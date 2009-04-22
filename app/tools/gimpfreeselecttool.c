@@ -31,6 +31,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
@@ -43,7 +44,6 @@
 #include "gimpfreeselecttool.h"
 #include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
-#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -1059,11 +1059,11 @@ gimp_free_select_tool_update_motion (GimpFreeSelectTool *fst,
                                                    &start_point_y,
                                                    segment_index);
 
-          gimp_tool_motion_constrain (start_point_x,
-                                      start_point_y,
-                                      &new_x,
-                                      &new_y,
-                                      GIMP_TOOL_CONSTRAIN_15_DEGREES);
+          gimp_constrain_line (start_point_x,
+                               start_point_y,
+                               &new_x,
+                               &new_y,
+                               GIMP_CONSTRAIN_LINE_15_DEGREES);
         }
 
       gimp_free_select_tool_move_segment_vertex_to (fst,
@@ -1208,10 +1208,10 @@ gimp_free_select_tool_oper_update (GimpTool         *tool,
                                                     &start_point_x,
                                                     &start_point_y);
 
-              gimp_tool_motion_constrain (start_point_x, start_point_y,
-                                          &priv->pending_point.x,
-                                          &priv->pending_point.y,
-                                          GIMP_TOOL_CONSTRAIN_15_DEGREES);
+              gimp_constrain_line (start_point_x, start_point_y,
+                                   &priv->pending_point.x,
+                                   &priv->pending_point.y,
+                                   GIMP_CONSTRAIN_LINE_15_DEGREES);
             }
         }
     }

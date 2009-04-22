@@ -26,6 +26,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimperror.h"
@@ -41,7 +42,6 @@
 #include "gimpblendoptions.h"
 #include "gimpblendtool.h"
 #include "gimptoolcontrol.h"
-#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -287,9 +287,9 @@ gimp_blend_tool_motion (GimpTool         *tool,
 
   if (state & GDK_CONTROL_MASK)
     {
-      gimp_tool_motion_constrain (blend_tool->start_x, blend_tool->start_y,
-                                  &blend_tool->end_x, &blend_tool->end_y,
-                                  GIMP_TOOL_CONSTRAIN_15_DEGREES);
+      gimp_constrain_line (blend_tool->start_x, blend_tool->start_y,
+                           &blend_tool->end_x, &blend_tool->end_y,
+                           GIMP_CONSTRAIN_LINE_15_DEGREES);
     }
 
   gimp_tool_pop_status (tool, display);
@@ -320,9 +320,9 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
       /* Restrict to multiples of 15 degrees if ctrl is pressed */
       if (press)
         {
-          gimp_tool_motion_constrain (blend_tool->start_x, blend_tool->start_y,
-                                      &blend_tool->end_x, &blend_tool->end_y,
-                                      GIMP_TOOL_CONSTRAIN_15_DEGREES);
+          gimp_constrain_line (blend_tool->start_x, blend_tool->start_y,
+                               &blend_tool->end_x, &blend_tool->end_y,
+                               GIMP_CONSTRAIN_LINE_15_DEGREES);
         }
 
       gimp_tool_pop_status (tool, display);

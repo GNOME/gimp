@@ -67,5 +67,18 @@ GimpObject * gimp_container_get_neighbor_of_active (GimpContainer   *container,
                                                     GimpContext     *context,
                                                     GimpObject      *active);
 
+/* Common values for the n_snap_lines parameter of
+ * gimp_constrain_line.
+ */
+#define GIMP_CONSTRAIN_LINE_90_DEGREES 2
+#define GIMP_CONSTRAIN_LINE_45_DEGREES 4
+#define GIMP_CONSTRAIN_LINE_15_DEGREES 12
+
+void         gimp_constrain_line                   (gdouble          start_x,
+                                                    gdouble          start_y,
+                                                    gdouble         *end_x,
+                                                    gdouble         *end_y,
+                                                    gint             n_snap_lines);
+
 
 #endif /* __APP_GIMP_UTILS_H__ */

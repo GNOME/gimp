@@ -31,6 +31,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
@@ -47,7 +48,6 @@
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
 #include "gimptoolcontrol.h"
-#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -437,9 +437,9 @@ gimp_measure_tool_motion (GimpTool         *tool,
           gdouble  x = measure->x[i];
           gdouble  y = measure->y[i];
 
-          gimp_tool_motion_constrain (measure->x[0], measure->y[0],
-                                      &x, &y,
-                                      GIMP_TOOL_CONSTRAIN_15_DEGREES);
+          gimp_constrain_line (measure->x[0], measure->y[0],
+                               &x, &y,
+                               GIMP_CONSTRAIN_LINE_15_DEGREES);
 
           measure->x[i] = ROUND (x);
           measure->y[i] = ROUND (y);
@@ -510,9 +510,9 @@ gimp_measure_tool_active_modifier_key (GimpTool        *tool,
       y = measure->mouse_y;
 
       if (press)
-        gimp_tool_motion_constrain (measure->x[0], measure->y[0],
-                                    &x, &y,
-                                    GIMP_TOOL_CONSTRAIN_15_DEGREES);
+        gimp_constrain_line (measure->x[0], measure->y[0],
+                             &x, &y,
+                             GIMP_CONSTRAIN_LINE_15_DEGREES);
 
       measure->x[measure->point] = ROUND (x);
       measure->y[measure->point] = ROUND (y);

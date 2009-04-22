@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppaintinfo.h"
@@ -44,7 +45,6 @@
 #include "gimpcoloroptions.h"
 #include "gimppainttool.h"
 #include "gimptoolcontrol.h"
-#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -269,9 +269,9 @@ gimp_paint_tool_round_line (GimpPaintCore   *core,
     }
 
   if (state & GDK_CONTROL_MASK)
-    gimp_tool_motion_constrain (core->last_coords.x, core->last_coords.y,
-                                &core->cur_coords.x, &core->cur_coords.y,
-                                GIMP_TOOL_CONSTRAIN_15_DEGREES);
+    gimp_constrain_line (core->last_coords.x, core->last_coords.y,
+                         &core->cur_coords.x, &core->cur_coords.y,
+                         GIMP_CONSTRAIN_LINE_15_DEGREES);
 }
 
 static void
