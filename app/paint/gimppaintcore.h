@@ -132,6 +132,10 @@ void      gimp_paint_core_interpolate               (GimpPaintCore    *core,
                                                      GimpPaintOptions *paint_options,
                                                      guint32           time);
 
+void      gimp_paint_core_round_line                (GimpPaintCore    *core,
+                                                     GimpPaintOptions *options,
+                                                     gboolean          constrain_15_degrees);
+
 
 /*  protected functions  */
 

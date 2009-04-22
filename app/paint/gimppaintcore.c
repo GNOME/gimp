@@ -22,6 +22,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "paint-types.h"
 
@@ -33,6 +34,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -570,6 +572,42 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 
   GIMP_PAINT_CORE_GET_CLASS (core)->interpolate (core, drawable,
                                                  paint_options, time);
+}
+
+/**
+ * gimp_paint_core_round_line:
+ * @core:                 the #GimpPaintCore
+ * @options:              the #GimpPaintOptions to use
+ * @constrain_15_degrees: the modifier state
+ *
+ * Adjusts core->last_coords and core_cur_coords in preparation to
+ * drawing a straight line. If @center_pixels is TRUE the endpoints
+ * get pushed to the center of the pixels. This avoids artefacts
+ * for e.g. the hard mode. The rounding of the slope to 15 degree
+ * steps if ctrl is pressed happens, as does rounding the start and
+ * end coordinates (which may be fractional in high zoom modes) to
+ * the center of pixels.
+ **/
+void
+gimp_paint_core_round_line (GimpPaintCore    *core,
+                            GimpPaintOptions *paint_options,
+                            gboolean          constrain_15_degrees)
+{
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
+
+  if (gimp_paint_options_get_brush_mode (paint_options) == GIMP_BRUSH_HARD)
+    {
+      core->last_coords.x = floor (core->last_coords.x) + 0.5;
+      core->last_coords.y = floor (core->last_coords.y) + 0.5;
+      core->cur_coords.x  = floor (core->cur_coords.x ) + 0.5;
+      core->cur_coords.y  = floor (core->cur_coords.y ) + 0.5;
+    }
+
+  if (constrain_15_degrees)
+    gimp_constrain_line (core->last_coords.x, core->last_coords.y,
+                         &core->cur_coords.x, &core->cur_coords.y,
+                         GIMP_CONSTRAIN_LINE_15_DEGREES);
 }
 
 
