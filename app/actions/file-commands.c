@@ -272,6 +272,11 @@ file_save_cmd_callback (GtkAction *action,
                              _("Save a Copy of the Image"), TRUE,
                              FALSE);
       break;
+
+    case GIMP_SAVE_MODE_EXPORT:
+    case GIMP_SAVE_MODE_EXPORT_TO:
+      /* TODO */
+      break;
     }
 
   if (save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE &&
