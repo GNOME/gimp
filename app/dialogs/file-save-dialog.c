@@ -87,7 +87,7 @@ file_save_dialog_new (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   dialog = gimp_file_dialog_new (gimp,
-                                 GTK_FILE_CHOOSER_ACTION_SAVE,
+                                 GIMP_FILE_CHOOSER_ACTION_SAVE,
                                  _("Save Image"), "gimp-file-save",
                                  GTK_STOCK_SAVE,
                                  GIMP_HELP_FILE_SAVE);

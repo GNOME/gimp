@@ -286,18 +286,19 @@ gimp_file_dialog_progress_get_window (GimpProgress *progress)
 /*  public functions  */
 
 GtkWidget *
-gimp_file_dialog_new (Gimp                 *gimp,
-                      GtkFileChooserAction  action,
-                      const gchar          *title,
-                      const gchar          *role,
-                      const gchar          *stock_id,
-                      const gchar          *help_id)
+gimp_file_dialog_new (Gimp                  *gimp,
+                      GimpFileChooserAction  action,
+                      const gchar           *title,
+                      const gchar           *role,
+                      const gchar           *stock_id,
+                      const gchar           *help_id)
 {
-  GimpFileDialog *dialog;
-  GSList         *file_procs;
-  const gchar    *automatic;
-  const gchar    *automatic_help_id;
-  gboolean        local_only;
+  GimpFileDialog       *dialog;
+  GSList               *file_procs;
+  const gchar          *automatic;
+  const gchar          *automatic_help_id;
+  gboolean              local_only;
+  GtkFileChooserAction  gtk_action;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -307,7 +308,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
   switch (action)
     {
-    case GTK_FILE_CHOOSER_ACTION_OPEN:
+    case GIMP_FILE_CHOOSER_ACTION_OPEN:
+      gtk_action = GTK_FILE_CHOOSER_ACTION_OPEN;
       file_procs = gimp->plug_in_manager->load_procs;
       automatic  = _("Automatically Detected");
       automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
@@ -317,7 +319,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
                                                "file-uri-load") == NULL);
       break;
 
-    case GTK_FILE_CHOOSER_ACTION_SAVE:
+    case GIMP_FILE_CHOOSER_ACTION_SAVE:
+      gtk_action = GTK_FILE_CHOOSER_ACTION_SAVE;
       file_procs = gimp->plug_in_manager->save_procs;
       automatic  = _("By Extension");
       automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
@@ -335,7 +338,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   dialog = g_object_new (GIMP_TYPE_FILE_DIALOG,
                          "title",                     title,
                          "role",                      role,
-                         "action",                    action,
+                         "action",                    gtk_action,
                          "local-only",                local_only,
                          "do-overwrite-confirmation", TRUE,
                          NULL);

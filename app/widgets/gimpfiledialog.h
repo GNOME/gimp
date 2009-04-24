@@ -66,7 +66,7 @@ typedef struct _GimpFileDialogState GimpFileDialogState;
 GType       gimp_file_dialog_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_file_dialog_new            (Gimp                 *gimp,
-                                             GtkFileChooserAction  action,
+                                             GimpFileChooserAction action,
                                              const gchar          *title,
                                              const gchar          *role,
                                              const gchar          *stock_id,

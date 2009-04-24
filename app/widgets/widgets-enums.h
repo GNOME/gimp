@@ -307,5 +307,12 @@ typedef enum  /*< skip >*/
   GIMP_DEVICE_VALUE_GRADIENT   = 1 << 8
 } GimpDeviceValues;
 
+typedef enum  /*< skip >*/
+{
+  GIMP_FILE_CHOOSER_ACTION_OPEN,
+  GIMP_FILE_CHOOSER_ACTION_SAVE,
+  GIMP_FILE_CHOOSER_ACTION_EXPORT
+} GimpFileChooserAction;
+
 
 #endif /* __WIDGETS_ENUMS_H__ */
