@@ -1,3 +1,8 @@
+2009-04-24  Martin Nordholts  <martinn@src.gnome.org>
+
+	* README: Update link to GTK+ themes in README. Patch from
+	Shlomi Fish.
+
 2009-04-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore.[ch]: made GimpCoords* parameter of
