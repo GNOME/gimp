@@ -219,6 +219,41 @@ file_procedure_find_by_extension (GSList      *procs,
   return file_proc_find_by_extension (procs, uri, FALSE);
 }
 
+gboolean
+file_procedure_in_group (GimpPlugInProcedure *file_proc,
+                         FileProcedureGroup   group)
+{
+  const gchar *name        = gimp_object_get_name (GIMP_OBJECT (file_proc));
+  gboolean     is_xcf_save = FALSE;
+  gboolean     is_filter   = FALSE;
+
+  is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
+
+  is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
+                 strcmp (name, "file-bz2-save") == 0);
+
+  switch (group)
+    {
+    case FILE_PROCEDURE_GROUP_SAVE:
+      /* Only .xcf shall pass */
+      /* FIXME: Handle .gz and .bz2 properly */
+      return is_xcf_save || is_filter;
+
+    case FILE_PROCEDURE_GROUP_EXPORT:
+      /* Anything but .xcf shall pass */
+      /* FIXME: Handle .gz and .bz2 properly */
+      return ! is_xcf_save || is_filter;
+
+    case FILE_PROCEDURE_GROUP_OPEN:
+      /* No filter applied for Open */
+      return TRUE;
+
+    default:
+    case FILE_PROCEDURE_GROUP_ANY:
+      return TRUE;
+    }
+}
+
 
 /*  private functions  */
 

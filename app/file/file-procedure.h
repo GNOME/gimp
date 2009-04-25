@@ -21,13 +21,24 @@
 #define __FILE_PROCEDURE_H__
 
 
-GimpPlugInProcedure * file_procedure_find              (GSList       *procs,
-                                                        const gchar  *filename,
-                                                        GError      **error);
-GimpPlugInProcedure * file_procedure_find_by_prefix    (GSList       *procs,
-                                                        const gchar  *uri);
-GimpPlugInProcedure * file_procedure_find_by_extension (GSList       *procs,
-                                                        const gchar  *uri);
+typedef enum
+{
+  FILE_PROCEDURE_GROUP_ANY,
+  FILE_PROCEDURE_GROUP_OPEN,
+  FILE_PROCEDURE_GROUP_SAVE,
+  FILE_PROCEDURE_GROUP_EXPORT
+} FileProcedureGroup;
+
+
+GimpPlugInProcedure *file_procedure_find              (GSList               *procs,
+                                                       const gchar          *filename,
+                                                       GError              **error);
+GimpPlugInProcedure *file_procedure_find_by_prefix    (GSList               *procs,
+                                                       const gchar          *uri);
+GimpPlugInProcedure *file_procedure_find_by_extension (GSList               *procs,
+                                                       const gchar          *uri);
+gboolean             file_procedure_in_group          (GimpPlugInProcedure  *file_proc,
+                                                       FileProcedureGroup    group);
 
 
 #endif /* __FILE_PROCEDURE_H__ */
