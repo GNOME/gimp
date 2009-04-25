@@ -27,7 +27,7 @@ GIMP is different
    po-tips/gimp20-tips.pot            --  the startup tips
 
  If you are looking for the translations of gimp-perl, please note that
- gimp-perl has been moved into it's own Subversion module called
+ gimp-perl has been moved into it's own git module called
  gimp-perl.
 
 

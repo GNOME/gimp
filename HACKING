@@ -23,15 +23,15 @@ Beta software can be found at alpha.gnu.org.
         - ftp://ftp.gnome.org/pub/GNOME/sources/libxslt/1.1/
 
 These are only the additional requirements if you want to compile from
-the Subversion repository. The file INSTALL lists the various libraries
-we depend on.
+the git repository. The file INSTALL lists the various libraries we
+depend on.
 
 
 Compilation
 -----------
-If you are accessing gimp via Subversion, then you will need to take
-several steps to get it to compile.  You can do all these steps at once
-by running:
+If you are accessing gimp via git, then you will need to take several
+steps to get it to compile.  You can do all these steps at once by
+running:
 
     gimp/trunk$ ./autogen.sh
 
@@ -67,23 +67,17 @@ disable the support for gtk-doc so you will not be able to generate
 the API documentation.
 
 
-Subversion
+Git
 ----------
-GIMP is available from GNOME Subversion. You can use the following
-commands to get them from the anonymous Subversion server:
+GIMP is available from GNOME Git. You can use the following commands
+to get GIMP from the the git server:
 
-For getting GIMP trunk, use:
+    $ git clone git://git.gnome.org/gimp
 
-    $ svn co http://svn.gnome.org/svn/gimp/trunk gimp
+You can read more on using GNOME's git service at these URLs:
 
-For getting a GIMP branch, use:
-
-    $ svn co http://svn.gnome.org/svn/gimp/branches/<branch> gimp-<branch>
-
-You can read more on using GNOME's Subversion service at these URLs:
-
-    http://developer.gnome.org/tools/svn.html
-    http://svnbook.red-bean.com/
+    http://live.gnome.org/Git
+    http://www.kernel.org/pub/software/scm/git/docs/
 
 
 You will also need relatively new stable releases of glib, pango, atk,
@@ -94,26 +88,19 @@ part of recent Linux distribution releases.
 Patches
 -------
 
-The best way to submit patches is to file a bug report at
+The best way to submit patches is to publish your git repository and
+ask developers to git-fetch from you.
+
+For bug fixes where the patch is small you can file a bug report at
 http://bugzilla.gnome.org/ and attach your patch to it as a plain text
 file, not compressed. If your patch is reasonably small you can submit
-it to the gimp-developer@lists.xcf.berkeley.edu mailing list. If the
-patch needs to be discussed, you should also consider using the
+it to the gimp-developer@lists.xcf.berkeley.edu mailing list. You can
+create the patch file with git-format-patch
+
+If the patch needs to be discussed, you should also consider using the
 mailing list instead of Bugzilla because bug reports tend to be hard
 to read if they contain too many comments. For the code, please try to
-follow the guidelines given in Hackordnung, below.  You can create the
-patch file with "svn diff", preferably in an annotated patch format.
-This can be achieved with ~/.subversion/config containing a custom
-diff command in the [helpers] section:
-
-[helpers]
-diff-cmd = /usr/local/bin/_svndiff
-
-And create an executable script in /usr/local/bin/_svndiff with the
-following contents:
-
-#!/bin/sh
-/usr/bin/diff -up --label "${3}" ${6} --label "${5}" ${7}
+follow the guidelines given in Hackordnung, below.
 
 
 Auto-generated Files

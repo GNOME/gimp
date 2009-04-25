@@ -1,5 +1,14 @@
 2009-04-24  Martin Nordholts  <martinn@src.gnome.org>
 
+	Convert Subversion references to git
+
+	* HACKING
+	* INSTALL
+	* README.i18n
+	* autogen.sh
+
+2009-04-24  Martin Nordholts  <martinn@src.gnome.org>
+
 	* README: Update link to GTK+ themes in README. Patch from
 	Shlomi Fish.
 
