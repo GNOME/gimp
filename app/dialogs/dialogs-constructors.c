@@ -129,6 +129,14 @@ dialogs_file_save_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_file_export_new (GimpDialogFactory *factory,
+                         GimpContext       *context,
+                         gint               view_size)
+{
+  return file_save_dialog_new (context->gimp, TRUE);
+}
+
+GtkWidget *
 dialogs_preferences_get (GimpDialogFactory *factory,
                          GimpContext       *context,
                          gint               view_size)
