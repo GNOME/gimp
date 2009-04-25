@@ -73,7 +73,8 @@ static gchar *   file_save_dialog_get_uri           (GimpFileDialog       *dialo
 static GSList *  file_save_dialog_get_procs         (GimpFileDialog       *dialog,
                                                      Gimp                 *gimp);
 static void      file_save_dialog_unknown_ext_msg   (GimpFileDialog       *dialog,
-                                                     Gimp                 *gimp);
+                                                     Gimp                 *gimp,
+                                                     const gchar          *basename);
 static gboolean  file_save_dialog_use_extension     (GtkWidget            *save_dialog,
                                                      const gchar          *uri);
 
@@ -378,7 +379,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               GIMP_LOG (SAVE_DIALOG,
                         "unable to figure save_proc, bailing out");
 
-              file_save_dialog_unknown_ext_msg (dialog, gimp);
+              file_save_dialog_unknown_ext_msg (dialog, gimp, basename);
 
               g_free (uri);
               g_free (basename);
@@ -411,7 +412,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
           GIMP_LOG (SAVE_DIALOG,
                     "basename has no useful extension, bailing out");
 
-          file_save_dialog_unknown_ext_msg (dialog, gimp);
+          file_save_dialog_unknown_ext_msg (dialog, gimp, basename);
 
           g_free (uri);
           g_free (basename);
@@ -548,13 +549,39 @@ file_save_dialog_get_procs (GimpFileDialog *dialog,
 
 static void
 file_save_dialog_unknown_ext_msg (GimpFileDialog *dialog,
-                                  Gimp           *gimp)
+                                  Gimp           *gimp,
+                                  const gchar    *basename)
 {
-  gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
-                _("The given filename does not have any known "
-                  "file extension. Please enter a known file "
-                  "extension or select a file format from the "
-                  "file format list."));
+  GimpPlugInProcedure *proc_in_other_group;
+
+  proc_in_other_group =
+    file_procedure_find ((dialog->export ?
+                          gimp->plug_in_manager->save_procs :
+                          gimp->plug_in_manager->export_procs),
+                         basename,
+                         NULL);
+
+  if (dialog->export && proc_in_other_group)
+    {
+      gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                    _("You can use this dialog to export to various file formats. "
+                      "If you want to save the image to the GIMP XCF format, use "
+                      "File→Save instead."));
+    }
+  else if (! dialog->export && proc_in_other_group)
+    {
+      gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                    _("You can use this dialog to save to the GIMP XCF "
+                      "format. Use File→Export to export to other file formats."));
+    }
+  else
+    {
+      gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                    _("The given filename does not have any known "
+                      "file extension. Please enter a known file "
+                      "extension or select a file format from the "
+                      "file format list."));
+    }
 }
 
 static gboolean
