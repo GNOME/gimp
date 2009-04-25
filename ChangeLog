@@ -1,3 +1,10 @@
+2009-04-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/dialogs/file-save-dialog.c: Introduce
+	file_save_dialog_unkown_ext_msg() so that we don't need to have a
+	copy-pasted huge error message (and prepare for more intricate
+	message handling).
+
 2009-04-24  Martin Nordholts  <martinn@src.gnome.org>
 
 	Convert Subversion references to git

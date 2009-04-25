@@ -55,21 +55,23 @@
 
 /*  local function prototypes  */
 
-static void      file_save_dialog_response      (GtkWidget            *save_dialog,
-                                                 gint                  response_id,
-                                                 Gimp                 *gimp);
-static gboolean  file_save_dialog_check_uri     (GtkWidget            *save_dialog,
-                                                 Gimp                 *gimp,
-                                                 gchar               **ret_uri,
-                                                 gchar               **ret_basename,
-                                                 GimpPlugInProcedure **ret_save_proc);
-static gboolean  file_save_dialog_use_extension (GtkWidget            *save_dialog,
-                                                 const gchar          *uri);
-static gboolean  file_save_dialog_save_image    (GtkWidget            *save_dialog,
-                                                 GimpImage            *image,
-                                                 const gchar          *uri,
-                                                 GimpPlugInProcedure  *save_proc,
-                                                 gboolean              save_a_copy);
+static void      file_save_dialog_response        (GtkWidget            *save_dialog,
+                                                   gint                  response_id,
+                                                   Gimp                 *gimp);
+static gboolean  file_save_dialog_check_uri       (GtkWidget            *save_dialog,
+                                                   Gimp                 *gimp,
+                                                   gchar               **ret_uri,
+                                                   gchar               **ret_basename,
+                                                   GimpPlugInProcedure **ret_save_proc);
+static void      file_save_dialog_unknown_ext_msg (GimpFileDialog       *dialog,
+                                                   Gimp                 *gimp);
+static gboolean  file_save_dialog_use_extension   (GtkWidget            *save_dialog,
+                                                   const gchar          *uri);
+static gboolean  file_save_dialog_save_image      (GtkWidget            *save_dialog,
+                                                   GimpImage            *image,
+                                                   const gchar          *uri,
+                                                   GimpPlugInProcedure  *save_proc,
+                                                   gboolean              save_a_copy);
 
 
 /*  public functions  */
@@ -298,11 +300,8 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               GIMP_LOG (SAVE_DIALOG,
                         "unable to figure save_proc, bailing out");
 
-              gimp_message (gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_WARNING,
-                            _("The given filename does not have any known "
-                              "file extension. Please enter a known file "
-                              "extension or select a file format from the "
-                              "file format list."));
+              file_save_dialog_unknown_ext_msg (dialog, gimp);
+
               g_free (uri);
               g_free (basename);
               return FALSE;
@@ -334,11 +333,8 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
           GIMP_LOG (SAVE_DIALOG,
                     "basename has no useful extension, bailing out");
 
-          gimp_message (gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_WARNING,
-                        _("The given filename does not have any known "
-                          "file extension. Please enter a known file "
-                          "extension or select a file format from the "
-                          "file format list."));
+          file_save_dialog_unknown_ext_msg (dialog, gimp);
+
           g_free (uri);
           g_free (basename);
           return FALSE;
@@ -416,6 +412,17 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   *ret_save_proc = save_proc;
 
   return TRUE;
+}
+
+static void
+file_save_dialog_unknown_ext_msg (GimpFileDialog *dialog,
+                                  Gimp           *gimp)
+{
+  gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                _("The given filename does not have any known "
+                  "file extension. Please enter a known file "
+                  "extension or select a file format from the "
+                  "file format list."));
 }
 
 static gboolean
