@@ -329,7 +329,8 @@ gimp_smudge_brush_coords (GimpPaintCore *paint_core,
   gint           height;
 
   gimp_brush_transform_size (brush_core->brush,
-                             brush_core->scale, brush_core->scale,
+                             brush_core->scale,
+                             brush_core->aspect_ratio,
                              brush_core->angle,
                              &width, &height);
 

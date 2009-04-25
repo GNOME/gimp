@@ -41,6 +41,7 @@ struct _GimpDynamicOptions
   gboolean  rate;
   gboolean  size;
   gboolean  inverse_size;
+  gboolean  aspect_ratio;
   gboolean  color;
   gboolean  angle;
   gdouble   prescale;
@@ -89,6 +90,7 @@ struct _GimpPaintOptions
 
   gdouble                   brush_scale;
   gdouble                   brush_angle;
+  gdouble                   brush_aspect_ratio;
 
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;
@@ -147,6 +149,10 @@ gdouble gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
 gdouble gimp_paint_options_get_dynamic_size    (GimpPaintOptions *paint_options,
                                                 const GimpCoords *coords,
                                                 gboolean          use_dynamics);
+
+gdouble gimp_paint_options_get_dynamic_aspect_ratio
+                                               (GimpPaintOptions *paint_options,
+                                                const GimpCoords *coords);
 
 gdouble gimp_paint_options_get_dynamic_rate    (GimpPaintOptions *paint_options,
                                                 const GimpCoords *coords);

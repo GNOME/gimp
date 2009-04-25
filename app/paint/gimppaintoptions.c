@@ -36,6 +36,7 @@
 
 
 #define DEFAULT_BRUSH_SCALE            1.0
+#define DEFAULT_BRUSH_ASPECT_RATIO     1.0
 #define DEFAULT_BRUSH_ANGLE            0.0
 
 #define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
@@ -48,6 +49,7 @@
 #define DEFAULT_PRESSURE_RATE          FALSE
 #define DEFAULT_PRESSURE_SIZE          FALSE
 #define DEFAULT_PRESSURE_INVERSE_SIZE  FALSE
+#define DEFAULT_PRESSURE_ASPECT_RATIO  FALSE
 #define DEFAULT_PRESSURE_COLOR         FALSE
 #define DEFAULT_PRESSURE_ANGLE         FALSE
 #define DEFAULT_PRESSURE_PRESCALE      1.0
@@ -57,6 +59,7 @@
 #define DEFAULT_VELOCITY_RATE          FALSE
 #define DEFAULT_VELOCITY_SIZE          FALSE
 #define DEFAULT_VELOCITY_INVERSE_SIZE  FALSE
+#define DEFAULT_VELOCITY_ASPECT_RATIO  FALSE
 #define DEFAULT_VELOCITY_COLOR         FALSE
 #define DEFAULT_VELOCITY_ANGLE         FALSE
 #define DEFAULT_VELOCITY_PRESCALE      1.0
@@ -66,6 +69,7 @@
 #define DEFAULT_DIRECTION_RATE         FALSE
 #define DEFAULT_DIRECTION_SIZE         FALSE
 #define DEFAULT_DIRECTION_INVERSE_SIZE FALSE
+#define DEFAULT_DIRECTION_ASPECT_RATIO FALSE
 #define DEFAULT_DIRECTION_COLOR        FALSE
 #define DEFAULT_DIRECTION_ANGLE        FALSE
 #define DEFAULT_DIRECTION_PRESCALE     1.0
@@ -75,6 +79,7 @@
 #define DEFAULT_TILT_RATE              FALSE
 #define DEFAULT_TILT_SIZE              FALSE
 #define DEFAULT_TILT_INVERSE_SIZE      FALSE
+#define DEFAULT_TILT_ASPECT_RATIO      FALSE
 #define DEFAULT_TILT_COLOR             FALSE
 #define DEFAULT_TILT_ANGLE             FALSE
 #define DEFAULT_TILT_PRESCALE          1.0
@@ -84,6 +89,7 @@
 #define DEFAULT_RANDOM_RATE            FALSE
 #define DEFAULT_RANDOM_SIZE            FALSE
 #define DEFAULT_RANDOM_INVERSE_SIZE    FALSE
+#define DEFAULT_RANDOM_ASPECT_RATIO    FALSE
 #define DEFAULT_RANDOM_COLOR           FALSE
 #define DEFAULT_RANDOM_ANGLE           FALSE
 #define DEFAULT_RANDOM_PRESCALE        1.0
@@ -109,6 +115,7 @@ enum
   PROP_PAINT_INFO,
 
   PROP_BRUSH_SCALE,
+  PROP_BRUSH_ASPECT_RATIO,
   PROP_BRUSH_ANGLE,
 
   PROP_APPLICATION_MODE,
@@ -121,6 +128,7 @@ enum
   PROP_PRESSURE_RATE,
   PROP_PRESSURE_SIZE,
   PROP_PRESSURE_INVERSE_SIZE,
+  PROP_PRESSURE_ASPECT_RATIO,
   PROP_PRESSURE_COLOR,
   PROP_PRESSURE_ANGLE,
   PROP_PRESSURE_PRESCALE,
@@ -130,6 +138,7 @@ enum
   PROP_VELOCITY_RATE,
   PROP_VELOCITY_SIZE,
   PROP_VELOCITY_INVERSE_SIZE,
+  PROP_VELOCITY_ASPECT_RATIO,
   PROP_VELOCITY_COLOR,
   PROP_VELOCITY_ANGLE,
   PROP_VELOCITY_PRESCALE,
@@ -139,6 +148,7 @@ enum
   PROP_DIRECTION_RATE,
   PROP_DIRECTION_SIZE,
   PROP_DIRECTION_INVERSE_SIZE,
+  PROP_DIRECTION_ASPECT_RATIO,
   PROP_DIRECTION_COLOR,
   PROP_DIRECTION_ANGLE,
   PROP_DIRECTION_PRESCALE,
@@ -148,6 +158,7 @@ enum
   PROP_TILT_RATE,
   PROP_TILT_SIZE,
   PROP_TILT_INVERSE_SIZE,
+  PROP_TILT_ASPECT_RATIO,
   PROP_TILT_COLOR,
   PROP_TILT_ANGLE,
   PROP_TILT_PRESCALE,
@@ -157,6 +168,7 @@ enum
   PROP_RANDOM_RATE,
   PROP_RANDOM_SIZE,
   PROP_RANDOM_INVERSE_SIZE,
+  PROP_RANDOM_ASPECT_RATIO,
   PROP_RANDOM_COLOR,
   PROP_RANDOM_ANGLE,
   PROP_RANDOM_PRESCALE,
@@ -233,6 +245,11 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    "brush-scale", _("Brush Scale"),
                                    0.01, 10.0, DEFAULT_BRUSH_SCALE,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
+                                   "brush-aspect-ratio", NULL,
+                                   0.01, 10.0, DEFAULT_BRUSH_ASPECT_RATIO,
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
                                    "brush-angle", _("Brush Angle"),
                                    -180.0, 180.0, DEFAULT_BRUSH_ANGLE,
@@ -281,6 +298,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     "pressure-inverse-size", NULL,
                                     DEFAULT_PRESSURE_INVERSE_SIZE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_ASPECT_RATIO,
+                                    "pressure-aspect-ratio", NULL,
+                                    DEFAULT_PRESSURE_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PRESSURE_PRESCALE,
                                    "pressure-prescale", NULL,
                                    0.0, 1.0, DEFAULT_PRESSURE_PRESCALE,
@@ -313,6 +334,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_INVERSE_SIZE,
                                     "velocity-inverse-size", NULL,
                                     DEFAULT_VELOCITY_INVERSE_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_ASPECT_RATIO,
+                                    "velocity-aspect-ratio", NULL,
+                                    DEFAULT_VELOCITY_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_VELOCITY_PRESCALE,
                                    "velocity-prescale", NULL,
@@ -347,6 +372,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     "direction-inverse-size", NULL,
                                     DEFAULT_DIRECTION_INVERSE_SIZE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_ASPECT_RATIO,
+                                    "direction-aspect-ratio", NULL,
+                                    DEFAULT_DIRECTION_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DIRECTION_PRESCALE,
                                    "direction-prescale", NULL,
                                    0.0, 1.0, DEFAULT_DIRECTION_PRESCALE,
@@ -379,6 +408,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT_INVERSE_SIZE,
                                     "tilt-inverse-size", NULL,
                                     DEFAULT_TILT_INVERSE_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT_ASPECT_RATIO,
+                                    "tilt-aspect-ratio", NULL,
+                                    DEFAULT_TILT_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_PRESCALE,
                                    "tilt-prescale", NULL,
@@ -439,7 +472,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    "jitter-amount", NULL,
                                    0.0, 50.0, DEFAULT_JITTER_AMOUNT,
                                    GIMP_PARAM_STATIC_STRINGS);
-
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ASPECT_RATIO,
+                                    "random-aspect-ratio", NULL,
+                                    DEFAULT_RANDOM_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
                                     "use-gradient", NULL,
                                     DEFAULT_USE_GRADIENT,
@@ -560,6 +596,10 @@ gimp_paint_options_set_property (GObject      *object,
       options->brush_scale = g_value_get_double (value);
       break;
 
+    case PROP_BRUSH_ASPECT_RATIO:
+      options->brush_aspect_ratio = g_value_get_double (value);
+      break;
+
     case PROP_BRUSH_ANGLE:
       options->brush_angle = - 1.0 * g_value_get_double (value) / 360.0; /* let's make the angle mathematically correct */
       break;
@@ -596,6 +636,10 @@ gimp_paint_options_set_property (GObject      *object,
       pressure_options->inverse_size = g_value_get_boolean (value);
       break;
 
+    case PROP_PRESSURE_ASPECT_RATIO:
+      pressure_options->aspect_ratio = g_value_get_boolean (value);
+      break;
+
     case PROP_PRESSURE_COLOR:
       pressure_options->color = g_value_get_boolean (value);
       break;
@@ -626,6 +670,10 @@ gimp_paint_options_set_property (GObject      *object,
 
     case PROP_VELOCITY_INVERSE_SIZE:
       velocity_options->inverse_size = g_value_get_boolean (value);
+      break;
+
+    case PROP_VELOCITY_ASPECT_RATIO:
+      velocity_options->aspect_ratio = g_value_get_boolean (value);
       break;
 
     case PROP_VELOCITY_COLOR:
@@ -660,6 +708,10 @@ gimp_paint_options_set_property (GObject      *object,
       direction_options->inverse_size = g_value_get_boolean (value);
       break;
 
+    case PROP_DIRECTION_ASPECT_RATIO:
+      direction_options->aspect_ratio = g_value_get_boolean (value);
+      break;
+
     case PROP_DIRECTION_COLOR:
       direction_options->color = g_value_get_boolean (value);
       break;
@@ -692,6 +744,10 @@ gimp_paint_options_set_property (GObject      *object,
       tilt_options->inverse_size = g_value_get_boolean (value);
       break;
 
+    case PROP_TILT_ASPECT_RATIO:
+      tilt_options->aspect_ratio = g_value_get_boolean (value);
+      break;
+
     case PROP_TILT_COLOR:
       tilt_options->color = g_value_get_boolean (value);
       break;
@@ -722,6 +778,10 @@ gimp_paint_options_set_property (GObject      *object,
 
     case PROP_RANDOM_INVERSE_SIZE:
       random_options->inverse_size = g_value_get_boolean (value);
+      break;
+
+    case PROP_RANDOM_ASPECT_RATIO:
+      random_options->aspect_ratio = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_COLOR:
@@ -832,6 +892,10 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_double (value, options->brush_scale);
       break;
 
+    case PROP_BRUSH_ASPECT_RATIO:
+      g_value_set_double (value, options->brush_aspect_ratio);
+      break;
+
     case PROP_BRUSH_ANGLE:
       g_value_set_double (value, - 1.0 * options->brush_angle * 360.0); /* mathematically correct -> intuitively correct */
       break;
@@ -868,6 +932,10 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, pressure_options->inverse_size);
       break;
 
+    case PROP_PRESSURE_ASPECT_RATIO:
+      g_value_set_boolean (value, pressure_options->aspect_ratio);
+      break;
+
     case PROP_PRESSURE_COLOR:
       g_value_set_boolean (value, pressure_options->color);
       break;
@@ -900,6 +968,10 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, velocity_options->inverse_size);
       break;
 
+    case PROP_VELOCITY_ASPECT_RATIO:
+      g_value_set_boolean (value, velocity_options->aspect_ratio);
+      break;
+
     case PROP_VELOCITY_COLOR:
       g_value_set_boolean (value, velocity_options->color);
       break;
@@ -930,6 +1002,10 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_DIRECTION_INVERSE_SIZE:
       g_value_set_boolean (value, direction_options->inverse_size);
+      break;
+
+    case PROP_DIRECTION_ASPECT_RATIO:
+      g_value_set_boolean (value, direction_options->aspect_ratio);
       break;
 
     case PROP_DIRECTION_COLOR:
@@ -965,6 +1041,10 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, tilt_options->inverse_size);
       break;
 
+    case PROP_TILT_ASPECT_RATIO:
+      g_value_set_boolean (value, tilt_options->aspect_ratio);
+      break;
+
     case PROP_TILT_COLOR:
       g_value_set_boolean (value, tilt_options->color);
       break;
@@ -995,6 +1075,10 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_RANDOM_INVERSE_SIZE:
       g_value_set_boolean (value, random_options->inverse_size);
+      break;
+
+    case PROP_RANDOM_ASPECT_RATIO:
+      g_value_set_boolean (value, random_options->aspect_ratio);
       break;
 
     case PROP_RANDOM_COLOR:
@@ -1490,6 +1574,74 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
   return scale;
 }
 
+gdouble
+gimp_paint_options_get_dynamic_aspect_ratio (GimpPaintOptions *paint_options,
+                                             const GimpCoords *coords)
+{
+  gdouble aspect_ratio = 1.0;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
+  g_return_val_if_fail (coords != NULL, 1.0);
+
+  if (paint_options->pressure_options->aspect_ratio  ||
+      paint_options->velocity_options->aspect_ratio  ||
+      paint_options->direction_options->aspect_ratio ||
+      paint_options->tilt_options->aspect_ratio      ||
+      paint_options->random_options->aspect_ratio)
+    {
+      gdouble pressure  = -1.0;
+      gdouble velocity  = -1.0;
+      gdouble direction = -1.0;
+      gdouble tilt      = -1.0;
+      gdouble random    = -1.0;
+
+
+      if (paint_options->pressure_options->aspect_ratio)
+        pressure = 2 * coords->pressure;
+
+      if (paint_options->velocity_options->aspect_ratio)
+        velocity = 2 * coords->velocity;
+
+      if (paint_options->random_options->aspect_ratio)
+        {
+           random = g_random_double_range (0.0, 1.0);
+           if (random <= 0.5)
+             {
+                random = 1 / (random / 0.5 * (2.0 - 1.0) + 1.0);
+             }
+           else
+             {
+                random = (random - 0.5) / (1.0 - 0.5) * (2.0 - 1.0) + 1.0;
+             }
+        }
+
+     if (paint_options->tilt_options->aspect_ratio)
+       {
+          tilt = sqrt ((1 - fabs (coords->xtilt)) / (1 - fabs (coords->ytilt)));
+       }
+
+      if (paint_options->direction_options->aspect_ratio)
+        {
+           direction = fmod (1 + coords->direction, 0.5) / 0.25;
+
+           if ((coords->direction > 0.0) && (coords->direction < 0.5))
+             direction = 1 / direction;
+        }
+
+      aspect_ratio = gimp_paint_options_get_dynamics_mix (pressure,
+                                                          paint_options->pressure_options->prescale,
+                                                          velocity,
+                                                          paint_options->velocity_options->prescale,
+                                                          random,
+                                                          paint_options->random_options->prescale,
+                                                          tilt,
+                                                          paint_options->tilt_options->prescale,
+                                                          direction,
+                                                          paint_options->direction_options->prescale);
+    }
+
+  return paint_options->brush_aspect_ratio * aspect_ratio;
+}
 
 gdouble
 gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,

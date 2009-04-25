@@ -47,12 +47,13 @@
 #include "gimp-intl.h"
 
 
-static gboolean    tool_has_opacity_dynamics  (GType       tool_type);
-static gboolean    tool_has_hardness_dynamics (GType       tool_type);
-static gboolean    tool_has_rate_dynamics     (GType       tool_type);
-static gboolean    tool_has_size_dynamics     (GType       tool_type);
-static gboolean    tool_has_color_dynamics    (GType       tool_type);
-static gboolean    tool_has_angle_dynamics    (GType       tool_type);
+static gboolean    tool_has_opacity_dynamics      (GType       tool_type);
+static gboolean    tool_has_hardness_dynamics     (GType       tool_type);
+static gboolean    tool_has_rate_dynamics         (GType       tool_type);
+static gboolean    tool_has_size_dynamics         (GType       tool_type);
+static gboolean    tool_has_color_dynamics        (GType       tool_type);
+static gboolean    tool_has_angle_dynamics        (GType       tool_type);
+static gboolean    tool_has_aspect_ratio_dynamics (GType       tool_type);
 
 static void        pressure_options_gui  (GimpPaintOptions *paint_options,
                                           GType             tool_type,
@@ -100,7 +101,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *incremental_toggle = NULL;
   gint              table_row          = 0;
   gint              n_dynamics         = 0;
-  GtkWidget        *dynamics_labels[6];
+  GtkWidget        *dynamics_labels[7];
   GType             tool_type;
 
   tool_type = tool_options->tool_info->tool_type;
@@ -139,6 +140,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     {
       GtkObject *adj_scale;
       GtkObject *adj_angle;
+      GtkObject *adj_aspect_ratio;
+
 
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                         "brush-view-type", "brush-view-size");
@@ -152,6 +155,13 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                              0.01, 0.1, 2,
                                              FALSE, 0.0, 0.0);
       gimp_scale_entry_set_logarithmic (adj_scale, TRUE);
+
+      adj_aspect_ratio = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
+                                                    GTK_TABLE (table), 0, table_row++,
+                                                    _("Aspect Ratio:"),
+                                                    0.01, 0.1, 2,
+                                                    FALSE, 0.0, 0.0);
+      gimp_scale_entry_set_logarithmic (adj_aspect_ratio, TRUE);
 
       adj_angle = gimp_prop_scale_entry_new (config, "brush-angle",
                                              GTK_TABLE (table), 0, table_row++,
@@ -183,6 +193,13 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       dynamics_labels[n_dynamics] = gtk_label_new (_("Size"));
       n_dynamics++;
     }
+
+  if (tool_has_aspect_ratio_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Aspect ratio"));
+      n_dynamics++;
+    }
+
 
   if (tool_has_angle_dynamics (tool_type))
     {
@@ -385,6 +402,18 @@ tool_has_size_dynamics (GType tool_type)
 }
 
 static gboolean
+tool_has_aspect_ratio_dynamics (GType tool_type)
+{
+  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
+          tool_type == GIMP_TYPE_CLONE_TOOL             ||
+          tool_type == GIMP_TYPE_HEAL_TOOL              ||
+          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
+          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
+          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
+          tool_type == GIMP_TYPE_ERASER_TOOL);
+}
+
+static gboolean
 tool_has_angle_dynamics (GType tool_type)
 {
   return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
@@ -490,6 +519,17 @@ pressure_options_gui (GimpPaintOptions *paint_options,
       column++;
     }
 
+  if (tool_has_aspect_ratio_dynamics (tool_type))
+    {
+      button = dynamics_check_button_new (config, "pressure-aspect_ratio",
+                                          table, column, row);
+
+      g_signal_connect (button, "size-allocate",
+                        G_CALLBACK (dynamics_check_button_size_allocate),
+                        labels[column - 1]);
+      column++;
+     }
+
   if (tool_has_angle_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-angle",
@@ -550,6 +590,13 @@ velocity_options_gui (GimpPaintOptions *paint_options,
                                  table, column++, row);
     }
 
+  if (tool_has_aspect_ratio_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "velocity-aspect-ratio",
+                                 table, column++, row);
+    }
+
+
   if (tool_has_angle_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "velocity-angle",
@@ -599,6 +646,12 @@ direction_options_gui (GimpPaintOptions *paint_options,
   if (tool_has_size_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "direction-size",
+                                 table, column++, row);
+    }
+
+  if (tool_has_aspect_ratio_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "direction-aspect-ratio",
                                  table, column++, row);
     }
 
@@ -655,6 +708,12 @@ tilt_options_gui (GimpPaintOptions *paint_options,
                                  table, column++, row);
     }
 
+if (tool_has_aspect_ratio_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "tilt-aspect-ratio",
+                                 table, column++, row);
+    }
+
   if (tool_has_angle_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "tilt-angle",
@@ -704,6 +763,12 @@ random_options_gui (GimpPaintOptions *paint_options,
   if (tool_has_size_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "random-size",
+                                 table, column++, row);
+    }
+
+  if (tool_has_aspect_ratio_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "random-aspect-ratio",
                                  table, column++, row);
     }
 

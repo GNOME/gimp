@@ -50,8 +50,8 @@ static void  gimp_brush_transform_bounding_box (GimpBrush         *brush,
 
 void
 gimp_brush_real_transform_size (GimpBrush *brush,
-                                gdouble    scale_x,
-                                gdouble    scale_y,
+                                gdouble    scale,
+                                gdouble    aspect_ratio,
                                 gdouble    angle,
                                 gint      *width,
                                 gint      *height)
@@ -59,7 +59,11 @@ gimp_brush_real_transform_size (GimpBrush *brush,
   GimpMatrix3 matrix;
   gint        x, y;
 
-  gimp_brush_transform_matrix (brush, scale_x, scale_y, angle, &matrix);
+  if (aspect_ratio < 1.0)
+    gimp_brush_transform_matrix (brush, scale * aspect_ratio, scale, angle, &matrix);
+  else
+    gimp_brush_transform_matrix (brush, scale, scale / aspect_ratio, angle, &matrix);
+
   gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
 }
 
@@ -88,8 +92,8 @@ gimp_brush_real_transform_size (GimpBrush *brush,
  */
 TempBuf *
 gimp_brush_real_transform_mask (GimpBrush *brush,
-                                gdouble    scale_x,
-                                gdouble    scale_y,
+                                gdouble    scale,
+                                gdouble    aspect_ratio,
                                 gdouble    angle)
 {
   TempBuf      *result;
@@ -157,7 +161,10 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   const guint fraction_bitmask = pow(2, fraction_bits) - 1 ;
 
 
-  gimp_brush_transform_matrix (brush, scale_x, scale_y, angle, &matrix);
+   if (aspect_ratio < 1.0)
+    gimp_brush_transform_matrix (brush, scale * aspect_ratio, scale, angle, &matrix);
+  else
+    gimp_brush_transform_matrix (brush, scale, scale / aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return temp_buf_copy (brush->mask, NULL);
@@ -335,8 +342,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
  */
 TempBuf *
 gimp_brush_real_transform_pixmap (GimpBrush *brush,
-                                  gdouble    scale_x,
-                                  gdouble    scale_y,
+                                  gdouble    scale,
+                                  gdouble    aspect_ratio,
                                   gdouble    angle)
 {
   TempBuf      *result;
@@ -404,7 +411,10 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   const guint fraction_bitmask = pow(2, fraction_bits)- 1 ;
 
 
-  gimp_brush_transform_matrix (brush, scale_x, scale_y, angle, &matrix);
+  if (aspect_ratio < 1.0)
+    gimp_brush_transform_matrix (brush, scale * aspect_ratio, scale, angle, &matrix);
+  else
+    gimp_brush_transform_matrix (brush, scale, scale / aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return temp_buf_copy (brush->pixmap, NULL);

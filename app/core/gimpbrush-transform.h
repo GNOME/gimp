@@ -24,18 +24,18 @@
 /*  virtual functions of GimpBrush, don't call directly  */
 
 void      gimp_brush_real_transform_size   (GimpBrush *brush,
-                                            gdouble    scale_x,
-                                            gdouble    scale_y,
+                                            gdouble    scale,
+                                            gdouble    aspect_ratio,
                                             gdouble    angle,
                                             gint      *scaled_width,
                                             gint      *scaled_height);
 TempBuf * gimp_brush_real_transform_mask   (GimpBrush *brush,
-                                            gdouble    scale_x,
-                                            gdouble    scale_y,
+                                            gdouble    scale,
+                                            gdouble    aspect_ratio,
                                             gdouble    angle);
 TempBuf * gimp_brush_real_transform_pixmap (GimpBrush *brush,
-                                            gdouble    scale_x,
-                                            gdouble    scale_y,
+                                            gdouble    scale,
+                                            gdouble    aspect_ratio,
                                             gdouble    angle);
 
 

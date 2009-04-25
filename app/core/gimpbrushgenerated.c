@@ -66,14 +66,14 @@ static const gchar * gimp_brush_generated_get_extension (GimpData     *data);
 static GimpData    * gimp_brush_generated_duplicate     (GimpData     *data);
 
 static void          gimp_brush_generated_transform_size(GimpBrush    *gbrush,
-                                                         gdouble       scale_x,
-                                                         gdouble       scale_y,
+                                                         gdouble       scale,
+                                                         gdouble       aspect_ratio,
                                                          gdouble       angle,
                                                          gint         *width,
                                                          gint         *height);
 static TempBuf     * gimp_brush_generated_transform_mask(GimpBrush    *gbrush,
-                                                         gdouble       scale_x,
-                                                         gdouble       scale_y,
+                                                         gdouble       scale,
+                                                         gdouble       aspect_ratio,
                                                          gdouble       angle);
 
 static TempBuf     * gimp_brush_generated_calc          (GimpBrushGenerated      *brush,
@@ -290,8 +290,8 @@ gimp_brush_generated_duplicate (GimpData *data)
 
 static void
 gimp_brush_generated_transform_size (GimpBrush *gbrush,
-                                     gdouble    scale_x,
-                                     gdouble    scale_y,
+                                     gdouble    scale,
+                                     gdouble    aspect_ratio,
                                      gdouble    angle,
                                      gint      *width,
                                      gint      *height)
@@ -300,12 +300,22 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
   gint                half_width;
   gint                half_height;
 
+  /* Since generated brushes are symmetric the dont have intput
+   * for aspect ratios  < 1.0. its same as rotate by 90 degrees and
+   * 1 / ratio. So we fix the input up for this case.   */
+
+  if (aspect_ratio < 1.0)
+    {
+      aspect_ratio = 1.0 / aspect_ratio;
+      angle = angle + 0.25;
+    }
+
   gimp_brush_generated_get_half_size (brush,
                                       brush->shape,
-                                      brush->radius * (scale_x + scale_y) / 2,
+                                      brush->radius * scale,
                                       brush->spikes,
                                       brush->hardness,
-                                      brush->aspect_ratio * scale_x / scale_y,
+                                      brush->aspect_ratio / aspect_ratio,
                                       (brush->angle + 360 * angle),
                                       &half_width, &half_height,
                                       NULL, NULL, NULL, NULL);
@@ -316,18 +326,28 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
 
 static TempBuf *
 gimp_brush_generated_transform_mask (GimpBrush *gbrush,
-                                     gdouble    scale_x,
-                                     gdouble    scale_y,
+                                     gdouble    scale,
+                                     gdouble    aspect_ratio,
                                      gdouble    angle)
 {
   GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
 
+  /* Since generated brushes are symmetric the dont have intput
+   * for aspect ratios  < 1.0. its same as rotate by 90 degrees and
+   * 1 / ratio. So we fix the input up for this case.   */
+
+  if (aspect_ratio < 1.0)
+    {
+      aspect_ratio = 1.0 / aspect_ratio;
+      angle = angle + 0.25;
+    }
+
   return gimp_brush_generated_calc (brush,
                                     brush->shape,
-                                    brush->radius * (scale_x + scale_y) / 2,
+                                    brush->radius * scale ,
                                     brush->spikes,
                                     brush->hardness,
-                                    brush->aspect_ratio * scale_x / scale_y,
+                                    brush->aspect_ratio / aspect_ratio,
                                     (brush->angle + 360 * angle),
                                     NULL, NULL);
 }

@@ -276,13 +276,13 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
       if (scale != 1.0)
         {
-          mask_buf = gimp_brush_transform_mask (brush, scale, scale, 0.0);
+          mask_buf = gimp_brush_transform_mask (brush, scale, 1.0, 0.0);
 
           if (! mask_buf)
             mask_buf = temp_buf_new (1, 1, 1, 0, 0, transp);
 
           if (pixmap_buf)
-            pixmap_buf = gimp_brush_transform_pixmap (brush, scale, scale, 0.0);
+            pixmap_buf = gimp_brush_transform_pixmap (brush, scale, 1.0, 0.0);
 
           mask_width  = mask_buf->width;
           mask_height = mask_buf->height;
@@ -457,19 +457,19 @@ gimp_brush_want_null_motion (GimpBrush  *brush,
 
 void
 gimp_brush_transform_size (GimpBrush     *brush,
-                           gdouble        scale_x,
-                           gdouble        scale_y,
+                           gdouble        scale,
+                           gdouble        aspect_ratio,
                            gdouble        angle,
                            gint          *width,
                            gint          *height)
 {
   g_return_if_fail (GIMP_IS_BRUSH (brush));
-  g_return_if_fail (scale_x > 0.0);
-  g_return_if_fail (scale_y > 0.0);
+  g_return_if_fail (scale > 0.0);
+  g_return_if_fail (aspect_ratio > 0.0);
   g_return_if_fail (width != NULL);
   g_return_if_fail (height != NULL);
 
-  if ((scale_x == 1.0) && (scale_y == 1.0) && ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
+  if ((scale == 1.0) && ( aspect_ratio == 1.0) && ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
     {
       *width  = brush->mask->width;
       *height = brush->mask->height;
@@ -477,41 +477,41 @@ gimp_brush_transform_size (GimpBrush     *brush,
       return;
     }
 
-  GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush, scale_x, scale_y, angle, width, height);
+  GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush, scale, aspect_ratio, angle, width, height);
 }
 
 TempBuf *
 gimp_brush_transform_mask (GimpBrush *brush,
-                           gdouble    scale_x,
-                           gdouble    scale_y,
+                           gdouble    scale,
+                           gdouble    aspect_ratio,
                            gdouble    angle)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
-  g_return_val_if_fail (scale_x > 0.0, NULL);
-  g_return_val_if_fail (scale_y > 0.0, NULL);
+  g_return_val_if_fail (scale > 0.0, NULL);
+  g_return_val_if_fail (aspect_ratio > 0.0, NULL);
 
-  if ((scale_x == 1.0) && (scale_y == 1.0) && (angle == 0.0))
+  if ((scale == 1.0) && (aspect_ratio == 1.0) && (angle == 0.0))
     return temp_buf_copy (brush->mask, NULL);
 
-  return GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush, scale_x, scale_y, angle);
+  return GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush, scale, aspect_ratio, angle);
 }
 
 TempBuf *
 gimp_brush_transform_pixmap (GimpBrush *brush,
-                             gdouble    scale_x,
-                             gdouble    scale_y,
+                             gdouble    scale,
+                             gdouble    aspect_ratio,
                              gdouble    angle)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (brush->pixmap != NULL, NULL);
-  g_return_val_if_fail (scale_x > 0.0, NULL);
-  g_return_val_if_fail (scale_y > 0.0, NULL);
+  g_return_val_if_fail (scale > 0.0, NULL);
+  g_return_val_if_fail (aspect_ratio > 0.0, NULL);
 
 
-  if ((scale_x == 1.0) && (scale_y == 1.0) && (angle == 0.0))
+  if ((scale == 1.0) && (aspect_ratio == 1.0) && (angle == 0.0))
     return temp_buf_copy (brush->pixmap, NULL);
 
-  return GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush, scale_x, scale_y, angle);
+  return GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush, scale, aspect_ratio, angle);
 }
 
 TempBuf *

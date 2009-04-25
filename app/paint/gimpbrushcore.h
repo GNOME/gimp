@@ -46,6 +46,7 @@ struct _GimpBrushCore
   gdouble        spacing;
   gdouble        scale;
   gdouble        angle;
+  gdouble        aspect_ratio;
 
   /*  brush buffers  */
   TempBuf       *pressure_brush;
@@ -60,6 +61,7 @@ struct _GimpBrushCore
   gint           last_transform_height;
   gdouble        last_scale;
   gdouble        last_angle;
+  gdouble        last_aspect_ratio;
 
   TempBuf       *transform_pixmap;
   TempBuf       *last_transform_pixmap;

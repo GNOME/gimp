@@ -49,6 +49,10 @@ void   tools_paint_brush_angle_cmd_callback         (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 
+void   tools_paint_brush_aspect_ratio_cmd_callback  (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+
 void   tools_ink_blob_size_cmd_callback             (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
