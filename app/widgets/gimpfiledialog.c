@@ -320,8 +320,11 @@ gimp_file_dialog_new (Gimp                  *gimp,
       break;
 
     case GIMP_FILE_CHOOSER_ACTION_SAVE:
+    case GIMP_FILE_CHOOSER_ACTION_EXPORT:
       gtk_action = GTK_FILE_CHOOSER_ACTION_SAVE;
-      file_procs = gimp->plug_in_manager->save_procs;
+      file_procs = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
+                    gimp->plug_in_manager->save_procs :
+                    gimp->plug_in_manager->export_procs);
       automatic  = _("By Extension");
       automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
@@ -461,6 +464,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                  Gimp           *gimp,
                                  GimpImage      *image,
                                  gboolean        save_a_copy,
+                                 gboolean        export,
                                  gboolean        close_after_saving)
 {
   const gchar *uri = NULL;
@@ -472,6 +476,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
 
   dialog->image              = image;
   dialog->save_a_copy        = save_a_copy;
+  dialog->export             = export;
   dialog->close_after_saving = close_after_saving;
 
   if (save_a_copy)

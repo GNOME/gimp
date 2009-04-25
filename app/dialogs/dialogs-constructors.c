@@ -125,7 +125,7 @@ dialogs_file_save_new (GimpDialogFactory *factory,
                        GimpContext       *context,
                        gint               view_size)
 {
-  return file_save_dialog_new (context->gimp);
+  return file_save_dialog_new (context->gimp, FALSE);
 }
 
 GtkWidget *

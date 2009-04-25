@@ -70,6 +70,8 @@ static gboolean  file_save_dialog_check_uri         (GtkWidget            *save_
 static gboolean  file_save_dialog_uri_will_change   (GimpFileDialog       *dialog,
                                                      Gimp                 *gimp);
 static gchar *   file_save_dialog_get_uri           (GimpFileDialog       *dialog);
+static GSList *  file_save_dialog_get_procs         (GimpFileDialog       *dialog,
+                                                     Gimp                 *gimp);
 static void      file_save_dialog_unknown_ext_msg   (GimpFileDialog       *dialog,
                                                      Gimp                 *gimp);
 static gboolean  file_save_dialog_use_extension     (GtkWidget            *save_dialog,
@@ -79,20 +81,34 @@ static gboolean  file_save_dialog_use_extension     (GtkWidget            *save_
 /*  public functions  */
 
 GtkWidget *
-file_save_dialog_new (Gimp *gimp)
+file_save_dialog_new (Gimp     *gimp,
+                      gboolean  export)
 {
   GtkWidget           *dialog;
   GimpFileDialogState *state;
 
+  if (! export)
+    {
+      dialog = gimp_file_dialog_new (gimp,
+                                     GIMP_FILE_CHOOSER_ACTION_SAVE,
+                                     _("Save Image"), "gimp-file-save",
+                                     GTK_STOCK_SAVE,
+                                     GIMP_HELP_FILE_SAVE);
+
+      state = g_object_get_data (G_OBJECT (gimp), "gimp-file-save-dialog-state");
+    }
+  else
+    {
+      dialog = gimp_file_dialog_new (gimp,
+                                     GIMP_FILE_CHOOSER_ACTION_EXPORT,
+                                     _("Export Image"), "gimp-file-export",
+                                     GTK_STOCK_SAVE,
+                                     GIMP_HELP_FILE_EXPORT);
+
+      state = g_object_get_data (G_OBJECT (gimp), "gimp-file-export-dialog-state");
+    }
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  dialog = gimp_file_dialog_new (gimp,
-                                 GIMP_FILE_CHOOSER_ACTION_SAVE,
-                                 _("Save Image"), "gimp-file-save",
-                                 GTK_STOCK_SAVE,
-                                 GIMP_HELP_FILE_SAVE);
-
-  state = g_object_get_data (G_OBJECT (gimp), "gimp-file-save-dialog-state");
 
   if (state)
     gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
@@ -137,9 +153,18 @@ file_save_dialog_response (GtkWidget *save_dialog,
   GimpPlugInProcedure *save_proc;
   gulong               handler_id;
 
-  g_object_set_data_full (G_OBJECT (gimp), "gimp-file-save-dialog-state",
-                          gimp_file_dialog_get_state (dialog),
-                          (GDestroyNotify) gimp_file_dialog_state_destroy);
+  if (! dialog->export)
+    {
+      g_object_set_data_full (G_OBJECT (gimp), "gimp-file-save-dialog-state",
+                              gimp_file_dialog_get_state (dialog),
+                              (GDestroyNotify) gimp_file_dialog_state_destroy);
+    }
+  else
+    {
+      g_object_set_data_full (G_OBJECT (gimp), "gimp-file-export-dialog-state",
+                              gimp_file_dialog_get_state (dialog),
+                              (GDestroyNotify) gimp_file_dialog_state_destroy);
+    }
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -163,7 +188,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        uri,
                                        save_proc,
                                        GIMP_RUN_INTERACTIVE,
-                                       ! dialog->save_a_copy,
+                                       ! dialog->save_a_copy && ! dialog->export,
                                        FALSE))
         {
           /* Save was successful, now store the URI in a couple of
@@ -183,6 +208,15 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                  GIMP_FILE_SAVE_A_COPY_URI_KEY,
                                  NULL);
             }
+
+          if (! dialog->export)
+            g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                    GIMP_FILE_SAVE_LAST_URI_KEY,
+                                    g_strdup (uri), (GDestroyNotify) g_free);
+          else
+            g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                    GIMP_FILE_EXPORT_LAST_URI_KEY,
+                                    g_strdup (uri), (GDestroyNotify) g_free);
 
           g_object_set_data_full (G_OBJECT (dialog->image->gimp),
                                   GIMP_FILE_SAVE_LAST_URI_KEY,
@@ -251,9 +285,9 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   basename      = file_utils_uri_display_basename (uri);
 
   save_proc     = dialog->file_proc;
-  uri_proc      = file_procedure_find (gimp->plug_in_manager->save_procs,
+  uri_proc      = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
                                        uri, NULL);
-  basename_proc = file_procedure_find (gimp->plug_in_manager->save_procs,
+  basename_proc = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
                                        basename, NULL);
 
   GIMP_LOG (SAVE_DIALOG, "URI = %s", uri);
@@ -301,9 +335,9 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               uri      = ext_uri;
               basename = ext_basename;
 
-              uri_proc      = file_procedure_find (gimp->plug_in_manager->save_procs,
+              uri_proc      = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
                                                     uri, NULL);
-              basename_proc = file_procedure_find (gimp->plug_in_manager->save_procs,
+              basename_proc = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
                                                    basename, NULL);
 
               utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
@@ -501,6 +535,15 @@ file_save_dialog_get_uri (GimpFileDialog *dialog)
     }
 
   return uri;
+}
+
+static GSList *
+file_save_dialog_get_procs (GimpFileDialog *dialog,
+                            Gimp           *gimp)
+{
+  return (! dialog->export ?
+          gimp->plug_in_manager->save_procs :
+          gimp->plug_in_manager->export_procs);
 }
 
 static void

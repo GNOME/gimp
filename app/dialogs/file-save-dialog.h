@@ -19,7 +19,8 @@
 #define __FILE_SAVE_DIALOG_H__
 
 
-GtkWidget * file_save_dialog_new        (Gimp *gimp);
+GtkWidget * file_save_dialog_new        (Gimp                *gimp,
+                                         gboolean             export);
 
 gboolean    file_save_dialog_save_image (GimpProgress        *progress_and_handler,
                                          Gimp                *gimp,

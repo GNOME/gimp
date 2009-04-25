@@ -513,7 +513,7 @@ file_save_dialog_show (Gimp        *gimp,
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
       gimp_file_dialog_set_save_image (GIMP_FILE_DIALOG (dialog),
-                                       gimp, image, save_a_copy,
+                                       gimp, image, save_a_copy, FALSE,
                                        close_after_saving);
 
       gtk_window_present (GTK_WINDOW (dialog));

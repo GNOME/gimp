@@ -24,6 +24,7 @@
 /* Data keys for Gimp */
 #define GIMP_FILE_OPEN_LAST_URI_KEY     "gimp-file-open-last-uri"
 #define GIMP_FILE_SAVE_LAST_URI_KEY     "gimp-file-save-last-uri"
+#define GIMP_FILE_EXPORT_LAST_URI_KEY   "gimp-file-export-last-uri"
 
 /* Data keys for GimpImage */
 #define GIMP_FILE_SAVE_A_COPY_URI_KEY   "gimp-file-save-a-copy-uri"
