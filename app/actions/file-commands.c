@@ -312,16 +312,24 @@ file_revert_cmd_callback (GtkAction *action,
   GimpDisplay *display;
   GimpImage   *image;
   GtkWidget   *dialog;
-  const gchar *uri;
+  const gchar *uri    = NULL;
+  const gchar *source = NULL;
   return_if_no_display (display, data);
 
   image = display->image;
 
   uri = gimp_object_get_name (GIMP_OBJECT (image));
 
+  if (! uri)
+    {
+      uri    = g_object_get_data (G_OBJECT (image),
+                                  GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+      source = uri;
+    }
+
   dialog = g_object_get_data (G_OBJECT (image), REVERT_DATA_KEY);
 
-  if (! uri)
+  if (! uri && ! source)
     {
       gimp_message_literal (image->gimp,
 			    G_OBJECT (display), GIMP_MESSAGE_ERROR,
@@ -360,7 +368,11 @@ file_revert_cmd_callback (GtkAction *action,
                         G_CALLBACK (file_revert_confirm_response),
                         display);
 
-      basename = file_utils_uri_display_basename (uri);
+      if (! source)
+        basename = file_utils_uri_display_basename (uri);
+      else
+        basename = g_strdup (gimp_image_get_uri (image));
+
       filename = file_utils_uri_display_name (uri);
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
@@ -555,6 +567,10 @@ file_revert_confirm_response (GtkWidget   *dialog,
       GError            *error = NULL;
 
       uri = gimp_object_get_name (GIMP_OBJECT (old_image));
+
+      if (! uri)
+        uri = g_object_get_data (G_OBJECT (old_image),
+                                 GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       new_image = file_open_image (gimp, gimp_get_user_context (gimp),
                                    GIMP_PROGRESS (display),
