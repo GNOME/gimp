@@ -33,6 +33,7 @@
 #include "core/gimpviewable.h"
 
 #include "file/file-utils.h"
+#include "file/gimp-file.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
@@ -239,11 +240,17 @@ void
 file_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *image    = action_data_get_image (data);
-  GimpDrawable *drawable = NULL;
+  GimpImage    *image     = action_data_get_image (data);
+  GimpDrawable *drawable  = NULL;
+  const gchar  *export_to = NULL;
+  gchar        *label     = NULL;
 
   if (image)
     drawable = gimp_image_get_active_drawable (image);
+
+  export_to = (image ?
+               g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY) :
+               NULL);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
@@ -251,8 +258,23 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save",             image && drawable);
   SET_SENSITIVE ("file-save-as",          image && drawable);
   SET_SENSITIVE ("file-save-a-copy",      image && drawable);
+  SET_SENSITIVE ("file-revert",           image && (GIMP_OBJECT (image)->name || export_to));
+  SET_SENSITIVE ("file-export",           image && drawable);
+  SET_SENSITIVE ("file-export-to",        export_to);
   SET_SENSITIVE ("file-save-as-template", image);
-  SET_SENSITIVE ("file-revert",           image && GIMP_OBJECT (image)->name);
+
+  if (export_to)
+    {
+      /*  Update file-export-to label */
+      label = g_strdup_printf (_("Export to %s"),
+                               file_utils_uri_display_basename (export_to));
+      gimp_action_group_set_action_label (group, "file-export-to", label);
+      g_free(label);
+    }
+  else
+    {
+      gimp_action_group_set_action_label (group, "file-export-to", _("Export to"));
+    }
 
   /*  needed for the empty display  */
   SET_SENSITIVE ("file-close-all",        image);
