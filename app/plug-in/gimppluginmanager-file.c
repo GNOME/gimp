@@ -26,6 +26,8 @@
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
+#include "file/file-procedure.h"
+
 #include "gimpplugin.h"
 #include "gimpplugindef.h"
 #include "gimppluginmanager.h"
@@ -134,8 +136,16 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
   gimp_plug_in_procedure_set_file_proc (file_proc,
                                         extensions, prefixes, NULL);
 
-  if (! g_slist_find (manager->save_procs, file_proc))
-    manager->save_procs = g_slist_prepend (manager->save_procs, file_proc);
+  if (file_procedure_in_group (file_proc, FILE_PROCEDURE_GROUP_SAVE))
+    {
+      if (! g_slist_find (manager->save_procs, file_proc))
+        manager->save_procs = g_slist_prepend (manager->save_procs, file_proc);
+    }
+  else
+    {
+      if (! g_slist_find (manager->export_procs, file_proc))
+        manager->export_procs = g_slist_prepend (manager->export_procs, file_proc);
+    }
 
   return TRUE;
 }
