@@ -145,6 +145,7 @@ gimp_plug_in_manager_init (GimpPlugInManager *manager)
   manager->plug_in_procedures = NULL;
   manager->load_procs         = NULL;
   manager->save_procs         = NULL;
+  manager->export_procs       = NULL;
 
   manager->current_plug_in    = NULL;
   manager->open_plug_ins      = NULL;
@@ -183,6 +184,12 @@ gimp_plug_in_manager_finalize (GObject *object)
     {
       g_slist_free (manager->save_procs);
       manager->save_procs = NULL;
+    }
+
+  if (manager->export_procs)
+    {
+      g_slist_free (manager->export_procs);
+      manager->export_procs = NULL;
     }
 
   if (manager->plug_in_procedures)
@@ -247,6 +254,7 @@ gimp_plug_in_manager_get_memsize (GimpObject *object,
   memsize += gimp_g_slist_get_memsize (manager->plug_in_procedures, 0);
   memsize += gimp_g_slist_get_memsize (manager->load_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->save_procs, 0);
+  memsize += gimp_g_slist_get_memsize (manager->export_procs, 0);
 
   memsize += gimp_g_slist_get_memsize (manager->menu_branches,  0 /* FIXME */);
   memsize += gimp_g_slist_get_memsize (manager->locale_domains, 0 /* FIXME */);
@@ -361,9 +369,10 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
                 gimp_plug_in_def_remove_procedure (plug_in_def, tmp_proc);
             }
 
-          /* also remove it from the lists of load and save procs */
-          manager->load_procs = g_slist_remove (manager->load_procs, tmp_proc);
-          manager->save_procs = g_slist_remove (manager->save_procs, tmp_proc);
+          /* also remove it from the lists of load, save and export procs */
+          manager->load_procs   = g_slist_remove (manager->load_procs,   tmp_proc);
+          manager->save_procs   = g_slist_remove (manager->save_procs,   tmp_proc);
+          manager->export_procs = g_slist_remove (manager->export_procs, tmp_proc);
 
           /* and from the history */
           gimp_plug_in_manager_history_remove (manager, tmp_proc);
