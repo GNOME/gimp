@@ -283,7 +283,28 @@ file_save_cmd_callback (GtkAction *action,
       break;
 
     case GIMP_SAVE_MODE_EXPORT_TO:
-      /* TODO */
+      {
+        const gchar         *uri;
+        GimpPlugInProcedure *export_proc;
+
+        uri = g_object_get_data (G_OBJECT (image),
+                                       GIMP_FILE_EXPORT_TO_URI_KEY);
+        if (uri)
+          {
+            export_proc =
+              file_procedure_find (image->gimp->plug_in_manager->export_procs,
+                                   uri, NULL);
+          }
+
+        if (uri && export_proc)
+          {
+            saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
+                                                 gimp, image, uri,
+                                                 export_proc,
+                                                 GIMP_RUN_WITH_LAST_VALS,
+                                                 FALSE, TRUE);
+          }
+      }
       break;
     }
 
