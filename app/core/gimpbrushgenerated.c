@@ -315,7 +315,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
                                       brush->radius * scale,
                                       brush->spikes,
                                       brush->hardness,
-                                      brush->aspect_ratio / aspect_ratio,
+                                      brush->aspect_ratio * aspect_ratio,
                                       (brush->angle + 360 * angle),
                                       &half_width, &half_height,
                                       NULL, NULL, NULL, NULL);
@@ -347,7 +347,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                     brush->radius * scale ,
                                     brush->spikes,
                                     brush->hardness,
-                                    brush->aspect_ratio / aspect_ratio,
+                                    brush->aspect_ratio * aspect_ratio,
                                     (brush->angle + 360 * angle),
                                     NULL, NULL);
 }
