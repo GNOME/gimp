@@ -316,8 +316,8 @@ file_save_cmd_callback (GtkAction *action,
 }
 
 void
-file_save_template_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+file_create_template_cmd_callback (GtkAction *action,
+                                   gpointer   data)
 {
   GimpDisplay *display;
   GtkWidget   *dialog;
@@ -326,7 +326,7 @@ file_save_template_cmd_callback (GtkAction *action,
   dialog = gimp_query_string_box (_("Create New Template"),
                                   display->shell,
                                   gimp_standard_help_func,
-                                  GIMP_HELP_FILE_SAVE_AS_TEMPLATE,
+                                  GIMP_HELP_FILE_CREATE_TEMPLATE,
                                   _("Enter a name for this template"),
                                   NULL,
                                   G_OBJECT (display->image), "disconnect",

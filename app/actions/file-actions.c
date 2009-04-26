@@ -86,11 +86,11 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_open_location_cmd_callback),
     GIMP_HELP_FILE_OPEN_LOCATION },
 
-  { "file-save-as-template", NULL,
-    NC_("file-action", "Save as _Template..."), NULL,
+  { "file-create-template", NULL,
+    NC_("file-action", "Create _Template..."), NULL,
     NC_("file-action", "Create a new template from this image"),
-    G_CALLBACK (file_save_template_cmd_callback),
-    GIMP_HELP_FILE_SAVE_AS_TEMPLATE },
+    G_CALLBACK (file_create_template_cmd_callback),
+    GIMP_HELP_FILE_CREATE_TEMPLATE },
 
   { "file-revert", GTK_STOCK_REVERT_TO_SAVED,
     NC_("file-action", "Re_vert"), NULL,
@@ -255,13 +255,13 @@ file_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("file-save",             image && drawable);
-  SET_SENSITIVE ("file-save-as",          image && drawable);
-  SET_SENSITIVE ("file-save-a-copy",      image && drawable);
-  SET_SENSITIVE ("file-revert",           image && (GIMP_OBJECT (image)->name || export_to));
-  SET_SENSITIVE ("file-export",           image && drawable);
-  SET_SENSITIVE ("file-export-to",        export_to);
-  SET_SENSITIVE ("file-save-as-template", image);
+  SET_SENSITIVE ("file-save",            image && drawable);
+  SET_SENSITIVE ("file-save-as",         image && drawable);
+  SET_SENSITIVE ("file-save-a-copy",     image && drawable);
+  SET_SENSITIVE ("file-revert",          image && (GIMP_OBJECT (image)->name || export_to));
+  SET_SENSITIVE ("file-export",          image && drawable);
+  SET_SENSITIVE ("file-export-to",       export_to);
+  SET_SENSITIVE ("file-create-template", image);
 
   if (export_to)
     {

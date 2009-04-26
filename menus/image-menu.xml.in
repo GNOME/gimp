@@ -47,7 +47,7 @@
 	<menuitem action="file-export" />
 	<menuitem action="file-export-to" />
       </placeholder>
-      <menuitem action="file-save-as-template" />
+      <menuitem action="file-create-template" />
       <separator />
       <placeholder name="Send" />
       <separator />
