@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-18 14:50+0100\n"
-"PO-Revision-Date: 2009-03-18 14:52+0100\n"
+"POT-Creation-Date: 2009-04-27 00:42+0200\n"
+"PO-Revision-Date: 2009-04-27 00:43+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2495,19 +2495,19 @@ msgstr "liv.rosso-cr709f"
 
 #: ../plug-ins/common/decompose.c:312 ../plug-ins/common/decompose.c:326
 msgid "Decompose an image into separate colorspace components"
-msgstr "Decompone un'immagine in componenti di spazio colore separati"
+msgstr "Scompone un'immagine in componenti di spazio colore separati"
 
 #: ../plug-ins/common/decompose.c:318 ../plug-ins/common/decompose.c:336
 msgid "_Decompose..."
-msgstr "_Decomponi..."
+msgstr "_Scomponi..."
 
 #: ../plug-ins/common/decompose.c:429
 msgid "Decomposing"
-msgstr "Decomposizione"
+msgstr "Scomposizione"
 
 #: ../plug-ins/common/decompose.c:1480
 msgid "Decompose"
-msgstr "Decomponi"
+msgstr "Scomponi"
 
 #: ../plug-ins/common/decompose.c:1503
 msgid "Extract Channels"
@@ -2515,7 +2515,7 @@ msgstr "Estrazione canali"
 
 #: ../plug-ins/common/decompose.c:1550
 msgid "_Decompose to layers"
-msgstr "_Decomposizione in livelli"
+msgstr "_Scomposizione in livelli"
 
 #: ../plug-ins/common/decompose.c:1561
 msgid "_Foreground as registration color"
