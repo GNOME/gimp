@@ -257,6 +257,9 @@ file_save_invoker (GimpProcedure      *procedure,
   file_proc =
     file_procedure_find (gimp->plug_in_manager->save_procs, uri, error);
 
+  if (! file_proc)
+    file_proc = file_procedure_find (gimp->plug_in_manager->export_procs, uri, error);
+
   g_free (uri);
 
   if (! file_proc)

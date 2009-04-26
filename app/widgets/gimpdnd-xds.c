@@ -141,6 +141,9 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 
   proc = file_procedure_find (image->gimp->plug_in_manager->save_procs, uri,
                               NULL);
+  if (! proc)
+    proc = file_procedure_find (image->gimp->plug_in_manager->export_procs, uri,
+                                NULL);
 
   if (proc)
     {
