@@ -1,3 +1,15 @@
+
+
+
+
+	NOTE: After the migration to git this ChangeLog is no longer used
+	during development. Instead, it will be updated prior to every
+	release based on the git log.
+
+
+
+
+
 2009-04-25  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/dialogs/file-save-dialog.c: Introduce
