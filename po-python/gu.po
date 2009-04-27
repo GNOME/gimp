@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: gimp-python.gimp-2-6.gu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-04-27 05:22+0000\n"
-"PO-Revision-Date: 2009-04-27 11:27+0530\n"
+"PO-Revision-Date: 2009-04-27 12:16+0530\n"
 "Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
 "Language-Team: Gujarati\n"
 "MIME-Version: 1.0\n"
@@ -20,16 +20,16 @@ msgstr ""
 
 #: ../plug-ins/pygimp/gimpfu.py:386
 msgid "Missing exception information"
-msgstr ""
+msgstr "ગુમ થયેલ અપવાદ જાણકારી"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
 #, python-format
 msgid "An error occured running %s"
-msgstr ""
+msgstr "%s ને ચલાવવા દરમ્યાન ભૂલ ઉદ્ભવી"
 
 #: ../plug-ins/pygimp/gimpfu.py:406
 msgid "_More Information"
-msgstr ""
+msgstr "વધારે જાણકારી (_M)"
 
 #: ../plug-ins/pygimp/gimpfu.py:518 ../plug-ins/pygimp/gimpfu.py:530
 #: ../plug-ins/pygimp/gimpfu.py:536
@@ -38,149 +38,148 @@ msgstr "ના"
 
 #: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:536
 msgid "Yes"
-msgstr ""
+msgstr "હા"
 
 #: ../plug-ins/pygimp/gimpfu.py:587 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
-msgstr ""
+msgstr "Python-Fu ફાઇલ પસંદગી"
 
 #: ../plug-ins/pygimp/gimpfu.py:598
 msgid "Python-Fu Folder Selection"
-msgstr ""
+msgstr "Python-Fu ફોલ્ડર પસંદગી"
 
 #: ../plug-ins/pygimp/gimpfu.py:689
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr ""
+msgstr "'%s' માટે અયોગ્ય ઇનપુટ"
 
 #: ../plug-ins/pygimp/gimpui.py:177
-#, fuzzy
 #| msgid "Python Console"
 msgid "Python-Fu Color Selection"
-msgstr "Python કન્સોલ"
+msgstr "Python-Fu રંગ પસંદગી"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
-msgstr ""
+msgstr "રંગ થયેલ XHTML તરીકે સંગ્રહ કરી રહ્યા છે"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
 msgid "Save as colored XHTML"
-msgstr ""
+msgstr "રંગ થયેલ XHTML તરીકે સંગ્રહ કરો"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
 msgid "Colored XHTML"
-msgstr ""
+msgstr "રંગ થયેલ XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Character _source"
-msgstr ""
+msgstr "અક્ષર સ્ત્રોત (_s)"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Source code"
-msgstr ""
+msgstr "સ્ત્રોત કોડ"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Text file"
-msgstr ""
+msgstr "લખાણ ફાઇલ"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
-msgstr ""
+msgstr "પ્રવેશ બોક્સ"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
-msgstr ""
+msgstr "વાંચવા માટે ફાઇલ (_F) અથવા વાપરવા માટે અક્ષરો"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
-msgstr ""
+msgstr "પિક્સેલોમાં ફોન્ટનું માપ (_n)"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
-msgstr ""
+msgstr "અલગ CSS ફાઇલને લખો (_W)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:57
 msgid "Add a layer of fog"
-msgstr ""
+msgstr "ફોગનાં સ્તરને ઉમેરો"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Fog..."
-msgstr ""
+msgstr "ફોગ (_F)..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Layer name"
-msgstr ""
+msgstr "સ્તર નામ (_L)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "Clouds"
-msgstr ""
+msgstr "વાદળો"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Fog color"
-msgstr ""
+msgstr "ફોગ રંગ (_F)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "_Turbulence"
-msgstr ""
+msgstr "તોફાન (_T)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:70
 msgid "Op_acity"
-msgstr ""
+msgstr "અપારદર્શકતા (_a)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
-msgstr ""
+msgstr "તકતીમાં રંગોનો ઓફસેટ"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
-msgstr ""
+msgstr "ઓફસેટ તકતી (_O)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
-msgstr ""
+msgstr "તકતી"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Off_set"
-msgstr ""
+msgstr "ઓફસેટ (_s)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
-msgstr ""
+msgstr "તકતી માં રંગોને ક્રમમાં કરો"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
-msgstr ""
+msgstr "ટૂંકી તકતી (_S)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "Color _model"
-msgstr ""
+msgstr "રંગ મોડેલ (_m)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Channel to _sort"
-msgstr ""
+msgstr "ટૂંકુ કરવા માટે ચેનલ (_s)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
-msgstr ""
+msgstr "લાલ અથવા રંગછટા"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Green or Saturation"
-msgstr ""
+msgstr "લીલો અથવા સંતૃપ્તિ"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "Blue or Value"
-msgstr ""
+msgstr "વાદળી અથવા કિંમત"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
 msgid "_Ascending"
@@ -188,19 +187,19 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
-msgstr ""
+msgstr "તકતી માંથી રંગોની મદદથી વારંવાર વપરાતા ઢાળોને બનાવો"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
-msgstr ""
+msgstr "ઢાળ ને વારંવાર કરવા માટે તકતી (_R)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
-msgstr ""
+msgstr "તકતી માંથી રંગોની મદદથી ઢાળને બનાવો"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
-msgstr ""
+msgstr "ઢાળમાં તકતી (_G)"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
@@ -217,31 +216,31 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Path for HTML export"
-msgstr ""
+msgstr "HTML નિકાસ માટે પાથ"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Filename for export"
-msgstr ""
+msgstr "નિકાસ માટે ફાઇલનામ"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Image name prefix"
-msgstr ""
+msgstr "ચિત્ર નામ ઉપસર્ગ"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Image format"
-msgstr ""
+msgstr "ચિત્ર બંધારણ"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Separate image folder"
-msgstr ""
+msgstr "અલગ ચિત્ર ફોલ્ડર"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Folder for image export"
-msgstr ""
+msgstr "ચિત્ર નિકાસ માટે ફોલ્ડર"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Space between table elements"
-msgstr ""
+msgstr "કોષ્ટક ઘટકો વચ્ચે જગ્યા"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Javascript for onmouseover and clicked"
@@ -262,35 +261,32 @@ msgstr "શોધો (_B)..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:139
 msgid "Python Procedure Browser"
-msgstr ""
+msgstr "Python પ્રક્રિયા બ્રાઉઝર"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:168
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "લખવા માટે '%s' ને ખોલી શકાયુ નહિં: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr ""
+msgstr "'%s' માં લખી શકાયુ નહિં: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:191
-#, fuzzy
 #| msgid "Python Console"
 msgid "Save Python-Fu Console Output"
-msgstr "Python કન્સોલ"
+msgstr "Python-Fu કન્સોલ આઉટપુટને સંગ્રહો"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:217
-#, fuzzy
 #| msgid "Interactive Python Development"
 msgid "Interactive GIMP Python interpreter"
-msgstr "અરસપરસ Python વિકાસ"
+msgstr "અરસપરસ GIMP Python અનુવાદક"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:222
-#, fuzzy
 #| msgid "Python Console"
 msgid "_Console"
-msgstr "Python કન્સોલ"
+msgstr "કન્સોલ (_C)"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
