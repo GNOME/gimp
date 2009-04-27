@@ -31,6 +31,9 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
+#include "core/gimptoolinfo.h"
+
+#include "paint/gimppaintoptions.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
@@ -367,17 +370,20 @@ context_opacity_cmd_callback (GtkAction *action,
                               gint       value,
                               gpointer   data)
 {
-  GimpContext *context;
-  gdouble      opacity;
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
   return_if_no_context (context, data);
 
-  opacity = action_select_value ((GimpActionSelectType) value,
-                                 gimp_context_get_opacity (context),
-                                 GIMP_OPACITY_TRANSPARENT,
-                                 GIMP_OPACITY_OPAQUE,
-                                 GIMP_OPACITY_OPAQUE,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_context_set_opacity (context, opacity);
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_TOOL_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (tool_info->tool_options),
+                              "opacity",
+                              1.0 / 255.0, 0.01, 0.1, FALSE);
+    }
 }
 
 void
@@ -478,17 +484,18 @@ context_brush_spacing_cmd_callback (GtkAction *action,
 {
   GimpContext *context;
   GimpBrush   *brush;
-  gint         spacing;
   return_if_no_context (context, data);
 
   brush = gimp_context_get_brush (context);
-  spacing = gimp_brush_get_spacing (brush);
-  spacing = action_select_value ((GimpActionSelectType) value,
-                                 spacing,
-                                 1.0, 5000.0, 20.0,
-                                 1.0, 5.0, 20.0, 0.0, FALSE);
-  gimp_brush_set_spacing (brush, spacing);
 
+  if (GIMP_IS_BRUSH (brush) && GIMP_DATA (brush)->writable)
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (brush),
+                              "spacing",
+                              1.0, 5.0, 20.0, FALSE);
+    }
 }
 
 void
@@ -574,15 +581,11 @@ context_brush_spikes_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
-      GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
-      gint                spikes;
-
-      spikes = gimp_brush_generated_get_spikes (generated);
-      spikes = action_select_value ((GimpActionSelectType) value,
-                                    spikes,
-                                    2.0, 20.0, 2.0,
-                                    0.0, 1.0, 4.0, 0.0, FALSE);
-      gimp_brush_generated_set_spikes (generated, spikes);
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (brush),
+                              "spikes",
+                              0.0, 1.0, 4.0, FALSE);
     }
 }
 
@@ -599,15 +602,11 @@ context_brush_hardness_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
-      GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
-      gdouble             hardness;
-
-      hardness = gimp_brush_generated_get_hardness (generated);
-      hardness = action_select_value ((GimpActionSelectType) value,
-                                      hardness,
-                                      0.0, 1.0, 1.0,
-                                      0.001, 0.01, 0.1, 0.0, FALSE);
-      gimp_brush_generated_set_hardness (generated, hardness);
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (brush),
+                              "hardness",
+                              0.001, 0.01, 0.1, FALSE);
     }
 }
 
@@ -624,15 +623,11 @@ context_brush_aspect_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
-      GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
-      gdouble             aspect;
-
-      aspect = gimp_brush_generated_get_aspect_ratio (generated);
-      aspect = action_select_value ((GimpActionSelectType) value,
-                                    aspect,
-                                    1.0, 20.0, 1.0,
-                                    0.1, 1.0, 4.0, 0.0, FALSE);
-      gimp_brush_generated_set_aspect_ratio (generated, aspect);
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (brush),
+                              "aspect-ratio",
+                              0.1, 1.0, 4.0, FALSE);
     }
 }
 

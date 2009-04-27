@@ -132,7 +132,8 @@ gimp_brush_class_init (GimpBrushClass *klass)
   klass->spacing_changed           = NULL;
 
   g_object_class_install_property (object_class, PROP_SPACING,
-                                   g_param_spec_double ("spacing", NULL, NULL,
+                                   g_param_spec_double ("spacing", NULL,
+                                                        _("Brush Spacing"),
                                                         1.0, 5000.0, 20.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
