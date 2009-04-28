@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-18 14:46+0100\n"
-"PO-Revision-Date: 2009-03-18 14:48+0100\n"
+"POT-Creation-Date: 2009-04-26 18:39+0200\n"
+"PO-Revision-Date: 2009-04-26 18:39+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -679,12 +679,12 @@ msgid "Blur Radius"
 msgstr "Raggio di sfocatura"
 
 #: ../plug-ins/common/blur-gauss.c:521 ../plug-ins/common/jigsaw.c:2456
-#: ../plug-ins/common/noise-spread.c:383
+#: ../plug-ins/common/noise-spread.c:381
 msgid "_Horizontal:"
 msgstr "_Orizzontale:"
 
 #: ../plug-ins/common/blur-gauss.c:525 ../plug-ins/common/jigsaw.c:2473
-#: ../plug-ins/common/noise-spread.c:387
+#: ../plug-ins/common/noise-spread.c:385
 msgid "_Vertical:"
 msgstr "_Verticale:"
 
@@ -968,7 +968,7 @@ msgstr "Blu"
 #: ../plug-ins/common/color-exchange.c:397 ../plug-ins/common/compose.c:189
 #: ../plug-ins/common/compose.c:200 ../plug-ins/common/diffraction.c:500
 #: ../plug-ins/common/diffraction.c:538 ../plug-ins/common/diffraction.c:576
-#: ../plug-ins/common/noise-rgb.c:530 ../plug-ins/common/noise-rgb.c:537
+#: ../plug-ins/common/noise-rgb.c:531 ../plug-ins/common/noise-rgb.c:538
 msgid "_Red:"
 msgstr "_Rosso:"
 
@@ -976,7 +976,7 @@ msgstr "_Rosso:"
 #: ../plug-ins/common/color-exchange.c:457 ../plug-ins/common/compose.c:190
 #: ../plug-ins/common/compose.c:201 ../plug-ins/common/diffraction.c:509
 #: ../plug-ins/common/diffraction.c:547 ../plug-ins/common/diffraction.c:585
-#: ../plug-ins/common/noise-rgb.c:531 ../plug-ins/common/noise-rgb.c:538
+#: ../plug-ins/common/noise-rgb.c:532 ../plug-ins/common/noise-rgb.c:539
 msgid "_Green:"
 msgstr "_Verde:"
 
@@ -984,7 +984,7 @@ msgstr "_Verde:"
 #: ../plug-ins/common/color-exchange.c:518 ../plug-ins/common/compose.c:191
 #: ../plug-ins/common/compose.c:202 ../plug-ins/common/diffraction.c:518
 #: ../plug-ins/common/diffraction.c:556 ../plug-ins/common/diffraction.c:594
-#: ../plug-ins/common/noise-rgb.c:532 ../plug-ins/common/noise-rgb.c:539
+#: ../plug-ins/common/noise-rgb.c:533 ../plug-ins/common/noise-rgb.c:540
 msgid "_Blue:"
 msgstr "_Blu:"
 
@@ -1023,7 +1023,6 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/file-ico/ico-load.c:731 ../plug-ins/file-jpeg/jpeg-load.c:108
 #: ../plug-ins/file-jpeg/jpeg-load.c:830 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:189
 #: ../plug-ins/file-xjt/xjt.c:2540 ../plug-ins/file-xjt/xjt.c:2548
 #: ../plug-ins/flame/flame.c:411
@@ -1060,7 +1059,6 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/file-bmp/bmp-write.c:295 ../plug-ins/file-fits/fits.c:475
 #: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:329 ../plug-ins/file-psd/psd-save.c:1637
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:282
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:162
 #: ../plug-ins/file-xjt/xjt.c:1291 ../plug-ins/file-xjt/xjt.c:1726
 #: ../plug-ins/flame/flame.c:442
@@ -1743,8 +1741,8 @@ msgstr "RGB"
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:203 ../plug-ins/common/noise-rgb.c:525
-#: ../plug-ins/common/noise-rgb.c:540
+#: ../plug-ins/common/compose.c:203 ../plug-ins/common/noise-rgb.c:526
+#: ../plug-ins/common/noise-rgb.c:541
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
@@ -2061,7 +2059,7 @@ msgid "E_xtend"
 msgstr "_Estendi"
 
 #: ../plug-ins/common/convolution-matrix.c:73
-#: ../plug-ins/common/displace.c:471 ../plug-ins/common/edge.c:708
+#: ../plug-ins/common/displace.c:471 ../plug-ins/common/edge.c:704
 #: ../plug-ins/common/fractal-trace.c:735 ../plug-ins/common/ripple.c:581
 msgid "_Wrap"
 msgstr "_Avvolgi"
@@ -2500,19 +2498,19 @@ msgstr "liv.rosso-cr709f"
 
 #: ../plug-ins/common/decompose.c:311 ../plug-ins/common/decompose.c:325
 msgid "Decompose an image into separate colorspace components"
-msgstr "Decompone un'immagine in componenti di spazio colore separati"
+msgstr "Scompone un'immagine in componenti di spazio colore separati"
 
 #: ../plug-ins/common/decompose.c:317 ../plug-ins/common/decompose.c:335
 msgid "_Decompose..."
-msgstr "_Decomponi..."
+msgstr "_Scomponi..."
 
 #: ../plug-ins/common/decompose.c:428
 msgid "Decomposing"
-msgstr "Decomposizione"
+msgstr "Scomposizione"
 
 #: ../plug-ins/common/decompose.c:1479
 msgid "Decompose"
-msgstr "Decomponi"
+msgstr "Scomponi"
 
 #: ../plug-ins/common/decompose.c:1502
 msgid "Extract Channels"
@@ -2520,7 +2518,7 @@ msgstr "Estrazione canali"
 
 #: ../plug-ins/common/decompose.c:1549
 msgid "_Decompose to layers"
-msgstr "_Decomposizione in livelli"
+msgstr "_Scomposizione in livelli"
 
 #: ../plug-ins/common/decompose.c:1560
 msgid "_Foreground as registration color"
@@ -2773,12 +2771,12 @@ msgstr "_Polare"
 msgid "Edge Behavior"
 msgstr "Comportamento contorni"
 
-#: ../plug-ins/common/displace.c:473 ../plug-ins/common/edge.c:721
+#: ../plug-ins/common/displace.c:473 ../plug-ins/common/edge.c:717
 #: ../plug-ins/common/ripple.c:582 ../plug-ins/common/waves.c:281
 msgid "_Smear"
 msgstr "_Macchia"
 
-#: ../plug-ins/common/displace.c:475 ../plug-ins/common/edge.c:734
+#: ../plug-ins/common/displace.c:475 ../plug-ins/common/edge.c:730
 #: ../plug-ins/common/fractal-trace.c:739 ../plug-ins/common/newsprint.c:397
 msgid "_Black"
 msgstr "_Nero"
@@ -2819,7 +2817,7 @@ msgstr "Rilevamento contorni ad alta risoluzione"
 msgid "_Laplace"
 msgstr "_Laplace..."
 
-#: ../plug-ins/common/edge-laplace.c:242 ../plug-ins/common/edge.c:672
+#: ../plug-ins/common/edge-laplace.c:242 ../plug-ins/common/edge.c:668
 msgid "Laplace"
 msgstr "Laplace"
 
@@ -2875,47 +2873,47 @@ msgstr "_Tieni conto dei risultati (solo una direzione)"
 msgid "Sobel edge detecting"
 msgstr "Rilevamento contorni Sobel"
 
-#: ../plug-ins/common/edge.c:151
+#: ../plug-ins/common/edge.c:147
 msgid "Several simple methods for detecting edges"
 msgstr "Diversi semplici metodi di rilevamento contorni"
 
-#: ../plug-ins/common/edge.c:156
+#: ../plug-ins/common/edge.c:152
 msgid "_Edge..."
 msgstr "_Contorni..."
 
-#: ../plug-ins/common/edge.c:228
+#: ../plug-ins/common/edge.c:224
 msgid "Edge detection"
 msgstr "Rilevamento contorni"
 
-#: ../plug-ins/common/edge.c:632
+#: ../plug-ins/common/edge.c:628
 msgid "Edge Detection"
 msgstr "Rilevamento contorni"
 
-#: ../plug-ins/common/edge.c:667
+#: ../plug-ins/common/edge.c:663
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../plug-ins/common/edge.c:668
+#: ../plug-ins/common/edge.c:664
 msgid "Prewitt compass"
 msgstr "Bussola Prewitt"
 
-#: ../plug-ins/common/edge.c:669 ../plug-ins/common/sinus.c:903
+#: ../plug-ins/common/edge.c:665 ../plug-ins/common/sinus.c:903
 msgid "Gradient"
 msgstr "Gradiente"
 
-#: ../plug-ins/common/edge.c:670
+#: ../plug-ins/common/edge.c:666
 msgid "Roberts"
 msgstr "Roberts"
 
-#: ../plug-ins/common/edge.c:671
+#: ../plug-ins/common/edge.c:667
 msgid "Differential"
 msgstr "Differenziale"
 
-#: ../plug-ins/common/edge.c:681
+#: ../plug-ins/common/edge.c:677
 msgid "_Algorithm:"
 msgstr "_Algoritmo:"
 
-#: ../plug-ins/common/edge.c:689
+#: ../plug-ins/common/edge.c:685
 msgid "A_mount:"
 msgstr "_Quantità:"
 
@@ -5535,43 +5533,43 @@ msgstr "_Rendi il contorno trasparente"
 msgid "_Lens refraction index:"
 msgstr "Indice di rifrazione _lente:"
 
-#: ../plug-ins/common/lens-distortion.c:114
+#: ../plug-ins/common/lens-distortion.c:112
 msgid "Corrects lens distortion"
 msgstr "Correzione distorsione lente"
 
-#: ../plug-ins/common/lens-distortion.c:119
+#: ../plug-ins/common/lens-distortion.c:117
 msgid "Lens Distortion..."
 msgstr "Distorsione lente..."
 
-#: ../plug-ins/common/lens-distortion.c:382
+#: ../plug-ins/common/lens-distortion.c:380
 msgid "Lens distortion"
 msgstr "Distorsione lente"
 
-#: ../plug-ins/common/lens-distortion.c:482
+#: ../plug-ins/common/lens-distortion.c:480
 msgid "Lens Distortion"
 msgstr "Distorsione lente"
 
-#: ../plug-ins/common/lens-distortion.c:520
+#: ../plug-ins/common/lens-distortion.c:518
 msgid "_Main:"
 msgstr "_Principale:"
 
-#: ../plug-ins/common/lens-distortion.c:534
+#: ../plug-ins/common/lens-distortion.c:532
 msgid "_Edge:"
 msgstr "_Margine:"
 
-#: ../plug-ins/common/lens-distortion.c:548 ../plug-ins/flame/flame.c:1236
+#: ../plug-ins/common/lens-distortion.c:546 ../plug-ins/flame/flame.c:1236
 msgid "_Zoom:"
 msgstr "_Zoom:"
 
-#: ../plug-ins/common/lens-distortion.c:562
+#: ../plug-ins/common/lens-distortion.c:560
 msgid "_Brighten:"
 msgstr "_Brillantezza:"
 
-#: ../plug-ins/common/lens-distortion.c:576
+#: ../plug-ins/common/lens-distortion.c:574
 msgid "_X shift:"
 msgstr "Spostamento _X:"
 
-#: ../plug-ins/common/lens-distortion.c:590
+#: ../plug-ins/common/lens-distortion.c:588
 msgid "_Y shift:"
 msgstr "Spostamento _Y:"
 
@@ -5981,35 +5979,35 @@ msgstr "Rip_etizioni:"
 msgid "Number of times to apply filter"
 msgstr "Numero di applicazioni del filtro"
 
-#: ../plug-ins/common/noise-rgb.c:143
+#: ../plug-ins/common/noise-rgb.c:144
 msgid "Distort colors by random amounts"
 msgstr "Distorce i colori di quantità casuali"
 
-#: ../plug-ins/common/noise-rgb.c:153
+#: ../plug-ins/common/noise-rgb.c:154
 msgid "_RGB Noise..."
 msgstr "Disturbo _RGB..."
 
-#: ../plug-ins/common/noise-rgb.c:281
+#: ../plug-ins/common/noise-rgb.c:282
 msgid "Adding noise"
 msgstr "Aggiunta disturbo"
 
-#: ../plug-ins/common/noise-rgb.c:448
+#: ../plug-ins/common/noise-rgb.c:449
 msgid "RGB Noise"
 msgstr "Disturbo RGB"
 
-#: ../plug-ins/common/noise-rgb.c:481
+#: ../plug-ins/common/noise-rgb.c:482
 msgid "Co_rrelated noise"
 msgstr "Disturbo co_rrelato"
 
-#: ../plug-ins/common/noise-rgb.c:496
+#: ../plug-ins/common/noise-rgb.c:497
 msgid "_Independent RGB"
 msgstr "RGB _indipendente"
 
-#: ../plug-ins/common/noise-rgb.c:520 ../plug-ins/common/noise-rgb.c:524
+#: ../plug-ins/common/noise-rgb.c:521 ../plug-ins/common/noise-rgb.c:525
 msgid "_Gray:"
 msgstr "_Grigio:"
 
-#: ../plug-ins/common/noise-rgb.c:550
+#: ../plug-ins/common/noise-rgb.c:551
 #, c-format
 msgid "Channel #%d:"
 msgstr "Canale #%d:"
@@ -6049,23 +6047,23 @@ msgstr "Dimensione _X:"
 msgid "_Y size:"
 msgstr "Dimensione _Y:"
 
-#: ../plug-ins/common/noise-spread.c:88
+#: ../plug-ins/common/noise-spread.c:86
 msgid "Move pixels around randomly"
 msgstr "Sposta i pixel attorno casualmente"
 
-#: ../plug-ins/common/noise-spread.c:97
+#: ../plug-ins/common/noise-spread.c:95
 msgid "Sp_read..."
 msgstr "Di_ffusione..."
 
-#: ../plug-ins/common/noise-spread.c:180
+#: ../plug-ins/common/noise-spread.c:178
 msgid "Spreading"
 msgstr "Diffusione"
 
-#: ../plug-ins/common/noise-spread.c:343
+#: ../plug-ins/common/noise-spread.c:341
 msgid "Spread"
 msgstr "Diffusione"
 
-#: ../plug-ins/common/noise-spread.c:368
+#: ../plug-ins/common/noise-spread.c:366
 msgid "Spread Amount"
 msgstr "Ammontare della diffusione"
 
@@ -8580,62 +8578,43 @@ msgstr ""
 "RLE aggressiva\n"
 "(non supportata da SGI)"
 
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:162
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:128
-#: ../plug-ins/file-uri/uri-backend-wget.c:302
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:234
 #, c-format
-msgid "Downloading %s of image data"
-msgstr "Scaricamento %s di dati immagine"
+msgid "Downloading image (%s of %s)"
+msgstr "Scaricamento immagine (%s di %s)"
 
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:163
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:224
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:238
+#, c-format
+msgid "Uploading image (%s of %s)"
+msgstr "Caricamento immagine (%s di %s)"
+
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:260
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:135
 #: ../plug-ins/file-uri/uri-backend-wget.c:345
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Scaricato %s di dati immagine"
 
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:181
-#, c-format
-msgid "Uploading %s of image data"
-msgstr "Caricamento %s di dati immagine"
-
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:182
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:228
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:264
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Caricato %s di dati immagine"
 
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:252
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:295
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:318
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:157
 #: ../plug-ins/file-uri/uri-backend-wget.c:194
 msgid "Connecting to server"
 msgstr "Connessione al server"
 
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:311
-#, c-format
-msgid "Failed to read %s from '%s': %s"
-msgstr "Fallita la lettura di %s da '%s': %s"
-
-#: ../plug-ins/file-uri/uri-backend-gnomevfs.c:360
-#, c-format
-msgid "Failed to write %s to '%s': %s"
-msgstr "Fallita la scrittura di %s su '%s': %s"
-
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:198
-#, c-format
-msgid "Downloading image (%s of %s)"
-msgstr "Scaricamento immagine (%s di %s)"
-
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:202
-#, c-format
-msgid "Uploading image (%s of %s)"
-msgstr "Caricamento immagine (%s di %s)"
-
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:59
 msgid "Could not initialize libcurl"
 msgstr "Impossibile inizializzare libcurl"
+
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:128
+#: ../plug-ins/file-uri/uri-backend-wget.c:302
+#, c-format
+msgid "Downloading %s of image data"
+msgstr "Scaricamento %s di dati immagine"
 
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:201
 #, c-format
@@ -12446,3 +12425,12 @@ msgstr "Immagine _schermo..."
 #: ../plug-ins/win-snap/winsnap.c:1141
 msgid "No data captured"
 msgstr "Nessun dato catturato"
+
+#~ msgid "Uploading %s of image data"
+#~ msgstr "Caricamento %s di dati immagine"
+
+#~ msgid "Failed to read %s from '%s': %s"
+#~ msgstr "Fallita la lettura di %s da '%s': %s"
+
+#~ msgid "Failed to write %s to '%s': %s"
+#~ msgstr "Fallita la scrittura di %s su '%s': %s"
