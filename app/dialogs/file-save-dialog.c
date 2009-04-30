@@ -37,6 +37,7 @@
 #include "file/file-procedure.h"
 #include "file/file-save.h"
 #include "file/file-utils.h"
+#include "file/gimpfile.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpfiledialog.h"
@@ -96,7 +97,7 @@ file_save_dialog_new (Gimp *gimp)
   if (state)
     gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
 
-  uri = g_object_get_data (G_OBJECT (gimp), "gimp-file-save-last-uri");
+  uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_SAVE_LAST_URI_KEY);
 
   if (uri)
     {
@@ -498,7 +499,7 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
                       GIMP_RUN_INTERACTIVE, save_a_copy, &error);
 
   if (status == GIMP_PDB_SUCCESS)
-    g_object_set_data_full (G_OBJECT (image->gimp), "gimp-file-save-last-uri",
+    g_object_set_data_full (G_OBJECT (image->gimp), GIMP_FILE_SAVE_LAST_URI_KEY,
                             g_strdup (uri), (GDestroyNotify) g_free);
 
   g_object_unref (image);

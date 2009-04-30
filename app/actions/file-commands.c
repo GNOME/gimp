@@ -40,6 +40,7 @@
 #include "file/file-procedure.h"
 #include "file/file-save.h"
 #include "file/file-utils.h"
+#include "file/gimpfile.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
@@ -440,7 +441,7 @@ file_open_dialog_show (Gimp        *gimp,
         uri = gimp_object_get_name (GIMP_OBJECT (image));
 
       if (! uri)
-        uri = g_object_get_data (G_OBJECT (gimp), "gimp-file-open-last-uri");
+        uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_URI_KEY);
 
       if (uri)
         gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);

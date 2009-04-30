@@ -37,6 +37,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "file/file-utils.h"
+#include "file/gimpfile.h"
 
 #include "pdb/gimppdb.h"
 
@@ -469,7 +470,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
   dialog->close_after_saving = close_after_saving;
 
   if (save_a_copy)
-    uri = g_object_get_data (G_OBJECT (image), "gimp-file-save-a-copy-uri");
+    uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_SAVE_A_COPY_URI_KEY);
 
   if (! uri)
     uri = gimp_image_get_uri (image);

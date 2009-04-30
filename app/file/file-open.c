@@ -68,6 +68,7 @@
 #include "file-open.h"
 #include "file-procedure.h"
 #include "file-utils.h"
+#include "gimpfile.h"
 
 #include "gimp-intl.h"
 
@@ -543,7 +544,7 @@ file_open_from_command_line (Gimp        *gimp,
         {
           success = TRUE;
 
-          g_object_set_data_full (G_OBJECT (gimp), "gimp-file-open-last-uri",
+          g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_URI_KEY,
                                   uri, (GDestroyNotify) g_free);
         }
       else if (status != GIMP_PDB_CANCEL)

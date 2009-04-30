@@ -22,6 +22,7 @@ libappfile_a_SOURCES = \
 	file-save.c		\
 	file-save.h		\
 	file-utils.c		\
-	file-utils.h
+	file-utils.h		\
+	gimpfile.h
 
 EXTRA_DIST = makefile.msc

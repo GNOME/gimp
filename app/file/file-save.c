@@ -59,6 +59,7 @@
 
 #include "file-save.h"
 #include "file-utils.h"
+#include "gimpfile.h"
 
 #include "gimp-intl.h"
 
@@ -155,7 +156,7 @@ file_save (GimpImage           *image,
       if (save_a_copy)
         {
           /*  remember the "save-a-copy" filename for the next invocation  */
-          g_object_set_data_full (G_OBJECT (image), "gimp-file-save-a-copy-uri",
+          g_object_set_data_full (G_OBJECT (image), GIMP_FILE_SAVE_A_COPY_URI_KEY,
                                   g_strdup (uri),
                                   (GDestroyNotify) g_free);
         }
@@ -164,7 +165,7 @@ file_save (GimpImage           *image,
           /*  reset the "save-a-copy" filename when the image URI changes  */
           if (strcmp (uri, gimp_image_get_uri (image)))
             g_object_set_data (G_OBJECT (image),
-                               "gimp-file-save-a-copy-uri", NULL);
+                               GIMP_FILE_SAVE_A_COPY_URI_KEY, NULL);
 
           gimp_image_set_uri (image, uri);
           gimp_image_set_save_proc (image, file_proc);

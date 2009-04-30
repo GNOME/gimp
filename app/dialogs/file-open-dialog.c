@@ -35,6 +35,7 @@
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
+#include "file/gimpfile.h"
 
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
@@ -119,7 +120,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
   uris = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (open_dialog));
 
   if (uris)
-    g_object_set_data_full (G_OBJECT (gimp), "gimp-file-open-last-uri",
+    g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_URI_KEY,
                             g_strdup (uris->data), (GDestroyNotify) g_free);
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
