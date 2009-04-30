@@ -155,7 +155,7 @@ file_save (GimpImage           *image,
       if (save_a_copy)
         {
           /*  remember the "save-a-copy" filename for the next invocation  */
-          g_object_set_data_full (G_OBJECT (image), "gimp-image-save-a-copy",
+          g_object_set_data_full (G_OBJECT (image), "gimp-file-save-a-copy-uri",
                                   g_strdup (uri),
                                   (GDestroyNotify) g_free);
         }
@@ -164,7 +164,7 @@ file_save (GimpImage           *image,
           /*  reset the "save-a-copy" filename when the image URI changes  */
           if (strcmp (uri, gimp_image_get_uri (image)))
             g_object_set_data (G_OBJECT (image),
-                               "gimp-image-save-a-copy", NULL);
+                               "gimp-file-save-a-copy-uri", NULL);
 
           gimp_image_set_uri (image, uri);
           gimp_image_set_save_proc (image, file_proc);

@@ -469,7 +469,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
   dialog->close_after_saving = close_after_saving;
 
   if (save_a_copy)
-    uri = g_object_get_data (G_OBJECT (image), "gimp-image-save-a-copy");
+    uri = g_object_get_data (G_OBJECT (image), "gimp-file-save-a-copy-uri");
 
   if (! uri)
     uri = gimp_image_get_uri (image);
