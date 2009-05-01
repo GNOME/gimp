@@ -82,6 +82,7 @@ void        gimp_file_dialog_set_open_image (GimpFileDialog       *dialog,
                                              GimpImage            *image,
                                              gboolean              open_as_layers);
 void        gimp_file_dialog_set_save_image (GimpFileDialog       *dialog,
+                                             Gimp                 *gimp,
                                              GimpImage            *image,
                                              gboolean              save_a_copy,
                                              gboolean              close_after_saving);

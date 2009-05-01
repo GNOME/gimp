@@ -71,7 +71,8 @@ static void     file_open_dialog_show        (Gimp                *gimp,
                                               GimpImage           *image,
                                               const gchar         *uri,
                                               gboolean             open_as_layers);
-static void     file_save_dialog_show        (GimpImage           *image,
+static void     file_save_dialog_show        (Gimp                *gimp,
+                                              GimpImage           *image,
                                               GtkWidget           *parent,
                                               const gchar         *title,
                                               gboolean             save_a_copy,
@@ -205,12 +206,14 @@ file_save_cmd_callback (GtkAction *action,
                         gint       value,
                         gpointer   data)
 {
+  Gimp         *gimp;
   GimpDisplay  *display;
   GimpImage    *image;
   GtkWidget    *widget;
   GimpSaveMode  save_mode;
   const gchar  *uri;
   gboolean      saved = FALSE;
+  return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
@@ -263,13 +266,13 @@ file_save_cmd_callback (GtkAction *action,
         }
 
     case GIMP_SAVE_MODE_SAVE_AS:
-      file_save_dialog_show (display->image, widget,
+      file_save_dialog_show (gimp, display->image, widget,
                              _("Save Image"), FALSE,
                              save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE);
       break;
 
     case GIMP_SAVE_MODE_SAVE_A_COPY:
-      file_save_dialog_show (display->image, widget,
+      file_save_dialog_show (gimp, display->image, widget,
                              _("Save a Copy of the Image"), TRUE,
                              FALSE);
       break;
@@ -460,7 +463,8 @@ file_open_dialog_show (Gimp        *gimp,
 }
 
 static void
-file_save_dialog_show (GimpImage   *image,
+file_save_dialog_show (Gimp        *gimp,
+                       GimpImage   *image,
                        GtkWidget   *parent,
                        const gchar *title,
                        gboolean     save_a_copy,
@@ -496,7 +500,8 @@ file_save_dialog_show (GimpImage   *image,
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
       gimp_file_dialog_set_save_image (GIMP_FILE_DIALOG (dialog),
-                                       image, save_a_copy, close_after_saving);
+                                       gimp, image, save_a_copy,
+                                       close_after_saving);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }

@@ -82,7 +82,6 @@ file_save_dialog_new (Gimp *gimp)
 {
   GtkWidget           *dialog;
   GimpFileDialogState *state;
-  const gchar         *uri;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -96,14 +95,6 @@ file_save_dialog_new (Gimp *gimp)
 
   if (state)
     gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
-
-  uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_SAVE_LAST_URI_KEY);
-
-  if (uri)
-    {
-      gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
-      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), "");
-    }
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_save_dialog_response),
