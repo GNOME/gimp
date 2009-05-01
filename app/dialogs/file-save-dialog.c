@@ -37,7 +37,7 @@
 #include "file/file-procedure.h"
 #include "file/file-save.h"
 #include "file/file-utils.h"
-#include "file/gimpfile.h"
+#include "file/gimp-file.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpfiledialog.h"

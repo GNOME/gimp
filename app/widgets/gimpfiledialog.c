@@ -37,7 +37,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "file/file-utils.h"
-#include "file/gimpfile.h"
+#include "file/gimp-file.h"
 
 #include "pdb/gimppdb.h"
 

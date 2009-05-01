@@ -35,7 +35,7 @@
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
-#include "file/gimpfile.h"
+#include "file/gimp-file.h"
 
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"

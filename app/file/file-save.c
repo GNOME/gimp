@@ -59,7 +59,7 @@
 
 #include "file-save.h"
 #include "file-utils.h"
-#include "gimpfile.h"
+#include "gimp-file.h"
 
 #include "gimp-intl.h"
 

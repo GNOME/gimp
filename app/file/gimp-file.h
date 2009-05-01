@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * file.h
+ * gimp-file.h
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __FILE_H__
-#define __FILE_H__
+#ifndef __GIMP_FILE_H__
+#define __GIMP_FILE_H__
 
 
 #define GIMP_FILE_SAVE_LAST_URI_KEY   "gimp-file-save-last-uri"
@@ -27,4 +27,4 @@
 #define GIMP_FILE_SAVE_A_COPY_URI_KEY "gimp-file-save-a-copy-uri"
 
 
-#endif /* __FILE_H__ */
+#endif /* __GIMP_FILE_H__ */

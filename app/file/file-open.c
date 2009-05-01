@@ -68,7 +68,7 @@
 #include "file-open.h"
 #include "file-procedure.h"
 #include "file-utils.h"
-#include "gimpfile.h"
+#include "gimp-file.h"
 
 #include "gimp-intl.h"
 
