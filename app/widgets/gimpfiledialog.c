@@ -62,55 +62,56 @@ struct _GimpFileDialogState
 };
 
 
-static void     gimp_file_dialog_progress_iface_init (GimpProgressInterface *iface);
+static void     gimp_file_dialog_progress_iface_init    (GimpProgressInterface *iface);
 
-static void     gimp_file_dialog_destroy             (GtkObject        *object);
-static gboolean gimp_file_dialog_delete_event        (GtkWidget        *widget,
-                                                      GdkEventAny      *event);
-static void     gimp_file_dialog_response            (GtkDialog        *dialog,
-                                                      gint              response_id);
-
+static void     gimp_file_dialog_destroy                (GtkObject        *object);
+static gboolean gimp_file_dialog_delete_event           (GtkWidget        *widget,
+                                                         GdkEventAny      *event);
+static void     gimp_file_dialog_response               (GtkDialog        *dialog,
+                                                         gint              response_id);
 static GimpProgress *
-                    gimp_file_dialog_progress_start  (GimpProgress     *progress,
-                                                      const gchar      *message,
-                                                      gboolean          cancelable);
-static void     gimp_file_dialog_progress_end        (GimpProgress     *progress);
-static gboolean gimp_file_dialog_progress_is_active  (GimpProgress     *progress);
-static void     gimp_file_dialog_progress_set_text   (GimpProgress     *progress,
-                                                      const gchar      *message);
-static void     gimp_file_dialog_progress_set_value  (GimpProgress     *progress,
-                                                      gdouble           percentage);
-static gdouble  gimp_file_dialog_progress_get_value  (GimpProgress     *progress);
-static void     gimp_file_dialog_progress_pulse      (GimpProgress     *progress);
-static guint32  gimp_file_dialog_progress_get_window (GimpProgress     *progress);
+                gimp_file_dialog_progress_start         (GimpProgress     *progress,
+                                                         const gchar      *message,
+                                                         gboolean          cancelable);
+static void     gimp_file_dialog_progress_end           (GimpProgress     *progress);
+static gboolean gimp_file_dialog_progress_is_active     (GimpProgress     *progress);
+static void     gimp_file_dialog_progress_set_text      (GimpProgress     *progress,
+                                                         const gchar      *message);
+static void     gimp_file_dialog_progress_set_value     (GimpProgress     *progress,
+                                                         gdouble           percentage);
+static gdouble  gimp_file_dialog_progress_get_value     (GimpProgress     *progress);
+static void     gimp_file_dialog_progress_pulse         (GimpProgress     *progress);
+static guint32  gimp_file_dialog_progress_get_window    (GimpProgress     *progress);
 
-static void     gimp_file_dialog_add_user_dir        (GimpFileDialog   *dialog,
-                                                      GUserDirectory    directory);
-static void     gimp_file_dialog_add_preview         (GimpFileDialog   *dialog,
-                                                      Gimp             *gimp);
-static void     gimp_file_dialog_add_filters         (GimpFileDialog   *dialog,
-                                                      Gimp             *gimp,
-                                                      GSList           *file_procs);
-static void     gimp_file_dialog_add_proc_selection  (GimpFileDialog   *dialog,
-                                                      Gimp             *gimp,
-                                                      GSList           *file_procs,
-                                                      const gchar      *automatic,
-                                                      const gchar      *automatic_help_id);
+static void     gimp_file_dialog_add_user_dir           (GimpFileDialog   *dialog,
+                                                         GUserDirectory    directory);
+static void     gimp_file_dialog_add_preview            (GimpFileDialog   *dialog,
+                                                         Gimp             *gimp);
+static void     gimp_file_dialog_add_filters            (GimpFileDialog   *dialog,
+                                                         Gimp             *gimp,
+                                                         GSList           *file_procs);
+static void     gimp_file_dialog_add_proc_selection     (GimpFileDialog   *dialog,
+                                                         Gimp             *gimp,
+                                                         GSList           *file_procs,
+                                                         const gchar      *automatic,
+                                                         const gchar      *automatic_help_id);
 
-static void     gimp_file_dialog_selection_changed   (GtkFileChooser   *chooser,
-                                                      GimpFileDialog   *dialog);
-static void     gimp_file_dialog_update_preview      (GtkFileChooser   *chooser,
-                                                      GimpFileDialog   *dialog);
+static void     gimp_file_dialog_selection_changed      (GtkFileChooser   *chooser,
+                                                         GimpFileDialog   *dialog);
+static void     gimp_file_dialog_update_preview         (GtkFileChooser   *chooser,
+                                                         GimpFileDialog   *dialog);
 
-static void     gimp_file_dialog_proc_changed        (GimpFileProcView *view,
-                                                      GimpFileDialog   *dialog);
+static void     gimp_file_dialog_proc_changed           (GimpFileProcView *view,
+                                                         GimpFileDialog   *dialog);
 
-static void     gimp_file_dialog_help_func           (const gchar      *help_id,
-                                                      gpointer          help_data);
-static void     gimp_file_dialog_help_clicked        (GtkWidget        *widget,
-                                                      gpointer          dialog);
+static void     gimp_file_dialog_help_func              (const gchar      *help_id,
+                                                         gpointer          help_data);
+static void     gimp_file_dialog_help_clicked           (GtkWidget        *widget,
+                                                         gpointer          dialog);
 
 static gchar  * gimp_file_dialog_pattern_from_extension (const gchar   *extension);
+static gchar  * gimp_file_dialog_get_dirname_from_uri   (const gchar   *uri);
+
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
@@ -478,51 +479,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
 
   gimp_file_dialog_set_file_proc (dialog, NULL);
 
-#ifndef G_OS_WIN32
-  dirname  = g_path_get_dirname (uri);
-#else
-  /* g_path_get_dirname() is supposed to work on pathnames, not URIs.
-   *
-   * If uri points to a file on the root of a drive
-   * "file:///d:/foo.png", g_path_get_dirname() would return
-   * "file:///d:". (What we really would want is "file:///d:/".) When
-   * this then is passed inside gtk+ to g_filename_from_uri() we get
-   * "d:" which is not an absolute pathname. This currently causes an
-   * assertion failure in gtk+. This scenario occurs if we have opened
-   * an image from the root of a drive and then do Save As.
-   *
-   * Of course, gtk+ shouldn't assert even if we feed it slighly bogus
-   * data, and that problem should be fixed, too. But to get the
-   * correct default current folder in the filechooser combo box, we
-   * need to pass it the proper URI for an absolute path anyway. So
-   * don't use g_path_get_dirname() on file: URIs.
-   */
-  if (g_str_has_prefix (uri, "file:///"))
-    {
-      gchar *filepath = g_filename_from_uri (uri, NULL, NULL);
-      gchar *dirpath  = NULL;
-
-      if (filepath != NULL)
-	{
-	  dirpath = g_path_get_dirname (filepath);
-	  g_free (filepath);
-	}
-
-      if (dirpath != NULL)
-	{
-	  dirname = g_filename_to_uri (dirpath, NULL, NULL);
-	  g_free (dirpath);
-	}
-      else
-        {
-          dirname = NULL;
-        }
-    }
-  else
-    {
-      dirname = g_path_get_dirname (uri);
-    }
-#endif
+  dirname = gimp_file_dialog_get_dirname_from_uri (uri);
 
   if (dirname && strlen (dirname) && strcmp (dirname, "."))
     {
@@ -935,4 +892,58 @@ gimp_file_dialog_pattern_from_extension (const gchar *extension)
   *p = '\0';
 
   return pattern;
+}
+
+static gchar *
+gimp_file_dialog_get_dirname_from_uri (const gchar *uri)
+{
+  gchar *dirname = NULL;
+
+#ifndef G_OS_WIN32
+  dirname  = g_path_get_dirname (uri);
+#else
+  /* g_path_get_dirname() is supposed to work on pathnames, not URIs.
+   *
+   * If uri points to a file on the root of a drive
+   * "file:///d:/foo.png", g_path_get_dirname() would return
+   * "file:///d:". (What we really would want is "file:///d:/".) When
+   * this then is passed inside gtk+ to g_filename_from_uri() we get
+   * "d:" which is not an absolute pathname. This currently causes an
+   * assertion failure in gtk+. This scenario occurs if we have opened
+   * an image from the root of a drive and then do Save As.
+   *
+   * Of course, gtk+ shouldn't assert even if we feed it slighly bogus
+   * data, and that problem should be fixed, too. But to get the
+   * correct default current folder in the filechooser combo box, we
+   * need to pass it the proper URI for an absolute path anyway. So
+   * don't use g_path_get_dirname() on file: URIs.
+   */
+  if (g_str_has_prefix (uri, "file:///"))
+    {
+      gchar *filepath = g_filename_from_uri (uri, NULL, NULL);
+      gchar *dirpath  = NULL;
+
+      if (filepath != NULL)
+	{
+	  dirpath = g_path_get_dirname (filepath);
+	  g_free (filepath);
+	}
+
+      if (dirpath != NULL)
+	{
+	  dirname = g_filename_to_uri (dirpath, NULL, NULL);
+	  g_free (dirpath);
+	}
+      else
+        {
+          dirname = NULL;
+        }
+    }
+  else
+    {
+      dirname = g_path_get_dirname (uri);
+    }
+#endif
+
+  return dirname;
 }
