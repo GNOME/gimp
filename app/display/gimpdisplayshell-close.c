@@ -129,7 +129,6 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                  GimpImage        *image)
 {
   GtkWidget      *dialog;
-  GtkWidget      *button;
   GimpMessageBox *box;
   GClosure       *closure;
   GSource        *source;
