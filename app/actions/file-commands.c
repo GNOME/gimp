@@ -53,6 +53,7 @@
 #include "display/gimpdisplay-foreach.h"
 
 #include "dialogs/dialogs.h"
+#include "dialogs/file-save-dialog.h"
 
 #include "actions.h"
 #include "file-commands.h"
@@ -77,11 +78,6 @@ static void     file_save_dialog_show        (Gimp                *gimp,
                                               const gchar         *title,
                                               gboolean             save_a_copy,
                                               gboolean             close_after_saving);
-static gboolean file_write_with_uri_and_proc (GimpImage           *image,
-                                              GimpContext         *context,
-                                              GimpDisplay         *display,
-                                              const gchar         *uri,
-                                              GimpPlugInProcedure *proc);
 static void     file_save_dialog_destroyed   (GtkWidget           *dialog,
                                               GimpImage           *image);
 static void     file_new_template_callback   (GtkWidget           *widget,
@@ -246,11 +242,11 @@ file_save_cmd_callback (GtkAction *action,
 
           if (uri && save_proc)
             {
-              saved = file_write_with_uri_and_proc (image,
-                                                    action_data_get_context (data),
-                                                    display,
-                                                    uri,
-                                                    save_proc);
+              saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
+                                                   gimp, image, uri,
+                                                   save_proc,
+                                                   GIMP_RUN_WITH_LAST_VALS,
+                                                   FALSE, TRUE);
               break;
             }
 
@@ -505,70 +501,6 @@ file_save_dialog_show (Gimp        *gimp,
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
-}
-
-static gboolean
-file_write_with_uri_and_proc (GimpImage           *image,
-                              GimpContext         *context,
-                              GimpDisplay         *display,
-                              const gchar         *uri,
-                              GimpPlugInProcedure *proc)
-{
-  gboolean           saved = FALSE;
-  GimpPDBStatusType  status;
-  GError            *error = NULL;
-  GList             *list;
-
-  for (list = gimp_action_groups_from_name ("file");
-       list;
-       list = g_list_next (list))
-    {
-      gimp_action_group_set_action_sensitive (list->data,
-                                              "file-quit",
-                                              FALSE);
-    }
-
-  status = file_save (image, context,
-                      GIMP_PROGRESS (display),
-                      uri, proc,
-                      GIMP_RUN_WITH_LAST_VALS, FALSE, &error);
-
-  switch (status)
-    {
-    case GIMP_PDB_SUCCESS:
-      saved = TRUE;
-      break;
-
-    case GIMP_PDB_CANCEL:
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (display), GIMP_MESSAGE_INFO,
-                            _("Saving canceled"));
-      break;
-
-    default:
-      {
-        gchar *filename = file_utils_uri_display_name (uri);
-
-        gimp_message (image->gimp, G_OBJECT (display),
-                      GIMP_MESSAGE_ERROR,
-                      _("Saving '%s' failed:\n\n%s"),
-                      filename, error->message);
-        g_free (filename);
-        g_clear_error (&error);
-      }
-      break;
-    }
-
-  for (list = gimp_action_groups_from_name ("file");
-       list;
-       list = g_list_next (list))
-    {
-      gimp_action_group_set_action_sensitive (list->data,
-                                              "file-quit",
-                                              TRUE);
-    }
-
-  return saved;
 }
 
 static void

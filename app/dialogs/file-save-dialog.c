@@ -68,11 +68,6 @@ static void      file_save_dialog_unknown_ext_msg (GimpFileDialog       *dialog,
                                                    Gimp                 *gimp);
 static gboolean  file_save_dialog_use_extension   (GtkWidget            *save_dialog,
                                                    const gchar          *uri);
-static gboolean  file_save_dialog_save_image      (GtkWidget            *save_dialog,
-                                                   GimpImage            *image,
-                                                   const gchar          *uri,
-                                                   GimpPlugInProcedure  *save_proc,
-                                                   gboolean              save_a_copy);
 
 
 /*  public functions  */
@@ -137,11 +132,14 @@ file_save_dialog_response (GtkWidget *save_dialog,
   if (file_save_dialog_check_uri (save_dialog, gimp,
                                   &uri, &basename, &save_proc))
     {
-      if (file_save_dialog_save_image (save_dialog,
+      if (file_save_dialog_save_image (GIMP_PROGRESS (save_dialog),
+                                       gimp,
                                        dialog->image,
                                        uri,
                                        save_proc,
-                                       dialog->save_a_copy))
+                                       GIMP_RUN_INTERACTIVE,
+                                       dialog->save_a_copy,
+                                       FALSE))
         {
           g_object_set_data_full (G_OBJECT (dialog->image->gimp),
                                   GIMP_FILE_SAVE_LAST_URI_KEY,
@@ -467,12 +465,15 @@ file_save_dialog_use_extension (GtkWidget   *save_dialog,
   return use_name;
 }
 
-static gboolean
-file_save_dialog_save_image (GtkWidget           *save_dialog,
+gboolean
+file_save_dialog_save_image (GimpProgress        *progress,
+                             Gimp                *gimp,
                              GimpImage           *image,
                              const gchar         *uri,
                              GimpPlugInProcedure *save_proc,
-                             gboolean             save_a_copy)
+                             GimpRunMode          run_mode,
+                             gboolean             save_a_copy,
+                             gboolean             verbose_cancel)
 {
   GimpPDBStatusType  status;
   GError            *error   = NULL;
@@ -486,10 +487,8 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
       gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
     }
 
-  status = file_save (image, gimp_get_user_context (image->gimp),
-                      GIMP_PROGRESS (save_dialog),
-                      uri, save_proc,
-                      GIMP_RUN_INTERACTIVE, save_a_copy, &error);
+  status = file_save (image, gimp_get_user_context (gimp), progress,
+                      uri, save_proc, run_mode, save_a_copy, &error);
 
   switch (status)
     {
@@ -498,13 +497,17 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
       break;
 
     case GIMP_PDB_CANCEL:
+      if (verbose_cancel)
+        gimp_message_literal (gimp,
+                              G_OBJECT (progress), GIMP_MESSAGE_INFO,
+                              _("Saving canceled"));
       break;
 
     default:
       {
         gchar *filename = file_utils_uri_display_name (uri);
 
-        gimp_message (image->gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_ERROR,
+        gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                       _("Saving '%s' failed:\n\n%s"), filename, error->message);
         g_clear_error (&error);
         g_free (filename);
