@@ -486,14 +486,10 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
       gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
     }
 
-  g_object_ref (image);
-
   status = file_save (image, gimp_get_user_context (image->gimp),
                       GIMP_PROGRESS (save_dialog),
                       uri, save_proc,
                       GIMP_RUN_INTERACTIVE, save_a_copy, &error);
-
-  g_object_unref (image);
 
   switch (status)
     {
