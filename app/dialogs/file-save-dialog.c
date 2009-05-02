@@ -141,10 +141,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        dialog->save_a_copy,
                                        FALSE))
         {
-          g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                                  GIMP_FILE_SAVE_LAST_URI_KEY,
-                                  g_strdup (uri), (GDestroyNotify) g_free);
-
           if (dialog)
             {
               GtkWindow *parent;

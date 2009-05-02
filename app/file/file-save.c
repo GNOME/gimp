@@ -154,6 +154,10 @@ file_save (Gimp                *gimp,
       GimpDocumentList *documents;
       GimpImagefile    *imagefile;
 
+      /* Store the URI of the last successfully saved image */
+      g_object_set_data_full (G_OBJECT (gimp),
+                              GIMP_FILE_SAVE_LAST_URI_KEY,
+                              g_strdup (uri), (GDestroyNotify) g_free);
       if (save_a_copy)
         {
           /*  remember the "save-a-copy" filename for the next invocation  */
