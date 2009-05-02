@@ -143,6 +143,10 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        save_proc,
                                        dialog->save_a_copy))
         {
+          g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                  GIMP_FILE_SAVE_LAST_URI_KEY,
+                                  g_strdup (uri), (GDestroyNotify) g_free);
+
           if (dialog)
             {
               GtkWindow *parent;
@@ -488,10 +492,6 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
                       GIMP_PROGRESS (save_dialog),
                       uri, save_proc,
                       GIMP_RUN_INTERACTIVE, save_a_copy, &error);
-
-  if (status == GIMP_PDB_SUCCESS)
-    g_object_set_data_full (G_OBJECT (image->gimp), GIMP_FILE_SAVE_LAST_URI_KEY,
-                            g_strdup (uri), (GDestroyNotify) g_free);
 
   g_object_unref (image);
 
