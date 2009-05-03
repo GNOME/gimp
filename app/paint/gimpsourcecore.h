@@ -70,6 +70,7 @@ struct _GimpSourceCoreClass
   void     (*  motion)    (GimpSourceCore   *source_core,
                            GimpDrawable     *drawable,
                            GimpPaintOptions *paint_options,
+                           const GimpCoords *coords,
                            gdouble           opacity,
                            GimpPickable     *src_pickable,
                            PixelRegion      *srcPR,
@@ -88,7 +89,8 @@ GType   gimp_source_core_get_type (void) G_GNUC_CONST;
 /* TEMP HACK */
 void    gimp_source_core_motion   (GimpSourceCore   *source_core,
                                    GimpDrawable     *drawable,
-                                   GimpPaintOptions *paint_options);
+                                   GimpPaintOptions *paint_options,
+                                   const GimpCoords *coords);
 
 
 #endif  /*  __GIMP_SOURCE_CORE_H__  */

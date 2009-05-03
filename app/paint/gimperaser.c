@@ -40,11 +40,13 @@
 static void   gimp_eraser_paint  (GimpPaintCore    *paint_core,
                                   GimpDrawable     *drawable,
                                   GimpPaintOptions *paint_options,
+                                  const GimpCoords *coords,
                                   GimpPaintState    paint_state,
                                   guint32           time);
 static void   gimp_eraser_motion (GimpPaintCore    *paint_core,
                                   GimpDrawable     *drawable,
-                                  GimpPaintOptions *paint_options);
+                                  GimpPaintOptions *paint_options,
+                                  const GimpCoords *coords);
 
 
 G_DEFINE_TYPE (GimpEraser, gimp_eraser, GIMP_TYPE_BRUSH_CORE)
@@ -82,13 +84,14 @@ static void
 gimp_eraser_paint (GimpPaintCore    *paint_core,
                    GimpDrawable     *drawable,
                    GimpPaintOptions *paint_options,
+                   const GimpCoords *coords,
                    GimpPaintState    paint_state,
                    guint32           time)
 {
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_MOTION:
-      gimp_eraser_motion (paint_core, drawable, paint_options);
+      gimp_eraser_motion (paint_core, drawable, paint_options, coords);
       break;
 
     default:
@@ -99,7 +102,8 @@ gimp_eraser_paint (GimpPaintCore    *paint_core,
 static void
 gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
-                    GimpPaintOptions *paint_options)
+                    GimpPaintOptions *paint_options,
+                    const GimpCoords *coords)
 {
   GimpEraserOptions *options = GIMP_ERASER_OPTIONS (paint_options);
   GimpContext       *context = GIMP_CONTEXT (paint_options);
@@ -130,11 +134,9 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   color_pixels (temp_buf_get_data (area), col,
                 area->width * area->height, area->bytes);
 
-  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
-                                                     &paint_core->cur_coords);
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options, coords);
 
-  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
-                                                      &paint_core->cur_coords);
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),

@@ -45,16 +45,20 @@ static void       gimp_smudge_finalize     (GObject          *object);
 static void       gimp_smudge_paint        (GimpPaintCore    *paint_core,
                                             GimpDrawable     *drawable,
                                             GimpPaintOptions *paint_options,
+                                            const GimpCoords *coords,
                                             GimpPaintState    paint_state,
                                             guint32           time);
 static gboolean   gimp_smudge_start        (GimpPaintCore    *paint_core,
                                             GimpDrawable     *drawable,
-                                            GimpPaintOptions *paint_options);
+                                            GimpPaintOptions *paint_options,
+                                            const GimpCoords *coords);
 static void       gimp_smudge_motion       (GimpPaintCore    *paint_core,
                                             GimpDrawable     *drawable,
-                                            GimpPaintOptions *paint_options);
+                                            GimpPaintOptions *paint_options,
+                                            const GimpCoords *coords);
 
 static void       gimp_smudge_brush_coords (GimpPaintCore    *paint_core,
+                                            const GimpCoords *coords,
                                             gint             *x,
                                             gint             *y,
                                             gint             *w,
@@ -117,6 +121,7 @@ static void
 gimp_smudge_paint (GimpPaintCore    *paint_core,
                    GimpDrawable     *drawable,
                    GimpPaintOptions *paint_options,
+                   const GimpCoords *coords,
                    GimpPaintState    paint_state,
                    guint32           time)
 {
@@ -128,10 +133,10 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
       /* initialization fails if the user starts outside the drawable */
       if (! smudge->initialized)
         smudge->initialized = gimp_smudge_start (paint_core, drawable,
-                                                 paint_options);
+                                                 paint_options, coords);
 
       if (smudge->initialized)
-        gimp_smudge_motion (paint_core, drawable, paint_options);
+        gimp_smudge_motion (paint_core, drawable, paint_options, coords);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -151,7 +156,8 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
 static gboolean
 gimp_smudge_start (GimpPaintCore    *paint_core,
                    GimpDrawable     *drawable,
-                   GimpPaintOptions *paint_options)
+                   GimpPaintOptions *paint_options,
+                   const GimpCoords *coords)
 {
   GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
   GimpImage   *image;
@@ -170,7 +176,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
     return FALSE;
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  gimp_smudge_brush_coords (paint_core, &x, &y, &w, &h);
+  gimp_smudge_brush_coords (paint_core, coords, &x, &y, &w, &h);
 
   /*  Allocate the accumulation buffer */
   bytes = gimp_drawable_bytes (drawable);
@@ -184,10 +190,10 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
       guchar fill[4];
 
       gimp_pickable_get_pixel_at (GIMP_PICKABLE (drawable),
-                                  CLAMP ((gint) paint_core->cur_coords.x,
+                                  CLAMP ((gint) coords->x,
                                          0,
                                          gimp_item_get_width (GIMP_ITEM (drawable)) - 1),
-                                  CLAMP ((gint) paint_core->cur_coords.y,
+                                  CLAMP ((gint) coords->y,
                                          0,
                                          gimp_item_get_height (GIMP_ITEM (drawable)) - 1),
                                   fill);
@@ -225,7 +231,8 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
 static void
 gimp_smudge_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
-                    GimpPaintOptions *paint_options)
+                    GimpPaintOptions *paint_options,
+                    const GimpCoords *coords)
 {
   GimpSmudge        *smudge  = GIMP_SMUDGE (paint_core);
   GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (paint_options);
@@ -255,15 +262,14 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     return;
 
   /*  Get the unclipped brush coordinates  */
-  gimp_smudge_brush_coords (paint_core, &x, &y, &w, &h);
+  gimp_smudge_brush_coords (paint_core, coords, &x, &y, &w, &h);
 
   /* srcPR will be the pixels under the current painthit from the drawable */
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      area->x, area->y, area->width, area->height, FALSE);
 
   /* Enable dynamic rate */
-  dynamic_rate = gimp_paint_options_get_dynamic_rate (paint_options,
-                                                      &paint_core->cur_coords);
+  dynamic_rate = gimp_paint_options_get_dynamic_rate (paint_options, coords);
   rate = (options->rate / 100.0) * dynamic_rate;
 
   /* The tempPR will be the built up buffer (for smudge) */
@@ -303,11 +309,9 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   else
     copy_region (&tempPR, &destPR);
 
-  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
-                                                     &paint_core->cur_coords);
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options, coords);
 
-  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
-                                                      &paint_core->cur_coords);
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords);
 
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
@@ -318,11 +322,12 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 }
 
 static void
-gimp_smudge_brush_coords (GimpPaintCore *paint_core,
-                          gint          *x,
-                          gint          *y,
-                          gint          *w,
-                          gint          *h)
+gimp_smudge_brush_coords (GimpPaintCore    *paint_core,
+                          const GimpCoords *coords,
+                          gint             *x,
+                          gint             *y,
+                          gint             *w,
+                          gint             *h)
 {
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_core);
   gint           width;
@@ -335,8 +340,8 @@ gimp_smudge_brush_coords (GimpPaintCore *paint_core,
                              &width, &height);
 
   /* Note: these are the brush mask size plus a border of 1 pixel */
-  *x = (gint) paint_core->cur_coords.x - width  / 2 - 1;
-  *y = (gint) paint_core->cur_coords.y - height / 2 - 1;
+  *x = (gint) coords->x - width  / 2 - 1;
+  *y = (gint) coords->y - height / 2 - 1;
   *w = width  + 2;
   *h = height + 2;
 }

@@ -45,21 +45,23 @@
 #define MAX_SHARPEN   -64
 
 
-static void    gimp_convolve_paint            (GimpPaintCore     *paint_core,
-                                               GimpDrawable      *drawable,
-                                               GimpPaintOptions  *paint_options,
-                                               GimpPaintState     paint_state,
-                                               guint32            time);
-static void    gimp_convolve_motion           (GimpPaintCore     *paint_core,
-                                               GimpDrawable      *drawable,
-                                               GimpPaintOptions  *paint_options);
+static void    gimp_convolve_paint            (GimpPaintCore    *paint_core,
+                                               GimpDrawable     *drawable,
+                                               GimpPaintOptions *paint_options,
+                                               const GimpCoords *coords,
+                                               GimpPaintState    paint_state,
+                                               guint32           time);
+static void    gimp_convolve_motion           (GimpPaintCore    *paint_core,
+                                               GimpDrawable     *drawable,
+                                               GimpPaintOptions *paint_options,
+                                               const GimpCoords *coords);
 
-static void    gimp_convolve_calculate_matrix (GimpConvolve      *convolve,
-                                               GimpConvolveType   type,
-                                               gint               radius_x,
-                                               gint               radius_y,
-                                               gdouble            rate);
-static gdouble gimp_convolve_sum_matrix       (const gfloat      *matrix);
+static void    gimp_convolve_calculate_matrix (GimpConvolve     *convolve,
+                                               GimpConvolveType  type,
+                                               gint              radius_x,
+                                               gint              radius_y,
+                                               gdouble           rate);
+static gdouble gimp_convolve_sum_matrix       (const gfloat     *matrix);
 
 
 G_DEFINE_TYPE (GimpConvolve, gimp_convolve, GIMP_TYPE_BRUSH_CORE)
@@ -100,13 +102,14 @@ static void
 gimp_convolve_paint (GimpPaintCore    *paint_core,
                      GimpDrawable     *drawable,
                      GimpPaintOptions *paint_options,
+                     const GimpCoords *coords,
                      GimpPaintState    paint_state,
                      guint32           time)
 {
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_MOTION:
-      gimp_convolve_motion (paint_core, drawable, paint_options);
+      gimp_convolve_motion (paint_core, drawable, paint_options, coords);
       break;
 
     default:
@@ -117,7 +120,8 @@ gimp_convolve_paint (GimpPaintCore    *paint_core,
 static void
 gimp_convolve_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
-                      GimpPaintOptions *paint_options)
+                      GimpPaintOptions *paint_options,
+                      const GimpCoords  *coords)
 {
   GimpConvolve        *convolve   = GIMP_CONVOLVE (paint_core);
   GimpBrushCore       *brush_core = GIMP_BRUSH_CORE (paint_core);
@@ -149,8 +153,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   rate = options->rate;
 
-  rate *= gimp_paint_options_get_dynamic_rate (paint_options,
-                                               &paint_core->cur_coords);
+  rate *= gimp_paint_options_get_dynamic_rate (paint_options, coords);
 
   gimp_convolve_calculate_matrix (convolve, options->type,
                                   brush_core->brush->mask->width / 2,

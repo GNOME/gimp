@@ -65,13 +65,15 @@ static gboolean gimp_source_core_start           (GimpPaintCore    *paint_core,
 static void     gimp_source_core_paint           (GimpPaintCore    *paint_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options,
+                                                  const GimpCoords *coords,
                                                   GimpPaintState    paint_state,
                                                   guint32           time);
 
 #if 0
 static void     gimp_source_core_motion          (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
-                                                  GimpPaintOptions *paint_options);
+                                                  GimpPaintOptions *paint_options,
+                                                  const GimpCoords *coords);
 #endif
 
 static gboolean gimp_source_core_real_get_source (GimpSourceCore   *source_core,
@@ -244,6 +246,7 @@ static void
 gimp_source_core_paint (GimpPaintCore    *paint_core,
                         GimpDrawable     *drawable,
                         GimpPaintOptions *paint_options,
+                        const GimpCoords *coords,
                         GimpPaintState    paint_state,
                         guint32           time)
 {
@@ -257,8 +260,8 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
         {
           gimp_source_core_set_src_drawable (source_core, drawable);
 
-          source_core->src_x = paint_core->cur_coords.x;
-          source_core->src_y = paint_core->cur_coords.y;
+          source_core->src_x = coords->x;
+          source_core->src_y = coords->y;
 
           source_core->first_stroke = TRUE;
         }
@@ -276,8 +279,8 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
         {
           /*  If the control key is down, move the src target and return */
 
-          source_core->src_x = paint_core->cur_coords.x;
-          source_core->src_y = paint_core->cur_coords.y;
+          source_core->src_x = coords->x;
+          source_core->src_y = coords->y;
 
           source_core->first_stroke = TRUE;
         }
@@ -288,8 +291,8 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
           gint dest_x;
           gint dest_y;
 
-          dest_x = paint_core->cur_coords.x;
-          dest_y = paint_core->cur_coords.y;
+          dest_x = coords->x;
+          dest_y = coords->y;
 
           if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED)
             {
@@ -312,7 +315,7 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
           source_core->src_x = dest_x + source_core->offset_x;
           source_core->src_y = dest_y + source_core->offset_y;
 
-          gimp_source_core_motion (source_core, drawable, paint_options);
+          gimp_source_core_motion (source_core, drawable, paint_options, coords);
         }
       break;
 
@@ -336,7 +339,9 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
 void
 gimp_source_core_motion (GimpSourceCore   *source_core,
                          GimpDrawable     *drawable,
-                         GimpPaintOptions *paint_options)
+                         GimpPaintOptions *paint_options,
+                         const GimpCoords *coords)
+
 {
   GimpPaintCore     *paint_core   = GIMP_PAINT_CORE (source_core);
   GimpSourceOptions *options      = GIMP_SOURCE_OPTIONS (paint_options);
@@ -414,6 +419,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   GIMP_SOURCE_CORE_GET_CLASS (source_core)->motion (source_core,
                                                     drawable,
                                                     paint_options,
+                                                    coords,
                                                     opacity,
                                                     src_pickable,
                                                     &srcPR,

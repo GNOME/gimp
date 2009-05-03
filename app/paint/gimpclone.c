@@ -53,6 +53,7 @@ static gboolean gimp_clone_start        (GimpPaintCore    *paint_core,
 static void     gimp_clone_motion       (GimpSourceCore   *source_core,
                                          GimpDrawable     *drawable,
                                          GimpPaintOptions *paint_options,
+                                         const GimpCoords *coords,
                                          gdouble           opacity,
                                          GimpPickable     *src_pickable,
                                          PixelRegion      *srcPR,
@@ -149,6 +150,7 @@ static void
 gimp_clone_motion (GimpSourceCore   *source_core,
                    GimpDrawable     *drawable,
                    GimpPaintOptions *paint_options,
+                   const GimpCoords *coords,
                    gdouble           opacity,
                    GimpPickable     *src_pickable,
                    PixelRegion      *srcPR,
@@ -236,11 +238,9 @@ gimp_clone_motion (GimpSourceCore   *source_core,
         }
     }
 
-  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
-                                                     &paint_core->cur_coords);
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options, coords);
 
-  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
-                                                      &paint_core->cur_coords);
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),

@@ -87,6 +87,7 @@ static PixelRegion *gimp_heal_region             (PixelRegion      *tempPR,
 static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options,
+                                                  const GimpCoords *coords,
                                                   gdouble           opacity,
                                                   GimpPickable     *src_pickable,
                                                   PixelRegion      *srcPR,
@@ -415,6 +416,7 @@ static void
 gimp_heal_motion (GimpSourceCore   *source_core,
                   GimpDrawable     *drawable,
                   GimpPaintOptions *paint_options,
+                  const GimpCoords *coords,
                   gdouble           opacity,
                   GimpPickable     *src_pickable,
                   PixelRegion      *srcPR,
@@ -437,8 +439,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   TempBuf       *mask_buf;
   gdouble        hardness;
 
-  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
-                                                      &paint_core->cur_coords);
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords);
 
   mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
                                              GIMP_BRUSH_HARD,
@@ -545,8 +546,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   temp_buf_free (temp);
 
-  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
-                                                     &paint_core->cur_coords);
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options, coords);
 
   /* replace the canvas with our healed data */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core),

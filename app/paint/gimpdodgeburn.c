@@ -44,11 +44,13 @@ static void   gimp_dodge_burn_finalize   (GObject            *object);
 static void   gimp_dodge_burn_paint      (GimpPaintCore      *paint_core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options,
+                                          const GimpCoords   *coords,
                                           GimpPaintState      paint_state,
                                           guint32             time);
 static void   gimp_dodge_burn_motion     (GimpPaintCore      *paint_core,
                                           GimpDrawable       *drawable,
-                                          GimpPaintOptions   *paint_options);
+                                          GimpPaintOptions   *paint_options,
+                                          const GimpCoords   *coords);
 
 static void   gimp_dodge_burn_make_luts  (GimpDodgeBurn      *dodgeburn,
                                           gdouble             db_exposure,
@@ -124,6 +126,7 @@ static void
 gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
                        GimpDrawable     *drawable,
                        GimpPaintOptions *paint_options,
+                       const GimpCoords *coords,
                        GimpPaintState    paint_state,
                        guint32           time)
 {
@@ -143,7 +146,7 @@ gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      gimp_dodge_burn_motion (paint_core, drawable, paint_options);
+      gimp_dodge_burn_motion (paint_core, drawable, paint_options, coords);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -159,7 +162,8 @@ gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
 static void
 gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                         GimpDrawable     *drawable,
-                        GimpPaintOptions *paint_options)
+                        GimpPaintOptions *paint_options,
+                        const GimpCoords *coords)
 {
   GimpDodgeBurn *dodgeburn = GIMP_DODGE_BURN (paint_core);
   GimpContext   *context   = GIMP_CONTEXT (paint_options);
@@ -235,11 +239,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   g_free (temp_data);
 
-  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
-                                                     &paint_core->cur_coords);
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options, coords);
 
-  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
-                                                      &paint_core->cur_coords);
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords);
 
   /* Replace the newly dodgedburned area (canvas_buf) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,

@@ -84,6 +84,7 @@ struct _GimpPaintCoreClass
   void       (* paint)          (GimpPaintCore    *core,
                                  GimpDrawable     *drawable,
                                  GimpPaintOptions *paint_options,
+                                 const GimpCoords *coords,
                                  GimpPaintState    paint_state,
                                  guint32           time);
   void       (* post_paint)     (GimpPaintCore    *core,
@@ -131,6 +132,16 @@ void      gimp_paint_core_interpolate               (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
                                                      guint32           time);
+
+void      gimp_paint_core_set_current_coords        (GimpPaintCore    *core,
+                                                     const GimpCoords *coords);
+void      gimp_paint_core_get_current_coords        (GimpPaintCore    *core,
+                                                     GimpCoords       *coords);
+
+void      gimp_paint_core_set_last_coords           (GimpPaintCore    *core,
+                                                     const GimpCoords *coords);
+void      gimp_paint_core_get_last_coords           (GimpPaintCore    *core,
+                                                     GimpCoords       *coords);
 
 void      gimp_paint_core_round_line                (GimpPaintCore    *core,
                                                      GimpPaintOptions *options,

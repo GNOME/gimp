@@ -44,11 +44,13 @@ static void       gimp_airbrush_finalize (GObject          *object);
 static void       gimp_airbrush_paint    (GimpPaintCore    *paint_core,
                                           GimpDrawable     *drawable,
                                           GimpPaintOptions *paint_options,
+                                          const GimpCoords *coords,
                                           GimpPaintState    paint_state,
                                           guint32           time);
 static void       gimp_airbrush_motion   (GimpPaintCore    *paint_core,
                                           GimpDrawable     *drawable,
-                                          GimpPaintOptions *paint_options);
+                                          GimpPaintOptions *paint_options,
+                                          const GimpCoords *coords);
 static gboolean   gimp_airbrush_timeout  (gpointer          data);
 
 
@@ -104,6 +106,7 @@ static void
 gimp_airbrush_paint (GimpPaintCore    *paint_core,
                      GimpDrawable     *drawable,
                      GimpPaintOptions *paint_options,
+                     const GimpCoords *coords,
                      GimpPaintState    paint_state,
                      guint32           time)
 {
@@ -121,6 +124,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
       GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
                                                    paint_options,
+                                                   coords,
                                                    paint_state, time);
       break;
 
@@ -131,7 +135,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           airbrush->timeout_id = 0;
         }
 
-      gimp_airbrush_motion (paint_core, drawable, paint_options);
+      gimp_airbrush_motion (paint_core, drawable, paint_options, coords);
 
       if (options->rate != 0.0)
         {
@@ -142,7 +146,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           airbrush->paint_options = paint_options;
 
           dynamic_rate = gimp_paint_options_get_dynamic_rate (paint_options,
-                                                              &paint_core->cur_coords);
+                                                              coords);
 
           timeout = 10000 / (options->rate * dynamic_rate);
 
@@ -161,6 +165,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
       GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
                                                    paint_options,
+                                                   coords,
                                                    paint_state, time);
       break;
     }
@@ -169,7 +174,9 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 static void
 gimp_airbrush_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
-                      GimpPaintOptions *paint_options)
+                      GimpPaintOptions *paint_options,
+                      const GimpCoords *coords)
+
 {
   GimpAirbrushOptions *options = GIMP_AIRBRUSH_OPTIONS (paint_options);
   gdouble              opacity;
@@ -182,15 +189,15 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
   saved_velocity = paint_options->velocity_options->hardness;
 
   if (saved_pressure)
-    opacity *= GIMP_PAINT_PRESSURE_SCALE * paint_core->cur_coords.pressure;
+    opacity *= GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
   if (saved_velocity)
-    opacity *= MAX (0.0, 1 - GIMP_PAINT_VELOCITY_SCALE * paint_core->cur_coords.velocity);
+    opacity *= MAX (0.0, 1 - GIMP_PAINT_VELOCITY_SCALE * coords->velocity);
 
   paint_options->pressure_options->hardness = FALSE;
   paint_options->velocity_options->hardness = FALSE;
 
-  _gimp_paintbrush_motion (paint_core, drawable, paint_options, opacity);
+  _gimp_paintbrush_motion (paint_core, drawable, paint_options, coords, opacity);
 
   paint_options->pressure_options->hardness = saved_pressure;
   paint_options->velocity_options->hardness = saved_velocity;
@@ -200,10 +207,14 @@ static gboolean
 gimp_airbrush_timeout (gpointer data)
 {
   GimpAirbrush *airbrush = GIMP_AIRBRUSH (data);
+  GimpCoords    coords;
+
+  gimp_paint_core_get_current_coords (GIMP_PAINT_CORE (airbrush), &coords);
 
   gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
                        airbrush->drawable,
                        airbrush->paint_options,
+                       &coords,
                        GIMP_PAINT_STATE_MOTION, 0);
 
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush->drawable)));

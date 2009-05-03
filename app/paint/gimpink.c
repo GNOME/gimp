@@ -52,6 +52,7 @@ static void      gimp_ink_finalize       (GObject          *object);
 static void      gimp_ink_paint          (GimpPaintCore    *paint_core,
                                           GimpDrawable     *drawable,
                                           GimpPaintOptions *paint_options,
+                                          const GimpCoords *coords,
                                           GimpPaintState    paint_state,
                                           guint32           time);
 static TempBuf * gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
@@ -64,6 +65,7 @@ static GimpUndo* gimp_ink_push_undo      (GimpPaintCore    *core,
 static void      gimp_ink_motion         (GimpPaintCore    *paint_core,
                                           GimpDrawable     *drawable,
                                           GimpPaintOptions *paint_options,
+                                          const GimpCoords *coords,
                                           guint32           time);
 
 static Blob    * ink_pen_ellipse         (GimpInkOptions   *options,
@@ -137,6 +139,7 @@ static void
 gimp_ink_paint (GimpPaintCore    *paint_core,
                 GimpDrawable     *drawable,
                 GimpPaintOptions *paint_options,
+                const GimpCoords *coords,
                 GimpPaintState    paint_state,
                 guint32           time)
 {
@@ -144,9 +147,13 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
 
   switch (paint_state)
     {
+      GimpCoords last_coords;
+
     case GIMP_PAINT_STATE_INIT:
-      if (paint_core->cur_coords.x == paint_core->last_coords.x &&
-          paint_core->cur_coords.y == paint_core->last_coords.y)
+      gimp_paint_core_get_last_coords (paint_core, &last_coords);
+
+      if (coords->x == last_coords.x &&
+          coords->y == last_coords.y)
         {
           /*  start with new blobs if we're not interpolating  */
 
@@ -174,7 +181,7 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      gimp_ink_motion (paint_core, drawable, paint_options, time);
+      gimp_ink_motion (paint_core, drawable, paint_options, coords, time);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -233,6 +240,7 @@ static void
 gimp_ink_motion (GimpPaintCore    *paint_core,
                  GimpDrawable     *drawable,
                  GimpPaintOptions *paint_options,
+                 const GimpCoords *coords,
                  guint32           time)
 {
   GimpInk        *ink     = GIMP_INK (paint_core);
@@ -250,11 +258,11 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   if (! ink->last_blob)
     {
       ink->last_blob = ink_pen_ellipse (options,
-                                        paint_core->cur_coords.x,
-                                        paint_core->cur_coords.y,
-                                        paint_core->cur_coords.pressure,
-                                        paint_core->cur_coords.xtilt,
-                                        paint_core->cur_coords.ytilt,
+                                        coords->x,
+                                        coords->y,
+                                        coords->pressure,
+                                        coords->xtilt,
+                                        coords->ytilt,
                                         100);
 
       if (ink->start_blob)
@@ -267,12 +275,12 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   else
     {
       Blob *blob = ink_pen_ellipse (options,
-                                    paint_core->cur_coords.x,
-                                    paint_core->cur_coords.y,
-                                    paint_core->cur_coords.pressure,
-                                    paint_core->cur_coords.xtilt,
-                                    paint_core->cur_coords.ytilt,
-                                    paint_core->cur_coords.velocity * 100);
+                                    coords->x,
+                                    coords->y,
+                                    coords->pressure,
+                                    coords->xtilt,
+                                    coords->ytilt,
+                                    coords->velocity * 100);
 
       blob_union = blob_convex_union (ink->last_blob, blob);
 

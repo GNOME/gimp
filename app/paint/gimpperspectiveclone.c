@@ -60,6 +60,7 @@ static gboolean gimp_perspective_clone_start      (GimpPaintCore    *paint_core,
 static void     gimp_perspective_clone_paint      (GimpPaintCore    *paint_core,
                                                    GimpDrawable     *drawable,
                                                    GimpPaintOptions *paint_options,
+                                                   const GimpCoords *coords,
                                                    GimpPaintState    paint_state,
                                                    guint32           time);
 
@@ -171,6 +172,7 @@ static void
 gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                               GimpDrawable     *drawable,
                               GimpPaintOptions *paint_options,
+                              const GimpCoords *coords,
                               GimpPaintState    paint_state,
                               guint32           time)
 {
@@ -185,8 +187,8 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
         {
           g_object_set (source_core, "src-drawable", drawable, NULL);
 
-          source_core->src_x = paint_core->cur_coords.x;
-          source_core->src_y = paint_core->cur_coords.y;
+          source_core->src_x = coords->x;
+          source_core->src_y = coords->y;
 
           /* get source coordinates in front view perspective */
           gimp_matrix3_transform_point (&clone->transform_inv,
@@ -211,8 +213,8 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
         {
           /*  If the control key is down, move the src target and return */
 
-          source_core->src_x = paint_core->cur_coords.x;
-          source_core->src_y = paint_core->cur_coords.y;
+          source_core->src_x = coords->x;
+          source_core->src_y = coords->y;
 
           /* get source coordinates in front view perspective */
           gimp_matrix3_transform_point (&clone->transform_inv,
@@ -230,8 +232,8 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
           gint dest_x;
           gint dest_y;
 
-          dest_x = paint_core->cur_coords.x;
-          dest_y = paint_core->cur_coords.y;
+          dest_x = coords->x;
+          dest_y = coords->y;
 
           if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED)
             {
@@ -258,7 +260,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
               source_core->first_stroke = FALSE;
             }
 
-          gimp_source_core_motion (source_core, drawable, paint_options);
+          gimp_source_core_motion (source_core, drawable, paint_options, coords);
         }
       break;
 

@@ -82,6 +82,7 @@ static gboolean  gimp_paint_core_real_pre_paint      (GimpPaintCore    *core,
 static void      gimp_paint_core_real_paint          (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
+                                                      const GimpCoords *coords,
                                                       GimpPaintState    paint_state,
                                                       guint32           time);
 static void      gimp_paint_core_real_post_paint     (GimpPaintCore    *core,
@@ -243,6 +244,7 @@ static void
 gimp_paint_core_real_paint (GimpPaintCore    *core,
                             GimpDrawable     *drawable,
                             GimpPaintOptions *paint_options,
+                            const GimpCoords *coords,
                             GimpPaintState    paint_state,
                             guint32           time)
 {
@@ -321,6 +323,7 @@ gimp_paint_core_paint (GimpPaintCore    *core,
 
       core_class->paint (core, drawable,
                          paint_options,
+                         &core->cur_coords,
                          paint_state, time);
 
       core_class->post_paint (core, drawable,
@@ -572,6 +575,46 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 
   GIMP_PAINT_CORE_GET_CLASS (core)->interpolate (core, drawable,
                                                  paint_options, time);
+}
+
+void
+gimp_paint_core_set_current_coords (GimpPaintCore    *core,
+                                    const GimpCoords *coords)
+{
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (coords != NULL);
+
+  core->cur_coords = *coords;
+}
+
+void
+gimp_paint_core_get_current_coords (GimpPaintCore *core,
+                                    GimpCoords    *coords)
+{
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (coords != NULL);
+
+  *coords = core->cur_coords;
+}
+
+void
+gimp_paint_core_set_last_coords (GimpPaintCore    *core,
+                                 const GimpCoords *coords)
+{
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (coords != NULL);
+
+  core->last_coords = *coords;
+}
+
+void
+gimp_paint_core_get_last_coords (GimpPaintCore *core,
+                                 GimpCoords    *coords)
+{
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (coords != NULL);
+
+  *coords = core->last_coords;
 }
 
 /**
