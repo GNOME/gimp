@@ -394,8 +394,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   /*  Get the initial undo extents  */
 
-  core->x1           = core->x2 = core->cur_coords.x;
-  core->y1           = core->y2 = core->cur_coords.y;
+  core->x1 = core->x2 = core->cur_coords.x;
+  core->y1 = core->y2 = core->cur_coords.y;
 
   core->last_paint.x = -1e6;
   core->last_paint.y = -1e6;

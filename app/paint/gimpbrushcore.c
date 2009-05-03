@@ -372,15 +372,15 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-      core->scale        = gimp_paint_options_get_dynamic_size (paint_options,
-                                                                coords,
-                                                                TRUE);
-      core->angle        = gimp_paint_options_get_dynamic_angle (paint_options,
-                                                                 coords);
+      core->scale = gimp_paint_options_get_dynamic_size (paint_options, coords,
+                                                         TRUE);
+
+      core->angle = gimp_paint_options_get_dynamic_angle (paint_options, coords);
+
       core->aspect_ratio =
-                    gimp_paint_options_get_dynamic_aspect_ratio (paint_options,
-                                                                 coords);
+        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords);
     }
+
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
 
   core->brush = core->main_brush;
@@ -736,7 +736,9 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
   core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);
 
-  gimp_brush_transform_size (core->brush, core->scale, core->aspect_ratio, core->angle, &brush_width, &brush_height);
+  gimp_brush_transform_size (core->brush,
+                             core->scale, core->aspect_ratio, core->angle,
+                             &brush_width, &brush_height);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   x = (gint) floor (current_coords.x) - (brush_width  / 2);
@@ -831,7 +833,8 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
     {
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
 
-      mask = gimp_brush_transform_mask (core->main_brush, scale, aspect_ratio, angle);
+      mask = gimp_brush_transform_mask (core->main_brush,
+                                        scale, aspect_ratio, angle);
     }
 
   if (mask)
@@ -1342,7 +1345,9 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   if ((core->scale == 1.0) && (core->angle == 0.0) && (core->aspect_ratio == 1.0))
     return brush->mask;
 
-  gimp_brush_transform_size (brush, core->scale, core->aspect_ratio, core->angle, &width, &height);
+  gimp_brush_transform_size (brush,
+                             core->scale, core->aspect_ratio, core->angle,
+                             &width, &height);
 
   if (! core->cache_invalid                             &&
       core->transform_brush                             &&
@@ -1367,7 +1372,10 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   if (core->transform_brush)
     temp_buf_free (core->transform_brush);
 
-  core->transform_brush = gimp_brush_transform_mask (brush, core->scale, core->aspect_ratio, core->angle);
+  core->transform_brush = gimp_brush_transform_mask (brush,
+                                                     core->scale,
+                                                     core->aspect_ratio,
+                                                     core->angle);
 
   core->cache_invalid       = TRUE;
   core->solid_cache_invalid = TRUE;
@@ -1388,8 +1396,9 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
   if ((core->scale == 1.0) && (core->angle == 0.0) && (core->aspect_ratio == 1.0))
     return brush->pixmap;
 
-  gimp_brush_transform_size (brush, core->scale, core->aspect_ratio, core->angle, &width, &height);
-
+  gimp_brush_transform_size (brush,
+                             core->scale, core->aspect_ratio, core->angle,
+                             &width, &height);
 
   if (! core->cache_invalid                                    &&
       core->transform_pixmap                                   &&
@@ -1412,7 +1421,10 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
     temp_buf_free (core->transform_pixmap);
 
 
-  core->transform_pixmap = gimp_brush_transform_pixmap (brush, core->scale, core->aspect_ratio, core->angle);
+  core->transform_pixmap = gimp_brush_transform_pixmap (brush,
+                                                        core->scale,
+                                                        core->aspect_ratio,
+                                                        core->angle);
 
   core->cache_invalid = TRUE;
 
