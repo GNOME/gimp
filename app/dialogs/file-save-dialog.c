@@ -211,13 +211,26 @@ file_save_dialog_response (GtkWidget *save_dialog,
             }
 
           if (! dialog->export)
-            g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                                    GIMP_FILE_SAVE_LAST_URI_KEY,
-                                    g_strdup (uri), (GDestroyNotify) g_free);
+            {
+              g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                      GIMP_FILE_SAVE_LAST_URI_KEY,
+                                      g_strdup (uri), (GDestroyNotify) g_free);
+            }
           else
-            g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                                    GIMP_FILE_EXPORT_LAST_URI_KEY,
-                                    g_strdup (uri), (GDestroyNotify) g_free);
+            {
+              g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                      GIMP_FILE_EXPORT_LAST_URI_KEY,
+                                      g_strdup (uri), (GDestroyNotify) g_free);
+
+              /* Remeber the last entered Export URI for the image. We
+               * only need to do this explicitly when exporting. It
+               * happens implicitly when saving since the GimpObject name
+               * of a GimpImage is the last-save URI
+               */
+              g_object_set_data_full (G_OBJECT (dialog->image),
+                                      GIMP_FILE_EXPORT_URI_KEY,
+                                      g_strdup (uri), (GDestroyNotify) g_free);
+            }
 
           g_object_set_data_full (G_OBJECT (dialog->image->gimp),
                                   GIMP_FILE_SAVE_LAST_URI_KEY,
