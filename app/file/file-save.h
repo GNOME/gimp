@@ -21,8 +21,8 @@
 #define __FILE_SAVE_H__
 
 
-GimpPDBStatusType   file_save (GimpImage            *image,
-                               GimpContext          *context,
+GimpPDBStatusType   file_save (Gimp                 *gimp,
+                               GimpImage            *image,
                                GimpProgress         *progress,
                                const gchar          *uri,
                                GimpPlugInProcedure  *file_proc,

@@ -67,8 +67,8 @@
 /*  public functions  */
 
 GimpPDBStatusType
-file_save (GimpImage           *image,
-           GimpContext         *context,
+file_save (Gimp                *gimp,
+           GimpImage           *image,
            GimpProgress        *progress,
            const gchar         *uri,
            GimpPlugInProcedure *file_proc,
@@ -83,8 +83,8 @@ file_save (GimpImage           *image,
   gint32             image_ID;
   gint32             drawable_ID;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress),
                         GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
@@ -135,7 +135,8 @@ file_save (GimpImage           *image,
 
   return_vals =
     gimp_pdb_execute_procedure_by_name (image->gimp->pdb,
-                                        context, progress, error,
+                                        gimp_get_user_context (gimp),
+                                        progress, error,
                                         GIMP_OBJECT (file_proc)->name,
                                         GIMP_TYPE_INT32,       run_mode,
                                         GIMP_TYPE_IMAGE_ID,    image_ID,

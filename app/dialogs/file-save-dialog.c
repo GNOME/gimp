@@ -487,8 +487,8 @@ file_save_dialog_save_image (GimpProgress        *progress,
       gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
     }
 
-  status = file_save (image, gimp_get_user_context (gimp), progress,
-                      uri, save_proc, run_mode, save_a_copy, &error);
+  status = file_save (gimp, image, progress, uri,
+                      save_proc, run_mode, save_a_copy, &error);
 
   switch (status)
     {
