@@ -470,6 +470,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
 {
   const gchar *dir_uri  = NULL;
   const gchar *name_uri = NULL;
+  const gchar *ext_uri  = NULL;
   gchar       *docs_uri = NULL;
   gchar       *dirname  = NULL;
   gchar       *basename = NULL;
@@ -537,6 +538,17 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
 
       if (! name_uri)
         name_uri = gimp_image_get_uri (image); /* Untitled */
+
+
+      /* Priority of default type/extension for Save:
+       *
+       *   1. Type of last Save
+       *   2. .xcf (which we don't explicitly append)
+       */
+      ext_uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+      if (! ext_uri)
+        ext_uri = "file:///we/only/care/about/extension.xcf";
     }
   else /* if (export) */
     {
@@ -593,10 +605,36 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
 
       if (! name_uri)
         name_uri = gimp_image_get_uri (image); /* Untitled */
+
+
+      /* Priority of default type/extension for Export:
+       *
+       *   1. Type of last Export
+       *   2. Type of import source
+       *   3. Type of latest Export of any document
+       *   2. .png
+       */
+      ext_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_URI_KEY);
+
+      if (! ext_uri)
+        ext_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_EXPORT_LAST_URI_KEY);
+
+      if (! ext_uri)
+        ext_uri = "file:///we/only/care/about/extension.png";
     }
 
   dirname = gimp_file_dialog_get_dirname_from_uri (dir_uri);
-  basename = file_utils_uri_display_basename (name_uri);
+  if (ext_uri)
+    {
+      gchar *uri_new_ext = file_utils_uri_with_new_ext (name_uri,
+                                                        ext_uri);
+      basename = file_utils_uri_display_basename (uri_new_ext);
+      g_free (uri_new_ext);
+    }
+  else
+    {
+      basename = file_utils_uri_display_basename (name_uri);
+    }
 
   gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog), dirname);
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);

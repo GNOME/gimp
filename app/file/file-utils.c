@@ -43,10 +43,12 @@
 #include "gimp-intl.h"
 
 
-static gchar * file_utils_unescape_uri (const gchar  *escaped,
-                                        gint          len,
-                                        const gchar  *illegal_escaped_characters,
-                                        gboolean      ascii_must_not_be_escaped);
+static gchar *      file_utils_unescape_uri  (const gchar *escaped,
+                                              gint         len,
+                                              const gchar *illegal_escaped_characters,
+                                              gboolean     ascii_must_not_be_escaped);
+static const gchar *file_utils_get_ext_start (const gchar *uri);
+
 
 
 gboolean
@@ -229,6 +231,51 @@ file_utils_filename_from_uri (const gchar *uri)
     }
 
   return filename;
+}
+
+gchar *
+file_utils_uri_with_new_ext (const gchar *uri,
+                             const gchar *ext_uri)
+{
+  const gchar *uri_ext      = file_utils_get_ext_start (uri);
+  const gchar *ext_uri_ext  = file_utils_get_ext_start (ext_uri);
+  gchar *uri_without_ext    = g_strndup (uri, uri_ext - uri);
+  gchar *ret                = g_strconcat (uri_without_ext, ext_uri_ext, NULL);
+  g_free (uri_without_ext);
+  return ret;
+}
+
+
+/**
+ * file_utils_get_ext_start:
+ * @uri:
+ *
+ * Returns the position of the extension (after the .) for an URI. If
+ * there is no extension the returned position is right after the
+ * string, at the terminating NULL character.
+ *
+ * Returns:
+ **/
+static const gchar *
+file_utils_get_ext_start (const gchar *uri)
+{
+  const gchar *ext        = NULL;
+  int          uri_len    = strlen (uri);
+  int          search_len = 0;
+
+  if (g_strrstr (uri, ".gz"))
+    search_len = uri_len - 3;
+  else if (g_strrstr (uri, ".bz2"))
+    search_len = uri_len - 4;
+  else
+    search_len = uri_len;
+
+  ext = g_strrstr_len (uri, search_len, ".");
+
+  if (! ext)
+    ext = uri + uri_len;
+
+  return ext;
 }
 
 gchar *
