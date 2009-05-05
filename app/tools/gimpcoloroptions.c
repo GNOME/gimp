@@ -71,7 +71,8 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
-                                   "average-radius", NULL,
+                                   "average-radius",
+                                   _("Color Picker Average Radius"),
                                    1.0, 300.0, 3.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 }

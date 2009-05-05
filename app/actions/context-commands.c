@@ -21,6 +21,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -42,6 +43,8 @@
 
 #include "actions.h"
 #include "context-commands.h"
+
+#include "gimp-intl.h"
 
 
 static const GimpLayerModeEffects paint_modes[] =
@@ -392,6 +395,7 @@ context_paint_mode_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpContext          *context;
+  GimpToolInfo         *tool_info;
   GimpLayerModeEffects  paint_mode;
   gint                  index;
   return_if_no_context (context, data);
@@ -403,6 +407,25 @@ context_paint_mode_cmd_callback (GtkAction *action,
                                0, G_N_ELEMENTS (paint_modes) - 1, 0,
                                0.0, 1.0, 1.0, 0.0, FALSE);
   gimp_context_set_paint_mode (context, paint_modes[index]);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_TOOL_OPTIONS (tool_info->tool_options))
+    {
+      GimpDisplay *display;
+      char        *value_desc;
+
+      gimp_enum_get_value (GIMP_TYPE_LAYER_MODE_EFFECTS, index,
+                           NULL, NULL, &value_desc, NULL);
+
+      display = action_data_get_display (data);
+
+      if (value_desc && display)
+        {
+          action_message (display, G_OBJECT (tool_info->tool_options),
+                          _("Paint Mode: %s"), value_desc);
+        }
+    }
 }
 
 void
@@ -512,9 +535,21 @@ context_brush_shape_cmd_callback (GtkAction *action,
   if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
+      GimpDisplay        *display;
+      char               *value_desc;
 
       gimp_brush_generated_set_shape (generated,
                                       (GimpBrushGeneratedShape) value);
+
+      gimp_enum_get_value (GIMP_TYPE_BRUSH_GENERATED_SHAPE, value,
+                           NULL, NULL, &value_desc, NULL);
+      display = action_data_get_display (data);
+
+      if (value_desc && display)
+        {
+          action_message (display, G_OBJECT (brush),
+                          _("Brush Shape: %s"), value_desc);
+        }
     }
 }
 
@@ -532,6 +567,7 @@ context_brush_radius_cmd_callback (GtkAction *action,
   if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
+      GimpDisplay        *display;
       gdouble             radius;
       gdouble             min_radius;
 
@@ -565,6 +601,14 @@ context_brush_radius_cmd_callback (GtkAction *action,
                                     min_radius, 4000.0, min_radius,
                                     0.1, 1.0, 10.0, 0.05, FALSE);
       gimp_brush_generated_set_radius (generated, radius);
+
+      display = action_data_get_display (data);
+
+      if (display)
+        {
+          action_message (action_data_get_display (data), G_OBJECT (brush),
+                          _("Brush Radius: %2.2f"), radius);
+        }
     }
 }
 
@@ -645,6 +689,7 @@ context_brush_angle_cmd_callback (GtkAction *action,
   if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
+      GimpDisplay        *display;
       gdouble             angle;
 
       angle = gimp_brush_generated_get_angle (generated);
@@ -660,6 +705,14 @@ context_brush_angle_cmd_callback (GtkAction *action,
                                      0.1, 1.0, 15.0, 0.0, TRUE);
 
       gimp_brush_generated_set_angle (generated, angle);
+
+      display = action_data_get_display (data);
+
+      if (display)
+        {
+          action_message (action_data_get_display (data), G_OBJECT (brush),
+                          _("Brush Angle: %2.2f"), angle);
+        }
     }
 }
 

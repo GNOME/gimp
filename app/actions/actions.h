@@ -52,6 +52,10 @@ void          action_select_property  (GimpActionSelectType  select_type,
 GimpObject  * action_select_object    (GimpActionSelectType  select_type,
                                        GimpContainer        *container,
                                        GimpObject           *current);
+void          action_message          (GimpDisplay          *display,
+                                       GObject              *object,
+                                       const gchar          *format,
+                                       ...) G_GNUC_PRINTF(3,4);
 
 
 #define return_if_no_gimp(gimp,data) \

@@ -93,12 +93,6 @@
 #include "gimp-intl.h"
 
 
-static void  action_message (GimpDisplay *display,
-                             GObject     *object,
-                             const gchar *format,
-                             ...) G_GNUC_PRINTF(3,4);
-
-
 /*  global variables  */
 
 GimpActionFactory *global_action_factory = NULL;
@@ -607,10 +601,7 @@ action_select_object (GimpActionSelectType  select_type,
   return gimp_container_get_child_by_index (container, select_index);
 }
 
-
-/*  private functions  */
-
-static void
+void
 action_message (GimpDisplay *display,
                 GObject     *object,
                 const gchar *format,
@@ -625,6 +616,10 @@ action_message (GimpDisplay *display,
       GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+    }
+  else if (GIMP_IS_VIEWABLE (object))
+    {
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
     }
 
   va_start (args, format);
