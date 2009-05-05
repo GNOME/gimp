@@ -201,14 +201,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                       GIMP_FILE_SAVE_A_COPY_URI_KEY,
                                       g_strdup (uri), (GDestroyNotify) g_free);
             }
-          else if (! dialog->save_a_copy &&
-                   strcmp (uri, gimp_image_get_uri (dialog->image)) != 0)
-            {
-              /*  reset the "save-a-copy" filename on URI Change */
-              g_object_set_data (G_OBJECT (dialog->image),
-                                 GIMP_FILE_SAVE_A_COPY_URI_KEY,
-                                 NULL);
-            }
 
           if (! dialog->export)
             {
