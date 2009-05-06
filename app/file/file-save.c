@@ -73,7 +73,7 @@ file_save (Gimp                *gimp,
            const gchar         *uri,
            GimpPlugInProcedure *file_proc,
            GimpRunMode          run_mode,
-           gboolean             save_a_copy,
+           gboolean             change_saved_state,
            GError             **error)
 {
   GimpDrawable      *drawable;
@@ -154,7 +154,7 @@ file_save (Gimp                *gimp,
       GimpDocumentList *documents;
       GimpImagefile    *imagefile;
 
-      if (! save_a_copy)
+      if (change_saved_state)
         {
           gimp_image_set_uri (image, uri);
           gimp_image_set_save_proc (image, file_proc);

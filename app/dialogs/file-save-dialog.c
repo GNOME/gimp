@@ -507,7 +507,7 @@ file_save_dialog_save_image (GimpProgress        *progress,
     }
 
   status = file_save (gimp, image, progress, uri,
-                      save_proc, run_mode, save_a_copy, &error);
+                      save_proc, run_mode, ! save_a_copy, &error);
 
   switch (status)
     {
