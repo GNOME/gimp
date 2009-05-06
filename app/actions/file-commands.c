@@ -246,7 +246,7 @@ file_save_cmd_callback (GtkAction *action,
                                                    gimp, image, uri,
                                                    save_proc,
                                                    GIMP_RUN_WITH_LAST_VALS,
-                                                   FALSE, TRUE);
+                                                   TRUE, TRUE);
               break;
             }
 
