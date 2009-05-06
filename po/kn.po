@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-18 21:39+0000\n"
-"PO-Revision-Date: 2009-05-05 17:52+0530\n"
+"PO-Revision-Date: 2009-05-06 12:38+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,7 +196,7 @@ msgstr ""
 #: ../app/main.c:463
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr ""
+msgstr "(ಈ ವಿಂಡೊವನ್ನು ಮುಚ್ಚಲು ಯಾವುದೆ ಅಕ್ಷರವನ್ನು ನಮೂದಿಸಿ)\n"
 
 #: ../app/main.c:480
 msgid "GIMP output. You can minimize this window, but don't close it."
@@ -245,7 +245,7 @@ msgstr "ಕುಂಚಗಳು"
 
 #: ../app/actions/actions.c:107 ../app/dialogs/dialogs.c:169
 msgid "Buffers"
-msgstr ""
+msgstr "ಬಫರುಗಳು"
 
 #: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:182
 msgid "Channels"
@@ -314,13 +314,13 @@ msgstr "ಅಕ್ಷರಶೈಲಿಗಳು"
 #: ../app/actions/actions.c:155 ../app/actions/dialogs-actions.c:141
 #: ../app/dialogs/dialogs.c:228 ../app/widgets/gimpgradienteditor.c:276
 msgid "Gradient Editor"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್ ಸಂಪಾದಕ"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:158 ../app/core/gimp.c:850
 #: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2756
 msgid "Gradients"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್‌ಗಳು"
 
 #: ../app/actions/actions.c:161
 msgid "Help"
@@ -369,7 +369,7 @@ msgstr ""
 
 #: ../app/actions/actions.c:188 ../app/dialogs/dialogs.c:206
 msgid "Sample Points"
-msgstr ""
+msgstr "ನಮೂನೆ ಬಿಂದುಗಳು"
 
 #: ../app/actions/actions.c:191
 msgid "Select"
@@ -445,11 +445,11 @@ msgstr ""
 
 #: ../app/actions/brushes-actions.c:65
 msgid "Copy Brush _Location"
-msgstr "ಕುಂಚದ ಸ್ಥಳವನ್ನು ಕಾಪಿ ಮಾಡುಸ(_L)"
+msgstr "ಕುಂಚದ ಸ್ಥಳವನ್ನು ಕಾಪಿ ಮಾಡು(_L)"
 
 #: ../app/actions/brushes-actions.c:66
 msgid "Copy brush file location to clipboard"
-msgstr ""
+msgstr "ಕುಂಚದ ಕಡತ ಸ್ಥಳವನ್ನು ನಕಲುಫಲಕಕ್ಕೆ ಕಾಪಿ ಮಾಡಿ"
 
 #: ../app/actions/brushes-actions.c:71
 msgid "_Delete Brush"
@@ -477,67 +477,67 @@ msgstr "ಕುಂಚವನ್ನು ಸಂಪಾದಿಸು"
 
 #: ../app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
-msgstr ""
+msgstr "ಬಫರುಗಳ ಮೆನು"
 
 #: ../app/actions/buffers-actions.c:46
 msgid "_Paste Buffer"
-msgstr ""
+msgstr "ಬಫರನ್ನು ಅಂಟಿಸು(_P)"
 
 #: ../app/actions/buffers-actions.c:47
 msgid "Paste the selected buffer"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಬಫರುಗಳನ್ನು ಅಂಟಿಸಿ"
 
 #: ../app/actions/buffers-actions.c:52
 msgid "Paste Buffer _Into"
-msgstr ""
+msgstr "ಬಫರನ್ನು ಇಲ್ಲಿಗೆ ಅಂಟಿಸು(_I)"
 
 #: ../app/actions/buffers-actions.c:53
 msgid "Paste the selected buffer into the selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಬಫರನ್ನು ಆಯ್ದ ಜಾಗಕ್ಕೆ ಅಂಟಿಸಿ"
 
 #: ../app/actions/buffers-actions.c:58
 msgid "Paste Buffer as _New"
-msgstr ""
+msgstr "ಬಫರನ್ನು ಹೊಸತಾಗಿ ಅಂಟಿಸು (_N)"
 
 #: ../app/actions/buffers-actions.c:59
 msgid "Paste the selected buffer as new image"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಬಫರ್ ಅನ್ನು ಹೊಸ ಚಿತ್ರವಾಗಿ ಅಂಟಿಸಿ"
 
 #: ../app/actions/buffers-actions.c:64
 msgid "_Delete Buffer"
-msgstr ""
+msgstr "ಬಫರ್ ಅನ್ನು ಅಳಿಸು(_D)"
 
 #: ../app/actions/buffers-actions.c:65
 msgid "Delete the selected buffer"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಬಫರ್ ಅನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/channels-actions.c:44
 msgid "Channels Menu"
-msgstr ""
+msgstr "ಚಾನಲ್‌ಗಳ ಮೆನು"
 
 #: ../app/actions/channels-actions.c:48
 msgid "_Edit Channel Attributes..."
-msgstr ""
+msgstr "ಚಾನಲ್‌ನ ಗುಣವಿಶೇಷಗಳನ್ನು ಸಂಪಾದಿಸು(_E)..."
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
-msgstr ""
+msgstr "ಚಾನಲ್‌ನ ಹೆಸರು, ಬಣ್ಣ ಹಾಗು ಅಪಾರದರ್ಶಕತೆಯನ್ನು ಸಂಪಾದಿಸಿ"
 
 #: ../app/actions/channels-actions.c:54
 msgid "_New Channel..."
-msgstr ""
+msgstr "ಹೊಸ ಚಾನಲ್‌(_N)..."
 
 #: ../app/actions/channels-actions.c:55
 msgid "Create a new channel"
-msgstr ""
+msgstr "ಒಂದು ಹೊಸ ಚಾನಲ್‌ ಅನ್ನು ನಿರ್ಮಿಸಿ"
 
 #: ../app/actions/channels-actions.c:60
 msgid "_New Channel"
-msgstr ""
+msgstr "ಹೊಸ ಚಾನಲ್‌(_N)"
 
 #: ../app/actions/channels-actions.c:61
 msgid "Create a new channel with last used values"
-msgstr ""
+msgstr "ಕೊನೆಯದಾಗಿ ಬಳಸಲಾದ ಮೌಲ್ಯಗಳೊಂದಿಗೆ ಹೊಸ ಚಾನಲ್ ಅನ್ನು ರಚಿಸಿ"
 
 #: ../app/actions/channels-actions.c:66
 msgid "D_uplicate Channel"
@@ -549,47 +549,47 @@ msgstr ""
 
 #: ../app/actions/channels-actions.c:72
 msgid "_Delete Channel"
-msgstr ""
+msgstr "ಚಾನಲ್‌ ಅನ್ನು ಅಳಿಸು(_D)"
 
 #: ../app/actions/channels-actions.c:73
 msgid "Delete this channel"
-msgstr ""
+msgstr "ಈ ಚಾನಲ್‌ ಅನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/channels-actions.c:78
 msgid "_Raise Channel"
-msgstr ""
+msgstr "ಚಾನಲ್‌ ಅನ್ನು ಏರಿಸು(_R)"
 
 #: ../app/actions/channels-actions.c:79
 msgid "Raise this channel one step in the channel stack"
-msgstr ""
+msgstr "ಚಾನಲ್‌ಗಳ ಜೋಡಣೆಯಲ್ಲಿ ಈ ಚಾನಲ್ ಅನ್ನು ಒಂದು ಹಂತ ಮೇಲಕ್ಕೆ ಏರಿಸಿ"
 
 #: ../app/actions/channels-actions.c:84
 msgid "Raise Channel to _Top"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಮೇಲಕ್ಕೆ ಏರಿಸು(_T)"
 
 #: ../app/actions/channels-actions.c:85
 msgid "Raise this channel to the top of the channel stack"
-msgstr ""
+msgstr "ಚಾನಲ್‌ಗಳ ಜೋಡಣೆಯಲ್ಲಿ ಈ ಚಾನಲ್ ಅನ್ನು ಎಲ್ಲಕ್ಕೂ ಮೇಲಕ್ಕೆ ಏರಿಸಿ"
 
 #: ../app/actions/channels-actions.c:90
 msgid "_Lower Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಕೆಳಕ್ಕೆ ಇಳಿಸು(_L)"
 
 #: ../app/actions/channels-actions.c:91
 msgid "Lower this channel one step in the channel stack"
-msgstr ""
+msgstr "ಚಾನಲ್‌ಗಳ ಜೋಡಣೆಯಲ್ಲಿ ಈ ಚಾನಲ್ ಅನ್ನು ಒಂದು ಹಂತ ಕೆಳಕ್ಕೆ ಇಳಿಸಿ"
 
 #: ../app/actions/channels-actions.c:96
 msgid "Lower Channel to _Bottom"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಕೆಳಕ್ಕೆ ಇಳಿಸು(_T)"
 
 #: ../app/actions/channels-actions.c:97
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr ""
+msgstr "ಚಾನಲ್‌ಗಳ ಜೋಡಣೆಯಲ್ಲಿ ಈ ಚಾನಲ್ ಅನ್ನು ಎಲ್ಲಕ್ಕೂ ಕೆಳಕ್ಕೆ ಇಳಿಸಿ"
 
 #: ../app/actions/channels-actions.c:105
 msgid "Channel to Sele_ction"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ರದ್ದು ಮಾಡು(_c)"
 
 #: ../app/actions/channels-actions.c:106
 msgid "Replace the selection with this channel"
@@ -602,40 +602,40 @@ msgstr "ಆಯ್ಕೆಗೆ ಸೇರಿಸು(_A)"
 
 #: ../app/actions/channels-actions.c:112
 msgid "Add this channel to the current selection"
-msgstr ""
+msgstr "ಈ ಚಾನಲ್ ಅನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಗೆ ಸೇರಿಸಿ"
 
 #: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:272
 #: ../app/actions/layers-actions.c:299 ../app/actions/layers-actions.c:326
 #: ../app/actions/vectors-actions.c:179
 msgid "_Subtract from Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯಿಂದ ಕಳೆ(_S)"
 
 #: ../app/actions/channels-actions.c:118
 msgid "Subtract this channel from the current selection"
-msgstr ""
+msgstr "ಈ ಚಾನಲ್ ಅನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಯಿಂದ ಕಳೆಯಿರಿ"
 
 #: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:278
 #: ../app/actions/layers-actions.c:305 ../app/actions/layers-actions.c:332
 #: ../app/actions/vectors-actions.c:185
 msgid "_Intersect with Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯೊಂದಿಗೆ ಛೇದಿಸು(_I)"
 
 #: ../app/actions/channels-actions.c:124
 msgid "Intersect this channel with the current selection"
-msgstr ""
+msgstr "ಈ ಚಾನಲ್ ಅನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಯೊಂದಿಗೆ ಛೇಧಿಸಿ"
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:393
 msgid "Channel Attributes"
-msgstr ""
+msgstr "ಚಾನಲ್ ಗುಣವಿಶೇಷಗಳು"
 
 #: ../app/actions/channels-commands.c:88
 msgid "Edit Channel Attributes"
-msgstr ""
+msgstr "ಚಾನಲ್ ಗುಣವಿಶೇಷಗಳನ್ನು ಸಂಪಾದಿಸಿ"
 
 #: ../app/actions/channels-commands.c:90
 msgid "Edit Channel Color"
-msgstr ""
+msgstr "ಚಾನಲ್ ಬಣ್ಣವನ್ನು ಸಂಪಾದಿಸಿ"
 
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
@@ -648,15 +648,15 @@ msgstr "ಅಪಾರದರ್ಶಕತೆಯನ್ನು ತುಂಬಿಸು(_
 #: ../app/actions/channels-commands.c:163
 #: ../app/widgets/gimpchanneltreeview.c:316
 msgid "New Channel"
-msgstr ""
+msgstr "ಹೊಸ ಚಾನಲ್"
 
 #: ../app/actions/channels-commands.c:120
 msgid "New Channel Options"
-msgstr ""
+msgstr "ಹೊಸ ಚಾನಲ್‌ನ ಆಯ್ಕೆಗಳು"
 
 #: ../app/actions/channels-commands.c:122
 msgid "New Channel Color"
-msgstr ""
+msgstr "ಹೊಸ ಚಾನಲ್‌ನ ಬಣ್ಣ"
 
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:584
@@ -669,7 +669,7 @@ msgstr ""
 #: ../app/actions/channels-commands.c:307 ../app/core/gimpselection.c:549
 #: ../app/pdb/selection-cmds.c:454 ../app/pdb/selection-cmds.c:521
 msgid "Channel to Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಗಾಗಿನ ಚಾನಲ್"
 
 #: ../app/actions/colormap-actions.c:44
 msgid "Colormap Menu"
@@ -691,15 +691,15 @@ msgstr "FG ಇಂದ ಬಣ್ಣವನ್ನು ಸೇರಿಸು(_A)"
 
 #: ../app/actions/colormap-actions.c:58
 msgid "Add current foreground color"
-msgstr ""
+msgstr "ಪ್ರಸಕ್ತ ಮುನ್ನೆಲೆ ಬಣ್ಣವನ್ನು ಸೇರಿಸಿ"
 
 #: ../app/actions/colormap-actions.c:63
 msgid "_Add Color from BG"
-msgstr ""
+msgstr "BG ಯಿಂದ ಬಣ್ಣವನ್ನು ಸೇರಿಸು(_A)"
 
 #: ../app/actions/colormap-actions.c:64
 msgid "Add current background color"
-msgstr ""
+msgstr "ಪ್ರಸಕ್ತ ಹಿನ್ನಲೆ ಬಣ್ಣವನ್ನು ಸೇರಿಸಿ"
 
 #: ../app/actions/colormap-commands.c:73
 #, c-format
@@ -712,11 +712,11 @@ msgstr ""
 
 #: ../app/actions/config-actions.c:39
 msgid "Use _GEGL"
-msgstr ""
+msgstr "_GEGL ಅನ್ನು ಬಳಸು"
 
 #: ../app/actions/config-actions.c:40
 msgid "If possible, use GEGL for image processing"
-msgstr ""
+msgstr "ಸಾಧ್ಯವಿದ್ದಲ್ಲಿ, ಚಿತ್ರವನ್ನು ಸಂಸ್ಕರಿಸಲು GEGL ಅನ್ನು ಬಳಸಿ"
 
 #: ../app/actions/context-actions.c:46
 msgid "_Context"
@@ -724,15 +724,15 @@ msgstr ""
 
 #: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:59
 msgid "_Colors"
-msgstr ""
+msgstr "ಬಣ್ಣಗಳು(_C)"
 
 #: ../app/actions/context-actions.c:48 ../app/actions/layers-actions.c:58
 msgid "_Opacity"
-msgstr ""
+msgstr "ಅಪಾರದರ್ಶಕತೆ(_O)"
 
 #: ../app/actions/context-actions.c:49
 msgid "Paint _Mode"
-msgstr ""
+msgstr "ಬಣ್ಣಹಚ್ಚುವ ಕ್ರಮ(_M)"
 
 #: ../app/actions/context-actions.c:50
 msgid "_Tool"
@@ -741,12 +741,12 @@ msgstr "ಉಪಕರಣ(_T)"
 #: ../app/actions/context-actions.c:51
 #: ../app/dialogs/preferences-dialog.c:1940
 msgid "_Brush"
-msgstr ""
+msgstr "ಕುಂಚ(_B)"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:99
 #: ../app/dialogs/preferences-dialog.c:1943
 msgid "_Pattern"
-msgstr ""
+msgstr "ವಿನ್ಯಾಸ(_P)"
 
 #: ../app/actions/context-actions.c:53
 msgid "_Palette"
@@ -756,7 +756,7 @@ msgstr ""
 #: ../app/dialogs/palette-import-dialog.c:216
 #: ../app/dialogs/preferences-dialog.c:1946
 msgid "_Gradient"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್(_G)"
 
 #: ../app/actions/context-actions.c:55
 msgid "_Font"
@@ -764,11 +764,11 @@ msgstr "ಅಕ್ಷರ ಶೈಲಿ(_F)"
 
 #: ../app/actions/context-actions.c:57
 msgid "_Shape"
-msgstr ""
+msgstr "ಆಕಾರ(_S)"
 
 #: ../app/actions/context-actions.c:58
 msgid "_Radius"
-msgstr ""
+msgstr "ತ್ರಿಜ್ಯ(_R)"
 
 #: ../app/actions/context-actions.c:59
 msgid "S_pikes"
@@ -784,27 +784,27 @@ msgstr ""
 
 #: ../app/actions/context-actions.c:62
 msgid "A_ngle"
-msgstr ""
+msgstr "ಕೋನ(_n)"
 
 #: ../app/actions/context-actions.c:65
 msgid "_Default Colors"
-msgstr ""
+msgstr "ಪೂರ್ವನಿಯೋಜಿತ ಬಣ್ಣಗಳು(_D)"
 
 #: ../app/actions/context-actions.c:66
 msgid "Set foreground color to black, background color to white"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆಯನ್ನು ಕಪ್ಪು ಬಣ್ಣಕ್ಕೂ, ಹಿನ್ನಲೆಯನ್ನು ಬಿಳಿ ಬಣ್ಣಕ್ಕೂ ಬದಲಾಯಿಸಿ"
 
 #: ../app/actions/context-actions.c:71
 msgid "S_wap Colors"
-msgstr ""
+msgstr "ಬಣ್ಣಗಳನ್ನು ಅದಲು ಬದಲು ಮಾಡು(_w)"
 
 #: ../app/actions/context-actions.c:72
 msgid "Exchange foreground and background colors"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆ ಹಾಗು ಹಿನ್ನೆಲೆ ಬಣ್ಣಗಳನ್ನು ಅದಲು ಬದಲು ಮಾಡಿ"
 
 #: ../app/actions/cursor-info-actions.c:40
 msgid "Pointer Information Menu"
-msgstr ""
+msgstr "ಸೂಚಕದ ಮಾಹಿತಿಯ ಮೆನು"
 
 #: ../app/actions/cursor-info-actions.c:47
 #: ../app/actions/sample-points-actions.c:47
@@ -831,6 +831,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"'%s' ಅನ್ನು ತೆರೆಯುವಲ್ಲಿವ ವಿಫಲಗೊಂಡಿದೆ:\n"
+"\n"
+"%s"
 
 #: ../app/actions/data-commands.c:133
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1419
@@ -842,12 +845,12 @@ msgstr "ಶೀರ್ಷಿಕೆಯಿಲ್ಲದ"
 
 #: ../app/actions/data-commands.c:231
 msgid "Delete Object"
-msgstr ""
+msgstr "ವಸ್ತುವನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/data-commands.c:254
 #, c-format
 msgid "Delete '%s'?"
-msgstr ""
+msgstr "'%s' ಅನ್ನು ಅಳಿಸಬೇಕೆ?"
 
 #: ../app/actions/data-commands.c:257
 #, c-format
@@ -856,35 +859,35 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:39
 msgid "Tool _Options"
-msgstr ""
+msgstr "ಉಪಕರಣದ ಆಯ್ಕೆಗಳು(_O)"
 
 #: ../app/actions/dialogs-actions.c:40
 msgid "Open the tool options dialog"
-msgstr ""
+msgstr "ಉಪಕರಣದ ಆಯ್ಕೆಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:45
 msgid "_Device Status"
-msgstr ""
+msgstr "ಸಾಧನದ ಸ್ಥಿತಿ(_D)"
 
 #: ../app/actions/dialogs-actions.c:46
 msgid "Open the device status dialog"
-msgstr ""
+msgstr "ಸಾಧನದ ಸ್ಥಿತಿಯ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:51
 msgid "_Layers"
-msgstr ""
+msgstr "ಪದರಗಳು(_L)"
 
 #: ../app/actions/dialogs-actions.c:52
 msgid "Open the layers dialog"
-msgstr ""
+msgstr "ಪದರಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:57
 msgid "_Channels"
-msgstr ""
+msgstr "ಚಾನಲ್‌ಗಳು(_C)"
 
 #: ../app/actions/dialogs-actions.c:58
 msgid "Open the channels dialog"
-msgstr ""
+msgstr "ಚಾನಲ್‌ಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:63
 msgid "_Paths"
@@ -920,7 +923,7 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:87
 msgid "Na_vigation"
-msgstr ""
+msgstr "ನ್ಯಾವಿಗೇಶನ್(_v)"
 
 #: ../app/actions/dialogs-actions.c:88
 msgid "Open the display navigation dialog"
@@ -940,7 +943,7 @@ msgstr "ಸೂಚಕ"
 
 #: ../app/actions/dialogs-actions.c:100
 msgid "Open the pointer information dialog"
-msgstr ""
+msgstr "ಸೂಚಕ ಮಾಹಿತಿ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:105
 msgid "_Sample Points"
@@ -952,23 +955,23 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:111
 msgid "Colo_rs"
-msgstr ""
+msgstr "ಬಣ್ಣಗಳು(_r)"
 
 #: ../app/actions/dialogs-actions.c:112
 msgid "Open the FG/BG color dialog"
-msgstr ""
+msgstr "FG/BG ಬಣ್ಣದ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:117
 msgid "_Brushes"
-msgstr ""
+msgstr "ಕುಂಚಗಳು(_B)"
 
 #: ../app/actions/dialogs-actions.c:118
 msgid "Open the brushes dialog"
-msgstr ""
+msgstr "ಕುಂಚಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:124
 msgid "Open the brush editor"
-msgstr ""
+msgstr "ಕುಂಚಗಳ ಸಂಪಾದಕವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:129
 msgid "P_atterns"
@@ -980,15 +983,15 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:135
 msgid "_Gradients"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್‌ಗಳು(_G)"
 
 #: ../app/actions/dialogs-actions.c:136
 msgid "Open the gradients dialog"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್‌ಗಳ ಸಂವಾದವನ್ನು ತೆರೆಯಿರಿ"
 
 #: ../app/actions/dialogs-actions.c:142
 msgid "Open the gradient editor"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್‌ಗಳ ಸಂಪಾದಕವನ್ನು ತೆರೆಯಿರಿ"
 
 #: ../app/actions/dialogs-actions.c:147
 msgid "Pal_ettes"
@@ -1004,15 +1007,15 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:159
 msgid "_Fonts"
-msgstr ""
+msgstr "ಅಕ್ಷರಶೈಲಿಗಳು(_F)"
 
 #: ../app/actions/dialogs-actions.c:160
 msgid "Open the fonts dialog"
-msgstr ""
+msgstr "ಅಕ್ಷರಶೈಲಿಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:165
 msgid "B_uffers"
-msgstr ""
+msgstr "ಬಫರುಗಳು(_u)"
 
 #: ../app/actions/dialogs-actions.c:166
 msgid "Open the named buffers dialog"
@@ -1020,11 +1023,11 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:171
 msgid "_Images"
-msgstr ""
+msgstr "ಚಿತ್ರಗಳು(_I)"
 
 #: ../app/actions/dialogs-actions.c:172
 msgid "Open the images dialog"
-msgstr ""
+msgstr "ಚಿತ್ರಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:177
 msgid "Document Histor_y"
@@ -1048,15 +1051,15 @@ msgstr "ಉಪಕರಣಗಳು(_o)"
 
 #: ../app/actions/dialogs-actions.c:190
 msgid "Open the tools dialog"
-msgstr ""
+msgstr "ಉಪಕರಣಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:195
 msgid "Error Co_nsole"
-msgstr ""
+msgstr "ದೋಷ ಕನ್ಸೋಲ್(_n)"
 
 #: ../app/actions/dialogs-actions.c:196
 msgid "Open the error console"
-msgstr ""
+msgstr "ದೋಷ ಕನ್ಸೋಲನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:206
 msgid "_Preferences"
@@ -1064,15 +1067,15 @@ msgstr "ಆದ್ಯತೆಗಳು(_P)"
 
 #: ../app/actions/dialogs-actions.c:207
 msgid "Open the preferences dialog"
-msgstr ""
+msgstr "ಆದ್ಯತೆಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:212
 msgid "_Keyboard Shortcuts"
-msgstr ""
+msgstr "ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳು(_K)"
 
 #: ../app/actions/dialogs-actions.c:213
 msgid "Open the keyboard shortcuts editor"
-msgstr ""
+msgstr "ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳ ಸಂಪಾದಕವನ್ನು ತೆರೆಯಿರಿ"
 
 #: ../app/actions/dialogs-actions.c:218
 msgid "_Modules"
@@ -1084,11 +1087,11 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:224
 msgid "_Tip of the Day"
-msgstr ""
+msgstr "ದಿನದ ಸಲಹೆ(_T)"
 
 #: ../app/actions/dialogs-actions.c:225
 msgid "Show some helpful tips on using GIMP"
-msgstr ""
+msgstr "GIMP ಅನ್ನು ಬಳಸಲು ನೆರವಾಗುವ ಕೆಲವು ಉಪಯುಕ್ತ ಸಲಹೆಗಳನ್ನು ತೋರಿಸು"
 
 #: ../app/actions/dialogs-actions.c:230
 msgid "_About"
@@ -1097,7 +1100,7 @@ msgstr "ಇದರ ಬಗ್ಗೆ(_A)"
 #: ../app/actions/dialogs-actions.c:231 ../app/dialogs/about-dialog.c:114
 #: ../app/gui/gui.c:479
 msgid "About GIMP"
-msgstr ""
+msgstr "GIMP ಬಗ್ಗೆ"
 
 #: ../app/actions/dock-actions.c:43
 msgid "M_ove to Screen"
@@ -1117,7 +1120,7 @@ msgstr ""
 
 #: ../app/actions/dock-actions.c:61
 msgid "_Show Image Selection"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಆಯ್ಕೆಯನ್ನು ತೋರಿಸು(_S)"
 
 #: ../app/actions/dock-actions.c:67
 msgid "Auto _Follow Active Image"
@@ -1125,35 +1128,35 @@ msgstr ""
 
 #: ../app/actions/dockable-actions.c:49
 msgid "Dialogs Menu"
-msgstr ""
+msgstr "ಸಂವಾದಗಳ ಮೆನು"
 
 #: ../app/actions/dockable-actions.c:53
 msgid "_Add Tab"
-msgstr ""
+msgstr "ಟ್ಯಾಬ್ ಅನ್ನು ಸೇರಿಸು(_A)"
 
 #: ../app/actions/dockable-actions.c:54
 msgid "_Preview Size"
-msgstr ""
+msgstr "ಗಾತ್ರದ ಮುನ್ನೋಟ(_P)"
 
 #: ../app/actions/dockable-actions.c:55
 msgid "_Tab Style"
-msgstr ""
+msgstr "ಟ್ಯಾಬ್ ಶೈಲಿ (_T)"
 
 #: ../app/actions/dockable-actions.c:58
 msgid "_Close Tab"
-msgstr "ಹಾಳೆಯನ್ನು ಮುಚ್ಚು (_C)"
+msgstr "ಟ್ಯಾಬ್ ಅನ್ನು ಮುಚ್ಚು (_C)"
 
 #: ../app/actions/dockable-actions.c:63
 msgid "_Detach Tab"
-msgstr "ಹಾಳೆಯನ್ನು ಕಿತ್ತುಹಾಕು (_D)"
+msgstr "ಟ್ಯಾಬ್‌ ಅನ್ನು ಕಿತ್ತುಹಾಕು (_D)"
 
 #: ../app/actions/dockable-actions.c:81
 msgid "_Tiny"
-msgstr ""
+msgstr "ತೀರ ಚಿಕ್ಕದಾದ(_T)"
 
 #: ../app/actions/dockable-actions.c:82
 msgid "E_xtra Small"
-msgstr ""
+msgstr "ಅತಿ ಚಿಕ್ಕದಾದ(_x)"
 
 #: ../app/actions/dockable-actions.c:83
 msgid "_Small"
@@ -1169,19 +1172,19 @@ msgstr "ದೊಡ್ಡದಾದ(_L)"
 
 #: ../app/actions/dockable-actions.c:86
 msgid "Ex_tra Large"
-msgstr ""
+msgstr "ಹೆಚ್ಚು ದೊಡ್ಡದಾದ(_t)"
 
 #: ../app/actions/dockable-actions.c:87
 msgid "_Huge"
-msgstr ""
+msgstr "ಅತಿ ದೊಡ್ಡದಾದ(_H)"
 
 #: ../app/actions/dockable-actions.c:88
 msgid "_Enormous"
-msgstr ""
+msgstr "ಬೃಹತ್ತಾದ(_E)"
 
 #: ../app/actions/dockable-actions.c:89
 msgid "_Gigantic"
-msgstr ""
+msgstr "ದೈತ್ಯಾಕಾರದ(_G)"
 
 #: ../app/actions/dockable-actions.c:94
 msgid "_Icon"
@@ -1189,7 +1192,7 @@ msgstr "ಚಿಹ್ನೆ(_I)"
 
 #: ../app/actions/dockable-actions.c:95
 msgid "Current _Status"
-msgstr ""
+msgstr "ಪ್ರಸಕ್ತ ಸ್ಥಿತಿ(_S)"
 
 #: ../app/actions/dockable-actions.c:96
 msgid "_Text"
@@ -1197,11 +1200,11 @@ msgstr "ಪಠ್ಯ(_T)"
 
 #: ../app/actions/dockable-actions.c:97
 msgid "I_con & Text"
-msgstr ""
+msgstr "ಚಿಹ್ನೆ ಹಾಗು ಪಠ್ಯ(_c)"
 
 #: ../app/actions/dockable-actions.c:98
 msgid "St_atus & Text"
-msgstr ""
+msgstr "ಸ್ಥಿತಿ ಹಾಗು ಪಠ್ಯ(_a)"
 
 #: ../app/actions/dockable-actions.c:108
 msgid "Loc_k Tab to Dock"
@@ -1209,15 +1212,15 @@ msgstr ""
 
 #: ../app/actions/dockable-actions.c:109
 msgid "Protect this tab from being dragged with the mouse pointer"
-msgstr ""
+msgstr "ಈ ಟ್ಯಾಬ್‌ ಮೌಸ್‌ನ ಸೂಚಕದಿಂದ ಎಳೆಯಲ್ಪಡದಂತೆ ಸಂರಕ್ಷಿಸಿ"
 
 #: ../app/actions/dockable-actions.c:115
 msgid "Show _Button Bar"
-msgstr ""
+msgstr "ಕೆಳಗಿನ ಪಟ್ಟಿಯನ್ನು ತೋರಿಸು(_B)"
 
 #: ../app/actions/dockable-actions.c:124
 msgid "View as _List"
-msgstr ""
+msgstr "ಪಟ್ಟಿಯಾಗಿ ನೋಡು(_L)"
 
 #: ../app/actions/dockable-actions.c:129
 msgid "View as _Grid"
@@ -1225,15 +1228,15 @@ msgstr ""
 
 #: ../app/actions/documents-actions.c:42
 msgid "Documents Menu"
-msgstr ""
+msgstr "ದಸ್ತಾವೇಜುಗಳ ಮೆನು"
 
 #: ../app/actions/documents-actions.c:46
 msgid "_Open Image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ತೆರೆ(_O)"
 
 #: ../app/actions/documents-actions.c:47
 msgid "Open the selected entry"
-msgstr ""
+msgstr "ಆಯ್ದ ನಮೂದನ್ನು ತೆರೆ"
 
 #: ../app/actions/documents-actions.c:52
 msgid "_Raise or Open Image"
@@ -1241,7 +1244,7 @@ msgstr ""
 
 #: ../app/actions/documents-actions.c:53
 msgid "Raise window if already open"
-msgstr ""
+msgstr "ವಿಂಡೊವು ಈಗಾಗಲೆ ತೆರೆಯಲ್ಪಟ್ಟಿದ್ದರೆ ಮೇಲಕ್ಕೆ ಎತ್ತರಿಸು"
 
 #: ../app/actions/documents-actions.c:58
 msgid "File Open _Dialog"
@@ -1249,23 +1252,23 @@ msgstr ""
 
 #: ../app/actions/documents-actions.c:59
 msgid "Open image dialog"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/documents-actions.c:64
 msgid "Copy Image _Location"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಸ್ಥಳವನ್ನು ಕಾಪಿ ಮಾಡು(_L)"
 
 #: ../app/actions/documents-actions.c:65
 msgid "Copy image location to clipboard"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಸ್ಥಳವನ್ನು ನಕಲು ಫಲಕಕ್ಕೆ ಕಾಪಿ ಮಾಡಿ"
 
 #: ../app/actions/documents-actions.c:70
 msgid "Remove _Entry"
-msgstr ""
+msgstr "ನಮೂದನ್ನು ತೆಗೆ(_E)"
 
 #: ../app/actions/documents-actions.c:71
 msgid "Remove the selected entry"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ನಮೂದನ್ನು ತೆಗೆದು ಹಾಕಿ"
 
 #: ../app/actions/documents-actions.c:76
 msgid "_Clear History"
@@ -1273,7 +1276,7 @@ msgstr "ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸು(_C)"
 
 #: ../app/actions/documents-actions.c:77
 msgid "Clear the entire document history"
-msgstr ""
+msgstr "ದಸ್ತಾವೇಜಿನ ಸಂಪೂರ್ಣ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸು"
 
 #: ../app/actions/documents-actions.c:82
 msgid "Recreate _Preview"
@@ -1285,23 +1288,23 @@ msgstr ""
 
 #: ../app/actions/documents-actions.c:88
 msgid "Reload _all Previews"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಮುನ್ನೋಟಗಳನ್ನು ಇನ್ನೊಮ್ಮೆ ಲೋಡ್ ಮಾಡು(_a)"
 
 #: ../app/actions/documents-actions.c:89
 msgid "Reload all previews"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಮುನ್ನೋಟಗಳನ್ನು ಇನ್ನೊಮ್ಮೆ ಲೋಡ್ ಮಾಡು"
 
 #: ../app/actions/documents-actions.c:94
 msgid "Remove Dangling E_ntries"
-msgstr ""
+msgstr "ನೇತಾಡುವ ನಮೂದುಗಳನ್ನು ತೆಗೆದುಹಾಕು(_n)"
 
 #: ../app/actions/documents-actions.c:95
 msgid "Remove dangling entries"
-msgstr ""
+msgstr "ನೇತಾಡುವ ನಮೂದುಗಳನ್ನು ತೆಗೆದುಹಾಕಿ"
 
 #: ../app/actions/documents-commands.c:198
 msgid "Clear Document History"
-msgstr ""
+msgstr "ದಸ್ತಾವೇಜುಗಳ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸು"
 
 #: ../app/actions/documents-commands.c:221
 msgid "Clear the Recent Documents list?"
@@ -1339,7 +1342,7 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:63
 msgid "_Offset..."
-msgstr ""
+msgstr "ಆಫ್‌ಸೆಟ್‌(_O)..."
 
 #: ../app/actions/drawable-actions.c:64
 msgid "Shift the pixels, optionally wrapping them at the borders"
@@ -1355,7 +1358,7 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:79 ../app/actions/vectors-actions.c:147
 msgid "_Visible"
-msgstr ""
+msgstr "ಗೋಚರಿಸುವ(_V)"
 
 #: ../app/actions/drawable-actions.c:80
 msgid "Toggle visibility"
@@ -1363,31 +1366,31 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:89 ../app/actions/image-actions.c:159
 msgid "Flip _Horizontally"
-msgstr ""
+msgstr "ಅಡ್ಡವಾಗಿ ಮಗುಚು(_H)"
 
 #: ../app/actions/drawable-actions.c:90
 msgid "Flip horizontally"
-msgstr ""
+msgstr "ಅಡ್ಡವಾಗಿ ಮಗುಚಿ"
 
 #: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
 msgid "Flip _Vertically"
-msgstr ""
+msgstr "ಲಂಬವಾಗಿ ಮಗುಚು(_V)"
 
 #: ../app/actions/drawable-actions.c:96
 msgid "Flip vertically"
-msgstr ""
+msgstr "ಲಂಬವಾಗಿ ಮಗುಚಿ"
 
 #: ../app/actions/drawable-actions.c:104 ../app/actions/image-actions.c:174
 msgid "Rotate 90° _clockwise"
-msgstr ""
+msgstr "ಪ್ರದಕ್ಷಿಣೆಯಲ್ಲಿ 90°ಯಷ್ಟು ತಿರುಗಿಸು (_c)"
 
 #: ../app/actions/drawable-actions.c:105
 msgid "Rotate 90 degrees to the right"
-msgstr ""
+msgstr "90 ಡಿಗ್ರಿಗಳಷ್ಟು ಬಲಕ್ಕೆ ತಿರುಗಿಸಿ"
 
 #: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:180
 msgid "Rotate _180°"
-msgstr ""
+msgstr "_180° ಯಷ್ಟು ತಿರುಗಿಸು"
 
 #: ../app/actions/drawable-actions.c:111
 msgid "Turn upside-down"
@@ -1395,11 +1398,11 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:186
 msgid "Rotate 90° counter-clock_wise"
-msgstr ""
+msgstr "ಅಪ್ರದಕ್ಷಿಣೆಯಲ್ಲಿ 90°ಯಷ್ಟು ತಿರುಗಿಸು (_w)"
 
 #: ../app/actions/drawable-actions.c:117
 msgid "Rotate 90 degrees to the left"
-msgstr ""
+msgstr "90 ಡಿಗ್ರಿಗಳಷ್ಟು ಎಡಕ್ಕೆ ತಿರುಗಿಸಿ"
 
 #: ../app/actions/drawable-commands.c:62
 msgid "Equalize does not operate on indexed layers."
@@ -1419,11 +1422,11 @@ msgstr "ಸಂಪಾದನೆ(_E)"
 
 #: ../app/actions/edit-actions.c:64
 msgid "_Paste as"
-msgstr ""
+msgstr "ಹೀಗೆ ಅಂಟಿಸು(_P)"
 
 #: ../app/actions/edit-actions.c:65
 msgid "_Buffer"
-msgstr ""
+msgstr "ಬಫರ್(_B)"
 
 #: ../app/actions/edit-actions.c:68
 msgid "Undo History Menu"
@@ -1520,7 +1523,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:138
 msgid "From _Clipboard"
-msgstr ""
+msgstr "ನಕಲುಫಲಕದಿಂದ(_C)"
 
 #: ../app/actions/edit-actions.c:139 ../app/actions/edit-actions.c:145
 msgid "Create a new image from the content of the clipboard"
@@ -1528,11 +1531,11 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:144
 msgid "_New Image"
-msgstr ""
+msgstr "ಹೊಸ ಚಿತ್ರ(_N)"
 
 #: ../app/actions/edit-actions.c:150
 msgid "New _Layer"
-msgstr ""
+msgstr "ಹೊಸ ಪದರ(_L)"
 
 #: ../app/actions/edit-actions.c:151
 msgid "Create a new layer from the content of the clipboard"
@@ -1581,19 +1584,19 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:189
 msgid "Fill with _FG Color"
-msgstr ""
+msgstr "_FG ಬಣ್ಣದೊಂದಿಗೆ ತುಂಬಿಸಿ"
 
 #: ../app/actions/edit-actions.c:190
 msgid "Fill the selection using the foreground color"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆಯ ಬಣ್ಣವನ್ನು ಉಪಯೋಗಿಸಿಕೊಂಡು ಆಯ್ಕೆ ಮಾಡಲಾದ ಜಾಗವನ್ನು ತುಂಬಿಸಿ"
 
 #: ../app/actions/edit-actions.c:195
 msgid "Fill with B_G Color"
-msgstr ""
+msgstr "B_G ಬಣ್ಣದೊಂದಿಗೆ ತುಂಬಿಸಿ"
 
 #: ../app/actions/edit-actions.c:196
 msgid "Fill the selection using the background color"
-msgstr ""
+msgstr "ಹಿನ್ನೆಲೆಯ ಬಣ್ಣವನ್ನು ಉಪಯೋಗಿಸಿಕೊಂಡು ಆಯ್ಕೆ ಮಾಡಲಾದ ಜಾಗವನ್ನು ತುಂಬಿಸಿ"
 
 #: ../app/actions/edit-actions.c:201
 msgid "Fill with P_attern"
@@ -1606,12 +1609,12 @@ msgstr ""
 #: ../app/actions/edit-actions.c:279
 #, c-format
 msgid "_Undo %s"
-msgstr ""
+msgstr "%s ಅನ್ನು ರದ್ದುಮಾಡು(_U)"
 
 #: ../app/actions/edit-actions.c:286
 #, c-format
 msgid "_Redo %s"
-msgstr ""
+msgstr "%s ಅನ್ನು ಪುನಃ ಮಾಡು"
 
 #: ../app/actions/edit-actions.c:301
 #, c-format
@@ -1697,15 +1700,15 @@ msgstr "ಎಲ್ಲವನ್ನೂ ಆರಿಸು(_A)"
 
 #: ../app/actions/error-console-actions.c:51
 msgid "Select all errors"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ದೋಷಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/actions/error-console-actions.c:59
 msgid "_Save Error Log to File..."
-msgstr ""
+msgstr "ದೋಷದ ದಾಖಲೆಯನ್ನು ಕಡತಕ್ಕೆ ಉಳಿಸು(_S)..."
 
 #: ../app/actions/error-console-actions.c:60
 msgid "Save error log"
-msgstr ""
+msgstr "ದೋಷದ ದಾಖಲೆಯನ್ನು ಉಳಿಸಿ"
 
 #: ../app/actions/error-console-actions.c:65
 msgid "Save S_election to File..."
@@ -1784,11 +1787,11 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:101
 msgid "Close all"
-msgstr ""
+msgstr "ಎಲ್ಲವನ್ನೂ ಮುಚ್ಚು"
 
 #: ../app/actions/file-actions.c:102
 msgid "Close all opened images"
-msgstr ""
+msgstr "ತೆರೆಯಲಾಗಿರುವ ಎಲ್ಲಾ ಚಿತ್ರಗಳನ್ನು ಮುಚ್ಚು"
 
 #: ../app/actions/file-actions.c:107
 msgid "_Quit"
@@ -1804,7 +1807,7 @@ msgstr "ಉಳಿಸು(_S)"
 
 #: ../app/actions/file-actions.c:117
 msgid "Save this image"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರವನ್ನು ಉಳಿಸು"
 
 #: ../app/actions/file-actions.c:122
 msgid "Save _As..."
@@ -1812,7 +1815,7 @@ msgstr "ಹೀಗೆ ಉಳಿಸು(_A)..."
 
 #: ../app/actions/file-actions.c:123
 msgid "Save this image with a different name"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರವನ್ನು ಬೇರೊಂದು ಹೆಸರಿನಿಂದ ಉಳಿಸಿ"
 
 #: ../app/actions/file-actions.c:128
 msgid "Save a Cop_y..."
@@ -1824,7 +1827,7 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:134
 msgid "Save and Close..."
-msgstr ""
+msgstr "ಉಳಿಸು ಹಾಗು ಮುಚ್ಚು..."
 
 #: ../app/actions/file-actions.c:135
 msgid "Save this image and close its window"
@@ -1833,15 +1836,15 @@ msgstr ""
 #: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:456
 #: ../app/dialogs/file-open-dialog.c:76
 msgid "Open Image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ತೆರೆ"
 
 #: ../app/actions/file-commands.c:125
 msgid "Open Image as Layers"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಪದರಗಳಾಗಿ ತೆರೆಯಿರಿ"
 
 #: ../app/actions/file-commands.c:266
 msgid "Saving canceled"
-msgstr ""
+msgstr "ಉಳಿಸುವಿಕೆ ರದ್ದಾಗಿದೆ"
 
 #: ../app/actions/file-commands.c:275 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
@@ -1851,10 +1854,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"'%s' ಅನ್ನು ಉಳಿಸುವುದು ವಿಫಲಗೊಂಡಿದೆ:\n"
+"\n"
+"%s"
 
 #: ../app/actions/file-commands.c:300
 msgid "No changes need to be saved"
-msgstr ""
+msgstr "ಯಾವುದೆ ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸುವ ಅಗತ್ಯವಿಲ್ಲ"
 
 #: ../app/actions/file-commands.c:307 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
@@ -1862,7 +1868,7 @@ msgstr "ಚಿತ್ರವನ್ನು ಉಳಿಸು"
 
 #: ../app/actions/file-commands.c:313
 msgid "Save a Copy of the Image"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಒಂದು ಪ್ರತಿಯನ್ನು ಉಳಿಸಿ"
 
 #: ../app/actions/file-commands.c:333
 msgid "Create New Template"
@@ -1974,14 +1980,14 @@ msgstr ""
 #: ../app/actions/gradient-editor-actions.c:166
 #: ../app/actions/gradient-editor-actions.c:214
 msgid "_Foreground Color"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆ ಬಣ್ಣ(_F)"
 
 #: ../app/actions/gradient-editor-actions.c:171
 #: ../app/actions/gradient-editor-actions.c:219
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:301
 msgid "_Background Color"
-msgstr ""
+msgstr "ಹಿನ್ನೆಲೆ ಬಣ್ಣ(_B)"
 
 #: ../app/actions/gradient-editor-actions.c:204
 msgid "_Right Neighbor's Left Endpoint"
@@ -1999,17 +2005,17 @@ msgstr ""
 #: ../app/actions/gradient-editor-actions.c:263
 #: ../app/actions/gradient-editor-actions.c:291
 msgid "F_oreground Color"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆ ಬಣ್ಣ(_o)"
 
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:296
 msgid "Fo_reground Color (Transparent)"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆ ಬಣ್ಣ (ಪಾರದರ್ಶಕ)(_r)"
 
 #: ../app/actions/gradient-editor-actions.c:278
 #: ../app/actions/gradient-editor-actions.c:306
 msgid "B_ackground Color (Transparent)"
-msgstr ""
+msgstr "ಹಿನ್ನೆಲೆ ಬಣ್ಣ (ಪಾರದರ್ಶಕ)(_a)"
 
 #: ../app/actions/gradient-editor-actions.c:314
 msgid "_Linear"
@@ -2303,7 +2309,7 @@ msgstr "ಸಹಾಯ(_H)"
 
 #: ../app/actions/help-actions.c:42
 msgid "Open the GIMP user manual"
-msgstr ""
+msgstr "GIMP ಬಳಕೆದಾರ ಕೈಪಿಡಿಯನ್ನು ತೆರೆಯಿರಿ"
 
 #: ../app/actions/help-actions.c:47
 msgid "_Context Help"
@@ -2335,7 +2341,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:60
 msgid "I_nfo"
-msgstr ""
+msgstr "ಮಾಹಿತಿ(_n)"
 
 #: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:653
 #: ../app/tools/gimpthresholdtool.c:264
@@ -2356,11 +2362,11 @@ msgstr "ಹೊಸ(_N)..."
 
 #: ../app/actions/image-actions.c:67
 msgid "Create a new image"
-msgstr ""
+msgstr "ಒಂದು ಹೊಸ ಚಿತ್ರವನ್ನು ರಚಿಸಿ"
 
 #: ../app/actions/image-actions.c:72
 msgid "Can_vas Size..."
-msgstr ""
+msgstr "ಕ್ಯಾನ್ವಾಸ್ ಗಾತ್ರ(_v)..."
 
 #: ../app/actions/image-actions.c:73
 msgid "Adjust the image dimensions"
@@ -2424,11 +2430,11 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:120 ../app/actions/layers-actions.c:146
 msgid "_Flatten Image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಸಪಾಟುಗೊಳಿಸು(_F)"
 
 #: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:147
 msgid "Merge all layers into one and remove transparency"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಪದರಗಳನ್ನು ಒಂದಾಗಿ ಒಗ್ಗೂಡಿಸಿ ಹಾಗು ಪಾರದರ್ಶಕತೆಯನ್ನು ತೆಗೆದುಹಾಕಿ"
 
 #: ../app/actions/image-actions.c:126
 msgid "Configure G_rid..."
@@ -2440,11 +2446,11 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:132
 msgid "Image Pr_operties"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಗುಣಧರ್ಮಗಳು(_o)"
 
 #: ../app/actions/image-actions.c:133
 msgid "Display information about this image"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರದ ಬಗೆಗಿನ ಮಾಹಿತಿಯನ್ನು ತೋರಿಸು"
 
 #: ../app/actions/image-actions.c:142
 msgid "Convert the image to the RGB colorspace"
@@ -2549,7 +2555,7 @@ msgstr ""
 
 #: ../app/actions/images-actions.c:53 ../app/actions/view-actions.c:75
 msgid "_New View"
-msgstr ""
+msgstr "ಹೊಸ ನೋಟ(_N)"
 
 #: ../app/actions/images-actions.c:54
 msgid "Create a new display for this image"
@@ -2557,11 +2563,11 @@ msgstr ""
 
 #: ../app/actions/images-actions.c:59
 msgid "_Delete Image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಅಳಿಸು(_D)"
 
 #: ../app/actions/images-actions.c:60
 msgid "Delete this image"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರವನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/layers-actions.c:48
 msgid "Layers Menu"
@@ -2569,7 +2575,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:51
 msgid "_Layer"
-msgstr ""
+msgstr "ಪದರ(_L)"
 
 #: ../app/actions/layers-actions.c:52
 msgid "Stac_k"
@@ -2597,11 +2603,11 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:62
 msgid "Te_xt Tool"
-msgstr ""
+msgstr "ಪಠ್ಯ ಉಪಕರಣ(_x)"
 
 #: ../app/actions/layers-actions.c:63
 msgid "Activate the text tool on this text layer"
-msgstr ""
+msgstr "ಈ ಪಠ್ಯ ಪದರದಲ್ಲಿ ಪಠ್ಯ ಉಪಕರಣವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ"
 
 #: ../app/actions/layers-actions.c:68
 msgid "_Edit Layer Attributes..."
@@ -2609,19 +2615,19 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:69
 msgid "Edit the layer's name"
-msgstr ""
+msgstr "ಪದರದ ಹೆಸರನ್ನು ಸಂಪಾದಿಸಿ"
 
 #: ../app/actions/layers-actions.c:74
 msgid "_New Layer..."
-msgstr ""
+msgstr "ಹೊಸ ಪದರ(_N)..."
 
 #: ../app/actions/layers-actions.c:75
 msgid "Create a new layer and add it to the image"
-msgstr ""
+msgstr "ಹೊಸ ಪದರವನ್ನು ರಚಿಸಿ ಹಾಗು ಅದನ್ನು ಚಿತ್ರಕ್ಕೆ ಸೇರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:80
 msgid "_New Layer"
-msgstr ""
+msgstr "ಹೊಸ ಪದರ(_N)"
 
 #: ../app/actions/layers-actions.c:81
 msgid "Create a new layer with last used values"
@@ -2645,11 +2651,11 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:98
 msgid "_Delete Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಅಳಿಸು(_D)"
 
 #: ../app/actions/layers-actions.c:99
 msgid "Delete this layer"
-msgstr ""
+msgstr "ಈ ಪದರವನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/layers-actions.c:104
 msgid "_Raise Layer"
@@ -2709,7 +2715,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:153
 msgid "Turn this text layer into a normal layer"
-msgstr ""
+msgstr "ಈ ಪಠ್ಯ ಪದರವನ್ನು ಸಾಮಾನ್ಯ ಪದರವಾಗಿ ಮಾರ್ಪಡಿಸಿ"
 
 #: ../app/actions/layers-actions.c:158
 msgid "Text to _Path"
@@ -2757,7 +2763,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:194
 msgid "Add La_yer Mask..."
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕನ್ನು ಸೇರಿಸು(_y)..."
 
 #: ../app/actions/layers-actions.c:195
 msgid "Add a mask that allows non-destructive editing of transparency"
@@ -2765,7 +2771,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:200
 msgid "Add Alpha C_hannel"
-msgstr ""
+msgstr "ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ಸೇರಿಸು(_h)"
 
 #: ../app/actions/layers-actions.c:201
 msgid "Add transparency information to the layer"
@@ -2773,7 +2779,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:206
 msgid "_Remove Alpha Channel"
-msgstr ""
+msgstr "ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ತೆಗೆದುಹಾಕು(_R)"
 
 #: ../app/actions/layers-actions.c:207
 msgid "Remove transparency information from the layer"
@@ -11561,7 +11567,7 @@ msgstr "ನೀವು ಉಳಿಸುತ್ತಿರುವ ಚಿತ್ರವನ�
 
 #: ../app/widgets/gimpdockable.c:194
 msgid "Configure this tab"
-msgstr "ಈ ಹಾಳೆಯನ್ನು ಸಂರಚಿಸಿ"
+msgstr "ಈ ಟ್ಯಾಬ್‌ ಅನ್ನು ಸಂರಚಿಸಿ"
 
 #: ../app/widgets/gimpdockseparator.c:44
 msgid "You can drop dockable dialogs here"
