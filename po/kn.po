@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-18 21:39+0000\n"
-"PO-Revision-Date: 2009-05-06 12:38+0530\n"
+"PO-Revision-Date: 2009-05-07 15:26+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1438,7 +1438,7 @@ msgstr "ರದ್ದು ಮಾಡು(_U)"
 
 #: ../app/actions/edit-actions.c:73
 msgid "Undo the last operation"
-msgstr ""
+msgstr "ಹಿಂದಿನ ಕಾರ್ಯವನ್ನು ರದ್ದು ಮಾಡಿ"
 
 #: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:314
 msgid "_Redo"
@@ -1446,7 +1446,7 @@ msgstr "ಪುನಃ ಮಾಡು(_R)"
 
 #: ../app/actions/edit-actions.c:79
 msgid "Redo the last operation that was undone"
-msgstr ""
+msgstr "ಈ ಮೊದಲು ರದ್ದು ಮಾಡಲಾದ ಕಾರ್ಯವನ್ನು ಪುನಃ ಮಾಡಿ"
 
 #: ../app/actions/edit-actions.c:84
 msgid "Strong Undo"
@@ -1486,7 +1486,7 @@ msgstr "ಕತ್ತರಿಸು(_t)"
 
 #: ../app/actions/edit-actions.c:109
 msgid "Move the selected pixels to the clipboard"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಪಿಕ್ಸೆಲ್‌ಗಳನ್ನು ನಕಲುಫಲಕಕ್ಕೆ ಸ್ಥಳಾಂತರಿಸಿ"
 
 #: ../app/actions/edit-actions.c:114
 msgid "_Copy"
@@ -1494,7 +1494,7 @@ msgstr "ಕಾಪಿ ಮಾಡು(_C)"
 
 #: ../app/actions/edit-actions.c:115
 msgid "Copy the selected pixels to the clipboard"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಪಿಕ್ಸೆಲ್‌ಗಳನ್ನು ನಕಲುಫಲಕಕ್ಕೆ ಕಾಪಿ ಮಾಡಿ"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:120
@@ -1503,7 +1503,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:121
 msgid "Copy what is visible in the selected region"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಜಾಗದಲ್ಲಿ ಗೋಚರಿಸುವುದನ್ನು ಕಾಪಿ ಮಾಡಿ"
 
 #: ../app/actions/edit-actions.c:126
 msgid "_Paste"
@@ -1519,7 +1519,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:133
 msgid "Paste the content of the clipboard into the current selection"
-msgstr ""
+msgstr "ನಕಲುಫಲಕದಲ್ಲಿರುವುದನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಗೆ ಅಂಟಿಸಿ"
 
 #: ../app/actions/edit-actions.c:138
 msgid "From _Clipboard"
@@ -1527,7 +1527,7 @@ msgstr "ನಕಲುಫಲಕದಿಂದ(_C)"
 
 #: ../app/actions/edit-actions.c:139 ../app/actions/edit-actions.c:145
 msgid "Create a new image from the content of the clipboard"
-msgstr ""
+msgstr "ನಕಲುಫಲಕದಲ್ಲಿರುವದರಿಂದ ಒಂದು ಹೊಸ ಚಿತ್ರವನ್ನು ರಚಿಸಿ"
 
 #: ../app/actions/edit-actions.c:144
 msgid "_New Image"
@@ -1539,7 +1539,7 @@ msgstr "ಹೊಸ ಪದರ(_L)"
 
 #: ../app/actions/edit-actions.c:151
 msgid "Create a new layer from the content of the clipboard"
-msgstr ""
+msgstr "ನಕಲುಫಲಕದಲ್ಲಿರುವದರಿಂದ ಒಂದು ಹೊಸ ಪದರವನ್ನು ರಚಿಸಿ"
 
 #: ../app/actions/edit-actions.c:156
 msgid "Cu_t Named..."
@@ -1580,7 +1580,7 @@ msgstr "ತೆರವುಗೊಳಿಸು(_e)"
 
 #: ../app/actions/edit-actions.c:181
 msgid "Clear the selected pixels"
-msgstr ""
+msgstr "ಆಯ್ದ ಪಿಕ್ಸೆಲ್‌ಗಳನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/edit-actions.c:189
 msgid "Fill with _FG Color"
@@ -1636,16 +1636,16 @@ msgstr ""
 
 #: ../app/actions/edit-commands.c:201
 msgid "Cut pixels to the clipboard"
-msgstr ""
+msgstr "ನಕಲುಫಲಕಕ್ಕಾಗಿ ಕತ್ತರಿಸಿದ ಪಿಕ್ಸೆಲ್‌ಗಳು"
 
 #: ../app/actions/edit-commands.c:228 ../app/actions/edit-commands.c:254
 msgid "Copied pixels to the clipboard"
-msgstr ""
+msgstr "ನಕಲುಫಲಕಕ್ಕಾಗಿ ಕಾಪಿ ಮಾಡಿದ ಪಿಕ್ಸೆಲ್‌ಗಳು"
 
 #: ../app/actions/edit-commands.c:315 ../app/actions/edit-commands.c:349
 #: ../app/actions/edit-commands.c:525
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
+msgstr "ಅಂಟಿಸಲು ನಕಲುಫಲಕದಲ್ಲಿ ಯಾವುದೆ ಚಿತ್ರವಿಲ್ಲ."
 
 #: ../app/actions/edit-commands.c:338 ../app/core/gimpbrushclipboard.c:181
 #: ../app/core/gimppatternclipboard.c:181 ../app/widgets/gimpclipboard.c:296
@@ -1659,7 +1659,7 @@ msgstr ""
 #: ../app/actions/edit-commands.c:366 ../app/actions/edit-commands.c:407
 #: ../app/actions/edit-commands.c:427
 msgid "Enter a name for this buffer"
-msgstr ""
+msgstr "ಈ ಬಫರಿಗಾಗಿ ಒಂದು ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
 
 #: ../app/actions/edit-commands.c:404
 msgid "Copy Named"
@@ -1684,7 +1684,7 @@ msgstr ""
 
 #: ../app/actions/error-console-actions.c:40
 msgid "Error Console Menu"
-msgstr ""
+msgstr "ದೋಷ ಕನ್ಸೋಲ್ ಮೆನು"
 
 #: ../app/actions/error-console-actions.c:44
 msgid "_Clear"
@@ -1692,7 +1692,7 @@ msgstr "ಅಳಿಸು(_C)"
 
 #: ../app/actions/error-console-actions.c:45
 msgid "Clear error console"
-msgstr ""
+msgstr "ದೋಷ ಕನ್ಸೋಲ್ ಅನ್ನು ತೆರವುಗೊಳಿಸು"
 
 #: ../app/actions/error-console-actions.c:50
 msgid "Select _All"
@@ -1712,19 +1712,19 @@ msgstr "ದೋಷದ ದಾಖಲೆಯನ್ನು ಉಳಿಸಿ"
 
 #: ../app/actions/error-console-actions.c:65
 msgid "Save S_election to File..."
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಕಡತಕ್ಕೆ ಉಳಿಸು(_e)..."
 
 #: ../app/actions/error-console-actions.c:66
 msgid "Save selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಉಳಿಸು"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
-msgstr ""
+msgstr "ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ. ಏನನ್ನೂ ಆಯ್ಕೆ ಮಾಡಿಲ್ಲ."
 
 #: ../app/actions/error-console-commands.c:95
 msgid "Save Error Log to File"
-msgstr ""
+msgstr "ದೋಷ ದಾಖಲೆಯನ್ನು ಕಡತಕ್ಕೆ ಉಳಿಸು"
 
 #: ../app/actions/error-console-commands.c:156
 #, c-format
@@ -1732,6 +1732,8 @@ msgid ""
 "Error writing file '%s':\n"
 "%s"
 msgstr ""
+"'%s' ಕಡತಕ್ಕೆ ಬರೆಯುವಲ್ಲಿ ದೋಷ:\n"
+"%s"
 
 #: ../app/actions/file-actions.c:66
 msgid "_File"
@@ -1751,15 +1753,15 @@ msgstr "ತೆರೆ(_O)..."
 
 #: ../app/actions/file-actions.c:72
 msgid "Open an image file"
-msgstr ""
+msgstr "ಒಂದು ಚಿತ್ರ ಕಡತವನ್ನು ತೆರೆ"
 
 #: ../app/actions/file-actions.c:77
 msgid "Op_en as Layers..."
-msgstr ""
+msgstr "ಪದರಗಳಾಗಿ ತೆರೆ(_e)..."
 
 #: ../app/actions/file-actions.c:78
 msgid "Open an image file as layers"
-msgstr ""
+msgstr "ಒಂದು ಚಿತ್ರ ಕಡತವನ್ನು ಪದರಗಳಾಗಿ ತೆರೆ"
 
 #: ../app/actions/file-actions.c:83
 msgid "Open _Location..."
@@ -1767,7 +1769,7 @@ msgstr "ಸ್ಥಳವನ್ನು ತೆರೆ(_L)..."
 
 #: ../app/actions/file-actions.c:84
 msgid "Open an image file from a specified location"
-msgstr ""
+msgstr "ಒಂದು ಚಿತ್ರ ಕಡತವನ್ನು ನಿಗದಿತ ಸ್ಥಳದಿಂದ ತೆರೆ"
 
 #: ../app/actions/file-actions.c:89
 msgid "Save as _Template..."
@@ -1783,7 +1785,7 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:96
 msgid "Reload the image file from disk"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಡಿಸ್ಕಿನಿಂದ ಮರಳಿ ಲೋಡ್ ಮಾಡು"
 
 #: ../app/actions/file-actions.c:101
 msgid "Close all"
@@ -1819,11 +1821,11 @@ msgstr "ಈ ಚಿತ್ರವನ್ನು ಬೇರೊಂದು ಹೆಸರಿ
 
 #: ../app/actions/file-actions.c:128
 msgid "Save a Cop_y..."
-msgstr ""
+msgstr "ಒಂದು ಪ್ರತಿಯನ್ನು ಉಳಿಸು(_y)..."
 
 #: ../app/actions/file-actions.c:129
 msgid "Save this image with a different name, but keep its current name"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಬೇರೊಂದು ಹೆಸರಿನೊಂದಿಗೆ ಉಳಿಸು, ಆದರೆ ಈಗಿನ ಹೆಸರನ್ನು ಹಾಗೆಯೆ ಇರಿಸಿಕೊ"
 
 #: ../app/actions/file-actions.c:134
 msgid "Save and Close..."
@@ -1831,7 +1833,7 @@ msgstr "ಉಳಿಸು ಹಾಗು ಮುಚ್ಚು..."
 
 #: ../app/actions/file-actions.c:135
 msgid "Save this image and close its window"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಉಳಿಸಿ ನಂತರ ವಿಂಡೊವನ್ನು ಮುಚ್ಚು"
 
 #: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:456
 #: ../app/dialogs/file-open-dialog.c:76
@@ -1911,7 +1913,7 @@ msgstr ""
 
 #: ../app/actions/fonts-actions.c:44
 msgid "Fonts Menu"
-msgstr ""
+msgstr "ಅಕ್ಷರಶೈಲಿಗಳ ಮೆನು"
 
 #: ../app/actions/fonts-actions.c:48
 msgid "_Rescan Font List"
@@ -2000,7 +2002,7 @@ msgstr ""
 #: ../app/actions/gradient-editor-actions.c:258
 #: ../app/actions/gradient-editor-actions.c:286
 msgid "_Fixed"
-msgstr ""
+msgstr "ನಿಶ್ಚಿತ(_F)"
 
 #: ../app/actions/gradient-editor-actions.c:263
 #: ../app/actions/gradient-editor-actions.c:291
@@ -2244,11 +2246,11 @@ msgstr ""
 
 #: ../app/actions/gradients-actions.c:48
 msgid "_New Gradient"
-msgstr ""
+msgstr "ಹೊಸ ಗ್ರೇಡಿಯಂಟ್(_N)"
 
 #: ../app/actions/gradients-actions.c:49
 msgid "New gradient"
-msgstr ""
+msgstr "ಹೊಸ ಗ್ರೇಡಿಯಂಟ್"
 
 #: ../app/actions/gradients-actions.c:54
 msgid "D_uplicate Gradient"
@@ -2268,19 +2270,19 @@ msgstr ""
 
 #: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
-msgstr ""
+msgstr "_POV-ರೇ ಆಗಿ ಉಳಿಸು..."
 
 #: ../app/actions/gradients-actions.c:67
 msgid "Save gradient as POV-Ray"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್‌ ಅನ್ನು POV-ರೇ ಆಗಿ ಉಳಿಸಿ"
 
 #: ../app/actions/gradients-actions.c:72
 msgid "_Delete Gradient"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್ ಅನ್ನು ಅಳಿಸು(_D)"
 
 #: ../app/actions/gradients-actions.c:73
 msgid "Delete gradient"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್ ಅನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/gradients-actions.c:78
 msgid "_Refresh Gradients"
@@ -2292,16 +2294,16 @@ msgstr ""
 
 #: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್ ಅನ್ನು ಸಂಪಾದಿಸು(_E)..."
 
 #: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್ ಅನ್ನು ಸಂಪಾದಿಸಿ"
 
 #: ../app/actions/gradients-commands.c:66
 #, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr ""
+msgstr "'%s' ಅನ್ನು POV-ರೇ ಆಗಿ ಉಳಿಸು"
 
 #: ../app/actions/help-actions.c:38 ../app/actions/help-actions.c:41
 msgid "_Help"
@@ -2317,11 +2319,11 @@ msgstr "ಸನ್ನಿವೇಶ ಸಹಾಯ(_C)"
 
 #: ../app/actions/help-actions.c:48
 msgid "Show the help for a specific user interface item"
-msgstr ""
+msgstr "ನಿಶ್ಚಿತ ಬಳಕೆದಾರ ಸಂಪರ್ಕಸಾಧನದ ಅಂಶಕ್ಕಾಗಿ ನೆರವನ್ನು ತೋರಿಸು"
 
 #: ../app/actions/image-actions.c:47 ../app/actions/image-actions.c:51
 msgid "Image Menu"
-msgstr ""
+msgstr "ಚಿತ್ರ ಮೆನು"
 
 #: ../app/actions/image-actions.c:54
 msgid "_Image"
@@ -2354,7 +2356,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:63
 msgid "C_omponents"
-msgstr ""
+msgstr "ಘಟಕಗಳು(_o)"
 
 #: ../app/actions/image-actions.c:66
 msgid "_New..."
@@ -2382,15 +2384,15 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:84
 msgid "F_it Canvas to Selection"
-msgstr ""
+msgstr "ಕ್ಯಾನ್ವಾಸ್ ಅನ್ನು ಆಯ್ಕೆಗೆ ಹೊಂದಿಸು(_i)"
 
 #: ../app/actions/image-actions.c:85
 msgid "Resize the image to the extents of the selection"
-msgstr ""
+msgstr "ಚಿತ್ರದ ವ್ಯಾಪ್ತಿಯ ಗಾತ್ರವನ್ನು ಆಯ್ಕೆಗೆ ಸರಿಹೊಂದುವಂತೆ ಕತ್ತರಿಸಿ"
 
 #: ../app/actions/image-actions.c:90
 msgid "_Print Size..."
-msgstr ""
+msgstr "ಮುದ್ರಣ ಗಾತ್ರ(_P)..."
 
 #: ../app/actions/image-actions.c:91
 msgid "Adjust the print resolution"
@@ -2406,27 +2408,27 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:102 ../app/actions/layers-actions.c:188
 msgid "_Crop to Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಗೆ ಕತ್ತರಿಸು(_C)"
 
 #: ../app/actions/image-actions.c:103
 msgid "Crop the image to the extents of the selection"
-msgstr ""
+msgstr "ಚಿತ್ರದ ವ್ಯಾಪ್ತಿಯನ್ನು ಆಯ್ಕೆಗೆ ಸರಿಹೊಂದುವಂತೆ ಕತ್ತರಿಸಿ"
 
 #: ../app/actions/image-actions.c:108
 msgid "_Duplicate"
-msgstr ""
+msgstr "ನಕಲಿಪ್ರತಿ(_D)"
 
 #: ../app/actions/image-actions.c:109
 msgid "Create a duplicate of this image"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರದ ಇನ್ನೊಂದು ಪ್ರತಿಯನ್ನು ರಚಿಸಿ"
 
 #: ../app/actions/image-actions.c:114
 msgid "Merge Visible _Layers..."
-msgstr ""
+msgstr "ಗೋಚರಿಸುವ ಪದರಗಳನ್ನು ವಿಲೀನಗೊಳಿಸು(_L)..."
 
 #: ../app/actions/image-actions.c:115 ../app/actions/layers-actions.c:141
 msgid "Merge all visible layers into one layer"
-msgstr ""
+msgstr "ಗೋಚರಿಸುವ ಎಲ್ಲಾ ಪದರಗಳನ್ನು ಒಂದು ಪದರವಾಗಿ ಒಗ್ಗೂಡಿಸಿ"
 
 #: ../app/actions/image-actions.c:120 ../app/actions/layers-actions.c:146
 msgid "_Flatten Image"
@@ -2474,11 +2476,11 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:160
 msgid "Flip image horizontally"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಅಡ್ಡವಾಗಿ ಮಗಚಿ"
 
 #: ../app/actions/image-actions.c:166
 msgid "Flip image vertically"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಲಂಬವಾಗಿ ಮಗಚಿ"
 
 #: ../app/actions/image-actions.c:175
 msgid "Rotate the image 90 degrees to the right"
@@ -2494,12 +2496,12 @@ msgstr "ಚಿತ್ರವನ್ನು 90 ಡಿಗ್ರಿಯಷ್ಟು ಎ�
 
 #: ../app/actions/image-commands.c:235
 msgid "Set Image Canvas Size"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಕ್ಯಾನ್ವಾಸ್ ಗಾತ್ರವನ್ನು ಹೊಂದಿಸಿ"
 
 #: ../app/actions/image-commands.c:261 ../app/actions/image-commands.c:282
 #: ../app/actions/image-commands.c:559
 msgid "Resizing"
-msgstr ""
+msgstr "ಗಾತ್ರಬದಲಾವಣೆ"
 
 #: ../app/actions/image-commands.c:306
 msgid "Set Image Print Resolution"
@@ -2509,22 +2511,22 @@ msgstr ""
 #: ../app/pdb/drawable-transform-cmds.c:148
 #: ../app/pdb/drawable-transform-cmds.c:223
 msgid "Flipping"
-msgstr ""
+msgstr "ಮಗುಚುವಿಕೆ"
 
 #: ../app/actions/image-commands.c:383
 #: ../app/pdb/drawable-transform-cmds.c:525
 #: ../app/pdb/drawable-transform-cmds.c:604 ../app/pdb/image-cmds.c:533
 #: ../app/pdb/transform-tools-cmds.c:215 ../app/tools/gimprotatetool.c:122
 msgid "Rotating"
-msgstr ""
+msgstr "ತಿರುಗಿಸುವಿಕೆ"
 
 #: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:639
 msgid "Cannot crop because the current selection is empty."
-msgstr ""
+msgstr "ಕತ್ತರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಆಯ್ಕೆ ಮಾಡಲಾದ ಸ್ಥಳವು ಖಾಲಿ ಇದೆ."
 
 #: ../app/actions/image-commands.c:606
 msgid "Change Print Size"
-msgstr ""
+msgstr "ಮುದ್ರಣ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿ"
 
 #: ../app/actions/image-commands.c:647 ../app/core/gimpimage-scale.c:82
 msgid "Scale Image"
@@ -2543,11 +2545,11 @@ msgstr "ಅಳತೆ ಬದಲಾವಣೆ"
 
 #: ../app/actions/images-actions.c:43
 msgid "Images Menu"
-msgstr ""
+msgstr "ಚಿತ್ರಗಳ ಮೆನು"
 
 #: ../app/actions/images-actions.c:47
 msgid "_Raise Views"
-msgstr ""
+msgstr "ನೋಟಗಳನ್ನು ಏರಿಸು(_R)"
 
 #: ../app/actions/images-actions.c:48
 msgid "Raise this image's displays"
@@ -2571,7 +2573,7 @@ msgstr "ಈ ಚಿತ್ರವನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/layers-actions.c:48
 msgid "Layers Menu"
-msgstr ""
+msgstr "ಪದರಗಳ ಮೆನು"
 
 #: ../app/actions/layers-actions.c:51
 msgid "_Layer"
@@ -2579,7 +2581,7 @@ msgstr "ಪದರ(_L)"
 
 #: ../app/actions/layers-actions.c:52
 msgid "Stac_k"
-msgstr ""
+msgstr "ಜೋಡಣೆ(_k)"
 
 #: ../app/actions/layers-actions.c:53
 msgid "Te_xt to Selection"
@@ -2587,11 +2589,11 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:54
 msgid "_Mask"
-msgstr ""
+msgstr "ಮುಸುಕು(_M)"
 
 #: ../app/actions/layers-actions.c:55
 msgid "Tr_ansparency"
-msgstr ""
+msgstr "ಪಾರದರ್ಶಕತೆ(_a)"
 
 #: ../app/actions/layers-actions.c:57
 msgid "_Properties"
@@ -2611,7 +2613,7 @@ msgstr "ಈ ಪಠ್ಯ ಪದರದಲ್ಲಿ ಪಠ್ಯ ಉಪಕರಣ�
 
 #: ../app/actions/layers-actions.c:68
 msgid "_Edit Layer Attributes..."
-msgstr ""
+msgstr "ಪದರದ ಗುಣವಿಶೇಷಗಳನ್ನು ಸಂಪಾದಿಸು(_E)..."
 
 #: ../app/actions/layers-actions.c:69
 msgid "Edit the layer's name"
@@ -2631,23 +2633,23 @@ msgstr "ಹೊಸ ಪದರ(_N)"
 
 #: ../app/actions/layers-actions.c:81
 msgid "Create a new layer with last used values"
-msgstr ""
+msgstr "ಕಡೆಯದಾಗಿ ಬಳಸಲಾದ ಮೌಲ್ಯಗಳಿಂದ ಒಂದು ಹೊಸ ಪದರವನ್ನು ರಚಿಸಿ"
 
 #: ../app/actions/layers-actions.c:86
 msgid "New from _Visible"
-msgstr ""
+msgstr "ಗೋಚರಿಸುವುದರಿಂದ ಹೊಸತು(_V)"
 
 #: ../app/actions/layers-actions.c:87
 msgid "Create a new layer from what is visible in this image"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರದಲ್ಲಿ ಗೋಚರಿಸುತ್ತಿರುವುದರಿಂದ ಒಂದು ಹೊಸ ಪದರವನ್ನು ರಚಿಸಿ"
 
 #: ../app/actions/layers-actions.c:92
 msgid "D_uplicate Layer"
-msgstr ""
+msgstr "ನಕಲಿ ಪದರ(_u)"
 
 #: ../app/actions/layers-actions.c:93
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr ""
+msgstr "ಪದರದ ಇನ್ನೊಂದು ಪ್ರತಿಯನ್ನು ರಚಿಸಿ ಹಾಗು ಚಿತ್ರಕ್ಕೆ ಸೇರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:98
 msgid "_Delete Layer"
@@ -2659,55 +2661,55 @@ msgstr "ಈ ಪದರವನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/layers-actions.c:104
 msgid "_Raise Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಏರಿಸು(_R)"
 
 #: ../app/actions/layers-actions.c:105
 msgid "Raise this layer one step in the layer stack"
-msgstr ""
+msgstr "ಪದರಗಳ ಜೋಡಣೆಯಲ್ಲಿನ ಈ ಪದರವನ್ನು ಒಂದು ಹಂತ ಏರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:110
 msgid "Layer to _Top"
-msgstr ""
+msgstr "ಪದರ ಮೇಲಕ್ಕೆ(_T)"
 
 #: ../app/actions/layers-actions.c:111
 msgid "Move this layer to the top of the layer stack"
-msgstr ""
+msgstr "ಪದರಗಳ ಜೋಡಣೆಯಲ್ಲಿ ಇದನ್ನು ಎಲ್ಲಾ ಪದರಗಳಿಗಿಂತ ಎತ್ತರಕ್ಕೆ ಏರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:116
 msgid "_Lower Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಇಳಿಸು(_L)"
 
 #: ../app/actions/layers-actions.c:117
 msgid "Lower this layer one step in the layer stack"
-msgstr ""
+msgstr "ಪದರಗಳ ಜೋಡಣೆಯಲ್ಲಿನ ಈ ಪದರವನ್ನು ಒಂದು ಹಂತ ಇಳಿಸಿ"
 
 #: ../app/actions/layers-actions.c:122
 msgid "Layer to _Bottom"
-msgstr ""
+msgstr "ಪದರ ಕೆಳಕ್ಕೆ(_T)"
 
 #: ../app/actions/layers-actions.c:123
 msgid "Move this layer to the bottom of the layer stack"
-msgstr ""
+msgstr "ಪದರಗಳ ಜೋಡಣೆಯಲ್ಲಿ ಇದನ್ನು ಎಲ್ಲಾ ಪದರಗಳಿಗಿಂತ ಕೆಳಕ್ಕೆ ಏರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:128
 msgid "_Anchor Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಲಂಗರುಹಾಕು(_A)"
 
 #: ../app/actions/layers-actions.c:129
 msgid "Anchor the floating layer"
-msgstr ""
+msgstr "ತೇಲುವ ಪದರಕ್ಕೆ ಲಂಗರು ಹಾಕಿ"
 
 #: ../app/actions/layers-actions.c:134
 msgid "Merge Do_wn"
-msgstr ""
+msgstr "ಕೆಳಕ್ಕೆ ವಿಲೀನಗೊಳಿಸು(_w)"
 
 #: ../app/actions/layers-actions.c:135
 msgid "Merge this layer with the one below it"
-msgstr ""
+msgstr "ಈ ಪದರವನ್ನು ಕೆಳಗಿನ ಪದರದೊಂದಿಗೆ ವಿಲೀನಗೊಳಿಸಿ"
 
 #: ../app/actions/layers-actions.c:140
 msgid "Merge _Visible Layers..."
-msgstr ""
+msgstr "ಗೋಚರಿಸುವ ಪದರಗಳನ್ನು ವಿಲೀನಗೊಳಿಸು(_V)..."
 
 #: ../app/actions/layers-actions.c:152
 msgid "_Discard Text Information"
@@ -2747,7 +2749,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:177
 msgid "Resize the layer to the size of the image"
-msgstr ""
+msgstr "ಪದರದ ಗಾತ್ರವನ್ನು ಚಿತ್ರದ ಗಾತ್ರಕ್ಕೆ ಸರಿಹೊಂದಿಸಿ"
 
 #: ../app/actions/layers-actions.c:182
 msgid "_Scale Layer..."
@@ -2759,7 +2761,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:189
 msgid "Crop the layer to the extents of the selection"
-msgstr ""
+msgstr "ಪದರದ ವ್ಯಾಪ್ತಿಯ ಗಾತ್ರವನ್ನು ಆಯ್ಕೆಗೆ ಸರಿಹೊಂದುವಂತೆ ಕತ್ತರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:194
 msgid "Add La_yer Mask..."
@@ -2775,7 +2777,7 @@ msgstr "ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ಸೇರಿಸು(_h)"
 
 #: ../app/actions/layers-actions.c:201
 msgid "Add transparency information to the layer"
-msgstr ""
+msgstr "ಪದರಕ್ಕೆ ಪಾರದರ್ಶಕತೆಯ ಮಾಹಿತಿಯನ್ನು ಸೇರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:206
 msgid "_Remove Alpha Channel"
@@ -2783,11 +2785,11 @@ msgstr "ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ತೆಗೆದುಹಾ
 
 #: ../app/actions/layers-actions.c:207
 msgid "Remove transparency information from the layer"
-msgstr ""
+msgstr "ಪದರದಿಂದ ಪಾರದರ್ಶಕತೆಯ ಮಾಹಿತಿಯನ್ನು ತೆಗೆದು ಹಾಕಿ"
 
 #: ../app/actions/layers-actions.c:215
 msgid "Lock Alph_a Channel"
-msgstr ""
+msgstr "ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ಲಾಕ್ ಮಾಡು(_a)"
 
 #: ../app/actions/layers-actions.c:216
 msgid "Keep transparency information on this layer from being modified"
@@ -2803,11 +2805,11 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:229
 msgid "S_how Layer Mask"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ತೋರಿಸು(_h)"
 
 #: ../app/actions/layers-actions.c:235
 msgid "_Disable Layer Mask"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ಅಶಕ್ತಗೊಳಿಸು(_D)"
 
 #: ../app/actions/layers-actions.c:236
 msgid "Dismiss the effect of the layer mask"
@@ -2815,7 +2817,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:245
 msgid "Apply Layer _Mask"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ಅನ್ವಯಿಸು(_M)"
 
 #: ../app/actions/layers-actions.c:246
 msgid "Apply the effect of the layer mask and remove it"
@@ -2823,11 +2825,11 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:251
 msgid "Delete Layer Mas_k"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ಅಳಿಸು(_k)"
 
 #: ../app/actions/layers-actions.c:252
 msgid "Remove the layer mask and its effect"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕು ಹಾಗು ಅದರ ಪರಿಣಾಮವನ್ನು ತೆಗೆದು ಹಾಕಿ"
 
 #: ../app/actions/layers-actions.c:260
 msgid "_Mask to Selection"
@@ -2835,11 +2837,11 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:261
 msgid "Replace the selection with the layer mask"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯ ಜಾಗವನ್ನು ಪದರದ ಮುಸುಕಿನಿಂದ ಬದಲಾಯಿಸಿ"
 
 #: ../app/actions/layers-actions.c:267
 msgid "Add the layer mask to the current selection"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ಈಗಿನ ಆಯ್ಕೆಯ ಜಾಗಕ್ಕೆ ಸೇರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:273
 msgid "Subtract the layer mask from the current selection"
@@ -2895,35 +2897,35 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:341
 msgid "Select _Top Layer"
-msgstr ""
+msgstr "ಮೇಲಿನ ಪದರವನ್ನು ಆಯ್ಕೆ ಮಾಡು(_T)"
 
 #: ../app/actions/layers-actions.c:342
 msgid "Select the topmost layer"
-msgstr ""
+msgstr "ಅತ್ಯಂತ ಮೇಲಿನ ಪದರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/actions/layers-actions.c:347
 msgid "Select _Bottom Layer"
-msgstr ""
+msgstr "ಕೆಳಗಿನ ಪದರವನ್ನು ಆಯ್ಕೆ ಮಾಡು(_B)"
 
 #: ../app/actions/layers-actions.c:348
 msgid "Select the bottommost layer"
-msgstr ""
+msgstr "ಅತ್ಯಂತ ಕೆಳಗಿನ ಪದರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/actions/layers-actions.c:353
 msgid "Select _Previous Layer"
-msgstr ""
+msgstr "ಹಿಂದಿನ ಪದರವನ್ನು ಆಯ್ಕೆ ಮಾಡು(_P)"
 
 #: ../app/actions/layers-actions.c:354
 msgid "Select the layer above the current layer"
-msgstr ""
+msgstr "ಈಗಿರುವ ಪದರದ ಮೇಲಿನ ಪದರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/actions/layers-actions.c:359
 msgid "Select _Next Layer"
-msgstr ""
+msgstr "ಮುಂದಿನ ಪದರವನ್ನು ಆಯ್ಕೆ ಮಾಡು(_N)"
 
 #: ../app/actions/layers-actions.c:360
 msgid "Select the layer below the current layer"
-msgstr ""
+msgstr "ಈಗಿರುವ ಪದರದ ಕೆಳಗಿನ ಪದರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/actions/layers-actions.c:368
 msgid "Set Opacity"
@@ -2942,11 +2944,11 @@ msgstr ""
 #: ../app/widgets/gimpdrawabletreeview.c:326
 #: ../app/widgets/gimplayertreeview.c:835
 msgid "New Layer"
-msgstr ""
+msgstr "ಹೊಸ ಪದರ"
 
 #: ../app/actions/layers-commands.c:254
 msgid "Create a New Layer"
-msgstr ""
+msgstr "ಹೊಸ ಪದರವನ್ನು ರಚಿಸಿ"
 
 #: ../app/actions/layers-commands.c:352
 msgid "Visible"
@@ -2970,12 +2972,12 @@ msgstr ""
 
 #: ../app/actions/layers-commands.c:1036
 msgid "Please select a channel first"
-msgstr ""
+msgstr "ದಯವಿಟ್ಟು ಒಂದು ಚಾನಲ್ ಪಟ್ಟಿಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕನ್ನು ಸೇರಿಸು"
 
 #: ../app/actions/palette-editor-actions.c:44
 msgid "Palette Editor Menu"
@@ -2983,11 +2985,11 @@ msgstr ""
 
 #: ../app/actions/palette-editor-actions.c:54
 msgid "_Delete Color"
-msgstr ""
+msgstr "ಬಣ್ಣವನ್ನು ಅಳಿಸು(_D)"
 
 #: ../app/actions/palette-editor-actions.c:55
 msgid "Delete color"
-msgstr ""
+msgstr "ಬಣ್ಣವನ್ನು ಅಳಿಸಿ"
 
 #: ../app/actions/palette-editor-actions.c:63
 msgid "Edit Active Palette"
@@ -2995,19 +2997,19 @@ msgstr ""
 
 #: ../app/actions/palette-editor-actions.c:72
 msgid "New Color from _FG"
-msgstr ""
+msgstr "_FG ಇಂದ ಹೊಸ ಬಣ್ಣ"
 
 #: ../app/actions/palette-editor-actions.c:73
 msgid "New color from foreground color"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆ ಬಣ್ಣದಿಂದ ಹೊಸ ಬಣ್ಣ"
 
 #: ../app/actions/palette-editor-actions.c:78
 msgid "New Color from _BG"
-msgstr ""
+msgstr "_BG ಇಂದ ಹೊಸ ಬಣ್ಣ"
 
 #: ../app/actions/palette-editor-actions.c:79
 msgid "New color from background color"
-msgstr ""
+msgstr "ಹಿನ್ನೆಲೆ ಬಣ್ಣದಿಂದ ಹೊಸ ಬಣ್ಣ"
 
 #: ../app/actions/palette-editor-actions.c:87
 #: ../app/actions/view-actions.c:261
@@ -3021,7 +3023,7 @@ msgstr "ಕುಗ್ಗಿಸು(_O)"
 
 #: ../app/actions/palette-editor-actions.c:99
 msgid "Zoom _All"
-msgstr ""
+msgstr "ಎಲ್ಲವನ್ನೂ ಹಿಗ್ಗಿಸು(_A)"
 
 #: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
@@ -3169,7 +3171,7 @@ msgstr ""
 
 #: ../app/actions/plug-in-actions.c:83
 msgid "Filte_rs"
-msgstr ""
+msgstr "ಫಿಲ್ಟರುಗಳು(_r)"
 
 #: ../app/actions/plug-in-actions.c:84
 msgid "Recently Used"
@@ -3189,7 +3191,7 @@ msgstr ""
 
 #: ../app/actions/plug-in-actions.c:88
 msgid "En_hance"
-msgstr ""
+msgstr "ವರ್ಧಿಸು(_h)"
 
 #: ../app/actions/plug-in-actions.c:89
 msgid "C_ombine"
@@ -3233,7 +3235,7 @@ msgstr "ಜಾಲ(_W)"
 
 #: ../app/actions/plug-in-actions.c:101
 msgid "An_imation"
-msgstr ""
+msgstr "ಎನಿಮೇಶನ್(_i)"
 
 #: ../app/actions/plug-in-actions.c:104
 msgid "Reset all _Filters"
@@ -3262,20 +3264,20 @@ msgstr ""
 #: ../app/actions/plug-in-actions.c:503
 #, c-format
 msgid "Re_peat \"%s\""
-msgstr ""
+msgstr "\"%s\" ಅನ್ನು ಪುನರಾವರ್ತಿಸು(_p)"
 
 #: ../app/actions/plug-in-actions.c:504
 #, c-format
 msgid "R_e-Show \"%s\""
-msgstr ""
+msgstr "\"%s\" ಅನ್ನು ಮರಳಿ ತೋರಿಸು(_e)"
 
 #: ../app/actions/plug-in-actions.c:520
 msgid "Repeat Last"
-msgstr ""
+msgstr "ಕೊನೆಯದನ್ನು ಪುನರಾವರ್ತಿಸು"
 
 #: ../app/actions/plug-in-actions.c:522
 msgid "Re-Show Last"
-msgstr ""
+msgstr "ಕೊನೆಯದನ್ನು ಮರಳಿಸು"
 
 #: ../app/actions/plug-in-commands.c:262
 msgid "Reset all Filters"
@@ -3291,7 +3293,7 @@ msgstr ""
 
 #: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
-msgstr ""
+msgstr "ಬಣ್ಣ ಹಾಗು ಅಪಾರದರ್ಶಕತೆಯನ್ನು ಸಂರಚಿಸು(_C)..."
 
 #: ../app/actions/quick-mask-actions.c:54
 msgid "Toggle _Quick Mask"
@@ -3304,11 +3306,11 @@ msgstr ""
 
 #: ../app/actions/quick-mask-actions.c:63
 msgid "Mask _Selected Areas"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಜಾಗಕ್ಕೆ ಮುಸುಕು ಹಾಕು(_S)"
 
 #: ../app/actions/quick-mask-actions.c:68
 msgid "Mask _Unselected Areas"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡದೆ ಇರುವ ಜಾಗಕ್ಕೆ ಮುಸುಕು ಹಾಕು(_U)"
 
 #: ../app/actions/quick-mask-commands.c:105
 msgid "Quick Mask Attributes"
@@ -3324,7 +3326,7 @@ msgstr ""
 
 #: ../app/actions/quick-mask-commands.c:111
 msgid "_Mask opacity:"
-msgstr ""
+msgstr "ಮುಸುಕಿನ ಅಪಾರದರ್ಶಕತೆ(_M):"
 
 #: ../app/actions/sample-points-actions.c:40
 msgid "Sample Point Menu"
@@ -3340,7 +3342,7 @@ msgstr "ಆರಿಸು(_S)"
 
 #: ../app/actions/select-actions.c:50
 msgid "select|_All"
-msgstr ""
+msgstr "ಎಲ್ಲಾ(_A)"
 
 #: ../app/actions/select-actions.c:51
 msgid "Select everything"
@@ -3348,7 +3350,7 @@ msgstr "ಎಲ್ಲವನ್ನು ಆಯ್ಕೆಮಾಡು"
 
 #: ../app/actions/select-actions.c:56
 msgid "select|_None"
-msgstr ""
+msgstr "ಯಾವುದೂ ಇಲ್ಲ(_N)"
 
 #: ../app/actions/select-actions.c:57
 msgid "Dismiss the selection"
@@ -3364,7 +3366,7 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:68
 msgid "_Float"
-msgstr ""
+msgstr "ತೇಲಿಸು(_F)"
 
 #: ../app/actions/select-actions.c:69
 msgid "Create a floating selection"
@@ -3388,35 +3390,35 @@ msgstr ""
 
 #: ../app/actions/select-actions.c:86
 msgid "S_hrink..."
-msgstr ""
+msgstr "ಸಂಕುಚಿಸು(_h)..."
 
 #: ../app/actions/select-actions.c:87
 msgid "Contract the selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಸಂಕುಚಿಸು"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
-msgstr ""
+msgstr "ಬೆಳೆಸು(_G)..."
 
 #: ../app/actions/select-actions.c:93
 msgid "Enlarge the selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/select-actions.c:98
 msgid "Bo_rder..."
-msgstr ""
+msgstr "ಅಂಚು(_r)..."
 
 #: ../app/actions/select-actions.c:99
 msgid "Replace the selection by its border"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಅದರ ಅಂಚಿನಿಂದ ಬದಲಾಯಿಸು"
 
 #: ../app/actions/select-actions.c:104
 msgid "Save to _Channel"
-msgstr ""
+msgstr "ಚಾನಲ್‌ಗೆ ಉಳಿಸು(_C)"
 
 #: ../app/actions/select-actions.c:105
 msgid "Save the selection to a channel"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾಗಿದ್ದನ್ನು ಚಾನಲ್‌ಗೆ ಉಳಿಸು"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
@@ -3562,7 +3564,7 @@ msgstr "ತೆರೆ"
 
 #: ../app/actions/text-editor-actions.c:45
 msgid "Load text from file"
-msgstr ""
+msgstr "ಪಠ್ಯವನ್ನು ಕಡತದಿಂದ ಲೋಡ್ ಮಾಡು"
 
 #: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:445
 msgid "Clear"
@@ -3570,7 +3572,7 @@ msgstr "ಅಳಿಸು"
 
 #: ../app/actions/text-editor-actions.c:51
 msgid "Clear all text"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಪಠ್ಯವನ್ನು ಅಳಿಸು"
 
 #: ../app/actions/text-editor-actions.c:59
 msgid "LTR"
@@ -3586,7 +3588,7 @@ msgstr "RTL"
 
 #: ../app/actions/text-editor-actions.c:66
 msgid "From right to left"
-msgstr ""
+msgstr "ಬಲದಿಂದ ಎಡಕ್ಕೆ"
 
 #: ../app/actions/text-editor-commands.c:63
 msgid "Open Text File (UTF-8)"
@@ -3628,7 +3630,7 @@ msgstr ""
 
 #: ../app/actions/tool-options-actions.c:76
 msgid "_New Entry..."
-msgstr ""
+msgstr "ಹೊಸ ನಮೂದು(_N)..."
 
 #: ../app/actions/tool-options-actions.c:81
 msgid "R_eset Tool Options"
@@ -3658,7 +3660,7 @@ msgstr ""
 #: ../app/actions/tool-options-commands.c:247
 #: ../app/actions/tool-options-commands.c:264
 msgid "Saved Options"
-msgstr ""
+msgstr "ಉಳಿಸಲಾದ ಆಯ್ಕೆಗಳು"
 
 #: ../app/actions/tool-options-commands.c:140
 msgid "Rename Saved Tool Options"
@@ -3746,7 +3748,7 @@ msgstr ""
 
 #: ../app/actions/tools-actions.c:99
 msgid "_By Color"
-msgstr ""
+msgstr "ಬಣ್ಣದಿಂದ(_B)"
 
 #: ../app/actions/tools-actions.c:100
 msgid "Select regions with similar colors"
@@ -3918,7 +3920,7 @@ msgstr ""
 
 #: ../app/actions/vectors-actions.c:207
 msgid "Advanced options"
-msgstr ""
+msgstr "ಸುಧಾರಿತ ಆಯ್ಕೆಗಳು"
 
 #: ../app/actions/vectors-commands.c:138
 msgid "Path Attributes"
@@ -3961,7 +3963,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:71
 msgid "Move to Screen"
-msgstr ""
+msgstr "ತೆರೆಗೆ ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/actions/view-actions.c:76
 msgid "Create another view on this image"
@@ -3973,7 +3975,7 @@ msgstr "ಮುಚ್ಚು(_C)"
 
 #: ../app/actions/view-actions.c:82
 msgid "Close this image window"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರದ ವಿಂಡೊವನ್ನು ಮುಚ್ಚು"
 
 #: ../app/actions/view-actions.c:87
 msgid "_Fit Image in Window"
@@ -3985,7 +3987,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:93
 msgid "Fi_ll Window"
-msgstr ""
+msgstr "ವಿಂಡೊವನ್ನು ತುಂಬಿಸು(_l)"
 
 #: ../app/actions/view-actions.c:94
 msgid "Adjust the zoom ratio so that the entire window is used"
@@ -4025,7 +4027,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:132
 msgid "_Dot for Dot"
-msgstr ""
+msgstr "ಚುಕ್ಕಿಯಿಂದ ಚುಕ್ಕಿಗೆ(_D)"
 
 #: ../app/actions/view-actions.c:133
 msgid "A pixel on the screen represents an image pixel"
@@ -4033,7 +4035,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:139
 msgid "Show _Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ತೋರಿಸು(_S)"
 
 #: ../app/actions/view-actions.c:140
 msgid "Display the selection outline"
@@ -4041,11 +4043,11 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:146
 msgid "Show _Layer Boundary"
-msgstr ""
+msgstr "ಪದರದ ಅಂಚನ್ನು ತೋರಿಸು(_L)"
 
 #: ../app/actions/view-actions.c:147
 msgid "Draw a border around the active layer"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ಪದರದ ಸುತ್ತ ಒಂದು ಅಂಚನ್ನು ಎಳೆ"
 
 #: ../app/actions/view-actions.c:153
 msgid "Show _Guides"
@@ -4145,7 +4147,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:292
 msgid "1_6:1  (1600%)"
-msgstr ""
+msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:293
 msgid "Zoom 16:1"
@@ -4153,7 +4155,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:298
 msgid "_8:1  (800%)"
-msgstr ""
+msgstr "_8:1  (800%)"
 
 #: ../app/actions/view-actions.c:299
 msgid "Zoom 8:1"
@@ -4161,7 +4163,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:304
 msgid "_4:1  (400%)"
-msgstr ""
+msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:305
 msgid "Zoom 4:1"
@@ -4169,7 +4171,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:310
 msgid "_2:1  (200%)"
-msgstr ""
+msgstr "_2:1  (200%)"
 
 #: ../app/actions/view-actions.c:311
 msgid "Zoom 2:1"
@@ -4177,7 +4179,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:316
 msgid "_1:1  (100%)"
-msgstr ""
+msgstr "_1:1  (100%)"
 
 #: ../app/actions/view-actions.c:317
 msgid "Zoom 1:1"
@@ -4185,7 +4187,7 @@ msgstr "1:1 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:322
 msgid "1:_2  (50%)"
-msgstr ""
+msgstr "1:_2  (50%)"
 
 #: ../app/actions/view-actions.c:323
 msgid "Zoom 1:2"
@@ -4193,7 +4195,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:328
 msgid "1:_4  (25%)"
-msgstr ""
+msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:329
 msgid "Zoom 1:4"
@@ -4201,7 +4203,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:334
 msgid "1:_8  (12.5%)"
-msgstr ""
+msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:335
 msgid "Zoom 1:8"
@@ -4209,7 +4211,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:340
 msgid "1:1_6  (6.25%)"
-msgstr ""
+msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:341
 msgid "Zoom 1:16"
@@ -4217,7 +4219,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:346
 msgid "Othe_r..."
-msgstr ""
+msgstr "ಇತರೆ(_r)..."
 
 #: ../app/actions/view-actions.c:347
 msgid "Set a custom zoom factor"
@@ -4225,11 +4227,11 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:355
 msgid "From _Theme"
-msgstr ""
+msgstr "ಪರಿಸರವಿನ್ಯಾಸದಿಂದ(_T)"
 
 #: ../app/actions/view-actions.c:356
 msgid "Use the current theme's background color"
-msgstr ""
+msgstr "ಈಗಿನ ಪರಿಸರವಿನ್ಯಾಸದ ಹಿನ್ನಲೆ ಬಣ್ಣವನ್ನು ಬಳಸಿ"
 
 #: ../app/actions/view-actions.c:361
 msgid "_Light Check Color"
@@ -4257,7 +4259,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:379
 msgid "As in _Preferences"
-msgstr ""
+msgstr "ಆದ್ಯತೆಯಲ್ಲಿ ಇರುವಂತೆ(_P)"
 
 #: ../app/actions/view-actions.c:380
 msgid "Reset padding color to what's configured in preferences"
@@ -4271,12 +4273,12 @@ msgstr ""
 #: ../app/actions/view-actions.c:708
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr ""
+msgstr "ಇತರೆ (%s)(_r)..."
 
 #: ../app/actions/view-actions.c:717
 #, c-format
 msgid "_Zoom (%s)"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸು (%s)(_Z)"
 
 #: ../app/actions/view-commands.c:613
 msgid "Set Canvas Padding Color"
@@ -4289,12 +4291,12 @@ msgstr ""
 #: ../app/actions/window-actions.c:168
 #, c-format
 msgid "Screen %s"
-msgstr ""
+msgstr "ತೆರೆ %s"
 
 #: ../app/actions/window-actions.c:170
 #, c-format
 msgid "Move this window to screen %s"
-msgstr ""
+msgstr "ವಿಂಡೊವನ್ನು ತೆರೆ %s ಗೆ ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/actions/windows-actions.c:79
 msgid "_Windows"
@@ -4478,7 +4480,7 @@ msgstr ""
 #: ../app/config/gimpconfig-file.c:79 ../app/config/gimpconfig-file.c:102
 #, c-format
 msgid "Error writing '%s': %s"
-msgstr ""
+msgstr "'%s' ಕ್ಕೆ ಬರೆಯುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ: %s"
 
 #: ../app/config/gimpconfig-file.c:90
 #, c-format
@@ -6816,7 +6818,7 @@ msgstr ""
 
 #: ../app/dialogs/image-merge-layers-dialog.c:72
 msgid "_Merge"
-msgstr "ಒಗ್ಗೂಡಿಸು (_M)"
+msgstr "ವಿಲೀನಗೊಳಿಸು (_M)"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:91
 msgid "Final, Merged Layer should be:"
