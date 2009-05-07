@@ -10,7 +10,8 @@ scripts = \
 	palette-to-gradient.py	\
 	py-slice.py		\
 	python-console.py	\
-	python-eval.py
+	python-eval.py		\
+	text-brush.py
 
 test_scripts = \
 	benchmark-foreground-extract.py	\
