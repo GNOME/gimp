@@ -22,9 +22,6 @@ import os
 
 gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
-gimp_dir = ".gimp-%d.%d" %(gimp.version[:2])
-BRUSH_DIR = os.path.join(os.path.expanduser('~'),gimp_dir,'brushes')
-    
 def text_brush(font_name, font_size, text):
     pdb.gimp_context_push()
     pdb.gimp_context_set_default_colors()
@@ -54,8 +51,8 @@ def text_brush(font_name, font_size, text):
                                   False,0 ,0)
             pdb.gimp_floating_sel_anchor(text_floating_sel)
 
-    file_name = (text.lower().replace(" ", "_") + ".gih").encode("utf-8")
-    file_path = os.path.join(BRUSH_DIR, file_name)
+    file_name = text.lower().replace(" ", "_") + ".gih"
+    file_path = os.path.join(gimp.directory, 'brushes', file_name)
     
     pdb.file_gih_save(img, img.layers[0], 
                       file_path, file_path, 
