@@ -26,18 +26,20 @@
 
 #ifdef ENABLE_DEBUG_MENU
 
-void   debug_mem_profile_cmd_callback          (GtkAction *action,
-                                                gpointer   data);
-void   debug_dump_menus_cmd_callback           (GtkAction *action,
-                                                gpointer   data);
-void   debug_dump_managers_cmd_callback        (GtkAction *action,
-                                                gpointer   data);
-void   debug_dump_attached_data_cmd_callback   (GtkAction *action,
-                                                gpointer   data);
-void   debug_benchmark_projection_cmd_callback (GtkAction *action,
-                                                gpointer   data);
-void   debug_show_image_graph_cmd_callback     (GtkAction *action,
-                                                gpointer   data);
+void debug_mem_profile_cmd_callback             (GtkAction *action,
+                                                 gpointer   data);
+void debug_dump_menus_cmd_callback              (GtkAction *action,
+                                                 gpointer   data);
+void debug_dump_managers_cmd_callback           (GtkAction *action,
+                                                 gpointer   data);
+void debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
+                                                 gpointer   data);
+void debug_dump_attached_data_cmd_callback      (GtkAction *action,
+                                                 gpointer   data);
+void debug_benchmark_projection_cmd_callback    (GtkAction *action,
+                                                 gpointer   data);
+void debug_show_image_graph_cmd_callback        (GtkAction *action,
+                                                 gpointer   data);
 
 #endif /* ENABLE_DEBUG_MENU */
 

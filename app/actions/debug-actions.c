@@ -65,6 +65,11 @@ static const GimpActionEntry debug_actions[] =
     G_CALLBACK (debug_dump_managers_cmd_callback),
     NULL },
 
+  { "debug-dump-keyboard-shortcuts", NULL,
+    "Dump _Keyboard Shortcuts", NULL, NULL,
+    G_CALLBACK (debug_dump_keyboard_shortcuts_cmd_callback),
+    NULL },
+
   { "debug-dump-attached-data", NULL,
     "Dump Attached Data", NULL, NULL,
     G_CALLBACK (debug_dump_attached_data_cmd_callback),

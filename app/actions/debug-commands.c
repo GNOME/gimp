@@ -41,6 +41,10 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+
+#include "widgets/gimpaction.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 
@@ -54,17 +58,21 @@
 
 /*  local function prototypes  */
 
-static gboolean  debug_benchmark_projection    (GimpImage  *image);
-static gboolean  debug_show_image_graph        (GimpImage  *source_image);
+static gboolean  debug_benchmark_projection    (GimpImage   *image);
+static gboolean  debug_show_image_graph        (GimpImage   *source_image);
 
-static void      debug_dump_menus_recurse_menu (GtkWidget  *menu,
-                                                gint        depth,
-                                                gchar      *path);
+static void      debug_dump_menus_recurse_menu (GtkWidget   *menu,
+                                                gint         depth,
+                                                gchar       *path);
 
-static void      debug_print_qdata             (GimpObject *object);
-static void      debug_print_qdata_foreach     (GQuark      key_id,
-                                                gpointer    data,
-                                                gpointer    user_data);
+static void      debug_print_qdata             (GimpObject  *object);
+static void      debug_print_qdata_foreach     (GQuark       key_id,
+                                                gpointer     data,
+                                                gpointer     user_data);
+
+static gboolean  debug_accel_find_func         (GtkAccelKey *key,
+                                                GClosure    *closure,
+                                                gpointer     data);
 
 
 /*  public functions  */
@@ -170,6 +178,74 @@ debug_dump_managers_cmd_callback (GtkAction *action,
 
           g_print ("%s\n", gtk_ui_manager_get_ui (managers->data));
         }
+    }
+}
+
+void
+debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
+                                            gpointer   data)
+{
+  GimpDisplay      *display     = NULL;
+  GimpDisplayShell *shell       = NULL;
+  GtkAccelGroup    *accel_group = NULL;
+  GList            *group_it    = NULL;
+  return_if_no_display (display, data);
+
+  shell       = GIMP_DISPLAY_SHELL (display->shell);
+  accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager));
+
+  for (group_it = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (shell->menubar_manager));
+       group_it;
+       group_it = g_list_next (group_it))
+    {
+      GimpActionGroup *group     = group_it->data;
+      GList           *actions   = NULL;
+      GList           *action_it = NULL;
+
+      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+      actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
+
+      for (action_it = actions; action_it; action_it = g_list_next (action_it))
+        {
+          GtkAction   *action        = action_it->data;
+          const gchar *name          = gtk_action_get_name (action);
+          GClosure    *accel_closure = NULL;
+
+          if (strstr (name, "-menu")  ||
+              strstr (name, "-popup") ||
+              name[0] == '<')
+              continue;
+
+          accel_closure = gtk_action_get_accel_closure (action);
+
+          if (accel_closure)
+            {
+              GtkAccelKey *key = gtk_accel_group_find (accel_group,
+                                                       debug_accel_find_func,
+                                                       accel_closure);
+              if (key            &&
+                  key->accel_key &&
+                  key->accel_flags & GTK_ACCEL_VISIBLE)
+                {
+                  gchar   *label_tmp  = NULL;
+                  gchar   *label      = NULL;
+                  gchar   *key_string = NULL;
+
+                  g_object_get (action, "label", &label_tmp, NULL);
+                  label = gimp_strip_uline (label_tmp);
+                  key_string = gtk_accelerator_get_label (key->accel_key,
+                                                          key->accel_mods);
+
+                  g_print ("%-20s %s\n", key_string, label);
+
+                  g_free (key_string);
+                  g_free (label);
+                  g_free (label_tmp);
+                }
+            }
+        }
+
+      g_list_free (actions);
     }
 }
 
@@ -342,5 +418,14 @@ debug_print_qdata_foreach (GQuark   key_id,
 {
   g_print ("%s: %p\n", g_quark_to_string (key_id), data);
 }
+
+static gboolean
+debug_accel_find_func (GtkAccelKey *key,
+                       GClosure    *closure,
+                       gpointer     data)
+{
+  return (GClosure *) data == closure;
+}
+
 
 #endif /* ENABLE_DEBUG_MENU */

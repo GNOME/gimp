@@ -31,6 +31,7 @@
         <separator />
         <menuitem action="debug-dump-items" />
         <menuitem action="debug-dump-managers" />
+        <menuitem action="debug-dump-keyboard-shortcuts" />
         <menuitem action="debug-dump-attached-data" />
       </menu>
 
