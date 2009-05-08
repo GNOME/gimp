@@ -71,20 +71,19 @@ def text_brush(font_name, font_size, text):
     pdb.gimp_context_pop()
 
 register(
-         "text_brush",
-         N_("New brush with characters from a text sequence"),
+        "brush-from-text",
+         N_("Create a new brush with characters from a text sequence"),
          """New dynamic brush where each cell is a character from 
 the input text in the chosen font """,
          "Joao S. O. Bueno",
          "Copyright Joao S.O. Bueno 2009. GPL v3.0",
          "2009",
-         N_("New _Brush from Text..."),
+         N_("New Brush from _Text..."),
          "",
          [
-            (PF_FONT, "font", "Font","Sans"),
-            (PF_INT, "size", "Pixel Size", 50),
-            (PF_STRING, "text", "text",
-             "The GNU Image Manipulation Program")
+            (PF_FONT,    "font", _("Font"), "Sans"),
+            (PF_SPINNER, "size", _("Pixel Size"), 50, (1, 8000, 1)),
+            (PF_STRING,  "text", _("Text"), "GNU Image Manipulation Program")
          ],
          [],
          text_brush,
