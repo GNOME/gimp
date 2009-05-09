@@ -924,16 +924,16 @@ gimp_file_dialog_get_dirname_from_uri (const gchar *uri)
       gchar *dirpath  = NULL;
 
       if (filepath != NULL)
-	{
-	  dirpath = g_path_get_dirname (filepath);
-	  g_free (filepath);
-	}
+        {
+          dirpath = g_path_get_dirname (filepath);
+          g_free (filepath);
+        }
 
       if (dirpath != NULL)
-	{
-	  dirname = g_filename_to_uri (dirpath, NULL, NULL);
-	  g_free (dirpath);
-	}
+        {
+          dirname = g_filename_to_uri (dirpath, NULL, NULL);
+          g_free (dirpath);
+        }
       else
         {
           dirname = NULL;
