@@ -64,6 +64,7 @@ static gboolean  file_save_dialog_check_uri       (GtkWidget            *save_di
                                                    gchar               **ret_uri,
                                                    gchar               **ret_basename,
                                                    GimpPlugInProcedure **ret_save_proc);
+static gchar *   file_save_dialog_get_uri         (GimpFileDialog       *dialog);
 static void      file_save_dialog_unknown_ext_msg (GimpFileDialog       *dialog,
                                                    Gimp                 *gimp);
 static gboolean  file_save_dialog_use_extension   (GtkWidget            *save_dialog,
@@ -212,9 +213,9 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   GimpPlugInProcedure *uri_proc;
   GimpPlugInProcedure *basename_proc;
 
-  uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (save_dialog));
+  uri = file_save_dialog_get_uri (dialog);
 
-  if (! (uri && strlen (uri)))
+  if (! uri)
     return FALSE;
 
   basename      = file_utils_uri_display_basename (uri);
@@ -425,6 +426,20 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   *ret_save_proc = save_proc;
 
   return TRUE;
+}
+
+static gchar *
+file_save_dialog_get_uri (GimpFileDialog *dialog)
+{
+  gchar *uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
+
+  if (uri && ! strlen (uri))
+    {
+      g_free (uri);
+      uri = NULL;
+    }
+
+  return uri;
 }
 
 static void
