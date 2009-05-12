@@ -1257,15 +1257,6 @@ else
   have_webkit="no (WebKit support disabled)"
 fi
 
-if test "x$have_webkit" = xyes; then
-  gimp_save_LIBS=$LIBS
-  LIBS="$LIBS $WEBKIT_LIBS"
-  AC_CHECK_LIB(webkit-1.0, webkit_web_view_set_zoom_level,
-               [AC_DEFINE(HAVE_WEBKIT_ZOOM_API, 1,
-	                  [Define to 1 if webkit has zoom API])])
-  LIBS=$gimp_save_LIBS
-fi
-
 AM_CONDITIONAL(BUILD_HELP_BROWSER, test "x$have_webkit" = xyes)
 
 

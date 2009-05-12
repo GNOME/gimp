@@ -300,9 +300,7 @@ browser_dialog_open (const gchar *plug_in_binary)
                     G_CALLBACK (view_key_press),
                     NULL);
 
-#if HAVE_WEBKIT_ZOOM_API
   webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (view), data.zoom);
-#endif
 
   g_signal_connect (view, "title-changed",
                     G_CALLBACK (title_changed),
@@ -704,11 +702,9 @@ ui_manager_new (GtkWidget *window)
                                      "    <separator />"
                                      "    <menuitem action=\"find\" />"
                                      "    <menuitem action=\"find-again\" />"
-#ifdef HAVE_WEBKIT_ZOOM_API
                                      "    <separator />"
                                      "    <menuitem action=\"zoom-in\" />"
                                      "    <menuitem action=\"zoom-out\" />"
-#endif
                                      "    <separator />"
                                      "    <menuitem action=\"close\" />"
                                      "  </popup>"
@@ -856,18 +852,14 @@ static void
 zoom_in_callback (GtkAction *action,
                   gpointer   data)
 {
-#ifdef HAVE_WEBKIT_ZOOM_API
   webkit_web_view_zoom_in (WEBKIT_WEB_VIEW (view));
-#endif
 }
 
 static void
 zoom_out_callback (GtkAction *action,
                    gpointer   data)
 {
-#ifdef HAVE_WEBKIT_ZOOM_API
   webkit_web_view_zoom_out (WEBKIT_WEB_VIEW (view));
-#endif
 }
 
 static void
@@ -1037,12 +1029,8 @@ dialog_unmap (GtkWidget *window,
   data.paned_position = gtk_paned_get_position (GTK_PANED (paned));
   data.show_index     = GTK_WIDGET_VISIBLE (sidebar);
 
-#ifdef HAVE_WEBKIT_ZOOM_API
   data.zoom = (view ?
                webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (view)) : 1.0);
-#else
-  data.zoom = 1.0;
-#endif
 
   gimp_set_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data, sizeof (data));
 
