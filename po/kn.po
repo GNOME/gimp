@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-18 21:39+0000\n"
-"PO-Revision-Date: 2009-05-07 15:26+0530\n"
+"PO-Revision-Date: 2009-05-12 17:35+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -78,12 +78,12 @@ msgstr ""
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr ""
+msgstr "ಯಾವುದೆ ವರ್ಗ(ಬ್ಯಾಚ್) ವಿವರಣೆಗಾರನನ್ನು(ಇಂಟರ್ಪ್ರಿಟರ್) ಸೂಚಿಸಲಾಗಿಲ್ಲ, ಪೂರ್ವನಿಯೋಜಿತ '%s' ಅನ್ನು ಬಳಸಲಾಗುತ್ತಿದೆ.\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr ""
+msgstr "ವರ್ಗ ವಿವರಣೆಗಾರ '%s' ಲಭ್ಯವಿಲ್ಲ. ಪಂಗಡ ಕ್ರಮವನ್ನು ಅಶಕ್ತಗೊಳಿಸಲಾಗುತ್ತಿದೆ."
 
 #: ../app/main.c:144 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
@@ -143,11 +143,11 @@ msgstr "ಬೇರೊಂದು ವ್ಯವಸ್ಥೆ gimprc ಕಡತವನ್
 
 #: ../app/main.c:214
 msgid "Batch command to run (can be used multiple times)"
-msgstr ""
+msgstr "ಚಲಾಯಿಸಬೇಕಿರುವ ವರ್ಗದ ಆಜ್ಞೆ (ಅನೇಕ ಬಾರಿ ಬಳಸಬಹುದು)"
 
 #: ../app/main.c:219
 msgid "The procedure to process batch commands with"
-msgstr ""
+msgstr "ವರ್ಗ ಆಜ್ಞೆಗಳನ್ನು ಸಂಸ್ಕರಿಸುವ ವಿಧಾನ"
 
 #: ../app/main.c:224
 msgid "Send messages to console instead of using a dialog"
@@ -165,7 +165,7 @@ msgstr "ಕುಸಿತಗೊಂಡಾಗ ದೋಷ ನಿವಾರಣೆ ಮಾ
 
 #: ../app/main.c:241
 msgid "Enable non-fatal debugging signal handlers"
-msgstr ""
+msgstr "ಮಾರಕವಲ್ಲದ ದೋಷ ನಿವಾರಣೆ ಸೂಚನೆ ಹ್ಯಾಂಡ್ಲರುಗಳನ್ನು ಶಕ್ತಗೊಳಿಸು"
 
 #: ../app/main.c:246
 msgid "Make all warnings fatal"
@@ -187,11 +187,11 @@ msgstr ""
 
 #: ../app/main.c:392
 msgid "Another GIMP instance is already running."
-msgstr ""
+msgstr "ಇನ್ನೊಂದು GIMP ನ ಪ್ರಸಂಗವು ಈಗಾಗಲೆ ನಡೆಯುತ್ತಿದೆ."
 
 #: ../app/main.c:462
 msgid "GIMP output. Type any character to close this window."
-msgstr ""
+msgstr "GIMP ಔಟ್‌ಪುಟ್‌. ಈ ವಿಂಡೊವನ್ನು ಮುಚ್ಚಲು ಯಾವುದಾದರೂ ಅಕ್ಷರವನ್ನು ನಮೂದಿಸಿ."
 
 #: ../app/main.c:463
 #, c-format
@@ -200,7 +200,7 @@ msgstr "(ಈ ವಿಂಡೊವನ್ನು ಮುಚ್ಚಲು ಯಾವು�
 
 #: ../app/main.c:480
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr ""
+msgstr "GIMP ಔಟ್‌ಪುಟ್‌. ನೀವು ಈ ವಿಂಡೊವನ್ನು ಚಿಕ್ಕದಾಗಿಸಬಹುದೆ ಹೊರತು ಮುಚ್ಚಲು ಸಾಧ್ಯವಿರುವುದಿಲ್ಲ."
 
 #: ../app/sanity.c:342
 #, c-format
@@ -209,6 +209,9 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
+"ಸಂರಚಿಸಲಾದ ಕಡತದ ಹೆಸರಿನ ಎನ್‌ಕೋಡಿಂಗ್ ಅನ್ನು UTF-8 ಗೆ ಮಾರ್ಪಡಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ: %s\n"
+"\n"
+"ದಯವಿಟ್ಟು ಪರಿಸರ ವೇರಿಯೇಬಲ್‌ನ ಮೌಲ್ಯ G_FILENAME_ENCODING ಅನ್ನು ಪರೀಕ್ಷಿಸಿ."
 
 #: ../app/sanity.c:361
 #, c-format
@@ -225,7 +228,7 @@ msgstr ""
 #: ../app/version.c:64
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr ""
+msgstr "%s ಆವೃತ್ತಿ %s ಅನ್ನು ಬಳಸಲಾಗುತ್ತಿದೆ(ಆವೃತ್ತಿ %s ಗಾಗಿ ಕಂಪೈಲ್ ಮಾಡಲಾಗಿದೆ)"
 
 #: ../app/version.c:127 ../tools/gimp-remote.c:95
 #, c-format
@@ -780,7 +783,7 @@ msgstr ""
 
 #: ../app/actions/context-actions.c:61
 msgid "_Aspect"
-msgstr ""
+msgstr "ಆಕಾರ(_A)"
 
 #: ../app/actions/context-actions.c:62
 msgid "A_ngle"
@@ -855,7 +858,7 @@ msgstr "'%s' ಅನ್ನು ಅಳಿಸಬೇಕೆ?"
 #: ../app/actions/data-commands.c:257
 #, c-format
 msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
-msgstr ""
+msgstr "'%s' ಅನ್ನು ನೀವು ಪಟ್ಟಿಯಿಂದ ಖಚಿತವಾಗಿಯೂ ತೆಗೆದು ಹಾಕಿ ನಂತರ ಅದನ್ನು ಡಿಸ್ಕಿನಿಂದ ಅಳಿಸಿ ಹಾಕಲು ಬಯಸುತ್ತೀರೆ?"
 
 #: ../app/actions/dialogs-actions.c:39
 msgid "Tool _Options"
@@ -1031,11 +1034,11 @@ msgstr "ಚಿತ್ರಗಳ ಸಂವಾದವನ್ನು ತೆರೆ"
 
 #: ../app/actions/dialogs-actions.c:177
 msgid "Document Histor_y"
-msgstr ""
+msgstr "ದಸ್ತಾವೇಜು ಇತಿಹಾಸ(_y)"
 
 #: ../app/actions/dialogs-actions.c:178
 msgid "Open the document history dialog"
-msgstr ""
+msgstr "ದಸ್ತಾವೇಜು ಇತಿಹಾಸದ ಸಂವಾದವನ್ನು ತೆರೆಯಿರಿ"
 
 #: ../app/actions/dialogs-actions.c:183
 msgid "_Templates"
@@ -1079,11 +1082,11 @@ msgstr "ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳ ಸಂಪಾ
 
 #: ../app/actions/dialogs-actions.c:218
 msgid "_Modules"
-msgstr ""
+msgstr "ಘಟಕಗಳು(_M)"
 
 #: ../app/actions/dialogs-actions.c:219
 msgid "Open the module manager dialog"
-msgstr ""
+msgstr "ಘಟಕ ವ್ಯವಸ್ಥಾಪಕನ ಸಂವಾದವನ್ನು ತೆರೆಯಿರಿ"
 
 #: ../app/actions/dialogs-actions.c:224
 msgid "_Tip of the Day"
@@ -1104,7 +1107,7 @@ msgstr "GIMP ಬಗ್ಗೆ"
 
 #: ../app/actions/dock-actions.c:43
 msgid "M_ove to Screen"
-msgstr ""
+msgstr "ತೆರೆಗೆ ಸ್ಥಳಾಂತರಿಸು(_o)"
 
 #: ../app/actions/dock-actions.c:47
 msgid "Close Dock"
@@ -1112,11 +1115,11 @@ msgstr ""
 
 #: ../app/actions/dock-actions.c:52 ../app/actions/view-actions.c:123
 msgid "_Open Display..."
-msgstr ""
+msgstr "ಪ್ರದರ್ಶಕವನ್ನು ತೆರೆ(_O)..."
 
 #: ../app/actions/dock-actions.c:53 ../app/actions/view-actions.c:124
 msgid "Connect to another display"
-msgstr ""
+msgstr "ಇನ್ನೊಂದು ಪ್ರದರ್ಶಕಕ್ಕೆ ಸಂಪರ್ಕ ಜೋಡಿಸು"
 
 #: ../app/actions/dock-actions.c:61
 msgid "_Show Image Selection"
@@ -1124,7 +1127,7 @@ msgstr "ಚಿತ್ರದ ಆಯ್ಕೆಯನ್ನು ತೋರಿಸು(_S)
 
 #: ../app/actions/dock-actions.c:67
 msgid "Auto _Follow Active Image"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ಚಿತ್ರವನ್ನು ತಾನಾಗಿಯೆ ಅನುಸರಿಸುವಂತೆ ಮಾಡು(_F)"
 
 #: ../app/actions/dockable-actions.c:49
 msgid "Dialogs Menu"
@@ -1280,11 +1283,11 @@ msgstr "ದಸ್ತಾವೇಜಿನ ಸಂಪೂರ್ಣ ಇತಿಹಾಸ�
 
 #: ../app/actions/documents-actions.c:82
 msgid "Recreate _Preview"
-msgstr ""
+msgstr "ಮುನ್ನೋಟವನ್ನು ಪುನಃ ರಚಿಸು(_P)"
 
 #: ../app/actions/documents-actions.c:83
 msgid "Recreate preview"
-msgstr ""
+msgstr "ಮುನ್ನೋಟವನ್ನು ಪುನಃ ರಚಿಸು"
 
 #: ../app/actions/documents-actions.c:88
 msgid "Reload _all Previews"
@@ -1315,6 +1318,8 @@ msgid ""
 "Clearing the document history will permanently remove all items from the "
 "recent documents list in all applications."
 msgstr ""
+"ದಸ್ತಾವೇಜು ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸುವುದರಿಂದ ಅದು ಎಲ್ಲಾ ಅನ್ವಯಗಳ ಪಟ್ಟಿಯಲ್ಲಿನ ಎಲ್ಲಾ ಇತ್ತೀಚಿನ ದಸ್ತಾವೇಜುಗಳನ್ನು "
+"ಶಾಶ್ವತವಾಗಿ ತೆಗೆದು ಹಾಕುತ್ತದೆ."
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Equalize"
@@ -2081,12 +2086,12 @@ msgstr "ಕುಗ್ಗಿಸು"
 
 #: ../app/actions/gradient-editor-actions.c:382
 msgid "Zoom All"
-msgstr ""
+msgstr "ಎಲ್ಲವನ್ನೂ ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/gradient-editor-actions.c:383
 #: ../app/actions/palette-editor-actions.c:100
 msgid "Zoom all"
-msgstr ""
+msgstr "ಎಲ್ಲವನ್ನೂ ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/gradient-editor-actions.c:773
 msgid "_Blending Function for Segment"
@@ -2150,7 +2155,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:808
 msgid "_Delete Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಅಳಿಸು(_D)"
 
 #: ../app/actions/gradient-editor-actions.c:810
 msgid "Re-_center Midpoints in Selection"
@@ -2186,7 +2191,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:458
 msgid "Replicate Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಪ್ರತಿರೂಪಗೊಳಿಸು"
 
 #: ../app/actions/gradient-editor-commands.c:459
 msgid "Replicate Gradient Selection"
@@ -2194,7 +2199,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:472
 msgid "Replicate"
-msgstr ""
+msgstr "ಪ್ರತಿರೂಪವನ್ನು ಮಾಡು"
 
 #: ../app/actions/gradient-editor-commands.c:492
 msgid ""
@@ -2372,15 +2377,15 @@ msgstr "ಕ್ಯಾನ್ವಾಸ್ ಗಾತ್ರ(_v)..."
 
 #: ../app/actions/image-actions.c:73
 msgid "Adjust the image dimensions"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಆಕಾರಗಳನ್ನು ಸರಿಹೊಂದಿಸು"
 
 #: ../app/actions/image-actions.c:78
 msgid "F_it Canvas to Layers"
-msgstr ""
+msgstr "ಕ್ಯಾನ್ವಾಸ್ ಅನ್ನು ಪದರಕ್ಕೆ ಸರಿಹೊಂದಿಸು(_i)"
 
 #: ../app/actions/image-actions.c:79
 msgid "Resize the image to enclose all layers"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಪದರಗಳನ್ನು ಒಳಗೊಳ್ಳುವಂತೆ ಪದರದ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿ"
 
 #: ../app/actions/image-actions.c:84
 msgid "F_it Canvas to Selection"
@@ -2404,7 +2409,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:97
 msgid "Change the size of the image content"
-msgstr ""
+msgstr "ಚಿತ್ರದಲ್ಲಿನ ವಿಷಯದ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿ"
 
 #: ../app/actions/image-actions.c:102 ../app/actions/layers-actions.c:188
 msgid "_Crop to Selection"
@@ -2460,7 +2465,7 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:146
 msgid "_Grayscale"
-msgstr ""
+msgstr "ಗ್ರೇಸ್ಕೇಲ್(_G)"
 
 #: ../app/actions/image-actions.c:147
 msgid "Convert the image to grayscale"
@@ -2476,11 +2481,11 @@ msgstr ""
 
 #: ../app/actions/image-actions.c:160
 msgid "Flip image horizontally"
-msgstr "ಚಿತ್ರವನ್ನು ಅಡ್ಡವಾಗಿ ಮಗಚಿ"
+msgstr "ಚಿತ್ರವನ್ನು ಅಡ್ಡವಾಗಿ ಮಗುಚಿ"
 
 #: ../app/actions/image-actions.c:166
 msgid "Flip image vertically"
-msgstr "ಚಿತ್ರವನ್ನು ಲಂಬವಾಗಿ ಮಗಚಿ"
+msgstr "ಚಿತ್ರವನ್ನು ಲಂಬವಾಗಿ ಮಗುಚಿ"
 
 #: ../app/actions/image-actions.c:175
 msgid "Rotate the image 90 degrees to the right"
@@ -2488,7 +2493,7 @@ msgstr "ಚಿತ್ರವನ್ನು 90 ಡಿಗ್ರಿಯಷ್ಟು ಬ�
 
 #: ../app/actions/image-actions.c:181
 msgid "Turn the image upside-down"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ತಲೆಕೆಳಗು ಮಾಡಿ"
 
 #: ../app/actions/image-actions.c:187
 msgid "Rotate the image 90 degrees to the left"
@@ -2530,7 +2535,7 @@ msgstr "ಮುದ್ರಣ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸ�
 
 #: ../app/actions/image-commands.c:647 ../app/core/gimpimage-scale.c:82
 msgid "Scale Image"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಅಳತೆ ಬದಲಾಯಿಸಿ"
 
 #. Scaling
 #: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1101
@@ -2757,7 +2762,7 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:183
 msgid "Change the size of the layer content"
-msgstr ""
+msgstr "ಪದರದಲ್ಲಿರುವ ವಿಷಯದ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿ"
 
 #: ../app/actions/layers-actions.c:189
 msgid "Crop the layer to the extents of the selection"
@@ -2769,7 +2774,7 @@ msgstr "ಪದರ ಮುಸುಕನ್ನು ಸೇರಿಸು(_y)..."
 
 #: ../app/actions/layers-actions.c:195
 msgid "Add a mask that allows non-destructive editing of transparency"
-msgstr ""
+msgstr "ಪಾರದರ್ಶಕತೆಯನ್ನು ಹಾನಿ ಮಾಡದೆ ಸಂಪಾದಿಸಬಲ್ಲ ಒಂದು ಮುಸುಕನ್ನು ಸೇರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:200
 msgid "Add Alpha C_hannel"
@@ -2797,11 +2802,11 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:222
 msgid "_Edit Layer Mask"
-msgstr ""
+msgstr "ಪದರದ ಮುಸಕನ್ನು ಸಂಪಾದಿಸು(_E)"
 
 #: ../app/actions/layers-actions.c:223
 msgid "Work on the layer mask"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕಿನ ಮೇಲೆ ಕೆಲಸ ಮಾಡಿ"
 
 #: ../app/actions/layers-actions.c:229
 msgid "S_how Layer Mask"
@@ -2813,7 +2818,7 @@ msgstr "ಪದರದ ಮುಸುಕನ್ನು ಅಶಕ್ತಗೊಳಿಸ�
 
 #: ../app/actions/layers-actions.c:236
 msgid "Dismiss the effect of the layer mask"
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕಿನ ಪರಿಣಾಮವನ್ನು ಬಿಟ್ಟು ಬಿಡು"
 
 #: ../app/actions/layers-actions.c:245
 msgid "Apply Layer _Mask"
@@ -2821,7 +2826,7 @@ msgstr "ಪದರದ ಮುಸುಕನ್ನು ಅನ್ವಯಿಸು(_M)"
 
 #: ../app/actions/layers-actions.c:246
 msgid "Apply the effect of the layer mask and remove it"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕಿನ ಪರಿಣಾಮವನ್ನು ಅನ್ವಯಿಸಿ ನಂತರ ತೆಗೆದು ಹಾಕಿ"
 
 #: ../app/actions/layers-actions.c:251
 msgid "Delete Layer Mas_k"
@@ -2845,11 +2850,11 @@ msgstr "ಪದರದ ಮುಸುಕನ್ನು ಈಗಿನ ಆಯ್ಕೆಯ
 
 #: ../app/actions/layers-actions.c:273
 msgid "Subtract the layer mask from the current selection"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಯಿಂದ ತೆಗೆದು ಹಾಕಿ"
 
 #: ../app/actions/layers-actions.c:279
 msgid "Intersect the layer mask with the current selection"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಯಿಂದ ಛೇಧಿಸಿ"
 
 #: ../app/actions/layers-actions.c:287
 msgid "Al_pha to Selection"
@@ -2857,23 +2862,23 @@ msgstr ""
 
 #: ../app/actions/layers-actions.c:288
 msgid "Replace the selection with the layer's alpha channel"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾಗಿರುವುದನ್ನು ಪದರದ ಅಲ್ಫಾ ಚಾನಲ್‌ನಿಂದ ಬದಲಾಯಿಸಿ"
 
 #: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
 msgid "A_dd to Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಗೆ ಸೇರಿಸು(_d)"
 
 #: ../app/actions/layers-actions.c:294
 msgid "Add the layer's alpha channel to the current selection"
-msgstr ""
+msgstr "ಪದರದ ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಗೆ ಸೇರಿಸಿ"
 
 #: ../app/actions/layers-actions.c:300
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr ""
+msgstr "ಪದರದ ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಯಿಂದ ತೆಗೆದು ಹಾಕಿ"
 
 #: ../app/actions/layers-actions.c:306
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr ""
+msgstr "ಪದರದ ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ಪ್ರಸಕ್ತ ಆಯ್ಕೆಯಿಂದ ಛೇಧಿಸಿ"
 
 #: ../app/actions/layers-actions.c:314
 msgid "_Text to Selection"
@@ -2933,11 +2938,11 @@ msgstr ""
 
 #: ../app/actions/layers-commands.c:203
 msgid "Layer Attributes"
-msgstr ""
+msgstr "ಪದರದ ಗುಣವಿಶೇಷಗಳು"
 
 #: ../app/actions/layers-commands.c:206
 msgid "Edit Layer Attributes"
-msgstr ""
+msgstr "ಪದರದ ಗುಣವಿಶೇಷಗಳನ್ನು ಸಂಪಾದಿಸಿ"
 
 #: ../app/actions/layers-commands.c:249 ../app/actions/layers-commands.c:251
 #: ../app/actions/layers-commands.c:319 ../app/actions/layers-commands.c:323
@@ -2956,7 +2961,7 @@ msgstr "ಗೋಚರಿಕೆ"
 
 #: ../app/actions/layers-commands.c:571
 msgid "Set Layer Boundary Size"
-msgstr ""
+msgstr "ಪದರದ ಅಂಚಿನ ಗಾತ್ರವನ್ನು ಹೊಂದಿಸಿ"
 
 #: ../app/actions/layers-commands.c:612 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
@@ -3650,11 +3655,11 @@ msgstr ""
 
 #: ../app/actions/tool-options-commands.c:72
 msgid "Save Tool Options"
-msgstr ""
+msgstr "ಉಪಕರಣ ಆಯ್ಕೆಗಳನ್ನು ಉಳಿಸು"
 
 #: ../app/actions/tool-options-commands.c:76
 msgid "Enter a name for the saved options"
-msgstr ""
+msgstr "ಉಳಿಸಲಾದ ಆಯ್ಕೆಗಳಿಗೆ ಒಂದು ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
 
 #: ../app/actions/tool-options-commands.c:77
 #: ../app/actions/tool-options-commands.c:247
@@ -3664,11 +3669,11 @@ msgstr "ಉಳಿಸಲಾದ ಆಯ್ಕೆಗಳು"
 
 #: ../app/actions/tool-options-commands.c:140
 msgid "Rename Saved Tool Options"
-msgstr ""
+msgstr "ಉಳಿಸಲಾದ ಉಪಕರಣ ಆಯ್ಕೆಗಳ ಹೆಸರನ್ನು ಬದಲಾಯಿಸಿ"
 
 #: ../app/actions/tool-options-commands.c:144
 msgid "Enter a new name for the saved options"
-msgstr ""
+msgstr "ಉಳಿಸಲಾದ ಉಪಕರಣ ಆಯ್ಕೆಗಳಿಗಾಗಿ ಒಂದು ಹೊಸ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
 
 #: ../app/actions/tool-options-commands.c:187
 msgid "Reset Tool Options"
@@ -3680,7 +3685,7 @@ msgstr ""
 
 #: ../app/actions/tools-actions.c:47
 msgid "Tools Menu"
-msgstr ""
+msgstr "ಉಪಕರಣಗಳ ಮೆನು"
 
 #: ../app/actions/tools-actions.c:50
 msgid "_Tools"
@@ -3688,63 +3693,63 @@ msgstr "ಉಪಕರಣಗಳು(_T)"
 
 #: ../app/actions/tools-actions.c:51
 msgid "_Selection Tools"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಉಪಕರಣಗಳು(_S)"
 
 #: ../app/actions/tools-actions.c:52
 msgid "_Paint Tools"
-msgstr ""
+msgstr "ಬಣ್ಣಹಚ್ಚುವ ಉಪಕರಣಗಳು(_P)"
 
 #: ../app/actions/tools-actions.c:53
 msgid "_Transform Tools"
-msgstr ""
+msgstr "ರೂಪಾಂತರ ಉಪಕರಣಗಳು(_T)"
 
 #: ../app/actions/tools-actions.c:54
 msgid "_Color Tools"
-msgstr ""
+msgstr "ಬಣ್ಣದ ಉಪಕರಣಗಳು(_C)"
 
 #: ../app/actions/tools-actions.c:57
 msgid "R_aise Tool"
-msgstr ""
+msgstr "ಉಪಕರಣವನ್ನು ಏರಿಸು(_a)"
 
 #: ../app/actions/tools-actions.c:58
 msgid "Raise tool"
-msgstr ""
+msgstr "ಉಪಕರಣವನ್ನು ಏರಿಸಿ"
 
 #: ../app/actions/tools-actions.c:63
 msgid "Ra_ise to Top"
-msgstr ""
+msgstr "ಮೇಲಕ್ಕೆ ಏರಿಸು(_i)"
 
 #: ../app/actions/tools-actions.c:64
 msgid "Raise tool to top"
-msgstr ""
+msgstr "ಉಪಕರಣವನ್ನು ಮೇಲಕ್ಕೆ ಏರಿಸಿ"
 
 #: ../app/actions/tools-actions.c:69
 msgid "L_ower Tool"
-msgstr ""
+msgstr "ಉಪಕರಣವನ್ನು ಇಳಿಸು(_o)"
 
 #: ../app/actions/tools-actions.c:70
 msgid "Lower tool"
-msgstr ""
+msgstr "ಉಪಕರಣವನ್ನು ಇಳಿಸಿ"
 
 #: ../app/actions/tools-actions.c:75
 msgid "Lo_wer to Bottom"
-msgstr ""
+msgstr "ಕೆಳಕ್ಕೆ ಇಳಿಸು(_w)"
 
 #: ../app/actions/tools-actions.c:76
 msgid "Lower tool to bottom"
-msgstr ""
+msgstr "ಉಪಕರಣವನ್ನು ಕೆಳಕ್ಕೆ ಇಳಿಸಿ"
 
 #: ../app/actions/tools-actions.c:81
 msgid "_Reset Order & Visibility"
-msgstr ""
+msgstr "ಅನುಕ್ರಮ ಹಾಗು ಗೋಚರಿಕೆಯನ್ನು ಮರು ಹೊಂದಿಸು(_R)"
 
 #: ../app/actions/tools-actions.c:82
 msgid "Reset tool order and visibility"
-msgstr ""
+msgstr "ಉಪಕರಣದ ಅನುಕ್ರಮ ಹಾಗು ಗೋಚರಿಕೆಯನ್ನು ಮರು ಹೊಂದಿಸಿ"
 
 #: ../app/actions/tools-actions.c:90
 msgid "_Show in Toolbox"
-msgstr ""
+msgstr "ಉಪಕರಣಪೆಟ್ಟಿಗೆಯಲ್ಲಿ ತೋರಿಸು(_S)"
 
 #: ../app/actions/tools-actions.c:99
 msgid "_By Color"
@@ -3752,7 +3757,7 @@ msgstr "ಬಣ್ಣದಿಂದ(_B)"
 
 #: ../app/actions/tools-actions.c:100
 msgid "Select regions with similar colors"
-msgstr ""
+msgstr "ಒಂದೇ ರೀತಿಯ ಬಣ್ಣಗಳಿರುವ ಜಾಗಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/actions/tools-actions.c:105
 msgid "_Arbitrary Rotation..."
@@ -3900,7 +3905,7 @@ msgstr "ಕಳೆ"
 
 #: ../app/actions/vectors-actions.c:186
 msgid "Intersect"
-msgstr ""
+msgstr "ಛೇಧಿಸು"
 
 #: ../app/actions/vectors-actions.c:194
 msgid "Selecti_on to Path"
@@ -3967,7 +3972,7 @@ msgstr "ತೆರೆಗೆ ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/actions/view-actions.c:76
 msgid "Create another view on this image"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರದಲ್ಲಿ ಇನ್ನೊಂದು ನೋಟವನ್ನು ರಚಿಸು"
 
 #: ../app/actions/view-actions.c:81
 msgid "_Close"
@@ -3979,11 +3984,11 @@ msgstr "ಈ ಚಿತ್ರದ ವಿಂಡೊವನ್ನು ಮುಚ್ಚು
 
 #: ../app/actions/view-actions.c:87
 msgid "_Fit Image in Window"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ವಿಂಡೊದ ಒಳಗಿರುವಂತೆ ಸರಿಹೊಂದಿಸು(_F)"
 
 #: ../app/actions/view-actions.c:88
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr ""
+msgstr "ಚಿತ್ರವು ಸಂಪೂರ್ಣವಾಗಿ ಕಾಣಿಸಿಕೊಳ್ಳುವಂತೆ ಹಿಗ್ಗಿಸುವ ಅನುಪಾತವನ್ನು ಸರಿಹೊಂದಿಸು"
 
 #: ../app/actions/view-actions.c:93
 msgid "Fi_ll Window"
@@ -3991,7 +3996,7 @@ msgstr "ವಿಂಡೊವನ್ನು ತುಂಬಿಸು(_l)"
 
 #: ../app/actions/view-actions.c:94
 msgid "Adjust the zoom ratio so that the entire window is used"
-msgstr ""
+msgstr "ವಿಂಡೋವು ಸಂಪೂರ್ಣವಾಗಿ ಬಳಕೆಯಾಗುವಂತೆ ಹಿಗ್ಗಿಸುವ ಅನುಪಾತವನ್ನು ಸರಿಹೊಂದಿಸು"
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:579
 msgid "Re_vert Zoom"
@@ -3999,23 +4004,23 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:100
 msgid "Restore the previous zoom level"
-msgstr ""
+msgstr "ಹಿಂದಿನ ಹಿಗ್ಗಿಸುವ ಮಟ್ಟವನ್ನು ಮರಳಿ ಸ್ಥಾಪಿಸು"
 
 #: ../app/actions/view-actions.c:105
 msgid "Na_vigation Window"
-msgstr ""
+msgstr "ನ್ಯಾವಿಗೇಶನ್ ವಿಂಡೊ(_v)"
 
 #: ../app/actions/view-actions.c:106
 msgid "Show an overview window for this image"
-msgstr ""
+msgstr "ಈ ಚಿತ್ರಕ್ಕಾಗಿನ ಅವಲೋಕನ ವಿಂಡೋವನ್ನು ತೋರಿಸು"
 
 #: ../app/actions/view-actions.c:111
 msgid "Display _Filters..."
-msgstr ""
+msgstr "ಫಿಲ್ಟರುಗಳನ್ನು ತೋರಿಸು(_F)..."
 
 #: ../app/actions/view-actions.c:112
 msgid "Configure filters applied to this view"
-msgstr ""
+msgstr "ಈ ನೋಟಕ್ಕೆ ಅನ್ವಯಿಸಲಾದ ಫಿಲ್ಟರುಗಳನ್ನು ಸಂರಚಿಸು"
 
 #: ../app/actions/view-actions.c:117
 msgid "Shrink _Wrap"
@@ -4111,39 +4116,39 @@ msgstr "ಮೆನುಪಟ್ಟಿಯನ್ನು ತೋರಿಸು( _M)"
 
 #: ../app/actions/view-actions.c:203
 msgid "Show this window's menubar"
-msgstr ""
+msgstr "ಈ ವಿಂಡೋದ ಮೆನುಪಟ್ಟಿಯನ್ನು ತೋರಿಸು"
 
 #: ../app/actions/view-actions.c:209
 msgid "Show R_ulers"
-msgstr ""
+msgstr "ಅಳತೆಪಟ್ಟಿಗಳನ್ನು ತೋರಿಸು(_u)"
 
 #: ../app/actions/view-actions.c:210
 msgid "Show this window's rulers"
-msgstr ""
+msgstr "ಈ ವಿಂಡೋದ ಅಳತೆಪಟ್ಟಿಗಳನ್ನು ತೋರಿಸು"
 
 #: ../app/actions/view-actions.c:216
 msgid "Show Scroll_bars"
-msgstr ""
+msgstr "ಚಲನಾಪಟ್ಟಿಕೆಗಳನ್ನು ತೋರಿಸು(_b)"
 
 #: ../app/actions/view-actions.c:217
 msgid "Show this window's scrollbars"
-msgstr ""
+msgstr "ಈ ವಿಂಡೋದ ಚಲನಾಪಟ್ಟಿಕೆಗಳನ್ನು ತೋರಿಸು"
 
 #: ../app/actions/view-actions.c:223
 msgid "Show S_tatusbar"
-msgstr ""
+msgstr "ಸ್ಥಿತಿಪಟ್ಟಿಕೆಯನ್ನು ತೋರಿಸು(_t)"
 
 #: ../app/actions/view-actions.c:224
 msgid "Show this window's statusbar"
-msgstr ""
+msgstr "ಈ ವಿಂಡೋದ ಸ್ಥಿತಿಪಟ್ಟಿಕೆಯನ್ನು ತೋರಿಸು"
 
 #: ../app/actions/view-actions.c:230
 msgid "Fullscr_een"
-msgstr ""
+msgstr "ಪೂರ್ಣತೆರೆ(_e)"
 
 #: ../app/actions/view-actions.c:231
 msgid "Toggle fullscreen view"
-msgstr ""
+msgstr "ಪೂರ್ಣತೆರೆ ನೋಟಕ್ಕೆ ಬದಲಾಯಿಸು"
 
 #: ../app/actions/view-actions.c:292
 msgid "1_6:1  (1600%)"
@@ -4151,7 +4156,7 @@ msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:293
 msgid "Zoom 16:1"
-msgstr ""
+msgstr "16:1 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:298
 msgid "_8:1  (800%)"
@@ -4159,7 +4164,7 @@ msgstr "_8:1  (800%)"
 
 #: ../app/actions/view-actions.c:299
 msgid "Zoom 8:1"
-msgstr ""
+msgstr "8:1 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:304
 msgid "_4:1  (400%)"
@@ -4167,7 +4172,7 @@ msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:305
 msgid "Zoom 4:1"
-msgstr ""
+msgstr "4:1 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:310
 msgid "_2:1  (200%)"
@@ -4175,7 +4180,7 @@ msgstr "_2:1  (200%)"
 
 #: ../app/actions/view-actions.c:311
 msgid "Zoom 2:1"
-msgstr ""
+msgstr "2:1 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:316
 msgid "_1:1  (100%)"
@@ -4191,7 +4196,7 @@ msgstr "1:_2  (50%)"
 
 #: ../app/actions/view-actions.c:323
 msgid "Zoom 1:2"
-msgstr ""
+msgstr "1:2 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:328
 msgid "1:_4  (25%)"
@@ -4199,7 +4204,7 @@ msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:329
 msgid "Zoom 1:4"
-msgstr ""
+msgstr "1:4 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:334
 msgid "1:_8  (12.5%)"
@@ -4207,7 +4212,7 @@ msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:335
 msgid "Zoom 1:8"
-msgstr ""
+msgstr "1:8 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:340
 msgid "1:1_6  (6.25%)"
@@ -4215,7 +4220,7 @@ msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:341
 msgid "Zoom 1:16"
-msgstr ""
+msgstr "1:16 ನಷ್ಟು ಹಿಗ್ಗಿಸು"
 
 #: ../app/actions/view-actions.c:346
 msgid "Othe_r..."
@@ -4223,7 +4228,7 @@ msgstr "ಇತರೆ(_r)..."
 
 #: ../app/actions/view-actions.c:347
 msgid "Set a custom zoom factor"
-msgstr ""
+msgstr "ಇಚ್ಛೆಯ ಒಂದು ಹಿಗ್ಗಿಸುವ ಅಂಶವನ್ನು ಹೊಂದಿಸಿ"
 
 #: ../app/actions/view-actions.c:355
 msgid "From _Theme"
@@ -4251,11 +4256,11 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:373
 msgid "Select _Custom Color..."
-msgstr ""
+msgstr "ಇಚ್ಛೆಯ ಬಣ್ಣವನ್ನು ಆಯ್ಕೆ ಮಾಡು(_C)..."
 
 #: ../app/actions/view-actions.c:374
 msgid "Use an arbitrary color"
-msgstr ""
+msgstr "ಮನಸ್ಸಿಗೆ ಬಂದ ಬಣ್ಣವನ್ನು ಬಳಸು"
 
 #: ../app/actions/view-actions.c:379
 msgid "As in _Preferences"
@@ -4312,15 +4317,15 @@ msgstr ""
 
 #: ../app/actions/windows-actions.c:84
 msgid "Tool_box"
-msgstr ""
+msgstr "ಉಪಕರಣ ಪೆಟ್ಟಿಗೆ(_b)"
 
 #: ../app/actions/windows-actions.c:85
 msgid "Raise the toolbox"
-msgstr ""
+msgstr "ಉಪಕರಣ ಪೆಟ್ಟಿಗೆಯನ್ನು ಏರಿಸು"
 
 #: ../app/base/base-enums.c:23
 msgid "Smooth"
-msgstr ""
+msgstr "ಮೃದು"
 
 #: ../app/base/base-enums.c:24
 msgid "Freehand"
@@ -4368,7 +4373,7 @@ msgstr ""
 
 #: ../app/base/base-enums.c:113
 msgid "Behind"
-msgstr ""
+msgstr "ಹಿಂದೆ"
 
 #: ../app/base/base-enums.c:114
 msgid "Multiply"
@@ -4440,7 +4445,7 @@ msgstr ""
 
 #: ../app/base/base-enums.c:133
 msgid "Color erase"
-msgstr ""
+msgstr "ಬಣ್ಣ ಅಳಿಸುವಿಕೆ"
 
 #: ../app/base/base-enums.c:134
 msgid "Erase"
@@ -4460,12 +4465,12 @@ msgid ""
 "file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart GIMP and check the location of the swap "
 "directory in your Preferences."
-msgstr ""
+msgstr "ಸ್ವಾಪ್ ಕಡತವನ್ನು ತೆರೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ. GIMP ನಲ್ಲಿ ಮೆಮೊರಿ ಖಾಲಿಯಾಗಿದೆ ಹಾಗು ಸ್ವಾಪ್ ಕಡತವನ್ನು ಬಳಸಲು ಸಾಧ್ಯವಿಲ್ಲ. ನಿಮ್ಮ ಚಿತ್ರದಲ್ಲಿನ ಕೆಲವು ಭಾಗಗಳು ಹಾಳಾಗಿರಬಹುದು. ನಿಮ್ಮ ಕೆಲಸವನ್ನು ಬೇರೆ ಕಡತದ ಹೆಸರುಗಳಲ್ಲಿ ಉಳಿಸಲು ಪ್ರಯತ್ನಿಸಿ, GIMP ಅನ್ನು ಮರಳಿ ಆರಂಭಿಸಿ ಹಾಗು ನಿಮ್ಮ ಆದ್ಯತೆಗಳಲ್ಲಿನ ಸ್ವಾಪ್ ಕೋಶವು ಇರುವ ಸ್ಥಳವನ್ನು ಪರೀಕ್ಷಿಸಿ."
 
 #: ../app/base/tile-swap.c:568
 #, c-format
 msgid "Failed to resize swap file: %s"
-msgstr ""
+msgstr "ಸ್ವಾಪ್ ಕಡತದ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ: %s"
 
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpcurve-save.c:53 ../app/core/gimpgradient-save.c:51
@@ -4475,7 +4480,7 @@ msgstr ""
 #: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "ಬರೆಯುವ ಸಲುವಾಗಿ '%s' ಅನ್ನು ತೆರೆಯಲಾಗಿಲ್ಲ: %s"
 
 #: ../app/config/gimpconfig-file.c:79 ../app/config/gimpconfig-file.c:102
 #, c-format
@@ -4485,7 +4490,7 @@ msgstr "'%s' ಕ್ಕೆ ಬರೆಯುವಲ್ಲಿ ದೋಷ ಉಂಟಾ�
 #: ../app/config/gimpconfig-file.c:90
 #, c-format
 msgid "Error reading '%s': %s"
-msgstr ""
+msgstr "'%s' ಅನ್ನು ಓದುವಲ್ಲಿ ದೋಷ: %s"
 
 #: ../app/config/gimpconfig-file.c:132
 #, c-format
@@ -4493,6 +4498,8 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
+"ನಿಮ್ಮ '%s' ಕಡತವನ್ನು ಪಾರ್ಸ್ ಮಾಡುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ. ಪೂರ್ವನಿಯೋಜಿತ ಮೌಲ್ಯಗಳನ್ನು ಬಳಸಲಾಗುತ್ತದೆ. "
+"'%s' ನಲ್ಲಿ ನಿಮ್ಮ ಸಂರಚನೆಯ ಒಂದು ಬ್ಯಾಕ್ಅಪ್ ಪ್ರತಿಯನ್ನು ನಿರ್ಮಿಸಲಾಗಿದೆ."
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -4504,6 +4511,8 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
+"ಶಕ್ತಗೊಳಿಸಿದಾಗ, ಒಂದು ಚಿತ್ರವನ್ನು ಹೊಂದಿರುವ ವಿಂಡೊದತ್ತ ಗಮನವು ಸೆಳೆಯಲ್ಪಟ್ಟಾಗ ಆ ಚಿತ್ರವು ಸಕ್ರಿಯ ಚಿತ್ರವಾಗುತ್ತದೆ. "
+"\"ಗಮನಸೆಳೆಯಲು ಕ್ಲಿಕ್‌ ಮಾಡಿ\" ಅನ್ನು ಬಳಸುವ ವಿಂಡೊ ವ್ಯವಸ್ಥಾಪಕದಲ್ಲಿ ಇದು ಉಪಯುಕ್ತವಾಗುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:23
 msgid ""
@@ -4513,23 +4522,23 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:27
 msgid "Specifies how the area around the image should be drawn."
-msgstr ""
+msgstr "ಚಿತ್ರದ ಸುತ್ತಲಿನ ಜಾಗವನ್ನು ಹೇಗೆ ಚಿತ್ರಿಸಬೇಕು ಎನ್ನುವುದನ್ನು ಇದು ಸೂಚಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "How to handle embedded color profiles when opening a file."
-msgstr ""
+msgstr "ಒಂದು ಕಡತವನ್ನು ತೆರೆಯುವಾಗ ಅಡಕಗೊಳಿಸಲಾದ ಬಣ್ಣದ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಹೇಗೆ ನಿಭಾಯಿಸಬೇಕು ಎಂದು ಸೂಚಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Ask for confirmation before closing an image without saving."
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಉಳಿಸದೆ ಮುಚ್ಚುವಾಗ ಖಚಿತ ಪಡಿಸಲು ಕೇಳು."
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the pixel format to use for mouse pointers."
-msgstr ""
+msgstr "ಮೌಸ್‌ನ ಸೂಚಕಗಳಲ್ಲಿ ಬಳಸಬೇಕಿರುವ ಪಿಕ್ಸೆಲ್‌ನ ವಿನ್ಯಾಸವನ್ನು ಹೊಂದಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:42
 msgid "Sets the type of mouse pointers to use."
-msgstr ""
+msgstr "ಬಳಸಬೇಕಿರುವ ಮೌಸ್‌ನ ಸೂಚಕದ ಬಗೆಯನ್ನು ಹೊಂದಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:45
 msgid ""
@@ -4542,6 +4551,8 @@ msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
+"ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ, ಒಂದು ಚಿತ್ರದ ಪ್ರತಿಯೊಂದು ಪಿಕ್ಸೆಲ್‌ ತೆರೆಯಲ್ಲಿನ ಪಿಕ್ಸೆಲ್‌ಗಳತ್ತ ಸೂಚಿತಗೊಳ್ಳುತ್ತದೆ ಎನ್ನುವುದನ್ನು ಇದು "
+"ಖಚಿತಪಡಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:75
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -4564,27 +4575,27 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:123
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr ""
+msgstr "ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ, ಆಯ್ಕೆ ಮಾಡಲಾದ ಕುಂಚವನ್ನು ಎಲ್ಲಾ ಉಪಕರಣಗಳಲ್ಲೂ ಬಳಸಲಾಗುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:129
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr ""
+msgstr "ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ, ಆಯ್ಕೆ ಮಾಡಲಾದ ಗ್ರೇಡಿಯಂಟ್‌ ಅನ್ನು ಎಲ್ಲಾ ಉಪಕರಣಗಳಲ್ಲೂ ಬಳಸಲಾಗುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:132
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr ""
+msgstr "ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ, ಎಲ್ಲಾ ಉಪಕರಣಗಳಲ್ಲಿಯೂ ಆಯ್ಕೆ ಮಾಡಲಾದ ವಿನ್ಯಾಸವನ್ನು ಬಳಸಲಾಗುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:146
 msgid "Sets the browser used by the help system."
-msgstr ""
+msgstr "ನೆರವಿನ ವ್ಯವಸ್ಥೆಗಾಗಿ ಬಳಸಲಾಗುವ ವೀಕ್ಷಕವನ್ನು ಹೊಂದಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "Sets the text to appear in image window status bars."
-msgstr ""
+msgstr "ಚಿತ್ರದ ವಿಂಡೊ ಸ್ಥಿತಿ ಪಟ್ಟಿಗಳಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುವ ಪಠ್ಯವನ್ನು ಹೊಂದಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "Sets the text to appear in image window titles."
-msgstr ""
+msgstr "ಚಿತ್ರದ ವಿಂಡೊ ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುವ ಪಠ್ಯವನ್ನು ಹೊಂದಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:160
 msgid ""
@@ -4602,7 +4613,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:174
 msgid "How many recently opened image filenames to keep on the File menu."
-msgstr ""
+msgstr "ಇತ್ತೀಚಿಗೆ ತೆರೆಯಲಾದ ಎಷ್ಟು ಚಿತ್ರದ ಹೆಸರುಗಳನ್ನು ಕಡತ ಮೆನುವಿನಲ್ಲಿ ಇರಿಸಿಕೊಳ್ಳಬೇಕು."
 
 #: ../app/config/gimprc-blurbs.h:177
 msgid ""
@@ -4615,6 +4626,8 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
+"ಇಲ್ಲಿ ಸೂಚಿಸಲಾದ ಗಾತ್ರಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಮೆಮೊರಿಯನ್ನು ತೆಗೆದುಕೊಳ್ಳುವ ಚಿತ್ರವನ್ನು ಬಳಕೆದಾರರು ರಚಿಸಲು ಪ್ರಯತ್ನಿಸಿದಾಗ "
+"GIMP ಎಚ್ಚರಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:185
 msgid "When enabled, GIMP will show mnemonics in menus."
@@ -4654,7 +4667,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:216
 msgid "Sets how many processors GIMP should try to use simultaneously."
-msgstr ""
+msgstr "ಏಕಕಾಲಕ್ಕೆ GIMP ಎಷ್ಟು ಸಂಸ್ಕಾರಕಗಳನ್ನು ಬಳಸಬೇಕು ಎನ್ನುವುದನ್ನು ಸೂಚಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:229
 msgid ""
@@ -4696,21 +4709,21 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:265
 msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr ""
+msgstr "ಪ್ರಸಕ್ತ ಉಪಕರಣ, ವಿನ್ಯಾಸ, ಬಣ್ಣ, ಹಾಗು ಕುಂಚವನ್ನು GIMP ಅಧಿವೇಶನಗಳಾದ್ಯಂತ ನೆನಪಿಟ್ಟುಕೊ."
 
 #: ../app/config/gimprc-blurbs.h:269
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
-msgstr ""
+msgstr "ತೆರೆಯಲಾದ ಹಾಗು ಉಳಿಸಲಾದ ಎಲ್ಲಾ ಕಡತಗಳ ಒಂದು ಶಾಶ್ವತ ದಾಖಲೆಯನ್ನು 'ಇತ್ತೀಚಿನ ದಸ್ತಾವೇಜುಗಳ ಪಟ್ಟಿ'ಯಲ್ಲಿ ಇರಿಸಿಕೊ."
 
 #: ../app/config/gimprc-blurbs.h:273
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
-msgstr ""
+msgstr "GIMP ನಿರ್ಗಮಿಸಿದಾಗ ಇದ್ದಂತಹ ಮುಖ್ಯ ಸಂವಾದಗಳ ಸ್ಥಾನ ಹಾಗು ಗಾತ್ರವನ್ನು ನೆನಪಿಟ್ಟುಕೊ."
 
 #: ../app/config/gimprc-blurbs.h:276
 msgid "Save the tool options when GIMP exits."
-msgstr ""
+msgstr "GIMP ನಿರ್ಗಮಿಸಿದಾಗ ಉಪಕರಣದ ಆಯ್ಕೆಗಳನ್ನು ಉಳಿಸಿ ನಿರ್ಗಮಿಸು."
 
 #: ../app/config/gimprc-blurbs.h:282
 msgid ""
@@ -4729,7 +4742,7 @@ msgstr ""
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
-msgstr ""
+msgstr "ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ, ಬಣ್ಣಹಚ್ಚುವ ಉಪಕರಣವನ್ನು ಬಳಸುವಾಗ ಚಿತ್ರದ ಮೇಲೆ ಮೌಸ್‌ನ ಸೂಚಕವು ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:295
 msgid ""
@@ -4787,11 +4800,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:331
 msgid "Show a tooltip when the pointer hovers over an item."
-msgstr ""
+msgstr "ಸೂಚಕವು ಒಂದು ಅಂಶದ ಮೇಲೆ ಸುಳಿದಾಡಿದಾಗ ಉಪಕರಣಸಲಹೆಯನ್ನು ತೋರಿಸು."
 
 #: ../app/config/gimprc-blurbs.h:334
 msgid "What to do when the space bar is pressed in the image window."
-msgstr ""
+msgstr "ಚಿತ್ರದ ವಿಂಡೋದಲ್ಲಿ ಸ್ಪೇಸ್ ಬಾರ್ ಅನ್ನು ಒತ್ತಿದಾಗ ಏನು ಮಾಡಬೇಕು."
 
 #: ../app/config/gimprc-blurbs.h:337
 msgid ""
@@ -4805,7 +4818,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:346
 msgid "When enabled, menus can be torn off."
-msgstr ""
+msgstr "ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ, ಮೆನುಗಳನ್ನು ಕಿತ್ತು ಹಾಕಬಹುದಾಗಿರುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:349
 msgid ""
@@ -4822,11 +4835,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr ""
+msgstr "GIMP ನಿರ್ಗಮಿಸಿದಾಗ ಬದಲಾಯಿಸಲಾದ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಉಳಿಸು."
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr ""
+msgstr "GIMP ಪ್ರತಿ ಬಾರಿ ಆರಂಭಗೊಂಡಾಗ ಉಳಿಸಲಾದ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಮರಳಿ ಸ್ಥಾಪಿಸು."
 
 #: ../app/config/gimprc-blurbs.h:365
 msgid ""
@@ -4856,15 +4869,15 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:390
 msgid "Show the current foreground and background colors in the toolbox."
-msgstr ""
+msgstr "ಉಪಕರಣಪೆಟ್ಟಿಗೆಯಲ್ಲಿನ ಪ್ರಸಕ್ತ ಹಿನ್ನಲೆ ಹಾಗು ಮುನ್ನೆಲೆ ಬಣ್ಣಗಳನ್ನು ತೋರಿಸು."
 
 #: ../app/config/gimprc-blurbs.h:393
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr ""
+msgstr "ಉಪಕರಣಪೆಟ್ಟಿಗೆಯಲ್ಲಿನ ಪ್ರಸಕ್ತ ಆಯ್ಕೆ ಮಾಡಲಾದ ಕುಂಚ, ವಿನ್ಯಾಸ ಹಾಗು ಗ್ರೇಡಿಯಂಟ್‌ ಅನ್ನು ತೋರಿಸು."
 
 #: ../app/config/gimprc-blurbs.h:396
 msgid "Show the currently active image in the toolbox."
-msgstr ""
+msgstr "ಉಪಕರಣಪೆಟ್ಟಿಗೆಯಲ್ಲಿನ ಪ್ರಸಕ್ತ ಸಕ್ರಿಯವಾಗಿರುವ ಚಿತ್ರವನ್ನು ತೋರಿಸು."
 
 #: ../app/config/gimprc-blurbs.h:402
 msgid ""
@@ -4874,7 +4887,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:406
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr ""
+msgstr "ಚಿತ್ರದಲ್ಲಿ ತೋರಿಸಲಾಗುವ ಪಾರದರ್ಶಕತೆಯ ರೀತಿಯನ್ನು ಹೊಂದಿಸುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:409
 msgid "Sets the size of the checkerboard used to display transparency."
@@ -4885,6 +4898,8 @@ msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
+"ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ, ಈಗಾಗಲೆ ಉಳಿಸಲಾದ ಒಂದು ಚಿತ್ರವನ್ನು ತೆರೆದ ನಂತರ ಬದಲಾಯಿಸಿದೆ ಇದ್ದಲ್ಲಿ GIMP ಆ ಚಿತ್ರವನ್ನು "
+"ಉಳಿಸುವುದಿಲ್ಲ."
 
 #: ../app/config/gimprc-blurbs.h:416
 msgid ""
@@ -4905,7 +4920,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:428
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr ""
+msgstr "ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ, F1 ಅನ್ನು ಒತ್ತುವುದರಿಂದ ನೆರವಿನ ವೀಕ್ಷಕವನ್ನು ತೆರೆಯುತ್ತದೆ."
 
 #: ../app/config/gimprc-blurbs.h:439
 #, c-format
@@ -4920,12 +4935,12 @@ msgstr ""
 #: ../app/core/gimp-units.c:164 ../app/gui/session.c:206
 #: ../app/plug-in/plug-in-rc.c:213
 msgid "fatal parse error"
-msgstr ""
+msgstr "ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ"
 
 #: ../app/config/gimprc-deserialize.c:163
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr ""
+msgstr "ಟೋಕನ್ %s ಗಾಗಿನ ಮೌಲ್ಯವು ಒಂದು ಮಾನ್ಯವಾದ UTF-8 ವಾಕ್ಯವಾಗಿಲ್ಲ"
 
 #. no undo (or redo) steps available
 #: ../app/core/core-enums.c:53 ../app/core/core-enums.c:252
@@ -4936,7 +4951,7 @@ msgstr "ಯಾವುದೂ ಇಲ್ಲ"
 
 #: ../app/core/core-enums.c:54
 msgid "Floyd-Steinberg (normal)"
-msgstr ""
+msgstr "Floyd-Steinberg (ಸಾಮಾನ್ಯ)"
 
 #: ../app/core/core-enums.c:55
 msgid "Floyd-Steinberg (reduced color bleeding)"
@@ -4964,7 +4979,7 @@ msgstr ""
 
 #: ../app/core/core-enums.c:211
 msgid "First item"
-msgstr ""
+msgstr "ಮೊದಲ ಅಂಶ"
 
 #: ../app/core/core-enums.c:213 ../app/dialogs/dialogs.c:198
 #: ../app/tools/tools-enums.c:210
@@ -4973,11 +4988,11 @@ msgstr "ಆಯ್ಕೆ"
 
 #: ../app/core/core-enums.c:214
 msgid "Active layer"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ಪದರ"
 
 #: ../app/core/core-enums.c:215
 msgid "Active channel"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ಚಾನಲ್"
 
 #: ../app/core/core-enums.c:216
 msgid "Active path"
@@ -4998,7 +5013,7 @@ msgstr "ಬಿಳಿ"
 #. Transparency
 #: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2311
 msgid "Transparency"
-msgstr ""
+msgstr "ಪಾರದರ್ಶಕತೆ"
 
 #: ../app/core/core-enums.c:251 ../app/core/core-enums.c:308
 msgid "Pattern"
@@ -5022,11 +5037,11 @@ msgstr ""
 
 #: ../app/core/core-enums.c:337 ../app/core/core-enums.c:367
 msgid "Round"
-msgstr ""
+msgstr "ವೃತ್ತಾಕಾರ"
 
 #: ../app/core/core-enums.c:338
 msgid "Bevel"
-msgstr ""
+msgstr "ಇಳಿಜಾರಿನ"
 
 #: ../app/core/core-enums.c:366
 msgid "Butt"
@@ -5046,39 +5061,39 @@ msgstr "ಸಾಲು"
 
 #: ../app/core/core-enums.c:406
 msgid "Long dashes"
-msgstr ""
+msgstr "ಉದ್ದನೆಯ ಅಡ್ಡಗೆರೆಗಳು"
 
 #: ../app/core/core-enums.c:407
 msgid "Medium dashes"
-msgstr ""
+msgstr "ಮಧ್ಯಮ ಅಡ್ಡಗೆರೆಗಳು"
 
 #: ../app/core/core-enums.c:408
 msgid "Short dashes"
-msgstr ""
+msgstr "ಚಿಕ್ಕ ಅಡ್ಡಗೆರೆಗಳು"
 
 #: ../app/core/core-enums.c:409
 msgid "Sparse dots"
-msgstr ""
+msgstr "ಚದುರಿದ ಚುಕ್ಕಿಗಳು"
 
 #: ../app/core/core-enums.c:410
 msgid "Normal dots"
-msgstr ""
+msgstr "ಸಾಮಾನ್ಯ ಚುಕ್ಕಿಗಳು"
 
 #: ../app/core/core-enums.c:411
 msgid "Dense dots"
-msgstr ""
+msgstr "ದಟ್ಟ ಚುಕ್ಕಿಗಳು"
 
 #: ../app/core/core-enums.c:412
 msgid "Stipples"
-msgstr ""
+msgstr "ಸಣ್ಣಸಣ್ಣ ಚುಕ್ಕಿಗಳು"
 
 #: ../app/core/core-enums.c:413
 msgid "Dash, dot"
-msgstr ""
+msgstr "ಅಡ್ಡಗೆರೆ, ಚುಕ್ಕಿ"
 
 #: ../app/core/core-enums.c:414
 msgid "Dash, dot, dot"
-msgstr ""
+msgstr "ಅಡ್ಡಗೆರೆ, ಚುಕ್ಕಿ, ಚುಕ್ಕಿ"
 
 #: ../app/core/core-enums.c:442
 msgid "Circle"
@@ -5086,7 +5101,7 @@ msgstr "ವೃತ್ತ"
 
 #: ../app/core/core-enums.c:444
 msgid "Diamond"
-msgstr ""
+msgstr "ವಜ್ರಾಕೃತಿ"
 
 #: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2343
 msgid "Horizontal"
@@ -5102,15 +5117,15 @@ msgstr "ಗೊತ್ತಿರದ"
 
 #: ../app/core/core-enums.c:505
 msgid "All layers"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಪದರಗಳು"
 
 #: ../app/core/core-enums.c:506
 msgid "Image-sized layers"
-msgstr ""
+msgstr "ಚಿತ್ರ-ಗಾತ್ರದ ಪದರಗಳು"
 
 #: ../app/core/core-enums.c:507
 msgid "All visible layers"
-msgstr ""
+msgstr "ಗೋಚರಿಸುವ ಎಲ್ಲಾ ಪದರಗಳು"
 
 #: ../app/core/core-enums.c:508
 msgid "All linked layers"
@@ -5118,11 +5133,11 @@ msgstr ""
 
 #: ../app/core/core-enums.c:572
 msgid "Tiny"
-msgstr ""
+msgstr "ಅತ್ಯಂತ ಚಿಕ್ಕದಾದ"
 
 #: ../app/core/core-enums.c:573
 msgid "Very small"
-msgstr ""
+msgstr "ಬಹಳ ಚಿಕ್ಕ್ಕದಾದ"
 
 #: ../app/core/core-enums.c:574
 msgid "Small"
@@ -5138,23 +5153,23 @@ msgstr "ದೊಡ್ಡದಾದ"
 
 #: ../app/core/core-enums.c:577
 msgid "Very large"
-msgstr ""
+msgstr "ಬಹಳ ದೊಡ್ಡದಾದ"
 
 #: ../app/core/core-enums.c:578
 msgid "Huge"
-msgstr ""
+msgstr "ಅತ್ಯಂತ ದೊಡ್ಡದಾದ"
 
 #: ../app/core/core-enums.c:579
 msgid "Enormous"
-msgstr ""
+msgstr "ಬೃಹತ್"
 
 #: ../app/core/core-enums.c:580
 msgid "Gigantic"
-msgstr ""
+msgstr "ಅಗಾಧ"
 
 #: ../app/core/core-enums.c:607
 msgid "View as list"
-msgstr ""
+msgstr "ಪಟ್ಟಿಯಾಗಿ ನೋಡು"
 
 #: ../app/core/core-enums.c:608
 msgid "View as grid"
@@ -5162,19 +5177,19 @@ msgstr ""
 
 #: ../app/core/core-enums.c:672
 msgid "No thumbnails"
-msgstr ""
+msgstr "ತಂಬ್‌ನೈಲ್‌ಗಳಿಲ್ಲ"
 
 #: ../app/core/core-enums.c:673
 msgid "Normal (128x128)"
-msgstr ""
+msgstr "ಸಾಮಾನ್ಯ (128x128)"
 
 #: ../app/core/core-enums.c:674
 msgid "Large (256x256)"
-msgstr ""
+msgstr "ದೊಡ್ಡದಾದ (256x256)"
 
 #: ../app/core/core-enums.c:850
 msgid "<<invalid>>"
-msgstr ""
+msgstr "<<ಅಮಾನ್ಯವಾದ>>"
 
 #: ../app/core/core-enums.c:851
 msgid "Scale image"
@@ -5182,31 +5197,31 @@ msgstr ""
 
 #: ../app/core/core-enums.c:852
 msgid "Resize image"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಗಾತ್ರ ಬದಲಾಯಿಸು"
 
 #: ../app/core/core-enums.c:853
 msgid "Flip image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಮಗುಚು"
 
 #: ../app/core/core-enums.c:854
 msgid "Rotate image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ತಿರುಗಿಸು"
 
 #: ../app/core/core-enums.c:855
 msgid "Crop image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಕತ್ತರಿಸು"
 
 #: ../app/core/core-enums.c:856
 msgid "Convert image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಮಾರ್ಪಡಿಸು"
 
 #: ../app/core/core-enums.c:857
 msgid "Remove item"
-msgstr ""
+msgstr "ಅಂಶವನ್ನು ತೆಗೆದು ಹಾಕು"
 
 #: ../app/core/core-enums.c:858
 msgid "Merge layers"
-msgstr ""
+msgstr "ಪದರಗಳನ್ನು ವಿಲೀನಗೊಳಿಸು"
 
 #: ../app/core/core-enums.c:859
 msgid "Merge paths"
@@ -5228,11 +5243,11 @@ msgstr ""
 
 #: ../app/core/core-enums.c:864 ../app/core/core-enums.c:896
 msgid "Layer/Channel"
-msgstr ""
+msgstr "ಪದರ/ಚಾನಲ್"
 
 #: ../app/core/core-enums.c:865 ../app/core/core-enums.c:897
 msgid "Layer/Channel modification"
-msgstr ""
+msgstr "ಪದರ/ಚಾನಲ್ ಮಾರ್ಪಡಿಸುವಿಕೆ"
 
 #: ../app/core/core-enums.c:866 ../app/core/core-enums.c:898
 msgid "Selection mask"
@@ -5240,7 +5255,7 @@ msgstr ""
 
 #: ../app/core/core-enums.c:867 ../app/core/core-enums.c:901
 msgid "Item visibility"
-msgstr ""
+msgstr "ಅಂಶದ ಗೋಚರಿಕೆ"
 
 #: ../app/core/core-enums.c:868 ../app/core/core-enums.c:902
 msgid "Link/Unlink item"
@@ -5248,31 +5263,31 @@ msgstr ""
 
 #: ../app/core/core-enums.c:869
 msgid "Item properties"
-msgstr ""
+msgstr "ಅಂಶದ ಗುಣಧರ್ಮ"
 
 #: ../app/core/core-enums.c:870 ../app/core/core-enums.c:900
 msgid "Move item"
-msgstr ""
+msgstr "ಅಂಶವನ್ನು ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/core/core-enums.c:871
 msgid "Scale item"
-msgstr ""
+msgstr "ಅಂಶದ ಅಳತೆ ಬದಲಾವಣೆ"
 
 #: ../app/core/core-enums.c:872
 msgid "Resize item"
-msgstr ""
+msgstr "ಅಂಶದ ಗಾತ್ರ ಬದಲಾವಣೆ"
 
 #: ../app/core/core-enums.c:873
 msgid "Add layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಸೇರಿಸು"
 
 #: ../app/core/core-enums.c:874 ../app/core/core-enums.c:911
 msgid "Add layer mask"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ಸೇರಿಸು"
 
 #: ../app/core/core-enums.c:875 ../app/core/core-enums.c:913
 msgid "Apply layer mask"
-msgstr ""
+msgstr "ಪದರದ ಮುಸುಕನ್ನು ಅನ್ವಯಿಸು"
 
 #: ../app/core/core-enums.c:876 ../app/core/core-enums.c:923
 msgid "Floating selection to layer"
@@ -5280,7 +5295,7 @@ msgstr ""
 
 #: ../app/core/core-enums.c:877
 msgid "Float selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ತೇಲಿಸು"
 
 #: ../app/core/core-enums.c:878
 msgid "Anchor floating selection"
@@ -5306,20 +5321,20 @@ msgstr "ಪಠ್ಯ"
 #: ../app/core/core-enums.c:883 ../app/core/core-enums.c:926
 #: ../app/core/gimpdrawable-transform.c:567
 msgid "Transform"
-msgstr ""
+msgstr "ರೂಪಾಂತರಿಸು"
 
 #: ../app/core/core-enums.c:884 ../app/core/core-enums.c:927
 #: ../app/paint/gimppaintcore.c:137
 msgid "Paint"
-msgstr ""
+msgstr "ಬಣ್ಣಹಚ್ಚು"
 
 #: ../app/core/core-enums.c:885 ../app/core/core-enums.c:930
 msgid "Attach parasite"
-msgstr ""
+msgstr "ಪರಾವಲಂಬಿಯನ್ನು ಲಗತ್ತಿಸು"
 
 #: ../app/core/core-enums.c:886 ../app/core/core-enums.c:931
 msgid "Remove parasite"
-msgstr ""
+msgstr "ಪರಾವಲಂಬಿಯನ್ನು ತೆಗೆದುಹಾಕು"
 
 #: ../app/core/core-enums.c:887
 msgid "Import paths"
@@ -5327,15 +5342,15 @@ msgstr ""
 
 #: ../app/core/core-enums.c:888 ../app/pdb/drawable-cmds.c:885
 msgid "Plug-In"
-msgstr ""
+msgstr "ಪ್ಲಗ್‌-ಇನ್"
 
 #: ../app/core/core-enums.c:889
 msgid "Image type"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಬಗೆ"
 
 #: ../app/core/core-enums.c:890
 msgid "Image size"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಗಾತ್ರ"
 
 #: ../app/core/core-enums.c:891
 msgid "Image resolution change"
@@ -5347,27 +5362,27 @@ msgstr ""
 
 #: ../app/core/core-enums.c:899
 msgid "Rename item"
-msgstr ""
+msgstr "ಅಂಶದ ಹೆಸರನ್ನು ಬದಲಾಯಿಸು"
 
 #: ../app/core/core-enums.c:903
 msgid "New layer"
-msgstr ""
+msgstr "ಹೊಸ ಪದರ"
 
 #: ../app/core/core-enums.c:904
 msgid "Delete layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಅಳಿಸು"
 
 #: ../app/core/core-enums.c:905
 msgid "Reposition layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಮರಳಿ ಇರಿಸು"
 
 #: ../app/core/core-enums.c:906
 msgid "Set layer mode"
-msgstr ""
+msgstr "ಪದರದ ಕ್ರಮವನ್ನು ಹೊಂದಿಸು"
 
 #: ../app/core/core-enums.c:907
 msgid "Set layer opacity"
-msgstr ""
+msgstr "ಪದರದ ಅಪಾರದರ್ಶಕತೆಯನ್ನು ಹೊಂದಿಸು"
 
 #: ../app/core/core-enums.c:908
 msgid "Lock/Unlock alpha channel"
@@ -5375,35 +5390,35 @@ msgstr ""
 
 #: ../app/core/core-enums.c:909
 msgid "Text layer"
-msgstr ""
+msgstr "ಪಠ್ಯ ಪದರ"
 
 #: ../app/core/core-enums.c:910
 msgid "Text layer modification"
-msgstr ""
+msgstr "ಪಠ್ಯ ಪದರ ಮಾರ್ಪಡಿಸುವಿಕೆ"
 
 #: ../app/core/core-enums.c:912
 msgid "Delete layer mask"
-msgstr ""
+msgstr "ಪದರ ಮುಸಕನ್ನು ಅಳಿಸು"
 
 #: ../app/core/core-enums.c:914
 msgid "Show layer mask"
-msgstr ""
+msgstr "ಪದರ ಮುಸಕನ್ನು ತೋರಿಸು"
 
 #: ../app/core/core-enums.c:915
 msgid "New channel"
-msgstr ""
+msgstr "ಹೊಸ ಚಾನಲ್"
 
 #: ../app/core/core-enums.c:916
 msgid "Delete channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಅಳಿಸು"
 
 #: ../app/core/core-enums.c:917
 msgid "Reposition channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಮರಳಿ ಇರಿಸು"
 
 #: ../app/core/core-enums.c:918
 msgid "Channel color"
-msgstr ""
+msgstr "ಚಾನಲ್ ಬಣ್ಣ"
 
 #: ../app/core/core-enums.c:919
 msgid "New path"
@@ -5428,11 +5443,11 @@ msgstr ""
 #: ../app/core/core-enums.c:928 ../app/paint/gimpink.c:95
 #: ../app/tools/gimpinktool.c:55
 msgid "Ink"
-msgstr ""
+msgstr "ಶಾಯಿ"
 
 #: ../app/core/core-enums.c:929
 msgid "Select foreground"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆಯನ್ನು ಆರಿಸು"
 
 #: ../app/core/core-enums.c:932
 msgid "Not undoable"
@@ -5440,7 +5455,7 @@ msgstr ""
 
 #: ../app/core/core-enums.c:1196
 msgid "Composite"
-msgstr ""
+msgstr "ಸಮ್ಮಿಶ್ರ"
 
 #: ../app/core/core-enums.c:1230
 msgid "Message"
@@ -5460,7 +5475,7 @@ msgstr "ಏನು ಮಾಡಬೇಕೆಂದು ನನ್ನನ್ನು ಕೇ
 
 #: ../app/core/core-enums.c:1261
 msgid "Keep embedded profile"
-msgstr ""
+msgstr "ಅಡಕಗೊಳಿಸಲಾದ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಇರಿಸಿಕೊ"
 
 #: ../app/core/core-enums.c:1262
 msgid "Convert to RGB workspace"
@@ -5471,75 +5486,75 @@ msgstr ""
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
-msgstr ""
+msgstr "\"%s\" ಅನ್ನು ಅಳಿಸುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ: %s"
 
 #: ../app/core/gimp-edit.c:190 ../app/core/gimp-edit.c:326
 msgid "Pasted Layer"
-msgstr ""
+msgstr "ಅಂಟಿಸಲಾದ ಪದರ"
 
 #: ../app/core/gimp-edit.c:464
 msgid "Fill with Foreground Color"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆ ಬಣ್ಣದಿಂದ ತುಂಬಿಸು"
 
 #: ../app/core/gimp-edit.c:468
 msgid "Fill with Background Color"
-msgstr ""
+msgstr "ಹಿನ್ನೆಲೆ ಬಣ್ಣದಿಂದ ತುಂಬಿಸು"
 
 #: ../app/core/gimp-edit.c:472
 msgid "Fill with White"
-msgstr ""
+msgstr "ಬಿಳಿಯಿಂದ ತುಂಬಿಸು"
 
 #: ../app/core/gimp-edit.c:476
 msgid "Fill with Transparency"
-msgstr ""
+msgstr "ಪಾರದರ್ಶಕತೆಯಿಂದ ತುಂಬಿಸು"
 
 #: ../app/core/gimp-edit.c:480
 msgid "Fill with Pattern"
-msgstr ""
+msgstr "ವಿನ್ಯಾಸದಿಂದ ತುಂಬಿಸು"
 
 #: ../app/core/gimp-edit.c:573
 msgid "Global Buffer"
-msgstr ""
+msgstr "ಜಾಗತಿಕ ಬಫರ್"
 
 #: ../app/core/gimp-gradients.c:61
 msgid "FG to BG (RGB)"
-msgstr ""
+msgstr "FG ಇಂದ BG (RGB)"
 
 #: ../app/core/gimp-gradients.c:66
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr ""
+msgstr "FG ಇಂದ BG (HSV ಅಪ್ರದಕ್ಷಿಣೆಯಾಗಿ)"
 
 #: ../app/core/gimp-gradients.c:71
 msgid "FG to BG (HSV clockwise hue)"
-msgstr ""
+msgstr "FG ಇಂದ BG (HSV ಪ್ರದಕ್ಷಿಣೆಯಾಗಿ ವರ್ಣ)"
 
 #: ../app/core/gimp-gradients.c:76
 msgid "FG to Transparent"
-msgstr ""
+msgstr "FG ಯಿಂದ ಪಾರದರ್ಶಕತೆ"
 
 #: ../app/core/gimp-user-install.c:153
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
-msgstr ""
+msgstr "ನೀವು ಈ ಮೊದಲು GIMP %s ಅನ್ನು ಬಳಸಿರುವಂತೆ ತೋರುತ್ತಿದೆ.  GIMP ಈಗ ನಿಮ್ಮ ಬಳಕೆದಾರ ಸಿದ್ದತೆಗಳನ್ನು '%s' ಗೆ ವರ್ಗಾಯಿಸುತ್ತದೆ."
 
 #: ../app/core/gimp-user-install.c:158
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
-msgstr ""
+msgstr "ನೀವು ಮೊದಲ ಬಾರಿಗೆ GIMP ಅನ್ನು ಬಳಸುತ್ತಿರುವಂತೆ ಕಾಣಿಸುತ್ತಿದೆ.  GIMP ಈಗ '%s' ಎಂಬ ಹೆಸರಿನ ಒಂದು ಕಡತಕೋಶವನ್ನು ನಿರ್ಮಿಸುತ್ತದೆ ಹಾಗು ಕೆಲವು ಕಡತಗಳನ್ನು ಅದಕ್ಕೆ ಕಾಪಿ ಮಾಡುತ್ತದೆ."
 
 #: ../app/core/gimp-user-install.c:309
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr ""
+msgstr "'%s' ಇಂದ ಕಡತವನ್ನು '%s' ಗೆ ಕಾಪಿ ಮಾಡಲಾಗುತ್ತಿದೆ..."
 
 #: ../app/core/gimp-user-install.c:324 ../app/core/gimp-user-install.c:350
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr ""
+msgstr "ಕಡತಕೋಶ '%s' ಅನ್ನು ನಿರ್ಮಿಸಲಾಗುತ್ತಿದೆ..."
 
 #: ../app/core/gimp-user-install.c:335 ../app/core/gimp-user-install.c:361
 #, c-format
@@ -5558,63 +5573,63 @@ msgstr ""
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:834
 msgid "Looking for data files"
-msgstr ""
+msgstr "ದತ್ತಾಂಶ ಕಡತಗಳಿಗಾಗಿ ನೋಡಲಾಗುತ್ತಿದೆ"
 
 #: ../app/core/gimp.c:834
 msgid "Parasites"
-msgstr ""
+msgstr "ಪರಾವಲಂಬಿಗಳು"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:854
 msgid "Fonts (this may take a while)"
-msgstr ""
+msgstr "ಅಕ್ಷರಶೈಲಿಗಳು (ಇದಕ್ಕೆ ಒಂದಿಷ್ಟು ಹೊತ್ತು ಹಿಡಿಯಬಹುದು)"
 
 #. initialize the module list
 #: ../app/core/gimp.c:863 ../app/dialogs/preferences-dialog.c:2772
 msgid "Modules"
-msgstr ""
+msgstr "ಘಟಕಗಳು"
 
 #: ../app/core/gimpbrush-load.c:177
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
-msgstr ""
+msgstr "%d ಬೈಟ್‌ಗಳನ್ನು '%s' ಇಂದ ಓದಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ: %s"
 
 #: ../app/core/gimpbrush-load.c:197
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಅಗಲ = 0."
 
 #: ../app/core/gimpbrush-load.c:206
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಎತ್ತರ = 0."
 
 #: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಬೈಟ್‌ಗಳು = 0."
 
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಗೊತ್ತಿರದ ಆಳ %d."
 
 #: ../app/core/gimpbrush-load.c:252
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಗೊತ್ತಿರದ ಆವೃತ್ತಿ %d."
 
 #: ../app/core/gimpbrush-load.c:268 ../app/core/gimpbrush-load.c:388
 #: ../app/core/gimpbrush-load.c:720
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಕಡತವನ್ನು ಮೊಟಕುಗೊಳಿಸಲಾಗಿರುವಂತೆ ತೋರುತ್ತಿದೆ."
 
 #: ../app/core/gimpbrush-load.c:276 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಅಮಾನ್ಯವಾದ UTF-8 ವಾಕ್ಯ."
 
 #: ../app/core/gimpbrush-load.c:283 ../app/core/gimpitem.c:505
 #: ../app/core/gimppattern-load.c:146
@@ -5629,52 +5644,54 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
+"ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಬೆಂಬಲವಿರದ ಕುಂಚದ ಆಳ %d.\n"
+"GIMP ಕುಂಚಗಳು GRAY ಅಥವ RGBA ಆಗಿರಬೇಕು."
 
 #: ../app/core/gimpbrush-load.c:448
 #, c-format
 msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: abr ವಿನ್ಯಾಸ ಆವೃತ್ತಿ %d ಅನ್ನು ಡೀಕೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ."
 
 #: ../app/core/gimpbrush-load.c:615
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಅಗಲವಾದ ಕುಂಚಗಳಿಗೆ ಬೆಂಬಲವಿಲ್ಲ."
 
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಒಂದು GIMP ಕುಂಚ ಕಡತವಾಗಿಲ್ಲ."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: %d ಸಾಲಿನಲ್ಲಿ ಗೊತ್ತಿರದ GIMP ಕುಂಚದ ಆವೃತ್ತಿ."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: %d ಸಾಲಿನಲ್ಲಿ ಗೊತ್ತಿರದ GIMP ಕುಂಚದ ಆಕಾರ."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
 msgid "Line %d: %s"
-msgstr ""
+msgstr "ಸಾಲು %d: %s"
 
 #: ../app/core/gimpbrushgenerated-load.c:228
 #, c-format
 msgid "File is truncated in line %d"
-msgstr ""
+msgstr "%d ಸಾಲಿನಲ್ಲಿ ಕಡತವನ್ನು ಮೊಟಕುಗೊಳಿಸಲಾಗಿದೆ"
 
 #: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ಅನ್ನು ಓದುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ: %s"
 
 #: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
 #: ../app/core/gimpbrushpipe-load.c:223
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr ""
+msgstr "ಕುಂಚ ಕಡತ '%s' ದಲ್ಲಿ ಮಾರಕ ಪಾರ್ಸ್ ದೋಷ: ಕಡತವು ಹಾಳಾಗಿದೆ."
 
 #: ../app/core/gimpchannel-select.c:60
 msgctxt "command"
@@ -5713,35 +5730,35 @@ msgstr ""
 
 #: ../app/core/gimpchannel.c:257
 msgid "Channel"
-msgstr ""
+msgstr "ಚಾನಲ್"
 
 #: ../app/core/gimpchannel.c:258
 msgid "Rename Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಹೆಸರನ್ನು ಬದಲಾಯಿಸು"
 
 #: ../app/core/gimpchannel.c:259
 msgid "Move Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/core/gimpchannel.c:260
 msgid "Scale Channel"
-msgstr ""
+msgstr "ಚಾನಲ್‌ನ ಅಳತೆಯನ್ನು ಬದಲಾಯಿಸು"
 
 #: ../app/core/gimpchannel.c:261
 msgid "Resize Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಗಾತ್ರ ಬದಲಿಸು"
 
 #: ../app/core/gimpchannel.c:262
 msgid "Flip Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಮಗುಚು"
 
 #: ../app/core/gimpchannel.c:263
 msgid "Rotate Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ತಿರುಗಿಸು"
 
 #: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:843
 msgid "Transform Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ರೂಪಾಂತರಿಸು"
 
 #: ../app/core/gimpchannel.c:265
 msgid "Stroke Channel"
@@ -5757,11 +5774,11 @@ msgstr ""
 
 #: ../app/core/gimpchannel.c:288
 msgid "Clear Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ತೆರವುಗೊಳಿಸು"
 
 #: ../app/core/gimpchannel.c:289
 msgid "Fill Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ತುಂಬಿಸು"
 
 #: ../app/core/gimpchannel.c:290
 msgid "Invert Channel"
@@ -5773,11 +5790,11 @@ msgstr ""
 
 #: ../app/core/gimpchannel.c:292
 msgid "Grow Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಬೆಳೆಸು"
 
 #: ../app/core/gimpchannel.c:293
 msgid "Shrink Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಕುಗ್ಗಿಸು"
 
 #: ../app/core/gimpchannel.c:710
 #, c-format
@@ -5786,11 +5803,11 @@ msgstr ""
 
 #: ../app/core/gimpchannel.c:1631
 msgid "Set Channel Color"
-msgstr ""
+msgstr "ಚಾನಲ್ ಬಣ್ಣವನ್ನು ಹೊಂದಿಸು"
 
 #: ../app/core/gimpchannel.c:1679
 msgid "Set Channel Opacity"
-msgstr ""
+msgstr "ಚಾನಲ್‌ನ ಅಪಾರದರ್ಶಕತೆಯನ್ನು ಹೊಂದಿಸು"
 
 #: ../app/core/gimpchannel.c:1747 ../app/core/gimpselection.c:520
 msgid "Selection Mask"
@@ -5799,7 +5816,7 @@ msgstr ""
 #: ../app/core/gimpdata.c:526 ../app/core/gimptoolpresets.c:279
 #, c-format
 msgid "Could not delete '%s': %s"
-msgstr ""
+msgstr "'%s' ಅನ್ನು ಅಳಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ: %s"
 
 #: ../app/core/gimpdatafactory.c:415 ../app/core/gimpdatafactory.c:575
 #: ../app/core/gimpdatafactory.c:595
@@ -5809,20 +5826,23 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"ದತ್ತಾಂಶವನ್ನು ಉಳಿಸುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ:\n"
+"\n"
+"%s"
 
 #: ../app/core/gimpdatafactory.c:494 ../app/core/gimpdatafactory.c:497
 #: ../app/core/gimpitem.c:312 ../app/core/gimpitem.c:315
 msgid "copy"
-msgstr ""
+msgstr "ನಕಲುಪ್ರತಿ"
 
 #: ../app/core/gimpdatafactory.c:506 ../app/core/gimpitem.c:324
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "%s ನಕಲುಪ್ರತಿ"
 
 #: ../app/core/gimpdatafactory.c:576
 msgid "You don't have a writable data folder configured."
-msgstr ""
+msgstr "ನಿಮ್ಮಲ್ಲಿ ಬರೆಯಬಹುದಾದಂತಹ ದತ್ತಾಂಶ ಕಡತಕೋಶವು ಸಂರಚಿಸಲಾಗಿಲ್ಲ."
 
 #: ../app/core/gimpdatafactory.c:751
 #, c-format
@@ -5831,6 +5851,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"ದತ್ತಾಂಶವನ್ನು ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ವಿಫಲಗೊಂಡಡಿದೆ:\n"
+"\n"
+"%s"
 
 #: ../app/core/gimpdrawable-blend.c:245 ../app/tools/gimpblendtool.c:107
 msgid "Blend"
@@ -5901,7 +5924,7 @@ msgstr ""
 #: ../app/core/gimpdrawable-levels.c:154 ../app/core/gimpdrawable-levels.c:170
 #: ../app/tools/gimplevelstool.c:150
 msgid "Levels"
-msgstr ""
+msgstr "ಹಂತಗಳು"
 
 #: ../app/core/gimpdrawable-offset.c:316
 msgid "Offset Drawable"
@@ -5933,11 +5956,11 @@ msgstr "ತಿರುಗಿಸು"
 
 #: ../app/core/gimpdrawable-transform.c:841 ../app/core/gimplayer.c:255
 msgid "Transform Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ರೂಪಾಂತರಿಸು"
 
 #: ../app/core/gimpdrawable-transform.c:856
 msgid "Transformation"
-msgstr ""
+msgstr "ರೂಪಾಂತರ"
 
 #: ../app/core/gimpgradient-load.c:71 ../app/core/gimpgradient-load.c:96
 #: ../app/core/gimpgradient-load.c:117 ../app/core/gimpgradient-load.c:168
@@ -6031,11 +6054,11 @@ msgstr ""
 
 #: ../app/core/gimpimage-convert.c:806
 msgid "Convert Image to RGB"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು RGB ಗೆ ಪರಿವರ್ತಿಸು"
 
 #: ../app/core/gimpimage-convert.c:810
 msgid "Convert Image to Grayscale"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಗ್ರೇಸ್ಕೇಲ್‌ಗೆ ಪರಿವರ್ತಿಸು"
 
 #: ../app/core/gimpimage-convert.c:814
 msgid "Convert Image to Indexed"
@@ -6056,7 +6079,7 @@ msgstr ""
 
 #: ../app/core/gimpimage-crop.c:133 ../app/core/gimpimage-resize.c:90
 msgid "Resize Image"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಗಾತ್ರವನ್ನು ಬದಲಿಸು"
 
 #: ../app/core/gimpimage-guides.c:51
 msgid "Add Horizontal Guide"
@@ -6076,31 +6099,31 @@ msgstr ""
 
 #: ../app/core/gimpimage-item-list.c:53
 msgid "Translate Items"
-msgstr ""
+msgstr "ಅಂಶಗಳನ್ನು ಅನುವಾದಿಸು"
 
 #: ../app/core/gimpimage-item-list.c:80
 msgid "Flip Items"
-msgstr ""
+msgstr "ಅಂಶಗಳನ್ನು ಮಗುಚು"
 
 #: ../app/core/gimpimage-item-list.c:107
 msgid "Rotate Items"
-msgstr ""
+msgstr "ಅಂಶಗಳನ್ನು ತಿರುಗಿಸು"
 
 #: ../app/core/gimpimage-item-list.c:137
 msgid "Transform Items"
-msgstr ""
+msgstr "ಅಂಶಗಳನ್ನು ರೂಪಾಂತರಿಸು"
 
 #: ../app/core/gimpimage-merge.c:102 ../app/core/gimpimage-merge.c:114
 msgid "Merge Visible Layers"
-msgstr ""
+msgstr "ಗೋಚರಿಸುವ ಪದರಗಳನ್ನು ವಿಲೀನಗೊಳಿಸು"
 
 #: ../app/core/gimpimage-merge.c:165
 msgid "Flatten Image"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು ಸಪಾಟುಗೊಳಿಸು"
 
 #: ../app/core/gimpimage-merge.c:214
 msgid "Merge Down"
-msgstr ""
+msgstr "ಕೆಳಕ್ಕೆ ವಿಲೀನಗೊಳಿಸು"
 
 #: ../app/core/gimpimage-merge.c:254
 msgid "Merge Visible Paths"
@@ -6134,7 +6157,7 @@ msgstr ""
 #: ../app/core/gimpimage-undo-push.c:863
 #, c-format
 msgid "Can't undo %s"
-msgstr ""
+msgstr "%s ಅನ್ನು ರದ್ದು ಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ"
 
 #: ../app/core/gimpimage.c:1506
 msgid "Change Image Resolution"
@@ -6146,75 +6169,75 @@ msgstr ""
 
 #: ../app/core/gimpimage.c:2384
 msgid "Attach Parasite to Image"
-msgstr ""
+msgstr "ಪರಾವಲಂಬಿಯನ್ನು ಚಿತ್ರಕ್ಕೆ ಲಗತ್ತಿಸು"
 
 #: ../app/core/gimpimage.c:2422
 msgid "Remove Parasite from Image"
-msgstr ""
+msgstr "ಪರಾವಲಂಬಿಯನ್ನು ಚಿತ್ರದಿಂದ ತೆಗೆದು ಹಾಕು"
 
 #: ../app/core/gimpimage.c:2875
 msgid "Add Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಸೇರಿಸು"
 
 #: ../app/core/gimpimage.c:2935 ../app/core/gimpimage.c:2948
 msgid "Remove Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ತೆಗೆದುಹಾಕು"
 
 #: ../app/core/gimpimage.c:3092
 msgid "Layer cannot be raised higher."
-msgstr ""
+msgstr "ಪದರಗಳನ್ನು ಇದಕ್ಕಿಂತ ಮೇಲಕ್ಕೆ ಏರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
 
 #: ../app/core/gimpimage.c:3097
 msgid "Raise Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಏರಿಸು"
 
 #: ../app/core/gimpimage.c:3116
 msgid "Layer cannot be lowered more."
-msgstr ""
+msgstr "ಪದರಗಳನ್ನು ಇದಕ್ಕಿಂತ ಕೆಳಕ್ಕೆ ಇಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
 
 #: ../app/core/gimpimage.c:3121
 msgid "Lower Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಇಳಿಸು"
 
 #: ../app/core/gimpimage.c:3132
 msgid "Raise Layer to Top"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಮೇಲಕ್ಕೆ ಏರಿಸು"
 
 #: ../app/core/gimpimage.c:3147
 msgid "Lower Layer to Bottom"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಕೆಳಕ್ಕೆ ಇಳಿಸು"
 
 #: ../app/core/gimpimage.c:3209
 msgid "Add Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಸೇರಿಸು"
 
 #: ../app/core/gimpimage.c:3252 ../app/core/gimpimage.c:3263
 msgid "Remove Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ತೆಗೆದು ಹಾಕು"
 
 #: ../app/core/gimpimage.c:3312
 msgid "Channel cannot be raised higher."
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಇದಕ್ಕಿಂತ ಮೇಲಕ್ಕೆ ಏರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
 
 #: ../app/core/gimpimage.c:3317
 msgid "Raise Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಏರಿಸು"
 
 #: ../app/core/gimpimage.c:3328
 msgid "Raise Channel to Top"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಮೇಲಕ್ಕೆ ಏರಿಸು"
 
 #: ../app/core/gimpimage.c:3348
 msgid "Channel cannot be lowered more."
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಇದಕ್ಕಿಂತ ಕೆಳಕ್ಕೆ ಇಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
 
 #: ../app/core/gimpimage.c:3353
 msgid "Lower Channel"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ಇಳಿಸು"
 
 #: ../app/core/gimpimage.c:3368
 msgid "Lower Channel to Bottom"
-msgstr ""
+msgstr "ಚಾನಲ್ ಅನ್ನು ತಳಕ್ಕೆ ಇಳಿಸು"
 
 #: ../app/core/gimpimage.c:3432
 msgid "Add Path"
@@ -6254,31 +6277,31 @@ msgstr "ಕಡತಕೋಶ"
 
 #: ../app/core/gimpimagefile.c:533
 msgid "Special File"
-msgstr ""
+msgstr "ವಿಶೇಷ ಕಡತ"
 
 #: ../app/core/gimpimagefile.c:549
 msgid "Remote File"
-msgstr ""
+msgstr "ದೂರಸ್ಥ ಕಡತ"
 
 #: ../app/core/gimpimagefile.c:568
 msgid "Click to create preview"
-msgstr ""
+msgstr "ಮುನ್ನೋಟವನ್ನು ಸೃಷ್ಟಿಸಲು ಕ್ಲಿಕ್ಕಿಸಿ"
 
 #: ../app/core/gimpimagefile.c:574
 msgid "Loading preview..."
-msgstr ""
+msgstr "ಮುನ್ನೋಟವನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ..."
 
 #: ../app/core/gimpimagefile.c:580
 msgid "Preview is out of date"
-msgstr ""
+msgstr "ಮುನ್ನೋಟವು ಬಹಳ ಹಳೆಯದಾಗಿದೆ"
 
 #: ../app/core/gimpimagefile.c:586
 msgid "Cannot create preview"
-msgstr ""
+msgstr "ಮುನ್ನೋಟವನ್ನು ರಚಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
 #: ../app/core/gimpimagefile.c:596
 msgid "(Preview may be out of date)"
-msgstr ""
+msgstr "(ಮುನ್ನೋಟವು ಬಹಳ ಹಳೆಯದಾಗಿರಬಹುದು)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:605 ../app/widgets/gimpimagepropview.c:446
@@ -6286,32 +6309,32 @@ msgstr ""
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d × %d ಪಿಕ್ಸೆಲ್‌"
+msgstr[1] "%d × %d ಪಿಕ್ಸೆಲ್‌ಗಳು"
 
 #: ../app/core/gimpimagefile.c:628 ../app/display/gimpdisplayshell-title.c:325
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ಪದರ"
+msgstr[1] "%d ಪದರಗಳು"
 
 #: ../app/core/gimpimagefile.c:675
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr ""
+msgstr "ತಂಬ್‌ನೈಲ್ '%s' ಅನ್ನು ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ: %s"
 
 #: ../app/core/gimpitem.c:1138
 msgid "Attach Parasite"
-msgstr ""
+msgstr "ಪರಾವಲಂಬಿಯನ್ನು ಲಗತ್ತಿಸು"
 
 #: ../app/core/gimpitem.c:1148
 msgid "Attach Parasite to Item"
-msgstr ""
+msgstr "ಪರಾವಲಂಬಿಯನ್ನು ಅಂಶಕ್ಕೆ ಲಗತ್ತಿಸು"
 
 #: ../app/core/gimpitem.c:1190 ../app/core/gimpitem.c:1197
 msgid "Remove Parasite from Item"
-msgstr ""
+msgstr "ಪರಾವಲಂಬಿಯನ್ನು ಅಂಶದಿಂದ ತೆಗೆದುಹಾಕು"
 
 #: ../app/core/gimplayer-floating-sel.c:99
 msgid "Remove Floating Selection"
@@ -6338,30 +6361,30 @@ msgstr "ಪದರ"
 
 #: ../app/core/gimplayer.c:249
 msgid "Rename Layer"
-msgstr ""
+msgstr "ಪದರದ ಹೆಸರನ್ನು ಬದಲಾಯಿಸು"
 
 #: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:434
 #: ../app/pdb/layer-cmds.c:470
 msgid "Move Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/core/gimplayer.c:252
 msgid "Resize Layer"
-msgstr ""
+msgstr "ಪದರದ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸು"
 
 #: ../app/core/gimplayer.c:253
 msgid "Flip Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ಮಗುಚು"
 
 #: ../app/core/gimplayer.c:254
 msgid "Rotate Layer"
-msgstr ""
+msgstr "ಪದರವನ್ನು ತಿರುಗಿಸು"
 
 #: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
-msgstr ""
+msgstr "%s ಮುಸುಕು"
 
 #: ../app/core/gimplayer.c:446
 #, c-format
@@ -6373,7 +6396,7 @@ msgstr ""
 #: ../app/core/gimplayer.c:1265
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕನ್ನು ಸೇರಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ ಏಕೆಂದರೆ ಪದರವು ಈಗಾಗಲೆ ಒಂದು ಮುಸುಕನ್ನು ಹೊಂದಿದೆ."
 
 #: ../app/core/gimplayer.c:1276
 #, c-format
@@ -6382,23 +6405,23 @@ msgstr ""
 
 #: ../app/core/gimplayer.c:1384
 msgid "Transfer Alpha to Mask"
-msgstr ""
+msgstr "ಆಲ್ಫಾವನ್ನು ಮುಸುಕಿಗೆ ರೂಪಾಂತರಿಸು"
 
 #: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕನ್ನು ಅನ್ವಯಿಸು"
 
 #: ../app/core/gimplayer.c:1557
 msgid "Delete Layer Mask"
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕನ್ನು ಅಳಿಸು"
 
 #: ../app/core/gimplayer.c:1669
 msgid "Add Alpha Channel"
-msgstr ""
+msgstr "ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ಸೇರಿಸು"
 
 #: ../app/core/gimplayer.c:1723
 msgid "Remove Alpha Channel"
-msgstr ""
+msgstr "ಆಲ್ಫಾ ಚಾನಲ್ ಅನ್ನು ತೆಗೆದುಹಾಕು"
 
 #: ../app/core/gimplayer.c:1745
 msgid "Layer to Image Size"
@@ -6406,17 +6429,17 @@ msgstr ""
 
 #: ../app/core/gimplayermask.c:105
 msgid "Move Layer Mask"
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕನ್ನು ಸ್ಥಳಾಂತರಿಸು"
 
 #. reject renaming, layer masks are always named "<layer name> mask"
 #: ../app/core/gimplayermask.c:160
 #, c-format
 msgid "Cannot rename layer masks."
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕುಗಳ ಹೆಸರನ್ನು ಬದಲಾಯಿಸಲಾಗಿಲ್ಲ."
 
 #: ../app/core/gimplayermask.c:303
 msgid "Show Layer Mask"
-msgstr ""
+msgstr "ಪದರ ಮುಸುಕಿನ ಹೆಸರನ್ನು ತೋರಿಸು"
 
 #: ../app/core/gimppalette-import.c:428
 #, c-format
@@ -6506,15 +6529,15 @@ msgstr "ದಯವಿಟ್ಟು ಕಾಯಿರಿ"
 
 #: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:240
 msgid "Move Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/core/gimpselection.c:168
 msgid "Sharpen Selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ತೀಕ್ಷ್ಣಗೊಳಿಸು"
 
 #: ../app/core/gimpselection.c:169
 msgid "Select None"
-msgstr ""
+msgstr "ಏನನ್ನೂ ಆರಿಸಬೇಡ"
 
 #: ../app/core/gimpselection.c:170
 msgid "Select All"
@@ -6587,44 +6610,44 @@ msgstr "ಇಂಚು"
 
 #: ../app/core/gimpunit.c:59
 msgid "inches"
-msgstr ""
+msgstr "ಇಂಚುಗಳು"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeter"
-msgstr ""
+msgstr "ಮಿಲಿಮೀಟರು"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeters"
-msgstr ""
+msgstr "ಮಿಲಿಮೀಟರುಗಳು"
 
 #. professional units
 #: ../app/core/gimpunit.c:63
 msgid "point"
-msgstr ""
+msgstr "ಬಿಂದು"
 
 #: ../app/core/gimpunit.c:63
 msgid "points"
-msgstr ""
+msgstr "ಬಿಂದುಗಳು"
 
 #: ../app/core/gimpunit.c:64
 msgid "pica"
-msgstr ""
+msgstr "ಪಿಕಾ"
 
 #: ../app/core/gimpunit.c:64
 msgid "picas"
-msgstr ""
+msgstr "ಪಿಕಾಗಳು"
 
 #: ../app/core/gimpunit.c:71
 msgid "percent"
-msgstr ""
+msgstr "ಪ್ರತಿಶತ"
 
 #: ../app/core/gimpunit.c:71
 msgid "plural|percent"
-msgstr ""
+msgstr "ಪ್ರತಿಶತ"
 
 #: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
-msgstr ""
+msgstr "GIMP ಜಾಲತಾಣಕ್ಕೆ ಭೇಟಿಕೊಡಿ"
 
 #. Translators: insert your names here, separated by newline
 #: ../app/dialogs/about-dialog.c:128
@@ -6633,19 +6656,19 @@ msgstr "ಶಂಕರ್ ಪ್ರಸಾದ್ <svenkate@redhat.com>"
 
 #: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
-msgstr ""
+msgstr "GIMP ಅನ್ನು ಸಾದರಪಡಿಸಿದವರು"
 
 #: ../app/dialogs/about-dialog.c:603
 msgid "This is an unstable development release."
-msgstr ""
+msgstr "ಇದು ಇನ್ನೂ ಸ್ಥಿರವಾಗಿರದ ವಿಕಸನಾ ಬಿಡುಗಡೆಯಾಗಿದೆ."
 
 #: ../app/dialogs/channel-options-dialog.c:145
 msgid "Channel _name:"
-msgstr ""
+msgstr "ಚಾನಲ್ ಹೆಸರು(_n):"
 
 #: ../app/dialogs/channel-options-dialog.c:174
 msgid "Initialize from _selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯಿಂದ ಆರಂಭಿಸು(_s)"
 
 #: ../app/dialogs/convert-dialog.c:125
 msgid "Indexed Color Conversion"
@@ -6657,11 +6680,11 @@ msgstr ""
 
 #: ../app/dialogs/convert-dialog.c:138
 msgid "C_onvert"
-msgstr ""
+msgstr "ಪರಿವರ್ತಿಸು(_o)"
 
 #: ../app/dialogs/convert-dialog.c:189
 msgid "_Maximum number of colors:"
-msgstr ""
+msgstr "ಗರಿಷ್ಟ ಸಂಖ್ಯೆ ಬಣ್ಣಗಳು(_M):"
 
 #: ../app/dialogs/convert-dialog.c:216
 msgid "_Remove unused colors from colormap"
@@ -6692,7 +6715,7 @@ msgstr ""
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:161
 #: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
-msgstr ""
+msgstr "GIMP ಸಂದೇಶ"
 
 #: ../app/dialogs/dialogs.c:142
 msgid "Devices"
@@ -6700,7 +6723,7 @@ msgstr "ಸಾಧನಗಳು"
 
 #: ../app/dialogs/dialogs.c:142
 msgid "Device Status"
-msgstr ""
+msgstr "ಸಾಧನದ ಸ್ಥಿತಿ"
 
 #: ../app/dialogs/dialogs.c:146
 msgid "Errors"
@@ -6740,11 +6763,11 @@ msgstr ""
 
 #: ../app/dialogs/dialogs.c:218
 msgid "FG/BG"
-msgstr ""
+msgstr "FG/BG"
 
 #: ../app/dialogs/dialogs.c:218
 msgid "FG/BG Color"
-msgstr ""
+msgstr "FG/BG ಬಣ್ಣ"
 
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
@@ -6769,11 +6792,11 @@ msgstr ""
 
 #: ../app/dialogs/file-open-location-dialog.c:72
 msgid "Open Location"
-msgstr "ಸ್ಥಳವನ್ನು ತೆಗೆ"
+msgstr "ಸ್ಥಳವನ್ನು ತೆರೆ"
 
 #: ../app/dialogs/file-open-location-dialog.c:110
 msgid "Enter location (URI):"
-msgstr ""
+msgstr "ಸ್ಥಳವನ್ನು ನಮೂದಿಸು (URI):"
 
 #: ../app/dialogs/file-save-dialog.c:302 ../app/dialogs/file-save-dialog.c:338
 msgid ""
@@ -6794,11 +6817,11 @@ msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:444
 msgid "The given file extension does not match the chosen file type."
-msgstr ""
+msgstr "ಒದಗಿಸಲಾದ ಕಡತದ ವಿಸ್ತರಣೆಯು ಆಯ್ಕೆ ಮಾಡಲಾದ ಕಡತದ ಬಗೆಯೊಂದಿಗೆ ತಾಳೆಯಾಗುತ್ತಿಲ್ಲ."
 
 #: ../app/dialogs/file-save-dialog.c:448
 msgid "Do you want to save the image using this name anyway?"
-msgstr ""
+msgstr "ನೀವು ಈ ಹೆಸರನ್ನು ಬಳಸಿಕೊಂಡು ಚಿತ್ರವನ್ನು ಉಳಿಸಲು ಬಯಸುತ್ತೀರೆ?"
 
 #: ../app/dialogs/grid-dialog.c:85
 msgid "Configure Grid"
@@ -6810,11 +6833,11 @@ msgstr ""
 
 #: ../app/dialogs/image-merge-layers-dialog.c:64
 msgid "Merge Layers"
-msgstr ""
+msgstr "ಪದರಗಳನ್ನು ವಿಲೀನಗೊಳಿಸು"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:66
 msgid "Layers Merge Options"
-msgstr ""
+msgstr "ಪದರವನ್ನು ವಿಲೀನಗೊಳಿಸುವ ಆಯ್ಕೆಗಳು"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:72
 msgid "_Merge"
@@ -6822,11 +6845,11 @@ msgstr "ವಿಲೀನಗೊಳಿಸು (_M)"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:91
 msgid "Final, Merged Layer should be:"
-msgstr ""
+msgstr "ಅಂತಿಮವಾಗಿ, ವಿಲೀನಗೊಳಿಸಲಾಧ ಪದರಗಳು ಹೀಗಿರಬೇಕು:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:95
 msgid "Expanded as necessary"
-msgstr ""
+msgstr "ಅಗತ್ಯವಿದ್ದಲ್ಲಿ ಹಿಗ್ಗಿಸು"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:98
 msgid "Clipped to image"
@@ -6842,7 +6865,7 @@ msgstr ""
 
 #: ../app/dialogs/image-new-dialog.c:96
 msgid "Create a New Image"
-msgstr ""
+msgstr "ಒಂದು ಹೊಸ ಚಿತ್ರವನ್ನು ರಚಿಸು"
 
 #: ../app/dialogs/image-new-dialog.c:144
 #: ../app/dialogs/preferences-dialog.c:2021
@@ -6857,7 +6880,7 @@ msgstr ""
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr ""
+msgstr "ನೀವು %s ಗಾತ್ರವನ್ನು ಹೊಂದಿದ ಚಿತ್ರವನ್ನು ರಚಿಸಲು ಪ್ರಯತ್ನಿಸುತ್ತಿದ್ದೀರಿ."
 
 #: ../app/dialogs/image-new-dialog.c:328
 #, c-format
@@ -6906,11 +6929,11 @@ msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:264
 msgid "Is this what you want to do?"
-msgstr ""
+msgstr "ನೀವು ಇದನ್ನೆ ಮಾಡಲು ಬಯಸಿದ್ದಿರೆ?"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
-msgstr ""
+msgstr "ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಸಂರಚಿಸಿ"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:73
 msgid ""
@@ -6920,11 +6943,11 @@ msgstr ""
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:81
 msgid "S_ave keyboard shortcuts on exit"
-msgstr ""
+msgstr "ನಿರ್ಗಮಿಸಿದಾಗ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಉಳಿಸು(_a)"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:83
 msgid "Add a Mask to the Layer"
-msgstr ""
+msgstr "ಪದರಕ್ಕೆ ಒಂದು ಮುಸುಕನ್ನು ಸೇರಿಸು"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:110
 msgid "Initialize Layer Mask to:"
@@ -6936,7 +6959,7 @@ msgstr ""
 
 #: ../app/dialogs/layer-options-dialog.c:125
 msgid "Layer _name:"
-msgstr ""
+msgstr "ಪದರದ ಹೆಸರು(_n):"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
@@ -6951,7 +6974,7 @@ msgstr "ಉದ್ದ:"
 
 #: ../app/dialogs/layer-options-dialog.c:202
 msgid "Layer Fill Type"
-msgstr ""
+msgstr "ಪದರವನ್ನು ತುಂಬಿಸುವ ಬಗೆ"
 
 #: ../app/dialogs/layer-options-dialog.c:217
 msgid "Set name from _text"
@@ -6963,7 +6986,7 @@ msgstr ""
 
 #: ../app/dialogs/module-dialog.c:150
 msgid "You will have to restart GIMP for the changes to take effect."
-msgstr ""
+msgstr "ಬದಲಾವಣೆಗಳು ಕಾರ್ಯರೂಪಕ್ಕೆ ಬರಲು GIMP ಅನ್ನು ನೀವು ಮರಳಿ ಆರಂಭಿಸಬೇಕು."
 
 #: ../app/dialogs/module-dialog.c:191
 msgid "Module"
@@ -6971,11 +6994,11 @@ msgstr "ಘಟಕ"
 
 #: ../app/dialogs/module-dialog.c:464
 msgid "Only in memory"
-msgstr ""
+msgstr "ಕೇವಲ ಮೆಮೊರಿಯಲ್ಲಿ ಮಾತ್ರ"
 
 #: ../app/dialogs/module-dialog.c:469
 msgid "No longer available"
-msgstr ""
+msgstr "ಇನ್ನು ಮುಂದೆ ಲಭ್ಯವಿರುವುದಿಲ್ಲ"
 
 #: ../app/dialogs/module-dialog.c:498
 msgid "Author:"
@@ -6999,15 +7022,15 @@ msgstr "ಸ್ಥಳ:"
 
 #: ../app/dialogs/offset-dialog.c:108
 msgid "Offset Layer"
-msgstr ""
+msgstr "ಆಫ್‌ಸೆಟ್‌ ಪದರ"
 
 #: ../app/dialogs/offset-dialog.c:110
 msgid "Offset Layer Mask"
-msgstr ""
+msgstr "ಆಫ್‌ಸೆಟ್‌ ಪದರ ಮುಸುಕು"
 
 #: ../app/dialogs/offset-dialog.c:112
 msgid "Offset Channel"
-msgstr ""
+msgstr "ಆಫ್‌ಸೆಟ್‌ ಚಾನಲ್"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:118 ../app/dialogs/offset-dialog.c:152
@@ -7018,7 +7041,7 @@ msgstr "ಆಫ್‍ಸೆಟ್"
 #. offset, used as a verb
 #: ../app/dialogs/offset-dialog.c:127
 msgid "_Offset"
-msgstr ""
+msgstr "ಆಫ್‌ಸೆಟ್‌(_O)"
 
 #: ../app/dialogs/offset-dialog.c:184 ../app/dialogs/resize-dialog.c:226
 msgid "_X:"
@@ -7030,12 +7053,12 @@ msgstr "_Y:"
 
 #: ../app/dialogs/offset-dialog.c:213
 msgid "Offset by  x/_2, y/2"
-msgstr ""
+msgstr "x/_2, y/2 ನಷ್ಟು ಆಫ್‌ಸೆಟ್‌"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:222
 msgid "Edge Behavior"
-msgstr ""
+msgstr "ಅಂಚಿನ ವರ್ತನೆ"
 
 #: ../app/dialogs/offset-dialog.c:226
 msgid "_Wrap around"
@@ -7043,11 +7066,11 @@ msgstr "ಆವರಿಕೆ(_Wrap) ಮಾಡು"
 
 #: ../app/dialogs/offset-dialog.c:229
 msgid "Fill with _background color"
-msgstr ""
+msgstr "ಹಿನ್ನಲೆ ಬಣ್ಣದಿಂದ ತುಂಬಿಸು(_b)"
 
 #: ../app/dialogs/offset-dialog.c:232
 msgid "Make _transparent"
-msgstr ""
+msgstr "ಪಾರದರ್ಶಕವಾಗಿಸು(_t)"
 
 #: ../app/dialogs/palette-import-dialog.c:156
 msgid "Import a New Palette"
@@ -7064,7 +7087,7 @@ msgstr "ಆಕರವನ್ನು ಆಯ್ಕೆಮಾಡು"
 
 #: ../app/dialogs/palette-import-dialog.c:227
 msgid "I_mage"
-msgstr ""
+msgstr "ಚಿತ್ರ(_m)"
 
 #: ../app/dialogs/palette-import-dialog.c:241
 msgid "Sample _Merged"
@@ -7086,11 +7109,11 @@ msgstr ""
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:305
 msgid "Import Options"
-msgstr ""
+msgstr "ಆಮದು ಆಯ್ಕೆಗಳು"
 
 #: ../app/dialogs/palette-import-dialog.c:319
 msgid "New import"
-msgstr ""
+msgstr "ಹೊಸ ಆಮದು"
 
 #: ../app/dialogs/palette-import-dialog.c:321
 msgid "Palette _name:"
@@ -7098,7 +7121,7 @@ msgstr ""
 
 #: ../app/dialogs/palette-import-dialog.c:327
 msgid "N_umber of colors:"
-msgstr ""
+msgstr "ಬಣ್ಣಗಳ ಸಂಖ್ಯೆ(_u):"
 
 #: ../app/dialogs/palette-import-dialog.c:340
 msgid "C_olumns:"
@@ -7115,7 +7138,7 @@ msgstr "ಮುನ್ನೋಟ"
 
 #: ../app/dialogs/palette-import-dialog.c:384
 msgid "The selected source contains no colors."
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಮೂಲವು ಯಾವುದೆ ಬಣ್ಣಗಳನ್ನು ಹೊಂದಿಲ್ಲ."
 
 #: ../app/dialogs/preferences-dialog.c:267
 msgid "Reset All Preferences"
@@ -11390,25 +11413,25 @@ msgstr "ಸಕ್ರಿಯ ನಿಯಂತ್ರಕಗಳು"
 
 #: ../app/widgets/gimpcontrollerlist.c:290
 msgid "Configure the selected controller"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ನಿಯಂತ್ರವನ್ನು ಸಂರಚಿಸಿ"
 
 #: ../app/widgets/gimpcontrollerlist.c:298
 msgid "Move the selected controller up"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ನಿಯಂತ್ರವನ್ನು ಮೇಲಕ್ಕೆ ಜರುಗಿಸಿ"
 
 #: ../app/widgets/gimpcontrollerlist.c:306
 msgid "Move the selected controller down"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ನಿಯಂತ್ರವನ್ನು ಕೆಳಕ್ಕೆ ಜರುಗಿಸಿ"
 
 #: ../app/widgets/gimpcontrollerlist.c:430
 #, c-format
 msgid "Add '%s' to the list of active controllers"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ನಿಯಂತ್ರಕಗಳ ಪಟ್ಟಿಗೆ '%s' ಅನ್ನು ಸೇರಿಸಿ"
 
 #: ../app/widgets/gimpcontrollerlist.c:481
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ನಿಯಂತ್ರಕಗಳ ಪಟ್ಟಿಯಿಂದ '%s' ಅನ್ನು ತೆಗೆದು ಹಾಕಿ"
 
 #: ../app/widgets/gimpcontrollerlist.c:514
 msgid ""
@@ -11416,6 +11439,9 @@ msgid ""
 "\n"
 "You already have a keyboard controller in your list of active controllers."
 msgstr ""
+"ಕೇವಲ ಒಂದು ಸಕ್ರಿಯ ಕೀಲಮಣೆ ನಿಯಂತ್ರಕವಿರಲು ಸಾಧ್ಯ.\n"
+"\n"
+"ನಿಮ್ಮ ಸಕ್ರಿಯ ನಿಯಂತ್ರಕಗಳ ಪಟ್ಟಿಯಲ್ಲಿ ನೀವು ಈಗಾಗಲೆ ಒಂದು ಕೀಲಿಮಣೆ ನಿಯಂತ್ರಕವನ್ನು ಹೊಂದಿದ್ದೀರಿ."
 
 #: ../app/widgets/gimpcontrollerlist.c:524
 msgid ""
@@ -11686,7 +11712,7 @@ msgstr ""
 #: ../app/widgets/gimpgradienteditor.c:1304
 #: ../app/widgets/gimpgradienteditor.c:1318
 msgid "Click: select"
-msgstr ""
+msgstr "ಕ್ಲಿಕ್: ಆರಿಸಿ"
 
 #: ../app/widgets/gimpgradienteditor.c:1332
 #: ../app/widgets/gimpgradienteditor.c:1356
@@ -11904,7 +11930,7 @@ msgstr "ಸ್ವಯಂಚಾಲಿತ"
 
 #: ../app/widgets/gimpmenudock.c:170
 msgid "When enabled the dialog automatically follows the image you are working on."
-msgstr ""
+msgstr "ಶಕ್ತಗೊಳಿಸಿದಲ್ಲಿ ಸಂವಾದವು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ನೀವು ಕೆಲಸ ಮಾಡುವ ಚಿತ್ರವನ್ನು ಅನುಸರಿಸುತ್ತದೆ."
 
 #: ../app/widgets/gimpmessagebox.c:443
 #, c-format
@@ -12185,7 +12211,7 @@ msgstr "ಮೆನು XML ಕಡತಗಳನ್ನು ಸಮರ್ಪಕವಾಗ
 #: ../app/widgets/gimpuimanager.c:746
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
-msgstr ""
+msgstr "%s ಇಂದ ಮೆನು ವಿವರಣೆಯನ್ನು ಪಾರ್ಸ್ ಮಾಡುವಲ್ಲಿ ಒಂದು ದೋಷ ಉಂಟಾಗಿದೆ: %s"
 
 #: ../app/widgets/gimpundoeditor.c:270
 msgid "[ Base Image ]"
