@@ -20,6 +20,7 @@ are fulfilled.  We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
 header files installed.
 
+
   ******************************************************************
   * Unless you are experienced with building software from source, *
   * you should not attempt to build all these libraries yourself!  *
@@ -27,12 +28,13 @@ header files installed.
   * packages of them and use these instead.                        *
   ******************************************************************
 
+
   1. You need to have installed a recent version of pkg-config available
-     from http://www.freedesktop.org/software/pkgconfig/.  
+     from http://www.freedesktop.org/software/pkgconfig/.
 
   2. You need intltool (at least 0.40.1, but preferably a newer version).
      Intltool can be downloaded from
-     http://ftp.gnome.org/pub/gnome/sources/intltool/  
+     http://ftp.gnome.org/pub/gnome/sources/intltool/
 
   3. You need to have GEGL version 0.0.23 or newer and babl version
      0.0.23 or newer. You can get them from http://gegl.org/ or clone
@@ -87,8 +89,8 @@ header files installed.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.7.
 
-Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
-lying around on your system, otherwise configure may fail to find the 
+Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
+lying around on your system, otherwise configure may fail to find the
 new ones.
 
 
@@ -133,14 +135,14 @@ These are:
      is intended primarily as a convenience for developers.
 
   --enable-gimpdir=DIR.  This option changes the default directory
-     GIMP uses to search for its configuration files from ~/.gimp-2.7 
+     GIMP uses to search for its configuration files from ~/.gimp-2.7
      (the directory .gimp-2.7 in the users home directory) to DIR.
 
   --enable-binreloc.  When compiled for Linux with this option enabled,
      GIMP will be binary relocatable.  Plug-ins and data files will
      be searched relative to the gimp binary instead of in the paths
      defined at compile time.
- 
+
   --with-shm=[none|sysv|posix|auto].  This option allows you to specify
      how image data is transported between the core and plug-ins. Usually
      the best way to do this is detected automatically.
@@ -151,7 +153,7 @@ These are:
      their header files. If you absolutely want to compile GIMP without
      support for TIFF, JPEG or PNG you need to explicitely disable
      them using the options given above.
- 
+
   --without-exif.  If libexif is available, the JPEG plug-in will use
      it to keep EXIF data in your JPEG files intact.  If this is
      causing any trouble at compile-time, you can build --without-exif.
@@ -168,18 +170,18 @@ These are:
   --without-wmf.  The WMF plug-in needs libwmf2 and configure checks for
      its presense. Use --without-aa if you run into problems.
 
-  --without-webkit.  If for some reason you don't want to build the 
-     helpbrowser plug-in, you can use --without-webkit to disable 
+  --without-webkit.  If for some reason you don't want to build the
+     Help Browser plug-in, you can use --without-webkit to disable
      it explicitly.
 
-  --without-svg.  If for some reason you want to build GIMP without 
+  --without-svg.  If for some reason you want to build GIMP without
      SVG support, you can build --without-svg.
 
   --without-lcms.  If for some reason you want to build GIMP without
      using lcms for color support, you can build with --without-lcms.
 
   --without-poppler.  If for some reason you don't want to build the PDF
-     import plug-in that uses libpoppler, you can use --without-poppler.
+     Import plug-in that uses libpoppler, you can use --without-poppler.
 
   --without-print.  If for some reason you don't want to build the Print
      plug-in based on the GtkPrint API, you can build with --without-print.
@@ -209,7 +211,7 @@ These are:
      to create uncompressed GIFs.
 
   --enable-gtk-doc.  This option controls whether the libgimp API
-     references will be created using gtk-doc. The HTML pages are 
+     references will be created using gtk-doc. The HTML pages are
      included in a standard tarball, so you will only need this if you
      are building from SVN.
 
@@ -234,7 +236,7 @@ These are:
      if you call configure with --without-desktop-dir.
 
   --disable-default-binary. Use this option if you don't want to make
-     gimp-2.7 the default gimp installation. Otherwise a link called
+     gimp-2.7 the default GIMP installation. Otherwise a link called
      gimp pointing to the gimp-2.7 executable will be installed.
 
   --disable-gimp-console.  Use this option if you don't want the
@@ -246,7 +248,7 @@ These are:
      your platform has DBus support.
 
   --disable-python.  If for some reason you don't want to build the
-     Python based pygimp plug-in, you can use --disable-python.
+     Python based PyGIMP plug-in, you can use --disable-python.
 
   --without-script-fu.  If for some reason you don't want to build the
      Script-Fu plug-in, you can use --without-script-fu.
@@ -258,9 +260,9 @@ The `make' command builds several things:
  - Some modules in the 'modules' subdirectory.
  - The main GIMP program 'gimp-2.7' in `app'.
 
-The `make install' commands installs the gimp header files associated 
-with the libgimp libraries, the plug-ins, some data files and the GIMP 
-executable. After running `make install' and assuming the build process 
+The `make install' commands installs the GIMP header files associated
+with the libgimp libraries, the plug-ins, some data files and the GIMP
+executable. After running `make install' and assuming the build process
 was successful you should be able to run `gimp'.
 
 
@@ -268,22 +270,22 @@ When ./configure fails
 ======================
 
 'configure' uses pkg-config, a tool that replaces the old foo-config
-scripts. The most recent version is available from 
+scripts. The most recent version is available from
 	http://www.freedesktop.org/software/pkgconfig/
 
 'configure' tries to compile and run a short GTK+ program. There are
 several reasons why this might fail:
 
-* pkg-config could not find the file 'gtk+-2.0.pc' that gets installed 
+* pkg-config could not find the file 'gtk+-2.0.pc' that gets installed
   with GTK. (This file is used to get information about where GTK+ is
   installed.)
 
-  Fix: Either make sure that this file is in the path where pkg-config 
-  looks for it (try 'pkg-config --debug' or add the location of 
-  gtk+-2.0.pc to the environment variable PKG_CONFIG_PATH before running 
+  Fix: Either make sure that this file is in the path where pkg-config
+  looks for it (try 'pkg-config --debug' or add the location of
+  gtk+-2.0.pc to the environment variable PKG_CONFIG_PATH before running
   configure.
 
-* Libraries you installed are not found when you attempt to start gimp.
+* Libraries you installed are not found when you attempt to start GIMP.
   The details of how to fix this problem will depend on the system:
 
   On Linux and other systems using ELF libraries, add the directory to
@@ -298,7 +300,7 @@ several reasons why this might fail:
   or
     LDFLAGS="-Wl,-rpath -Wl,/home/joe/lib" ./configure
 
-* An old version of the GTK+ libraries was found instead of 
+* An old version of the GTK+ libraries was found instead of
   your newly installed version. This commonly happens if a
   binary package of GTK+ was previously installed on your system,
   and you later compiled GTK+ from source.
@@ -319,10 +321,10 @@ config.log. This may help diagnose problems.
 When ./configure fails on plug-ins
 ==================================
 
-There are some GIMP plug-ins that need additional third-party libraries 
-installed on your system. For example to compile the plug-ins that load 
-and save JPEG, PNG or TIFF files you need the related libraries and header 
-files installed, otherwise you'll get a message that plugin xyz will not 
+There are some GIMP plug-ins that need additional third-party libraries
+installed on your system. For example to compile the plug-ins that load
+and save JPEG, PNG or TIFF files you need the related libraries and header
+files installed, otherwise you'll get a message that plugin xyz will not
 be built.
 
 If you are sure that those libraries are correctly installed, but configure
