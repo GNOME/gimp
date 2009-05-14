@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-18 21:39+0000\n"
-"PO-Revision-Date: 2009-05-12 17:35+0530\n"
+"PO-Revision-Date: 2009-05-13 23:46+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6943,7 +6943,7 @@ msgstr ""
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:81
 msgid "S_ave keyboard shortcuts on exit"
-msgstr "ನಿರ್ಗಮಿಸಿದಾಗ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಉಳಿಸು(_a)"
+msgstr "ನಿರ್ಗಮಿಸುವ ಮೊದಲು ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಉಳಿಸು(_a)"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:83
 msgid "Add a Mask to the Layer"
@@ -7095,7 +7095,7 @@ msgstr ""
 
 #: ../app/dialogs/palette-import-dialog.c:253
 msgid "_Selected Pixels only"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಪಿಕ್ಸೆಲ್‌ಗಳು ಮಾತ್ರ(_S)"
 
 #: ../app/dialogs/palette-import-dialog.c:265
 msgid "Palette _file"
@@ -7142,33 +7142,33 @@ msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಮೂಲವು ಯಾವುದೆ �
 
 #: ../app/dialogs/preferences-dialog.c:267
 msgid "Reset All Preferences"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಆದ್ಯತೆಗಳನ್ನು ಮರುಹೊಂದಿಸು"
 
 #: ../app/dialogs/preferences-dialog.c:285
 msgid "Do you really want to reset all preferences to default values?"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಆದ್ಯತೆಗಳನ್ನು ಪೂರ್ವನಿಯೋಜಿತ ಮೌಲ್ಯಗಳಿಗೆ ಮರುಹೊಂದಿಸಲು ಬಯಸುತ್ತೀರಾ?"
 
 #: ../app/dialogs/preferences-dialog.c:355
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr ""
+msgstr "ಈ ಕೆಳಗಿನ ಪರಿಣಾಮಗಳು ಕಾರ್ಯರೂಪಕ್ಕೆ ಬರಲು GIMP ಅನ್ನು ಮರಳಿ ಆರಂಭಿಸಬೇಕಾಗುತ್ತದೆ:"
 
 #: ../app/dialogs/preferences-dialog.c:500
 msgid "Configure Input Devices"
-msgstr ""
+msgstr "ಇನ್‌ಪುಟ್‌ ಸಾಧನಗಳನ್ನು ಸಂರಚಿಸಿ"
 
 #: ../app/dialogs/preferences-dialog.c:577
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "ನೀವು ಮುಂದಿನ ಬಾರಿ GIMP ಅನ್ನು ಆರಂಭಿಸಿದಾಗ ನಿಮ್ಮ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳು ಮರಳಿ ಹೊಂದಿಸಲಾಗುತ್ತದೆ."
 
 #: ../app/dialogs/preferences-dialog.c:588
 msgid "Remove all Keyboard Shortcuts"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ತೆಗೆದುಹಾಕು"
 
 #: ../app/dialogs/preferences-dialog.c:610
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಮೆನುಗಳಿಂದ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ನೀವು ಖಚಿತವಾಗಿಯೂ ತೆಗೆದು ಹಾಕಲು ಬಯಸುತ್ತೀರೆ?"
 
 #: ../app/dialogs/preferences-dialog.c:651
 msgid ""
@@ -7190,27 +7190,27 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1289
 msgid "Show _menubar"
-msgstr ""
+msgstr "ಮೆನುಪಟ್ಟಿಯನ್ನು ತೋರಿಸು(_m)"
 
 #: ../app/dialogs/preferences-dialog.c:1293
 msgid "Show _rulers"
-msgstr ""
+msgstr "ಗೆರೆಪಟ್ಟಿಗಳನ್ನು ತೋರಿಸು(_r)"
 
 #: ../app/dialogs/preferences-dialog.c:1296
 msgid "Show scroll_bars"
-msgstr ""
+msgstr "ಚಲನಪಟ್ಟಿಕೆಗಳನ್ನು ತೋರಿಸು(_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1299
 msgid "Show s_tatusbar"
-msgstr ""
+msgstr "ಸ್ಥಿತಿಪಟ್ಟಿಕೆಗಳನ್ನು ತೋರಿಸು(_t)"
 
 #: ../app/dialogs/preferences-dialog.c:1307
 msgid "Show s_election"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ತೋರಿಸು(_e)"
 
 #: ../app/dialogs/preferences-dialog.c:1310
 msgid "Show _layer boundary"
-msgstr ""
+msgstr "ಪದರದ ಸೀಮಾರೇಖೆಯನ್ನು ತೋರಿಸು(_l)"
 
 #: ../app/dialogs/preferences-dialog.c:1313
 msgid "Show _guides"
@@ -7239,19 +7239,19 @@ msgstr "ಆದ್ಯತೆಗಳು"
 #: ../app/dialogs/preferences-dialog.c:1529
 #: ../app/dialogs/preferences-dialog.c:2780
 msgid "Environment"
-msgstr ""
+msgstr "ಪರಿಸರ"
 
 #: ../app/dialogs/preferences-dialog.c:1543
 msgid "Resource Consumption"
-msgstr ""
+msgstr "ಸಂಪನ್ಮೂಲದ ಬಳಕೆ"
 
 #: ../app/dialogs/preferences-dialog.c:1553
 msgid "Minimal number of _undo levels:"
-msgstr ""
+msgstr "ರದ್ದುಗೊಳಿಸುವ ಹಂತದ ಕನಿಷ್ಟ ಸಂಖ್ಯೆ(_u):"
 
 #: ../app/dialogs/preferences-dialog.c:1556
 msgid "Maximum undo _memory:"
-msgstr ""
+msgstr "ಗರಿಷ್ಟ ರದ್ದುಗೊಳಿಸುವ ಮೆಮೊರಿ(_m):"
 
 #: ../app/dialogs/preferences-dialog.c:1559
 msgid "Tile cache _size:"
@@ -7259,37 +7259,37 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1562
 msgid "Maximum _new image size:"
-msgstr ""
+msgstr "ಹೊಸ ಚಿತ್ರದ ಗರಿಷ್ಟ ಗಾತ್ರ(_n):"
 
 #: ../app/dialogs/preferences-dialog.c:1567
 msgid "Number of _processors to use:"
-msgstr ""
+msgstr "ಬಳಸಬೇಕಿರುವ ಸಂಸ್ಕಾರಕಗಳ ಸಂಖ್ಯೆ(_p):"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1572
 msgid "Image Thumbnails"
-msgstr ""
+msgstr "ಚಿತ್ರದ ತಂಬ್‌ನೈಲ್‌ಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:1577
 msgid "Size of _thumbnails:"
-msgstr ""
+msgstr "ತಂಬ್‌ನೈಲ್‌ಗಳ ಗಾತ್ರ(_t):"
 
 #: ../app/dialogs/preferences-dialog.c:1581
 msgid "Maximum _filesize for thumbnailing:"
-msgstr ""
+msgstr "ತಂಬ್‌ನೈಲ್ ಮಾಡಲು ಗರಿಷ್ಟ ಸಂಖ್ಯೆ ಕಡತದ ಗಾತ್ರ(_f):"
 
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1585
 msgid "Saving Images"
-msgstr ""
+msgstr "ಚಿತ್ರಗಳನ್ನು ಉಳಿಸುವಿಕೆ"
 
 #: ../app/dialogs/preferences-dialog.c:1588
 msgid "Confirm closing of unsa_ved images"
-msgstr ""
+msgstr "ಉಳಿಸದೆ ಇರುವ ಚಿತ್ರಗಳನ್ನು ಮುಚ್ಚುವಾಗ ಅನುಮತಿಯನ್ನು ಕೇಳು(_v)"
 
 #: ../app/dialogs/preferences-dialog.c:1598
 msgid "Keep record of used files in the Recent Documents list"
-msgstr ""
+msgstr "ಇತ್ತೀಚಿನ ದಸ್ತಾವೇಜುಗಳ ಪಟ್ಟಿಯನ್ನು ಬಳಸಲಾದ ಕಡತಗಳ ದಾಖಲೆಗಳನ್ನು ಇರಿಸಿಕೊ"
 
 #: ../app/dialogs/preferences-dialog.c:1607
 msgid "User Interface"
@@ -7302,15 +7302,15 @@ msgstr "ಸಂಪರ್ಕಸಾಧನ"
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1617
 msgid "Previews"
-msgstr ""
+msgstr "ಮುನ್ನೋಟಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:1620
 msgid "_Enable layer & channel previews"
-msgstr ""
+msgstr "ಪದರ ಹಾಗು ಚಾನಲ್‌ಗಳ ಮುನ್ನೋಟಗಳನ್ನು ಶಕ್ತಗೊಳಿಸು(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:1626
 msgid "_Default layer & channel preview size:"
-msgstr ""
+msgstr "ಪದರ ಹಾಗು ಚಾನಲ್ ಮುನ್ನೋಟದ ಪೂರ್ವನಿಯೋಜಿತ ಗಾತ್ರ(_D):"
 
 #: ../app/dialogs/preferences-dialog.c:1629
 msgid "Na_vigation preview size:"
@@ -7327,27 +7327,27 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1640
 msgid "_Use dynamic keyboard shortcuts"
-msgstr ""
+msgstr "ಕ್ರಿಯಾತ್ಮಕ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಬಳಸು(_U)"
 
 #: ../app/dialogs/preferences-dialog.c:1644
 msgid "Configure _Keyboard Shortcuts..."
-msgstr ""
+msgstr "ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಸಂರಚಿಸು(_K)..."
 
 #: ../app/dialogs/preferences-dialog.c:1651
 msgid "_Save keyboard shortcuts on exit"
-msgstr ""
+msgstr "ನಿರ್ಗಮಿಸುವ ಮೊದಲು ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಉಳಿಸು(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1655
 msgid "Save Keyboard Shortcuts _Now"
-msgstr ""
+msgstr "ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಈಗಲೆ ಉಳಿಸು(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:1662
 msgid "_Reset Keyboard Shortcuts to Default Values"
-msgstr ""
+msgstr "ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ಪೂರ್ವನಿಯೋಜಿತ ಮೌಲ್ಯಗಳಿಗೆ ಬದಲಾಯಿಸು(_R)"
 
 #: ../app/dialogs/preferences-dialog.c:1671
 msgid "Remove _All Keyboard Shortcuts"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಕೀಲಿಮಣೆ ಶಾರ್ಟ್-ಕಟ್‌ಗಳನ್ನು ತೆಗೆದುಹಾಕು(_A)"
 
 #: ../app/dialogs/preferences-dialog.c:1683
 #: ../app/dialogs/preferences-dialog.c:1722
@@ -7360,11 +7360,11 @@ msgstr "ಪರಿಸರವಿನ್ಯಾಸವನ್ನು ಆರಿಸಿ"
 
 #: ../app/dialogs/preferences-dialog.c:1774
 msgid "Reload C_urrent Theme"
-msgstr ""
+msgstr "ಪ್ರಸಕ್ತ ಪರಿಸರವಿನ್ಯಾಸವನ್ನು ಮರಳಿ ಲೋಡ್ ಮಾಡು(_u)"
 
 #: ../app/dialogs/preferences-dialog.c:1786
 msgid "Help System"
-msgstr ""
+msgstr "ನೆರವಿನ ವ್ಯವಸ್ಥೆ"
 
 #. General
 #: ../app/dialogs/preferences-dialog.c:1798
@@ -7376,31 +7376,31 @@ msgstr "ಸಾಮಾನ್ಯ"
 
 #: ../app/dialogs/preferences-dialog.c:1801
 msgid "Show _tooltips"
-msgstr ""
+msgstr "ಉಪಕರಣ ಸಲಹೆಗಳನ್ನು ತೋರಿಸು(_t)"
 
 #: ../app/dialogs/preferences-dialog.c:1804
 msgid "Show help _buttons"
-msgstr ""
+msgstr "ನೆರವಿನ ಗುಂಡಿಗಳನ್ನು ತೋರಿಸು(_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1817
 msgid "Use the online version"
-msgstr ""
+msgstr "ಆನ್‌ಲೈನ್‌ ಆವೃತ್ತಿಯನ್ನು ಬಳಸು"
 
 #: ../app/dialogs/preferences-dialog.c:1818
 msgid "Use a locally installed copy"
-msgstr ""
+msgstr "ಸ್ಥಳೀಯವಾಗಿ ಅನುಸ್ಥಾಪಿಸಲಾದ ಒಂದು ಪ್ರತಿಯನ್ನು ಬಳಸು"
 
 #: ../app/dialogs/preferences-dialog.c:1819
 msgid "User manual:"
-msgstr ""
+msgstr "ಬಳಕೆದಾರ ಕೈಪಿಡಿ:"
 
 #: ../app/dialogs/preferences-dialog.c:1826
 msgid "There's a local installation of the user manual."
-msgstr ""
+msgstr "ಬಳಕೆದಾರ ಕೈಪಿಡಿಯ ಒಂದು ಪ್ರತಿಯನ್ನು ಸ್ಥಳೀಯವಾಗಿ ಅನುಸ್ಥಾಪಿಸಲಾಗಿದೆ."
 
 #: ../app/dialogs/preferences-dialog.c:1831
 msgid "The user manual is not installed locally."
-msgstr ""
+msgstr "ಬಳಕೆದಾರ ಕೈಪಿಡಿಯನ್ನು ಸ್ಥಳೀಯವಾಗಿ ಅನುಸ್ಥಾಪಿಸಲಾಗಿಲ್ಲ."
 
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:1854
@@ -7409,7 +7409,7 @@ msgstr "ನೆರವಿನ ವೀಕ್ಷಕ"
 
 #: ../app/dialogs/preferences-dialog.c:1858
 msgid "H_elp browser to use:"
-msgstr ""
+msgstr "ಬಳಸಬೇಕಿರುವ ನೆರವು ವೀಕ್ಷಕ(_e):"
 
 #: ../app/dialogs/preferences-dialog.c:1863
 msgid "Web Browser"
@@ -7417,19 +7417,19 @@ msgstr "ಜಾಲ ವೀಕ್ಷಕ"
 
 #: ../app/dialogs/preferences-dialog.c:1867
 msgid "_Web browser to use:"
-msgstr ""
+msgstr "ಬಳಸಬೇಕಿರುವ ಜಾಲ ವೀಕ್ಷಕ(_W):"
 
 #: ../app/dialogs/preferences-dialog.c:1895
 msgid "_Save tool options on exit"
-msgstr ""
+msgstr "ನಿರ್ಗಮಿಸುವ ಮೊದಲು ಉಪಕರಣ ಆಯ್ಕೆಗಳನ್ನು ಉಳಿಸು(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1899
 msgid "Save Tool Options _Now"
-msgstr ""
+msgstr "ಉಪಕರಣ ಆಯ್ಕೆಗಳನ್ನು ಈಗಲೆ ಉಳಿಸು(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:1906
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr ""
+msgstr "ಉಳಿಸಲಾದ ಉಪಕರಣ ಆಯ್ಕೆಗಳನ್ನು ಪೂರ್ವನಿಯೋಜಿತ ಮೌಲ್ಯಗಳಿಗೆ ಬದಲಿಸು(_R)"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1916
@@ -7451,7 +7451,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1949
 msgid "Move Tool"
-msgstr ""
+msgstr "ಉಪಕರಣವನ್ನು ಜರುಗಿಸು"
 
 #: ../app/dialogs/preferences-dialog.c:1953
 msgid "Set layer or path as active"
@@ -7459,7 +7459,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1966 ../app/widgets/gimptoolbox.c:631
 msgid "Toolbox"
-msgstr ""
+msgstr "ಉಪಕರಣಪೆಟ್ಟಿಗೆ"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1978
@@ -7470,23 +7470,23 @@ msgstr "ಗೋಚರಿಕೆ"
 
 #: ../app/dialogs/preferences-dialog.c:1982
 msgid "Show _foreground & background color"
-msgstr ""
+msgstr "ಹಿನ್ನೆಲೆ ಹಾಗು ಮುನ್ನೆಲೆ ಬಣ್ಣವನ್ನು ತೋರಿಸು(_f)"
 
 #: ../app/dialogs/preferences-dialog.c:1986
 msgid "Show active _brush, pattern & gradient"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ಕುಂಚ, ವಿನ್ಯಾಸ ಹಾಗು ಗ್ರೇಡಿಯಂಟ್‌ ಅನ್ನು ತೋರಿಸು(_b)"
 
 #: ../app/dialogs/preferences-dialog.c:1990
 msgid "Show active _image"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ಚಿತ್ರವನ್ನು ತೋರಿಸು(_i)"
 
 #: ../app/dialogs/preferences-dialog.c:2003
 msgid "Default New Image"
-msgstr ""
+msgstr "ಪೂರ್ವನಿಯೋಜಿತ ಹೊಸ ಚಿತ್ರ"
 
 #: ../app/dialogs/preferences-dialog.c:2006
 msgid "Default Image"
-msgstr ""
+msgstr "ಪೂರ್ವನಿಯೋಜಿತ ಚಿತ್ರ"
 
 #: ../app/dialogs/preferences-dialog.c:2043
 msgid "Default Image Grid"
@@ -7498,36 +7498,36 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2067
 msgid "Image Windows"
-msgstr ""
+msgstr "ಚಿತ್ರದ ವಿಂಡೋಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2082
 msgid "Use \"_Dot for dot\" by default"
-msgstr ""
+msgstr "ಪೂರ್ವನಿಯೋಜಿತವಾಗಿ \"ಚುಕ್ಕಿಗೆ ಚುಕ್ಕಿಯನ್ನು\" ಬಳಸು(_D)"
 
 #: ../app/dialogs/preferences-dialog.c:2088
 msgid "Marching _ants speed:"
-msgstr ""
+msgstr "ಚಲಿಸುವ ಇರುವೆಗಳ ವೇಗ(_a):"
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2092
 msgid "Zoom & Resize Behavior"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸುವ ಹಾಗು ಗಾತ್ರ ಬದಲಾವಣೆ ವರ್ತನೆ"
 
 #: ../app/dialogs/preferences-dialog.c:2096
 msgid "Resize window on _zoom"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸಿದಾಗ ವಿಂಡೋದ ಗಾತ್ರವನ್ನು ಬದಲಿಸು (_z)"
 
 #: ../app/dialogs/preferences-dialog.c:2099
 msgid "Resize window on image _size change"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಗಾತ್ರ ಬದಲಾವಣೆ ಮಾಡಿದಾಗ ವಿಂಡೋದ ಗಾತ್ರವನ್ನು ಬದಲಿಸು(_s)"
 
 #: ../app/dialogs/preferences-dialog.c:2105
 msgid "Fit to window"
-msgstr ""
+msgstr "ವಿಂಡೊಗೆ ಸರಿಹೊಂದಿಸು"
 
 #: ../app/dialogs/preferences-dialog.c:2107
 msgid "Initial zoom _ratio:"
-msgstr ""
+msgstr "ಆರಂಭಿಕ ಹಿಗ್ಗಿಸುವ ಅನುಪಾತ(_r):"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2111
@@ -7536,20 +7536,20 @@ msgstr "ಸ್ಪೇಸ್ ಬಾರ್"
 
 #: ../app/dialogs/preferences-dialog.c:2117
 msgid "_While space bar is pressed:"
-msgstr ""
+msgstr "ಸ್ಪೇಸ್ ಬಾರ್ ಅನ್ನು ಒತ್ತಿದಾಗ(_W):"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2121
 msgid "Mouse Pointers"
-msgstr ""
+msgstr "ಮೌಸ್‌ ಸೂಚಕಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2125
 msgid "Show _brush outline"
-msgstr ""
+msgstr "ಕುಂಚದ ಹೊರರೇಖೆಯನ್ನು ತೋರಿಸು(_b)"
 
 #: ../app/dialogs/preferences-dialog.c:2128
 msgid "Show pointer for paint _tools"
-msgstr ""
+msgstr "ಬಣ್ಣಹಚ್ಚುವ ಉಪಕರಣಗಳಿಗಾಗಿ ಸೂಚಕವನ್ನು ತೋರಿಸು(_t)"
 
 #: ../app/dialogs/preferences-dialog.c:2134
 msgid "Pointer _mode:"
@@ -7565,11 +7565,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2160
 msgid "Default Appearance in Normal Mode"
-msgstr ""
+msgstr "ಸಾಮಾನ್ಯ ಕ್ರಮದಲ್ಲಿ ಪೂರ್ವನಿಯೋಜಿತ ಗೋಚರಿಕೆ"
 
 #: ../app/dialogs/preferences-dialog.c:2165
 msgid "Default Appearance in Fullscreen Mode"
-msgstr ""
+msgstr "ಪೂರ್ಣಪರದೆ ಕ್ರಮದಲ್ಲಿ ಪೂರ್ವನಿಯೋಜಿತ ಗೋಚರಿಕೆ"
 
 #: ../app/dialogs/preferences-dialog.c:2174
 msgid "Image Title & Statusbar Format"
@@ -7577,7 +7577,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2177
 msgid "Title & Status"
-msgstr ""
+msgstr "ಶೀರ್ಷಿಕೆ ಹಾಗು ಸ್ಥಿತಿ "
 
 #: ../app/dialogs/preferences-dialog.c:2195
 msgid "Current format"
@@ -7589,15 +7589,15 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2197
 msgid "Show zoom percentage"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸುವ ಪ್ರತಿಶತವನ್ನು ತೋರಿಸು"
 
 #: ../app/dialogs/preferences-dialog.c:2198
 msgid "Show zoom ratio"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸುವ ಅನುಪಾತವನ್ನು ತೋರಿಸು"
 
 #: ../app/dialogs/preferences-dialog.c:2199
 msgid "Show image size"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಗಾತ್ರವನ್ನು ತೋರಿಸು"
 
 #: ../app/dialogs/preferences-dialog.c:2212
 msgid "Image Title Format"
@@ -7621,7 +7621,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2321
 msgid "Monitor Resolution"
-msgstr ""
+msgstr "ತೆರೆಯ ರೆಸಲ್ಯೂಶನ್"
 
 #: ../app/dialogs/preferences-dialog.c:2325
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:269
@@ -7637,11 +7637,11 @@ msgstr "ppi"
 #: ../app/dialogs/preferences-dialog.c:2363
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
-msgstr ""
+msgstr "ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪತ್ತೆಹಚ್ಚು (ಪ್ರಸಕ್ತ %d × %d ppi ಆಗಿದೆ)(_D)"
 
 #: ../app/dialogs/preferences-dialog.c:2383
 msgid "_Enter manually"
-msgstr ""
+msgstr "ಕೈಯಾರೆ ನಮೂದಿಸು(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:2398
 msgid "C_alibrate..."
@@ -7653,19 +7653,19 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2441
 msgid "_RGB profile:"
-msgstr ""
+msgstr "_RGB ಪ್ರೊಫೈಲ್:"
 
 #: ../app/dialogs/preferences-dialog.c:2442
 msgid "Select RGB Color Profile"
-msgstr ""
+msgstr "RGB ಬಣ್ಣದ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2443
 msgid "_CMYK profile:"
-msgstr ""
+msgstr "_CMYK ಪ್ರೊಫೈಲ್:"
 
 #: ../app/dialogs/preferences-dialog.c:2444
 msgid "Select CMYK Color Profile"
-msgstr ""
+msgstr "CMYK ಬಣ್ಣದ ಪ್ರೊಫೈಲ್ ಅನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2445
 msgid "_Monitor profile:"
@@ -7705,7 +7705,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2526
 msgid "Select Warning Color"
-msgstr ""
+msgstr "ಎಚ್ಚರಿಕೆಯ ಬಣ್ಣವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2539
 msgid "File Open behaviour:"
@@ -7718,31 +7718,31 @@ msgstr "ಇನ್‌ಪುಟ್‌ ಸಾಧನಗಳು"
 #. Extended Input Devices
 #: ../app/dialogs/preferences-dialog.c:2561
 msgid "Extended Input Devices"
-msgstr ""
+msgstr "ವಿಸ್ತರಿಸಲಾದ ಇನ್‌ಪುಟ್‌ ಸಾಧನಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2565
 msgid "Configure E_xtended Input Devices..."
-msgstr ""
+msgstr "ವಿಸ್ತರಿಸಲಾದ ಇನ್‌ಪುಟ್‌ ಸಾಧನಗಳನ್ನು ಸಂರಚಿಸಿ(_x)..."
 
 #: ../app/dialogs/preferences-dialog.c:2572
 msgid "_Save input device settings on exit"
-msgstr ""
+msgstr "ನಿರ್ಗಮಿಸುವ ಮೊದಲು ಇನ್‌ಪುಟ್‌ ಸಾಧನ ಸಿದ್ಧತೆಗಳನ್ನು ಉಳಿಸು(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2576
 msgid "Save Input Device Settings _Now"
-msgstr ""
+msgstr "ಇನ್‌ಪುಟ್‌ ಸಾಧನ ಸಿದ್ಧತೆಗಳನ್ನು ಈಗಲೆ ಉಳಿಸು(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2583
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr ""
+msgstr "ಉಳಿಸಲಾದ ಇನ್‌ಪುಟ್‌ ಪೂರ್ವನಿಯೋಜಿತ ಮೌಲ್ಯಗಳಿಗೆ ಬದಲಾಯಿಸು(_R)"
 
 #: ../app/dialogs/preferences-dialog.c:2598
 msgid "Additional Input Controllers"
-msgstr ""
+msgstr "ಹೆಚ್ಚುವರಿ ಇನ್‌ಪುಟ್ ನಿಯಂತ್ರಕಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2601
 msgid "Input Controllers"
-msgstr ""
+msgstr "ಇನ್‌ಪುಟ್‌ ನಿಯಂತ್ರಕಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2617
 msgid "Window Management"
@@ -7750,11 +7750,11 @@ msgstr "ವಿಂಡೊ ನಿರ್ವಹಣೆ"
 
 #: ../app/dialogs/preferences-dialog.c:2626
 msgid "Window Manager Hints"
-msgstr ""
+msgstr "ವಿಂಡೋ ವ್ಯವಸ್ಥಾಪಕ ಸುಳಿಹುಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2632
 msgid "Hint for the _toolbox:"
-msgstr ""
+msgstr "ಉಪಕರಣಪೆಟ್ಟಿಗೆಗಾಗಿನ ಸುಳುಹು(_t):"
 
 #: ../app/dialogs/preferences-dialog.c:2636
 msgid "Hint for other _docks:"
@@ -7766,24 +7766,24 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2646
 msgid "Focus"
-msgstr ""
+msgstr "ಗಮನ"
 
 #: ../app/dialogs/preferences-dialog.c:2650
 msgid "Activate the _focused image"
-msgstr ""
+msgstr "ಗಮನ ಕೇಂದ್ರೀಕರಿಸಲಾದ ಚಿತ್ರವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸು(_f)"
 
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2654
 msgid "Window Positions"
-msgstr ""
+msgstr "ವಿಂಡೊದ ಸ್ಥಾನಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2657
 msgid "_Save window positions on exit"
-msgstr ""
+msgstr "ನಿರ್ಗಮಿಸುವ ಮೊದಲು ವಿಂಡೊದ ಸ್ಥಾನಗಳನ್ನು ಉಳಿಸು(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2661
 msgid "Save Window Positions _Now"
-msgstr ""
+msgstr "ವಿಂಡೊದ ಸ್ಥಾನಗಳನ್ನು ಈಗಲೆ ಉಳಿಸು(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:2668
 msgid "_Reset Saved Window Positions to Default Values"
@@ -7799,23 +7799,23 @@ msgstr "ತಾತ್ಕಾಲಿಕ ಕಡತಕೋಶ:"
 
 #: ../app/dialogs/preferences-dialog.c:2704
 msgid "Select Folder for Temporary Files"
-msgstr ""
+msgstr "ತಾತ್ಕಾಲಿಕ ಕಡತಗಳಿಗಾಗಿ ಕಡತಕೋಶವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2708
 msgid "Swap folder:"
-msgstr ""
+msgstr "ಸ್ವಾಪ್‌ ಕಡತಕೋಶ:"
 
 #: ../app/dialogs/preferences-dialog.c:2709
 msgid "Select Swap Folder"
-msgstr ""
+msgstr "ಸ್ವಾಪ್‌ ಕಡತಕೋಶವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2744
 msgid "Brush Folders"
-msgstr ""
+msgstr "ಕುಂಚದ ಕಡತಕೋಶಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2746
 msgid "Select Brush Folders"
-msgstr ""
+msgstr "ಕುಂಚದ ಕಡತಕೋಶಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2748
 msgid "Pattern Folders"
@@ -7835,11 +7835,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2756
 msgid "Gradient Folders"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್‌ ಕಡತಕೋಶಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2758
 msgid "Select Gradient Folders"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್‌ ಕಡತಕೋಶಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2760
 msgid "Font Folders"
@@ -7847,15 +7847,15 @@ msgstr "ಅಕ್ಸರಶೈಲಿಯ ಕಡತಕೋಶಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2762
 msgid "Select Font Folders"
-msgstr ""
+msgstr "ಅಕ್ಷರಶೈಲಿ ಕಡತಕೋಶಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2764
 msgid "Plug-In Folders"
-msgstr ""
+msgstr "ಪ್ಲಗ್‌-ಇನ್‌ ಕಡತಕೋಶಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2766
 msgid "Select Plug-In Folders"
-msgstr ""
+msgstr "ಪ್ಲಗ್‌-ಇನ್‌ ಕಡತಕೋಶಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2768
 msgid "Scripts"
@@ -7863,19 +7863,19 @@ msgstr "ಸ್ಕ್ರಿಪ್ಟುಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2768
 msgid "Script-Fu Folders"
-msgstr ""
+msgstr "Script-Fu ಕಡತಕೋಶಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2770
 msgid "Select Script-Fu Folders"
-msgstr ""
+msgstr "Script-Fu ಕಡತಕೋಶಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2772
 msgid "Module Folders"
-msgstr ""
+msgstr "ಘಟಕ ಕಡತಕೋಶಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2774
 msgid "Select Module Folders"
-msgstr ""
+msgstr "ಘಟಕ ಕಡತಕೋಶಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿು"
 
 #: ../app/dialogs/preferences-dialog.c:2776
 msgid "Interpreters"
@@ -7891,11 +7891,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2780
 msgid "Environment Folders"
-msgstr ""
+msgstr "ಪರಿಸರ ಕಡತಕೋಶಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2782
 msgid "Select Environment Folders"
-msgstr ""
+msgstr "ಪರಿಸರ ಕಡತಕೋಶಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/preferences-dialog.c:2784
 msgid "Themes"
@@ -7903,11 +7903,11 @@ msgstr "ಪರಿಸರವಿನ್ಯಾಸಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2784
 msgid "Theme Folders"
-msgstr ""
+msgstr "ಪರಿಸರವಿನ್ಯಾಸ ಕಡತಕೋಶಗಳು"
 
 #: ../app/dialogs/preferences-dialog.c:2786
 msgid "Select Theme Folders"
-msgstr ""
+msgstr "ಪರಿಸರವಿನ್ಯಾಸ ಕಡತಕೋಶಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
@@ -7951,18 +7951,18 @@ msgstr "ಎಲ್ಲಾ ಚಿತ್ರಗಳನ್ನು ಮುಚ್ಚು"
 
 #: ../app/dialogs/quit-dialog.c:165
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr ""
+msgstr "ನೀವು ಈಗ GIMP ಅನ್ನು ಮುಚ್ಚಿದರೆ, ಈ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
 
 #: ../app/dialogs/quit-dialog.c:168
 msgid "If you close these images now, changes will be lost."
-msgstr ""
+msgstr "ನೀವು ಈಗ ಚಿತ್ರಗಳನ್ನು ಮುಚ್ಚಿದಲ್ಲಿ, ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
 
 #: ../app/dialogs/quit-dialog.c:216
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ಉಳಿಸದೆ ಇರುವ ಬದಲಾವಣೆಗಳನ್ನು ಹೊಂದಿರುವ ಒಂದು ಚಿತ್ರವಿದೆ:"
+msgstr[1] "ಉಳಿಸದೆ ಇರುವ ಬದಲಾವಣೆಗಳನ್ನು ಹೊಂದಿರುವ %d ಚಿತ್ರಗಳಿವೆ:"
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
@@ -7978,7 +7978,7 @@ msgstr "ಪದರದ ಗಾತ್ರ"
 
 #: ../app/dialogs/resize-dialog.c:294
 msgid "Resize _layers:"
-msgstr ""
+msgstr "ಪದರಗಳ ಗಾತ್ರಗಳನ್ನು ಬದಲಾಯಿಸು(_l):"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
@@ -8021,7 +8021,7 @@ msgstr ""
 
 #: ../app/dialogs/stroke-dialog.c:225
 msgid "Paint tool:"
-msgstr ""
+msgstr "ಬಣ್ಣಹಚ್ಚುವ ಉಪಕರಣ:"
 
 #: ../app/dialogs/stroke-dialog.c:246
 msgid "_Emulate brush dynamics"
@@ -8029,24 +8029,24 @@ msgstr ""
 
 #: ../app/dialogs/tips-dialog.c:89
 msgid "The GIMP tips file is empty!"
-msgstr ""
+msgstr "GIMP ಸಲಹೆಗಳ ಕಡತವು ಖಾಲಿ ಇದೆ!"
 
 #: ../app/dialogs/tips-dialog.c:93
 msgid "The GIMP tips file appears to be missing!"
-msgstr ""
+msgstr "GIMP ಸಲಹೆಗಳ ಕಡತವು ಕಾಣಿಸುತ್ತಿಲ್ಲ!"
 
 #: ../app/dialogs/tips-dialog.c:95
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr ""
+msgstr "'%s' ಎಂಬ ಹೆಸರಿನ ಒಂದು ಕಡತ ಇರಬೇಕಿತ್ತು. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಅನುಸ್ಥಾಪನೆಯನ್ನು ಪರಿಶೀಲಿಸಿ."
 
 #: ../app/dialogs/tips-dialog.c:101
 msgid "The GIMP tips file could not be parsed!"
-msgstr ""
+msgstr "GIMP ಸಲಹೆಗಳ ಕಡತವನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ!"
 
 #: ../app/dialogs/tips-dialog.c:129
 msgid "GIMP Tip of the Day"
-msgstr ""
+msgstr "GIMP ನ ದಿನದ ಸಲಹೆ"
 
 #: ../app/dialogs/tips-dialog.c:135
 msgid "_Previous Tip"
@@ -8072,19 +8072,19 @@ msgstr "tips-locale:C"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
-msgstr ""
+msgstr "GIMP ಬಳಕೆದಾರ ಅನುಸ್ಥಾಪನೆ"
 
 #: ../app/dialogs/user-install-dialog.c:94
 msgid "User installation failed!"
-msgstr ""
+msgstr "ಬಳಕೆದಾರ ಅನುಸ್ಥಾಪನೆಯು ವಿಫಲಗೊಂಡಿದೆ!"
 
 #: ../app/dialogs/user-install-dialog.c:96
 msgid "The GIMP user installation failed; see the log for details."
-msgstr ""
+msgstr "GIMP ಬಳಕೆದಾರ ಅನುಸ್ಥಾಪನೆಯನ್ನು ವಿಫಲಗೊಂಡಿದೆ; ವಿವರಗಳಿಗಾಗಿ ದಾಖಲೆಯನ್ನು ನೋಡಿ."
 
 #: ../app/dialogs/user-install-dialog.c:99
 msgid "Installation Log"
-msgstr ""
+msgstr "ಅನುಸ್ಥಾಪನಾ ದಾಖಲೆ"
 
 #: ../app/dialogs/vectors-export-dialog.c:55
 msgid "Export Path to SVG"
@@ -8105,7 +8105,7 @@ msgstr ""
 #: ../app/dialogs/vectors-import-dialog.c:92
 #: ../app/widgets/gimpprofilechooserdialog.c:132
 msgid "All files (*.*)"
-msgstr ""
+msgstr "ಎಲ್ಲಾ ಕಡತಗಳು (*.*)"
 
 #: ../app/dialogs/vectors-import-dialog.c:97
 msgid "Scalable SVG image (*.svg)"
@@ -8125,7 +8125,7 @@ msgstr ""
 
 #: ../app/display/display-enums.c:24
 msgid "Tool icon"
-msgstr ""
+msgstr "ಉಪಕರಣದ ಚಿಹ್ನೆ"
 
 #: ../app/display/display-enums.c:25
 msgid "Tool icon with crosshair"
@@ -8174,7 +8174,7 @@ msgstr ""
 #: ../app/display/gimpdisplay-handlers.c:160
 #, c-format
 msgid "Image saved to '%s'"
-msgstr ""
+msgstr "ಚಿತ್ರವನ್ನು '%s' ಗೆ ಉಳಿಸಲಾಗಿದೆ"
 
 #: ../app/display/gimpdisplayshell.c:1033
 msgid "Access the image menu"
@@ -8182,7 +8182,7 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell.c:1138
 msgid "Zoom image when window size changes"
-msgstr ""
+msgstr "ವಿಂಡೋದ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿದಾಗ ಚಿತ್ರವನ್ನು ಹಿಗ್ಗಿಸು"
 
 #: ../app/display/gimpdisplayshell.c:1188
 msgid "Navigate the image display"
@@ -8191,7 +8191,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell.c:1283
 #: ../app/display/gimpdisplayshell.c:1373 ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
-msgstr ""
+msgstr "ಚಿತ್ರ ಕಡತಗಳನ್ನು ತೆರೆಯಲು ಅವುಗಳನ್ನು ಇಲ್ಲಿ ಹಾಕಿ"
 
 #: ../app/display/gimpdisplayshell-close.c:147
 #: ../app/display/gimpdisplayshell-close.c:224
@@ -8201,12 +8201,12 @@ msgstr "%s ಅನ್ನು ಮುಚ್ಚು"
 
 #: ../app/display/gimpdisplayshell-close.c:159
 msgid "Do_n't Save"
-msgstr ""
+msgstr "ಉಳಿಸಬೇಡ(_n)"
 
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr ""
+msgstr "ಚಿತ್ರ '%s' ಅನ್ನು ಮುಚ್ಚುವ ಮೊದಲು ಅದರ ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಬೇಕೆ?"
 
 #: ../app/display/gimpdisplayshell-close.c:254
 #, c-format
@@ -8307,7 +8307,7 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-title.c:298
 msgid "(clean)"
-msgstr ""
+msgstr " "
 
 #: ../app/display/gimpdisplayshell-title.c:346
 #: ../app/display/gimpdisplayshell-title.c:359
@@ -8333,17 +8333,17 @@ msgstr ""
 #: ../app/file/file-open.c:194
 #, c-format
 msgid "%s plug-In could not open image"
-msgstr ""
+msgstr "%s ಪ್ಲಗ್‌-ಇನ್‌ನಿಂದ ಚಿತ್ರವನ್ನು ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
 #: ../app/file/file-open.c:455
 #, c-format
 msgid "Image doesn't contain any layers"
-msgstr ""
+msgstr "ಚಿತ್ರವು ಯಾವುದೆ ಪದರಗಳನ್ನು ಹೊಂದಿಲ್ಲ"
 
 #: ../app/file/file-open.c:505
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr ""
+msgstr "'%s' ಅನ್ನು ತೆರೆಯುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ: %s"
 
 #: ../app/file/file-open.c:613
 msgid ""
@@ -8359,12 +8359,12 @@ msgstr "ಗೊತ್ತಿರದ ಕಡತದ ಬಗೆ"
 #: ../app/file/file-save.c:192
 #, c-format
 msgid "%s plug-in could not save image"
-msgstr ""
+msgstr "%s ಪ್ಲಗ್‌-ಇನ್‌ನಿಂದ ಚಿತ್ರವನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
 #: ../app/file/file-utils.c:74
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
-msgstr ""
+msgstr "'%s:' ಯು ಇಂದು ಮಾನ್ಯವಾದ ಸ್ಕೀಮ್‌ ಆಗಿಲ್ಲ"
 
 #: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
 #, c-format
@@ -8402,7 +8402,7 @@ msgstr ""
 #: ../app/paint/gimpbrushcore.c:353
 #, c-format
 msgid "No brushes available for use with this tool."
-msgstr ""
+msgstr "ಈ ಉಪಕರಣದೊಂದಿಗೆ ಬಳಸಲು ಯಾವುದೆ ಕುಂಚಗಳು ಲಭ್ಯವಿಲ್ಲ."
 
 #: ../app/paint/gimpclone.c:99 ../app/tools/gimpclonetool.c:61
 msgid "Clone"
@@ -8411,7 +8411,7 @@ msgstr "ತದ್ರೂಪು"
 #: ../app/paint/gimpclone.c:140
 #, c-format
 msgid "No patterns available for use with this tool."
-msgstr ""
+msgstr "ಈ ಉಪಕರಣದೊಂದಿಗೆ ಬಳಸಲು ಯಾವುದೆ ನಮೂನೆಗಳು ಲಭ್ಯವಿಲ್ಲ."
 
 #: ../app/paint/gimpconvolve.c:77
 msgid "Convolve"
