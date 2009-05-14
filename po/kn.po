@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-18 21:39+0000\n"
-"PO-Revision-Date: 2009-05-13 23:46+0530\n"
+"PO-Revision-Date: 2009-05-14 17:48+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8149,11 +8149,11 @@ msgstr ""
 
 #: ../app/display/display-enums.c:88
 msgid "Custom color"
-msgstr ""
+msgstr "ಇಚ್ಛೆಯ ಬಣ್ಣ"
 
 #: ../app/display/display-enums.c:116
 msgid "No action"
-msgstr ""
+msgstr "ಯಾವುದೆ ಕ್ರಿಯೆ ಇಲ್ಲ"
 
 #: ../app/display/display-enums.c:117
 msgid "Pan view"
@@ -8161,15 +8161,15 @@ msgstr ""
 
 #: ../app/display/display-enums.c:118
 msgid "Switch to Move tool"
-msgstr ""
+msgstr "ಸ್ಥಳಾಂತರಿಸುವ ಉಪಕರಣಕ್ಕೆ ಬದಲಾಯಿಸು"
 
 #: ../app/display/display-enums.c:145
 msgid "quality|Low"
-msgstr ""
+msgstr "ಕೆಳಮಟ್ಟದ"
 
 #: ../app/display/display-enums.c:146
 msgid "quality|High"
-msgstr ""
+msgstr "ಉತ್ತಮ"
 
 #: ../app/display/gimpdisplay-handlers.c:160
 #, c-format
@@ -8178,7 +8178,7 @@ msgstr "ಚಿತ್ರವನ್ನು '%s' ಗೆ ಉಳಿಸಲಾಗಿದ�
 
 #: ../app/display/gimpdisplayshell.c:1033
 msgid "Access the image menu"
-msgstr ""
+msgstr "ಚಿತ್ರದ ಮೆನುವನ್ನು ನಿಲುಕಿಸಿಕೊಳ್ಳಿ"
 
 #: ../app/display/gimpdisplayshell.c:1138
 msgid "Zoom image when window size changes"
@@ -8212,8 +8212,8 @@ msgstr "ಚಿತ್ರ '%s' ಅನ್ನು ಮುಚ್ಚುವ ಮೊದಲ�
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ನೀವು ಚಿತ್ರವನ್ನು ಉಳಿಸದೆ ಹೋದರೆ, ಕೊನೆಯ ಒಂದು ಗಂಟೆಯಲ್ಲಿ ಮಾಡಲಾದ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
+msgstr[1] "ನೀವು ಚಿತ್ರವನ್ನು ಉಳಿಸದೆ ಹೋದರೆ, ಕೊನೆಯ %d ಗಂಟೆಗಳಲ್ಲಿ ಮಾಡಲಾದ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
 
 #: ../app/display/gimpdisplayshell-close.c:264
 #, c-format
@@ -8223,21 +8223,21 @@ msgid ""
 msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ನೀವು ಚಿತ್ರವನ್ನು ಉಳಿಸದೆ ಹೋದರೆ, ಕೊನೆಯ ಗಂಟೆ ಹಾಗು %d ನಿಮಿಷದಲ್ಲಿ ಮಾಡಲಾದ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
+msgstr[1] "ನೀವು ಚಿತ್ರವನ್ನು ಉಳಿಸದೆ ಹೋದರೆ, ಕೊನೆಯ ಗಂಟೆ ಹಾಗು %d ನಿಮಿಷಗಳಲ್ಲಿ ಮಾಡಲಾದ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
 
 #: ../app/display/gimpdisplayshell-close.c:275
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ನೀವು ಚಿತ್ರವನ್ನು ಉಳಿಸದೆ ಹೋದರೆ, ಕೊನೆಯ ನಿಮಿಷದಲ್ಲಿ ಮಾಡಲಾದ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
+msgstr[1] "ನೀವು ಚಿತ್ರವನ್ನು ಉಳಿಸದೆ ಹೋದರೆ, ಕೊನೆಯ %d ನಿಮಿಷಗಳಲ್ಲಿ ಮಾಡಲಾದ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
 #: ../app/display/gimpdisplayshell-dnd.c:587
 #: ../app/display/gimpdisplayshell-dnd.c:658
 msgid "Drop New Layer"
-msgstr ""
+msgstr "ಹೊಸ ಪದರವನ್ನು ಬಿಟ್ಟುಬಿಡು"
 
 #: ../app/display/gimpdisplayshell-dnd.c:301
 msgid "Drop New Path"
@@ -8246,7 +8246,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-dnd.c:497
 #: ../app/widgets/gimplayertreeview.c:719
 msgid "Drop layers"
-msgstr ""
+msgstr "ಪದರಗಳನ್ನು ಬಿಟ್ಟುಬಿಡು"
 
 #: ../app/display/gimpdisplayshell-dnd.c:648
 #: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
@@ -8263,35 +8263,35 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-layer-select.c:120
 msgid "Layer Select"
-msgstr ""
+msgstr "ಪದರ ಆಯ್ಕೆ"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:114
 msgid "Zoom Ratio"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸುವ ಅನುಪಾತ"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:116
 msgid "Select Zoom Ratio"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸುವ ಅನುಪಾತವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:159
 msgid "Zoom ratio:"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸುವ ಅನುಪಾತ:"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:184
 msgid "Zoom:"
-msgstr ""
+msgstr "ಹಿಗ್ಗಿಸು:"
 
 #: ../app/display/gimpdisplayshell-title.c:233
 msgid "RGB-empty"
-msgstr ""
+msgstr "RGB-ಖಾಲಿ"
 
 #: ../app/display/gimpdisplayshell-title.c:236
 msgid "grayscale-empty"
-msgstr ""
+msgstr "ಗ್ರೇಸ್ಕೇಲ್‌-ಖಾಲಿ"
 
 #: ../app/display/gimpdisplayshell-title.c:236
 msgid "grayscale"
-msgstr ""
+msgstr "ಗ್ರೇಸ್ಕೇಲ್‌"
 
 #: ../app/display/gimpdisplayshell-title.c:239
 msgid "indexed-empty"
@@ -8303,7 +8303,7 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-title.c:293
 msgid "(modified)"
-msgstr ""
+msgstr "(ಮಾರ್ಪಡಿಸಲಾದ)"
 
 #: ../app/display/gimpdisplayshell-title.c:298
 msgid "(clean)"
@@ -8436,7 +8436,7 @@ msgstr ""
 
 #: ../app/paint/gimppaintbrush.c:63 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
-msgstr ""
+msgstr "ಬಣ್ಣದ ಕುಂಚ"
 
 #: ../app/paint/gimppaintcore-stroke.c:332
 #, c-format
@@ -8464,7 +8464,7 @@ msgstr ""
 #: ../app/paint/gimpsourcecore.c:227
 #, c-format
 msgid "Set a source image first."
-msgstr ""
+msgstr "ಮೂಲದ ಚಿತ್ರವನ್ನು ಮೊದಲು ಸಿದ್ಧಪಡಿಸಿ."
 
 #: ../app/paint/paint-enums.c:51
 msgid "Modify Perspective"
@@ -8509,39 +8509,39 @@ msgstr ""
 #: ../app/pdb/drawable-transform-cmds.c:989
 #: ../app/pdb/transform-tools-cmds.c:438
 msgid "2D Transform"
-msgstr ""
+msgstr "2D ರೂಪಾಂತರ"
 
 #: ../app/pdb/drawable-transform-cmds.c:1072
 #: ../app/pdb/drawable-transform-cmds.c:1165
 #: ../app/pdb/drawable-transform-cmds.c:1256
 msgid "2D Transforming"
-msgstr ""
+msgstr "2D ರೂಪಾಂತರಿಸುವಿಕೆ"
 
 #: ../app/pdb/edit-cmds.c:709 ../app/tools/gimpblendtool.c:225
 msgid "Blending"
-msgstr ""
+msgstr "ಸಮ್ಮಿಶ್ರಣ"
 
 #: ../app/pdb/floating-sel-cmds.c:63
 #, c-format
 msgid "Cannot remove this layer because it is not a floating selection."
-msgstr ""
+msgstr "ಈ ಪದರವನ್ನು ತೆಗೆದು ಹಾಕಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಇದು ಒಂದು ತೇಲುವ ಆಯ್ಕೆಯಾಗಿಲ್ಲ."
 
 #: ../app/pdb/floating-sel-cmds.c:95
 #, c-format
 msgid "Cannot anchor this layer because it is not a floating selection."
-msgstr ""
+msgstr "ಈ ಪದರವನ್ನು ಲಂಗರು ಹಾಕಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಇದು ಒಂದು ತೇಲುವ ಆಯ್ಕೆಯಾಗಿಲ್ಲ."
 
 #: ../app/pdb/floating-sel-cmds.c:127
 #, c-format
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
-msgstr ""
+msgstr "ಈ ಪದರವನ್ನು ಒಂದು ಸಾಮಾನ್ಯವಾದ ಪದರವಾಗಿ ಮಾರ್ಪಡಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಇದು ಒಂದು ತೇಲುವ ಆಯ್ಕೆಯಾಗಿಲ್ಲ."
 
 #: ../app/pdb/floating-sel-cmds.c:188
 #, c-format
 msgid "Cannot rigor this layer because it is not a floating selection."
-msgstr ""
+msgstr "ಈ ಪದರವನ್ನು ಪೆಡಸಾಗಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಇದು ಒಂದು ತೇಲುವ ಆಯ್ಕೆಯಾಗಿಲ್ಲ."
 
 #: ../app/pdb/floating-sel-cmds.c:222
 #, c-format
@@ -8552,27 +8552,27 @@ msgstr ""
 #: ../app/pdb/gimppdb.c:377
 #, c-format
 msgid "Procedure '%s' not found"
-msgstr ""
+msgstr "ವಿಧಾಣ '%s' ಕಂಡುಬಂದಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:61
 #, c-format
 msgid "Invalid empty brush name"
-msgstr ""
+msgstr "ಆಮಾನ್ಯವಾದ ಖಾಲಿ ಕುಂಚದ ಹೆಸರು"
 
 #: ../app/pdb/gimppdb-utils.c:71
 #, c-format
 msgid "Brush '%s' not found"
-msgstr ""
+msgstr "ಕುಂಚ '%s' ಕಂಡುಬಂದಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:76
 #, c-format
 msgid "Brush '%s' is not editable"
-msgstr ""
+msgstr "ಕುಂಚ '%s' ಅನ್ನು ಸಂಪಾದಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:102
 #, c-format
 msgid "Brush '%s' is not a generated brush"
-msgstr ""
+msgstr "ಕುಂಚ '%s' ವು ಒಂದು ಉತ್ಪಾದಿಸಲಾದ ಕುಂಚವಾಗಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:122
 #, c-format
@@ -8587,17 +8587,17 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:152
 #, c-format
 msgid "Invalid empty gradient name"
-msgstr ""
+msgstr "ಅಮಾನ್ಯವಾದ ಖಾಲಿ ಗ್ರೇಡಿಯಂಟ್ ಹೆಸರು"
 
 #: ../app/pdb/gimppdb-utils.c:162
 #, c-format
 msgid "Gradient '%s' not found"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್ '%s' ಕಂಡು ಬಂದಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:167
 #, c-format
 msgid "Gradient '%s' is not editable"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್ '%s' ಅನ್ನು ಸಂಪಾದಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:188
 #, c-format
@@ -8617,17 +8617,17 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:223
 #, c-format
 msgid "Invalid empty font name"
-msgstr ""
+msgstr "ಅಮಾನ್ಯವಾದ ಖಾಲಿ ಅಕ್ಷರಶೈಲಿಯ ಹೆಸರು"
 
 #: ../app/pdb/gimppdb-utils.c:233
 #, c-format
 msgid "Font '%s' not found"
-msgstr ""
+msgstr "ಅಕ್ಷರಶೈಲಿ '%s' ಕಂಡುಬಂದಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:252
 #, c-format
 msgid "Invalid empty buffer name"
-msgstr ""
+msgstr "ಅಮಾನ್ಯವಾದ ಖಾಲಿ ಬಫರ್ ಹೆಸರು"
 
 #: ../app/pdb/gimppdb-utils.c:262
 #, c-format
@@ -8642,37 +8642,37 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:291
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr ""
+msgstr "ಬಣ್ಣಹಚ್ಚುವ ವಿಧಾನ '%s' ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:307
 #, c-format
 msgid "Item '%s' (%d) can not be used because it has not been added to an image"
-msgstr ""
+msgstr "ಅಂಶ '%s' (%d) ಅನ್ನು ಬಳಸಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಅದು ಒಂದು ಸೇರಿಸಲಾದ ಚಿತ್ರವಾಗಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:329
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
-msgstr ""
+msgstr "ಅಂಶ '%s' (%d) ಅನ್ನು ಈಗಾಗಲೆ ಒಂದು ಚಿತ್ರವಾಗಿ ಸೇರಿಸಲಾಗಿದೆ"
 
 #: ../app/pdb/gimppdb-utils.c:337
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
-msgstr ""
+msgstr "ಅಂಶ '%s' (%d) ಅನ್ನು ತಪ್ಪು ಚಿತ್ರಕ್ಕೆ ಸೇರಿಸಲು ಪ್ರಯತ್ನಿಸಲಾಗುತ್ತಿದೆ"
 
 #: ../app/pdb/gimppdb-utils.c:356
 #, c-format
 msgid "Layer '%s' (%d) can not be used because it is not a text layer"
-msgstr ""
+msgstr "ಪದರ '%s' (%d) ಅನ್ನು ಬಳಸಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಅದು ಒಂದು ಪಠ್ಯ ಪದರವಾಗಿಲ್ಲ"
 
 #: ../app/pdb/gimppdb-utils.c:401
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
-msgstr ""
+msgstr "ಚಿತ್ರ '%s' (%d) ವು '%s' ಬಗೆಯದ್ದಾಗಿದೆ, ಆದರೆ '%s' ಬಗೆಯ ಚಿತ್ರವನ್ನು ನಿರೀಕ್ಷಿಸಲಾಗಿತ್ತು"
 
 #: ../app/pdb/gimppdb-utils.c:430
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
-msgstr ""
+msgstr "ಚಿತ್ರವು '%s' (%d) ಈಗಾಗಲೆ '%s' ಬಗೆಯದ್ದಾಗಿದೆ"
 
 #: ../app/pdb/gimppdb-utils.c:455
 #, c-format
@@ -8689,7 +8689,7 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:361 ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr ""
+msgstr "ವಿಧಾನ '%s' ವು ಯಾವುದೆ ಮೌಲ್ಯವನ್ನು ಮರಳಿಸಿಲ್ಲ"
 
 #: ../app/pdb/gimpprocedure.c:585
 #, c-format
@@ -8754,12 +8754,12 @@ msgstr ""
 
 #: ../app/pdb/selection-tools-cmds.c:218 ../app/tools/gimpfreeselecttool.c:197
 msgid "Free Select"
-msgstr ""
+msgstr "ಮುಕ್ತ ಆಯ್ಕೆ"
 
 #: ../app/pdb/text-layer-cmds.c:90
 #, c-format
 msgid "Failed to create text layer"
-msgstr ""
+msgstr "ಪಠ್ಯ ಪದರವನ್ನು ರಚಿಸುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ"
 
 #: ../app/pdb/text-layer-cmds.c:163 ../app/pdb/text-layer-cmds.c:235
 #: ../app/pdb/text-layer-cmds.c:314 ../app/pdb/text-layer-cmds.c:394
@@ -8769,7 +8769,7 @@ msgstr ""
 #: ../app/pdb/text-layer-cmds.c:897 ../app/pdb/text-layer-cmds.c:969
 #: ../app/pdb/text-layer-cmds.c:1041
 msgid "Set text layer attribute"
-msgstr ""
+msgstr "ಪಠ್ಯ ಪದರ ಗುಣಲಕ್ಷಣವನ್ನು ಹೊಂದಿಸು"
 
 #: ../app/plug-in/gimpenvirontable.c:282
 #, c-format
@@ -8824,15 +8824,15 @@ msgstr ""
 #: ../app/plug-in/gimppluginmanager-call.c:321
 #, c-format
 msgid "Failed to run plug-in \"%s\""
-msgstr ""
+msgstr "\"%s\" ನಲ್ಲಿ ಪ್ಲಗ್‌ಇನ್‌ ಅನ್ನು ಚಲಾಯಿಸುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
-msgstr ""
+msgstr "ಪ್ಲಗ್‌-ಇನ್‌ಗಳಿಗಾಗಿ ಹುಡುಕಲಾಗುತ್ತಿದೆ"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:271
 msgid "Resource configuration"
-msgstr ""
+msgstr "ಸಂಪನ್ಮೂಲದ ಸಂರಚನೆ"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:307
 msgid "Querying new Plug-ins"
@@ -8840,7 +8840,7 @@ msgstr ""
 
 #: ../app/plug-in/gimppluginmanager-restore.c:357
 msgid "Initializing Plug-ins"
-msgstr ""
+msgstr "ಪ್ಲಗ್‌ಇನ್‌ಗಳನ್ನು ಆರಂಭಿಸಲಾಗುತ್ತಿದೆ"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:429
 msgid "Starting Extensions"
@@ -8873,7 +8873,7 @@ msgstr ""
 #: ../app/plug-in/plug-in-icc-profile.c:247
 #, c-format
 msgid "Error running '%s'"
-msgstr ""
+msgstr "'%s' ಅನ್ನು ಚಲಾಯಿಸುವಲ್ಲಿ ದೋಷ"
 
 #: ../app/plug-in/plug-in-icc-profile.c:137
 #: ../app/plug-in/plug-in-icc-profile.c:198
@@ -8904,6 +8904,8 @@ msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 msgstr ""
+"Pack my box with\n"
+"five dozen liquor jugs."
 
 #: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:879
 msgid "Add Text Layer"
