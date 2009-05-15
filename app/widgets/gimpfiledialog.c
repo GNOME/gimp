@@ -493,11 +493,18 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       folder = g_object_get_data (G_OBJECT (image), "gimp-image-dirname");
 
       if (folder)
-        gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), folder);
+        {
+          gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), folder);
+        }
       else
-        gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog),
-                                  g_object_get_data (G_OBJECT (gimp),
-                                                     GIMP_FILE_SAVE_LAST_URI_KEY));
+        {
+          gchar *save_last_uri = g_object_get_data (G_OBJECT (gimp),
+                                                    GIMP_FILE_SAVE_LAST_URI_KEY);
+
+          if (save_last_uri)
+            gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog),
+                                      save_last_uri);
+        }
     }
 
   g_free (dirname);
