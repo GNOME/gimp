@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-18 21:39+0000\n"
-"PO-Revision-Date: 2009-05-14 17:48+0530\n"
+"PO-Revision-Date: 2009-05-14 23:47+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8852,7 +8852,7 @@ msgstr ""
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
-msgstr ""
+msgstr "ಪ್ಲಗ್‌-ಇನ್ ಪರಿಸರ"
 
 #: ../app/plug-in/gimppluginprocedure.c:989
 #, c-format
@@ -8880,22 +8880,22 @@ msgstr "'%s' ಅನ್ನು ಚಲಾಯಿಸುವಲ್ಲಿ ದೋಷ"
 #: ../app/plug-in/plug-in-icc-profile.c:257
 #, c-format
 msgid "Plug-In missing (%s)"
-msgstr ""
+msgstr "ಪ್ಲಗ್‌-ಇನ್ ಕಾಣಿಸುತ್ತಿಲ್ಲ (%s)"
 
 #: ../app/plug-in/plug-in-rc.c:206
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr ""
+msgstr "'%s' ಅನ್ನು ಉಪೇಕ್ಷಿಸಲಾಗುತ್ತಿದೆ: ತಪ್ಪು GIMP ಪ್ರೊಟೋಕಾಲ್ ಆವೃತ್ತಿ."
 
 #: ../app/plug-in/plug-in-rc.c:479
 #, c-format
 msgid "invalid value '%s' for icon type"
-msgstr ""
+msgstr "ಚಿಹ್ನೆಯ ಬಗೆಗಾಗಿನ ಅಮಾನ್ಯವಾದ ಮೌಲ್ಯ '%s'"
 
 #: ../app/plug-in/plug-in-rc.c:494
 #, c-format
 msgid "invalid value '%ld' for icon type"
-msgstr ""
+msgstr "ಚಿಹ್ನೆಯ ಬಗೆಗಾಗಿನ ಅಮಾನ್ಯವಾದ ಮೌಲ್ಯ '%ld'"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
@@ -8945,11 +8945,11 @@ msgstr "ಪಠ್ಯ ಪದರವನ್ನು ರೂಪಾಂತರಿಸು"
 
 #: ../app/text/gimptextlayer.c:492
 msgid "Discard Text Information"
-msgstr ""
+msgstr "ಪಠ್ಯ ಮಾಹಿತಿಯನ್ನು ಬಿಟ್ಟುಬಿಡು"
 
 #: ../app/text/gimptextlayer.c:543
 msgid "Due to lack of any fonts, text functionality is not available."
-msgstr ""
+msgstr "ಯಾವುದೆ ಅಕ್ಷರಶೈಲಿಯು ಇರದ ಕಾರಣ, ಪಠ್ಯ ಸವಲತ್ತು ಲಭ್ಯವಿರುವುದಿಲ್ಲ."
 
 #: ../app/text/gimptextlayer.c:579
 msgid "Empty Text Layer"
@@ -8984,7 +8984,7 @@ msgstr ""
 #: ../app/tools/gimpairbrushtool.c:92 ../app/tools/gimpconvolvetool.c:217
 #: ../app/tools/gimpsmudgetool.c:97
 msgid "Rate:"
-msgstr ""
+msgstr "ದರ:"
 
 #: ../app/tools/gimpairbrushtool.c:98 ../app/tools/gimppaintoptions-gui.c:198
 msgid "Pressure:"
@@ -9000,7 +9000,7 @@ msgstr ""
 
 #: ../app/tools/gimpaligntool.c:136
 msgid "_Align"
-msgstr ""
+msgstr "ಹೊಂದಿಸು(_A)"
 
 #: ../app/tools/gimpaligntool.c:599
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
@@ -9008,11 +9008,11 @@ msgstr ""
 
 #: ../app/tools/gimpaligntool.c:608
 msgid "Click to pick this layer as first item"
-msgstr ""
+msgstr "ಈ ಪದರವನ್ನು ಮೊದಲ ಅಂಶವಾಗಿ ಆರಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ"
 
 #: ../app/tools/gimpaligntool.c:616
 msgid "Click to add this layer to the list"
-msgstr ""
+msgstr "ಈ ಪದರವನ್ನು ಪಟ್ಟಿಗೆ ಸೇರಿಸಲು ಕ್ಲಿಕ್‌ ಮಾಡಿ"
 
 #: ../app/tools/gimpaligntool.c:620
 msgid "Click to pick this guide as first item"
@@ -9032,7 +9032,7 @@ msgstr ""
 
 #: ../app/tools/gimpaligntool.c:778
 msgid "Relative to:"
-msgstr ""
+msgstr "ಇದಕ್ಕೆ ಸಂಬಂಧಿಸಿದ:"
 
 #: ../app/tools/gimpaligntool.c:796
 msgid "Align left edge of target"
@@ -9060,7 +9060,7 @@ msgstr ""
 
 #: ../app/tools/gimpaligntool.c:834
 msgid "Distribute"
-msgstr ""
+msgstr "ಹಂಚು"
 
 #: ../app/tools/gimpaligntool.c:848
 msgid "Distribute left edges of targets"
@@ -9092,7 +9092,7 @@ msgstr "ಆಫ್‌ಸೆಟ್‌:"
 
 #: ../app/tools/gimpblendoptions.c:216 ../app/tools/gimppaintoptions-gui.c:648
 msgid "Gradient:"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್:"
 
 #: ../app/tools/gimpblendoptions.c:232 ../app/widgets/gimpbrusheditor.c:146
 msgid "Shape:"
@@ -9100,7 +9100,7 @@ msgstr "ಆಕಾರ:"
 
 #: ../app/tools/gimpblendoptions.c:239 ../app/tools/gimppaintoptions-gui.c:672
 msgid "Repeat:"
-msgstr ""
+msgstr "ಪುನರಾವರ್ತಿಸು:"
 
 #: ../app/tools/gimpblendoptions.c:257
 msgid "Adaptive supersampling"
@@ -9114,7 +9114,7 @@ msgstr "ಗರಿಷ್ಟ ಆಳ:"
 #: ../app/tools/gimpbucketfilloptions.c:287
 #: ../app/tools/gimpregionselectoptions.c:220
 msgid "Threshold:"
-msgstr ""
+msgstr "ಪರಿಮಿತಿ:"
 
 #: ../app/tools/gimpblendtool.c:108
 msgid "Blend Tool: Fill selected area with a color gradient"
@@ -9178,11 +9178,11 @@ msgstr "ವೈದೃಶ್ಯ(_t):"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:354
 msgid "Edit these Settings as Levels"
-msgstr ""
+msgstr "ಈ ಸಿದ್ಧತೆಗಳನ್ನು ಹಂತಗಳಾಗಿ ಸಂಪಾದಿಸಿ"
 
 #: ../app/tools/gimpbucketfilloptions.c:100
 msgid "Allow completely transparent regions to be filled"
-msgstr ""
+msgstr "ಸಂಪೂರ್ಣವಾಗಿ ಪಾರದರ್ಶಕವಾದ ಜಾಗಗಳು ತುಂಬಿಕೊಳ್ಳುವಂತೆ ಮಾಡು"
 
 #: ../app/tools/gimpbucketfilloptions.c:106
 msgid "Base filled area on all visible layers"
@@ -9207,11 +9207,11 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:243
 msgid "Fill whole selection"
-msgstr ""
+msgstr "ಸಂಪೂರ್ಣ ಆಯ್ಕೆಯನ್ನು ತುಂಬಿಸು"
 
 #: ../app/tools/gimpbucketfilloptions.c:244
 msgid "Fill similar colors"
-msgstr ""
+msgstr "ಒಂದೇ ರೀತಿಯ ಬಣ್ಣಗಳನ್ನು ತುಂಬಿಸು"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
 msgid "Finding Similar Colors"
@@ -9219,7 +9219,7 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:269
 msgid "Fill transparent areas"
-msgstr ""
+msgstr "ಪಾರದರ್ಶಕ ಜಾಗಗಳನ್ನು ತುಂಬಿಸು"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:151 ../app/tools/gimphealtool.c:99
@@ -9246,11 +9246,11 @@ msgstr ""
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
-msgstr ""
+msgstr "ಬಣ್ಣದಿಂದ ಆಯ್ಕೆ ಮಾಡು"
 
 #: ../app/tools/gimpbycolorselecttool.c:68
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr ""
+msgstr "ಬಣ್ಣದಿಂದ ಆಯ್ಕೆ ಮಾಡುವ ಉಪಕರಣ: ಒಂದೇ ರೀತಿಯ ಬಣ್ಣಗಳಿರುವ ಜಾಗಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡು"
 
 #: ../app/tools/gimpbycolorselecttool.c:69
 msgid "_By Color Select"
@@ -9258,7 +9258,7 @@ msgstr ""
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
-msgstr ""
+msgstr "ತದ್ರೂಪು ಉಪಕರಣ: ಕುಂಚವನ್ನು ಬಳಸಿಕೊಂಡು ಒಂದು ಚಿತ್ರ ಅಥವ ವಿನ್ಯಾಸದಿಂದ ಬೇಕಾದ ಸ್ಥಳವನ್ನು ಕಾಪಿ ಮಾಡಿ"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
@@ -9289,36 +9289,36 @@ msgstr "ಜೋಡಣೆ:"
 
 #: ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr ""
+msgstr "ಬಣ್ಣ ಸಮತೋಲನ ಉಪಕರಣ: ಬಣ್ಣದ ಹರಡುವಿಕೆಯನ್ನು ಸರಿಹೊಂದಿಸಿ"
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
-msgstr ""
+msgstr "ಬಣ್ಣದ ಸಮತೋಲನ(_B)..."
 
 #: ../app/tools/gimpcolorbalancetool.c:113
 msgid "Adjust Color Balance"
-msgstr ""
+msgstr "ಬಣ್ಣದ ಸಮತೋಲನ ಹೊಂದಿಸು"
 
 #: ../app/tools/gimpcolorbalancetool.c:115
 msgid "Import Color Balance Settings"
-msgstr ""
+msgstr "ಬಣ್ಣದ ಸಮತೋಲನದ ಸಿದ್ಧತೆಗಳನ್ನು ಆಮದು ಮಾಡಿಕೊಳ್ಳಿ"
 
 #: ../app/tools/gimpcolorbalancetool.c:116
 msgid "Export Color Balance Settings"
-msgstr ""
+msgstr "ಬಣ್ಣದ ಸಮತೋಲನದ ಸಿದ್ಧತೆಗಳನ್ನು ರಫ್ತು ಮಾಡಿ"
 
 #: ../app/tools/gimpcolorbalancetool.c:163
 #, c-format
 msgid "Color Balance operates only on RGB color layers."
-msgstr ""
+msgstr "ಬಣ್ಣದ ಸಮತೋಲನವು ಕೇವಲ RGB ಬಣ್ಣ ಪದರಗಳಿಗೆ ಮಾತ್ರ ಕೆಲಸ ಮಾಡುತ್ತದೆ."
 
 #: ../app/tools/gimpcolorbalancetool.c:270
 msgid "Select Range to Adjust"
-msgstr ""
+msgstr "ಸರಿಹೊಂದಿಸಲು ವ್ಯಾಪ್ತಿಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:172
 msgid "Adjust Color Levels"
-msgstr ""
+msgstr "ಬಣ್ಣದ ಹಂತಗಳನ್ನು ಹೊಂದಿಸಿ"
 
 #: ../app/tools/gimpcolorbalancetool.c:296
 #: ../app/tools/gimphuesaturationtool.c:255
@@ -9528,6 +9528,7 @@ msgid "Curves Tool: Adjust color curves"
 msgstr ""
 
 #: ../app/tools/gimpcurvestool.c:142
+#, fuzzy
 msgid "_Curves..."
 msgstr "ವಕ್ರರೇಖೆಗಳು(_C)..."
 
@@ -9659,19 +9660,19 @@ msgstr ""
 #: ../app/tools/gimpeditselectiontool.c:457
 #: ../app/tools/gimpeditselectiontool.c:726
 msgid "Move: "
-msgstr ""
+msgstr "ಸ್ಥಳಾಂತರಿಸು:"
 
 #: ../app/tools/gimpellipseselecttool.c:68
 msgid "Ellipse Select"
-msgstr ""
+msgstr "ದೀರ್ಘವೃತ್ತ ಆಯ್ಕೆ"
 
 #: ../app/tools/gimpellipseselecttool.c:69
 msgid "Ellipse Select Tool: Select an elliptical region"
-msgstr ""
+msgstr "ದೀರ್ಘವೃತ್ತ ಆಯ್ಕೆ ಉಪಕರಣ: ಒಂದು ದೀರ್ಘವೃತ್ತ ಜಾಗವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/tools/gimpellipseselecttool.c:70
 msgid "_Ellipse Select"
-msgstr ""
+msgstr "ದೀರ್ಘವೃತ್ತ ಆಯ್ಕೆ(_E)"
 
 #: ../app/tools/gimperasertool.c:67
 msgid "Eraser Tool: Erase to background or transparency using a brush"
@@ -9708,24 +9709,25 @@ msgstr "ಪರಿಣಾಮ:"
 #: ../app/tools/gimpflipoptions.c:139
 #, c-format
 msgid "Flip Type  (%s)"
-msgstr ""
+msgstr "ತುಂಬಿಸುವ ಬಗೆ  (%s)"
 
 #: ../app/tools/gimpfliptool.c:79
 msgid "Flip"
-msgstr ""
+msgstr "ಮಗುಚು"
 
 #: ../app/tools/gimpfliptool.c:80
+#, fuzzy
 msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr ""
+msgstr "ಮಗುಚುವ ಉಪಕರಣ:"
 
 #: ../app/tools/gimpfliptool.c:82
 msgid "_Flip"
-msgstr ""
+msgstr "ಮಗುಚು(_F)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:79
 #: ../app/tools/gimpselectionoptions.c:79
 msgid "Smooth edges"
-msgstr ""
+msgstr "ಮೃದು ಅಂಚುಗಳು"
 
 #: ../app/tools/gimpforegroundselectoptions.c:85
 msgid "Select a single contiguous area"
@@ -9782,28 +9784,28 @@ msgstr "ದೊಡ್ಡ ಕುಂಚ"
 
 #: ../app/tools/gimpforegroundselectoptions.c:334
 msgid "Smoothing:"
-msgstr ""
+msgstr "ಮೃದುಗೊಳಿಕೆ:"
 
 #: ../app/tools/gimpforegroundselectoptions.c:340
 msgid "Preview color:"
-msgstr ""
+msgstr "ಮುನ್ನೋಟ ಬಣ್ಣ:"
 
 #. granularity
 #: ../app/tools/gimpforegroundselectoptions.c:343
 msgid "Color Sensitivity"
-msgstr ""
+msgstr "ಬಣ್ಣದ ಸಂವೇದನಶೀಲತೆ"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆಯ ಆಯ್ಕೆ"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆಯ ಆಯ್ಕೆ ಉಪಕರಣ: ಮುನ್ನೆಲೆಯ ವಸ್ತುಗಳನ್ನು ಹೊಂದಿರುವ ಒಂದು ಜಾಗವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/tools/gimpforegroundselecttool.c:147
 msgid "F_oreground Select"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆಯ ಆಯ್ಕೆ(_o)"
 
 #: ../app/tools/gimpforegroundselecttool.c:314
 msgid "Add more strokes or press Enter to accept the selection"
@@ -9820,7 +9822,7 @@ msgstr ""
 #: ../app/tools/gimpforegroundselecttool.c:766
 msgctxt "command"
 msgid "Foreground Select"
-msgstr ""
+msgstr "ಮುನ್ನೆಲೆಯ ಆಯ್ಕೆ"
 
 #: ../app/tools/gimpfreeselecttool.c:198
 msgid "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
@@ -9828,11 +9830,11 @@ msgstr ""
 
 #: ../app/tools/gimpfreeselecttool.c:199
 msgid "_Free Select"
-msgstr ""
+msgstr "ಮುಕ್ತ ಆಯ್ಕೆ(_F)"
 
 #: ../app/tools/gimpfreeselecttool.c:1116
 msgid "Click to complete selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ"
 
 #: ../app/tools/gimpfreeselecttool.c:1120
 msgid "Click-Drag to move segment vertex"
@@ -9849,7 +9851,7 @@ msgstr ""
 #: ../app/tools/gimpfreeselecttool.c:1581
 msgctxt "command"
 msgid "Free Select"
-msgstr ""
+msgstr "ಮುಕ್ತ ಆಯ್ಕೆ"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fuzzy Select"
@@ -9941,7 +9943,7 @@ msgstr ""
 
 #: ../app/tools/gimphuesaturationtool.c:251
 msgid "M_aster"
-msgstr ""
+msgstr "ಮಾಸ್ಟರ್(_a)"
 
 #: ../app/tools/gimphuesaturationtool.c:251
 msgid "Adjust all colors"
@@ -9973,7 +9975,7 @@ msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:262
 msgid "Select Primary Color to Adjust"
-msgstr ""
+msgstr "ಸರಿಹೊಂದಿಸಲು ಪ್ರಾಥಮಿಕ ಬಣ್ಣವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/tools/gimphuesaturationtool.c:352
 msgid "_Overlap:"
@@ -10126,7 +10128,7 @@ msgstr ""
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:419
 msgid "Input Levels"
-msgstr ""
+msgstr "ಇನ್‌ಪುಟ್‌ ಹಂತಗಳು"
 
 #: ../app/tools/gimplevelstool.c:522
 msgid "Gamma"
@@ -10135,7 +10137,7 @@ msgstr "ಗಾಮಾ"
 #. Output levels frame
 #: ../app/tools/gimplevelstool.c:564
 msgid "Output Levels"
-msgstr ""
+msgstr "ಔಟ್‌ಪುಟ್‌ ಹಂತಗಳು"
 
 #. all channels frame
 #: ../app/tools/gimplevelstool.c:641
@@ -10144,7 +10146,7 @@ msgstr "ಎಲ್ಲಾ ಚಾನಲ್‌ಗಳು"
 
 #: ../app/tools/gimplevelstool.c:655
 msgid "Adjust levels automatically"
-msgstr ""
+msgstr "ಹಂತಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಹೊಂದಿಸು"
 
 #: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
@@ -10156,7 +10158,7 @@ msgstr ""
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
-msgstr ""
+msgstr "ವಿಂಡೋವನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಗಾತ್ರಬದಲಿಸು"
 
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:188
@@ -10182,15 +10184,15 @@ msgstr "ಮಾಹಿತಿ ವಿಂಡೊವನ್ನು ಬಳಸು"
 
 #: ../app/tools/gimpmeasuretool.c:121
 msgid "Measure"
-msgstr ""
+msgstr "ಅಳತೆ ಮಾಡು"
 
 #: ../app/tools/gimpmeasuretool.c:122
 msgid "Measure Tool: Measure distances and angles"
-msgstr ""
+msgstr "ಅಳತೆ ಮಾಡುವ ಉಪಕರಣ: ದೂರಗಳನ್ನು ಹಾಗು ಕೋನಗಳನ್ನು ಅಳತೆ ಮಾಡಿ"
 
 #: ../app/tools/gimpmeasuretool.c:123
 msgid "_Measure"
-msgstr ""
+msgstr "ಅಳತೆ ಮಾಡು(_M)"
 
 #: ../app/tools/gimpmeasuretool.c:241
 msgid "Add Guides"
@@ -10231,11 +10233,11 @@ msgstr ""
 
 #: ../app/tools/gimpmoveoptions.c:141
 msgid "Move the active layer"
-msgstr ""
+msgstr "ಸಕ್ರಿಯ ಪದರವನ್ನು ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/tools/gimpmoveoptions.c:145
 msgid "Move selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/tools/gimpmoveoptions.c:149
 msgid "Pick a path"
@@ -10247,7 +10249,7 @@ msgstr ""
 
 #: ../app/tools/gimpmoveoptions.c:179
 msgid "Move:"
-msgstr ""
+msgstr "ಸ್ಥಳಾಂತರಿಸು:"
 
 #: ../app/tools/gimpmovetool.c:127
 msgctxt "tool"
@@ -10256,7 +10258,7 @@ msgstr "ಸ್ಥಳಾಂತರಿಸು"
 
 #: ../app/tools/gimpmovetool.c:128
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr ""
+msgstr "ಸ್ಥಳಾಂತರಿಸುವ ಉಪಕರಣ: ಪದರಗಳನ್ನು, ಆಯ್ಕೆಗಳನ್ನು ಹಾಗು ಇತರೆ ವಸ್ತುಗಳನ್ನು ಸ್ಥಳಾಂತರಿಸಿ"
 
 #: ../app/tools/gimpmovetool.c:129
 msgid "_Move"
@@ -10324,7 +10326,7 @@ msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:204
 msgid "Velocity:"
-msgstr ""
+msgstr "ವೇಗ:"
 
 #: ../app/tools/gimppaintoptions-gui.c:210
 msgid "Random:"
@@ -10357,7 +10359,7 @@ msgstr "ಪ್ರಮಾಣ:"
 
 #: ../app/tools/gimppaintoptions-gui.c:631
 msgid "Use color from gradient"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್‌ನಿಂದ ಬಣ್ಣವನ್ನು ಬಳಸಿ"
 
 #: ../app/tools/gimppainttool.c:136
 msgid "Click to paint"
@@ -10443,7 +10445,7 @@ msgstr ""
 
 #: ../app/tools/gimprectangleoptions.c:112
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
+msgstr "ಆಯ್ಕೆಯನ್ನು ಸಂಕುಚಿಸುವಾಗ ಕಾಣಿಸುವ ಎಲ್ಲಾ ಪದರಗಳನ್ನು ಬಳಸು"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:729
@@ -10469,11 +10471,11 @@ msgstr "ಹೈಲೈಟ್"
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:991
 msgid "Auto Shrink"
-msgstr ""
+msgstr "ಸ್ವಯಂ ಸಂಕುಚನ"
 
 #: ../app/tools/gimprectangleoptions.c:998
 msgid "Shrink merged"
-msgstr ""
+msgstr "ವಿಲೀನಗೊಳಿಸಿದ್ದನ್ನು ಸಂಕುಚಿಸು"
 
 #: ../app/tools/gimprectangleselectoptions.c:164
 msgid "Rounded corners"
@@ -10497,7 +10499,7 @@ msgstr "ಆಯತಾಕಾರ: "
 
 #: ../app/tools/gimpregionselectoptions.c:83
 msgid "Allow completely transparent regions to be selected"
-msgstr ""
+msgstr "ಸಂಪೂರ್ಣ ಪಾರದರ್ಶಕ ಜಾಗಗಳನ್ನು ಆರಿಸುವುದನ್ನು ಅನುಮತಿಸು"
 
 #: ../app/tools/gimpregionselectoptions.c:90
 msgid "Base region_select on all visible layers"
@@ -10505,11 +10507,11 @@ msgstr ""
 
 #: ../app/tools/gimpregionselectoptions.c:202
 msgid "Select transparent areas"
-msgstr ""
+msgstr "ಪಾರದರ್ಶಕ ಜಾಗಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡು"
 
 #: ../app/tools/gimpregionselectoptions.c:227
 msgid "Select by:"
-msgstr ""
+msgstr "ಇದರ ಮೂಲಕ ಆಯ್ಕೆ ಮಾಡು:"
 
 #: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
@@ -10661,7 +10663,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:171
 msgid "Adjust letter spacing"
-msgstr ""
+msgstr "ಅಕ್ಷರಗಳ ನಡುವಿನ ಅಂತರವನ್ನು ಸರಿಹೊಂದಿಸು"
 
 #: ../app/tools/gimptextoptions.c:445
 msgid "Font:"
@@ -10727,7 +10729,7 @@ msgstr ""
 
 #: ../app/tools/gimptexttool.c:1315
 msgid "Reshape Text Layer"
-msgstr ""
+msgstr "ಪಠ್ಯ ಪದರದ ಆಕಾರವನ್ನು ಬದಲಿಸು"
 
 #: ../app/tools/gimpthresholdtool.c:91
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
@@ -10938,7 +10940,7 @@ msgstr ""
 
 #: ../app/tools/gimpvectortool.c:1246
 msgid "Click to delete this anchor"
-msgstr ""
+msgstr "ಈ ಲಂಗರನ್ನು ಅಳಿಸಲು ಕ್ಲಿಕ್‌ ಮಾಡಿ"
 
 #: ../app/tools/gimpvectortool.c:1250
 msgid "Click to connect this anchor with the selected endpoint"
@@ -10992,7 +10994,7 @@ msgstr "ಎತ್ತರ"
 
 #: ../app/tools/tools-enums.c:179
 msgid "Free select"
-msgstr ""
+msgstr "ಮುಕ್ತ ಆಯ್ಕೆ"
 
 #: ../app/tools/tools-enums.c:180
 msgid "Fixed size"
@@ -11110,7 +11112,7 @@ msgstr "ಹೆಸರು"
 
 #: ../app/widgets/gimpactionview.c:641 ../app/widgets/gimpactionview.c:846
 msgid "Changing shortcut failed."
-msgstr ""
+msgstr "ಶಾರ್ಟ್-ಕಟ್‌ ಅನ್ನು ಬದಲಿಸುವುದು ವಿಫಲಗೊಂಡಿದೆ."
 
 #: ../app/widgets/gimpactionview.c:683
 msgid "Conflicting Shortcuts"
@@ -11118,7 +11120,7 @@ msgstr ""
 
 #: ../app/widgets/gimpactionview.c:689
 msgid "_Reassign shortcut"
-msgstr ""
+msgstr "ಶಾರ್ಟ್-ಕಟ್‌ ಅನ್ನು ಮರಳಿ ನಿಯೋಜಿಸು(_R)"
 
 #: ../app/widgets/gimpactionview.c:704
 #, c-format
@@ -11128,15 +11130,15 @@ msgstr ""
 #: ../app/widgets/gimpactionview.c:708
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr ""
+msgstr "ಶಾರ್ಟ್-ಕಟ್‌ ಅನ್ನು ಮರು ನಿಯೋಜಿಸುವುದರಿಂದ ಅದು \"%s\" ಇಂದ ತೆಗೆದು ಹಾಕಲ್ಪಡುತ್ತದೆ."
 
 #: ../app/widgets/gimpactionview.c:781
 msgid "Invalid shortcut."
-msgstr ""
+msgstr "ಅಮಾನ್ಯವಾದ ಶಾರ್ಟ್-ಕಟ್‌."
 
 #: ../app/widgets/gimpactionview.c:870
 msgid "Removing shortcut failed."
-msgstr ""
+msgstr "ಶಾರ್ಟ್-ಕಟ್‌ ಅನ್ನು ತೆಗೆದು ಹಾಕುವುದು ವಿಫಲಗೊಂಡಿದೆ."
 
 #: ../app/widgets/gimpbrusheditor.c:169
 msgid "Spikes:"
@@ -11171,11 +11173,11 @@ msgstr ""
 
 #: ../app/widgets/gimpchanneltreeview.c:321
 msgid "Empty Channel"
-msgstr ""
+msgstr "ಖಾಲಿ ಚಾನಲ್‌"
 
 #: ../app/widgets/gimpcolordialog.c:150
 msgid "Add the current color to the color history"
-msgstr ""
+msgstr "ಪ್ರಸಕ್ತ ಬಣ್ಣವನ್ನು ಬಣ್ಣದ ಇತಿಹಾಸಕ್ಕೆ ಸೇರಿಸಿ"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:152
 msgid "Available Filters"
@@ -11195,7 +11197,7 @@ msgstr "ಸಕ್ರಿಯ ಫಿಲ್ಟರುಗಳು"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:319
 msgid "Reset the selected filter to default values"
-msgstr ""
+msgstr "ಆಯ್ಕೆ ಮಾಡಲಾದ ಫಿಲ್ಟರನ್ನು ಪೂರ್ವನಿಯೋಜಿತ ಮೌಲ್ಯಗಳಿಗೆ ಬದಲಿಸು"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:493
 #, c-format
@@ -11205,7 +11207,7 @@ msgstr "'%s' ಅನ್ನು ಸಕ್ರಿಯ ಫಿಲ್ಟರುಗಳ ಪ�
 #: ../app/widgets/gimpcolordisplayeditor.c:530
 #, c-format
 msgid "Remove '%s' from the list of active filters"
-msgstr ""
+msgstr "'%s' ಅನ್ನು ಸಕ್ರಿಯ ಫಿಲ್ಟರುಗಳ ಪಟ್ಟಿಯಿಂದ ತೆಗೆದು ಹಾಕು"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:561
 msgid "No filter selected"
@@ -11307,7 +11309,7 @@ msgstr ""
 
 #: ../app/widgets/gimpcontrollereditor.c:207
 msgid "_Enable this controller"
-msgstr ""
+msgstr "ಈ ನಿಯಂತ್ರಕವನ್ನು ಶಕ್ತಗೊಳಿಸು(_E)"
 
 #: ../app/widgets/gimpcontrollereditor.c:228
 msgid "Name:"
@@ -11576,7 +11578,7 @@ msgstr "ಹಿನ್ನಲೆ: %d, %d, %d"
 
 #: ../app/widgets/gimpdnd-xds.c:190
 msgid "The given filename does not have any known file extension."
-msgstr ""
+msgstr "ಒದಗಿಸಲಾದ ಕಡತದ ಹೆಸರು ತಿಳಿದಿರುವ ಯಾವುದೆ ವಿಸ್ತರಣೆಯನ್ನು ಹೊಂದಿಲ್ಲ."
 
 #: ../app/widgets/gimpdnd-xds.c:208
 msgid "File Exists"
@@ -12237,7 +12239,7 @@ msgstr "ವಿನ್ಯಾಸ ಆಯ್ಕೆಯ ಸಂವಾದವನ್ನು 
 
 #: ../app/widgets/gimpviewablebox.c:204
 msgid "Open the gradient selection dialog"
-msgstr ""
+msgstr "ಗ್ರೇಡಿಯಂಟ್ ಆಯ್ಕೆಯ ಸಂವಾದವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../app/widgets/gimpviewablebox.c:224
 msgid "Reverse"
