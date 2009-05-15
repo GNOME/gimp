@@ -42,8 +42,8 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 # required versions of other packages
 m4_define([babl_required_version], [0.0.23])
 m4_define([gegl_required_version], [0.0.22])
-m4_define([glib_required_version], [2.18.0])
-m4_define([gtk_required_version], [2.14.4])
+m4_define([glib_required_version], [2.20.0])
+m4_define([gtk_required_version], [2.16.1])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([cairo_required_version], [1.6.0])
 m4_define([pangocairo_required_version], [1.20.1])
@@ -462,11 +462,11 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.21.0 or newer])
-if $PKG_CONFIG --atleast-version=2.21.0 glib-2.0; then
-  have_glib_2_21=yes
+AC_MSG_CHECKING([if GLib is version 2.23.0 or newer])
+if $PKG_CONFIG --atleast-version=2.23.0 glib-2.0; then
+  have_glib_2_23=yes
 else
-  have_glib_2_21=no
+  have_glib_2_23=no
 fi
 AC_MSG_RESULT($have_glib_2_21)
 
@@ -487,11 +487,11 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.15.0 or newer])
-if $PKG_CONFIG --atleast-version=2.15.0 gtk+-2.0; then
-  have_gtk_2_15=yes
+AC_MSG_CHECKING([if GTK+ is version 2.19.0 or newer])
+if $PKG_CONFIG --atleast-version=2.19.0 gtk+-2.0; then
+  have_gtk_2_19=yes
 else
-  have_gtk_2_15=no
+  have_gtk_2_19=no
 fi
 AC_MSG_RESULT($have_gtk_2_15)
 
@@ -1813,11 +1813,11 @@ AC_SUBST(MIME_TYPES)
 
 CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED"
 
-if test "x$have_glib_2_21" != "xyes"; then
+if test "x$have_glib_2_23" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gtk_2_15" != "xyes"; then
+if test "x$have_gtk_2_19" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
