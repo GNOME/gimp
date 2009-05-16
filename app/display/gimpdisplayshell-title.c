@@ -441,20 +441,22 @@ gimp_display_shell_format_filename (gchar       *buf,
                                     GimpImage   *image,
                                     const gchar *filename)
 {
-  gint         incr   = 0;
   const gchar *source = g_object_get_data (G_OBJECT (image),
                                            GIMP_FILE_IMPORT_SOURCE_URI_KEY);
-  if (! source)
-    {
-      incr = print (buf, len, start, "%s", filename);
-    }
-  else
+  if (source)
     {
       gchar *source_basename = file_utils_uri_display_basename (source);
+      gint   incr;
+
       incr = print (buf, len, start,
-                    "%s (%s %s)", filename,  _("imported from"), source_basename);
+                    /*  image name and source as shown in the title of
+                        the image window */
+                    _("%s (imported from %s)"), filename, source_basename);
+
       g_free (source_basename);
+
+      return incr;
     }
 
-  return incr;
+  return print (buf, len, start, "%s", filename);
 }
