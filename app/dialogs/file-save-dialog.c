@@ -57,26 +57,26 @@
 /*  local function prototypes  */
 
 static GtkFileChooserConfirmation
-                 file_save_dialog_confirm_overwrite (GtkWidget            *save_dialog,
-                                                     Gimp                 *gimp);
-static void      file_save_dialog_response          (GtkWidget            *save_dialog,
-                                                     gint                  response_id,
-                                                     Gimp                 *gimp);
-static gboolean  file_save_dialog_check_uri         (GtkWidget            *save_dialog,
-                                                     Gimp                 *gimp,
-                                                     gchar               **ret_uri,
-                                                     gchar               **ret_basename,
-                                                     GimpPlugInProcedure **ret_save_proc);
-static gboolean  file_save_dialog_uri_will_change   (GimpFileDialog       *dialog,
-                                                     Gimp                 *gimp);
-static gchar *   file_save_dialog_get_uri           (GimpFileDialog       *dialog);
-static GSList *  file_save_dialog_get_procs         (GimpFileDialog       *dialog,
-                                                     Gimp                 *gimp);
-static void      file_save_dialog_unknown_ext_msg   (GimpFileDialog       *dialog,
-                                                     Gimp                 *gimp,
-                                                     const gchar          *basename);
-static gboolean  file_save_dialog_use_extension     (GtkWidget            *save_dialog,
-                                                     const gchar          *uri);
+                 file_save_dialog_confirm_overwrite         (GtkWidget            *save_dialog,
+                                                             Gimp                 *gimp);
+static void      file_save_dialog_response                  (GtkWidget            *save_dialog,
+                                                             gint                  response_id,
+                                                             Gimp                 *gimp);
+static gboolean  file_save_dialog_check_uri                 (GtkWidget            *save_dialog,
+                                                             Gimp                 *gimp,
+                                                             gchar               **ret_uri,
+                                                             gchar               **ret_basename,
+                                                             GimpPlugInProcedure **ret_save_proc);
+static gboolean  file_save_dialog_no_overwrite_confirmation (GimpFileDialog       *dialog,
+                                                             Gimp                 *gimp);
+static gchar *   file_save_dialog_get_uri                   (GimpFileDialog       *dialog);
+static GSList *  file_save_dialog_get_procs                 (GimpFileDialog       *dialog,
+                                                             Gimp                 *gimp);
+static void      file_save_dialog_unknown_ext_msg           (GimpFileDialog       *dialog,
+                                                             Gimp                 *gimp,
+                                                             const gchar          *basename);
+static gboolean  file_save_dialog_use_extension             (GtkWidget            *save_dialog,
+                                                             const gchar          *uri);
 
 
 /*  public functions  */
@@ -134,7 +134,7 @@ file_save_dialog_confirm_overwrite (GtkWidget *save_dialog,
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
 
-  if (file_save_dialog_uri_will_change (dialog, gimp))
+  if (file_save_dialog_no_overwrite_confirmation (dialog, gimp))
     /* The URI will not be accepted whatever happens, so don't
      * bother asking the user about overwriting files
      */
@@ -271,7 +271,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
 /*
  * IMPORTANT: When changing this function, keep
- * file_save_dialog_uri_will_change() up to date. It is difficult to
+ * file_save_dialog_no_overwrite_confirmation() up to date. It is difficult to
  * move logic to a common place due to how the dialog is implemented
  * in GTK+ in combination with how we use it.
  */
@@ -508,13 +508,15 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
  * IMPORTANT: Keep this up to date with file_save_dialog_check_uri().
  */
 static gboolean
-file_save_dialog_uri_will_change (GimpFileDialog *dialog,
-                                  Gimp           *gimp)
+file_save_dialog_no_overwrite_confirmation (GimpFileDialog *dialog,
+                                            Gimp           *gimp)
 {
-  gboolean             will_change   = FALSE;
-  gchar               *uri           = NULL;
-  gchar               *basename      = NULL;
-  GimpPlugInProcedure *basename_proc = NULL;
+  gboolean             uri_will_change = FALSE;
+  gboolean             unknown_ext     = FALSE;
+  gchar               *uri             = NULL;
+  gchar               *basename        = NULL;
+  GimpPlugInProcedure *basename_proc   = NULL;
+  GimpPlugInProcedure *save_proc       = NULL;
 
   uri = file_save_dialog_get_uri (dialog);
 
@@ -522,17 +524,21 @@ file_save_dialog_uri_will_change (GimpFileDialog *dialog,
     return FALSE;
 
   basename      = file_utils_uri_display_basename (uri);
-  basename_proc = file_procedure_find (gimp->plug_in_manager->save_procs,
+  save_proc     = dialog->file_proc;
+  basename_proc = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
                                        basename, NULL);
 
-  will_change = (! basename_proc &&
-                 ! strchr (basename, '.') &&
-                 (! dialog->file_proc || dialog->file_proc->extensions_list));
+  uri_will_change = (! basename_proc &&
+                     ! strchr (basename, '.') &&
+                     (! save_proc || save_proc->extensions_list));
+
+  unknown_ext     = (! save_proc &&
+                     ! basename_proc);
 
   g_free (basename);
   g_free (uri);
 
-  return will_change;
+  return uri_will_change || unknown_ext;
 }
 
 static gchar *
