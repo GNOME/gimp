@@ -28,6 +28,7 @@ GimpPDBStatusType   file_save (Gimp                 *gimp,
                                GimpPlugInProcedure  *file_proc,
                                GimpRunMode           run_mode,
                                gboolean              change_saved_state,
+                               gboolean              export,
                                GError              **error);
 
 

@@ -120,7 +120,8 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   gint                 length;
   guchar              *data;
   gchar               *uri;
-  GError              *error = NULL;
+  gboolean             export = FALSE;
+  GError              *error  = NULL;
 
   g_return_if_fail (GDK_IS_DRAG_CONTEXT (context));
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -142,8 +143,12 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   proc = file_procedure_find (image->gimp->plug_in_manager->save_procs, uri,
                               NULL);
   if (! proc)
-    proc = file_procedure_find (image->gimp->plug_in_manager->export_procs, uri,
-                                NULL);
+    {
+      proc = file_procedure_find (image->gimp->plug_in_manager->export_procs, uri,
+                                  NULL);
+
+      export = TRUE;
+    }
 
   if (proc)
     {
@@ -157,7 +162,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
         {
           if (file_save (image->gimp,
                          image, NULL,
-                         uri, proc, GIMP_RUN_INTERACTIVE, TRUE,
+                         uri, proc, GIMP_RUN_INTERACTIVE, TRUE, export,
                          &error) == GIMP_PDB_SUCCESS)
             {
               gtk_selection_data_set (selection,

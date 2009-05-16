@@ -74,6 +74,7 @@ file_save (Gimp                *gimp,
            GimpPlugInProcedure *file_proc,
            GimpRunMode          run_mode,
            gboolean             change_saved_state,
+           gboolean             export,
            GError             **error)
 {
   GimpDrawable      *drawable;
@@ -162,7 +163,10 @@ file_save (Gimp                *gimp,
           gimp_image_clean_all (image);
         }
 
-      gimp_image_saved (image, uri);
+      if (! export)
+        gimp_image_saved (image, uri);
+      else
+        gimp_image_exported (image, uri);
 
       documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
       imagefile = gimp_document_list_add_uri (documents,

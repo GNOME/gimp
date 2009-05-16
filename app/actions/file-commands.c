@@ -251,7 +251,7 @@ file_save_cmd_callback (GtkAction *action,
                                                    gimp, image, uri,
                                                    save_proc,
                                                    GIMP_RUN_WITH_LAST_VALS,
-                                                   TRUE, TRUE);
+                                                   TRUE, FALSE, TRUE);
               break;
             }
 
@@ -302,7 +302,7 @@ file_save_cmd_callback (GtkAction *action,
                                                  gimp, image, uri,
                                                  export_proc,
                                                  GIMP_RUN_WITH_LAST_VALS,
-                                                 FALSE, TRUE);
+                                                 FALSE, TRUE, TRUE);
           }
       }
       break;

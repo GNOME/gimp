@@ -190,6 +190,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        save_proc,
                                        GIMP_RUN_INTERACTIVE,
                                        ! dialog->save_a_copy && ! dialog->export,
+                                       dialog->export,
                                        FALSE))
         {
           /* Save was successful, now store the URI in a couple of
@@ -648,6 +649,7 @@ file_save_dialog_save_image (GimpProgress        *progress,
                              GimpPlugInProcedure *save_proc,
                              GimpRunMode          run_mode,
                              gboolean             change_saved_state,
+                             gboolean             export,
                              gboolean             verbose_cancel)
 {
   GimpPDBStatusType  status;
@@ -663,7 +665,7 @@ file_save_dialog_save_image (GimpProgress        *progress,
     }
 
   status = file_save (gimp, image, progress, uri,
-                      save_proc, run_mode, change_saved_state, &error);
+                      save_proc, run_mode, change_saved_state, export, &error);
 
   switch (status)
     {
