@@ -140,7 +140,7 @@ static const GimpEnumActionEntry file_save_actions[] =
 
   { "file-export", NULL,
     NC_("file-action", "Export..."), "<control>E",
-    NC_("file-action", "Export the image to various file formats such as .png or .jpg"),
+    NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
     GIMP_SAVE_MODE_EXPORT, FALSE,
     GIMP_HELP_FILE_EXPORT },
 
@@ -249,8 +249,8 @@ file_actions_update (GimpActionGroup *group,
     drawable = gimp_image_get_active_drawable (image);
 
   export_to = (image ?
-               g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY) :
-               NULL);
+               g_object_get_data (G_OBJECT (image),
+                                  GIMP_FILE_EXPORT_TO_URI_KEY) : NULL);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
@@ -273,11 +273,12 @@ file_actions_update (GimpActionGroup *group,
     }
   else
     {
-      gimp_action_group_set_action_label (group, "file-export-to", _("Export to"));
+      gimp_action_group_set_action_label (group,
+                                          "file-export-to", _("Export to"));
     }
 
   /*  needed for the empty display  */
-  SET_SENSITIVE ("file-close-all",        image);
+  SET_SENSITIVE ("file-close-all",       image);
 
 #undef SET_SENSITIVE
 }
