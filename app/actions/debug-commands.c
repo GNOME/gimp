@@ -19,6 +19,7 @@
 
 #include <string.h>
 
+#include <glib/gprintf.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -189,11 +190,13 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
   GimpDisplayShell *shell       = NULL;
   GtkAccelGroup    *accel_group = NULL;
   GList            *group_it    = NULL;
+  GList            *strings     = NULL;
   return_if_no_display (display, data);
 
   shell       = GIMP_DISPLAY_SHELL (display->shell);
   accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager));
 
+  /* Gather formated strings of keyboard shortcuts */
   for (group_it = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (shell->menubar_manager));
        group_it;
        group_it = g_list_next (group_it))
@@ -227,16 +230,20 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
                   key->accel_key &&
                   key->accel_flags & GTK_ACCEL_VISIBLE)
                 {
-                  gchar   *label_tmp  = NULL;
-                  gchar   *label      = NULL;
-                  gchar   *key_string = NULL;
+                  gchar *label_tmp       = NULL;
+                  gchar *label           = NULL;
+                  gchar *key_string      = NULL;
+                  gchar *formated_string = NULL;
 
                   g_object_get (action, "label", &label_tmp, NULL);
-                  label = gimp_strip_uline (label_tmp);
-                  key_string = gtk_accelerator_get_label (key->accel_key,
-                                                          key->accel_mods);
+                  label           = gimp_strip_uline (label_tmp);
+                  key_string      = gtk_accelerator_get_label (key->accel_key,
+                                                               key->accel_mods);
+                  formated_string = g_new0 (gchar, 20 + 1 + strlen (label) + 1 + 1);
 
-                  g_print ("%-20s %s\n", key_string, label);
+                  g_sprintf (formated_string, "%-20s %s\n", key_string, label);
+
+                  strings = g_list_prepend (strings, formated_string);
 
                   g_free (key_string);
                   g_free (label);
@@ -247,6 +254,21 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
 
       g_list_free (actions);
     }
+
+  /* Sort and prints the strings */
+  {
+    GList *string_it = NULL;
+
+    strings = g_list_sort (strings, (GCompareFunc) strcmp);
+
+    for (string_it = strings; string_it; string_it = g_list_next (string_it))
+      {
+        g_print ("%s", (gchar*) string_it->data);
+        g_free (string_it->data);
+      }
+
+    g_list_free (strings);
+  }
 }
 
 void
