@@ -28,6 +28,8 @@
 
 #include "file/file-utils.h"
 
+#include "widgets/gimpuimanager.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
 #include "gimpdisplayshell.h"
@@ -170,6 +172,18 @@ gimp_display_saved_handler (GimpImage   *image,
   g_free (filename);
 }
 
+static gboolean
+gimp_display_update_ui_manager_idle (GimpDisplay *display)
+{
+  if (! display || ! display->shell)
+    return FALSE;
+
+  /* Update the File/Export to label */
+  gimp_ui_manager_update (GIMP_DISPLAY_SHELL (display->shell)->menubar_manager, display);
+
+  return FALSE;
+}
+
 static void
 gimp_display_exported_handler (GimpImage   *image,
                                const gchar *uri,
@@ -181,5 +195,8 @@ gimp_display_exported_handler (GimpImage   *image,
   gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
                             GTK_STOCK_SAVE, _("Image exported to '%s'"), filename);
   g_free (filename);
+
+  /* Schedule updating of the 'Export to' label */
+  g_idle_add ((GSourceFunc) gimp_display_update_ui_manager_idle, display);
 }
 
