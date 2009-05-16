@@ -78,7 +78,12 @@ static void     file_save_dialog_show        (Gimp                *gimp,
                                               const gchar         *title,
                                               gboolean             save_a_copy,
                                               gboolean             close_after_saving);
+static void     file_export_dialog_show      (Gimp                *gimp,
+                                              GimpImage           *image,
+                                              GtkWidget           *parent);
 static void     file_save_dialog_destroyed   (GtkWidget           *dialog,
+                                              GimpImage           *image);
+static void     file_export_dialog_destroyed (GtkWidget           *dialog,
                                               GimpImage           *image);
 static void     file_new_template_callback   (GtkWidget           *widget,
                                               const gchar         *name,
@@ -246,7 +251,7 @@ file_save_cmd_callback (GtkAction *action,
                                                    gimp, image, uri,
                                                    save_proc,
                                                    GIMP_RUN_WITH_LAST_VALS,
-                                                   TRUE, TRUE);
+                                                   TRUE, FALSE, TRUE);
               break;
             }
 
@@ -272,6 +277,35 @@ file_save_cmd_callback (GtkAction *action,
                              _("Save a Copy of the Image"), TRUE,
                              FALSE);
       break;
+
+    case GIMP_SAVE_MODE_EXPORT:
+      file_export_dialog_show (gimp, display->image, widget);
+      break;
+
+    case GIMP_SAVE_MODE_EXPORT_TO:
+      {
+        const gchar         *uri;
+        GimpPlugInProcedure *export_proc;
+
+        uri = g_object_get_data (G_OBJECT (image),
+                                       GIMP_FILE_EXPORT_TO_URI_KEY);
+        if (uri)
+          {
+            export_proc =
+              file_procedure_find (image->gimp->plug_in_manager->export_procs,
+                                   uri, NULL);
+          }
+
+        if (uri && export_proc)
+          {
+            saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
+                                                 gimp, image, uri,
+                                                 export_proc,
+                                                 GIMP_RUN_WITH_LAST_VALS,
+                                                 FALSE, TRUE, TRUE);
+          }
+      }
+      break;
     }
 
   if (save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE &&
@@ -282,8 +316,8 @@ file_save_cmd_callback (GtkAction *action,
 }
 
 void
-file_save_template_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+file_create_template_cmd_callback (GtkAction *action,
+                                   gpointer   data)
 {
   GimpDisplay *display;
   GtkWidget   *dialog;
@@ -292,7 +326,7 @@ file_save_template_cmd_callback (GtkAction *action,
   dialog = gimp_query_string_box (_("Create New Template"),
                                   display->shell,
                                   gimp_standard_help_func,
-                                  GIMP_HELP_FILE_SAVE_AS_TEMPLATE,
+                                  GIMP_HELP_FILE_CREATE_TEMPLATE,
                                   _("Enter a name for this template"),
                                   NULL,
                                   G_OBJECT (display->image), "disconnect",
@@ -307,16 +341,24 @@ file_revert_cmd_callback (GtkAction *action,
   GimpDisplay *display;
   GimpImage   *image;
   GtkWidget   *dialog;
-  const gchar *uri;
+  const gchar *uri    = NULL;
+  const gchar *source = NULL;
   return_if_no_display (display, data);
 
   image = display->image;
 
   uri = gimp_object_get_name (GIMP_OBJECT (image));
 
+  if (! uri)
+    {
+      uri    = g_object_get_data (G_OBJECT (image),
+                                  GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+      source = uri;
+    }
+
   dialog = g_object_get_data (G_OBJECT (image), REVERT_DATA_KEY);
 
-  if (! uri)
+  if (! uri && ! source)
     {
       gimp_message_literal (image->gimp,
 			    G_OBJECT (display), GIMP_MESSAGE_ERROR,
@@ -355,7 +397,11 @@ file_revert_cmd_callback (GtkAction *action,
                         G_CALLBACK (file_revert_confirm_response),
                         display);
 
-      basename = file_utils_uri_display_basename (uri);
+      if (! source)
+        basename = file_utils_uri_display_basename (uri);
+      else
+        basename = g_strdup (gimp_image_get_uri (image));
+
       filename = file_utils_uri_display_name (uri);
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
@@ -496,7 +542,7 @@ file_save_dialog_show (Gimp        *gimp,
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
       gimp_file_dialog_set_save_image (GIMP_FILE_DIALOG (dialog),
-                                       gimp, image, save_a_copy,
+                                       gimp, image, save_a_copy, FALSE,
                                        close_after_saving);
 
       gtk_window_present (GTK_WINDOW (dialog));
@@ -509,6 +555,57 @@ file_save_dialog_destroyed (GtkWidget *dialog,
 {
   if (GIMP_FILE_DIALOG (dialog)->image == image)
     g_object_set_data (G_OBJECT (image), "gimp-file-save-dialog", NULL);
+}
+
+static void
+file_export_dialog_show (Gimp      *gimp,
+                         GimpImage *image,
+                         GtkWidget *parent)
+{
+  GtkWidget *dialog;
+
+  dialog = g_object_get_data (G_OBJECT (image), "gimp-file-export-dialog");
+
+  if (! dialog)
+    {
+      dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                               gtk_widget_get_screen (parent),
+                                               "gimp-file-export-dialog",
+                                               -1, FALSE);
+
+      if (dialog)
+        {
+          gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                        GTK_WINDOW (parent));
+
+          g_object_set_data_full (G_OBJECT (image),
+                                  "gimp-file-export-dialog", dialog,
+                                  (GDestroyNotify) gtk_widget_destroy);
+          g_signal_connect (dialog, "destroy",
+                            G_CALLBACK (file_export_dialog_destroyed),
+                            image);
+        }
+    }
+
+  if (dialog)
+    {
+      gimp_file_dialog_set_save_image (GIMP_FILE_DIALOG (dialog),
+                                       gimp,
+                                       image,
+                                       FALSE,
+                                       TRUE,
+                                       FALSE);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
+}
+
+static void
+file_export_dialog_destroyed (GtkWidget *dialog,
+                              GimpImage *image)
+{
+  if (GIMP_FILE_DIALOG (dialog)->image == image)
+    g_object_set_data (G_OBJECT (image), "gimp-file-export-dialog", NULL);
 }
 
 static void
@@ -550,6 +647,10 @@ file_revert_confirm_response (GtkWidget   *dialog,
       GError            *error = NULL;
 
       uri = gimp_object_get_name (GIMP_OBJECT (old_image));
+
+      if (! uri)
+        uri = g_object_get_data (G_OBJECT (old_image),
+                                 GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       new_image = file_open_image (gimp, gimp_get_user_context (gimp),
                                    GIMP_PROGRESS (display),

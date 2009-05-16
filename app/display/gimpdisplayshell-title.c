@@ -36,6 +36,7 @@
 #include "core/gimpunit.h"
 
 #include "file/file-utils.h"
+#include "file/gimp-file.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -55,6 +56,11 @@ static gint     gimp_display_shell_format_title      (GimpDisplayShell *display,
                                                       gchar            *title,
                                                       gint              title_len,
                                                       const gchar      *format);
+static gint     gimp_display_shell_format_filename   (gchar            *buf,
+                                                      gint              len,
+                                                      gint              start,
+                                                      GimpImage        *image,
+                                                      const gchar      *filename);
 
 
 /*  public functions  */
@@ -202,7 +208,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               {
                 const gchar *name = gimp_image_get_display_name (image);
 
-                i += print (title, title_len, i, "%s", name);
+                i += gimp_display_shell_format_filename (title, title_len, i, image, name);
               }
               break;
 
@@ -213,7 +219,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
                 filename = file_utils_uri_display_name (uri);
 
-                i += print (title, title_len, i, "%s", filename);
+                i += gimp_display_shell_format_filename (title, title_len, i, image, filename);
 
                 g_free (filename);
               }
@@ -426,4 +432,29 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   title[MIN (i, title_len - 1)] = '\0';
 
   return i;
+}
+
+static gint
+gimp_display_shell_format_filename (gchar       *buf,
+                                    gint         len,
+                                    gint         start,
+                                    GimpImage   *image,
+                                    const gchar *filename)
+{
+  gint         incr   = 0;
+  const gchar *source = g_object_get_data (G_OBJECT (image),
+                                           GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+  if (! source)
+    {
+      incr = print (buf, len, start, "%s", filename);
+    }
+  else
+    {
+      gchar *source_basename = file_utils_uri_display_basename (source);
+      incr = print (buf, len, start,
+                    "%s (%s %s)", filename,  _("imported from"), source_basename);
+      g_free (source_basename);
+    }
+
+  return incr;
 }

@@ -96,6 +96,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
             dialogs_file_open_location_new, FALSE, TRUE, FALSE),
   TOPLEVEL ("gimp-file-save-dialog",
             dialogs_file_save_new,          FALSE, TRUE, TRUE),
+  TOPLEVEL ("gimp-file-export-dialog",
+            dialogs_file_export_new,        FALSE, TRUE, TRUE),
 
   /*  singleton toplevels  */
   TOPLEVEL ("gimp-preferences-dialog",

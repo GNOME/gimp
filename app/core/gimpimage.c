@@ -97,6 +97,7 @@ enum
   CLEAN,
   DIRTY,
   SAVED,
+  EXPORTED,
   UPDATE_GUIDE,
   UPDATE_SAMPLE_POINT,
   SAMPLE_POINT_ADDED,
@@ -386,6 +387,16 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
+  gimp_image_signals[EXPORTED] =
+    g_signal_new ("exported",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, exported),
+                  NULL, NULL,
+                  gimp_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
   gimp_image_signals[UPDATE_GUIDE] =
     g_signal_new ("update-guide",
                   G_TYPE_FROM_CLASS (klass),
@@ -504,6 +515,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
   klass->saved                        = NULL;
+  klass->exported                     = NULL;
   klass->update_guide                 = NULL;
   klass->update_sample_point          = NULL;
   klass->sample_point_added           = NULL;
@@ -2069,6 +2081,24 @@ gimp_image_saved (GimpImage   *image,
   g_return_if_fail (uri != NULL);
 
   g_signal_emit (image, gimp_image_signals[SAVED], 0, uri);
+}
+
+/**
+ * gimp_image_exported:
+ * @image:
+ * @uri:
+ *
+ * Emits the "exported" signal, indicating that @image was exported to the
+ * location specified by @uri.
+ */
+void
+gimp_image_exported (GimpImage   *image,
+                     const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (uri != NULL);
+
+  g_signal_emit (image, gimp_image_signals[EXPORTED], 0, uri);
 }
 
 /*  flush this image's displays  */

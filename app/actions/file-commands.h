@@ -32,7 +32,7 @@ void   file_open_recent_cmd_callback     (GtkAction   *action,
 void   file_save_cmd_callback            (GtkAction   *action,
                                           gint         value,
                                           gpointer     data);
-void   file_save_template_cmd_callback   (GtkAction   *action,
+void   file_create_template_cmd_callback (GtkAction   *action,
                                           gpointer     data);
 
 void   file_revert_cmd_callback          (GtkAction   *action,

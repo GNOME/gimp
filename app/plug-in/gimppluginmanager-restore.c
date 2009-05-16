@@ -177,12 +177,15 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
       gimp_plug_in_manager_add_to_db (manager, context, list->data);
     }
 
-  /* sort the load and save procedures  */
+  /* sort the load, save and export procedures  */
   manager->load_procs =
     g_slist_sort_with_data (manager->load_procs,
                             gimp_plug_in_manager_file_proc_compare, manager);
   manager->save_procs =
     g_slist_sort_with_data (manager->save_procs,
+                            gimp_plug_in_manager_file_proc_compare, manager);
+  manager->export_procs =
+    g_slist_sort_with_data (manager->export_procs,
                             gimp_plug_in_manager_file_proc_compare, manager);
 
   gimp_plug_in_manager_run_extensions (manager, context, status_callback);

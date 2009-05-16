@@ -33,6 +33,8 @@ gchar     * file_utils_any_to_uri           (Gimp          *gimp,
                                              const gchar   *filename_or_uri,
                                              GError       **error);
 gchar     * file_utils_filename_from_uri    (const gchar   *uri);
+gchar     * file_utils_uri_with_new_ext     (const gchar   *uri,
+                                             const gchar   *uri_with_ext);
 
 gchar     * file_utils_uri_to_utf8_filename (const gchar   *uri);
 

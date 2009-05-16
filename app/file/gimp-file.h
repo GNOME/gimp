@@ -21,10 +21,17 @@
 #ifndef __GIMP_FILE_H__
 #define __GIMP_FILE_H__
 
+/* Data keys for Gimp */
+#define GIMP_FILE_OPEN_LAST_URI_KEY     "gimp-file-open-last-uri"
+#define GIMP_FILE_SAVE_LAST_URI_KEY     "gimp-file-save-last-uri"
+#define GIMP_FILE_EXPORT_LAST_URI_KEY   "gimp-file-export-last-uri"
 
-#define GIMP_FILE_SAVE_LAST_URI_KEY   "gimp-file-save-last-uri"
-#define GIMP_FILE_OPEN_LAST_URI_KEY   "gimp-file-open-last-uri"
-#define GIMP_FILE_SAVE_A_COPY_URI_KEY "gimp-file-save-a-copy-uri"
+/* Data keys for GimpImage */
+#define GIMP_FILE_EXPORT_URI_KEY        "gimp-file-export-uri"
+#define GIMP_FILE_SAVE_A_COPY_URI_KEY   "gimp-file-save-a-copy-uri"
+#define GIMP_FILE_EXPORT_TO_URI_KEY     "gimp-file-export-to-uri"
+#define GIMP_FILE_IMPORT_SOURCE_URI_KEY "gimp-file-import-source-uri"
+
 
 
 #endif /* __GIMP_FILE_H__ */

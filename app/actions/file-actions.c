@@ -33,6 +33,7 @@
 #include "core/gimpviewable.h"
 
 #include "file/file-utils.h"
+#include "file/gimp-file.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
@@ -85,11 +86,11 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_open_location_cmd_callback),
     GIMP_HELP_FILE_OPEN_LOCATION },
 
-  { "file-save-as-template", NULL,
-    NC_("file-action", "Save as _Template..."), NULL,
+  { "file-create-template", NULL,
+    NC_("file-action", "Create _Template..."), NULL,
     NC_("file-action", "Create a new template from this image"),
-    G_CALLBACK (file_save_template_cmd_callback),
-    GIMP_HELP_FILE_SAVE_AS_TEMPLATE },
+    G_CALLBACK (file_create_template_cmd_callback),
+    GIMP_HELP_FILE_CREATE_TEMPLATE },
 
   { "file-revert", GTK_STOCK_REVERT_TO_SAVED,
     NC_("file-action", "Re_vert"), NULL,
@@ -135,7 +136,19 @@ static const GimpEnumActionEntry file_save_actions[] =
     NC_("file-action", "Save and Close..."), NULL,
     NC_("file-action", "Save this image and close its window"),
     GIMP_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
-    GIMP_HELP_FILE_SAVE }
+    GIMP_HELP_FILE_SAVE },
+
+  { "file-export", NULL,
+    NC_("file-action", "Export..."), NULL,
+    NC_("file-action", "Export the image to various file formats such as .png or .jpg"),
+    GIMP_SAVE_MODE_EXPORT, FALSE,
+    GIMP_HELP_FILE_EXPORT },
+
+  { "file-export-to", NULL,
+    NC_("file-action", "Export to"), NULL,
+    NC_("file-action", "Export the image back to the import source in the import format"),
+    GIMP_SAVE_MODE_EXPORT_TO, FALSE,
+    GIMP_HELP_FILE_EXPORT_TO }
 };
 
 void
@@ -227,20 +240,41 @@ void
 file_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *image    = action_data_get_image (data);
-  GimpDrawable *drawable = NULL;
+  GimpImage    *image     = action_data_get_image (data);
+  GimpDrawable *drawable  = NULL;
+  const gchar  *export_to = NULL;
+  gchar        *label     = NULL;
 
   if (image)
     drawable = gimp_image_get_active_drawable (image);
 
+  export_to = (image ?
+               g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY) :
+               NULL);
+
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("file-save",             image && drawable);
-  SET_SENSITIVE ("file-save-as",          image && drawable);
-  SET_SENSITIVE ("file-save-a-copy",      image && drawable);
-  SET_SENSITIVE ("file-save-as-template", image);
-  SET_SENSITIVE ("file-revert",           image && GIMP_OBJECT (image)->name);
+  SET_SENSITIVE ("file-save",            image && drawable);
+  SET_SENSITIVE ("file-save-as",         image && drawable);
+  SET_SENSITIVE ("file-save-a-copy",     image && drawable);
+  SET_SENSITIVE ("file-revert",          image && (GIMP_OBJECT (image)->name || export_to));
+  SET_SENSITIVE ("file-export",          image && drawable);
+  SET_SENSITIVE ("file-export-to",       export_to);
+  SET_SENSITIVE ("file-create-template", image);
+
+  if (export_to)
+    {
+      /*  Update file-export-to label */
+      label = g_strdup_printf (_("Export to %s"),
+                               file_utils_uri_display_basename (export_to));
+      gimp_action_group_set_action_label (group, "file-export-to", label);
+      g_free(label);
+    }
+  else
+    {
+      gimp_action_group_set_action_label (group, "file-export-to", _("Export to"));
+    }
 
   /*  needed for the empty display  */
   SET_SENSITIVE ("file-close-all",        image);

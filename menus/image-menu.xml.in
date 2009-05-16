@@ -40,9 +40,14 @@
 	<menuitem action="file-save" />
 	<menuitem action="file-save-as" />
 	<menuitem action="file-save-a-copy" />
-	<menuitem action="file-save-as-template" />
       </placeholder>
       <menuitem action="file-revert" />
+      <separator />
+      <placeholder name="Export">
+	<menuitem action="file-export" />
+	<menuitem action="file-export-to" />
+      </placeholder>
+      <menuitem action="file-create-template" />
       <separator />
       <placeholder name="Send" />
       <separator />

@@ -205,6 +205,8 @@ struct _GimpImageClass
                                          GimpDirtyMask         dirty_mask);
   void (* saved)                        (GimpImage            *image,
                                          const gchar          *uri);
+  void (* exported)                     (GimpImage            *image,
+                                         const gchar          *uri);
 
   void (* update_guide)                 (GimpImage            *image,
                                          GimpGuide            *guide);
@@ -259,6 +261,8 @@ void            gimp_image_set_save_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
 GimpPlugInProcedure * gimp_image_get_save_proc   (const GimpImage    *image);
 void            gimp_image_saved                 (GimpImage          *image,
+                                                  const gchar        *uri);
+void            gimp_image_exported              (GimpImage          *image,
                                                   const gchar        *uri);
 
 void            gimp_image_set_resolution        (GimpImage          *image,

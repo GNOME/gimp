@@ -43,6 +43,7 @@ struct _GimpFileDialog
   GimpImage            *image;
   gboolean              open_as_layers;
   gboolean              save_a_copy;
+  gboolean              export;
   gboolean              close_after_saving;
 
   GtkWidget            *thumb_box;
@@ -66,7 +67,7 @@ typedef struct _GimpFileDialogState GimpFileDialogState;
 GType       gimp_file_dialog_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_file_dialog_new            (Gimp                 *gimp,
-                                             GtkFileChooserAction  action,
+                                             GimpFileChooserAction action,
                                              const gchar          *title,
                                              const gchar          *role,
                                              const gchar          *stock_id,
@@ -85,6 +86,7 @@ void        gimp_file_dialog_set_save_image (GimpFileDialog       *dialog,
                                              Gimp                 *gimp,
                                              GimpImage            *image,
                                              gboolean              save_a_copy,
+                                             gboolean              export,
                                              gboolean              close_after_saving);
 
 GimpFileDialogState * gimp_file_dialog_get_state     (GimpFileDialog      *dialog);

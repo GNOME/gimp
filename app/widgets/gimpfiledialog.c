@@ -110,6 +110,7 @@ static void     gimp_file_dialog_help_clicked           (GtkWidget        *widge
                                                          gpointer          dialog);
 
 static gchar  * gimp_file_dialog_pattern_from_extension (const gchar   *extension);
+static gchar  * gimp_file_dialog_get_documents_uri      (void);
 static gchar  * gimp_file_dialog_get_dirname_from_uri   (const gchar   *uri);
 
 
@@ -286,18 +287,19 @@ gimp_file_dialog_progress_get_window (GimpProgress *progress)
 /*  public functions  */
 
 GtkWidget *
-gimp_file_dialog_new (Gimp                 *gimp,
-                      GtkFileChooserAction  action,
-                      const gchar          *title,
-                      const gchar          *role,
-                      const gchar          *stock_id,
-                      const gchar          *help_id)
+gimp_file_dialog_new (Gimp                  *gimp,
+                      GimpFileChooserAction  action,
+                      const gchar           *title,
+                      const gchar           *role,
+                      const gchar           *stock_id,
+                      const gchar           *help_id)
 {
-  GimpFileDialog *dialog;
-  GSList         *file_procs;
-  const gchar    *automatic;
-  const gchar    *automatic_help_id;
-  gboolean        local_only;
+  GimpFileDialog       *dialog;
+  GSList               *file_procs;
+  const gchar          *automatic;
+  const gchar          *automatic_help_id;
+  gboolean              local_only;
+  GtkFileChooserAction  gtk_action;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -307,7 +309,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
   switch (action)
     {
-    case GTK_FILE_CHOOSER_ACTION_OPEN:
+    case GIMP_FILE_CHOOSER_ACTION_OPEN:
+      gtk_action = GTK_FILE_CHOOSER_ACTION_OPEN;
       file_procs = gimp->plug_in_manager->load_procs;
       automatic  = _("Automatically Detected");
       automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
@@ -317,8 +320,12 @@ gimp_file_dialog_new (Gimp                 *gimp,
                                                "file-uri-load") == NULL);
       break;
 
-    case GTK_FILE_CHOOSER_ACTION_SAVE:
-      file_procs = gimp->plug_in_manager->save_procs;
+    case GIMP_FILE_CHOOSER_ACTION_SAVE:
+    case GIMP_FILE_CHOOSER_ACTION_EXPORT:
+      gtk_action = GTK_FILE_CHOOSER_ACTION_SAVE;
+      file_procs = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
+                    gimp->plug_in_manager->save_procs :
+                    gimp->plug_in_manager->export_procs);
       automatic  = _("By Extension");
       automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
@@ -335,7 +342,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   dialog = g_object_new (GIMP_TYPE_FILE_DIALOG,
                          "title",                     title,
                          "role",                      role,
-                         "action",                    action,
+                         "action",                    gtk_action,
                          "local-only",                local_only,
                          "do-overwrite-confirmation", TRUE,
                          NULL);
@@ -458,60 +465,183 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                  Gimp           *gimp,
                                  GimpImage      *image,
                                  gboolean        save_a_copy,
+                                 gboolean        export,
                                  gboolean        close_after_saving)
 {
-  const gchar *uri = NULL;
-  gchar       *dirname;
-  gchar       *basename;
+  const gchar *dir_uri  = NULL;
+  const gchar *name_uri = NULL;
+  const gchar *ext_uri  = NULL;
+  gchar       *docs_uri = NULL;
+  gchar       *dirname  = NULL;
+  gchar       *basename = NULL;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
+  docs_uri = gimp_file_dialog_get_documents_uri ();
+
   dialog->image              = image;
   dialog->save_a_copy        = save_a_copy;
+  dialog->export             = export;
   dialog->close_after_saving = close_after_saving;
-
-  if (save_a_copy)
-    uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_SAVE_A_COPY_URI_KEY);
-
-  if (! uri)
-    uri = gimp_image_get_uri (image);
 
   gimp_file_dialog_set_file_proc (dialog, NULL);
 
-  dirname = gimp_file_dialog_get_dirname_from_uri (uri);
-
-  if (dirname && strlen (dirname) && strcmp (dirname, "."))
+  if (! export)
     {
-      gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
-                                               dirname);
+      /*
+       * Priority of default paths for Save:
+       *
+       *   1. Last Save a copy-path (applies only to Save a copy)
+       *   2. Last Save path
+       *   3. Path of source XCF
+       *   4. Path of Import source
+       *   5. Last Save path of any GIMP document
+       *   6. The OS 'Documents' path
+       */
+
+      if (save_a_copy)
+        dir_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_SAVE_A_COPY_URI_KEY);
+
+      if (! dir_uri)
+        dir_uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+      if (! dir_uri)
+        dir_uri = g_object_get_data (G_OBJECT (image), "gimp-image-source-uri");
+
+      if (! dir_uri)
+        dir_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+
+      if (! dir_uri)
+        dir_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_SAVE_LAST_URI_KEY);
+
+      if (! dir_uri)
+        dir_uri = docs_uri;
+
+
+      /* Priority of default basenames for Save:
+       *
+       *   1. Last Save a copy-name (applies only to Save a copy)
+       *   2. Last Save name
+       *   3. The 'Export to' path
+       *   3. 'Untitled'
+       */
+
+      if (save_a_copy)
+        name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_SAVE_A_COPY_URI_KEY);
+
+      if (! name_uri)
+        name_uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+      if (! name_uri)
+        name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY);
+
+      if (! name_uri)
+        name_uri = gimp_image_get_uri (image); /* Untitled */
+
+
+      /* Priority of default type/extension for Save:
+       *
+       *   1. Type of last Save
+       *   2. .xcf (which we don't explicitly append)
+       */
+      ext_uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+      if (! ext_uri)
+        ext_uri = "file:///we/only/care/about/extension.xcf";
+    }
+  else /* if (export) */
+    {
+      /*
+       * Priority of default paths for Export:
+       *
+       *   1. Last Export path
+       *   2. Last Export path of any document
+       *   3. Path of import source
+       *   4. Path of XCF source
+       *   5. Last path of any save to XCF
+       *   6. The OS 'Documents' path
+       */
+
+      dir_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_URI_KEY);
+
+      if (! dir_uri)
+        dir_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_EXPORT_LAST_URI_KEY);
+
+      if (! dir_uri)
+        dir_uri = g_object_get_data (G_OBJECT (image), "gimp-image-source-uri");
+
+      if (! dir_uri)
+        dir_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+
+      if (! dir_uri)
+        dir_uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+      if (! dir_uri)
+        dir_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_SAVE_LAST_URI_KEY);
+
+      if (! dir_uri)
+        dir_uri = docs_uri;
+
+
+      /* Priority of default basenames for Export:
+       *
+       *   1. Last Export name
+       *   2. Source file name
+       *   3. Save URI
+       *   3. 'Untitled'
+       */
+
+      name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_URI_KEY);
+
+      if (! name_uri)
+        name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+
+      if (! name_uri)
+        name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY);
+
+      if (! name_uri)
+        name_uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+      if (! name_uri)
+        name_uri = gimp_image_get_uri (image); /* Untitled */
+
+
+      /* Priority of default type/extension for Export:
+       *
+       *   1. Type of last Export
+       *   2. Type of import source
+       *   3. Type of latest Export of any document
+       *   2. .png
+       */
+      ext_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_URI_KEY);
+
+      if (! ext_uri)
+        ext_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_EXPORT_LAST_URI_KEY);
+
+      if (! ext_uri)
+        ext_uri = "file:///we/only/care/about/extension.png";
+    }
+
+  dirname = gimp_file_dialog_get_dirname_from_uri (dir_uri);
+  if (ext_uri)
+    {
+      gchar *uri_new_ext = file_utils_uri_with_new_ext (name_uri,
+                                                        ext_uri);
+      basename = file_utils_uri_display_basename (uri_new_ext);
+      g_free (uri_new_ext);
     }
   else
     {
-      const gchar *folder;
-
-      folder = g_object_get_data (G_OBJECT (image), "gimp-image-dirname");
-
-      if (folder)
-        {
-          gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), folder);
-        }
-      else
-        {
-          gchar *save_last_uri = g_object_get_data (G_OBJECT (gimp),
-                                                    GIMP_FILE_SAVE_LAST_URI_KEY);
-
-          if (save_last_uri)
-            gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog),
-                                      save_last_uri);
-        }
+      basename = file_utils_uri_display_basename (name_uri);
     }
 
-  g_free (dirname);
-
-  basename = file_utils_uri_display_basename (uri);
+  gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog), dirname);
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
+
+  g_free (docs_uri);
   g_free (basename);
+  g_free (dirname);
 }
 
 GimpFileDialogState *
@@ -899,6 +1029,23 @@ gimp_file_dialog_pattern_from_extension (const gchar *extension)
   *p = '\0';
 
   return pattern;
+}
+
+static gchar *
+gimp_file_dialog_get_documents_uri (void)
+{
+  gchar *path;
+  gchar *uri;
+
+  /* Make sure it ends in '/' */
+  path = g_build_path ("/",
+                       g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
+                       "/",
+                       NULL);
+  uri = g_filename_to_uri (path, NULL, NULL);
+  g_free (path);
+
+  return uri;
 }
 
 static gchar *
