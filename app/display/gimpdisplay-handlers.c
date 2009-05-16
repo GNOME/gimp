@@ -38,19 +38,22 @@
 
 /*  local function prototypes  */
 
-static void   gimp_display_update_handler (GimpProjection *projection,
-                                           gboolean        now,
-                                           gint            x,
-                                           gint            y,
-                                           gint            w,
-                                           gint            h,
-                                           GimpDisplay    *display);
-static void   gimp_display_flush_handler  (GimpImage      *image,
-                                           gboolean        invalidate_preview,
-                                           GimpDisplay    *display);
-static void   gimp_display_saved_handler  (GimpImage      *image,
-                                           const gchar    *uri,
-                                           GimpDisplay    *display);
+static void   gimp_display_update_handler    (GimpProjection *projection,
+                                              gboolean        now,
+                                              gint            x,
+                                              gint            y,
+                                              gint            w,
+                                              gint            h,
+                                              GimpDisplay    *display);
+static void   gimp_display_flush_handler     (GimpImage      *image,
+                                              gboolean        invalidate_preview,
+                                              GimpDisplay    *display);
+static void   gimp_display_saved_handler     (GimpImage      *image,
+                                              const gchar    *uri,
+                                              GimpDisplay    *display);
+static void   gimp_display_exported_handler  (GimpImage      *image,
+                                              const gchar    *uri,
+                                              GimpDisplay    *display);
 
 
 /*  public functions  */
@@ -86,6 +89,9 @@ gimp_display_connect (GimpDisplay *display,
   g_signal_connect (image, "saved",
                     G_CALLBACK (gimp_display_saved_handler),
                     display);
+  g_signal_connect (image, "exported",
+                    G_CALLBACK (gimp_display_exported_handler),
+                    display);
 }
 
 void
@@ -100,6 +106,9 @@ gimp_display_disconnect (GimpDisplay *display)
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_saved_handler,
+                                        display);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_exported_handler,
                                         display);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_flush_handler,
@@ -160,3 +169,17 @@ gimp_display_saved_handler (GimpImage   *image,
                             GTK_STOCK_SAVE, _("Image saved to '%s'"), filename);
   g_free (filename);
 }
+
+static void
+gimp_display_exported_handler (GimpImage   *image,
+                               const gchar *uri,
+                               GimpDisplay *display)
+{
+  GtkWidget *statusbar = GIMP_DISPLAY_SHELL (display->shell)->statusbar;
+  gchar     *filename  = file_utils_uri_display_name (uri);
+
+  gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
+                            GTK_STOCK_SAVE, _("Image exported to '%s'"), filename);
+  g_free (filename);
+}
+
