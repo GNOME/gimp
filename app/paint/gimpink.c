@@ -57,7 +57,8 @@ static void      gimp_ink_paint          (GimpPaintCore    *paint_core,
                                           guint32           time);
 static TempBuf * gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
                                           GimpDrawable     *drawable,
-                                          GimpPaintOptions *paint_options);
+                                          GimpPaintOptions *paint_options,
+                                          const GimpCoords *coords);
 static GimpUndo* gimp_ink_push_undo      (GimpPaintCore    *core,
                                           GimpImage        *image,
                                           const gchar      *undo_desc);
@@ -192,7 +193,8 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
 static TempBuf *
 gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
                          GimpDrawable     *drawable,
-                         GimpPaintOptions *paint_options)
+                         GimpPaintOptions *paint_options,
+                         const GimpCoords *coords)
 {
   GimpInk *ink = GIMP_INK (paint_core);
   gint     x, y;
@@ -292,7 +294,8 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 
   /* Get the buffer */
   ink->cur_blob = blob_to_render;
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
+                                         coords);
   ink->cur_blob = NULL;
 
   if (! area)

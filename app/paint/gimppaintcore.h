@@ -100,7 +100,8 @@ struct _GimpPaintCoreClass
 
   TempBuf  * (* get_paint_area) (GimpPaintCore    *core,
                                  GimpDrawable     *drawable,
-                                 GimpPaintOptions *paint_options);
+                                 GimpPaintOptions *paint_options,
+                                 const GimpCoords *coords);
 
   GimpUndo * (* push_undo)      (GimpPaintCore    *core,
                                  GimpImage        *image,
@@ -152,7 +153,8 @@ void      gimp_paint_core_round_line                (GimpPaintCore    *core,
 
 TempBuf * gimp_paint_core_get_paint_area            (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
-                                                     GimpPaintOptions *options);
+                                                     GimpPaintOptions *options,
+                                                     const GimpCoords *coords);
 TempBuf * gimp_paint_core_get_orig_image            (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      gint              x1,

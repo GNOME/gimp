@@ -96,7 +96,8 @@ static void      gimp_paint_core_real_interpolate    (GimpPaintCore    *core,
                                                       guint32           time);
 static TempBuf * gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
-                                                      GimpPaintOptions *options);
+                                                      GimpPaintOptions *options,
+                                                      const GimpCoords *coords);
 static GimpUndo* gimp_paint_core_real_push_undo      (GimpPaintCore    *core,
                                                       GimpImage        *image,
                                                       const gchar      *undo_desc);
@@ -274,7 +275,8 @@ gimp_paint_core_real_interpolate (GimpPaintCore    *core,
 static TempBuf *
 gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
                                      GimpDrawable     *drawable,
-                                     GimpPaintOptions *paint_options)
+                                     GimpPaintOptions *paint_options,
+                                     const GimpCoords *coords)
 {
   return NULL;
 }
@@ -659,15 +661,18 @@ gimp_paint_core_round_line (GimpPaintCore    *core,
 TempBuf *
 gimp_paint_core_get_paint_area (GimpPaintCore    *core,
                                 GimpDrawable     *drawable,
-                                GimpPaintOptions *paint_options)
+                                GimpPaintOptions *paint_options,
+                                const GimpCoords *coords)
 {
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), NULL);
+  g_return_val_if_fail (coords != NULL, NULL);
 
   return GIMP_PAINT_CORE_GET_CLASS (core)->get_paint_area (core, drawable,
-                                                           paint_options);
+                                                           paint_options,
+                                                           coords);
 }
 
 TempBuf *

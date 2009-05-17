@@ -185,7 +185,8 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
+                                         coords);
   if (! area)
     return;
 
@@ -245,6 +246,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   /* Replace the newly dodgedburned area (canvas_buf) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
+                                  coords,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),

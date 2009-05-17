@@ -171,7 +171,8 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
+                                         coords);
   if (! area)
     return FALSE;
 
@@ -257,7 +258,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     return;
 
   /*  Get the paint area */
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
+                                         coords);
   if (! area)
     return;
 
@@ -314,6 +316,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords);
 
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
+                                  coords,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),

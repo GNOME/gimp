@@ -124,7 +124,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
+                                         coords);
   if (! area)
     return;
 
@@ -156,6 +157,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   else if (brush_core->brush && brush_core->brush->pixmap)
     {
       gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
+                                              coords,
                                               area,
                                               gimp_paint_options_get_brush_mode (paint_options));
 
@@ -180,6 +182,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
   /* finally, let the brush core paste the colored area on the canvas */
   gimp_brush_core_paste_canvas (brush_core, drawable,
+                                coords,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),

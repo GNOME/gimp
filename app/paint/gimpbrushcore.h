@@ -111,6 +111,7 @@ void    gimp_brush_core_create_bound_segs (GimpBrushCore         *core,
 
 void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
+                                        const GimpCoords         *coords,
                                         gdouble                   brush_opacity,
                                         gdouble                   image_opacity,
                                         GimpLayerModeEffects      paint_mode,
@@ -119,6 +120,7 @@ void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         GimpPaintApplicationMode  mode);
 void    gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
+                                        const GimpCoords         *coords,
                                         gdouble                   brush_opacity,
                                         gdouble                   image_opacity,
                                         GimpBrushApplicationMode  brush_hardness,
@@ -128,10 +130,12 @@ void    gimp_brush_core_replace_canvas (GimpBrushCore            *core,
 void    gimp_brush_core_color_area_with_pixmap
                                          (GimpBrushCore            *core,
                                           GimpDrawable             *drawable,
+                                          const GimpCoords         *coords,
                                           TempBuf                  *area,
                                           GimpBrushApplicationMode  mode);
 
 TempBuf * gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
+                                          const GimpCoords         *coords,
                                           GimpBrushApplicationMode  brush_hardness,
                                           gdouble                   dynamic_hardness);
 

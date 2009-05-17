@@ -79,7 +79,8 @@ static void     gimp_brush_core_interpolate        (GimpPaintCore    *core,
 
 static TempBuf *gimp_brush_core_get_paint_area     (GimpPaintCore    *paint_core,
                                                     GimpDrawable     *drawable,
-                                                    GimpPaintOptions *paint_options);
+                                                    GimpPaintOptions *paint_options,
+                                                    const GimpCoords *coords);
 
 static void     gimp_brush_core_real_set_brush     (GimpBrushCore    *core,
                                                     GimpBrush        *brush);
@@ -709,29 +710,24 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 static TempBuf *
 gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
                                 GimpDrawable     *drawable,
-                                GimpPaintOptions *paint_options)
+                                GimpPaintOptions *paint_options,
+                                const GimpCoords *coords)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
-  GimpCoords     current_coords;
   gint           x, y;
   gint           x1, y1, x2, y2;
   gint           drawable_width, drawable_height;
   gint           brush_width, brush_height;
 
-  gimp_paint_core_get_current_coords (paint_core, &current_coords);
-
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-      core->scale = gimp_paint_options_get_dynamic_size (paint_options,
-                                                         &current_coords,
+      core->scale = gimp_paint_options_get_dynamic_size (paint_options, coords,
                                                          TRUE);
 
-      core->angle = gimp_paint_options_get_dynamic_angle (paint_options,
-                                                          &current_coords);
+      core->angle = gimp_paint_options_get_dynamic_angle (paint_options, coords);
 
       core->aspect_ratio =
-        gimp_paint_options_get_dynamic_aspect_ratio (paint_options,
-                                                     &current_coords);
+        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords);
     }
 
   core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);
@@ -741,8 +737,8 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
                              &brush_width, &brush_height);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  x = (gint) floor (current_coords.x) - (brush_width  / 2);
-  y = (gint) floor (current_coords.y) - (brush_height / 2);
+  x = (gint) floor (coords->x) - (brush_width  / 2);
+  y = (gint) floor (coords->y) - (brush_height / 2);
 
   drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
   drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
@@ -876,6 +872,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
 void
 gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               GimpDrawable             *drawable,
+                              const GimpCoords         *coords,
                               gdouble                   brush_opacity,
                               gdouble                   image_opacity,
                               GimpLayerModeEffects      paint_mode,
@@ -884,23 +881,21 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               GimpPaintApplicationMode  mode)
 {
   TempBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
+                                                        coords,
                                                         brush_hardness,
                                                         dynamic_hardness);
 
   if (brush_mask)
     {
       GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-      GimpCoords     current_coords;
       PixelRegion    brush_maskPR;
       gint           x;
       gint           y;
       gint           off_x;
       gint           off_y;
 
-      gimp_paint_core_get_current_coords (paint_core, &current_coords);
-
-      x = (gint) floor (current_coords.x) - (brush_mask->width  >> 1);
-      y = (gint) floor (current_coords.y) - (brush_mask->height >> 1);
+      x = (gint) floor (coords->x) - (brush_mask->width  >> 1);
+      y = (gint) floor (coords->y) - (brush_mask->height >> 1);
 
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
@@ -924,6 +919,7 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
 void
 gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                 GimpDrawable             *drawable,
+                                const GimpCoords         *coords,
                                 gdouble                   brush_opacity,
                                 gdouble                   image_opacity,
                                 GimpBrushApplicationMode  brush_hardness,
@@ -931,23 +927,21 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                 GimpPaintApplicationMode  mode)
 {
   TempBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
+                                                        coords,
                                                         brush_hardness,
                                                         dynamic_hardness);
 
   if (brush_mask)
     {
       GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-      GimpCoords     current_coords;
       PixelRegion    brush_maskPR;
       gint           x;
       gint           y;
       gint           off_x;
       gint           off_y;
 
-      gimp_paint_core_get_current_coords (paint_core, &current_coords);
-
-      x = (gint) floor (current_coords.x) - (brush_mask->width  >> 1);
-      y = (gint) floor (current_coords.y) - (brush_mask->height >> 1);
+      x = (gint) floor (coords->x) - (brush_mask->width  >> 1);
+      y = (gint) floor (coords->y) - (brush_mask->height >> 1);
 
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
@@ -1433,38 +1427,35 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
 
 TempBuf *
 gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
+                                const GimpCoords         *coords,
                                 GimpBrushApplicationMode  brush_hardness,
                                 gdouble                   dynamic_hardness)
 {
-  GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-  GimpCoords     current_coords;
-  TempBuf       *mask;
+  TempBuf *mask;
 
   mask = gimp_brush_core_transform_mask (core, core->brush);
 
   if (! mask)
     return NULL;
 
-  gimp_paint_core_get_current_coords (paint_core, &current_coords);
-
   switch (brush_hardness)
     {
     case GIMP_BRUSH_SOFT:
       mask = gimp_brush_core_subsample_mask (core, mask,
-                                             current_coords.x,
-                                             current_coords.y);
+                                             coords->x,
+                                             coords->y);
       break;
 
     case GIMP_BRUSH_HARD:
       mask = gimp_brush_core_solidify_mask (core, mask,
-                                            current_coords.x,
-                                            current_coords.y);
+                                            coords->x,
+                                            coords->y);
       break;
 
     case GIMP_BRUSH_PRESSURE:
       mask = gimp_brush_core_pressurize_mask (core, mask,
-                                              current_coords.x,
-                                              current_coords.y,
+                                              coords->x,
+                                              coords->y,
                                               dynamic_hardness);
       break;
 
@@ -1483,22 +1474,21 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
 void
 gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
+                                        const GimpCoords         *coords,
                                         TempBuf                  *area,
                                         GimpBrushApplicationMode  mode)
 {
-  GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-  GimpCoords     current_coords;
-  GimpImage     *image;
-  PixelRegion    destPR;
-  void          *pr;
-  guchar        *d;
-  gint           ulx;
-  gint           uly;
-  gint           offsetx;
-  gint           offsety;
-  gint           y;
-  TempBuf       *pixmap_mask;
-  TempBuf       *brush_mask;
+  GimpImage   *image;
+  PixelRegion  destPR;
+  void        *pr;
+  guchar      *d;
+  gint         ulx;
+  gint         uly;
+  gint         offsetx;
+  gint         offsety;
+  gint         y;
+  TempBuf     *pixmap_mask;
+  TempBuf     *brush_mask;
 
   g_return_if_fail (GIMP_IS_BRUSH (core->brush));
   g_return_if_fail (core->brush->pixmap != NULL);
@@ -1510,8 +1500,6 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
 
   if (! pixmap_mask)
     return;
-
-  gimp_paint_core_get_current_coords (paint_core, &current_coords);
 
   if (mode != GIMP_BRUSH_HARD)
     brush_mask = gimp_brush_core_transform_mask (core, core->brush);
@@ -1526,16 +1514,16 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   /*  Calculate upper left corner of brush as in
    *  gimp_paint_core_get_paint_area.  Ugly to have to do this here, too.
    */
-  ulx = (gint) floor (current_coords.x) - (pixmap_mask->width  >> 1);
-  uly = (gint) floor (current_coords.y) - (pixmap_mask->height >> 1);
+  ulx = (gint) floor (coords->x) - (pixmap_mask->width  >> 1);
+  uly = (gint) floor (coords->y) - (pixmap_mask->height >> 1);
 
   /*  Not sure why this is necessary, but empirically the code does
    *  not work without it for even-sided brushes.  See bug #166622.
    */
   if (pixmap_mask->width %2 == 0)
-    ulx += ROUND (current_coords.x) - floor (current_coords.x);
+    ulx += ROUND (coords->x) - floor (coords->x);
   if (pixmap_mask->height %2 == 0)
-    uly += ROUND (current_coords.y) - floor (current_coords.y);
+    uly += ROUND (coords->y) - floor (coords->y);
 
   offsetx = area->x - ulx;
   offsety = area->y - uly;

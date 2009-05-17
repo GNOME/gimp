@@ -387,7 +387,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
     }
 
   paint_area = gimp_paint_core_get_paint_area (paint_core, drawable,
-                                               paint_options);
+                                               paint_options, coords);
   if (! paint_area)
     return;
 

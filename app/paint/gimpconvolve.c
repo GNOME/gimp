@@ -121,7 +121,7 @@ static void
 gimp_convolve_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
                       GimpPaintOptions *paint_options,
-                      const GimpCoords  *coords)
+                      const GimpCoords *coords)
 {
   GimpConvolve        *convolve   = GIMP_CONVOLVE (paint_core);
   GimpBrushCore       *brush_core = GIMP_BRUSH_CORE (paint_core);
@@ -147,7 +147,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
+                                         coords);
   if (! area)
     return;
 
@@ -209,6 +210,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   g_free (buffer);
 
   gimp_brush_core_replace_canvas (brush_core, drawable,
+                                  coords,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
