@@ -163,10 +163,10 @@ file_save (Gimp                *gimp,
           gimp_image_clean_all (image);
         }
 
-      if (! export)
-        gimp_image_saved (image, uri);
-      else
+      if (export)
         gimp_image_exported (image, uri);
+      else
+        gimp_image_saved (image, uri);
 
       documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
       imagefile = gimp_document_list_add_uri (documents,
