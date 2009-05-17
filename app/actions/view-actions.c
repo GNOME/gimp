@@ -85,7 +85,7 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_FILE_CLOSE },
 
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
-    NC_("view-action", "_Fit Image in Window"), NULL,
+    NC_("view-action", "_Fit Image in Window"), "<shift><control>R",
     NC_("view-action", "Adjust the zoom ratio so that the image becomes fully visible"),
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
@@ -115,7 +115,7 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
 
   { "view-shrink-wrap", GTK_STOCK_ZOOM_FIT,
-    NC_("view-action", "Shrink _Wrap"), NULL,
+    NC_("view-action", "Shrink _Wrap"), "<control>R",
     NC_("view-action", "Reduce the image window to the size of the image display"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
     GIMP_HELP_VIEW_SHRINK_WRAP },
@@ -297,25 +297,25 @@ static const GimpEnumActionEntry view_zoom_actions[] =
 static const GimpRadioActionEntry view_zoom_explicit_actions[] =
 {
   { "view-zoom-16-1", NULL,
-    NC_("view-zoom-action", "1_6:1  (1600%)"), NULL,
+    NC_("view-zoom-action", "1_6:1  (1600%)"), "5",
     NC_("view-zoom-action", "Zoom 16:1"),
     160000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-8-1", NULL,
-    NC_("view-zoom-action", "_8:1  (800%)"), NULL,
+    NC_("view-zoom-action", "_8:1  (800%)"), "4",
     NC_("view-zoom-action", "Zoom 8:1"),
     80000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-4-1", NULL,
-    NC_("view-zoom-action", "_4:1  (400%)"), NULL,
+    NC_("view-zoom-action", "_4:1  (400%)"), "3",
     NC_("view-zoom-action", "Zoom 4:1"),
     40000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-2-1", NULL,
-    NC_("view-zoom-action", "_2:1  (200%)"), NULL,
+    NC_("view-zoom-action", "_2:1  (200%)"), "2",
     NC_("view-zoom-action", "Zoom 2:1"),
     20000,
     GIMP_HELP_VIEW_ZOOM_IN },
@@ -327,25 +327,25 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     GIMP_HELP_VIEW_ZOOM_100 },
 
   { "view-zoom-1-2", NULL,
-    NC_("view-zoom-action", "1:_2  (50%)"), NULL,
+    NC_("view-zoom-action", "1:_2  (50%)"), "<shift>2",
     NC_("view-zoom-action", "Zoom 1:2"),
     5000,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-4", NULL,
-    NC_("view-zoom-action", "1:_4  (25%)"), NULL,
+    NC_("view-zoom-action", "1:_4  (25%)"), "<shift>3",
     NC_("view-zoom-action", "Zoom 1:4"),
     2500,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-8", NULL,
-    NC_("view-zoom-action", "1:_8  (12.5%)"), NULL,
+    NC_("view-zoom-action", "1:_8  (12.5%)"), "<shift>4",
     NC_("view-zoom-action", "Zoom 1:8"),
     1250,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-1-16", NULL,
-    NC_("view-zoom-action", "1:1_6  (6.25%)"), NULL,
+    NC_("view-zoom-action", "1:1_6  (6.25%)"), "<shift>5",
     NC_("view-zoom-action", "Zoom 1:16"),
     625,
     GIMP_HELP_VIEW_ZOOM_OUT },
