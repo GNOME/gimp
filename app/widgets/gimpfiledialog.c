@@ -501,19 +501,23 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
 
       if (save_a_copy)
-        dir_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_SAVE_A_COPY_URI_KEY);
+        dir_uri = g_object_get_data (G_OBJECT (image),
+                                     GIMP_FILE_SAVE_A_COPY_URI_KEY);
 
       if (! dir_uri)
         dir_uri = gimp_object_get_name (GIMP_OBJECT (image));
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image), "gimp-image-source-uri");
+        dir_uri = g_object_get_data (G_OBJECT (image),
+                                     "gimp-image-source-uri");
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        dir_uri = g_object_get_data (G_OBJECT (image),
+                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_SAVE_LAST_URI_KEY);
+        dir_uri = g_object_get_data (G_OBJECT (gimp),
+                                     GIMP_FILE_SAVE_LAST_URI_KEY);
 
       if (! dir_uri)
         dir_uri = docs_uri;
@@ -528,13 +532,15 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
 
       if (save_a_copy)
-        name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_SAVE_A_COPY_URI_KEY);
+        name_uri = g_object_get_data (G_OBJECT (image),
+                                      GIMP_FILE_SAVE_A_COPY_URI_KEY);
 
       if (! name_uri)
         name_uri = gimp_object_get_name (GIMP_OBJECT (image));
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY);
+        name_uri = g_object_get_data (G_OBJECT (image),
+                                      GIMP_FILE_EXPORT_TO_URI_KEY);
 
       if (! name_uri)
         name_uri = gimp_image_get_uri (image); /* Untitled */
@@ -563,22 +569,27 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   6. The OS 'Documents' path
        */
 
-      dir_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_URI_KEY);
+      dir_uri = g_object_get_data (G_OBJECT (image),
+                                   GIMP_FILE_EXPORT_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_EXPORT_LAST_URI_KEY);
+        dir_uri = g_object_get_data (G_OBJECT (gimp),
+                                     GIMP_FILE_EXPORT_LAST_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image), "gimp-image-source-uri");
+        dir_uri = g_object_get_data (G_OBJECT (image),
+                                     "gimp-image-source-uri");
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        dir_uri = g_object_get_data (G_OBJECT (image),
+                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       if (! dir_uri)
         dir_uri = gimp_object_get_name (GIMP_OBJECT (image));
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_SAVE_LAST_URI_KEY);
+        dir_uri = g_object_get_data (G_OBJECT (gimp),
+                                     GIMP_FILE_SAVE_LAST_URI_KEY);
 
       if (! dir_uri)
         dir_uri = docs_uri;
@@ -592,13 +603,16 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. 'Untitled'
        */
 
-      name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_URI_KEY);
+      name_uri = g_object_get_data (G_OBJECT (image),
+                                    GIMP_FILE_EXPORT_URI_KEY);
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        name_uri = g_object_get_data (G_OBJECT (image),
+                                      GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY);
+        name_uri = g_object_get_data (G_OBJECT (image),
+                                      GIMP_FILE_EXPORT_TO_URI_KEY);
 
       if (! name_uri)
         name_uri = gimp_object_get_name (GIMP_OBJECT (image));
@@ -613,16 +627,19 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. Type of latest Export of any document
        *   2. .png
        */
-      ext_uri = g_object_get_data (G_OBJECT (image), GIMP_FILE_EXPORT_URI_KEY);
+      ext_uri = g_object_get_data (G_OBJECT (image),
+                                   GIMP_FILE_EXPORT_URI_KEY);
 
       if (! ext_uri)
-        ext_uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_EXPORT_LAST_URI_KEY);
+        ext_uri = g_object_get_data (G_OBJECT (gimp),
+                                     GIMP_FILE_EXPORT_LAST_URI_KEY);
 
       if (! ext_uri)
         ext_uri = "file:///we/only/care/about/extension.png";
     }
 
   dirname = gimp_file_dialog_get_dirname_from_uri (dir_uri);
+
   if (ext_uri)
     {
       gchar *uri_new_ext = file_utils_uri_with_new_ext (name_uri,
