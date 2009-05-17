@@ -16,7 +16,7 @@
 
  ( ) Make sure the checkout is up to date, clean from uncommitted changes.
 
- ( ) Check that the version number is correct in configure.in
+ ( ) Check that the version number is correct in configure.ac
 
  ( ) Run 'make maintainer-clean -k'
 
@@ -69,7 +69,7 @@
      downloads/index.htrw.  Commit this change, the web server should
      then update itself soon (usually less than an hour).
 
- ( ) Bump the version number in configure.in and commit this change.
+ ( ) Bump the version number in configure.ac and commit this change.
 
  ( ) Grab a properly chilled beverage and enjoy yourself.
 

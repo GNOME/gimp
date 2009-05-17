@@ -1848,7 +1848,7 @@ AC_CONFIG_COMMANDS([libgimpbase/gimpversion.h], [
   cat > $outfile <<\_______EOF
 /* gimpversion.h
  *
- * This is a generated file.  Please modify 'configure.in'
+ * This is a generated file.  Please modify 'configure.ac'
  */
 
 #ifndef __GIMP_VERSION_H__

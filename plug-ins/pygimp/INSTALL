@@ -245,6 +245,6 @@ Makefile(s), the header file containing system-dependent definitions
 (if the package uses one), and `config.status' (all the files that
 `configure' created), type `make distclean'.
 
-The file `configure.in' is used as a template to create `configure' by
+The file `configure.ac' is used as a template to create `configure' by
 a program called `autoconf'.  You will only need it if you want to
 regenerate `configure' using a newer version of `autoconf'.

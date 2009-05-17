@@ -52,7 +52,7 @@ if GIMP_UNSTABLE
 DEBUG_MENU_PARAMS = --stringparam debug-menu yes
 endif
 
-%.xml: %.xml.in $(top_srcdir)/configure.in $(srcdir)/menus.xsl dialogs-menuitems.xml
+%.xml: %.xml.in $(top_srcdir)/configure.ac $(srcdir)/menus.xsl dialogs-menuitems.xml
 if HAVE_XSLTPROC
 	$(XSLTPROC) --xinclude $(DEBUG_MENU_PARAMS) $(srcdir)/menus.xsl $< > $(@) || rm -f $(@)
 else

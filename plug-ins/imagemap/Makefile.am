@@ -146,7 +146,7 @@ CLEANFILES = y.tab.c y.tab.h
 ## The following rules are not necessary for most users.  They are
 ## only used by the maintainers who modify the symbols and grammar
 ## that are used for parsing the map files.  These rules are very
-## specific and a test for flex and bison in configure.in would not be
+## specific and a test for flex and bison in configure.ac would not be
 ## appropriate in most cases, so the Makefile rules are included here.
 ## In addition, the default rules provided by automake would not be
 ## sufficient because the source and target files have different base
