@@ -102,6 +102,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpcontroller.h		\
 	gimpdialog.c			\
 	gimpdialog.h			\
+	gimpeevl.c			\
+	gimpeevl.h			\
 	gimpenumcombobox.c		\
 	gimpenumcombobox.h		\
 	gimpenumlabel.c			\
@@ -321,7 +323,10 @@ gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
 # test programs, not installed
 #
 
-EXTRA_PROGRAMS = test-preview-area
+EXTRA_PROGRAMS = \
+	test-preview-area	\
+	test-eevl
+
 
 test_preview_area_SOURCES = test-preview-area.c 
 
@@ -333,6 +338,28 @@ test_preview_area_LDADD = \
 	$(GTK_LIBS) \
 	$(test_preview_area_DEPENDENCIES)
 
+
+test_eevl_SOURCES = \
+	test-eevl.c
+
+test_eevl_DEPENDENCIES = \
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+
+test_eevl_LDADD = \
+	$(GLIB_LIBS) 		\
+	$(test_eevl_DEPENDENCIES)
+
+
+#
+# test programs, not to be built by default and never installed
+#
+
+TESTS = test-eevl$(EXEEXT)
+
+
+
+
+CLEANFILES += $(EXTRA_PROGRAMS)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib

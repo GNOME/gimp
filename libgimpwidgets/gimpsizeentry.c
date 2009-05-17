@@ -22,12 +22,15 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
 
 #include "gimpwidgets.h"
 
+#include "gimpeevl.h"
 #include "gimpsizeentry.h"
 
 
@@ -70,20 +73,27 @@ struct _GimpSizeEntryField
 };
 
 
-static void   gimp_size_entry_finalize        (GObject            *object);
-
-static void   gimp_size_entry_update_value    (GimpSizeEntryField *gsef,
-                                               gdouble             value);
-static void   gimp_size_entry_value_callback  (GtkWidget          *widget,
-                                               gpointer            data);
-static void   gimp_size_entry_update_refval   (GimpSizeEntryField *gsef,
-                                               gdouble             refval);
-static void   gimp_size_entry_refval_callback (GtkWidget          *widget,
-                                               gpointer            data);
-static void   gimp_size_entry_update_unit     (GimpSizeEntry      *gse,
-                                               GimpUnit            unit);
-static void   gimp_size_entry_unit_callback   (GtkWidget          *widget,
-                                               GimpSizeEntry      *sizeentry);
+static void      gimp_size_entry_finalize            (GObject            *object);
+static void      gimp_size_entry_update_value        (GimpSizeEntryField *gsef,
+                                                      gdouble             value);
+static void      gimp_size_entry_value_callback      (GtkWidget          *widget,
+                                                      gpointer            data);
+static void      gimp_size_entry_update_refval       (GimpSizeEntryField *gsef,
+                                                      gdouble             refval);
+static void      gimp_size_entry_refval_callback     (GtkWidget          *widget,
+                                                      gpointer            data);
+static void      gimp_size_entry_update_unit         (GimpSizeEntry      *gse,
+                                                      GimpUnit            unit);
+static void      gimp_size_entry_unit_callback       (GtkWidget          *widget,
+                                                      GimpSizeEntry      *sizeentry);
+static void      gimp_size_entry_attach_eevl         (GtkSpinButton      *spin_button,
+                                                      GimpSizeEntryField *gsef);
+static gint      gimp_size_entry_eevl_input_callback (GtkSpinButton      *spinner,
+                                                      gdouble            *return_val,
+                                                      gpointer           *data);
+static gboolean  gimp_size_entry_eevl_unit_resolver  (const gchar        *ident,
+                                                      GimpEevlQuantity   *result,
+                                                      gpointer            data);
 
 
 G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_TABLE)
@@ -287,6 +297,9 @@ gimp_size_entry_new (gint                       number_of_fields,
                                                      1.0, 10.0, 0.0,
                                                      1.0, digits);
 
+      gimp_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->value_spinbutton),
+                                   gsef);
+
       if (spinbutton_width > 0)
         {
           if (spinbutton_width < 17)
@@ -402,6 +415,9 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
   g_signal_connect (gsef->value_adjustment, "value-changed",
                     G_CALLBACK (gimp_size_entry_value_callback),
                     gsef);
+
+  gimp_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->value_spinbutton),
+                               gsef);
 
   if (gse->show_refval)
     {
@@ -1141,6 +1157,174 @@ gimp_size_entry_unit_callback (GtkWidget     *widget,
 
   if (gse->unit != new_unit)
     gimp_size_entry_update_unit (gse, new_unit);
+}
+
+/**
+ * gimp_size_entry_attach_eevl:
+ * @spin_button:
+ * @gsef:
+ *
+ * Hooks in the GimpEevl unit expression parser into the
+ * #GtkSpinButton of the #GimpSizeEntryField.
+ **/
+static void
+gimp_size_entry_attach_eevl (GtkSpinButton      *spin_button,
+                             GimpSizeEntryField *gsef)
+{
+  gtk_spin_button_set_numeric (spin_button,
+                               FALSE);
+  gtk_spin_button_set_update_policy (spin_button,
+                                     GTK_UPDATE_IF_VALID);
+  g_signal_connect (spin_button, "input",
+                    G_CALLBACK (gimp_size_entry_eevl_input_callback),
+                    gsef);
+}
+
+static gint
+gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
+                                     gdouble       *return_val,
+                                     gpointer      *data)
+{
+  GimpSizeEntryField *gsef      = (GimpSizeEntryField *) data;
+  gboolean            success   = FALSE;
+  const gchar        *error_pos = 0;
+  GError             *error     = NULL;
+  GimpEevlQuantity    result;
+
+  g_return_val_if_fail (GTK_IS_SPIN_BUTTON (spinner), FALSE);
+  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gsef->gse), FALSE);
+
+  success = gimp_eevl_evaluate (gtk_entry_get_text (GTK_ENTRY (spinner)),
+                                gimp_size_entry_eevl_unit_resolver,
+                                &result,
+                                data,
+                                &error_pos,
+                                &error);
+  if (! success)
+    {
+      if (error && error_pos)
+        {
+          g_printerr ("ERROR: %s at '%s'\n",
+                      error->message,
+                      *error_pos ? error_pos : "<End of input>");
+        }
+      else
+        {
+          g_printerr ("ERROR: Expression evaluation failed without error.\n");
+        }
+
+      gtk_widget_error_bell (GTK_WIDGET (spinner));
+      return GTK_INPUT_ERROR;
+    }
+  else if (result.dimension != 1 && gsef->gse->unit != GIMP_UNIT_PERCENT)
+    {
+      g_printerr ("ERROR: result has wrong dimension (expected 1, got %d)\n", result.dimension);
+
+      gtk_widget_error_bell (GTK_WIDGET (spinner));
+      return GTK_INPUT_ERROR;
+    }
+  else if (result.dimension != 0 && gsef->gse->unit == GIMP_UNIT_PERCENT)
+    {
+      g_printerr ("ERROR: result has wrong dimension (expected 0, got %d)\n", result.dimension);
+
+      gtk_widget_error_bell (GTK_WIDGET (spinner));
+      return GTK_INPUT_ERROR;
+    }
+  else
+    {
+      /* transform back to UI-unit */
+      GimpEevlQuantity ui_unit;
+
+      switch (gsef->gse->unit)
+        {
+        case GIMP_UNIT_PIXEL:
+          ui_unit.value     = gsef->resolution;
+          ui_unit.dimension = 1;
+          break;
+        case GIMP_UNIT_PERCENT:
+          ui_unit.value     = 1.0;
+          ui_unit.dimension = 0;
+          break;
+        default:
+          ui_unit.value     = gimp_unit_get_factor(gsef->gse->unit);
+          ui_unit.dimension = 1;
+          break;
+        }
+
+      *return_val = result.value * ui_unit.value;
+
+      return TRUE;
+    }
+}
+
+static gboolean
+gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
+                                    GimpEevlQuantity *result,
+                                    gpointer          data)
+{
+  GimpSizeEntryField *gsef                 = (GimpSizeEntryField *) data;
+  gboolean            resolve_default_unit = (identifier == NULL);
+  GimpUnit            unit;
+  
+  g_return_val_if_fail (gsef, FALSE);
+  g_return_val_if_fail (result != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gsef->gse), FALSE);
+
+
+  for (unit = 0;
+       unit <= gimp_unit_get_number_of_units ();
+       unit++)
+    {
+      /* Hack to handle percent within the loop */
+      if (unit == gimp_unit_get_number_of_units ())
+        unit = GIMP_UNIT_PERCENT;
+
+      if ((resolve_default_unit && unit == gsef->gse->unit) ||
+          (identifier &&
+           (strcmp (gimp_unit_get_symbol (unit),       identifier) == 0 ||
+            strcmp (gimp_unit_get_abbreviation (unit), identifier) == 0)))
+        {
+          switch (unit)
+            {
+            case GIMP_UNIT_PERCENT:
+              if (gsef->gse->unit == GIMP_UNIT_PERCENT)
+                {
+                  result->value = 1;
+                  result->dimension = 0;
+                }
+              else
+                {
+                  /* gsef->upper contains the '100%'-value */
+                  result->value = 100*gsef->resolution/gsef->upper;
+                  result->dimension = 1;
+                }
+              /* return here, don't perform percentage conversion */
+              return TRUE;
+            case GIMP_UNIT_PIXEL:
+              result->value     = gsef->resolution;
+              break;
+            default:
+              result->value     = gimp_unit_get_factor (unit);
+              break;
+            }
+
+          if (gsef->gse->unit == GIMP_UNIT_PERCENT)
+            {
+              /* map non-percentages onto percent */
+              result->value = gsef->upper/(100*gsef->resolution);
+              result->dimension = 0;
+            }
+          else
+            {
+              result->dimension = 1;
+            }
+
+          /* We are done */
+          return TRUE;
+        }
+    }
+
+  return FALSE;
 }
 
 /**
