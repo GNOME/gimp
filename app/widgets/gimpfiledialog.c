@@ -610,7 +610,6 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       /* Priority of default type/extension for Export:
        *
        *   1. Type of last Export
-       *   2. Type of import source
        *   3. Type of latest Export of any document
        *   2. .png
        */
