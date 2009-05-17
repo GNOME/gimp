@@ -233,7 +233,10 @@ file_save_dialog_response (GtkWidget *save_dialog,
           g_object_set_data_full (G_OBJECT (dialog->image->gimp),
                                   GIMP_FILE_SAVE_LAST_URI_KEY,
                                   g_strdup (uri), (GDestroyNotify) g_free);
-          
+
+          /*  make sure the menus are updated with the keys we've just set  */
+          gimp_image_flush (dialog->image);
+
           /* Handle close-after-saing */
           if (dialog)
             {
