@@ -249,7 +249,7 @@ query (void)
                           "Henrik Brix Andersen <brix@gimp.org>",
                           "1998 - 2008",
                           "v1.1 (2008/04)",
-                          N_("_Screenshot..."),
+                          N_("From _Screenshot..."),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
