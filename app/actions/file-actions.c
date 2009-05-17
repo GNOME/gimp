@@ -246,11 +246,11 @@ file_actions_update (GimpActionGroup *group,
   gchar        *label     = NULL;
 
   if (image)
-    drawable = gimp_image_get_active_drawable (image);
-
-  export_to = (image ?
-               g_object_get_data (G_OBJECT (image),
-                                  GIMP_FILE_EXPORT_TO_URI_KEY) : NULL);
+    {
+      drawable  = gimp_image_get_active_drawable (image);
+      export_to = g_object_get_data (G_OBJECT (image),
+                                     GIMP_FILE_EXPORT_TO_URI_KEY);
+    }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
@@ -269,7 +269,7 @@ file_actions_update (GimpActionGroup *group,
       label = g_strdup_printf (_("Export to %s"),
                                file_utils_uri_display_basename (export_to));
       gimp_action_group_set_action_label (group, "file-export-to", label);
-      g_free(label);
+      g_free (label);
     }
   else
     {
