@@ -1,14 +1,14 @@
-# translation of gimp-libgimp.gimp-2-6.po to marathi
+# translation of mr.po to marathi
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Sandeep Shedmake <sandeep.shedmake@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.gimp-2-6\n"
+"Project-Id-Version: mr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-02 01:35+0000\n"
-"PO-Revision-Date: 2009-03-30 18:24+0530\n"
+"PO-Revision-Date: 2009-05-18 20:00+0530\n"
 "Last-Translator: Sandeep Shedmake <sandeep.shedmake@gmail.com>\n"
 "Language-Team: marathi\n"
 "MIME-Version: 1.0\n"
@@ -44,12 +44,12 @@ msgstr "ब्रशची निवड"
 #: ../libgimp/gimpbrushselectbutton.c:913
 #: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
-msgstr "_ब्राऊज करा..."
+msgstr "तपासा (_B)..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr ""
+msgstr "%s प्लग-इन थर हाताळू शकत नाही"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -59,16 +59,16 @@ msgstr "दृश्यमान थर हलवा"
 #: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr ""
+msgstr "%s प्लग-इन थर ऑफसेट, आकार किंवा अपारदर्शकता हाताळू शकत नाही"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr ""
+msgstr "%s प्लग-इन फक्त ऍनीमेशन चौकट नुरूप थर हाताळू शकतो"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
-msgstr "चलचित्र प्रमाणे संचित करा"
+msgstr "ऍनीमेशन नुरूप साठवा"
 
 #: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
 #: ../libgimp/gimpexport.c:263
@@ -78,7 +78,7 @@ msgstr "प्रतिमा सपाट करा"
 #: ../libgimp/gimpexport.c:262
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr ""
+msgstr "%s प्लग-इन पारदर्शकता हाताळू शकत नाही"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
