@@ -139,13 +139,13 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_SAVE },
 
   { "file-export", NULL,
-    NC_("file-action", "Export..."), "<control>E",
+    NC_("file-action", "Export..."), "<control><shift>E",
     NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
     GIMP_SAVE_MODE_EXPORT, FALSE,
     GIMP_HELP_FILE_EXPORT },
 
   { "file-export-to", NULL,
-    NC_("file-action", "Export to"), "<control><shift>E",
+    NC_("file-action", "Export to"), "<control>E",
     NC_("file-action", "Export the image back to the import source in the import format"),
     GIMP_SAVE_MODE_EXPORT_TO, FALSE,
     GIMP_HELP_FILE_EXPORT_TO }
