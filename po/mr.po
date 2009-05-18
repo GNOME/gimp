@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-02 01:35+0000\n"
-"PO-Revision-Date: 2009-05-18 15:09+0530\n"
+"PO-Revision-Date: 2009-05-18 19:22+0530\n"
 "Last-Translator: Sandeep Shedmake <sandeep.shedmake@gmail.com>\n"
 "Language-Team: marathi\n"
 "MIME-Version: 1.0\n"
@@ -4664,7 +4664,7 @@ msgstr "सक्षम केल्यानंतर, GIMP मेनुंम�
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for GIMP."
-msgstr ""
+msgstr "सहसा 8-बीट दृष्यशी संलग्न आहे, यामुळे GIMP करीता किमान प्रणाली रंगची वाटप केली जाते."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid ""
@@ -4690,7 +4690,7 @@ msgstr ""
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
-msgstr ""
+msgstr "कार्यान्वीत केल्यास, हलवा साधन संपादीत स्तर किंवा मार्ग सक्रीय करतो.  हे जुण्या आवृत्तीत मुलभूत वर्तन नुरूप असे."
 
 #: ../app/config/gimprc-blurbs.h:212
 msgid ""
@@ -4900,7 +4900,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr ""
+msgstr "GIMP पासून बाहेर पडतेवेळी बदल केलेले कळफलक शार्टकट साठवा."
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
@@ -7220,7 +7220,7 @@ msgstr "स्तंभ (_o):"
 
 #: ../app/dialogs/palette-import-dialog.c:352
 msgid "I_nterval:"
-msgstr ""
+msgstr "अवधी (_n):"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:363
@@ -8303,14 +8303,14 @@ msgstr "साठवू नका (_n)"
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "बंद करण्यापूर्वी बदल '%s' प्रतिमेत साठवायचे का?"
+msgstr "बंद करण्यापूर्वी बदल '%s' प्रतिमेत साठवायचे?"
 
 #: ../app/display/gimpdisplayshell-close.c:254
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "प्रतिमा न साठवल्यास, शेवटच्या तासाला केलेले बदल लागू होणार नाही."
+msgstr[1] "प्रतिमा न साठवल्यास, शेवटच्या %d तासाला केलेले बदल लागू होणार नाही."
 
 #: ../app/display/gimpdisplayshell-close.c:264
 #, c-format
@@ -8320,15 +8320,15 @@ msgid ""
 msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "प्रतिमा न साठवल्यास, शेवटच्या तासाला व %d मिनीटाला केलेले बदल लागू होणार नाही."
+msgstr[1] "प्रतिमा न साठवल्यास, शेवटच्या तासाला व %d मिनीटाला केलेले बदल लागू होणार नाही."
 
 #: ../app/display/gimpdisplayshell-close.c:275
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "प्रतिमा न साठवल्यास, शेवटच्या मिनीटाला केलेले बदल लागू होणार नाही."
+msgstr[1] "प्रतिमा न साठवल्यास, शेवटच्या %d मिनीटाला केलेले बदल लागू होणार नाही."
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
 #: ../app/display/gimpdisplayshell-dnd.c:587
@@ -8595,7 +8595,7 @@ msgstr "मास्क एकत्र करा"
 #: ../app/pdb/drawable-transform-cmds.c:395
 #: ../app/pdb/transform-tools-cmds.c:146 ../app/tools/gimpperspectivetool.c:69
 msgid "Perspective"
-msgstr ""
+msgstr "दृष्टीकोन"
 
 #: ../app/pdb/drawable-transform-cmds.c:832
 #: ../app/pdb/drawable-transform-cmds.c:904
@@ -12556,7 +12556,7 @@ msgstr "GIMP XCF प्रतिमा"
 #: ../app/xcf/xcf.c:271
 #, c-format
 msgid "Opening '%s'"
-msgstr ""
+msgstr "'%s' उघडत आहे"
 
 #: ../app/xcf/xcf.c:313
 #, c-format
@@ -12566,7 +12566,7 @@ msgstr "XCF त्रुटी: विनाआधार XCF फाइल आव
 #: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Saving '%s'"
-msgstr ""
+msgstr "'%s' साठवत आहे"
 
 #: ../app/xcf/xcf.c:403
 #, c-format
@@ -12575,7 +12575,7 @@ msgstr "XCF फाइल संचित करण्यात त्रुट�
 
 #: ../desktop/gimp.desktop.in.in.h:1
 msgid "Create images and edit photographs"
-msgstr ""
+msgstr "प्रतिमा बनवा व फोटोग्राफ संपादीत करा"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
@@ -12583,31 +12583,31 @@ msgstr "प्रतिमा संपादक"
 
 #: ../tools/gimp-remote.c:65
 msgid "Use a running GIMP only, never start a new one"
-msgstr ""
+msgstr "फक्त कार्यरत GIMP वापरा, नवीन कधिच चालू करू नका"
 
 #: ../tools/gimp-remote.c:70
 msgid "Only check if GIMP is running, then quit"
-msgstr ""
+msgstr "GIMP कार्यरत असल्यावरच तपासा, त्यानंतर बाहेर पडा"
 
 #: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
-msgstr ""
+msgstr "GIMP साधनपट्टी चौकटीच्या X चौकट ID ची छपाई करा, व त्यानंतर बाहेर पडा"
 
 #: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
-msgstr ""
+msgstr "स्टार्टअप चौकट न दाखवता GIMP सुरू करा"
 
 #: ../tools/gimp-remote-x11.c:67
 msgid "Could not connect to GIMP."
-msgstr ""
+msgstr "GIMP शी जुळवणी स्थापीत करणे अशक्य."
 
 #: ../tools/gimp-remote-x11.c:68
 msgid "Make sure that the Toolbox is visible!"
-msgstr ""
+msgstr "साधनपेटी दृष्यास्पद आहे याची खात्री करा!"
 
 #. if execv and execvp return, there was an error
 #: ../tools/gimp-remote-x11.c:248
 #, c-format
 msgid "Couldn't start '%s': %s"
-msgstr ""
+msgstr "'%s' सुरू करणे अशक्य: %s"
 
