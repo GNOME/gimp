@@ -30,24 +30,24 @@
 #include "gimpbrushpipe-load.h"
 
 
-static void        gimp_brush_pipe_finalize         (GObject      *object);
+static void        gimp_brush_pipe_finalize         (GObject          *object);
 
-static gint64      gimp_brush_pipe_get_memsize      (GimpObject   *object,
-                                                     gint64       *gui_size);
+static gint64      gimp_brush_pipe_get_memsize      (GimpObject       *object,
+                                                     gint64           *gui_size);
 
-static gboolean    gimp_brush_pipe_get_popup_size   (GimpViewable *viewable,
-                                                     gint          width,
-                                                     gint          height,
-                                                     gboolean      dot_for_dot,
-                                                     gint         *popup_width,
-                                                     gint         *popup_height);
+static gboolean    gimp_brush_pipe_get_popup_size   (GimpViewable     *viewable,
+                                                     gint              width,
+                                                     gint              height,
+                                                     gboolean          dot_for_dot,
+                                                     gint             *popup_width,
+                                                     gint             *popup_height);
 
-static GimpBrush * gimp_brush_pipe_select_brush     (GimpBrush    *brush,
-                                                     GimpCoords   *last_coords,
-                                                     GimpCoords   *cur_coords);
-static gboolean    gimp_brush_pipe_want_null_motion (GimpBrush    *brush,
-                                                     GimpCoords   *last_coords,
-                                                     GimpCoords   *cur_coords);
+static GimpBrush * gimp_brush_pipe_select_brush     (GimpBrush        *brush,
+                                                     const GimpCoords *last_coords,
+                                                     const GimpCoords *current_coords);
+static gboolean    gimp_brush_pipe_want_null_motion (GimpBrush        *brush,
+                                                     const GimpCoords *last_coords,
+                                                     const GimpCoords *current_coords);
 
 
 G_DEFINE_TYPE (GimpBrushPipe, gimp_brush_pipe, GIMP_TYPE_BRUSH);
@@ -163,9 +163,9 @@ gimp_brush_pipe_get_popup_size (GimpViewable *viewable,
 }
 
 static GimpBrush *
-gimp_brush_pipe_select_brush (GimpBrush  *brush,
-                              GimpCoords *last_coords,
-                              GimpCoords *cur_coords)
+gimp_brush_pipe_select_brush (GimpBrush        *brush,
+                              const GimpCoords *last_coords,
+                              const GimpCoords *current_coords)
 {
   GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
   gint           i, brushix, ix;
@@ -189,8 +189,8 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
           break;
 
         case PIPE_SELECT_ANGULAR:
-          angle = atan2 (cur_coords->y - last_coords->y,
-                         cur_coords->x - last_coords->x);
+          angle = atan2 (current_coords->y - last_coords->y,
+                         current_coords->x - last_coords->x);
           /* Offset angle to be compatible with PSP tubes */
           angle += G_PI_2;
           /* Map it to the [0..2*G_PI) interval */
@@ -202,8 +202,8 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
           break;
 
         case PIPE_SELECT_VELOCITY:
-          velocity = sqrt (SQR (cur_coords->x - last_coords->x) +
-                           SQR (cur_coords->y - last_coords->y));
+          velocity = sqrt (SQR (current_coords->x - last_coords->x) +
+                           SQR (current_coords->y - last_coords->y));
 
           /* I don't know how much velocity is enough velocity. I will assume 0  to
            brush' saved spacing (converted to pixels) to be 'enough' velocity */
@@ -216,15 +216,15 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
           break;
 
         case PIPE_SELECT_PRESSURE:
-          ix = RINT (cur_coords->pressure * (pipe->rank[i] - 1));
+          ix = RINT (current_coords->pressure * (pipe->rank[i] - 1));
           break;
 
         case PIPE_SELECT_TILT_X:
-          ix = RINT (cur_coords->xtilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
+          ix = RINT (current_coords->xtilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
           break;
 
         case PIPE_SELECT_TILT_Y:
-          ix = RINT (cur_coords->ytilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
+          ix = RINT (current_coords->ytilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
           break;
 
         case PIPE_SELECT_CONSTANT:
@@ -246,9 +246,9 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
 }
 
 static gboolean
-gimp_brush_pipe_want_null_motion (GimpBrush  *brush,
-                                  GimpCoords *last_coords,
-                                  GimpCoords *cur_coords)
+gimp_brush_pipe_want_null_motion (GimpBrush        *brush,
+                                  const GimpCoords *last_coords,
+                                  const GimpCoords *current_coords)
 {
   GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
   gint           i;

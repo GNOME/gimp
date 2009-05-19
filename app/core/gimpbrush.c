@@ -76,11 +76,11 @@ static gchar       * gimp_brush_get_description       (GimpViewable         *vie
 static const gchar * gimp_brush_get_extension         (GimpData             *data);
 
 static GimpBrush   * gimp_brush_real_select_brush     (GimpBrush            *brush,
-                                                       GimpCoords           *last_coords,
-                                                       GimpCoords           *cur_coords);
+                                                       const GimpCoords     *last_coords,
+                                                       const GimpCoords     *current_coords);
 static gboolean      gimp_brush_real_want_null_motion (GimpBrush            *brush,
-                                                       GimpCoords           *last_coords,
-                                                       GimpCoords           *cur_coords);
+                                                       const GimpCoords     *last_coords,
+                                                       const GimpCoords     *current_coords);
 
 static gchar       * gimp_brush_get_checksum          (GimpTagged           *tagged);
 
@@ -356,17 +356,17 @@ gimp_brush_get_extension (GimpData *data)
 }
 
 static GimpBrush *
-gimp_brush_real_select_brush (GimpBrush  *brush,
-                              GimpCoords *last_coords,
-                              GimpCoords *cur_coords)
+gimp_brush_real_select_brush (GimpBrush        *brush,
+                              const GimpCoords *last_coords,
+                              const GimpCoords *current_coords)
 {
   return brush;
 }
 
 static gboolean
-gimp_brush_real_want_null_motion (GimpBrush  *brush,
-                                  GimpCoords *last_coords,
-                                  GimpCoords *cur_coords)
+gimp_brush_real_want_null_motion (GimpBrush        *brush,
+                                  const GimpCoords *last_coords,
+                                  const GimpCoords *current_coords)
 {
   return TRUE;
 }
@@ -429,31 +429,31 @@ gimp_brush_get_standard (void)
 }
 
 GimpBrush *
-gimp_brush_select_brush (GimpBrush  *brush,
-                         GimpCoords *last_coords,
-                         GimpCoords *cur_coords)
+gimp_brush_select_brush (GimpBrush        *brush,
+                         const GimpCoords *last_coords,
+                         const GimpCoords *current_coords)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (last_coords != NULL, NULL);
-  g_return_val_if_fail (cur_coords != NULL, NULL);
+  g_return_val_if_fail (current_coords != NULL, NULL);
 
   return GIMP_BRUSH_GET_CLASS (brush)->select_brush (brush,
                                                      last_coords,
-                                                     cur_coords);
+                                                     current_coords);
 }
 
 gboolean
-gimp_brush_want_null_motion (GimpBrush  *brush,
-                             GimpCoords *last_coords,
-                             GimpCoords *cur_coords)
+gimp_brush_want_null_motion (GimpBrush        *brush,
+                             const GimpCoords *last_coords,
+                             const GimpCoords *current_coords)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), FALSE);
   g_return_val_if_fail (last_coords != NULL, FALSE);
-  g_return_val_if_fail (cur_coords != NULL, FALSE);
+  g_return_val_if_fail (current_coords != NULL, FALSE);
 
   return GIMP_BRUSH_GET_CLASS (brush)->want_null_motion (brush,
                                                          last_coords,
-                                                         cur_coords);
+                                                         current_coords);
 }
 
 void

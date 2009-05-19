@@ -50,29 +50,29 @@ struct _GimpBrushClass
   GimpDataClass parent_class;
 
   /*  virtual functions  */
-  GimpBrush * (* select_brush)     (GimpBrush  *brush,
-                                    GimpCoords *last_coords,
-                                    GimpCoords *cur_coords);
-  gboolean    (* want_null_motion) (GimpBrush  *brush,
-                                    GimpCoords *last_coords,
-                                    GimpCoords *cur_coords);
-  void        (* transform_size)   (GimpBrush  *brush,
-                                    gdouble     scale_x,
-                                    gdouble     scale_y,
-                                    gdouble     angle,
-                                    gint       *width,
-                                    gint       *height);
-  TempBuf   * (* transform_mask)   (GimpBrush  *brush,
-                                    gdouble     scale_x,
-                                    gdouble     scale_y,
-                                    gdouble     angle);
-  TempBuf   * (* transform_pixmap) (GimpBrush  *brush,
-                                    gdouble     scale_x,
-                                    gdouble     scale_y,
-                                    gdouble     angle);
+  GimpBrush * (* select_brush)     (GimpBrush        *brush,
+                                    const GimpCoords *last_coords,
+                                    const GimpCoords *current_coords);
+  gboolean    (* want_null_motion) (GimpBrush        *brush,
+                                    const GimpCoords *last_coords,
+                                    const GimpCoords *current_coords);
+  void        (* transform_size)   (GimpBrush        *brush,
+                                    gdouble           scale_x,
+                                    gdouble           scale_y,
+                                    gdouble           angle,
+                                    gint             *width,
+                                    gint             *height);
+  TempBuf   * (* transform_mask)   (GimpBrush        *brush,
+                                    gdouble           scale_x,
+                                    gdouble           scale_y,
+                                    gdouble           angle);
+  TempBuf   * (* transform_pixmap) (GimpBrush        *brush,
+                                    gdouble           scale_x,
+                                    gdouble           scale_y,
+                                    gdouble           angle);
 
   /*  signals  */
-  void        (* spacing_changed)  (GimpBrush  *brush);
+  void        (* spacing_changed)  (GimpBrush        *brush);
 };
 
 
@@ -82,11 +82,11 @@ GimpData  * gimp_brush_new              (const gchar      *name);
 GimpData  * gimp_brush_get_standard     (void);
 
 GimpBrush * gimp_brush_select_brush     (GimpBrush        *brush,
-                                         GimpCoords       *last_coords,
-                                         GimpCoords       *cur_coords);
+                                         const GimpCoords *last_coords,
+                                         const GimpCoords *current_coords);
 gboolean    gimp_brush_want_null_motion (GimpBrush        *brush,
-                                         GimpCoords       *last_coords,
-                                         GimpCoords       *cur_coords);
+                                         const GimpCoords *last_coords,
+                                         const GimpCoords *current_coords);
 
 /* Gets width and height of a transformed mask of the brush, for provided parameters. */
 void        gimp_brush_transform_size   (GimpBrush        *brush,
