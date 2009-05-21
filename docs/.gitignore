@@ -1,8 +1,8 @@
 /Makefile
 /Makefile.in
-/gimp-2.7.1
-/gimprc-2.7.5
-/gimp-remote-2.7.1
+/gimp-2.*.1
+/gimprc-2.*.5
+/gimp-remote-2.*.1
 /gimptool-2.0.1
 /Wilber.xcf
 /Wilber_Construction_Kit.xcf
