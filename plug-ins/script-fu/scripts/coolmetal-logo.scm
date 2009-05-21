@@ -119,7 +119,7 @@
   (begin
     (gimp-image-undo-group-start img)
 
-    (if (car (gimp-layer-is-floating-sel logo-layer))
+    (if (= (car (gimp-layer-is-floating-sel logo-layer)) TRUE)
         (begin
             (gimp-floating-sel-to-layer logo-layer)
             (set! logo-layer (car (gimp-image-get-active-layer img)))
