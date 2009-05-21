@@ -2964,7 +2964,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
                   if (alpha_dither)
                     {
-                      if ((src[ALPHA_G] << 6) < (255 * dmval))
+                      if (src[ALPHA_G] < dmval)
                         transparent = TRUE;
                     }
                   else
@@ -3198,7 +3198,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
                   if (alpha_dither)
                     {
-                      if ((src[alpha_pix] << 6) < (255*dmval))
+                      if (src[alpha_pix] < dmval)
                         transparent = TRUE;
                     }
                   else
