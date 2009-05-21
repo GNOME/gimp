@@ -339,6 +339,7 @@ EXPORTS
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
+	gimp_image_get_uri
 	gimp_image_get_vectors
 	gimp_image_get_vectors_by_tattoo
 	gimp_image_get_vectors_position
