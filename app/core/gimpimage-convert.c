@@ -1271,6 +1271,7 @@ generate_histogram_rgb (CFHistogram   histogram,
           while (size--)
             {
 	      gboolean transparent = FALSE;
+
 	      if (has_alpha)
 	        {
 		  if (alpha_dither)
@@ -2815,8 +2816,8 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
                   if (alpha_dither)
                     {
-                      gint dither_x = (col+offsetx+srcPR.x) & DM_WIDTHMASK;
-                      gint dither_y = (row+offsety+srcPR.y) & DM_HEIGHTMASK;
+                      gint dither_x = (col + offsetx + srcPR.x) & DM_WIDTHMASK;
+                      gint dither_y = (row + offsety + srcPR.y) & DM_HEIGHTMASK;
 
                       if ((src[ALPHA_G]) < DM[dither_x][dither_y])
                         transparent = TRUE;
@@ -2899,8 +2900,8 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
           for (col = 0; col < srcPR.w; col++)
             {
               const int dmval =
-                DM[(col+offsetx+srcPR.x) & DM_WIDTHMASK]
-                [(row+offsety+srcPR.y) & DM_HEIGHTMASK];
+                DM[(col + offsetx + srcPR.x) & DM_WIDTHMASK]
+                [(row + offsety + srcPR.y) & DM_HEIGHTMASK];
 
               /* get pixel value and index into the cache */
               pixel = src[GRAY];
@@ -3069,8 +3070,8 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
                   if (alpha_dither)
                     {
-                      gint dither_x = (col+offsetx+srcPR.x) & DM_WIDTHMASK;
-                      gint dither_y = (row+offsety+srcPR.y) & DM_HEIGHTMASK;
+                      gint dither_x = (col + offsetx + srcPR.x) & DM_WIDTHMASK;
+                      gint dither_y = (row + offsety + srcPR.y) & DM_HEIGHTMASK;
                       if ((src[alpha_pix]) < DM[dither_x][dither_y])
                         transparent = TRUE;
                     }
@@ -3189,8 +3190,8 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
           for (col = 0; col < srcPR.w; col++)
             {
               const int dmval =
-                DM[(col+offsetx+srcPR.x) & DM_WIDTHMASK]
-                [(row+offsety+srcPR.y) & DM_HEIGHTMASK];
+                DM[(col + offsetx + srcPR.x) & DM_WIDTHMASK]
+                [(row + offsety + srcPR.y) & DM_HEIGHTMASK];
 
               if (has_alpha)
                 {
@@ -3680,8 +3681,8 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
                 {
                   if (alpha_dither)
                     {
-                      gint dither_x = (col+offsetx) & DM_WIDTHMASK;
-                      gint dither_y = (row+offsety) & DM_HEIGHTMASK;
+                      gint dither_x = (col + offsetx) & DM_WIDTHMASK;
+                      gint dither_y = (row + offsety) & DM_HEIGHTMASK;
 
                       if ((src[ALPHA_G]) < DM[dither_x][dither_y])
                         transparent = TRUE;
@@ -3964,8 +3965,8 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
                 {
                   if (alpha_dither)
                     {
-                      gint dither_x = (col+offsetx) & DM_WIDTHMASK;
-                      gint dither_y = (row+offsety) & DM_HEIGHTMASK;
+                      gint dither_x = (col + offsetx) & DM_WIDTHMASK;
+                      gint dither_y = (row + offsety) & DM_HEIGHTMASK;
 
                       if ((src[alpha_pix]) < DM[dither_x][dither_y])
                         transparent = TRUE;
