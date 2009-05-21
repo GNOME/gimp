@@ -75,6 +75,29 @@ sanity_check (void)
 
 /*  private functions  */
 
+static gboolean
+sanity_check_version (guint major_version, guint required_major,
+                      guint minor_version, guint required_minor,
+                      guint micro_version, guint required_micro)
+{
+  if (major_version > required_major)
+    return TRUE;
+
+  if (major_version < required_major)
+    return FALSE;
+
+  if (minor_version > required_minor)
+    return TRUE;
+
+  if (minor_version < required_minor)
+    return FALSE;
+
+  if (micro_version >= required_micro)
+    return TRUE;
+
+  return FALSE;
+}
+
 static gchar *
 sanity_check_gimp (void)
 {
@@ -266,9 +289,9 @@ sanity_check_babl (void)
                     &babl_minor_version,
                     &babl_micro_version);
 
-  if (babl_major_version < BABL_REQUIRED_MAJOR ||
-      babl_minor_version < BABL_REQUIRED_MINOR ||
-      babl_micro_version < BABL_REQUIRED_MICRO)
+  if (! sanity_check_version (babl_major_version, BABL_REQUIRED_MAJOR,
+                              babl_minor_version, BABL_REQUIRED_MINOR,
+                              babl_micro_version, BABL_REQUIRED_MICRO))
     {
       return g_strdup_printf
         ("BABL version too old!\n\n"
@@ -304,9 +327,9 @@ sanity_check_gegl (void)
                     &gegl_minor_version,
                     &gegl_micro_version);
 
-  if (gegl_major_version < GEGL_REQUIRED_MAJOR ||
-      gegl_minor_version < GEGL_REQUIRED_MINOR ||
-      gegl_micro_version < GEGL_REQUIRED_MICRO)
+  if (! sanity_check_version (gegl_major_version, GEGL_REQUIRED_MAJOR,
+                              gegl_minor_version, GEGL_REQUIRED_MINOR,
+                              gegl_micro_version, GEGL_REQUIRED_MICRO))
     {
       return g_strdup_printf
         ("GEGL version too old!\n\n"
