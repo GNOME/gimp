@@ -1077,8 +1077,11 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                       gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
                                                         column, edit_cell, TRUE);
                     }
-                  else if (! toggled_cell) /* ignore double click on toggles */
+                  else if (! toggled_cell && bevent->state == 0)
                     {
+                      /* Only activate if we're not in a toggled cell
+                       * and no modifier keys are pressed
+                       */
                       gimp_container_view_item_activated (container_view,
                                                           renderer->viewable);
                     }
