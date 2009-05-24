@@ -40,11 +40,15 @@ enum
 };
 
 
-static void       gimp_browser_destroy        (GtkObject   *object);
+static void      gimp_browser_destroy          (GtkObject             *object);
 
-static void       gimp_browser_entry_changed  (GtkEditable *editable,
-                                               GimpBrowser *browser);
-static gboolean   gimp_browser_search_timeout (gpointer     data);
+static void      gimp_browser_entry_changed    (GtkEditable           *editable,
+                                                GimpBrowser           *browser);
+static void      gimp_browser_entry_icon_press (GtkEntry              *entry,
+                                                GtkEntryIconPosition   icon_pos,
+                                                GdkEvent              *event,
+                                                GimpBrowser           *browser);
+static gboolean  gimp_browser_search_timeout   (gpointer               data);
 
 
 G_DEFINE_TYPE (GimpBrowser, gimp_browser, GTK_TYPE_HPANED)
@@ -106,6 +110,17 @@ gimp_browser_init (GimpBrowser *browser)
 
   g_signal_connect (browser->search_entry, "changed",
                     G_CALLBACK (gimp_browser_entry_changed),
+                    browser);
+
+  gtk_entry_set_icon_from_stock (GTK_ENTRY (browser->search_entry),
+                                 GTK_ENTRY_ICON_SECONDARY,
+                                 GTK_STOCK_CLEAR);
+  gtk_entry_set_icon_activatable (GTK_ENTRY (browser->search_entry),
+                                  GTK_ENTRY_ICON_SECONDARY,
+                                  TRUE);
+
+  g_signal_connect (browser->search_entry, "icon-press",
+                    G_CALLBACK (gimp_browser_entry_icon_press),
                     browser);
 
   /* count label */
@@ -308,6 +323,18 @@ gimp_browser_entry_changed (GtkEditable *editable,
 
   browser->search_timeout_id =
     g_timeout_add (100, gimp_browser_search_timeout, browser);
+}
+
+static void
+gimp_browser_entry_icon_press (GtkEntry              *entry,
+                               GtkEntryIconPosition   icon_pos,
+                               GdkEvent              *event,
+                               GimpBrowser           *browser)
+{
+  if (((GdkEventButton*) event)->button == 1)
+    {
+      gtk_entry_set_text (entry, "");
+    }
 }
 
 static gboolean
