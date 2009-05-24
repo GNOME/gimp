@@ -312,8 +312,8 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
                               gboolean          proximity,
                               GimpDisplay      *display)
 {
-  GimpColorPickMode  mode   = GIMP_COLOR_PICK_MODE_NONE;
-  const gchar       *status = NULL;
+  GimpColorPickMode  mode;
+  const gchar       *status;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
@@ -330,10 +330,15 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
       mode   = GIMP_COLOR_PICK_MODE_PALETTE;
       status = _("Click to add control points to all channels");
     }
+  else
+    {
+      mode   = GIMP_COLOR_PICK_MODE_NONE;
+      status = _("Click to locate on curve (try Shift, Ctrl)");
+    }
 
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;
 
-  if (status && proximity)
+  if (proximity)
     gimp_tool_push_status (tool, display, "%s", status);
 }
 
