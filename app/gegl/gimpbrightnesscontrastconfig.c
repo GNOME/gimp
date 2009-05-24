@@ -66,7 +66,7 @@ gimp_brightness_contrast_config_class_init (GimpBrightnessContrastConfigClass *k
   object_class->set_property       = gimp_brightness_contrast_config_set_property;
   object_class->get_property       = gimp_brightness_contrast_config_get_property;
 
-  viewable_class->default_stock_id = "gimp-tool-brightness-constrast";
+  viewable_class->default_stock_id = "gimp-tool-brightness-contrast";
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRIGHTNESS,
                                    "brightness",
