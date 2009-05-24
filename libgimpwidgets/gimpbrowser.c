@@ -42,7 +42,9 @@ enum
 
 static void      gimp_browser_destroy          (GtkObject             *object);
 
-static void      gimp_browser_entry_changed    (GtkEditable           *editable,
+static void      gimp_browser_combo_changed    (GtkComboBox           *combo,
+                                                GimpBrowser           *browser);
+static void      gimp_browser_entry_changed    (GtkEntry              *entry,
                                                 GimpBrowser           *browser);
 static void      gimp_browser_entry_icon_press (GtkEntry              *entry,
                                                 GtkEntryIconPosition   icon_pos,
@@ -113,11 +115,11 @@ gimp_browser_init (GimpBrowser *browser)
                     browser);
 
   gtk_entry_set_icon_from_stock (GTK_ENTRY (browser->search_entry),
-                                 GTK_ENTRY_ICON_SECONDARY,
-                                 GTK_STOCK_CLEAR);
+                                 GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_CLEAR);
   gtk_entry_set_icon_activatable (GTK_ENTRY (browser->search_entry),
-                                  GTK_ENTRY_ICON_SECONDARY,
-                                  TRUE);
+                                  GTK_ENTRY_ICON_SECONDARY, TRUE);
+  gtk_entry_set_icon_sensitive (GTK_ENTRY (browser->search_entry),
+                                GTK_ENTRY_ICON_SECONDARY, FALSE);
 
   g_signal_connect (browser->search_entry, "icon-press",
                     G_CALLBACK (gimp_browser_entry_icon_press),
@@ -231,7 +233,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
                                   &browser->search_type);
 
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_browser_entry_changed),
+                        G_CALLBACK (gimp_browser_combo_changed),
                         browser);
     }
   else
@@ -315,14 +317,31 @@ gimp_browser_show_message (GimpBrowser *browser,
 /*  private functions  */
 
 static void
-gimp_browser_entry_changed (GtkEditable *editable,
-                            GimpBrowser *browser)
+gimp_browser_queue_search (GimpBrowser *browser)
 {
   if (browser->search_timeout_id)
     g_source_remove (browser->search_timeout_id);
 
   browser->search_timeout_id =
     g_timeout_add (100, gimp_browser_search_timeout, browser);
+}
+
+static void
+gimp_browser_combo_changed (GtkComboBox *combo,
+                            GimpBrowser *browser)
+{
+  gimp_browser_queue_search (browser);
+}
+
+static void
+gimp_browser_entry_changed (GtkEntry    *entry,
+                            GimpBrowser *browser)
+{
+  gimp_browser_queue_search (browser);
+
+  gtk_entry_set_icon_sensitive (entry,
+                                GTK_ENTRY_ICON_SECONDARY,
+                                gtk_entry_get_text_length (entry) > 0);
 }
 
 static void
