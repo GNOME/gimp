@@ -210,7 +210,7 @@ browser_dialog_open (const gchar *plug_in_binary)
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/ui/help-browser-popup/forward");
-  gtk_action_connect_proxy (action, GTK_WIDGET (item));
+  gtk_activatable_set_related_action (GTK_ACTIVATABLE (item), action);
   g_object_notify (G_OBJECT (action), "tooltip");
   button_next = GTK_WIDGET (item);
 
@@ -220,7 +220,7 @@ browser_dialog_open (const gchar *plug_in_binary)
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/ui/help-browser-popup/back");
-  gtk_action_connect_proxy (action, GTK_WIDGET (item));
+  gtk_activatable_set_related_action (GTK_ACTIVATABLE (item), action);
   g_object_notify (G_OBJECT (action), "tooltip");
   button_prev = GTK_WIDGET (item);
 

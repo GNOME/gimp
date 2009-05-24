@@ -911,7 +911,8 @@ static void
 gimp_ui_manager_menu_item_select (GtkWidget     *widget,
                                   GimpUIManager *manager)
 {
-  GtkAction *action = gtk_widget_get_action (widget);
+  GtkAction *action =
+    gtk_activatable_get_related_action (GTK_ACTIVATABLE (widget));
 
   if (action)
     {
