@@ -516,8 +516,8 @@ make_tools(GtkWidget *window)
 
   handlebox = gtk_handle_box_new ();
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/Tools");
-  gtk_toolbar_set_orientation (GTK_TOOLBAR (toolbar),
-			       GTK_ORIENTATION_VERTICAL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (toolbar),
+                                  GTK_ORIENTATION_VERTICAL);
 
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
   gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
@@ -536,9 +536,10 @@ make_selection_toolbar(void)
 
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/Selection");
 
-  gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
-  gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
-  gtk_container_set_border_width(GTK_CONTAINER(toolbar), 0);
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (toolbar),
+                                  GTK_ORIENTATION_VERTICAL);
+  gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
 
   gtk_widget_show (toolbar);
   return toolbar;
