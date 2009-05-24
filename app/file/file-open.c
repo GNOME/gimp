@@ -202,20 +202,20 @@ file_open_image (Gimp                *gimp,
   if (image)
     {
       file_open_handle_color_profile (image, context, progress, run_mode);
-    }
 
-  if (file_open_file_proc_is_import (file_proc))
-    {
-      /* Remember the import source */
-      g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
-                              g_strdup (uri), (GDestroyNotify) g_free);
+      if (file_open_file_proc_is_import (file_proc))
+        {
+          /* Remember the import source */
+          g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
+                                  g_strdup (uri), (GDestroyNotify) g_free);
 
-      /* Set 'Export to' target to import source */
-      g_object_set_data_full (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY,
-                              g_strdup (uri), (GDestroyNotify) g_free);
+          /* Set 'Export to' target to import source */
+          g_object_set_data_full (G_OBJECT (image), GIMP_FILE_EXPORT_TO_URI_KEY,
+                                  g_strdup (uri), (GDestroyNotify) g_free);
 
-      /* We shall treat this file as an Untitled file */
-      gimp_object_set_name (GIMP_OBJECT (image), NULL);
+          /* We shall treat this file as an Untitled file */
+          gimp_object_set_name (GIMP_OBJECT (image), NULL);
+        }
     }
 
   return image;
