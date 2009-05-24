@@ -331,7 +331,9 @@ gimp_browser_entry_icon_press (GtkEntry              *entry,
                                GdkEvent              *event,
                                GimpBrowser           *browser)
 {
-  if (((GdkEventButton*) event)->button == 1)
+  GdkEventButton *bevent = (GdkEventButton *) event;
+
+  if (icon_pos == GTK_ENTRY_ICON_SECONDARY && bevent->button == 1)
     {
       gtk_entry_set_text (entry, "");
     }
