@@ -36,6 +36,7 @@ LDADD = \
 	$(libgimpbase)		\
 	$(WEBKIT_LIBS)		\
 	$(GIO_LIBS)		\
+	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
