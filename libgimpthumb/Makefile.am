@@ -86,7 +86,10 @@ noinst_PROGRAMS = gimp-thumbnail-list
 
 gimp_thumbnail_list_SOURCES = gimp-thumbnail-list.c
 
-gimp_thumbnail_list_LDADD = libgimpthumb-$(GIMP_API_VERSION).la
+gimp_thumbnail_list_LDADD = \
+	libgimpthumb-$(GIMP_API_VERSION).la \
+	$(GDK_PIXBUF_LIBS) \
+	$(GLIB_LIBS)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib
