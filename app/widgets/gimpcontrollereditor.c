@@ -308,7 +308,7 @@ gimp_controller_editor_constructor (GType                  type,
       const gchar *event_name;
       const gchar *event_blurb;
       const gchar *event_action;
-      gchar       *stock_id = NULL;
+      const gchar *stock_id = NULL;
 
       event_name  = gimp_controller_get_event_name  (controller, i);
       event_blurb = gimp_controller_get_event_blurb (controller, i);
@@ -322,7 +322,7 @@ gimp_controller_editor_constructor (GType                  type,
           action = gimp_ui_manager_find_action (ui_manager, NULL, event_action);
 
           if (action)
-            g_object_get (action, "stock-id", &stock_id, NULL);
+            stock_id = gtk_action_get_stock_id (action);
         }
 
       gtk_list_store_append (store, &iter);
@@ -332,9 +332,6 @@ gimp_controller_editor_constructor (GType                  type,
                           COLUMN_STOCK_ID, stock_id,
                           COLUMN_ACTION,   event_action,
                           -1);
-
-      if (stock_id)
-        g_free (stock_id);
     }
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 0,

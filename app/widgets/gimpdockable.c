@@ -1232,9 +1232,7 @@ gimp_dockable_show_menu (GimpDockable *dockable)
           if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (),
                                        dockable->stock_id))
             {
-              g_object_set (parent_menu_action,
-                            "icon-name", dockable->stock_id,
-                            NULL);
+              gtk_action_set_icon_name (parent_menu_action, dockable->stock_id);
             }
         }
 

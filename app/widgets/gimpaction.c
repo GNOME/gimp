@@ -289,7 +289,7 @@ gimp_action_new (const gchar *name,
   if (stock_id)
     {
       if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), stock_id))
-        g_object_set (action, "icon-name", stock_id, NULL);
+        gtk_action_set_icon_name (GTK_ACTION (action), stock_id);
     }
 
   return action;
@@ -409,17 +409,12 @@ static void
 gimp_action_set_proxy_tooltip (GimpAction *action,
                                GtkWidget  *proxy)
 {
-  gchar *tooltip;
-
-  g_object_get (action, "tooltip", &tooltip, NULL);
+  const gchar *tooltip = gtk_action_get_tooltip (GTK_ACTION (action));
 
   if (tooltip)
-    {
-      gimp_help_set_help_data (proxy, tooltip,
-                               g_object_get_qdata (G_OBJECT (proxy),
-                                                   GIMP_HELP_ID));
-      g_free (tooltip);
-    }
+    gimp_help_set_help_data (proxy, tooltip,
+                             g_object_get_qdata (G_OBJECT (proxy),
+                                                 GIMP_HELP_ID));
 }
 
 static void

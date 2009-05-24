@@ -230,12 +230,12 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
                   key->accel_key &&
                   key->accel_flags & GTK_ACCEL_VISIBLE)
                 {
-                  gchar *label_tmp       = NULL;
-                  gchar *label           = NULL;
-                  gchar *key_string      = NULL;
-                  gchar *formated_string = NULL;
+                  const gchar *label_tmp;
+                  gchar       *label;
+                  gchar       *key_string;
+                  gchar       *formated_string;
 
-                  g_object_get (action, "label", &label_tmp, NULL);
+                  label_tmp       = gtk_action_get_label (action);
                   label           = gimp_strip_uline (label_tmp);
                   key_string      = gtk_accelerator_get_label (key->accel_key,
                                                                key->accel_mods);
@@ -247,7 +247,6 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
 
                   g_free (key_string);
                   g_free (label);
-                  g_free (label_tmp);
                 }
             }
         }

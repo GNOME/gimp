@@ -615,7 +615,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   GtkWidget       *image;
   GtkIconSize      button_icon_size;
   GtkReliefStyle   button_relief;
-  gchar           *stock_id;
+  const gchar     *stock_id;
   gchar           *tooltip;
   const gchar     *help_id;
   GList           *extended = NULL;
@@ -648,10 +648,8 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
 
-  g_object_get (action,
-                "stock-id", &stock_id,
-                "tooltip",  &tooltip,
-                NULL);
+  stock_id = gtk_action_get_stock_id (action);
+  tooltip  = g_strdup (gtk_action_get_tooltip (action));
 
   old_child = gtk_bin_get_child (GTK_BIN (button));
 
@@ -661,8 +659,6 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   image = gtk_image_new_from_stock (stock_id, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
-
-  g_free (stock_id);
 
   gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
   gtk_box_pack_start (GTK_BOX (editor->button_box), button, TRUE, TRUE, 0);
@@ -692,17 +688,13 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
           if (tooltip)
             {
-              gchar *ext_tooltip;
-
-              g_object_get (action, "tooltip", &ext_tooltip, NULL);
+              const gchar *ext_tooltip = gtk_action_get_tooltip (action);
 
               if (ext_tooltip)
                 {
                   gchar *tmp = g_strconcat (tooltip, "\n<b>",
                                             gimp_get_mod_string (mod_mask),
                                             "</b>  ", ext_tooltip, NULL);
-
-                  g_free (ext_tooltip);
                   g_free (tooltip);
                   tooltip = tmp;
                 }

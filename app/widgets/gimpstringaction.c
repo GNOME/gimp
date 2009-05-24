@@ -170,7 +170,7 @@ gimp_string_action_new (const gchar *name,
   if (stock_id)
     {
       if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), stock_id))
-        g_object_set (action, "icon-name", stock_id, NULL);
+        gtk_action_set_icon_name (GTK_ACTION (action), stock_id);
     }
 
   return action;

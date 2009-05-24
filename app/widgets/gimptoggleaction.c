@@ -81,18 +81,17 @@ gimp_toggle_action_new (const gchar *name,
   GtkToggleAction *action;
 
   action = g_object_new (GIMP_TYPE_TOGGLE_ACTION,
-                         "name",     name,
-                         "label",    label,
-                         "tooltip",  tooltip,
-                         "stock-id", stock_id,
+                         "name",    name,
+                         "label",   label,
+                         "tooltip", tooltip,
                          NULL);
 
   if (stock_id)
     {
       if (gtk_icon_factory_lookup_default (stock_id))
-        g_object_set (action, "stock-id", stock_id, NULL);
+        gtk_action_set_stock_id (GTK_ACTION (action), stock_id);
       else
-        g_object_set (action, "icon-name", stock_id, NULL);
+        gtk_action_set_icon_name (GTK_ACTION (action), stock_id);
     }
 
   return action;
@@ -106,17 +105,12 @@ static void
 gimp_toggle_action_set_proxy_tooltip (GimpToggleAction *action,
                                       GtkWidget        *proxy)
 {
-  gchar *tooltip;
-
-  g_object_get (action, "tooltip", &tooltip, NULL);
+  const gchar *tooltip = gtk_action_get_tooltip (GTK_ACTION (action));
 
   if (tooltip)
-    {
-      gimp_help_set_help_data (proxy, tooltip,
-                               g_object_get_qdata (G_OBJECT (proxy),
-                                                   GIMP_HELP_ID));
-      g_free (tooltip);
-    }
+    gimp_help_set_help_data (proxy, tooltip,
+                             g_object_get_qdata (G_OBJECT (proxy),
+                                                 GIMP_HELP_ID));
 }
 
 static void

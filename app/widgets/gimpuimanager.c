@@ -916,15 +916,10 @@ gimp_ui_manager_menu_item_select (GtkWidget     *widget,
 
   if (action)
     {
-      gchar *tooltip;
-
-      g_object_get (action, "tooltip", &tooltip, NULL);
+      const gchar *tooltip = gtk_action_get_tooltip (action);
 
       if (tooltip)
-        {
-          g_signal_emit (manager, manager_signals[SHOW_TOOLTIP], 0, tooltip);
-          g_free (tooltip);
-        }
+        g_signal_emit (manager, manager_signals[SHOW_TOOLTIP], 0, tooltip);
     }
 }
 

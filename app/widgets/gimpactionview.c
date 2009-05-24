@@ -241,10 +241,9 @@ gimp_action_view_new (GimpUIManager *manager,
         {
           GtkAction       *action        = list2->data;
           const gchar     *name          = gtk_action_get_name (action);
-          gchar           *stock_id;
+          const gchar     *stock_id      = gtk_action_get_stock_id (action);
           gchar           *label;
           gchar           *label_casefold;
-          gchar           *tmp;
           guint            accel_key     = 0;
           GdkModifierType  accel_mask    = 0;
           GClosure        *accel_closure = NULL;
@@ -255,13 +254,7 @@ gimp_action_view_new (GimpUIManager *manager,
               name[0] == '<')
             continue;
 
-          g_object_get (action,
-                        "stock-id", &stock_id,
-                        "label",    &tmp,
-                        NULL);
-
-          label = gimp_strip_uline (tmp);
-          g_free (tmp);
+          label = gimp_strip_uline (gtk_action_get_label (action));
 
           if (! (label && strlen (label)))
             {
@@ -307,7 +300,6 @@ gimp_action_view_new (GimpUIManager *manager,
                               GIMP_ACTION_VIEW_COLUMN_ACCEL_CLOSURE,  accel_closure,
                               -1);
 
-          g_free (stock_id);
           g_free (label);
           g_free (label_casefold);
 
@@ -655,19 +647,14 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
 {
   GimpActionGroup *group;
   gchar           *label;
-  gchar           *tmp;
   gchar           *accel_string;
   ConfirmData     *confirm_data;
   GtkWidget       *dialog;
   GimpMessageBox  *box;
 
-  g_object_get (action,
-                "action-group", &group,
-                "label",        &tmp,
-                NULL);
+  g_object_get (action, "action-group", &group, NULL);
 
-  label = gimp_strip_uline (tmp);
-  g_free (tmp);
+  label = gimp_strip_uline (gtk_action_get_label (action));
 
   accel_string = gtk_accelerator_get_label (accel_key, accel_mask);
 

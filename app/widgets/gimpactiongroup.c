@@ -842,7 +842,7 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
   else
     stripped = (gchar *) label;
 
-  g_object_set (action, "label", stripped, NULL);
+  gtk_action_set_label (action, stripped);
 
   if (! group->mnemonics)
     g_free (stripped);

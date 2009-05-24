@@ -1030,12 +1030,12 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
     {
       GtkAction   *action;
       GtkAccelKey *accel_key;
-      gchar       *tooltip;
+      const gchar *tooltip;
       const gchar *help_id;
 
       action = g_object_get_data (G_OBJECT (widget), "gimp-accel-action");
 
-      g_object_get (action, "tooltip", &tooltip, NULL);
+      tooltip = gtk_action_get_tooltip (action);
       help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
       accel_key = gtk_accel_group_find (accel_group,
@@ -1061,8 +1061,6 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
         {
           gimp_help_set_help_data (widget, tooltip, help_id);
         }
-
-      g_free (tooltip);
     }
 }
 
@@ -1094,15 +1092,13 @@ gimp_widget_set_accel_help (GtkWidget *widget,
     }
   else
     {
-      gchar *tooltip;
-      gchar *help_id;
+      const gchar *tooltip;
+      const gchar *help_id;
 
-      g_object_get (action, "tooltip", &tooltip, NULL);
+      tooltip = gtk_action_get_tooltip (action);
       help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
       gimp_help_set_help_data (widget, tooltip, help_id);
-
-      g_free (tooltip);
     }
 }
 
