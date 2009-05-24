@@ -413,7 +413,7 @@ context_paint_mode_cmd_callback (GtkAction *action,
   if (tool_info && GIMP_IS_TOOL_OPTIONS (tool_info->tool_options))
     {
       GimpDisplay *display;
-      char        *value_desc;
+      const char  *value_desc;
 
       gimp_enum_get_value (GIMP_TYPE_LAYER_MODE_EFFECTS, index,
                            NULL, NULL, &value_desc, NULL);
@@ -536,7 +536,7 @@ context_brush_shape_cmd_callback (GtkAction *action,
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       GimpDisplay        *display;
-      char               *value_desc;
+      const char         *value_desc;
 
       gimp_brush_generated_set_shape (generated,
                                       (GimpBrushGeneratedShape) value);
