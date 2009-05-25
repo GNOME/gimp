@@ -264,9 +264,9 @@ gimp_paint_tool_button_press (GimpTool         *tool,
       return;
     }
 
-  drawable = gimp_image_get_active_drawable (display->image);
-
   curr_coords = *coords;
+
+  drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -332,7 +332,8 @@ gimp_paint_tool_button_press (GimpTool         *tool,
   /*  Paint to the image  */
   if (paint_tool->draw_line)
     {
-      gimp_paint_core_interpolate (core, drawable, paint_options, time);
+      gimp_paint_core_interpolate (core, drawable, paint_options,
+                                   &core->cur_coords, time);
     }
   else
     {
@@ -403,33 +404,34 @@ gimp_paint_tool_motion (GimpTool         *tool,
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
   GimpDrawable     *drawable;
+  GimpCoords        curr_coords;
   gint              off_x, off_y;
-
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-    {
-      GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state,
-                                              display);
-      return;
-    }
-
-  drawable = gimp_image_get_active_drawable (display->image);
-
-  core->cur_coords = *coords;
-
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-  core->cur_coords.x -= off_x;
-  core->cur_coords.y -= off_y;
 
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    return;
+
+  curr_coords = *coords;
+
+  drawable = gimp_image_get_active_drawable (display->image);
+
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+  curr_coords.x -= off_x;
+  curr_coords.y -= off_y;
+
   /*  don't paint while the Shift key is pressed for line drawing  */
   if (paint_tool->draw_line)
-    return;
+    {
+      gimp_paint_core_set_current_coords (core, &curr_coords);
+      return;
+    }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gimp_paint_core_interpolate (core, drawable, paint_options, time);
+  gimp_paint_core_interpolate (core, drawable, paint_options,
+                               &curr_coords, time);
 
   gimp_projection_flush_now (gimp_image_get_projection (display->image));
   gimp_display_flush_now (display);

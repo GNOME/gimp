@@ -132,6 +132,7 @@ void      gimp_paint_core_cleanup                   (GimpPaintCore    *core);
 void      gimp_paint_core_interpolate               (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
+                                                     const GimpCoords *coords,
                                                      guint32           time);
 
 void      gimp_paint_core_set_current_coords        (GimpPaintCore    *core,

@@ -78,9 +78,8 @@ gimp_paint_core_stroke (GimpPaintCore     *core,
 
       for (i = 1; i < n_strokes; i++)
         {
-          core->cur_coords = strokes[i];
-
-          gimp_paint_core_interpolate (core, drawable, paint_options, 0);
+          gimp_paint_core_interpolate (core, drawable, paint_options,
+                                       &strokes[i], 0);
         }
 
       gimp_paint_core_paint (core, drawable, paint_options,
@@ -194,9 +193,8 @@ gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
 
           for (i = 1; i < n_coords; i++)
             {
-              core->cur_coords = coords[i];
-
-              gimp_paint_core_interpolate (core, drawable, paint_options, 0);
+              gimp_paint_core_interpolate (core, drawable, paint_options,
+                                           &coords[i], 0);
             }
 
           gimp_paint_core_paint (core, drawable, paint_options,
@@ -299,9 +297,9 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
 
               for (i = 1; i < coords->len; i++)
                 {
-                  core->cur_coords = g_array_index (coords, GimpCoords, i);
-
-                  gimp_paint_core_interpolate (core, drawable, paint_options, 0);
+                  gimp_paint_core_interpolate (core, drawable, paint_options,
+                                               &g_array_index (coords, GimpCoords, i),
+                                               0);
                 }
 
               gimp_paint_core_paint (core, drawable, paint_options,

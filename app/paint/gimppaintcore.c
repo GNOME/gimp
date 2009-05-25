@@ -568,12 +568,16 @@ void
 gimp_paint_core_interpolate (GimpPaintCore    *core,
                              GimpDrawable     *drawable,
                              GimpPaintOptions *paint_options,
+                             const GimpCoords *coords,
                              guint32           time)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (coords != NULL);
+
+  core->cur_coords = *coords;
 
   GIMP_PAINT_CORE_GET_CLASS (core)->interpolate (core, drawable,
                                                  paint_options, time);
