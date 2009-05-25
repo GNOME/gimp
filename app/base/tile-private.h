@@ -77,10 +77,10 @@ struct _Tile
 
 
 /*  tile_data_pointer() as a macro so that it can be inlined  */
-
+/*  note that (y) & (TILE_HEIGHT-1) is equivalent to (y) % TILE_HEIGHT 
+    for positive power-of-two divisors */
 #define TILE_DATA_POINTER(tile,x,y) \
   ((tile)->data + \
-   (((y) % TILE_HEIGHT) * (tile)->ewidth + ((x) % TILE_WIDTH)) * (tile)->bpp)
-
+   (((y) & (TILE_HEIGHT-1)) * (tile)->ewidth + ((x) & (TILE_WIDTH-1))) * (tile)->bpp)
 
 #endif /* __TILE_PRIVATE_H__ */
