@@ -1,3 +1,8 @@
+2009-05-25  Manoj Kumar Giri  <mgiri@redhat.com>
+
+	* LINGUAS: Added or into the List.
+	* or.po: Updated Oriya Translation.
+
 2009-04-27  Marco Ciampa  <ciampix@libero.it>
 
 	it.po: small fixes in italian translation.
