@@ -61,6 +61,9 @@ static void     gimp_combo_tag_entry_tag_count_changed (GimpFilteredContainer  *
 
 static void     gimp_combo_tag_entry_get_arrow_rect    (GimpComboTagEntry      *entry,
                                                         GdkRectangle           *arrow_rect);
+static gboolean gimp_combo_tag_entry_arrow_hit_test    (GimpComboTagEntry      *entry,
+                                                        gint                    x,
+                                                        gint                    y);
 
 
 G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GIMP_TYPE_TAG_ENTRY);
@@ -88,12 +91,13 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
   entry->popup                = NULL;
   entry->focus_width          = 0;
   entry->interior_focus       = FALSE;
+  entry->cursor_type          = GDK_XTERM;
   entry->normal_item_attr     = NULL;
   entry->selected_item_attr   = NULL;
   entry->insensitive_item_attr = NULL;
 
   gtk_widget_add_events (GTK_WIDGET (entry),
-                         GDK_BUTTON_PRESS_MASK);
+                         GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
 
   if (gtk_widget_get_direction (GTK_WIDGET (entry)) == GTK_TEXT_DIR_RTL)
     {
@@ -249,36 +253,62 @@ gimp_combo_tag_entry_event (GtkWidget *widget,
 {
   GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
 
-  if (event->type == GDK_BUTTON_PRESS)
+  switch (event->type)
     {
-      GdkEventButton   *button_event = (GdkEventButton *) event;
-      gint              x;
-      gint              y;
-      GdkRectangle      arrow_rect;
-
-      x = button_event->x;
-      y = button_event->y;
-
-      gimp_combo_tag_entry_get_arrow_rect (entry, &arrow_rect);
-      if (x > arrow_rect.x
-          && y > arrow_rect.y
-          && x < arrow_rect.x + arrow_rect.width
-          && y < arrow_rect.y + arrow_rect.height)
+      case GDK_BUTTON_PRESS:
         {
-          if (! entry->popup)
+          GdkEventButton   *button_event = (GdkEventButton *) event;
+
+          if (gimp_combo_tag_entry_arrow_hit_test (entry, button_event->x, button_event->y))
             {
-              gimp_combo_tag_entry_popup_list (entry);
+              if (! entry->popup)
+                {
+                  gimp_combo_tag_entry_popup_list (entry);
+                }
+              else
+                {
+                  gtk_widget_destroy (entry->popup);
+                }
+
+              return TRUE;
+            }
+
+          return FALSE;
+        }
+
+      case GDK_MOTION_NOTIFY:
+        {
+          GdkEventMotion   *motion_event = (GdkEventMotion *) event;
+          GdkCursorType     cursor_type;
+
+          if (gimp_combo_tag_entry_arrow_hit_test (entry, motion_event->x, motion_event->y))
+            {
+              cursor_type = GDK_ARROW;
             }
           else
             {
-              gtk_widget_destroy (entry->popup);
+              cursor_type = GDK_XTERM;
             }
 
-          return TRUE;
-        }
-    }
+          if (cursor_type != entry->cursor_type)
+            {
+              GdkDisplay *display;
+              GdkCursor  *cursor;
 
-  return FALSE;
+              display = gtk_widget_get_display (widget);
+              cursor = gdk_cursor_new_for_display (display, cursor_type);
+              gdk_window_set_cursor (motion_event->window, cursor);
+              gdk_cursor_unref (cursor);
+
+              entry->cursor_type = cursor_type;
+            }
+
+          return FALSE;
+        }
+
+      default:
+        return FALSE;
+    }
 }
 
 static void
@@ -387,4 +417,19 @@ gimp_combo_tag_entry_get_arrow_rect (GimpComboTagEntry *entry,
   arrow_rect->y      = 0;
   arrow_rect->width  = 12;
   arrow_rect->height = widget->allocation.height - style->ythickness * 2;
+}
+
+static gboolean
+gimp_combo_tag_entry_arrow_hit_test (GimpComboTagEntry *entry,
+                                     gint               x,
+                                     gint               y)
+{
+  GdkRectangle      arrow_rect;
+
+  gimp_combo_tag_entry_get_arrow_rect (entry, &arrow_rect);
+
+  return (x > arrow_rect.x
+          && y > arrow_rect.y
+          && x < arrow_rect.x + arrow_rect.width
+          && y < arrow_rect.y + arrow_rect.height);
 }

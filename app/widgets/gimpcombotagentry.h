@@ -44,6 +44,7 @@ struct _GimpComboTagEntry
   PangoAttrList  *insensitive_item_attr;
   GdkColor        selected_item_color;
   gboolean        interior_focus;
+  GdkCursorType   cursor_type;
 };
 
 struct _GimpComboTagEntryClass
