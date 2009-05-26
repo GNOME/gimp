@@ -53,7 +53,6 @@
 
 #include "gimp-intl.h"
 
-
 typedef enum
 {
   SWAP_IN = 1,
@@ -116,6 +115,39 @@ static gboolean       seek_err_msg     = TRUE;
 static gboolean       read_err_msg     = TRUE;
 static gboolean       write_err_msg    = TRUE;
 
+#ifdef TILE_PROFILING
+static gulong         tile_total_seek = 0;
+
+/* how many tiles were swapped out under cache pressure but never
+   swapped back in?  This does not count idle swapped tiles, as those
+   do not contribute to any perceived load or latency */
+static gulong         tile_total_wasted_swapout = 0;
+
+/* total tile flushes under cache pressure */
+gulong                tile_total_zorched = 0;
+gulong                tile_total_zorched_swapout = 0;
+static gulong         tile_total_zorched_swapin = 0;
+
+/* total tiles swapped out to swap file (not total calls to swap out;
+   this only counts actual flushes to disk) */
+static gulong         tile_total_swapout = 0;
+static gulong         tile_unique_swapout = 0;
+gulong                tile_idle_swapout = 0;
+
+/* total tiles swapped in from swap file (not total calls to swap in;
+   this only counts actual tile reads from disk) */
+static gulong         tile_total_swapin  = 0;
+static gulong         tile_unique_swapin  = 0;
+
+/* total dead time spent waiting to read or write */
+static glong          tile_total_swapwait_sec  = 0;
+static glong          tile_total_swapwait_usec = 0;
+
+/* total time spent in tile cache due to cache pressure */
+glong                 tile_total_interactive_sec = 0;
+glong                 tile_total_interactive_usec = 0;
+
+#endif
 
 #ifdef G_OS_WIN32
 
@@ -191,11 +223,29 @@ tile_swap_init (const gchar *path)
 void
 tile_swap_exit (void)
 {
-#ifdef HINTS_SANITY
+
+#ifdef TILE_PROFILING
   extern int tile_exist_peak;
 
-  g_printerr ("Tile exist peak was %d Tile structs (%d bytes)",
-              tile_exist_peak, tile_exist_peak * sizeof(Tile));
+  g_printerr ("\n\nPeak Tile usage: %d Tile structs\n\n",
+              tile_exist_peak);
+
+  g_printerr ("Total tiles swapped out to disk: %lu\n",tile_total_swapout);
+  g_printerr ("Unique tiles swapped out to disk: %lu\n",tile_unique_swapout);
+  g_printerr ("Total tiles swapped in from disk: %lu\n",tile_total_swapin);
+  g_printerr ("Unique tiles swapped in from disk: %lu\n",tile_unique_swapin);
+  g_printerr ("Tiles swapped out by idle swapper: %lu\n",tile_idle_swapout);
+  g_printerr ("Total seeks during swapping: %lu\n",tile_total_seek);
+  g_printerr ("Total time spent in swap: %f seconds\n\n",
+              tile_total_swapwait_sec+.000001*tile_total_swapwait_usec);
+
+  g_printerr ("Total zorched tiles: %lu\n",tile_total_zorched);
+  g_printerr ("Total zorched tiles swapped out: %lu\n",tile_total_zorched_swapout);
+  g_printerr ("Total zorched tiles swapped back in: %lu\n",tile_total_zorched_swapin);
+  g_printerr ("Total zorched tiles wasted after swapping out: %lu\n",tile_total_wasted_swapout);
+  g_printerr ("Total interactive swap/cache delay: %f seconds\n\n",
+              tile_total_interactive_sec+.000001*tile_total_interactive_usec);
+
 #endif
 
   if (tile_global_refcount () != 0)
@@ -316,13 +366,34 @@ tile_swap_default_in (SwapFile *swap_file,
 {
   gint   nleft;
   gint64 offset;
+#ifdef TILE_PROFILING
+  GTimeVal now;
+  GTimeVal later;
+#endif
 
   if (tile->data)
     return;
 
+#ifdef TILE_PROFILING
+  g_get_current_time(&now);
+  tile_total_swapin++;
+
+  if (tile->zorched)
+    tile_total_zorched_swapin++;
+
+  if (!tile->inonce)
+    tile_unique_swapin++;
+
+  tile->inonce = TRUE;
+#endif
+
   if (swap_file->cur_position != tile->swap_offset)
     {
       swap_file->cur_position = tile->swap_offset;
+
+#ifdef TILE_PROFILING
+      tile_total_seek++;
+#endif
 
       offset = LARGE_SEEK (swap_file->fd, tile->swap_offset, SEEK_SET);
       if (offset == -1)
@@ -361,6 +432,42 @@ tile_swap_default_in (SwapFile *swap_file,
       nleft -= err;
     }
 
+#ifdef TILE_PROFILING
+  g_get_current_time(&later);
+  tile_total_swapwait_usec += later.tv_usec - now.tv_usec;
+  tile_total_swapwait_sec += later.tv_sec - now.tv_sec;
+
+  if (tile_total_swapwait_usec < 0)
+    {
+      tile_total_swapwait_usec += 1000000;
+      tile_total_swapwait_sec--;
+    }
+
+  if (tile_total_swapwait_usec > 1000000)
+    {
+      tile_total_swapwait_usec -= 1000000;
+      tile_total_swapwait_sec++;
+    }
+
+  tile_total_interactive_usec += later.tv_usec - now.tv_usec;
+  tile_total_interactive_sec += later.tv_sec - now.tv_sec;
+
+  if (tile_total_interactive_usec < 0)
+    {
+      tile_total_interactive_usec += 1000000;
+      tile_total_interactive_sec--;
+    }
+
+  if (tile_total_interactive_usec > 1000000)
+    {
+      tile_total_interactive_usec -= 1000000;
+      tile_total_interactive_sec++;
+    }
+
+  tile->zorched = FALSE;
+  tile->zorchout = FALSE;
+#endif
+
   swap_file->cur_position += tile->size;
 
   /*  Do not delete the swap from the file  */
@@ -377,6 +484,17 @@ tile_swap_default_out (SwapFile *swap_file,
   gint   nleft;
   gint64 offset;
   gint64 newpos;
+#ifdef TILE_PROFILING
+  GTimeVal now;
+  GTimeVal later;
+  g_get_current_time(&now);
+  tile_total_swapout++;
+
+  if (!tile->outonce)
+    tile_unique_swapout++;
+
+  tile->outonce = TRUE;
+#endif
 
   bytes = TILE_WIDTH * TILE_HEIGHT * tile->bpp;
 
@@ -388,6 +506,11 @@ tile_swap_default_out (SwapFile *swap_file,
 
   if (swap_file->cur_position != newpos)
     {
+
+#ifdef TILE_PROFILING
+      tile_total_seek++;
+#endif
+
       offset = LARGE_SEEK (swap_file->fd, newpos, SEEK_SET);
 
       if (offset == -1)
@@ -420,6 +543,25 @@ tile_swap_default_out (SwapFile *swap_file,
       nleft -= err;
     }
 
+#ifdef TILE_PROFILING
+  g_get_current_time(&later);
+  tile_total_swapwait_usec += later.tv_usec - now.tv_usec;
+  tile_total_swapwait_sec += later.tv_sec - now.tv_sec;
+
+  if (tile_total_swapwait_usec < 0)
+    {
+      tile_total_swapwait_usec += 1000000;
+      tile_total_swapwait_sec--;
+    }
+
+  if (tile_total_swapwait_usec > 1000000)
+    {
+      tile_total_swapwait_usec -= 1000000;
+      tile_total_swapwait_sec++;
+    }
+
+#endif
+
   swap_file->cur_position += tile->size;
 
   /* Do NOT free tile->data because we may be pre-swapping.
@@ -444,6 +586,14 @@ tile_swap_default_delete (SwapFile *swap_file,
 
   if (tile->swap_offset == -1)
     return;
+
+#ifdef TILE_PROFILING
+  if (tile->zorchout)
+    tile_total_wasted_swapout++;
+
+  tile->zorched=FALSE;
+  tile->zorchout=FALSE;
+#endif
 
   start = tile->swap_offset;
   end = start + TILE_WIDTH * TILE_HEIGHT * tile->bpp;

@@ -18,6 +18,9 @@
 #ifndef __TILE_PRIVATE_H__
 #define __TILE_PRIVATE_H__
 
+/*  Uncomment to enable global counters to profile the tile system. */
+/*  #define TILE_PROFILING */
+
 #include <sys/types.h>
 
 typedef struct _TileLink TileLink;
@@ -47,6 +50,17 @@ struct _Tile
                            hold this tile */
   guint   dirty : 1;    /* is the tile dirty? has it been modified? */
   guint   valid : 1;    /* is the tile valid? */
+
+#ifdef TILE_PROFILING
+
+  guint zorched : 1;    /* was the tile flushed due to cache pressure
+			   [zorched]? */
+  guint zorchout: 1;    /* was the tile swapped out due to cache
+			   pressure [zorched]? */
+  guint  inonce : 1;    /* has the tile been swapped in at least once? */
+  guint outonce : 1;    /* has the tile been swapped out at least once? */
+
+#endif
 
   guchar  bpp;          /* the bytes per pixel (1, 2, 3 or 4) */
   gushort ewidth;       /* the effective width of the tile */

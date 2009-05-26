@@ -34,6 +34,10 @@
 
 static void  tile_manager_allocate_tiles (TileManager *tm);
 
+#ifdef TILE_PROFILING
+extern gint tile_exist_peak;
+extern gint tile_exist_count;
+#endif
 
 GType
 gimp_tile_manager_get_type (void)
@@ -199,6 +203,11 @@ tile_manager_get (TileManager *tm,
 
               new->size    = new->ewidth * new->eheight * new->bpp;
               new->data    = g_new (guchar, new->size);
+#ifdef TILE_PROFILING
+              tile_exist_count++;
+              if (tile_exist_count > tile_exist_peak)
+                tile_exist_peak = tile_exist_count;
+#endif
 
               if (tile->rowhint)
                 {
@@ -364,6 +373,9 @@ tile_manager_invalidate_tile (TileManager  *tm,
     {
       g_free (tile->data);
       tile->data = NULL;
+#ifdef TILE_PROFILING
+      tile_exist_count--;
+#endif
     }
 
   if (tile->swap_offset != -1)

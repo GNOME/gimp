@@ -32,10 +32,6 @@
 /*  Uncomment for verbose debugging on copy-on-write logic  */
 /*  #define TILE_DEBUG  */
 
-/*  Uncomment to enable global counters to profile the tile system. */
-/*  #define TILE_PROFILING */
-
-
 /*  This is being used from tile-swap, but just for debugging purposes.  */
 static gint tile_ref_count    = 0;
 
@@ -46,14 +42,13 @@ static gint tile_count        = 0;
 static gint tile_share_count  = 0;
 static gint tile_active_count = 0;
 
-static gint tile_exist_peak   = 0;
-static gint tile_exist_count  = 0;
+gint tile_exist_peak   = 0;
+gint tile_exist_count  = 0;
 
 #endif
 
 
 static void  tile_destroy (Tile *tile);
-
 
 Tile *
 tile_new (gint bpp)
@@ -193,6 +188,9 @@ tile_destroy (Tile *tile)
     {
       g_free (tile->data);
       tile->data = NULL;
+#ifdef TILE_PROFILING
+      tile_exist_count--;
+#endif
     }
   if (tile->rowhint)
     {
@@ -213,8 +211,6 @@ tile_destroy (Tile *tile)
 
 #ifdef TILE_PROFILING
   tile_count--;
-
-  tile_exist_count--;
 #endif
 }
 

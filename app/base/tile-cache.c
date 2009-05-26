@@ -51,6 +51,14 @@ static TileList      clean_list       = { NULL, NULL };
 static TileList      dirty_list       = { NULL, NULL };
 static guint         idle_swapper     = 0;
 
+#ifdef TILE_PROFILING
+extern gulong        tile_idle_swapout;
+extern gulong        tile_total_zorched;
+extern gulong        tile_total_zorched_swapout;
+extern glong         tile_total_interactive_sec;
+extern glong         tile_total_interactive_usec;
+extern gint          tile_exist_count;
+#endif
 
 #ifdef ENABLE_MP
 
@@ -154,14 +162,43 @@ tile_cache_insert (Tile *tile)
        *  cache is smaller than the size of a tile in which case
        *  it won't be possible to put it in the cache.
        */
-      while ((cur_cache_size + max_tile_size) > max_cache_size)
+
+#ifdef TILE_PROFILING
+      if ((cur_cache_size + tile->size) > max_cache_size)
         {
-          if (! tile_cache_zorch_next ())
+          GTimeVal now;
+          GTimeVal later;
+          g_get_current_time(&now);
+#endif
+
+          while ((cur_cache_size + max_tile_size) > max_cache_size)
             {
-              g_warning ("cache: unable to find room for a tile");
-              goto out;
+              if (! tile_cache_zorch_next ())
+                {
+                  g_warning ("cache: unable to find room for a tile");
+                  goto out;
+                }
             }
+
+#ifdef TILE_PROFILING
+          g_get_current_time(&later);
+          tile_total_interactive_usec += later.tv_usec - now.tv_usec;
+          tile_total_interactive_sec += later.tv_sec - now.tv_sec;
+
+          if (tile_total_interactive_usec < 0)
+            {
+              tile_total_interactive_usec += 1000000;
+              tile_total_interactive_sec--;
+            }
+
+          if (tile_total_interactive_usec > 1000000)
+            {
+              tile_total_interactive_usec -= 1000000;
+              tile_total_interactive_sec++;
+            }
+
         }
+#endif
 
       cur_cache_size += tile->size;
     }
@@ -186,6 +223,10 @@ tile_cache_insert (Tile *tile)
       if (! idle_swapper &&
           cur_cache_dirty * 2 > max_cache_size)
         {
+
+#ifdef TILE_PROFILING
+	  g_printerr("idle swapper -> running");
+#endif
           idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
                                              IDLE_SWAPPER_TIMEOUT,
                                              tile_idle_preswap,
@@ -264,6 +305,16 @@ tile_cache_zorch_next (void)
   else
     return FALSE;
 
+#ifdef TILE_PROFILING
+  tile_total_zorched++;
+  tile->zorched = TRUE;
+  if (tile->dirty || tile->swap_offset == -1)
+    {
+      tile_total_zorched_swapout++;
+      tile->zorchout = TRUE;
+    }
+#endif
+
   tile_cache_flush_internal (tile);
 
   if (tile->dirty || tile->swap_offset == -1)
@@ -275,7 +326,9 @@ tile_cache_zorch_next (void)
     {
       g_free (tile->data);
       tile->data = NULL;
-
+#ifdef TILE_PROFILING
+      tile_exist_count--;
+#endif
       return TRUE;
     }
 
@@ -290,6 +343,9 @@ tile_idle_preswap (gpointer data)
 
   if (cur_cache_dirty * 2 < max_cache_size)
     {
+#ifdef TILE_PROFILING
+      g_printerr("\nidle swapper -> stopped\n");
+#endif
       idle_swapper = 0;
       return FALSE;
     }
@@ -298,6 +354,12 @@ tile_idle_preswap (gpointer data)
 
   if ((tile = dirty_list.first))
     {
+
+#ifdef TILE_PROFILING
+      g_printerr(".");
+      tile_idle_swapout++;
+#endif
+
       tile_swap_out (tile);
 
       dirty_list.first = tile->next;
