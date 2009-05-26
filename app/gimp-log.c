@@ -47,9 +47,15 @@ gimp_log_init (void)
         { "scale",          GIMP_LOG_SCALE          }
       };
 
-      gimp_log_flags = g_parse_debug_string (env_log_val,
-                                             log_keys,
-                                             G_N_ELEMENTS (log_keys));
+      /*  g_parse_debug_string() has special treatment of the string 'help',
+       *  but we want to use it for the GIMP_LOG_HELP domain
+       */
+      if (g_ascii_strcasecmp (env_log_val, "help") == 0)
+        gimp_log_flags = GIMP_LOG_HELP;
+      else
+        gimp_log_flags = g_parse_debug_string (env_log_val,
+                                               log_keys,
+                                               G_N_ELEMENTS (log_keys));
     }
 }
 
