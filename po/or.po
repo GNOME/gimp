@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: or\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-05-21 16:52+0000\n"
-"PO-Revision-Date: 2009-05-25 18:08+0530\n"
+"PO-Revision-Date: 2009-05-26 18:21+0530\n"
 "Last-Translator: Manoj Kumar Giri <mgiri@redhat.com>\n"
 "Language-Team: Oriya <oriya-it@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../app/about.h:24
@@ -23,7 +24,7 @@ msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr ""
+msgstr "GNU ପ୍ରତିଛବି ପ୍ରକଳନ ପ୍ରଗ୍ରାମ"
 
 #: ../app/about.h:30
 msgid ""
@@ -49,6 +50,19 @@ msgid ""
 "GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
 "Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
+"GIMP is free software; you can redistribute it and/or modify it under the "
+"terms of the GNU General Public License as published by the Free Software "
+"Foundation; either version 2 of the License, or (at your option) any later "
+"version.\n"
+"\n"
+"GIMP is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
+"Suite 330, Boston, MA 02111-1307, USA."
 
 #: ../app/app.c:214
 #, c-format
@@ -58,11 +72,15 @@ msgid ""
 "To avoid data loss, please check the location and permissions of the swap "
 "directory defined in your Preferences (currently \"%s\")."
 msgstr ""
+"ପରୀକ୍ଷଣ ଅଦଳ ବଦଳ ଫାଇଲକୁ ଖୋଲିବାରେ ଅସମର୍ଥ।\n"
+"\n"
+"ତଥ୍ୟ ନଷ୍ଟକୁ ଏଡ଼ାଇବା ପାଇଁ, ଦୟାକରି ଆପଣଙ୍କର ପସନ୍ଦରେ ବ୍ୟଖ୍ୟା କରାଯାଇଥିବା ଅଦଳ ବଦଳ ଡ଼ିରେକ୍ଟୋରୀ "
+"ଅବସ୍ଥାନ ଏବଂ ଅନୁମତିକୁ ଯାଞ୍ଚକରନ୍ତୁ (ବର୍ତ୍ତମାନ \"%s\")।"
 
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr ""
+msgstr "ପୂର୍ବନିର୍ଦ୍ଧାରିତ '%s' କୁ ବ୍ୟବହାର କରି, କୌଣସି ଦଳ ଅନୁବାଦକ ଉଲ୍ଲେଖ କରାଯାଇନାହିଁ।\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
@@ -71,28 +89,27 @@ msgstr ""
 
 #: ../app/main.c:144 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
-msgstr ""
+msgstr "ସଂସ୍କରଣ ସୂଚନା ପ୍ରଦାନ କରନ୍ତୁ ଏବଂ ପ୍ରସ୍ଥାନ କରନ୍ତୁ"
 
 #: ../app/main.c:149
 msgid "Show license information and exit"
-msgstr ""
+msgstr "ଅନୁମତିପତ୍ର ସୂଚନା ପ୍ରଦାନ କରନ୍ତୁ ଏବଂ ପ୍ରସ୍ଥାନ କରନ୍ତୁ"
 
 #: ../app/main.c:154
-#, fuzzy
 msgid "Be more verbose"
 msgstr "ଅଧିକ ଦୃଷ୍ଟି ସୂଚନାଯୁକ୍ତ ହୁଅନ୍ତୁ"
 
 #: ../app/main.c:159
 msgid "Start a new GIMP instance"
-msgstr ""
+msgstr "ଗୋଟିଏ ନୂନତ GIMP ଉଦାହରଣ ଆରମ୍ଭ କରନ୍ତୁ"
 
 #: ../app/main.c:164
 msgid "Open images as new"
-msgstr ""
+msgstr "ପ୍ରତିଛବିଗୁଡ଼ିକୁ ନୂତନ ଭାବରେ ଖୋଲନ୍ତୁ"
 
 #: ../app/main.c:169
 msgid "Run without a user interface"
-msgstr ""
+msgstr "ଗୋଟିଏ ଚାଳକ ଅନ୍ତରାପୃଷ୍ଠ ବିନା ଚଲାନ୍ତୁ"
 
 #: ../app/main.c:174
 msgid "Do not load brushes, gradients, patterns, ..."
@@ -100,11 +117,11 @@ msgstr ""
 
 #: ../app/main.c:179
 msgid "Do not load any fonts"
-msgstr ""
+msgstr "କୌଣସି ଅକ୍ଷରରୂପକୁ ଧାରଣ କରନ୍ତୁ ନାହିଁ"
 
 #: ../app/main.c:184
 msgid "Do not show a startup window"
-msgstr ""
+msgstr "ଆରମ୍ଭ ୱିଣ୍ଡୋ ଦର୍ଶାନ୍ତୁ ନାହିଁ"
 
 #: ../app/main.c:189
 msgid "Do not use shared memory between GIMP and plugins"
@@ -120,11 +137,11 @@ msgstr ""
 
 #: ../app/main.c:204
 msgid "Use an alternate user gimprc file"
-msgstr ""
+msgstr "ଗୋଟିଏ ବୈକଳ୍ପିକ ଚାଳକ gimprc ଫାଇଲ ବ୍ୟବହାର କରନ୍ତୁ"
 
 #: ../app/main.c:209
 msgid "Use an alternate system gimprc file"
-msgstr ""
+msgstr "ଗୋଟିଏ ବୈକଳ୍ପିକ ତନ୍ତ୍ର gimprc ଫାଇଲ ବ୍ୟବହାର କରନ୍ତୁ"
 
 #: ../app/main.c:214
 msgid "Batch command to run (can be used multiple times)"
@@ -153,7 +170,6 @@ msgid "Enable non-fatal debugging signal handlers"
 msgstr ""
 
 #: ../app/main.c:246
-#, fuzzy
 msgid "Make all warnings fatal"
 msgstr "ସମସ୍ତ ଚେତାବନୀକୁ ମାରାତ୍ମକ କରନ୍ତୁ"
 
@@ -163,37 +179,35 @@ msgstr ""
 
 #: ../app/main.c:355
 msgid "[FILE|URI...]"
-msgstr ""
+msgstr "[FILE|URI...]"
 
 #: ../app/main.c:373
-#, fuzzy
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
-"GIMP ଆଲେଖୀକ ଉପୟୋଗକର୍ତ୍ତା ଅନ୍ତରାପୃଷ୍ଠ ପ୍ରାରମ୍ଭିକରଣ କରିପାରିଲା ନାହିଁ ।\n"
-"ଆପଣଙ୍କ ପ୍ରଦର୍ଶନ ପରିବେଶ ପାଇଁ ଏକ ସଠିକ୍ ବ୍ଯବସ୍ଥା ରହିଛିବୋଲି ନିଶ୍ଚଯ କରନ୍ତୁ ।"
+"GIMP ଆଲେଖୀକ ଉପୟୋଗକର୍ତ୍ତା ଅନ୍ତରାପୃଷ୍ଠ ପ୍ରାରମ୍ଭିକରଣ କରିପାରିଲା ନାହିଁ।\n"
+"ଆପଣଙ୍କ ପ୍ରଦର୍ଶନ ପରିବେଶ ପାଇଁ ଏକ ସଠିକ୍ ବ୍ଯବସ୍ଥା ରହିଛିବୋଲି ନିଶ୍ଚୟ କରନ୍ତୁ।"
 
 #: ../app/main.c:392
 msgid "Another GIMP instance is already running."
-msgstr ""
+msgstr "ଅନ୍ୟଏକ GIMP ଉଦାହରଣ ପୂର୍ବରୁ ଚାଲୁଅଛି।"
 
 #: ../app/main.c:462
 msgid "GIMP output. Type any character to close this window."
-msgstr ""
+msgstr "GIMP ଫଳାଫଳ। ଏହି ୱିଣ୍ଡୋକୁ ବନ୍ଦ କରିବା ପାଇଁ କୌଣସି ଅକ୍ଷର ଟାଇପ କରନ୍ତୁ।"
 
 #: ../app/main.c:463
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr ""
+msgstr "(ଏହି ୱିଣ୍ଡୋକୁ ବନ୍ଦ କରିବା ପାଇଁ କୌଣସି ଅକ୍ଷର ଟାଇପ କରନ୍ତୁ)\n"
 
 #: ../app/main.c:480
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr ""
+msgstr "GIMP ଫଳାଫଳ। ଆପଣ ଏହି ୱିଣ୍ଡୋକୁ କ୍ଷୁଦ୍ରାକାର କରିପାରିବେ।, କିନ୍ତୁ ଏହାକୁ ବନ୍ଦ କରିନଥାଏ।"
 
 #: ../app/sanity.c:365
 #, c-format
-#, fuzzy
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
 "\n"
@@ -201,7 +215,7 @@ msgid ""
 msgstr ""
 "ସଂରଚିତ ଫ଼ାଇଲନାମ କୂଟଲେଖନଟି ରୂପାନ୍ତରିତ ହୋଇ ପାରିବ ନାହିଁ UTF-8 କୁ: %s\n"
 "\n"
-"ଦଯାପୂର୍ବକ ପରୀକ୍ଷା କରନ୍ତୁ ପରିବେଶ ପରିବର୍ତ୍ତନୀଯ ର ମୂଲ୍ଯ   G_FILENAME_ENCODING."
+"ଦୟାପୂର୍ବକ ପରୀକ୍ଷା କରନ୍ତୁ ପରିବେଶ ପରିବର୍ତ୍ତନୀଯ ର ମୂଲ୍ଯ G_FILENAME_ENCODING."
 
 #: ../app/sanity.c:384
 #, c-format
@@ -218,16 +232,15 @@ msgstr ""
 #: ../app/version.c:64
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr ""
+msgstr "%s ସଂସ୍କରଣ %s ବ୍ୟବହାର କରି (ସଂସ୍କରଣ %s ବିପକ୍ଷରେ ସଙ୍କଳନ କରି)"
 
 #: ../app/version.c:127 ../tools/gimp-remote.c:95
 #, c-format
 msgid "%s version %s"
-msgstr ""
+msgstr "%s ସଂସ୍କରଣ %s"
 
 #: ../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:123
 #: ../app/dialogs/dialogs.c:224 ../app/widgets/gimpbrusheditor.c:90
-#, fuzzy
 msgid "Brush Editor"
 msgstr "ତୂଳୀ ସମ୍ପାଦକ"
 
@@ -260,7 +273,7 @@ msgstr "ପ୍ରସଙ୍ଗ"
 
 #: ../app/actions/actions.c:122 ../app/dialogs/dialogs.c:150
 msgid "Pointer Information"
-msgstr ""
+msgstr "ସୂଚକ ସୂଚନା"
 
 #: ../app/actions/actions.c:125
 msgid "Debug"
@@ -363,7 +376,7 @@ msgstr "କ୍ଷୀପ୍ର ମୁଖ଼ା"
 
 #: ../app/actions/actions.c:188 ../app/dialogs/dialogs.c:206
 msgid "Sample Points"
-msgstr ""
+msgstr "ନମୁନା ବିନ୍ଦୁଗୁଡ଼ିକ"
 
 #: ../app/actions/actions.c:191
 msgid "Select"
@@ -403,11 +416,11 @@ msgstr "ୱିଣ୍ଡୋ"
 
 #: ../app/actions/brush-editor-actions.c:43
 msgid "Brush Editor Menu"
-msgstr ""
+msgstr "ତୁଳୀ ସମ୍ପାଦକ ତାଲିକା"
 
 #: ../app/actions/brush-editor-actions.c:50
 msgid "Edit Active Brush"
-msgstr ""
+msgstr "ସକ୍ରିୟ ତୁଳୀକୁ ସମ୍ପାଦନ କରନ୍ତୁ"
 
 #: ../app/actions/brushes-actions.c:43
 msgid "Brushes Menu"
@@ -415,11 +428,11 @@ msgstr "ତୂଳୀରାଜି ପ୍ରସୂଚୀ"
 
 #: ../app/actions/brushes-actions.c:47
 msgid "_Open Brush as Image"
-msgstr ""
+msgstr "ତୁଳୀକୁ ପ୍ରତିଛବି ଭାବରେ ଖୋଲନ୍ତୁ (_O)"
 
 #: ../app/actions/brushes-actions.c:48
 msgid "Open brush as image"
-msgstr ""
+msgstr "ତୁଳୀକୁ ପ୍ରତିଛବି ଭାବରେ ଖୋଲନ୍ତୁ"
 
 #: ../app/actions/brushes-actions.c:53
 msgid "_New Brush"
@@ -439,7 +452,7 @@ msgstr "ନକଲି ତୂଳୀ"
 
 #: ../app/actions/brushes-actions.c:65
 msgid "Copy Brush _Location"
-msgstr ""
+msgstr "ତୁଳୀ ଅବସ୍ଥାନକୁ ନକଲ କରନ୍ତୁ (_L)"
 
 #: ../app/actions/brushes-actions.c:66
 msgid "Copy brush file location to clipboard"
@@ -582,9 +595,8 @@ msgid "Lower this channel to the bottom of the channel stack"
 msgstr ""
 
 #: ../app/actions/channels-actions.c:105
-#, fuzzy
 msgid "Channel to Sele_ction"
-msgstr "ସ୍ରୋତ ଚ_ଯନ କୁ"
+msgstr "ଚୟନ କରିବା ପାଇଁ ଉପପଥ (_c)"
 
 #: ../app/actions/channels-actions.c:106
 msgid "Replace the selection with this channel"
@@ -623,19 +635,16 @@ msgstr ""
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:393
-#, fuzzy
 msgid "Channel Attributes"
-msgstr "ସ୍ରୋତ ଗୁଣରାଜି"
+msgstr "ଉପପଥ ଗୁଣଧର୍ମ"
 
 #: ../app/actions/channels-commands.c:88
-#, fuzzy
 msgid "Edit Channel Attributes"
-msgstr "ସ୍ରୋତ ଗୁଣରାଜି ସମ୍ପାଦନା କରନ୍ତୁ"
+msgstr "ଉପପଥ ଗୁଣଧର୍ମକୁ ସମ୍ପାଦନା କରନ୍ତୁ"
 
 #: ../app/actions/channels-commands.c:90
-#, fuzzy
 msgid "Edit Channel Color"
-msgstr "ସ୍ରୋତ ରଙ୍ଗ ସମ୍ପାଦନା କରନ୍ତୁ"
+msgstr "ଉପପଥ ରଙ୍ଗକୁ ସମ୍ପାଦନା କରନ୍ତୁ"
 
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
@@ -647,186 +656,156 @@ msgstr ""
 #: ../app/actions/channels-commands.c:159
 #: ../app/actions/channels-commands.c:163
 #: ../app/widgets/gimpchanneltreeview.c:316
-#, fuzzy
 msgid "New Channel"
-msgstr "ନୂତନ ସ୍ରୋତ"
+msgstr "ନୂତନ ଉପପଥ"
 
 #: ../app/actions/channels-commands.c:120
-#, fuzzy
 msgid "New Channel Options"
-msgstr "ନୂତନ ସ୍ରୋତ ବିକଳ୍ପରାଜି"
+msgstr "ନୂତନ ଉପପଥ ବିକଳ୍ପଗୁଡ଼ିକ"
 
 #: ../app/actions/channels-commands.c:122
-#, fuzzy
 msgid "New Channel Color"
-msgstr "ନୂତନ ସ୍ରୋତ ରଙ୍ଗ"
+msgstr "ନୂତନ ଉପପଥ ରଙ୍ଗ"
 
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:584
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
-#, fuzzy
 msgid "%s Channel Copy"
-msgstr "%s ସ୍ରୋତ ନକଲ୍"
+msgstr "%s ଉପପଥ ନକଲ"
 
 #: ../app/actions/channels-commands.c:307 ../app/core/gimpselection.c:549
 #: ../app/pdb/selection-cmds.c:454 ../app/pdb/selection-cmds.c:521
-#, fuzzy
 msgid "Channel to Selection"
-msgstr "ସ୍ରୋତ ଚଯନକୁ "
+msgstr "ବାଛିବା ପାଇଁ ଉପପଥ"
 
 #: ../app/actions/colormap-actions.c:44
-#, fuzzy
 msgid "Colormap Menu"
-msgstr "ରଙ୍ଗମାନଚିତ୍ର ପ୍ରସୂଚୀ"
+msgstr "ରଙ୍ଗମାନଚିତ୍ର ସୂଚୀ"
 
 #: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:48
-#, fuzzy
 msgid "_Edit Color..."
-msgstr "_ରଙ୍ଗ ସମ୍ପାଦନା କରନ୍ତୁ..."
+msgstr "ରଙ୍ଗ ସମ୍ପାଦନା କରନ୍ତୁ (_E)..."
 
 #: ../app/actions/colormap-actions.c:49
 #: ../app/actions/palette-editor-actions.c:49
-#, fuzzy
 msgid "Edit color"
 msgstr "ରଙ୍ଗ ସମ୍ପାଦନା କରନ୍ତୁ"
 
 #: ../app/actions/colormap-actions.c:57
-#, fuzzy
 msgid "_Add Color from FG"
-msgstr "_FG ରୁ ରଙ୍ଗ ୟୋଗ କରନ୍ତୁ"
+msgstr "FG ରୁ ରଙ୍ଗ ଯୋଗ କରନ୍ତୁ (_A)"
 
 #: ../app/actions/colormap-actions.c:58
 msgid "Add current foreground color"
-msgstr ""
+msgstr "ପ୍ରଚଳିତ ପୃଷ୍ଠଭୂମି ରଙ୍ଗ ଯୋଗ କରନ୍ତୁ"
 
 #: ../app/actions/colormap-actions.c:63
-#, fuzzy
 msgid "_Add Color from BG"
-msgstr "_BG ରୁ ରଙ୍ଗ ୟୋଗ କରନ୍ତୁ"
+msgstr "BG ରୁ ରଙ୍ଗ ଯୋଗ କରନ୍ତୁ (_A)"
 
 #: ../app/actions/colormap-actions.c:64
 msgid "Add current background color"
-msgstr ""
+msgstr "ପ୍ରଚଳିତ ପ୍ରଚ୍ଛଦଭୂମି ରଙ୍ଗ ଯୋଗକରନ୍ତୁ"
 
 #: ../app/actions/colormap-commands.c:73
 #, c-format
-#, fuzzy
 msgid "Edit colormap entry #%d"
 msgstr "ରଙ୍ଗମାନଚିତ୍ର ନିବେଶ ସମ୍ପାଦନା କରନ୍ତୁ #%d"
 
 #: ../app/actions/colormap-commands.c:80
-#, fuzzy
 msgid "Edit Colormap Entry"
 msgstr "ରଙ୍ଗମାନଚିତ୍ର ନିବେଶ ସମ୍ପାଦନା କରନ୍ତୁ"
 
 #: ../app/actions/config-actions.c:39
 msgid "Use _GEGL"
-msgstr ""
+msgstr "GEGL ବ୍ୟବହାର କରନ୍ତୁ (_G)"
 
 #: ../app/actions/config-actions.c:40
 msgid "If possible, use GEGL for image processing"
-msgstr ""
+msgstr "ଯଦି ସମ୍ଭବ, ତେବେ ପ୍ରତିଛବି କାର୍ଯ୍ୟକାରୀ କରିବା ପାଇଁ GEGL ବ୍ୟବହାର କରନ୍ତୁ"
 
 #: ../app/actions/context-actions.c:46
-#, fuzzy
 msgid "_Context"
-msgstr "_ସନ୍ଦର୍ଭ"
+msgstr "ପ୍ରସଙ୍ଗ (_C)"
 
 #: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:59
-#, fuzzy
 msgid "_Colors"
-msgstr "_ରଙ୍ଗରାଜି"
+msgstr "ରଙ୍ଗ (_C)"
 
 #: ../app/actions/context-actions.c:48 ../app/actions/layers-actions.c:58
-#, fuzzy
 msgid "_Opacity"
-msgstr "_ଅଭେଦ୍ଯତା"
+msgstr "ଅଭେଦ୍ଯତା (_O)"
 
 #: ../app/actions/context-actions.c:49
-#, fuzzy
 msgid "Paint _Mode"
-msgstr "ରଙ୍ଗଲେପ _ରୀତି"
+msgstr "ରଙ୍ଗଲେପ ରୀତି (_M)"
 
 #: ../app/actions/context-actions.c:50
-#, fuzzy
 msgid "_Tool"
 msgstr "ଉପକରଣ (_T)"
 
 #: ../app/actions/context-actions.c:51
 #: ../app/dialogs/preferences-dialog.c:1940
-#, fuzzy
 msgid "_Brush"
-msgstr "_ତୂଳୀ"
+msgstr "ତୂଳୀ (_B)"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:99
 #: ../app/dialogs/preferences-dialog.c:1943
-#, fuzzy
 msgid "_Pattern"
-msgstr "_ସ୍ବରୂପ"
+msgstr "ସ୍ବରୂପ (_P)"
 
 #: ../app/actions/context-actions.c:53
-#, fuzzy
 msgid "_Palette"
-msgstr "_ରଙ୍ଗପାତ୍ର"
+msgstr "ରଙ୍ଗପାତ୍ର (_P)"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:216
 #: ../app/dialogs/preferences-dialog.c:1946
-#, fuzzy
 msgid "_Gradient"
-msgstr "_ଆନତ"
+msgstr "କ୍ରମାନତ (_G)"
 
 #: ../app/actions/context-actions.c:55
-#, fuzzy
 msgid "_Font"
 msgstr "ଅକ୍ଷରରୂପ (_F)"
 
 #: ../app/actions/context-actions.c:57
-#, fuzzy
 msgid "_Shape"
-msgstr "_ଆକୃତି"
+msgstr "ଆକୃତି (_S)"
 
 #: ../app/actions/context-actions.c:58
-#, fuzzy
 msgid "_Radius"
-msgstr "_ବ୍ଯାସାର୍ଦ୍ଧ"
+msgstr "ବ୍ଯାସାର୍ଦ୍ଧ (_R)"
 
 #: ../app/actions/context-actions.c:59
-#, fuzzy
 msgid "S_pikes"
-msgstr "କ_ଣ୍ଟାରାଜି"
+msgstr "କଣ୍ଟାଗୁଡ଼ିକ (_p)"
 
 #: ../app/actions/context-actions.c:60
-#, fuzzy
 msgid "_Hardness"
-msgstr "_କଠିଣତା"
+msgstr "କଠିନତା (_H)"
 
 #: ../app/actions/context-actions.c:61
-#, fuzzy
 msgid "_Aspect"
-msgstr "_ଦୃଷ୍ଟିକୋଣ"
+msgstr "ଦୃଷ୍ଟିକୋଣ (_A)"
 
 #: ../app/actions/context-actions.c:62
-#, fuzzy
 msgid "A_ngle"
-msgstr "କୋ_ଣ"
+msgstr "କୋଣ (_n)"
 
 #: ../app/actions/context-actions.c:65
-#, fuzzy
 msgid "_Default Colors"
-msgstr "_ପୂର୍ବନିର୍ଦ୍ଧାରିତ ରଙ୍ଗରାଜି"
+msgstr "ପୂର୍ବନିର୍ଦ୍ଧାରିତ ରଙ୍ଗ (_D)"
 
 #: ../app/actions/context-actions.c:66
 msgid "Set foreground color to black, background color to white"
 msgstr ""
 
 #: ../app/actions/context-actions.c:71
-#, fuzzy
 msgid "S_wap Colors"
-msgstr "ଅ_ଦଳବଦଳ ରଙ୍ଗରାଜି"
+msgstr "ଅଦଳବଦଳ ରଙ୍ଗ (_w)"
 
 #: ../app/actions/context-actions.c:72
 msgid "Exchange foreground and background colors"
@@ -856,13 +835,12 @@ msgstr ""
 #: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:981
 #, c-format
-#, fuzzy
 msgid ""
 "Opening '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"ଖୋଲିବା '%s' ନିଷ୍ଫଳ:\n"
+"'%s' ଖୋଲିବା ନିଷ୍ଫଳ ହୋଇଛି:\n"
 "\n"
 "%s"
 
@@ -871,19 +849,17 @@ msgstr ""
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:222
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:774
 #: ../app/pdb/image-cmds.c:2198 ../app/widgets/gimpdnd-xds.c:92
-#, fuzzy
 msgid "Untitled"
 msgstr "ଶୀର୍ଷକ ହୀନ"
 
 #: ../app/actions/data-commands.c:231
-#, fuzzy
 msgid "Delete Object"
 msgstr "ବସ୍ତୁ ବିଲୋପ କରନ୍ତୁ"
 
 #: ../app/actions/data-commands.c:254
 #, c-format
 msgid "Delete '%s'?"
-msgstr ""
+msgstr "'%s' କୁ ଅପସାରଣ କରିବେ କି?"
 
 #: ../app/actions/data-commands.c:257
 #, c-format
@@ -891,97 +867,86 @@ msgid "Are you sure you want to remove '%s' from the list and delete it on disk?
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:39
-#, fuzzy
 msgid "Tool _Options"
-msgstr "ସାଧନ _ବିକଳ୍ପରାଜି"
+msgstr "ସାଧନ ବିକଳ୍ପଗୁଡ଼ିକ (_O)"
 
 #: ../app/actions/dialogs-actions.c:40
 msgid "Open the tool options dialog"
-msgstr ""
+msgstr "ସାଧନ ବିକଳ୍ପ ସଂଳାପକୁ ଖୋଲନ୍ତୁ"
 
 #: ../app/actions/dialogs-actions.c:45
-#, fuzzy
 msgid "_Device Status"
-msgstr "_ୟନ୍ତ୍ର ସ୍ଥିତି"
+msgstr "ଉପକରଣ ସ୍ଥିତି (_D)"
 
 #: ../app/actions/dialogs-actions.c:46
 msgid "Open the device status dialog"
-msgstr ""
+msgstr "ଉପକରଣ ସ୍ଥିତି ସଂଳାପକୁ ଖୋଲନ୍ତୁ"
 
 #: ../app/actions/dialogs-actions.c:51
-#, fuzzy
 msgid "_Layers"
-msgstr "_ସ୍ତରରାଜି"
+msgstr "ସ୍ତରଗୁଡ଼ିକ (_L)"
 
 #: ../app/actions/dialogs-actions.c:52
 msgid "Open the layers dialog"
-msgstr ""
+msgstr "ସ୍ତର ସଂଳାପକୁ ଖୋଲନ୍ତୁ"
 
 #: ../app/actions/dialogs-actions.c:57
-#, fuzzy
 msgid "_Channels"
-msgstr "_ସ୍ରୋତରାଜି"
+msgstr "ଉପପଥଗୁଡ଼ିକ (_C)"
 
 #: ../app/actions/dialogs-actions.c:58
 msgid "Open the channels dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:63
-#, fuzzy
 msgid "_Paths"
-msgstr "_ପଥରାଜି"
+msgstr "ପଥଗୁଡ଼ିକ (_P)"
 
 #: ../app/actions/dialogs-actions.c:64
 msgid "Open the paths dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:69
-#, fuzzy
 msgid "Color_map"
-msgstr "ରଙ୍ଗ_ମାନଚିତ୍ର"
+msgstr "ରଙ୍ଗ ମାନଚିତ୍ର (_m)"
 
 #: ../app/actions/dialogs-actions.c:70
 msgid "Open the colormap dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:75
-#, fuzzy
 msgid "Histogra_m"
-msgstr "ହିଷ୍ଟୋଗ୍ରା_ମ୍"
+msgstr "ହିଷ୍ଟୋଗ୍ରାମ (_m)"
 
 #: ../app/actions/dialogs-actions.c:76
 msgid "Open the histogram dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:81
-#, fuzzy
 msgid "_Selection Editor"
-msgstr "_ଚଯନ ସମ୍ପାଦକ"
+msgstr "ଚୟନ ସମ୍ପାଦକ (_S)"
 
 #: ../app/actions/dialogs-actions.c:82
 msgid "Open the selection editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:87
-#, fuzzy
 msgid "Na_vigation"
-msgstr "ପଥ_ପ୍ରଦର୍ଶନ"
+msgstr "ପଥ ପ୍ରଦର୍ଶନ (_v)"
 
 #: ../app/actions/dialogs-actions.c:88
 msgid "Open the display navigation dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:93
-#, fuzzy
 msgid "Undo _History"
-msgstr "ଅକାର୍ୟ୍ଯକରଣ _ଇତିହାସ"
+msgstr "ପୁରୁଣା ତଥ୍ୟର ପଦକ୍ଷେପ ବାତିଲ କରନ୍ତୁ (_H)"
 
 #: ../app/actions/dialogs-actions.c:94
 msgid "Open the undo history dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:99 ../app/dialogs/dialogs.c:150
-#, fuzzy
 msgid "Pointer"
 msgstr "ସୂଚକ"
 
@@ -998,18 +963,16 @@ msgid "Open the sample points dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:111
-#, fuzzy
 msgid "Colo_rs"
-msgstr "ରଙ୍ଗ_ରାଜି"
+msgstr "ରଙ୍ଗ (_r)"
 
 #: ../app/actions/dialogs-actions.c:112
 msgid "Open the FG/BG color dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:117
-#, fuzzy
 msgid "_Brushes"
-msgstr "_ତୂଳୀରାଜି"
+msgstr "ତୂଳୀଗୁଡ଼ିକ (_B)"
 
 #: ../app/actions/dialogs-actions.c:118
 msgid "Open the brushes dialog"
@@ -1020,18 +983,16 @@ msgid "Open the brush editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:129
-#, fuzzy
 msgid "P_atterns"
-msgstr "ସ୍ବ_ରୂପରାଜି"
+msgstr "ସ୍ବରୂପ (_a)"
 
 #: ../app/actions/dialogs-actions.c:130
 msgid "Open the patterns dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:135
-#, fuzzy
 msgid "_Gradients"
-msgstr "_ଆନତରାଜି"
+msgstr "କ୍ରମାନତ (_G)"
 
 #: ../app/actions/dialogs-actions.c:136
 msgid "Open the gradients dialog"
@@ -1042,9 +1003,8 @@ msgid "Open the gradient editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:147
-#, fuzzy
 msgid "Pal_ettes"
-msgstr "ରଙ୍ଗ_ପାତ୍ରରାଜି"
+msgstr "ରଙ୍ଗପାତ୍ରଗୁଡ଼ିକ (_e)"
 
 #: ../app/actions/dialogs-actions.c:148
 msgid "Open the palettes dialog"
@@ -1055,70 +1015,62 @@ msgid "Open the palette editor"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:159
-#, fuzzy
 msgid "_Fonts"
-msgstr "_ଅକ୍ଷରରୂପରାଜି"
+msgstr "ଅକ୍ଷରରୂପ (_F)"
 
 #: ../app/actions/dialogs-actions.c:160
 msgid "Open the fonts dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:165
-#, fuzzy
 msgid "B_uffers"
-msgstr "ସା_ମଯିକସଂଗ୍ରହ"
+msgstr "ବଫରଗୁଡ଼ିକ (_u)"
 
 #: ../app/actions/dialogs-actions.c:166
 msgid "Open the named buffers dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:171
-#, fuzzy
 msgid "_Images"
-msgstr "_ଛବିରାଜି"
+msgstr "ପ୍ରତିଛବିଗୁଡ଼ିକ (_I)"
 
 #: ../app/actions/dialogs-actions.c:172
 msgid "Open the images dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:177
-#, fuzzy
 msgid "Document Histor_y"
-msgstr "ପ୍ରଲେଖ ଇତିହା_ସ"
+msgstr "ଦଲିଲ ପୁରୁଣା ତଥ୍ୟ (_y)"
 
 #: ../app/actions/dialogs-actions.c:178
 msgid "Open the document history dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:183
-#, fuzzy
 msgid "_Templates"
-msgstr "_ଋପଦରାଜି"
+msgstr "ନମୁନାଗୁଡ଼ିକ (_T)"
 
 #: ../app/actions/dialogs-actions.c:184
 msgid "Open the image templates dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:189
-#, fuzzy
 msgid "T_ools"
-msgstr "_ଟୁଲଗୁଡିକ"
+msgstr "ଉପକରଣଗୁଡ଼ିକ (_o)"
 
 #: ../app/actions/dialogs-actions.c:190
 msgid "Open the tools dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:195
-#, fuzzy
 msgid "Error Co_nsole"
-msgstr "ତୃଟି ସୂଚ_କୟନ୍ତ୍ରଫ଼ଳକ"
+msgstr "ତୃଟି କୋନସଲ (_n)"
 
 #: ../app/actions/dialogs-actions.c:196
 msgid "Open the error console"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:206
-#, fuzzy
 msgid "_Preferences"
 msgstr "ପସନ୍ଦ (_P)"
 
@@ -1127,9 +1079,8 @@ msgid "Open the preferences dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:212
-#, fuzzy
 msgid "_Keyboard Shortcuts"
-msgstr "_ଚାବିପଟଳ ସଂକ୍ଷିପ୍ତପଥରାଜି"
+msgstr "କିବୋର୍ଡ଼ ସଂକ୍ଷିପ୍ତପଥଗୁଡ଼ିକ (_K)"
 
 #: ../app/actions/dialogs-actions.c:213
 msgid "Open the keyboard shortcuts editor"
@@ -1153,7 +1104,6 @@ msgid "Show some helpful tips on using GIMP"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:230
-#, fuzzy
 msgid "_About"
 msgstr "ବିବରଣୀ (_A)"
 
@@ -1179,114 +1129,92 @@ msgid "Connect to another display"
 msgstr ""
 
 #: ../app/actions/dock-actions.c:61
-#, fuzzy
 msgid "_Show Image Selection"
-msgstr "_ଛବି ଚଯନ ପ୍ରଦର୍ଶନ କରନ୍ତୁ"
+msgstr "ଛବି ଚୟନ ପ୍ରଦର୍ଶନ କରନ୍ତୁ (_S)"
 
 #: ../app/actions/dock-actions.c:67
-#, fuzzy
 msgid "Auto _Follow Active Image"
-msgstr "ସକ୍ରିଯ ଛବି ସ୍ବଯଂ _ପଶ୍ଚାତ୍ଧାବନ କରନ୍ତୁ"
+msgstr "ସକ୍ରିୟ ଛବି ସ୍ବଯଂ ଅନୁସରଣ କରନ୍ତୁ (_F)"
 
 #: ../app/actions/dockable-actions.c:49
-#, fuzzy
 msgid "Dialogs Menu"
-msgstr "ସଂଳାପରାଜି ପ୍ରସୂଚୀ"
+msgstr "ସଂଳାପ ତାଲିକା"
 
 #: ../app/actions/dockable-actions.c:53
-#, fuzzy
 msgid "_Add Tab"
-msgstr "_Tab ୟୋଗ କରନ୍ତୁ"
+msgstr "ଟ୍ୟାବ ଯୋଗ କରନ୍ତୁ (_A)"
 
 #: ../app/actions/dockable-actions.c:54
-#, fuzzy
 msgid "_Preview Size"
-msgstr "_ପ୍ରାକ୍ଦର୍ଶନ ଆକାର"
+msgstr "ପ୍ରାକଦର୍ଶନ ଆକାର (_P)"
 
 #: ../app/actions/dockable-actions.c:55
-#, fuzzy
 msgid "_Tab Style"
-msgstr "_Tab ଠାଣି"
+msgstr "ଟ୍ୟାବ ଶୈଳୀ (_T)"
 
 #: ../app/actions/dockable-actions.c:58
-#, fuzzy
 msgid "_Close Tab"
 msgstr "ଟ୍ୟାବ ବନ୍ଦ କରନ୍ତୁ (_C)"
 
 #: ../app/actions/dockable-actions.c:63
-#, fuzzy
 msgid "_Detach Tab"
-msgstr "_ଟାବ ବିଚ୍ଛିନ୍ନ କର"
+msgstr "ଟ୍ୟାବ ବିଚ୍ଛିନ୍ନ କରନ୍ତୁ (_D)"
 
 #: ../app/actions/dockable-actions.c:81
-#, fuzzy
 msgid "_Tiny"
-msgstr "_କ୍ଷୁଦ୍ର"
+msgstr "କ୍ଷୁଦ୍ର (_T)"
 
 #: ../app/actions/dockable-actions.c:82
-#, fuzzy
 msgid "E_xtra Small"
-msgstr "ଅତି_ରିକ୍ତ ଛୋଟ"
+msgstr "ଅତିରିକ୍ତ ଛୋଟ (_x)"
 
 #: ../app/actions/dockable-actions.c:83
-#, fuzzy
 msgid "_Small"
-msgstr "_ଛୋଟ"
+msgstr "ଛୋଟ (_S)"
 
 #: ../app/actions/dockable-actions.c:84
-#, fuzzy
 msgid "_Medium"
-msgstr "_ମଧ୍ଯମ"
+msgstr "ମଧ୍ଯମ (_M)"
 
 #: ../app/actions/dockable-actions.c:85
-#, fuzzy
 msgid "_Large"
-msgstr "_ବଡ"
+msgstr "ବଡ (_L)"
 
 #: ../app/actions/dockable-actions.c:86
-#, fuzzy
 msgid "Ex_tra Large"
-msgstr "ଅତି_ରିକ୍ତ ବୃହତ"
+msgstr "ଅତିରିକ୍ତ ବୃହତ (_t)"
 
 #: ../app/actions/dockable-actions.c:87
-#, fuzzy
 msgid "_Huge"
-msgstr "_ବିରାଟ"
+msgstr "ବିରାଟ (_H)"
 
 #: ../app/actions/dockable-actions.c:88
-#, fuzzy
 msgid "_Enormous"
-msgstr "_ଅତିଶଯ"
+msgstr "ଅତିଶୟ (_E)"
 
 #: ../app/actions/dockable-actions.c:89
-#, fuzzy
 msgid "_Gigantic"
-msgstr "_ବିଶାଳକାଯ"
+msgstr "ବିଶାଳକାୟ (_G)"
 
 #: ../app/actions/dockable-actions.c:94
-#, fuzzy
 msgid "_Icon"
-msgstr "ଚିତ୍ରସଂେକତ (_I)"
+msgstr "ଚିତ୍ରସଂକେତ (_I)"
 
 #: ../app/actions/dockable-actions.c:95
-#, fuzzy
 msgid "Current _Status"
-msgstr "ଚଳିତ _ସ୍ଥିତି"
+msgstr "ପ୍ରଚଳିତ ସ୍ଥିତି (_S)"
 
 #: ../app/actions/dockable-actions.c:96
-#, fuzzy
 msgid "_Text"
-msgstr "_ପାଠ୍ଯ"
+msgstr "ପାଠ୍ଯ (_T)"
 
 #: ../app/actions/dockable-actions.c:97
-#, fuzzy
 msgid "I_con & Text"
-msgstr "ପ୍ର_ତିମୂର୍ତ୍ତି ଓ ପାଠ୍ଯ"
+msgstr "ଚିତ୍ରସଂକେତ ଏବଂ ପାଠ୍ୟ (_c)"
 
 #: ../app/actions/dockable-actions.c:98
-#, fuzzy
 msgid "St_atus & Text"
-msgstr "ସ୍ଥି_ତି ଓ ପାଠ୍ଯ"
+msgstr "ସ୍ଥିତି ଓ ପାଠ୍ଯ (_a)"
 
 #: ../app/actions/dockable-actions.c:108
 msgid "Loc_k Tab to Dock"
@@ -1301,24 +1229,20 @@ msgid "Show _Button Bar"
 msgstr ""
 
 #: ../app/actions/dockable-actions.c:124
-#, fuzzy
 msgid "View as _List"
-msgstr "ତାଲିକା_ଭାବରେ ଦର୍ଶନ କରନ୍ତୁ "
+msgstr "ତାଲିକା ଭାବରେ ଦର୍ଶନ କରନ୍ତୁ (_L)"
 
 #: ../app/actions/dockable-actions.c:129
-#, fuzzy
 msgid "View as _Grid"
-msgstr "ଜାଲ_ଭାବରେ ଦର୍ଶନ କରନ୍ତୁ"
+msgstr "ଜାଲ ଭାବରେ ଦର୍ଶନ କରନ୍ତୁ (_G)"
 
 #: ../app/actions/documents-actions.c:42
-#, fuzzy
 msgid "Documents Menu"
-msgstr "ପ୍ରଲେଖରାଜି ପ୍ରସୂଚୀ"
+msgstr "ଦଲିଲ ତାଲିକା"
 
 #: ../app/actions/documents-actions.c:46
-#, fuzzy
 msgid "_Open Image"
-msgstr "_ଛବି ଖୋଲନ୍ତୁ"
+msgstr "ପ୍ରତିଛବି ଖୋଲନ୍ତୁ (_O)"
 
 #: ../app/actions/documents-actions.c:47
 #, fuzzy
