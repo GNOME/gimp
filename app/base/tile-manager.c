@@ -235,18 +235,19 @@ tile_manager_get (TileManager *tm,
               tm->tiles[tile_num] = tile;
             }
 
+	  /* must lock before marking dirty */
+	  tile_lock (tile);
           tile->write_count++;
           tile->dirty = TRUE;
         }
-#ifdef DEBUG_TILE_MANAGER
       else
         {
+#ifdef DEBUG_TILE_MANAGER
           if (G_UNLIKELY (tile->write_count))
             g_printerr ("STINK! r/o on r/w tile (%d)\n", tile->write_count);
-        }
 #endif
-
-      tile_lock (tile);
+          tile_lock (tile);
+        }
     }
 
   return tile;
@@ -348,7 +349,7 @@ tile_manager_invalidate_tile (TileManager  *tm,
       tm->cached_num  = -1;
     }
 
-  if (tile->listhead)
+  if (tile->cached)
     tile_cache_flush (tile);
 
   if (G_UNLIKELY (tile->share_count > 1))

@@ -80,11 +80,8 @@ tile_lock (Tile *tile)
 
   if (tile->ref_count == 1)
     {
-      if (tile->listhead)
-        {
-          /* remove from cache, move to main store */
-          tile_cache_flush (tile);
-        }
+      /* remove from cache, move to main store */
+      tile_cache_flush (tile);
 
 #ifdef TILE_PROFILING
       tile_active_count++;
@@ -197,6 +194,10 @@ tile_destroy (Tile *tile)
       g_slice_free1 (sizeof (TileRowHint) * TILE_HEIGHT, tile->rowhint);
       tile->rowhint = NULL;
     }
+
+  /* must flush before deleting swap */
+  tile_cache_flush (tile);
+
   if (tile->swap_offset != -1)
     {
       /* If the tile is on disk, then delete its
@@ -204,8 +205,6 @@ tile_destroy (Tile *tile)
        */
       tile_swap_delete (tile);
     }
-  if (tile->listhead)
-    tile_cache_flush (tile);
 
   g_slice_free (Tile, tile);
 

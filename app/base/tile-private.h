@@ -50,6 +50,7 @@ struct _Tile
                            hold this tile */
   guint   dirty : 1;    /* is the tile dirty? has it been modified? */
   guint   valid : 1;    /* is the tile valid? */
+  guint  cached : 1;    /* is the tile cached */
 
 #ifdef TILE_PROFILING
 
@@ -86,7 +87,6 @@ struct _Tile
 
   Tile     *next;       /* List pointers for the tile cache lists */
   Tile     *prev;
-  gpointer  listhead;   /* Pointer to the head of the list this tile is on */
 };
 
 

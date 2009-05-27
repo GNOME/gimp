@@ -35,6 +35,7 @@ static gboolean  tile_cache_zorch_next     (void);
 static void      tile_cache_flush_internal (Tile     *tile);
 
 static gboolean  tile_idle_preswap         (gpointer  data);
+static void      tile_verify(void);
 
 
 typedef struct _TileList
@@ -43,13 +44,12 @@ typedef struct _TileList
   Tile *last;
 } TileList;
 
-static const gulong  max_tile_size    = TILE_WIDTH * TILE_HEIGHT * 4;
 static gulong        cur_cache_size   = 0;
 static gulong        max_cache_size   = 0;
 static gulong        cur_cache_dirty  = 0;
-static TileList      clean_list       = { NULL, NULL };
-static TileList      dirty_list       = { NULL, NULL };
+static TileList      tile_list        = { NULL, NULL };
 static guint         idle_swapper     = 0;
+static Tile         *idle_scan_last   = NULL;
 
 #ifdef TILE_PROFILING
 extern gulong        tile_idle_swapout;
@@ -74,6 +74,7 @@ static GMutex       *tile_cache_mutex = NULL;
 
 #endif
 
+#define PENDING_WRITE(t) ((t)->dirty || (t)->swap_offset == -1)
 
 void
 tile_cache_init (gulong tile_cache_size)
@@ -84,8 +85,8 @@ tile_cache_init (gulong tile_cache_size)
   tile_cache_mutex = g_mutex_new ();
 #endif
 
-  clean_list.first = clean_list.last = NULL;
-  dirty_list.first = dirty_list.last = NULL;
+  tile_list.first = tile_list.last = NULL;
+  idle_scan_last = NULL;
 
   max_cache_size = tile_cache_size;
 }
@@ -113,8 +114,6 @@ tile_cache_exit (void)
 void
 tile_cache_insert (Tile *tile)
 {
-  TileList *list;
-  TileList *newlist;
 
   TILE_CACHE_LOCK;
 
@@ -127,32 +126,27 @@ tile_cache_insert (Tile *tile)
    *  it was the most recently accessed tile.
    */
 
-  list = tile->listhead;
-
-  newlist = ((tile->dirty || tile->swap_offset == -1) ?
-             &dirty_list : &clean_list);
-
-  /* if list is NULL, the tile is not in the cache */
-
-  if (list)
+  if (tile->cached)
     {
-      /* Tile is in the cache.  Remove it from its current list and
-         put it at the tail of the proper list (clean or dirty) */
+      /* Tile is in the cache.  Remove it from the list. */
 
       if (tile->next)
         tile->next->prev = tile->prev;
       else
-        list->last = tile->prev;
+        tile_list.last = tile->prev;
 
-      if (tile->prev)
-        tile->prev->next = tile->next;
-      else
-        list->first = tile->next;
+      if(tile->prev){
+	tile->prev->next = tile->next;
+      }else{
+	tile_list.first = tile->next;
+      }
 
-      tile->listhead = NULL;
+      if (PENDING_WRITE(tile))
+	cur_cache_dirty -= tile->size;
 
-      if (list == &dirty_list)
-        cur_cache_dirty -= tile->size;
+      if(tile == idle_scan_last)
+	idle_scan_last = tile->next;
+
     }
   else
     {
@@ -170,8 +164,8 @@ tile_cache_insert (Tile *tile)
           GTimeVal later;
           g_get_current_time(&now);
 #endif
-
-          while ((cur_cache_size + max_tile_size) > max_cache_size)
+          
+          while ((cur_cache_size + tile->size) > max_cache_size)
             {
               if (! tile_cache_zorch_next ())
                 {
@@ -206,20 +200,22 @@ tile_cache_insert (Tile *tile)
   /* Put the tile at the end of the proper list */
 
   tile->next = NULL;
-  tile->prev = newlist->last;
-  tile->listhead = newlist;
+  tile->prev = tile_list.last;
+  if(tile_list.last){
+    tile_list.last->next = tile;
+  }else{
+    tile_list.first = tile;
+  }
+  tile_list.last = tile;
+  tile->cached = TRUE;
 
-  if (newlist->last)
-    newlist->last->next = tile;
-  else
-    newlist->first = tile;
-
-  newlist->last = tile;
-
-  if (tile->dirty || (tile->swap_offset == -1))
+  if (PENDING_WRITE(tile))
     {
       cur_cache_dirty += tile->size;
 
+      if(!idle_scan_last)
+	idle_scan_last=tile;
+      
       if (! idle_swapper &&
           cur_cache_dirty * 2 > max_cache_size)
         {
@@ -243,7 +239,8 @@ tile_cache_flush (Tile *tile)
 {
   TILE_CACHE_LOCK;
 
-  tile_cache_flush_internal (tile);
+  if (tile->cached)
+    tile_cache_flush_internal (tile);
 
   TILE_CACHE_UNLOCK;
 }
@@ -267,57 +264,50 @@ tile_cache_set_size (gulong cache_size)
 static void
 tile_cache_flush_internal (Tile *tile)
 {
-  TileList *list = tile->listhead;
 
-  /* Find where the tile is in the cache.
-   */
+  tile->cached = FALSE;
+  if (PENDING_WRITE(tile))
+    cur_cache_dirty -= tile->size;
+  cur_cache_size -= tile->size;
+  
+  if (tile->next)
+    tile->next->prev = tile->prev;
+  else
+    tile_list.last = tile->prev;
+  
+  if(tile->prev){
+    tile->prev->next = tile->next;
+  }else{
+    tile_list.first = tile->next;
+  }
+  
+  if(tile == idle_scan_last)
+    idle_scan_last = tile->next;
+  
+  tile->next = tile->prev = NULL;
 
-  if (list)
-    {
-      cur_cache_size -= tile->size;
-
-      if (list == &dirty_list)
-        cur_cache_dirty -= tile->size;
-
-      if (tile->next)
-        tile->next->prev = tile->prev;
-      else
-        list->last = tile->prev;
-
-      if (tile->prev)
-        tile->prev->next = tile->next;
-      else
-        list->first = tile->next;
-
-      tile->listhead = NULL;
-    }
 }
 
 static gboolean
 tile_cache_zorch_next (void)
 {
-  Tile *tile;
 
-  if (clean_list.first)
-    tile = clean_list.first;
-  else if (dirty_list.first)
-    tile = dirty_list.first;
-  else
-    return FALSE;
-
+  Tile *tile = tile_list.first;    
+  if(!tile)return FALSE;
+  
 #ifdef TILE_PROFILING
   tile_total_zorched++;
   tile->zorched = TRUE;
-  if (tile->dirty || tile->swap_offset == -1)
+  if(PENDING_WRITE(tile))
     {
       tile_total_zorched_swapout++;
       tile->zorchout = TRUE;
     }
 #endif
-
+  
   tile_cache_flush_internal (tile);
 
-  if (tile->dirty || tile->swap_offset == -1)
+  if (PENDING_WRITE(tile))
     {
       tile_swap_out (tile);
     }
@@ -352,37 +342,74 @@ tile_idle_preswap (gpointer data)
 
   TILE_CACHE_LOCK;
 
-  if ((tile = dirty_list.first))
-    {
-
 #ifdef TILE_PROFILING
-      g_printerr(".");
-      tile_idle_swapout++;
+  tile_verify();
+  g_printerr(".");
+  tile_idle_swapout++;
 #endif
 
+  tile = idle_scan_last;
+
+  while(tile){
+    if(PENDING_WRITE(tile)){
+      idle_scan_last = tile->next;
+      
       tile_swap_out (tile);
+      if(!PENDING_WRITE(tile))
+	cur_cache_dirty -= tile->size;
 
-      dirty_list.first = tile->next;
+      TILE_CACHE_UNLOCK;
+      return TRUE;
+    }
+    tile = tile->next;
+  }
+  
+  g_printerr("\nidle swapper -> stopped\n");
+  idle_scan_last = NULL;
+  idle_swapper = 0;
+  
+  TILE_CACHE_UNLOCK;
+  
+  return FALSE;
+}
 
-      if (tile->next)
-        tile->next->prev = NULL;
-      else
-        dirty_list.last = NULL;
+#ifdef TILE_PROFILING
+static void
+tile_verify(void)
+{
+  /* scan list linearly, count metrics, compare to running totals */
+  gulong local_size=0;
+  gulong local_dirty=0;
+  gulong acc=0;
+  Tile *t = tile_list.first;
 
-      tile->next = NULL;
-      tile->prev = clean_list.last;
-      tile->listhead = &clean_list;
-
-      if (clean_list.last)
-        clean_list.last->next = tile;
-      else
-        clean_list.first = tile;
-
-      clean_list.last = tile;
-      cur_cache_dirty -= tile->size;
+  while(t)
+    {
+      local_size+=t->size;
+      if(PENDING_WRITE(t))
+        local_dirty+=t->size;
+      t=t->next;
     }
 
-  TILE_CACHE_UNLOCK;
+  if(local_size != cur_cache_size)
+    g_printerr("\nCache size mismatch: running=%lu, tested=%lu\n",
+	       cur_cache_size,local_size);
 
-  return TRUE;
+  if(local_dirty != cur_cache_dirty)
+    g_printerr("\nCache dirty mismatch: running=%lu, tested=%lu\n",
+	       cur_cache_dirty,local_dirty);
+
+  /* scan forward from scan list */
+  t = idle_scan_last;
+  while(t)
+    {
+      if(PENDING_WRITE(t))
+        acc+=t->size;
+      t=t->next;
+    }
+  
+  if(acc != local_dirty)
+    g_printerr("\nDirty scan follower mismatch: running=%lu, tested=%lu\n",
+               acc,local_dirty);
 }
+#endif
