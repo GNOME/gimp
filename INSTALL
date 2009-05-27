@@ -253,6 +253,11 @@ These are:
   --without-script-fu.  If for some reason you don't want to build the
      Script-Fu plug-in, you can use --without-script-fu.
 
+  --without-xmc.  The X11 Mouse Cursor(XMC) plug-in needs libXcursor
+     and configure checks for its presense. If for some reason you
+     don't want to build the XMC plug-in even though the library is
+     installed, use --without-xmc to disable it explicitly.
+
 
 The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.

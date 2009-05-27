@@ -1431,6 +1431,29 @@ AC_SUBST(LCMS)
 AM_CONDITIONAL(HAVE_LCMS, test "x$have_lcms" = xyes)
 
 
+######################
+# Check for libXcursor
+######################
+
+AC_ARG_WITH(xmc,[  --without-xmc           build without Xcursor support])
+
+have_xmc=no
+if test "x$with_xmc" != xno; then
+  have_xmc=yes
+  PKG_CHECK_MODULES(XMC, xcursor,
+    FILE_XMC='file-xmc$(EXEEXT)',
+    have_xmc="no (libXcursor not found)")
+else
+   have_xmc="no (libXcursor support disabled)"
+fi
+
+if test "x$have_xmc" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/x-xcursor"
+fi
+
+AC_SUBST(FILE_XMC)
+
+
 ################
 # Check for alsa
 ################
@@ -2104,6 +2127,7 @@ Optional Plug-Ins:
   Windows ICO          $have_libpng
   WMF:                 $have_libwmf
   XJT:                 $have_xjt
+  X11 Mouse Cursor:    $have_xmc
   XPM:                 $have_libxpm
 
 Plug-In Features:

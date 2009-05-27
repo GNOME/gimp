@@ -115,6 +115,7 @@ libexec_PROGRAMS = \
 	$(FILE_TIFF_SAVE) \
 	$(FILE_WMF) \
 	file-xbm \
+	$(FILE_XMC) \
 	$(FILE_XPM) \
 	file-xwd \
 	film \
@@ -194,6 +195,7 @@ EXTRA_PROGRAMS = \
 	file-tiff-load \
 	file-tiff-save \
 	file-wmf \
+	file-xmc \
 	file-xpm \
 	lcms \
 	mail \
@@ -1434,6 +1436,23 @@ file_xbm_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+file_xmc_SOURCES = \
+	file-xmc.c
+
+file_xmc_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(XMC_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
