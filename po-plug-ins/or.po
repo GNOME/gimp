@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: or\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-05-21 16:51+0000\n"
-"PO-Revision-Date: 2009-05-25 18:17+0530\n"
+"PO-Revision-Date: 2009-05-28 18:23+0530\n"
 "Last-Translator: Manoj Kumar Giri <mgiri@redhat.com>\n"
 "Language-Team: Oriya <oriya-it@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:119
@@ -119,7 +120,7 @@ msgstr "ଡିଗ୍ରୀଗୁଡିକ"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:652
 msgid "Rotate Colors"
-msgstr ""
+msgstr "ରଙ୍ଗଗୁଡ଼ିକୁ ବୁଲାନ୍ତୁ"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:692
 msgid "Main Options"
@@ -131,15 +132,15 @@ msgstr "ଧୂସର ବିକଳ୍ପଗୁଡିକ"
 
 #: ../plug-ins/color-rotate/color-rotate-stock.c:35
 msgid "Switch to Clockwise"
-msgstr ""
+msgstr "ବାମାବର୍ତ୍ତୀ କରନ୍ତୁ"
 
 #: ../plug-ins/color-rotate/color-rotate-stock.c:37
 msgid "Switch to C/Clockwise"
-msgstr ""
+msgstr "C/ବାମାବର୍ତ୍ତୀ କରନ୍ତୁ"
 
 #: ../plug-ins/color-rotate/color-rotate-stock.c:39
 msgid "Change Order of Arrows"
-msgstr ""
+msgstr "ତୀରଗୁଡ଼ିକର କ୍ରମକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ"
 
 #: ../plug-ins/color-rotate/color-rotate-stock.c:41
 #: ../plug-ins/imagemap/imap_cmd_select_all.c:51
@@ -148,105 +149,87 @@ msgstr "ସମସ୍ତଙ୍କୁ ମନୋନୀତ କରନ୍ତୁ"
 
 #: ../plug-ins/color-rotate/color-rotate.c:99
 msgid "Replace a range of colors with another"
-msgstr ""
+msgstr "ଗୋଟିଏ ରଙ୍ଗ ପରିସରକୁ ଅନ୍ୟ ଏକ ସହିତ ପରିବର୍ତ୍ତନ କରନ୍ତୁ"
 
 #: ../plug-ins/color-rotate/color-rotate.c:106
 msgid "_Rotate Colors..."
-msgstr ""
+msgstr "ରଙ୍ଗଗୁଡ଼ିକୁ ବୁଲାନ୍ତୁ (_R)..."
 
 #: ../plug-ins/color-rotate/color-rotate.c:140
 msgid "Rotating the colors"
-msgstr ""
+msgstr "ରଙ୍ଗଗୁଡ଼ିକୁ ବୁଲାଉଛି"
 
 #: ../plug-ins/common/alien-map.c:140
-#, fuzzy
 msgid "_Modify red channel"
-msgstr "_ଲାଲ ଚ୍ଯାନେଲକୁ ପରିବର୍ତ୍ତନକର"
+msgstr "ଲାଲ ଚ୍ଯାନେଲକୁ ପରିବର୍ତ୍ତନକରନ୍ତୁ (_M)"
 
 #: ../plug-ins/common/alien-map.c:140
-#, fuzzy
 msgid "_Modify hue channel"
-msgstr "_ବର୍ଣ୍ଣରଞ୍ଜିତ ଚ୍ଯାନେଲକୁ ପରିବର୍ତ୍ତନ କର"
+msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ ଚ୍ଯାନେଲକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ (_M)"
 
 #: ../plug-ins/common/alien-map.c:141
-#, fuzzy
 msgid "Mo_dify green channel"
-msgstr "ସବୁଜ ଚ୍ଯାନେଲକୁ_ପରିବର୍ତ୍ତନ କର"
+msgstr "ସବୁଜ ଚ୍ଯାନେଲକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ (_d)"
 
 #: ../plug-ins/common/alien-map.c:141
-#, fuzzy
 msgid "Mo_dify saturation channel"
-msgstr "ମିଶ୍ରିତ ଚ୍ଯାନେଲକୁ_ପରିବର୍ତ୍ତନ କର"
+msgstr "ପରିପୃକ୍ତ ଚ୍ଯାନେଲକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ (_d)"
 
 #: ../plug-ins/common/alien-map.c:142
-#, fuzzy
 msgid "Mod_ify blue channel"
-msgstr "ନୀଳ ଚ୍ଯାନେଲକୁ_ପରିବର୍ତ୍ତନ କର"
+msgstr "ନୀଳ ଚ୍ଯାନେଲକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ (_i)"
 
 #: ../plug-ins/common/alien-map.c:142
-#, fuzzy
 msgid "Mod_ify luminosity channel"
-msgstr "ଉଜ୍ବଳକ୍ଷମ ଚ୍ଯାନେଲକୁ_ପରିବର୍ତ୍ତନ କର"
+msgstr "ଉଜ୍ବଳକ୍ଷମ ଚ୍ଯାନେଲକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ (_i)"
 
 #: ../plug-ins/common/alien-map.c:147
-#, fuzzy
 msgid "Red _frequency:"
-msgstr "ଲାଲ _ ଫ୍ରିକ୍ବେନସି:"
+msgstr "ଲାଲ ବାରମ୍ବାରତା (_f):"
 
 #: ../plug-ins/common/alien-map.c:147
-#, fuzzy
 msgid "Hue _frequency:"
-msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ _ଫ୍ରିକ୍ବେନସି:"
+msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ ବାରମ୍ବାରତା (_f):"
 
 #: ../plug-ins/common/alien-map.c:148
-#, fuzzy
 msgid "Green fr_equency:"
-msgstr "ସବୁଜ_ଫ୍ରିକ୍ବେନସି:"
+msgstr "ସବୁଜ ବାରମ୍ବାରତା (_e):"
 
 #: ../plug-ins/common/alien-map.c:148
-#, fuzzy
 msgid "Saturation fr_equency:"
-msgstr "ସଂପୂର୍ଣ୍ଣମିଶ୍ରିତ_ଫ୍ରିକ୍ବେନସି:"
+msgstr "ପରିପୃକ୍ତ ବାରମ୍ବାରତା (_e):"
 
 #: ../plug-ins/common/alien-map.c:149
-#, fuzzy
 msgid "Blue freq_uency:"
-msgstr "ନୀଳ_ଫ୍ରିକ୍ବେନସି:"
+msgstr "ନୀଳ ବାରମ୍ବାରତା (_u):"
 
 #: ../plug-ins/common/alien-map.c:149
-#, fuzzy
 msgid "Luminosity freq_uency:"
-msgstr "ଉଜ୍ବଳକ୍ଷମ_ଫ୍ରିକ୍ବେନସି:"
+msgstr "ଉଜ୍ବଳକ୍ଷମ ବାରମ୍ବାରତା (_u):"
 
 #: ../plug-ins/common/alien-map.c:151
-#, fuzzy
 msgid "Red _phaseshift:"
-msgstr "ଲାଲ _ଫେଜସିଫ୍ଟ:"
+msgstr "ଲାଲ ଅବସ୍ଥା ପରିବର୍ତ୍ତନ (_p):"
 
 #: ../plug-ins/common/alien-map.c:151
-#, fuzzy
 msgid "Hue _phaseshift:"
-msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ _ଫେଜସିଫ୍ଟ:"
+msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ ଅବସ୍ଥା ପରିବର୍ତ୍ତନ (_p):"
 
 #: ../plug-ins/common/alien-map.c:152
-#, fuzzy
 msgid "Green ph_aseshift:"
-msgstr "ସବୁଜ_ଫେଜସିଫ୍ଟ:"
+msgstr "ସବୁଜ ଅବସ୍ଥା ପରିବର୍ତ୍ତନ (_a):"
 
 #: ../plug-ins/common/alien-map.c:152
-#, fuzzy
 msgid "Saturation ph_aseshift:"
-msgstr "ସଂପୂର୍ଣ୍ଣମିଶ୍ରିତ_ଫେଜସିଫ୍ଟ:"
+msgstr "ପରିପୃକ୍ତ ଅବସ୍ଥା ପରିବର୍ତ୍ତନ (_a):"
 
 #: ../plug-ins/common/alien-map.c:153
-#, fuzzy
 msgid "Blue pha_seshift:"
-msgstr "ନୀଳ _ଫେଜସିଫ୍ଟ:"
+msgstr "ନୀଳ ଅବସ୍ଥା ପରିବର୍ତ୍ତନ (_s):"
 
 #: ../plug-ins/common/alien-map.c:153
-#, fuzzy
 msgid "Luminosity pha_seshift:"
-msgstr "ଉଜ୍ବଳକ୍ଷମ_ଫେଜସିଫ୍ଟ:"
+msgstr "ଉଜ୍ବଳକ୍ଷମ ଅବସ୍ଥା ପରିବର୍ତ୍ତନ (_s):"
 
 #: ../plug-ins/common/alien-map.c:183
 msgid "Alter colors in various psychedelic ways"
@@ -266,15 +249,13 @@ msgstr ""
 
 #: ../plug-ins/common/alien-map.c:441 ../plug-ins/common/alien-map.c:465
 #: ../plug-ins/common/alien-map.c:489
-#, fuzzy
 msgid "Number of cycles covering full value range"
 msgstr "ପୂର୍ଣ୍ଣ ମୂଲ୍ଯ ପରିସରକୁ ଆବୃତ କରୁଥିବା ଘୂର୍ଣ୍ଣନଚକ୍ର ଗୁଡିକର ସଂଖ୍ଯା"
 
 #: ../plug-ins/common/alien-map.c:453 ../plug-ins/common/alien-map.c:477
 #: ../plug-ins/common/alien-map.c:501
-#, fuzzy
 msgid "Phase angle, range 0-360"
-msgstr "ଫେଜ କୋଣ, ପରିସର 0-360"
+msgstr "ଅବସ୍ଥା ମଧ୍ଯବର୍ତ୍ତୀ କୋଣ, ପରିସର 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/alien-map.c:515 ../plug-ins/common/hot.c:611
@@ -299,14 +280,12 @@ msgid "Align Visi_ble Layers..."
 msgstr ""
 
 #: ../plug-ins/common/align-layers.c:173
-#, fuzzy
 msgid "There are not enough layers to align."
-msgstr "ପଂକ୍ତିକୃତ କରିବା ପାଇଁ ୟଥେଷ୍ଟ ସ୍ତର ନାହିଁ"
+msgstr "ପଂକ୍ତିକୃତ କରିବା ପାଇଁ ଯଥେଷ୍ଟ ସ୍ତର ନାହିଁ"
 
 #: ../plug-ins/common/align-layers.c:400
-#, fuzzy
 msgid "Align Visible Layers"
-msgstr "ଦୃଶ୍ଯମାନ ସ୍ତରଗୁଡିକୁ ପଂକ୍ତିକୃତ କର"
+msgstr "ଦୃଶ୍ଯମାନ ସ୍ତରଗୁଡିକୁ ପଂକ୍ତିକୃତ କରନ୍ତୁ"
 
 #. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
@@ -334,7 +313,6 @@ msgid "Fill (right to left)"
 msgstr "ପୁରଣକରନ୍ତୁ (ଡାହାଣରୁ ବାମକୁ)"
 
 #: ../plug-ins/common/align-layers.c:428 ../plug-ins/common/align-layers.c:459
-#, fuzzy
 msgid "Snap to grid"
 msgstr "କ୍ଷିପ୍ରସ୍ଥାପନ କରନ୍ତୁ ଜାଲି ପାଖକୁ"
 
@@ -388,32 +366,28 @@ msgid "_Grid size:"
 msgstr "ଗ୍ରୀଡ ଆକାର (_G):"
 
 #: ../plug-ins/common/align-layers.c:495
-#, fuzzy
 msgid "_Ignore the bottom layer even if visible"
-msgstr "_ୟଦିବା ଦୃଶ୍ଯମାନ ହୁଏ, ତଳ ସ୍ତରକୁ ଅବହେଳା କରେ"
+msgstr "ଯଦିବା ଦୃଶ୍ଯମାନ ହୁଏ, ତଳ ସ୍ତରକୁ ଅବହେଳା କରେ (_I)"
 
 #: ../plug-ins/common/align-layers.c:505
-#, fuzzy
 msgid "_Use the (invisible) bottom layer as the base"
-msgstr "_ (ଅଦୃଶ୍ଯ) ତଳ ସ୍ତରକୁ ଆଧାର ପରି ଉପୟୋଗ କର"
+msgstr "(ଅଦୃଶ୍ଯ) ତଳ ସ୍ତରକୁ ଆଧାର ପରି ଉପୟୋଗ କରନ୍ତୁ (_U)"
 
 #: ../plug-ins/common/animation-optimize.c:133
 msgid "Modify image to reduce size when saved as GIF animation"
 msgstr ""
 
 #: ../plug-ins/common/animation-optimize.c:145
-#, fuzzy
 msgid "Optimize (for _GIF)"
-msgstr "ସର୍ବାଧିକ କର (ପାଇଁ _GIF)"
+msgstr "ସର୍ବାଧିକ କରନ୍ତୁ (GIF ପାଇଁ) (_G)"
 
 #: ../plug-ins/common/animation-optimize.c:153
 msgid "Reduce file size where combining layers is possible"
 msgstr ""
 
 #: ../plug-ins/common/animation-optimize.c:163
-#, fuzzy
 msgid "_Optimize (Difference)"
-msgstr "_ସର୍ବାଧିକ କର (ଭିନ୍ନତା)"
+msgstr "ସର୍ବାଧିକ କରନ୍ତୁ (ଭିନ୍ନତା) (_O)"
 
 #: ../plug-ins/common/animation-optimize.c:171
 msgid "Remove optimization to make editing easier"
@@ -424,14 +398,12 @@ msgid "_Unoptimize"
 msgstr "ପ୍ରତିକୂଳନ (_U)"
 
 #: ../plug-ins/common/animation-optimize.c:198
-#, fuzzy
 msgid "_Remove Backdrop"
-msgstr "_ପୃଷ୍ଠଭୂମି ହଟାଇ"
+msgstr "ପୃଷ୍ଠଭୂମି ହଟାନ୍ତୁ (_R)"
 
 #: ../plug-ins/common/animation-optimize.c:214
-#, fuzzy
 msgid "_Find Backdrop"
-msgstr "_ପୃଷ୍ଠଭୂମି ଖୋଜ"
+msgstr "ପୃଷ୍ଠଭୂମି ଖୋଜନ୍ତୁ (_F)"
 
 #: ../plug-ins/common/animation-optimize.c:427
 msgid "Unoptimizing animation"
@@ -454,9 +426,8 @@ msgid "Preview a GIMP layer-based animation"
 msgstr "GIMP ସ୍ତର ଆଧାରିତ ଜୀବନାୟନର ପ୍ରାକଦର୍ଶନ"
 
 #: ../plug-ins/common/animation-play.c:168
-#, fuzzy
 msgid "_Playback..."
-msgstr "_ପୃଷ୍ଠ ଗାଯନ..."
+msgstr "ପୃଷ୍ଠ ଗାୟନ (_P)..."
 
 #: ../plug-ins/common/animation-play.c:447
 msgid "_Step"
@@ -591,16 +562,14 @@ msgid "Simulate an image painted on window blinds"
 msgstr ""
 
 #: ../plug-ins/common/blinds.c:121
-#, fuzzy
 msgid "_Blinds..."
-msgstr "_ପରଦାଗୁଡିକ..."
+msgstr "ଅପ୍ରତ୍ୟକ୍ଷ (_B)..."
 
 #: ../plug-ins/common/blinds.c:188
 msgid "Adding blinds"
-msgstr ""
+msgstr "ଅପ୍ରତ୍ୟକ୍ଷ ଯୋଗକରୁଅଛି"
 
 #: ../plug-ins/common/blinds.c:226
-#, fuzzy
 msgid "Blinds"
 msgstr "ଅପ୍ରତ୍ୟକ୍ଷ"
 
@@ -661,15 +630,13 @@ msgid "Blur neighboring pixels, but only in low-contrast areas"
 msgstr ""
 
 #: ../plug-ins/common/blur-gauss-selective.c:115
-#, fuzzy
 msgid "_Selective Gaussian Blur..."
-msgstr "_ମନୋନୀତ ଗୌସିଆନ ଅସ୍ପଷ୍ଟ..."
+msgstr "ଗୌସିଆନ ଅସ୍ପଷ୍ଟତା ମନୋନୀତ କରନ୍ତୁ (_S)..."
 
 #: ../plug-ins/common/blur-gauss-selective.c:195
 #: ../plug-ins/common/blur-gauss-selective.c:232
-#, fuzzy
 msgid "Selective Gaussian Blur"
-msgstr "ମନୋନୀତ ଗୌସିଆନ ଅସ୍ପଷ୍ଟ"
+msgstr "ମନୋନୀତ ଗୌସିଆନ ଅସ୍ପଷ୍ଟତା"
 
 #: ../plug-ins/common/blur-gauss-selective.c:211
 #: ../plug-ins/common/blur-gauss.c:448 ../plug-ins/common/cartoon.c:232
@@ -678,7 +645,6 @@ msgstr "ମନୋନୀତ ଗୌସିଆନ ଅସ୍ପଷ୍ଟ"
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
 #: ../plug-ins/file-sgi/sgi.c:536 ../plug-ins/file-xjt/xjt.c:1701
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
-#, fuzzy
 msgid "Cannot operate on indexed color images."
 msgstr "ଅନୁକ୍ରମଣୀକାବଦ୍ଧ ରଙ୍ଗୀନ ଚିତ୍ରଗୁଡିକୁ ପରିଚାଳିତ କରିପାରିବ ନାହିଁ"
 
@@ -857,168 +823,141 @@ msgid "Create an embossing effect using a bump map"
 msgstr ""
 
 #: ../plug-ins/common/bump-map.c:267
-#, fuzzy
 msgid "_Bump Map..."
-msgstr "_ଉଚ୍ଚ ମାନଚିତ୍ର..."
+msgstr "ଉଚ୍ଚ ମାନଚିତ୍ର (_B)..."
 
 #: ../plug-ins/common/bump-map.c:415
 msgid "Bump-mapping"
 msgstr ""
 
 #: ../plug-ins/common/bump-map.c:766
-#, fuzzy
 msgid "Bump Map"
 msgstr "ଉଚ୍ଚ ମାନଚିତ୍ର"
 
 #: ../plug-ins/common/bump-map.c:832
-#, fuzzy
 msgid "_Bump map:"
-msgstr "_ଉଚ୍ଚ ମାନଚିତ୍ର:"
+msgstr "ଉଚ୍ଚ ମାନଚିତ୍ର (_B):"
 
 #. Map type menu
 #: ../plug-ins/common/bump-map.c:835 ../plug-ins/flame/flame.c:748
 #: ../plug-ins/lighting/lighting-ui.c:842
-#, fuzzy
 msgid "Linear"
-msgstr "ଲିନିଅର୍"
+msgstr "ସରଳ"
 
 #: ../plug-ins/common/bump-map.c:836 ../plug-ins/flame/flame.c:750
 #: ../plug-ins/lighting/lighting-ui.c:845
-#, fuzzy
 msgid "Spherical"
 msgstr "ଗୋଲାକାର"
 
 #: ../plug-ins/common/bump-map.c:837 ../plug-ins/flame/flame.c:749
 #: ../plug-ins/lighting/lighting-ui.c:844
-#, fuzzy
 msgid "Sinusoidal"
 msgstr "ଅଙ୍କାବଙ୍କା"
 
 #: ../plug-ins/common/bump-map.c:844
-#, fuzzy
 msgid "_Map type:"
-msgstr "_ମାନଚିତ୍ର ପ୍ରକାର:"
+msgstr "ମାନଚିତ୍ର ପ୍ରକାର (_M):"
 
 #. Compensate darkening
 #: ../plug-ins/common/bump-map.c:849
-#, fuzzy
 msgid "Co_mpensate for darkening"
-msgstr "ଅନ୍ଧକାର କରିବା ପାଇଁ_ପ୍ରତିଦାନକର"
+msgstr "ଅନ୍ଧକାର କରିବା ପାଇଁ ପ୍ରତିଦାନ କରନ୍ତୁ (_m)"
 
 #. Invert bumpmap
 #: ../plug-ins/common/bump-map.c:863
-#, fuzzy
 msgid "I_nvert bumpmap"
-msgstr "ବମ୍ପମ୍ଯାପ_ଓଲଟାଅ"
+msgstr "ବମ୍ପମ୍ଯାପକୁ ଓଲଟାଅ (_n)"
 
 #. Tile bumpmap
 #: ../plug-ins/common/bump-map.c:877
-#, fuzzy
 msgid "_Tile bumpmap"
-msgstr "_ଟାଇଲ ବମ୍ପମ୍ଯାପ"
+msgstr "ଟାଇଲ ବମ୍ପମ୍ଯାପ (_T)"
 
 #: ../plug-ins/common/bump-map.c:892 ../plug-ins/common/emboss.c:499
-#, fuzzy
 msgid "_Azimuth:"
-msgstr "_ଆଜିମଥ:"
+msgstr "ଆଜିମଥ (_A):"
 
 #: ../plug-ins/common/bump-map.c:904
-#, fuzzy
 msgid "_Elevation:"
-msgstr "_ଉଚ୍ଚତାଦର୍ଶାଇବା:"
+msgstr "ଉଚ୍ଚତା ଦର୍ଶାଇବା (_E):"
 
 #: ../plug-ins/common/bump-map.c:930 ../plug-ins/common/file-ps.c:3398
-#, fuzzy
 msgid "_X offset:"
-msgstr "_X ଅଫ୍ ସେଟ:"
+msgstr "X ଅଫ ସେଟ (_X):"
 
 #: ../plug-ins/common/bump-map.c:933 ../plug-ins/common/bump-map.c:947
-#, fuzzy
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr "ମଧ୍ଯ ମାଉସ ବଟନ ଉପୟୋଗ କରି ପୂର୍ବଦୃଶ୍ଯକୁ ଟାଣିବା ଦ୍ବାରା ଅଫ୍ ସେଟକୁ ବ୍ଯବସ୍ଥା କରାୟାଇପାରିବ ।"
+msgstr "ମଧ୍ଯ ମାଉସ ବଟନ ଉପୟୋଗ କରି ପୂର୍ବଦୃଶ୍ଯକୁ ଟାଣିବା ଦ୍ବାରା ଅଫ୍ ସେଟକୁ ବ୍ଯବସ୍ଥା କରାୟାଇପାରିବ।"
 
 #: ../plug-ins/common/bump-map.c:944 ../plug-ins/common/file-ps.c:3407
-#, fuzzy
 msgid "_Y offset:"
-msgstr "_Y ଅଫ୍ ସେଟ:"
+msgstr "Y ଅଫ ସେଟ (_Y):"
 
 #: ../plug-ins/common/bump-map.c:958
-#, fuzzy
 msgid "_Waterlevel:"
-msgstr "_ଜଳସ୍ତର:"
+msgstr "ଜଳସ୍ତର (_W):"
 
 #: ../plug-ins/common/bump-map.c:970
-#, fuzzy
 msgid "A_mbient:"
-msgstr "ପରିପାଟି_:"
+msgstr "ପରିପାଟି (_m):"
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
 msgstr ""
 
 #: ../plug-ins/common/cartoon.c:147
-#, fuzzy
 msgid "Ca_rtoon..."
-msgstr "କାର୍ଟୁନ_..."
+msgstr "କାର୍ଟୁନ (_r)..."
 
 #: ../plug-ins/common/cartoon.c:811
-#, fuzzy
 msgid "Cartoon"
 msgstr "କାର୍ଟୁନ"
 
 #: ../plug-ins/common/cartoon.c:848 ../plug-ins/common/photocopy.c:876
-#, fuzzy
 msgid "_Mask radius:"
-msgstr "_ମାସ୍କ ବ୍ଯାସାର୍ଦ୍ଧ:"
+msgstr "ମାସ୍କ ବ୍ଯାସାର୍ଦ୍ଧ (_M):"
 
 #: ../plug-ins/common/cartoon.c:862
-#, fuzzy
 msgid "_Percent black:"
-msgstr "_ଶତକଡା କଳା:"
+msgstr "ଶତକଡା କଳା (_P):"
 
 #: ../plug-ins/common/channel-mixer.c:175
 msgid "Alter colors by mixing RGB Channels"
 msgstr ""
 
 #: ../plug-ins/common/channel-mixer.c:180
-#, fuzzy
 msgid "Channel Mi_xer..."
-msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣ_କାରୀ..."
+msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ (_x)..."
 
 #. printf("Channel Mixer:: Mode:%d  r %f  g %f  b %f\n ",
 #. param[3].data.d_int32, mix.black.red_gain,
 #. mix.black.green_gain, mix.black.blue_gain);
 #: ../plug-ins/common/channel-mixer.c:271
 #: ../plug-ins/common/channel-mixer.c:492
-#, fuzzy
 msgid "Channel Mixer"
 msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ"
 
 #: ../plug-ins/common/channel-mixer.c:529
-#, fuzzy
 msgid "O_utput channel:"
-msgstr "ଆଉଟପୁଟ_ଚ୍ଯାନେଲ:"
+msgstr "ଫଳାଫଳ ଚ୍ଯାନେଲ (_u)"
 
 #. Redmode radio frame
 #: ../plug-ins/common/channel-mixer.c:538 ../plug-ins/common/decompose.c:174
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:991
-#, fuzzy
 msgid "Red"
 msgstr "ଲାଲ"
 
 #. Greenmode radio frame
 #: ../plug-ins/common/channel-mixer.c:543 ../plug-ins/common/decompose.c:175
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1032
-#, fuzzy
 msgid "Green"
 msgstr "ସବୁଜ"
 
 #. Bluemode radio frame
 #: ../plug-ins/common/channel-mixer.c:548 ../plug-ins/common/decompose.c:176
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1073
-#, fuzzy
 msgid "Blue"
 msgstr "ନୀଳ"
 
@@ -1027,7 +966,6 @@ msgstr "ନୀଳ"
 #: ../plug-ins/common/compose.c:201 ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
 #: ../plug-ins/common/noise-rgb.c:530 ../plug-ins/common/noise-rgb.c:537
-#, fuzzy
 msgid "_Red:"
 msgstr "ନାଲି (_R):"
 
@@ -1036,7 +974,6 @@ msgstr "ନାଲି (_R):"
 #: ../plug-ins/common/compose.c:202 ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
 #: ../plug-ins/common/noise-rgb.c:531 ../plug-ins/common/noise-rgb.c:538
-#, fuzzy
 msgid "_Green:"
 msgstr "ସବୁଜ (_G):"
 
@@ -1045,24 +982,20 @@ msgstr "ସବୁଜ (_G):"
 #: ../plug-ins/common/compose.c:203 ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
 #: ../plug-ins/common/noise-rgb.c:532 ../plug-ins/common/noise-rgb.c:539
-#, fuzzy
 msgid "_Blue:"
 msgstr "ନୀଳ (_B):"
 
 #: ../plug-ins/common/channel-mixer.c:636
-#, fuzzy
 msgid "_Monochrome"
-msgstr "_ମନୋକ୍ରୋମ"
+msgstr "ମନୋକ୍ରୋମ (_M)"
 
 #: ../plug-ins/common/channel-mixer.c:649
-#, fuzzy
 msgid "Preserve _luminosity"
-msgstr " _ଜାଜ୍ଜ୍ବଲ୍ଯତା ସୁରକ୍ଷିତ କରନ୍ତୁ"
+msgstr "ଜାଜ୍ଜ୍ବଲ୍ଯତା ସୁରକ୍ଷିତ କରନ୍ତୁ (_l)"
 
 #: ../plug-ins/common/channel-mixer.c:878
-#, fuzzy
 msgid "Load Channel Mixer Settings"
-msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ ସେଟିଙ୍ଗଗୁଡିକୁ ଲୋଡ କର"
+msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ ସେଟିଙ୍ଗଗୁଡିକୁ ଲୋଡ କରନ୍ତୁ"
 
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:982
@@ -1097,14 +1030,12 @@ msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ ସେଟିଙ୍�
 #: ../plug-ins/help/gimphelplocale.c:239
 #: ../plug-ins/lighting/lighting-ui.c:1354
 #, c-format
-#, fuzzy
 msgid "Could not open '%s' for reading: %s"
-msgstr "ଖୋଲି ପାରିଲା ନାହିଁ '%s' ପଢିବା ପାଇଁ: %s"
+msgstr "ପଢିବା ପାଇଁ '%s' କୁ ଖୋଲି ପାରିଲା ନାହିଁ: %s"
 
 #: ../plug-ins/common/channel-mixer.c:1005
-#, fuzzy
 msgid "Save Channel Mixer Settings"
-msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ ସେଟିଙ୍ଗଗୁଡିକୁ ସଂଚଯ କର"
+msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ ସେଟିଙ୍ଗଗୁଡିକୁ ସଂଚଯ କରନ୍ତୁ"
 
 #: ../plug-ins/common/channel-mixer.c:1060
 #: ../plug-ins/common/cml-explorer.c:2005 ../plug-ins/common/curve-bend.c:833
@@ -1134,278 +1065,225 @@ msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ ସେଟିଙ୍�
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2374
 #: ../plug-ins/lighting/lighting-ui.c:1211
 #, c-format
-#, fuzzy
 msgid "Could not open '%s' for writing: %s"
-msgstr "ଖୋଲି ପାରିଲା ନାହିଁ '%s' ଲେଖିବା ପାଇଁ: %s"
+msgstr "ଲେଖିବା ପାଇଁ '%s' କୁ ଖୋଲି ପାରିଲା ନାହିଁ: %s"
 
 #: ../plug-ins/common/channel-mixer.c:1068
 #: ../plug-ins/common/cml-explorer.c:2060
 #, c-format
-#, fuzzy
 msgid "Parameters were saved to '%s'"
-msgstr " '%s' କୁ ପାରମିଟରଗୁଡିକ ସଂଚଯ ହେଲେ"
+msgstr "'%s' ରେ ପ୍ରାଚଳଗୁଡିକୁ ସଂଚୟ ହୋଇଛି"
 
 #: ../plug-ins/common/checkerboard.c:89
 msgid "Create a checkerboard pattern"
 msgstr ""
 
 #: ../plug-ins/common/checkerboard.c:94
-#, fuzzy
 msgid "_Checkerboard..."
-msgstr "_ଚେକରବୋର୍ଡ..."
+msgstr "ଯାଞ୍ଚକରିବା ବୋର୍ଡ (_C)..."
 
 #: ../plug-ins/common/checkerboard.c:161
 msgid "Adding checkerboard"
 msgstr ""
 
 #: ../plug-ins/common/checkerboard.c:346
-#, fuzzy
 msgid "Checkerboard"
-msgstr "ୟାଞ୍ଚକରିବା ବୋର୍ଡ"
+msgstr "ଯାଞ୍ଚକରିବା ବୋର୍ଡ"
 
 #: ../plug-ins/common/checkerboard.c:412
 #: ../plug-ins/gimpressionist/sizemap.c:511
-#, fuzzy
 msgid "_Size:"
 msgstr "ଆକାର (_S):"
 
 #: ../plug-ins/common/checkerboard.c:421
-#, fuzzy
 msgid "_Psychobilly"
-msgstr "_ ମନୋବିକୃତି"
+msgstr "ମନୋବିକୃତି (_P)"
 
 #: ../plug-ins/common/cml-explorer.c:129
-#, fuzzy
 msgid "Keep image's values"
-msgstr "ଚିତ୍ରର ମୂଲ୍ଯ ଗୁଡିକ ରଖ"
+msgstr "ଚିତ୍ରର ମୂଲ୍ଯ ଗୁଡିକୁ ରଖନ୍ତୁ"
 
 #: ../plug-ins/common/cml-explorer.c:130
-#, fuzzy
 msgid "Keep the first value"
-msgstr "ପ୍ରଥମ ମୂଲ୍ଯକୁ ରଖ"
+msgstr "ପ୍ରଥମ ମୂଲ୍ଯକୁ ରଖନ୍ତୁ"
 
 #: ../plug-ins/common/cml-explorer.c:131
-#, fuzzy
 msgid "Fill with parameter k"
-msgstr "ପାରାମିଟର k ସହିତ ପୁରଣ କର"
+msgstr "ପ୍ରାଚଳ k ସହିତ ପୁରଣ କରନ୍ତୁ"
 
 #: ../plug-ins/common/cml-explorer.c:132
-#, fuzzy
 msgid "k{x(1-x)}^p"
 msgstr "k{x(1-x)}^p"
 
 #: ../plug-ins/common/cml-explorer.c:133
-#, fuzzy
 msgid "k{x(1-x)}^p stepped"
 msgstr "k{x(1-x)}^p ସୋପାନୀକୃତ"
 
 #: ../plug-ins/common/cml-explorer.c:134
-#, fuzzy
 msgid "kx^p"
 msgstr "kx^p"
 
 #: ../plug-ins/common/cml-explorer.c:135
-#, fuzzy
 msgid "kx^p stepped"
 msgstr "kx^p ସୋପାନୀକୃତ"
 
 #: ../plug-ins/common/cml-explorer.c:136
-#, fuzzy
 msgid "k(1-x^p)"
 msgstr "k(1-x^p)"
 
 #: ../plug-ins/common/cml-explorer.c:137
-#, fuzzy
 msgid "k(1-x^p) stepped"
 msgstr "k(1-x^p) ସୋପାନୀକୃତ"
 
 #: ../plug-ins/common/cml-explorer.c:138
-#, fuzzy
 msgid "Delta function"
 msgstr "ଡେଲଟା କାର୍ୟ୍ଯ"
 
 #: ../plug-ins/common/cml-explorer.c:139
-#, fuzzy
 msgid "Delta function stepped"
 msgstr "ସୋପାନୀକୃତ ଡେଲ୍ଟା କାର୍ୟ୍ଯ"
 
 #: ../plug-ins/common/cml-explorer.c:140
-#, fuzzy
 msgid "sin^p-based function"
 msgstr "sin^p-ଆଧାରିତ କାର୍ୟ୍ଯ"
 
 #: ../plug-ins/common/cml-explorer.c:141
-#, fuzzy
 msgid "sin^p, stepped"
 msgstr "sin^p, ସୋପାନୀକୃତ"
 
 #: ../plug-ins/common/cml-explorer.c:167
-#, fuzzy
 msgid "Max (x, -)"
 msgstr "ସର୍ବାଧିକ (x, -)"
 
 #: ../plug-ins/common/cml-explorer.c:168
-#, fuzzy
 msgid "Max (x+d, -)"
 msgstr "ସର୍ବାଧିକ (x+d, -)"
 
 #: ../plug-ins/common/cml-explorer.c:169
-#, fuzzy
 msgid "Max (x-d, -)"
 msgstr "ସର୍ବାଧିକ (x-d, -)"
 
 #: ../plug-ins/common/cml-explorer.c:170
-#, fuzzy
 msgid "Min (x, -)"
 msgstr "ନ୍ଯୁନତମ(x, -)"
 
 #: ../plug-ins/common/cml-explorer.c:171
-#, fuzzy
 msgid "Min (x+d, -)"
 msgstr "ନ୍ଯୁନତମ (x+d, -)"
 
 #: ../plug-ins/common/cml-explorer.c:172
-#, fuzzy
 msgid "Min (x-d, -)"
 msgstr "ନ୍ଯୁନତମ (x-d, -)"
 
 #: ../plug-ins/common/cml-explorer.c:173
-#, fuzzy
 msgid "Max (x+d, -), (x < 0.5)"
 msgstr "ସର୍ବାଧିକ (x+d, -), (x < 0.5)"
 
 #: ../plug-ins/common/cml-explorer.c:174
-#, fuzzy
 msgid "Max (x+d, -), (0.5 < x)"
 msgstr "ସର୍ବାଧିକ (x+d, -), (0.5 < x)"
 
 #: ../plug-ins/common/cml-explorer.c:175
-#, fuzzy
 msgid "Max (x-d, -), (x < 0.5)"
 msgstr "ସର୍ବାଧିକ (x-d, -), (x < 0.5)"
 
 #: ../plug-ins/common/cml-explorer.c:176
-#, fuzzy
 msgid "Max (x-d, -), (0.5 < x)"
 msgstr "ସର୍ବାଧିକ (x-d, -), (0.5 < x)"
 
 #: ../plug-ins/common/cml-explorer.c:177
-#, fuzzy
 msgid "Min (x+d, -), (x < 0.5)"
 msgstr "ନ୍ଯୁନତମ (x+d, -), (x < 0.5)"
 
 #: ../plug-ins/common/cml-explorer.c:178
-#, fuzzy
 msgid "Min (x+d, -), (0.5 < x)"
 msgstr "ନ୍ଯୁନତମ (x+d, -), (0.5 < x)"
 
 #: ../plug-ins/common/cml-explorer.c:179
-#, fuzzy
 msgid "Min (x-d, -), (x < 0.5)"
 msgstr "ନ୍ଯୁନତମ (x-d, -), (x < 0.5)"
 
 #: ../plug-ins/common/cml-explorer.c:180
-#, fuzzy
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "ନ୍ଯୁନତମ (x-d, -), (0.5 < x)"
 
 #: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1651
-#, fuzzy
 msgid "Standard"
 msgstr "ମାନକ"
 
 #: ../plug-ins/common/cml-explorer.c:201
-#, fuzzy
 msgid "Use average value"
-msgstr "ହାରାହାରି ମୂଲ୍ଯ ଉପୟୋଗ କର"
+msgstr "ହାରାହାରି ମୂଲ୍ଯ ଉପଯୋଗ କରନ୍ତୁ"
 
 #: ../plug-ins/common/cml-explorer.c:202
-#, fuzzy
 msgid "Use reverse value"
-msgstr "ବିପରୀତ ମୂଲ୍ଯ ଉପୟୋଗ କର"
+msgstr "ବିପରୀତ ମୂଲ୍ଯ ଉପଯୋଗ କରନ୍ତୁ"
 
 #: ../plug-ins/common/cml-explorer.c:203
-#, fuzzy
 msgid "With random power (0,10)"
 msgstr "କ୍ରମହୀନ ଘାତାଙ୍କ ସହିତ (0,10)"
 
 #: ../plug-ins/common/cml-explorer.c:204
-#, fuzzy
 msgid "With random power (0,1)"
 msgstr "କ୍ରମହୀନ ଘାତାଙ୍କ ସହିତ (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:205
-#, fuzzy
 msgid "With gradient power (0,1)"
 msgstr "କ୍ରମାବନତି ଘାତାଙ୍କ ସହିତ (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:206
-#, fuzzy
 msgid "Multiply rand. value (0,1)"
-msgstr "ରାଣ୍ଡ. ମୂଲ୍ଯ ଗୁଣନକର  (0,1)"
+msgstr "ରାଣ୍ଡ. ମୂଲ୍ଯ ଗୁଣନକରନ୍ତୁ (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:207
-#, fuzzy
 msgid "Multiply rand. value (0,2)"
-msgstr "ରାଣ୍ଡ ମୂଲ୍ଯ ଗୁଣନ କର (0,2)"
+msgstr "ରାଣ୍ଡ ମୂଲ୍ଯ ଗୁଣନ କରନ୍ତୁ (0,2)"
 
 #: ../plug-ins/common/cml-explorer.c:208
-#, fuzzy
 msgid "Multiply gradient (0,1)"
-msgstr "କ୍ରମାବନତି ଗୁଣନ କର (0,1)"
+msgstr "କ୍ରମାବନତି ଗୁଣନ କରନ୍ତୁ (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:209
-#, fuzzy
 msgid "With p and random (0,1)"
-msgstr " p ଏବଂ କ୍ରମହୀନ ସହିତ (0,1)"
+msgstr "p ଏବଂ କ୍ରମହୀନ ସହିତ (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:223
-#, fuzzy
 msgid "All black"
 msgstr "ସବୁ କଳା"
 
 #: ../plug-ins/common/cml-explorer.c:224
-#, fuzzy
 msgid "All gray"
 msgstr "ସବୁ ଧୂସର"
 
 #: ../plug-ins/common/cml-explorer.c:225
-#, fuzzy
 msgid "All white"
 msgstr "ସବୁ ଧଳା"
 
 #: ../plug-ins/common/cml-explorer.c:226
-#, fuzzy
 msgid "The first row of the image"
 msgstr "ଚିତ୍ରର ପ୍ରଥମ ଧାଡି"
 
 #: ../plug-ins/common/cml-explorer.c:227
-#, fuzzy
 msgid "Continuous gradient"
-msgstr "କ୍ରମାନ୍ବଯରେ କ୍ରମାବନତି"
+msgstr "କ୍ରମାନ୍ବୟରେ କ୍ରମାବନତି"
 
 #: ../plug-ins/common/cml-explorer.c:228
-#, fuzzy
 msgid "Continuous grad. w/o gap"
-msgstr "କ୍ରମାନ୍ବଯ କ୍ରମାବନତି w/o gap"
+msgstr "କ୍ରମାନ୍ବୟ କ୍ରମାବନତି w/o gap"
 
 #: ../plug-ins/common/cml-explorer.c:229
-#, fuzzy
 msgid "Random, ch. independent"
-msgstr "କ୍ରମବୀନ, ch. ସ୍ବତନ୍ତ୍ର"
+msgstr "କ୍ରମହୀନ, ch. ସ୍ବତନ୍ତ୍ର"
 
 #: ../plug-ins/common/cml-explorer.c:230
-#, fuzzy
 msgid "Random shared"
-msgstr "କ୍ରମବୀନ ବଣ୍ଟିତ"
+msgstr "କ୍ରମହୀନ ବଣ୍ଟିତ"
 
 #: ../plug-ins/common/cml-explorer.c:231
-#, fuzzy
 msgid "Randoms from seed"
 msgstr "ସିଡ଼ରୁ କ୍ରମହୀନଗୁଡିକ"
 
 #: ../plug-ins/common/cml-explorer.c:232
-#, fuzzy
 msgid "Randoms from seed (shared)"
 msgstr "ସିଡ଼ରୁ (ବଣ୍ଟିତ) କ୍ରମହୀନଗୁଡିକ"
 
@@ -1413,26 +1291,22 @@ msgstr "ସିଡ଼ରୁ (ବଣ୍ଟିତ) କ୍ରମହୀନଗୁଡି�
 #: ../plug-ins/common/decompose.c:188
 #: ../plug-ins/gimpressionist/orientation.c:180
 #: ../plug-ins/gimpressionist/size.c:183
-#, fuzzy
 msgid "Hue"
 msgstr "ରଙ୍ଗପ୍ରକାର"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:189
-#, fuzzy
 msgid "Saturation"
-msgstr "ସିକ୍ତକରଣ"
+msgstr "ପରିପୃକ୍ତତା"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:156
 #: ../plug-ins/gimpressionist/size.c:159
-#, fuzzy
 msgid "Value"
 msgstr "ମୂଲ୍ଯ"
 
 #: ../plug-ins/common/cml-explorer.c:307
-#, fuzzy
 msgid "(None)"
 msgstr "(କିଛି ନୁହେଁ)"
 
@@ -1441,22 +1315,20 @@ msgid "Create abstract Coupled-Map Lattice patterns"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:466
-#, fuzzy
 msgid "CML _Explorer..."
-msgstr "CML _ଅନ୍ବେଷକ..."
+msgstr "CML ଅନ୍ବେଷକ (_E)..."
 
 #: ../plug-ins/common/cml-explorer.c:756
 msgid "CML Explorer: evoluting"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1177
-#, fuzzy
 msgid "Coupled-Map-Lattice Explorer"
-msgstr "ୟୁଗ୍ମ-ମ୍ଯାପ-ଲାଟିସ୍ ଅନ୍ବେଷକ"
+msgstr "ଯୁଗ୍ମ-ମ୍ଯାପ-ଲାଟିସ୍ ଅନ୍ବେଷକ"
 
 #: ../plug-ins/common/cml-explorer.c:1224
 msgid "New Seed"
-msgstr ""
+msgstr "ନୂତନ ସିଡ଼"
 
 #: ../plug-ins/common/cml-explorer.c:1235
 msgid "Fix Seed"
@@ -1468,52 +1340,42 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1288 ../plug-ins/common/filter-pack.c:700
 #: ../plug-ins/common/van-gogh-lic.c:671
-#, fuzzy
 msgid "_Hue"
-msgstr "_ବର୍ଣ୍ଣରଞ୍ଜିତ"
+msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ (_H)"
 
 #: ../plug-ins/common/cml-explorer.c:1292
-#, fuzzy
 msgid "Sat_uration"
-msgstr "ସଂପୂର୍ଣ୍ଣ_ମିଶ୍ରଣ"
+msgstr "ପରିପୃକ୍ତତା (_u)"
 
 #: ../plug-ins/common/cml-explorer.c:1296 ../plug-ins/common/filter-pack.c:708
-#, fuzzy
 msgid "_Value"
-msgstr "_ମୂଲ୍ଯ"
+msgstr "ମୂଲ୍ଯ (_V)"
 
 #: ../plug-ins/common/cml-explorer.c:1300
-#, fuzzy
 msgid "_Advanced"
 msgstr "ଉନ୍ନତ (_A)"
 
 #: ../plug-ins/common/cml-explorer.c:1315
-#, fuzzy
 msgid "Channel Independent Parameters"
 msgstr "ଚ୍ୟାନେଲ ସ୍ବତନ୍ତ୍ର ପାରମିଟରଗୁଡିକ"
 
 #: ../plug-ins/common/cml-explorer.c:1337
-#, fuzzy
 msgid "Initial value:"
 msgstr "ପ୍ରାରମ୍ଭିକ ମୂଲ୍ଯ:"
 
 #: ../plug-ins/common/cml-explorer.c:1343
-#, fuzzy
 msgid "Zoom scale:"
-msgstr "ଜୁମ ସ୍କେଲ:"
+msgstr "ଛୋଟ ବଡ଼ ମାପକ:"
 
 #: ../plug-ins/common/cml-explorer.c:1352
-#, fuzzy
 msgid "Start offset:"
-msgstr "ଅଫସେଟ ଆରମ୍ଭ କର:"
+msgstr "ଅଫସେଟ ଆରମ୍ଭ କରନ୍ତୁ:"
 
 #: ../plug-ins/common/cml-explorer.c:1361
-#, fuzzy
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "କ୍ରମହୀନର ସିଡ଼ (କେବଳ \"ସିଡ଼ ଠାରୁ\" ମୋଡଗୁଡିକ ପାଇଁ)"
 
 #: ../plug-ins/common/cml-explorer.c:1372 ../plug-ins/maze/maze-dialog.c:261
-#, fuzzy
 msgid "Seed:"
 msgstr "ସିଡ୍‍:"
 
@@ -1522,7 +1384,6 @@ msgid "Switch to \"From seed\" With the Last Seed"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1397
-#, fuzzy
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1530,105 +1391,88 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "\"ସ୍ଥିର ସିଡ଼\" ବଟନ ମୋର ଏକ ଉପନାମ ଅଟେ ।\n"
-"ସେହି ସମାନ ସିଡ଼ ସମାନ ଚିତ୍ର ଉତ୍ପାଦନ କରେ, ୟଦି (1) ଚିତ୍ର ଗୁଡିକର ଓସାର ସମାନ ଥାଏ (ଅଂକନକ୍ଷମରେ ଚିତ୍ରଗୁଡିକ ପୂର୍ବଦୃଶ୍ଯ ଠାରୁ କାହିଁକି ଭିନ୍ନ ହୁଅନ୍ତି ଏହା ତାହାର କାରଣ ଅଟେ), ଏବଂ (2) ସମସ୍ତ ଗଠନ ପରିବର୍ତ୍ତନ ଦର ଶୂନ୍ଯ ସହିତ ସମାନ ଥାଏ ।"
+"ସେହି ସମାନ ସିଡ଼ ସମାନ ଚିତ୍ର ଉତ୍ପାଦନ କରେ, ଯଦି (1) ଚିତ୍ର ଗୁଡିକର ଓସାର ସମାନ ଥାଏ "
+"(ଅଂକନକ୍ଷମରେ ଚିତ୍ରଗୁଡିକ ପୂର୍ବଦୃଶ୍ଯ ଠାରୁ କାହିଁକି ଭିନ୍ନ ହୁଅନ୍ତି ଏହା ତାହାର କାରଣ ଅଟେ), "
+"ଏବଂ (2) ସମସ୍ତ ଗଠନ ପରିବର୍ତ୍ତନ ଦର ଶୂନ୍ଯ ସହିତ ସମାନ ଥାଏ।"
 
 #: ../plug-ins/common/cml-explorer.c:1405
-#, fuzzy
 msgid "O_thers"
-msgstr "ଅନ୍ଯ_ମାନେ"
+msgstr "ଅନ୍ଯମାନେ (_t)"
 
 #: ../plug-ins/common/cml-explorer.c:1420
-#, fuzzy
 msgid "Copy Settings"
-msgstr "ସେଟିଙ୍ଗଗୁଡିକୁ ପ୍ରତିଲିପିକର"
+msgstr "ସେଟିଙ୍ଗଗୁଡିକୁ ନକଲ କରନ୍ତୁ"
 
 #: ../plug-ins/common/cml-explorer.c:1439
-#, fuzzy
 msgid "Source channel:"
-msgstr "ମୂଳ ଚ୍ଯାନେଲ:"
+msgstr "ଉତ୍ସ ଚ୍ଯାନେଲ:"
 
 #: ../plug-ins/common/cml-explorer.c:1454
 #: ../plug-ins/common/cml-explorer.c:1502
-#, fuzzy
 msgid "Destination channel:"
-msgstr "ଗନ୍ତବ୍ଯ ଚ୍ଯାନେଲ:"
+msgstr "ଗନ୍ତବ୍ଯ ସ୍ଥଳ ଚ୍ଯାନେଲ:"
 
 #: ../plug-ins/common/cml-explorer.c:1458
 msgid "Copy Parameters"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1467
-#, fuzzy
 msgid "Selective Load Settings"
-msgstr "ମନୋନଯକ୍ଷମ ଲୋଡ଼ ସେଟିଙ୍ଗଗୁଡିକ"
+msgstr "ବଚ୍ଛିତ ଲୋଡ଼ ସେଟିଙ୍ଗଗୁଡିକ"
 
 #: ../plug-ins/common/cml-explorer.c:1487
-#, fuzzy
 msgid "Source channel in file:"
-msgstr "ଫାଇଲରେ ମୂଳ ଚ୍ଯାନେଲ:"
+msgstr "ଫାଇଲରେ ଉତ୍ସ ଚ୍ଯାନେଲ:"
 
 #: ../plug-ins/common/cml-explorer.c:1508
-#, fuzzy
 msgid "_Misc Ops."
-msgstr "_Misc Ops."
+msgstr "ମିଶ୍ରିତ Ops (_M)"
 
 #: ../plug-ins/common/cml-explorer.c:1557
-#, fuzzy
 msgid "Function type:"
 msgstr "କାର୍ୟ୍ଯ ପ୍ରକାର:"
 
 #: ../plug-ins/common/cml-explorer.c:1573
-#, fuzzy
 msgid "Composition:"
 msgstr "ରଚନା:"
 
 #: ../plug-ins/common/cml-explorer.c:1587
-#, fuzzy
 msgid "Misc arrange:"
-msgstr "Misc ଆଯୋଜନ:"
+msgstr "ମିଶ୍ରିତ ଆୟୋଜନ:"
 
 #: ../plug-ins/common/cml-explorer.c:1591
-#, fuzzy
 msgid "Use cyclic range"
-msgstr "ଚକ୍ରାକାର ପରିସର ଉପୟୋଗ କର"
+msgstr "ଚକ୍ରାକାର ପରିସର ଉପଯୋଗ କରନ୍ତୁ"
 
 #: ../plug-ins/common/cml-explorer.c:1601
-#, fuzzy
 msgid "Mod. rate:"
 msgstr "Mod. ଦର:"
 
 #: ../plug-ins/common/cml-explorer.c:1610
-#, fuzzy
 msgid "Env. sensitivity:"
 msgstr "Env. ସମ୍ବେଦନଶୀଳତା:"
 
 #: ../plug-ins/common/cml-explorer.c:1619
-#, fuzzy
 msgid "Diffusion dist.:"
 msgstr "ବିକ୍ଷିପ୍ତ dist.:"
 
 #: ../plug-ins/common/cml-explorer.c:1628
-#, fuzzy
 msgid "# of subranges:"
 msgstr "# ର ଉପପରିସରଗୁଡିକ:"
 
 #: ../plug-ins/common/cml-explorer.c:1637
-#, fuzzy
 msgid "P(ower factor):"
 msgstr "P(ଘାତାଙ୍କଗୁଣ):"
 
 #: ../plug-ins/common/cml-explorer.c:1646
-#, fuzzy
 msgid "Parameter k:"
-msgstr "ପାରାମିଟର k:"
+msgstr "ପ୍ରାଚଳ k:"
 
 #: ../plug-ins/common/cml-explorer.c:1655
-#, fuzzy
 msgid "Range low:"
 msgstr "ପରିସର ନୀଚ୍ଚ:"
 
 #: ../plug-ins/common/cml-explorer.c:1664
-#, fuzzy
 msgid "Range high:"
 msgstr "ପରିସର ଉଚ୍ଚ:"
 
@@ -1637,17 +1481,14 @@ msgid "Plot a Graph of the Settings"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1721
-#, fuzzy
 msgid "Ch. sensitivity:"
 msgstr "Ch. ସମ୍ବେଦନଶୀଳତା:"
 
 #: ../plug-ins/common/cml-explorer.c:1731
-#, fuzzy
 msgid "Mutation rate:"
-msgstr "ଗଠନ ପରିବର୍ତ୍ତନଦର :"
+msgstr "ଗଠନ ପରିବର୍ତ୍ତନ ଦର :"
 
 #: ../plug-ins/common/cml-explorer.c:1741
-#, fuzzy
 msgid "Mutation dist.:"
 msgstr "ଗଠନ ପରିବର୍ତ୍ତନ dist.:"
 
@@ -1656,7 +1497,6 @@ msgid "Graph of the Current Settings"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1890
-#, fuzzy
 msgid "Warning: the source and the destination are the same channel."
 msgstr "ଚେତାବନୀ: ମୂଳ ଏବଂ ଗନ୍ତବ୍ଯ ଉଭଯ ସମାନ ଚ୍ଯାନେଲ ଅଟନ୍ତି ।"
 
@@ -1669,13 +1509,11 @@ msgid "Load CML Explorer Parameters"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:2200
-#, fuzzy
 msgid "Error: it's not CML parameter file."
 msgstr "ତ୍ରୁଟି: ଏହା CMLପାରାମିଟର ଫାଇଲ ନୁହେଁ"
 
 #: ../plug-ins/common/cml-explorer.c:2207
 #, c-format
-#, fuzzy
 msgid "Warning: '%s' is an old format file."
 msgstr "ଚେତାବନୀ: '%s' ଏକ ପୁରୁଣା ଫର୍ମାଟ ଫାଇଲ ଅଟେ ।"
 
@@ -1685,7 +1523,6 @@ msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:2274
-#, fuzzy
 msgid "Error: failed to load parameters"
 msgstr "ତ୍ରୁଟି: ପାରାମିଟରଗୁଡିକୁ ଲୋଡ଼ କରିବାରେ ବିଫଳ ହେଲା"
 
@@ -1694,15 +1531,13 @@ msgid "Analyze the set of colors in the image"
 msgstr ""
 
 #: ../plug-ins/common/color-cube-analyze.c:112
-#, fuzzy
 msgid "Colorcube A_nalysis..."
-msgstr "ରଙ୍ଗ କ୍ଯୁବ_ବିଶ୍ଳେଷଣ..."
+msgstr "ରଙ୍ଗ କ୍ଯୁବ ବିଶ୍ଳେଷଣ (_n)..."
 
 #: ../plug-ins/common/color-cube-analyze.c:200
 #: ../plug-ins/common/color-cube-analyze.c:356
-#, fuzzy
 msgid "Colorcube Analysis"
-msgstr "ରଙ୍ଗକ୍ଯୁବ ବିଶ୍ଲେଷଣ "
+msgstr "ରଙ୍ଗକ୍ଯୁବ ବିଶ୍ଳେଷଣ "
 
 #. output results
 #: ../plug-ins/common/color-cube-analyze.c:384
@@ -1712,18 +1547,15 @@ msgid "Image dimensions: %d × %d"
 msgstr ""
 
 #: ../plug-ins/common/color-cube-analyze.c:387
-#, fuzzy
 msgid "No colors"
 msgstr "କୌଣସି ରଙ୍ଗ ନାହିଁ"
 
 #: ../plug-ins/common/color-cube-analyze.c:389
-#, fuzzy
 msgid "Only one unique color"
 msgstr "କେବଳ ଗୋଟିଏ ଅନନ୍ଯ ରଙ୍ଗ"
 
 #: ../plug-ins/common/color-cube-analyze.c:391
 #, c-format
-#, fuzzy
 msgid "Number of unique colors: %d"
 msgstr "ଅନନ୍ଯ ରଙ୍ଗ ଗୁଡିକର ସଂଖ୍ଯା: %d"
 
@@ -1732,9 +1564,8 @@ msgid "Stretch color saturation to cover maximum possible range"
 msgstr ""
 
 #: ../plug-ins/common/color-enhance.c:81
-#, fuzzy
 msgid "_Color Enhance"
-msgstr "_ରଙ୍ଗ ଉନ୍ନତ"
+msgstr "ରଙ୍ଗ ଉନ୍ନତ (_C)"
 
 #: ../plug-ins/common/color-enhance.c:115
 msgid "Color Enhance"
@@ -1745,85 +1576,71 @@ msgid "Swap one color with another"
 msgstr ""
 
 #: ../plug-ins/common/color-exchange.c:128
-#, fuzzy
 msgid "_Color Exchange..."
-msgstr "_ରଙ୍ଗ ବିନିମଯ..."
+msgstr "ରଙ୍ଗ ବିନିମୟ (_C)..."
 
 #: ../plug-ins/common/color-exchange.c:213
 #: ../plug-ins/common/color-exchange.c:287
-#, fuzzy
 msgid "Color Exchange"
-msgstr "ରଙ୍ଗ ବିନିମଯ"
+msgstr "ରଙ୍ଗ ବିନିମୟ"
 
 #: ../plug-ins/common/color-exchange.c:309
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr ""
 
 #: ../plug-ins/common/color-exchange.c:347
-#, fuzzy
 msgid "To Color"
 msgstr "କୁ ରଙ୍ଗ"
 
 #: ../plug-ins/common/color-exchange.c:347
-#, fuzzy
 msgid "From Color"
 msgstr "ଠାରୁ ରଙ୍ଗ"
 
 #: ../plug-ins/common/color-exchange.c:365
-#, fuzzy
 msgid "Color Exchange: To Color"
-msgstr "ରଙ୍ଗ ବିନିମଯ: କୁ ରଙ୍ଗ"
+msgstr "ରଙ୍ଗ ବିନିମୟ: କୁ ରଙ୍ଗ"
 
 #: ../plug-ins/common/color-exchange.c:366
-#, fuzzy
 msgid "Color Exchange: From Color"
-msgstr "ରଙ୍ଗ ବିନିମୟ : ଠାରୁ ରଙ୍ଗ"
+msgstr "ରଙ୍ଗ ବିନିମୟ: ଠାରୁ ରଙ୍ଗ"
 
 #: ../plug-ins/common/color-exchange.c:424
-#, fuzzy
 msgid "R_ed threshold:"
-msgstr "ଲାଲ_ ପ୍ରାରମ୍ଭ:"
+msgstr "ଲାଲ ପ୍ରାରମ୍ଭ (_e):"
 
 #: ../plug-ins/common/color-exchange.c:484
-#, fuzzy
 msgid "G_reen threshold:"
-msgstr "ସବୁଜ_ ପ୍ରାରମ୍ଭ :"
+msgstr "ସବୁଜ ପ୍ରାରମ୍ଭ (_r):"
 
 #: ../plug-ins/common/color-exchange.c:545
-#, fuzzy
 msgid "B_lue threshold:"
-msgstr "ନୀ_ଳ ପ୍ରାରମ୍ଭ :"
+msgstr "ନୀଳ ପ୍ରାରମ୍ଭ (_l):"
 
 #: ../plug-ins/common/color-exchange.c:573
-#, fuzzy
 msgid "Lock _thresholds"
-msgstr "ତାଲାବନ୍ଦ _ପ୍ରାରମ୍ଭ"
+msgstr "ଅପରିବର୍ତ୍ତନୀୟ ପ୍ରାରମ୍ଭ (_t)"
 
 #: ../plug-ins/common/color-to-alpha.c:94
 msgid "Convert a specified color to transparency"
 msgstr ""
 
 #: ../plug-ins/common/color-to-alpha.c:101
-#, fuzzy
 msgid "Color to _Alpha..."
-msgstr "ଆଲ୍ଫାକୁ ରଙ୍ଗ _କର ..."
+msgstr "ଆଲ୍ଫାକୁ ରଙ୍ଗ କରନ୍ତୁ (_A)..."
 
 #: ../plug-ins/common/color-to-alpha.c:184
 msgid "Removing color"
 msgstr ""
 
 #: ../plug-ins/common/color-to-alpha.c:377
-#, fuzzy
 msgid "Color to Alpha"
-msgstr "ଆଲ୍ଫାକୁ ରଙ୍ଗ"
+msgstr "ଆଲ୍ଫାକୁ ରଙ୍ଗ କରନ୍ତୁ"
 
 #: ../plug-ins/common/color-to-alpha.c:414
-#, fuzzy
 msgid "Color to Alpha Color Picker"
 msgstr "ଆଲ୍ଫା ରଙ୍ଗ ଉଠାଇବାକୁ ରଙ୍ଗ"
 
 #: ../plug-ins/common/color-to-alpha.c:429
-#, fuzzy
 msgid "to alpha"
 msgstr "ଆଲ୍ଫାକୁ"
 
@@ -1840,7 +1657,6 @@ msgid "Colorifying"
 msgstr ""
 
 #: ../plug-ins/common/colorify.c:255
-#, fuzzy
 msgid "Colorify"
 msgstr "ରଙ୍ଗ କରିବା"
 
@@ -1849,7 +1665,6 @@ msgid "Custom color:"
 msgstr ""
 
 #: ../plug-ins/common/colorify.c:294
-#, fuzzy
 msgid "Colorify Custom Color"
 msgstr "ବ୍ଯବସ୍ଥାପିତ ରଙ୍ଗକୁ ରଙ୍ଗ କର"
 
@@ -1911,59 +1726,50 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/file-raw.c:1023
-#, fuzzy
 msgid "RGB"
 msgstr "RGB"
 
 #: ../plug-ins/common/compose.c:200 ../plug-ins/common/decompose.c:178
-#, fuzzy
 msgid "RGBA"
 msgstr "RGBA"
 
 #: ../plug-ins/common/compose.c:204 ../plug-ins/common/noise-rgb.c:525
 #: ../plug-ins/common/noise-rgb.c:540
-#, fuzzy
 msgid "_Alpha:"
-msgstr "_ଆଲ୍ଫା :"
+msgstr "ଆଲ୍ଫା (_A):"
 
 #: ../plug-ins/common/compose.c:211 ../plug-ins/common/decompose.c:184
-#, fuzzy
 msgid "HSV"
 msgstr "HSV"
 
 #: ../plug-ins/common/compose.c:212 ../plug-ins/common/compose.c:220
-#, fuzzy
 msgid "_Hue:"
 msgstr "ରଙ୍ଗ (_H):"
 
 #: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:221
 #: ../plug-ins/common/noise-hsv.c:421
-#, fuzzy
 msgid "_Saturation:"
 msgstr "ରଙ୍ଗର ପ୍ରଗାଢ଼ତା (_S):"
 
 #: ../plug-ins/common/compose.c:214 ../plug-ins/common/noise-hsv.c:433
-#, fuzzy
 msgid "_Value:"
 msgstr "ମୂଲ୍ଯ (_V):"
 
 #: ../plug-ins/common/compose.c:219 ../plug-ins/common/decompose.c:193
 msgid "HSL"
-msgstr ""
+msgstr "HSL"
 
 #: ../plug-ins/common/compose.c:222
-#, fuzzy
 msgid "_Lightness:"
-msgstr "_ହାଲୁକାପଣ:"
+msgstr "ହାଲୁକାପଣ (_L):"
 
 #: ../plug-ins/common/compose.c:227 ../plug-ins/common/decompose.c:202
-#, fuzzy
 msgid "CMY"
 msgstr "CMY"
 
 #: ../plug-ins/common/compose.c:228 ../plug-ins/common/compose.c:236
 msgid "_Cyan:"
-msgstr ""
+msgstr "Cyan (_C):"
 
 #: ../plug-ins/common/compose.c:229 ../plug-ins/common/compose.c:237
 msgid "_Magenta:"
@@ -1974,17 +1780,14 @@ msgid "_Yellow:"
 msgstr ""
 
 #: ../plug-ins/common/compose.c:235 ../plug-ins/common/decompose.c:211
-#, fuzzy
 msgid "CMYK"
 msgstr "CMYK"
 
 #: ../plug-ins/common/compose.c:239
-#, fuzzy
 msgid "_Black:"
-msgstr "_କଳା:"
+msgstr "କଳା (_B):"
 
 #: ../plug-ins/common/compose.c:243 ../plug-ins/common/decompose.c:224
-#, fuzzy
 msgid "LAB"
 msgstr "LAB"
 
@@ -2041,9 +1844,8 @@ msgid "Create an image using multiple gray images as color channels"
 msgstr ""
 
 #: ../plug-ins/common/compose.c:410
-#, fuzzy
 msgid "C_ompose..."
-msgstr "ର_ଚନା ..."
+msgstr "ରଚନା କରନ୍ତୁ (_o)..."
 
 #: ../plug-ins/common/compose.c:434
 msgid "Recompose an image that was previously decomposed"
@@ -2051,7 +1853,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:442
 msgid "R_ecompose"
-msgstr ""
+msgstr "ପୁନଃ ସଂରଚନା କରନ୍ତୁ (_e)"
 
 #: ../plug-ins/common/compose.c:488
 msgid ""
@@ -2065,7 +1867,6 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:545
 #, c-format
-#, fuzzy
 msgid "Could not get layers for image %d"
 msgstr "ଚିତ୍ର %d ପାଇଁ କୌଣସି ସ୍ତର ମିଳିଲା ନାହିଁ"
 
@@ -2083,23 +1884,19 @@ msgid "Specified layer %d not found"
 msgstr ""
 
 #: ../plug-ins/common/compose.c:730
-#, fuzzy
 msgid "Drawables have different size"
 msgstr "ଅଂକନୟୋଗ୍ଯ ଗୁଡିକର ଭିନ୍ନ ଆକାର ରହିଅଛି"
 
 #: ../plug-ins/common/compose.c:755
-#, fuzzy
 msgid "Images have different size"
 msgstr "ଚିତ୍ରଗୁଡିକର ଭିନ୍ନ ଆକାର ଅଛି"
 
 #: ../plug-ins/common/compose.c:773
-#, fuzzy
 msgid "Error in getting layer IDs"
 msgstr "ସ୍ତର IDs ପ୍ରାପ୍ତ କରିବାରେ ତ୍ରୁଟି"
 
 #: ../plug-ins/common/compose.c:796
 #, c-format
-#, fuzzy
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "ଚିତ୍ର ଗୋଟିଏ ଧୂସର ଚିତ୍ର ନୁହେଁ (bpp=%d)"
 
@@ -2108,23 +1905,20 @@ msgid "Unable to recompose, source layer not found"
 msgstr ""
 
 #: ../plug-ins/common/compose.c:1488
-#, fuzzy
 msgid "Compose"
 msgstr "ଲେଖନ୍ତୁ"
 
 #. Compose type combo
 #: ../plug-ins/common/compose.c:1515
-#, fuzzy
 msgid "Compose Channels"
-msgstr "ଚ୍ଯାନେଲଗୁଡିକୁ ରଚନା କର"
+msgstr "ଚ୍ଯାନେଲଗୁଡିକୁ ରଚନା କରନ୍ତୁ"
 
 #: ../plug-ins/common/compose.c:1525 ../plug-ins/common/decompose.c:1515
 msgid "Color _model:"
-msgstr ""
+msgstr "ରଙ୍ଗ ମଡେଲ (_m):"
 
 #. Channel representation table
 #: ../plug-ins/common/compose.c:1557
-#, fuzzy
 msgid "Channel Representations"
 msgstr "ଚ୍ଯାନେଲ ଉପସ୍ଥାପନଗୁଡିକ"
 
@@ -2138,9 +1932,8 @@ msgstr ""
 
 #: ../plug-ins/common/contrast-normalize.c:92
 #: ../plug-ins/common/edge-dog.c:359
-#, fuzzy
 msgid "_Normalize"
-msgstr "_ସମାନ୍ଯକରିବା"
+msgstr "ସାମାନ୍ଯ କରିବା (_N)"
 
 #: ../plug-ins/common/contrast-normalize.c:126
 msgid "Normalizing"
@@ -2159,7 +1952,6 @@ msgid "Retinex"
 msgstr ""
 
 #: ../plug-ins/common/contrast-retinex.c:286
-#, fuzzy
 msgid "Retinex Image Enhancement"
 msgstr "ରେଟିନେକ୍ସ ଚିତ୍ର ଉନ୍ନତ କରଣ"
 
@@ -2168,23 +1960,20 @@ msgid "Uniform"
 msgstr ""
 
 #: ../plug-ins/common/contrast-retinex.c:322
-#, fuzzy
 msgid "Low"
-msgstr "ଧୀର"
+msgstr "ନିଚ୍ଚ"
 
 #: ../plug-ins/common/contrast-retinex.c:323
-#, fuzzy
 msgid "High"
-msgstr "ବ୍ରୁହତ"
+msgstr "ଉଚ୍ଚ"
 
 #: ../plug-ins/common/contrast-retinex.c:334
 msgid "_Level:"
-msgstr ""
+msgstr "ସ୍ତର (_L):"
 
 #: ../plug-ins/common/contrast-retinex.c:339
-#, fuzzy
 msgid "_Scale:"
-msgstr "_ସ୍କେଲ:"
+msgstr "ମାପକ (_S):"
 
 #: ../plug-ins/common/contrast-retinex.c:354
 msgid "Scale _division:"
@@ -2203,136 +1992,115 @@ msgid "Stretch image contrast to cover the maximum possible range"
 msgstr ""
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:81
-#, fuzzy
 msgid "Stretch _HSV"
-msgstr "ବିସ୍ତାରକର _HSV"
+msgstr "HSV କୁ ବିସ୍ତାରକରନ୍ତୁ (_H)"
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:116
 msgid "Auto-Stretching HSV"
 msgstr ""
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:192
-#, fuzzy
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-msgstr "ସ୍ବଯଂଚାଳିତବିସ୍ତାର_hsv: cମାନଚିତ୍ର NULL ଥିଲା !  ତ୍ଯାଗ କରୁଛି...\n"
+msgstr "autostretch_hsv: cmap NULL ଥିଲା!  ତ୍ଯାଗ କରୁଛି...\n"
 
 #: ../plug-ins/common/contrast-stretch.c:68
 msgid "Stretch contrast to cover the maximum possible range"
 msgstr ""
 
 #: ../plug-ins/common/contrast-stretch.c:79
-#, fuzzy
 msgid "_Stretch Contrast"
-msgstr "_ବୈଷମ୍ଯକୁ  ବିସ୍ତାର କର"
+msgstr "ବୈଷମ୍ଯକୁ ବିସ୍ତାର କରନ୍ତୁ (_S)"
 
 #: ../plug-ins/common/contrast-stretch.c:113
 msgid "Auto-stretching contrast"
 msgstr ""
 
 #: ../plug-ins/common/contrast-stretch.c:152
-#, fuzzy
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr "c_a ବିସ୍ତାର: cମାନଚିତ୍ର  NULL ଥିଲା !  ତ୍ଯାଗ କରୁଛି...\n"
+msgstr "ବିସ୍ତାର: cmap  NULL ଥିଲା !  ତ୍ଯାଗ କରୁଛି... (_a)\n"
 
 #: ../plug-ins/common/convolution-matrix.c:64
-#, fuzzy
 msgid "Gr_ey"
-msgstr "ଧୂ_ସର"
+msgstr "ଧୂସର (_e)"
 
 #: ../plug-ins/common/convolution-matrix.c:65
-#, fuzzy
 msgid "Re_d"
-msgstr "ଲା_ଲ"
+msgstr "ଲାଲ (_d)"
 
 #: ../plug-ins/common/convolution-matrix.c:66
 #: ../plug-ins/common/newsprint.c:353
-#, fuzzy
 msgid "_Green"
-msgstr "_ସବୁଜ"
+msgstr "ସବୁଜ (_G)"
 
 #: ../plug-ins/common/convolution-matrix.c:67
 #: ../plug-ins/common/newsprint.c:361
-#, fuzzy
 msgid "_Blue"
-msgstr "_ନୀଳ"
+msgstr "ନୀଳ (_B)"
 
 #: ../plug-ins/common/convolution-matrix.c:68
-#, fuzzy
 msgid "_Alpha"
-msgstr "_ଆଲ୍ଫା"
+msgstr "ଆଲ୍ଫା (_A)"
 
 #: ../plug-ins/common/convolution-matrix.c:73
-#, fuzzy
 msgid "E_xtend"
-msgstr "ବି_ସ୍ତାର କର"
+msgstr "ବିସ୍ତାର କରନ୍ତୁ (_x)"
 
 #: ../plug-ins/common/convolution-matrix.c:74
 #: ../plug-ins/common/displace.c:472 ../plug-ins/common/edge.c:709
 #: ../plug-ins/common/fractal-trace.c:736 ../plug-ins/common/ripple.c:564
-#, fuzzy
 msgid "_Wrap"
-msgstr "_ଆବୃତ କର"
+msgstr "ଆବୃତ କରନ୍ତୁ (_W)"
 
 #: ../plug-ins/common/convolution-matrix.c:75
-#, fuzzy
 msgid "Cro_p"
-msgstr "କର୍ତ୍ତନ_କର"
+msgstr "କର୍ତ୍ତନ କରନ୍ତୁ (_p)"
 
 #: ../plug-ins/common/convolution-matrix.c:201
 msgid "Apply a generic 5x5 convolution matrix"
 msgstr ""
 
 #: ../plug-ins/common/convolution-matrix.c:206
-#, fuzzy
 msgid "_Convolution Matrix..."
-msgstr "_କୁଞ୍ଚିତ ମାଟ୍ରିକ୍ସ..."
+msgstr "କୁଞ୍ଚିତ ମାଟ୍ରିକ୍ସ (_C)..."
 
 #: ../plug-ins/common/convolution-matrix.c:241
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
 msgstr ""
 
 #: ../plug-ins/common/convolution-matrix.c:314
-#, fuzzy
 msgid "Applying convolution"
-msgstr "କୁଞ୍ଚିତତା ପ୍ରଯୋଗ କରୁଛି"
+msgstr "କୁଞ୍ଚିତତା ପ୍ରୟୋଗ କରୁଅଛି"
 
 #: ../plug-ins/common/convolution-matrix.c:906
-#, fuzzy
 msgid "Convolution Matrix"
 msgstr "କୁଞ୍ଚିତ ମାଟ୍ରିକ୍ସ"
 
 #: ../plug-ins/common/convolution-matrix.c:944
-#, fuzzy
 msgid "Matrix"
 msgstr "ମାଟ୍ରିକ୍ସ୍"
 
 #: ../plug-ins/common/convolution-matrix.c:982
-#, fuzzy
 msgid "D_ivisor:"
-msgstr "ବି_ଭାଜକ:"
+msgstr "ବିଭାଜକ (_i):"
 
 #: ../plug-ins/common/convolution-matrix.c:1008
 #: ../plug-ins/common/depth-merge.c:768 ../plug-ins/common/file-raw.c:1043
-#, fuzzy
 msgid "O_ffset:"
-msgstr "ଅଫ୍_ସେଟ:"
+msgstr "ଅଫସେଟ (_f):"
 
 #: ../plug-ins/common/convolution-matrix.c:1037
 msgid "N_ormalise"
 msgstr ""
 
 #: ../plug-ins/common/convolution-matrix.c:1049
-#, fuzzy
 msgid "A_lpha-weighting"
-msgstr "ଅଲ୍ଫା_ଓଜନ କରିବା"
+msgstr "ଅଲ୍ଫା ଓଜନ କରିବା (_l)"
 
 #: ../plug-ins/common/convolution-matrix.c:1068
-#, fuzzy
 msgid "Border"
-msgstr "ସୀମା"
+msgstr "ସୀମାରେଖା"
 
 #: ../plug-ins/common/convolution-matrix.c:1095
-#, fuzzy
 msgid "Channels"
 msgstr "ଉପପଥ ମାନ"
 
@@ -2361,47 +2129,40 @@ msgid "Autocrop unused space from edges and middle"
 msgstr ""
 
 #: ../plug-ins/common/crop-zealous.c:90
-#, fuzzy
 msgid "_Zealous Crop"
-msgstr "_ଉତ୍ସାହ କର୍ତ୍ତନ"
+msgstr "ଉତ୍ସାହ କର୍ତ୍ତନ (_Z)"
 
 #: ../plug-ins/common/crop-zealous.c:138
 msgid "Zealous cropping"
 msgstr ""
 
 #: ../plug-ins/common/crop-zealous.c:239
-#, fuzzy
 msgid "Nothing to crop."
-msgstr "କାଟିବାକୁ କିଛିନାହିଁ"
+msgstr "କାଟିବାକୁ କିଛିନାହିଁ।"
 
 #: ../plug-ins/common/cubism.c:150
 msgid "Convert the image into randomly rotated square blobs"
 msgstr ""
 
 #: ../plug-ins/common/cubism.c:155
-#, fuzzy
 msgid "_Cubism..."
-msgstr "_ଘନକ୍ଷେତ୍ରତା..."
+msgstr "ଘନକ୍ଷେତ୍ରତା (_C)..."
 
 #: ../plug-ins/common/cubism.c:268
-#, fuzzy
 msgid "Cubism"
 msgstr "ଘନକ୍ଷେତ୍ରତା"
 
 #: ../plug-ins/common/cubism.c:305
-#, fuzzy
 msgid "_Tile size:"
-msgstr "_ଟାଇଲ ଆକାର:"
+msgstr "ଟାଇଲ ଆକାର (_T):"
 
 #: ../plug-ins/common/cubism.c:318
-#, fuzzy
 msgid "T_ile saturation:"
-msgstr "ଟାଇଲ_ସଂପୂର୍ଣ୍ଣ ମିଶ୍ରଣ:"
+msgstr "ଟାଇଲ ପରିପୃକ୍ତତା (_i):"
 
 #: ../plug-ins/common/cubism.c:329
-#, fuzzy
 msgid "_Use background color"
-msgstr "_ପୃଷ୍ଠଭୂମି ରଙ୍ଗ ଉପୟୋଗକର"
+msgstr "ପୃଷ୍ଠଭୂମି ରଙ୍ଗକୁ ଉପଯୋଗ କରନ୍ତୁ (_U)"
 
 #: ../plug-ins/common/cubism.c:419
 msgid "Cubistic transformation"
@@ -2412,29 +2173,24 @@ msgid "Bend the image using two control curves"
 msgstr ""
 
 #: ../plug-ins/common/curve-bend.c:541
-#, fuzzy
 msgid "_Curve Bend..."
-msgstr "_ବକ୍ର ବଙ୍କା..."
+msgstr "ବକ୍ର ବଙ୍କା (_C)..."
 
 #: ../plug-ins/common/curve-bend.c:677 ../plug-ins/common/edge-dog.c:176
-#, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "କେବଳ ସ୍ତରଗୁଡିକରେ ପରିଚାଳିତ ହୋଇପାରିବ (କିନ୍ତୁ ଚ୍ଯାନେଲ କିମ୍ବା ମାସ୍କରେ ଡକାୟାଇଥିଲା) ।"
 
 #: ../plug-ins/common/curve-bend.c:687
-#, fuzzy
 msgid "Cannot operate on layers with masks."
 msgstr "ମାସ୍କ ଗୁଡିକ ସହିତ ସ୍ତରଗୁଡିକରେ ପରିଚାଳିତ ହୋଇ ପାରିବ ନାହିଁ"
 
 #: ../plug-ins/common/curve-bend.c:699
-#, fuzzy
 msgid "Cannot operate on empty selections."
 msgstr "ଖାଲି ମନୋନଯନଗୁଡିକରେ ପରିଚାଳିତ ହୋଇ ପାରିବ ନାହିଁ"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
 #: ../plug-ins/common/curve-bend.c:1211 ../plug-ins/common/curve-bend.c:2932
-#, fuzzy
 msgid "Curve Bend"
 msgstr "ବକ୍ର ବଙ୍କା"
 
@@ -2444,353 +2200,309 @@ msgstr "ବକ୍ର ବଙ୍କା"
 #: ../plug-ins/gimpressionist/orientmap.c:592
 #: ../plug-ins/gimpressionist/sizemap.c:461
 #: ../plug-ins/print/print-page-layout.c:159
-#, fuzzy
 msgid "Preview"
-msgstr "ପୂର୍ବଦୃଶ୍ଯ"
+msgstr "ପ୍ରାକଦର୍ଶନ"
 
 #. The preview button
 #: ../plug-ins/common/curve-bend.c:1276
 msgid "_Preview Once"
-msgstr ""
+msgstr "ଥରେ ପ୍ରାକଦର୍ଶନ କରନ୍ତୁ (_P)"
 
 #. The preview toggle
 #: ../plug-ins/common/curve-bend.c:1285
-#, fuzzy
 msgid "Automatic pre_view"
-msgstr "ସ୍ବଯଂଚାଳିତ ପୂର୍ବ _ ଦୃଶ୍ଯ"
+msgstr "ସ୍ବୟଂଚାଳିତ ପ୍ରାକଦର୍ଶନ (_v)"
 
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/ripple.c:505
 #: ../plug-ins/gfig/gfig-dialog.c:1207
-#, fuzzy
 msgid "Options"
 msgstr "ବିକଳ୍ପଗୁଡିକ"
 
 #. Rotate spinbutton
 #: ../plug-ins/common/curve-bend.c:1309
-#, fuzzy
 msgid "Rotat_e:"
-msgstr "ଘୂରା_ଅ:"
+msgstr "ଘୂରାନ୍ତୁ (_e):"
 
 #. The smoothing toggle
 #: ../plug-ins/common/curve-bend.c:1328
-#, fuzzy
 msgid "Smoo_thing"
-msgstr "ମସୃଣ_କରୁଛି"
+msgstr "ମସୃଣ କରୁଛି (_t)"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve-bend.c:1338 ../plug-ins/common/mosaic.c:727
 #: ../plug-ins/common/qbist.c:853 ../plug-ins/common/ripple.c:514
-#, fuzzy
 msgid "_Antialiasing"
-msgstr "_ଛବିମଶୃଣକରଣ"
+msgstr "ଛବି ମଶୃଣକରୁଅଛି (_A)"
 
 #. The work_on_copy toggle
 #: ../plug-ins/common/curve-bend.c:1348
-#, fuzzy
 msgid "Work on cop_y"
-msgstr "ପ୍ରତିଲିପିରେ_କାମକର"
+msgstr "ପ୍ରତିଲିପିରେ କାମକରନ୍ତୁ (_y)"
 
 #. The curves graph
 #: ../plug-ins/common/curve-bend.c:1358
-#, fuzzy
 msgid "Modify Curves"
-msgstr "ବକ୍ରଗୁଡିକୁ ପରିବର୍ତ୍ତନ କର"
+msgstr "ବକ୍ରଗୁଡିକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ"
 
 #: ../plug-ins/common/curve-bend.c:1386
-#, fuzzy
 msgid "Curve for Border"
 msgstr "ବୋର୍ଡର ପାଇଁ ବକ୍ର"
 
 #: ../plug-ins/common/curve-bend.c:1390
-#, fuzzy
 msgid "_Upper"
-msgstr "_ଉପର"
+msgstr "ଉପର (_U)"
 
 #: ../plug-ins/common/curve-bend.c:1391
-#, fuzzy
 msgid "_Lower"
-msgstr "_ତଳ"
+msgstr "ତଳ (_L)"
 
 #: ../plug-ins/common/curve-bend.c:1401
-#, fuzzy
 msgid "Curve Type"
 msgstr "ବାଙ୍କ ପ୍ରକାର"
 
 #: ../plug-ins/common/curve-bend.c:1405
-#, fuzzy
 msgid "Smoot_h"
-msgstr "ମସୃଣ_"
+msgstr "ମସୃଣ (_h)"
 
 #: ../plug-ins/common/curve-bend.c:1406
-#, fuzzy
 msgid "_Free"
-msgstr "_ମୁକ୍ତ"
+msgstr "ମୁକ୍ତ (_F)"
 
 #. The Copy button
 #: ../plug-ins/common/curve-bend.c:1421
-#, fuzzy
 msgid "_Copy"
 msgstr "ନକଲ କରନ୍ତୁ (_C)"
 
 #: ../plug-ins/common/curve-bend.c:1426
-#, fuzzy
 msgid "Copy the active curve to the other border"
-msgstr "ଅନ୍ଯ ବୋର୍ଡରକୁ ସକ୍ରିଯ ବକ୍ରକୁ ପ୍ରତିଲିପି କର"
+msgstr "ସକ୍ରିୟ ବକ୍ରକୁ ଅନ୍ଯ ବୋର୍ଡରରେ ନକଲ କରନ୍ତୁ"
 
 #. The CopyInv button
 #: ../plug-ins/common/curve-bend.c:1433
-#, fuzzy
 msgid "_Mirror"
-msgstr "_ଦର୍ପଣ"
+msgstr "ଦର୍ପଣ (_M)"
 
 #: ../plug-ins/common/curve-bend.c:1438
-#, fuzzy
 msgid "Mirror the active curve to the other border"
-msgstr "ଅନ୍ଯ ବୋର୍ଡରକୁ ସକ୍ରିଯ ବକ୍ରକୁ ପ୍ରତିବିମ୍ବିତ କର"
+msgstr "ସକ୍ରିୟ ବକ୍ରକୁ ଅନ୍ଯ ବୋର୍ଡରରେ ପ୍ରତିବିମ୍ବିତ କରନ୍ତୁ"
 
 #. The Swap button
 #: ../plug-ins/common/curve-bend.c:1446
-#, fuzzy
 msgid "S_wap"
-msgstr "ଅଦଳ_ବଦଳ"
+msgstr "ଅଦଳ ବଦଳ କରନ୍ତୁ (_w)"
 
 #: ../plug-ins/common/curve-bend.c:1451
-#, fuzzy
 msgid "Swap the two curves"
-msgstr "ଦୁଇଟି ବକ୍ରକୁ ବଦଳ କର"
+msgstr "ଦୁଇଟି ବକ୍ରକୁ ବଦଳ କରନ୍ତୁ"
 
 #: ../plug-ins/common/curve-bend.c:1463
-#, fuzzy
 msgid "Reset the active curve"
-msgstr "ସକ୍ରିଯ ବକ୍ରକୁ ପୁନଃସ୍ଥିର କର"
+msgstr "ସକ୍ରିୟ ବକ୍ରକୁ ପୁନଃସ୍ଥିର କରନ୍ତୁ"
 
 #: ../plug-ins/common/curve-bend.c:1480
-#, fuzzy
 msgid "Load the curves from a file"
-msgstr "ଗୋଟିଏ ଫାଇଲରୁ ବକ୍ରଗୁଡିକୁ ଲୋଡ଼ କର"
+msgstr "ଗୋଟିଏ ଫାଇଲରୁ ବକ୍ରଗୁଡିକୁ ଲୋଡ଼ କରନ୍ତୁ"
 
 #: ../plug-ins/common/curve-bend.c:1492
-#, fuzzy
 msgid "Save the curves to a file"
-msgstr "ଗୋଟିଏ ଫାଇଲକୁ ବକ୍ର ଗୁଡିକୁ ସଂଚଯ କର"
+msgstr "ଗୋଟିଏ ଫାଇଲକୁ ବକ୍ର ଗୁଡିକରେ ସଂଚୟ କରନ୍ତୁ"
 
 #: ../plug-ins/common/curve-bend.c:2030
 msgid "Load Curve Points from File"
-msgstr ""
+msgstr "ଫାଇଲରୁ ବକ୍ର ବିନ୍ଦୁଗୁଡ଼ିକୁ ଧାରଣ କରନ୍ତୁ"
 
 #: ../plug-ins/common/curve-bend.c:2065
 msgid "Save Curve Points to File"
-msgstr ""
+msgstr "ବକ୍ର ବିନ୍ଦୁଗୁଡ଼ିକୁ ଫାଇଲରେ ସଂରକ୍ଷଣ କରନ୍ତୁ"
 
 #: ../plug-ins/common/decompose.c:170 ../plug-ins/common/decompose.c:174
 #: ../plug-ins/common/decompose.c:178
-#, fuzzy
 msgid "red"
 msgstr "ଲାଲ"
 
 #: ../plug-ins/common/decompose.c:171 ../plug-ins/common/decompose.c:175
 #: ../plug-ins/common/decompose.c:179
-#, fuzzy
 msgid "green"
 msgstr "ସବୁଜ"
 
 #: ../plug-ins/common/decompose.c:172 ../plug-ins/common/decompose.c:176
 #: ../plug-ins/common/decompose.c:180
-#, fuzzy
 msgid "blue"
 msgstr "ନୀଳ"
 
 #: ../plug-ins/common/decompose.c:181 ../plug-ins/common/decompose.c:221
-#, fuzzy
 msgid "alpha"
 msgstr "ଆଲ୍ଫା"
 
 #: ../plug-ins/common/decompose.c:184 ../plug-ins/common/decompose.c:188
-#, fuzzy
 msgid "hue"
 msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ"
 
 #: ../plug-ins/common/decompose.c:185 ../plug-ins/common/decompose.c:189
-#, fuzzy
 msgid "saturation"
-msgstr "ସଂପୂର୍ଣ୍ଣ ମିଶ୍ରଣ"
+msgstr "ପରିପୃକ୍ତତା"
 
 #: ../plug-ins/common/decompose.c:186 ../plug-ins/common/decompose.c:190
-#, fuzzy
 msgid "value"
 msgstr "ମୂଲ୍ଯ"
 
 #: ../plug-ins/common/decompose.c:193 ../plug-ins/common/decompose.c:197
 msgid "hue_l"
-msgstr ""
+msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ (_l)"
 
 #: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:198
 msgid "saturation_l"
-msgstr ""
+msgstr "ପରିପୃକ୍ତତା (_l)"
 
 #: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:199
 msgid "lightness"
-msgstr ""
+msgstr "ଆଲୋକ"
 
 #: ../plug-ins/common/decompose.c:197
 msgid "Hue (HSL)"
-msgstr ""
+msgstr "ବର୍ଣ୍ଣରଞ୍ଜିତ (HSL)"
 
 #: ../plug-ins/common/decompose.c:198
 msgid "Saturation (HSL)"
-msgstr ""
+msgstr "ପରିପୃକ୍ତତା (HSL)"
 
 #: ../plug-ins/common/decompose.c:199
 msgid "Lightness"
-msgstr ""
+msgstr "ଆଲୋକ"
 
 #: ../plug-ins/common/decompose.c:202 ../plug-ins/common/decompose.c:206
-#, fuzzy
 msgid "cyan"
 msgstr "ସିଆନ"
 
 #: ../plug-ins/common/decompose.c:203 ../plug-ins/common/decompose.c:207
-#, fuzzy
 msgid "magenta"
 msgstr "ମେଜେଣ୍ଟା"
 
 #: ../plug-ins/common/decompose.c:204 ../plug-ins/common/decompose.c:208
-#, fuzzy
 msgid "yellow"
 msgstr "ହଳଦିଆ"
 
 #: ../plug-ins/common/decompose.c:206
-#, fuzzy
 msgid "Cyan"
 msgstr "ସିଆନ"
 
 #: ../plug-ins/common/decompose.c:207
-#, fuzzy
 msgid "Magenta"
 msgstr "ମାଗେଣ୍ଟା"
 
 #: ../plug-ins/common/decompose.c:208
-#, fuzzy
 msgid "Yellow"
 msgstr "ହଳଦିଆ"
 
 #: ../plug-ins/common/decompose.c:211 ../plug-ins/common/decompose.c:216
 msgid "cyan-k"
-msgstr ""
+msgstr "ସିଆନ-k"
 
 #: ../plug-ins/common/decompose.c:212 ../plug-ins/common/decompose.c:217
 msgid "magenta-k"
-msgstr ""
+msgstr "ମାଗେଣ୍ଟା-k"
 
 #: ../plug-ins/common/decompose.c:213 ../plug-ins/common/decompose.c:218
 msgid "yellow-k"
-msgstr ""
+msgstr "ହଳଦିଆ-k"
 
 #: ../plug-ins/common/decompose.c:214
-#, fuzzy
 msgid "black"
 msgstr "କଳା"
 
 #: ../plug-ins/common/decompose.c:216
-#, fuzzy
 msgid "Cyan_K"
-msgstr "ସିଆନ_K"
+msgstr "ସିଆନ (_K)"
 
 #: ../plug-ins/common/decompose.c:217
-#, fuzzy
 msgid "Magenta_K"
-msgstr "ମେଜେଣ୍ଟା_K"
+msgstr "ମେଜେଣ୍ଟା (_K)"
 
 #: ../plug-ins/common/decompose.c:218
-#, fuzzy
 msgid "Yellow_K"
-msgstr "ହଳଦିଆ_K"
+msgstr "ହଳଦିଆ (_K)"
 
 #: ../plug-ins/common/decompose.c:221
-#, fuzzy
 msgid "Alpha"
 msgstr "ଆଲ୍ଫା"
 
 #: ../plug-ins/common/decompose.c:229
 msgid "luma-y470"
-msgstr ""
+msgstr "ଲୁମା-y470"
 
 #: ../plug-ins/common/decompose.c:230
 msgid "blueness-cb470"
-msgstr ""
+msgstr "ନୀଳ-cb470"
 
 #: ../plug-ins/common/decompose.c:231
 msgid "redness-cr470"
-msgstr ""
+msgstr "ଲାଲି-cr470"
 
 #: ../plug-ins/common/decompose.c:233
 msgid "luma-y709"
-msgstr ""
+msgstr "ଲୁମା-y709"
 
 #: ../plug-ins/common/decompose.c:234
 msgid "blueness-cb709"
-msgstr ""
+msgstr "ନୀଳ-cb709"
 
 #: ../plug-ins/common/decompose.c:235
 msgid "redness-cr709"
-msgstr ""
+msgstr "ଲାଲି-cr709"
 
 #: ../plug-ins/common/decompose.c:237
 msgid "luma-y470f"
-msgstr ""
+msgstr "ଲୁମା-y470f"
 
 #: ../plug-ins/common/decompose.c:238
 msgid "blueness-cb470f"
-msgstr ""
+msgstr "ନୀଳ-cb470f"
 
 #: ../plug-ins/common/decompose.c:239
 msgid "redness-cr470f"
-msgstr ""
+msgstr "ଲାଲି-cr470f"
 
 #: ../plug-ins/common/decompose.c:241
 msgid "luma-y709f"
-msgstr ""
+msgstr "ଲୁମା-y709f"
 
 #: ../plug-ins/common/decompose.c:242
 msgid "blueness-cb709f"
-msgstr ""
+msgstr "ନୀଳ-cb709f"
 
 #: ../plug-ins/common/decompose.c:243
 msgid "redness-cr709f"
-msgstr ""
+msgstr "ଲାଲି-cr709f"
 
 #: ../plug-ins/common/decompose.c:312 ../plug-ins/common/decompose.c:326
 msgid "Decompose an image into separate colorspace components"
 msgstr ""
 
 #: ../plug-ins/common/decompose.c:318 ../plug-ins/common/decompose.c:336
-#, fuzzy
 msgid "_Decompose..."
-msgstr "_ମୂଳ ପଦାର୍ଥରେ ପରିଣତ କର..."
+msgstr "ମୂଳ ପଦାର୍ଥରେ ପରିଣତ କରନ୍ତୁ (_D)..."
 
 #: ../plug-ins/common/decompose.c:429
 msgid "Decomposing"
-msgstr ""
+msgstr "ମୂଳ ପଦାର୍ଥରେ ପରିଣତ କରୁଅଛି"
 
 #: ../plug-ins/common/decompose.c:1480
-#, fuzzy
 msgid "Decompose"
-msgstr "ମୂଳରେ ପରିଣତକର"
+msgstr "ମୂଳ ପଦାର୍ଥରେ ପରିଣତ କରନ୍ତୁ କରନ୍ତ"
 
 #: ../plug-ins/common/decompose.c:1503
-#, fuzzy
 msgid "Extract Channels"
 msgstr "ନିଃସାରଣ ଚ୍ଯାନେଲଗୁଡିକ"
 
 #: ../plug-ins/common/decompose.c:1550
 msgid "_Decompose to layers"
-msgstr ""
+msgstr "ସ୍ତରଗୁଡ଼ିକରେ ମୂଳ ପଦାର୍ଥରେ ପରିଣତ କରନ୍ତୁ (_D)"
 
 #: ../plug-ins/common/decompose.c:1561
 msgid "_Foreground as registration color"
-msgstr ""
+msgstr "ପଞ୍ଜିକରଣ ରଙ୍ଗ ଭାବରେ ପ୍ରଚ୍ଛଦଭୂମି (_F)"
 
 #: ../plug-ins/common/decompose.c:1562
 msgid ""
@@ -2803,136 +2515,114 @@ msgid "Fix images where every other row is missing"
 msgstr ""
 
 #: ../plug-ins/common/deinterlace.c:100
-#, fuzzy
 msgid "_Deinterlace..."
-msgstr "_ପରସ୍ପରଛନ୍ଦିତ କର ନାହିଁ..."
+msgstr "ପରସ୍ପରଛନ୍ଦିତ କରନ୍ତୁ ନାହିଁ (_D)..."
 
 #: ../plug-ins/common/deinterlace.c:157 ../plug-ins/common/deinterlace.c:325
-#, fuzzy
 msgid "Deinterlace"
 msgstr "ଡି-ଇଣ୍ଟରଲେସ"
 
 #: ../plug-ins/common/deinterlace.c:357
-#, fuzzy
 msgid "Keep o_dd fields"
-msgstr "ବିଷମ କ୍ଷେତ୍ରଗୁଡିକୁ_ରଖ"
+msgstr "ବିଷମ କ୍ଷେତ୍ରଗୁଡିକୁ ରଖନ୍ତୁ (_d)"
 
 #: ../plug-ins/common/deinterlace.c:358
-#, fuzzy
 msgid "Keep _even fields"
-msgstr "ସମ କ୍ଷେତ୍ର ଗୁଡିକୁ _ରଖ"
+msgstr "ସମ କ୍ଷେତ୍ର ଗୁଡିକୁ ରଖନ୍ତୁ (_e)"
 
 #: ../plug-ins/common/depth-merge.c:184
 msgid "Combine two images using depth maps (z-buffers)"
 msgstr ""
 
 #: ../plug-ins/common/depth-merge.c:193
-#, fuzzy
 msgid "_Depth Merge..."
-msgstr "_ଗଭୀରତା ମିଶାଅ..."
+msgstr "ଗଭୀରତା ମିଶ୍ରଣ (_D)..."
 
 #: ../plug-ins/common/depth-merge.c:387
 msgid "Depth-merging"
-msgstr ""
+msgstr "ଗଭୀରତା ମିଶ୍ରଣ କରୁଅଛି"
 
 #: ../plug-ins/common/depth-merge.c:644
-#, fuzzy
 msgid "Depth Merge"
-msgstr "ଗଭୀରତା ମିଶାଅ"
+msgstr "ଗଭୀରତା ମିଶ୍ରଣ"
 
 #: ../plug-ins/common/depth-merge.c:696
-#, fuzzy
 msgid "Source 1:"
-msgstr "ମୂଳ 1:"
+msgstr "ଉତ୍ସ 1:"
 
 #: ../plug-ins/common/depth-merge.c:711 ../plug-ins/common/depth-merge.c:741
-#, fuzzy
 msgid "Depth map:"
 msgstr "ଗଭୀରତା ମାନଚିତ୍ର:"
 
 #: ../plug-ins/common/depth-merge.c:726
-#, fuzzy
 msgid "Source 2:"
-msgstr "ମୂଳ 2:"
+msgstr "ଉତ୍ସ 2:"
 
 #: ../plug-ins/common/depth-merge.c:758
-#, fuzzy
 msgid "O_verlap:"
-msgstr "ଉପରେ _ସ୍ଥାପନ:"
+msgstr "ଉପରେ ସ୍ଥାପନ (_v):"
 
 #: ../plug-ins/common/depth-merge.c:778
-#, fuzzy
 msgid "Sc_ale 1:"
-msgstr "ସ୍କେ_ଲ 1:"
+msgstr "ସ୍କେଲ 1 (_a):"
 
 #: ../plug-ins/common/depth-merge.c:788
-#, fuzzy
 msgid "Sca_le 2:"
-msgstr "ସ୍କେ_ଲ 2:"
+msgstr "ସ୍କେଲ 2 (_l):"
 
 #: ../plug-ins/common/despeckle.c:142
 msgid "Remove speckle noise from the image"
 msgstr ""
 
 #: ../plug-ins/common/despeckle.c:148
-#, fuzzy
 msgid "Des_peckle..."
-msgstr "ଡିସ୍ପେକଲ_..."
+msgstr "ଡିସ୍ପେକଲ (_p)..."
 
 #: ../plug-ins/common/despeckle.c:425 ../plug-ins/common/despeckle.c:645
-#, fuzzy
 msgid "Despeckle"
 msgstr "ଡିସ୍ପେକଲ"
 
 #: ../plug-ins/common/despeckle.c:454
-#, fuzzy
 msgid "Median"
 msgstr "ମଧ୍ଯମା"
 
 #: ../plug-ins/common/despeckle.c:462
-#, fuzzy
 msgid "_Adaptive"
-msgstr "_ଉପୟୋଗୀ"
+msgstr "ଉପୟୋଗୀ (_A)"
 
 #: ../plug-ins/common/despeckle.c:472
-#, fuzzy
 msgid "R_ecursive"
-msgstr "ରିକର୍ସିଭ_"
+msgstr "ପୁନଃପୌନିକ (_e)"
 
 #: ../plug-ins/common/despeckle.c:493 ../plug-ins/common/edge-neon.c:732
 #: ../plug-ins/common/nl-filter.c:1089 ../plug-ins/common/nova.c:366
 #: ../plug-ins/common/unsharp-mask.c:680 ../plug-ins/common/whirl-pinch.c:589
 #: ../plug-ins/gradient-flare/gradient-flare.c:2758
 #: ../plug-ins/imagemap/imap_circle.c:278
-#, fuzzy
 msgid "_Radius:"
-msgstr "_ବ୍ଯାସାର୍ଦ୍ଧ:"
+msgstr "ବ୍ଯାସାର୍ଦ୍ଧ (_R):"
 
 #: ../plug-ins/common/despeckle.c:509
-#, fuzzy
 msgid "_Black level:"
-msgstr "_କଳା ସ୍ତର:"
+msgstr "କଳା ସ୍ତର (_B):"
 
 #: ../plug-ins/common/despeckle.c:525
-#, fuzzy
 msgid "_White level:"
-msgstr "_ଧଳା ସ୍ତର :"
+msgstr "ଧଳା ସ୍ତର (_W):"
 
 #: ../plug-ins/common/destripe.c:103
 msgid "Remove vertical stripe artifacts from the image"
 msgstr ""
 
 #: ../plug-ins/common/destripe.c:109
-#, fuzzy
 msgid "Des_tripe..."
-msgstr "ଡିସ୍ଟ୍ରାଇପ_ ..."
+msgstr "ଡିସ୍ଟ୍ରାଇପ (_t)..."
 
 #: ../plug-ins/common/destripe.c:272
 msgid "Destriping"
-msgstr ""
+msgstr "ଡିସ୍ଟ୍ରାଇପ କରୁଅଛି"
 
 #: ../plug-ins/common/destripe.c:438
-#, fuzzy
 msgid "Destripe"
 msgstr "ଡିସ୍ଟ୍ରାଇପ"
 
@@ -2943,146 +2633,130 @@ msgstr "ଡିସ୍ଟ୍ରାଇପ"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
 #: ../plug-ins/print/print-page-layout.c:252
-#, fuzzy
 msgid "_Width:"
 msgstr "ଓସାର (_W):"
 
 #: ../plug-ins/common/destripe.c:484
-#, fuzzy
 msgid "Create _histogram"
-msgstr "ହିଷ୍ଟୋଗ୍ରାମ _ସୃଷ୍ଟି କର"
+msgstr "ହିଷ୍ଟୋଗ୍ରାମ ସୃଷ୍ଟି କରନ୍ତୁ (_h)"
 
 #: ../plug-ins/common/diffraction.c:167
 msgid "Generate diffraction patterns"
-msgstr ""
+msgstr "ଡିଫ୍ରାକ୍ସନ ନମୁନାଗୁଡିକୁ ସୃଷ୍ଟିକରନ୍ତୁ"
 
 #: ../plug-ins/common/diffraction.c:172
-#, fuzzy
 msgid "_Diffraction Patterns..."
-msgstr "_ଡିଫ୍ରାକ୍ସନ ନମୁନାଗୁଡିକ..."
+msgstr "ଡିଫ୍ରାକ୍ସନ ନମୁନାଗୁଡିକ (_D)..."
 
 #: ../plug-ins/common/diffraction.c:330
 msgid "Creating diffraction pattern"
-msgstr ""
+msgstr "ଡିଫ୍ରାକ୍ସନ ନମୁନାଗୁଡିକୁ ନିର୍ମାଣ କରୁଅଛି"
 
 #: ../plug-ins/common/diffraction.c:434
-#, fuzzy
 msgid "Diffraction Patterns"
 msgstr "ଡିଫ୍ରାକ୍ସନ ନମୁନାଗୁଡିକ"
 
 #: ../plug-ins/common/diffraction.c:477
 #: ../plug-ins/map-object/map-object-ui.c:1388
-#, fuzzy
 msgid "_Preview!"
-msgstr "_ପୂର୍ବଦୃଶ୍ଯ!"
+msgstr "ପୂର୍ବଦୃଶ୍ଯ (_P)!"
 
 #: ../plug-ins/common/diffraction.c:527
-#, fuzzy
 msgid "Frequencies"
-msgstr "ଫ୍ରିକ୍ବେନସିଗୁଡିକ"
+msgstr "ବାରମ୍ବାରତା"
 
 #: ../plug-ins/common/diffraction.c:565
-#, fuzzy
 msgid "Contours"
 msgstr "ସୀମାରେଖାଗୁଡିକ"
 
 #: ../plug-ins/common/diffraction.c:603
 msgid "Sharp Edges"
-msgstr ""
+msgstr "ତୀକ୍ଷ୍ଣ ଧାର"
 
 #: ../plug-ins/common/diffraction.c:615 ../plug-ins/common/softglow.c:683
 #: ../plug-ins/flame/flame.c:1081
-#, fuzzy
 msgid "_Brightness:"
 msgstr "ଉଜ୍ଜ୍ବଳତା (_B):"
 
 #: ../plug-ins/common/diffraction.c:624
-#, fuzzy
 msgid "Sc_attering:"
-msgstr "ବିସ୍ତୀର୍ଣ୍ଣ_କରିବା:"
+msgstr "ବିସ୍ତୀର୍ଣ୍ଣ କରୁଅଛି (_a):"
 
 #: ../plug-ins/common/diffraction.c:633
-#, fuzzy
 msgid "Po_larization:"
-msgstr "ପୋଲା_ରାଇଜେସନ:"
+msgstr "ଧୃବିକରଣ (_l):"
 
 #: ../plug-ins/common/diffraction.c:641
 msgid "Other Options"
-msgstr ""
+msgstr "ଅନ୍ୟନ୍ୟ ବିକଳ୍ପଗୁଡ଼ିକ"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_X displacement"
-msgstr ""
+msgstr "X ବିସ୍ଥାପନ (_X)"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_Pinch"
-msgstr ""
+msgstr "କ୍ଳେଶ (_P)"
 
 #: ../plug-ins/common/displace.c:143
 msgid "_Y displacement"
-msgstr ""
+msgstr "Y ବିସ୍ଥାପନ (_Y)"
 
 #: ../plug-ins/common/displace.c:143
 msgid "_Whirl"
-msgstr ""
+msgstr "ଘୂର୍ଣ୍ଣନ (_W)"
 
 #: ../plug-ins/common/displace.c:169
 msgid "Displace pixels as indicated by displacement maps"
 msgstr ""
 
 #: ../plug-ins/common/displace.c:179
-#, fuzzy
 msgid "_Displace..."
-msgstr "_ବିସ୍ଥାପିତ..."
+msgstr "ବିସ୍ଥାପନ କରନ୍ତୁ (_D)..."
 
 #: ../plug-ins/common/displace.c:290
 msgid "Displacing"
-msgstr ""
+msgstr "ବିସ୍ଥାପନ କରୁଅଛି"
 
 #: ../plug-ins/common/displace.c:326
-#, fuzzy
 msgid "Displace"
-msgstr "ବିସ୍ଥାପିତ"
+msgstr "ବିସ୍ଥାପନ କରନ୍ତୁ"
 
 #. X options
 #: ../plug-ins/common/displace.c:362
-#, fuzzy
 msgid "_X displacement:"
-msgstr "_X ବିସ୍ଥାପନ:"
+msgstr "X ବିସ୍ଥାପନ (_X):"
 
 #. Y Options
 #: ../plug-ins/common/displace.c:409
-#, fuzzy
 msgid "_Y displacement:"
-msgstr "_Y ବିସ୍ଥାପନ:"
+msgstr "Y ବିସ୍ଥାପନ (_Y):"
 
 #: ../plug-ins/common/displace.c:459
 msgid "Displacement Mode"
-msgstr ""
+msgstr "ବିସ୍ଥାପନ ଧାରା"
 
 #: ../plug-ins/common/displace.c:462
 msgid "_Cartesian"
-msgstr ""
+msgstr "କାର୍ଟେସେନ (_C)"
 
 #: ../plug-ins/common/displace.c:463
 msgid "_Polar"
-msgstr ""
+msgstr "ଦିଗମୟ (_P)"
 
 #: ../plug-ins/common/displace.c:468
 msgid "Edge Behavior"
-msgstr ""
+msgstr "ଧାର ଆଚରଣ"
 
 #: ../plug-ins/common/displace.c:474 ../plug-ins/common/edge.c:722
 #: ../plug-ins/common/ripple.c:565 ../plug-ins/common/waves.c:281
-#, fuzzy
 msgid "_Smear"
-msgstr "_ବିଲେପନ କର"
+msgstr "କଳଙ୍କ (_S)"
 
 #: ../plug-ins/common/displace.c:476 ../plug-ins/common/edge.c:735
 #: ../plug-ins/common/fractal-trace.c:740 ../plug-ins/common/newsprint.c:398
-#, fuzzy
 msgid "_Black"
-msgstr "_କଳା"
+msgstr "କଳା (_B)"
 
 #: ../plug-ins/common/edge-dog.c:133
 msgid "Edge detection with control of edge thickness"
@@ -3093,45 +2767,38 @@ msgid "_Difference of Gaussians..."
 msgstr ""
 
 #: ../plug-ins/common/edge-dog.c:243 ../plug-ins/common/edge-dog.c:300
-#, fuzzy
 msgid "DoG Edge Detect"
-msgstr "DoGଧାର ଚିହ୍ନଟ କରିବା"
+msgstr "DoG ଧାର ଚିହ୍ନଟ କରିବା"
 
 #: ../plug-ins/common/edge-dog.c:329
 msgid "Smoothing Parameters"
-msgstr ""
+msgstr "ପ୍ରାଚଳଗୁଡ଼ିକୁ ମସୃଣ କରୁଅଛି"
 
 #: ../plug-ins/common/edge-dog.c:343
-#, fuzzy
 msgid "_Radius 1:"
-msgstr "_ବ୍ଯାସାର୍ଦ୍ଧ 1:"
+msgstr "ବ୍ଯାସାର୍ଦ୍ଧ 1 (_R):"
 
 #: ../plug-ins/common/edge-dog.c:347
-#, fuzzy
 msgid "R_adius 2:"
-msgstr "ବ୍ଯାସାର୍ଦ୍ଧ_ 2:"
+msgstr "ବ୍ଯାସାର୍ଦ୍ଧ 2 (_a):"
 
 #: ../plug-ins/common/edge-dog.c:370 ../plug-ins/gimpressionist/paper.c:167
-#, fuzzy
 msgid "_Invert"
-msgstr "_ଓଲଟାନ୍ତୁ"
+msgstr "ଓଲଟାନ୍ତୁ (_I)"
 
 #: ../plug-ins/common/edge-laplace.c:75
 msgid "High-resolution edge detection"
-msgstr ""
+msgstr "ଉଚ୍ଚ-ବିଭେଦନ ଧାର ଚିହ୍ନଟ"
 
 #: ../plug-ins/common/edge-laplace.c:85
-#, fuzzy
 msgid "_Laplace"
-msgstr "_ଲାପଲେଶ"
+msgstr "ଲାପଲେଶ (_L)"
 
 #: ../plug-ins/common/edge-laplace.c:243 ../plug-ins/common/edge.c:673
-#, fuzzy
 msgid "Laplace"
 msgstr "ଲାପ୍ଲେସ"
 
 #: ../plug-ins/common/edge-laplace.c:321
-#, fuzzy
 msgid "Cleanup"
 msgstr "ସଫ଼ା କରନ୍ତୁ"
 
@@ -3140,37 +2807,32 @@ msgid "Simulate the glowing boundary of a neon light"
 msgstr ""
 
 #: ../plug-ins/common/edge-neon.c:139
-#, fuzzy
 msgid "_Neon..."
-msgstr "_ନିଅନ..."
+msgstr "ନିଅନ (_N)..."
 
 #: ../plug-ins/common/edge-neon.c:211
 msgid "Neon"
-msgstr ""
+msgstr "ନିଅନ"
 
 #: ../plug-ins/common/edge-neon.c:695
-#, fuzzy
 msgid "Neon Detection"
 msgstr "ନିଅନ ଚିହ୍ନଟକରଣ"
 
 #: ../plug-ins/common/edge-neon.c:747 ../plug-ins/common/unsharp-mask.c:693
-#, fuzzy
 msgid "_Amount:"
-msgstr "_ପରିମାଣ:"
+msgstr "ପରିମାଣ (_A):"
 
 #: ../plug-ins/common/edge-sobel.c:108
 msgid "Specialized direction-dependent edge detection"
 msgstr ""
 
 #: ../plug-ins/common/edge-sobel.c:121
-#, fuzzy
 msgid "_Sobel..."
-msgstr "_ସୋବେଲ..."
+msgstr "ସୋବେଲ (_S)..."
 
 #: ../plug-ins/common/edge-sobel.c:231
-#, fuzzy
 msgid "Sobel Edge Detection"
-msgstr "ସୋବେଲ ଦାର ଚିହ୍ନଟ କରଣ"
+msgstr "ସୋବେଲ ଧାର ଚିହ୍ନଟ କରଣ"
 
 #: ../plug-ins/common/edge-sobel.c:260
 msgid "Sobel _horizontally"
@@ -3181,9 +2843,8 @@ msgid "Sobel _vertically"
 msgstr ""
 
 #: ../plug-ins/common/edge-sobel.c:284
-#, fuzzy
 msgid "_Keep sign of result (one direction only)"
-msgstr "_ଫଳାଫଳର ଚିହ୍ନ ରଖ (କେବଳ ଗୋଟିଏ ଦିଗରେ)"
+msgstr "ଫଳାଫଳର ଚିହ୍ନ ରଖନ୍ତୁ (କେବଳ ଗୋଟିଏ ଦିଗରେ) (_K)"
 
 #: ../plug-ins/common/edge-sobel.c:370
 msgid "Sobel edge detecting"
@@ -3194,21 +2855,18 @@ msgid "Several simple methods for detecting edges"
 msgstr ""
 
 #: ../plug-ins/common/edge.c:157
-#, fuzzy
 msgid "_Edge..."
-msgstr "_ଧାର..."
+msgstr "ଧାର (_E)..."
 
 #: ../plug-ins/common/edge.c:229
 msgid "Edge detection"
-msgstr ""
+msgstr "ଧାର ଚିହ୍ନଟକରଣ"
 
 #: ../plug-ins/common/edge.c:633
-#, fuzzy
 msgid "Edge Detection"
 msgstr "ଧାର ଚିହ୍ନଟକରଣ"
 
 #: ../plug-ins/common/edge.c:668
-#, fuzzy
 msgid "Sobel"
 msgstr "ସୋବେଲ"
 
@@ -3217,81 +2875,68 @@ msgid "Prewitt compass"
 msgstr ""
 
 #: ../plug-ins/common/edge.c:670 ../plug-ins/common/sinus.c:904
-#, fuzzy
 msgid "Gradient"
 msgstr "ଗ୍ରାଡିଏଣ୍ଟ"
 
 #: ../plug-ins/common/edge.c:671
-#, fuzzy
 msgid "Roberts"
-msgstr "ରୋବର୍ଟସ୍"
+msgstr "ରୋବର୍ଟସ"
 
 #: ../plug-ins/common/edge.c:672
-#, fuzzy
 msgid "Differential"
 msgstr "ଭିନ୍ନତା"
 
 #: ../plug-ins/common/edge.c:682
-#, fuzzy
 msgid "_Algorithm:"
-msgstr "_ଆଲଗୋରିଥମ:"
+msgstr "ଆଲଗୋରିଥମ (_A):"
 
 #: ../plug-ins/common/edge.c:690
-#, fuzzy
 msgid "A_mount:"
-msgstr "ପରି_ମାଣ:"
+msgstr "ପରିମାଣ (_m):"
 
 #: ../plug-ins/common/emboss.c:124
 msgid "Simulate an image created by embossing"
 msgstr ""
 
 #: ../plug-ins/common/emboss.c:130
-#, fuzzy
 msgid "_Emboss..."
-msgstr "_ଖୋଦିତ କର..."
+msgstr "ଖୋଦିତ କରନ୍ତୁ (_E)..."
 
 #: ../plug-ins/common/emboss.c:384 ../plug-ins/common/emboss.c:446
-#, fuzzy
 msgid "Emboss"
-msgstr "ଖୋଦିତକର"
+msgstr "ଖୋଦିତକରନ୍ତୁ"
 
 #: ../plug-ins/common/emboss.c:474
-#, fuzzy
 msgid "Function"
 msgstr "କାର୍ୟ୍ଯ"
 
 #: ../plug-ins/common/emboss.c:478
-#, fuzzy
 msgid "_Bumpmap"
-msgstr "_ବମ୍ପମ୍ଯାପ"
+msgstr "ବମ୍ପମ୍ଯାପ (_B)"
 
 #: ../plug-ins/common/emboss.c:479
-#, fuzzy
 msgid "_Emboss"
-msgstr "_ଖୋଦିତକର"
+msgstr "ଖୋଦିତ କରନ୍ତୁ (_E)"
 
 #: ../plug-ins/common/emboss.c:511
-#, fuzzy
 msgid "E_levation:"
-msgstr "ଉତ୍ତୋଳନ_:"
+msgstr "ଉତ୍ତୋଳନ (_l):"
 
 #: ../plug-ins/common/engrave.c:101
 msgid "Simulate an antique engraving"
 msgstr ""
 
 #: ../plug-ins/common/engrave.c:106
-#, fuzzy
 msgid "En_grave..."
-msgstr "ଖୋଦିତ_କର..."
+msgstr "ଖୋଦିତ କରନ୍ତୁ (_g)..."
 
 #: ../plug-ins/common/engrave.c:180
 msgid "Engraving"
-msgstr ""
+msgstr "ଖୋଦିନ କରୁଅଛି"
 
 #: ../plug-ins/common/engrave.c:209
-#, fuzzy
 msgid "Engrave"
-msgstr "ଖୋଦିତକର"
+msgstr "ଖୋଦିତକରନ୍ତୁ"
 
 #: ../plug-ins/common/engrave.c:244 ../plug-ins/common/file-html-table.c:611
 #: ../plug-ins/common/file-ps.c:3181 ../plug-ins/common/file-ps.c:3389
@@ -3300,40 +2945,33 @@ msgstr "ଖୋଦିତକର"
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
 #: ../plug-ins/print/print-page-layout.c:254
-#, fuzzy
 msgid "_Height:"
 msgstr "ଉଚ୍ଚତା (_H):"
 
 #: ../plug-ins/common/engrave.c:255
-#, fuzzy
 msgid "_Limit line width"
-msgstr "_ସୀମା ରେଖା ଓସାର"
+msgstr "ସୀମା ରେଖା ଓସାର (_L)"
 
 #: ../plug-ins/common/file-aa.c:98
-#, fuzzy
 msgid "ASCII art"
 msgstr "ASCII କଳା"
 
 #. Create the actual window.
 #: ../plug-ins/common/file-aa.c:349
-#, fuzzy
 msgid "Save as Text"
-msgstr "ଟେକ୍ସଟ ପରି ସଂଚଯ କର"
+msgstr "ପାଠ୍ୟ ପରି ସଂଚୟ କରନ୍ତୁ"
 
 #: ../plug-ins/common/file-aa.c:371
-#, fuzzy
 msgid "_Format:"
 msgstr "ଶୈଳୀ (_F):"
 
 #: ../plug-ins/common/file-cel.c:111 ../plug-ins/common/file-cel.c:129
-#, fuzzy
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
 #: ../plug-ins/common/file-cel.c:191
-#, fuzzy
 msgid "Load KISS Palette"
-msgstr " KISS ବର୍ଣ୍ଣଫଳକ ଲୋଡ଼ କର"
+msgstr "KISS ବର୍ଣ୍ଣଫଳକ ଧାରଣ କରନ୍ତୁ"
 
 #. max. rows allocated
 #. column, highest column ever used
@@ -3355,18 +2993,16 @@ msgstr " KISS ବର୍ଣ୍ଣଫଳକ ଲୋଡ଼ କର"
 #: ../plug-ins/file-sgi/sgi.c:331 ../plug-ins/file-xjt/xjt.c:3363
 #, c-format
 msgid "Opening '%s'"
-msgstr ""
+msgstr "'%s' କୁ ଖୋଲୁଅଛି"
 
 #: ../plug-ins/common/file-cel.c:354
-#, fuzzy
 msgid "Can't create a new image"
-msgstr "ଗୋଟିଏ ନୂଆ ଚିତ୍ର ସୃଷ୍ଟି କରିପାରିବ ନାହିଁ"
+msgstr "ଗୋଟିଏ ନୂଆ ଚିତ୍ର ସୃଷ୍ଟି କରିପାରିବେ ନାହିଁ"
 
 #: ../plug-ins/common/file-cel.c:443
 #, c-format
-#, fuzzy
 msgid "Unsupported bit depth (%d)!"
-msgstr "ଅସମର୍ଥିତ ବିଟ୍ ଗଭୀରତା (%d)!"
+msgstr "ଅସମର୍ଥିତ ବିଟ ଗଭୀରତା (%d)!"
 
 #. init the progress meter
 #. And let's begin the progress
@@ -3385,17 +3021,15 @@ msgstr "ଅସମର୍ଥିତ ବିଟ୍ ଗଭୀରତା (%d)!"
 #: ../plug-ins/file-xjt/xjt.c:1710
 #, c-format
 msgid "Saving '%s'"
-msgstr ""
+msgstr "'%s' କୁ ସଂରକ୍ଷଣ କରୁଅଛି"
 
 #: ../plug-ins/common/file-compressor.c:160
-#, fuzzy
 msgid "gzip archive"
-msgstr "gzip ଲେଖାଗାର"
+msgstr "gzip ଅଭିଲେଖାଗାର"
 
 #: ../plug-ins/common/file-compressor.c:181
-#, fuzzy
 msgid "bzip archive"
-msgstr "bzip ଲେଖାଗାର"
+msgstr "bzip ଅଭିଲେଖାଗାର"
 
 #: ../plug-ins/common/file-compressor.c:390
 msgid "No sensible file extension, saving as compressed XCF."
@@ -3406,204 +3040,174 @@ msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 
 #: ../plug-ins/common/file-csource.c:112
-#, fuzzy
 msgid "C source code"
-msgstr "C ମୂଳ କୋଡ"
+msgstr "C ଉତ୍ସ ସଂକେତ"
 
 #: ../plug-ins/common/file-csource.c:660
-#, fuzzy
 msgid "Save as C-Source"
-msgstr "C-ମୂଲ ପରି ସଂଚଯ କର"
+msgstr "C-ମୂଲ ପରି ସଂଚୟ କରନ୍ତୁ"
 
 #: ../plug-ins/common/file-csource.c:691
-#, fuzzy
 msgid "_Prefixed name:"
-msgstr "_ଉପସର୍ଗଯୁକ୍ତ ନାମ:"
+msgstr "ଉପସର୍ଗଯୁକ୍ତ ନାମ (_P):"
 
 #: ../plug-ins/common/file-csource.c:700
-#, fuzzy
 msgid "Co_mment:"
 msgstr "ଟିପ୍ପଣୀ (_m):"
 
 #. Use Comment
 #.
 #: ../plug-ins/common/file-csource.c:707
-#, fuzzy
 msgid "_Save comment to file"
-msgstr "_ଫାଇଲକୁ ମନ୍ତବ୍ଯ ସଂଚଯ କର"
+msgstr "ଫାଇଲକୁ ମନ୍ତବ୍ଯକୁ ସଂଚୟ କରନ୍ତୁ"
 
 #. GLib types
 #.
 #: ../plug-ins/common/file-csource.c:719
-#, fuzzy
 msgid "_Use GLib types (guint8*)"
-msgstr "_ GLib ପ୍ରକାରଗୁଡିକ ଉପୟୋଗ କର (guint8*)"
+msgstr "GLib ପ୍ରକାରଗୁଡିକୁ ଉପୟୋଗ କରନ୍ତୁ (guint8*) (_U)"
 
 #. Use Macros
 #.
 #: ../plug-ins/common/file-csource.c:731
-#, fuzzy
 msgid "Us_e macros instead of struct"
-msgstr "ସ୍ଟ୍ରକ୍ଟ ବଦଳରେ_ମାକ୍ରୋଗୁଡିକୁ ଉପୟୋଗ କର"
+msgstr "ଗଠନ ବଦଳରେ ମାକ୍ରୋଗୁଡିକୁ ଉପଯୋଗ କରନ୍ତୁ (_e)"
 
 #. Use RLE
 #.
 #: ../plug-ins/common/file-csource.c:743
-#, fuzzy
 msgid "Use _1 byte Run-Length-Encoding"
-msgstr " _1 ବାଇଟ ଚଳାଇବା-ଦୈର୍ଘ୍ଯ- ଏନକୋଡିଙ୍ଗ ଉପୟୋଗ କର"
+msgstr ""
 
 #. Alpha
 #.
 #: ../plug-ins/common/file-csource.c:755
-#, fuzzy
 msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr "ଆଲ୍ଫା_ଚ୍ଯାନେଲ ସଂଚଯ କର (RGBA/RGB)"
+msgstr "ଆଲ୍ଫା ଚ୍ଯାନେଲ ସଂଚୟ କରନ୍ତୁ (RGBA/RGB) (_v)"
 
 #: ../plug-ins/common/file-csource.c:773
-#, fuzzy
 msgid "Op_acity:"
 msgstr "ଅସ୍ବଚ୍ଛତା (_a):"
 
 #: ../plug-ins/common/file-desktop-link.c:83
 msgid "Desktop Link"
-msgstr ""
+msgstr "ଡେସ୍କଟପ ସଂଯୋଗ"
 
 #: ../plug-ins/common/file-desktop-link.c:173
 #, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr ""
+msgstr "ଡେସ୍କଟପ ଫାଇଲ '%s' କୁ ଧାରଣ କରିବାରେ ତ୍ରୁଟି: %s"
 
 #: ../plug-ins/common/file-dicom.c:146
-#, fuzzy
 msgid "DICOM image"
 msgstr "DICOM ଚିତ୍ର"
 
 #: ../plug-ins/common/file-dicom.c:171
-#, fuzzy
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "ଔଷଧ ଚିତ୍ରରେ ଡିଜିଟାଲ ଚିତ୍ରକରିବା ଏବଂ ୟୋଗାୟୋଗଗୁଡିକ"
 
 #: ../plug-ins/common/file-dicom.c:352
 #, c-format
-#, fuzzy
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' ଏକ DICOM ଫାଇଲ ନୁହେଁ ।"
 
 #: ../plug-ins/common/file-dicom.c:769 ../plug-ins/common/file-pcx.c:659
 #: ../plug-ins/common/file-pnm.c:967
-#, fuzzy
 msgid "Cannot save images with alpha channel."
 msgstr "ଅଲଫା ଚ୍ଯାନେଲ ସହିତ ଚିତ୍ରଗୁଡିକୁ ସଂଚଯ କରିପାରିବ ନାହିଁ"
 
 #: ../plug-ins/common/file-dicom.c:784 ../plug-ins/common/file-ps.c:1203
 #: ../plug-ins/common/file-xwd.c:604 ../plug-ins/file-fits/fits.c:466
 #: ../plug-ins/file-xjt/xjt.c:1705
-#, fuzzy
 msgid "Cannot operate on unknown image types."
 msgstr "ଅଜ୍ଞାତ ଚିତ୍ର ପ୍ରକାରଗୁଡିକରେ ପରିଚାଳନା କରିପାରିବ ନାହିଁ"
 
 #: ../plug-ins/common/file-gbr.c:154 ../plug-ins/common/file-gbr.c:175
-#, fuzzy
 msgid "GIMP brush"
 msgstr "GIMP ତୁଳୀ"
 
 #: ../plug-ins/common/file-gbr.c:401 ../plug-ins/common/file-gbr.c:413
-#, fuzzy
 msgid "Unsupported brush format"
 msgstr "ଅସମର୍ଥିତ ତୁଳୀ ଫର୍ମାଟ"
 
 #: ../plug-ins/common/file-gbr.c:425
 #, c-format
-#, fuzzy
 msgid "Error in GIMP brush file '%s'"
-msgstr " GIMP ତୁଳୀ ଫାଇଲରେ ତ୍ରୁଟି '%s'"
+msgstr "GIMP ତୁଳୀ ଫାଇଲରେ ତ୍ରୁଟି '%s'"
 
 #: ../plug-ins/common/file-gbr.c:433
 #, c-format
-#, fuzzy
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "ଅକାମୀ UTF-8 ବାକ୍ଯଖଣ୍ଡ ତୂଳୀ ଫ଼ାଇଲ୍ ରେ '%s'."
 
 #: ../plug-ins/common/file-gbr.c:439 ../plug-ins/common/file-gih.c:510
 #: ../plug-ins/common/file-gih.c:1173
 #: ../plug-ins/gradient-flare/gradient-flare.c:3063
-#, fuzzy
 msgid "Unnamed"
 msgstr "ଅନାମିତ"
 
 #: ../plug-ins/common/file-gbr.c:622
-#, fuzzy
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "GIMP ତୁଳୀ ଗୁଡିକ  GREYSCALE କିମ୍ବା RGBA ଅଟନ୍ତି"
 
 #: ../plug-ins/common/file-gbr.c:720
-#, fuzzy
 msgid "Save as Brush"
-msgstr "ତୁଳୀ ପରି ସଂଚଯ କର"
+msgstr "ତୁଳୀ ପରି ସଂଚୟ କରନ୍ତୁ"
 
 #. attach labels
 #: ../plug-ins/common/file-gbr.c:747 ../plug-ins/common/grid.c:790
-#, fuzzy
 msgid "Spacing:"
-msgstr "ଅନ୍ତରାଳନ:"
+msgstr "ଅନ୍ତରାଳ:"
 
 #: ../plug-ins/common/file-gbr.c:758 ../plug-ins/common/file-gih.c:925
 #: ../plug-ins/common/file-pat.c:556 ../plug-ins/gimpressionist/presets.c:666
-#, fuzzy
 msgid "Description:"
 msgstr "ବର୍ଣ୍ଣନା:"
 
 #: ../plug-ins/common/file-gif-load.c:142
 #: ../plug-ins/common/file-gif-save.c:168
-#, fuzzy
 msgid "GIF image"
 msgstr "GIF ଚିତ୍ର"
 
 #: ../plug-ins/common/file-gif-load.c:357
-#, fuzzy
 msgid "This is not a GIF file"
 msgstr "ଏହା ଗୋଟିଏ GIF ଫାଇଲ ନୁହେଁ"
 
 #: ../plug-ins/common/file-gif-load.c:396
-#, fuzzy
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "ଅଣ-ବର୍ଗୀୟ ପିକ୍ସେଲ ।  ଚିତ୍ର ହୁଏତ ଦବିଗଲାପରି ଦେଖାଯାଇପାରେ ।"
 
 #: ../plug-ins/common/file-gif-load.c:913
 #, c-format
-#, fuzzy
 msgid "Background (%d%s)"
 msgstr "ପୃଷ୍ଠଭୂମୀ (%d%s)"
 
 #: ../plug-ins/common/file-gif-load.c:936
 #, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr ""
+msgstr "'%s' କୁ ଖୋଲୁଅଛି (ଫ୍ରେମ %d)"
 
 #: ../plug-ins/common/file-gif-load.c:965 ../plug-ins/common/iwarp.c:791
 #: ../plug-ins/common/iwarp.c:826
 #, c-format
-#, fuzzy
 msgid "Frame %d"
 msgstr "ଫ୍ରେମ %d"
 
 #: ../plug-ins/common/file-gif-load.c:967
 #, c-format
-#, fuzzy
 msgid "Frame %d (%d%s)"
-msgstr "Frame %d (%d%s)"
+msgstr "ଫ୍ରେମ %d (%d%s)"
 
 #: ../plug-ins/common/file-gif-load.c:998
 #, c-format
-#, fuzzy
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
-msgstr "GIF: ଅମନ୍ତବ୍ୟଯୁକ୍ତ GIF ସଂମିଶ୍ରିତ ପ୍ରକାର %d ପରିଚାଳିତ ହୁଏ ନାହିଁ । ଚଳଚ୍ଚିତ୍ର ହୁଏତ ଚାଲିବ ନାହିଁ କିମ୍ବା ପୁନଃ-ସଂଚୟ ସଠିକ୍ ଭାବରେ ହୋଇପାରିବ ନାହିଁ ।"
+msgstr ""
+"GIF: ଅମନ୍ତବ୍ୟଯୁକ୍ତ GIF ସଂମିଶ୍ରିତ ପ୍ରକାର %d ପରିଚାଳିତ ହୁଏ ନାହିଁ । ଚଳଚ୍ଚିତ୍ର ହୁଏତ ଚାଲିବ ନାହିଁ କିମ୍ବା "
+"ପୁନଃ-ସଂଚୟ ସଠିକ୍ ଭାବରେ ହୋଇପାରିବ ନାହିଁ।"
 
 #: ../plug-ins/common/file-gif-save.c:447
-#, fuzzy
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "ରଙ୍ଗଗୁଡିକୁ ଆଉ ହ୍ରାସ କରିପାରିଲା ନାହିଁ । ଅସ୍ବଚ୍ଛ ପରି ସଂଚୟ କରୁଛି"
 
@@ -3615,14 +3219,12 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:673
-#, fuzzy
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
-msgstr " GIF ଫର୍ମାଟ କେବଳ  7 ବିଟ୍  ASCII ଏନକୋଡିଙ୍ଗରେ ମନ୍ତବ୍ୟଗୁଡିକୁ ସମର୍ଥନ କରେ । କୌଣସି ମନ୍ତବ୍ୟ ସଂଚୟ ହୋଇ ନାହିଁ"
+msgstr "GIF ଫର୍ମାଟ କେବଳ  7 ବିଟ୍  ASCII ଏନକୋଡିଙ୍ଗରେ ମନ୍ତବ୍ୟଗୁଡିକୁ ସମର୍ଥନ କରେ । କୌଣସି ମନ୍ତବ୍ୟ ସଂଚୟ ହୋଇ ନାହିଁ"
 
 #: ../plug-ins/common/file-gif-save.c:732
-#, fuzzy
 msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr "RGB ରଙ୍ଗ ଚିତ୍ରଗୁଡିକୁ ସଂଚୟ କରିପାରିବ ନାହିଁ । ଅନୁକ୍ରମଣୀକାବଦ୍ଧ ରଙ୍ଗ କିମ୍ବା ଧୁସର ସ୍କେଲକୁ ପ୍ରଥମେ ରୂପାନ୍ତର କର ।"
 
@@ -3643,43 +3245,36 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1008
-#, fuzzy
 msgid "Save as GIF"
-msgstr " GIF ପରି ସଂଚୟ କର"
+msgstr "GIF ପରି ସଂଚୟ କରନ୍ତୁ"
 
 #. regular gif parameter settings
 #: ../plug-ins/common/file-gif-save.c:1030
-#, fuzzy
 msgid "GIF Options"
 msgstr "GIF ବିକଳ୍ପସବୁ"
 
 #: ../plug-ins/common/file-gif-save.c:1036
 msgid "I_nterlace"
-msgstr ""
+msgstr "ଅନ୍ତରାପୃଷ୍ଠ (_n)"
 
 #: ../plug-ins/common/file-gif-save.c:1052
-#, fuzzy
 msgid "_GIF comment:"
-msgstr "_GIF ମନ୍ତବ୍ୟ:"
+msgstr "GIF ମନ୍ତବ୍ୟ (_G):"
 
 #. additional animated gif parameter settings
 #: ../plug-ins/common/file-gif-save.c:1110
-#, fuzzy
 msgid "Animated GIF Options"
 msgstr "ଚଳଚ୍ଚିତ୍ରିତ GIF ବିକଳ୍ପଗୁଡିକ"
 
 #: ../plug-ins/common/file-gif-save.c:1116
-#, fuzzy
 msgid "_Loop forever"
-msgstr "_ସବୁବେଳ ପାଇଁ ଚକ୍ରାବର୍ତ୍ତ"
+msgstr "ସବୁବେଳ ପାଇଁ ଚକ୍ରାବର୍ତ୍ତୀ କରନ୍ତୁ (_L)"
 
 #: ../plug-ins/common/file-gif-save.c:1129
-#, fuzzy
 msgid "_Delay between frames where unspecified:"
-msgstr "_ଫ୍ରେମ ଗୁଡିକ ମଧ୍ୟରେ ବିଳମ୍ବ ଯେଉଁଠାରେ ଅନିର୍ଦ୍ଦିଷ୍ଟ:"
+msgstr "ଫ୍ରେମ ଗୁଡିକ ମଧ୍ୟରେ ବିଳମ୍ବ ଯେଉଁଠାରେ ଅନିର୍ଦ୍ଦିଷ୍ଟ (_D):"
 
 #: ../plug-ins/common/file-gif-save.c:1144 ../plug-ins/common/file-mng.c:1474
-#, fuzzy
 msgid "milliseconds"
 msgstr "ମିଲିସେକେଣ୍ଡ"
 
@@ -3688,17 +3283,14 @@ msgid "_Frame disposal where unspecified:"
 msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1158
-#, fuzzy
 msgid "I don't care"
 msgstr "ମୁଁ ଖାତିର କରେ ନାହିଁ"
 
 #: ../plug-ins/common/file-gif-save.c:1160
-#, fuzzy
 msgid "Cumulative layers (combine)"
 msgstr "ଚକ୍ରବର୍ତ୍ତି ସ୍ତରଗୁଡିକ (ସଂମିଶ୍ରିତ)"
 
 #: ../plug-ins/common/file-gif-save.c:1162
-#, fuzzy
 msgid "One frame per layer (replace)"
 msgstr "ପ୍ରତି ସ୍ତର ଗୋଟିଏ ଫ୍ରେମ (ପୁନଃସ୍ଥାପିତ କର)"
 
@@ -3712,109 +3304,88 @@ msgid "U_se disposal entered above for all frames"
 msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:2341
-#, fuzzy
 msgid "Error writing output file."
 msgstr "ଆଉଟପୁଟ ଫାଇଲକୁ ଲେଖିବାରେ ତ୍ରୁଟି"
 
 #: ../plug-ins/common/file-gif-save.c:2411
 #, c-format
-#, fuzzy
 msgid "The default comment is limited to %d characters."
 msgstr "ଡିଫଲ୍ଟ ମନ୍ତବ୍ୟ %d ଅକ୍ଷର ଗୁଡିକ ପର୍ଯ୍ୟନ୍ତ ସୀମିତ ଅଟେ ।"
 
 #: ../plug-ins/common/file-gih.c:209 ../plug-ins/common/file-gih.c:230
-#, fuzzy
 msgid "GIMP brush (animated)"
 msgstr "GIMP ତୁଳୀ (ଚଳଚ୍ଚିତ୍ରିତ)"
 
 #: ../plug-ins/common/file-gih.c:324
 #, c-format
-#, fuzzy
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "ସ୍ତର %s ର ଗୋଟିଏ ଆଲ୍ଫା ଚ୍ୟାନେଲ ନଥାଏ, ବାଦ ଦିଆଯାଇଥାଏ ।"
 
 #: ../plug-ins/common/file-gih.c:503
-#, fuzzy
 msgid "Error in GIMP brush pipe file."
-msgstr " GIMP ତୁଳୀ ପାଇପ ଫାଇଲରେ ତ୍ରୁଟି"
+msgstr "GIMP ତୁଳୀ ପାଇପ ଫାଇଲରେ ତ୍ରୁଟି"
 
 #: ../plug-ins/common/file-gih.c:569
-#, fuzzy
 msgid "GIMP brush file appears to be corrupted."
 msgstr "GIMP ତୁଳୀ ଫାଇଲ ଦୂଷିତ ହୋଇଥିବା ପ୍ରତୀତ ହେଉଛି ।"
 
 #: ../plug-ins/common/file-gih.c:718
-#, fuzzy
 msgid "Couldn't load one brush in the pipe, giving up."
 msgstr "ପାଇପରେ ଗୋଟିଏ ତୁଳୀ ଲୋଡ କରିପାରିଲା ନାହିଁ, ପରିତ୍ୟାଗ କରୁଛି"
 
 #: ../plug-ins/common/file-gih.c:881
-#, fuzzy
 msgid "Save as Brush Pipe"
 msgstr "ତୁଳୀ ପାଇପ ପରି ସଂଚୟ କର"
 
 #: ../plug-ins/common/file-gih.c:911
-#, fuzzy
 msgid "Spacing (percent):"
 msgstr "ଅନ୍ତରଦେବା (ଶତକଡା):"
 
 #: ../plug-ins/common/file-gih.c:978
-#, fuzzy
 msgid "Pixels"
 msgstr "ପିକ୍ସେଲଗୁଡିକ"
 
 #: ../plug-ins/common/file-gih.c:983
-#, fuzzy
 msgid "Cell size:"
 msgstr "କୋଷ ଆକାର:"
 
 #: ../plug-ins/common/file-gih.c:995
-#, fuzzy
 msgid "Number of cells:"
 msgstr "କୋଷଗୁଡିକର ସଂଖ୍ଯା:"
 
 #: ../plug-ins/common/file-gih.c:1020
-#, fuzzy
 msgid " Rows of "
-msgstr " ର ଧାଡିଗୁଡିକ"
+msgstr "ର ଧାଡିଗୁଡିକ"
 
 #: ../plug-ins/common/file-gih.c:1032
-#, fuzzy
 msgid " Columns on each layer"
-msgstr " ପ୍ରତି ସ୍ତରରେ ସ୍ତମ୍ଭଗୁଡିକ"
+msgstr "ପ୍ରତି ସ୍ତରରେ ସ୍ତମ୍ଭଗୁଡିକ"
 
 #: ../plug-ins/common/file-gih.c:1036
-#, fuzzy
 msgid " (Width Mismatch!) "
-msgstr " (ଓସାର ମେଳ ଖାଉନି!) "
+msgstr "(ଓସାର ମେଳ ଖାଉନି!) "
 
 #: ../plug-ins/common/file-gih.c:1040
-#, fuzzy
 msgid " (Height Mismatch!) "
-msgstr " (ଉଚ୍ଚତା ମେଳଖାଉନି!) "
+msgstr "(ଉଚ୍ଚତା ମେଳଖାଉନି!) "
 
 #: ../plug-ins/common/file-gih.c:1045
-#, fuzzy
 msgid "Display as:"
-msgstr "ପରି ପ୍ରଦର୍ଶନ କର:"
+msgstr "ଏହି ପରି ପ୍ରଦର୍ଶନ କରନ୍ତୁ:"
 
 #: ../plug-ins/common/file-gih.c:1054
-#, fuzzy
 msgid "Dimension:"
 msgstr "ଆକୃତି:"
 
 #: ../plug-ins/common/file-gih.c:1129
-#, fuzzy
 msgid "Ranks:"
 msgstr "ପଦବୀଗୁଡିକ:"
 
 #: ../plug-ins/common/file-header.c:77
-#, fuzzy
 msgid "C source code header"
 msgstr "C ମୂଳ କୋଡ ଶୀର୍ଷଟୀକା"
 
 #: ../plug-ins/common/file-html-table.c:156
-#, fuzzy
 msgid "HTML table"
 msgstr "HTML ଟେବୁଲ"
 
@@ -3823,12 +3394,10 @@ msgid "Save as HTML table"
 msgstr ""
 
 #: ../plug-ins/common/file-html-table.c:436
-#, fuzzy
 msgid "Warning"
 msgstr "ଚେତାବନୀ"
 
 #: ../plug-ins/common/file-html-table.c:447
-#, fuzzy
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
@@ -3840,111 +3409,97 @@ msgstr ""
 
 #. HTML Page Options
 #: ../plug-ins/common/file-html-table.c:456
-#, fuzzy
 msgid "HTML Page Options"
 msgstr "HTML ପୃଷ୍ଠା ବିକଳ୍ପଗୁଡିକ"
 
 #: ../plug-ins/common/file-html-table.c:463
-#, fuzzy
 msgid "_Generate full HTML document"
-msgstr "_ପୂର୍ଣ୍ଣ HTML ଦଲିଲ ଉତ୍ପାଦନ କର"
+msgstr "ପୂର୍ଣ୍ଣ HTML ଦଲିଲ ଉତ୍ପାଦନ କରନ୍ତୁ (_G)"
 
 #: ../plug-ins/common/file-html-table.c:469
-#, fuzzy
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
-msgstr "ଯଦି ଠିକ୍ ଚିହ୍ନିତ ହୁଏ GTM ଗୋଟିଏ ପୂର୍ଣ୍ଣ HTML ଦଲିଲ <HTML>, <BODY>, ଇତ୍ୟାଦି  କେବଳ ଟେବୁଲ html ପରିବର୍ତ୍ତେ ଟାଗ ସହିତ ଆଉଟପୁଟ କରିବ ।"
+msgstr ""
+"ଯଦି ଠିକ୍ ଚିହ୍ନିତ ହୁଏ GTM ଗୋଟିଏ ପୂର୍ଣ୍ଣ HTML ଦଲିଲ <HTML>, <BODY>, ଇତ୍ୟାଦି "
+"କେବଳ ଟେବୁଲ html ପରିବର୍ତ୍ତେ ଟାଗ ସହିତ ଆଉଟପୁଟ କରିବ।"
 
 #. HTML Table Creation Options
 #: ../plug-ins/common/file-html-table.c:482
-#, fuzzy
 msgid "Table Creation Options"
 msgstr "ଟେବୁଲ ସୃଷ୍ଟି ବିକଳ୍ପଗୁଡିକ"
 
 #: ../plug-ins/common/file-html-table.c:490
-#, fuzzy
 msgid "_Use cellspan"
-msgstr "_କୋଷବିସ୍ତାର ଉପଯୋଗକର"
+msgstr "କୋଷବିସ୍ତାର ଉପଯୋଗକରନ୍ତୁ (_U)"
 
 #: ../plug-ins/common/file-html-table.c:496
-#, fuzzy
 msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
-msgstr "ଯଦି ଚିହ୍ନିତ ହୁଏ GTM ଯେ କୌଣସି ଅବିକଳ ରଙ୍ଗଯୁକ୍ତ ଆୟତାକାର କ୍ଷେତ୍ରର ବିଭାଗକୁ ଗୋଟିଏ ବିଶାଳ ROWSPAN ଏବଂ COLSPAN ମୂଲ୍ୟ ଗୁଡିକ ସହିତ ପୁନଃସ୍ଥାପିତ କରିବ ।"
+msgstr ""
+"ଯଦି ଚିହ୍ନିତ ହୁଏ GTM ଯେ କୌଣସି ଅବିକଳ ରଙ୍ଗଯୁକ୍ତ ଆୟତାକାର କ୍ଷେତ୍ରର ବିଭାଗକୁ ଗୋଟିଏ ବିଶାଳ ROWSPAN "
+"ଏବଂ COLSPAN ମୂଲ୍ୟ ଗୁଡିକ ସହିତ ପୁନଃସ୍ଥାପିତ କରିବ।"
 
 #: ../plug-ins/common/file-html-table.c:505
-#, fuzzy
 msgid "Co_mpress TD tags"
-msgstr "ସଂକ୍ଷିପ୍ତ_କରେ TD ଟାଗଗୁଡିକୁ"
+msgstr "TD ଟ୍ୟାଗଗୁଡିକୁ ସଂକ୍ଷିପ୍ତ କରନ୍ତୁ (_m)"
 
 #: ../plug-ins/common/file-html-table.c:511
-#, fuzzy
 msgid ""
 "Checking this tag will cause GTM to leave no whitespace between the TD tags "
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
-msgstr "ଏହି ଟାଗକୁ ଚିହ୍ନିତ କରିବା ଦ୍ବାରା GTM  TD ଟାଗ ଏବଂ କୋଷବିଷୟଗୁଡିକ ମଧ୍ୟରେ କୌଣସି ଧଳା ସ୍ଥାନ ଛାଡିବ ନାହିଁ । ଏହା କେବଳ ପିକ୍ସେଲ ସ୍ତର ସ୍ଥାପିତ କରିବାକୁ ନିୟନ୍ତ୍ରଣ କରିବା ପାଇଁ ଆବଶ୍ୟକ ହୋଇଥାଏ ।"
+msgstr ""
+"ଏହି ଟାଗକୁ ଚିହ୍ନିତ କରିବା ଦ୍ବାରା GTM  TD ଟାଗ ଏବଂ କୋଷବିଷୟଗୁଡିକ ମଧ୍ୟରେ କୌଣସି ଧଳା ସ୍ଥାନ ଛାଡିବ ନାହିଁ। "
+"ଏହା କେବଳ ପିକ୍ସେଲ ସ୍ତର ସ୍ଥାପିତ କରିବାକୁ ନିୟନ୍ତ୍ରଣ କରିବା ପାଇଁ ଆବଶ୍ୟକ ହୋଇଥାଏ ।"
 
 #: ../plug-ins/common/file-html-table.c:521
-#, fuzzy
 msgid "C_aption"
-msgstr "ଶି_ରୋନାମ ଗୁଡିକ"
+msgstr "ଶୀର୍ଷକ (_a)"
 
 #: ../plug-ins/common/file-html-table.c:527
-#, fuzzy
 msgid "Check if you would like to have the table captioned."
 msgstr "ଯଦି ଆପଣ ଟେବୁଲକୁ ଶିରୋନାମ ଯୁକ୍ତ କରିବାକୁ  ଚାହାଁନ୍ତି, ତେବେ ଚିହ୍ନିତ କରନ୍ତୁ"
 
 #: ../plug-ins/common/file-html-table.c:542
-#, fuzzy
 msgid "The text for the table caption."
-msgstr "ଟେବୁଲ ଶିରୋନାମ ପାଇଁ ଟେକ୍ସଟ"
+msgstr "ଟେବୁଲ ଶିରୋନାମ ପାଇଁ ପାଠ୍ୟ"
 
 #: ../plug-ins/common/file-html-table.c:555
-#, fuzzy
 msgid "C_ell content:"
-msgstr "କୋଷ_ବିଷୟ:"
+msgstr "କୋଷ ବିଷୟବସ୍ତୁ (_e):"
 
 #: ../plug-ins/common/file-html-table.c:559
-#, fuzzy
 msgid "The text to go into each cell."
-msgstr "ପ୍ରତ୍ୟେକ କୋଷ ଭିତରକୁ ଟେକ୍ସଟ ଯିବ"
+msgstr "ପ୍ରତ୍ୟେକ କୋଷ ଭିତରକୁ ପାଠ୍ୟ ଯିବ"
 
 #. HTML Table Options
 #: ../plug-ins/common/file-html-table.c:569
-#, fuzzy
 msgid "Table Options"
 msgstr "ଟେବୁଲ ବିକଳ୍ପଗୁଡିକ"
 
 #: ../plug-ins/common/file-html-table.c:580
-#, fuzzy
 msgid "_Border:"
 msgstr "ଧାର (_B):"
 
 #: ../plug-ins/common/file-html-table.c:584
-#, fuzzy
 msgid "The number of pixels in the table border."
 msgstr "ଟେବୁଲ ବୋର୍ଡରରେ ପିକ୍ସେଲଗୁଡିକର ସଂଖ୍ୟା"
 
 #: ../plug-ins/common/file-html-table.c:599
-#, fuzzy
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "ପ୍ରତ୍ୟେକ ଟେବୁଲ କୋଷ ପାଇଁ ଓସାର ।  ଗୋଟିଏ ସଂଖ୍ୟା କିମ୍ବା ଶତକଡା ହୋଇପାରିବ"
+msgstr "ପ୍ରତ୍ୟେକ ଟେବୁଲ କୋଷ ପାଇଁ ଓସାର।  ଗୋଟିଏ ସଂଖ୍ୟା କିମ୍ବା ଶତକଡା ହୋଇପାରିବ।"
 
 #: ../plug-ins/common/file-html-table.c:615
-#, fuzzy
 msgid "The height for each table cell.  Can be a number or a percent."
-msgstr "ପ୍ରତ୍ୟେକ ଟେବୁଲ କୋଷ ପାଇଁ ଉଚ୍ଚତା ।  ଗୋଟିଏ ସଂଖ୍ୟା କିମ୍ବା ଶତକଡା ହୋଇପାରିବ"
+msgstr "ପ୍ରତ୍ୟେକ ଟେବୁଲ କୋଷ ପାଇଁ ଉଚ୍ଚତା।  ଗୋଟିଏ ସଂଖ୍ୟା କିମ୍ବା ଶତକଡା ହୋଇପାରିବ।"
 
 #: ../plug-ins/common/file-html-table.c:626
-#, fuzzy
 msgid "Cell-_padding:"
-msgstr "କୋଷ -_ପ୍ୟାଡିଙ୍ଗ:"
+msgstr "କୋଷ-ପ୍ୟାଡ଼ିଙ୍ଗ (_p):"
 
 #: ../plug-ins/common/file-html-table.c:630
-#, fuzzy
 msgid "The amount of cellpadding."
 msgstr "କୋଷପ୍ୟାଡିଙ୍ଗର ପରିମାଣ"
 
