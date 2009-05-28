@@ -4,14 +4,16 @@
 # Tor Lillqvist <tml@íki.fi>, 1999, 2000.
 # Mikko Paananen <mikko at ipi.fi>, 2004.
 # Ilkka Tuohela <hile@iki.fi>, 2006.
+# Aapo Rantalainen <aapo.rantalainen@gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins 1.1.26\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 13:48+0300\n"
-"PO-Revision-Date: 2007-02-03 17:28+0300\n"
-"Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
+"Project-Id-Version: gimp-plug-ins\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-04-17 09:06+0000\n"
+"PO-Revision-Date: 2009-05-28 14:44+0300\n"
+"Last-Translator: Aapo Rantalainen <aapo.rantalainen at gmail.com>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -233,7 +235,7 @@ msgstr "Valoisuuden vaihesiirto:"
 
 #: ../plug-ins/common/alien-map.c:183
 msgid "Alter colors in various psychedelic ways"
-msgstr ""
+msgstr "Muuta värit psykedeelisiksi"
 
 #: ../plug-ins/common/alien-map.c:188
 msgid "_Alien Map..."
@@ -250,7 +252,7 @@ msgstr "Alien Map"
 #: ../plug-ins/common/alien-map.c:441 ../plug-ins/common/alien-map.c:465
 #: ../plug-ins/common/alien-map.c:489
 msgid "Number of cycles covering full value range"
-msgstr ""
+msgstr "Täyteen arvoon tarvittavien toistojen määrä"
 
 #: ../plug-ins/common/alien-map.c:453 ../plug-ins/common/alien-map.c:477
 #: ../plug-ins/common/alien-map.c:501
@@ -501,7 +503,7 @@ msgstr "Lopeta toisto"
 
 #: ../plug-ins/common/antialias.c:84
 msgid "Antialias using the Scale3X edge-extrapolation algorithm"
-msgstr ""
+msgstr "Antialiasoi käyttäen Scale3X reunan ekstrapolointi algoritmia"
 
 #: ../plug-ins/common/antialias.c:90
 msgid "_Antialias"
@@ -513,7 +515,7 @@ msgstr "Antialiasointi..."
 
 #: ../plug-ins/common/apply-canvas.c:1140
 msgid "Add a canvas texture to the image"
-msgstr ""
+msgstr "Lisää kangas tekstuuri kuvaan"
 
 #: ../plug-ins/common/apply-canvas.c:1145
 msgid "_Apply Canvas..."
@@ -559,19 +561,19 @@ msgstr "Syvyys:"
 
 #: ../plug-ins/common/blinds.c:116
 msgid "Simulate an image painted on window blinds"
-msgstr ""
+msgstr "Simuloi sälekaihtimelle maalattua kuvaa"
 
 #: ../plug-ins/common/blinds.c:121
 msgid "_Blinds..."
-msgstr ""
+msgstr "Sälekaihtimet..."
 
 #: ../plug-ins/common/blinds.c:188
 msgid "Adding blinds"
-msgstr ""
+msgstr "Lisätään kaihtimet"
 
 #: ../plug-ins/common/blinds.c:226
 msgid "Blinds"
-msgstr ""
+msgstr "Sälekaihtimet"
 
 #. Orientation toggle box
 #: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:539
@@ -594,18 +596,18 @@ msgstr "_Pystysuora"
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:935
 #: ../plug-ins/common/decompose.c:723 ../plug-ins/common/file-cel.c:362
 #: ../plug-ins/common/file-cel.c:365 ../plug-ins/common/file-dicom.c:557
-#: ../plug-ins/common/file-gif-load.c:913 ../plug-ins/common/file-pcx.c:412
+#: ../plug-ins/common/file-gif-load.c:911 ../plug-ins/common/file-pcx.c:412
 #: ../plug-ins/common/file-pcx.c:418 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:584
+#: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:585
 #: ../plug-ins/common/file-raw.c:712 ../plug-ins/common/file-sunras.c:975
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:896 ../plug-ins/common/film.c:746
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:267
 #: ../plug-ins/file-bmp/bmp-read.c:590 ../plug-ins/file-faxg3/faxg3.c:478
 #: ../plug-ins/file-fits/fits.c:530 ../plug-ins/file-jpeg/jpeg-load.c:249
-#: ../plug-ins/file-jpeg/jpeg-load.c:758
+#: ../plug-ins/file-jpeg/jpeg-load.c:761
 #: ../plug-ins/file-psd/psd-image-res-load.c:995
-#: ../plug-ins/file-psd/psd-load.c:1523 ../plug-ins/file-sgi/sgi.c:384
+#: ../plug-ins/file-psd/psd-load.c:1526 ../plug-ins/file-sgi/sgi.c:384
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/twain/twain.c:568
 #: ../plug-ins/win-snap/winsnap.c:1155
@@ -702,7 +704,7 @@ msgstr "RLE"
 
 #: ../plug-ins/common/blur-motion.c:157 ../plug-ins/common/blur-motion.c:171
 msgid "Simulate movement using directional blur"
-msgstr ""
+msgstr "Simuloi liikettä kahdensuuntaisella sumennoksella"
 
 #: ../plug-ins/common/blur-motion.c:164 ../plug-ins/common/blur-motion.c:177
 msgid "_Motion Blur..."
@@ -757,7 +759,7 @@ msgstr "_Y:"
 
 #: ../plug-ins/common/blur-motion.c:1101
 msgid "Blur _outward"
-msgstr ""
+msgstr "Sumenna _ulospäin"
 
 #: ../plug-ins/common/blur-motion.c:1114
 msgid "Blur Parameters"
@@ -820,7 +822,7 @@ msgstr ""
 
 #: ../plug-ins/common/bump-map.c:257
 msgid "Create an embossing effect using a bump map"
-msgstr ""
+msgstr "Tee korkokuvatehoste käyttäen kuhmukarttaa"
 
 #: ../plug-ins/common/bump-map.c:267
 msgid "_Bump Map..."
@@ -875,7 +877,7 @@ msgstr "Toista kuhmutus"
 
 #: ../plug-ins/common/bump-map.c:892 ../plug-ins/common/emboss.c:499
 msgid "_Azimuth:"
-msgstr "_Atsimuutti:"
+msgstr "_Atsimuuttikulma:"
 
 #: ../plug-ins/common/bump-map.c:904
 msgid "_Elevation:"
@@ -889,7 +891,8 @@ msgstr "_X-siirtymä:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr ""
+msgstr "Siirtymä voidaan määritellä raahaamaalla esikatselukuvaa keskimmäisellä "
+"hiiren napilla."
 
 #: ../plug-ins/common/bump-map.c:944 ../plug-ins/common/file-ps.c:3407
 msgid "_Y offset:"
@@ -905,7 +908,7 @@ msgstr "Y_mpäristö:"
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
-msgstr ""
+msgstr "Simuloi sarjakuvaa tehostamalla reunoja"
 
 #: ../plug-ins/common/cartoon.c:147
 msgid "Ca_rtoon..."
@@ -1007,7 +1010,7 @@ msgstr "Lataa kanava-asetukset"
 #: ../plug-ins/common/file-mng.c:1073 ../plug-ins/common/file-pat.c:330
 #: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:541
 #: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:721
-#: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
+#: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1036
 #: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1751
 #: ../plug-ins/common/file-raw.c:249 ../plug-ins/common/file-raw.c:666
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
@@ -1018,7 +1021,7 @@ msgstr "Lataa kanava-asetukset"
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:460
 #: ../plug-ins/file-fli/fli-gimp.c:497 ../plug-ins/file-ico/ico-load.c:653
 #: ../plug-ins/file-ico/ico-load.c:732 ../plug-ins/file-jpeg/jpeg-load.c:109
-#: ../plug-ins/file-jpeg/jpeg-load.c:828 ../plug-ins/file-psd/psd-load.c:131
+#: ../plug-ins/file-jpeg/jpeg-load.c:831 ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-psd/psd-thumb-load.c:80
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:272
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:190
@@ -1049,14 +1052,14 @@ msgstr "Tallenna kanava-asetukset"
 #: ../plug-ins/common/file-mng.c:575 ../plug-ins/common/file-mng.c:909
 #: ../plug-ins/common/file-pat.c:462 ../plug-ins/common/file-pcx.c:666
 #: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1270
-#: ../plug-ins/common/file-pnm.c:973 ../plug-ins/common/file-ps.c:1213
+#: ../plug-ins/common/file-pnm.c:977 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:546 ../plug-ins/common/file-raw.c:574
 #: ../plug-ins/common/file-sunras.c:563 ../plug-ins/common/file-tga.c:1170
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
 #: ../plug-ins/common/file-xwd.c:614 ../plug-ins/common/sphere-designer.c:2112
 #: ../plug-ins/file-bmp/bmp-write.c:296 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1008
-#: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1626
+#: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1635
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:283
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:163
 #: ../plug-ins/file-xjt/xjt.c:1292 ../plug-ins/file-xjt/xjt.c:1729
@@ -1560,7 +1563,7 @@ msgstr "Värien lukumäärä: %d"
 
 #: ../plug-ins/common/color-enhance.c:69
 msgid "Stretch color saturation to cover maximum possible range"
-msgstr ""
+msgstr "Venytä värin kylläsyittää täyttämään suurin mahdollinen alue"
 
 #: ../plug-ins/common/color-enhance.c:81
 msgid "_Color Enhance"
@@ -1572,7 +1575,7 @@ msgstr "Värikorostus"
 
 #: ../plug-ins/common/color-exchange.c:122
 msgid "Swap one color with another"
-msgstr ""
+msgstr "Vaihda väri toiseksi"
 
 #: ../plug-ins/common/color-exchange.c:128
 msgid "_Color Exchange..."
@@ -1621,7 +1624,7 @@ msgstr "_Lukitse kynnysarvot"
 
 #: ../plug-ins/common/color-to-alpha.c:94
 msgid "Convert a specified color to transparency"
-msgstr ""
+msgstr "Muuta valittu väri läpinäkyväksi"
 
 #: ../plug-ins/common/color-to-alpha.c:101
 msgid "Color to _Alpha..."
@@ -1645,7 +1648,7 @@ msgstr "alfakanavaksi"
 
 #: ../plug-ins/common/colorify.c:102
 msgid "Replace all colors with shades of a specified color"
-msgstr ""
+msgstr "Muuta kaikki värit valitun värin sävyiksi"
 
 #: ../plug-ins/common/colorify.c:108
 msgid "Colorif_y..."
@@ -1840,7 +1843,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:404
 msgid "Create an image using multiple gray images as color channels"
-msgstr ""
+msgstr "Luo kuva käyttäen montaa harmaasävykuvaa värikanavina"
 
 #: ../plug-ins/common/compose.c:410
 msgid "C_ompose..."
@@ -1894,25 +1897,25 @@ msgstr "Kuvilla on eri koot"
 
 #: ../plug-ins/common/compose.c:773
 msgid "Error in getting layer IDs"
-msgstr ""
+msgstr "Virhe haettaessa tason ID:tä"
 
 #: ../plug-ins/common/compose.c:796
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
-msgstr ""
+msgstr "Kuva ei ole harmaasävykuva (bpp=%d)"
 
 #: ../plug-ins/common/compose.c:824
 msgid "Unable to recompose, source layer not found"
-msgstr ""
+msgstr "Yhdistäminen ei onnistu, lähtötasoa ei löydy"
 
 #: ../plug-ins/common/compose.c:1488
 msgid "Compose"
-msgstr ""
+msgstr "Yhdistä"
 
 #. Compose type combo
 #: ../plug-ins/common/compose.c:1515
 msgid "Compose Channels"
-msgstr ""
+msgstr "Yhdistä kanavat"
 
 #: ../plug-ins/common/compose.c:1525 ../plug-ins/common/decompose.c:1515
 msgid "Color _model:"
@@ -1929,7 +1932,7 @@ msgstr "Maskin arvo"
 
 #: ../plug-ins/common/contrast-normalize.c:80
 msgid "Stretch brightness values to cover the full range"
-msgstr ""
+msgstr "Venytä valoisuus arvoja täyttämään koko alueen"
 
 #: ../plug-ins/common/contrast-normalize.c:92
 #: ../plug-ins/common/edge-dog.c:359
@@ -1942,7 +1945,7 @@ msgstr "Normalisoidaan"
 
 #: ../plug-ins/common/contrast-retinex.c:156
 msgid "Enhance contrast using the Retinex method"
-msgstr ""
+msgstr "Tehosta kontrastia käyttäen Retinex-menetelmää"
 
 #: ../plug-ins/common/contrast-retinex.c:166
 msgid "Retine_x..."
@@ -2002,15 +2005,15 @@ msgstr "Laajennetaan HSV"
 
 #: ../plug-ins/common/contrast-stretch-hsv.c:192
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "autostretch_hsv: cmap oli NULL!  Lopetetaan...\n"
 
 #: ../plug-ins/common/contrast-stretch.c:68
 msgid "Stretch contrast to cover the maximum possible range"
-msgstr ""
+msgstr "Laajenna kontrastia kattamaan suurin mahdollinen alue"
 
 #: ../plug-ins/common/contrast-stretch.c:79
 msgid "_Stretch Contrast"
-msgstr "Laajenna kontrasti"
+msgstr "Laajenna kontrastia"
 
 #: ../plug-ins/common/contrast-stretch.c:113
 msgid "Auto-stretching contrast"
@@ -2018,7 +2021,7 @@ msgstr "Automaattinen kontrastin laajennos"
 
 #: ../plug-ins/common/contrast-stretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "c_astretch: cmap oli NULL!  Lopetetaan...\n"
 
 #: ../plug-ins/common/convolution-matrix.c:64
 msgid "Gr_ey"
@@ -2127,15 +2130,15 @@ msgstr "Rajaus"
 
 #: ../plug-ins/common/crop-zealous.c:85
 msgid "Autocrop unused space from edges and middle"
-msgstr ""
+msgstr "Rajaa automaattisesti käyttämättömän alueen reunoilta ja keskeltä"
 
 #: ../plug-ins/common/crop-zealous.c:90
 msgid "_Zealous Crop"
-msgstr ""
+msgstr "Tiukka automaattinen rajaus"
 
 #: ../plug-ins/common/crop-zealous.c:138
 msgid "Zealous cropping"
-msgstr ""
+msgstr "Tiukka automaattinen rajaus"
 
 #: ../plug-ins/common/crop-zealous.c:239
 msgid "Nothing to crop."
@@ -2143,7 +2146,7 @@ msgstr "Ei rajattavaa."
 
 #: ../plug-ins/common/cubism.c:150
 msgid "Convert the image into randomly rotated square blobs"
-msgstr ""
+msgstr "Muuttaa kuvan satunnaisesti kierretyiksi neliöiksi"
 
 #: ../plug-ins/common/cubism.c:155
 msgid "_Cubism..."
@@ -2171,7 +2174,7 @@ msgstr "Kubistinen muunnos"
 
 #: ../plug-ins/common/curve-bend.c:520
 msgid "Bend the image using two control curves"
-msgstr ""
+msgstr "Taivuta kuvaa käyttäen kahta kontrollikäyrää"
 
 #: ../plug-ins/common/curve-bend.c:541
 msgid "_Curve Bend..."
@@ -2513,7 +2516,7 @@ msgstr ""
 
 #: ../plug-ins/common/deinterlace.c:91
 msgid "Fix images where every other row is missing"
-msgstr ""
+msgstr "Poistaa kuvasta lomituksen"
 
 #: ../plug-ins/common/deinterlace.c:100
 msgid "_Deinterlace..."
@@ -2533,19 +2536,19 @@ msgstr "Säilytä parilliset kentät"
 
 #: ../plug-ins/common/depth-merge.c:184
 msgid "Combine two images using depth maps (z-buffers)"
-msgstr ""
+msgstr "Yhdistä kaksi kuvaa käyttäen syvyyskarttoja (z-puskureita)"
 
 #: ../plug-ins/common/depth-merge.c:193
 msgid "_Depth Merge..."
-msgstr ""
+msgstr "_Syvyys yhdistys.."
 
 #: ../plug-ins/common/depth-merge.c:387
 msgid "Depth-merging"
-msgstr ""
+msgstr "Yhdistetään"
 
 #: ../plug-ins/common/depth-merge.c:644
 msgid "Depth Merge"
-msgstr ""
+msgstr "Syvyys yhdistys"
 
 #: ../plug-ins/common/depth-merge.c:696
 msgid "Source 1:"
@@ -2573,15 +2576,15 @@ msgstr "Skaala 2:"
 
 #: ../plug-ins/common/despeckle.c:142
 msgid "Remove speckle noise from the image"
-msgstr ""
+msgstr "Poisto täplittäiset häiriöt kuvasta"
 
 #: ../plug-ins/common/despeckle.c:148
 msgid "Des_peckle..."
-msgstr ""
+msgstr "Täplityksen poisto..."
 
 #: ../plug-ins/common/despeckle.c:425 ../plug-ins/common/despeckle.c:645
 msgid "Despeckle"
-msgstr ""
+msgstr "Poistetaan täplitystä"
 
 #: ../plug-ins/common/despeckle.c:454
 msgid "Median"
@@ -2613,19 +2616,19 @@ msgstr "_Valkoisen taso:"
 
 #: ../plug-ins/common/destripe.c:103
 msgid "Remove vertical stripe artifacts from the image"
-msgstr ""
+msgstr "Poistaa pystysuorat juovat kuvasta"
 
 #: ../plug-ins/common/destripe.c:109
 msgid "Des_tripe..."
-msgstr ""
+msgstr "Juovituksen poisto..."
 
 #: ../plug-ins/common/destripe.c:272
 msgid "Destriping"
-msgstr ""
+msgstr "Poistetaan juovitus"
 
 #: ../plug-ins/common/destripe.c:438
 msgid "Destripe"
-msgstr ""
+msgstr "Juovituksen poisto"
 
 #: ../plug-ins/common/destripe.c:473 ../plug-ins/common/file-html-table.c:595
 #: ../plug-ins/common/file-ps.c:3171 ../plug-ins/common/file-ps.c:3380
@@ -2697,7 +2700,7 @@ msgstr "X-syrjäytys"
 
 #: ../plug-ins/common/displace.c:142
 msgid "_Pinch"
-msgstr ""
+msgstr "_Nipistys"
 
 #: ../plug-ins/common/displace.c:143
 msgid "_Y displacement"
@@ -2705,19 +2708,19 @@ msgstr "Y-syrjäytys"
 
 #: ../plug-ins/common/displace.c:143
 msgid "_Whirl"
-msgstr ""
+msgstr "_Tuiskuts"
 
 #: ../plug-ins/common/displace.c:169
 msgid "Displace pixels as indicated by displacement maps"
-msgstr ""
+msgstr "Syrjäyttää pikseleitä käyttäen määriteltyä syrjäyttämiskarttaa"
 
 #: ../plug-ins/common/displace.c:179
 msgid "_Displace..."
-msgstr ""
+msgstr "_Syrjäytys"
 
 #: ../plug-ins/common/displace.c:290
 msgid "Displacing"
-msgstr "Syrjäytys"
+msgstr "Syrjäytetään"
 
 #: ../plug-ins/common/displace.c:326
 msgid "Displace"
@@ -2747,7 +2750,7 @@ msgstr "_Polaarinen"
 
 #: ../plug-ins/common/displace.c:468
 msgid "Edge Behavior"
-msgstr ""
+msgstr "Reunan käyttäytyminen"
 
 #: ../plug-ins/common/displace.c:474 ../plug-ins/common/edge.c:722
 #: ../plug-ins/common/ripple.c:565 ../plug-ins/common/waves.c:281
@@ -2761,11 +2764,11 @@ msgstr "_Musta"
 
 #: ../plug-ins/common/edge-dog.c:133
 msgid "Edge detection with control of edge thickness"
-msgstr ""
+msgstr "Reunan tunnistaminen reunan paksuuden avulla"
 
 #: ../plug-ins/common/edge-dog.c:140
 msgid "_Difference of Gaussians..."
-msgstr ""
+msgstr "Gaussialaisten erotus"
 
 #: ../plug-ins/common/edge-dog.c:243 ../plug-ins/common/edge-dog.c:300
 msgid "DoG Edge Detect"
@@ -2805,7 +2808,7 @@ msgstr "Siivotaan"
 
 #: ../plug-ins/common/edge-neon.c:134
 msgid "Simulate the glowing boundary of a neon light"
-msgstr ""
+msgstr "Simuloi loistavia reunoja neon valolla"
 
 #: ../plug-ins/common/edge-neon.c:139
 msgid "_Neon..."
@@ -2825,7 +2828,7 @@ msgstr "_Määrä:"
 
 #: ../plug-ins/common/edge-sobel.c:108
 msgid "Specialized direction-dependent edge detection"
-msgstr ""
+msgstr "Erikoistunut suunnasta riippuva reunan tunnistaminen"
 
 #: ../plug-ins/common/edge-sobel.c:121
 msgid "_Sobel..."
@@ -2853,7 +2856,7 @@ msgstr "Sobel-reunantunnistus"
 
 #: ../plug-ins/common/edge.c:152
 msgid "Several simple methods for detecting edges"
-msgstr ""
+msgstr "Monia yksinkertaisia tapoja löytää reunoja"
 
 #: ../plug-ins/common/edge.c:157
 msgid "_Edge..."
@@ -2881,7 +2884,7 @@ msgstr "Väriliuku"
 
 #: ../plug-ins/common/edge.c:671
 msgid "Roberts"
-msgstr "_Roberts"
+msgstr "Roberts"
 
 #: ../plug-ins/common/edge.c:672
 msgid "Differential"
@@ -2897,15 +2900,15 @@ msgstr "_Määrä:"
 
 #: ../plug-ins/common/emboss.c:124
 msgid "Simulate an image created by embossing"
-msgstr ""
+msgstr "Simuloi kuvan tekemistä korkokuvana"
 
 #: ../plug-ins/common/emboss.c:130
 msgid "_Emboss..."
-msgstr ""
+msgstr "_Korkokuva..."
 
 #: ../plug-ins/common/emboss.c:384 ../plug-ins/common/emboss.c:446
 msgid "Emboss"
-msgstr ""
+msgstr "Korkokuva"
 
 #: ../plug-ins/common/emboss.c:474
 msgid "Function"
@@ -2913,23 +2916,23 @@ msgstr "Funktio"
 
 #: ../plug-ins/common/emboss.c:478
 msgid "_Bumpmap"
-msgstr ""
+msgstr "Kuhmukartta"
 
 #: ../plug-ins/common/emboss.c:479
 msgid "_Emboss"
-msgstr ""
+msgstr "_Korkokuva"
 
 #: ../plug-ins/common/emboss.c:511
 msgid "E_levation:"
-msgstr ""
+msgstr "Korkeustaso"
 
 #: ../plug-ins/common/engrave.c:101
 msgid "Simulate an antique engraving"
-msgstr ""
+msgstr "Simuloi antiikkista kaiverrusta"
 
 #: ../plug-ins/common/engrave.c:106
 msgid "En_grave..."
-msgstr "Kaiverran..."
+msgstr "Kaiverrus..."
 
 #: ../plug-ins/common/engrave.c:180
 msgid "Engraving"
@@ -2983,7 +2986,7 @@ msgstr "Ladataan KISS paletti"
 #: ../plug-ins/common/file-gih.c:667 ../plug-ins/common/file-pat.c:335
 #: ../plug-ins/common/file-pcx.c:366 ../plug-ins/common/file-pdf.c:586
 #: ../plug-ins/common/file-pix.c:348 ../plug-ins/common/file-png.c:728
-#: ../plug-ins/common/file-pnm.c:498 ../plug-ins/common/file-ps.c:1042
+#: ../plug-ins/common/file-pnm.c:499 ../plug-ins/common/file-ps.c:1042
 #: ../plug-ins/common/file-raw.c:671 ../plug-ins/common/file-sunras.c:486
 #: ../plug-ins/common/file-tga.c:447 ../plug-ins/common/file-tiff-load.c:603
 #: ../plug-ins/common/file-wmf.c:994 ../plug-ins/common/file-xbm.c:741
@@ -3011,14 +3014,14 @@ msgstr "Värejä on väärä määrä (%d)"
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1280
 #: ../plug-ins/common/file-html-table.c:256 ../plug-ins/common/file-pat.c:467
 #: ../plug-ins/common/file-pcx.c:627 ../plug-ins/common/file-pix.c:529
-#: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:978
+#: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:982
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:568
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/file-bmp/bmp-write.c:307
 #: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:282
-#: ../plug-ins/file-psd/psd-save.c:1631 ../plug-ins/file-sgi/sgi.c:554
+#: ../plug-ins/file-psd/psd-save.c:1640 ../plug-ins/file-sgi/sgi.c:554
 #: ../plug-ins/file-xjt/xjt.c:1710
 #, c-format
 msgid "Saving '%s'"
@@ -3094,7 +3097,7 @@ msgstr "Peitto:"
 
 #: ../plug-ins/common/file-desktop-link.c:83
 msgid "Desktop Link"
-msgstr ""
+msgstr "Työpöytä linkki"
 
 #: ../plug-ins/common/file-desktop-link.c:173
 #, c-format
@@ -3115,7 +3118,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "\"%s\" ei ole DICOM-tiedosto."
 
 #: ../plug-ins/common/file-dicom.c:769 ../plug-ins/common/file-pcx.c:659
-#: ../plug-ins/common/file-pnm.c:963
+#: ../plug-ins/common/file-pnm.c:967
 msgid "Cannot save images with alpha channel."
 msgstr "Ei voi tallentaa kuvia, joissa on alfa-kanava."
 
@@ -3180,33 +3183,35 @@ msgstr "Tämä ei ole GIF-kuva"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Pikselisuhde ei ole neliömäinen. Kuva voi näyttää litistyneeltä."
 
-#: ../plug-ins/common/file-gif-load.c:915
+#: ../plug-ins/common/file-gif-load.c:913
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Tausta (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:938
+#: ../plug-ins/common/file-gif-load.c:936
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Avataan \"%s\" (ruutu %d)"
 
-#: ../plug-ins/common/file-gif-load.c:967 ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/file-gif-load.c:965 ../plug-ins/common/iwarp.c:791
 #: ../plug-ins/common/iwarp.c:826
 #, c-format
 msgid "Frame %d"
 msgstr "Ruutu %d"
 
-#: ../plug-ins/common/file-gif-load.c:969
+#: ../plug-ins/common/file-gif-load.c:967
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Ruutu %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1000
+#: ../plug-ins/common/file-gif-load.c:998
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr ""
+"GIF: Dokumentoimatonta GIF yhdistetyyppiä %d ei voitu käsitellä.  Animaatiota ei "
+"välttämättä voi katsoa tai uudelleen tallentaa täydellisesti."
 
 #: ../plug-ins/common/file-gif-save.c:447
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -3218,6 +3223,8 @@ msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
+"Ei voida tallentaa '%s'.  GIF tiedostotyyppi ei tue kuvaa jonka "
+"korkeus tai leveys on enemmän kuin %d pikseliä."
 
 #: ../plug-ins/common/file-gif-save.c:673
 msgid ""
@@ -3806,7 +3813,7 @@ msgstr "Tallenna väriarvot läpinäkyvistä pikseleistä"
 msgid "Co_mpression level:"
 msgstr "Pakkaustaso:"
 
-#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1185
+#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1186
 msgid "_Load Defaults"
 msgstr "_Lataa oletukset"
 
@@ -3814,78 +3821,78 @@ msgstr "_Lataa oletukset"
 msgid "S_ave Defaults"
 msgstr "_Tallenna oletukset"
 
-#: ../plug-ins/common/file-pnm.c:247
+#: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
 msgstr "PNM-kuva"
 
-#: ../plug-ins/common/file-pnm.c:267
+#: ../plug-ins/common/file-pnm.c:268
 msgid "PNM image"
 msgstr "PNM-kuva"
 
-#: ../plug-ins/common/file-pnm.c:279
+#: ../plug-ins/common/file-pnm.c:280
 msgid "PBM image"
 msgstr "PBM-kuva"
 
-#: ../plug-ins/common/file-pnm.c:291
+#: ../plug-ins/common/file-pnm.c:292
 msgid "PGM image"
 msgstr "PGM-kuva"
 
-#: ../plug-ins/common/file-pnm.c:303
+#: ../plug-ins/common/file-pnm.c:304
 msgid "PPM image"
 msgstr "PPM-kuva"
 
-#: ../plug-ins/common/file-pnm.c:527 ../plug-ins/common/file-pnm.c:549
-#: ../plug-ins/common/file-pnm.c:558 ../plug-ins/common/file-pnm.c:569
-#: ../plug-ins/common/file-pnm.c:657 ../plug-ins/common/file-pnm.c:727
+#: ../plug-ins/common/file-pnm.c:528 ../plug-ins/common/file-pnm.c:550
+#: ../plug-ins/common/file-pnm.c:559 ../plug-ins/common/file-pnm.c:570
+#: ../plug-ins/common/file-pnm.c:658 ../plug-ins/common/file-pnm.c:728
 msgid "Premature end of file."
 msgstr "Tiedosto loppui kesken."
 
-#: ../plug-ins/common/file-pnm.c:529
+#: ../plug-ins/common/file-pnm.c:530
 msgid "Invalid file."
 msgstr "Virheellinen tiedosto."
 
-#: ../plug-ins/common/file-pnm.c:543
+#: ../plug-ins/common/file-pnm.c:544
 msgid "File not in a supported format."
 msgstr "Tiedostomuoto ei ole tuettu."
 
-#: ../plug-ins/common/file-pnm.c:552
+#: ../plug-ins/common/file-pnm.c:553
 msgid "Invalid X resolution."
 msgstr "Virheellinen X-tarkkuus."
 
-#: ../plug-ins/common/file-pnm.c:554
+#: ../plug-ins/common/file-pnm.c:555
 msgid "Image width is larger than GIMP can handle."
 msgstr ""
 
-#: ../plug-ins/common/file-pnm.c:561
+#: ../plug-ins/common/file-pnm.c:562
 msgid "Invalid Y resolution."
 msgstr "Virheellinen Y-tarkkuus."
 
-#: ../plug-ins/common/file-pnm.c:563
+#: ../plug-ins/common/file-pnm.c:564
 msgid "Image height is larger than GIMP can handle."
 msgstr ""
 
-#: ../plug-ins/common/file-pnm.c:575
+#: ../plug-ins/common/file-pnm.c:576
 msgid "Unsupported maximum value."
 msgstr "Enimmäisarvo ei ole tuettu."
 
-#: ../plug-ins/common/file-pnm.c:780
+#: ../plug-ins/common/file-pnm.c:781
 msgid "Error reading file."
 msgstr "Virhe luettaessa tiedostoa."
 
-#: ../plug-ins/common/file-pnm.c:1148
+#: ../plug-ins/common/file-pnm.c:1185
 msgid "Save as PNM"
 msgstr "Tallenna PNM-muodossa"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1165
+#: ../plug-ins/common/file-pnm.c:1202
 msgid "Data formatting"
 msgstr "Tiedostomuoto"
 
-#: ../plug-ins/common/file-pnm.c:1169
+#: ../plug-ins/common/file-pnm.c:1206
 msgid "Raw"
 msgstr "Raaka"
 
-#: ../plug-ins/common/file-pnm.c:1170
+#: ../plug-ins/common/file-pnm.c:1207
 msgid "Ascii"
 msgstr "ASCII"
 
@@ -4904,7 +4911,7 @@ msgstr "Esikatselun koko"
 
 #: ../plug-ins/common/fractal-trace.c:116
 msgid "Transform image with the Mandelbrot Fractal"
-msgstr ""
+msgstr "Muuttaa kuvaa Mandelbrotin fraktaalilla"
 
 #: ../plug-ins/common/fractal-trace.c:121
 msgid "_Fractal Trace..."
@@ -4972,7 +4979,7 @@ msgstr ""
 
 #: ../plug-ins/common/gradient-map.c:84
 msgid "Recolor the image using colors from the active gradient"
-msgstr ""
+msgstr "Väritä kuva käyttäen aktiivista liukuvärikarttaa"
 
 #: ../plug-ins/common/gradient-map.c:97
 msgid "_Gradient Map"
@@ -4980,7 +4987,7 @@ msgstr "_Liukuvärikartta"
 
 #: ../plug-ins/common/gradient-map.c:106
 msgid "Recolor the image using colors from the active palette"
-msgstr ""
+msgstr "Väritä kuva käyttäen aktiivista palettia"
 
 #: ../plug-ins/common/gradient-map.c:119
 msgid "_Palette Map"
@@ -5044,7 +5051,7 @@ msgstr "Risteyksien väri"
 
 #: ../plug-ins/common/guillotine.c:75
 msgid "Slice the image into subimages using guides"
-msgstr ""
+msgstr "Viipaloi kuvan pieniksi kuviksi käyttäen apulinjoja"
 
 #: ../plug-ins/common/guillotine.c:82
 msgid "_Guillotine"
@@ -5056,7 +5063,7 @@ msgstr "Giljotiini"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
-msgstr ""
+msgstr "Etsii ja korjaa pikseleitä jotka voivat olla vaarallisen kirkkaita"
 
 #: ../plug-ins/common/hot.c:217
 msgid "_Hot..."
@@ -5088,7 +5095,7 @@ msgstr "_Tummenna"
 
 #: ../plug-ins/common/illusion.c:91
 msgid "Superimpose many altered copies of the image"
-msgstr ""
+msgstr "Asettaa päällekkäin monia kierrettyjä kuvan kopioita"
 
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
@@ -5112,7 +5119,7 @@ msgstr "Tila _2"
 
 #: ../plug-ins/common/iwarp.c:262
 msgid "Use mouse control to warp image areas"
-msgstr ""
+msgstr "Vääristä kuvaa käyttäen hiirtä"
 
 #: ../plug-ins/common/iwarp.c:267
 msgid "_IWarp..."
@@ -5120,16 +5127,16 @@ msgstr "_IWarp..."
 
 #: ../plug-ins/common/iwarp.c:697
 msgid "Warping"
-msgstr ""
+msgstr "Vääristetään"
 
 #: ../plug-ins/common/iwarp.c:802
 #, c-format
 msgid "Warping Frame %d"
-msgstr ""
+msgstr "Vääristetään ruutua %d"
 
 #: ../plug-ins/common/iwarp.c:814
 msgid "Ping pong"
-msgstr "Ping Pong"
+msgstr "Edestakaisin"
 
 #: ../plug-ins/common/iwarp.c:1020
 msgid "A_nimate"
@@ -5145,7 +5152,7 @@ msgstr "Takaperin"
 
 #: ../plug-ins/common/iwarp.c:1057
 msgid "_Ping pong"
-msgstr "_Ping Pong"
+msgstr "_Edestakaisin"
 
 #: ../plug-ins/common/iwarp.c:1070
 msgid "_Animate"
@@ -5217,10 +5224,12 @@ msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
 msgstr ""
+"Klikkaa esikatselukuvaa ja liikuta hiirtä nappi painettuna  määritelläksesi "
+"vääristymiä kuvaan"
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
-msgstr ""
+msgstr "Lisää palapeli-kuviointi kuvaan"
 
 #: ../plug-ins/common/jigsaw.c:361
 msgid "_Jigsaw..."
@@ -5256,7 +5265,7 @@ msgstr "Särmäyksen leveys:"
 
 #: ../plug-ins/common/jigsaw.c:2505
 msgid "Degree of slope of each piece's edge"
-msgstr ""
+msgstr "Palojen reunojen kaltevuus asteina"
 
 #: ../plug-ins/common/jigsaw.c:2518
 msgid "H_ighlight:"
@@ -5264,7 +5273,7 @@ msgstr "Korostus:"
 
 #: ../plug-ins/common/jigsaw.c:2522
 msgid "The amount of highlighting on the edges of each piece"
-msgstr ""
+msgstr "Palojen reunojen korostamisen määrä"
 
 #. frame for primitive radio buttons
 #: ../plug-ins/common/jigsaw.c:2539
@@ -5297,7 +5306,7 @@ msgstr "_Aseta väriprofiili..."
 
 #: ../plug-ins/common/lcms.c:241
 msgid "Assign default RGB Profile"
-msgstr "Käytä Ota RGB-oletusprofiilia"
+msgstr "Käytä RGB-oletusprofiilia"
 
 #: ../plug-ins/common/lcms.c:248
 msgid "Apply a color profile on the image"
@@ -5319,118 +5328,118 @@ msgstr "Tietoja kuvan väriprofiilista"
 msgid "Color Profile Information"
 msgstr "Tietoja väriprofiilista"
 
-#: ../plug-ins/common/lcms.c:570
+#: ../plug-ins/common/lcms.c:572
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Väriprofiili \"%s\" ei ole RGB-väriavaruudessa."
 
-#: ../plug-ins/common/lcms.c:677
+#: ../plug-ins/common/lcms.c:679
 msgid "Default RGB working space"
 msgstr "RGB-väriavaruuden oletusarvo"
 
-#: ../plug-ins/common/lcms.c:773
+#: ../plug-ins/common/lcms.c:775
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:823
+#: ../plug-ins/common/lcms.c:825
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" ei näytä olevan ICC-väriprofiili"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:883
+#: ../plug-ins/common/lcms.c:885
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Muunnetaan \"%s\" muotoon \"%s\""
 
-#: ../plug-ins/common/lcms.c:1127
+#: ../plug-ins/common/lcms.c:1129
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "ICC-profiilia ei voi ladata tiedostosta '%s'"
 
-#: ../plug-ins/common/lcms.c:1149
+#: ../plug-ins/common/lcms.c:1151
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Kuva \"%s\" sisältää sulautetun väriprofiilin:"
 
-#: ../plug-ins/common/lcms.c:1193
+#: ../plug-ins/common/lcms.c:1195
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Muunnetaanko kuva RGB-työtilaan (%s)?"
 
-#: ../plug-ins/common/lcms.c:1224
+#: ../plug-ins/common/lcms.c:1226
 msgid "Convert to RGB working space?"
 msgstr "Muunnetaanko RGB-työtilaan?"
 
-#: ../plug-ins/common/lcms.c:1229
+#: ../plug-ins/common/lcms.c:1231
 msgid "_Keep"
 msgstr "_Säilytä"
 
-#: ../plug-ins/common/lcms.c:1234
+#: ../plug-ins/common/lcms.c:1236
 msgid "_Convert"
 msgstr "_Muunna"
 
-#: ../plug-ins/common/lcms.c:1261 ../plug-ins/file-jpeg/jpeg-exif.c:377
+#: ../plug-ins/common/lcms.c:1263 ../plug-ins/file-jpeg/jpeg-exif.c:377
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "_Älä kysy uudestaan"
 
-#: ../plug-ins/common/lcms.c:1325
+#: ../plug-ins/common/lcms.c:1327
 msgid "Select destination profile"
 msgstr "Valitse kohdeprofiili"
 
-#: ../plug-ins/common/lcms.c:1352
+#: ../plug-ins/common/lcms.c:1354
 msgid "All files (*.*)"
 msgstr "Kaikki lohkot (*.*)"
 
-#: ../plug-ins/common/lcms.c:1357
+#: ../plug-ins/common/lcms.c:1359
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-väriprofiili (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1400
+#: ../plug-ins/common/lcms.c:1402
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB-väriavaruus (%s)"
 
-#: ../plug-ins/common/lcms.c:1450
+#: ../plug-ins/common/lcms.c:1452
 msgid "Convert to ICC Color Profile"
 msgstr "Muunna ICC-väriprofiiliin"
 
-#: ../plug-ins/common/lcms.c:1451
+#: ../plug-ins/common/lcms.c:1453
 msgid "Assign ICC Color Profile"
 msgstr "Aseta ICC-väriprofiili"
 
-#: ../plug-ins/common/lcms.c:1459
+#: ../plug-ins/common/lcms.c:1461
 msgid "_Assign"
 msgstr "_Aseta"
 
-#: ../plug-ins/common/lcms.c:1476
+#: ../plug-ins/common/lcms.c:1478
 msgid "Current Color Profile"
 msgstr "Nykyinen väriprofiili"
 
-#: ../plug-ins/common/lcms.c:1491
+#: ../plug-ins/common/lcms.c:1493
 msgid "Convert to"
 msgstr "Muunna muotoon"
 
-#: ../plug-ins/common/lcms.c:1491
+#: ../plug-ins/common/lcms.c:1493
 msgid "Assign"
 msgstr "Aseta"
 
-#: ../plug-ins/common/lcms.c:1515
+#: ../plug-ins/common/lcms.c:1517
 msgid "_Rendering Intent:"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1531
+#: ../plug-ins/common/lcms.c:1533
 msgid "_Black Point Compensation"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1573
+#: ../plug-ins/common/lcms.c:1575
 msgid "Destination profile is not for RGB color space."
 msgstr "Kohdeprofiili ei ole RGB-väriavaruudessa."
 
 #: ../plug-ins/common/lens-apply.c:108
 msgid "Simulate an elliptical lens over the image"
-msgstr ""
+msgstr "Simuloi elliptistä linssiä kuvan päällä"
 
 #: ../plug-ins/common/lens-apply.c:114
 msgid "Apply _Lens..."
@@ -5466,19 +5475,19 @@ msgstr "Linssin refraktiokerroin:"
 
 #: ../plug-ins/common/lens-distortion.c:115
 msgid "Corrects lens distortion"
-msgstr ""
+msgstr "Korjaa linssi vääristymiä"
 
 #: ../plug-ins/common/lens-distortion.c:120
 msgid "Lens Distortion..."
-msgstr ""
+msgstr "Linssi vääristymä..."
 
 #: ../plug-ins/common/lens-distortion.c:383
 msgid "Lens distortion"
-msgstr ""
+msgstr "Linssi vääristymä"
 
 #: ../plug-ins/common/lens-distortion.c:483
 msgid "Lens Distortion"
-msgstr ""
+msgstr "Linssi vääristymä"
 
 #: ../plug-ins/common/lens-distortion.c:521
 msgid "_Main:"
@@ -5530,7 +5539,7 @@ msgstr "Näytä _sijainti"
 
 #: ../plug-ins/common/mail.c:188
 msgid "Send the image by email"
-msgstr ""
+msgstr "Lähetä kuva sähköpostilla"
 
 #: ../plug-ins/common/mail.c:194
 msgid "Send by E_mail..."
@@ -5599,7 +5608,7 @@ msgstr ""
 
 #: ../plug-ins/common/mosaic.c:359
 msgid "Convert the image into irregular tiles"
-msgstr "Muunna kuva epäsäännöllisiksi paloiksi"
+msgstr "Muuntaa kuvan epäsäännöllisiksi paloiksi"
 
 #: ../plug-ins/common/mosaic.c:364
 msgid "_Mosaic..."
@@ -5645,7 +5654,7 @@ msgstr "Ruudun _koko:"
 
 #: ../plug-ins/common/mosaic.c:660 ../plug-ins/common/tile-glass.c:303
 msgid "Tile _height:"
-msgstr "Tiilen _korkeus:"
+msgstr "Ruudun _korkeus:"
 
 #: ../plug-ins/common/mosaic.c:673
 msgid "Til_e spacing:"
@@ -5669,15 +5678,15 @@ msgstr "Väritys"
 
 #: ../plug-ins/common/mosaic.c:752
 msgid "Allo_w tile splitting"
-msgstr ""
+msgstr "Salli ruutujen päällekkäisyys"
 
 #: ../plug-ins/common/mosaic.c:765
 msgid "_Pitted surfaces"
-msgstr ""
+msgstr "Arpinen pinta"
 
 #: ../plug-ins/common/mosaic.c:778
 msgid "_FG/BG lighting"
-msgstr ""
+msgstr "Edustan/taustan valaistus"
 
 #: ../plug-ins/common/newsprint.c:127
 msgid "Round"
@@ -5685,7 +5694,7 @@ msgstr "Pyöreä"
 
 #: ../plug-ins/common/newsprint.c:136
 msgid "Line"
-msgstr "Liiva"
+msgstr "Viiva"
 
 #: ../plug-ins/common/newsprint.c:145 ../plug-ins/flame/flame.c:760
 msgid "Diamond"
@@ -5725,7 +5734,7 @@ msgstr "Valovoima"
 
 #: ../plug-ins/common/newsprint.c:517
 msgid "Halftone the image to give newspaper-like effect"
-msgstr ""
+msgstr "Rasteroi kuva näyttämään sanomalehdeltä"
 
 #: ../plug-ins/common/newsprint.c:526
 msgid "Newsprin_t..."
@@ -5833,7 +5842,7 @@ msgstr "A_lfa:"
 
 #: ../plug-ins/common/noise-hsv.c:103
 msgid "Randomize hue/saturation/value independently"
-msgstr ""
+msgstr "Satunnaiset riippumattomat hue/saturation/value"
 
 #: ../plug-ins/common/noise-hsv.c:108
 msgid "HSV Noise..."
@@ -5877,7 +5886,7 @@ msgstr ""
 
 #: ../plug-ins/common/noise-randomize.c:233
 msgid "_Hurl..."
-msgstr "Luodaan koirankorva..."
+msgstr ""
 
 #: ../plug-ins/common/noise-randomize.c:245
 msgid "_Pick..."
@@ -5943,7 +5952,7 @@ msgstr "Kanava #%d:"
 
 #: ../plug-ins/common/noise-solid.c:176
 msgid "Create a random cloud-like texture"
-msgstr ""
+msgstr "Luo satunnaisen pilvitekstuurin"
 
 #: ../plug-ins/common/noise-solid.c:182
 msgid "_Solid Noise..."
@@ -5978,7 +5987,7 @@ msgstr "_Y koko:"
 
 #: ../plug-ins/common/noise-spread.c:89
 msgid "Move pixels around randomly"
-msgstr ""
+msgstr "Liikuttaa pikseleitä satunnaisesti"
 
 #: ../plug-ins/common/noise-spread.c:98
 msgid "Sp_read..."
@@ -6030,7 +6039,7 @@ msgstr "Supernovan keskikohta"
 
 #: ../plug-ins/common/oilify.c:119 ../plug-ins/common/oilify.c:134
 msgid "Smear colors to simulate an oil painting"
-msgstr ""
+msgstr "Tuhrii värejä simuloiden äljyvärimaalausta"
 
 #: ../plug-ins/common/oilify.c:125
 msgid "Oili_fy..."
@@ -6053,7 +6062,7 @@ msgstr "_Maskin koko:"
 #.
 #: ../plug-ins/common/oilify.c:830
 msgid "Use m_ask-size map:"
-msgstr ""
+msgstr "Käytä maskin kokoista karttaa:"
 
 #: ../plug-ins/common/oilify.c:867 ../plug-ins/common/sinus.c:922
 msgid "_Exponent:"
@@ -6071,11 +6080,11 @@ msgstr "Käytä eksponenttikarttaa:"
 #.
 #: ../plug-ins/common/oilify.c:918
 msgid "_Use intensity algorithm"
-msgstr ""
+msgstr "Käytä intensiteetti algoritmia"
 
 #: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
-msgstr ""
+msgstr "Simuloi värin vääristymistä kuten kopiokoneessa"
 
 #: ../plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
@@ -6124,7 +6133,7 @@ msgstr "Pikselin _korkeus:"
 
 #: ../plug-ins/common/plasma.c:176
 msgid "Create a random plasma texture"
-msgstr ""
+msgstr "Luo satunnaisen plasmatekstuurin"
 
 #: ../plug-ins/common/plasma.c:181
 msgid "_Plasma..."
@@ -6144,7 +6153,7 @@ msgstr "T_urbulenssi:"
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr ""
+msgstr "Näyttää tietoja liitännäisistä"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-In Browser"
@@ -6209,19 +6218,19 @@ msgstr "Puunäyttö"
 
 #: ../plug-ins/common/polar-coords.c:156
 msgid "Convert image to or from polar coordinates"
-msgstr ""
+msgstr "Muuttaa kuvan napakoordinaatistoiseksi tai takaisin"
 
 #: ../plug-ins/common/polar-coords.c:163
 msgid "P_olar Coordinates..."
-msgstr ""
+msgstr "Napakoordinaatisto..."
 
 #: ../plug-ins/common/polar-coords.c:360
 msgid "Polar coordinates"
-msgstr ""
+msgstr "Napakoordinaatisto"
 
 #: ../plug-ins/common/polar-coords.c:592
 msgid "Polar Coordinates"
-msgstr ""
+msgstr "Napakoordinaatisto"
 
 #: ../plug-ins/common/polar-coords.c:631
 msgid "Circle _depth in percent:"
@@ -6240,6 +6249,8 @@ msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
+"Jos valittu, kuvaus alkaa oikealta, muuten vasemmalta."
+
 
 #: ../plug-ins/common/polar-coords.c:675
 msgid "Map from _top"
@@ -6272,11 +6283,11 @@ msgstr "Proseduuriselain"
 
 #: ../plug-ins/common/procedure-browser.c:126
 msgid "Procedure Browser"
-msgstr ""
+msgstr "Proseduuriselain"
 
 #: ../plug-ins/common/qbist.c:402
 msgid "Generate a huge variety of abstract patterns"
-msgstr ""
+msgstr "Tuottaa suuren määrän erilaisia abstrakteja kuviointeja"
 
 #: ../plug-ins/common/qbist.c:410
 msgid "_Qbist..."
@@ -6319,11 +6330,11 @@ msgstr "Kynnysarvo:"
 
 #: ../plug-ins/common/red-eye-removal.c:176
 msgid "Threshold for the red eye color to remove."
-msgstr ""
+msgstr "Kynnysarvo punasilmäisyyden poistolle"
 
 #: ../plug-ins/common/red-eye-removal.c:181
 msgid "Manually selecting the eyes may improve the results."
-msgstr ""
+msgstr "Käsin valittu silmä saattaa parantaa tulosta."
 
 #: ../plug-ins/common/red-eye-removal.c:301
 msgid "Removing red eye"
@@ -6331,7 +6342,7 @@ msgstr "Poistetaan punasilmäisyys"
 
 #: ../plug-ins/common/ripple.c:129
 msgid "Displace pixels in a ripple pattern"
-msgstr ""
+msgstr "Vaihtaa pikseleiden paikkaa väreilykuvion mukaan"
 
 #: ../plug-ins/common/ripple.c:136
 msgid "_Ripple..."
@@ -6401,7 +6412,7 @@ msgstr "Pyöritys"
 
 #: ../plug-ins/common/sample-colorize.c:298
 msgid "Colorize image using a sample image as a guide"
-msgstr ""
+msgstr "Väritä kuva käyttäen toista kuvaa ohjeena"
 
 #: ../plug-ins/common/sample-colorize.c:303
 msgid "_Sample Colorize..."
@@ -6431,7 +6442,7 @@ msgstr "Takaperoisesta väriliu'usta"
 
 #: ../plug-ins/common/sample-colorize.c:1383
 msgid "From gradient"
-msgstr "Väliliu'usta"
+msgstr "Väriliu'usta"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1404
@@ -6511,11 +6522,11 @@ msgstr "Annettua ikkunaa ei löytynyt"
 
 #: ../plug-ins/common/screenshot.c:975
 msgid "There was an error taking the screenshot."
-msgstr ""
+msgstr "Virhe kuvankaappaamisesssa."
 
 #: ../plug-ins/common/screenshot.c:1069
 msgid "S_nap"
-msgstr ""
+msgstr "_Ota kuva"
 
 #: ../plug-ins/common/screenshot.c:1099
 msgid "After the delay, the screenshot is taken."
@@ -6549,7 +6560,7 @@ msgstr "Ota kuvankaappaus _koko ruudusta"
 
 #: ../plug-ins/common/screenshot.c:1177
 msgid "Include _mouse pointer"
-msgstr ""
+msgstr "Sisällytä hiiren kohdistin"
 
 #: ../plug-ins/common/screenshot.c:1197
 msgid "Select a _region to grab"
@@ -6567,19 +6578,19 @@ msgstr "sekuntia"
 
 #: ../plug-ins/common/semi-flatten.c:68
 msgid "Replace partial transparency with the current background color"
-msgstr ""
+msgstr "Korvaa osittaisen läpinäkyvyyden nykyisellä taustavärillä"
 
 #: ../plug-ins/common/semi-flatten.c:75
 msgid "_Semi-Flatten"
-msgstr ""
+msgstr "Osittainen tasoitus"
 
 #: ../plug-ins/common/semi-flatten.c:118
 msgid "Semi-Flattening"
-msgstr ""
+msgstr "Tasoitetaan osittain"
 
 #: ../plug-ins/common/sharpen.c:113
 msgid "Make image sharper (less powerful than Unsharp Mask)"
-msgstr ""
+msgstr "Tekee kuvasta terävämmän (vähemmän tehokas kuin Epäterävöitä maskia)"
 
 #: ../plug-ins/common/sharpen.c:120
 msgid "_Sharpen..."
@@ -6598,7 +6609,7 @@ msgstr "Terävöinti"
 
 #: ../plug-ins/common/shift.c:101
 msgid "Shift each row of pixels by a random amount"
-msgstr ""
+msgstr "Siirtää jokaista pikseliriviä satunnaisesti"
 
 #: ../plug-ins/common/shift.c:108
 msgid "_Shift..."
@@ -6626,7 +6637,7 @@ msgstr "Määrä:"
 
 #: ../plug-ins/common/sinus.c:186
 msgid "Generate complex sinusoidal textures"
-msgstr ""
+msgstr "Tuottaa monimutkaisen siniaalto tekstuurin"
 
 #: ../plug-ins/common/sinus.c:191
 msgid "_Sinus..."
@@ -6686,7 +6697,7 @@ msgstr "Värit"
 #. if in grey scale, the colors are necessarily black and white
 #: ../plug-ins/common/sinus.c:791
 msgid "The colors are white and black."
-msgstr "Värit ovat musta ja valkoinen"
+msgstr "Värit ovat musta ja valkoinen."
 
 #: ../plug-ins/common/sinus.c:802
 msgid "Bl_ack & white"
@@ -6771,15 +6782,15 @@ msgstr "_Hakusyvyys:"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
-msgstr ""
+msgstr "Simuloi hehkua lisäämällä valoisien alueiden intensiteettiä ja sumeutta"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
-msgstr ""
+msgstr "Hehkutus..."
 
 #: ../plug-ins/common/softglow.c:632
 msgid "Softglow"
-msgstr ""
+msgstr "Hehkutus"
 
 #: ../plug-ins/common/softglow.c:669
 msgid "_Glow radius:"
@@ -6787,7 +6798,7 @@ msgstr "Hohdon säde:"
 
 #: ../plug-ins/common/sparkle.c:178
 msgid "Turn bright spots into starry sparkles"
-msgstr ""
+msgstr "Muuttaa kirkkaat kohdat tuikkiviksi tähdiksi"
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
@@ -6795,7 +6806,7 @@ msgstr "_Säkenöinti..."
 
 #: ../plug-ins/common/sparkle.c:223
 msgid "Region selected for filter is empty"
-msgstr ""
+msgstr "Suotimelle valittu alue on tyhjä"
 
 #: ../plug-ins/common/sparkle.c:299
 msgid "Sparkling"
@@ -6819,7 +6830,7 @@ msgstr "Intensiteetti"
 
 #: ../plug-ins/common/sparkle.c:389
 msgid "Adjust the flare intensity"
-msgstr ""
+msgstr "Säädä loimun intensiteettiä"
 
 #: ../plug-ins/common/sparkle.c:399
 msgid "_Spike length:"
@@ -6827,7 +6838,7 @@ msgstr "Piikin pituus:"
 
 #: ../plug-ins/common/sparkle.c:402
 msgid "Adjust the spike length"
-msgstr ""
+msgstr "Säädä piikin pituutta"
 
 #: ../plug-ins/common/sparkle.c:412
 msgid "Sp_ike points:"
@@ -6835,7 +6846,7 @@ msgstr "Piikin pisteet:"
 
 #: ../plug-ins/common/sparkle.c:415
 msgid "Adjust the number of spikes"
-msgstr ""
+msgstr "Säädä piikkien määrää"
 
 #: ../plug-ins/common/sparkle.c:425
 msgid "Spi_ke angle (-1: random):"
@@ -6843,7 +6854,7 @@ msgstr "Piikin kulma (-1: satunnainen):"
 
 #: ../plug-ins/common/sparkle.c:428
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
-msgstr ""
+msgstr "Säädä piikin kulmaa (-1 tarkoittaa satunnaista)"
 
 #: ../plug-ins/common/sparkle.c:439
 msgid "Spik_e density:"
@@ -6851,7 +6862,7 @@ msgstr "Piikkien tiheys:"
 
 #: ../plug-ins/common/sparkle.c:442
 msgid "Adjust the spike density"
-msgstr ""
+msgstr "Säädä pikkien tiheyttä"
 
 #: ../plug-ins/common/sparkle.c:452
 msgid "Tr_ansparency:"
@@ -6859,7 +6870,7 @@ msgstr "Lä_pinäkyvyys:"
 
 #: ../plug-ins/common/sparkle.c:455
 msgid "Adjust the opacity of the spikes"
-msgstr ""
+msgstr "Säädä piikkien läpinäkyvyyttä"
 
 #: ../plug-ins/common/sparkle.c:465
 msgid "_Random hue:"
@@ -6867,7 +6878,7 @@ msgstr "Satunnainen _sävy:"
 
 #: ../plug-ins/common/sparkle.c:468
 msgid "Adjust how much the hue should be changed randomly"
-msgstr ""
+msgstr "Säädä kuinka paljon sävyä muutetaan satunnaisesti"
 
 #: ../plug-ins/common/sparkle.c:478
 msgid "Rando_m saturation:"
@@ -6875,7 +6886,7 @@ msgstr "Satunnainen _kylläisyys:"
 
 #: ../plug-ins/common/sparkle.c:481
 msgid "Adjust how much the saturation should be changed randomly"
-msgstr ""
+msgstr "Säädä kuinka paljon kylläisyyttä muutetaan satunnaisesti"
 
 #: ../plug-ins/common/sparkle.c:498
 msgid "_Preserve luminosity"
@@ -6891,7 +6902,7 @@ msgstr "Käänteinen"
 
 #: ../plug-ins/common/sparkle.c:520
 msgid "Should the effect be inversed?"
-msgstr ""
+msgstr "Tummiin alueisiin piirretään käänteiset säkenöinnit"
 
 #: ../plug-ins/common/sparkle.c:529
 msgid "A_dd border"
@@ -6899,7 +6910,7 @@ msgstr "Lisää reunus"
 
 #: ../plug-ins/common/sparkle.c:535
 msgid "Draw a border of spikes around the image"
-msgstr ""
+msgstr "Piirtää piikkisetreunukset kuvan ympärille"
 
 #: ../plug-ins/common/sparkle.c:549
 msgid "_Natural color"
@@ -7086,7 +7097,7 @@ msgstr "Luodaan palloa"
 
 #: ../plug-ins/common/sphere-designer.c:3013
 msgid "Create an image of a textured sphere"
-msgstr ""
+msgstr "Luo kuvan pinnoitetusta pallopinnasta"
 
 #: ../plug-ins/common/sphere-designer.c:3020
 msgid "Sphere _Designer..."
@@ -7094,15 +7105,15 @@ msgstr "Pallos_uunnittelu..."
 
 #: ../plug-ins/common/sphere-designer.c:3074
 msgid "Region selected for plug-in is empty"
-msgstr ""
+msgstr "Suotimelle valittu alue on tyhjä"
 
 #: ../plug-ins/common/threshold-alpha.c:85
 msgid "Make transparency all-or-nothing"
-msgstr ""
+msgstr "Tekee läpinäkyväksi kaiken-tai-ei-mitään"
 
 #: ../plug-ins/common/threshold-alpha.c:90
 msgid "_Threshold Alpha..."
-msgstr "Kynnysarvo:"
+msgstr "Kynnysarvo..."
 
 #: ../plug-ins/common/threshold-alpha.c:131
 msgid "The layer has its alpha channel locked."
@@ -7114,11 +7125,11 @@ msgstr ""
 
 #: ../plug-ins/common/threshold-alpha.c:165
 msgid "Coloring transparency"
-msgstr ""
+msgstr "Tehdään läpinäkyväksi"
 
 #: ../plug-ins/common/threshold-alpha.c:248
 msgid "Threshold Alpha"
-msgstr ""
+msgstr "Raja"
 
 #: ../plug-ins/common/threshold-alpha.c:283
 msgid "Threshold:"
@@ -7126,7 +7137,7 @@ msgstr "Raja:"
 
 #: ../plug-ins/common/tile-glass.c:124
 msgid "Simulate distortion caused by square glass tiles"
-msgstr ""
+msgstr "Simuloi vääristymistä joka aiheutuu lasitiilistä"
 
 #: ../plug-ins/common/tile-glass.c:130
 msgid "_Glass Tile..."
@@ -7142,7 +7153,7 @@ msgstr "Tiilen _leveys:"
 
 #: ../plug-ins/common/tile-paper.c:243 ../plug-ins/common/tile-paper.c:556
 msgid "Paper Tile"
-msgstr ""
+msgstr "Paperin palat"
 
 #: ../plug-ins/common/tile-paper.c:269
 msgid "Division"
@@ -7210,7 +7221,7 @@ msgstr "Taustaväri"
 
 #: ../plug-ins/common/tile-paper.c:846
 msgid "Cut image into paper tiles, and slide them"
-msgstr ""
+msgstr "Leikkaa kuvan paperin paloiksi"
 
 #: ../plug-ins/common/tile-paper.c:851
 msgid "September 31, 1999"
@@ -7218,41 +7229,41 @@ msgstr "Syyskuun 31. 1999"
 
 #: ../plug-ins/common/tile-paper.c:852
 msgid "_Paper Tile..."
-msgstr ""
+msgstr "Paperin palat..."
 
 #: ../plug-ins/common/tile-seamless.c:67
 msgid "Alters edges to make the image seamlessly tileable"
-msgstr ""
+msgstr "Muuttaa kuvan reunoja, jotta kuvasta tulee saumattomasti jatkuva"
 
 #: ../plug-ins/common/tile-seamless.c:73
 msgid "_Make Seamless"
-msgstr ""
+msgstr "Saumattomasti jatkuva"
 
 #: ../plug-ins/common/tile-seamless.c:338
 msgid "Tiler"
-msgstr ""
+msgstr "Tehdään jatkuvaksi"
 
 #: ../plug-ins/common/tile-small.c:215
 msgid "Tile image into smaller versions of the original"
-msgstr ""
+msgstr "Laatoita kuva alkuperäisen kuvan pienennöksillä"
 
 #: ../plug-ins/common/tile-small.c:220
 msgid "_Small Tiles..."
-msgstr ""
+msgstr "Laatoitus..."
 
 #: ../plug-ins/common/tile-small.c:263
 msgid "Region selected for filter is empty."
-msgstr ""
+msgstr "Suotimelle valittu alue on tyhjä."
 
 #. Set the tile cache size
 #: ../plug-ins/common/tile-small.c:321 ../plug-ins/common/tile.c:190
 msgid "Tiling"
-msgstr ""
+msgstr "Laatoitetaan"
 
 #. Get the preview image
 #: ../plug-ins/common/tile-small.c:364
 msgid "Small Tiles"
-msgstr ""
+msgstr "Pienet laatat"
 
 #. Area for buttons etc
 #. Flip
@@ -7271,15 +7282,15 @@ msgstr "Joka toinen lohko"
 
 #: ../plug-ins/common/tile-small.c:490
 msgid "_Explicit tile"
-msgstr ""
+msgstr "Tietty pala"
 
 #: ../plug-ins/common/tile-small.c:496
 msgid "Ro_w:"
-msgstr "Rivi:"
+msgstr "Riviltä:"
 
 #: ../plug-ins/common/tile-small.c:520
 msgid "Col_umn:"
-msgstr "Sarake:"
+msgstr "Sarakkeesta:"
 
 #: ../plug-ins/common/tile-small.c:572
 msgid "O_pacity:"
@@ -7292,19 +7303,19 @@ msgstr "Se_gmenttejä:"
 
 #: ../plug-ins/common/tile.c:101
 msgid "Create an array of copies of the image"
-msgstr ""
+msgstr "Luo taulukun kuvan kopioita"
 
 #: ../plug-ins/common/tile.c:111
 msgid "_Tile..."
-msgstr ""
+msgstr "Kopioi laatoitukseksi..."
 
 #: ../plug-ins/common/tile.c:401
 msgid "Tile"
-msgstr ""
+msgstr "Laatoitus"
 
 #: ../plug-ins/common/tile.c:422
 msgid "Tile to New Size"
-msgstr ""
+msgstr "Uuden laatan koko"
 
 #: ../plug-ins/common/tile.c:444
 msgid "C_reate new image"
@@ -7440,7 +7451,7 @@ msgstr ""
 
 #: ../plug-ins/common/unit-editor.c:352
 msgid "Please fill in all text fields."
-msgstr ""
+msgstr "Täytä kaikki tekstikentät"
 
 #: ../plug-ins/common/unit-editor.c:409
 msgid "Unit Editor"
@@ -7448,11 +7459,11 @@ msgstr "Yksikköeditori"
 
 #: ../plug-ins/common/unsharp-mask.c:128
 msgid "The most widely useful method for sharpening an image"
-msgstr ""
+msgstr "Käyttökelpoisin menetelmä kuvan terävöittämiseksi"
 
 #: ../plug-ins/common/unsharp-mask.c:138
 msgid "_Unsharp Mask..."
-msgstr ""
+msgstr "_Epäterävöitä maski..."
 
 #: ../plug-ins/common/unsharp-mask.c:475
 msgid "Merging"
@@ -7460,7 +7471,7 @@ msgstr "Yhdistäminen"
 
 #: ../plug-ins/common/unsharp-mask.c:644
 msgid "Unsharp Mask"
-msgstr ""
+msgstr "Epäterävöitä maski"
 
 #: ../plug-ins/common/value-invert.c:90
 msgid "Invert the brightness of each pixel"
@@ -7476,19 +7487,19 @@ msgstr ""
 
 #: ../plug-ins/common/value-propagate.c:189
 msgid "More _white (larger value)"
-msgstr ""
+msgstr "Lisää _valkoista (suurempia arvoja)"
 
 #: ../plug-ins/common/value-propagate.c:192
 msgid "More blac_k (smaller value)"
-msgstr ""
+msgstr "Lisää _mustaa (pienempiä arvoja)"
 
 #: ../plug-ins/common/value-propagate.c:195
 msgid "_Middle value to peaks"
-msgstr ""
+msgstr "_Keskiarvoista huippuihin"
 
 #: ../plug-ins/common/value-propagate.c:198
 msgid "_Foreground to peaks"
-msgstr ""
+msgstr "_Taustaväristä huippuihin"
 
 #: ../plug-ins/common/value-propagate.c:201
 msgid "O_nly foreground"
@@ -7508,11 +7519,11 @@ msgstr "Lisää läpinäkyvyyttä"
 
 #: ../plug-ins/common/value-propagate.c:233
 msgid "Propagate certain colors to neighboring pixels"
-msgstr ""
+msgstr "Monistaa joitakin värejä naapuripikseleihin"
 
 #: ../plug-ins/common/value-propagate.c:238
 msgid "_Value Propagate..."
-msgstr ""
+msgstr "Arvojen monistus..."
 
 #: ../plug-ins/common/value-propagate.c:245
 msgid "Shrink lighter areas of the image"
@@ -7533,12 +7544,12 @@ msgstr ""
 #: ../plug-ins/common/value-propagate.c:473
 #: ../plug-ins/common/value-propagate.c:1086
 msgid "Value Propagate"
-msgstr ""
+msgstr "Arvojen monistus"
 
 #. Parameter settings
 #: ../plug-ins/common/value-propagate.c:1152
 msgid "Propagate"
-msgstr "Etenemisnopeus"
+msgstr "Monistus"
 
 #: ../plug-ins/common/value-propagate.c:1165
 msgid "Lower t_hreshold:"
@@ -7550,7 +7561,7 @@ msgstr "Ylempi kynnysarvo:"
 
 #: ../plug-ins/common/value-propagate.c:1189
 msgid "_Propagating rate:"
-msgstr "Etenemisnopeus:"
+msgstr "Voimakkuus:"
 
 #: ../plug-ins/common/value-propagate.c:1200
 msgid "To l_eft"
@@ -7570,11 +7581,11 @@ msgstr "Alas"
 
 #: ../plug-ins/common/value-propagate.c:1218
 msgid "Propagating _alpha channel"
-msgstr ""
+msgstr "_Alfakanavan monistus"
 
 #: ../plug-ins/common/value-propagate.c:1229
 msgid "Propagating value channel"
-msgstr ""
+msgstr "Arvokanavan monistus"
 
 #: ../plug-ins/common/van-gogh-lic.c:566 ../plug-ins/common/van-gogh-lic.c:641
 msgid "Van Gogh (LIC)"
@@ -7654,11 +7665,11 @@ msgstr ""
 
 #: ../plug-ins/common/video.c:44
 msgid "S_triped"
-msgstr ""
+msgstr "_Juovat"
 
 #: ../plug-ins/common/video.c:45
 msgid "_Wide-striped"
-msgstr ""
+msgstr "_Leveät juovat"
 
 #: ../plug-ins/common/video.c:46
 msgid "Lo_ng-staggered"
@@ -7670,19 +7681,19 @@ msgstr ""
 
 #: ../plug-ins/common/video.c:48
 msgid "Larg_e 3x3"
-msgstr ""
+msgstr "_Iso 3x3"
 
 #: ../plug-ins/common/video.c:49
 msgid "_Hex"
-msgstr ""
+msgstr "Kuuskulmiot"
 
 #: ../plug-ins/common/video.c:50
 msgid "_Dots"
-msgstr ""
+msgstr "Pisteet"
 
 #: ../plug-ins/common/video.c:1807
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
+msgstr "Simuloi huonon tai matalaresoluutioisen näytön vääristämistä"
 
 #: ../plug-ins/common/video.c:1814
 msgid "Vi_deo..."
@@ -7699,23 +7710,23 @@ msgstr "Kuvio"
 
 #: ../plug-ins/common/video.c:2083
 msgid "_Additive"
-msgstr ""
+msgstr "Lisäävä"
 
 #: ../plug-ins/common/video.c:2093
 msgid "_Rotated"
-msgstr ""
+msgstr "Käännetty"
 
 #: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
-msgstr ""
+msgstr "Kiertää ja tuhrii kuvaa monella eri tavalla"
 
 #: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
-msgstr ""
+msgstr "Vääntö..."
 
 #: ../plug-ins/common/warp.c:376
 msgid "Warp"
-msgstr ""
+msgstr "Vääntö"
 
 #: ../plug-ins/common/warp.c:397
 msgid "Basic Options"
@@ -7748,7 +7759,7 @@ msgstr "Kääri"
 
 #: ../plug-ins/common/warp.c:486
 msgid "Smear"
-msgstr "Töhri"
+msgstr "Tuhri"
 
 #: ../plug-ins/common/warp.c:501 ../plug-ins/file-fits/fits.c:1021
 #: ../plug-ins/flame/flame.c:1175 ../plug-ins/gfig/gfig-dialog.c:1460
@@ -7816,25 +7827,25 @@ msgstr ""
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1178
 msgid "Smoothing X gradient"
-msgstr ""
+msgstr "Pehmennetään X gradienttiä"
 
 #: ../plug-ins/common/warp.c:1181
 msgid "Smoothing Y gradient"
-msgstr ""
+msgstr "Pehmennetään Y gradienttiä"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1231
 msgid "Finding XY gradient"
-msgstr ""
+msgstr "Etsitään XY gradienttiä"
 
 #: ../plug-ins/common/warp.c:1256
 #, c-format
 msgid "Flow step %d"
-msgstr ""
+msgstr "Virtausaskel %d"
 
 #: ../plug-ins/common/waves.c:120
 msgid "Distort the image with waves"
-msgstr ""
+msgstr "Vääristää kuvia aalloilla"
 
 #: ../plug-ins/common/waves.c:125
 msgid "_Waves..."
@@ -7886,7 +7897,7 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/common/web-browser.c:246
-#,  c-format
+#, c-format
 msgid ""
 "Could not execute the web browser specified in the Preferences dialog:\n"
 "\n"
@@ -7898,35 +7909,35 @@ msgstr ""
 
 #: ../plug-ins/common/whirl-pinch.c:138
 msgid "Distort an image by whirling and pinching"
-msgstr ""
+msgstr "Vääristää kuvaa tuiskulla ja nipistyksellä"
 
 #: ../plug-ins/common/whirl-pinch.c:149
 msgid "W_hirl and Pinch..."
-msgstr ""
+msgstr "Kierto ja pullistus..."
 
 #: ../plug-ins/common/whirl-pinch.c:193
 msgid "Region affected by plug-in is empty"
-msgstr ""
+msgstr "Suotimelle valittu alue on tyhjä"
 
 #: ../plug-ins/common/whirl-pinch.c:341
 msgid "Whirling and pinching"
-msgstr ""
+msgstr "Kierto ja pullistus"
 
 #: ../plug-ins/common/whirl-pinch.c:528
 msgid "Whirl and Pinch"
-msgstr ""
+msgstr "Kierto ja pullistus"
 
 #: ../plug-ins/common/whirl-pinch.c:565
 msgid "_Whirl angle:"
-msgstr "_Kulma:"
+msgstr "_Kierron kulma:"
 
 #: ../plug-ins/common/whirl-pinch.c:577
 msgid "_Pinch amount:"
-msgstr "_Määrä:"
+msgstr "_Pullistuksen määrä:"
 
 #: ../plug-ins/common/wind.c:175
 msgid "Smear image to give windblown effect"
-msgstr ""
+msgstr "Tuhrii kuvaa tehden siihen tuulitehosteen"
 
 #: ../plug-ins/common/wind.c:180
 msgid "Wi_nd..."
@@ -7934,11 +7945,11 @@ msgstr "_Tuuli..."
 
 #: ../plug-ins/common/wind.c:315
 msgid "Rendering blast"
-msgstr ""
+msgstr "Renderöidään puuskaa"
 
 #: ../plug-ins/common/wind.c:447
 msgid "Rendering wind"
-msgstr ""
+msgstr "Renderöidään tuulta"
 
 #: ../plug-ins/common/wind.c:879
 msgid "Wind"
@@ -8029,7 +8040,7 @@ msgstr "Bittisyvyys ei ole tuettu tai on virheellinen."
 #: ../plug-ins/file-bmp/bmp-read.c:761 ../plug-ins/file-bmp/bmp-read.c:802
 #: ../plug-ins/file-bmp/bmp-read.c:852
 msgid "The bitmap ends unexpectedly."
-msgstr ""
+msgstr "Kuvakartta loppui yllättäen."
 
 #: ../plug-ins/file-bmp/bmp-write.c:188 ../plug-ins/file-bmp/bmp-write.c:210
 msgid "Cannot save indexed image with transparency in BMP file format."
@@ -8047,21 +8058,21 @@ msgstr "Tallennetaan BMP:nä"
 msgid "_Run-Length Encoded"
 msgstr "RLE-pakattu"
 
-#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:899
+#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:900
 msgid "_Advanced Options"
 msgstr "_Lisäasetukset"
 
 #: ../plug-ins/file-bmp/bmp-write.c:843
 msgid "16 bits"
-msgstr ""
+msgstr "16 bittiä"
 
 #: ../plug-ins/file-bmp/bmp-write.c:879
 msgid "24 bits"
-msgstr ""
+msgstr "24 bittiä"
 
 #: ../plug-ins/file-bmp/bmp-write.c:896
 msgid "32 bits"
-msgstr ""
+msgstr "32 bittiä"
 
 #: ../plug-ins/file-bmp/bmp.c:124 ../plug-ins/file-bmp/bmp.c:143
 msgid "Windows BMP image"
@@ -8177,7 +8188,7 @@ msgstr "Pakattu (PNG)"
 msgid "Icon #%i"
 msgstr "Kuvake #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:725 ../plug-ins/file-jpeg/jpeg-load.c:630
+#: ../plug-ins/file-ico/ico-load.c:725 ../plug-ins/file-jpeg/jpeg-load.c:633
 #: ../plug-ins/file-psd/psd-thumb-load.c:85
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -8197,11 +8208,11 @@ msgstr "Säilytä _suunta"
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:352
 msgid "According to the EXIF data, this image is rotated."
-msgstr ""
+msgstr "EXIF data perusteella tämä kuva on käännetty"
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:367
 msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr ""
+msgstr "Haluatko että GIMP kääntää sen standardiin asentoon?"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:241
 msgid "JPEG preview"
@@ -8214,118 +8225,121 @@ msgstr "Koko: %02.01f kB"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:682
 msgid "Calculating file size..."
-msgstr ""
+msgstr "Lasketaan kuvan koko..."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:773 ../plug-ins/file-jpeg/jpeg-save.c:875
+#: ../plug-ins/file-jpeg/jpeg-save.c:774 ../plug-ins/file-jpeg/jpeg-save.c:876
 msgid "File size: unknown"
 msgstr "Koko: tuntematon"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:826
+#: ../plug-ins/file-jpeg/jpeg-save.c:827
 msgid "Save as JPEG"
 msgstr "Tallennetaan JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:861
+#: ../plug-ins/file-jpeg/jpeg-save.c:862
 msgid "_Quality:"
 msgstr "Laatu:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:865
+#: ../plug-ins/file-jpeg/jpeg-save.c:866
 msgid "JPEG quality parameter"
 msgstr "JPEG parametrit"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:884
+#: ../plug-ins/file-jpeg/jpeg-save.c:885
 msgid "Enable preview to obtain the file size."
 msgstr ""
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:887
+#: ../plug-ins/file-jpeg/jpeg-save.c:888
 msgid "Sho_w preview in image window"
 msgstr "Näytä _esikatselu kuvaikkunassa"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:928
+#: ../plug-ins/file-jpeg/jpeg-save.c:929
 msgid "S_moothing:"
 msgstr "_Pehmennys:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:941
+#: ../plug-ins/file-jpeg/jpeg-save.c:942
 msgid "Frequency (rows):"
 msgstr "Virheenkorjaus per riviä:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:957
+#: ../plug-ins/file-jpeg/jpeg-save.c:958
 msgid "Use _restart markers"
 msgstr "Käytä _uudelleenaloitusmerkkejä"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:973
+#: ../plug-ins/file-jpeg/jpeg-save.c:974
 msgid "_Optimize"
 msgstr "_Optimoi"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:987
+#: ../plug-ins/file-jpeg/jpeg-save.c:988
 msgid "_Progressive"
 msgstr "_Progressiivinen"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1003
+#: ../plug-ins/file-jpeg/jpeg-save.c:1004
 msgid "Save _EXIF data"
 msgstr "Tallenna EXIF-tiedot"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1020
+#: ../plug-ins/file-jpeg/jpeg-save.c:1021
 msgid "Save _thumbnail"
 msgstr "Tallenna _pienoiskuva"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1037
+#: ../plug-ins/file-jpeg/jpeg-save.c:1038
 msgid "Save _XMP data"
 msgstr "Tallenna _XMP-tiedot"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1052
+#: ../plug-ins/file-jpeg/jpeg-save.c:1053
 msgid "_Use quality settings from original image"
-msgstr ""
+msgstr "Käytä alkuperäisen kuvan laatuasetuksia"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1058
+#: ../plug-ins/file-jpeg/jpeg-save.c:1059
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
+"Jos alkuperäinen kuva on ladattu JPEG-tiedostosta, joka käyttää epästandardeja "
+"laatuasetuksia (quantization taulukkoja), käytä tätä aseusta, niin saat melkein "
+"saman laadun ja tiedosto koon."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1082
+#: ../plug-ins/file-jpeg/jpeg-save.c:1083
 msgid "Su_bsampling:"
 msgstr "_Alinäytteistys:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1089
+#: ../plug-ins/file-jpeg/jpeg-save.c:1090
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (paras laatu)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1091
+#: ../plug-ins/file-jpeg/jpeg-save.c:1092
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1093
+#: ../plug-ins/file-jpeg/jpeg-save.c:1094
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1095
+#: ../plug-ins/file-jpeg/jpeg-save.c:1096
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (pienin tiedosto)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1125
+#: ../plug-ins/file-jpeg/jpeg-save.c:1126
 msgid "_DCT method:"
 msgstr "_DST-menetelmä:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1131
+#: ../plug-ins/file-jpeg/jpeg-save.c:1132
 msgid "Fast Integer"
 msgstr "Nopea kokonaisluku"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1132
+#: ../plug-ins/file-jpeg/jpeg-save.c:1133
 msgid "Integer"
 msgstr "Kokonaisluku"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1133
+#: ../plug-ins/file-jpeg/jpeg-save.c:1134
 msgid "Floating-Point"
 msgstr "Liukuluku"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1149
+#: ../plug-ins/file-jpeg/jpeg-save.c:1150
 msgid "Comment"
 msgstr "Kommentti"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1194
+#: ../plug-ins/file-jpeg/jpeg-save.c:1195
 msgid "Sa_ve Defaults"
 msgstr "_Tallenna oletukset"
 
@@ -8389,19 +8403,19 @@ msgstr "Tason korkeus ei ole tuettu tai on virheellinen: %d"
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Tason leveys ei ole tuettu tai on virheellinen: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1150 ../plug-ins/file-psd/psd-load.c:1499
+#: ../plug-ins/file-psd/psd-load.c:1153 ../plug-ins/file-psd/psd-load.c:1502
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Pakkaustila ei ole tuettu: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1588
+#: ../plug-ins/file-psd/psd-load.c:1595
 msgid "Extra"
 msgstr "Lisäosat"
 
 #: ../plug-ins/file-psd/psd-save.c:228 ../plug-ins/file-psd/psd.c:114
 #: ../plug-ins/file-psd/psd.c:153
 msgid "Photoshop image"
-msgstr ""
+msgstr "Photoshop kuva"
 
 #: ../plug-ins/file-psd/psd-save.c:371
 #, c-format
@@ -8409,28 +8423,34 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
+"Ei voitu tallentaa taso, jossa on tila '%s'. Joko PSD tiedostotyyppi tai "
+"tallennusliitännäinen ei tue sitä, käytetään normaalia tilaa."
 
-#: ../plug-ins/file-psd/psd-save.c:628
+#: ../plug-ins/file-psd/psd-save.c:631
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 
-#: ../plug-ins/file-psd/psd-save.c:1596
+#: ../plug-ins/file-psd/psd-save.c:1605
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
+"Ei voitu tallentaa \"%s\". PSD tiedostotyyppi ei tue kuvaa, jonka "
+"leveys tai korkeus on yli 30 000 pikseliä."
 
-#: ../plug-ins/file-psd/psd-save.c:1611
+#: ../plug-ins/file-psd/psd-save.c:1620
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
+"Ei voitu tallentaa \"%s\". PSD tiedostotyyppi ei tue kuvaa, jossa on taso, "
+"jonka leveys tai korkeus on yli 30 000 pikseliä."
 
 #: ../plug-ins/file-psd/psd-util.c:51
 msgid "Unexpected end of file"
-msgstr "Tiedosto loppui kesken"
+msgstr "Tiedosto loppui odottamattomasti kesken"
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -8444,7 +8464,7 @@ msgstr "Ei voi avata \"%s\" lukua varten."
 #: ../plug-ins/file-sgi/sgi.c:549
 #, c-format
 msgid "Could not open '%s' for writing."
-msgstr "Ei voi avata '%s' kirjoitusta varten."
+msgstr "Ei voi avata \"%s\" kirjoitusta varten."
 
 #: ../plug-ins/file-sgi/sgi.c:629
 msgid "Save as SGI"
@@ -8511,7 +8531,7 @@ msgstr "Muista _aina"
 #: ../plug-ins/file-uri/uri-backend-wget.c:303
 #, c-format
 msgid "Downloading %s of image data"
-msgstr ""
+msgstr "Ladataan %s kuvatietoja"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:164
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:226
@@ -8550,7 +8570,7 @@ msgid "Failed to write %s to '%s': %s"
 msgstr "Tiedostoa %s ei voi kirjoittaa kohteeseen %s: %s"
 
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:200
-#,  c-format
+#, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "Noudetaan kuva (%s/%s)"
 
@@ -8675,7 +8695,7 @@ msgstr ""
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
-msgstr ""
+msgstr "Luo kosmisen toistuvan fraktaali leimahduksen"
 
 #: ../plug-ins/flame/flame.c:134
 msgid "_Flame..."
@@ -8687,7 +8707,7 @@ msgstr "Piirretään liekkiä"
 
 #: ../plug-ins/flame/flame.c:319
 msgid "Flame works only on RGB drawables."
-msgstr ""
+msgstr "Liekki toimii vain RGB kuvissa."
 
 #: ../plug-ins/flame/flame.c:402
 #, c-format
@@ -8696,7 +8716,7 @@ msgstr "'%s' ei ole tiedosto"
 
 #: ../plug-ins/flame/flame.c:646
 msgid "Edit Flame"
-msgstr ""
+msgstr "Muokkaa liekkiä"
 
 #: ../plug-ins/flame/flame.c:669
 msgid "Directions"
@@ -8704,7 +8724,7 @@ msgstr "Suunnat"
 
 #: ../plug-ins/flame/flame.c:705
 msgid "Controls"
-msgstr ""
+msgstr "Säätimet"
 
 #: ../plug-ins/flame/flame.c:719
 msgid "_Speed:"
@@ -8741,7 +8761,7 @@ msgstr "Taipunut"
 
 #: ../plug-ins/flame/flame.c:755
 msgid "Handkerchief"
-msgstr ""
+msgstr "Nenäliina"
 
 #: ../plug-ins/flame/flame.c:756
 msgid "Heart"
@@ -8753,11 +8773,11 @@ msgstr "Levy"
 
 #: ../plug-ins/flame/flame.c:759
 msgid "Hyperbolic"
-msgstr ""
+msgstr "Hyperbolinen"
 
 #: ../plug-ins/flame/flame.c:761
 msgid "Ex"
-msgstr ""
+msgstr "Äksä"
 
 #: ../plug-ins/flame/flame.c:762
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
@@ -8778,7 +8798,7 @@ msgstr "Eksponentti"
 
 #: ../plug-ins/flame/flame.c:767
 msgid "Power"
-msgstr ""
+msgstr "Poveri"
 
 #: ../plug-ins/flame/flame.c:768
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:997
@@ -8833,7 +8853,7 @@ msgstr "Liekki"
 
 #: ../plug-ins/flame/flame.c:1069
 msgid "_Rendering"
-msgstr "_Muodostan"
+msgstr "_Muodostus"
 
 #: ../plug-ins/flame/flame.c:1095
 msgid "Co_ntrast:"
@@ -8853,7 +8873,7 @@ msgstr "Ylinäytteistys:"
 
 #: ../plug-ins/flame/flame.c:1145
 msgid "Spatial _filter radius:"
-msgstr ""
+msgstr "Spatiaalinen säde:"
 
 #: ../plug-ins/flame/flame.c:1164
 msgid "Color_map:"
@@ -9378,7 +9398,7 @@ msgstr "Valitse objekti"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1038
 msgid "This tool has no options"
-msgstr ""
+msgstr "Tällä työkalulla ei ole asetuksia"
 
 #. Put buttons in
 #: ../plug-ins/gfig/gfig-dialog.c:1228
@@ -9420,7 +9440,7 @@ msgstr "Tausta:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1305
 msgid "Feather"
-msgstr ""
+msgstr "Höyhen"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1329
 msgid "Radius:"
@@ -9498,7 +9518,7 @@ msgstr ""
 
 #: ../plug-ins/gfig/gfig-dobject.c:955
 msgid "Error reading file"
-msgstr ""
+msgstr "Virhe tiedostoa luettaessa"
 
 #: ../plug-ins/gfig/gfig-dobject.c:1044
 msgid "Editing read-only object - you will not be able to save it"
@@ -10171,11 +10191,11 @@ msgstr ""
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:807
 msgid "Produce a lense flare effect using gradients"
-msgstr ""
+msgstr "Tuottaa linssiheijastuksen käyttäen liukuväriä"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:812
 msgid "_Gradient Flare..."
-msgstr ""
+msgstr "Liukuväriheijastus..."
 
 #.
 #. *    Dialog Shell
@@ -10183,7 +10203,7 @@ msgstr ""
 #: ../plug-ins/gradient-flare/gradient-flare.c:951
 #: ../plug-ins/gradient-flare/gradient-flare.c:2357
 msgid "Gradient Flare"
-msgstr ""
+msgstr "Liukuväriheijastus"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1264
 #, c-format
@@ -10223,7 +10243,7 @@ msgstr ""
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2466
 msgid "Default"
-msgstr ""
+msgstr "Oletus"
 
 #.
 #. *  Scales
@@ -10272,7 +10292,7 @@ msgstr "Valitsin"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3059
 msgid "New Gradient Flare"
-msgstr ""
+msgstr "Uusi liukuväriheijastus"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Enter a name for the new GFlare"
@@ -10285,7 +10305,7 @@ msgstr "Nimi '%s' on jo käytössä!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3138
 msgid "Copy Gradient Flare"
-msgstr ""
+msgstr "Kopioi liukuväriheijastus"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3141
 msgid "Enter a name for the copied GFlare"
@@ -10298,11 +10318,11 @@ msgstr "Nimi '%s' on jo käytössä!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3194
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
+msgstr "Ei voi tuhota!! Yksi GFlare on pakko olla."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3204
 msgid "Delete Gradient Flare"
-msgstr ""
+msgstr "Tuhoa liukuväriheijastus"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3276
 #, c-format
@@ -10311,7 +10331,7 @@ msgstr ""
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3317
 msgid "Gradient Flare Editor"
-msgstr ""
+msgstr "Liukuväriheijastus editori"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3321
 msgid "Rescan Gradients"
@@ -10320,7 +10340,7 @@ msgstr ""
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3446
 msgid "Glow Paint Options"
-msgstr ""
+msgstr "Hehkun piirron asetukset"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3457
 #: ../plug-ins/gradient-flare/gradient-flare.c:3485
@@ -10342,7 +10362,7 @@ msgstr "Säteiden piirron asetukset"
 #. Rays
 #: ../plug-ins/gradient-flare/gradient-flare.c:3502
 msgid "Second Flares Paint Options"
-msgstr ""
+msgstr "Toissisijaisten liekkien piirron asetukset"
 
 #.
 #. *  Gradient Menus
@@ -10357,17 +10377,17 @@ msgstr "Väriliukumat"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3671
 #: ../plug-ins/gradient-flare/gradient-flare.c:3808
 msgid "Radial gradient:"
-msgstr ""
+msgstr "Radiaalinen liukuma"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3570
 #: ../plug-ins/gradient-flare/gradient-flare.c:3675
 msgid "Angular gradient:"
-msgstr ""
+msgstr "Kiertyvä liukuma"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3574
 #: ../plug-ins/gradient-flare/gradient-flare.c:3679
 msgid "Angular size gradient:"
-msgstr ""
+msgstr "Kiertyvä kokoliukuma"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3594
 #: ../plug-ins/gradient-flare/gradient-flare.c:3699
@@ -10397,7 +10417,7 @@ msgstr "Piikkien lukumäärä:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3748
 msgid "Spike thickness:"
-msgstr ""
+msgstr "Piikkien paksuus:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3762
 msgid "_Rays"
@@ -10405,18 +10425,18 @@ msgstr "_Säteet"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3812
 msgid "Size factor gradient:"
-msgstr ""
+msgstr "Koko liukuma:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3816
 msgid "Probability gradient:"
-msgstr ""
+msgstr "Todennäköisyys liukuma:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
 #: ../plug-ins/gradient-flare/gradient-flare.c:3878
 msgid "Shape of Second Flares"
-msgstr ""
+msgstr "Toissisijaisen liekin muoto"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3886
 #: ../plug-ins/imagemap/imap_menu.c:222
@@ -10434,7 +10454,7 @@ msgstr "Satunnaissiemen:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3950
 msgid "_Second Flares"
-msgstr ""
+msgstr "Toissisijainen liekki"
 
 #: ../plug-ins/help-browser/dialog.c:186
 #: ../plug-ins/help-browser/dialog.c:1134
@@ -12037,7 +12057,7 @@ msgstr "Algoritmi"
 
 #: ../plug-ins/maze/maze-dialog.c:270
 msgid "Depth first"
-msgstr "Syvyyteen ensin -haku"
+msgstr "Syvyyssuuntainen"
 
 #: ../plug-ins/maze/maze-dialog.c:271
 msgid "Prim's algorithm"
@@ -12053,7 +12073,7 @@ msgstr ""
 
 #: ../plug-ins/maze/maze.c:123
 msgid "Draw a labyrinth"
-msgstr ""
+msgstr "Piirtää labyrintin"
 
 #: ../plug-ins/maze/maze.c:130
 msgid "_Maze..."
