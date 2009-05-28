@@ -50,6 +50,7 @@
 #include "tile-rowhints.h"
 #include "tile-swap.h"
 #include "tile-private.h"
+#include "tile-cache.h"
 
 #include "gimp-intl.h"
 
@@ -374,7 +375,9 @@ tile_swap_default_in (SwapFile *swap_file,
   if (tile->data)
     return;
 
-#ifdef TILE_PROFILING
+  tile_cache_suspend_idle_swapper();
+
+#ifdef TILE_PROFILING  
   g_get_current_time(&now);
   tile_total_swapin++;
 

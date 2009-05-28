@@ -27,16 +27,14 @@
 #include "tile-rowhints.h"
 #include "tile-private.h"
 
-
-#define IDLE_SWAPPER_TIMEOUT  250
-
+#define IDLE_SWAPPER_START              1000
+#define IDLE_SWAPPER_INTERVAL_MS        20
+#define IDLE_SWAPPER_TILES_PER_INTERVAL 10
 
 static gboolean  tile_cache_zorch_next     (void);
 static void      tile_cache_flush_internal (Tile     *tile);
-
 static gboolean  tile_idle_preswap         (gpointer  data);
 static void      tile_verify(void);
-
 
 typedef struct _TileList
 {
@@ -49,6 +47,7 @@ static gulong        max_cache_size   = 0;
 static gulong        cur_cache_dirty  = 0;
 static TileList      tile_list        = { NULL, NULL };
 static guint         idle_swapper     = 0;
+static guint         idle_delay       = 0;
 static Tile         *idle_scan_last   = NULL;
 
 #ifdef TILE_PROFILING
@@ -109,6 +108,12 @@ tile_cache_exit (void)
   g_mutex_free (tile_cache_mutex);
   tile_cache_mutex = NULL;
 #endif
+}
+
+void
+tile_cache_suspend_idle_swapper(void)
+{
+  idle_delay = 1;
 }
 
 void
@@ -208,6 +213,7 @@ tile_cache_insert (Tile *tile)
   }
   tile_list.last = tile;
   tile->cached = TRUE;
+  idle_delay = 1;
 
   if (PENDING_WRITE(tile))
     {
@@ -216,15 +222,16 @@ tile_cache_insert (Tile *tile)
       if(!idle_scan_last)
 	idle_scan_last=tile;
       
-      if (! idle_swapper &&
-          cur_cache_dirty * 2 > max_cache_size)
+      if (!idle_swapper)
         {
 
 #ifdef TILE_PROFILING
-	  g_printerr("idle swapper -> running");
+	  g_printerr("idle swapper -> started\n");
+	  g_printerr("idle swapper -> waiting");
 #endif
+	  idle_delay = 0;
           idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
-                                             IDLE_SWAPPER_TIMEOUT,
+                                             IDLE_SWAPPER_START,
                                              tile_idle_preswap,
                                              NULL, NULL);
         }
@@ -250,6 +257,7 @@ tile_cache_set_size (gulong cache_size)
 {
   TILE_CACHE_LOCK;
 
+  idle_delay = 1;
   max_cache_size = cache_size;
 
   while (cur_cache_size > max_cache_size)
@@ -309,6 +317,7 @@ tile_cache_zorch_next (void)
 
   if (PENDING_WRITE(tile))
     {
+      idle_delay = 1;
       tile_swap_out (tile);
     }
 
@@ -327,49 +336,89 @@ tile_cache_zorch_next (void)
 }
 
 static gboolean
-tile_idle_preswap (gpointer data)
+tile_idle_preswap_run (gpointer data)
 {
   Tile *tile;
+  int count = 0;
 
-  if (cur_cache_dirty * 2 < max_cache_size)
+  if (idle_delay)
     {
 #ifdef TILE_PROFILING
-      g_printerr("\nidle swapper -> stopped\n");
+      g_printerr("\nidle swapper -> waiting");
 #endif
-      idle_swapper = 0;
+      idle_delay = 0;
+      idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
+                                         IDLE_SWAPPER_START,
+                                         tile_idle_preswap,
+                                         NULL, NULL);
       return FALSE;
     }
 
   TILE_CACHE_LOCK;
 
 #ifdef TILE_PROFILING
-  tile_verify();
   g_printerr(".");
-  tile_idle_swapout++;
 #endif
 
   tile = idle_scan_last;
 
-  while(tile){
-    if(PENDING_WRITE(tile)){
-      idle_scan_last = tile->next;
-      
-      tile_swap_out (tile);
-      if(!PENDING_WRITE(tile))
-	cur_cache_dirty -= tile->size;
-
-      TILE_CACHE_UNLOCK;
-      return TRUE;
+  while(tile)
+    {
+      if(PENDING_WRITE(tile))
+        {
+          idle_scan_last = tile->next;
+          
+#ifdef TILE_PROFILING
+          tile_idle_swapout++;
+#endif
+          tile_swap_out (tile);
+          if(!PENDING_WRITE(tile))
+            cur_cache_dirty -= tile->size;
+          count++;
+          
+          if(count>=IDLE_SWAPPER_TILES_PER_INTERVAL) 
+            {
+              TILE_CACHE_UNLOCK;
+              return TRUE;
+            }
+        }
+      tile = tile->next;
     }
-    tile = tile->next;
-  }
   
   g_printerr("\nidle swapper -> stopped\n");
   idle_scan_last = NULL;
   idle_swapper = 0;
-  
+
+#ifdef TILE_PROFILING
+  tile_verify();
+#endif
+
   TILE_CACHE_UNLOCK;
   
+  return FALSE;
+}
+
+static gboolean
+tile_idle_preswap (gpointer data)
+{
+  
+  if (idle_delay){
+#ifdef TILE_PROFILING
+    g_printerr(".");
+#endif
+    idle_delay = 0;
+    return TRUE;
+  }
+  
+#ifdef TILE_PROFILING
+  tile_verify();
+  g_printerr("\nidle swapper -> running");
+#endif
+  
+  idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
+				     IDLE_SWAPPER_INTERVAL_MS,
+				     tile_idle_preswap_run,
+				     NULL, NULL);
   return FALSE;
 }
 
