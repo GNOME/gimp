@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-04-12 11:11+0000\n"
-"PO-Revision-Date: 2009-04-13 13:49+0800\n"
+"POT-Creation-Date: 2009-05-26 18:41+0000\n"
+"PO-Revision-Date: 2009-05-04 17:16+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -173,7 +173,7 @@ msgstr "按钮(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
-msgstr "标志(_L)"
+msgstr "徽标(_L)"
 
 #: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
@@ -197,7 +197,7 @@ msgstr "_Classic.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
-msgstr "Alpha 变标志(_L)"
+msgstr "Alpha 变徽标(_L)"
 
 #: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
@@ -225,7 +225,7 @@ msgstr "凹凸贴图 (Alpha 图层)模糊半径"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
-msgstr "用带轮廓的文字和投影创建标志"
+msgstr "创建一个带有有轮廓的文字和投影的徽标"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
@@ -638,7 +638,7 @@ msgstr "奇异炽光(_G)..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Create a logo with an alien glow around the text"
-msgstr "用周围带有奇异炽光的文字创建标志"
+msgstr "创建一个周围带有奇异炽光的文字的徽标"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
@@ -654,7 +654,7 @@ msgstr "奇异霓虹灯(_N)..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
-msgstr "创建一个文字周围带有迷幻轮廓的标志"
+msgstr "创建一个文字周围带有迷幻轮廓的徽标"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
@@ -682,7 +682,7 @@ msgstr "给选中的区域(或 alpha) 添加渐变效果，投影和背景"
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr "创建一个带有渐变效果，投影和背景的纯文本标志"
+msgstr "创建一个带有渐变效果，投影和背景的纯文本徽标"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -698,7 +698,7 @@ msgstr "基本 II (_A)..."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 msgid "Create a simple logo with a shadow and a highlight"
-msgstr "创建一个带有阴影和高亮的简单标志"
+msgstr "创建一个带有阴影和高亮的简单徽标"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
@@ -819,7 +819,7 @@ msgstr "混合模式"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr "用混合背景，高光和阴影创建徽标"
+msgstr "创建一个带有混合背景，高光和阴影的徽标"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
@@ -875,7 +875,7 @@ msgstr "奶牛斑(_V)..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
-msgstr "创建一个“奶牛斑点”风格的带文字的标志"
+msgstr "创建一个带有“奶牛斑点”风格的文字的徽标"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
@@ -992,7 +992,7 @@ msgstr "雕刻..."
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
-msgstr "创建一个文字在指定背景图像上凸起或凹入的标志"
+msgstr "创建一个文字在指定背景图像上凸起或凹入的徽标"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1008,7 +1008,7 @@ msgstr "为选中区域(或 alpha)创建粉笔画效果"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr "创建一个模仿粉笔在黑板上潦草书写的标志"
+msgstr "创建一个模仿粉笔在黑板上潦草书写的徽标"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
@@ -1032,7 +1032,7 @@ msgstr "裁切量"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
-msgstr "创建一个类似于碎裂木刻的标志"
+msgstr "创建一个类似于碎裂木刻的徽标"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
@@ -1106,7 +1106,7 @@ msgstr "镀铬(_H)..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
-msgstr "创建一个极简单但很酷的镀铬标志"
+msgstr "创建一个极简单但很酷的镀铬徽标"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
@@ -1205,7 +1205,7 @@ msgstr "漫画书(_K)..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr "以描绘轮廓及渐变填充创建一个漫画书风格的标志"
+msgstr "以描绘轮廓及渐变填充创建一个漫画书风格的徽标"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1228,7 +1228,7 @@ msgstr "冰凉金属(_M)..."
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 msgid "Create a metallic logo with reflections and perspective shadows"
-msgstr "以反射及透视阴影创建一个金属标志"
+msgstr "创建一个带有反射及透视阴影的金属徽标"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
@@ -1243,7 +1243,7 @@ msgstr "背景图像"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
-msgstr "创建一个以晶体或凝胶体效果置换其下的图像的标志"
+msgstr "创建一个以晶体或凝胶体效果置换其下的图像的徽标"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
@@ -1373,9 +1373,8 @@ msgid "_Erase Every Other Row..."
 msgstr "隔行擦除(_E)..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
-#, fuzzy
 msgid "Create an image filled with a Land Pattern"
-msgstr "创建一幅以凸凹地图填充的图像"
+msgstr "创建一幅以凸凹地图图案填充的图像"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:2
 #: ../plug-ins/script-fu/scripts/land.scm.h:2
@@ -1464,7 +1463,7 @@ msgstr "给选中区域(或 alpha) 添加附带投影的霜冻效果"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
-msgstr "创建一个附带投影的冻结标志"
+msgstr "创建一个附带投影的冻结徽标"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
@@ -1664,7 +1663,7 @@ msgstr "混和渐变(文字)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr "创建一个带渐变、图案、阴影和凸凹贴图的标志"
+msgstr "创建一个带渐变、图案、阴影和凸凹贴图的徽标"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -1712,7 +1711,7 @@ msgstr "给选中区域(或 alpha) 添加炽热金属的效果"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
-msgstr "创建一个看起来像炽热金属的标志"
+msgstr "创建一个看起来像炽热金属的徽标"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
@@ -1734,7 +1733,7 @@ msgstr "边缘大小(像素)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
-msgstr "创建一个闪亮的斜角边缘的标志"
+msgstr "创建一个闪亮的斜角边缘的徽标"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
@@ -1821,7 +1820,7 @@ msgstr "删除所有参考线(_R)"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
-msgstr "创建一个双色的潦草文字风格的标志"
+msgstr "创建一个双色的潦草文字风格的徽标"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
@@ -1833,7 +1832,7 @@ msgstr "框架大小"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
-msgstr ""
+msgstr "Imigre-_26..."
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
 msgid "Create an image filled with a topographic map pattern"
@@ -1949,7 +1948,7 @@ msgstr "将选中区域(或 alpha)转换到类似于霓虹灯广告牌的物件"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
-msgstr "创建一个霓虹灯广告牌风格的标志"
+msgstr "创建一个霓虹灯广告牌风格的徽标"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
@@ -1965,7 +1964,7 @@ msgstr "格点大小(像素)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Create a logo in the style of newspaper printing"
-msgstr "创建一个新闻印刷风格的标志"
+msgstr "创建一个报纸印刷风格的徽标"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -1975,7 +1974,7 @@ msgstr "密度(%)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:9
 msgid "Newsprint Te_xt..."
-msgstr "新闻印刷文本(_X)..."
+msgstr "报纸印刷文本(_X)..."
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Defocus"
@@ -2060,9 +2059,8 @@ msgid "_Perspective..."
 msgstr "透视(_P)..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
-#, fuzzy
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "给选中区域(或 alpha)添加“掠夺者”效果"
+msgstr "给选中区域(或 alpha)添加“捕食者”效果"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2078,7 +2076,7 @@ msgstr "像素化"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:7
 msgid "_Predator..."
-msgstr "掠夺者(_P)..."
+msgstr "捕食者(_P)..."
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Create images, each containing an oval button graphic"
@@ -2282,7 +2280,7 @@ msgstr "幻灯片(_S)..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
-msgstr "创建一个最新式的镀铬标志"
+msgstr "创建一个最新式的镀铬徽标"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
@@ -2290,7 +2288,7 @@ msgstr "新式镀铬..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
-msgstr "创建一个有迅速文字效果的标志"
+msgstr "创建一个有迅速文字效果的徽标"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
@@ -2444,7 +2442,7 @@ msgstr "_Spyrogimp..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr "以类似岩石的材质、新星炽光和阴影创建标志"
+msgstr "以类似岩石的材质、新星炽光和阴影创建徽标"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
@@ -2471,9 +2469,8 @@ msgid "Number of times to whirl"
 msgstr "旋转次数"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
-#, fuzzy
 msgid "Quarter size"
-msgstr "边缘大小"
+msgstr "四分之一大小"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl angle"
@@ -2493,7 +2490,7 @@ msgstr "基本颜色"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Create a logo using a Trace Of Particles effect"
-msgstr "创建一个粒子追踪效果的标志"
+msgstr "以粒子追踪效果创建徽标"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
@@ -2518,7 +2515,7 @@ msgstr "边缘平滑"
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid ""
 "Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr "创建一个沿着圆周渲染指定文字的标志"
+msgstr "创建一个沿着圆周渲染指定文字的徽标"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2531,7 +2528,7 @@ msgstr "文字环(_I)..."
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
 msgid ""
 "Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr "创建一个带有高光、阴影和马赛克背景的纹理化的标志"
+msgstr "创建一个带有高光、阴影和马赛克背景的纹理化的徽标"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"

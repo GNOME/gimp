@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-04-17 20:32+0000\n"
-"PO-Revision-Date: 2009-04-12 21:05+0800\n"
+"POT-Creation-Date: 2009-05-24 15:24+0000\n"
+"PO-Revision-Date: 2009-05-02 22:15+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -266,7 +266,7 @@ msgstr "按类型"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:385
-#: ../libgimp/gimpprocbrowserdialog.c:536 ../libgimpwidgets/gimpbrowser.c:113
+#: ../libgimp/gimpprocbrowserdialog.c:536 ../libgimpwidgets/gimpbrowser.c:130
 msgid "No matches"
 msgstr "无匹配"
 
@@ -486,22 +486,19 @@ msgid "Large"
 msgstr "大"
 
 #: ../libgimpbase/gimpbaseenums.c:237
-#, fuzzy
 msgctxt "check-type"
 msgid "Light checks"
-msgstr "浅色十字"
+msgstr "浅色方格"
 
 #: ../libgimpbase/gimpbaseenums.c:238
-#, fuzzy
 msgctxt "check-type"
 msgid "Mid-tone checks"
-msgstr "中等色调十字"
+msgstr "中等色调方格"
 
 #: ../libgimpbase/gimpbaseenums.c:239
-#, fuzzy
 msgctxt "check-type"
 msgid "Dark checks"
-msgstr "深色十字"
+msgstr "深色方格"
 
 #: ../libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
@@ -564,7 +561,6 @@ msgid "Bi-linear"
 msgstr "对称线性"
 
 #: ../libgimpbase/gimpbaseenums.c:402
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "径向"
@@ -635,7 +631,6 @@ msgid "Solid"
 msgstr "实线"
 
 #: ../libgimpbase/gimpbaseenums.c:476
-#, fuzzy
 msgctxt "icon-type"
 msgid "Stock ID"
 msgstr "存储 ID"
@@ -711,10 +706,9 @@ msgid "Cubic"
 msgstr "立方"
 
 #: ../libgimpbase/gimpbaseenums.c:582
-#, fuzzy
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
-msgstr "Sinc (Lanczos3)"
+msgstr "正弦 (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:611
 msgctxt "paint-application-mode"
@@ -948,7 +942,6 @@ msgid "Color managed display"
 msgstr "颜色管理的显示"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
-#, fuzzy
 msgctxt "color-management-mode"
 msgid "Print simulation"
 msgstr "打印模拟"
@@ -1108,7 +1101,7 @@ msgstr "缩略图没有包含 Thumb::URI 标签"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "无法为 “%s” 创建缩略图：%s"
 
-#: ../libgimpwidgets/gimpbrowser.c:97
+#: ../libgimpwidgets/gimpbrowser.c:103
 msgid "_Search:"
 msgstr "搜索(_S)："
 
@@ -1225,7 +1218,7 @@ msgstr "已选中一页"
 
 #: ../libgimpwidgets/gimppageselector.c:1177
 #: ../libgimpwidgets/gimppageselector.c:1181
-#, fuzzy, c-format
+#, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "已选中 %d 页"
@@ -1387,7 +1380,7 @@ msgstr "横向"
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgctxt "color-selector-channel"
 msgid "_H"
-msgstr "色调(_H)"
+msgstr "_H"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Hue"
@@ -1396,7 +1389,7 @@ msgstr "色调"
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgctxt "color-selector-channel"
 msgid "_S"
-msgstr "饱和度(_S)"
+msgstr "_S"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Saturation"
@@ -1405,7 +1398,7 @@ msgstr "饱和度"
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgctxt "color-selector-channel"
 msgid "_V"
-msgstr "亮度(_V)"
+msgstr "_V"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Value"
@@ -1414,7 +1407,7 @@ msgstr "亮度"
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgctxt "color-selector-channel"
 msgid "_R"
-msgstr "红(_R)"
+msgstr "_R"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Red"
@@ -1423,7 +1416,7 @@ msgstr "红色"
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_G"
-msgstr "绿(_G)"
+msgstr "_G"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgid "Green"
@@ -1432,14 +1425,13 @@ msgstr "绿色"
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_B"
-msgstr "蓝(_B)"
+msgstr "_B"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgid "Blue"
 msgstr "蓝色"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:132
-#, fuzzy
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
@@ -1481,25 +1473,25 @@ msgstr "CMYK"
 #: ../modules/color-selector-cmyk-lcms.c:168
 #: ../modules/color-selector-cmyk.c:124
 msgid "_C"
-msgstr "青(_C)"
+msgstr "_C"
 
 #. Magenta
 #: ../modules/color-selector-cmyk-lcms.c:170
 #: ../modules/color-selector-cmyk.c:126
 msgid "_M"
-msgstr "红(_M)"
+msgstr "_M"
 
 #. Yellow
 #: ../modules/color-selector-cmyk-lcms.c:172
 #: ../modules/color-selector-cmyk.c:128
 msgid "_Y"
-msgstr "黄(_Y)"
+msgstr "_Y"
 
 #. Key (Black)
 #: ../modules/color-selector-cmyk-lcms.c:174
 #: ../modules/color-selector-cmyk.c:130
 msgid "_K"
-msgstr "黑(_K)"
+msgstr "_K"
 
 #: ../modules/color-selector-cmyk-lcms.c:178
 #: ../modules/color-selector-cmyk.c:134
@@ -1937,7 +1929,7 @@ msgstr "Gamma"
 
 #: ../modules/display-filter-gamma.c:231
 msgid "_Gamma:"
-msgstr "Gamma(_G)："
+msgstr "_Gamma："
 
 #: ../modules/display-filter-high-contrast.c:89
 msgid "High Contrast color display filter"
@@ -2016,15 +2008,3 @@ msgstr "目标(_I)："
 #: ../modules/display-filter-proof.c:411
 msgid "_Black Point Compensation"
 msgstr "黑点补偿(_B)"
-
-#~ msgid "gradient|Linear"
-#~ msgstr "线性"
-
-#~ msgid "interpolation|None"
-#~ msgstr "无"
-
-#~ msgid "interpolation|Linear"
-#~ msgstr "线性"
-
-#~ msgid "intent|Saturation"
-#~ msgstr "饱和度"
