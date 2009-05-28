@@ -1068,61 +1068,63 @@ struct ChildLocation
 
 static void
 child_location_foreach (GtkWidget *child,
-			gpointer   data)
+                        gpointer   data)
 {
   gint x, y;
   struct ChildLocation *child_loc = data;
 
   /* Ignore invisible widgets */
-  if (!GTK_WIDGET_DRAWABLE (child))
+  if (! GTK_WIDGET_DRAWABLE (child))
     return;
 
   /* (child_loc->x, child_loc->y) are relative to
    * child_loc->container's allocation.
    */
 
-  if (!child_loc->child &&
+  if (! child_loc->child &&
       gtk_widget_translate_coordinates (child_loc->container, child,
-					child_loc->x, child_loc->y,
-					&x, &y))
+                                        child_loc->x, child_loc->y,
+                                        &x, &y))
     {
 #ifdef DEBUG_TOOLTIP
       g_print ("candidate: %s  alloc=[(%d,%d)  %dx%d]     (%d, %d)->(%d, %d)\n",
-	       gtk_widget_get_name (child),
-	       child->allocation.x,
-	       child->allocation.y,
-	       child->allocation.width,
-	       child->allocation.height,
-	       child_loc->x, child_loc->y,
-	       x, y);
+               gtk_widget_get_name (child),
+               child->allocation.x,
+               child->allocation.y,
+               child->allocation.width,
+               child->allocation.height,
+               child_loc->x, child_loc->y,
+               x, y);
 #endif /* DEBUG_TOOLTIP */
 
       /* (x, y) relative to child's allocation. */
       if (x >= 0 && x < child->allocation.width
-	  && y >= 0 && y < child->allocation.height)
+          && y >= 0 && y < child->allocation.height)
         {
-	  if (GTK_IS_CONTAINER (child))
-	    {
-	      struct ChildLocation tmp = { NULL, NULL, 0, 0 };
+          if (GTK_IS_CONTAINER (child))
+            {
+              struct ChildLocation tmp = { NULL, NULL, 0, 0 };
 
-	      /* Take (x, y) relative the child's allocation and
-	       * recurse.
-	       */
-	      tmp.x = x;
-	      tmp.y = y;
-	      tmp.container = child;
+              /* Take (x, y) relative the child's allocation and
+               * recurse.
+               */
+              tmp.x = x;
+              tmp.y = y;
+              tmp.container = child;
 
-	      gtk_container_forall (GTK_CONTAINER (child),
-				    child_location_foreach, &tmp);
+              gtk_container_forall (GTK_CONTAINER (child),
+                                    child_location_foreach, &tmp);
 
-	      if (tmp.child)
-		child_loc->child = tmp.child;
-	      else
-		child_loc->child = child;
-	    }
-	  else
-	    child_loc->child = child;
-	}
+              if (tmp.child)
+                child_loc->child = tmp.child;
+              else
+                child_loc->child = child;
+            }
+          else
+            {
+              child_loc->child = child;
+            }
+        }
     }
 }
 
@@ -1131,13 +1133,13 @@ child_location_foreach (GtkWidget *child,
  */
 static void
 window_to_alloc (GtkWidget *dest_widget,
-		 gint       src_x,
-		 gint       src_y,
-		 gint      *dest_x,
-		 gint      *dest_y)
+                 gint       src_x,
+                 gint       src_y,
+                 gint      *dest_x,
+                 gint      *dest_y)
 {
   /* Translate from window relative to allocation relative */
-  if (!GTK_WIDGET_NO_WINDOW (dest_widget) && dest_widget->parent)
+  if (! GTK_WIDGET_NO_WINDOW (dest_widget) && dest_widget->parent)
     {
       gint wx, wy;
       gdk_window_get_position (gtk_widget_get_window (dest_widget), &wx, &wy);
@@ -1162,21 +1164,21 @@ window_to_alloc (GtkWidget *dest_widget,
 
 static GtkWidget *
 find_widget_under_pointer (GdkWindow *window,
-			   gint      *x,
-			   gint      *y)
+                           gint      *x,
+                           gint      *y)
 {
   GtkWidget *event_widget;
   struct ChildLocation child_loc = { NULL, NULL, 0, 0 };
 
   gdk_window_get_user_data (window, (void **)&event_widget);
 
-  if (!event_widget)
+  if (! event_widget)
     return NULL;
 
 #ifdef DEBUG_TOOLTIP
   g_print ("event window %p (belonging to %p (%s))  (%d, %d)\n",
-	   window, event_widget, gtk_widget_get_name (event_widget),
-	   *x, *y);
+           window, event_widget, gtk_widget_get_name (event_widget),
+           *x, *y);
 #endif
 
   /* Coordinates are relative to event window */
@@ -1210,8 +1212,8 @@ find_widget_under_pointer (GdkWindow *window,
    * relative coordinates.
    */
   window_to_alloc (event_widget,
-		   child_loc.x, child_loc.y,
-		   &child_loc.x, &child_loc.y);
+                   child_loc.x, child_loc.y,
+                   &child_loc.x, &child_loc.y);
 
   if (GTK_IS_CONTAINER (event_widget))
     {
@@ -1221,21 +1223,21 @@ find_widget_under_pointer (GdkWindow *window,
       child_loc.child = NULL;
 
       gtk_container_forall (GTK_CONTAINER (event_widget),
-			    child_location_foreach, &child_loc);
+                            child_location_foreach, &child_loc);
 
       /* Here we have a widget, with coordinates relative to
        * child_loc.container's allocation.
        */
 
       if (child_loc.child)
-	event_widget = child_loc.child;
+        event_widget = child_loc.child;
       else if (child_loc.container)
-	event_widget = child_loc.container;
+        event_widget = child_loc.container;
 
       /* Translate to event_widget's allocation */
       gtk_widget_translate_coordinates (container, event_widget,
-					child_loc.x, child_loc.y,
-					&child_loc.x, &child_loc.y);
+                                        child_loc.x, child_loc.y,
+                                        &child_loc.x, &child_loc.y);
 
     }
 
