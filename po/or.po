@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: or\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-05-21 16:52+0000\n"
-"PO-Revision-Date: 2009-05-26 18:21+0530\n"
+"PO-Revision-Date: 2009-05-28 13:25+0530\n"
 "Last-Translator: Manoj Kumar Giri <mgiri@redhat.com>\n"
 "Language-Team: Oriya <oriya-it@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -614,9 +615,8 @@ msgstr ""
 #: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:272
 #: ../app/actions/layers-actions.c:299 ../app/actions/layers-actions.c:326
 #: ../app/actions/vectors-actions.c:179
-#, fuzzy
 msgid "_Subtract from Selection"
-msgstr "_ଚଯନ ରୁ ବିୟୋଗ କରନ୍ତୁ"
+msgstr "ଚୟନରୁ ବିୟୋଗ କରନ୍ତୁ (_S)"
 
 #: ../app/actions/channels-actions.c:118
 msgid "Subtract this channel from the current selection"
@@ -625,9 +625,8 @@ msgstr ""
 #: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:278
 #: ../app/actions/layers-actions.c:305 ../app/actions/layers-actions.c:332
 #: ../app/actions/vectors-actions.c:185
-#, fuzzy
 msgid "_Intersect with Selection"
-msgstr "_ଚଯନ ସହ ପ୍ରତିଚ୍ଛେଦନ କରନ୍ତୁ"
+msgstr "ଚୟନ ସହ ପ୍ରତିଚ୍ଛେଦନ କରନ୍ତୁ (_I)"
 
 #: ../app/actions/channels-actions.c:124
 msgid "Intersect this channel with the current selection"
@@ -1095,9 +1094,8 @@ msgid "Open the module manager dialog"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:224
-#, fuzzy
 msgid "_Tip of the Day"
-msgstr "_ ଆଜିଦିନର ସଙ୍କେତ"
+msgstr "ଆଜିଦିନର ସୂଚନା (_T)"
 
 #: ../app/actions/dialogs-actions.c:225
 msgid "Show some helpful tips on using GIMP"
@@ -1245,27 +1243,22 @@ msgid "_Open Image"
 msgstr "ପ୍ରତିଛବି ଖୋଲନ୍ତୁ (_O)"
 
 #: ../app/actions/documents-actions.c:47
-#, fuzzy
 msgid "Open the selected entry"
-msgstr "ଚଯନିତ ନିବେଶ ଖୋଲନ୍ତୁ"
+msgstr "ଚୟିତ ନିବେଶକୁ ଖୋଲନ୍ତୁ"
 
 #: ../app/actions/documents-actions.c:52
-#, fuzzy
 msgid "_Raise or Open Image"
-msgstr "_ଛବି ଉନ୍ନିତ କରନ୍ତୁ କିମ୍ବା ଖୋଲନ୍ତୁ"
+msgstr "ଛବି ଉନ୍ନିତ କରନ୍ତୁ କିମ୍ବା ଖୋଲନ୍ତୁ (_R)"
 
 #: ../app/actions/documents-actions.c:53
-#, fuzzy
 msgid "Raise window if already open"
-msgstr "ୟଦି ପୂର୍ବରୁ ଖୋଲାଅଛି wiଣ୍ଡୋ ଉନ୍ନିତ କରନ୍ତୁ"
+msgstr "ଯଦି ପୂର୍ବରୁ ଖୋଲାଅଛି ୱିଣ୍ଡୋକୁ ଉନ୍ନିତ କରନ୍ତୁ"
 
 #: ../app/actions/documents-actions.c:58
-#, fuzzy
 msgid "File Open _Dialog"
-msgstr "ଫ଼ାଇଲ୍ ଖୋଲନ୍ତୁ _ସଂଳାପ"
+msgstr "ଫାଇଲ ଖୋଲନ୍ତୁ ସଂଳାପ (_D)"
 
 #: ../app/actions/documents-actions.c:59
-#, fuzzy
 msgid "Open image dialog"
 msgstr "ଛବି ସଂଳାପ ଖୋଲନ୍ତୁ"
 
@@ -1278,17 +1271,14 @@ msgid "Copy image location to clipboard"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:70
-#, fuzzy
 msgid "Remove _Entry"
-msgstr "ନିବେଶ _ହଟାନ୍ତୁ"
+msgstr "ନିବେଶ ହଟାନ୍ତୁ (_E)"
 
 #: ../app/actions/documents-actions.c:71
-#, fuzzy
 msgid "Remove the selected entry"
-msgstr "ଚଯନିତ ନିବେଶ ହଟାନ୍ତୁ"
+msgstr "ଚୟିତ ନିବେଶକୁ ହଟାନ୍ତୁ"
 
 #: ../app/actions/documents-actions.c:76
-#, fuzzy
 msgid "_Clear History"
 msgstr "ପୁରୁଣା ତଥ୍ଯକୁ ସଫା କରନ୍ତୁ (_C)"
 
@@ -1297,43 +1287,36 @@ msgid "Clear the entire document history"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:82
-#, fuzzy
 msgid "Recreate _Preview"
-msgstr "ପ୍ରାକ୍ଦର୍ଶନ_ ପୂନର୍ସୃଷ୍ଟି କରନ୍ତୁ"
+msgstr "ପ୍ରାକଦର୍ଶନ ପୁନଃ ନିର୍ମାଣ କରନ୍ତୁ (_P)"
 
 #: ../app/actions/documents-actions.c:83
-#, fuzzy
 msgid "Recreate preview"
-msgstr "ପ୍ରାକ୍ଦର୍ଶନ ପୂନର୍ସୃଷ୍ଟି କରନ୍ତୁ"
+msgstr "ପ୍ରାକଦର୍ଶନ ପୁନଃ ନିର୍ମାଣ କରନ୍ତୁ"
 
 #: ../app/actions/documents-actions.c:88
-#, fuzzy
 msgid "Reload _all Previews"
-msgstr "ସମସ୍ତ ପ୍ରାକ୍ଦର୍ଶନରାଜି_ ପୂନର୍ସଂସ୍ଥାପନ କରନ୍ତୁ "
+msgstr "ସମସ୍ତ ପ୍ରାକଦର୍ଶନ ପୁନଃ ସ୍ଥାପନ କରନ୍ତୁ (_a)"
 
 #: ../app/actions/documents-actions.c:89
-#, fuzzy
 msgid "Reload all previews"
-msgstr "ସମସ୍ତ ପ୍ରାକ୍ଦର୍ଶନରାଜି ପୂନର୍ସଂସ୍ଥାପନ କରନ୍ତୁ"
+msgstr "ସମସ୍ତ ପ୍ରାକଦର୍ଶନ ପୁନଃ ସ୍ଥାପନ କରନ୍ତୁ"
 
 #: ../app/actions/documents-actions.c:94
-#, fuzzy
 msgid "Remove Dangling E_ntries"
-msgstr "ଦୋଳଯମାନ୍ ନି_ବେଶରାଜି ହଟାନ୍ତୁ"
+msgstr "ଦୋଳୟମାନ ନିବେଶଗୁଡ଼ିକୁ ହଟାନ୍ତୁ (_n)"
 
 #: ../app/actions/documents-actions.c:95
-#, fuzzy
 msgid "Remove dangling entries"
-msgstr "ଦୋଳଯମାନ୍ ନିବେଶରାଜି ହଟାନ୍ତୁ"
+msgstr "ଦୋଳୟମାନ ନିବେଶଗୁଡ଼ିକୁ ହଟାନ୍ତୁ"
 
 #: ../app/actions/documents-commands.c:198
 msgid "Clear Document History"
 msgstr ""
 
 #: ../app/actions/documents-commands.c:221
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "ସାମ୍ପ୍ରତିକ ଦଲିଲ ତାଲିକା ସଫା କରନ୍ତୁ"
+msgstr "ସାମ୍ପ୍ରତିକ ଦଲିଲ ତାଲିକା ସଫା କରିବେ କି?"
 
 #: ../app/actions/documents-commands.c:224
 msgid ""
@@ -1342,81 +1325,72 @@ msgid ""
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:45
-#, fuzzy
 msgid "_Equalize"
-msgstr "_ସମକରଣ"
+msgstr "ସମକରଣ (_E)"
 
 #: ../app/actions/drawable-actions.c:46
 msgid "Automatic contrast enhancement"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:51
-#, fuzzy
 msgid "In_vert"
-msgstr "ଓ_ଲଟାନ୍ତୁ"
+msgstr "ଓଲଟାନ୍ତୁ (_v)"
 
 #: ../app/actions/drawable-actions.c:52
 msgid "Invert the colors"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:57
-#, fuzzy
 msgid "_White Balance"
-msgstr "_ଧଳା ସନ୍ତୁଳନ"
+msgstr "ଧଳା ସନ୍ତୁଳନ (_W)"
 
 #: ../app/actions/drawable-actions.c:58
 msgid "Automatic white balance correction"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:63
-#, fuzzy
 msgid "_Offset..."
-msgstr "_ସମସନ୍ତୁଳନ..."
+msgstr "ସମସନ୍ତୁଳନ (_O)..."
 
 #: ../app/actions/drawable-actions.c:64
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:72 ../app/actions/vectors-actions.c:153
-#, fuzzy
 msgid "_Linked"
-msgstr "_ସଂୟୋଗୀକୃତ"
+msgstr "ସଂଯୁକ୍ତ (_L)"
 
 #: ../app/actions/drawable-actions.c:73
 msgid "Toggle the linked state"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:79 ../app/actions/vectors-actions.c:147
-#, fuzzy
 msgid "_Visible"
-msgstr "_ଦୃଶ୍ଯମାନ୍"
+msgstr "ଦୃଶ୍ଯମାନ (_V)"
 
 #: ../app/actions/drawable-actions.c:80
 msgid "Toggle visibility"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:89 ../app/actions/image-actions.c:159
-#, fuzzy
 msgid "Flip _Horizontally"
-msgstr "ଭୂସମାନ୍ତର ଭାବରେ_ ଛିଟିକାନ୍ତୁ "
+msgstr "ଭୂସମାନ୍ତର ଭାବରେ ଛିଟିକାନ୍ତୁ (_H)"
 
 #: ../app/actions/drawable-actions.c:90
 msgid "Flip horizontally"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
-#, fuzzy
 msgid "Flip _Vertically"
-msgstr "ଲମ୍ବ ଭାବରେ_ ଛିଟିକାନ୍ତୁ "
+msgstr "ଭୂଲମ୍ବ ଭାବରେ ଛିଟିକାନ୍ତୁ (_V)"
 
 #: ../app/actions/drawable-actions.c:96
-#, fuzzy
 msgid "Flip vertically"
-msgstr "ଲମ୍ବଭାବରେ ଅଘାତ କର"
+msgstr "ଭୂଲମ୍ବ ଭାବରେ ଛିଟିକାନ୍ତୁ"
 
 #: ../app/actions/drawable-actions.c:104 ../app/actions/image-actions.c:174
 msgid "Rotate 90° _clockwise"
-msgstr ""
+msgstr "ବାମାବର୍ତ୍ତୀରେ 90° ବୁଲାନ୍ତୁ (_c)"
 
 #: ../app/actions/drawable-actions.c:105
 msgid "Rotate 90 degrees to the right"
@@ -1439,40 +1413,34 @@ msgid "Rotate 90 degrees to the left"
 msgstr ""
 
 #: ../app/actions/drawable-commands.c:62
-#, fuzzy
 msgid "Equalize does not operate on indexed layers."
-msgstr "ଅନୁକ୍ରମଣିତ ସ୍ତରରାଜି ଉପରେ ସମକରଣ ପ୍ରଚାଳନ ହୁଏ ନାହିଁ ।"
+msgstr "ଅନୁକ୍ରମଣିତ ସ୍ତରଗୁଡ଼ିକ ଉପରେ ସମକରଣ ପ୍ରଚାଳନ ହୁଏ ନାହିଁ।"
 
 #: ../app/actions/drawable-commands.c:85
-#, fuzzy
 msgid "Invert does not operate on indexed layers."
-msgstr "ଅନୁକ୍ରମଣିତ ସ୍ତରରାଜି ଉପରେ ଓଲଟା ପ୍ରଚାଳନ ହୁଏ ନାହିଁ ।"
+msgstr "ଅନୁକ୍ରମଣିତ ସ୍ତରଗୁଡ଼ିକ ଉପରେ ଓଲଟା ପ୍ରଚାଳନ ହୁଏ ନାହିଁ।"
 
 #: ../app/actions/drawable-commands.c:108
-#, fuzzy
 msgid "White Balance operates only on RGB color layers."
-msgstr "କେବଳ RGB ରଙ୍ଗ ସ୍ତରରାଜି ଉପରେ ଧଳା ସନ୍ତୁଳନ ପ୍ରଚାଳନ ହୁଏ ।"
+msgstr "କେବଳ RGB ରଙ୍ଗ ସ୍ତରଗୁଡ଼ିକ ଉପରେ ଧଳା ସନ୍ତୁଳନ ପ୍ରଚାଳନ ହୁଏ।"
 
 #: ../app/actions/edit-actions.c:63
-#, fuzzy
 msgid "_Edit"
 msgstr "ସମ୍ପାଦନ କରନ୍ତୁ (_E)"
 
 #: ../app/actions/edit-actions.c:64
 msgid "_Paste as"
-msgstr ""
+msgstr "ଏହିପରି ଲଗାନ୍ତୁ (_P)"
 
 #: ../app/actions/edit-actions.c:65
-#, fuzzy
 msgid "_Buffer"
-msgstr "_ସାମଯିକସଂଗ୍ରହ"
+msgstr "ବଫର (_B)"
 
 #: ../app/actions/edit-actions.c:68
 msgid "Undo History Menu"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:313
-#, fuzzy
 msgid "_Undo"
 msgstr "ପଦକ୍ଷେପ ବାତିଲ କରନ୍ତୁ (_U)"
 
@@ -1481,7 +1449,6 @@ msgid "Undo the last operation"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:314
-#, fuzzy
 msgid "_Redo"
 msgstr "ପୁଣି କରନ୍ତୁ (_R)"
 
@@ -1506,9 +1473,8 @@ msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:96
-#, fuzzy
 msgid "_Clear Undo History"
-msgstr "_ଅକାର୍ୟ୍ଯକରଣ ଇତିହାସ ସଫାକରନ୍ତୁ"
+msgstr "ପଦକ୍ଷେପ ବାତିଲ ପୁରୁଣା ତଥ୍ୟକୁ ସଫାକରନ୍ତୁ (_C)"
 
 #: ../app/actions/edit-actions.c:97
 msgid "Remove all operations from the undo history"
@@ -1523,7 +1489,6 @@ msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:108
-#, fuzzy
 msgid "Cu_t"
 msgstr "କାଟନ୍ତୁ (_t)"
 
@@ -1532,7 +1497,6 @@ msgid "Move the selected pixels to the clipboard"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:114
-#, fuzzy
 msgid "_Copy"
 msgstr "ନକଲ କରନ୍ତୁ (_C)"
 
@@ -1542,16 +1506,14 @@ msgstr ""
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:120
-#, fuzzy
 msgid "Copy _Visible"
-msgstr "ନକଲ୍ _ଦୃଶ୍ଯମାନ୍"
+msgstr "ନକଲ ଦୃଶ୍ଯମାନ (_V)"
 
 #: ../app/actions/edit-actions.c:121
 msgid "Copy what is visible in the selected region"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:126
-#, fuzzy
 msgid "_Paste"
 msgstr "ଲଗାନ୍ତୁ (_P)"
 
@@ -1560,9 +1522,8 @@ msgid "Paste the content of the clipboard"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:132
-#, fuzzy
 msgid "Paste _Into"
-msgstr "ଭିତରେ_ ଚପାନ୍ତୁ "
+msgstr "ଭିତରେ ଲଗାନ୍ତୁ (_I)"
 
 #: ../app/actions/edit-actions.c:133
 msgid "Paste the content of the clipboard into the current selection"
@@ -1589,18 +1550,16 @@ msgid "Create a new layer from the content of the clipboard"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:156
-#, fuzzy
 msgid "Cu_t Named..."
-msgstr "ନାମିତ କାଟିଆଣ_ନ୍ତୁ..."
+msgstr "ନାମିତ କାଟି ଆଣନ୍ତୁ (_t)..."
 
 #: ../app/actions/edit-actions.c:157
 msgid "Move the selected pixels to a named buffer"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:162
-#, fuzzy
 msgid "_Copy Named..."
-msgstr "_ନାମିତ ନକଲ୍ କରନ୍ତୁ..."
+msgstr "ନାମିତ ନକଲ କରନ୍ତୁ (_C)..."
 
 #: ../app/actions/edit-actions.c:163
 msgid "Copy the selected pixels to a named buffer"
@@ -1616,16 +1575,14 @@ msgid "Copy the selected region to a named buffer"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:174
-#, fuzzy
 msgid "_Paste Named..."
-msgstr "_ନାମିତ ଚପାନ୍ତୁ..."
+msgstr "ନାମିତ ଲଗାନ୍ତୁ (_P)..."
 
 #: ../app/actions/edit-actions.c:175
 msgid "Paste the content of a named buffer"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:180
-#, fuzzy
 msgid "Cl_ear"
 msgstr "ସଫା କରନ୍ତୁ (_e)"
 
@@ -1634,27 +1591,24 @@ msgid "Clear the selected pixels"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:189
-#, fuzzy
 msgid "Fill with _FG Color"
-msgstr "_FG ରଙ୍ଗ ସହ ପୂରଣ କରନ୍ତୁ "
+msgstr "FG ରଙ୍ଗ ସହ ପୂରଣ କରନ୍ତୁ (_F)"
 
 #: ../app/actions/edit-actions.c:190
 msgid "Fill the selection using the foreground color"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:195
-#, fuzzy
 msgid "Fill with B_G Color"
-msgstr "B_G ରଙ୍ଗ ସହ ପୂରଣ କରନ୍ତୁ "
+msgstr "BG ରଙ୍ଗ ସହ ପୂରଣ କରନ୍ତୁ (_G)"
 
 #: ../app/actions/edit-actions.c:196
 msgid "Fill the selection using the background color"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:201
-#, fuzzy
 msgid "Fill with P_attern"
-msgstr "ସ୍ବ_ରୂପ ସହ ପୂରଣ କରନ୍ତୁ"
+msgstr "ସ୍ବରୂପ ସହ ପୂରଣ କରନ୍ତୁ (_a)"
 
 #: ../app/actions/edit-actions.c:202
 msgid "Fill the selection using the active pattern"
@@ -1662,15 +1616,13 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:279
 #, c-format
-#, fuzzy
 msgid "_Undo %s"
-msgstr "_ଅକାର୍ୟ୍ଯକରଣ %s"
+msgstr "%s ର ପଦକ୍ଷେପ ବାତିଲ କରନ୍ତୁ (_U)"
 
 #: ../app/actions/edit-actions.c:286
 #, c-format
-#, fuzzy
 msgid "_Redo %s"
-msgstr "_ପୂନର୍କରଣ %s"
+msgstr "%s କୁ ପୁଣି କରନ୍ତୁ (_R)"
 
 #: ../app/actions/edit-actions.c:301
 #, c-format
@@ -1678,14 +1630,12 @@ msgid "_Fade %s..."
 msgstr ""
 
 #: ../app/actions/edit-commands.c:134
-#, fuzzy
 msgid "Clear Undo History"
-msgstr "ଅକାର୍ୟ୍ଯକରଣ ଇତିହାସ ସଫାକରନ୍ତୁ"
+msgstr "ପଦକ୍ଷେପ ବାତିଲ ପୁରୁଣା ତଥ୍ୟକୁ ସଫାକରନ୍ତୁ"
 
 #: ../app/actions/edit-commands.c:160
-#, fuzzy
 msgid "Really clear image's undo history?"
-msgstr "ପ୍ରକୃତରେ ଛବିର ଅକାର୍ୟ୍ଯକରଣ ଇତିହାସ ସଫାକରିବେକି?"
+msgstr "ପ୍ରକୃତରେ ଛବିର ପଦକ୍ଷେପ ବାତିଲ ପୁରୁଣା ତଥ୍ୟକୁ ସଫା କରିବେ କି?"
 
 #: ../app/actions/edit-commands.c:172
 #, c-format
@@ -1707,53 +1657,44 @@ msgstr ""
 
 #: ../app/actions/edit-commands.c:338 ../app/core/gimpbrushclipboard.c:181
 #: ../app/core/gimppatternclipboard.c:181 ../app/widgets/gimpclipboard.c:296
-#, fuzzy
 msgid "Clipboard"
-msgstr "କର୍ତ୍ତନପଟ୍ଟ"
+msgstr "କ୍ଲିପବୋର୍ଡ"
 
 #: ../app/actions/edit-commands.c:363
-#, fuzzy
 msgid "Cut Named"
 msgstr "ନାମିତ କାଟିଆଣନ୍ତୁ"
 
 #: ../app/actions/edit-commands.c:366 ../app/actions/edit-commands.c:407
 #: ../app/actions/edit-commands.c:427
-#, fuzzy
 msgid "Enter a name for this buffer"
-msgstr "ଏହି ସାମଯିକସଂଗ୍ରହ ପାଇଁ ଏକ ନାମ ନିବେଶ କରନ୍ତୁ"
+msgstr "ଏହି ସାମୟିକ ସଂଗ୍ରହ ପାଇଁ ଏକ ନାମ ନିବେଶ କରନ୍ତୁ"
 
 #: ../app/actions/edit-commands.c:404
-#, fuzzy
 msgid "Copy Named"
-msgstr "ନାମିତ ନକଲ୍ କରନ୍ତୁ"
+msgstr "ନାମିତ ନକଲ କରନ୍ତୁ"
 
 #: ../app/actions/edit-commands.c:424
 msgid "Copy Visible Named "
 msgstr ""
 
 #: ../app/actions/edit-commands.c:542
-#, fuzzy
 msgid "There is no active layer or channel to cut from."
-msgstr "କାଟିଆଣିବା ପାଇଁ କୌଣସି ସକ୍ରିଯ ସ୍ତର କିମ୍ବା ସ୍ରୋତ ନାହିଁ ।"
+msgstr "କାଟିଆଣିବା ପାଇଁ କୌଣସି ସକ୍ରିୟ ସ୍ତର କିମ୍ବା ଉପପଥ ନାହିଁ।"
 
 #: ../app/actions/edit-commands.c:547 ../app/actions/edit-commands.c:579
 #: ../app/actions/edit-commands.c:603
-#, fuzzy
 msgid "(Unnamed Buffer)"
-msgstr "(ଅନାମିତ ସାମଯିକସଂଗ୍ରହ)"
+msgstr "(ଅନାମିତ ସାମୟିକସଂଗ୍ରହ)"
 
 #: ../app/actions/edit-commands.c:574
-#, fuzzy
 msgid "There is no active layer or channel to copy from."
-msgstr "ନକଲ୍ କରି ଆଣିବା ପାଇଁ କୌଣସି ସକ୍ରିଯ ସ୍ତର କିମ୍ବା ସ୍ରୋତ ନାହିଁ ।"
+msgstr "ନକଲ କରି ଆଣିବା ପାଇଁ କୌଣସି ସକ୍ରିୟ ସ୍ତର କିମ୍ବା ଉପପଥ ନାହିଁ।"
 
 #: ../app/actions/error-console-actions.c:40
-#, fuzzy
 msgid "Error Console Menu"
-msgstr "ତୃଟି ସୂଚକୟନ୍ତ୍ରଫ଼ଳକ ପ୍ରସୂଚୀ"
+msgstr "କୋନସୋଲ ତାଲିକାରେ ତୃଟି"
 
 #: ../app/actions/error-console-actions.c:44
-#, fuzzy
 msgid "_Clear"
 msgstr "ସଫା କରନ୍ତୁ (_C)"
 
@@ -1762,7 +1703,6 @@ msgid "Clear error console"
 msgstr ""
 
 #: ../app/actions/error-console-actions.c:50
-#, fuzzy
 msgid "Select _All"
 msgstr "ସବୁକିଛି ଚୟନ କରନ୍ତୁ (_A)"
 
@@ -1783,14 +1723,12 @@ msgid "Save S_election to File..."
 msgstr ""
 
 #: ../app/actions/error-console-actions.c:66
-#, fuzzy
 msgid "Save selection"
-msgstr "ଚଯନ ସଂରକ୍ଷଣ କରନ୍ତୁ"
+msgstr "ଚୟନ ସଂରକ୍ଷଣ କରନ୍ତୁ"
 
 #: ../app/actions/error-console-commands.c:84
-#, fuzzy
 msgid "Cannot save. Nothing is selected."
-msgstr "ସଂରକ୍ଷଣ କରିପାରିବ ନାହିଁ । କୌଣସିଟି ଚଯନିତ ନୁହେଁ ।"
+msgstr "ସଂରକ୍ଷଣ କରିପାରିବେ ନାହିଁ। କୌଣସିଟି ଚୟିତ ନୁହେଁ।"
 
 #: ../app/actions/error-console-commands.c:95
 #, fuzzy
