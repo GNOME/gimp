@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: or\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-05-21 16:51+0000\n"
-"PO-Revision-Date: 2009-05-28 18:23+0530\n"
+"PO-Revision-Date: 2009-05-28 18:40+0530\n"
 "Last-Translator: Manoj Kumar Giri <mgiri@redhat.com>\n"
 "Language-Team: Oriya <oriya-it@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -646,7 +647,7 @@ msgstr "ମନୋନୀତ ଗୌସିଆନ ଅସ୍ପଷ୍ଟତା"
 #: ../plug-ins/file-sgi/sgi.c:536 ../plug-ins/file-xjt/xjt.c:1701
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
-msgstr "ଅନୁକ୍ରମଣୀକାବଦ୍ଧ ରଙ୍ଗୀନ ଚିତ୍ରଗୁଡିକୁ ପରିଚାଳିତ କରିପାରିବ ନାହିଁ"
+msgstr "ଅନୁକ୍ରମଣୀକାବଦ୍ଧ ରଙ୍ଗୀନ ଚିତ୍ରଗୁଡିକୁ ପରିଚାଳିତ କରିପାରିବ ନାହିଁ।"
 
 #: ../plug-ins/common/blur-gauss-selective.c:271
 msgid "_Blur radius:"
@@ -941,7 +942,7 @@ msgstr "ଚ୍ଯାନେଲ ମିଶ୍ରଣକାରୀ"
 
 #: ../plug-ins/common/channel-mixer.c:529
 msgid "O_utput channel:"
-msgstr "ଫଳାଫଳ ଚ୍ଯାନେଲ (_u)"
+msgstr "ଫଳାଫଳ ଚ୍ଯାନେଲ (_u):"
 
 #. Redmode radio frame
 #: ../plug-ins/common/channel-mixer.c:538 ../plug-ins/common/decompose.c:174
@@ -1390,7 +1391,7 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"\"ସ୍ଥିର ସିଡ଼\" ବଟନ ମୋର ଏକ ଉପନାମ ଅଟେ ।\n"
+"\"Fix seed\" ବଟନ ମୋର ଏକ ଉପନାମ ଅଟେ ।\n"
 "ସେହି ସମାନ ସିଡ଼ ସମାନ ଚିତ୍ର ଉତ୍ପାଦନ କରେ, ଯଦି (1) ଚିତ୍ର ଗୁଡିକର ଓସାର ସମାନ ଥାଏ "
 "(ଅଂକନକ୍ଷମରେ ଚିତ୍ରଗୁଡିକ ପୂର୍ବଦୃଶ୍ଯ ଠାରୁ କାହିଁକି ଭିନ୍ନ ହୁଅନ୍ତି ଏହା ତାହାର କାରଣ ଅଟେ), "
 "ଏବଂ (2) ସମସ୍ତ ଗଠନ ପରିବର୍ତ୍ତନ ଦର ଶୂନ୍ଯ ସହିତ ସମାନ ଥାଏ।"
@@ -1498,7 +1499,7 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1890
 msgid "Warning: the source and the destination are the same channel."
-msgstr "ଚେତାବନୀ: ମୂଳ ଏବଂ ଗନ୍ତବ୍ଯ ଉଭଯ ସମାନ ଚ୍ଯାନେଲ ଅଟନ୍ତି ।"
+msgstr "ଚେତାବନୀ: ମୂଳ ଏବଂ ଗନ୍ତବ୍ଯ ଉଭଯ ସମାନ ଚ୍ଯାନେଲ ଅଟନ୍ତି।"
 
 #: ../plug-ins/common/cml-explorer.c:1949
 msgid "Save CML Explorer Parameters"
@@ -1510,12 +1511,12 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:2200
 msgid "Error: it's not CML parameter file."
-msgstr "ତ୍ରୁଟି: ଏହା CMLପାରାମିଟର ଫାଇଲ ନୁହେଁ"
+msgstr "ତ୍ରୁଟି: ଏହା CMLପାରାମିଟର ଫାଇଲ ନୁହେଁ।"
 
 #: ../plug-ins/common/cml-explorer.c:2207
 #, c-format
 msgid "Warning: '%s' is an old format file."
-msgstr "ଚେତାବନୀ: '%s' ଏକ ପୁରୁଣା ଫର୍ମାଟ ଫାଇଲ ଅଟେ ।"
+msgstr "ଚେତାବନୀ: '%s' ଏକ ପୁରୁଣା ଫର୍ମାଟ ଫାଇଲ ଅଟେ।"
 
 #: ../plug-ins/common/cml-explorer.c:2211
 #, c-format
