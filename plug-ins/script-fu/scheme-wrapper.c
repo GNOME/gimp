@@ -330,6 +330,7 @@ ts_stdout_output_func (TsOutputType  type,
   if (len < 0)
     len = strlen (string);
   fprintf (stdout, "%.*s", len, string);
+  fflush (stdout);
 }
 
 void
