@@ -233,17 +233,15 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
                   const gchar *label_tmp;
                   gchar       *label;
                   gchar       *key_string;
-                  gchar       *formated_string;
 
-                  label_tmp       = gtk_action_get_label (action);
-                  label           = gimp_strip_uline (label_tmp);
-                  key_string      = gtk_accelerator_get_label (key->accel_key,
-                                                               key->accel_mods);
-                  formated_string = g_new0 (gchar, 20 + 1 + strlen (label) + 1 + 1);
+                  label_tmp  = gtk_action_get_label (action);
+                  label      = gimp_strip_uline (label_tmp);
+                  key_string = gtk_accelerator_get_label (key->accel_key,
+                                                          key->accel_mods);
 
-                  g_sprintf (formated_string, "%-20s %s\n", key_string, label);
-
-                  strings = g_list_prepend (strings, formated_string);
+                  strings = g_list_prepend (strings,
+                                            g_strdup_printf ("%-20s %s",
+                                                             key_string, label));
 
                   g_free (key_string);
                   g_free (label);
@@ -262,7 +260,7 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
 
     for (string_it = strings; string_it; string_it = g_list_next (string_it))
       {
-        g_print ("%s", (gchar*) string_it->data);
+        g_print ("%s\n", (gchar *) string_it->data);
         g_free (string_it->data);
       }
 
