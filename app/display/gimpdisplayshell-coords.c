@@ -356,11 +356,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
                                0.5 * shell->last_coords.direction);
         }
 
-      while (coords->direction > 1.0)
-        coords->direction -= 1.0;
-
-      while (coords->direction < 0.0)
-        coords->direction += 1.0;
+      coords->direction = coords->direction - floor(coords->direction);
 
       /* High speed -> less smooth*/
       inertia_factor *= (1 - coords->velocity);
