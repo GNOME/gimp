@@ -97,6 +97,7 @@ libexec_PROGRAMS = \
 	file-glob \
 	file-header \
 	file-html-table \
+	$(FILE_JP2_LOAD) \
 	$(FILE_MNG) \
 	file-pat \
 	file-pcx \
@@ -184,6 +185,7 @@ libexec_PROGRAMS = \
 
 EXTRA_PROGRAMS = \
 	file-aa \
+	file-jp2-load \
 	file-mng \
 	file-pdf \
 	file-png \
@@ -1130,6 +1132,20 @@ file_html_table_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+file_jp2_load_SOURCES = \
+	file-jp2-load.c
+
+file_jp2_load_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GLIB_LIBS)		\
+	$(JP2_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

@@ -1386,6 +1386,32 @@ AC_SUBST(WMF_LIBS)
 AC_SUBST(WMF_CFLAGS)
 
 
+#####################
+# Check for libjasper
+#####################
+
+AC_ARG_WITH(libjasper,  [  --without-libjasper     build without JPEG-2000 support])
+
+have_jp2=no
+if test "x$with_libjasper" != xno && test -z "$JASPER_LIBS"; then
+  have_jp2=yes
+  AC_CHECK_LIB(jasper, jas_init,
+    FILE_JP2_LOAD='file-jp2-load$(EXEEXT)' ; JP2_LIBS=-ljasper,
+    [have_jp2="no (JasPer library not found)"
+    AC_MSG_WARN(*** JP2 plug-in will not be built (JasPer library not found) ***)])
+else
+   have_jp2="no (JasPer support disabled)"
+fi
+
+if test "x$have_jp2" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/jp2;image/jpeg2000;image/jpx"
+fi
+
+AM_CONDITIONAL(BUILD_JP2, test "x$have_jp2" = xyes)
+AC_SUBST(FILE_JP2_LOAD)
+AC_SUBST(JP2_LIBS)
+
+
 ################
 # Check for lcms
 ################
@@ -2062,6 +2088,7 @@ Optional Plug-Ins:
   Help Browser:        $have_webkit
   LCMS:                $have_lcms
   JPEG:                $jpeg_ok
+  JPEG 2000:           $have_jp2
   MNG:                 $have_libmng
   PDF:                 $have_poppler
   PNG:                 $have_libpng
