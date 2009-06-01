@@ -78,8 +78,6 @@ print_settings_save (PrintData *data)
 {
   GKeyFile *key_file = print_settings_key_file_from_settings (data);
 
-  print_utils_key_file_save_as_rcfile (key_file, PRINT_SETTINGS_NAME);
-
   /* image setup */
   if (gimp_image_is_valid (data->image_id))
     {
@@ -104,6 +102,13 @@ print_settings_save (PrintData *data)
                                              data->image_id,
                                              PRINT_SETTINGS_NAME);
     }
+
+  /* some settings shouldn't be made persistent on a global level,
+   * so they are only stored in the image, not in the rcfile
+   */
+  g_key_file_remove_key (key_file, PRINT_SETTINGS_NAME, "n-copies", NULL);
+
+  print_utils_key_file_save_as_rcfile (key_file, PRINT_SETTINGS_NAME);
 
   g_key_file_free (key_file);
 }
