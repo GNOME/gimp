@@ -74,6 +74,13 @@ typedef enum
   UPDATE_CALLER     = 1 << 6
 } ColorSelectUpdateType;
 
+typedef enum
+{
+  DRAG_NONE,
+  DRAG_XY,
+  DRAG_Z
+} ColorSelectDragMode;
+
 
 #define GIMP_COLOR_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SELECT, GimpColorSelectClass))
 #define GIMP_IS_COLOR_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SELECT))
@@ -96,6 +103,8 @@ struct _GimpColorSelect
   ColorSelectFillType  z_color_fill;
   ColorSelectFillType  xy_color_fill;
   GdkGC               *gc;
+
+  ColorSelectDragMode  drag_mode;
 };
 
 struct _GimpColorSelectClass
@@ -240,6 +249,7 @@ gimp_color_select_init (GimpColorSelect *select)
   select->z_color_fill  = COLOR_SELECT_HUE;
   select->xy_color_fill = COLOR_SELECT_SATURATION_VALUE;
   select->gc            = NULL;
+  select->drag_mode     = DRAG_NONE;
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (select), hbox, TRUE, TRUE, 0);
@@ -636,38 +646,56 @@ gimp_color_select_xy_events (GtkWidget       *widget,
                              GdkEvent        *event,
                              GimpColorSelect *select)
 {
-  GdkEventButton *bevent;
-  GdkEventMotion *mevent;
-  gint            width, height;
-  gint            x, y;
+  gint width, height;
+  gint x, y;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
-      x = bevent->x;
-      y = bevent->y;
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
 
-      gdk_pointer_grab (gtk_widget_get_window (select->xy_color), FALSE,
-                        GDK_POINTER_MOTION_HINT_MASK |
-                        GDK_BUTTON_MOTION_MASK       |
-                        GDK_BUTTON_RELEASE_MASK,
-                        NULL, NULL, bevent->time);
+        if (select->drag_mode != DRAG_NONE || bevent->button != 1)
+          return FALSE;
+
+        x = bevent->x;
+        y = bevent->y;
+
+        gdk_pointer_grab (gtk_widget_get_window (select->xy_color), FALSE,
+                          GDK_POINTER_MOTION_HINT_MASK |
+                          GDK_BUTTON_MOTION_MASK       |
+                          GDK_BUTTON_RELEASE_MASK,
+                          NULL, NULL, bevent->time);
+        select->drag_mode = DRAG_XY;
+      }
       break;
 
     case GDK_BUTTON_RELEASE:
-      bevent = (GdkEventButton *) event;
-      x = bevent->x;
-      y = bevent->y;
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
 
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  bevent->time);
+        if (select->drag_mode != DRAG_XY || bevent->button != 1)
+          return FALSE;
+
+        x = bevent->x;
+        y = bevent->y;
+
+        gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                    bevent->time);
+        select->drag_mode = DRAG_NONE;
+      }
       break;
 
     case GDK_MOTION_NOTIFY:
-      mevent = (GdkEventMotion *) event;
-      x = mevent->x;
-      y = mevent->y;
+      {
+        GdkEventMotion *mevent = (GdkEventMotion *) event;
+
+        if (select->drag_mode != DRAG_XY)
+          return FALSE;
+
+        x = mevent->x;
+        y = mevent->y;
+      }
       break;
 
     default:
@@ -724,35 +752,53 @@ gimp_color_select_z_events (GtkWidget       *widget,
                             GdkEvent        *event,
                             GimpColorSelect *select)
 {
-  GdkEventButton *bevent;
-  GdkEventMotion *mevent;
-  gint            height;
-  gint            z;
+  gint height;
+  gint z;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
-      z = bevent->y;
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
 
-      gdk_pointer_grab (gtk_widget_get_window (select->z_color), FALSE,
-                        GDK_POINTER_MOTION_HINT_MASK |
-                        GDK_BUTTON_MOTION_MASK       |
-                        GDK_BUTTON_RELEASE_MASK,
-                        NULL, NULL, bevent->time);
+        if (select->drag_mode != DRAG_NONE || bevent->button != 1)
+          return FALSE;
+
+        z = bevent->y;
+
+        gdk_pointer_grab (gtk_widget_get_window (select->z_color), FALSE,
+                          GDK_POINTER_MOTION_HINT_MASK |
+                          GDK_BUTTON_MOTION_MASK       |
+                          GDK_BUTTON_RELEASE_MASK,
+                          NULL, NULL, bevent->time);
+        select->drag_mode = DRAG_Z;
+      }
       break;
 
     case GDK_BUTTON_RELEASE:
-      bevent = (GdkEventButton *) event;
-      z = bevent->y;
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
 
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  bevent->time);
+        if (select->drag_mode != DRAG_Z || bevent->button != 1)
+          return FALSE;
+
+        z = bevent->y;
+
+        gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                    bevent->time);
+        select->drag_mode = DRAG_NONE;
+      }
       break;
 
     case GDK_MOTION_NOTIFY:
-      mevent = (GdkEventMotion *) event;
-      z = mevent->y;
+      {
+        GdkEventMotion *mevent = (GdkEventMotion *) event;
+
+        if (select->drag_mode != DRAG_Z)
+          return FALSE;
+
+        z = mevent->y;
+      }
       break;
 
     default:
