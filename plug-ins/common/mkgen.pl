@@ -7,7 +7,7 @@ require 'util.pl';
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
-$ignorefile = ".svnignore";
+$ignorefile = ".gitignore";
 
 $outmk = "Makefile.am$FILE_EXT";
 $outignore = "$ignorefile$FILE_EXT";
@@ -100,10 +100,10 @@ install-\%: \%
 EOT
 
 print IGNORE <<EOT;
-Makefile
-Makefile.in
-.deps
-.libs
+/Makefile
+/Makefile.in
+/.deps
+/.libs
 EOT
 
 foreach (sort keys %plugins) {
@@ -171,7 +171,7 @@ ${makename}_LDADD = \\
 	$deplib
 EOT
 
-    print IGNORE "$_\n";
+    print IGNORE "/$_\n";
 }
 
 close MK;
@@ -180,5 +180,3 @@ close IGNORE;
 &write_file($outmk);
 &write_file($outignore);
 
-system ("svn", "propset", "-F", $ignorefile, "svn:ignore", ".");
-unlink $ignorefile;
