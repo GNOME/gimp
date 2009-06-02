@@ -66,6 +66,7 @@ plug-ins/common/file-gih.c
 plug-ins/common/file-glob.c
 plug-ins/common/file-header.c
 plug-ins/common/file-html-table.c
+plug-ins/common/file-jp2-load.c
 plug-ins/common/file-mng.c
 plug-ins/common/file-pat.c
 plug-ins/common/file-pcx.c
@@ -83,6 +84,7 @@ plug-ins/common/file-tiff-load.c
 plug-ins/common/file-tiff-save.c
 plug-ins/common/file-wmf.c
 plug-ins/common/file-xbm.c
+plug-ins/common/file-xmc.c
 plug-ins/common/file-xpm.c
 plug-ins/common/file-xwd.c
 plug-ins/common/film.c
