@@ -44,7 +44,7 @@
 #elif PLATFORM_OSX
 #  define DEFAULT_WEB_BROWSER  "open %s"
 #else
-#  define DEFAULT_WEB_BROWSER  "firefox %s"
+#  define DEFAULT_WEB_BROWSER  "xdg-open %s"
 #endif
 
 
