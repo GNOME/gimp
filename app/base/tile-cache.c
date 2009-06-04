@@ -356,6 +356,7 @@ tile_idle_preswap_run (gpointer data)
 #ifdef TILE_PROFILING
       g_printerr("\nidle swapper -> waiting");
 #endif
+
       idle_delay = 0;
       idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
                                          IDLE_SWAPPER_START,
@@ -397,7 +398,10 @@ tile_idle_preswap_run (gpointer data)
       tile = tile->next;
     }
 
+#ifdef TILE_PROFILING
   g_printerr ("\nidle swapper -> stopped\n");
+#endif
+
   idle_scan_last = NULL;
   idle_swapper = 0;
 
