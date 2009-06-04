@@ -27,20 +27,18 @@
 #include "tile-rowhints.h"
 #include "tile-private.h"
 
+
 #define IDLE_SWAPPER_START              1000
 #define IDLE_SWAPPER_INTERVAL_MS        20
 #define IDLE_SWAPPER_TILES_PER_INTERVAL 10
 
-static gboolean  tile_cache_zorch_next     (void);
-static void      tile_cache_flush_internal (Tile     *tile);
-static gboolean  tile_idle_preswap         (gpointer  data);
-static void      tile_verify(void);
 
 typedef struct _TileList
 {
   Tile *first;
   Tile *last;
 } TileList;
+
 
 static gulong        cur_cache_size   = 0;
 static gulong        max_cache_size   = 0;
@@ -74,6 +72,15 @@ static GMutex       *tile_cache_mutex = NULL;
 #endif
 
 #define PENDING_WRITE(t) ((t)->dirty || (t)->swap_offset == -1)
+
+
+static gboolean  tile_cache_zorch_next     (void);
+static void      tile_cache_flush_internal (Tile     *tile);
+static gboolean  tile_idle_preswap         (gpointer  data);
+#ifdef TILE_PROFILING
+static void      tile_verify               (void);
+#endif
+
 
 void
 tile_cache_init (gulong tile_cache_size)
@@ -167,9 +174,9 @@ tile_cache_insert (Tile *tile)
         {
           GTimeVal now;
           GTimeVal later;
+
           g_get_current_time(&now);
 #endif
-          
           while ((cur_cache_size + tile->size) > max_cache_size)
             {
               if (! tile_cache_zorch_next ())
@@ -180,7 +187,7 @@ tile_cache_insert (Tile *tile)
             }
 
 #ifdef TILE_PROFILING
-          g_get_current_time(&later);
+          g_get_current_time (&later);
           tile_total_interactive_usec += later.tv_usec - now.tv_usec;
           tile_total_interactive_sec += later.tv_sec - now.tv_sec;
 
@@ -195,7 +202,6 @@ tile_cache_insert (Tile *tile)
               tile_total_interactive_usec -= 1000000;
               tile_total_interactive_sec++;
             }
-
         }
 #endif
 
@@ -206,11 +212,12 @@ tile_cache_insert (Tile *tile)
 
   tile->next = NULL;
   tile->prev = tile_list.last;
-  if(tile_list.last){
+
+  if (tile_list.last)
     tile_list.last->next = tile;
-  }else{
+  else
     tile_list.first = tile;
-  }
+
   tile_list.last = tile;
   tile->cached = TRUE;
   idle_delay = 1;
@@ -219,12 +226,11 @@ tile_cache_insert (Tile *tile)
     {
       cur_cache_dirty += tile->size;
 
-      if(!idle_scan_last)
+      if (! idle_scan_last)
 	idle_scan_last=tile;
-      
-      if (!idle_swapper)
-        {
 
+      if (! idle_swapper)
+        {
 #ifdef TILE_PROFILING
 	  g_printerr("idle swapper -> started\n");
 	  g_printerr("idle swapper -> waiting");
@@ -274,48 +280,51 @@ tile_cache_flush_internal (Tile *tile)
 {
 
   tile->cached = FALSE;
+
   if (PENDING_WRITE(tile))
     cur_cache_dirty -= tile->size;
+
   cur_cache_size -= tile->size;
-  
+
   if (tile->next)
     tile->next->prev = tile->prev;
   else
     tile_list.last = tile->prev;
-  
-  if(tile->prev){
-    tile->prev->next = tile->next;
-  }else{
-    tile_list.first = tile->next;
-  }
-  
-  if(tile == idle_scan_last)
-    idle_scan_last = tile->next;
-  
-  tile->next = tile->prev = NULL;
 
+  if (tile->prev)
+    tile->prev->next = tile->next;
+  else
+    tile_list.first = tile->next;
+
+  if (tile == idle_scan_last)
+    idle_scan_last = tile->next;
+
+  tile->next = tile->prev = NULL;
 }
 
 static gboolean
 tile_cache_zorch_next (void)
 {
 
-  Tile *tile = tile_list.first;    
-  if(!tile)return FALSE;
-  
+  Tile *tile = tile_list.first;
+
+  if (! tile)
+    return FALSE;
+
 #ifdef TILE_PROFILING
   tile_total_zorched++;
   tile->zorched = TRUE;
-  if(PENDING_WRITE(tile))
+
+  if (PENDING_WRITE (tile))
     {
       tile_total_zorched_swapout++;
       tile->zorchout = TRUE;
     }
 #endif
-  
+
   tile_cache_flush_internal (tile);
 
-  if (PENDING_WRITE(tile))
+  if (PENDING_WRITE (tile))
     {
       idle_delay = 1;
       tile_swap_out (tile);
@@ -325,6 +334,7 @@ tile_cache_zorch_next (void)
     {
       g_free (tile->data);
       tile->data = NULL;
+
 #ifdef TILE_PROFILING
       tile_exist_count--;
 #endif
@@ -362,46 +372,48 @@ tile_idle_preswap_run (gpointer data)
 
   tile = idle_scan_last;
 
-  while(tile)
+  while (tile)
     {
-      if(PENDING_WRITE(tile))
+      if (PENDING_WRITE (tile))
         {
           idle_scan_last = tile->next;
-          
+
 #ifdef TILE_PROFILING
           tile_idle_swapout++;
 #endif
           tile_swap_out (tile);
-          if(!PENDING_WRITE(tile))
+
+          if (! PENDING_WRITE(tile))
             cur_cache_dirty -= tile->size;
+
           count++;
-          
-          if(count>=IDLE_SWAPPER_TILES_PER_INTERVAL) 
+          if (count >= IDLE_SWAPPER_TILES_PER_INTERVAL)
             {
               TILE_CACHE_UNLOCK;
               return TRUE;
             }
         }
+
       tile = tile->next;
     }
-  
-  g_printerr("\nidle swapper -> stopped\n");
+
+  g_printerr ("\nidle swapper -> stopped\n");
   idle_scan_last = NULL;
   idle_swapper = 0;
 
 #ifdef TILE_PROFILING
-  tile_verify();
+  tile_verify ();
 #endif
 
   TILE_CACHE_UNLOCK;
-  
+
   return FALSE;
 }
 
 static gboolean
 tile_idle_preswap (gpointer data)
 {
-  
+
   if (idle_delay){
 #ifdef TILE_PROFILING
     g_printerr(".");
@@ -409,12 +421,12 @@ tile_idle_preswap (gpointer data)
     idle_delay = 0;
     return TRUE;
   }
-  
+
 #ifdef TILE_PROFILING
-  tile_verify();
+  tile_verify ();
   g_printerr("\nidle swapper -> running");
 #endif
-  
+
   idle_swapper = g_timeout_add_full (G_PRIORITY_LOW,
 				     IDLE_SWAPPER_INTERVAL_MS,
 				     tile_idle_preswap_run,
@@ -424,41 +436,39 @@ tile_idle_preswap (gpointer data)
 
 #ifdef TILE_PROFILING
 static void
-tile_verify(void)
+tile_verify (void)
 {
   /* scan list linearly, count metrics, compare to running totals */
-  gulong local_size=0;
-  gulong local_dirty=0;
-  gulong acc=0;
-  Tile *t = tile_list.first;
+  const Tile *t;
+  gulong      local_size  = 0;
+  gulong      local_dirty = 0;
+  gulong      acc         = 0;
 
-  while(t)
+  for (t = tile_list.first; t; t = t->next)
     {
-      local_size+=t->size;
-      if(PENDING_WRITE(t))
-        local_dirty+=t->size;
-      t=t->next;
+      local_size += t->size;
+
+      if (PENDING_WRITE (t))
+        local_dirty += t->size;
     }
 
-  if(local_size != cur_cache_size)
-    g_printerr("\nCache size mismatch: running=%lu, tested=%lu\n",
-	       cur_cache_size,local_size);
+  if (local_size != cur_cache_size)
+    g_printerr ("\nCache size mismatch: running=%lu, tested=%lu\n",
+                cur_cache_size,local_size);
 
-  if(local_dirty != cur_cache_dirty)
-    g_printerr("\nCache dirty mismatch: running=%lu, tested=%lu\n",
-	       cur_cache_dirty,local_dirty);
+  if (local_dirty != cur_cache_dirty)
+    g_printerr ("\nCache dirty mismatch: running=%lu, tested=%lu\n",
+                cur_cache_dirty,local_dirty);
 
   /* scan forward from scan list */
-  t = idle_scan_last;
-  while(t)
+  for (t = idle_scan_last; t; t = t->next)
     {
-      if(PENDING_WRITE(t))
-        acc+=t->size;
-      t=t->next;
+      if (PENDING_WRITE (t))
+        acc += t->size;
     }
-  
-  if(acc != local_dirty)
-    g_printerr("\nDirty scan follower mismatch: running=%lu, tested=%lu\n",
-               acc,local_dirty);
+
+  if (acc != local_dirty)
+    g_printerr ("\nDirty scan follower mismatch: running=%lu, tested=%lu\n",
+                acc,local_dirty);
 }
 #endif

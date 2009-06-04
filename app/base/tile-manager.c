@@ -203,6 +203,7 @@ tile_manager_get (TileManager *tm,
 
               new->size    = new->ewidth * new->eheight * new->bpp;
               new->data    = g_new (guchar, new->size);
+
 #ifdef TILE_PROFILING
               tile_exist_count++;
               if (tile_exist_count > tile_exist_peak)

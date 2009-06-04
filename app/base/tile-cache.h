@@ -19,14 +19,13 @@
 #define __TILE_CACHE_H__
 
 
-void   tile_cache_init     (gulong  cache_size);
-void   tile_cache_exit     (void);
+void   tile_cache_init                 (gulong  cache_size);
+void   tile_cache_exit                 (void);
 
-void   tile_cache_set_size (gulong  cache_size);
-void   tile_cache_suspend_idle_swapper(void);
+void   tile_cache_set_size             (gulong  cache_size);
+void   tile_cache_suspend_idle_swapper (void);
 
-void   tile_cache_insert   (Tile   *tile);
-void   tile_cache_flush    (Tile   *tile);
-
+void   tile_cache_insert               (Tile   *tile);
+void   tile_cache_flush                (Tile   *tile);
 
 #endif /* __TILE_CACHE_H__ */

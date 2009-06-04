@@ -42,13 +42,14 @@ static gint tile_count        = 0;
 static gint tile_share_count  = 0;
 static gint tile_active_count = 0;
 
-gint tile_exist_peak   = 0;
-gint tile_exist_count  = 0;
+gint tile_exist_peak          = 0;
+gint tile_exist_count         = 0;
 
 #endif
 
 
 static void  tile_destroy (Tile *tile);
+
 
 Tile *
 tile_new (gint bpp)
@@ -163,6 +164,7 @@ tile_alloc (Tile *tile)
 
 #ifdef TILE_PROFILING
   tile_exist_count++;
+
   if (tile_exist_count > tile_exist_peak)
     tile_exist_peak = tile_exist_count;
 #endif
@@ -181,14 +183,17 @@ tile_destroy (Tile *tile)
       g_warning ("tried to destroy an attached tile");
       return;
     }
+
   if (tile->data)
     {
       g_free (tile->data);
       tile->data = NULL;
+
 #ifdef TILE_PROFILING
       tile_exist_count--;
 #endif
     }
+
   if (tile->rowhint)
     {
       g_slice_free1 (sizeof (TileRowHint) * TILE_HEIGHT, tile->rowhint);
