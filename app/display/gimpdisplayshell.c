@@ -816,6 +816,41 @@ gimp_display_shell_zoom_button_callback (GimpDisplayShell *shell,
     }
 }
 
+static void
+gimp_display_shell_sync_config (GimpDisplayShell  *shell,
+                                GimpDisplayConfig *config)
+{
+  gimp_config_sync (G_OBJECT (config->default_view),
+                    G_OBJECT (shell->options), 0);
+  gimp_config_sync (G_OBJECT (config->default_fullscreen_view),
+                    G_OBJECT (shell->fullscreen_options), 0);
+
+  if (shell->display && shell->display->shell)
+    {
+      /*  if the shell is already fully constructed, use proper API
+       *  so the actions are updated accordingly.
+       */
+      gimp_display_shell_set_snap_to_guides  (shell,
+                                              config->default_snap_to_guides);
+      gimp_display_shell_set_snap_to_grid    (shell,
+                                              config->default_snap_to_grid);
+      gimp_display_shell_set_snap_to_canvas  (shell,
+                                              config->default_snap_to_canvas);
+      gimp_display_shell_set_snap_to_vectors (shell,
+                                              config->default_snap_to_path);
+    }
+  else
+    {
+      /*  otherwise the shell is currently being constructed and
+       *  display->shell is NULL.
+       */
+      shell->snap_to_guides  = config->default_snap_to_guides;
+      shell->snap_to_grid    = config->default_snap_to_grid;
+      shell->snap_to_canvas  = config->default_snap_to_canvas;
+      shell->snap_to_vectors = config->default_snap_to_path;
+    }
+}
+
 
 /*  public functions  */
 
@@ -886,16 +921,6 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   shell->dot_for_dot = display->config->default_dot_for_dot;
 
-  gimp_config_sync (G_OBJECT (display->config->default_view),
-                    G_OBJECT (shell->options), 0);
-  gimp_config_sync (G_OBJECT (display->config->default_fullscreen_view),
-                    G_OBJECT (shell->fullscreen_options), 0);
-
-  shell->snap_to_guides  = display->config->default_snap_to_guides;
-  shell->snap_to_grid    = display->config->default_snap_to_grid;
-  shell->snap_to_canvas  = display->config->default_snap_to_canvas;
-  shell->snap_to_vectors = display->config->default_snap_to_path;
-
   screen = gtk_widget_get_screen (GTK_WIDGET (shell));
 
   if (display->config->monitor_res_from_gdk)
@@ -937,6 +962,8 @@ gimp_display_shell_new (GimpDisplay       *display,
   g_signal_connect (shell->menubar_manager, "hide-tooltip",
                     G_CALLBACK (gimp_display_shell_hide_tooltip),
                     shell);
+
+  gimp_display_shell_sync_config (shell, display->config);
 
   /*  GtkTable widgets are not able to shrink a row/column correctly if
    *  widgets are attached with GTK_EXPAND even if those widgets have
@@ -1460,6 +1487,8 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_scale_changed (shell);
 
   gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
+
+  gimp_display_shell_sync_config (shell, shell->display->config);
 
   gimp_display_shell_appearance_update (shell);
 
