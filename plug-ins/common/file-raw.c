@@ -56,6 +56,7 @@ typedef enum
 {
   RAW_RGB,                      /* RGB Image */
   RAW_RGBA,                     /* RGB Image with an Alpha channel */
+  RAW_RGB565,                   /* RGB Image 16bit, 5,6,5 bits per channel */
   RAW_PLANAR,                   /* Planar RGB */
   RAW_INDEXED,                  /* Indexed image */
   RAW_INDEXEDA                  /* Indexed image with an Alpha channel */
@@ -97,6 +98,7 @@ static void              run               (const gchar      *name,
 /* prototypes for the new load functions */
 static gboolean          raw_load_standard (RawGimpData      *data,
                                             gint              bpp);
+static gboolean          raw_load_rgb565   (RawGimpData      *data);
 static gboolean          raw_load_planar   (RawGimpData      *data);
 static gboolean          raw_load_palette  (RawGimpData      *data,
                                             const gchar      *palette_filename);
@@ -112,6 +114,9 @@ static int               mmap_read         (gint              fd,
                                             gint32            len,
                                             gint32            pos,
                                             gint              rowstride);
+static void              rgb_565_to_888    (guint16          *in,
+                                            guchar           *out,
+                                            gint32            num_pixels);
 
 static gint32            load_image        (const gchar      *filename,
                                             GError          **error);
@@ -394,6 +399,43 @@ raw_load_standard (RawGimpData *data,
                            0, 0, runtime->image_width, runtime->image_height);
   g_free (row);
   return TRUE;
+}
+
+/* this handles RGB565 images */
+static gboolean
+raw_load_rgb565 (RawGimpData *data)
+{
+  gint32   num_pixels = runtime->image_width * runtime->image_height;
+  guint16 *in         = g_malloc (num_pixels * 2);
+  guchar  *row        = g_malloc (num_pixels * 3);
+
+  raw_read_row (data->fp, (guchar *)in, runtime->file_offset, num_pixels * 2);
+  rgb_565_to_888 (in, row, num_pixels);
+
+  gimp_pixel_rgn_set_rect (&data->region, row,
+                           0, 0, runtime->image_width, runtime->image_height);
+  g_free (in);
+  g_free (row);
+
+  return TRUE;
+}
+
+/* this converts a 2bpp buffer to a 3bpp buffer in is a buffer of
+ * 16bit pixels, out is a buffer of 24bit pixels
+ */
+static void
+rgb_565_to_888 (guint16 *in,
+                guchar  *out,
+                gint32   num_pixels)
+{
+  guint32 i, j;
+
+  for (i = 0, j = 0; i < num_pixels; i++)
+    {
+      out[j++] = 0x00FF & ((in[i] >> 8) | ((in[i] >> 13) & 0x0007));
+      out[j++] = 0x00FF & ((in[i] >> 3) | ((in[i] >>  9) & 0x0003));
+      out[j++] = 0x00FF & ((in[i] << 3) | ((in[i] >>  2) & 0x0007));
+    }
 }
 
 /* this handles 3 bpp "planar" images */
@@ -681,6 +723,12 @@ load_image (const gchar  *filename,
       itype = GIMP_RGB;
       break;
 
+    case RAW_RGB565:          /* RGB565 */
+      bpp   = 2;
+      ltype = GIMP_RGB_IMAGE;
+      itype = GIMP_RGB;
+      break;
+
     case RAW_RGBA:            /* RGB + alpha */
       bpp   = 4;
       ltype = GIMP_RGBA_IMAGE;
@@ -724,6 +772,10 @@ load_image (const gchar  *filename,
     case RAW_RGB:
     case RAW_RGBA:
       raw_load_standard (data, bpp);
+      break;
+
+    case RAW_RGB565:
+      raw_load_rgb565 (data);
       break;
 
     case RAW_PLANAR:
@@ -839,6 +891,27 @@ preview_update (GimpPreviewArea *preview)
           }
 
         g_free (row);
+      }
+      break;
+
+    case RAW_RGB565:
+      /* RGB565 image */
+      {
+        guint16 *in  = g_malloc0 (width * 2);
+        guchar  *row = g_malloc0 (width * 3);
+
+        for (y = 0; y < height; y++)
+          {
+            pos = runtime->file_offset + runtime->image_width * y * 2;
+            mmap_read (preview_fd, in, width * 2, pos, width * 2);
+            rgb_565_to_888 (in, row, width);
+
+            gimp_preview_area_draw (preview, 0, y, width, 1,
+                                    GIMP_RGB_IMAGE, row, width * 3);
+          }
+
+        g_free (row);
+        g_free (in);
       }
       break;
 
@@ -1021,6 +1094,7 @@ load_dialog (const gchar *filename)
 
   combo = gimp_int_combo_box_new (_("RGB"),           RAW_RGB,
                                   _("RGB Alpha"),     RAW_RGBA,
+                                  _("RGB565"),        RAW_RGB565,
                                   _("Planar RGB"),    RAW_PLANAR,
                                   _("Indexed"),       RAW_INDEXED,
                                   _("Indexed Alpha"), RAW_INDEXEDA,
