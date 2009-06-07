@@ -1350,14 +1350,18 @@ warp_one (GimpDrawable *draw,
 
   /* Get selection area */
 
-  if (! gimp_drawable_mask_intersect (draw->drawable_id, &x1, &y1, &x2, &y2))
+  if (! gimp_drawable_mask_intersect (draw->drawable_id,
+                                      &x1, &y1, &width, &height))
     return;
 
-   width  = draw->width;
-   height = draw->height;
-   dest_bytes  = draw->bpp;
+  x2 = x1 + width;
+  y2 = y1 + height;
 
-   dmap_bytes = map_x->bpp;
+  width  = draw->width;
+  height = draw->height;
+  dest_bytes = draw->bpp;
+
+  dmap_bytes = map_x->bpp;
 
    max_progress = (x2 - x1) * (y2 - y1);
 

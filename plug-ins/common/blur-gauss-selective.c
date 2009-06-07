@@ -730,19 +730,19 @@ sel_gauss (GimpDrawable *drawable,
            gint          maxdelta)
 {
   GimpPixelRgn src_rgn, dest_rgn;
-  gint         width, height;
   gint         bytes;
   gboolean     has_alpha;
   guchar      *dest;
   guchar      *src;
-  gint         x1, y1, x2, y2;
+  gint         x, y;
+  gint         width, height;
   gdouble     *mat;
   gint         numrad;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x, &y, &width, &height))
+    return;
 
-  width     = x2 - x1;
-  height    = y2 - y1;
   bytes     = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
@@ -754,20 +754,20 @@ sel_gauss (GimpDrawable *drawable,
   dest = g_new (guchar, width * height * bytes);
 
   gimp_pixel_rgn_init (&src_rgn,
-                       drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
+                       drawable, x, y, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_get_rect (&src_rgn, src, x, y, width, height);
 
   matrixmult (src, dest, width, height, mat, numrad,
               bytes, has_alpha, maxdelta, FALSE);
 
   gimp_pixel_rgn_init (&dest_rgn,
-                       drawable, x1, y1, width, height, TRUE, TRUE);
-  gimp_pixel_rgn_set_rect (&dest_rgn, dest, x1, y1, width, height);
+                       drawable, x, y, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_set_rect (&dest_rgn, dest, x, y, width, height);
 
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+  gimp_drawable_update (drawable->drawable_id, x, y, width, height);
 
   /* free up buffers */
   g_free (src);
@@ -780,7 +780,7 @@ preview_update (GimpPreview *preview)
 {
   GimpDrawable  *drawable;
   glong          bytes;
-  gint           x1, y1;
+  gint           x, y;
   guchar        *render_buffer;  /* Buffer to hold rendered image */
   gint           width;          /* Width of preview widget */
   gint           height;         /* Height of preview widget */
@@ -800,19 +800,19 @@ preview_update (GimpPreview *preview)
   /*
    * Setup for filter...
    */
-  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_preview_get_position (preview, &x, &y);
   gimp_preview_get_size (preview, &width, &height);
 
   /* initialize pixel regions */
   gimp_pixel_rgn_init (&srcPR, drawable,
-                       x1, y1, width, height,
+                       x, y, width, height,
                        FALSE, FALSE);
   render_buffer = g_new (guchar, width * height * bytes);
 
   src = g_new (guchar, width * height * bytes);
 
   /* render image */
-  gimp_pixel_rgn_get_rect (&srcPR, src, x1, y1, width, height);
+  gimp_pixel_rgn_get_rect (&srcPR, src, x, y, width, height);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   radius = fabs (bvals.radius) + 1.0;

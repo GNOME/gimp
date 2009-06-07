@@ -250,7 +250,13 @@ blur (GimpDrawable *drawable)
   gint          ind;
   gboolean      has_alpha;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &width, &height))
+    return;
+
+  x2 = x1 + width;
+  y2 = y1 + height;
+
   /*
    *  Get the size of the input image. (This will/must be the same
    *  as the size of the output image.  Also get alpha info.

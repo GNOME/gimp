@@ -204,12 +204,9 @@ deinterlace (GimpDrawable *drawable,
     }
   else
     {
-      gint x2, y2;
-
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x, &y, &x2, &y2);
-
-      width  = x2 - x;
-      height = y2 - y;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height))
+        return;
 
       dest = g_new (guchar, width * bytes);
 

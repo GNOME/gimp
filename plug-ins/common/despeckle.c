@@ -367,35 +367,35 @@ pixel_copy (guchar       *dest,
 static void
 despeckle (void)
 {
-  GimpPixelRgn  src_rgn,        /* Source image region */
-                dst_rgn;
-  guchar       *src, *dst;
+  GimpPixelRgn  src_rgn;        /* Source image region */
+  GimpPixelRgn  dst_rgn;
+  guchar       *src;
+  guchar       *dst;
   gint          img_bpp;
-  gint          width;
-  gint          height;
-  gint          x1, y1 ,x2 ,y2;
+  gint          x, y;
+  gint          width, height;
 
   img_bpp = gimp_drawable_bpp (drawable->drawable_id);
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  width  = x2 - x1;
-  height = y2 - y1;
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x, &y, &width, &height))
+    return;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dst_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable, x, y, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dst_rgn, drawable, x, y, width, height, TRUE, TRUE);
 
   src = g_new (guchar, width * height * img_bpp);
   dst = g_new (guchar, width * height * img_bpp);
 
-  gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
+  gimp_pixel_rgn_get_rect (&src_rgn, src, x, y, width, height);
 
   despeckle_median (src, dst, width, height, img_bpp, despeckle_radius, FALSE);
 
-  gimp_pixel_rgn_set_rect (&dst_rgn, dst, x1, y1, width, height);
+  gimp_pixel_rgn_set_rect (&dst_rgn, dst, x, y, width, height);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+  gimp_drawable_update (drawable->drawable_id, x, y, width, height);
 
   g_free (dst);
   g_free (src);

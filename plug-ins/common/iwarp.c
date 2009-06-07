@@ -185,9 +185,8 @@ static void     iwarp_scale_preview       (gint       new_width,
 static void     iwarp_preview_build       (GtkWidget *dialog,
                                            GtkWidget *vbox);
 
-static void     iwarp_init                (void);
+static gboolean iwarp_init                (void);
 static void     iwarp_preview_init        (void);
-
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -963,14 +962,20 @@ iwarp_preview_init (void)
   g_free (linebuffer);
 }
 
-static void
+static gboolean
 iwarp_init (void)
 {
   gint  i;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &xl, &yl, &xh, &yh);
-  sel_width = xh - xl;
-  sel_height = yh - yl;
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &xl, &yl, &sel_width, &sel_height))
+    {
+      g_message (_("Region affected by plug-in is empty"));
+      return FALSE;
+    }
+
+  xh = xl + sel_width;
+  yh = yl + sel_height;
 
   image_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
@@ -1000,6 +1005,8 @@ iwarp_init (void)
         pow ((cos (sqrt((gdouble) i / MAX_DEFORM_AREA_RADIUS) * G_PI) + 1) *
              0.5, 0.7); /*0.7*/
     }
+
+  return TRUE;
 }
 
 static void
@@ -1269,7 +1276,8 @@ iwarp_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  iwarp_init ();
+  if (! iwarp_init ())
+    return FALSE;
 
   dialog = gimp_dialog_new (_("IWarp"), PLUG_IN_BINARY,
                             NULL, 0,

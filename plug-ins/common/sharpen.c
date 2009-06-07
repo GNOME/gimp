@@ -291,17 +291,19 @@ sharpen (GimpDrawable *drawable)
 
   filter = NULL;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &sel_width, &sel_height))
+    return;
 
-  sel_width  = x2 - x1;
-  sel_height = y2 - y1;
-  img_bpp    = gimp_drawable_bpp (drawable->drawable_id);
+  x2 = x1 + sel_width;
+  y2 = y1 + sel_height;
+
+  img_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
   /*
    * Let the user know what we're doing...
    */
-  gimp_progress_init( _("Sharpening"));
+  gimp_progress_init (_("Sharpening"));
 
   /*
    * Setup for filter...

@@ -429,20 +429,23 @@ value_propagate_body (GimpDrawable *drawable,
   dtype = gimp_drawable_type (drawable->drawable_id);
   bytes = drawable->bpp;
 
-  /* Here I use the algorithm of blur.c . */
+  /* Here I use the algorithm of blur.c */
   if (preview)
     {
        gimp_preview_get_position (preview, &begx, &begy);
        gimp_preview_get_size (preview, &width, &height);
+
        endx = begx + width;
        endy = begy + height;
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id,
-                                 &begx, &begy, &endx, &endy);
-      width  = endx - begx;
-      height = endy - begy;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &begx, &begy, &width, &height))
+        return;
+
+      endx = begx + width;
+      endy = begy + height;
     }
 
   gimp_tile_cache_ntiles (2 * ((width) / gimp_tile_width () + 1));

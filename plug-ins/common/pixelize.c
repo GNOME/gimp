@@ -460,10 +460,12 @@ pixelize_large (GimpDrawable *drawable,
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id,
-                                 &x1, &y1, &x2, &y2);
-      width  = x2 - x1;
-      height = y2 - y1;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x1, &y1, &width, &height))
+        return;
+
+      x2 = x1 + width;
+      y2 = y1 + height;
 
       /* Initialize progress */
       progress = 0;
@@ -632,10 +634,15 @@ pixelize_small (GimpDrawable *drawable,
 {
   GimpPixelRgn src_rgn, dest_rgn;
   gint         bpp, has_alpha;
-  gint         x1, y1, x2, y2;
+  gint         x1, y1, x2, y2, w, h;
   gint         progress, max_progress;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1, &w, &h))
+    return;
+
+  x2 = x1 + w;
+  y2 = y1 + h;
+
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, x2-x1, y2-y1, TRUE, TRUE);
 

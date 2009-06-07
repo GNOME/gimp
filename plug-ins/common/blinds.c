@@ -567,11 +567,13 @@ apply_blinds (GimpDrawable *drawable)
 
   gimp_drawable_get_color_uchar (drawable->drawable_id, &background, bg);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &sel_x1, &sel_y1,
+                                      &sel_width, &sel_height))
+    return;
 
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
+  sel_x2 = sel_x1 + sel_width;
+  sel_y2 = sel_y1 + sel_height;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
                        sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);

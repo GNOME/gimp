@@ -488,14 +488,18 @@ mosaic (GimpDrawable *drawable,
     {
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
+
       x2 = x1 + width;
       y2 = y1 + height;
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width  = (x2 - x1);
-      height = (y2 - y1);
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x1, &y1, &width, &height))
+        return;
+
+      x2 = x1 + width;
+      y2 = y1 + height;
 
       /*  progress bar for gradient finding  */
       gimp_progress_init (_("Finding edges"));
@@ -517,7 +521,7 @@ mosaic (GimpDrawable *drawable,
       grid_create_octagons (x1, y1, x2, y2);
       break;
     case TRIANGLES:
-      grid_create_triangles(x1, y1, x2, y2);
+      grid_create_triangles (x1, y1, x2, y2);
       break;
     default:
       break;

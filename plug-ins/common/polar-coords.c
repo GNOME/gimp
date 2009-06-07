@@ -202,13 +202,14 @@ run (const gchar      *name,
   img_height    = gimp_drawable_height (drawable->drawable_id);
   img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &sel_x1, &sel_y1, &sel_width, &sel_height))
+    return;
 
   /* Calculate scaling parameters */
 
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
+  sel_x2 = sel_x1 + sel_width;
+  sel_y2 = sel_y1 + sel_height;
 
   cen_x = (double) (sel_x1 + sel_x2 - 1) / 2.0;
   cen_y = (double) (sel_y1 + sel_y2 - 1) / 2.0;
