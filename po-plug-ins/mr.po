@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-02 01:35+0000\n"
-"PO-Revision-Date: 2009-06-08 12:08+0530\n"
+"PO-Revision-Date: 2009-06-08 12:58+0530\n"
 "Last-Translator: Sandeep Shedmake <sandeep.shedmake@gmail.com>\n"
 "Language-Team: marathi\n"
 "MIME-Version: 1.0\n"
@@ -180,7 +180,7 @@ msgstr "निळा_वाहिनी सुधारा"
 
 #: ../plug-ins/common/alien-map.c:142
 msgid "Mod_ify luminosity channel"
-msgstr "तेजस्वी_वाहिनी सुधारा"
+msgstr "तेजस्वीवाहिनी सुधारा (_i)"
 
 #: ../plug-ins/common/alien-map.c:147
 msgid "Red _frequency:"
@@ -204,7 +204,7 @@ msgstr "निळे_आवर्तन:"
 
 #: ../plug-ins/common/alien-map.c:149
 msgid "Luminosity freq_uency:"
-msgstr "तेजस्वीता_आवर्तन:"
+msgstr "तेजस्वीता आवर्तन (_u):"
 
 #: ../plug-ins/common/alien-map.c:151
 msgid "Red _phaseshift:"
@@ -228,7 +228,7 @@ msgstr "निळा_टप्पाहलवा:"
 
 #: ../plug-ins/common/alien-map.c:153
 msgid "Luminosity pha_seshift:"
-msgstr "तेजस्वीता_टप्पाहलवा:"
+msgstr "तेजस्वीता टप्पा हलवा (_s):"
 
 #: ../plug-ins/common/alien-map.c:183
 msgid "Alter colors in various psychedelic ways"
@@ -1673,7 +1673,7 @@ msgstr "colormap पुन्हा सुस्थीत करा"
 
 #: ../plug-ins/common/colormap-remap.c:104
 msgid "R_earrange Colormap..."
-msgstr "R_earrange Colormap पुन्हा"
+msgstr "Colormap पुन्हा सुस्थीत करा (_e)..."
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
@@ -4160,11 +4160,11 @@ msgstr "RGB संचित करण्याचा प्रकार"
 
 #: ../plug-ins/common/file-raw.c:1181
 msgid "Standard (R,G,B)"
-msgstr "Standard (R,G,B)"
+msgstr "मानक (R,G,B)"
 
 #: ../plug-ins/common/file-raw.c:1182
 msgid "Planar (RRR,GGG,BBB)"
-msgstr "Planar (RRR,GGG,BBB)"
+msgstr "प्लेनार (RRR,GGG,BBB)"
 
 #: ../plug-ins/common/file-raw.c:1187
 msgid "Indexed Palette Type"
@@ -6343,7 +6343,7 @@ msgstr "_थ्रेसहोल्ड:"
 
 #: ../plug-ins/common/red-eye-removal.c:176
 msgid "Threshold for the red eye color to remove."
-msgstr "red eye रंग काढूण टाकण्याकरीता मर्यादा"
+msgstr "red eye रंग काढूण टाकण्याकरीता मर्यादा."
 
 #: ../plug-ins/common/red-eye-removal.c:181
 msgid "Manually selecting the eyes may improve the results."
@@ -6507,27 +6507,27 @@ msgstr ""
 
 #: ../plug-ins/common/screenshot.c:240
 msgid "Create an image from an area of the screen"
-msgstr ""
+msgstr "पडद्यावरील क्षेत्र् पासून प्रतिमा बनवा"
 
 #: ../plug-ins/common/screenshot.c:253
 msgid "_Screenshot..."
-msgstr ""
+msgstr "सक्रीनशॉट (_S)..."
 
 #: ../plug-ins/common/screenshot.c:417
 msgid "Error selecting the window"
-msgstr ""
+msgstr "चौकट नीवडतेवेळी त्रुटी आढळली"
 
 #: ../plug-ins/common/screenshot.c:778
 msgid "Importing screenshot"
-msgstr ""
+msgstr "स्क्रीनशॉट आयात करत आहे"
 
 #: ../plug-ins/common/screenshot.c:804 ../plug-ins/common/screenshot.c:1060
 msgid "Screenshot"
-msgstr ""
+msgstr "स्क्रीनशॉट"
 
 #: ../plug-ins/common/screenshot.c:845
 msgid "Mouse Pointer"
-msgstr ""
+msgstr "माऊस पॉईन्टर"
 
 #: ../plug-ins/common/screenshot.c:949
 msgid "Specified window not found"
@@ -6535,7 +6535,7 @@ msgstr "निर्देशित विंडो सापडली नाह
 
 #: ../plug-ins/common/screenshot.c:975
 msgid "There was an error taking the screenshot."
-msgstr ""
+msgstr "स्क्रीनशॉट प्राप्त करतेऴेळी त्रुटी आढळली."
 
 #: ../plug-ins/common/screenshot.c:1069
 msgid "S_nap"
@@ -6543,54 +6543,54 @@ msgstr ""
 
 #: ../plug-ins/common/screenshot.c:1099
 msgid "After the delay, the screenshot is taken."
-msgstr ""
+msgstr "विलंब नंतर, स्क्रीनशॉट प्राप्त केले."
 
 #: ../plug-ins/common/screenshot.c:1101
 msgid "After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
+msgstr "विलंब नंतर, माऊसला स्क्रीनशॉट करीता नीवडलेल्या क्षेत्रवर ओढा."
 
 #: ../plug-ins/common/screenshot.c:1104
 msgid "At the end of the delay, click in a window to snap it."
-msgstr ""
+msgstr "विलंबच्या शेवटी, प्राप्त करण्याकरीता चौकटीत क्लिक करा."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1110
 msgid "Area"
-msgstr ""
+msgstr "क्षेत्र"
 
 #: ../plug-ins/common/screenshot.c:1121
 msgid "Take a screenshot of a single _window"
-msgstr ""
+msgstr "एकमेव चौकटीचे स्क्रीनशॉट घ्या (_w)"
 
 #: ../plug-ins/common/screenshot.c:1140
 msgid "Include window _decoration"
-msgstr ""
+msgstr "चौकट सुशोभीकरण समावेष करा (_d)"
 
 #: ../plug-ins/common/screenshot.c:1158
 msgid "Take a screenshot of the entire _screen"
-msgstr ""
+msgstr "संपूर्ण चौकटचे स्क्रीनशॉट घ्या (_s)"
 
 #: ../plug-ins/common/screenshot.c:1177
 msgid "Include _mouse pointer"
-msgstr ""
+msgstr "माऊस पॉईन्टर समावेष करा (_m)"
 
 #: ../plug-ins/common/screenshot.c:1197
 msgid "Select a _region to grab"
-msgstr ""
+msgstr "प्राप्त करण्याकरीता क्षेत्र नीवडा (_r)"
 
 #. Delay
 #: ../plug-ins/common/screenshot.c:1212
 msgid "Delay"
-msgstr ""
+msgstr "विलंब"
 
 #. this is the unit label of a spinbutton
 #: ../plug-ins/common/screenshot.c:1234
 msgid "seconds"
-msgstr ""
+msgstr "सेकंद"
 
 #: ../plug-ins/common/semi-flatten.c:68
 msgid "Replace partial transparency with the current background color"
-msgstr ""
+msgstr "वर्तमान पार्श्वभूमी रंग सह अपूरी पारदर्शकता बदला"
 
 #: ../plug-ins/common/semi-flatten.c:75
 msgid "_Semi-Flatten"
@@ -6602,18 +6602,18 @@ msgstr ""
 
 #: ../plug-ins/common/sharpen.c:113
 msgid "Make image sharper (less powerful than Unsharp Mask)"
-msgstr ""
+msgstr "प्रतिमा तीक्ष्ण करा (Unsharp Mask पेक्षा कमी शक्तिशाली)"
 
 #: ../plug-ins/common/sharpen.c:120
 msgid "_Sharpen..."
-msgstr "_तीक्ष्ण करणे..."
+msgstr "तीक्ष्ण करा (_S)..."
 
 #.
 #. * Let the user know what we're doing...
 #.
 #: ../plug-ins/common/sharpen.c:307
 msgid "Sharpening"
-msgstr ""
+msgstr "तीक्ष्ण करत आहे"
 
 #: ../plug-ins/common/sharpen.c:476
 msgid "Sharpen"
@@ -6621,11 +6621,11 @@ msgstr "तीक्ष्ण"
 
 #: ../plug-ins/common/shift.c:101
 msgid "Shift each row of pixels by a random amount"
-msgstr ""
+msgstr "विनाक्रम प्रमाण नुरूप पिक्सेलची प्रत्येक ओळ हलवा"
 
 #: ../plug-ins/common/shift.c:108
 msgid "_Shift..."
-msgstr "_स्थलांतर करणे..."
+msgstr ""
 
 #: ../plug-ins/common/shift.c:189
 msgid "Shifting"
@@ -6633,19 +6633,19 @@ msgstr ""
 
 #: ../plug-ins/common/shift.c:355
 msgid "Shift"
-msgstr "स्थलांतर करणे"
+msgstr ""
 
 #: ../plug-ins/common/shift.c:388
 msgid "Shift _horizontally"
-msgstr "समतल_स्थलांतरित करा"
+msgstr "आडवे हलवा (_h)"
 
 #: ../plug-ins/common/shift.c:391
 msgid "Shift _vertically"
-msgstr "लंबरूपी_स्थलांतरित करा"
+msgstr "उभे हलवा (_v)"
 
 #: ../plug-ins/common/shift.c:422
 msgid "Shift _amount:"
-msgstr "स्थलांतरण_मात्रा:"
+msgstr "स्थालांतरण प्रमाण (_a):"
 
 #: ../plug-ins/common/sinus.c:186
 msgid "Generate complex sinusoidal textures"
@@ -6653,17 +6653,17 @@ msgstr ""
 
 #: ../plug-ins/common/sinus.c:191
 msgid "_Sinus..."
-msgstr "_व्रण..."
+msgstr "Sinus (_S)..."
 
 #: ../plug-ins/common/sinus.c:284
 msgid "Sinus: rendering"
-msgstr ""
+msgstr "Sinus: दृष्य"
 
 #. Create Main window with a vbox
 #. ==============================
 #: ../plug-ins/common/sinus.c:648
 msgid "Sinus"
-msgstr "व्रण"
+msgstr "Sinus"
 
 #: ../plug-ins/common/sinus.c:690
 msgid "Drawing Settings"
@@ -6671,11 +6671,11 @@ msgstr "आरेखन संयोजना"
 
 #: ../plug-ins/common/sinus.c:700
 msgid "_X scale:"
-msgstr ""
+msgstr "X प्रमाण (_X):"
 
 #: ../plug-ins/common/sinus.c:709
 msgid "_Y scale:"
-msgstr ""
+msgstr "Y प्रमाण (_Y):"
 
 #: ../plug-ins/common/sinus.c:718
 msgid "Co_mplexity:"
@@ -6717,11 +6717,11 @@ msgstr "काळे_ & पांढरे"
 
 #: ../plug-ins/common/sinus.c:804
 msgid "_Foreground & background"
-msgstr "_पुरोभूमी & पार्श्वभूमी"
+msgstr "पुरोभूमी & पार्श्वभूमी (_F)"
 
 #: ../plug-ins/common/sinus.c:806
 msgid "C_hoose here:"
-msgstr "इथे_पसंत करा:"
+msgstr "इथे पसंत करा (_h):"
 
 #: ../plug-ins/common/sinus.c:819
 msgid "First color"
@@ -6733,15 +6733,15 @@ msgstr "दूसरा रंग"
 
 #: ../plug-ins/common/sinus.c:842
 msgid "Alpha Channels"
-msgstr "आल्फा चेनल्स"
+msgstr "अल्फा वाहिनी"
 
 #: ../plug-ins/common/sinus.c:855
 msgid "F_irst color:"
-msgstr ""
+msgstr "पहिला रंग (_i):"
 
 #: ../plug-ins/common/sinus.c:870
 msgid "S_econd color:"
-msgstr ""
+msgstr "दूसरा रंग (_e):"
 
 #: ../plug-ins/common/sinus.c:886
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:904
@@ -6770,19 +6770,19 @@ msgstr "_मिश्रण"
 
 #: ../plug-ins/common/sinus.c:1049
 msgid "Do _preview"
-msgstr ""
+msgstr "पूर्वदृष्य पहा (_p)"
 
 #: ../plug-ins/common/smooth-palette.c:83
 msgid "Derive a smooth color palette from the image"
-msgstr ""
+msgstr "प्रतिमा पासून गुळगुळीत रंग पॅलेट प्राप्त करा"
 
 #: ../plug-ins/common/smooth-palette.c:88
 msgid "Smoo_th Palette..."
-msgstr "गुळगुळीत_पॅलेट..."
+msgstr "गुळगुळीत पॅलेट (_t)..."
 
 #: ../plug-ins/common/smooth-palette.c:179
 msgid "Deriving smooth palette"
-msgstr ""
+msgstr "गुळगुळीत पॅलेट प्राप्त करत आहे"
 
 #: ../plug-ins/common/smooth-palette.c:412
 msgid "Smooth Palette"
@@ -6790,7 +6790,7 @@ msgstr "गुळगुळीत पॅलेट"
 
 #: ../plug-ins/common/smooth-palette.c:452
 msgid "_Search depth:"
-msgstr "_शोध खोली:"
+msgstr "शोध खोलता (_S):"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
@@ -6798,15 +6798,15 @@ msgstr ""
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
-msgstr "_सौम्यचमक..."
+msgstr "सौम्य चकाकी (_S)..."
 
 #: ../plug-ins/common/softglow.c:632
 msgid "Softglow"
-msgstr "सौम्यचमक"
+msgstr "सौम्य चकाकी"
 
 #: ../plug-ins/common/softglow.c:669
 msgid "_Glow radius:"
-msgstr "_चमक त्रिज्या:"
+msgstr "चकाकी त्रिज्या (_G):"
 
 #: ../plug-ins/common/sparkle.c:178
 msgid "Turn bright spots into starry sparkles"
@@ -6814,27 +6814,27 @@ msgstr ""
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
-msgstr "_चमकणे..."
+msgstr "चमक (_S)..."
 
 #: ../plug-ins/common/sparkle.c:223
 msgid "Region selected for filter is empty"
-msgstr ""
+msgstr "फिल्टर करीता नीवडलेले क्षेत्र रिकामे आहे"
 
 #: ../plug-ins/common/sparkle.c:299
 msgid "Sparkling"
-msgstr ""
+msgstr "चमकते"
 
 #: ../plug-ins/common/sparkle.c:337
 msgid "Sparkle"
-msgstr "चमकणे"
+msgstr "चमक"
 
 #: ../plug-ins/common/sparkle.c:373
 msgid "Luminosity _threshold:"
-msgstr ""
+msgstr "तेजस्वीता मर्यादा (_t):"
 
 #: ../plug-ins/common/sparkle.c:376
 msgid "Adjust the luminosity threshold"
-msgstr ""
+msgstr "तेजस्वीता मर्यादा सुस्थापीत करा"
 
 #: ../plug-ins/common/sparkle.c:386
 msgid "F_lare intensity:"
@@ -6886,7 +6886,7 @@ msgstr ""
 
 #: ../plug-ins/common/sparkle.c:465
 msgid "_Random hue:"
-msgstr "_यादृच्छिक रंगछटा:"
+msgstr "यादृच्छिक रंगछटा (_R):"
 
 #: ../plug-ins/common/sparkle.c:468
 msgid "Adjust how much the hue should be changed randomly"
@@ -6894,7 +6894,7 @@ msgstr ""
 
 #: ../plug-ins/common/sparkle.c:478
 msgid "Rando_m saturation:"
-msgstr "यादृच्छिक_संतृप्ति:"
+msgstr "यादृच्छिक संतृप्ति (_m):"
 
 #: ../plug-ins/common/sparkle.c:481
 msgid "Adjust how much the saturation should be changed randomly"
@@ -6902,39 +6902,39 @@ msgstr ""
 
 #: ../plug-ins/common/sparkle.c:498
 msgid "_Preserve luminosity"
-msgstr "_तेजस्वीता अनुरक्षित करा"
+msgstr "तेजस्वीता सुरक्षीत करा (_P)"
 
 #: ../plug-ins/common/sparkle.c:505
 msgid "Should the luminosity be preserved?"
-msgstr ""
+msgstr "तेजस्वीता सुरक्षीत करायची?"
 
 #: ../plug-ins/common/sparkle.c:514
 msgid "In_verse"
-msgstr "उ_लट"
+msgstr "उलट (_v)"
 
 #: ../plug-ins/common/sparkle.c:520
 msgid "Should the effect be inversed?"
-msgstr ""
+msgstr "प्रभाव उलटे करायचे?"
 
 #: ../plug-ins/common/sparkle.c:529
 msgid "A_dd border"
-msgstr "किनारी_समाविष्ट करा"
+msgstr "किनार समावेष करा (_d)"
 
 #: ../plug-ins/common/sparkle.c:535
 msgid "Draw a border of spikes around the image"
-msgstr ""
+msgstr "प्रतिमा भोवती टोकदार रेषा रेखाटा"
 
 #: ../plug-ins/common/sparkle.c:549
 msgid "_Natural color"
-msgstr "_नैसर्गिक रंग"
+msgstr "नैसर्गिक रंग (_N)"
 
 #: ../plug-ins/common/sparkle.c:550
 msgid "_Foreground color"
-msgstr "_पुरोभूमी रंग"
+msgstr "पुरोभूमी रंग (_F)"
 
 #: ../plug-ins/common/sparkle.c:551
 msgid "_Background color"
-msgstr "_पार्श्वभूमी रंग"
+msgstr "पार्श्वभूमी रंग (_B)"
 
 #: ../plug-ins/common/sparkle.c:558
 msgid "Use the color of the image"
@@ -7018,7 +7018,7 @@ msgstr "गोळा डिजाइनर"
 
 #: ../plug-ins/common/sphere-designer.c:2675
 msgid "Properties"
-msgstr ""
+msgstr "गुणधर्म"
 
 #: ../plug-ins/common/sphere-designer.c:2691
 msgid "Bump"
@@ -7064,7 +7064,7 @@ msgstr "घातचिह्न.:"
 
 #: ../plug-ins/common/sphere-designer.c:2777
 msgid "Transformations"
-msgstr ""
+msgstr "रूपांतर"
 
 #: ../plug-ins/common/sphere-designer.c:2793
 #: ../plug-ins/map-object/map-object-ui.c:1143
@@ -7113,15 +7113,15 @@ msgstr ""
 
 #: ../plug-ins/common/sphere-designer.c:3020
 msgid "Sphere _Designer..."
-msgstr "गोळा_डिजाइनर..."
+msgstr "गोळा डिजाइनर (_D)..."
 
 #: ../plug-ins/common/sphere-designer.c:3074
 msgid "Region selected for plug-in is empty"
-msgstr ""
+msgstr "प्लग-इन करीता नीवडलेले क्षेत्र रिकामे आहे"
 
 #: ../plug-ins/common/threshold-alpha.c:85
 msgid "Make transparency all-or-nothing"
-msgstr ""
+msgstr "पारदर्शकता संपूर्ण-किंवा-काहिच बनवू नका"
 
 #: ../plug-ins/common/threshold-alpha.c:90
 msgid "_Threshold Alpha..."
