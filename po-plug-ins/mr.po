@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-02 01:35+0000\n"
-"PO-Revision-Date: 2009-06-05 18:50+0530\n"
+"PO-Revision-Date: 2009-06-08 12:08+0530\n"
 "Last-Translator: Sandeep Shedmake <sandeep.shedmake@gmail.com>\n"
 "Language-Team: marathi\n"
 "MIME-Version: 1.0\n"
@@ -6437,12 +6437,12 @@ msgstr "नमूना रंगपुर्ती"
 
 #: ../plug-ins/common/sample-colorize.c:1323
 msgid "Get _Sample Colors"
-msgstr ""
+msgstr "नमूना रंग प्राप्त करा (_S)"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample-colorize.c:1352
 msgid "Destination:"
-msgstr "नियतस्थान:"
+msgstr "लक्ष्य:"
 
 #. layer combo_box (Sample)
 #: ../plug-ins/common/sample-colorize.c:1368
@@ -6475,7 +6475,7 @@ msgstr "इनपुट स्तर:"
 
 #: ../plug-ins/common/sample-colorize.c:1605
 msgid "Output levels:"
-msgstr ""
+msgstr "आऊटपुट स्थर:"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1645
