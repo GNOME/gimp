@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-02 01:35+0000\n"
-"PO-Revision-Date: 2009-06-08 12:58+0530\n"
+"PO-Revision-Date: 2009-06-09 12:32+0530\n"
 "Last-Translator: Sandeep Shedmake <sandeep.shedmake@gmail.com>\n"
 "Language-Team: marathi\n"
 "MIME-Version: 1.0\n"
@@ -7129,7 +7129,7 @@ msgstr "_थ्रेसहोल्ड आल्फा..."
 
 #: ../plug-ins/common/threshold-alpha.c:131
 msgid "The layer has its alpha channel locked."
-msgstr ""
+msgstr "थराची अल्फा वाहिनी कुलूपबंद आहे."
 
 #: ../plug-ins/common/threshold-alpha.c:137
 msgid "RGBA/GRAYA drawable is not selected."
@@ -7233,7 +7233,7 @@ msgstr "पार्श्वभूमी रंग"
 
 #: ../plug-ins/common/tile-paper.c:846
 msgid "Cut image into paper tiles, and slide them"
-msgstr ""
+msgstr "प्रतिमेला पेपर टाईन नुरूप कापा, व त्यांस पुढे सरकवा"
 
 #: ../plug-ins/common/tile-paper.c:851
 msgid "September 31, 1999"
@@ -7241,41 +7241,41 @@ msgstr "सप्टेंबर 31, 1999"
 
 #: ../plug-ins/common/tile-paper.c:852
 msgid "_Paper Tile..."
-msgstr "_कागद टाईल..."
+msgstr "कागद टाईल (_P)..."
 
 #: ../plug-ins/common/tile-seamless.c:67
 msgid "Alters edges to make the image seamlessly tileable"
-msgstr ""
+msgstr "प्रतिमा टाइलजोगी करण्याकरीता किनार बदलत आहे"
 
 #: ../plug-ins/common/tile-seamless.c:73
 msgid "_Make Seamless"
-msgstr "_सलग बनवा"
+msgstr "सलग बनवा (_M)"
 
 #: ../plug-ins/common/tile-seamless.c:338
 msgid "Tiler"
-msgstr ""
+msgstr "टाईलर"
 
 #: ../plug-ins/common/tile-small.c:215
 msgid "Tile image into smaller versions of the original"
-msgstr ""
+msgstr "प्रतिमेला मूळच्या लहान भाग नुरूप करा"
 
 #: ../plug-ins/common/tile-small.c:220
 msgid "_Small Tiles..."
-msgstr "_लहान टाईल्स..."
+msgstr "लहान टाईल्स् (_S)..."
 
 #: ../plug-ins/common/tile-small.c:263
 msgid "Region selected for filter is empty."
-msgstr ""
+msgstr "फिल्टर करीता नीवडलेले क्षेत्र रिकामे आहे."
 
 #. Set the tile cache size
 #: ../plug-ins/common/tile-small.c:321 ../plug-ins/common/tile.c:190
 msgid "Tiling"
-msgstr ""
+msgstr "टाईलींग"
 
 #. Get the preview image
 #: ../plug-ins/common/tile-small.c:364
 msgid "Small Tiles"
-msgstr ""
+msgstr "लहान टाईलस्"
 
 #. Area for buttons etc
 #. Flip
@@ -7315,7 +7315,7 @@ msgstr "खंडांची संख्या"
 
 #: ../plug-ins/common/tile.c:101
 msgid "Create an array of copies of the image"
-msgstr ""
+msgstr "प्रतिमाचे प्रत यांची श्रृंखला बनवा"
 
 #: ../plug-ins/common/tile.c:111
 msgid "_Tile..."
@@ -7331,7 +7331,7 @@ msgstr "नव्या आकारात टाईल करा"
 
 #: ../plug-ins/common/tile.c:444
 msgid "C_reate new image"
-msgstr ""
+msgstr "नवीन प्रतिमा बनवा (_C)"
 
 #: ../plug-ins/common/unit-editor.c:94
 msgid "Saved"
@@ -7411,23 +7411,23 @@ msgstr "एककाचे बहुवचनिय रूप."
 
 #: ../plug-ins/common/unit-editor.c:121
 msgid "Create a new unit from scratch"
-msgstr ""
+msgstr "स्कॅच् पासून नवीन यूनीट बनवा"
 
 #: ../plug-ins/common/unit-editor.c:127
 msgid "Create a new unit using the currently selected unit as template"
-msgstr ""
+msgstr "वर्तमानक्षणी नीवडलेल्या यूनीटला प्रारूप नुरूप वापरण्याकरीता नवीन यूनीट बनवा"
 
 #: ../plug-ins/common/unit-editor.c:145
 msgid "Create or alter units used in GIMP"
-msgstr ""
+msgstr "GIMP मध्ये वापरण्याजोगी यूनीट बनवा किंवा बदला"
 
 #: ../plug-ins/common/unit-editor.c:150
 msgid "U_nits"
-msgstr ""
+msgstr "यूनीट (_n)"
 
 #: ../plug-ins/common/unit-editor.c:208
 msgid "Add a New Unit"
-msgstr ""
+msgstr "नवीन यूनीट समावेष करा"
 
 #: ../plug-ins/common/unit-editor.c:237
 msgid "_ID:"
@@ -7459,11 +7459,11 @@ msgstr "_बहुवचन:"
 
 #: ../plug-ins/common/unit-editor.c:349
 msgid "Incomplete input"
-msgstr ""
+msgstr "अपूरे इनपुट"
 
 #: ../plug-ins/common/unit-editor.c:352
 msgid "Please fill in all text fields."
-msgstr ""
+msgstr "कृपया सर्व पाठ्य क्षेत्र भरून काढा."
 
 #: ../plug-ins/common/unit-editor.c:409
 msgid "Unit Editor"
@@ -7471,7 +7471,7 @@ msgstr "एकक संपादक"
 
 #: ../plug-ins/common/unsharp-mask.c:128
 msgid "The most widely useful method for sharpening an image"
-msgstr ""
+msgstr "प्रतिमा तीक्ष्ण करण्याकरीता सर्वात प्रभावी वापरण्याजोगी पद्धत"
 
 #: ../plug-ins/common/unsharp-mask.c:138
 msgid "_Unsharp Mask..."
@@ -7479,7 +7479,7 @@ msgstr "_मुखवट्यामधून तीक्ष्णता का
 
 #: ../plug-ins/common/unsharp-mask.c:475
 msgid "Merging"
-msgstr ""
+msgstr "एकत्रीकरण"
 
 #: ../plug-ins/common/unsharp-mask.c:644
 msgid "Unsharp Mask"
@@ -7487,71 +7487,71 @@ msgstr "मुखवट्यामधून तीक्ष्णता का�
 
 #: ../plug-ins/common/value-invert.c:90
 msgid "Invert the brightness of each pixel"
-msgstr ""
+msgstr "प्रत्येक पिक्सेलचा तेजपणा उलटवा"
 
 #: ../plug-ins/common/value-invert.c:104
 msgid "_Value Invert"
-msgstr "_मूल्य उलटवा"
+msgstr "मूल्य उलटवा (_V)"
 
 #: ../plug-ins/common/value-invert.c:191
 msgid "Value Invert"
-msgstr ""
+msgstr "मूल्य उलटवा"
 
 #: ../plug-ins/common/value-propagate.c:189
 msgid "More _white (larger value)"
-msgstr "अधिक_पांढरे (मोठे मूल्य)"
+msgstr "अधिक पांढरे (मोठे मूल्य) (_w)"
 
 #: ../plug-ins/common/value-propagate.c:192
 msgid "More blac_k (smaller value)"
-msgstr "अधिक_काळे (कमी मूल्य)"
+msgstr "अधिक काळे (कमी मूल्य) (_k)"
 
 #: ../plug-ins/common/value-propagate.c:195
 msgid "_Middle value to peaks"
-msgstr "_मध्यम मूल्य शिखरावर"
+msgstr "मध्यम मूल्य शिखरावर (_M)"
 
 #: ../plug-ins/common/value-propagate.c:198
 msgid "_Foreground to peaks"
-msgstr "_पुरोभूमी शिखरावर"
+msgstr "पुरोभूमी शिखरावर (_F)"
 
 #: ../plug-ins/common/value-propagate.c:201
 msgid "O_nly foreground"
-msgstr "फक्त_पुरोभूमी"
+msgstr "फक्त पुरोभूमी (_n)"
 
 #: ../plug-ins/common/value-propagate.c:204
 msgid "Only b_ackground"
-msgstr "फक्त_पार्श्वभूमी"
+msgstr "फक्त पार्श्वभूमी (_a)"
 
 #: ../plug-ins/common/value-propagate.c:207
 msgid "Mor_e opaque"
-msgstr "अधिक_अपारदर्शक"
+msgstr "अधिक अपारदर्शक (_e)"
 
 #: ../plug-ins/common/value-propagate.c:210
 msgid "More t_ransparent"
-msgstr "वधारे_पारदर्शक"
+msgstr "अधिक पारदर्शक (_t)"
 
 #: ../plug-ins/common/value-propagate.c:233
 msgid "Propagate certain colors to neighboring pixels"
-msgstr ""
+msgstr "ठराविक रंग शेजारी पिक्सेल करीता पसरवा"
 
 #: ../plug-ins/common/value-propagate.c:238
 msgid "_Value Propagate..."
-msgstr "_मूल्य प्रचार करणे..."
+msgstr "मूल्य प्रचार करणे (_V)..."
 
 #: ../plug-ins/common/value-propagate.c:245
 msgid "Shrink lighter areas of the image"
-msgstr ""
+msgstr "प्रतिमातील कमी प्रकटीकरण क्षेत्र संकोचीत करा"
 
 #: ../plug-ins/common/value-propagate.c:250
 msgid "E_rode"
-msgstr "झीज_वणे"
+msgstr "झीजवा (_r)"
 
 #: ../plug-ins/common/value-propagate.c:257
 msgid "Grow lighter areas of the image"
-msgstr ""
+msgstr "प्रतिमाचे "
 
 #: ../plug-ins/common/value-propagate.c:262
 msgid "_Dilate"
-msgstr "_विस्तारणे"
+msgstr "विस्तारा (_D)"
 
 #: ../plug-ins/common/value-propagate.c:473
 #: ../plug-ins/common/value-propagate.c:1086
@@ -7565,43 +7565,43 @@ msgstr "प्रचार करणे"
 
 #: ../plug-ins/common/value-propagate.c:1165
 msgid "Lower t_hreshold:"
-msgstr "खालचा_थ्रेसहोल्ड:"
+msgstr "खालचा थ्रेसहोल्ड (_h):"
 
 #: ../plug-ins/common/value-propagate.c:1177
 msgid "_Upper threshold:"
-msgstr "_वरचा थ्रेसहोल्ड:"
+msgstr "वरचा थ्रेसहोल्ड (_U):"
 
 #: ../plug-ins/common/value-propagate.c:1189
 msgid "_Propagating rate:"
-msgstr "_प्रचारण दर:"
+msgstr "प्रचारण दर (_P):"
 
 #: ../plug-ins/common/value-propagate.c:1200
 msgid "To l_eft"
-msgstr "डाव्या_बाजूला"
+msgstr "डाव्या बाजूला (_e)"
 
 #: ../plug-ins/common/value-propagate.c:1203
 msgid "To _right"
-msgstr "उजव्या_बाजूला"
+msgstr "उजव्या बाजूला (_r)"
 
 #: ../plug-ins/common/value-propagate.c:1206
 msgid "To _top"
-msgstr "वरच्या _बाजूला"
+msgstr "वरच्या बाजूला (_t)"
 
 #: ../plug-ins/common/value-propagate.c:1209
 msgid "To _bottom"
-msgstr "तळाच्या_बाजूला"
+msgstr "तळाच्या बाजूला (_b)"
 
 #: ../plug-ins/common/value-propagate.c:1218
 msgid "Propagating _alpha channel"
-msgstr ""
+msgstr "अल्फा वाहिनी प्रसारीत करा (_a)"
 
 #: ../plug-ins/common/value-propagate.c:1229
 msgid "Propagating value channel"
-msgstr ""
+msgstr "मूल्य वाहिनी प्रसारीत करत आहे"
 
 #: ../plug-ins/common/van-gogh-lic.c:566 ../plug-ins/common/van-gogh-lic.c:641
 msgid "Van Gogh (LIC)"
-msgstr "वॅन गोघ (LIC)"
+msgstr "Van Gogh (LIC)"
 
 #: ../plug-ins/common/van-gogh-lic.c:666
 msgid "Effect Channel"
@@ -7609,7 +7609,7 @@ msgstr "प्रभाव वाहिनी"
 
 #: ../plug-ins/common/van-gogh-lic.c:673
 msgid "_Brightness"
-msgstr "_उजाळा"
+msgstr "तेजपणा (_B)"
 
 #: ../plug-ins/common/van-gogh-lic.c:679
 msgid "Effect Operator"
@@ -7637,7 +7637,7 @@ msgstr "स्त्रोत_प्रतिमेसह"
 
 #: ../plug-ins/common/van-gogh-lic.c:716
 msgid "_Effect image:"
-msgstr ""
+msgstr "प्रभानी प्रतिमा (_E):"
 
 #: ../plug-ins/common/van-gogh-lic.c:727
 msgid "_Filter length:"
@@ -7661,15 +7661,15 @@ msgstr "कमाल_मूल्य:"
 
 #: ../plug-ins/common/van-gogh-lic.c:809
 msgid "Special effects that nobody understands"
-msgstr ""
+msgstr "कुणालाही न समझण्याजोगी विशेष प्रभाव"
 
 #: ../plug-ins/common/van-gogh-lic.c:814
 msgid "_Van Gogh (LIC)..."
-msgstr "_वॅन गोघ (LIC)..."
+msgstr "Van Gogh (LIC) (_V)..."
 
 #: ../plug-ins/common/video.c:42
 msgid "_Staggered"
-msgstr "_लटपटणारे"
+msgstr "लटपटणारे (_S)"
 
 #: ../plug-ins/common/video.c:43
 msgid "_Large staggered"
@@ -7893,6 +7893,8 @@ msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences dialog."
 msgstr ""
+"वेब ब्राऊजर निश्चित केले नाही.\n"
+"आवड नीवड संवादचा वापर करून कृपया वेब ब्राऊजर निश्चित करा."
 
 #: ../plug-ins/common/web-browser.c:228
 #, c-format
@@ -7902,6 +7904,10 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"आवड नीवड संवाद अंतर्गत वेब ब्राऊजर आदेशचे वाचन "
+"शक्य नाही:\n"
+"\n"
+"%s"
 
 #: ../plug-ins/common/web-browser.c:246
 #, c-format
@@ -7910,6 +7916,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"आवड नीवड संवाद अंतर्गत वेब ब्राऊजर कार्यान्वीत करणे शक्य नाही:\n"
+"\n"
+"%s"
 
 #: ../plug-ins/common/whirl-pinch.c:138
 msgid "Distort an image by whirling and pinching"
@@ -7917,11 +7926,11 @@ msgstr ""
 
 #: ../plug-ins/common/whirl-pinch.c:149
 msgid "W_hirl and Pinch..."
-msgstr "फिरवणे_आणि चिमटा भरणे..."
+msgstr "फिरवणे आणि चिमटा भरणे (_h)..."
 
 #: ../plug-ins/common/whirl-pinch.c:193
 msgid "Region affected by plug-in is empty"
-msgstr ""
+msgstr "प्लग-इन द्वारे प्रभावीत क्षेत्र रिकामे आहे"
 
 #: ../plug-ins/common/whirl-pinch.c:341
 msgid "Whirling and pinching"
@@ -7933,11 +7942,11 @@ msgstr "फिरवणे आणि चिमटा भरणे"
 
 #: ../plug-ins/common/whirl-pinch.c:565
 msgid "_Whirl angle:"
-msgstr "_फिरवण्याचा कोन:"
+msgstr "फिरवण्याचा कोन (_W):"
 
 #: ../plug-ins/common/whirl-pinch.c:577
 msgid "_Pinch amount:"
-msgstr "_चिमटा भरण्याची मात्रा:"
+msgstr "चिमटा भरण्याची मात्रा (_P):"
 
 #: ../plug-ins/common/wind.c:175
 msgid "Smear image to give windblown effect"
