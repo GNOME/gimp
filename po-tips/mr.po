@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2009-03-02 01:35+0000\n"
-"PO-Revision-Date: 2009-04-08 13:50+0530\n"
+"PO-Revision-Date: 2009-06-10 18:08+0530\n"
 "Last-Translator: Sandeep Shedmake <sandeep.shedmake@gmail.com>\n"
 "Language-Team: marathi\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,8 @@ msgid ""
 "with the eyedropper tool sets the background color instead of the foreground "
 "color."
 msgstr ""
+"Bucket Fill साधनसह <tt>Ctrl</tt>-क्लिक केल्यास अग्रभूमी ऐवजी पार्श्वभूमी रंगचा वापर केला जातो. तसेच, "
+"eyedropper साधनसह <tt>Ctrl</tt>-क्लिक केल्यास अग्रभूमी ऐवजी पार्श्वभूमी रंग निश्चित होते."
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -31,12 +33,14 @@ msgid ""
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
+"थर संवाद अंतर्गत थर मास्क पूर्वदृष्य वरील <tt>Ctrl</tt>-क्लिक केल्यास, थर मास्कचे प्रभाव टॉगल होते. "
+"थर संवाद अंतर्गत थर मास्क पूर्वदृष्य वरील <tt>Alt</tt>-क्लिक केल्यास, प्रत्यक्षरित्या अवलोकन टॉगल होते."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
-msgstr ""
+msgstr "फिरवा साधनसह <tt>Ctrl</tt>-ओढा केल्यास गोलाकार 15 डिग्री कोन नुरूप निर्बंधीत केले जाईल."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
@@ -51,6 +55,9 @@ msgid ""
 "Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
 "use the menus to do the same."
 msgstr ""
+"प्रतिमेवर इतर कार्यपद्धती कार्यान्वीत करण्यापूर्वी अनिश्चित नीवड यांस नवीन थर किंवा शेवटचे सक्रीय "
+"थर नुरूप एँकर करावे लागेल. थर संवाद अंतर्गत &quot;नवीन थर&quot; किंवा &quot;एँकर थर&quot; "
+"बटणावर क्लिक करा किंवा तेच कार्य पूर्ण करण्याकरीता मेन्यूचा वापर करा."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -62,13 +69,18 @@ msgid ""
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
+"आवड नीवड संवाद मध्ये &quot;गतिक कळफलक शार्टकट&quot; कार्यान्वीत केल्यावर, "
+"तुम्ही शार्टकट किज् पुन्हा लागू करू शकता. असे तुम्ही मेन्यू वरील, मेन्यू घटक नीवडा, "
+"व पसंतीची कि जोडणी दाबा. &quot;कळफलक शार्टकट साठवा&quot; कार्यान्वीत केल्यावर, "
+"GIMP पासून बाहेर पडतेवेळी कि बाइन्डींग साठवले जाते. शार्टकटचे चुकीने लागूकरण/पुन्हा लागूकरण "
+"टाळण्याकरीता तुम्ही &quot;गतिक कळफलक शार्टकट&quot; अकार्यान्वीत केले पाहिजे."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
-msgstr ""
+msgstr "प्रतिमेवर गाइड स्थापीत करण्याकरीता रूलरवर क्लिक करा व ओढा. सर्व ओढलेले नीवड गाइड नुरूप केले जातिल. हलवा साधनच्या सहाय्याने तुम्ही प्रतिमा वरील गाइड काढूण टाकू शकता."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
@@ -76,13 +88,16 @@ msgid ""
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
+"GIMP gzip संकोचन करीता on the fly समर्थन पुरवतो. फाइलनावात फक्त <tt>.gz</tt> (किंवा <tt>."
+"bz2</tt>, bzip2 प्रतिष्ठापीत असल्यास) समावेष करा व तुमची प्रतिमा संकोचीत नुरूप साठवली जाईल. तसेच "
+"संकोचीत प्रतिमाचे दाखलन देखिल योग्य नुरूप चालते."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
-msgstr ""
+msgstr "प्रतिमा आयोजीत करण्याकरीता GIMP थरांचा वापर करतो. त्यांस स्लाइड किंवा फिल्टरचे स्टॅक नुरूप पहा, जेणेकरूण त्याचे अवलोकन अंतर्भूत माहिती मिश्रण यानुरूप आढळेल."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
@@ -90,6 +105,8 @@ msgid ""
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer→Transparency→Add Alpha Channel."
 msgstr ""
+"थर संवाद मध्ये थराचे नाव <b>bold</b> नुरूप प्रदर्शित केल्यास, या थर करीता अल्फा-वाहिनी आढळणार नाही. तुम्ही अल्फा-वाहिनी"
+"थर→पारदर्शकता→अल्फा वाहिनी समावेष करा, नुरूप समावेष करू शकता."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -97,20 +114,20 @@ msgid ""
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
 "tool (Colors→Levels). If there are any color casts, you can correct them "
 "with the Curves tool (Colors→Curves)."
-msgstr ""
+msgstr "स्कॅन केलेली काहिक फोटो रंगीत नुरूप न आढळल्यास, तुम्ही थर साधन (रंग→थर) अंतर्गत &quot;स्वयं&quot; बटणसह टोनल क्षेत्र सहज वापरू शकता. कुठलेही कलर कास्ट आढळल्यास, तुम्ही त्यांस Curves साधनसह (रंग→वक्ररेष) सुधारीत करू शकता."
 
 #: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
-msgstr ""
+msgstr "मार्ग (संपादन→मार्ग रेखाटा) रेखाटल्यास, पेन्ट साधन परस्पर वर्तमान संयोजनाशी वापरले जाऊ शकते. तुम्ही ग्रेडिऐन्ट पद्धतीत Paintbrush किंवा Eraser किंवा Smudge साधनचा वापर करू शकता."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
-msgstr ""
+msgstr "पडदा खूपच विना आयोजीत आडळल्यास, तुम्ही प्रतिमा खिडकीत <tt>Tab</tt> दाबू शकता व साधनपेटी व इतर संवादचे दृष्य टॉगल करू शकता."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -118,6 +135,8 @@ msgid ""
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
 "in to work on the whole image."
 msgstr ""
+"बहुतांश प्लग-इन वर्तमान प्रतिमाच्या वर्तमान थरावर कार्य करतात. काहिक घटना मध्ये, प्लग-इन संपूर्ण प्रतिमावर योग्यरित्या कार्य करण्याकरीता "
+"तुम्हाला सर्व थर (प्रतिमा→प्रतिमा आडवे करा) एकत्र करावे लागतील."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -126,6 +145,8 @@ msgid ""
 "(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
+"सर्व प्रकारच्या प्रतिमांना सर्व प्रभाव लागू होत नाही. हे grayed-out मेन्यू-नोंदणी द्वारे दर्शवले गेले आहे. तुम्हाला प्रतिमा पद्धत RGB "
+"(प्रतिमा→पद्धत→RGB) नुरूप करावे लागेल, अल्फा-वाहिनी (थर→पारदर्शकता→अल्फा वाहिनी समावेष करा) समावेष किंवा आडवे करावे लागेल (प्रतिमा→प्रतिमा आडवे करा)."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -133,6 +154,8 @@ msgid ""
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr ""
+"नीवड करण्यापूर्वी <tt>Shift</tt> कि दाबल्यास व सतत दाबून ठेवल्यास, वर्तमान नीवड बदलवण्याऐवजी समावेष करण्यास परवानगी देते. नीवड करण्यापूर्वी <tt>Ctrl</"
+"tt> चा वापर केल्यास वर्तमान नीवड पासून वजा होते."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -141,6 +164,10 @@ msgid ""
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
+"प्रतिमेवर पुन्हा कार्य करण्यासाठी साठवतेवेळी, XCF, GIMP चे "
+"मुळ फाइल स्वरूप वापरण्याचा प्रयत्न करा (<tt>.xcf</tt> फाइल वाढ वापरा). "
+"यामुळे थर व तुमच्या कामाची प्रत्येक प्रगती साठवते. प्रकल्प एकदा पूर्ण झाल्यावर, "
+"तुम्ही त्यांस खालिल नुरूप साठवू शकता JPEG, PNG, GIF, ..."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
@@ -148,20 +175,22 @@ msgid ""
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
 "window managers can be configured to ignore the <tt>Alt</tt> key or to use "
 "the <tt>Super</tt> key (or \"Windows logo\") instead."
-msgstr ""
+msgstr "<tt>Alt</tt>-ओढा चा वापर करून तुम्ही नीवड सुस्थीत किंवा हलवू शकता. यामुळे खिडकी सरकत असल्यास , तुमचे खिडकी व्यवस्थापक <tt>Alt</tt> किचा वापर आधिपासूनच करते. बहुतांश खिडकी व्यवस्थापक <tt>Alt</tt> कि किंवा त्याऐवजी <tt>Super</tt> कि (किंवा \"Windows logo\") वगळण्याकरीता संयोजीत केले जाऊ शकते."
 
 #: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
-msgstr ""
+msgstr "Path साधनचा वापर करून तुम्ही क्लिष्ठ नीवड बनवू व संपादीत करू शकता. Paths संवाद तुम्हाला एकापेक्षा जास्त मार्गांवर कार्य करण्यास व त्यांना नीवड नुरूप रूपांतरीत करण्याकरीता परवानगी देतो."
 
 #: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
+"थर संवाद पासून तुम्ही तर ओढू शकता व साधनपेटी मध्ये स्थीत करू शकता. "
+"यामुळे फक्त ठराविक थर समावेष असलेली नवीन प्रतिमा बनवली जाते."
 
 #: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
@@ -169,6 +198,8 @@ msgid ""
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
+"तुम्ही GIMP मध्ये बरेच घटक ओढू व टाकू शकता. उदाहरणार्थ, साधनपेटी किंवा रंग पॅलेट पासून रंग ओढणे व "
+"प्रतिमा मध्ये समावेष केल्याने वर्तमान नीवडलेले क्षेत्र ठराविक रंगाने भरले जाते."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
@@ -176,18 +207,20 @@ msgid ""
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr ""
+"संपादीत करा→नीवड रेखाटा पर्यायचा वापर करून तुम्ही सोपे चौरस किंवा वर्तुळ बनवू शकता. तो वर्तमान नीवडचे किनार रेखाटतो. Path साधन किंवा "
+"फिल्टर्स→रेन्डर→Gfig याचा वापर करून आणखी क्लिष्ठ आकार रेखाटले जाऊ शकतात."
 
 #: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
-msgstr ""
+msgstr "F1 कि दाबून तुम्ही बहुतांश GIMP गुणविशेष करीता संदर्भ-संवेदनशील मदत प्राप्त करू शकता. हे मेन्यू अंतर्गत देखिल कार्य करते."
 
 #: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
-msgstr ""
+msgstr "थर संवाद अंतर्गत थराच्या पाठ्य लेबलवर उजवी-क्लिक प्रविष्ट करून तुम्ही अनेक थर कार्यपद्धती कार्यान्वीत करू शकता."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
@@ -195,19 +228,21 @@ msgid ""
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
-msgstr ""
+msgstr "तुम्ही नीवड वाहिनी (नीवडा→वाहिनीवर साठवा) करीता साठवू शकता व त्यानंतर कुठल्याही पेन्ट साधनसह ही वाहिनी संपादीत करू शकता. वाहिनी संवाद अंतर्गत बटणांचा वापर केल्यास, तुम्ही नवीन वाहिनीचे अवलोकन टॉगल करू शकता किंवा त्यांस नीवड नुरूप रूपांतरीत करू शकता."
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
 msgstr ""
+"प्रतिमा अंतर्गत सर्व थर वापरायचे असल्यास तुम्ही <tt>Ctrl</tt>-<tt>टॅबचा</tt> वापर करू शकता"
+"(खिडकी व्यवस्थापक त्या किज सुरक्षीत करत नाही...)."
 
 #: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
-msgstr ""
+msgstr "प्रतिमा भोवती पॅन करण्याकरीता तुम्ही मध्य माऊस बटणचा वापर करू शकता (किंवा माऊस फिरवतेवेळी <tt>स्पेसबार</tt> दाबा)."
 
 #: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
@@ -216,4 +251,7 @@ msgid ""
 "selection by painting in the image and click on the button again to convert "
 "it back to a normal selection."
 msgstr ""
+"तुम्ही नीवड बदलण्याकरीता पेन्ट साधनचा वापर करू शकता. प्रतिमा खिडकीच्या तळ डावे बाजूवरील &quot;"
+"Quick Mask&quot; बटणावर क्लिक करा. प्रतिमा मध्ये पेन्ट करून तुमची नीवड बदला व सर्वसाधारण नीवड "
+"नुरूप रूपांतरीत करण्याकरीता पुन्हा बटणावर क्लिक करा."
 
