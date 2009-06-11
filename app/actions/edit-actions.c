@@ -169,7 +169,8 @@ static const GimpActionEntry edit_actions[] =
 
   { "edit-named-copy-visible", NULL, /* GIMP_STOCK_COPY_VISIBLE, */
     NC_("edit-action", "Copy _Visible Named..."), "",
-    NC_("edit-action", "Copy the selected region to a named buffer"),
+    NC_("edit-action",
+        "Copy what is visible in the selected region to a named buffer"),
     G_CALLBACK (edit_named_copy_visible_cmd_callback),
     GIMP_HELP_BUFFER_COPY },
 
