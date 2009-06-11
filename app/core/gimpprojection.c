@@ -22,6 +22,8 @@
 #include "core-types.h"
 
 #include "base/tile.h"
+#include "base/tile-rowhints.h" /* EEK */
+#include "base/tile-private.h"  /* EEK */
 #include "base/tile-manager.h"
 #include "base/tile-pyramid.h"
 
@@ -746,14 +748,61 @@ gimp_projection_validate_tile (TileManager    *tm,
                                Tile           *tile,
                                GimpProjection *proj)
 {
-  gint x, y;
+  Tile *additional[7];
+  gint  n_additional = 0;
+  gint  x, y;
+  gint  width, height;
+  gint  tile_width, tile_height;
+  gint  col, row;
+  gint  i;
 
   /*  Find the coordinates of this tile  */
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);
 
-  gimp_projection_construct (proj,
-                             x, y,
-                             tile_ewidth (tile), tile_eheight (tile));
+  width  = tile_width  = tile_ewidth (tile);
+  height = tile_height = tile_eheight (tile);
+
+  tile_manager_get_tile_col_row (tm, tile, &col, &row);
+
+  /*  try to validate up to 8 invalid tiles in a row  */
+  while (tile_width == TILE_WIDTH && n_additional < 7)
+    {
+      Tile *t;
+
+      col++;
+
+      /*  get the next tile without any read or write access, so it
+       *  won't be locked (and validated)
+       */
+      t = tile_manager_get_at (tm, col, row, FALSE, FALSE);
+
+      if (t)
+        {
+          if (tile_is_valid (t))
+            break;
+
+          /*  HACK: mark the tile as valid, so locking it with r/w access
+           *  won't validate it
+           */
+          t->valid = TRUE;
+          t = tile_manager_get_at (tm, col, row, TRUE, TRUE);
+
+          /*  add the tile's width to the chunk to validate  */
+          tile_width = tile_ewidth (t);
+          width += tile_width;
+
+          additional[n_additional++] = t;
+        }
+    }
+
+  gimp_projection_construct (proj, x, y, width, height);
+
+  for (i = 0; i < n_additional; i++)
+    {
+      /*  HACK: mark the tile as valid, because we know it is  */
+      additional[i]->valid = TRUE;
+      tile_release (additional[i], TRUE);
+    }
 }
 
 /*  image callbacks  */
