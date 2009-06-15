@@ -1268,7 +1268,7 @@ gih_save_image (const gchar  *filename,
   imageh = gimp_image_height (image_ID);
   gimp_tile_cache_size (gimp_tile_height () * imagew * 4);
 
-  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
 
   if (fd == -1)
     {

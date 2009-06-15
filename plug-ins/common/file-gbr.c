@@ -626,7 +626,7 @@ save_image (const gchar  *filename,
       }
     }
 
-  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
 
   if (fd == -1)
     {

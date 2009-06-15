@@ -373,7 +373,7 @@ test_clipboard_paste (GtkClipboard *clipboard,
       if (! strcmp (filename, "-"))
         fd = 1;
       else
-        fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 
       if (fd < 0)
         {
