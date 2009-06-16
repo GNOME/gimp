@@ -500,8 +500,6 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 void
 gimp_image_map_commit (GimpImageMap *image_map)
 {
-  gint x1, y1, x2, y2;
-
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
   if (image_map->idle_id)
@@ -520,14 +518,14 @@ gimp_image_map_commit (GimpImageMap *image_map)
   /*  Register an undo step  */
   if (image_map->undo_tiles)
     {
-      x1 = image_map->undo_offset_x;
-      y1 = image_map->undo_offset_y;
-      x2 = x1 + tile_manager_width (image_map->undo_tiles);
-      y2 = y1 + tile_manager_height (image_map->undo_tiles);
+      gint x      = image_map->undo_offset_x;
+      gint y      = image_map->undo_offset_y;
+      gint width  = tile_manager_width  (image_map->undo_tiles);
+      gint height = tile_manager_height (image_map->undo_tiles);
 
       gimp_drawable_push_undo (image_map->drawable,
                                image_map->undo_desc,
-                               x1, y1, x2, y2,
+                               x, y, width, height,
                                image_map->undo_tiles, FALSE);
 
       tile_manager_unref (image_map->undo_tiles);

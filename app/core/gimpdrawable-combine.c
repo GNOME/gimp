@@ -100,8 +100,10 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
     {
       GimpDrawableUndo *undo;
 
-      gimp_drawable_push_undo (drawable,
-                               undo_desc, x1, y1, x2, y2, NULL, FALSE);
+      gimp_drawable_push_undo (drawable, undo_desc,
+                               x1, y1,
+                               x2 - x1, y2 - y1,
+                               NULL, FALSE);
 
       undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
 
@@ -255,7 +257,10 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
-    gimp_drawable_push_undo (drawable, undo_desc, x1, y1, x2, y2, NULL, FALSE);
+    gimp_drawable_push_undo (drawable, undo_desc,
+                             x1, y1,
+                             x2 - x1, y2 - y1,
+                             NULL, FALSE);
 
   /* configure the pixel regions */
   pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),

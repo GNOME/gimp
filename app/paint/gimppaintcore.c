@@ -436,7 +436,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
       gimp_drawable_push_undo (drawable, NULL,
                                core->x1, core->y1,
-                               core->x2, core->y2,
+                               core->x2 - core->x1, core->y2 - core->y1,
                                core->undo_tiles,
                                TRUE);
 

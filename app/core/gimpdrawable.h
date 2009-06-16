@@ -200,10 +200,10 @@ void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
 
 void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,
-                                                  gint                x1,
-                                                  gint                y1,
-                                                  gint                x2,
-                                                  gint                y2,
+                                                  gint                x,
+                                                  gint                y,
+                                                  gint                width,
+                                                  gint                height,
                                                   TileManager        *tiles,
                                                   gboolean            sparse);
 

@@ -710,7 +710,9 @@ gimp_selection_extract (GimpSelection *selection,
     {
       if (cut_image && non_empty)
         gimp_drawable_push_undo (GIMP_DRAWABLE (pickable), NULL,
-                                 x1, y1, x2, y2, NULL, FALSE);
+                                 x1, y1,
+                                 x2 - x1, y2 - y1,
+                                 NULL, FALSE);
 
       gimp_item_get_offset (GIMP_ITEM (pickable), &off_x, &off_y);
       colormap = gimp_drawable_get_colormap (GIMP_DRAWABLE (pickable));

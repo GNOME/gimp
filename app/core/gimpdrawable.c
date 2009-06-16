@@ -1464,16 +1464,14 @@ gimp_drawable_swap_pixels (GimpDrawable *drawable,
 void
 gimp_drawable_push_undo (GimpDrawable *drawable,
                          const gchar  *undo_desc,
-                         gint          x1,
-                         gint          y1,
-                         gint          x2,
-                         gint          y2,
+                         gint          x,
+                         gint          y,
+                         gint          width,
+                         gint          height,
                          TileManager  *tiles,
                          gboolean      sparse)
 {
   GimpItem *item;
-  gint      x, y;
-  gint      width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (sparse == FALSE || tiles != NULL);
@@ -1488,11 +1486,11 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 
 #if 0
   g_printerr ("gimp_drawable_push_undo (%s, %d, %d, %d, %d)\n",
-              sparse ? "TRUE" : "FALSE", x1, y1, x2 - x1, y2 - y1);
+              sparse ? "TRUE" : "FALSE", x, y, width, height);
 #endif
 
-  if (! gimp_rectangle_intersect (x1, y1,
-                                  x2 - x1, y2 - y1,
+  if (! gimp_rectangle_intersect (x, y,
+                                  width, height,
                                   0, 0,
                                   gimp_item_get_width (item),
                                   gimp_item_get_height (item),
