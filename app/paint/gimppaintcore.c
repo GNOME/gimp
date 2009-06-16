@@ -479,6 +479,9 @@ void
 gimp_paint_core_cancel (GimpPaintCore *core,
                         GimpDrawable  *drawable)
 {
+  gint x, y;
+  gint width, height;
+
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -489,11 +492,18 @@ gimp_paint_core_cancel (GimpPaintCore *core,
   if ((core->x2 == core->x1) || (core->y2 == core->y1))
     return;
 
-  gimp_paint_core_copy_valid_tiles (core->undo_tiles,
-                                    gimp_drawable_get_tiles (drawable),
-                                    core->x1, core->y1,
-                                    core->x2 - core->x1,
-                                    core->y2 - core->y1);
+  if (gimp_rectangle_intersect (core->x1, core->y1,
+                                core->x2 - core->x1,
+                                core->y2 - core->y1,
+                                0, 0,
+                                gimp_item_width  (GIMP_ITEM (drawable)),
+                                gimp_item_height (GIMP_ITEM (drawable)),
+                                &x, &y, &width, &height))
+    {
+      gimp_paint_core_copy_valid_tiles (core->undo_tiles,
+                                        gimp_drawable_get_tiles (drawable),
+                                        x, y, width, height);
+    }
 
   tile_manager_unref (core->undo_tiles);
   core->undo_tiles = NULL;
@@ -504,9 +514,7 @@ gimp_paint_core_cancel (GimpPaintCore *core,
       core->saved_proj_tiles = NULL;
     }
 
-  gimp_drawable_update (drawable,
-                        core->x1, core->y1,
-                        core->x2 - core->x1, core->y2 - core->y1);
+  gimp_drawable_update (drawable, x, y, width, height);
 
   gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
 }
