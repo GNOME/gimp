@@ -577,6 +577,22 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
         clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
+      /*  also transform the mask if we are transforming an entire layer  */
+      if (GIMP_IS_LAYER (drawable) &&
+          gimp_layer_get_mask (GIMP_LAYER (drawable)) &&
+          gimp_channel_is_empty (gimp_image_get_mask (image)))
+        {
+          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
+
+          gimp_item_transform (GIMP_ITEM (mask), context,
+                               matrix,
+                               direction,
+                               interpolation_type,
+                               recursion_level,
+                               clip_result,
+                               progress);
+        }
+
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_affine (drawable, context,
                                                         orig_tiles,
@@ -664,6 +680,19 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
         clip_result = TRUE;
 
+      /*  also transform the mask if we are transforming an entire layer  */
+      if (GIMP_IS_LAYER (drawable) &&
+          gimp_layer_get_mask (GIMP_LAYER (drawable)) &&
+          gimp_channel_is_empty (gimp_image_get_mask (image)))
+        {
+          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
+
+          gimp_item_flip (GIMP_ITEM (mask), context,
+                          flip_type,
+                          axis,
+                          clip_result);
+        }
+
       /* transform the buffer */
       if (orig_tiles)
         {
@@ -739,6 +768,20 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
       /*  always clip unfloated tiles so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
         clip_result = TRUE;
+
+      /*  also transform the mask if we are transforming an entire layer  */
+      if (GIMP_IS_LAYER (drawable) &&
+          gimp_layer_get_mask (GIMP_LAYER (drawable)) &&
+          gimp_channel_is_empty (gimp_image_get_mask (image)))
+        {
+          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
+
+          gimp_item_rotate (GIMP_ITEM (mask), context,
+                            rotate_type,
+                            center_x,
+                            center_y,
+                            clip_result);
+        }
 
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
