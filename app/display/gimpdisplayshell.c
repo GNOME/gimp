@@ -1376,6 +1376,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_expose_full (shell);
 
+  gtk_window_unmaximize (GTK_WINDOW (shell));
   gtk_window_resize (GTK_WINDOW (shell), width, height);
 
   /*  update the ui managers  */
