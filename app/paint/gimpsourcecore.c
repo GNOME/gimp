@@ -450,20 +450,21 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   GimpImage         *image     = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpImage         *src_image = gimp_pickable_get_image (src_pickable);
   TileManager       *src_tiles = gimp_pickable_get_tiles (src_pickable);
-  gint               x1, y1;
-  gint               x2, y2;
+  gint               x, y;
+  gint               width, height;
 
-  x1 = CLAMP (paint_area->x + src_offset_x,
-              0, tile_manager_width  (src_tiles));
-  y1 = CLAMP (paint_area->y + src_offset_y,
-              0, tile_manager_height (src_tiles));
-  x2 = CLAMP (paint_area->x + src_offset_x + paint_area->width,
-              0, tile_manager_width  (src_tiles));
-  y2 = CLAMP (paint_area->y + src_offset_y + paint_area->height,
-              0, tile_manager_height (src_tiles));
-
-  if (!(x2 - x1) || !(y2 - y1))
-    return FALSE;
+  if (! gimp_rectangle_intersect (paint_area->x + src_offset_x,
+                                  paint_area->y + src_offset_y,
+                                  paint_area->width,
+                                  paint_area->height,
+                                  0, 0,
+                                  tile_manager_width  (src_tiles),
+                                  tile_manager_height (src_tiles),
+                                  &x, &y,
+                                  &width, &height))
+    {
+      return FALSE;
+    }
 
   /*  If the source image is different from the destination,
    *  then we should copy straight from the source image
@@ -475,7 +476,8 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
       (! options->sample_merged && (source_core->src_drawable != drawable)))
     {
       pixel_region_init (srcPR, src_tiles,
-                         x1, y1, x2 - x1, y2 - y1, FALSE);
+                         x, y, width, height,
+                         FALSE);
     }
   else
     {
@@ -485,20 +487,20 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
       if (options->sample_merged)
         orig = gimp_paint_core_get_orig_proj (GIMP_PAINT_CORE (source_core),
                                               src_pickable,
-                                              x1, y1, x2, y2);
+                                              x, y, width, height);
       else
         orig = gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core),
                                                GIMP_DRAWABLE (src_pickable),
-                                               x1, y1, x2, y2);
+                                               x, y, width, height);
 
       pixel_region_init_temp_buf (srcPR, orig,
-                                  0, 0, x2 - x1, y2 - y1);
+                                  0, 0, width, height);
     }
 
-  *paint_area_offset_x = x1 - (paint_area->x + src_offset_x);
-  *paint_area_offset_y = y1 - (paint_area->y + src_offset_y);
-  *paint_area_width    = x2 - x1;
-  *paint_area_height   = y2 - y1;
+  *paint_area_offset_x = x - (paint_area->x + src_offset_x);
+  *paint_area_offset_y = y - (paint_area->y + src_offset_y);
+  *paint_area_width    = width;
+  *paint_area_height   = height;
 
   return TRUE;
 }

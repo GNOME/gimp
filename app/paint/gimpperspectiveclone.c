@@ -360,11 +360,15 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
       if (options->sample_merged)
         orig = gimp_paint_core_get_orig_proj (paint_core,
                                               src_pickable,
-                                              xmin, ymin, xmax, ymax);
+                                              xmin, ymin,
+                                              xmax - xmin,
+                                              ymax - ymin);
       else
         orig = gimp_paint_core_get_orig_image (paint_core,
                                                GIMP_DRAWABLE (src_pickable),
-                                               xmin, ymin, xmax, ymax);
+                                               xmin, ymin,
+                                               xmax - xmin,
+                                               ymax - ymin);
 
       pixel_region_init_temp_buf (&origPR, orig,
                                   0, 0, xmax - xmin, ymax - ymin);

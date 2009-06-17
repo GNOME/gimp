@@ -158,16 +158,16 @@ TempBuf * gimp_paint_core_get_paint_area            (GimpPaintCore    *core,
                                                      const GimpCoords *coords);
 TempBuf * gimp_paint_core_get_orig_image            (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
-                                                     gint              x1,
-                                                     gint              y1,
-                                                     gint              x2,
-                                                     gint              y2);
+                                                     gint              x,
+                                                     gint              y,
+                                                     gint              width,
+                                                     gint              height);
 TempBuf * gimp_paint_core_get_orig_proj             (GimpPaintCore    *core,
                                                      GimpPickable     *pickable,
-                                                     gint              x1,
-                                                     gint              y1,
-                                                     gint              x2,
-                                                     gint              y2);
+                                                     gint              x,
+                                                     gint              y,
+                                                     gint              width,
+                                                     gint              height);
 
 void      gimp_paint_core_paste             (GimpPaintCore            *core,
                                              PixelRegion              *paint_maskPR,

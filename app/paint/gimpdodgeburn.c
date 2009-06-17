@@ -195,21 +195,26 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
    */
   {
     GimpItem *item = GIMP_ITEM (drawable);
-    gint      x1, y1, x2, y2;
+    gint      x, y;
+    gint      width, height;
 
-    x1 = CLAMP (area->x, 0, gimp_item_get_width  (item));
-    y1 = CLAMP (area->y, 0, gimp_item_get_height (item));
-    x2 = CLAMP (area->x + area->width,  0, gimp_item_get_width  (item));
-    y2 = CLAMP (area->y + area->height, 0, gimp_item_get_height (item));
-
-    if (!(x2 - x1) || !(y2 - y1))
-      return;
+    if (! gimp_rectangle_intersect (area->x, area->y,
+                                    area->width, area->height,
+                                    0, 0,
+                                    gimp_item_get_width  (item),
+                                    gimp_item_get_height (item),
+                                    &x, &y,
+                                    &width, &height))
+      {
+        return;
+      }
 
     /*  get the original untouched image  */
-    orig = gimp_paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2);
+    orig = gimp_paint_core_get_orig_image (paint_core, drawable,
+                                           x, y, width, height);
 
     pixel_region_init_temp_buf (&srcPR, orig,
-                                0, 0, x2 - x1, y2 - y1);
+                                0, 0, width, height);
   }
 
   /* tempPR will hold the dodgeburned region */

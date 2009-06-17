@@ -690,10 +690,10 @@ gimp_paint_core_get_paint_area (GimpPaintCore    *core,
 TempBuf *
 gimp_paint_core_get_orig_image (GimpPaintCore *core,
                                 GimpDrawable  *drawable,
-                                gint           x1,
-                                gint           y1,
-                                gint           x2,
-                                gint           y2)
+                                gint           x,
+                                gint           y,
+                                gint           width,
+                                gint           height)
 {
   PixelRegion   srcPR;
   PixelRegion   destPR;
@@ -713,28 +713,27 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
 
   core->orig_buf = temp_buf_resize (core->orig_buf,
                                     gimp_drawable_bytes (drawable),
-                                    x1, y1,
-                                    (x2 - x1), (y2 - y1));
+                                    x, y, width, height);
 
   drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
   drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
 
-  x1 = CLAMP (x1, 0, drawable_width);
-  y1 = CLAMP (y1, 0, drawable_height);
-  x2 = CLAMP (x2, 0, drawable_width);
-  y2 = CLAMP (y2, 0, drawable_height);
+  gimp_rectangle_intersect (x, y,
+                            width, height,
+                            0, 0,
+                            drawable_width, drawable_height,
+                            &x, &y,
+                            &width, &height);
 
   /*  configure the pixel regions  */
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     x1, y1,
-                     (x2 - x1), (y2 - y1),
+                     x, y, width, height,
                      FALSE);
 
   pixel_region_init_temp_buf (&destPR, core->orig_buf,
-                              x1 - core->orig_buf->x,
-                              y1 - core->orig_buf->y,
-                              x2 - x1,
-                              y2 - y1);
+                              x - core->orig_buf->x,
+                              y - core->orig_buf->y,
+                              width, height);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
@@ -784,10 +783,10 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
 TempBuf *
 gimp_paint_core_get_orig_proj (GimpPaintCore *core,
                                GimpPickable  *pickable,
-                               gint           x1,
-                               gint           y1,
-                               gint           x2,
-                               gint           y2)
+                               gint           x,
+                               gint           y,
+                               gint           width,
+                               gint           height)
 {
   TileManager  *src_tiles;
   PixelRegion   srcPR;
@@ -808,30 +807,29 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
 
   core->orig_proj_buf = temp_buf_resize (core->orig_proj_buf,
                                          gimp_pickable_get_bytes (pickable),
-                                         x1, y1,
-                                         (x2 - x1), (y2 - y1));
+                                         x, y, width, height);
 
   src_tiles = gimp_pickable_get_tiles (pickable);
 
   pickable_width  = tile_manager_width  (src_tiles);
   pickable_height = tile_manager_height (src_tiles);
 
-  x1 = CLAMP (x1, 0, pickable_width);
-  y1 = CLAMP (y1, 0, pickable_height);
-  x2 = CLAMP (x2, 0, pickable_width);
-  y2 = CLAMP (y2, 0, pickable_height);
+  gimp_rectangle_intersect (x, y,
+                            width, height,
+                            0, 0,
+                            pickable_width, pickable_height,
+                            &x, &y,
+                            &width, &height);
 
   /*  configure the pixel regions  */
   pixel_region_init (&srcPR, src_tiles,
-                     x1, y1,
-                     (x2 - x1), (y2 - y1),
+                     x, y, width, height,
                      FALSE);
 
   pixel_region_init_temp_buf (&destPR, core->orig_proj_buf,
-                              x1 - core->orig_proj_buf->x,
-                              y1 - core->orig_proj_buf->y,
-                              x2 - x1,
-                              y2 - y1);
+                              x - core->orig_proj_buf->x,
+                              y - core->orig_proj_buf->y,
+                              width, height);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
