@@ -200,6 +200,7 @@ struct _GimpCoords
   gdouble wheel;
   gdouble velocity;
   gdouble direction;
+  gdouble fading;
 };
 
 

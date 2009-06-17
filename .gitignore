@@ -1,16 +1,5 @@
-/.anjuta/
-/.anjuta_sym_db.db
-/TODO.tasks
-*.anjuta
-*.c~
-*.h~
-*.patch
 
 
-=======
-*.la
-*.lo
-*.o
 /ChangeLog
 /.anjuta/
 /.anjuta_sym_db.db
