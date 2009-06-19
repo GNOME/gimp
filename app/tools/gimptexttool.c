@@ -1069,6 +1069,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
   pango_layout_get_pixel_extents (layout, &ink_extents, &logical_extents);
+  gimp_text_layout_transform_rect (text_tool->layout, &logical_extents);
 
   if (ink_extents.x < 0)
     logical_off_x = -ink_extents.x;
@@ -1103,6 +1104,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       g_free (string);
 
       pango_layout_index_to_pos (layout, cursorx, &crect);
+      gimp_text_layout_transform_rect (text_tool->layout, &crect);
 
       crect.x      = PANGO_PIXELS (crect.x) + logical_off_x;
       crect.y      = PANGO_PIXELS (crect.y) + logical_off_y;
@@ -1157,14 +1159,21 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool,
 
   do
     {
-      gint firstline, lastline;
-      gint first_x,   last_x;
+      gint    firstline, lastline;
+      gint    first_x,   last_x;
+      gdouble first_tmp, last_tmp;
 
       pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
-      pango_layout_index_to_line_x (layout, max, 0, &lastline, &last_x);
+      pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
 
-      first_x = PANGO_PIXELS (first_x) + logical_off_x;
-      last_x  = PANGO_PIXELS (last_x)  + logical_off_x;
+      first_tmp = first_x;
+      last_tmp  = last_x;
+
+      gimp_text_layout_transform_distance (text_tool->layout, &first_tmp, NULL);
+      gimp_text_layout_transform_distance (text_tool->layout, &last_tmp,  NULL);
+
+      first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
+      last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
 
       if (i >= firstline && i <= lastline)
         {
@@ -1172,6 +1181,8 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool,
 
           pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
           pango_extents_to_pixels (&crect, NULL);
+
+          gimp_text_layout_transform_rect (text_tool->layout, &crect);
 
           crect.x += logical_off_x;
           crect.y += logical_off_y;
@@ -1256,14 +1267,21 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
    */
   do
     {
-      gint firstline, lastline;
-      gint first_x,   last_x;
+      gint    firstline, lastline;
+      gint    first_x,   last_x;
+      gdouble first_tmp, last_tmp;
 
       pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
       pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
 
-      first_x = PANGO_PIXELS (first_x) + logical_off_x;
-      last_x  = PANGO_PIXELS (last_x)  + logical_off_x;
+      first_tmp = first_x;
+      last_tmp  = last_x;
+
+      gimp_text_layout_transform_distance (text_tool->layout, &first_tmp, NULL);
+      gimp_text_layout_transform_distance (text_tool->layout, &last_tmp,  NULL);
+
+      first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
+      last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
 
       if (i >= firstline && i <= lastline)
         {
@@ -1271,6 +1289,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
 
           pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
           pango_extents_to_pixels (&crect, NULL);
+
+          gimp_text_layout_transform_rect (text_tool->layout, &crect);
 
           crect.x += logical_off_x;
           crect.y += logical_off_y;
@@ -2237,6 +2257,8 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
   gchar          *string;
   gint            offset;
   gint            trailing;
+
+  gimp_text_layout_untransform_point (text_tool->layout, &x, &y);
 
   /*  adjust to offset of logical rect  */
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);

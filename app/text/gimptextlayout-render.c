@@ -32,10 +32,6 @@
 #include "gimptextlayout-render.h"
 
 
-static void  gimp_text_layout_render_trafo (GimpTextLayout  *layout,
-                                            cairo_matrix_t  *trafo);
-
-
 void
 gimp_text_layout_render (GimpTextLayout *layout,
                          cairo_t        *cr,
@@ -79,33 +75,11 @@ gimp_text_layout_render (GimpTextLayout *layout,
 
   cairo_translate (cr, x, y);
 
-  gimp_text_layout_render_trafo (layout, &trafo);
+  gimp_text_layout_get_transform (layout, &trafo);
   cairo_transform (cr, &trafo);
 
   if (path)
     pango_cairo_layout_path (cr, pango_layout);
   else
     pango_cairo_show_layout (cr, pango_layout);
-}
-
-
-static void
-gimp_text_layout_render_trafo (GimpTextLayout *layout,
-                               cairo_matrix_t *trafo)
-{
-  GimpText *text = gimp_text_layout_get_text (layout);
-  gdouble   xres;
-  gdouble   yres;
-  gdouble   norm;
-
-  gimp_text_layout_get_resolution (layout, &xres, &yres);
-
-  norm = 1.0 / yres * xres;
-
-  trafo->xx = text->transformation.coeff[0][0] * norm;
-  trafo->xy = text->transformation.coeff[0][1] * 1.0;
-  trafo->yx = text->transformation.coeff[1][0] * norm;
-  trafo->yy = text->transformation.coeff[1][1] * 1.0;
-  trafo->x0 = 0;
-  trafo->y0 = 0;
 }

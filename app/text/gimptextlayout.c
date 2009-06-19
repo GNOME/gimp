@@ -289,6 +289,183 @@ gimp_text_layout_get_pango_layout (GimpTextLayout *layout)
   return layout->layout;
 }
 
+void
+gimp_text_layout_get_transform (GimpTextLayout *layout,
+                                cairo_matrix_t *matrix)
+{
+  GimpText *text;
+  gdouble   xres;
+  gdouble   yres;
+  gdouble   norm;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (matrix != NULL);
+
+  text = gimp_text_layout_get_text (layout);
+
+  gimp_text_layout_get_resolution (layout, &xres, &yres);
+
+  norm = 1.0 / yres * xres;
+
+  matrix->xx = text->transformation.coeff[0][0] * norm;
+  matrix->xy = text->transformation.coeff[0][1] * 1.0;
+  matrix->yx = text->transformation.coeff[1][0] * norm;
+  matrix->yy = text->transformation.coeff[1][1] * 1.0;
+  matrix->x0 = 0;
+  matrix->y0 = 0;
+}
+
+void
+gimp_text_layout_transform_rect (GimpTextLayout *layout,
+                                 PangoRectangle *rect)
+{
+  cairo_matrix_t matrix;
+  gdouble        x, y;
+  gdouble        width, height;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (rect != NULL);
+
+  x      = rect->x;
+  y      = rect->y;
+  width  = rect->width;
+  height = rect->height;
+
+  gimp_text_layout_get_transform (layout, &matrix);
+
+  cairo_matrix_transform_point (&matrix, &x, &y);
+  cairo_matrix_transform_distance (&matrix, &width, &height);
+
+  rect->x      = ROUND (x);
+  rect->y      = ROUND (y);
+  rect->width  = ROUND (width);
+  rect->height = ROUND (height);
+}
+
+void
+gimp_text_layout_transform_point (GimpTextLayout *layout,
+                                  gdouble        *x,
+                                  gdouble        *y)
+{
+  cairo_matrix_t matrix;
+  gdouble        _x = 0.0;
+  gdouble        _y = 0.0;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+
+  if (x) _x = *x;
+  if (y) _y = *y;
+
+  gimp_text_layout_get_transform (layout, &matrix);
+
+  cairo_matrix_transform_point (&matrix, &_x, &_y);
+
+  if (x) *x = _x;
+  if (y) *y = _y;
+}
+
+void
+gimp_text_layout_transform_distance (GimpTextLayout *layout,
+                                     gdouble        *x,
+                                     gdouble        *y)
+{
+  cairo_matrix_t matrix;
+  gdouble        _x = 0.0;
+  gdouble        _y = 0.0;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+
+  if (x) _x = *x;
+  if (y) _y = *y;
+
+  gimp_text_layout_get_transform (layout, &matrix);
+
+  cairo_matrix_transform_distance (&matrix, &_x, &_y);
+
+  if (x) *x = _x;
+  if (y) *y = _y;
+}
+
+void
+gimp_text_layout_untransform_rect (GimpTextLayout *layout,
+                                   PangoRectangle *rect)
+{
+  cairo_matrix_t matrix;
+  gdouble        x, y;
+  gdouble        width, height;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (rect != NULL);
+
+  x      = rect->x;
+  y      = rect->y;
+  width  = rect->width;
+  height = rect->height;
+
+  gimp_text_layout_get_transform (layout, &matrix);
+
+  if (cairo_matrix_invert (&matrix) == CAIRO_STATUS_SUCCESS)
+    {
+      cairo_matrix_transform_point (&matrix, &x, &y);
+      cairo_matrix_transform_distance (&matrix, &width, &height);
+
+      rect->x      = ROUND (x);
+      rect->y      = ROUND (y);
+      rect->width  = ROUND (width);
+      rect->height = ROUND (height);
+    }
+}
+
+void
+gimp_text_layout_untransform_point (GimpTextLayout *layout,
+                                    gdouble        *x,
+                                    gdouble        *y)
+{
+  cairo_matrix_t matrix;
+  gdouble        _x = 0.0;
+  gdouble        _y = 0.0;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+
+  if (x) _x = *x;
+  if (y) _y = *y;
+
+  gimp_text_layout_get_transform (layout, &matrix);
+
+  if (cairo_matrix_invert (&matrix) == CAIRO_STATUS_SUCCESS)
+    {
+      cairo_matrix_transform_point (&matrix, &_x, &_y);
+
+      if (x) *x = _x;
+      if (y) *y = _y;
+    }
+}
+
+void
+gimp_text_layout_untransform_distance (GimpTextLayout *layout,
+                                       gdouble        *x,
+                                       gdouble        *y)
+{
+  cairo_matrix_t matrix;
+  gdouble        _x = 0.0;
+  gdouble        _y = 0.0;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+
+  if (x) _x = *x;
+  if (y) _y = *y;
+
+  gimp_text_layout_get_transform (layout, &matrix);
+
+  if (cairo_matrix_invert (&matrix) == CAIRO_STATUS_SUCCESS)
+    {
+      cairo_matrix_transform_distance (&matrix, &_x, &_y);
+
+      if (x) *x = _x;
+      if (y) *y = _y;
+    }
+}
+
 static void
 gimp_text_layout_position (GimpTextLayout *layout)
 {
