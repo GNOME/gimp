@@ -55,9 +55,9 @@
 /contrast-retinex
 /contrast-retinex.exe
 /contrast-stretch
+/contrast-stretch.exe
 /contrast-stretch-hsv
 /contrast-stretch-hsv.exe
-/contrast-stretch.exe
 /convolution-matrix
 /convolution-matrix.exe
 /crop-auto
@@ -83,6 +83,7 @@
 /displace
 /displace.exe
 /edge
+/edge.exe
 /edge-dog
 /edge-dog.exe
 /edge-laplace
@@ -91,7 +92,6 @@
 /edge-neon.exe
 /edge-sobel
 /edge-sobel.exe
-/edge.exe
 /emboss
 /emboss.exe
 /engrave
@@ -263,6 +263,7 @@
 /threshold-alpha
 /threshold-alpha.exe
 /tile
+/tile.exe
 /tile-glass
 /tile-glass.exe
 /tile-paper
@@ -271,7 +272,6 @@
 /tile-seamless.exe
 /tile-small
 /tile-small.exe
-/tile.exe
 /unit-editor
 /unit-editor.exe
 /unsharp-mask

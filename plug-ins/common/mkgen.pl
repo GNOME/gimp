@@ -100,10 +100,10 @@ install-\%: \%
 EOT
 
 print IGNORE <<EOT;
-/Makefile
-/Makefile.in
 /.deps
 /.libs
+/Makefile
+/Makefile.in
 EOT
 
 foreach (sort keys %plugins) {
@@ -172,6 +172,7 @@ ${makename}_LDADD = \\
 EOT
 
     print IGNORE "/$_\n";
+    print IGNORE "/$_.exe\n";
 }
 
 close MK;
