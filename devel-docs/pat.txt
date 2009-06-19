@@ -23,17 +23,17 @@ Bytes 12 - 15: height
 
 Bytes 16 - 19: bytes
 	Type: 32 bit unsigned int 
-	Value: Colour depth of brush. 
+	Value: Colour depth of pattern 
 	1 = greyscale, 2 = greyscale + A, 3 = RGB, 4 = RGBA
 
 Bytes 20 - 23: magic_number
 	Type: 32 bit unsigned int 
-	Value: GIMP brush magic number. 
+	Value: GIMP pattern magic number.
 	('G' << 24) + ('I' << 16) + ('M' << 8) + 'P'
 
-Bytes 24 - (header_size - 24):
+Bytes 24 - (header_size - 1):
 	Type: char *
-	Value: UTF-8 string - name of brush
+	Value: UTF-8 string - name of pattern
 
 
 BODY
