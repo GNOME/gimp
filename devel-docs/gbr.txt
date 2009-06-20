@@ -5,7 +5,7 @@ Based on examples and code, it seems that v1 is like v2, but it is
 lacking bytes 20 - 27 (no magic or spacing info), and thus having
 as last header field:
 
-Bytes 20 - (header_size - 20):
+Bytes 20 - (header_size - 1):
     Type: char *
     Value: undefined encoding string - name of brush
 
@@ -25,7 +25,7 @@ Bytes 0  - 3:  header_size:
 
 Bytes 4  - 7: version
 	Type: 32 bit unsigned int 
-	Value: The file format version. Currently
+	Value: The file format version.
 
 Bytes 8  - 11: width
 	Type: 32 bit unsigned int 
@@ -67,9 +67,9 @@ The GIMP Paintbrush File Format Version 3 (.gbr)
 ------------------------------------------------
 
 This changed GIMP brush format was introduced by the FilmGimp or
-CinePaint developers without noticing the GIMP developers. We've added
-support for reading these brushes. The format is very similar to
-version 2 but uses the bytes field as a data format identifier. It
-seems the only format identifier in use is 18 which corresponds to
-16bit floats. If you encounter brushes with a different data format,
-please let the GIMP developers know.
+CinePaint developers without notifying the GIMP developers. We've
+added support for reading these brushes. The format is very similar
+to version 2 but uses the bytes field as a data format identifier. 
+It seems the only format identifier in use is 18 which corresponds
+to 16bit floats. If you encounter brushes with a different data
+format, please let the GIMP developers know.
