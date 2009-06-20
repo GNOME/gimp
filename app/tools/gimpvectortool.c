@@ -77,6 +77,7 @@ static void     gimp_vector_tool_button_press    (GimpTool              *tool,
                                                   const GimpCoords      *coords,
                                                   guint32                time,
                                                   GdkModifierType        state,
+                                                  GimpButtonPressType    press_type,
                                                   GimpDisplay           *display);
 static void     gimp_vector_tool_button_release  (GimpTool              *tool,
                                                   const GimpCoords      *coords,
@@ -243,11 +244,12 @@ gimp_vector_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_vector_tool_button_press (GimpTool         *tool,
-                               const GimpCoords *coords,
-                               guint32           time,
-                               GdkModifierType   state,
-                               GimpDisplay      *display)
+gimp_vector_tool_button_press (GimpTool            *tool,
+                               const GimpCoords    *coords,
+                               guint32              time,
+                               GdkModifierType      state,
+                               GimpButtonPressType  press_type,
+                               GimpDisplay         *display)
 {
   GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);

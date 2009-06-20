@@ -124,6 +124,7 @@ static void   gimp_iscissors_tool_button_press   (GimpTool              *tool,
                                                   const GimpCoords      *coords,
                                                   guint32                time,
                                                   GdkModifierType        state,
+                                                  GimpButtonPressType    press_type,
                                                   GimpDisplay           *display);
 static void   gimp_iscissors_tool_button_release (GimpTool              *tool,
                                                   const GimpCoords      *coords,
@@ -398,11 +399,12 @@ gimp_iscissors_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_iscissors_tool_button_press (GimpTool         *tool,
-                                  const GimpCoords *coords,
-                                  guint32           time,
-                                  GdkModifierType   state,
-                                  GimpDisplay      *display)
+gimp_iscissors_tool_button_press (GimpTool            *tool,
+                                  const GimpCoords    *coords,
+                                  guint32              time,
+                                  GdkModifierType      state,
+                                  GimpButtonPressType  press_type,
+                                  GimpDisplay         *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);

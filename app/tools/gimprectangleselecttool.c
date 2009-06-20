@@ -90,6 +90,7 @@ static void     gimp_rectangle_select_tool_button_press   (GimpTool             
                                                            const GimpCoords      *coords,
                                                            guint32                time,
                                                            GdkModifierType        state,
+                                                           GimpButtonPressType    press_type,
                                                            GimpDisplay           *display);
 static void     gimp_rectangle_select_tool_button_release (GimpTool              *tool,
                                                            const GimpCoords      *coords,
@@ -366,11 +367,12 @@ gimp_rectangle_select_tool_delegate_button_press (GimpRectangleSelectTool *rect_
 }
 
 static void
-gimp_rectangle_select_tool_button_press (GimpTool         *tool,
-                                         const GimpCoords *coords,
-                                         guint32           time,
-                                         GdkModifierType   state,
-                                         GimpDisplay      *display)
+gimp_rectangle_select_tool_button_press (GimpTool            *tool,
+                                         const GimpCoords    *coords,
+                                         guint32              time,
+                                         GdkModifierType      state,
+                                         GimpButtonPressType  press_type,
+                                         GimpDisplay         *display)
 {
   GimpRectangleTool              *rectangle;
   GimpRectangleSelectTool        *rect_sel_tool;

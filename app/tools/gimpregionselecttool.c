@@ -53,6 +53,7 @@ static void   gimp_region_select_tool_button_press   (GimpTool              *too
                                                       const GimpCoords      *coords,
                                                       guint32                time,
                                                       GdkModifierType        state,
+                                                      GimpButtonPressType    press_type,
                                                       GimpDisplay           *display);
 static void   gimp_region_select_tool_button_release (GimpTool              *tool,
                                                       const GimpCoords      *coords,
@@ -139,11 +140,12 @@ gimp_region_select_tool_finalize (GObject *object)
 }
 
 static void
-gimp_region_select_tool_button_press (GimpTool         *tool,
-                                      const GimpCoords *coords,
-                                      guint32           time,
-                                      GdkModifierType   state,
-                                      GimpDisplay      *display)
+gimp_region_select_tool_button_press (GimpTool            *tool,
+                                      const GimpCoords    *coords,
+                                      guint32              time,
+                                      GdkModifierType      state,
+                                      GimpButtonPressType  press_type,
+                                      GimpDisplay         *display)
 {
   GimpRegionSelectTool    *region_sel = GIMP_REGION_SELECT_TOOL (tool);
   GimpRegionSelectOptions *options    = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);

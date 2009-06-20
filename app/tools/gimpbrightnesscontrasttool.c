@@ -61,6 +61,7 @@ static void   gimp_brightness_contrast_tool_button_press   (GimpTool            
                                                             const GimpCoords      *coords,
                                                             guint32                time,
                                                             GdkModifierType        state,
+                                                            GimpButtonPressType    press_type,
                                                             GimpDisplay           *display);
 static void   gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
                                                             const GimpCoords      *coords,
@@ -227,11 +228,12 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
 
 
 static void
-gimp_brightness_contrast_tool_button_press (GimpTool         *tool,
-                                            const GimpCoords *coords,
-                                            guint32           time,
-                                            GdkModifierType   state,
-                                            GimpDisplay      *display)
+gimp_brightness_contrast_tool_button_press (GimpTool            *tool,
+                                            const GimpCoords    *coords,
+                                            guint32              time,
+                                            GdkModifierType      state,
+                                            GimpButtonPressType  press_type,
+                                            GimpDisplay         *display)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 

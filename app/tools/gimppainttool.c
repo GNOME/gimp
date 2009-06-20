@@ -65,6 +65,7 @@ static void   gimp_paint_tool_button_press   (GimpTool              *tool,
                                               const GimpCoords      *coords,
                                               guint32                time,
                                               GdkModifierType        state,
+                                              GimpButtonPressType    press_type,
                                               GimpDisplay           *display);
 static void   gimp_paint_tool_button_release (GimpTool              *tool,
                                               const GimpCoords      *coords,
@@ -242,11 +243,12 @@ gimp_paint_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_paint_tool_button_press (GimpTool         *tool,
-                              const GimpCoords *coords,
-                              guint32           time,
-                              GdkModifierType   state,
-                              GimpDisplay      *display)
+gimp_paint_tool_button_press (GimpTool            *tool,
+                              const GimpCoords    *coords,
+                              guint32              time,
+                              GdkModifierType      state,
+                              GimpButtonPressType  press_type,
+                              GimpDisplay         *display)
 {
   GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (tool);
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
@@ -260,7 +262,7 @@ gimp_paint_tool_button_press (GimpTool         *tool,
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
       GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                    display);
+                                                    press_type, display);
       return;
     }
 
@@ -320,7 +322,7 @@ gimp_paint_tool_button_press (GimpTool         *tool,
 
   /*  chain up to activate the tool  */
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                display);
+                                                press_type, display);
 
   /*  pause the current selection  */
   gimp_image_selection_control (display->image, GIMP_SELECTION_PAUSE);

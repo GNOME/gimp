@@ -75,6 +75,7 @@ static void   gimp_color_tool_button_press   (GimpTool              *tool,
                                               const GimpCoords      *coords,
                                               guint32                time,
                                               GdkModifierType        state,
+                                              GimpButtonPressType    press_type,
                                               GimpDisplay           *display);
 static void   gimp_color_tool_button_release (GimpTool              *tool,
                                               const GimpCoords      *coords,
@@ -225,18 +226,19 @@ gimp_color_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_color_tool_button_press (GimpTool         *tool,
-                              const GimpCoords *coords,
-                              guint32           time,
-                              GdkModifierType   state,
-                              GimpDisplay      *display)
+gimp_color_tool_button_press (GimpTool            *tool,
+                              const GimpCoords    *coords,
+                              guint32              time,
+                              GdkModifierType      state,
+                              GimpButtonPressType  press_type,
+                              GimpDisplay         *display)
 {
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
   GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
 
   /*  Chain up to activate the tool  */
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                display);
+                                                press_type, display);
 
   if (! color_tool->enabled)
     return;

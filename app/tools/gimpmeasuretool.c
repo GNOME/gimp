@@ -65,6 +65,7 @@ static void     gimp_measure_tool_button_press    (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
+                                                   GimpButtonPressType    press_type,
                                                    GimpDisplay           *display);
 static void     gimp_measure_tool_button_release  (GimpTool              *tool,
                                                    const GimpCoords      *coords,
@@ -178,11 +179,12 @@ gimp_measure_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_measure_tool_button_press (GimpTool         *tool,
-                                const GimpCoords *coords,
-                                guint32           time,
-                                GdkModifierType   state,
-                                GimpDisplay      *display)
+gimp_measure_tool_button_press (GimpTool            *tool,
+                                const GimpCoords    *coords,
+                                guint32              time,
+                                GdkModifierType      state,
+                                GimpButtonPressType  press_type,
+                                GimpDisplay         *display)
 {
   GimpMeasureTool    *measure = GIMP_MEASURE_TOOL (tool);
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);

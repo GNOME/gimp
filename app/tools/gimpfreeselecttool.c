@@ -146,6 +146,7 @@ static void     gimp_free_select_tool_button_press        (GimpTool             
                                                            const GimpCoords      *coords,
                                                            guint32                time,
                                                            GdkModifierType        state,
+                                                           GimpButtonPressType    press_type,
                                                            GimpDisplay           *display);
 static void     gimp_free_select_tool_button_release      (GimpTool              *tool,
                                                            const GimpCoords      *coords,
@@ -1272,11 +1273,12 @@ gimp_free_select_tool_cursor_update (GimpTool         *tool,
 }
 
 static void
-gimp_free_select_tool_button_press (GimpTool         *tool,
-                                    const GimpCoords *coords,
-                                    guint32           time,
-                                    GdkModifierType   state,
-                                    GimpDisplay      *display)
+gimp_free_select_tool_button_press (GimpTool            *tool,
+                                    const GimpCoords    *coords,
+                                    guint32              time,
+                                    GdkModifierType      state,
+                                    GimpButtonPressType  press_type,
+                                    GimpDisplay         *display)
 {
   GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
   GimpFreeSelectTool        *fst       = GIMP_FREE_SELECT_TOOL (tool);

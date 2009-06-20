@@ -41,6 +41,7 @@ void       tool_manager_button_press_active        (Gimp             *gimp,
                                                     const GimpCoords *coords,
                                                     guint32           time,
                                                     GdkModifierType   state,
+                                                    GimpButtonPressType press_type,
                                                     GimpDisplay      *display);
 void       tool_manager_button_release_active      (Gimp             *gimp,
                                                     const GimpCoords *coords,

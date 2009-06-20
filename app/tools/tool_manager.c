@@ -272,11 +272,12 @@ tool_manager_control_active (Gimp           *gimp,
 }
 
 void
-tool_manager_button_press_active (Gimp             *gimp,
-                                  const GimpCoords *coords,
-                                  guint32           time,
-                                  GdkModifierType   state,
-                                  GimpDisplay      *display)
+tool_manager_button_press_active (Gimp                *gimp,
+                                  const GimpCoords    *coords,
+                                  guint32              time,
+                                  GdkModifierType      state,
+                                  GimpButtonPressType  press_type,
+                                  GimpDisplay         *display)
 {
   GimpToolManager *tool_manager;
 
@@ -287,7 +288,7 @@ tool_manager_button_press_active (Gimp             *gimp,
   if (tool_manager->active_tool)
     {
       gimp_tool_button_press (tool_manager->active_tool,
-                              coords, time, state,
+                              coords, time, state, press_type,
                               display);
     }
 }

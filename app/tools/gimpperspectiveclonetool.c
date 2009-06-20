@@ -69,6 +69,7 @@ static void          gimp_perspective_clone_tool_button_press  (GimpTool        
                                                                 const GimpCoords *coords,
                                                                 guint32           time,
                                                                 GdkModifierType   state,
+                                                                GimpButtonPressType  press_type,
                                                                 GimpDisplay      *display);
 static void          gimp_perspective_clone_tool_button_release(GimpTool         *tool,
                                                                 const GimpCoords *coords,
@@ -321,11 +322,12 @@ gimp_perspective_clone_tool_halt (GimpPerspectiveCloneTool *clone_tool)
 }
 
 static void
-gimp_perspective_clone_tool_button_press (GimpTool         *tool,
-                                          const GimpCoords *coords,
-                                          guint32           time,
-                                          GdkModifierType   state,
-                                          GimpDisplay      *display)
+gimp_perspective_clone_tool_button_press (GimpTool            *tool,
+                                          const GimpCoords    *coords,
+                                          guint32              time,
+                                          GdkModifierType      state,
+                                          GimpButtonPressType  press_type,
+                                          GimpDisplay         *display)
 {
   GimpPaintTool               *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpPerspectiveCloneTool    *clone_tool  = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
@@ -366,7 +368,7 @@ gimp_perspective_clone_tool_button_press (GimpTool         *tool,
           }
 
         GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                      display);
+                                                      press_type, display);
 
         /* Set the coordinates for the reference cross */
         gimp_perspective_clone_get_source_point (clone,

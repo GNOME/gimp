@@ -22,6 +22,18 @@
  * these enums are registered with the type system
  */
 
+#define GIMP_TYPE_BUTTON_PRESS_TYPE (gimp_button_press_type_get_type ())
+
+GType gimp_button_press_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_BUTTON_PRESS_NORMAL,
+  GIMP_BUTTON_PRESS_DOUBLE,
+  GIMP_BUTTON_PRESS_TRIPLE
+} GimpButtonPressType;
+
+
 #define GIMP_TYPE_BUTTON_RELEASE_TYPE (gimp_button_release_type_get_type ())
 
 GType gimp_button_release_type_get_type (void) G_GNUC_CONST;

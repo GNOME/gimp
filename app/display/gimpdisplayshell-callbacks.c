@@ -924,7 +924,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                     tool_manager_button_press_active (gimp,
                                                       &image_coords,
-                                                      time, state, display);
+                                                      time, state,
+                                                      GIMP_BUTTON_PRESS_NORMAL,
+                                                      display);
 
                     shell->last_read_motion_time = bevent->time;
                   }
@@ -967,6 +969,62 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           default:
             break;
+          }
+
+        return_val = TRUE;
+      }
+      break;
+
+    case GDK_2BUTTON_PRESS:
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
+
+        GIMP_LOG (TOOL_EVENTS, "event (display %p): 2BUTTON_PRESS (%d)",
+                  display, bevent->button);
+
+        if (gimp->busy)
+          return TRUE;
+
+        active_tool = tool_manager_get_active (gimp);
+
+        if (bevent->button == 1                                &&
+            active_tool                                        &&
+            gimp_tool_control_is_active (active_tool->control) &&
+            gimp_tool_control_get_wants_double_click (active_tool->control))
+          {
+            tool_manager_button_press_active (gimp,
+                                              &image_coords,
+                                              time, state,
+                                              GIMP_BUTTON_PRESS_DOUBLE,
+                                              display);
+          }
+
+        return_val = TRUE;
+      }
+      break;
+
+    case GDK_3BUTTON_PRESS:
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
+
+        GIMP_LOG (TOOL_EVENTS, "event (display %p): 3BUTTON_PRESS (%d)",
+                  display, bevent->button);
+
+        if (gimp->busy)
+          return TRUE;
+
+        active_tool = tool_manager_get_active (gimp);
+
+        if (bevent->button == 1                                &&
+            active_tool                                        &&
+            gimp_tool_control_is_active (active_tool->control) &&
+            gimp_tool_control_get_wants_triple_click (active_tool->control))
+          {
+            tool_manager_button_press_active (gimp,
+                                              &image_coords,
+                                              time, state,
+                                              GIMP_BUTTON_PRESS_TRIPLE,
+                                              display);
           }
 
         return_val = TRUE;

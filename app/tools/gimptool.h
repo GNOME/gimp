@@ -91,6 +91,7 @@ struct _GimpToolClass
                                            const GimpCoords      *coords,
                                            guint32                time,
                                            GdkModifierType        state,
+                                           GimpButtonPressType    press_type,
                                            GimpDisplay           *display);
   void            (* button_release)      (GimpTool              *tool,
                                            const GimpCoords      *coords,
@@ -155,6 +156,7 @@ void          gimp_tool_button_press        (GimpTool            *tool,
                                              const GimpCoords    *coords,
                                              guint32              time,
                                              GdkModifierType      state,
+                                             GimpButtonPressType  press_type,
                                              GimpDisplay         *display);
 void          gimp_tool_button_release      (GimpTool            *tool,
                                              const GimpCoords    *coords,

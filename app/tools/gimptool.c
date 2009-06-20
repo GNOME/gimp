@@ -72,6 +72,7 @@ static void       gimp_tool_real_button_press   (GimpTool              *tool,
                                                  const GimpCoords      *coords,
                                                  guint32                time,
                                                  GdkModifierType        state,
+                                                 GimpButtonPressType    press_type,
                                                  GimpDisplay           *display);
 static void       gimp_tool_real_button_release (GimpTool              *tool,
                                                  const GimpCoords      *coords,
@@ -288,16 +289,20 @@ gimp_tool_real_control (GimpTool       *tool,
 }
 
 static void
-gimp_tool_real_button_press (GimpTool         *tool,
-                             const GimpCoords *coords,
-                             guint32           time,
-                             GdkModifierType   state,
-                             GimpDisplay      *display)
+gimp_tool_real_button_press (GimpTool            *tool,
+                             const GimpCoords    *coords,
+                             guint32              time,
+                             GdkModifierType      state,
+                             GimpButtonPressType  press_type,
+                             GimpDisplay         *display)
 {
-  tool->display  = display;
-  tool->drawable = gimp_image_get_active_drawable (display->image);
+  if (press_type == GIMP_BUTTON_PRESS_NORMAL)
+    {
+      tool->display  = display;
+      tool->drawable = gimp_image_get_active_drawable (display->image);
 
-  gimp_tool_control_activate (tool->control);
+      gimp_tool_control_activate (tool->control);
+    }
 }
 
 static void
@@ -501,20 +506,22 @@ gimp_tool_control (GimpTool       *tool,
 }
 
 void
-gimp_tool_button_press (GimpTool         *tool,
-                        const GimpCoords *coords,
-                        guint32           time,
-                        GdkModifierType   state,
-                        GimpDisplay      *display)
+gimp_tool_button_press (GimpTool            *tool,
+                        const GimpCoords    *coords,
+                        guint32              time,
+                        GdkModifierType      state,
+                        GimpButtonPressType  press_type,
+                        GimpDisplay         *display)
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   GIMP_TOOL_GET_CLASS (tool)->button_press (tool, coords, time, state,
-                                            display);
+                                            press_type, display);
 
-  if (gimp_tool_control_is_active (tool->control))
+  if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
+      gimp_tool_control_is_active (tool->control))
     {
       tool->button_press_state    = state;
       tool->active_modifier_state = state;

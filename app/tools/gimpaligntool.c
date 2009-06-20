@@ -70,12 +70,13 @@ static void   gimp_align_tool_button_press   (GimpTool              *tool,
                                               const GimpCoords      *coords,
                                               guint32                time,
                                               GdkModifierType        state,
+                                              GimpButtonPressType    press_type,
                                               GimpDisplay           *display);
 static void   gimp_align_tool_button_release (GimpTool              *tool,
                                               const GimpCoords      *coords,
                                               guint32                time,
                                               GdkModifierType        state,
-                                              GimpButtonReleaseType  release_tyle,
+                                              GimpButtonReleaseType  release_type,
                                               GimpDisplay           *display);
 static void   gimp_align_tool_motion         (GimpTool              *tool,
                                               const GimpCoords      *coords,
@@ -270,11 +271,12 @@ gimp_align_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_align_tool_button_press (GimpTool         *tool,
-                              const GimpCoords *coords,
-                              guint32           time,
-                              GdkModifierType   state,
-                              GimpDisplay      *display)
+gimp_align_tool_button_press (GimpTool            *tool,
+                              const GimpCoords    *coords,
+                              guint32              time,
+                              GdkModifierType      state,
+                              GimpButtonPressType  press_type,
+                              GimpDisplay         *display)
 {
   GimpAlignTool    *align_tool  = GIMP_ALIGN_TOOL (tool);
 

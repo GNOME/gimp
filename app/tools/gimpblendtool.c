@@ -58,6 +58,7 @@ static void   gimp_blend_tool_button_press        (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
+                                                   GimpButtonPressType    press_type,
                                                    GimpDisplay           *display);
 static void   gimp_blend_tool_button_release      (GimpTool              *tool,
                                                    const GimpCoords      *coords,
@@ -170,11 +171,12 @@ gimp_blend_tool_initialize (GimpTool     *tool,
 }
 
 static void
-gimp_blend_tool_button_press (GimpTool         *tool,
-                              const GimpCoords *coords,
-                              guint32           time,
-                              GdkModifierType   state,
-                              GimpDisplay      *display)
+gimp_blend_tool_button_press (GimpTool            *tool,
+                              const GimpCoords    *coords,
+                              guint32              time,
+                              GdkModifierType      state,
+                              GimpButtonPressType  press_type,
+                              GimpDisplay         *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 

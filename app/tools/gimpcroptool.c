@@ -68,6 +68,7 @@ static void      gimp_crop_tool_button_press              (GimpTool             
                                                            const GimpCoords           *coords,
                                                            guint32                     time,
                                                            GdkModifierType             state,
+                                                           GimpButtonPressType         press_type,
                                                            GimpDisplay                *display);
 static void      gimp_crop_tool_button_release            (GimpTool                   *tool,
                                                            const GimpCoords           *coords,
@@ -246,11 +247,12 @@ gimp_crop_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_crop_tool_button_press (GimpTool         *tool,
-                             const GimpCoords *coords,
-                             guint32           time,
-                             GdkModifierType   state,
-                             GimpDisplay      *display)
+gimp_crop_tool_button_press (GimpTool            *tool,
+                             const GimpCoords    *coords,
+                             guint32              time,
+                             GdkModifierType      state,
+                             GimpButtonPressType  press_type,
+                             GimpDisplay         *display)
 {
   if (tool->display && display != tool->display)
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));

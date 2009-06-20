@@ -83,6 +83,7 @@ static void      gimp_transform_tool_button_press           (GimpTool           
                                                              const GimpCoords      *coords,
                                                              guint32                time,
                                                              GdkModifierType        state,
+                                                             GimpButtonPressType    press_type,
                                                              GimpDisplay           *display);
 static void      gimp_transform_tool_button_release         (GimpTool              *tool,
                                                              const GimpCoords      *coords,
@@ -397,11 +398,12 @@ gimp_transform_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_transform_tool_button_press (GimpTool         *tool,
-                                  const GimpCoords *coords,
-                                  guint32           time,
-                                  GdkModifierType   state,
-                                  GimpDisplay      *display)
+gimp_transform_tool_button_press (GimpTool            *tool,
+                                  const GimpCoords    *coords,
+                                  guint32              time,
+                                  GdkModifierType      state,
+                                  GimpButtonPressType  press_type,
+                                  GimpDisplay         *display)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 

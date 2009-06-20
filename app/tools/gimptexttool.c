@@ -86,6 +86,7 @@ static void      gimp_text_tool_button_press    (GimpTool          *tool,
                                                  const GimpCoords  *coords,
                                                  guint32            time,
                                                  GdkModifierType    state,
+                                                 GimpButtonPressType  press_type,
                                                  GimpDisplay       *display);
 static void      gimp_text_tool_button_release  (GimpTool          *tool,
                                                  const GimpCoords  *coords,
@@ -401,11 +402,12 @@ gimp_text_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_text_tool_button_press (GimpTool         *tool,
-                             const GimpCoords *coords,
-                             guint32           time,
-                             GdkModifierType   state,
-                             GimpDisplay      *display)
+gimp_text_tool_button_press (GimpTool            *tool,
+                             const GimpCoords    *coords,
+                             guint32              time,
+                             GdkModifierType      state,
+                             GimpButtonPressType  press_type,
+                             GimpDisplay         *display)
 {
   GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);

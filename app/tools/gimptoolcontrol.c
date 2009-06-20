@@ -63,6 +63,9 @@ gimp_tool_control_init (GimpToolControl *control)
 
   control->toggled                = FALSE;
 
+  control->wants_click            = FALSE;
+  control->wants_double_click     = FALSE;
+  control->wants_triple_click     = FALSE;
   control->wants_all_key_events   = FALSE;
 
   control->cursor                 = GIMP_CURSOR_MOUSE;
@@ -206,23 +209,6 @@ gimp_tool_control_get_handle_empty_image (GimpToolControl *control)
 }
 
 void
-gimp_tool_control_set_wants_click (GimpToolControl *control,
-                                   gboolean         wants_click)
-{
-  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
-
-  control->wants_click = wants_click ? TRUE : FALSE;
-}
-
-gboolean
-gimp_tool_control_get_wants_click (GimpToolControl *control)
-{
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
-
-  return control->wants_click;
-}
-
-void
 gimp_tool_control_set_dirty_mask (GimpToolControl *control,
                                   GimpDirtyMask    dirty_mask)
 {
@@ -271,6 +257,57 @@ gimp_tool_control_get_snap_to (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
   return control->auto_snap_to;
+}
+
+void
+gimp_tool_control_set_wants_click (GimpToolControl *control,
+                                   gboolean         wants_click)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->wants_click = wants_click ? TRUE : FALSE;
+}
+
+gboolean
+gimp_tool_control_get_wants_click (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+
+  return control->wants_click;
+}
+
+void
+gimp_tool_control_set_wants_double_click (GimpToolControl *control,
+                                          gboolean         wants_double_click)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->wants_double_click = wants_double_click ? TRUE : FALSE;
+}
+
+gboolean
+gimp_tool_control_get_wants_double_click (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+
+  return control->wants_double_click;
+}
+
+void
+gimp_tool_control_set_wants_triple_click (GimpToolControl *control,
+                                          gboolean         wants_triple_click)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->wants_triple_click = wants_triple_click ? TRUE : FALSE;
+}
+
+gboolean
+gimp_tool_control_get_wants_triple_click (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+
+  return control->wants_triple_click;
 }
 
 void
