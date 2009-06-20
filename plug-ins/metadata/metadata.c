@@ -23,14 +23,16 @@
 
 #include <libgimp/gimp.h>
 
+#include <libexif/exif-data.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #include "metadata.h"
 #include "xmp-encode.h"
 
-/* FIXME: uncomment when these are working
 #include "interface.h"
 #include "exif-decode.h"
+/* FIXME: uncomment when these are working
 #include "exif-encode.h"
 #include "iptc-decode.h"
 */
@@ -65,14 +67,12 @@ MAIN ()
 static void
 query (void)
 {
-/* FIXME: uncomment when these are working
   static const GimpParamDef editor_args[] =
   {
     { GIMP_PDB_INT32,       "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_DRAWABLE,    "drawable",  "Input drawable (unused)"      }
   };
-*/
 
   static const GimpParamDef decode_xmp_args[] =
   {
@@ -89,7 +89,6 @@ query (void)
     { GIMP_PDB_STRING,      "xmp",       "XMP packet"                   }
   };
 
-/* FIXME: uncomment when these are working
   static const GimpParamDef decode_exif_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
@@ -97,6 +96,7 @@ query (void)
     { GIMP_PDB_INT8ARRAY,   "exif",      "EXIF block"                   }
   };
 
+/* FIXME: uncomment when these are working
   static const GimpParamDef encode_exif_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  }
@@ -179,17 +179,16 @@ query (void)
     { GIMP_PDB_INT32,       "overwrite", "Overwrite existing file: { FALSE (0), TRUE (1) }" }
   };
 
-/* FIXME: uncomment when these are working
   gimp_install_procedure (EDITOR_PROC,
-			  N_("View and edit metadata (EXIF, IPTC, XMP)"),
+                          N_("View and edit metadata (EXIF, IPTC, XMP)"),
                           "View and edit metadata information attached to the "
                           "current image.  This can include EXIF, IPTC and/or "
                           "XMP information.  Some or all of this metadata "
                           "will be saved in the file, depending on the output "
                           "file format.",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2004-2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2004-2005",
                           N_("Propert_ies"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
@@ -197,18 +196,17 @@ query (void)
                           editor_args, NULL);
 
   gimp_plugin_menu_register (EDITOR_PROC, "<Image>/File/Info");
-  gimp_plugin_icon_register (EDITOR_PROC, GIMP_ICON_TYPE_STOCK_ID,
- */
+  // XXX gimp_plugin_icon_register (EDITOR_PROC, GIMP_ICON_TYPE_STOCK_ID,
 
   gimp_install_procedure (DECODE_XMP_PROC,
-			  "Decode an XMP packet",
+                          "Decode an XMP packet",
                           "Parse an XMP packet and merge the results with "
                           "any metadata already attached to the image.  This "
                           "should be used when an XMP packet is read from an "
                           "image file.",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -216,13 +214,13 @@ query (void)
                           decode_xmp_args, NULL);
 
   gimp_install_procedure (ENCODE_XMP_PROC,
-			  "Encode metadata into an XMP packet",
+                          "Encode metadata into an XMP packet",
                           "Generate an XMP packet from the metadata "
                           "information attached to the image.  The new XMP "
                           "packet can then be saved into a file.",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Róman Joost <romanofski@gimp.org>",
+                          "Róman Joost <romanofski@gimp.org>",
+                          "2008",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -230,30 +228,30 @@ query (void)
                           G_N_ELEMENTS (encode_xmp_return_vals),
                           encode_xmp_args, encode_xmp_return_vals);
 
-/* FIXME: uncomment when these are working
   gimp_install_procedure (DECODE_EXIF_PROC,
-			  "Decode an EXIF block",
+                          "Decode an EXIF block",
                           "Parse an EXIF block and merge the results with "
                           "any metadata already attached to the image.  This "
                           "should be used when an EXIF block is read from an "
                           "image file.",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (decode_exif_args), 0,
                           decode_exif_args, NULL);
 
+/* FIXME: uncomment when these are working
   gimp_install_procedure (ENCODE_EXIF_PROC,
-			  "Encode metadata into an EXIF block",
+                          "Encode metadata into an EXIF block",
                           "Generate an EXIF block from the metadata "
                           "information attached to the image.  The new EXIF "
                           "block can then be saved into a file.",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -263,12 +261,12 @@ query (void)
 */
 
   gimp_install_procedure (GET_PROC,
-			  "Retrieve the values of an XMP property",
+                          "Retrieve the values of an XMP property",
                           "Retrieve the list of values associated with "
                           "an XMP property.",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -277,13 +275,13 @@ query (void)
                           get_args, get_return_vals);
 
   gimp_install_procedure (SET_PROC,
-			  "Set the values of an XMP property",
+                          "Set the values of an XMP property",
                           "Set the list of values associated with "
                           "an XMP property.  If a property with the same "
                           "name already exists, it will be replaced.",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -291,15 +289,15 @@ query (void)
                           set_args, NULL);
 
   gimp_install_procedure (GET_SIMPLE_PROC,
-			  "Retrieve the value of an XMP property",
+                          "Retrieve the value of an XMP property",
                           "Retrieve value associated with a scalar XMP "
                           "property.  This can only be done for simple "
                           "property types such as text or integers.  "
                           "Structured types must be retrieved with "
                           "plug_in_metadata_get().",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -308,14 +306,14 @@ query (void)
                           get_simple_args, get_simple_return_vals);
 
   gimp_install_procedure (SET_SIMPLE_PROC,
-			  "Set the value of an XMP property",
+                          "Set the value of an XMP property",
                           "Set the value of a scalar XMP property.  This "
                           "can only be done for simple property types such "
                           "as text or integers.  Structured types need to "
                           "be set with plug_in_metadata_set().",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -323,14 +321,14 @@ query (void)
                           set_simple_args, NULL);
 
   gimp_install_procedure (IMPORT_PROC,
-			  "Import XMP from a file into the current image",
+                          "Import XMP from a file into the current image",
                           "Load an XMP packet from a file and import it into "
                           "the current image.  This can be used to add a "
                           "license statement or some other predefined "
                           "metadata to an image",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -338,16 +336,16 @@ query (void)
                           import_args, NULL);
 
   gimp_install_procedure (EXPORT_PROC,
-			  "Export XMP from the current image to a file",
+                          "Export XMP from the current image to a file",
                           "Export the metadata associated with the current "
                           "image into a file.  The metadata will be saved as "
                           "an XMP packet.  If overwrite is TRUE, then any "
                           "existing file will be overwritten without warning. "
                           "If overwrite is FALSE, then an error will occur if "
                           "the file already exists.",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "Raphaël Quinet <raphael@gimp.org>",
-			  "2005",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "Raphaël Quinet <raphael@gimp.org>",
+                          "2005",
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
@@ -388,6 +386,7 @@ run (const gchar      *name,
   if (parasite)
     {
       GError *error = NULL;
+      g_warning ("Parsing Metadata XMP parasite.");
 
       if (!! strncmp (gimp_parasite_data (parasite),
                       METADATA_MARKER, METADATA_MARKER_LEN)
@@ -396,7 +395,7 @@ run (const gchar      *name,
                                        + METADATA_MARKER_LEN,
                                        gimp_parasite_data_size (parasite)
                                        - METADATA_MARKER_LEN,
-                                       FALSE, &error))
+                                       TRUE, &error))
         {
           g_printerr ("Metadata parasite seems to be corrupt");
           /* continue anyway, we will attach a clean parasite later */
@@ -432,10 +431,22 @@ run (const gchar      *name,
       if (! xmp_model_parse_buffer (xmp_model, buffer, strlen (buffer),
                                     FALSE, &error))
         status = GIMP_PDB_EXECUTION_ERROR;
+
     }
   else if (! strcmp (name, ENCODE_XMP_PROC))
     {
       /* done below together with the parasite */
+    }
+  else if (! strcmp (name, DECODE_EXIF_PROC))
+    {
+#ifdef HAVE_EXIF
+        GError      *error         = NULL;
+
+        if (! xmp_merge_from_exifbuffer (xmp_model,
+                                         image_ID,
+                                         &error))
+        status = GIMP_PDB_EXECUTION_ERROR;
+#endif
     }
   else if (! strcmp (name, GET_PROC))
     {
@@ -509,7 +520,6 @@ run (const gchar      *name,
     }
   else if (! strcmp (name, EDITOR_PROC))
     {
-      /* FIXME: uncomment when these are working
       GimpRunMode run_mode;
 
       run_mode = param[0].data.d_int32;
@@ -519,7 +529,6 @@ run (const gchar      *name,
             status = GIMP_PDB_CANCEL;
         }
 
-       */
       g_printerr ("Not implemented yet (EDITOR_PROC)\n");
       status = GIMP_PDB_EXECUTION_ERROR;
     }

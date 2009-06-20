@@ -50,6 +50,8 @@
 void gimp_metadata_store_exif    (gint32    image_ID,
                                   ExifData *exif_data)
 {
+  GimpParam    *return_vals;
+  gint          nreturn_vals;
   GimpParasite *parasite      = NULL;
   guchar       *exif_buf      = NULL;
   guint         exif_buf_len  = 0;
@@ -64,6 +66,14 @@ void gimp_metadata_store_exif    (gint32    image_ID,
       gimp_image_parasite_attach (image_ID, parasite);
       gimp_parasite_free (parasite);
     }
+  return_vals = gimp_run_procedure ("plug-in-metadata-decode-exif",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE,      image_ID,
+                                    GIMP_PDB_INT32,      exif_data->size,
+                                    GIMP_PDB_INT8ARRAY,  exif_data,
+                                    GIMP_PDB_END);
+  if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
+    g_warning ("JPEG Exif -> XMP Merge failed");
 
   free (exif_buf);
 }
