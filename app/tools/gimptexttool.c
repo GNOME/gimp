@@ -102,6 +102,9 @@ static void      gimp_text_tool_motion          (GimpTool          *tool,
 static gboolean  gimp_text_tool_key_press       (GimpTool          *tool,
                                                  GdkEventKey       *kevent,
                                                  GimpDisplay       *display);
+static gboolean gimp_text_tool_clipboard_action (GimpTool          *tool,
+                                                 GimpClipboardAction action,
+                                                 GimpDisplay       *display);
 static void      gimp_text_tool_oper_update     (GimpTool          *tool,
                                                  const GimpCoords  *coords,
                                                  GdkModifierType    state,
@@ -221,22 +224,23 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructor  = gimp_text_tool_constructor;
-  object_class->dispose      = gimp_text_tool_dispose;
-  object_class->finalize     = gimp_text_tool_finalize;
-  object_class->set_property = gimp_rectangle_tool_set_property;
-  object_class->get_property = gimp_rectangle_tool_get_property;
+  object_class->constructor    = gimp_text_tool_constructor;
+  object_class->dispose        = gimp_text_tool_dispose;
+  object_class->finalize       = gimp_text_tool_finalize;
+  object_class->set_property   = gimp_rectangle_tool_set_property;
+  object_class->get_property   = gimp_rectangle_tool_get_property;
 
-  tool_class->control        = gimp_text_tool_control;
-  tool_class->button_press   = gimp_text_tool_button_press;
-  tool_class->motion         = gimp_text_tool_motion;
-  tool_class->button_release = gimp_text_tool_button_release;
-  tool_class->key_press      = gimp_text_tool_key_press;
-  tool_class->oper_update    = gimp_text_tool_oper_update;
-  tool_class->cursor_update  = gimp_text_tool_cursor_update;
-  tool_class->get_popup      = gimp_text_tool_get_popup;
+  tool_class->control          = gimp_text_tool_control;
+  tool_class->button_press     = gimp_text_tool_button_press;
+  tool_class->motion           = gimp_text_tool_motion;
+  tool_class->button_release   = gimp_text_tool_button_release;
+  tool_class->key_press        = gimp_text_tool_key_press;
+  tool_class->clipboard_action = gimp_text_tool_clipboard_action;
+  tool_class->oper_update      = gimp_text_tool_oper_update;
+  tool_class->cursor_update    = gimp_text_tool_cursor_update;
+  tool_class->get_popup        = gimp_text_tool_get_popup;
 
-  draw_tool_class->draw      = gimp_text_tool_draw;
+  draw_tool_class->draw        = gimp_text_tool_draw;
 
   gimp_rectangle_tool_install_properties (object_class);
 }
@@ -1000,6 +1004,51 @@ gimp_text_tool_key_press (GimpTool    *tool,
   return retval;
 }
 
+static gboolean
+gimp_text_tool_clipboard_action (GimpTool            *tool,
+                                 GimpClipboardAction  action,
+                                 GimpDisplay         *display)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+
+  if (display != tool->display)
+    return FALSE;
+
+  switch (action)
+    {
+    case GIMP_CLIPBOARD_ACTION_CUT:
+      gimp_text_tool_clipboard_cut (text_tool);
+      break;
+
+    case GIMP_CLIPBOARD_ACTION_COPY:
+      gimp_text_tool_clipboard_copy (text_tool, TRUE);
+      break;
+
+    case GIMP_CLIPBOARD_ACTION_PASTE:
+      gimp_text_tool_clipboard_paste (text_tool, TRUE);
+      break;
+    }
+
+  return TRUE;
+}
+
+static void
+gimp_text_tool_oper_update (GimpTool         *tool,
+                            const GimpCoords *coords,
+                            GdkModifierType   state,
+                            gboolean          proximity,
+                            GimpDisplay      *display)
+{
+  GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
+
+  gimp_rectangle_tool_oper_update (tool, coords, state, proximity, display);
+
+  text_tool->moving = (gimp_rectangle_tool_get_function (rect_tool) ==
+                       GIMP_RECTANGLE_TOOL_MOVING &&
+                       (state & GDK_MOD1_MASK));
+}
+
 static void
 gimp_text_tool_cursor_update (GimpTool         *tool,
                               const GimpCoords *coords,
@@ -1034,23 +1083,6 @@ gimp_text_tool_cursor_update (GimpTool         *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
-}
-
-static void
-gimp_text_tool_oper_update (GimpTool         *tool,
-                            const GimpCoords *coords,
-                            GdkModifierType   state,
-                            gboolean          proximity,
-                            GimpDisplay      *display)
-{
-  GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
-  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
-
-  gimp_rectangle_tool_oper_update (tool, coords, state, proximity, display);
-
-  text_tool->moving = (gimp_rectangle_tool_get_function (rect_tool) ==
-                       GIMP_RECTANGLE_TOOL_MOVING &&
-                       (state & GDK_MOD1_MASK));
 }
 
 static GimpUIManager *

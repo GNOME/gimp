@@ -118,6 +118,9 @@ struct _GimpToolClass
                                            gboolean               press,
                                            GdkModifierType        state,
                                            GimpDisplay           *display);
+  gboolean        (* clipboard_action)    (GimpTool              *tool,
+                                           GimpClipboardAction    action,
+                                           GimpDisplay           *display);
 
   void            (* oper_update)         (GimpTool              *tool,
                                            const GimpCoords      *coords,
@@ -180,6 +183,10 @@ void          gimp_tool_set_modifier_state  (GimpTool            *tool,
                                              GimpDisplay         *display);
 void    gimp_tool_set_active_modifier_state (GimpTool            *tool,
                                              GdkModifierType      state,
+                                             GimpDisplay         *display);
+
+gboolean      gimp_tool_clipboard_action    (GimpTool            *tool,
+                                             GimpClipboardAction  action,
                                              GimpDisplay         *display);
 
 void          gimp_tool_oper_update         (GimpTool            *tool,

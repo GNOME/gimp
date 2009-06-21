@@ -98,6 +98,9 @@ static void  gimp_tool_real_active_modifier_key (GimpTool              *tool,
                                                  gboolean               press,
                                                  GdkModifierType        state,
                                                  GimpDisplay           *display);
+static gboolean gimp_tool_real_clipboard_action (GimpTool              *tool,
+                                                 GimpClipboardAction    action,
+                                                 GimpDisplay           *display);
 static void       gimp_tool_real_oper_update    (GimpTool              *tool,
                                                  const GimpCoords      *coords,
                                                  GdkModifierType        state,
@@ -142,6 +145,7 @@ gimp_tool_class_init (GimpToolClass *klass)
   klass->key_press           = gimp_tool_real_key_press;
   klass->modifier_key        = gimp_tool_real_modifier_key;
   klass->active_modifier_key = gimp_tool_real_active_modifier_key;
+  klass->clipboard_action    = gimp_tool_real_clipboard_action;
   klass->oper_update         = gimp_tool_real_oper_update;
   klass->cursor_update       = gimp_tool_real_cursor_update;
   klass->get_popup           = gimp_tool_real_get_popup;
@@ -349,6 +353,14 @@ gimp_tool_real_active_modifier_key (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *display)
 {
+}
+
+static gboolean
+gimp_tool_real_clipboard_action (GimpTool            *tool,
+                                 GimpClipboardAction  action,
+                                 GimpDisplay         *display)
+{
+  return FALSE;
 }
 
 static void
@@ -833,6 +845,18 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
     }
 
   tool->active_modifier_state = state;
+}
+
+gboolean
+gimp_tool_clipboard_action (GimpTool            *tool,
+                            GimpClipboardAction  action,
+                            GimpDisplay         *display)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (display == tool->focus_display, FALSE);
+
+  return GIMP_TOOL_GET_CLASS (tool)->clipboard_action (tool, action, display);
 }
 
 void
