@@ -703,48 +703,58 @@ gimp_text_tool_motion (GimpTool         *tool,
           if (text_tool->select_words ||
               text_tool->select_lines)
             {
-              /*  when selecting words or lines, we always keep the
-               *  cursor at the start and the selection mark at the
-               *  end of the selection
-               */
-              if (offset < text_tool->select_start_offset)
+              GtkTextIter start;
+              GtkTextIter end;
+
+              gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
+                                                  &cursor, offset);
+              gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
+                                                  &selection,
+                                                  text_tool->select_start_offset);
+
+              if (offset <= text_tool->select_start_offset)
                 {
-                  gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                      &cursor, offset);
-                  gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                      &selection,
-                                                      text_tool->select_start_offset);
+                  start = cursor;
+                  end   = selection;
                 }
               else
                 {
-                  gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                      &cursor,
-                                                      text_tool->select_start_offset);
-                  gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                      &selection, offset);
+                  start = selection;
+                  end   = cursor;
                 }
 
               if (text_tool->select_words)
                 {
-                  if (! gtk_text_iter_starts_word (&cursor))
-                    gtk_text_iter_backward_visible_word_starts (&cursor, 1);
+                  if (! gtk_text_iter_starts_word (&start))
+                    gtk_text_iter_backward_visible_word_starts (&start, 1);
 
-                  if (! gtk_text_iter_ends_word (&selection) &&
-                      ! gtk_text_iter_forward_visible_word_ends (&selection, 1))
-                    gtk_text_iter_forward_to_line_end (&selection);
+                  if (! gtk_text_iter_ends_word (&end) &&
+                      ! gtk_text_iter_forward_visible_word_ends (&end, 1))
+                    gtk_text_iter_forward_to_line_end (&end);
                 }
               else if (text_tool->select_lines)
                 {
-                  gtk_text_iter_set_line_offset (&cursor, 0);
-                  gtk_text_iter_forward_to_line_end (&selection);
+                  gtk_text_iter_set_line_offset (&start, 0);
+                  gtk_text_iter_forward_to_line_end (&end);
+                }
+
+              if (offset <= text_tool->select_start_offset)
+                {
+                  cursor    = start;
+                  selection = end;
+                }
+              else
+                {
+                  selection = start;
+                  cursor    = end;
                 }
             }
           else
             {
-              if (selection_offset != offset)
+              if (cursor_offset != offset)
                 {
                   gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                      &selection, offset);
+                                                      &cursor, offset);
                 }
             }
 
@@ -772,9 +782,10 @@ gimp_text_tool_key_press (GimpTool    *tool,
                           GimpDisplay *display)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
-  GtkTextMark  *insert;
-  GtkTextMark  *selection_bound;
-  GtkTextIter   cursor, selection;
+  GtkTextMark  *cursor_mark;
+  GtkTextMark  *selection_mark;
+  GtkTextIter   cursor;
+  GtkTextIter   selection;
   GtkTextIter  *sel_start;
   gint          x_pos  = -1;
   gboolean      retval = TRUE;
@@ -790,18 +801,18 @@ gimp_text_tool_key_press (GimpTool    *tool,
       return TRUE;
     }
 
-  insert = gtk_text_buffer_get_insert (text_tool->text_buffer);
-  selection_bound = gtk_text_buffer_get_selection_bound (text_tool->text_buffer);
+  cursor_mark    = gtk_text_buffer_get_insert (text_tool->text_buffer);
+  selection_mark = gtk_text_buffer_get_selection_bound (text_tool->text_buffer);
 
   gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &cursor, insert);
+                                    &cursor, cursor_mark);
   gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &selection, selection_bound);
+                                    &selection, selection_mark);
 
   if (kevent->state & GDK_SHIFT_MASK)
-    sel_start = &cursor;
-  else
     sel_start = &selection;
+  else
+    sel_start = &cursor;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -835,29 +846,29 @@ gimp_text_tool_key_press (GimpTool    *tool,
     case GDK_KP_Left:
       if (kevent->state & GDK_CONTROL_MASK)
         {
-          gtk_text_iter_backward_visible_word_starts (&selection, 1);
+          gtk_text_iter_backward_visible_word_starts (&cursor, 1);
         }
       else
         {
-          gtk_text_iter_backward_cursor_position (&selection);
+          gtk_text_iter_backward_cursor_position (&cursor);
         }
-      gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                    &selection);
+      gtk_text_buffer_select_range (text_tool->text_buffer,
+                                    &cursor, sel_start);
       break;
 
     case GDK_Right:
     case GDK_KP_Right:
       if (kevent->state & GDK_CONTROL_MASK)
         {
-	  if (! gtk_text_iter_forward_visible_word_ends (&selection, 1))
-	    gtk_text_iter_forward_to_line_end (&selection);
+	  if (! gtk_text_iter_forward_visible_word_ends (&cursor, 1))
+	    gtk_text_iter_forward_to_line_end (&cursor);
         }
       else
         {
-          gtk_text_iter_forward_cursor_position (&selection);
+          gtk_text_iter_forward_cursor_position (&cursor);
         }
-      gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                    &selection);
+      gtk_text_buffer_select_range (text_tool->text_buffer,
+                                    &cursor, sel_start);
       gimp_text_tool_reset_im_context (text_tool);
       break;
 
@@ -877,8 +888,8 @@ gimp_text_tool_key_press (GimpTool    *tool,
 
         layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
-        line       = gtk_text_iter_get_line (&selection);
-        line_index = gtk_text_iter_get_line_index (&selection);
+        line       = gtk_text_iter_get_line (&cursor);
+        line_index = gtk_text_iter_get_line_index (&cursor);
 
         layout_iter = pango_layout_get_iter (layout);
         for (i = 0; i < line; i++)
@@ -908,9 +919,9 @@ gimp_text_tool_key_press (GimpTool    *tool,
             line--;
             if (line < 0)
               {
-                gtk_text_iter_set_line_offset (&selection, 0);
-                gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                              &selection);
+                gtk_text_iter_set_line_offset (&cursor, 0);
+                gtk_text_buffer_select_range (text_tool->text_buffer,
+                                              &cursor, sel_start);
                 break;
               }
           }
@@ -926,15 +937,15 @@ gimp_text_tool_key_press (GimpTool    *tool,
             if (kevent->keyval == GDK_Up ||
                 kevent->keyval == GDK_KP_Up)
               {
-                gtk_text_iter_set_line_offset (&selection, 0);
-                gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                              &selection);
+                gtk_text_iter_set_line_offset (&cursor, 0);
+                gtk_text_buffer_select_range (text_tool->text_buffer,
+                                              &cursor, sel_start);
               }
             else
               {
-                gtk_text_iter_forward_to_line_end (&selection);
-                gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                              &selection);
+                gtk_text_iter_forward_to_line_end (&cursor);
+                gtk_text_buffer_select_range (text_tool->text_buffer,
+                                              &cursor, sel_start);
               }
             break;
           }
@@ -953,31 +964,29 @@ gimp_text_tool_key_press (GimpTool    *tool,
         line_index -= layout_line->start_index;
 
         gtk_text_buffer_get_iter_at_line_index (text_tool->text_buffer,
-                                                &selection,
+                                                &cursor,
                                                 line, line_index);
 
         while (trailing--)
-          gtk_text_iter_forward_char (&selection);
+          gtk_text_iter_forward_char (&cursor);
 
-        gtk_text_buffer_place_cursor (text_tool->text_buffer, &selection);
-        gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                      &selection);
+        gtk_text_buffer_select_range (text_tool->text_buffer,
+                                      &cursor, sel_start);
       }
       break;
 
     case GDK_Home:
     case GDK_KP_Home:
-      gtk_text_iter_set_line (&selection, gtk_text_iter_get_line (&selection));
-      gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                    &selection);
+      gtk_text_iter_set_line_offset (&cursor, 0);
+      gtk_text_buffer_select_range (text_tool->text_buffer,
+                                    &cursor, sel_start);
       break;
 
     case GDK_End:
     case GDK_KP_End:
-      gtk_text_iter_set_line (&selection, gtk_text_iter_get_line (&selection));
-      gtk_text_iter_forward_to_line_end (&selection);
-      gtk_text_buffer_select_range (text_tool->text_buffer, sel_start,
-                                    &selection);
+      gtk_text_iter_forward_to_line_end (&cursor);
+      gtk_text_buffer_select_range (text_tool->text_buffer,
+                                    &cursor, sel_start);
       break;
 
     default:
