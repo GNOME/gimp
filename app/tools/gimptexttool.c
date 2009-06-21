@@ -429,19 +429,19 @@ gimp_text_tool_button_press (GimpTool            *tool,
                 "y2", &y2,
                 NULL);
 
+  text_tool->selecting = FALSE;
+
   if (coords->x > x1 && coords->x <= x2 &&
       coords->y > y1 && coords->y <= y2 &&
       ! text_tool->moving)
     {
-      text_tool->text_cursor_changing = TRUE;
+      text_tool->selecting = TRUE;
 
       gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_DEAD);
       gimp_tool_control_activate (tool->control);
     }
   else
     {
-      text_tool->text_cursor_changing = FALSE;
-
       gimp_rectangle_tool_button_press (tool, coords, time, state, display);
     }
 
@@ -570,7 +570,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
     gimp_text_tool_clipboard_copy (text_tool, FALSE);
 
-  text_tool->text_cursor_changing = FALSE;
+  text_tool->selecting = FALSE;
 
   if (text && text_tool->text == text)
     {
@@ -592,30 +592,6 @@ gimp_text_tool_button_release (GimpTool              *tool,
                                              text_tool);
 
           return;
-        }
-      else if (! text_tool->moving)
-        {
-          /* user has selected text */
-
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-          if (text_tool->layout && text_tool->text_cursor_changing)
-            {
-              GimpItem   *item = GIMP_ITEM (text_tool->layer);
-              gdouble     x    = coords->x - gimp_item_get_offset_x (item);
-              gdouble     y    = coords->y - gimp_item_get_offset_y (item);
-              GtkTextIter cursor;
-              gint        offset;
-
-              offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
-
-              gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                  &cursor, offset);
-              gtk_text_buffer_move_mark_by_name (text_tool->text_buffer,
-                                                 "selection_bound",  &cursor);
-            }
-
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
         }
     }
   else if (y2 - y1 < MIN_LAYER_WIDTH)
@@ -653,7 +629,7 @@ gimp_text_tool_motion (GimpTool         *tool,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
-  if (text_tool->text_cursor_changing)
+  if (text_tool->selecting)
     {
       if (text_tool->layout)
         {

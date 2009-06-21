@@ -63,7 +63,8 @@ struct _GimpTextTool
 
   gboolean        handle_rectangle_change_complete;
   gboolean        text_box_fixed;
-  gboolean        text_cursor_changing;
+
+  gboolean        selecting;
 
   gint            x_pos;
 
