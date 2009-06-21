@@ -65,6 +65,9 @@ struct _GimpTextTool
   gboolean        text_box_fixed;
 
   gboolean        selecting;
+  gint            select_start_offset;
+  gboolean        select_words;
+  gboolean        select_lines;
 
   gint            x_pos;
 
