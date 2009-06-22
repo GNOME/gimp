@@ -19,7 +19,7 @@
 #define __GIMP_TEXT_TOOL_H__
 
 
-//#define TEXT_TOOL_HACK 1
+#define TEXT_TOOL_HACK 1
 
 
 #include "gimpdrawtool.h"
