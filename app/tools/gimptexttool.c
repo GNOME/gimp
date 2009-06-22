@@ -35,6 +35,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer-floating-sel.h"
+#include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 
@@ -67,6 +68,17 @@
 
 
 #define TEXT_UNDO_TIMEOUT 3
+
+
+#ifndef TEXT_TOOL_HACK
+enum
+{
+  MOVE_CURSOR,
+  DELETE_FROM_CURSOR,
+  BACKSPACE,
+  LAST_SIGNAL
+};
+#endif
 
 
 /*  local function prototypes  */
@@ -130,6 +142,27 @@ static void      gimp_text_tool_draw_selection  (GimpDrawTool      *draw_tool,
 
 static gboolean  gimp_text_tool_rectangle_change_complete
                                                 (GimpRectangleTool *rect_tool);
+
+static void      gimp_text_tool_move_cursor     (GimpTextTool      *text_tool,
+                                                 GtkMovementStep    step,
+                                                 gint               count,
+                                                 gboolean           extend_selection
+#ifdef TEXT_TOOL_HACK
+                                                 , GtkTextView     *proxy
+#endif
+                                                 );
+static void   gimp_text_tool_delete_from_cursor (GimpTextTool      *text_tool,
+                                                 GtkDeleteType      type,
+                                                 gint               count
+#ifdef TEXT_TOOL_HACK
+                                                 , GtkTextView     *proxy
+#endif
+                                                 );
+static void      gimp_text_tool_backspace       (GimpTextTool      *text_tool
+#ifdef TEXT_TOOL_HACK
+                                                 , GtkTextView     *proxy
+#endif
+                                                 );
 
 static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpTextLayer     *layer,
@@ -197,6 +230,10 @@ G_DEFINE_TYPE_WITH_CODE (GimpTextTool, gimp_text_tool,
 
 #define parent_class gimp_text_tool_parent_class
 
+#ifndef TEXT_TOOL_HACK
+static guint signals[LAST_SIGNAL] = { 0, };
+#endif
+
 
 void
 gimp_text_tool_register (GimpToolRegisterCallback  callback,
@@ -242,7 +279,47 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
 
   draw_tool_class->draw        = gimp_text_tool_draw;
 
+#ifndef TEXT_TOOL_HACK
+  klass->move_cursor           = gimp_text_tool_move_cursor;
+  klass->delete_from_cursor    = gimp_text_tool_delete_from_cursor;
+  klass->backspace             = gimp_text_tool_backspace;
+#endif
+
   gimp_rectangle_tool_install_properties (object_class);
+
+#ifndef TEXT_TOOL_HACK
+  signals[MOVE_CURSOR] =
+    g_signal_new ("move-cursor",
+                  G_OBJECT_CLASS_TYPE (object_class),
+                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                  G_STRUCT_OFFSET (GimpTextToolClass, move_cursor),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM_INT_BOOLEAN,
+		  G_TYPE_NONE, 3,
+                  GTK_TYPE_MOVEMENT_STEP,
+                  G_TYPE_INT,
+                  G_TYPE_BOOLEAN);
+
+  signals[DELETE_FROM_CURSOR] =
+    g_signal_new ("delete-from-cursor",
+		  G_OBJECT_CLASS_TYPE (object_class),
+		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+		  G_STRUCT_OFFSET (GimpTextToolClass, delete_from_cursor),
+		  NULL, NULL,
+		  gimp_marshal_VOID__ENUM_INT,
+		  G_TYPE_NONE, 2,
+		  GTK_TYPE_DELETE_TYPE,
+		  G_TYPE_INT);
+
+  signals[BACKSPACE] =
+    g_signal_new ("backspace",
+		  G_OBJECT_CLASS_TYPE (object_class),
+		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+		  G_STRUCT_OFFSET (GimpTextToolClass, backspace),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+#endif
 }
 
 static void
@@ -302,6 +379,27 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->handle_rectangle_change_complete = TRUE;
 
   text_tool->x_pos = -1;
+
+#ifdef TEXT_TOOL_HACK
+  /*  we need this crap because we need some object to call
+   *  gtk_binding_set_activate() activate with. It takes a GtkObject
+   *  instead of a GObject. So instead of adding the needed binding
+   *  signals to GimpTextTool, we abuse a GtkTextView, which has all
+   *  the needed signals anyway, and connect to its signals. Puke!
+   */
+  text_tool->proxy_text_view = gtk_text_view_new ();
+  g_object_ref_sink (text_tool->proxy_text_view);
+
+  g_signal_connect_swapped (text_tool->proxy_text_view, "move-cursor",
+                            G_CALLBACK (gimp_text_tool_move_cursor),
+                            text_tool);
+  g_signal_connect_swapped (text_tool->proxy_text_view, "delete-from-cursor",
+                            G_CALLBACK (gimp_text_tool_delete_from_cursor),
+                            text_tool);
+  g_signal_connect_swapped (text_tool->proxy_text_view, "backspace",
+                            G_CALLBACK (gimp_text_tool_backspace),
+                            text_tool);
+#endif
 }
 
 static GObject *
@@ -348,6 +446,14 @@ gimp_text_tool_dispose (GObject *object)
 
   if (text_tool->editor)
     gtk_widget_destroy (text_tool->editor);
+
+#ifdef TEXT_TOOL_HACK
+  if (text_tool->proxy_text_view)
+    {
+      g_object_unref (text_tool->proxy_text_view);
+      text_tool->proxy_text_view = NULL;
+    }
+#endif
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -785,7 +891,10 @@ gimp_text_tool_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *display)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (tool);
+  GtkTextViewClass *tv_class = g_type_class_ref (GTK_TYPE_TEXT_VIEW);
+  GtkBindingSet    *binding  = gtk_binding_set_by_class (tv_class);
+
   GtkTextMark  *cursor_mark;
   GtkTextMark  *selection_mark;
   GtkTextIter   cursor;
@@ -802,6 +911,20 @@ gimp_text_tool_key_press (GimpTool    *tool,
       text_tool->needs_im_reset = TRUE;
       text_tool->x_pos          = -1;
 
+      return TRUE;
+    }
+
+  if (gtk_binding_set_activate (binding,
+                                kevent->keyval,
+                                kevent->state,
+#ifdef TEXT_TOOL_HACK
+                                GTK_OBJECT (text_tool->proxy_text_view)
+#else
+                                (GtkObject *) text_tool
+#endif
+                                ))
+    {
+      g_printerr ("binding handled event!\n");
       return TRUE;
     }
 
@@ -836,175 +959,6 @@ gimp_text_tool_key_press (GimpTool    *tool,
       gimp_text_tool_enter_text (text_tool, "\t");
       gimp_text_tool_reset_im_context (text_tool);
       gimp_text_tool_update_layout (text_tool);
-      break;
-
-    case GDK_BackSpace:
-      gimp_text_tool_delete_text (text_tool, TRUE);
-      break;
-
-    case GDK_Delete:
-      gimp_text_tool_delete_text (text_tool, FALSE);
-      break;
-
-    case GDK_Left:
-    case GDK_KP_Left:
-      if (kevent->state & GDK_CONTROL_MASK)
-        {
-          gtk_text_iter_backward_visible_word_starts (&cursor, 1);
-        }
-      else
-        {
-          gtk_text_iter_backward_cursor_position (&cursor);
-        }
-      gtk_text_buffer_select_range (text_tool->text_buffer,
-                                    &cursor, sel_start);
-      break;
-
-    case GDK_Right:
-    case GDK_KP_Right:
-      if (kevent->state & GDK_CONTROL_MASK)
-        {
-	  if (! gtk_text_iter_forward_visible_word_ends (&cursor, 1))
-	    gtk_text_iter_forward_to_line_end (&cursor);
-        }
-      else
-        {
-          gtk_text_iter_forward_cursor_position (&cursor);
-        }
-      gtk_text_buffer_select_range (text_tool->text_buffer,
-                                    &cursor, sel_start);
-      gimp_text_tool_reset_im_context (text_tool);
-      break;
-
-    case GDK_Up:
-    case GDK_KP_Up:
-    case GDK_Down:
-    case GDK_KP_Down:
-      {
-        PangoLayout     *layout;
-        PangoLayoutLine *layout_line;
-        PangoLayoutIter *layout_iter;
-        PangoRectangle   logical;
-        gint             line;
-        gint             line_index;
-        gint             trailing;
-        gint             i;
-
-        layout = gimp_text_layout_get_pango_layout (text_tool->layout);
-
-        line       = gtk_text_iter_get_line (&cursor);
-        line_index = gtk_text_iter_get_line_index (&cursor);
-
-        layout_iter = pango_layout_get_iter (layout);
-        for (i = 0; i < line; i++)
-          pango_layout_iter_next_line (layout_iter);
-
-        layout_line = pango_layout_iter_get_line_readonly (layout_iter);
-
-        pango_layout_line_index_to_x (layout_line,
-                                      layout_line->start_index + line_index,
-                                      FALSE, &x_pos);
-
-        pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
-        x_pos += logical.x;
-
-        pango_layout_iter_free (layout_iter);
-
-        /*  try to go to the remembered x_pos if it exists *and* we are at
-         *  the beginning or at the end of the current line
-         */
-        if (text_tool->x_pos != -1 && (line_index == layout_line->length ||
-                                       line_index == 0))
-          x_pos = text_tool->x_pos;
-
-        if (kevent->keyval == GDK_Up ||
-            kevent->keyval == GDK_KP_Up)
-          {
-            line--;
-            if (line < 0)
-              {
-                gtk_text_iter_set_line_offset (&cursor, 0);
-                gtk_text_buffer_select_range (text_tool->text_buffer,
-                                              &cursor, sel_start);
-                break;
-              }
-          }
-        else
-          {
-            line++;
-          }
-
-        layout_line = pango_layout_get_line_readonly (layout, line);
-
-        if (! layout_line)
-          {
-            if (kevent->keyval == GDK_Up ||
-                kevent->keyval == GDK_KP_Up)
-              {
-                gtk_text_iter_set_line_offset (&cursor, 0);
-                gtk_text_buffer_select_range (text_tool->text_buffer,
-                                              &cursor, sel_start);
-              }
-            else
-              {
-                gtk_text_iter_forward_to_line_end (&cursor);
-                gtk_text_buffer_select_range (text_tool->text_buffer,
-                                              &cursor, sel_start);
-              }
-            break;
-          }
-
-        layout_iter = pango_layout_get_iter (layout);
-        for (i = 0; i < line; i++)
-          pango_layout_iter_next_line (layout_iter);
-
-        pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
-
-        pango_layout_iter_free (layout_iter);
-
-        pango_layout_line_x_to_index (layout_line, x_pos - logical.x,
-                                      &line_index, &trailing);
-
-        line_index -= layout_line->start_index;
-
-        gtk_text_buffer_get_iter_at_line_index (text_tool->text_buffer,
-                                                &cursor,
-                                                line, line_index);
-
-        while (trailing--)
-          gtk_text_iter_forward_char (&cursor);
-
-        gtk_text_buffer_select_range (text_tool->text_buffer,
-                                      &cursor, sel_start);
-      }
-      break;
-
-    case GDK_Page_Up:
-    case GDK_KP_Page_Up:
-      gtk_text_buffer_get_start_iter (text_tool->text_buffer, &cursor);
-      gtk_text_buffer_select_range (text_tool->text_buffer,
-                                    &cursor, sel_start);
-      break;
-
-    case GDK_Page_Down:
-    case GDK_KP_Page_Down:
-      gtk_text_buffer_get_end_iter (text_tool->text_buffer, &cursor);
-      gtk_text_buffer_select_range (text_tool->text_buffer,
-                                    &cursor, sel_start);
-      break;
-
-    case GDK_Home:
-    case GDK_KP_Home:
-      gtk_text_iter_set_line_offset (&cursor, 0);
-      gtk_text_buffer_select_range (text_tool->text_buffer,
-                                    &cursor, sel_start);
-      break;
-
-    case GDK_End:
-    case GDK_KP_End:
-      gtk_text_iter_forward_to_line_end (&cursor);
-      gtk_text_buffer_select_range (text_tool->text_buffer,
-                                    &cursor, sel_start);
       break;
 
     default:
@@ -1466,6 +1420,224 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   while (pango_layout_iter_next_line (line_iter));
 
   pango_layout_iter_free (line_iter);
+}
+
+static void
+gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
+                            GtkMovementStep  step,
+                            gint             count,
+                            gboolean         extend_selection
+#ifdef TEXT_TOOL_HACK
+                            , GtkTextView     *proxy
+#endif
+                            )
+{
+  GtkTextMark  *cursor_mark;
+  GtkTextMark  *selection_mark;
+  GtkTextIter   cursor;
+  GtkTextIter   selection;
+  GtkTextIter  *sel_start;
+  gint          x_pos  = -1;
+
+  cursor_mark    = gtk_text_buffer_get_insert (text_tool->text_buffer);
+  selection_mark = gtk_text_buffer_get_selection_bound (text_tool->text_buffer);
+
+  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
+                                    &cursor, cursor_mark);
+  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
+                                    &selection, selection_mark);
+
+  if (extend_selection)
+    sel_start = &selection;
+  else
+    sel_start = &cursor;
+
+  switch (step)
+    {
+    case GTK_MOVEMENT_LOGICAL_POSITIONS:
+      gtk_text_iter_forward_visible_cursor_positions (&cursor, count);
+      break;
+
+    case GTK_MOVEMENT_VISUAL_POSITIONS:
+      if (count < 0)
+        {
+          gtk_text_iter_backward_cursor_position (&cursor);
+        }
+      else if (count > 0)
+        {
+          gtk_text_iter_forward_cursor_position (&cursor);
+        }
+      break;
+
+    case GTK_MOVEMENT_WORDS:
+      if (count < 0)
+        {
+          gtk_text_iter_backward_visible_word_starts (&cursor, count);
+        }
+      else if (count > 0)
+        {
+	  if (! gtk_text_iter_forward_visible_word_ends (&cursor, count))
+	    gtk_text_iter_forward_to_line_end (&cursor);
+        }
+      break;
+
+    case GTK_MOVEMENT_DISPLAY_LINES:
+      {
+        PangoLayout     *layout;
+        PangoLayoutLine *layout_line;
+        PangoLayoutIter *layout_iter;
+        PangoRectangle   logical;
+        gint             line;
+        gint             line_index;
+        gint             trailing;
+        gint             i;
+
+        layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+
+        line       = gtk_text_iter_get_line (&cursor);
+        line_index = gtk_text_iter_get_line_index (&cursor);
+
+        layout_iter = pango_layout_get_iter (layout);
+        for (i = 0; i < line; i++)
+          pango_layout_iter_next_line (layout_iter);
+
+        layout_line = pango_layout_iter_get_line_readonly (layout_iter);
+
+        pango_layout_line_index_to_x (layout_line,
+                                      layout_line->start_index + line_index,
+                                      FALSE, &x_pos);
+
+        pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
+        x_pos += logical.x;
+
+        pango_layout_iter_free (layout_iter);
+
+        /*  try to go to the remembered x_pos if it exists *and* we are at
+         *  the beginning or at the end of the current line
+         */
+        if (text_tool->x_pos != -1 && (line_index == layout_line->length ||
+                                       line_index == 0))
+          x_pos = text_tool->x_pos;
+
+        if (count < 0)
+          {
+            line--;
+            if (line < 0)
+              {
+                gtk_text_iter_set_line_offset (&cursor, 0);
+                break;
+              }
+          }
+        else if (count > 0)
+          {
+            line++;
+          }
+
+        layout_line = pango_layout_get_line_readonly (layout, line);
+
+        if (! layout_line)
+          {
+            if (count < 0)
+              {
+                gtk_text_iter_set_line_offset (&cursor, 0);
+              }
+            else if (count > 0)
+              {
+                gtk_text_iter_forward_to_line_end (&cursor);
+              }
+            break;
+          }
+
+        layout_iter = pango_layout_get_iter (layout);
+        for (i = 0; i < line; i++)
+          pango_layout_iter_next_line (layout_iter);
+
+        pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
+
+        pango_layout_iter_free (layout_iter);
+
+        pango_layout_line_x_to_index (layout_line, x_pos - logical.x,
+                                      &line_index, &trailing);
+
+        line_index -= layout_line->start_index;
+
+        gtk_text_buffer_get_iter_at_line_index (text_tool->text_buffer,
+                                                &cursor,
+                                                line, line_index);
+
+        while (trailing--)
+          gtk_text_iter_forward_char (&cursor);
+      }
+      break;
+
+    case GTK_MOVEMENT_PAGES:
+      if (count < 0)
+        {
+          gtk_text_buffer_get_start_iter (text_tool->text_buffer, &cursor);
+        }
+      else if (count > 0)
+        {
+          gtk_text_buffer_get_end_iter (text_tool->text_buffer, &cursor);
+        }
+      break;
+
+    case GTK_MOVEMENT_DISPLAY_LINE_ENDS:
+      if (count < 0)
+        {
+          gtk_text_iter_set_line_offset (&cursor, 0);
+        }
+      else if (count > 0)
+        {
+          gtk_text_iter_forward_to_line_end (&cursor);
+        }
+      break;
+
+    default:
+      return;
+    }
+
+  text_tool->x_pos = x_pos;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+  gtk_text_buffer_select_range (text_tool->text_buffer,
+                                &cursor, sel_start);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+
+#ifdef TEXT_TOOL_HACK
+  g_signal_stop_emission_by_name (proxy, "move-cursor");
+#endif
+}
+
+static void
+gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
+                                   GtkDeleteType  type,
+                                   gint           count
+#ifdef TEXT_TOOL_HACK
+                                   , GtkTextView *proxy
+#endif
+                            )
+{
+  gimp_text_tool_delete_text (text_tool, FALSE);
+
+#ifdef TEXT_TOOL_HACK
+  g_signal_stop_emission_by_name (proxy, "delete-from-cursor");
+#endif
+}
+
+static void
+gimp_text_tool_backspace (GimpTextTool  *text_tool
+#ifdef TEXT_TOOL_HACK
+                          , GtkTextView *proxy
+#endif
+                          )
+{
+  gimp_text_tool_delete_text (text_tool, TRUE);
+
+#ifdef TEXT_TOOL_HACK
+  g_signal_stop_emission_by_name (proxy, "backspace");
+#endif
 }
 
 static gboolean
