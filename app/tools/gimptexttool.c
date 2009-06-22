@@ -1472,7 +1472,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
     case GTK_MOVEMENT_WORDS:
       if (count < 0)
         {
-          gtk_text_iter_backward_visible_word_starts (&cursor, count);
+          gtk_text_iter_backward_visible_word_starts (&cursor, -count);
         }
       else if (count > 0)
         {
