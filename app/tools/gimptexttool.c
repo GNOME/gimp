@@ -979,6 +979,20 @@ gimp_text_tool_key_press (GimpTool    *tool,
       }
       break;
 
+    case GDK_Page_Up:
+    case GDK_KP_Page_Up:
+      gtk_text_buffer_get_start_iter (text_tool->text_buffer, &cursor);
+      gtk_text_buffer_select_range (text_tool->text_buffer,
+                                    &cursor, sel_start);
+      break;
+
+    case GDK_Page_Down:
+    case GDK_KP_Page_Down:
+      gtk_text_buffer_get_end_iter (text_tool->text_buffer, &cursor);
+      gtk_text_buffer_select_range (text_tool->text_buffer,
+                                    &cursor, sel_start);
+      break;
+
     case GDK_Home:
     case GDK_KP_Home:
       gtk_text_iter_set_line_offset (&cursor, 0);
