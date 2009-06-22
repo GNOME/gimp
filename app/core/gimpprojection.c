@@ -776,23 +776,22 @@ gimp_projection_validate_tile (TileManager    *tm,
        */
       t = tile_manager_get_at (tm, col, row, FALSE, FALSE);
 
-      if (t)
-        {
-          if (tile_is_valid (t))
-            break;
+      /*  if we hit the right border, or a valid tile, bail out
+       */
+      if (! t || tile_is_valid (t))
+        break;
 
-          /*  HACK: mark the tile as valid, so locking it with r/w access
-           *  won't validate it
-           */
-          t->valid = TRUE;
-          t = tile_manager_get_at (tm, col, row, TRUE, TRUE);
+      /*  HACK: mark the tile as valid, so locking it with r/w access
+       *  won't validate it
+       */
+      t->valid = TRUE;
+      t = tile_manager_get_at (tm, col, row, TRUE, TRUE);
 
-          /*  add the tile's width to the chunk to validate  */
-          tile_width = tile_ewidth (t);
-          width += tile_width;
+      /*  add the tile's width to the chunk to validate  */
+      tile_width = tile_ewidth (t);
+      width += tile_width;
 
-          additional[n_additional++] = t;
-        }
+      additional[n_additional++] = t;
     }
 
   gimp_projection_construct (proj, x, y, width, height);
