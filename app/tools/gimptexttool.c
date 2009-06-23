@@ -1602,7 +1602,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         }
       else if (count > 0)
         {
-          gtk_text_iter_forward_to_line_end (&cursor);
+          if (! gtk_text_iter_ends_line (&cursor))
+            gtk_text_iter_forward_to_line_end (&cursor);
         }
       break;
 
