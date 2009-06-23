@@ -19,9 +19,6 @@
 #define __GIMP_TEXT_TOOL_H__
 
 
-#define TEXT_TOOL_HACK 1
-
-
 #include "gimpdrawtool.h"
 
 
@@ -76,27 +73,14 @@ struct _GimpTextTool
 
   GimpTextLayout *layout;
 
-#ifdef TEXT_TOOL_HACK
-  GtkWidget      *proxy_text_view; /* this sucks so much */
-#endif
+  /* this sucks so much */
+  GtkWidget      *offscreen_window;
+  GtkWidget      *proxy_text_view;
 };
 
 struct _GimpTextToolClass
 {
   GimpDrawToolClass parent_class;
-
-#ifndef TEXT_TOOL_HACK
-  void (* move_cursor)        (GimpTextTool    *text_tool,
-                               GtkMovementStep  step,
-                               gint             count,
-                               gboolean         extend_selection);
-
-  void (* delete_from_cursor) (GimpTextTool    *text_tool,
-                               GtkDeleteType    type,
-                               gint             count);
-
-  void (* backspace)          (GimpTextTool    *text_tool);
-#endif
 };
 
 

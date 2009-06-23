@@ -70,17 +70,6 @@
 #define TEXT_UNDO_TIMEOUT 3
 
 
-#ifndef TEXT_TOOL_HACK
-enum
-{
-  MOVE_CURSOR,
-  DELETE_FROM_CURSOR,
-  BACKSPACE,
-  LAST_SIGNAL
-};
-#endif
-
-
 /*  local function prototypes  */
 
 static void gimp_text_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
@@ -143,26 +132,15 @@ static void      gimp_text_tool_draw_selection  (GimpDrawTool      *draw_tool,
 static gboolean  gimp_text_tool_rectangle_change_complete
                                                 (GimpRectangleTool *rect_tool);
 
+static void      gimp_text_tool_ensure_proxy    (GimpTextTool      *text_tool);
 static void      gimp_text_tool_move_cursor     (GimpTextTool      *text_tool,
                                                  GtkMovementStep    step,
                                                  gint               count,
-                                                 gboolean           extend_selection
-#ifdef TEXT_TOOL_HACK
-                                                 , GtkTextView     *proxy
-#endif
-                                                 );
+                                                 gboolean           extend_selection);
 static void   gimp_text_tool_delete_from_cursor (GimpTextTool      *text_tool,
                                                  GtkDeleteType      type,
-                                                 gint               count
-#ifdef TEXT_TOOL_HACK
-                                                 , GtkTextView     *proxy
-#endif
-                                                 );
-static void      gimp_text_tool_backspace       (GimpTextTool      *text_tool
-#ifdef TEXT_TOOL_HACK
-                                                 , GtkTextView     *proxy
-#endif
-                                                 );
+                                                 gint               count);
+static void      gimp_text_tool_backspace       (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpTextLayer     *layer,
@@ -230,10 +208,6 @@ G_DEFINE_TYPE_WITH_CODE (GimpTextTool, gimp_text_tool,
 
 #define parent_class gimp_text_tool_parent_class
 
-#ifndef TEXT_TOOL_HACK
-static guint signals[LAST_SIGNAL] = { 0, };
-#endif
-
 
 void
 gimp_text_tool_register (GimpToolRegisterCallback  callback,
@@ -279,47 +253,7 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
 
   draw_tool_class->draw        = gimp_text_tool_draw;
 
-#ifndef TEXT_TOOL_HACK
-  klass->move_cursor           = gimp_text_tool_move_cursor;
-  klass->delete_from_cursor    = gimp_text_tool_delete_from_cursor;
-  klass->backspace             = gimp_text_tool_backspace;
-#endif
-
   gimp_rectangle_tool_install_properties (object_class);
-
-#ifndef TEXT_TOOL_HACK
-  signals[MOVE_CURSOR] =
-    g_signal_new ("move-cursor",
-                  G_OBJECT_CLASS_TYPE (object_class),
-                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpTextToolClass, move_cursor),
-                  NULL, NULL,
-                  gimp_marshal_VOID__ENUM_INT_BOOLEAN,
-		  G_TYPE_NONE, 3,
-                  GTK_TYPE_MOVEMENT_STEP,
-                  G_TYPE_INT,
-                  G_TYPE_BOOLEAN);
-
-  signals[DELETE_FROM_CURSOR] =
-    g_signal_new ("delete-from-cursor",
-		  G_OBJECT_CLASS_TYPE (object_class),
-		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-		  G_STRUCT_OFFSET (GimpTextToolClass, delete_from_cursor),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM_INT,
-		  G_TYPE_NONE, 2,
-		  GTK_TYPE_DELETE_TYPE,
-		  G_TYPE_INT);
-
-  signals[BACKSPACE] =
-    g_signal_new ("backspace",
-		  G_OBJECT_CLASS_TYPE (object_class),
-		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-		  G_STRUCT_OFFSET (GimpTextToolClass, backspace),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
-#endif
 }
 
 static void
@@ -379,34 +313,6 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->handle_rectangle_change_complete = TRUE;
 
   text_tool->x_pos = -1;
-
-#ifdef TEXT_TOOL_HACK
-  /*  we need this crap because we need some object to call
-   *  gtk_binding_set_activate() with. It takes a GtkObject instead of
-   *  a GObject. So instead of adding the needed binding signals to
-   *  GimpTextTool, we abuse a GtkTextView, which has all the needed
-   *  signals anyway, and connect to its signals. Puke!
-   */
-  {
-    GtkTextBuffer *dummy = gtk_text_buffer_new (NULL);
-
-    text_tool->proxy_text_view = gtk_text_view_new_with_buffer (dummy);
-    g_object_unref (dummy);
-
-    g_object_ref_sink (text_tool->proxy_text_view);
-    gtk_widget_ensure_style (text_tool->proxy_text_view);
-
-    g_signal_connect_swapped (text_tool->proxy_text_view, "move-cursor",
-                              G_CALLBACK (gimp_text_tool_move_cursor),
-                              text_tool);
-    g_signal_connect_swapped (text_tool->proxy_text_view, "delete-from-cursor",
-                              G_CALLBACK (gimp_text_tool_delete_from_cursor),
-                              text_tool);
-    g_signal_connect_swapped (text_tool->proxy_text_view, "backspace",
-                              G_CALLBACK (gimp_text_tool_backspace),
-                              text_tool);
-  }
-#endif
 }
 
 static GObject *
@@ -454,13 +360,12 @@ gimp_text_tool_dispose (GObject *object)
   if (text_tool->editor)
     gtk_widget_destroy (text_tool->editor);
 
-#ifdef TEXT_TOOL_HACK
   if (text_tool->proxy_text_view)
     {
-      g_object_unref (text_tool->proxy_text_view);
+      gtk_widget_destroy (text_tool->offscreen_window);
+      text_tool->offscreen_window = NULL;
       text_tool->proxy_text_view = NULL;
     }
-#endif
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -899,16 +804,17 @@ gimp_text_tool_key_press (GimpTool    *tool,
                           GimpDisplay *display)
 {
   GimpTextTool     *text_tool = GIMP_TEXT_TOOL (tool);
-  GtkTextViewClass *tv_class = g_type_class_ref (GTK_TYPE_TEXT_VIEW);
-  GtkBindingSet    *binding  = gtk_binding_set_by_class (tv_class);
+  GtkTextViewClass *tv_class  = g_type_class_ref (GTK_TYPE_TEXT_VIEW);
+  GtkBindingSet    *binding   = gtk_binding_set_by_class (tv_class);
+  GtkTextMark      *cursor_mark;
+  GtkTextMark      *selection_mark;
+  GtkTextIter       cursor;
+  GtkTextIter       selection;
+  GtkTextIter      *sel_start;
+  gint              x_pos  = -1;
+  gboolean          retval = TRUE;
 
-  GtkTextMark  *cursor_mark;
-  GtkTextMark  *selection_mark;
-  GtkTextIter   cursor;
-  GtkTextIter   selection;
-  GtkTextIter  *sel_start;
-  gint          x_pos  = -1;
-  gboolean      retval = TRUE;
+  g_type_class_unref (tv_class);
 
   if (display != tool->display)
     return FALSE;
@@ -921,15 +827,12 @@ gimp_text_tool_key_press (GimpTool    *tool,
       return TRUE;
     }
 
+  gimp_text_tool_ensure_proxy (text_tool);
+
   if (gtk_binding_set_activate (binding,
                                 kevent->keyval,
                                 kevent->state,
-#ifdef TEXT_TOOL_HACK
-                                GTK_OBJECT (text_tool->proxy_text_view)
-#else
-                                (GtkObject *) text_tool
-#endif
-                                ))
+                                GTK_OBJECT (text_tool->proxy_text_view)))
     {
       g_printerr ("binding handled event!\n");
       return TRUE;
@@ -1429,15 +1332,106 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   pango_layout_iter_free (line_iter);
 }
 
+static gboolean
+gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (rect_tool);
+
+  if (text_tool->handle_rectangle_change_complete)
+    {
+      GimpText *text = text_tool->text;
+      GimpItem *item = GIMP_ITEM (text_tool->layer);
+      gint      x1, y1;
+      gint      x2, y2;
+
+      g_object_get (rect_tool,
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
+
+      text_tool->text_box_fixed = TRUE;
+
+      if (! text || ! text->text || (text->text[0] == 0))
+        {
+          /* we can't set properties for the text layer, because it
+           * isn't created until some text has been inserted, so we
+           * need to make a special note that will remind us what to
+           * do when we actually create the layer
+           */
+          return TRUE;
+        }
+
+      g_object_set (text_tool->proxy,
+                    "box-mode",   GIMP_TEXT_BOX_FIXED,
+                    "box-width",  (gdouble) (x2 - x1),
+                    "box-height", (gdouble) (y2 - y1),
+                    NULL);
+
+      gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
+                                   _("Reshape Text Layer"));
+
+      gimp_item_translate (item,
+                           x1 - gimp_item_get_offset_x (item),
+                           y1 - gimp_item_get_offset_y (item),
+                           TRUE);
+      gimp_text_tool_apply (text_tool);
+
+      gimp_image_undo_group_end (text_tool->image);
+    }
+
+  return TRUE;
+}
+
+static void
+gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
+{
+  GimpTool *tool = GIMP_TOOL (text_tool);
+
+  if (text_tool->offscreen_window &&
+      gtk_widget_get_screen (text_tool->offscreen_window) !=
+      gtk_widget_get_screen (tool->display->shell))
+    {
+      gtk_window_set_screen (GTK_WINDOW (text_tool->offscreen_window),
+                             gtk_widget_get_screen (tool->display->shell));
+      gtk_window_move (GTK_WINDOW (text_tool->offscreen_window), -200, -200);
+    }
+  else if (! text_tool->offscreen_window)
+    {
+      GtkTextBuffer *buffer;
+
+      text_tool->offscreen_window = gtk_window_new (GTK_WINDOW_POPUP);
+      gtk_window_set_screen (GTK_WINDOW (text_tool->offscreen_window),
+                             gtk_widget_get_screen (tool->display->shell));
+      gtk_window_move (GTK_WINDOW (text_tool->offscreen_window), -200, -200);
+      gtk_widget_show (text_tool->offscreen_window);
+
+      buffer = gtk_text_buffer_new (NULL);
+      text_tool->proxy_text_view = gtk_text_view_new_with_buffer (buffer);
+      g_object_unref  (buffer);
+
+      gtk_container_add (GTK_CONTAINER (text_tool->offscreen_window),
+                         text_tool->proxy_text_view);
+      gtk_widget_show (text_tool->proxy_text_view);
+
+      g_signal_connect_swapped (text_tool->proxy_text_view, "move-cursor",
+                                G_CALLBACK (gimp_text_tool_move_cursor),
+                                text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "delete-from-cursor",
+                                G_CALLBACK (gimp_text_tool_delete_from_cursor),
+                                text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "backspace",
+                                G_CALLBACK (gimp_text_tool_backspace),
+                                text_tool);
+    }
+}
+
 static void
 gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
                             GtkMovementStep  step,
                             gint             count,
-                            gboolean         extend_selection
-#ifdef TEXT_TOOL_HACK
-                            , GtkTextView     *proxy
-#endif
-                            )
+                            gboolean         extend_selection)
 {
   GtkTextMark  *cursor_mark;
   GtkTextMark  *selection_mark;
@@ -1619,92 +1613,26 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
                                 &cursor, sel_start);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
-
-#ifdef TEXT_TOOL_HACK
-  g_signal_stop_emission_by_name (proxy, "move-cursor");
-#endif
 }
 
 static void
 gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
                                    GtkDeleteType  type,
-                                   gint           count
-#ifdef TEXT_TOOL_HACK
-                                   , GtkTextView *proxy
-#endif
-                            )
+                                   gint           count)
 {
-  gimp_text_tool_delete_text (text_tool, FALSE);
+  g_printerr ("%s: %s count = %d\n",
+              G_STRFUNC,
+              g_enum_get_value (g_type_class_ref (GTK_TYPE_DELETE_TYPE),
+                                type)->value_name,
+              count);
 
-#ifdef TEXT_TOOL_HACK
-  g_signal_stop_emission_by_name (proxy, "delete-from-cursor");
-#endif
+  gimp_text_tool_delete_text (text_tool, FALSE);
 }
 
 static void
-gimp_text_tool_backspace (GimpTextTool  *text_tool
-#ifdef TEXT_TOOL_HACK
-                          , GtkTextView *proxy
-#endif
-                          )
+gimp_text_tool_backspace (GimpTextTool  *text_tool)
 {
   gimp_text_tool_delete_text (text_tool, TRUE);
-
-#ifdef TEXT_TOOL_HACK
-  g_signal_stop_emission_by_name (proxy, "backspace");
-#endif
-}
-
-static gboolean
-gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
-{
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (rect_tool);
-
-  if (text_tool->handle_rectangle_change_complete)
-    {
-      GimpText *text = text_tool->text;
-      GimpItem *item = GIMP_ITEM (text_tool->layer);
-      gint      x1, y1;
-      gint      x2, y2;
-
-      g_object_get (rect_tool,
-                    "x1", &x1,
-                    "y1", &y1,
-                    "x2", &x2,
-                    "y2", &y2,
-                    NULL);
-
-      text_tool->text_box_fixed = TRUE;
-
-      if (! text || ! text->text || (text->text[0] == 0))
-        {
-          /* we can't set properties for the text layer, because it
-           * isn't created until some text has been inserted, so we
-           * need to make a special note that will remind us what to
-           * do when we actually create the layer
-           */
-          return TRUE;
-        }
-
-      g_object_set (text_tool->proxy,
-                    "box-mode",   GIMP_TEXT_BOX_FIXED,
-                    "box-width",  (gdouble) (x2 - x1),
-                    "box-height", (gdouble) (y2 - y1),
-                    NULL);
-
-      gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
-                                   _("Reshape Text Layer"));
-
-      gimp_item_translate (item,
-                           x1 - gimp_item_get_offset_x (item),
-                           y1 - gimp_item_get_offset_y (item),
-                           TRUE);
-      gimp_text_tool_apply (text_tool);
-
-      gimp_image_undo_group_end (text_tool->image);
-    }
-
-  return TRUE;
 }
 
 
