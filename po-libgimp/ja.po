@@ -4,14 +4,15 @@
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003, 2004.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
-# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008
+# NISHIBORI Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2009
+# Ken Okubo <se5k-ookb@asahi-net.or.jp>, 2009
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-04 19:51+0900\n"
-"PO-Revision-Date: 2009-01-02 17:32+0900\n"
+"POT-Creation-Date: 2009-06-20 21:59+0900\n"
+"PO-Revision-Date: 2009-06-20 23:00+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -20,104 +21,113 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1045
+#: ../libgimp/gimp.c:1044
 msgid "success"
 msgstr "成功"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1049
+#: ../libgimp/gimp.c:1048
 msgid "execution error"
 msgstr "実行時エラー"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1053
+#: ../libgimp/gimp.c:1052
 msgid "calling error"
 msgstr "呼出時エラー"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1057
+#: ../libgimp/gimp.c:1056
 msgid "cancelled"
 msgstr "取消"
 
-#: ../libgimp/gimpbrushselectbutton.c:170
+#: ../libgimp/gimpbrushselectbutton.c:169
 msgid "Brush Selection"
 msgstr "ブラシ選択"
 
-#: ../libgimp/gimpbrushselectbutton.c:913
-#: ../libgimp/gimppatternselectbutton.c:714
+#: ../libgimp/gimpbrushselectbutton.c:915
+#: ../libgimp/gimppatternselectbutton.c:716
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
-#: ../libgimp/gimpexport.c:224 ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:223
+#: ../libgimp/gimpexport.c:259
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s プラグインはレイヤーを取り扱えません"
 
-#: ../libgimp/gimpexport.c:225 ../libgimp/gimpexport.c:234
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:224
+#: ../libgimp/gimpexport.c:233
+#: ../libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:260
 msgid "Merge Visible Layers"
 msgstr "可視レイヤーの結合"
 
-#: ../libgimp/gimpexport.c:233
+#: ../libgimp/gimpexport.c:232
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s プラグインはレイヤーのオフセット、サイズ、透明度を扱えません"
 
-#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:241
+#: ../libgimp/gimpexport.c:250
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s プラグインはアニメーションフレームとしてのみレイヤーを取り扱えます"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:251
 msgid "Save as Animation"
 msgstr "アニメーションとして保存"
 
-#: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:269
 msgid "Flatten Image"
 msgstr "画像の統合"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:268
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s は透明度情報を取り扱えません"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:277
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s はレイヤーマスクを取り扱えません"
 
-#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:278
 msgid "Apply Layer Masks"
 msgstr "レイヤーマスク適用"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:286
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s は RGB 画像のみ取り扱えます"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:334
 msgid "Convert to RGB"
 msgstr "RGB に変換"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:295
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s はグレースケール画像のみ取り扱えます"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:346
 msgid "Convert to Grayscale"
 msgstr "グレースケールに変換"
 
-#: ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s はインデックス画像のみ取り扱えます"
 
-#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:335
-#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:344
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -125,12 +135,12 @@ msgstr ""
 "既定値でインデックス画像に自動変換する\n"
 "(良い結果を得たい場合には手動で行って下さい)"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:314
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s は 2値ビットマップまたはインデックス画像のみ取り扱えます"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:315
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -138,35 +148,35 @@ msgstr ""
 "ビットマップ標準設定でインデックス画像に自動変換する\n"
 "(良い結果を得たい場合には手動で行って下さい)"
 
-#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:324
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s は RGBまたはグレースケール画像のみ取り扱えます"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:333
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s は RGB またはインデックス画像のみ取り扱えます"
 
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:343
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s はグレースケールまたはインデックス画像のみ取り扱えます"
 
-#: ../libgimp/gimpexport.c:355
+#: ../libgimp/gimpexport.c:354
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s にはアルファチャンネルが必要です"
 
-#: ../libgimp/gimpexport.c:356
+#: ../libgimp/gimpexport.c:355
 msgid "Add Alpha Channel"
 msgstr "アルファチャンネルを追加"
 
-#: ../libgimp/gimpexport.c:411
+#: ../libgimp/gimpexport.c:410
 msgid "Confirm Save"
 msgstr "保存の確認"
 
-#: ../libgimp/gimpexport.c:417
+#: ../libgimp/gimpexport.c:416
 msgid "Confirm"
 msgstr "確認"
 
@@ -182,22 +192,24 @@ msgstr "無視(_I)"
 msgid "_Export"
 msgstr "エクスポート(_E)"
 
+# （要査読）
+# ダイアログ・メッセージ
+# 仕様変更（まず、メニューから [エクスポート] を選択する）されたため、その仕様に沿うようにメッセージを意訳した。
+# (2009-06-20 NISHIBORI Kiyotaka)
 #. the headline
-#: ../libgimp/gimpexport.c:527
+#: ../libgimp/gimpexport.c:528
 #, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
+msgid "Your image should be exported before it can be saved as %s for the following reasons:"
 msgstr ""
-"%s として保存するために画像のエクスポートを行います\n"
-"（理由は次のとおりです）"
+"%s ファイルとしてエクスポートするための処理を行います。\n"
+"（処理が必要な理由と処理内容を次に示します。必要に応じて項目を選択してください。）"
 
 #. the footline
-#: ../libgimp/gimpexport.c:601
+#: ../libgimp/gimpexport.c:602
 msgid "The export conversion won't modify your original image."
 msgstr "エクスポートによるファイル形式変換は元画像(ファイル)に影響を与えません"
 
-#: ../libgimp/gimpexport.c:700
+#: ../libgimp/gimpexport.c:701
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -206,7 +218,7 @@ msgstr ""
 "レイヤーマスクを %s として保存しようとしています\n"
 "この操作では、可視レイヤーは保存されません"
 
-#: ../libgimp/gimpexport.c:706
+#: ../libgimp/gimpexport.c:707
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -215,27 +227,28 @@ msgstr ""
 "チャンネル (保管されている選択範囲) を %s として保存しようとしています\n"
 "この操作では可視レイヤーは保存されません"
 
-#: ../libgimp/gimpfontselectbutton.c:130
+#: ../libgimp/gimpfontselectbutton.c:129
 msgid "Font Selection"
 msgstr "フォント選択"
 
-#: ../libgimp/gimpfontselectbutton.c:145
+#: ../libgimp/gimpfontselectbutton.c:144
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpgradientselectbutton.c:148
+#: ../libgimp/gimpgradientselectbutton.c:147
 msgid "Gradient Selection"
 msgstr "グラデーション選択"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
+#: ../libgimp/gimpmenu.c:449
+#: ../libgimpwidgets/gimpintstore.c:238
 msgid "(Empty)"
 msgstr "(空)"
 
-#: ../libgimp/gimppaletteselectbutton.c:130
+#: ../libgimp/gimppaletteselectbutton.c:129
 msgid "Palette Selection"
 msgstr "パレット選択"
 
-#: ../libgimp/gimppatternselectbutton.c:156
+#: ../libgimp/gimppatternselectbutton.c:155
 msgid "Pattern Selection"
 msgstr "パターン選択"
 
@@ -268,90 +281,91 @@ msgid "by type"
 msgstr "型で"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:383
-#: ../libgimp/gimpprocbrowserdialog.c:534 ../libgimpwidgets/gimpbrowser.c:114
+#: ../libgimp/gimpprocbrowserdialog.c:385
+#: ../libgimp/gimpprocbrowserdialog.c:536
+#: ../libgimpwidgets/gimpbrowser.c:130
 msgid "No matches"
 msgstr "合致するものがありません"
 
-#: ../libgimp/gimpprocbrowserdialog.c:386
+#: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Search term invalid or incomplete"
 msgstr "検索する語句が不適切または不完全です"
 
-#: ../libgimp/gimpprocbrowserdialog.c:395
+#: ../libgimp/gimpprocbrowserdialog.c:397
 msgid "Searching"
 msgstr "検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:406
+#: ../libgimp/gimpprocbrowserdialog.c:408
 msgid "Searching by name"
 msgstr "名前で検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:427
+#: ../libgimp/gimpprocbrowserdialog.c:429
 msgid "Searching by description"
 msgstr "説明で検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:434
+#: ../libgimp/gimpprocbrowserdialog.c:436
 msgid "Searching by help"
 msgstr "ヘルプで検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:441
+#: ../libgimp/gimpprocbrowserdialog.c:443
 msgid "Searching by author"
 msgstr "作者で検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:448
+#: ../libgimp/gimpprocbrowserdialog.c:450
 msgid "Searching by copyright"
 msgstr "著作権者で検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:455
+#: ../libgimp/gimpprocbrowserdialog.c:457
 msgid "Searching by date"
 msgstr "日付で検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:462
+#: ../libgimp/gimpprocbrowserdialog.c:464
 msgid "Searching by type"
 msgstr "型で検索中"
 
-#: ../libgimp/gimpprocbrowserdialog.c:472
+#: ../libgimp/gimpprocbrowserdialog.c:474
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d 個のプロシージャ"
 msgstr[1] "%d 個のプロシージャ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:481
+#: ../libgimp/gimpprocbrowserdialog.c:483
 msgid "No matches for your query"
 msgstr "条件に合致するものがありません"
 
-#: ../libgimp/gimpprocbrowserdialog.c:485
+#: ../libgimp/gimpprocbrowserdialog.c:487
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d 個のプロシージャが合致しました"
 msgstr[1] "%d 個のプロシージャが合致しました"
 
-#: ../libgimp/gimpprocview.c:163
+#: ../libgimp/gimpprocview.c:162
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: ../libgimp/gimpprocview.c:176
+#: ../libgimp/gimpprocview.c:175
 msgid "Return Values"
 msgstr "返り値"
 
-#: ../libgimp/gimpprocview.c:189
+#: ../libgimp/gimpprocview.c:188
 msgid "Additional Information"
 msgstr "追加情報"
 
-#: ../libgimp/gimpprocview.c:229
+#: ../libgimp/gimpprocview.c:228
 msgid "Author:"
 msgstr "作者："
 
-#: ../libgimp/gimpprocview.c:241
+#: ../libgimp/gimpprocview.c:240
 msgid "Date:"
 msgstr "日付："
 
-#: ../libgimp/gimpprocview.c:253
+#: ../libgimp/gimpprocview.c:252
 msgid "Copyright:"
 msgstr "著作権者："
 
-#: ../libgimp/gimpunitcache.c:57
+#: ../libgimp/gimpunitcache.c:56
 msgid "percent"
 msgstr "パーセント"
 
@@ -480,7 +494,7 @@ msgstr "インデックス"
 #: ../libgimpbase/gimpbaseenums.c:172
 msgctxt "channel-type"
 msgid "Alpha"
-msgstr "透明度"
+msgstr "アルファ"
 
 #: ../libgimpbase/gimpbaseenums.c:202
 msgctxt "check-size"
@@ -497,37 +511,34 @@ msgctxt "check-size"
 msgid "Large"
 msgstr "大"
 
-# 2008-12-30: これまでは「明るい市松模様」
-# 若年層で「市松模様」を理解できない場合があると考え「チェック柄」を採用した
 #: ../libgimpbase/gimpbaseenums.c:237
 msgctxt "check-type"
 msgid "Light checks"
-msgstr "チェック（明るい）"
+msgstr "市松模様（明るい）"
 
-# 2008-12-30: これまでは「明るい市松模様」
-# 若年層で「市松模様」を理解できない場合があると考え「チェック柄」を採用した
 #: ../libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Mid-tone checks"
-msgstr "チェック（中間調）"
+msgstr "市松模様（中間調）"
 
-# 2008-12-30: これまでは「明るい市松模様」
-# 若年層で「市松模様」を理解できない場合があると考え「チェック柄」を採用した
 #: ../libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "Dark checks"
-msgstr "チェック（暗い）"
+msgstr "市松模様（暗い）"
 
+# 「白色のみ」から変更
 #: ../libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "White only"
 msgstr "無地（白）"
 
+# 「グレーのみ」から変更
 #: ../libgimpbase/gimpbaseenums.c:241
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "無地（グレー）"
 
+# 「黒色のみ」から変更
 #: ../libgimpbase/gimpbaseenums.c:242
 msgctxt "check-type"
 msgid "Black only"
@@ -651,7 +662,7 @@ msgstr "実線"
 #: ../libgimpbase/gimpbaseenums.c:476
 msgctxt "icon-type"
 msgid "Stock ID"
-msgstr "Stock ID"
+msgstr "ストック ID"
 
 #: ../libgimpbase/gimpbaseenums.c:477
 msgctxt "icon-type"
@@ -843,7 +854,7 @@ msgstr "GIMP 拡張"
 #: ../libgimpbase/gimpbaseenums.c:938
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
-msgstr "一時プロシージャ"
+msgstr "テンポラリプロシージャ"
 
 #: ../libgimpbase/gimpbaseenums.c:1105
 msgctxt "text-direction"
@@ -899,78 +910,65 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "均等割付"
 
-#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
-#: ../modules/display-filter-lcms.c:183
+#: ../libgimpbase/gimputils.c:169
+#: ../libgimpbase/gimputils.c:174
+#: ../modules/color-selector-cmyk-lcms.c:406
+#: ../modules/color-selector-cmyk-lcms.c:412
+#: ../modules/display-filter-lcms.c:182
 msgid "(invalid UTF-8 string)"
 msgstr "(不正な UTF-8 文字列)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:41
 msgid "Mode of operation for color management."
-msgstr "色管理用の操作モード"
+msgstr "画面表示にあたり、どのようなカラーマネジメント操作を行うか選択します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:43
 msgid "The color profile of your (primary) monitor."
-msgstr "( 1 台目の) モニタのカラープロファイルを指定します"
+msgstr "（メイン）モニタのプロファイルを指定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:46
-msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
-"windowing system.  The configured monitor profile is then only used as a "
-"fallback."
-msgstr ""
-"この設定がオンの場合は、ウィンドウシステムのディスプレイカラープロファイルの"
-"使用を優先し、それが使えない場合に指定のモニタプロファイルを使用します。"
+#: ../libgimpconfig/gimpcolorconfig.c:45
+msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
+msgstr "この設定がオンの場合は、ウィンドウシステムのディスプレイカラープロファイルの使用を優先し、それが使えない場合に指定のモニタプロファイルを使用します。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:49
 msgid "The default RGB working space color profile."
-msgstr "既定のRGBカラースペースプロファイルを指定します"
+msgstr "RGB 作業用スペースのプロファイルを指定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:51
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "RGBとCMYKの変換に使用するカラープロファイルを指定します"
+msgstr "RGB 作業用スペースと CMYK の変換に使用するプロファイルを指定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:53
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr ""
-"印刷版のシミュレート(ソフトプルーフ)用に使用するカラープロファイルを指定しま"
-"す"
+msgstr "印刷シミュレーション（ソフトプルーフ）に使用するプロファイルを指定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "Sets how colors are mapped for your display."
-msgstr "このディスプレイ用の色の割り当て方法を設定します"
+msgstr "RGB 作業用スペースからモニタのカラースペースへの変換をプロファイルを用いてどのように処理するか設定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
-msgid ""
-"Sets how colors are converted from RGB working space to the print simulation "
-"device."
-msgstr ""
-"RGBカラースペースから印刷シミュレーションデバイスへの色変換方法を設定します。"
+#: ../libgimpconfig/gimpcolorconfig.c:57
+msgid "Sets how colors are converted from RGB working space to the print simulation device."
+msgstr "RGB 作業用スペースから印刷デバイスのカラースペースへの変換をプロファイルを用いてどのように処理するか設定します"
 
-#: ../libgimpconfig/gimpcolorconfig.c:61
-msgid ""
-"When enabled, the print simulation will mark colors which can not be "
-"represented in the target color space."
-msgstr ""
-"この設定がオンのときは、印刷シミュレーションで表現できない色領域を指定色で"
-"マーキングします。"
+#: ../libgimpconfig/gimpcolorconfig.c:60
+msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
+msgstr "この設定がオンのときは、印刷シミュレーション（ソフトプルーフ）で再現できない色域を指定色でマーキングします"
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libgimpconfig/gimpcolorconfig.c:63
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
-"印刷で表現不可能な色領域はこの色でマーキングされます。\n"
+"再現不可能な色域はこの色でマーキングされます。\n"
 "クリックで、他のマーキング色に変更できます。"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgctxt "color-management-mode"
 msgid "No color management"
-msgstr "カラー・マネジメントしない"
+msgstr "カラーマネジメントなし"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
 msgctxt "color-management-mode"
 msgid "Color managed display"
-msgstr "ディスプレイ"
+msgstr "モニタ表示のカラーマネジメント"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
 msgctxt "color-management-mode"
@@ -980,12 +978,12 @@ msgstr "印刷シミュレーション"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
-msgstr "鮮かさ重視"
+msgstr "知覚的"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
-msgstr "相対色距離"
+msgstr "相対的な色域を維持"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgctxt "color-rendering-intent"
@@ -995,443 +993,438 @@ msgstr "彩度"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:60
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
-msgstr "絶対色距離"
+msgstr "絶対的な色域を維持"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:97
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "トークン %s の値が正しい UTF-8 文字列ではありません"
+msgstr "トークン %s の値は適切な UTF-8 文字列ではありません"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:436
+#: ../libgimpconfig/gimpconfig-deserialize.c:435
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "トークン %s はブール値で 'yes' か 'no' のはずですが、 '%s' でした"
+msgstr "トークン %s はブール値 ('yes' または 'no') が要求されるにもかかわらず、'%s' でした"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:510
+#: ../libgimpconfig/gimpconfig-deserialize.c:509
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "トークン %2$s の値 '%1$s' が不正です"
+msgstr "トークン %2$s の値 '%1$s' は不適切です"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:525
+#: ../libgimpconfig/gimpconfig-deserialize.c:524
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "トークン %2$s の値 '%1$ld' が不正です"
+msgstr "トークン %2$s の値 '%1$ld' は不適切です"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:594
+#: ../libgimpconfig/gimpconfig-deserialize.c:593
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "トークン '%s' の解析中： %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:474
-#: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
-#: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:656
+#: ../libgimpconfig/gimpconfig-iface.c:473
+#: ../libgimpconfig/gimpconfig-iface.c:486
+#: ../libgimpconfig/gimpscanner.c:497
+#: ../libgimpconfig/gimpscanner.c:578
+#: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "致命的な解析エラー"
 
-#: ../libgimpconfig/gimpconfig-path.c:379
+#: ../libgimpconfig/gimpconfig-path.c:378
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s} を展開できません"
 
-#: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:694
+#: ../libgimpconfig/gimpconfigwriter.c:77
+#: ../libgimpconfig/gimpconfigwriter.c:718
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr ""
-"'%s' に書き込み中にエラーが発生しました\n"
-"（詳細または原因は次のとおりです）\n"
-"  %s"
+"'%s' に書き込み中にエラーが発生しました。\n"
+"\n"
+"%s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:136
+#: ../libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr ""
-"'%s' 用の一時ファイル作成に失敗しました\n"
-"（詳細または原因は次のとおりです）\n"
-"  %s"
+"'%s' 用の一時ファイル作成に失敗しました。\n"
+"%s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:149
+#: ../libgimpconfig/gimpconfigwriter.c:148
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr ""
-"'%s' を開いて書き込むことができません\n"
-"（詳細または原因は次のとおりです）\n"
-"  %s"
+"'%s' を開いて書き込むことができません。\n"
+"\n"
+"%s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"'%s' 用一時ファイルへの書き込み中にエラーが発生しました\n"
-"（詳細または原因は次のとおりです）\n"
-"  %s\n"
+"'%s' 用一時ファイルへの書き込み中にエラーが発生しました。\n"
 "\n"
-"元ファイルは変更されていません"
+"%s\n"
+"\n"
+"元ファイルは変更されていません。"
 
-#: ../libgimpconfig/gimpconfigwriter.c:683
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"'%s' 用一時ファイルへの書き込み中にエラーが発生しました\n"
-"（詳細または原因は次のとおりです）\n"
-"  %s\n"
+"'%s' 用一時ファイルへの書き込み中にエラーが発生しました。\n"
 "\n"
-"ファイルは作成されませんでした"
+"%s\n"
+"\n"
+"ファイルは作成されませんでした。"
 
-#: ../libgimpconfig/gimpconfigwriter.c:712
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr ""
-"%s を作成できませんでした\n"
-"（詳細または原因は次のとおりです）\n"
-"  %s"
+"%s を作成できません。\n"
+"\n"
+"%s"
 
-#: ../libgimpconfig/gimpscanner.c:255
+#: ../libgimpconfig/gimpscanner.c:254
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "不正な UTF-8 文字列"
 
-#: ../libgimpconfig/gimpscanner.c:606
+#: ../libgimpconfig/gimpscanner.c:605
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr ""
-"'%s'（%d 行目のデータ）を解析中にエラーが発生しました\n"
-"（詳細または原因は次のとおりです）\n"
-"  %s"
+"'%s'（%d 行目のデータ）を解析中にエラーが発生しました。\n"
+"\n"
+"%s"
 
-#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
-#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
-#: ../libgimpmodule/gimpmodule.c:433
+#: ../libgimpmodule/gimpmodule.c:152
+#: ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279
+#: ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:432
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
-"モジュール '%s' 読み込み中にエラーが発生しました\n"
-"（詳細または原因はつぎのとおりです）\n"
-"  %s"
+"モジュール '%s' 読み込み中にエラーが発生しました。\n"
+"\n"
+"%s"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:374
 msgid "Module error"
 msgstr "モジュールエラー"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Loaded"
 msgstr "読み込み済み"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Load failed"
 msgstr "読み込み失敗"
 
-#: ../libgimpmodule/gimpmodule.c:378
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Not loaded"
 msgstr "未読み込み"
 
-#: ../libgimpthumb/gimpthumb-utils.c:123
+#: ../libgimpthumb/gimpthumb-utils.c:122
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "ホームディレクトリが特定できませんでした。\n"
-"サムネイルは一時ファイル用のディレクトリ (%s) に置かれます。"
+"サムネイルは一時フォルダ (%s) に置かれます。"
 
-#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
+#: ../libgimpthumb/gimpthumb-utils.c:246
+#: ../libgimpthumb/gimpthumb-utils.c:314
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "サムネイルフォルダ '%s' 作成失敗。"
+msgstr "サムネイルフォルダ '%s' 作成に失敗しました"
 
-#: ../libgimpthumb/gimpthumbnail.c:498
+#: ../libgimpthumb/gimpthumbnail.c:497
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "サムネイルにタグ (Thumb::URI URI) が含まれていません"
 
-#: ../libgimpthumb/gimpthumbnail.c:898
+#: ../libgimpthumb/gimpthumbnail.c:893
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""
 "%s のサムネイル生成に失敗しました\n"
-"（詳細または原因はつぎのとおりです）\n"
-"  %s"
+"その詳細または原因はつぎのとおりです\n"
+"\n"
+"%s"
 
-#: ../libgimpwidgets/gimpbrowser.c:98
+#: ../libgimpwidgets/gimpbrowser.c:103
 msgid "_Search:"
 msgstr "検索(_S): "
 
-#: ../libgimpwidgets/gimpcolorbutton.c:118
+#: ../libgimpwidgets/gimpcolorbutton.c:117
 msgid "_Foreground Color"
 msgstr "描画色(_F)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:122
+#: ../libgimpwidgets/gimpcolorbutton.c:121
 msgid "_Background Color"
 msgstr "背景色(_B)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:126
+#: ../libgimpwidgets/gimpcolorbutton.c:125
 msgid "Blac_k"
 msgstr "黒(_K)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:130
+#: ../libgimpwidgets/gimpcolorbutton.c:129
 msgid "_White"
 msgstr "白(_W)"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:144
+#: ../libgimpwidgets/gimpcolorprofilestore.c:143
 msgid "Select color profile from disk..."
 msgstr "カラープロファイルをディスクから選択..."
 
 # カラープロファイルの選択種類
-#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+#: ../libgimpwidgets/gimpcolorprofilestore.c:279
 msgctxt "profile"
 msgid "None"
-msgstr "指定しない"
+msgstr "使用しない"
 
-#: ../libgimpwidgets/gimpcolorscales.c:98
+#: ../libgimpwidgets/gimpcolorscales.c:97
 msgid "Scales"
 msgstr "スケール"
 
-#: ../libgimpwidgets/gimpcolorselection.c:210
+#: ../libgimpwidgets/gimpcolorselection.c:209
 msgid "Current:"
 msgstr "現在: "
 
-#: ../libgimpwidgets/gimpcolorselection.c:232
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr "以前: "
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
-msgid ""
-"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
-"CSS color names."
-msgstr ""
-"HTMLとCSSで使われる色の 16 進表記を入力します。CSSで使われる色名の入力も可能"
-"です"
+#: ../libgimpwidgets/gimpcolorselection.c:285
+msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
+msgstr "HTMLとCSSで使われる色の 16 進表記を入力します。CSSで使われる色名の入力も可能です"
 
-#: ../libgimpwidgets/gimpcolorselection.c:292
+#: ../libgimpwidgets/gimpcolorselection.c:291
 msgid "HTML _notation:"
 msgstr "HTML表記(_N)"
 
-#: ../libgimpwidgets/gimpfileentry.c:174
+#: ../libgimpwidgets/gimpfileentry.c:173
 msgid "Open a file selector to browse your folders"
 msgstr "ファイルセレクタでフォルダを閲覧します"
 
-#: ../libgimpwidgets/gimpfileentry.c:175
+#: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your files"
 msgstr "ファイルセレクタでファイルを閲覧します"
 
-#: ../libgimpwidgets/gimpfileentry.c:335
+#: ../libgimpwidgets/gimpfileentry.c:334
 msgid "Select Folder"
 msgstr "フォルダ選択"
 
-#: ../libgimpwidgets/gimpfileentry.c:337
+#: ../libgimpwidgets/gimpfileentry.c:336
 msgid "Select File"
 msgstr "ファイル選択"
 
-# 日本語版ヘルプが未整備のため、敢えて訳していない
-#: ../libgimpwidgets/gimphelpui.c:420
+# 日本語版ヘルプが未整備のため、「(英語)」を追記
+# (2009-03-28 NISHIBORI kiyotaka)
+#: ../libgimpwidgets/gimphelpui.c:419
 msgid "Press F1 for more help"
-msgstr "Press F1 for more help"
+msgstr "F1キーでヘルプ表示(英語) "
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Kilobytes"
 msgstr "キロバイト"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Megabytes"
 msgstr "メガバイト"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:206
+#: ../libgimpwidgets/gimpmemsizeentry.c:207
 msgid "Gigabytes"
 msgstr "ギガバイト"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1166
+#: ../libgimpwidgets/gimppageselector.c:268
+#: ../libgimpwidgets/gimppageselector.c:1165
 msgid "Nothing selected"
 msgstr "何も選択されていません"
 
-#: ../libgimpwidgets/gimppageselector.c:287
+#: ../libgimpwidgets/gimppageselector.c:286
 msgid "Select _All"
 msgstr "すべて選択(_A)"
 
-#: ../libgimpwidgets/gimppageselector.c:307
+#: ../libgimpwidgets/gimppageselector.c:306
 msgid "Select _range:"
 msgstr "範囲の選択(_R): "
 
-#: ../libgimpwidgets/gimppageselector.c:319
+#: ../libgimpwidgets/gimppageselector.c:318
 msgid "Open _pages as"
 msgstr ""
 "ページを次の\n"
 "ように展開する(_P)"
 
-#: ../libgimpwidgets/gimppageselector.c:420
+#: ../libgimpwidgets/gimppageselector.c:419
 msgid "Page 000"
 msgstr "ページ 000"
 
-#: ../libgimpwidgets/gimppageselector.c:508
-#: ../libgimpwidgets/gimppageselector.c:744
+#: ../libgimpwidgets/gimppageselector.c:507
+#: ../libgimpwidgets/gimppageselector.c:743
 #, c-format
 msgid "Page %d"
 msgstr "ページ %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1171
+#: ../libgimpwidgets/gimppageselector.c:1170
 msgid "One page selected"
 msgstr "1 ページを選択"
 
-#: ../libgimpwidgets/gimppageselector.c:1178
-#: ../libgimpwidgets/gimppageselector.c:1182
+#: ../libgimpwidgets/gimppageselector.c:1177
+#: ../libgimpwidgets/gimppageselector.c:1181
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d ページを選択"
 msgstr[1] "複数ページ(%dページ)を選択"
 
-#: ../libgimpwidgets/gimppatheditor.c:214
+#: ../libgimpwidgets/gimppatheditor.c:213
 msgid "Writable"
 msgstr "書き込み可能"
 
-#: ../libgimpwidgets/gimppatheditor.c:223
+#: ../libgimpwidgets/gimppatheditor.c:222
 msgid "Folder"
 msgstr "フォルダ"
 
-#: ../libgimpwidgets/gimppickbutton.c:107
-msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select "
-"that color."
-msgstr ""
-"eyedropperをクリックし、スクリーン上のどこかをクリックしてその場所の色を選択"
-"します"
+# ツールチップ
+# スポイト・ツールとは別物なので、「マウスポインタでスクリーン上をクリック…」とした。
+# (2009-06-06 NISHIBORI Kiyotaka)
+#: ../libgimpwidgets/gimppickbutton.c:106
+msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
+msgstr "ここをクリックするとマウスポインタがスポイトの形に変化します。マウスポインタでスクリーン上をクリックし、その場所の色を選択します。"
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:277
+#: ../libgimpwidgets/gimppreview.c:276
 msgid "_Preview"
 msgstr "プレビュー(_P)"
 
-# 2008-12-30: これまでは「明るい市松模様」
-# 若年層で「市松模様」を理解できない場合があると考え「チェック柄」を採用した
-#: ../libgimpwidgets/gimppreviewarea.c:94
+#: ../libgimpwidgets/gimppreviewarea.c:93
 msgid "Check Size"
-msgstr "チェック柄のサイズ"
+msgstr "市松模様のサイズ"
 
-# 2008-12-30: これまでは「明るい市松模様」
-# 若年層で「市松模様」を理解できない場合があると考え「チェック柄」を採用した
-#: ../libgimpwidgets/gimppreviewarea.c:101
+#: ../libgimpwidgets/gimppreviewarea.c:100
 msgid "Check Style"
-msgstr "チェック柄のスタイル"
+msgstr "市松模様のスタイル"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1860
+#: ../libgimpwidgets/gimppropwidgets.c:1859
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "この文字入力フィールドは %d 文字に制限されています。"
 msgstr[1] "この文字入力フィールドは %d 文字に制限されています。"
 
-#: ../libgimpwidgets/gimpstock.c:112
+#: ../libgimpwidgets/gimpstock.c:111
 msgid "Anchor"
 msgstr "固定"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:112
 msgid "C_enter"
 msgstr "中央(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "_Duplicate"
 msgstr "複製(_D)"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "_Edit"
 msgstr "編集(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "Linked"
 msgstr "リンク済み"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "Paste as New"
 msgstr "新規に貼り付け"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste Into"
 msgstr "選択範囲内にペースト"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "_Reset"
 msgstr "リセット(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "Visible"
 msgstr "可視"
 
-#: ../libgimpwidgets/gimpstock.c:156 ../libgimpwidgets/gimpstock.c:160
+#: ../libgimpwidgets/gimpstock.c:155
+#: ../libgimpwidgets/gimpstock.c:159
 msgid "_Stroke"
 msgstr "ストローク(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:172
+#: ../libgimpwidgets/gimpstock.c:171
 msgid "L_etter Spacing"
 msgstr "文字間隔(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libgimpwidgets/gimpstock.c:172
 msgid "L_ine Spacing"
 msgstr "行間隔(_I)"
 
-#: ../libgimpwidgets/gimpstock.c:189
+#: ../libgimpwidgets/gimpstock.c:188
 msgid "_Resize"
 msgstr "サイズ変更(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:190 ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:189
+#: ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "拡大縮小(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:295
 msgid "Cr_op"
 msgstr "切り抜き(_O)"
 
-#: ../libgimpwidgets/gimpstock.c:315
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "変換(_T)"
 
-#: ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "回転(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:321
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "剪断変形(_S)"
 
-#: ../libgimpwidgets/gimpunitmenu.c:266
+#: ../libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
-msgstr "詳細設定..."
+msgstr "その他..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:581
+#: ../libgimpwidgets/gimpunitmenu.c:580
 msgid "Unit Selection"
 msgstr "単位選択"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:628
 msgid "Unit"
 msgstr "単位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:633
+#: ../libgimpwidgets/gimpunitmenu.c:632
 msgid "Factor"
 msgstr "倍率"
 
-#: ../libgimpwidgets/gimpwidgets.c:511
-msgid ""
-"Use this value for random number generator seed - this allows you to repeat "
-"a given \"random\" operation"
-msgstr ""
-"この値を乱数の種として用います - そうすることで、特定の \"乱数\" 操作を行うこ"
-"とができます"
+#: ../libgimpwidgets/gimpwidgets.c:510
+msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "この値を乱数の種として用います - そうすることで、特定の \"乱数\" 操作を行うことができます"
 
-#: ../libgimpwidgets/gimpwidgets.c:515
+#: ../libgimpwidgets/gimpwidgets.c:514
 msgid "_New Seed"
 msgstr "新しい種(_N)"
 
-#: ../libgimpwidgets/gimpwidgets.c:528
+#: ../libgimpwidgets/gimpwidgets.c:527
 msgid "Seed random number generator with a generated random number"
 msgstr "生成された乱数で、乱数生成の種を取得します"
 
-#: ../libgimpwidgets/gimpwidgets.c:532
+#: ../libgimpwidgets/gimpwidgets.c:531
 msgid "_Randomize"
 msgstr "乱数化(_R)"
 
@@ -1533,610 +1526,596 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "縮小"
 
-#: ../modules/color-selector-cmyk-lcms.c:87
+#: ../modules/color-selector-cmyk-lcms.c:86
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYKカラーセレクター(カラープロファイル使用)"
 
-#: ../modules/color-selector-cmyk-lcms.c:150
-#: ../modules/color-selector-cmyk.c:102
+#: ../modules/color-selector-cmyk-lcms.c:149
+#: ../modules/color-selector-cmyk.c:101
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:169
-#: ../modules/color-selector-cmyk.c:125
+#: ../modules/color-selector-cmyk-lcms.c:168
+#: ../modules/color-selector-cmyk.c:124
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:171
-#: ../modules/color-selector-cmyk.c:127
+#: ../modules/color-selector-cmyk-lcms.c:170
+#: ../modules/color-selector-cmyk.c:126
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:173
-#: ../modules/color-selector-cmyk.c:129
+#: ../modules/color-selector-cmyk-lcms.c:172
+#: ../modules/color-selector-cmyk.c:128
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:175
-#: ../modules/color-selector-cmyk.c:131
+#: ../modules/color-selector-cmyk-lcms.c:174
+#: ../modules/color-selector-cmyk.c:130
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:179
-#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk-lcms.c:178
+#: ../modules/color-selector-cmyk.c:134
 msgid "Cyan"
 msgstr "シアン"
 
-#: ../modules/color-selector-cmyk-lcms.c:180
-#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk.c:135
 msgid "Magenta"
 msgstr "マゼンタ"
 
-#: ../modules/color-selector-cmyk-lcms.c:181
-#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk.c:136
 msgid "Yellow"
 msgstr "イエロー"
 
-#: ../modules/color-selector-cmyk-lcms.c:182
-#: ../modules/color-selector-cmyk.c:138
+#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk.c:137
 msgid "Black"
-msgstr "黒"
+msgstr "ブラック"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
+#: ../modules/color-selector-cmyk-lcms.c:394
 msgid "Profile: (none)"
-msgstr "プロファイルを使用しない"
+msgstr "プロファイル: （使用していません）"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:415
 #, c-format
 msgid "Profile: %s"
-msgstr "%s"
+msgstr "プロファイル: %s"
 
-#: ../modules/color-selector-cmyk.c:71
+#: ../modules/color-selector-cmyk.c:70
 msgid "CMYK color selector"
-msgstr "CMYK形式の色選択"
+msgstr "CMYK カラーセレクター"
 
-#: ../modules/color-selector-cmyk.c:172
+#: ../modules/color-selector-cmyk.c:171
 msgid "Black _pullout:"
-msgstr "黒の折込(_P): "
+msgstr "黒の割合(_P): "
 
-#: ../modules/color-selector-cmyk.c:189
+#: ../modules/color-selector-cmyk.c:188
 msgid "The percentage of black to pull out of the colored inks."
-msgstr "黒のパーセンテージを着色の折込します"
+msgstr "有色インクを減量するために置き換える黒の割合"
 
-#: ../modules/color-selector-water.c:82
+#: ../modules/color-selector-water.c:81
 msgid "Watercolor style color selector"
 msgstr "水彩色形式の色選択"
 
-#: ../modules/color-selector-water.c:118
+#: ../modules/color-selector-water.c:117
 msgid "Watercolor"
 msgstr "水彩色"
 
-#: ../modules/color-selector-water.c:186
+#: ../modules/color-selector-water.c:185
 msgid "Pressure"
 msgstr "圧力"
 
-#: ../modules/color-selector-wheel.c:103
+#: ../modules/color-selector-wheel.c:74
 msgid "HSV color wheel"
 msgstr "HSV 色相環"
 
-#: ../modules/color-selector-wheel.c:134
+#: ../modules/color-selector-wheel.c:105
 msgid "Wheel"
-msgstr "三角形"
+msgstr "色相環"
 
-#: ../modules/controller-dx-dinput.c:156
+#: ../modules/controller-dx-dinput.c:155
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX の DirectInput イベントコントローラ"
 
-#: ../modules/controller-dx-dinput.c:196
-#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
+#: ../modules/controller-dx-dinput.c:195
+#: ../modules/controller-linux-input.c:217
+#: ../modules/controller-midi.c:211
 msgid "Device:"
 msgstr "デバイス: "
 
-#: ../modules/controller-dx-dinput.c:197
+#: ../modules/controller-dx-dinput.c:196
 msgid "The device to read DirectInput events from."
 msgstr "DirectInput イベントを取得するデバイスを指定します"
 
-#: ../modules/controller-dx-dinput.c:206
+#: ../modules/controller-dx-dinput.c:205
 msgid "DirectX DirectInput"
 msgstr "DirectX の DirectInput イベント"
 
-#: ../modules/controller-dx-dinput.c:420
+#: ../modules/controller-dx-dinput.c:419
 #, c-format
 msgid "Button %d"
 msgstr "ボタン %d"
 
-#: ../modules/controller-dx-dinput.c:423
+#: ../modules/controller-dx-dinput.c:422
 #, c-format
 msgid "Button %d Press"
 msgstr "ボタン %d を押す"
 
-#: ../modules/controller-dx-dinput.c:426
+#: ../modules/controller-dx-dinput.c:425
 #, c-format
 msgid "Button %d Release"
 msgstr "ボタン %d を放す"
 
-#: ../modules/controller-dx-dinput.c:443
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-linux-input.c:89
 msgid "X Move Left"
 msgstr "X を左に動かす"
 
-#: ../modules/controller-dx-dinput.c:446
-#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-linux-input.c:90
 msgid "X Move Right"
 msgstr "X を右に動かす"
 
-#: ../modules/controller-dx-dinput.c:452
+#: ../modules/controller-dx-dinput.c:451
 msgid "Y Move Away"
 msgstr "Y を向こうに動かす"
 
-#: ../modules/controller-dx-dinput.c:455
+#: ../modules/controller-dx-dinput.c:454
 msgid "Y Move Near"
 msgstr "Y を手前に動かす"
 
-#: ../modules/controller-dx-dinput.c:461
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-linux-input.c:93
 msgid "Z Move Up"
 msgstr "Z を上に動かす"
 
-#: ../modules/controller-dx-dinput.c:464
-#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-linux-input.c:94
 msgid "Z Move Down"
 msgstr "Z を下に動かす"
 
-#: ../modules/controller-dx-dinput.c:470
+#: ../modules/controller-dx-dinput.c:469
 msgid "X Axis Tilt Away"
 msgstr "X軸を向こうに傾ける"
 
-#: ../modules/controller-dx-dinput.c:473
+#: ../modules/controller-dx-dinput.c:472
 msgid "X Axis Tilt Near"
 msgstr "X軸を手前に傾ける"
 
-#: ../modules/controller-dx-dinput.c:479
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
 msgstr "Y軸を右に傾ける"
 
-#: ../modules/controller-dx-dinput.c:482
-#: ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
 msgstr "Y軸を左に傾ける"
 
-#: ../modules/controller-dx-dinput.c:488
-#: ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:100
 msgid "Z Axis Turn Left"
 msgstr "Z軸を左に傾ける"
 
-#: ../modules/controller-dx-dinput.c:491
-#: ../modules/controller-linux-input.c:102
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Right"
 msgstr "Z軸を右に傾ける"
 
-#: ../modules/controller-dx-dinput.c:502
+#: ../modules/controller-dx-dinput.c:501
 #, c-format
 msgid "Slider %d Increase"
 msgstr "スライダー %d を増加"
 
-#: ../modules/controller-dx-dinput.c:505
+#: ../modules/controller-dx-dinput.c:504
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "スライダー %d を減少"
 
-#: ../modules/controller-dx-dinput.c:515
+#: ../modules/controller-dx-dinput.c:514
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X ビュー"
 
-#: ../modules/controller-dx-dinput.c:518
+#: ../modules/controller-dx-dinput.c:517
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y ビュー"
 
-#: ../modules/controller-dx-dinput.c:521
+#: ../modules/controller-dx-dinput.c:520
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d リターン"
 
-#: ../modules/controller-dx-dinput.c:1084
+#: ../modules/controller-dx-dinput.c:1083
 msgid "DirectInput Events"
 msgstr "DirectInput イベント"
 
-#: ../modules/controller-dx-dinput.c:1095
-#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
+#: ../modules/controller-dx-dinput.c:1094
+#: ../modules/controller-linux-input.c:524
+#: ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "デバイスが設定されていません"
 
-#: ../modules/controller-dx-dinput.c:1120
-#: ../modules/controller-linux-input.c:588
+#: ../modules/controller-dx-dinput.c:1119
+#: ../modules/controller-linux-input.c:587
 msgid "Device not available"
 msgstr "このデバイスは利用できません"
 
-#: ../modules/controller-linux-input.c:58
+#: ../modules/controller-linux-input.c:57
 msgid "Button 0"
 msgstr "ボタン 0"
 
-#: ../modules/controller-linux-input.c:59
+#: ../modules/controller-linux-input.c:58
 msgid "Button 1"
 msgstr "ボタン 1"
 
-#: ../modules/controller-linux-input.c:60
+#: ../modules/controller-linux-input.c:59
 msgid "Button 2"
 msgstr "ボタン 2"
 
-#: ../modules/controller-linux-input.c:61
+#: ../modules/controller-linux-input.c:60
 msgid "Button 3"
 msgstr "ボタン 3"
 
-#: ../modules/controller-linux-input.c:62
+#: ../modules/controller-linux-input.c:61
 msgid "Button 4"
 msgstr "ボタン 4"
 
-#: ../modules/controller-linux-input.c:63
+#: ../modules/controller-linux-input.c:62
 msgid "Button 5"
 msgstr "ボタン 5"
 
-#: ../modules/controller-linux-input.c:64
+#: ../modules/controller-linux-input.c:63
 msgid "Button 6"
 msgstr "ボタン 6"
 
-#: ../modules/controller-linux-input.c:65
+#: ../modules/controller-linux-input.c:64
 msgid "Button 7"
 msgstr "ボタン 7"
 
-#: ../modules/controller-linux-input.c:66
+#: ../modules/controller-linux-input.c:65
 msgid "Button 8"
 msgstr "ボタン 8"
 
-#: ../modules/controller-linux-input.c:67
+#: ../modules/controller-linux-input.c:66
 msgid "Button 9"
 msgstr "ボタン 9"
 
-#: ../modules/controller-linux-input.c:68
+#: ../modules/controller-linux-input.c:67
 msgid "Button Mouse"
 msgstr "マウスボタン"
 
-#: ../modules/controller-linux-input.c:69
+#: ../modules/controller-linux-input.c:68
 msgid "Button Left"
 msgstr "左ボタン"
 
-#: ../modules/controller-linux-input.c:70
+#: ../modules/controller-linux-input.c:69
 msgid "Button Right"
 msgstr "右ボタン"
 
-#: ../modules/controller-linux-input.c:71
+#: ../modules/controller-linux-input.c:70
 msgid "Button Middle"
 msgstr "中央ボタン"
 
-#: ../modules/controller-linux-input.c:72
+#: ../modules/controller-linux-input.c:71
 msgid "Button Side"
 msgstr "サイドボタン"
 
-#: ../modules/controller-linux-input.c:73
+#: ../modules/controller-linux-input.c:72
 msgid "Button Extra"
 msgstr "エクストラボタン"
 
-#: ../modules/controller-linux-input.c:74
+#: ../modules/controller-linux-input.c:73
 msgid "Button Forward"
 msgstr "前ボタン"
 
-#: ../modules/controller-linux-input.c:75
+#: ../modules/controller-linux-input.c:74
 msgid "Button Back"
 msgstr "後退ボタン"
 
-#: ../modules/controller-linux-input.c:76
+#: ../modules/controller-linux-input.c:75
 msgid "Button Task"
 msgstr "タスクボタン"
 
-#: ../modules/controller-linux-input.c:78
+#: ../modules/controller-linux-input.c:77
 msgid "Button Wheel"
 msgstr "ホイールボタン"
 
-#: ../modules/controller-linux-input.c:81
+#: ../modules/controller-linux-input.c:80
 msgid "Button Gear Down"
 msgstr "ギアダウンボタン"
 
-#: ../modules/controller-linux-input.c:84
+#: ../modules/controller-linux-input.c:83
 msgid "Button Gear Up"
 msgstr "ギアアップボタン"
 
-#: ../modules/controller-linux-input.c:92
+#: ../modules/controller-linux-input.c:91
 msgid "Y Move Forward"
 msgstr "Y を前に動かす"
 
-#: ../modules/controller-linux-input.c:93
+#: ../modules/controller-linux-input.c:92
 msgid "Y Move Back"
 msgstr "Y を後に動かす"
 
-#: ../modules/controller-linux-input.c:97
+#: ../modules/controller-linux-input.c:96
 msgid "X Axis Tilt Forward"
 msgstr "X軸を前に傾ける"
 
-#: ../modules/controller-linux-input.c:98
+#: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Back"
 msgstr "X軸を後に傾ける"
 
-#: ../modules/controller-linux-input.c:104
+#: ../modules/controller-linux-input.c:103
 msgid "Horiz. Wheel Turn Back"
 msgstr "ホイールを後にターン"
 
-#: ../modules/controller-linux-input.c:105
+#: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Forward"
 msgstr "ホイールを前にターン"
 
-#: ../modules/controller-linux-input.c:106
+#: ../modules/controller-linux-input.c:105
 msgid "Dial Turn Left"
 msgstr "ダイヤルを左にターン"
 
-#: ../modules/controller-linux-input.c:107
+#: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Right"
 msgstr "ダイヤルを右にターン"
 
-#: ../modules/controller-linux-input.c:108
+#: ../modules/controller-linux-input.c:107
 msgid "Wheel Turn Left"
 msgstr "ホイールを左にターン"
 
-#: ../modules/controller-linux-input.c:109
+#: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Right"
 msgstr "ホイールを右にターン"
 
-#: ../modules/controller-linux-input.c:178
+#: ../modules/controller-linux-input.c:177
 msgid "Linux input event controller"
 msgstr "Linux Input イベントコントローラ"
 
-#: ../modules/controller-linux-input.c:219
+#: ../modules/controller-linux-input.c:218
 msgid "The name of the device to read Linux Input events from."
 msgstr "Linux Input イベントを取得するデバイス名を入力します"
 
-#: ../modules/controller-linux-input.c:230
+#: ../modules/controller-linux-input.c:229
 msgid "Linux Input"
 msgstr "Linux Input"
 
-#: ../modules/controller-linux-input.c:513
+#: ../modules/controller-linux-input.c:512
 msgid "Linux Input Events"
 msgstr "Linux Input イベント"
 
-#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
-#: ../modules/controller-midi.c:480
+#: ../modules/controller-linux-input.c:550
+#: ../modules/controller-midi.c:453
+#: ../modules/controller-midi.c:479
 #, c-format
 msgid "Reading from %s"
 msgstr "%s から読み込み"
 
-#: ../modules/controller-linux-input.c:569
-#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
-#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
+#: ../modules/controller-linux-input.c:568
+#: ../modules/controller-linux-input.c:622
+#: ../modules/controller-midi.c:435
+#: ../modules/controller-midi.c:496
+#: ../modules/controller-midi.c:567
 #, c-format
 msgid "Device not available: %s"
 msgstr ""
-"このデバイスは利用できません\n"
-"（詳細または原因は次のとおりです）\n"
-"  %s"
+"このデバイスは利用できません。\n"
+"\n"
+"%s"
 
-#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
+#: ../modules/controller-linux-input.c:631
+#: ../modules/controller-midi.c:576
 msgid "End of file"
 msgstr "EOF"
 
-#: ../modules/controller-midi.c:164
+#: ../modules/controller-midi.c:163
 msgid "MIDI event controller"
 msgstr "MIDI イベントコントローラ"
 
-#: ../modules/controller-midi.c:203
+#: ../modules/controller-midi.c:202
 msgid "The name of the device to read MIDI events from."
 msgstr "MIDI イベントを取得するデバイス名を指定します"
 
-#: ../modules/controller-midi.c:206
+#: ../modules/controller-midi.c:205
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "ALSA シーケンスを使うときは 'alsa' と入力してください"
 
-#: ../modules/controller-midi.c:221
+#: ../modules/controller-midi.c:220
 msgid "Channel:"
 msgstr "チャンネル: "
 
-#: ../modules/controller-midi.c:222
-msgid ""
-"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
-"channels."
-msgstr ""
-"イベントを取得する MIDI チャンネルを指定します。すべての MIDI チャンネルから"
-"イベントを取得するときは -1 を設定してください"
+#: ../modules/controller-midi.c:221
+msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
+msgstr "イベントを取得する MIDI チャンネルを指定します。すべての MIDI チャンネルからイベントを取得するときは -1 を設定してください"
 
-#: ../modules/controller-midi.c:226
+#: ../modules/controller-midi.c:225
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller-midi.c:355
+#: ../modules/controller-midi.c:354
 #, c-format
 msgid "Note %02x on"
 msgstr "Note %02x on"
 
-#: ../modules/controller-midi.c:358
+#: ../modules/controller-midi.c:357
 #, c-format
 msgid "Note %02x off"
 msgstr "Note %02x off"
 
-#: ../modules/controller-midi.c:361
+#: ../modules/controller-midi.c:360
 #, c-format
 msgid "Controller %03d"
 msgstr "コントローラ %03d"
 
-#: ../modules/controller-midi.c:408
+#: ../modules/controller-midi.c:407
 msgid "MIDI Events"
 msgstr "MIDI イベント"
 
-#: ../modules/controller-midi.c:426
+#: ../modules/controller-midi.c:425
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller-midi.c:428
+#: ../modules/controller-midi.c:427
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI 入力コントローラ"
 
-#: ../modules/display-filter-color-blind.c:67
+#: ../modules/display-filter-color-blind.c:66
 msgid "Protanopia (insensitivity to red)"
 msgstr "第一色覚障害 (赤に無感覚)"
 
-#: ../modules/display-filter-color-blind.c:69
+#: ../modules/display-filter-color-blind.c:68
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "第二色覚障害 (緑に無感覚)"
 
-#: ../modules/display-filter-color-blind.c:71
+#: ../modules/display-filter-color-blind.c:70
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "第三色覚障害 (青に無感覚)"
 
-#: ../modules/display-filter-color-blind.c:198
+#: ../modules/display-filter-color-blind.c:197
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "色覚障害シミュレーションフィルタ (Brettel-Vienot-Mollon アルゴリズム)"
 
-#: ../modules/display-filter-color-blind.c:261
+#: ../modules/display-filter-color-blind.c:260
 msgid "Color Deficient Vision"
 msgstr "色覚障害の視覚"
 
-#: ../modules/display-filter-color-blind.c:483
+#: ../modules/display-filter-color-blind.c:482
 msgid "Color _deficiency type:"
 msgstr "色覚障害のタイプ(_D): "
 
-#: ../modules/display-filter-gamma.c:90
+#: ../modules/display-filter-gamma.c:89
 msgid "Gamma color display filter"
 msgstr "ガンマ値 色表示フィルタ"
 
-#: ../modules/display-filter-gamma.c:129
+#: ../modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "ガンマ値"
 
-#: ../modules/display-filter-gamma.c:232
+#: ../modules/display-filter-gamma.c:231
 msgid "_Gamma:"
 msgstr "ガンマ値(_G): "
 
-#: ../modules/display-filter-high-contrast.c:90
+#: ../modules/display-filter-high-contrast.c:89
 msgid "High Contrast color display filter"
 msgstr "ハイコントラスト カラー表示フィルタ"
 
-#: ../modules/display-filter-high-contrast.c:129
+#: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "コントラスト"
 
-#: ../modules/display-filter-high-contrast.c:232
+#: ../modules/display-filter-high-contrast.c:231
 msgid "Contrast c_ycles:"
 msgstr "コントラストサイクル(_Y): "
 
-#: ../modules/display-filter-lcms.c:102
+#: ../modules/display-filter-lcms.c:101
 msgid "Color management display filter using ICC color profiles"
-msgstr "ICCカラープロファイルを用いる色管理ディスプレイフィルタ"
+msgstr "ICCカラープロファイルを用いたカラーマネジメント・ディスプレイフィルタ"
 
-#: ../modules/display-filter-lcms.c:134
+#: ../modules/display-filter-lcms.c:133
 msgid "Color Management"
-msgstr "色管理"
+msgstr "カラーマネジメント"
 
-#: ../modules/display-filter-lcms.c:191
+#: ../modules/display-filter-lcms.c:190
 msgid "None"
 msgstr "なし"
 
-#: ../modules/display-filter-lcms.c:212
-msgid ""
-"This filter takes its configuration from the Color Management section in the "
-"Preferences dialog."
-msgstr ""
-"このフィルタは、環境設定ダイアログの色管理の部の設定をもとに設定されます。"
+#: ../modules/display-filter-lcms.c:211
+msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
+msgstr "このフィルタの設定は、環境設定のカラーマネジメント・セクションのものが適用されます"
 
-#: ../modules/display-filter-lcms.c:226
+#: ../modules/display-filter-lcms.c:225
 msgid "Mode of operation:"
 msgstr "操作モード: "
 
-#: ../modules/display-filter-lcms.c:233
+# 環境設定 [カラーマネジメント] では
+# "RGB プロファイル" となっているため
+#: ../modules/display-filter-lcms.c:232
 msgid "Image profile:"
-msgstr "画像プロファイル: "
+msgstr "RGB プロファイル: "
 
-#: ../modules/display-filter-lcms.c:241
+#: ../modules/display-filter-lcms.c:240
 msgid "Monitor profile:"
 msgstr "モニタプロファイル: "
 
-#: ../modules/display-filter-lcms.c:249
+#: ../modules/display-filter-lcms.c:248
 msgid "Print simulation profile:"
-msgstr "印刷シミュレーションプロファイル: "
+msgstr "プリンタプロファイル: "
 
-#: ../modules/display-filter-proof.c:97
+#: ../modules/display-filter-proof.c:96
 msgid "Color proof filter using ICC color profile"
-msgstr "ICCカラープロファイルを用いる色合せ"
+msgstr "ICCカラープロファイルを用いた色校正"
 
-#: ../modules/display-filter-proof.c:145
+#: ../modules/display-filter-proof.c:144
 msgid "Color Proof"
-msgstr "色合せ"
+msgstr "色校正"
 
-#: ../modules/display-filter-proof.c:311
+#: ../modules/display-filter-proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "ICCカラープロファイルを選択"
 
-#: ../modules/display-filter-proof.c:338
+#: ../modules/display-filter-proof.c:337
 msgid "All files (*.*)"
 msgstr "すべてのファイル (*.*)"
 
-#: ../modules/display-filter-proof.c:343
+#: ../modules/display-filter-proof.c:342
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC カラープロファイル (*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:401
+#: ../modules/display-filter-proof.c:400
 msgid "_Profile:"
 msgstr "プロファイル(_P): "
 
-#: ../modules/display-filter-proof.c:407
+#: ../modules/display-filter-proof.c:406
 msgid "_Intent:"
-msgstr "方法(_I): "
+msgstr "レンダリングインテント(_I): "
 
-#: ../modules/display-filter-proof.c:412
+#: ../modules/display-filter-proof.c:411
 msgid "_Black Point Compensation"
-msgstr "黒の生成(_B)"
+msgstr "黒点を補正(_B)"
 
 #~ msgid "gradient|Linear"
 #~ msgstr "線形"
-
 #~ msgid "interpolation|None"
 #~ msgstr "補間しない"
-
 #~ msgid "interpolation|Linear"
 #~ msgstr "線形"
-
 #~ msgid "intent|Saturation"
 #~ msgstr "彩度"
-
 #~ msgid "Painter-style triangle color selector"
 #~ msgstr "Painter 式の色選択"
-
 #~ msgid "Triangle"
 #~ msgstr "三角形"
-
 #~ msgid "profile|None"
 #~ msgstr "カラープロファイルを指定しない"
-
 #~ msgid "%d Byte"
 #~ msgid_plural "%d Bytes"
 #~ msgstr[0] "%d バイト"
 #~ msgstr[1] "%d バイト"
-
 #~ msgid "%.2f KB"
 #~ msgstr "%.2f KB"
-
 #~ msgid "%.1f KB"
 #~ msgstr "%.1f KB"
-
 #~ msgid "%d KB"
 #~ msgstr "%d KB"
-
 #~ msgid "%.2f MB"
 #~ msgstr "%.2f MB"
-
 #~ msgid "%.1f MB"
 #~ msgstr "%.1f MB"
-
 #~ msgid "%d MB"
 #~ msgstr "%d MB"
-
 #~ msgid "%.2f GB"
 #~ msgstr "%.2f GB"
-
 #~ msgid "%.1f GB"
 #~ msgstr "%.1f GB"
-
 #~ msgid "%d GB"
 #~ msgstr "%d GB"
+

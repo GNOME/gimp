@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-04 19:55+0900\n"
-"PO-Revision-Date: 2008-12-30 23:26+0900\n"
+"POT-Creation-Date: 2009-06-20 21:59+0900\n"
+"PO-Revision-Date: 2009-06-20 12:28+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -21,50 +21,50 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: 465,278,170,-1,-1,-1,-1,-1,-1,-1\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:131
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Script-Fu コンソール"
 
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Welcome to TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Interactive Scheme Development"
 
-#: ../plug-ins/script-fu/script-fu-console.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:294
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu コンソールの出力を保存"
 
-#: ../plug-ins/script-fu/script-fu-console.c:341
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "ファイル '%s' を書き込み用で開けませんでした： %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu プロシージャブラウザ"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:63
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu は２つのスクリプトを同時に実行できません。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "すでに \"%s\" スクリプトを実行中です。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:224
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -72,152 +72,152 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:288
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "色の選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
 msgstr "ファイルの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:448
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
 msgstr "フォルダの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
 msgstr "フォントの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
 msgstr "パレットの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:478
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
 msgstr "パターンの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:487
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "グラデーションの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:496
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
-msgstr "Script-Fu ブラシ選択 (Script-Fu)"
+msgstr "ブラシの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
+#: ../plug-ins/script-fu/script-fu-interface.c:823
 #, c-format
 msgid "Error while executing %s:"
 msgstr ""
 "'%s' 実行中にエラーが発生しました。\n"
 "（詳細または原因は次のとおりです。）"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:150
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "'script-fu-register' を呼ぶための引数が不足しています。"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:609
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
 #, c-format
 msgid "Error while loading %s:"
 msgstr ""
 "\"%s\"読込み中にエラーが発生しました。\n"
 "（詳細または原因は次のとおりです。）"
 
-#: ../plug-ins/script-fu/script-fu-server.c:713
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu サーバオプション"
 
-#: ../plug-ins/script-fu/script-fu-server.c:718
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "サーバスタート(_S)"
 
-#: ../plug-ins/script-fu/script-fu-server.c:746
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "サーバポート:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:752
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "サーバログファイル:"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "Script-Fu 開発のための対話的コンソールです"
 
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "_Console"
 msgstr "Script-Fu コンソール(_C)"
 
-#: ../plug-ins/script-fu/script-fu.c:141
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "Script-Fu をリモート操作するためのサーバを開始します"
 
-#: ../plug-ins/script-fu/script-fu.c:146
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "サーバスタート(_S)..."
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
-msgstr "GIMP 関連のウェブサイト"
+msgstr "GIMP 関連のウェブサイト(_G)"
 
-#: ../plug-ins/script-fu/script-fu.c:303
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "ユーザーマニュアル(_U)"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "Script-Fu(_S)"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "テスト(_T)"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
 msgstr "ボタン(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
 msgstr "ロゴ(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
 msgstr "パターン(_P)"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "Web ページテーマ(_W)"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "エイリアン発光(_A)"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "ベベルパターン(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "クラシック Gimp.Org(_C)"
 
 # これまでは「透明度をロゴに(_L)」
 # この表記では機能が連想しにくいと感じたため「ロゴ効果(_L)」に変更した
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "ロゴ効果(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "使用可能なスクリプトをディスクから再読み込みします"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
-msgstr "スクリプトリを再読み込み(_R)"
+msgstr "スクリプトを再読み込み(_R)"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -1398,7 +1398,7 @@ msgstr "消す"
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase every other row or column"
 msgstr ""
-"画像中のピクセルを 1 行おき(または 1 列おき）に消去して縞模様の効果を施しま"
+"画像中のピクセルを 1 行おき(または 1 列おき）に消去して縞模様の効果を与えま"
 "す。"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
@@ -1912,7 +1912,7 @@ msgstr "枠サイズ"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
-msgstr "手書き風..."
+msgstr "手書き風...(_2)"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
 msgid "Create an image filled with a topographic map pattern"
@@ -2143,8 +2143,8 @@ msgstr "遠近法(_P)..."
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
 msgstr ""
-"「プレデター」の赤外線スコープを透して見たような効果を選択範囲 (または不透明"
-"部分) に施します。"
+"選択範囲（または不透明部分）に「プレデター」の赤外線スコープを透して見たよう"
+"な効果を与えます。"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -3075,13 +3075,13 @@ msgstr "Xach 効果(_X)..."
 #~ msgstr "追加情報"
 
 #~ msgid "Internal GIMP procedure"
-#~ msgstr "内部 GIMP プロセジャ"
+#~ msgstr "内部 GIMP プロシージャ"
 
 #~ msgid "GIMP Plug-In"
 #~ msgstr "GIMP プラグイン"
 
 #~ msgid "Temporary Procedure"
-#~ msgstr "一時プロセジャ"
+#~ msgstr "一時プロシージャ"
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo"
 #~ msgstr "<Image>/Script-Fu/透明度をロゴに"
@@ -3106,7 +3106,7 @@ msgstr "Xach 効果(_X)..."
 
 #, fuzzy
 #~ msgid "<Image>/Script-Fu/Animators"
-#~ msgstr "<Image>/Script-Fu/動画/ブレンド(_B)..."
+#~ msgstr "<Image>/Script-Fu/動画/焼き付け(_B)..."
 
 #, fuzzy
 #~ msgid "<Image>/Script-Fu/Stencil Ops"
@@ -3712,7 +3712,7 @@ msgstr "Xach 効果(_X)..."
 #~ "At least one font you've choosen is invalid.\n"
 #~ "Please check your settings.\n"
 #~ msgstr ""
-#~ "少なくとも選択したフォント中に一つ以上\n"
+#~ "選択したフォント中に少なくとも一つ\n"
 #~ "不正なものがあります。設定を確認して下さい。\n"
 
 #~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
@@ -3738,7 +3738,7 @@ msgstr "Xach 効果(_X)..."
 
 #, fuzzy
 #~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Script-Fu ファイル選択"
+#~ msgstr "Script-Fu フォルダ選択"
 
 #~ msgid "NOT SET"
 #~ msgstr "未指定"
