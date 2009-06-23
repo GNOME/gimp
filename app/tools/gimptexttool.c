@@ -803,18 +803,14 @@ gimp_text_tool_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *display)
 {
-  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (tool);
-  GtkTextViewClass *tv_class  = g_type_class_ref (GTK_TYPE_TEXT_VIEW);
-  GtkBindingSet    *binding   = gtk_binding_set_by_class (tv_class);
-  GtkTextMark      *cursor_mark;
-  GtkTextMark      *selection_mark;
-  GtkTextIter       cursor;
-  GtkTextIter       selection;
-  GtkTextIter      *sel_start;
-  gint              x_pos  = -1;
-  gboolean          retval = TRUE;
-
-  g_type_class_unref (tv_class);
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+  GtkTextMark  *cursor_mark;
+  GtkTextMark  *selection_mark;
+  GtkTextIter   cursor;
+  GtkTextIter   selection;
+  GtkTextIter  *sel_start;
+  gint          x_pos  = -1;
+  gboolean      retval = TRUE;
 
   if (display != tool->display)
     return FALSE;
@@ -829,10 +825,8 @@ gimp_text_tool_key_press (GimpTool    *tool,
 
   gimp_text_tool_ensure_proxy (text_tool);
 
-  if (gtk_binding_set_activate (binding,
-                                kevent->keyval,
-                                kevent->state,
-                                GTK_OBJECT (text_tool->proxy_text_view)))
+  if (gtk_bindings_activate_event (GTK_OBJECT (text_tool->proxy_text_view),
+                                   kevent))
     {
       g_printerr ("binding handled event!\n");
       return TRUE;
@@ -1578,7 +1572,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
       }
       break;
 
-    case GTK_MOVEMENT_PAGES:
+    case GTK_MOVEMENT_PAGES: /* well... */
+    case GTK_MOVEMENT_BUFFER_ENDS:
       if (count < 0)
         {
           gtk_text_buffer_get_start_iter (text_tool->text_buffer, &cursor);
@@ -1586,6 +1581,18 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
       else if (count > 0)
         {
           gtk_text_buffer_get_end_iter (text_tool->text_buffer, &cursor);
+        }
+      break;
+
+    case GTK_MOVEMENT_PARAGRAPH_ENDS:
+      if (count < 0)
+        {
+          gtk_text_iter_set_line_offset (&cursor, 0);
+        }
+      else if (count > 0)
+        {
+          if (! gtk_text_iter_ends_line (&cursor))
+            gtk_text_iter_forward_to_line_end (&cursor);
         }
       break;
 
@@ -1626,7 +1633,33 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
                                 type)->value_name,
               count);
 
-  gimp_text_tool_delete_text (text_tool, FALSE);
+  switch (type)
+    {
+    case GTK_DELETE_CHARS:
+      gimp_text_tool_delete_text (text_tool, FALSE);
+      break;
+
+    case GTK_DELETE_WORD_ENDS:
+      break;
+
+    case GTK_DELETE_WORDS:
+      break;
+
+    case GTK_DELETE_DISPLAY_LINES:
+      break;
+
+    case GTK_DELETE_DISPLAY_LINE_ENDS:
+      break;
+
+    case GTK_DELETE_PARAGRAPH_ENDS:
+      break;
+
+    case GTK_DELETE_PARAGRAPHS:
+      break;
+
+    case GTK_DELETE_WHITESPACE:
+      break;
+    }
 }
 
 static void

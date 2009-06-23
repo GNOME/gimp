@@ -23,6 +23,9 @@
 
 #include "widgets-types.h"
 
+#include "display/display-types.h"
+#include "display/gimpcanvas.h"
+
 #include "gimpwindow.h"
 
 
@@ -59,7 +62,9 @@ gimp_window_key_press_event (GtkWidget   *widget,
    */
 
   /* text widgets get all key events first */
-  if (GTK_IS_EDITABLE (focus) || GTK_IS_TEXT_VIEW (focus))
+  if (GTK_IS_EDITABLE (focus)  ||
+      GTK_IS_TEXT_VIEW (focus) ||
+      GIMP_IS_CANVAS (focus))
     handled = gtk_window_propagate_key_event (window, event);
 
   /* invoke control/alt accelerators */

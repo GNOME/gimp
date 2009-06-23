@@ -558,6 +558,7 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
                                       "/dummy-menubar/image-popup",
                                       GTK_WIDGET (shell),
                                       NULL, NULL, NULL, NULL);
+            return TRUE;
           }
       }
       break;
@@ -570,6 +571,7 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
             kevent->keyval == GDK_ISO_Left_Tab)
           {
             gimp_dialog_factories_toggle ();
+            return TRUE;
           }
       }
       break;
@@ -578,7 +580,7 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
       break;
     }
 
-  return TRUE;
+  return FALSE;
 }
 
 gboolean
