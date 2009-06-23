@@ -382,23 +382,30 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
 #ifdef TEXT_TOOL_HACK
   /*  we need this crap because we need some object to call
-   *  gtk_binding_set_activate() activate with. It takes a GtkObject
-   *  instead of a GObject. So instead of adding the needed binding
-   *  signals to GimpTextTool, we abuse a GtkTextView, which has all
-   *  the needed signals anyway, and connect to its signals. Puke!
+   *  gtk_binding_set_activate() with. It takes a GtkObject instead of
+   *  a GObject. So instead of adding the needed binding signals to
+   *  GimpTextTool, we abuse a GtkTextView, which has all the needed
+   *  signals anyway, and connect to its signals. Puke!
    */
-  text_tool->proxy_text_view = gtk_text_view_new ();
-  g_object_ref_sink (text_tool->proxy_text_view);
+  {
+    GtkTextBuffer *dummy = gtk_text_buffer_new (NULL);
 
-  g_signal_connect_swapped (text_tool->proxy_text_view, "move-cursor",
-                            G_CALLBACK (gimp_text_tool_move_cursor),
-                            text_tool);
-  g_signal_connect_swapped (text_tool->proxy_text_view, "delete-from-cursor",
-                            G_CALLBACK (gimp_text_tool_delete_from_cursor),
-                            text_tool);
-  g_signal_connect_swapped (text_tool->proxy_text_view, "backspace",
-                            G_CALLBACK (gimp_text_tool_backspace),
-                            text_tool);
+    text_tool->proxy_text_view = gtk_text_view_new_with_buffer (dummy);
+    g_object_unref (dummy);
+
+    g_object_ref_sink (text_tool->proxy_text_view);
+    gtk_widget_ensure_style (text_tool->proxy_text_view);
+
+    g_signal_connect_swapped (text_tool->proxy_text_view, "move-cursor",
+                              G_CALLBACK (gimp_text_tool_move_cursor),
+                              text_tool);
+    g_signal_connect_swapped (text_tool->proxy_text_view, "delete-from-cursor",
+                              G_CALLBACK (gimp_text_tool_delete_from_cursor),
+                              text_tool);
+    g_signal_connect_swapped (text_tool->proxy_text_view, "backspace",
+                              G_CALLBACK (gimp_text_tool_backspace),
+                              text_tool);
+  }
 #endif
 }
 
@@ -1438,6 +1445,13 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
   GtkTextIter   selection;
   GtkTextIter  *sel_start;
   gint          x_pos  = -1;
+
+  g_printerr ("%s: %s count = %d, select = %s\n",
+              G_STRFUNC,
+              g_enum_get_value (g_type_class_ref (GTK_TYPE_MOVEMENT_STEP),
+                                step)->value_name,
+              count,
+              extend_selection ? "TRUE" : "FALSE");
 
   cursor_mark    = gtk_text_buffer_get_insert (text_tool->text_buffer);
   selection_mark = gtk_text_buffer_get_selection_bound (text_tool->text_buffer);
