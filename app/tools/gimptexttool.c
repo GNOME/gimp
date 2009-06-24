@@ -1657,9 +1657,26 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
       break;
 
     case GTK_DELETE_WORD_ENDS:
+      if (count < 0)
+        {
+          if (! gtk_text_iter_starts_word (&cursor))
+            gtk_text_iter_backward_visible_word_starts (&cursor, 1);
+        }
+      else if (count > 0)
+        {
+          if (! gtk_text_iter_ends_word (&end) &&
+              ! gtk_text_iter_forward_visible_word_ends (&end, 1))
+            gtk_text_iter_forward_to_line_end (&end);
+        }
       break;
 
     case GTK_DELETE_WORDS:
+      if (! gtk_text_iter_starts_word (&cursor))
+        gtk_text_iter_backward_visible_word_starts (&cursor, 1);
+
+      if (! gtk_text_iter_ends_word (&end) &&
+          ! gtk_text_iter_forward_visible_word_ends (&end, 1))
+        gtk_text_iter_forward_to_line_end (&end);
       break;
 
     case GTK_DELETE_DISPLAY_LINES:
