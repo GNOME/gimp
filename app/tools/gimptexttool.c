@@ -61,6 +61,7 @@
 #include "gimprectangletool.h"
 #include "gimprectangleoptions.h"
 #include "gimptextoptions.h"
+#include "gimptextproxy.h"
 #include "gimptexttool.h"
 #include "gimptoolcontrol.h"
 
@@ -1364,18 +1365,13 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
     }
   else if (! text_tool->offscreen_window)
     {
-      GtkTextBuffer *buffer;
-
       text_tool->offscreen_window = gtk_window_new (GTK_WINDOW_POPUP);
       gtk_window_set_screen (GTK_WINDOW (text_tool->offscreen_window),
                              gtk_widget_get_screen (tool->display->shell));
       gtk_window_move (GTK_WINDOW (text_tool->offscreen_window), -200, -200);
       gtk_widget_show (text_tool->offscreen_window);
 
-      buffer = gtk_text_buffer_new (NULL);
-      text_tool->proxy_text_view = gtk_text_view_new_with_buffer (buffer);
-      g_object_unref  (buffer);
-
+      text_tool->proxy_text_view = gimp_text_proxy_new ();
       gtk_container_add (GTK_CONTAINER (text_tool->offscreen_window),
                          text_tool->proxy_text_view);
       gtk_widget_show (text_tool->proxy_text_view);

@@ -1,0 +1,113 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * GimpTextProxy
+ * Copyright (C) 2009  Michael Natterer <mitch@gimp.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "gimptextproxy.h"
+
+
+static void   gimp_text_proxy_move_cursor        (GtkTextView     *text_view,
+                                                  GtkMovementStep  step,
+                                                  gint             count,
+                                                  gboolean         extend_selection);
+static void   gimp_text_proxy_delete_from_cursor (GtkTextView     *text_view,
+                                                  GtkDeleteType    type,
+                                                  gint             count);
+static void   gimp_text_proxy_backspace          (GtkTextView     *text_view);
+static void   gimp_text_proxy_cut_clipboard      (GtkTextView     *text_view);
+static void   gimp_text_proxy_copy_clipboard     (GtkTextView     *text_view);
+static void   gimp_text_proxy_paste_clipboard    (GtkTextView     *text_view);
+
+
+G_DEFINE_TYPE (GimpTextProxy, gimp_text_proxy, GTK_TYPE_TEXT_VIEW)
+
+
+static void
+gimp_text_proxy_class_init (GimpTextProxyClass *klass)
+{
+  GtkTextViewClass *tv_class = GTK_TEXT_VIEW_CLASS (klass);
+
+  tv_class->move_cursor        = gimp_text_proxy_move_cursor;
+  tv_class->delete_from_cursor = gimp_text_proxy_delete_from_cursor;
+  tv_class->backspace          = gimp_text_proxy_backspace;
+  tv_class->cut_clipboard      = gimp_text_proxy_cut_clipboard;
+  tv_class->copy_clipboard     = gimp_text_proxy_copy_clipboard;
+  tv_class->paste_clipboard    = gimp_text_proxy_paste_clipboard;
+}
+
+static void
+gimp_text_proxy_init (GimpTextProxy *text_proxy)
+{
+}
+
+static void
+gimp_text_proxy_move_cursor (GtkTextView     *text_view,
+                             GtkMovementStep  step,
+                             gint             count,
+                             gboolean         extend_selection)
+{
+}
+
+static void
+gimp_text_proxy_delete_from_cursor (GtkTextView   *text_view,
+                                    GtkDeleteType  type,
+                                    gint           count)
+{
+}
+
+static void
+gimp_text_proxy_backspace (GtkTextView *text_view)
+{
+}
+
+static void
+gimp_text_proxy_cut_clipboard (GtkTextView *text_view)
+{
+}
+
+static void
+gimp_text_proxy_copy_clipboard (GtkTextView *text_view)
+{
+}
+
+static void
+gimp_text_proxy_paste_clipboard (GtkTextView *text_view)
+{
+}
+
+
+/*  public functions  */
+
+GtkWidget *
+gimp_text_proxy_new (void)
+{
+  GtkTextBuffer *buffer = gtk_text_buffer_new (NULL);
+  GtkWidget     *proxy;
+
+  proxy = g_object_new (GIMP_TYPE_TEXT_PROXY,
+                        "buffer", buffer,
+                        NULL);
+
+  g_object_unref (buffer);
+
+  return proxy;
+}
