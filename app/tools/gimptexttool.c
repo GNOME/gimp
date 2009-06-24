@@ -1686,6 +1686,17 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
       break;
 
     case GTK_DELETE_PARAGRAPH_ENDS:
+      if (count < 0)
+        {
+          gtk_text_iter_set_line_offset (&cursor, 0);
+        }
+      else if (count > 0)
+        {
+          if (! gtk_text_iter_ends_line (&end))
+            gtk_text_iter_forward_to_line_end (&end);
+          else
+            gtk_text_iter_forward_cursor_positions (&end, 1);
+        }
       break;
 
     case GTK_DELETE_PARAGRAPHS:
