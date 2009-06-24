@@ -103,9 +103,6 @@ static void      gimp_text_tool_motion          (GimpTool          *tool,
 static gboolean  gimp_text_tool_key_press       (GimpTool          *tool,
                                                  GdkEventKey       *kevent,
                                                  GimpDisplay       *display);
-static gboolean gimp_text_tool_clipboard_action (GimpTool          *tool,
-                                                 GimpClipboardAction action,
-                                                 GimpDisplay       *display);
 static void      gimp_text_tool_oper_update     (GimpTool          *tool,
                                                  const GimpCoords  *coords,
                                                  GdkModifierType    state,
@@ -249,7 +246,6 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   tool_class->motion           = gimp_text_tool_motion;
   tool_class->button_release   = gimp_text_tool_button_release;
   tool_class->key_press        = gimp_text_tool_key_press;
-  tool_class->clipboard_action = gimp_text_tool_clipboard_action;
   tool_class->oper_update      = gimp_text_tool_oper_update;
   tool_class->cursor_update    = gimp_text_tool_cursor_update;
   tool_class->get_popup        = gimp_text_tool_get_popup;
@@ -877,34 +873,6 @@ gimp_text_tool_key_press (GimpTool    *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   return retval;
-}
-
-static gboolean
-gimp_text_tool_clipboard_action (GimpTool            *tool,
-                                 GimpClipboardAction  action,
-                                 GimpDisplay         *display)
-{
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
-
-  if (display != tool->display)
-    return FALSE;
-
-  switch (action)
-    {
-    case GIMP_CLIPBOARD_ACTION_CUT:
-      gimp_text_tool_clipboard_cut (text_tool);
-      break;
-
-    case GIMP_CLIPBOARD_ACTION_COPY:
-      gimp_text_tool_clipboard_copy (text_tool, TRUE);
-      break;
-
-    case GIMP_CLIPBOARD_ACTION_PASTE:
-      gimp_text_tool_clipboard_paste (text_tool, TRUE);
-      break;
-    }
-
-  return TRUE;
 }
 
 static void

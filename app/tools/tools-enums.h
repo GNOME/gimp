@@ -47,18 +47,6 @@ typedef enum
 } GimpButtonReleaseType;
 
 
-#define GIMP_TYPE_CLIPBOARD_ACTION (gimp_clipboard_action_get_type ())
-
-GType gimp_clipboard_action_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_CLIPBOARD_ACTION_CUT,
-  GIMP_CLIPBOARD_ACTION_COPY,
-  GIMP_CLIPBOARD_ACTION_PASTE
-} GimpClipboardAction;
-
-
 #define GIMP_TYPE_RECTANGLE_GUIDE (gimp_rectangle_guide_get_type ())
 
 GType gimp_rectangle_guide_get_type (void) G_GNUC_CONST;

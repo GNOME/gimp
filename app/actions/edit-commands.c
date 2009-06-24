@@ -48,8 +48,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
-#include "tools/tool_manager.h"
-
 #include "dialogs/dialogs.h"
 #include "dialogs/fade-dialog.h"
 
@@ -191,19 +189,8 @@ edit_cut_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
-  GimpDisplay  *display;
   GError       *error = NULL;
   return_if_no_drawable (image, drawable, data);
-
-  display = action_data_get_display (data);
-
-  if (display &&
-      tool_manager_clipboard_action_active (display->gimp,
-                                            GIMP_CLIPBOARD_ACTION_CUT,
-                                            display))
-    {
-      return;
-    }
 
   if (gimp_edit_cut (image, drawable, action_data_get_context (data), &error))
     {
@@ -232,19 +219,8 @@ edit_copy_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
-  GimpDisplay  *display;
   GError       *error = NULL;
   return_if_no_drawable (image, drawable, data);
-
-  display = action_data_get_display (data);
-
-  if (display &&
-      tool_manager_clipboard_action_active (display->gimp,
-                                            GIMP_CLIPBOARD_ACTION_COPY,
-                                            display))
-    {
-      return;
-    }
 
   if (gimp_edit_copy (image, drawable, action_data_get_context (data), &error))
     {
@@ -301,14 +277,6 @@ edit_paste_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
   GimpDisplay *display = action_data_get_display (data);
-
-  if (display &&
-      tool_manager_clipboard_action_active (display->gimp,
-                                            GIMP_CLIPBOARD_ACTION_PASTE,
-                                            display))
-    {
-      return;
-    }
 
   if (display && display->image)
     edit_paste (display, FALSE);
