@@ -51,6 +51,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimptexteditor.h"
+#include "widgets/gimptextproxy.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -61,7 +62,6 @@
 #include "gimprectangletool.h"
 #include "gimprectangleoptions.h"
 #include "gimptextoptions.h"
-#include "gimptextproxy.h"
 #include "gimptexttool.h"
 #include "gimptoolcontrol.h"
 
