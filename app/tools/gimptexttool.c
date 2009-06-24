@@ -141,6 +141,9 @@ static void   gimp_text_tool_delete_from_cursor (GimpTextTool      *text_tool,
                                                  GtkDeleteType      type,
                                                  gint               count);
 static void      gimp_text_tool_backspace       (GimpTextTool      *text_tool);
+static void      gimp_text_tool_cut_clipboard   (GimpTextTool      *text_tool);
+static void      gimp_text_tool_copy_clipboard  (GimpTextTool      *text_tool);
+static void      gimp_text_tool_paste_clipboard (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpTextLayer     *layer,
@@ -1418,6 +1421,15 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
       g_signal_connect_swapped (text_tool->proxy_text_view, "backspace",
                                 G_CALLBACK (gimp_text_tool_backspace),
                                 text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "cut-clipboard",
+                                G_CALLBACK (gimp_text_tool_cut_clipboard),
+                                text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "copy-clipboard",
+                                G_CALLBACK (gimp_text_tool_copy_clipboard),
+                                text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "paste-clipboard",
+                                G_CALLBACK (gimp_text_tool_paste_clipboard),
+                                text_tool);
     }
 }
 
@@ -1732,6 +1744,24 @@ gimp_text_tool_backspace (GimpTextTool *text_tool)
 
       gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
     }
+}
+
+static void
+gimp_text_tool_cut_clipboard (GimpTextTool *text_tool)
+{
+  gimp_text_tool_clipboard_cut (text_tool);
+}
+
+static void
+gimp_text_tool_copy_clipboard (GimpTextTool *text_tool)
+{
+  gimp_text_tool_clipboard_copy (text_tool, TRUE);
+}
+
+static void
+gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
+{
+  gimp_text_tool_clipboard_paste (text_tool, TRUE);
 }
 
 
