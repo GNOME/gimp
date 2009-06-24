@@ -29,6 +29,8 @@ static void   gimp_text_proxy_move_cursor        (GtkTextView     *text_view,
                                                   GtkMovementStep  step,
                                                   gint             count,
                                                   gboolean         extend_selection);
+static void   gimp_text_proxy_insert_at_cursor   (GtkTextView     *text_view,
+                                                  const gchar     *str);
 static void   gimp_text_proxy_delete_from_cursor (GtkTextView     *text_view,
                                                   GtkDeleteType    type,
                                                   gint             count);
@@ -47,6 +49,7 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
   GtkTextViewClass *tv_class = GTK_TEXT_VIEW_CLASS (klass);
 
   tv_class->move_cursor        = gimp_text_proxy_move_cursor;
+  tv_class->insert_at_cursor   = gimp_text_proxy_insert_at_cursor;
   tv_class->delete_from_cursor = gimp_text_proxy_delete_from_cursor;
   tv_class->backspace          = gimp_text_proxy_backspace;
   tv_class->cut_clipboard      = gimp_text_proxy_cut_clipboard;
@@ -64,6 +67,12 @@ gimp_text_proxy_move_cursor (GtkTextView     *text_view,
                              GtkMovementStep  step,
                              gint             count,
                              gboolean         extend_selection)
+{
+}
+
+static void
+gimp_text_proxy_insert_at_cursor (GtkTextView *text_view,
+                                  const gchar *str)
 {
 }
 

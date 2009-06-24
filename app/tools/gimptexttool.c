@@ -135,6 +135,8 @@ static void      gimp_text_tool_move_cursor     (GimpTextTool      *text_tool,
                                                  GtkMovementStep    step,
                                                  gint               count,
                                                  gboolean           extend_selection);
+static void     gimp_text_tool_insert_at_cursor (GimpTextTool      *text_tool,
+                                                 const gchar       *str);
 static void   gimp_text_tool_delete_from_cursor (GimpTextTool      *text_tool,
                                                  GtkDeleteType      type,
                                                  gint               count);
@@ -1379,6 +1381,9 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
       g_signal_connect_swapped (text_tool->proxy_text_view, "move-cursor",
                                 G_CALLBACK (gimp_text_tool_move_cursor),
                                 text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "insert-at-cursor",
+                                G_CALLBACK (gimp_text_tool_insert_at_cursor),
+                                text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "delete-from-cursor",
                                 G_CALLBACK (gimp_text_tool_delete_from_cursor),
                                 text_tool);
@@ -1596,6 +1601,14 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
                                 &cursor, sel_start);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+}
+
+static void
+gimp_text_tool_insert_at_cursor (GimpTextTool *text_tool,
+                                 const gchar  *str)
+{
+  gtk_text_buffer_insert_interactive_at_cursor (text_tool->text_buffer,
+                                                str, -1, TRUE);
 }
 
 static gboolean
