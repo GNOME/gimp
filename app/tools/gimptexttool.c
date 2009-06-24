@@ -1598,6 +1598,37 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
+static gboolean
+is_whitespace (gunichar ch,
+               gpointer user_data)
+{
+  return (ch == ' ' || ch == '\t');
+}
+
+static gboolean
+is_not_whitespace (gunichar ch,
+                   gpointer user_data)
+{
+  return ! is_whitespace (ch, user_data);
+}
+
+static gboolean
+find_whitepace_region (const GtkTextIter *center,
+                       GtkTextIter       *start,
+                       GtkTextIter       *end)
+{
+  *start = *center;
+  *end   = *center;
+
+  if (gtk_text_iter_backward_find_char (start, is_not_whitespace, NULL, NULL))
+    gtk_text_iter_forward_char (start); /* we want the first whitespace... */
+
+  if (is_whitespace (gtk_text_iter_get_char (end), NULL))
+    gtk_text_iter_forward_find_char (end, is_not_whitespace, NULL, NULL);
+
+  return ! gtk_text_iter_equal (start, end);
+}
+
 static void
 gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
                                    GtkDeleteType  type,
@@ -1679,10 +1710,11 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
       break;
 
     case GTK_DELETE_WHITESPACE:
+      find_whitepace_region (&cursor, &cursor, &end);
       break;
     }
 
-  if (gtk_text_iter_compare (&cursor, &end))
+  if (! gtk_text_iter_equal (&cursor, &end))
     {
       gtk_text_buffer_delete_interactive (text_tool->text_buffer,
                                           &cursor, &end, TRUE);
