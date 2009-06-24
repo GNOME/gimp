@@ -94,8 +94,7 @@ void       gimp_text_tool_set_layer              (GimpTextTool *text_tool,
 
 gboolean   gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool);
 
-void       gimp_text_tool_delete_text            (GimpTextTool *text_tool,
-                                                  gboolean      backspace);
+void       gimp_text_tool_delete_selection       (GimpTextTool *text_tool);
 void       gimp_text_tool_clipboard_cut          (GimpTextTool *text_tool);
 void       gimp_text_tool_clipboard_copy         (GimpTextTool *text_tool,
                                                   gboolean      use_clipboard);

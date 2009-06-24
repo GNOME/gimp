@@ -1627,16 +1627,33 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
                                    GtkDeleteType  type,
                                    gint           count)
 {
+  GtkTextIter cursor;
+  GtkTextIter end;
+
   g_printerr ("%s: %s count = %d\n",
               G_STRFUNC,
               g_enum_get_value (g_type_class_ref (GTK_TYPE_DELETE_TYPE),
                                 type)->value_name,
               count);
 
+  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
+                                    &cursor,
+                                    gtk_text_buffer_get_insert (text_tool->text_buffer));
+
+  end = cursor;
+
   switch (type)
     {
     case GTK_DELETE_CHARS:
-      gimp_text_tool_delete_text (text_tool, FALSE);
+      if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+        {
+          gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+          return;
+        }
+      else
+        {
+          gtk_text_iter_forward_cursor_positions (&end, count);
+        }
       break;
 
     case GTK_DELETE_WORD_ENDS:
@@ -1660,12 +1677,33 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
     case GTK_DELETE_WHITESPACE:
       break;
     }
+
+  if (gtk_text_iter_compare (&cursor, &end))
+    {
+      gtk_text_buffer_delete_interactive (text_tool->text_buffer,
+                                          &cursor, &end, TRUE);
+    }
 }
 
 static void
-gimp_text_tool_backspace (GimpTextTool  *text_tool)
+gimp_text_tool_backspace (GimpTextTool *text_tool)
 {
-  gimp_text_tool_delete_text (text_tool, TRUE);
+  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+    {
+      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+    }
+  else
+    {
+      GtkTextMark *cursor_mark;
+      GtkTextIter  cursor;
+
+      cursor_mark = gtk_text_buffer_get_insert (text_tool->text_buffer);
+
+      gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
+                                        &cursor, cursor_mark);
+
+      gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
+    }
 }
 
 
@@ -2478,10 +2516,7 @@ static void
 gimp_text_tool_enter_text (GimpTextTool *text_tool,
                            const gchar  *str)
 {
-  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
-    {
-      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
-    }
+  gimp_text_tool_delete_selection (text_tool);
 
   gtk_text_buffer_insert_at_cursor (text_tool->text_buffer, str, -1);
 }
@@ -2613,30 +2648,11 @@ gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool)
 }
 
 void
-gimp_text_tool_delete_text (GimpTextTool *text_tool,
-                            gboolean      backspace)
+gimp_text_tool_delete_selection (GimpTextTool *text_tool)
 {
-  GtkTextIter cursor;
-
-  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &cursor,
-                                    gtk_text_buffer_get_insert (text_tool->text_buffer));
-
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
     {
       gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
-    }
-  else if (backspace)
-    {
-      gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
-    }
-  else
-    {
-      GtkTextIter end = cursor;
-
-      gtk_text_iter_forward_cursor_positions (&end, 1);
-      gtk_text_buffer_delete_interactive (text_tool->text_buffer,
-                                          &cursor, &end, TRUE);
     }
 }
 
