@@ -207,6 +207,7 @@ void       gimp_draw_tool_draw_text_cursor         (GimpDrawTool     *draw_tool,
                                                     gdouble           y1,
                                                     gdouble           x2,
                                                     gdouble           y2,
+                                                    gboolean          overwrite,
                                                     gboolean          use_offsets);
 
 gboolean   gimp_draw_tool_on_handle                (GimpDrawTool     *draw_tool,

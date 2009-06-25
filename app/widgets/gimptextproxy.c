@@ -38,6 +38,7 @@ static void   gimp_text_proxy_backspace          (GtkTextView     *text_view);
 static void   gimp_text_proxy_cut_clipboard      (GtkTextView     *text_view);
 static void   gimp_text_proxy_copy_clipboard     (GtkTextView     *text_view);
 static void   gimp_text_proxy_paste_clipboard    (GtkTextView     *text_view);
+static void   gimp_text_proxy_toggle_overwrite   (GtkTextView     *text_view);
 
 
 G_DEFINE_TYPE (GimpTextProxy, gimp_text_proxy, GTK_TYPE_TEXT_VIEW)
@@ -55,6 +56,7 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
   tv_class->cut_clipboard      = gimp_text_proxy_cut_clipboard;
   tv_class->copy_clipboard     = gimp_text_proxy_copy_clipboard;
   tv_class->paste_clipboard    = gimp_text_proxy_paste_clipboard;
+  tv_class->toggle_overwrite   = gimp_text_proxy_toggle_overwrite;
 }
 
 static void
@@ -100,6 +102,11 @@ gimp_text_proxy_copy_clipboard (GtkTextView *text_view)
 
 static void
 gimp_text_proxy_paste_clipboard (GtkTextView *text_view)
+{
+}
+
+static void
+gimp_text_proxy_toggle_overwrite (GtkTextView *text_view)
 {
 }
 

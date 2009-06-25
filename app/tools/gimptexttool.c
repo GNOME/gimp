@@ -144,6 +144,7 @@ static void      gimp_text_tool_backspace       (GimpTextTool      *text_tool);
 static void      gimp_text_tool_cut_clipboard   (GimpTextTool      *text_tool);
 static void      gimp_text_tool_copy_clipboard  (GimpTextTool      *text_tool);
 static void      gimp_text_tool_paste_clipboard (GimpTextTool      *text_tool);
+static void     gimp_text_tool_toggle_overwrite (GimpTextTool      *text_tool);
 static void      gimp_text_tool_select_all      (GimpTextTool      *text_tool,
                                                  gboolean           select);
 
@@ -315,6 +316,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
                                               "context/context-font-select-set");
 
   text_tool->handle_rectangle_change_complete = TRUE;
+
+  text_tool->overwrite_mode = FALSE;
 
   text_tool->x_pos = -1;
 }
@@ -1036,6 +1039,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       GtkTextIter     cursor;
       PangoRectangle  crect;
       gchar          *string;
+      gboolean        overwrite_cursor;
 
       gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer, &cursor,
                                         gtk_text_buffer_get_insert (text_tool->text_buffer));
@@ -1057,11 +1061,17 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       crect.x      = PANGO_PIXELS (crect.x) + logical_off_x;
       crect.y      = PANGO_PIXELS (crect.y) + logical_off_y;
+      crect.width  = PANGO_PIXELS (crect.width);
       crect.height = PANGO_PIXELS (crect.height);
+
+      overwrite_cursor = text_tool->overwrite_mode && crect.width > 0;
 
       gimp_draw_tool_draw_text_cursor (draw_tool,
                                        crect.x, crect.y,
-                                       crect.x, crect.y + crect.height,
+                                       overwrite_cursor ?
+                                       crect.x + crect.width : crect.x,
+                                       crect.y + crect.height,
+                                       overwrite_cursor,
                                        TRUE);
 
       if (text_tool->preedit_string && text_tool->preedit_len > 0)
@@ -1387,6 +1397,9 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "paste-clipboard",
                                 G_CALLBACK (gimp_text_tool_paste_clipboard),
+                                text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "toggle-overwrite",
+                                G_CALLBACK (gimp_text_tool_toggle_overwrite),
                                 text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "select-all",
                                 G_CALLBACK (gimp_text_tool_select_all),
@@ -1754,6 +1767,16 @@ static void
 gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
 {
   gimp_text_tool_clipboard_paste (text_tool, TRUE);
+}
+
+static void
+gimp_text_tool_toggle_overwrite (GimpTextTool *text_tool)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+  text_tool->overwrite_mode = ! text_tool->overwrite_mode;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
@@ -2588,9 +2611,25 @@ static void
 gimp_text_tool_enter_text (GimpTextTool *text_tool,
                            const gchar  *str)
 {
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+  gboolean       had_selection;
+
+  had_selection = gtk_text_buffer_get_has_selection (buffer);
+
   gimp_text_tool_delete_selection (text_tool);
 
-  gtk_text_buffer_insert_at_cursor (text_tool->text_buffer, str, -1);
+  if (! had_selection && text_tool->overwrite_mode && strcmp (str, "\n"))
+    {
+      GtkTextIter cursor;
+
+      gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                        gtk_text_buffer_get_insert (buffer));
+
+      if (! gtk_text_iter_ends_line (&cursor))
+        gimp_text_tool_delete_from_cursor (text_tool, GTK_DELETE_CHARS, 1);
+    }
+
+  gtk_text_buffer_insert_at_cursor (buffer, str, -1);
 }
 
 static void

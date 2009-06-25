@@ -1458,6 +1458,7 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
                                  gdouble       y1,
                                  gdouble       x2,
                                  gdouble       y2,
+                                 gboolean      overwrite,
                                  gboolean      use_offsets)
 {
   GimpDisplayShell *shell;
@@ -1477,29 +1478,53 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
                                      &tx2, &ty2,
                                      use_offsets);
 
-  /*  vertical line  */
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1), PROJ_ROUND (ty1) + 2,
-                         PROJ_ROUND (tx2), PROJ_ROUND (ty2) - 2);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1) - 1, PROJ_ROUND (ty1) + 2,
-                         PROJ_ROUND (tx2) - 1, PROJ_ROUND (ty2) - 2);
+  if (overwrite)
+    {
+      gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
+                                  GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  PROJ_ROUND (tx1),
+                                  PROJ_ROUND (ty1),
+                                  PROJ_ROUND (tx2 - tx1),
+                                  PROJ_ROUND (ty2 - ty1));
+      gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
+                                  GIMP_CANVAS_STYLE_XOR, FALSE,
+                                  PROJ_ROUND (tx1) + 1,
+                                  PROJ_ROUND (ty1) + 1,
+                                  PROJ_ROUND (tx2 - tx1) - 2,
+                                  PROJ_ROUND (ty2 - ty1) - 2);
+    }
+  else
+    {
+      /*  vertical line  */
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                             GIMP_CANVAS_STYLE_XOR,
+                             PROJ_ROUND (tx1), PROJ_ROUND (ty1) + 2,
+                             PROJ_ROUND (tx2), PROJ_ROUND (ty2) - 2);
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                             GIMP_CANVAS_STYLE_XOR,
+                             PROJ_ROUND (tx1) - 1, PROJ_ROUND (ty1) + 2,
+                             PROJ_ROUND (tx2) - 1, PROJ_ROUND (ty2) - 2);
 
-  /*  top serif  */
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1),
-                         PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1));
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1) + 1,
-                         PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1) + 1);
+      /*  top serif  */
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                             GIMP_CANVAS_STYLE_XOR,
+                             PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1),
+                             PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1));
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                             GIMP_CANVAS_STYLE_XOR,
+                             PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1) + 1,
+                             PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1) + 1);
 
-  /*  bottom serif  */
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 1,
-                         PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 1);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 2,
-                         PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 2);
+      /*  bottom serif  */
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                             GIMP_CANVAS_STYLE_XOR,
+                             PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 1,
+                             PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 1);
+      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                             GIMP_CANVAS_STYLE_XOR,
+                             PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 2,
+                             PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 2);
+    }
 }
 
 gboolean

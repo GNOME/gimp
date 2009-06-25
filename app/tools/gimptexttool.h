@@ -69,6 +69,8 @@ struct _GimpTextTool
   gboolean        select_words;
   gboolean        select_lines;
 
+  gboolean        overwrite_mode;
+
   gint            x_pos;
 
   GimpTextLayout *layout;
