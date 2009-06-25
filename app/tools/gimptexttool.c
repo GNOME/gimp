@@ -144,6 +144,8 @@ static void      gimp_text_tool_backspace       (GimpTextTool      *text_tool);
 static void      gimp_text_tool_cut_clipboard   (GimpTextTool      *text_tool);
 static void      gimp_text_tool_copy_clipboard  (GimpTextTool      *text_tool);
 static void      gimp_text_tool_paste_clipboard (GimpTextTool      *text_tool);
+static void      gimp_text_tool_select_all      (GimpTextTool      *text_tool,
+                                                 gboolean           select);
 
 static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpTextLayer     *layer,
@@ -1399,6 +1401,9 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
       g_signal_connect_swapped (text_tool->proxy_text_view, "paste-clipboard",
                                 G_CALLBACK (gimp_text_tool_paste_clipboard),
                                 text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "select-all",
+                                G_CALLBACK (gimp_text_tool_select_all),
+                                text_tool);
     }
 }
 
@@ -1771,6 +1776,33 @@ static void
 gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
 {
   gimp_text_tool_clipboard_paste (text_tool, TRUE);
+}
+
+static void
+gimp_text_tool_select_all (GimpTextTool *text_tool,
+                           gboolean      select)
+{
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+  if (select)
+    {
+      GtkTextIter start, end;
+
+      gtk_text_buffer_get_bounds (buffer, &start, &end);
+      gtk_text_buffer_select_range (buffer, &start, &end);
+    }
+  else
+    {
+      GtkTextIter cursor;
+
+      gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+					gtk_text_buffer_get_insert (buffer));
+      gtk_text_buffer_move_mark_by_name (buffer, "selection_bound", &cursor);
+    }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 
