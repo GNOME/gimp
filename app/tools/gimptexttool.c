@@ -440,6 +440,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
   GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
   GimpText          *text      = text_tool->text;
+  GtkTextBuffer     *buffer    = text_tool->text_buffer;
   GimpDrawable      *drawable;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -449,7 +450,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
       gint x1, y1;
       gint x2, y2;
 
-      g_signal_handlers_block_by_func (text_tool->text_buffer,
+      g_signal_handlers_block_by_func (buffer,
                                        gimp_text_tool_text_buffer_mark_set,
                                        text_tool);
 
@@ -519,7 +520,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
                   if (text && text_tool->text == text)
                     {
                       gimp_text_tool_canvas_editor (text_tool);
-                      gtk_text_buffer_set_text (text_tool->text_buffer,
+                      gtk_text_buffer_set_text (buffer,
                                                 text_tool->text->text, -1);
 
                       gimp_text_tool_update_layout (text_tool);
@@ -534,8 +535,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
                   offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
 
-                  gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                      &cursor, offset);
+                  gtk_text_buffer_get_iter_at_offset (buffer, &cursor, offset);
 
                   selection = cursor;
 
@@ -546,8 +546,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
                   switch (press_type)
                     {
                     case GIMP_BUTTON_PRESS_NORMAL:
-                      gtk_text_buffer_place_cursor (text_tool->text_buffer,
-                                                    &cursor);
+                      gtk_text_buffer_place_cursor (buffer, &cursor);
                       break;
 
                     case GIMP_BUTTON_PRESS_DOUBLE:
@@ -560,8 +559,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
                           ! gtk_text_iter_forward_visible_word_ends (&selection, 1))
                         gtk_text_iter_forward_to_line_end (&selection);
 
-                      gtk_text_buffer_select_range (text_tool->text_buffer,
-                                                    &cursor, &selection);
+                      gtk_text_buffer_select_range (buffer, &cursor, &selection);
                       break;
 
                     case GIMP_BUTTON_PRESS_TRIPLE:
@@ -570,8 +568,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
                       gtk_text_iter_set_line_offset (&cursor, 0);
                       gtk_text_iter_forward_to_line_end (&selection);
 
-                      gtk_text_buffer_select_range (text_tool->text_buffer,
-                                                    &cursor, &selection);
+                      gtk_text_buffer_select_range (buffer, &cursor, &selection);
                       break;
                     }
                 }
@@ -592,7 +589,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
       text_tool->text = NULL;
     }
 
-  gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
+  gtk_text_buffer_set_text (buffer, "", -1);
   gimp_text_tool_connect (text_tool, NULL, NULL);
   gimp_text_tool_canvas_editor (text_tool);
 
@@ -702,26 +699,22 @@ gimp_text_tool_motion (GimpTool         *tool,
     {
       if (text_tool->layout)
         {
-          GimpItem    *item = GIMP_ITEM (text_tool->layer);
-          gdouble      x    = coords->x - gimp_item_get_offset_x (item);
-          gdouble      y    = coords->y - gimp_item_get_offset_y (item);
-          GtkTextMark *cursor_mark;
-          GtkTextMark *selection_mark;
-          GtkTextIter  cursor;
-          GtkTextIter  selection;
-          gint         cursor_offset;
-          gint         selection_offset;
-          gint         offset;
+          GimpItem      *item   = GIMP_ITEM (text_tool->layer);
+          gdouble        x      = coords->x - gimp_item_get_offset_x (item);
+          gdouble        y      = coords->y - gimp_item_get_offset_y (item);
+          GtkTextBuffer *buffer = text_tool->text_buffer;
+          GtkTextIter    cursor;
+          GtkTextIter    selection;
+          gint           cursor_offset;
+          gint           selection_offset;
+          gint           offset;
 
           offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
 
-          cursor_mark    = gtk_text_buffer_get_insert (text_tool->text_buffer);
-          selection_mark = gtk_text_buffer_get_selection_bound (text_tool->text_buffer);
-
-          gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                            &cursor, cursor_mark);
-          gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                            &selection, selection_mark);
+          gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                            gtk_text_buffer_get_insert (buffer));
+          gtk_text_buffer_get_iter_at_mark (buffer, &selection,
+                                            gtk_text_buffer_get_selection_bound (buffer));
 
           cursor_offset    = gtk_text_iter_get_offset (&cursor);
           selection_offset = gtk_text_iter_get_offset (&selection);
@@ -732,9 +725,9 @@ gimp_text_tool_motion (GimpTool         *tool,
               GtkTextIter start;
               GtkTextIter end;
 
-              gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
+              gtk_text_buffer_get_iter_at_offset (buffer,
                                                   &cursor, offset);
-              gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
+              gtk_text_buffer_get_iter_at_offset (buffer,
                                                   &selection,
                                                   text_tool->select_start_offset);
 
@@ -779,8 +772,7 @@ gimp_text_tool_motion (GimpTool         *tool,
             {
               if (cursor_offset != offset)
                 {
-                  gtk_text_buffer_get_iter_at_offset (text_tool->text_buffer,
-                                                      &cursor, offset);
+                  gtk_text_buffer_get_iter_at_offset (buffer, &cursor, offset);
                 }
             }
 
@@ -789,8 +781,7 @@ gimp_text_tool_motion (GimpTool         *tool,
             {
               gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-              gtk_text_buffer_select_range (text_tool->text_buffer,
-                                            &cursor, &selection);
+              gtk_text_buffer_select_range (buffer, &cursor, &selection);
 
               gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
             }
@@ -807,14 +798,13 @@ gimp_text_tool_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *display)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
-  GtkTextMark  *cursor_mark;
-  GtkTextMark  *selection_mark;
-  GtkTextIter   cursor;
-  GtkTextIter   selection;
-  GtkTextIter  *sel_start;
-  gint          x_pos  = -1;
-  gboolean      retval = TRUE;
+  GimpTextTool  *text_tool = GIMP_TEXT_TOOL (tool);
+  GtkTextBuffer *buffer    = text_tool->text_buffer;
+  GtkTextIter    cursor;
+  GtkTextIter    selection;
+  GtkTextIter   *sel_start;
+  gint           x_pos  = -1;
+  gboolean       retval = TRUE;
 
   if (display != tool->display)
     return FALSE;
@@ -836,13 +826,10 @@ gimp_text_tool_key_press (GimpTool    *tool,
       return TRUE;
     }
 
-  cursor_mark    = gtk_text_buffer_get_insert (text_tool->text_buffer);
-  selection_mark = gtk_text_buffer_get_selection_bound (text_tool->text_buffer);
-
-  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &cursor, cursor_mark);
-  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &selection, selection_mark);
+  gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                    gtk_text_buffer_get_insert (buffer));
+  gtk_text_buffer_get_iter_at_mark (buffer, &selection,
+                                    gtk_text_buffer_get_selection_bound (buffer));
 
   if (kevent->state & GDK_SHIFT_MASK)
     sel_start = &selection;
@@ -1413,12 +1400,11 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
                             gint             count,
                             gboolean         extend_selection)
 {
-  GtkTextMark  *cursor_mark;
-  GtkTextMark  *selection_mark;
-  GtkTextIter   cursor;
-  GtkTextIter   selection;
-  GtkTextIter  *sel_start;
-  gint          x_pos  = -1;
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+  GtkTextIter    cursor;
+  GtkTextIter    selection;
+  GtkTextIter   *sel_start;
+  gint           x_pos  = -1;
 
   g_printerr ("%s: %s count = %d, select = %s\n",
               G_STRFUNC,
@@ -1427,13 +1413,10 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
               count,
               extend_selection ? "TRUE" : "FALSE");
 
-  cursor_mark    = gtk_text_buffer_get_insert (text_tool->text_buffer);
-  selection_mark = gtk_text_buffer_get_selection_bound (text_tool->text_buffer);
-
-  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &cursor, cursor_mark);
-  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &selection, selection_mark);
+  gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                    gtk_text_buffer_get_insert (buffer));
+  gtk_text_buffer_get_iter_at_mark (buffer, &selection,
+                                    gtk_text_buffer_get_selection_bound (buffer));
 
   if (extend_selection)
     sel_start = &selection;
@@ -1549,8 +1532,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
         line_index -= layout_line->start_index;
 
-        gtk_text_buffer_get_iter_at_line_index (text_tool->text_buffer,
-                                                &cursor,
+        gtk_text_buffer_get_iter_at_line_index (buffer, &cursor,
                                                 line, line_index);
 
         while (trailing--)
@@ -1562,11 +1544,11 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
     case GTK_MOVEMENT_BUFFER_ENDS:
       if (count < 0)
         {
-          gtk_text_buffer_get_start_iter (text_tool->text_buffer, &cursor);
+          gtk_text_buffer_get_start_iter (buffer, &cursor);
         }
       else if (count > 0)
         {
-          gtk_text_buffer_get_end_iter (text_tool->text_buffer, &cursor);
+          gtk_text_buffer_get_end_iter (buffer, &cursor);
         }
       break;
 
@@ -1602,8 +1584,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-  gtk_text_buffer_select_range (text_tool->text_buffer,
-                                &cursor, sel_start);
+  gtk_text_buffer_select_range (buffer, &cursor, sel_start);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
@@ -1652,8 +1633,9 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
                                    GtkDeleteType  type,
                                    gint           count)
 {
-  GtkTextIter cursor;
-  GtkTextIter end;
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+  GtkTextIter    cursor;
+  GtkTextIter    end;
 
   g_printerr ("%s: %s count = %d\n",
               G_STRFUNC,
@@ -1661,18 +1643,16 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
                                 type)->value_name,
               count);
 
-  gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                    &cursor,
-                                    gtk_text_buffer_get_insert (text_tool->text_buffer));
-
+  gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                    gtk_text_buffer_get_insert (buffer));
   end = cursor;
 
   switch (type)
     {
     case GTK_DELETE_CHARS:
-      if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+      if (gtk_text_buffer_get_has_selection (buffer))
         {
-          gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+          gtk_text_buffer_delete_selection (buffer, TRUE, TRUE);
           return;
         }
       else
@@ -1734,29 +1714,27 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
 
   if (! gtk_text_iter_equal (&cursor, &end))
     {
-      gtk_text_buffer_delete_interactive (text_tool->text_buffer,
-                                          &cursor, &end, TRUE);
+      gtk_text_buffer_delete_interactive (buffer, &cursor, &end, TRUE);
     }
 }
 
 static void
 gimp_text_tool_backspace (GimpTextTool *text_tool)
 {
-  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+
+  if (gtk_text_buffer_get_has_selection (buffer))
     {
-      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+      gtk_text_buffer_delete_selection (buffer, TRUE, TRUE);
     }
   else
     {
-      GtkTextMark *cursor_mark;
-      GtkTextIter  cursor;
+      GtkTextIter cursor;
 
-      cursor_mark = gtk_text_buffer_get_insert (text_tool->text_buffer);
+      gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                        gtk_text_buffer_get_insert (buffer));
 
-      gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer,
-                                        &cursor, cursor_mark);
-
-      gtk_text_buffer_backspace (text_tool->text_buffer, &cursor, TRUE, TRUE);
+      gtk_text_buffer_backspace (buffer, &cursor, TRUE, TRUE);
     }
 }
 
@@ -1875,7 +1853,7 @@ gimp_text_tool_use_editor_notify (GimpTextOptions *options,
 {
   if (options->use_editor)
     {
-      if (text_tool->text && text_tool->text_buffer)
+      if (text_tool->text)
         gimp_text_tool_editor (text_tool);
     }
   else
@@ -2289,46 +2267,41 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
 static gchar *
 gimp_text_tool_canvas_editor_get_text (GimpTextTool *text_tool)
 {
-  if (text_tool->text_buffer)
+  GtkTextIter  start, end;
+  GtkTextIter  selstart, selend;
+  gchar       *string;
+  gchar       *fb;
+  gchar       *lb;
+
+  gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
+  gtk_text_buffer_get_selection_bounds (text_tool->text_buffer,
+                                        &selstart, &selend);
+
+  fb = gtk_text_buffer_get_text (text_tool->text_buffer,
+                                 &start, &selstart, TRUE);
+  lb = gtk_text_buffer_get_text (text_tool->text_buffer,
+                                 &selstart, &end, TRUE);
+
+  if (text_tool->preedit_string)
     {
-      GtkTextIter  start, end;
-      GtkTextIter  selstart, selend;
-      gchar       *string;
-      gchar       *fb;
-      gchar       *lb;
-
-      gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
-      gtk_text_buffer_get_selection_bounds (text_tool->text_buffer,
-                                            &selstart, &selend);
-
-      fb = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                     &start, &selstart, TRUE);
-      lb = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                     &selstart, &end, TRUE);
-
-      if (text_tool->preedit_string)
+      if (fb == NULL)
         {
-          if (fb == NULL)
-            {
-              string = g_strconcat (text_tool->preedit_string, lb, NULL);
-            }
-          else
-            {
-              string = g_strconcat (fb, text_tool->preedit_string, lb, NULL);
-            }
+          string = g_strconcat (text_tool->preedit_string, lb, NULL);
         }
       else
         {
-          string = g_strconcat (fb, lb, NULL);
+          string = g_strconcat (fb, text_tool->preedit_string, lb, NULL);
         }
-
-      g_free (fb);
-      g_free (lb);
-
-      return string;
+    }
+  else
+    {
+      string = g_strconcat (fb, lb, NULL);
     }
 
-  return NULL;
+  g_free (fb);
+  g_free (lb);
+
+  return string;
 }
 
 
@@ -2740,10 +2713,7 @@ gimp_text_tool_preedit_changed_cb (GtkIMContext *context,
 gboolean
 gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool)
 {
-  if (text_tool->text_buffer)
-    return gtk_text_buffer_get_has_selection (text_tool->text_buffer);
-  else
-    return FALSE;
+  return gtk_text_buffer_get_has_selection (text_tool->text_buffer);
 }
 
 void
