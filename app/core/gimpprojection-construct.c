@@ -158,12 +158,6 @@ gimp_projection_construct_gegl (GimpProjection *proj,
     gegl_processor_set_rectangle (proj->processor, &rect);
 
   while (gegl_processor_work (proj->processor, NULL));
-
-#ifdef __GNUC__
-#warning FIXME: keep the processor around once gegl_processor_set_rectangle() works
-#endif
-  g_object_unref (proj->processor);
-  proj->processor = NULL;
 }
 
 static void
