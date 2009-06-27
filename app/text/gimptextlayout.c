@@ -133,10 +133,13 @@ gimp_text_layout_new (GimpText  *text,
   context = gimp_text_get_pango_context (text, xres, yres);
 
   layout = g_object_new (GIMP_TYPE_TEXT_LAYOUT, NULL);
+
   layout->text   = g_object_ref (text);
   layout->layout = pango_layout_new (context);
-  layout->xres = xres;
-  layout->yres = yres;
+  layout->xres   = xres;
+  layout->yres   = yres;
+
+  pango_layout_set_wrap (layout->layout, PANGO_WRAP_WORD_CHAR);
 
   g_object_unref (context);
 
