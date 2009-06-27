@@ -1468,68 +1468,54 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
     case GTK_MOVEMENT_DISPLAY_LINES:
       {
+        GtkTextIter      start;
+        GtkTextIter      end;
+        gchar           *string;
+        gint             cursor_index;
         PangoLayout     *layout;
         PangoLayoutLine *layout_line;
         PangoLayoutIter *layout_iter;
         PangoRectangle   logical;
         gint             line;
-        gint             line_index;
         gint             trailing;
         gint             i;
 
+        gtk_text_buffer_get_bounds (buffer, &start, &end);
+
+        string = gtk_text_buffer_get_text (buffer, &start, &cursor, FALSE);
+        cursor_index = strlen (string);
+        g_free (string);
+
         layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
-        line       = gtk_text_iter_get_line (&cursor);
-        line_index = gtk_text_iter_get_line_index (&cursor);
+        pango_layout_index_to_line_x (layout, cursor_index, FALSE,
+                                      &line, &x_pos);
 
         layout_iter = pango_layout_get_iter (layout);
         for (i = 0; i < line; i++)
           pango_layout_iter_next_line (layout_iter);
 
-        layout_line = pango_layout_iter_get_line_readonly (layout_iter);
-
-        pango_layout_line_index_to_x (layout_line,
-                                      layout_line->start_index + line_index,
-                                      FALSE, &x_pos);
-
         pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
-        x_pos += logical.x;
 
         pango_layout_iter_free (layout_iter);
 
         /*  try to go to the remembered x_pos if it exists *and* we are at
          *  the beginning or at the end of the current line
          */
-        if (text_tool->x_pos != -1 && (line_index == layout_line->length ||
-                                       line_index == 0))
+        if (text_tool->x_pos != -1 && (x_pos <= logical.x ||
+                                       x_pos >= logical.width))
           x_pos = text_tool->x_pos;
 
-        if (count < 0)
-          {
-            line--;
-            if (line < 0)
-              {
-                gtk_text_iter_set_line_offset (&cursor, 0);
-                break;
-              }
-          }
-        else if (count > 0)
-          {
-            line++;
-          }
+        line += count;
 
-        layout_line = pango_layout_get_line_readonly (layout, line);
-
-        if (! layout_line)
+        if (line < 0)
           {
-            if (count < 0)
-              {
-                gtk_text_iter_set_line_offset (&cursor, 0);
-              }
-            else if (count > 0)
-              {
-                gtk_text_iter_forward_to_line_end (&cursor);
-              }
+            gtk_text_iter_set_line_offset (&cursor, 0);
+            break;
+          }
+        else if (line >= pango_layout_get_line_count (layout))
+          {
+            gtk_text_iter_forward_to_line_end (&cursor);
             break;
           }
 
@@ -1537,17 +1523,22 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         for (i = 0; i < line; i++)
           pango_layout_iter_next_line (layout_iter);
 
+        layout_line = pango_layout_iter_get_line_readonly (layout_iter);
         pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
 
         pango_layout_iter_free (layout_iter);
 
-        pango_layout_line_x_to_index (layout_line, x_pos - logical.x,
-                                      &line_index, &trailing);
+        pango_layout_line_x_to_index (layout_line, x_pos,
+                                      &cursor_index, &trailing);
 
-        line_index -= layout_line->start_index;
+        string = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
 
-        gtk_text_buffer_get_iter_at_line_index (buffer, &cursor,
-                                                line, line_index);
+        string[cursor_index] = '\0';
+
+        gtk_text_buffer_get_iter_at_offset (buffer, &cursor,
+                                            g_utf8_strlen (string, -1));
+
+        g_free (string);
 
         while (trailing--)
           gtk_text_iter_forward_char (&cursor);
