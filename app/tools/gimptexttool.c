@@ -1004,6 +1004,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   if (! text_tool->layout)
     gimp_text_tool_update_layout (text_tool);
 
+  /* Turn on clipping for text-cursor and selections */
   g_object_get (text_tool,
                 "x1", &x1,
                 "y1", &y1,
@@ -1011,11 +1012,11 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                 "y2", &y2,
                 NULL);
 
-  /* Turn on clipping for text-cursor and selections */
   cliprect.x      = x1;
   cliprect.width  = x2 - x1;
   cliprect.y      = y1;
   cliprect.height = y2 - y1;
+
   gimp_draw_tool_set_clip_rect (draw_tool, &cliprect, FALSE);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
@@ -1035,28 +1036,28 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
     {
       /* If the text buffer has no selection, draw the text cursor */
 
-      gint            cursorx;
+      GtkTextBuffer  *buffer = text_tool->text_buffer;
+      gint            cursor_index;
       GtkTextIter     cursor;
       PangoRectangle  crect;
       gchar          *string;
       gboolean        overwrite_cursor;
 
-      gtk_text_buffer_get_iter_at_mark (text_tool->text_buffer, &cursor,
-                                        gtk_text_buffer_get_insert (text_tool->text_buffer));
+      gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                        gtk_text_buffer_get_insert (buffer));
 
-      string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                         &start, &cursor, FALSE);
+      string = gtk_text_buffer_get_text (buffer, &start, &cursor, FALSE);
 
       /* Using strlen to get the byte index, not the character offset */
-      cursorx = strlen (string);
+      cursor_index = strlen (string);
 
       /* TODO: make cursor position itself even inside preedits! */
       if (text_tool->preedit_len > 0)
-        cursorx += text_tool->preedit_len;
+        cursor_index += text_tool->preedit_len;
 
       g_free (string);
 
-      pango_layout_index_to_pos (layout, cursorx, &crect);
+      pango_layout_index_to_pos (layout, cursor_index, &crect);
       gimp_text_layout_transform_rect (text_tool->layout, &crect);
 
       crect.x      = PANGO_PIXELS (crect.x) + logical_off_x;
