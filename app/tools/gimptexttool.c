@@ -37,7 +37,6 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
-#include "core/gimpundostack.h"
 
 #include "text/gimptext.h"
 #include "text/gimptext-vectors.h"
@@ -466,8 +465,8 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
       text_tool->selecting = FALSE;
 
-      if (coords->x > x1 && coords->x <= x2 &&
-          coords->y > y1 && coords->y <= y2 &&
+      if (coords->x >= x1 && coords->x < x2 &&
+          coords->y >= y1 && coords->y < y2 &&
           ! text_tool->moving)
         {
           text_tool->selecting = TRUE;
@@ -491,8 +490,8 @@ gimp_text_tool_button_press (GimpTool            *tool,
           gdouble   x    = coords->x - gimp_item_get_offset_x (item);
           gdouble   y    = coords->y - gimp_item_get_offset_y (item);
 
-          if (x < 0 || x > item->width ||
-              y < 0 || y > item->height)
+          if (x < 0 || x >= item->width ||
+              y < 0 || y >= item->height)
             {
               gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
@@ -511,8 +510,8 @@ gimp_text_tool_button_press (GimpTool            *tool,
       gdouble   x    = coords->x - gimp_item_get_offset_x (item);
       gdouble   y    = coords->y - gimp_item_get_offset_y (item);
 
-      if (x > 0 && x < gimp_item_get_width (item) &&
-          y > 0 && y < gimp_item_get_height (item))
+      if (x >= 0 && x < gimp_item_get_width (item) &&
+          y >= 0 && y < gimp_item_get_height (item))
         {
           /*  did the user click on a text layer?  */
           if (gimp_text_tool_set_drawable (text_tool, drawable, TRUE))
@@ -636,10 +635,13 @@ gimp_text_tool_button_release (GimpTool              *tool,
                 "y2", &y2,
                 NULL);
 
-  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
-    gimp_text_tool_clipboard_copy (text_tool, FALSE);
+  if (text_tool->selecting)
+    {
+      if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+        gimp_text_tool_clipboard_copy (text_tool, FALSE);
 
-  text_tool->selecting = FALSE;
+      text_tool->selecting = FALSE;
+    }
 
   if (text && text_tool->text == text)
     {
@@ -728,10 +730,9 @@ gimp_text_tool_motion (GimpTool         *tool,
               GtkTextIter start;
               GtkTextIter end;
 
-              gtk_text_buffer_get_iter_at_offset (buffer,
-                                                  &cursor, offset);
-              gtk_text_buffer_get_iter_at_offset (buffer,
-                                                  &selection,
+              gtk_text_buffer_get_iter_at_offset (buffer, &cursor,
+                                                  offset);
+              gtk_text_buffer_get_iter_at_offset (buffer, &selection,
                                                   text_tool->select_start_offset);
 
               if (offset <= text_tool->select_start_offset)
@@ -805,7 +806,6 @@ gimp_text_tool_key_press (GimpTool    *tool,
   GtkTextBuffer *buffer    = text_tool->text_buffer;
   GtkTextIter    cursor;
   GtkTextIter    selection;
-  GtkTextIter   *sel_start;
   gint           x_pos  = -1;
   gboolean       retval = TRUE;
 
@@ -833,11 +833,6 @@ gimp_text_tool_key_press (GimpTool    *tool,
                                     gtk_text_buffer_get_insert (buffer));
   gtk_text_buffer_get_iter_at_mark (buffer, &selection,
                                     gtk_text_buffer_get_selection_bound (buffer));
-
-  if (kevent->state & GDK_SHIFT_MASK)
-    sel_start = &selection;
-  else
-    sel_start = &cursor;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -899,15 +894,15 @@ gimp_text_tool_cursor_update (GimpTool         *tool,
       gint          x1, y1;
       gint          x2, y2;
 
-      g_object_get (G_OBJECT (tool),
+      g_object_get (tool,
                     "x1", &x1,
                     "y1", &y1,
                     "x2", &x2,
                     "y2", &y2,
                     NULL);
 
-      if (coords->x > x1 && coords->x <= x2 &&
-          coords->y > y1 && coords->y <= y2 &&
+      if (coords->x >= x1 && coords->x < x2 &&
+          coords->y >= y1 && coords->y < y2 &&
           ! text_tool->moving)
         {
           gimp_tool_control_set_cursor          (tool->control, GDK_XTERM);
@@ -941,8 +936,8 @@ gimp_text_tool_get_popup (GimpTool         *tool,
                 "y2", &y2,
                 NULL);
 
-  if (coords->x > x1 && coords->x <= x2 &&
-      coords->y > y1 && coords->y <= y2)
+  if (coords->x >= x1 && coords->x < x2 &&
+      coords->y >= y1 && coords->y < y2)
     {
       if (! text_tool->ui_manager)
         {
@@ -980,7 +975,8 @@ static void
 gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTextTool   *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GdkRectangle    cliprect;
+  GtkTextBuffer  *buffer    = text_tool->text_buffer;
+  GdkRectangle    clip_rect;
   gint            x1, x2;
   gint            y1, y2;
   gint            logical_off_x = 0;
@@ -988,7 +984,6 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   PangoLayout    *layout;
   PangoRectangle  ink_extents;
   PangoRectangle  logical_extents;
-  GtkTextIter     start;
 
   g_object_set (text_tool,
                 "narrow-mode", TRUE,
@@ -1012,12 +1007,12 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                 "y2", &y2,
                 NULL);
 
-  cliprect.x      = x1;
-  cliprect.width  = x2 - x1;
-  cliprect.y      = y1;
-  cliprect.height = y2 - y1;
+  clip_rect.x      = x1;
+  clip_rect.width  = x2 - x1;
+  clip_rect.y      = y1;
+  clip_rect.height = y2 - y1;
 
-  gimp_draw_tool_set_clip_rect (draw_tool, &cliprect, FALSE);
+  gimp_draw_tool_set_clip_rect (draw_tool, &clip_rect, FALSE);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
@@ -1030,19 +1025,18 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   if (ink_extents.y < 0)
     logical_off_y = -ink_extents.y;
 
-  gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
-
-  if (! gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+  if (! gtk_text_buffer_get_has_selection (buffer))
     {
       /* If the text buffer has no selection, draw the text cursor */
 
-      GtkTextBuffer  *buffer = text_tool->text_buffer;
-      gint            cursor_index;
+      GtkTextIter     start;
       GtkTextIter     cursor;
+      gint            cursor_index;
       PangoRectangle  crect;
       gchar          *string;
       gboolean        overwrite_cursor;
 
+      gtk_text_buffer_get_start_iter (buffer, &start);
       gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                         gtk_text_buffer_get_insert (buffer));
 
@@ -1195,6 +1189,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
                                gint          logical_off_y)
 {
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  GtkTextBuffer   *buffer    = text_tool->text_buffer;
   PangoLayout     *layout;
   PangoLayoutIter *line_iter;
   GtkTextIter      start;
@@ -1203,17 +1198,14 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   gint             min, max;
   gchar           *string;
 
-  gtk_text_buffer_get_selection_bounds (text_tool->text_buffer,
-                                        &sel_start, &sel_end);
-  gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
+  gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
+  gtk_text_buffer_get_start_iter (buffer, &start);
 
-  string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                     &start, &sel_start, FALSE);
+  string = gtk_text_buffer_get_text (buffer, &start, &sel_start, FALSE);
   min = strlen (string);
   g_free (string);
 
-  string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                     &start, &sel_end, FALSE);
+  string = gtk_text_buffer_get_text (buffer, &start, &sel_end, FALSE);
   max = strlen (string);
   g_free (string);
 
@@ -2282,20 +2274,18 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
 static gchar *
 gimp_text_tool_canvas_editor_get_text (GimpTextTool *text_tool)
 {
-  GtkTextIter  start, end;
-  GtkTextIter  selstart, selend;
-  gchar       *string;
-  gchar       *fb;
-  gchar       *lb;
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+  GtkTextIter    start, end;
+  GtkTextIter    selstart, selend;
+  gchar         *string;
+  gchar         *fb;
+  gchar         *lb;
 
-  gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
-  gtk_text_buffer_get_selection_bounds (text_tool->text_buffer,
-                                        &selstart, &selend);
+  gtk_text_buffer_get_bounds (buffer, &start, &end);
+  gtk_text_buffer_get_selection_bounds (buffer, &selstart, &selend);
 
-  fb = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                 &start, &selstart, TRUE);
-  lb = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                 &selstart, &end, TRUE);
+  fb = gtk_text_buffer_get_text (buffer, &start, &selstart, TRUE);
+  lb = gtk_text_buffer_get_text (buffer, &selstart, &end, TRUE);
 
   if (text_tool->preedit_string)
     {
@@ -2825,9 +2815,9 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 void
 gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
 {
-  GimpVectors   *vectors0;
-  GimpVectors   *vectors;
-  gdouble        box_height;
+  GimpVectors *vectors0;
+  GimpVectors *vectors;
+  gdouble      box_height;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
