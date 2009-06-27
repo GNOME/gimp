@@ -57,7 +57,7 @@ text_tool_cut_cmd_callback (GtkAction *action,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
-  gimp_text_tool_clipboard_cut (text_tool);
+  gimp_text_tool_cut_clipboard (text_tool);
 }
 
 void
@@ -66,7 +66,7 @@ text_tool_copy_cmd_callback (GtkAction *action,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
-  gimp_text_tool_clipboard_copy (text_tool, TRUE);
+  gimp_text_tool_copy_clipboard (text_tool);
 }
 
 void
@@ -75,7 +75,7 @@ text_tool_paste_cmd_callback (GtkAction *action,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
-  gimp_text_tool_clipboard_paste (text_tool, TRUE);
+  gimp_text_tool_paste_clipboard (text_tool);
 }
 
 void
