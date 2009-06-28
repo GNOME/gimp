@@ -1506,12 +1506,12 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
         if (line < 0)
           {
-            gtk_text_iter_set_line_offset (&cursor, 0);
+            cursor = start;
             break;
           }
         else if (line >= pango_layout_get_line_count (layout))
           {
-            gtk_text_iter_forward_to_line_end (&cursor);
+            cursor = end;
             break;
           }
 
