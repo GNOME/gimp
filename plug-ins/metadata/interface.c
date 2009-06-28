@@ -69,9 +69,9 @@ typedef struct
 
 static void
 value_edited (GtkCellRendererText *cell,
-	      const gchar         *path_string,
-	      const gchar         *new_text,
-	      gpointer             data)
+        const gchar         *path_string,
+        const gchar         *new_text,
+        gpointer             data)
 {
   GtkTreeModel *model = data;
   GtkTreePath  *path  = gtk_tree_path_new_from_string (path_string);
@@ -85,8 +85,8 @@ value_edited (GtkCellRendererText *cell,
   /* FIXME: update value[] array */
   /* FIXME: check widget xref and update other widget if not NULL */
   gtk_tree_store_set (GTK_TREE_STORE (model), &iter,
-		      COL_XMP_VALUE, new_text,
-		      -1);
+          COL_XMP_VALUE, new_text,
+          -1);
 
   gtk_tree_path_free (path);
 }
@@ -135,7 +135,7 @@ add_view_columns (GtkTreeView *treeview)
   g_object_set (renderer, "xalign", 0.0, NULL);
 
   g_signal_connect (renderer, "edited",
-		    G_CALLBACK (value_edited), model);
+        G_CALLBACK (value_edited), model);
   col_offset =
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (treeview),
                                                  -1, _("Value"),
@@ -217,7 +217,7 @@ register_entry_xref (GtkWidget   *entry,
   xref->property_name = property_name;
   xref->widget_list = g_slist_prepend (NULL, entry);
   g_signal_connect (GTK_ENTRY (entry), "changed",
-		    G_CALLBACK (entry_changed), xref);
+        G_CALLBACK (entry_changed), xref);
 }
 
 static void
@@ -244,7 +244,7 @@ register_text_xref (GtkTextBuffer *text_buffer,
   xref->property_name = property_name;
   xref->widget_list = g_slist_prepend (NULL, text_buffer);
   g_signal_connect (GTK_TEXT_BUFFER (text_buffer), "changed",
-		    G_CALLBACK (text_changed), xref);
+        G_CALLBACK (text_changed), xref);
 }
 
 static void
@@ -259,7 +259,7 @@ add_description_tab (GtkWidget *notebook)
 
   frame = gimp_frame_new (_("Description"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
-			    gtk_label_new (_("Description")));
+          gtk_label_new (_("Description")));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
   /* gtk_widget_show (frame); */
 
@@ -272,21 +272,21 @@ add_description_tab (GtkWidget *notebook)
   entry = gtk_entry_new ();
   register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "title");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Image _title:"), 0.0, 0.5,
-			     entry, 1, FALSE);
+           _("Image _title:"), 0.0, 0.5,
+           entry, 1, FALSE);
 
   entry = gtk_entry_new ();
   register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "creator");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Author:"), 0.0, 0.5,
-			     entry, 1, FALSE);
+           _("_Author:"), 0.0, 0.5,
+           entry, 1, FALSE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+          GTK_POLICY_AUTOMATIC,
+          GTK_POLICY_AUTOMATIC);
   text_view = gtk_text_view_new ();
   text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
   gtk_text_buffer_set_text (text_buffer,
@@ -297,28 +297,28 @@ add_description_tab (GtkWidget *notebook)
   register_text_xref (text_buffer, XMP_SCHEMA_DUBLIN_CORE, "description");
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Description:"), 0.0, 0.5,
-			     scrolled_window, 1, FALSE);
+           _("_Description:"), 0.0, 0.5,
+           scrolled_window, 1, FALSE);
 
   entry = gtk_entry_new ();
   register_entry_xref (entry, XMP_SCHEMA_PHOTOSHOP, "CaptionWriter");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Description _writer:"), 0.0, 0.5,
-			     entry, 1, FALSE);
+           _("Description _writer:"), 0.0, 0.5,
+           entry, 1, FALSE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+          GTK_POLICY_AUTOMATIC,
+          GTK_POLICY_AUTOMATIC);
   text_view = gtk_text_view_new ();
   text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
   register_text_xref (text_buffer, XMP_SCHEMA_PDF, "Keywords");
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("_Keywords:"), 0.0, 0.5,
-			     scrolled_window, 1, FALSE);
+           _("_Keywords:"), 0.0, 0.5,
+           scrolled_window, 1, FALSE);
 
   gtk_widget_show_all (frame);
 }
@@ -331,7 +331,7 @@ add_copyright_tab (GtkWidget *notebook)
   /* FIXME: add entries, cross-link with XMP model */
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
-			    gtk_label_new (_("Copyright")));
+          gtk_label_new (_("Copyright")));
   gtk_widget_show (label);
 }
 
@@ -343,7 +343,7 @@ add_origin_tab (GtkWidget *notebook)
   /* FIXME: add entries, cross-link with XMP model */
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
-			    gtk_label_new (_("Origin")));
+          gtk_label_new (_("Origin")));
   gtk_widget_show (label);
 }
 
@@ -355,7 +355,7 @@ add_camera1_tab (GtkWidget *notebook)
   /* FIXME: add entries, cross-link with XMP model */
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
-			    gtk_label_new (_("Camera 1")));
+          gtk_label_new (_("Camera 1")));
   gtk_widget_show (label);
 }
 
@@ -367,7 +367,7 @@ add_camera2_tab (GtkWidget *notebook)
   /* FIXME: add entries, cross-link with XMP model */
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
-			    gtk_label_new (_("Camera 2")));
+          gtk_label_new (_("Camera 2")));
   gtk_widget_show (label);
 }
 
@@ -382,13 +382,13 @@ add_thumbnail_tab (GtkWidget *notebook)
                                           (GtkIconSize) -1, "thumbnail");
   image = gtk_image_new_from_pixbuf (default_thumb);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), image,
-			    gtk_label_new (_("Thumbnail")));
+          gtk_label_new (_("Thumbnail")));
   gtk_widget_show (image);
 }
 
 static void
 add_advanced_tab (GtkWidget    *notebook,
-		  GtkTreeModel *model)
+      GtkTreeModel *model)
 {
   GtkWidget *sw;
   GtkWidget *treeview;
@@ -396,12 +396,12 @@ add_advanced_tab (GtkWidget    *notebook,
   /* Advanced tab */
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw),
-				       GTK_SHADOW_ETCHED_IN);
+               GTK_SHADOW_ETCHED_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+          GTK_POLICY_AUTOMATIC,
+          GTK_POLICY_AUTOMATIC);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sw,
-			    gtk_label_new (_("Advanced")));
+          gtk_label_new (_("Advanced")));
 
   /* create tree view - model will be unref'ed in xmp_model_free() */
   treeview = gtk_tree_view_new_with_model (model);
@@ -413,7 +413,7 @@ add_advanced_tab (GtkWidget    *notebook,
 
   /* expand all rows after the treeview widget has been realized */
   g_signal_connect (treeview, "realize",
-		    G_CALLBACK (gtk_tree_view_expand_all), NULL);
+        G_CALLBACK (gtk_tree_view_expand_all), NULL);
   gtk_widget_show (treeview);
   gtk_widget_show (sw);
 }
@@ -590,7 +590,7 @@ file_export_dialog (GtkWidget   *parent,
                                          GTK_FILE_CHOOSER_ACTION_SAVE,
 
                                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                         GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                         GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
                                          NULL);
 
@@ -683,7 +683,7 @@ metadata_dialog (gint32    image_ID,
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_container_set_border_width (GTK_CONTAINER (notebook), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (mgui.dlg)->vbox), notebook,
-		      TRUE, TRUE, 0);
+          TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
   mgui.xmp_model = xmp_model;
