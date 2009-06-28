@@ -397,7 +397,7 @@ run (const gchar      *name,
                                        - METADATA_MARKER_LEN,
                                        TRUE, &error))
         {
-          g_printerr ("Metadata parasite seems to be corrupt");
+          g_printerr ("\nMetadata parasite seems to be corrupt");
           /* continue anyway, we will attach a clean parasite later */
         }
       gimp_parasite_free (parasite);
@@ -445,7 +445,10 @@ run (const gchar      *name,
         if (! xmp_merge_from_exifbuffer (xmp_model,
                                          image_ID,
                                          &error))
-        status = GIMP_PDB_EXECUTION_ERROR;
+          {
+            status = GIMP_PDB_EXECUTION_ERROR;
+            g_printerr ("\nExif to XMP merge failed.\n");
+          }
 #endif
     }
   else if (! strcmp (name, GET_PROC))
