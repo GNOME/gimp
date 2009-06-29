@@ -130,7 +130,17 @@ typedef enum  /*< pdb-skip, skip >*/
   SIOX_REFINEMENT_CHANGE_SENSITIVITY = (1 << 2),
   SIOX_REFINEMENT_CHANGE_SMOOTHNESS  = (1 << 3),
   SIOX_REFINEMENT_CHANGE_MULTIBLOB   = (1 << 4),
+  SIOX_REFINEMENT_CHANGE_THRESHOLD   = (1 << 5),//(new) 
   SIOX_REFINEMENT_RECALCULATE        = 0xFF
 } SioxRefinementType;
 
+typedef enum  /*< pdb-skip, skip >*///(new)
+{
+  SIOX_DRB_NO_CHANGE                 = 0,//(new)
+  SIOX_DRB_ADD                       = (1 << 0),//(new)
+  SIOX_DRB_SUBTRACT                  = (1 << 1),//(new)
+  SIOX_DRB_RECALCULATE               = 0xFF//(new)
+} SioxDRBType;//(new)
+
 #endif /* __BASE_ENUMS_H__ */
+

@@ -17,8 +17,13 @@
 
 #ifndef  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
 #define  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
-
-
+/*typedef struct _GimpSioxDrb//(new)
+{
+	SioxState        *state;//(new)
+	gboolean          options;//(new)
+	GimpDrawable     *mask;//(new)
+}SioxDrbState;//(new)
+*/
 /*  general API (as seen from the PDB)  */
 
 void       gimp_drawable_foreground_extract (GimpDrawable              *drawable,
@@ -36,11 +41,31 @@ SioxState * gimp_drawable_foreground_extract_siox_init   (GimpDrawable *drawable
 void        gimp_drawable_foreground_extract_siox  (GimpDrawable       *mask,
                                                     SioxState          *state,
                                                     SioxRefinementType  refinemane,
+                                                    //GArray             *stroke,//(new) 
+                                                    //gboolean			sioxdrboption,//(new)   
                                                     gint                smoothness,
                                                     const gdouble       sensitivity[3],
                                                     gboolean            multiblob,
                                                     GimpProgress       *progress);
 void        gimp_drawable_foreground_extract_siox_done (SioxState      *state);
 
+                                                    
+void gimp_drawable_foreground_extract_siox_drb(GimpDrawable       *mask,//(new)
+										  SioxState         *state,
+										  gboolean          optionsrefinement,
+										    gint		    optionsthreshold,//(should be  float)
+										    gint            radius,
+											GimpProgress       *progress);
 
+void siox_forefound_drb (SioxState    *state,//(new)
+                                TileManager  *mask,
+                                gboolean     options,
+								gint		 x,
+								gint		 y,
+								gint         brushradius,
+								gfloat       threshold);//(new)
+
+void printstate(SioxState *state);
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */
+
+

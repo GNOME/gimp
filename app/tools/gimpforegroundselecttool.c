@@ -51,6 +51,8 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
+#include "base/siox.h"
+#include "gdk/gdkkeysyms.h"//
 
 
 typedef struct
@@ -91,7 +93,6 @@ static void   gimp_foreground_select_tool_button_press   (GimpTool         *tool
                                                           const GimpCoords *coords,
                                                           guint32           time,
                                                           GdkModifierType   state,
-                                                          GimpButtonPressType press_type,
                                                           GimpDisplay      *display);
 static void   gimp_foreground_select_tool_button_release (GimpTool         *tool,
                                                           const GimpCoords *coords,
@@ -126,8 +127,14 @@ static void   gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool 
 static void   gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
                                                      GParamSpec                  *pspec,
                                                      GimpForegroundSelectTool    *fg_select);
+/*----new 2009-6-28*/
+//static void   gimp_foreground_select_siox_drb(GimpTool         *tool,
+	//										  GimpDisplay      *display);
 
+static gboolean gimp_forground_select_tool_drbsignal(gboolean drbsignal);
 
+static gboolean mark_drb = FALSE;
+/*----end*/
 G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
                GIMP_TYPE_FREE_SELECT_TOOL)
 
@@ -137,7 +144,7 @@ G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
 void
 gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
                                       gpointer                  data)
-{
+{printf("=============gimp_foreground_select_tool_register");
   (* callback) (GIMP_TYPE_FOREGROUND_SELECT_TOOL,
                 GIMP_TYPE_FOREGROUND_SELECT_OPTIONS,
                 gimp_foreground_select_options_gui,
@@ -153,7 +160,7 @@ gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
 
 static void
 gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
-{
+{printf("=============gimp_foreground_select_tool_class_init");
   GObjectClass            *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass           *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass       *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
@@ -180,7 +187,7 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 
 static void
 gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
-{
+{printf("===========gimp_foreground_select_tool_init\n");
   GimpTool *tool = GIMP_TOOL (fg_select);
 
   gimp_tool_control_set_scroll_lock (tool->control, FALSE);
@@ -198,13 +205,14 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
   fg_select->stroke  = NULL;
   fg_select->strokes = NULL;
   fg_select->mask    = NULL;
+  fg_select->drbsignal = FALSE;	//(new)
 }
 
 static GObject *
 gimp_foreground_select_tool_constructor (GType                  type,
                                          guint                  n_params,
                                          GObjectConstructParam *params)
-{
+{printf("===========tool_constructor\n");
   GObject         *object;
   GimpToolOptions *options;
 
@@ -221,7 +229,7 @@ gimp_foreground_select_tool_constructor (GType                  type,
 
 static void
 gimp_foreground_select_tool_finalize (GObject *object)
-{
+{printf("===========tool_finalize\n");
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (object);
 
   if (fg_select->stroke)
@@ -243,17 +251,17 @@ static void
 gimp_foreground_select_tool_control (GimpTool       *tool,
                                      GimpToolAction  action,
                                      GimpDisplay    *display)
-{
+{printf("===========gimp_foreground_select_tool_control\n");
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 
   switch (action)
-    {
+    {printf("===========action\n");
     case GIMP_TOOL_ACTION_PAUSE:
     case GIMP_TOOL_ACTION_RESUME:
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      {
+      {printf("===========action_halt\n");
         GList *list;
 
         gimp_foreground_select_tool_set_mask (fg_select, display, NULL);
@@ -270,7 +278,7 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
         fg_select->strokes = NULL;
 
         if (fg_select->state)
-          {
+          {printf("===========switch action state\n");
             gimp_drawable_foreground_extract_siox_done (fg_select->state);
             fg_select->state = NULL;
           }
@@ -289,7 +297,7 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
                                          GdkModifierType   state,
                                          gboolean          proximity,
                                          GimpDisplay      *display)
-{
+{printf("===========gimp_foreground_select_tool_oper_update\n");
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
   GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
   const gchar              *status    = NULL;
@@ -303,7 +311,7 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
                                                display);
 
   if (fg_select->mask)
-    {
+    {printf("===========11\n");
       switch (GIMP_SELECTION_TOOL (tool)->function)
         {
         case SELECTION_SELECT:
@@ -312,7 +320,12 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
         case SELECTION_MOVE_COPY:
         case SELECTION_ANCHOR:
           if (fg_select->strokes)
-            status = _("Add more strokes or press Enter to accept the selection");
+			{printf("===========12\n");
+				if(!fg_select->drbsignal)//(new)
+        		status = _("Add more strokes or press Shift to drb");
+				else
+				status = _("Add more drb or press Enter to accept the selection");
+			}
           else
             status = _("Mark foreground by painting on the object to extract");
           break;
@@ -321,7 +334,7 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
         }
     }
   else
-    {
+    {printf("===========13\n");
       switch (GIMP_SELECTION_TOOL (tool)->function)
         {
         case SELECTION_SELECT:
@@ -333,13 +346,15 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
     }
 
   if (proximity)
-    {
+    {printf("===========14\n");
       if (status)
-        gimp_tool_replace_status (tool, display, "%s", status);
-
+		{gimp_tool_replace_status (tool, display, "%s", status);
+		printf("===========15\n");
+		}
       gimp_draw_tool_start (draw_tool, display);
     }
 }
+
 
 static void
 gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
@@ -347,9 +362,9 @@ gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
                                           gboolean         press,
                                           GdkModifierType  state,
                                           GimpDisplay     *display)
-{
+{printf("===========tool_modifier_key\n");
   if (key == GDK_CONTROL_MASK)
-    {
+    {printf("===========tool_modifier_key_key\n");
       GimpForegroundSelectOptions *options;
 
       options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
@@ -357,7 +372,19 @@ gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
       g_object_set (options,
                     "background", ! options->background,
                     NULL);
-    }
+	}
+	  /*----new----
+		GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+		gimp_forground_select_tool_drbsignal(fg_select->drbsignal);
+		printf("fg_select->drbsignal=%d\n",fg_select->drbsignal);
+		----end----*/
+	if(key == GDK_SHIFT_MASK)
+	{
+		 mark_drb = TRUE;
+		//gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,display);//(修改)
+                                          
+	}
+	
 }
 
 static void
@@ -365,11 +392,11 @@ gimp_foreground_select_tool_cursor_update (GimpTool         *tool,
                                            const GimpCoords *coords,
                                            GdkModifierType   state,
                                            GimpDisplay      *display)
-{
+{printf("===========gimp_foreground_select_tool_cursor_update\n");
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 
   if (fg_select->mask)
-    {
+    {printf("===========16\n");
       GimpForegroundSelectOptions *options;
 
       options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
@@ -382,12 +409,13 @@ gimp_foreground_select_tool_cursor_update (GimpTool         *tool,
         case SELECTION_MOVE:
         case SELECTION_MOVE_COPY:
         case SELECTION_ANCHOR:
+			printf("===========17\n");
           return;
         default:
           break;
         }
     }
-
+printf("===========18\n");
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
@@ -395,12 +423,13 @@ static gboolean
 gimp_foreground_select_tool_key_press (GimpTool    *tool,
                                        GdkEventKey *kevent,
                                        GimpDisplay *display)
-{
+{printf("===========tool_key_press\n");
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-
+ 
+	
   if (display != tool->display)
     return FALSE;
-
+  
   if (fg_select->state)
     {
       switch (kevent->keyval)
@@ -414,42 +443,74 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
         case GDK_Escape:
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
           return TRUE;
-
+	   /*---------------add
+		case GDK_SHIFT_MASK:
+			mark_drb = TRUE;
+       /*-----------------end*/
         default:
           return FALSE;
         }
-    }
+	}	
+/*==============new================
+  if (fg_select->state)
+    {   
+		if(fg_select->drbsignal)
+	
+		 switch (kevent->keyval)
+        {
+        case GDK_Return:
+	    case GDK_KP_Enter:
+        case GDK_ISO_Enter:
+          gimp_foreground_select_tool_apply (fg_select, display);
+          return TRUE;
+
+        case GDK_Escape:
+		 gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+          return TRUE;
+				
+		default:
+          return FALSE;
+        }
+		else
+		{if (kevent->keyval == GDK_Return)//(new)
+			gimp_forground_select_tool_drbsignal(fg_select->drbsignal);//
+		}
+	}
+	 ===============end===========*/
   else
     {
       return GIMP_TOOL_CLASS (parent_class)->key_press (tool,
                                                         kevent,
                                                         display);
+		printf("===========tool_key_press_return\n");
     }
 }
 
 static void
-gimp_foreground_select_tool_button_press (GimpTool            *tool,
-                                          const GimpCoords    *coords,
-                                          guint32              time,
-                                          GdkModifierType      state,
-                                          GimpButtonPressType  press_type,
-                                          GimpDisplay         *display)
-{
+gimp_foreground_select_tool_button_press (GimpTool         *tool,
+                                          const GimpCoords *coords,
+                                          guint32           time,
+                                          GdkModifierType   state,
+                                          GimpDisplay      *display)
+{printf("===========tool_button_press\n");
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
   GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (fg_select->mask)
-    {
+  if (fg_select->mask && (!fg_select->drbsignal))//(new)
+    {printf("===========3\n");
       GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
 
       gimp_draw_tool_pause (draw_tool);
 
       if (gimp_draw_tool_is_active (draw_tool) && draw_tool->display != display)
-        gimp_draw_tool_stop (draw_tool);
+		{ gimp_draw_tool_stop (draw_tool);
+			printf("===========4\n");
+		}
 
       if (! gimp_tool_control_is_active (tool->control))
-        gimp_tool_control_activate (tool->control);
-
+		{  gimp_tool_control_activate (tool->control);
+		printf("===========5\n");
+		}
       fg_select->last_coords = *coords;
 
       g_return_if_fail (fg_select->stroke == NULL);
@@ -458,14 +519,43 @@ gimp_foreground_select_tool_button_press (GimpTool            *tool,
       g_array_append_val (fg_select->stroke, point);
 
       if (! gimp_draw_tool_is_active (draw_tool))
-        gimp_draw_tool_start (draw_tool, display);
-
+		{ gimp_draw_tool_start (draw_tool, display);
+		printf("===========6\n");
+		}
       gimp_draw_tool_resume (draw_tool);
     }
-  else
+	/*---------------add*/   //看看如何修改
+  else if (fg_select->drbsignal)
+	{
+		GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
+
+      gimp_draw_tool_pause (draw_tool);
+
+      if (gimp_draw_tool_is_active (draw_tool) && draw_tool->display != display)
+		 gimp_draw_tool_stop (draw_tool);
+		
+
+      if (! gimp_tool_control_is_active (tool->control))
+		  gimp_tool_control_activate (tool->control);
+	
+      fg_select->last_coords = *coords;
+
+      g_return_if_fail (fg_select->stroke == NULL);
+      fg_select->stroke = g_array_new (FALSE, FALSE, sizeof (GimpVector2));
+
+      g_array_append_val (fg_select->stroke, point);
+
+      if (! gimp_draw_tool_is_active (draw_tool))
+		gimp_draw_tool_start (draw_tool, display);
+	
+      gimp_draw_tool_resume (draw_tool);
+		
+	}
+	/*---------------end*/	
+  else		
     {
-      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                    press_type, display);
+      GIMP_TOOL_CLASS (parent_class)->button_press (tool,
+                                                    coords, time, state, display);
     }
 }
 
@@ -476,11 +566,11 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
                                             GdkModifierType        state,
                                             GimpButtonReleaseType  release_type,
                                             GimpDisplay           *display)
-{
+{printf("===========tool_button_release\n");
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 
-  if (fg_select->mask)
-    {
+  if (fg_select->mask && (!fg_select->drbsignal))//
+    {printf("===========0\n");
       GimpForegroundSelectOptions *options;
 
       options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
@@ -492,11 +582,17 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
       gimp_foreground_select_tool_push_stroke (fg_select, display, options);
 
       gimp_free_select_tool_select (GIMP_FREE_SELECT_TOOL (tool), display);
-
+    printf("===========1\n");
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
-  else
-    {
+	/*-------------add*/
+  else if (fg_select->drbsignal)
+	{
+		
+	}
+	/*--------------end*/	
+  else	
+    {printf("===========2\n");
       GIMP_TOOL_CLASS (parent_class)->button_release (tool,
                                                       coords, time, state,
                                                       release_type,
@@ -545,7 +641,7 @@ gimp_foreground_select_tool_get_area (GimpChannel *mask,
                                       gint        *y1,
                                       gint        *x2,
                                       gint        *y2)
-{
+{printf("===========tool_get_area\n");
   gint width;
   gint height;
 
@@ -621,7 +717,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                     GimpDisplay        *display)
-{
+{printf("===========gimp_foreground_select_tool_select\n");
   GimpForegroundSelectTool    *fg_select;
   GimpForegroundSelectOptions *options;
   GimpImage                   *image = display->image;
@@ -630,20 +726,27 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   GimpChannel                 *mask;
   const GimpVector2           *points;
   gint                         n_points;
-
-  drawable  = gimp_image_get_active_drawable (image);
+  gint                         radius;
+	
+	
+  drawable  = gimp_image_get_active_drawable (image);	
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
-  options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (free_sel);
-
+  options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (free_sel);  
+/*-----new-----*/	
+  GimpTool *tool =GIMP_TOOL(fg_select);	
+  GimpDisplayShell   *shell = GIMP_DISPLAY_SHELL (display->shell);
+  radius = (options->stroke_width / shell->scale_y) / 2;
+/*----end----*/	
   if (fg_select->idle_id)
-    {
+    {printf("===========7\n");
       g_source_remove (fg_select->idle_id);
       fg_select->idle_id = 0;
     }
 
   if (! drawable)
-    return;
-
+	{printf("===========return\n");
+		return;
+	}
   scan_convert = gimp_scan_convert_new ();
 
   gimp_free_select_tool_get_points (free_sel,
@@ -664,10 +767,25 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                   gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                                   0, 0, 128);
   gimp_scan_convert_free (scan_convert);
-
-  if (fg_select->strokes)
-    {
-      GList *list;
+	/*==new===*/
+	if(fg_select->strokes)
+		{
+			printf("GDK_SHIFT_MASK=%d",GDK_SHIFT_MASK);
+			/*
+			fg_select->drbsignal = gimp_foreground_select_tool_modifier_key(tool,//(应该怎么写？)
+                                          GDK_SHIFT_MASK,
+                                          TRUE,
+                                          GDK_SHIFT_MASK,
+                                          display
+			);*/
+			fg_select->drbsignal = mark_drb;
+			printf("===========fg_select->drbsignal=%d\n",fg_select->drbsignal);
+		}
+	/*-----------end------------*/
+	if (fg_select->strokes && (!fg_select->drbsignal))
+	
+	{printf("===========8\n");
+		GList *list;
 
       gimp_set_busy (image->gimp);
 
@@ -676,20 +794,43 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
         gimp_foreground_select_tool_stroke (mask, list->data);
 
       if (fg_select->state)
-        gimp_drawable_foreground_extract_siox (GIMP_DRAWABLE (mask),
+		{gimp_drawable_foreground_extract_siox (GIMP_DRAWABLE (mask),
                                                fg_select->state,
                                                fg_select->refinement,
                                                options->smoothness,
                                                options->sensitivity,
                                                ! options->contiguous,
                                                GIMP_PROGRESS (display));
-
+		printf("===========tool_select_extract_siox\n");
+		}
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
 
       gimp_unset_busy (image->gimp);
-    }
-  else
-    {
+	}
+		/*-----new-------*/ 
+	else if	(fg_select->drbsignal)
+   
+  
+	{  printf("===========9\n");
+		gimp_set_busy (image->gimp);
+	
+		fg_select->drbsignal = gimp_forground_select_tool_drbsignal(fg_select->drbsignal);
+		gimp_drawable_foreground_extract_siox_drb(GIMP_DRAWABLE (mask),
+												  fg_select->state,
+												  options->refinement,
+												  options->threshold,
+												   radius,
+												  GIMP_PROGRESS (display));
+
+		
+	options->refinement = SIOX_DRB_NO_CHANGE ;	
+	
+	    gimp_unset_busy (image->gimp);
+	}
+	/*------end-------*/
+	
+	else 
+	{printf("===========10\n");
       gint x1, y1;
       gint x2, y2;
 
@@ -704,17 +845,25 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
         gimp_drawable_foreground_extract_siox_init (drawable,
                                                     x1, y1, x2 - x1, y2 - y1);
     }
+	
+
 
   gimp_foreground_select_tool_set_mask (fg_select, display, mask);
 
   g_object_unref (mask);
 }
 
+/*----new */
+static gboolean gimp_forground_select_tool_drbsignal(gboolean drbsignal) 
+{
+	return drbsignal = TRUE;
+}
+/*----new end*/
 static void
 gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
                                       GimpDisplay              *display,
                                       GimpChannel              *mask)
-{
+{printf("===========tool_set_mask\n");
   GimpTool                    *tool = GIMP_TOOL (fg_select);
   GimpForegroundSelectOptions *options;
 
@@ -758,7 +907,7 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
 static void
 gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
                                    GimpDisplay              *display)
-{
+{printf("===========select_tool_apply\n");
   GimpTool             *tool    = GIMP_TOOL (fg_select);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
@@ -780,7 +929,7 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 static void
 gimp_foreground_select_tool_stroke (GimpChannel    *mask,
                                     FgSelectStroke *stroke)
-{
+{printf("===========select_tool_stroke\n");
   GimpScanConvert *scan_convert = gimp_scan_convert_new ();
 
   if (stroke->num_points == 1)
@@ -815,7 +964,7 @@ static void
 gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
                                          GimpDisplay                 *display,
                                          GimpForegroundSelectOptions *options)
-{
+{printf("===========select_tool_push_stroke\n");
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
   FgSelectStroke   *stroke;
 
@@ -854,7 +1003,7 @@ static void
 gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
                                        GParamSpec                  *pspec,
                                        GimpForegroundSelectTool    *fg_select)
-{
+{printf("===========select_options_notify\n");
   SioxRefinementType refinement = 0;
 
   if (! fg_select->mask)
@@ -871,6 +1020,10 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
   else if (g_str_has_prefix (pspec->name, "sensitivity"))
     {
       refinement = SIOX_REFINEMENT_CHANGE_SENSITIVITY;
+    }
+  else if (strcmp (pspec->name, "threshold"))//(new)
+    {
+      refinement = SIOX_REFINEMENT_CHANGE_THRESHOLD;
     }
 
   if (refinement)
@@ -896,3 +1049,4 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
                                      options->mask_color);
     }
 }
+

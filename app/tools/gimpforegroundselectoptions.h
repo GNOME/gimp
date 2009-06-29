@@ -39,8 +39,10 @@ struct _GimpForegroundSelectOptions
 
   gboolean              contiguous;
   gboolean              background;
+  gboolean              refinement;//(new)
   gint                  stroke_width;
   gint                  smoothness;
+  gint                threshold;//(new)
   GimpChannelType       mask_color;
   gboolean              expanded;
   gdouble               sensitivity[3];
@@ -53,3 +55,4 @@ GtkWidget * gimp_foreground_select_options_gui      (GimpToolOptions *tool_optio
 
 
 #endif /* __GIMP_FOREGROUND_SELECT_OPTIONS_H__ */
+

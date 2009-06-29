@@ -39,7 +39,11 @@ GtkWidget     * gimp_prop_boolean_radio_frame_new (GObject      *config,
                                                    const gchar  *title,
                                                    const gchar  *true_text,
                                                    const gchar  *false_text);
-
+GtkWidget     * gimp_prop_boolean_radio_frame_drb_new (GObject      *config,//new
+                                                   const gchar  *property_name,//new
+                                                   const gchar  *title,//new
+                                                   const gchar  *true_text,//new                                                
+                                                   const gchar  *false_text);//new                                                   
 GtkWidget     * gimp_prop_expander_new            (GObject      *config,
                                                    const gchar  *property_name,
                                                    const gchar  *label);
@@ -217,3 +221,4 @@ GtkWidget     * gimp_prop_stock_image_new         (GObject       *config,
 G_END_DECLS
 
 #endif /* __GIMP_PROP_WIDGETS_H__ */
+

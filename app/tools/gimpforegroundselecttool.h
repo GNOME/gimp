@@ -43,6 +43,7 @@ struct _GimpForegroundSelectTool
   guint               idle_id;
   GArray             *stroke;
   GList              *strokes;
+  gboolean            drbsignal;//(new)
   GimpChannel        *mask;
   SioxState          *state;
   SioxRefinementType  refinement;
@@ -56,8 +57,14 @@ struct _GimpForegroundSelectToolClass
 
 void    gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
                                               gpointer                  data);
+                                              
+/*static void                                                            //(new)
+gimp_foreground_select_siox_drb (GimpTool         *tool,//(new)
+								 GimpDisplay      *display);    */                                          
 
 GType   gimp_foreground_select_tool_get_type (void) G_GNUC_CONST;
 
+static gboolean gimp_forground_select_tool_drbsignal(gboolean drbsignal); //
 
 #endif  /*  __GIMP_FOREGROUND_SELECT_TOOL_H__  */
+
