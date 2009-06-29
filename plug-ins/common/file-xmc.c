@@ -58,6 +58,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <X11/Xlib.h>
 #include <X11/Xcursor/Xcursor.h>
 
 #include "libgimp/stdplugins-intl.h"
