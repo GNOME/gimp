@@ -7,6 +7,45 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
+=================================================
+
+* Bugs fixed:
+
+ 563029 - Closing maximized image doesn't restore document window size
+ 585488 – Perspective transformation on a layer with a mask causes crash
+ 586008 - GIMP crashes when right-click canceling a drawing action initiated
+          outside layer boundaries
+ 584345 – when printing, the number of copies should be reset to 1
+ 557061 – Alpha to Logo
+ 472644 – Rotate with clipping crops the whole layer
+ 577575 – transform tool fills underlying extracted area wrongly
+ 555738 – Image display is wrong after undoing canvas size
+ 577024 – help-browser plugin crashes when used with webkit 1.1.3
+ 555025 – Action GEGL box widgets weirdness
+
+* Updated and new translations:
+
+ Czech (cs)
+ Danish (da)
+ German (de)
+ Basque (eu)
+ Finnish (fi)
+ Italian (it)
+ Gujarati (gu)
+ Kannada (kn)
+ Marathi (mr)
+ Norwegian bokmål (nb)
+ Oriya (or)
+ Portuguese (pt)
+ Romanian (ro)
+ Sinhala (si)
+ Swedish (sv)
+ Simplified Chinese (zh_CN)
+ Traditional Chinese - Hong Kong (zh_HK)
+ Traditional Chinese - Taiwan (zh_TW)
+
+
 Overview of Changes from GIMP 2.6.5 to GIMP 2.6.6
 =================================================
 
