@@ -22,10 +22,6 @@
 
 G_BEGIN_DECLS
 
-gboolean        exif_merge_to_xmp           (XMPModel            *xmp_model,
-                                             const gchar         *filename,
-                                             GError             **error);
-
 gboolean        xmp_merge_from_exifbuffer   (XMPModel            *xmp_model,
                                              gint32               image_ID,
                                              GError             **error);

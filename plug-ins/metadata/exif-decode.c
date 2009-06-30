@@ -34,10 +34,17 @@
 #include "exif-decode.h"
 
 
+/*  local function prototypes  */
+
+gboolean            xmp_merge_from_exifbuffer   (XMPModel    *xmp_model,
+                                                 gint32       image_ID,
+                                                 GError     **error);
 static void         exif_foreach_content_cb     (ExifContent *content,
                                                  XMPModel    *xmp_model);
 static void         exif_foreach_entry_cb       (ExifEntry   *entry,
                                                  XMPModel    *xmp_model);
+
+/* public functions */
 
 /**
  * xmp_merge_from_exifbuffer:
@@ -76,11 +83,16 @@ xmp_merge_from_exifbuffer (XMPModel     *xmp_model,
    return TRUE;
 }
 
+
+/* private functions */
+
 static void
 exif_foreach_content_cb (ExifContent *content,
                          XMPModel    *xmp_model)
 {
-   exif_content_foreach_entry (content, (void *) exif_foreach_entry_cb, xmp_model);
+   exif_content_foreach_entry (content,
+                               (void *) exif_foreach_entry_cb,
+                               xmp_model);
 }
 
 static void

@@ -386,7 +386,6 @@ run (const gchar      *name,
   if (parasite)
     {
       GError *error = NULL;
-      g_warning ("Parsing Metadata XMP parasite.");
 
       if (!! strncmp (gimp_parasite_data (parasite),
                       METADATA_MARKER, METADATA_MARKER_LEN)
