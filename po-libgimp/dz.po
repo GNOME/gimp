@@ -288,7 +288,7 @@ msgstr "དབྱེ་བའི་ཐོག་ལས་ འཚོལ་ཞི�
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d བྱ་སྒོའི་ལམ་ལུགས་ཚུ།"
-msgstr[1] ""
+msgstr[1] "%d"
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
@@ -299,7 +299,7 @@ msgstr "ཁྱོད་ཀྱི་འདྲི་དཔྱད་ཀྱི་ལ
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "ཁྱོད་ཀྱི་འདྲི་དཔྱད་ཀྱི་དང་ %d བྱ་སྒོའི་ལམ་ལུགས་དེ་ མཐུན་སྒྲིག་འབདཝ་མས།"
-msgstr[1] ""
+msgstr[1] "%d"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516
@@ -720,7 +720,7 @@ msgstr "གནས་སྐབས་ཀྱི་བྱ་སྒོའི་ལམ
 msgid "%d Byte"
 msgid_plural "%d Bytes"
 msgstr[0] "%d བཱའིཊི།"
-msgstr[1] ""
+msgstr[1] "%d"
 
 #: ../libgimpbase/gimpmemsize.c:186
 #, c-format
