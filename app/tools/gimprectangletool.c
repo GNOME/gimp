@@ -4099,13 +4099,13 @@ gimp_rectangle_tool_update_int_rect (GimpRectangleTool *rect_tool)
 {
   GimpRectangleToolPrivate *priv = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
-  priv->x1_int = ROUND (priv->x1);
-  priv->y1_int = ROUND (priv->y1);
+  priv->x1_int = RINT (priv->x1);
+  priv->y1_int = RINT (priv->y1);
 
   if (gimp_rectangle_tool_rect_rubber_banding_func (rect_tool))
     {
-      priv->width_int  = ROUND (priv->x2) - priv->x1_int;
-      priv->height_int = ROUND (priv->y2) - priv->y1_int;
+      priv->width_int  = (gint) RINT (priv->x2) - priv->x1_int;
+      priv->height_int = (gint) RINT (priv->y2) - priv->y1_int;
     }
 }
 
@@ -4176,8 +4176,8 @@ gimp_rectangle_tool_adjust_coord (GimpRectangleTool *rect_tool,
   switch (priv->precision)
     {
       case GIMP_RECTANGLE_PRECISION_INT:
-        *coord_x_output = ROUND (coord_x_input);
-        *coord_y_output = ROUND (coord_y_input);
+        *coord_x_output = RINT (coord_x_input);
+        *coord_y_output = RINT (coord_y_input);
         break;
 
       case GIMP_RECTANGLE_PRECISION_DOUBLE:
