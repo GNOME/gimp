@@ -42,7 +42,7 @@ struct _GimpForegroundSelectOptions
   gboolean              refinement;//(new)
   gint                  stroke_width;
   gint                  smoothness;
-  gint                threshold;//(new)
+  gfloat                threshold;//(new)
   GimpChannelType       mask_color;
   gboolean              expanded;
   gdouble               sensitivity[3];

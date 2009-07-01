@@ -111,9 +111,9 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
                                 GIMP_PARAM_STATIC_STRINGS);
 		
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_THRESHOLD,//(new)
+  GIMP_CONFIG_INSTALL_PROP_FLOAT (object_class, PROP_THRESHOLD,//(new)
                                 "threshold",//(new)
-								_("Range for SIOX_DRB_ADD:1.0"//(new)
+				_("Range for SIOX_DRB_ADD:1.0"//(new)
                                   "Range for SIOX_DRB_ADD:0.0"),//(new)
                                 0.0, 1.0, SIOX_DEFAULT_THRESHOLD,//(new)
                                 GIMP_PARAM_STATIC_STRINGS);	//(new)
@@ -188,7 +188,7 @@ gimp_foreground_select_options_set_property (GObject      *object,
       break;
 
     case PROP_THRESHOLD://(new)
-      options->threshold = g_value_get_int (value);//(new)
+      options->threshold = g_value_get_float (value);//(new)
       break;//(new)		
 
     case PROP_MASK_COLOR:
@@ -252,7 +252,7 @@ gimp_foreground_select_options_get_property (GObject    *object,
       break;
 
 	case PROP_THRESHOLD://(new)//(should be float )
-      g_value_set_int (value, options->threshold);//(new)
+      g_value_set_float(value, options->threshold);//(new)
       break;//(new)
 			
     case PROP_MASK_COLOR:
