@@ -878,59 +878,6 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
 
   return frame;
 }
-/**
- *gimp_prop_boolean_radio_frame_drb_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of boolean property controlled by the radio buttons.
- * @title:         Label for the frame.
- * @true_text:     Label for the button corresponding to %TRUE.
- * @false_text:    Label for the button corresponding to %FALSE.
-**/
- GtkWidget *   //new
-gimp_prop_boolean_radio_frame_drb_new (GObject     *config,//new
-                                   const gchar *property_name,//new
-                                   const gchar *title,//new
-                                   const gchar *true_text,//new
-                                   const gchar *false_text)//new
-{                                                         //new
-  GParamSpec *param_spec;        //new
-  GtkWidget  *frame_drb;             //new
-  GtkWidget  *button;            //new
-  gboolean    value;              //new
-
-  g_return_val_if_fail (G_IS_OBJECT (config), NULL);  //new
-  g_return_val_if_fail (property_name != NULL, NULL);  //new
-
-  param_spec = check_param_spec_w (config, property_name,//new
-                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);//new
-  if (! param_spec)                   //new
-    return NULL;                         //new
-     
-  g_object_get (config,                  //new
-                property_name, &value,    //new
-                NULL);             //new
-
-  frame_drb =                             //new
-    gimp_int_radio_group_new (TRUE, title,//new(需要修改)
-                              G_CALLBACK (gimp_prop_radio_button_callback),//new
-                              config, value,  //new
-
-                              false_text, FALSE, &button,//new
-                              true_text,  TRUE,  NULL,  //new
-
-                              NULL);  //new
-
-  set_radio_spec (G_OBJECT (button), param_spec);  //new
-  
-  connect_notify (config, property_name,  //new
-                  G_CALLBACK (gimp_prop_radio_button_notify), //new
-                  button);  //new
-
-  g_object_set_data (G_OBJECT (frame_drb), "radio-button", button);//new
-
-  return frame_drb;   //new
-}   //new
-
 
 /**
  * gimp_prop_enum_stock_box_new:
