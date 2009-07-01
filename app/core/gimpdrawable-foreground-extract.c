@@ -170,17 +170,17 @@ gimp_drawable_foreground_extract_siox_done (SioxState *state)
 void                                                   //(new)
 gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,
 					  SioxState         *state,
-			        	  gboolean          optionsrefinement,
-					  gint		    optionsthreshold,//( should be float)
-					  gint              radius,
-					  GimpProgress       *progress)
+			        	  gboolean           optionsrefinement,
+					  gfloat	     optionsthreshold,//( should be float)
+					  gint               radius,
+					  GimpProgress      *progress)
 {
     gint x = (state->x);
     gint y = (state->y);
     g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
     if (progress)
 	gimp_progress_start (progress, _("Detail Refinement Brush"), FALSE);
-    siox_forefound_drb(state,gimp_drawable_get_tiles(mask),
+    siox_foreground_drb(state,gimp_drawable_get_tiles(mask),
 		       optionsrefinement,x,y,
 		       radius,optionsthreshold);
     if (progress)
@@ -192,13 +192,13 @@ gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,
 
 
 void
-siox_forefound_drb (SioxState    *state,
+siox_foreground_drb (SioxState   *state,
 		    TileManager  *mask,
-		    gboolean     options,
-		    gint         x,
-		    gint	 y,
-		    gint         brushradius,
-		    gfloat       threshold)//
+		    gboolean      options,
+		    gint          x,
+		    gint	  y,
+		    gint          brushradius,
+		    gfloat        threshold)//
  {
      SioxDRBType drbbrush_mode;//
      gint sioxdrboptions = options;
