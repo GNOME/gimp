@@ -188,7 +188,7 @@ gimp_foreground_select_options_set_property (GObject      *object,
       break;
 
     case PROP_THRESHOLD://(new)
-      options->threshold = g_value_get_gouble (value);//(new)
+      options->threshold = g_value_get_double (value);//(new)
       break;//(new)		
 
     case PROP_MASK_COLOR:
@@ -252,7 +252,7 @@ gimp_foreground_select_options_get_property (GObject    *object,
       break;
 
     case PROP_THRESHOLD://(new)//(should be float )
-      g_value_set_gouble (value, options->threshold);//(new)
+      g_value_set_double (value, options->threshold);//(new)
       break;//(new)
 			
     case PROP_MASK_COLOR:
