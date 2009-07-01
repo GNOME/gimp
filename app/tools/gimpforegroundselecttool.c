@@ -458,7 +458,6 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
           return FALSE;
         }
     }	
-
   else
       return GIMP_TOOL_CLASS (parent_class)->key_press (tool,
                                                         kevent,
@@ -707,7 +706,8 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
 static void
 gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
-                                    GimpDisplay      *display)
+                                    GimpDisplay      *display)//,
+									//GdkEventKey        *kevent)
 {printf("===========gimp_foreground_select_tool_select\n");
   GimpForegroundSelectTool    *fg_select;
   GimpForegroundSelectOptions *options;
@@ -773,7 +773,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 			//if((kevent->keyval == GDK_Shift_L) || (kevent->keyval == GDK_Shift_R )) 
 			  
 	      //	fg_select->drbsignal= TRUE;
-      fg_select->drbsignal = mark_drb;//(should be a function to push)
+      fg_select->drbsignal = mark_drb;
   }
   
   

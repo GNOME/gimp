@@ -32,6 +32,7 @@
 #include "base/boundary.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-item-list.h"
@@ -55,7 +56,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimptoolcontrol.h"
 #include "tool_manager.h"
-#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -601,9 +601,9 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
 
   if (edit_select->constrain)
     {
-      gimp_tool_motion_constrain (edit_select->start_x, edit_select->start_y,
-                                  &new_x, &new_y,
-                                  GIMP_TOOL_CONSTRAIN_45_DEGREES);
+      gimp_constrain_line (edit_select->start_x, edit_select->start_y,
+                           &new_x, &new_y,
+                           GIMP_CONSTRAIN_LINE_45_DEGREES);
     }
 
   motion_x = new_x - off_x;
