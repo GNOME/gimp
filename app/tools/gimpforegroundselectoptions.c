@@ -111,7 +111,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
                                 GIMP_PARAM_STATIC_STRINGS);
 		
-  GIMP_CONFIG_INSTALL_PROP_FLOAT (object_class, PROP_THRESHOLD,//(new)
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,//(new)
                                 "threshold",//(new)
 				_("Range for SIOX_DRB_ADD:1.0"//(new)
                                   "Range for SIOX_DRB_ADD:0.0"),//(new)
@@ -188,7 +188,7 @@ gimp_foreground_select_options_set_property (GObject      *object,
       break;
 
     case PROP_THRESHOLD://(new)
-      options->threshold = g_value_get_float (value);//(new)
+      options->threshold = g_value_get_gouble (value);//(new)
       break;//(new)		
 
     case PROP_MASK_COLOR:
@@ -251,8 +251,8 @@ gimp_foreground_select_options_get_property (GObject    *object,
       g_value_set_int (value, options->smoothness);
       break;
 
-	case PROP_THRESHOLD://(new)//(should be float )
-      g_value_set_float(value, options->threshold);//(new)
+    case PROP_THRESHOLD://(new)//(should be float )
+      g_value_set_gouble (value, options->threshold);//(new)
       break;//(new)
 			
     case PROP_MASK_COLOR:
@@ -325,7 +325,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   title = g_strdup_printf (_("Detail Refinement Brush  (%s)"),//(new)
                              gimp_get_mod_string (GDK_CONTROL_MASK));//(new)
 
-  frame_drb = gimp_prop_boolean_radio_frame_drb_new (config, "refinement", title,//(new)
+  frame_drb = gimp_prop_boolean_radio_frame_new (config, "refinement", title,//(new)
                                              _("Subtract"),//(new)
                                              _("Add"));//(new)
 
@@ -365,6 +365,19 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_box_pack_start (GTK_BOX (inner_frame), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
+
+ /*  threshold  */ //(new)
+  table_t = gtk_table_new (2, 3, FALSE);//(new)
+  gtk_table_set_row_spacings (GTK_TABLE (table_t), 2);//(new)
+  gtk_table_set_col_spacings (GTK_TABLE (table_t), 2);//(new)
+  gtk_box_pack_start (GTK_BOX (vbox), table_t, FALSE, FALSE, 0);//(new)
+  gtk_widget_show (table_t);//(new)
+
+  scale_t = gimp_prop_hscale_new (config, "threshold", 0.01, 0.1, 3);//(new)
+  gtk_range_set_update_policy (GTK_RANGE (scale_t), GTK_UPDATE_DELAYED);//(new)
+  gtk_scale_set_value_pos (GTK_SCALE (scale_t), GTK_POS_RIGHT);//(new)
+  gimp_table_attach_aligned (GTK_TABLE (table_t), 0, 0,//(new)
+                             _("Threshold:"), 0.0, 0.5, scale_t, 2, FALSE);//(new)	
 	
   /*  smoothness  */
   table = gtk_table_new (2, 3, FALSE);
@@ -378,18 +391,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_RIGHT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Smoothing:"), 0.0, 0.5, scale, 2, FALSE);
-  /*  threshold  */ //(new)
-  table_t = gtk_table_new (2, 3, FALSE);//(new)
-  gtk_table_set_row_spacings (GTK_TABLE (table_t), 2);//(new)
-  gtk_table_set_col_spacings (GTK_TABLE (table_t), 2);//(new)
-  gtk_box_pack_start (GTK_BOX (vbox), table_t, FALSE, FALSE, 0);//(new)
-  gtk_widget_show (table_t);//(new)
-
-  scale_t = gimp_prop_hscale_new (config, "threshold", 0.01, 0.1, 0);//(new)
-  gtk_range_set_update_policy (GTK_RANGE (scale_t), GTK_UPDATE_DELAYED);//(new)
-  gtk_scale_set_value_pos (GTK_SCALE (scale_t), GTK_POS_RIGHT);//(new)
-  gimp_table_attach_aligned (GTK_TABLE (table_t), 0, 0,//(new)
-                             _("Threshold:"), 0.0, 0.5, scale_t, 2, FALSE);//(new)
+ 
 	
   /*  mask color */
   menu = gimp_prop_enum_combo_box_new (config, "mask-color",
@@ -429,4 +431,3 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   return vbox;
 }
-
