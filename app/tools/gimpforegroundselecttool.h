@@ -30,8 +30,11 @@
 #define GIMP_FOREGROUND_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FOREGROUND_SELECT_TOOL, GimpForegroundSelectToolClass))
 
 #define GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS(t)  (GIMP_FOREGROUND_SELECT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
-
-
+/*--------new
+#define GIMP_TYPE_FREE_SELECT_TOOL                  (gimp_free_select_tool_get_type ())
+#define GIMP_FREE_SELECT_TOOL(obj)                  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FREE_SELECT_TOOL, GimpFreeSelectTool))
+#define GIMP_IS_FREE_SELECT_TOOL(obj)               (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FREE_SELECT_TOOL))
+/*---------------end*/
 typedef struct _GimpForegroundSelectTool      GimpForegroundSelectTool;
 typedef struct _GimpForegroundSelectToolClass GimpForegroundSelectToolClass;
 
@@ -43,7 +46,7 @@ struct _GimpForegroundSelectTool
   guint               idle_id;
   GArray             *stroke;
   GList              *strokes;
-  gboolean            drbsignal;//(new)
+  GArray             *drbsignal;//(new)
   GimpChannel        *mask;
   SioxState          *state;
   SioxRefinementType  refinement;
@@ -60,7 +63,7 @@ void    gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback
                                               
 /*static void                                                            //(new)
 gimp_foreground_select_siox_drb (GimpTool         *tool,//(new)
-								 GimpDisplay      *display);    */                                          
+				 GimpDisplay      *display);    */                                          
 
 GType   gimp_foreground_select_tool_get_type (void) G_GNUC_CONST;
 
