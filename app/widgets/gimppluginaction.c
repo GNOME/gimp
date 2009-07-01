@@ -164,7 +164,12 @@ gimp_plug_in_action_activate (GtkAction *action)
 {
   GimpPlugInAction *plug_in_action = GIMP_PLUG_IN_ACTION (action);
 
-  gimp_plug_in_action_selected (plug_in_action, plug_in_action->procedure);
+  /* Not all actions have procedures associated with them, for example
+   * unused "plug-in-recent-[N]" actions, so check for NULL before we
+   * invoke the plug-in action
+   */
+  if (plug_in_action->procedure)
+    gimp_plug_in_action_selected (plug_in_action, plug_in_action->procedure);
 }
 
 static void
