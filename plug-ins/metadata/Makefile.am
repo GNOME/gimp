@@ -30,11 +30,11 @@ metadata_SOURCES = \
 	xmp-encode.h	\
 	xmp-encode.c	\
 	xmp-schemas.h	\
-	xmp-schemas.c	
-#	interface.h	\
-#	interface.c	\
-#	exif-decode.h	\
-#	exif-decode.c	\
+	xmp-schemas.c	\
+	interface.h	\
+	interface.c	\
+	exif-decode.h	\
+	exif-decode.c	
 #	exif-encode.h	\
 #	exif-encode.c	\
 #	iptc-decode.h	\
@@ -56,10 +56,12 @@ INCLUDES = \
 
 LDADD = \
 	$(libgimp)		\
+	$(libgimpui)		\
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(libgimpmath)		\
+	$(EXIF_LIBS)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
