@@ -242,12 +242,15 @@ file_actions_update (GimpActionGroup *group,
 {
   GimpImage    *image     = action_data_get_image (data);
   GimpDrawable *drawable  = NULL;
+  const gchar  *source    = NULL;
   const gchar  *export_to = NULL;
   gchar        *label     = NULL;
 
   if (image)
     {
       drawable  = gimp_image_get_active_drawable (image);
+      source    = g_object_get_data (G_OBJECT (image),
+                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
       export_to = g_object_get_data (G_OBJECT (image),
                                      GIMP_FILE_EXPORT_TO_URI_KEY);
     }
@@ -258,12 +261,20 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save",            image && drawable);
   SET_SENSITIVE ("file-save-as",         image && drawable);
   SET_SENSITIVE ("file-save-a-copy",     image && drawable);
-  SET_SENSITIVE ("file-revert",          image && (GIMP_OBJECT (image)->name || export_to));
+  SET_SENSITIVE ("file-revert",          image && (GIMP_OBJECT (image)->name || source));
   SET_SENSITIVE ("file-export",          image && drawable);
-  SET_SENSITIVE ("file-export-to",       export_to);
+  SET_SENSITIVE ("file-export-to",       source || export_to);
   SET_SENSITIVE ("file-create-template", image);
 
-  if (export_to)
+  if (source && ! export_to)
+    {
+      /*  Update file-export-to label */
+      label = g_strdup_printf (_("Overwrite %s"),
+                               file_utils_uri_display_basename (source));
+      gimp_action_group_set_action_label (group, "file-export-to", label);
+      g_free (label);
+    }
+  else if (export_to)
     {
       /*  Update file-export-to label */
       label = g_strdup_printf (_("Export to %s"),
