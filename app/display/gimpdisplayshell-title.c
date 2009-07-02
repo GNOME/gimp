@@ -445,15 +445,17 @@ gimp_display_shell_format_filename (gchar       *buf,
                                            GIMP_FILE_IMPORT_SOURCE_URI_KEY);
   if (source)
     {
-      gchar *source_basename = file_utils_uri_display_basename (source);
+      gchar *source_no_ext   = file_utils_uri_with_new_ext (source, NULL);
+      gchar *source_basename = file_utils_uri_display_basename (source_no_ext);
       gint   incr;
 
       incr = print (buf, len, start,
-                    /*  image name and source as shown in the title of
+                    /*  image import source as shown in the title of
                         the image window */
-                    _("%s (imported from %s)"), filename, source_basename);
+                    _("[%s] (imported)"), source_basename);
 
       g_free (source_basename);
+      g_free (source_no_ext);
 
       return incr;
     }
