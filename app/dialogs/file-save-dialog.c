@@ -208,6 +208,14 @@ file_save_dialog_response (GtkWidget *save_dialog,
               g_object_set_data_full (G_OBJECT (dialog->image->gimp),
                                       GIMP_FILE_SAVE_LAST_URI_KEY,
                                       g_strdup (uri), (GDestroyNotify) g_free);
+
+              /* Forget the import source when we save. We interpret a
+               * save as that the user is not interested in being able
+               * to quickly export back to the original any longer
+               */
+              g_object_set_data (G_OBJECT (dialog->image),
+                                 GIMP_FILE_IMPORT_SOURCE_URI_KEY,
+                                 NULL);
             }
           else
             {
