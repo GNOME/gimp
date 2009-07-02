@@ -103,6 +103,9 @@ struct _SioxState
   gint          xsbpp;
 };
 
+static SioxState  *drbstate;//
+static TileManager  *drbmask;//
+
 /* A struct that holds the classification result */
 typedef struct
 {
@@ -824,7 +827,13 @@ siox_foreground_extract (SioxState          *state,
                          const gdouble       sensitivity[3],
                          gboolean            multiblob,
                          SioxProgressFunc    progress_callback,
+                         gfloat              sioxdrbthreshold,//(new)
+                         gboolean	     sioxdrboptions,//(new) 
+                         gboolean            drbsignal,//(new)
+                         gint                brush_radius,//(new)
                          gpointer            progress_data)
+{
+if(!drbsignal)
 {
   PixelRegion  srcPR;
   PixelRegion  mapPR;
@@ -1256,6 +1265,24 @@ siox_foreground_extract (SioxState          *state,
   dilate_mask (mask, x, y, width, height);
 
   siox_progress_update (progress_callback, progress_data, 1.0);
+  drbstate = state;//	
+  drbmask  = mask;//	 
+}
+else
+{
+    gint	 brush_mode;
+    gfloat    threshold = sioxdrbthreshold;
+    gint         x, y;
+    x = drbstate->x;
+    y = drbstate->y;
+
+    brush_mode |= (sioxdrboptions ?
+                    SIOX_DRB_ADD   :
+                    SIOX_DRB_SUBTRACT);
+    drbstate = siox_drb (drbstate,drbmask,x,y,
+                        brush_radius,brush_mode,
+                        threshold);
+}  
 }
 
 
@@ -1278,7 +1305,8 @@ siox_foreground_extract (SioxState          *state,
  * TODO: This is still an experimental method. There are more tests
  * needed to evaluate performance of this!
  */
-void
+//void
+SioxState *
 siox_drb (SioxState   *state,
           TileManager *mask,
           gint         x,

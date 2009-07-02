@@ -43,7 +43,7 @@ struct _GimpForegroundSelectTool
   guint               idle_id;
   GArray             *stroke;
   GList              *strokes;
-  GArray             *drbsignal;//(new)
+  gboolean           *drbsignal;//(new)
   GimpChannel        *mask;
   SioxState          *state;
   SioxRefinementType  refinement;

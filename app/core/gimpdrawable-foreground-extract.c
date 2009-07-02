@@ -63,11 +63,15 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
 
   if (state)
     {
-      gimp_drawable_foreground_extract_siox (mask, state,
+          gimp_drawable_foreground_extract_siox (mask, state,
                                              SIOX_REFINEMENT_RECALCULATE,
-                                             SIOX_DEFAULT_SMOOTHNESS,
+					     SIOX_DEFAULT_SMOOTHNESS,
+					     SIOX_DEFAULT_THRESHOLD  ,//
+					     SIOX_DRB_RECALCULATE  ,//
                                              sensitivity,
                                              FALSE,
+                                             FALSE,//(new)
+                                             18,//
                                              progress);
 
       gimp_drawable_foreground_extract_siox_done (state);
@@ -118,8 +122,12 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                                        SioxState          *state,
                                        SioxRefinementType  refinement,
                                        gint                smoothness,
+                                       gfloat              sioxdrbthreshold,//(new)				
+                                       gboolean	 	   sioxdrboption,//(new)   
                                        const gdouble       sensitivity[3],
                                        gboolean            multiblob,
+                                       gboolean            drbsignal,//(new)
+                                       gint                brush_radius,//(new)
                                        GimpProgress       *progress)
 {
   gint x1, y1;
@@ -134,7 +142,8 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
 
   if (progress)
     gimp_progress_start (progress, _("Foreground Extraction"), FALSE);
-
+  if (progress && (drbsignal))//(new)
+    gimp_progress_start (progress, _("DRB Extraction"), FALSE);
   if (GIMP_IS_CHANNEL (mask))
     {
       gimp_channel_bounds (GIMP_CHANNEL (mask), &x1, &y1, &x2, &y2);
@@ -151,6 +160,10 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                            gimp_drawable_get_tiles (mask), x1, y1, x2, y2,
                            smoothness, sensitivity, multiblob,
                            (SioxProgressFunc) gimp_progress_set_value,
+                           sioxdrbthreshold,//(new)
+                           sioxdrboption,//(new)  
+                           drbsignal,//(new)
+                           brush_radius,//(new)
                            progress);
 
   if (progress)
@@ -166,7 +179,7 @@ gimp_drawable_foreground_extract_siox_done (SioxState *state)
 
   siox_done (state);
 }
-
+/*
 void                                                   //(new)
 gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,
 					  SioxState         *state,
@@ -220,5 +233,5 @@ siox_foreground_drb (SioxState   *state,
 	      drbbrush_mode,  //
 	      drbthreshold);
 	 
- }
+ }*/
  
