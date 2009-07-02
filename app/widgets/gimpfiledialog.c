@@ -527,7 +527,8 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *
        *   1. Last Save a copy-name (applies only to Save a copy)
        *   2. Last Save name
-       *   3. The 'Export to' path
+       *   3. Last Export name
+       *   3. The source image path
        *   3. 'Untitled'
        */
 
@@ -541,6 +542,10 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),
                                       GIMP_FILE_EXPORT_TO_URI_KEY);
+
+      if (! name_uri)
+        name_uri = g_object_get_data (G_OBJECT (image),
+                                      GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       if (! name_uri)
         name_uri = gimp_image_get_uri (image); /* Untitled */
