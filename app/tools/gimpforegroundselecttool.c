@@ -470,7 +470,7 @@ gimp_foreground_select_tool_button_press (GimpTool            *tool,
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
   GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (fg_select->mask && (!fg_select->drbsignal))
+  if (fg_select->mask)
     {
       GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
 
@@ -494,7 +494,7 @@ gimp_foreground_select_tool_button_press (GimpTool            *tool,
 
       gimp_draw_tool_resume (draw_tool);
     }
-  else if (fg_select->drbsignal)//
+ /* else if (fg_select->drbsignal)//
 	{
 		GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
 		printf("----------------------drb brush");
@@ -519,7 +519,7 @@ gimp_foreground_select_tool_button_press (GimpTool            *tool,
 	
       gimp_draw_tool_resume (draw_tool);
 		
-	}
+	}*/
   else
     {
       GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
@@ -664,6 +664,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
                                     GIMP_ACTIVE_COLOR_BACKGROUND :
                                     GIMP_ACTIVE_COLOR_BACKGROUND),
                                    options->stroke_width);
+     }
   if (fg_select->mask)
     {
       GimpDisplayShell   *shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
@@ -778,8 +779,9 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 						  GIMP_PROGRESS (display));
 
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
-
+      options->refinement = SIOX_DRB_NO_CHANGE ;
       gimp_unset_busy (image->gimp);
+      }
     }
   
   else
