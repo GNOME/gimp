@@ -238,7 +238,7 @@ file_utils_uri_with_new_ext (const gchar *uri,
                              const gchar *ext_uri)
 {
   const gchar *uri_ext      = file_utils_get_ext_start (uri);
-  const gchar *ext_uri_ext  = file_utils_get_ext_start (ext_uri);
+  const gchar *ext_uri_ext  = ext_uri ? file_utils_get_ext_start (ext_uri) : NULL;
   gchar *uri_without_ext    = g_strndup (uri, uri_ext - uri);
   gchar *ret                = g_strconcat (uri_without_ext, ext_uri_ext, NULL);
   g_free (uri_without_ext);
