@@ -103,6 +103,7 @@ struct _GimpPaintOptions
   GimpDynamicOptions       *direction_options;
   GimpDynamicOptions       *tilt_options;
   GimpDynamicOptions       *random_options;
+  GimpDynamicOptions       *fading_options;
 
   GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;
@@ -144,27 +145,34 @@ GimpBrushApplicationMode
 
 
 gdouble gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords);
+                                                const GimpCoords *coords,
+                                                gdouble           pixel_dist);
 
 gdouble gimp_paint_options_get_dynamic_size    (GimpPaintOptions *paint_options,
                                                 const GimpCoords *coords,
-                                                gboolean          use_dynamics);
+                                                gboolean          use_dynamics,
+                                                gdouble           pixel_dist);
 
 gdouble gimp_paint_options_get_dynamic_aspect_ratio
                                                (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords);
+                                                const GimpCoords *coords,
+                                                gdouble           pixel_dist);
 
 gdouble gimp_paint_options_get_dynamic_rate    (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords);
+                                                const GimpCoords *coords,
+                                                gdouble           pixel_dist);
 
 gdouble gimp_paint_options_get_dynamic_color   (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords);
+                                                const GimpCoords *coords,
+                                                gdouble           pixel_dist);
 
 gdouble gimp_paint_options_get_dynamic_angle   (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords);
+                                                const GimpCoords *coords,
+                                                gdouble           pixel_dist);
 
 gdouble gimp_paint_options_get_dynamic_hardness(GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords);
+                                                const GimpCoords *coords,
+                                                gdouble           pixel_dist);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

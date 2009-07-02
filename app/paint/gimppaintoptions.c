@@ -34,6 +34,7 @@
 
 #include "gimp-intl.h"
 
+#include "core/gimpcoords.h"
 
 #define DEFAULT_BRUSH_SCALE            1.0
 #define DEFAULT_BRUSH_ASPECT_RATIO     1.0
@@ -93,6 +94,16 @@
 #define DEFAULT_RANDOM_COLOR           FALSE
 #define DEFAULT_RANDOM_ANGLE           FALSE
 #define DEFAULT_RANDOM_PRESCALE        1.0
+
+#define DEFAULT_FADING_OPACITY         FALSE
+#define DEFAULT_FADING_HARDNESS        FALSE
+#define DEFAULT_FADING_RATE            FALSE
+#define DEFAULT_FADING_SIZE            FALSE
+#define DEFAULT_FADING_INVERSE_SIZE    FALSE
+#define DEFAULT_FADING_ASPECT_RATIO    FALSE
+#define DEFAULT_FADING_COLOR           FALSE
+#define DEFAULT_FADING_ANGLE           FALSE
+#define DEFAULT_FADING_PRESCALE        1.0
 
 #define DEFAULT_USE_FADE               FALSE
 #define DEFAULT_FADE_LENGTH            100.0
@@ -173,6 +184,16 @@ enum
   PROP_RANDOM_ANGLE,
   PROP_RANDOM_PRESCALE,
 
+  PROP_FADING_OPACITY,
+  PROP_FADING_HARDNESS,
+  PROP_FADING_RATE,
+  PROP_FADING_SIZE,
+  PROP_FADING_INVERSE_SIZE,
+  PROP_FADING_ASPECT_RATIO,
+  PROP_FADING_COLOR,
+  PROP_FADING_ANGLE,
+  PROP_FADING_PRESCALE,
+
   PROP_USE_FADE,
   PROP_FADE_LENGTH,
   PROP_FADE_UNIT,
@@ -216,7 +237,9 @@ static gdouble gimp_paint_options_get_dynamics_mix (gdouble       mix1,
                                                     gdouble       mix4,
                                                     gdouble       mix4_scale,
                                                     gdouble       mix5,
-                                                    gdouble       mix5_scale);
+                                                    gdouble       mix5_scale,
+                                                    gdouble       mix6,
+                                                    gdouble       mix6_scale);
 
 
 G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options, GIMP_TYPE_TOOL_OPTIONS)
@@ -451,6 +474,39 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    0.0, 1.0, DEFAULT_RANDOM_PRESCALE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
+ GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_OPACITY,
+                                    "fading-opacity", NULL,
+                                    DEFAULT_FADING_OPACITY,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_HARDNESS,
+                                    "fading-hardness", NULL,
+                                    DEFAULT_FADING_HARDNESS,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_RATE,
+                                    "fading-rate", NULL,
+                                    DEFAULT_FADING_RATE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_SIZE,
+                                    "fading-size", NULL,
+                                    DEFAULT_FADING_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_COLOR,
+                                    "fading-color", NULL,
+                                    DEFAULT_FADING_COLOR,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_ANGLE,
+                                    "fading-angle", NULL,
+                                    DEFAULT_FADING_ANGLE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_INVERSE_SIZE,
+                                    "fading-inverse-size", NULL,
+                                    DEFAULT_FADING_INVERSE_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADING_PRESCALE,
+                                   "fading-prescale", NULL,
+                                   0.0, 1.0, DEFAULT_FADING_PRESCALE,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
                                     "use-fade", NULL,
                                     DEFAULT_USE_FADE,
@@ -475,6 +531,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ASPECT_RATIO,
                                     "random-aspect-ratio", NULL,
                                     DEFAULT_RANDOM_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_ASPECT_RATIO,
+                                    "fading-aspect-ratio", NULL,
+                                    DEFAULT_FADING_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
                                     "use-gradient", NULL,
@@ -545,6 +605,7 @@ gimp_paint_options_init (GimpPaintOptions *options)
   options->direction_options = g_slice_new0 (GimpDynamicOptions);
   options->tilt_options      = g_slice_new0 (GimpDynamicOptions);
   options->random_options    = g_slice_new0 (GimpDynamicOptions);
+  options->fading_options    = g_slice_new0 (GimpDynamicOptions);
   options->fade_options      = g_slice_new0 (GimpFadeOptions);
   options->jitter_options    = g_slice_new0 (GimpJitterOptions);
   options->gradient_options  = g_slice_new0 (GimpGradientOptions);
@@ -563,6 +624,7 @@ gimp_paint_options_finalize (GObject *object)
   g_slice_free (GimpDynamicOptions,  options->direction_options);
   g_slice_free (GimpDynamicOptions,  options->tilt_options);
   g_slice_free (GimpDynamicOptions,  options->random_options);
+  g_slice_free (GimpDynamicOptions,  options->fading_options);
   g_slice_free (GimpFadeOptions,     options->fade_options);
   g_slice_free (GimpJitterOptions,   options->jitter_options);
   g_slice_free (GimpGradientOptions, options->gradient_options);
@@ -582,6 +644,7 @@ gimp_paint_options_set_property (GObject      *object,
   GimpDynamicOptions  *direction_options = options->direction_options;
   GimpDynamicOptions  *tilt_options      = options->tilt_options;
   GimpDynamicOptions  *random_options    = options->random_options;
+  GimpDynamicOptions  *fading_options    = options->fading_options;
   GimpFadeOptions     *fade_options      = options->fade_options;
   GimpJitterOptions   *jitter_options    = options->jitter_options;
   GimpGradientOptions *gradient_options  = options->gradient_options;
@@ -795,6 +858,42 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_RANDOM_PRESCALE:
       random_options->prescale = g_value_get_double (value);
       break;
+/*Fading*/
+    case PROP_FADING_OPACITY:
+      fading_options->opacity = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADING_HARDNESS:
+      fading_options->hardness = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADING_RATE:
+      fading_options->rate = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADING_SIZE:
+      fading_options->size = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADING_INVERSE_SIZE:
+      fading_options->inverse_size = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADING_ASPECT_RATIO:
+      fading_options->aspect_ratio = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADING_COLOR:
+      fading_options->color = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADING_ANGLE:
+      fading_options->angle = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADING_PRESCALE:
+      fading_options->prescale = g_value_get_double (value);
+      break;
 
     case PROP_USE_FADE:
       fade_options->use_fade = g_value_get_boolean (value);
@@ -878,6 +977,7 @@ gimp_paint_options_get_property (GObject    *object,
   GimpDynamicOptions  *direction_options = options->direction_options;
   GimpDynamicOptions  *tilt_options      = options->tilt_options;
   GimpDynamicOptions  *random_options    = options->random_options;
+  GimpDynamicOptions  *fading_options    = options->fading_options;
   GimpFadeOptions     *fade_options      = options->fade_options;
   GimpJitterOptions   *jitter_options    = options->jitter_options;
   GimpGradientOptions *gradient_options  = options->gradient_options;
@@ -1093,6 +1193,44 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_double (value, random_options->prescale);
       break;
 
+/*fading*/
+
+    case PROP_FADING_OPACITY:
+      g_value_set_boolean (value, fading_options->opacity);
+      break;
+
+    case PROP_FADING_HARDNESS:
+      g_value_set_boolean (value, fading_options->hardness);
+      break;
+
+    case PROP_FADING_RATE:
+      g_value_set_boolean (value, fading_options->rate);
+      break;
+
+    case PROP_FADING_SIZE:
+      g_value_set_boolean (value, fading_options->size);
+      break;
+
+    case PROP_FADING_INVERSE_SIZE:
+      g_value_set_boolean (value, fading_options->inverse_size);
+      break;
+
+    case PROP_FADING_ASPECT_RATIO:
+      g_value_set_boolean (value, fading_options->aspect_ratio);
+      break;
+
+    case PROP_FADING_COLOR:
+      g_value_set_boolean (value, fading_options->color);
+      break;
+
+    case PROP_FADING_ANGLE:
+      g_value_set_boolean (value, fading_options->angle);
+      break;
+
+    case PROP_FADING_PRESCALE:
+      g_value_set_double (value, fading_options->prescale);
+      break;
+
     case PROP_USE_FADE:
       g_value_set_boolean (value, fade_options->use_fade);
       break;
@@ -1210,6 +1348,8 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
                              gdouble           pixel_dist)
 {
   GimpFadeOptions *fade_options;
+  gdouble z = -1.0;
+
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options),
                         GIMP_OPACITY_OPAQUE);
@@ -1244,8 +1384,14 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
                            MAX (xres, yres) / unit_factor);
           }
           break;
-        }
 
+ 
+		  //printf("fade_out: %f", fade_out);
+		  //printf("pixel_dist: %f", pixel_dist);
+        }
+		  //printf("fade_out: %f", fade_out);
+		  //printf("pixel_dist: %f", pixel_dist);
+		  
       /*  factor in the fade out value  */
       if (fade_out > 0.0)
         {
@@ -1253,10 +1399,11 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
 
           /*  Model the amount of paint left as a gaussian curve  */
           x = pixel_dist / fade_out;
+		  z = exp (- x * x * 5.541);
+          return z;    /*  ln (1/255)  */
 
-          return exp (- x * x * 5.541);    /*  ln (1/255)  */
         }
-
+  
       return GIMP_OPACITY_TRANSPARENT;
     }
 
@@ -1301,7 +1448,8 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
       paint_options->velocity_options->color  ||
       paint_options->direction_options->color ||
       paint_options->tilt_options->color      ||
-      paint_options->random_options->color)
+      paint_options->random_options->color ||
+      paint_options->fading_options->color)
     {
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
                                   NULL, grad_point,
@@ -1378,13 +1526,16 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
       paint_options->velocity_options->hardness ||
       paint_options->random_options->hardness)
     return GIMP_BRUSH_PRESSURE;
-
+  
   return GIMP_BRUSH_SOFT;
 }
 
 
 /* Calculates dynamics mix to be used for same parameter
  * (velocity/pressure/direction/tilt/random) mix Needed in may places and tools.
+ *
+ * Added one parameter: fading, the 6th driving factor. 
+ * (velocity/pressure/direction/tilt/random/fading) 
  */
 static gdouble
 gimp_paint_options_get_dynamics_mix (gdouble mix1,
@@ -1396,7 +1547,9 @@ gimp_paint_options_get_dynamics_mix (gdouble mix1,
                                      gdouble mix4,
                                      gdouble mix4_scale,
                                      gdouble mix5,
-                                     gdouble mix5_scale)
+                                     gdouble mix5_scale,
+                                     gdouble mix6,
+                                     gdouble mix6_scale)
 {
   gdouble scale_sum = 0.0;
   gdouble result    = 1.0;
@@ -1431,13 +1584,20 @@ gimp_paint_options_get_dynamics_mix (gdouble mix1,
     }
   else mix5 = 0.0;
 
+  if (mix6 > -1.0)
+    {
+      scale_sum += fabs (mix6_scale);
+    }
+  else mix6 = 0.0;
+
   if (scale_sum > 0.0)
     {
       result = (mix1 * mix1_scale) / scale_sum +
                (mix2 * mix2_scale) / scale_sum +
                (mix3 * mix3_scale) / scale_sum +
                (mix4 * mix4_scale) / scale_sum +
-               (mix5 * mix5_scale) / scale_sum;
+               (mix5 * mix5_scale) / scale_sum +
+               (mix6 * mix6_scale) / scale_sum;
     }
 
   if (result < 0.0)
@@ -1448,7 +1608,8 @@ gimp_paint_options_get_dynamics_mix (gdouble mix1,
 
 gdouble
 gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
-                                        const GimpCoords *coords)
+                                        const GimpCoords *coords,
+                                        gdouble           pixel_dist)
 {
   gdouble opacity = 1.0;
 
@@ -1459,13 +1620,15 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
       paint_options->velocity_options->opacity  ||
       paint_options->direction_options->opacity ||
       paint_options->tilt_options->opacity      ||
-      paint_options->random_options->opacity)
+      paint_options->random_options->opacity||
+      paint_options->fading_options->opacity)
     {
       gdouble pressure  = -1.0;
       gdouble velocity  = -1.0;
       gdouble direction = -1.0;
       gdouble tilt      = -1.0;
       gdouble random    = -1.0;
+      gdouble fading    = -1.0;
 
 
       if (paint_options->pressure_options->opacity)
@@ -1473,17 +1636,36 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
 
       if (paint_options->velocity_options->opacity)
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
-
+		//printf("velocity: %f", velocity);
+		
       if (paint_options->random_options->opacity)
         random = g_random_double_range (0.0, 1.0);
+		//printf("%f", random);
 
-     if (paint_options->tilt_options->opacity)
+      if (paint_options->tilt_options->opacity)
         tilt = 1.0 - sqrt (SQR (coords->xtilt) + SQR (coords->ytilt));
 
       if (paint_options->direction_options->opacity)
         direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
 
-      opacity = gimp_paint_options_get_dynamics_mix (pressure,
+      if (paint_options->fading_options->opacity)
+		{
+		  gdouble p;
+		  gdouble fade_out;
+			
+		  fade_out = DEFAULT_FADE_LENGTH; 		  
+		  p = pixel_dist / fade_out;
+		  fading = exp (- p * p * 5.541);
+			/*
+		  printf("fade_out: %f", fade_out);
+		  printf("pixel_dist: %f", pixel_dist);
+		  printf("fading value: %f", fading);
+		*/
+	 	  //printf("fading-cor: %f", coords->fading);
+		  
+		}
+		
+	  opacity = gimp_paint_options_get_dynamics_mix (pressure,
                                                      paint_options->pressure_options->prescale,
                                                      velocity,
                                                      paint_options->velocity_options->prescale,
@@ -1492,7 +1674,9 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
                                                      tilt,
                                                      paint_options->tilt_options->prescale,
                                                      direction,
-                                                     paint_options->direction_options->prescale);
+                                                     paint_options->direction_options->prescale,
+                                                     fading,
+                                                     paint_options->fading_options->prescale);
     }
 
   return opacity;
@@ -1501,7 +1685,8 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
 gdouble
 gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
                                      const GimpCoords *coords,
-                                     gboolean          use_dynamics)
+                                     gboolean          use_dynamics,
+                                     gdouble           pixel_dist)
 {
   gdouble scale = 1.0;
 
@@ -1512,7 +1697,8 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
       gdouble direction = -1.0;
       gdouble random    = -1.0;
       gdouble tilt      = -1.0;
-
+      gdouble fading    = -1.0;
+      
       if (paint_options->pressure_options->size)
         {
           pressure = coords->pressure;
@@ -1552,6 +1738,18 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
       if (paint_options->direction_options->size)
          direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
 
+		
+      if (paint_options->fading_options->size || 
+          paint_options->fading_options->inverse_size)
+		{
+		  gdouble p;
+		  gdouble fade_out;
+			
+		  fade_out = DEFAULT_FADE_LENGTH; 		  
+		  p = pixel_dist / fade_out;
+		  fading = exp (- p * p * 5.541);
+		}
+		
       scale = gimp_paint_options_get_dynamics_mix (pressure,
                                                    paint_options->pressure_options->prescale,
                                                    velocity,
@@ -1561,7 +1759,9 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
                                                    tilt,
                                                    paint_options->tilt_options->prescale,
                                                    direction,
-                                                   paint_options->direction_options->prescale);
+                                                   paint_options->direction_options->prescale,
+                                                   fading,
+                                                   paint_options->fading_options->prescale);
 
       if (scale < 1 / 64.0)
         scale = 1 / 8.0;
@@ -1576,7 +1776,8 @@ gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_aspect_ratio (GimpPaintOptions *paint_options,
-                                             const GimpCoords *coords)
+                                             const GimpCoords *coords,
+                                             gdouble           pixel_dist)
 {
   gdouble aspect_ratio = 1.0;
 
@@ -1587,13 +1788,15 @@ gimp_paint_options_get_dynamic_aspect_ratio (GimpPaintOptions *paint_options,
       paint_options->velocity_options->aspect_ratio  ||
       paint_options->direction_options->aspect_ratio ||
       paint_options->tilt_options->aspect_ratio      ||
-      paint_options->random_options->aspect_ratio)
+      paint_options->random_options->aspect_ratio    ||
+      paint_options->fading_options->aspect_ratio)
     {
       gdouble pressure  = -1.0;
       gdouble velocity  = -1.0;
       gdouble direction = -1.0;
       gdouble tilt      = -1.0;
       gdouble random    = -1.0;
+      gdouble fading    = -1.0;
 
 
       if (paint_options->pressure_options->aspect_ratio)
@@ -1628,6 +1831,16 @@ gimp_paint_options_get_dynamic_aspect_ratio (GimpPaintOptions *paint_options,
              direction = 1 / direction;
         }
 
+      if (paint_options->fading_options->aspect_ratio)
+		{
+		  gdouble p;
+		  gdouble fade_out;
+			
+		  fade_out = DEFAULT_FADE_LENGTH; 		  
+		  p = pixel_dist / fade_out;
+		  fading = exp (- p * p * 5.541);
+		}
+		
       aspect_ratio = gimp_paint_options_get_dynamics_mix (pressure,
                                                           paint_options->pressure_options->prescale,
                                                           velocity,
@@ -1637,7 +1850,9 @@ gimp_paint_options_get_dynamic_aspect_ratio (GimpPaintOptions *paint_options,
                                                           tilt,
                                                           paint_options->tilt_options->prescale,
                                                           direction,
-                                                          paint_options->direction_options->prescale);
+                                                          paint_options->direction_options->prescale,
+                                                          fading,
+                                                          paint_options->fading_options->prescale);
     }
 
   return paint_options->brush_aspect_ratio * aspect_ratio;
@@ -1645,7 +1860,8 @@ gimp_paint_options_get_dynamic_aspect_ratio (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords)
+                                     const GimpCoords *coords,
+                                     gdouble           pixel_dist)
 {
   gdouble rate = 1.0;
 
@@ -1663,6 +1879,7 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
       gdouble direction = -1.0;
       gdouble random    = -1.0;
       gdouble tilt      = -1.0;
+      gdouble fading    = -1.0;
 
       if (paint_options->pressure_options->rate)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -1679,6 +1896,16 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
       if (paint_options->direction_options->rate)
         direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
 
+      if (paint_options->fading_options->rate)
+		{
+		  gdouble p;
+		  gdouble fade_out;
+			
+		  fade_out = DEFAULT_FADE_LENGTH; 		  
+		  p = pixel_dist / fade_out;
+		  fading = exp (- p * p * 5.541);
+		}
+		
       rate = gimp_paint_options_get_dynamics_mix (pressure,
                                                   paint_options->pressure_options->prescale,
                                                   velocity,
@@ -1688,7 +1915,9 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
                                                   tilt,
                                                   paint_options->tilt_options->prescale,
                                                   direction,
-                                                  paint_options->direction_options->prescale);
+                                                  paint_options->direction_options->prescale,
+                                                  fading,
+                                                  paint_options->fading_options->prescale);
     }
 
   return rate;
@@ -1697,7 +1926,8 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
-                                      const GimpCoords *coords)
+                                      const GimpCoords *coords,
+                                      gdouble           pixel_dist)
 {
   gdouble color = 1.0;
 
@@ -1708,13 +1938,15 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
       paint_options->velocity_options->color  ||
       paint_options->direction_options->color ||
       paint_options->tilt_options->color      ||
-      paint_options->random_options->color)
+      paint_options->random_options->color  ||
+      paint_options->fading_options->color)
     {
       gdouble pressure  = -1.0;
       gdouble velocity  = -1.0;
       gdouble direction = -1.0;
       gdouble random    = -1.0;
       gdouble tilt      = -1.0;
+      gdouble fading    = -1.0;
 
       if (paint_options->pressure_options->color)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -1731,6 +1963,16 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
       if (paint_options->direction_options->color)
         direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
 
+      if (paint_options->fading_options->color)
+		{
+		  gdouble p;
+		  gdouble fade_out;
+			
+		  fade_out = DEFAULT_FADE_LENGTH; 		  
+		  p = pixel_dist / fade_out;
+		  fading = exp (- p * p * 5.541);
+		}
+		
       color = gimp_paint_options_get_dynamics_mix (pressure,
                                                    paint_options->pressure_options->prescale,
                                                    velocity,
@@ -1740,7 +1982,9 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
                                                    tilt,
                                                    paint_options->tilt_options->prescale,
                                                    direction,
-                                                   paint_options->direction_options->prescale);
+                                                   paint_options->direction_options->prescale,
+                                                   fading,
+                                                   paint_options->fading_options->prescale);
     }
 
   return color;
@@ -1748,7 +1992,8 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
-                                         const GimpCoords *coords)
+                                         const GimpCoords *coords,
+                                         gdouble           pixel_dist)
 {
   gdouble hardness = 1.0;
 
@@ -1759,13 +2004,15 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
       paint_options->velocity_options->hardness  ||
       paint_options->direction_options->hardness ||
       paint_options->tilt_options->hardness      ||
-      paint_options->random_options->hardness)
+      paint_options->random_options->hardness   ||
+      paint_options->fading_options->hardness)
     {
       gdouble pressure  = -1.0;
       gdouble velocity  = -1.0;
       gdouble direction = -1.0;
       gdouble random    = -1.0;
       gdouble tilt      = -1.0;
+      gdouble fading      = -1.0;
 
       if (paint_options->pressure_options->hardness)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -1782,6 +2029,16 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
       if (paint_options->direction_options->hardness)
         direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
 
+      if (paint_options->fading_options->hardness)
+		{
+		  gdouble p;
+		  gdouble fade_out;
+			
+		  fade_out = DEFAULT_FADE_LENGTH; 		  
+		  p = pixel_dist / fade_out;
+		  fading = exp (- p * p * 5.541);
+		}
+
       hardness = gimp_paint_options_get_dynamics_mix (pressure,
                                                       paint_options->pressure_options->prescale,
                                                       velocity,
@@ -1791,7 +2048,9 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
                                                       tilt,
                                                       paint_options->tilt_options->prescale,
                                                       direction,
-                                                      paint_options->direction_options->prescale);
+                                                      paint_options->direction_options->prescale,
+                                                      fading,
+                                                      paint_options->fading_options->prescale);
     }
 
   return hardness;
@@ -1799,7 +2058,8 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_dynamic_angle (GimpPaintOptions *paint_options,
-                                      const GimpCoords *coords)
+                                      const GimpCoords *coords,
+                                      gdouble           pixel_dist)
 {
   gdouble angle = 1.0;
 
@@ -1810,14 +2070,15 @@ gimp_paint_options_get_dynamic_angle (GimpPaintOptions *paint_options,
       paint_options->velocity_options->angle  ||
       paint_options->direction_options->angle ||
       paint_options->tilt_options->angle      ||
-      paint_options->random_options->angle)
+      paint_options->random_options->angle   ||
+      paint_options->fading_options->angle)
     {
       gdouble pressure  = -1.0;
       gdouble velocity  = -1.0;
       gdouble direction = -1.0;
       gdouble random    = -1.0;
       gdouble tilt      = -1.0;
-
+      gdouble fading    = -1.0;
       if (paint_options->pressure_options->angle)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
@@ -1862,6 +2123,15 @@ gimp_paint_options_get_dynamic_angle (GimpPaintOptions *paint_options,
       if (paint_options->direction_options->angle)
         direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
 
+      if (paint_options->fading_options->rate)
+		{
+		  gdouble p;
+		  gdouble fade_out;
+			
+		  fade_out = DEFAULT_FADE_LENGTH; 		  
+		  p = pixel_dist / fade_out;
+		  fading = exp (- p * p * 5.541);
+		}
 
       angle = gimp_paint_options_get_dynamics_mix (pressure,
                                                    paint_options->pressure_options->prescale,
@@ -1872,7 +2142,9 @@ gimp_paint_options_get_dynamic_angle (GimpPaintOptions *paint_options,
                                                    tilt,
                                                    paint_options->tilt_options->prescale,
                                                    direction,
-                                                   paint_options->direction_options->prescale);
+                                                   paint_options->direction_options->prescale,
+                                                   fading,
+                                                   paint_options->fading_options->prescale);
       angle = angle - 0.5;
     }
 

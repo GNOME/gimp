@@ -1,3 +1,12 @@
+/.anjuta/
+/.anjuta_sym_db.db
+/TODO.tasks
+*.anjuta
+*.c~
+*.h~
+*.patch
+/app/
+
 /Makefile
 /Makefile.in
 /aclocal.m4

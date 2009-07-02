@@ -374,12 +374,15 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
       core->scale = gimp_paint_options_get_dynamic_size (paint_options, coords,
-                                                         TRUE);
+                                                         TRUE,
+                                                         paint_core->pixel_dist);
 
-      core->angle = gimp_paint_options_get_dynamic_angle (paint_options, coords);
+      core->angle = gimp_paint_options_get_dynamic_angle (paint_options, coords,
+                                                          paint_core->pixel_dist);
 
       core->aspect_ratio =
-        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords);
+        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords, 
+                                                     paint_core->pixel_dist);
     }
 
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
@@ -722,12 +725,15 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
       core->scale = gimp_paint_options_get_dynamic_size (paint_options, coords,
-                                                         TRUE);
+                                                         TRUE, 
+                                                         paint_core->pixel_dist);
 
-      core->angle = gimp_paint_options_get_dynamic_angle (paint_options, coords);
+      core->angle = gimp_paint_options_get_dynamic_angle (paint_options, coords,
+                                                          paint_core->pixel_dist);
 
       core->aspect_ratio =
-        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords);
+        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords, 
+                                                     paint_core->pixel_dist);
     }
 
   core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);

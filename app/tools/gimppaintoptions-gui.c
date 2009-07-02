@@ -76,6 +76,12 @@ static void        random_options_gui    (GimpPaintOptions *paint_options,
                                           GType             tool_type,
                                           GtkTable         *table,
                                           gint              row);
+/**/
+static void        fading_options_gui    (GimpPaintOptions *paint_options,
+                                          GType             tool_type,
+                                          GtkTable         *table,
+                                          gint              row);
+/**/
 static GtkWidget * fade_options_gui      (GimpPaintOptions *paint_options,
                                           GType             tool_type);
 static GtkWidget * gradient_options_gui  (GimpPaintOptions *paint_options,
@@ -234,7 +240,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_container_add (GTK_CONTAINER (frame), inner_frame);
       gtk_widget_show (inner_frame);
 
-      table = gtk_table_new (5, n_dynamics + 2, FALSE);
+      table = gtk_table_new (7, n_dynamics + 2, FALSE);
       gtk_container_add (GTK_CONTAINER (inner_frame), table);
       gtk_widget_show (table);
 
@@ -268,6 +274,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
+//@@Nicolas
+
+      label = gtk_label_new (_("Fading - new:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
       pressure_options_gui (options, tool_type,
                             GTK_TABLE (table), 1,
                             dynamics_labels);
@@ -283,6 +297,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       random_options_gui (options, tool_type,
                           GTK_TABLE (table), 5);
+
+      fading_options_gui (options, tool_type,
+                          GTK_TABLE (table), 6);
 
       /* EEK: pack the fixed *after* the buttons so the table calls
        * size-allocates on it *before* it places the toggles. Fixes
@@ -785,6 +802,64 @@ random_options_gui (GimpPaintOptions *paint_options,
     }
 
    scalebutton = gimp_prop_scale_button_new (config, "random-prescale");
+   gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+   gtk_widget_show (scalebutton);
+}
+
+static void
+fading_options_gui (GimpPaintOptions *paint_options,
+                    GType             tool_type,
+                    GtkTable         *table,
+                    gint              row)
+{
+  GObject   *config = G_OBJECT (paint_options);
+  gint       column = 1;
+  GtkWidget *scalebutton;
+
+  if (tool_has_opacity_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "fading-opacity",
+                                 table, column++, row);
+    }
+
+  if (tool_has_hardness_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "fading-hardness",
+                                 table, column++, row);
+    }
+
+  if (tool_has_rate_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "fading-rate",
+                                 table, column++, row);
+    }
+
+  if (tool_has_size_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "fading-size",
+                                 table, column++, row);
+    }
+
+  if (tool_has_aspect_ratio_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "fading-aspect-ratio",
+                                 table, column++, row);
+    }
+
+  if (tool_has_angle_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "fading-angle",
+                                 table, column++, row);
+    }
+
+  if (tool_has_color_dynamics (tool_type))
+    {
+      dynamics_check_button_new (config, "fading-color",
+                                 table, column++, row);
+    }
+
+   scalebutton = gimp_prop_scale_button_new (config, "fading-prescale");
    gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
    gtk_widget_show (scalebutton);

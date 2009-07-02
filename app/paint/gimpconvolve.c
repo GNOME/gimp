@@ -154,7 +154,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   rate = options->rate;
 
-  rate *= gimp_paint_options_get_dynamic_rate (paint_options, coords);
+  rate *= gimp_paint_options_get_dynamic_rate (paint_options, coords,
+                                               paint_core->pixel_dist);
 
   gimp_convolve_calculate_matrix (convolve, options->type,
                                   brush_core->brush->mask->width / 2,
