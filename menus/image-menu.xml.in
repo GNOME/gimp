@@ -37,15 +37,15 @@
 
       <separator />
       <placeholder name="Save">
-	<menuitem action="file-save" />
-	<menuitem action="file-save-as" />
-	<menuitem action="file-save-a-copy" />
+        <menuitem action="file-save" />
+        <menuitem action="file-save-as" />
+        <menuitem action="file-save-a-copy" />
       </placeholder>
       <menuitem action="file-revert" />
       <separator />
       <placeholder name="Export">
         <menuitem action="file-export-to" />
-	<menuitem action="file-export" />
+        <menuitem action="file-export" />
       </placeholder>
       <menuitem action="file-create-template" />
       <separator />
@@ -91,7 +91,7 @@
         <menuitem action="context-brush-select-last" />
         <menuitem action="context-brush-select-previous" />
         <menuitem action="context-brush-select-next" />
-	<separator />
+        <separator />
         <menu action="context-brush-shape-menu" name="Shape">
           <menuitem action="context-brush-shape-circle" />
           <menuitem action="context-brush-shape-square" />
@@ -175,25 +175,25 @@
       </placeholder>
       <separator />
       <placeholder name="Cut">
-	<menuitem action="edit-cut" />
+        <menuitem action="edit-cut" />
       </placeholder>
       <placeholder name="Copy">
-	<menuitem action="edit-copy" />
-	<menuitem action="edit-copy-visible" />
+        <menuitem action="edit-copy" />
+        <menuitem action="edit-copy-visible" />
       </placeholder>
       <placeholder name="Paste">
-	<menuitem action="edit-paste" />
-	<menuitem action="edit-paste-into" />
+        <menuitem action="edit-paste" />
+        <menuitem action="edit-paste-into" />
       </placeholder>
       <menu action="edit-paste-as-menu" name="Paste as">
-	<menuitem action="edit-paste-as-new-short" />
-	<menuitem action="edit-paste-as-new-layer" />
+        <menuitem action="edit-paste-as-new-short" />
+        <menuitem action="edit-paste-as-new-layer" />
       </menu>
       <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />
-	<menuitem action="edit-named-copy" />
-	<menuitem action="edit-named-copy-visible" />
-	<menuitem action="edit-named-paste" />
+        <menuitem action="edit-named-copy" />
+        <menuitem action="edit-named-copy-visible" />
+        <menuitem action="edit-named-paste" />
       </menu>
       <separator />
       <placeholder name="Clear">
@@ -259,7 +259,7 @@
         <menuitem action="view-zoom-1-4" />
         <menuitem action="view-zoom-1-8" />
         <menuitem action="view-zoom-1-16" />
-	<separator />
+        <separator />
         <menuitem action="view-zoom-other" />
       </menu>
       <separator />
@@ -309,22 +309,22 @@
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
         <menuitem action="image-convert-indexed" />
-	<separator />
-	<placeholder name="Color Profile" />
-	<separator />
+        <separator />
+        <placeholder name="Color Profile" />
+        <separator />
       </menu>
       <menu action="image-transform-menu" name="Transform">
         <placeholder name="Flip">
           <menuitem action="image-flip-horizontal" />
           <menuitem action="image-flip-vertical" />
         </placeholder>
-	<separator />
+        <separator />
         <placeholder name="Rotate">
           <menuitem action="image-rotate-90" />
           <menuitem action="image-rotate-270" />
           <menuitem action="image-rotate-180" />
         </placeholder>
-	<separator />
+        <separator />
       </menu>
       <separator />
       <placeholder name="Resize">
@@ -372,9 +372,9 @@
         <menuitem action="layers-text-along-vectors" />
         <menu action="layers-text-to-selection-menu">
           <menuitem action="layers-text-selection-replace" />
-	  <menuitem action="layers-text-selection-add" />
-	  <menuitem action="layers-text-selection-subtract" />
-	  <menuitem action="layers-text-selection-intersect" />
+          <menuitem action="layers-text-selection-add" />
+          <menuitem action="layers-text-selection-subtract" />
+          <menuitem action="layers-text-selection-intersect" />
         </menu>
       </placeholder>
       <separator />
@@ -385,7 +385,7 @@
           <menuitem action="layers-select-top" />
           <menuitem action="layers-select-bottom" />
         </placeholder>
-	<separator />
+        <separator />
         <placeholder name="Position">
           <menuitem action="layers-raise" />
           <menuitem action="layers-lower" />
@@ -400,13 +400,13 @@
           <menuitem action="layers-mask-apply" />
           <menuitem action="layers-mask-delete" />
         </placeholder>
-	<separator />
+        <separator />
         <placeholder name="Properties">
           <menuitem action="layers-mask-show" />
           <menuitem action="layers-mask-edit" />
           <menuitem action="layers-mask-disable" />
         </placeholder>
-	<separator />
+        <separator />
         <placeholder name="Selection">
           <menuitem action="layers-mask-selection-replace" />
           <menuitem action="layers-mask-selection-add" />
@@ -420,28 +420,28 @@
           <menuitem action="layers-alpha-add" />
           <menuitem action="layers-alpha-remove" />
         </placeholder>
-	<separator />
+        <separator />
         <placeholder name="Selection">
           <menuitem action="layers-alpha-selection-replace" />
-	  <menuitem action="layers-alpha-selection-add" />
-	  <menuitem action="layers-alpha-selection-subtract" />
-	  <menuitem action="layers-alpha-selection-intersect" />
+          <menuitem action="layers-alpha-selection-add" />
+          <menuitem action="layers-alpha-selection-subtract" />
+          <menuitem action="layers-alpha-selection-intersect" />
         </placeholder>
-	<separator />
+        <separator />
       </menu>
       <menu action="layers-transform-menu" name="Transform">
         <placeholder name="Flip">
           <menuitem action="drawable-flip-horizontal" />
           <menuitem action="drawable-flip-vertical" />
         </placeholder>
-	<separator />
+        <separator />
         <placeholder name="Rotate">
           <menuitem action="drawable-rotate-90" />
           <menuitem action="drawable-rotate-270" />
           <menuitem action="drawable-rotate-180" />
           <menuitem action="tools-rotate-arbitrary" />
         </placeholder>
-	<separator />
+        <separator />
         <menuitem action="drawable-offset" />
       </menu>
 
@@ -517,49 +517,49 @@
 
     <menu action="tools-menu" name="Tools">
       <menu action="tools-select-menu" name="Selection Tools">
-	<menuitem action="tools-rect-select" />
-	<menuitem action="tools-ellipse-select" />
-	<menuitem action="tools-free-select" />
-	<menuitem action="tools-foreground-select" />
-	<menuitem action="tools-fuzzy-select" />
-	<menuitem action="tools-by-color-select" />
-	<menuitem action="tools-iscissors" />
+        <menuitem action="tools-rect-select" />
+        <menuitem action="tools-ellipse-select" />
+        <menuitem action="tools-free-select" />
+        <menuitem action="tools-foreground-select" />
+        <menuitem action="tools-fuzzy-select" />
+        <menuitem action="tools-by-color-select" />
+        <menuitem action="tools-iscissors" />
       </menu>
       <menu action="tools-paint-menu" name="Paint Tools">
-	<menuitem action="tools-bucket-fill" />
-	<menuitem action="tools-blend" />
-	<menuitem action="tools-pencil" />
-	<menuitem action="tools-paintbrush" />
-	<menuitem action="tools-eraser" />
-	<menuitem action="tools-airbrush" />
-	<menuitem action="tools-ink" />
-	<menuitem action="tools-clone" />
-	<menuitem action="tools-heal" />
-	<menuitem action="tools-perspective-clone" />
-	<menuitem action="tools-convolve" />
-	<menuitem action="tools-smudge" />
-	<menuitem action="tools-dodge-burn" />
+        <menuitem action="tools-bucket-fill" />
+        <menuitem action="tools-blend" />
+        <menuitem action="tools-pencil" />
+        <menuitem action="tools-paintbrush" />
+        <menuitem action="tools-eraser" />
+        <menuitem action="tools-airbrush" />
+        <menuitem action="tools-ink" />
+        <menuitem action="tools-clone" />
+        <menuitem action="tools-heal" />
+        <menuitem action="tools-perspective-clone" />
+        <menuitem action="tools-convolve" />
+        <menuitem action="tools-smudge" />
+        <menuitem action="tools-dodge-burn" />
       </menu>
       <menu action="tools-transform-menu" name="Transform Tools">
-	<menuitem action="tools-align" />
-	<menuitem action="tools-move" />
-	<menuitem action="tools-crop" />
-	<menuitem action="tools-rotate" />
-	<menuitem action="tools-scale" />
-	<menuitem action="tools-shear" />
-	<menuitem action="tools-perspective" />
-	<menuitem action="tools-flip" />
+        <menuitem action="tools-align" />
+        <menuitem action="tools-move" />
+        <menuitem action="tools-crop" />
+        <menuitem action="tools-rotate" />
+        <menuitem action="tools-scale" />
+        <menuitem action="tools-shear" />
+        <menuitem action="tools-perspective" />
+        <menuitem action="tools-flip" />
       </menu>
       <menu action="tools-color-menu" name="Color Tools">
-	<menuitem action="tools-color-balance" />
-	<menuitem action="tools-hue-saturation" />
-	<menuitem action="tools-colorize" />
-	<menuitem action="tools-brightness-contrast" />
-	<menuitem action="tools-threshold" />
-	<menuitem action="tools-levels" />
-	<menuitem action="tools-curves" />
-	<menuitem action="tools-posterize" />
-	<menuitem action="tools-desaturate" />
+        <menuitem action="tools-color-balance" />
+        <menuitem action="tools-hue-saturation" />
+        <menuitem action="tools-colorize" />
+        <menuitem action="tools-brightness-contrast" />
+        <menuitem action="tools-threshold" />
+        <menuitem action="tools-levels" />
+        <menuitem action="tools-curves" />
+        <menuitem action="tools-posterize" />
+        <menuitem action="tools-desaturate" />
       </menu>
       <menuitem action="tools-vector" />
       <menuitem action="tools-color-picker" />
@@ -586,9 +586,9 @@
       <menu action="plug-in-distorts-menu" name="Distorts" />
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light" />
-	<separator />
+        <separator />
         <placeholder name="Shadow" />
-	<separator />
+        <separator />
         <placeholder name="Glass" />
       </menu>
       <menu action="plug-in-noise-menu" name="Noise" />
@@ -599,15 +599,15 @@
       <menu action="plug-in-decor-menu" name="Decor" />
       <menu action="plug-in-map-menu" name="Map" />
       <menu action="plug-in-render-menu" name="Render">
-	<menu action="plug-in-render-clouds-menu" name="Clouds" />
-	<menu action="plug-in-render-nature-menu" name="Nature" />
-	<menu action="plug-in-render-pattern-menu" name="Pattern" />
-	<separator />
+        <menu action="plug-in-render-clouds-menu" name="Clouds" />
+        <menu action="plug-in-render-nature-menu" name="Nature" />
+        <menu action="plug-in-render-pattern-menu" name="Pattern" />
+        <separator />
       </menu>
       <menu action="plug-in-web-menu" name="Web" />
       <menu action="plug-in-animation-menu" name="Animation" >
         <placeholder name="Animators" />
-	<separator />
+        <separator />
       </menu>
       <separator />
       <placeholder name="Menus" />
@@ -622,13 +622,13 @@
     <menu action="windows-menu" name="Windows">
       <menu action="windows-docks-menu" name="Recently Closed Docks" />
       <menu action="windows-dialogs-menu" name="Dockable Dialogs">
-	<xi:include href="dialogs-menuitems.xml" />
+        <xi:include href="dialogs-menuitems.xml" />
       </menu>
       <separator />
       <placeholder name="Images" />
       <separator />
       <placeholder name="Docks">
-	<menuitem action="windows-show-toolbox" />
+        <menuitem action="windows-show-toolbox" />
       </placeholder>
     </menu>
 
