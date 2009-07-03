@@ -121,6 +121,8 @@ struct _GimpImage
   guint              dirty_time;            /*  time when image became dirty */
   gint               undo_freeze_count;     /*  counts the _freeze's         */
 
+  gint               export_dirty;          /*  'dirty' but for export       */
+
   gint               instance_count;        /*  number of instances          */
   gint               disp_count;            /*  number of displays           */
 
@@ -350,6 +352,8 @@ gint            gimp_image_clean                 (GimpImage          *image,
                                                   GimpDirtyMask       dirty_mask);
 void            gimp_image_clean_all             (GimpImage          *image);
 gint            gimp_image_is_dirty              (const GimpImage    *image);
+gboolean        gimp_image_is_export_dirty       (const GimpImage    *image);
+void            gimp_image_export_clean_all      (GimpImage          *image);
 
 
 /*  flush this image's displays  */

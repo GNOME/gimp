@@ -600,6 +600,8 @@ gimp_image_init (GimpImage *image)
   image->dirty_time            = 0;
   image->undo_freeze_count     = 0;
 
+  image->export_dirty          = 1;
+
   image->instance_count        = 0;
   image->disp_count            = 0;
 
@@ -2028,6 +2030,7 @@ gimp_image_dirty (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   image->dirty++;
+  image->export_dirty++;
 
   if (! image->dirty_time)
     image->dirty_time = time (NULL);
@@ -2046,6 +2049,7 @@ gimp_image_clean (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   image->dirty--;
+  image->export_dirty--;
 
   g_signal_emit (image, gimp_image_signals[CLEAN], 0, dirty_mask);
 
@@ -2065,6 +2069,16 @@ gimp_image_clean_all (GimpImage *image)
   g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
 }
 
+void
+gimp_image_export_clean_all (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  image->export_dirty = 0;
+
+  g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
+}
+
 /**
  * gimp_image_is_dirty:
  * @image:
@@ -2075,6 +2089,18 @@ gint
 gimp_image_is_dirty (const GimpImage *image)
 {
   return image->dirty != 0;
+}
+
+/**
+ * gimp_image_is_export_dirty:
+ * @image:
+ *
+ * Returns: True if the image export is dirty, false otherwise.
+ **/
+gboolean
+gimp_image_is_export_dirty (const GimpImage *image)
+{
+  return image->export_dirty != 0;
 }
 
 /**

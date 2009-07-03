@@ -598,7 +598,10 @@ file_open_sanitize_image (GimpImage *image,
   while (image->undo_freeze_count)
     gimp_image_undo_thaw (image);
 
-  /* set the image to clean  */
+  /* Set the image to clean. Note that export dirtiness is not set to
+   * clean here; we can only consider export clean after the first
+   * export
+   */
   gimp_image_clean_all (image);
 
   /* make sure the entire projection is properly constructed, because

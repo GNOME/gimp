@@ -162,6 +162,10 @@ file_save (Gimp                *gimp,
 
           gimp_image_clean_all (image);
         }
+      else if (export)
+        {
+          gimp_image_export_clean_all (image);
+        }
 
       if (export)
         gimp_image_exported (image, uri);
