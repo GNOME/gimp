@@ -244,7 +244,6 @@ file_actions_update (GimpActionGroup *group,
   GimpDrawable *drawable  = NULL;
   const gchar  *source    = NULL;
   const gchar  *export_to = NULL;
-  gchar        *label     = NULL;
 
   if (image)
     {
@@ -266,19 +265,17 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-export",          image && drawable);
   SET_SENSITIVE ("file-create-template", image);
 
-  if (source && ! export_to)
+  if (source || export_to)
     {
-      /*  Update file-export-to label */
-      label = g_strdup_printf (_("Overwrite %s"),
-                               file_utils_uri_display_basename (source));
-      gimp_action_group_set_action_label (group, "file-export-to", label);
-      g_free (label);
-    }
-  else if (export_to)
-    {
-      /*  Update file-export-to label */
-      label = g_strdup_printf (_("Export to %s"),
-                               file_utils_uri_display_basename (export_to));
+      gchar *label = NULL;
+
+      if (! export_to)
+        label = g_strdup_printf (_("Overwrite %s"),
+                                 file_utils_uri_display_basename (source));
+      else
+        label = g_strdup_printf (_("Export to %s"),
+                                 file_utils_uri_display_basename (export_to));
+
       gimp_action_group_set_action_label (group, "file-export-to", label);
       g_free (label);
     }
