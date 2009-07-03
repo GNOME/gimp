@@ -43,10 +43,12 @@ struct _GimpForegroundSelectTool
   guint               idle_id;
   GArray             *stroke;
   GList              *strokes;
-  gboolean           *drbsignal;//(new)
+  GArray             *drbsignal;//(new)
+  GList              *drbsignals;
   GimpChannel        *mask;
   SioxState          *state;
   SioxRefinementType  refinement;
+  SioxDRBType         drbrefinement;//(new)   
 };
 
 struct _GimpForegroundSelectToolClass
@@ -62,3 +64,4 @@ GType   gimp_foreground_select_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_FOREGROUND_SELECT_TOOL_H__  */
+

@@ -45,14 +45,14 @@ void        gimp_drawable_foreground_extract_siox  (GimpDrawable       *mask,
                                                     gint                brush_radius,//(new)
                                                     GimpProgress       *progress);
 void        gimp_drawable_foreground_extract_siox_done (SioxState      *state);
-/*
+
 void gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,//(new)
 					       SioxState         *state,
 					       gboolean           optionsrefinement,
 					       gfloat             optionsthreshold,//( should be float)
 					       gint               radius,
 					       GimpProgress      *progress);
-
+/*
 void siox_foreground_drb (SioxState    *state,//(new)
 			 TileManager  *mask,
 			 gboolean      options,
@@ -61,3 +61,4 @@ void siox_foreground_drb (SioxState    *state,//(new)
 			 gint          brushradius,
 			 gfloat        threshold);//(new)*/
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */
+

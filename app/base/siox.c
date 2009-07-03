@@ -103,8 +103,8 @@ struct _SioxState
   gint          xsbpp;
 };
 
-static SioxState  *drbstate;//
-static TileManager  *drbmask;//
+//static SioxState  *drbstate;//
+//static TileManager  *drbmask;//
 
 /* A struct that holds the classification result */
 typedef struct
@@ -827,14 +827,14 @@ siox_foreground_extract (SioxState          *state,
                          const gdouble       sensitivity[3],
                          gboolean            multiblob,
                          SioxProgressFunc    progress_callback,
-                         gfloat              sioxdrbthreshold,//(new)
-                         gboolean	     sioxdrboptions,//(new) 
-                         gboolean            drbsignal,//(new)
-                         gint                brush_radius,//(new)
+                         //gfloat              sioxdrbthreshold,//(new)
+                         //gboolean	     sioxdrboptions,//(new) 
+                         //gboolean            drbsignal,//(new)
+                         //gint                brush_radius,//(new)
                          gpointer            progress_data)
 {
-if(!drbsignal)
-{
+//if(!drbsignal)
+  printf("siox_foreground_extract \n");
   PixelRegion  srcPR;
   PixelRegion  mapPR;
   gpointer     pr;
@@ -877,14 +877,17 @@ if(!drbsignal)
   total = width * height;
 
   if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
-    g_hash_table_foreach_remove (state->cache, siox_cache_remove_bg, NULL);
-
+   { g_hash_table_foreach_remove (state->cache, siox_cache_remove_bg, NULL);
+    printf("siox_foreground_extract/refinement = SIOX_REFINEMENT_ADD_FOREGROUND \n");
+   }
   if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
-    g_hash_table_foreach_remove (state->cache, siox_cache_remove_fg, NULL);
-
+    {g_hash_table_foreach_remove (state->cache, siox_cache_remove_fg, NULL);
+     printf("siox_foreground_extract/refinement = SIOX_REFINEMENT_ADD_BACKGROUND\n"); 
+     }
   if (refinement & SIOX_REFINEMENT_CHANGE_SENSITIVITY)
     {
       refinement = SIOX_REFINEMENT_RECALCULATE;
+      printf("siox_foreground_extract/refinement = SIOX_REFINEMENT_RECALCULATE \n");
     }
   else
     {
@@ -898,7 +901,7 @@ if(!drbsignal)
 
   if (refinement & (SIOX_REFINEMENT_ADD_FOREGROUND |
                     SIOX_REFINEMENT_ADD_BACKGROUND))
-    {
+    {printf("siox_foreground_extract/count given foreground and background pixels \n");
       /* count given foreground and background pixels */
       pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
       total = width * height;
@@ -929,10 +932,12 @@ if(!drbsignal)
             }
 
             pixels += mapPR.w * mapPR.h;
-
+            
             if (n % 16 == 0)
-              siox_progress_update (progress_callback, progress_data,
+              {siox_progress_update (progress_callback, progress_data,
                                     0.1 * ((gdouble) pixels / (gdouble) total));
+              printf("siox_foreground_extract/siox_progress_update 0.1\n");                      
+              }
         }
 
 #ifdef SIOX_DEBUG
@@ -953,11 +958,11 @@ if(!drbsignal)
                          width, height, FALSE);
       pixel_region_init (&mapPR, mask,
                          x, y, width, height, FALSE);
-
+printf("siox_foreground_extract/create inputs for color signatures \n");
       pr = pixel_regions_register (2, &srcPR, &mapPR);
 
       if (! (refinement & SIOX_REFINEMENT_ADD_FOREGROUND))
-        {
+        {printf("siox_foreground_extract/! (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)\n");
           gint i = 0;
 
           for (pixels = 0, n = 0;
@@ -988,13 +993,15 @@ if(!drbsignal)
               pixels += mapPR.w * mapPR.h;
 
               if (n % 16 == 0)
-                siox_progress_update (progress_callback, progress_data,
+               { siox_progress_update (progress_callback, progress_data,
                                       0.1 + 0.1 * ((gdouble) pixels /
                                                    (gdouble) total));
+               printf("siox_foreground_extract/siox_progress_update 0.1+0.1\n");   
+               }
             }
         }
       else if (! (refinement & SIOX_REFINEMENT_ADD_BACKGROUND))
-        {
+        {printf("siox_foreground_extract/(refinement & SIOX_REFINEMENT_ADD_BACKGROUND) && (refinement & SIOX_REFINEMENT_ADD_FOREGROUND) \n");
           gint i = 0;
 
           for (pixels = 0, n = 0;
@@ -1025,13 +1032,15 @@ if(!drbsignal)
               pixels += mapPR.w * mapPR.h;
 
               if (n % 16 == 0)
-                siox_progress_update (progress_callback, progress_data,
+                {siox_progress_update (progress_callback, progress_data,
                                       0.1 + 0.1 * ((gdouble) pixels /
                                                    (gdouble) total));
+                printf("siox_foreground_extract/siox_progress_update 0.1+0.1*\n");   
+                }  
             }
         }
       else   /* both changed */
-        {
+        {printf("siox_foreground_extract/! (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)\n");
           gint i = 0;
           gint j = 0;
 
@@ -1068,14 +1077,16 @@ if(!drbsignal)
               pixels += mapPR.w * mapPR.h;
 
               if (n % 16 == 0)
-                siox_progress_update (progress_callback, progress_data,
+               { siox_progress_update (progress_callback, progress_data,
                                       0.1 + 0.1 * ((gdouble) pixels /
                                                    (gdouble) total));
+               printf("siox_foreground_extract/siox_progress_update 0.1+0.1**\n");   
+               }
             }
         }
 
       if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
-        {
+        {printf("siox_foreground_extract/Create color signature for the background\n");
           /* Create color signature for the background */
           state->bgsig = create_signature (surebg, surebgcount,
                                            &state->bgsiglen, limits,
@@ -1096,7 +1107,7 @@ if(!drbsignal)
       siox_progress_update (progress_callback, progress_data, 0.4);
 
       if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
-        {
+        {printf("siox_foreground_extract/Create color signature for the foreground\n");
           /* Create color signature for the foreground */
           state->fgsig = create_signature (surefg, surefgcount,
                                            &state->fgsiglen, limits,
@@ -1108,9 +1119,10 @@ if(!drbsignal)
           g_free (surefg);
         }
   }
-
+  
   siox_progress_update (progress_callback, progress_data, 0.5);
-
+  printf("siox_foreground_extract/siox_progress_update 0.5\n");
+   printf("siox_foreground_extract/Reduce the working area to the region of interest\n");
   /* Reduce the working area to the region of interest */
   gimp_rectangle_intersect (x1, y1, x2 - x1, y2 - y1,
                             x, y, width, height,
@@ -1129,7 +1141,7 @@ if(!drbsignal)
   pixel_region_init (&mapPR, mask, x, y, width, height, TRUE);
 
   total = width * height;
-
+ printf("siox_foreground_extract/ pixel_region_init _two\n");
   for (pr = pixel_regions_register (2, &srcPR, &mapPR), n = 0, pixels = 0;
        pr != NULL;
        pr = pixel_regions_process (pr), n++)
@@ -1224,8 +1236,10 @@ if(!drbsignal)
       pixels += mapPR.w * mapPR.h;
 
       if (n % 8 == 0)
-        siox_progress_update (progress_callback, progress_data,
+       { siox_progress_update (progress_callback, progress_data,
                               0.5 + 0.3 * ((gdouble) pixels / (gdouble) total));
+       printf("siox_foreground_extract/ siox_progress_update 0.5+0.3\n");
+       }
     }
 
 #ifdef SIOX_DEBUG
@@ -1239,19 +1253,19 @@ if(!drbsignal)
 
   /* smooth a bit for error killing */
   smooth_mask (mask, x, y, width, height);
-
+  printf("siox_foreground_extract/smooth a bit for error killing \n");
   /* erode, to make sure only "strongly connected components"
    * keep being connected
    */
   erode_mask (mask, x, y, width, height);
-
+printf("siox_foreground_extract/erode, to make sure only strongly connected components\n");
   /* search the biggest connected component */
   find_max_blob (mask, x, y, width, height,
                  multiblob ?
                  MULTIBLOB_DEFAULT_SIZEFACTOR : MULTIBLOB_ONE_BLOB_ONLY);
 
   siox_progress_update (progress_callback, progress_data, 0.9);
-
+printf("siox_foreground_extract/ siox_progress_update 0.9\n");
   /* smooth again - as user specified */
   for (n = 0; n < smoothness; n++)
     smooth_mask (mask, x, y, width, height);
@@ -1263,12 +1277,11 @@ if(!drbsignal)
 
   /* dilate, to fill up boundary pixels killed by erode */
   dilate_mask (mask, x, y, width, height);
-
+printf("siox_foreground_extract/dilate, to fill up boundary pixels killed by erode\n");
   siox_progress_update (progress_callback, progress_data, 1.0);
-  drbstate = state;//	
-  drbmask  = mask;//	 
-}
-else
+  printf("siox_foreground_extract/ siox_progress_update 1.0\n");	 
+
+/*else
 {
     gint	 brush_mode;
     gfloat    threshold = sioxdrbthreshold;
@@ -1282,7 +1295,7 @@ else
     drbstate = siox_drb (drbstate,drbmask,x,y,
                         brush_radius,brush_mode,
                         threshold);
-}  
+} */ 
 }
 
 
@@ -1305,16 +1318,17 @@ else
  * TODO: This is still an experimental method. There are more tests
  * needed to evaluate performance of this!
  */
-//void
-SioxState *
+void
+//SioxState *
 siox_drb (SioxState   *state,
           TileManager *mask,
           gint         x,
           gint         y,
           gint         brush_radius,
           gint         brush_mode,
-          gfloat       threshold)
-{
+          gfloat       threshold,
+          gpointer     progress_data)//
+{printf("siox_drb\n");
   PixelRegion  srcPR;
   PixelRegion  mapPR;
   gpointer     pr;
@@ -1360,7 +1374,7 @@ siox_drb (SioxState   *state,
               mindistfg = (gfloat) sqrt (cr->fgdist);
 
               if (brush_mode == SIOX_DRB_ADD)
-                {
+                {printf("siox_drb SIOX_DRB_ADD \n");
                   if (*m > SIOX_HIGH)
                     continue;
 
@@ -1376,7 +1390,7 @@ siox_drb (SioxState   *state,
                     }
                 }
               else /*if (brush_mode == SIOX_DRB_SUBTRACT)*/
-                {
+                {printf("siox_drb SIOX_DRB_SUBSTRCT \n");
                   if (*m < SIOX_HIGH)
                     continue;
 
@@ -1432,3 +1446,4 @@ siox_done (SioxState *state)
   g_printerr ("siox.c: siox_done()\n");
 #endif
 }
+
