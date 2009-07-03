@@ -138,17 +138,17 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
-  { "file-export", NULL,
-    NC_("file-action", "Export..."), "<control><shift>E",
-    NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
-    GIMP_SAVE_MODE_EXPORT, FALSE,
-    GIMP_HELP_FILE_EXPORT },
-
   { "file-export-to", NULL,
     NC_("file-action", "Export to"), "<control>E",
     NC_("file-action", "Export the image back to the import source in the import format"),
     GIMP_SAVE_MODE_EXPORT_TO, FALSE,
-    GIMP_HELP_FILE_EXPORT_TO }
+    GIMP_HELP_FILE_EXPORT_TO },
+
+  { "file-export", NULL,
+    NC_("file-action", "Export..."), "<control><shift>E",
+    NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
+    GIMP_SAVE_MODE_EXPORT, FALSE,
+    GIMP_HELP_FILE_EXPORT }
 };
 
 void
@@ -262,8 +262,8 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save-as",         image && drawable);
   SET_SENSITIVE ("file-save-a-copy",     image && drawable);
   SET_SENSITIVE ("file-revert",          image && (GIMP_OBJECT (image)->name || source));
-  SET_SENSITIVE ("file-export",          image && drawable);
   SET_SENSITIVE ("file-export-to",       source || export_to);
+  SET_SENSITIVE ("file-export",          image && drawable);
   SET_SENSITIVE ("file-create-template", image);
 
   if (source && ! export_to)

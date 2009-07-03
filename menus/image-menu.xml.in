@@ -44,8 +44,8 @@
       <menuitem action="file-revert" />
       <separator />
       <placeholder name="Export">
+        <menuitem action="file-export-to" />
 	<menuitem action="file-export" />
-	<menuitem action="file-export-to" />
       </placeholder>
       <menuitem action="file-create-template" />
       <separator />
