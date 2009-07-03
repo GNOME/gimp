@@ -314,7 +314,8 @@ gimp_image_undo_can_compress (GimpImage    *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  if (image->dirty != 0 && ! gimp_undo_stack_peek (image->redo_stack))
+  if (gimp_image_is_dirty (image) &&
+      ! gimp_undo_stack_peek (image->redo_stack))
     {
       GimpUndo *undo = gimp_undo_stack_peek (image->undo_stack);
 

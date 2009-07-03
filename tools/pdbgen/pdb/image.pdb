@@ -1649,7 +1649,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  dirty = (image->dirty != 0);
+  dirty = gimp_image_is_dirty (image);
 }
 CODE
     );

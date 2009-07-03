@@ -232,7 +232,7 @@ file_save_cmd_callback (GtkAction *action,
     case GIMP_SAVE_MODE_SAVE:
     case GIMP_SAVE_MODE_SAVE_AND_CLOSE:
       /*  Only save if the image has been modified, or if it is new.  */
-      if ((image->dirty ||
+      if ((gimp_image_is_dirty (image) ||
            ! GIMP_GUI_CONFIG (image->gimp->config)->trust_dirty_flag) ||
           uri == NULL)
         {
@@ -309,7 +309,8 @@ file_save_cmd_callback (GtkAction *action,
     }
 
   if (save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE &&
-      saved && ! display->image->dirty)
+      saved &&
+      ! gimp_image_is_dirty (display->image))
     {
       gimp_display_close (display);
     }

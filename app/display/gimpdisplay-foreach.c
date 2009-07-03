@@ -47,7 +47,7 @@ gimp_displays_dirty (Gimp *gimp)
     {
       GimpDisplay *display = list->data;
 
-      if (display->image && display->image->dirty)
+      if (display->image && gimp_image_is_dirty (display->image))
         return TRUE;
     }
 
@@ -59,7 +59,8 @@ gimp_displays_image_dirty_callback (GimpImage     *image,
                                     GimpDirtyMask  dirty_mask,
                                     GimpContainer *container)
 {
-  if (image->dirty && image->disp_count > 0 &&
+  if (gimp_image_is_dirty (image) &&
+      image->disp_count > 0 &&
       ! gimp_container_have (container, GIMP_OBJECT (image)))
     gimp_container_add (container, GIMP_OBJECT (image));
 }
@@ -84,7 +85,7 @@ gimp_displays_image_clean_callback (GimpImage     *image,
                                     GimpDirtyMask  dirty_mask,
                                     GimpContainer *container)
 {
-  if (! image->dirty)
+  if (! gimp_image_is_dirty (image))
     gimp_container_remove (container, GIMP_OBJECT (image));
 }
 
@@ -130,7 +131,8 @@ gimp_displays_get_dirty_images (Gimp *gimp)
         {
           GimpImage *image = list->data;
 
-          if (image->dirty && image->disp_count > 0)
+          if (gimp_image_is_dirty (image) &&
+              image->disp_count > 0)
             gimp_container_add (container, GIMP_OBJECT (image));
         }
 

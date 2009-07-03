@@ -84,10 +84,10 @@ gimp_display_shell_close (GimpDisplayShell *shell,
    *  it before nuking it--this only applies if its the last view
    *  to an image canvas.  (a image with disp_count = 1)
    */
-  if (! kill_it              &&
-      image                  &&
-      image->disp_count == 1 &&
-      image->dirty           &&
+  if (! kill_it                   &&
+      image                       &&
+      image->disp_count == 1      &&
+      gimp_image_is_dirty (image) &&
       shell->display->config->confirm_on_close)
     {
       /*  If there's a save dialog active for this image, then raise it.

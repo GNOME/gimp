@@ -262,7 +262,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   i += print (title, title_len, i, "%%D");
                   break;
                 }
-              if (image->dirty)
+              if (gimp_image_is_dirty (image))
                 title[i++] = format[1];
               format++;
               break;
@@ -274,18 +274,18 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   i += print (title, title_len, i, "%%C");
                   break;
                 }
-              if (! image->dirty)
+              if (! gimp_image_is_dirty (image))
                 title[i++] = format[1];
               format++;
               break;
 
             case 'B': /* dirty flag (long) */
-              if (image->dirty)
+              if (gimp_image_is_dirty (image))
                 i += print (title, title_len, i, "%s", _("(modified)"));
               break;
 
             case 'A': /* clean flag (long) */
-              if (! image->dirty)
+              if (! gimp_image_is_dirty (image))
                 i += print (title, title_len, i, "%s", _("(clean)"));
               break;
 

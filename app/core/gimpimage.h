@@ -349,6 +349,7 @@ gint            gimp_image_dirty                 (GimpImage          *image,
 gint            gimp_image_clean                 (GimpImage          *image,
                                                   GimpDirtyMask       dirty_mask);
 void            gimp_image_clean_all             (GimpImage          *image);
+gint            gimp_image_is_dirty              (const GimpImage    *image);
 
 
 /*  flush this image's displays  */

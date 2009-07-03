@@ -1675,7 +1675,7 @@ image_is_dirty_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      dirty = (image->dirty != 0);
+      dirty = gimp_image_is_dirty (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

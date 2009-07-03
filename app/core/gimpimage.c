@@ -2066,6 +2066,18 @@ gimp_image_clean_all (GimpImage *image)
 }
 
 /**
+ * gimp_image_is_dirty:
+ * @image:
+ *
+ * Returns: True if the image is dirty, false otherwise.
+ **/
+gint
+gimp_image_is_dirty (const GimpImage *image)
+{
+  return image->dirty != 0;
+}
+
+/**
  * gimp_image_saved:
  * @image:
  * @uri:
