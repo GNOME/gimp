@@ -100,7 +100,7 @@ typedef struct _GimpDocumentView             GimpDocumentView;
 typedef struct _GimpFontView                 GimpFontView;
 typedef struct _GimpImageView                GimpImageView;
 typedef struct _GimpTemplateView             GimpTemplateView;
-typedef struct _GimpToolView                 GimpToolView;
+typedef struct _GimpToolEditor               GimpToolEditor;
 
 
 /*  GimpDataFactoryView widgets  */
