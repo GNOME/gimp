@@ -123,7 +123,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                                        SioxRefinementType  refinement,
                                        gint                smoothness,
                                        gfloat              sioxdrbthreshold,//(new)				
-                                       gboolean	 	   sioxdrboption,//(new)   
+                                       SioxDRBType	 	   sioxdrboption,//(new)   
                                        const gdouble       sensitivity[3],
                                        gboolean            multiblob,
                                        gboolean            drbsignal,//(new)
@@ -191,16 +191,16 @@ gimp_drawable_foreground_extract_siox_done (SioxState *state)
 void                                   //(new)
 gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,
 					  SioxState         *state,
-			        	  gboolean           optionsrefinement,
-					  gfloat	     optionsthreshold,//( should be float)
+			          SioxDRBType        optionsrefinement,
+					  gfloat	         optionsthreshold,//( should be float)
 					  gint               radius,
 					  GimpProgress      *progress)
 {printf("gimp_drawable_foreground_extract_siox_drb\n");
-	gint brush_mode;
+	/*gint brush_mode;
 	brush_mode |= (optionsrefinement ?
                     SIOX_DRB_ADD   :
                     SIOX_DRB_SUBTRACT);
-    
+    */
 	 gint x = (state->x);
          gint y = (state->y);
  
@@ -208,7 +208,8 @@ gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,
 	      mask,//
 	      x,y,
 	      radius,
-	      brush_mode,  //
+		  optionsrefinement,//		  
+	      //brush_mode,  //
 	      optionsthreshold,
 	      progress);
    
@@ -272,4 +273,3 @@ siox_foreground_drb (SioxState   *state,
 	 
  }*/
  
-

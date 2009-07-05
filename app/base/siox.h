@@ -83,11 +83,11 @@ void        siox_drb                (SioxState          *state,
                                      gint                x,
                                      gint                y,
                                      gint                brush_radius,
-                                     gint                brush_mode,
+                                     SioxDRBType         optionsrefinement,//
+                                     //gint                brush_mode,
                                      gfloat              threshold,
                                     // SioxProgressFunc    progress_callback,//
                                      gpointer            progress_data);//(new)
 
 
 #endif /* __SIOX_H__ */
-
