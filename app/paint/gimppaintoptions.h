@@ -29,23 +29,10 @@
                                         GIMP_CONTEXT_BRUSH_MASK
 
 
-typedef struct _GimpDynamicOptions  GimpDynamicOptions;
 typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpJitterOptions   GimpJitterOptions;
 typedef struct _GimpGradientOptions GimpGradientOptions;
 
-struct _GimpDynamicOptions
-{
-  gboolean  opacity;
-  gboolean  hardness;
-  gboolean  rate;
-  gboolean  size;
-  gboolean  inverse_size;
-  gboolean  aspect_ratio;
-  gboolean  color;
-  gboolean  angle;
-  gdouble   prescale;
-};
 
 struct _GimpFadeOptions
 {
@@ -77,8 +64,6 @@ struct _GimpGradientOptions
 #define GIMP_IS_PAINT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_OPTIONS))
 #define GIMP_PAINT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_OPTIONS, GimpPaintOptionsClass))
 
-#define GIMP_PAINT_PRESSURE_SCALE 1.5
-#define GIMP_PAINT_VELOCITY_SCALE 1.0
 
 typedef struct _GimpPaintOptionsClass GimpPaintOptionsClass;
 
@@ -96,14 +81,6 @@ struct _GimpPaintOptions
   GimpPaintApplicationMode  application_mode_save;
 
   gboolean                  hard;
-
-  gboolean                  dynamics_expanded;
-  GimpDynamicOptions       *pressure_options;
-  GimpDynamicOptions       *velocity_options;
-  GimpDynamicOptions       *direction_options;
-  GimpDynamicOptions       *tilt_options;
-  GimpDynamicOptions       *random_options;
-  GimpDynamicOptions       *fading_options;
 
   GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;
@@ -143,36 +120,6 @@ gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
 
-
-gdouble gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gdouble           pixel_dist);
-
-gdouble gimp_paint_options_get_dynamic_size    (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gboolean          use_dynamics,
-                                                gdouble           pixel_dist);
-
-gdouble gimp_paint_options_get_dynamic_aspect_ratio
-                                               (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gdouble           pixel_dist);
-
-gdouble gimp_paint_options_get_dynamic_rate    (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gdouble           pixel_dist);
-
-gdouble gimp_paint_options_get_dynamic_color   (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gdouble           pixel_dist);
-
-gdouble gimp_paint_options_get_dynamic_angle   (GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gdouble           pixel_dist);
-
-gdouble gimp_paint_options_get_dynamic_hardness(GimpPaintOptions *paint_options,
-                                                const GimpCoords *coords,
-                                                gdouble           pixel_dist);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */
