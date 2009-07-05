@@ -441,35 +441,39 @@ gimp_display_shell_format_filename (gchar       *buf,
                                     GimpImage   *image,
                                     const gchar *filename)
 {
-  gint         incr          = 0;
-  const gchar *name_format   = NULL;
-  const gchar *name          = NULL;
-  const gchar *export_status = NULL;
-  const gchar *format_string = NULL;
   const gchar *source        = NULL;
-  const gchar *export_to     = NULL;
+  const gchar *name_format   = NULL;
+  const gchar *export_status = NULL;
+  gchar       *format_string = NULL;
+  gchar       *name          = NULL;
+  gint         incr          = 0;
 
-  source    = g_object_get_data (G_OBJECT (image),
-                                 GIMP_FILE_IMPORT_SOURCE_URI_KEY);
-  export_to = g_object_get_data (G_OBJECT (image),
-                                 GIMP_FILE_EXPORT_TO_URI_KEY);
+  source = g_object_get_data (G_OBJECT (image),
+                              GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
-  if (source)
+  /* Calculate filename and format */
+  if (! source)
     {
       /* As soon as the image is saved the source is forgotten, so the
-       * above condition is enough to figure out name_format and name
+       * above condition is enough to figure out name and name format
        */
-      name_format = "[%s]";
-      name        = source;
+      name        = g_strdup (filename);
+      name_format = "%s";
     }
   else
     {
-      name_format = "%s";
-      name        = gimp_object_get_name (GIMP_OBJECT (image));
+      gchar *source_no_ext = file_utils_uri_with_new_ext (source, NULL);
+      name = file_utils_uri_display_basename (source_no_ext);
+      g_free (source_no_ext);
+
+      name_format = "[%s]";
     }
 
+  /* Calculate filename suffix */
   if (! gimp_image_is_export_dirty (image))
     {
+      const gchar *export_to = g_object_get_data (G_OBJECT (image),
+                                                  GIMP_FILE_EXPORT_TO_URI_KEY);
       if (export_to)
         export_status = _(" (exported)");
       else if (source)
@@ -482,24 +486,13 @@ gimp_display_shell_format_filename (gchar       *buf,
       export_status = _(" (imported)");
     }
 
+  /* Merge strings and print the result */
   format_string = g_strconcat (name_format, export_status, NULL);
-
-  if (source)
-    {
-      gchar *source_no_ext   = file_utils_uri_with_new_ext (source, NULL);
-      gchar *source_basename = file_utils_uri_display_basename (source_no_ext);
-
-      incr = print (buf, len, start, format_string, source_basename);
-
-      g_free (source_basename);
-      g_free (source_no_ext);
-    }
-  else
-    {
-      incr = print (buf, len, start, format_string, filename);
-    }
-
+  incr = print (buf, len, start, format_string, name);
   g_free (format_string);
+
+  /* Cleanup */
+  g_free (name);
 
   return incr;
 }
