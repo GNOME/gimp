@@ -434,7 +434,7 @@ PKG_CHECK_EXISTS(iso-codes,
   have_iso_codes="yes"
   AC_DEFINE(HAVE_ISO_CODES, 1,
   	    [Define to 1 if the iso-codes package is available])
-  ISO_CODES_PREFIX=`$PKG_CONFIG --variable=prefix iso-codes`   
+  ISO_CODES_PREFIX=`$PKG_CONFIG --variable=prefix iso-codes`
   ISO_CODES_LOCATION="$ISO_CODES_PREFIX/share/xml/iso-codes"
   ISO_CODES_LOCALEDIR="$ISO_CODES_PREFIX/$DATADIRNAME/locale",
   have_iso_codes="no (iso-codes package not found)")
