@@ -47,6 +47,10 @@ if BUILD_XJT
 file_xjt = file-xjt
 endif
 
+if BUILD_METADATA
+metadata = metadata
+endif
+
 
 SUBDIRS = \
 	$(script_fu)		\
@@ -74,7 +78,7 @@ SUBDIRS = \
 	lighting		\
 	map-object		\
 	maze			\
-	metadata		\
+	$(metadata)		\
 	pagecurl		\
 	$(print)		\
 	selection-to-path	\

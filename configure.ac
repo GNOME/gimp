@@ -1188,6 +1188,8 @@ fi
 AC_SUBST(EXIF_CFLAGS)
 AC_SUBST(EXIF_LIBS)
 
+AM_CONDITIONAL(BUILD_METADATA, test "x$have_libexif" = xyes)
+
 
 #################
 # Check for libaa
