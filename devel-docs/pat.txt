@@ -29,7 +29,7 @@ Bytes 16 - 19: bytes
 Bytes 20 - 23: magic_number
 	Type: 32 bit unsigned int 
 	Value: GIMP pattern magic number.
-	('G' << 24) + ('I' << 16) + ('M' << 8) + 'P'
+	('G' << 24) + ('P' << 16) + ('A' << 8) + 'T'
 
 Bytes 24 - (header_size - 1):
 	Type: char *
