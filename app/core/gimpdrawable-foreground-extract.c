@@ -46,7 +46,7 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                   GimpForegroundExtractMode  mode,
                                   GimpDrawable              *mask,
                                   GimpProgress              *progress)
-{printf("gimp_drawable_foreground_extract \n");
+{
   SioxState    *state;
   const gdouble sensitivity[3] = { SIOX_DEFAULT_SENSITIVITY_L,
                                    SIOX_DEFAULT_SENSITIVITY_A,
@@ -62,8 +62,8 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                                 gimp_item_get_height (GIMP_ITEM (mask)));
 
   if (state)
-    {     printf("gimp_drawable_foreground_extract/gimp_drawable_foreground_extract_siox  \n");
-          gimp_drawable_foreground_extract_siox (mask, state,
+    {
+      gimp_drawable_foreground_extract_siox (mask, state,
                                              SIOX_REFINEMENT_RECALCULATE,
 					     SIOX_DEFAULT_SMOOTHNESS,
 					     SIOX_DEFAULT_THRESHOLD  ,//
@@ -84,7 +84,7 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
                                             gint          y,
                                             gint          width,
                                             gint          height)
-{printf("gimp_drawable_foreground_extract_siox_init \n");
+{
   const guchar *colormap = NULL;
   gboolean      intersect;
   gint          offset_x;
@@ -103,7 +103,7 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
                                         gimp_item_get_height (GIMP_ITEM (drawable)),
                                         x, y, width, height,
                                         &x, &y, &width, &height);
-printf("gimp_drawable_foreground_extract_siox_init /gimp_rectangle_intersect\n");
+
 
   /* FIXME:
    * Clear the mask outside the rectangle that we are working on?
@@ -122,14 +122,14 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                                        SioxState          *state,
                                        SioxRefinementType  refinement,
                                        gint                smoothness,
-                                       gfloat              sioxdrbthreshold,//(new)				
-                                       SioxDRBType	 	   sioxdrboption,//(new)   
+                                       gfloat              sioxdrbthreshold,
+                                       SioxDRBType         sioxdrboption,   
                                        const gdouble       sensitivity[3],
                                        gboolean            multiblob,
-                                       gboolean            drbsignal,//(new)
-                                       gint                brush_radius,//(new)
+                                       gboolean            drbsignal,
+                                       gint                brush_radius,
                                        GimpProgress       *progress)
-{printf("gimp_drawable_foreground_extract_siox\n");
+{
   gint x1, y1;
   gint x2, y2;
 
@@ -140,14 +140,12 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
 
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (progress)
+  if (progress && (!drbsignal))
     gimp_progress_start (progress, _("Foreground Extraction"), FALSE);
-  if (progress && (drbsignal))//(new)
+  if (progress && drbsignal)
     gimp_progress_start (progress, _("Detail Refinement Brush"), FALSE);
   if (GIMP_IS_CHANNEL (mask))
-    {
-      gimp_channel_bounds (GIMP_CHANNEL (mask), &x1, &y1, &x2, &y2);
-    }
+    gimp_channel_bounds (GIMP_CHANNEL (mask), &x1, &y1, &x2, &y2);
   else
     {
       x1 = 0;
@@ -155,24 +153,22 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
       x2 = gimp_item_get_width  (GIMP_ITEM (mask));
       y2 = gimp_item_get_height (GIMP_ITEM (mask));
     }
-  if(!drbsignal)
-	{ printf("gimp_drawable_foreground_extract_siox   !drbsignal\n");
-		siox_foreground_extract (state, refinement,
-                           gimp_drawable_get_tiles (mask), x1, y1, x2, y2,
-                           smoothness, sensitivity, multiblob,
-                           (SioxProgressFunc) gimp_progress_set_value,
-                           //sioxdrbthreshold,//(new)
-                           //sioxdrboption,//(new)  
-                           //drbsignal,//(new)
-                           //brush_radius,//(new)
-                           progress);
-	}
+  if (!drbsignal)
+    { 
+      siox_foreground_extract (state,
+                               refinement,
+                               gimp_drawable_get_tiles (mask),
+                               x1, y1, x2, y2,
+                               smoothness, sensitivity, multiblob,
+                               (SioxProgressFunc) gimp_progress_set_value,
+                               progress);
+    }
   else
-	{printf("gimp_drawable_foreground_extract_siox   else drbsignal\n");
-		gimp_drawable_foreground_extract_siox_drb(gimp_drawable_get_tiles (mask),
-					  state,sioxdrboption,sioxdrbthreshold,
-					  brush_radius,progress);
-	}
+    {
+      gimp_drawable_foreground_extract_siox_drb(gimp_drawable_get_tiles (mask),
+			        		state,sioxdrboption,sioxdrbthreshold,
+					        brush_radius,progress);
+    }
   if (progress)
     gimp_progress_end (progress);
 
@@ -181,95 +177,38 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
 
 void
 gimp_drawable_foreground_extract_siox_done (SioxState *state)
-{printf("gimp_drawable_foreground_extract/gimp_drawable_foreground_extract_siox_done \n");
+{
   g_return_if_fail (state != NULL);
 
   siox_done (state);
 }
 
 
-void                                   //(new)
-gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,
+void                                  
+gimp_drawable_foreground_extract_siox_drb(TileManager       *mask,
 					  SioxState         *state,
-			          SioxDRBType        optionsrefinement,
-					  gfloat	         optionsthreshold,//( should be float)
+					  SioxDRBType        optionsrefinement,
+					  gfloat             optionsthreshold,
 					  gint               radius,
 					  GimpProgress      *progress)
-{printf("gimp_drawable_foreground_extract_siox_drb\n");
-	/*gint brush_mode;
-	brush_mode |= (optionsrefinement ?
-                    SIOX_DRB_ADD   :
-                    SIOX_DRB_SUBTRACT);
-    */
-	 gint x = (state->x);
-         gint y = (state->y);
- 
-         siox_drb(state,//
-	      mask,//
-	      x,y,
-	      radius,
-		  optionsrefinement,//		  
-	      //brush_mode,  //
-	      optionsthreshold,
-	      progress);
+{
+  gint x = (state->x);
+  gint y = (state->y);
+  siox_drb(state,//
+           mask,//
+	   x,y,
+	   radius,
+	   optionsrefinement,//
+	   optionsthreshold,
+	   progress);
    
 }
 
 
 
-/*
-void                                                   //(new)
-gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,
-					  SioxState         *state,
-			        	  gboolean           optionsrefinement,
-					  gfloat	     optionsthreshold,//( should be float)
-					  gint               radius,
-					  GimpProgress      *progress)
-{
-    gint x = (state->x);
-    gint y = (state->y);
-    g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-    if (progress)
-	gimp_progress_start (progress, _("Detail Refinement Brush"), FALSE);
-    siox_foreground_drb(state,gimp_drawable_get_tiles(mask),
-		       optionsrefinement,x,y,
-		       radius,optionsthreshold);
-    if (progress)
-    gimp_progress_end (progress);
-
-}
 
 
 
 
-void
-siox_foreground_drb (SioxState   *state,
-		    TileManager  *mask,
-		    gboolean      options,
-		    gint          x,
-		    gint	  y,
-		    gint          brushradius,
-		    gfloat        threshold)//
- {
-     SioxDRBType drbbrush_mode;//
-     gint sioxdrboptions = options;
-     TileManager *drbmask = mask;
-     SioxState  *drbstate = state;
-     gfloat drbthreshold = threshold;
-     gint  drbbrush_radius = brushradius;
-     gint drbx = x;
-     gint drby = y;
 
-     if(sioxdrboptions == 0)//
-	 drbbrush_mode = (1<<0);//
-     else if(sioxdrboptions == 1)//
-	 drbbrush_mode = (1<<1);//
-     siox_drb(drbstate,//
-	      drbmask,//
-	      drbx,drby,
-	      drbbrush_radius,
-	      drbbrush_mode,  //
-	      drbthreshold);
-	 
- }*/
- 
+

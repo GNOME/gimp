@@ -37,27 +37,20 @@ void        gimp_drawable_foreground_extract_siox  (GimpDrawable       *mask,
                                                     SioxState          *state,
                                                     SioxRefinementType  refinemane,
                                                     gint                smoothness,
-                                                    gfloat              sioxdrbthreshold,//(new)	
-                                                    SioxDRBType 	 	sioxdrboption,//(new)   
+                                                    gfloat              sioxdrbthreshold,	
+                                                    SioxDRBType         sioxdrboption,  
                                                     const gdouble       sensitivity[3],
                                                     gboolean            multiblob,
-                                                    gboolean            drbsignal,//
-                                                    gint                brush_radius,//(new)
+                                                    gboolean            drbsignal,
+                                                    gint                brush_radius,
                                                     GimpProgress       *progress);
 void        gimp_drawable_foreground_extract_siox_done (SioxState      *state);
 
-void gimp_drawable_foreground_extract_siox_drb(GimpDrawable      *mask,//(new)
-					       SioxState         *state,
-					       SioxDRBType        optionsrefinement,
-					       gfloat             optionsthreshold,//( should be float)
-					       gint               radius,
-					       GimpProgress      *progress);
-/*
-void siox_foreground_drb (SioxState    *state,//(new)
-			 TileManager  *mask,
-			 gboolean      options,
-			 gint          x,
-			 gint          y,
-			 gint          brushradius,
-			 gfloat        threshold);//(new)*/
+void        gimp_drawable_foreground_extract_siox_drb(TileManager       *mask,
+						      SioxState         *state,
+						      SioxDRBType        optionsrefinement,
+						      gfloat             optionsthreshold,
+						      gint               radius,
+						      GimpProgress      *progress);
+
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */

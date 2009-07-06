@@ -69,10 +69,6 @@ void        siox_foreground_extract (SioxState          *state,
                                      const gdouble       sensitivity[3],
                                      gboolean            multiblob,
                                      SioxProgressFunc    progress_callback,
-                                     //gfloat              sioxdrbthreshold,//(new)
-                                     //gboolean	 	 sioxdrboptions,//(new) 
-                                     //gboolean            drbsignal,//(new)
-                                     //gint                brush_radius,//(new)
                                      gpointer            progress_data);
 void        siox_done               (SioxState          *state);
 
@@ -84,9 +80,7 @@ void        siox_drb                (SioxState          *state,
                                      gint                y,
                                      gint                brush_radius,
                                      SioxDRBType         optionsrefinement,//
-                                     //gint                brush_mode,
                                      gfloat              threshold,
-                                    // SioxProgressFunc    progress_callback,//
                                      gpointer            progress_data);//(new)
 
 
