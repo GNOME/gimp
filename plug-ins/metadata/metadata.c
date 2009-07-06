@@ -29,7 +29,6 @@
 
 #include "metadata.h"
 #include "xmp-encode.h"
-
 #include "interface.h"
 #include "exif-decode.h"
 /* FIXME: uncomment when these are working
@@ -438,17 +437,13 @@ run (const gchar      *name,
     }
   else if (! strcmp (name, DECODE_EXIF_PROC))
     {
-#ifdef HAVE_EXIF
         GError      *error         = NULL;
 
-        if (! xmp_merge_from_exifbuffer (xmp_model,
-                                         image_ID,
-                                         &error))
+        if (! xmp_merge_from_exifbuffer (xmp_model, image_ID, &error))
           {
             status = GIMP_PDB_EXECUTION_ERROR;
             g_printerr ("\nExif to XMP merge failed.\n");
           }
-#endif
     }
   else if (! strcmp (name, GET_PROC))
     {
