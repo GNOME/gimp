@@ -272,6 +272,7 @@ spread (GimpDrawable *drawable)
   param.width    = drawable->width;
   param.height   = drawable->height;
 
+  gimp_pixel_fetcher_set_edge_mode(param.pft, GIMP_PIXEL_FETCHER_EDGE_BLACK);
   iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_dest (iter, spread_func, &param);
   gimp_rgn_iterator_free (iter);
@@ -301,6 +302,7 @@ spread_preview_update (GimpPreview *preview,
                                                 1) + 1) / 2;
   param.width    = drawable->width;
   param.height   = drawable->height;
+  gimp_pixel_fetcher_set_edge_mode(param.pft, GIMP_PIXEL_FETCHER_EDGE_BLACK);
 
   gimp_preview_get_size (preview, &width, &height);
 
