@@ -1288,7 +1288,8 @@ gimp_resolution_entry_get_x_in_dpi (GimpResolutionEntry *gre)
 {
   g_return_val_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre), 0);
 
-  return gre->x.value / gimp_unit_get_factor (gre->unit);
+  /* dots_in_one_unit * units_in_one_inch -> dpi */
+  return gre->x.value * gimp_unit_get_factor (gre->unit);
 }
 
 /**
@@ -1302,7 +1303,7 @@ gimp_resolution_entry_get_y_in_dpi (GimpResolutionEntry *gre)
 {
   g_return_val_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre), 0);
 
-  return gre->y.value / gimp_unit_get_factor (gre->unit);
+  return gre->y.value * gimp_unit_get_factor (gre->unit);
 }
 
 
