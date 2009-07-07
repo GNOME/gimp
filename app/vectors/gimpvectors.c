@@ -1050,6 +1050,7 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
   if (cmd_array->len > 0)
     {
       ret_bezdesc = g_new (GimpBezierDesc, 1);
+      ret_bezdesc->status = CAIRO_STATUS_SUCCESS;
       ret_bezdesc->num_data = cmd_array->len;
       ret_bezdesc->data = (cairo_path_data_t *) cmd_array->data;
       g_array_free (cmd_array, FALSE);
