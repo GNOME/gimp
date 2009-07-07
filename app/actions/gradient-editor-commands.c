@@ -773,7 +773,7 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
       gimp_gradient_segment_range_blend (gradient,
                                          editor->control_sel_l,
                                          editor->control_sel_r,
-                                         &editor->control_sel_r->left_color,
+                                         &editor->control_sel_l->left_color,
                                          color,
                                          TRUE, TRUE);
       break;
@@ -782,7 +782,7 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
       gimp_gradient_segment_range_blend (gradient,
                                          editor->control_sel_l,
                                          editor->control_sel_r,
-                                         &editor->control_sel_r->left_color,
+                                         &editor->control_sel_l->left_color,
                                          color,
                                          TRUE, TRUE);
       gimp_gradient_segments_free (editor->right_saved_segments);
