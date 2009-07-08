@@ -12,6 +12,14 @@ Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
 
 * Bugs fixed:
 
+ 569661 – Import from PDF throws errors when entering resolution in
+          pixels per millimetre
+ 567262 – Black pixels appear in "Spread" filter preview
+ 554658 – Path Dialog: Path preview pics not to see constantly
+ 167604 – gimp_gradient_get_color_at() may return out-of-bounds values
+ 567393 – Rectangle select tool size shrinks to 0 if size is larger than
+          the image and the up or down arrow is pressed
+ 587543 – crash when invoking certain actions by keyboard shortcut
  563029 - Closing maximized image doesn't restore document window size
  585488 – Perspective transformation on a layer with a mask causes crash
  586008 - GIMP crashes when right-click canceling a drawing action initiated
