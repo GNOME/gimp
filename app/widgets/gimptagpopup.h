@@ -36,9 +36,11 @@ typedef struct _PopupTagData PopupTagData;
 struct _GimpTagPopup
 {
   GtkWindow          parent_instance;
+
   GimpComboTagEntry *combo_entry;
   GtkWidget         *alignment;
-  GtkWidget         *drawing_area;
+  GtkWidget         *tag_area;
+
   PangoContext      *context;
   PangoLayout       *layout;
   PopupTagData      *tag_data;
