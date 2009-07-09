@@ -148,9 +148,36 @@ gimp_tag_popup_class_init (GimpTagPopupClass *klass)
 static void
 gimp_tag_popup_init (GimpTagPopup *popup)
 {
+  GtkWidget *widget = GTK_WIDGET (popup);
+
+  popup->upper_arrow_state = GTK_STATE_NORMAL;
+  popup->lower_arrow_state = GTK_STATE_NORMAL;
+
+  gtk_widget_add_events (widget,
+                         GDK_BUTTON_PRESS_MASK   |
+                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_POINTER_MOTION_MASK |
+                         GDK_KEY_RELEASE_MASK    |
+                         GDK_SCROLL_MASK);
+
+  popup->frame = gtk_frame_new (NULL);
+  gtk_container_add (GTK_CONTAINER (popup), popup->frame);
+  gtk_widget_show (popup->frame);
+
+  popup->alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+  gtk_container_add (GTK_CONTAINER (popup->frame), popup->alignment);
+  gtk_widget_show (popup->alignment);
+
+  popup->tag_area = gtk_drawing_area_new ();
+  gtk_widget_add_events (popup->tag_area,
+                         GDK_BUTTON_PRESS_MASK   |
+                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_POINTER_MOTION_MASK);
+  gtk_container_add (GTK_CONTAINER (popup->alignment), popup->tag_area);
+  gtk_widget_show (popup->tag_area);
 }
 
-static GObject*
+static GObject *
 gimp_tag_popup_constructor (GType                  type,
                             guint                  n_construct_params,
                             GObjectConstructParam *construct_params)
@@ -158,9 +185,6 @@ gimp_tag_popup_constructor (GType                  type,
   GObject               *object;
   GimpTagPopup          *popup;
   GimpFilteredContainer *container;
-  GtkWidget             *alignment;
-  GtkWidget             *tag_area;
-  GtkWidget             *frame;
   gint                   x;
   gint                   y;
   gint                   width;
@@ -179,41 +203,17 @@ gimp_tag_popup_constructor (GType                  type,
   GdkRectangle           popup_rects[2]; /* variants of popup placement */
   GdkRectangle           popup_rect; /* best popup rect in screen coordinates */
 
-
   object = G_OBJECT_CLASS (parent_class)->constructor (type,
                                                        n_construct_params,
                                                        construct_params);
   popup = GIMP_TAG_POPUP (object);
 
-  gtk_widget_add_events (GTK_WIDGET (popup),
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_POINTER_MOTION_MASK |
-                         GDK_KEY_RELEASE_MASK    |
-                         GDK_SCROLL_MASK);
   gtk_window_set_screen (GTK_WINDOW (popup),
                          gtk_widget_get_screen (GTK_WIDGET (popup->combo_entry)));
 
-  frame = gtk_frame_new (NULL);
-  gtk_container_add (GTK_CONTAINER (popup), frame);
+  popup->context = gtk_widget_create_pango_context (GTK_WIDGET (popup));
+  popup->layout  = pango_layout_new (popup->context);
 
-  alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_container_add (GTK_CONTAINER (frame), alignment);
-
-  tag_area = gtk_drawing_area_new ();
-  gtk_widget_add_events (tag_area,
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_POINTER_MOTION_MASK);
-  gtk_container_add (GTK_CONTAINER (alignment), tag_area);
-
-  popup->alignment         = alignment;
-  popup->tag_area          = tag_area;
-  popup->context           = gtk_widget_create_pango_context (GTK_WIDGET (popup));
-  popup->layout            = pango_layout_new (popup->context);
-  popup->prelight          = NULL;
-  popup->upper_arrow_state = GTK_STATE_NORMAL;
-  popup->lower_arrow_state = GTK_STATE_NORMAL;
   gtk_widget_style_get (GTK_WIDGET (popup),
                         "scroll-arrow-vlength", &popup->scroll_arrow_height,
                         NULL);
@@ -263,12 +263,12 @@ gimp_tag_popup_constructor (GType                  type,
                               (GFunc) gimp_tag_popup_check_can_toggle, popup);
     }
 
-  width = GTK_WIDGET (popup->combo_entry)->allocation.width - frame->style->xthickness * 2;
+  width = GTK_WIDGET (popup->combo_entry)->allocation.width - popup->frame->style->xthickness * 2;
   height = gimp_tag_popup_layout_tags (popup, width);
   gdk_window_get_origin (GTK_WIDGET (popup->combo_entry)->window, &x, &y);
   max_height = GTK_WIDGET (popup->combo_entry)->allocation.height * 7;
   screen_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (popup->combo_entry)));
-  height += frame->style->ythickness * 2;
+  height += popup->frame->style->ythickness * 2;
   popup_height = height;
   popup_rects[0].x = x;
   popup_rects[0].y = 0;
@@ -294,17 +294,17 @@ gimp_tag_popup_constructor (GType                  type,
       if (popup_rects[0].height >= popup_rects[1].height)
         {
           popup_rect = popup_rects[0];
-          popup_rect.y += popup->scroll_arrow_height + frame->style->ythickness;
+          popup_rect.y += popup->scroll_arrow_height + popup->frame->style->ythickness;
         }
       else
         {
           popup_rect = popup_rects[1];
-          popup_rect.y -= popup->scroll_arrow_height + frame->style->ythickness;
+          popup_rect.y -= popup->scroll_arrow_height + popup->frame->style->ythickness;
         }
 
       popup->arrows_visible = TRUE;
       popup->upper_arrow_state = GTK_STATE_INSENSITIVE;
-      gtk_alignment_set_padding (GTK_ALIGNMENT (alignment),
+      gtk_alignment_set_padding (GTK_ALIGNMENT (popup->alignment),
                                  popup->scroll_arrow_height + 2,
                                  popup->scroll_arrow_height + 2, 0, 0);
       popup_height = popup_rect.height - popup->scroll_arrow_height * 2 + 4;
@@ -313,24 +313,22 @@ gimp_tag_popup_constructor (GType                  type,
       popup->scroll_step   = 0;
     }
 
-  tag_area->requisition.width  = width;
-  tag_area->requisition.height = popup_height;
+  popup->tag_area->requisition.width  = width;
+  popup->tag_area->requisition.height = popup_height;
 
   gtk_window_move (GTK_WINDOW (popup), popup_rect.x, popup_rect.y);
   gtk_window_resize (GTK_WINDOW (popup), popup_rect.width, popup_rect.height);
 
-  gtk_widget_show_all (GTK_WIDGET (popup));
-
-  g_signal_connect (alignment, "expose-event",
+  g_signal_connect (popup->alignment, "expose-event",
                     G_CALLBACK (gimp_tag_popup_border_expose),
                     popup);
   g_signal_connect (popup, "event",
                     G_CALLBACK (gimp_tag_popup_border_event),
                     NULL);
-  g_signal_connect (tag_area, "expose-event",
+  g_signal_connect (popup->tag_area, "expose-event",
                     G_CALLBACK (gimp_tag_popup_list_expose),
                     popup);
-  g_signal_connect (tag_area, "event",
+  g_signal_connect (popup->tag_area, "event",
                     G_CALLBACK (gimp_tag_popup_list_event),
                     popup);
 
@@ -453,7 +451,7 @@ gimp_tag_popup_show (GimpTagPopup *popup)
 
   g_return_if_fail (popup);
 
-  gtk_widget_show_all (GTK_WIDGET (popup));
+  gtk_widget_show (GTK_WIDGET (popup));
 
   gtk_grab_add (GTK_WIDGET (popup));
   gtk_widget_grab_focus (GTK_WIDGET (popup));
