@@ -98,8 +98,6 @@ static void     gimp_tag_popup_check_can_toggle        (GimpTagged         *tagg
                                                         GimpTagPopup       *popup);
 static gint     gimp_tag_popup_layout_tags             (GimpTagPopup       *popup,
                                                         gint                width);
-static void     gimp_tag_popup_do_timeout_scroll       (GimpTagPopup       *popup,
-                                                        gboolean            touchscreen_mode);
 static gboolean gimp_tag_popup_scroll_timeout          (gpointer            data);
 static void     gimp_tag_popup_remove_scroll_timeout   (GimpTagPopup       *popup);
 static gboolean gimp_tag_popup_scroll_timeout_initial  (gpointer            data);
@@ -283,18 +281,18 @@ gimp_tag_popup_constructor (GType                  type,
 
   gdk_window_get_origin (GTK_WIDGET (popup->combo_entry)->window, &x, &y);
 
-  max_height = GTK_WIDGET (popup->combo_entry)->allocation.height * 7;
+  max_height = GTK_WIDGET (popup->combo_entry)->allocation.height * 10;
 
   screen_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (popup->combo_entry)));
 
-  popup_height = height;
+  popup_height = MIN (height, max_height);
 
   popup_rects[0].x      = x;
   popup_rects[0].y      = 0;
   popup_rects[0].width  = GTK_WIDGET (popup->combo_entry)->allocation.width;
   popup_rects[0].height = y + GTK_WIDGET (popup->combo_entry)->allocation.height;
 
-  popup_rects[1].x      = popup_rects[0].x;
+  popup_rects[1].x      = x;
   popup_rects[1].y      = y;
   popup_rects[1].width  = popup_rects[0].width;
   popup_rects[1].height = screen_height - popup_rects[0].height;
@@ -325,6 +323,11 @@ gimp_tag_popup_constructor (GType                  type,
                            popup->frame->style->ythickness);
         }
 
+      popup_height = popup_rect.height;
+    }
+
+  if (popup_height < height)
+    {
       popup->arrows_visible    = TRUE;
       popup->upper_arrow_state = GTK_STATE_INSENSITIVE;
 
@@ -332,7 +335,7 @@ gimp_tag_popup_constructor (GType                  type,
                                  popup->scroll_arrow_height + 2,
                                  popup->scroll_arrow_height + 2, 0, 0);
 
-      popup_height = popup_rect.height - 2 * popup->scroll_arrow_height + 4;
+      popup_height -= 2 * popup->scroll_arrow_height + 4;
 
       popup->scroll_height = height - popup_rect.height;
       popup->scroll_y      = 0;
@@ -674,13 +677,15 @@ gimp_tag_popup_border_event (GtkWidget *widget,
   else if (event->type == GDK_MOTION_NOTIFY)
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
-      gint            x, y;
 
-      x = motion_event->x + widget->allocation.x;
-      y = motion_event->y + widget->allocation.y;
+      if (motion_event->window == widget->window)
+        {
+          gint x = motion_event->x + widget->allocation.x;
+          gint y = motion_event->y + widget->allocation.y;
 
-      gimp_tag_popup_handle_scrolling (popup, x, y,
-                                       popup->scroll_timeout_id == 0, TRUE);
+          gimp_tag_popup_handle_scrolling (popup, x, y,
+                                           popup->scroll_timeout_id == 0, TRUE);
+        }
     }
   else if (event->type == GDK_BUTTON_RELEASE)
     {
@@ -706,7 +711,7 @@ gimp_tag_popup_border_event (GtkWidget *widget,
       gtk_grab_remove (widget);
       gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
                                   GDK_CURRENT_TIME);
-      gtk_widget_destroy (GTK_WIDGET (popup));
+      gtk_widget_destroy (widget);
     }
   else if (event->type == GDK_SCROLL)
     {
@@ -1077,7 +1082,7 @@ gimp_tag_popup_scroll_timeout (gpointer data)
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
 
-  gimp_tag_popup_do_timeout_scroll (popup, touchscreen_mode);
+  gimp_tag_popup_scroll_by (popup, popup->scroll_step);
 
   return TRUE;
 }
@@ -1104,7 +1109,7 @@ gimp_tag_popup_scroll_timeout_initial (gpointer data)
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
 
-  gimp_tag_popup_do_timeout_scroll (popup, touchscreen_mode);
+  gimp_tag_popup_scroll_by (popup, popup->scroll_step);
 
   gimp_tag_popup_remove_scroll_timeout (popup);
 
@@ -1127,7 +1132,7 @@ gimp_tag_popup_start_scrolling (GimpTagPopup *popup)
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
 
-  gimp_tag_popup_do_timeout_scroll (popup, touchscreen_mode);
+  gimp_tag_popup_scroll_by (popup, popup->scroll_step);
 
   popup->scroll_timeout_id =
     gdk_threads_add_timeout (timeout,
@@ -1157,42 +1162,53 @@ static void
 gimp_tag_popup_scroll_by (GimpTagPopup *popup,
                           gint          step)
 {
-  gint new_scroll_y = popup->scroll_y + step;
+  GtkStateType arrow_state;
+  gint         new_scroll_y = popup->scroll_y + step;
+
+  arrow_state = popup->upper_arrow_state;
 
   if (new_scroll_y < 0)
     {
       new_scroll_y = 0;
 
-      if (popup->upper_arrow_state != GTK_STATE_INSENSITIVE)
-        {
-          gimp_tag_popup_stop_scrolling (popup);
-          gtk_widget_queue_draw (GTK_WIDGET (popup));
-        }
+      if (arrow_state != GTK_STATE_INSENSITIVE)
+        gimp_tag_popup_stop_scrolling (popup);
 
-      popup->upper_arrow_state = GTK_STATE_INSENSITIVE;
+      arrow_state = GTK_STATE_INSENSITIVE;
     }
   else
     {
-      popup->upper_arrow_state = (popup->upper_arrow_prelight ?
-                                  GTK_STATE_PRELIGHT : GTK_STATE_NORMAL);
+      arrow_state = (popup->upper_arrow_prelight ?
+                     GTK_STATE_PRELIGHT : GTK_STATE_NORMAL);
     }
+
+  if (arrow_state != popup->upper_arrow_state)
+    {
+      popup->upper_arrow_state = arrow_state;
+      gtk_widget_queue_draw (GTK_WIDGET (popup));
+    }
+
+  arrow_state = popup->lower_arrow_state;
 
   if (new_scroll_y >= popup->scroll_height)
     {
       new_scroll_y = popup->scroll_height - 1;
 
-      if (popup->lower_arrow_state != GTK_STATE_INSENSITIVE)
-        {
-          gimp_tag_popup_stop_scrolling (popup);
-          gtk_widget_queue_draw (GTK_WIDGET (popup));
-        }
+      if (arrow_state != GTK_STATE_INSENSITIVE)
+        gimp_tag_popup_stop_scrolling (popup);
 
-      popup->lower_arrow_state = GTK_STATE_INSENSITIVE;
+      arrow_state = GTK_STATE_INSENSITIVE;
     }
   else
     {
-      popup->lower_arrow_state = (popup->lower_arrow_prelight ?
-                                  GTK_STATE_PRELIGHT : GTK_STATE_NORMAL);
+      arrow_state = (popup->lower_arrow_prelight ?
+                     GTK_STATE_PRELIGHT : GTK_STATE_NORMAL);
+    }
+
+  if (arrow_state != popup->lower_arrow_state)
+    {
+      popup->lower_arrow_state = arrow_state;
+      gtk_widget_queue_draw (GTK_WIDGET (popup));
     }
 
   if (new_scroll_y != popup->scroll_y)
@@ -1201,13 +1217,6 @@ gimp_tag_popup_scroll_by (GimpTagPopup *popup,
 
       gdk_window_scroll (popup->tag_area->window, 0, -step);
     }
-}
-
-static void
-gimp_tag_popup_do_timeout_scroll (GimpTagPopup *popup,
-                                  gboolean      touchscreen_mode)
-{
-  gimp_tag_popup_scroll_by (popup, popup->scroll_step);
 }
 
 static void
