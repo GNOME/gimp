@@ -54,7 +54,6 @@ struct _GimpTagPopup
   gint               scroll_arrow_height;
   gboolean           scroll_fast;
   gboolean           arrows_visible;
-  gboolean           ignore_button_release;
   gboolean           upper_arrow_prelight;
   gboolean           lower_arrow_prelight;
   gboolean           single_select_disabled;

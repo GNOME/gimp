@@ -664,8 +664,6 @@ gimp_tag_popup_border_event (GtkWidget *widget,
       x = motion_event->x + widget->allocation.x;
       y = motion_event->y + widget->allocation.y;
 
-      popup->ignore_button_release = FALSE;
-
       gimp_tag_popup_handle_scrolling (popup, x, y,
                                        popup->timeout_id == 0, TRUE);
     }
@@ -676,7 +674,6 @@ gimp_tag_popup_border_event (GtkWidget *widget,
       popup->single_select_disabled = TRUE;
 
       if (button_event->window == widget->window &&
-          ! popup->ignore_button_release         &&
           gimp_tag_popup_button_scroll (popup, button_event))
         {
           return TRUE;
