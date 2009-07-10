@@ -805,11 +805,21 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
 
       pango_renderer_draw_layout (renderer, popup->layout,
                                   (tag_data->bounds.x +
-                                   GIMP_TAG_POPUP_PADDING) * PANGO_SCALE +
-                                  GIMP_TAG_POPUP_PADDING,
+                                   GIMP_TAG_POPUP_PADDING) * PANGO_SCALE,
                                   (tag_data->bounds.y -
                                    popup->scroll_y +
                                    GIMP_TAG_POPUP_PADDING) * PANGO_SCALE);
+
+#if 0
+      gtk_paint_layout (style, window,
+                        tag_data->state,
+                        TRUE,
+                        &event->area, widget, NULL,
+                        tag_data->bounds.x + GIMP_TAG_POPUP_PADDING,
+                        tag_data->bounds.y - popup->scroll_y +
+                        GIMP_TAG_POPUP_PADDING,
+                        popup->layout);
+#endif
 
       if (tag_data == popup->prelight              &&
           tag_data->state != GTK_STATE_INSENSITIVE &&
