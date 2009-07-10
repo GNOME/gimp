@@ -564,80 +564,74 @@ gimp_tag_popup_border_expose (GtkWidget      *widget,
                               GdkEventExpose *event,
                               GimpTagPopup   *popup)
 {
-  GdkGC        *gc;
-  GdkRectangle  border;
-  GdkRectangle  upper;
-  GdkRectangle  lower;
-  gint          arrow_space;
+  GdkRectangle border;
+  GdkRectangle upper;
+  GdkRectangle lower;
+  gint         arrow_space;
+  gint         arrow_size;
 
   if (event->window != widget->window)
     return FALSE;
 
-  gc = gdk_gc_new (GDK_DRAWABLE (widget->window));
-
   get_arrows_visible_area (popup, &border, &upper, &lower, &arrow_space);
 
-  if (event->window == widget->window)
+  arrow_size = 0.7 * arrow_space;
+
+  gtk_paint_box (widget->style,
+                 widget->window,
+                 GTK_STATE_NORMAL,
+                 GTK_SHADOW_OUT,
+                 &event->area, widget, "menu",
+                 0, 0, -1, -1);
+
+  if (popup->arrows_visible)
     {
-      gint arrow_size = 0.7 * arrow_space;
+      /*  upper arrow  */
 
       gtk_paint_box (widget->style,
                      widget->window,
-                     GTK_STATE_NORMAL,
+                     popup->upper_arrow_state,
                      GTK_SHADOW_OUT,
                      &event->area, widget, "menu",
-                     0, 0, -1, -1);
+                     upper.x,
+                     upper.y,
+                     upper.width,
+                     upper.height);
 
-      if (popup->arrows_visible)
-        {
-          gtk_paint_box (widget->style,
-                         widget->window,
-                         popup->upper_arrow_state,
-                         GTK_SHADOW_OUT,
-                         &event->area, widget, "menu",
-                         upper.x,
-                         upper.y,
-                         upper.width,
-                         upper.height);
+      gtk_paint_arrow (widget->style,
+                       widget->window,
+                       popup->upper_arrow_state,
+                       GTK_SHADOW_OUT,
+                       &event->area, widget, "menu_scroll_arrow_up",
+                       GTK_ARROW_UP,
+                       TRUE,
+                       upper.x + (upper.width - arrow_size) / 2,
+                       upper.y + widget->style->ythickness + (arrow_space - arrow_size) / 2,
+                       arrow_size, arrow_size);
 
-          gtk_paint_arrow (widget->style,
-                           widget->window,
-                           popup->upper_arrow_state,
-                           GTK_SHADOW_OUT,
-                           &event->area, widget, "menu_scroll_arrow_up",
-                           GTK_ARROW_UP,
-                           TRUE,
-                           upper.x + (upper.width - arrow_size) / 2,
-                           upper.y + widget->style->ythickness + (arrow_space - arrow_size) / 2,
-                           arrow_size, arrow_size);
-        }
+      /*  lower arrow  */
 
-      if (popup->arrows_visible)
-        {
-          gtk_paint_box (widget->style,
-                         widget->window,
-                         popup->lower_arrow_state,
-                         GTK_SHADOW_OUT,
-                         &event->area, widget, "menu",
-                         lower.x,
-                         lower.y,
-                         lower.width,
-                         lower.height);
+      gtk_paint_box (widget->style,
+                     widget->window,
+                     popup->lower_arrow_state,
+                     GTK_SHADOW_OUT,
+                     &event->area, widget, "menu",
+                     lower.x,
+                     lower.y,
+                     lower.width,
+                     lower.height);
 
-          gtk_paint_arrow (widget->style,
-                           widget->window,
-                           popup->lower_arrow_state,
-                           GTK_SHADOW_OUT,
-                           &event->area, widget, "menu_scroll_arrow_down",
-                           GTK_ARROW_DOWN,
-                           TRUE,
-                           lower.x + (lower.width - arrow_size) / 2,
-                           lower.y + widget->style->ythickness + (arrow_space - arrow_size) / 2,
-                           arrow_size, arrow_size);
-        }
+      gtk_paint_arrow (widget->style,
+                       widget->window,
+                       popup->lower_arrow_state,
+                       GTK_SHADOW_OUT,
+                       &event->area, widget, "menu_scroll_arrow_down",
+                       GTK_ARROW_DOWN,
+                       TRUE,
+                       lower.x + (lower.width - arrow_size) / 2,
+                       lower.y + widget->style->ythickness + (arrow_space - arrow_size) / 2,
+                       arrow_size, arrow_size);
     }
-
-  g_object_unref (gc);
 
   return FALSE;
 }
@@ -709,6 +703,9 @@ gimp_tag_popup_border_event (GtkWidget *widget,
     }
   else if (event->type == GDK_KEY_PRESS)
     {
+      gtk_grab_remove (widget);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                  GDK_CURRENT_TIME);
       gtk_widget_destroy (GTK_WIDGET (popup));
     }
   else if (event->type == GDK_SCROLL)
@@ -741,9 +738,9 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GdkGC          *gc;
   PangoRenderer  *renderer;
-  gint            i;
   PangoAttribute *attribute;
   PangoAttrList  *attributes;
+  gint            i;
 
   renderer = gdk_pango_renderer_get_default (gtk_widget_get_screen (widget));
   gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer),
