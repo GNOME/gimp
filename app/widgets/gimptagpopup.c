@@ -830,9 +830,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
       popup->single_select_disabled = TRUE;
 
       x = button_event->x;
-      y = button_event->y;
-
-      y += popup->scroll_y;
+      y = button_event->y + popup->scroll_y;
 
       for (i = 0; i < popup->tag_count; i++)
         {
@@ -857,9 +855,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
       gint            i;
 
       x = motion_event->x;
-      y = motion_event->y;
-
-      y += popup->scroll_y;
+      y = motion_event->y + popup->scroll_y;
 
       for (i = 0; i < popup->tag_count; i++)
         {
@@ -874,8 +870,9 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
                 {
                   popup->prelight = tag_data;
                   gtk_widget_queue_draw (widget);
-                  break;
                 }
+
+              break;
             }
         }
     }
@@ -890,9 +887,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
       popup->single_select_disabled = TRUE;
 
       x = button_event->x;
-      y = button_event->y;
-
-      y += popup->scroll_y;
+      y = button_event->y + popup->scroll_y;
 
       for (i = 0; i < popup->tag_count; i++)
         {
