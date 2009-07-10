@@ -163,6 +163,7 @@ gimp_tag_popup_init (GimpTagPopup *popup)
                          GDK_SCROLL_MASK);
 
   popup->frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (popup->frame), GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (popup), popup->frame);
   gtk_widget_show (popup->frame);
 
