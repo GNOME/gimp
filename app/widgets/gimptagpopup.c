@@ -89,6 +89,9 @@ static gboolean gimp_tag_popup_border_event            (GtkWidget          *widg
 static gboolean gimp_tag_popup_list_event              (GtkWidget          *widget,
                                                         GdkEvent           *event,
                                                         GimpTagPopup       *popup);
+static gboolean gimp_tag_popup_is_in_tag               (PopupTagData       *tag_data,
+                                                        gint                x,
+                                                        gint                y);
 static void     gimp_tag_popup_toggle_tag              (GimpTagPopup       *popup,
                                                         PopupTagData       *tag_data);
 static void     gimp_tag_popup_check_can_toggle        (GimpTagged         *tagged,
@@ -864,10 +867,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
         {
           PopupTagData *tag_data = &popup->tag_data[i];
 
-          if (x >= tag_data->bounds.x                          &&
-              y >= tag_data->bounds.y                          &&
-              x <  tag_data->bounds.x + tag_data->bounds.width &&
-              y <  tag_data->bounds.y + tag_data->bounds.height)
+          if (gimp_tag_popup_is_in_tag (tag_data, x, y))
             {
               gimp_tag_popup_toggle_tag (popup, tag_data);
               gtk_widget_queue_draw (widget);
@@ -889,10 +889,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
         {
           PopupTagData *tag_data = &popup->tag_data[i];
 
-          if (x >= tag_data->bounds.x                          &&
-              y >= tag_data->bounds.y                          &&
-              x <  tag_data->bounds.x + tag_data->bounds.width &&
-              y <  tag_data->bounds.y + tag_data->bounds.height)
+          if (gimp_tag_popup_is_in_tag (tag_data, x, y))
             {
               if (popup->prelight != tag_data)
                 {
@@ -921,16 +918,29 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
         {
           PopupTagData *tag_data = &popup->tag_data[i];
 
-          if (x >= tag_data->bounds.x                          &&
-              y >= tag_data->bounds.y                          &&
-              x <  tag_data->bounds.x + tag_data->bounds.width &&
-              y <  tag_data->bounds.y + tag_data->bounds.height)
+          if (gimp_tag_popup_is_in_tag (tag_data, x, y))
             {
               gimp_tag_popup_toggle_tag (popup, tag_data);
               gtk_widget_destroy (GTK_WIDGET (popup));
               break;
             }
         }
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_tag_popup_is_in_tag (PopupTagData *tag_data,
+                          gint          x,
+                          gint          y)
+{
+  if (x >= tag_data->bounds.x                          &&
+      y >= tag_data->bounds.y                          &&
+      x <  tag_data->bounds.x + tag_data->bounds.width &&
+      y <  tag_data->bounds.y + tag_data->bounds.height)
+    {
+      return TRUE;
     }
 
   return FALSE;
