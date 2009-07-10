@@ -28,15 +28,15 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
-#include "core/gimpfilteredcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpviewable.h"
+#include "core/gimpfilteredcontainer.h"
 #include "core/gimptag.h"
 #include "core/gimptagged.h"
+#include "core/gimpviewable.h"
 
+#include "gimpcombotagentry.h"
 #include "gimptagentry.h"
 #include "gimptagpopup.h"
-#include "gimpcombotagentry.h"
 
 #include "gimp-intl.h"
 
@@ -51,19 +51,17 @@
 #define GIMP_TAG_POPUP_PADDING       2
 #define GIMP_TAG_POPUP_LINE_SPACING  2
 
+enum
+{
+  PROP_0,
+  PROP_OWNER
+};
 
 struct _PopupTagData
 {
   GimpTag      *tag;
   GdkRectangle  bounds;
   GtkStateType  state;
-};
-
-
-enum
-{
-  PROP_0,
-  PROP_OWNER
 };
 
 
@@ -224,7 +222,7 @@ gimp_tag_popup_constructor (GType                  type,
   pango_layout_set_attributes (popup->layout,
                                popup->combo_entry->normal_item_attr);
 
-  current_tags = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (popup->combo_entry));
+  current_tags  = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (popup->combo_entry));
   current_count = g_strv_length (current_tags);
 
   container = GIMP_TAG_ENTRY (popup->combo_entry)->container;
@@ -232,24 +230,31 @@ gimp_tag_popup_constructor (GType                  type,
   tag_hash = container->tag_ref_counts;
   tag_list = g_hash_table_get_keys (tag_hash);
   tag_list = g_list_sort (tag_list, gimp_tag_compare_func);
+
   popup->tag_count = g_list_length (tag_list);
-  popup->tag_data  = g_malloc (sizeof (PopupTagData) * popup->tag_count);
-  tag_iterator = tag_list;
-  for (i = 0; i < popup->tag_count; i++)
+  popup->tag_data  = g_new0 (PopupTagData, popup->tag_count);
+
+  for (i = 0, tag_iterator = tag_list;
+       i < popup->tag_count;
+       i++, tag_iterator = g_list_next (tag_iterator))
     {
-      popup->tag_data[i].tag = GIMP_TAG (tag_iterator->data);
-      popup->tag_data[i].state = GTK_STATE_NORMAL;
-      list_tag = gimp_tag_get_name (popup->tag_data[i].tag);
+      PopupTagData *tag_data = &popup->tag_data[i];
+
+      tag_data->tag   = tag_iterator->data;
+      tag_data->state = GTK_STATE_NORMAL;
+
+      list_tag = gimp_tag_get_name (tag_data->tag);
+
       for (j = 0; j < current_count; j++)
         {
           if (! strcmp (current_tags[j], list_tag))
             {
-              popup->tag_data[i].state = GTK_STATE_SELECTED;
+              tag_data->state = GTK_STATE_SELECTED;
               break;
             }
         }
-      tag_iterator = g_list_next (tag_iterator);
     }
+
   g_list_free (tag_list);
   g_strfreev (current_tags);
 
@@ -268,21 +273,29 @@ gimp_tag_popup_constructor (GType                  type,
                               popup);
     }
 
-  width = GTK_WIDGET (popup->combo_entry)->allocation.width - popup->frame->style->xthickness * 2;
-  height = gimp_tag_popup_layout_tags (popup, width);
+  width  = (GTK_WIDGET (popup->combo_entry)->allocation.width -
+            2 * popup->frame->style->xthickness);
+  height = (gimp_tag_popup_layout_tags (popup, width) +
+            2 * popup->frame->style->ythickness);
+
   gdk_window_get_origin (GTK_WIDGET (popup->combo_entry)->window, &x, &y);
+
   max_height = GTK_WIDGET (popup->combo_entry)->allocation.height * 7;
+
   screen_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (popup->combo_entry)));
-  height += popup->frame->style->ythickness * 2;
+
   popup_height = height;
-  popup_rects[0].x = x;
-  popup_rects[0].y = 0;
-  popup_rects[0].width = GTK_WIDGET (popup->combo_entry)->allocation.width;
+
+  popup_rects[0].x      = x;
+  popup_rects[0].y      = 0;
+  popup_rects[0].width  = GTK_WIDGET (popup->combo_entry)->allocation.width;
   popup_rects[0].height = y + GTK_WIDGET (popup->combo_entry)->allocation.height;
-  popup_rects[1].x = popup_rects[0].x;
-  popup_rects[1].y = y;
-  popup_rects[1].width = popup_rects[0].width;
+
+  popup_rects[1].x      = popup_rects[0].x;
+  popup_rects[1].y      = y;
+  popup_rects[1].width  = popup_rects[0].width;
   popup_rects[1].height = screen_height - popup_rects[0].height;
+
   if (popup_rects[0].height >= popup_height)
     {
       popup_rect = popup_rects[0];
@@ -299,20 +312,25 @@ gimp_tag_popup_constructor (GType                  type,
       if (popup_rects[0].height >= popup_rects[1].height)
         {
           popup_rect = popup_rects[0];
-          popup_rect.y += popup->scroll_arrow_height + popup->frame->style->ythickness;
+          popup_rect.y += (popup->scroll_arrow_height +
+                           popup->frame->style->ythickness);
         }
       else
         {
           popup_rect = popup_rects[1];
-          popup_rect.y -= popup->scroll_arrow_height + popup->frame->style->ythickness;
+          popup_rect.y -= (popup->scroll_arrow_height +
+                           popup->frame->style->ythickness);
         }
 
-      popup->arrows_visible = TRUE;
+      popup->arrows_visible    = TRUE;
       popup->upper_arrow_state = GTK_STATE_INSENSITIVE;
+
       gtk_alignment_set_padding (GTK_ALIGNMENT (popup->alignment),
                                  popup->scroll_arrow_height + 2,
                                  popup->scroll_arrow_height + 2, 0, 0);
-      popup_height = popup_rect.height - popup->scroll_arrow_height * 2 + 4;
+
+      popup_height = popup_rect.height - 2 * popup->scroll_arrow_height + 4;
+
       popup->scroll_height = height - popup_rect.height;
       popup->scroll_y      = 0;
       popup->scroll_step   = 0;
@@ -665,7 +683,7 @@ gimp_tag_popup_border_event (GtkWidget *widget,
       y = motion_event->y + widget->allocation.y;
 
       gimp_tag_popup_handle_scrolling (popup, x, y,
-                                       popup->timeout_id == 0, TRUE);
+                                       popup->scroll_timeout_id == 0, TRUE);
     }
   else if (event->type == GDK_BUTTON_RELEASE)
     {
@@ -1050,10 +1068,10 @@ gimp_tag_popup_scroll_timeout (gpointer data)
 static void
 gimp_tag_popup_remove_scroll_timeout (GimpTagPopup *popup)
 {
-  if (popup->timeout_id)
+  if (popup->scroll_timeout_id)
     {
-      g_source_remove (popup->timeout_id);
-      popup->timeout_id = 0;
+      g_source_remove (popup->scroll_timeout_id);
+      popup->scroll_timeout_id = 0;
     }
 }
 
@@ -1073,9 +1091,10 @@ gimp_tag_popup_scroll_timeout_initial (gpointer data)
 
   gimp_tag_popup_remove_scroll_timeout (popup);
 
-  popup->timeout_id = gdk_threads_add_timeout (timeout,
-                                              gimp_tag_popup_scroll_timeout,
-                                              popup);
+  popup->scroll_timeout_id =
+    gdk_threads_add_timeout (timeout,
+                             gimp_tag_popup_scroll_timeout,
+                             popup);
 
   return FALSE;
 }
@@ -1093,9 +1112,10 @@ gimp_tag_popup_start_scrolling (GimpTagPopup *popup)
 
   gimp_tag_popup_do_timeout_scroll (popup, touchscreen_mode);
 
-  popup->timeout_id = gdk_threads_add_timeout (timeout,
-                                               gimp_tag_popup_scroll_timeout_initial,
-                                               popup);
+  popup->scroll_timeout_id =
+    gdk_threads_add_timeout (timeout,
+                             gimp_tag_popup_scroll_timeout_initial,
+                             popup);
 }
 
 static void
@@ -1216,7 +1236,7 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
             {
               if (enter && popup->upper_arrow_prelight)
                 {
-                  if (popup->timeout_id == 0)
+                  if (popup->scroll_timeout_id == 0)
                     {
                       gimp_tag_popup_remove_scroll_timeout (popup);
                       popup->scroll_step = -MENU_SCROLL_STEP2; /* always fast */
@@ -1253,7 +1273,7 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
                   popup->scroll_step = (scroll_fast ?
                                         -MENU_SCROLL_STEP2 : -MENU_SCROLL_STEP1);
 
-                  popup->timeout_id =
+                  popup->scroll_timeout_id =
                     gdk_threads_add_timeout (scroll_fast ?
                                              MENU_SCROLL_TIMEOUT2 :
                                              MENU_SCROLL_TIMEOUT1,
@@ -1317,7 +1337,7 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
             {
               if (enter && popup->lower_arrow_prelight)
                 {
-                  if (popup->timeout_id == 0)
+                  if (popup->scroll_timeout_id == 0)
                     {
                       gimp_tag_popup_remove_scroll_timeout (popup);
                       popup->scroll_step = MENU_SCROLL_STEP2; /* always fast */
@@ -1354,7 +1374,7 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
                   popup->scroll_step = (scroll_fast ?
                                         MENU_SCROLL_STEP2 : MENU_SCROLL_STEP1);
 
-                  popup->timeout_id =
+                  popup->scroll_timeout_id =
                     gdk_threads_add_timeout (scroll_fast ?
                                              MENU_SCROLL_TIMEOUT2 :
                                              MENU_SCROLL_TIMEOUT1,
