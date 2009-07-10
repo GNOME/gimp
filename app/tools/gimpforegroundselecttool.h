@@ -43,12 +43,12 @@ struct _GimpForegroundSelectTool
   guint               idle_id;
   GArray             *stroke;
   GList              *strokes;
-  GArray             *drbsignal;//(new)
+  GArray             *drbsignal;
   GList              *drbsignals;
   GimpChannel        *mask;
   SioxState          *state;
   SioxRefinementType  refinement;
-  SioxDRBType         drbrefinement;//(new)   
+  SioxDRBType         drbrefinement;
 };
 
 struct _GimpForegroundSelectToolClass

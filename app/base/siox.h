@@ -72,16 +72,13 @@ void        siox_foreground_extract (SioxState          *state,
                                      gpointer            progress_data);
 void        siox_done               (SioxState          *state);
 
-
-//SioxState * 
 void        siox_drb                (SioxState          *state,
                                      TileManager        *mask,
                                      gint                x,
                                      gint                y,
                                      gint                brush_radius,
-                                     SioxDRBType         optionsrefinement,//
-                                     gfloat              threshold,
-                                     gpointer            progress_data);//(new)
+                                     SioxDRBType         optionsrefinement,
+                                     gfloat              threshold);
 
 
 #endif /* __SIOX_H__ */

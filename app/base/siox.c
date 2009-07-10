@@ -828,7 +828,7 @@ siox_foreground_extract (SioxState          *state,
                          const gdouble       sensitivity[3],
                          gboolean            multiblob,
                          SioxProgressFunc    progress_callback,
-			 gpointer            progress_data)
+                         gpointer            progress_data)
 {
   PixelRegion  srcPR;
   PixelRegion  mapPR;
@@ -882,7 +882,7 @@ siox_foreground_extract (SioxState          *state,
   else
     {
       if (! state->bgsig)
-	refinement |= SIOX_REFINEMENT_ADD_BACKGROUND;
+        refinement |= SIOX_REFINEMENT_ADD_BACKGROUND;
 		
       if (! state->fgsig)
         refinement |= SIOX_REFINEMENT_ADD_FOREGROUND;
@@ -1091,7 +1091,7 @@ siox_foreground_extract (SioxState          *state,
       siox_progress_update (progress_callback, progress_data, 0.4);
 
       if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
-        {printf("siox_foreground_extract/Create color signature for the foreground\n");
+        {
           /* Create color signature for the foreground */
           state->fgsig = create_signature (surefg, surefgcount,
                                            &state->fgsiglen, limits,
@@ -1284,15 +1284,13 @@ siox_foreground_extract (SioxState          *state,
  * needed to evaluate performance of this!
  */
 void
-//SioxState *
 siox_drb (SioxState   *state,
           TileManager *mask,
           gint         x,
           gint         y,
           gint         brush_radius,
-          SioxDRBType  optionsrefinement,//
-	  gfloat       threshold,
-          gpointer     progress_data)//
+          SioxDRBType  optionsrefinement,\
+          gfloat       threshold)
 {
   PixelRegion  srcPR;
   PixelRegion  mapPR;
@@ -1302,7 +1300,7 @@ siox_drb (SioxState   *state,
 
   g_return_if_fail (state != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
-
+/*
   if (optionsrefinement & SIOX_DRB_ADD)
     g_hash_table_foreach_remove(state->cache,siox_cache_remove_bg,NULL);
   if (optionsrefinement & SIOX_DRB_SUBTRACT)
@@ -1310,12 +1308,27 @@ siox_drb (SioxState   *state,
   if (optionsrefinement & SIOX_DRB_CHANGE_THRESHOLD)
     optionsrefinement = SIOX_DRB_RECALCULATE;
    
-  pixel_region_init (&srcPR, state->pixels,
+/*pixel_region_init (&srcPR, state->pixels,
                      x - brush_radius, y - brush_radius, brush_radius * 2,
                      brush_radius * 2, FALSE);
-  pixel_region_init (&mapPR, mask, x - brush_radius, y - brush_radius,
+ 
+ pixel_region_init (&mapPR, mask, x - brush_radius, y - brush_radius,
                      brush_radius * 2, brush_radius * 2, TRUE);
-
+*/
+ /* pixel_region_init (&srcPR, state->pixels,
+                    x , y , state->width, state->height, FALSE);
+  pixel_region_init (&mapPR, mask, x, y,
+                    brush_radius * 2,
+                     brush_radius * 2, TRUE);
+*/		 
+  pixel_region_init (&srcPR, state->pixels,
+                     x , y , state->width, state->height, FALSE);
+  pixel_region_init (&mapPR, mask, x, y,
+                    brush_radius * 2,
+                     brush_radius * 2, TRUE);
+/*	
+	 
+*/
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
        pr != NULL;
        pr = pixel_regions_process (pr))

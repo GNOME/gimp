@@ -65,13 +65,13 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
     {
       gimp_drawable_foreground_extract_siox (mask, state,
                                              SIOX_REFINEMENT_RECALCULATE,
-					     SIOX_DEFAULT_SMOOTHNESS,
-					     SIOX_DEFAULT_THRESHOLD  ,//
-					     SIOX_DRB_RECALCULATE  ,//
+                                             SIOX_DEFAULT_SMOOTHNESS,
+                                             SIOX_DEFAULT_THRESHOLD,
+                                             SIOX_DRB_RECALCULATE,
                                              sensitivity,
                                              FALSE,
-                                             FALSE,//(new)
-                                             18,//
+                                             FALSE,
+                                             18,
                                              progress);
 
       gimp_drawable_foreground_extract_siox_done (state);
@@ -165,9 +165,9 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
     }
   else
     {
-      gimp_drawable_foreground_extract_siox_drb(gimp_drawable_get_tiles (mask),
-			        		state,sioxdrboption,sioxdrbthreshold,
-					        brush_radius,progress);
+      gimp_drawable_foreground_extract_siox_drb (gimp_drawable_get_tiles (mask),
+                                                 state,sioxdrboption,sioxdrbthreshold,
+                                                 brush_radius,progress);
     }
   if (progress)
     gimp_progress_end (progress);
@@ -185,23 +185,22 @@ gimp_drawable_foreground_extract_siox_done (SioxState *state)
 
 
 void                                  
-gimp_drawable_foreground_extract_siox_drb(TileManager       *mask,
-					  SioxState         *state,
-					  SioxDRBType        optionsrefinement,
-					  gfloat             optionsthreshold,
-					  gint               radius,
-					  GimpProgress      *progress)
+gimp_drawable_foreground_extract_siox_drb (TileManager       *mask,
+                                           SioxState         *state,
+                                           SioxDRBType        optionsrefinement,
+                                           gfloat             optionsthreshold,
+                                           gint               radius,
+                                           GimpProgress      *progress)
 {
   gint x = (state->x);
   gint y = (state->y);
-  siox_drb(state,//
-           mask,//
-	   x,y,
-	   radius,
-	   optionsrefinement,//
-	   optionsthreshold,
-	   progress);
-   
+  siox_drb (state,
+            mask,
+            x,y,
+            radius,
+            optionsrefinement,
+            optionsthreshold,
+            progress);
 }
 
 
