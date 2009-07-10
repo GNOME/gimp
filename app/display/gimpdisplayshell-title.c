@@ -446,17 +446,21 @@ gimp_display_shell_format_filename (gchar       *buf,
   const gchar *export_status = NULL;
   gchar       *format_string = NULL;
   gchar       *name          = NULL;
+  gboolean     is_imported   = FALSE;
   gint         incr          = 0;
 
   source = g_object_get_data (G_OBJECT (image),
                               GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
+  /* Note that as soon as the image is saved, it is not considered
+   * imported any longer (GIMP_FILE_IMPORT_SOURCE_URI_KEY is set to
+   * NULL)
+   */
+  is_imported = (source != NULL);
+
   /* Calculate filename and format */
-  if (! source)
+  if (! is_imported)
     {
-      /* As soon as the image is saved the source is forgotten, so the
-       * above condition is enough to figure out name and name format
-       */
       name        = g_strdup (filename);
       name_format = "%s";
     }
@@ -472,16 +476,17 @@ gimp_display_shell_format_filename (gchar       *buf,
   /* Calculate filename suffix */
   if (! gimp_image_is_export_dirty (image))
     {
-      const gchar *export_to = g_object_get_data (G_OBJECT (image),
-                                                  GIMP_FILE_EXPORT_TO_URI_KEY);
-      if (export_to)
+      gboolean is_exported;
+      is_exported = (g_object_get_data (G_OBJECT (image),
+                                        GIMP_FILE_EXPORT_TO_URI_KEY) != NULL);
+      if (is_exported)
         export_status = _(" (exported)");
-      else if (source)
+      else if (is_imported)
         export_status = _(" (overwritten)");
       else
         g_warning ("Unexpected code path, Save+export implementation is buggy!");
     }
-  else if (source)
+  else if (is_imported)
     {
       export_status = _(" (imported)");
     }
