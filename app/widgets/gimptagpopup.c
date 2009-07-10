@@ -41,13 +41,15 @@
 #include "gimp-intl.h"
 
 
-#define MENU_SCROLL_STEP1      8
-#define MENU_SCROLL_STEP2     15
-#define MENU_SCROLL_FAST_ZONE  8
-#define MENU_SCROLL_TIMEOUT1  50
-#define MENU_SCROLL_TIMEOUT2  20
+#define MENU_SCROLL_STEP1         8
+#define MENU_SCROLL_STEP2        15
+#define MENU_SCROLL_FAST_ZONE     8
+#define MENU_SCROLL_TIMEOUT1     50
+#define MENU_SCROLL_TIMEOUT2     20
 
-#define GIMP_TAG_POPUP_MARGIN  5
+#define GIMP_TAG_POPUP_MARGIN     5
+#define GIMP_TAG_POPUP_SPACING_X  3
+#define GIMP_TAG_POPUP_SPACING_Y  2
 
 
 struct _PopupTagData
@@ -505,10 +507,11 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
       tag_data->bounds.width  = PANGO_PIXELS (w);
       tag_data->bounds.height = PANGO_PIXELS (h);
 
-      if (tag_data->bounds.width + x + 3 + GIMP_TAG_POPUP_MARGIN > width)
+      if (x + GIMP_TAG_POPUP_SPACING_X + tag_data->bounds.width +
+          GIMP_TAG_POPUP_MARGIN > width)
         {
           x = GIMP_TAG_POPUP_MARGIN;
-          y += line_height + 2;
+          y += line_height + GIMP_TAG_POPUP_SPACING_Y;
         }
 
       tag_data->bounds.x = x;
@@ -519,8 +522,6 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
 
   if (gtk_widget_get_direction (GTK_WIDGET (popup)) == GTK_TEXT_DIR_RTL)
     {
-      GList *iterator;
-
       for (i = 0; i < popup->tag_count; i++)
         {
           PopupTagData *tag_data = &popup->tag_data[i];
