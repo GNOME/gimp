@@ -41,15 +41,15 @@
 #include "gimp-intl.h"
 
 
-#define MENU_SCROLL_STEP1         8
-#define MENU_SCROLL_STEP2        15
-#define MENU_SCROLL_FAST_ZONE     8
-#define MENU_SCROLL_TIMEOUT1     50
-#define MENU_SCROLL_TIMEOUT2     20
+#define MENU_SCROLL_STEP1            8
+#define MENU_SCROLL_STEP2           15
+#define MENU_SCROLL_FAST_ZONE        8
+#define MENU_SCROLL_TIMEOUT1        50
+#define MENU_SCROLL_TIMEOUT2        20
 
-#define GIMP_TAG_POPUP_MARGIN     5
-#define GIMP_TAG_POPUP_SPACING_X  3
-#define GIMP_TAG_POPUP_SPACING_Y  2
+#define GIMP_TAG_POPUP_MARGIN        5
+#define GIMP_TAG_POPUP_PADDING       2
+#define GIMP_TAG_POPUP_LINE_SPACING  2
 
 
 struct _PopupTagData
@@ -503,22 +503,22 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
 
       pango_layout_set_text (popup->layout,
                              gimp_tag_get_name (tag_data->tag), -1);
-      pango_layout_get_size (popup->layout, &w, &h);
+      pango_layout_get_pixel_size (popup->layout, &w, &h);
 
-      tag_data->bounds.width  = PANGO_PIXELS (w);
-      tag_data->bounds.height = PANGO_PIXELS (h);
+      tag_data->bounds.width  = w + 2 * GIMP_TAG_POPUP_PADDING;
+      tag_data->bounds.height = h + 2 * GIMP_TAG_POPUP_PADDING;
 
-      if (x + GIMP_TAG_POPUP_SPACING_X + tag_data->bounds.width +
-          GIMP_TAG_POPUP_MARGIN > width)
+      if (x + space_width + tag_data->bounds.width +
+          GIMP_TAG_POPUP_MARGIN - 1 > width)
         {
           x = GIMP_TAG_POPUP_MARGIN;
-          y += line_height + GIMP_TAG_POPUP_SPACING_Y;
+          y += line_height + 2 * GIMP_TAG_POPUP_PADDING + GIMP_TAG_POPUP_LINE_SPACING;
         }
 
       tag_data->bounds.x = x;
       tag_data->bounds.y = y;
 
-      x += tag_data->bounds.width + space_width + 5;
+      x += tag_data->bounds.width + space_width;
     }
 
   if (gtk_widget_get_direction (GTK_WIDGET (popup)) == GTK_TEXT_DIR_RTL)
@@ -734,8 +734,6 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
 
   gc = gdk_gc_new (GDK_DRAWABLE (window));
   gdk_gc_set_rgb_fg_color (gc, &popup->combo_entry->selected_item_color);
-  gdk_gc_set_line_attributes (gc, 5, GDK_LINE_SOLID, GDK_CAP_ROUND,
-                              GDK_JOIN_ROUND);
 
   for (i = 0; i < popup->tag_count; i++)
     {
@@ -744,17 +742,19 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
       pango_layout_set_text (popup->layout,
                              gimp_tag_get_name (tag_data->tag), -1);
 
-      if (popup->tag_data[i].state == GTK_STATE_SELECTED)
+      switch (tag_data->state)
         {
+        case GTK_STATE_SELECTED:
           attributes = pango_attr_list_copy (popup->combo_entry->selected_item_attr);
-        }
-      else if (popup->tag_data[i].state == GTK_STATE_INSENSITIVE)
-        {
+          break;
+
+        case GTK_STATE_INSENSITIVE:
           attributes = pango_attr_list_copy (popup->combo_entry->insensitive_item_attr);
-        }
-      else
-        {
+          break;
+
+        default:
           attributes = pango_attr_list_copy (popup->combo_entry->normal_item_attr);
+          break;
         }
 
       if (tag_data == popup->prelight &&
@@ -767,19 +767,34 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
       pango_layout_set_attributes (popup->layout, attributes);
       pango_attr_list_unref (attributes);
 
-      if (popup->tag_data[i].state == GTK_STATE_SELECTED)
+      if (tag_data->state == GTK_STATE_SELECTED)
         {
-          gdk_draw_rectangle (window, gc, FALSE,
+          gdk_draw_line (window, gc,
+                         tag_data->bounds.x,
+                         tag_data->bounds.y - popup->scroll_y - 1,
+                         tag_data->bounds.x + tag_data->bounds.width - 1,
+                         tag_data->bounds.y - popup->scroll_y - 1);
+
+          gdk_draw_rectangle (window, gc, TRUE,
                               tag_data->bounds.x - 1,
-                              tag_data->bounds.y - popup->scroll_y + 1,
-                              tag_data->bounds.width  + 2,
-                              tag_data->bounds.height - 2);
+                              tag_data->bounds.y - popup->scroll_y,
+                              tag_data->bounds.width + 2,
+                              tag_data->bounds.height);
+
+          gdk_draw_line (window, gc,
+                         tag_data->bounds.x,
+                         tag_data->bounds.y - popup->scroll_y + tag_data->bounds.height,
+                         tag_data->bounds.x + tag_data->bounds.width - 1,
+                         tag_data->bounds.y - popup->scroll_y + tag_data->bounds.height);
         }
 
       pango_renderer_draw_layout (renderer, popup->layout,
-                                  tag_data->bounds.x * PANGO_SCALE,
+                                  (tag_data->bounds.x +
+                                   GIMP_TAG_POPUP_PADDING) * PANGO_SCALE +
+                                  GIMP_TAG_POPUP_PADDING,
                                   (tag_data->bounds.y -
-                                   popup->scroll_y) * PANGO_SCALE);
+                                   popup->scroll_y +
+                                   GIMP_TAG_POPUP_PADDING) * PANGO_SCALE);
 
       if (tag_data == popup->prelight              &&
           tag_data->state != GTK_STATE_INSENSITIVE &&
