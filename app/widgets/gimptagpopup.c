@@ -362,13 +362,6 @@ gimp_tag_popup_dispose (GObject *object)
       popup->context = NULL;
     }
 
-  if (popup->close_rectangles)
-    {
-      g_list_foreach (popup->close_rectangles, (GFunc) g_free, NULL);
-      g_list_free (popup->close_rectangles);
-      popup->close_rectangles = NULL;
-    }
-
   if (popup->tag_data)
     {
       g_free (popup->tag_data);
@@ -514,19 +507,6 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
 
       if (tag_data->bounds.width + x + 3 + GIMP_TAG_POPUP_MARGIN > width)
         {
-          if (tag_data->bounds.width + line_height + GIMP_TAG_POPUP_MARGIN < width)
-            {
-              GdkRectangle *close_rect = g_malloc (sizeof (GdkRectangle));
-
-              close_rect->x      = x - space_width - 5;
-              close_rect->y      = y;
-              close_rect->width  = width - close_rect->x;
-              close_rect->height = line_height + 2;
-
-              popup->close_rectangles = g_list_append (popup->close_rectangles,
-                                                       close_rect);
-            }
-
           x = GIMP_TAG_POPUP_MARGIN;
           y += line_height + 2;
         }
@@ -535,20 +515,6 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
       tag_data->bounds.y = y;
 
       x += tag_data->bounds.width + space_width + 5;
-    }
-
-  if (popup->tag_count > 0 &&
-      (width - x) > line_height + GIMP_TAG_POPUP_MARGIN)
-    {
-      GdkRectangle *close_rect = g_malloc (sizeof (GdkRectangle));
-
-      close_rect->x      = x - space_width - 5;
-      close_rect->y      = y;
-      close_rect->width  = width - close_rect->x;
-      close_rect->height = line_height + 2;
-
-      popup->close_rectangles = g_list_append (popup->close_rectangles,
-                                               close_rect);
     }
 
   if (gtk_widget_get_direction (GTK_WIDGET (popup)) == GTK_TEXT_DIR_RTL)
@@ -562,15 +528,6 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
           tag_data->bounds.x = (width -
                                 tag_data->bounds.x -
                                 tag_data->bounds.width);
-        }
-
-      for (iterator = popup->close_rectangles;
-           iterator;
-           iterator = g_list_next (iterator))
-        {
-          GdkRectangle *rect = iterator->data;
-
-          rect->x = width - rect->x - rect->width;
         }
     }
 
@@ -875,27 +832,6 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
               gimp_tag_popup_toggle_tag (popup, tag_data);
               gtk_widget_queue_draw (widget);
               break;
-            }
-        }
-
-      if (i == popup->tag_count)
-        {
-          GList *iterator;
-
-          for (iterator = popup->close_rectangles;
-               iterator;
-               iterator = g_list_next (iterator))
-            {
-              GdkRectangle *bounds = iterator->data;
-
-              if (x >= bounds->x                &&
-                  y >= bounds->y                &&
-                  x <  bounds->x + bounds->width &&
-                  y <  bounds->y + bounds->height)
-                {
-                  gtk_widget_destroy (GTK_WIDGET (popup));
-                  break;
-                }
             }
         }
     }
