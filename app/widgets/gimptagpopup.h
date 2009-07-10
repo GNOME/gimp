@@ -38,16 +38,22 @@ struct _GimpTagPopup
   GtkWindow          parent_instance;
 
   GimpComboTagEntry *combo_entry;
+
   GtkWidget         *frame;
   GtkWidget         *alignment;
   GtkWidget         *tag_area;
 
   PangoContext      *context;
   PangoLayout       *layout;
+
   PopupTagData      *tag_data;
-  PopupTagData      *prelight;
   gint               tag_count;
-  guint              timeout_id;
+
+  PopupTagData      *prelight;
+
+  gboolean           single_select_disabled;
+
+  guint              scroll_timeout_id;
   gint               scroll_height;
   gint               scroll_y;
   gint               scroll_step;
@@ -56,7 +62,6 @@ struct _GimpTagPopup
   gboolean           arrows_visible;
   gboolean           upper_arrow_prelight;
   gboolean           lower_arrow_prelight;
-  gboolean           single_select_disabled;
   GtkStateType       upper_arrow_state;
   GtkStateType       lower_arrow_state;
 };
