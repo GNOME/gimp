@@ -208,8 +208,8 @@ are yes and no.
 
 .TP
 (default-image
-    (width 640)
-    (height 400)
+    (width 610)
+    (height 377)
     (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
@@ -602,6 +602,30 @@ Sets the default settings used when an image is viewed in fullscreen mode.
 This is a parameter list.
 
 .TP
+(default-snap-to-guides yes)
+
+Snap to guides by default in new image windows.  Possible values are yes and
+no.
+
+.TP
+(default-snap-to-grid no)
+
+Snap to the grid by default in new image windows.  Possible values are yes and
+no.
+
+.TP
+(default-snap-to-canvas yes)
+
+Snap to the canvas edge by default in new image windows.  Possible values are
+yes and no.
+
+.TP
+(default-snap-to-path no)
+
+Snap to the active path by default in new image windows.  Possible values are
+yes and no.
+
+.TP
 (activate-on-focus yes)
 
 When enabled, an image will become the active image when its image window
@@ -644,6 +668,12 @@ default threshold.  This is an integer value.
 If enabled, the move tool sets the edited layer or path as active.  This used
 to be the default behaviour in older versions.  Possible values are yes and
 no.
+
+.TP
+(image-map-tool-max-recent 10)
+
+How many recent settings to keep around in color correction tools  This is an
+integer value.
 
 .TP
 (trust-dirty-flag yes)
@@ -788,7 +818,7 @@ Sets the browser used by the help system.  Possible values are gimp and
 web-browser.
 
 .TP
-(web-browser "firefox %s")
+(web-browser "xdg-open %s")
 
 Sets the external web browser to be used.  This can be an absolute path or the
 name of an executable to search for in the user's PATH. If the command
@@ -802,7 +832,7 @@ When enabled, the online user manual will be used by the help system.
 Otherwise the locally installed copy is used.  Possible values are yes and no.
 
 .TP
-(user-manual-online-uri "http://docs.gimp.org/2.6")
+(user-manual-online-uri "http://docs.gimp.org/2.7")
 
 The location of the online user manual. This is used if 'user-manual-online'
 is enabled.  This is a string value.
@@ -905,5 +935,3 @@ Per-user configuration file
 
 .SH "SEE ALSO"
 .BR gimp (1),
-.BR gimptool (1),
-.BR gimp\-remote (1)
