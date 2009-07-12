@@ -11,6 +11,7 @@ Changes in GIMP 2.7.0
 =====================
 
 Core:
+
  - Ported the projection code to GEGL, i.e. the code that composes a
    single image from a stack of layers
  - Arrange layer modes into more logical and useful groups
@@ -36,17 +37,30 @@ Core:
  - Prepare better and more intuitive handling of the floating
    selection
  - Support rotation of brushes
- - Add more capabilities to brush dynamics such as based on tilt
+ - Allow brush dynamics to depend on tilt
  - Add File->Debug->Show Image Graph that show the GEGL graph of an
    image
+ - Add diagonal guides to the Crop Tool
+ - Drop support for the GnomeVFS file-uri backend
+ - Add aspect ratio to brush dynamics
+ - Allow to dump keyboard shortucts ith File->Debug->Dump Keyboard
+   Shortcuts
+ - Separate the activites of saving and exporting images
+ - Add status bar feedback for keyboard changes to brush paramaters
+ - Add a simple parser to size entry widgets
+ - Change default shortcuts for "Shrink Wrap" and "Fit in Window" to
+   Ctrl+R and Ctrl+Shift+R respectively since the previous shortcuts
+   are now used for the save+export
 
 Plug-ins:
+
  - Map the 'Linear Dodge' layer mode in PSD files to the 'Addition'
    layer mode in GIMP
+ - Add JPEG2000 load plug-in
+ - Add X11 mouse cursor plug-in
+ - Add support for loading 16bit (RGB565) raw data
 
 General:
+
  - Changed licence to GPLv3+ and LGPLv3+
  - Lots of bugfixes and cleanups...
-
-
-** These are changes up to and including 2009-02-28 **
