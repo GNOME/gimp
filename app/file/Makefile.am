@@ -23,6 +23,6 @@ libappfile_a_SOURCES = \
 	file-save.h		\
 	file-utils.c		\
 	file-utils.h		\
-	gimpfile.h
+	gimp-file.h
 
 EXTRA_DIST = makefile.msc
