@@ -122,6 +122,7 @@ EXPORTS
 	gimp_dialog_run
 	gimp_dialogs_show_help_button
 	gimp_double_adjustment_update
+	gimp_eevl_evaluate
 	gimp_enum_combo_box_get_type
 	gimp_enum_combo_box_new
 	gimp_enum_combo_box_new_with_model
