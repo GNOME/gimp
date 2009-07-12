@@ -635,6 +635,7 @@ EXPORTS
  	gimp_text_layer_get_line_spacing
  	gimp_text_layer_get_text
  	gimp_text_layer_new
+ 	gimp_text_layer_resize
  	gimp_text_layer_set_antialias
  	gimp_text_layer_set_base_direction
  	gimp_text_layer_set_color
