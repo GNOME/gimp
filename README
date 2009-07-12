@@ -7,8 +7,8 @@ GIMP 2.7 replaces earlier GIMP 2.x versions. It is advised that you
 uninstall them before installing GIMP 2.7. If you want to keep your
 older GIMP 2.x installation in parallel to GIMP 2.7, you have to
 choose a separate prefix which is not in your default library search
-path. Otherwise your GIMP 2.4 or GIMP 2.2 installation will start to
-use the new libraries. You have been warned.
+path. Otherwise your prevoius GIMP installation will start to use the
+new libraries. You have been warned.
 
 If you think you found a bug in this version, please make sure that it
 hasn't been reported earlier and that it is not just new stuff that is
