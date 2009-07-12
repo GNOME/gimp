@@ -363,8 +363,9 @@ gimp_image_map_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       if (image_map_tool->shell)
-        gtk_dialog_response (GTK_DIALOG (image_map_tool->shell),
-                             GTK_RESPONSE_CANCEL);
+        gimp_image_map_tool_response (image_map_tool->shell,
+                                      GTK_RESPONSE_CANCEL,
+                                      image_map_tool);
       break;
     }
 
@@ -378,22 +379,28 @@ gimp_image_map_tool_key_press (GimpTool    *tool,
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
-  if (display == tool->display)
+  if (image_map_tool->shell && display == tool->display)
     {
       switch (kevent->keyval)
         {
         case GDK_Return:
         case GDK_KP_Enter:
         case GDK_ISO_Enter:
-          gimp_image_map_tool_response (NULL, GTK_RESPONSE_OK, image_map_tool);
+          gimp_image_map_tool_response (image_map_tool->shell,
+                                        GTK_RESPONSE_OK,
+                                        image_map_tool);
           return TRUE;
 
         case GDK_BackSpace:
-          gimp_image_map_tool_response (NULL, RESPONSE_RESET, image_map_tool);
+          gimp_image_map_tool_response (image_map_tool->shell,
+                                        RESPONSE_RESET,
+                                        image_map_tool);
           return TRUE;
 
         case GDK_Escape:
-          gimp_image_map_tool_response (NULL, GTK_RESPONSE_CANCEL, image_map_tool);
+          gimp_image_map_tool_response (image_map_tool->shell,
+                                        GTK_RESPONSE_CANCEL,
+                                        image_map_tool);
           return TRUE;
         }
     }
