@@ -24,7 +24,7 @@
 
  ( ) Do a complete build of the source tree.
 
- ( ) Check if NEWS, README or INSTALL need to be updated.
+ ( ) Check if NEWS, authors.xml, README or INSTALL need to be updated.
 
  ( ) Does the splash screen need to be changed?
 
