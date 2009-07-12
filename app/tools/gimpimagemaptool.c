@@ -99,6 +99,8 @@ static void      gimp_image_map_tool_response    (GtkWidget        *widget,
                                                   gint              response_id,
                                                   GimpImageMapTool *im_tool);
 
+static void      gimp_image_map_tool_dialog_destroy (GimpImageMapTool  *im_tool);
+
 static void      gimp_image_map_tool_notify_preview (GObject           *config,
                                                      GParamSpec        *pspec,
                                                      GimpImageMapTool  *im_tool);
@@ -248,13 +250,7 @@ gimp_image_map_tool_finalize (GObject *object)
     }
 
   if (image_map_tool->shell)
-    {
-      gtk_widget_destroy (image_map_tool->shell);
-      image_map_tool->shell        = NULL;
-      image_map_tool->main_vbox    = NULL;
-      image_map_tool->settings_box = NULL;
-      image_map_tool->label_group  = NULL;
-    }
+    gimp_image_map_tool_dialog_destroy (image_map_tool);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -593,6 +589,16 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       tool->drawable = NULL;
       break;
     }
+}
+
+static void
+gimp_image_map_tool_dialog_destroy (GimpImageMapTool *image_map_tool)
+{
+  gtk_widget_destroy (image_map_tool->shell);
+  image_map_tool->shell        = NULL;
+  image_map_tool->main_vbox    = NULL;
+  image_map_tool->settings_box = NULL;
+  image_map_tool->label_group  = NULL;
 }
 
 static void
