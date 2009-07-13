@@ -95,3 +95,24 @@ endif
 all-local: AUTHORS
 
 dist-hook: check-defs validate-authors
+
+
+
+CHANGELOG_START = 74424325abb54620b370f2595445b2b2a19fe5e7
+
+ChangeLog: $(srcdir)/ChangeLog $(srcdir)/ChangeLog.pre-git
+$(srcdir)/ChangeLog:
+	@echo Creating $@ based on git log
+	@if test -d "$(srcdir)/.git"; then \
+	  (GIT_DIR=$(top_srcdir)/.git ./missing --run \
+	   git log $(CHANGELOG_START)^.. --stat) | fmt --split-only > $@.tmp \
+	  && mv -f $@.tmp $@ && echo Appending ChangeLog.pre-git && cat ChangeLog.pre-git >> $@ \
+	  || ($(RM) $@.tmp; \
+	      echo Failed to generate ChangeLog, your ChangeLog may be outdated >&2; \
+	      (test -f $@ || echo git-log is required to generate this file >> $@)); \
+	else \
+	  test -f $@ || \
+	  (echo A git checkout and git-log is required to generate ChangeLog >&2 && \
+	  echo A git checkout and git-log is required to generate this file >> $@); \
+	fi
+.PHONY: $(srcdir)/ChangeLog

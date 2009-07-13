@@ -1,36 +1,4 @@
 
-
-
-
-	NOTE: After the migration to git this ChangeLog is no longer used
-	during development. Instead, it will be updated prior to every
-	release based on the git log.
-
-
-
-
-
-2009-04-25  Martin Nordholts  <martinn@svn.gnome.org>
-
-	* app/dialogs/file-save-dialog.c: Introduce
-	file_save_dialog_unkown_ext_msg() so that we don't need to have a
-	copy-pasted huge error message (and prepare for more intricate
-	message handling).
-
-2009-04-24  Martin Nordholts  <martinn@src.gnome.org>
-
-	Convert Subversion references to git
-
-	* HACKING
-	* INSTALL
-	* README.i18n
-	* autogen.sh
-
-2009-04-24  Martin Nordholts  <martinn@src.gnome.org>
-
-	* README: Update link to GTK+ themes in README. Patch from
-	Shlomi Fish.
-
 2009-04-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore.[ch]: made GimpCoords* parameter of
