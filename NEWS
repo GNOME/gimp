@@ -10,47 +10,28 @@ towards the next stable release, which will be GIMP 2.8.
 Changes in GIMP 2.7.0
 =====================
 
-Core:
+UI:
 
- - Ported the projection code to GEGL, i.e. the code that composes a
-   single image from a stack of layers
+ - Change the Text Tool to perform text editing on-canvas (GSoC 2008)
+ - Add support for tagging GIMP resources such as brushes and allow
+   filtering based on these tags (GSoC 2008)
+ - Separate the activies of saving an image and exporting it, there is
+   now an 'File->Export...' for example
+ - Add a simple parser to size entry widgets, images can be scaled
+   to e.g. "50%" or "2 * 37px + 10in"
  - Arrange layer modes into more logical and useful groups
- - Port layer modes to GEGL
- - Rearrange leagcy layer mode code to increase maintainability
- - New docks are created at the pointer position
- - Allow to benchmark projectino performance with
-   File->Debug->Benchmark Projection
- - Clean up and merge infrastructure code from the GSoC 2006 Vector
-   Layer branch
- - Clean up and merge on-canvas text editing code from the GSoC 2008
-   On-Canvas Text Editing branch
- - Move 'Text along path' from tool options to text context menu
- - Refactor the layer stack code to more easily allow nesting of
-   layers aka layer groups later
- - Show selection position and size in the Pointer dockable
- - Merge support for tagging and tag-based selection of resources such
-   as brushes from the GSoC 2008 Tagging of Resources branch
- - Add support for printing crop marks for images
- - Smooth painting strokes with Catmull-Rom Spline based event
-   interpolation
- - Port the floating selection code to GEGL
- - Prepare better and more intuitive handling of the floating
-   selection
- - Support rotation of brushes
- - Allow brush dynamics to depend on tilt
- - Add File->Debug->Show Image Graph that show the GEGL graph of an
-   image
- - Add diagonal guides to the Crop Tool
- - Drop support for the GnomeVFS file-uri backend
- - Add aspect ratio to brush dynamics
- - Allow to dump keyboard shortucts ith File->Debug->Dump Keyboard
-   Shortcuts
- - Separate the activites of saving and exporting images
+ - Added support for rotation of brushes
+ - Make the Pointer dockable show information about selection position
+   and size
  - Add status bar feedback for keyboard changes to brush paramaters
- - Add a simple parser to size entry widgets
+ - Add diagonal guides to the Crop Tool
+ - New docks are created at the pointer position
+ - Add support for printing crop marks for images
+ - Move 'Text along path' from tool options to text context menu
  - Change default shortcuts for "Shrink Wrap" and "Fit in Window" to
    Ctrl+R and Ctrl+Shift+R respectively since the previous shortcuts
-   are now used for the save+export
+   are now used for the save+export feature
+
 
 Plug-ins:
 
@@ -58,9 +39,37 @@ Plug-ins:
    layer mode in GIMP
  - Add JPEG2000 load plug-in
  - Add X11 mouse cursor plug-in
- - Add support for loading 16bit (RGB565) raw data
+ - Addd support for loading 16bit (RGB565) raw data
 
-General:
 
- - Changed licence to GPLv3+ and LGPLv3+
- - Lots of bugfixes and cleanups...
+GEGL:
+
+ - Port the projection code, the code that composes a single image
+   from a stack of layers, to GEGL
+ - Port layer modes to GEGL
+ - Port the floating selection code to GEGL
+ - Refactor the layer stack code to prepare for layer groups later
+ - Prepare better and more intuitive handling of the floating
+   selection
+ - Add File->Debug->Show Image Graph that show the GEGL graph of an
+   image
+ - Allow to benchmark projection performance with
+   File->Debug->Benchmark Projection
+
+
+Core:
+
+ - Make painting strokes Catmull-Rom Spline interpolated
+ - Add support for arbitrary affine transforms of brushes
+ - Add support for brush dynamics to depend on tilt
+ - Add aspect ratio to brush dynamics
+ - Add infrastructure to soon support vector layers (GSoC 2006)
+ - Rearrange legacy layer mode code to increase maintainability
+ - Drop support for the obsolete GnomeVFS file-uri backend
+ - Allow to dump keyboard shortucts ith File->Debug->Dump Keyboard
+   Shortcuts
+
+
+PDB:
+
+ - Add procedures to manipulate size of text box
