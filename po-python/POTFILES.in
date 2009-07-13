@@ -14,3 +14,4 @@ plug-ins/pygimp/plug-ins/palette-to-gradient.py
 plug-ins/pygimp/plug-ins/py-slice.py
 plug-ins/pygimp/plug-ins/python-console.py
 plug-ins/pygimp/plug-ins/shadow_bevel.py
+plug-ins/pygimp/plug-ins/text-brush.py
