@@ -5,7 +5,7 @@
 *.c~
 *.h~
 *.patch
-/app/
+
 
 /Makefile
 /Makefile.in
