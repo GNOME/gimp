@@ -5,13 +5,13 @@
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp python trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-12 23:22+0300\n"
-"PO-Revision-Date: 2009-01-10 01:25+0300\n"
+"POT-Creation-Date: 2009-07-13 13:34+0400\n"
+"PO-Revision-Date: 2009-07-13 13:36+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,37 +20,37 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:385
+#: ../plug-ins/pygimp/gimpfu.py:391
 msgid "Missing exception information"
 msgstr "Отсутствует информация о прерывании"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:400
 #, python-format
 msgid "An error occured running %s"
 msgstr "При запуске %s произошла ошибка"
 
-#: ../plug-ins/pygimp/gimpfu.py:405
+#: ../plug-ins/pygimp/gimpfu.py:411
 msgid "_More Information"
 msgstr "_Подробнее"
 
-#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpfu.py:529
-#: ../plug-ins/pygimp/gimpfu.py:535
+#: ../plug-ins/pygimp/gimpfu.py:523 ../plug-ins/pygimp/gimpfu.py:535
+#: ../plug-ins/pygimp/gimpfu.py:541
 msgid "No"
 msgstr "Нет"
 
-#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:535
+#: ../plug-ins/pygimp/gimpfu.py:533 ../plug-ins/pygimp/gimpfu.py:541
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:586 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:592 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Выбор файла в Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:597
+#: ../plug-ins/pygimp/gimpfu.py:603
 msgid "Python-Fu Folder Selection"
 msgstr "Выбор каталога в Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:688
+#: ../plug-ins/pygimp/gimpfu.py:694
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Некорректный ввод для '%s'"
@@ -313,3 +313,23 @@ msgstr "Смещение тени по _X"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Смещение тени по _Y"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+msgid "Create a new brush with characters from a text sequence"
+msgstr "Создать новую кисть, содержащую последовательность букв"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+msgid "New Brush from _Text..."
+msgstr "_Кисть из текста..."
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+msgid "Font"
+msgstr "Шрифт:"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+msgid "Pixel Size"
+msgstr "Кегль (px):"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+msgid "Text"
+msgstr "Текст:"
