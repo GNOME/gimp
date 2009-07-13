@@ -1,3 +1,7 @@
+*.la
+*.lo
+*.o
+/ChangeLog
 /Makefile
 /Makefile.in
 /aclocal.m4
@@ -15,9 +19,9 @@
 /configure
 /depcomp
 /gimp-2.0.pc
+/gimp-zip
 /gimpthumb-2.0.pc
 /gimpui-2.0.pc
-/gimp-zip
 /gtk-doc.make
 /install-sh
 /intltool-extract
@@ -35,6 +39,3 @@
 /stamp-h
 /stamp-h.in
 /stamp-h1
-*.la
-*.lo
-*.o
