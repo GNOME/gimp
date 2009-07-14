@@ -852,39 +852,6 @@ try_fseek (FILE  *f,
   return 0;
 }
 
-static gint
-read_extended_data_block (FILE     *f,
-                          gint      image_ID,
-                          guint     total_len,
-                          PSPimage *ia)
-{
-  long    data_start;
-  guchar  buf[4];
-  guint16 keyword;
-  guint32 length;
-
-  data_start = ftell (f);
-
-  while (ftell (f) < data_start + total_len)
-    {
-      if (fread (buf, 4, 1, f) < 1
-          || fread (&keyword, 2, 1, f) < 1
-          || fread (&length, 4, 1, f) < 1)
-        {
-          g_message ("Error reading extended data chunk");
-          return -1;
-        }
-      if (memcmp (buf, "~FL\0", 4) != 0)
-        {
-          g_message ("Invalid extended data chunk header");
-          return -1;
-        }
-      /* TODO Read keyword and assign it to PSPExtendedDataID */
-    }
-
-  return 0;
-}
-
 
 
 static gint
