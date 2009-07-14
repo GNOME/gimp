@@ -71,6 +71,11 @@ AC_CONFIG_SRCDIR([app/core/gimp.c])
 AM_INIT_AUTOMAKE(no-define dist-bzip2)
 AM_CONFIG_HEADER(config.h)
 
+# Enable silent build rules by default, requires at least
+# Automake-1.11. Disable by either passing --disable-silent-rules to
+# configure or passing V=1 to make
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
 GIMP_MAJOR_VERSION=gimp_major_version
 GIMP_MINOR_VERSION=gimp_minor_version
 GIMP_MICRO_VERSION=gimp_micro_version
