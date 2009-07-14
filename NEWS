@@ -39,7 +39,7 @@ Plug-ins:
    layer mode in GIMP
  - Add JPEG2000 load plug-in
  - Add X11 mouse cursor plug-in
- - Addd support for loading 16bit (RGB565) raw data
+ - Add support for loading 16bit (RGB565) raw data
 
 
 GEGL:
