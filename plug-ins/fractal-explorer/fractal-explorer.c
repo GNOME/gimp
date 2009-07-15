@@ -1132,8 +1132,8 @@ fractalexplorer_rescan_list (GtkWidget *widget,
   patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"),
                                      fractalexplorer_path);
   gtk_container_set_border_width (GTK_CONTAINER (patheditor), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
+                      patheditor, TRUE, TRUE, 0);
   gtk_widget_show (patheditor);
 
   if (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK)

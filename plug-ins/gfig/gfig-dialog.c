@@ -306,12 +306,12 @@ gfig_dialog (void)
   /* build the menu */
   ui_manager = create_ui_manager (top_level_dlg);
   menubar = gtk_ui_manager_get_widget (ui_manager, "/ui/gfig-menubar");
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (top_level_dlg))),
                       menubar, FALSE, FALSE, 0);
   gtk_widget_show (menubar);
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/ui/gfig-toolbar");
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (top_level_dlg))),
                       toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
@@ -320,8 +320,8 @@ gfig_dialog (void)
   /* Main box */
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), main_hbox,
-                    TRUE, TRUE, 0);
+  gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (top_level_dlg))),
+                    main_hbox, TRUE, TRUE, 0);
 
   /* Preview itself */
   gtk_box_pack_start (GTK_BOX (main_hbox), make_preview (), FALSE, FALSE, 0);
@@ -1220,7 +1220,8 @@ gfig_prefs_action_callback (GtkAction *widget,
 
       main_vbox = gtk_vbox_new (FALSE, 0);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+      gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                         main_vbox);
       gtk_widget_show (main_vbox);
 
       /* Put buttons in */
@@ -1368,7 +1369,8 @@ gfig_grid_action_callback (GtkAction *action,
 
       main_vbox = gtk_vbox_new (FALSE, 0);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+      gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                         main_vbox);
       gtk_widget_show (main_vbox);
 
       hbox = gtk_hbox_new (FALSE, 6);

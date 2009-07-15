@@ -121,8 +121,8 @@ make_default_dialog (const gchar *title)
 
    data->vbox = gtk_vbox_new (FALSE, 12);
    gtk_container_set_border_width (GTK_CONTAINER (data->vbox), 12);
-   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (data->dialog)->vbox), data->vbox,
-                       TRUE, TRUE, 0);
+   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
+                       data->vbox, TRUE, TRUE, 0);
    gtk_widget_show (data->vbox);
 
    return data;

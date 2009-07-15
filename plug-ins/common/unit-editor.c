@@ -222,8 +222,8 @@ new_unit_dialog (GtkWidget *main_dialog,
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   entry = identifier_entry = gtk_entry_new ();
@@ -449,8 +449,8 @@ unit_editor_dialog (void)
      -1, NULL);
 
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/unit-editor-toolbar");
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), toolbar,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -460,7 +460,7 @@ unit_editor_dialog (void)
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_ALWAYS);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                      scrolled_win);
   gtk_widget_show (scrolled_win);
 

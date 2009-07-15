@@ -564,7 +564,7 @@ browser_dialog_new (void)
 
   browser->browser = gimp_browser_new ();
   gtk_container_set_border_width (GTK_CONTAINER (browser->browser), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (browser->dialog)->vbox),
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (browser->dialog))),
                      browser->browser);
   gtk_widget_show (browser->browser);
 

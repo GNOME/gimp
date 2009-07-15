@@ -1202,7 +1202,8 @@ newsprint_dialog (GimpDrawable *drawable)
 
   paned = gtk_hpaned_new ();
   gtk_container_set_border_width (GTK_CONTAINER (paned), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), paned);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     paned);
   gtk_widget_show (paned);
 
   hbox = gtk_hbox_new (FALSE, 0);

@@ -1241,7 +1241,8 @@ fp_dialog (void)
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
+                      table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   gtk_table_attach (GTK_TABLE (table), bna, 0, 2, 0, 1,

@@ -801,15 +801,15 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   toolbar = gtk_ui_manager_get_widget (ifsDesign->ui_manager,
                                        "/ifs-compose-toolbar");
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), toolbar,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
   /*  The main vbox */
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      main_vbox, TRUE, TRUE, 0);
 
   /*  The design area */
 
@@ -1191,8 +1191,8 @@ ifs_options_dialog (GtkWidget *parent)
       gtk_container_set_border_width (GTK_CONTAINER (table), 12);
       gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (ifsOptD->dialog)->vbox), table,
-                          FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (ifsOptD->dialog))),
+                          table, FALSE, FALSE, 0);
       gtk_widget_show (table);
 
       label = gtk_label_new (_("Max. memory:"));
