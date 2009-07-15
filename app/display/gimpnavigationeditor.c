@@ -277,7 +277,8 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
     gint border_width, border_height;
     gint screen_click_x, screen_click_y;
 
-    gdk_window_get_origin (widget->window, &x_origin, &y_origin);
+    gdk_window_get_origin (gtk_widget_get_window (widget),
+                           &x_origin, &y_origin);
 
     screen_click_x = x_origin + click_x;
     screen_click_y = y_origin + click_y;

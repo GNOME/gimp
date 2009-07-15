@@ -318,10 +318,10 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
   k = columns * rows;
   for (j = 0; j < k; j++)
     gimp_display_shell_draw_quad (tool->drawable,
-                    GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
-                    mask, mask_offx, mask_offy,
-                    x[j], y[j], u[j], v[j],
-                    opacity);
+                                  GDK_DRAWABLE (gtk_widget_get_window (shell->canvas)),
+                                  mask, mask_offx, mask_offy,
+                                  x[j], y[j], u[j], v[j],
+                                  opacity);
 }
 
 

@@ -93,7 +93,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 
   gtk_widget_show (layer_select->shell);
 
-  gdk_keyboard_grab (layer_select->shell->window, FALSE, time);
+  gdk_keyboard_grab (gtk_widget_get_window (layer_select->shell), FALSE, time);
 }
 
 
