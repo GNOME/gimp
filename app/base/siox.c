@@ -1289,50 +1289,45 @@ siox_drb (SioxState   *state,
           gint         x,
           gint         y,
           gint         brush_radius,
-          SioxDRBType  optionsrefinement,\
+          gint         brush_mode,
           gfloat       threshold)
 {
   PixelRegion  srcPR;
   PixelRegion  mapPR;
   gpointer     pr;
   gint         row, col;
-  gint         brush_mode;//
+
 
   g_return_if_fail (state != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
-/*
-  if (optionsrefinement & SIOX_DRB_ADD)
-    g_hash_table_foreach_remove(state->cache,siox_cache_remove_bg,NULL);
-  if (optionsrefinement & SIOX_DRB_SUBTRACT)
-    g_hash_table_foreach_remove(state->cache,siox_cache_remove_fg,NULL);
-  if (optionsrefinement & SIOX_DRB_CHANGE_THRESHOLD)
-    optionsrefinement = SIOX_DRB_RECALCULATE;
-   
+	
+
+
+     
 /*pixel_region_init (&srcPR, state->pixels,
                      x - brush_radius, y - brush_radius, brush_radius * 2,
                      brush_radius * 2, FALSE);
  
  pixel_region_init (&mapPR, mask, x - brush_radius, y - brush_radius,
                      brush_radius * 2, brush_radius * 2, TRUE);
-*/
- /* pixel_region_init (&srcPR, state->pixels,
-                    x , y , state->width, state->height, FALSE);
-  pixel_region_init (&mapPR, mask, x, y,
-                    brush_radius * 2,
-                     brush_radius * 2, TRUE);
-*/		 
+
   pixel_region_init (&srcPR, state->pixels,
-                     x , y , state->width, state->height, FALSE);
+                    x , y , brush_radius * 2, brush_radius * 2, FALSE);
   pixel_region_init (&mapPR, mask, x, y,
-                    brush_radius * 2,
+                     brush_radius * 2,
                      brush_radius * 2, TRUE);
-/*	
-	 
-*/
+*/	 
+	
+  pixel_region_init (&srcPR, state->pixels,
+                     x , y , brush_radius * 2,brush_radius * 2, FALSE);
+  pixel_region_init (&mapPR, mask, x, y,
+                     brush_radius * 2,
+                     brush_radius * 2, TRUE);
+
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
-    {
+    {printf("pr\n");
       const guchar *src = srcPR.data;
       guchar       *map = mapPR.data;
 
@@ -1342,7 +1337,7 @@ siox_drb (SioxState   *state,
           guchar       *m = map;
 
           for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
-            {
+            {printf("m = %d,col =%d \n",m,col);
               gint         key;
               classresult *cr;
               gfloat       mindistbg;
@@ -1359,8 +1354,8 @@ siox_drb (SioxState   *state,
               mindistbg = (gfloat) sqrt (cr->bgdist);
               mindistfg = (gfloat) sqrt (cr->fgdist);
 
-              if (optionsrefinement & SIOX_DRB_ADD)
-                {printf("siox_drb SIOX_DRB_ADD \n");
+              if (brush_mode == 0)
+                {printf("SIOX_DRB_ADD \n");
                   if (*m > SIOX_HIGH)
                     continue;
 
@@ -1375,7 +1370,7 @@ siox_drb (SioxState   *state,
                       alpha = MIN (d, 1.0);
                     }
                 }
-              else if (optionsrefinement & SIOX_DRB_SUBTRACT) /*if (brush_mode == SIOX_DRB_SUBTRACT)*/
+              else if (brush_mode == 1) /*if (brush_mode == SIOX_DRB_SUBTRACT)*/
                 {
                   if (*m < SIOX_HIGH)
                     continue;
@@ -1403,12 +1398,13 @@ siox_drb (SioxState   *state,
                 {
                   *m = (gint) (255.999 * alpha);
                 }
-            }
-
+     
+			}
           src += srcPR.rowstride;
           map += mapPR.rowstride;
         }
     }
+
 }
 
 /**

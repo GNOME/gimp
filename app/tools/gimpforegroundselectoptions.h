@@ -39,6 +39,7 @@ struct _GimpForegroundSelectOptions
 
   gboolean              contiguous;
   gboolean              background;
+  gboolean              drb;
   gboolean              refinement;
   gint                  stroke_width;
   gint                  smoothness;

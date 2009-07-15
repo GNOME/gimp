@@ -40,6 +40,7 @@ enum
   PROP_ANTIALIAS,
   PROP_CONTIGUOUS,
   PROP_BACKGROUND,
+  PROP_DRB,
   PROP_REFINEMENT,
   PROP_STROKE_WIDTH,
   PROP_SMOOTHNESS,
@@ -91,6 +92,12 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                     "background", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DRB,
+                                    "drb",
+                                    _("drb can use"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);                                  
   
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_REFINEMENT,
                                     "refinement", NULL,
@@ -175,6 +182,10 @@ gimp_foreground_select_options_set_property (GObject      *object,
       options->background = g_value_get_boolean (value);
       break;
 
+    case PROP_DRB:  
+      options->drb = g_value_get_boolean (value);
+      break;
+      
     case PROP_REFINEMENT:
       options->refinement = g_value_get_boolean (value);
       break;
@@ -238,7 +249,11 @@ gimp_foreground_select_options_get_property (GObject    *object,
     case PROP_BACKGROUND:
       g_value_set_boolean (value, options->background);
       break;
-			
+		
+    case PROP_DRB:   
+      g_value_set_boolean (value, options->drb);
+      break;	
+      			
     case PROP_REFINEMENT:
       g_value_set_boolean (value, options->refinement);
       break;
@@ -289,6 +304,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *frame;
+  GObject   *drb = G_OBJECT (tool_options);
   GtkWidget *frame_drb;
   GtkWidget *scale;
   GtkWidget *scale_t;
@@ -321,6 +337,11 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  /* drb */
+  button = gimp_prop_check_button_new (drb, "drb", _("DRB"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+  
   /* add / subtract  */
   title = g_strdup_printf (_("Detail Refinement Brush  (%s)"),
                              gimp_get_mod_string (GDK_CONTROL_MASK));

@@ -77,7 +77,7 @@ void        siox_drb                (SioxState          *state,
                                      gint                x,
                                      gint                y,
                                      gint                brush_radius,
-                                     SioxDRBType         optionsrefinement,
+                                     gint                brush_mode,
                                      gfloat              threshold);
 
 

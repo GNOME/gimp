@@ -58,6 +58,7 @@ typedef struct
 {
   gint         width;
   gboolean     background;
+  gboolean     drbrefinement;	
   gint         num_points;
   GimpVector2 *points;
 } FgSelectStroke;
@@ -280,12 +281,12 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
             g_slice_free (FgSelectStroke, stroke);
           }
         for (drblist = fg_select->drbsignals; drblist; drblist = drblist->next)
-	  {
-	    FgSelectStroke *drbsignal = drblist->data; 
+	      {
+	        FgSelectStroke *drbsignal = drblist->data; 
 			 
-	    g_free (drbsignal->points);
-	    g_slice_free (FgSelectStroke, drbsignal); 
-	  }
+	        g_free (drbsignal->points);
+	        g_slice_free (FgSelectStroke, drbsignal); 
+	      }
 
         g_list_free (fg_select->strokes);
         fg_select->strokes = NULL;
@@ -338,7 +339,7 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
           if (fg_select->strokes)
             {
 		if(!fg_select->drbsignal)
-		  status = _("Add more strokes or press Up to drb");
+		  status = _("Add more strokes or click buttondrb to drb");
 		else
 		  status = _("Add more drb or press Enter to accept the selection");
 	    }
@@ -433,13 +434,7 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
   if (fg_select->state)
     {
       switch (kevent->keyval)
-        {
-        case GDK_Up:	
-	  mark_drb = TRUE;
-	  printf("click Up\n");
-	  G_CALLBACK (gimp_foreground_select_options_notify);      
-	  return  TRUE;	
-	  
+        { 
         case GDK_Return:
         case GDK_KP_Enter:
         case GDK_ISO_Enter:
@@ -667,7 +662,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
                                    fg_select->drbsignal->len,
                                    GIMP_CONTEXT (options),
                                    (options->refinement ?
-                                    GIMP_ACTIVE_COLOR_BACKGROUND :
+                                    GIMP_ACTIVE_COLOR_FOREGROUND :
                                     GIMP_ACTIVE_COLOR_BACKGROUND),
                                    options->stroke_width);
      }
@@ -726,6 +721,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
   options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (free_sel);
   printf("mark_drb = %d\n",mark_drb);
+  printf(" fg_select->refinement\n", fg_select->refinement); 	
+  printf("options->refinement\n", options->refinement); 		
   if (fg_select->idle_id)
     {
       g_source_remove (fg_select->idle_id);
@@ -734,7 +731,10 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
   if (! drawable)
     return;
-
+  if (options->drb)
+    mark_drb = TRUE;
+  else 
+    mark_drb = FALSE;
   scan_convert = gimp_scan_convert_new ();
 
   gimp_free_select_tool_get_points (free_sel,
@@ -755,7 +755,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                   gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                                   0, 0, 128);
   gimp_scan_convert_free (scan_convert);
- 
+printf(" fg_select->refinement\n", fg_select->refinement); 
   if (fg_select->strokes)
     { 
       GList *list;
@@ -780,8 +780,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 	                                         fg_select->drbrefinement,
 	                                         options->sensitivity, 
 	                                         ! options->contiguous,
-	                                         mark_drb, 
-	                                         options->stroke_width,
+	                                         options->drb, 
+	                                         options->stroke_width/2,
 	                                         GIMP_PROGRESS (display));
 
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
@@ -917,9 +917,14 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
                             stroke->width,
                             GIMP_JOIN_ROUND, GIMP_CAP_ROUND, 10.0,
                             0.0, NULL);
-  gimp_scan_convert_compose_value (scan_convert,
-                                   gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                                   0, 0, stroke->background ? 0 : 255);
+ if (!mark_drb) 
+   gimp_scan_convert_compose_value (scan_convert,
+                                    gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
+                                    0, 0, stroke->background ? 0 : 255);
+ if (mark_drb) 
+   gimp_scan_convert_compose_value (scan_convert,
+                                    gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
+                                    0, 0, stroke->drbrefinement ? 0 : 255);	
   gimp_scan_convert_free (scan_convert);
 }
 
@@ -949,13 +954,13 @@ if (!mark_drb)
                               SIOX_REFINEMENT_ADD_BACKGROUND :
                               SIOX_REFINEMENT_ADD_FOREGROUND);
   }
-else
+else if (mark_drb)
   {
     g_return_if_fail (fg_select->drbsignal != NULL);
 
     stroke = g_slice_new (FgSelectStroke);
 
-    stroke->background = options->refinement;
+    stroke->drbrefinement = options->refinement;
     stroke->width      = ROUND ((gdouble) options->stroke_width / shell->scale_y);
     stroke->num_points = fg_select->drbsignal->len;
     stroke->points     = (GimpVector2 *) g_array_free (fg_select->drbsignal, FALSE);
@@ -964,9 +969,9 @@ else
 
     fg_select->drbsignals = g_list_append (fg_select->drbsignals, stroke);
 
-    fg_select->drbrefinement |= (stroke->background?
-                                 SIOX_DRB_ADD :
-                                 SIOX_DRB_SUBTRACT);
+    fg_select->drbrefinement |= (stroke->drbrefinement?
+                                 SIOX_DRB_SUBTRACT :
+                                 SIOX_DRB_ADD);
   }		
 }
 
@@ -1042,7 +1047,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
                          (GSourceFunc) gimp_foreground_select_tool_idle_select,
                          fg_select, NULL);
     }
-  if (g_str_has_prefix (pspec->name, "mask-color"))
+ if (g_str_has_prefix (pspec->name, "mask-color"))
     {
       GimpTool *tool = GIMP_TOOL (fg_select);
 
