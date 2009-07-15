@@ -47,10 +47,14 @@ typedef enum
   GIMP_EXPORT_EXPORT
 } GimpExportReturn;
 
-GimpExportReturn   gimp_export_image (gint32                 *image_ID,
-                                      gint32                 *drawable_ID,
-                                      const gchar            *format_name,
-                                      GimpExportCapabilities  capabilities);
+GimpExportReturn   gimp_export_image                   (gint32                 *image_ID,
+                                                        gint32                 *drawable_ID,
+                                                        const gchar            *format_name,
+                                                        GimpExportCapabilities  capabilities);
+GtkWidget        * gimp_export_dialog_new              (const gchar            *format_name,
+                                                        const gchar            *role,
+                                                        const gchar            *help_id);
+GtkWidget        * gimp_export_dialog_get_content_area (GtkWidget              *dialog);
 
 
 G_END_DECLS
