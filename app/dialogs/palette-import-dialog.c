@@ -189,7 +189,7 @@ palette_import_dialog_new (GimpContext *context)
 
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->dialog)->vbox),
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
                      main_hbox);
   gtk_widget_show (main_hbox);
 

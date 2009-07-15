@@ -92,7 +92,8 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
 
   table = gtk_table_new (4, 4, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), table);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     table);
   gtk_widget_show (table);
 
   if (pixbuf)

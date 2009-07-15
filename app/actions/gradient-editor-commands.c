@@ -483,7 +483,8 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     vbox);
   gtk_widget_show (vbox);
 
   /*  Instructions  */
@@ -585,7 +586,8 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     vbox);
   gtk_widget_show (vbox);
 
   /*  Instructions  */

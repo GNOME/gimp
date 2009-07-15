@@ -114,8 +114,8 @@ gimp_perspective_tool_dialog (GimpTransformTool *tr_tool)
 
   frame = gimp_frame_new (_("Transformation Matrix"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), frame,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (tr_tool->dialog))),
+                      frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);

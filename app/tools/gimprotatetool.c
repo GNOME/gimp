@@ -177,8 +177,8 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), table,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (tr_tool->dialog))),
+                      table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   button = gimp_spin_button_new (&rotate->angle_adj,

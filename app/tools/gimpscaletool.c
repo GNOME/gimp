@@ -170,8 +170,8 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                   NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (scale->box), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), scale->box,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (tr_tool->dialog))),
+                      scale->box, FALSE, FALSE, 0);
   gtk_widget_show (scale->box);
 
   g_signal_connect (scale->box, "notify",

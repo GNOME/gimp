@@ -74,8 +74,8 @@ image_properties_dialog_new (GimpImage   *image,
                     NULL);
 
   notebook = gtk_notebook_new ();
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), notebook,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
 
   view = gimp_image_prop_view_new (image);

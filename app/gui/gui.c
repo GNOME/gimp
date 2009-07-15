@@ -171,7 +171,8 @@ gui_abort (const gchar *abort_message)
 
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), "%s", abort_message);
 
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     box);
   gtk_widget_show (box);
 
   gimp_dialog_run (GIMP_DIALOG (dialog));

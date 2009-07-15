@@ -1437,7 +1437,8 @@ prefs_dialog_new (Gimp       *gimp,
   /* The main hbox */
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     hbox);
   gtk_widget_show (hbox);
 
   /* The categories tree */
