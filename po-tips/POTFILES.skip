@@ -1,4 +1,5 @@
 app
+data/tags
 desktop
 desktop/gimp.desktop.in
 libgimp
