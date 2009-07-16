@@ -416,7 +416,7 @@ write_pascalstring (FILE        *fd,
     }
   else
     {
-      write_gint16 (fd, 0, why);
+      write_gchar (fd, 0, why);
     }
 
   /* If total length (length byte + content) is not a multiple of PADDING,
