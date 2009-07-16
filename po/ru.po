@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-13 12:43+0400\n"
-"PO-Revision-Date: 2009-07-13 13:33+0400\n"
+"POT-Creation-Date: 2009-07-16 17:48+0400\n"
+"PO-Revision-Date: 2009-07-16 19:26+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -257,7 +257,7 @@ msgstr "Редактор кистей"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:108 ../app/core/gimp.c:855
-#: ../app/dialogs/dialogs.c:158 ../app/dialogs/preferences-dialog.c:2743
+#: ../app/dialogs/dialogs.c:158 ../app/dialogs/preferences-dialog.c:2744
 msgid "Brushes"
 msgstr "Кисти"
 
@@ -304,7 +304,7 @@ msgstr "Панель"
 
 #. Document History
 #: ../app/actions/actions.c:141 ../app/dialogs/dialogs.c:172
-#: ../app/dialogs/preferences-dialog.c:1594
+#: ../app/dialogs/preferences-dialog.c:1595
 msgid "Document History"
 msgstr "Недавние изображения"
 
@@ -325,7 +325,7 @@ msgid "File"
 msgstr "Файл"
 
 #: ../app/actions/actions.c:156 ../app/dialogs/dialogs.c:166
-#: ../app/dialogs/preferences-dialog.c:2759
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Fonts"
 msgstr "Шрифты"
 
@@ -336,7 +336,7 @@ msgstr "Редактор градиентов"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:162 ../app/core/gimp.c:867
-#: ../app/dialogs/dialogs.c:162 ../app/dialogs/preferences-dialog.c:2755
+#: ../app/dialogs/dialogs.c:162 ../app/dialogs/preferences-dialog.c:2756
 msgid "Gradients"
 msgstr "Градиенты"
 
@@ -354,7 +354,7 @@ msgid "Images"
 msgstr "Изображения"
 
 #: ../app/actions/actions.c:174 ../app/dialogs/dialogs.c:179
-#: ../app/dialogs/resize-dialog.c:286
+#: ../app/dialogs/resize-dialog.c:287
 msgid "Layers"
 msgstr "Слои"
 
@@ -365,17 +365,17 @@ msgstr "Редактор палитры образцов"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:180 ../app/core/gimp.c:863
-#: ../app/dialogs/dialogs.c:164 ../app/dialogs/preferences-dialog.c:2751
+#: ../app/dialogs/dialogs.c:164 ../app/dialogs/preferences-dialog.c:2752
 msgid "Palettes"
 msgstr "Палитры цветовых образцов"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:183 ../app/core/gimp.c:859
-#: ../app/dialogs/dialogs.c:160 ../app/dialogs/preferences-dialog.c:2747
+#: ../app/dialogs/dialogs.c:160 ../app/dialogs/preferences-dialog.c:2748
 msgid "Patterns"
 msgstr "Текстуры"
 
-#: ../app/actions/actions.c:186 ../app/dialogs/preferences-dialog.c:2763
+#: ../app/actions/actions.c:186 ../app/dialogs/preferences-dialog.c:2764
 msgid "Plug-Ins"
 msgstr "Расширения"
 
@@ -406,7 +406,7 @@ msgid "Text Editor"
 msgstr "Редактор текста"
 
 #: ../app/actions/actions.c:207 ../app/dialogs/dialogs.c:139
-#: ../app/dialogs/preferences-dialog.c:1879 ../app/gui/gui.c:428
+#: ../app/dialogs/preferences-dialog.c:1880 ../app/gui/gui.c:429
 msgid "Tool Options"
 msgstr "Параметры инструментов"
 
@@ -2629,7 +2629,7 @@ msgstr "Сделать копию выделения градиента"
 msgid "Replicate"
 msgstr "Создать копию"
 
-#: ../app/actions/gradient-editor-commands.c:491
+#: ../app/actions/gradient-editor-commands.c:492
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -2637,7 +2637,7 @@ msgstr ""
 "Укажите количество копий\n"
 "выделенного сегмента"
 
-#: ../app/actions/gradient-editor-commands.c:494
+#: ../app/actions/gradient-editor-commands.c:495
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -2645,27 +2645,27 @@ msgstr ""
 "Выбор числа создаваемых\n"
 "копий выделения."
 
-#: ../app/actions/gradient-editor-commands.c:553
+#: ../app/actions/gradient-editor-commands.c:554
 msgid "Split Segment Uniformly"
 msgstr "Равномерно разделить сегмент"
 
-#: ../app/actions/gradient-editor-commands.c:554
+#: ../app/actions/gradient-editor-commands.c:555
 msgid "Split Gradient Segment Uniformly"
 msgstr "Равномерно разделить сегмент градиента"
 
-#: ../app/actions/gradient-editor-commands.c:558
+#: ../app/actions/gradient-editor-commands.c:559
 msgid "Split Segments Uniformly"
 msgstr "Равномерно разделить сегменты"
 
-#: ../app/actions/gradient-editor-commands.c:559
+#: ../app/actions/gradient-editor-commands.c:560
 msgid "Split Gradient Segments Uniformly"
 msgstr "Равномерно разделить сегменты градиента"
 
-#: ../app/actions/gradient-editor-commands.c:572
+#: ../app/actions/gradient-editor-commands.c:573
 msgid "Split"
 msgstr "Разделить"
 
-#: ../app/actions/gradient-editor-commands.c:593
+#: ../app/actions/gradient-editor-commands.c:595
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -2673,7 +2673,7 @@ msgstr ""
 "Выберите число равных частей  \n"
 "на которые надо разделить сегмент"
 
-#: ../app/actions/gradient-editor-commands.c:596
+#: ../app/actions/gradient-editor-commands.c:598
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -3073,7 +3073,7 @@ msgstr "Смена размера изображения"
 
 #. Scaling
 #: ../app/actions/image-commands.c:660 ../app/actions/layers-commands.c:1100
-#: ../app/dialogs/preferences-dialog.c:1924
+#: ../app/dialogs/preferences-dialog.c:1925
 #: ../app/pdb/drawable-transform-cmds.c:681
 #: ../app/pdb/drawable-transform-cmds.c:757 ../app/pdb/image-cmds.c:404
 #: ../app/pdb/image-cmds.c:440 ../app/pdb/layer-cmds.c:288
@@ -4290,7 +4290,7 @@ msgstr "_Прикреплять выделение к краям изображ�
 
 #: ../app/actions/select-commands.c:332 ../app/actions/select-commands.c:365
 #: ../app/actions/vectors-commands.c:383 ../app/actions/vectors-commands.c:417
-#: ../app/dialogs/stroke-dialog.c:288
+#: ../app/dialogs/stroke-dialog.c:289
 msgid "There is no active layer or channel to stroke to."
 msgstr "Нет активного слоя или канала для обводки"
 
@@ -6231,7 +6231,7 @@ msgstr "По Флойду-Стейнбергу (уменьшенное раст�
 #: ../app/core/core-enums.c:57
 msgctxt "convert-dither-type"
 msgid "Positioned"
-msgstr ""
+msgstr "Фиксированное"
 
 #: ../app/core/core-enums.c:87
 msgctxt "convert-palette-type"
@@ -7058,7 +7058,7 @@ msgid "Fonts (this may take a while)"
 msgstr "Шрифты (их загрузка может длиться долго)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:880 ../app/dialogs/preferences-dialog.c:2771
+#: ../app/core/gimp.c:880 ../app/dialogs/preferences-dialog.c:2772
 msgid "Modules"
 msgstr "Модули"
 
@@ -7820,7 +7820,7 @@ msgstr "Опускание контура"
 msgid "Lower Path to Bottom"
 msgstr "Сделать контур нижним"
 
-#: ../app/core/gimpimagefile.c:534 ../app/dialogs/preferences-dialog.c:1726
+#: ../app/core/gimpimagefile.c:534 ../app/dialogs/preferences-dialog.c:1727
 msgid "Folder"
 msgstr "Каталог"
 
@@ -7862,7 +7862,7 @@ msgstr[0] "%d x %d точку растра"
 msgstr[1] "%d x %d точки растра"
 msgstr[2] "%d x %d точек растра"
 
-#: ../app/core/gimpimagefile.c:634 ../app/display/gimpdisplayshell-title.c:316
+#: ../app/core/gimpimagefile.c:634 ../app/display/gimpdisplayshell-title.c:318
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8225,7 +8225,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "проценты"
 
-#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:478
+#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:479
 msgid "About GIMP"
 msgstr "О GIMP"
 
@@ -8249,11 +8249,11 @@ msgstr "GIMP создали для вас"
 msgid "This is an unstable development release."
 msgstr "Это нестабильная версия программы."
 
-#: ../app/dialogs/channel-options-dialog.c:145
+#: ../app/dialogs/channel-options-dialog.c:146
 msgid "Channel _name:"
 msgstr "_Имя канала:"
 
-#: ../app/dialogs/channel-options-dialog.c:174
+#: ../app/dialogs/channel-options-dialog.c:175
 msgid "Initialize from _selection"
 msgstr "Создать из _выделения"
 
@@ -8372,11 +8372,11 @@ msgstr "Ослабить %s"
 msgid "_Fade"
 msgstr "_Ослабить"
 
-#: ../app/dialogs/fade-dialog.c:157
+#: ../app/dialogs/fade-dialog.c:158
 msgid "_Mode:"
 msgstr "_Режим:"
 
-#: ../app/dialogs/fade-dialog.c:163
+#: ../app/dialogs/fade-dialog.c:164
 msgid "_Opacity:"
 msgstr "Н_епрозрачность:"
 
@@ -8477,23 +8477,23 @@ msgstr "Параметры объединения слоев"
 msgid "_Merge"
 msgstr "О_бъединить"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:91
+#: ../app/dialogs/image-merge-layers-dialog.c:92
 msgid "Final, Merged Layer should be:"
 msgstr "Полученный слой должен быть:"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:95
+#: ../app/dialogs/image-merge-layers-dialog.c:96
 msgid "Expanded as necessary"
 msgstr "Расширен при необходимости"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:98
+#: ../app/dialogs/image-merge-layers-dialog.c:99
 msgid "Clipped to image"
 msgstr "Отсечен по изображению"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:101
+#: ../app/dialogs/image-merge-layers-dialog.c:102
 msgid "Clipped to bottom layer"
 msgstr "Отсечен по нижнему слою"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:109
+#: ../app/dialogs/image-merge-layers-dialog.c:110
 msgid "_Discard invisible layers"
 msgstr "От_казаться от невидимых слоев"
 
@@ -8502,7 +8502,7 @@ msgid "Create a New Image"
 msgstr "Создать новое изображение"
 
 #: ../app/dialogs/image-new-dialog.c:144
-#: ../app/dialogs/preferences-dialog.c:2020
+#: ../app/dialogs/preferences-dialog.c:2021
 msgid "_Template:"
 msgstr "_Шаблон:"
 
@@ -8575,7 +8575,7 @@ msgstr "Вы действительно хотите это сделать?"
 msgid "Configure Keyboard Shortcuts"
 msgstr "Настройка комбинаций клавиш"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:72
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:73
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
@@ -8583,7 +8583,7 @@ msgstr ""
 "Укажите строку для редактирования, нажмите сочетание клавиш или Backspace "
 "для отмены"
 
-#: ../app/dialogs/keyboard-shortcuts-dialog.c:80
+#: ../app/dialogs/keyboard-shortcuts-dialog.c:81
 msgid "S_ave keyboard shortcuts on exit"
 msgstr "_Сохранять комбинации клавиш при выходе"
 
@@ -8591,11 +8591,11 @@ msgstr "_Сохранять комбинации клавиш при выход�
 msgid "Add a Mask to the Layer"
 msgstr "Добавить маску к слою"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:110
+#: ../app/dialogs/layer-add-mask-dialog.c:111
 msgid "Initialize Layer Mask to:"
 msgstr "С чем инициализировать маску слоя:"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:139
+#: ../app/dialogs/layer-add-mask-dialog.c:140
 msgid "In_vert mask"
 msgstr "Ин_вертировать маску"
 
@@ -8605,12 +8605,12 @@ msgstr "_Имя слоя:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1069
+#: ../app/tools/gimpmeasuretool.c:1070
 msgid "Width:"
 msgstr "Ширина:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1097
+#: ../app/tools/gimpmeasuretool.c:1098
 msgid "Height:"
 msgstr "Высота:"
 
@@ -8626,41 +8626,41 @@ msgstr "Взять имя из _текста"
 msgid "Module Manager"
 msgstr "Управление модулями"
 
-#: ../app/dialogs/module-dialog.c:149
+#: ../app/dialogs/module-dialog.c:150
 msgid "You will have to restart GIMP for the changes to take effect."
 msgstr ""
 "Необходимо перезапустить GIMP, чтобы\n"
 "подействовали внесенные изменения."
 
-#: ../app/dialogs/module-dialog.c:190
+#: ../app/dialogs/module-dialog.c:191
 msgid "Module"
 msgstr "Модуль"
 
-#: ../app/dialogs/module-dialog.c:463
+#: ../app/dialogs/module-dialog.c:464
 msgid "Only in memory"
 msgstr "Только в памяти"
 
-#: ../app/dialogs/module-dialog.c:468
+#: ../app/dialogs/module-dialog.c:469
 msgid "No longer available"
 msgstr "Больше не доступен"
 
-#: ../app/dialogs/module-dialog.c:497
+#: ../app/dialogs/module-dialog.c:498
 msgid "Author:"
 msgstr "Автор:"
 
-#: ../app/dialogs/module-dialog.c:498
+#: ../app/dialogs/module-dialog.c:499
 msgid "Version:"
 msgstr "Версия:"
 
-#: ../app/dialogs/module-dialog.c:499
+#: ../app/dialogs/module-dialog.c:500
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../app/dialogs/module-dialog.c:500
+#: ../app/dialogs/module-dialog.c:501
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: ../app/dialogs/module-dialog.c:501
+#: ../app/dialogs/module-dialog.c:502
 msgid "Location:"
 msgstr "Расположение:"
 
@@ -8678,7 +8678,7 @@ msgstr "Смещение канала"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:118 ../app/dialogs/offset-dialog.c:152
-#: ../app/dialogs/resize-dialog.c:197 ../app/widgets/gimpgrideditor.c:275
+#: ../app/dialogs/resize-dialog.c:198 ../app/widgets/gimpgrideditor.c:275
 msgid "Offset"
 msgstr "Смещение"
 
@@ -8687,11 +8687,11 @@ msgstr "Смещение"
 msgid "_Offset"
 msgstr "_Смещение"
 
-#: ../app/dialogs/offset-dialog.c:184 ../app/dialogs/resize-dialog.c:226
+#: ../app/dialogs/offset-dialog.c:184 ../app/dialogs/resize-dialog.c:227
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/offset-dialog.c:186 ../app/dialogs/resize-dialog.c:227
+#: ../app/dialogs/offset-dialog.c:186 ../app/dialogs/resize-dialog.c:228
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -8730,7 +8730,7 @@ msgid "Select Source"
 msgstr "Выбрать источник"
 
 #: ../app/dialogs/palette-import-dialog.c:214
-#: ../app/dialogs/preferences-dialog.c:1945
+#: ../app/dialogs/preferences-dialog.c:1946
 msgid "_Gradient"
 msgstr "_Градиент"
 
@@ -8894,698 +8894,698 @@ msgstr "Установить свой цвет фона вокруг изобр�
 msgid "Preferences"
 msgstr "Параметры"
 
-#: ../app/dialogs/preferences-dialog.c:1528
-#: ../app/dialogs/preferences-dialog.c:2779
+#: ../app/dialogs/preferences-dialog.c:1529
+#: ../app/dialogs/preferences-dialog.c:2780
 msgid "Environment"
 msgstr "Окружение"
 
-#: ../app/dialogs/preferences-dialog.c:1542
+#: ../app/dialogs/preferences-dialog.c:1543
 msgid "Resource Consumption"
 msgstr "Конфигурирование ресурсов"
 
-#: ../app/dialogs/preferences-dialog.c:1552
+#: ../app/dialogs/preferences-dialog.c:1553
 msgid "Minimal number of _undo levels:"
 msgstr "Минимальное число _уровней отмены:"
 
-#: ../app/dialogs/preferences-dialog.c:1555
+#: ../app/dialogs/preferences-dialog.c:1556
 msgid "Maximum undo _memory:"
 msgstr "Максимально памяти для _отмены:"
 
-#: ../app/dialogs/preferences-dialog.c:1558
+#: ../app/dialogs/preferences-dialog.c:1559
 msgid "Tile cache _size:"
 msgstr "Размер _кэша:"
 
-#: ../app/dialogs/preferences-dialog.c:1561
+#: ../app/dialogs/preferences-dialog.c:1562
 msgid "Maximum _new image size:"
 msgstr "Максимальный размер _нового изображения:"
 
-#: ../app/dialogs/preferences-dialog.c:1566
+#: ../app/dialogs/preferences-dialog.c:1567
 msgid "Number of _processors to use:"
 msgstr "Число используемых _процессоров:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1571
+#: ../app/dialogs/preferences-dialog.c:1572
 msgid "Image Thumbnails"
 msgstr "Эскизы изображений"
 
-#: ../app/dialogs/preferences-dialog.c:1576
+#: ../app/dialogs/preferences-dialog.c:1577
 msgid "Size of _thumbnails:"
 msgstr "Размер файлов _эскизов:"
 
-#: ../app/dialogs/preferences-dialog.c:1580
+#: ../app/dialogs/preferences-dialog.c:1581
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Максимальный размер эскизных _файлов:"
 
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1584
+#: ../app/dialogs/preferences-dialog.c:1585
 msgid "Saving Images"
 msgstr "Сохранение изображений"
 
-#: ../app/dialogs/preferences-dialog.c:1587
+#: ../app/dialogs/preferences-dialog.c:1588
 msgid "Confirm closing of unsa_ved images"
 msgstr "Требовать подтверждение при закрытии несохраненных _изображений"
 
-#: ../app/dialogs/preferences-dialog.c:1597
+#: ../app/dialogs/preferences-dialog.c:1598
 msgid "Keep record of used files in the Recent Documents list"
 msgstr "Хранить список недавно открывавшихся файлов"
 
-#: ../app/dialogs/preferences-dialog.c:1606
+#: ../app/dialogs/preferences-dialog.c:1607
 msgid "User Interface"
 msgstr "Пользовательский интерфейс"
 
-#: ../app/dialogs/preferences-dialog.c:1609
+#: ../app/dialogs/preferences-dialog.c:1610
 msgid "Interface"
 msgstr "Интерфейс"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1616
+#: ../app/dialogs/preferences-dialog.c:1617
 msgid "Previews"
 msgstr "Предварительный просмотр"
 
-#: ../app/dialogs/preferences-dialog.c:1619
+#: ../app/dialogs/preferences-dialog.c:1620
 msgid "_Enable layer & channel previews"
 msgstr "Включить _предпросмотр слоев и каналов"
 
-#: ../app/dialogs/preferences-dialog.c:1625
+#: ../app/dialogs/preferences-dialog.c:1626
 msgid "_Default layer & channel preview size:"
 msgstr "_Размер эскизов слоев и каналов:"
 
-#: ../app/dialogs/preferences-dialog.c:1628
+#: ../app/dialogs/preferences-dialog.c:1629
 msgid "Na_vigation preview size:"
 msgstr "Ра_змер окна навигации:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1632
+#: ../app/dialogs/preferences-dialog.c:1633
 msgid "Keyboard Shortcuts"
 msgstr "Клавиатурные комбинации"
 
-#: ../app/dialogs/preferences-dialog.c:1636
+#: ../app/dialogs/preferences-dialog.c:1637
 msgid "Show menu _mnemonics (access keys)"
 msgstr "Показывать _мнемонические клавиши"
 
-#: ../app/dialogs/preferences-dialog.c:1639
+#: ../app/dialogs/preferences-dialog.c:1640
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "_Использовать динамические комбинации клавиш"
 
-#: ../app/dialogs/preferences-dialog.c:1643
+#: ../app/dialogs/preferences-dialog.c:1644
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Настроить _комбинации клавиш..."
 
-#: ../app/dialogs/preferences-dialog.c:1650
+#: ../app/dialogs/preferences-dialog.c:1651
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Сохранять комбинации клавиш при выходе"
 
-#: ../app/dialogs/preferences-dialog.c:1654
+#: ../app/dialogs/preferences-dialog.c:1655
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Сохранить комбинации клавиш _сейчас"
 
-#: ../app/dialogs/preferences-dialog.c:1661
+#: ../app/dialogs/preferences-dialog.c:1662
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Восстановить исходные комбинации клавиш"
 
-#: ../app/dialogs/preferences-dialog.c:1670
+#: ../app/dialogs/preferences-dialog.c:1671
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Удалить все ком_бинации клавиш"
 
-#: ../app/dialogs/preferences-dialog.c:1682
-#: ../app/dialogs/preferences-dialog.c:1721
+#: ../app/dialogs/preferences-dialog.c:1683
+#: ../app/dialogs/preferences-dialog.c:1722
 msgid "Theme"
 msgstr "Тема"
 
-#: ../app/dialogs/preferences-dialog.c:1691
+#: ../app/dialogs/preferences-dialog.c:1692
 msgid "Select Theme"
 msgstr "Выбрать тему"
 
-#: ../app/dialogs/preferences-dialog.c:1773
+#: ../app/dialogs/preferences-dialog.c:1774
 msgid "Reload C_urrent Theme"
 msgstr "_Обновить текущую тему"
 
-#: ../app/dialogs/preferences-dialog.c:1785
+#: ../app/dialogs/preferences-dialog.c:1786
 msgid "Help System"
 msgstr "Система помощи"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1797
-#: ../app/dialogs/preferences-dialog.c:1891
-#: ../app/dialogs/preferences-dialog.c:2078
+#: ../app/dialogs/preferences-dialog.c:1798
+#: ../app/dialogs/preferences-dialog.c:1892
+#: ../app/dialogs/preferences-dialog.c:2079
 #: ../app/widgets/gimpcontrollereditor.c:188
 msgid "General"
 msgstr "Общая"
 
-#: ../app/dialogs/preferences-dialog.c:1800
+#: ../app/dialogs/preferences-dialog.c:1801
 msgid "Show _tooltips"
 msgstr "Показывать всплывающие по_дсказки"
 
-#: ../app/dialogs/preferences-dialog.c:1803
+#: ../app/dialogs/preferences-dialog.c:1804
 msgid "Show help _buttons"
 msgstr "Показывать кнопку «_Справка»"
 
-#: ../app/dialogs/preferences-dialog.c:1816
+#: ../app/dialogs/preferences-dialog.c:1817
 msgid "Use the online version"
 msgstr "Использовать версию из Интернета"
 
-#: ../app/dialogs/preferences-dialog.c:1817
+#: ../app/dialogs/preferences-dialog.c:1818
 msgid "Use a locally installed copy"
 msgstr "Использовать локальную копию"
 
-#: ../app/dialogs/preferences-dialog.c:1818
+#: ../app/dialogs/preferences-dialog.c:1819
 msgid "User manual:"
 msgstr "Руководство пользователя:"
 
-#: ../app/dialogs/preferences-dialog.c:1825
+#: ../app/dialogs/preferences-dialog.c:1826
 msgid "There's a local installation of the user manual."
 msgstr "Руководство пользователя установлено локально"
 
-#: ../app/dialogs/preferences-dialog.c:1830
+#: ../app/dialogs/preferences-dialog.c:1831
 msgid "The user manual is not installed locally."
 msgstr "Руководство пользователя не установлено локально"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1853
+#: ../app/dialogs/preferences-dialog.c:1854
 msgid "Help Browser"
 msgstr "Справочная система"
 
-#: ../app/dialogs/preferences-dialog.c:1857
+#: ../app/dialogs/preferences-dialog.c:1858
 msgid "H_elp browser to use:"
 msgstr "_Программа просмотра справки:"
 
-#: ../app/dialogs/preferences-dialog.c:1862
+#: ../app/dialogs/preferences-dialog.c:1863
 msgid "Web Browser"
 msgstr "Внешний просмотрщик"
 
-#: ../app/dialogs/preferences-dialog.c:1866
+#: ../app/dialogs/preferences-dialog.c:1867
 msgid "_Web browser to use:"
 msgstr "Используемый _браузер:"
 
-#: ../app/dialogs/preferences-dialog.c:1894
+#: ../app/dialogs/preferences-dialog.c:1895
 msgid "_Save tool options on exit"
 msgstr "_Сохранять параметры инструментов при выходе"
 
-#: ../app/dialogs/preferences-dialog.c:1898
+#: ../app/dialogs/preferences-dialog.c:1899
 msgid "Save Tool Options _Now"
 msgstr "Сохранить _параметры инструментов"
 
-#: ../app/dialogs/preferences-dialog.c:1905
+#: ../app/dialogs/preferences-dialog.c:1906
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Восстановить исходные параметры инструментов"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1915
+#: ../app/dialogs/preferences-dialog.c:1916
 msgid "Guide & Grid Snapping"
 msgstr "Прилипание к направляющим и сетке"
 
-#: ../app/dialogs/preferences-dialog.c:1920
+#: ../app/dialogs/preferences-dialog.c:1921
 msgid "_Snap distance:"
 msgstr "_Дистанция прилипания:"
 
-#: ../app/dialogs/preferences-dialog.c:1928
+#: ../app/dialogs/preferences-dialog.c:1929
 msgid "Default _interpolation:"
 msgstr "_Интерполяция по умолчанию:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1935
+#: ../app/dialogs/preferences-dialog.c:1936
 msgid "Paint Options Shared Between Tools"
 msgstr "Параметры рисования разделены между инструментами"
 
-#: ../app/dialogs/preferences-dialog.c:1939
+#: ../app/dialogs/preferences-dialog.c:1940
 msgid "_Brush"
 msgstr "_Кисть"
 
-#: ../app/dialogs/preferences-dialog.c:1942
+#: ../app/dialogs/preferences-dialog.c:1943
 msgid "_Pattern"
 msgstr "_Текстура"
 
-#: ../app/dialogs/preferences-dialog.c:1948
+#: ../app/dialogs/preferences-dialog.c:1949
 msgid "Move Tool"
 msgstr "Инструмент перемещения"
 
-#: ../app/dialogs/preferences-dialog.c:1952
+#: ../app/dialogs/preferences-dialog.c:1953
 msgid "Set layer or path as active"
 msgstr "Делать слой или контур активным"
 
-#: ../app/dialogs/preferences-dialog.c:1965 ../app/widgets/gimptoolbox.c:631
+#: ../app/dialogs/preferences-dialog.c:1966 ../app/widgets/gimptoolbox.c:631
 msgid "Toolbox"
 msgstr "Панель инструментов"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1977
-#: ../app/dialogs/preferences-dialog.c:2151
+#: ../app/dialogs/preferences-dialog.c:1978
+#: ../app/dialogs/preferences-dialog.c:2152
 #: ../app/widgets/gimpgrideditor.c:203
 msgid "Appearance"
 msgstr "Внешний вид"
 
-#: ../app/dialogs/preferences-dialog.c:1981
+#: ../app/dialogs/preferences-dialog.c:1982
 msgid "Show _foreground & background color"
 msgstr "Показывать цвет _переднего плана и фона"
 
-#: ../app/dialogs/preferences-dialog.c:1985
+#: ../app/dialogs/preferences-dialog.c:1986
 msgid "Show active _brush, pattern & gradient"
 msgstr "Показывать активные _кисти, текстуры и градиенты"
 
-#: ../app/dialogs/preferences-dialog.c:1989
+#: ../app/dialogs/preferences-dialog.c:1990
 msgid "Show active _image"
 msgstr "Показывать активное _изображение"
 
-#: ../app/dialogs/preferences-dialog.c:2002
+#: ../app/dialogs/preferences-dialog.c:2003
 msgid "Default New Image"
 msgstr "Свойства нового изображения"
 
-#: ../app/dialogs/preferences-dialog.c:2005
+#: ../app/dialogs/preferences-dialog.c:2006
 msgid "Default Image"
 msgstr "Изображение по умолчанию"
 
-#: ../app/dialogs/preferences-dialog.c:2042
+#: ../app/dialogs/preferences-dialog.c:2043
 msgid "Default Image Grid"
 msgstr "Параметры сетки"
 
-#: ../app/dialogs/preferences-dialog.c:2045
+#: ../app/dialogs/preferences-dialog.c:2046
 msgid "Default Grid"
 msgstr "Параметры сетки"
 
-#: ../app/dialogs/preferences-dialog.c:2066
+#: ../app/dialogs/preferences-dialog.c:2067
 msgid "Image Windows"
 msgstr "Окно изображения"
 
-#: ../app/dialogs/preferences-dialog.c:2081
+#: ../app/dialogs/preferences-dialog.c:2082
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Использовать «_Точка за точкой» по умолчанию"
 
-#: ../app/dialogs/preferences-dialog.c:2087
+#: ../app/dialogs/preferences-dialog.c:2088
 msgid "Marching _ants speed:"
 msgstr "Скорость _муравьиной дорожки:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2091
+#: ../app/dialogs/preferences-dialog.c:2092
 msgid "Zoom & Resize Behavior"
 msgstr "Правила масштабирования и изменения размера"
 
-#: ../app/dialogs/preferences-dialog.c:2095
+#: ../app/dialogs/preferences-dialog.c:2096
 msgid "Resize window on _zoom"
 msgstr "Изменять размер окна при _масштабировании"
 
-#: ../app/dialogs/preferences-dialog.c:2098
+#: ../app/dialogs/preferences-dialog.c:2099
 msgid "Resize window on image _size change"
 msgstr "Изменять размер окна при _смене размера изображения"
 
-#: ../app/dialogs/preferences-dialog.c:2104
+#: ../app/dialogs/preferences-dialog.c:2105
 msgid "Fit to window"
 msgstr "К размеру окна"
 
-#: ../app/dialogs/preferences-dialog.c:2106
+#: ../app/dialogs/preferences-dialog.c:2107
 msgid "Initial zoom _ratio:"
 msgstr "_Исходные пропорции масштаба:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2110
+#: ../app/dialogs/preferences-dialog.c:2111
 msgid "Space Bar"
 msgstr "Пробел"
 
-#: ../app/dialogs/preferences-dialog.c:2116
+#: ../app/dialogs/preferences-dialog.c:2117
 msgid "_While space bar is pressed:"
 msgstr "_При нажатии пробела:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2120
+#: ../app/dialogs/preferences-dialog.c:2121
 msgid "Mouse Pointers"
 msgstr "Курсоры мыши"
 
-#: ../app/dialogs/preferences-dialog.c:2124
+#: ../app/dialogs/preferences-dialog.c:2125
 msgid "Show _brush outline"
 msgstr "Показывать _контур кисти"
 
-#: ../app/dialogs/preferences-dialog.c:2127
+#: ../app/dialogs/preferences-dialog.c:2128
 msgid "Show pointer for paint _tools"
 msgstr "Показывать курсор мыши в режиме рисования"
 
-#: ../app/dialogs/preferences-dialog.c:2133
+#: ../app/dialogs/preferences-dialog.c:2134
 msgid "Pointer _mode:"
 msgstr "_Режим курсора:"
 
-#: ../app/dialogs/preferences-dialog.c:2136
+#: ../app/dialogs/preferences-dialog.c:2137
 msgid "Pointer re_ndering:"
 msgstr "Отображение к_урсора:"
 
-#: ../app/dialogs/preferences-dialog.c:2148
+#: ../app/dialogs/preferences-dialog.c:2149
 msgid "Image Window Appearance"
 msgstr "Внешний вид окна изображения"
 
-#: ../app/dialogs/preferences-dialog.c:2159
+#: ../app/dialogs/preferences-dialog.c:2160
 msgid "Default Appearance in Normal Mode"
 msgstr "Внешний вид по умолчанию в нормальном режиме"
 
-#: ../app/dialogs/preferences-dialog.c:2164
+#: ../app/dialogs/preferences-dialog.c:2165
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Внешний вид по умолчанию в полноэкранном режиме"
 
-#: ../app/dialogs/preferences-dialog.c:2173
+#: ../app/dialogs/preferences-dialog.c:2174
 msgid "Image Title & Statusbar Format"
 msgstr "Формат заголовка изображения и строки состояния"
 
-#: ../app/dialogs/preferences-dialog.c:2176
+#: ../app/dialogs/preferences-dialog.c:2177
 msgid "Title & Status"
 msgstr "Заголовок и состояние"
 
-#: ../app/dialogs/preferences-dialog.c:2194
+#: ../app/dialogs/preferences-dialog.c:2195
 msgid "Current format"
 msgstr "Текущий формат"
 
-#: ../app/dialogs/preferences-dialog.c:2195
+#: ../app/dialogs/preferences-dialog.c:2196
 msgid "Default format"
 msgstr "Исходный формат"
 
-#: ../app/dialogs/preferences-dialog.c:2196
+#: ../app/dialogs/preferences-dialog.c:2197
 msgid "Show zoom percentage"
 msgstr "Показывать масштаб в %"
 
-#: ../app/dialogs/preferences-dialog.c:2197
+#: ../app/dialogs/preferences-dialog.c:2198
 msgid "Show zoom ratio"
 msgstr "Показывать масштабный коэффициент"
 
-#: ../app/dialogs/preferences-dialog.c:2198
+#: ../app/dialogs/preferences-dialog.c:2199
 msgid "Show image size"
 msgstr "Показать размер изображения"
 
-#: ../app/dialogs/preferences-dialog.c:2211
+#: ../app/dialogs/preferences-dialog.c:2212
 msgid "Image Title Format"
 msgstr "Формат заголовка изображения"
 
-#: ../app/dialogs/preferences-dialog.c:2213
+#: ../app/dialogs/preferences-dialog.c:2214
 msgid "Image Statusbar Format"
 msgstr "Формат строки состояния"
 
-#: ../app/dialogs/preferences-dialog.c:2298
+#: ../app/dialogs/preferences-dialog.c:2299
 msgid "Display"
 msgstr "Дисплей"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2310
+#: ../app/dialogs/preferences-dialog.c:2311
 msgid "Transparency"
 msgstr "Прозрачный"
 
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2315
 msgid "_Check style:"
 msgstr "_Стиль клеток:"
 
-#: ../app/dialogs/preferences-dialog.c:2317
+#: ../app/dialogs/preferences-dialog.c:2318
 msgid "Check _size:"
 msgstr "Размер _клеток:"
 
-#: ../app/dialogs/preferences-dialog.c:2320
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "Monitor Resolution"
 msgstr "Разрешение монитора"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2324
+#: ../app/dialogs/preferences-dialog.c:2325
 #: ../app/display/gimpcursorview.c:202 ../app/widgets/gimpgrideditor.c:268
 #: ../app/widgets/gimpgrideditor.c:300
 msgid "Pixels"
 msgstr "px"
 
-#: ../app/dialogs/preferences-dialog.c:2342
+#: ../app/dialogs/preferences-dialog.c:2343
 msgid "Horizontal"
 msgstr "Горизонтальное"
 
-#: ../app/dialogs/preferences-dialog.c:2344
+#: ../app/dialogs/preferences-dialog.c:2345
 msgid "Vertical"
 msgstr "Вертикальное"
 
-#: ../app/dialogs/preferences-dialog.c:2346
+#: ../app/dialogs/preferences-dialog.c:2347
 #: ../app/widgets/gimpimagepropview.c:476
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2362
+#: ../app/dialogs/preferences-dialog.c:2363
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "О_пределить автоматически (сейчас %d × %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2382
+#: ../app/dialogs/preferences-dialog.c:2383
 msgid "_Enter manually"
 msgstr "_Вручную"
 
-#: ../app/dialogs/preferences-dialog.c:2397
+#: ../app/dialogs/preferences-dialog.c:2398
 msgid "C_alibrate..."
 msgstr "О_ткалибровать..."
 
-#: ../app/dialogs/preferences-dialog.c:2420
+#: ../app/dialogs/preferences-dialog.c:2421
 msgid "Color Management"
 msgstr "Управление цветом"
 
-#: ../app/dialogs/preferences-dialog.c:2440
+#: ../app/dialogs/preferences-dialog.c:2441
 msgid "_RGB profile:"
 msgstr "_RGB-профиль:"
 
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2442
 msgid "Select RGB Color Profile"
 msgstr "Выберите RGB-профиль"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2443
 msgid "_CMYK profile:"
 msgstr "_CMYK-профиль:"
 
-#: ../app/dialogs/preferences-dialog.c:2443
+#: ../app/dialogs/preferences-dialog.c:2444
 msgid "Select CMYK Color Profile"
 msgstr "Выберите CMYK-профиль"
 
-#: ../app/dialogs/preferences-dialog.c:2444
+#: ../app/dialogs/preferences-dialog.c:2445
 msgid "_Monitor profile:"
 msgstr "Профиль _монитора:"
 
-#: ../app/dialogs/preferences-dialog.c:2445
+#: ../app/dialogs/preferences-dialog.c:2446
 msgid "Select Monitor Color Profile"
 msgstr "Выберите цветовой профиль монитора"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2447
 msgid "_Print simulation profile:"
 msgstr "Профиль _имитации принтера:"
 
-#: ../app/dialogs/preferences-dialog.c:2447
+#: ../app/dialogs/preferences-dialog.c:2448
 msgid "Select Printer Color Profile"
 msgstr "Выбор цветового профиля принтера"
 
-#: ../app/dialogs/preferences-dialog.c:2458
+#: ../app/dialogs/preferences-dialog.c:2459
 msgid "_Mode of operation:"
 msgstr "_Вид управления:"
 
-#: ../app/dialogs/preferences-dialog.c:2488
+#: ../app/dialogs/preferences-dialog.c:2489
 msgid "_Try to use the system monitor profile"
 msgstr "_Использовать системный ICC-профиль монитора"
 
-#: ../app/dialogs/preferences-dialog.c:2498
+#: ../app/dialogs/preferences-dialog.c:2499
 msgid "_Display rendering intent:"
 msgstr "_Цветопередача монитора:"
 
-#: ../app/dialogs/preferences-dialog.c:2507
+#: ../app/dialogs/preferences-dialog.c:2508
 msgid "_Softproof rendering intent:"
 msgstr "Ц_ветопередача при цветопробе:"
 
-#: ../app/dialogs/preferences-dialog.c:2520
+#: ../app/dialogs/preferences-dialog.c:2521
 msgid "Mark out of gamut colors"
 msgstr "Пометить цвета вне цветового охвата"
 
-#: ../app/dialogs/preferences-dialog.c:2525
+#: ../app/dialogs/preferences-dialog.c:2526
 msgid "Select Warning Color"
 msgstr "Выберите цвет предупреждения"
 
-#: ../app/dialogs/preferences-dialog.c:2538
+#: ../app/dialogs/preferences-dialog.c:2539
 msgid "File Open behaviour:"
 msgstr "Поведение при открытии файла:"
 
-#: ../app/dialogs/preferences-dialog.c:2550
+#: ../app/dialogs/preferences-dialog.c:2551
 msgid "Input Devices"
 msgstr "Устройства ввода"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2560
+#: ../app/dialogs/preferences-dialog.c:2561
 msgid "Extended Input Devices"
 msgstr "Дополнительные устройства ввода"
 
-#: ../app/dialogs/preferences-dialog.c:2564
+#: ../app/dialogs/preferences-dialog.c:2565
 msgid "Configure E_xtended Input Devices..."
 msgstr "Настроить _дополнительные устройства ввода..."
 
-#: ../app/dialogs/preferences-dialog.c:2571
+#: ../app/dialogs/preferences-dialog.c:2572
 msgid "_Save input device settings on exit"
 msgstr "Сохранять параметры устройств ввода при выходе"
 
-#: ../app/dialogs/preferences-dialog.c:2575
+#: ../app/dialogs/preferences-dialog.c:2576
 msgid "Save Input Device Settings _Now"
 msgstr "Сохранить параметры устройств ввода _сейчас"
 
-#: ../app/dialogs/preferences-dialog.c:2582
+#: ../app/dialogs/preferences-dialog.c:2583
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Восстановить параметры устройств ввода по умолчанию"
 
-#: ../app/dialogs/preferences-dialog.c:2597
+#: ../app/dialogs/preferences-dialog.c:2598
 msgid "Additional Input Controllers"
 msgstr "Дополнительные способы управления"
 
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2601
 msgid "Input Controllers"
 msgstr "Способы управления"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2617
 msgid "Window Management"
 msgstr "Поведение окон"
 
-#: ../app/dialogs/preferences-dialog.c:2625
+#: ../app/dialogs/preferences-dialog.c:2626
 msgid "Window Manager Hints"
 msgstr "Управление внешним видом окон"
 
-#: ../app/dialogs/preferences-dialog.c:2631
+#: ../app/dialogs/preferences-dialog.c:2632
 msgid "Hint for the _toolbox:"
 msgstr "Тип окна для панели _инструментов:"
 
-#: ../app/dialogs/preferences-dialog.c:2635
+#: ../app/dialogs/preferences-dialog.c:2636
 msgid "Hint for other _docks:"
 msgstr "Тип окна для _других панелей:"
 
-#: ../app/dialogs/preferences-dialog.c:2640
+#: ../app/dialogs/preferences-dialog.c:2641
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr "Все панели сверху окна изображения"
 
-#: ../app/dialogs/preferences-dialog.c:2645
+#: ../app/dialogs/preferences-dialog.c:2646
 msgid "Focus"
 msgstr "Фокус"
 
-#: ../app/dialogs/preferences-dialog.c:2649
+#: ../app/dialogs/preferences-dialog.c:2650
 msgid "Activate the _focused image"
 msgstr "_Активировать изображение в фокусе"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2653
+#: ../app/dialogs/preferences-dialog.c:2654
 msgid "Window Positions"
 msgstr "Расположение окон"
 
-#: ../app/dialogs/preferences-dialog.c:2656
+#: ../app/dialogs/preferences-dialog.c:2657
 msgid "_Save window positions on exit"
 msgstr "_Сохранять расположение окон при выходе"
 
-#: ../app/dialogs/preferences-dialog.c:2660
+#: ../app/dialogs/preferences-dialog.c:2661
 msgid "Save Window Positions _Now"
 msgstr "Сохранить расположение окон с_ейчас"
 
-#: ../app/dialogs/preferences-dialog.c:2667
+#: ../app/dialogs/preferences-dialog.c:2668
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Восстановить исходную позицию окон"
 
-#: ../app/dialogs/preferences-dialog.c:2682
+#: ../app/dialogs/preferences-dialog.c:2683
 msgid "Folders"
 msgstr "Каталоги"
 
-#: ../app/dialogs/preferences-dialog.c:2702
+#: ../app/dialogs/preferences-dialog.c:2703
 msgid "Temporary folder:"
 msgstr "Временный каталог:"
 
-#: ../app/dialogs/preferences-dialog.c:2703
+#: ../app/dialogs/preferences-dialog.c:2704
 msgid "Select Folder for Temporary Files"
 msgstr "Выберите каталог для временных файлов"
 
-#: ../app/dialogs/preferences-dialog.c:2707
+#: ../app/dialogs/preferences-dialog.c:2708
 msgid "Swap folder:"
 msgstr "Каталог подкачки:"
 
-#: ../app/dialogs/preferences-dialog.c:2708
+#: ../app/dialogs/preferences-dialog.c:2709
 msgid "Select Swap Folder"
 msgstr "Выбрать каталог подкачки"
 
-#: ../app/dialogs/preferences-dialog.c:2743
+#: ../app/dialogs/preferences-dialog.c:2744
 msgid "Brush Folders"
 msgstr "Каталоги кистей"
 
-#: ../app/dialogs/preferences-dialog.c:2745
+#: ../app/dialogs/preferences-dialog.c:2746
 msgid "Select Brush Folders"
 msgstr "Выбрать каталоги кистей"
 
-#: ../app/dialogs/preferences-dialog.c:2747
+#: ../app/dialogs/preferences-dialog.c:2748
 msgid "Pattern Folders"
 msgstr "Каталоги текстур"
 
-#: ../app/dialogs/preferences-dialog.c:2749
+#: ../app/dialogs/preferences-dialog.c:2750
 msgid "Select Pattern Folders"
 msgstr "Выбрать каталоги текстур"
 
-#: ../app/dialogs/preferences-dialog.c:2751
+#: ../app/dialogs/preferences-dialog.c:2752
 msgid "Palette Folders"
 msgstr "Каталоги палитр"
 
-#: ../app/dialogs/preferences-dialog.c:2753
+#: ../app/dialogs/preferences-dialog.c:2754
 msgid "Select Palette Folders"
 msgstr "Выбрать каталоги палитр"
 
-#: ../app/dialogs/preferences-dialog.c:2755
+#: ../app/dialogs/preferences-dialog.c:2756
 msgid "Gradient Folders"
 msgstr "Каталоги градиентов"
 
-#: ../app/dialogs/preferences-dialog.c:2757
+#: ../app/dialogs/preferences-dialog.c:2758
 msgid "Select Gradient Folders"
 msgstr "Выбрать каталоги градиентов"
 
-#: ../app/dialogs/preferences-dialog.c:2759
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Font Folders"
 msgstr "Каталоги шрифтов"
 
-#: ../app/dialogs/preferences-dialog.c:2761
+#: ../app/dialogs/preferences-dialog.c:2762
 msgid "Select Font Folders"
 msgstr "Выбрать каталоги шрифтов"
 
-#: ../app/dialogs/preferences-dialog.c:2763
+#: ../app/dialogs/preferences-dialog.c:2764
 msgid "Plug-In Folders"
 msgstr "Каталоги расширений"
 
-#: ../app/dialogs/preferences-dialog.c:2765
+#: ../app/dialogs/preferences-dialog.c:2766
 msgid "Select Plug-In Folders"
 msgstr "Выбрать каталоги расширений"
 
-#: ../app/dialogs/preferences-dialog.c:2767
+#: ../app/dialogs/preferences-dialog.c:2768
 msgid "Scripts"
 msgstr "Сценарии"
 
-#: ../app/dialogs/preferences-dialog.c:2767
+#: ../app/dialogs/preferences-dialog.c:2768
 msgid "Script-Fu Folders"
 msgstr "Каталоги Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2769
+#: ../app/dialogs/preferences-dialog.c:2770
 msgid "Select Script-Fu Folders"
 msgstr "Выбрать каталоги Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2771
+#: ../app/dialogs/preferences-dialog.c:2772
 msgid "Module Folders"
 msgstr "Каталоги модулей"
 
-#: ../app/dialogs/preferences-dialog.c:2773
+#: ../app/dialogs/preferences-dialog.c:2774
 msgid "Select Module Folders"
 msgstr "Выбрать каталоги модулей"
 
-#: ../app/dialogs/preferences-dialog.c:2775
+#: ../app/dialogs/preferences-dialog.c:2776
 msgid "Interpreters"
 msgstr "Интерпретаторы"
 
-#: ../app/dialogs/preferences-dialog.c:2775
+#: ../app/dialogs/preferences-dialog.c:2776
 msgid "Interpreter Folders"
 msgstr "Каталоги интерпретаторов"
 
-#: ../app/dialogs/preferences-dialog.c:2777
+#: ../app/dialogs/preferences-dialog.c:2778
 msgid "Select Interpreter Folders"
 msgstr "Выбрать каталоги интерпретаторов"
 
-#: ../app/dialogs/preferences-dialog.c:2779
+#: ../app/dialogs/preferences-dialog.c:2780
 msgid "Environment Folders"
 msgstr "Каталоги окружения"
 
-#: ../app/dialogs/preferences-dialog.c:2781
+#: ../app/dialogs/preferences-dialog.c:2782
 msgid "Select Environment Folders"
 msgstr "Выбрать каталоги окружения"
 
-#: ../app/dialogs/preferences-dialog.c:2783
+#: ../app/dialogs/preferences-dialog.c:2784
 msgid "Themes"
 msgstr "Стили оформления"
 
-#: ../app/dialogs/preferences-dialog.c:2783
+#: ../app/dialogs/preferences-dialog.c:2784
 msgid "Theme Folders"
 msgstr "Каталоги стилей оформления"
 
-#: ../app/dialogs/preferences-dialog.c:2785
+#: ../app/dialogs/preferences-dialog.c:2786
 msgid "Select Theme Folders"
 msgstr "Выбрать каталоги стилей оформления"
 
@@ -9658,7 +9658,7 @@ msgstr "Размер холста"
 msgid "Layer Size"
 msgstr "Размер слоя"
 
-#: ../app/dialogs/resize-dialog.c:294
+#: ../app/dialogs/resize-dialog.c:295
 msgid "Resize _layers:"
 msgstr "Изменить размер _слоев:"
 
@@ -9666,15 +9666,15 @@ msgstr "Изменить размер _слоев:"
 msgid "Calibrate Monitor Resolution"
 msgstr "Откалибровать разрешение монитора"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:127
+#: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
 msgstr "Измерьте линейки и введите значение их длины:"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:152
+#: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
 msgstr "Горизонтальная:"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:157
+#: ../app/dialogs/resolution-calibrate-dialog.c:158
 msgid "_Vertical:"
 msgstr "Вертикальная:"
 
@@ -9683,15 +9683,15 @@ msgstr "Вертикальная:"
 msgid "Image Size"
 msgstr "Размер изображения"
 
-#: ../app/dialogs/scale-dialog.c:175
+#: ../app/dialogs/scale-dialog.c:176
 msgid "Quality"
 msgstr "Качество"
 
-#: ../app/dialogs/scale-dialog.c:187
+#: ../app/dialogs/scale-dialog.c:188
 msgid "I_nterpolation:"
 msgstr "И_нтерполяция:"
 
-#: ../app/dialogs/scale-dialog.c:206
+#: ../app/dialogs/scale-dialog.c:207
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and layer masks only."
@@ -9703,11 +9703,11 @@ msgstr ""
 msgid "Choose Stroke Style"
 msgstr "Стиль обведения области"
 
-#: ../app/dialogs/stroke-dialog.c:221
+#: ../app/dialogs/stroke-dialog.c:222
 msgid "Paint tool:"
 msgstr "Инструмент:"
 
-#: ../app/dialogs/stroke-dialog.c:235
+#: ../app/dialogs/stroke-dialog.c:236
 msgid "_Emulate brush dynamics"
 msgstr "_Имитировать динамику кисти"
 
@@ -9805,7 +9805,7 @@ msgstr "Объединить _импортированные контуры"
 msgid "_Scale imported paths to fit image"
 msgstr "_Масштабировать контуры до размера изображения"
 
-#: ../app/dialogs/vectors-options-dialog.c:121
+#: ../app/dialogs/vectors-options-dialog.c:122
 msgid "Path name:"
 msgstr "Имя контура:"
 
@@ -10057,29 +10057,29 @@ msgstr "Пропорции:"
 msgid "Zoom:"
 msgstr "Масштаб:"
 
-#: ../app/display/gimpdisplayshell-title.c:284
+#: ../app/display/gimpdisplayshell-title.c:286
 msgid "(modified)"
 msgstr "(измененен)"
 
-#: ../app/display/gimpdisplayshell-title.c:289
+#: ../app/display/gimpdisplayshell-title.c:291
 msgid "(clean)"
 msgstr "(неизменен)"
 
-#: ../app/display/gimpdisplayshell-title.c:337
-#: ../app/display/gimpdisplayshell-title.c:350
+#: ../app/display/gimpdisplayshell-title.c:339
+#: ../app/display/gimpdisplayshell-title.c:352
 #: ../app/widgets/gimpactiongroup.c:888
 msgid "(none)"
 msgstr "(Нет)"
 
-#: ../app/display/gimpdisplayshell-title.c:483
+#: ../app/display/gimpdisplayshell-title.c:485
 msgid " (exported)"
 msgstr " (экспортировано)"
 
-#: ../app/display/gimpdisplayshell-title.c:485
+#: ../app/display/gimpdisplayshell-title.c:487
 msgid " (overwritten)"
 msgstr " (перезаписано)"
 
-#: ../app/display/gimpdisplayshell-title.c:491
+#: ../app/display/gimpdisplayshell-title.c:493
 msgid " (imported)"
 msgstr " (импортировано)"
 
@@ -10150,7 +10150,7 @@ msgid "not a GIMP Levels file"
 msgstr "не файл цветовых уровней GIMP"
 
 #. initialize the document history
-#: ../app/gui/gui.c:425
+#: ../app/gui/gui.c:426
 msgid "Documents"
 msgstr "Документы"
 
@@ -11862,7 +11862,7 @@ msgstr "_Предустановки:"
 msgid "Settings saved to '%s'"
 msgstr "Настройки сохранены в '%s'"
 
-#: ../app/tools/gimpimagemaptool.c:315
+#: ../app/tools/gimpimagemaptool.c:316
 msgid "_Preview"
 msgstr "Пр_едварительный просмотр"
 
@@ -11876,7 +11876,7 @@ msgstr "Коррекция"
 msgid "Size:"
 msgstr "Размер:"
 
-#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1041
+#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1042
 #: ../app/tools/gimppaintoptions-gui.c:168
 #: ../app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
@@ -12087,8 +12087,8 @@ msgstr "Щелкните и потащите, чтобы добавить нов
 msgid "Click-Drag to move all points"
 msgstr "Щелкните и потащите, чтобы переместить все точки"
 
-#: ../app/tools/gimpmeasuretool.c:881 ../app/tools/gimpmeasuretool.c:1024
-#: ../app/tools/gimpmeasuretool.c:1080 ../app/tools/gimpmeasuretool.c:1108
+#: ../app/tools/gimpmeasuretool.c:881 ../app/tools/gimpmeasuretool.c:1025
+#: ../app/tools/gimpmeasuretool.c:1081 ../app/tools/gimpmeasuretool.c:1109
 #: ../app/tools/gimppainttool.c:580
 msgid "pixels"
 msgstr "точки растра"
@@ -12098,7 +12098,7 @@ msgstr "точки растра"
 msgid "Measure Distances and Angles"
 msgstr "Измерение расстояний и углов"
 
-#: ../app/tools/gimpmeasuretool.c:1013
+#: ../app/tools/gimpmeasuretool.c:1014
 msgid "Distance:"
 msgstr "Расстояние:"
 
