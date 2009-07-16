@@ -90,12 +90,12 @@ gimp_operation_levels_map (gdouble value,
   else
     value = (value - low_input);
 
+  /* clamp to new black and white points */
+  value = CLAMP (value, 0.0, 1.0);
+
   if (inv_gamma != 1.0)
     {
-      if (value >= 0.0)
-        value =  pow ( value, inv_gamma);
-      else
-        value = -pow (-value, inv_gamma);
+      value =  pow ( value, inv_gamma);
     }
 
   /*  determine the output intensity  */

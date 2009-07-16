@@ -91,12 +91,12 @@ levels_lut_func (Levels *levels,
           inten = (gdouble) (255.0 * inten - levels->low_input[j]);
         }
 
+      /* clamp to new black and white points */
+      inten = CLAMP (inten, 0.0, 1.0);
+
       if (levels->gamma[j] != 0.0)
         {
-          if (inten >= 0.0)
-            inten =  pow ( inten, (1.0 / levels->gamma[j]));
-          else
-            inten = -pow (-inten, (1.0 / levels->gamma[j]));
+          inten =  pow ( inten, (1.0 / levels->gamma[j]));
         }
 
       /*  determine the output intensity  */
