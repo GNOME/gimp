@@ -12,6 +12,10 @@ Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
 
 * Bugs fixed:
 
+ 567466 – PNG comment not found if more than 1 tEXt chunks
+ 585665 – Exporting to PSD with a blank text layer creates a corrupt file
+ 586316 – Levels tool does not adjust output levels correctly if input
+          levels are changed
  569661 – Import from PDF throws errors when entering resolution in
           pixels per millimetre
  567262 – Black pixels appear in "Spread" filter preview
