@@ -1031,7 +1031,7 @@ load_image (const gchar  *filename,
     {
       gchar *comment = NULL;
 
-      for (i = 0; i < num_texts && !comment; i++)
+      for (i = 0; i < num_texts && !comment; i++, text++)
         {
           if (text->key == NULL || strcmp (text->key, "Comment"))
             continue;
