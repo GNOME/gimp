@@ -92,6 +92,8 @@ static gboolean gimp_tag_popup_list_event              (GtkWidget          *widg
 static gboolean gimp_tag_popup_is_in_tag               (PopupTagData       *tag_data,
                                                         gint                x,
                                                         gint                y);
+static void     gimp_tag_popup_queue_draw_tag          (GimpTagPopup       *widget,
+                                                        PopupTagData       *tag_data);
 static void     gimp_tag_popup_toggle_tag              (GimpTagPopup       *popup,
                                                         PopupTagData       *tag_data);
 static void     gimp_tag_popup_check_can_toggle        (GimpTagged         *tagged,
@@ -897,8 +899,13 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
 
       if (prelight != popup->prelight)
         {
+          if (popup->prelight)
+            gimp_tag_popup_queue_draw_tag (popup, popup->prelight);
+
           popup->prelight = prelight;
-          gtk_widget_queue_draw (widget);
+
+          if (popup->prelight)
+            gimp_tag_popup_queue_draw_tag (popup, popup->prelight);
         }
     }
   else if (event->type == GDK_BUTTON_RELEASE &&
@@ -944,6 +951,17 @@ gimp_tag_popup_is_in_tag (PopupTagData *tag_data,
     }
 
   return FALSE;
+}
+
+static void
+gimp_tag_popup_queue_draw_tag (GimpTagPopup *popup,
+                               PopupTagData *tag_data)
+{
+  gtk_widget_queue_draw_area (popup->tag_area,
+                              tag_data->bounds.x,
+                              tag_data->bounds.y - popup->scroll_y,
+                              tag_data->bounds.width,
+                              tag_data->bounds.height);
 }
 
 static void
