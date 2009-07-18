@@ -876,6 +876,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
   else if (event->type == GDK_MOTION_NOTIFY)
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
+      PopupTagData   *prelight     = NULL;
       gint            x;
       gint            y;
       gint            i;
@@ -889,14 +890,15 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
 
           if (gimp_tag_popup_is_in_tag (tag_data, x, y))
             {
-              if (popup->prelight != tag_data)
-                {
-                  popup->prelight = tag_data;
-                  gtk_widget_queue_draw (widget);
-                }
-
+              prelight = tag_data;
               break;
             }
+        }
+
+      if (prelight != popup->prelight)
+        {
+          popup->prelight = prelight;
+          gtk_widget_queue_draw (widget);
         }
     }
   else if (event->type == GDK_BUTTON_RELEASE &&
