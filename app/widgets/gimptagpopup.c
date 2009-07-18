@@ -409,8 +409,7 @@ gimp_tag_popup_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_OWNER:
-      popup->combo_entry = g_value_get_object (value);
-      g_object_ref (popup->combo_entry);
+      popup->combo_entry = g_value_dup_object (value);
       break;
 
     default:
