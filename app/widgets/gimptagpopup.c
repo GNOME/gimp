@@ -179,6 +179,20 @@ gimp_tag_popup_init (GimpTagPopup *popup)
                          GDK_POINTER_MOTION_MASK);
   gtk_container_add (GTK_CONTAINER (popup->alignment), popup->tag_area);
   gtk_widget_show (popup->tag_area);
+
+  g_signal_connect (popup->alignment, "expose-event",
+                    G_CALLBACK (gimp_tag_popup_border_expose),
+                    popup);
+  g_signal_connect (popup, "event",
+                    G_CALLBACK (gimp_tag_popup_border_event),
+                    NULL);
+  g_signal_connect (popup->tag_area, "expose-event",
+                    G_CALLBACK (gimp_tag_popup_list_expose),
+                    popup);
+  g_signal_connect (popup->tag_area, "event",
+                    G_CALLBACK (gimp_tag_popup_list_event),
+                    popup);
+
 }
 
 static GObject *
@@ -349,19 +363,6 @@ gimp_tag_popup_constructor (GType                  type,
 
   gtk_window_move (GTK_WINDOW (popup), popup_rect.x, popup_rect.y);
   gtk_window_resize (GTK_WINDOW (popup), popup_rect.width, popup_rect.height);
-
-  g_signal_connect (popup->alignment, "expose-event",
-                    G_CALLBACK (gimp_tag_popup_border_expose),
-                    popup);
-  g_signal_connect (popup, "event",
-                    G_CALLBACK (gimp_tag_popup_border_event),
-                    NULL);
-  g_signal_connect (popup->tag_area, "expose-event",
-                    G_CALLBACK (gimp_tag_popup_list_expose),
-                    popup);
-  g_signal_connect (popup->tag_area, "event",
-                    G_CALLBACK (gimp_tag_popup_list_event),
-                    popup);
 
   return object;
 }
