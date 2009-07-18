@@ -192,7 +192,6 @@ gimp_tag_popup_init (GimpTagPopup *popup)
   g_signal_connect (popup->tag_area, "event",
                     G_CALLBACK (gimp_tag_popup_list_event),
                     popup);
-
 }
 
 static GObject *
@@ -676,15 +675,13 @@ gimp_tag_popup_border_event (GtkWidget *widget,
   else if (event->type == GDK_MOTION_NOTIFY)
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
+      gint            x, y;
 
-      if (motion_event->window == gtk_widget_get_window (widget))
-        {
-          gint x = motion_event->x + widget->allocation.x;
-          gint y = motion_event->y + widget->allocation.y;
+      gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, NULL);
 
-          gimp_tag_popup_handle_scrolling (popup, x, y,
-                                           popup->scroll_timeout_id == 0, TRUE);
-        }
+      gimp_tag_popup_handle_scrolling (popup, x, y,
+                                       motion_event->window == widget->window,
+                                       TRUE);
     }
   else if (event->type == GDK_BUTTON_RELEASE)
     {
