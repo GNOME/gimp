@@ -30,18 +30,25 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimptemplate.h"
 
 #include "gimpimagecommenteditor.h"
 
+#include "gimp-intl.h"
 
 #define GIMP_IMAGE_COMMENT_PARASITE "gimp-comment"
 
 
-static void  gimp_image_comment_editor_update         (GimpImageParasiteView  *view);
+static void  gimp_image_comment_editor_update              (GimpImageParasiteView  *view);
 
-static void  gimp_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
-                                                       GimpImageCommentEditor *editor);
+static void  gimp_image_comment_editor_buffer_changed      (GtkTextBuffer          *buffer,
+                                                            GimpImageCommentEditor *editor);
+static void  gimp_image_comment_editor_use_default_comment (GtkWidget              *button,
+                                                            GimpImageCommentEditor *editor);
 
 
 G_DEFINE_TYPE (GimpImageCommentEditor,
@@ -60,20 +67,30 @@ gimp_image_comment_editor_class_init (GimpImageCommentEditorClass *klass)
 static void
 gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
 {
+  GtkWidget *vbox;
   GtkWidget *scrolled_window;
   GtkWidget *text_view;
+  GtkWidget *button;
 
+  /* Init */
   editor->recoursing = FALSE;
 
+  /* Vbox */
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (editor), vbox);
+  gtk_widget_show (vbox);
+
+  /* Scrolled winow */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
-  gtk_container_add (GTK_CONTAINER (editor), scrolled_window);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
+  /* Text view */
   text_view = gtk_text_view_new ();
 
   gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), TRUE);
@@ -86,6 +103,21 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
+  /* Button */
+  button = gtk_button_new_with_label (_("Use default comment"));
+  gimp_help_set_help_data (GTK_WIDGET (button),
+                           _("Replace the current image comment with the "
+                             "default comment set in "
+                             "Edit→Preferences→Default Image."),
+                           NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_image_comment_editor_use_default_comment),
+                    editor);
+
+  /* Buffer */
   editor->buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
 
   g_signal_connect (editor->buffer, "changed",
@@ -191,4 +223,17 @@ gimp_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
   editor->recoursing = FALSE;
 
   g_free (text);
+}
+
+static void
+gimp_image_comment_editor_use_default_comment (GtkWidget              *button,
+                                               GimpImageCommentEditor *editor)
+{
+  GimpImage   *image   = gimp_image_parasite_view_get_image (GIMP_IMAGE_PARASITE_VIEW (editor));
+  const gchar *comment = image ? image->gimp->config->default_image->comment : NULL;
+
+  if (comment)
+    gtk_text_buffer_set_text (editor->buffer, comment, -1);
+  else
+    gtk_text_buffer_set_text (editor->buffer, "", -1);
 }
