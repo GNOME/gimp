@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tags\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-16 19:05+0200\n"
-"PO-Revision-Date: 2009-07-16 19:11+0200\n"
+"POT-Creation-Date: 2009-07-20 10:47+0200\n"
+"PO-Revision-Date: 2009-07-20 10:48+0200\n"
 "Last-Translator: Martin Nordholts <martinn@src.gnome.org>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -15,9 +15,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
-msgid "circle"
-msgstr "cirkel"
-
-#: ../data/tags/gimp-tags-default.xml.in.h:2
 msgid "fuzzy"
 msgstr "luddig"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:2
+msgid "round"
+msgstr "rund"
+
+#~ msgid "circle"
+#~ msgstr "cirkel"
