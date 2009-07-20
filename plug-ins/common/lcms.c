@@ -836,7 +836,11 @@ lcms_image_set_profile (gint32       image,
                                     g_mapped_file_get_length (file),
                                     g_mapped_file_get_contents (file));
 
+#if GLIB_CHECK_VERSION(2, 21, 3)
+      g_mapped_file_unref (file);
+#else
       g_mapped_file_free (file);
+#endif
 
       gimp_image_parasite_attach (image, parasite);
       gimp_parasite_free (parasite);

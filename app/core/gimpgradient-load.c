@@ -519,8 +519,12 @@ svg_parse_gradient_stop_style (SvgStop     *stop,
 
       if (end > sep && sep > style)
         {
-          gchar *name  = g_strndup (style, sep - style);
-          gchar *value = g_strndup (++sep, end - sep - (*end == ';' ? 1 : 0));
+          gchar *name;
+          gchar *value;
+
+          name = g_strndup (style, sep - style);
+          sep++;
+          value = g_strndup (sep, end - sep - (*end == ';' ? 1 : 0));
 
           svg_parse_gradient_stop_style_prop (stop, name, value);
 

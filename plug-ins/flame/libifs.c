@@ -1260,43 +1260,6 @@ estimate_bounding_box (control_point *cp,
     }
 }
 
-/* use hill climberer to find smooth ordering of control points
-   this is untested */
-
-void
-sort_control_points (control_point *cps,
-                     int            ncps,
-                     double       (*metric)())
-{
-  int    niter = ncps * 1000;
-  int    i, n, m;
-  double same, swap;
-  for (i = 0; i < niter; i++)
-    {
-      /* consider switching points with indexes n and m */
-      n = g_random_int_range (0, ncps);
-      m = g_random_int_range (0, ncps);
-
-      same = (metric(cps + n, cps + (n - 1) % ncps) +
-              metric(cps + n, cps + (n + 1) % ncps) +
-              metric(cps + m, cps + (m - 1) % ncps) +
-              metric(cps + m, cps + (m + 1) % ncps));
-
-      swap = (metric(cps + n, cps + (m - 1) % ncps) +
-              metric(cps + n, cps + (m + 1) % ncps) +
-              metric(cps + m, cps + (n - 1) % ncps) +
-              metric(cps + m, cps + (n + 1) % ncps));
-
-      if (swap < same)
-        {
-          control_point t;
-          t = cps[n];
-          cps[n] = cps[m];
-          cps[m] = t;
-        }
-    }
-}
-
 /* this has serious flaws in it */
 
 double

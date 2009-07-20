@@ -339,7 +339,11 @@ load_wmf_size (const gchar *filename,
     success = FALSE;
 
   wmf_mem_close (API);
+#if GLIB_CHECK_VERSION(2, 21, 3)
+  g_mapped_file_unref (file);
+#else
   g_mapped_file_free (file);
+#endif
 
   if (width < 1 || height < 1)
     {
