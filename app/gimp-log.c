@@ -43,7 +43,8 @@ gimp_log_init (void)
         { "save-dialog",    GIMP_LOG_SAVE_DIALOG    },
         { "image-scale",    GIMP_LOG_IMAGE_SCALE    },
         { "shadow-tiles",   GIMP_LOG_SHADOW_TILES   },
-        { "scale",          GIMP_LOG_SCALE          }
+        { "scale",          GIMP_LOG_SCALE          },
+        { "wm",             GIMP_LOG_WM             }
       };
 
       /*  g_parse_debug_string() has special treatment of the string 'help',

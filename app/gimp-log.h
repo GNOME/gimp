@@ -30,7 +30,8 @@ typedef enum
   GIMP_LOG_SAVE_DIALOG    = 1 << 6,
   GIMP_LOG_IMAGE_SCALE    = 1 << 7,
   GIMP_LOG_SHADOW_TILES   = 1 << 8,
-  GIMP_LOG_SCALE          = 1 << 9
+  GIMP_LOG_SCALE          = 1 << 9,
+  GIMP_LOG_WM             = 1 << 10
 } GimpLogFlags;
 
 
@@ -81,6 +82,7 @@ void   gimp_logv     (const gchar *function,
 #define IMAGE_SCALE    GIMP_LOG_IMAGE_SCALE
 #define SHADOW_TILES   GIMP_LOG_SHADOW_TILES
 #define SCALE          GIMP_LOG_SCALE
+#define WM             GIMP_LOG_WM
 
 #if 0 /* last resort */
 #  define GIMP_LOG /* nothing => no varargs, no log */
