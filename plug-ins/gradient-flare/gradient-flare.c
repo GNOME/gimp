@@ -4878,9 +4878,7 @@ gradient_get_values_external (const gchar *gradient_name,
   ci = gradient_cache_lookup (gradient_name, &found);
   if (!found)
     {
-#ifdef __GNUC__
-#warning FIXME: "reverse" hardcoded to FALSE.
-#endif
+      /* FIXME: "reverse" hardcoded to FALSE. */
       gradient_get_values_real_external (gradient_name, ci->values,
                                          GRADIENT_RESOLUTION, FALSE);
     }

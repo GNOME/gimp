@@ -271,9 +271,7 @@ drawable_to_cmap (control_point *cp)
       gint     num;
       gdouble *g;
 
-#ifdef __GNUC__
-#warning FIXME: "reverse" hardcoded to FALSE.
-#endif
+      /* FIXME: "reverse" hardcoded to FALSE. */
       gimp_gradient_get_uniform_samples (name, 256, FALSE,
                                          &num, &g);
 

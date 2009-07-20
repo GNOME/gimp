@@ -32,9 +32,7 @@
 #include "gimpparamspecs-duplicate.h"
 
 
-#ifdef __GNUC__
-#warning FIXME: this code is not yet general as it should be (gegl tool only atm)
-#endif
+/* FIXME: this code is not yet general as it should be (gegl tool only atm) */
 
 GParamSpec *
 gimp_param_spec_duplicate (GParamSpec *pspec)

@@ -66,9 +66,7 @@
 
 #include <glib/gstdio.h>
 
-#ifdef __GNUC__
-#warning GIMP_DISABLE_DEPRECATED
-#endif
+/* FIXME: #undef GTK_DISABLE_DEPRECATED */
 #undef GIMP_DISABLE_DEPRECATED
 
 #include <libgimp/gimp.h>

@@ -37,12 +37,6 @@
 #include "gimpviewable.h"
 
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_get_pad() or something similar needs to be public
-#endif
-gpointer   gegl_node_get_pad (GeglNode    *self,
-                              const gchar *pad_name);
-
 enum
 {
   FLUSH,

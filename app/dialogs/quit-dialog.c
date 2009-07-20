@@ -91,9 +91,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-#ifdef __GNUC__
-#warning FIXME: need container of dirty images
-#endif
+  /* FIXME: need container of dirty images */
 
   images  = gimp_displays_get_dirty_images (gimp);
   context = gimp_context_new (gimp, "close-all-dialog",

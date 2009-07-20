@@ -1461,9 +1461,7 @@ gimp_dialog_factories_clear_foreach (gconstpointer      key,
       if (info->widget)
         continue;
 
-#ifdef __GNUC__
-#warning FIXME: implement session info deletion
-#endif
+      /* FIXME: implement session info deletion */
     }
 }
 

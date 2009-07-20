@@ -19,9 +19,7 @@
 
 #include <string.h>
 
-#ifdef __GNUC__
-#warning FIXME: #undef GTK_DISABLE_DEPRECATED
-#endif
+/* FIXME: #undef GTK_DISABLE_DEPRECATED */
 #undef GTK_DISABLE_DEPRECATED
 
 #include <gegl.h>
