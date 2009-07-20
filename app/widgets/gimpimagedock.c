@@ -35,6 +35,8 @@
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 
+#include "gimp-log.h"
+
 
 static GObject * gimp_image_dock_constructor  (GType                  type,
                                                guint                  n_params,
@@ -159,6 +161,11 @@ gimp_image_dock_display_changed (GimpContext   *context,
         g_object_get (display, "shell", &parent, NULL);
 
       gtk_window_set_transient_for (GTK_WINDOW (dock), parent);
+      GIMP_LOG (WM, "Setting dock '%s' [%p] transient for '%s' [%p]",
+                gtk_window_get_title (GTK_WINDOW (dock)),
+                dock,
+                gtk_window_get_title (parent),
+                parent);
 
       if (parent)
         g_object_unref (parent);
@@ -193,5 +200,8 @@ gimp_image_dock_notify_transient (GimpConfig *config,
   else
     {
       gtk_window_set_transient_for (GTK_WINDOW (dock), NULL);
+      GIMP_LOG (WM, "Setting dock '%s' [%p] transient for NULL",
+                gtk_window_get_title (GTK_WINDOW (dock)),
+                dock);
     }
 }

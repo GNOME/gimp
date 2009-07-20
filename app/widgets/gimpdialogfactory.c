@@ -1488,6 +1488,10 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
               visibility = GIMP_DIALOG_VISIBILITY_VISIBLE;
 
               gtk_widget_hide (widget);
+
+              GIMP_LOG (WM, "Hiding '%s' [%p]",
+                        gtk_window_get_title (GTK_WINDOW (widget)),
+                        widget);
             }
           else
             {
@@ -1523,6 +1527,10 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
           if (! GTK_WIDGET_VISIBLE (widget) &&
               visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)
             {
+              GIMP_LOG (WM, "Showing '%s' [%p]",
+                        gtk_window_get_title (GTK_WINDOW (widget)),
+                        widget);
+
               /* Don't use gtk_window_present() here, we don't want the
                * keyboard focus to move.
                */
