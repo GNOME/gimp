@@ -1133,7 +1133,11 @@ lcms_load_profile (const gchar *filename,
                  gimp_filename_to_utf8 (filename));
     }
 
+#if GLIB_CHECK_VERSION(2, 21, 3)
+  g_mapped_file_unref (file);
+#else
   g_mapped_file_free (file);
+#endif
 
   return profile;
 }
