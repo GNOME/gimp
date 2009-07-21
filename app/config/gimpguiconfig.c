@@ -278,7 +278,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MENU_MNEMONICS,
-                                    "menu-mnemonics", MENU_MNEMONICS_BLURB,
+                                    "menu-mnemonics", NULL,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_IGNORE);
