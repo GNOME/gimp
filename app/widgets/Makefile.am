@@ -295,10 +295,10 @@ libappwidgets_a_sources = \
 	gimptoolbox-indicator-area.h	\
 	gimptooldialog.c		\
 	gimptooldialog.h		\
+	gimptooleditor.c		\
+	gimptooleditor.h		\
 	gimptooloptionseditor.c		\
 	gimptooloptionseditor.h		\
-	gimptoolview.c			\
-	gimptoolview.h			\
 	gimpuimanager.c			\
 	gimpuimanager.h			\
 	gimpundoeditor.c		\

@@ -33,7 +33,7 @@
 
 #include "gimpcontainerview.h"
 #include "gimpviewrenderer.h"
-#include "gimptoolview.h"
+#include "gimptooleditor.h"
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
