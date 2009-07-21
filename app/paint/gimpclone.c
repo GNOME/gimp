@@ -238,11 +238,11 @@ gimp_clone_motion (GimpSourceCore   *source_core,
         }
     }
 
-  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options, coords, 
-                                                     paint_core->pixel_dist);
+  opacity *= 1; /*gimp_paint_options_get_dynamic_opacity (paint_options, coords,
+                                                     paint_core->pixel_dist);*/
 
-  hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords,
-                                                      paint_core->pixel_dist);
+  hardness = 1; /*gimp_paint_options_get_dynamic_hardness (paint_options, coords,
+                                                      paint_core->pixel_dist);*/
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 coords,

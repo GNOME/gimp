@@ -172,14 +172,14 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    "jitter-amount", NULL,
                                    0.0, 50.0, DEFAULT_JITTER_AMOUNT,
                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ASPECT_RATIO,
+/*(object_class, PROP_RANDOM_ASPECT_RATIO,
                                     "random-aspect-ratio", NULL,
                                     DEFAULT_RANDOM_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_ASPECT_RATIO,
                                     "fading-aspect-ratio", NULL,
                                     DEFAULT_FADING_ASPECT_RATIO,
-                                    GIMP_PARAM_STATIC_STRINGS);
+                                    GIMP_PARAM_STATIC_STRINGS);*/
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
                                     "use-gradient", NULL,
                                     DEFAULT_USE_GRADIENT,
@@ -498,7 +498,7 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
           }
           break;
         }
-		  
+
       /*  factor in the fade out value  */
       if (fade_out > 0.0)
         {
@@ -510,7 +510,7 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
           return z;    /*  ln (1/255)  */
 
         }
-  
+
       return GIMP_OPACITY_TRANSPARENT;
     }
 
@@ -565,9 +565,10 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 
       return TRUE;
     }
-*/
 
-  else if (gradient_options->use_gradient)
+
+  else*/
+  if (gradient_options->use_gradient)
     {
       gdouble gradient_length = 0.0;
       gdouble unit_factor;
@@ -631,11 +632,11 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
   if (paint_options->hard)
     return GIMP_BRUSH_HARD;
 
-  if (paint_options->pressure_options->hardness ||
+/*  if (paint_options->pressure_options->hardness ||
       paint_options->velocity_options->hardness ||
       paint_options->random_options->hardness)
-    return GIMP_BRUSH_PRESSURE;
-  
+    return GIMP_BRUSH_PRESSURE;*/
+
   return GIMP_BRUSH_SOFT;
 }
 

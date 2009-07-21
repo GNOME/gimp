@@ -271,8 +271,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                      area->x, area->y, area->width, area->height, FALSE);
 
   /* Enable dynamic rate */
-  dynamic_rate = gimp_paint_options_get_dynamic_rate (paint_options, coords,
-                                                      paint_core->pixel_dist);
+  dynamic_rate = 1;/*gimp_paint_options_get_dynamic_rate (paint_options, coords,
+                                                      paint_core->pixel_dist);*/
   rate = (options->rate / 100.0) * dynamic_rate;
 
   /* The tempPR will be the built up buffer (for smudge) */
@@ -312,11 +312,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   else
     copy_region (&tempPR, &destPR);
 
-  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options, coords,
-                                                     paint_core->pixel_dist);
+  opacity *= 1;/*gimp_paint_options_get_dynamic_opacity (paint_options, coords,
+                                                     paint_core->pixel_dist);*/
 
-  hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords,
-                                                      paint_core->pixel_dist);
+  hardness = 1;/*gimp_paint_options_get_dynamic_hardness (paint_options, coords,
+                                                      paint_core->pixel_dist);*/
 
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                   coords,

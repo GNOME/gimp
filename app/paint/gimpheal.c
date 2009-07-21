@@ -439,8 +439,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   TempBuf       *mask_buf;
   gdouble        hardness;
 
-  hardness = gimp_paint_options_get_dynamic_hardness (paint_options, coords,
-                                                      paint_core->pixel_dist);
+  hardness = 1;/*gimp_paint_options_get_dynamic_hardness (paint_options, coords,
+                                                      paint_core->pixel_dist);*/
 
   mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
                                              coords,
@@ -548,8 +548,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   temp_buf_free (temp);
 
-  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options, coords,
-                                                     paint_core->pixel_dist);
+  opacity *= 1;/*gimp_paint_options_get_dynamic_opacity (paint_options, coords,
+                                                     paint_core->pixel_dist);*/
 
   /* replace the canvas with our healed data */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,

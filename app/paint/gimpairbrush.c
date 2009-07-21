@@ -145,9 +145,9 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           airbrush->drawable      = drawable;
           airbrush->paint_options = paint_options;
 
-          dynamic_rate = gimp_paint_options_get_dynamic_rate (paint_options,
-                                                              coords,
-                                                              paint_core->pixel_dist);
+          dynamic_rate = 1;// gimp_paint_options_get_dynamic_rate (paint_options,
+                                       //                       coords,
+                                       //                        paint_core->pixel_dist);
 
           timeout = 10000 / (options->rate * dynamic_rate);
 
@@ -186,22 +186,22 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 
   opacity = options->pressure / 100.0;
 
-  saved_pressure = paint_options->pressure_options->hardness;
-  saved_velocity = paint_options->velocity_options->hardness;
+  saved_pressure = FALSE;//paint_options->pressure_options->hardness;
+  saved_velocity = FALSE;//paint_options->velocity_options->hardness;
 
   if (saved_pressure)
-    opacity *= GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+    opacity *=  coords->pressure;
 
   if (saved_velocity)
-    opacity *= MAX (0.0, 1 - GIMP_PAINT_VELOCITY_SCALE * coords->velocity);
+    opacity *= MAX (0.0, 1 -  coords->velocity);
 
-  paint_options->pressure_options->hardness = FALSE;
-  paint_options->velocity_options->hardness = FALSE;
+  //paint_options->pressure_options->hardness = FALSE;
+  //paint_options->velocity_options->hardness = FALSE;
 
   _gimp_paintbrush_motion (paint_core, drawable, paint_options, coords, opacity);
 
-  paint_options->pressure_options->hardness = saved_pressure;
-  paint_options->velocity_options->hardness = saved_velocity;
+  //paint_options->pressure_options->hardness = saved_pressure;
+  //paint_options->velocity_options->hardness = saved_velocity;
 }
 
 static gboolean

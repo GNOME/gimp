@@ -367,22 +367,22 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
   if (! core->main_brush)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("No brushes available for use with this tool."));
+                           _("No brushes available for use with this tool."));
       return FALSE;
     }
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-      core->scale = gimp_paint_options_get_dynamic_size (paint_options, coords,
+      core->scale = paint_options->brush_scale;/* gimp_paint_options_get_dynamic_size (paint_options, coords,
                                                          TRUE,
-                                                         paint_core->pixel_dist);
+                                                         paint_core->pixel_dist);*/
 
-      core->angle = gimp_paint_options_get_dynamic_angle (paint_options, coords,
-                                                          paint_core->pixel_dist);
+      core->angle = paint_options->brush_angle;/* gimp_paint_options_get_dynamic_angle (paint_options, coords,
+                                                          paint_core->pixel_dist);*/
 
-      core->aspect_ratio =
-        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords, 
-                                                     paint_core->pixel_dist);
+      core->aspect_ratio = paint_options->brush_aspect_ratio;
+/*        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords,
+                                                     paint_core->pixel_dist);*/
     }
 
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
@@ -724,16 +724,16 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-      core->scale = gimp_paint_options_get_dynamic_size (paint_options, coords,
-                                                         TRUE, 
-                                                         paint_core->pixel_dist);
+      core->scale = paint_options->brush_scale; /*gimp_paint_options_get_dynamic_size (paint_options, coords,
+                                                         TRUE,
+                                                         paint_core->pixel_dist);*/
 
-      core->angle = gimp_paint_options_get_dynamic_angle (paint_options, coords,
-                                                          paint_core->pixel_dist);
+      core->angle = paint_options->brush_angle; /* gimp_paint_options_get_dynamic_angle (paint_options, coords,
+                                                          paint_core->pixel_dist);*/
 
-      core->aspect_ratio =
-        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords, 
-                                                     paint_core->pixel_dist);
+      core->aspect_ratio = paint_options->brush_aspect_ratio;/*
+        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords,
+                                                     paint_core->pixel_dist);*/
     }
 
   core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);
