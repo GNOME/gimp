@@ -33,7 +33,6 @@ menudata_DATA = \
 	text-editor-toolbar.xml		\
 	text-tool-menu.xml		\
 	tool-options-menu.xml		\
-	tools-menu.xml			\
 	undo-menu.xml			\
 	vectors-menu.xml
 

@@ -268,13 +268,6 @@ menus_init (Gimp              *gimp,
                                       "images-menu.xml", NULL,
                                       NULL);
 
-  gimp_menu_factory_manager_register (global_menu_factory, "<Tools>",
-                                      "tools",
-                                      NULL,
-                                      "/tools-popup",
-                                      "tools-menu.xml", NULL,
-                                      NULL);
-
   gimp_menu_factory_manager_register (global_menu_factory, "<BrushEditor>",
                                       "brush-editor",
                                       NULL,

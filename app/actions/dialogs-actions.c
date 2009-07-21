@@ -184,12 +184,6 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-template-list|gimp-template-grid",
     GIMP_HELP_TEMPLATE_DIALOG },
 
-  { "dialogs-tools", GIMP_STOCK_TOOLS,
-    NC_("dialogs-action", "T_ools"), NULL,
-    NC_("dialogs-action", "Open the tools dialog"),
-    "gimp-tool-list|gimp-tool-grid",
-    GIMP_HELP_TOOLS_DIALOG },
-
   { "dialogs-error-console", GIMP_STOCK_WARNING,
     NC_("dialogs-action", "Error Co_nsole"), NULL,
     NC_("dialogs-action", "Open the error console"),

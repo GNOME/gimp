@@ -61,7 +61,6 @@
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptooloptionseditor.h"
-#include "widgets/gimptoolview.h"
 #include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorstreeview.h"
 
@@ -386,18 +385,6 @@ dialogs_font_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_tool_list_view_new (GimpDialogFactory *factory,
-                            GimpContext       *context,
-                            gint               view_size)
-{
-  return gimp_tool_view_new (GIMP_VIEW_TYPE_LIST,
-                             context->gimp->tool_info_list,
-                             context,
-                             view_size, 0,
-                             factory->menu_factory);
-}
-
-GtkWidget *
 dialogs_buffer_list_view_new (GimpDialogFactory *factory,
                               GimpContext       *context,
                               gint               view_size)
@@ -508,18 +495,6 @@ dialogs_font_grid_view_new (GimpDialogFactory *factory,
 {
   return gimp_font_view_new (GIMP_VIEW_TYPE_GRID,
                              context->gimp->fonts,
-                             context,
-                             view_size, 1,
-                             factory->menu_factory);
-}
-
-GtkWidget *
-dialogs_tool_grid_view_new (GimpDialogFactory *factory,
-                            GimpContext       *context,
-                            gint               view_size)
-{
-  return gimp_tool_view_new (GIMP_VIEW_TYPE_GRID,
-                             context->gimp->tool_info_list,
                              context,
                              view_size, 1,
                              factory->menu_factory);
