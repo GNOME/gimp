@@ -3034,8 +3034,16 @@ sphere_main (GimpDrawable *drawable)
   memset (img, 0, PREVIEWSIZE * PREVIEWSIZE * 3);
   makewindow ();
 
-  if (!s.com.numtexture)
-    sphere_response (NULL, RESPONSE_RESET, NULL);
+  if (s.com.numtexture == 0)
+    {
+      /* Setup and use default list */
+      sphere_response (NULL, RESPONSE_RESET, NULL);
+    }
+  else
+    {
+      /* Reuse the list from a previous invocation */
+      rebuildlist ();
+    }
 
   gtk_main ();
 
