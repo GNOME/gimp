@@ -574,11 +574,6 @@
 # 
 # (restore-accels yes)
 
-# When enabled, GIMP will show mnemonics in menus.  Possible values are yes
-# and no.
-# 
-# (menu-mnemonics yes)
-
 # How many recently opened image filenames to keep on the File menu.  This is
 # an integer value.
 # 
@@ -674,13 +669,6 @@
 # are normal, utility and keep-above.
 # 
 # (dock-window-hint utility)
-
-# When enabled, dock windows (the toolbox and palettes) are set to be
-# transient to the active image window. Most window managers will keep the
-# dock windows above the image window then, but it may also have other
-# effects.  Possible values are yes and no.
-# 
-# (transient-docks no)
 
 # Sets the pixel format to use for mouse pointers.  Possible values are
 # bitmap and pixbuf.
