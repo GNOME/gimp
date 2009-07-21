@@ -147,7 +147,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell->scale_dialog)->vbox),
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (shell->scale_dialog))),
                      table);
   gtk_widget_show (table);
 

@@ -365,7 +365,8 @@ borderaverage_dialog (gint32        image_ID,
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     main_vbox);
   gtk_widget_show (main_vbox);
 
   frame = gimp_frame_new (_("Border Size"));

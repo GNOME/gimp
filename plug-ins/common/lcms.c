@@ -1246,7 +1246,8 @@ lcms_icc_apply_dialog (gint32       image,
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   label = lcms_icc_profile_src_label_new (image, src_profile);
@@ -1471,7 +1472,8 @@ lcms_dialog (GimpColorConfig *config,
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     main_vbox);
   gtk_widget_show (main_vbox);
 
   frame = gimp_frame_new (_("Current Color Profile"));

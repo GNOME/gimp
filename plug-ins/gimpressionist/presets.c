@@ -659,7 +659,8 @@ create_save_preset (GtkWidget *parent)
 
   box = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), box);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (window))),
+                     box);
   gtk_widget_show (box);
 
   label = gtk_label_new (_("Description:"));

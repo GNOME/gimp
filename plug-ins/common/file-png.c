@@ -1031,7 +1031,7 @@ load_image (const gchar  *filename,
     {
       gchar *comment = NULL;
 
-      for (i = 0; i < num_texts && !comment; i++)
+      for (i = 0; i < num_texts && !comment; i++, text++)
         {
           if (text->key == NULL || strcmp (text->key, "Comment"))
             continue;
@@ -1808,7 +1808,7 @@ save_dialog (gint32    image_ID,
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 

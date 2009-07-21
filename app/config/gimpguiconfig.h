@@ -52,7 +52,6 @@ struct _GimpGuiConfig
   gboolean             can_change_accels;
   gboolean             save_accels;
   gboolean             restore_accels;
-  gboolean             menu_mnemonics;
   gint                 last_opened_size;
   guint64              max_new_image_size;
   gboolean             toolbox_color_area;

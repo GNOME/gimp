@@ -662,8 +662,8 @@ edit_callback (GtkWidget *widget,
 
       main_vbox = gtk_vbox_new (FALSE, 12);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (edit_dialog)->vbox), main_vbox,
-                          FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (edit_dialog))),
+                          main_vbox, FALSE, FALSE, 0);
 
       frame = gimp_frame_new (_("Directions"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -982,8 +982,8 @@ flame_dialog (void)
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
   box = gtk_hbox_new (FALSE, 12);

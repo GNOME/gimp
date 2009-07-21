@@ -606,7 +606,8 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (menu->selection)->vbox), vbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (menu->selection))),
+                     vbox);
   gtk_widget_show (vbox);
 
   /*  the selection list  */

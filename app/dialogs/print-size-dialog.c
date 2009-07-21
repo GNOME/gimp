@@ -137,7 +137,7 @@ print_size_dialog_new (GimpImage              *image,
 
   frame = gimp_frame_new (_("Print Size"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

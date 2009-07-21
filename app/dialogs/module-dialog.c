@@ -143,7 +143,8 @@ module_dialog_new (Gimp *gimp)
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
+                     vbox);
   gtk_widget_show (vbox);
 
   dialog->hint = gimp_hint_box_new (_("You will have to restart GIMP "

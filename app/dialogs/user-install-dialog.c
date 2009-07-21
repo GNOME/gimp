@@ -97,8 +97,8 @@ user_install_dialog_new (GimpUserInstall *install)
 
   frame = gimp_frame_new (_("Installation Log"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);

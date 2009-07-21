@@ -442,8 +442,9 @@ dialog (GimpDrawable *drawable)
                                     1, GIMP_MAX_IMAGE_SIZE,
                                     1, GIMP_MAX_IMAGE_SIZE);
   gtk_container_set_border_width (GTK_CONTAINER (sizeentry), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), sizeentry,
-                      FALSE, FALSE, 0);  gtk_widget_show (sizeentry);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
+                      sizeentry, FALSE, FALSE, 0);
+  gtk_widget_show (sizeentry);
 
   spinbutton = gimp_spin_button_new (&adj, config.ntries,
                                      1, 1024, 1, 10, 0, 1, 0);

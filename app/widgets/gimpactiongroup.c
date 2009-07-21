@@ -46,8 +46,7 @@ enum
   PROP_0,
   PROP_GIMP,
   PROP_LABEL,
-  PROP_STOCK_ID,
-  PROP_MNEMONICS
+  PROP_STOCK_ID
 };
 
 
@@ -102,13 +101,6 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_MNEMONICS,
-                                   g_param_spec_boolean ("mnemonics",
-                                                         NULL, NULL,
-                                                         TRUE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
 
   klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 }
@@ -223,9 +215,7 @@ gimp_action_group_set_property (GObject      *object,
     case PROP_STOCK_ID:
       group->stock_id = g_value_dup_string (value);
       break;
-    case PROP_MNEMONICS:
-      group->mnemonics = g_value_get_boolean (value);
-      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -251,9 +241,7 @@ gimp_action_group_get_property (GObject    *object,
     case PROP_STOCK_ID:
       g_value_set_string (value, group->stock_id);
       break;
-    case PROP_MNEMONICS:
-      g_value_set_boolean (value, group->mnemonics);
-      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -283,7 +271,6 @@ gimp_action_group_check_unique_action (GimpActionGroup *group,
  * @name:        the name of the action group.
  * @label:       the user visible label of the action group.
  * @stock_id:    the icon of the action group.
- * @mnemonics:   whether or not to show mnemonics.
  * @user_data:   the user_data for #GtkAction callbacks.
  * @update_func: the function that will be called on
  *               gimp_action_group_update().
@@ -299,7 +286,6 @@ gimp_action_group_new (Gimp                      *gimp,
                        const gchar               *name,
                        const gchar               *label,
                        const gchar               *stock_id,
-                       gboolean                   mnemonics,
                        gpointer                   user_data,
                        GimpActionGroupUpdateFunc  update_func)
 {
@@ -313,7 +299,6 @@ gimp_action_group_new (Gimp                      *gimp,
                         "name",      name,
                         "label",     label,
                         "stock-id",  stock_id,
-                        "mnemonics", mnemonics,
                         NULL);
 
   group->user_data   = user_data;
@@ -362,7 +347,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
   for (i = 0; i < n_entries; i++)
     {
       GimpAction  *action;
-      gchar       *label;
+      const gchar *label;
       const gchar *tooltip = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
@@ -370,7 +355,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
 
       if (msg_context)
         {
-          label = (gchar *) g_dpgettext2 (NULL, msg_context, entries[i].label);
+          label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
@@ -381,14 +366,8 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
           tooltip = gettext (entries[i].tooltip);
         }
 
-      if (! group->mnemonics)
-        label = gimp_strip_uline (label);
-
       action = gimp_action_new (entries[i].name, label, tooltip,
                                 entries[i].stock_id);
-
-      if (! group->mnemonics)
-        g_free (label);
 
       if (entries[i].callback)
         g_signal_connect (action, "activate",
@@ -421,7 +400,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
   for (i = 0; i < n_entries; i++)
     {
       GtkToggleAction *action;
-      gchar           *label;
+      const gchar     *label;
       const gchar     *tooltip = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
@@ -429,7 +408,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
 
       if (msg_context)
         {
-          label = (gchar *) g_dpgettext2 (NULL, msg_context, entries[i].label);
+          label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
@@ -440,14 +419,8 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
           tooltip = gettext (entries[i].tooltip);
         }
 
-      if (! group->mnemonics)
-        label = gimp_strip_uline (label);
-
       action = gimp_toggle_action_new (entries[i].name, label, tooltip,
                                        entries[i].stock_id);
-
-      if (! group->mnemonics)
-        g_free (label);
 
       gtk_toggle_action_set_active (action, entries[i].is_active);
 
@@ -486,7 +459,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
   for (i = 0; i < n_entries; i++)
     {
       GtkRadioAction *action;
-      gchar          *label;
+      const gchar    *label;
       const gchar    *tooltip = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
@@ -494,7 +467,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
 
       if (msg_context)
         {
-          label = (gchar *) g_dpgettext2 (NULL, msg_context, entries[i].label);
+          label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
@@ -505,15 +478,9 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
           tooltip = gettext (entries[i].tooltip);
         }
 
-      if (! group->mnemonics)
-        label = gimp_strip_uline (label);
-
       action = gimp_radio_action_new (entries[i].name, label, tooltip,
                                       entries[i].stock_id,
                                       entries[i].value);
-
-      if (! group->mnemonics)
-        g_free (label);
 
       if (i == 0)
         first_action = action;
@@ -558,7 +525,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
   for (i = 0; i < n_entries; i++)
     {
       GimpEnumAction *action;
-      gchar          *label;
+      const gchar    *label;
       const gchar    *tooltip = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
@@ -566,7 +533,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
 
       if (msg_context)
         {
-          label = (gchar *) g_dpgettext2 (NULL, msg_context, entries[i].label);
+          label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
@@ -577,16 +544,10 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
           tooltip = gettext (entries[i].tooltip);
         }
 
-      if (! group->mnemonics)
-        label = gimp_strip_uline (label);
-
       action = gimp_enum_action_new (entries[i].name, label, tooltip,
                                      entries[i].stock_id,
                                      entries[i].value,
                                      entries[i].value_variable);
-
-      if (! group->mnemonics)
-        g_free (label);
 
       if (callback)
         g_signal_connect (action, "selected",
@@ -620,7 +581,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
   for (i = 0; i < n_entries; i++)
     {
       GimpStringAction *action;
-      gchar            *label;
+      const gchar      *label;
       const gchar      *tooltip = NULL;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
@@ -628,7 +589,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
 
       if (msg_context)
         {
-          label = (gchar *) g_dpgettext2 (NULL, msg_context, entries[i].label);
+          label = g_dpgettext2 (NULL, msg_context, entries[i].label);
 
           if (entries[i].tooltip)
             tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
@@ -639,15 +600,9 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
           tooltip = gettext (entries[i].tooltip);
         }
 
-      if (! group->mnemonics)
-        label = gimp_strip_uline (label);
-
       action = gimp_string_action_new (entries[i].name, label, tooltip,
                                        entries[i].stock_id,
                                        entries[i].value);
-
-      if (! group->mnemonics)
-        g_free (label);
 
       if (callback)
         g_signal_connect (action, "selected",
@@ -680,24 +635,15 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
   for (i = 0; i < n_entries; i++)
     {
       GimpPlugInAction *action;
-      gchar            *label;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
         continue;
 
-      label = (gchar *) entries[i].label;
-
-      if (! group->mnemonics)
-        label = gimp_strip_uline (label);
-
       action = gimp_plug_in_action_new (entries[i].name,
-                                        label,
+                                        entries[i].label,
                                         entries[i].tooltip,
                                         entries[i].stock_id,
                                         entries[i].procedure);
-
-      if (! group->mnemonics)
-        g_free (label);
 
       if (callback)
         g_signal_connect (action, "selected",
@@ -822,7 +768,6 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
                                     const gchar     *label)
 {
   GtkAction *action;
-  gchar     *stripped;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
@@ -837,15 +782,7 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
       return;
     }
 
-  if (! group->mnemonics)
-    stripped = gimp_strip_uline (label);
-  else
-    stripped = (gchar *) label;
-
-  gtk_action_set_label (action, stripped);
-
-  if (! group->mnemonics)
-    g_free (stripped);
+  gtk_action_set_label (action, label);
 }
 
 void

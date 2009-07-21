@@ -1206,7 +1206,7 @@ gimp_tag_entry_expose (GtkWidget      *widget,
   const char     *display_text;
 
   /* eeeeeek */
-  if (widget->window == event->window)
+  if (gtk_widget_get_window (widget) == event->window)
     return FALSE;
 
   if (! GIMP_TAG_ENTRY (widget)->description_shown)
@@ -1236,7 +1236,7 @@ gimp_tag_entry_expose (GtkWidget      *widget,
                          &layout_width, &layout_height);
   offset = (window_height - PANGO_PIXELS (layout_height)) / 2;
 
-  gtk_paint_layout (widget->style,
+  gtk_paint_layout (gtk_widget_get_style (widget),
                     event->window,
                     GTK_STATE_INSENSITIVE,
                     TRUE,

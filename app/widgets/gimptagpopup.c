@@ -92,6 +92,9 @@ static gboolean gimp_tag_popup_list_event              (GtkWidget          *widg
 static gboolean gimp_tag_popup_is_in_tag               (PopupTagData       *tag_data,
                                                         gint                x,
                                                         gint                y);
+
+static void     gimp_tag_popup_queue_draw_tag          (GimpTagPopup       *widget,
+                                                        PopupTagData       *tag_data);
 static void     gimp_tag_popup_toggle_tag              (GimpTagPopup       *popup,
                                                         PopupTagData       *tag_data);
 static void     gimp_tag_popup_check_can_toggle        (GimpTagged         *tagged,
@@ -177,6 +180,20 @@ gimp_tag_popup_init (GimpTagPopup *popup)
                          GDK_POINTER_MOTION_MASK);
   gtk_container_add (GTK_CONTAINER (popup->alignment), popup->tag_area);
   gtk_widget_show (popup->tag_area);
+
+  g_signal_connect (popup->alignment, "expose-event",
+                    G_CALLBACK (gimp_tag_popup_border_expose),
+                    popup);
+  g_signal_connect (popup, "event",
+                    G_CALLBACK (gimp_tag_popup_border_event),
+                    NULL);
+  g_signal_connect (popup->tag_area, "expose-event",
+                    G_CALLBACK (gimp_tag_popup_list_expose),
+                    popup);
+  g_signal_connect (popup->tag_area, "event",
+                    G_CALLBACK (gimp_tag_popup_list_event),
+                    popup);
+
 }
 
 static GObject *
@@ -348,19 +365,6 @@ gimp_tag_popup_constructor (GType                  type,
   gtk_window_move (GTK_WINDOW (popup), popup_rect.x, popup_rect.y);
   gtk_window_resize (GTK_WINDOW (popup), popup_rect.width, popup_rect.height);
 
-  g_signal_connect (popup->alignment, "expose-event",
-                    G_CALLBACK (gimp_tag_popup_border_expose),
-                    popup);
-  g_signal_connect (popup, "event",
-                    G_CALLBACK (gimp_tag_popup_border_event),
-                    NULL);
-  g_signal_connect (popup->tag_area, "expose-event",
-                    G_CALLBACK (gimp_tag_popup_list_expose),
-                    popup);
-  g_signal_connect (popup->tag_area, "event",
-                    G_CALLBACK (gimp_tag_popup_list_event),
-                    popup);
-
   return object;
 }
 
@@ -409,8 +413,8 @@ gimp_tag_popup_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_OWNER:
-      popup->combo_entry = g_value_get_object (value);
-      g_object_ref (popup->combo_entry);
+
+      popup->combo_entry = g_value_dup_object (value);
       break;
 
     default:
@@ -567,21 +571,23 @@ gimp_tag_popup_border_expose (GtkWidget      *widget,
                               GdkEventExpose *event,
                               GimpTagPopup   *popup)
 {
-  GdkRectangle border;
-  GdkRectangle upper;
-  GdkRectangle lower;
-  gint         arrow_space;
-  gint         arrow_size;
 
-  if (event->window != widget->window)
+  GdkWindow    *window = gtk_widget_get_window (widget);
+  GtkStyle     *style  = gtk_widget_get_style (widget);
+  GdkRectangle  border;
+  GdkRectangle  upper;
+  GdkRectangle  lower;
+  gint          arrow_space;
+  gint          arrow_size;
+
+  if (event->window != gtk_widget_get_window (widget))
     return FALSE;
 
   get_arrows_visible_area (popup, &border, &upper, &lower, &arrow_space);
 
   arrow_size = 0.7 * arrow_space;
 
-  gtk_paint_box (widget->style,
-                 widget->window,
+  gtk_paint_box (style, window,
                  GTK_STATE_NORMAL,
                  GTK_SHADOW_OUT,
                  &event->area, widget, "menu",
@@ -591,8 +597,7 @@ gimp_tag_popup_border_expose (GtkWidget      *widget,
     {
       /*  upper arrow  */
 
-      gtk_paint_box (widget->style,
-                     widget->window,
+      gtk_paint_box (style, window,
                      popup->upper_arrow_state,
                      GTK_SHADOW_OUT,
                      &event->area, widget, "menu",
@@ -601,21 +606,19 @@ gimp_tag_popup_border_expose (GtkWidget      *widget,
                      upper.width,
                      upper.height);
 
-      gtk_paint_arrow (widget->style,
-                       widget->window,
+      gtk_paint_arrow (style, window,
                        popup->upper_arrow_state,
                        GTK_SHADOW_OUT,
                        &event->area, widget, "menu_scroll_arrow_up",
                        GTK_ARROW_UP,
                        TRUE,
                        upper.x + (upper.width - arrow_size) / 2,
-                       upper.y + widget->style->ythickness + (arrow_space - arrow_size) / 2,
+                       upper.y + style->ythickness + (arrow_space - arrow_size) / 2,
                        arrow_size, arrow_size);
 
       /*  lower arrow  */
 
-      gtk_paint_box (widget->style,
-                     widget->window,
+      gtk_paint_box (style, window,
                      popup->lower_arrow_state,
                      GTK_SHADOW_OUT,
                      &event->area, widget, "menu",
@@ -624,15 +627,14 @@ gimp_tag_popup_border_expose (GtkWidget      *widget,
                      lower.width,
                      lower.height);
 
-      gtk_paint_arrow (widget->style,
-                       widget->window,
+      gtk_paint_arrow (style, window,
                        popup->lower_arrow_state,
                        GTK_SHADOW_OUT,
                        &event->area, widget, "menu_scroll_arrow_down",
                        GTK_ARROW_DOWN,
                        TRUE,
                        lower.x + (lower.width - arrow_size) / 2,
-                       lower.y + widget->style->ythickness + (arrow_space - arrow_size) / 2,
+                       lower.y + style->ythickness + (arrow_space - arrow_size) / 2,
                        arrow_size, arrow_size);
     }
 
@@ -651,15 +653,15 @@ gimp_tag_popup_border_event (GtkWidget *widget,
       gint            x;
       gint            y;
 
-      if (button_event->window == widget->window &&
+      if (button_event->window == gtk_widget_get_window (widget) &&
           gimp_tag_popup_button_scroll (popup, button_event))
         {
           return TRUE;
         }
 
-      gdk_window_get_pointer (widget->window, &x, &y, NULL);
+      gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, NULL);
 
-      if (button_event->window != popup->tag_area->window &&
+      if (button_event->window != gtk_widget_get_window (popup->tag_area) &&
           (x < widget->allocation.y                            ||
            y < widget->allocation.x                            ||
            x > widget->allocation.x + widget->allocation.width ||
@@ -678,14 +680,13 @@ gimp_tag_popup_border_event (GtkWidget *widget,
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
 
-      if (motion_event->window == widget->window)
-        {
-          gint x = motion_event->x + widget->allocation.x;
-          gint y = motion_event->y + widget->allocation.y;
+      gint            x, y;
 
-          gimp_tag_popup_handle_scrolling (popup, x, y,
-                                           popup->scroll_timeout_id == 0, TRUE);
-        }
+      gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, NULL);
+
+      gimp_tag_popup_handle_scrolling (popup, x, y,
+                                       motion_event->window == widget->window,
+                                       TRUE);
     }
   else if (event->type == GDK_BUTTON_RELEASE)
     {
@@ -693,7 +694,7 @@ gimp_tag_popup_border_event (GtkWidget *widget,
 
       popup->single_select_disabled = TRUE;
 
-      if (button_event->window == widget->window &&
+      if (button_event->window == gtk_widget_get_window (widget) &&
           gimp_tag_popup_button_scroll (popup, button_event))
         {
           return TRUE;
@@ -880,6 +881,9 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
   else if (event->type == GDK_MOTION_NOTIFY)
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
+
+      PopupTagData   *prelight     = NULL;
+
       gint            x;
       gint            y;
       gint            i;
@@ -893,14 +897,20 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
 
           if (gimp_tag_popup_is_in_tag (tag_data, x, y))
             {
-              if (popup->prelight != tag_data)
-                {
-                  popup->prelight = tag_data;
-                  gtk_widget_queue_draw (widget);
-                }
-
+              prelight = tag_data;
               break;
             }
+        }
+
+      if (prelight != popup->prelight)
+        {
+          if (popup->prelight)
+            gimp_tag_popup_queue_draw_tag (popup, popup->prelight);
+
+          popup->prelight = prelight;
+
+          if (popup->prelight)
+            gimp_tag_popup_queue_draw_tag (popup, popup->prelight);
         }
     }
   else if (event->type == GDK_BUTTON_RELEASE &&
@@ -946,6 +956,17 @@ gimp_tag_popup_is_in_tag (PopupTagData *tag_data,
     }
 
   return FALSE;
+}
+
+static void
+gimp_tag_popup_queue_draw_tag (GimpTagPopup *popup,
+                               PopupTagData *tag_data)
+{
+  gtk_widget_queue_draw_area (popup->tag_area,
+                              tag_data->bounds.x,
+                              tag_data->bounds.y - popup->scroll_y,
+                              tag_data->bounds.width,
+                              tag_data->bounds.height);
 }
 
 static void
@@ -1180,6 +1201,7 @@ gimp_tag_popup_scroll_by (GimpTagPopup *popup,
     {
       arrow_state = (popup->upper_arrow_prelight ?
                      GTK_STATE_PRELIGHT : GTK_STATE_NORMAL);
+
     }
 
   if (arrow_state != popup->upper_arrow_state)
@@ -1215,7 +1237,7 @@ gimp_tag_popup_scroll_by (GimpTagPopup *popup,
     {
       popup->scroll_y = new_scroll_y;
 
-      gdk_window_scroll (popup->tag_area->window, 0, -step);
+      gdk_window_scroll (gtk_widget_get_window (popup->tag_area), 0, -step);
     }
 }
 
@@ -1330,7 +1352,7 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
             {
               popup->upper_arrow_state = arrow_state;
 
-              gdk_window_invalidate_rect (GTK_WIDGET (popup)->window,
+              gdk_window_invalidate_rect (gtk_widget_get_window (GTK_WIDGET (popup)),
                                           &rect, FALSE);
             }
         }
@@ -1431,7 +1453,7 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
             {
               popup->lower_arrow_state = arrow_state;
 
-              gdk_window_invalidate_rect (GTK_WIDGET (popup)->window,
+              gdk_window_invalidate_rect (gtk_widget_get_window (GTK_WIDGET (popup)),
                                           &rect, FALSE);
             }
         }

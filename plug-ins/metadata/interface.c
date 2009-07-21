@@ -682,8 +682,8 @@ metadata_dialog (gint32    image_ID,
   notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_container_set_border_width (GTK_CONTAINER (notebook), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (mgui.dlg)->vbox), notebook,
-          TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (mgui.dlg))),
+                      notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
   mgui.xmp_model = xmp_model;

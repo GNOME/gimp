@@ -1437,7 +1437,8 @@ prefs_dialog_new (Gimp       *gimp,
   /* The main hbox */
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                     hbox);
   gtk_widget_show (hbox);
 
   /* The categories tree */
@@ -1632,9 +1633,6 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "menu-mnemonics",
-                          _("Show menu _mnemonics (access keys)"),
-                          GTK_BOX (vbox2));
   prefs_check_button_add (object, "can-change-accels",
                           _("_Use dynamic keyboard shortcuts"),
                           GTK_BOX (vbox2));

@@ -1319,25 +1319,48 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpViewRenderer *renderer;
-      GimpUIManager    *ui_manager;
-      GimpActionGroup  *group;
+      GimpUIManager   *ui_manager = GIMP_EDITOR (tree_view)->ui_manager;
+      GimpActionGroup *group;
 
-      ui_manager = GIMP_EDITOR (tree_view)->ui_manager;
-      group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
+      group = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
-      gtk_tree_model_get (tree_view->model, &iter,
-                          layer_view->priv->model_column_mask, &renderer,
-                          -1);
-
-      if (renderer)
+      if (state & GDK_MOD1_MASK)
         {
-          GimpLayerMask *mask = GIMP_LAYER_MASK (renderer->viewable);
+          const gchar *action = "layers-alpha-selection-replace";
 
-          if (gimp_layer_mask_get_edit (mask))
-            gimp_action_group_set_action_active (group,
-                                                 "layers-mask-edit", FALSE);
-          g_object_unref (renderer);
+          if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
+            {
+              action = "layers-alpha-selection-intersect";
+            }
+          else if (state & GDK_SHIFT_MASK)
+            {
+              action = "layers-alpha-selection-add";
+            }
+          else if (state & GDK_CONTROL_MASK)
+            {
+              action = "layers-alpha-selection-subtract";
+            }
+
+          gimp_action_group_activate_action (group, action);
+        }
+      else
+        {
+          GimpViewRenderer *renderer;
+
+          gtk_tree_model_get (tree_view->model, &iter,
+                              layer_view->priv->model_column_mask, &renderer,
+                              -1);
+
+          if (renderer)
+            {
+              GimpLayerMask *mask = GIMP_LAYER_MASK (renderer->viewable);
+
+              if (gimp_layer_mask_get_edit (mask))
+                gimp_action_group_set_action_active (group,
+                                                     "layers-mask-edit", FALSE);
+
+              g_object_unref (renderer);
+            }
         }
     }
 

@@ -1033,8 +1033,8 @@ main_dialog (GimpDrawable *drawable)
 
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (appwin)->vbox), main_hbox,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (appwin))),
+                      main_hbox, FALSE, FALSE, 0);
   gtk_widget_show (main_hbox);
 
   /* Create the Preview */

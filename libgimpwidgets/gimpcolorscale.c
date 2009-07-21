@@ -79,12 +79,14 @@ gimp_color_scale_init (GimpColorScale *scale)
   GTK_SCALE (scale)->draw_value = FALSE;
 
   range->slider_size_fixed = TRUE;
-  range->orientation       = GTK_ORIENTATION_HORIZONTAL;
   range->flippable         = TRUE;
   /* range->update_policy     = GTK_UPDATE_DELAYED; */
 
   scale->channel      = GIMP_COLOR_SELECTOR_VALUE;
   scale->needs_render = TRUE;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (range),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
   gimp_rgba_set (&scale->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&scale->rgb, &scale->hsv);
@@ -142,7 +144,7 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
   scale_width  = range->range_rect.width  - 2 * (focus + trough_border);
   scale_height = range->range_rect.height - 2 * (focus + trough_border);
 
-  switch (range->orientation)
+  switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
       scale_width  -= range->min_slider_size - 1;
@@ -311,7 +313,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
       gdk_gc_set_clip_rectangle (style->black_gc, &area);
 
-      switch (range->orientation)
+      switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
         {
         case GTK_ORIENTATION_HORIZONTAL:
           gdk_draw_rgb_image_dithalign (window,
@@ -351,7 +353,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
                      range->range_rect.width,
                      range->range_rect.height);
 
-  switch (range->orientation)
+  switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
       area.x      = widget->allocation.x + range->slider_start;
@@ -377,7 +379,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
             style->dark_gc[GTK_STATE_INSENSITIVE]);
 
       gdk_gc_set_clip_rectangle (gc, &expose_area);
-      switch (range->orientation)
+
+      switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
         {
         case GTK_ORIENTATION_HORIZONTAL:
           for (w = area.width, x = area.x, y = area.y;
@@ -390,6 +393,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
             gdk_draw_line (window, gc, x, y, x, y + h - 1);
           break;
         }
+
       gdk_gc_set_clip_rectangle (gc, NULL);
 
       gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
@@ -397,7 +401,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
             style->light_gc[GTK_STATE_INSENSITIVE]);
 
       gdk_gc_set_clip_rectangle (gc, &expose_area);
-      switch (range->orientation)
+
+      switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
         {
         case GTK_ORIENTATION_HORIZONTAL:
           for (w = area.width, x = area.x, y = area.y + area.height - 1;
@@ -410,6 +415,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
             gdk_draw_line (window, gc, x, y, x, y + h - 1);
           break;
         }
+
       gdk_gc_set_clip_rectangle (gc, NULL);
     }
 
@@ -429,16 +435,13 @@ GtkWidget *
 gimp_color_scale_new (GtkOrientation            orientation,
                       GimpColorSelectorChannel  channel)
 {
-  GimpColorScale *scale;
-  GtkRange       *range;
-
-  scale = g_object_new (GIMP_TYPE_COLOR_SCALE, NULL);
+  GimpColorScale *scale = g_object_new (GIMP_TYPE_COLOR_SCALE,
+                                        "orientation", orientation,
+                                        NULL);
 
   scale->channel = channel;
 
-  range = GTK_RANGE (scale);
-  range->orientation = orientation;
-  range->flippable   = (orientation == GTK_ORIENTATION_HORIZONTAL);
+  GTK_RANGE (scale)->flippable = (orientation == GTK_ORIENTATION_HORIZONTAL);
 
   return GTK_WIDGET (scale);
 }
@@ -493,7 +496,8 @@ gimp_color_scale_set_color (GimpColorScale *scale,
 static gboolean
 should_invert (GtkRange *range)
 {
-  if (range->orientation == GTK_ORIENTATION_HORIZONTAL)
+  if (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)) ==
+      GTK_ORIENTATION_HORIZONTAL)
     return
       (range->inverted && !range->flippable) ||
       (range->inverted && range->flippable &&
@@ -555,7 +559,7 @@ gimp_color_scale_render (GimpColorScale *scale)
 
   invert = should_invert (range);
 
-  switch (range->orientation)
+  switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
       for (x = 0, d = buf; x < scale->width; x++, d += 3)
@@ -625,7 +629,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
   buf = scale->buf;
   rgb = scale->rgb;
 
-  switch (range->orientation)
+  switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
       {

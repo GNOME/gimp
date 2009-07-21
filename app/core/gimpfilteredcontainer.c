@@ -213,8 +213,7 @@ gimp_filtered_container_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_SRC_CONTAINER:
-      filtered_container->src_container = g_value_get_object (value);
-      g_object_ref (filtered_container->src_container);
+      filtered_container->src_container = g_value_dup_object (value);
 
       g_signal_connect (filtered_container->src_container, "add",
                         G_CALLBACK (gimp_filtered_container_src_add),

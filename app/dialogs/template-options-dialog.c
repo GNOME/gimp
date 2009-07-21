@@ -103,7 +103,8 @@ template_options_dialog_new (GimpTemplate *template,
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->dialog)->vbox), vbox);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (options->dialog))),
+                     vbox);
   gtk_widget_show (vbox);
 
   options->editor = gimp_template_editor_new (template, options->gimp, TRUE);

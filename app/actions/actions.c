@@ -24,8 +24,6 @@
 
 #include "actions-types.h"
 
-#include "config/gimpguiconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -227,16 +225,12 @@ static const GimpActionFactoryEntry action_groups[] =
 void
 actions_init (Gimp *gimp)
 {
-  GimpGuiConfig *gui_config;
-  gint           i;
+  gint i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (global_action_factory == NULL);
 
-  gui_config = GIMP_GUI_CONFIG (gimp->config);
-
-  global_action_factory = gimp_action_factory_new (gimp,
-                                                   gui_config->menu_mnemonics);
+  global_action_factory = gimp_action_factory_new (gimp);
 
   for (i = 0; i < G_N_ELEMENTS (action_groups); i++)
     gimp_action_factory_group_register (global_action_factory,

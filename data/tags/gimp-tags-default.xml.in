@@ -26,60 +26,144 @@
   </resource>
 
   <resource identifier="brushes/Circle-1.vbr" checksum="5686e2c8f5eba4d85d99a72fa620ce1a">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-3.vbr" checksum="541e33b7cbfa87adac1e275e825da4bd">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-5.vbr" checksum="c3016808d65cdca04df573bd92d92fe8">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-7.vbr" checksum="24f071640eef492687b9dd9e45fd3e80">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-9.vbr" checksum="a5d94d82235668de98b9b8e573c8e86d">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-11.vbr" checksum="4744b701c428037318158da542d41bc2">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-13.vbr" checksum="4b8e68d6c73c96151ab0c4e5ac247418">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-15.vbr" checksum="893c52e9ae77b5b3d28492e1ef1e1fbe">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-17.vbr" checksum="2346bd647b77772bc65c199cb5e360d1">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-19.vbr" checksum="27c917943dcdf447bad3c202feb71daf">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-3.vbr" checksum="13590692b064cefd63d7ffa942db71c2">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-5.vbr" checksum="13be0ea0729c907910dcbaa5ad39602e">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-7.vbr" checksum="ca4f200f2a8c1d44d4d3b57fb9b6295e">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-9.vbr" checksum="3a9bd089c56837da1b58334ff4cde18b">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-11.vbr" checksum="aa580aceb667a49f385adac5b0a049b5">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-13.vbr" checksum="742dc4898e54d3ce9a24bd373cd02d4e">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-15.vbr" checksum="8a72451f9aa3cfacb088421521e3375a">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-17.vbr" checksum="5243c6abe22500194660e0bf5af6dae5">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/Circle-Fuzzy-19.vbr" checksum="e4e5ccda277d40a794dc58b2a15e5136">
+    <tag>
+      <_thetag>circle</_thetag>
+    </tag>
+    <tag>
+      <_thetag>fuzzy</_thetag>
+    </tag>
   </resource>
 
   <resource identifier="brushes/confetti.gbr" checksum="ba5a4759cb321b81e232bba3f33dce76">

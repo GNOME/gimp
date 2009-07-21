@@ -456,7 +456,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 
         gimp_display_shell_start_scrolling (shell, coords.x, coords.y);
 
-        gdk_pointer_grab (shell->canvas->window, FALSE,
+        gdk_pointer_grab (gtk_widget_get_window (shell->canvas), FALSE,
                           GDK_POINTER_MOTION_MASK |
                           GDK_POINTER_MOTION_HINT_MASK,
                           NULL, NULL, time);
@@ -482,7 +482,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
       break;
     }
 
-  gdk_keyboard_grab (shell->canvas->window, FALSE, time);
+  gdk_keyboard_grab (gtk_widget_get_window (shell->canvas), FALSE, time);
 
   shell->space_pressed = TRUE;
 }
@@ -839,7 +839,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /*  we expect a FOCUS_IN event to follow, but can't rely
              *  on it, so force one
              */
-            gdk_window_focus (canvas->window, time);
+            gdk_window_focus (gtk_widget_get_window (canvas), time);
           }
 
         /*  ignore new mouse events  */
@@ -871,11 +871,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
               }
 
-            gdk_pointer_grab (canvas->window,
+            gdk_pointer_grab (gtk_widget_get_window (canvas),
                               FALSE, event_mask, NULL, NULL, time);
 
             if (! shell->space_pressed && ! shell->space_release_pending)
-              gdk_keyboard_grab (canvas->window, FALSE, time);
+              gdk_keyboard_grab (gtk_widget_get_window (canvas), FALSE, time);
 
             if (active_tool &&
                 (! gimp_image_is_empty (image) ||
@@ -1174,9 +1174,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             value = (gtk_adjustment_get_value (adj) +
                      ((direction == GDK_SCROLL_UP ||
                        direction == GDK_SCROLL_LEFT) ?
-                      -adj->page_increment / 2 :
-                      adj->page_increment / 2));
-            value = CLAMP (value, adj->lower, adj->upper - adj->page_size);
+                      -gtk_adjustment_get_page_increment (adj) / 2 :
+                      gtk_adjustment_get_page_increment (adj) / 2));
+            value = CLAMP (value,
+                           gtk_adjustment_get_lower (adj),
+                           gtk_adjustment_get_upper (adj) -
+                           gtk_adjustment_get_page_size (adj));
 
             gtk_adjustment_set_value (adj, value);
           }
@@ -1749,17 +1752,18 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
               /*  we expect a FOCUS_IN event to follow, but can't rely
                *  on it, so force one
                */
-              gdk_window_focus (shell->canvas->window,
+              gdk_window_focus (gtk_widget_get_window (shell->canvas),
                                 gdk_event_get_time ((GdkEvent *) event));
             }
 
-          gdk_pointer_grab (shell->canvas->window, FALSE,
+          gdk_pointer_grab (gtk_widget_get_window (shell->canvas), FALSE,
                             GDK_POINTER_MOTION_HINT_MASK |
                             GDK_BUTTON1_MOTION_MASK |
                             GDK_BUTTON_RELEASE_MASK,
                             NULL, NULL, event->time);
 
-          gdk_keyboard_grab (shell->canvas->window, FALSE, event->time);
+          gdk_keyboard_grab (gtk_widget_get_window (shell->canvas),
+                             FALSE, event->time);
 
           if (sample_point)
             gimp_color_tool_start_sample_point (active_tool, display);
@@ -1834,11 +1838,11 @@ void
 gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
                                        GimpDisplayShell *shell)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active !=
-      gimp_image_get_quick_mask_state (shell->display->image))
+  gboolean active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+  if (active != gimp_image_get_quick_mask_state (shell->display->image))
     {
-      gimp_image_set_quick_mask_state (shell->display->image,
-                                       GTK_TOGGLE_BUTTON (widget)->active);
+      gimp_image_set_quick_mask_state (shell->display->image, active);
 
       gimp_image_flush (shell->display->image);
     }
@@ -2175,7 +2179,7 @@ gimp_display_shell_canvas_expose_drop_zone (GimpDisplayShell *shell,
 {
   cairo_t *cr;
 
-  cr = gdk_cairo_create (shell->canvas->window);
+  cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
   gdk_cairo_region (cr, eevent->region);
   cairo_clip (cr);
 

@@ -3106,8 +3106,8 @@ load_dialog (const gchar *filename,
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   if (page_count > 1)
@@ -3345,8 +3345,8 @@ save_dialog (void)
   /* Main hbox */
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      hbox, FALSE, FALSE, 0);
   main_vbox[0] = main_vbox[1] = NULL;
 
   for (j = 0; j < G_N_ELEMENTS (main_vbox); j++)

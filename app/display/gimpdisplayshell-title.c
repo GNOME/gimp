@@ -107,7 +107,8 @@ gimp_display_shell_update_title_idle (gpointer data)
 
       g_strlcpy (title + len, GIMP_ACRONYM, sizeof (title) - len);
 
-      gdk_window_set_title (GTK_WIDGET (shell)->window, title);
+      gdk_window_set_title (gtk_widget_get_window (GTK_WIDGET (shell)),
+                            title);
 
       /* format the statusbar */
       gimp_display_shell_format_title (shell, title, sizeof (title),
@@ -118,7 +119,8 @@ gimp_display_shell_update_title_idle (gpointer data)
     }
   else
     {
-      gdk_window_set_title (GTK_WIDGET (shell)->window, GIMP_NAME);
+      gdk_window_set_title (gtk_widget_get_window (GTK_WIDGET (shell)),
+                            GIMP_NAME);
 
       gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
                               NULL, " ");

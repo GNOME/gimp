@@ -94,9 +94,14 @@ gimp_language_entry_constructor (GType                  type,
 
       completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
                                  "model",             entry->store,
-                                 "text-column",       GIMP_LANGUAGE_STORE_LANGUAGE,
                                  "inline-selection",  TRUE,
                                  NULL);
+
+      /* Note that we must use this function to set the text column,
+       * otherwise we won't get a cell renderer for free
+       */
+      gtk_entry_completion_set_text_column (completion,
+                                            GIMP_LANGUAGE_STORE_LANGUAGE);
 
       gtk_entry_set_completion (GTK_ENTRY (entry), completion);
       g_object_unref (completion);

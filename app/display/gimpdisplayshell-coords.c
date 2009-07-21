@@ -92,7 +92,8 @@ gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
 {
   gdouble axes[GDK_AXIS_LAST];
 
-  gdk_device_get_state (device, shell->canvas->window, axes, NULL);
+  gdk_device_get_state (device, gtk_widget_get_window (shell->canvas),
+                        axes, NULL);
 
   gdk_device_get_axis (device, axes, GDK_AXIS_X, &coords->x);
   gdk_device_get_axis (device, axes, GDK_AXIS_Y, &coords->y);
@@ -186,7 +187,8 @@ gimp_display_shell_get_device_state (GimpDisplayShell *shell,
                                      GdkDevice        *device,
                                      GdkModifierType  *state)
 {
-  gdk_device_get_state (device, shell->canvas->window, NULL, state);
+  gdk_device_get_state (device, gtk_widget_get_window (shell->canvas),
+                        NULL, state);
 }
 
 /**

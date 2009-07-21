@@ -73,3 +73,9 @@ Core:
 PDB:
 
  - Add procedures to manipulate size of text box
+
+General:
+
+ - Changed licence to (L)GPLv3+
+ - Use the automake 1.11 feature 'silent build rules' by default
+ - Lots of bug fixes and cleanup

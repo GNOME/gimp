@@ -64,7 +64,6 @@ enum
   PROP_CAN_CHANGE_ACCELS,
   PROP_SAVE_ACCELS,
   PROP_RESTORE_ACCELS,
-  PROP_MENU_MNEMONICS,
   PROP_LAST_OPENED_SIZE,
   PROP_MAX_NEW_IMAGE_SIZE,
   PROP_TOOLBOX_COLOR_AREA,
@@ -87,6 +86,7 @@ enum
 
   /* ignored, only for backward compatibility: */
   PROP_INFO_WINDOW_PER_DISPLAY,
+  PROP_MENU_MNEMONICS,
   PROP_SHOW_TOOL_TIPS,
   PROP_SHOW_TIPS
 };
@@ -177,11 +177,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "restore-accels", RESTORE_ACCELS_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MENU_MNEMONICS,
-                                    "menu-mnemonics", MENU_MNEMONICS_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
                                 "last-opened-size", LAST_OPENED_SIZE_BLURB,
                                 0, 1024, 10,
@@ -286,6 +281,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MENU_MNEMONICS,
+                                    "menu-mnemonics", MENU_MNEMONICS_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
                                     "show-tool-tips", NULL,
                                     FALSE,
@@ -366,9 +366,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_RESTORE_ACCELS:
       gui_config->restore_accels = g_value_get_boolean (value);
       break;
-    case PROP_MENU_MNEMONICS:
-      gui_config->menu_mnemonics = g_value_get_boolean (value);
-      break;
     case PROP_LAST_OPENED_SIZE:
       gui_config->last_opened_size = g_value_get_int (value);
       break;
@@ -433,6 +430,7 @@ gimp_gui_config_set_property (GObject      *object,
       break;
 
     case PROP_INFO_WINDOW_PER_DISPLAY:
+    case PROP_MENU_MNEMONICS:
     case PROP_SHOW_TOOL_TIPS:
     case PROP_SHOW_TIPS:
       /* ignored */
@@ -493,9 +491,6 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_RESTORE_ACCELS:
       g_value_set_boolean (value, gui_config->restore_accels);
       break;
-    case PROP_MENU_MNEMONICS:
-      g_value_set_boolean (value, gui_config->menu_mnemonics);
-      break;
     case PROP_LAST_OPENED_SIZE:
       g_value_set_int (value, gui_config->last_opened_size);
       break;
@@ -555,6 +550,7 @@ gimp_gui_config_get_property (GObject    *object,
       break;
 
     case PROP_INFO_WINDOW_PER_DISPLAY:
+    case PROP_MENU_MNEMONICS:
     case PROP_SHOW_TOOL_TIPS:
     case PROP_SHOW_TIPS:
       /* ignored */

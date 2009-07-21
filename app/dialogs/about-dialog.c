@@ -146,7 +146,7 @@ about_dialog_create (GimpContext *context)
                         dialog);
 
       /*  kids, don't try this at home!  */
-      container = GTK_DIALOG (widget)->vbox;
+      container = gtk_dialog_get_content_area (GTK_DIALOG (widget));
       children = gtk_container_get_children (GTK_CONTAINER (container));
 
       if (GTK_IS_VBOX (children->data))

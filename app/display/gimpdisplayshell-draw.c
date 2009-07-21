@@ -146,7 +146,7 @@ gimp_display_shell_draw_guide (const GimpDisplayShell *shell,
   x1 = 0;
   y1 = 0;
 
-  gdk_drawable_get_size (shell->canvas->window, &x2, &y2);
+  gdk_drawable_get_size (gtk_widget_get_window (shell->canvas), &x2, &y2);
 
   switch (gimp_guide_get_orientation (guide))
     {
@@ -429,7 +429,7 @@ gimp_display_shell_draw_sample_point (const GimpDisplayShell *shell,
   y1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
   y2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
 
-  gdk_drawable_get_size (shell->canvas->window, &w, &h);
+  gdk_drawable_get_size (gtk_widget_get_window (shell->canvas), &w, &h);
 
   if (x < - GIMP_SAMPLE_POINT_DRAW_SIZE   ||
       y < - GIMP_SAMPLE_POINT_DRAW_SIZE   ||
@@ -663,7 +663,7 @@ gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
 
   values.join_style = GDK_JOIN_MITER;
 
-  shell->grid_gc = gdk_gc_new_with_values (shell->canvas->window,
+  shell->grid_gc = gdk_gc_new_with_values (gtk_widget_get_window (shell->canvas),
                                            &values, (GDK_GC_LINE_STYLE |
                                                      GDK_GC_JOIN_STYLE));
 
@@ -692,7 +692,7 @@ gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
   values.cap_style  = GDK_CAP_ROUND;
   values.join_style = GDK_JOIN_ROUND;
 
-  shell->pen_gc = gdk_gc_new_with_values (shell->canvas->window,
+  shell->pen_gc = gdk_gc_new_with_values (gtk_widget_get_window (shell->canvas),
                                           &values, (GDK_GC_LINE_STYLE |
                                                     GDK_GC_CAP_STYLE  |
                                                     GDK_GC_JOIN_STYLE));
