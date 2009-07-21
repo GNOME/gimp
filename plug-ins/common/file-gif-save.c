@@ -215,7 +215,7 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-          export = gimp_export_image (&image_ID, &drawable_ID, "GIF",
+          export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                                       (GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
                                        GIMP_EXPORT_CAN_HANDLE_ALPHA  |
@@ -1005,25 +1005,11 @@ save_dialog (gint32 image_ID)
 
   gimp_image_get_layers (image_ID, &nlayers);
 
-  dialog = gimp_dialog_new (_("Save as GIF"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, SAVE_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("GIF"), PLUG_IN_BINARY, SAVE_PROC);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_container_add (GTK_CONTAINER (gimp_export_dialog_get_content_area (dialog)),
                      main_vbox);
   gtk_widget_show (main_vbox);
 

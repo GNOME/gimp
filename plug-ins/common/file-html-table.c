@@ -405,25 +405,11 @@ save_dialog (gint32 image_ID)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Save as HTML table"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, SAVE_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("HTML table"), PLUG_IN_BINARY, SAVE_PROC);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
 
   if (gimp_image_width (image_ID) * gimp_image_height (image_ID) > 4096)

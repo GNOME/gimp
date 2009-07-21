@@ -860,27 +860,13 @@ save_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Save as XJT"), PLUG_IN_BINARY,
-                         NULL, 0,
-                         gimp_standard_help_func, "file-xjt-save",
-
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                         NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  dlg = gimp_export_dialog_new (_("XJT"), PLUG_IN_BINARY, "file-xjt-save");
 
   table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dlg)),
                       table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 

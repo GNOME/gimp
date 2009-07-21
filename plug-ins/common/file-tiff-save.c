@@ -250,7 +250,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          export = gimp_export_image (&image, &drawable, "TIFF",
+          export = gimp_export_image (&image, &drawable, NULL,
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
                                        GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -1058,25 +1058,11 @@ save_dialog (gboolean has_alpha,
   GtkWidget *g4;
   gboolean   run;
 
-  dialog = gimp_dialog_new (_("Save as TIFF"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, SAVE_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("TIFF"), PLUG_IN_BINARY, SAVE_PROC);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       vbox, FALSE, TRUE, 0);
 
   /*  compression  */

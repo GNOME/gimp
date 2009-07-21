@@ -1226,25 +1226,11 @@ save_dialog (const gchar *filename,
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Raw Image Save"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, SAVE_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("Raw Image"), PLUG_IN_BINARY, SAVE_PROC);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 

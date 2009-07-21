@@ -50,21 +50,9 @@ ico_dialog_new (IcoSaveInfo *info)
   GtkWidget *scrolledwindow;
   GtkWidget *warning;
 
-  dialog = gimp_dialog_new (_("Save as Windows Icon"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, "plug-in-winicon",
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("Windows Icon"),
+                                   PLUG_IN_BINARY,
+                                   "plug-in-winicon");
 
   /* We store an array that holds each icon's requested bit depth
      with the dialog. It's queried when the dialog is closed so the
@@ -78,7 +66,7 @@ ico_dialog_new (IcoSaveInfo *info)
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
