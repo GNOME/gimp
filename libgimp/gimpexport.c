@@ -657,6 +657,10 @@ export_dialog (GSList      *actions,
  * user chooses Cancel, GIMP_EXPORT_CANCEL is returned and the
  * save_plugin should quit itself with status #GIMP_PDB_CANCEL.
  *
+ * If @format_name is NULL, no dialogs will be shown and this function
+ * will behave as if the user clicked on the 'Export' button, if a
+ * dialog would have been shown.
+ *
  * Returns: An enum of #GimpExportReturn describing the user_action.
  **/
 GimpExportReturn
