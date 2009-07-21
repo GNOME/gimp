@@ -36,9 +36,7 @@
 #include "core/gimpselection.h"
 #include "core/gimptoolinfo.h"
 
-#ifdef __GNUC__
-#warning FIXME: #include "tools/tools-types.h"
-#endif
+/* FIXME: #include "tools/tools-types.h" */
 #include "tools/tools-types.h"
 #include "tools/gimpregionselectoptions.h"
 

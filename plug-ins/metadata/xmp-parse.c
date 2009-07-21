@@ -948,6 +948,11 @@ end_element_handler    (GMarkupParseContext  *markup_context,
     case STATE_INSIDE_ALT:
     case STATE_INSIDE_BAG:
     case STATE_INSIDE_SEQ:
+      if (context->property && context->prop_cur_value < 0)
+        {
+          g_free (context->property);
+          context->property = NULL;
+        }
       context->state = STATE_INSIDE_PROPERTY;
       break;
 

@@ -649,6 +649,19 @@ load_dialog_resolution_callback (GimpSizeEntry *res,
   if (!load_rsvg_size (filename, &vals, NULL))
     return;
 
+  g_signal_handlers_block_by_func (size, load_dialog_size_callback, NULL);
+
+  gimp_size_entry_set_resolution (size, 0, load_vals.resolution, FALSE);
+  gimp_size_entry_set_resolution (size, 1, load_vals.resolution, FALSE);
+
+  g_signal_handlers_unblock_by_func (size, load_dialog_size_callback, NULL);
+
+  if (gimp_size_entry_get_unit (size) != GIMP_UNIT_PIXEL)
+    {
+      ratio_x = gimp_size_entry_get_refval (size, 0) / vals.width;
+      ratio_y = gimp_size_entry_get_refval (size, 1) / vals.height;
+    }
+
   svg_width  = vals.width;
   svg_height = vals.height;
 

@@ -463,7 +463,7 @@ respin_cmap (png_structp  png_ptr,
 
       if (transparent != -1)
         {
-          png_color palette[256];
+          png_color palette[256] = { {0, 0, 0} };
           gint i;
 
           png_set_tRNS (png_ptr, png_info_ptr, (png_bytep) trans, 1, NULL);
@@ -481,7 +481,7 @@ respin_cmap (png_structp  png_ptr,
            * unchanged, and finally from index transparent to index 0.
            */
 
-          for (i = 0; i < colors; i++)
+          for (i = 1; i < colors; i++)
             {
               palette[i].red = before[3 * remap[i]];
               palette[i].green = before[3 * remap[i] + 1];
@@ -504,6 +504,41 @@ respin_cmap (png_structp  png_ptr,
   return FALSE;
 }
 
+static mng_retcode
+mng_putchunk_plte_wrapper (mng_handle    handle,
+                           gint          numcolors,
+                           const guchar *colormap)
+{
+  mng_palette8 palette;
+
+  memset (palette, 0, sizeof palette);
+  if (0 < numcolors)
+    memcpy (palette, colormap, numcolors * sizeof palette[0]);
+
+  return mng_putchunk_plte (handle, numcolors, palette);
+}
+
+static mng_retcode
+mng_putchunk_trns_wrapper (mng_handle    handle,
+                           gint          n_alphas,
+                           const guchar *buffer)
+{
+  const mng_bool mng_global = TRUE;
+  const mng_bool mng_empty  = TRUE;
+  mng_uint8arr   alphas;
+
+  memset (alphas, 0, sizeof alphas);
+  if (buffer && 0 < n_alphas)
+    memcpy (alphas, buffer, n_alphas * sizeof alphas[0]);
+
+  return mng_putchunk_trns (handle,
+                            ! mng_empty,
+                            ! mng_global,
+                            MNG_COLORTYPE_INDEXED,
+                            n_alphas,
+                            alphas,
+                            0, 0, 0, 0, 0, alphas);
+}
 
 static gboolean
 mng_save_image (const gchar  *filename,
@@ -637,7 +672,7 @@ mng_save_image (const gchar  *filename,
 
   if (mng_putchunk_text (handle,
                          strlen (MNG_TEXT_TITLE), MNG_TEXT_TITLE,
-                         22, "Created using GIMP") != MNG_NOERROR)
+                         18, "Created using GIMP") != MNG_NOERROR)
     {
       g_warning ("Unable to mng_putchunk_text() in mng_save_image()");
       goto err3;
@@ -731,8 +766,8 @@ mng_save_image (const gchar  *filename,
       palette = gimp_image_get_colormap (image_id, &numcolors);
 
       if ((numcolors != 0) &&
-          (mng_putchunk_plte (handle, numcolors,
-                              (mng_palette8e *) palette) != MNG_NOERROR))
+          (mng_putchunk_plte_wrapper (handle, numcolors,
+                                      palette) != MNG_NOERROR))
         {
           g_warning ("Unable to mng_putchunk_plte() in mng_save_image()");
           goto err3;
@@ -1168,11 +1203,10 @@ mng_save_image (const gchar  *filename,
               /* If this frame's palette is the same as the global palette,
                * write a 0-color palette chunk.
                */
-              if (mng_putchunk_plte (handle,
-                                     (layer_has_unique_palette ?
-                                      (chunksize / 3) : 0),
-                                     (mng_palette8e *) chunkbuffer) !=
-                  MNG_NOERROR)
+              if (mng_putchunk_plte_wrapper (handle,
+                                             (layer_has_unique_palette ?
+                                              (chunksize / 3) : 0),
+                                             chunkbuffer) != MNG_NOERROR)
                 {
                   g_warning ("Unable to mng_putchunk_plte() "
                              "in mng_save_image()");
@@ -1181,10 +1215,9 @@ mng_save_image (const gchar  *filename,
             }
           else if (strncmp (chunkname, "tRNS", 4) == 0)
             {
-              if (mng_putchunk_trns (handle, 0, 0, 3, chunksize,
-                                     (mng_uint8 *) chunkbuffer,
-                                     0, 0, 0, 0, 0,
-                                     (mng_uint8 *) chunkbuffer) != MNG_NOERROR)
+              if (mng_putchunk_trns_wrapper (handle,
+                                             chunksize,
+                                             chunkbuffer) != MNG_NOERROR)
                 {
                   g_warning ("Unable to mng_putchunk_trns() "
                              "in mng_save_image()");
@@ -1250,25 +1283,11 @@ mng_save_dialog (gint32 image_id)
   gint       num_layers;
   gboolean   run;
 
-  dialog = gimp_dialog_new (_("Save as MNG"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, SAVE_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("MNG"), PLUG_IN_BINARY, SAVE_PROC);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_container_add (GTK_CONTAINER (gimp_export_dialog_get_content_area (dialog)),
                      main_vbox);
 
   frame = gimp_frame_new (_("MNG Options"));
@@ -1568,7 +1587,7 @@ run (const gchar      *name,
           gimp_procedural_db_get_data (SAVE_PROC, &mng_data);
 
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          export = gimp_export_image (&image_id, &drawable_id, "MNG",
+          export = gimp_export_image (&image_id, &drawable_id, NULL,
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
                                        GIMP_EXPORT_CAN_HANDLE_INDEXED |

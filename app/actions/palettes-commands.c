@@ -90,9 +90,7 @@ palettes_merge_callback (GtkWidget   *widget,
                          const gchar *palette_name,
                          gpointer     data)
 {
-#ifdef __GNUC__
-#warning FIXME: reimplement palettes_merge_callback()
-#endif
+  /* FIXME: reimplement palettes_merge_callback() */
 #if 0
   GimpContainerEditor *editor;
   GimpPalette         *palette;

@@ -20,6 +20,8 @@ EXPORTS
 	gimp_drawable_preview_get_drawable
 	gimp_drawable_preview_get_type
 	gimp_drawable_preview_new
+	gimp_export_dialog_get_content_area
+	gimp_export_dialog_new
 	gimp_export_image
 	gimp_font_select_button_get_font
 	gimp_font_select_button_get_type

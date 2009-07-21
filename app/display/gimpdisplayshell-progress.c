@@ -51,8 +51,7 @@ gimp_display_shell_progress_start (GimpProgress *progress,
 
   if (progress && gimp_display_shell_is_iconified (shell))
     {
-      gdk_window_set_title (gtk_widget_get_window (GTK_WIDGET (shell)),
-                            message);
+      gtk_window_set_title (GTK_WINDOW (shell), message);
     }
 
   return progress;
@@ -88,8 +87,7 @@ gimp_display_shell_progress_set_text (GimpProgress *progress,
   if (gimp_progress_is_active (GIMP_PROGRESS (shell->statusbar)) &&
       gimp_display_shell_is_iconified (shell))
     {
-      gdk_window_set_title (gtk_widget_get_window (GTK_WIDGET (shell)),
-                            message);
+      gtk_window_set_title (GTK_WINDOW (shell), message);
     }
 }
 
@@ -198,8 +196,7 @@ gimp_display_shell_progress_window_state_changed (GimpDisplayShell *shell)
                                               "progress");
       if (msg)
         {
-          gdk_window_set_title (gtk_widget_get_window (GTK_WIDGET (shell)),
-                                msg);
+          gtk_window_set_title (GTK_WINDOW (shell), msg);
           return;
         }
     }

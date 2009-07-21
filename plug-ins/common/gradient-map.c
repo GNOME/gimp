@@ -264,9 +264,7 @@ get_samples_gradient (GimpDrawable *drawable)
 
   gradient_name = gimp_context_get_gradient ();
 
-#ifdef __GNUC__
-#warning FIXME: "reverse" hardcoded to FALSE.
-#endif
+  /* FIXME: "reverse" hardcoded to FALSE. */
   gimp_gradient_get_uniform_samples (gradient_name, NSAMPLES, FALSE,
                                      &n_f_samples, &f_samples);
 

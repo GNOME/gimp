@@ -1053,9 +1053,7 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
 /* Stuff below taken from gtktooltip.c
  */
 
-#ifdef __GNUC__
-#warning FIXME: remove this crack as soon as a GTK+ widget_under_pointer() is available
-#endif
+/* FIXME: remove this crack as soon as a GTK+ widget_under_pointer() is available */
 
 struct ChildLocation
 {

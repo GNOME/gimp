@@ -35,6 +35,8 @@
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 
+#include "gimp-log.h"
+
 
 static GObject * gimp_image_dock_constructor  (GType                  type,
                                                guint                  n_params,
@@ -48,10 +50,6 @@ static void      gimp_image_dock_display_changed  (GimpContext       *context,
 static void      gimp_image_dock_image_flush      (GimpImage         *image,
                                                    gboolean           invalidate_preview,
                                                    GimpImageDock     *dock);
-
-static void      gimp_image_dock_notify_transient (GimpConfig        *config,
-                                                   GParamSpec        *pspec,
-                                                   GimpDock          *dock);
 
 
 G_DEFINE_TYPE (GimpImageDock, gimp_image_dock, GIMP_TYPE_DOCK)
@@ -115,11 +113,6 @@ gimp_image_dock_constructor (GType                  type,
                            G_CALLBACK (gimp_image_dock_display_changed),
                            dock, 0);
 
-  g_signal_connect_object (gimp_dock_get_context (GIMP_DOCK (dock))->gimp->config,
-                           "notify::transient-docks",
-                           G_CALLBACK (gimp_image_dock_notify_transient),
-                           dock, 0);
-
   return object;
 }
 
@@ -150,19 +143,6 @@ gimp_image_dock_display_changed (GimpContext   *context,
                                  GimpImageDock *dock)
 {
   gimp_ui_manager_update (dock->ui_manager, display);
-
-  if (GIMP_GUI_CONFIG (context->gimp->config)->transient_docks)
-    {
-      GtkWindow *parent = NULL;
-
-      if (display)
-        g_object_get (display, "shell", &parent, NULL);
-
-      gtk_window_set_transient_for (GTK_WINDOW (dock), parent);
-
-      if (parent)
-        g_object_unref (parent);
-    }
 }
 
 static void
@@ -176,22 +156,5 @@ gimp_image_dock_image_flush (GimpImage     *image,
 
       if (display)
         gimp_ui_manager_update (dock->ui_manager, display);
-    }
-}
-
-static void
-gimp_image_dock_notify_transient (GimpConfig *config,
-                                  GParamSpec *pspec,
-                                  GimpDock   *dock)
-{
-  if (GIMP_GUI_CONFIG (config)->transient_docks)
-    {
-      gimp_image_dock_display_changed (gimp_dock_get_context (dock),
-                                       gimp_context_get_display (gimp_dock_get_context (dock)),
-                                       GIMP_IMAGE_DOCK (dock));
-    }
-  else
-    {
-      gtk_window_set_transient_for (GTK_WINDOW (dock), NULL);
     }
 }

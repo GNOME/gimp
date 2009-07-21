@@ -868,9 +868,7 @@ gimp_curve_get_uchar (GimpCurve *curve,
   gint i;
 
   g_return_if_fail (GIMP_IS_CURVE (curve));
-#ifdef __GNUC__
-#warning: FIXME: support n_samples != curve->n_samples
-#endif
+  /* FIXME: support n_samples != curve->n_samples */
   g_return_if_fail (n_samples == curve->n_samples);
   g_return_if_fail (samples != NULL);
 

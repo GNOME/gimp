@@ -189,6 +189,12 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
                                   ((gdouble) u2 - u1) / (v2 - v1),
                                   x1, y1, x2, y2);
       break;
+
+    case GIMP_TRANSFORM_RESIZE_CLIP:
+      /* Remove warning about not handling all enum values. We handle
+       * this case in the beginning of the function
+       */
+      break;
     }
 
   /* ensure that resulting rectangle has at least area 1 */

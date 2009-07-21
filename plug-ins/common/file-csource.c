@@ -170,7 +170,7 @@ run (const gchar      *name,
 
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      export = gimp_export_image (&image_ID, &drawable_ID, "C Source",
+      export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                                   (GIMP_EXPORT_CAN_HANDLE_RGB |
                                    GIMP_EXPORT_CAN_HANDLE_ALPHA ));
 
@@ -656,25 +656,11 @@ run_save_dialog (Config *config)
   GtkObject *adj;
   gboolean   run;
 
-  dialog = gimp_dialog_new (_("Save as C-Source"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, SAVE_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("C-Source"), PLUG_IN_BINARY, SAVE_PROC);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_container_add (GTK_CONTAINER (gimp_export_dialog_get_content_area (dialog)),
                      vbox);
   gtk_widget_show (vbox);
 

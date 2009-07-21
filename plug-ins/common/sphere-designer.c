@@ -2092,7 +2092,6 @@ loadpreset_response (GtkWidget *dialog,
       g_free (name);
 
       rebuildlist ();
-      restartrender ();
     }
 
   gtk_widget_hide (dialog);
@@ -2503,7 +2502,8 @@ sphere_response (GtkWidget *widget,
       vset (&s.com.texture[2].translate, 15, 15, -15);
 
       gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (texturelist)));
-      restartrender ();
+
+      rebuildlist ();
       break;
 
     case GTK_RESPONSE_OK:
@@ -3034,10 +3034,16 @@ sphere_main (GimpDrawable *drawable)
   memset (img, 0, PREVIEWSIZE * PREVIEWSIZE * 3);
   makewindow ();
 
-  if (!s.com.numtexture)
-    sphere_response (NULL, RESPONSE_RESET, NULL);
-
-  rebuildlist ();
+  if (s.com.numtexture == 0)
+    {
+      /* Setup and use default list */
+      sphere_response (NULL, RESPONSE_RESET, NULL);
+    }
+  else
+    {
+      /* Reuse the list from a previous invocation */
+      rebuildlist ();
+    }
 
   gtk_main ();
 

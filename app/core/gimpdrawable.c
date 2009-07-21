@@ -370,9 +370,7 @@ gimp_drawable_visibility_changed (GimpItem *item)
                                 output, "input");
         }
 
-#ifdef __GNUC__
-#warning FIXME: chain up again when above floating sel special case is gone
-#endif
+      /* FIXME: chain up again when above floating sel special case is gone */
       return;
     }
 
@@ -1859,9 +1857,7 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
 
   gimp_drawable_sync_source_node (drawable, FALSE);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack when the floating sel is no layer any longer
-#endif
+  /* FIXME: remove this hack when the floating sel is no layer any longer */
   g_signal_emit_by_name (floating_sel, "visibility-changed");
 }
 
@@ -1880,9 +1876,7 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
 
   gimp_drawable_sync_source_node (drawable, TRUE);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack when the floating sel is no layer any longer
-#endif
+  /* FIXME: remove this hack when the floating sel is no layer any longer */
   g_signal_emit_by_name (floating_sel, "visibility-changed");
 
   /*  Invalidate the preview of the obscured drawable.  We do this here

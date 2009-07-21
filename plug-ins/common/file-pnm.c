@@ -373,25 +373,25 @@ run (const gchar      *name,
 
           if (strcmp (name, PNM_SAVE_PROC) == 0)
             {
-              export = gimp_export_image (&image_ID, &drawable_ID, "PNM",
+              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                                           GIMP_EXPORT_CAN_HANDLE_RGB  |
                                           GIMP_EXPORT_CAN_HANDLE_GRAY |
                                           GIMP_EXPORT_CAN_HANDLE_INDEXED);
             }
           else if (strcmp (name, PBM_SAVE_PROC) == 0)
             {
-              export = gimp_export_image (&image_ID, &drawable_ID, "PBM",
+              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                                           GIMP_EXPORT_CAN_HANDLE_BITMAP);
               pbm = TRUE;  /* gimp has no mono image type so hack it */
             }
           else if (strcmp (name, PGM_SAVE_PROC) == 0)
             {
-              export = gimp_export_image (&image_ID, &drawable_ID, "PGM",
+              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                                           GIMP_EXPORT_CAN_HANDLE_GRAY);
             }
           else
             {
-              export = gimp_export_image (&image_ID, &drawable_ID, "PPM",
+              export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                                           GIMP_EXPORT_CAN_HANDLE_RGB |
                                           GIMP_EXPORT_CAN_HANDLE_INDEXED);
             }
@@ -1181,21 +1181,7 @@ save_dialog (void)
   GtkWidget *frame;
   gboolean   run;
 
-  dialog = gimp_dialog_new (_("Save as PNM"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, PNM_SAVE_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("PNM"), PLUG_IN_BINARY, PNM_SAVE_PROC);
 
   /*  file save type  */
   frame = gimp_int_radio_group_new (TRUE, _("Data formatting"),
@@ -1207,7 +1193,7 @@ save_dialog (void)
 
                                     NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 

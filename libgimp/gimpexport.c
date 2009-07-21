@@ -657,6 +657,10 @@ export_dialog (GSList      *actions,
  * user chooses Cancel, GIMP_EXPORT_CANCEL is returned and the
  * save_plugin should quit itself with status #GIMP_PDB_CANCEL.
  *
+ * If @format_name is NULL, no dialogs will be shown and this function
+ * will behave as if the user clicked on the 'Export' button, if a
+ * dialog would have been shown.
+ *
  * Returns: An enum of #GimpExportReturn describing the user_action.
  **/
 GimpExportReturn
@@ -923,4 +927,75 @@ gimp_export_image (gint32                 *image_ID,
   g_slist_free (actions);
 
   return retval;
+}
+
+/**
+ * gimp_export_dialog_new:
+ * @format_name: The short name of the image_format (e.g. JPEG or PNG).
+ * @role:        The dialog's @role which will be set with
+ *               gtk_window_set_role().
+ * @help_id:     The GIMP help id.
+ *
+ * Creates a new export dialog. All file plug-ins should use this
+ * dialog to get a consistent look on the export dialogs. Use
+ * gimp_export_dialog_get_content_area() to get a #GtkVBox to be
+ * filled with export options. The export dialog is a wrapped
+ * #GimpDialog.
+ *
+ * The dialog response when the user clicks on the Export button is
+ * %GTK_RESPONSE_OK, and when the Cancel button is clicked it is
+ * %GTK_RESPONSE_CANCEL.
+ *
+ * Returns: The new export dialog.
+ *
+ * Since: GIMP 2.8
+ **/
+GtkWidget *
+gimp_export_dialog_new (const gchar *format_name,
+                        const gchar *role,
+                        const gchar *help_id)
+{
+  GtkWidget *dialog = NULL;
+  GtkWidget *button = NULL;
+  gchar     *title  = g_strconcat (_("Export Image as "), format_name, NULL);
+
+  dialog = gimp_dialog_new (title, role,
+                            NULL, 0,
+                            gimp_standard_help_func, help_id,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            NULL);
+
+  button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
+                                   _("_Export"), GTK_RESPONSE_OK);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_SAVE,
+                                                  GTK_ICON_SIZE_BUTTON));
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  g_free (title);
+
+  return dialog;
+}
+
+/**
+ * gimp_export_dialog_get_content_area:
+ * @dialog: A dialog created with gimp_export_dialog_new()
+ *
+ * Returns the #GtkVBox of the passed export dialog to be filled with
+ * export options.
+ *
+ * Returns: The #GtkVBox to fill with export options.
+ *
+ * Since: GIMP 2.8
+ **/
+GtkWidget *
+gimp_export_dialog_get_content_area (GtkWidget *dialog)
+{
+  return gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 }

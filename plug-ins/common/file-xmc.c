@@ -493,7 +493,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          export = gimp_export_image (&image_ID, &drawable_ID, "XMC",
+          export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_ALPHA |
                                        GIMP_EXPORT_CAN_HANDLE_LAYERS |
@@ -1054,29 +1054,14 @@ save_dialog (const gint32 image_ID, GimpParamRegion *hotspotRange)
   gboolean        run;
 
   g_value_init (&val, G_TYPE_DOUBLE);
-  dialog = gimp_dialog_new (_("Save as X11 Mouse Cursor"), /* title */
-                            PLUG_IN_BINARY,                 /* role */
-                            NULL, 0,                /* parent flags */
-                            gimp_standard_help_func,   /* help func */
-                            SAVE_PROC,                   /* help id */
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_export_dialog_new (_("X11 Mouse Cursor"), PLUG_IN_BINARY, SAVE_PROC);
 
   /*
    * parameter settings
    */
   frame = gimp_frame_new (_("XMC Options"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

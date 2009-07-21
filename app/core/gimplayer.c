@@ -823,9 +823,7 @@ gimp_layer_transform (GimpItem               *item,
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-#ifdef __GNUC__
-#warning FIXME: make interpolated transformations work on layers without alpha
-#endif
+  /* FIXME: make interpolated transformations work on layers without alpha */
   if (interpolation_type != GIMP_INTERPOLATION_NONE &&
       ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)))
     gimp_layer_add_alpha (layer);

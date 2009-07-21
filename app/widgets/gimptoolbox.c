@@ -827,9 +827,7 @@ toolbox_area_notify (GimpGuiConfig *config,
 
       gtk_widget_show (parent);
 
-#ifdef __GNUC__
-#warning FIXME: fix GtkWrapBox child requisition/allocation instead of hacking badly (bug #162500).
-#endif
+      /* FIXME: fix GtkWrapBox child requisition/allocation instead of hacking badly (bug #162500). */
       gtk_widget_size_request (area, &req);
       gtk_widget_set_size_request (parent, req.width, req.height);
     }

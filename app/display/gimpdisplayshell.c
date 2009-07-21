@@ -79,6 +79,7 @@
 #include "gimpdisplayshell-transform.h"
 #include "gimpstatusbar.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 enum
@@ -652,6 +653,11 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
 
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
+      GIMP_LOG (WM, "Display shell '%s' [%p] set fullscreen %s",
+                gtk_window_get_title (GTK_WINDOW (widget)),
+                widget,
+                fullscreen ? "TURE" : "FALSE");
+
       group = gimp_ui_manager_get_action_group (shell->menubar_manager, "view");
       gimp_action_group_set_action_active (group,
                                            "view-fullscreen", fullscreen);
@@ -671,10 +677,19 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
       gboolean iconified = (event->new_window_state &
                             GDK_WINDOW_STATE_ICONIFIED) != 0;
 
+      GIMP_LOG (WM, "Display shell '%s' [%p] set %s",
+                gtk_window_get_title (GTK_WINDOW (widget)),
+                widget,
+                iconified ? "iconified" : "uniconified");
+
       if (iconified)
         {
           if (gimp_displays_get_num_visible (gimp) == 0)
-            gimp_dialog_factories_hide_with_display ();
+            {
+              GIMP_LOG (WM, "No displays visible any longer");
+
+              gimp_dialog_factories_hide_with_display ();
+            }
         }
       else
         {

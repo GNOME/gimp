@@ -735,12 +735,6 @@ Restore saved keyboard shortcuts on each GIMP startup.  Possible values are
 yes and no.
 
 .TP
-(menu-mnemonics yes)
-
-When enabled, GIMP will show mnemonics in menus.  Possible values are yes and
-no.
-
-.TP
 (last-opened-size 10)
 
 How many recently opened image filenames to keep on the File menu.  This is an
@@ -850,14 +844,6 @@ normal, utility and keep-above.
 The window type hint that is set on dock windows. This may affect the way your
 window manager decorates and handles dock windows.  Possible values are
 normal, utility and keep-above.
-
-.TP
-(transient-docks no)
-
-When enabled, dock windows (the toolbox and palettes) are set to be transient
-to the active image window. Most window managers will keep the dock windows
-above the image window then, but it may also have other effects.  Possible
-values are yes and no.
 
 .TP
 (cursor-format pixbuf)

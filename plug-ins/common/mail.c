@@ -707,7 +707,11 @@ to64 (const gchar  *filename,
   bytes = g_base64_encode_close (TRUE, out, &state, &save);
   fwrite (out, 1, bytes, outfile);
 
+#if GLIB_CHECK_VERSION(2, 21, 3)
+  g_mapped_file_unref (infile);
+#else
   g_mapped_file_free (infile);
+#endif
 
   return TRUE;
 }

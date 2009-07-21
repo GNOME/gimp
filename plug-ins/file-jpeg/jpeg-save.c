@@ -828,19 +828,7 @@ save_dialog (void)
   gchar         *text;
 
 
-  dialog = gimp_dialog_new (_("Save as JPEG"), PLUG_IN_BINARY,
-                            NULL, 0,
-                            gimp_standard_help_func, SAVE_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+  dialog = gimp_export_dialog_new (_("JPEG"), PLUG_IN_BINARY, SAVE_PROC);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (save_dialog_response),
@@ -850,11 +838,10 @@ save_dialog (void)
                     NULL);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -1180,7 +1167,7 @@ save_dialog (void)
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 

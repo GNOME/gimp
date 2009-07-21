@@ -78,7 +78,6 @@ extern void print_control_point(FILE *f, control_point *cp, int quote);
 extern void random_control_point(control_point *cp, int ivar);
 extern void parse_control_point(char **ss, control_point *cp);
 extern void estimate_bounding_box(control_point *cp, double eps, double *bmin, double *bmax);
-extern void sort_control_points(control_point *cps, int ncps, double (*metric)());
 extern double standard_metric(control_point *cp1, control_point *cp2);
 extern double random_uniform01(void);
 extern double random_uniform11(void);

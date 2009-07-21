@@ -76,7 +76,11 @@ jpeg_exif_data_new_from_file (const gchar  *filename,
   data = exif_data_new_from_data ((guchar *) g_mapped_file_get_contents (file),
                                   g_mapped_file_get_length (file));
 
+#if GLIB_CHECK_VERSION(2, 21, 3)
+  g_mapped_file_unref (file);
+#else
   g_mapped_file_free (file);
+#endif
 
   return data;
 }

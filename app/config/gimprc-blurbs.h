@@ -196,9 +196,6 @@ N_("Speed of marching ants in the selection outline.  This value is in " \
 N_("GIMP will warn the user if an attempt is made to create an image that " \
    "would take more memory than the size specified here.")
 
-#define MENU_MNEMONICS_BLURB  \
-N_("When enabled, GIMP will show mnemonics in menus.")
-
 #define MIN_COLORS_BLURB  \
 N_("Generally only a concern for 8-bit displays, this sets the minimum " \
    "number of system colors allocated for GIMP.")
@@ -359,12 +356,6 @@ N_("Sets the swap file location. GIMP uses a tile based memory allocation " \
 
 #define TEAROFF_MENUS_BLURB \
 N_("When enabled, menus can be torn off.")
-
-#define TRANSIENT_DOCKS_BLURB \
-N_("When enabled, dock windows (the toolbox and palettes) are set to be " \
-   "transient to the active image window. Most window managers will " \
-   "keep the dock windows above the image window then, but it may also " \
-   "have other effects.")
 
 #define CAN_CHANGE_ACCELS_BLURB \
 N_("When enabled, you can change keyboard shortcuts for menu items " \
