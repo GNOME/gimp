@@ -69,7 +69,6 @@ struct _GimpGuiConfig
   gchar               *user_manual_online_uri;
   GimpWindowHint       toolbox_window_hint;
   GimpWindowHint       dock_window_hint;
-  gboolean             transient_docks;
   GimpCursorFormat     cursor_format;
 
   gint                 last_tip;  /* saved in sessionrc */

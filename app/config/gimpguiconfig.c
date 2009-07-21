@@ -81,14 +81,14 @@ enum
   PROP_USER_MANUAL_ONLINE_URI,
   PROP_TOOLBOX_WINDOW_HINT,
   PROP_DOCK_WINDOW_HINT,
-  PROP_TRANSIENT_DOCKS,
   PROP_CURSOR_FORMAT,
 
   /* ignored, only for backward compatibility: */
   PROP_INFO_WINDOW_PER_DISPLAY,
   PROP_MENU_MNEMONICS,
   PROP_SHOW_TOOL_TIPS,
-  PROP_SHOW_TIPS
+  PROP_SHOW_TIPS,
+  PROP_TRANSIENT_DOCKS
 };
 
 
@@ -264,10 +264,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_WINDOW_HINT_UTILITY,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
-                                    "transient-docks", TRANSIENT_DOCKS_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
                                  "cursor-format", CURSOR_FORMAT_BLURB,
                                  GIMP_TYPE_CURSOR_FORMAT,
@@ -293,6 +289,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
                                     "show-tips", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
+                                    "transient-docks", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_IGNORE);
@@ -422,9 +423,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_DOCK_WINDOW_HINT:
       gui_config->dock_window_hint = g_value_get_enum (value);
       break;
-    case PROP_TRANSIENT_DOCKS:
-      gui_config->transient_docks = g_value_get_boolean (value);
-      break;
     case PROP_CURSOR_FORMAT:
       gui_config->cursor_format = g_value_get_enum (value);
       break;
@@ -433,6 +431,7 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_MENU_MNEMONICS:
     case PROP_SHOW_TOOL_TIPS:
     case PROP_SHOW_TIPS:
+    case PROP_TRANSIENT_DOCKS:
       /* ignored */
       break;
 
@@ -542,9 +541,6 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_DOCK_WINDOW_HINT:
       g_value_set_enum (value, gui_config->dock_window_hint);
       break;
-    case PROP_TRANSIENT_DOCKS:
-      g_value_set_boolean (value, gui_config->transient_docks);
-      break;
     case PROP_CURSOR_FORMAT:
       g_value_set_enum (value, gui_config->cursor_format);
       break;
@@ -553,6 +549,7 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_MENU_MNEMONICS:
     case PROP_SHOW_TOOL_TIPS:
     case PROP_SHOW_TIPS:
+    case PROP_TRANSIENT_DOCKS:
       /* ignored */
       break;
 

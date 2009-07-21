@@ -360,12 +360,6 @@ N_("Sets the swap file location. GIMP uses a tile based memory allocation " \
 #define TEAROFF_MENUS_BLURB \
 N_("When enabled, menus can be torn off.")
 
-#define TRANSIENT_DOCKS_BLURB \
-N_("When enabled, dock windows (the toolbox and palettes) are set to be " \
-   "transient to the active image window. Most window managers will " \
-   "keep the dock windows above the image window then, but it may also " \
-   "have other effects.")
-
 #define CAN_CHANGE_ACCELS_BLURB \
 N_("When enabled, you can change keyboard shortcuts for menu items " \
    "by hitting a key combination while the menu item is highlighted.")
