@@ -55,7 +55,7 @@ static gboolean    tool_has_color_dynamics        (GType       tool_type);
 static gboolean    tool_has_angle_dynamics        (GType       tool_type);
 static gboolean    tool_has_aspect_ratio_dynamics (GType       tool_type);
 
-static void        pressure_options_gui  (GimpPaintOptions *paint_options,
+/*static void        pressure_options_gui  (GimpPaintOptions *paint_options,
                                           GType             tool_type,
                                           GtkTable         *table,
                                           gint              row,
@@ -75,7 +75,7 @@ static void        tilt_options_gui      (GimpPaintOptions *paint_options,
 static void        random_options_gui    (GimpPaintOptions *paint_options,
                                           GType             tool_type,
                                           GtkTable         *table,
-                                          gint              row);
+                                          gint              row);*/
 /**/
 static void        fading_options_gui    (GimpPaintOptions *paint_options,
                                           GType             tool_type,
@@ -176,7 +176,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                              FALSE, 0.0, 0.0);
     }
 
-  if (tool_has_opacity_dynamics (tool_type))
+  /*if (tool_has_opacity_dynamics (tool_type))
     {
       dynamics_labels[n_dynamics] = gtk_label_new (_("Opacity"));
       n_dynamics++;
@@ -218,12 +218,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       dynamics_labels[n_dynamics] = gtk_label_new (_("Color"));
       n_dynamics++;
     }
-
+  */
   /* NB: When adding new dynamics, increase size of the
    * dynamics_labels[] array
    */
 
-
+/*
   if (n_dynamics > 0)
     {
       GtkWidget *inner_frame;
@@ -301,11 +301,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       fading_options_gui (options, tool_type,
                           GTK_TABLE (table), 6);
 
+       */
       /* EEK: pack the fixed *after* the buttons so the table calls
        * size-allocates on it *before* it places the toggles. Fixes
        * label positions in RTL mode.
        */
-      fixed = gtk_fixed_new ();
+   /*   fixed = gtk_fixed_new ();
       gtk_table_attach (GTK_TABLE (table), fixed, 0, n_dynamics + 2, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (fixed);
@@ -318,7 +319,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
           gtk_fixed_put (GTK_FIXED (fixed), dynamics_labels[i], 0, 0);
           gtk_widget_show (dynamics_labels[i]);
         }
-    }
+    }*/
 
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
