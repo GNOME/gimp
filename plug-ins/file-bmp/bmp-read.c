@@ -26,8 +26,10 @@
 #include <string.h>
 
 #include <glib/gstdio.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimppixbuf.h>
 
 #include "bmp.h"
 
@@ -366,10 +368,35 @@ ReadBMP (const gchar  *name,
     }
   else
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Error reading BMP file header from '%s'"),
-                   gimp_filename_to_utf8 (filename));
-      return -1;
+      GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+
+      if (pixbuf)
+        {
+          gint32 layer_ID;
+
+          image_ID = gimp_image_new (gdk_pixbuf_get_width (pixbuf),
+                                     gdk_pixbuf_get_height (pixbuf),
+                                     GIMP_RGB);
+
+          layer_ID = gimp_layer_new_from_pixbuf (image_ID, _("Background"),
+                                                 pixbuf,
+                                                 100.,
+                                                 GIMP_NORMAL_MODE, 0, 0);
+          g_object_unref (pixbuf);
+
+          gimp_image_set_filename (image_ID, filename);
+          gimp_image_add_layer (image_ID, layer_ID, -1);
+
+          return image_ID;
+        }
+      else
+        {
+
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading BMP file header from '%s'"),
+                       gimp_filename_to_utf8 (filename));
+          return -1;
+        }
     }
 
   /* Valid bitpdepthis 1, 4, 8, 16, 24, 32 */
