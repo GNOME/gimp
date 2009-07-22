@@ -26,6 +26,5 @@
   <menuitem action="dialogs-images" />
   <menuitem action="dialogs-document-history" />
   <menuitem action="dialogs-templates" />
-  <menuitem action="dialogs-tools" />
   <menuitem action="dialogs-error-console" />
 </menuitems>

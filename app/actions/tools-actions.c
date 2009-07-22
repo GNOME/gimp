@@ -42,54 +42,11 @@
 
 static const GimpActionEntry tools_actions[] =
 {
-  { "tools-popup", GIMP_STOCK_TOOLS,
-    NC_("tools-action", "Tools Menu"), NULL, NULL, NULL,
-    GIMP_HELP_TOOLS_DIALOG },
-
   { "tools-menu",           NULL, NC_("tools-action", "_Tools")           },
   { "tools-select-menu",    NULL, NC_("tools-action", "_Selection Tools") },
   { "tools-paint-menu",     NULL, NC_("tools-action", "_Paint Tools")     },
   { "tools-transform-menu", NULL, NC_("tools-action", "_Transform Tools") },
   { "tools-color-menu",     NULL, NC_("tools-action", "_Color Tools")     },
-
-  { "tools-raise", GTK_STOCK_GO_UP,
-    NC_("tools-action", "R_aise Tool"), NULL,
-    NC_("tools-action", "Raise this tool"),
-    G_CALLBACK (tools_raise_cmd_callback),
-    NULL },
-
-  { "tools-raise-to-top", GTK_STOCK_GOTO_TOP,
-    NC_("tools-action", "Ra_ise to Top"), NULL,
-    NC_("tools-action", "Raise this tool to the top"),
-    G_CALLBACK (tools_raise_to_top_cmd_callback),
-    NULL },
-
-  { "tools-lower", GTK_STOCK_GO_DOWN,
-    NC_("tools-action", "L_ower Tool"), NULL,
-    NC_("tools-action", "Lower this tool"),
-    G_CALLBACK (tools_lower_cmd_callback),
-    NULL },
-
-  { "tools-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
-    NC_("tools-action", "Lo_wer to Bottom"), NULL,
-    NC_("tools-action", "Lower this tool to the bottom"),
-    G_CALLBACK (tools_lower_to_bottom_cmd_callback),
-    NULL },
-
-  { "tools-reset", GIMP_STOCK_RESET,
-    NC_("tools-action", "_Reset Order & Visibility"), NULL,
-    NC_("tools-action", "Reset tool order and visibility"),
-    G_CALLBACK (tools_reset_cmd_callback),
-    NULL }
-};
-
-static const GimpToggleActionEntry tools_toggle_actions[] =
-{
-  { "tools-visibility", GIMP_STOCK_VISIBLE,
-    NC_("tools-action", "_Show in Toolbox"), NULL, NULL,
-    G_CALLBACK (tools_toggle_visibility_cmd_callback),
-    TRUE,
-    NULL /* FIXME */ }
 };
 
 static const GimpStringActionEntry tools_alternative_actions[] =
@@ -638,10 +595,6 @@ tools_actions_setup (GimpActionGroup *group)
                                  tools_actions,
                                  G_N_ELEMENTS (tools_actions));
 
-  gimp_action_group_add_toggle_actions (group, "tools-action",
-                                        tools_toggle_actions,
-                                        G_N_ELEMENTS (tools_toggle_actions));
-
   gimp_action_group_add_string_actions (group, "tools-action",
                                         tools_alternative_actions,
                                         G_N_ELEMENTS (tools_alternative_actions),
@@ -763,39 +716,4 @@ void
 tools_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpContext   *context   = gimp_get_user_context (group->gimp);
-  GimpToolInfo  *tool_info = gimp_context_get_tool (context);
-  GimpContainer *container = context->gimp->tool_info_list;
-  gboolean       raise     = FALSE;
-  gboolean       lower     = FALSE;
-
-#define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
-#define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
-
-  SET_SENSITIVE ("tools-visibility", tool_info);
-
-  if (tool_info)
-    {
-      gint last_index;
-      gint index;
-
-      SET_ACTIVE ("tools-visibility", tool_info->visible);
-
-      last_index = gimp_container_get_n_children (container) -1;
-      index      = gimp_container_get_child_index   (container,
-                                                     GIMP_OBJECT (tool_info));
-
-      raise = index != 0;
-      lower = index != last_index;
-    }
-
-  SET_SENSITIVE ("tools-raise",           raise);
-  SET_SENSITIVE ("tools-raise-to-top",    raise);
-  SET_SENSITIVE ("tools-lower",           lower);
-  SET_SENSITIVE ("tools-lower-to-bottom", lower);
-
-#undef SET_SENSITIVE
-#undef SET_ACTIVE
 }

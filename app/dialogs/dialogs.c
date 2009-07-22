@@ -165,8 +165,6 @@ static const GimpDialogFactoryEntry dock_entries[] =
             GIMP_HELP_PALETTE_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
   LISTGRID (font, N_("Fonts"), NULL, GIMP_STOCK_FONT,
             GIMP_HELP_FONT_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LISTGRID (tool, N_("Tools"), NULL, GIMP_STOCK_TOOLS,
-            GIMP_HELP_TOOLS_DIALOG, GIMP_VIEW_SIZE_SMALL),
   LISTGRID (buffer, N_("Buffers"), NULL, GIMP_STOCK_BUFFER,
             GIMP_HELP_BUFFER_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
   LISTGRID (document, N_("History"), N_("Document History"), "document-open-recent",

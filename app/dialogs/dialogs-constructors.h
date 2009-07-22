@@ -113,9 +113,6 @@ GtkWidget * dialogs_palette_list_view_new  (GimpDialogFactory *factory,
 GtkWidget * dialogs_font_list_view_new     (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
-GtkWidget * dialogs_tool_list_view_new     (GimpDialogFactory *factory,
-                                            GimpContext       *context,
-                                            gint               view_size);
 GtkWidget * dialogs_buffer_list_view_new   (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
@@ -142,9 +139,6 @@ GtkWidget * dialogs_palette_grid_view_new  (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
 GtkWidget * dialogs_font_grid_view_new     (GimpDialogFactory *factory,
-                                            GimpContext       *context,
-                                            gint               view_size);
-GtkWidget * dialogs_tool_grid_view_new     (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
 GtkWidget * dialogs_buffer_grid_view_new   (GimpDialogFactory *factory,

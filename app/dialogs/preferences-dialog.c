@@ -49,6 +49,7 @@
 #include "widgets/gimpprofilechooserdialog.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptemplateeditor.h"
+#include "widgets/gimptooleditor.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -1990,6 +1991,20 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_unref (size_group);
   size_group = NULL;
+
+  /* Tool Order */
+  {
+    GtkWidget *tool_view;
+
+    vbox2 = prefs_frame_new (_("Tools configuration"),
+                             GTK_CONTAINER (vbox), TRUE);
+    tool_view = gimp_tool_editor_new (gimp->tool_info_list, gimp->user_context,
+                                      gimp_tools_get_default_order (gimp),
+                                      GIMP_VIEW_SIZE_SMALL, 1);
+
+    gtk_box_pack_start (GTK_BOX (vbox2), tool_view, TRUE, TRUE, 0);
+    gtk_widget_show (tool_view);
+  }
 
 
   /***********************/

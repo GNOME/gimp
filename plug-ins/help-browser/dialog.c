@@ -331,7 +331,7 @@ browser_dialog_load (const gchar *uri)
 {
   g_return_if_fail (uri != NULL);
 
-  webkit_web_view_open (WEBKIT_WEB_VIEW (view), uri);
+  webkit_web_view_load_uri (WEBKIT_WEB_VIEW (view), uri);
 
   select_index (uri);
 
