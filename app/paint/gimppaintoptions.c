@@ -407,6 +407,57 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_HARD:
       g_value_set_boolean (value, options->hard);
       break;
+    case PROP_USE_JITTER:
+      jitter_options->use_jitter = g_value_get_boolean (value);
+      break;
+
+    case PROP_JITTER_AMOUNT:
+      jitter_options->jitter_amount = g_value_get_double (value);
+      break;
+
+    case PROP_USE_GRADIENT:
+      gradient_options->use_gradient = g_value_get_boolean (value);
+      break;
+
+    case PROP_GRADIENT_REVERSE:
+      gradient_options->gradient_reverse = g_value_get_boolean (value);
+      break;
+
+    case PROP_GRADIENT_REPEAT:
+      gradient_options->gradient_repeat = g_value_get_enum (value);
+      break;
+
+    case PROP_GRADIENT_LENGTH:
+      gradient_options->gradient_length = g_value_get_double (value);
+      break;
+
+    case PROP_GRADIENT_UNIT:
+      gradient_options->gradient_unit = g_value_get_int (value);
+      break;
+
+    case PROP_BRUSH_VIEW_TYPE:
+      options->brush_view_type = g_value_get_enum (value);
+      break;
+
+    case PROP_BRUSH_VIEW_SIZE:
+      options->brush_view_size = g_value_get_int (value);
+      break;
+
+    case PROP_PATTERN_VIEW_TYPE:
+      options->pattern_view_type = g_value_get_enum (value);
+      break;
+
+    case PROP_PATTERN_VIEW_SIZE:
+      options->pattern_view_size = g_value_get_int (value);
+      break;
+
+    case PROP_GRADIENT_VIEW_TYPE:
+      options->gradient_view_type = g_value_get_enum (value);
+      break;
+
+    case PROP_GRADIENT_VIEW_SIZE:
+      options->gradient_view_size = g_value_get_int (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
