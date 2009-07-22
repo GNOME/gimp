@@ -290,9 +290,9 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
 
         g_list_free (fg_select->strokes);
         fg_select->strokes = NULL;
-         
-		g_list_free (fg_select->drbsignals);
-		fg_select->drbsignals = NULL;  
+        g_list_free (fg_select->drbsignals);
+	fg_select->drbsignals = NULL;  
+        
         if (fg_select->state)
           {
             gimp_drawable_foreground_extract_siox_done (fg_select->state);
@@ -339,7 +339,7 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
           if (fg_select->strokes)
             {
 		if(!fg_select->drbsignal)
-		  status = _("Add more strokes or click buttondrb to drb");
+		  status = _("Add more strokes or click button DRB to drb");
 		else
 		  status = _("Add more drb or press Enter to accept the selection");
 	    }
@@ -437,8 +437,7 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
         { 
         case GDK_Return:
         case GDK_KP_Enter:
-        case GDK_ISO_Enter:
-          printf("click Enter\n");	
+        case GDK_ISO_Enter:	
           gimp_foreground_select_tool_apply (fg_select, display);
           return TRUE;
 
@@ -720,9 +719,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   drawable  = gimp_image_get_active_drawable (image);
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
   options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (free_sel);
-  printf("mark_drb = %d\n",mark_drb);
-  printf(" fg_select->refinement\n", fg_select->refinement); 	
-  printf("options->refinement\n", options->refinement); 		
+		
   if (fg_select->idle_id)
     {
       g_source_remove (fg_select->idle_id);
@@ -755,15 +752,16 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                   gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                                   0, 0, 128);
   gimp_scan_convert_free (scan_convert);
-printf(" fg_select->refinement\n", fg_select->refinement); 
+
   if (fg_select->strokes)
     { 
       GList *list;
       GList *drblist;
       gimp_set_busy (image->gimp);
-      if(!mark_drb) 
+     
 			
       /*  apply foreground and background markers  */
+      if (!mark_drb) 
         for (list = fg_select->strokes; list; list = list->next)
           gimp_foreground_select_tool_stroke (mask, list->data);
       else if (mark_drb)
@@ -771,7 +769,7 @@ printf(" fg_select->refinement\n", fg_select->refinement);
           gimp_foreground_select_tool_stroke (mask, drblist->data);
 			
       if (fg_select->state)
-	{ printf("fg_select->state\n");
+	{
 	  gimp_drawable_foreground_extract_siox (GIMP_DRAWABLE (mask),
 	                                         fg_select->state,
 	                                         fg_select->refinement,

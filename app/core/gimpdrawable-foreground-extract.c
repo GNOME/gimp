@@ -165,9 +165,12 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
     }
   else
     {
-      gimp_drawable_foreground_extract_siox_drb (gimp_drawable_get_tiles (mask),
-                                                 state,sioxdrboption,sioxdrbthreshold,
-                                                 brush_radius,progress);
+      siox_drb (state,
+                gimp_drawable_get_tiles (mask),
+                state->x,state->y,
+                brush_radius,
+                sioxdrboption,
+                sioxdrbthreshold);
     }
   if (progress)
     gimp_progress_end (progress);
@@ -183,7 +186,7 @@ gimp_drawable_foreground_extract_siox_done (SioxState *state)
   siox_done (state);
 }
 
-
+/*
 void                                  
 gimp_drawable_foreground_extract_siox_drb (TileManager       *mask,
                                            SioxState         *state,
@@ -208,7 +211,7 @@ gimp_drawable_foreground_extract_siox_drb (TileManager       *mask,
 }
 
 
-
+*/
 
 
 

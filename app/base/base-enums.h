@@ -147,7 +147,7 @@ typedef enum  /*< pdb-skip, skip >///(new)
   SIOX_DRB_ADD                       = 0,
   SIOX_DRB_SUBTRACT                  = 1,
   SIOX_DRB_NO_CHANGE                 = (1 << 1),
- // SIOX_DRB_CHANGE_THRESHOLD          = (1 << 2),/* threshold  /
+//SIOX_DRB_CHANGE_THRESHOLD          = (1 << 2),/* threshold  /
   SIOX_DRB_RECALCULATE               = 0xFF
 } SioxDRBType;*/
 

@@ -95,7 +95,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
   
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DRB,
                                     "drb",
-                                    _("drb can use"),
+                                    _("Detail refinement brush can use"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);                                  
   

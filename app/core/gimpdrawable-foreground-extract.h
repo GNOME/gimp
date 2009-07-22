@@ -46,11 +46,11 @@ void        gimp_drawable_foreground_extract_siox  (GimpDrawable       *mask,
                                                     GimpProgress       *progress);
 void        gimp_drawable_foreground_extract_siox_done (SioxState      *state);
 
-void        gimp_drawable_foreground_extract_siox_drb (TileManager       *mask,
+/*void        gimp_drawable_foreground_extract_siox_drb (TileManager       *mask,
                                                        SioxState         *state,
                                                        SioxDRBType        optionsrefinement,
                                                        gfloat             optionsthreshold,
                                                        gint               radius,
                                                        GimpProgress      *progress);
-
+*/
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */
