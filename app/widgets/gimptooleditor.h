@@ -2,7 +2,8 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimptooleditor.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
+ *                         Stephen Griffiths <scgmk5@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,11 +49,11 @@ struct _GimpToolEditorClass
 
 GType       gimp_tool_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tool_editor_new (GimpContainer *container,
-                                  GimpContext   *context,
-                                  GList         *defualt_tool_order,
-                                  gint           view_size,
-                                  gint           view_border_width);
+GtkWidget * gimp_tool_editor_new      (GimpContainer *container,
+                                       GimpContext   *context,
+                                       GList         *defualt_tool_order,
+                                       gint           view_size,
+                                       gint           view_border_width);
 
 
 #endif  /*  __GIMP_TOOL_EDITOR_H__  */
