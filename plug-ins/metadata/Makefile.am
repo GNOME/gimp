@@ -1,5 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpxmpmodelentry = libgimpxmpmodelentry.a
 libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
@@ -13,6 +14,14 @@ mwindows = -mwindows
 endif
 
 AM_LDFLAGS = $(mwindows)
+
+noinst_LIBRARIES = libgimpxmpmodelentry.a
+
+libgimpxmpmodelentry_a_SOURCES = \
+	gimpxmpmodelentry.h	\
+	gimpxmpmodelentry.c	\
+	xmp-model.c		\
+	xmp-model.h
 
 libexecdir = $(gimpplugindir)/plug-ins
 
@@ -61,6 +70,8 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
+	$(libgimpxmpmodelentry)	\
+	$(libgimp)		\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\

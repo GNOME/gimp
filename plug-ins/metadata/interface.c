@@ -53,6 +53,7 @@
 #include "interface.h"
 #include "metadata.h"
 #include "xmp-encode.h"
+#include "gimpxmpmodelentry.h"
 
 
 #define RESPONSE_IMPORT   1
@@ -69,10 +70,10 @@ typedef struct
 } MetadataGui;
 
 static void
-value_edited (GtkCellRendererText *cell,
-        const gchar         *path_string,
-        const gchar         *new_text,
-        gpointer             data)
+tree_value_edited (GtkCellRendererText *cell,
+                   const gchar         *path_string,
+                   const gchar         *new_text,
+                   gpointer             data)
 {
   GtkTreeModel *model = data;
   GtkTreePath  *path  = gtk_tree_path_new_from_string (path_string);
@@ -86,8 +87,8 @@ value_edited (GtkCellRendererText *cell,
   /* FIXME: update value[] array */
   /* FIXME: check widget xref and update other widget if not NULL */
   gtk_tree_store_set (GTK_TREE_STORE (model), &iter,
-          COL_XMP_VALUE, new_text,
-          -1);
+                      COL_XMP_VALUE, new_text,
+                      -1);
 
   gtk_tree_path_free (path);
 }
@@ -136,7 +137,7 @@ add_view_columns (GtkTreeView *treeview)
   g_object_set (renderer, "xalign", 0.0, NULL);
 
   g_signal_connect (renderer, "edited",
-        G_CALLBACK (value_edited), model);
+                    G_CALLBACK (tree_value_edited), model);
   col_offset =
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (treeview),
                                                  -1, _("Value"),
@@ -195,6 +196,7 @@ typedef struct
   const gchar *schema;
   const gchar *property_name;
   GSList      *widget_list;
+  MetadataGui *mgui;
 } WidgetXRef;
 
 static void
@@ -203,13 +205,18 @@ entry_changed (GtkEntry *entry,
 {
   WidgetXRef *xref = user_data;
 
-  g_print ("XMP: %s %p %p %s\n", xref->property_name, entry, user_data, gtk_entry_get_text (entry)); /* FIXME */
+  xmp_model_set_scalar_property (xref->mgui->xmp_model,
+                                 xref->schema,
+                                 xref->property_name,
+                                 gtk_entry_get_text (entry));
+  update_icons (xref->mgui);
 }
 
 static void
 register_entry_xref (GtkWidget   *entry,
                      const gchar *schema,
-                     const gchar *property_name)
+                     const gchar *property_name,
+                     MetadataGui *mgui)
 {
   WidgetXRef *xref;
 
@@ -217,13 +224,14 @@ register_entry_xref (GtkWidget   *entry,
   xref->schema = schema;
   xref->property_name = property_name;
   xref->widget_list = g_slist_prepend (NULL, entry);
+  xref->mgui = mgui;
   g_signal_connect (GTK_ENTRY (entry), "changed",
-        G_CALLBACK (entry_changed), xref);
+                    G_CALLBACK (entry_changed), xref);
 }
 
 static void
 text_changed (GtkTextBuffer *text_buffer,
-             gpointer       user_data)
+              gpointer       user_data)
 {
   WidgetXRef  *xref = user_data;
   GtkTextIter  start;
@@ -245,11 +253,12 @@ register_text_xref (GtkTextBuffer *text_buffer,
   xref->property_name = property_name;
   xref->widget_list = g_slist_prepend (NULL, text_buffer);
   g_signal_connect (GTK_TEXT_BUFFER (text_buffer), "changed",
-        G_CALLBACK (text_changed), xref);
+                    G_CALLBACK (text_changed), xref);
 }
 
 static void
-add_description_tab (GtkWidget *notebook)
+add_description_tab (GtkWidget   *notebook,
+                     MetadataGui *mgui)
 {
   GtkWidget     *frame;
   GtkWidget     *table;
@@ -262,7 +271,7 @@ add_description_tab (GtkWidget *notebook)
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
           gtk_label_new (_("Description")));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
-  /* gtk_widget_show (frame); */
+  gtk_widget_show (frame);
 
   table = gtk_table_new (5, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -270,17 +279,16 @@ add_description_tab (GtkWidget *notebook)
   gtk_container_add (GTK_CONTAINER (frame), table);
   /* gtk_widget_show (table); */
 
-  entry = gtk_entry_new ();
-  register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "title");
+  entry = gimp_xmp_model_entry_new (XMP_SCHEMA_DUBLIN_CORE, "title", mgui->xmp_model);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-           _("Image _title:"), 0.0, 0.5,
-           entry, 1, FALSE);
+                             _("Image _title:"), 0.0, 0.5,
+                             entry, 1, FALSE);
 
-  entry = gtk_entry_new ();
-  register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "creator");
+  entry = gimp_xmp_model_entry_new (XMP_SCHEMA_DUBLIN_CORE, "creator", mgui->xmp_model);
+  //register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "creator", mgui);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-           _("_Author:"), 0.0, 0.5,
-           entry, 1, FALSE);
+                             _("_Author:"), 0.0, 0.5,
+                             entry, 1, FALSE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -302,7 +310,7 @@ add_description_tab (GtkWidget *notebook)
            scrolled_window, 1, FALSE);
 
   entry = gtk_entry_new ();
-  register_entry_xref (entry, XMP_SCHEMA_PHOTOSHOP, "CaptionWriter");
+  register_entry_xref (entry, XMP_SCHEMA_PHOTOSHOP, "CaptionWriter", mgui);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
            _("Description _writer:"), 0.0, 0.5,
            entry, 1, FALSE);
@@ -697,7 +705,7 @@ metadata_dialog (gint32    image_ID,
   mgui.run_ok = FALSE;
 
   /* add the tabs to the notebook */
-  add_description_tab (notebook);
+  add_description_tab (notebook, &mgui);
   add_copyright_tab (notebook);
   add_origin_tab (notebook);
   add_camera1_tab (notebook);
