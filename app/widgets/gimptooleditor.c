@@ -2,7 +2,8 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimptooleditor.c
- * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
+ *                         Stephen Griffiths <scgmk5@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +36,6 @@
 #include "gimpviewrenderer.h"
 #include "gimptooleditor.h"
 #include "gimphelp-ids.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -75,12 +75,23 @@ static void   gimp_tool_editor_eye_clicked (GtkCellRendererToggle *toggle,
                                             gchar                 *path_str,
                                             GdkModifierType        state,
                                             GimpToolEditor        *tool_editor);
-static void   gimp_tool_editor_button_clicked
+
+static void   gimp_tool_editor_raise_clicked
                                            (GtkButton             *button,
                                             GimpToolEditor        *tool_editor);
-static void   gimp_tool_editor_button_extend_clicked
+static void   gimp_tool_editor_raise_extend_clicked
                                            (GtkButton             *button,
                                             GdkModifierType        mask,
+                                            GimpToolEditor        *tool_editor);
+static void   gimp_tool_editor_lower_clicked
+                                           (GtkButton             *button,
+                                            GimpToolEditor        *tool_editor);
+static void   gimp_tool_editor_lower_extend_clicked
+                                           (GtkButton             *button,
+                                            GdkModifierType        mask,
+                                            GimpToolEditor        *tool_editor);
+static void   gimp_tool_editor_reset_clicked
+                                           (GtkButton             *button,
                                             GimpToolEditor        *tool_editor);
 
 
@@ -96,7 +107,7 @@ G_DEFINE_TYPE (GimpToolEditor, gimp_tool_editor, GIMP_TYPE_CONTAINER_TREE_VIEW)
 static void
 gimp_tool_editor_class_init (GimpToolEditorClass *klass)
 {
-  GtkObjectClass           *object_class = GTK_OBJECT_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
   g_type_class_add_private (klass, sizeof (GimpToolEditorPrivate));
 
@@ -133,14 +144,14 @@ gimp_tool_editor_destroy (GtkObject *object)
       priv->visible_handler_id = 0;
     }
 
-  priv->context            = NULL;
-  priv->container          = NULL;
+  priv->context      = NULL;
+  priv->container    = NULL;
 
-  priv->raise_button       = NULL;
-  priv->lower_button       = NULL;
-  priv->reset_button       = NULL;
+  priv->raise_button = NULL;
+  priv->lower_button = NULL;
+  priv->reset_button = NULL;
 
-  priv->scrolled           = NULL;
+  priv->scrolled     = NULL;
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -158,8 +169,8 @@ gimp_tool_editor_new (GimpContainer *container,
   GObject               *object;
   GimpToolEditorPrivate *priv;
 
-  g_return_val_if_fail (container != NULL, NULL);
-  g_return_val_if_fail (context   != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   object         = g_object_new (GIMP_TYPE_TOOL_EDITOR, NULL);
   tool_editor    = GIMP_TOOL_EDITOR (object);
@@ -211,6 +222,7 @@ gimp_tool_editor_new (GimpContainer *container,
     g_signal_connect (eye_cell, "clicked",
                       G_CALLBACK (gimp_tool_editor_eye_clicked),
                       tool_editor);
+
     priv->visible_handler_id =
       gimp_container_add_handler (container, "notify::visible",
                                   G_CALLBACK (gimp_tool_editor_visible_notify),
@@ -222,40 +234,40 @@ gimp_tool_editor_new (GimpContainer *container,
     gimp_editor_add_button (GIMP_EDITOR (tree_view), GTK_STOCK_GO_UP,
                             _("Raise this tool Raise this tool to the top"),
                             NULL,
-                            G_CALLBACK (gimp_tool_editor_button_clicked),
-                            G_CALLBACK (gimp_tool_editor_button_extend_clicked),
+                            G_CALLBACK (gimp_tool_editor_raise_clicked),
+                            G_CALLBACK (gimp_tool_editor_raise_extend_clicked),
                             tool_editor);
+
   priv->lower_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view), GTK_STOCK_GO_DOWN,
                             _("Lower this tool Lower this tool to the bottom"),
                             NULL,
-                            G_CALLBACK (gimp_tool_editor_button_clicked),
-                            G_CALLBACK (gimp_tool_editor_button_extend_clicked),
+                            G_CALLBACK (gimp_tool_editor_lower_clicked),
+                            G_CALLBACK (gimp_tool_editor_lower_extend_clicked),
                             tool_editor);
+
   priv->reset_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view), GIMP_STOCK_RESET,
                             _("Reset tool order and visibility"), NULL,
-                            G_CALLBACK (gimp_tool_editor_button_clicked), NULL,
+                            G_CALLBACK (gimp_tool_editor_reset_clicked), NULL,
                             tool_editor);
 
   return GTK_WIDGET (tool_editor);
 }
 
 static void
-gimp_tool_editor_button_clicked (GtkButton    *button,
-                                 GimpToolEditor *tool_editor)
+gimp_tool_editor_raise_clicked (GtkButton    *button,
+                                GimpToolEditor *tool_editor)
 {
+  GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
   GimpToolInfo          *tool_info;
-  GimpToolEditorPrivate *priv;
-  gint                   index;
 
-  priv      = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
   tool_info = gimp_context_get_tool (priv->context);
 
-  if (tool_info && button == GTK_BUTTON (priv->raise_button))
+  if (tool_info)
     {
-      index = gimp_container_get_child_index (priv->container,
-                                              GIMP_OBJECT (tool_info));
+      gint index = gimp_container_get_child_index (priv->container,
+                                                   GIMP_OBJECT (tool_info));
 
       if (index > 0)
         {
@@ -263,10 +275,44 @@ gimp_tool_editor_button_clicked (GtkButton    *button,
                                   GIMP_OBJECT (tool_info), index - 1);
         }
     }
-  else if (tool_info && button == GTK_BUTTON (priv->lower_button))
+}
+
+static void
+gimp_tool_editor_raise_extend_clicked (GtkButton       *button,
+                                       GdkModifierType  mask,
+                                       GimpToolEditor    *tool_editor)
+{
+  GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
+  GimpToolInfo          *tool_info;
+
+  tool_info = gimp_context_get_tool (priv->context);
+
+  if (tool_info && (mask & GDK_SHIFT_MASK))
     {
-      index = gimp_container_get_child_index (priv->container,
-                                              GIMP_OBJECT (tool_info));
+      gint index = gimp_container_get_child_index (priv->container,
+                                                   GIMP_OBJECT (tool_info));
+
+      if (index > 0)
+        {
+          gimp_container_reorder (priv->container,
+                                  GIMP_OBJECT (tool_info), 0);
+        }
+    }
+}
+
+static void
+gimp_tool_editor_lower_clicked (GtkButton    *button,
+                                GimpToolEditor *tool_editor)
+{
+  GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
+  GimpToolInfo          *tool_info;
+
+  tool_info = gimp_context_get_tool (priv->context);
+
+  if (tool_info)
+    {
+      gint index = gimp_container_get_child_index (priv->container,
+                                                   GIMP_OBJECT (tool_info));
 
       if (index + 1 < gimp_container_get_n_children (priv->container))
         {
@@ -274,67 +320,56 @@ gimp_tool_editor_button_clicked (GtkButton    *button,
                                   GIMP_OBJECT (tool_info), index + 1);
         }
     }
-  else if (tool_info && button == GTK_BUTTON (priv->reset_button))
+}
+
+static void
+gimp_tool_editor_lower_extend_clicked (GtkButton       *button,
+                                       GdkModifierType  mask,
+                                       GimpToolEditor    *tool_editor)
+{
+  GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
+  GimpToolInfo          *tool_info;
+
+  tool_info = gimp_context_get_tool (priv->context);
+
+  if (tool_info && (mask & GDK_SHIFT_MASK))
     {
-      GList *list;
-      gint   i    = 0;
+      gint index = gimp_container_get_n_children (priv->container) - 1;
 
-      for (list = priv->default_tool_order;
-           list;
-           list = g_list_next (list))
-        {
-          GimpObject *object =
-                 gimp_container_get_child_by_name (priv->container, list->data);
+      index = MAX (index, 0);
 
-          if (object)
-            {
-              gboolean visible;
-              gpointer data;
-
-              gimp_container_reorder (priv->container, object, i);
-              data = g_object_get_data (G_OBJECT (object),
-                                        "gimp-tool-default-visible");
-
-              visible = GPOINTER_TO_INT (data);
-              g_object_set (object, "visible", visible, NULL);
-
-              i++;
-            }
-        }
+      gimp_container_reorder (priv->container,
+                              GIMP_OBJECT (tool_info), index);
     }
 }
 
 static void
-gimp_tool_editor_button_extend_clicked (GtkButton       *button,
-                                        GdkModifierType  mask,
-                                        GimpToolEditor    *tool_editor)
+gimp_tool_editor_reset_clicked (GtkButton    *button,
+                                GimpToolEditor *tool_editor)
 {
-  GimpToolInfo          *tool_info;
-  GimpToolEditorPrivate *priv;
-  gint                   index;
+  GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
+  GList                 *list;
+  gint                   i;
 
-  priv      = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
-  tool_info = gimp_context_get_tool (priv->context);
+  for (list = priv->default_tool_order, i = 0;
+       list;
+       list = g_list_next (list), i++)
+    {
+      GimpObject *object =
+        gimp_container_get_child_by_name (priv->container, list->data);
 
-  if (! mask == GDK_SHIFT_MASK)
-    {
-      /* do nothing */
-    }
-  if (button == GTK_BUTTON (priv->raise_button))
-    {
-      index = gimp_container_get_child_index (priv->container,
-                                              GIMP_OBJECT (tool_info));
-      if (index > 0)
-        gimp_container_reorder (priv->container,
-                                GIMP_OBJECT (tool_info), 0);
-    }
-  else if (button == GTK_BUTTON (priv->lower_button))
-    {
-      index = gimp_container_get_n_children (priv->container) - 1;
-      index = index >= 0 ? index : 0;
+      if (object)
+        {
+          gboolean visible;
+          gpointer data;
 
-      gimp_container_reorder (priv->container,
-                              GIMP_OBJECT (tool_info), index);
+          gimp_container_reorder (priv->container, object, i);
+          data = g_object_get_data (G_OBJECT (object),
+                                    "gimp-tool-default-visible");
+
+          visible = GPOINTER_TO_INT (data);
+          g_object_set (object, "visible", visible, NULL);
+        }
     }
 }
 
@@ -343,10 +378,9 @@ gimp_tool_editor_visible_notify (GimpToolInfo  *tool_info,
                                  GParamSpec    *pspec,
                                  GimpToolEditor  *tool_editor)
 {
-  GimpToolEditorPrivate *priv;
+  GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
   GtkTreeIter           *iter;
 
-  priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
   iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (tool_editor),
                                      GIMP_VIEWABLE (tool_info));
 
@@ -389,9 +423,9 @@ gimp_tool_editor_eye_clicked (GtkCellRendererToggle *toggle,
                               GdkModifierType        state,
                               GimpToolEditor        *tool_editor)
 {
-  GtkTreeIter            iter;
-  GtkTreePath           *path;
   GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
+  GtkTreePath           *path;
+  GtkTreeIter            iter;
 
   path = gtk_tree_path_new_from_string (path_str);
 
