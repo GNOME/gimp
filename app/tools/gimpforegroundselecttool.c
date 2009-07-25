@@ -57,8 +57,7 @@
 typedef struct
 {
   gint         width;
-  gboolean     background;
-  gboolean     drbrefinement;	
+  gboolean     background;	
   gint         num_points;
   GimpVector2 *points;
 } FgSelectStroke;
@@ -129,8 +128,6 @@ static void   gimp_foreground_select_options_notify (GimpForegroundSelectOptions
                                                      GParamSpec                  *pspec,
                                                      GimpForegroundSelectTool    *fg_select);
 
-
-static gboolean mark_drb = FALSE;
 
 
 G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
@@ -296,8 +293,7 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
         if (fg_select->state)
           {
             gimp_drawable_foreground_extract_siox_done (fg_select->state);
-            fg_select->state = NULL;
-            mark_drb = FALSE;  
+            fg_select->state = NULL; 
           }
 
         tool->display = NULL;
@@ -336,9 +332,9 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
         case SELECTION_MOVE:
         case SELECTION_MOVE_COPY:
         case SELECTION_ANCHOR:
-          if (fg_select->strokes)
+          if (fg_select->strokes || fg_select->drbsignals)
             {
-		if(!fg_select->drbsignal)
+		if(!fg_select->drbsignals)
 		  status = _("Add more strokes or click button DRB to drb");
 		else
 		  status = _("Add more drb or press Enter to accept the selection");
@@ -465,10 +461,11 @@ gimp_foreground_select_tool_button_press (GimpTool            *tool,
                                           GimpButtonPressType  press_type,
                                           GimpDisplay         *display)
 {
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-  GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpForegroundSelectTool    *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpDrawTool                *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpForegroundSelectOptions *options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
-  if (fg_select->mask &&(!mark_drb))
+  if (fg_select->mask &&(!options->drb))
     {
       GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
 
@@ -492,7 +489,7 @@ gimp_foreground_select_tool_button_press (GimpTool            *tool,
       
       gimp_draw_tool_resume (draw_tool);
     }
-  else if (fg_select->mask && mark_drb)
+  else if (fg_select->mask && options->drb)
     {
       GimpVector2 point = gimp_vector2_new (coords->x, coords->y);
 	
@@ -533,7 +530,7 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
                                             GimpDisplay           *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-
+  
   if (fg_select->mask)
     {
       GimpForegroundSelectOptions *options;
@@ -566,9 +563,9 @@ gimp_foreground_select_tool_motion (GimpTool         *tool,
                                     GdkModifierType   state,
                                     GimpDisplay      *display)
 {
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-
-  if (fg_select->mask && (!mark_drb))
+  GimpForegroundSelectTool *fg_select  = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpForegroundSelectOptions *options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
+  if (fg_select->mask && (!options->drb))
     {
       GimpVector2 *last = &g_array_index (fg_select->stroke,
                                           GimpVector2,
@@ -587,7 +584,7 @@ gimp_foreground_select_tool_motion (GimpTool         *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
-  else if (fg_select->mask && mark_drb)	
+  else if (fg_select->mask && options->drb)	
     {
       GimpVector2 *last = &g_array_index (fg_select->drbsignal,
                                           GimpVector2,
@@ -643,7 +640,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
   options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
-  if (fg_select->stroke && (!mark_drb))
+  if (fg_select->stroke && (!options->drb))
     {
       gimp_display_shell_draw_pen (GIMP_DISPLAY_SHELL (draw_tool->display->shell),
                                    (const GimpVector2 *)fg_select->stroke->data,
@@ -654,15 +651,15 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
                                     GIMP_ACTIVE_COLOR_FOREGROUND),
                                    options->stroke_width);
     }
-  if (fg_select->stroke && mark_drb)	
+  if (fg_select->stroke && options->drb)	
     {
       gimp_display_shell_draw_pen (GIMP_DISPLAY_SHELL (draw_tool->display->shell),
                                    (const GimpVector2 *)fg_select->drbsignal->data,
                                    fg_select->drbsignal->len,
                                    GIMP_CONTEXT (options),
                                    (options->refinement ?
-                                    GIMP_ACTIVE_COLOR_FOREGROUND :
-                                    GIMP_ACTIVE_COLOR_BACKGROUND),
+                                    GIMP_ACTIVE_COLOR_BACKGROUND :
+                                    GIMP_ACTIVE_COLOR_FOREGROUND),
                                    options->stroke_width);
      }
   if (fg_select->mask)
@@ -728,10 +725,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
   if (! drawable)
     return;
-  if (options->drb)
-    mark_drb = TRUE;
-  else 
-    mark_drb = FALSE;
+ 
   scan_convert = gimp_scan_convert_new ();
 
   gimp_free_select_tool_get_points (free_sel,
@@ -761,10 +755,10 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
      
 			
       /*  apply foreground and background markers  */
-      if (!mark_drb) 
+      if (!options->drb) 
         for (list = fg_select->strokes; list; list = list->next)
           gimp_foreground_select_tool_stroke (mask, list->data);
-      else if (mark_drb)
+      else if (options->drb)
 	for (drblist = fg_select->drbsignals; drblist; drblist = drblist->next)
           gimp_foreground_select_tool_stroke (mask, drblist->data);
 			
@@ -836,7 +830,7 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
   gimp_display_shell_set_mask (GIMP_DISPLAY_SHELL (display->shell),
                                GIMP_DRAWABLE (mask), options->mask_color);
 
-  if (mask && (!mark_drb))
+  if (mask && (!options->drb))
     {
       gimp_tool_control_set_tool_cursor        (tool->control,
                                                 GIMP_TOOL_CURSOR_PAINTBRUSH);
@@ -845,7 +839,7 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
 
       gimp_tool_control_set_toggled (tool->control, options->background);
     }
-  else if (mask && mark_drb)
+  else if (mask && options->drb)
     {
       gimp_tool_control_set_tool_cursor        (tool->control,
                                                 GIMP_TOOL_CURSOR_PAINTBRUSH);
@@ -915,14 +909,11 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
                             stroke->width,
                             GIMP_JOIN_ROUND, GIMP_CAP_ROUND, 10.0,
                             0.0, NULL);
- if (!mark_drb) 
+
    gimp_scan_convert_compose_value (scan_convert,
                                     gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                                     0, 0, stroke->background ? 0 : 255);
- if (mark_drb) 
-   gimp_scan_convert_compose_value (scan_convert,
-                                    gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                                    0, 0, stroke->drbrefinement ? 0 : 255);	
+	
   gimp_scan_convert_free (scan_convert);
 }
 
@@ -933,7 +924,7 @@ gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
   FgSelectStroke   *stroke;
-if (!mark_drb)
+if (!options->drb)
   {
     g_return_if_fail (fg_select->stroke != NULL);
     
@@ -952,13 +943,13 @@ if (!mark_drb)
                               SIOX_REFINEMENT_ADD_BACKGROUND :
                               SIOX_REFINEMENT_ADD_FOREGROUND);
   }
-else if (mark_drb)
+else if (options->drb)
   {
     g_return_if_fail (fg_select->drbsignal != NULL);
 
     stroke = g_slice_new (FgSelectStroke);
 
-    stroke->drbrefinement = options->refinement;
+    stroke->background = options->refinement;
     stroke->width      = ROUND ((gdouble) options->stroke_width / shell->scale_y);
     stroke->num_points = fg_select->drbsignal->len;
     stroke->points     = (GimpVector2 *) g_array_free (fg_select->drbsignal, FALSE);
@@ -967,9 +958,9 @@ else if (mark_drb)
 
     fg_select->drbsignals = g_list_append (fg_select->drbsignals, stroke);
 
-    fg_select->drbrefinement |= (stroke->drbrefinement?
-                                 SIOX_DRB_SUBTRACT :
-                                 SIOX_DRB_ADD);
+    fg_select->drbrefinement |= (stroke->background?
+                                 SIOX_DRB_ADD :
+                                 SIOX_DRB_SUBTRACT);
   }		
 }
 
@@ -993,7 +984,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
 {
   SioxRefinementType refinement = 0;
   SioxDRBType        drbrefinement = 0; 
- if (!mark_drb)
+ if (!options->drb)
    {
      if (!fg_select->mask)
          return;
@@ -1009,7 +1000,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
    }
  else
    {
-     if (! fg_select->mask)
+     if (! options->drb)
 	 return;
 
      if (strcmp (pspec->name, "threshold") == 0)

@@ -141,14 +141,6 @@ typedef enum  /*< pdb-skip, skip >*///(new)
   SIOX_DRB_CHANGE_SENSITIVITY        = (1 << 3),
   SIOX_DRB_CHANGE_SMOOTHNESS         = (1 << 4),
   SIOX_DRB_RECALCULATE               = 0xFF
-} SioxDRBType;/*
-typedef enum  /*< pdb-skip, skip >///(new)
-{
-  SIOX_DRB_ADD                       = 0,
-  SIOX_DRB_SUBTRACT                  = 1,
-  SIOX_DRB_NO_CHANGE                 = (1 << 1),
-//SIOX_DRB_CHANGE_THRESHOLD          = (1 << 2),/* threshold  /
-  SIOX_DRB_RECALCULATE               = 0xFF
-} SioxDRBType;*/
+} SioxDRBType;
 
 #endif /* __BASE_ENUMS_H__ */
