@@ -241,7 +241,7 @@ N_("Sets how many processors GIMP should try to use simultaneously.")
 N_("When enabled, the X server is queried for the mouse's current position " \
    "on each motion event, rather than relying on the position hint.  This " \
    "means painting with large brushes should be more accurate, but it may " \
-   "be slower.  Perversely, on some X servers enabling this option results " \
+   "be slower.  Conversely, on some X servers enabling this option results " \
    "in faster painting.")
 
 #define PLUG_IN_HISTORY_SIZE_BLURB \
@@ -444,7 +444,7 @@ N_("When enabled, pressing F1 will open the help browser.")
 #define WEB_BROWSER_BLURB \
 N_("Sets the external web browser to be used.  This can be an absolute " \
    "path or the name of an executable to search for in the user's PATH. " \
-   "If the command contains '%s' it will be replaced with the URL, else " \
+   "If the command contains '%s' it will be replaced with the URL, otherwise " \
    "the URL will be appended to the command with a space separating the " \
    "two.")
 
