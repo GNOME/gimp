@@ -635,7 +635,7 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
 
   iter = parent_view_iface->insert_item (view, viewable, index);
 
-  gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+  gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       item_view->priv->model_column_visible,
                       gimp_item_get_visible (item),
                       item_view->priv->model_column_linked,
@@ -906,7 +906,7 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
         {
           gchar *name = gimp_viewable_get_description (renderer->viewable, NULL);
 
-          gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
+          gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
                               GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
                               -1);
           g_free (name);
@@ -941,7 +941,7 @@ gimp_item_tree_view_visible_changed (GimpItem         *item,
                                      (GimpViewable *) item);
 
   if (iter)
-    gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+    gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                         view->priv->model_column_visible,
                         gimp_item_get_visible (item),
                         -1);
@@ -971,7 +971,7 @@ gimp_item_tree_view_linked_changed (GimpItem         *item,
                                      (GimpViewable *) item);
 
   if (iter)
-    gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+    gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                         view->priv->model_column_linked,
                         gimp_item_get_linked (item),
                         -1);

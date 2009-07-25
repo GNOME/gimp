@@ -402,7 +402,7 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
           g_free (name);
 
           name = gimp_viewable_get_description (renderer->viewable, NULL);
-          gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
+          gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
                               GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
                               -1);
           g_free (name);
