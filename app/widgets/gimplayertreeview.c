@@ -893,7 +893,7 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
       iter = gimp_container_view_lookup (view, (GimpViewable *) floating_sel);
 
       if (iter)
-        gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+        gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                             GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES,
                             layer_view->priv->italic_attrs,
                             -1);
@@ -911,7 +911,7 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
           iter = gimp_container_view_lookup (view, (GimpViewable *) drawable);
 
           if (iter)
-            gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+            gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                                 GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES,
                                 gimp_drawable_has_alpha (drawable) ?
                                 NULL : layer_view->priv->bold_attrs,
@@ -1190,7 +1190,7 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
       g_signal_connect_closure (mask, "show-changed",  closure, FALSE);
     }
 
-  gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+  gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       layer_view->priv->model_column_mask,         renderer,
                       layer_view->priv->model_column_mask_visible, mask_visible,
                       -1);
@@ -1423,7 +1423,7 @@ gimp_layer_tree_view_alpha_update (GimpLayerTreeView *view,
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
-  gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+  gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES,
                       gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) ?
                       NULL : view->priv->bold_attrs,
