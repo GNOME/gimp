@@ -57,7 +57,7 @@ struct _GimpContainerViewPrivate
   GimpContainer *container;
   GimpContext   *context;
 
-  GHashTable    *hash_table;
+  GHashTable    *item_hash;
 
   gint           view_size;
   gint           view_border_width;
@@ -250,10 +250,10 @@ gimp_container_view_private_dispose (GimpContainerView        *view,
 static void
 gimp_container_view_private_finalize (GimpContainerViewPrivate *private)
 {
-  if (private->hash_table)
+  if (private->item_hash)
     {
-      g_hash_table_destroy (private->hash_table);
-      private->hash_table = NULL;
+      g_hash_table_destroy (private->item_hash);
+      private->item_hash = NULL;
     }
 
   g_slice_free (GimpContainerViewPrivate, private);
@@ -710,8 +710,8 @@ gimp_container_view_select_item (GimpContainerView *view,
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->hash_table)
-    insert_data = g_hash_table_lookup (private->hash_table, viewable);
+  if (private->item_hash)
+    insert_data = g_hash_table_lookup (private->item_hash, viewable);
   else
     insert_data = NULL;
 
@@ -733,8 +733,8 @@ gimp_container_view_activate_item (GimpContainerView *view,
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->hash_table)
-    insert_data = g_hash_table_lookup (private->hash_table, viewable);
+  if (private->item_hash)
+    insert_data = g_hash_table_lookup (private->item_hash, viewable);
   else
     insert_data = NULL;
 
@@ -754,8 +754,8 @@ gimp_container_view_context_item (GimpContainerView *view,
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->hash_table)
-    insert_data = g_hash_table_lookup (private->hash_table, viewable);
+  if (private->item_hash)
+    insert_data = g_hash_table_lookup (private->item_hash, viewable);
   else
     insert_data = NULL;
 
@@ -778,8 +778,8 @@ gimp_container_view_lookup (GimpContainerView *view,
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->hash_table)
-    return g_hash_table_lookup (private->hash_table, viewable);
+  if (private->item_hash)
+    return g_hash_table_lookup (private->item_hash, viewable);
 
   return NULL;
 }
@@ -953,10 +953,10 @@ gimp_container_view_real_clear_items (GimpContainerView *view)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->hash_table)
+  if (private->item_hash)
     {
-      g_hash_table_destroy (private->hash_table);
-      private->hash_table = NULL;
+      g_hash_table_destroy (private->item_hash);
+      private->item_hash = NULL;
     }
 }
 
@@ -973,12 +973,13 @@ gimp_container_view_add_foreach (GimpViewable      *viewable,
 
   insert_data = view_iface->insert_item (view, viewable, -1);
 
-  if (! private->hash_table)
-    private->hash_table = g_hash_table_new_full (g_direct_hash, g_direct_equal,
-                                                 NULL,
-                                                 view_iface->insert_data_free);
+  if (! private->item_hash)
+    private->item_hash = g_hash_table_new_full (g_direct_hash,
+                                                g_direct_equal,
+                                                NULL,
+                                                view_iface->insert_data_free);
 
-  g_hash_table_insert (private->hash_table, viewable, insert_data);
+  g_hash_table_insert (private->item_hash, viewable, insert_data);
 }
 
 static void
@@ -1002,12 +1003,13 @@ gimp_container_view_add (GimpContainerView *view,
 
   insert_data = view_iface->insert_item (view, viewable, index);
 
-  if (! private->hash_table)
-    private->hash_table = g_hash_table_new_full (g_direct_hash, g_direct_equal,
-                                                 NULL,
-                                                 view_iface->insert_data_free);
+  if (! private->item_hash)
+    private->item_hash = g_hash_table_new_full (g_direct_hash,
+                                                g_direct_equal,
+                                                NULL,
+                                                view_iface->insert_data_free);
 
-  g_hash_table_insert (private->hash_table, viewable, insert_data);
+  g_hash_table_insert (private->item_hash, viewable, insert_data);
 }
 
 static void
@@ -1021,10 +1023,10 @@ gimp_container_view_remove (GimpContainerView *view,
   if (gimp_container_frozen (container))
     return;
 
-  if (! private->hash_table)
+  if (! private->item_hash)
     return;
 
-  insert_data = g_hash_table_lookup (private->hash_table, viewable);
+  insert_data = g_hash_table_lookup (private->item_hash, viewable);
 
   if (insert_data)
     {
@@ -1032,7 +1034,7 @@ gimp_container_view_remove (GimpContainerView *view,
                                                              viewable,
                                                              insert_data);
 
-      g_hash_table_remove (private->hash_table, viewable);
+      g_hash_table_remove (private->item_hash, viewable);
     }
 }
 
@@ -1048,10 +1050,10 @@ gimp_container_view_reorder (GimpContainerView *view,
   if (gimp_container_frozen (container))
     return;
 
-  if (! private->hash_table)
+  if (! private->item_hash)
     return;
 
-  insert_data = g_hash_table_lookup (private->hash_table, viewable);
+  insert_data = g_hash_table_lookup (private->item_hash, viewable);
 
   if (insert_data)
     {
@@ -1104,10 +1106,10 @@ gimp_container_view_name_changed (GimpViewable      *viewable,
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
   gpointer                  insert_data;
 
-  if (! private->hash_table)
+  if (! private->item_hash)
     return;
 
-  insert_data = g_hash_table_lookup (private->hash_table, viewable);
+  insert_data = g_hash_table_lookup (private->item_hash, viewable);
 
   if (insert_data)
     {
