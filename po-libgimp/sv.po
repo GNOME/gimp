@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-24 10:46+0100\n"
-"PO-Revision-Date: 2009-03-24 11:49+0100\n"
+"POT-Creation-Date: 2009-07-26 16:29+0200\n"
+"PO-Revision-Date: 2009-07-26 16:29+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -187,6 +187,7 @@ msgid "_Ignore"
 msgstr "_Ignorera"
 
 #: ../libgimp/gimpexport.c:498
+#: ../libgimp/gimpexport.c:969
 msgid "_Export"
 msgstr "_Export"
 
@@ -201,7 +202,7 @@ msgstr "Din bild bör exporteras innan den kan sparas som %s av följande anledn
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen vid export modifierar inte originalbilden."
 
-#: ../libgimp/gimpexport.c:701
+#: ../libgimp/gimpexport.c:705
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -210,7 +211,7 @@ msgstr ""
 "Du kommer att spara en lagermask som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: ../libgimp/gimpexport.c:707
+#: ../libgimp/gimpexport.c:711
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -218,6 +219,10 @@ msgid ""
 msgstr ""
 "Du kommer att spara en kanal (sparad markering) som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
+
+#: ../libgimp/gimpexport.c:960
+msgid "Export Image as "
+msgstr "Exportera bild som "
 
 #: ../libgimp/gimpfontselectbutton.c:129
 msgid "Font Selection"
@@ -275,7 +280,7 @@ msgstr "efter typ"
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:385
 #: ../libgimp/gimpprocbrowserdialog.c:536
-#: ../libgimpwidgets/gimpbrowser.c:113
+#: ../libgimpwidgets/gimpbrowser.c:130
 msgid "No matches"
 msgstr "Inga sökträffar"
 
@@ -997,8 +1002,8 @@ msgstr "vid tolkning av elementet \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:473
 #: ../libgimpconfig/gimpconfig-iface.c:486
-#: ../libgimpconfig/gimpscanner.c:497
-#: ../libgimpconfig/gimpscanner.c:578
+#: ../libgimpconfig/gimpscanner.c:501
+#: ../libgimpconfig/gimpscanner.c:582
 #: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "ödesdigert tolkningsfel"
@@ -1048,12 +1053,12 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "Kunde inte skapa \"%s\": %s"
 
-#: ../libgimpconfig/gimpscanner.c:254
+#: ../libgimpconfig/gimpscanner.c:258
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "ogiltig UTF-8-sträng"
 
-#: ../libgimpconfig/gimpscanner.c:605
+#: ../libgimpconfig/gimpscanner.c:609
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fel vid tolkning av \"%s\" på rad %d: %s"
@@ -1108,7 +1113,7 @@ msgstr "Miniatyrbilden innehåller ingen Thumb::URI-tagg"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kunde inte skapa miniaturbild för %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:97
+#: ../libgimpwidgets/gimpbrowser.c:103
 msgid "_Search:"
 msgstr "_Sök:"
 
@@ -1343,11 +1348,11 @@ msgstr "Mer..."
 msgid "Unit Selection"
 msgstr "Enhetsval"
 
-#: ../libgimpwidgets/gimpunitmenu.c:628
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "Enhet"
 
-#: ../libgimpwidgets/gimpunitmenu.c:632
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "Faktor"
 
