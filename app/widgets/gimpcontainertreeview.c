@@ -975,8 +975,8 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
       tree_view->priv->dnd_renderer = renderer;
 
-      gtk_tree_view_get_background_area (tree_view->view, path,
-                                         column, &column_area);
+      gtk_tree_view_get_cell_area (tree_view->view, path,
+                                   column, &column_area);
 
       gtk_tree_view_column_cell_set_cell_data (column,
                                                tree_view->model,
