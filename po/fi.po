@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-20 15:35+0300\n"
-"PO-Revision-Date: 2008-10-20 15:45+0300\n"
+"PO-Revision-Date: 2009-07-26 21:02+0200\n"
 "Last-Translator: Timo Jyrinki <timo.jyrinki@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -9823,7 +9823,7 @@ msgstr "Värinpoistotyökalu: Muuta värit harmaasävyiksi"
 
 #: ../app/tools/gimpdesaturatetool.c:79
 msgid "_Desaturate..."
-msgstr "_Poita värit..."
+msgstr "_Poista värit..."
 
 #: ../app/tools/gimpdesaturatetool.c:93
 msgid "Desaturate (Remove Colors)"
