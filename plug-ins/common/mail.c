@@ -232,19 +232,18 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data (PLUG_IN_PROC, &mail_info);
-          if (! strlen (mail_info.filename))
-            {
-              gchar *filename = gimp_image_get_filename (image_ID);
+          {
+            gchar *filename = gimp_image_get_filename (image_ID);
 
-              if (filename)
-                {
-                  gchar *basename = g_path_get_basename (filename);
+            if (filename)
+              {
+                gchar *basename = g_path_get_basename (filename);
 
-                  g_strlcpy (mail_info.filename, basename, BUFFER_SIZE);
-                  g_free (basename);
-                  g_free (filename);
-                }
-            }
+                g_strlcpy (mail_info.filename, basename, BUFFER_SIZE);
+                g_free (basename);
+                g_free (filename);
+              }
+          }
 
           if (! save_dialog ())
             status = GIMP_PDB_CANCEL;
