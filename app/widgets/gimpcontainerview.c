@@ -66,7 +66,7 @@ struct _GimpContainerViewPrivate
   /*  initialized by subclass  */
   GtkWidget     *dnd_widget;
 
-  GQuark         name_changed_handler_id;
+  GHashTable    *name_changed_handler_hash;
 };
 
 
@@ -264,6 +264,12 @@ gimp_container_view_private_finalize (GimpContainerViewPrivate *private)
       private->item_hash = NULL;
     }
 
+  if (private->name_changed_handler_hash)
+    {
+      g_hash_table_destroy (private->name_changed_handler_hash);
+      private->name_changed_handler_hash = NULL;
+    }
+
   g_slice_free (GimpContainerViewPrivate, private);
 }
 
@@ -295,6 +301,11 @@ gimp_container_view_get_private (GimpContainerView *view)
                                                   g_direct_equal,
                                                   NULL,
                                                   view_iface->insert_data_free);
+
+      private->name_changed_handler_hash = g_hash_table_new_full (g_direct_hash,
+                                                                  g_direct_equal,
+                                                                  NULL,
+                                                                  NULL);
 
       g_object_set_qdata_full ((GObject *) view, private_key, private,
                                (GDestroyNotify) gimp_container_view_private_finalize);
@@ -382,10 +393,6 @@ gimp_container_view_real_set_container (GimpContainerView *view,
     {
       gimp_container_view_select_item (view, NULL);
 
-      /* FIXME: move to remove_container() */
-      gimp_container_remove_handler (private->container,
-                                     private->name_changed_handler_id);
-
       /* freeze/thaw is only supported for the toplevel container */
       g_signal_handlers_disconnect_by_func (private->container,
                                             gimp_container_view_freeze,
@@ -424,22 +431,8 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
   if (private->container)
     {
-      GType              children_type = gimp_container_get_children_type (private->container);
-      GimpViewableClass *viewable_class;
-
-      viewable_class = g_type_class_ref (children_type);
-
       if (! gimp_container_frozen (private->container))
         gimp_container_view_add_container (view, private->container);
-
-      /* FIXME: move to add_container() */
-      private->name_changed_handler_id =
-        gimp_container_add_handler (private->container,
-                                    viewable_class->name_changed_signal,
-                                    G_CALLBACK (gimp_container_view_name_changed),
-                                    view);
-
-      g_type_class_unref (viewable_class);
 
       /* freeze/thaw is only supported for the toplevel container */
       g_signal_connect_object (private->container, "freeze",
@@ -453,9 +446,11 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
       if (private->context)
         {
+          GType        children_type;
           const gchar *signal_name;
 
-          signal_name = gimp_context_type_to_signal_name (children_type);
+          children_type = gimp_container_get_children_type (private->container);
+          signal_name   = gimp_context_type_to_signal_name (children_type);
 
           if (signal_name)
             {
@@ -948,9 +943,28 @@ static void
 gimp_container_view_add_container (GimpContainerView *view,
                                    GimpContainer     *container)
 {
+  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  GType                     children_type;
+  GimpViewableClass        *viewable_class;
+  GQuark                    name_changed_handler_id;
+
   gimp_container_foreach (container,
                           (GFunc) gimp_container_view_add_foreach,
                           view);
+
+  children_type  = gimp_container_get_children_type (container);
+  viewable_class = g_type_class_ref (children_type);
+
+  name_changed_handler_id =
+    gimp_container_add_handler (container,
+                                viewable_class->name_changed_signal,
+                                G_CALLBACK (gimp_container_view_name_changed),
+                                view);
+
+  g_type_class_unref (viewable_class);
+
+  g_hash_table_insert (private->name_changed_handler_hash, container,
+                       GUINT_TO_POINTER (name_changed_handler_id));
 
   g_signal_connect_object (container, "add",
                            G_CALLBACK (gimp_container_view_add),
@@ -1008,6 +1022,15 @@ gimp_container_view_remove_container (GimpContainerView *view,
                                       GimpContainer     *container)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  GQuark                    name_changed_handler_id;
+
+  name_changed_handler_id =
+    GPOINTER_TO_UINT (g_hash_table_lookup (private->name_changed_handler_hash,
+                                           container));
+
+  gimp_container_remove_handler (container, name_changed_handler_id);
+
+  g_hash_table_remove (private->name_changed_handler_hash, container);
 
   g_signal_handlers_disconnect_by_func (container,
                                         gimp_container_view_add,
