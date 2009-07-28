@@ -561,23 +561,26 @@ gimp_container_view_real_set_context (GimpContainerView *view,
 
           if (signal_name)
             {
-              GimpObject *object;
-
               g_signal_connect_object (private->context, signal_name,
                                        G_CALLBACK (gimp_container_view_context_changed),
                                        view,
                                        0);
-
-              object = gimp_context_get_by_type (private->context,
-                                                 children_type);
-
-              gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
 
               if (private->dnd_widget)
                 gimp_dnd_viewable_dest_add (private->dnd_widget,
                                             children_type,
                                             gimp_container_view_viewable_dropped,
                                             view);
+
+              if (! gimp_container_frozen (private->container))
+                {
+                  GimpObject *object;
+
+                  object = gimp_context_get_by_type (private->context,
+                                                     children_type);
+
+                  gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
+                }
             }
         }
     }
