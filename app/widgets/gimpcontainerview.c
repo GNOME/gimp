@@ -111,6 +111,9 @@ static void   gimp_container_view_thaw             (GimpContainerView  *view,
 static void   gimp_container_view_name_changed     (GimpViewable       *viewable,
                                                     GimpContainerView  *view);
 
+static void   gimp_container_view_connect_context    (GimpContainerView *view);
+static void   gimp_container_view_disconnect_context (GimpContainerView *view);
+
 static void   gimp_container_view_context_changed  (GimpContext        *context,
                                                     GimpViewable       *viewable,
                                                     GimpContainerView  *view);
@@ -405,27 +408,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
         gimp_container_view_remove_container (view, private->container);
 
       if (private->context)
-        {
-          GType        children_type;
-          const gchar *signal_name;
-
-          children_type = gimp_container_get_children_type (private->container);
-          signal_name   = gimp_context_type_to_signal_name (children_type);
-
-          if (signal_name)
-            {
-              g_signal_handlers_disconnect_by_func (private->context,
-                                                    gimp_container_view_context_changed,
-                                                    view);
-
-              if (private->dnd_widget)
-                {
-                  gtk_drag_dest_unset (private->dnd_widget);
-                  gimp_dnd_viewable_dest_remove (private->dnd_widget,
-                                                 children_type);
-                }
-            }
-        }
+        gimp_container_view_disconnect_context (view);
     }
 
   private->container = container;
@@ -446,37 +429,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
                                G_CONNECT_SWAPPED);
 
       if (private->context)
-        {
-          GType        children_type;
-          const gchar *signal_name;
-
-          children_type = gimp_container_get_children_type (private->container);
-          signal_name   = gimp_context_type_to_signal_name (children_type);
-
-          if (signal_name)
-            {
-              g_signal_connect_object (private->context, signal_name,
-                                       G_CALLBACK (gimp_container_view_context_changed),
-                                       view,
-                                       0);
-
-              if (private->dnd_widget)
-                gimp_dnd_viewable_dest_add (private->dnd_widget,
-                                            children_type,
-                                            gimp_container_view_viewable_dropped,
-                                            view);
-
-              if (! gimp_container_frozen (private->container))
-                {
-                  GimpObject *object;
-
-                  object = gimp_context_get_by_type (private->context,
-                                                     children_type);
-
-                  gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
-                }
-            }
-        }
+        gimp_container_view_connect_context (view);
     }
 }
 
@@ -520,27 +473,7 @@ gimp_container_view_real_set_context (GimpContainerView *view,
   if (private->context)
     {
       if (private->container)
-        {
-          GType        children_type;
-          const gchar *signal_name;
-
-          children_type = gimp_container_get_children_type (private->container);
-          signal_name   = gimp_context_type_to_signal_name (children_type);
-
-          if (signal_name)
-            {
-              g_signal_handlers_disconnect_by_func (private->context,
-                                                    gimp_container_view_context_changed,
-                                                    view);
-
-              if (private->dnd_widget)
-                {
-                  gtk_drag_dest_unset (private->dnd_widget);
-                  gimp_dnd_viewable_dest_remove (private->dnd_widget,
-                                                 children_type);
-                }
-            }
-        }
+        gimp_container_view_disconnect_context (view);
 
       g_object_unref (private->context);
     }
@@ -552,37 +485,7 @@ gimp_container_view_real_set_context (GimpContainerView *view,
       g_object_ref (private->context);
 
       if (private->container)
-        {
-          GType        children_type;
-          const gchar *signal_name;
-
-          children_type = gimp_container_get_children_type (private->container);
-          signal_name   = gimp_context_type_to_signal_name (children_type);
-
-          if (signal_name)
-            {
-              g_signal_connect_object (private->context, signal_name,
-                                       G_CALLBACK (gimp_container_view_context_changed),
-                                       view,
-                                       0);
-
-              if (private->dnd_widget)
-                gimp_dnd_viewable_dest_add (private->dnd_widget,
-                                            children_type,
-                                            gimp_container_view_viewable_dropped,
-                                            view);
-
-              if (! gimp_container_frozen (private->container))
-                {
-                  GimpObject *object;
-
-                  object = gimp_context_get_by_type (private->context,
-                                                     children_type);
-
-                  gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
-                }
-            }
-        }
+        gimp_container_view_connect_context (view);
     }
 }
 
@@ -1155,6 +1058,64 @@ gimp_container_view_name_changed (GimpViewable      *viewable,
       GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->rename_item (view,
                                                              viewable,
                                                              insert_data);
+    }
+}
+
+static void
+gimp_container_view_connect_context (GimpContainerView *view)
+{
+  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  GType                     children_type;
+  const gchar              *signal_name;
+
+  children_type = gimp_container_get_children_type (private->container);
+  signal_name   = gimp_context_type_to_signal_name (children_type);
+
+  if (signal_name)
+    {
+      g_signal_connect_object (private->context, signal_name,
+                               G_CALLBACK (gimp_container_view_context_changed),
+                               view,
+                               0);
+
+      if (private->dnd_widget)
+        gimp_dnd_viewable_dest_add (private->dnd_widget,
+                                    children_type,
+                                    gimp_container_view_viewable_dropped,
+                                    view);
+
+      if (! gimp_container_frozen (private->container))
+        {
+          GimpObject *object = gimp_context_get_by_type (private->context,
+                                                         children_type);
+
+          gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
+        }
+    }
+}
+
+static void
+gimp_container_view_disconnect_context (GimpContainerView *view)
+{
+  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  GType                     children_type;
+  const gchar              *signal_name;
+
+  children_type = gimp_container_get_children_type (private->container);
+  signal_name   = gimp_context_type_to_signal_name (children_type);
+
+  if (signal_name)
+    {
+      g_signal_handlers_disconnect_by_func (private->context,
+                                            gimp_container_view_context_changed,
+                                            view);
+
+      if (private->dnd_widget)
+        {
+          gtk_drag_dest_unset (private->dnd_widget);
+          gimp_dnd_viewable_dest_remove (private->dnd_widget,
+                                         children_type);
+        }
     }
 }
 
