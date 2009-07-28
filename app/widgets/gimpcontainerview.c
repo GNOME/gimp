@@ -83,14 +83,22 @@ static void   gimp_container_view_real_set_context   (GimpContainerView *view,
 static void   gimp_container_view_clear_items      (GimpContainerView  *view);
 static void   gimp_container_view_real_clear_items (GimpContainerView  *view);
 
+static void   gimp_container_view_add_container    (GimpContainerView  *view,
+                                                    GimpContainer      *container);
 static void   gimp_container_view_add_foreach      (GimpViewable       *viewable,
                                                     GimpContainerView  *view);
 static void   gimp_container_view_add              (GimpContainerView  *view,
                                                     GimpViewable       *viewable,
                                                     GimpContainer      *container);
+
+static void   gimp_container_view_remove_container (GimpContainerView  *view,
+                                                    GimpContainer      *container);
+static void   gimp_container_view_remove_foreach   (GimpViewable       *viewable,
+                                                    GimpContainerView  *view);
 static void   gimp_container_view_remove           (GimpContainerView  *view,
                                                     GimpViewable       *viewable,
                                                     GimpContainer      *container);
+
 static void   gimp_container_view_reorder          (GimpContainerView  *view,
                                                     GimpViewable       *viewable,
                                                     gint                new_index,
@@ -373,26 +381,21 @@ gimp_container_view_real_set_container (GimpContainerView *view,
   if (private->container)
     {
       gimp_container_view_select_item (view, NULL);
-      gimp_container_view_clear_items (view);
 
+      /* FIXME: move to remove_container() */
       gimp_container_remove_handler (private->container,
                                      private->name_changed_handler_id);
 
-      g_signal_handlers_disconnect_by_func (private->container,
-                                            gimp_container_view_add,
-                                            view);
-      g_signal_handlers_disconnect_by_func (private->container,
-                                            gimp_container_view_remove,
-                                            view);
-      g_signal_handlers_disconnect_by_func (private->container,
-                                            gimp_container_view_reorder,
-                                            view);
+      /* freeze/thaw is only supported for the toplevel container */
       g_signal_handlers_disconnect_by_func (private->container,
                                             gimp_container_view_freeze,
                                             view);
       g_signal_handlers_disconnect_by_func (private->container,
                                             gimp_container_view_thaw,
                                             view);
+
+      if (! gimp_container_frozen (private->container))
+        gimp_container_view_remove_container (view, private->container);
 
       if (private->context)
         {
@@ -426,10 +429,10 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
       viewable_class = g_type_class_ref (children_type);
 
-      gimp_container_foreach (private->container,
-                              (GFunc) gimp_container_view_add_foreach,
-                              view);
+      if (! gimp_container_frozen (private->container))
+        gimp_container_view_add_container (view, private->container);
 
+      /* FIXME: move to add_container() */
       private->name_changed_handler_id =
         gimp_container_add_handler (private->container,
                                     viewable_class->name_changed_signal,
@@ -438,18 +441,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
       g_type_class_unref (viewable_class);
 
-      g_signal_connect_object (private->container, "add",
-                               G_CALLBACK (gimp_container_view_add),
-                               view,
-                               G_CONNECT_SWAPPED);
-      g_signal_connect_object (private->container, "remove",
-                               G_CALLBACK (gimp_container_view_remove),
-                               view,
-                               G_CONNECT_SWAPPED);
-      g_signal_connect_object (private->container, "reorder",
-                               G_CALLBACK (gimp_container_view_reorder),
-                               view,
-                               G_CONNECT_SWAPPED);
+      /* freeze/thaw is only supported for the toplevel container */
       g_signal_connect_object (private->container, "freeze",
                                G_CALLBACK (gimp_container_view_freeze),
                                view,
@@ -467,23 +459,26 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
           if (signal_name)
             {
-              GimpObject *object;
-
               g_signal_connect_object (private->context, signal_name,
                                        G_CALLBACK (gimp_container_view_context_changed),
                                        view,
                                        0);
-
-              object = gimp_context_get_by_type (private->context,
-                                                 children_type);
-
-              gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
 
               if (private->dnd_widget)
                 gimp_dnd_viewable_dest_add (private->dnd_widget,
                                             children_type,
                                             gimp_container_view_viewable_dropped,
                                             view);
+
+              if (! gimp_container_frozen (private->container))
+                {
+                  GimpObject *object;
+
+                  object = gimp_context_get_by_type (private->context,
+                                                     children_type);
+
+                  gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
+                }
             }
         }
     }
@@ -950,6 +945,28 @@ gimp_container_view_real_clear_items (GimpContainerView *view)
 }
 
 static void
+gimp_container_view_add_container (GimpContainerView *view,
+                                   GimpContainer     *container)
+{
+  gimp_container_foreach (container,
+                          (GFunc) gimp_container_view_add_foreach,
+                          view);
+
+  g_signal_connect_object (container, "add",
+                           G_CALLBACK (gimp_container_view_add),
+                           view,
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (container, "remove",
+                           G_CALLBACK (gimp_container_view_remove),
+                           view,
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (container, "reorder",
+                           G_CALLBACK (gimp_container_view_reorder),
+                           view,
+                           G_CONNECT_SWAPPED);
+}
+
+static void
 gimp_container_view_add_foreach (GimpViewable      *viewable,
                                  GimpContainerView *view)
 {
@@ -975,9 +992,6 @@ gimp_container_view_add (GimpContainerView *view,
   gpointer                    insert_data;
   gint                        index;
 
-  if (gimp_container_frozen (container))
-    return;
-
   view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
   private    = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
@@ -990,15 +1004,47 @@ gimp_container_view_add (GimpContainerView *view,
 }
 
 static void
+gimp_container_view_remove_container (GimpContainerView *view,
+                                      GimpContainer     *container)
+{
+  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+  g_signal_handlers_disconnect_by_func (container,
+                                        gimp_container_view_add,
+                                        view);
+  g_signal_handlers_disconnect_by_func (container,
+                                        gimp_container_view_remove,
+                                        view);
+  g_signal_handlers_disconnect_by_func (container,
+                                        gimp_container_view_reorder,
+                                        view);
+
+  if (FALSE /* private->model_is_list */ && container == private->container)
+    {
+      gimp_container_view_clear_items (view);
+    }
+  else
+    {
+      gimp_container_foreach (container,
+                              (GFunc) gimp_container_view_remove_foreach,
+                              view);
+    }
+}
+
+static void
+gimp_container_view_remove_foreach (GimpViewable      *viewable,
+                                    GimpContainerView *view)
+{
+  gimp_container_view_remove (view, viewable, NULL);
+}
+
+static void
 gimp_container_view_remove (GimpContainerView *view,
                             GimpViewable      *viewable,
-                            GimpContainer     *container)
+                            GimpContainer     *unused)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
   gpointer                  insert_data;
-
-  if (gimp_container_frozen (container))
-    return;
 
   insert_data = g_hash_table_lookup (private->item_hash, viewable);
 
@@ -1021,9 +1067,6 @@ gimp_container_view_reorder (GimpContainerView *view,
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
   gpointer                  insert_data;
 
-  if (gimp_container_frozen (container))
-    return;
-
   insert_data = g_hash_table_lookup (private->item_hash, viewable);
 
   if (insert_data)
@@ -1039,7 +1082,7 @@ static void
 gimp_container_view_freeze (GimpContainerView *view,
                             GimpContainer     *container)
 {
-  gimp_container_view_clear_items (view);
+  gimp_container_view_remove_container (view, container);
 }
 
 static void
@@ -1048,9 +1091,7 @@ gimp_container_view_thaw (GimpContainerView *view,
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  gimp_container_foreach (private->container,
-                          (GFunc) gimp_container_view_add_foreach,
-                          view);
+  gimp_container_view_add_container (view, container);
 
   if (private->context)
     {
