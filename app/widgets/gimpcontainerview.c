@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerview.c
- * Copyright (C) 2001-2006 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -406,10 +406,11 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
       if (private->context)
         {
-          GType        children_type = gimp_container_get_children_type (private->container);
+          GType        children_type;
           const gchar *signal_name;
 
-          signal_name = gimp_context_type_to_signal_name (children_type);
+          children_type = gimp_container_get_children_type (private->container);
+          signal_name   = gimp_context_type_to_signal_name (children_type);
 
           if (signal_name)
             {
@@ -520,10 +521,11 @@ gimp_container_view_real_set_context (GimpContainerView *view,
     {
       if (private->container)
         {
-          GType        children_type = gimp_container_get_children_type (private->container);
+          GType        children_type;
           const gchar *signal_name;
 
-          signal_name = gimp_context_type_to_signal_name (children_type);
+          children_type = gimp_container_get_children_type (private->container);
+          signal_name   = gimp_context_type_to_signal_name (children_type);
 
           if (signal_name)
             {
@@ -551,10 +553,11 @@ gimp_container_view_real_set_context (GimpContainerView *view,
 
       if (private->container)
         {
-          GType        children_type = gimp_container_get_children_type (private->container);
+          GType        children_type;
           const gchar *signal_name;
 
-          signal_name = gimp_context_type_to_signal_name (children_type);
+          children_type = gimp_container_get_children_type (private->container);
+          signal_name   = gimp_context_type_to_signal_name (children_type);
 
           if (signal_name)
             {
@@ -1118,10 +1121,11 @@ gimp_container_view_thaw (GimpContainerView *view,
 
   if (private->context)
     {
-      GType        children_type = gimp_container_get_children_type (private->container);
+      GType        children_type;
       const gchar *signal_name;
 
-      signal_name = gimp_context_type_to_signal_name (children_type);
+      children_type = gimp_container_get_children_type (private->container);
+      signal_name   = gimp_context_type_to_signal_name (children_type);
 
       if (signal_name)
         {
