@@ -1282,30 +1282,155 @@ siox_foreground_extract (SioxState          *state,
  * needed to evaluate performance of this!
  */
 void
-siox_drb (SioxState   *state,
-          TileManager *mask,
-          gint         x,
-          gint         y,
-          gint         brush_radius,
-          SioxDRBType  optionsrefinement,
-          gfloat       threshold)
+siox_drb (SioxState    *state,
+          TileManager  *mask,
+          gint          x,
+          gint          y,
+          gint          brush_radius,
+          SioxDRBType   optionsrefinement,
+          gfloat        threshold,
+          const gdouble sensitivity[3],
+          gboolean      multiblob,
+	  gint          smoothness)
 {
   PixelRegion  srcPR;
   PixelRegion  mapPR;
   gpointer     pr;
   gint         row, col;
-
+  gfloat       clustersize;
+  gfloat       limits[3];
+  gint         n;
 
   g_return_if_fail (state != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
 	
+  limits[0] = sensitivity[0];
+  limits[1] = sensitivity[1];
+  limits[2] = sensitivity[2];	
+  
+  clustersize = get_clustersize (limits);
+  
   if (optionsrefinement & SIOX_DRB_ADD)
     g_hash_table_foreach_remove(state->cache,siox_cache_remove_bg,NULL);
   if (optionsrefinement & SIOX_DRB_SUBTRACT)
     g_hash_table_foreach_remove(state->cache,siox_cache_remove_fg,NULL);
   if (optionsrefinement & SIOX_DRB_CHANGE_THRESHOLD)
     optionsrefinement = SIOX_DRB_RECALCULATE;
+ 
+  pixel_region_init (&srcPR, state->pixels,
+                     x - state->offset_x, y - state->offset_y, state->width, state->height,
+                     FALSE);
+  pixel_region_init (&mapPR, mask, x, y, state->width, state->height, TRUE);
+ 
+  for (pr = pixel_regions_register (2, &srcPR, &mapPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      const guchar *src = srcPR.data;
+      guchar       *map = mapPR.data;
 
+      for (row = 0; row < srcPR.h; row++)
+        {
+          const guchar *s = src;
+          guchar       *m = map;
+
+          for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
+            {
+              lab          labpixel;
+              gfloat       minbg, minfg, d;
+              classresult *cr;
+              gint         key;
+              gint         i;
+
+              if (*m < SIOX_LOW || *m > SIOX_HIGH)
+                continue;
+
+              key = create_key (s, state->bpp, state->colormap);
+
+              cr = g_hash_table_lookup (state->cache, GINT_TO_POINTER (key));
+
+
+              if (cr)
+                {
+                  *m = (cr->bgdist >= cr->fgdist) ? 254 : 0;
+
+#ifdef SIOX_DEBUG
+                  ++hits;
+#endif
+                  continue;
+                }
+               
+#ifdef SIOX_DEBUG
+              ++miss;
+#endif         
+              cr = g_slice_new0 (classresult);
+              calc_lab (s, state->bpp, state->colormap, &labpixel);
+
+              minbg = euklid (&labpixel, state->bgsig + 0);
+
+              for (i = 1; i < state->bgsiglen; i++)
+                {
+                  d = euklid (&labpixel, state->bgsig + i);
+
+                  if (d < minbg)
+						minbg = d;
+                }
+
+              cr->bgdist = minbg;
+
+              if (state->fgsiglen == 0)
+                {
+                  if (minbg < clustersize)
+                    minfg = minbg + clustersize;
+                  else
+                    minfg = 0.00001; /* This is a guess -
+                                        now we actually require a foreground
+                                        signature, !=0 to avoid div by zero
+                                      */
+                }
+              else
+                {
+	              minfg = euklid (&labpixel, state->fgsig + 0);
+
+                  for (i = 1; i < state->fgsiglen; i++)
+                    {
+                      d = euklid (&labpixel, state->fgsig + i);
+
+                      if (d < minfg)
+                        {
+                          minfg = d;
+                        }
+                    }
+                }
+
+              cr->fgdist = minfg;
+
+              g_hash_table_insert (state->cache, GINT_TO_POINTER (key), cr);
+
+              *m = minbg >= minfg ? 254 : 0;
+     
+           }
+
+          src += srcPR.rowstride;
+          map += mapPR.rowstride;
+        }    
+    }
+  smooth_mask (mask, x, y, state->width, state->height);
+
+  erode_mask (mask, x, y, state->width, state->height);
+
+  find_max_blob (mask, x, y, state->width, state->height,
+                 multiblob ?
+                 MULTIBLOB_DEFAULT_SIZEFACTOR : MULTIBLOB_ONE_BLOB_ONLY);
+
+  for (n = 0; n < smoothness; n++)
+    smooth_mask (mask, x, y, state->width, state->height);
+
+  find_max_blob (mask, x, y, state->width, state->height,
+                 multiblob ?
+                 MULTIBLOB_DEFAULT_SIZEFACTOR : MULTIBLOB_ONE_BLOB_ONLY);
+
+  dilate_mask (mask, x, y, state->width, state->height);
      
 /*pixel_region_init (&srcPR, state->pixels,
                      x - brush_radius, y - brush_radius, brush_radius * 2,
@@ -1330,7 +1455,7 @@ siox_drb (SioxState   *state,
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
-    {printf("pr\n");
+    {
       const guchar *src = srcPR.data;
       guchar       *map = mapPR.data;
 
@@ -1340,7 +1465,7 @@ siox_drb (SioxState   *state,
           guchar       *m = map;
 
           for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
-            {printf("m = %d,col =%d \n",m,col);
+            {
               gint         key;
               classresult *cr;
               gfloat       mindistbg;
@@ -1407,7 +1532,6 @@ siox_drb (SioxState   *state,
           map += mapPR.rowstride;
         }
     }
-
 }
 
 /**

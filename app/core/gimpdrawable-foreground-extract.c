@@ -170,7 +170,10 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                 state->x,state->y,
                 brush_radius,
                 sioxdrboption,
-                sioxdrbthreshold);
+                sioxdrbthreshold,
+                sensitivity,
+	        multiblob,
+		smoothness);
     }
   if (progress)
     gimp_progress_end (progress);

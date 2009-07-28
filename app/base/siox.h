@@ -78,7 +78,10 @@ void        siox_drb                (SioxState          *state,
                                      gint                y,
                                      gint                brush_radius,
                                      SioxDRBType         optionsrefinement,
-                                     gfloat              threshold);
+                                     gfloat              threshold,
+                                     const gdouble       sensitivity[3],
+                                     gboolean            multiblob,
+                                     gint                smoothness);
 
 
 #endif /* __SIOX_H__ */

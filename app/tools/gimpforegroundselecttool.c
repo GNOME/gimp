@@ -400,7 +400,10 @@ gimp_foreground_select_tool_cursor_update (GimpTool         *tool,
 
       options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
-      gimp_tool_control_set_toggled (tool->control, options->background);
+      if (!options->drb)
+	gimp_tool_control_set_toggled (tool->control, options->background);
+      else
+	gimp_tool_control_set_toggled (tool->control, options->refinement);	
 
       switch (GIMP_SELECTION_TOOL (tool)->function)
         {
@@ -651,7 +654,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
                                     GIMP_ACTIVE_COLOR_FOREGROUND),
                                    options->stroke_width);
     }
-  if (fg_select->stroke && options->drb)	
+  if (fg_select->drbsignal && options->drb)	
     {
       gimp_display_shell_draw_pen (GIMP_DISPLAY_SHELL (draw_tool->display->shell),
                                    (const GimpVector2 *)fg_select->drbsignal->data,
@@ -1000,7 +1003,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
    }
  else
    {
-     if (! options->drb)
+     if (!fg_select->mask)
 	 return;
 
      if (strcmp (pspec->name, "threshold") == 0)
