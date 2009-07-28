@@ -11,6 +11,7 @@ menudata_built_files = $(menudata_in_files:.xml.in=.xml)
 menudata_DATA = \
 	$(menudata_built_files)		\
 	brush-editor-menu.xml		\
+	dynamics-editor-menu.xml	\
 	brushes-menu.xml		\
 	buffers-menu.xml		\
 	channels-menu.xml		\

@@ -274,7 +274,19 @@ menus_init (Gimp              *gimp,
                                       "/brush-editor-popup",
                                       "brush-editor-menu.xml", NULL,
                                       NULL);
-
+	
+  gimp_menu_factory_manager_register (global_menu_factory, "<DynamicsEditor>",
+                                      "dynamics-editor",
+                                      NULL,
+                                      "/dynamics-editor-popup",
+                                      "dynamics-editor-menu.xml", NULL,
+                                      NULL);
+/*
+	   gimp_menu_factory_manager_register (global_menu_factory, "<DynamicsEditor>",
+                                      "dynamics",
+                                      NULL,
+                                      NULL);
+*/
   gimp_menu_factory_manager_register (global_menu_factory, "<GradientEditor>",
                                       "gradient-editor",
                                       NULL,

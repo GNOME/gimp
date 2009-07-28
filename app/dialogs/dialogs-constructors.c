@@ -670,6 +670,15 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_dynamics_editor_get (GimpDialogFactory *factory,
+                          GimpContext       *context,
+                          gint               view_size)
+{
+  return gimp_brush_editor_new (context,
+                                factory->menu_factory);
+}
+
+GtkWidget *
 dialogs_gradient_editor_get (GimpDialogFactory *factory,
                              GimpContext       *context,
                              gint               view_size)

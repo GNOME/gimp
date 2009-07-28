@@ -18,6 +18,7 @@
 (gtk_accel_path "<Actions>/layers/layers-alpha-selection-replace" "<Alt>a")
 (gtk_accel_path "<Actions>/dialogs/dialogs-layers" "F7")
 (gtk_accel_path "<Actions>/dialogs/dialogs-brushes" "")
+(gtk_accel_path "<Actions>/dialogs/dialogs-dynamics" "")
 (gtk_accel_path "<Actions>/view/view-info-window" "F8")
 (gtk_accel_path "<Actions>/layers/layers-duplicate" "<Control>j")
 (gtk_accel_path "<Actions>/dialogs/dialogs-channels" "<Shift>F7")

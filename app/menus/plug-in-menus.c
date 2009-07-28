@@ -317,9 +317,16 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
           plug_in_menus_add_proc (manager, "/colormap-popup",
                                   plug_in_proc, menu_path);
         }
+		
       else if (! strcmp (manager->name, "<Brushes>"))
         {
           plug_in_menus_add_proc (manager, "/brushes-popup",
+                                  plug_in_proc, menu_path);
+        }     
+		
+      else if (! strcmp (manager->name, "<Dynamics>"))
+        {
+          plug_in_menus_add_proc (manager, "/dynamics-popup",
                                   plug_in_proc, menu_path);
         }
       else if (! strcmp (manager->name, "<Gradients>"))
