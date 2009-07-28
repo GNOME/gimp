@@ -28,8 +28,8 @@
 
 #include <libexif/exif-data.h>
 
-#include "xmp-model.h"
 #include "xmp-schemas.h"
+#include "xmp-model.h"
 #include "exif-decode.h"
 
 

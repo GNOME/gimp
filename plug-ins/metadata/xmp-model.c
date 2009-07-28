@@ -31,28 +31,34 @@
 #include "xmp-parse.h"
 #include "xmp-model.h"
 
-/* The main part of the XMPModel structure is the GtkTreeStore in
- * which all references to XMP properties are stored.  In the tree,
- * the elements at the root level are the schemas (namespaces) and the
- * children of the schemas are the XMP properties.
- *
- * If the XMP file contains a schema that is not part of the XMP
- * specification or a known extension (e.g., IPTC Core), it will be
- * included in the custom_schemas list and the corresponding element
- * in the tree will get a reference to that list element instead of a
- * reference to one of the static schema definitions found in
- * xmp-schemas.c.  Same for custom properties inside a known or custom
- * schema.
- */
-struct _XMPModel
-{
-  GtkTreeStore *treestore;
-  GSList       *custom_schemas;
-  GSList       *custom_properties;
 
-  XMPSchema    *cached_schema;
-  GtkTreeIter   cached_schema_iter;
-};
+G_DEFINE_TYPE (XMPModel, xmp_model, GTK_TYPE_TREE_STORE)
+
+static void
+xmp_model_init (XMPModel *xmp_model)
+{
+  /* columns defined by the XMPModelColumns enum */
+  gtk_tree_store_new (XMP_MODEL_NUM_COLUMNS,
+                      G_TYPE_STRING,   /* COL_XMP_NAME */
+                      G_TYPE_STRING,   /* COL_XMP_VALUE */
+                      G_TYPE_POINTER,  /* COL_XMP_VALUE_RAW */
+                      G_TYPE_POINTER,  /* COL_XMP_TYPE_XREF */
+                      G_TYPE_POINTER,  /* COL_XMP_WIDGET_XREF */
+                      G_TYPE_INT,      /* COL_XMP_EDITABLE */
+                      GDK_TYPE_PIXBUF, /* COL_XMP_EDIT_ICON */
+                      G_TYPE_BOOLEAN,  /* COL_XMP_VISIBLE */
+                      G_TYPE_INT,      /* COL_XMP_WEIGHT */
+                      G_TYPE_BOOLEAN   /* COL_XMP_WEIGHT_SET */
+                      );
+  xmp_model->custom_schemas     = NULL;
+  xmp_model->custom_properties  = NULL;
+  xmp_model->cached_schema      = NULL;
+}
+
+static void
+xmp_model_class_init (XMPModelClass *klass)
+{
+}
 
 /**
  * xmp_model_new:
@@ -62,27 +68,7 @@ struct _XMPModel
 XMPModel *
 xmp_model_new (void)
 {
-  XMPModel *xmp_model;
-
-  xmp_model = g_new (XMPModel, 1);
-  /* columns defined by the XMPModelColumns enum */
-  xmp_model->treestore =
-    gtk_tree_store_new (XMP_MODEL_NUM_COLUMNS,
-                        G_TYPE_STRING,   /* COL_XMP_NAME */
-                        G_TYPE_STRING,   /* COL_XMP_VALUE */
-                        G_TYPE_POINTER,  /* COL_XMP_VALUE_RAW */
-                        G_TYPE_POINTER,  /* COL_XMP_TYPE_XREF */
-                        G_TYPE_POINTER,  /* COL_XMP_WIDGET_XREF */
-                        G_TYPE_INT,      /* COL_XMP_EDITABLE */
-                        GDK_TYPE_PIXBUF, /* COL_XMP_EDIT_ICON */
-                        G_TYPE_BOOLEAN,  /* COL_XMP_VISIBLE */
-                        G_TYPE_INT,      /* COL_XMP_WEIGHT */
-                        G_TYPE_BOOLEAN   /* COL_XMP_WEIGHT_SET */
-                        );
-  xmp_model->custom_schemas = NULL;
-  xmp_model->custom_properties = NULL;
-  xmp_model->cached_schema = NULL;
-  return xmp_model;
+  return g_object_new (GIMP_TYPE_XMP_MODEL, NULL);
 }
 
 /**
@@ -131,7 +117,7 @@ xmp_model_free (XMPModel *xmp_model)
         }
       while (gtk_tree_model_iter_next (model, &iter));
     }
-  g_object_unref (xmp_model->treestore);
+  g_object_unref (xmp_model);
   /* FIXME: free custom schemas */
   g_free (xmp_model);
 }
@@ -151,7 +137,7 @@ xmp_model_is_empty (XMPModel *xmp_model)
   if ((xmp_model->custom_schemas != NULL)
       || (xmp_model->custom_properties != NULL))
     return FALSE;
-  return !gtk_tree_model_get_iter_first (GTK_TREE_MODEL (xmp_model->treestore),
+  return !gtk_tree_model_get_iter_first (GTK_TREE_MODEL (xmp_model),
                                          &iter);
 }
 
@@ -283,12 +269,12 @@ find_iter_for_schema (XMPModel    *xmp_model,
       return TRUE;
     }
   /* find where this schema has been stored in the tree */
-  if (! gtk_tree_model_get_iter_first (GTK_TREE_MODEL (xmp_model->treestore),
+  if (! gtk_tree_model_get_iter_first (GTK_TREE_MODEL (xmp_model),
                                        iter))
     return FALSE;
   do
     {
-      gtk_tree_model_get (GTK_TREE_MODEL (xmp_model->treestore), iter,
+      gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), iter,
                           COL_XMP_TYPE_XREF, &schema_xref,
                           -1);
       if (schema_xref == schema)
@@ -297,7 +283,7 @@ find_iter_for_schema (XMPModel    *xmp_model,
           return TRUE;
         }
     }
-  while (gtk_tree_model_iter_next (GTK_TREE_MODEL (xmp_model->treestore),
+  while (gtk_tree_model_iter_next (GTK_TREE_MODEL (xmp_model),
                                    iter));
   return FALSE;
 }
@@ -311,23 +297,23 @@ find_and_remove_property (XMPModel    *xmp_model,
   GtkTreeIter  child_iter;
   XMPProperty *property_xref;
 
-  if (! gtk_tree_model_iter_children (GTK_TREE_MODEL (xmp_model->treestore),
+  if (! gtk_tree_model_iter_children (GTK_TREE_MODEL (xmp_model),
                                       &child_iter, schema_iter))
     return;
   for (;;)
     {
-      gtk_tree_model_get (GTK_TREE_MODEL (xmp_model->treestore), &child_iter,
+      gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), &child_iter,
                           COL_XMP_TYPE_XREF, &property_xref,
                           -1);
       if (property_xref == property)
         {
-          if (! gtk_tree_store_remove (GTK_TREE_STORE (xmp_model->treestore),
+          if (! gtk_tree_store_remove (GTK_TREE_STORE (xmp_model),
                                        &child_iter))
             break;
         }
       else
         {
-          if (! gtk_tree_model_iter_next (GTK_TREE_MODEL(xmp_model->treestore),
+          if (! gtk_tree_model_iter_next (GTK_TREE_MODEL(xmp_model),
                                           &child_iter))
             break;
         }
@@ -340,8 +326,8 @@ add_known_schema (XMPModel    *xmp_model,
                   XMPSchema   *schema,
                   GtkTreeIter *iter)
 {
-  gtk_tree_store_append (xmp_model->treestore, iter, NULL);
-  gtk_tree_store_set (xmp_model->treestore, iter,
+  gtk_tree_store_append (GTK_TREE_STORE (xmp_model), iter, NULL);
+  gtk_tree_store_set (GTK_TREE_STORE (xmp_model), iter,
                       COL_XMP_NAME, schema->name,
                       COL_XMP_VALUE, schema->uri,
                       COL_XMP_VALUE_RAW, NULL,
@@ -474,8 +460,8 @@ parse_set_property (XMPParseContext     *context,
           xmp_model->custom_properties =
             g_slist_prepend (xmp_model->custom_properties, property);
         }
-      gtk_tree_store_append (xmp_model->treestore, &child_iter, &iter);
-      gtk_tree_store_set (xmp_model->treestore, &child_iter,
+      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                           COL_XMP_NAME, name,
                           COL_XMP_VALUE, value[0],
                           COL_XMP_VALUE_RAW, value,
@@ -506,8 +492,8 @@ parse_set_property (XMPParseContext     *context,
             g_slist_prepend (xmp_model->custom_properties, property);
         }
       tmp_name = g_strconcat (name, " @", NULL);
-      gtk_tree_store_append (xmp_model->treestore, &child_iter, &iter);
-      gtk_tree_store_set (xmp_model->treestore, &child_iter,
+      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                           COL_XMP_NAME, tmp_name,
                           COL_XMP_VALUE, value[0],
                           COL_XMP_VALUE_RAW, value,
@@ -549,8 +535,8 @@ parse_set_property (XMPParseContext     *context,
 
       tmp_name = g_strconcat (name, " []", NULL);
       tmp_value = g_strjoinv ("; ", (gchar **) value);
-      gtk_tree_store_append (xmp_model->treestore, &child_iter, &iter);
-      gtk_tree_store_set (xmp_model->treestore, &child_iter,
+      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                           COL_XMP_NAME, tmp_name,
                           COL_XMP_VALUE, tmp_value,
                           COL_XMP_VALUE_RAW, value,
@@ -586,8 +572,8 @@ parse_set_property (XMPParseContext     *context,
         }
 
       tmp_name = g_strconcat (name, " []", NULL);
-      gtk_tree_store_append (xmp_model->treestore, &child_iter, &iter);
-      gtk_tree_store_set (xmp_model->treestore, &child_iter,
+      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                           COL_XMP_NAME, tmp_name,
                           COL_XMP_VALUE, "[FIXME: display thumbnails]",
                           COL_XMP_VALUE_RAW, value,
@@ -622,8 +608,8 @@ parse_set_property (XMPParseContext     *context,
       for (i = 0; value[i] != NULL; i += 2)
         {
           tmp_name = g_strconcat (name, " [", value[i], "]", NULL);
-          gtk_tree_store_append (xmp_model->treestore, &child_iter, &iter);
-          gtk_tree_store_set (xmp_model->treestore, &child_iter,
+          gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+          gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                               COL_XMP_NAME, tmp_name,
                               COL_XMP_VALUE, value[i + 1],
                               COL_XMP_VALUE_RAW, value,
@@ -659,8 +645,8 @@ parse_set_property (XMPParseContext     *context,
       for (i = 2; value[i] != NULL; i += 2)
         {
           tmp_name = g_strconcat (name, " [", value[i], "]", NULL);
-          gtk_tree_store_append (xmp_model->treestore, &child_iter, &iter);
-          gtk_tree_store_set (xmp_model->treestore, &child_iter,
+          gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+          gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                               COL_XMP_NAME, tmp_name,
                               COL_XMP_VALUE, value[i + 1],
                               COL_XMP_VALUE_RAW, value,
@@ -788,7 +774,7 @@ GtkTreeModel *
 xmp_model_get_tree_model (XMPModel *xmp_model)
 {
   g_return_val_if_fail (xmp_model != NULL, NULL);
-  return GTK_TREE_MODEL (xmp_model->treestore);
+  return GTK_TREE_MODEL (xmp_model);
 }
 
 /**
@@ -833,19 +819,19 @@ xmp_model_get_scalar_property (XMPModel    *xmp_model,
         }
   if (property == NULL)
     return NULL;
-  if (! gtk_tree_model_iter_children (GTK_TREE_MODEL (xmp_model->treestore),
+  if (! gtk_tree_model_iter_children (GTK_TREE_MODEL (xmp_model),
                                       &child_iter, &iter))
     return NULL;
   do
     {
-      gtk_tree_model_get (GTK_TREE_MODEL (xmp_model->treestore), &child_iter,
+      gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), &child_iter,
                           COL_XMP_TYPE_XREF, &property_xref,
                           COL_XMP_VALUE, &value,
                           -1);
       if (property_xref == property)
         return value;
     }
-  while (gtk_tree_model_iter_next (GTK_TREE_MODEL(xmp_model->treestore),
+  while (gtk_tree_model_iter_next (GTK_TREE_MODEL(xmp_model),
                                    &child_iter));
   return NULL;
 }
@@ -868,9 +854,10 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
                                const gchar *property_value)
 {
   XMPSchema    *schema;
-  GtkTreeIter   iter;
   XMPProperty  *property = NULL;
+  GtkTreeIter   iter;
   GtkTreeIter   child_iter;
+  GtkTreePath  *path;
   int           i;
   gchar       **value;
 
@@ -909,8 +896,8 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
   value = g_new (gchar *, 2);
   value[0] = g_strdup (property_value);
   value[1] = NULL;
-  gtk_tree_store_append (xmp_model->treestore, &child_iter, &iter);
-  gtk_tree_store_set (xmp_model->treestore, &child_iter,
+  gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+  gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                       COL_XMP_NAME, g_strdup (property_name),
                       COL_XMP_VALUE, value[0],
                       COL_XMP_VALUE_RAW, value,
@@ -922,5 +909,7 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
                       COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
                       COL_XMP_WEIGHT_SET, FALSE,
                       -1);
+  path = gtk_tree_model_get_path (GTK_TREE_MODEL (xmp_model), &child_iter);
+  gtk_tree_model_row_changed (GTK_TREE_MODEL (xmp_model), path, &child_iter);
   return TRUE;
 }
