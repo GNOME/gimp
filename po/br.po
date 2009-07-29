@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2009-07-28 04:22+0000\n"
-"PO-Revision-Date: 2009-07-28 09:26+0100\n"
-"Last-Translator: Denis <Unknown>\n"
+"POT-Creation-Date: 2009-07-29 04:08+0000\n"
+"PO-Revision-Date: 2009-07-29 12:04+0100\n"
+"Last-Translator: Denis <denisarnuad@yahoo.fr>\n"
 "Language-Team: An Drouizig <drouizig@drouizig.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -397,7 +397,6 @@ msgid "Templates"
 msgstr "Patromoù"
 
 #: ../app/actions/actions.c:199
-#| msgid "Te_xt Tool"
 msgid "Text Tool"
 msgstr "Benveg Testenn"
 
@@ -523,7 +522,6 @@ msgid "_Edit Brush..."
 msgstr "_Embann ar broust..."
 
 #: ../app/actions/brushes-actions.c:86
-#| msgid "Edit brush"
 msgctxt "brushes-action"
 msgid "Edit this brush"
 msgstr "Embann ar broust-mañ..."
@@ -574,7 +572,6 @@ msgid "Delete the selected buffer"
 msgstr "Dilemel ar skurzer diuzet"
 
 #: ../app/actions/channels-actions.c:43
-#| msgid "Channels Menu"
 msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "Lañser Sanelloù"
@@ -925,7 +922,7 @@ msgid "Brush Shape: %s"
 msgstr "ar broust : %s"
 
 #: ../app/actions/context-commands.c:610
-#,fuzzy, c-format
+#, fuzzy, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "ar broust : %2.2f"
 
@@ -1228,7 +1225,6 @@ msgid "Open the images dialog"
 msgstr "Digeriñ boestad emziviz ar skeudennoù"
 
 #: ../app/actions/dialogs-actions.c:176
-#| msgid "Document Histor_y"
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "Roll istor an te_ulioù"
@@ -1344,31 +1340,26 @@ msgid "Dialogs Menu"
 msgstr "Lañser ar boestadoù emziviz"
 
 #: ../app/actions/dockable-actions.c:53
-#| msgid "_Add Tab"
 msgctxt "dockable-action"
 msgid "_Add Tab"
 msgstr "Ouzhpenn_añ un ivinell"
 
 #: ../app/actions/dockable-actions.c:55
-#| msgid "_Preview Size"
 msgctxt "dockable-action"
 msgid "_Preview Size"
 msgstr "Me_nt an alberz"
 
 #: ../app/actions/dockable-actions.c:57
-#| msgid "_Tab Style"
 msgctxt "dockable-action"
 msgid "_Tab Style"
 msgstr "_Stil an ivinell"
 
 #: ../app/actions/dockable-actions.c:60
-#| msgid "_Close Tab"
 msgctxt "dockable-action"
 msgid "_Close Tab"
 msgstr "_Serriñ an ivinell"
 
 #: ../app/actions/dockable-actions.c:65
-#| msgid "_Detach Tab"
 msgctxt "dockable-action"
 msgid "_Detach Tab"
 msgstr "_Distagañ an ivinell"
@@ -1379,79 +1370,66 @@ msgid "_Tiny"
 msgstr "_Munut"
 
 #: ../app/actions/dockable-actions.c:86
-#| msgid "E_xtra Small"
 msgctxt "preview-size"
 msgid "E_xtra Small"
 msgstr "Bihan _kenañ"
 
 #: ../app/actions/dockable-actions.c:88
-#| msgid "_Small"
 msgctxt "preview-size"
 msgid "_Small"
 msgstr "_Bihan"
 
 #: ../app/actions/dockable-actions.c:90
-#| msgid "_Medium"
 msgctxt "preview-size"
 msgid "_Medium"
 msgstr "_Etre"
 
 #: ../app/actions/dockable-actions.c:92
-#| msgid "_Large"
 msgctxt "preview-size"
 msgid "_Large"
 msgstr "B_ras"
 
 #: ../app/actions/dockable-actions.c:94
-#| msgid "Ex_tra Large"
 msgctxt "preview-size"
 msgid "Ex_tra Large"
 msgstr "Bra_s kenañ"
 
 #: ../app/actions/dockable-actions.c:96
-#| msgid "_Huge"
 msgctxt "preview-size"
 msgid "_Huge"
 msgstr "_Divent"
 
 #: ../app/actions/dockable-actions.c:98
-#| msgid "_Enormous"
 msgctxt "preview-size"
 msgid "_Enormous"
 msgstr "_Pikol tra"
 
 #: ../app/actions/dockable-actions.c:100
-#| msgid "_Gigantic"
 msgctxt "preview-size"
 msgid "_Gigantic"
 msgstr "_Ramzel"
 
 #: ../app/actions/dockable-actions.c:106
-#| msgid "_Icon"
 msgctxt "tab-style"
 msgid "_Icon"
 msgstr "_Arlun"
 
 #: ../app/actions/dockable-actions.c:108
-#| msgid "Current _Status"
 msgctxt "tab-style"
 msgid "Current _Status"
 msgstr "_Stad vremanel"
 
 #: ../app/actions/dockable-actions.c:110
-#| msgid "_Text"
 msgctxt "tab-style"
 msgid "_Text"
 msgstr "_Testenn"
 
 #: ../app/actions/dockable-actions.c:112
-#| msgid "I_con & Text"
 msgctxt "tab-style"
 msgid "I_con & Text"
 msgstr "_Arlun & testenn"
 
 #: ../app/actions/dockable-actions.c:114
-#| msgid "St_atus & Text"
 msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "St_ad & testenn"
@@ -1487,7 +1465,6 @@ msgid "Documents Menu"
 msgstr "Lañser Teulioù"
 
 #: ../app/actions/documents-actions.c:45
-#| msgid "_Open Image"
 msgctxt "documents-action"
 msgid "_Open Image"
 msgstr "_Digeriñ ar skeudenn"
@@ -1518,61 +1495,51 @@ msgid "Open image dialog"
 msgstr "Digeriñ boestad emziviz ar skeudennoù"
 
 #: ../app/actions/documents-actions.c:63
-#| msgid "Copy Image _Location"
 msgctxt "documents-action"
 msgid "Copy Image _Location"
 msgstr "Eilañ _lec'hiadur ar skeudenn"
 
 #: ../app/actions/documents-actions.c:64
-#| msgid "Copy image location to clipboard"
 msgctxt "documents-action"
 msgid "Copy image location to clipboard"
 msgstr "Eilañ lec'hiadur ar skeudenn er golver"
 
 #: ../app/actions/documents-actions.c:69
-#| msgid "Remove _Entry"
 msgctxt "documents-action"
 msgid "Remove _Entry"
 msgstr "Dilemel an _enankad"
 
 #: ../app/actions/documents-actions.c:70
-#| msgid "Remove the selected entry"
 msgctxt "documents-action"
 msgid "Remove the selected entry"
 msgstr "Dilemel an enankad diuzet"
 
 #: ../app/actions/documents-actions.c:75
-#| msgid "_Clear History"
 msgctxt "documents-action"
 msgid "_Clear History"
 msgstr "_Skarzhañ ar roll istor"
 
 #: ../app/actions/documents-actions.c:76
-#| msgid "Clear the entire document history"
 msgctxt "documents-action"
 msgid "Clear the entire document history"
 msgstr "Skarzhañ roll istor an teul penn da benn"
 
 #: ../app/actions/documents-actions.c:81
-#| msgid "Recreate _Preview"
 msgctxt "documents-action"
 msgid "Recreate _Preview"
 msgstr "Krouiñ an _alberz en-dro"
 
 #: ../app/actions/documents-actions.c:82
-#| msgid "Recreate preview"
 msgctxt "documents-action"
 msgid "Recreate preview"
 msgstr "Krouiñ an alberz en-dro"
 
 #: ../app/actions/documents-actions.c:87
-#| msgid "Reload _all Previews"
 msgctxt "documents-action"
 msgid "Reload _all Previews"
 msgstr "Adkargañ _an holl alberzioù"
 
 #: ../app/actions/documents-actions.c:88
-#| msgid "Reload all previews"
 msgctxt "documents-action"
 msgid "Reload all previews"
 msgstr "Adkargañ an holl alberzioù"
@@ -1615,7 +1582,6 @@ msgid "In_vert"
 msgstr "T_uginañ"
 
 #: ../app/actions/drawable-actions.c:52
-#| msgid "Invert the colors"
 msgctxt "drawable-action"
 msgid "Invert the colors"
 msgstr "Tuginañ al livioù"
@@ -1631,7 +1597,6 @@ msgid "Automatic white balance correction"
 msgstr "Reizhadur kempouez al liv gwenn emgefreek"
 
 #: ../app/actions/drawable-actions.c:63
-#| msgid "_Offset..."
 msgctxt "drawable-action"
 msgid "_Offset..."
 msgstr "_Linkañ..."
@@ -1642,7 +1607,6 @@ msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Linkañ ar pikselioù, o strollañ anezho, gant un dibarzh, tro dro d'ar riblenn."
 
 #: ../app/actions/drawable-actions.c:73
-#| msgid "_Linked"
 msgctxt "drawable-action"
 msgid "_Linked"
 msgstr "_Ereet"
@@ -1653,7 +1617,6 @@ msgid "Toggle the linked state"
 msgstr "Trec'haoliñ ar stad ereet"
 
 #: ../app/actions/drawable-actions.c:80
-#| msgid "_Visible"
 msgctxt "drawable-action"
 msgid "_Visible"
 msgstr "_Hewel"
@@ -1694,7 +1657,6 @@ msgid "Rotate 90 degrees to the right"
 msgstr "C'hwelañ dre 90 derez war an tu dehou"
 
 #: ../app/actions/drawable-actions.c:111
-#| msgid "Rotate _180°"
 msgctxt "drawable-action"
 msgid "Rotate _180°"
 msgstr "C'hwelañ  dre _180°"
@@ -1727,19 +1689,16 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "Gwerediñ a ra kempouez al livioù gwenn war an treuzfollennoù RGG hepken."
 
 #: ../app/actions/edit-actions.c:63
-#| msgid "_Edit"
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "_Embann"
 
 #: ../app/actions/edit-actions.c:64
-#| msgid "_Paste as"
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "_Pegañ evel"
 
 #: ../app/actions/edit-actions.c:65
-#| msgid "_Buffer"
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Skurzer"
@@ -1750,7 +1709,6 @@ msgid "Undo History Menu"
 msgstr "Lañser roll istor an dizoberioù"
 
 #: ../app/actions/edit-actions.c:72
-#| msgid "_Undo"
 msgctxt "edit-action"
 msgid "_Undo"
 msgstr "Dis_ober"
@@ -1761,7 +1719,6 @@ msgid "Undo the last operation"
 msgstr "Dizober ar gwezhiadur diwezhañ"
 
 #: ../app/actions/edit-actions.c:78
-#| msgid "_Redo"
 msgctxt "edit-action"
 msgid "_Redo"
 msgstr "_Adober"
@@ -1812,7 +1769,6 @@ msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr "Daskemmañ ar mod pentañ ha demerez an dornatadur pikselioù diwezhañ"
 
 #: ../app/actions/edit-actions.c:110
-#| msgid "Cu_t"
 msgctxt "edit-action"
 msgid "Cu_t"
 msgstr "_Troc'hañ"
@@ -1823,7 +1779,6 @@ msgid "Move the selected pixels to the clipboard"
 msgstr "Dilec'hiañ ar pikselioù bet diuzet er golver"
 
 #: ../app/actions/edit-actions.c:116
-#| msgid "_Copy"
 msgctxt "edit-action"
 msgid "_Copy"
 msgstr "_Eilañ"
@@ -1835,7 +1790,6 @@ msgstr "Eilañ ar pikselioù bet diuzet er golver"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:122
-#| msgid "Copy _Visible"
 msgctxt "edit-action"
 msgid "Copy _Visible"
 msgstr "Eilañ _hewel"
@@ -1846,7 +1800,6 @@ msgid "Copy what is visible in the selected region"
 msgstr "Eilañ pezh a zo hewel war ar maez bet diuzet"
 
 #: ../app/actions/edit-actions.c:128
-#| msgid "_Paste"
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "_Pegañ"
@@ -1857,7 +1810,6 @@ msgid "Paste the content of the clipboard"
 msgstr "Pegañ ar golverad"
 
 #: ../app/actions/edit-actions.c:134
-#| msgid "Paste _Into"
 msgctxt "edit-action"
 msgid "Paste _Into"
 msgstr "Pegañ _e"
@@ -1935,7 +1887,6 @@ msgid "Paste the content of a named buffer"
 msgstr "Pegañ ar skurzerad anvet"
 
 #: ../app/actions/edit-actions.c:184
-#| msgid "Cl_ear"
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "_Skarzhañ"
@@ -2075,7 +2026,6 @@ msgid "Error Console Menu"
 msgstr "Lañser ar Penel fazioù"
 
 #: ../app/actions/error-console-actions.c:43
-#| msgid "_Clear"
 msgctxt "error-console-action"
 msgid "_Clear"
 msgstr "_Skarzhañ"
@@ -2136,13 +2086,11 @@ msgstr ""
 "%s"
 
 #: ../app/actions/file-actions.c:67
-#| msgid "_File"
 msgctxt "file-action"
 msgid "_File"
 msgstr "_Restr"
 
 #: ../app/actions/file-actions.c:68
-#| msgid "Create"
 msgctxt "file-action"
 msgid "Create"
 msgstr "Krouiñ"
@@ -2430,7 +2378,6 @@ msgid "Blend Endpoints' Opacit_y"
 msgstr "Kemmeskañ demerez an dibennoù"
 
 #: ../app/actions/gradient-editor-actions.c:124
-#| msgid "Edit Active Gradient"
 msgctxt "gradient-editor-action"
 msgid "Edit Active Gradient"
 msgstr "Embann an ilrezenn oberiant"
@@ -2453,125 +2400,96 @@ msgstr "Liv ar _rakva"
 
 #: ../app/actions/gradient-editor-actions.c:170
 #: ../app/actions/gradient-editor-actions.c:218
-#, fuzzy
-#| msgid "_Background Color"
 msgctxt "gradient-editor-action"
 msgid "_Background Color"
 msgstr "Liv an _drekva"
 
 #: ../app/actions/gradient-editor-actions.c:203
-#, fuzzy
-#| msgid "_Right Neighbor's Left Endpoint"
 msgctxt "gradient-editor-action"
 msgid "_Right Neighbor's Left Endpoint"
 msgstr "Dibenn a-gleiz an amezeg a-_zehou"
 
 #: ../app/actions/gradient-editor-actions.c:208
-#, fuzzy
-#| msgid "_Left Endpoint"
 msgctxt "gradient-editor-action"
 msgid "_Left Endpoint"
 msgstr "Dibenn a-gl_eiz"
 
 #: ../app/actions/gradient-editor-actions.c:257
 #: ../app/actions/gradient-editor-actions.c:287
-#| msgid "_Fixed"
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
 msgstr "_Kempennet"
 
 #: ../app/actions/gradient-editor-actions.c:262
 #: ../app/actions/gradient-editor-actions.c:292
-#, fuzzy
-#| msgid "F_oreground Color"
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
 msgstr "Liv ar r_akva"
 
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:298
-#, fuzzy
-#| msgid "Fo_reground Color (Transparent)"
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
 msgstr "Liv ar _rakva (treuzwelus)"
 
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:303
-#, fuzzy
-#| msgid "_Background Color"
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr "Liv an _drekva"
 
 #: ../app/actions/gradient-editor-actions.c:279
 #: ../app/actions/gradient-editor-actions.c:309
-#, fuzzy
-#| msgid "B_ackground Color (Transparent)"
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
 msgstr "Liv an drekv_a (treuzwelus)"
 
 #: ../app/actions/gradient-editor-actions.c:317
-#| msgid "_Linear"
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
 msgstr "_Linennek"
 
 #: ../app/actions/gradient-editor-actions.c:322
-#| msgid "_Curved"
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
 msgstr "_Kromm"
 
 #: ../app/actions/gradient-editor-actions.c:327
-#| msgid "_Sinusoidal"
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
 msgstr "_Sinuzoidel"
 
 #: ../app/actions/gradient-editor-actions.c:332
-#, fuzzy
-#| msgid "Spherical (i_ncreasing)"
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
 msgstr "Pellennek (war _gresk)"
 
 #: ../app/actions/gradient-editor-actions.c:337
-#, fuzzy
-#| msgid "Spherical (_decreasing)"
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
 msgstr "Pellennek (war _zigresk)"
 
 #: ../app/actions/gradient-editor-actions.c:342
-#| msgid "(Varies)"
 msgctxt "gradient-editor-blending"
 msgid "(Varies)"
 msgstr "(Liesseurt)"
 
 #: ../app/actions/gradient-editor-actions.c:350
-#| msgid "_RGB"
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGG"
 
 #: ../app/actions/gradient-editor-actions.c:355
-#, fuzzy
-#| msgid "HSV (_counter-clockwise hue)"
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
 msgstr "APG (HSV arliv e tu _gin an nadozioù)"
 
 #: ../app/actions/gradient-editor-actions.c:360
-#, fuzzy
-#| msgid "HSV (clockwise _hue)"
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
 msgstr "APG (HSV arliv e _tu an nadozioù)TSV"
 
 #: ../app/actions/gradient-editor-actions.c:365
-#| msgid "(Varies)"
 msgctxt "gradient-editor-coloring"
 msgid "(Varies)"
 msgstr "(Liesseurt)"
@@ -2764,91 +2682,76 @@ msgstr ""
 "a vo troc'het er regennoù en diuzad."
 
 #: ../app/actions/gradients-actions.c:43
-#| msgid "Gradients Menu"
 msgctxt "gradients-action"
 msgid "Gradients Menu"
 msgstr "Lañser Ilrezennoù"
 
 #: ../app/actions/gradients-actions.c:47
-#| msgid "_New Gradient"
 msgctxt "gradients-action"
 msgid "_New Gradient"
 msgstr "Ilrezenn _nevez"
 
 #: ../app/actions/gradients-actions.c:48
-#| msgid "Create a new image"
 msgctxt "gradients-action"
 msgid "Create a new gradient"
 msgstr "Krouiñ un ilrezenn nevez"
 
 #: ../app/actions/gradients-actions.c:53
-#| msgid "D_uplicate Gradient"
 msgctxt "gradients-action"
 msgid "D_uplicate Gradient"
 msgstr "Arre_daoliñ an ilrezenn"
 
 #: ../app/actions/gradients-actions.c:54
-#| msgid "Duplicate gradient"
 msgctxt "gradients-action"
 msgid "Duplicate this gradient"
 msgstr "Arredaoliñ an ilrezenn"
 
 #: ../app/actions/gradients-actions.c:59
-#| msgid "Copy Gradient _Location"
 msgctxt "gradients-action"
 msgid "Copy Gradient _Location"
 msgstr "Eilañ _lec'hiadur an ilrezenn"
 
 #: ../app/actions/gradients-actions.c:60
-#| msgid "Copy gradient file location to clipboard"
 msgctxt "gradients-action"
 msgid "Copy gradient file location to clipboard"
 msgstr "Eilañ lec'hiadur ar restr ilrezenn er golver"
 
 #: ../app/actions/gradients-actions.c:65
-#| msgid "Save as _POV-Ray..."
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
 msgstr "Enrollañ e mod _POV-Ray..."
 
 #: ../app/actions/gradients-actions.c:66
-#| msgid "Save gradient as POV-Ray"
 msgctxt "gradients-action"
 msgid "Save gradient as POV-Ray"
 msgstr "Enrollañ an ilrezenn e mentrezh  POV-Ray"
 
 #: ../app/actions/gradients-actions.c:71
-#| msgid "_Delete Gradient"
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
 msgstr "_Dilemel an ilrezenn"
 
 #: ../app/actions/gradients-actions.c:72
-#| msgid "Delete gradient"
 msgctxt "gradients-action"
 msgid "Delete this gradient"
 msgstr "Dilemel an ilrezenn"
 
 #: ../app/actions/gradients-actions.c:77
-#| msgid "_Refresh Gradients"
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
 msgstr "Azg_renaat an ilrezenn"
 
 #: ../app/actions/gradients-actions.c:78
-#| msgid "Refresh gradients"
 msgctxt "gradients-action"
 msgid "Refresh gradients"
 msgstr "Azgrenaat an ilrezenn"
 
 #: ../app/actions/gradients-actions.c:86
-#| msgid "_Edit Gradient..."
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
 msgstr "_Embann an ilrezenn..."
 
 #: ../app/actions/gradients-actions.c:87
-#| msgid "Edit gradient"
 msgctxt "gradients-action"
 msgid "Edit gradient"
 msgstr "Embann an ilrezenn"
@@ -2860,354 +2763,272 @@ msgstr "Enrollañ '%s' e mentrezh POV-Ray"
 
 #: ../app/actions/help-actions.c:37
 #: ../app/actions/help-actions.c:40
-#| msgid "_Help"
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Skoazell"
 
 #: ../app/actions/help-actions.c:41
-#| msgid "Open the GIMP user manual"
 msgctxt "help-action"
 msgid "Open the GIMP user manual"
 msgstr "Digeriñ dornlevr arveriad GIMP"
 
 #: ../app/actions/help-actions.c:46
-#, fuzzy
-#| msgid "_Context Help"
 msgctxt "help-action"
 msgid "_Context Help"
 msgstr "Skoazell gem_perzhel"
 
 #: ../app/actions/help-actions.c:47
-#, fuzzy
-#| msgid "Show the help for a specific user interface item"
 msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "Diskouez ar skoazell evit un ergorenn spesadel eus ketal an arveriad"
 
 #: ../app/actions/image-actions.c:47
 #: ../app/actions/image-actions.c:51
-#| msgid "Image Menu"
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr "Lañser Skeudenn"
 
 #: ../app/actions/image-actions.c:54
-#| msgid "_Image"
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Skeudenn"
 
 #: ../app/actions/image-actions.c:55
-#| msgid "_Mode"
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Mod"
 
 #: ../app/actions/image-actions.c:56
-#| msgid "_Transform"
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Treuzfurmiñ"
 
 #: ../app/actions/image-actions.c:57
-#| msgid "_Guides"
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Dealfoù"
 
 #: ../app/actions/image-actions.c:59
-#| msgid "_Colors"
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Livioù"
 
 #: ../app/actions/image-actions.c:60
-#| msgid "I_nfo"
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "Titou_roù"
 
 #: ../app/actions/image-actions.c:61
-#| msgid "_Auto"
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Emgefreek"
 
 #: ../app/actions/image-actions.c:62
-#| msgid "_Map"
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Kartenn"
 
 #: ../app/actions/image-actions.c:63
-#| msgid "C_omponents"
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "Parzhi_où"
 
 #: ../app/actions/image-actions.c:66
-#| msgid "_New..."
 msgctxt "image-action"
 msgid "_New..."
 msgstr "_Nevez..."
 
 #: ../app/actions/image-actions.c:67
-#| msgid "Create a new image"
 msgctxt "image-action"
 msgid "Create a new image"
 msgstr "Krouiñ ur skeudenn nevez"
 
 #: ../app/actions/image-actions.c:72
-#| msgid "Can_vas Size..."
 msgctxt "image-action"
 msgid "Can_vas Size..."
 msgstr "Ment ar ste_uenn..."
 
 #: ../app/actions/image-actions.c:73
-#, fuzzy
-#| msgid "Adjust the image dimensions"
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "Kengeidañ mentoù ar skeudenn"
 
 #: ../app/actions/image-actions.c:78
-#, fuzzy
-#| msgid "F_it Canvas to Layers"
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
-msgstr "Steuenn o kenglotañ ouzh an treuzfollennoù"
+msgstr "Steuenn o kenglotañ ouzh an tr_euzfollennoù"
 
 #: ../app/actions/image-actions.c:79
-#, fuzzy
-#| msgid "Resize the image to enclose all layers"
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "Admentañ ar skeudenn evit enkorfañ an holl dreuzfollennoù"
 
 #: ../app/actions/image-actions.c:84
-#, fuzzy
-#| msgid "F_it Canvas to Selection"
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr "Lakaat ar steuenn de genglotañ gant an d_iuzad"
 
 #: ../app/actions/image-actions.c:85
-#, fuzzy
-#| msgid "Resize the image to the extents of the selection"
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "Admentañ ar skeudenn betek astennadoù an diuzad"
 
 #: ../app/actions/image-actions.c:90
-#| msgid "_Print Size..."
 msgctxt "image-action"
 msgid "_Print Size..."
 msgstr "Ment ar _moulladur..."
 
 #: ../app/actions/image-actions.c:91
-#, fuzzy
-#| msgid "Adjust the print resolution"
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "Kengeidañ diarunusted ar moullañ"
 
 #: ../app/actions/image-actions.c:96
-#| msgid "_Scale Image..."
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr "_Skeulaat ar skeudenn..."
 
 #: ../app/actions/image-actions.c:97
-#, fuzzy
-#| msgid "Change the size of the image content"
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "Kemmañ ment ar skeudennad"
 
 #: ../app/actions/image-actions.c:102
-#, fuzzy
-#| msgid "_Crop to Selection"
 msgctxt "image-action"
 msgid "_Crop to Selection"
 msgstr "Didro_c'hañ an diuzad"
 
 #: ../app/actions/image-actions.c:103
-#, fuzzy
-#| msgid "Crop the image to the extents of the selection"
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr "Didroc'hañ ar skeudenn betek astennadoù an diuzad"
 
 #: ../app/actions/image-actions.c:108
-#| msgid "_Duplicate"
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "Arre_daoliñ"
 
 #: ../app/actions/image-actions.c:109
-#, fuzzy
-#| msgid "Create a duplicate of this image"
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Krouiñ un eilad eus ar skeudenn-mañ"
 
 #: ../app/actions/image-actions.c:114
-#, fuzzy
-#| msgid "Merge Visible _Layers..."
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "Toueziañ an _treuzfollennoù hewel..."
 
 #: ../app/actions/image-actions.c:115
-#, fuzzy
-#| msgid "Merge all visible layers into one layer"
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Toueziañ an holl dreuzfollennoù hewel en un dreuzfollenn"
 
 #: ../app/actions/image-actions.c:120
-#, fuzzy
-#| msgid "_Flatten Image"
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "_Pladañ ar skeudenn"
 
 #: ../app/actions/image-actions.c:121
-#, fuzzy
-#| msgid "Merge all layers into one and remove transparency"
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Toueziañ an holl dreuzfollennoù e unan ha dilemel an dreuzwelusted"
 
 #: ../app/actions/image-actions.c:126
-#| msgid "Configure G_rid..."
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "Kefluniañ ar g_ael..."
 
 #: ../app/actions/image-actions.c:127
-#| msgid "Configure the grid for this image"
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Kefluniañ ar gael evit ar skeudenn-mañ"
 
 #: ../app/actions/image-actions.c:132
-#| msgid "Image Pr_operties"
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "Perzhi_où ar skeudenn"
 
 #: ../app/actions/image-actions.c:133
-#, fuzzy
-#| msgid "Display information about this image"
 msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Skrammañ stlennoù diwar-benn ar skeudenn-mañ"
 
 #: ../app/actions/image-actions.c:141
-#| msgid "_RGB"
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGG"
 
 #: ../app/actions/image-actions.c:142
-#| msgid "Convert the image to the RGB colorspace"
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Amdreiñ ar skeudenn da livioù RGG"
 
 #: ../app/actions/image-actions.c:146
-#| msgid "_Grayscale"
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Li_veoù louedoù"
 
 #: ../app/actions/image-actions.c:147
-#, fuzzy
-#| msgid "Convert the image to grayscale"
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Amdreiñ ar skeudenn da liveoù louedoù"
 
 #: ../app/actions/image-actions.c:151
-#| msgid "_Indexed..."
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "Livioù _ibiliet..."
 
 #: ../app/actions/image-actions.c:152
-#, fuzzy
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Amdreiñ ar skeudenn da livioù ibiliet"
 
 #: ../app/actions/image-actions.c:159
-#, fuzzy
-#| msgid "Flip _Horizontally"
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "Melezour a-_zremm"
 
 #: ../app/actions/image-actions.c:160
-#, fuzzy
-#| msgid "Flip image horizontally"
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Melezour a-zremm"
 
 #: ../app/actions/image-actions.c:165
-#, fuzzy
-#| msgid "Flip _Vertically"
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "Melezour a-_serzh"
 
 #: ../app/actions/image-actions.c:166
-#, fuzzy
-#| msgid "Flip image vertically"
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Melezour a-serzh"
 
 #: ../app/actions/image-actions.c:174
-#, fuzzy
-#| msgid "Rotate 90° _clockwise"
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "_C'hwelañ dre 90° gant roud ar bizied"
 
 #: ../app/actions/image-actions.c:175
-#, fuzzy
-#| msgid "Rotate the image 90 degrees to the right"
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "C'hwelañ ar skeudenn dre 90 derez war an tu dehou"
 
 #: ../app/actions/image-actions.c:180
-#| msgid "Rotate _180°"
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "C'hwelañ  dre _180°"
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
-#| msgid "Turn the image upside-down"
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Treiñ ar skeudenn en amgin"
 
 #: ../app/actions/image-actions.c:186
-#, fuzzy
-#| msgid "Rotate 90° counter-clock_wise"
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "C'h_welañ dre 90° gant roud gin an nadozioù"
 
 #: ../app/actions/image-actions.c:187
-#, fuzzy
-#| msgid "Rotate the image 90 degrees to the left"
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "C'hwelañ ar skeudenn dre 90 derez war an tu kleiz"
@@ -3271,561 +3092,412 @@ msgid "Scaling"
 msgstr "O skeulaat"
 
 #: ../app/actions/images-actions.c:43
-#| msgid "Images Menu"
 msgctxt "images-action"
 msgid "Images Menu"
 msgstr "Lañser Skeudennoù"
 
 #: ../app/actions/images-actions.c:47
-#, fuzzy
-#| msgid "_Raise Views"
 msgctxt "images-action"
 msgid "_Raise Views"
 msgstr "Sevel ar g_welioù"
 
 #: ../app/actions/images-actions.c:48
-#, fuzzy
-#| msgid "Raise this image's displays"
 msgctxt "images-action"
 msgid "Raise this image's displays"
 msgstr "Sevel skrammadur ar skeudenn-mañ d'al lein"
 
 #: ../app/actions/images-actions.c:53
-#| msgid "_New View"
 msgctxt "images-action"
 msgid "_New View"
 msgstr "Gwel _nevez"
 
 #: ../app/actions/images-actions.c:54
-#, fuzzy
-#| msgid "Create a new display for this image"
 msgctxt "images-action"
 msgid "Create a new display for this image"
 msgstr "Krouiñ ur skrammadur evit ar skeudenn-mañ"
 
 #: ../app/actions/images-actions.c:59
-#| msgid "_Delete Image"
 msgctxt "images-action"
 msgid "_Delete Image"
 msgstr "_Dilemel ar skeudenn"
 
 #: ../app/actions/images-actions.c:60
-#| msgid "Delete this image"
 msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Dilemel ar skeudenn-mañ"
 
 #: ../app/actions/layers-actions.c:47
-#| msgid "Layers Menu"
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Lañser Treuzfollennoù"
 
 #: ../app/actions/layers-actions.c:51
-#| msgid "_Layer"
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Treuzfollenn"
 
 #: ../app/actions/layers-actions.c:53
-#| msgid "Stac_k"
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "Be_rn"
 
 #: ../app/actions/layers-actions.c:55
-#| msgid "Te_xt to Selection"
 msgctxt "layers-action"
 msgid "Te_xt to Selection"
 msgstr "Te_stenn da ziuzad"
 
 #: ../app/actions/layers-actions.c:57
-#| msgid "_Mask"
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maskl"
 
 #: ../app/actions/layers-actions.c:59
-#| msgid "Tr_ansparency"
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "_Boullder"
 
 #: ../app/actions/layers-actions.c:61
-#| msgid "_Transform"
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Treuzfurmiñ"
 
 #: ../app/actions/layers-actions.c:63
-#| msgid "_Properties"
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "_Perzhioù"
 
 #: ../app/actions/layers-actions.c:65
-#| msgid "_Opacity"
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "_Demerez"
 
 #: ../app/actions/layers-actions.c:67
-#, fuzzy
-#| msgid "Layer _Mode"
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "_Mod an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:70
-#, fuzzy
-#| msgid "Te_xt Tool"
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "Benveg Te_stenn"
 
 #: ../app/actions/layers-actions.c:71
-#, fuzzy
-#| msgid "Activate the text tool on this text layer"
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "Gweredekaat ar benveg testenn war an dreuzfollenn destenn-mañ"
 
 #: ../app/actions/layers-actions.c:76
-#, fuzzy
-#| msgid "_Edit Layer Attributes..."
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "_Embann doareennoù an dreuzfollenn..."
 
 #: ../app/actions/layers-actions.c:77
-#, fuzzy
-#| msgid "Edit the layer's name"
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Embann anv an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:82
-#, fuzzy
-#| msgid "_New Layer..."
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "Treuzfollenn _nevez..."
 
 #: ../app/actions/layers-actions.c:83
-#, fuzzy
-#| msgid "Create a new layer and add it to the image"
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Krouiñ un dreuzfollenn nevez hag ouzhpennañ hi er skeudenn-mañ"
 
 #: ../app/actions/layers-actions.c:88
-#, fuzzy
-#| msgid "_New Layer"
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "Treuzfollenn _nevez"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
-#| msgid "Create a new layer with last used values"
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "Krouiñ un dreuzfollenn nevez gant ar gwerzhioù diwezhañ arveret"
 
 #: ../app/actions/layers-actions.c:94
-#, fuzzy
-#| msgid "New from _Visible"
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "Unan nevez diouzh an hini he_wel"
 
 #: ../app/actions/layers-actions.c:96
-#, fuzzy
-#| msgid "Create a new layer from what is visible in this image"
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "Krouiñ un dreuzfollenn nevez diouzh pezh a zo hewel war ar skeudenn"
 
 #: ../app/actions/layers-actions.c:101
 #, fuzzy
-#| msgid "D_uplicate Layer"
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "Arre_daoliñ an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:103
-#, fuzzy
-#| msgid "Create a duplicate of the layer and add it to the image"
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Krouiñ un eilad eus an dreuzfollenn hag ouzhpennañ eñ war ar skeudenn"
 
 #: ../app/actions/layers-actions.c:108
-#, fuzzy
-#| msgid "_Delete Layer"
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "_Dilemel an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:109
-#, fuzzy
-#| msgid "Delete this layer"
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "Dilemel an dreuzfollenn-mañ"
 
 #: ../app/actions/layers-actions.c:114
-#, fuzzy
-#| msgid "_Raise Layer"
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "_Sevel an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:115
-#, fuzzy
-#| msgid "Raise this layer one step in the layer stack"
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "Sevel an dreuzfollenn-mañ dre ur paz e bern an treuzfollennoù"
 
 #: ../app/actions/layers-actions.c:120
-#, fuzzy
-#| msgid "Layer to _Top"
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "Treuzfollenn d'an _uhelañ"
 
 #: ../app/actions/layers-actions.c:121
-#, fuzzy
-#| msgid "Move this layer to the top of the layer stack"
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "Sevel an dreuzfollenn-mañ betek lein bern an treuzfollennoù"
 
 #: ../app/actions/layers-actions.c:126
-#, fuzzy
-#| msgid "_Lower Layer"
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "_Diskenn an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:127
-#, fuzzy
-#| msgid "Lower this layer one step in the layer stack"
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "Diskenn an dreuzfollenn-mañ dre ur paz e bern an treuzfollennoù"
 
 #: ../app/actions/layers-actions.c:132
-#, fuzzy
-#| msgid "Layer to _Bottom"
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "Treuzfollenn d'an _izelañ"
 
 #: ../app/actions/layers-actions.c:133
-#, fuzzy
-#| msgid "Move this layer to the bottom of the layer stack"
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Diskenn an dreuzfollenn-mañ betek traoñ bern an treuzfollennoù"
 
 #: ../app/actions/layers-actions.c:138
-#, fuzzy
-#| msgid "_Anchor Layer"
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "_Eoriañ an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:139
-#, fuzzy
-#| msgid "Anchor the floating layer"
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Eoriañ an dreuzfollenn war neuñv"
 
 #: ../app/actions/layers-actions.c:144
-#, fuzzy
-#| msgid "Merge Do_wn"
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "_Toueziañ etrezek an traoñ"
 
 #: ../app/actions/layers-actions.c:145
-#, fuzzy
-#| msgid "Merge this layer with the one below it"
 msgctxt "layers-action"
 msgid "Merge this layer with the one below it"
 msgstr "Toueziañ an dreuzfollenn-mañ gant an hini a zo dindan"
 
 #: ../app/actions/layers-actions.c:150
-#, fuzzy
-#| msgid "Merge _Visible Layers..."
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "Toueziañ an treuzfollennoù _hewel..."
 
 #: ../app/actions/layers-actions.c:151
-#, fuzzy
-#| msgid "Merge all visible layers into one layer"
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Toueziañ an holl dreuzfollennoù hewel en un dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:156
-#, fuzzy
-#| msgid "_Flatten Image"
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "_Pladañ ar skeudenn"
 
 #: ../app/actions/layers-actions.c:157
-#, fuzzy
-#| msgid "Merge all layers into one and remove transparency"
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Toueziañ an holl dreuzfollennoù e unan ha dilemel an dreuzwelusted"
 
 #: ../app/actions/layers-actions.c:162
-#, fuzzy
-#| msgid "_Discard Text Information"
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "_Diskar an destenn gelaouiñ"
 
 #: ../app/actions/layers-actions.c:163
-#, fuzzy
-#| msgid "Turn this text layer into a normal layer"
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "Treiñ an dreuzfollenn destenn-mañ d'un dreuzfollenn skoueriek"
 
 #: ../app/actions/layers-actions.c:168
-#| msgid "Text to _Path"
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "Testenn da _dreug"
 
 #: ../app/actions/layers-actions.c:169
-#, fuzzy
-#| msgid "Create a path from this text layer"
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "Krouiñ un treug diouzh an dreuzfollenn destenn"
 
 #: ../app/actions/layers-actions.c:174
-#, fuzzy
-#| msgid "Text alon_g Path"
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Testenn a-hed an treu_g"
 
 #: ../app/actions/layers-actions.c:175
-#, fuzzy
-#| msgid "Warp this layer's text along the current path"
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Distummañ an dreuzfollenn destenn-mañ a-hed an treug bremanel"
 
 #: ../app/actions/layers-actions.c:180
-#, fuzzy
-#| msgid "Layer B_oundary Size..."
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "Ment bevenn_où an dreuzfollenn..."
 
 #: ../app/actions/layers-actions.c:181
-#, fuzzy
-#| msgid "Adjust the layer dimensions"
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "Kengeidañ mentoù an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:186
-#, fuzzy
-#| msgid "Layer to _Image Size"
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "Treuzfollenn ouzh ment ar _skeudenn"
 
 #: ../app/actions/layers-actions.c:187
-#, fuzzy
-#| msgid "Resize the layer to the size of the image"
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "Admentañ an dreuzfollenn betek ment ar skeudenn"
 
 #: ../app/actions/layers-actions.c:192
-#, fuzzy
-#| msgid "_Scale Layer..."
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "_Skeulaat an dreuzfollenn..."
 
 #: ../app/actions/layers-actions.c:193
-#, fuzzy
-#| msgid "Change the size of the layer content"
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "Kemmañ ment an dreuzfollennad"
 
 #: ../app/actions/layers-actions.c:198
-#, fuzzy
-#| msgid "_Crop to Selection"
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "Didro_c'hañ an diuzad"
 
 #: ../app/actions/layers-actions.c:199
-#, fuzzy
-#| msgid "Crop the layer to the extents of the selection"
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "Admentañ an dreuzfollenn betek astennadoù an diuzad"
 
 #: ../app/actions/layers-actions.c:204
-#, fuzzy
-#| msgid "Add La_yer Mask..."
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "Ouzhpennañ ur _maskl treuzfollenn..."
 
 #: ../app/actions/layers-actions.c:206
-#, fuzzy
-#| msgid "Add a mask that allows non-destructive editing of transparency"
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr "Ouzhpennañ ur maskl oc'h aotren un embann dizistrujus eus an dreuzwelusted"
 
 #: ../app/actions/layers-actions.c:211
-#, fuzzy
-#| msgid "Add Alpha C_hannel"
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Ouz_hpennañ ur sanell alfa"
 
 #: ../app/actions/layers-actions.c:212
-#, fuzzy
-#| msgid "Add transparency information to the layer"
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "Ouzhpennañ ar stlennoù a-fet treuzwelusted d'an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:217
-#, fuzzy
-#| msgid "_Remove Alpha Channel"
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "_Dilemel ar sanell Alfa"
 
 #: ../app/actions/layers-actions.c:218
-#, fuzzy
-#| msgid "Remove transparency information from the layer"
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "Dilemel ar stlennoù a-fet treuzwelusted diouzh an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:226
-#, fuzzy
-#| msgid "Lock Alph_a Channel"
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "Prennañ ar sanell _alfa"
 
 #: ../app/actions/layers-actions.c:228
-#, fuzzy
-#| msgid "Keep transparency information on this layer from being modified"
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr "Mirout ar stlennoù treuzwelusted war an dreuzfollenn-mañ ouzh bezañ daskemmet"
 
 #: ../app/actions/layers-actions.c:234
-#, fuzzy
-#| msgid "_Edit Layer Mask"
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "Embann ar maskl treuzfollenn"
 
 #: ../app/actions/layers-actions.c:235
-#, fuzzy
-#| msgid "Work on the layer mask"
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Labourat war ar maskl treuzfollenn"
 
 #: ../app/actions/layers-actions.c:241
-#, fuzzy
-#| msgid "S_how Layer Mask"
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "Diskouez ar _maskl treuzfollenn"
 
 #: ../app/actions/layers-actions.c:247
-#, fuzzy
-#| msgid "_Disable Layer Mask"
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "_Diweredekaat ar maskl treuzfollenn"
 
 #: ../app/actions/layers-actions.c:248
-#, fuzzy
-#| msgid "Dismiss the effect of the layer mask"
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "Argas efed ar maskl treuzfollenn"
 
 #: ../app/actions/layers-actions.c:257
-#, fuzzy
-#| msgid "Apply Layer _Mask"
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Arloañ ar _maskl treuzfollenn"
 
 #: ../app/actions/layers-actions.c:258
-#, fuzzy
-#| msgid "Apply the effect of the layer mask and remove it"
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Arloañ efed maskl an dreuzfollenn ha dilemel eñ"
 
 #: ../app/actions/layers-actions.c:263
-#, fuzzy
-#| msgid "Delete Layer Mas_k"
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Dilemel ar mas_kl treuzfollenn"
 
 #: ../app/actions/layers-actions.c:264
-#, fuzzy
-#| msgid "Remove the layer mask and its effect"
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Arloañ efed maskl an dreuzfollenn ha dilemel eñ"
 
 #: ../app/actions/layers-actions.c:272
-#, fuzzy
-#| msgid "_Mask to Selection"
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "_Maskl ouzh an diuzad"
 
 #: ../app/actions/layers-actions.c:273
-#, fuzzy
-#| msgid "Replace the selection with the layer mask"
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Amsaviñ an diuzad ouzh ar maskl treuzfollenn"
 
 #: ../app/actions/layers-actions.c:278
-#, fuzzy
-#| msgid "_Add to Selection"
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "Ouzhpenn_añ d'an diuzad"
 
 #: ../app/actions/layers-actions.c:279
-#, fuzzy
-#| msgid "Add the layer mask to the current selection"
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Ouzhpennañ ar maskl treuzfollenn d'an diuzad bremanel"
@@ -3833,15 +3505,11 @@ msgstr "Ouzhpennañ ar maskl treuzfollenn d'an diuzad bremanel"
 #: ../app/actions/layers-actions.c:284
 #: ../app/actions/layers-actions.c:313
 #: ../app/actions/layers-actions.c:343
-#, fuzzy
-#| msgid "_Subtract from Selection"
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "Tennañ kuit diouzh an diuzad"
 
 #: ../app/actions/layers-actions.c:285
-#, fuzzy
-#| msgid "Subtract the layer mask from the current selection"
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Dilemel ar maskl treuzfollenn diouzh an diuzad bremanel"
@@ -3849,148 +3517,107 @@ msgstr "Dilemel ar maskl treuzfollenn diouzh an diuzad bremanel"
 #: ../app/actions/layers-actions.c:290
 #: ../app/actions/layers-actions.c:320
 #: ../app/actions/layers-actions.c:350
-#, fuzzy
-#| msgid "_Intersect with Selection"
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "_Kenskejadur gant an diuzad"
 
 #: ../app/actions/layers-actions.c:291
-#, fuzzy
-#| msgid "Intersect the layer mask with the current selection"
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "Kenskejañ ar maskl treuzfollenn gant an diuzad bremanel"
 
 #: ../app/actions/layers-actions.c:299
-#, fuzzy
-#| msgid "Al_pha to Selection"
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Al_fa ouzh an diuzad"
 
 #: ../app/actions/layers-actions.c:301
-#, fuzzy
-#| msgid "Replace the selection with the layer's alpha channel"
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Amsaviñ an diuzad ouzh sanell alfa an dreuzfollenn"
 
 #: ../app/actions/layers-actions.c:306
 #: ../app/actions/layers-actions.c:336
-#, fuzzy
-#| msgid "A_dd to Selection"
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "Ouzhpennañ d'an _diuzad"
 
 #: ../app/actions/layers-actions.c:308
-#, fuzzy
-#| msgid "Add the layer's alpha channel to the current selection"
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Ouzhpennañ sanell alfa an dreuzfollenn d'an diuzad bremanel"
 
 #: ../app/actions/layers-actions.c:315
-#, fuzzy
-#| msgid "Subtract the layer's alpha channel from the current selection"
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Lemel sanell alfa an dreuzfollenn diouzh an diuzad bremanel"
 
 #: ../app/actions/layers-actions.c:322
-#, fuzzy
-#| msgid "Intersect the layer's alpha channel with the current selection"
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Kenskejañ sanell alfa an dreuzfollenn gant an diuzad bremanel"
 
 #: ../app/actions/layers-actions.c:330
-#| msgid "_Text to Selection"
 msgctxt "layers-action"
 msgid "_Text to Selection"
 msgstr "_Testenn da ziuzad"
 
 #: ../app/actions/layers-actions.c:331
-#, fuzzy
-#| msgid "Replace the selection with the text layer's outline"
 msgctxt "layers-action"
 msgid "Replace the selection with the text layer's outline"
 msgstr "Amsaviñ an diuzad gant trolinenn an dreuzfollenn destenn"
 
 #: ../app/actions/layers-actions.c:338
-#, fuzzy
-#| msgid "Add the text layer's outline to the current selection"
 msgctxt "layers-action"
 msgid "Add the text layer's outline to the current selection"
 msgstr "Ouzhpennañ trolinenn testenn an dreuzfollenn d'an diuzad bremanel"
 
 #: ../app/actions/layers-actions.c:345
-#, fuzzy
-#| msgid "Subtract the text layer's outline from the current selection"
 msgctxt "layers-action"
 msgid "Subtract the text layer's outline from the current selection"
 msgstr "Lemel trolinenn testenn an dreuzfollenn diouzh an diuzad bremanel"
 
 #: ../app/actions/layers-actions.c:352
-#, fuzzy
-#| msgid "Intersect the text layer's outline with the current selection"
 msgctxt "layers-action"
 msgid "Intersect the text layer's outline with the current selection"
 msgstr "Kenskejañ trolinenn testenn an dreuzfollenn gant an diuzad bremanel"
 
 #: ../app/actions/layers-actions.c:360
-#, fuzzy
-#| msgid "Select _Top Layer"
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Diuzañ an dreuzfollenn e _lein"
 
 #: ../app/actions/layers-actions.c:361
-#, fuzzy
-#| msgid "Select the topmost layer"
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Diuzañ an dreuzfollenn el lein"
 
 #: ../app/actions/layers-actions.c:366
-#, fuzzy
-#| msgid "Select _Bottom Layer"
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Diuzañ an dreuzfollenn en _traoñ"
 
 #: ../app/actions/layers-actions.c:367
-#, fuzzy
-#| msgid "Select the bottommost layer"
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Diuzañ an dreuzfollenn en traoñ"
 
 #: ../app/actions/layers-actions.c:372
-#, fuzzy
-#| msgid "Select _Previous Layer"
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "Diuzañ an dreuzfollenn gent"
 
 #: ../app/actions/layers-actions.c:373
-#, fuzzy
-#| msgid "Select the layer above the current layer"
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "Diuzañ an dreuzfollenn a-us d'an dreuzfollenn oberiant"
 
 #: ../app/actions/layers-actions.c:378
-#, fuzzy
-#| msgid "Select _Next Layer"
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "Diuzañ an dreuzfollenn war-lerc'h"
 
 #: ../app/actions/layers-actions.c:379
-#, fuzzy
-#| msgid "Select the layer below the current layer"
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "Diuzañ an dreuzfollenn dindan an dreuzfollenn oberiant"
@@ -4048,14 +3675,11 @@ msgid "Add Layer Mask"
 msgstr "Ouzhpennañ ur maskl treuzfollenn"
 
 #: ../app/actions/palette-editor-actions.c:43
-#, fuzzy
-#| msgid "Palette Editor Menu"
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
 msgstr "Lañser Embanner livaouegoù"
 
 #: ../app/actions/palette-editor-actions.c:47
-#| msgid "_Edit Color..."
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
 msgstr "_Embann al liv..."
@@ -4068,7 +3692,6 @@ msgid "Edit this entry"
 msgstr "Embann an ilrezenn"
 
 #: ../app/actions/palette-editor-actions.c:53
-#| msgid "_Delete Color"
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
 msgstr "_Dilemel al liv"
@@ -4081,14 +3704,11 @@ msgid "Delete this entry"
 msgstr "Dilemel an dreuzfollenn-mañ"
 
 #: ../app/actions/palette-editor-actions.c:62
-#| msgid "Edit Active Palette"
 msgctxt "palette-editor-action"
 msgid "Edit Active Palette"
 msgstr "Embann al livaoueg oberiant"
 
 #: ../app/actions/palette-editor-actions.c:71
-#, fuzzy
-#| msgid "New Color from _FG"
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
 msgstr "Liv nevez diouzh ar _rakva"
@@ -4101,8 +3721,6 @@ msgid "Create a new entry from the foreground color"
 msgstr "Liv nevez diouzh liv ar rakva"
 
 #: ../app/actions/palette-editor-actions.c:78
-#, fuzzy
-#| msgid "New Color from _BG"
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
 msgstr "Liv nevez diouzh an _drekva"
@@ -4135,105 +3753,86 @@ msgid "Edit Color Palette Entry"
 msgstr "Embann enankad al livaoueg"
 
 #: ../app/actions/palettes-actions.c:43
-#| msgid "Palettes Menu"
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "Lañser Livaouegoù"
 
 #: ../app/actions/palettes-actions.c:47
-#| msgid "_New Palette"
 msgctxt "palettes-action"
 msgid "_New Palette"
 msgstr "Livaoueg _nevez"
 
 #: ../app/actions/palettes-actions.c:48
-#| msgid "Create a new template"
 msgctxt "palettes-action"
 msgid "Create a new palette"
 msgstr "Krouiñ ul livaoueg nevez"
 
 #: ../app/actions/palettes-actions.c:53
-#| msgid "_Import Palette..."
 msgctxt "palettes-action"
 msgid "_Import Palette..."
 msgstr "_Enporzhiañ al livaoueg..."
 
 #: ../app/actions/palettes-actions.c:54
-#| msgid "Import palette"
 msgctxt "palettes-action"
 msgid "Import palette"
 msgstr "Enporzhiañ al livaoueg"
 
 #: ../app/actions/palettes-actions.c:59
-#, fuzzy
-#| msgid "D_uplicate Palette"
 msgctxt "palettes-action"
 msgid "D_uplicate Palette"
 msgstr "Arredaoliñ al livao_ueg"
 
 #: ../app/actions/palettes-actions.c:60
-#, fuzzy
-#| msgid "Duplicate palette"
 msgctxt "palettes-action"
 msgid "Duplicate this palette"
-msgstr "Arredaoliñ al livaoueg"
+msgstr "Arredaoliñ al livaoueg-mañ"
 
 #: ../app/actions/palettes-actions.c:65
-#| msgid "_Merge Palettes..."
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
 msgstr "_Toueziañ al livaouegoù..."
 
 #: ../app/actions/palettes-actions.c:66
-#| msgid "Merge palettes"
 msgctxt "palettes-action"
 msgid "Merge palettes"
 msgstr "Toueziañ al livaouegoù"
 
 #: ../app/actions/palettes-actions.c:71
-#| msgid "Copy Palette _Location"
 msgctxt "palettes-action"
 msgid "Copy Palette _Location"
 msgstr "Eilañ lec'hiadur al _livaoueg"
 
 #: ../app/actions/palettes-actions.c:72
-#| msgid "Copy palette file location to clipboard"
 msgctxt "palettes-action"
 msgid "Copy palette file location to clipboard"
 msgstr "Eilañ lec'hiadur ar restr livaoueg er golver"
 
 #: ../app/actions/palettes-actions.c:77
-#| msgid "_Delete Palette"
 msgctxt "palettes-action"
 msgid "_Delete Palette"
 msgstr "_Dilemel al livaoueg"
 
 #: ../app/actions/palettes-actions.c:78
-#| msgid "Delete palette"
 msgctxt "palettes-action"
 msgid "Delete this palette"
 msgstr "Dilemel al livaoueg-mañ"
 
 #: ../app/actions/palettes-actions.c:83
-#| msgid "_Refresh Palettes"
 msgctxt "palettes-action"
 msgid "_Refresh Palettes"
 msgstr "Azgren_aat al livaouegoù"
 
 #: ../app/actions/palettes-actions.c:84
-#| msgid "Refresh palettes"
 msgctxt "palettes-action"
 msgid "Refresh palettes"
 msgstr "Azgrenaat al livaouegoù"
 
 #: ../app/actions/palettes-actions.c:92
-#| msgid "_Edit Palette..."
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
 msgstr "_Embann al livaoueg..."
 
 #: ../app/actions/palettes-actions.c:93
-#| msgid "Edit palette"
 msgctxt "palettes-action"
 msgid "Edit palette"
 msgstr "Embann al livaoueg"
@@ -4247,14 +3846,11 @@ msgid "Enter a name for the merged palette"
 msgstr "Enankit un anv evit al livaoueg toueziet"
 
 #: ../app/actions/patterns-actions.c:42
-#| msgid "Patterns Menu"
 msgctxt "patterns-action"
 msgid "Patterns Menu"
 msgstr "Lañser Gousturioù"
 
 #: ../app/actions/patterns-actions.c:46
-#, fuzzy
-#| msgid "_Open Pattern as Image"
 msgctxt "patterns-action"
 msgid "_Open Pattern as Image"
 msgstr "_Digeriñ ar goustur evel skeudenn"
@@ -4267,8 +3863,6 @@ msgid "Open this pattern as an image"
 msgstr "Digeriñ ar goustur evel skeudenn"
 
 #: ../app/actions/patterns-actions.c:52
-#, fuzzy
-#| msgid "_New Pattern"
 msgctxt "patterns-action"
 msgid "_New Pattern"
 msgstr "Goustur _nevez"
@@ -4281,229 +3875,176 @@ msgid "Create a new pattern"
 msgstr "Krouiñ ur patrom nevez"
 
 #: ../app/actions/patterns-actions.c:58
-#, fuzzy
-#| msgid "D_uplicate Pattern"
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
 msgstr "Arredaoliñ ar go_ustur"
 
 #: ../app/actions/patterns-actions.c:59
-#, fuzzy
-#| msgid "Duplicate pattern"
 msgctxt "patterns-action"
 msgid "Duplicate this pattern"
-msgstr "Arredaoliñ ar goustur"
+msgstr "Arredaoliñ ar goustur-mañ"
 
 #: ../app/actions/patterns-actions.c:64
-#, fuzzy
-#| msgid "Copy Pattern _Location"
 msgctxt "patterns-action"
 msgid "Copy Pattern _Location"
 msgstr "Eilañ _lec'hiadur ar goustur"
 
 #: ../app/actions/patterns-actions.c:65
-#, fuzzy
-#| msgid "Copy pattern file location to clipboard"
 msgctxt "patterns-action"
 msgid "Copy pattern file location to clipboard"
 msgstr "Eilañ lec'hiadur ar restr goustur er golver"
 
 #: ../app/actions/patterns-actions.c:70
-#| msgid "_Delete Pattern"
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
 msgstr "_Dilemel ar goustur"
 
 #: ../app/actions/patterns-actions.c:71
-#| msgid "Delete pattern"
 msgctxt "patterns-action"
 msgid "Delete this pattern"
 msgstr "Dilemel ar goustur-mañ"
 
 #: ../app/actions/patterns-actions.c:76
-#| msgid "_Refresh Patterns"
 msgctxt "patterns-action"
 msgid "_Refresh Patterns"
 msgstr "Azg_renaat ar gousturioù"
 
 #: ../app/actions/patterns-actions.c:77
-#| msgid "Refresh patterns"
 msgctxt "patterns-action"
 msgid "Refresh patterns"
 msgstr "Azgrenaat ar gousturioù"
 
 #: ../app/actions/patterns-actions.c:85
-#| msgid "_Edit Pattern..."
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
 msgstr "_Embann ar goustur..."
 
 #: ../app/actions/patterns-actions.c:86
-#| msgid "Edit pattern"
 msgctxt "patterns-action"
 msgid "Edit pattern"
 msgstr "Embann ar goustur"
 
 #: ../app/actions/plug-in-actions.c:84
-#| msgid "Filte_rs"
 msgctxt "plug-in-action"
 msgid "Filte_rs"
 msgstr "Silo_ù"
 
 #: ../app/actions/plug-in-actions.c:86
-#, fuzzy
-#| msgid "Recently Used"
 msgctxt "plug-in-action"
 msgid "Recently Used"
 msgstr "Arveret n'eus ket pell zo"
 
 #: ../app/actions/plug-in-actions.c:88
-#| msgid "_Blur"
 msgctxt "plug-in-action"
 msgid "_Blur"
 msgstr "Ru_zed"
 
 #: ../app/actions/plug-in-actions.c:90
-#| msgid "_Noise"
 msgctxt "plug-in-action"
 msgid "_Noise"
 msgstr "_Trouz"
 
 #: ../app/actions/plug-in-actions.c:92
-#, fuzzy
-#| msgid "Edge-De_tect"
 msgctxt "plug-in-action"
 msgid "Edge-De_tect"
 msgstr "Dinoadur ar _riblenn"
 
 #: ../app/actions/plug-in-actions.c:94
-#| msgid "En_hance"
 msgctxt "plug-in-action"
 msgid "En_hance"
 msgstr "Gwell_aat"
 
 #: ../app/actions/plug-in-actions.c:96
-#, fuzzy
-#| msgid "C_ombine"
 msgctxt "plug-in-action"
 msgid "C_ombine"
 msgstr "Keda_ozañ"
 
 #: ../app/actions/plug-in-actions.c:98
-#, fuzzy
-#| msgid "_Generic"
 msgctxt "plug-in-action"
 msgid "_Generic"
 msgstr "_Rumm"
 
 #: ../app/actions/plug-in-actions.c:100
-#, fuzzy
-#| msgid "_Light and Shadow"
 msgctxt "plug-in-action"
 msgid "_Light and Shadow"
 msgstr "_Sklêrijenn ha disheol"
 
 #: ../app/actions/plug-in-actions.c:102
-#, fuzzy
-#| msgid "_Distorts"
 msgctxt "plug-in-action"
 msgid "_Distorts"
 msgstr "Torr_gammoù"
 
 #: ../app/actions/plug-in-actions.c:104
-#| msgid "_Artistic"
 msgctxt "plug-in-action"
 msgid "_Artistic"
 msgstr "_Arzek"
 
 #: ../app/actions/plug-in-actions.c:106
-#| msgid "_Decor"
 msgctxt "plug-in-action"
 msgid "_Decor"
 msgstr "Klinka_dur"
 
 #: ../app/actions/plug-in-actions.c:108
-#| msgid "_Map"
 msgctxt "plug-in-action"
 msgid "_Map"
 msgstr "_Kartenn"
 
 #: ../app/actions/plug-in-actions.c:110
-#, fuzzy
-#| msgid "_Render"
 msgctxt "plug-in-action"
 msgid "_Render"
 msgstr "_Deouez"
 
 #: ../app/actions/plug-in-actions.c:112
-#| msgid "_Clouds"
 msgctxt "plug-in-action"
 msgid "_Clouds"
 msgstr "Ko_umoul"
 
 #: ../app/actions/plug-in-actions.c:114
-#| msgid "_Nature"
 msgctxt "plug-in-action"
 msgid "_Nature"
 msgstr "_Natur"
 
 #: ../app/actions/plug-in-actions.c:116
-#| msgid "_Pattern"
 msgctxt "plug-in-action"
 msgid "_Pattern"
 msgstr "_Goustur"
 
 #: ../app/actions/plug-in-actions.c:118
-#| msgid "_Web"
 msgctxt "plug-in-action"
 msgid "_Web"
 msgstr "_Web"
 
 #: ../app/actions/plug-in-actions.c:120
-#, fuzzy
-#| msgid "An_imation"
 msgctxt "plug-in-action"
 msgid "An_imation"
 msgstr "F_iñv"
 
 #: ../app/actions/plug-in-actions.c:123
-#, fuzzy
-#| msgid "Reset all _Filters"
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
 msgstr "Adderaouekaat an holl _siloù"
 
 #: ../app/actions/plug-in-actions.c:124
-#, fuzzy
-#| msgid "Reset all plug-ins to their default settings"
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
 msgstr "Adderaouekaat an holl enlugelladoù gant oc'h arventennoù dre ziouer"
 
 #: ../app/actions/plug-in-actions.c:132
-#, fuzzy
-#| msgid "Re_peat Last"
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
 msgstr "Arr_en an hini diwezhañ"
 
 #: ../app/actions/plug-in-actions.c:134
-#, fuzzy
-#| msgid "Rerun the last used plug-in using the same settings"
 msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
 msgstr "Adlañsañ an enlugellad diwezhañ arveret en ur ober gant an hevelep arventennoù"
 
 #: ../app/actions/plug-in-actions.c:139
-#, fuzzy
-#| msgid "R_e-Show Last"
 msgctxt "plug-in-action"
 msgid "R_e-Show Last"
 msgstr "Addiskou_ez an hini diwezhañ"
 
 #: ../app/actions/plug-in-actions.c:140
-#, fuzzy
-#| msgid "Show the last used plug-in dialog again"
 msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
 msgstr "Diskouez en-dro boestad emziviz an enlugellad diwezhañ arveret"
@@ -4535,22 +4076,16 @@ msgid "Do you really want to reset all filters to default values?"
 msgstr "Ha fellout a fell deoc'h adderaouekaat an holl siloù betek o gwerzhioù dre ziouer ?"
 
 #: ../app/actions/quick-mask-actions.c:42
-#, fuzzy
-#| msgid "Quick Mask Menu"
 msgctxt "quick-mask-action"
 msgid "Quick Mask Menu"
 msgstr "Lañser ar Maskl herrek"
 
 #: ../app/actions/quick-mask-actions.c:46
-#, fuzzy
-#| msgid "_Configure Color and Opacity..."
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
 msgstr "_Kefluniañ al livioù hag an demerez..."
 
 #: ../app/actions/quick-mask-actions.c:54
-#, fuzzy
-#| msgid "Toggle _Quick Mask"
 msgctxt "quick-mask-action"
 msgid "Toggle _Quick Mask"
 msgstr "(Diw)_gweredekaat ar maskl herrek"
@@ -4563,15 +4098,11 @@ msgid "Toggle Quick Mask on/off"
 msgstr "(Diw)gweredekaat ar maskl herrek"
 
 #: ../app/actions/quick-mask-actions.c:64
-#, fuzzy
-#| msgid "Mask _Selected Areas"
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
 msgstr "Ma_sklañ ar maezioù diuzet"
 
 #: ../app/actions/quick-mask-actions.c:69
-#, fuzzy
-#| msgid "Mask _Unselected Areas"
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
 msgstr "Masklañ ar maezioù a_ndiuzet"
@@ -4593,15 +4124,11 @@ msgid "_Mask opacity:"
 msgstr "Demerez ar _maskl :"
 
 #: ../app/actions/sample-points-actions.c:39
-#, fuzzy
-#| msgid "Sample Point Menu"
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
 msgstr "Lañser ar poenter standilhonañ"
 
 #: ../app/actions/sample-points-actions.c:46
-#, fuzzy
-#| msgid "_Sample Merged"
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
 msgstr "Standilhonoù toueziet"
@@ -4614,14 +4141,11 @@ msgid "Use the composite color of all visible layers"
 msgstr "Diuzad ur maez diazez war an holl dreuzfollennoù hewel"
 
 #: ../app/actions/select-actions.c:44
-#, fuzzy
-#| msgid "Selection Editor Menu"
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr "Lañser an embanner diuzañ"
 
 #: ../app/actions/select-actions.c:47
-#| msgid "_Select"
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Diuzañ"
@@ -4634,157 +4158,116 @@ msgid "_All"
 msgstr "Zoum e-keñver _ar prenestr"
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
-#| msgid "Select everything"
 msgctxt "select-action"
 msgid "Select everything"
 msgstr "Diuzañ pep tra"
 
 #: ../app/actions/select-actions.c:56
-#| msgid "None"
 msgctxt "select-action"
 msgid "_None"
 msgstr "Tra ebet"
 
 #: ../app/actions/select-actions.c:57
-#, fuzzy
-#| msgid "Dismiss the selection"
 msgctxt "select-action"
 msgid "Dismiss the selection"
 msgstr "Argas an diuzad"
 
 #: ../app/actions/select-actions.c:62
-#| msgid "_Invert"
 msgctxt "select-action"
 msgid "_Invert"
 msgstr "Tug_inañ"
 
 #: ../app/actions/select-actions.c:63
-#, fuzzy
-#| msgid "Invert the selection"
 msgctxt "select-action"
 msgid "Invert the selection"
 msgstr "Tuginañ an diuzad"
 
 #: ../app/actions/select-actions.c:68
-#, fuzzy
-#| msgid "_Float"
 msgctxt "select-action"
 msgid "_Float"
 msgstr "_Tonn"
 
 #: ../app/actions/select-actions.c:69
-#, fuzzy
-#| msgid "Create a floating selection"
 msgctxt "select-action"
 msgid "Create a floating selection"
 msgstr "Krouiñ un diuzad war neuñv"
 
 #: ../app/actions/select-actions.c:74
-#, fuzzy
-#| msgid "Fea_ther..."
 msgctxt "select-action"
 msgid "Fea_ther..."
 msgstr "Kuñvsaa_t..."
 
 #: ../app/actions/select-actions.c:76
-#, fuzzy
-#| msgid "Blur the selection border so that it fades out smoothly"
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
 msgstr "Lakaat ruzed war riblenn an diuzad a-benn ma arveuzo tamm ha tamm"
 
 #: ../app/actions/select-actions.c:81
-#, fuzzy
-#| msgid "_Sharpen"
 msgctxt "select-action"
 msgid "_Sharpen"
 msgstr "Lem_maat"
 
 #: ../app/actions/select-actions.c:82
-#, fuzzy
-#| msgid "Remove fuzzyness from the selection"
 msgctxt "select-action"
 msgid "Remove fuzzyness from the selection"
 msgstr "Dilemel an amspiser diouzh an diuzad"
 
 #: ../app/actions/select-actions.c:87
-#| msgid "S_hrink..."
 msgctxt "select-action"
 msgid "S_hrink..."
 msgstr "_Bihanaat..."
 
 #: ../app/actions/select-actions.c:88
-#, fuzzy
-#| msgid "Contract the selection"
 msgctxt "select-action"
 msgid "Contract the selection"
 msgstr "Strishaat an diuzad"
 
 #: ../app/actions/select-actions.c:93
-#| msgid "_Grow..."
 msgctxt "select-action"
 msgid "_Grow..."
 msgstr "K_reskaat..."
 
 #: ../app/actions/select-actions.c:94
-#, fuzzy
-#| msgid "Enlarge the selection"
 msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr "Brasaat an diuzad"
 
 #: ../app/actions/select-actions.c:99
-#| msgid "Bo_rder..."
 msgctxt "select-action"
 msgid "Bo_rder..."
 msgstr "_Riblenn..."
 
 #: ../app/actions/select-actions.c:100
-#, fuzzy
-#| msgid "Replace the selection by its border"
 msgctxt "select-action"
 msgid "Replace the selection by its border"
 msgstr "Adlakaat an diuzad e-kichen e riblenn"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
-#| msgid "Save to _Channel"
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr "Enrollañ en ur sanell"
 
 #: ../app/actions/select-actions.c:106
-#, fuzzy
-#| msgid "Save the selection to a channel"
 msgctxt "select-action"
 msgid "Save the selection to a channel"
 msgstr "Enrollañ ar diuzad en ur sanell"
 
 #: ../app/actions/select-actions.c:111
-#, fuzzy
-#| msgid "_Stroke Selection..."
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "Tre_sañ an diuzad..."
 
 #: ../app/actions/select-actions.c:112
-#, fuzzy
-#| msgid "Paint along the selection outline"
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Pentañ a-hed trolinenn an diuzad"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
-#| msgid "_Stroke Selection"
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr "Tre_sañ an diuzad"
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
-#| msgid "Stroke the selection with last used values"
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Tresañ an diuzad gant ar gwerzhioù diwezhañ"
@@ -4853,34 +4336,26 @@ msgid "Stroke Selection"
 msgstr "Tresañ an diuzad"
 
 #: ../app/actions/templates-actions.c:41
-#| msgid "Templates Menu"
 msgctxt "templates-action"
 msgid "Templates Menu"
 msgstr "Lañser Patromoù"
 
 #: ../app/actions/templates-actions.c:45
-#, fuzzy
-#| msgid "_Create Image from Template"
 msgctxt "templates-action"
 msgid "_Create Image from Template"
 msgstr "_Krouiñ ur skeudenn diouzh ur patrom..."
 
 #: ../app/actions/templates-actions.c:46
-#, fuzzy
-#| msgid "Create a new image from the selected template"
 msgctxt "templates-action"
 msgid "Create a new image from the selected template"
 msgstr "Krouiñ ur skeudenn nevez diouzh ar patrom diuzet"
 
 #: ../app/actions/templates-actions.c:51
-#| msgid "_New Template..."
 msgctxt "templates-action"
 msgid "_New Template..."
 msgstr "Patrom _nevez..."
 
 #: ../app/actions/templates-actions.c:52
-#, fuzzy
-#| msgid "Create a new template"
 msgctxt "templates-action"
 msgid "Create a new template"
 msgstr "Krouiñ ur patrom nevez"
@@ -4893,37 +4368,29 @@ msgid "D_uplicate Template..."
 msgstr "Arre_daoliñ ar patrom..."
 
 #: ../app/actions/templates-actions.c:58
-#, fuzzy
-#| msgid "Duplicate the selected template"
 msgctxt "templates-action"
 msgid "Duplicate this template"
-msgstr "Arredaoliñ ar patrom diuzet"
+msgstr "Arredaoliñ ar patrom-mañ"
 
 #: ../app/actions/templates-actions.c:63
-#| msgid "_Edit Template..."
 msgctxt "templates-action"
 msgid "_Edit Template..."
 msgstr "_Embann ar patrom..."
 
 #: ../app/actions/templates-actions.c:64
-#| msgid "Edit Template"
 msgctxt "templates-action"
 msgid "Edit this template"
 msgstr "Embann ar patrom"
 
 #: ../app/actions/templates-actions.c:69
-#, fuzzy
-#| msgid "_Delete Template"
 msgctxt "templates-action"
 msgid "_Delete Template"
 msgstr "_Dilemel ar patrom"
 
 #: ../app/actions/templates-actions.c:70
-#, fuzzy
-#| msgid "Delete this image"
 msgctxt "templates-action"
 msgid "Delete this template"
-msgstr "Dilemel ar skeudenn-mañ"
+msgstr "Dilemel ar patrom-mañ"
 
 #: ../app/actions/templates-commands.c:112
 msgid "New Template"
@@ -4948,51 +4415,41 @@ msgid "Are you sure you want to delete template '%s' from the list and from disk
 msgstr "Ha fellout a ra deoc'h dilemel ar patrom '%s' diwar ar roll ha diwar ar gantenn ?"
 
 #: ../app/actions/text-editor-actions.c:43
-#| msgid "Open"
 msgctxt "text-editor-action"
 msgid "Open"
 msgstr "Digeriñ"
 
 #: ../app/actions/text-editor-actions.c:44
-#, fuzzy
-#| msgid "Load text from file"
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Kargañ an destenn diouzh ur restr"
 
 #: ../app/actions/text-editor-actions.c:49
-#| msgid "Clear"
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "Skarzhañ"
 
 #: ../app/actions/text-editor-actions.c:50
-#, fuzzy
-#| msgid "Clear all text"
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Skarzhañ an destenn a-bezh"
 
 #: ../app/actions/text-editor-actions.c:58
-#| msgid "LTR"
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "KdaD"
 
 #: ../app/actions/text-editor-actions.c:59
-#| msgid "From left to right"
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "Eus an tu kleiz d'an tu dehou"
 
 #: ../app/actions/text-editor-actions.c:64
-#| msgid "RTL"
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "DdaK"
 
 #: ../app/actions/text-editor-actions.c:65
-#| msgid "From right to left"
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Eus an tu dehou d'an tu kleiz"
@@ -5040,25 +4497,21 @@ msgid "Input _Methods"
 msgstr "Liveoù enankañ"
 
 #: ../app/actions/text-tool-actions.c:57
-#| msgid "Cu_t"
 msgctxt "text-tool-action"
 msgid "Cu_t"
 msgstr "_Troc'hañ"
 
 #: ../app/actions/text-tool-actions.c:62
-#| msgid "_Copy"
 msgctxt "text-tool-action"
 msgid "_Copy"
 msgstr "_Eilañ"
 
 #: ../app/actions/text-tool-actions.c:67
-#| msgid "_Paste"
 msgctxt "text-tool-action"
 msgid "_Paste"
 msgstr "_Pegañ"
 
 #: ../app/actions/text-tool-actions.c:72
-#| msgid "_Delete Path"
 msgctxt "text-tool-action"
 msgid "_Delete"
 msgstr "_Dilemel"
@@ -5071,24 +4524,19 @@ msgid "_Open text file..."
 msgstr "_Digeriñ ar skrammañ..."
 
 #: ../app/actions/text-tool-actions.c:82
-#| msgid "Cl_ear"
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "_Skarzhañ"
 
 #: ../app/actions/text-tool-actions.c:83
-#, fuzzy
-#| msgid "Clear all text"
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "Skarzhañ an destenn a-bezh"
 
 #: ../app/actions/text-tool-actions.c:88
-#, fuzzy
-#| msgid "Path from Text"
 msgctxt "text-tool-action"
 msgid "_Path from Text"
-msgstr "Krouiñ un treug diouzh an destenn"
+msgstr "Krouiñ un _treug diouzh an destenn"
 
 #: ../app/actions/text-tool-actions.c:90
 #, fuzzy
@@ -5098,11 +4546,9 @@ msgid "Create a path from the outlines of the current text"
 msgstr "Krouiñ un treug diouzh an dreuzfollenn destenn"
 
 #: ../app/actions/text-tool-actions.c:95
-#, fuzzy
-#| msgid "Text along Path"
 msgctxt "text-tool-action"
 msgid "Text _along Path"
-msgstr "Testenn a-hed an treug"
+msgstr "Testenn _a-hed an treug"
 
 #: ../app/actions/text-tool-actions.c:97
 #, fuzzy
@@ -5112,84 +4558,61 @@ msgid "Bend the text along the currently active path"
 msgstr "Distummañ an dreuzfollenn destenn-mañ a-hed an treug bremanel"
 
 #: ../app/actions/text-tool-actions.c:105
-#, fuzzy
-#| msgid "From left to right"
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "Eus an tu kleiz d'an tu dehou"
 
 #: ../app/actions/text-tool-actions.c:110
-#, fuzzy
-#| msgid "From right to left"
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Eus an tu dehou d'an tu kleiz"
 
 #: ../app/actions/tool-options-actions.c:55
-#, fuzzy
-#| msgid "Tool Options Menu"
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "Lañser Dibarzhioù ar binvioù"
 
 #: ../app/actions/tool-options-actions.c:59
-#, fuzzy
-#| msgid "_Save Options To"
 msgctxt "tool-options-action"
 msgid "_Save Options To"
 msgstr "_Enrollañ an dibarzhioù e"
 
 #: ../app/actions/tool-options-actions.c:63
-#, fuzzy
-#| msgid "_Restore Options From"
 msgctxt "tool-options-action"
 msgid "_Restore Options From"
 msgstr "Assav an diba_rzhioù diouzh"
 
 #: ../app/actions/tool-options-actions.c:67
-#, fuzzy
-#| msgid "Re_name Saved Options"
 msgctxt "tool-options-action"
 msgid "Re_name Saved Options"
 msgstr "Ade_nvel an dibarzhioù enrollet"
 
 #: ../app/actions/tool-options-actions.c:71
-#, fuzzy
-#| msgid "_Delete Saved Options"
 msgctxt "tool-options-action"
 msgid "_Delete Saved Options"
 msgstr "_Dilemel an dibarzhioù enrollet"
 
 #: ../app/actions/tool-options-actions.c:75
-#| msgid "_New Entry..."
 msgctxt "tool-options-action"
 msgid "_New Entry..."
 msgstr "Enankad _nevez..."
 
 #: ../app/actions/tool-options-actions.c:80
-#, fuzzy
-#| msgid "R_eset Tool Options"
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
 msgstr "Add_eraouekaat dibarzhioù ar binvioù"
 
 #: ../app/actions/tool-options-actions.c:81
-#, fuzzy
-#| msgid "Reset to default values"
 msgctxt "tool-options-action"
 msgid "Reset to default values"
 msgstr "Adderaouekaat betek ar gwerzhioù dre ziouer"
 
 #: ../app/actions/tool-options-actions.c:86
-#, fuzzy
-#| msgid "Reset _all Tool Options"
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
 msgstr "Adder_aouekaat holl zibarzhioù ar binvioù"
 
 #: ../app/actions/tool-options-actions.c:87
-#, fuzzy
-#| msgid "Reset all tool options"
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
 msgstr "Adderaouekaat holl zibarzhioù ar binvioù"
@@ -5225,112 +4648,85 @@ msgid "Do you really want to reset all tool options to default values?"
 msgstr "Ha fellout a ra deoc'h adderaouekaat holl zibarzhioù ar binvioù betek o gwerzh dre ziouer ?"
 
 #: ../app/actions/tools-actions.c:45
-#| msgid "_Tools"
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Binvioù"
 
 #: ../app/actions/tools-actions.c:46
-#, fuzzy
-#| msgid "_Selection Tools"
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "Binvioù _diuzañ"
 
 #: ../app/actions/tools-actions.c:47
-#, fuzzy
-#| msgid "_Paint Tools"
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "Binvioù _pentañ"
 
 #: ../app/actions/tools-actions.c:48
-#, fuzzy
-#| msgid "_Transform Tools"
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "Binvioù _treuzfurmiñ"
 
 #: ../app/actions/tools-actions.c:49
-#, fuzzy
-#| msgid "_Color Tools"
 msgctxt "tools-action"
 msgid "_Color Tools"
 msgstr "Binvioù _livañ"
 
 #: ../app/actions/tools-actions.c:55
-#| msgid "_By Color"
 msgctxt "tools-action"
 msgid "_By Color"
 msgstr "Dr_e liv"
 
 #: ../app/actions/tools-actions.c:56
-#, fuzzy
-#| msgid "Select regions with similar colors"
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
 msgstr "Diuzañ maezioù gant livioù damheñvel"
 
 #: ../app/actions/tools-actions.c:61
-#, fuzzy
-#| msgid "_Arbitrary Rotation..."
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
 msgstr "C'hwel_adur tidek..."
 
 #: ../app/actions/tools-actions.c:62
-#, fuzzy
-#| msgid "Rotate by an arbitrary angle"
 msgctxt "tools-action"
 msgid "Rotate by an arbitrary angle"
 msgstr "C'hwelañ dre ur c'horn tidel"
 
 #: ../app/actions/vectors-actions.c:44
-#, fuzzy
-#| msgid "Paths Menu"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Lañser Treugoù"
 
 #: ../app/actions/vectors-actions.c:48
-#, fuzzy
-#| msgid "Path _Tool"
 msgctxt "vectors-action"
 msgid "Path _Tool"
 msgstr "Benveg _treug"
 
 #: ../app/actions/vectors-actions.c:53
-#, fuzzy
-#| msgid "_Edit Path Attributes..."
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Embann doareennoù an treug..."
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
-#| msgid "Edit path attributes"
 msgctxt "vectors-action"
 msgid "Edit path attributes"
 msgstr "Embann doareennoù an treug"
 
 #: ../app/actions/vectors-actions.c:59
-#| msgid "_New Path..."
 msgctxt "vectors-action"
 msgid "_New Path..."
 msgstr "Treug _nevez..."
 
 #: ../app/actions/vectors-actions.c:60
-#| msgid "Create a new template"
 msgctxt "vectors-action"
 msgid "Create a new path..."
 msgstr "Krouiñ un treug nevez..."
 
 #: ../app/actions/vectors-actions.c:65
 #, fuzzy
-#| msgid "New path with last values"
 msgctxt "vectors-action"
 msgid "_New Path with last values"
-msgstr "Treug nevez gant ar gwerzhioù nevez"
+msgstr "Treug _nevez gant ar gwerzhioù nevez"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
@@ -5340,82 +4736,61 @@ msgid "Create a new path with last used values"
 msgstr "Krouiñ un dreuzfollenn nevez gant ar gwerzhioù diwezhañ arveret"
 
 #: ../app/actions/vectors-actions.c:71
-#, fuzzy
-#| msgid "D_uplicate Path"
 msgctxt "vectors-action"
 msgid "D_uplicate Path"
 msgstr "Arre_daoliñ an treug"
 
 #: ../app/actions/vectors-actions.c:72
-#, fuzzy
-#| msgid "Duplicate path"
 msgctxt "vectors-action"
 msgid "Duplicate this path"
-msgstr "Arredaoliñ an treug"
+msgstr "Arredaoliñ an treug-mañ"
 
 #: ../app/actions/vectors-actions.c:77
-#| msgid "_Delete Path"
 msgctxt "vectors-action"
 msgid "_Delete Path"
 msgstr "_Dilemel an treug"
 
 #: ../app/actions/vectors-actions.c:78
-#, fuzzy
-#| msgid "Delete path"
 msgctxt "vectors-action"
 msgid "Delete this path"
-msgstr "Dilemel an treug"
+msgstr "Dilemel an treug-mañ"
 
 #: ../app/actions/vectors-actions.c:83
-#, fuzzy
-#| msgid "Merge _Visible Paths"
 msgctxt "vectors-action"
 msgid "Merge _Visible Paths"
 msgstr "Toueziañ an treugoù _hewel"
 
 #: ../app/actions/vectors-actions.c:88
-#| msgid "_Raise Path"
 msgctxt "vectors-action"
 msgid "_Raise Path"
 msgstr "Sevel an t_reug"
 
 #: ../app/actions/vectors-actions.c:89
-#| msgid "Raise path"
 msgctxt "vectors-action"
 msgid "Raise this path"
 msgstr "Sevel an treug-mañ"
 
 #: ../app/actions/vectors-actions.c:94
-#, fuzzy
-#| msgid "Raise Path to _Top"
 msgctxt "vectors-action"
 msgid "Raise Path to _Top"
 msgstr "Sevel an treug d'an _uhelañ"
 
 #: ../app/actions/vectors-actions.c:95
-#, fuzzy
-#| msgid "Raise path to top"
 msgctxt "vectors-action"
 msgid "Raise this path to the top"
-msgstr "Sevel an treug d'an uhelañ"
+msgstr "Sevel an treug-mañ d'an uhelañ"
 
 #: ../app/actions/vectors-actions.c:100
-#, fuzzy
-#| msgid "_Lower Path"
 msgctxt "vectors-action"
 msgid "_Lower Path"
 msgstr "_Diskenn an treug"
 
 #: ../app/actions/vectors-actions.c:101
-#, fuzzy
-#| msgid "Lower path"
 msgctxt "vectors-action"
 msgid "Lower this path"
-msgstr "Diskenn an treug"
+msgstr "Diskenn an treug-mañ"
 
 #: ../app/actions/vectors-actions.c:106
-#, fuzzy
-#| msgid "Lower Path to _Bottom"
 msgctxt "vectors-action"
 msgid "Lower Path to _Bottom"
 msgstr "Diskenn an treug d'an _izelañ"
@@ -5456,37 +4831,31 @@ msgid "Paint along the path with last values"
 msgstr "Pentañ a-hed an treug gant ar gwerzhioù diwezhañ"
 
 #: ../app/actions/vectors-actions.c:124
-#| msgid "Co_py Path"
 msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "_Eilañ an treug"
 
 #: ../app/actions/vectors-actions.c:129
-#| msgid "Paste Pat_h"
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "Peg_añ an treug"
 
 #: ../app/actions/vectors-actions.c:134
-#| msgid "E_xport Path..."
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "E_zporzhiañ an treug..."
 
 #: ../app/actions/vectors-actions.c:139
-#| msgid "I_mport Path..."
 msgctxt "vectors-action"
 msgid "I_mport Path..."
 msgstr "E_nporzhiañ un treug..."
 
 #: ../app/actions/vectors-actions.c:147
-#| msgid "_Visible"
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr "_Hewel"
 
 #: ../app/actions/vectors-actions.c:153
-#| msgid "_Linked"
 msgctxt "vectors-action"
 msgid "_Linked"
 msgstr "_Ereet"
@@ -5629,13 +4998,11 @@ msgid "Stroke Path"
 msgstr "Tresañ an treug"
 
 #: ../app/actions/view-actions.c:68
-#| msgid "_View"
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Skrammañ"
 
 #: ../app/actions/view-actions.c:69
-#| msgid "_Zoom"
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Zoum"
@@ -5669,7 +5036,6 @@ msgid "Create another view on this image"
 msgstr "Krouiñ ur skrammadur all evit ar skeudenn-mañ"
 
 #: ../app/actions/view-actions.c:82
-#| msgid "_Close"
 msgctxt "view-action"
 msgid "_Close"
 msgstr "_Serriñ"
@@ -5976,7 +5342,6 @@ msgid "Show this window's statusbar"
 msgstr "Diskouez barrenn stad ar prenestr-mañ"
 
 #: ../app/actions/view-actions.c:231
-#| msgid "Fullscr_een"
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "Skrammad a-b_ezh"
@@ -5989,153 +5354,128 @@ msgid "Toggle fullscreen view"
 msgstr "Trec'haoliñ gwel ar skrammad a-bezh"
 
 #: ../app/actions/view-actions.c:263
-#| msgid "Zoom _Out"
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "Zoum bi_hanaat"
 
 #: ../app/actions/view-actions.c:264
 #: ../app/actions/view-actions.c:276
-#| msgid "Zoom out"
 msgctxt "view-action"
 msgid "Zoom out"
 msgstr "Zoum bihanaat"
 
 #: ../app/actions/view-actions.c:269
-#| msgid "Zoom _In"
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "Zoum _brasaat"
 
 #: ../app/actions/view-actions.c:270
 #: ../app/actions/view-actions.c:282
-#| msgid "Zoom in"
 msgctxt "view-action"
 msgid "Zoom in"
 msgstr "Zoum brasaat"
 
 #: ../app/actions/view-actions.c:275
-#| msgid "Zoom Out"
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Zoum bihanaat"
 
 #: ../app/actions/view-actions.c:281
-#| msgid "Zoom In"
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Zoum brasaat"
 
 #: ../app/actions/view-actions.c:300
-#| msgid "1_6:1  (1600%)"
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1 (1600%)"
 
 #: ../app/actions/view-actions.c:301
-#| msgid "Zoom 16:1"
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Zoum 16:1"
 
 #: ../app/actions/view-actions.c:306
-#| msgid "_8:1  (800%)"
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1 (800%)"
 
 #: ../app/actions/view-actions.c:307
-#| msgid "Zoom 8:1"
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Zoum 8:1"
 
 #: ../app/actions/view-actions.c:312
-#| msgid "_4:1  (400%)"
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1 (400%)"
 
 #: ../app/actions/view-actions.c:313
-#| msgid "Zoom 4:1"
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Zoom 4:1"
 
 #: ../app/actions/view-actions.c:318
-#| msgid "_2:1  (200%)"
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1 (200%)"
 
 #: ../app/actions/view-actions.c:319
-#| msgid "Zoom 2:1"
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Zoum 2:1"
 
 #: ../app/actions/view-actions.c:324
-#| msgid "_1:1  (100%)"
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1 (100%)"
 
 #: ../app/actions/view-actions.c:325
-#| msgid "Zoom 1:1"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Zoum 1:1"
 
 #: ../app/actions/view-actions.c:330
-#| msgid "1:_2  (50%)"
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2 (50%)"
 
 #: ../app/actions/view-actions.c:331
-#| msgid "Zoom 1:2"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Zoum 1:2"
 
 #: ../app/actions/view-actions.c:336
-#| msgid "1:_4  (25%)"
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4 (25%)"
 
 #: ../app/actions/view-actions.c:337
-#| msgid "Zoom 1:4"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Zoum 1:4"
 
 #: ../app/actions/view-actions.c:342
-#| msgid "1:_8  (12.5%)"
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8 (12.5%)"
 
 #: ../app/actions/view-actions.c:343
-#| msgid "Zoom 1:8"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Zoum 1:8"
 
 #: ../app/actions/view-actions.c:348
-#| msgid "1:1_6  (6.25%)"
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6 (6.25%)"
 
 #: ../app/actions/view-actions.c:349
-#| msgid "Zoom 1:16"
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Zoum 1:16"
 
 #: ../app/actions/view-actions.c:354
-#| msgid "Othe_r..."
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "_All..."
@@ -6148,7 +5488,6 @@ msgid "Set a custom zoom factor"
 msgstr "Arventenniñ ur periad zoumañ personelaet"
 
 #: ../app/actions/view-actions.c:363
-#| msgid "From _Theme"
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Diwar an ne_uz"
@@ -6203,7 +5542,6 @@ msgid "Use an arbitrary color"
 msgstr "Arverañ ul liv tidel"
 
 #: ../app/actions/view-actions.c:387
-#| msgid "As in _Preferences"
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Evel er _gwellvezioù"
@@ -6253,7 +5591,6 @@ msgid "Move this window to screen %s"
 msgstr "Dilec'hiañ ar prenestr-mañ war ar skramm %s"
 
 #: ../app/actions/windows-actions.c:80
-#| msgid "_Windows"
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Prenestroù"
@@ -6287,97 +5624,81 @@ msgid "Raise the toolbox"
 msgstr "Sevel ar voestad vinvioù"
 
 #: ../app/base/base-enums.c:23
-#| msgid "Smooth"
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "Lufret"
 
 #: ../app/base/base-enums.c:24
-#| msgid "Freehand"
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "Gant an dorn"
 
 #: ../app/base/base-enums.c:56
-#| msgid "Value"
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "Gwerzh"
 
 #: ../app/base/base-enums.c:57
-#| msgid "Red"
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "Ruz"
 
 #: ../app/base/base-enums.c:58
-#| msgid "Green"
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "Gwer"
 
 #: ../app/base/base-enums.c:59
-#| msgid "Blue"
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "Glas"
 
 #: ../app/base/base-enums.c:60
-#| msgid "Alpha"
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "Alfa"
 
 #: ../app/base/base-enums.c:61
-#| msgid "RGB"
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGG"
 
 #: ../app/base/base-enums.c:113
-#| msgid "Normal"
 msgctxt "layer-mode-effects"
 msgid "Normal"
 msgstr "Reizh"
 
 #: ../app/base/base-enums.c:114
-#| msgid "Dissolve"
 msgctxt "layer-mode-effects"
 msgid "Dissolve"
 msgstr "Loezañ"
 
 #: ../app/base/base-enums.c:115
-#| msgid "Behind"
 msgctxt "layer-mode-effects"
 msgid "Behind"
 msgstr "A-dreñv"
 
 #: ../app/base/base-enums.c:116
-#| msgid "Multiply"
 msgctxt "layer-mode-effects"
 msgid "Multiply"
 msgstr "Liesaat"
 
 #: ../app/base/base-enums.c:117
-#| msgid "Screen"
 msgctxt "layer-mode-effects"
 msgid "Screen"
 msgstr "Skramm"
 
 #: ../app/base/base-enums.c:118
-#| msgid "Overlay"
 msgctxt "layer-mode-effects"
 msgid "Overlay"
 msgstr "Gourloañ"
 
 #: ../app/base/base-enums.c:119
-#| msgid "Difference"
 msgctxt "layer-mode-effects"
 msgid "Difference"
 msgstr "Diforc'h"
 
 #: ../app/base/base-enums.c:120
-#| msgid "Addition"
 msgctxt "layer-mode-effects"
 msgid "Addition"
 msgstr "Sammadur"
@@ -6404,31 +5725,26 @@ msgid "Lighten only"
 msgstr "Sklaeraat hepken"
 
 #: ../app/base/base-enums.c:124
-#| msgid "Hue"
 msgctxt "layer-mode-effects"
 msgid "Hue"
 msgstr "Arliv"
 
 #: ../app/base/base-enums.c:125
-#| msgid "Saturation"
 msgctxt "layer-mode-effects"
 msgid "Saturation"
 msgstr "Peurvec'hiañ"
 
 #: ../app/base/base-enums.c:126
-#| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color"
 msgstr "Liv"
 
 #: ../app/base/base-enums.c:127
-#| msgid "Value"
 msgctxt "layer-mode-effects"
 msgid "Value"
 msgstr "Gwerzh"
 
 #: ../app/base/base-enums.c:128
-#| msgid "Divide"
 msgctxt "layer-mode-effects"
 msgid "Divide"
 msgstr "Rannañ"
@@ -6483,13 +5799,11 @@ msgid "Color erase"
 msgstr "Diverkañ al liv"
 
 #: ../app/base/base-enums.c:136
-#| msgid "Erase"
 msgctxt "layer-mode-effects"
 msgid "Erase"
 msgstr "Diverkañ"
 
 #: ../app/base/base-enums.c:137
-#| msgid "Replace"
 msgctxt "layer-mode-effects"
 msgid "Replace"
 msgstr "Amsaviñ"
@@ -6860,7 +6174,6 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "Gwerzh ar bomm %s n'eo ket un hedad nodoù UTF-8 talvoudek"
 
 #: ../app/core/core-enums.c:54
-#| msgid "None"
 msgctxt "convert-dither-type"
 msgid "None"
 msgstr "Tra ebet"
@@ -6915,19 +6228,16 @@ msgid "Use custom palette"
 msgstr "Arverañ ul livaoueg personelaet"
 
 #: ../app/core/core-enums.c:216
-#| msgid "First item"
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Ergorenn gentañ"
 
 #: ../app/core/core-enums.c:217
-#| msgid "Image"
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Skeudenn"
 
 #: ../app/core/core-enums.c:218
-#| msgid "Selection"
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Diuzad"
@@ -6947,43 +6257,36 @@ msgid "Active channel"
 msgstr "Sanell red"
 
 #: ../app/core/core-enums.c:221
-#| msgid "Active path"
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Treug oberiant"
 
 #: ../app/core/core-enums.c:253
-#| msgid "Foreground color"
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Liv ar rakva"
 
 #: ../app/core/core-enums.c:254
-#| msgid "Background color"
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Liv an drekva"
 
 #: ../app/core/core-enums.c:255
-#| msgid "White"
 msgctxt "fill-type"
 msgid "White"
 msgstr "Gwenn"
 
 #: ../app/core/core-enums.c:256
-#| msgid "Transparency"
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Demerez"
 
 #: ../app/core/core-enums.c:257
-#| msgid "Pattern"
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Goustur"
 
 #: ../app/core/core-enums.c:258
-#| msgid "None"
 msgctxt "fill-type"
 msgid "None"
 msgstr "Tra ebet"
@@ -6996,7 +6299,6 @@ msgid "Solid color"
 msgstr "Liv unvan"
 
 #: ../app/core/core-enums.c:287
-#| msgid "Pattern"
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Goustur"
@@ -7023,43 +6325,36 @@ msgid "Miter"
 msgstr "Stumm ivinell"
 
 #: ../app/core/core-enums.c:346
-#| msgid "Round"
 msgctxt "join-style"
 msgid "Round"
 msgstr "Rontaet"
 
 #: ../app/core/core-enums.c:347
-#| msgid "Bevel"
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Beskell"
 
 #: ../app/core/core-enums.c:376
-#| msgid "Butt"
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Kromm"
 
 #: ../app/core/core-enums.c:377
-#| msgid "Round"
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Rontaet"
 
 #: ../app/core/core-enums.c:378
-#| msgid "Square"
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Karrez"
 
 #: ../app/core/core-enums.c:415
-#| msgid "Custom"
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Personelaet"
 
 #: ../app/core/core-enums.c:416
-#| msgid "Line"
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Linenn"
@@ -7128,43 +6423,36 @@ msgid "Dash, dot, dot"
 msgstr "Gourzhell, pikenn, pikenn"
 
 #: ../app/core/core-enums.c:454
-#| msgid "Circle"
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Kelc'h"
 
 #: ../app/core/core-enums.c:455
-#| msgid "Square"
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Karrez"
 
 #: ../app/core/core-enums.c:456
-#| msgid "Diamond"
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Diamant"
 
 #: ../app/core/core-enums.c:485
-#| msgid "Horizontal"
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "A-zremm"
 
 #: ../app/core/core-enums.c:486
-#| msgid "Vertical"
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "A-serzh"
 
 #: ../app/core/core-enums.c:487
-#| msgid "Unknown"
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Dianav"
 
 #: ../app/core/core-enums.c:518
-#| msgid "None"
 msgctxt "item-set"
 msgid "None"
 msgstr "Tra ebet"
@@ -7205,61 +6493,51 @@ msgid "Tiny"
 msgstr "Munut"
 
 #: ../app/core/core-enums.c:589
-#| msgid "Very small"
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Bihan kenañ"
 
 #: ../app/core/core-enums.c:590
-#| msgid "Small"
 msgctxt "view-size"
 msgid "Small"
 msgstr "Bihan"
 
 #: ../app/core/core-enums.c:591
-#| msgid "Medium"
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Etre"
 
 #: ../app/core/core-enums.c:592
-#| msgid "Large"
 msgctxt "view-size"
 msgid "Large"
 msgstr "Bras"
 
 #: ../app/core/core-enums.c:593
-#| msgid "Very large"
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Bras kenañ"
 
 #: ../app/core/core-enums.c:594
-#| msgid "Huge"
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Divent"
 
 #: ../app/core/core-enums.c:595
-#| msgid "Enormous"
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Pikol tra"
 
 #: ../app/core/core-enums.c:596
-#| msgid "Gigantic"
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Ramzel"
 
 #: ../app/core/core-enums.c:624
-#| msgid "View as list"
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Gwelout evel ur roll"
 
 #: ../app/core/core-enums.c:625
-#| msgid "View as grid"
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Gwelout evel ur gael"
@@ -7286,7 +6564,6 @@ msgid "Large (256x256)"
 msgstr "Bras (256x256)"
 
 #: ../app/core/core-enums.c:869
-#| msgid "<<invalid>>"
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<didalvoudek>>"
@@ -7363,14 +6640,12 @@ msgstr "Maskl herrek"
 
 #: ../app/core/core-enums.c:880
 #: ../app/core/core-enums.c:910
-#| msgid "Grid"
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Kael"
 
 #: ../app/core/core-enums.c:881
 #: ../app/core/core-enums.c:912
-#| msgid "Guide"
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Dealf"
@@ -7498,33 +6773,28 @@ msgid "Anchor floating selection"
 msgstr "Eoriañ an diuzad war neuñv"
 
 #: ../app/core/core-enums.c:898
-#| msgid "Paste"
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Pegañ"
 
 #: ../app/core/core-enums.c:899
-#| msgid "Cut"
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Troc'hañ"
 
 #: ../app/core/core-enums.c:900
-#| msgid "Text"
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Testenn"
 
 #: ../app/core/core-enums.c:901
 #: ../app/core/core-enums.c:942
-#| msgid "Transform"
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Treuzfurmiñ"
 
 #: ../app/core/core-enums.c:902
 #: ../app/core/core-enums.c:943
-#| msgid "Paint"
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Pentañ"
@@ -7553,7 +6823,6 @@ msgid "Import paths"
 msgstr "Enporzhiañ treugoù"
 
 #: ../app/core/core-enums.c:906
-#| msgid "Plug-In"
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Enlugellad"
@@ -7748,43 +7017,36 @@ msgid "Composite"
 msgstr "Kedaoz"
 
 #: ../app/core/core-enums.c:1221
-#| msgid "Red"
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Ruz"
 
 #: ../app/core/core-enums.c:1222
-#| msgid "Green"
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Gwer"
 
 #: ../app/core/core-enums.c:1223
-#| msgid "Blue"
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Glas"
 
 #: ../app/core/core-enums.c:1224
-#| msgid "Hue"
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Arliv"
 
 #: ../app/core/core-enums.c:1225
-#| msgid "Saturation"
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Peurvec'hiañ"
 
 #: ../app/core/core-enums.c:1226
-#| msgid "Value"
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Gwerzh"
 
 #: ../app/core/core-enums.c:1255
-#| msgid "Message"
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Kemennadenn"
@@ -7797,13 +7059,11 @@ msgid "Warning"
 msgstr "Taolit evezh"
 
 #: ../app/core/core-enums.c:1257
-#| msgid "Error"
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Fazi"
 
 #: ../app/core/core-enums.c:1286
-#| msgid "Ask what to do"
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Goulenn petra zo d'ober"
@@ -9078,61 +8338,51 @@ msgid "Background"
 msgstr "Drekva"
 
 #: ../app/core/gimpunit.c:56
-#| msgid "pixel"
 msgctxt "unit-singular"
 msgid "pixel"
 msgstr "piksel"
 
 #: ../app/core/gimpunit.c:56
-#| msgid "pixels"
 msgctxt "unit-plural"
 msgid "pixels"
 msgstr "a bikselioù"
 
 #: ../app/core/gimpunit.c:60
-#| msgid "inch"
 msgctxt "unit-singular"
 msgid "inch"
 msgstr "meutad"
 
 #: ../app/core/gimpunit.c:60
-#| msgid "inches"
 msgctxt "unit-plural"
 msgid "inches"
 msgstr "a veutadoù"
 
 #: ../app/core/gimpunit.c:63
-#| msgid "millimeter"
 msgctxt "unit-singular"
 msgid "millimeter"
 msgstr "milimetr"
 
 #: ../app/core/gimpunit.c:63
-#| msgid "millimeters"
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "a vilimetroù"
 
 #: ../app/core/gimpunit.c:67
-#| msgid "point"
 msgctxt "unit-singular"
 msgid "point"
 msgstr "bikenn"
 
 #: ../app/core/gimpunit.c:67
-#| msgid "points"
 msgctxt "unit-plural"
 msgid "points"
 msgstr "a bikennoù"
 
 #: ../app/core/gimpunit.c:70
-#| msgid "pica"
 msgctxt "unit-singular"
 msgid "pica"
 msgstr "pika"
 
 #: ../app/core/gimpunit.c:70
-#| msgid "picas"
 msgctxt "unit-plural"
 msgid "picas"
 msgstr "a bikaioù"
@@ -10823,12 +10073,12 @@ msgstr "Embanner diuzad"
 #. Width
 #: ../app/display/gimpcursorview.c:288
 msgid "W"
-msgstr ""
+msgstr "L"
 
 #. Height
 #: ../app/display/gimpcursorview.c:295
 msgid "H"
-msgstr ""
+msgstr "S"
 
 #: ../app/display/gimpcursorview.c:322
 msgid "_Sample Merged"
@@ -10840,10 +10090,9 @@ msgid "Image saved to '%s'"
 msgstr "Skeudenn bet enrollet e '%s'"
 
 #: ../app/display/gimpdisplay-handlers.c:183
-#, fuzzy, c-format
-#| msgid "Image saved to '%s'"
+#, c-format
 msgid "Image exported to '%s'"
-msgstr "Skeudenn bet enrollet e '%s'"
+msgstr "Skeudenn bet ezporzhiet e '%s'"
 
 #: ../app/display/gimpdisplayshell.c:1119
 msgid "Access the image menu"
@@ -10967,19 +10216,16 @@ msgid "(none)"
 msgstr "(Tra ebet)"
 
 #: ../app/display/gimpdisplayshell-title.c:483
-#, fuzzy
 msgid " (exported)"
 msgstr "(ezporzhiet)"
 
 #: ../app/display/gimpdisplayshell-title.c:485
 msgid " (overwritten)"
-msgstr ""
+msgstr "(erlec'hiet)"
 
 #: ../app/display/gimpdisplayshell-title.c:491
-#, fuzzy
-#| msgid "New import"
 msgid " (imported)"
-msgstr "Enporzhiadenn nevez"
+msgstr "(enporzhiet)"
 
 #: ../app/display/gimpstatusbar.c:346
 #, c-format
@@ -11157,51 +10403,41 @@ msgid "Set a source image first."
 msgstr "Arventenniñ un tarzh skeudenn da gentañ."
 
 #: ../app/paint/paint-enums.c:52
-#, fuzzy
-#| msgid "Modify Perspective"
 msgctxt "perspective-clone-mode"
 msgid "Modify Perspective"
 msgstr "Daskemmañ an diarsell"
 
 #: ../app/paint/paint-enums.c:53
-#, fuzzy
-#| msgid "Perspective Clone"
 msgctxt "perspective-clone-mode"
 msgid "Perspective Clone"
 msgstr "Klon an diarsell"
 
 #: ../app/paint/paint-enums.c:83
-#| msgid "None"
 msgctxt "source-align-mode"
 msgid "None"
 msgstr "Tra ebet"
 
 #: ../app/paint/paint-enums.c:84
-#| msgid "Aligned"
 msgctxt "source-align-mode"
 msgid "Aligned"
 msgstr "Desteud"
 
 #: ../app/paint/paint-enums.c:85
-#| msgid "Registered"
 msgctxt "source-align-mode"
 msgid "Registered"
 msgstr "Marilhet"
 
 #: ../app/paint/paint-enums.c:86
-#| msgid "Fixed"
 msgctxt "source-align-mode"
 msgid "Fixed"
 msgstr "Kempennet"
 
 #: ../app/paint/paint-enums.c:114
-#| msgid "Blur"
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Ruzed"
 
 #: ../app/paint/paint-enums.c:115
-#| msgid "Sharpen"
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Lemmaat"
@@ -12559,8 +11795,6 @@ msgid "Mark foreground by painting on the object to extract"
 msgstr "Merkañ ar rakva dre bentañ an ergorenn da eztennañ"
 
 #: ../app/tools/gimpforegroundselecttool.c:328
-#, fuzzy
-#| msgid "Rougly outline the object to extract"
 msgid "Roughly outline the object to extract"
 msgstr "Sevel dre vras trolinenn an ergorenn da eztennañ"
 
@@ -13074,8 +12308,6 @@ msgid "Scale:"
 msgstr "Skeulaat :"
 
 #: ../app/tools/gimppaintoptions-gui.c:161
-#, fuzzy
-#| msgid "Aspect ratio:"
 msgid "Aspect Ratio:"
 msgstr "Parenn an neuz :"
 
@@ -13096,7 +12328,6 @@ msgid "Aspect ratio"
 msgstr "Parenn an neuz"
 
 #: ../app/tools/gimppaintoptions-gui.c:206
-#| msgid "A_ngle"
 msgid "Angle"
 msgstr "Kor_n"
 
@@ -13113,10 +12344,8 @@ msgid "Velocity:"
 msgstr "Herrder :"
 
 #: ../app/tools/gimppaintoptions-gui.c:253
-#, fuzzy
-#| msgid "Direction"
 msgid "Direction:"
-msgstr "Roud"
+msgstr "Roud :"
 
 #: ../app/tools/gimppaintoptions-gui.c:265
 msgid "Random:"
@@ -13457,16 +12686,12 @@ msgid "Font:"
 msgstr "Nodrezh :"
 
 #: ../app/tools/gimptextoptions.c:461
-#, fuzzy
-#| msgid "Text Editor"
 msgid "Use editor"
-msgstr "Embanner an testennoù"
+msgstr "Arverañ an embanner"
 
 #: ../app/tools/gimptextoptions.c:481
-#, fuzzy
-#| msgid "Hinting"
 msgid "Hinting:"
-msgstr "Feurioù kengeidañ"
+msgstr "Feurioù kengeidañ :"
 
 #: ../app/tools/gimptextoptions.c:485
 msgid "Text Color"
@@ -13764,29 +12989,21 @@ msgid "There is no active layer or channel to stroke to"
 msgstr "N'eus treuzfollenn pe sanell oberiant ebet da dresañ warno."
 
 #: ../app/tools/tools-enums.c:91
-#, fuzzy
-#| msgid "No guides"
 msgctxt "rectangle-guide"
 msgid "No guides"
 msgstr "Dealf ebet"
 
 #: ../app/tools/tools-enums.c:92
-#, fuzzy
-#| msgid "Center lines"
 msgctxt "rectangle-guide"
 msgid "Center lines"
 msgstr "Kreizañ al linennoù"
 
 #: ../app/tools/tools-enums.c:93
-#, fuzzy
-#| msgid "Rule of thirds"
 msgctxt "rectangle-guide"
 msgid "Rule of thirds"
 msgstr "Reolenn an trederennoù"
 
 #: ../app/tools/tools-enums.c:94
-#, fuzzy
-#| msgid "Golden sections"
 msgctxt "rectangle-guide"
 msgid "Golden sections"
 msgstr "Diuzadoù alaouret"
@@ -13797,121 +13014,96 @@ msgid "Diagonal lines"
 msgstr ""
 
 #: ../app/tools/tools-enums.c:185
-#, fuzzy
-#| msgid "Aspect ratio"
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Parenn an neuz"
 
 #: ../app/tools/tools-enums.c:186
-#| msgid "Width"
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Width"
 msgstr "Led"
 
 #: ../app/tools/tools-enums.c:187
-#| msgid "Height"
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Height"
 msgstr "Sav"
 
 #: ../app/tools/tools-enums.c:188
-#| msgid "Size"
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
 msgstr "Ment"
 
 #: ../app/tools/tools-enums.c:217
-#, fuzzy
-#| msgid "Free select"
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "Diuzad gant an dorn"
 
 #: ../app/tools/tools-enums.c:218
-#, fuzzy
-#| msgid "Fixed size"
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "Ment fest"
 
 #: ../app/tools/tools-enums.c:219
-#, fuzzy
-#| msgid "Fixed aspect ratio"
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "Parenn neuz fest"
 
 #: ../app/tools/tools-enums.c:248
-#| msgid "Layer"
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "Treuzfollenn"
 
 #: ../app/tools/tools-enums.c:249
-#| msgid "Selection"
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "Diuzad"
 
 #: ../app/tools/tools-enums.c:250
-#| msgid "Path"
 msgctxt "transform-type"
 msgid "Path"
 msgstr "Treug"
 
 #: ../app/tools/tools-enums.c:280
-#| msgid "Outline"
 msgctxt "transform-preview-type"
 msgid "Outline"
 msgstr "Trolinenn"
 
 #: ../app/tools/tools-enums.c:281
-#| msgid "Grid"
 msgctxt "transform-preview-type"
 msgid "Grid"
 msgstr "Kael"
 
 #: ../app/tools/tools-enums.c:282
-#| msgid "Image"
 msgctxt "transform-preview-type"
 msgid "Image"
 msgstr "Skeudenn"
 
 #: ../app/tools/tools-enums.c:283
-#| msgid "Image + Grid"
 msgctxt "transform-preview-type"
 msgid "Image + Grid"
 msgstr "Skeudenn + Kael"
 
 #: ../app/tools/tools-enums.c:311
-#, fuzzy
-#| msgid "Number of grid lines"
 msgctxt "transform-grid-type"
 msgid "Number of grid lines"
 msgstr "Niver a linennoù er gael"
 
 #: ../app/tools/tools-enums.c:312
-#, fuzzy
-#| msgid "Grid line spacing"
 msgctxt "transform-grid-type"
 msgid "Grid line spacing"
 msgstr "Esaou al linennoù er gael"
 
 #: ../app/tools/tools-enums.c:341
-#| msgid "Design"
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Ergrafañ"
 
 #: ../app/tools/tools-enums.c:342
-#| msgid "Edit"
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Embann"
 
 #: ../app/tools/tools-enums.c:343
-#| msgid "Move"
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Dilec'hiañ"
@@ -14726,10 +13918,8 @@ msgstr "Sanell :"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
-#, fuzzy
-#| msgid "Default format"
 msgid "Use default comment"
-msgstr "Mentrezh dre ziouer"
+msgstr "Arverañ ar mentrezh dre ziouer"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid "Replace the current image comment with the default comment set in Edit→Preferences→Default Image."
@@ -14974,7 +14164,6 @@ msgid "Dash _preset:"
 msgstr "Ragarventenn ar _gourzhell :"
 
 #: ../app/widgets/gimptagentry.c:43
-#| msgid "Miter"
 msgid "filter"
 msgstr ""
 
@@ -15215,31 +14404,26 @@ msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Hedad nodoù UTF-8 didalvoudek er restr '%s'."
 
 #: ../app/widgets/widgets-enums.c:23
-#| msgid "Foreground"
 msgctxt "active-color"
 msgid "Foreground"
 msgstr "Rakva"
 
 #: ../app/widgets/widgets-enums.c:24
-#| msgid "Background"
 msgctxt "active-color"
 msgid "Background"
 msgstr "Drekva"
 
 #: ../app/widgets/widgets-enums.c:85
-#| msgid "Pixel"
 msgctxt "color-frame-mode"
 msgid "Pixel"
 msgstr "Piksel"
 
 #: ../app/widgets/widgets-enums.c:86
-#| msgid "RGB"
 msgctxt "color-frame-mode"
 msgid "RGB"
 msgstr "RGG"
 
 #: ../app/widgets/widgets-enums.c:87
-#| msgid "HSV"
 msgctxt "color-frame-mode"
 msgid "HSV"
 msgstr "APG"
@@ -15285,7 +14469,6 @@ msgid "GIMP help browser"
 msgstr "Merdeer skoazellañ GIMP"
 
 #: ../app/widgets/widgets-enums.c:208
-#| msgid "Web browser"
 msgctxt "help-browser-type"
 msgid "Web browser"
 msgstr "Merdeer web"
@@ -15301,49 +14484,41 @@ msgid "Logarithmic histogram"
 msgstr "Tellun treoliek"
 
 #: ../app/widgets/widgets-enums.c:271
-#| msgid "Icon"
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Arlun"
 
 #: ../app/widgets/widgets-enums.c:272
-#| msgid "Current status"
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Stad vremanel"
 
 #: ../app/widgets/widgets-enums.c:273
-#| msgid "Text"
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Testenn"
 
 #: ../app/widgets/widgets-enums.c:274
-#| msgid "Description"
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Deskrivadur"
 
 #: ../app/widgets/widgets-enums.c:275
-#| msgid "Icon & text"
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Arlun & testenn"
 
 #: ../app/widgets/widgets-enums.c:276
-#| msgid "Icon & desc"
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Arlun & deskriv."
 
 #: ../app/widgets/widgets-enums.c:277
-#| msgid "Status & text"
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Stad & testenn"
 
 #: ../app/widgets/widgets-enums.c:278
-#| msgid "Status & desc"
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stad & deskriv."
