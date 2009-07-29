@@ -126,6 +126,7 @@ static void   prefs_tool_options_clear_callback   (GtkWidget  *widget,
 /*  private variables  */
 
 static GtkWidget *prefs_dialog = NULL;
+static GtkWidget *tool_editor  = NULL;
 
 
 /*  public function  */
@@ -406,10 +407,14 @@ prefs_response (GtkWidget *widget,
             g_value_unset (&value);
           }
 
+        gimp_tool_editor_revert_changes (GIMP_TOOL_EDITOR (tool_editor));
+
         g_object_thaw_notify (G_OBJECT (gimp->edit_config));
 
         g_list_free (diff);
       }
+
+      tool_editor = NULL;
     }
 
   /*  enable autosaving again  */
@@ -1992,19 +1997,15 @@ prefs_dialog_new (Gimp       *gimp,
   g_object_unref (size_group);
   size_group = NULL;
 
-  /* Tool Order */
-  {
-    GtkWidget *tool_view;
-
-    vbox2 = prefs_frame_new (_("Tools configuration"),
-                             GTK_CONTAINER (vbox), TRUE);
-    tool_view = gimp_tool_editor_new (gimp->tool_info_list, gimp->user_context,
+  /* Tool Editor */
+  vbox2 = prefs_frame_new (_("Tools configuration"),
+                           GTK_CONTAINER (vbox), TRUE);
+  tool_editor = gimp_tool_editor_new (gimp->tool_info_list, gimp->user_context,
                                       gimp_tools_get_default_order (gimp),
                                       GIMP_VIEW_SIZE_SMALL, 1);
 
-    gtk_box_pack_start (GTK_BOX (vbox2), tool_view, TRUE, TRUE, 0);
-    gtk_widget_show (tool_view);
-  }
+  gtk_box_pack_start (GTK_BOX (vbox2), tool_editor, TRUE, TRUE, 0);
+  gtk_widget_show (tool_editor);
 
 
   /***********************/
