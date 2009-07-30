@@ -118,17 +118,19 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-brush-grid|gimp-brush-list",
     GIMP_HELP_BRUSH_DIALOG },
 
+
   { "dialogs-brush-editor", GIMP_STOCK_BRUSH,
     NC_("dialogs-action", "Brush Editor"), NULL,
     NC_("dialogs-action", "Open the brush editor"),
     "gimp-brush-editor",
     GIMP_HELP_BRUSH_EDIT },
-	 
-  { "dialogs-dynamics-editor", GIMP_STOCK_BRUSH,
+
+  { "dialogs-dynamics-editor", GIMP_STOCK_DYNAMICS,
     NC_("dialogs-action", "Dynamics Editor"), NULL,
     NC_("dialogs-action", "Open the dynamics editor"),
     "gimp-dynamics-editor",
-    GIMP_HELP_BRUSH_EDIT },
+    GIMP_HELP_DYNAMICS_EDITOR_DIALOG },
+
 
   { "dialogs-patterns", GIMP_STOCK_PATTERN,
     NC_("dialogs-action", "P_atterns"), "<control><shift>P",

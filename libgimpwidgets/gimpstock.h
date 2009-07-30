@@ -268,6 +268,7 @@ G_BEGIN_DECLS
 /*  missing icons:  */
 
 #define GIMP_STOCK_BRUSH                    GIMP_STOCK_TOOL_PAINTBRUSH
+#define GIMP_STOCK_DYNAMICS                 GIMP_STOCK_TOOL_PAINTBRUSH
 #define GIMP_STOCK_BUFFER                   GTK_STOCK_PASTE
 #define GIMP_STOCK_DETACH                   GTK_STOCK_CONVERT
 #define GIMP_STOCK_FONT                     GTK_STOCK_SELECT_FONT

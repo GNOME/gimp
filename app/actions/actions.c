@@ -104,7 +104,7 @@ static const GimpActionFactoryEntry action_groups[] =
   { "brush-editor", N_("Brush Editor"), GIMP_STOCK_BRUSH,
     brush_editor_actions_setup,
     brush_editor_actions_update },
-  { "dynamics-editor", N_("Dynamics Editor"), GIMP_STOCK_BRUSH,
+  { "dynamics-editor", N_("Dynamics Editor"), GIMP_STOCK_DYNAMICS,
     dynamics_editor_actions_setup,
     dynamics_editor_actions_update },
   { "brushes", N_("Brushes"), GIMP_STOCK_BRUSH,

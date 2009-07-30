@@ -305,6 +305,8 @@
 #define GIMP_HELP_BRUSH_EDITOR_DIALOG             "gimp-brush-editor-dialog"
 #define GIMP_HELP_BRUSH_EDITOR_EDIT_ACTIVE        "gimp-brush-editor-edit-active"
 
+#define GIMP_HELP_DYNAMICS_EDITOR_DIALOG          "gimp-dynamics-editor-dialog"
+
 #define GIMP_HELP_PATTERN_DIALOG                  "gimp-pattern-dialog"
 #define GIMP_HELP_PATTERN_EDIT                    "gimp-pattern-edit"
 #define GIMP_HELP_PATTERN_OPEN_AS_IMAGE           "gimp-pattern-open-as-image"
