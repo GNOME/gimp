@@ -49,6 +49,7 @@
 
 #include "actions.h"
 #include "brush-editor-actions.h"
+#include "dynamics-editor-actions.h"
 #include "brushes-actions.h"
 #include "buffers-actions.h"
 #include "channels-actions.h"
@@ -104,8 +105,8 @@ static const GimpActionFactoryEntry action_groups[] =
     brush_editor_actions_setup,
     brush_editor_actions_update },
   { "dynamics-editor", N_("Dynamics Editor"), GIMP_STOCK_BRUSH,
-    brush_editor_actions_setup,
-    brush_editor_actions_update },
+    dynamics_editor_actions_setup,
+    dynamics_editor_actions_update },
   { "brushes", N_("Brushes"), GIMP_STOCK_BRUSH,
     brushes_actions_setup,
     brushes_actions_update },

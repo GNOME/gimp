@@ -190,6 +190,9 @@ GtkWidget * dialogs_color_editor_new       (GimpDialogFactory *factory,
 GtkWidget * dialogs_brush_editor_get       (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
+GtkWidget * dialogs_dynamics_editor_get    (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            gint               view_size);
 GtkWidget * dialogs_gradient_editor_get    (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
