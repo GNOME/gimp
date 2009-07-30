@@ -1267,6 +1267,14 @@ gimp_layer_new_from_region (PixelRegion          *region,
 }
 
 GimpLayerMask *
+gimp_layer_get_mask (const GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
+  return layer->mask;
+}
+
+GimpLayerMask *
 gimp_layer_add_mask (GimpLayer      *layer,
                      GimpLayerMask  *mask,
                      gboolean        push_undo,
@@ -1869,14 +1877,6 @@ gimp_layer_boundary (GimpLayer *layer,
 /**********************/
 /*  access functions  */
 /**********************/
-
-GimpLayerMask *
-gimp_layer_get_mask (const GimpLayer *layer)
-{
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-
-  return layer->mask;
-}
 
 GimpDrawable *
 gimp_layer_get_floating_sel_drawable (const GimpLayer *layer)

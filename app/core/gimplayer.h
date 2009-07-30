@@ -96,6 +96,7 @@ GimpLayer     * gimp_layer_new_from_region     (PixelRegion          *region,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
 
+GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
 GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
                                                 GimpAddMaskType       mask_type,
                                                 GimpChannel          *channel);
@@ -106,6 +107,7 @@ GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
 void            gimp_layer_apply_mask          (GimpLayer            *layer,
                                                 GimpMaskApplyMode     mode,
                                                 gboolean              push_undo);
+
 void            gimp_layer_add_alpha           (GimpLayer            *layer);
 void            gimp_layer_flatten             (GimpLayer            *layer,
                                                 GimpContext          *context);
@@ -114,8 +116,6 @@ void            gimp_layer_resize_to_image     (GimpLayer            *layer,
                                                 GimpContext          *context);
 BoundSeg      * gimp_layer_boundary            (GimpLayer            *layer,
                                                 gint                 *num_segs);
-
-GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
 
 GimpDrawable * gimp_layer_get_floating_sel_drawable (const GimpLayer *layer);
 void           gimp_layer_set_floating_sel_drawable (GimpLayer       *layer,
