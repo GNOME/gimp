@@ -3721,12 +3721,11 @@ msgid "The amount of cellspacing."
 msgstr "Brasder an esaouiñ etre ar c'helligoù."
 
 #: ../plug-ins/common/file-jp2-load.c:96
-#| msgid "JPEG image"
 msgid "JPEG-2000 image"
 msgstr "Skeudenn JPEG-2000"
 
 #: ../plug-ins/common/file-jp2-load.c:214
-#| msgid "Couldn't read file:"
+#,fuzzy
 msgid "Couldn't decode image."
 msgstr "N'haller ket lenn ar restr."
 
@@ -3736,6 +3735,7 @@ msgstr "N'haller ket lenn ar restr."
 #: ../plug-ins/common/file-jp2-load.c:287
 #: ../plug-ins/common/file-jp2-load.c:294
 #: ../plug-ins/common/file-jp2-load.c:300
+#, fuzzy
 msgid "Image type currently not supported."
 msgstr "N'eo ket skoret rizh ar skeudenn."
 
@@ -4874,7 +4874,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:673
 #, fuzzy, c-format
-#| msgid "'%s' is not a valid BMP file"
 msgid "'%s' is not a valid X cursor."
 msgstr "'%s' n'eo ket ur reti X talvoudek."
 
@@ -5037,9 +5036,10 @@ msgid "Height of '%s' is too large. Please reduce more than %dpx)"
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1526
-#, c-format
+#, fuzzy, c-format
+#| msgid "The name '%s' is used already!"
 msgid "The size of '%s' is zero!"
-msgstr ""
+msgstr "Arveret eo an anv '%s' endeo !"
 
 #: ../plug-ins/common/file-xmc.c:1566
 #, c-format

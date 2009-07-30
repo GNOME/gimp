@@ -225,7 +225,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:960
 #, fuzzy
 msgid "Export Image as "
-msgstr "Ezporzhiañ ar skeudenn dindan"
+msgstr "Ezporzhiañ ar skeudenn dindan "
 
 #: ../libgimp/gimpfontselectbutton.c:129
 msgid "Font Selection"
@@ -370,28 +370,21 @@ msgid "percent"
 msgstr "dregant"
 
 #: ../libgimpbase/gimpbaseenums.c:28
-#, fuzzy
-#| msgid "_White (full opacity)"
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "G_wenn (demerez klok)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
-#, fuzzy
-#| msgid "_Black (full transparency)"
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Du (treuzweluster klok)"
 
 #: ../libgimpbase/gimpbaseenums.c:30
-#| msgid "Layer's _alpha channel"
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "Sanell _alfa an dreuzfollenn"
 
 #: ../libgimpbase/gimpbaseenums.c:31
-#, fuzzy
-#| msgid "_Transfer layer's alpha channel"
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "_Treuzkas sanell alfa an dreuzfollenn"
@@ -403,97 +396,71 @@ msgid "_Selection"
 msgstr "_Diuzad"
 
 #: ../libgimpbase/gimpbaseenums.c:33
-#, fuzzy
-#| msgid "_Grayscale copy of layer"
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "Eilad an dreuzfollenn dre liveoù louedoù"
 
 #: ../libgimpbase/gimpbaseenums.c:34
-#| msgid "C_hannel"
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "S_anell"
 
 #: ../libgimpbase/gimpbaseenums.c:65
-#, fuzzy
-#| msgid "FG to BG (RGB)"
 msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "Rakva etrezek Drekva (RGG)"
 
 #: ../libgimpbase/gimpbaseenums.c:66
-#, fuzzy
-#| msgid "FG to BG (HSV)"
 msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
 msgstr "Drekva etrezek rakva (APG)"
 
 #: ../libgimpbase/gimpbaseenums.c:67
-#, fuzzy
-#| msgid "FG to transparent"
 msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "Rakva da dreuzwelus"
 
 #: ../libgimpbase/gimpbaseenums.c:68
-#, fuzzy
-#| msgid "Custom gradient"
 msgctxt "blend-mode"
 msgid "Custom gradient"
 msgstr "Ilrezenn personelaet"
 
 #: ../libgimpbase/gimpbaseenums.c:98
-#, fuzzy
-#| msgid "FG color fill"
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "Leuniañ gant liv ar rakva"
 
 #: ../libgimpbase/gimpbaseenums.c:99
-#, fuzzy
-#| msgid "BG color fill"
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "Leuniañ gant liv an drekva"
 
 #: ../libgimpbase/gimpbaseenums.c:100
-#, fuzzy
-#| msgid "Pattern fill"
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "Leuniañ gant ur goustur"
 
 #: ../libgimpbase/gimpbaseenums.c:131
-#, fuzzy
-#| msgid "Add to the current selection"
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Ouzhpennañ d'an diuzad bremanel"
 
 #: ../libgimpbase/gimpbaseenums.c:132
-#, fuzzy
-#| msgid "Subtract from the current selection"
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Lemel diouzh an diuzad bremanel"
 
 #: ../libgimpbase/gimpbaseenums.c:133
-#, fuzzy
-#| msgid "Replace the current selection"
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Amsaviñ an diuzad bremanel"
 
 #: ../libgimpbase/gimpbaseenums.c:134
-#, fuzzy
-#| msgid "Intersect with the current selection"
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Kenskejañ gant an diuzad bremanel"
 
 #: ../libgimpbase/gimpbaseenums.c:167
-#| msgid "Red"
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Ruz"
@@ -517,8 +484,6 @@ msgid "Gray"
 msgstr "Loued"
 
 #: ../libgimpbase/gimpbaseenums.c:171
-#, fuzzy
-#| msgid "Indexed"
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Ibiliet"
@@ -548,22 +513,16 @@ msgid "Large"
 msgstr "Bras"
 
 #: ../libgimpbase/gimpbaseenums.c:237
-#, fuzzy
-#| msgid "Light checks"
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Damerioù sklaer"
 
 #: ../libgimpbase/gimpbaseenums.c:238
-#, fuzzy
-#| msgid "Mid-tone checks"
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Damerioù hanterdonenn"
 
 #: ../libgimpbase/gimpbaseenums.c:239
-#, fuzzy
-#| msgid "Dark checks"
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Damerioù teñval"
@@ -623,22 +582,17 @@ msgid "Dodge"
 msgstr "Sklaeraat"
 
 #: ../libgimpbase/gimpbaseenums.c:334
-#, fuzzy
-#| msgid "Burn"
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Teñvalaat"
 
 #: ../libgimpbase/gimpbaseenums.c:400
 #, fuzzy
-#| msgid "Bi-linear"
 msgctxt "gradient-type"
 msgid "Linear"
-msgstr "Uelinennek"
+msgstr "Linennek"
 
 #: ../libgimpbase/gimpbaseenums.c:401
-#, fuzzy
-#| msgid "Bi-linear"
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Uelinennek"
@@ -656,105 +610,76 @@ msgid "Square"
 msgstr "Karrez"
 
 #: ../libgimpbase/gimpbaseenums.c:404
-#, fuzzy
-#| msgid "Conical (sym)"
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Kernennek (kemparzhek)"
 
 #: ../libgimpbase/gimpbaseenums.c:405
-#, fuzzy
-#| msgid "Conical (asym)"
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Kernennek (ankemparzhek)"
 
 #: ../libgimpbase/gimpbaseenums.c:406
-#, fuzzy
-#| msgid "Shaped (angular)"
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Stummet (kornek)"
 
 #: ../libgimpbase/gimpbaseenums.c:407
-#, fuzzy
-#| msgid "Shaped (spherical)"
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Stummet (pellennek)"
 
 #: ../libgimpbase/gimpbaseenums.c:408
-#, fuzzy
-#| msgid "Shaped (dimpled)"
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Stummet (boset)"
 
 #: ../libgimpbase/gimpbaseenums.c:409
-#, fuzzy
-#| msgid "Spiral (cw)"
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Troellenn (roud an nadozioù)"
 
 #: ../libgimpbase/gimpbaseenums.c:410
-#, fuzzy
-#| msgid "Spiral (ccw)"
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Troellenn (roud gin an nadozioù)"
 
 #: ../libgimpbase/gimpbaseenums.c:442
-#, fuzzy
-#| msgid "Intersections (dots)"
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Kenskejadoù (pikennoù)"
 
 #: ../libgimpbase/gimpbaseenums.c:443
-#, fuzzy
-#| msgid "Intersections (crosshairs)"
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Kenskejadoù (kroazioù)"
 
 #: ../libgimpbase/gimpbaseenums.c:444
-#, fuzzy
-#| msgid "Dashed"
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Gourzhellet"
 
 #: ../libgimpbase/gimpbaseenums.c:445
-#, fuzzy
-#| msgid "Double dashed"
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Divc'hourzhell"
 
 #: ../libgimpbase/gimpbaseenums.c:446
-#, fuzzy
-#| msgid "Solid"
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Unvan"
 
 #: ../libgimpbase/gimpbaseenums.c:476
-#, fuzzy
-#| msgid "Stock ID"
 msgctxt "icon-type"
 msgid "Stock ID"
 msgstr "Kadaviñ an naoudi (id)"
 
 #: ../libgimpbase/gimpbaseenums.c:477
-#, fuzzy
-#| msgid "Inline pixbuf"
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "Skurzer pikselioù enkorfet"
 
 #: ../libgimpbase/gimpbaseenums.c:478
-#| msgid "Image file"
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Restr skeudenn"
@@ -802,15 +727,11 @@ msgid "Grayscale-alpha"
 msgstr "Liveoù louedoù-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:547
-#, fuzzy
-#| msgid "Indexed"
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Ibiliet"
 
 #: ../libgimpbase/gimpbaseenums.c:548
-#, fuzzy
-#| msgid "Indexed-alpha"
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Ibiliet-alfa"
@@ -840,15 +761,11 @@ msgid "Sinc (Lanczos3)"
 msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:611
-#, fuzzy
-#| msgid "Constant"
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Arstalek"
 
 #: ../libgimpbase/gimpbaseenums.c:612
-#, fuzzy
-#| msgid "Incremental"
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Azvuiadek"
@@ -860,36 +777,26 @@ msgid "None"
 msgstr "Tra ebet"
 
 #: ../libgimpbase/gimpbaseenums.c:643
-#, fuzzy
-#| msgid "Sawtooth wave"
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Gwagennoù mod dent heskern"
 
 #: ../libgimpbase/gimpbaseenums.c:644
-#, fuzzy
-#| msgid "Triangular wave"
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Gwagennoù tric'hornek"
 
 #: ../libgimpbase/gimpbaseenums.c:674
-#, fuzzy
-#| msgid "Run interactively"
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Loc'hañ mod etrewezhiat"
 
 #: ../libgimpbase/gimpbaseenums.c:675
-#, fuzzy
-#| msgid "Run non-interactively"
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Loc'hañ mod dietrewezhiat"
 
 #: ../libgimpbase/gimpbaseenums.c:676
-#, fuzzy
-#| msgid "Run with last used values"
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Loc'hañ gant ar gwerzhioù diwezhañ bet arveret"
@@ -907,43 +814,31 @@ msgid "Points"
 msgstr "a boentoù"
 
 #: ../libgimpbase/gimpbaseenums.c:736
-#, fuzzy
-#| msgid "Shadows"
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Disheolioù"
 
 #: ../libgimpbase/gimpbaseenums.c:737
-#, fuzzy
-#| msgid "Midtones"
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Hanterdonennoù"
 
 #: ../libgimpbase/gimpbaseenums.c:738
-#, fuzzy
-#| msgid "Highlights"
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Usskedoù"
 
 #: ../libgimpbase/gimpbaseenums.c:767
-#, fuzzy
-#| msgid "Normal (Forward)"
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Skoueriek (war-raok)"
 
 #: ../libgimpbase/gimpbaseenums.c:768
-#, fuzzy
-#| msgid "Corrective (Backward)"
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Difazius (Drekva)"
 
 #: ../libgimpbase/gimpbaseenums.c:799
-#, fuzzy
-#| msgid "Adjust"
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Kengeidañ"
@@ -955,57 +850,41 @@ msgid "Clip"
 msgstr "Troc'hañ"
 
 #: ../libgimpbase/gimpbaseenums.c:801
-#, fuzzy
-#| msgid "Crop to result"
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Troc'hañ betek an disoc'h"
 
 #: ../libgimpbase/gimpbaseenums.c:802
-#, fuzzy
-#| msgid "Crop with aspect"
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Troc'hañ gant un neuz"
 
 #: ../libgimpbase/gimpbaseenums.c:935
-#, fuzzy
-#| msgid "Internal GIMP procedure"
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Treugennad diabarzh GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:936
-#, fuzzy
-#| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "Enlugellad GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:937
-#, fuzzy
-#| msgid "GIMP Extension"
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "Askouezh GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:938
-#, fuzzy
-#| msgid "Temporary Procedure"
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Treugennad padennek"
 
 #: ../libgimpbase/gimpbaseenums.c:1105
-#, fuzzy
-#| msgid "From left to right"
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Eus an tu kleiz d'an tu dehou"
 
 #: ../libgimpbase/gimpbaseenums.c:1106
-#, fuzzy
-#| msgid "From right to left"
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Eus an tu dehou d'an tu kleiz"
@@ -1017,11 +896,9 @@ msgid "None"
 msgstr "Tra ebet"
 
 #: ../libgimpbase/gimpbaseenums.c:1138
-#, fuzzy
-#| msgid "Highlights"
 msgctxt "text-hint-style"
 msgid "Slight"
-msgstr "Usskedoù"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:1139
 #| msgid "Medium"
@@ -1036,15 +913,11 @@ msgid "Full"
 msgstr "Leuniet"
 
 #: ../libgimpbase/gimpbaseenums.c:1171
-#, fuzzy
-#| msgid "Left justified"
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Marzekaet a-gleiz"
 
 #: ../libgimpbase/gimpbaseenums.c:1172
-#, fuzzy
-#| msgid "Right justified"
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Marzekaet a-zehou"
@@ -1110,22 +983,16 @@ msgid "The color to use for marking colors which are out of gamut."
 msgstr "Al liv da arverañ evit ober livioù er-maez eus an dirïad livioù."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
-#, fuzzy
-#| msgid "No color management"
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Ardoadur liv ebet"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
-#, fuzzy
-#| msgid "Color managed display"
 msgctxt "color-management-mode"
 msgid "Color managed display"
 msgstr "Skrammañ al liv meret"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
-#, fuzzy
-#| msgid "Print simulation"
 msgctxt "color-management-mode"
 msgid "Print simulation"
 msgstr "Darvanañ ar moullañ"
@@ -1133,15 +1000,11 @@ msgstr "Darvanañ ar moullañ"
 # Perceptual ??
 # Perceptible
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
-#, fuzzy
-#| msgid "Perceptual"
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Heverz"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
-#| msgid "Relative colorimetric"
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Livverk daveel"
@@ -1153,8 +1016,6 @@ msgid "Saturation"
 msgstr "Peurvec'hiañ"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:60
-#, fuzzy
-#| msgid "Absolute colorimetric"
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Livverk dizave"
