@@ -138,6 +138,13 @@
           <menuitem action="context-brush-angle-increase-skip" />
         </menu>
       </menu>
+      <menu action="context-dynamics-menu" name="Pattern">
+        <menuitem action="context-dynamics-select-first" />
+        <menuitem action="context-dynamics-select-last" />
+        <menuitem action="context-dynamics-select-previous" />
+        <menuitem action="context-dynamics-select-next" />
+      </menu>
+      </menu>
       <menu action="context-pattern-menu" name="Pattern">
         <menuitem action="context-pattern-select-first" />
         <menuitem action="context-pattern-select-last" />
