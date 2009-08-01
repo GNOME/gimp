@@ -258,12 +258,15 @@ vectors_actions_update (GimpActionGroup *group,
       if (vectors)
         {
           GimpItem *item = GIMP_ITEM (vectors);
+          GList    *vectors_list;
           GList    *list;
 
           visible = gimp_item_get_visible (item);
           linked  = gimp_item_get_linked  (item);
 
-          list = g_list_find (gimp_image_get_vectors_iter (image), vectors);
+          vectors_list = gimp_item_get_container_iter (item);
+
+          list = g_list_find (vectors_list, vectors);
 
           if (list)
             {

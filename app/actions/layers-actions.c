@@ -509,13 +509,16 @@ layers_actions_update (GimpActionGroup *group,
 
       if (layer)
         {
+          GList *layer_list;
           GList *list;
 
           mask       = gimp_layer_get_mask (layer);
           lock_alpha = gimp_layer_get_lock_alpha (layer);
           alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-          list = g_list_find (gimp_image_get_layer_iter (image), layer);
+          layer_list = gimp_item_get_container_iter (GIMP_ITEM (layer));
+
+          list = g_list_find (layer_list, layer);
 
           if (list)
             {
