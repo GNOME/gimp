@@ -589,13 +589,13 @@ gimp_ruler_size_request (GtkWidget      *widget,
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      widget->requisition.width  = style->xthickness * 2 + 1;
-      widget->requisition.height = style->ythickness * 2 + size;
+      requisition->width  = style->xthickness * 2 + 1;
+      requisition->height = style->ythickness * 2 + size;
     }
   else
     {
-      widget->requisition.width  = style->xthickness * 2 + size;
-      widget->requisition.height = style->ythickness * 2 + 1;
+      requisition->width  = style->xthickness * 2 + size;
+      requisition->height = style->ythickness * 2 + 1;
     }
 }
 
