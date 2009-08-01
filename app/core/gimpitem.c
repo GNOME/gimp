@@ -528,9 +528,16 @@ gimp_item_sync_offset_node (GimpItem *item)
 void
 gimp_item_removed (GimpItem *item)
 {
+  GimpContainer *children;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   item->removed = TRUE;
+
+  children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+  if (children)
+    gimp_container_foreach (children, (GFunc) gimp_item_removed, NULL);
 
   g_signal_emit (item, gimp_item_signals[REMOVED], 0);
 }
