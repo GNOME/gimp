@@ -64,6 +64,7 @@ struct _GimpContainerViewInterface
                               GimpContext       *context);
   gpointer (* insert_item)   (GimpContainerView *view,
                               GimpViewable      *object,
+                              gpointer           parent_insert_data,
                               gint               index);
   void     (* remove_item)   (GimpContainerView *view,
                               GimpViewable      *object,

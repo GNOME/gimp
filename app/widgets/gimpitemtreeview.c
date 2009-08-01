@@ -107,6 +107,7 @@ static void   gimp_item_tree_view_set_context       (GimpContainerView *view,
 
 static gpointer gimp_item_tree_view_insert_item     (GimpContainerView *view,
                                                      GimpViewable      *viewable,
+                                                     gpointer           parent_insert_data,
                                                      gint               index);
 static gboolean gimp_item_tree_view_select_item     (GimpContainerView *view,
                                                      GimpViewable      *item,
@@ -626,6 +627,7 @@ gimp_item_tree_view_set_context (GimpContainerView *view,
 static gpointer
 gimp_item_tree_view_insert_item (GimpContainerView *view,
                                  GimpViewable      *viewable,
+                                 gpointer           parent_insert_data,
                                  gint               index)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
@@ -633,7 +635,8 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   GimpItem              *item      = GIMP_ITEM (viewable);
   GtkTreeIter           *iter;
 
-  iter = parent_view_iface->insert_item (view, viewable, index);
+  iter = parent_view_iface->insert_item (view, viewable,
+                                         parent_insert_data, index);
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       item_view->priv->model_column_visible,

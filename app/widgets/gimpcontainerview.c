@@ -895,14 +895,28 @@ gimp_container_view_add_foreach (GimpViewable      *viewable,
 {
   GimpContainerViewInterface *view_iface;
   GimpContainerViewPrivate   *private;
+  GimpViewable               *parent;
+  GimpContainer              *children;
+  gpointer                    parent_insert_data = NULL;
   gpointer                    insert_data;
 
   view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
   private    = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  insert_data = view_iface->insert_item (view, viewable, -1);
+  parent = gimp_viewable_get_parent (viewable);
+
+  if (parent)
+    parent_insert_data = g_hash_table_lookup (private->item_hash, parent);
+
+  insert_data = view_iface->insert_item (view, viewable,
+                                         parent_insert_data, -1);
 
   g_hash_table_insert (private->item_hash, viewable, insert_data);
+
+  children = gimp_viewable_get_children (viewable);
+
+  if (children)
+    gimp_container_view_add_container (view, children);
 }
 
 static void
@@ -912,6 +926,9 @@ gimp_container_view_add (GimpContainerView *view,
 {
   GimpContainerViewInterface *view_iface;
   GimpContainerViewPrivate   *private;
+  GimpViewable               *parent;
+  GimpContainer              *children;
+  gpointer                    parent_insert_data = NULL;
   gpointer                    insert_data;
   gint                        index;
 
@@ -921,9 +938,20 @@ gimp_container_view_add (GimpContainerView *view,
   index = gimp_container_get_child_index (container,
                                           GIMP_OBJECT (viewable));
 
-  insert_data = view_iface->insert_item (view, viewable, index);
+  parent = gimp_viewable_get_parent (viewable);
+
+  if (parent)
+    parent_insert_data = g_hash_table_lookup (private->item_hash, parent);
+
+  insert_data = view_iface->insert_item (view, viewable,
+                                         parent_insert_data, -1);
 
   g_hash_table_insert (private->item_hash, viewable, insert_data);
+
+  children = gimp_viewable_get_children (viewable);
+
+  if (children)
+    gimp_container_view_add_container (view, children);
 }
 
 static void
@@ -976,7 +1004,13 @@ gimp_container_view_remove (GimpContainerView *view,
                             GimpContainer     *unused)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  GimpContainer            *children;
   gpointer                  insert_data;
+
+  children = gimp_viewable_get_children (viewable);
+
+  if (children)
+    gimp_container_view_remove_container (view, children);
 
   insert_data = g_hash_table_lookup (private->item_hash, viewable);
 

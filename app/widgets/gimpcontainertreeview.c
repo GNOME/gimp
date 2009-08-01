@@ -59,6 +59,7 @@ static void          gimp_container_tree_view_set_context       (GimpContainerVi
                                                                  GimpContext                 *context);
 static gpointer      gimp_container_tree_view_insert_item       (GimpContainerView           *view,
                                                                  GimpViewable                *viewable,
+                                                                 gpointer                     parent_insert_data,
                                                                  gint                         index);
 static void          gimp_container_tree_view_remove_item       (GimpContainerView           *view,
                                                                  GimpViewable                *viewable,
@@ -584,17 +585,18 @@ gimp_container_tree_view_set_context (GimpContainerView *view,
 static gpointer
 gimp_container_tree_view_insert_item (GimpContainerView *view,
                                       GimpViewable      *viewable,
+                                      gpointer           parent_insert_data,
                                       gint               index)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter            iter;
 
-  /* FIXME tree */
-
   if (index == -1)
-    gtk_tree_store_append (GTK_TREE_STORE (tree_view->model), &iter, NULL);
+    gtk_tree_store_append (GTK_TREE_STORE (tree_view->model), &iter,
+                           parent_insert_data);
   else
-    gtk_tree_store_insert (GTK_TREE_STORE (tree_view->model), &iter, NULL, index);
+    gtk_tree_store_insert (GTK_TREE_STORE (tree_view->model), &iter,
+                           parent_insert_data, index);
 
   gimp_container_tree_view_set (tree_view, &iter, viewable);
 
