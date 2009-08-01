@@ -1067,30 +1067,31 @@ static void
 gimp_image_size_changed (GimpViewable *viewable)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
+  GList     *all_items;
   GList     *list;
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
     GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
 
-  gimp_container_foreach (image->layers,
-                          (GFunc) gimp_viewable_size_changed,
-                          NULL);
-  gimp_container_foreach (image->channels,
-                          (GFunc) gimp_viewable_size_changed,
-                          NULL);
-  gimp_container_foreach (image->vectors,
-                          (GFunc) gimp_viewable_size_changed,
-                          NULL);
-
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  all_items = gimp_image_get_layer_list (image);
+  for (list = all_items; list; list = g_list_next (list))
     {
       GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (list->data));
+
+      gimp_viewable_size_changed (GIMP_VIEWABLE (list->data));
 
       if (mask)
         gimp_viewable_size_changed (GIMP_VIEWABLE (mask));
     }
+  g_list_free (all_items);
+
+  all_items = gimp_image_get_channel_list (image);
+  g_list_foreach (all_items, (GFunc) gimp_viewable_size_changed, NULL);
+  g_list_free (all_items);
+
+  all_items = gimp_image_get_vectors_list (image);
+  g_list_foreach (all_items, (GFunc) gimp_viewable_size_changed, NULL);
+  g_list_free (all_items);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (image)));
 
@@ -2542,6 +2543,7 @@ gboolean
 gimp_image_set_tattoo_state (GimpImage  *image,
                              GimpTattoo  val)
 {
+  GList      *all_items;
   GList      *list;
   gboolean    retval = TRUE;
   GimpTattoo  maxval = 0;
@@ -2549,9 +2551,9 @@ gimp_image_set_tattoo_state (GimpImage  *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   /* Check that the layer tattoos don't overlap with channel or vector ones */
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  all_items = gimp_image_get_layer_list (image);
+
+  for (list = all_items; list; list = g_list_next (list))
     {
       GimpTattoo ltattoo;
 
@@ -2566,10 +2568,12 @@ gimp_image_set_tattoo_state (GimpImage  *image,
         retval = FALSE; /* Oopps duplicated tattoo in vectors */
     }
 
+  g_list_free (all_items);
+
   /* Now check that the channel and vectors tattoos don't overlap */
-  for (list = gimp_image_get_channel_iter (image);
-       list;
-       list = g_list_next (list))
+  all_items = gimp_image_get_channel_list (image);
+
+  for (list = all_items; list; list = g_list_next (list))
     {
       GimpTattoo ctattoo;
 
@@ -2581,10 +2585,12 @@ gimp_image_set_tattoo_state (GimpImage  *image,
         retval = FALSE; /* Oopps duplicated tattoo in vectors */
     }
 
+  g_list_free (all_items);
+
   /* Find the max tattoo value in the vectors */
-  for (list = gimp_image_get_vectors_iter (image);
-       list;
-       list = g_list_next (list))
+  all_items = gimp_image_get_vectors_list (image);
+
+  for (list = all_items; list; list = g_list_next (list))
     {
       GimpTattoo vtattoo;
 
@@ -2592,6 +2598,8 @@ gimp_image_set_tattoo_state (GimpImage  *image,
       if (vtattoo > maxval)
         maxval = vtattoo;
     }
+
+  g_list_free (all_items);
 
   if (val < maxval)
     retval = FALSE;
@@ -3818,13 +3826,14 @@ gimp_image_pick_correlate_layer (const GimpImage *image,
                                  gint             x,
                                  gint             y)
 {
+  GList *all_layers;
   GList *list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  all_layers = gimp_image_get_layer_list (image);
+
+  for (list = all_layers; list; list = g_list_next (list))
     {
       GimpLayer *layer = list->data;
       gint       off_x, off_y;
@@ -3834,9 +3843,13 @@ gimp_image_pick_correlate_layer (const GimpImage *image,
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
                                         x - off_x, y - off_y) > 63)
         {
+          g_list_free (all_layers);
+
           return layer;
         }
     }
+
+  g_list_free (all_layers);
 
   return NULL;
 }

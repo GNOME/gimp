@@ -534,17 +534,20 @@ gimp_display_shell_draw_vectors (const GimpDisplayShell *shell)
   if (shell->display->image &&
       TRUE /* gimp_display_shell_get_show_vectors (shell) */)
     {
+      GList *all_vectors;
       GList *list;
 
-      for (list = gimp_image_get_vectors_iter (shell->display->image);
-           list;
-           list = list->next)
+      all_vectors = gimp_image_get_vectors_list (shell->display->image);
+
+      for (list = all_vectors; list; list = list->next)
         {
           GimpVectors *vectors = list->data;
 
           if (gimp_item_get_visible (GIMP_ITEM (vectors)))
             gimp_display_shell_draw_vector (shell, vectors);
         }
+
+      g_list_free (all_vectors);
     }
 }
 

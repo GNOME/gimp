@@ -902,11 +902,12 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
     }
   else
     {
+      GList *all_layers;
       GList *list;
 
-      for (list = gimp_image_get_layer_iter (image);
-           list;
-           list = g_list_next (list))
+      all_layers = gimp_image_get_layer_list (image);
+
+      for (list = all_layers; list; list = g_list_next (list))
         {
           GimpDrawable *drawable = list->data;
 
@@ -919,6 +920,8 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
                                 NULL : layer_view->priv->bold_attrs,
                                 -1);
         }
+
+      g_list_free (all_layers);
     }
 }
 
