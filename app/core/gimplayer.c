@@ -2039,3 +2039,25 @@ gimp_layer_get_lock_alpha (const GimpLayer *layer)
 
   return layer->lock_alpha;
 }
+
+GimpContainer *
+gimp_layer_get_container (const GimpLayer *layer)
+{
+  GimpViewable *parent;
+
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
+  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
+
+  if (parent)
+    return gimp_viewable_get_children (parent);
+
+  if (gimp_item_is_attached (GIMP_ITEM (layer)))
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+      return gimp_image_get_layers (image);
+    }
+
+  return NULL;
+}
