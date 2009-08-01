@@ -2918,10 +2918,21 @@ gimp_image_get_item_by_tattoo (GimpContainer *items,
 
   for (list = GIMP_LIST (items)->list; list; list = g_list_next (list))
     {
-      GimpItem *item = list->data;
+      GimpItem      *item = list->data;
+      GimpContainer *children;
 
       if (gimp_item_get_tattoo (item) == tattoo)
         return item;
+
+      children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+      if (children)
+        {
+          item = gimp_image_get_item_by_tattoo (children, tattoo);
+
+          if (item)
+            return item;
+        }
     }
 
   return NULL;
