@@ -425,6 +425,10 @@ GList         * gimp_image_get_layer_iter        (const GimpImage    *image);
 GList         * gimp_image_get_channel_iter      (const GimpImage    *image);
 GList         * gimp_image_get_vectors_iter      (const GimpImage    *image);
 
+GList         * gimp_image_get_layer_list        (const GimpImage    *image);
+GList         * gimp_image_get_channel_list      (const GimpImage    *image);
+GList         * gimp_image_get_vectors_list      (const GimpImage    *image);
+
 GimpDrawable  * gimp_image_get_active_drawable   (const GimpImage    *image);
 GimpLayer     * gimp_image_get_active_layer      (const GimpImage    *image);
 GimpChannel   * gimp_image_get_active_channel    (const GimpImage    *image);

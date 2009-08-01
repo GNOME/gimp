@@ -114,6 +114,43 @@ gimp_item_stack_new (GType item_type)
                        NULL);
 }
 
+GList *
+gimp_item_stack_get_item_list (GimpItemStack *stack)
+{
+  GList *list;
+  GList *result = NULL;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
+
+  for (list = GIMP_LIST (stack)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpViewable  *viewable = list->data;
+      GimpContainer *children;
+
+      result = g_list_prepend (result, viewable);
+
+      children = gimp_viewable_get_children (viewable);
+
+      if (children)
+        {
+          GList *child_list;
+
+          child_list = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (children));
+
+          while (child_list)
+            {
+              result = g_list_prepend (result, child_list->data);
+
+              child_list = g_list_remove (child_list, child_list->data);
+            }
+        }
+    }
+
+  return g_list_reverse (result);
+}
+
 static void
 gimp_item_stack_invalidate_preview (GimpViewable *viewable)
 {
