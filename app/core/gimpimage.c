@@ -2756,8 +2756,9 @@ gimp_image_set_active_layer (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (layer == NULL ||
-                        gimp_container_have (image->layers,
-                                             GIMP_OBJECT (layer)), NULL);
+                        (gimp_item_is_attached (GIMP_ITEM (layer)) &&
+                         gimp_item_get_image (GIMP_ITEM (layer)) == image),
+                        NULL);
 
   floating_sel = gimp_image_get_floating_selection (image);
 
@@ -2796,8 +2797,9 @@ gimp_image_set_active_channel (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
   g_return_val_if_fail (channel == NULL ||
-                        gimp_container_have (image->channels,
-                                             GIMP_OBJECT (channel)), NULL);
+                        (gimp_item_is_attached (GIMP_ITEM (channel)) &&
+                         gimp_item_get_image (GIMP_ITEM (channel)) == image),
+                        NULL);
 
   /*  Not if there is a floating selection  */
   if (channel && gimp_image_get_floating_selection (image))
@@ -2843,8 +2845,9 @@ gimp_image_set_active_vectors (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (vectors == NULL ||
-                        gimp_container_have (image->vectors,
-                                             GIMP_OBJECT (vectors)), NULL);
+                        (gimp_item_is_attached (GIMP_ITEM (vectors)) &&
+                         gimp_item_get_image (GIMP_ITEM (vectors)) == image),
+                        NULL);
 
   if (vectors != image->active_vectors)
     {
