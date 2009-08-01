@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 
 #include "core-types.h"
@@ -149,6 +151,68 @@ gimp_item_stack_get_item_list (GimpItemStack *stack)
     }
 
   return g_list_reverse (result);
+}
+
+GimpItem *
+gimp_item_stack_get_item_by_tattoo (GimpItemStack *stack,
+                                    GimpTattoo     tattoo)
+{
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
+
+  for (list = GIMP_LIST (stack)->list; list; list = g_list_next (list))
+    {
+      GimpItem      *item = list->data;
+      GimpContainer *children;
+
+      if (gimp_item_get_tattoo (item) == tattoo)
+        return item;
+
+      children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+      if (children)
+        {
+          item = gimp_item_stack_get_item_by_tattoo (GIMP_ITEM_STACK (children),
+                                                     tattoo);
+
+          if (item)
+            return item;
+        }
+    }
+
+  return NULL;
+}
+
+GimpItem *
+gimp_item_stack_get_item_by_name (GimpItemStack *stack,
+                                  const gchar   *name)
+{
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
+
+  for (list = GIMP_LIST (stack)->list; list; list = g_list_next (list))
+    {
+      GimpItem      *item = list->data;
+      GimpContainer *children;
+
+      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (item)), name))
+        return item;
+
+      children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+      if (children)
+        {
+          item = gimp_item_stack_get_item_by_name (GIMP_ITEM_STACK (children),
+                                                   name);
+
+          if (item)
+            return item;
+        }
+    }
+
+  return NULL;
 }
 
 static void
