@@ -668,6 +668,21 @@ gimp_item_get_container (GimpItem *item)
   return NULL;
 }
 
+GList *
+gimp_item_get_container_iter (GimpItem *item)
+{
+  GimpContainer *container;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  container = gimp_item_get_container (container);
+
+  if (container)
+    return GIMP_LIST (container)->list;
+
+  return NULL;
+}
+
 gint
 gimp_item_get_index (GimpItem *item)
 {
