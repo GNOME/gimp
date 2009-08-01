@@ -89,6 +89,8 @@ static gboolean gimp_viewable_real_get_popup_size    (GimpViewable  *viewable,
                                                       gint          *popup_height);
 static gchar * gimp_viewable_real_get_description    (GimpViewable  *viewable,
                                                       gchar        **tooltip);
+static GimpContainer * gimp_viewable_real_get_children (GimpViewable *viewable);
+
 static gboolean gimp_viewable_serialize_property     (GimpConfig    *config,
                                                       guint          property_id,
                                                       const GValue  *value,
@@ -154,6 +156,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->get_pixbuf              = NULL;
   klass->get_new_pixbuf          = gimp_viewable_real_get_new_pixbuf;
   klass->get_description         = gimp_viewable_real_get_description;
+  klass->get_children            = gimp_viewable_real_get_children;
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
                                    NULL, NULL,
@@ -372,6 +375,12 @@ gimp_viewable_real_get_description (GimpViewable  *viewable,
                                     gchar        **tooltip)
 {
   return g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable)));
+}
+
+static GimpContainer *
+gimp_viewable_real_get_children (GimpViewable *viewable)
+{
+  return NULL;
 }
 
 static gboolean
@@ -1091,4 +1100,30 @@ gimp_viewable_preview_is_frozen (GimpViewable *viewable)
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
 
   return viewable->freeze_count != 0;
+}
+
+GimpViewable *
+gimp_viewable_get_parent (GimpViewable *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+
+  return viewable->parent;
+}
+
+void
+gimp_viewable_set_parent (GimpViewable *viewable,
+                          GimpViewable *parent)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (parent == NULL || GIMP_IS_VIEWABLE (parent));
+
+  viewable->parent = parent;
+}
+
+GimpContainer *
+gimp_viewable_get_children (GimpViewable *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+
+  return GIMP_VIEWABLE_GET_CLASS (viewable)->get_children (viewable);
 }
