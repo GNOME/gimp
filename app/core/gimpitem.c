@@ -675,7 +675,7 @@ gimp_item_get_container_iter (GimpItem *item)
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
-  container = gimp_item_get_container (container);
+  container = gimp_item_get_container (item);
 
   if (container)
     return GIMP_LIST (container)->list;
