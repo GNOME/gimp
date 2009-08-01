@@ -237,7 +237,7 @@ run (const gchar      *name,
 
             if (filename)
               {
-                gchar *basename = g_path_get_basename (filename);
+                gchar *basename = g_filename_display_basename (filename);
 
                 g_strlcpy (mail_info.filename, basename, BUFFER_SIZE);
                 g_free (basename);
