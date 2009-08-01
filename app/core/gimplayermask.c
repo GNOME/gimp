@@ -102,6 +102,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   klass->edit_changed        = gimp_layer_mask_real_edit_changed;
 
   item_class->is_attached    = gimp_layer_mask_is_attached;
+  item_class->get_container  = gimp_layer_mask_get_container;
   item_class->duplicate      = gimp_layer_mask_duplicate;
   item_class->rename         = gimp_layer_mask_rename;
   item_class->translate_desc = _("Move Layer Mask");
