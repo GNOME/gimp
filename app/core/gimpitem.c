@@ -167,6 +167,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->linked_changed            = NULL;
 
   klass->is_attached               = NULL;
+  klass->get_container             = NULL;
   klass->duplicate                 = gimp_item_real_duplicate;
   klass->convert                   = gimp_item_real_convert;
   klass->rename                    = gimp_item_real_rename;
@@ -647,6 +648,39 @@ gimp_item_is_attached (GimpItem *item)
     return gimp_item_is_attached (GIMP_ITEM (parent));
 
   return GIMP_ITEM_GET_CLASS (item)->is_attached (item);
+}
+
+GimpContainer *
+gimp_item_get_container (GimpItem *item)
+{
+  GimpViewable *parent;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+
+  if (parent)
+    return gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+
+  if (GIMP_ITEM_GET_CLASS (item)->get_container)
+    return GIMP_ITEM_GET_CLASS (item)->get_container (item);
+
+  return NULL;
+}
+
+gint
+gimp_item_get_index (GimpItem *item)
+{
+  GimpContainer *container;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
+
+  container = gimp_item_get_container (item);
+
+  if (container)
+    return gimp_container_get_child_index (container, GIMP_OBJECT (item));
+
+  return -1;
 }
 
 /**

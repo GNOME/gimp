@@ -137,7 +137,5 @@ void            gimp_layer_set_lock_alpha      (GimpLayer            *layer,
                                                 gboolean              push_undo);
 gboolean        gimp_layer_get_lock_alpha      (const GimpLayer      *layer);
 
-GimpContainer * gimp_layer_get_container       (const GimpLayer      *layer);
-
 
 #endif /* __GIMP_LAYER_H__ */

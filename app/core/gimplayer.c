@@ -97,6 +97,8 @@ static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
 
 static void       gimp_layer_removed            (GimpItem           *item);
 static gboolean   gimp_layer_is_attached        (GimpItem           *item);
+static GimpContainer *
+                  gimp_layer_get_container      (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type);
 static void       gimp_layer_convert            (GimpItem           *item,
@@ -236,6 +238,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   item_class->removed                 = gimp_layer_removed;
   item_class->is_attached             = gimp_layer_is_attached;
+  item_class->get_container           = gimp_layer_get_container;
   item_class->duplicate               = gimp_layer_duplicate;
   item_class->convert                 = gimp_layer_convert;
   item_class->rename                  = gimp_layer_rename;
@@ -540,6 +543,19 @@ gimp_layer_is_attached (GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
           gimp_container_have (gimp_item_get_image (item)->layers, GIMP_OBJECT (item)));
+}
+
+static GimpContainer *
+gimp_layer_get_container (GimpItem *item)
+{
+  if (gimp_item_is_attached (item))
+    {
+      GimpImage *image = gimp_item_get_image (item);
+
+      return gimp_image_get_layers (image);
+    }
+
+  return NULL;
 }
 
 static GimpItem *
@@ -2038,26 +2054,4 @@ gimp_layer_get_lock_alpha (const GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   return layer->lock_alpha;
-}
-
-GimpContainer *
-gimp_layer_get_container (const GimpLayer *layer)
-{
-  GimpViewable *parent;
-
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-
-  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
-
-  if (parent)
-    return gimp_viewable_get_children (parent);
-
-  if (gimp_item_is_attached (GIMP_ITEM (layer)))
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-
-      return gimp_image_get_layers (image);
-    }
-
-  return NULL;
 }

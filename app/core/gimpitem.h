@@ -61,63 +61,64 @@ struct _GimpItemClass
   GimpViewableClass  parent_class;
 
   /*  signals  */
-  void       (* removed)            (GimpItem      *item);
-  void       (* visibility_changed) (GimpItem      *item);
-  void       (* linked_changed)     (GimpItem      *item);
+  void            (* removed)            (GimpItem               *item);
+  void            (* visibility_changed) (GimpItem               *item);
+  void            (* linked_changed)     (GimpItem               *item);
 
   /*  virtual functions  */
-  gboolean   (* is_attached)  (GimpItem               *item);
-  GimpItem * (* duplicate)    (GimpItem               *item,
-                               GType                   new_type);
-  void       (* convert)      (GimpItem               *item,
-                               GimpImage              *dest_image);
-  gboolean   (* rename)       (GimpItem               *item,
-                               const gchar            *new_name,
-                               const gchar            *undo_desc,
-                               GError                **error);
-  void       (* translate)    (GimpItem               *item,
-                               gint                    offset_x,
-                               gint                    offset_y,
-                               gboolean                push_undo);
-  void       (* scale)        (GimpItem               *item,
-                               gint                    new_width,
-                               gint                    new_height,
-                               gint                    new_offset_x,
-                               gint                    new_offset_y,
-                               GimpInterpolationType   interpolation_type,
-                               GimpProgress           *progress);
-  void       (* resize)       (GimpItem               *item,
-                               GimpContext            *context,
-                               gint                    new_width,
-                               gint                    new_height,
-                               gint                    offset_x,
-                               gint                    offset_y);
-  void       (* flip)         (GimpItem               *item,
-                               GimpContext            *context,
-                               GimpOrientationType     flip_type,
-                               gdouble                 axis,
-                               gboolean                clip_result);
-  void       (* rotate)       (GimpItem               *item,
-                               GimpContext            *context,
-                               GimpRotationType        rotate_type,
-                               gdouble                 center_x,
-                               gdouble                 center_y,
-                               gboolean                clip_result);
-  void       (* transform)    (GimpItem               *item,
-                               GimpContext            *context,
-                               const GimpMatrix3      *matrix,
-                               GimpTransformDirection  direction,
-                               GimpInterpolationType   interpolation_type,
-                               gint                    recursion_level,
-                               GimpTransformResize     clip_result,
-                               GimpProgress           *progress);
-  gboolean   (* stroke)       (GimpItem               *item,
-                               GimpDrawable           *drawable,
-                               GimpStrokeOptions      *stroke_options,
-                               gboolean                push_undo,
-                               GimpProgress           *progress,
-                               GError                **error);
-  GeglNode * (* get_node)     (GimpItem               *item);
+  gboolean        (* is_attached)        (GimpItem               *item);
+  GimpContainer * (* get_container)      (GimpItem               *item);
+  GimpItem      * (* duplicate)          (GimpItem               *item,
+                                          GType                   new_type);
+  void            (* convert)            (GimpItem               *item,
+                                          GimpImage              *dest_image);
+  gboolean        (* rename)             (GimpItem               *item,
+                                          const gchar            *new_name,
+                                          const gchar            *undo_desc,
+                                          GError                **error);
+  void            (* translate)          (GimpItem               *item,
+                                          gint                    offset_x,
+                                          gint                    offset_y,
+                                          gboolean                push_undo);
+  void            (* scale)              (GimpItem               *item,
+                                          gint                    new_width,
+                                          gint                    new_height,
+                                          gint                    new_offset_x,
+                                          gint                    new_offset_y,
+                                          GimpInterpolationType   interpolation_type,
+                                          GimpProgress           *progress);
+  void            (* resize)             (GimpItem               *item,
+                                          GimpContext            *context,
+                                          gint                    new_width,
+                                          gint                    new_height,
+                                          gint                    offset_x,
+                                          gint                    offset_y);
+  void            (* flip)               (GimpItem               *item,
+                                          GimpContext            *context,
+                                          GimpOrientationType     flip_type,
+                                          gdouble                 axis,
+                                          gboolean                clip_result);
+  void            (* rotate)             (GimpItem               *item,
+                                          GimpContext            *context,
+                                          GimpRotationType        rotate_type,
+                                          gdouble                 center_x,
+                                          gdouble                 center_y,
+                                          gboolean                clip_result);
+  void            (* transform)          (GimpItem               *item,
+                                          GimpContext            *context,
+                                          const GimpMatrix3      *matrix,
+                                          GimpTransformDirection  direction,
+                                          GimpInterpolationType   interpolation_type,
+                                          gint                    recursion_level,
+                                          GimpTransformResize     clip_result,
+                                          GimpProgress           *progress);
+  gboolean        (* stroke)             (GimpItem               *item,
+                                          GimpDrawable           *drawable,
+                                          GimpStrokeOptions      *stroke_options,
+                                          gboolean                push_undo,
+                                          GimpProgress           *progress,
+                                          GError                **error);
+  GeglNode      * (* get_node)           (GimpItem               *item);
 
 
   const gchar *default_name;
@@ -138,6 +139,9 @@ void            gimp_item_removed          (GimpItem           *item);
 gboolean        gimp_item_is_removed       (const GimpItem     *item);
 
 gboolean        gimp_item_is_attached      (GimpItem           *item);
+
+GimpContainer * gimp_item_get_container    (GimpItem           *item);
+gint            gimp_item_get_index        (GimpItem           *item);
 
 void            gimp_item_configure        (GimpItem           *item,
                                             GimpImage          *image,
