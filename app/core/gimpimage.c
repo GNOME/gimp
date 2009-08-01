@@ -2965,14 +2965,42 @@ gimp_image_get_vectors_by_tattoo (const GimpImage *image,
   return GIMP_VECTORS (gimp_image_get_item_by_tattoo (image->vectors, tattoo));
 }
 
+static GimpItem *
+gimp_image_get_item_by_name (GimpContainer *items,
+                             const gchar   *name)
+{
+  GList *list;
+
+  for (list = GIMP_LIST (items)->list; list; list = g_list_next (list))
+    {
+      GimpItem      *item = list->data;
+      GimpContainer *children;
+
+      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (item)), name))
+        return item;
+
+      children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+      if (children)
+        {
+          item = gimp_image_get_item_by_name (children, name);
+
+          if (item)
+            return item;
+        }
+    }
+
+  return NULL;
+}
+
 GimpLayer *
 gimp_image_get_layer_by_name (const GimpImage *image,
                               const gchar     *name)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_LAYER (gimp_container_get_child_by_name (image->layers,
-                                                       name));
+  return GIMP_LAYER (gimp_image_get_item_by_name (image->layers, name));
 }
 
 GimpChannel *
@@ -2980,9 +3008,9 @@ gimp_image_get_channel_by_name (const GimpImage *image,
                                 const gchar     *name)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_CHANNEL (gimp_container_get_child_by_name (image->channels,
-                                                         name));
+  return GIMP_CHANNEL (gimp_image_get_item_by_name (image->channels, name));
 }
 
 GimpVectors *
@@ -2990,9 +3018,9 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
                                 const gchar     *name)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_VECTORS (gimp_container_get_child_by_name (image->vectors,
-                                                         name));
+  return GIMP_VECTORS (gimp_image_get_item_by_name (image->vectors, name));
 }
 
 gboolean
