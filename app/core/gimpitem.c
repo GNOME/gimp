@@ -637,7 +637,14 @@ gimp_item_configure (GimpItem    *item,
 gboolean
 gimp_item_is_attached (GimpItem *item)
 {
+  GimpViewable *parent;
+
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+
+  if (parent)
+    return gimp_item_is_attached (GIMP_ITEM (parent));
 
   return GIMP_ITEM_GET_CLASS (item)->is_attached (item);
 }
