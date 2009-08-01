@@ -3205,8 +3205,7 @@ gimp_image_raise_layer (GimpImage  *image,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  index = gimp_container_get_child_index (image->layers,
-                                          GIMP_OBJECT (layer));
+  index = gimp_item_get_index (GIMP_ITEM (layer));
 
   if (index == 0)
     {
@@ -3224,16 +3223,18 @@ gimp_image_lower_layer (GimpImage  *image,
                         GimpLayer  *layer,
                         GError    **error)
 {
-  gint index;
+  GimpContainer *container;
+  gint           index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  index = gimp_container_get_child_index (image->layers,
-                                          GIMP_OBJECT (layer));
+  container = gimp_item_get_container (GIMP_ITEM (layer));
 
-  if (index == gimp_container_get_n_children (image->layers) - 1)
+  index = gimp_item_get_index (GIMP_ITEM (layer));
+
+  if (index == gimp_container_get_n_children (container) - 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Layer cannot be lowered more."));
@@ -3259,12 +3260,15 @@ gboolean
 gimp_image_lower_layer_to_bottom (GimpImage *image,
                                   GimpLayer *layer)
 {
-  gint length;
+  GimpContainer *container;
+  gint           length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  length = gimp_container_get_n_children (image->layers);
+  container = gimp_item_get_container (GIMP_ITEM (layer));
+
+  length = gimp_container_get_n_children (container);
 
   return gimp_image_position_layer (image, layer, length - 1,
                                     TRUE, _("Lower Layer to Bottom"));
@@ -3277,18 +3281,20 @@ gimp_image_position_layer (GimpImage   *image,
                            gboolean     push_undo,
                            const gchar *undo_desc)
 {
-  gint  index;
-  gint  num_layers;
+  GimpContainer *container;
+  gint           index;
+  gint           num_layers;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  index = gimp_container_get_child_index (image->layers,
-                                          GIMP_OBJECT (layer));
+  container = gimp_item_get_container (GIMP_ITEM (layer));
+
+  index = gimp_item_get_index (GIMP_ITEM (layer));
   if (index < 0)
     return FALSE;
 
-  num_layers = gimp_container_get_n_children (image->layers);
+  num_layers = gimp_container_get_n_children (container);
 
   new_index = CLAMP (new_index, 0, num_layers - 1);
 
@@ -3297,7 +3303,7 @@ gimp_image_position_layer (GimpImage   *image,
       if (push_undo)
         gimp_image_undo_push_layer_reposition (image, undo_desc, layer);
 
-      gimp_container_reorder (image->layers, GIMP_OBJECT (layer), new_index);
+      gimp_container_reorder (container, GIMP_OBJECT (layer), new_index);
     }
 
   return TRUE;
@@ -3436,8 +3442,7 @@ gimp_image_raise_channel (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  index = gimp_container_get_child_index (image->channels,
-                                          GIMP_OBJECT (channel));
+  index = gimp_item_get_index (GIMP_ITEM (channel));
 
   if (index == 0)
     {
@@ -3467,16 +3472,18 @@ gimp_image_lower_channel (GimpImage    *image,
                           GimpChannel  *channel,
                           GError      **error)
 {
-  gint index;
+  GimpContainer *container;
+  gint           index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  index = gimp_container_get_child_index (image->channels,
-                                          GIMP_OBJECT (channel));
+  container = gimp_item_get_container (GIMP_ITEM (channel));
 
-  if (index == gimp_container_get_n_children (image->channels) - 1)
+  index = gimp_item_get_index (GIMP_ITEM (channel));
+
+  if (index == gimp_container_get_n_children (container) - 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Channel cannot be lowered more."));
@@ -3491,12 +3498,15 @@ gboolean
 gimp_image_lower_channel_to_bottom (GimpImage   *image,
                                     GimpChannel *channel)
 {
-  gint length;
+  GimpContainer *container;
+  gint           length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
-  length = gimp_container_get_n_children (image->channels);
+  container = gimp_item_get_container (GIMP_ITEM (channel));
+
+  length = gimp_container_get_n_children (container);
 
   return gimp_image_position_channel (image, channel, length - 1,
                                       TRUE, _("Lower Channel to Bottom"));
@@ -3509,18 +3519,20 @@ gimp_image_position_channel (GimpImage   *image,
                              gboolean     push_undo,
                              const gchar *undo_desc)
 {
-  gint index;
-  gint num_channels;
+  GimpContainer *container;
+  gint           index;
+  gint           num_channels;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
-  index = gimp_container_get_child_index (image->channels,
-                                          GIMP_OBJECT (channel));
+  container = gimp_item_get_container (GIMP_ITEM (channel));
+
+  index = gimp_item_get_index (GIMP_ITEM (channel));
   if (index < 0)
     return FALSE;
 
-  num_channels = gimp_container_get_n_children (image->channels);
+  num_channels = gimp_container_get_n_children (container);
 
   new_index = CLAMP (new_index, 0, num_channels - 1);
 
@@ -3530,7 +3542,7 @@ gimp_image_position_channel (GimpImage   *image,
       if (push_undo)
         gimp_image_undo_push_channel_reposition (image, undo_desc, channel);
 
-      gimp_container_reorder (image->channels, GIMP_OBJECT (channel), new_index);
+      gimp_container_reorder (container, GIMP_OBJECT (channel), new_index);
     }
 
   return TRUE;
@@ -3644,8 +3656,7 @@ gimp_image_raise_vectors (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  index = gimp_container_get_child_index (image->vectors,
-                                          GIMP_OBJECT (vectors));
+  index = gimp_item_get_index (GIMP_ITEM (vectors));
 
   if (index == 0)
     {
@@ -3674,16 +3685,18 @@ gimp_image_lower_vectors (GimpImage    *image,
                           GimpVectors  *vectors,
                           GError      **error)
 {
-  gint index;
+  GimpContainer *container;
+  gint           index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  index = gimp_container_get_child_index (image->vectors,
-                                          GIMP_OBJECT (vectors));
+  container = gimp_item_get_container (GIMP_ITEM (vectors));
 
-  if (index == gimp_container_get_n_children (image->vectors) - 1)
+  index = gimp_item_get_index (GIMP_ITEM (vectors));
+
+  if (index == gimp_container_get_n_children (container) - 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("Path cannot be lowered more."));
@@ -3698,12 +3711,15 @@ gboolean
 gimp_image_lower_vectors_to_bottom (GimpImage   *image,
                                     GimpVectors *vectors)
 {
-  gint length;
+  GimpContainer *container;
+  gint           length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
-  length = gimp_container_get_n_children (image->vectors);
+  container = gimp_item_get_container (GIMP_ITEM (vectors));
+
+  length = gimp_container_get_n_children (container);
 
   return gimp_image_position_vectors (image, vectors, length - 1,
                                       TRUE, _("Lower Path to Bottom"));
@@ -3716,18 +3732,20 @@ gimp_image_position_vectors (GimpImage   *image,
                              gboolean     push_undo,
                              const gchar *undo_desc)
 {
-  gint index;
-  gint num_vectors;
+  GimpContainer *container;
+  gint           index;
+  gint           num_vectors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
-  index = gimp_container_get_child_index (image->vectors,
-                                          GIMP_OBJECT (vectors));
+  container = gimp_item_get_container (GIMP_ITEM (vectors));
+
+  index = gimp_item_get_index (GIMP_ITEM (vectors));
   if (index < 0)
     return FALSE;
 
-  num_vectors = gimp_container_get_n_children (image->vectors);
+  num_vectors = gimp_container_get_n_children (container);
 
   new_index = CLAMP (new_index, 0, num_vectors - 1);
 
@@ -3736,7 +3754,7 @@ gimp_image_position_vectors (GimpImage   *image,
       if (push_undo)
         gimp_image_undo_push_vectors_reposition (image, undo_desc, vectors);
 
-      gimp_container_reorder (image->vectors, GIMP_OBJECT (vectors), new_index);
+      gimp_container_reorder (container, GIMP_OBJECT (vectors), new_index);
     }
 
   return TRUE;
