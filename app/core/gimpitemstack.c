@@ -114,12 +114,23 @@ gimp_item_stack_new (GType item_type)
                        NULL);
 }
 
+static void
+gimp_item_stack_invalidate_preview (GimpViewable *viewable)
+{
+  GimpContainer *children = gimp_viewable_get_children (viewable);
+
+  if (children)
+    gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (children));
+
+  gimp_viewable_invalidate_preview (viewable);
+}
+
 void
 gimp_item_stack_invalidate_previews (GimpItemStack *stack)
 {
   g_return_if_fail (GIMP_IS_ITEM_STACK (stack));
 
   gimp_container_foreach (GIMP_CONTAINER (stack),
-                          (GFunc) gimp_viewable_invalidate_preview,
+                          (GFunc) gimp_item_stack_invalidate_preview,
                           NULL);
 }
