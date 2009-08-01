@@ -259,7 +259,7 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
       name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
       target_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
                                                           GIMP_TYPE_VECTORS));
-      pos = gimp_image_get_vectors_index (image, vectors);
+      pos = gimp_item_get_index (GIMP_ITEM (vectors));
       gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       cur_item = cur_item->next;
 

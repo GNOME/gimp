@@ -80,7 +80,7 @@ gimp_layer_prop_undo_constructor (GType                  type,
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_LAYER_REPOSITION:
-      layer_prop_undo->position = gimp_image_get_layer_index (image, layer);
+      layer_prop_undo->position = gimp_item_get_index (GIMP_ITEM (layer));
       break;
 
     case GIMP_UNDO_LAYER_MODE:
@@ -118,7 +118,7 @@ gimp_layer_prop_undo_pop (GimpUndo            *undo,
       {
         gint position;
 
-        position = gimp_image_get_layer_index (undo->image, layer);
+        position = gimp_item_get_index (GIMP_ITEM (layer));
         gimp_image_position_layer (undo->image, layer,
                                    layer_prop_undo->position,
                                    FALSE, NULL);

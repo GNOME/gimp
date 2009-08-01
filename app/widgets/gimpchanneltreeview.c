@@ -225,8 +225,7 @@ gimp_channel_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
 
       if (dest_viewable)
         {
-          index = gimp_image_get_channel_index (gimp_item_tree_view_get_image (item_view),
-                                                GIMP_CHANNEL (dest_viewable));
+          index = gimp_item_get_index (GIMP_ITEM (dest_viewable));
 
           if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
             index++;
@@ -264,8 +263,7 @@ gimp_channel_tree_view_drop_component (GimpContainerTreeView   *tree_view,
 
   if (dest_viewable)
     {
-      index = gimp_image_get_channel_index (gimp_item_tree_view_get_image (item_view),
-                                            GIMP_CHANNEL (dest_viewable));
+      index = gimp_item_get_index (GIMP_ITEM (dest_viewable));
 
       if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
         index++;

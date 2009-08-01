@@ -442,13 +442,6 @@ void            gimp_image_active_layer_changed   (GimpImage         *image);
 void            gimp_image_active_channel_changed (GimpImage         *image);
 void            gimp_image_active_vectors_changed (GimpImage         *image);
 
-gint            gimp_image_get_layer_index       (const GimpImage    *image,
-                                                  const GimpLayer    *layer);
-gint            gimp_image_get_channel_index     (const GimpImage    *image,
-                                                  const GimpChannel  *channel);
-gint            gimp_image_get_vectors_index     (const GimpImage    *image,
-                                                  const GimpVectors  *vectors);
-
 GimpLayer     * gimp_image_get_layer_by_index    (const GimpImage    *image,
                                                   gint                index);
 GimpChannel   * gimp_image_get_channel_by_index  (const GimpImage    *image,

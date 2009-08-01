@@ -79,7 +79,7 @@ gimp_vectors_prop_undo_constructor (GType                  type,
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_VECTORS_REPOSITION:
-      vectors_prop_undo->position = gimp_image_get_vectors_index (image, vectors);
+      vectors_prop_undo->position = gimp_item_get_index (GIMP_ITEM (vectors));
       break;
 
     default:
@@ -105,7 +105,7 @@ gimp_vectors_prop_undo_pop (GimpUndo            *undo,
       {
         gint position;
 
-        position = gimp_image_get_vectors_index (undo->image, vectors);
+        position = gimp_item_get_index (GIMP_ITEM (vectors));
         gimp_image_position_vectors (undo->image, vectors,
                                      vectors_prop_undo->position,
                                      FALSE, NULL);

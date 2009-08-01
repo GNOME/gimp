@@ -188,8 +188,7 @@ gimp_layer_undo_pop (GimpUndo            *undo,
       /*  remove layer  */
 
       /*  record the current position  */
-      layer_undo->prev_position = gimp_image_get_layer_index (undo->image,
-                                                              layer);
+      layer_undo->prev_position = gimp_item_get_index (GIMP_ITEM (layer));
 
       gimp_image_remove_layer (undo->image, layer, FALSE,
                                layer_undo->prev_layer);

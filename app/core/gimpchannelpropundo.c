@@ -80,7 +80,7 @@ gimp_channel_prop_undo_constructor (GType                  type,
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_CHANNEL_REPOSITION:
-      channel_prop_undo->position = gimp_image_get_channel_index (image, channel);
+      channel_prop_undo->position = gimp_item_get_index (GIMP_ITEM (channel));
       break;
 
     case GIMP_UNDO_CHANNEL_COLOR:
@@ -110,7 +110,7 @@ gimp_channel_prop_undo_pop (GimpUndo            *undo,
       {
         gint position;
 
-        position = gimp_image_get_channel_index (undo->image, channel);
+        position = gimp_item_get_index (GIMP_ITEM (channel));
         gimp_image_position_channel (undo->image, channel,
                                      channel_prop_undo->position,
                                      FALSE, NULL);

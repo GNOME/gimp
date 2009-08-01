@@ -235,8 +235,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
 
   if (dest_viewable)
     {
-      index = gimp_image_get_vectors_index (image,
-                                            GIMP_VECTORS (dest_viewable));
+      index = gimp_item_get_index (GIMP_ITEM (dest_viewable));
 
       if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
         index++;

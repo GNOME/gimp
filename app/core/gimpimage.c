@@ -2848,39 +2848,6 @@ gimp_image_active_vectors_changed (GimpImage *image)
   g_signal_emit (image, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
 }
 
-gint
-gimp_image_get_layer_index (const GimpImage   *image,
-                            const GimpLayer   *layer)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), -1);
-
-  return gimp_container_get_child_index (image->layers,
-                                         GIMP_OBJECT (layer));
-}
-
-gint
-gimp_image_get_channel_index (const GimpImage   *image,
-                              const GimpChannel *channel)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), -1);
-
-  return gimp_container_get_child_index (image->channels,
-                                         GIMP_OBJECT (channel));
-}
-
-gint
-gimp_image_get_vectors_index (const GimpImage   *image,
-                              const GimpVectors *vectors)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), -1);
-
-  return gimp_container_get_child_index (image->vectors,
-                                         GIMP_OBJECT (vectors));
-}
-
 GimpLayer *
 gimp_image_get_layer_by_index (const GimpImage *image,
                                gint             index)
@@ -3185,7 +3152,7 @@ gimp_image_add_layers (GimpImage   *image,
       GimpLayer *active_layer = gimp_image_get_active_layer (image);
 
       if (active_layer)
-        position = gimp_image_get_layer_index (image, active_layer);
+        position = gimp_item_get_index (GIMP_ITEM (active_layer));
       else
         position = 0;
     }

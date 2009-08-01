@@ -189,8 +189,7 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
       /*  remove vectors  */
 
       /*  record the current position  */
-      vectors_undo->prev_position = gimp_image_get_vectors_index (undo->image,
-                                                                  vectors);
+      vectors_undo->prev_position = gimp_item_get_index (GIMP_ITEM (vectors));
 
       gimp_image_remove_vectors (undo->image, vectors, FALSE,
                                  vectors_undo->prev_vectors);

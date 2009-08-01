@@ -188,8 +188,7 @@ gimp_channel_undo_pop (GimpUndo            *undo,
       /*  remove channel  */
 
       /*  record the current position  */
-      channel_undo->prev_position = gimp_image_get_channel_index (undo->image,
-                                                                  channel);
+      channel_undo->prev_position = gimp_item_get_index (GIMP_ITEM (channel));
 
       gimp_image_remove_channel (undo->image, channel, FALSE,
                                  channel_undo->prev_channel);
