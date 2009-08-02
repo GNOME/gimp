@@ -72,6 +72,7 @@ scripts = \
 	neon-logo.scm			\
 	news-text.scm			\
 	old-photo.scm			\
+	palette-export.scm		\
 	paste-as-brush.scm		\
 	paste-as-pattern.scm		\
 	perspective-shadow.scm		\
