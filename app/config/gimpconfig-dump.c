@@ -478,7 +478,7 @@ dump_describe_param (GParamSpec *param_spec)
     g_warning ("FIXME: Can't tell anything about a %s.",
                g_type_name (param_spec->value_type));
 
-  if(strcmp(blurb, "") == 0)
+  if (strcmp (blurb, "") == 0)
     return g_strdup_printf ("%s", values);
   else
     return g_strdup_printf ("%s  %s", blurb, values);
