@@ -362,15 +362,21 @@ layers_select_cmd_callback (GtkAction *action,
                             gint       value,
                             gpointer   data)
 {
-  GimpImage *image;
-  GimpLayer *layer;
-  GimpLayer *new_layer;
+  GimpImage     *image;
+  GimpLayer     *layer;
+  GimpContainer *container;
+  GimpLayer     *new_layer;
   return_if_no_image (image, data);
 
   layer = gimp_image_get_active_layer (image);
 
+  if (layer)
+    container = gimp_item_get_container (GIMP_ITEM (layer));
+  else
+    container = gimp_image_get_layers (image);
+
   new_layer = (GimpLayer *) action_select_object ((GimpActionSelectType) value,
-                                                  image->layers,
+                                                  container,
                                                   (GimpObject *) layer);
 
   if (new_layer && new_layer != layer)
