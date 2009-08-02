@@ -2883,30 +2883,6 @@ gimp_image_set_active_vectors (GimpImage   *image,
   return image->active_vectors;
 }
 
-void
-gimp_image_active_layer_changed (GimpImage *image)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  g_signal_emit (image, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
-}
-
-void
-gimp_image_active_channel_changed (GimpImage *image)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  g_signal_emit (image, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
-}
-
-void
-gimp_image_active_vectors_changed (GimpImage *image)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  g_signal_emit (image, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
-}
-
 GimpLayer *
 gimp_image_get_layer_by_index (const GimpImage *image,
                                gint             index)
