@@ -189,32 +189,7 @@ gimp_drawable_foreground_extract_siox_done (SioxState *state)
   siox_done (state);
 }
 
-/*
-void                                  
-gimp_drawable_foreground_extract_siox_drb (TileManager       *mask,
-                                           SioxState         *state,
-                                           SioxDRBType        optionsrefinement,
-                                           gfloat             optionsthreshold,
-                                           gint               radius,
-                                           GimpProgress      *progress)
-{
-  gint x = (state->x);
-  gint y = (state->y);
-  gint brush_mode;
-  if (optionsrefinement == SIOX_DRB_ADD)
-    brush_mode = 0;
-  else if(optionsrefinement == SIOX_DRB_SUBTRACT)	
-	brush_mode = 1;
-  siox_drb (state,
-            mask,
-            x,y,
-            radius,
-            brush_mode,
-            optionsthreshold);
-}
 
-
-*/
 
 
 

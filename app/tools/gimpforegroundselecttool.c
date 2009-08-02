@@ -57,7 +57,8 @@
 typedef struct
 {
   gint         width;
-  gboolean     background;	
+  gboolean     background;
+  gboolean     refinement;	
   gint         num_points;
   GimpVector2 *points;
 } FgSelectStroke;
@@ -715,11 +716,14 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   const GimpVector2           *points;
   gint                         n_points;
   gint                         radius;
-	
+  GimpDisplayShell            *shell;	
+  
   drawable  = gimp_image_get_active_drawable (image);
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
   options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (free_sel);
-		
+  shell     = GIMP_DISPLAY_SHELL (display->shell);
+  radius    = (options->stroke_width / shell->scale_y) / 2;
+  		
   if (fg_select->idle_id)
     {
       g_source_remove (fg_select->idle_id);
@@ -776,7 +780,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 	                                         options->sensitivity, 
 	                                         ! options->contiguous,
 	                                         options->drb, 
-	                                         options->stroke_width/2,
+	                                         radius,
 	                                         GIMP_PROGRESS (display));
 
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
@@ -952,7 +956,7 @@ else if (options->drb)
 
     stroke = g_slice_new (FgSelectStroke);
 
-    stroke->background = options->refinement;
+    stroke->refinement = options->refinement;
     stroke->width      = ROUND ((gdouble) options->stroke_width / shell->scale_y);
     stroke->num_points = fg_select->drbsignal->len;
     stroke->points     = (GimpVector2 *) g_array_free (fg_select->drbsignal, FALSE);
@@ -961,9 +965,9 @@ else if (options->drb)
 
     fg_select->drbsignals = g_list_append (fg_select->drbsignals, stroke);
 
-    fg_select->drbrefinement |= (stroke->background?
-                                 SIOX_DRB_ADD :
-                                 SIOX_DRB_SUBTRACT);
+    fg_select->drbrefinement |= (stroke->refinement?
+                                 SIOX_DRB_SUBTRACT :
+                                 SIOX_DRB_ADD);
   }		
 }
 

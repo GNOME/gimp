@@ -1310,12 +1310,6 @@ siox_drb (SioxState    *state,
   
   clustersize = get_clustersize (limits);
   
-  if (optionsrefinement & SIOX_DRB_ADD)
-    g_hash_table_foreach_remove(state->cache,siox_cache_remove_bg,NULL);
-  if (optionsrefinement & SIOX_DRB_SUBTRACT)
-    g_hash_table_foreach_remove(state->cache,siox_cache_remove_fg,NULL);
-  if (optionsrefinement & SIOX_DRB_CHANGE_THRESHOLD)
-    optionsrefinement = SIOX_DRB_RECALCULATE;
  
   pixel_region_init (&srcPR, state->pixels,
                      x - state->offset_x, y - state->offset_y, state->width, state->height,
@@ -1431,105 +1425,113 @@ siox_drb (SioxState    *state,
                  MULTIBLOB_DEFAULT_SIZEFACTOR : MULTIBLOB_ONE_BLOB_ONLY);
 
   dilate_mask (mask, x, y, state->width, state->height);
-     
-/*pixel_region_init (&srcPR, state->pixels,
-                     x - brush_radius, y - brush_radius, brush_radius * 2,
-                     brush_radius * 2, FALSE);
- 
-  pixel_region_init (&mapPR, mask, x - brush_radius, y - brush_radius,
-                     brush_radius * 2, brush_radius * 2, TRUE);
-
-  pixel_region_init (&srcPR, state->pixels,
-                    x , y , brush_radius * 2, brush_radius * 2, FALSE);
-  pixel_region_init (&mapPR, mask, x, y,
-                     brush_radius * 2,
-                     brush_radius * 2, TRUE);
-*/	 
-	
-  pixel_region_init (&srcPR, state->pixels,
-                     x , y , state->width, state->height, FALSE);
-  pixel_region_init (&mapPR, mask, x, y,
-                     brush_radius * 2,
-                     brush_radius * 2, TRUE);
-
-  for (pr = pixel_regions_register (2, &srcPR, &mapPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  
+  if (optionsrefinement & SIOX_DRB_ADD)
+    g_hash_table_foreach_remove(state->cache,siox_cache_remove_bg,NULL);
+  if (optionsrefinement & SIOX_DRB_SUBTRACT)
+    g_hash_table_foreach_remove(state->cache,siox_cache_remove_fg,NULL);
+  if (optionsrefinement & SIOX_DRB_CHANGE_THRESHOLD)
+    optionsrefinement = SIOX_DRB_RECALCULATE;
+  if (optionsrefinement & (SIOX_DRB_ADD |
+                           SIOX_DRB_SUBTRACT)) 
     {
-      const guchar *src = srcPR.data;
-      guchar       *map = mapPR.data;
+      /*pixel_region_init (&srcPR, state->pixels,
+                          x - brush_radius, y - brush_radius, brush_radius * 2,
+                          brush_radius * 2, FALSE);
+      pixel_region_init (&mapPR, mask, x - brush_radius, y - brush_radius,
+                         brush_radius * 2, brush_radius * 2, TRUE);
 
-      for (row = 0; row < srcPR.h; row++)
+      pixel_region_init (&srcPR, state->pixels,
+                         x , y , brush_radius * 2, brush_radius * 2, FALSE);
+      pixel_region_init (&mapPR, mask, x, y,
+                         brush_radius * 2,
+                         brush_radius * 2, TRUE);
+      */	 
+	
+      pixel_region_init (&srcPR, state->pixels,
+                         x , y , state->width, state->height, FALSE);
+      pixel_region_init (&mapPR, mask, x, y,
+                         brush_radius * 2,
+                         brush_radius * 2, TRUE);
+
+      for (pr = pixel_regions_register (2, &srcPR, &mapPR);
+           pr != NULL;
+           pr = pixel_regions_process (pr))
         {
-          const guchar *s = src;
-          guchar       *m = map;
+          const guchar *src = srcPR.data;
+          guchar       *map = mapPR.data;
 
-          for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
+          for (row = 0; row < srcPR.h; row++)
             {
-              gint         key;
-              classresult *cr;
-              gfloat       mindistbg;
-              gfloat       mindistfg;
-              gfloat       alpha;
+              const guchar *s = src;
+              guchar       *m = map;
 
-              key = create_key (s, state->bpp, state->colormap);
-              cr  = g_hash_table_lookup (state->cache, GINT_TO_POINTER (key));
-
-              if (! cr)
-                continue; /* Unknown color -
-                             can only be sure background or sure forground */
-
-              mindistbg = (gfloat) sqrt (cr->bgdist);
-              mindistfg = (gfloat) sqrt (cr->fgdist);
-
-              if (optionsrefinement & SIOX_DRB_ADD)
+              for (col = 0; col < srcPR.w; col++, m++, s += state->bpp)
                 {
-                  if (*m > SIOX_HIGH)
-                    continue;
+                  gint         key;
+                  classresult *cr;
+                  gfloat       mindistbg;
+                  gfloat       mindistfg;
+                  gfloat       alpha;
 
-                  if (mindistfg == 0.0)
+                  key = create_key (s, state->bpp, state->colormap);
+                  cr  = g_hash_table_lookup (state->cache, GINT_TO_POINTER (key));
+
+                  if (! cr)
+                    continue; /* Unknown color -
+                                 can only be sure background or sure forground */
+
+                  mindistbg = (gfloat) sqrt (cr->bgdist);
+                  mindistfg = (gfloat) sqrt (cr->fgdist);
+
+                  if (optionsrefinement & SIOX_DRB_ADD)
                     {
-                      alpha = 1.0; /* avoid div by zero */
+                      if (*m > SIOX_HIGH)
+                        continue;
+    
+                      if (mindistfg == 0.0)
+                        {
+                          alpha = 1.0; /* avoid div by zero */
+                        }
+                      else
+                        {
+                          gdouble d = mindistbg / mindistfg;
+
+                          alpha = MIN (d, 1.0);
+                        }
+                    }
+                  else if (optionsrefinement & SIOX_DRB_SUBTRACT) /*if (brush_mode == SIOX_DRB_SUBTRACT)*/
+                    {
+                      if (*m < SIOX_LOW)
+                        continue;
+
+                      if (mindistbg == 0.0)
+                        {
+                          alpha = 0.0; /* avoid div by zero */
+                        }
+                      else
+                        {
+                          gdouble d = mindistfg / mindistbg;
+ 
+                          alpha = 1.0 - MIN (d, 1.0);
+                        }
+                    }
+   
+                  if (alpha < threshold)
+                    {
+                      /* background with a certain confidence
+                       * to be decided by user.
+                       */
+                      *m = 0;
                     }
                   else
                     {
-                      gdouble d = mindistbg / mindistfg;
-
-                      alpha = MIN (d, 1.0);
+                      *m = (gint) (255.999 * alpha);
                     }
                 }
-              else if (optionsrefinement & SIOX_DRB_SUBTRACT) /*if (brush_mode == SIOX_DRB_SUBTRACT)*/
-                {
-                  if (*m < SIOX_HIGH)
-                    continue;
-
-                  if (mindistbg == 0.0)
-                    {
-                      alpha = 0.0; /* avoid div by zero */
-                    }
-                  else
-                    {
-                      gdouble d = mindistfg / mindistbg;
-
-                      alpha = 1.0 - MIN (d, 1.0);
-                    }
-                }
-
-              if (alpha < threshold)
-                {
-                  /* background with a certain confidence
-                   * to be decided by user.
-                   */
-                  *m = 0;
-                }
-              else
-                {
-                  *m = (gint) (255.999 * alpha);
-                }
-     
-			}
-          src += srcPR.rowstride;
-          map += mapPR.rowstride;
+              src += srcPR.rowstride;
+              map += mapPR.rowstride;
+            }
         }
     }
 }
