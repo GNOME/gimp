@@ -2884,36 +2884,6 @@ gimp_image_set_active_vectors (GimpImage   *image,
 }
 
 GimpLayer *
-gimp_image_get_layer_by_index (const GimpImage *image,
-                               gint             index)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  return (GimpLayer *) gimp_container_get_child_by_index (image->layers,
-                                                          index);
-}
-
-GimpChannel *
-gimp_image_get_channel_by_index (const GimpImage *image,
-                                 gint             index)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  return (GimpChannel *) gimp_container_get_child_by_index (image->channels,
-                                                            index);
-}
-
-GimpVectors *
-gimp_image_get_vectors_by_index (const GimpImage *image,
-                                 gint             index)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  return (GimpVectors *) gimp_container_get_child_by_index (image->vectors,
-                                                            index);
-}
-
-GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *image,
                                 GimpTattoo       tattoo)
 {

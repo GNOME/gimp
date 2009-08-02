@@ -446,13 +446,6 @@ GimpChannel   * gimp_image_unset_active_channel  (GimpImage          *image);
 GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *image,
                                                   GimpVectors        *vectors);
 
-GimpLayer     * gimp_image_get_layer_by_index    (const GimpImage    *image,
-                                                  gint                index);
-GimpChannel   * gimp_image_get_channel_by_index  (const GimpImage    *image,
-                                                  gint                index);
-GimpVectors   * gimp_image_get_vectors_by_index  (const GimpImage    *image,
-                                                  gint                index);
-
 GimpLayer     * gimp_image_get_layer_by_tattoo   (const GimpImage    *image,
                                                   GimpTattoo          tattoo);
 GimpChannel   * gimp_image_get_channel_by_tattoo (const GimpImage    *image,
