@@ -32,7 +32,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "widgets/gimpbrusheditor.h"
-//#include "widgets/gimpdynamicseditor.h"
+#include "widgets/gimpdynamicseditor.h"
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpchanneltreeview.h"
@@ -675,7 +675,7 @@ dialogs_dynamics_editor_get (GimpDialogFactory *factory,
                           GimpContext       *context,
                           gint               view_size)
 {
-  return gimp_brush_editor_new (context,
+  return gimp_dynamics_editor_new (context,
                                 factory->menu_factory);
 }
 

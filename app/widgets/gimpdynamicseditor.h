@@ -28,19 +28,19 @@
 #define GIMP_IS_DYNAMICS_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DYNAMICS_EDITOR))
 #define GIMP_DYNAMICS_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS_EDITOR, GimpDynamicsEditorClass))
 
-
 typedef struct _GimpDynamicsEditorClass GimpDynamicsEditorClass;
+
 
 struct _GimpDynamicsEditor
 {
   GimpDataEditor  parent_instance;
-  //GtkWidget      *options_vbox;
+  GtkWidget      *options_vbox;
 
   //not sure what to add yet.
   
 };
 
-GtkWidget  * gimp_paint_options_gui (GimpToolOptions *tool_options);
+//GtkWidget  * gimp_paint_options_gui (GimpToolOptions *tool_options);
 
 struct _GimpDynamicsEditorClass
 {
