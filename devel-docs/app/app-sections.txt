@@ -5615,6 +5615,22 @@ GIMP_BLOB_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpdynamicseditor</FILE>
+<TITLE>GimpDynamicsEditor</TITLE>
+GimpDynamicsEditor
+gimp_dynamics_editor_new
+<SUBSECTION Standard>
+GimpDynamicsEditorClass
+GIMP_Dynamics_EDITOR
+GIMP_IS_DYNAMICS_EDITOR
+GIMP_TYPE_DYNAMICS_EDITOR
+gimp_dynamics_editor_get_type
+GIMP_DYNAMICS_EDITOR_CLASS
+GIMP_IS_DYNAMICS_EDITOR_CLASS
+GIMP_DYNAMICS_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpbrusheditor</FILE>
 <TITLE>GimpBrushEditor</TITLE>
 GimpBrushEditor

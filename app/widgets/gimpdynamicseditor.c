@@ -28,16 +28,23 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpbrushgenerated.h"
+//#include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 
-#include "gimpbrusheditor.h"
 #include "gimpdocked.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
 
 #include "gimp-intl.h"
 
+#include "gimpdynamicseditor.h"
+//To do: 
+// discard unneeded ones. 
+// needs to be fixed to gimppaintdynamics.h when that works.
+
+/*
+#include "paint/gimppaintoptions.h"
+ 
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"
@@ -57,13 +64,7 @@
 #include "tools/gimpsmudgetool.h"
 #include "tools/gimptooloptions-gui.h"
 
-//To do: 
-// discard unneeded ones. 
-// needs to be fixed to gimppaintdynamics.h when that works.
-#include "paint/gimppaintoptions.h"
-#include "gimpdynamicseditor.h"
-
-
+*/
 
 
 /*  local function prototypes  */
@@ -81,7 +82,7 @@ static void   gimp_dynamics_editor_set_context    (GimpDocked         *docked,
                                                    GimpContext        *context);
 
 /*dynamics options gui*/
-
+/*
 static gboolean    tool_has_opacity_dynamics      (GType       tool_type);
 static gboolean    tool_has_hardness_dynamics     (GType       tool_type);
 static gboolean    tool_has_rate_dynamics         (GType       tool_type);
@@ -111,12 +112,12 @@ static void        random_options_gui    (GimpPaintOptions *paint_options,
                                           GType             tool_type,
                                           GtkTable         *table,
                                           gint              row);
-/**/
+
 static void        fading_options_gui    (GimpPaintOptions *paint_options,
                                           GType             tool_type,
                                           GtkTable         *table,
                                           gint              row);
-/**/
+*/
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsEditor, gimp_dynamics_editor,
@@ -175,9 +176,6 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_widget_show (frame);
 	
 }
-
-
-
 	
 static GObject *
 gimp_dynamics_editor_constructor (GType                  type,
@@ -209,11 +207,20 @@ gimp_dynamics_editor_set_context (GimpDocked  *docked,
 
 
 GtkWidget *
-gimp_dynamics_editor_new (GimpContext     *context,
-                          GimpMenuFactory *menu_factory)
+gimp_dynamics_editor_new (GimpMenuFactory *menu_factory)
+//gimp_dynamics_editor_new (GimpContext     *context,
+//                          GimpMenuFactory *menu_factory)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  //g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
+  return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<DynamicsEditor>",
+                       "ui-path",         "/dynamics-editor-popup",
+                       NULL);
+
+/*
   return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<DynamicsEditor>",
@@ -222,12 +229,13 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "context",         context,
                        "data",            gimp_context_get_brush (context),
                        NULL);
+*/
 }
 
 
 
 /*  private functions  */
-
+/*
 static gboolean
 tool_has_opacity_dynamics (GType tool_type)
 {
@@ -720,7 +728,7 @@ fading_options_gui (GimpPaintOptions *paint_options,
    gtk_widget_show (scalebutton);
 }
 
-
+*/
 /*
 GtkWidget *
 gimp_paint_options_gui (GimpToolOptions *tool_options)
