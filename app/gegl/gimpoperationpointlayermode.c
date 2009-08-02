@@ -45,6 +45,9 @@
 #define G     (GREEN)
 #define B     (BLUE)
 #define A     (ALPHA)
+#define L     0
+#define C     1
+#define H     2
 #define inA   (in[A])
 #define inCa  (in[c])
 #define inC   (in[A]  ? in[c]  / in[A]  : 0.0)
@@ -243,40 +246,46 @@ gimp_operation_point_layer_mode_get_new_color_hsv (GimpLayerModeEffects  blend_m
 }
 
 static void
-gimp_operation_point_layer_mode_get_new_color_hsl (GimpLayerModeEffects  blend_mode,
-                                                   const gfloat         *in,
-                                                   const gfloat         *lay,
-                                                   gfloat               *new)
+gimp_operation_point_layer_mode_get_new_color_lchab (GimpLayerModeEffects  blend_mode,
+                                                     const gfloat         *in,
+                                                     const gfloat         *lay,
+                                                     gfloat               *new)
 {
-  GimpRGB inRGB;
-  GimpHSL inHSL;
-  GimpRGB layRGB;
-  GimpHSL layHSL;
-  GimpRGB newRGB;
-  GimpHSL newHSL;
+  float in_lchab[3];
+  float lay_lchab[3];
+  float new_lchab[3];
+  Babl *ragabaa_to_lchab = babl_fish (babl_format ("RaGaBaA float"),
+                                      babl_format ("CIE LCH(ab) float"));
+  Babl *lchab_to_ragabaa = babl_fish (babl_format ("CIE LCH(ab) float"),
+                                      babl_format ("RaGaBaA float"));
 
-  gimp_rgb_set (&inRGB,  in[R],  in[G],  in[B]);
-  gimp_rgb_set (&layRGB, lay[R], lay[G], lay[B]);
-
-  gimp_rgb_to_hsl (&inRGB,  &inHSL);
-  gimp_rgb_to_hsl (&layRGB, &layHSL);
+  babl_process (ragabaa_to_lchab, (void*)in,  (void*)in_lchab,  1);
+  babl_process (ragabaa_to_lchab, (void*)lay, (void*)lay_lchab, 1);
 
   switch (blend_mode)
     {
     case GIMP_HUE_MODE:
-      gimp_hsl_set (&newHSL, layHSL.h, inHSL.s,  inHSL.l);
+      new_lchab[L] = in_lchab[L];
+      new_lchab[C] = in_lchab[C];
+      new_lchab[H] = lay_lchab[H];
       break;
 
     case GIMP_SATURATION_MODE:
-      gimp_hsl_set (&newHSL, inHSL.h,  layHSL.s, inHSL.l);
+      new_lchab[L] = in_lchab[L];
+      new_lchab[C] = lay_lchab[C];
+      new_lchab[H] = in_lchab[H];
       break;
 
     case GIMP_COLOR_MODE:
-      gimp_hsl_set (&newHSL, layHSL.h, layHSL.s, inHSL.l);
+      new_lchab[L] = in_lchab[L];
+      new_lchab[C] = lay_lchab[C];
+      new_lchab[H] = lay_lchab[H];
       break;
 
-    case GIMP_VALUE_MODE:
-      gimp_hsl_set (&newHSL, inHSL.h,  inHSL.s,  layHSL.l);
+    case GIMP_VALUE_MODE: /* GIMP_LIGHTNESS_MODE */
+      new_lchab[L] = lay_lchab[L];
+      new_lchab[C] = in_lchab[C];
+      new_lchab[H] = in_lchab[H];
       break;
 
     default:
@@ -284,11 +293,7 @@ gimp_operation_point_layer_mode_get_new_color_hsl (GimpLayerModeEffects  blend_m
       break;
     }
 
-  gimp_hsl_to_rgb (&newHSL, &newRGB);
-
-  new[R] = newRGB.r;
-  new[G] = newRGB.g;
-  new[B] = newRGB.b;
+  babl_process (lchab_to_ragabaa, new_lchab, new, 1);
 }
 
 static void
@@ -601,10 +606,14 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
            *
            * f(Sc, Dc) = New color
            */
-          gimp_operation_point_layer_mode_get_new_color_hsl (blend_mode,
-                                                             in,
-                                                             lay,
-                                                             new);
+
+          /* FIXME: Doing this call for each pixel is very slow, we
+           * should make conversions on larger chunks of data
+           */
+          gimp_operation_point_layer_mode_get_new_color_lchab (blend_mode,
+                                                               in,
+                                                               lay,
+                                                               new);
           EACH_CHANNEL (
           outCa = newCa * layA * inA + layCa * (1 - inA) + inCa * (1 - layA));
           break;
