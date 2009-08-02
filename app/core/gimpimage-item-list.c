@@ -162,6 +162,7 @@ gimp_image_item_list_get_list (const GimpImage  *image,
                                GimpItemTypeMask  type,
                                GimpItemSet       set)
 {
+  GList *all_items;
   GList *list;
   GList *return_list = NULL;
 
@@ -170,41 +171,47 @@ gimp_image_item_list_get_list (const GimpImage  *image,
 
   if (type & GIMP_ITEM_TYPE_LAYERS)
     {
-      for (list = gimp_image_get_layer_iter (image);
-           list;
-           list = g_list_next (list))
+      all_items = gimp_image_get_layer_list (image);
+
+      for (list = all_items; list; list = g_list_next (list))
         {
           GimpItem *item = list->data;
 
           if (item != exclude && gimp_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
+
+      g_list_free (all_items);
     }
 
   if (type & GIMP_ITEM_TYPE_CHANNELS)
     {
-      for (list = gimp_image_get_channel_iter (image);
-           list;
-           list = g_list_next (list))
+      all_items = gimp_image_get_channel_list (image);
+
+      for (list = all_items; list; list = g_list_next (list))
         {
           GimpItem *item = list->data;
 
           if (item != exclude && gimp_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
+
+      g_list_free (all_items);
     }
 
   if (type & GIMP_ITEM_TYPE_VECTORS)
     {
-      for (list = gimp_image_get_vectors_iter (image);
-           list;
-           list = g_list_next (list))
+      all_items = gimp_image_get_vectors_list (image);
+
+      for (list = all_items; list; list = g_list_next (list))
         {
           GimpItem *item = list->data;
 
           if (item != exclude && gimp_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
+
+      g_list_free (all_items);
     }
 
   return g_list_reverse (return_list);

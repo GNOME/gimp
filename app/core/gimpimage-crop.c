@@ -118,8 +118,15 @@ gimp_image_crop (GimpImage   *image,
     }
   else
     {
+      GList    *all_layers;
+      GList    *all_channels;
+      GList    *all_vectors;
       GimpItem *item;
       GList    *list;
+
+      all_layers   = gimp_image_get_layer_list (image);
+      all_channels = gimp_image_get_channel_list (image);
+      all_vectors  = gimp_image_get_vectors_list (image);
 
       g_object_freeze_notify (G_OBJECT (image));
 
@@ -145,9 +152,7 @@ gimp_image_crop (GimpImage   *image,
                     NULL);
 
       /*  Resize all channels  */
-      for (list = gimp_image_get_channel_iter (image);
-           list;
-           list = g_list_next (list))
+      for (list = all_channels; list; list = g_list_next (list))
         {
           item = (GimpItem *) list->data;
 
@@ -155,9 +160,7 @@ gimp_image_crop (GimpImage   *image,
         }
 
       /*  Resize all vectors  */
-      for (list = gimp_image_get_vectors_iter (image);
-           list;
-           list = g_list_next (list))
+      for (list = all_vectors; list; list = g_list_next (list))
         {
           item = (GimpItem *) list->data;
 
@@ -169,13 +172,9 @@ gimp_image_crop (GimpImage   *image,
                         width, height, -x1, -y1);
 
       /*  crop all layers  */
-      list = gimp_image_get_layer_iter (image);
-
-      while (list)
+      for (list = all_layers; list; list = g_list_next (list))
         {
           item = (GimpItem *) list->data;
-
-          list = g_list_next (list);
 
           gimp_item_translate (item, -x1, -y1, TRUE);
 
@@ -281,6 +280,10 @@ gimp_image_crop (GimpImage   *image,
                                         previous_height);
 
       g_object_thaw_notify (G_OBJECT (image));
+
+      g_list_free (all_layers);
+      g_list_free (all_channels);
+      g_list_free (all_vectors);
     }
 
   gimp_unset_busy (image->gimp);

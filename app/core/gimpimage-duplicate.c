@@ -202,6 +202,7 @@ gimp_image_duplicate_layers (GimpImage     *image,
 {
   GimpLayer *active_layer = NULL;
   GimpLayer *floating_selection;
+  GList     *all_layers;
   GList     *list;
   gint       count;
 
@@ -209,11 +210,11 @@ gimp_image_duplicate_layers (GimpImage     *image,
   floating_selection = gimp_image_get_floating_selection (image);
 
   if (floating_selection)
-    {
-      *floating_sel_drawable = gimp_layer_get_floating_sel_drawable (floating_selection);
-    }
+    *floating_sel_drawable = gimp_layer_get_floating_sel_drawable (floating_selection);
 
-  for (list = gimp_image_get_layer_iter (image), count = 0;
+  all_layers = gimp_image_get_layer_list (image);
+
+  for (list = all_layers, count = 0;
        list;
        list = g_list_next (list))
     {
@@ -248,6 +249,8 @@ gimp_image_duplicate_layers (GimpImage     *image,
         gimp_image_add_layer (new_image, new_layer, count++, FALSE);
     }
 
+  g_list_free (all_layers);
+
   return active_layer;
 }
 
@@ -258,10 +261,13 @@ gimp_image_duplicate_channels (GimpImage     *image,
                                GimpDrawable **new_floating_sel_drawable)
 {
   GimpChannel *active_channel = NULL;
+  GList       *all_channels;
   GList       *list;
   gint         count;
 
-  for (list = gimp_image_get_channel_iter (image), count = 0;
+  all_channels = gimp_image_get_channel_list (image);
+
+  for (list = all_channels, count = 0;
        list;
        list = g_list_next (list))
     {
@@ -277,13 +283,15 @@ gimp_image_duplicate_channels (GimpImage     *image,
                             gimp_object_get_name (GIMP_OBJECT (channel)));
 
       if (gimp_image_get_active_channel (image) == channel)
-        active_channel = (new_channel);
+        active_channel = new_channel;
 
       if (floating_sel_drawable == GIMP_DRAWABLE (channel))
         *new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
       gimp_image_add_channel (new_image, new_channel, count++, FALSE);
     }
+
+  g_list_free (all_channels);
 
   return active_channel;
 }
@@ -293,10 +301,13 @@ gimp_image_duplicate_vectors (GimpImage *image,
                               GimpImage *new_image)
 {
   GimpVectors *active_vectors = NULL;
+  GList       *all_vectors;
   GList       *list;
   gint         count;
 
-  for (list = gimp_image_get_vectors_iter (image), count = 0;
+  all_vectors = gimp_image_get_vectors_list (image);
+
+  for (list = all_vectors, count = 0;
        list;
        list = g_list_next (list))
     {
@@ -316,6 +327,8 @@ gimp_image_duplicate_vectors (GimpImage *image,
 
       gimp_image_add_vectors (new_image, new_vectors, count++, FALSE);
     }
+
+  g_list_free (all_vectors);
 
   return active_vectors;
 }
@@ -369,7 +382,9 @@ gimp_image_duplicate_guides (GimpImage *image,
 {
   GList *list;
 
-  for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
+  for (list = gimp_image_get_guides (image);
+       list;
+       list = g_list_next (list))
     {
       GimpGuide *guide    = list->data;
       gint       position = gimp_guide_get_position (guide);
