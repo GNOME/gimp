@@ -197,55 +197,6 @@ gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
 }
 
 static void
-gimp_operation_point_layer_mode_get_new_color_hsv (GimpLayerModeEffects  blend_mode,
-                                                   const gfloat         *in,
-                                                   const gfloat         *lay,
-                                                   gfloat               *new)
-{
-  GimpRGB inRGB;
-  GimpHSV inHSV;
-  GimpRGB layRGB;
-  GimpHSV layHSV;
-  GimpRGB newRGB;
-  GimpHSV newHSV;
-
-  gimp_rgb_set (&inRGB,  in[R],  in[G],  in[B]);
-  gimp_rgb_set (&layRGB, lay[R], lay[G], lay[B]);
-
-  gimp_rgb_to_hsv (&inRGB,  &inHSV);
-  gimp_rgb_to_hsv (&layRGB, &layHSV);
-
-  switch (blend_mode)
-    {
-    case GIMP_HUE_MODE:
-      gimp_hsv_set (&newHSV, layHSV.h, inHSV.s,  inHSV.v);
-      break;
-
-    case GIMP_SATURATION_MODE:
-      gimp_hsv_set (&newHSV, inHSV.h,  layHSV.s, inHSV.v);
-      break;
-
-    case GIMP_COLOR_MODE:
-      gimp_hsv_set (&newHSV, layHSV.h, layHSV.s, inHSV.v);
-      break;
-
-    case GIMP_VALUE_MODE:
-      gimp_hsv_set (&newHSV, inHSV.h,  inHSV.s,  layHSV.v);
-      break;
-
-    default:
-      g_assert_not_reached ();
-      break;
-    }
-
-  gimp_hsv_to_rgb (&newHSV, &newRGB);
-
-  new[R] = newRGB.r;
-  new[G] = newRGB.g;
-  new[B] = newRGB.b;
-}
-
-static void
 gimp_operation_point_layer_mode_get_new_color_lchab (GimpLayerModeEffects  blend_mode,
                                                      const gfloat         *in,
                                                      const gfloat         *lay,
@@ -588,20 +539,8 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 
         case GIMP_HUE_MODE:
         case GIMP_SATURATION_MODE:
-        case GIMP_VALUE_MODE:
-          /* Custom SVG 1.2:
-           *
-           * f(Sc, Dc) = New color depending on mode
-           */
-          gimp_operation_point_layer_mode_get_new_color_hsv (blend_mode,
-                                                             in,
-                                                             lay,
-                                                             new);
-          EACH_CHANNEL (
-          outCa = newCa * layA * inA + layCa * (1 - inA) + inCa * (1 - layA));
-          break;
-
         case GIMP_COLOR_MODE:
+        case GIMP_VALUE_MODE: /* GIMP_LIGHTNESS_MODE */
           /* Custom SVG 1.2:
            *
            * f(Sc, Dc) = New color
