@@ -1615,7 +1615,7 @@ gimp_image_has_alpha (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), TRUE);
 
-  layer = gimp_image_get_layer_by_index (image, 0);
+  layer = GIMP_LAYER (gimp_container_get_first_child (image->layers));
 
   return ((gimp_image_get_n_layers (image) > 1) ||
           (layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))));
