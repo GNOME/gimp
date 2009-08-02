@@ -421,6 +421,10 @@ GimpContainer * gimp_image_get_layers            (const GimpImage    *image);
 GimpContainer * gimp_image_get_channels          (const GimpImage    *image);
 GimpContainer * gimp_image_get_vectors           (const GimpImage    *image);
 
+gint            gimp_image_get_n_layers          (const GimpImage    *image);
+gint            gimp_image_get_n_channels        (const GimpImage    *image);
+gint            gimp_image_get_n_vectors         (const GimpImage    *image);
+
 GList         * gimp_image_get_layer_iter        (const GimpImage    *image);
 GList         * gimp_image_get_channel_iter      (const GimpImage    *image);
 GList         * gimp_image_get_vectors_iter      (const GimpImage    *image);

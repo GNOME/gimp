@@ -2649,6 +2649,30 @@ gimp_image_get_vectors (const GimpImage *image)
   return image->vectors;
 }
 
+gint
+gimp_image_get_n_layers (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  return gimp_item_stack_get_n_items (GIMP_ITEM_STACK (image->layers));
+}
+
+gint
+gimp_image_get_n_channels (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  return gimp_item_stack_get_n_items (GIMP_ITEM_STACK (image->channels));
+}
+
+gint
+gimp_image_get_n_vectors (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  return gimp_item_stack_get_n_items (GIMP_ITEM_STACK (image->vectors));
+}
+
 GList *
 gimp_image_get_layer_iter (const GimpImage *image)
 {
