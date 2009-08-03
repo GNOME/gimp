@@ -212,6 +212,8 @@ gimp_container_tree_view_constructor (GType                  type,
   tree_view->main_column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, tree_view->main_column, 0);
 
+  gtk_tree_view_set_expander_column (tree_view->view, tree_view->main_column);
+
   tree_view->renderer_cell = gimp_cell_renderer_viewable_new ();
   gtk_tree_view_column_pack_start (tree_view->main_column,
                                    tree_view->renderer_cell,
