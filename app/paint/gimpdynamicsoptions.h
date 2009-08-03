@@ -23,6 +23,7 @@
 #include "gimppaintoptions.h"
 #include "core/gimpdata.h"
 
+#define GIMP_DYNAMICS_DRIVERS 6
 
 typedef struct _GimpDynamicOptions  GimpDynamicOptions;
 
@@ -39,6 +40,25 @@ struct _GimpDynamicOptions
   gboolean  angle;
   gdouble   prescale;
 };
+
+struct _GimpDynamicsOutputOptions
+{
+  gboolean  pressure;
+  gboolean  velocity;
+  gboolean  direction;
+  gboolean  tilt;
+  gboolean  random;
+  gboolean  fade;
+
+  GimpCurve*  pressure_curve;
+  GimpCurve*  velocity_curve;
+  GimpCurve*  direction_curve;
+  GimpCurve*  tilt_curve;
+  GimpCurve*  random_curve;
+  GimpCurve*  fade_curve;
+
+};
+
 
 #define GIMP_PAINT_PRESSURE_SCALE 1.5
 #define GIMP_PAINT_VELOCITY_SCALE 1.0
