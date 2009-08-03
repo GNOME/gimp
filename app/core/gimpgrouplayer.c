@@ -143,6 +143,9 @@ gimp_group_layer_duplicate (GimpItem *item,
 
           new_child = gimp_item_duplicate (child, G_TYPE_FROM_INSTANCE (child));
 
+          gimp_viewable_set_parent (GIMP_VIEWABLE (new_child),
+                                    GIMP_VIEWABLE (new_layer));
+
           gimp_container_insert (new_layer->children,
                                  GIMP_OBJECT (new_child),
                                  position);
@@ -165,7 +168,7 @@ gimp_group_layer_new (GimpImage *image)
                            image,
                            0, 0, 1, 1,
                            gimp_image_base_type_with_alpha (image),
-                           NULL);
+                           _("Group Layer"));
 
   return GIMP_LAYER (layer);
 }
