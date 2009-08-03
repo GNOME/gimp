@@ -207,17 +207,19 @@ gimp_dynamics_editor_set_context (GimpDocked  *docked,
 
 
 GtkWidget *
-gimp_dynamics_editor_new (GimpMenuFactory *menu_factory)
-//gimp_dynamics_editor_new (GimpContext     *context,
-//                          GimpMenuFactory *menu_factory)
+gimp_dynamics_editor_new (GimpContext     *context,
+                          GimpMenuFactory *menu_factory)
 {
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
-  //g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  //g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<DynamicsEditor>",
                        "ui-path",         "/dynamics-editor-popup",
+                       "data-factory",    context->gimp->brush_factory,
+                       "context",         context,
+                       "data",            gimp_context_get_brush (context),
                        NULL);
 
 /*
