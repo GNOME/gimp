@@ -344,8 +344,8 @@ gimp_channel_tree_view_item_new (GimpImage *image)
                                   gimp_image_get_height (image),
                                   _("Empty Channel"), &color);
 
-  /* FIXME tree */
-  gimp_image_add_channel (image, new_channel, NULL, -1, TRUE);
+  gimp_image_add_channel (image, new_channel,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 

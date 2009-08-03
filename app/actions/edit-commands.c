@@ -348,8 +348,8 @@ edit_paste_as_new_layer_cmd_callback (GtkAction *action,
                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       g_object_unref (buffer);
 
-      /* FIXME tree */
-      gimp_image_add_layer (image, layer, NULL, -1, TRUE);
+      gimp_image_add_layer (image, layer,
+                            GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
       gimp_image_flush (image);
     }
@@ -496,9 +496,10 @@ edit_paste (GimpDisplay *display,
 
   if (svg)
     {
-      /* FIXME tree */
       if (gimp_vectors_import_buffer (display->image, svg, svg_size,
-                                      TRUE, TRUE, NULL, -1, NULL, NULL))
+                                      TRUE, TRUE,
+                                      GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                      NULL, NULL))
         {
           gimp_image_flush (display->image);
         }

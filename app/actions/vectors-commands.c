@@ -187,8 +187,8 @@ vectors_new_last_vals_cmd_callback (GtkAction *action,
   new_vectors = gimp_vectors_new (image,
                                   vectors_name ? vectors_name : _("New Path"));
 
-  /* FIXME tree */
-  gimp_image_add_vectors (image, new_vectors, NULL, -1, TRUE);
+  gimp_image_add_vectors (image, new_vectors,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_flush (image);
 }
@@ -252,8 +252,10 @@ vectors_duplicate_cmd_callback (GtkAction *action,
 
   new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
                                                    G_TYPE_FROM_INSTANCE (vectors)));
-  /* FIXME tree */
-  gimp_image_add_vectors (image, new_vectors, NULL, -1, TRUE);
+
+  gimp_image_add_vectors (image, new_vectors,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+
   gimp_image_flush (image);
 }
 
@@ -478,9 +480,10 @@ vectors_paste_cmd_callback (GtkAction *action,
     {
       GError *error = NULL;
 
-      /* FIXME tree */
       if (! gimp_vectors_import_buffer (image, svg, svg_size,
-                                        TRUE, TRUE, NULL, -1, NULL, &error))
+                                        TRUE, TRUE,
+                                        GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                        NULL, &error))
         {
           gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
                         "%s", error->message);
@@ -625,8 +628,8 @@ vectors_new_vectors_response (GtkWidget            *widget,
 
       new_vectors = gimp_vectors_new (options->image, vectors_name);
 
-      /* FIXME tree */
-      gimp_image_add_vectors (options->image, new_vectors, NULL, -1, TRUE);
+      gimp_image_add_vectors (options->image, new_vectors,
+                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
       gimp_image_flush (options->image);
     }
@@ -672,10 +675,10 @@ vectors_import_response (GtkWidget           *widget,
 
       filename = gtk_file_chooser_get_filename (chooser);
 
-      /* FIXME tree */
       if (gimp_vectors_import_file (dialog->image, filename,
                                     vectors_import_merge, vectors_import_scale,
-                                    NULL, -1, NULL, &error))
+                                    GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                    NULL, &error))
         {
           gimp_image_flush (dialog->image);
         }

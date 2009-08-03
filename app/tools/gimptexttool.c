@@ -2173,8 +2173,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
   gimp_item_set_offset (GIMP_ITEM (layer), x1, y1);
 
-  /* FIXME tree */
-  gimp_image_add_layer (image, layer, NULL, -1, TRUE);
+  gimp_image_add_layer (image, layer,
+                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   if (text_tool->text_box_fixed)
     {
@@ -2791,8 +2791,8 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
       gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
     }
 
-  /* FIXME tree */
-  gimp_image_add_vectors (text_tool->image, vectors, NULL, -1, TRUE);
+  gimp_image_add_vectors (text_tool->image, vectors,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_flush (text_tool->image);
 }
@@ -2819,8 +2819,8 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
 
   gimp_vectors_warp_vectors (vectors0, vectors, 0.5 * box_height);
 
-  /* FIXME tree */
-  gimp_image_add_vectors (text_tool->image, vectors, NULL, -1, TRUE);
+  gimp_image_add_vectors (text_tool->image, vectors,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
 
   gimp_image_flush (text_tool->image);

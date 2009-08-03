@@ -863,8 +863,8 @@ gimp_layer_tree_view_item_new (GimpImage *image)
                               gimp_image_base_type_with_alpha (image),
                               _("Empty Layer"), 1.0, GIMP_NORMAL_MODE);
 
-  /* FIXME tree */
-  gimp_image_add_layer (image, new_layer, NULL, -1, TRUE);
+  gimp_image_add_layer (image, new_layer,
+                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 
