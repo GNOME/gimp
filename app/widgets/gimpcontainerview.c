@@ -210,6 +210,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
   view_iface->set_view_size = NULL;
 
   view_iface->insert_data_free = NULL;
+  view_iface->model_is_tree    = FALSE;
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_object ("container",
@@ -958,8 +959,12 @@ static void
 gimp_container_view_remove_container (GimpContainerView *view,
                                       GimpContainer     *container)
 {
-  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-  GQuark                    name_changed_handler_id;
+  GimpContainerViewInterface *view_iface;
+  GimpContainerViewPrivate   *private;
+  GQuark                      name_changed_handler_id;
+
+  view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
+  private    = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
   name_changed_handler_id =
     GPOINTER_TO_UINT (g_hash_table_lookup (private->name_changed_handler_hash,
@@ -979,7 +984,7 @@ gimp_container_view_remove_container (GimpContainerView *view,
                                         gimp_container_view_reorder,
                                         view);
 
-  if (FALSE /* private->model_is_list */ && container == private->container)
+  if (! view_iface->model_is_tree && container == private->container)
     {
       gimp_container_view_clear_items (view);
     }
