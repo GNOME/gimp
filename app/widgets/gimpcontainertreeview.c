@@ -199,7 +199,7 @@ gimp_container_tree_view_constructor (GType                  type,
                                   "enable-search",   FALSE,
                                   "headers-visible", FALSE,
                                   "has-tooltip",     TRUE,
-                                  "show-expanders",  FALSE,
+                                  "show-expanders",  GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->model_is_tree,
                                   NULL);
   g_object_unref (tree);
 
