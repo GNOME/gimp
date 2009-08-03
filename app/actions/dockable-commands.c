@@ -191,6 +191,9 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
                   GimpDocked *new;
                   gboolean    show;
 
+                  gimp_dockable_set_locked (GIMP_DOCKABLE (new_dockable),
+                                            gimp_dockable_is_locked (dockable));
+
                   old = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
                   new = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (new_dockable)));
 
