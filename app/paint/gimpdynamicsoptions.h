@@ -60,8 +60,7 @@ struct _GimpDynamicsOptions
   GimpData                  parent_instance;
 
   GimpPaintInfo            *dynamics_info;
-	
-  gboolean                  dynamics_expanded;
+
   GimpDynamicOptions       *pressure_options;
   GimpDynamicOptions       *velocity_options;
   GimpDynamicOptions       *direction_options;
@@ -89,8 +88,8 @@ gdouble gimp_dynamics_options_get_dynamic_size   (GimpDynamicsOptions  *dynamics
                                                   const GimpCoords       *coords,
                                                   gboolean                use_dynamics,
                                                   gdouble                 pixel_dist);
- 
-gdouble gimp_dynamics_options_get_dynamic_aspect_ratio 
+
+gdouble gimp_dynamics_options_get_dynamic_aspect_ratio
                                                (GimpDynamicsOptions    *dynamics_options,
                                                 GimpPaintOptions       *paint_options,
                                                 const GimpCoords       *coords,

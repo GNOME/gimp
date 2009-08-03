@@ -30,7 +30,6 @@
 #include "core/gimpgradient.h"
 #include "core/gimppaintinfo.h"
 
-//#include "gimppaintoptions.h"
 #include "gimpdynamicsoptions.h"
 
 #include "gimp-intl.h"
@@ -105,7 +104,7 @@ enum
   PROP_0,
 
   PROP_DYNAMICS_INFO,
-	
+
   PROP_DYNAMICS_EXPANDED,
 
   PROP_PRESSURE_OPACITY,
@@ -218,18 +217,14 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
   object_class->get_property = gimp_dynamics_options_get_property;
   object_class->notify       = gimp_dynamics_options_notify;
 
-	
+
   g_object_class_install_property (object_class, PROP_DYNAMICS_INFO,
                                    g_param_spec_object ("dynamics-info",
                                                         NULL, NULL,
                                                         GIMP_TYPE_PAINT_INFO,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-	
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DYNAMICS_EXPANDED,
-                                    "dynamics-expanded", NULL,
-                                    DEFAULT_DYNAMICS_EXPANDED,
-                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ASPECT_RATIO,
                                     "random-aspect-ratio", NULL,
                                     DEFAULT_RANDOM_ASPECT_RATIO,
@@ -457,7 +452,7 @@ static void
 gimp_dynamics_options_init (GimpDynamicsOptions *options)
 {
   options->application_mode_save = DEFAULT_APPLICATION_MODE;
-	
+
   options->pressure_options  = g_slice_new0 (GimpDynamicOptions);
   options->velocity_options  = g_slice_new0 (GimpDynamicOptions);
   options->direction_options = g_slice_new0 (GimpDynamicOptions);
@@ -475,7 +470,7 @@ gimp_dynamics_options_finalize (GObject *object)
 
   if (options->dynamics_info)
     g_object_unref (options->dynamics_info);
-    
+
   g_slice_free (GimpDynamicOptions,  options->pressure_options);
   g_slice_free (GimpDynamicOptions,  options->velocity_options);
   g_slice_free (GimpDynamicOptions,  options->direction_options);
@@ -488,9 +483,9 @@ gimp_dynamics_options_finalize (GObject *object)
 
 static void
 gimp_dynamics_options_set_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
   GimpDynamicsOptions *options           = GIMP_DYNAMICS_OPTIONS (object);
   GimpDynamicOptions  *pressure_options  = options->pressure_options;
@@ -505,10 +500,6 @@ gimp_dynamics_options_set_property (GObject      *object,
 
     case PROP_DYNAMICS_INFO:
       g_value_set_object (value, options->dynamics_info);
-      break;
-
-    case PROP_DYNAMICS_EXPANDED:
-      options->dynamics_expanded = g_value_get_boolean (value);
       break;
 
     case PROP_PRESSURE_OPACITY:
@@ -753,10 +744,6 @@ gimp_dynamics_options_get_property (GObject    *object,
     {
     case PROP_DYNAMICS_INFO:
       g_value_set_object (value, options->dynamics_info);
-      break;
-
-    case PROP_DYNAMICS_EXPANDED:
-      g_value_set_boolean (value, options->dynamics_expanded);
       break;
 
     case PROP_PRESSURE_OPACITY:
@@ -1030,8 +1017,8 @@ gimp_dynamics_options_new (GimpPaintInfo *dynamics_info)
 /* Calculates dynamics mix to be used for same parameter
  * (velocity/pressure/direction/tilt/random) mix Needed in may places and tools.
  *
- * Added one parameter: fading, the 6th driving factor. 
- * (velocity/pressure/direction/tilt/random/fading) 
+ * Added one parameter: fading, the 6th driving factor.
+ * (velocity/pressure/direction/tilt/random/fading)
  */
 static gdouble
 gimp_dynamics_options_get_dynamics_mix (gdouble mix1,
@@ -1132,7 +1119,7 @@ gimp_dynamics_options_get_dynamic_opacity (GimpDynamicsOptions *dynamics_options
 
       if (dynamics_options->velocity_options->opacity)
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
-		
+
       if (dynamics_options->random_options->opacity)
         random = g_random_double_range (0.0, 1.0);
 
@@ -1155,7 +1142,7 @@ gimp_dynamics_options_get_dynamic_opacity (GimpDynamicsOptions *dynamics_options
           printf("pixel_dist: %f", pixel_dist);
 */
 
-	  opacity = gimp_dynamics_options_get_dynamics_mix (pressure,
+   opacity = gimp_dynamics_options_get_dynamics_mix (pressure,
                                                      dynamics_options->pressure_options->prescale,
                                                      velocity,
                                                      dynamics_options->velocity_options->prescale,
@@ -1174,10 +1161,10 @@ gimp_dynamics_options_get_dynamic_opacity (GimpDynamicsOptions *dynamics_options
 
 gdouble
 gimp_dynamics_options_get_dynamic_size (GimpDynamicsOptions *dynamics_options,
-                                     GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords,
-                                     gboolean          use_dynamics,
-                                     gdouble           pixel_dist)
+                                        GimpPaintOptions *paint_options,
+                                        const GimpCoords *coords,
+                                        gboolean          use_dynamics,
+                                        gdouble           pixel_dist)
 {
   gdouble scale = 1.0;
 
@@ -1189,7 +1176,7 @@ gimp_dynamics_options_get_dynamic_size (GimpDynamicsOptions *dynamics_options,
       gdouble random    = -1.0;
       gdouble tilt      = -1.0;
       gdouble fading    = -1.0;
-      
+
       if (dynamics_options->pressure_options->size)
         {
           pressure = coords->pressure;
@@ -1230,7 +1217,7 @@ gimp_dynamics_options_get_dynamic_size (GimpDynamicsOptions *dynamics_options,
          direction = coords->direction + 0.5; /* mixer does not mix negative angles right so we shift */
 
 
-      if (dynamics_options->fading_options->size || 
+      if (dynamics_options->fading_options->size ||
           dynamics_options->fading_options->inverse_size)
         {
           gdouble p;
@@ -1239,7 +1226,7 @@ gimp_dynamics_options_get_dynamic_size (GimpDynamicsOptions *dynamics_options,
           fade_out = DEFAULT_FADE_LENGTH;
           p = pixel_dist / fade_out;
           fading = exp (- p * p * 5.541);
-        }	
+        }
 
       scale = gimp_dynamics_options_get_dynamics_mix (pressure,
                                                    dynamics_options->pressure_options->prescale,
@@ -1266,7 +1253,7 @@ gimp_dynamics_options_get_dynamic_size (GimpDynamicsOptions *dynamics_options,
 }
 
 gdouble
-gimp_dynamics_options_get_dynamic_aspect_ratio 
+gimp_dynamics_options_get_dynamic_aspect_ratio
                                          (GimpDynamicsOptions *dynamics_options,
                                           GimpPaintOptions    *paint_options,
                                           const GimpCoords    *coords,
@@ -1465,7 +1452,7 @@ gimp_dynamics_options_get_dynamic_color (GimpDynamicsOptions *dynamics_options,
           p = pixel_dist / fade_out;
           fading = exp (- p * p * 5.541);
         }
-		
+
       color = gimp_dynamics_options_get_dynamics_mix (pressure,
                                                    dynamics_options->pressure_options->prescale,
                                                    velocity,
