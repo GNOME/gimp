@@ -2946,6 +2946,65 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
                                                          name));
 }
 
+static GimpItem *
+gimp_image_get_insert_pos (GimpItem       *parent,
+                           gint           *position,
+                           GimpItem       *active_item,
+                           GimpContainer  *toplevel_container,
+                           GimpContainer **parent_container)
+{
+  /*  if we want to insert in the active item's parent container  */
+  if (parent == GIMP_IMAGE_ACTIVE_PARENT)
+    {
+      if (active_item)
+        {
+          /*  if the active item is a branch, add to the top of that
+           *  branch; add to the active item's parent container
+           *  otherwise
+           */
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (active_item)))
+            {
+              parent    = active_item;
+              *position = 0;
+            }
+          else
+            {
+              parent = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (active_item)));
+            }
+        }
+      else
+        {
+          /*  use the toplevel container if there is no active item  */
+          parent = NULL;
+        }
+    }
+
+  if (parent)
+    *parent_container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+  else
+    *parent_container = toplevel_container;
+
+  /*  if we want to add on top of the active item  */
+  if (*position == -1)
+    {
+      if (active_item)
+        *position = gimp_container_get_child_index (*parent_container,
+                                                    GIMP_OBJECT (active_item));
+
+      /*  if the active item is not in the specified parent container,
+       *  fall back to index 0
+       */
+      if (*position == -1)
+        *position = 0;
+    }
+
+  /*  don't add at a non-existing index  */
+  *position = CLAMP (*position,
+                     0, gimp_container_get_n_children (*parent_container));
+
+  return parent;
+}
+
 gboolean
 gimp_image_add_layer (GimpImage *image,
                       GimpLayer *layer,
@@ -2963,38 +3022,26 @@ gimp_image_add_layer (GimpImage *image,
   g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (layer)), FALSE);
   g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) == image,
                         FALSE);
-  g_return_val_if_fail (parent == NULL || GIMP_IS_LAYER (parent), FALSE);
   g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        GIMP_IS_LAYER (parent), FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
   g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_get_image (GIMP_ITEM (parent)) == image,
                         FALSE);
 
-  if (parent)
-    container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
-  else
-    container = image->layers;
-
-  floating_sel = gimp_image_get_floating_selection (image);
-
   active_layer = gimp_image_get_active_layer (image);
 
-  old_has_alpha = gimp_image_has_alpha (image);
+  parent = GIMP_LAYER (gimp_image_get_insert_pos ((GimpItem *) parent,
+                                                  &position,
+                                                  GIMP_ITEM (active_layer),
+                                                  image->layers,
+                                                  &container));
 
-  if (push_undo)
-    gimp_image_undo_push_layer_add (image, _("Add Layer"),
-                                    layer, active_layer);
-
-  /*  add the layer to the list at the specified position  */
-  if (position == -1)
-    {
-      if (active_layer)
-        position = gimp_container_get_child_index (container,
-                                                   GIMP_OBJECT (active_layer));
-
-      if (position == -1)
-        position = 0;
-    }
+  floating_sel = gimp_image_get_floating_selection (image);
 
   /*  If there is a floating selection (and this isn't it!),
    *  make sure the insert position is greater than 0
@@ -3002,8 +3049,11 @@ gimp_image_add_layer (GimpImage *image,
   if (position == 0 && container == image->layers && floating_sel)
     position = 1;
 
-  /*  Don't add at a non-existing index  */
-  position = MIN (position, gimp_container_get_n_children (container));
+  old_has_alpha = gimp_image_has_alpha (image);
+
+  if (push_undo)
+    gimp_image_undo_push_layer_add (image, _("Add Layer"),
+                                    layer, active_layer);
 
   if (parent)
     gimp_viewable_set_parent (GIMP_VIEWABLE (layer),
@@ -3163,42 +3213,35 @@ gimp_image_add_layers (GimpImage   *image,
                        gint         height,
                        const gchar *undo_desc)
 {
-  GList *list;
-  gint   layers_x      = G_MAXINT;
-  gint   layers_y      = G_MAXINT;
-  gint   layers_width  = 0;
-  gint   layers_height = 0;
-  gint   offset_x;
-  gint   offset_y;
+  GimpLayer     *active_layer;
+  GimpContainer *container;
+  GList         *list;
+  gint           layers_x      = G_MAXINT;
+  gint           layers_y      = G_MAXINT;
+  gint           layers_width  = 0;
+  gint           layers_height = 0;
+  gint           offset_x;
+  gint           offset_y;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (layers != NULL);
-  g_return_if_fail (parent == NULL || GIMP_IS_LAYER (parent));
   g_return_if_fail (parent == NULL ||
+                    parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                    GIMP_IS_LAYER (parent));
+  g_return_if_fail (parent == NULL ||
+                    parent == GIMP_IMAGE_ACTIVE_PARENT ||
                     gimp_item_is_attached (GIMP_ITEM (parent)));
   g_return_if_fail (parent == NULL ||
+                    parent == GIMP_IMAGE_ACTIVE_PARENT ||
                     gimp_item_get_image (GIMP_ITEM (parent)) == image);
 
-  if (position == -1)
-    {
-      GimpLayer *active_layer = gimp_image_get_active_layer (image);
+  active_layer = gimp_image_get_active_layer (image);
 
-      if (active_layer)
-        {
-          GimpContainer *container;
-
-          if (parent)
-            container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
-          else
-            container = image->layers;
-
-          position = gimp_container_get_child_index (container,
-                                                     GIMP_OBJECT (active_layer));
-        }
-
-      if (position == -1)
-        position = 0;
-    }
+  parent = GIMP_LAYER (gimp_image_get_insert_pos ((GimpItem *) parent,
+                                                  &position,
+                                                  GIMP_ITEM (active_layer),
+                                                  image->layers,
+                                                  &container));
 
   for (list = layers; list; list = g_list_next (list))
     {
@@ -3368,37 +3411,28 @@ gimp_image_add_channel (GimpImage   *image,
   g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (channel)), FALSE);
   g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (channel)) == image,
                         FALSE);
-  g_return_val_if_fail (parent == NULL || GIMP_IS_CHANNEL (parent), FALSE);
   g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        GIMP_IS_CHANNEL (parent), FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
   g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_get_image (GIMP_ITEM (parent)) == image,
                         FALSE);
 
-  if (parent)
-    container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
-  else
-    container = image->channels;
-
   active_channel = gimp_image_get_active_channel (image);
+
+  parent = GIMP_CHANNEL (gimp_image_get_insert_pos ((GimpItem *) parent,
+                                                    &position,
+                                                    GIMP_ITEM (active_channel),
+                                                    image->channels,
+                                                    &container));
 
   if (push_undo)
     gimp_image_undo_push_channel_add (image, _("Add Channel"),
                                       channel, active_channel);
-
-  /*  add the channel to the list at the specified position  */
-  if (position == -1)
-    {
-      if (active_channel)
-        position = gimp_container_get_child_index (container,
-                                                   GIMP_OBJECT (active_channel));
-
-      if (position == -1)
-        position = 0;
-    }
-
-  /*  Don't add at a non-existing index  */
-  position = MIN (position, gimp_container_get_n_children (container));
 
   if (parent)
     gimp_viewable_set_parent (GIMP_VIEWABLE (channel),
@@ -3640,37 +3674,28 @@ gimp_image_add_vectors (GimpImage   *image,
   g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (vectors)), FALSE);
   g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (vectors)) == image,
                         FALSE);
-  g_return_val_if_fail (parent == NULL || GIMP_IS_VECTORS (parent), FALSE);
   g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        GIMP_IS_VECTORS (parent), FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
   g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_get_image (GIMP_ITEM (parent)) == image,
                         FALSE);
 
-  if (parent)
-    container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
-  else
-    container = image->vectors;
-
   active_vectors = gimp_image_get_active_vectors (image);
+
+  parent = GIMP_VECTORS (gimp_image_get_insert_pos ((GimpItem *) parent,
+                                                    &position,
+                                                    GIMP_ITEM (active_vectors),
+                                                    image->vectors,
+                                                    &container));
 
   if (push_undo)
     gimp_image_undo_push_vectors_add (image, _("Add Path"),
                                       vectors, active_vectors);
-
-  /*  add the vectors to the list at the specified position  */
-  if (position == -1)
-    {
-      if (active_vectors)
-        position = gimp_container_get_child_index (container,
-                                                   GIMP_OBJECT (active_vectors));
-
-      if (position == -1)
-        position = 0;
-    }
-
-  /*  Don't add at a non-existing index  */
-  position = MIN (position, gimp_container_get_n_children (container));
 
   if (parent)
     gimp_viewable_set_parent (GIMP_VIEWABLE (vectors),

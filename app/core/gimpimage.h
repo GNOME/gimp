@@ -75,6 +75,9 @@
                                             GIMP_INDEXED_IMAGE : -1)
 
 
+#define GIMP_IMAGE_ACTIVE_PARENT           ((gpointer) 1)
+
+
 typedef struct _GimpImageFlushAccumulator GimpImageFlushAccumulator;
 
 struct _GimpImageFlushAccumulator
