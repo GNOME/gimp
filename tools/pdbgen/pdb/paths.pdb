@@ -241,7 +241,7 @@ sub path_set_points {
       g_free (points);
 
       if (vectors)
-        success = gimp_image_add_vectors (image, vectors, 0, TRUE);
+        success = gimp_image_add_vectors (image, vectors, NULL, 0, TRUE);
       else
         success = FALSE;
     }
@@ -588,7 +588,7 @@ sub path_import {
 	code    => <<'CODE'
 {
   success = gimp_vectors_import_file (image, filename,
-                                      merge, scale, -1, NULL, NULL);
+                                      merge, scale, NULL, -1, NULL, NULL);
 }
 CODE
     );

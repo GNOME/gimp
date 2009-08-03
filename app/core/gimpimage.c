@@ -2949,10 +2949,10 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
 gboolean
 gimp_image_add_layer (GimpImage *image,
                       GimpLayer *layer,
+                      GimpLayer *parent,
                       gint       position,
                       gboolean   push_undo)
 {
-  GimpLayer     *parent = NULL;
   GimpLayer     *active_layer;
   GimpContainer *container;
   GimpLayer     *floating_sel;
@@ -3085,8 +3085,8 @@ gimp_image_remove_layer (GimpImage *image,
     }
 
   if (push_undo)
-    gimp_image_undo_push_layer_remove (image, undo_desc,
-                                       layer, index, active_layer);
+    gimp_image_undo_push_layer_remove (image, undo_desc, layer,
+                                       parent, index, active_layer);
 
   g_object_ref (layer);
 
@@ -3155,6 +3155,7 @@ gimp_image_remove_layer (GimpImage *image,
 void
 gimp_image_add_layers (GimpImage   *image,
                        GList       *layers,
+                       GimpLayer   *parent,
                        gint         position,
                        gint         x,
                        gint         y,
@@ -3172,14 +3173,30 @@ gimp_image_add_layers (GimpImage   *image,
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (layers != NULL);
+  g_return_if_fail (parent == NULL || GIMP_IS_LAYER (parent));
+  g_return_if_fail (parent == NULL ||
+                    gimp_item_is_attached (GIMP_ITEM (parent)));
+  g_return_if_fail (parent == NULL ||
+                    gimp_item_get_image (GIMP_ITEM (parent)) == image);
 
   if (position == -1)
     {
       GimpLayer *active_layer = gimp_image_get_active_layer (image);
 
       if (active_layer)
-        position = gimp_item_get_index (GIMP_ITEM (active_layer));
-      else
+        {
+          GimpContainer *container;
+
+          if (parent)
+            container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+          else
+            container = image->layers;
+
+          position = gimp_container_get_child_index (container,
+                                                     GIMP_OBJECT (active_layer));
+        }
+
+      if (position == -1)
         position = 0;
     }
 
@@ -3210,7 +3227,8 @@ gimp_image_add_layers (GimpImage   *image,
 
       gimp_item_translate (new_item, offset_x, offset_y, FALSE);
 
-      gimp_image_add_layer (image, GIMP_LAYER (new_item), position, TRUE);
+      gimp_image_add_layer (image, GIMP_LAYER (new_item),
+                            parent, position, TRUE);
       position++;
     }
 
@@ -3338,10 +3356,10 @@ gimp_image_position_layer (GimpImage   *image,
 gboolean
 gimp_image_add_channel (GimpImage   *image,
                         GimpChannel *channel,
+                        GimpChannel *parent,
                         gint         position,
                         gboolean     push_undo)
 {
-  GimpVectors   *parent = NULL;
   GimpChannel   *active_channel;
   GimpContainer *container;
 
@@ -3438,8 +3456,8 @@ gimp_image_remove_channel (GimpImage   *image,
   index = gimp_item_get_index (GIMP_ITEM (channel));
 
   if (push_undo)
-    gimp_image_undo_push_channel_remove (image, _("Remove Channel"),
-                                         channel, index, active_channel);
+    gimp_image_undo_push_channel_remove (image, _("Remove Channel"), channel,
+                                         parent, index, active_channel);
 
   g_object_ref (channel);
 
@@ -3610,10 +3628,10 @@ gimp_image_position_channel (GimpImage   *image,
 gboolean
 gimp_image_add_vectors (GimpImage   *image,
                         GimpVectors *vectors,
+                        GimpVectors *parent,
                         gint         position,
                         gboolean     push_undo)
 {
-  GimpVectors   *parent = NULL;
   GimpVectors   *active_vectors;
   GimpContainer *container;
 
@@ -3691,8 +3709,8 @@ gimp_image_remove_vectors (GimpImage   *image,
   index = gimp_item_get_index (GIMP_ITEM (vectors));
 
   if (push_undo)
-    gimp_image_undo_push_vectors_remove (image, _("Remove Path"),
-                                         vectors, index, active_vectors);
+    gimp_image_undo_push_vectors_remove (image, _("Remove Path"), vectors,
+                                         parent, index, active_vectors);
 
   g_object_ref (vectors);
 

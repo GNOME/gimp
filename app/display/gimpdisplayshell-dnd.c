@@ -260,7 +260,8 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
       gimp_item_set_visible (new_item, TRUE, FALSE);
       gimp_item_set_linked (new_item, FALSE, FALSE);
 
-      gimp_image_add_layer (image, new_layer, -1, TRUE);
+      /* FIXME tree */
+      gimp_image_add_layer (image, new_layer, NULL, -1, TRUE);
 
       gimp_image_undo_group_end (image);
 
@@ -300,7 +301,8 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Path"));
 
-      gimp_image_add_vectors (image, new_vectors, -1, TRUE);
+      /* FIXME tree */
+      gimp_image_add_vectors (image, new_vectors, NULL, -1, TRUE);
 
       gimp_image_undo_group_end (image);
 
@@ -328,9 +330,10 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
   if (! image)
     return;
 
+  /* FIXME tree */
   if (! gimp_vectors_import_buffer (image,
                                     (const gchar *) svg_data, svg_data_len,
-                                    TRUE, TRUE, -1, NULL, &error))
+                                    TRUE, TRUE, NULL, -1, NULL, &error))
     {
       gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
 			    GIMP_MESSAGE_ERROR,
@@ -492,7 +495,8 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
               gimp_display_shell_untransform_viewport (shell, &x, &y,
                                                        &width, &height);
 
-              gimp_image_add_layers (image, new_layers, -1,
+              /* FIXME tree */
+              gimp_image_add_layers (image, new_layers, NULL, -1,
                                      x, y, width, height,
                                      _("Drop layers"));
 
@@ -588,7 +592,8 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
 
       gimp_display_shell_dnd_position_item (shell, new_item);
 
-      gimp_image_add_layer (dest_image, new_layer, -1, TRUE);
+      /* FIXME tree */
+      gimp_image_add_layer (dest_image, new_layer, NULL, -1, TRUE);
 
       gimp_image_undo_group_end (dest_image);
 
@@ -660,7 +665,8 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
       if (! new_image)
         gimp_display_shell_dnd_position_item (shell, new_item);
 
-      gimp_image_add_layer (image, new_layer, -1, TRUE);
+      /* FIXME tree */
+      gimp_image_add_layer (image, new_layer, NULL, -1, TRUE);
 
       gimp_image_undo_group_end (image);
 

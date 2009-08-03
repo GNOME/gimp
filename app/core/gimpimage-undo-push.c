@@ -427,12 +427,15 @@ GimpUndo *
 gimp_image_undo_push_layer_remove (GimpImage   *image,
                                    const gchar *undo_desc,
                                    GimpLayer   *layer,
+                                   GimpLayer   *prev_parent,
                                    gint         prev_position,
                                    GimpLayer   *prev_layer)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), NULL);
+  g_return_val_if_fail (prev_parent == NULL || GIMP_IS_LAYER (prev_parent),
+                        NULL);
   g_return_val_if_fail (prev_layer == NULL || GIMP_IS_LAYER (prev_layer),
                         NULL);
 
@@ -440,6 +443,7 @@ gimp_image_undo_push_layer_remove (GimpImage   *image,
                                GIMP_UNDO_LAYER_REMOVE, undo_desc,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
                                "item",          layer,
+                               "prev-parent",   prev_parent,
                                "prev-position", prev_position,
                                "prev-layer",    prev_layer,
                                NULL);
@@ -656,12 +660,15 @@ GimpUndo *
 gimp_image_undo_push_channel_remove (GimpImage   *image,
                                      const gchar *undo_desc,
                                      GimpChannel *channel,
+                                     GimpChannel *prev_parent,
                                      gint         prev_position,
                                      GimpChannel *prev_channel)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)), NULL);
+  g_return_val_if_fail (prev_parent == NULL || GIMP_IS_CHANNEL (prev_parent),
+                        NULL);
   g_return_val_if_fail (prev_channel == NULL || GIMP_IS_CHANNEL (prev_channel),
                         NULL);
 
@@ -669,6 +676,7 @@ gimp_image_undo_push_channel_remove (GimpImage   *image,
                                GIMP_UNDO_CHANNEL_REMOVE, undo_desc,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
                                "item",          channel,
+                               "prev-parent",   prev_parent,
                                "prev-position", prev_position,
                                "prev-channel",  prev_channel,
                                NULL);
@@ -735,12 +743,15 @@ GimpUndo *
 gimp_image_undo_push_vectors_remove (GimpImage   *image,
                                      const gchar *undo_desc,
                                      GimpVectors *vectors,
+                                     GimpVectors *prev_parent,
                                      gint         prev_position,
                                      GimpVectors *prev_vectors)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (vectors)), NULL);
+  g_return_val_if_fail (prev_parent == NULL || GIMP_IS_VECTORS (prev_parent),
+                        NULL);
   g_return_val_if_fail (prev_vectors == NULL || GIMP_IS_VECTORS (prev_vectors),
                         NULL);
 
@@ -748,6 +759,7 @@ gimp_image_undo_push_vectors_remove (GimpImage   *image,
                                GIMP_UNDO_VECTORS_REMOVE, undo_desc,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
                                "item",          vectors,
+                               "prev-parent",   prev_parent,
                                "prev-position", prev_position,
                                "prev-vectors",  prev_vectors,
                                NULL);

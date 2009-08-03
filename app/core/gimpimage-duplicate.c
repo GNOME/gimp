@@ -225,6 +225,9 @@ gimp_image_duplicate_layers (GimpImage     *image,
                                                  new_image,
                                                  G_TYPE_FROM_INSTANCE (layer)));
 
+      g_object_set_data (G_OBJECT (layer), "gimp-image-duplicate-item",
+                         new_layer);
+
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_layer),
                             gimp_object_get_name (GIMP_OBJECT (layer)));
@@ -246,8 +249,23 @@ gimp_image_duplicate_layers (GimpImage     *image,
         *new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
 
       if (*floating_layer != new_layer)
-        gimp_image_add_layer (new_image, new_layer, count++, FALSE);
+        {
+          GimpViewable *parent;
+          GimpLayer    *new_parent = NULL;
+
+          parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
+
+          if (parent)
+            new_parent = g_object_get_data (G_OBJECT (parent),
+                                            "gimp-image-duplicate-item");
+
+          gimp_image_add_layer (new_image, new_layer,
+                                new_parent, count++, FALSE);
+        }
     }
+
+  for (list = all_layers; list; list = g_list_next (list))
+    g_object_set_data (list->data, "gimp-image-duplicate-item", NULL);
 
   g_list_free (all_layers);
 
@@ -271,12 +289,17 @@ gimp_image_duplicate_channels (GimpImage     *image,
        list;
        list = g_list_next (list))
     {
-      GimpChannel *channel = list->data;
-      GimpChannel *new_channel;
+      GimpChannel  *channel = list->data;
+      GimpChannel  *new_channel;
+      GimpViewable *parent;
+      GimpChannel  *new_parent = NULL;
 
       new_channel = GIMP_CHANNEL (gimp_item_convert (GIMP_ITEM (channel),
                                                      new_image,
                                                      G_TYPE_FROM_INSTANCE (channel)));
+
+      g_object_set_data (G_OBJECT (channel), "gimp-image-duplicate-item",
+                         new_channel);
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_channel),
@@ -288,8 +311,18 @@ gimp_image_duplicate_channels (GimpImage     *image,
       if (floating_sel_drawable == GIMP_DRAWABLE (channel))
         *new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
-      gimp_image_add_channel (new_image, new_channel, count++, FALSE);
+      parent = gimp_viewable_get_parent (GIMP_VIEWABLE (channel));
+
+      if (parent)
+        new_parent = g_object_get_data (G_OBJECT (parent),
+                                        "gimp-image-duplicate-item");
+
+      gimp_image_add_channel (new_image, new_channel,
+                              new_parent, count++, FALSE);
     }
+
+  for (list = all_channels; list; list = g_list_next (list))
+    g_object_set_data (list->data, "gimp-image-duplicate-item", NULL);
 
   g_list_free (all_channels);
 
@@ -311,12 +344,17 @@ gimp_image_duplicate_vectors (GimpImage *image,
        list;
        list = g_list_next (list))
     {
-      GimpVectors *vectors = list->data;
-      GimpVectors *new_vectors;
+      GimpVectors  *vectors = list->data;
+      GimpVectors  *new_vectors;
+      GimpViewable *parent;
+      GimpVectors  *new_parent = NULL;
 
       new_vectors = GIMP_VECTORS (gimp_item_convert (GIMP_ITEM (vectors),
                                                      new_image,
                                                      G_TYPE_FROM_INSTANCE (vectors)));
+
+      g_object_set_data (G_OBJECT (vectors), "gimp-image-duplicate-item",
+                         new_vectors);
 
       /*  Make sure the copied vectors doesn't say: "<old vectors> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_vectors),
@@ -325,8 +363,18 @@ gimp_image_duplicate_vectors (GimpImage *image,
       if (gimp_image_get_active_vectors (image) == vectors)
         active_vectors = new_vectors;
 
-      gimp_image_add_vectors (new_image, new_vectors, count++, FALSE);
+      parent = gimp_viewable_get_parent (GIMP_VIEWABLE (vectors));
+
+      if (parent)
+        new_parent = g_object_get_data (G_OBJECT (parent),
+                                        "gimp-image-duplicate-item");
+
+      gimp_image_add_vectors (new_image, new_vectors,
+                              new_parent, count++, FALSE);
     }
+
+  for (list = all_vectors; list; list = g_list_next (list))
+    g_object_set_data (list->data, "gimp-image-duplicate-item", NULL);
 
   g_list_free (all_vectors);
 

@@ -36,6 +36,7 @@ struct _GimpChannelUndo
 {
   GimpItemUndo  parent_instance;
 
+  GimpChannel  *prev_parent;
   gint          prev_position;   /*  former position in list  */
   GimpChannel  *prev_channel;    /*  previous active channel  */
 };

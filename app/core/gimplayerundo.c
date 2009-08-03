@@ -29,6 +29,7 @@
 enum
 {
   PROP_0,
+  PROP_PREV_PARENT,
   PROP_PREV_POSITION,
   PROP_PREV_LAYER
 };
@@ -73,6 +74,13 @@ gimp_layer_undo_class_init (GimpLayerUndoClass *klass)
   gimp_object_class->get_memsize = gimp_layer_undo_get_memsize;
 
   undo_class->pop                = gimp_layer_undo_pop;
+
+  g_object_class_install_property (object_class, PROP_PREV_PARENT,
+                                   g_param_spec_object ("prev-parent",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_LAYER,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PREV_POSITION,
                                    g_param_spec_int ("prev-position", NULL, NULL,
@@ -119,6 +127,9 @@ gimp_layer_undo_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_PREV_PARENT:
+      layer_undo->prev_parent = g_value_get_object (value);
+      break;
     case PROP_PREV_POSITION:
       layer_undo->prev_position = g_value_get_int (value);
       break;
@@ -142,6 +153,9 @@ gimp_layer_undo_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_PREV_PARENT:
+      g_value_set_object (value, layer_undo->prev_parent);
+      break;
     case PROP_PREV_POSITION:
       g_value_set_int (value, layer_undo->prev_position);
       break;
@@ -187,7 +201,10 @@ gimp_layer_undo_pop (GimpUndo            *undo,
     {
       /*  remove layer  */
 
-      /*  record the current position  */
+      /*  record the current parent and position  */
+      layer_undo->prev_parent =
+        GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)));
+
       layer_undo->prev_position = gimp_item_get_index (GIMP_ITEM (layer));
 
       gimp_image_remove_layer (undo->image, layer, FALSE,
@@ -201,6 +218,7 @@ gimp_layer_undo_pop (GimpUndo            *undo,
       layer_undo->prev_layer = gimp_image_get_active_layer (undo->image);
 
       gimp_image_add_layer (undo->image, layer,
+                            layer_undo->prev_parent,
                             layer_undo->prev_position, FALSE);
 
       GIMP_ITEM (layer)->removed = FALSE;

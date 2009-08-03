@@ -30,6 +30,7 @@
 enum
 {
   PROP_0,
+  PROP_PREV_PARENT,
   PROP_PREV_POSITION,
   PROP_PREV_VECTORS
 };
@@ -74,6 +75,13 @@ gimp_vectors_undo_class_init (GimpVectorsUndoClass *klass)
   gimp_object_class->get_memsize = gimp_vectors_undo_get_memsize;
 
   undo_class->pop                = gimp_vectors_undo_pop;
+
+  g_object_class_install_property (object_class, PROP_PREV_PARENT,
+                                   g_param_spec_object ("prev-parent",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_VECTORS,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PREV_POSITION,
                                    g_param_spec_int ("prev-position", NULL, NULL,
@@ -120,6 +128,9 @@ gimp_vectors_undo_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_PREV_PARENT:
+      vectors_undo->prev_parent = g_value_get_object (value);
+      break;
     case PROP_PREV_POSITION:
       vectors_undo->prev_position = g_value_get_int (value);
       break;
@@ -143,6 +154,9 @@ gimp_vectors_undo_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_PREV_PARENT:
+      g_value_set_object (value, vectors_undo->prev_parent);
+      break;
     case PROP_PREV_POSITION:
       g_value_set_int (value, vectors_undo->prev_position);
       break;
@@ -188,7 +202,10 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
     {
       /*  remove vectors  */
 
-      /*  record the current position  */
+      /*  record the current parent and position  */
+      vectors_undo->prev_parent =
+        GIMP_VECTORS (gimp_viewable_get_parent (GIMP_VIEWABLE (vectors)));
+
       vectors_undo->prev_position = gimp_item_get_index (GIMP_ITEM (vectors));
 
       gimp_image_remove_vectors (undo->image, vectors, FALSE,
@@ -202,6 +219,7 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
       vectors_undo->prev_vectors = gimp_image_get_active_vectors (undo->image);
 
       gimp_image_add_vectors (undo->image, vectors,
+                              vectors_undo->prev_parent,
                               vectors_undo->prev_position, FALSE);
 
       GIMP_ITEM (vectors)->removed = FALSE;

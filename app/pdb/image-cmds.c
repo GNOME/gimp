@@ -914,7 +914,9 @@ image_add_layer_invoker (GimpProcedure      *procedure,
                                        GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
                                        error))
         {
-          success = gimp_image_add_layer (image, layer, MAX (position, -1), TRUE);
+          /* FIXME tree */
+          success = gimp_image_add_layer (image, layer,
+                                          NULL, MAX (position, -1), TRUE);
         }
       else
         {
@@ -1104,7 +1106,9 @@ image_add_channel_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
         {
-          success = gimp_image_add_channel (image, channel, MAX (position, -1), TRUE);
+          /* FIXME tree */
+          success = gimp_image_add_channel (image, channel,
+                                            NULL, MAX (position, -1), TRUE);
         }
       else
         {
@@ -1246,7 +1250,9 @@ image_add_vectors_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
         {
-          success = gimp_image_add_vectors (image, vectors, MAX (position, -1), TRUE);
+          /* FIXME tree */
+          success = gimp_image_add_vectors (image, vectors,
+                                            NULL, MAX (position, -1), TRUE);
         }
       else
         {

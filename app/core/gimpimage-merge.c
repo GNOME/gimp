@@ -276,7 +276,8 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
 
       g_slist_free (merge_list);
 
-      gimp_image_add_vectors (image, target_vectors, pos, TRUE);
+      /* FIXME tree */
+      gimp_image_add_vectors (image, target_vectors, NULL, pos, TRUE);
       gimp_unset_busy (image->gimp);
 
       gimp_image_undo_group_end (image);
@@ -591,14 +592,17 @@ gimp_image_merge_layers (GimpImage     *image,
           gimp_image_remove_layer (image, layer, TRUE, NULL);
         }
 
-      gimp_image_add_layer (image, merge_layer, position, TRUE);
+      /* FIXME tree */
+      gimp_image_add_layer (image, merge_layer, NULL, position, TRUE);
     }
   else
     {
       /*  Add the layer to the image  */
+
+      /* FIXME tree */
       gimp_image_add_layer
         (image, merge_layer,
-         gimp_container_get_n_children (image->layers) - position + 1,
+         NULL, gimp_container_get_n_children (image->layers) - position + 1,
          TRUE);
     }
 

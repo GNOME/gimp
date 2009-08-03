@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpitemtreeview.c
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -493,6 +493,45 @@ gimp_item_tree_view_get_edit_button (GimpItemTreeView *view)
   return view->priv->edit_button;
 }
 
+gint
+gimp_item_tree_view_get_drop_index (GimpItemTreeView         *view,
+                                    GimpViewable             *dest_viewable,
+                                    GtkTreeViewDropPosition   drop_pos,
+                                    GimpViewable            **parent)
+{
+  gint index = -1;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), -1);
+  g_return_val_if_fail (dest_viewable == NULL ||
+                        GIMP_IS_VIEWABLE (dest_viewable), -1);
+  g_return_val_if_fail (parent != NULL, -1);
+
+  *parent = NULL;
+
+  if (dest_viewable)
+    {
+      *parent = gimp_viewable_get_parent (dest_viewable);
+      index   = gimp_item_get_index (GIMP_ITEM (dest_viewable));
+
+      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+        {
+          GimpContainer *children = gimp_viewable_get_children (dest_viewable);
+
+          if (children)
+            {
+              *parent = dest_viewable;
+              index   = 0;
+            }
+          else
+            {
+              index++;
+            }
+        }
+    }
+
+  return index;
+}
+
 static void
 gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
                                     GimpImage        *image)
@@ -768,19 +807,22 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
     {
       GType     item_type = item_view_class->item_type;
       GimpItem *new_item;
+      GimpItem *parent;
 
       if (g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable), item_type))
         item_type = G_TYPE_FROM_INSTANCE (src_viewable);
 
-      if (dest_viewable && drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-        dest_index++;
+      dest_index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+                                                       drop_pos,
+                                                       (GimpViewable **) &parent);
 
       new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
                                     item_view->priv->image, item_type);
 
       gimp_item_set_linked (new_item, FALSE, FALSE);
 
-      item_view_class->add_item (item_view->priv->image, new_item, dest_index, TRUE);
+      item_view_class->add_item (item_view->priv->image, new_item,
+                                 parent, dest_index, TRUE);
     }
   else if (dest_viewable)
     {

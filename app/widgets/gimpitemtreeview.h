@@ -36,6 +36,7 @@ typedef void            (* GimpReorderItemFunc)  (GimpImage       *image,
                                                   const gchar     *undo_desc);
 typedef void            (* GimpAddItemFunc)      (GimpImage       *image,
                                                   GimpItem        *item,
+                                                  GimpItem        *parent,
                                                   gint             index,
                                                   gboolean         push_undo);
 typedef void            (* GimpRemoveItemFunc)   (GimpImage       *image,
@@ -116,6 +117,11 @@ void        gimp_item_tree_view_set_image       (GimpItemTreeView *view,
 GimpImage * gimp_item_tree_view_get_image       (GimpItemTreeView *view);
 GtkWidget * gimp_item_tree_view_get_new_button  (GimpItemTreeView *view);
 GtkWidget * gimp_item_tree_view_get_edit_button (GimpItemTreeView *view);
+
+gint        gimp_item_tree_view_get_drop_index  (GimpItemTreeView *view,
+                                                 GimpViewable     *dest_viewable,
+                                                 GtkTreeViewDropPosition drop_pos,
+                                                 GimpViewable    **parent);
 
 
 #endif  /*  __GIMP_ITEM_TREE_VIEW_H__  */

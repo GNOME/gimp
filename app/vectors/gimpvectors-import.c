@@ -97,6 +97,7 @@ static gboolean  gimp_vectors_import  (GimpImage            *image,
                                        gsize                 len,
                                        gboolean              merge,
                                        gboolean              scale,
+                                       GimpVectors          *parent,
                                        gint                  position,
                                        GList               **ret_vectors,
                                        GError              **error);
@@ -198,16 +199,19 @@ gimp_vectors_import_file (GimpImage    *image,
                           const gchar  *filename,
                           gboolean      merge,
                           gboolean      scale,
+                          GimpVectors  *parent,
                           gint          position,
                           GList       **ret_vectors,
                           GError      **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (parent == NULL || GIMP_IS_VECTORS (parent), FALSE);
   g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, filename, NULL, 0, merge, scale, position,
+  return gimp_vectors_import (image, filename, NULL, 0, merge, scale,
+                              parent, position,
                               ret_vectors, error);
 }
 
@@ -230,16 +234,19 @@ gimp_vectors_import_buffer (GimpImage    *image,
                             gsize         len,
                             gboolean      merge,
                             gboolean      scale,
+                            GimpVectors  *parent,
                             gint          position,
                             GList       **ret_vectors,
                             GError      **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
+  g_return_val_if_fail (parent == NULL || GIMP_IS_VECTORS (parent), FALSE);
   g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, NULL, buffer, len, merge, scale, position,
+  return gimp_vectors_import (image, NULL, buffer, len, merge, scale,
+                              parent, position,
                               ret_vectors, error);
 }
 
@@ -250,6 +257,7 @@ gimp_vectors_import (GimpImage    *image,
                      gsize         len,
                      gboolean      merge,
                      gboolean      scale,
+                     GimpVectors  *parent,
                      gint          position,
                      GList       **ret_vectors,
                      GError      **error)
@@ -305,7 +313,8 @@ gimp_vectors_import (GimpImage    *image,
                   vectors = gimp_vectors_new (image,
                                               ((merge || !path->id) ?
                                                _("Imported Path") : path->id));
-                  gimp_image_add_vectors (image, vectors, position, TRUE);
+                  gimp_image_add_vectors (image, vectors,
+                                          parent, position, TRUE);
                   gimp_vectors_freeze (vectors);
 
                   if (ret_vectors)

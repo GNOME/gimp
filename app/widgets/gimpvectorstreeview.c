@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpvectorstreeview.c
- * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -225,24 +225,21 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
                                  GimpViewable            *dest_viewable,
                                  GtkTreeViewDropPosition  drop_pos)
 {
-  GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *image = gimp_item_tree_view_get_image (view);
-  gint              index = -1;
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
+  GimpVectors      *parent;
+  gint              index;
   GError           *error = NULL;
 
   if (image->gimp->be_verbose)
     g_print ("%s: SVG dropped (len = %d)\n", G_STRFUNC, (gint) svg_data_len);
 
-  if (dest_viewable)
-    {
-      index = gimp_item_get_index (GIMP_ITEM (dest_viewable));
-
-      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-        index++;
-    }
+  index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+                                              drop_pos,
+                                              (GimpViewable **) &parent);
 
   if (! gimp_vectors_import_buffer (image, svg_data, svg_data_len,
-                                    TRUE, TRUE, index, NULL, &error))
+                                    TRUE, TRUE, parent, index, NULL, &error))
     {
       gimp_message_literal (image->gimp,
 			    G_OBJECT (tree_view), GIMP_MESSAGE_ERROR,
@@ -262,7 +259,8 @@ gimp_vectors_tree_view_item_new (GimpImage *image)
 
   new_vectors = gimp_vectors_new (image, _("Empty Path"));
 
-  gimp_image_add_vectors (image, new_vectors, -1, TRUE);
+  /* FIXME tree */
+  gimp_image_add_vectors (image, new_vectors, NULL, -1, TRUE);
 
   return GIMP_ITEM (new_vectors);
 }

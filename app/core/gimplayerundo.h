@@ -36,6 +36,7 @@ struct _GimpLayerUndo
 {
   GimpItemUndo  parent_instance;
 
+  GimpLayer    *prev_parent;
   gint          prev_position;   /*  former position in list  */
   GimpLayer    *prev_layer;      /*  previous active layer    */
 };

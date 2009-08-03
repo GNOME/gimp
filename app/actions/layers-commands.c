@@ -329,7 +329,8 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
                               layer_fill_type);
   gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
 
-  gimp_image_add_layer (image, new_layer, -1, TRUE);
+  /* FIXME tree */
+  gimp_image_add_layer (image, new_layer, NULL, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 
@@ -352,7 +353,8 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                      gimp_image_base_type_with_alpha (image),
                                      _("Visible"),
                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image, layer, -1, TRUE);
+  /* FIXME tree */
+  gimp_image_add_layer (image, layer, NULL, -1, TRUE);
 
   gimp_image_flush (image);
 }
@@ -445,7 +447,8 @@ layers_duplicate_cmd_callback (GtkAction *action,
 
   new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
                                                G_TYPE_FROM_INSTANCE (layer)));
-  gimp_image_add_layer (image, new_layer, -1, TRUE);
+  /* FIXME tree */
+  gimp_image_add_layer (image, new_layer, NULL, -1, TRUE);
 
   gimp_image_flush (image);
 }
@@ -520,8 +523,8 @@ layers_text_to_vectors_cmd_callback (GtkAction *action,
       gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
       gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
 
-      gimp_image_add_vectors (image, vectors, -1, TRUE);
-      gimp_image_set_active_vectors (image, vectors);
+      /* FIXME tree */
+      gimp_image_add_vectors (image, vectors, NULL, -1, TRUE);
 
       gimp_image_flush (image);
     }
@@ -548,8 +551,8 @@ layers_text_along_vectors_cmd_callback (GtkAction *action,
 
       gimp_item_set_visible (GIMP_ITEM (new_vectors), TRUE, FALSE);
 
-      gimp_image_add_vectors (image, new_vectors, -1, TRUE);
-      gimp_image_set_active_vectors (image, new_vectors);
+      /* FIXME tree */
+      gimp_image_add_vectors (image, new_vectors, NULL, -1, TRUE);
 
       gimp_image_flush (image);
     }
@@ -965,7 +968,8 @@ layers_new_layer_response (GtkWidget          *widget,
           gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
                                       dialog->context,
                                       layer_fill_type);
-          gimp_image_add_layer (dialog->image, layer, -1, TRUE);
+          /* FIXME tree */
+          gimp_image_add_layer (dialog->image, layer, NULL, -1, TRUE);
 
           gimp_image_flush (dialog->image);
         }

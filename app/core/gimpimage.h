@@ -462,6 +462,7 @@ GimpVectors   * gimp_image_get_vectors_by_name   (const GimpImage    *image,
 
 gboolean        gimp_image_add_layer             (GimpImage          *image,
                                                   GimpLayer          *layer,
+                                                  GimpLayer          *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
 void            gimp_image_remove_layer          (GimpImage          *image,
@@ -471,6 +472,7 @@ void            gimp_image_remove_layer          (GimpImage          *image,
 
 void            gimp_image_add_layers            (GimpImage          *image,
                                                   GList              *layers,
+                                                  GimpLayer          *parent,
                                                   gint                position,
                                                   gint                x,
                                                   gint                y,
@@ -496,6 +498,7 @@ gboolean        gimp_image_position_layer        (GimpImage          *image,
 
 gboolean        gimp_image_add_channel           (GimpImage          *image,
                                                   GimpChannel        *channel,
+                                                  GimpChannel        *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
 void            gimp_image_remove_channel        (GimpImage          *image,
@@ -521,6 +524,7 @@ gboolean        gimp_image_position_channel      (GimpImage          *image,
 
 gboolean        gimp_image_add_vectors           (GimpImage          *image,
                                                   GimpVectors        *vectors,
+                                                  GimpVectors        *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
 void            gimp_image_remove_vectors        (GimpImage          *image,
