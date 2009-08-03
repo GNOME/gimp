@@ -228,6 +228,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
 {
   GimpImage   *image;
   GimpChannel *new_channel;
+  GimpChannel *parent = GIMP_IMAGE_ACTIVE_PARENT;
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
@@ -261,10 +262,15 @@ channels_duplicate_cmd_callback (GtkAction *action,
       new_channel =
         GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
                                            G_TYPE_FROM_INSTANCE (channel)));
+
+      /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
+       *  the latter would add a duplicated group inside itself instead of
+       *  above it
+       */
+      parent = GIMP_CHANNEL (gimp_viewable_get_parent (GIMP_VIEWABLE (channel)));
     }
 
-  gimp_image_add_channel (image, new_channel,
-                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_image_add_channel (image, new_channel, parent, -1, TRUE);
 
   gimp_image_flush (image);
 }

@@ -444,13 +444,19 @@ layers_duplicate_cmd_callback (GtkAction *action,
   GimpImage *image;
   GimpLayer *layer;
   GimpLayer *new_layer;
+  GimpLayer *parent;
   return_if_no_layer (image, layer, data);
 
   new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
                                                G_TYPE_FROM_INSTANCE (layer)));
 
-  gimp_image_add_layer (image, new_layer,
-                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
+   *  the latter would add a duplicated group inside itself instead of
+   *  above it
+   */
+  parent = GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)));
+
+  gimp_image_add_layer (image, new_layer, parent, -1, TRUE);
 
   gimp_image_flush (image);
 }
