@@ -945,7 +945,7 @@ gimp_container_view_add (GimpContainerView *view,
     parent_insert_data = g_hash_table_lookup (private->item_hash, parent);
 
   insert_data = view_iface->insert_item (view, viewable,
-                                         parent_insert_data, -1);
+                                         parent_insert_data, index);
 
   g_hash_table_insert (private->item_hash, viewable, insert_data);
 
