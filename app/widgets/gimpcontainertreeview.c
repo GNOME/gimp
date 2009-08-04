@@ -602,6 +602,15 @@ gimp_container_tree_view_insert_item (GimpContainerView *view,
 
   gimp_container_tree_view_set (tree_view, &iter, viewable);
 
+  if (parent_insert_data)
+    {
+      GtkTreePath *path = gtk_tree_model_get_path (tree_view->model, &iter);
+
+      gtk_tree_view_expand_to_path (tree_view->view, path);
+
+      gtk_tree_path_free (path);
+    }
+
   return gtk_tree_iter_copy (&iter);
 }
 
