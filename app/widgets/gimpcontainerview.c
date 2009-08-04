@@ -31,6 +31,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptreehandler.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcontainerview.h"
@@ -54,19 +55,19 @@ typedef struct _GimpContainerViewPrivate GimpContainerViewPrivate;
 
 struct _GimpContainerViewPrivate
 {
-  GimpContainer *container;
-  GimpContext   *context;
+  GimpContainer   *container;
+  GimpContext     *context;
 
-  GHashTable    *item_hash;
+  GHashTable      *item_hash;
 
-  gint           view_size;
-  gint           view_border_width;
-  gboolean       reorderable;
+  gint             view_size;
+  gint             view_border_width;
+  gboolean         reorderable;
 
   /*  initialized by subclass  */
-  GtkWidget     *dnd_widget;
+  GtkWidget       *dnd_widget;
 
-  GHashTable    *name_changed_handler_hash;
+  GimpTreeHandler *name_changed_handler;
 };
 
 
@@ -268,12 +269,6 @@ gimp_container_view_private_finalize (GimpContainerViewPrivate *private)
       private->item_hash = NULL;
     }
 
-  if (private->name_changed_handler_hash)
-    {
-      g_hash_table_destroy (private->name_changed_handler_hash);
-      private->name_changed_handler_hash = NULL;
-    }
-
   g_slice_free (GimpContainerViewPrivate, private);
 }
 
@@ -305,11 +300,6 @@ gimp_container_view_get_private (GimpContainerView *view)
                                                   g_direct_equal,
                                                   NULL,
                                                   view_iface->insert_data_free);
-
-      private->name_changed_handler_hash = g_hash_table_new_full (g_direct_hash,
-                                                                  g_direct_equal,
-                                                                  NULL,
-                                                                  NULL);
 
       g_object_set_qdata_full ((GObject *) view, private_key, private,
                                (GDestroyNotify) gimp_container_view_private_finalize);
@@ -854,27 +844,27 @@ gimp_container_view_add_container (GimpContainerView *view,
                                    GimpContainer     *container)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-  GType                     children_type;
-  GimpViewableClass        *viewable_class;
-  GQuark                    name_changed_handler_id;
 
   gimp_container_foreach (container,
                           (GFunc) gimp_container_view_add_foreach,
                           view);
 
-  children_type  = gimp_container_get_children_type (container);
-  viewable_class = g_type_class_ref (children_type);
+  if (container == private->container)
+    {
+      GType              children_type;
+      GimpViewableClass *viewable_class;
 
-  name_changed_handler_id =
-    gimp_container_add_handler (container,
-                                viewable_class->name_changed_signal,
-                                G_CALLBACK (gimp_container_view_name_changed),
-                                view);
+      children_type  = gimp_container_get_children_type (container);
+      viewable_class = g_type_class_ref (children_type);
 
-  g_type_class_unref (viewable_class);
+      private->name_changed_handler =
+        gimp_tree_handler_connect (container,
+                                   viewable_class->name_changed_signal,
+                                   G_CALLBACK (gimp_container_view_name_changed),
+                                   view);
 
-  g_hash_table_insert (private->name_changed_handler_hash, container,
-                       GUINT_TO_POINTER (name_changed_handler_id));
+      g_type_class_unref (viewable_class);
+    }
 
   g_signal_connect_object (container, "add",
                            G_CALLBACK (gimp_container_view_add),
@@ -961,18 +951,15 @@ gimp_container_view_remove_container (GimpContainerView *view,
 {
   GimpContainerViewInterface *view_iface;
   GimpContainerViewPrivate   *private;
-  GQuark                      name_changed_handler_id;
 
   view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
   private    = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  name_changed_handler_id =
-    GPOINTER_TO_UINT (g_hash_table_lookup (private->name_changed_handler_hash,
-                                           container));
-
-  gimp_container_remove_handler (container, name_changed_handler_id);
-
-  g_hash_table_remove (private->name_changed_handler_hash, container);
+  if (container == private->container)
+    {
+      gimp_tree_handler_disconnect (private->name_changed_handler);
+      private->name_changed_handler = NULL;
+    }
 
   g_signal_handlers_disconnect_by_func (container,
                                         gimp_container_view_add,
