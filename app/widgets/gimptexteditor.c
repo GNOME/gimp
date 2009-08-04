@@ -30,7 +30,6 @@
 
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
-#include "gimplanguageentry.h"
 #include "gimptexteditor.h"
 #include "gimpuimanager.h"
 
@@ -172,34 +171,6 @@ gimp_text_editor_new (const gchar     *title,
     {
       gtk_box_pack_start (GTK_BOX (content_area), toolbar, FALSE, FALSE, 0);
       gtk_widget_show (toolbar);
-
-      /*  language entry, disabled until it works  */
-      if (FALSE)
-        {
-          GtkToolItem *item;
-          GtkWidget   *hbox;
-          GtkWidget   *label;
-          GtkWidget   *entry;
-
-          item = gtk_tool_item_new ();
-          gtk_tool_item_set_expand (item, TRUE);
-          gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
-          gtk_widget_show (GTK_WIDGET (item));
-
-          hbox = gtk_hbox_new (FALSE, 6);
-          gtk_container_add (GTK_CONTAINER (item), hbox);
-          gtk_widget_show (hbox);
-
-          label = gtk_label_new_with_mnemonic (_("_Language:"));
-          gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-          gtk_widget_show (label);
-
-          entry = gimp_language_entry_new ();
-          gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-          gtk_widget_show (entry);
-
-          gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
-        }
     }
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

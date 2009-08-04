@@ -429,6 +429,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *button;
   GtkWidget       *entry;
   GtkWidget       *box;
+  GtkWidget       *label;
   GtkWidget       *spinbutton;
   GtkSizeGroup    *size_group;
   gint             row = 0;
@@ -513,6 +514,22 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Language:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  entry = gimp_prop_language_entry_new (config, "language");
+  gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
+  gtk_widget_show (entry);
 
   return main_vbox;
 }
