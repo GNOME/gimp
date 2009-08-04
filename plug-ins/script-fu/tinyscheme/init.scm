@@ -64,16 +64,25 @@
      (foldr (lambda (a b) (if (< a b) a b)) (car lst) (cdr lst)))
 (define (succ x) (+ x 1))
 (define (pred x) (- x 1))
-(define (gcd a b)
-  (let ((aa (abs a))
-	(bb (abs b)))
-     (if (= bb 0)
-          aa
-          (gcd bb (remainder aa bb)))))
-(define (lcm a b)
-     (if (or (= a 0) (= b 0))
-          0
-          (abs (* (quotient a (gcd a b)) b))))
+(define gcd
+  (lambda a
+    (if (null? a)
+      0
+      (let ((aa (abs (car a)))
+            (bb (abs (cadr a))))
+         (if (= bb 0)
+              aa
+              (gcd bb (remainder aa bb)))))))
+(define lcm
+  (lambda a
+    (if (null? a)
+      1
+      (let ((aa (abs (car a)))
+            (bb (abs (cadr a))))
+         (if (or (= aa 0) (= bb 0))
+             0
+             (abs (* (quotient aa (gcd aa bb)) bb)))))))
+
 
 (define call/cc call-with-current-continuation)
 
@@ -110,7 +119,7 @@
 (define (string->anyatom str pred)
      (let* ((a (string->atom str)))
        (if (pred a) a
-	   (error "string->xxx: not a xxx" a))))
+     (error "string->xxx: not a xxx" a))))
 
 (define (string->number str) (string->anyatom str number?))
 
@@ -118,9 +127,9 @@
   (if (pred n)
       (atom->string n)
       (error "xxx->string: not a xxx" n)))
-  
 
-(define (number->string n) (anyatom->string n number?))    
+
+(define (number->string n) (anyatom->string n number?))
 
 (define (char-cmp? cmp a b)
      (cmp (char->integer a) (char->integer b)))
@@ -180,31 +189,31 @@
   (if (null? lists)
       (cons cars cdrs)
       (let ((car1 (caar lists))
-	    (cdr1 (cdar lists)))
-	(unzip1-with-cdr-iterative 
-	 (cdr lists) 
-	 (append cars (list car1))
-	 (append cdrs (list cdr1))))))
+      (cdr1 (cdar lists)))
+  (unzip1-with-cdr-iterative
+   (cdr lists)
+   (append cars (list car1))
+   (append cdrs (list cdr1))))))
 
 (define (map proc . lists)
   (if (null? lists)
       (apply proc)
       (if (null? (car lists))
-	  '()
-	  (let* ((unz (apply unzip1-with-cdr lists))
-		 (cars (car unz))
-		 (cdrs (cdr unz)))
-	    (cons (apply proc cars) (apply map (cons proc cdrs)))))))
+    '()
+    (let* ((unz (apply unzip1-with-cdr lists))
+     (cars (car unz))
+     (cdrs (cdr unz)))
+      (cons (apply proc cars) (apply map (cons proc cdrs)))))))
 
 (define (for-each proc . lists)
   (if (null? lists)
       (apply proc)
       (if (null? (car lists))
-	  #t
-	  (let* ((unz (apply unzip1-with-cdr lists))
-		 (cars (car unz))
-		 (cdrs (cdr unz)))
-	    (apply proc cars) (apply map (cons proc cdrs))))))
+    #t
+    (let* ((unz (apply unzip1-with-cdr lists))
+     (cars (car unz))
+     (cdrs (cdr unz)))
+      (apply proc cars) (apply map (cons proc cdrs))))))
 
 (define (list-tail x k)
     (if (zero? k)
@@ -453,8 +462,8 @@
   (let* ((env (if (null? envl) (current-environment) (eval (car envl))))
          (xval (eval x env)))
     (if (closure? xval)
-	(make-closure (get-closure-code xval) env)
-	xval)))
+  (make-closure (get-closure-code xval) env)
+  xval)))
 
 ; Redefine this if you install another package infrastructure
 ; Also redefine 'package'
@@ -466,7 +475,7 @@
      (and (input-port? p) (output-port? p)))
 
 (define (close-port p)
-     (cond 
+     (cond
           ((input-output-port? p) (close-input-port (close-output-port p)))
           ((input-port? p) (close-input-port p))
           ((output-port? p) (close-output-port p))
@@ -539,7 +548,7 @@
                     (* (quotient *seed* q) r)))
           (if (< *seed* 0) (set! *seed* (+ *seed* m)))
           *seed*))
-;; SRFI-0 
+;; SRFI-0
 ;; COND-EXPAND
 ;; Implemented as a macro
 (define *features* '(srfi-0))
@@ -562,15 +571,15 @@
 
 (define (cond-eval condition)
   (cond ((symbol? condition)
-	 (if (member condition *features*) #t #f))
-	((eq? condition #t) #t)
-	((eq? condition #f) #f)
-	(else (case (car condition)
-		((and) (cond-eval-and (cdr condition)))
-		((or) (cond-eval-or (cdr condition)))
-		((not) (if (not (null? (cddr condition)))
-			   (error "cond-expand : 'not' takes 1 argument")
-			   (not (cond-eval (cadr condition)))))
-		(else (error "cond-expand : unknown operator" (car condition)))))))
+   (if (member condition *features*) #t #f))
+  ((eq? condition #t) #t)
+  ((eq? condition #f) #f)
+  (else (case (car condition)
+    ((and) (cond-eval-and (cdr condition)))
+    ((or) (cond-eval-or (cdr condition)))
+    ((not) (if (not (null? (cddr condition)))
+         (error "cond-expand : 'not' takes 1 argument")
+         (not (cond-eval (cadr condition)))))
+    (else (error "cond-expand : unknown operator" (car condition)))))))
 
 (gc-verbose #f)
