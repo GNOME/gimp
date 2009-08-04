@@ -40,6 +40,7 @@
 #include "core/gimpitemundo.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptreehandler.h"
 #include "core/gimpundostack.h"
 
 #include "vectors/gimpvectors.h"
@@ -79,8 +80,8 @@ struct _GimpItemTreeViewPriv
   GtkCellRenderer *eye_cell;
   GtkCellRenderer *chain_cell;
 
-  GQuark           visible_changed_handler_id;
-  GQuark           linked_changed_handler_id;
+  GimpTreeHandler *visible_changed_handler;
+  GimpTreeHandler *linked_changed_handler;
 };
 
 
@@ -287,9 +288,6 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
   gimp_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
 
   view->priv->image  = NULL;
-
-  view->priv->visible_changed_handler_id = 0;
-  view->priv->linked_changed_handler_id  = 0;
 }
 
 static GObject *
@@ -604,27 +602,26 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
 
   if (old_container)
     {
-      gimp_container_remove_handler (old_container,
-                                     item_view->priv->visible_changed_handler_id);
-      gimp_container_remove_handler (old_container,
-                                     item_view->priv->linked_changed_handler_id);
+      gimp_tree_handler_disconnect (item_view->priv->visible_changed_handler);
+      item_view->priv->visible_changed_handler = NULL;
 
-      item_view->priv->visible_changed_handler_id = 0;
-      item_view->priv->linked_changed_handler_id  = 0;
+      gimp_tree_handler_disconnect (item_view->priv->linked_changed_handler);
+      item_view->priv->linked_changed_handler = NULL;
     }
 
   parent_view_iface->set_container (view, container);
 
   if (container)
     {
-      item_view->priv->visible_changed_handler_id =
-        gimp_container_add_handler (container, "visibility-changed",
-                                    G_CALLBACK (gimp_item_tree_view_visible_changed),
-                                    view);
-      item_view->priv->linked_changed_handler_id =
-        gimp_container_add_handler (container, "linked-changed",
-                                    G_CALLBACK (gimp_item_tree_view_linked_changed),
-                                    view);
+      item_view->priv->visible_changed_handler =
+        gimp_tree_handler_connect (container, "visibility-changed",
+                                   G_CALLBACK (gimp_item_tree_view_visible_changed),
+                                   view);
+
+      item_view->priv->linked_changed_handler =
+        gimp_tree_handler_connect (container, "linked-changed",
+                                   G_CALLBACK (gimp_item_tree_view_linked_changed),
+                                   view);
     }
 }
 
