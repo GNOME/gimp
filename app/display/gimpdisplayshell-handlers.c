@@ -178,17 +178,17 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
 
   shell->vectors_freeze_handler =
-    gimp_container_add_handler (image->vectors, "freeze",
-                                G_CALLBACK (gimp_display_shell_vectors_freeze_handler),
-                                shell);
+    gimp_tree_handler_connect (image->vectors, "freeze",
+                               G_CALLBACK (gimp_display_shell_vectors_freeze_handler),
+                               shell);
   shell->vectors_thaw_handler =
-    gimp_container_add_handler (image->vectors, "thaw",
-                                G_CALLBACK (gimp_display_shell_vectors_thaw_handler),
-                                shell);
+    gimp_tree_handler_connect (image->vectors, "thaw",
+                               G_CALLBACK (gimp_display_shell_vectors_thaw_handler),
+                               shell);
   shell->vectors_visible_handler =
-    gimp_container_add_handler (image->vectors, "visibility-changed",
-                                G_CALLBACK (gimp_display_shell_vectors_visible_handler),
-                                shell);
+    gimp_tree_handler_connect (image->vectors, "visibility-changed",
+                               G_CALLBACK (gimp_display_shell_vectors_visible_handler),
+                               shell);
 
   g_signal_connect (image->vectors, "add",
                     G_CALLBACK (gimp_display_shell_vectors_add_handler),
@@ -319,12 +319,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_vectors_add_handler,
                                         shell);
 
-  gimp_container_remove_handler (image->vectors,
-                                 shell->vectors_visible_handler);
-  gimp_container_remove_handler (image->vectors,
-                                 shell->vectors_thaw_handler);
-  gimp_container_remove_handler (image->vectors,
-                                 shell->vectors_freeze_handler);
+  gimp_tree_handler_disconnect (shell->vectors_visible_handler);
+  gimp_tree_handler_disconnect (shell->vectors_thaw_handler);
+  gimp_tree_handler_disconnect (shell->vectors_freeze_handler);
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_profile_changed_handler,

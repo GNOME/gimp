@@ -180,9 +180,9 @@ struct _GimpDisplayShell
 
   gint               paused_count;
 
-  GQuark             vectors_freeze_handler;
-  GQuark             vectors_thaw_handler;
-  GQuark             vectors_visible_handler;
+  GimpTreeHandler   *vectors_freeze_handler;
+  GimpTreeHandler   *vectors_thaw_handler;
+  GimpTreeHandler   *vectors_visible_handler;
 
   GdkWindowState     window_state;     /* for fullscreen display              */
   gboolean           zoom_on_resize;
