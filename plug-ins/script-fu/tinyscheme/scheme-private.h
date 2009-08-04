@@ -144,6 +144,9 @@ enum scheme_opcodes {
   OP_MAXDEFINED
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define cons(sc,a,b) _cons(sc,a,b,0)
 #define immutable_cons(sc,a,b) _cons(sc,a,b,1)
@@ -188,5 +191,9 @@ int is_promise(pointer p);
 int is_environment(pointer p);
 int is_immutable(pointer p);
 void setimmutable(pointer p);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
