@@ -321,8 +321,13 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         shell);
 
   gimp_tree_handler_disconnect (shell->vectors_visible_handler);
+  shell->vectors_visible_handler = NULL;
+
   gimp_tree_handler_disconnect (shell->vectors_thaw_handler);
+  shell->vectors_thaw_handler = NULL;
+
   gimp_tree_handler_disconnect (shell->vectors_freeze_handler);
+  shell->vectors_freeze_handler = NULL;
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_profile_changed_handler,
