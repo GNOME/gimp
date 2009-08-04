@@ -517,6 +517,9 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
 
+  /*  Only add the language entry if the iso-codes package is available.  */
+
+#ifdef HAVE_ISO_CODES
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
@@ -532,6 +535,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   entry = gimp_prop_language_entry_new (config, "language");
   gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
+#endif
 
   return main_vbox;
 }
