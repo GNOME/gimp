@@ -78,6 +78,11 @@ GtkWidget * gimp_prop_number_pair_entry_new
                                            gdouble      min_valid_value,
                                            gdouble      max_valid_value);
 
+/*  GParamString  */
+
+GtkWidget * gimp_prop_language_entry_new  (GObject     *config,
+                                           const gchar *property_name);
+
 
 /*  A view on all of an object's properties  */
 
