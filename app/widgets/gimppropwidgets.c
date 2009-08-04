@@ -850,8 +850,7 @@ gimp_prop_language_entry_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  // FIXME
-  gtk_entry_set_text (GTK_ENTRY (entry), value);
+  gimp_language_entry_set_iso_code (GIMP_LANGUAGE_ENTRY (entry), value);
   g_free (value);
 
   set_param_spec (G_OBJECT (entry), entry, param_spec);
@@ -872,21 +871,20 @@ gimp_prop_language_entry_callback (GtkWidget *entry,
                                    GObject   *config)
 {
   GParamSpec  *param_spec;
-  const gchar *text;
+  const gchar *code;
 
   param_spec = get_param_spec (G_OBJECT (entry));
   if (! param_spec)
     return;
 
-  // FIXME
-  text = gtk_entry_get_text (GTK_ENTRY (entry));
+  code = gimp_language_entry_get_iso_code (GIMP_LANGUAGE_ENTRY (entry));
 
   g_signal_handlers_block_by_func (config,
                                    gimp_prop_language_entry_notify,
                                    entry);
 
   g_object_set (config,
-                param_spec->name, text,
+                param_spec->name, code,
                 NULL);
 
   g_signal_handlers_unblock_by_func (config,
@@ -909,8 +907,7 @@ gimp_prop_language_entry_notify (GObject    *config,
                                    gimp_prop_language_entry_callback,
                                    config);
 
-  // FIXME
-  gtk_entry_set_text (GTK_ENTRY (entry), value ? value : "");
+  gimp_language_entry_set_iso_code (GIMP_LANGUAGE_ENTRY (entry), value);
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_prop_language_entry_callback,
