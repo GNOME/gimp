@@ -1354,7 +1354,11 @@ static void finalize_cell(scheme *sc, pointer a) {
 /* ========== Routines for Reading ========== */
 
 static int file_push(scheme *sc, const char *fname) {
-  FILE *fin=fopen(fname,"rb");
+ FILE *fin = NULL;
+ if (sc->file_i == MAXFIL-1)
+    return 0;
+
+  fin=fopen(fname,"rb");
   if(fin!=0) {
     sc->file_i++;
     sc->load_stack[sc->file_i].kind=port_file|port_input;
