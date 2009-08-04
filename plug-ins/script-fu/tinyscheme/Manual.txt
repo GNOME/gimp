@@ -182,7 +182,7 @@ Please read accompanying file COPYING.
      with-input-from-file, with-output-from-file and
      with-input-output-from-to-files, close-port and input-output-port? 
      (not R5RS).
-     String Ports: open-input-string, open-output-string,
+     String Ports: open-input-string, open-output-string, get-output-string,
      open-input-output-string. Strings can be used with I/O routines.
 
           Vectors

@@ -11,6 +11,7 @@ enum scheme_port_kind {
   port_free=0,
   port_file=1,
   port_string=2,
+  port_srfi6=4,
   port_input=16,
   port_output=32
 };
