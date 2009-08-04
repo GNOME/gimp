@@ -151,6 +151,7 @@ typedef struct _GimpPdbProgress     GimpPdbProgress;
 typedef struct _GimpProjection      GimpProjection;
 typedef struct _GimpSubProgress     GimpSubProgress;
 typedef struct _GimpTag             GimpTag;
+typedef struct _GimpTreeHandler     GimpTreeHandler;
 
 
 /*  interfaces  */
