@@ -32,6 +32,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
+#include "core/gimptreehandler.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
