@@ -53,7 +53,7 @@
 #define ICON_SPACING        2
 
 /*  timeout (in milliseconds) for temporary statusbar messages  */
-#define MESSAGE_TIMEOUT  5000
+#define MESSAGE_TIMEOUT  8000
 
 
 typedef struct _GimpStatusbarMsg GimpStatusbarMsg;
