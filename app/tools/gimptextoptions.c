@@ -134,7 +134,9 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                  GIMP_TEXT_HINT_STYLE_MEDIUM,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
-                                   "language", NULL,
+                                   "language",
+                                   N_("The text language may have an effect "
+                                      "on the way the text is rendered."),
                                    (const gchar *) gtk_get_default_language (),
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
