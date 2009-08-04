@@ -38,6 +38,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemundo.h"
+#include "core/gimptreehandler.h"
 
 #include "text/gimptextlayer.h"
 
@@ -72,11 +73,11 @@ struct _GimpLayerTreeViewPriv
   PangoAttrList   *italic_attrs;
   PangoAttrList   *bold_attrs;
 
-  GQuark           mode_changed_handler_id;
-  GQuark           opacity_changed_handler_id;
-  GQuark           lock_alpha_changed_handler_id;
-  GQuark           mask_changed_handler_id;
-  GQuark           alpha_changed_handler_id;
+  GimpTreeHandler *mode_changed_handler;
+  GimpTreeHandler *opacity_changed_handler;
+  GimpTreeHandler *lock_alpha_changed_handler;
+  GimpTreeHandler *mask_changed_handler;
+  GimpTreeHandler *alpha_changed_handler;
 };
 
 
@@ -359,11 +360,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   attr->start_index = 0;
   attr->end_index   = -1;
   pango_attr_list_insert (view->priv->bold_attrs, attr);
-
-  view->priv->mode_changed_handler_id       = 0;
-  view->priv->opacity_changed_handler_id    = 0;
-  view->priv->lock_alpha_changed_handler_id = 0;
-  view->priv->mask_changed_handler_id       = 0;
 }
 
 static GObject *
@@ -483,42 +479,50 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
 
   if (old_container)
     {
-      gimp_container_remove_handler (old_container,
-                                     layer_view->priv->mode_changed_handler_id);
-      gimp_container_remove_handler (old_container,
-                                     layer_view->priv->opacity_changed_handler_id);
-      gimp_container_remove_handler (old_container,
-                                     layer_view->priv->lock_alpha_changed_handler_id);
-      gimp_container_remove_handler (old_container,
-                                     layer_view->priv->mask_changed_handler_id);
-      gimp_container_remove_handler (old_container,
-                                     layer_view->priv->alpha_changed_handler_id);
+      gimp_tree_handler_disconnect (layer_view->priv->mode_changed_handler);
+      layer_view->priv->mode_changed_handler = NULL;
+
+      gimp_tree_handler_disconnect (layer_view->priv->opacity_changed_handler);
+      layer_view->priv->opacity_changed_handler = NULL;
+
+      gimp_tree_handler_disconnect (layer_view->priv->lock_alpha_changed_handler);
+      layer_view->priv->lock_alpha_changed_handler = NULL;
+
+      gimp_tree_handler_disconnect (layer_view->priv->mask_changed_handler);
+      layer_view->priv->mask_changed_handler = NULL;
+
+      gimp_tree_handler_disconnect (layer_view->priv->alpha_changed_handler);
+      layer_view->priv->alpha_changed_handler = NULL;
     }
 
   parent_view_iface->set_container (view, container);
 
   if (container)
     {
-      layer_view->priv->mode_changed_handler_id =
-        gimp_container_add_handler (container, "mode-changed",
-                                    G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
-                                    view);
-      layer_view->priv->opacity_changed_handler_id =
-        gimp_container_add_handler (container, "opacity-changed",
-                                    G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
-                                    view);
-      layer_view->priv->lock_alpha_changed_handler_id =
-        gimp_container_add_handler (container, "lock-alpha-changed",
-                                    G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
-                                    view);
-      layer_view->priv->mask_changed_handler_id =
-        gimp_container_add_handler (container, "mask-changed",
-                                    G_CALLBACK (gimp_layer_tree_view_mask_changed),
-                                    view);
-      layer_view->priv->alpha_changed_handler_id =
-        gimp_container_add_handler (container, "alpha-changed",
-                                    G_CALLBACK (gimp_layer_tree_view_alpha_changed),
-                                    view);
+      layer_view->priv->mode_changed_handler =
+        gimp_tree_handler_connect (container, "mode-changed",
+                                   G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
+                                   view);
+
+      layer_view->priv->opacity_changed_handler =
+        gimp_tree_handler_connect (container, "opacity-changed",
+                                   G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
+                                   view);
+
+      layer_view->priv->lock_alpha_changed_handler =
+        gimp_tree_handler_connect (container, "lock-alpha-changed",
+                                   G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
+                                   view);
+
+      layer_view->priv->mask_changed_handler =
+        gimp_tree_handler_connect (container, "mask-changed",
+                                   G_CALLBACK (gimp_layer_tree_view_mask_changed),
+                                   view);
+
+      layer_view->priv->alpha_changed_handler =
+        gimp_tree_handler_connect (container, "alpha-changed",
+                                   G_CALLBACK (gimp_layer_tree_view_alpha_changed),
+                                   view);
     }
 }
 
