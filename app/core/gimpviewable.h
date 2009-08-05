@@ -182,5 +182,8 @@ void            gimp_viewable_set_parent         (GimpViewable  *viewable,
 
 GimpContainer * gimp_viewable_get_children       (GimpViewable  *viewable);
 
+gboolean        gimp_viewable_is_ancestor        (GimpViewable  *ancestor,
+                                                  GimpViewable  *descendant);
+
 
 #endif  /* __GIMP_VIEWABLE_H__ */

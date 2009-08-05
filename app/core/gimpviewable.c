@@ -1127,3 +1127,23 @@ gimp_viewable_get_children (GimpViewable *viewable)
 
   return GIMP_VIEWABLE_GET_CLASS (viewable)->get_children (viewable);
 }
+
+gboolean
+gimp_viewable_is_ancestor (GimpViewable *ancestor,
+                           GimpViewable *descendant)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (ancestor), FALSE);
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (descendant), FALSE);
+
+  while (descendant)
+    {
+      GimpViewable *parent = gimp_viewable_get_parent (descendant);
+
+      if (parent == ancestor)
+        return TRUE;
+
+      descendant = parent;
+    }
+
+  return FALSE;
+}
