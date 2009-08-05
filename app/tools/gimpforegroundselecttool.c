@@ -119,7 +119,8 @@ static void   gimp_foreground_select_tool_apply    (GimpForegroundSelectTool *fg
                                                     GimpDisplay              *display);
 
 static void   gimp_foreground_select_tool_stroke   (GimpChannel              *mask,
-                                                    FgSelectStroke           *stroke);
+                                                    FgSelectStroke           *stroke,
+                                                    gboolean                  drb);
 
 static void   gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
                                                        GimpDisplay                 *display,
@@ -764,10 +765,10 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
       /*  apply foreground and background markers  */
       if (!options->drb) 
         for (list = fg_select->strokes; list; list = list->next)
-          gimp_foreground_select_tool_stroke (mask, list->data);
+          gimp_foreground_select_tool_stroke (mask, list->data, FALSE);
       else if (options->drb)
 	for (drblist = fg_select->drbsignals; drblist; drblist = drblist->next)
-          gimp_foreground_select_tool_stroke (mask, drblist->data);
+          gimp_foreground_select_tool_stroke (mask, drblist->data, TRUE);
 			
       if (fg_select->state)
 	{
@@ -890,7 +891,8 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 
 static void
 gimp_foreground_select_tool_stroke (GimpChannel    *mask,
-                                    FgSelectStroke *stroke)
+                                    FgSelectStroke *stroke,
+                                    gboolean        drb)
 {
   GimpScanConvert *scan_convert = gimp_scan_convert_new ();
 
@@ -911,15 +913,20 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
                                       stroke->num_points, stroke->points,
                                       FALSE);
     }
-
+  
   gimp_scan_convert_stroke (scan_convert,
                             stroke->width,
                             GIMP_JOIN_ROUND, GIMP_CAP_ROUND, 10.0,
                             0.0, NULL);
-
-   gimp_scan_convert_compose_value (scan_convert,
-                                    gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                                    0, 0, stroke->background ? 0 : 255);
+  if (!drb)
+    gimp_scan_convert_compose_value (scan_convert,
+                                     gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
+                                     0, 0, stroke->background ? 0 : 255);
+     
+  else
+    gimp_scan_convert_compose_value (scan_convert,
+                                     gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
+                                     0, 0, stroke->refinement ? 255 : 255);	
 	
   gimp_scan_convert_free (scan_convert);
 }

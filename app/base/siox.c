@@ -1432,22 +1432,10 @@ siox_drb (SioxState    *state,
     g_hash_table_foreach_remove(state->cache,siox_cache_remove_fg,NULL);
   if (optionsrefinement & SIOX_DRB_CHANGE_THRESHOLD)
     optionsrefinement = SIOX_DRB_RECALCULATE;
-  if (optionsrefinement & (SIOX_DRB_ADD |
-                           SIOX_DRB_SUBTRACT)) 
-    {
-      /*pixel_region_init (&srcPR, state->pixels,
-                          x - brush_radius, y - brush_radius, brush_radius * 2,
-                          brush_radius * 2, FALSE);
-      pixel_region_init (&mapPR, mask, x - brush_radius, y - brush_radius,
-                         brush_radius * 2, brush_radius * 2, TRUE);
-
-      pixel_region_init (&srcPR, state->pixels,
-                         x , y , brush_radius * 2, brush_radius * 2, FALSE);
-      pixel_region_init (&mapPR, mask, x, y,
-                         brush_radius * 2,
-                         brush_radius * 2, TRUE);
-      */	 
-	
+//  if (optionsrefinement & (SIOX_DRB_ADD |
+//                           SIOX_DRB_SUBTRACT)) 
+//    {
+    	 
       pixel_region_init (&srcPR, state->pixels,
                          x , y , state->width, state->height, FALSE);
       pixel_region_init (&mapPR, mask, x, y,
@@ -1533,7 +1521,7 @@ siox_drb (SioxState    *state,
               map += mapPR.rowstride;
             }
         }
-    }
+    //}
 }
 
 /**
