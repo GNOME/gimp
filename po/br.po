@@ -13799,8 +13799,8 @@ msgid "%d ppi, %s"
 msgstr "%d pdm, %s"
 
 #: ../app/widgets/gimptexteditor.c:193
-msgid "_Language:"
-msgstr "_Yezh :"
+msgid "Language:"
+msgstr "Yezh :"
 
 #: ../app/widgets/gimptexteditor.c:232
 msgid "_Use selected font"
