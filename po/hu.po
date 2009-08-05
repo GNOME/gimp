@@ -1,5 +1,5 @@
 # Hungarian translation of gimp.
-# Copyright (C) 1998, 2000, 2001, 2003, 2004, 2007, 2008 Free Software Foundation, Inc.
+# Copyright (C) 1998, 2000, 2001, 2003, 2004, 2007, 2008, 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Balazs Nagy <julian7@kva.hu>, 1998.
@@ -9,14 +9,15 @@
 # Laszlo Dvornik <dvornik@gnome.hu>, 2004.
 # Arpad Biro <biro arpad gmail>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng@gnome.hu>, 2007, 2008.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&amp;component=general\n"
 "POT-Creation-Date: 2008-12-13 15:53+0000\n"
-"PO-Revision-Date: 2008-12-15 01:13+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
-"Language-Team: Hungarian <gnome@fsf.hu>\n"
+"PO-Revision-Date: 2009-08-05 15:02+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Language-Team: Hungarian <gnome at gnome dot hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,7 +30,7 @@ msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "A GNU képszerkesztőprogram"
+msgstr "A GNU képszerkesztő program"
 
 #: ../app/about.h:30
 msgid ""
