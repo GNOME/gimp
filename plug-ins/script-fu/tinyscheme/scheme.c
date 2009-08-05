@@ -1416,24 +1416,18 @@ static pointer port_from_filename(scheme *sc, const char *fn, int prop) {
   return mk_port(sc,pt);
 }
 
-static port *port_rep_from_file(scheme *sc, FILE *f, int prop) {
-  char *rw;
-  port *pt;
-  pt=(port*)sc->malloc(sizeof(port));
-  if(pt==0) {
-    return 0;
-  }
-  if(prop==(port_input|port_output)) {
-    rw="a+";
-  } else if(prop==port_output) {
-    rw="w";
-  } else {
-    rw="r";
-  }
-  pt->kind=port_file|prop;
-  pt->rep.stdio.file=f;
-  pt->rep.stdio.closeit=0;
-  return pt;
+static port *port_rep_from_file(scheme *sc, FILE *f, int prop)
+{
+    port *pt;
+
+    pt = (port *)sc->malloc(sizeof *pt);
+    if (pt == NULL) {
+        return NULL;
+    }
+    pt->kind = port_file | prop;
+    pt->rep.stdio.file = f;
+    pt->rep.stdio.closeit = 0;
+    return pt;
 }
 
 static pointer port_from_file(scheme *sc, FILE *f, int prop) {
