@@ -1,15 +1,15 @@
 # Breton translation for gimp
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
 # This file is distributed under the same license as the gimp package.
-# Alan Monfort <alan.monfort@free.fr>, 2008.
+# Alan Monfort <alan.monfort@free.fr>, 2007-2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2009-07-28 04:21+0000\n"
-"PO-Revision-Date: 2009-07-28 09:19+0100\n"
-"Last-Translator: Denis <Unknown>\n"
+"POT-Creation-Date: 2009-08-03 20:31+0000\n"
+"PO-Revision-Date: 2009-08-04 15:21+0100\n"
+"Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig <drouizig@drouizig.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3153,7 +3153,6 @@ msgstr "Arz ASCII"
 
 #. Create the actual window.
 #: ../plug-ins/common/file-aa.c:348
-#| msgid "Texture"
 msgid "Text"
 msgstr "Testenn"
 
@@ -3270,7 +3269,6 @@ msgid "C source code"
 msgstr "Boneg tarzh C"
 
 #: ../plug-ins/common/file-csource.c:659
-#| msgid "Source 1:"
 msgid "C-Source"
 msgstr "C-source"
 
@@ -3384,7 +3382,6 @@ msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "Pe LIVEOÙ LOUEDOÙ pe RGGA ez eo broustoù GIMP"
 
 #: ../plug-ins/common/file-gbr.c:731
-#| msgid "_Brush"
 msgid "Brush"
 msgstr "Broust"
 
@@ -3557,7 +3554,6 @@ msgid "Couldn't load one brush in the pipe, giving up."
 msgstr "N'haller ket kargañ ur broust fiñv."
 
 #: ../plug-ins/common/file-gih.c:862
-#| msgid "Save as Brush Pipe"
 msgid "Brush Pipe"
 msgstr "Broust fiñv"
 
@@ -3725,9 +3721,8 @@ msgid "JPEG-2000 image"
 msgstr "Skeudenn JPEG-2000"
 
 #: ../plug-ins/common/file-jp2-load.c:214
-#,fuzzy
 msgid "Couldn't decode image."
-msgstr "N'haller ket lenn ar restr."
+msgstr "N'haller ket divonegañ ar skeudenn."
 
 #: ../plug-ins/common/file-jp2-load.c:235
 #: ../plug-ins/common/file-jp2-load.c:258
@@ -3735,9 +3730,8 @@ msgstr "N'haller ket lenn ar restr."
 #: ../plug-ins/common/file-jp2-load.c:287
 #: ../plug-ins/common/file-jp2-load.c:294
 #: ../plug-ins/common/file-jp2-load.c:300
-#, fuzzy
 msgid "Image type currently not supported."
-msgstr "N'eo ket skoret rizh ar skeudenn."
+msgstr "N'eo ket skoret rizh bremanel ar skeudenn."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3747,7 +3741,6 @@ msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "N'haller ket enrollañ ar boullder hep koll, oc'h enrollañ an demerez en e lec'h."
 
 #: ../plug-ins/common/file-mng.c:1286
-#| msgid "PNG"
 msgid "MNG"
 msgstr "MNG"
 
@@ -3860,7 +3853,6 @@ msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Hedad nodoù UTF-8 didalvoudek er restr goustur '%s'."
 
 #: ../plug-ins/common/file-pat.c:527
-#| msgid "GIMP pattern"
 msgid "Pattern"
 msgstr "Goustur"
 
@@ -4111,7 +4103,6 @@ msgid "Error reading file."
 msgstr "Fazi e-pad ma oa o lenn ar restr."
 
 #: ../plug-ins/common/file-pnm.c:1184
-#| msgid "PNG"
 msgid "PNM"
 msgstr "PNM"
 
@@ -4261,7 +4252,6 @@ msgid "Graphic antialiasing"
 msgstr "Lufradur ar c'hevregad"
 
 #: ../plug-ins/common/file-ps.c:3328
-#| msgid "Save as PostScript"
 msgid "PostScript"
 msgstr "PostScript"
 
@@ -4358,7 +4348,6 @@ msgid "RGB Alpha"
 msgstr "Alfa RGG"
 
 #: ../plug-ins/common/file-raw.c:1098
-#| msgid "RGB"
 msgid "RGB565"
 msgstr "RGB565"
 
@@ -4409,7 +4398,6 @@ msgid "Pal_ette File:"
 msgstr "Restr livaouegoù :"
 
 #: ../plug-ins/common/file-raw.c:1229
-#| msgid "Raw Image Save"
 msgid "Raw Image"
 msgstr "Skeudenn diaoz"
 
@@ -4523,7 +4511,6 @@ msgid "EOF encountered on reading"
 msgstr "Dibenn restr kejet outañ pa oa o lenn"
 
 #: ../plug-ins/common/file-sunras.c:1628
-#| msgid "Save as SUNRAS"
 msgid "SUNRAS"
 msgstr "SUNRAS"
 
@@ -4861,7 +4848,6 @@ msgstr "Askouezhadenn ar restr maskl :"
 #: ../plug-ins/common/file-xmc.c:332
 #: ../plug-ins/common/file-xmc.c:372
 #: ../plug-ins/common/file-xmc.c:1057
-#, fuzzy
 msgid "X11 Mouse Cursor"
 msgstr "Biz al logodenn X11"
 
@@ -4871,40 +4857,41 @@ msgid ""
 "Cannot set the hotspot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
+"N'hall ket arventenniñ ar pik tomm !\n"
+"Ret eo deoc'h kempenn an treuzfollennoù a-benn ma vo ur genskejadenn gant pep hini."
 
 #: ../plug-ins/common/file-xmc.c:673
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid X cursor."
-msgstr "'%s' n'eo ket ur reti X talvoudek."
+msgstr "'%s' n'eo ket ur biz X talvoudek."
 
 #: ../plug-ins/common/file-xmc.c:689
 #, c-format
 msgid "The width of frame %d of '%s' is too big for X cursor."
-msgstr ""
+msgstr "Led ar skeudenn %d eus '%s' zo re vras evit ar biz X."
 
 #: ../plug-ins/common/file-xmc.c:696
 #, c-format
 msgid "The height of frame %d of '%s' is too big for X cursor."
-msgstr ""
+msgstr "Sav ar skeudenn %d eus '%s' zo re vras evit ar biz X."
 
 #: ../plug-ins/common/file-xmc.c:901
 #, c-format
 msgid "there is no image chunk in \"%s\"."
-msgstr ""
+msgstr "n'eus tamm skeudenn ebet e \"%s\"."
 
 #: ../plug-ins/common/file-xmc.c:943
 #, c-format
 msgid "The width of '%s' is too big for X cursor."
-msgstr ""
+msgstr "Led '%s' zo re vras evit ar biz X."
 
 #: ../plug-ins/common/file-xmc.c:950
 #, c-format
 msgid "The height of '%s' is too big for X cursor."
-msgstr ""
+msgstr "Sav '%s' zo re vras evit ar biz X."
 
 #: ../plug-ins/common/file-xmc.c:1020
 #, c-format
-#| msgid "Write error occurred"
 msgid "A read error occurred."
 msgstr "Degouezhet ez eus bet ur fazi lenn"
 
@@ -4912,26 +4899,24 @@ msgstr "Degouezhet ez eus bet ur fazi lenn"
 #. * parameter settings
 #.
 #: ../plug-ins/common/file-xmc.c:1062
-#| msgid "XBM Options"
 msgid "XMC Options"
 msgstr "Dibarzhioù XMC"
 
 #: ../plug-ins/common/file-xmc.c:1090
 msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
-msgstr ""
+msgstr "Enankañ daveenn X ar bikenn domm. E korn kleiz e lein emañ an orin."
 
 #: ../plug-ins/common/file-xmc.c:1094
-#| msgid "Hot spot _X:"
 msgid "Hotspot _X:"
 msgstr "Pikenn domm _X :"
 
 #: ../plug-ins/common/file-xmc.c:1108
 msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
-msgstr ""
+msgstr "Enankañ daveenn Y ar bikenn domm. E korn kleiz e lein emañ an orin."
 
 #: ../plug-ins/common/file-xmc.c:1119
 msgid "_Auto-Crop all frames."
-msgstr ""
+msgstr "_Emzidroc'hañ an holl skeudennoù."
 
 #: ../plug-ins/common/file-xmc.c:1132
 msgid ""
@@ -4939,6 +4924,9 @@ msgid ""
 "This reduces the file size and may fix the problem that some large cursors disorder the screen.\n"
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
+"Dilemel riblennoù goullo an holl skeudennoù.\n"
+"Bihanaet e vo ment ar restroù ganti ha marteze e vo ratreet ar gudenn gant ar bizioù re vras o tizurzhiañ ar skrammad.\n"
+"Digevaskit mar soñjit embann ar biz ezporzhiet oc'h ober gant goulevioù all."
 
 #: ../plug-ins/common/file-xmc.c:1155
 msgid ""
@@ -4947,56 +4935,56 @@ msgid ""
 "Nominal size has no relation with the actual size (width or height).\n"
 "It is only used to determine which frame depends on which animation sequence, and which sequence is used based on the value of \"gtk-cursor-theme-size\"."
 msgstr ""
+"Dibabit ment verkel ar skeudennoù.\n"
+"Ma ne soñjit ket e sevel bizioù liesventek pe ma n'ouzit ket, dilezit \"32px\".\n"
+"N'eus keñver ebet etre ar vent vremanel hag ar vent verkel (led pe sav).\n"
+"Arveret eo a-benn despizañ pe skeudenn a vo liammet ouzh pe vliverezh ha gant pe vliverezh a vo arveret, diazezet war gwerzh eus \"gtk-cursor-theme-size\"."
 
 #: ../plug-ins/common/file-xmc.c:1172
 msgid "_Use this value only for a frame which size is not specified."
-msgstr ""
+msgstr "_Arverañ ar werzh-mañ evit ar skeudennoù o vent dierspizet nemetken."
 
 #: ../plug-ins/common/file-xmc.c:1175
 msgid "_Replace the size of all frames even if it is specified."
-msgstr ""
+msgstr "_Amsaviñ ment an holl skeudennoù ha pa vefe erspizet."
 
 #: ../plug-ins/common/file-xmc.c:1209
 msgid "Enter time span in milliseconds in which each frame is rendered."
-msgstr ""
+msgstr "Enankañ padvezh e milieilennoù e-pad ma vo deouezet pep skeudenn."
 
 #: ../plug-ins/common/file-xmc.c:1212
-#| msgid "Delay"
 msgid "_Delay:"
 msgstr "_Dale :"
 
 #: ../plug-ins/common/file-xmc.c:1217
 msgid "_Use this value only for a frame which delay is not specified."
-msgstr ""
+msgstr "_Enankañ ar werzh-mañ evit ur skeudenn he dale dierspizet nemetken."
 
 #: ../plug-ins/common/file-xmc.c:1220
 msgid "_Replace the delay of all frames even if it is specified."
-msgstr ""
+msgstr "_Amsaviñ dale an holl skeudennoù ha pa vefe erspizet."
 
 #: ../plug-ins/common/file-xmc.c:1245
 msgid "The part of copyright information that exceeded 65535 characters was removed."
-msgstr ""
+msgstr "Dilamet eo bet al lod eus titouroù ar c'hopyright a ya dreist da 65535 arouezenn."
 
 #: ../plug-ins/common/file-xmc.c:1255
 msgid "Enter copyright information."
-msgstr ""
+msgstr "Enankañ titouroù ar c'hopyright."
 
 #: ../plug-ins/common/file-xmc.c:1257
-#| msgid "_Top-right"
 msgid "_Copyright:"
 msgstr "_Copyright:"
 
 #: ../plug-ins/common/file-xmc.c:1273
 msgid "The part of license information that exceeded 65535 characters was removed."
-msgstr ""
+msgstr "Dilamet eo bet al lod eus titouroù al lañvaz a ya dreist da 65535 arouezenn."
 
 #: ../plug-ins/common/file-xmc.c:1283
-#, fuzzy
 msgid "Enter license information."
-msgstr "Roit titouroù a-fet lañvaz."
+msgstr "Enankit titouroù a-fet lañvaz."
 
 #: ../plug-ins/common/file-xmc.c:1285
-#| msgid "_Lines"
 msgid "_License:"
 msgstr "_Lañvaz :"
 
@@ -5006,40 +4994,39 @@ msgstr "_Lañvaz :"
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
 #: ../plug-ins/common/file-xmc.c:1292
-#| msgid "Ot_her"
 msgid "_Other:"
 msgstr "_All :"
 
 #: ../plug-ins/common/file-xmc.c:1326
 msgid "Enter other comment if you want."
-msgstr ""
+msgstr "Enankañ askelennoù all mar fell deoc'h."
 
 #: ../plug-ins/common/file-xmc.c:1376
-#, fuzzy, c-format
+#, c-format
 #| msgid "The default comment is limited to %d characters."
 msgid "Comment is limited to %d characters."
-msgstr "Bevennet eo an askellenn dre ziouer ouzh %d arouezennoù."
+msgstr "Bevennet eo an askellenn ouzh %d arouezenn."
 
 #: ../plug-ins/common/file-xmc.c:1494
 #, c-format
 msgid "This plug-in can only handle RGBA image format with 8bit color depth."
-msgstr ""
+msgstr "Gant an enlugellad e vez dornataet mentrezh skeudennoù mod RGGA hepken gant donder liv 8 eizhbit."
 
 #: ../plug-ins/common/file-xmc.c:1512
 #, c-format
 msgid "Width of '%s' is too large. Please reduce more than %dpx)"
-msgstr ""
+msgstr "Re vras eo led '%s'. Mar plij, bihanait muioc'h eget %dpx)"
 
 #: ../plug-ins/common/file-xmc.c:1519
 #, c-format
 msgid "Height of '%s' is too large. Please reduce more than %dpx)"
-msgstr ""
+msgstr "Re vras eo sav '%s'. Mar plij, bihanait muioc'h eget %dpx)"
 
 #: ../plug-ins/common/file-xmc.c:1526
-#, fuzzy, c-format
+#, c-format
 #| msgid "The name '%s' is used already!"
 msgid "The size of '%s' is zero!"
-msgstr "Arveret eo an anv '%s' endeo !"
+msgstr "Ment '%s' a dalv da vann !"
 
 #: ../plug-ins/common/file-xmc.c:1566
 #, c-format
@@ -5047,6 +5034,8 @@ msgid ""
 "Cannot save the cursor because the hotspot is not on '%s'.\n"
 "Try to change the hotspot position, layer geometry or save without auto-crop."
 msgstr ""
+"N'hall ket enrollañ ar biz rak ar bikenn domm n'emañ ket war '%s'.\n"
+"Klaskit kem lec'hiadur ar bikenn domm, mentoniezh an dreuzfollenn pe enrollañ hep an emzidroc'hañ."
 
 #: ../plug-ins/common/file-xmc.c:1721
 #, c-format
@@ -5054,12 +5043,16 @@ msgid ""
 "Your cursor was successfully saved but it contains one or more frames which width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
+"Enrollet eo bet ho piz gant berzh koulskoude ez eus ennañ unan pe veur a skeudenn he sav pe led brasoc'h eget %ips.\n"
+"Gwallleuniet e vo ar skrammad gantañ gant endroioù zo."
 
 #: ../plug-ins/common/file-xmc.c:1728
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames which nominal size is not supported by gnome-appearance-properties.\n"
 "You can satisfy it by checking \"Replace the size of all frame...\" in save dialog, or Your cursor may not appear in gnome-appearance-properties."
 msgstr ""
+"Enrollet eo bet ho piz gant berzh koulskoude ez eus ennañ unan pe veur a skeudenn he ment verkel nad eo ket skoret gant perzhioù-neuz-gnome.\n"
+"Kempennet e vo en ur gevaskañ \"Amsaviñ ment an holl skeudennoù...\" er voestad emziviz enrollañ pe ne vo ket skrammet ho piz e perzhioù-neuz-gnome."
 
 #: ../plug-ins/common/file-xmc.c:1965
 #, c-format
@@ -5067,11 +5060,13 @@ msgid ""
 "The parasite \"%s\" is too long for X cursor.\n"
 "The overflowed string was dropped."
 msgstr ""
+"Re hir eo an arvevad \"%s\" evit ar biz X.\n"
+"An arroudennoù gwall zo bet laosket."
 
 #: ../plug-ins/common/file-xmc.c:2167
 #, c-format
 msgid "Sorry, this plug-in cannot handle a cursor which contains over %i different nominal sizes."
-msgstr ""
+msgstr "Digarez, n'hall ket an enlugellad-mañ dornata ur biz gant muioc'h eget %i a ventoù merkel ennañ."
 
 #: ../plug-ins/common/file-xpm.c:173
 #: ../plug-ins/common/file-xpm.c:198
@@ -5793,7 +5788,7 @@ msgstr "Derez ar veskell war riblenn pep pezh"
 
 #: ../plug-ins/common/jigsaw.c:2518
 msgid "H_ighlight:"
-msgstr "Slka_eraat :"
+msgstr "Skla_eraat :"
 
 #: ../plug-ins/common/jigsaw.c:2522
 msgid "The amount of highlighting on the edges of each piece"
@@ -5906,7 +5901,7 @@ msgstr "_Amdreiñ"
 #: ../plug-ins/common/lcms.c:1271
 #: ../plug-ins/file-jpeg/jpeg-exif.c:380
 msgid "_Don't ask me again"
-msgstr "Na c'houlenn ket _diganin en-dro"
+msgstr "Na c'houlenn _diganin en-dro"
 
 #: ../plug-ins/common/lcms.c:1335
 msgid "Select destination profile"
@@ -6071,35 +6066,35 @@ msgstr "Kas ar skeudenn dre bostel"
 msgid "Send by E_mail..."
 msgstr "Kas dre b_ostel..."
 
-#: ../plug-ins/common/mail.c:407
+#: ../plug-ins/common/mail.c:406
 msgid "Send by Email"
 msgstr "Kas ar skeudenn dre bostel"
 
-#: ../plug-ins/common/mail.c:412
+#: ../plug-ins/common/mail.c:411
 msgid "_Send"
 msgstr "_Kas"
 
-#: ../plug-ins/common/mail.c:444
+#: ../plug-ins/common/mail.c:443
 msgid "_Filename:"
 msgstr "A_nv ar restr :"
 
-#: ../plug-ins/common/mail.c:456
+#: ../plug-ins/common/mail.c:455
 msgid "_To:"
 msgstr "_Da :"
 
-#: ../plug-ins/common/mail.c:470
+#: ../plug-ins/common/mail.c:469
 msgid "_From:"
 msgstr "A-_berzh :"
 
-#: ../plug-ins/common/mail.c:482
+#: ../plug-ins/common/mail.c:481
 msgid "S_ubject:"
 msgstr "D_anvez :"
 
-#: ../plug-ins/common/mail.c:591
+#: ../plug-ins/common/mail.c:590
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "fazi en abeg da askouezhadenn ar restr pe he ezvezañs"
 
-#: ../plug-ins/common/mail.c:729
+#: ../plug-ins/common/mail.c:728
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "N'haller ket loc'hañ ar c'has (%s)"
@@ -7901,9 +7896,8 @@ msgid "Symbol"
 msgstr "Arouez"
 
 #: ../plug-ins/common/unit-editor.c:103
-#, fuzzy
 msgid "The unit's symbol if it has one (e.g. \" for inches). The unit's abbreviation is used if doesn't have a symbol."
-msgstr "Arouez an unanenn mar bez unan (d.sk. \"  evit meutadoù). Arveret e vo berradur an unanenn ma n'eus ket un arouez  eviti."
+msgstr "Arouez an unanenn mar bez unan (d.sk. \"  evit meutadoù). Arveret e vo berradur an unanenn ma n'eus ket un arouez eviti."
 
 #: ../plug-ins/common/unit-editor.c:106
 msgid "Abbreviation"
@@ -8691,7 +8685,6 @@ msgid "GFLI 1.3"
 msgstr "GFLI 1.3"
 
 #: ../plug-ins/file-ico/ico-dialog.c:53
-#| msgid "Save as Windows Icon"
 msgid "Windows Icon"
 msgstr "Arlun Windows"
 
@@ -8767,7 +8760,6 @@ msgstr "Alberz JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:201
 #, c-format
-#| msgid "_Tile size:"
 msgid "File size: %s"
 msgstr "Ment ar restr : %s"
 
@@ -8781,7 +8773,6 @@ msgid "File size: unknown"
 msgstr "Ment ar restr : dianav"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:831
-#| msgid "_JPEG"
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -9735,7 +9726,7 @@ msgstr "Leuniañ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:414
 msgid "No fill"
-msgstr "Na leuniañ ket"
+msgstr "Na leuniañ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "Color fill"
@@ -11040,7 +11031,7 @@ msgstr "N'eo ket hegerz dornlev an arveriad evit GIMP."
 
 #: ../plug-ins/help/gimphelpdomain.c:187
 msgid "Please install the additional help package or use the online user manual at http://docs.gimp.org/."
-msgstr ""
+msgstr "Mar plij, staliit ar pakad skoazellañ ouzhpenn pe arverit dornlevr an arveriad enlinenn war http://docs.gimp.org/."
 
 #: ../plug-ins/help/gimphelpdomain.c:196
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -12584,7 +12575,6 @@ msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgstr "Gwelou hag embann metaroadennoù (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata.c:191
-#| msgid "Properties"
 msgid "Propert_ies"
 msgstr "Perzh_ioù"
 
@@ -12720,9 +12710,8 @@ msgstr "Leuskel _marzioù ar bajenn a-gostez"
 
 #. crop marks toggle
 #: ../plug-ins/print/print-page-layout.c:160
-#, fuzzy
 msgid "_Draw Crop Marks"
-msgstr "_Tresañ merkoù didroc'hañ"
+msgstr "_Tresañ ar merkoù didroc'hañ"
 
 #: ../plug-ins/print/print-page-layout.c:306
 msgid "_X resolution:"

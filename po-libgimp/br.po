@@ -1,15 +1,15 @@
 # Breton translation for gimp
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
 # This file is distributed under the same license as the gimp package.
-# Alan Monfort <alan.monfort@free.fr>, 2007.
+# Alan Monfort <alan.monfort@free.fr>, 2007-2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2009-07-28 04:21+0000\n"
-"PO-Revision-Date: 2009-07-28 09:24+0100\n"
-"Last-Translator: Denis <Unknown>\n"
+"POT-Creation-Date: 2009-08-03 20:31+0000\n"
+"PO-Revision-Date: 2009-08-04 11:13+0100\n"
+"Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig <drouizig@drouizig.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -223,9 +223,8 @@ msgstr ""
 "Ne vo ket enrollet an treuzfollennoù hewel ganti."
 
 #: ../libgimp/gimpexport.c:960
-#, fuzzy
 msgid "Export Image as "
-msgstr "Ezporzhiañ ar skeudenn dindan "
+msgstr "Ezporzhiañ ar skeudenn evel "
 
 #: ../libgimp/gimpfontselectbutton.c:129
 msgid "Font Selection"
@@ -289,7 +288,7 @@ msgstr "Kenglotadenn ebet"
 
 #: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Search term invalid or incomplete"
-msgstr ""
+msgstr "Termen da glask didalvoudek pe diglok"
 
 #: ../libgimp/gimpprocbrowserdialog.c:397
 msgid "Searching"
@@ -390,7 +389,6 @@ msgid "_Transfer layer's alpha channel"
 msgstr "_Treuzkas sanell alfa an dreuzfollenn"
 
 #: ../libgimpbase/gimpbaseenums.c:32
-#| msgid "_Selection"
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Diuzad"
@@ -466,19 +464,16 @@ msgid "Red"
 msgstr "Ruz"
 
 #: ../libgimpbase/gimpbaseenums.c:168
-#| msgid "Green"
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Gwer"
 
 #: ../libgimpbase/gimpbaseenums.c:169
-#| msgid "Blue"
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Glas"
 
 #: ../libgimpbase/gimpbaseenums.c:170
-#| msgid "Gray"
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Loued"
@@ -489,25 +484,21 @@ msgid "Indexed"
 msgstr "Ibiliet"
 
 #: ../libgimpbase/gimpbaseenums.c:172
-#| msgid "Alpha"
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:202
-#| msgid "Small"
 msgctxt "check-size"
 msgid "Small"
 msgstr "Bihan"
 
 #: ../libgimpbase/gimpbaseenums.c:203
-#| msgid "Medium"
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Etre"
 
 #: ../libgimpbase/gimpbaseenums.c:204
-#| msgid "Large"
 msgctxt "check-size"
 msgid "Large"
 msgstr "Bras"
@@ -528,55 +519,46 @@ msgid "Dark checks"
 msgstr "Damerioù teñval"
 
 #: ../libgimpbase/gimpbaseenums.c:240
-#| msgid "White only"
 msgctxt "check-type"
 msgid "White only"
 msgstr "Gwenn hepken"
 
 #: ../libgimpbase/gimpbaseenums.c:241
-#| msgid "Gray only"
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Loued hepken"
 
 #: ../libgimpbase/gimpbaseenums.c:242
-#| msgid "Black only"
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Du hepken"
 
 #: ../libgimpbase/gimpbaseenums.c:271
-#| msgid "Image"
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Skeudenn"
 
 #: ../libgimpbase/gimpbaseenums.c:272
-#| msgid "Pattern"
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Goustur"
 
 #: ../libgimpbase/gimpbaseenums.c:302
-#| msgid "Lightness"
 msgctxt "desaturate-mode"
 msgid "Lightness"
 msgstr "Lintr"
 
 #: ../libgimpbase/gimpbaseenums.c:303
-#| msgid "Luminosity"
 msgctxt "desaturate-mode"
 msgid "Luminosity"
 msgstr "Sklêrijenn"
 
 #: ../libgimpbase/gimpbaseenums.c:304
-#| msgid "Average"
 msgctxt "desaturate-mode"
 msgid "Average"
 msgstr "Keitad"
 
 #: ../libgimpbase/gimpbaseenums.c:333
-#| msgid "Dodge"
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Sklaeraat"
@@ -587,7 +569,6 @@ msgid "Burn"
 msgstr "Teñvalaat"
 
 #: ../libgimpbase/gimpbaseenums.c:400
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Linennek"
@@ -598,13 +579,11 @@ msgid "Bi-linear"
 msgstr "Uelinennek"
 
 #: ../libgimpbase/gimpbaseenums.c:402
-#| msgid "Radial"
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Skinek"
 
 #: ../libgimpbase/gimpbaseenums.c:403
-#| msgid "Square"
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Karrez"
@@ -685,43 +664,36 @@ msgid "Image file"
 msgstr "Restr skeudenn"
 
 #: ../libgimpbase/gimpbaseenums.c:508
-#| msgid "RGB color"
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "Liv RGG"
 
 #: ../libgimpbase/gimpbaseenums.c:509
-#| msgid "Grayscale"
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Liveoù louedoù"
 
 #: ../libgimpbase/gimpbaseenums.c:510
-#| msgid "Indexed color"
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Livioù ibiliet"
 
 #: ../libgimpbase/gimpbaseenums.c:543
-#| msgid "RGB"
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGG"
 
 #: ../libgimpbase/gimpbaseenums.c:544
-#| msgid "RGB-alpha"
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGG-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:545
-#| msgid "Grayscale"
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Liveoù louedoù"
 
 #: ../libgimpbase/gimpbaseenums.c:546
-#| msgid "Grayscale-alpha"
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Liveoù louedoù-alfa"
@@ -737,25 +709,21 @@ msgid "Indexed-alpha"
 msgstr "Ibiliet-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:579
-#| msgid "None"
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Tra ebet"
 
 #: ../libgimpbase/gimpbaseenums.c:580
-#| msgid "Bi-linear"
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Uelinennek"
 
 #: ../libgimpbase/gimpbaseenums.c:581
-#| msgid "Cubic"
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Diñsek"
 
 #: ../libgimpbase/gimpbaseenums.c:582
-#| msgid "Sinc (Lanczos3)"
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
 msgstr "Sinc (Lanczos3)"
@@ -771,7 +739,6 @@ msgid "Incremental"
 msgstr "Azvuiadek"
 
 #: ../libgimpbase/gimpbaseenums.c:642
-#| msgid "None"
 msgctxt "repeat-mode"
 msgid "None"
 msgstr "Tra ebet"
@@ -802,13 +769,11 @@ msgid "Run with last used values"
 msgstr "Loc'hañ gant ar gwerzhioù diwezhañ bet arveret"
 
 #: ../libgimpbase/gimpbaseenums.c:705
-#| msgid "Pixels"
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "a bikselioù"
 
 #: ../libgimpbase/gimpbaseenums.c:706
-#| msgid "Points"
 msgctxt "size-type"
 msgid "Points"
 msgstr "a boentoù"
@@ -844,7 +809,6 @@ msgid "Adjust"
 msgstr "Kengeidañ"
 
 #: ../libgimpbase/gimpbaseenums.c:800
-#| msgid "Clip"
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Troc'hañ"
@@ -890,7 +854,6 @@ msgid "From right to left"
 msgstr "Eus an tu dehou d'an tu kleiz"
 
 #: ../libgimpbase/gimpbaseenums.c:1137
-#| msgid "None"
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Tra ebet"
@@ -898,16 +861,14 @@ msgstr "Tra ebet"
 #: ../libgimpbase/gimpbaseenums.c:1138
 msgctxt "text-hint-style"
 msgid "Slight"
-msgstr ""
+msgstr "Skañv"
 
 #: ../libgimpbase/gimpbaseenums.c:1139
-#| msgid "Medium"
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Etre"
 
 #: ../libgimpbase/gimpbaseenums.c:1140
-#| msgid "Filled"
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Leuniet"
@@ -923,13 +884,11 @@ msgid "Right justified"
 msgstr "Marzekaet a-zehou"
 
 #: ../libgimpbase/gimpbaseenums.c:1173
-#| msgid "Centered"
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Kreizet"
 
 #: ../libgimpbase/gimpbaseenums.c:1174
-#| msgid "Filled"
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Leuniet"
@@ -1010,7 +969,6 @@ msgid "Relative colorimetric"
 msgstr "Livverk daveel"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
-#| msgid "Saturation"
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Peurvec'hiañ"
@@ -1419,25 +1377,21 @@ msgid "_Randomize"
 msgstr "Da_rgouezhezkaat"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:24
-#| msgid "Square"
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Karrez"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
-#| msgid "Portrait"
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Poltred"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
-#| msgid "Landscape"
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Gweledva"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
-#| msgid "_H"
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_A"
@@ -1447,7 +1401,6 @@ msgid "Hue"
 msgstr "Arliv"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
-#| msgid "_S"
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_P"
@@ -1457,7 +1410,6 @@ msgid "Saturation"
 msgstr "Peurvec'hiañ"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
-#| msgid "_V"
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_L"
@@ -1467,7 +1419,6 @@ msgid "Value"
 msgstr "Lintr"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
-#| msgid "_R"
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
@@ -1477,7 +1428,6 @@ msgid "Red"
 msgstr "Ruz"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
-#| msgid "_G"
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
@@ -1487,7 +1437,6 @@ msgid "Green"
 msgstr "Gwer"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
-#| msgid "_B"
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_G"
@@ -1497,7 +1446,6 @@ msgid "Blue"
 msgstr "Glas"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:132
-#| msgid "_A"
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
@@ -1507,25 +1455,21 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:161
-#| msgid "Layers"
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Treuzfollennoù"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:162
-#| msgid "Images"
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Skeudennoù"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:223
-#| msgid "Zoom in"
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Zoum brasaat"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:224
-#| msgid "Zoom out"
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Zoum bihanaat"
