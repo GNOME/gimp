@@ -784,17 +784,9 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
                                    GimpViewable            *dest_viewable,
                                    GtkTreeViewDropPosition  drop_pos)
 {
-  GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (tree_view);
-  GimpItemTreeView      *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpItemTreeViewClass *item_view_class;
-  GimpContainer         *container;
-  gint                   dest_index     = -1;
-
-  container = gimp_container_view_get_container (container_view);
-
-  if (dest_viewable)
-    dest_index = gimp_container_get_child_index (container,
-                                                 GIMP_OBJECT (dest_viewable));
+  GimpItemTreeView      *item_view  = GIMP_ITEM_TREE_VIEW (tree_view);
+  gint                   dest_index = -1;
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
@@ -823,25 +815,41 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
     }
   else if (dest_viewable)
     {
-      gint src_index;
+      GimpContainer *src_container;
+      GimpContainer *dest_container;
+      gint           src_index;
+      gint           dest_index;
 
-      src_index = gimp_container_get_child_index (container,
-                                                  GIMP_OBJECT (src_viewable));
+      src_container = gimp_item_get_container (GIMP_ITEM (src_viewable));
+      src_index     = gimp_item_get_index (GIMP_ITEM (src_viewable));
 
-      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER && src_index > dest_index)
+      dest_container = gimp_item_get_container (GIMP_ITEM (dest_viewable));
+      dest_index     = gimp_item_get_index (GIMP_ITEM (dest_viewable));
+
+      if (src_container == dest_container)
         {
-          dest_index++;
-        }
-      else if (drop_pos == GTK_TREE_VIEW_DROP_BEFORE && src_index < dest_index)
-        {
-          dest_index--;
-        }
+          if (drop_pos == GTK_TREE_VIEW_DROP_AFTER &&
+              src_index > dest_index)
+            {
+              dest_index++;
+            }
+          else if (drop_pos == GTK_TREE_VIEW_DROP_BEFORE &&
+                   src_index < dest_index)
+            {
+              dest_index--;
+            }
 
-      item_view_class->reorder_item (item_view->priv->image,
-                                     GIMP_ITEM (src_viewable),
-                                     dest_index,
-                                     TRUE,
-                                     item_view_class->reorder_desc);
+          item_view_class->reorder_item (item_view->priv->image,
+                                         GIMP_ITEM (src_viewable),
+                                         dest_index,
+                                         TRUE,
+                                         item_view_class->reorder_desc);
+        }
+      else
+        {
+          g_printerr ("%s: dnd between containers (%d -> %d)\n",
+                      G_STRFUNC, src_index, dest_index);
+        }
     }
 
   gimp_image_flush (item_view->priv->image);
