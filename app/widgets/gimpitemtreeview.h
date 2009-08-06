@@ -31,6 +31,7 @@ typedef void            (* GimpSetItemFunc)      (GimpImage       *image,
                                                   GimpItem        *item);
 typedef void            (* GimpReorderItemFunc)  (GimpImage       *image,
                                                   GimpItem        *item,
+                                                  GimpItem        *new_parent,
                                                   gint             new_index,
                                                   gboolean         push_undo,
                                                   const gchar     *undo_desc);

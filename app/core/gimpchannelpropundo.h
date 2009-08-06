@@ -36,6 +36,7 @@ struct _GimpChannelPropUndo
 {
   GimpItemUndo  parent_instance;
 
+  GimpChannel  *parent;
   gint          position;
   GimpRGB       color;
 };

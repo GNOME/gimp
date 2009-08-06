@@ -815,41 +815,30 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
     }
   else if (dest_viewable)
     {
-      GimpContainer *src_container;
-      GimpContainer *dest_container;
-      gint           src_index;
-      gint           dest_index;
+      GimpItem *src_parent;
+      GimpItem *dest_parent;
+      gint      src_index;
+      gint      dest_index;
 
-      src_container = gimp_item_get_container (GIMP_ITEM (src_viewable));
-      src_index     = gimp_item_get_index (GIMP_ITEM (src_viewable));
+      src_parent = GIMP_ITEM (gimp_viewable_get_parent (src_viewable));
+      src_index  = gimp_item_get_index (GIMP_ITEM (src_viewable));
 
-      dest_container = gimp_item_get_container (GIMP_ITEM (dest_viewable));
-      dest_index     = gimp_item_get_index (GIMP_ITEM (dest_viewable));
+      dest_index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+                                                       drop_pos,
+                                                       (GimpViewable **) &dest_parent);
 
-      if (src_container == dest_container)
+      if (src_parent == dest_parent)
         {
-          if (drop_pos == GTK_TREE_VIEW_DROP_AFTER &&
-              src_index > dest_index)
-            {
-              dest_index++;
-            }
-          else if (drop_pos == GTK_TREE_VIEW_DROP_BEFORE &&
-                   src_index < dest_index)
-            {
-              dest_index--;
-            }
+          if (src_index < dest_index)
+            dest_index--;
+        }
 
-          item_view_class->reorder_item (item_view->priv->image,
-                                         GIMP_ITEM (src_viewable),
-                                         dest_index,
-                                         TRUE,
-                                         item_view_class->reorder_desc);
-        }
-      else
-        {
-          g_printerr ("%s: dnd between containers (%d -> %d)\n",
-                      G_STRFUNC, src_index, dest_index);
-        }
+      item_view_class->reorder_item (item_view->priv->image,
+                                     GIMP_ITEM (src_viewable),
+                                     dest_parent,
+                                     dest_index,
+                                     TRUE,
+                                     item_view_class->reorder_desc);
     }
 
   gimp_image_flush (item_view->priv->image);

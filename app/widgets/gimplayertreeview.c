@@ -222,7 +222,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->get_container   = gimp_image_get_layers;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_layer;
   item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_layer;
-  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_layer;
+  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_reorder_layer;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_layer;
   item_view_class->new_item        = gimp_layer_tree_view_item_new;

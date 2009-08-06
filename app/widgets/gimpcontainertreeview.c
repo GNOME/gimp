@@ -213,6 +213,7 @@ gimp_container_tree_view_constructor (GType                  type,
   gtk_tree_view_insert_column (tree_view->view, tree_view->main_column, 0);
 
   gtk_tree_view_set_expander_column (tree_view->view, tree_view->main_column);
+  gtk_tree_view_set_enable_tree_lines (tree_view->view, TRUE);
 
   tree_view->renderer_cell = gimp_cell_renderer_viewable_new ();
   gtk_tree_view_column_pack_start (tree_view->main_column,
@@ -653,12 +654,17 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
 
   if (iter)
     {
+      GimpViewable  *parent;
       GimpContainer *container;
-      GtkTreePath   *path;
       GtkTreeIter    selected_iter;
       gboolean       selected;
 
-      container = gimp_container_view_get_container (view);
+      parent = gimp_viewable_get_parent (viewable);
+
+      if (parent)
+        container = gimp_viewable_get_children (parent);
+      else
+        container = gimp_container_view_get_container (view);
 
       selected = gtk_tree_selection_get_selected (tree_view->priv->selection,
                                                   NULL, &selected_iter);
@@ -690,18 +696,24 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
         }
       else
         {
-          GtkTreeIter place_iter;
-          gint        old_index;
+          GtkTreePath *path;
+          GtkTreeIter  place_iter;
+          gint         depth;
+          gint        *indices;
+          gint         old_index;
 
           path = gtk_tree_model_get_path (tree_view->model, iter);
-          old_index = gtk_tree_path_get_indices (path)[0];
-          gtk_tree_path_free (path);
+          indices = gtk_tree_path_get_indices (path);
+
+          depth = gtk_tree_path_get_depth (path);
+
+          old_index = indices[depth - 1];
 
           if (new_index != old_index)
             {
-              path = gtk_tree_path_new_from_indices (new_index, -1);
+              indices[depth - 1] = new_index;
+
               gtk_tree_model_get_iter (tree_view->model, &place_iter, path);
-              gtk_tree_path_free (path);
 
               if (new_index > old_index)
                 gtk_tree_store_move_after (GTK_TREE_STORE (tree_view->model),
@@ -710,6 +722,8 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
                 gtk_tree_store_move_before (GTK_TREE_STORE (tree_view->model),
                                             iter, &place_iter);
             }
+
+          gtk_tree_path_free (path);
         }
 
       if (selected)

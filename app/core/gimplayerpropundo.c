@@ -79,7 +79,8 @@ gimp_layer_prop_undo_constructor (GType                  type,
 
   switch (GIMP_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_LAYER_REPOSITION:
+    case GIMP_UNDO_LAYER_REORDER:
+      layer_prop_undo->parent = GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)));
       layer_prop_undo->position = gimp_item_get_index (GIMP_ITEM (layer));
       break;
 
@@ -114,14 +115,20 @@ gimp_layer_prop_undo_pop (GimpUndo            *undo,
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_LAYER_REPOSITION:
+    case GIMP_UNDO_LAYER_REORDER:
       {
-        gint position;
+        GimpLayer *parent;
+        gint       position;
 
+        parent   = GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)));
         position = gimp_item_get_index (GIMP_ITEM (layer));
-        gimp_image_position_layer (undo->image, layer,
-                                   layer_prop_undo->position,
-                                   FALSE, NULL);
+
+        gimp_image_reorder_layer (undo->image, layer,
+                                  layer_prop_undo->parent,
+                                  layer_prop_undo->position,
+                                  FALSE, NULL);
+
+        layer_prop_undo->parent   = parent;
         layer_prop_undo->position = position;
       }
       break;

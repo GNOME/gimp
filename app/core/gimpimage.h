@@ -493,8 +493,9 @@ gboolean        gimp_image_raise_layer_to_top    (GimpImage          *image,
                                                   GimpLayer          *layer);
 gboolean        gimp_image_lower_layer_to_bottom (GimpImage          *image,
                                                   GimpLayer          *layer);
-gboolean        gimp_image_position_layer        (GimpImage          *image,
+gboolean        gimp_image_reorder_layer         (GimpImage          *image,
                                                   GimpLayer          *layer,
+                                                  GimpLayer          *new_parent,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
@@ -519,8 +520,9 @@ gboolean        gimp_image_lower_channel         (GimpImage          *image,
                                                   GError            **error);
 gboolean      gimp_image_lower_channel_to_bottom (GimpImage          *image,
                                                   GimpChannel        *channel);
-gboolean        gimp_image_position_channel      (GimpImage          *image,
+gboolean        gimp_image_reorder_channel       (GimpImage          *image,
                                                   GimpChannel        *channel,
+                                                  GimpChannel        *new_parent,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
@@ -545,8 +547,9 @@ gboolean        gimp_image_lower_vectors         (GimpImage          *image,
                                                   GError            **error);
 gboolean      gimp_image_lower_vectors_to_bottom (GimpImage          *image,
                                                   GimpVectors        *vectors);
-gboolean        gimp_image_position_vectors      (GimpImage          *image,
+gboolean        gimp_image_reorder_vectors       (GimpImage          *image,
                                                   GimpVectors        *vectors,
+                                                  GimpVectors        *new_parent,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);

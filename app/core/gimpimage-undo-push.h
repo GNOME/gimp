@@ -114,7 +114,7 @@ GimpUndo * gimp_image_undo_push_layer_remove        (GimpImage     *image,
                                                      GimpLayer     *prev_parent,
                                                      gint           prev_position,
                                                      GimpLayer     *prev_layer);
-GimpUndo * gimp_image_undo_push_layer_reposition    (GimpImage     *image,
+GimpUndo * gimp_image_undo_push_layer_reorder       (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer);
 GimpUndo * gimp_image_undo_push_layer_mode          (GimpImage     *image,
@@ -169,7 +169,7 @@ GimpUndo * gimp_image_undo_push_channel_remove      (GimpImage     *image,
                                                      GimpChannel   *prev_parent,
                                                      gint           prev_position,
                                                      GimpChannel   *prev_channel);
-GimpUndo * gimp_image_undo_push_channel_reposition  (GimpImage     *image,
+GimpUndo * gimp_image_undo_push_channel_reorder     (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpChannel   *channel);
 GimpUndo * gimp_image_undo_push_channel_color       (GimpImage     *image,
@@ -192,7 +192,7 @@ GimpUndo * gimp_image_undo_push_vectors_remove      (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_vectors_mod         (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpVectors   *vectors);
-GimpUndo * gimp_image_undo_push_vectors_reposition  (GimpImage     *image,
+GimpUndo * gimp_image_undo_push_vectors_reorder     (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpVectors   *vectors);
 
