@@ -97,6 +97,12 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_new_from_visible_cmd_callback),
     GIMP_HELP_LAYER_NEW_FROM_VISIBLE },
 
+  { "layers-new-group", GTK_STOCK_DIRECTORY,
+    NC_("layers-action", "_New Group Layer..."), NULL,
+    NC_("layers-action", "Create a new group layer and add it to the image"),
+    G_CALLBACK (layers_new_group_cmd_callback),
+    GIMP_HELP_LAYER_NEW },
+
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
     NC_("layers-action", "D_uplicate Layer"), "<control><shift>D",
     NC_("layers-action",
@@ -544,6 +550,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new",              image);
   SET_SENSITIVE ("layers-new-last-values",  image);
   SET_SENSITIVE ("layers-new-from-visible", image);
+  SET_SENSITIVE ("layers-new-group",        image);
   SET_SENSITIVE ("layers-duplicate",        layer && !fs && !ac);
   SET_SENSITIVE ("layers-delete",           layer && !ac);
 

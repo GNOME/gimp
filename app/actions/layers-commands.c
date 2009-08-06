@@ -33,12 +33,12 @@
 #include "core/gimp.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitemundo.h"
-#include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimppickable.h"
@@ -353,6 +353,22 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                      gimp_image_base_type_with_alpha (image),
                                      _("Visible"),
                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  gimp_image_add_layer (image, layer,
+                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+
+  gimp_image_flush (image);
+}
+
+void
+layers_new_group_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_image (image, data);
+
+  layer = gimp_group_layer_new (image);
 
   gimp_image_add_layer (image, layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
