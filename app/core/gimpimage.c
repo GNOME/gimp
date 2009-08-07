@@ -3344,6 +3344,22 @@ gimp_image_raise_layer (GimpImage  *image,
 }
 
 gboolean
+gimp_image_raise_layer_to_top (GimpImage *image,
+                               GimpLayer *layer)
+{
+  GimpLayer *parent;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
+  parent = GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)));
+
+  return gimp_image_reorder_layer (image, layer,
+                                   parent, 0,
+                                   TRUE, _("Raise Layer to Top"));
+}
+
+gboolean
 gimp_image_lower_layer (GimpImage  *image,
                         GimpLayer  *layer,
                         GError    **error)
@@ -3372,22 +3388,6 @@ gimp_image_lower_layer (GimpImage  *image,
   return gimp_image_reorder_layer (image, layer,
                                    parent, index + 1,
                                    TRUE, _("Lower Layer"));
-}
-
-gboolean
-gimp_image_raise_layer_to_top (GimpImage *image,
-                               GimpLayer *layer)
-{
-  GimpLayer *parent;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  parent = GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)));
-
-  return gimp_image_reorder_layer (image, layer,
-                                   parent, 0,
-                                   TRUE, _("Raise Layer to Top"));
 }
 
 gboolean

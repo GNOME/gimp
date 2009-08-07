@@ -486,11 +486,11 @@ void            gimp_image_add_layers            (GimpImage          *image,
 gboolean        gimp_image_raise_layer           (GimpImage          *image,
                                                   GimpLayer          *layer,
                                                   GError            **error);
+gboolean        gimp_image_raise_layer_to_top    (GimpImage          *image,
+                                                  GimpLayer          *layer);
 gboolean        gimp_image_lower_layer           (GimpImage          *image,
                                                   GimpLayer          *layer,
                                                   GError            **error);
-gboolean        gimp_image_raise_layer_to_top    (GimpImage          *image,
-                                                  GimpLayer          *layer);
 gboolean        gimp_image_lower_layer_to_bottom (GimpImage          *image,
                                                   GimpLayer          *layer);
 gboolean        gimp_image_reorder_layer         (GimpImage          *image,
