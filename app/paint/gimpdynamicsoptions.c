@@ -181,6 +181,8 @@ static gdouble gimp_dynamics_options_get_dynamics_mix (gdouble       mix1,
                                                        gdouble       mix6,
                                                        gdouble       mix6_scale);
 
+static void    gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
+
 static void    gimp_dynamics_options_finalize         (GObject      *object);
 
 
@@ -196,13 +198,14 @@ static void    gimp_dynamics_options_get_property     (GObject      *object,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
 
-G_DEFINE_TYPE_WITH_CODE (GimpDynamicsOptions, gimp_dynamics_options, GIMP_TYPE_DATA,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_dynamics_editor_docked_iface_init))
 /*
+G_DEFINE_TYPE_WITH_CODE (GimpDynamicsOptions, gimp_dynamics_options, GIMP_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_dynamics_editor_docked_iface_init))
+*/
 G_DEFINE_TYPE (GimpDynamicsOptions, gimp_dynamics_options,
                GIMP_TYPE_DATA)
-*/
+
 
 #define parent_class gimp_dynamics_options_parent_class
 
@@ -976,6 +979,7 @@ static void
 gimp_dynamics_options_notify (GObject    *object,
                               GParamSpec *pspec)
 {
+/*
   GimpDynamicsOptions *options = GIMP_DYNAMICS_OPTIONS (object);
 
   if (pspec->param_id == PROP_USE_GRADIENT)
@@ -995,6 +999,8 @@ gimp_dynamics_options_notify (GObject    *object,
 
   if (G_OBJECT_CLASS (parent_class)->notify)
     G_OBJECT_CLASS (parent_class)->notify (object, pspec);
+	 */
+	
 }
 
 GimpDynamicsOptions *

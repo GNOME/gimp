@@ -21,7 +21,7 @@
 
 #include "core/gimptooloptions.h"
 #include "gimppaintoptions.h"
-#include "gimpdata.h"
+#include "core/gimpdata.h"
 
 
 typedef struct _GimpDynamicOptions  GimpDynamicOptions;
@@ -53,7 +53,6 @@ struct _GimpDynamicOptions
 
 
 typedef struct _GimpDynamicsOptionsClass GimpDynamicsOptionsClass;
-
 
 struct _GimpDynamicsOptions
 {
