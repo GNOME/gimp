@@ -168,8 +168,6 @@ void    putstr(scheme *sc, const char *s);
 int list_length(scheme *sc, pointer a);
 int eqv(pointer a, pointer b);
 
-
-SCHEME_EXPORT void set_safe_foreign (scheme *sc, pointer data);
 SCHEME_EXPORT pointer foreign_error (scheme *sc, const char *s, pointer a);
 
 #if USE_INTERFACE

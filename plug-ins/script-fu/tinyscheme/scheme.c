@@ -656,7 +656,7 @@ static int alloc_cellseg(scheme *sc, int n) {
      return n;
 }
 
-static INLINE pointer get_cell(scheme *sc, pointer a, pointer b) {
+static INLINE pointer get_cell_x(scheme *sc, pointer a, pointer b) {
   if (sc->free_cell != sc->NIL) {
     pointer x = sc->free_cell;
     sc->free_cell = cdr(x);
@@ -676,8 +676,9 @@ static pointer _get_cell(scheme *sc, pointer a, pointer b) {
   }
 
   if (sc->free_cell == sc->NIL) {
+    const int min_to_be_recovered = sc->last_cell_seg*8;
     gc(sc,a, b);
-    if (sc->fcells < sc->last_cell_seg*8
+    if (sc->fcells < min_to_be_recovered
         || sc->free_cell == sc->NIL) {
       /* if only a few recovered, get more to avoid fruitless gc's */
       if (!alloc_cellseg(sc,1) && sc->free_cell == sc->NIL) {
@@ -774,6 +775,76 @@ static pointer find_consecutive_cells(scheme *sc, int n) {
   }
   return sc->NIL;
 }
+
+/* To retain recent allocs before interpreter knows about them -
+   Tehom */
+
+static void push_recent_alloc(scheme *sc, pointer recent, pointer extra)
+{
+  pointer holder = get_cell_x(sc, recent, extra);
+  typeflag(holder) = T_PAIR | T_IMMUTABLE;
+  car(holder) = recent;
+  cdr(holder) = car(sc->sink);
+  car(sc->sink) = holder;
+}
+
+
+static pointer get_cell(scheme *sc, pointer a, pointer b)
+{
+  pointer cell   = get_cell_x(sc, a, b);
+  /* For right now, include "a" and "b" in "cell" so that gc doesn't
+     think they are garbage. */
+  /* Tentatively record it as a pair so gc understands it. */
+  typeflag(cell) = T_PAIR;
+  car(cell) = a;
+  cdr(cell) = b;
+  push_recent_alloc(sc, cell, sc->NIL);
+  return cell;
+}
+
+static pointer get_vector_object(scheme *sc, int len, pointer init)
+{
+  pointer cells = get_consecutive_cells(sc,len/2+len%2+1);
+  if(sc->no_memory) { return sc->sink; }
+  /* Record it as a vector so that gc understands it. */
+  typeflag(cells) = (T_VECTOR | T_ATOM);
+  ivalue_unchecked(cells)=len;
+  set_num_integer(cells);
+  fill_vector(cells,init);
+  push_recent_alloc(sc, cells, sc->NIL);
+  return cells;
+}
+
+static INLINE void ok_to_freely_gc(scheme *sc)
+{
+  car(sc->sink) = sc->NIL;
+}
+
+
+#if defined TSGRIND
+static void check_cell_alloced(pointer p, int expect_alloced)
+{
+  /* Can't use putstr(sc,str) because callers have no access to
+     sc.  */
+  if(typeflag(p) & !expect_alloced)
+    {
+      fprintf(stderr,"Cell is already allocated!\n");
+    }
+  if(!(typeflag(p)) & expect_alloced)
+    {
+      fprintf(stderr,"Cell is not allocated!\n");
+    }
+}
+static void check_range_alloced(pointer p, int n, int expect_alloced)
+{
+  int i;
+  for(i = 0;i<n;i++)
+    { (void)check_cell_alloced(p+i,expect_alloced); }
+}
+
+#endif
+
+/* Medium level cell allocation */
 
 /* get new cons cell */
 pointer _cons(scheme *sc, pointer a, pointer b, int immutable) {
@@ -939,23 +1010,10 @@ static pointer mk_number(scheme *sc, num n) {
  }
 }
 
-void set_safe_foreign (scheme *sc, pointer data) {
-  if (sc->safe_foreign == sc->NIL) {
-    fprintf (stderr, "get_safe_foreign called outside a foreign function\n");
-  } else {
-    car (sc->safe_foreign) = data;
-  }
-}
-
 pointer foreign_error (scheme *sc, const char *s, pointer a) {
-  if (sc->safe_foreign == sc->NIL) {
-    fprintf (stderr, "set_foreign_error_flag called outside a foreign function\n");
-  } else {
-    sc->foreign_error = cons (sc, mk_string (sc, s), a);
-  }
+  sc->foreign_error = cons (sc, mk_string (sc, s), a);
   return sc->T;
 }
-
 
 /* char_cnt is length of string in chars. */
 /* str points to a NUL terminated string. */
@@ -1009,8 +1067,8 @@ INTERFACE pointer mk_string(scheme *sc, const char *str) {
 INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
-     strvalue(x) = store_string(sc,len,str,0);
      typeflag(x) = (T_STRING | T_ATOM);
+     strvalue(x) = store_string(sc,len,str,0);
      strlength(x) = len;
      return (x);
 }
@@ -1018,21 +1076,14 @@ INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
 INTERFACE pointer mk_empty_string(scheme *sc, int len, gunichar fill) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
-     strvalue(x) = store_string(sc,len,0,fill);
      typeflag(x) = (T_STRING | T_ATOM);
+     strvalue(x) = store_string(sc,len,0,fill);
      strlength(x) = len;
      return (x);
 }
 
-INTERFACE static pointer mk_vector(scheme *sc, int len) {
-     pointer x=get_consecutive_cells(sc,len/2+len%2+1);
-     if(sc->no_memory) { return sc->sink; }
-     typeflag(x) = (T_VECTOR | T_ATOM);
-     ivalue_unchecked(x)=len;
-     set_num_integer(x);
-     fill_vector(x,sc->NIL);
-     return x;
-}
+INTERFACE static pointer mk_vector(scheme *sc, int len)
+{ return get_vector_object(sc,len,sc->NIL); }
 
 INTERFACE static void fill_vector(pointer vec, pointer obj) {
      int i;
@@ -1294,11 +1345,13 @@ static void gc(scheme *sc, pointer a, pointer b) {
   mark(sc->code);
   dump_stack_mark(sc);
   mark(sc->value);
-  mark(sc->safe_foreign);
   mark(sc->inport);
   mark(sc->save_inport);
   mark(sc->outport);
   mark(sc->loadport);
+
+  /* Mark recent objects the interpreter doesn't know about yet. */
+  mark(car(sc->sink));
 
   /* mark variables a, b */
   mark(a);
@@ -2663,10 +2716,8 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           if (is_proc(sc->code)) {
                s_goto(sc,procnum(sc->code));   /* PROCEDURE */
           } else if (is_foreign(sc->code)) {
-               sc->safe_foreign = cons (sc, sc->NIL, sc->safe_foreign);
                sc->foreign_error = sc->NIL;
                x=sc->code->_object._ff(sc,sc->args);
-               sc->safe_foreign = cdr (sc->safe_foreign);
                if (sc->foreign_error == sc->NIL) {
                    s_return(sc,x);
                } else {
@@ -4459,6 +4510,7 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
         pcd=dispatch_table+sc->op;
       }
     }
+    ok_to_freely_gc(sc);
     old_op=sc->op;
     if (pcd->func(sc, (enum scheme_opcodes)sc->op) == sc->NIL) {
       return;
@@ -4676,7 +4728,6 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   sc->code = sc->NIL;
   sc->tracing=0;
   sc->bc_flag = 0;
-  sc->safe_foreign = sc->NIL;
 
   /* init sc->NIL */
   typeflag(sc->NIL) = (T_ATOM | MARK);
@@ -4687,6 +4738,10 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   /* init F */
   typeflag(sc->F) = (T_ATOM | MARK);
   car(sc->F) = cdr(sc->F) = sc->F;
+  /* init sink */
+  typeflag(sc->sink) = (T_PAIR | MARK);
+  car(sc->sink) = sc->NIL;
+
   sc->oblist = oblist_initial_value(sc);
   /* init global_env */
   new_frame_in_env(sc, sc->NIL);
