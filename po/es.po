@@ -8,16 +8,16 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009.
-# Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 # Jorge González <jorgegonz@svn.gnome.org>, 2009.
+# Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-08-04 20:46+0000\n"
-"PO-Revision-Date: 2009-08-05 05:38+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"POT-Creation-Date: 2009-08-06 19:36+0000\n"
+"PO-Revision-Date: 2009-08-05 10:53+0200\n"
+"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -747,7 +747,7 @@ msgstr "Canal de color nuevo"
 #: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:589
 #: ../app/widgets/gimpchanneltreeview.c:272
-#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:313
+#: ../app/widgets/gimplayertreeview.c:808 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Copia del canal %s"
@@ -953,7 +953,7 @@ msgstr "Usar el color compuesto de todas las capas visibles"
 #: ../app/dialogs/file-open-location-dialog.c:212
 #: ../app/dialogs/file-open-location-dialog.c:224
 #: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:761 ../app/widgets/gimptoolbox-dnd.c:158
+#: ../app/widgets/gimplayertreeview.c:768 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:973
 #, c-format
 msgid ""
@@ -1925,7 +1925,7 @@ msgstr "Rellenar la selección con el color del fondo"
 #: ../app/actions/edit-actions.c:205
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
-msgstr "Rellenar con un _patrón"
+msgstr "Rellenar con un pa_trón"
 
 #: ../app/actions/edit-actions.c:206
 msgctxt "edit-action"
@@ -3064,7 +3064,7 @@ msgstr "Volteando"
 msgid "Rotating"
 msgstr "Rotando"
 
-#: ../app/actions/image-commands.c:410 ../app/actions/layers-commands.c:654
+#: ../app/actions/image-commands.c:410 ../app/actions/layers-commands.c:670
 msgid "Cannot crop because the current selection is empty."
 msgstr "No se puede recortar porque la selección actual está vacía."
 
@@ -3077,7 +3077,7 @@ msgid "Scale Image"
 msgstr "Escalar la imagen"
 
 #. Scaling
-#: ../app/actions/image-commands.c:660 ../app/actions/layers-commands.c:1119
+#: ../app/actions/image-commands.c:660 ../app/actions/layers-commands.c:1135
 #: ../app/dialogs/preferences-dialog.c:1928
 #: ../app/pdb/drawable-transform-cmds.c:681
 #: ../app/pdb/drawable-transform-cmds.c:757 ../app/pdb/image-cmds.c:404
@@ -3223,400 +3223,416 @@ msgid "Create a new layer from what is visible in this image"
 msgstr "Crear una capa nueva a partir de lo que es visible en esta imagen"
 
 #: ../app/actions/layers-actions.c:101
+#, fuzzy
+#| msgctxt "layers-action"
+#| msgid "_New Layer..."
+msgctxt "layers-action"
+msgid "_New Group Layer..."
+msgstr "Capa _nueva…"
+
+#: ../app/actions/layers-actions.c:102
+#, fuzzy
+#| msgctxt "layers-action"
+#| msgid "Create a new layer and add it to the image"
+msgctxt "layers-action"
+msgid "Create a new group layer and add it to the image"
+msgstr "Crea una capa nueva y la añade a la imagen"
+
+#: ../app/actions/layers-actions.c:107
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "D_uplicar la capa"
 
-#: ../app/actions/layers-actions.c:103
+#: ../app/actions/layers-actions.c:109
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Crea un duplicado de la capa y la añade a la imagen"
 
-#: ../app/actions/layers-actions.c:108
+#: ../app/actions/layers-actions.c:114
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "_Borrar la capa"
 
-#: ../app/actions/layers-actions.c:109
+#: ../app/actions/layers-actions.c:115
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "Borra esta capa"
 
-#: ../app/actions/layers-actions.c:114
+#: ../app/actions/layers-actions.c:120
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "_Elevar capa"
 
-#: ../app/actions/layers-actions.c:115
+#: ../app/actions/layers-actions.c:121
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "Eleva esta capa un nivel dentro de la pila de capas"
 
-#: ../app/actions/layers-actions.c:120
+#: ../app/actions/layers-actions.c:126
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "Capa a la _cima"
 
-#: ../app/actions/layers-actions.c:121
+#: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "Mueve esta capa a la parte superior de la pila de capas"
 
-#: ../app/actions/layers-actions.c:126
+#: ../app/actions/layers-actions.c:132
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "_Bajar capa"
 
-#: ../app/actions/layers-actions.c:127
+#: ../app/actions/layers-actions.c:133
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "Baja esta capa un nivel dentro de la pila de capas"
 
-#: ../app/actions/layers-actions.c:132
+#: ../app/actions/layers-actions.c:138
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "Capa al _fondo"
 
-#: ../app/actions/layers-actions.c:133
+#: ../app/actions/layers-actions.c:139
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Mueve esta capa a la parte inferior de la pila de capas"
 
-#: ../app/actions/layers-actions.c:138
+#: ../app/actions/layers-actions.c:144
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "_Anclar la capa"
 
-#: ../app/actions/layers-actions.c:139
+#: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Anclar la capa flotante"
 
-#: ../app/actions/layers-actions.c:144
+#: ../app/actions/layers-actions.c:150
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "Combinar hacia aba_jo"
 
-#: ../app/actions/layers-actions.c:145
+#: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
 msgid "Merge this layer with the one below it"
 msgstr "Combina esta capa con la que está bajo ella"
 
-#: ../app/actions/layers-actions.c:150
+#: ../app/actions/layers-actions.c:156
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "Combinar las capas _visibles…"
 
-#: ../app/actions/layers-actions.c:151
+#: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Combina todas las capas visibles en una sola capa"
 
-#: ../app/actions/layers-actions.c:156
+#: ../app/actions/layers-actions.c:162
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "A_planar la imagen"
 
-#: ../app/actions/layers-actions.c:157
+#: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Combina todas las capas en una y quita la transparencia"
 
-#: ../app/actions/layers-actions.c:162
+#: ../app/actions/layers-actions.c:168
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "_Descartar información de texto"
 
-#: ../app/actions/layers-actions.c:163
+#: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "Convierte esta capa de texto en una capa normal"
 
-#: ../app/actions/layers-actions.c:168
+#: ../app/actions/layers-actions.c:174
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "Texto a _ruta"
 
-#: ../app/actions/layers-actions.c:169
+#: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "Crea una ruta a partir de esta capa de texto"
 
-#: ../app/actions/layers-actions.c:174
+#: ../app/actions/layers-actions.c:180
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Texto _siguiendo una ruta"
 
-#: ../app/actions/layers-actions.c:175
+#: ../app/actions/layers-actions.c:181
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Hacer seguir el texto de esta capa a lo largo de la ruta"
 
-#: ../app/actions/layers-actions.c:180
+#: ../app/actions/layers-actions.c:186
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "Tamaño de b_orde de capa…"
 
-#: ../app/actions/layers-actions.c:181
+#: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "Ajusta las dimensiones de la capa"
 
-#: ../app/actions/layers-actions.c:186
+#: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "Capa a tamaño de _imagen"
 
-#: ../app/actions/layers-actions.c:187
+#: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "Redimensiona la capa al tamaño de la imagen"
 
-#: ../app/actions/layers-actions.c:192
+#: ../app/actions/layers-actions.c:198
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "E_scalar capa…"
 
-#: ../app/actions/layers-actions.c:193
+#: ../app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "Cambia el tamaño del contenido de la capa"
 
-#: ../app/actions/layers-actions.c:198
+#: ../app/actions/layers-actions.c:204
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "Re_cortar a la selección"
 
-#: ../app/actions/layers-actions.c:199
+#: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "Recorta la capa a las dimensiones de la selección"
 
-#: ../app/actions/layers-actions.c:204
+#: ../app/actions/layers-actions.c:210
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "Añadir má_scara de capa…"
 
-#: ../app/actions/layers-actions.c:206
+#: ../app/actions/layers-actions.c:212
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
 "Añade una máscara que permita la edición no destructiva de la transparencia"
 
-#: ../app/actions/layers-actions.c:211
+#: ../app/actions/layers-actions.c:217
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Añadir canal al_fa"
 
-#: ../app/actions/layers-actions.c:212
+#: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "Añade información de transparencia a la capa"
 
-#: ../app/actions/layers-actions.c:217
+#: ../app/actions/layers-actions.c:223
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "Elimina_r el canal Alfa"
 
-#: ../app/actions/layers-actions.c:218
+#: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "Quita la información de transparencia de la capa"
 
-#: ../app/actions/layers-actions.c:226
+#: ../app/actions/layers-actions.c:232
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "Bloquear el canal alf_a"
 
-#: ../app/actions/layers-actions.c:228
+#: ../app/actions/layers-actions.c:234
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr ""
 "Evita que la información de transparencia de esta capa pueda ser modificada"
 
-#: ../app/actions/layers-actions.c:234
+#: ../app/actions/layers-actions.c:240
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "_Editar máscara de capa"
 
-#: ../app/actions/layers-actions.c:235
+#: ../app/actions/layers-actions.c:241
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Trabajar sobre la máscara de capa"
 
-#: ../app/actions/layers-actions.c:241
+#: ../app/actions/layers-actions.c:247
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "_Mostrar máscara de capa"
 
-#: ../app/actions/layers-actions.c:247
+#: ../app/actions/layers-actions.c:253
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "_Desactivar máscara de capa"
 
-#: ../app/actions/layers-actions.c:248
+#: ../app/actions/layers-actions.c:254
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "Ignorar el efecto de la máscara de capa"
 
-#: ../app/actions/layers-actions.c:257
+#: ../app/actions/layers-actions.c:263
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Aplicar _máscara de capa"
 
-#: ../app/actions/layers-actions.c:258
+#: ../app/actions/layers-actions.c:264
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Aplicar el efecto de la máscara de capa y quitarla"
 
-#: ../app/actions/layers-actions.c:263
+#: ../app/actions/layers-actions.c:269
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Borrar másca_ra de capa"
 
-#: ../app/actions/layers-actions.c:264
+#: ../app/actions/layers-actions.c:270
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Quitar la máscara de capa y su efecto"
 
-#: ../app/actions/layers-actions.c:272
+#: ../app/actions/layers-actions.c:278
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "_Máscara a selección"
 
-#: ../app/actions/layers-actions.c:273
+#: ../app/actions/layers-actions.c:279
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Sustituir la selección con la máscara de capa"
 
-#: ../app/actions/layers-actions.c:278
+#: ../app/actions/layers-actions.c:284
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "_Añadir a selección"
 
-#: ../app/actions/layers-actions.c:279
+#: ../app/actions/layers-actions.c:285
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Añadir la máscara de capa a la selección actual"
 
-#: ../app/actions/layers-actions.c:284 ../app/actions/layers-actions.c:313
-#: ../app/actions/layers-actions.c:343
+#: ../app/actions/layers-actions.c:290 ../app/actions/layers-actions.c:319
+#: ../app/actions/layers-actions.c:349
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "_Sustraer de selección"
 
-#: ../app/actions/layers-actions.c:285
+#: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Sustraer la máscara de capa de la selección actual"
 
-#: ../app/actions/layers-actions.c:290 ../app/actions/layers-actions.c:320
-#: ../app/actions/layers-actions.c:350
+#: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:326
+#: ../app/actions/layers-actions.c:356
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "_Interseccionar con selección"
 
-#: ../app/actions/layers-actions.c:291
+#: ../app/actions/layers-actions.c:297
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr ""
 "Establecer la máscara de capa como su intersección con la selección actual"
 
-#: ../app/actions/layers-actions.c:299
+#: ../app/actions/layers-actions.c:305
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Alfa a _selección"
 
-#: ../app/actions/layers-actions.c:301
+#: ../app/actions/layers-actions.c:307
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Sustituir la selección con el canal alfa de la capa"
 
-#: ../app/actions/layers-actions.c:306 ../app/actions/layers-actions.c:336
+#: ../app/actions/layers-actions.c:312 ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "_Añadir a selección"
 
-#: ../app/actions/layers-actions.c:308
+#: ../app/actions/layers-actions.c:314
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Añadir el canal alfa de la capa a la selección actual"
 
-#: ../app/actions/layers-actions.c:315
+#: ../app/actions/layers-actions.c:321
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Sustraer el canal alfa de la capa de la selección actual"
 
-#: ../app/actions/layers-actions.c:322
+#: ../app/actions/layers-actions.c:328
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr ""
 "Establecer la selección actual como su intersección con el canal alfa de la "
 "capa"
 
-#: ../app/actions/layers-actions.c:330
+#: ../app/actions/layers-actions.c:336
 msgctxt "layers-action"
 msgid "_Text to Selection"
 msgstr "_Texto a selección"
 
-#: ../app/actions/layers-actions.c:331
+#: ../app/actions/layers-actions.c:337
 msgctxt "layers-action"
 msgid "Replace the selection with the text layer's outline"
 msgstr "Sustituir la selección por borde exterior de la capa de texto"
 
-#: ../app/actions/layers-actions.c:338
+#: ../app/actions/layers-actions.c:344
 msgctxt "layers-action"
 msgid "Add the text layer's outline to the current selection"
 msgstr "Añadir el borde exterior de la capa del texto a la selección actual"
 
-#: ../app/actions/layers-actions.c:345
+#: ../app/actions/layers-actions.c:351
 msgctxt "layers-action"
 msgid "Subtract the text layer's outline from the current selection"
 msgstr "Sustraer el borde exterior de la capa de texto de la selección actual"
 
-#: ../app/actions/layers-actions.c:352
+#: ../app/actions/layers-actions.c:358
 msgctxt "layers-action"
 msgid "Intersect the text layer's outline with the current selection"
 msgstr ""
 "Establecer el borde exterior de la capa de texto como su intersección con la "
 "selección actual"
 
-#: ../app/actions/layers-actions.c:360
+#: ../app/actions/layers-actions.c:366
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Seleccionar la capa _superior"
 
-#: ../app/actions/layers-actions.c:361
+#: ../app/actions/layers-actions.c:367
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Seleccionar la capa más alta"
 
-#: ../app/actions/layers-actions.c:366
+#: ../app/actions/layers-actions.c:372
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Seleccionar la capa i_nferior"
 
-#: ../app/actions/layers-actions.c:367
+#: ../app/actions/layers-actions.c:373
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Seleccionar la capa más baja"
 
-#: ../app/actions/layers-actions.c:372
+#: ../app/actions/layers-actions.c:378
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "Seleccionar la _capa anterior"
 
-#: ../app/actions/layers-actions.c:373
+#: ../app/actions/layers-actions.c:379
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "Seleccionar la capa por encima de la actual"
 
-#: ../app/actions/layers-actions.c:378
+#: ../app/actions/layers-actions.c:384
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "Seleccionar la capa siguie_nte"
 
-#: ../app/actions/layers-actions.c:379
+#: ../app/actions/layers-actions.c:385
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "Seleccionar la capa por debajo de la actual"
@@ -3632,7 +3648,7 @@ msgstr "Editar atributos de capa"
 #: ../app/actions/layers-commands.c:250 ../app/actions/layers-commands.c:252
 #: ../app/actions/layers-commands.c:320 ../app/actions/layers-commands.c:324
 #: ../app/widgets/gimpdrawabletreeview.c:327
-#: ../app/widgets/gimplayertreeview.c:862
+#: ../app/widgets/gimplayertreeview.c:869
 msgid "New Layer"
 msgstr "Capa nueva"
 
@@ -3644,27 +3660,27 @@ msgstr "Crear una capa nueva"
 msgid "Visible"
 msgstr "Visible"
 
-#: ../app/actions/layers-commands.c:585
+#: ../app/actions/layers-commands.c:601
 msgid "Set Layer Boundary Size"
 msgstr "Establecer el tamaño de borde de capa"
 
-#: ../app/actions/layers-commands.c:626 ../app/core/gimplayer.c:255
+#: ../app/actions/layers-commands.c:642 ../app/core/gimplayer.c:255
 msgid "Scale Layer"
 msgstr "Escalar la capa"
 
-#: ../app/actions/layers-commands.c:664
+#: ../app/actions/layers-commands.c:680
 msgid "Crop Layer"
 msgstr "Recortar la capa"
 
-#: ../app/actions/layers-commands.c:803
+#: ../app/actions/layers-commands.c:819
 msgid "Layer Mask to Selection"
 msgstr "Máscara de capa a selección"
 
-#: ../app/actions/layers-commands.c:1054
+#: ../app/actions/layers-commands.c:1070
 msgid "Please select a channel first"
 msgstr "Seleccione un canal primero"
 
-#: ../app/actions/layers-commands.c:1062 ../app/core/gimplayer.c:1332
+#: ../app/actions/layers-commands.c:1078 ../app/core/gimplayer.c:1332
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
@@ -5844,13 +5860,6 @@ msgstr ""
 "Establece cuántos procesadores debe intentar usar simultáneamente GIMP."
 
 #: ../app/config/gimprc-blurbs.h:241
-#, fuzzy
-#| msgid ""
-#| "When enabled, the X server is queried for the mouse's current position on "
-#| "each motion event, rather than relying on the position hint.  This means "
-#| "painting with large brushes should be more accurate, but it may be "
-#| "slower.  Perversely, on some X servers enabling this option results in "
-#| "faster painting."
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -6189,21 +6198,16 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Cuando se encuentre activado, pulsando F1 se abrirá el visor de ayuda."
 
 #: ../app/config/gimprc-blurbs.h:445
-#, fuzzy, c-format
-#| msgid ""
-#| "Sets the external web browser to be used.  This can be an absolute path "
-#| "or the name of an executable to search for in the user's PATH. If the "
-#| "command contains '%s' it will be replaced with the URL, else the URL will "
-#| "be appended to the command with a space separating the two."
+#, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
 "the name of an executable to search for in the user's PATH. If the command "
 "contains '%s' it will be replaced with the URL, otherwise the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
-"Define el navegador externo que se usará. Esto puede ser una ruta absoluta o "
-"el nombre de un ejecutable que se encuentre en la ruta del usuario. Si el "
-"comando contiene «%s» será reemplazado con la URL, sino la URL será añadida "
+"Define el navegador externo que se usará.  Esto puede ser una ruta absoluta "
+"o el nombre de un ejecutable que se encuentre en la ruta del usuario. Si el "
+"comando contiene «%s» será reemplazado con la URL; si no, la URL será añadida "
 "al comando con un espacio separando a ambos."
 
 #: ../app/config/gimprc-deserialize.c:134 ../app/core/gimp-modules.c:133
@@ -6773,9 +6777,11 @@ msgid "Delete layer"
 msgstr "Borra la capa"
 
 #: ../app/core/core-enums.c:923
+#, fuzzy
+#| msgid "Reorder Layer"
 msgctxt "undo-type"
-msgid "Reposition layer"
-msgstr "Reposicionar la capa"
+msgid "Reorder layer"
+msgstr "Reordenar la capa"
 
 #: ../app/core/core-enums.c:924
 msgctxt "undo-type"
@@ -6823,9 +6829,11 @@ msgid "Delete channel"
 msgstr "Borra el canal"
 
 #: ../app/core/core-enums.c:935
+#, fuzzy
+#| msgid "Reorder Channel"
 msgctxt "undo-type"
-msgid "Reposition channel"
-msgstr "Reposicionar el canal"
+msgid "Reorder channel"
+msgstr "Reordenar el canal"
 
 #: ../app/core/core-enums.c:936
 msgctxt "undo-type"
@@ -6848,9 +6856,11 @@ msgid "Path modification"
 msgstr "Modificación de la ruta"
 
 #: ../app/core/core-enums.c:940
+#, fuzzy
+#| msgid "Reorder path"
 msgctxt "undo-type"
-msgid "Reposition path"
-msgstr "Reposicionar la ruta"
+msgid "Reorder path"
+msgstr "Reordenar la ruta"
 
 #: ../app/core/core-enums.c:944
 msgctxt "undo-type"
@@ -7738,103 +7748,103 @@ msgstr "Adjuntar parásito a la imagen"
 msgid "Remove Parasite from Image"
 msgstr "Eliminar el parásito de la imagen"
 
-#: ../app/core/gimpimage.c:3055
+#: ../app/core/gimpimage.c:3082
 msgid "Add Layer"
 msgstr "Añadir una capa"
 
-#: ../app/core/gimpimage.c:3108 ../app/core/gimpimage.c:3134
+#: ../app/core/gimpimage.c:3135 ../app/core/gimpimage.c:3161
 msgid "Remove Layer"
 msgstr "Eliminar una capa"
 
-#: ../app/core/gimpimage.c:3127
+#: ../app/core/gimpimage.c:3154
 msgid "Remove Floating Selection"
 msgstr "Eliminar la selección flotante"
 
-#: ../app/core/gimpimage.c:3300
+#: ../app/core/gimpimage.c:3328
 msgid "Layer cannot be raised higher."
 msgstr "La capa no puede ser elevada más alto."
 
-#: ../app/core/gimpimage.c:3305
+#: ../app/core/gimpimage.c:3336
 msgid "Raise Layer"
 msgstr "Elevar la capa"
 
-#: ../app/core/gimpimage.c:3327
+#: ../app/core/gimpimage.c:3359
 msgid "Layer cannot be lowered more."
 msgstr "La capa no puede bajarse más."
 
-#: ../app/core/gimpimage.c:3332
+#: ../app/core/gimpimage.c:3367
 msgid "Lower Layer"
 msgstr "Bajar la capa"
 
-#: ../app/core/gimpimage.c:3343
+#: ../app/core/gimpimage.c:3383
 msgid "Raise Layer to Top"
 msgstr "Elevar la capa hasta lo más alto"
 
-#: ../app/core/gimpimage.c:3361
+#: ../app/core/gimpimage.c:3405
 msgid "Lower Layer to Bottom"
 msgstr "Bajar la capa hasta la parte más baja"
 
-#: ../app/core/gimpimage.c:3434
+#: ../app/core/gimpimage.c:3500
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: ../app/core/gimpimage.c:3477 ../app/core/gimpimage.c:3493
+#: ../app/core/gimpimage.c:3543 ../app/core/gimpimage.c:3559
 msgid "Remove Channel"
 msgstr "Eliminar el canal"
 
-#: ../app/core/gimpimage.c:3561
+#: ../app/core/gimpimage.c:3628
 msgid "Channel cannot be raised higher."
 msgstr "El canal no puede ser elevado más alto."
 
-#: ../app/core/gimpimage.c:3566
+#: ../app/core/gimpimage.c:3636
 msgid "Raise Channel"
 msgstr "Elevar el canal"
 
-#: ../app/core/gimpimage.c:3577
+#: ../app/core/gimpimage.c:3652
 msgid "Raise Channel to Top"
 msgstr "Elevar el canal hasta lo alto"
 
-#: ../app/core/gimpimage.c:3600
+#: ../app/core/gimpimage.c:3676
 msgid "Channel cannot be lowered more."
 msgstr "El canal no puede descender más."
 
-#: ../app/core/gimpimage.c:3605
+#: ../app/core/gimpimage.c:3684
 msgid "Lower Channel"
 msgstr "Bajar el canal"
 
-#: ../app/core/gimpimage.c:3623
+#: ../app/core/gimpimage.c:3706
 msgid "Lower Channel to Bottom"
 msgstr "Bajar el canal hasta lo más bajo"
 
-#: ../app/core/gimpimage.c:3697
+#: ../app/core/gimpimage.c:3803
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: ../app/core/gimpimage.c:3737
+#: ../app/core/gimpimage.c:3843
 msgid "Remove Path"
 msgstr "Eliminar la ruta"
 
-#: ../app/core/gimpimage.c:3799
+#: ../app/core/gimpimage.c:3906
 msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada más alto."
 
-#: ../app/core/gimpimage.c:3804
+#: ../app/core/gimpimage.c:3914
 msgid "Raise Path"
 msgstr "Elevar la ruta"
 
-#: ../app/core/gimpimage.c:3815
+#: ../app/core/gimpimage.c:3930
 msgid "Raise Path to Top"
 msgstr "Elevar la ruta hasta el principio"
 
-#: ../app/core/gimpimage.c:3837
+#: ../app/core/gimpimage.c:3953
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender más."
 
-#: ../app/core/gimpimage.c:3842
+#: ../app/core/gimpimage.c:3961
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
-#: ../app/core/gimpimage.c:3860
+#: ../app/core/gimpimage.c:3983
 msgid "Lower Path to Bottom"
 msgstr "Bajar la ruta hasta el fondo"
 
@@ -10045,12 +10055,12 @@ msgid "Drop New Path"
 msgstr "Borrar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:502
-#: ../app/widgets/gimplayertreeview.c:750
+#: ../app/widgets/gimplayertreeview.c:757
 msgid "Drop layers"
 msgstr "Descartar las capas"
 
 #: ../app/display/gimpdisplayshell-dnd.c:654
-#: ../app/widgets/gimplayertreeview.c:827 ../app/widgets/gimptoolbox-dnd.c:361
+#: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Búfer descartado"
 
@@ -10084,29 +10094,29 @@ msgstr "Aumento:"
 
 #: ../app/display/gimpdisplayshell-title.c:284
 msgid "(modified)"
-msgstr "(modificado)"
+msgstr "(modificada)"
 
 #: ../app/display/gimpdisplayshell-title.c:289
 msgid "(clean)"
-msgstr "(limpio)"
+msgstr "(limpia)"
 
 #: ../app/display/gimpdisplayshell-title.c:337
 #: ../app/display/gimpdisplayshell-title.c:350
 #: ../app/widgets/gimpactiongroup.c:825
 msgid "(none)"
-msgstr "(ninguno)"
+msgstr "(ninguna)"
 
 #: ../app/display/gimpdisplayshell-title.c:483
 msgid " (exported)"
-msgstr " (exportado)"
+msgstr " (exportada)"
 
 #: ../app/display/gimpdisplayshell-title.c:485
 msgid " (overwritten)"
-msgstr " (sobreescrito)"
+msgstr " (sobreescrita)"
 
 #: ../app/display/gimpdisplayshell-title.c:491
 msgid " (imported)"
-msgstr " (importado)"
+msgstr " (importada)"
 
 #: ../app/display/gimpstatusbar.c:346
 #, c-format
@@ -11442,7 +11452,7 @@ msgstr "Pulse para añadir puntos de control a todos los canales"
 
 #: ../app/tools/gimpcurvestool.c:336
 msgid "Click to locate on curve (try Shift, Ctrl)"
-msgstr "Pulse para situar sobre la curva (pruebe Máyus, o Ctrl)"
+msgstr "Pulse para situar sobre la curva (pruebe Mayús o Ctrl)"
 
 #: ../app/tools/gimpcurvestool.c:449 ../app/tools/gimplevelstool.c:380
 msgid "Cha_nnel:"
@@ -12206,13 +12216,13 @@ msgstr "_Pincel"
 
 #: ../app/tools/gimppaintoptions-gui.c:121
 #: ../app/tools/gimpselectionoptions.c:210
-#: ../app/widgets/gimpbrushselect.c:193 ../app/widgets/gimplayertreeview.c:298
+#: ../app/widgets/gimpbrushselect.c:193 ../app/widgets/gimplayertreeview.c:300
 msgid "Mode:"
 msgstr "Modo:"
 
 #: ../app/tools/gimppaintoptions-gui.c:136
 #: ../app/tools/gimptransformoptions.c:347
-#: ../app/widgets/gimpbrushselect.c:180 ../app/widgets/gimplayertreeview.c:313
+#: ../app/widgets/gimpbrushselect.c:180 ../app/widgets/gimplayertreeview.c:315
 msgid "Opacity:"
 msgstr "Opacidad:"
 
@@ -12597,6 +12607,7 @@ msgstr ""
 #: ../app/tools/gimptextoptions.c:138
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr ""
+"El idioma del texto puede afectar a la forma en que el texto se renderiza."
 
 #: ../app/tools/gimptextoptions.c:154
 msgid "Indentation of the first line"
@@ -12643,10 +12654,8 @@ msgid "Justify:"
 msgstr "Justificar:"
 
 #: ../app/tools/gimptextoptions.c:531
-#, fuzzy
-#| msgid "_Language:"
 msgid "Language:"
-msgstr "_Idioma:"
+msgstr "Idioma:"
 
 #: ../app/tools/gimptexttool.c:225
 msgid "Text"
@@ -13960,11 +13969,11 @@ msgstr "%g x %g %s"
 msgid "colors"
 msgstr "colores"
 
-#: ../app/widgets/gimpitemtreeview.c:1065
+#: ../app/widgets/gimpitemtreeview.c:1062
 msgid "Set Item Exclusive Visible"
 msgstr "Define al elemento como exclusivo visible"
 
-#: ../app/widgets/gimpitemtreeview.c:1073
+#: ../app/widgets/gimpitemtreeview.c:1070
 msgid "Set Item Exclusive Linked"
 msgstr "Define al elemento como exclusivo enlazado"
 
@@ -13972,15 +13981,15 @@ msgstr "Define al elemento como exclusivo enlazado"
 msgid "Reorder Layer"
 msgstr "Reordenar la capa"
 
-#: ../app/widgets/gimplayertreeview.c:335
+#: ../app/widgets/gimplayertreeview.c:337
 msgid "Lock alpha channel"
 msgstr "Bloquear el canal alfa"
 
-#: ../app/widgets/gimplayertreeview.c:347
+#: ../app/widgets/gimplayertreeview.c:349
 msgid "Lock:"
 msgstr "Bloquear:"
 
-#: ../app/widgets/gimplayertreeview.c:868
+#: ../app/widgets/gimplayertreeview.c:875
 msgid "Empty Layer"
 msgstr "Capa vacía"
 
@@ -14608,3 +14617,15 @@ msgstr "¡Asegúrese de que la caja de herramientas está visible!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "No se ha podido iniciar «%s»: %s"
+
+#~ msgctxt "undo-type"
+#~ msgid "Reposition layer"
+#~ msgstr "Reposicionar la capa"
+
+#~ msgctxt "undo-type"
+#~ msgid "Reposition channel"
+#~ msgstr "Reposicionar el canal"
+
+#~ msgctxt "undo-type"
+#~ msgid "Reposition path"
+#~ msgstr "Reposicionar la ruta"
