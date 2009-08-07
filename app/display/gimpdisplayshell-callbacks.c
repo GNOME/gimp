@@ -1137,14 +1137,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
-        if (active_tool &&
-            gimp_tool_control_get_motion_mode (active_tool->control) ==
-            GIMP_MOTION_MODE_COMPRESS)
+        if (shell->scrolling ||
+            (active_tool &&
+             gimp_tool_control_get_motion_mode (active_tool->control) ==
+             GIMP_MOTION_MODE_COMPRESS))
           {
             compressed_motion = gimp_display_shell_compress_motion (shell);
           }
 
-        if (compressed_motion)
+        if (compressed_motion && ! shell->scrolling)
           {
             GdkDevice *device = gimp_devices_get_current (gimp);
 
@@ -1159,8 +1160,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                        &display_coords,
                                                        &image_coords);
 
-            if (active_tool &&
-                gimp_tool_control_get_snap_to (active_tool->control))
+            if (gimp_tool_control_get_snap_to (active_tool->control))
               {
                 gint x, y, width, height;
 
@@ -1186,10 +1186,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (shell->scrolling)
           {
+            const gint x = (compressed_motion
+                            ? ((GdkEventMotion *) compressed_motion)->x
+                            : mevent->x);
+            const gint y = (compressed_motion
+                            ? ((GdkEventMotion *) compressed_motion)->y
+                            : mevent->y);
+
             gimp_display_shell_scroll (shell,
-                                       (shell->scroll_start_x - mevent->x -
+                                       (shell->scroll_start_x - x -
                                         shell->offset_x),
-                                       (shell->scroll_start_y - mevent->y -
+                                       (shell->scroll_start_y - y -
                                         shell->offset_y));
           }
         else if (state & GDK_BUTTON1_MASK)
@@ -1841,9 +1848,9 @@ gimp_display_shell_key_to_state (gint key)
 static GdkEvent *
 gimp_display_shell_compress_motion (GimpDisplayShell *shell)
 {
-  GList    *requeued_events = NULL;
-  GList    *list;
-  GdkEvent *last_motion = NULL;
+  GList       *requeued_events = NULL;
+  const GList *list;
+  GdkEvent    *last_motion = NULL;
 
   /*  Move the entire GDK event queue to a private list, filtering
    *  out any motion events for the desired widget.
