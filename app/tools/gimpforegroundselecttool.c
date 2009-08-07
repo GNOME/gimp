@@ -926,7 +926,7 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
   else
     gimp_scan_convert_compose_value (scan_convert,
                                      gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                                     0, 0, stroke->refinement ? 255 : 255);	
+                                     0, 0, stroke->refinement ? 255 : 0);	
 	
   gimp_scan_convert_free (scan_convert);
 }
