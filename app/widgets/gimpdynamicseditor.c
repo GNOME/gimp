@@ -210,7 +210,7 @@ GtkWidget *
 gimp_dynamics_editor_new (GimpContext     *context,
                           GimpMenuFactory *menu_factory)
 {
-  //g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
