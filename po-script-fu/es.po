@@ -11,8 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.gimp-2-6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-07 12:04+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-01-18 16:25+0000\n"
 "PO-Revision-Date: 2008-12-30 19:33+0100\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -115,7 +116,7 @@ msgstr "Selección de pincel de Script-Fu"
 #: ../plug-ins/script-fu/script-fu-interface.c:824
 #, c-format
 msgid "Error while executing %s:"
-msgstr "Error al ejecutar %s:"
+msgstr "Error durante la ejecución de %s:"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:150
 msgid "Too few arguments to 'script-fu-register' call"
@@ -124,7 +125,7 @@ msgstr "Faltan argumentos para la llamada a «script-fu-register»"
 #: ../plug-ins/script-fu/script-fu-scripts.c:609
 #, c-format
 msgid "Error while loading %s:"
-msgstr "Error al cargar %s:"
+msgstr "Error durante la carga de %s:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:713
 msgid "Script-Fu Server Options"
@@ -2852,4 +2853,3 @@ msgstr "Opacidad del brillo"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efecto _Xach…"
-
