@@ -503,15 +503,29 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
 
   if (dest_viewable)
     {
-      GimpViewable *parent = gimp_viewable_get_parent (dest_viewable);
+      GimpViewable *parent;
+
+      /*  dropping on the lower part of a group item drops into that group  */
+      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER &&
+          gimp_viewable_get_children (dest_viewable))
+        {
+          parent = dest_viewable;
+        }
+      else
+        {
+          parent = gimp_viewable_get_parent (dest_viewable);
+        }
 
       if (parent)
         dest_container = gimp_viewable_get_children (parent);
       else if (gimp_container_have (container, GIMP_OBJECT (dest_viewable)))
         dest_container = container;
 
-      dest_index = gimp_container_get_child_index (dest_container,
-                                                   GIMP_OBJECT (dest_viewable));
+      if (parent == dest_viewable)
+        dest_index = 0;
+      else
+        dest_index = gimp_container_get_child_index (dest_container,
+                                                     GIMP_OBJECT (dest_viewable));
     }
 
   if (src_viewable && g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
