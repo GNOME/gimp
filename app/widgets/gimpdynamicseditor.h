@@ -51,7 +51,7 @@ struct _GimpDynamicsEditorClass
 GType       gimp_dynamics_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_dynamics_editor_new  (GimpContext      *context,
-                                      GimpMenuFactory  *menu_factory);
+                                       GimpMenuFactory  *menu_factory);
 
 
 

@@ -33,6 +33,8 @@ libappwidgets_a_sources = \
 	gimpblobeditor.h		\
 	gimpbrusheditor.c		\
 	gimpbrusheditor.h		\
+	gimpdynamicseditor.c		\
+	gimpdynamicseditor.h		\
 	gimpbrushfactoryview.c		\
 	gimpbrushfactoryview.h		\
 	gimpbrushselect.c		\

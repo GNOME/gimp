@@ -16,6 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+#define DYNAMICS_VIEW_SIZE 96
+
 #include "config.h"
 
 #include <string.h>
@@ -37,7 +40,10 @@
 
 #include "gimp-intl.h"
 
+#include "gimpmenufactory.h"
 #include "widgets/gimpdynamicseditor.h"
+
+#include "core/gimpbrush.h"
 //To do:
 // discard unneeded ones.
 // needs to be fixed to gimppaintdynamics.h when that works.
@@ -75,8 +81,8 @@ static GObject * gimp_dynamics_editor_constructor (GType              type,
                                                    guint              n_params,
                                                    GObjectConstructParam *params);
 
-static void   gimp_dynamics_editor_set_data       (GimpDataEditor     *editor,
-                                                   GimpData           *data);
+//static void   gimp_dynamics_editor_set_data       (GimpDataEditor     *editor,
+//                                                   GimpData           *data);
 
 static void   gimp_dynamics_editor_set_context    (GimpDocked         *docked,
                                                    GimpContext        *context);
@@ -138,7 +144,7 @@ gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
 
   object_class->constructor = gimp_dynamics_editor_constructor;
 
-  editor_class->set_data    = gimp_dynamics_editor_set_data;
+  //editor_class->set_data    = gimp_dynamics_editor_set_data;
   editor_class->title       = _("Dynamics Editor");
 }
 
@@ -174,6 +180,19 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+
+  data_editor->view = gimp_view_new_full_by_types (NULL,
+                                                   GIMP_TYPE_VIEW,
+                                                   GIMP_TYPE_BRUSH,
+                                                   DYNAMICS_VIEW_SIZE,
+                                                   DYNAMICS_VIEW_SIZE, 0,
+                                                   FALSE, FALSE, TRUE);
+  gtk_widget_set_size_request (data_editor->view, -1, DYNAMICS_VIEW_SIZE);
+  gimp_view_set_expand (GIMP_VIEW (data_editor->view), TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), data_editor->view);
+  gtk_widget_show (data_editor->view);
+
+  //editor->shape_group = NULL;
 
 }
 
