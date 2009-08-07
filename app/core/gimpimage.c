@@ -3059,6 +3059,10 @@ gimp_image_add_layer (GimpImage *image,
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_get_image (GIMP_ITEM (parent)) == image,
                         FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
+                        FALSE);
 
   active_layer = gimp_image_get_active_layer (image);
 
@@ -3261,6 +3265,9 @@ gimp_image_add_layers (GimpImage   *image,
   g_return_if_fail (parent == NULL ||
                     parent == GIMP_IMAGE_ACTIVE_PARENT ||
                     gimp_item_get_image (GIMP_ITEM (parent)) == image);
+  g_return_if_fail (parent == NULL ||
+                    parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                    gimp_viewable_get_children (GIMP_VIEWABLE (parent)));
 
   active_layer = gimp_image_get_active_layer (image);
 
@@ -3426,6 +3433,9 @@ gimp_image_reorder_layer (GimpImage   *image,
   g_return_val_if_fail (new_parent == NULL ||
                         gimp_item_get_image (GIMP_ITEM (new_parent)) == image,
                         FALSE);
+  g_return_val_if_fail (new_parent == NULL ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (new_parent)),
+                        FALSE);
 
   container = gimp_item_get_container (GIMP_ITEM (layer));
 
@@ -3486,6 +3496,10 @@ gimp_image_add_channel (GimpImage   *image,
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_get_image (GIMP_ITEM (parent)) == image,
+                        FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
                         FALSE);
 
   active_channel = gimp_image_get_active_channel (image);
@@ -3729,6 +3743,9 @@ gimp_image_reorder_channel (GimpImage   *image,
   g_return_val_if_fail (new_parent == NULL ||
                         gimp_item_get_image (GIMP_ITEM (new_parent)) == image,
                         FALSE);
+  g_return_val_if_fail (new_parent == NULL ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (new_parent)),
+                        FALSE);
 
   container = gimp_item_get_container (GIMP_ITEM (channel));
 
@@ -3789,6 +3806,10 @@ gimp_image_add_vectors (GimpImage   *image,
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_get_image (GIMP_ITEM (parent)) == image,
+                        FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
                         FALSE);
 
   active_vectors = gimp_image_get_active_vectors (image);
@@ -4005,6 +4026,9 @@ gimp_image_reorder_vectors (GimpImage   *image,
                         gimp_item_is_attached (GIMP_ITEM (new_parent)), FALSE);
   g_return_val_if_fail (new_parent == NULL ||
                         gimp_item_get_image (GIMP_ITEM (new_parent)) == image,
+                        FALSE);
+  g_return_val_if_fail (new_parent == NULL ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (new_parent)),
                         FALSE);
 
   container = gimp_item_get_container (GIMP_ITEM (vectors));
