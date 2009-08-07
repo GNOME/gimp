@@ -37,14 +37,14 @@
 
 #include "gimp-intl.h"
 
-#include "gimpdynamicseditor.h"
-//To do: 
-// discard unneeded ones. 
+#include "widgets/gimpdynamicseditor.h"
+//To do:
+// discard unneeded ones.
 // needs to be fixed to gimppaintdynamics.h when that works.
 
 /*
 #include "paint/gimppaintoptions.h"
- 
+
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"
@@ -155,7 +155,7 @@ gimp_dynamics_editor_docked_iface_init (GimpDockedInterface *iface)
 
 /*
 To do:
-look at other init for dataeditors 
+look at other init for dataeditors
 look at how to move gui codes from paintopitons to here
 */
 
@@ -174,9 +174,9 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
-	
+
 }
-	
+
 static GObject *
 gimp_dynamics_editor_constructor (GType                  type,
                                   guint                  n_params,
@@ -735,7 +735,7 @@ fading_options_gui (GimpPaintOptions *paint_options,
 GtkWidget *
 gimp_paint_options_gui (GimpToolOptions *tool_options)
 {
-	
+
   GObject          *config  = G_OBJECT (tool_options);
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (tool_options);
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
