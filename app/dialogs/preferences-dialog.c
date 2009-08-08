@@ -1861,16 +1861,6 @@ prefs_dialog_new (Gimp       *gimp,
                             _("H_elp browser to use:"),
                             GTK_TABLE (table), 0, size_group);
 
-  /*  Web Browser  (unused on win32)  */
-#ifndef G_OS_WIN32
-  vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
-
-  prefs_widget_add_aligned (gimp_prop_entry_new (object, "web-browser", 0),
-                            _("_Web browser to use:"),
-                            GTK_TABLE (table), 0, FALSE, size_group);
-#endif
-
   g_object_unref (size_group);
   size_group = NULL;
 

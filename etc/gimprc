@@ -639,14 +639,6 @@
 # 
 # (help-browser gimp)
 
-# Sets the external web browser to be used.  This can be an absolute path or
-# the name of an executable to search for in the user's PATH. If the command
-# contains '%s' it will be replaced with the URL, otherwise the URL will be
-# appended to the command with a space separating the two.  This is a single
-# filename.
-# 
-# (web-browser "xdg-open %s")
-
 # When enabled, the online user manual will be used by the help system.
 # Otherwise the locally installed copy is used.  Possible values are yes and
 # no.

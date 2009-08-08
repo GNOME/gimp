@@ -441,13 +441,6 @@ N_("When enabled, pressing F1 will open the help browser.")
 "The location of the online user manual. This is used if " \
 "'user-manual-online' is enabled."
 
-#define WEB_BROWSER_BLURB \
-N_("Sets the external web browser to be used.  This can be an absolute " \
-   "path or the name of an executable to search for in the user's PATH. " \
-   "If the command contains '%s' it will be replaced with the URL, otherwise " \
-   "the URL will be appended to the command with a space separating the " \
-   "two.")
-
 #define XOR_COLOR_BLURB \
 "Sets the color that is used for XOR drawing. This setting only exists as " \
 "a workaround for buggy display drivers. If lines on the canvas are not " \
