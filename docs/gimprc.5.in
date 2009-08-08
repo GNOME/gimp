@@ -676,7 +676,7 @@ How many recent settings to keep around in color correction tools  This is an
 integer value.
 
 .TP
-(trust-dirty-flag yes)
+(trust-dirty-flag no)
 
 When enabled, GIMP will not save an image if it has not been changed since it
 was opened.  Possible values are yes and no.

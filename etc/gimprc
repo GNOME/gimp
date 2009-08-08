@@ -528,7 +528,7 @@
 # When enabled, GIMP will not save an image if it has not been changed since
 # it was opened.  Possible values are yes and no.
 # 
-# (trust-dirty-flag yes)
+# (trust-dirty-flag no)
 
 # Remember the current tool, pattern, color, and brush across GIMP sessions. 
 # Possible values are yes and no.
