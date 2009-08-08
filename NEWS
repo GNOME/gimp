@@ -12,6 +12,17 @@ Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
 
 * Bugs fixed:
 
+ 590638 – Changing palettes from list to grid view loses "locked to dock"
+          status
+ 589674 – "Send by Email" does not update "Filename"
+ 589674 – "Send by Email" does not update "Filename"
+ 586851 – Transparent BMP files fail to load
+ 589205 – help-browser uses deprecated (and sometimes broken) webkit call
+ 582821 – 'Sphere Designer' does not reset correctly...
+ 570353 – first time open of .svg file ignores the requested units
+ 555777 – Export to MNG animation fails
+ 577301 – Dithering with transparency is broken for "positioned" method
+ 493778 – metadata plug-in crashes on some images
  567466 – PNG comment not found if more than 1 tEXt chunks
  585665 – Exporting to PSD with a blank text layer creates a corrupt file
  586316 – Levels tool does not adjust output levels correctly if input
@@ -41,10 +52,13 @@ Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
  Czech (cs)
  Danish (da)
  German (de)
+ Spanish (es)
  Basque (eu)
  Finnish (fi)
+ Hungarian (hu)
  Italian (it)
  Gujarati (gu)
+ Japaness (ja)
  Kannada (kn)
  Marathi (mr)
  Norwegian bokmål (nb)
