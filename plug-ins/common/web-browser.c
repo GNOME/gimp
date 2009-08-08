@@ -22,9 +22,10 @@
 
 #include <string.h> /* strlen, strstr */
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -32,7 +33,8 @@
 #include <windows.h>
 #endif
 
-#define PLUG_IN_PROC "plug-in-web-browser"
+#define PLUG_IN_PROC   "plug-in-web-browser"
+#define PLUG_IN_BINARY "web-browser"
 
 
 static void     query            (void);
@@ -43,12 +45,6 @@ static void     run              (const gchar      *name,
                                   GimpParam       **return_vals);
 static gboolean browser_open_url (const gchar      *url,
                                   GError          **error);
-
-#ifndef G_OS_WIN32
-static gchar*   strreplace       (const gchar      *string,
-                                  const gchar      *delimiter,
-                                  const gchar      *replacement);
-#endif
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -186,93 +182,11 @@ browser_open_url (const gchar  *url,
 
   return TRUE;
 #else
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  GError    *my_error = NULL;
-  gchar     *browser;
-  gchar     *argument;
-  gchar     *cmd;
-  gchar    **argv;
-  gboolean   retval;
-
-  g_return_val_if_fail (url != NULL, FALSE);
-
-  browser = gimp_gimprc_query ("web-browser");
-
-  if (browser == NULL || ! strlen (browser))
-    {
-      g_set_error (error, 0, 0,
-                   _("Web browser not specified.\n"
-                     "Please specify a web browser using the Preferences dialog."));
-      g_free (browser);
-      return FALSE;
-    }
-
-  /* quote the url since it might contains special chars */
-  argument = g_shell_quote (url);
-
-  /* replace %s with URL */
-  if (strstr (browser, "%s"))
-    cmd = strreplace (browser, "%s", argument);
-  else
-    cmd = g_strconcat (browser, " ", argument, NULL);
-
-  g_free (browser);
-  g_free (argument);
-
-  /* parse the cmd line */
-  if (! g_shell_parse_argv (cmd, NULL, &argv, &my_error))
-    {
-      g_set_error (error, 0, 0,
-                   _("Could not parse the web browser command specified in the "
-                     "Preferences dialog:\n\n%s"),
-                   my_error->message);
-      g_error_free (my_error);
-      g_free (cmd);
-      return FALSE;
-    }
-
-  g_free (cmd);
-
-  retval = g_spawn_async (NULL, argv, NULL,
-                          G_SPAWN_SEARCH_PATH,
-                          NULL, NULL,
-                          NULL, &my_error);
-
-  if (! retval)
-    {
-      g_set_error (error, 0, 0,
-                   _("Could not execute the web browser specified in the "
-                     "Preferences dialog:\n\n%s"),
-                   my_error->message);
-      g_error_free (my_error);
-    }
-
-  g_strfreev (argv);
-
-  return retval;
-
+  return gtk_show_uri (gdk_screen_get_default (),
+                       url,
+                       gtk_get_current_event_time(),
+                       error);
 #endif
 }
-
-#ifndef G_OS_WIN32
-
-static gchar*
-strreplace (const gchar *string,
-            const gchar *delimiter,
-            const gchar *replacement)
-{
-  gchar  *ret;
-  gchar **tmp;
-
-  g_return_val_if_fail (string != NULL, NULL);
-  g_return_val_if_fail (delimiter != NULL, NULL);
-  g_return_val_if_fail (replacement != NULL, NULL);
-
-  tmp = g_strsplit (string, delimiter, 0);
-  ret = g_strjoinv (replacement, tmp);
-  g_strfreev (tmp);
-
-  return ret;
-}
-
-#endif /* !G_OS_WIN32 */
