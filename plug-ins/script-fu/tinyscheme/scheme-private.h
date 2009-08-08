@@ -57,6 +57,8 @@ func_dealloc free;
 /* return code */
 int retcode;
 int tracing;
+int top_EOF;  /* Have we seen EOF at top level? */
+
 
 #define CELL_SEGSIZE    25000 /* # of cells in one segment */
 #define CELL_NSEGMENT   50    /* # of segments for cells */
