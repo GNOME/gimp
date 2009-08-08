@@ -47,6 +47,8 @@ typedef struct _GimpSmudge           GimpSmudge;
 typedef struct _GimpPaintOptions            GimpPaintOptions;
 typedef struct _GimpSourceOptions           GimpSourceOptions;
 
+typedef struct _GimpDynamicsOptions         GimpDynamicsOptions;
+
 typedef struct _GimpAirbrushOptions         GimpAirbrushOptions;
 typedef struct _GimpCloneOptions            GimpCloneOptions;
 typedef struct _GimpConvolveOptions         GimpConvolveOptions;

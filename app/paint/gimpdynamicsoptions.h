@@ -19,7 +19,7 @@
 #define __GIMP_DYNAMICS_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+//#include "core/gimptooloptions.h"
 #include "gimppaintoptions.h"
 #include "core/gimpdata.h"
 
@@ -41,7 +41,7 @@ struct _GimpDynamicOptions
   gdouble   prescale;
 };
 
-struct _GimpDynamicsOutputOptions
+struct _GimpDynamicOutputOptions
 {
   gboolean  pressure;
   gboolean  velocity;
@@ -76,7 +76,7 @@ typedef struct _GimpDynamicsOptionsClass GimpDynamicsOptionsClass;
 
 struct _GimpDynamicsOptions
 {
-  GimpData                  parent_instance;
+  GimpPaintOptions          parent_instance;
 
   GimpPaintInfo            *dynamics_info;
 
@@ -90,45 +90,13 @@ struct _GimpDynamicsOptions
 
 struct _GimpDynamicsOptionsClass
 {
-  GimpPaintOptionsClass  parent_instance;
+  GimpDataClass  parent_instance;
 };
 
 
 GType              gimp_dynamics_options_get_type (void) G_GNUC_CONST;
 
 GimpData           * gimp_dynamics_options_new   (GimpPaintInfo    *dynamics_info);
-
-gdouble gimp_dynamics_options_get_dynamic_opacity (GimpDynamicsOptions *dynamics_options,
-                                                   const GimpCoords       *coords,
-                                                   gdouble                 pixel_dist);
-
-gdouble gimp_dynamics_options_get_dynamic_size   (GimpDynamicsOptions  *dynamics_options,
-                                                  GimpPaintOptions       *paint_options,
-                                                  const GimpCoords       *coords,
-                                                  gboolean                use_dynamics,
-                                                  gdouble                 pixel_dist);
-
-gdouble gimp_dynamics_options_get_dynamic_aspect_ratio
-                                               (GimpDynamicsOptions    *dynamics_options,
-                                                GimpPaintOptions       *paint_options,
-                                                const GimpCoords       *coords,
-                                                gdouble                 pixel_dist)
-
-gdouble gimp_dynamics_options_get_dynamic_rate (GimpDynamicsOptions    *dynamics_options,
-                                                const GimpCoords       *coords,
-                                                gdouble                 pixel_dist);
-
-gdouble gimp_dynamics_options_get_dynamic_color(GimpDynamicsOptions    *dynamics_options,
-                                                const GimpCoords       *coords,
-                                                gdouble                 pixel_dist);
-
-gdouble gimp_dynamics_options_get_dynamic_angle (GimpDynamicsOptions   *dynamics_options,
-                                                const GimpCoords       *coords,
-                                                gdouble                 pixel_dist);
-
-gdouble gimp_dynamics_options_get_dynamic_hardness(GimpDynamicsOptions *dynamics_options,
-                                                const GimpCoords       *coords,
-                                                gdouble                 pixel_dist);
 
 
 

@@ -60,6 +60,8 @@ libapppaint_a_sources = \
 	gimppaintcoreundo.h		\
 	gimppaintoptions.c		\
 	gimppaintoptions.h		\
+	gimpdynamicsoptions.c		\
+	gimpdynamicsoptions.h		\
 	gimppencil.c			\
 	gimppencil.h			\
 	gimppenciloptions.c		\
