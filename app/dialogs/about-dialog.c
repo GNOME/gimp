@@ -40,9 +40,6 @@
 #include "gimp-intl.h"
 
 
-#define PDB_URL_LOAD   "plug-in-web-browser"
-
-
 typedef struct
 {
   GtkWidget   *dialog;
@@ -67,9 +64,6 @@ static void        about_dialog_map           (GtkWidget       *widget,
                                                GimpAboutDialog *dialog);
 static void        about_dialog_unmap         (GtkWidget       *widget,
                                                GimpAboutDialog *dialog);
-static void        about_dialog_load_url      (GtkAboutDialog  *dialog,
-                                               const gchar     *url,
-                                               gpointer         data);
 static GdkPixbuf * about_dialog_load_logo     (void);
 static void        about_dialog_add_animation (GtkWidget       *vbox,
                                                GimpAboutDialog *dialog);
@@ -95,11 +89,6 @@ about_dialog_create (GimpContext *context)
       GtkWidget *container;
       GdkPixbuf *pixbuf;
       GList     *children;
-
-      if (gimp_pdb_lookup_procedure (context->gimp->pdb, PDB_URL_LOAD))
-        gtk_about_dialog_set_url_hook (about_dialog_load_url,
-                                       g_object_ref (context),
-                                       (GDestroyNotify) g_object_unref);
 
       dialog = g_new0 (GimpAboutDialog, 1);
 
@@ -191,22 +180,6 @@ about_dialog_unmap (GtkWidget       *widget,
       g_source_remove (dialog->timer);
       dialog->timer = 0;
     }
-}
-
-static void
-about_dialog_load_url (GtkAboutDialog *dialog,
-                       const gchar    *url,
-                       gpointer        data)
-{
-  GimpContext *context = GIMP_CONTEXT (data);
-  GValueArray *return_vals;
-
-  return_vals = gimp_pdb_execute_procedure_by_name (context->gimp->pdb,
-                                                    context, NULL, NULL,
-                                                    PDB_URL_LOAD,
-                                                    G_TYPE_STRING, url,
-                                                    G_TYPE_NONE);
-  g_value_array_free (return_vals);
 }
 
 static GdkPixbuf *
