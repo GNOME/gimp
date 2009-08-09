@@ -54,15 +54,8 @@
 #include "base/siox.h"
 #include "gdk/gdkkeysyms.h"
 
-typedef struct
-{
-  gint         width;
-  gboolean     background;
-  gboolean     refinement;	
-  gint         num_points;
-  GimpVector2 *points;
-} FgSelectStroke;
-
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
 
 static GObject * gimp_foreground_select_tool_constructor (GType             type,
                                                           guint             n_params,
@@ -130,7 +123,8 @@ static void   gimp_foreground_select_options_notify (GimpForegroundSelectOptions
                                                      GParamSpec                  *pspec,
                                                      GimpForegroundSelectTool    *fg_select);
 
-
+static void    gimp_scan_convert_compose_value_drb (GimpScanConvert   *sc,  
+                                                    TileManager       *tile_manager);
 
 G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
                GIMP_TYPE_FREE_SELECT_TOOL)
@@ -717,13 +711,11 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   const GimpVector2           *points;
   gint                         n_points;
   gint                         radius;
-  GimpDisplayShell            *shell;	
+	
   
   drawable  = gimp_image_get_active_drawable (image);
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
   options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (free_sel);
-  shell     = GIMP_DISPLAY_SHELL (display->shell);
-  radius    = (options->stroke_width / shell->scale_y) / 2;
   		
   if (fg_select->idle_id)
     {
@@ -772,6 +764,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 			
       if (fg_select->state)
 	{
+	  if (options->drb)
+	    for (drblist = fg_select->drbsignals; drblist->next; drblist = drblist->next);	
 	  gimp_drawable_foreground_extract_siox (GIMP_DRAWABLE (mask),
 	                                         fg_select->state,
 	                                         fg_select->refinement,
@@ -781,7 +775,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 	                                         options->sensitivity, 
 	                                         ! options->contiguous,
 	                                         options->drb, 
-	                                         radius,
+	                                         options->stroke_width/2,
+						 drblist->data,
 	                                         GIMP_PROGRESS (display));
 
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
@@ -924,9 +919,8 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
                                      0, 0, stroke->background ? 0 : 255);
      
   else
-    gimp_scan_convert_compose_value (scan_convert,
-                                     gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                                     0, 0, stroke->refinement ? 255 : 0);	
+    gimp_scan_convert_compose_value_drb (scan_convert,
+                                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)));
 	
   gimp_scan_convert_free (scan_convert);
 }
@@ -1062,4 +1056,20 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
     }
 }
 
+static void 
+gimp_scan_convert_compose_value_drb (GimpScanConvert *sc,
+                                     TileManager     *tile_manager)
+
+{
+  PixelRegion      maskPR;
+  gint             x, y;
+  gint             width, height;
+
+  x      = 0;
+  y      = 0;
+  width  = tile_manager_width (tile_manager);
+  height = tile_manager_height (tile_manager);
+
+  pixel_region_init (&maskPR, tile_manager, x, y, width, height, TRUE);
+} 
 

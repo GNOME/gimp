@@ -81,7 +81,9 @@ void        siox_drb                (SioxState          *state,
                                      gfloat              threshold,
                                      const gdouble       sensitivity[3],
                                      gboolean            multiblob,
-                                     gint                smoothness);
+                                     gint                smoothness,
+                                     GimpVector2        *drbpoints,
+                                     gint                drbnum);
 
 
 #endif /* __SIOX_H__ */

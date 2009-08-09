@@ -20,6 +20,14 @@
 
 
 /*  general API (as seen from the PDB)  */
+typedef struct
+{
+  gint         width;
+  gboolean     background;	
+  gboolean     refinement;	
+  gint         num_points;
+  GimpVector2 *points;
+} FgSelectStroke;
 
 void       gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                              GimpForegroundExtractMode  mode,
@@ -43,6 +51,7 @@ void        gimp_drawable_foreground_extract_siox  (GimpDrawable       *mask,
                                                     gboolean            multiblob,
                                                     gboolean            drbsignal,
                                                     gint                brush_radius,
+                                                    FgSelectStroke     *drbpoints,
                                                     GimpProgress       *progress);
 void        gimp_drawable_foreground_extract_siox_done (SioxState      *state);
 

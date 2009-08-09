@@ -1291,7 +1291,9 @@ siox_drb (SioxState    *state,
           gfloat        threshold,
           const gdouble sensitivity[3],
           gboolean      multiblob,
-	  gint          smoothness)
+	  gint          smoothness,
+	  GimpVector2  *drbpoints,
+          gint          drbnum)
 {
   PixelRegion  srcPR;
   PixelRegion  mapPR;
@@ -1300,7 +1302,8 @@ siox_drb (SioxState    *state,
   gfloat       clustersize;
   gfloat       limits[3];
   gint         n;
-
+  gint         p;
+  
   g_return_if_fail (state != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
 	
@@ -1432,16 +1435,16 @@ siox_drb (SioxState    *state,
     g_hash_table_foreach_remove(state->cache,siox_cache_remove_fg,NULL);
   if (optionsrefinement & SIOX_DRB_CHANGE_THRESHOLD)
     optionsrefinement = SIOX_DRB_RECALCULATE;
-//  if (optionsrefinement & (SIOX_DRB_ADD |
-//                           SIOX_DRB_SUBTRACT)) 
-//    {
-    	 
-      pixel_region_init (&srcPR, state->pixels,
-                         x , y , state->width, state->height, FALSE);
-      pixel_region_init (&mapPR, mask, x, y,
-                         brush_radius * 2,
-                         brush_radius * 2, TRUE);
 
+  for (p = 0; p<drbnum; p++)
+    { 
+      pixel_region_init (&srcPR, state->pixels,
+                       drbpoints[p].x - brush_radius, drbpoints[p].y - brush_radius, brush_radius * 2,
+                       brush_radius * 2, FALSE);
+ 
+      pixel_region_init (&mapPR, mask, drbpoints[p].x- brush_radius , drbpoints[p].y - brush_radius,
+                       brush_radius * 2, brush_radius * 2, TRUE);
+    	 
       for (pr = pixel_regions_register (2, &srcPR, &mapPR);
            pr != NULL;
            pr = pixel_regions_process (pr))
@@ -1521,7 +1524,7 @@ siox_drb (SioxState    *state,
               map += mapPR.rowstride;
             }
         }
-    //}
+    }
 }
 
 /**

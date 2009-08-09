@@ -72,6 +72,7 @@ gimp_drawable_foreground_extract (GimpDrawable              *drawable,
                                              FALSE,
                                              FALSE,
                                              18,
+                                             NULL,
                                              progress);
 
       gimp_drawable_foreground_extract_siox_done (state);
@@ -128,6 +129,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                                        gboolean            multiblob,
                                        gboolean            drbsignal,
                                        gint                brush_radius,
+                                       FgSelectStroke     *drbpoints,
                                        GimpProgress       *progress)
 {
   gint x1, y1;
@@ -173,7 +175,9 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                 sioxdrbthreshold,
                 sensitivity,
 	        multiblob,
-		smoothness);
+		smoothness,
+		drbpoints->points,
+		drbpoints->num_points);
     }
   if (progress)
     gimp_progress_end (progress);
