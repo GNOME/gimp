@@ -8,14 +8,15 @@
 # Pablo G. del Campo <pablodc@par001001-703>, 2003, 2004.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007, 2008, 2009.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
+# Jorge González <jorgegonz@svn.gnome.org>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
 "POT-Creation-Date: 2009-07-23 08:30+0000\n"
-"PO-Revision-Date: 2009-07-23 10:52+0200\n"
-"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"PO-Revision-Date: 2009-08-09 19:36+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1538,7 +1539,7 @@ msgstr "_K"
 #: ../modules/color-selector-cmyk-lcms.c:178
 #: ../modules/color-selector-cmyk.c:134
 msgid "Cyan"
-msgstr "Cián"
+msgstr "Cian"
 
 #: ../modules/color-selector-cmyk-lcms.c:179
 #: ../modules/color-selector-cmyk.c:135
