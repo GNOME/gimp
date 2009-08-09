@@ -17,7 +17,7 @@
 /* character strings. As a result, the length of a string in bytes  */
 /* may not be the same as the length of a string in characters. You */
 /* must keep this in mind at all times while making any changes to  */
-/* the routines in this file, or when adding new features.          */
+/* the routines in this file and when adding new features.          */
 /*                                                                  */
 /* UTF-8 modifications made by Kevin Cozens (kcozens@interlog.com)  */
 /* **************************************************************** */
@@ -392,6 +392,7 @@ static port *port_rep_from_string(scheme *sc, char *start, char *past_the_end, i
 static void port_close(scheme *sc, pointer p, int flag);
 static void mark(pointer a);
 static void gc(scheme *sc, pointer a, pointer b);
+static gunichar basic_inchar(port *pt);
 static gunichar inchar(scheme *sc);
 static void backchar(scheme *sc, gunichar c);
 static char *readstr_upto(scheme *sc, char *delim);
@@ -723,7 +724,7 @@ static pointer reserve_cells(scheme *sc, int n) {
 static pointer get_consecutive_cells(scheme *sc, int n) {
   pointer x;
 
-  if (sc->no_memory) { return sc->sink; }
+  if(sc->no_memory) { return sc->sink; }
 
   /* Are there any cells available? */
   x=find_consecutive_cells(sc,n);
@@ -1655,7 +1656,7 @@ static gunichar inchar(scheme *sc) {
     /* Instead, set port_saw_EOF */
     pt->kind |= port_saw_EOF;
 
-    file_pop(sc);
+    /* file_pop(sc); */
     return EOF;
     /* NOTREACHED */
   }
@@ -1957,9 +1958,9 @@ static int token(scheme *sc) {
      case BACKQUOTE:
           return (TOK_BQUOTE);
      case ',':
-          if ((c=inchar(sc)) == '@')
+          if ((c=inchar(sc)) == '@') {
                return (TOK_ATMARK);
-          else {
+          } else {
                backchar(sc,c);
                return (TOK_COMMA);
           }
@@ -2803,6 +2804,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
      case OP_DEF0:  /* define */
           if(is_immutable(car(sc->code)))
                 Error_1(sc,"define: unable to alter immutable", car(sc->code));
+
           if (is_pair(car(sc->code))) {
                x = caar(sc->code);
                sc->code = cons(sc, sc->LAMBDA, cons(sc, cdar(sc->code), cdr(sc->code)));
@@ -4309,7 +4311,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           pointer vec=car(sc->args);
           int len=ivalue_unchecked(vec);
           if(i==len) {
-               putstr(sc," )");
+               putstr(sc,")");
                s_return(sc,sc->T);
           } else {
                pointer elem=vector_elem(vec,i);
@@ -4644,9 +4646,7 @@ static struct scheme_interface vtbl ={
   fill_vector,
   vector_elem,
   set_vector_elem,
-
   is_port,
-
   is_pair,
   pair_car,
   pair_cdr,
