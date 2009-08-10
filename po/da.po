@@ -4,99 +4,8 @@
 # Hvis der er problemer, så start med at kigge i de.po - den er oversat
 # af Sven Neumann som er en af udviklerne bag programmet.
 #
-# Konventioner:
-#
-#    * (adaptive) supersampling -> adaptiv udjævning
-#    * alpha -> alfa
-#    * antialiasing -> udjævning
-#    * artistic -> kunsterisk
-#    * blend -> blanding
-#    * blur -> udvisk, blødgør, tilslør
-#    * bounding box -> afgrænsningsboks
-#    * brush -> pensel
-#    * bucket fill -> spandudfyldning
-#    * bump -> bule
-#    * bump map -> højdekort
-#    * burn -> brænde
-#    * clip -> (ofte) beskær
-#    * color picker -> farveopsnapper
-#    * coloring type -> farvetype (fx RGB, HSV)
-#    * colormap -> farveafbildning
-#    * convert -> konvertere 2009-02-26 (PKO)
-#    * convolution matrix -> foldningsmatrix (se i øvrigt ../po/da.po)
-#    * convolve -> konturændring (convolve kommer sig af at operationen foregår via en "convolution matrix")
-#    * crop -> beskær (afventer godkendelse (PKO))
-#    * custom -> tilpasset 2009-02-26 (PKO)
-#    * cyan -> cyan
-#    * DB Browser -> proceduredatabase (browser er overflødigt)
-#    * desaturate -> afmætning
-#    * dialog -> vindue
-#    * display -> visning
-#    * dithering -> dithering (en slags farvespredning)
-#    * dodge -> lysne
-#    * drawable -> tegneobjekt
-#    * drop shadow -> baggrundsskygge
-#    * emboss -> relief
-#    * enviroment map -> omgivelsesreflektioner
-#    * feather -> udtynd
-#    * FG, BG -> fg., bg. (forgrund og baggrund)
-#    * flatten image -> fladgør billede
-#    * FractalExplorer -> Fraktaludforsker
-#    * frame (i animationer) -> [enkelt]billede
-#    * fuzzy -> udflydende
-#    * gfig -> figurer
-#    * gfig objekt -> figur
-#    * gradient -> farveovergang
-#    * guide -> hjælpelinje
-#    * guides -> rektangler (egentligt en form for hjælpelinjer)
-#    * highlight -> højlysområde (dækker over ekstremt belyste refleksioner)
-#    * hot spot -> afsætspunkt (det punkt der betragtes som origo)
-#    * hue -> farvetone
-#    * imagemap -> billedkort (den slags på hjemmesider i stedet for tekst)
-#    * intersect -> kryds
-#    * luminosity -> lysstyrke
-#    * magenta -> magenta
-#    * mapping -> afbildning
-#    * merge -> forén
-#    * module, plugin -> [udvidelses]modul, [program]udvidelse (når der mere er tale om modulets funktionalitet)
-#    * opacity -> ugennemsigtighed [(til tider bare gennemsigtighed når retning er ligegyldig) 2009.03.01 afventer 		godkendelse for sletning PKO]
-#    * operation -> handling (oftest)
-#    * path -> (til tider) bane, (ellers i forbindelses med mapper/kataloger) sti
-#    * pixel -> skærmpunkt
-#    * procedural database -> proceduredatabase
-#    * RLE -> rækkekomprimering (RLE)
-#    * saturation -> mætning
-#    * script -> program
-#    * selection -> markering el. det markerede
-#    * shearing -> trapezering
-#    * shrink -> formindsk
-#    * smudge -> udtvær
-#    * stroke -> bestryg (vb.), strøg (n.)
-#    * The GIMP -> GIMP, GIMP'en (modsvarer GNOME) 2009.02.26 (PKO)
-#    * tile -> flise, fliselæg
-#    * tip -> tip (og ikke tips)
-#    * transforms -> transformering
-#    * utils -> værktøjer
-#    * web page themes -> hjemmesidetemaer
-#    * Xtns -> udvidelser
-#    * zoom -> zoom (RO)
-#
-# Bindestreg benyttet som separator (i fx lysstyrke-kontrast) er oversat
-# med skråstreg (lysstyrke/kontrast) undtagen i menuer hvor det ikke er
-# muligt (pga. dårlig GIMP-arkitektur).
-#
-# Bemærk at palet på dansk er uden -te til sidst.
-#
-# Hvis en skelnen mellem 'plug-ins' og 'modules/extensions' er
-# nødvendig, kaldes det første for udvidelsesmoduler (det er som regel
-# nogle små scripts) og det andet for programudvidelser (større,
-# vist nok i '.o'-format).
-#
-# X, Y og Z er oversat med x, y og z i overenstemmelse med alm. dansk
-# praksis.
-#
-# Flere af menunavnene har en forstavelse i flertal - den er som regel
-# rettet til ental, f.eks. "Paths Menu" -> "Banemenu"
+# Yderligere oplysninger og konventioner kan findes på
+# http://wiki.dansk-gruppen.dk/index.php/Gimp
 #
 # Kenneth Christiansen <kenneth@ripen.dk>, 1999, 2000.
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
@@ -109,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-14 23:29+0200\n"
-"PO-Revision-Date: 2009-06-12 14:54+0100\n"
+"POT-Creation-Date: 2009-08-10 12:06+0200\n"
+"PO-Revision-Date: 2009-08-06 16:28+0100\n"
 "Last-Translator: Mads Lundby <lundbymads@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -121,7 +30,7 @@ msgstr ""
 
 #: ../app/about.h:24
 msgid "GIMP"
-msgstr "Gimp"
+msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
@@ -133,7 +42,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "Copyright © 1995-2008\n"
-"Spencer Kimball, Peter Mattis og Gimp-udviklingsgruppen"
+"Spencer Kimball, Peter Mattis og GIMP-udviklingsgruppen"
 
 #: ../app/about.h:34
 msgid ""
@@ -151,17 +60,17 @@ msgid ""
 "GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
 "Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"Gimp er et frit program. Du kan redistribuere og ændre programmet under "
+"GIMP er et frit program. Du kan redistribuere og ændre programmet under "
 "betingelserne i GNU General Public License som udgivet af Free Software "
 "Foundation; enten version 2 af licensen, eller (hvis du ønsker det) enhver "
 "senere version.\n"
 "\n"
-"Gimp distribueres i håb om at programmet er nyttigt, men uden NOGEN GARANTI, "
+"GIMP distribueres i håb om at programmet er nyttigt, men uden NOGEN GARANTI, "
 "ikke engang underforstået garanti om at det er SALGBART eller PASSER TIL ET "
 "BESTEMT FORMÅL. Se GNU General Public License for detaljer.\n"
 "\n"
 "Du burde have modtaget en kopi af GNU General Public License sammen med "
-"Gimp. Hvis du ikke har det, kan du skrive til Free Software Foundation, Inc. "
+"GIMP. Hvis du ikke har det, kan du skrive til Free Software Foundation, Inc. "
 "59 Temple Place, Suite 330, Boston, MA 02111-1307 USA."
 
 #: ../app/app.c:214
@@ -202,7 +111,7 @@ msgstr "Fortæl mere"
 
 #: ../app/main.c:159
 msgid "Start a new GIMP instance"
-msgstr "Start en ny instans af Gimp"
+msgstr "Start en ny instans af GIMP"
 
 #: ../app/main.c:164
 msgid "Open images as new"
@@ -226,7 +135,7 @@ msgstr "Vis ikke et opstartsvindue"
 
 #: ../app/main.c:189
 msgid "Do not use shared memory between GIMP and plugins"
-msgstr "Brug ikke delt hukommelse mellem Gimp og udvidelsesmoduler"
+msgstr "Brug ikke delt hukommelse mellem GIMP og udvidelsesmoduler"
 
 #: ../app/main.c:194
 msgid "Do not use special CPU acceleration functions"
@@ -287,16 +196,16 @@ msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
-"Gimp kunne ikke klargøre den grafiske brugergrænseflade.\n"
+"GIMP kunne ikke klargøre den grafiske brugergrænseflade.\n"
 "Kontrollér at en korrekt opsætning af dit grafiske miljø eksisterer."
 
 #: ../app/main.c:392
 msgid "Another GIMP instance is already running."
-msgstr "En anden instans af Gimp kører allerede."
+msgstr "En anden instans af GIMP kører allerede."
 
 #: ../app/main.c:462
 msgid "GIMP output. Type any character to close this window."
-msgstr "Output fra Gimp. Tryk på en tast for at lukke dette vindue."
+msgstr "Output fra GIMP. Tryk på en tast for at lukke dette vindue."
 
 #: ../app/main.c:463
 #, c-format
@@ -305,7 +214,7 @@ msgstr "(Tryk på en tast for at lukke dette vindue)\n"
 
 #: ../app/main.c:480
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr "Output fra Gimp. Du kan minimere dette vindue, men luk det ikke."
+msgstr "Output fra GIMP. Du kan minimere dette vindue, men luk det ikke."
 
 #: ../app/sanity.c:365
 #, c-format
@@ -328,7 +237,7 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"Navnet på den mappe som indeholder brugerkonfigurationen til Gimp kan ikke "
+"Navnet på den mappe som indeholder brugerindstillingerne til GIMP kan ikke "
 "konverteres til UTF-8: %s\n"
 "\n"
 "Sandsynligvis gemmer dit filsystem filer i en anden kodning end UTF-8, uden "
@@ -359,7 +268,7 @@ msgstr "Pensler"
 
 #: ../app/actions/actions.c:107 ../app/dialogs/dialogs.c:169
 msgid "Buffers"
-msgstr "Mellemlagere"
+msgstr "Buffere"
 
 #: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:182
 msgid "Channels"
@@ -372,7 +281,7 @@ msgstr "Farveafbildning"
 
 #: ../app/actions/actions.c:116
 msgid "Configuration"
-msgstr "Konfiguration"
+msgstr "Indstillinger"
 
 #: ../app/actions/actions.c:119
 msgid "Context"
@@ -592,39 +501,39 @@ msgstr "Redigér pensel"
 
 #: ../app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
-msgstr "Mellemlagermenu"
+msgstr "Buffermenu"
 
 #: ../app/actions/buffers-actions.c:46
 msgid "_Paste Buffer"
-msgstr "_Indsæt mellemlager"
+msgstr "_Indsæt buffer"
 
 #: ../app/actions/buffers-actions.c:47
 msgid "Paste the selected buffer"
-msgstr "Indsæt det valgte mellemlager"
+msgstr "Indsæt den valgte buffer"
 
 #: ../app/actions/buffers-actions.c:52
 msgid "Paste Buffer _Into"
-msgstr "Indsæt mellemlager _i"
+msgstr "Indsæt buffer _i"
 
 #: ../app/actions/buffers-actions.c:53
 msgid "Paste the selected buffer into the selection"
-msgstr "Indsæt det valgte mellemlager i markeringen"
+msgstr "Indsæt den valgte buffer i markeringen"
 
 #: ../app/actions/buffers-actions.c:58
 msgid "Paste Buffer as _New"
-msgstr "Indsæt mellemlager som _ny"
+msgstr "Indsæt buffer som _ny"
 
 #: ../app/actions/buffers-actions.c:59
 msgid "Paste the selected buffer as new image"
-msgstr "Indsæt det valgte mellemlager som nyt billede"
+msgstr "Indsæt den valgte buffer som nyt billede"
 
 #: ../app/actions/buffers-actions.c:64
 msgid "_Delete Buffer"
-msgstr "_Slet mellemlager"
+msgstr "_Slet buffer"
 
 #: ../app/actions/buffers-actions.c:65
 msgid "Delete the selected buffer"
-msgstr "Slet det valgte mellemlager"
+msgstr "Slet den valgte buffer "
 
 #: ../app/actions/channels-actions.c:44
 msgid "Channels Menu"
@@ -636,7 +545,7 @@ msgstr "_Redigér kanalegenskaber..."
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
-msgstr "Redigér kanalens navn, farve og gennemsigtighed"
+msgstr "Redigér kanalens navn, farve og opacitet"
 
 #: ../app/actions/channels-actions.c:54
 msgid "_New Channel..."
@@ -755,7 +664,7 @@ msgstr "Redigér kanalfarve"
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
-msgstr "_Fyld-ugennemsigtighed:"
+msgstr "_Udfyldningsopacitet:"
 
 #: ../app/actions/channels-commands.c:116
 #: ../app/actions/channels-commands.c:117
@@ -843,7 +752,7 @@ msgstr "_Farver"
 
 #: ../app/actions/context-actions.c:48 ../app/actions/layers-actions.c:58
 msgid "_Opacity"
-msgstr "_Ugennemsigtighed"
+msgstr "_Opacitet"
 
 #: ../app/actions/context-actions.c:49
 msgid "Paint _Mode"
@@ -1132,11 +1041,11 @@ msgstr "Åbn vinduet skrifttyper"
 
 #: ../app/actions/dialogs-actions.c:165
 msgid "B_uffers"
-msgstr "_Mellemlagere"
+msgstr "B_uffere"
 
 #: ../app/actions/dialogs-actions.c:166
 msgid "Open the named buffers dialog"
-msgstr "Åbn vinduet navngivet mellemlager"
+msgstr "Åbn vinduet navngiven buffer"
 
 #: ../app/actions/dialogs-actions.c:171
 msgid "_Images"
@@ -1209,7 +1118,7 @@ msgstr "_Dagens tip"
 
 #: ../app/actions/dialogs-actions.c:225
 msgid "Show some helpful tips on using GIMP"
-msgstr "Vis nogle nyttige tips om brug af Gimp"
+msgstr "Vis nogle nyttige tips om brug af GIMP"
 
 #: ../app/actions/dialogs-actions.c:230
 msgid "_About"
@@ -1218,7 +1127,7 @@ msgstr "_Om"
 #: ../app/actions/dialogs-actions.c:231 ../app/dialogs/about-dialog.c:114
 #: ../app/gui/gui.c:479
 msgid "About GIMP"
-msgstr "Om Gimp"
+msgstr "Om GIMP"
 
 #: ../app/actions/dock-actions.c:43
 msgid "M_ove to Screen"
@@ -1315,7 +1224,7 @@ msgstr "Aktuel _status"
 
 #: ../app/actions/dockable-actions.c:96
 msgid "_Text"
-msgstr "_Tekst"
+msgstr "T_ekst"
 
 #: ../app/actions/dockable-actions.c:97
 msgid "I_con & Text"
@@ -1547,7 +1456,7 @@ msgstr "Indsæt s_om"
 
 #: ../app/actions/edit-actions.c:65
 msgid "_Buffer"
-msgstr "_Mellemlager"
+msgstr "_Buffer"
 
 # "menu" udeladt af hensyn til længden
 #: ../app/actions/edit-actions.c:68
@@ -1596,13 +1505,11 @@ msgstr "Fjern alle handlinger fra fortrydelseshistorikken"
 
 #: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:315
 msgid "_Fade..."
-msgstr "_Falme..."
+msgstr "_Udtone..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr ""
-"Ændr maletilstand og ugennemsigtighed for den seneste "
-"billedpunktsmanipulation "
+msgstr "Ændr maletilstand og opacitet for den seneste billedpunktsmanipulation"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -1671,7 +1578,7 @@ msgstr "K_lip navngivet..."
 
 #: ../app/actions/edit-actions.c:157
 msgid "Move the selected pixels to a named buffer"
-msgstr "Flyt de markerede billedpunkter til et navngivet mellemlager"
+msgstr "Flyt de markerede billedpunkter til en navngiven buffer"
 
 #: ../app/actions/edit-actions.c:162
 msgid "_Copy Named..."
@@ -1679,7 +1586,7 @@ msgstr "_Kopiér navngivet..."
 
 #: ../app/actions/edit-actions.c:163
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Kopiér de markerede billedpunkter til et navngivet mellemlager"
+msgstr "Kopiér de markerede billedpunkter til en navngiven buffer"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:168
@@ -1688,7 +1595,7 @@ msgstr "Kopiér _synlig navngivet..."
 
 #: ../app/actions/edit-actions.c:169
 msgid "Copy the selected region to a named buffer"
-msgstr "Kopiér det markerede område til et navngivet mellemlager"
+msgstr "Kopiér det markerede område til en navngiven buffer"
 
 #: ../app/actions/edit-actions.c:174
 msgid "_Paste Named..."
@@ -1696,7 +1603,7 @@ msgstr "_Indsæt navngivet..."
 
 #: ../app/actions/edit-actions.c:175
 msgid "Paste the content of a named buffer"
-msgstr "Indsæt indholdet af et navngivet mellemlager"
+msgstr "Indsæt indholdet af en navngiven buffer"
 
 #: ../app/actions/edit-actions.c:180
 msgid "Cl_ear"
@@ -1733,7 +1640,7 @@ msgstr "Udfyld markeringen med det aktive mønster"
 #: ../app/actions/edit-actions.c:279
 #, c-format
 msgid "_Undo %s"
-msgstr "_Fortryd '%s'"
+msgstr "_Fortryd %s"
 
 #: ../app/actions/edit-actions.c:286
 #, c-format
@@ -1743,7 +1650,7 @@ msgstr "_Omgør '%s'"
 #: ../app/actions/edit-actions.c:301
 #, c-format
 msgid "_Fade %s..."
-msgstr "_Falm %s..."
+msgstr "_Udton %s..."
 
 #: ../app/actions/edit-commands.c:134
 msgid "Clear Undo History"
@@ -1776,7 +1683,7 @@ msgstr "Der er ingen billeddata i udklipsholderen at indsætte."
 #: ../app/actions/edit-commands.c:338 ../app/core/gimpbrushclipboard.c:181
 #: ../app/core/gimppatternclipboard.c:181 ../app/widgets/gimpclipboard.c:296
 msgid "Clipboard"
-msgstr "udklipsholder"
+msgstr "Udklipsholder"
 
 #: ../app/actions/edit-commands.c:363
 msgid "Cut Named"
@@ -1785,7 +1692,7 @@ msgstr "Klip navngivet"
 #: ../app/actions/edit-commands.c:366 ../app/actions/edit-commands.c:407
 #: ../app/actions/edit-commands.c:427
 msgid "Enter a name for this buffer"
-msgstr "Indtast et navn til dette mellemlager"
+msgstr "Indtast et navn til denne buffer"
 
 #: ../app/actions/edit-commands.c:404
 msgid "Copy Named"
@@ -1802,7 +1709,7 @@ msgstr "Der er ikke noget aktivt lag eller nogen aktiv kanal at klippe fra."
 #: ../app/actions/edit-commands.c:547 ../app/actions/edit-commands.c:579
 #: ../app/actions/edit-commands.c:603
 msgid "(Unnamed Buffer)"
-msgstr "(unavngivet mellemlager)"
+msgstr "(unavngiven buffer)"
 
 #: ../app/actions/edit-commands.c:574
 msgid "There is no active layer or channel to copy from."
@@ -1871,7 +1778,7 @@ msgstr "Opret"
 
 #: ../app/actions/file-actions.c:68
 msgid "Open _Recent"
-msgstr "Åbn _seneste"
+msgstr "Åbn s_eneste"
 
 #: ../app/actions/file-actions.c:71
 msgid "_Open..."
@@ -1883,7 +1790,7 @@ msgstr "Åbn en billedfil"
 
 #: ../app/actions/file-actions.c:77
 msgid "Op_en as Layers..."
-msgstr "Åbn som _lag..."
+msgstr "Åbn som la_g..."
 
 #: ../app/actions/file-actions.c:78
 msgid "Open an image file as layers"
@@ -1891,7 +1798,7 @@ msgstr "Åbn en billedfil som lag"
 
 #: ../app/actions/file-actions.c:83
 msgid "Open _Location..."
-msgstr "Åbn _placering..."
+msgstr "Åbn pla_cering..."
 
 #: ../app/actions/file-actions.c:84
 msgid "Open an image file from a specified location"
@@ -1947,7 +1854,7 @@ msgstr "Gem dette billede med et andet navn"
 
 #: ../app/actions/file-actions.c:128
 msgid "Save a Cop_y..."
-msgstr "Gem en _kopi..."
+msgstr "Gem en k_opi..."
 
 #: ../app/actions/file-actions.c:129
 msgid "Save this image with a different name, but keep its current name"
@@ -2097,7 +2004,7 @@ msgstr "Bland endepunkternes f_arver"
 
 #: ../app/actions/gradient-editor-actions.c:117
 msgid "Blend Endpoints' Opacit_y"
-msgstr "Bland endepunkternes _ugennemsigtighed"
+msgstr "Bland endepunkternes _opacitet"
 
 #: ../app/actions/gradient-editor-actions.c:125
 msgid "Edit Active Gradient"
@@ -2456,7 +2363,7 @@ msgstr "_Hjælp"
 
 #: ../app/actions/help-actions.c:42
 msgid "Open the GIMP user manual"
-msgstr "Åbn brugermanualen til Gimp"
+msgstr "Åbn brugermanualen til GIMP"
 
 #: ../app/actions/help-actions.c:47
 msgid "_Context Help"
@@ -2586,11 +2493,11 @@ msgstr "Forén alle lag og fjern gennemsigtighed"
 
 #: ../app/actions/image-actions.c:126
 msgid "Configure G_rid..."
-msgstr "Konfigurér g_itter..."
+msgstr "Indstil g_itter..."
 
 #: ../app/actions/image-actions.c:127
 msgid "Configure the grid for this image"
-msgstr "Konfigurér gitteret for dette billede"
+msgstr "Indstil gitteret for dette billede"
 
 #: ../app/actions/image-actions.c:132
 msgid "Image Pr_operties"
@@ -3077,7 +2984,7 @@ msgstr "Vælg laget under det aktuelle lag"
 
 #: ../app/actions/layers-actions.c:368
 msgid "Set Opacity"
-msgstr "Vælg ugennemsigtighed"
+msgstr "Vælg opacitet"
 
 #: ../app/actions/layers-commands.c:203
 msgid "Layer Attributes"
@@ -3317,7 +3224,7 @@ msgstr "_Redigér mønster..."
 
 #: ../app/actions/patterns-actions.c:87
 msgid "Edit pattern"
-msgstr "_Redigér mønster"
+msgstr "Redigér mønster"
 
 #: ../app/actions/plug-in-actions.c:83
 msgid "Filte_rs"
@@ -3330,7 +3237,7 @@ msgstr "Seneste anvendte"
 # dækker vist bedst
 #: ../app/actions/plug-in-actions.c:85
 msgid "_Blur"
-msgstr "_Blødgøring"
+msgstr "_Sløring"
 
 #: ../app/actions/plug-in-actions.c:86
 msgid "_Noise"
@@ -3338,16 +3245,15 @@ msgstr "_Støj"
 
 #: ../app/actions/plug-in-actions.c:87
 msgid "Edge-De_tect"
-msgstr "Kant_finding"
+msgstr "Kant_genkendelse"
 
-# dækker vist mere præcist - alt er jo en forbedring. Dette er en lidt for kreativ fortolkning. Rettet tilbage til Forbedr.
 #: ../app/actions/plug-in-actions.c:88
 msgid "En_hance"
-msgstr "_Forbedr"
+msgstr "_Forbedring"
 
 #: ../app/actions/plug-in-actions.c:89
 msgid "C_ombine"
-msgstr "_Kombinér"
+msgstr "_Kombinering"
 
 #: ../app/actions/plug-in-actions.c:90
 msgid "_Generic"
@@ -3371,7 +3277,7 @@ msgstr "_Dekoration"
 
 #: ../app/actions/plug-in-actions.c:96
 msgid "_Render"
-msgstr "_Generér"
+msgstr "_Gengivelse"
 
 #: ../app/actions/plug-in-actions.c:97
 msgid "_Clouds"
@@ -3445,7 +3351,7 @@ msgstr "Ekspresmaskemenu"
 
 #: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
-msgstr "_Konfigurér farve og ugennemsigtighed..."
+msgstr "_Indstil farve og opacitet..."
 
 #: ../app/actions/quick-mask-actions.c:54
 msgid "Toggle _Quick Mask"
@@ -3478,7 +3384,7 @@ msgstr "Redigér ekspresmaskens farve"
 
 #: ../app/actions/quick-mask-commands.c:111
 msgid "_Mask opacity:"
-msgstr "Ugennemsigtighed for _maske:"
+msgstr "Opacitet for _maske:"
 
 #: ../app/actions/sample-points-actions.c:40
 msgid "Sample Point Menu"
@@ -3495,7 +3401,7 @@ msgstr "_Markér"
 
 #: ../app/actions/select-actions.c:50
 msgid "select|_All"
-msgstr "Markér| _Alt"
+msgstr "_Alt"
 
 #: ../app/actions/select-actions.c:51
 msgid "Select everything"
@@ -3503,7 +3409,7 @@ msgstr "Markér alt"
 
 #: ../app/actions/select-actions.c:56
 msgid "select|_None"
-msgstr "Markér| _Intet"
+msgstr "_Intet"
 
 #: ../app/actions/select-actions.c:57
 msgid "Dismiss the selection"
@@ -3515,7 +3421,7 @@ msgstr "I_nvertér"
 
 #: ../app/actions/select-actions.c:63
 msgid "Invert the selection"
-msgstr "Inverter markeringen"
+msgstr "Invertér markeringen"
 
 #: ../app/actions/select-actions.c:68
 msgid "_Float"
@@ -3531,7 +3437,7 @@ msgstr "_Udtynd..."
 
 #: ../app/actions/select-actions.c:75
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr "Blødgør markeringskanten så den udviskes jævnt"
+msgstr "Slør markeringskanten så den toner jævnt ud"
 
 #: ../app/actions/select-actions.c:80
 msgid "_Sharpen"
@@ -3861,7 +3767,7 @@ msgstr "_Transformeringsværktøjer"
 
 #: ../app/actions/tools-actions.c:54
 msgid "_Color Tools"
-msgstr "_Farveværktøjer"
+msgstr "Far_veværktøjer"
 
 #: ../app/actions/tools-actions.c:57
 msgid "R_aise Tool"
@@ -4176,7 +4082,7 @@ msgstr "Vis _filtre..."
 
 #: ../app/actions/view-actions.c:112
 msgid "Configure filters applied to this view"
-msgstr "Konfigurér filtre der anvendes på denne visning"
+msgstr "Indstil filtre der anvendes på denne visning"
 
 #: ../app/actions/view-actions.c:117
 msgid "Shrink _Wrap"
@@ -4385,7 +4291,7 @@ msgstr "A_nden..."
 
 #: ../app/actions/view-actions.c:347
 msgid "Set a custom zoom factor"
-msgstr "Angiv en tilpasset zoomfaktor"
+msgstr "Angiv en brugertilpasset zoomfaktor"
 
 #: ../app/actions/view-actions.c:355
 msgid "From _Theme"
@@ -4415,7 +4321,7 @@ msgstr "Brug den mørke ternfarve"
 
 #: ../app/actions/view-actions.c:373
 msgid "Select _Custom Color..."
-msgstr "Vælg _anden farve..."
+msgstr "Vælg _brugertilpasset farve..."
 
 #: ../app/actions/view-actions.c:374
 msgid "Use an arbitrary color"
@@ -4427,7 +4333,7 @@ msgstr "Som i _indstillinger"
 
 #: ../app/actions/view-actions.c:380
 msgid "Reset padding color to what's configured in preferences"
-msgstr "Nulstil udfyldningsfarve til det, der er konfigureret i indstillinger"
+msgstr "Nulstil udfyldningsfarve til det, der er angivet i indstillinger"
 
 #: ../app/actions/view-actions.c:571
 #, c-format
@@ -4450,7 +4356,7 @@ msgstr "Angiv lærredudfyldningsfarve"
 
 #: ../app/actions/view-commands.c:615
 msgid "Set Custom Canvas Padding Color"
-msgstr "Tilpas lærredudfyldningsfarve"
+msgstr "Angiv brugertilpasset lærredudfyldningsfarve"
 
 #: ../app/actions/window-actions.c:168
 #, c-format
@@ -4627,9 +4533,9 @@ msgid ""
 "using different filenames, restart GIMP and check the location of the swap "
 "directory in your Preferences."
 msgstr ""
-"Kunne ikke åbne swapfilen. Gimp er løbet tør for hukommelse og kan ikke "
+"Kunne ikke åbne swapfilen. GIMP er løbet tør for hukommelse og kan ikke "
 "bruge swapfilen. Nogle dele af dine billeder kan være ødelagte. Prøv at "
-"gemme dit arbejde med andre filnavne, genstart Gimp og kontrollér "
+"gemme dit arbejde med andre filnavne, genstart GIMP og kontrollér "
 "placeringen af swapmappen i dine indstillinger."
 
 #: ../app/base/tile-swap.c:568
@@ -4687,7 +4593,7 @@ msgid ""
 "color."
 msgstr ""
 "Angiv udfyldningsfarven for lærredet hvis udfyldningstilstanden er sat til "
-"brugerdefineret farve."
+"brugertilpasset farve."
 
 #: ../app/config/gimprc-blurbs.h:27
 msgid "Specifies how the area around the image should be drawn."
@@ -4815,12 +4721,12 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
-"Gimp vil advare brugeren ved forsøg på at oprette et billede, der vil optage "
+"GIMP vil advare brugeren ved forsøg på at oprette et billede, der vil optage "
 "mere hukommelse end den størrelse, som er angivet her."
 
 #: ../app/config/gimprc-blurbs.h:185
 msgid "When enabled, GIMP will show mnemonics in menus."
-msgstr "Hvis aktiveret vil Gimp vise genveje i menuer."
+msgstr "Hvis aktiveret vil GIMP vise genveje i menuer."
 
 #: ../app/config/gimprc-blurbs.h:188
 msgid ""
@@ -4828,7 +4734,7 @@ msgid ""
 "system colors allocated for GIMP."
 msgstr ""
 "Generelt kun interessant for 8 bit-skærme. Dette angiver det minimale antal "
-"systemfarver. der bliver allokeret til Gimp."
+"systemfarver. der bliver allokeret til GIMP."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid ""
@@ -4869,7 +4775,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:216
 msgid "Sets how many processors GIMP should try to use simultaneously."
-msgstr "Angiver hvor mange processorer Gimp skal forsøge at bruge samtidig."
+msgstr "Angiver hvor mange processorer GIMP skal forsøge at bruge samtidig."
 
 #: ../app/config/gimprc-blurbs.h:229
 msgid ""
@@ -4891,7 +4797,7 @@ msgid ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
-"Angiver om Gimp skal oprette forhåndsvisninger for lag og kanaler. "
+"Angiver om GIMP skal oprette forhåndsvisninger for lag og kanaler. "
 "Forhåndsvisninger i lag- og kanalvinduer er rare at have, men kan sænke "
 "hastigheden, når der arbejdes med store billeder."
 
@@ -4922,13 +4828,13 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:262
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
-"Lad Gimp forsøge at gendanne din seneste gemte session ved hver opstart."
+"Lad GIMP forsøge at gendanne din seneste gemte session ved hver opstart."
 
 #: ../app/config/gimprc-blurbs.h:265
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
-"Husk aktuelt værktøj, mønster, farve og pensel på tværs af Gimp-sessioner."
+"Husk aktuelt værktøj, mønster, farve og pensel på tværs af GIMP-sessioner."
 
 #: ../app/config/gimprc-blurbs.h:269
 msgid ""
@@ -4941,11 +4847,11 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:273
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
-"Gem placeringerne og størrelserne af hovedvinduerne når Gimp afslutter."
+"Gem placeringerne og størrelserne af hovedvinduerne når GIMP afslutter."
 
 #: ../app/config/gimprc-blurbs.h:276
 msgid "Save the tool options when GIMP exits."
-msgstr "Gem værktøjsindstillingerne når Gimp afslutter."
+msgstr "Gem værktøjsindstillingerne når GIMP afslutter."
 
 #: ../app/config/gimprc-blurbs.h:282
 msgid ""
@@ -5062,10 +4968,10 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Angiv swapfilens placering. Gimp bruger et flisebaseret "
+"Angiv swapfilens placering. GIMP bruger et flisebaseret "
 "hukommelsesallokeringssystem. Swapfilen bliver brugt til hurtigt og let at "
 "kopiere fliser ned på disken og tilbage igen. Bemærk at swapfilen hurtigt "
-"kan blive meget stor, hvis Gimp bliver brugt med store billeder. Desuden kan "
+"kan blive meget stor, hvis GIMP bliver brugt med store billeder. Desuden kan "
 "det gå forfærdeligt langsomt, hvis swapfilen bliver oprettet i en mappe, som "
 "er monteret over NFS. Derfor kan det være en god idé at anbringe din swapfil "
 "i \"/tmp\"."
@@ -5095,11 +5001,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr "Gem ændrede tastaturgenveje når Gimp afslutter."
+msgstr "Gem ændrede tastaturgenveje når GIMP afslutter."
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Gendan gemte tastaturgenveje ved hver opstart af Gimp."
+msgstr "Gendan gemte tastaturgenveje ved hver opstart af GIMP."
 
 #: ../app/config/gimprc-blurbs.h:365
 msgid ""
@@ -5109,7 +5015,7 @@ msgid ""
 "shared by other users."
 msgstr ""
 "Angiver mappen til midlertidig lagring. Filer vil dukke op her under kørslen "
-"af Gimp. De fleste filer vil forsvinde, når Gimp afslutter, men nogle filer "
+"af GIMP. De fleste filer vil forsvinde, når GIMP afslutter, men nogle filer "
 "bliver med stor sandsynlighed liggende, så det er bedst hvis denne mappe "
 "ikke er delt med andre brugere."
 
@@ -5132,7 +5038,7 @@ msgid ""
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
 msgstr ""
-"Hvis mængden af billeddata overstiger denne grænse, vil Gimp begynde at "
+"Hvis mængden af billeddata overstiger denne grænse, vil GIMP begynde at "
 "anbringe fliser på disken. Dette er meget langsommere, men gør det muligt at "
 "arbejde på billeder, som ikke kan være i hukommelsen ellers. Hvis du har en "
 "masse ram, kan du prøve at sætte denne værdi højere."
@@ -5170,7 +5076,7 @@ msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
-"Hvis aktiveret vil Gimp ikke gemme et billede, hvis det ikke er blevet "
+"Hvis aktiveret vil GIMP ikke gemme et billede, hvis det ikke er blevet "
 "ændret siden, det blev åbnet."
 
 #: ../app/config/gimprc-blurbs.h:416
@@ -5250,15 +5156,15 @@ msgstr "Generér optimal palet"
 
 #: ../app/core/core-enums.c:86
 msgid "Use web-optimized palette"
-msgstr "Benyt internetoptimeret palet"
+msgstr "Brug internetoptimeret palet"
 
 #: ../app/core/core-enums.c:87
 msgid "Use black and white (1-bit) palette"
-msgstr "Benyt sort/hvid-palet (1-bit)"
+msgstr "Brug sort/hvid-palet (1-bit)"
 
 #: ../app/core/core-enums.c:88
 msgid "Use custom palette"
-msgstr "Benyt brugerdefineret palet"
+msgstr "Brug brugertilpasset palet"
 
 #: ../app/core/core-enums.c:211
 msgid "First item"
@@ -5324,7 +5230,7 @@ msgstr "Rund"
 
 #: ../app/core/core-enums.c:338
 msgid "Bevel"
-msgstr "Kant"
+msgstr "Facetkant"
 
 #: ../app/core/core-enums.c:366
 msgid "Butt"
@@ -5336,7 +5242,7 @@ msgstr "Kvadratisk"
 
 #: ../app/core/core-enums.c:404
 msgid "Custom"
-msgstr "Brugerdefineret"
+msgstr "Brugertilpasset"
 
 #: ../app/core/core-enums.c:405
 msgid "Line"
@@ -5661,11 +5567,11 @@ msgstr "Flyt lag"
 
 #: ../app/core/core-enums.c:906
 msgid "Set layer mode"
-msgstr "Ændr lagtilstand"
+msgstr "Sæt lagtilstand"
 
 #: ../app/core/core-enums.c:907
 msgid "Set layer opacity"
-msgstr "Ændr laggennemsigtighed"
+msgstr "Sæt lagopacitet"
 
 #: ../app/core/core-enums.c:908
 msgid "Lock/Unlock alpha channel"
@@ -5800,7 +5706,7 @@ msgstr "Udfyldning med mønster"
 
 #: ../app/core/gimp-edit.c:573
 msgid "Global Buffer"
-msgstr "Globalt mellemlager"
+msgstr "Global buffer"
 
 #: ../app/core/gimp-gradients.c:61
 msgid "FG to BG (RGB)"
@@ -5824,7 +5730,7 @@ msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
-"Det ser ud til, at du har brugt Gimp %s før. Gimp vil nu overflytte dine "
+"Det ser ud til, at du har brugt GIMP %s før. GIMP vil nu overflytte dine "
 "indstillinger til \"%s\"."
 
 #: ../app/core/gimp-user-install.c:158
@@ -5833,7 +5739,7 @@ msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
 msgstr ""
-"Det ser ud til, at du bruger Gimp for første gang. Gimp vil nu oprette en "
+"Det ser ud til, at du bruger GIMP for første gang. GIMP vil nu oprette en "
 "mappe ved navn \"%s\" og kopiere nogle filer til den."
 
 #: ../app/core/gimp-user-install.c:309
@@ -5940,7 +5846,7 @@ msgid ""
 msgstr ""
 "Fatal fortolkningsfejl i penselfilen \"%s\": ikke-understøttet penseldybdde %"
 "d\n"
-"Gimp-pensler skal være gråtone eller RGBA."
+"GIMP-pensler skal være gråtone eller RGBA."
 
 #: ../app/core/gimpbrush-load.c:448
 #, c-format
@@ -5960,14 +5866,14 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Fatal fortolkningsfejl i penselfilen \"%s\": ikke en Gimp-penselfil."
+msgstr "Fatal fortolkningsfejl i penselfilen \"%s\": ikke en GIMP-penselfil."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"Fatal fortolkningsfejl i penselfilen \"%s\": ukendt Gimp-penselversion på "
+"Fatal fortolkningsfejl i penselfilen \"%s\": ukendt GIMP-penselversion på "
 "linje %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
@@ -5975,7 +5881,7 @@ msgstr ""
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"Fatal fortolkningsfejl i penselfilen \"%s\": ukendt Gimp-penselform på linje "
+"Fatal fortolkningsfejl i penselfilen \"%s\": ukendt GIMP-penselform på linje "
 "%d."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
@@ -6062,7 +5968,7 @@ msgstr "Vend kanal"
 msgid "Rotate Channel"
 msgstr "Rotér kanal"
 
-#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:843
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:886
 msgid "Transform Channel"
 msgstr "Transformér kanal"
 
@@ -6113,7 +6019,7 @@ msgstr "Angiv kanalfarve"
 
 #: ../app/core/gimpchannel.c:1679
 msgid "Set Channel Opacity"
-msgstr "Ændring af ugennemsigtighed for kanal"
+msgstr "Sæt kanalopacitet"
 
 #: ../app/core/gimpchannel.c:1747 ../app/core/gimpselection.c:520
 msgid "Selection Mask"
@@ -6245,28 +6151,28 @@ msgstr "Posterisér"
 
 #: ../app/core/gimpdrawable-stroke.c:324
 msgid "Render Stroke"
-msgstr "Tegn bestrygning"
+msgstr "Gengiv bestrygning"
 
 #: ../app/core/gimpdrawable-threshold.c:71
 #: ../app/core/gimpdrawable-threshold.c:82 ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
 msgstr "Tærskel"
 
-#: ../app/core/gimpdrawable-transform.c:629 ../app/tools/gimpfliptool.c:116
+#: ../app/core/gimpdrawable-transform.c:645 ../app/tools/gimpfliptool.c:116
 msgctxt "command"
 msgid "Flip"
 msgstr "Vend"
 
-#: ../app/core/gimpdrawable-transform.c:716 ../app/tools/gimprotatetool.c:121
+#: ../app/core/gimpdrawable-transform.c:745 ../app/tools/gimprotatetool.c:121
 msgctxt "command"
 msgid "Rotate"
 msgstr "Rotér"
 
-#: ../app/core/gimpdrawable-transform.c:841 ../app/core/gimplayer.c:255
+#: ../app/core/gimpdrawable-transform.c:884 ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Transformér lag"
 
-#: ../app/core/gimpdrawable-transform.c:856
+#: ../app/core/gimpdrawable-transform.c:899
 msgid "Transformation"
 msgstr "Transformering"
 
@@ -6281,7 +6187,7 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
-"Fatal fortolkningsfejl i farveovergangsfilen \"%s\": Ikke en Gimp-"
+"Fatal fortolkningsfejl i farveovergangsfilen \"%s\": Ikke en GIMP-"
 "farveovergangsfil."
 
 #: ../app/core/gimpgradient-load.c:109
@@ -6330,8 +6236,7 @@ msgstr "Gitterets forgrundsfarve."
 #: ../app/core/gimpgrid.c:95
 msgid ""
 "The background color of the grid; only used in double dashed line style."
-msgstr ""
-"Gitterets baggrundsfarve; benyttes kun med en dobbeltstiplet linjestil."
+msgstr "Gitterets baggrundsfarve; bruges kun ved en dobbeltstiplet linjestil."
 
 #: ../app/core/gimpgrid.c:101
 msgid "Horizontal spacing of grid lines."
@@ -6852,7 +6757,7 @@ msgid ""
 msgstr ""
 "Fatal fortolkningsfejl i mønsterfilen \"%s\": Ikke-understøttet mønsterdybde "
 "%d.\n"
-"Gimp-mønstre skal være gråtone eller RGB."
+"GIMP-mønstre skal være gråtone eller RGB."
 
 #: ../app/core/gimppattern-load.c:139
 #, c-format
@@ -6919,7 +6824,7 @@ msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
 msgstr ""
-"Konvertér en hjørnekobling til en afrundet kobling, hvis hjørnet strækker "
+"Konvertér en hjørnekobling til en facetskåret kobling, hvis hjørnet strækker "
 "sig mere end afstanden hjørnegrænse * linjebredde fra det faktiske "
 "koblingspunkt."
 
@@ -6996,7 +6901,7 @@ msgstr "procent"
 
 #: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
-msgstr "Besøg Gimps hjemmeside"
+msgstr "Besøg GIMP-hjemmesiden"
 
 #. Translators: insert your names here, separated by newline
 #: ../app/dialogs/about-dialog.c:128
@@ -7014,7 +6919,7 @@ msgstr ""
 
 #: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
-msgstr "Gimp er leveret til dig af"
+msgstr "GIMP er leveret til dig af"
 
 #: ../app/dialogs/about-dialog.c:603
 msgid "This is an unstable development release."
@@ -7051,15 +6956,15 @@ msgstr "_Fjern ubrugte farver fra farveafbildning"
 #. dithering
 #: ../app/dialogs/convert-dialog.c:232 ../app/tools/gimpblendoptions.c:247
 msgid "Dithering"
-msgstr "Rastering"
+msgstr "Rastersimulering"
 
 #: ../app/dialogs/convert-dialog.c:244
 msgid "Color _dithering:"
-msgstr "Farve_rastering:"
+msgstr "Farve_rastersimulering:"
 
 #: ../app/dialogs/convert-dialog.c:259
 msgid "Enable dithering of _transparency"
-msgstr "Aktivér rastering af _gennemsigtighed"
+msgstr "Aktivér rastersimulering af _gennemsigtighed"
 
 #: ../app/dialogs/convert-dialog.c:286
 msgid "Converting to indexed colors"
@@ -7073,7 +6978,7 @@ msgstr "Kan ikke konvertere til en palet med mere end 256 farver."
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:161
 #: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
-msgstr "Meddelelse fra Gimp"
+msgstr "Meddelelse fra GIMP"
 
 #: ../app/dialogs/dialogs.c:142
 msgid "Devices"
@@ -7130,11 +7035,11 @@ msgstr "For-/baggrundsfarve"
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
 msgid "Fade %s"
-msgstr "Falme %s"
+msgstr "Udton %s"
 
 #: ../app/dialogs/fade-dialog.c:123
 msgid "_Fade"
-msgstr "_Falme"
+msgstr "_Udtoning"
 
 #: ../app/dialogs/fade-dialog.c:157
 msgid "_Mode:"
@@ -7142,7 +7047,7 @@ msgstr "_Tilstand:"
 
 #: ../app/dialogs/fade-dialog.c:163
 msgid "_Opacity:"
-msgstr "_Ugennemsigtighed:"
+msgstr "_Opacitet:"
 
 #: ../app/dialogs/file-open-dialog.c:253
 msgid "Open layers"
@@ -7188,11 +7093,11 @@ msgstr "Ønsker du at gemme billedet med dette navn alligevel?"
 
 #: ../app/dialogs/grid-dialog.c:85
 msgid "Configure Grid"
-msgstr "Konfigurér gitter"
+msgstr "Indstil gitter"
 
 #: ../app/dialogs/grid-dialog.c:86
 msgid "Configure Image Grid"
-msgstr "Konfigurér billedgitter"
+msgstr "Indstil billedgitter"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:64
 msgid "Merge Layers"
@@ -7253,8 +7158,7 @@ msgid ""
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
 "Et billede af den valgte størrelse vil bruge mere hukommelse, end der er "
-"konfigureret som \"Maksimal billedstørrelse\" under indstillingerne (aktuelt "
-"%s)."
+"angivet som \"Maksimal billedstørrelse\" under indstillingerne (aktuelt %s)."
 
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
@@ -7290,7 +7194,7 @@ msgid ""
 "%s)."
 msgstr ""
 "Skalering af billedet til den valgte størrelse vil bruge mere hukommelse end "
-"der er konfigureret som \"Maksimal billedstørrelse\" under indstillingerne "
+"der er angivet som \"Maksimal billedstørrelse\" under indstillingerne "
 "(aktuelt %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:260
@@ -7306,7 +7210,7 @@ msgstr "Er dette, hvad du ønsker at gøre?"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
-msgstr "Konfigurér tastaturgenveje"
+msgstr "Indstil tastaturgenveje"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:73
 msgid ""
@@ -7361,7 +7265,7 @@ msgstr "Programudvidelser"
 
 #: ../app/dialogs/module-dialog.c:150
 msgid "You will have to restart GIMP for the changes to take effect."
-msgstr "Du skal genstarte Gimp, før ændringerne træder i kraft."
+msgstr "Du skal genstarte GIMP, før ændringerne træder i kraft."
 
 # for at skelne 'modules' fra 'plug-ins' kalder vi førstnævnte for programudvidelser
 #: ../app/dialogs/module-dialog.c:191
@@ -7528,11 +7432,11 @@ msgstr "Vil du nulstille alle indstillinger til deres standardværdier?"
 
 #: ../app/dialogs/preferences-dialog.c:355
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "Du skal genstarte Gimp, før de følgende ændringer træder i kraft:"
+msgstr "Du skal genstarte GIMP, før de følgende ændringer træder i kraft:"
 
 #: ../app/dialogs/preferences-dialog.c:500
 msgid "Configure Input Devices"
-msgstr "Konfigurér inputenheder"
+msgstr "Indstil inputenheder"
 
 #: ../app/dialogs/preferences-dialog.c:577
 msgid ""
@@ -7540,7 +7444,7 @@ msgid ""
 "start GIMP."
 msgstr ""
 "Dine tastaturgenveje vil blive nulstillet til standardværdierne, næste gang "
-"du starter Gimp."
+"du starter GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:588
 msgid "Remove all Keyboard Shortcuts"
@@ -7556,7 +7460,7 @@ msgid ""
 "GIMP."
 msgstr ""
 "Din vinduesopsætning vil blive nulstillet til standardværdierne næste gang, "
-"du starter Gimp."
+"du starter GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:686
 msgid ""
@@ -7564,7 +7468,7 @@ msgid ""
 "start GIMP."
 msgstr ""
 "Dine indstillinger for inputenheder vil blive nulstillet til "
-"standardværdierne, næste gang du starter Gimp."
+"standardværdierne, næste gang du starter GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:721
 msgid ""
@@ -7572,7 +7476,7 @@ msgid ""
 "GIMP."
 msgstr ""
 "Dine værktøjsindstillinger vil blive nulstillet til standardværdierne næste "
-"gang, du starter Gimp."
+"gang, du starter GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:1289
 msgid "Show _menubar"
@@ -7612,11 +7516,11 @@ msgstr "Lærred_udfyldningstilstand:"
 
 #: ../app/dialogs/preferences-dialog.c:1327
 msgid "Custom p_adding color:"
-msgstr "_Brugerdefineret udfyldningsfarve:"
+msgstr "_Brugertilpasset udfyldningsfarve:"
 
 #: ../app/dialogs/preferences-dialog.c:1328
 msgid "Select Custom Canvas Padding Color"
-msgstr "Vælg lærredudfyldningsfarve"
+msgstr "Vælg brugertilpasset lærredudfyldningsfarve"
 
 #: ../app/dialogs/preferences-dialog.c:1417
 msgid "Preferences"
@@ -7649,7 +7553,7 @@ msgstr "Maksimal størrelse af _nyt billede:"
 
 #: ../app/dialogs/preferences-dialog.c:1567
 msgid "Number of _processors to use:"
-msgstr "Antal _processorer som benyttes:"
+msgstr "Antal _processorer som bruges:"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1572
@@ -7709,15 +7613,15 @@ msgstr "Tastaturgenveje"
 
 #: ../app/dialogs/preferences-dialog.c:1637
 msgid "Show menu _mnemonics (access keys)"
-msgstr "Vis menu_genveje"
+msgstr "Vis menu_genveje (genvejstaster)"
 
 #: ../app/dialogs/preferences-dialog.c:1640
 msgid "_Use dynamic keyboard shortcuts"
-msgstr "Benyt _dynamiske tastaturgenveje"
+msgstr "Brug _dynamiske tastaturgenveje"
 
 #: ../app/dialogs/preferences-dialog.c:1644
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Konfigurér _tastaturgenveje..."
+msgstr "Indstil _tastaturgenveje..."
 
 #: ../app/dialogs/preferences-dialog.c:1651
 msgid "_Save keyboard shortcuts on exit"
@@ -7890,7 +7794,7 @@ msgstr "Billedvinduer"
 # skal synkroniseres
 #: ../app/dialogs/preferences-dialog.c:2082
 msgid "Use \"_Dot for dot\" by default"
-msgstr "Benyt \"_punkt for punkt\" som standard"
+msgstr "Brug \"_punkt for punkt\" som standard"
 
 #: ../app/dialogs/preferences-dialog.c:2088
 msgid "Marching _ants speed:"
@@ -7915,7 +7819,7 @@ msgstr "Tilpas til vindue"
 
 #: ../app/dialogs/preferences-dialog.c:2107
 msgid "Initial zoom _ratio:"
-msgstr "Startzoomforhold:"
+msgstr "Startværdi zoomfo_rhold:"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2111
@@ -7946,7 +7850,7 @@ msgstr "Markør_tilstand:"
 # -udseende dækker
 #: ../app/dialogs/preferences-dialog.c:2137
 msgid "Pointer re_ndering:"
-msgstr "Markør_udseende:"
+msgstr "Markør_gengivelse:"
 
 #: ../app/dialogs/preferences-dialog.c:2149
 msgid "Image Window Appearance"
@@ -8093,7 +7997,7 @@ msgstr "Farvetilpasning for _udskriftssimulering:"
 
 #: ../app/dialogs/preferences-dialog.c:2521
 msgid "Mark out of gamut colors"
-msgstr "Markér farver uden for farveskala"
+msgstr "Markér farver uden for gamut-farveskala"
 
 #: ../app/dialogs/preferences-dialog.c:2526
 msgid "Select Warning Color"
@@ -8114,7 +8018,7 @@ msgstr "Udvidede inputenheder"
 
 #: ../app/dialogs/preferences-dialog.c:2565
 msgid "Configure E_xtended Input Devices..."
-msgstr "Konfigurér _udvidede inputenheder..."
+msgstr "Indstil _udvidede inputenheder..."
 
 #: ../app/dialogs/preferences-dialog.c:2572
 msgid "_Save input device settings on exit"
@@ -8335,7 +8239,7 @@ msgstr "billedpunkter/%a"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Quit GIMP"
-msgstr "Afslut Gimp"
+msgstr "Afslut GIMP"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Close All Images"
@@ -8343,11 +8247,11 @@ msgstr "Luk alle billeder"
 
 #: ../app/dialogs/quit-dialog.c:165
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "Hvis du afslutter Gimp nu, vil disse ændringer gå tabt."
+msgstr "Hvis du afslutter GIMP nu, vil disse ændringer gå tabt."
 
 #: ../app/dialogs/quit-dialog.c:168
 msgid "If you close these images now, changes will be lost."
-msgstr "Hvis du afslutter Gimp nu, vil ændringer gå tabt."
+msgstr "Hvis du afslutter GIMP nu, vil ændringer gå tabt."
 
 #: ../app/dialogs/quit-dialog.c:216
 #, c-format
@@ -8423,11 +8327,11 @@ msgstr "_Efterlign penseldynamik"
 
 #: ../app/dialogs/tips-dialog.c:89
 msgid "The GIMP tips file is empty!"
-msgstr "Filen med tips til Gimp er tom\""
+msgstr "Filen med tips til GIMP er tom!"
 
 #: ../app/dialogs/tips-dialog.c:93
 msgid "The GIMP tips file appears to be missing!"
-msgstr "Filen med tips til Gimp ser ud til at mangle!"
+msgstr "Filen med tips til GIMP ser ud til at mangle!"
 
 #: ../app/dialogs/tips-dialog.c:95
 #, c-format
@@ -8436,11 +8340,11 @@ msgstr "Der burde være en fil med navnet \"%s\". Kontrollér din installation."
 
 #: ../app/dialogs/tips-dialog.c:101
 msgid "The GIMP tips file could not be parsed!"
-msgstr "Filen med tips til Gimp kunne ikke fortolkes!"
+msgstr "Filen med tips til GIMP kunne ikke fortolkes!"
 
 #: ../app/dialogs/tips-dialog.c:129
 msgid "GIMP Tip of the Day"
-msgstr "Dagens tip til Gimp"
+msgstr "Dagens tip til GIMP"
 
 #: ../app/dialogs/tips-dialog.c:135
 msgid "_Previous Tip"
@@ -8466,7 +8370,7 @@ msgstr "tips-locale:da"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
-msgstr "Gimp brugerinstallation"
+msgstr "GIMP brugerinstallation"
 
 #: ../app/dialogs/user-install-dialog.c:94
 msgid "User installation failed!"
@@ -8474,7 +8378,7 @@ msgstr "Brugerinstallation mislykkedes!"
 
 #: ../app/dialogs/user-install-dialog.c:96
 msgid "The GIMP user installation failed; see the log for details."
-msgstr "Gimp brugerinstallation mislykkedes; se venligst loggen for detaljer."
+msgstr "GIMP brugerinstallation mislykkedes; se venligst loggen for detaljer."
 
 #: ../app/dialogs/user-install-dialog.c:99
 msgid "Installation Log"
@@ -8544,7 +8448,7 @@ msgstr "Mørk ternfarve"
 
 #: ../app/display/display-enums.c:88
 msgid "Custom color"
-msgstr "Brugerdefineret farve"
+msgstr "Brugertilpasset farve"
 
 #: ../app/display/display-enums.c:116
 msgid "No action"
@@ -8560,11 +8464,11 @@ msgstr "Skift til flytteværktøjet"
 
 #: ../app/display/display-enums.c:145
 msgid "quality|Low"
-msgstr "kvalitet|lav"
+msgstr "Lav"
 
 #: ../app/display/display-enums.c:146
 msgid "quality|High"
-msgstr "kvalitet|høj"
+msgstr "Høj"
 
 #: ../app/display/gimpdisplay-handlers.c:160
 #, c-format
@@ -8586,7 +8490,7 @@ msgstr "Navigér billedvisningen"
 #: ../app/display/gimpdisplayshell.c:1285
 #: ../app/display/gimpdisplayshell.c:1375 ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
-msgstr "Træk billeder hertil for  at åbne dem "
+msgstr "Træk billeder hertil for at åbne dem"
 
 #: ../app/display/gimpdisplayshell-close.c:147
 #: ../app/display/gimpdisplayshell-close.c:224
@@ -8657,7 +8561,7 @@ msgstr "Drop lag"
 #: ../app/display/gimpdisplayshell-dnd.c:648
 #: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
-msgstr "Droppet mellemlager"
+msgstr "Droppet buffer"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:75
 msgid "Color Display Filters"
@@ -8665,7 +8569,7 @@ msgstr "Farvefremvisningsfiltre"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:78
 msgid "Configure Color Display Filters"
-msgstr "Konfigurér farvefremvisningsfiltre"
+msgstr "Indstil farvefremvisningsfiltre"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:120
 msgid "Layer Select"
@@ -8782,7 +8686,7 @@ msgstr "Ugyldig tegnsekvens i URI"
 #: ../app/gegl/gimpcurvesconfig.c:384
 #, c-format
 msgid "not a GIMP Curves file"
-msgstr "ikke en Gimp-kurvefil"
+msgstr "ikke en GIMP-kurvefil"
 
 #: ../app/gegl/gimpcurvesconfig.c:398 ../app/gegl/gimplevelsconfig.c:711
 #, c-format
@@ -8792,7 +8696,7 @@ msgstr "fortolkningsfejl"
 #: ../app/gegl/gimplevelsconfig.c:664
 #, c-format
 msgid "not a GIMP Levels file"
-msgstr "ikke en niveaufil til Gimp"
+msgstr "ikke en GIMP-niveaufil"
 
 #. initialize the document history
 #: ../app/gui/gui.c:426
@@ -8801,7 +8705,7 @@ msgstr "Dokumenter"
 
 #: ../app/gui/splash.c:116
 msgid "GIMP Startup"
-msgstr "Opstart af Gimp"
+msgstr "Opstart af GIMP"
 
 #: ../app/paint/gimpairbrush.c:69 ../app/tools/gimpairbrushtool.c:54
 msgid "Airbrush"
@@ -8893,7 +8797,7 @@ msgstr "Fast"
 # dækker vist bedst
 #: ../app/paint/paint-enums.c:111
 msgid "Blur"
-msgstr "Blødgør"
+msgstr "Slør"
 
 #: ../app/paint/paint-enums.c:112
 msgid "Sharpen"
@@ -9038,12 +8942,12 @@ msgstr "Skrifttype \"%s\" blev ikke fundet"
 #: ../app/pdb/gimppdb-utils.c:252
 #, c-format
 msgid "Invalid empty buffer name"
-msgstr "Ugyldigt tomt mellemlagernavn"
+msgstr "Ugyldigt tomt buffernavn"
 
 #: ../app/pdb/gimppdb-utils.c:262
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "Navngivet mellemlager \"%s\" blev ikke fundet"
+msgstr "Navngiven buffer \"%s\" blev ikke fundet"
 
 #: ../app/pdb/gimppdb-utils.c:281
 #, c-format
@@ -9266,8 +9170,8 @@ msgstr ""
 "Udvidelsesmodul gik ned: \"%s\"\n"
 "(%s)\n"
 "\n"
-"Det døende modul kan have skabt uorden i Gimps interne tilstand. Du kan evt. "
-"gemme dine billeder og genstarte Gimp for at være på den sikre side."
+"Det døende modul kan have skabt uorden i GIMPs interne tilstand. Du kan evt. "
+"gemme dine billeder og genstarte GIMP for at være på den sikre side."
 
 #: ../app/plug-in/gimppluginmanager-call.c:173
 #: ../app/plug-in/gimppluginmanager-call.c:223
@@ -9282,7 +9186,7 @@ msgstr "Søger efter udvidelsesmoduler"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:271
 msgid "Resource configuration"
-msgstr "Ressourcekonfiguration"
+msgstr "Ressourceindstillinger"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:307
 msgid "Querying new Plug-ins"
@@ -9339,7 +9243,7 @@ msgstr "Modul mangler (%s)"
 #: ../app/plug-in/plug-in-rc.c:206
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "Springer over \"%s\": forkert version af Gimp-protokollen."
+msgstr "Springer over \"%s\": forkert version af GIMP-protokollen."
 
 #: ../app/plug-in/plug-in-rc.c:479
 #, c-format
@@ -9866,25 +9770,25 @@ msgstr "Radius:"
 #: ../app/tools/gimpcolorpickeroptions.c:156
 #, c-format
 msgid "Pick Mode  (%s)"
-msgstr "Opsnappertilstand (%s)"
+msgstr "Vælgertilstand (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:165
 #, c-format
 msgid "Use info window  (%s)"
-msgstr "Benyt infovindue (%s)"
+msgstr "Brug infovindue (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:96
 msgid "Color Picker"
-msgstr "Farveopsnapper"
+msgstr "Farvevælger"
 
 #: ../app/tools/gimpcolorpickertool.c:97
 msgid "Color Picker Tool: Set colors from image pixels"
-msgstr "Farveopsnapperværktøj: Vælg farver fra billedpunkter"
+msgstr "Farvevælgerværktøj: Vælg farver fra billedpunkter"
 
 #: ../app/tools/gimpcolorpickertool.c:98
 msgid "C_olor Picker"
-msgstr "_Farveopsnapper"
+msgstr "_Farvevælger"
 
 #: ../app/tools/gimpcolorpickertool.c:242
 msgid "Click in any image to view its color"
@@ -9892,11 +9796,11 @@ msgstr "Klik på et billede for at se farven"
 
 #: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:509
 msgid "Click in any image to pick the foreground color"
-msgstr "Klik på et billede for at opsnappe forgrundsfarven"
+msgstr "Klik på et billede for at vælge forgrundsfarven"
 
 #: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:515
 msgid "Click in any image to pick the background color"
-msgstr "Klik på et billede for at opsnappe baggrundsfarven"
+msgstr "Klik på et billede for at vælge baggrundsfarven"
 
 #: ../app/tools/gimpcolorpickertool.c:265
 msgid "Click in any image to add the color to the palette"
@@ -9906,7 +9810,7 @@ msgstr "Klik på et billede for at tilføje farven til paletten"
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
 msgid "Color Picker Information"
-msgstr "Farveopsnapper"
+msgstr "Farvevælger"
 
 #: ../app/tools/gimpcolortool.c:258 ../app/tools/gimpcolortool.c:437
 msgid "Move Sample Point: "
@@ -9922,23 +9826,23 @@ msgstr "Tilføj prøvepunkt: "
 
 #: ../app/tools/gimpconvolvetool.c:73
 msgid "Blur / Sharpen"
-msgstr "Blødgør/skærp"
+msgstr "Sløring/skarphed"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr "Blødgør/skærp-værktøj: Blødgør eller skærp selektivt vha. en pensel"
+msgstr "Sløring/skarphed-værktøj: Slør eller skærp selektivt vha. en pensel"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Bl_ur / Sharpen"
-msgstr "Blø_dgør/skærp"
+msgstr "Sl_øring/skarphed"
 
 #: ../app/tools/gimpconvolvetool.c:170
 msgid "Click to blur"
-msgstr "Klik for at blødgøre"
+msgstr "Klik for at sløre"
 
 #: ../app/tools/gimpconvolvetool.c:171
 msgid "Click to blur the line"
-msgstr "Klik for at blødgøre linjen"
+msgstr "Klik for at sløre linjen"
 
 #: ../app/tools/gimpconvolvetool.c:172
 #, c-format
@@ -9956,7 +9860,7 @@ msgstr "Klik for at skærpe linjen"
 #: ../app/tools/gimpconvolvetool.c:178
 #, c-format
 msgid "%s to blur"
-msgstr "%s for at blødgøre"
+msgstr "%s for at sløre"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:199
@@ -10656,7 +10560,7 @@ msgstr "_Zoom"
 
 #: ../app/tools/gimpmeasureoptions.c:124
 msgid "Use info window"
-msgstr "Benyt infovindue"
+msgstr "Brug infovindue"
 
 #: ../app/tools/gimpmeasuretool.c:121
 msgid "Measure"
@@ -10770,7 +10674,7 @@ msgstr "Tilstand:"
 #: ../app/tools/gimptransformoptions.c:348
 #: ../app/widgets/gimpbrushselect.c:178 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity:"
-msgstr "Ugennemsigtighed:"
+msgstr "Opacitet:"
 
 #: ../app/tools/gimppaintoptions-gui.c:137
 msgid "Brush:"
@@ -10782,7 +10686,7 @@ msgstr "Skalér:"
 
 #: ../app/tools/gimppaintoptions-gui.c:150
 msgid "Opacity"
-msgstr "Ugennemsigtighed"
+msgstr "Opacitet"
 
 #: ../app/tools/gimppaintoptions-gui.c:156
 msgid "Hardness"
@@ -10818,7 +10722,7 @@ msgstr "Hård kant"
 
 #: ../app/tools/gimppaintoptions-gui.c:565
 msgid "Fade out"
-msgstr "Falmen"
+msgstr "Udtoning"
 
 #: ../app/tools/gimppaintoptions-gui.c:574
 #: ../app/tools/gimppaintoptions-gui.c:657
@@ -10835,7 +10739,7 @@ msgstr "Mængde:"
 
 #: ../app/tools/gimppaintoptions-gui.c:631
 msgid "Use color from gradient"
-msgstr "Benyt farve fra farveovergang"
+msgstr "Brug farve fra farveovergang"
 
 #: ../app/tools/gimppainttool.c:136
 msgid "Click to paint"
@@ -11194,7 +11098,7 @@ msgstr "_Tekst"
 
 #: ../app/tools/gimptexttool.c:956
 msgid "GIMP Text Editor"
-msgstr "Gimps tekstredigering"
+msgstr "GIMP tekstredigering"
 
 #: ../app/tools/gimptexttool.c:1072 ../app/tools/gimptexttool.c:1075
 msgid "Confirm Text Editing"
@@ -11577,7 +11481,7 @@ msgstr "Ingen baner fundet i '%s'"
 #: ../app/vectors/gimpvectors-import.c:339
 #, c-format
 msgid "No paths found in the buffer"
-msgstr "Ingen baner fundet i mellemlageret"
+msgstr "Ingen baner fundet i bufferen"
 
 #: ../app/vectors/gimpvectors-import.c:349
 #, c-format
@@ -11915,7 +11819,7 @@ msgstr "Aktive controllere"
 
 #: ../app/widgets/gimpcontrollerlist.c:290
 msgid "Configure the selected controller"
-msgstr "Konfigurér den valgte controller"
+msgstr "Indstil den valgte controller"
 
 #: ../app/widgets/gimpcontrollerlist.c:298
 msgid "Move the selected controller up"
@@ -11982,14 +11886,14 @@ msgid ""
 "removing it."
 msgstr ""
 "Hvis du fjerner denne controller fra listen af aktive controllere, sletter "
-"du permanent alle hændelsesvalg du har konfigureret.\n"
+"du permanent alle hændelsesvalg du har indstillet.\n"
 "\n"
 "Hvis du vælger \"Deaktivér controller\", deaktiverer du controlleren uden at "
 "fjerne den."
 
 #: ../app/widgets/gimpcontrollerlist.c:633
 msgid "Configure Input Controller"
-msgstr "Konfigurér inputcontroller"
+msgstr "Indstil inputcontroller"
 
 #: ../app/widgets/gimpcontrollerwheel.c:72
 #: ../app/widgets/gimpcontrollerwheel.c:75
@@ -12105,7 +12009,7 @@ msgstr "Ønsker du at erstatte den med det billede du gemmer?"
 
 #: ../app/widgets/gimpdockable.c:194
 msgid "Configure this tab"
-msgstr "Konfigurér dette faneblad"
+msgstr "Indstil dette faneblad"
 
 #: ../app/widgets/gimpdockseparator.c:44
 msgid "You can drop dockable dialogs here"
@@ -12187,7 +12091,7 @@ msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:1002
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Lysstyrke: %0.1f   Ugennemsigtighed: %0.1f"
+msgstr "Lysstyrke: %0.1f   Opacitet: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:1033
 #, c-format
@@ -12271,14 +12175,14 @@ msgstr "Hjælpefremviser mangler"
 
 #: ../app/widgets/gimphelp.c:295
 msgid "The GIMP help browser is not available."
-msgstr "Gimps hjælpefremviser er ikke tilgængelig."
+msgstr "GIMPs hjælpefremviser er ikke tilgængelig."
 
 #: ../app/widgets/gimphelp.c:296
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
-"Gimps hjælpefremvisermodul ser ud til at mangle i din installation. Du kan i "
+"GIMPs hjælpefremvisermodul ser ud til at mangle i din installation. Du kan i "
 "stedet bruge webbrowseren til at læse hjælpesiderne."
 
 #: ../app/widgets/gimphelp.c:337
@@ -12287,7 +12191,7 @@ msgstr "Hjælpefremviser starter ikke"
 
 #: ../app/widgets/gimphelp.c:338
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Kunne ikke starte Gimps hjælpefremvisermodul."
+msgstr "Kunne ikke starte GIMPs hjælpefremvisermodul."
 
 #: ../app/widgets/gimphelp.c:365
 msgid "Use _Web Browser"
@@ -12295,7 +12199,7 @@ msgstr "Brug _webbrowser"
 
 #: ../app/widgets/gimphelp.c:614
 msgid "GIMP user manual is missing"
-msgstr "Brugermanualen til Gimp mangler"
+msgstr "Brugermanualen til GIMP mangler"
 
 #: ../app/widgets/gimphelp.c:621
 msgid "_Read Online"
@@ -12303,7 +12207,7 @@ msgstr "_Læs på nettet"
 
 #: ../app/widgets/gimphelp.c:645
 msgid "The GIMP user manual is not installed on your computer."
-msgstr "Brugermanualen til Gimp er ikke installeret på din computer."
+msgstr "Brugermanualen til GIMP er ikke installeret på din computer."
 
 #: ../app/widgets/gimphelp.c:648
 msgid ""
@@ -12734,7 +12638,7 @@ msgstr "Fejl ved gemning af værktøjsindstillingerne: %s"
 
 #: ../app/widgets/gimpuimanager.c:738
 msgid "Your GIMP installation is incomplete:"
-msgstr "Din installation af Gimp er ufuldstændig:"
+msgstr "Din installation af GIMP er ufuldstændig:"
 
 #: ../app/widgets/gimpuimanager.c:740
 msgid "Plase make sure the menu XML files are correctly installed."
@@ -12849,7 +12753,7 @@ msgstr "Smart"
 
 #: ../app/widgets/widgets-enums.c:201
 msgid "GIMP help browser"
-msgstr "Hjælpefremviser"
+msgstr "GIMP hjælpefremviser"
 
 #: ../app/widgets/widgets-enums.c:202
 msgid "Web browser"
@@ -12946,7 +12850,7 @@ msgstr "Kunne ikke søge i XCF-fil: %s"
 
 #: ../app/xcf/xcf.c:99 ../app/xcf/xcf.c:167
 msgid "GIMP XCF image"
-msgstr "Gimp XCF-billede"
+msgstr "GIMP XCF-billede"
 
 #: ../app/xcf/xcf.c:271
 #, c-format
@@ -12978,23 +12882,23 @@ msgstr "Billedredigering"
 
 #: ../tools/gimp-remote.c:65
 msgid "Use a running GIMP only, never start a new one"
-msgstr "Brug kun en kørende Gimp, start ikke en ny"
+msgstr "Brug kun en kørende GIMP, start ikke en ny"
 
 #: ../tools/gimp-remote.c:70
 msgid "Only check if GIMP is running, then quit"
-msgstr "Tjek kun om Gimp kører, afslut så"
+msgstr "Tjek kun om GIMP kører, afslut så"
 
 #: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
-msgstr "Udskriv X-window-id på Gimp værktøjskassevinduet og afslut herefter"
+msgstr "Udskriv X-window-id på GIMP værktøjskassevinduet og afslut herefter"
 
 #: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
-msgstr "Start Gimp uden at vise opstartsvinduet"
+msgstr "Start GIMP uden at vise opstartsvinduet"
 
 #: ../tools/gimp-remote-x11.c:67
 msgid "Could not connect to GIMP."
-msgstr "Kunne ikke tilslutte til Gimp."
+msgstr "Kunne ikke tilslutte til GIMP."
 
 #: ../tools/gimp-remote-x11.c:68
 msgid "Make sure that the Toolbox is visible!"
