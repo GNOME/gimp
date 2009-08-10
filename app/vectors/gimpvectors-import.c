@@ -209,6 +209,17 @@ gimp_vectors_import_file (GimpImage    *image,
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         GIMP_IS_VECTORS (parent), FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_item_get_image (GIMP_ITEM (parent)) == image,
+                        FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
+                        FALSE);
   g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -246,6 +257,17 @@ gimp_vectors_import_buffer (GimpImage    *image,
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         GIMP_IS_VECTORS (parent), FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_item_get_image (GIMP_ITEM (parent)) == image,
+                        FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
+                        FALSE);
   g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
