@@ -41,6 +41,21 @@
 #include "gimp-intl.h"
 
 
+static GimpObject *
+gimp_pdb_get_data_factory_item (GimpDataFactory *data_factory,
+                                const gchar     *name)
+{
+  GimpObject *gimp_object;
+
+  gimp_object = gimp_container_get_child_by_name (gimp_data_factory_get_container (data_factory), name);
+
+  if (! gimp_object)
+    gimp_object = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (data_factory), name);
+
+  return gimp_object;
+}
+
+
 GimpBrush *
 gimp_pdb_get_brush (Gimp         *gimp,
                     const gchar  *name,
@@ -59,8 +74,7 @@ gimp_pdb_get_brush (Gimp         *gimp,
       return NULL;
     }
 
-  brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->brush_factory), name);
+  brush = (GimpBrush *) gimp_pdb_get_data_factory_item (gimp->brush_factory, name);
 
   if (! brush)
     {
@@ -120,8 +134,7 @@ gimp_pdb_get_pattern (Gimp         *gimp,
       return NULL;
     }
 
-  pattern = (GimpPattern *)
-    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->pattern_factory), name);
+  pattern = (GimpPattern *) gimp_pdb_get_data_factory_item (gimp->pattern_factory, name);
 
   if (! pattern)
     {
@@ -150,8 +163,7 @@ gimp_pdb_get_gradient (Gimp         *gimp,
       return NULL;
     }
 
-  gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->gradient_factory), name);
+  gradient = (GimpGradient *) gimp_pdb_get_data_factory_item (gimp->gradient_factory, name);
 
   if (! gradient)
     {
@@ -186,8 +198,7 @@ gimp_pdb_get_palette (Gimp         *gimp,
       return NULL;
     }
 
-  palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->palette_factory), name);
+  palette = (GimpPalette *) gimp_pdb_get_data_factory_item (gimp->palette_factory, name);
 
   if (! palette)
     {
