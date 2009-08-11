@@ -184,7 +184,7 @@ static gdouble gimp_dynamics_options_get_dynamics_mix (gdouble       mix1,
                                                        gdouble       mix6_scale);
 */
 
-static void    gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
+static void    gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass);
 
 static void    gimp_dynamics_options_finalize         (GObject      *object);
 
@@ -1011,7 +1011,7 @@ gimp_dynamics_options_new (GimpPaintInfo *dynamics_info)
 {
   GimpDynamicsOptions *options;
 
-  g_return_val_if_fail (GIMP_IS_DYNAMICS_INFO (dynamics_info), NULL);
+  g_return_val_if_fail (GIMP_IS_PAINT_INFO (dynamics_info), NULL);
 
   options = g_object_new (dynamics_info->paint_options_type,
                           "gimp",       dynamics_info->gimp,
