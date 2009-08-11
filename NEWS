@@ -12,6 +12,7 @@ Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
 
 * Bugs fixed:
 
+ 577581 – Crashes when using any colors tool/function on Windows
  589667 – GIMP crashes when clicking GEGL Operation on Windows
  590638 – Changing palettes from list to grid view loses "locked to dock"
           status
