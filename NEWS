@@ -12,8 +12,10 @@ Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
 
 * Bugs fixed:
 
+ 591017 – Tablet pan is not working as fast as it should
  577581 – Crashes when using any colors tool/function on Windows
  589667 – GIMP crashes when clicking GEGL Operation on Windows
+ 569833 – file-jpeg-save erroneous with small quality values
  590638 – Changing palettes from list to grid view loses "locked to dock"
           status
  589674 – "Send by Email" does not update "Filename"
