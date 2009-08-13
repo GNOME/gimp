@@ -646,7 +646,7 @@ to be the default behaviour in older versions.  Possible values are yes and
 no.
 
 .TP
-(trust-dirty-flag yes)
+(trust-dirty-flag no)
 
 When enabled, GIMP will not save an image if it has not been changed since it
 was opened.  Possible values are yes and no.
