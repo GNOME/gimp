@@ -45,6 +45,7 @@
       <separator />
       <placeholder name="Export">
         <menuitem action="file-export-to" />
+        <menuitem action="file-overwrite" />
         <menuitem action="file-export" />
       </placeholder>
       <menuitem action="file-create-template" />
