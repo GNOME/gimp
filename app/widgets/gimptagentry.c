@@ -97,6 +97,9 @@ static gboolean gimp_tag_entry_query_tag                 (GimpTagEntry     *entr
 static void     gimp_tag_entry_assign_tags               (GimpTagEntry     *entry);
 static void     gimp_tag_entry_load_selection            (GimpTagEntry     *entry,
                                                           gboolean          sort);
+static void     gimp_tag_entry_find_common_tags          (gpointer          key,
+                                                          gpointer          value,
+                                                          gpointer          user_data);
 
 static gchar *  gimp_tag_entry_get_completion_prefix     (GimpTagEntry     *entry);
 static GList *  gimp_tag_entry_get_completion_candidates (GimpTagEntry     *entry,
@@ -178,6 +181,7 @@ gimp_tag_entry_init (GimpTagEntry *entry)
 {
   entry->container            = NULL;
   entry->selected_items       = NULL;
+  entry->common_tags          = NULL;
   entry->tab_completion_index = -1;
   entry->mode                 = GIMP_TAG_ENTRY_MODE_QUERY;
   entry->description_shown    = FALSE;
@@ -219,6 +223,12 @@ gimp_tag_entry_dispose (GObject *object)
     {
       g_list_free (entry->selected_items);
       entry->selected_items = NULL;
+    }
+
+  if (entry->common_tags)
+    {
+      g_list_free (entry->common_tags);
+      entry->common_tags = NULL;
     }
 
   if (entry->recent_list)
@@ -728,8 +738,12 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
   gint      count;
   gint      i;
   GimpTag  *tag;
-  GList    *tag_list = NULL;
-  GList    *list;
+  GList    *resource_iter;
+  GList    *tag_iter;
+  GList    *dont_remove_list = NULL;
+  GList    *remove_list      = NULL;
+  GList    *add_list         = NULL;
+  GList    *common_tags      = NULL;
 
   parsed_tags = gimp_tag_entry_parse_tags (tag_entry);
 
@@ -739,17 +753,51 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
       tag = gimp_tag_new (parsed_tags[i]);
       if (tag)
         {
-          tag_list = g_list_append (tag_list, tag);
+          if (g_list_find_custom (tag_entry->common_tags, tag, gimp_tag_compare_func))
+            {
+              dont_remove_list = g_list_prepend (dont_remove_list, tag);
+            }
+          else
+            {
+              add_list = g_list_prepend (add_list, tag);
+            }
+
+          common_tags = g_list_prepend (common_tags, tag);
         }
     }
   g_strfreev (parsed_tags);
 
-  for (list = tag_entry->selected_items; list; list = g_list_next (list))
+  /* find common tags which were removed. */
+  for (tag_iter = tag_entry->common_tags; tag_iter; tag_iter = g_list_next (tag_iter))
     {
-      gimp_tagged_set_tags (list->data, tag_list);
+      if (! g_list_find_custom (dont_remove_list, tag_iter->data, gimp_tag_compare_func))
+        {
+          remove_list = g_list_prepend (remove_list, tag_iter->data);
+        }
+    }
+  g_list_free (dont_remove_list);
+
+  for (resource_iter = tag_entry->selected_items; resource_iter;
+       resource_iter = g_list_next (resource_iter))
+    {
+      GimpTagged       *tagged = GIMP_TAGGED (resource_iter->data);
+
+      for (tag_iter = remove_list; tag_iter; tag_iter = g_list_next (tag_iter))
+        {
+          gimp_tagged_remove_tag (tagged, GIMP_TAG (tag_iter->data));
+        }
+      for (tag_iter = add_list; tag_iter; tag_iter = g_list_next (tag_iter))
+        {
+          gimp_tagged_add_tag (tagged, GIMP_TAG (tag_iter->data));
+        }
     }
 
-  g_list_free (tag_list);
+  g_list_free (add_list);
+  g_list_free (remove_list);
+
+  /* common tags list with changes applied. */
+  g_list_free (tag_entry->common_tags);
+  tag_entry->common_tags = common_tags;
 }
 
 /**
@@ -832,8 +880,6 @@ void
 gimp_tag_entry_set_selected_items (GimpTagEntry *tag_entry,
                                    GList        *items)
 {
-  GList *list;
-
   g_return_if_fail (GIMP_IS_TAG_ENTRY (tag_entry));
 
   if (tag_entry->selected_items)
@@ -842,32 +888,17 @@ gimp_tag_entry_set_selected_items (GimpTagEntry *tag_entry,
       tag_entry->selected_items = NULL;
     }
 
-  tag_entry->selected_items = g_list_copy (items);
-
-  for (list = tag_entry->selected_items; list; list = g_list_next (list))
+  if (tag_entry->common_tags)
     {
-      if (gimp_tagged_get_tags (GIMP_TAGGED (list->data))
-          && gimp_container_have (GIMP_CONTAINER (tag_entry->container),
-                                  GIMP_OBJECT (list->data)))
-        {
-          break;
-        }
+      g_list_free (tag_entry->common_tags);
+      tag_entry->common_tags = NULL;
     }
+
+  tag_entry->selected_items = g_list_copy (items);
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
     {
-      if (list)
-        {
-          gimp_tag_entry_load_selection (tag_entry, TRUE);
-          gimp_tag_entry_toggle_desc (tag_entry, FALSE);
-        }
-      else
-        {
-          tag_entry->internal_operation++;
-          gtk_editable_delete_text (GTK_EDITABLE (tag_entry), 0, -1);
-          tag_entry->internal_operation--;
-          gimp_tag_entry_toggle_desc (tag_entry, TRUE);
-        }
+      gimp_tag_entry_load_selection (tag_entry, TRUE);
     }
 }
 
@@ -875,26 +906,45 @@ static void
 gimp_tag_entry_load_selection (GimpTagEntry *tag_entry,
                                gboolean      sort)
 {
-  GimpTagged *selected_item;
-  GList      *tag_list;
   GList      *list;
   gint        insert_pos;
+  GHashTable *refcounts;
+  GList      *resource;
+  GList      *tag;
 
   tag_entry->internal_operation++;
   gtk_editable_delete_text (GTK_EDITABLE (tag_entry), 0, -1);
   tag_entry->internal_operation--;
 
   if (! tag_entry->selected_items)
-    return;
+    {
+      gimp_tag_entry_toggle_desc (tag_entry, FALSE);
+      return;
+    }
 
-  selected_item = GIMP_TAGGED (tag_entry->selected_items->data);
-  insert_pos = 0;
+  refcounts = g_hash_table_new ((GHashFunc) gimp_tag_get_hash,
+                                (GEqualFunc) gimp_tag_equals);
 
-  tag_list = g_list_copy (gimp_tagged_get_tags (selected_item));
-  if (sort)
-    tag_list = g_list_sort (tag_list, gimp_tag_compare_func);
+  /* find set of tags common to all resources. */
+  for (resource = tag_entry->selected_items; resource; resource = g_list_next (resource))
+    {
+      for (tag = gimp_tagged_get_tags (GIMP_TAGGED (resource->data)); tag;
+           tag = g_list_next (tag))
+        {
+          /* count refcount for each tag */
+          guint refcount = GPOINTER_TO_UINT (g_hash_table_lookup (refcounts, tag->data));
+          g_hash_table_insert (refcounts, tag->data, GUINT_TO_POINTER (refcount + 1));
+        }
+    }
 
-  for (list = tag_list; list; list = g_list_next (list))
+  g_hash_table_foreach (refcounts, gimp_tag_entry_find_common_tags,tag_entry);
+
+  g_hash_table_destroy (refcounts);
+
+  tag_entry->common_tags = g_list_sort (tag_entry->common_tags, gimp_tag_compare_func);
+
+  insert_pos = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
+  for (list = tag_entry->common_tags; list; list = g_list_next (list))
     {
       GimpTag *tag = list->data;
       gchar   *text;
@@ -911,9 +961,22 @@ gimp_tag_entry_load_selection (GimpTagEntry *tag_entry,
       g_free (text);
     }
 
-  g_list_free (tag_list);
-
   gimp_tag_entry_commit_tags (tag_entry);
+}
+
+static void
+gimp_tag_entry_find_common_tags (gpointer key,
+                                 gpointer value,
+                                 gpointer user_data)
+{
+  guint         ref_count = GPOINTER_TO_UINT (value);
+  GimpTagEntry *tag_entry = GIMP_TAG_ENTRY (user_data);
+
+  /* FIXME: more efficient list length */
+  if (ref_count == g_list_length (tag_entry->selected_items))
+    {
+      tag_entry->common_tags = g_list_prepend (tag_entry->common_tags, key);
+    }
 }
 
 static gchar *

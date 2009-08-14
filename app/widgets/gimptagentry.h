@@ -51,6 +51,7 @@ struct _GimpTagEntry
    */
   GString                *mask;
   GList                  *selected_items;
+  GList                  *common_tags;
   GList                  *recent_list;
   gint                    tab_completion_index;
   gint                    internal_operation;

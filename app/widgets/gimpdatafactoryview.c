@@ -333,13 +333,10 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
 
   if (view->priv->assign_tag_entry)
     {
-      GList *active_items = NULL;
+      GList             *active_items = NULL;
+      GimpContainerView *container_view = GIMP_CONTAINER_VIEW (editor->view);
 
-      if (viewable)
-        {
-          active_items = g_list_append (active_items, viewable);
-        }
-
+      gimp_container_view_get_selected (container_view, &active_items);
       gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (view->priv->assign_tag_entry),
                                          active_items);
 
