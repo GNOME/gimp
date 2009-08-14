@@ -8,7 +8,6 @@ brushdata_DATA = \
 	dunes.gbr			\
 	galaxy.gbr			\
 	galaxy_big.gbr			\
-	galaxy_small.gbr		\
 	pepper.gbr			\
 	pixel.gbr			\
 	\
@@ -17,8 +16,6 @@ brushdata_DATA = \
 	Round-Fuzzy.vbr			\
 	Round.vbr			\
 	\
-	SketchBrush-16.gih		\
-	SketchBrush-32.gih		\
 	SketchBrush-64.gih		\
 	confetti.gih			\
 	feltpen.gih			\
@@ -32,6 +29,7 @@ obsoletebrushdata_DATA = \
 	20x20squareBlur.gbr		\
 	5x5square.gbr			\
 	5x5squareBlur.gbr		\
+	galaxy_small.gbr		\
 	\
 	Calligraphic-Brush-0.vbr	\
 	Calligraphic-Brush-1.vbr	\
@@ -58,6 +56,9 @@ obsoletebrushdata_DATA = \
 	Circle-Fuzzy-19.vbr		\
 	Diagonal-Star-11.vbr		\
 	Diagonal-Star-17.vbr		\
-	Diagonal-Star-25.vbr
+	Diagonal-Star-25.vbr		\
+	\
+	SketchBrush-16.gih		\
+	SketchBrush-32.gih
 
 EXTRA_DIST = $(brushdata_DATA) $(obsoletebrushdata_DATA)
