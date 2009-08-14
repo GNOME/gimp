@@ -1,14 +1,9 @@
 ## Makefile.am for gimp/data/brushes
 
 brushdatadir = $(gimpdatadir)/brushes
+obsoletebrushdatadir = $(gimpdatadir)/brushes/gimp-obsolete-files
 
 brushdata_DATA = \
-	10x10square.gbr			\
-	10x10squareBlur.gbr		\
-	20x20square.gbr			\
-	20x20squareBlur.gbr		\
-	5x5square.gbr			\
-	5x5squareBlur.gbr		\
 	confetti.gbr			\
 	dunes.gbr			\
 	galaxy.gbr			\
@@ -52,4 +47,12 @@ brushdata_DATA = \
 	hsparks.gih			\
 	vine.gih
 
-EXTRA_DIST = $(brushdata_DATA)
+obsoletebrushdata_DATA = \
+	10x10square.gbr			\
+	10x10squareBlur.gbr		\
+	20x20square.gbr			\
+	20x20squareBlur.gbr		\
+	5x5square.gbr			\
+	5x5squareBlur.gbr
+
+EXTRA_DIST = $(brushdata_DATA) $(obsoletebrushdata_DATA)
