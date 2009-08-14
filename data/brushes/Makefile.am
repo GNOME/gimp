@@ -16,6 +16,7 @@ brushdata_DATA = \
 	Calligraphic-Brush-1.vbr	\
 	Calligraphic-Brush-2.vbr	\
 	Calligraphic-Brush-3.vbr	\
+	Calligraphic.vbr		\
 	Circle-1.vbr			\
 	Circle-3.vbr			\
 	Circle-5.vbr			\
@@ -38,6 +39,9 @@ brushdata_DATA = \
 	Diagonal-Star-11.vbr		\
 	Diagonal-Star-17.vbr		\
 	Diagonal-Star-25.vbr		\
+	Diagonal-Star.vbr		\
+	Round-Fuzzy.vbr			\
+	Round.vbr			\
 	\
 	SketchBrush-16.gih		\
 	SketchBrush-32.gih		\
