@@ -17,9 +17,14 @@
 
 #include "config.h"
 
+#include <fcntl.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -436,6 +441,30 @@ temp_buf_get_memsize (TempBuf *buf)
     return (sizeof (TempBuf) + temp_buf_get_data_size (buf));
 
   return 0;
+}
+
+
+/**
+ * temp_buf_dump:
+ * @buf:
+ * @file:
+ *
+ * Dumps a TempBuf to a raw RGB image that is easy to analyze, for
+ * example with GIMP.
+ **/
+void
+temp_buf_dump (TempBuf     *buf,
+               const gchar *filename)
+{
+  gint fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+
+  g_return_if_fail (fd != -1);
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (temp_buf_get_data (buf) != NULL);
+
+  write (fd, temp_buf_get_data (buf), temp_buf_get_data_size (buf));
+
+  close (fd);
 }
 
 
