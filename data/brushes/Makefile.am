@@ -12,11 +12,31 @@ brushdata_DATA = \
 	pepper.gbr			\
 	pixel.gbr			\
 	\
+	Calligraphic.vbr		\
+	Diagonal-Star.vbr		\
+	Round-Fuzzy.vbr			\
+	Round.vbr			\
+	\
+	SketchBrush-16.gih		\
+	SketchBrush-32.gih		\
+	SketchBrush-64.gih		\
+	confetti.gih			\
+	feltpen.gih			\
+	hsparks.gih			\
+	vine.gih
+
+obsoletebrushdata_DATA = \
+	10x10square.gbr			\
+	10x10squareBlur.gbr		\
+	20x20square.gbr			\
+	20x20squareBlur.gbr		\
+	5x5square.gbr			\
+	5x5squareBlur.gbr		\
+	\
 	Calligraphic-Brush-0.vbr	\
 	Calligraphic-Brush-1.vbr	\
 	Calligraphic-Brush-2.vbr	\
 	Calligraphic-Brush-3.vbr	\
-	Calligraphic.vbr		\
 	Circle-1.vbr			\
 	Circle-3.vbr			\
 	Circle-5.vbr			\
@@ -38,25 +58,6 @@ brushdata_DATA = \
 	Circle-Fuzzy-19.vbr		\
 	Diagonal-Star-11.vbr		\
 	Diagonal-Star-17.vbr		\
-	Diagonal-Star-25.vbr		\
-	Diagonal-Star.vbr		\
-	Round-Fuzzy.vbr			\
-	Round.vbr			\
-	\
-	SketchBrush-16.gih		\
-	SketchBrush-32.gih		\
-	SketchBrush-64.gih		\
-	confetti.gih			\
-	feltpen.gih			\
-	hsparks.gih			\
-	vine.gih
-
-obsoletebrushdata_DATA = \
-	10x10square.gbr			\
-	10x10squareBlur.gbr		\
-	20x20square.gbr			\
-	20x20squareBlur.gbr		\
-	5x5square.gbr			\
-	5x5squareBlur.gbr
+	Diagonal-Star-25.vbr
 
 EXTRA_DIST = $(brushdata_DATA) $(obsoletebrushdata_DATA)
