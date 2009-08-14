@@ -172,8 +172,17 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
 
   GtkWidget      *frame;
-  //GtkWidget      *box;
-  //gint            row = 0;
+  GtkWidget      *box;
+  gint            row = 0;
+  GtkWidget        *table;
+  GtkWidget        *menu;
+  GtkWidget        *label;
+  GtkWidget        *button;
+  GtkWidget        *incremental_toggle = NULL;
+  gint              table_row          = 0;
+  gint              n_dynamics         = 0;
+  GtkWidget        *dynamics_labels[7];
+  GType             tool_type;
 
   //add a frame
   frame = gtk_frame_new (NULL);
@@ -193,6 +202,40 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_widget_show (data_editor->view);
 
   //editor->shape_group = NULL;
+  /* table for sliders/labels */
+  editor->options_vbox = gtk_table_new (4, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (editor->options_vbox), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (editor->options_vbox), 2);
+  gtk_box_pack_start (GTK_BOX (editor), editor->options_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (editor->options_vbox);
+
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (editor->options_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+/*
+  g_object_set_data (G_OBJECT (vbox), "set_options", table);
+
+  menu  = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                     _("Mode:"), 0.0, 0.5,
+                                     menu, 2, FALSE);
+
+//  if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
+//      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+//      tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
+//      tool_type == GIMP_TYPE_SMUDGE_TOOL)
+    {
+      gtk_widget_set_sensitive (menu, FALSE);
+      gtk_widget_set_sensitive (label, FALSE);
+    }
+
+  gimp_prop_opacity_entry_new (config, "opacity",
+                               GTK_TABLE (table), 0, table_row++,
+                               _("Opacity:"));
+*/
 
 }
 
@@ -240,7 +283,21 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "context",         context,
                        "data",            gimp_context_get_brush (context),
                        NULL);
+ 
+  GtkWidget        *vbox; 
+  GtkWidget        *table;
+  GtkWidget        *menu;
+  GtkWidget        *label;
+  GtkWidget        *button;
+  GtkWidget        *incremental_toggle = NULL;
+  gint              table_row          = 0;
+  gint              n_dynamics         = 0;
+  GtkWidget        *dynamics_labels[7];
+  GType             tool_type;
 
+  //tool_type = tool_options->tool_info->tool_type;
+
+  /*  the main table  */
 /*
   return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
                        "menu-factory",    menu_factory,
