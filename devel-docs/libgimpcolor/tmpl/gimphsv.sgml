@@ -68,6 +68,17 @@ Definitions and Functions relating to HSV colors.
 @alpha: 
 
 
+<!-- ##### FUNCTION gimp_hsl_set ##### -->
+<para>
+
+</para>
+
+@hsl: 
+@h: 
+@s: 
+@l: 
+
+
 <!-- ##### MACRO GIMP_TYPE_HSV ##### -->
 <para>
 

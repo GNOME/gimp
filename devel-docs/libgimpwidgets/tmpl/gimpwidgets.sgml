@@ -385,3 +385,10 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @Varargs: 
 
 
+<!-- ##### MACRO GIMP_WIDGETS_ERROR ##### -->
+<para>
+
+</para>
+
+
+
