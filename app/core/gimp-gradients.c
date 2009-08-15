@@ -56,24 +56,35 @@ gimp_gradients_init (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  /* FG to BG (RGB) */
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to BG (RGB)"),
                                           FG_BG_RGB_KEY);
+  gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
+  gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
   gimp_context_set_gradient (gimp->user_context, gradient);
 
+  /* FG to BG (HSV counter-clockwise) */
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to BG (HSV counter-clockwise)"),
                                           FG_BG_HSV_CCW_KEY);
-  gradient->segments->color = GIMP_GRADIENT_SEGMENT_HSV_CCW;
+  gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
+  gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
+  gradient->segments->color            = GIMP_GRADIENT_SEGMENT_HSV_CCW;
 
+  /* FG to BG (HSV clockwise hue) */
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to BG (HSV clockwise hue)"),
                                           FG_BG_HSV_CW_KEY);
-  gradient->segments->color = GIMP_GRADIENT_SEGMENT_HSV_CW;
+  gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
+  gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
+  gradient->segments->color            = GIMP_GRADIENT_SEGMENT_HSV_CW;
 
+  /* FG to Transparent */
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to Transparent"),
                                           FG_TRANSPARENT_KEY);
+  gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
 }
 
@@ -88,9 +99,6 @@ gimp_gradients_add_gradient (Gimp        *gimp,
   GimpGradient *gradient = GIMP_GRADIENT (gimp_gradient_new (name));
 
   gimp_data_make_internal (GIMP_DATA (gradient), id);
-
-  gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
-  gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
 
   gimp_container_add (gimp_data_factory_get_container (gimp->gradient_factory),
                       GIMP_OBJECT (gradient));
