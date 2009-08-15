@@ -113,7 +113,7 @@
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
 # 
-# (default-brush "Circle (11)")
+# (default-brush "Round Fuzzy")
 
 # Specify a default pattern.  This is a string value.
 # 

@@ -151,7 +151,7 @@ Where to look for fonts in addition to the system-wide installed fonts.  This
 is a colon-separated list of folders to search.
 
 .TP
-(default-brush "Circle (11)")
+(default-brush "Round Fuzzy")
 
 Specify a default brush.  The brush is searched for in the specified brush
 path.  This is a string value.
