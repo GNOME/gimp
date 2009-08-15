@@ -29,6 +29,7 @@ EXTRA_DIST = \
 	parasites.txt		\
 	pat.txt			\
 	structure.xml		\
+	submitting-patches.txt	\
 	undo.txt		\
 	vbr.txt			\
 	xcf.txt

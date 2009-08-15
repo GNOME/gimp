@@ -1,0 +1,1 @@
+See http://gimp.org/bugs/howtos/submit-patch.html for instructions
