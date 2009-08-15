@@ -49,6 +49,9 @@ Plug-ins:
  - Add support for loading 16bit (RGB565) raw data
  - Add palette exporter for CSS, PHP, Python, txt and Java, accessed
    through palette context menu
+ - Add plug-in API for getting image URI, for manipulating size of
+   text layers, for getting and setting text layer hint, and for
+   unified export dialog appearance
 
 
 Data:
@@ -92,11 +95,6 @@ Core:
  - Remove "transient-docks" gimprc setting, the 'Utility window' hint
    and a sane window manager does a better job
  - Remove "web-browser" gimprc setting and use gtk_show_uri() instead
-
-
-PDB:
-
- - Add procedures to manipulate size of text box
 
 
 General:
