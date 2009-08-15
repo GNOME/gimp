@@ -32,24 +32,47 @@
 #include "xmp-model.h"
 
 
-G_DEFINE_TYPE (XMPModel, xmp_model, GTK_TYPE_TREE_STORE)
+enum {
+  PROPERTY_CHANGED,
+  SCHEMA_CHANGED,
+  LAST_SIGNAL
+};
+
+static void
+xmp_model_iface_init (GtkTreeModelIface *iface)
+{
+}
+
+
+
+G_DEFINE_TYPE_WITH_CODE (XMPModel, xmp_model,
+                         GTK_TYPE_TREE_STORE,
+                         G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
+                                                xmp_model_iface_init));
+
+static guint xmp_model_signals[LAST_SIGNAL] = { 0 };
+
+
 
 static void
 xmp_model_init (XMPModel *xmp_model)
 {
-  /* columns defined by the XMPModelColumns enum */
-  gtk_tree_store_new (XMP_MODEL_NUM_COLUMNS,
-                      G_TYPE_STRING,   /* COL_XMP_NAME */
-                      G_TYPE_STRING,   /* COL_XMP_VALUE */
-                      G_TYPE_POINTER,  /* COL_XMP_VALUE_RAW */
-                      G_TYPE_POINTER,  /* COL_XMP_TYPE_XREF */
-                      G_TYPE_POINTER,  /* COL_XMP_WIDGET_XREF */
-                      G_TYPE_INT,      /* COL_XMP_EDITABLE */
-                      GDK_TYPE_PIXBUF, /* COL_XMP_EDIT_ICON */
-                      G_TYPE_BOOLEAN,  /* COL_XMP_VISIBLE */
-                      G_TYPE_INT,      /* COL_XMP_WEIGHT */
-                      G_TYPE_BOOLEAN   /* COL_XMP_WEIGHT_SET */
-                      );
+  GType types[XMP_MODEL_NUM_COLUMNS];
+
+  types[COL_XMP_NAME]           = G_TYPE_STRING;
+  types[COL_XMP_VALUE]          = G_TYPE_STRING;
+  types[COL_XMP_VALUE_RAW]      = G_TYPE_POINTER;
+  types[COL_XMP_TYPE_XREF]      = G_TYPE_POINTER;
+  types[COL_XMP_WIDGET_XREF]    = G_TYPE_POINTER;
+  types[COL_XMP_EDITABLE]       = G_TYPE_INT;
+  types[COL_XMP_EDIT_ICON]      = GDK_TYPE_PIXBUF;
+  types[COL_XMP_VISIBLE]        = G_TYPE_BOOLEAN;
+  types[COL_XMP_WEIGHT]         = G_TYPE_INT;
+  types[COL_XMP_WEIGHT_SET]     = G_TYPE_BOOLEAN;
+
+  gtk_tree_store_set_column_types (GTK_TREE_STORE (xmp_model),
+                                   XMP_MODEL_NUM_COLUMNS, types);
+
   xmp_model->custom_schemas     = NULL;
   xmp_model->custom_properties  = NULL;
   xmp_model->cached_schema      = NULL;
@@ -58,7 +81,19 @@ xmp_model_init (XMPModel *xmp_model)
 static void
 xmp_model_class_init (XMPModelClass *klass)
 {
+  xmp_model_signals[PROPERTY_CHANGED] =
+    g_signal_new ("property-changed",
+                  GIMP_TYPE_XMP_MODEL,
+                  G_SIGNAL_DETAILED,
+                  G_STRUCT_OFFSET (XMPModelClass, property_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__BOXED,
+                  G_TYPE_NONE, 1,
+                  GTK_TYPE_TREE_ITER);
+
+  klass->property_changed = NULL;
 }
+
 
 /**
  * xmp_model_new:
@@ -473,6 +508,7 @@ parse_set_property (XMPParseContext     *context,
                           COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
                           COL_XMP_WEIGHT_SET, FALSE,
                           -1);
+      xmp_model_property_changed (xmp_model, schema, &child_iter);
       break;
 
     case XMP_PTYPE_RESOURCE:
@@ -857,7 +893,6 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
   XMPProperty  *property = NULL;
   GtkTreeIter   iter;
   GtkTreeIter   child_iter;
-  GtkTreePath  *path;
   int           i;
   gchar       **value;
 
@@ -909,7 +944,37 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
                       COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
                       COL_XMP_WEIGHT_SET, FALSE,
                       -1);
-  path = gtk_tree_model_get_path (GTK_TREE_MODEL (xmp_model), &child_iter);
-  gtk_tree_model_row_changed (GTK_TREE_MODEL (xmp_model), path, &child_iter);
+  xmp_model_property_changed (xmp_model, schema, &child_iter);
   return TRUE;
+}
+
+/**
+ * xmp_model_property_changed:
+ * @xmp_model: An #XMPModel
+ * @schema: An #XMPSchema the property belongs to
+ * @iter: A valid #GtkTreeIter pointing to the changed row
+ *
+ * Emits the "property-changed" event based on the @tree_model with
+ * detail. The detail is a joined string of xmp-schema-prefix and
+ * xmp-property-name (e.g.  property-changed::dc:DocumentID).
+ **/
+void
+xmp_model_property_changed (XMPModel     *xmp_model,
+                            XMPSchema    *schema,
+                            GtkTreeIter  *iter)
+{
+  GQuark         detail;
+  gchar         *joined;
+  const gchar   *property_name;
+
+  g_return_if_fail (GIMP_IS_XMP_MODEL (xmp_model));
+  g_return_if_fail (iter != NULL);
+
+  gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), iter,
+                      COL_XMP_NAME, &property_name,
+                      -1);
+  joined = g_strjoin (":", schema->prefix, property_name, NULL);
+  detail = g_quark_from_string (joined);
+
+  g_signal_emit (xmp_model, xmp_model_signals[PROPERTY_CHANGED], detail, iter);
 }

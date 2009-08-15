@@ -62,6 +62,10 @@ struct _XMPModel
 struct _XMPModelClass
 {
   GtkTreeStoreClass  parent_class;
+
+  void (* property_changed) (XMPModel       *xmp_model,
+                             XMPSchema      *schema,
+                             GtkTreeIter    *iter);
 };
 
 /* columns used in the GtkTreeStore model holding the XMP metadata */
@@ -111,6 +115,11 @@ gboolean      xmp_model_set_scalar_property (XMPModel    *xmp_model,
                                              const gchar *schema_name,
                                              const gchar *property_name,
                                              const gchar *property_value);
+
+/* Signals */
+void          xmp_model_property_changed    (XMPModel     *xmp_model,
+                                             XMPSchema    *schema,
+                                             GtkTreeIter  *iter);
 
 G_END_DECLS
 
