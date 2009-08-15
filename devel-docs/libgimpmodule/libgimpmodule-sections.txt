@@ -17,6 +17,7 @@ gimp_module_register_enum
 gimp_module_info_new
 gimp_module_info_copy
 gimp_module_info_free
+gimp_module_error_quark
 <SUBSECTION Standard>
 GimpModuleClass
 GIMP_MODULE
