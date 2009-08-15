@@ -27,8 +27,6 @@ UI:
    and size
  - Get rid of the Tools dockable and move toolbox configuration to
    Preferences
- - Add large variants of round brushes and remove duplicate and
-   useless brushes
  - Add status bar feedback for keyboard changes to brush paramaters
  - Add diagonal guides to the Crop Tool
  - New docks are created at the pointer position
@@ -51,6 +49,13 @@ Plug-ins:
  - Add support for loading 16bit (RGB565) raw data
  - Add palette exporter for CSS, PHP, Python, txt and Java, accessed
    through palette context menu
+
+
+Data:
+
+ - Add large variants of round brushes and remove duplicate and
+   useless brushes
+ - Add "FG to BG (Hardedge)" gradient
 
 
 GEGL:
