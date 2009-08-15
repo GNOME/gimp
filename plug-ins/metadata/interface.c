@@ -48,9 +48,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "xmp-schemas.h"
+#include "xmp-model.h"
 #include "interface.h"
 #include "metadata.h"
-#include "xmp-schemas.h"
 #include "xmp-encode.h"
 
 
