@@ -29,7 +29,8 @@
 
  ( ) Does the splash screen need to be changed?
 
- ( ) Run 'make distcheck'.
+ ( ) Run 'make distcheck'. Avoid passing make -j since that can cause
+     mysterious fails
 
  ( ) If there are problems with 'make distcheck', fix them and try again.
 
