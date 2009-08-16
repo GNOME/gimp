@@ -19,7 +19,6 @@ Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
  590638 – Changing palettes from list to grid view loses "locked to dock"
           status
  589674 – "Send by Email" does not update "Filename"
- 589674 – "Send by Email" does not update "Filename"
  586851 – Transparent BMP files fail to load
  589205 – help-browser uses deprecated (and sometimes broken) webkit call
  582821 – 'Sphere Designer' does not reset correctly...
