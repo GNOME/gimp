@@ -1412,6 +1412,7 @@ siox_drb (SioxState    *state,
           map += mapPR.rowstride;
         }    
     }
+  /*  
   smooth_mask (mask, x, y, state->width, state->height);
 
   erode_mask (mask, x, y, state->width, state->height);
@@ -1428,11 +1429,11 @@ siox_drb (SioxState    *state,
                  MULTIBLOB_DEFAULT_SIZEFACTOR : MULTIBLOB_ONE_BLOB_ONLY);
 
   dilate_mask (mask, x, y, state->width, state->height);
-  
+  */
   if (optionsrefinement & SIOX_DRB_ADD)
-    g_hash_table_foreach_remove(state->cache,siox_cache_remove_bg,NULL);
-  if (optionsrefinement & SIOX_DRB_SUBTRACT)
     g_hash_table_foreach_remove(state->cache,siox_cache_remove_fg,NULL);
+  if (optionsrefinement & SIOX_DRB_SUBTRACT)
+    g_hash_table_foreach_remove(state->cache,siox_cache_remove_bg,NULL);
   if (optionsrefinement & SIOX_DRB_CHANGE_THRESHOLD)
     optionsrefinement = SIOX_DRB_RECALCULATE;
 

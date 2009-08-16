@@ -775,7 +775,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 	                                         options->sensitivity, 
 	                                         ! options->contiguous,
 	                                         options->drb, 
-	                                         options->stroke_width,
+	                                         options->stroke_width/2,
 						 drblist->data,
 	                                         GIMP_PROGRESS (display));
 
