@@ -25,7 +25,9 @@
  ( ) Do a complete build of the source tree.
 
  ( ) Check if NEWS, authors.xml, README or INSTALL need to be updated,
-     as well as any release notes on gimp.org.
+     as well as any release notes on gimp.org. Don't forget to add any
+     "Index of new symbols in GIMP 2.x" to the gtk-doc generated
+     devel-docs.
 
  ( ) Does the splash screen need to be changed?
 
