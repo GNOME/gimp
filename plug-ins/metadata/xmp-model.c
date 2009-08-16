@@ -32,7 +32,8 @@
 #include "xmp-model.h"
 
 
-enum {
+enum
+{
   PROPERTY_CHANGED,
   SCHEMA_CHANGED,
   LAST_SIGNAL
@@ -122,9 +123,11 @@ xmp_model_free (XMPModel *xmp_model)
   gint           i;
 
   g_return_if_fail (xmp_model != NULL);
+
   /* we used XMP_FLAG_DEFER_VALUE_FREE for the parser, so now we must free
      all value arrays */
   model = xmp_model_get_tree_model (xmp_model);
+
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (model), &iter))
     {
       do
@@ -145,6 +148,7 @@ xmp_model_free (XMPModel *xmp_model)
                         g_free (value_array[i]);
                       g_free (value_array);
                     }
+
                   last_value_array = value_array;
                 }
               while (gtk_tree_model_iter_next (model, &child));
@@ -152,9 +156,11 @@ xmp_model_free (XMPModel *xmp_model)
         }
       while (gtk_tree_model_iter_next (model, &iter));
     }
+
   g_object_unref (xmp_model);
   /* FIXME: free custom schemas */
   g_free (xmp_model);
+
 }
 
 /**
@@ -199,6 +205,7 @@ find_xmp_schema (XMPModel    *xmp_model,
           return &(xmp_schemas[i]);
         }
     }
+
   /* this is not a standard shema; now check the custom schemas */
   for (list = xmp_model->custom_schemas; list != NULL; list = list->next)
     {
@@ -212,6 +219,7 @@ find_xmp_schema (XMPModel    *xmp_model,
           return (XMPSchema *)(list->data);
         }
     }
+
   /* now check for some common errors and results of bad encoding: */
   /* - check for "http:" without "//", or missing "http://" */
   for (i = 0; xmp_schemas[i].uri != NULL; ++i)
@@ -232,16 +240,19 @@ find_xmp_schema (XMPModel    *xmp_model,
   for (c = schema_uri; *c; c++)
     if ((*c == '(') || (*c == ' ') || (*c == ','))
       {
-        int len;
+        gint len;
 
         c++;
         while (*c == ' ')
           c++;
+
         if (! *c)
           break;
+
         for (len = 1; c[len]; len++)
           if ((c[len] == ')') || (c[len] == ' '))
             break;
+
         for (i = 0; xmp_schemas[i].uri != NULL; ++i)
           {
             if (! strncmp (xmp_schemas[i].uri, c, len))
@@ -254,9 +265,11 @@ find_xmp_schema (XMPModel    *xmp_model,
               }
           }
       }
+
 #ifdef DEBUG_XMP_MODEL
   g_print ("Unknown schema URI %s\n", schema_uri);
 #endif
+
   return NULL;
 }
 
@@ -271,9 +284,11 @@ find_xmp_schema_prefix (XMPModel    *xmp_model,
   for (i = 0; xmp_schemas[i].uri != NULL; ++i)
     if (! strcmp (xmp_schemas[i].prefix, prefix))
       return &(xmp_schemas[i]);
+
   for (list = xmp_model->custom_schemas; list != NULL; list = list->next)
     if (! strcmp (((XMPSchema *)(list->data))->prefix, prefix))
       return (XMPSchema *)(list->data);
+
   return NULL;
 }
 
@@ -307,6 +322,7 @@ find_iter_for_schema (XMPModel    *xmp_model,
   if (! gtk_tree_model_get_iter_first (GTK_TREE_MODEL (xmp_model),
                                        iter))
     return FALSE;
+
   do
     {
       gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), iter,
@@ -318,8 +334,8 @@ find_iter_for_schema (XMPModel    *xmp_model,
           return TRUE;
         }
     }
-  while (gtk_tree_model_iter_next (GTK_TREE_MODEL (xmp_model),
-                                   iter));
+  while (gtk_tree_model_iter_next (GTK_TREE_MODEL (xmp_model), iter));
+
   return FALSE;
 }
 
@@ -390,7 +406,9 @@ parse_start_schema (XMPParseContext     *context,
   XMPSchema   *schema;
 
   g_return_val_if_fail (xmp_model != NULL, NULL);
+
   schema = find_xmp_schema (xmp_model, ns_uri);
+
   if (schema == NULL)
     {
       /* add schema to custom_schemas */
@@ -407,30 +425,35 @@ parse_start_schema (XMPParseContext     *context,
       /* already in the tree, so no need to add it again */
       return schema;
     }
+
   /* schemas with NULL names are special and should not go in the tree */
   if (schema->name == NULL)
     {
       cache_iter_for_schema (xmp_model, NULL, NULL);
       return schema;
     }
+
   /* if the schema is not in the tree yet, add it now */
   add_known_schema (xmp_model, schema, &iter);
+
   return schema;
 }
 
 /* called by the XMP parser - end of schema */
 static void
-parse_end_schema (XMPParseContext     *context,
-                  gpointer             ns_user_data,
-                  gpointer             user_data,
-                  GError             **error)
+parse_end_schema (XMPParseContext  *context,
+                  gpointer          ns_user_data,
+                  gpointer          user_data,
+                  GError          **error)
 {
   XMPModel  *xmp_model = user_data;
   XMPSchema *schema = ns_user_data;
 
   g_return_if_fail (xmp_model != NULL);
   g_return_if_fail (schema != NULL);
+
   xmp_model->cached_schema = NULL;
+
 #ifdef DEBUG_XMP_MODEL
   if (schema->name)
     g_print ("End of %s\n", schema->name);
@@ -459,14 +482,17 @@ parse_set_property (XMPParseContext     *context,
 
   g_return_if_fail (xmp_model != NULL);
   g_return_if_fail (schema != NULL);
+
   if (! find_iter_for_schema (xmp_model, schema, &iter))
     {
       g_printerr ("Unable to set XMP property '%s' because its schema is bad",
                   name);
       return;
     }
+
   ns_prefix = schema->prefix;
   property = NULL;
+
   if (schema->properties != NULL)
     for (i = 0; schema->properties[i].name != NULL; ++i)
       if (! strcmp (schema->properties[i].name, name))
@@ -474,6 +500,7 @@ parse_set_property (XMPParseContext     *context,
           property = &(schema->properties[i]);
           break;
         }
+
   /* if the same property was already present, remove it (replace it) */
   if (property != NULL)
     find_and_remove_property (xmp_model, property, &iter);
@@ -715,7 +742,8 @@ parse_error (XMPParseContext *context,
   g_printerr ("While parsing XMP metadata:\n%s\n", error->message);
 }
 
-static XMPParser xmp_parser = {
+static const XMPParser xmp_parser =
+{
   parse_start_schema,
   parse_end_schema,
   parse_set_property,
@@ -735,10 +763,10 @@ static XMPParser xmp_parser = {
  * will try to find the <?xpacket...?> marker in the buffer, skipping any
  * unknown data found before it.
  *
- * Return value: %TRUE on success, %FALSE if an error was set
- *
  * (Note: this calls the functions from xmp_parse.c, which will call the
  *  functions in this file through the xmp_parser structure defined above.)
+ *
+ * Return value: %TRUE on success, %FALSE if an error was set
  **/
 gboolean
 xmp_model_parse_buffer (XMPModel     *xmp_model,
@@ -769,6 +797,7 @@ xmp_model_parse_buffer (XMPModel     *xmp_model,
     }
 
   xmp_parse_context_free (context);
+
   return TRUE;
 }
 
@@ -792,11 +821,15 @@ xmp_model_parse_file (XMPModel     *xmp_model,
   gsize  buffer_length;
 
   g_return_val_if_fail (filename != NULL, FALSE);
+
   if (! g_file_get_contents (filename, &buffer, &buffer_length, error))
     return FALSE;
+
   if (! xmp_model_parse_buffer (xmp_model, buffer, buffer_length, TRUE, error))
     return FALSE;
+
   g_free (buffer);
+
   return TRUE;
 }
 
@@ -821,7 +854,8 @@ xmp_model_get_tree_model (XMPModel *xmp_model)
  *
  * Store a new value for the specified XMP property.
  *
- * Return value: string representation of the value of that property, or %NULL if the property does not exist
+ * Return value: string representation of the value of that property,
+ *               or %NULL if the property does not exist
  **/
 const gchar *
 xmp_model_get_scalar_property (XMPModel    *xmp_model,
@@ -839,25 +873,33 @@ xmp_model_get_scalar_property (XMPModel    *xmp_model,
   g_return_val_if_fail (xmp_model != NULL, NULL);
   g_return_val_if_fail (schema_name != NULL, NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
+
   schema = find_xmp_schema (xmp_model, schema_name);
+
   if (! schema)
     schema = find_xmp_schema_prefix (xmp_model, schema_name);
+
   if (! schema)
     return NULL;
+
   if (! find_iter_for_schema (xmp_model, schema, &iter))
     return NULL;
- if (schema->properties != NULL)
+
+  if (schema->properties != NULL)
     for (i = 0; schema->properties[i].name != NULL; ++i)
       if (! strcmp (schema->properties[i].name, property_name))
         {
           property = &(schema->properties[i]);
           break;
         }
+
   if (property == NULL)
     return NULL;
+
   if (! gtk_tree_model_iter_children (GTK_TREE_MODEL (xmp_model),
                                       &child_iter, &iter))
     return NULL;
+
   do
     {
       gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), &child_iter,
@@ -869,6 +911,7 @@ xmp_model_get_scalar_property (XMPModel    *xmp_model,
     }
   while (gtk_tree_model_iter_next (GTK_TREE_MODEL(xmp_model),
                                    &child_iter));
+
   return NULL;
 }
 
@@ -881,7 +924,8 @@ xmp_model_get_scalar_property (XMPModel    *xmp_model,
  *
  * Store a new value for the specified XMP property.
  *
- * Return value: %TRUE if the property was set, %FALSE if an error occurred (for example, the @schema_name is invalid)
+ * Return value: %TRUE if the property was set, %FALSE if an error
+ *               occurred (for example, the @schema_name is invalid)
  **/
 gboolean
 xmp_model_set_scalar_property (XMPModel    *xmp_model,
@@ -900,30 +944,37 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
   g_return_val_if_fail (schema_name != NULL, FALSE);
   g_return_val_if_fail (property_name != NULL, FALSE);
   g_return_val_if_fail (property_value != NULL, FALSE);
+
   schema = find_xmp_schema (xmp_model, schema_name);
+
   if (! schema)
     schema = find_xmp_schema_prefix (xmp_model, schema_name);
+
   if (! schema)
     return FALSE;
 
   if (! find_iter_for_schema (xmp_model, schema, &iter))
     add_known_schema (xmp_model, schema, &iter);
 
- if (schema->properties != NULL)
+  if (schema->properties != NULL)
     for (i = 0; schema->properties[i].name != NULL; ++i)
       if (! strcmp (schema->properties[i].name, property_name))
         {
           property = &(schema->properties[i]);
           break;
         }
+
   if (property != NULL)
-    find_and_remove_property (xmp_model, property, &iter);
+    {
+      find_and_remove_property (xmp_model, property, &iter);
+    }
   else
     {
       property = g_new (XMPProperty, 1);
-      property->name = g_strdup (property_name);
-      property->type = XMP_TYPE_TEXT;
+      property->name     = g_strdup (property_name);
+      property->type     = XMP_TYPE_TEXT;
       property->editable = TRUE;
+
       xmp_model->custom_properties =
         g_slist_prepend (xmp_model->custom_properties, property);
     }
@@ -945,6 +996,7 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
                       COL_XMP_WEIGHT_SET, FALSE,
                       -1);
   xmp_model_property_changed (xmp_model, schema, &child_iter);
+
   return TRUE;
 }
 
