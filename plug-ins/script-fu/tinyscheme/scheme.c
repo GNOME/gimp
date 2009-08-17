@@ -1710,7 +1710,7 @@ static char *readstr_upto(scheme *sc, char *delim) {
   char *p = sc->strbuff;
   gunichar c = 0;
   gunichar c_prev = 0;
-  int  len = 0;
+  int len = 0;
 
 #if 0
   while (!is_one_of(delim, (*p++ = inchar(sc))))
@@ -1727,7 +1727,8 @@ static char *readstr_upto(scheme *sc, char *delim) {
     c = inchar(sc);
     len = g_unichar_to_utf8(c, p);
     p += len;
-  } while (c && !is_one_of(delim, c));
+  } while ((p - sc->strbuff < sizeof(sc->strbuff)) &&
+           (c && !is_one_of(delim, c)));
 
   if(p==sc->strbuff+2 && c_prev=='\\')
     *p = '\0';
@@ -2053,9 +2054,11 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
                default:
 #if USE_ASCII_NAMES
                     if(c==127) {
-                         strcpy(p,"#\\del"); break;
+                         snprintf(p,STRBUFFSIZE, "#\\del");
+                         break;
                     } else if(c<32) {
-                         strcpy(p,"#\\"); strcat(p,charnames[c]); break;
+                         snprintf(p,STRBUFFSIZE, "#\\%s", charnames[c]);
+                         break;
                     }
 #else
                     if(c<32) {
@@ -2655,7 +2658,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
        if(sc->tracing) {
          s_save(sc,OP_REAL_APPLY,sc->args,sc->code);
          sc->print_flag = 1;
-         /*         sc->args=cons(sc,sc->code,sc->args);*/
+         /*  sc->args=cons(sc,sc->code,sc->args);*/
          putstr(sc,"\nApply to: ");
          s_goto(sc,OP_P0LIST);
        }
@@ -2769,7 +2772,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
 
      case OP_SET0:       /* set! */
           if(is_immutable(car(sc->code)))
-                Error_1(sc,"set!: unable to alter immutable variable", car(sc->code));
+                Error_1(sc,"set!: unable to alter immutable variable",car(sc->code));
           s_save(sc,OP_SET1, sc->NIL, car(sc->code));
           sc->code = cadr(sc->code);
           s_goto(sc,OP_EVAL);
@@ -3593,17 +3596,11 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 static int is_list(scheme *sc, pointer a)
 { return list_length(sc,a) >= 0; }
 
-/* Result is:
-   proper list: length
-   circular list: -1
-   not even a pair: -2
-   dotted list: -2 minus length before dot
-*/
-int list_length(scheme *sc, pointer a) {
+int list_length(scheme *sc, pointer p) {
     int i=0;
     pointer slow, fast;
 
-    slow = fast = a;
+    slow = fast = p;
     while (1)
     {
         if (fast == sc->NIL)
@@ -4156,13 +4153,13 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
      case OP_RDVEC:
           /*sc->code=cons(sc,mk_proc(sc,OP_VECTOR),sc->value);
           s_goto(sc,OP_EVAL); Cannot be quoted*/
-       /*x=cons(sc,mk_proc(sc,OP_VECTOR),sc->value);
-         s_return(sc,x); Cannot be part of pairs*/
-       /*sc->code=mk_proc(sc,OP_VECTOR);
-       sc->args=sc->value;
-       s_goto(sc,OP_APPLY);*/
-       sc->args=sc->value;
-       s_goto(sc,OP_VECTOR);
+          /*x=cons(sc,mk_proc(sc,OP_VECTOR),sc->value);
+          s_return(sc,x); Cannot be part of pairs*/
+          /*sc->code=mk_proc(sc,OP_VECTOR);
+          sc->args=sc->value;
+          s_goto(sc,OP_APPLY);*/
+          sc->args=sc->value;
+          s_goto(sc,OP_VECTOR);
 
      /* ========== printing part ========== */
      case OP_P0LIST:
