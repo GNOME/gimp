@@ -1,17 +1,37 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2008
-# Luca Ferretti <elle.uca@libero.it>, 2006
+# Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007, 2008, 2009
 # Alessandro Falappa <alessandro@falappa.net>, 2007
+# Luca Ferretti <elle.uca@libero.it>, 2006, 2009.
+#
+# Convenzioni adottate per Gimp:
+#
+#  brush = pennello
+#  brush pipe = pennello animato
+#  canvas = superficie (impreciso ma entrato nel gergo convenzionale grafico italiano)
+#  emboss = rilievo
+#  feather = sfumata
+#  gradients = gradiente
+#  layer = livello (errato ma entrato nel gergo convenzionale grafico italiano)
+#  map = mappa
+#  newsprint = effetto giornale
+#  ripple = increspatura
+#  pattern = motivo
+#  path = tracciato
+#  palette = tavolozza
+#  (to) render = render, disegnare
+#  stroke = delineare
+#  (to) shear = inclinare
+#  undo history = cronologia annullamenti
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.3\n"
+"Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-20 10:23+0200\n"
-"PO-Revision-Date: 2008-09-20 10:28+0200\n"
-"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
-"Language-Team: gimp.linux.it\n"
+"POT-Creation-Date: 2009-08-17 17:00+0200\n"
+"PO-Revision-Date: 2009-08-17 17:00+0200\n"
+"Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -45,7 +65,7 @@ msgstr "Selezione pennello"
 #: ../libgimp/gimpbrushselectbutton.c:913
 #: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
-msgstr "_Scorri..."
+msgstr "E_splora..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
@@ -61,7 +81,8 @@ msgstr "Unisci livelli visibili"
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
-"Il plug-in %s non può gestire la posizione, dimensione o opacità dei livelli"
+"Il plug-in %s non può gestire la posizione, la dimensione o l'opacità dei "
+"livelli"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
@@ -85,7 +106,7 @@ msgstr "Il plug-in %s non può gestire la trasparenza"
 #: ../libgimp/gimpexport.c:271
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "Il plug-in %s non può gestire maschere di livello"
+msgstr "Il plug-in %s non può gestire le maschere di livello"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -94,17 +115,17 @@ msgstr "Applica maschere di livello"
 #: ../libgimp/gimpexport.c:280
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Il plug-in %s può gestire solo immagini RGB"
+msgstr "Il plug-in %s può gestire solo le immagini RGB"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
-msgstr "Conversione a RGB"
+msgstr "Converti in RGB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Il plug-in %s può gestire solo immagini in scala di grigi"
+msgstr "Il plug-in %s può gestire solo le immagini in scala di grigi"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -114,7 +135,7 @@ msgstr "Converti in scala di grigi"
 #: ../libgimp/gimpexport.c:298
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "Il plug-in %s può gestire solo immagini indicizzate"
+msgstr "Il plug-in %s può gestire solo le immagini indicizzate"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -122,40 +143,38 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Converti in immagini indicizzate utilizzando \n"
-"le impostazioni predefinite (impostare manualmente\n"
-"per controllare il risultato)"
+"Converti in indicizzata usando le impostazioni predefinite\n"
+"(impostare manualmente per controllare il risultato)"
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"Il plug-in %s può gestire solo immagini bitmap (due colori) o indicizzate"
+"Il plug-in %s può gestire solo le immagini indicizzate bitmap (due colori)"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Converti in immagini indicizzate utilizzando le\n"
-"impostazioni predefinite delle immagini bitmap\n"
-"(impostate manualmente per controllare il risultato)"
+"Converti in indicizzata usando le impostazioni predefinite per bitmap\n"
+"(impostare manualmente per controllare il risultato)"
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Il plug-in %s può gestire solo immagini RGB o in scala di grigi"
+msgstr "Il plug-in %s può gestire solo le immagini RGB o in scala di grigi"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "Il plug-in %s può gestire solo immagini RGB o indicizzate"
+msgstr "Il plug-in %s può gestire solo le immagini RGB o indicizzate"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
-"Il plug-in %s può gestire solo immagini in scala di grigi o indicizzate"
+"Il plug-in %s può gestire solo le immagini in scala di grigi o indicizzate"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
@@ -221,7 +240,7 @@ msgstr ""
 
 #: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
-msgstr "Selezione caratteri"
+msgstr "Selezione tipo di carattere"
 
 #: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
@@ -307,7 +326,7 @@ msgstr "Ricerca per tipo"
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
-msgstr[0] "%d procedure"
+msgstr[0] "%d procedura"
 msgstr[1] "%d procedure"
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
@@ -350,9 +369,11 @@ msgstr "Data:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
+# era percento, ma il dizionario dice che la
+# grafia separata è più frequente
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
-msgstr "percento"
+msgstr "per cento"
 
 #: ../libgimpbase/gimpbaseenums.c:28
 msgid "_White (full opacity)"
@@ -410,13 +431,14 @@ msgstr "Riempi colore SF"
 msgid "Pattern fill"
 msgstr "Riempimento con motivo"
 
+# questo e i seguenti simili sono commenti
 #: ../libgimpbase/gimpbaseenums.c:128
 msgid "Add to the current selection"
-msgstr "Aggiungi alla selezione corrente"
+msgstr "Aggiunge alla selezione corrente"
 
 #: ../libgimpbase/gimpbaseenums.c:129
 msgid "Subtract from the current selection"
-msgstr "Sottrai dalla selezione corrente"
+msgstr "Sottrae dalla selezione corrente"
 
 #: ../libgimpbase/gimpbaseenums.c:130
 msgid "Replace the current selection"
@@ -442,6 +464,8 @@ msgstr "Blu"
 msgid "Gray"
 msgstr "Grigio"
 
+# o indicizzata? nel senso di immagine?
+# boh
 #: ../libgimpbase/gimpbaseenums.c:167 ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed"
 msgstr "Indicizzato"
@@ -538,17 +562,18 @@ msgstr "Conica (simm.)"
 msgid "Conical (asym)"
 msgstr "Conica (asimm.)"
 
+# era "Conformata", ma mi pare errato...
 #: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (angular)"
-msgstr "Conformata (angolare)"
+msgstr "Sagomata (angolare)"
 
 #: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (spherical)"
-msgstr "Conformata (sferica)"
+msgstr "Sagomata (sferica)"
 
 #: ../libgimpbase/gimpbaseenums.c:397
 msgid "Shaped (dimpled)"
-msgstr "Conformata (curvata)"
+msgstr "Sagomata (curvata)"
 
 #: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (cw)"
@@ -566,26 +591,32 @@ msgstr "Intersezioni (punti)"
 msgid "Intersections (crosshairs)"
 msgstr "Intersezioni (crocini)"
 
+# Tratteggiata? nel senso linea?
 #: ../libgimpbase/gimpbaseenums.c:432
 msgid "Dashed"
 msgstr "Tratteggio"
 
+# vedi sopra
 #: ../libgimpbase/gimpbaseenums.c:433
 msgid "Double dashed"
 msgstr "Doppio tratteggio"
 
+# vedi sopra
 #: ../libgimpbase/gimpbaseenums.c:434
 msgid "Solid"
 msgstr "Continuo"
 
+# enumer. per tipo di icona
 #: ../libgimpbase/gimpbaseenums.c:463
 msgid "Stock ID"
-msgstr "ID blocco"
+msgstr "ID di stock"
 
+# enumer. per tipo di icona
 #: ../libgimpbase/gimpbaseenums.c:464
 msgid "Inline pixbuf"
-msgstr "Pixbuf inlinea"
+msgstr "Pixbuf incorporata"
 
+# enumer. per tipo di icona
 #: ../libgimpbase/gimpbaseenums.c:465
 msgid "Image file"
 msgstr "File immagine"
@@ -634,22 +665,27 @@ msgstr "Cubica"
 msgid "Sinc (Lanczos3)"
 msgstr "Sinc (Lanczos3)"
 
+# paint-application-mode
 #: ../libgimpbase/gimpbaseenums.c:594
 msgid "Constant"
 msgstr "Costante"
 
+# paint-application-mode
 #: ../libgimpbase/gimpbaseenums.c:595
 msgid "Incremental"
 msgstr "Incrementale"
 
+# repeat-mode
 #: ../libgimpbase/gimpbaseenums.c:624 ../modules/display-filter-lcms.c:191
 msgid "None"
-msgstr "Nessuno"
+msgstr "Nessuna"
 
+# repeat-mode
 #: ../libgimpbase/gimpbaseenums.c:625
 msgid "Sawtooth wave"
 msgstr "Onda a dente di sega"
 
+# repeat-mode
 #: ../libgimpbase/gimpbaseenums.c:626
 msgid "Triangular wave"
 msgstr "Onda triangolare"
@@ -682,6 +718,7 @@ msgstr "Ombre"
 msgid "Midtones"
 msgstr "Mezzi toni"
 
+# zone di luce? punti luminosi? punti luce?
 #: ../libgimpbase/gimpbaseenums.c:717
 msgid "Highlights"
 msgstr "Alte luci"
@@ -698,6 +735,8 @@ msgstr "Correttiva (indietro)"
 msgid "Adjust"
 msgstr "Regola"
 
+# non mi convince molto anche perché taglia
+# è già Cut(ctrl+x).... 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Clip"
 msgstr "Taglia"
@@ -763,7 +802,7 @@ msgstr "Modalità di operazione per la gestione del colore."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
-msgstr "Profilo di colore per il monitor (principale)."
+msgstr "Il profilo di colore del monitor (principale)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
@@ -771,9 +810,9 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Se attivata, GIMP tenterà di usare il profilo di colore dello schermo "
+"Se attivata, GIMP tenta di usare il profilo di colore dello schermo "
 "dall'ambiente grafico. Il profilo del monitor configurato verrà usato solo "
-"in caso di fallimento dell'operazione."
+"come ripiego."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
@@ -791,14 +830,14 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
-msgstr "Imposta come verranno mappati i colori per il display."
+msgstr "Imposta come sono mappati i colori per il display."
 
 #: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
-"Imposta come i colori saranno convertiti dallo spazio di lavoro RGB al "
+"Imposta come i colori sono convertiti dallo spazio di lavoro RGB al "
 "dispositivo di simulazione di stampa."
 
 #: ../libgimpconfig/gimpcolorconfig.c:61
@@ -806,12 +845,12 @@ msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Se abilitata, la simulazione di stampa segnerà i colori che non potranno "
-"essere rappresentati nello spazio di colore del risultato."
+"Se abilitata, la simulazione di stampa contrassegna i colori che non "
+"potranno essere rappresentati nello spazio di colore di destinazione."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "Il colore da usare per segnare i colori fuori gamma."
+msgstr "Il colore da usare per contrassegnare i colori fuori gamma."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -850,8 +889,7 @@ msgstr "il valore per il token %s non è una stringa UTF-8 valida"
 #: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr ""
-"per un token booleano %s era previsto \"yes\" o \"no\" ma è arrivato \"%s\""
+msgstr "atteso \"yes\" o \"no\" per il token booleano %s, ottenuto \"%s\""
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
@@ -861,7 +899,7 @@ msgstr "valore \"%s\" non valido per il token %s"
 #: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "valore non valido \"%ld\" per il token %s"
+msgstr "valore \"%ld\" non valido per il token %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
@@ -873,18 +911,18 @@ msgstr "durante l'analisi del token \"%s\": %s"
 #: ../libgimpconfig/gimpscanner.c:579
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
-msgstr "errore di analisi fatale"
+msgstr "errore di analisi irrimediabile"
 
 #: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
-msgstr "Impossibile espandere $(%s)"
+msgstr "Impossibile espandere ${%s}"
 
 #: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:693
+#: ../libgimpconfig/gimpconfigwriter.c:718
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "Errore nella scrittura su \"%s\": %s"
+msgstr "Errore nello scrivere su \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
@@ -896,25 +934,26 @@ msgstr "Impossibile creare il file temporaneo per \"%s\": %s"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"Errore nella scrittura su file temporaneo per \"%s\": %s\n"
+"Errore nello scrivere sul file temporaneo per \"%s\": %s\n"
 "Il file originale non è stato toccato."
 
-#: ../libgimpconfig/gimpconfigwriter.c:682
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"Errore nella scrittura su file temporaneo per \"%s\": %s\n"
+"Errore nello scrivere sul file temporaneo per \"%s\": %s\n"
 "Non è stato creato alcun file."
 
-#: ../libgimpconfig/gimpconfigwriter.c:711
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Impossibile creare \"%s\": %s"
@@ -927,7 +966,7 @@ msgstr "stringa UTF-8 non valida"
 #: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Errore durante l'elaborazione di \"%s\" alla riga %d: %s"
+msgstr "Errore durante l'analisi di \"%s\" alla riga %d: %s"
 
 #: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
 #: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
@@ -946,7 +985,7 @@ msgstr "Caricato"
 
 #: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
-msgstr "Caricamento fallito"
+msgstr "Caricamento non riuscito"
 
 #: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
@@ -965,12 +1004,12 @@ msgstr ""
 #: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Fallita la creazione della cartella per le miniature \"%s\"."
+msgstr "Creazione della cartella \"%s\" per le miniature non riuscita."
 
 #: ../libgimpthumb/gimpthumbnail.c:498
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr "La miniatura non contiene la tag Thumb::URI"
+msgstr "La miniatura non contiene il tag Thumb::URI"
 
 #: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
@@ -1023,8 +1062,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Notazione colore esadecimale come si usa in HTML e nei CSS. Questa voce "
-"accetta anche i nomi di colore CSS."
+"Notazione colore esadecimale come si usa in HTML e CSS. Questa voce accetta "
+"anche i nomi di colore CSS."
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
@@ -1066,11 +1105,12 @@ msgstr "Gigabyte"
 #: ../libgimpwidgets/gimppageselector.c:269
 #: ../libgimpwidgets/gimppageselector.c:1166
 msgid "Nothing selected"
-msgstr "Selezione nulla"
+msgstr "Nessuna selezione"
 
+# usato accelerato gtk+
 #: ../libgimpwidgets/gimppageselector.c:287
 msgid "Select _All"
-msgstr "Selezion_a tutto"
+msgstr "_Seleziona tutto"
 
 #: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
@@ -1092,15 +1132,15 @@ msgstr "Pagina %d"
 
 #: ../libgimpwidgets/gimppageselector.c:1171
 msgid "One page selected"
-msgstr "Una pagina selezionata"
+msgstr "Selezionata una pagina"
 
 #: ../libgimpwidgets/gimppageselector.c:1178
 #: ../libgimpwidgets/gimppageselector.c:1182
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
-msgstr[0] "%d pagina selezionata"
-msgstr[1] "%d pagine selezionate"
+msgstr[0] "Selezionata %d pagina"
+msgstr[1] "Selezionate tutte le pagine (%d)"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
@@ -1170,10 +1210,9 @@ msgstr "Incolla come nuovo"
 msgid "Paste Into"
 msgstr "Incolla dentro"
 
-# Un'altra traduzione per reset potrebbe essere "Azzera" -Luca
 #: ../libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
-msgstr "_Reimposta"
+msgstr "Azze_ra"
 
 #: ../libgimpwidgets/gimpstock.c:120
 msgid "Visible"
@@ -1217,7 +1256,7 @@ msgstr "_Inclina"
 
 #: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
-msgstr "Altri..."
+msgstr "Altro..."
 
 #: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
@@ -1237,8 +1276,7 @@ msgid ""
 "a given \"random\" operation"
 msgstr ""
 "Usare questo valore per la generazione del seme di casualità - questo "
-"permette \n"
-"di ripetere una data operazione \"casuale\""
+"permette di ripetere una data operazione \"casuale\""
 
 #: ../libgimpwidgets/gimpwidgets.c:515
 msgid "_New Seed"
@@ -1354,7 +1392,7 @@ msgstr "_Gamma:"
 
 #: ../modules/display-filter-high-contrast.c:90
 msgid "High Contrast color display filter"
-msgstr "Filtro di visualizzazione colore ad alto contrasto"
+msgstr "Filtro di visualizzazione colore a contrasto elevato"
 
 #: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
@@ -1387,7 +1425,7 @@ msgstr "Modalità di operazione:"
 
 #: ../modules/display-filter-lcms.c:233
 msgid "Image profile:"
-msgstr "Profilo immagine:"
+msgstr "Profilo dell'immagine:"
 
 #: ../modules/display-filter-lcms.c:241
 msgid "Monitor profile:"
@@ -1399,7 +1437,7 @@ msgstr "Profilo di simulazione di stampa:"
 
 #: ../modules/display-filter-proof.c:97
 msgid "Color proof filter using ICC color profile"
-msgstr "Fitro a prova di colore usando i profili di colore ICC"
+msgstr "Filtro a prova di colore usando i profili di colore ICC"
 
 #: ../modules/display-filter-proof.c:145
 msgid "Color Proof"
@@ -1407,7 +1445,7 @@ msgstr "Prova di colore"
 
 #: ../modules/display-filter-proof.c:311
 msgid "Choose an ICC Color Profile"
-msgstr "Scegli un profilo di colore ICC"
+msgstr "Scegliere un profilo di colore ICC"
 
 #: ../modules/display-filter-proof.c:338
 msgid "All files (*.*)"
@@ -1515,11 +1553,11 @@ msgstr "Acquerelli"
 msgid "Pressure"
 msgstr "Pressione"
 
-#: ../modules/color-selector-wheel.c:98
+#: ../modules/color-selector-wheel.c:103
 msgid "HSV color wheel"
 msgstr "Ruota di colori HSV"
 
-#: ../modules/color-selector-wheel.c:129
+#: ../modules/color-selector-wheel.c:134
 msgid "Wheel"
 msgstr "Ruota"
 
@@ -1619,7 +1657,7 @@ msgstr "A sinistra spostamento X"
 #: ../modules/controller-linux-input.c:91
 #: ../modules/controller-dx-dinput.c:446
 msgid "X Move Right"
-msgstr "A destra Spostamento X"
+msgstr "A destra spostamento X"
 
 #: ../modules/controller-linux-input.c:92
 msgid "Y Move Forward"
@@ -1675,6 +1713,12 @@ msgstr "Marcia indietro rotella orizzontale"
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Marcia avanti rotella orizzontale"
 
+#  { REL_DIAL,   "dial-turn-left",                N_("Dial Turn Left")
+#           },
+#   { REL_DIAL,   "dial-turn-right",               N_("Dial Turn Right")
+#           },
+#
+#  e trovando REL_DIAL nei sorgenti di un modulo del kernel Linux, credo che si riferisca ad apparecchi come  http://en.wikipedia.org/wiki/Griffin_PowerMate
 #: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
 msgstr "Tasto a sinistra"
@@ -1821,7 +1865,7 @@ msgstr "Il nome del dispositivo da cui leggere gli eventi MIDI."
 
 #: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Immettere 'alsa' per usare il sequencer ALSA."
+msgstr "Inserire \"alsa\" per usare il sequencer ALSA."
 
 #: ../modules/controller-midi.c:221
 msgid "Channel:"
