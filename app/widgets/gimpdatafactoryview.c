@@ -230,7 +230,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
                                          factory_view->priv->tag_filtered_container, context,
-                                         view_size, view_border_width,
+                                         view_size, view_border_width, TRUE,
                                          menu_factory, menu_identifier,
                                          ui_identifier))
     {

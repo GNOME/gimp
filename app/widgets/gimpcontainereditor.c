@@ -112,6 +112,7 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
                                  GimpContext         *context,
                                  gint                 view_size,
                                  gint                 view_border_width,
+                                 gboolean             multiple_selection,
                                  GimpMenuFactory     *menu_factory,
                                  const gchar         *menu_identifier,
                                  const gchar         *ui_identifier)
@@ -142,7 +143,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
         GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
                                                            context,
                                                            view_size,
-                                                           view_border_width));
+                                                           view_border_width,
+                                                           multiple_selection));
       break;
 
     default:

@@ -65,6 +65,7 @@ struct _GimpContainerViewPrivate
   gint             view_size;
   gint             view_border_width;
   gboolean         reorderable;
+  gboolean         multiple_selection;
 
   /*  initialized by subclass  */
   GtkWidget       *dnd_widget;
@@ -232,6 +233,13 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                                             GIMP_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,
+                                       g_param_spec_boolean ("multiple-selection",
+                                                            NULL, NULL,
+                                                            FALSE,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_CONSTRUCT));
+
+  g_object_interface_install_property (view_iface,
                                        g_param_spec_boolean ("reorderable",
                                                              NULL, NULL,
                                                              FALSE,
@@ -338,6 +346,9 @@ gimp_container_view_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass,
                                     GIMP_CONTAINER_VIEW_PROP_CONTEXT,
                                     "context");
+  g_object_class_override_property (klass,
+                                    GIMP_CONTAINER_VIEW_PROP_MULTIPLE_SELECTION,
+                                    "multiple-selection");
   g_object_class_override_property (klass,
                                     GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
                                     "reorderable");
@@ -839,6 +850,11 @@ gimp_container_view_set_property (GObject      *object,
     case GIMP_CONTAINER_VIEW_PROP_CONTEXT:
       gimp_container_view_set_context (view, g_value_get_object (value));
       break;
+    case GIMP_CONTAINER_VIEW_PROP_MULTIPLE_SELECTION:
+      {
+        GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+        private->multiple_selection = g_value_get_boolean (value);
+      }
     case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
       gimp_container_view_set_reorderable (view, g_value_get_boolean (value));
       break;
@@ -879,6 +895,11 @@ gimp_container_view_get_property (GObject    *object,
     case GIMP_CONTAINER_VIEW_PROP_CONTEXT:
       g_value_set_object (value, gimp_container_view_get_context (view));
       break;
+    case GIMP_CONTAINER_VIEW_PROP_MULTIPLE_SELECTION:
+      {
+        GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+        g_value_set_boolean (value, private->multiple_selection);
+      }
     case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
       g_value_set_boolean (value, gimp_container_view_get_reorderable (view));
       break;

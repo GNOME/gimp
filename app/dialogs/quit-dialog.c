@@ -143,7 +143,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
   view_size = gimp->config->layer_preview_size;
   rows      = CLAMP (gimp_container_get_n_children (images), 3, 6);
 
-  view = gimp_container_tree_view_new (images, context, view_size, 1);
+  view = gimp_container_tree_view_new (images, context, view_size, 1, FALSE);
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
                                        -1,
                                        rows * (view_size + 2));

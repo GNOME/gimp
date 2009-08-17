@@ -81,7 +81,7 @@ gimp_image_view_new (GimpViewType     view_type,
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (image_view),
                                          view_type,
                                          container, context,
-                                         view_size, view_border_width,
+                                         view_size, view_border_width, FALSE,
                                          menu_factory, "<Images>",
                                          "/images-popup"))
     {

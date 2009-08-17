@@ -190,6 +190,7 @@ gimp_container_tree_view_constructor (GType                  type,
   GimpContainerBox      *box;
   GtkTreeStore          *tree;
   GObject               *object;
+  gboolean               multiple_selection;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -255,8 +256,14 @@ gimp_container_tree_view_constructor (GType                  type,
 
   tree_view->priv->selection = gtk_tree_view_get_selection (tree_view->view);
 
-  gtk_tree_selection_set_mode (tree_view->priv->selection,
-                               GTK_SELECTION_MULTIPLE);
+  g_object_get (tree_view,
+                "multiple-selection", &multiple_selection,
+                NULL);
+  if (multiple_selection)
+    {
+      gtk_tree_selection_set_mode (tree_view->priv->selection,
+                                   GTK_SELECTION_MULTIPLE);
+    }
 
   g_signal_connect (tree_view->priv->selection, "changed",
                     G_CALLBACK (gimp_container_tree_view_selection_changed),
@@ -383,7 +390,8 @@ GtkWidget *
 gimp_container_tree_view_new (GimpContainer *container,
                               GimpContext   *context,
                               gint           view_size,
-                              gint           view_border_width)
+                              gint           view_border_width,
+                              gboolean       multiple_selection)
 {
   GimpContainerTreeView *tree_view;
   GimpContainerView     *view;
@@ -397,7 +405,9 @@ gimp_container_tree_view_new (GimpContainer *container,
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  tree_view = g_object_new (GIMP_TYPE_CONTAINER_TREE_VIEW, NULL);
+  tree_view = g_object_new (GIMP_TYPE_CONTAINER_TREE_VIEW,
+                            "multiple-selection", multiple_selection,
+                            NULL);
 
   view = GIMP_CONTAINER_VIEW (tree_view);
 

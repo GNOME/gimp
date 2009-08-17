@@ -139,7 +139,7 @@ gimp_undo_editor_constructor (GType                  type,
 
   undo_editor->view = gimp_container_tree_view_new (NULL, NULL,
                                                     undo_editor->view_size,
-                                                    1);
+                                                    1, FALSE);
 
   gtk_container_add (GTK_CONTAINER (undo_editor), undo_editor->view);
   gtk_widget_show (undo_editor->view);
