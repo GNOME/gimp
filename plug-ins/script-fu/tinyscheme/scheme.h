@@ -202,7 +202,7 @@ struct scheme_interface {
   gunichar (*charvalue)(pointer p);
   int (*is_list)(scheme *sc, pointer p);
   int (*is_vector)(pointer p);
-  int (*list_length)(scheme *sc, pointer a);
+  int (*list_length)(scheme *sc, pointer p);
   long (*vector_length)(pointer vec);
   void (*fill_vector)(pointer vec, pointer elem);
   pointer (*vector_elem)(pointer vec, int ielem);
