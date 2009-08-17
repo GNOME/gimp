@@ -211,7 +211,9 @@ load_image (const gchar  *filename,
   image = jas_image_decode (stream, -1, 0);
   if (!image)
     {
-      g_message(_("Couldn't decode image."));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Couldn't decode '%s'."),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -232,7 +234,10 @@ load_image (const gchar  *filename,
       components[0] = jas_image_getcmptbytype (image, JAS_IMAGE_CT_GRAY_Y);
       if (components[0] == -1)
         {
-          g_message (_("Image type currently not supported."));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("The image '%s' is in grayscale but does not contain "
+                         "any gray component."),
+                       gimp_filename_to_utf8 (filename));
           return -1;
         }
       components[1] = jas_image_getcmptbytype (image, JAS_IMAGE_CT_OPACITY);
@@ -255,7 +260,10 @@ load_image (const gchar  *filename,
       components[2] = jas_image_getcmptbytype (image, JAS_IMAGE_CT_RGB_B);
       if (components[0] == -1 || components[1] == -1 || components[2] == -1)
         {
-          g_message (_("Image type currently not supported."));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("The image '%s' is in RGB but is missing some of the "
+                         "components."),
+                       gimp_filename_to_utf8 (filename));
           return -1;
         }
       components[3] = jas_image_getcmptbytype (image, JAS_IMAGE_CT_OPACITY);
@@ -271,8 +279,32 @@ load_image (const gchar  *filename,
         }
       break;
 
+    case JAS_CLRSPC_FAM_XYZ:
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("The image '%s' is in the CIEXYZ color space but there is "
+                     "no code in place to convert it to RGB."),
+                   gimp_filename_to_utf8 (filename));
+      return -1;
+
+    case JAS_CLRSPC_FAM_LAB:
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("The image '%s' is in the CIELAB color space but there is "
+                     "no code in place to convert it to RGB."),
+                   gimp_filename_to_utf8 (filename));
+      return -1;
+      
+    case JAS_CLRSPC_FAM_YCBCR:
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("The image '%s' is in the YCbCr color space but there is "
+                     "no code in place to convert it to RGB."),
+                   gimp_filename_to_utf8 (filename));
+      return -1;
+      
+    case JAS_CLRSPC_FAM_UNKNOWN:
     default:
-      g_message (_("Image type currently not supported."));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("The image '%s' is in an unkown color space."),
+                   gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -284,20 +316,30 @@ load_image (const gchar  *filename,
           jas_image_cmptbrx (image, components[i]) != jas_image_brx (image) ||
           jas_image_cmptbry (image, components[i]) != jas_image_bry (image))
         {
-          g_message (_("Image type currently not supported."));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Image component %d of image '%s' did not have the "
+                         "same size as the image which is currently not "
+                         "supported."),
+                       i, gimp_filename_to_utf8 (filename));
           return -1;
         }
 
       if (jas_image_cmpthstep (image, components[i]) != 1 ||
           jas_image_cmptvstep (image, components[i]) != 1)
         {
-          g_message (_("Image type currently not supported."));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Image component %d of image '%s' does not have both "
+                         "a hstep and vstep."),
+                       i, gimp_filename_to_utf8 (filename));
           return -1;
         }
 
       if (jas_image_cmptsgnd (image, components[i]))
         {
-          g_message (_("Image type currently not supported."));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Image component %d of image '%s' is signed which is "
+                         "currently not supported by GIMP."),
+                       i, gimp_filename_to_utf8 (filename));
           return -1;
         }
     }
