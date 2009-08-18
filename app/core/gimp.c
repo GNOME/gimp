@@ -75,6 +75,8 @@
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
 
+#include "paint/gimpdynamicsoptions.h"
+
 #include "gimp-intl.h"
 
 
@@ -238,6 +240,7 @@ gimp_init (Gimp *gimp)
 
   gimp->fonts               = NULL;
   gimp->brush_factory       = NULL;
+  gimp->dynamics_factory       = NULL;
   gimp->pattern_factory     = NULL;
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
@@ -276,6 +279,9 @@ gimp_dispose (GObject *object)
 
   if (gimp->brush_factory)
     gimp_data_factory_data_free (gimp->brush_factory);
+  
+  if (gimp->dynamics_factory)
+    gimp_data_factory_data_free (gimp->dynamics_factory);
 
   if (gimp->pattern_factory)
     gimp_data_factory_data_free (gimp->pattern_factory);
@@ -337,6 +343,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->brush_factory);
       gimp->brush_factory = NULL;
+    }
+
+  if (gimp->dynamics_factory)
+    {
+      g_object_unref (gimp->dynamics_factory);
+      gimp->dynamics_factory = NULL;
     }
 
   if (gimp->pattern_factory)
@@ -478,6 +490,8 @@ gimp_get_memsize (GimpObject *object,
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->brush_factory),
                                       gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->dynamics_factory),
+                                      gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->pattern_factory),
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->gradient_factory),
@@ -526,6 +540,12 @@ gimp_real_initialize (Gimp               *gimp,
     { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION,      FALSE }
   };
 
+  static const GimpDataFactoryLoaderEntry dynamics_loader_entries[] =
+  {
+    { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION,         FALSE },
+    { gimp_pattern_load_pixbuf,  NULL,                                FALSE }
+  };
+  
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
   {
     { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION,         FALSE },
@@ -565,6 +585,18 @@ gimp_real_initialize (Gimp               *gimp,
                            gimp_brush_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->brush_factory),
                                "brush factory");
+
+
+  gimp->dynamics_factory =
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_DYNAMICS_OPTIONS,
+                           "dynamics-path", "dynamics-path-writable",
+                           dynamics_loader_entries,
+                           G_N_ELEMENTS (dynamics_loader_entries),
+                           gimp_dynamics_options_new,
+                           gimp_dynamics_get_standard);
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->dynamics_factory),
+                               "dynamics factory");
 
   gimp->pattern_factory =
     gimp_data_factory_new (gimp,

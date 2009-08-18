@@ -1023,6 +1023,26 @@ gimp_dynamics_options_new (GimpPaintInfo *dynamics_info)
 }
 
 
+GimpData *
+gimp_dynamics_get_standard (void)
+{
+  static GimpData *standard_dynamics = NULL;
+
+  if (! standard_dynamics)
+    {
+      standard_dynamics = gimp_dynamics_options_new ("Standard");
+
+      standard_dynamics->dirty = FALSE;
+      gimp_data_make_internal (standard_dynamics,
+                               "gimp-dynamics-standard");
+
+      g_object_ref (standard_dynamics);
+    }
+
+  return standard_dynamics;
+}
+
+
 /* Calculates dynamics mix to be used for same parameter
  * (velocity/pressure/direction/tilt/random) mix Needed in may places and tools.
  *

@@ -90,6 +90,7 @@ struct _Gimp
   GimpContainer          *fonts;
 
   GimpDataFactory        *brush_factory;
+  GimpDataFactory        *dynamics_factory;
   GimpDataFactory        *pattern_factory;
   GimpDataFactory        *gradient_factory;
   GimpDataFactory        *palette_factory;

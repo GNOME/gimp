@@ -98,6 +98,6 @@ GType              gimp_dynamics_options_get_type (void) G_GNUC_CONST;
 
 GimpData           * gimp_dynamics_options_new   (GimpPaintInfo    *dynamics_info);
 
-
+GimpData           * gimp_dynamics_get_standard     (void);
 
 #endif  /*  __GIMP_DYNAMICS_OPTIONS_H__  */

@@ -201,8 +201,8 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), data_editor->view);
   gtk_widget_show (data_editor->view);
 
+/*
   //editor->shape_group = NULL;
-  /* table for sliders/labels */
   editor->options_vbox = gtk_table_new (4, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (editor->options_vbox), 2);
   gtk_table_set_col_spacings (GTK_TABLE (editor->options_vbox), 2);
@@ -214,7 +214,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (editor->options_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
-
+*/
 /*
   g_object_set_data (G_OBJECT (vbox), "set_options", table);
 
@@ -279,9 +279,9 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<DynamicsEditor>",
                        "ui-path",         "/dynamics-editor-popup",
-                       "data-factory",    context->gimp->brush_factory,
+                       "data-factory",    context->gimp->dynamics_factory,
                        "context",         context,
-                       "data",            gimp_context_get_brush (context),
+                       "data",            gimp_context_get_dynamics (context),*/
                        NULL);
  
   GtkWidget        *vbox; 
@@ -297,17 +297,6 @@ gimp_dynamics_editor_new (GimpContext     *context,
 
   //tool_type = tool_options->tool_info->tool_type;
 
-  /*  the main table  */
-/*
-  return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
-                       "menu-factory",    menu_factory,
-                       "menu-identifier", "<DynamicsEditor>",
-                       "ui-path",         "/dynamics-editor-popup",
-                       "data-factory",    context->gimp->brush_factory,
-                       "context",         context,
-                       "data",            gimp_context_get_brush (context),
-                       NULL);
-*/
 }
 
 

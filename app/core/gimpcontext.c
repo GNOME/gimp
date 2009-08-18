@@ -47,6 +47,7 @@
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
 
+#include "paint/gimpdynamicsoptions.h"
 #include "text/gimpfont.h"
 
 #include "gimp-intl.h"
@@ -156,9 +157,22 @@ static void gimp_context_brush_removed       (GimpContainer    *brush_list,
                                               GimpContext      *context);
 static void gimp_context_brush_list_thaw     (GimpContainer    *container,
                                               GimpContext      *context);
+
 static void gimp_context_real_set_brush      (GimpContext      *context,
                                               GimpBrush        *brush);
 
+/*  dynamics  */
+
+static void gimp_context_dynamics_dirty      (GimpDynamicsOptions   *dynamics,
+                                              GimpContext           *context);
+static void gimp_context_dynamics_removed    (GimpContainer    *dynamics_list,
+                                              GimpDynamicsOptions  *dynamics,
+                                              GimpContext      *context);
+static void gimp_context_dynamics_list_thaw  (GimpContainer    *container,
+                                              GimpContext      *context);
+static void gimp_context_real_set_dynamics   (GimpContext      *context,
+                                              GimpDynamicsOptions  *dynamics);
+											  
 /*  pattern  */
 static void gimp_context_pattern_dirty       (GimpPattern      *pattern,
                                               GimpContext      *context);
@@ -267,6 +281,7 @@ enum
   OPACITY_CHANGED,
   PAINT_MODE_CHANGED,
   BRUSH_CHANGED,
+  DYNAMICS_CHANGED,
   PATTERN_CHANGED,
   GRADIENT_CHANGED,
   PALETTE_CHANGED,
@@ -440,6 +455,16 @@ gimp_context_class_init (GimpContextClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_BRUSH);
 
+  gimp_context_signals[DYNAMICS_CHANGED] =
+    g_signal_new ("dynamics-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, dynamics_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DYNAMICS_OPTIONS);
+
   gimp_context_signals[PATTERN_CHANGED] =
     g_signal_new ("pattern-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -527,6 +552,7 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->opacity_changed         = NULL;
   klass->paint_mode_changed      = NULL;
   klass->brush_changed           = NULL;
+  klass->dynamics_changed        = NULL;
   klass->pattern_changed         = NULL;
   klass->gradient_changed        = NULL;
   klass->palette_changed         = NULL;
@@ -539,6 +565,7 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]       = GIMP_TYPE_TOOL_INFO;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PAINT_INFO] = GIMP_TYPE_PAINT_INFO;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_BRUSH]      = GIMP_TYPE_BRUSH;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_DYNAMICS]   = GIMP_TYPE_DYNAMICS_OPTIONS;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]    = GIMP_TYPE_PATTERN;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]   = GIMP_TYPE_GRADIENT;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]    = GIMP_TYPE_PALETTE;
@@ -607,6 +634,12 @@ gimp_context_class_init (GimpContextClass *klass)
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_BRUSH],
                                    NULL,
                                    GIMP_TYPE_BRUSH,
+                                   GIMP_PARAM_STATIC_STRINGS);
+								   
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_DYNAMICS,
+                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_DYNAMICS],
+                                   NULL,
+                                   GIMP_TYPE_DYNAMICS_OPTIONS,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PATTERN,
@@ -746,6 +779,13 @@ gimp_context_constructor (GType                  type,
                            object, 0);
   g_signal_connect_object (gimp_data_factory_get_container (gimp->brush_factory), "thaw",
                            G_CALLBACK (gimp_context_brush_list_thaw),
+                           object, 0);
+
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->dynamics_factory), "remove",
+                           G_CALLBACK (gimp_context_dynamics_removed),
+                           object, 0);
+  g_signal_connect_object (gimp_data_factory_get_container (gimp->dynamics_factory), "thaw",
+                           G_CALLBACK (gimp_context_dynamics_list_thaw),
                            object, 0);
 
   g_signal_connect_object (gimp_data_factory_get_container (gimp->pattern_factory), "remove",
@@ -977,6 +1017,9 @@ gimp_context_set_property (GObject      *object,
     case GIMP_CONTEXT_PROP_BRUSH:
       gimp_context_set_brush (context, g_value_get_object (value));
       break;
+    case GIMP_CONTEXT_PROP_DYNAMICS:
+      gimp_context_set_dynamics (context, g_value_get_object (value));
+      break;
     case GIMP_CONTEXT_PROP_PATTERN:
       gimp_context_set_pattern (context, g_value_get_object (value));
       break;
@@ -1054,6 +1097,9 @@ gimp_context_get_property (GObject    *object,
     case GIMP_CONTEXT_PROP_BRUSH:
       g_value_set_object (value, gimp_context_get_brush (context));
       break;
+    case GIMP_CONTEXT_PROP_DYNAMICS:
+      g_value_set_object (value, gimp_context_get_dynamics (context));
+      break;
     case GIMP_CONTEXT_PROP_PATTERN:
       g_value_set_object (value, gimp_context_get_pattern (context));
       break;
@@ -1129,6 +1175,7 @@ gimp_context_serialize_property (GimpConfig       *config,
     case GIMP_CONTEXT_PROP_TOOL:
     case GIMP_CONTEXT_PROP_PAINT_INFO:
     case GIMP_CONTEXT_PROP_BRUSH:
+    case GIMP_CONTEXT_PROP_DYNAMICS:
     case GIMP_CONTEXT_PROP_PATTERN:
     case GIMP_CONTEXT_PROP_GRADIENT:
     case GIMP_CONTEXT_PROP_PALETTE:
@@ -1187,6 +1234,12 @@ gimp_context_deserialize_property (GimpConfig *object,
       container = gimp_data_factory_get_container (context->gimp->brush_factory);
       current   = (GimpObject *) context->brush;
       name_loc  = &context->brush_name;
+      break;
+
+    case GIMP_CONTEXT_PROP_DYNAMICS:
+      container = gimp_data_factory_get_container (context->gimp->dynamics_factory);
+      current   = (GimpObject *) context->dynamics;
+      name_loc  = &context->dynamics_name;
       break;
 
     case GIMP_CONTEXT_PROP_PATTERN:
@@ -1490,6 +1543,14 @@ gimp_context_copy_property (GimpContext         *src,
       standard_object = standard_brush;
       src_name        = src->brush_name;
       dest_name_loc   = &dest->brush_name;
+      break;
+
+    case GIMP_CONTEXT_PROP_DYNAMICS:
+      gimp_context_real_set_dynamics (dest, src->dynamics);
+      object          = src->dynamics;
+      standard_object = standard_dynamics;
+      src_name        = src->dynamics_name;
+      dest_name_loc   = &dest->dynamics_name;
       break;
 
     case GIMP_CONTEXT_PROP_PATTERN:
@@ -2401,6 +2462,127 @@ gimp_context_real_set_brush (GimpContext *context,
 
   g_object_notify (G_OBJECT (context), "brush");
   gimp_context_brush_changed (context);
+}
+
+
+/*****************************************************************************/
+/*  dynamics *****************************************************************/
+
+
+GimpBrush *
+gimp_context_get_dynamics (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return context->dynamics;
+}
+
+void
+gimp_context_set_dynamics (GimpContext           *context,
+                           GimpDynamicsOptions   *dynamics)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (! dynamics || GIMP_IS_DYNAMICS (dynamics));
+  context_find_defined (context, GIMP_CONTEXT_PROP_DYNAMICS);
+
+  gimp_context_real_set_dynamics (context, dynamics);
+}
+
+void
+gimp_context_dynamics_changed (GimpContext *context)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  g_signal_emit (context,
+                 gimp_context_signals[DYNAMICS_CHANGED], 0,
+                 context->dynamics);
+}
+
+static void
+gimp_context_dynamics_dirty (GimpDynamicsOptions   *dynamics,
+                             GimpContext           *context)
+{
+  g_free (context->dynamics_name);
+  context->dynamics_name = g_strdup (GIMP_OBJECT (dynamics)->name);
+}
+
+static void gimp_context_dynamics_removed    (GimpContainer    *dynamics_list,
+                                              GimpDynamicsOptions  *dynamics,
+                                              GimpContext      *context);
+{
+  if (dynamics == context->dynamics)
+    {
+      context->dynamics = NULL;
+
+      g_signal_handlers_disconnect_by_func (dynamics,
+                                            gimp_context_dynamics_dirty,
+                                            context);
+      g_object_unref (dynamics);
+
+      if (! gimp_container_frozen (container))
+        gimp_context_dynamics_list_thaw (container, context);
+    }
+}
+
+
+static void gimp_context_dynamics_list_thaw  (GimpContainer    *container,
+                                              GimpContext      *context);
+{
+  GimpDynamicsOptions *dynamics;
+/*
+  if (! context->dynamics_name)
+    context->dynamics_name = g_strdup (context->gimp->config->default_dynamics);
+*/
+  dynamics = gimp_context_find_object (context, container,
+                                    context->dynamics_name,
+                                    gimp_dynamics_get_standard ());
+
+  gimp_context_real_set_dynamics (context, dynamics);
+}
+
+
+static void
+gimp_context_real_set_dynamics (GimpContext           *context,
+								GimpDynamicsOptions   *dynamics)
+{
+/*  if (! standard_dynamics)
+    standard_dynamics = GIMP_BRUSH (gimp_dynamics_get_standard ());
+*/
+  if (context->dynamics == dynamics)
+    return;
+
+  if (context->dynamics_name && dynamics != standard_dynamics)
+    {
+      g_free (context->dynamics_name);
+      context->dynamics_name = NULL;
+    }
+
+  /*  disconnect from the old brush's signals  */
+  if (context->dynamics)
+    {
+      g_signal_handlers_disconnect_by_func (context->dynamics,
+                                            gimp_context_dynamics_dirty,
+                                            context);
+      g_object_unref (context->dynamics);
+    }
+
+  context->dynamics = dynamics;
+
+  if (dynamics)
+    {
+      g_object_ref (dynamics);
+
+      g_signal_connect_object (dynamics, "name-changed",
+                               G_CALLBACK (gimp_context_dynamics_dirty),
+                               context,
+                               0);
+
+      if (dynamics != standard_dynamics)
+        context->dynamics_name = g_strdup (GIMP_OBJECT (dynamics)->name);
+    }
+
+  g_object_notify (G_OBJECT (context), "dynamics");
+  gimp_context_dynamics_changed (context);
 }
 
 
