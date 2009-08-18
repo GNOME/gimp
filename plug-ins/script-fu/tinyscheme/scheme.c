@@ -4021,7 +4021,8 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                char *str;
 
                size=p->rep.string.curr-p->rep.string.start+1;
-               if(str=sc->malloc(size)) {
+               str=sc->malloc(size);
+               if(str != NULL) {
                     pointer s;
 
                     memcpy(str,p->rep.string.start,size-1);
