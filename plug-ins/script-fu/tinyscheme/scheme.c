@@ -628,7 +628,7 @@ static int alloc_cellseg(scheme *sc, int n) {
           i = ++sc->last_cell_seg ;
           sc->alloc_seg[i] = cp;
           /* adjust in TYPE_BITS-bit boundary */
-          if (((unsigned long) cp) % adj != 0) {
+          if(((unsigned long)cp)%adj!=0) {
             cp=(char*)(adj*((unsigned long)cp/adj+1));
           }
         /* insert new segment in address order */
@@ -2791,19 +2791,19 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           sc->code = sc->value;
           s_goto(sc,OP_EVAL);
 
-#if 1	  
+#if 1
      case OP_LAMBDA:     /* lambda */
-	  /* If the hook is defined, apply it to sc->code, otherwise
-	     set sc->value fall thru */
-	  {
-	       pointer f=find_slot_in_env(sc,sc->envir,sc->COMPILE_HOOK,1);
+          /* If the hook is defined, apply it to sc->code, otherwise
+             set sc->value fall thru */
+          {
+               pointer f=find_slot_in_env(sc,sc->envir,sc->COMPILE_HOOK,1);
                if(f==sc->NIL) {
-		    sc->value = sc->code;
+                    sc->value = sc->code;
                     /* Fallthru */
                } else {
-		    s_save(sc,OP_LAMBDA1,sc->args,sc->code);
-		    sc->args=cons(sc,sc->code,sc->NIL);
-		    sc->code=slot_value_in_env(f);
+                    s_save(sc,OP_LAMBDA1,sc->args,sc->code);
+                    sc->args=cons(sc,sc->code,sc->NIL);
+                    sc->code=slot_value_in_env(f);
                     s_goto(sc,OP_APPLY);
                }
           }
@@ -2814,8 +2814,8 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
 #else
      case OP_LAMBDA:     /* lambda */
           s_return(sc,mk_closure(sc, sc->code, sc->envir));
-	  
-#endif	  
+
+#endif
 
      case OP_MKCLOSURE: /* make-closure */
        x=car(sc->args);
