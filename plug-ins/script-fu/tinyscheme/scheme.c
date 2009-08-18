@@ -32,6 +32,9 @@
 # include <io.h>
 # define access(f,a) _access(f,a)
 #endif
+#ifdef WIN32
+#define snprintf _snprintf
+#endif
 #if USE_DL
 # include "dynload.h"
 #endif
