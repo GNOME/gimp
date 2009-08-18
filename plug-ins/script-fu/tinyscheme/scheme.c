@@ -1354,6 +1354,8 @@ static void gc(scheme *sc, pointer a, pointer b) {
 
   /* Mark recent objects the interpreter doesn't know about yet. */
   mark(car(sc->sink));
+  /* Mark any older stuff above nested C calls */
+  mark(sc->c_nest);
 
   /* mark variables a, b */
   mark(a);
@@ -4756,6 +4758,8 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   /* init sink */
   typeflag(sc->sink) = (T_PAIR | MARK);
   car(sc->sink) = sc->NIL;
+  /* init c_nest */
+  sc->c_nest = sc->NIL;
 
   sc->oblist = oblist_initial_value(sc);
   /* init global_env */
@@ -4908,18 +4912,43 @@ void scheme_define(scheme *sc, pointer envir, pointer symbol, pointer value) {
 pointer scheme_apply0(scheme *sc, const char *procname)
 { return scheme_eval(sc, cons(sc,mk_symbol(sc,procname),sc->NIL)); }
 
+void save_from_C_call(scheme *sc)
+{
+  pointer saved_data =
+    cons(sc,
+        car(sc->sink),
+        cons(sc,
+             sc->envir,
+             sc->dump));
+  /* Push */
+  sc->c_nest = cons(sc, saved_data, sc->c_nest);
+  /* Truncate the dump stack so TS will return here when done, not
+     directly resume pre-C-call operations. */
+  dump_stack_reset(sc);
+}
+
+void restore_from_C_call(scheme *sc)
+{
+  car(sc->sink) = caar(sc->c_nest);
+  sc->envir = cadar(sc->c_nest);
+  sc->dump = cdr(cdar(sc->c_nest));
+  /* Pop */
+  sc->c_nest = cdr(sc->c_nest);
+}
+
 /* "func" and "args" are assumed to be already eval'ed. */
 pointer scheme_call(scheme *sc, pointer func, pointer args)
 {
   int old_repl = sc->interactive_repl;
   sc->interactive_repl = 0;
-  s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
+  save_from_C_call(sc);
   sc->envir = sc->global_env;
   sc->args = args;
   sc->code = func;
   sc->retcode = 0;
   Eval_Cycle(sc, OP_APPLY);
   sc->interactive_repl = old_repl;
+  restore_from_C_call(sc);
   return sc->value;
 }
 
@@ -4927,12 +4956,13 @@ pointer scheme_eval(scheme *sc, pointer obj)
 {
   int old_repl = sc->interactive_repl;
   sc->interactive_repl = 0;
-  s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
+  save_from_C_call(sc);
   sc->args = sc->NIL;
   sc->code = obj;
   sc->retcode = 0;
   Eval_Cycle(sc, OP_EVAL);
   sc->interactive_repl = old_repl;
+  restore_from_C_call(sc);
   return sc->value;
 }
 

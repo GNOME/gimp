@@ -89,6 +89,8 @@ pointer EOF_OBJ;         /* special cell representing end-of-file object */
 pointer oblist;          /* pointer to symbol table */
 pointer global_env;      /* pointer to global environment */
 
+pointer c_nest;          /* stack for nested calls from C */
+
 /* global pointers to special symbols */
 pointer LAMBDA;               /* pointer to syntax lambda */
 pointer QUOTE;           /* pointer to syntax quote */
