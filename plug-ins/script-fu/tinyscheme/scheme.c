@@ -4895,6 +4895,25 @@ void scheme_define(scheme *sc, pointer envir, pointer symbol, pointer value) {
 }
 
 #if !STANDALONE
+void scheme_register_foreign_func(scheme * sc, scheme_registerable * sr)
+{
+  scheme_define(sc,
+               sc->global_env,
+               mk_symbol(sc,sr->name),
+               mk_foreign_func(sc, sr->f));
+}
+
+void scheme_register_foreign_func_list(scheme * sc,
+                                      scheme_registerable * list,
+                                      int count)
+{
+  int i;
+  for(i = 0; i < count; i++)
+    {
+      scheme_register_foreign_func(sc, list + i);
+    }
+}
+
 pointer scheme_apply0(scheme *sc, const char *procname)
 { return scheme_eval(sc, cons(sc,mk_symbol(sc,procname),sc->NIL)); }
 

@@ -239,6 +239,20 @@ struct scheme_interface {
 };
 #endif
 
+#if !STANDALONE
+typedef struct scheme_registerable
+{
+  foreign_func  f;
+  char *       name;
+}
+scheme_registerable;
+
+void scheme_register_foreign_func_list(scheme * sc,
+                                      scheme_registerable * list,
+                                      int n);
+
+#endif /* !STANDALONE */
+
 #ifdef __cplusplus
 }
 #endif
