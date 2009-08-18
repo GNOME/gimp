@@ -106,6 +106,12 @@ print_settings_save (PrintData *data)
   /* some settings shouldn't be made persistent on a global level,
    * so they are only stored in the image, not in the rcfile
    */
+
+  g_key_file_remove_key (key_file, "image-setup", "x-resolution", NULL);
+  g_key_file_remove_key (key_file, "image-setup", "y-resolution", NULL);
+  g_key_file_remove_key (key_file, "image-setup", "x-offset", NULL);
+  g_key_file_remove_key (key_file, "image-setup", "y-offset", NULL);
+
   g_key_file_remove_key (key_file, PRINT_SETTINGS_NAME, "n-copies", NULL);
 
   print_utils_key_file_save_as_rcfile (key_file, PRINT_SETTINGS_NAME);
