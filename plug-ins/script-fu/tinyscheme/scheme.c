@@ -234,8 +234,8 @@ INTERFACE double rvalue(pointer p)    { return (!num_is_integer(p)?(p)->_object.
 INTERFACE  gunichar charvalue(pointer p)  { return (gunichar)ivalue_unchecked(p); }
 
 INTERFACE INLINE int is_port(pointer p)     { return (type(p)==T_PORT); }
-#define is_inport(p) (type(p)==T_PORT && p->_object._port->kind&port_input)
-#define is_outport(p) (type(p)==T_PORT && p->_object._port->kind&port_output)
+INTERFACE INLINE int is_inport(pointer p)  { return is_port(p) && p->_object._port->kind & port_input; }
+INTERFACE INLINE int is_outport(pointer p) { return is_port(p) && p->_object._port->kind & port_output; }
 
 INTERFACE INLINE int is_pair(pointer p)     { return (type(p)==T_PAIR); }
 #define car(p)           ((p)->_object._cons._car)
@@ -4396,8 +4396,8 @@ static struct {
   {is_string, "string"},
   {is_symbol, "symbol"},
   {is_port, "port"},
-  {0,"input port"},
-  {0,"output_port"},
+  {is_inport,"input port"},
+  {is_outport,"output port"},
   {is_environment, "environment"},
   {is_pair, "pair"},
   {0, "pair or '()"},
@@ -4451,9 +4451,6 @@ static const char *procname(pointer x) {
 
 /* kernel of this interpreter */
 static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
-  int count=0;
-  int old_op;
-
   sc->op = op;
   for (;;) {
     op_code_info *pcd=dispatch_table+sc->op;
@@ -4486,11 +4483,7 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
           do {
             pointer arg=car(arglist);
             j=(int)t[0];
-            if(j==TST_INPORT[0]) {
-              if(!is_inport(arg)) break;
-            } else if(j==TST_OUTPORT[0]) {
-              if(!is_outport(arg)) break;
-            } else if(j==TST_LIST[0]) {
+        if(j==TST_LIST[0]) {
               if(arg!=sc->NIL && !is_pair(arg)) break;
             } else {
               if(!tests[j].fct(arg)) break;
@@ -4519,7 +4512,6 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
       }
     }
     ok_to_freely_gc(sc);
-    old_op=sc->op;
     if (pcd->func(sc, (enum scheme_opcodes)sc->op) == sc->NIL) {
       return;
     }
@@ -4527,7 +4519,6 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
       fprintf(stderr,"No memory!\n");
       return;
     }
-    count++;
   }
 }
 
