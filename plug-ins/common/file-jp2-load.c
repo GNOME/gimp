@@ -292,14 +292,14 @@ load_image (const gchar  *filename,
                      "no code in place to convert it to RGB."),
                    gimp_filename_to_utf8 (filename));
       return -1;
-      
+
     case JAS_CLRSPC_FAM_YCBCR:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("The image '%s' is in the YCbCr color space but there is "
                      "no code in place to convert it to RGB."),
                    gimp_filename_to_utf8 (filename));
       return -1;
-      
+
     case JAS_CLRSPC_FAM_UNKNOWN:
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
