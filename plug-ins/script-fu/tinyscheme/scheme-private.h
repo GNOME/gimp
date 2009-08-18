@@ -92,16 +92,17 @@ pointer global_env;      /* pointer to global environment */
 pointer c_nest;          /* stack for nested calls from C */
 
 /* global pointers to special symbols */
-pointer LAMBDA;               /* pointer to syntax lambda */
+pointer LAMBDA;          /* pointer to syntax lambda */
 pointer QUOTE;           /* pointer to syntax quote */
 
-pointer QQUOTE;               /* pointer to symbol quasiquote */
+pointer QQUOTE;          /* pointer to symbol quasiquote */
 pointer UNQUOTE;         /* pointer to symbol unquote */
 pointer UNQUOTESP;       /* pointer to symbol unquote-splicing */
 pointer FEED_TO;         /* => */
 pointer COLON_HOOK;      /* *colon-hook* */
 pointer ERROR_HOOK;      /* *error-hook* */
-pointer SHARP_HOOK;  /* *sharp-hook* */
+pointer SHARP_HOOK;      /* *sharp-hook* */
+pointer COMPILE_HOOK;    /* *compile-hook* */
 
 pointer free_cell;       /* pointer to top of free cells */
 long    fcells;          /* # of free cells */
@@ -112,7 +113,7 @@ pointer save_inport;
 pointer loadport;
 
 #define MAXFIL 64
-port load_stack[MAXFIL];     /* Stack of open files for port -1 (LOADing) */
+port load_stack[MAXFIL]; /* Stack of open files for port -1 (LOADing) */
 int nesting_stack[MAXFIL];
 int file_i;
 int nesting;
@@ -131,7 +132,7 @@ int print_flag;
 pointer value;
 int op;
 
-void *ext_data;     /* For the benefit of foreign functions */
+void *ext_data;      /* For the benefit of foreign functions */
 long gensym_cnt;
 
 struct scheme_interface *vptr;

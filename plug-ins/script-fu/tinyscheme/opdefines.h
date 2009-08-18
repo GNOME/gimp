@@ -17,6 +17,7 @@
 #endif
     _OP_DEF(opexe_0, 0,                                0,  0,       0,                               OP_DOMACRO          )
     _OP_DEF(opexe_0, 0,                                0,  0,       0,                               OP_LAMBDA           )
+    _OP_DEF(opexe_0, 0,                                0,  0,       0,                               OP_LAMBDA1          )
     _OP_DEF(opexe_0, "make-closure",                   1,  2,       TST_PAIR TST_ENVIRONMENT,        OP_MKCLOSURE        )
     _OP_DEF(opexe_0, 0,                                0,  0,       0,                               OP_QUOTE            )
     _OP_DEF(opexe_0, 0,                                0,  0,       0,                               OP_DEF0             )

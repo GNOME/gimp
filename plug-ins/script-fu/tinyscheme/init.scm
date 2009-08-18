@@ -30,6 +30,18 @@
 (define (cdddar x) (cdr (cdr (cdr (car x)))))
 (define (cddddr x) (cdr (cdr (cdr (cdr x)))))
 
+;;;; Utility to ease macro creation
+(define (macro-expand form)
+     ((eval (get-closure-code (eval (car form)))) form))
+
+(define (macro-expand-all form)
+   (if (macro? form)
+      (macro-expand-all (macro-expand form))
+      form))
+
+(define *compile-hook* macro-expand-all)
+
+
 (macro (unless form)
      `(if (not ,(cadr form)) (begin ,@(cddr form))))
 
@@ -501,10 +513,6 @@
      (generic-assoc equal? obj alst))
 
 (define (acons x y z) (cons (cons x y) z))
-
-;;;; Utility to ease macro creation
-(define (macro-expand form)
-     ((eval (get-closure-code (eval (car form)))) form))
 
 ;;;; Handy for imperative programs
 ;;;; Used as: (define-with-return (foo x y) .... (return z) ...)
