@@ -204,7 +204,7 @@ INTERFACE INLINE int is_string(pointer p)     { return (type(p)==T_STRING); }
 #define strvalue(p)      ((p)->_object._string._svalue)
 #define strlength(p)     ((p)->_object._string._length)
 
-INTERFACE static int is_list(scheme *sc, pointer p);
+INTERFACE static int is_list(scheme *sc, pointer a);
 INTERFACE INLINE int is_vector(pointer p)    { return (type(p)==T_VECTOR); }
 INTERFACE static void fill_vector(pointer vec, pointer obj);
 INTERFACE static pointer vector_elem(pointer vec, int ielem);
@@ -3639,34 +3639,15 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
      return sc->T;
 }
 
-static int is_list(scheme *sc, pointer a) {
-    pointer slow, fast;
+static int is_list(scheme *sc, pointer a)
+{ return list_length(sc,a) >= 0; }
 
-    slow = fast = a;
-    while (1)
-    {
-        if (fast == sc->NIL)
-                return 1;
-        if (!is_pair(fast))
-                return 0;
-        fast = cdr(fast);
-        if (fast == sc->NIL)
-                return 1;
-        if (!is_pair(fast))
-                return 0;
-        fast = cdr(fast);
-
-        slow = cdr(slow);
-        if (fast == slow)
-        {
-            /* the fast pointer has looped back around and caught up
-               with the slow pointer, hence the structure is circular,
-               not of finite length, and therefore not a list */
-            return 0;
-        }
-    }
-}
-
+/* Result is:
+   proper list: length
+   circular list: -1
+   not even a pair: -2
+   dotted list: -2 minus length before dot
+*/
 int list_length(scheme *sc, pointer p) {
     int i=0;
     pointer slow, fast;
@@ -3677,16 +3658,18 @@ int list_length(scheme *sc, pointer p) {
         if (fast == sc->NIL)
                 return i;
         if (!is_pair(fast))
-                return i;
+                return -2 - i;
         fast = cdr(fast);
         ++i;
         if (fast == sc->NIL)
                 return i;
         if (!is_pair(fast))
-                return i;
+                return -2 - i;
         ++i;
         fast = cdr(fast);
 
+       /* Safe because we would have already returned if `fast'
+          encountered a non-pair. */
         slow = cdr(slow);
         if (fast == slow)
         {
@@ -3777,7 +3760,7 @@ static pointer opexe_3(scheme *sc, enum scheme_opcodes op) {
      case OP_PAIRP:       /* pair? */
           s_retbool(is_pair(car(sc->args)));
      case OP_LISTP:       /* list? */
-          s_retbool(is_list(sc, car(sc->args)));
+          s_retbool(list_length(sc,car(sc->args)) >= 0);
      case OP_ENVP:        /* environment? */
           s_retbool(is_environment(car(sc->args)));
      case OP_VECTORP:     /* vector? */
