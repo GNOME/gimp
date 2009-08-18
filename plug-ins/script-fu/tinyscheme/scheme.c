@@ -5080,3 +5080,9 @@ int main(int argc, char **argv) {
 }
 
 #endif
+
+/*
+Local variables:
+c-file-style: "k&r"
+End:
+*/
