@@ -46,8 +46,9 @@ struct _GimpItem
   gint              width, height;      /*  size in pixels           */
   gint              offset_x, offset_y; /*  pixel offset in image    */
 
-  guint             visible : 1;        /*  control visibility       */
-  guint             linked  : 1;        /*  control linkage          */
+  guint             visible      : 1;   /*  control visibility       */
+  guint             linked       : 1;   /*  control linkage          */
+  guint             lock_content : 1;   /*  content editability      */
 
   guint             removed : 1;        /*  removed from the image?  */
 
@@ -61,9 +62,10 @@ struct _GimpItemClass
   GimpViewableClass  parent_class;
 
   /*  signals  */
-  void            (* removed)            (GimpItem               *item);
-  void            (* visibility_changed) (GimpItem               *item);
-  void            (* linked_changed)     (GimpItem               *item);
+  void            (* removed)              (GimpItem             *item);
+  void            (* visibility_changed)   (GimpItem             *item);
+  void            (* linked_changed)       (GimpItem             *item);
+  void            (* lock_content_changed) (GimpItem             *item);
 
   /*  virtual functions  */
   gboolean        (* is_attached)        (GimpItem               *item);
@@ -261,15 +263,20 @@ const GimpParasite * gimp_item_parasite_find (const GimpItem     *item,
 gchar        ** gimp_item_parasite_list      (const GimpItem     *item,
                                               gint               *count);
 
-gboolean        gimp_item_get_visible        (const GimpItem     *item);
 void            gimp_item_set_visible        (GimpItem           *item,
                                               gboolean            visible,
                                               gboolean            push_undo);
+gboolean        gimp_item_get_visible        (const GimpItem     *item);
 
 void            gimp_item_set_linked         (GimpItem           *item,
                                               gboolean            linked,
                                               gboolean            push_undo);
 gboolean        gimp_item_get_linked         (const GimpItem     *item);
+
+void            gimp_item_set_lock_content   (GimpItem           *item,
+                                              gboolean            lock_content,
+                                              gboolean            push_undo);
+gboolean        gimp_item_get_lock_content   (const GimpItem     *item);
 
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);
