@@ -964,7 +964,7 @@ gimp_layer_tree_view_lock_alpha_button_toggled (GtkWidget         *widget,
           GimpUndo *undo;
           gboolean  push_undo = TRUE;
 
-          /*  compress opacity undos  */
+          /*  compress lock alpha undos  */
           undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                                GIMP_UNDO_LAYER_LOCK_ALPHA);
 
