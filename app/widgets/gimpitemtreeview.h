@@ -116,6 +116,12 @@ GtkWidget * gimp_item_tree_view_new             (GType             view_type,
 void        gimp_item_tree_view_set_image       (GimpItemTreeView *view,
                                                  GimpImage        *image);
 GimpImage * gimp_item_tree_view_get_image       (GimpItemTreeView *view);
+
+void        gimp_item_tree_view_add_options     (GimpItemTreeView *view,
+                                                 const gchar      *label,
+                                                 GtkWidget        *options);
+GtkWidget * gimp_item_tree_view_get_lock_box    (GimpItemTreeView *view);
+
 GtkWidget * gimp_item_tree_view_get_new_button  (GimpItemTreeView *view);
 GtkWidget * gimp_item_tree_view_get_edit_button (GimpItemTreeView *view);
 
