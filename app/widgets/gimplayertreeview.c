@@ -60,7 +60,6 @@
 
 struct _GimpLayerTreeViewPriv
 {
-  GtkWidget       *options_box;
   GtkWidget       *paint_mode_menu;
   GtkAdjustment   *opacity_adjustment;
   GtkWidget       *lock_alpha_toggle;
@@ -87,9 +86,6 @@ static GObject * gimp_layer_tree_view_constructor (GType                type,
                                                    guint                n_params,
                                                    GObjectConstructParam *params);
 static void   gimp_layer_tree_view_finalize       (GObject             *object);
-
-static void   gimp_layer_tree_view_style_set      (GtkWidget           *widget,
-                                                   GtkStyle            *prev_style);
 
 static void   gimp_layer_tree_view_set_container  (GimpContainerView   *view,
                                                    GimpContainer       *container);
@@ -197,7 +193,6 @@ static void
 gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 {
   GObjectClass               *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass             *widget_class = GTK_WIDGET_CLASS (klass);
   GimpContainerTreeViewClass *tree_view_class;
   GimpItemTreeViewClass      *item_view_class;
 
@@ -206,8 +201,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 
   object_class->constructor = gimp_layer_tree_view_constructor;
   object_class->finalize    = gimp_layer_tree_view_finalize;
-
-  widget_class->style_set   = gimp_layer_tree_view_style_set;
 
   tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
   tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
@@ -259,6 +252,7 @@ static void
 gimp_layer_tree_view_init (GimpLayerTreeView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GtkWidget             *table;
   GtkWidget             *hbox;
   GtkWidget             *image;
   GtkIconSize            icon_size;
@@ -285,18 +279,12 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
   tree_view->n_model_columns++;
 
-  view->priv->options_box = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (view->priv->options_box), 2);
-  gtk_box_pack_start (GTK_BOX (view), view->priv->options_box, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (view), view->priv->options_box, 0);
-  gtk_widget_show (view->priv->options_box);
-
   /*  Paint mode menu  */
 
   view->priv->paint_mode_menu = gimp_paint_mode_menu_new (FALSE, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (view->priv->options_box), 0, 0,
-                             _("Mode:"), 0.0, 0.5,
-                             view->priv->paint_mode_menu, 2, FALSE);
+  gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view),
+                                   _("Mode:"),
+                                   view->priv->paint_mode_menu);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (view->priv->paint_mode_menu),
                               GIMP_NORMAL_MODE,
@@ -308,13 +296,18 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Opacity scale  */
 
+  table = gtk_table_new (2, 1, FALSE);
+
   view->priv->opacity_adjustment =
-    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (view->priv->options_box), 0, 1,
-                                          _("Opacity:"), -1, -1,
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                          NULL, -1, -1,
                                           100.0, 0.0, 100.0, 1.0, 10.0, 1,
                                           TRUE, 0.0, 0.0,
                                           NULL,
                                           GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE));
+  gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view),
+                                   _("Opacity:"),
+                                   table);
 
   g_signal_connect (view->priv->opacity_adjustment, "value-changed",
                     G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),
@@ -322,10 +315,11 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Lock alpha toggle  */
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gimp_item_tree_view_get_lock_box (GIMP_ITEM_TREE_VIEW (view));
 
   view->priv->lock_alpha_toggle = gtk_check_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), view->priv->lock_alpha_toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), view->priv->lock_alpha_toggle,
+                      FALSE, FALSE, 0);
   gtk_widget_show (view->priv->lock_alpha_toggle);
 
   g_signal_connect (view->priv->lock_alpha_toggle, "toggled",
@@ -342,12 +336,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   image = gtk_image_new_from_stock (GIMP_STOCK_TRANSPARENCY, icon_size);
   gtk_container_add (GTK_CONTAINER (view->priv->lock_alpha_toggle), image);
   gtk_widget_show (image);
-
-  gimp_table_attach_aligned (GTK_TABLE (view->priv->options_box), 0, 2,
-                             _("Lock:"), 0.0, 0.5,
-                             hbox, 2, FALSE);
-
-  gtk_widget_set_sensitive (view->priv->options_box, FALSE);
 
   view->priv->italic_attrs = pango_attr_list_new ();
   attr = pango_attr_style_new (PANGO_STYLE_ITALIC);
@@ -442,27 +430,6 @@ gimp_layer_tree_view_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_layer_tree_view_style_set (GtkWidget *widget,
-                                GtkStyle  *prev_style)
-{
-  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (widget);
-  gint               content_spacing;
-  gint               button_spacing;
-
-  gtk_widget_style_get (widget,
-                        "content-spacing", &content_spacing,
-                        "button-spacing",  &button_spacing,
-                        NULL);
-
-  gtk_table_set_col_spacings (GTK_TABLE (layer_view->priv->options_box),
-                              button_spacing);
-  gtk_table_set_row_spacings (GTK_TABLE (layer_view->priv->options_box),
-                              content_spacing);
-
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
 
@@ -587,9 +554,8 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
                                   GimpViewable      *item,
                                   gpointer           insert_data)
 {
-  GimpItemTreeView  *item_view         = GIMP_ITEM_TREE_VIEW (view);
-  GimpLayerTreeView *layer_view        = GIMP_LAYER_TREE_VIEW (view);
-  gboolean           options_sensitive = FALSE;
+  GimpItemTreeView  *item_view  = GIMP_ITEM_TREE_VIEW (view);
+  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
   gboolean           success;
 
   success = parent_view_iface->select_item (view, item, insert_data);
@@ -604,15 +570,11 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
           gimp_layer_tree_view_update_menu (layer_view, GIMP_LAYER (item));
         }
 
-      options_sensitive = TRUE;
-
       if (! success || gimp_layer_is_floating_sel (GIMP_LAYER (item)))
         {
-          gtk_widget_set_sensitive (gimp_item_tree_view_get_edit_button (item_view),  FALSE);
+          gtk_widget_set_sensitive (gimp_item_tree_view_get_edit_button (item_view), FALSE);
         }
     }
-
-  gtk_widget_set_sensitive (layer_view->priv->options_box, options_sensitive);
 
   return success;
 }
