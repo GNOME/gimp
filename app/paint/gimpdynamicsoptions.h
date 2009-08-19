@@ -35,6 +35,8 @@ struct _GimpDynamicOutputOptions
   gboolean  random;
   gboolean  fade;
 
+  gdouble  fade_length;
+
   GimpCurve*  pressure_curve;
   GimpCurve*  velocity_curve;
   GimpCurve*  direction_curve;
@@ -81,7 +83,7 @@ struct _GimpDynamicsOptionsClass
 
 GType              gimp_dynamics_options_get_type (void) G_GNUC_CONST;
 
-GimpData           * gimp_dynamics_options_new   (GString *name);
+GimpData           * gimp_dynamics_options_new   (const gchar *name);
 
 GimpData           * gimp_dynamics_get_standard     (void);
 

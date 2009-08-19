@@ -25,10 +25,11 @@
 
 #include "paint-types.h"
 
+
+
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpgradient.h"
-#include "core/gimppaintinfo.h"
+#include "core/gimpcurve.h"
 
 #include "gimpdynamicsoptions.h"
 
@@ -156,6 +157,11 @@ static void    gimp_dynamics_options_get_property     (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
+
+static void    gimp_dynamics_options_curves_init      (GimpDynamicOutputOptions *dynamics);
+
+static void    gimp_dynamics_options_curves_finalize  (GimpDynamicOutputOptions *dynamics);
+
 
 /*
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsOptions, gimp_dynamics_options, GIMP_TYPE_DATA,
@@ -361,12 +367,25 @@ gimp_dynamics_options_init (GimpDynamicsOptions *options)
 {
 
   options->opacity_dynamics      = g_slice_new0 (GimpDynamicOutputOptions);
+  gimp_dynamics_options_curves_init(options->opacity_dynamics);
+
   options->hardness_dynamics     = g_slice_new0 (GimpDynamicOutputOptions);
+  gimp_dynamics_options_curves_init(options->hardness_dynamics);
+
   options->rate_dynamics         = g_slice_new0 (GimpDynamicOutputOptions);
+  gimp_dynamics_options_curves_init(options->rate_dynamics);
+
   options->size_dynamics         = g_slice_new0 (GimpDynamicOutputOptions);
+  gimp_dynamics_options_curves_init(options->size_dynamics);
+
   options->aspect_ratio_dynamics = g_slice_new0 (GimpDynamicOutputOptions);
+  gimp_dynamics_options_curves_init(options->aspect_ratio_dynamics);
+
   options->color_dynamics        = g_slice_new0 (GimpDynamicOutputOptions);
+  gimp_dynamics_options_curves_init(options->color_dynamics);
+
   options->angle_dynamics        = g_slice_new0 (GimpDynamicOutputOptions);
+  gimp_dynamics_options_curves_init(options->angle_dynamics);
 
 }
 
@@ -376,17 +395,71 @@ gimp_dynamics_options_finalize (GObject *object)
 {
   GimpDynamicsOptions *options = GIMP_DYNAMICS_OPTIONS (object);
 
+  gimp_dynamics_options_curves_finalize   (options->opacity_dynamics);
   g_slice_free (GimpDynamicOutputOptions,  options->opacity_dynamics);
+
+  gimp_dynamics_options_curves_finalize   (options->hardness_dynamics);
   g_slice_free (GimpDynamicOutputOptions,  options->hardness_dynamics);
+
+  gimp_dynamics_options_curves_finalize   (options->rate_dynamics);
   g_slice_free (GimpDynamicOutputOptions,  options->rate_dynamics);
+
+  gimp_dynamics_options_curves_finalize   (options->size_dynamics);
   g_slice_free (GimpDynamicOutputOptions,  options->size_dynamics);
+
+  gimp_dynamics_options_curves_finalize   (options->aspect_ratio_dynamics);
   g_slice_free (GimpDynamicOutputOptions,  options->aspect_ratio_dynamics);
+
+  gimp_dynamics_options_curves_finalize   (options->color_dynamics);
   g_slice_free (GimpDynamicOutputOptions,  options->color_dynamics);
+
+  gimp_dynamics_options_curves_finalize   (options->angle_dynamics);
   g_slice_free (GimpDynamicOutputOptions,  options->angle_dynamics);
 
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
+
+static void
+gimp_dynamics_options_curves_init      (GimpDynamicOutputOptions *dynamics)
+{
+  dynamics->pressure_curve = g_object_new (GIMP_TYPE_CURVE,
+                             "name",       "Pressure curve",
+                              NULL);
+  dynamics->velocity_curve = g_object_new (GIMP_TYPE_CURVE,
+                             "name",       "Velocity curve",
+                             NULL);
+  dynamics->direction_curve = g_object_new (GIMP_TYPE_CURVE,
+                              "name",       "Direction curve",
+                              NULL);
+  dynamics->tilt_curve      = g_object_new (GIMP_TYPE_CURVE,
+                              "name",       "Tilt curve",
+                              NULL);
+  dynamics->random_curve    = g_object_new (GIMP_TYPE_CURVE,
+                              "name",       "Random curve",
+                              NULL);
+  dynamics->fade_curve      = g_object_new (GIMP_TYPE_CURVE,
+                              "name",       "Fade curve",
+                              NULL);
+}
+
+static void
+gimp_dynamics_options_curves_finalize  (GimpDynamicOutputOptions *dynamics)
+{
+  g_object_unref(dynamics->pressure_curve);
+
+  g_object_unref(dynamics->velocity_curve);
+
+  g_object_unref(dynamics->direction_curve);
+
+  g_object_unref(dynamics->tilt_curve);
+
+  g_object_unref(dynamics->random_curve);
+
+  g_object_unref(dynamics->fade_curve);
+
+}
+
 
 static void
 gimp_dynamics_options_set_property (GObject      *object,
@@ -811,7 +884,7 @@ gimp_dynamics_options_notify (GObject    *object,
 }
 
 GimpData *
-gimp_dynamics_options_new (GString *name)
+gimp_dynamics_options_new (const gchar *name)
 {
   GimpDynamicsOptions *options;
 

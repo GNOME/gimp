@@ -40,6 +40,7 @@
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-kernels.h"
 #include "gimppaintoptions.h"
+#include "gimpdynamicsoptions.h"
 
 #include "gimp-intl.h"
 
@@ -49,6 +50,7 @@
 enum
 {
   SET_BRUSH,
+  SET_DYNAMICS,
   LAST_SIGNAL
 };
 
@@ -84,6 +86,9 @@ static TempBuf *gimp_brush_core_get_paint_area     (GimpPaintCore    *paint_core
 
 static void     gimp_brush_core_real_set_brush     (GimpBrushCore    *core,
                                                     GimpBrush        *brush);
+
+static void     gimp_brush_core_real_set_dynamics  (GimpBrushCore       *core,
+                                                    GimpDynamicsOptions *dynamics);
 
 static inline void rotate_pointers                 (gulong          **p,
                                                     guint32           n);
@@ -147,6 +152,16 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_BRUSH);
 
+  core_signals[SET_DYNAMICS] =
+    g_signal_new ("set-brush",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpBrushCoreClass, set_dynamics),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DYNAMICS_OPTIONS);
+
   object_class->finalize  = gimp_brush_core_finalize;
 
   paint_core_class->start          = gimp_brush_core_start;
@@ -167,6 +182,7 @@ gimp_brush_core_init (GimpBrushCore *core)
 
   core->main_brush                   = NULL;
   core->brush                        = NULL;
+  core->dynamics                     = NULL;
   core->spacing                      = 1.0;
   core->scale                        = 1.0;
   core->angle                        = 1.0;
@@ -804,6 +820,21 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
     }
 }
 
+static void
+gimp_brush_core_real_set_dynamics (GimpBrushCore       *core,
+                                   GimpDynamicsOptions *dynamics)
+{
+  if (core->dynamics)
+    {
+      g_object_unref (core->dynamics);
+      core->dynamics = NULL;
+    }
+
+  core->dynamics = dynamics;
+
+
+}
+
 void
 gimp_brush_core_set_brush (GimpBrushCore *core,
                            GimpBrush     *brush)
@@ -812,6 +843,16 @@ gimp_brush_core_set_brush (GimpBrushCore *core,
   g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
 
   g_signal_emit (core, core_signals[SET_BRUSH], 0, brush);
+}
+
+void
+gimp_brush_core_set_dynamics (GimpBrushCore       *core,
+                              GimpDynamicsOptions *dynamics)
+{
+  g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
+  g_return_if_fail (dynamics == NULL || GIMP_IS_DYNAMICS_OPTIONS (dynamics));
+
+  g_signal_emit (core, core_signals[SET_DYNAMICS], 0, dynamics);
 }
 
 void

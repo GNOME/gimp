@@ -43,6 +43,7 @@ struct _GimpBrushCore
 
   GimpBrush     *main_brush;
   GimpBrush     *brush;
+  GimpDynamicsOptions *dynamics;
   gdouble        spacing;
   gdouble        scale;
   gdouble        angle;
@@ -97,8 +98,11 @@ struct _GimpBrushCoreClass
 
   gboolean            handles_transforming_brush;
 
-  void (* set_brush) (GimpBrushCore *core,
-                      GimpBrush     *brush);
+  void (* set_brush)    (GimpBrushCore *core,
+                         GimpBrush     *brush);
+  void (* set_dynamics) (GimpBrushCore       *core,
+                         GimpDynamicsOptions *brush);
+
 };
 
 
@@ -106,6 +110,10 @@ GType   gimp_brush_core_get_type       (void) G_GNUC_CONST;
 
 void    gimp_brush_core_set_brush      (GimpBrushCore            *core,
                                         GimpBrush                *brush);
+
+void    gimp_brush_core_set_dynamics   (GimpBrushCore            *core,
+                                        GimpDynamicsOptions      *dynamics);
+
 void    gimp_brush_core_create_bound_segs (GimpBrushCore         *core,
                                            GimpPaintOptions      *options);
 
