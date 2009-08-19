@@ -71,6 +71,8 @@ struct _GimpItemTreeViewPriv
   GtkSizeGroup    *options_group;
   GtkWidget       *lock_box;
 
+  GtkWidget       *lock_content_toggle;
+
   GtkWidget       *edit_button;
   GtkWidget       *new_button;
   GtkWidget       *raise_button;
@@ -85,6 +87,7 @@ struct _GimpItemTreeViewPriv
 
   GimpTreeHandler *visible_changed_handler;
   GimpTreeHandler *linked_changed_handler;
+  GimpTreeHandler *lock_content_changed_handler;
 };
 
 
@@ -154,10 +157,12 @@ static void   gimp_item_tree_view_name_edited       (GtkCellRendererText *cell,
                                                      const gchar       *new_name,
                                                      GimpItemTreeView  *view);
 
-static void   gimp_item_tree_view_visible_changed   (GimpItem          *item,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_linked_changed    (GimpItem          *item,
-                                                     GimpItemTreeView  *view);
+static void   gimp_item_tree_view_visible_changed      (GimpItem          *item,
+                                                        GimpItemTreeView  *view);
+static void   gimp_item_tree_view_linked_changed       (GimpItem          *item,
+                                                        GimpItemTreeView  *view);
+static void   gimp_item_tree_view_lock_content_changed (GimpItem          *item,
+                                                        GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_eye_clicked       (GtkCellRendererToggle *toggle,
                                                      gchar             *path,
@@ -167,6 +172,12 @@ static void   gimp_item_tree_view_chain_clicked     (GtkCellRendererToggle *togg
                                                      gchar             *path,
                                                      GdkModifierType    state,
                                                      GimpItemTreeView  *view);
+static void   gimp_item_tree_view_lock_content_toggled
+                                                    (GtkWidget         *widget,
+                                                     GimpItemTreeView  *view);
+
+static void   gimp_item_tree_view_update_options    (GimpItemTreeView  *view,
+                                                     GimpItem          *item);
 
 /*  utility function to avoid code duplication  */
 static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *toggle,
@@ -270,6 +281,9 @@ static void
 gimp_item_tree_view_init (GimpItemTreeView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GtkWidget             *hbox;
+  GtkWidget             *image;
+  GtkIconSize            icon_size;
 
   view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
                                             GIMP_TYPE_ITEM_TREE_VIEW,
@@ -295,6 +309,32 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
   gimp_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
 
   view->priv->image  = NULL;
+
+
+  /*  Lock content toggle  */
+
+  hbox = gimp_item_tree_view_get_lock_box (view);
+
+  view->priv->lock_content_toggle = gtk_check_button_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), view->priv->lock_content_toggle,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (view->priv->lock_content_toggle);
+
+  g_signal_connect (view->priv->lock_content_toggle, "toggled",
+                    G_CALLBACK (gimp_item_tree_view_lock_content_toggled),
+                    view);
+
+  gimp_help_set_help_data (view->priv->lock_content_toggle,
+                           _("Lock pixels"),
+                           NULL /* GIMP_HELP_LAYER_DIALOG_LOCK_ALPHA_BUTTON */);
+
+  gtk_widget_style_get (GTK_WIDGET (view),
+                        "button-icon-size", &icon_size,
+                        NULL);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_TOOL_PAINTBRUSH, icon_size);
+  gtk_container_add (GTK_CONTAINER (view->priv->lock_content_toggle), image);
+  gtk_widget_show (image);
 }
 
 static GObject *
@@ -731,6 +771,9 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
 
       gimp_tree_handler_disconnect (item_view->priv->linked_changed_handler);
       item_view->priv->linked_changed_handler = NULL;
+
+      gimp_tree_handler_disconnect (item_view->priv->lock_content_changed_handler);
+      item_view->priv->lock_content_changed_handler = NULL;
     }
 
   parent_view_iface->set_container (view, container);
@@ -745,6 +788,11 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
       item_view->priv->linked_changed_handler =
         gimp_tree_handler_connect (container, "linked-changed",
                                    G_CALLBACK (gimp_item_tree_view_linked_changed),
+                                   view);
+
+      item_view->priv->lock_content_changed_handler =
+        gimp_tree_handler_connect (container, "lock-alpha-changed",
+                                   G_CALLBACK (gimp_item_tree_view_lock_content_changed),
                                    view);
     }
 }
@@ -837,6 +885,8 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
         }
 
       options_sensitive = TRUE;
+
+      gimp_item_tree_view_update_options (tree_view, GIMP_ITEM (item));
     }
 
   gimp_ui_manager_update (GIMP_EDITOR (tree_view)->ui_manager, tree_view);
@@ -1154,6 +1204,88 @@ gimp_item_tree_view_chain_clicked (GtkCellRendererToggle *toggle,
 {
   gimp_item_tree_view_toggle_clicked (toggle, path_str, state, view,
                                       GIMP_UNDO_ITEM_LINKED);
+}
+
+
+/*  "Lock Content" callbacks  */
+
+static void
+gimp_item_tree_view_lock_content_changed (GimpItem         *item,
+                                          GimpItemTreeView *view)
+{
+  GimpImage *image = view->priv->image;
+  GimpItem  *active_item;
+
+  active_item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+
+  if (active_item == item)
+    gimp_item_tree_view_update_options (view, item);
+}
+
+static void
+gimp_item_tree_view_lock_content_toggled (GtkWidget         *widget,
+                                          GimpItemTreeView  *view)
+{
+  GimpImage *image = view->priv->image;
+  GimpItem  *item;
+
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+
+  if (item)
+    {
+      gboolean lock_content;
+
+      lock_content = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+      if (gimp_item_get_lock_content (item) != lock_content)
+        {
+#if 0
+          GimpUndo *undo;
+#endif
+          gboolean  push_undo = TRUE;
+
+#if 0
+          /*  compress lock content undos  */
+          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                               GIMP_UNDO_ITEM_LOCK_CONTENT);
+
+          if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+            push_undo = FALSE;
+#endif
+
+          g_signal_handlers_block_by_func (item,
+                                           gimp_item_tree_view_lock_content_changed,
+                                           view);
+
+          gimp_item_set_lock_content (item, lock_content, push_undo);
+
+          g_signal_handlers_unblock_by_func (item,
+                                             gimp_item_tree_view_lock_content_changed,
+                                             view);
+
+          gimp_image_flush (image);
+        }
+    }
+}
+
+static void
+gimp_item_tree_view_update_options (GimpItemTreeView *view,
+                                    GimpItem         *item)
+{
+  if (gimp_item_get_lock_content (item) !=
+      gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_content_toggle)))
+    {
+      g_signal_handlers_block_by_func (view->priv->lock_content_toggle,
+                                       gimp_item_tree_view_lock_content_toggled,
+                                       view);
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->lock_content_toggle),
+                                    gimp_item_get_lock_content (item));
+
+      g_signal_handlers_unblock_by_func (view->priv->lock_content_toggle,
+                                         gimp_item_tree_view_lock_content_toggled,
+                                         view);
+    }
 }
 
 
