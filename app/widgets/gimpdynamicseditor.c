@@ -17,6 +17,7 @@
  */
 
 
+
 #define DYNAMICS_VIEW_SIZE 96
 
 #include "config.h"
@@ -170,9 +171,9 @@ static void
 gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-
   GtkWidget      *frame;
-  GtkWidget      *box;
+
+/*GtkWidget      *box;
   gint            row = 0;
   GtkWidget        *table;
   GtkWidget        *menu;
@@ -183,6 +184,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gint              n_dynamics         = 0;
   GtkWidget        *dynamics_labels[7];
   GType             tool_type;
+*/
 
   //add a frame
   frame = gtk_frame_new (NULL);
@@ -281,9 +283,9 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "ui-path",         "/dynamics-editor-popup",
                        "data-factory",    context->gimp->dynamics_factory,
                        "context",         context,
-                       "data",            gimp_context_get_dynamics (context),*/
+                       "data",            gimp_context_get_dynamics (context),
                        NULL);
- 
+ /*
   GtkWidget        *vbox; 
   GtkWidget        *table;
   GtkWidget        *menu;
@@ -296,7 +298,7 @@ gimp_dynamics_editor_new (GimpContext     *context,
   GType             tool_type;
 
   //tool_type = tool_options->tool_info->tool_type;
-
+*/
 }
 
 

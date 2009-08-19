@@ -262,13 +262,6 @@ void            gimp_context_set_brush          (GimpContext     *context,
                                                  GimpBrush       *brush);
 void            gimp_context_brush_changed      (GimpContext     *context);
 
-/*  brush  */
-GimpBrush     * gimp_context_get_brush          (GimpContext     *context);
-void            gimp_context_set_brush          (GimpContext     *context,
-                                                 GimpBrush       *brush);
-void            gimp_context_brush_changed      (GimpContext     *context);
-
-
 /*  dynamics  */
 GimpDynamicsOptions * gimp_context_get_dynamics (GimpContext     *context);
 void            gimp_context_set_dynamics       (GimpContext     *context,
