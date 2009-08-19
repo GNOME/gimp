@@ -305,6 +305,7 @@ static const gchar * const gimp_context_prop_names[] =
   "opacity",
   "paint-mode",
   "brush",
+  "dynamics",
   "pattern",
   "gradient",
   "palette",
@@ -326,6 +327,7 @@ static GType gimp_context_prop_types[] =
   G_TYPE_NONE,
   G_TYPE_NONE,
   G_TYPE_NONE,
+  0,
   0,
   0,
   0,
@@ -708,6 +710,9 @@ gimp_context_init (GimpContext *context)
   context->brush           = NULL;
   context->brush_name      = NULL;
 
+  context->dynamics        = NULL;
+  context->dynamics_name   = NULL;
+
   context->pattern         = NULL;
   context->pattern_name    = NULL;
 
@@ -896,6 +901,17 @@ gimp_context_finalize (GObject *object)
     {
       g_free (context->brush_name);
       context->brush_name = NULL;
+    }
+
+  if (context->dynamics)
+    {
+      g_object_unref (context->dynamics);
+      context->dynamics = NULL;
+    }
+  if (context->dynamics_name)
+    {
+      g_free (context->dynamics_name);
+      context->dynamics_name = NULL;
     }
 
   if (context->pattern)
