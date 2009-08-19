@@ -247,6 +247,7 @@ typedef struct scheme_registerable
 }
 scheme_registerable;
 
+void scheme_register_foreign_func(scheme * sc, scheme_registerable * sr);
 void scheme_register_foreign_func_list(scheme * sc,
                                       scheme_registerable * list,
                                       int n);

@@ -171,6 +171,8 @@ gunichar charvalue(pointer p);
 int is_vector(pointer p);
 
 int is_port(pointer p);
+int is_inport(pointer p);
+int is_outport(pointer p);
 
 int is_pair(pointer p);
 pointer pair_car(pointer p);
