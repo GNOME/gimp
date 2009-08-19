@@ -81,7 +81,7 @@ struct _GimpDynamicsOptionsClass
 
 GType              gimp_dynamics_options_get_type (void) G_GNUC_CONST;
 
-GimpData           * gimp_dynamics_options_new   (GimpPaintInfo    *paint_info);
+GimpData           * gimp_dynamics_options_new   (GString *name);
 
 GimpData           * gimp_dynamics_get_standard     (void);
 

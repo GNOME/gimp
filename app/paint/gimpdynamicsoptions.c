@@ -36,67 +36,53 @@
 #include "gimp-intl.h"
 
 
-//#define DEFAULT_DYNAMICS_EXPANDED      FALSE
-
 #define DEFAULT_PRESSURE_OPACITY       TRUE
 #define DEFAULT_PRESSURE_HARDNESS      FALSE
 #define DEFAULT_PRESSURE_RATE          FALSE
 #define DEFAULT_PRESSURE_SIZE          FALSE
-#define DEFAULT_PRESSURE_INVERSE_SIZE  FALSE
 #define DEFAULT_PRESSURE_ASPECT_RATIO  FALSE
 #define DEFAULT_PRESSURE_COLOR         FALSE
 #define DEFAULT_PRESSURE_ANGLE         FALSE
-#define DEFAULT_PRESSURE_PRESCALE      1.0
 
 #define DEFAULT_VELOCITY_OPACITY       FALSE
 #define DEFAULT_VELOCITY_HARDNESS      FALSE
 #define DEFAULT_VELOCITY_RATE          FALSE
 #define DEFAULT_VELOCITY_SIZE          FALSE
-#define DEFAULT_VELOCITY_INVERSE_SIZE  FALSE
 #define DEFAULT_VELOCITY_ASPECT_RATIO  FALSE
 #define DEFAULT_VELOCITY_COLOR         FALSE
 #define DEFAULT_VELOCITY_ANGLE         FALSE
-#define DEFAULT_VELOCITY_PRESCALE      1.0
 
 #define DEFAULT_DIRECTION_OPACITY      FALSE
 #define DEFAULT_DIRECTION_HARDNESS     FALSE
 #define DEFAULT_DIRECTION_RATE         FALSE
 #define DEFAULT_DIRECTION_SIZE         FALSE
-#define DEFAULT_DIRECTION_INVERSE_SIZE FALSE
 #define DEFAULT_DIRECTION_ASPECT_RATIO FALSE
 #define DEFAULT_DIRECTION_COLOR        FALSE
 #define DEFAULT_DIRECTION_ANGLE        FALSE
-#define DEFAULT_DIRECTION_PRESCALE     1.0
 
 #define DEFAULT_TILT_OPACITY           FALSE
 #define DEFAULT_TILT_HARDNESS          FALSE
 #define DEFAULT_TILT_RATE              FALSE
 #define DEFAULT_TILT_SIZE              FALSE
-#define DEFAULT_TILT_INVERSE_SIZE      FALSE
 #define DEFAULT_TILT_ASPECT_RATIO      FALSE
 #define DEFAULT_TILT_COLOR             FALSE
 #define DEFAULT_TILT_ANGLE             FALSE
-#define DEFAULT_TILT_PRESCALE          1.0
 
 #define DEFAULT_RANDOM_OPACITY         FALSE
 #define DEFAULT_RANDOM_HARDNESS        FALSE
 #define DEFAULT_RANDOM_RATE            FALSE
 #define DEFAULT_RANDOM_SIZE            FALSE
-#define DEFAULT_RANDOM_INVERSE_SIZE    FALSE
 #define DEFAULT_RANDOM_ASPECT_RATIO    FALSE
 #define DEFAULT_RANDOM_COLOR           FALSE
 #define DEFAULT_RANDOM_ANGLE           FALSE
-#define DEFAULT_RANDOM_PRESCALE        1.0
 
 #define DEFAULT_FADING_OPACITY         FALSE
 #define DEFAULT_FADING_HARDNESS        FALSE
 #define DEFAULT_FADING_RATE            FALSE
 #define DEFAULT_FADING_SIZE            FALSE
-#define DEFAULT_FADING_INVERSE_SIZE    FALSE
 #define DEFAULT_FADING_ASPECT_RATIO    FALSE
 #define DEFAULT_FADING_COLOR           FALSE
 #define DEFAULT_FADING_ANGLE           FALSE
-#define DEFAULT_FADING_PRESCALE        1.0
 
 #define DEFAULT_FADE_LENGTH            100.0
 
@@ -104,85 +90,54 @@ enum
 {
   PROP_0,
 
-  PROP_DYNAMICS_INFO,
-
-  PROP_DYNAMICS_EXPANDED,
-
   PROP_PRESSURE_OPACITY,
   PROP_PRESSURE_HARDNESS,
   PROP_PRESSURE_RATE,
   PROP_PRESSURE_SIZE,
-  PROP_PRESSURE_INVERSE_SIZE,
   PROP_PRESSURE_ASPECT_RATIO,
   PROP_PRESSURE_COLOR,
   PROP_PRESSURE_ANGLE,
-  PROP_PRESSURE_PRESCALE,
 
   PROP_VELOCITY_OPACITY,
   PROP_VELOCITY_HARDNESS,
   PROP_VELOCITY_RATE,
   PROP_VELOCITY_SIZE,
-  PROP_VELOCITY_INVERSE_SIZE,
   PROP_VELOCITY_ASPECT_RATIO,
   PROP_VELOCITY_COLOR,
   PROP_VELOCITY_ANGLE,
-  PROP_VELOCITY_PRESCALE,
 
   PROP_DIRECTION_OPACITY,
   PROP_DIRECTION_HARDNESS,
   PROP_DIRECTION_RATE,
   PROP_DIRECTION_SIZE,
-  PROP_DIRECTION_INVERSE_SIZE,
   PROP_DIRECTION_ASPECT_RATIO,
   PROP_DIRECTION_COLOR,
   PROP_DIRECTION_ANGLE,
-  PROP_DIRECTION_PRESCALE,
 
   PROP_TILT_OPACITY,
   PROP_TILT_HARDNESS,
   PROP_TILT_RATE,
   PROP_TILT_SIZE,
-  PROP_TILT_INVERSE_SIZE,
   PROP_TILT_ASPECT_RATIO,
   PROP_TILT_COLOR,
   PROP_TILT_ANGLE,
-  PROP_TILT_PRESCALE,
 
   PROP_RANDOM_OPACITY,
   PROP_RANDOM_HARDNESS,
   PROP_RANDOM_RATE,
   PROP_RANDOM_SIZE,
-  PROP_RANDOM_INVERSE_SIZE,
   PROP_RANDOM_ASPECT_RATIO,
   PROP_RANDOM_COLOR,
   PROP_RANDOM_ANGLE,
-  PROP_RANDOM_PRESCALE,
 
   PROP_FADING_OPACITY,
   PROP_FADING_HARDNESS,
   PROP_FADING_RATE,
   PROP_FADING_SIZE,
-  PROP_FADING_INVERSE_SIZE,
   PROP_FADING_ASPECT_RATIO,
   PROP_FADING_COLOR,
   PROP_FADING_ANGLE,
-  PROP_FADING_PRESCALE,
 };
-
-/*
-static gdouble gimp_dynamics_options_get_dynamics_mix (gdouble       mix1,
-                                                       gdouble       mix1_scale,
-                                                       gdouble       mix2,
-                                                       gdouble       mix2_scale,
-                                                       gdouble       mix3,
-                                                       gdouble       mix3_scale,
-                                                       gdouble       mix4,
-                                                       gdouble       mix4_scale,
-                                                       gdouble       mix5,
-                                                       gdouble       mix5_scale,
-                                                       gdouble       mix6,
-                                                       gdouble       mix6_scale);
-*/
 
 static void    gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass);
 
@@ -196,6 +151,7 @@ static void    gimp_dynamics_options_set_property     (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
+
 static void    gimp_dynamics_options_get_property     (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
@@ -223,13 +179,6 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
   object_class->get_property = gimp_dynamics_options_get_property;
   object_class->notify       = gimp_dynamics_options_notify;
 
-
-  g_object_class_install_property (object_class, PROP_DYNAMICS_INFO,
-                                   g_param_spec_object ("dynamics-info",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_PAINT_INFO,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ASPECT_RATIO,
                                     "random-aspect-ratio", NULL,
@@ -263,18 +212,10 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
                                     "pressure-angle", NULL,
                                     DEFAULT_PRESSURE_COLOR,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_INVERSE_SIZE,
-                                    "pressure-inverse-size", NULL,
-                                    DEFAULT_PRESSURE_INVERSE_SIZE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_ASPECT_RATIO,
                                     "pressure-aspect-ratio", NULL,
                                     DEFAULT_PRESSURE_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PRESSURE_PRESCALE,
-                                   "pressure-prescale", NULL,
-                                   0.0, 1.0, DEFAULT_PRESSURE_PRESCALE,
-                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_OPACITY,
                                     "velocity-opacity", NULL,
@@ -300,18 +241,10 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
                                     "velocity-angle", NULL,
                                     DEFAULT_VELOCITY_COLOR,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_INVERSE_SIZE,
-                                    "velocity-inverse-size", NULL,
-                                    DEFAULT_VELOCITY_INVERSE_SIZE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_ASPECT_RATIO,
                                     "velocity-aspect-ratio", NULL,
                                     DEFAULT_VELOCITY_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_VELOCITY_PRESCALE,
-                                   "velocity-prescale", NULL,
-                                   0.0, 1.0, DEFAULT_VELOCITY_PRESCALE,
-                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_OPACITY,
                                     "direction-opacity", NULL,
@@ -337,18 +270,10 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
                                     "direction-angle", NULL,
                                     DEFAULT_DIRECTION_ANGLE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_INVERSE_SIZE,
-                                    "direction-inverse-size", NULL,
-                                    DEFAULT_DIRECTION_INVERSE_SIZE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_ASPECT_RATIO,
                                     "direction-aspect-ratio", NULL,
                                     DEFAULT_DIRECTION_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DIRECTION_PRESCALE,
-                                   "direction-prescale", NULL,
-                                   0.0, 1.0, DEFAULT_DIRECTION_PRESCALE,
-                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT_OPACITY,
                                     "tilt-opacity", NULL,
@@ -374,18 +299,10 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
                                     "tilt-angle", NULL,
                                     DEFAULT_TILT_ANGLE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT_INVERSE_SIZE,
-                                    "tilt-inverse-size", NULL,
-                                    DEFAULT_TILT_INVERSE_SIZE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT_ASPECT_RATIO,
                                     "tilt-aspect-ratio", NULL,
                                     DEFAULT_TILT_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_PRESCALE,
-                                   "tilt-prescale", NULL,
-                                   0.0, 1.0, DEFAULT_TILT_PRESCALE,
-                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_OPACITY,
                                     "random-opacity", NULL,
@@ -411,14 +328,6 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
                                     "random-angle", NULL,
                                     DEFAULT_RANDOM_ANGLE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_INVERSE_SIZE,
-                                    "random-inverse-size", NULL,
-                                    DEFAULT_RANDOM_INVERSE_SIZE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RANDOM_PRESCALE,
-                                   "random-prescale", NULL,
-                                   0.0, 1.0, DEFAULT_RANDOM_PRESCALE,
-                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_OPACITY,
                                     "fading-opacity", NULL,
@@ -444,14 +353,7 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
                                     "fading-angle", NULL,
                                     DEFAULT_FADING_ANGLE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_INVERSE_SIZE,
-                                    "fading-inverse-size", NULL,
-                                    DEFAULT_FADING_INVERSE_SIZE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADING_PRESCALE,
-                                   "fading-prescale", NULL,
-                                   0.0, 1.0, DEFAULT_FADING_PRESCALE,
-                                   GIMP_PARAM_STATIC_STRINGS);
+
 }
 
 static void
@@ -909,16 +811,12 @@ gimp_dynamics_options_notify (GObject    *object,
 }
 
 GimpData *
-gimp_dynamics_options_new (GimpPaintInfo *paint_info)
+gimp_dynamics_options_new (GString *name)
 {
   GimpDynamicsOptions *options;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), NULL);
-
   options = g_object_new (GIMP_TYPE_DYNAMICS_OPTIONS,
-                          "gimp",       paint_info->gimp,
-                          "name",       GIMP_OBJECT (paint_info)->name,
-  //                        "paint-info", paint_info,
+                          "name",       name,
                           NULL);
 
   return options;
