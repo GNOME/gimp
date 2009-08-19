@@ -153,7 +153,7 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
                   GIMP_TYPE_BRUSH);
 
   core_signals[SET_DYNAMICS] =
-    g_signal_new ("set-brush",
+    g_signal_new ("set-dynamics",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpBrushCoreClass, set_dynamics),
@@ -173,6 +173,7 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
   klass->handles_changing_brush     = FALSE;
   klass->handles_transforming_brush = TRUE;
   klass->set_brush                  = gimp_brush_core_real_set_brush;
+  klass->set_dynamics               = gimp_brush_core_real_set_dynamics;
 }
 
 static void
@@ -740,9 +741,11 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-      core->scale = paint_options->brush_scale; /*gimp_paint_options_get_dynamic_size (paint_options, coords,
-                                                         TRUE,
-                                                         paint_core->pixel_dist);*/
+      core->scale = paint_options->brush_scale;
+      if (core->dynamics)
+      {
+        core->scale *= gimp_dynamics_options_get_output_val(core->dynamics->size_dynamics, coords);
+      }
 
       core->angle = paint_options->brush_angle; /* gimp_paint_options_get_dynamic_angle (paint_options, coords,
                                                           paint_core->pixel_dist);*/

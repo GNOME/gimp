@@ -19,7 +19,6 @@
 #define __GIMP_DYNAMICS_OPTIONS_H__
 
 
-//#include "core/gimptooloptions.h"
 #include "gimppaintoptions.h"
 #include "core/gimpdata.h"
 
@@ -86,5 +85,7 @@ GType              gimp_dynamics_options_get_type (void) G_GNUC_CONST;
 GimpData           * gimp_dynamics_options_new   (const gchar *name);
 
 GimpData           * gimp_dynamics_get_standard     (void);
+
+gdouble            gimp_dynamics_options_get_output_val (GimpDynamicOutputOptions *output, GimpCoords *coords);
 
 #endif  /*  __GIMP_DYNAMICS_OPTIONS_H__  */

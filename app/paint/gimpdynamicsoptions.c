@@ -915,6 +915,12 @@ gimp_dynamics_get_standard (void)
   return standard_dynamics;
 }
 
+gdouble
+gimp_dynamics_options_get_output_val (GimpDynamicOutputOptions *output, GimpCoords *coords)
+{
+  printf("Dynamics queried...");
+  return 1;
+}
 
 /* Calculates dynamics mix to be used for same parameter
  * (velocity/pressure/direction/tilt/random) mix Needed in may places and tools.
