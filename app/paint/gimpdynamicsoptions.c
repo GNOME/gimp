@@ -457,14 +457,15 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
 static void
 gimp_dynamics_options_init (GimpDynamicsOptions *options)
 {
-  //options->application_mode_save = DEFAULT_APPLICATION_MODE;
 
-  options->pressure_options  = g_slice_new0 (GimpDynamicOptions);
-  options->velocity_options  = g_slice_new0 (GimpDynamicOptions);
-  options->direction_options = g_slice_new0 (GimpDynamicOptions);
-  options->tilt_options      = g_slice_new0 (GimpDynamicOptions);
-  options->random_options    = g_slice_new0 (GimpDynamicOptions);
-  options->fading_options    = g_slice_new0 (GimpDynamicOptions);
+  options->opacity_dynamics      = g_slice_new0 (GimpDynamicOutputOptions);
+  options->hardness_dynamics     = g_slice_new0 (GimpDynamicOutputOptions);
+  options->rate_dynamics         = g_slice_new0 (GimpDynamicOutputOptions);
+  options->size_dynamics         = g_slice_new0 (GimpDynamicOutputOptions);
+  options->aspect_ratio_dynamics = g_slice_new0 (GimpDynamicOutputOptions);
+  options->color_dynamics        = g_slice_new0 (GimpDynamicOutputOptions);
+  options->angle_dynamics        = g_slice_new0 (GimpDynamicOutputOptions);
+
 }
 
 
@@ -473,16 +474,14 @@ gimp_dynamics_options_finalize (GObject *object)
 {
   GimpDynamicsOptions *options = GIMP_DYNAMICS_OPTIONS (object);
 
+  g_slice_free (GimpDynamicOutputOptions,  options->opacity_dynamics);
+  g_slice_free (GimpDynamicOutputOptions,  options->hardness_dynamics);
+  g_slice_free (GimpDynamicOutputOptions,  options->rate_dynamics);
+  g_slice_free (GimpDynamicOutputOptions,  options->size_dynamics);
+  g_slice_free (GimpDynamicOutputOptions,  options->aspect_ratio_dynamics);
+  g_slice_free (GimpDynamicOutputOptions,  options->color_dynamics);
+  g_slice_free (GimpDynamicOutputOptions,  options->angle_dynamics);
 
-  if (options->dynamics_info)
-    g_object_unref (options->dynamics_info);
-
-  g_slice_free (GimpDynamicOptions,  options->pressure_options);
-  g_slice_free (GimpDynamicOptions,  options->velocity_options);
-  g_slice_free (GimpDynamicOptions,  options->direction_options);
-  g_slice_free (GimpDynamicOptions,  options->tilt_options);
-  g_slice_free (GimpDynamicOptions,  options->random_options);
-  g_slice_free (GimpDynamicOptions,  options->fading_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -494,234 +493,187 @@ gimp_dynamics_options_set_property (GObject      *object,
                                     GParamSpec   *pspec)
 {
   GimpDynamicsOptions *options           = GIMP_DYNAMICS_OPTIONS (object);
-  GimpDynamicOptions  *pressure_options  = options->pressure_options;
-  GimpDynamicOptions  *velocity_options  = options->velocity_options;
-  GimpDynamicOptions  *direction_options = options->direction_options;
-  GimpDynamicOptions  *tilt_options      = options->tilt_options;
-  GimpDynamicOptions  *random_options    = options->random_options;
-  GimpDynamicOptions  *fading_options    = options->fading_options;
+
+  GimpDynamicOutputOptions *opacity_dynamics      = options->opacity_dynamics;
+  GimpDynamicOutputOptions *hardness_dynamics     = options->hardness_dynamics;
+  GimpDynamicOutputOptions *rate_dynamics         = options->rate_dynamics;
+  GimpDynamicOutputOptions *size_dynamics         = options->size_dynamics;
+  GimpDynamicOutputOptions *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
+  GimpDynamicOutputOptions *color_dynamics        = options->color_dynamics;
+  GimpDynamicOutputOptions *angle_dynamics        = options->angle_dynamics;
 
   switch (property_id)
     {
 
-    case PROP_DYNAMICS_INFO:
-      g_value_set_object (value, options->dynamics_info);
-      break;
 
     case PROP_PRESSURE_OPACITY:
-      pressure_options->opacity = g_value_get_boolean (value);
+      opacity_dynamics->pressure = g_value_get_boolean (value);
       break;
 
     case PROP_PRESSURE_HARDNESS:
-      pressure_options->hardness = g_value_get_boolean (value);
+      hardness_dynamics->pressure = g_value_get_boolean (value);
       break;
 
     case PROP_PRESSURE_RATE:
-      pressure_options->rate = g_value_get_boolean (value);
+      rate_dynamics->pressure = g_value_get_boolean (value);
       break;
 
     case PROP_PRESSURE_SIZE:
-      pressure_options->size = g_value_get_boolean (value);
-      break;
-
-    case PROP_PRESSURE_INVERSE_SIZE:
-      pressure_options->inverse_size = g_value_get_boolean (value);
+      size_dynamics->pressure = g_value_get_boolean (value);
       break;
 
     case PROP_PRESSURE_ASPECT_RATIO:
-      pressure_options->aspect_ratio = g_value_get_boolean (value);
+      aspect_ratio_dynamics->pressure = g_value_get_boolean (value);
       break;
 
     case PROP_PRESSURE_COLOR:
-      pressure_options->color = g_value_get_boolean (value);
+      color_dynamics->pressure = g_value_get_boolean (value);
       break;
 
     case PROP_PRESSURE_ANGLE:
-      pressure_options->angle = g_value_get_boolean (value);
-      break;
-
-    case PROP_PRESSURE_PRESCALE:
-      pressure_options->prescale = g_value_get_double (value);
+      angle_dynamics->pressure = g_value_get_boolean (value);
       break;
 
     case PROP_VELOCITY_OPACITY:
-      velocity_options->opacity = g_value_get_boolean (value);
+      opacity_dynamics->velocity = g_value_get_boolean (value);
       break;
 
     case PROP_VELOCITY_HARDNESS:
-      velocity_options->hardness = g_value_get_boolean (value);
+      hardness_dynamics->velocity = g_value_get_boolean (value);
       break;
 
     case PROP_VELOCITY_RATE:
-      velocity_options->rate = g_value_get_boolean (value);
+      rate_dynamics->velocity = g_value_get_boolean (value);
       break;
 
     case PROP_VELOCITY_SIZE:
-      velocity_options->size = g_value_get_boolean (value);
-      break;
-
-    case PROP_VELOCITY_INVERSE_SIZE:
-      velocity_options->inverse_size = g_value_get_boolean (value);
+      size_dynamics->velocity = g_value_get_boolean (value);
       break;
 
     case PROP_VELOCITY_ASPECT_RATIO:
-      velocity_options->aspect_ratio = g_value_get_boolean (value);
+      aspect_ratio_dynamics->velocity = g_value_get_boolean (value);
       break;
 
     case PROP_VELOCITY_COLOR:
-      velocity_options->color = g_value_get_boolean (value);
+      color_dynamics->velocity = g_value_get_boolean (value);
       break;
 
     case PROP_VELOCITY_ANGLE:
-      velocity_options->angle = g_value_get_boolean (value);
-      break;
-
-    case PROP_VELOCITY_PRESCALE:
-      velocity_options->prescale = g_value_get_double (value);
+      angle_dynamics->velocity = g_value_get_boolean (value);
       break;
 
     case PROP_DIRECTION_OPACITY:
-      direction_options->opacity = g_value_get_boolean (value);
+      opacity_dynamics->direction = g_value_get_boolean (value);
       break;
 
     case PROP_DIRECTION_HARDNESS:
-      direction_options->hardness = g_value_get_boolean (value);
+      hardness_dynamics->direction = g_value_get_boolean (value);
       break;
 
     case PROP_DIRECTION_RATE:
-      direction_options->rate = g_value_get_boolean (value);
+      rate_dynamics->direction = g_value_get_boolean (value);
       break;
 
     case PROP_DIRECTION_SIZE:
-      direction_options->size = g_value_get_boolean (value);
-      break;
-
-    case PROP_DIRECTION_INVERSE_SIZE:
-      direction_options->inverse_size = g_value_get_boolean (value);
+      size_dynamics->direction = g_value_get_boolean (value);
       break;
 
     case PROP_DIRECTION_ASPECT_RATIO:
-      direction_options->aspect_ratio = g_value_get_boolean (value);
+      aspect_ratio_dynamics->direction = g_value_get_boolean (value);
       break;
 
     case PROP_DIRECTION_COLOR:
-      direction_options->color = g_value_get_boolean (value);
+      color_dynamics->direction = g_value_get_boolean (value);
       break;
 
     case PROP_DIRECTION_ANGLE:
-      direction_options->angle = g_value_get_boolean (value);
-      break;
-
-    case PROP_DIRECTION_PRESCALE:
-      direction_options->prescale = g_value_get_double (value);
+      angle_dynamics->direction = g_value_get_boolean (value);
       break;
 
     case PROP_TILT_OPACITY:
-      tilt_options->opacity = g_value_get_boolean (value);
+      opacity_dynamics->tilt = g_value_get_boolean (value);
       break;
 
     case PROP_TILT_HARDNESS:
-      tilt_options->hardness = g_value_get_boolean (value);
+      hardness_dynamics->tilt = g_value_get_boolean (value);
       break;
 
     case PROP_TILT_RATE:
-      tilt_options->rate = g_value_get_boolean (value);
+      rate_dynamics->tilt = g_value_get_boolean (value);
       break;
 
     case PROP_TILT_SIZE:
-      tilt_options->size = g_value_get_boolean (value);
-      break;
-
-    case PROP_TILT_INVERSE_SIZE:
-      tilt_options->inverse_size = g_value_get_boolean (value);
+      size_dynamics->tilt = g_value_get_boolean (value);
       break;
 
     case PROP_TILT_ASPECT_RATIO:
-      tilt_options->aspect_ratio = g_value_get_boolean (value);
+      aspect_ratio_dynamics->tilt = g_value_get_boolean (value);
       break;
 
     case PROP_TILT_COLOR:
-      tilt_options->color = g_value_get_boolean (value);
+      color_dynamics->tilt = g_value_get_boolean (value);
       break;
 
     case PROP_TILT_ANGLE:
-      tilt_options->angle = g_value_get_boolean (value);
-      break;
-
-    case PROP_TILT_PRESCALE:
-      tilt_options->prescale = g_value_get_double (value);
+      angle_dynamics->tilt = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_OPACITY:
-      random_options->opacity = g_value_get_boolean (value);
+      opacity_dynamics->random = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_HARDNESS:
-      random_options->hardness = g_value_get_boolean (value);
+      hardness_dynamics->random = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_RATE:
-      random_options->rate = g_value_get_boolean (value);
+      rate_dynamics->random = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_SIZE:
-      random_options->size = g_value_get_boolean (value);
-      break;
-
-    case PROP_RANDOM_INVERSE_SIZE:
-      random_options->inverse_size = g_value_get_boolean (value);
+      size_dynamics->random = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_ASPECT_RATIO:
-      random_options->aspect_ratio = g_value_get_boolean (value);
+      aspect_ratio_dynamics->random = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_COLOR:
-      random_options->color = g_value_get_boolean (value);
+      color_dynamics->random = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_ANGLE:
-      random_options->angle = g_value_get_boolean (value);
+      angle_dynamics->random = g_value_get_boolean (value);
       break;
 
-    case PROP_RANDOM_PRESCALE:
-      random_options->prescale = g_value_get_double (value);
-      break;
+
 /*Fading*/
     case PROP_FADING_OPACITY:
-      fading_options->opacity = g_value_get_boolean (value);
+      opacity_dynamics->fade = g_value_get_boolean (value);
       break;
 
     case PROP_FADING_HARDNESS:
-      fading_options->hardness = g_value_get_boolean (value);
+      hardness_dynamics->fade = g_value_get_boolean (value);
       break;
 
     case PROP_FADING_RATE:
-      fading_options->rate = g_value_get_boolean (value);
+      rate_dynamics->fade = g_value_get_boolean (value);
       break;
 
     case PROP_FADING_SIZE:
-      fading_options->size = g_value_get_boolean (value);
-      break;
-
-    case PROP_FADING_INVERSE_SIZE:
-      fading_options->inverse_size = g_value_get_boolean (value);
+      size_dynamics->fade = g_value_get_boolean (value);
       break;
 
     case PROP_FADING_ASPECT_RATIO:
-      fading_options->aspect_ratio = g_value_get_boolean (value);
+      aspect_ratio_dynamics->fade = g_value_get_boolean (value);
       break;
 
     case PROP_FADING_COLOR:
-      fading_options->color = g_value_get_boolean (value);
+      color_dynamics->fade = g_value_get_boolean (value);
       break;
 
     case PROP_FADING_ANGLE:
-      fading_options->angle = g_value_get_boolean (value);
-      break;
-
-    case PROP_FADING_PRESCALE:
-      fading_options->prescale = g_value_get_double (value);
+      angle_dynamics->fade = g_value_get_boolean (value);
       break;
 
     default:
@@ -739,236 +691,186 @@ gimp_dynamics_options_get_property (GObject    *object,
                                  GParamSpec *pspec)
 {
   GimpDynamicsOptions *options           = GIMP_DYNAMICS_OPTIONS (object);
-  GimpDynamicOptions  *pressure_options  = options->pressure_options;
-  GimpDynamicOptions  *velocity_options  = options->velocity_options;
-  GimpDynamicOptions  *direction_options = options->direction_options;
-  GimpDynamicOptions  *tilt_options      = options->tilt_options;
-  GimpDynamicOptions  *random_options    = options->random_options;
-  GimpDynamicOptions  *fading_options    = options->fading_options;
+  GimpDynamicOutputOptions *opacity_dynamics      = options->opacity_dynamics;
+  GimpDynamicOutputOptions *hardness_dynamics     = options->hardness_dynamics;
+  GimpDynamicOutputOptions *rate_dynamics         = options->rate_dynamics;
+  GimpDynamicOutputOptions *size_dynamics         = options->size_dynamics;
+  GimpDynamicOutputOptions *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
+  GimpDynamicOutputOptions *color_dynamics        = options->color_dynamics;
+  GimpDynamicOutputOptions *angle_dynamics        = options->angle_dynamics;
 
   switch (property_id)
     {
-    case PROP_DYNAMICS_INFO:
-      g_value_set_object (value, options->dynamics_info);
-      break;
 
     case PROP_PRESSURE_OPACITY:
-      g_value_set_boolean (value, pressure_options->opacity);
+      g_value_set_boolean (value, opacity_dynamics->pressure);
       break;
 
     case PROP_PRESSURE_HARDNESS:
-      g_value_set_boolean (value, pressure_options->hardness);
+      g_value_set_boolean (value, hardness_dynamics->pressure);
       break;
 
     case PROP_PRESSURE_RATE:
-      g_value_set_boolean (value, pressure_options->rate);
+      g_value_set_boolean (value, rate_dynamics->pressure);
       break;
 
     case PROP_PRESSURE_SIZE:
-      g_value_set_boolean (value, pressure_options->size);
-      break;
-
-    case PROP_PRESSURE_INVERSE_SIZE:
-      g_value_set_boolean (value, pressure_options->inverse_size);
+      g_value_set_boolean (value, size_dynamics->pressure);
       break;
 
     case PROP_PRESSURE_ASPECT_RATIO:
-      g_value_set_boolean (value, pressure_options->aspect_ratio);
+      g_value_set_boolean (value, aspect_ratio_dynamics->pressure);
       break;
 
     case PROP_PRESSURE_COLOR:
-      g_value_set_boolean (value, pressure_options->color);
+      g_value_set_boolean (value, color_dynamics->pressure);
       break;
 
     case PROP_PRESSURE_ANGLE:
-      g_value_set_boolean (value, pressure_options->angle);
-      break;
-
-    case PROP_PRESSURE_PRESCALE:
-      g_value_set_double (value, pressure_options->prescale);
+      g_value_set_boolean (value, angle_dynamics->pressure);
       break;
 
     case PROP_VELOCITY_OPACITY:
-      g_value_set_boolean (value, velocity_options->opacity);
+      g_value_set_boolean (value, opacity_dynamics->velocity);
       break;
 
     case PROP_VELOCITY_HARDNESS:
-      g_value_set_boolean (value, velocity_options->hardness);
+      g_value_set_boolean (value, hardness_dynamics->velocity);
       break;
 
     case PROP_VELOCITY_RATE:
-      g_value_set_boolean (value, velocity_options->rate);
+      g_value_set_boolean (value, rate_dynamics->velocity);
       break;
 
     case PROP_VELOCITY_SIZE:
-      g_value_set_boolean (value, velocity_options->size);
-      break;
-
-    case PROP_VELOCITY_INVERSE_SIZE:
-      g_value_set_boolean (value, velocity_options->inverse_size);
+      g_value_set_boolean (value, size_dynamics->velocity);
       break;
 
     case PROP_VELOCITY_ASPECT_RATIO:
-      g_value_set_boolean (value, velocity_options->aspect_ratio);
+      g_value_set_boolean (value, aspect_ratio_dynamics->velocity);
       break;
 
     case PROP_VELOCITY_COLOR:
-      g_value_set_boolean (value, velocity_options->color);
+      g_value_set_boolean (value, color_dynamics->velocity);
       break;
 
     case PROP_VELOCITY_ANGLE:
-      g_value_set_boolean (value, velocity_options->angle);
-      break;
-
-    case PROP_VELOCITY_PRESCALE:
-      g_value_set_double (value, velocity_options->prescale);
+      g_value_set_boolean (value, angle_dynamics->velocity);
       break;
 
     case PROP_DIRECTION_OPACITY:
-      g_value_set_boolean (value, direction_options->opacity);
+      g_value_set_boolean (value, opacity_dynamics->direction);
       break;
 
     case PROP_DIRECTION_HARDNESS:
-      g_value_set_boolean (value, direction_options->hardness);
+      g_value_set_boolean (value, hardness_dynamics->direction);
       break;
 
     case PROP_DIRECTION_RATE:
-      g_value_set_boolean (value, direction_options->rate);
+      g_value_set_boolean (value, rate_dynamics->direction);
       break;
 
     case PROP_DIRECTION_SIZE:
-      g_value_set_boolean (value, direction_options->size);
-      break;
-
-    case PROP_DIRECTION_INVERSE_SIZE:
-      g_value_set_boolean (value, direction_options->inverse_size);
+      g_value_set_boolean (value, size_dynamics->direction);
       break;
 
     case PROP_DIRECTION_ASPECT_RATIO:
-      g_value_set_boolean (value, direction_options->aspect_ratio);
+      g_value_set_boolean (value, aspect_ratio_dynamics->direction);
       break;
 
     case PROP_DIRECTION_COLOR:
-      g_value_set_boolean (value, direction_options->color);
+      g_value_set_boolean (value, color_dynamics->direction);
       break;
 
     case PROP_DIRECTION_ANGLE:
-      g_value_set_boolean (value, direction_options->angle);
-      break;
-
-    case PROP_DIRECTION_PRESCALE:
-      g_value_set_double (value, direction_options->prescale);
+      g_value_set_boolean (value, angle_dynamics->direction);
       break;
 
 
     case PROP_TILT_OPACITY:
-      g_value_set_boolean (value, tilt_options->opacity);
+      g_value_set_boolean (value, opacity_dynamics->tilt);
       break;
 
     case PROP_TILT_HARDNESS:
-      g_value_set_boolean (value, tilt_options->hardness);
+      g_value_set_boolean (value, hardness_dynamics->tilt);
       break;
 
     case PROP_TILT_RATE:
-      g_value_set_boolean (value, tilt_options->rate);
+      g_value_set_boolean (value, rate_dynamics->tilt);
       break;
 
     case PROP_TILT_SIZE:
-      g_value_set_boolean (value, tilt_options->size);
-      break;
-
-    case PROP_TILT_INVERSE_SIZE:
-      g_value_set_boolean (value, tilt_options->inverse_size);
+      g_value_set_boolean (value, size_dynamics->tilt);
       break;
 
     case PROP_TILT_ASPECT_RATIO:
-      g_value_set_boolean (value, tilt_options->aspect_ratio);
+      g_value_set_boolean (value, aspect_ratio_dynamics->tilt);
       break;
 
     case PROP_TILT_COLOR:
-      g_value_set_boolean (value, tilt_options->color);
+      g_value_set_boolean (value, color_dynamics->tilt);
       break;
 
     case PROP_TILT_ANGLE:
-      g_value_set_boolean (value, tilt_options->angle);
-      break;
-
-    case PROP_TILT_PRESCALE:
-      g_value_set_double (value, tilt_options->prescale);
+      g_value_set_boolean (value, angle_dynamics->tilt);
       break;
 
     case PROP_RANDOM_OPACITY:
-      g_value_set_boolean (value, random_options->opacity);
+      g_value_set_boolean (value, opacity_dynamics->random);
       break;
 
     case PROP_RANDOM_HARDNESS:
-      g_value_set_boolean (value, random_options->hardness);
+      g_value_set_boolean (value, hardness_dynamics->random);
       break;
 
     case PROP_RANDOM_RATE:
-      g_value_set_boolean (value, random_options->rate);
+      g_value_set_boolean (value, rate_dynamics->random);
       break;
 
     case PROP_RANDOM_SIZE:
-      g_value_set_boolean (value, random_options->size);
-      break;
-
-    case PROP_RANDOM_INVERSE_SIZE:
-      g_value_set_boolean (value, random_options->inverse_size);
+      g_value_set_boolean (value, size_dynamics->random);
       break;
 
     case PROP_RANDOM_ASPECT_RATIO:
-      g_value_set_boolean (value, random_options->aspect_ratio);
+      g_value_set_boolean (value, aspect_ratio_dynamics->random);
       break;
 
     case PROP_RANDOM_COLOR:
-      g_value_set_boolean (value, random_options->color);
+      g_value_set_boolean (value, color_dynamics->random);
       break;
 
     case PROP_RANDOM_ANGLE:
-      g_value_set_boolean (value, random_options->angle);
-      break;
-
-    case PROP_RANDOM_PRESCALE:
-      g_value_set_double (value, random_options->prescale);
+      g_value_set_boolean (value, angle_dynamics->random);
       break;
 
 /*fading*/
 
     case PROP_FADING_OPACITY:
-      g_value_set_boolean (value, fading_options->opacity);
+      g_value_set_boolean (value, opacity_dynamics->fade);
       break;
 
     case PROP_FADING_HARDNESS:
-      g_value_set_boolean (value, fading_options->hardness);
+      g_value_set_boolean (value, hardness_dynamics->fade);
       break;
 
     case PROP_FADING_RATE:
-      g_value_set_boolean (value, fading_options->rate);
+      g_value_set_boolean (value, rate_dynamics->fade);
       break;
 
     case PROP_FADING_SIZE:
-      g_value_set_boolean (value, fading_options->size);
-      break;
-
-    case PROP_FADING_INVERSE_SIZE:
-      g_value_set_boolean (value, fading_options->inverse_size);
+      g_value_set_boolean (value, size_dynamics->fade);
       break;
 
     case PROP_FADING_ASPECT_RATIO:
-      g_value_set_boolean (value, fading_options->aspect_ratio);
+      g_value_set_boolean (value, aspect_ratio_dynamics->fade);
       break;
 
     case PROP_FADING_COLOR:
-      g_value_set_boolean (value, fading_options->color);
+      g_value_set_boolean (value, color_dynamics->fade);
       break;
 
     case PROP_FADING_ANGLE:
-      g_value_set_boolean (value, fading_options->angle);
-      break;
-
-    case PROP_FADING_PRESCALE:
-      g_value_set_double (value, fading_options->prescale);
+      g_value_set_boolean (value, angle_dynamics->fade);
       break;
 
     default:
@@ -1002,21 +904,21 @@ gimp_dynamics_options_notify (GObject    *object,
 
   if (G_OBJECT_CLASS (parent_class)->notify)
     G_OBJECT_CLASS (parent_class)->notify (object, pspec);
-	 */
-	
+    */
+
 }
 
 GimpData *
-gimp_dynamics_options_new (GimpPaintInfo *dynamics_info)
+gimp_dynamics_options_new (GimpPaintInfo *paint_info)
 {
   GimpDynamicsOptions *options;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_INFO (dynamics_info), NULL);
+  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), NULL);
 
-  options = g_object_new (dynamics_info->paint_options_type,
-                          "gimp",       dynamics_info->gimp,
-                          "name",       GIMP_OBJECT (dynamics_info)->name,
-                          "paint-info", dynamics_info,
+  options = g_object_new (GIMP_TYPE_DYNAMICS_OPTIONS,
+                          "gimp",       paint_info->gimp,
+                          "name",       GIMP_OBJECT (paint_info)->name,
+  //                        "paint-info", paint_info,
                           NULL);
 
   return options;

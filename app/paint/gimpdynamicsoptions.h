@@ -23,23 +23,8 @@
 #include "gimppaintoptions.h"
 #include "core/gimpdata.h"
 
-#define GIMP_DYNAMICS_DRIVERS 6
+typedef struct _GimpDynamicOutputOptions  GimpDynamicOutputOptions;
 
-typedef struct _GimpDynamicOptions  GimpDynamicOptions;
-
-
-struct _GimpDynamicOptions
-{
-  gboolean  opacity;
-  gboolean  hardness;
-  gboolean  rate;
-  gboolean  size;
-  gboolean  inverse_size;
-  gboolean  aspect_ratio;
-  gboolean  color;
-  gboolean  angle;
-  gdouble   prescale;
-};
 
 struct _GimpDynamicOutputOptions
 {
@@ -76,16 +61,16 @@ typedef struct _GimpDynamicsOptionsClass GimpDynamicsOptionsClass;
 
 struct _GimpDynamicsOptions
 {
-  GimpPaintOptions          parent_instance;
+   GimpDataClass          parent_instance;
 
-  GimpPaintInfo            *dynamics_info;
+  GimpDynamicOutputOptions*  opacity_dynamics;
+  GimpDynamicOutputOptions*  hardness_dynamics;
+  GimpDynamicOutputOptions*  rate_dynamics;
+  GimpDynamicOutputOptions*  size_dynamics;
+  GimpDynamicOutputOptions*  aspect_ratio_dynamics;
+  GimpDynamicOutputOptions*  color_dynamics;
+  GimpDynamicOutputOptions*  angle_dynamics;
 
-  GimpDynamicOptions       *pressure_options;
-  GimpDynamicOptions       *velocity_options;
-  GimpDynamicOptions       *direction_options;
-  GimpDynamicOptions       *tilt_options;
-  GimpDynamicOptions       *random_options;
-  GimpDynamicOptions       *fading_options;
 };
 
 struct _GimpDynamicsOptionsClass
@@ -96,7 +81,7 @@ struct _GimpDynamicsOptionsClass
 
 GType              gimp_dynamics_options_get_type (void) G_GNUC_CONST;
 
-GimpData           * gimp_dynamics_options_new   (GimpPaintInfo    *dynamics_info);
+GimpData           * gimp_dynamics_options_new   (GimpPaintInfo    *paint_info);
 
 GimpData           * gimp_dynamics_get_standard     (void);
 
