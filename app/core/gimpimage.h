@@ -553,6 +553,7 @@ gboolean        gimp_image_reorder_vectors       (GimpImage          *image,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
+
 gboolean        gimp_image_layer_boundary        (const GimpImage    *image,
                                                   BoundSeg          **segs,
                                                   gint               *n_segs);
