@@ -2487,7 +2487,7 @@ gimp_context_real_set_brush (GimpContext *context,
 /*  dynamics *****************************************************************/
 
 
-GimpDynamicsOptions *
+GimpDynamics *
 gimp_context_get_dynamics (GimpContext *context)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -2497,7 +2497,7 @@ gimp_context_get_dynamics (GimpContext *context)
 
 void
 gimp_context_set_dynamics (GimpContext           *context,
-                           GimpDynamicsOptions   *dynamics)
+                           GimpDynamics          *dynamics)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (! dynamics || GIMP_IS_DYNAMICS (dynamics));
@@ -2547,10 +2547,10 @@ static void gimp_context_dynamics_list_thaw  (GimpContainer    *container,
                                               GimpContext      *context)
 {
   GimpDynamicsOptions *dynamics;
-/*
+  /*
   if (! context->dynamics_name)
     context->dynamics_name = g_strdup (context->gimp->config->default_dynamics);
-*/
+  */
   dynamics = gimp_context_find_object (context, container,
                                     context->dynamics_name,
                                     gimp_dynamics_get_standard ());

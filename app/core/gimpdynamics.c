@@ -149,16 +149,16 @@ static void    gimp_dynamics_notify           (GObject      *object,
                                                        GParamSpec   *pspec);
 
 static void    gimp_dynamics_set_property     (GObject      *object,
-                                                       guint         property_id,
-                                                       const GValue *value,
-                                                       GParamSpec   *pspec);
+                                               guint         property_id,
+                                               const GValue *value,
+                                               GParamSpec   *pspec);
 
 static void    gimp_dynamics_get_property     (GObject      *object,
-                                                       guint         property_id,
-                                                       GValue       *value,
-                                                       GParamSpec   *pspec);
+                                               guint         property_id,
+                                               GValue       *value,
+                                               GParamSpec   *pspec);
 
-static void    gimp_dynamics_output_init      (GimpDynamicsOutput *dynamics);
+static GimpDynamicsOutput* gimp_dynamics_output_init ();
 
 static void    gimp_dynamics_output_finalize  (GimpDynamicsOutput *dynamics);
 
@@ -185,15 +185,6 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   object_class->get_property = gimp_dynamics_get_property;
   object_class->notify       = gimp_dynamics_notify;
 
-
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ASPECT_RATIO,
-                                    "random-aspect-ratio", NULL,
-                                    DEFAULT_RANDOM_ASPECT_RATIO,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_ASPECT_RATIO,
-                                    "fading-aspect-ratio", NULL,
-                                    DEFAULT_FADING_ASPECT_RATIO,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
                                     DEFAULT_PRESSURE_OPACITY,
@@ -334,6 +325,10 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                     "random-angle", NULL,
                                     DEFAULT_RANDOM_ANGLE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ASPECT_RATIO,
+                                    "random-aspect-ratio", NULL,
+                                    DEFAULT_RANDOM_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_OPACITY,
                                     "fading-opacity", NULL,
@@ -359,25 +354,29 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                     "fading-angle", NULL,
                                     DEFAULT_FADING_ANGLE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_ASPECT_RATIO,
+                                    "fading-aspect-ratio", NULL,
+                                    DEFAULT_FADING_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
 }
 
 static void
 gimp_dynamics_init (GimpDynamics *options)
 {
-  gimp_dynamics_output_init(options->opacity_dynamics);
+  options->opacity_dynamics      = gimp_dynamics_output_init();
 
-  gimp_dynamics_output_init(options->hardness_dynamics);
+  options->hardness_dynamics     = gimp_dynamics_output_init();
 
-  gimp_dynamics_output_init(options->rate_dynamics);
+  options->rate_dynamics         = gimp_dynamics_output_init();
 
-  gimp_dynamics_output_init(options->size_dynamics);
+  options->size_dynamics         = gimp_dynamics_output_init();
 
-  gimp_dynamics_output_init(options->aspect_ratio_dynamics);
+  options->aspect_ratio_dynamics = gimp_dynamics_output_init();
 
-  gimp_dynamics_output_init(options->color_dynamics);
+  options->color_dynamics        = gimp_dynamics_output_init();
 
-  gimp_dynamics_output_init(options->angle_dynamics);
+  options->angle_dynamics        = gimp_dynamics_output_init();
 
 }
 
@@ -401,14 +400,13 @@ gimp_dynamics_finalize (GObject *object)
 
   gimp_dynamics_output_finalize   (options->angle_dynamics);
 
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
-gimp_dynamics_output_init      (GimpDynamicsOutput *dynamics)
+static GimpDynamicsOutput*
+gimp_dynamics_output_init()
 {
-  dynamics = g_slice_new0 (GimpDynamicsOutput);
+  GimpDynamicsOutput * dynamics = g_slice_new0 (GimpDynamicsOutput);
 
   dynamics->pressure_curve = g_object_new (GIMP_TYPE_CURVE,
                              "name",       "Pressure curve",
@@ -428,6 +426,7 @@ gimp_dynamics_output_init      (GimpDynamicsOutput *dynamics)
   dynamics->fade_curve      = g_object_new (GIMP_TYPE_CURVE,
                               "name",       "Fade curve",
                               NULL);
+  return dynamics;
 }
 
 static void
@@ -468,7 +467,6 @@ gimp_dynamics_set_property (GObject      *object,
 
   switch (property_id)
     {
-
 
     case PROP_PRESSURE_OPACITY:
       opacity_dynamics->pressure = g_value_get_boolean (value);
@@ -907,7 +905,7 @@ gimp_dynamics_get_standard (void)
 gdouble
 gimp_dynamics_get_output_val (GimpDynamicsOutput *output, GimpCoords *coords)
 {
-  printf("Dynamics queried...");
+  printf("Dynamics queried...\n");
   return 1;
 }
 

@@ -114,7 +114,7 @@ struct _GimpContextClass
   void (* brush_changed)      (GimpContext          *context,
                                GimpBrush            *brush);
   void (* dynamics_changed)   (GimpContext          *context,
-                               GimpDynamicsOptions  *dynamics);
+                               GimpDynamics         *dynamics);
   void (* pattern_changed)    (GimpContext          *context,
                                GimpPattern          *pattern);
   void (* gradient_changed)   (GimpContext          *context,
@@ -263,9 +263,9 @@ void            gimp_context_set_brush          (GimpContext     *context,
 void            gimp_context_brush_changed      (GimpContext     *context);
 
 /*  dynamics  */
-GimpDynamicsOptions * gimp_context_get_dynamics (GimpContext     *context);
+GimpDynamics  * gimp_context_get_dynamics       (GimpContext     *context);
 void            gimp_context_set_dynamics       (GimpContext     *context,
-                                                 GimpDynamicsOptions *dynamics);
+                                                 GimpDynamics    *dynamics);
 void            gimp_context_dynamics_changed   (GimpContext     *context);
 
 
