@@ -172,7 +172,7 @@ static void gimp_context_dynamics_list_thaw  (GimpContainer    *container,
                                               GimpContext      *context);
 static void gimp_context_real_set_dynamics   (GimpContext      *context,
                                               GimpDynamicsOptions  *dynamics);
-											  
+
 /*  pattern  */
 static void gimp_context_pattern_dirty       (GimpPattern      *pattern,
                                               GimpContext      *context);
@@ -281,7 +281,6 @@ enum
   OPACITY_CHANGED,
   PAINT_MODE_CHANGED,
   BRUSH_CHANGED,
-  DYNAMICS_CHANGED,
   PATTERN_CHANGED,
   GRADIENT_CHANGED,
   PALETTE_CHANGED,
@@ -289,6 +288,7 @@ enum
   BUFFER_CHANGED,
   IMAGEFILE_CHANGED,
   TEMPLATE_CHANGED,
+  DYNAMICS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -305,14 +305,14 @@ static const gchar * const gimp_context_prop_names[] =
   "opacity",
   "paint-mode",
   "brush",
-  "dynamics",
   "pattern",
   "gradient",
   "palette",
   "font",
   "buffer",
   "imagefile",
-  "template"
+  "template",
+  "dynamics"
 };
 
 static GType gimp_context_prop_types[] =
@@ -638,7 +638,7 @@ gimp_context_class_init (GimpContextClass *klass)
                                    NULL,
                                    GIMP_TYPE_BRUSH,
                                    GIMP_PARAM_STATIC_STRINGS);
-								   
+
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_DYNAMICS,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_DYNAMICS],
                                    NULL,

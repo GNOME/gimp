@@ -240,7 +240,7 @@ gimp_init (Gimp *gimp)
 
   gimp->fonts               = NULL;
   gimp->brush_factory       = NULL;
-  gimp->dynamics_factory       = NULL;
+  gimp->dynamics_factory    = NULL;
   gimp->pattern_factory     = NULL;
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
@@ -279,7 +279,7 @@ gimp_dispose (GObject *object)
 
   if (gimp->brush_factory)
     gimp_data_factory_data_free (gimp->brush_factory);
-  
+
   if (gimp->dynamics_factory)
     gimp_data_factory_data_free (gimp->dynamics_factory);
 
@@ -542,10 +542,9 @@ gimp_real_initialize (Gimp               *gimp,
 
   static const GimpDataFactoryLoaderEntry dynamics_loader_entries[] =
   {
-    { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION,         FALSE },
-    { gimp_pattern_load_pixbuf,  NULL,                                FALSE }
+    { gimp_dynamics_load,       GIMP_DYNAMICS_FILE_EXTENSION,         FALSE }
   };
-  
+
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
   {
     { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION,         FALSE },
