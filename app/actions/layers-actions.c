@@ -491,19 +491,20 @@ void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage     *image      = action_data_get_image (data);
-  GimpLayer     *layer      = NULL;
-  GimpLayerMask *mask       = NULL;     /*  layer mask             */
-  gboolean       fs         = FALSE;    /*  floating sel           */
-  gboolean       ac         = FALSE;    /*  active channel         */
-  gboolean       sel        = FALSE;
-  gboolean       alpha      = FALSE;    /*  alpha channel present  */
-  gboolean       indexed    = FALSE;    /*  is indexed             */
-  gboolean       lock_alpha = FALSE;
-  gboolean       text_layer = FALSE;
-  gboolean       writable   = FALSE;
-  GList         *next       = NULL;
-  GList         *prev       = NULL;
+  GimpImage     *image        = action_data_get_image (data);
+  GimpLayer     *layer        = NULL;
+  GimpLayerMask *mask         = NULL;     /*  layer mask             */
+  gboolean       fs           = FALSE;    /*  floating sel           */
+  gboolean       ac           = FALSE;    /*  active channel         */
+  gboolean       sel          = FALSE;
+  gboolean       alpha        = FALSE;    /*  alpha channel present  */
+  gboolean       indexed      = FALSE;    /*  is indexed             */
+  gboolean       lock_alpha   = FALSE;
+  gboolean       text_layer   = FALSE;
+  gboolean       writable     = FALSE;
+  GList         *next         = NULL;
+  GList         *next_visible = NULL;
+  GList         *prev         = NULL;
 
   if (image)
     {
@@ -532,6 +533,14 @@ layers_actions_update (GimpActionGroup *group,
             {
               prev = g_list_previous (list);
               next = g_list_next (list);
+
+              for (next_visible = next;
+                   next_visible;
+                   next_visible = g_list_next (next_visible))
+                {
+                  if (gimp_item_get_visible (next_visible->data))
+                    break;
+                }
             }
 
           text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
@@ -566,7 +575,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
 
   SET_SENSITIVE ("layers-anchor",           layer &&  fs && !ac);
-  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && next_visible);
   SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",    layer && !fs && !ac);
 
