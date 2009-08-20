@@ -377,7 +377,10 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   GimpBrush     *brush;
 
-  brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+  core->dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+
+
+  brush    = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
   if (core->main_brush != brush)
     gimp_brush_core_set_brush (core, brush);
@@ -394,6 +397,12 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
       core->scale = paint_options->brush_scale;/* gimp_paint_options_get_dynamic_size (paint_options, coords,
                                                          TRUE,
                                                          paint_core->pixel_dist);*/
+      if (core->dynamics)
+        {
+          core->scale *= gimp_dynamics_get_output_val(core->dynamics->size_dynamics, coords);
+          printf("PAss GO 2\n");
+        }
+      else printf("Go to jail\n");
 
       core->angle = paint_options->brush_angle;/* gimp_paint_options_get_dynamic_angle (paint_options, coords,
                                                           paint_core->pixel_dist);*/
@@ -746,6 +755,7 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
       if (core->dynamics)
       {
         core->scale *= gimp_dynamics_get_output_val(core->dynamics->size_dynamics, coords);
+        printf("PAssing go1\n");
       }
 
       core->angle = paint_options->brush_angle; /* gimp_paint_options_get_dynamic_angle (paint_options, coords,
@@ -826,7 +836,7 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
 
 static void
 gimp_brush_core_real_set_dynamics (GimpBrushCore       *core,
-                                   GimpDynamics *dynamics)
+                                   GimpDynamics        *dynamics)
 {
   if (core->dynamics)
     {
