@@ -436,8 +436,9 @@ gimp_item_real_duplicate (GimpItem *item,
   g_object_unref (new_item->parasites);
   new_item->parasites = gimp_parasite_list_copy (item->parasites);
 
-  new_item->visible = gimp_item_get_visible (item);
-  new_item->linked  = gimp_item_get_linked (item);
+  new_item->visible      = gimp_item_get_visible (item);
+  new_item->linked       = gimp_item_get_linked (item);
+  new_item->lock_content = gimp_item_get_lock_content (item);
 
   return new_item;
 }
