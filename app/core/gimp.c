@@ -76,6 +76,8 @@
 #include "gimptoolinfo.h"
 
 #include "gimpdynamics.h"
+#include "gimpdynamics-load.h"
+
 
 #include "gimp-intl.h"
 
@@ -543,7 +545,7 @@ gimp_real_initialize (Gimp               *gimp,
   static const GimpDataFactoryLoaderEntry dynamics_loader_entries[] =
   {
     /*TODO: Dynamics need savers and loaders*/
-    { gimp_pattern_load,       GIMP_PATTERN_FILE_EXTENSION,         FALSE }
+    { gimp_dynamics_load,       GIMP_DYNAMICS_FILE_EXTENSION,         FALSE }
   };
 
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
