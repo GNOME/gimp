@@ -89,6 +89,8 @@ gimp_image_crop (GimpImage   *image,
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (active_layer_only == FALSE ||
+                    gimp_image_get_active_layer (image));
 
   previous_width  = gimp_image_get_width (image);
   previous_height = gimp_image_get_height (image);
