@@ -171,26 +171,34 @@ static void
 gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  GtkWidget      *frame;
-
-/*GtkWidget      *box;
-  gint            row = 0;
+  GtkWidget      *vbox;
+  
   GtkWidget        *table;
-  GtkWidget        *menu;
   GtkWidget        *label;
+  gint              n_dynamics         = 0;
+/*  
+  GtkWidget        *dynamics_labels[7];
+  GtkWidget      *frame;
+  GtkWidget      *box;
+  gint            row = 0;
+  GtkWidget        *menu;
   GtkWidget        *button;
   GtkWidget        *incremental_toggle = NULL;
   gint              table_row          = 0;
-  gint              n_dynamics         = 0;
-  GtkWidget        *dynamics_labels[7];
   GType             tool_type;
 */
 
+/*
   //add a frame
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+*/
+  vbox = gtk_vbox_new (FALSE, 6);
+  //gtk_box_pack_start (GTK_BOX (editor), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   data_editor->view = gimp_view_new_full_by_types (NULL,
                                                    GIMP_TYPE_VIEW,
@@ -200,8 +208,67 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                                                    FALSE, FALSE, TRUE);
   gtk_widget_set_size_request (data_editor->view, -1, DYNAMICS_VIEW_SIZE);
   gimp_view_set_expand (GIMP_VIEW (data_editor->view), TRUE);
-  gtk_container_add (GTK_CONTAINER (frame), data_editor->view);
+  gtk_container_add (GTK_CONTAINER (vbox), data_editor->view);
   gtk_widget_show (data_editor->view);
+
+  n_dynamics = 5;
+
+  if (n_dynamics > 0)
+    {
+      GtkWidget *inner_frame;
+      GtkWidget *fixed;
+      gint       i;
+      gboolean   rtl = gtk_widget_get_direction (vbox) == GTK_TEXT_DIR_RTL;
+
+      //frame = gimp_prop_expander_new (config, "dynamics-expanded",
+      //                                _("Brush Dynamics"));
+/*      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+*/
+      inner_frame = gimp_frame_new (NULL);
+      gtk_container_add (GTK_CONTAINER (vbox), inner_frame);
+      gtk_widget_show (inner_frame);
+
+
+      table = gtk_table_new (7, n_dynamics + 2, FALSE);
+      gtk_container_add (GTK_CONTAINER (inner_frame), table);
+      gtk_widget_show (table);
+
+      label = gtk_label_new (_("Pressure:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Velocity:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Direction:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Tilt:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Random:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Fading - new:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
 
 /*
   //editor->shape_group = NULL;
@@ -285,20 +352,7 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "context",         context,
                        "data",            gimp_context_get_dynamics (context),
                        NULL);
- /*
-  GtkWidget        *vbox;
-  GtkWidget        *table;
-  GtkWidget        *menu;
-  GtkWidget        *label;
-  GtkWidget        *button;
-  GtkWidget        *incremental_toggle = NULL;
-  gint              table_row          = 0;
-  gint              n_dynamics         = 0;
-  GtkWidget        *dynamics_labels[7];
-  GType             tool_type;
-
-  //tool_type = tool_options->tool_info->tool_type;
-*/
+ 
 }
 
 
