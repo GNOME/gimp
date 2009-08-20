@@ -35,6 +35,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-transform.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
@@ -333,6 +334,21 @@ gimp_transform_tool_initialize (GimpTool     *tool,
                                 GError      **error)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpDrawable      *drawable;
+
+  drawable = gimp_image_get_active_drawable (display->image);
+
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
+
+  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("The active layer's pixels are locked."));
+      return FALSE;
+    }
 
   if (display != tool->display)
     {
@@ -340,7 +356,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
 
       /*  Set the pointer to the active display  */
       tool->display  = display;
-      tool->drawable = gimp_image_get_active_drawable (display->image);
+      tool->drawable = drawable;
 
       /*  Initialize the transform tool dialog */
       if (! tr_tool->dialog)

@@ -33,6 +33,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
@@ -266,6 +267,15 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   GimpToolInfo     *tool_info      = tool->tool_info;
   GimpDrawable     *drawable;
 
+  drawable = gimp_image_get_active_drawable (display->image);
+
+  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("The active layer's pixels are locked."));
+      return FALSE;
+    }
+
   /*  set display so the dialog can be hidden on display destruction  */
   tool->display = display;
 
@@ -333,8 +343,6 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                  G_CALLBACK (gimp_image_map_tool_gegl_notify),
                                  image_map_tool, 0);
     }
-
-  drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
                                      GIMP_VIEWABLE (drawable),

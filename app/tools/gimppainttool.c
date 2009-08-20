@@ -27,6 +27,7 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpprojection.h"
@@ -58,6 +59,9 @@ static GObject * gimp_paint_tool_constructor (GType                  type,
                                               GObjectConstructParam *params);
 static void   gimp_paint_tool_finalize       (GObject               *object);
 
+static gboolean  gimp_paint_tool_initialize  (GimpTool              *tool,
+                                              GimpDisplay           *display,
+                                              GError               **error);
 static void   gimp_paint_tool_control        (GimpTool              *tool,
                                               GimpToolAction         action,
                                               GimpDisplay           *display);
@@ -111,6 +115,7 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   object_class->constructor  = gimp_paint_tool_constructor;
   object_class->finalize     = gimp_paint_tool_finalize;
 
+  tool_class->initialize     = gimp_paint_tool_initialize;
   tool_class->control        = gimp_paint_tool_control;
   tool_class->button_press   = gimp_paint_tool_button_press;
   tool_class->button_release = gimp_paint_tool_button_release;
@@ -214,6 +219,29 @@ gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
   tool->pick_colors = TRUE;
 
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;
+}
+
+static gboolean
+gimp_paint_tool_initialize (GimpTool     *tool,
+                            GimpDisplay  *display,
+                            GError      **error)
+{
+  GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
+
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
+      gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("The active layer's pixels are locked."));
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static void

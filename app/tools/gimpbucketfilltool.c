@@ -26,6 +26,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable-bucket-fill.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimppickable.h"
@@ -43,6 +44,9 @@
 
 /*  local function prototypes  */
 
+static gboolean gimp_bucket_fill_tool_initialize   (GimpTool              *tool,
+                                                    GimpDisplay           *display,
+                                                    GError               **error);
 static void   gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                                     const GimpCoords      *coords,
                                                     guint32                time,
@@ -91,6 +95,7 @@ gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
+  tool_class->initialize     = gimp_bucket_fill_tool_initialize;
   tool_class->button_release = gimp_bucket_fill_tool_button_release;
   tool_class->modifier_key   = gimp_bucket_fill_tool_modifier_key;
   tool_class->cursor_update  = gimp_bucket_fill_tool_cursor_update;
@@ -109,6 +114,28 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
                                          "context/context-opacity-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-pattern-select-set");
+}
+
+static gboolean
+gimp_bucket_fill_tool_initialize (GimpTool     *tool,
+                                  GimpDisplay  *display,
+                                  GError      **error)
+{
+  GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
+
+  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("The active layer's pixels are locked."));
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static void
