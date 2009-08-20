@@ -464,6 +464,7 @@
         </menu>
         <menuitem action="drawable-visible" />
         <menuitem action="drawable-linked" />
+        <menuitem action="drawable-lock-content" />
         <menuitem action="layers-lock-alpha" />
       </menu>
 
