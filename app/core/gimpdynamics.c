@@ -158,16 +158,12 @@ static void    gimp_dynamics_get_property     (GObject      *object,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
-static GimpDynamicsOutput* gimp_dynamics_output_init ();
+static GimpDynamicsOutput* gimp_dynamics_output_init (void);
 
 static void    gimp_dynamics_output_finalize  (GimpDynamicsOutput *dynamics);
 
 
-/*
-G_DEFINE_TYPE_WITH_CODE (GimpDynamics, gimp_dynamics, GIMP_TYPE_DATA,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_dynamics_editor_docked_iface_init))
-*/
+
 G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
                GIMP_TYPE_DATA)
 
@@ -404,7 +400,7 @@ gimp_dynamics_finalize (GObject *object)
 }
 
 static GimpDynamicsOutput*
-gimp_dynamics_output_init()
+gimp_dynamics_output_init(void)
 {
   GimpDynamicsOutput * dynamics = g_slice_new0 (GimpDynamicsOutput);
 
@@ -903,10 +899,29 @@ gimp_dynamics_get_standard (void)
 }
 
 gdouble
-gimp_dynamics_get_output_val (GimpDynamicsOutput *output, GimpCoords *coords)
+gimp_dynamics_get_output_val (GimpDynamicsOutput *output, GimpCoords coords)
 {
-  printf("Dynamics queried...\n");
-  return 1;
+  gdouble total = 0.0;
+  gdouble factors = 0.0;
+
+  gdouble result = 1.0;
+
+  if (output->pressure)
+    {
+      total += coords.pressure;
+      factors++;
+    }
+
+  if (output->velocity)
+    {
+      total += (1.0 - coords.velocity);
+      factors++;
+    }
+  if (factors > 0)
+    result = total / factors;
+
+  //printf("Dynamics queried. Result: %f, vel %f, f: %f, t: %f \n", result, coords.velocity, factors, total);
+  return result;
 }
 
 /* Calculates dynamics mix to be used for same parameter
