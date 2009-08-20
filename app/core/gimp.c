@@ -75,7 +75,7 @@
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
 
-#include "paint/gimpdynamicsoptions.h"
+#include "gimpdynamics.h"
 
 #include "gimp-intl.h"
 
@@ -589,11 +589,11 @@ gimp_real_initialize (Gimp               *gimp,
 
   gimp->dynamics_factory =
     gimp_data_factory_new (gimp,
-                           GIMP_TYPE_DYNAMICS_OPTIONS,
+                           GIMP_TYPE_DYNAMICS,
                            "dynamics-path", "dynamics-path-writable",
                            dynamics_loader_entries,
                            G_N_ELEMENTS (dynamics_loader_entries),
-                           gimp_dynamics_options_new,
+                           gimp_dynamics_new,
                            gimp_dynamics_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->dynamics_factory),
                                "dynamics factory");

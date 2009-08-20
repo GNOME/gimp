@@ -47,7 +47,8 @@
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
 
-#include "paint/gimpdynamicsoptions.h"
+#include "gimpdynamics.h"
+
 #include "text/gimpfont.h"
 
 #include "gimp-intl.h"
@@ -171,7 +172,7 @@ static void gimp_context_dynamics_removed    (GimpContainer    *container,
 static void gimp_context_dynamics_list_thaw  (GimpContainer    *container,
                                               GimpContext      *context);
 static void gimp_context_real_set_dynamics   (GimpContext      *context,
-                                              GimpDynamicsOptions  *dynamics);
+                                              GimpDynamics     *dynamics);
 
 /*  pattern  */
 static void gimp_context_pattern_dirty       (GimpPattern      *pattern,
@@ -466,7 +467,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   NULL, NULL,
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_DYNAMICS_OPTIONS);
+                  GIMP_TYPE_DYNAMICS);
 
   gimp_context_signals[PATTERN_CHANGED] =
     g_signal_new ("pattern-changed",
@@ -568,7 +569,7 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]       = GIMP_TYPE_TOOL_INFO;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PAINT_INFO] = GIMP_TYPE_PAINT_INFO;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_BRUSH]      = GIMP_TYPE_BRUSH;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_DYNAMICS]   = GIMP_TYPE_DYNAMICS_OPTIONS;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_DYNAMICS]   = GIMP_TYPE_DYNAMICS;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]    = GIMP_TYPE_PATTERN;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]   = GIMP_TYPE_GRADIENT;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]    = GIMP_TYPE_PALETTE;
@@ -642,7 +643,7 @@ gimp_context_class_init (GimpContextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_DYNAMICS,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_DYNAMICS],
                                    NULL,
-                                   GIMP_TYPE_DYNAMICS_OPTIONS,
+                                   GIMP_TYPE_DYNAMICS,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PATTERN,
@@ -2499,7 +2500,7 @@ gimp_context_set_dynamics (GimpContext           *context,
                            GimpDynamicsOptions   *dynamics)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! dynamics || GIMP_IS_DYNAMICS_OPTIONS (dynamics));
+  g_return_if_fail (! dynamics || GIMP_IS_DYNAMICS (dynamics));
   context_find_defined (context, GIMP_CONTEXT_PROP_DYNAMICS);
 
   gimp_context_real_set_dynamics (context, dynamics);
@@ -2560,10 +2561,10 @@ static void gimp_context_dynamics_list_thaw  (GimpContainer    *container,
 
 static void
 gimp_context_real_set_dynamics (GimpContext           *context,
-								GimpDynamicsOptions   *dynamics)
+                                GimpDynamics          *dynamics)
 {
   if (! standard_dynamics)
-    standard_dynamics = GIMP_DYNAMICS_OPTIONS (gimp_dynamics_get_standard ());
+    standard_dynamics = GIMP_DYNAMICS (gimp_dynamics_get_standard ());
 
   if (context->dynamics == dynamics)
     return;

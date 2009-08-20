@@ -20,7 +20,7 @@
 
 
 #include "gimppaintcore.h"
-
+#include "core/gimpdynamics.h"
 
 #define BRUSH_CORE_SUBSAMPLE        4
 #define BRUSH_CORE_SOLID_SUBSAMPLE  2
@@ -43,7 +43,7 @@ struct _GimpBrushCore
 
   GimpBrush     *main_brush;
   GimpBrush     *brush;
-  GimpDynamicsOptions *dynamics;
+  GimpDynamics  *dynamics;
   gdouble        spacing;
   gdouble        scale;
   gdouble        angle;
@@ -101,7 +101,7 @@ struct _GimpBrushCoreClass
   void (* set_brush)    (GimpBrushCore *core,
                          GimpBrush     *brush);
   void (* set_dynamics) (GimpBrushCore       *core,
-                         GimpDynamicsOptions *brush);
+                         GimpDynamics *brush);
 
 };
 
@@ -112,7 +112,7 @@ void    gimp_brush_core_set_brush      (GimpBrushCore            *core,
                                         GimpBrush                *brush);
 
 void    gimp_brush_core_set_dynamics   (GimpBrushCore            *core,
-                                        GimpDynamicsOptions      *dynamics);
+                                        GimpDynamics             *dynamics);
 
 void    gimp_brush_core_create_bound_segs (GimpBrushCore         *core,
                                            GimpPaintOptions      *options);

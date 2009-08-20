@@ -23,7 +23,7 @@
 
 
 #include "gimpobject.h"
-
+#include "gimpdynamics.h"
 
 #define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
 #define GIMP_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
@@ -64,7 +64,7 @@ struct _GimpContext
   GimpBrush            *brush;
   gchar                *brush_name;
 
-  GimpDynamicsOptions  *dynamics;
+  GimpDynamics         *dynamics;
   gchar                *dynamics_name;
 
   GimpPattern          *pattern;

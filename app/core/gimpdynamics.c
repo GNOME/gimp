@@ -23,17 +23,17 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "paint-types.h"
+#include "paint/paint-types.h"
 
 
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimpcurve.h"
+#include "gimp.h"
+#include "gimpimage.h"
+#include "gimpcurve.h"
 
-#include "gimpdynamicsoptions.h"
+#include "gimpdynamics.h"
 
-#include "core/gimpdata.h"
+#include "gimpdata.h"
 #include "gimp-intl.h"
 
 
@@ -140,50 +140,50 @@ enum
   PROP_FADING_ANGLE,
 };
 
-static void    gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass);
+static void    gimp_dynamics_class_init (GimpDynamicsClass *klass);
 
-static void    gimp_dynamics_options_finalize         (GObject      *object);
+static void    gimp_dynamics_finalize         (GObject      *object);
 
 
-static void    gimp_dynamics_options_notify           (GObject      *object,
+static void    gimp_dynamics_notify           (GObject      *object,
                                                        GParamSpec   *pspec);
 
-static void    gimp_dynamics_options_set_property     (GObject      *object,
+static void    gimp_dynamics_set_property     (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
 
-static void    gimp_dynamics_options_get_property     (GObject      *object,
+static void    gimp_dynamics_get_property     (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
 
-static void    gimp_dynamics_options_curves_init      (GimpDynamicOutputOptions *dynamics);
+static void    gimp_dynamics_curves_init      (GimpDynamicsOutput *dynamics);
 
-static void    gimp_dynamics_options_curves_finalize  (GimpDynamicOutputOptions *dynamics);
+static void    gimp_dynamics_curves_finalize  (GimpDynamicsOutput *dynamics);
 
 
 /*
-G_DEFINE_TYPE_WITH_CODE (GimpDynamicsOptions, gimp_dynamics_options, GIMP_TYPE_DATA,
+G_DEFINE_TYPE_WITH_CODE (GimpDynamics, gimp_dynamics, GIMP_TYPE_DATA,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_dynamics_editor_docked_iface_init))
 */
-G_DEFINE_TYPE (GimpDynamicsOptions, gimp_dynamics_options,
+G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
                GIMP_TYPE_DATA)
 
 
-#define parent_class gimp_dynamics_options_parent_class
+#define parent_class gimp_dynamics_parent_class
 
 
 static void
-gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
+gimp_dynamics_class_init (GimpDynamicsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_dynamics_options_finalize;
-  object_class->set_property = gimp_dynamics_options_set_property;
-  object_class->get_property = gimp_dynamics_options_get_property;
-  object_class->notify       = gimp_dynamics_options_notify;
+  object_class->finalize     = gimp_dynamics_finalize;
+  object_class->set_property = gimp_dynamics_set_property;
+  object_class->get_property = gimp_dynamics_get_property;
+  object_class->notify       = gimp_dynamics_notify;
 
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_ASPECT_RATIO,
@@ -363,65 +363,65 @@ gimp_dynamics_options_class_init (GimpDynamicsOptionsClass *klass)
 }
 
 static void
-gimp_dynamics_options_init (GimpDynamicsOptions *options)
+gimp_dynamics_init (GimpDynamics *options)
 {
 
-  options->opacity_dynamics      = g_slice_new0 (GimpDynamicOutputOptions);
-  gimp_dynamics_options_curves_init(options->opacity_dynamics);
+  options->opacity_dynamics      = g_slice_new0 (GimpDynamicsOutput);
+  gimp_dynamics_curves_init(options->opacity_dynamics);
 
-  options->hardness_dynamics     = g_slice_new0 (GimpDynamicOutputOptions);
-  gimp_dynamics_options_curves_init(options->hardness_dynamics);
+  options->hardness_dynamics     = g_slice_new0 (GimpDynamicsOutput);
+  gimp_dynamics_curves_init(options->hardness_dynamics);
 
-  options->rate_dynamics         = g_slice_new0 (GimpDynamicOutputOptions);
-  gimp_dynamics_options_curves_init(options->rate_dynamics);
+  options->rate_dynamics         = g_slice_new0 (GimpDynamicsOutput);
+  gimp_dynamics_curves_init(options->rate_dynamics);
 
-  options->size_dynamics         = g_slice_new0 (GimpDynamicOutputOptions);
-  gimp_dynamics_options_curves_init(options->size_dynamics);
+  options->size_dynamics         = g_slice_new0 (GimpDynamicsOutput);
+  gimp_dynamics_curves_init(options->size_dynamics);
 
-  options->aspect_ratio_dynamics = g_slice_new0 (GimpDynamicOutputOptions);
-  gimp_dynamics_options_curves_init(options->aspect_ratio_dynamics);
+  options->aspect_ratio_dynamics = g_slice_new0 (GimpDynamicsOutput);
+  gimp_dynamics_curves_init(options->aspect_ratio_dynamics);
 
-  options->color_dynamics        = g_slice_new0 (GimpDynamicOutputOptions);
-  gimp_dynamics_options_curves_init(options->color_dynamics);
+  options->color_dynamics        = g_slice_new0 (GimpDynamicsOutput);
+  gimp_dynamics_curves_init(options->color_dynamics);
 
-  options->angle_dynamics        = g_slice_new0 (GimpDynamicOutputOptions);
-  gimp_dynamics_options_curves_init(options->angle_dynamics);
+  options->angle_dynamics        = g_slice_new0 (GimpDynamicsOutput);
+  gimp_dynamics_curves_init(options->angle_dynamics);
 
 }
 
 
 static void
-gimp_dynamics_options_finalize (GObject *object)
+gimp_dynamics_finalize (GObject *object)
 {
-  GimpDynamicsOptions *options = GIMP_DYNAMICS_OPTIONS (object);
+  GimpDynamics *options = GIMP_DYNAMICS (object);
 
-  gimp_dynamics_options_curves_finalize   (options->opacity_dynamics);
-  g_slice_free (GimpDynamicOutputOptions,  options->opacity_dynamics);
+  gimp_dynamics_curves_finalize   (options->opacity_dynamics);
+  g_slice_free (GimpDynamicsOutput,  options->opacity_dynamics);
 
-  gimp_dynamics_options_curves_finalize   (options->hardness_dynamics);
-  g_slice_free (GimpDynamicOutputOptions,  options->hardness_dynamics);
+  gimp_dynamics_curves_finalize   (options->hardness_dynamics);
+  g_slice_free (GimpDynamicsOutput,  options->hardness_dynamics);
 
-  gimp_dynamics_options_curves_finalize   (options->rate_dynamics);
-  g_slice_free (GimpDynamicOutputOptions,  options->rate_dynamics);
+  gimp_dynamics_curves_finalize   (options->rate_dynamics);
+  g_slice_free (GimpDynamicsOutput,  options->rate_dynamics);
 
-  gimp_dynamics_options_curves_finalize   (options->size_dynamics);
-  g_slice_free (GimpDynamicOutputOptions,  options->size_dynamics);
+  gimp_dynamics_curves_finalize   (options->size_dynamics);
+  g_slice_free (GimpDynamicsOutput,  options->size_dynamics);
 
-  gimp_dynamics_options_curves_finalize   (options->aspect_ratio_dynamics);
-  g_slice_free (GimpDynamicOutputOptions,  options->aspect_ratio_dynamics);
+  gimp_dynamics_curves_finalize   (options->aspect_ratio_dynamics);
+  g_slice_free (GimpDynamicsOutput,  options->aspect_ratio_dynamics);
 
-  gimp_dynamics_options_curves_finalize   (options->color_dynamics);
-  g_slice_free (GimpDynamicOutputOptions,  options->color_dynamics);
+  gimp_dynamics_curves_finalize   (options->color_dynamics);
+  g_slice_free (GimpDynamicsOutput,  options->color_dynamics);
 
-  gimp_dynamics_options_curves_finalize   (options->angle_dynamics);
-  g_slice_free (GimpDynamicOutputOptions,  options->angle_dynamics);
+  gimp_dynamics_curves_finalize   (options->angle_dynamics);
+  g_slice_free (GimpDynamicsOutput,  options->angle_dynamics);
 
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_dynamics_options_curves_init      (GimpDynamicOutputOptions *dynamics)
+gimp_dynamics_curves_init      (GimpDynamicsOutput *dynamics)
 {
   dynamics->pressure_curve = g_object_new (GIMP_TYPE_CURVE,
                              "name",       "Pressure curve",
@@ -444,7 +444,7 @@ gimp_dynamics_options_curves_init      (GimpDynamicOutputOptions *dynamics)
 }
 
 static void
-gimp_dynamics_options_curves_finalize  (GimpDynamicOutputOptions *dynamics)
+gimp_dynamics_curves_finalize  (GimpDynamicsOutput *dynamics)
 {
   g_object_unref(dynamics->pressure_curve);
 
@@ -462,20 +462,20 @@ gimp_dynamics_options_curves_finalize  (GimpDynamicOutputOptions *dynamics)
 
 
 static void
-gimp_dynamics_options_set_property (GObject      *object,
+gimp_dynamics_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpDynamicsOptions *options           = GIMP_DYNAMICS_OPTIONS (object);
+  GimpDynamics *options           = GIMP_DYNAMICS (object);
 
-  GimpDynamicOutputOptions *opacity_dynamics      = options->opacity_dynamics;
-  GimpDynamicOutputOptions *hardness_dynamics     = options->hardness_dynamics;
-  GimpDynamicOutputOptions *rate_dynamics         = options->rate_dynamics;
-  GimpDynamicOutputOptions *size_dynamics         = options->size_dynamics;
-  GimpDynamicOutputOptions *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
-  GimpDynamicOutputOptions *color_dynamics        = options->color_dynamics;
-  GimpDynamicOutputOptions *angle_dynamics        = options->angle_dynamics;
+  GimpDynamicsOutput *opacity_dynamics      = options->opacity_dynamics;
+  GimpDynamicsOutput *hardness_dynamics     = options->hardness_dynamics;
+  GimpDynamicsOutput *rate_dynamics         = options->rate_dynamics;
+  GimpDynamicsOutput *size_dynamics         = options->size_dynamics;
+  GimpDynamicsOutput *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
+  GimpDynamicsOutput *color_dynamics        = options->color_dynamics;
+  GimpDynamicsOutput *angle_dynamics        = options->angle_dynamics;
 
   switch (property_id)
     {
@@ -660,19 +660,19 @@ gimp_dynamics_options_set_property (GObject      *object,
 
 
 static void
-gimp_dynamics_options_get_property (GObject    *object,
+gimp_dynamics_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDynamicsOptions *options           = GIMP_DYNAMICS_OPTIONS (object);
-  GimpDynamicOutputOptions *opacity_dynamics      = options->opacity_dynamics;
-  GimpDynamicOutputOptions *hardness_dynamics     = options->hardness_dynamics;
-  GimpDynamicOutputOptions *rate_dynamics         = options->rate_dynamics;
-  GimpDynamicOutputOptions *size_dynamics         = options->size_dynamics;
-  GimpDynamicOutputOptions *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
-  GimpDynamicOutputOptions *color_dynamics        = options->color_dynamics;
-  GimpDynamicOutputOptions *angle_dynamics        = options->angle_dynamics;
+  GimpDynamics *options           = GIMP_DYNAMICS (object);
+  GimpDynamicsOutput *opacity_dynamics      = options->opacity_dynamics;
+  GimpDynamicsOutput *hardness_dynamics     = options->hardness_dynamics;
+  GimpDynamicsOutput *rate_dynamics         = options->rate_dynamics;
+  GimpDynamicsOutput *size_dynamics         = options->size_dynamics;
+  GimpDynamicsOutput *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
+  GimpDynamicsOutput *color_dynamics        = options->color_dynamics;
+  GimpDynamicsOutput *angle_dynamics        = options->angle_dynamics;
 
   switch (property_id)
     {
@@ -856,11 +856,11 @@ gimp_dynamics_options_get_property (GObject    *object,
 
 
 static void
-gimp_dynamics_options_notify (GObject    *object,
+gimp_dynamics_notify (GObject    *object,
                               GParamSpec *pspec)
 {
 /*
-  GimpDynamicsOptions *options = GIMP_DYNAMICS_OPTIONS (object);
+  GimpDynamics *options = GIMP_DYNAMICS (object);
 
   if (pspec->param_id == PROP_USE_GRADIENT)
     {
@@ -884,11 +884,11 @@ gimp_dynamics_options_notify (GObject    *object,
 }
 
 GimpData *
-gimp_dynamics_options_new (const gchar *name)
+gimp_dynamics_new (const gchar *name)
 {
-  GimpDynamicsOptions *options;
+  GimpDynamics *options;
 
-  options = g_object_new (GIMP_TYPE_DYNAMICS_OPTIONS,
+  options = g_object_new (GIMP_TYPE_DYNAMICS,
                           "name",       name,
                           NULL);
 
@@ -903,7 +903,7 @@ gimp_dynamics_get_standard (void)
 
   if (! standard_dynamics)
     {
-      standard_dynamics = gimp_dynamics_options_new ("Standard");
+      standard_dynamics = gimp_dynamics_new ("Standard");
 
       standard_dynamics->dirty = FALSE;
       gimp_data_make_internal (standard_dynamics,
@@ -916,7 +916,7 @@ gimp_dynamics_get_standard (void)
 }
 
 gdouble
-gimp_dynamics_options_get_output_val (GimpDynamicOutputOptions *output, GimpCoords *coords)
+gimp_dynamics_get_output_val (GimpDynamicsOutput *output, GimpCoords *coords)
 {
   printf("Dynamics queried...");
   return 1;

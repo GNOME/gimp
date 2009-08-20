@@ -43,7 +43,7 @@
 
 #include "gimpmenufactory.h"
 #include "widgets/gimpdynamicseditor.h"
-#include "paint/gimpdynamicsoptions.h"
+#include "core/gimpdynamics.h"
 #include "core/gimpbrush.h"
 //To do:
 // discard unneeded ones.
@@ -194,7 +194,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
   data_editor->view = gimp_view_new_full_by_types (NULL,
                                                    GIMP_TYPE_VIEW,
-                                                   GIMP_TYPE_DYNAMICS_OPTIONS,
+                                                   GIMP_TYPE_DYNAMICS,
                                                    DYNAMICS_VIEW_SIZE,
                                                    DYNAMICS_VIEW_SIZE, 0,
                                                    FALSE, FALSE, TRUE);
@@ -286,7 +286,7 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "data",            gimp_context_get_dynamics (context),
                        NULL);
  /*
-  GtkWidget        *vbox; 
+  GtkWidget        *vbox;
   GtkWidget        *table;
   GtkWidget        *menu;
   GtkWidget        *label;
