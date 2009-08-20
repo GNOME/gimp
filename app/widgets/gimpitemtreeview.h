@@ -100,6 +100,11 @@ struct _GimpItemTreeViewClass
 
   /*  undo descriptions  */
   const gchar          *reorder_desc;
+
+  /*  lock content button appearance  */
+  const gchar          *lock_content_stock_id;
+  const gchar          *lock_content_tooltip;
+  const gchar          *lock_content_help_id;
 };
 
 

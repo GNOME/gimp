@@ -102,18 +102,20 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
   iv_class->new_item        = gimp_vectors_tree_view_item_new;
 
-  iv_class->action_group        = "vectors";
-  iv_class->activate_action     = "vectors-path-tool";
-  iv_class->edit_action         = "vectors-edit-attributes";
-  iv_class->new_action          = "vectors-new";
-  iv_class->new_default_action  = "vectors-new-last-values";
-  iv_class->raise_action        = "vectors-raise";
-  iv_class->raise_top_action    = "vectors-raise-to-top";
-  iv_class->lower_action        = "vectors-lower";
-  iv_class->lower_bottom_action = "vectors-lower-to-bottom";
-  iv_class->duplicate_action    = "vectors-duplicate";
-  iv_class->delete_action       = "vectors-delete";
-  iv_class->reorder_desc        = _("Reorder path");
+  iv_class->action_group          = "vectors";
+  iv_class->activate_action       = "vectors-path-tool";
+  iv_class->edit_action           = "vectors-edit-attributes";
+  iv_class->new_action            = "vectors-new";
+  iv_class->new_default_action    = "vectors-new-last-values";
+  iv_class->raise_action          = "vectors-raise";
+  iv_class->raise_top_action      = "vectors-raise-to-top";
+  iv_class->lower_action          = "vectors-lower";
+  iv_class->lower_bottom_action   = "vectors-lower-to-bottom";
+  iv_class->duplicate_action      = "vectors-duplicate";
+  iv_class->delete_action         = "vectors-delete";
+  iv_class->reorder_desc          = _("Reorder path");
+  iv_class->lock_content_stock_id = GIMP_STOCK_TOOL_PATH;
+  iv_class->lock_content_tooltip  = _("Lock path strokes");
 }
 
 static void

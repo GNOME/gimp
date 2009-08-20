@@ -23,6 +23,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimp.h"
@@ -116,6 +118,9 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
   tree_view_class->drop_color    = gimp_drawable_tree_view_drop_color;
 
   item_view_class->set_image     = gimp_drawable_tree_view_set_image;
+
+  item_view_class->lock_content_stock_id = GIMP_STOCK_TOOL_PAINTBRUSH;
+  item_view_class->lock_content_tooltip  = _("Lock pixels");
 }
 
 static void

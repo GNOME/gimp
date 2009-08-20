@@ -253,7 +253,12 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lower_bottom_action     = NULL;
   klass->duplicate_action        = NULL;
   klass->delete_action           = NULL;
+
   klass->reorder_desc            = NULL;
+
+  klass->lock_content_stock_id   = NULL;
+  klass->lock_content_tooltip    = NULL;
+  klass->lock_content_help_id    = NULL;
 
   g_type_class_add_private (klass, sizeof (GimpItemTreeViewPriv));
 }
@@ -281,9 +286,6 @@ static void
 gimp_item_tree_view_init (GimpItemTreeView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GtkWidget             *hbox;
-  GtkWidget             *image;
-  GtkIconSize            icon_size;
 
   view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
                                             GIMP_TYPE_ITEM_TREE_VIEW,
@@ -309,32 +311,6 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
   gimp_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
 
   view->priv->image  = NULL;
-
-
-  /*  Lock content toggle  */
-
-  hbox = gimp_item_tree_view_get_lock_box (view);
-
-  view->priv->lock_content_toggle = gtk_check_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), view->priv->lock_content_toggle,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (view->priv->lock_content_toggle);
-
-  g_signal_connect (view->priv->lock_content_toggle, "toggled",
-                    G_CALLBACK (gimp_item_tree_view_lock_content_toggled),
-                    view);
-
-  gimp_help_set_help_data (view->priv->lock_content_toggle,
-                           _("Lock pixels"),
-                           NULL /* GIMP_HELP_LAYER_DIALOG_LOCK_ALPHA_BUTTON */);
-
-  gtk_widget_style_get (GTK_WIDGET (view),
-                        "button-icon-size", &icon_size,
-                        NULL);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_TOOL_PAINTBRUSH, icon_size);
-  gtk_container_add (GTK_CONTAINER (view->priv->lock_content_toggle), image);
-  gtk_widget_show (image);
 }
 
 static GObject *
@@ -348,6 +324,9 @@ gimp_item_tree_view_constructor (GType                  type,
   GimpItemTreeView      *item_view;
   GObject               *object;
   GtkTreeViewColumn     *column;
+  GtkWidget             *hbox;
+  GtkWidget             *image;
+  GtkIconSize            icon_size;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -450,6 +429,36 @@ gimp_item_tree_view_constructor (GType                  type,
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
                                   GTK_BUTTON (item_view->priv->delete_button),
                                   item_view_class->item_type);
+
+
+  /*  Lock content toggle  */
+
+  hbox = gimp_item_tree_view_get_lock_box (item_view);
+
+  item_view->priv->lock_content_toggle = gtk_check_button_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), item_view->priv->lock_content_toggle,
+                      FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (hbox),
+                         item_view->priv->lock_content_toggle, 0);
+  gtk_widget_show (item_view->priv->lock_content_toggle);
+
+  g_signal_connect (item_view->priv->lock_content_toggle, "toggled",
+                    G_CALLBACK (gimp_item_tree_view_lock_content_toggled),
+                    item_view);
+
+  gimp_help_set_help_data (item_view->priv->lock_content_toggle,
+                           item_view_class->lock_content_tooltip,
+                           item_view_class->lock_content_help_id);
+
+  gtk_widget_style_get (GTK_WIDGET (item_view),
+                        "button-icon-size", &icon_size,
+                        NULL);
+
+  image = gtk_image_new_from_stock (item_view_class->lock_content_stock_id,
+                                    icon_size);
+  gtk_container_add (GTK_CONTAINER (item_view->priv->lock_content_toggle),
+                     image);
+  gtk_widget_show (image);
 
   return object;
 }
