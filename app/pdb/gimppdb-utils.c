@@ -352,6 +352,26 @@ gimp_pdb_item_is_floating (GimpItem  *item,
 }
 
 gboolean
+gimp_pdb_item_is_writable (GimpItem  *item,
+                           GError   **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_item_get_lock_content (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) cannot be modified because its "
+                     "contents are locked"),
+                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
 gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
                               GError    **error)
 {

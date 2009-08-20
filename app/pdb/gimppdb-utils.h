@@ -53,8 +53,12 @@ gboolean        gimp_pdb_item_is_attached       (GimpItem           *item,
 gboolean        gimp_pdb_item_is_floating       (GimpItem           *item,
                                                  GimpImage          *dest_image,
                                                  GError            **error);
+gboolean        gimp_pdb_item_is_writable       (GimpItem           *item,
+                                                 GError            **error);
+
 gboolean        gimp_pdb_layer_is_text_layer    (GimpLayer          *layer,
                                                  GError            **error);
+
 gboolean        gimp_pdb_image_is_base_type     (GimpImage          *image,
                                                  GimpImageBaseType   type,
                                                  GError            **error);
