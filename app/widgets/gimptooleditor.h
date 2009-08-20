@@ -51,7 +51,7 @@ GType       gimp_tool_editor_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_tool_editor_new            (GimpContainer  *container,
                                              GimpContext    *context,
-                                             GList          *defualt_tool_order,
+                                             GList          *default_tool_order,
                                              gint            view_size,
                                              gint            view_border_width);
 
