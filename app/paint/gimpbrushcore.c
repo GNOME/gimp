@@ -376,8 +376,14 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   GimpBrush     *brush;
-
   core->dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+
+  /* If context does not have dynamics object for us, lets get standard*/
+  if (!core->dynamics)
+    {
+      core->dynamics = GIMP_DYNAMICS(gimp_dynamics_get_standard());
+      gimp_context_set_dynamics (GIMP_CONTEXT (paint_options), core->dynamics);
+    }
 
 
   brush    = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
@@ -394,22 +400,20 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-      core->scale = paint_options->brush_scale;/* gimp_paint_options_get_dynamic_size (paint_options, coords,
-                                                         TRUE,
-                                                         paint_core->pixel_dist);*/
-      if (core->dynamics)
-        {
-          core->scale *= gimp_dynamics_get_output_val(core->dynamics->size_dynamics, coords);
-          printf("PAss GO 2\n");
-        }
-      else printf("Go to jail\n");
+      core->scale = paint_options->brush_scale;
 
-      core->angle = paint_options->brush_angle;/* gimp_paint_options_get_dynamic_angle (paint_options, coords,
-                                                          paint_core->pixel_dist);*/
+      core->angle = paint_options->brush_angle;
 
       core->aspect_ratio = paint_options->brush_aspect_ratio;
-/*        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords,
-                                                     paint_core->pixel_dist);*/
+
+      if (core->dynamics)
+        {
+          core->scale *= gimp_dynamics_get_output_val(core->dynamics->size_dynamics, *coords);
+
+          core->angle += gimp_dynamics_get_output_val(core->dynamics->angle_dynamics, *coords);
+
+          core->aspect_ratio *= gimp_dynamics_get_output_val(core->dynamics->aspect_ratio_dynamics, *coords);
+        }
     }
 
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
@@ -752,18 +756,18 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
       core->scale = paint_options->brush_scale;
+      core->angle = paint_options->brush_angle;
+      core->aspect_ratio = paint_options->brush_aspect_ratio;
+
       if (core->dynamics)
       {
-        core->scale *= gimp_dynamics_get_output_val(core->dynamics->size_dynamics, coords);
-        printf("PAssing go1\n");
+        core->scale *= gimp_dynamics_get_output_val(core->dynamics->size_dynamics, *coords);
+
+        core->angle += gimp_dynamics_get_output_val(core->dynamics->angle_dynamics, *coords);
+
+        core->aspect_ratio *= gimp_dynamics_get_output_val(core->dynamics->aspect_ratio_dynamics, *coords);
+
       }
-
-      core->angle = paint_options->brush_angle; /* gimp_paint_options_get_dynamic_angle (paint_options, coords,
-                                                          paint_core->pixel_dist);*/
-
-      core->aspect_ratio = paint_options->brush_aspect_ratio;/*
-        gimp_paint_options_get_dynamic_aspect_ratio (paint_options, coords,
-                                                     paint_core->pixel_dist);*/
     }
 
   core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);
