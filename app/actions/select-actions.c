@@ -137,10 +137,16 @@ select_actions_update (GimpActionGroup *group,
   GimpDrawable *drawable = NULL;
   gboolean      fs       = FALSE;
   gboolean      sel      = FALSE;
+  gboolean      writable = FALSE;
 
   if (image)
     {
       drawable = gimp_image_get_active_drawable (image);
+
+      if (drawable)
+        {
+          writable = ! gimp_item_get_lock_content (GIMP_ITEM (drawable));
+        }
 
       fs  = (gimp_image_get_floating_selection (image) != NULL);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
@@ -152,7 +158,7 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-all",    drawable);
   SET_SENSITIVE ("select-none",   drawable && sel);
   SET_SENSITIVE ("select-invert", drawable);
-  SET_SENSITIVE ("select-float",  drawable && sel);
+  SET_SENSITIVE ("select-float",  writable && sel);
 
   SET_SENSITIVE ("select-feather", drawable && sel);
   SET_SENSITIVE ("select-sharpen", drawable && sel);
@@ -161,8 +167,8 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-border",  drawable && sel);
 
   SET_SENSITIVE ("select-save",               drawable && !fs);
-  SET_SENSITIVE ("select-stroke",             drawable && sel);
-  SET_SENSITIVE ("select-stroke-last-values", drawable && sel);
+  SET_SENSITIVE ("select-stroke",             writable && sel);
+  SET_SENSITIVE ("select-stroke-last-values", writable && sel);
 
 #undef SET_SENSITIVE
 }

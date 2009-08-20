@@ -244,6 +244,7 @@ vectors_actions_update (GimpActionGroup *group,
   gboolean     global_buf = FALSE;
   gboolean     visible    = FALSE;
   gboolean     linked     = FALSE;
+  gboolean     writable   = FALSE;
   GList       *next       = NULL;
   GList       *prev       = NULL;
 
@@ -261,8 +262,9 @@ vectors_actions_update (GimpActionGroup *group,
           GList    *vectors_list;
           GList    *list;
 
-          visible = gimp_item_get_visible (item);
-          linked  = gimp_item_get_linked  (item);
+          visible  = gimp_item_get_visible (item);
+          linked   = gimp_item_get_linked (item);
+          writable = ! gimp_item_get_lock_content (item);
 
           vectors_list = gimp_item_get_container_iter (item);
 
@@ -281,7 +283,7 @@ vectors_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("vectors-path-tool",       vectors);
+  SET_SENSITIVE ("vectors-path-tool",       writable);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
   SET_SENSITIVE ("vectors-new",             image);

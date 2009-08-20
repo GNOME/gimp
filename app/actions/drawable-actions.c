@@ -154,6 +154,7 @@ drawable_actions_update (GimpActionGroup *group,
   gboolean      is_indexed = FALSE;
   gboolean      visible    = FALSE;
   gboolean      linked     = FALSE;
+  gboolean      writable   = FALSE;
 
   image = action_data_get_image (data);
 
@@ -175,8 +176,9 @@ drawable_actions_update (GimpActionGroup *group,
           else
             item = GIMP_ITEM (drawable);
 
-          visible = gimp_item_get_visible (item);
-          linked  = gimp_item_get_linked  (item);
+          visible  = gimp_item_get_visible (item);
+          linked   = gimp_item_get_linked (item);
+          writable = ! gimp_item_get_lock_content (item);
         }
     }
 
@@ -185,10 +187,10 @@ drawable_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("drawable-equalize",       drawable && ! is_indexed);
-  SET_SENSITIVE ("drawable-invert",         drawable && ! is_indexed);
-  SET_SENSITIVE ("drawable-levels-stretch", drawable &&   is_rgb);
-  SET_SENSITIVE ("drawable-offset",         drawable);
+  SET_SENSITIVE ("drawable-equalize",       writable && ! is_indexed);
+  SET_SENSITIVE ("drawable-invert",         writable && ! is_indexed);
+  SET_SENSITIVE ("drawable-levels-stretch", writable &&   is_rgb);
+  SET_SENSITIVE ("drawable-offset",         writable);
 
   SET_SENSITIVE ("drawable-visible", drawable);
   SET_SENSITIVE ("drawable-linked",  drawable);
@@ -196,12 +198,12 @@ drawable_actions_update (GimpActionGroup *group,
   SET_ACTIVE ("drawable-visible", visible);
   SET_ACTIVE ("drawable-linked",  linked);
 
-  SET_SENSITIVE ("drawable-flip-horizontal", drawable);
-  SET_SENSITIVE ("drawable-flip-vertical",   drawable);
+  SET_SENSITIVE ("drawable-flip-horizontal", writable);
+  SET_SENSITIVE ("drawable-flip-vertical",   writable);
 
-  SET_SENSITIVE ("drawable-rotate-90",  drawable);
-  SET_SENSITIVE ("drawable-rotate-180", drawable);
-  SET_SENSITIVE ("drawable-rotate-270", drawable);
+  SET_SENSITIVE ("drawable-rotate-90",  writable);
+  SET_SENSITIVE ("drawable-rotate-180", writable);
+  SET_SENSITIVE ("drawable-rotate-270", writable);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

@@ -501,6 +501,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       indexed    = FALSE;    /*  is indexed             */
   gboolean       lock_alpha = FALSE;
   gboolean       text_layer = FALSE;
+  gboolean       writable   = FALSE;
   GList         *next       = NULL;
   GList         *prev       = NULL;
 
@@ -521,6 +522,7 @@ layers_actions_update (GimpActionGroup *group,
           mask       = gimp_layer_get_mask (layer);
           lock_alpha = gimp_layer_get_lock_alpha (layer);
           alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+          writable   = ! gimp_item_get_lock_content (GIMP_ITEM (layer));
 
           layer_list = gimp_item_get_container_iter (GIMP_ITEM (layer));
 
@@ -532,8 +534,7 @@ layers_actions_update (GimpActionGroup *group,
               next = g_list_next (list);
             }
 
-          if (layer)
-            text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
+          text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
         }
     }
 
@@ -577,21 +578,21 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
   SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
 
-  SET_SENSITIVE ("layers-resize",          layer && !ac);
-  SET_SENSITIVE ("layers-resize-to-image", layer && !ac);
-  SET_SENSITIVE ("layers-scale",           layer && !ac);
+  SET_SENSITIVE ("layers-resize",          writable && !ac);
+  SET_SENSITIVE ("layers-resize-to-image", writable && !ac);
+  SET_SENSITIVE ("layers-scale",           writable && !ac);
 
-  SET_SENSITIVE ("layers-crop",            layer && sel);
+  SET_SENSITIVE ("layers-crop",            writable && sel);
 
-  SET_SENSITIVE ("layers-alpha-add",       layer && !fs && !alpha);
-  SET_SENSITIVE ("layers-alpha-remove",    layer && !fs &&  alpha);
+  SET_SENSITIVE ("layers-alpha-add",       writable && !fs && !alpha);
+  SET_SENSITIVE ("layers-alpha-remove",    writable && !fs &&  alpha);
 
   SET_SENSITIVE ("layers-lock-alpha", layer);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !mask);
-  SET_SENSITIVE ("layers-mask-apply",  layer && !fs && !ac &&  mask);
-  SET_SENSITIVE ("layers-mask-delete", layer && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask);
+  SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
 
   SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac &&  mask);
   SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac &&  mask);
