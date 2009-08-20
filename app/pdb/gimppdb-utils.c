@@ -304,6 +304,7 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
 
 gboolean
 gimp_pdb_item_is_attached (GimpItem  *item,
+                           gboolean   writable,
                            GError   **error)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
@@ -318,6 +319,9 @@ gimp_pdb_item_is_attached (GimpItem  *item,
                    gimp_item_get_ID (item));
       return FALSE;
     }
+
+  if (writable)
+    return gimp_pdb_item_is_writable (item, error);
 
   return TRUE;
 }
@@ -389,7 +393,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
       return FALSE;
     }
 
-  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), error);
+  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), FALSE, error);
 }
 
 static const gchar *

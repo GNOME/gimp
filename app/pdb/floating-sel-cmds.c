@@ -152,7 +152,7 @@ floating_sel_attach_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         floating_sel_attach (layer, drawable);
       else
         success = FALSE;

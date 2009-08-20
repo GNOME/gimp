@@ -71,7 +71,7 @@ HELP
                         "plug-in/gimppluginmanager.h") ],
 	code    => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       const gchar *undo_desc = _("Plug-In");
 
@@ -148,7 +148,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
+  if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error))
+    gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -231,7 +234,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error))
     non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   else
     success = FALSE;
@@ -278,7 +281,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error))
     non_empty = gimp_drawable_mask_intersect (drawable,
                                               &x, &y, &width, &height);
   else
@@ -1009,7 +1012,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
+  if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+      x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
       y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
       num_channels == gimp_drawable_bytes (drawable))
     {
@@ -1253,7 +1257,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     gimp_drawable_offset (drawable, context, wrap_around, fill_type,
                           offset_x, offset_y);
   else
@@ -1321,7 +1325,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-foreground-extract.h") ],
         code    => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error))
     gimp_drawable_foreground_extract (drawable, mode, mask, progress);
   else
     success = FALSE;

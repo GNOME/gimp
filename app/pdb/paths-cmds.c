@@ -330,7 +330,8 @@ path_stroke_current_invoker (GimpProcedure      *procedure,
       GimpVectors  *vectors  = gimp_image_get_active_vectors (image);
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-      if (vectors && drawable)
+      if (vectors && drawable &&
+          gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error))
         {
           GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
 
