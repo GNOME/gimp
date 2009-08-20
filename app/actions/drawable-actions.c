@@ -69,6 +69,13 @@ static const GimpActionEntry drawable_actions[] =
 
 static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
+  { "drawable-visible", GIMP_STOCK_VISIBLE,
+    NC_("drawable-action", "_Visible"), NULL,
+    NC_("drawable-action", "Toggle visibility"),
+    G_CALLBACK (drawable_visible_cmd_callback),
+    FALSE,
+    GIMP_HELP_LAYER_VISIBLE },
+
   { "drawable-linked", GIMP_STOCK_LINKED,
     NC_("drawable-action", "_Linked"), NULL,
     NC_("drawable-action", "Toggle the linked state"),
@@ -76,12 +83,13 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     FALSE,
     GIMP_HELP_LAYER_LINKED },
 
-  { "drawable-visible", GIMP_STOCK_VISIBLE,
-    NC_("drawable-action", "_Visible"), NULL,
-    NC_("drawable-action", "Toggle visibility"),
-    G_CALLBACK (drawable_visible_cmd_callback),
+  { "drawable-lock-content", NULL /* GIMP_STOCK_LOCK */,
+    NC_("drawable-action", "L_ock pixels"), NULL,
+    NC_("drawable-action",
+        "Keep the pixels on this drawable from being modified"),
+    G_CALLBACK (drawable_lock_content_cmd_callback),
     FALSE,
-    GIMP_HELP_LAYER_VISIBLE }
+    NULL, /* GIMP_HELP_LAYER_LOCK_PIXELS */ }
 };
 
 static const GimpEnumActionEntry drawable_flip_actions[] =
@@ -154,6 +162,7 @@ drawable_actions_update (GimpActionGroup *group,
   gboolean      is_indexed = FALSE;
   gboolean      visible    = FALSE;
   gboolean      linked     = FALSE;
+  gboolean      locked     = FALSE;
   gboolean      writable   = FALSE;
 
   image = action_data_get_image (data);
@@ -178,7 +187,8 @@ drawable_actions_update (GimpActionGroup *group,
 
           visible  = gimp_item_get_visible (item);
           linked   = gimp_item_get_linked (item);
-          writable = ! gimp_item_get_lock_content (item);
+          locked   = gimp_item_get_lock_content (item);
+          writable = ! locked;
         }
     }
 
@@ -192,11 +202,13 @@ drawable_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("drawable-levels-stretch", writable &&   is_rgb);
   SET_SENSITIVE ("drawable-offset",         writable);
 
-  SET_SENSITIVE ("drawable-visible", drawable);
-  SET_SENSITIVE ("drawable-linked",  drawable);
+  SET_SENSITIVE ("drawable-visible",      drawable);
+  SET_SENSITIVE ("drawable-linked",       drawable);
+  SET_SENSITIVE ("drawable-lock-content", drawable);
 
-  SET_ACTIVE ("drawable-visible", visible);
-  SET_ACTIVE ("drawable-linked",  linked);
+  SET_ACTIVE ("drawable-visible",      visible);
+  SET_ACTIVE ("drawable-linked",       linked);
+  SET_ACTIVE ("drawable-lock-content", locked);
 
   SET_SENSITIVE ("drawable-flip-horizontal", writable);
   SET_SENSITIVE ("drawable-flip-vertical",   writable);
