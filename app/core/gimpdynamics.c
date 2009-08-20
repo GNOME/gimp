@@ -158,9 +158,9 @@ static void    gimp_dynamics_get_property     (GObject      *object,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
 
-static void    gimp_dynamics_curves_init      (GimpDynamicsOutput *dynamics);
+static void    gimp_dynamics_output_init      (GimpDynamicsOutput *dynamics);
 
-static void    gimp_dynamics_curves_finalize  (GimpDynamicsOutput *dynamics);
+static void    gimp_dynamics_output_finalize  (GimpDynamicsOutput *dynamics);
 
 
 /*
@@ -365,27 +365,19 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
 static void
 gimp_dynamics_init (GimpDynamics *options)
 {
+  gimp_dynamics_output_init(options->opacity_dynamics);
 
-  options->opacity_dynamics      = g_slice_new0 (GimpDynamicsOutput);
-  gimp_dynamics_curves_init(options->opacity_dynamics);
+  gimp_dynamics_output_init(options->hardness_dynamics);
 
-  options->hardness_dynamics     = g_slice_new0 (GimpDynamicsOutput);
-  gimp_dynamics_curves_init(options->hardness_dynamics);
+  gimp_dynamics_output_init(options->rate_dynamics);
 
-  options->rate_dynamics         = g_slice_new0 (GimpDynamicsOutput);
-  gimp_dynamics_curves_init(options->rate_dynamics);
+  gimp_dynamics_output_init(options->size_dynamics);
 
-  options->size_dynamics         = g_slice_new0 (GimpDynamicsOutput);
-  gimp_dynamics_curves_init(options->size_dynamics);
+  gimp_dynamics_output_init(options->aspect_ratio_dynamics);
 
-  options->aspect_ratio_dynamics = g_slice_new0 (GimpDynamicsOutput);
-  gimp_dynamics_curves_init(options->aspect_ratio_dynamics);
+  gimp_dynamics_output_init(options->color_dynamics);
 
-  options->color_dynamics        = g_slice_new0 (GimpDynamicsOutput);
-  gimp_dynamics_curves_init(options->color_dynamics);
-
-  options->angle_dynamics        = g_slice_new0 (GimpDynamicsOutput);
-  gimp_dynamics_curves_init(options->angle_dynamics);
+  gimp_dynamics_output_init(options->angle_dynamics);
 
 }
 
@@ -395,34 +387,29 @@ gimp_dynamics_finalize (GObject *object)
 {
   GimpDynamics *options = GIMP_DYNAMICS (object);
 
-  gimp_dynamics_curves_finalize   (options->opacity_dynamics);
-  g_slice_free (GimpDynamicsOutput,  options->opacity_dynamics);
+  gimp_dynamics_output_finalize   (options->opacity_dynamics);
 
-  gimp_dynamics_curves_finalize   (options->hardness_dynamics);
-  g_slice_free (GimpDynamicsOutput,  options->hardness_dynamics);
+  gimp_dynamics_output_finalize   (options->hardness_dynamics);
 
-  gimp_dynamics_curves_finalize   (options->rate_dynamics);
-  g_slice_free (GimpDynamicsOutput,  options->rate_dynamics);
+  gimp_dynamics_output_finalize   (options->rate_dynamics);
 
-  gimp_dynamics_curves_finalize   (options->size_dynamics);
-  g_slice_free (GimpDynamicsOutput,  options->size_dynamics);
+  gimp_dynamics_output_finalize   (options->size_dynamics);
 
-  gimp_dynamics_curves_finalize   (options->aspect_ratio_dynamics);
-  g_slice_free (GimpDynamicsOutput,  options->aspect_ratio_dynamics);
+  gimp_dynamics_output_finalize   (options->aspect_ratio_dynamics);
 
-  gimp_dynamics_curves_finalize   (options->color_dynamics);
-  g_slice_free (GimpDynamicsOutput,  options->color_dynamics);
+  gimp_dynamics_output_finalize   (options->color_dynamics);
 
-  gimp_dynamics_curves_finalize   (options->angle_dynamics);
-  g_slice_free (GimpDynamicsOutput,  options->angle_dynamics);
+  gimp_dynamics_output_finalize   (options->angle_dynamics);
 
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_dynamics_curves_init      (GimpDynamicsOutput *dynamics)
+gimp_dynamics_output_init      (GimpDynamicsOutput *dynamics)
 {
+  dynamics = g_slice_new0 (GimpDynamicsOutput);
+
   dynamics->pressure_curve = g_object_new (GIMP_TYPE_CURVE,
                              "name",       "Pressure curve",
                               NULL);
@@ -444,7 +431,7 @@ gimp_dynamics_curves_init      (GimpDynamicsOutput *dynamics)
 }
 
 static void
-gimp_dynamics_curves_finalize  (GimpDynamicsOutput *dynamics)
+gimp_dynamics_output_finalize  (GimpDynamicsOutput *dynamics)
 {
   g_object_unref(dynamics->pressure_curve);
 
@@ -457,6 +444,8 @@ gimp_dynamics_curves_finalize  (GimpDynamicsOutput *dynamics)
   g_object_unref(dynamics->random_curve);
 
   g_object_unref(dynamics->fade_curve);
+
+  g_slice_free (GimpDynamicsOutput,  dynamics);
 
 }
 
