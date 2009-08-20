@@ -634,6 +634,10 @@ gimp_item_tree_view_get_lock_box (GimpItemTreeView *view)
       view->priv->lock_box = gtk_hbox_new (FALSE, button_spacing);
 
       gimp_item_tree_view_add_options (view, _("Lock:"), view->priv->lock_box);
+
+      gtk_box_set_child_packing (GTK_BOX (view->priv->options_box),
+                                 gtk_widget_get_parent (view->priv->lock_box),
+                                 FALSE, FALSE, 0, GTK_PACK_END);
     }
 
   return view->priv->lock_box;
