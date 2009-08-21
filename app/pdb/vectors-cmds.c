@@ -120,7 +120,7 @@ vectors_new_from_text_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           gint x, y;
 

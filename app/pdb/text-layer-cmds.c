@@ -118,7 +118,7 @@ text_layer_get_text_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "text", &text,
@@ -156,7 +156,7 @@ text_layer_set_text_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -190,7 +190,7 @@ text_layer_get_font_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "font", &font,
@@ -228,7 +228,7 @@ text_layer_set_font_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -263,7 +263,7 @@ text_layer_get_font_size_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "font-size",      &font_size,
@@ -307,7 +307,7 @@ text_layer_set_font_size_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -342,7 +342,7 @@ text_layer_get_antialias_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "antialias", &antialias,
@@ -380,7 +380,7 @@ text_layer_set_antialias_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -414,7 +414,7 @@ text_layer_get_hint_style_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "hint-style", &style,
@@ -452,7 +452,7 @@ text_layer_set_hint_style_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -486,7 +486,7 @@ text_layer_get_kerning_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "kerning", &kerning,
@@ -524,7 +524,7 @@ text_layer_set_kerning_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -558,7 +558,7 @@ text_layer_get_language_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "language", &language,
@@ -596,7 +596,7 @@ text_layer_set_language_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -630,7 +630,7 @@ text_layer_get_base_direction_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "base-direction", &direction,
@@ -668,7 +668,7 @@ text_layer_set_base_direction_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -702,7 +702,7 @@ text_layer_get_justification_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "justify", &justify,
@@ -740,7 +740,7 @@ text_layer_set_justification_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -774,7 +774,7 @@ text_layer_get_color_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           color = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer))->color;
         }
@@ -810,7 +810,7 @@ text_layer_set_color_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -844,7 +844,7 @@ text_layer_get_indent_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "indent", &indent,
@@ -882,7 +882,7 @@ text_layer_set_indent_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -916,7 +916,7 @@ text_layer_get_line_spacing_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "line-spacing", &line_spacing,
@@ -954,7 +954,7 @@ text_layer_set_line_spacing_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -988,7 +988,7 @@ text_layer_get_letter_spacing_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "letter-spacing", &letter_spacing,
@@ -1026,7 +1026,7 @@ text_layer_set_letter_spacing_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -1062,7 +1062,7 @@ text_layer_resize_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),
@@ -1098,7 +1098,7 @@ text_layer_get_hinting_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                         "hinting", &hinting,
@@ -1141,7 +1141,7 @@ text_layer_set_hinting_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
           gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                                _("Set text layer attribute"),

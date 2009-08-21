@@ -377,6 +377,7 @@ gimp_pdb_item_is_writable (GimpItem  *item,
 
 gboolean
 gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
+                              gboolean    writable,
                               GError    **error)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
@@ -393,7 +394,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
       return FALSE;
     }
 
-  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), FALSE, error);
+  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), writable, error);
 }
 
 static const gchar *
