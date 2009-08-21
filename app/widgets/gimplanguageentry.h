@@ -37,17 +37,14 @@ struct _GimpLanguageEntryClass
   GtkEntryClass  parent_class;
 };
 
-struct _GimpLanguageEntry
-{
-  GtkEntry       parent_instance;
 
-  GtkListStore  *store;
-};
+GType         gimp_language_entry_get_type     (void) G_GNUC_CONST;
 
+GtkWidget   * gimp_language_entry_new          (void);
 
-GType       gimp_language_entry_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_language_entry_new      (void);
+const gchar * gimp_language_entry_get_iso_code (GimpLanguageEntry *entry);
+gboolean      gimp_language_entry_set_iso_code (GimpLanguageEntry *entry,
+                                                const gchar       *code);
 
 
 #endif  /* __GIMP_LANGUAGE_ENTRY_H__ */

@@ -11,8 +11,10 @@ enum scheme_port_kind {
   port_free=0,
   port_file=1,
   port_string=2,
+  port_srfi6=4,
   port_input=16,
-  port_output=32
+  port_output=32,
+  port_saw_EOF=64
 };
 
 typedef struct port {
@@ -57,6 +59,7 @@ func_dealloc free;
 int retcode;
 int tracing;
 
+
 #define CELL_SEGSIZE    25000 /* # of cells in one segment */
 #define CELL_NSEGMENT   50    /* # of segments for cells */
 char *alloc_seg[CELL_NSEGMENT];
@@ -68,7 +71,6 @@ pointer args;            /* register for arguments of function */
 pointer envir;           /* stack register for current environment */
 pointer code;            /* register for current code */
 pointer dump;            /* stack register for next evaluation */
-pointer safe_foreign;    /* register to avoid gc problems */
 pointer foreign_error;   /* used for foreign functions to signal an error */
 
 int interactive_repl;    /* are we in an interactive REPL? */
@@ -87,17 +89,20 @@ pointer EOF_OBJ;         /* special cell representing end-of-file object */
 pointer oblist;          /* pointer to symbol table */
 pointer global_env;      /* pointer to global environment */
 
+pointer c_nest;          /* stack for nested calls from C */
+
 /* global pointers to special symbols */
-pointer LAMBDA;               /* pointer to syntax lambda */
+pointer LAMBDA;          /* pointer to syntax lambda */
 pointer QUOTE;           /* pointer to syntax quote */
 
-pointer QQUOTE;               /* pointer to symbol quasiquote */
+pointer QQUOTE;          /* pointer to symbol quasiquote */
 pointer UNQUOTE;         /* pointer to symbol unquote */
 pointer UNQUOTESP;       /* pointer to symbol unquote-splicing */
 pointer FEED_TO;         /* => */
 pointer COLON_HOOK;      /* *colon-hook* */
 pointer ERROR_HOOK;      /* *error-hook* */
-pointer SHARP_HOOK;  /* *sharp-hook* */
+pointer SHARP_HOOK;      /* *sharp-hook* */
+pointer COMPILE_HOOK;    /* *compile-hook* */
 
 pointer free_cell;       /* pointer to top of free cells */
 long    fcells;          /* # of free cells */
@@ -108,7 +113,7 @@ pointer save_inport;
 pointer loadport;
 
 #define MAXFIL 64
-port load_stack[MAXFIL];     /* Stack of open files for port -1 (LOADing) */
+port load_stack[MAXFIL]; /* Stack of open files for port -1 (LOADing) */
 int nesting_stack[MAXFIL];
 int file_i;
 int nesting;
@@ -117,7 +122,9 @@ char    gc_verbose;      /* if gc_verbose is not zero, print gc status */
 char    no_memory;       /* Whether mem. alloc. has failed */
 
 #define LINESIZE 1024
-char    strbuff[LINESIZE];
+char    linebuff[LINESIZE];
+#define STRBUFFSIZE 256
+char    strbuff[STRBUFFSIZE];
 
 FILE *tmpfp;
 int tok;
@@ -125,7 +132,7 @@ int print_flag;
 pointer value;
 int op;
 
-void *ext_data;     /* For the benefit of foreign functions */
+void *ext_data;      /* For the benefit of foreign functions */
 long gensym_cnt;
 
 struct scheme_interface *vptr;
@@ -143,6 +150,9 @@ enum scheme_opcodes {
   OP_MAXDEFINED
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define cons(sc,a,b) _cons(sc,a,b,0)
 #define immutable_cons(sc,a,b) _cons(sc,a,b,1)
@@ -161,6 +171,8 @@ gunichar charvalue(pointer p);
 int is_vector(pointer p);
 
 int is_port(pointer p);
+int is_inport(pointer p);
+int is_outport(pointer p);
 
 int is_pair(pointer p);
 pointer pair_car(pointer p);
@@ -188,4 +200,14 @@ int is_environment(pointer p);
 int is_immutable(pointer p);
 void setimmutable(pointer p);
 
+#ifdef __cplusplus
+}
 #endif
+
+#endif
+
+/*
+Local variables:
+c-file-style: "k&r"
+End:
+*/

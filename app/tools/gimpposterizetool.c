@@ -154,7 +154,10 @@ gimp_posterize_tool_initialize (GimpTool     *tool,
 
   gimp_config_reset (GIMP_CONFIG (posterize_tool->config));
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
 
   gtk_adjustment_set_value (posterize_tool->levels_data,
                             posterize_tool->config->levels);

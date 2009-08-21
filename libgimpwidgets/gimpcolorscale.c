@@ -135,8 +135,8 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
       focus += focus_padding;
     }
 
-  range->min_slider_size = (MIN (widget->requisition.width,
-                                 widget->requisition.height) - 2 * focus) / 2;
+  range->min_slider_size = (MIN (allocation->width,
+                                 allocation->height) - 2 * focus) / 2;
 
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);

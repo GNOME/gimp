@@ -318,11 +318,7 @@ static gboolean
 gimp_toolbox_delete_event (GtkWidget   *widget,
                            GdkEventAny *event)
 {
-  /* Activate the action instead of simply calling gimp_exit(),
-   * so that the quit action's sensitivity is taken into account.
-   */
-  gimp_ui_manager_activate_action (GIMP_IMAGE_DOCK (widget)->ui_manager,
-                                   "file", "file-quit");
+  gimp_dialog_factory_hide_dialog (widget);
 
   return TRUE;
 }

@@ -109,7 +109,7 @@ search.
 .TP
 (brush-path-writable "${gimp_dir}/brushes")
 
-  This is a colon-separated list of folders to search.
+This is a colon-separated list of folders to search.
 
 .TP
 (pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
@@ -120,7 +120,7 @@ search.
 .TP
 (pattern-path-writable "${gimp_dir}/patterns")
 
-  This is a colon-separated list of folders to search.
+This is a colon-separated list of folders to search.
 
 .TP
 (palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
@@ -131,7 +131,7 @@ search.
 .TP
 (palette-path-writable "${gimp_dir}/palettes")
 
-  This is a colon-separated list of folders to search.
+This is a colon-separated list of folders to search.
 
 .TP
 (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
@@ -142,7 +142,7 @@ search.
 .TP
 (gradient-path-writable "${gimp_dir}/gradients")
 
-  This is a colon-separated list of folders to search.
+This is a colon-separated list of folders to search.
 
 .TP
 (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
@@ -151,7 +151,7 @@ Where to look for fonts in addition to the system-wide installed fonts.  This
 is a colon-separated list of folders to search.
 
 .TP
-(default-brush "Circle (11)")
+(default-brush "Round Fuzzy")
 
 Specify a default brush.  The brush is searched for in the specified brush
 path.  This is a string value.
@@ -388,7 +388,7 @@ are yes and no.
 
 When enabled, the X server is queried for the mouse's current position on each
 motion event, rather than relying on the position hint.  This means painting
-with large brushes should be more accurate, but it may be slower.  Perversely,
+with large brushes should be more accurate, but it may be slower.  Conversely,
 on some X servers enabling this option results in faster painting.  Possible
 values are yes and no.
 
@@ -676,7 +676,7 @@ How many recent settings to keep around in color correction tools  This is an
 integer value.
 
 .TP
-(trust-dirty-flag yes)
+(trust-dirty-flag no)
 
 When enabled, GIMP will not save an image if it has not been changed since it
 was opened.  Possible values are yes and no.
@@ -812,14 +812,6 @@ Sets the browser used by the help system.  Possible values are gimp and
 web-browser.
 
 .TP
-(web-browser "xdg-open %s")
-
-Sets the external web browser to be used.  This can be an absolute path or the
-name of an executable to search for in the user's PATH. If the command
-contains '%s' it will be replaced with the URL, else the URL will be appended
-to the command with a space separating the two.  This is a single filename.
-
-.TP
 (user-manual-online no)
 
 When enabled, the online user manual will be used by the help system.
@@ -920,4 +912,4 @@ System-wide configuration file
 Per-user configuration file
 
 .SH "SEE ALSO"
-.BR gimp (1),
+.BR gimp (1)

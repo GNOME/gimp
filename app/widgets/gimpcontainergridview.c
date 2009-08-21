@@ -63,6 +63,7 @@ static void     gimp_container_grid_view_set_context  (GimpContainerView      *v
                                                        GimpContext            *context);
 static gpointer gimp_container_grid_view_insert_item  (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
+                                                       gpointer                parent_insert_data,
                                                        gint                    index);
 static void     gimp_container_grid_view_remove_item  (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
@@ -415,6 +416,7 @@ gimp_container_grid_view_set_context (GimpContainerView *view,
 static gpointer
 gimp_container_grid_view_insert_item (GimpContainerView *container_view,
                                       GimpViewable      *viewable,
+                                      gpointer           parent_insert_data,
                                       gint               index)
 {
   GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (container_view);

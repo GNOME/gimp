@@ -53,6 +53,9 @@ gimp_image_rotate (GimpImage        *image,
                    GimpRotationType  rotate_type,
                    GimpProgress     *progress)
 {
+  GList    *all_layers;
+  GList    *all_channels;
+  GList    *all_vectors;
   GList    *list;
   gdouble   center_x;
   gdouble   center_y;
@@ -78,9 +81,13 @@ gimp_image_rotate (GimpImage        *image,
   center_x              = previous_image_width  / 2.0;
   center_y              = previous_image_height / 2.0;
 
-  progress_max = (gimp_container_get_n_children (image->channels) +
-                  gimp_container_get_n_children (image->layers)   +
-                  gimp_container_get_n_children (image->vectors)  +
+  all_layers   = gimp_image_get_layer_list (image);
+  all_channels = gimp_image_get_channel_list (image);
+  all_vectors  = gimp_image_get_vectors_list (image);
+
+  progress_max = (g_list_length (all_layers)   +
+                  g_list_length (all_channels) +
+                  g_list_length (all_vectors)  +
                   1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));
@@ -113,9 +120,7 @@ gimp_image_rotate (GimpImage        *image,
     }
 
   /*  Rotate all channels  */
-  for (list = gimp_image_get_channel_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_channels; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -128,9 +133,7 @@ gimp_image_rotate (GimpImage        *image,
     }
 
   /*  Rotate all vectors  */
-  for (list = gimp_image_get_vectors_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_vectors; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -167,9 +170,7 @@ gimp_image_rotate (GimpImage        *image,
   }
 
   /*  Rotate all layers  */
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_layers; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
       gint      off_x;
@@ -225,6 +226,10 @@ gimp_image_rotate (GimpImage        *image,
                                       previous_image_height);
 
   g_object_thaw_notify (G_OBJECT (image));
+
+  g_list_free (all_layers);
+  g_list_free (all_channels);
+  g_list_free (all_vectors);
 
   gimp_unset_busy (image->gimp);
 }

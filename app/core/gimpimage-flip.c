@@ -42,6 +42,9 @@ gimp_image_flip (GimpImage           *image,
                  GimpOrientationType  flip_type,
                  GimpProgress        *progress)
 {
+  GList   *all_layers;
+  GList   *all_channels;
+  GList   *all_vectors;
   GList   *list;
   gdouble  axis;
   gdouble  progress_max;
@@ -68,17 +71,19 @@ gimp_image_flip (GimpImage           *image,
       return;
     }
 
-  progress_max = (gimp_container_get_n_children (image->channels) +
-                  gimp_container_get_n_children (image->layers)   +
-                  gimp_container_get_n_children (image->vectors)  +
+  all_layers   = gimp_image_get_layer_list (image);
+  all_channels = gimp_image_get_channel_list (image);
+  all_vectors  = gimp_image_get_vectors_list (image);
+
+  progress_max = (g_list_length (all_layers)   +
+                  g_list_length (all_channels) +
+                  g_list_length (all_vectors)  +
                   1 /* selection */);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_FLIP, NULL);
 
   /*  Flip all channels  */
-  for (list = gimp_image_get_channel_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_channels; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -89,9 +94,7 @@ gimp_image_flip (GimpImage           *image,
     }
 
   /*  Flip all vectors  */
-  for (list = gimp_image_get_vectors_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_vectors; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -109,9 +112,7 @@ gimp_image_flip (GimpImage           *image,
     gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Flip all layers  */
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_layers; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -122,7 +123,9 @@ gimp_image_flip (GimpImage           *image,
     }
 
   /*  Flip all Guides  */
-  for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
+  for (list = gimp_image_get_guides (image);
+       list;
+       list = g_list_next (list))
     {
       GimpGuide *guide    = list->data;
       gint       position = gimp_guide_get_position (guide);
@@ -149,7 +152,9 @@ gimp_image_flip (GimpImage           *image,
     }
 
   /*  Flip all sample points  */
-  for (list = gimp_image_get_sample_points (image); list; list = g_list_next (list))
+  for (list = gimp_image_get_sample_points (image);
+       list;
+       list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
 
@@ -169,6 +174,10 @@ gimp_image_flip (GimpImage           *image,
     }
 
   gimp_image_undo_group_end (image);
+
+  g_list_free (all_layers);
+  g_list_free (all_channels);
+  g_list_free (all_vectors);
 
   gimp_unset_busy (image->gimp);
 }

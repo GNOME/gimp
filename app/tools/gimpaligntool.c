@@ -99,15 +99,15 @@ static void   gimp_align_tool_cursor_update  (GimpTool              *tool,
 
 static void   gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
 
-static GtkWidget *button_with_stock          (GimpAlignmentType      action,
+static GtkWidget * button_with_stock         (GimpAlignmentType      action,
                                               GimpAlignTool         *align_tool);
-static GtkWidget *gimp_align_tool_controls   (GimpAlignTool         *align_tool);
+static GtkWidget * gimp_align_tool_controls  (GimpAlignTool         *align_tool);
 static void   do_alignment                   (GtkWidget             *widget,
                                               gpointer               data);
 static void   clear_selected_object          (GObject               *object,
                                               GimpAlignTool         *align_tool);
 static void   clear_all_selected_objects     (GimpAlignTool         *align_tool);
-static GimpLayer *select_layer_by_coords     (GimpImage             *image,
+static GimpLayer * select_layer_by_coords    (GimpImage             *image,
                                               gint                   x,
                                               gint                   y);
 void          gimp_image_arrange_objects     (GimpImage             *image,
@@ -116,6 +116,7 @@ void          gimp_image_arrange_objects     (GimpImage             *image,
                                               GObject               *reference,
                                               GimpAlignmentType      reference_alignment,
                                               gint                   offset);
+
 
 G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -203,8 +204,7 @@ gimp_align_tool_constructor (GType                  type,
    * object is fully constructed before we get here, which is not
    * guaranteed
    */
-  container = GTK_CONTAINER (g_object_get_data (options,
-                                                "controls-container"));
+  container = g_object_get_data (options, "controls-container");
 
   if (container)
     {
@@ -278,7 +278,7 @@ gimp_align_tool_button_press (GimpTool            *tool,
                               GimpButtonPressType  press_type,
                               GimpDisplay         *display)
 {
-  GimpAlignTool    *align_tool  = GIMP_ALIGN_TOOL (tool);
+  GimpAlignTool *align_tool  = GIMP_ALIGN_TOOL (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -307,8 +307,7 @@ gimp_align_tool_button_press (GimpTool            *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
-/*
- * some rather complex logic here.  If the user clicks without modifiers,
+/* some rather complex logic here.  If the user clicks without modifiers,
  * then we start a new list, and use the first object in it as reference.
  * If the user clicks using Shift, or draws a rubber-band box, then
  * we add objects to the list, but do not specify which one should
@@ -385,11 +384,12 @@ gimp_align_tool_button_release (GimpTool              *tool,
         {
           if (! g_list_find (align_tool->selected_objects, object))
             {
-              align_tool->selected_objects
-                = g_list_append (align_tool->selected_objects, object);
+              align_tool->selected_objects =
+                g_list_append (align_tool->selected_objects, object);
+
               g_signal_connect (object, "removed",
                                 G_CALLBACK (clear_selected_object),
-                                (gpointer) align_tool);
+                                align_tool);
 
               /* if an object has been selected using unmodified click,
                * it should be used as the reference
@@ -405,11 +405,12 @@ gimp_align_tool_button_release (GimpTool              *tool,
       gint   X1    = MAX (coords->x, align_tool->x0);
       gint   Y0    = MIN (coords->y, align_tool->y0);
       gint   Y1    = MAX (coords->y, align_tool->y0);
+      GList *all_layers;
       GList *list;
 
-      for (list = gimp_image_get_layer_iter (image);
-           list;
-           list = g_list_next (list))
+      all_layers = gimp_image_get_layer_list (image);
+
+      for (list = all_layers; list; list = g_list_next (list))
         {
           GimpLayer *layer = list->data;
           gint       x0, y0, x1, y1;
@@ -427,11 +428,15 @@ gimp_align_tool_button_release (GimpTool              *tool,
           if (g_list_find (align_tool->selected_objects, layer))
             continue;
 
-          align_tool->selected_objects
-            = g_list_append (align_tool->selected_objects, layer);
-          g_signal_connect (layer, "removed", G_CALLBACK (clear_selected_object),
-                            (gpointer) align_tool);
+          align_tool->selected_objects =
+            g_list_append (align_tool->selected_objects, layer);
+
+          g_signal_connect (layer, "removed",
+                            G_CALLBACK (clear_selected_object),
+                            align_tool);
         }
+
+      g_list_free (all_layers);
     }
 
   for (i = 0; i < ALIGN_TOOL_NUM_BUTTONS; i++)
@@ -671,7 +676,8 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
                                  x, y,w, h,
                                  FALSE);
 
-  for (list = g_list_first (align_tool->selected_objects); list;
+  for (list = align_tool->selected_objects;
+       list;
        list = g_list_next (list))
     {
       if (GIMP_IS_ITEM (list->data))
@@ -901,10 +907,11 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
                                      100000,
                                      1, 20, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
   g_signal_connect (align_tool->horz_offset_adjustment, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &align_tool->horz_offset);
-  gtk_widget_show (spinbutton);
 
   return main_vbox;
 }
@@ -1067,6 +1074,8 @@ button_with_stock (GimpAlignmentType  action,
 
   button = gtk_button_new ();
   g_object_set_data (G_OBJECT (button), "action", GINT_TO_POINTER (action));
+  gtk_widget_set_sensitive (button, FALSE);
+  gtk_widget_show (button);
 
   image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
   gtk_misc_set_padding (GTK_MISC (image), 2, 2);
@@ -1076,9 +1085,6 @@ button_with_stock (GimpAlignmentType  action,
   g_signal_connect (button, "clicked",
                     G_CALLBACK (do_alignment),
                     align_tool);
-
-  gtk_widget_set_sensitive (button, FALSE);
-  gtk_widget_show (button);
 
   return button;
 }
@@ -1092,7 +1098,7 @@ clear_selected_object (GObject       *object,
   if (align_tool->selected_objects)
     g_signal_handlers_disconnect_by_func (object,
                                           G_CALLBACK (clear_selected_object),
-                                          (gpointer) align_tool);
+                                          align_tool);
 
   align_tool->selected_objects = g_list_remove (align_tool->selected_objects,
                                                 object);
@@ -1110,11 +1116,11 @@ clear_all_selected_objects (GimpAlignTool *align_tool)
 
   while (align_tool->selected_objects)
     {
-      GObject *object = G_OBJECT (g_list_first (align_tool->selected_objects)->data);
+      GObject *object = align_tool->selected_objects->data;
 
       g_signal_handlers_disconnect_by_func (object,
-                                            G_CALLBACK (clear_selected_object),
-                                            (gpointer) align_tool);
+                                            clear_selected_object,
+                                            align_tool);
 
       align_tool->selected_objects = g_list_remove (align_tool->selected_objects,
                                                     object);
@@ -1129,13 +1135,12 @@ select_layer_by_coords (GimpImage *image,
                         gint       x,
                         gint       y)
 {
+  GList *all_layers;
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  all_layers = gimp_image_get_layer_list (image);
 
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_layers; list; list = g_list_next (list))
     {
       GimpLayer *layer = list->data;
       gint       off_x, off_y;
@@ -1153,9 +1158,13 @@ select_layer_by_coords (GimpImage *image,
           x < off_x + width &&
           y < off_y + height)
         {
+          g_list_free (all_layers);
+
           return layer;
         }
     }
+
+  g_list_free (all_layers);
 
   return NULL;
 }

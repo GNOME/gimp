@@ -70,6 +70,8 @@ gsize     temp_buf_get_data_size (TempBuf       *buf);
 guchar  * temp_buf_data_clear    (TempBuf       *buf);
 
 gsize     temp_buf_get_memsize   (TempBuf       *buf);
+void      temp_buf_dump          (TempBuf       *buf,
+                                  const gchar   *filename);
 
 
 #endif  /*  __TEMP_BUF_H__  */

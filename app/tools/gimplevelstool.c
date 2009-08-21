@@ -235,7 +235,10 @@ gimp_levels_tool_initialize (GimpTool     *tool,
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
                                   FALSE);
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
                                       levels_menu_sensitivity, drawable, NULL);

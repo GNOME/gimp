@@ -766,6 +766,7 @@ gimp_image_convert (GimpImage               *image,
 {
   QuantizeObj       *quantobj = NULL;
   GimpImageBaseType  old_type;
+  GList             *all_layers;
   GList             *list;
   const gchar       *undo_desc = NULL;
   gint               nth_layer, n_layers;
@@ -797,7 +798,9 @@ gimp_image_convert (GimpImage               *image,
 
   gimp_set_busy (image->gimp);
 
-  n_layers = gimp_container_get_n_children (GIMP_CONTAINER (image->layers));
+  all_layers = gimp_image_get_layer_list (image);
+
+  n_layers = g_list_length (all_layers);
 
   switch (new_type)
     {
@@ -866,7 +869,7 @@ gimp_image_convert (GimpImage               *image,
           num_found_cols = 0;
 
           /*  Build the histogram  */
-          for (list = gimp_image_get_layer_iter (image), nth_layer = 0;
+          for (list = all_layers, nth_layer = 0;
                list;
                list = g_list_next (list), nth_layer++)
             {
@@ -951,7 +954,7 @@ gimp_image_convert (GimpImage               *image,
   if (quantobj)
     quantobj->n_layers = n_layers;
 
-  for (list = gimp_image_get_layer_iter (image), nth_layer = 0;
+  for (list = all_layers, nth_layer = 0;
        list;
        list = g_list_next (list), nth_layer++)
     {
@@ -1025,9 +1028,7 @@ gimp_image_convert (GimpImage               *image,
                             remap_table, &num_entries);
 
           /*  Convert all layers  */
-          for (list = gimp_image_get_layer_iter (image);
-               list;
-               list = g_list_next (list))
+          for (list = all_layers; list; list = g_list_next (list))
             {
               remap_indexed_layer (list->data, remap_table, num_entries);
             }
@@ -1085,6 +1086,8 @@ gimp_image_convert (GimpImage               *image,
 
   gimp_image_mode_changed (image);
   g_object_thaw_notify (G_OBJECT (image));
+
+  g_list_free (all_layers);
 
   gimp_unset_busy (image->gimp);
 

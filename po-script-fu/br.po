@@ -1,0 +1,2673 @@
+# Breton translation for gimp
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the gimp package.
+# Alan Monfort <alan.monfort@free.fr>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp\n"
+"Report-Msgid-Bugs-To: An Drouizig <drouizig@drouizig.org>\n"
+"POT-Creation-Date: 2009-03-10 06:21+0000\n"
+"PO-Revision-Date: 2009-07-28 04:47+0100\n"
+"Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
+"Language-Team: An Drouizig <drouizig@drouizig.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/script-fu/script-fu-console.c:131
+#: ../plug-ins/script-fu/script-fu-console.c:198
+msgid "Script-Fu Console"
+msgstr "Penel Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:194
+msgid "Welcome to TinyScheme"
+msgstr "Degemer mat e TinyScheme"
+
+#: ../plug-ins/script-fu/script-fu-console.c:200
+msgid "Interactive Scheme Development"
+msgstr "Steuñv diorrenn etrewezhiat"
+
+#: ../plug-ins/script-fu/script-fu-console.c:236
+msgid "_Browse..."
+msgstr "_Furchal..."
+
+#: ../plug-ins/script-fu/script-fu-console.c:294
+msgid "Save Script-Fu Console Output"
+msgstr "Enrollañ ec'hankad penel Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:341
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "N'haller ket digeriñ '%s' evit skrivañ : %s"
+
+#: ../plug-ins/script-fu/script-fu-console.c:370
+msgid "Script-Fu Procedure Browser"
+msgstr "Merdeer an treugennadoù Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-eval.c:63
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Aotreet e vez galvadennoù anetrewezhiat hepken gant mod priziañ Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:196
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Skript-Fu n'eo ket gouest da erounit daou skript war un dro."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:198
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Emaoc'h oc'h erounit ar skript \"%s\" ."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:224
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Skript-Fu : %s"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:288
+#, c-format
+msgid "%s:"
+msgstr "%s :"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:336
+msgid "Script-Fu Color Selection"
+msgstr "Diuzad al liv evit Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:445
+msgid "Script-Fu File Selection"
+msgstr "Diuzad ar restr evit Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:448
+msgid "Script-Fu Folder Selection"
+msgstr "Diuzad an teuliad evit Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:461
+msgid "Script-Fu Font Selection"
+msgstr "Diuzad  an nodrezh evit Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:469
+msgid "Script-Fu Palette Selection"
+msgstr "Diuzad al livaoueg evit Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:478
+msgid "Script-Fu Pattern Selection"
+msgstr "Diuzad ar goustur evit Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:487
+msgid "Script-Fu Gradient Selection"
+msgstr "Diuzad an ilrezenn evit Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:496
+msgid "Script-Fu Brush Selection"
+msgstr "Diuzad ar broust evit Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:824
+#, c-format
+msgid "Error while executing %s:"
+msgstr "Fazi e-pad ma oa oc'h erounit %s :"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:150
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Re nebeut a arguzennoù evit galvadenn 'script-fu-register'"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:609
+#, c-format
+msgid "Error while loading %s:"
+msgstr "Fazi e-pad ma oa o kargañ %s :"
+
+#: ../plug-ins/script-fu/script-fu-server.c:713
+msgid "Script-Fu Server Options"
+msgstr "Dibarzhioù an dafariad Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu-server.c:718
+msgid "_Start Server"
+msgstr "_Loc'hañ an dafariad"
+
+#: ../plug-ins/script-fu/script-fu-server.c:746
+msgid "Server port:"
+msgstr "Porzh an dafariad :"
+
+#: ../plug-ins/script-fu/script-fu-server.c:752
+msgid "Server logfile:"
+msgstr "Kerzhlevr an dafariad :"
+
+#: ../plug-ins/script-fu/script-fu.c:111
+msgid "Interactive console for Script-Fu development"
+msgstr "Penel etrewezhiat evit diorren Skript-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:117
+msgid "_Console"
+msgstr "_Penel"
+
+#: ../plug-ins/script-fu/script-fu.c:141
+msgid "Server for remote Script-Fu operation"
+msgstr "Dafariad evit gwezhiadurioù Skript-Fu a-bell"
+
+#: ../plug-ins/script-fu/script-fu.c:146
+msgid "_Start Server..."
+msgstr "_Loc'hañ an dafariad..."
+
+#: ../plug-ins/script-fu/script-fu.c:302
+msgid "_GIMP Online"
+msgstr "_GIMP enlinenn"
+
+#: ../plug-ins/script-fu/script-fu.c:303
+msgid "_User Manual"
+msgstr "Dornlevr an arveriad"
+
+#: ../plug-ins/script-fu/script-fu.c:306
+msgid "_Script-Fu"
+msgstr "_Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:308
+msgid "_Test"
+msgstr "_Taol arnod"
+
+#: ../plug-ins/script-fu/script-fu.c:311
+msgid "_Buttons"
+msgstr "A_fell"
+
+#: ../plug-ins/script-fu/script-fu.c:313
+msgid "_Logos"
+msgstr "Sie_lloù"
+
+#: ../plug-ins/script-fu/script-fu.c:315
+msgid "_Patterns"
+msgstr "_Gousturioù"
+
+#: ../plug-ins/script-fu/script-fu.c:318
+msgid "_Web Page Themes"
+msgstr "Neuzioù ar bajennad _web"
+
+#: ../plug-ins/script-fu/script-fu.c:320
+msgid "_Alien Glow"
+msgstr "S_kleur Alien"
+
+#: ../plug-ins/script-fu/script-fu.c:322
+msgid "_Beveled Pattern"
+msgstr "Goustur _beskellet"
+
+#: ../plug-ins/script-fu/script-fu.c:324
+msgid "_Classic.Gimp.Org"
+msgstr "_Gimp.Org Klasel"
+
+#: ../plug-ins/script-fu/script-fu.c:327
+msgid "Alpha to _Logo"
+msgstr "Alfa war ar _siell"
+
+#: ../plug-ins/script-fu/script-fu.c:330
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Lenn en-dro an holl skriptoù Script-Fu hegerz"
+
+#: ../plug-ins/script-fu/script-fu.c:335
+msgid "_Refresh Scripts"
+msgstr "_Azbevaat ar skriptoù"
+
+#: ../plug-ins/script-fu/script-fu.c:358
+msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
+msgstr "N'hallit ket arverañ \"Azbevaat ar skriptoù\" mard eo digor ur voestad emziviz Script-Fu. Serrit prenestroù Script-Fu ha klaskit en-dro."
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
+msgid "3D _Outline..."
+msgstr "E_c'hankad 3M..."
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
+msgid "Bumpmap (alpha layer) blur radius"
+msgstr "Skin ruzed ar bosoù (treuzfollenn alfa)"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
+msgid "Create a logo with outlined text and a drop shadow"
+msgstr "Krouiñ ur siell gant un destenn trolinennet hag un disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
+msgid "Default bumpmap settings"
+msgstr "Arventennoù ar bosoù dre ziouer"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:5
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:7
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/slide.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "Nodrezh"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:6
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:3
+msgid "Font size (pixels)"
+msgstr "Ment an nodrezh (pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
+msgid "Outline blur radius"
+msgstr "Skin ruzed an drolinenn"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgstr "Trolinennañ ar maez diuzet (pe d'an alfa) gant ur goustur hag ouzhpennañ un disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "Goustur"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
+msgid "Shadow X offset"
+msgstr "Linkañ X an disheol"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
+msgid "Shadow Y offset"
+msgstr "Linkañ Y an disheol"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
+msgid "Shadow blur radius"
+msgstr "Skin ruzed an disheol"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:7
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:10
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: ../plug-ins/script-fu/scripts/slide.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:5
+msgid "Text"
+msgstr "Testenn"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+msgid "3_D Truchet..."
+msgstr "Truched 3_M..."
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:1
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:2
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:1
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:1
+msgid "Background color"
+msgstr "Liv an drekva"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:2
+msgid "Block size"
+msgstr "Ment ar bloc'had"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+msgid "Create an image filled with a 3D Truchet pattern"
+msgstr "Krouiñ ur skeudenn leuniet gant ur goustur 3M mod Truchet"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
+msgid "End blend"
+msgstr "Mesk diwezhel"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:5
+msgid "Number of X tiles"
+msgstr "Niver a garrezioù e X"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:6
+msgid "Number of Y tiles"
+msgstr "Niver a garrezioù e Y"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
+msgid "Start blend"
+msgstr "Deraouiñ ar meskañ"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+msgid "Supersample"
+msgstr "Dreiststandilhonañ"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:8
+msgid "Thickness"
+msgstr "Tevder"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
+msgid "Add B_evel..."
+msgstr "Ouzhpennañ ur veskell..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
+msgid "Add a beveled border to an image"
+msgstr "Ouzhpennañ ur riblenn beskellet d'ur skeudenn"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
+msgid "Keep bump layer"
+msgstr "Mirout treuzfollennoù ar bosoù"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: ../plug-ins/script-fu/scripts/slide.scm.h:6
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+msgid "Work on copy"
+msgstr "Labourat war un eilad"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:1
+msgid "Add _Border..."
+msgstr "Ouzhpennañ ur ri_blenn..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Add a border around an image"
+msgstr "Ouzhpennañ ur riblenn tro dro d'ur skeudenn"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border X size"
+msgstr "Ment ar riblenn e X"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+msgid "Border Y size"
+msgstr "Ment ar riblenn e Y"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+msgid "Border color"
+msgstr "Liv ar riblenn"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
+msgid "Delta value on color"
+msgstr "Gwerzh Delta war al liv"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+msgid "Create an arrow graphic with an eerie glow for web pages"
+msgstr "Krouiñ ur bir kevregat gant ur skleur iskis evit ajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "Diskenn"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/camo.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+msgid "Flatten image"
+msgstr "Pladañ ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+msgid "Glow color"
+msgstr "Liv ar skleur"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "Kleiz"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+msgid "Orientation"
+msgstr "Reteradur"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+msgid "Right"
+msgstr "Dehou"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:7
+msgid "Size"
+msgstr "Ment"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+msgid "Up"
+msgstr "Sevel"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
+msgid "_Arrow..."
+msgstr "_Saezh..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+msgid "Bar height"
+msgstr "Sav ar varrenn"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+msgid "Bar length"
+msgstr "Led ar varrenn"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Create an Hrule graphic with an eerie glow for web pages"
+msgstr "Krouiñ ur reolennH kevregat gant ur skleur iskis evit ajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+msgid "_Hrule..."
+msgstr "_Linenn a-zremm..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+msgid "Create a bullet graphic with an eerie glow for web pages"
+msgstr "Krouiñ ur padellig kevregat gant ur skleur iskis evit ajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
+msgid "Radius"
+msgstr "Skin"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+msgid "_Bullet..."
+msgstr "_Padellig..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+msgid "B_utton..."
+msgstr "A_fell..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+msgid "Create a button graphic with an eerie glow for web pages"
+msgstr "Krouiñ un afell gevregat gant ur skleur iskis evit pajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+msgid "Glow radius"
+msgstr "Skin ar skleur"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
+msgid "Padding"
+msgstr "Leuniadur"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:11
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:9
+msgid "Text color"
+msgstr "Liv an destenn"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "Add an eerie glow around the selected region (or alpha)"
+msgstr "Ouzhpennañ ur skleur iskis tro dro d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+msgid "Alien _Glow..."
+msgstr "S_kleur Alien..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+msgid "Create a logo with an alien glow around the text"
+msgstr "Krouiñ ur siell gant skleur un alien tro dro d'an destenn"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+msgid "Glow size (pixels * 4)"
+msgstr "Ment ar skleur (pikselioù * 4)"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "Add psychedelic outlines to the selected region (or alpha)"
+msgstr "Ouzhpennañ trolinennoù psikedelek d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+msgid "Alien _Neon..."
+msgstr "_Neon Alien..."
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Create a logo with psychedelic outlines around the text"
+msgstr "Krouiñ ur siell gant trolinennoù psikedelek tro dro d'an destenn"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+msgid "Fade away"
+msgstr "Arveuz"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+msgid "Number of bands"
+msgstr "Niver a vandennoù"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+msgid "Width of bands"
+msgstr "Led ar bandennoù"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
+msgid "Width of gaps"
+msgstr "Led an etremezioù"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid "Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
+msgstr "Ouzhpennañ un efed ilrezennek, un disheol bannet hag un drekva d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+msgid "Create a plain text logo with a gradient effect, a drop shadow, and a background"
+msgstr "Krouiñ ur siellad testenn gant un efed ilzerenn, un disheol bannet hag un drekva"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
+msgid "_Basic I..."
+msgstr "_Bazik I..."
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "Add a shadow and a highlight to the selected region (or alpha)"
+msgstr "Ouzhpennañ un disheol hag un ussked d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+msgid "B_asic II..."
+msgstr "B_azik II..."
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+msgid "Create a simple logo with a shadow and a highlight"
+msgstr "Krouiñ ur siell ant un disheol hag un ussked"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
+msgid "Bevel width"
+msgstr "Led ar veskell"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+msgid "Create a simple, beveled button graphic for webpages"
+msgstr "Krouiñ un eeun a afell gevregat beskellet evit ar pajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+msgid "Lower-right color"
+msgstr "Liv en traoñ a-zehou"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Pressed"
+msgstr "Pouezet warni"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
+msgid "Simple _Beveled Button..."
+msgstr "Afell eeun _beskellet..."
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
+msgid "Upper-left color"
+msgstr "Liv e lein a-gleiz"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "Create a beveled pattern arrow for webpages"
+msgstr "Krouiñ ur goustur bir beskellet evit ar pajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "Create a beveled pattern bullet for webpages"
+msgstr "Krouiñ ur goustur padellig beskellet evit ar pajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+msgid "Diameter"
+msgstr "Treuzkiz"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+msgid "Transparent background"
+msgstr "Drekva treuzwelus"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+msgid "Create a beveled pattern button for webpages"
+msgstr "Krouiñ ur goustur afell beskellet evit ar pajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+msgid "Create a beveled pattern heading for webpages"
+msgstr "Krouiñ ur goustur talbenn beskellet evit ar pajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+msgid "H_eading..."
+msgstr "_Talbenn..."
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "Create a beveled pattern hrule for webpages"
+msgstr "Krouiñ ur goustur reolennH beskellet evit ar pajennadoù web"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Height"
+msgstr "Sav"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
+msgid "Width"
+msgstr "Led"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "Blend Animation needs at least three source layers"
+msgstr "Ezhomm ez eus tri zarzh treuzfollennoù da vihanañ gant ar meskañ bliverezh"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid "Create intermediate layers to blend two or more layers over a background as an animation"
+msgstr "Krouiñ treuzfollennoù treugel evit meskañ div pe vuioc'h a dreuzfollennoù a-us d'un drekva evel ur bliverezh"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
+msgid "Intermediate frames"
+msgstr "Skeudennoù treugel"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
+msgid "Looped"
+msgstr "E dol"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
+msgid "Max. blur radius"
+msgstr "Skin uc'hek ar ruzed"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
+msgid "_Blend..."
+msgstr "_Meskañ..."
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid "Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
+msgstr "Ouzhpennañ drekvaoù mesket, usskedoù ha disheolioù d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
+msgid "Blen_ded..."
+msgstr "Mesk_et..."
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
+msgid "Blend mode"
+msgstr "Mod meskañ"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Create a logo with blended backgrounds, highlights, and shadows"
+msgstr "Krouiñ ur siell gant drekvaoù, usskedoù ha disheolioù bet mesket"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
+msgid "Custom Gradient"
+msgstr "Ilrezenn personelaet"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-BG-HSV"
+msgstr "RV-DV-APL"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
+msgid "FG-BG-RGB"
+msgstr "RV-DV-RGG"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
+msgid "FG-Transparent"
+msgstr "RV treuzwelus"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:2
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Gradient"
+msgstr "Ilrezenn"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:4
+msgid "Gradient reverse"
+msgstr "Ilrezenn c'hin"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
+msgid "Offset (pixels)"
+msgstr "Linkañ (pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "Add 'cow spots' to the selected region (or alpha)"
+msgstr "Ouzhpennañ 'kroc'hen saout' d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+msgid "Background Color"
+msgstr "Liv an drekva"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+msgid "Bo_vination..."
+msgstr "B_uoc'haat..."
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+msgid "Create a logo with text in the style of 'cow spots'"
+msgstr "Krouiñ ur siell gant un destenn mod 'kroc'hen saout'"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+msgid "Spots density X"
+msgstr "Douester poentoù e X"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
+msgid "Spots density Y"
+msgstr "Douester poentoù e Y"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+msgid "Add glowing"
+msgstr "Ouzhpennañ skleur"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+msgid "After glow"
+msgstr "War-lec'h ar skleur"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+msgid "B_urn-In..."
+msgstr "_Entanaat..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+msgid "Corona width"
+msgstr "Led ar gurunenn"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid "Create intermediate layers to produce an animated 'burn-in' transition between two layers"
+msgstr "Krouiñ treuzfollennoù treugel evit krouiñ un arveuz blivet mod 'tanañ' etre div dreuzfollenn"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+msgid "Fadeout"
+msgstr "Arveuz"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+msgid "Fadeout width"
+msgstr "Led an arveuz"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+msgid "Prepare for GIF"
+msgstr "Prientiñ evit GIF"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+msgid "Speed (pixels/frame)"
+msgstr "Tizh (pikselioù/skeudenn)"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer."
+msgstr "Ezhomm ez eus div dreuzfollenn en holl gant ar skript Tanañ (burn-in) : un dreuzfollenn evit ar rakva gant treuzwelusted hag un dreuzfollenn evit an drekva."
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:1
+msgid "Color 1"
+msgstr "Liv 1"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:2
+msgid "Color 2"
+msgstr "Liv 2"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:3
+msgid "Color 3"
+msgstr "Liv 3"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Create an image filled with a camouflage pattern"
+msgstr "Krouiñ ur skeudenn leuniet gant ur goustur darguzhañ"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:6
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Granularity"
+msgstr "Arweegezh"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:7
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Image size"
+msgstr "Ment ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:8
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
+msgid "Smooth"
+msgstr "Dousaat"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:9
+msgid "_Camouflage..."
+msgstr "_Darguzhañ..."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
+msgid "Carve white areas"
+msgstr "Engravañ ar maezioù gwenn"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "Image to carve"
+msgstr "Skeudenn da engravañ"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Stencil C_arve..."
+msgstr "Moull liv_añ delwenniñ..."
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
+msgid "Background Image"
+msgstr "Skeudenn an drekva"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
+msgid "Carve raised text"
+msgstr "Engravañ an destenn brasaet"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
+msgid "Carved..."
+msgstr "Engravet..."
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
+msgid "Create a logo with text raised above or carved in to the specified background image"
+msgstr "Krouiñ ur siell gant an destenn savet dirak pe zelwennet e-barzh drekva erspizet ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+msgid "Padding around text"
+msgstr "Leuniadur tro dro d'an destenn"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:2
+msgid "Chalk color"
+msgstr "Liv ar c'hleiz"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:3
+msgid "Create a chalk drawing effect for the selected region (or alpha)"
+msgstr "Krouiñ un efed tresañ dre gleiz evit ar maez diuzet (pe an alfa)"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Create a logo resembling chalk scribbled on a blackboard"
+msgstr "Krouiñ ur siell heñvel ouzh kleiz skrifet fall war un daolenn"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:8
+msgid "_Chalk..."
+msgstr "_Kleiz..."
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
+msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
+msgstr "Ouzhpennañ un efed mod skoltr koad gant an delwenniñ d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
+msgid "Blur amount"
+msgstr "Kementad ruzed"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
+msgid "Chip Awa_y..."
+msgstr "Skolp e-leizh..."
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip amount"
+msgstr "Kementad skolp"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Create a logo resembling a chipped wood carving"
+msgstr "Krouiñ ur siell heñvel ouzh skoltr koad gant an delwenniñ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
+msgid "Drop shadow"
+msgstr "Disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
+msgid "Fill BG with pattern"
+msgstr "Leunian an DV gant ur goustur"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Invert"
+msgstr "Tuginañ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
+msgid "Keep background"
+msgstr "Mirout an drekva"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
+msgstr "Ouzhpennañ un efed kromañ d'ar maez diuzet (pe d'an alfa) un ur arverañ ur moull livañ erspizet (liveoù louedoù)"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+msgid "Chrome balance"
+msgstr "Mentel ar c'hrom"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+msgid "Chrome factor"
+msgstr "Parenn ar c'hrom"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+msgid "Chrome lightness"
+msgstr "Lintr ar c'hrom"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+msgid "Chrome saturation"
+msgstr "Peurvec'hiadur ar c'hrom"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
+msgid "Chrome white areas"
+msgstr "Maezioù gwenn ar c'hrom"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+msgid "Environment map"
+msgstr "Kartenn an amva"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+msgid "Highlight balance"
+msgstr "Mentel al lintr"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+msgid "Stencil C_hrome..."
+msgstr "Moull livañ kr_om..."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "Add a simple chrome effect to the selected region (or alpha)"
+msgstr "Ouzhpennañ un efed kromañ eeun d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+msgid "C_hrome..."
+msgstr "Kr_om..."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+msgid "Create a simplistic, but cool, chromed logo"
+msgstr "Krouiñ ur siell kromet eeun, dispar avat"
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
+msgid "Offsets (pixels * 2)"
+msgstr "Linkadurioù (pikselioù x2)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:1
+msgid "Circuit seed"
+msgstr "Hadenn an amred"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr "Leuniañ ar maez siuzet (pe d'an alfa) gant roudoù evel re un amred moullet"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:3
+#: ../plug-ins/script-fu/scripts/predator.scm.h:3
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
+msgid "Keep selection"
+msgstr "Mirout an diuzad"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
+msgid "No background (only for separate layer)"
+msgstr "Drekva ebet (evit an dreuzfollenn diforc'h hepken)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
+msgid "Oilify mask size"
+msgstr "Eouliañ ment ar maskl"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/lava.scm.h:6
+#: ../plug-ins/script-fu/scripts/predator.scm.h:6
+msgid "Separate layer"
+msgstr "Treuzfollenn diforc'h"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
+msgid "_Circuit..."
+msgstr "Amre_d..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "Ouzhpennañ ur wiadezh heñvel ouzh an dilhad d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:2
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur X"
+msgstr "Ruzed X"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:4
+msgid "Blur Y"
+msgstr "Ruzed Y"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:5
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Depth"
+msgstr "Donder"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:6
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Elevation"
+msgstr "Savidigezh"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:7
+msgid "_Clothify..."
+msgstr "_Gwiad..."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:1
+msgid "Add realistic looking coffee stains to the image"
+msgstr "Ouzhpennañ introù kafe o neuz gwirheñvel d'ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:2
+msgid "Darken only"
+msgstr "Teñvalaat nemetken"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "Stains"
+msgstr "Introù"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:4
+msgid "_Coffee Stain..."
+msgstr "Introù _kafe..."
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
+msgstr "Ouzhpennañ un efed mod bandennoù treset d'ar maez diuzet (pe d'an alfa) dre drolinennañ ha leuniañ gant un ilrezenn"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
+msgid "Comic Boo_k..."
+msgstr "Bandennoù treset..."
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
+msgid "Create a comic-book style logo by outlining and filling with a gradient"
+msgstr "Krouiñ ur siell he stil bandennoù treset dre drolinennañ ha leuniañ gant un ilrezenn"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
+msgid "Outline color"
+msgstr "Liv an drolinenn"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
+msgid "Outline size"
+msgstr "Ment an drolinenn"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid "Add a metallic effect to the selected region (or alpha) with reflections and perspective shadows"
+msgstr "Ouzhpennañ un efed metalek d'ar maez diuzet (pe d'an alfa) gant disvannadurioù ha disheolioù diarsellek"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+msgid "Cool _Metal..."
+msgstr "_Metal yen..."
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+msgid "Create a metallic logo with reflections and perspective shadows"
+msgstr "Krouiñ ur siell vetalek gant disvannadurioù ha disheolioù diarsellek"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
+msgid "Effect size (pixels)"
+msgstr "Ment an efed (pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "Skeudenn an drekva"
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+msgid "Create a logo with a crystal/gel effect displacing the image underneath"
+msgstr "Krouiñ ur siell gant un efed mod strink/skorn en ur zilec'hiañ ar skeudenn a-zindan"
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+msgid "Crystal..."
+msgstr "Strink..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
+msgid "Difference Clouds..."
+msgstr "Koumoul Diforc'h..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Trouz unvan arloet gant mod diforc'h un dreuzfollenn"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
+msgid "Distress the selection"
+msgstr "Digempenn an diuzad"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
+msgid "Granularity (1 is low)"
+msgstr "Arweegezh (1 a dalv izel)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
+msgid "Smooth horizontally"
+msgstr "Dousaat a-zremm"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
+msgid "Smooth vertically"
+msgstr "Dousaat a-serzh"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
+msgid "Spread"
+msgstr "Ledañ"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
+msgid "Threshold (bigger 1<-->255 smaller)"
+msgstr "Gwehin (brasoc'h 1<-->255 bihanoc'h)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
+msgid "_Distort..."
+msgstr "_Distummañ..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Ouzhpennañ un disheol bannet d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+msgid "Allow resizing"
+msgstr "Aotren an admentañ"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:3
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:3
+msgid "Blur radius"
+msgstr "Skin ar ruzed"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+msgid "Color"
+msgstr "Liv"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+msgid "Offset X"
+msgstr "Linkañ X"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+msgid "Offset Y"
+msgstr "Linkañ Y"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Opacity"
+msgstr "Demerez"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
+msgid "_Drop Shadow..."
+msgstr "_Disheol bannet..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
+msgid "Columns"
+msgstr "Bannoù"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Erase"
+msgstr "Diverkañ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase every other row or column"
+msgstr "Diverkañ an holl renkoù pe vannoù all..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
+msgid "Erase/fill"
+msgstr "Diverkañ/leuniañ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
+msgid "Even"
+msgstr "Hebar"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
+msgid "Even/odd"
+msgstr "Hebar/Ampar"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
+msgid "Fill with BG"
+msgstr "Leuniañ gant an DV"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Odd"
+msgstr "Ampar"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows"
+msgstr "Renkoù"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
+msgid "Rows/cols"
+msgstr "Renkoù/bannoù"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
+msgid "_Erase Every Other Row..."
+msgstr "Div_erkañ an holl renkoù all..."
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:1
+msgid "Create an image filled with a Land Pattern"
+msgstr "Krouiñ ur skeudenn leuniet gant ur goustur Douar"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:2
+#: ../plug-ins/script-fu/scripts/land.scm.h:2
+msgid "Detail level"
+msgstr "Spisder ar munudoù"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:3
+#: ../plug-ins/script-fu/scripts/land.scm.h:4
+msgid "Image height"
+msgstr "Sav ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:4
+#: ../plug-ins/script-fu/scripts/land.scm.h:5
+msgid "Image width"
+msgstr "Led ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:5
+#: ../plug-ins/script-fu/scripts/land.scm.h:7
+msgid "Random seed"
+msgstr "Hadenn dargouezhek"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:6
+#: ../plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale X"
+msgstr "Skeulaat X"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:7
+#: ../plug-ins/script-fu/scripts/land.scm.h:9
+msgid "Scale Y"
+msgstr "Skeulaat Y"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:8
+msgid "_Flatland..."
+msgstr "Tir _kompez"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:1
+msgid "Active colors"
+msgstr "Gweredekaat al livioù"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:2
+msgid "Black on white"
+msgstr "Du war wenn"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:3
+msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgstr "Krouiñ ur skeudenn leuniet gant alberzioù nodrezhoù o klotañ gant sil un anv nodrezh"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Font _size (pixels)"
+msgstr "Men_t an nodrezh (pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
+msgid "Render _Font Map..."
+msgstr "Deo_uez glennad an nodrezh..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
+msgid "Use font _name as text"
+msgstr "Arverañ anv an nodrezh evel testenn"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
+msgid "_Border (pixels)"
+msgstr "Ri_blenn (pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
+msgid "_Color scheme"
+msgstr "Go_ulun al liv"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:9
+msgid "_Filter (regexp)"
+msgstr "_Sil (regexp)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:10
+msgid "_Labels"
+msgstr "Skritel_ligoù"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:11
+msgid "_Text"
+msgstr "T_estenn"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid "Add a frost effect to the selected region (or alpha) with an added drop shadow"
+msgstr "Ouzhpennañ un efed skornet d'ar maez diuzet (pe d'an alfa) gant an disheol bannet ouzhpennet"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+msgid "Create frozen logo with an added drop shadow"
+msgstr "Krouiñ ur siell skornet gant an disheol bannet ouzhpennet"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
+msgid "_Frosty..."
+msgstr "_Riellek..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "Ouzhpennañ ur riblenn amspis ha dentek d'ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+msgid "Add shadow"
+msgstr "Ouzhpennañ disheol"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+msgid "Blur border"
+msgstr "Riblenn ruzet"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "Ment ar riblenn"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr "Arweegezh (1 a dalv izel)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#, no-c-format
+msgid "Shadow weight (%)"
+msgstr "Tevder an disheol (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
+msgid "_Fuzzy Border..."
+msgstr "Riblenn _dispis..."
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+msgid "Autocrop"
+msgstr "Didroc'hañ emgefreek"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "Create an image of a large header using the gimp.org webpage theme"
+msgstr "Krouiñ ur skeudenn eus un talbenn bras en ur arverañ neuz pajennad web gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "Create an image of a small header using the gimp.org webpage theme"
+msgstr "Krouiñ ur skeudenn eus un talbenn bihan en ur arverañ neuz pajenn web gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+msgid "Dark color"
+msgstr "Liv teñval"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight color"
+msgstr "Liv flamm"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+msgid "Index image"
+msgstr "Skeudenn ibil"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+msgid "Number of colors"
+msgstr "Niver a livioù"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+msgid "Remove background"
+msgstr "Dilemel an drekva"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+msgid "Select-by-color threshold"
+msgstr "Gwehin diuzañ dre liv"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+msgid "Shadow color"
+msgstr "Liv an disheol"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
+msgid "_Big Header..."
+msgstr "Tal_benn bras..."
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
+msgid "_Small Header..."
+msgstr "Talbenn bi_han..."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+msgid "Create an image of a Tube Button Label Header using the gimp.org webpage theme"
+msgstr "Krouiñ ur skeudenn eus un talbenn afell e stumm un duellenn en ur arverañ neuz pajenn web gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
+msgstr "Krouiñ ur skeudenn eus ur skritell afell he stumm un duellenn en ur arverañ neuz pajenn web gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+msgid "Create an image of a second level Tube Button Label using the gimp.org webpage theme"
+msgstr "Krouiñ ur skeudenn eus un eil skritell afell he stumm un duellenn en ur arverañ neuz pajenn web gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+msgid "Create an image of a third level Tube Button Label using the gimp.org webpage theme"
+msgstr "Krouiñ ur skeudenn eus un teirvet skritell afell he stumm un duellenn en ur arverañ neuz pajenn web gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+msgid "T_ube Sub-Button Label..."
+msgstr "Skritell isafell mod 'Korzenn'..."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
+msgid "Tub_e Sub-Sub-Button Label..."
+msgstr "Skritell is-isafell mod 'Korzenn'..."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
+msgid "_General Tube Labels..."
+msgstr "Skritell hollek mod 'Korzenn'..."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
+msgid "_Tube Button Label..."
+msgstr "Skritell afell mod 'Korzenn'..."
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
+msgstr "Ouzhpennañ ilrezennoù, disheolioù, ha koagennoù d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
+msgid "Blend gradient (outline)"
+msgstr "Ilrezenn (trolinenn)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
+msgid "Blend gradient (text)"
+msgstr "Ilrezenn (testenn)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Create a logo with gradients, patterns, shadows, and bump maps"
+msgstr "Krouiñ ur siell gant ilrezennoù, gousturioù, disheolioù ha glennoù koagennet"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
+msgid "Glo_ssy..."
+msgstr "Gwernisek..."
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
+msgid "Outline gradient reverse"
+msgstr "Ilrezenn an drolinenn tuginet"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
+msgid "Pattern (outline)"
+msgstr "Goustur (trolinenn)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
+msgid "Pattern (overlay)"
+msgstr "Goustur (goleiñ)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
+msgid "Pattern (text)"
+msgstr "Goustur (testenn)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+msgid "Shadow"
+msgstr "Disheol"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
+msgid "Text gradient reverse"
+msgstr "Ilrezenn an destenn tuginet"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
+msgid "Use pattern for outline instead of gradient"
+msgstr "Arverañ ur goustur evit an drolinenn e-lec'h un ilrezenn"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
+msgid "Use pattern for text instead of gradient"
+msgstr "Arverañ ur goustur evit an destenn e-lec'h un ilrezenn"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:22
+msgid "Use pattern overlay"
+msgstr "Arverañ ur goustur goleiñ"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "Add a glowing hot metal effect to the selected region (or alpha)"
+msgstr "Ouzhpennañ un efed heñvel ouzh ar metal tomm o skleurañ d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+msgid "Create a logo that looks like glowing hot metal"
+msgstr "Krouiñ ur siell he neuz heñvel ouzh ar metal tomm o skleurañ"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+msgid "Glo_wing Hot..."
+msgstr "Skleurek fla_mm..."
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
+msgstr "Ouzhpennañ un neuz heoliek hag un efed beskellañ d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+msgid "Bevel height (sharpness)"
+msgstr "Hed ar veskell (lemmder)"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
+msgid "Border size (pixels)"
+msgstr "Ment ar riblenn (pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+msgid "Create a logo with a shiny look and beveled edges"
+msgstr "Krouiñ ur siell gant un neuz heoliek ha riblennoù beskellet"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+msgid "Gradient Beve_l..."
+msgstr "Beske_ll an ilrezenn..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Krouiñ ur skeudenn leuniet gant ur skouer eus an ilrezenn vremanel"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+msgid "Custom _Gradient..."
+msgstr "Ilrezenn personelaet..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
+msgid "Draw a grid as specified by the lists of X and Y locations using the current brush"
+msgstr "Tresañ ur gael evel ma 'z eo erspizet gant rolloù al lec'hiadurioù X ha Y en ur arverañ ar broust bremanel"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
+msgid "X divisions"
+msgstr "Rannadurioù  X"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
+msgid "Y divisions"
+msgstr "Rannadurioù  Y"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
+msgid "_Grid..."
+msgstr "_Kael..."
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
+msgid "New Guides from _Selection"
+msgstr "Dealfoù nevez diouzh an _diuzad"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr "Ouzhpennañ un dealf war al lec'h erspizet evel un dregantad eus ment ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
+msgid "Direction"
+msgstr "Roud"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
+msgid "Horizontal"
+msgstr "A-zremm"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
+msgid "New Guide (by _Percent)..."
+msgstr "Dealf nevez (dre zre_gantad)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
+#, no-c-format
+msgid "Position (in %)"
+msgstr "Lec'hiadur (e %)"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
+msgid "Vertical"
+msgstr "A-serzh"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "Ouhpennañ un dealf gant al lec'hiadur hag ar reteradur bet erspizet (e pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "New _Guide..."
+msgstr "_Dealf nevez..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
+msgid "Position"
+msgstr "Lec'hiadur"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+msgid "Remove all horizontal and vertical guides"
+msgstr "Dilec'hiañ an holl zealfoù a-zremm hag a-serzh"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
+msgid "_Remove all Guides"
+msgstr "Dilemel an holl zealfoù"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "Create a logo in a two-color, scribbled text style"
+msgstr "Krouiñ ur siell gant ur stil mod testenn skrivet fall e daou liv"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+msgid "Frame color"
+msgstr "Liv ar framm"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+msgid "Frame size"
+msgstr "Ment ar framm"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+msgid "Imigre-_26..."
+msgstr "Imigre-_26..."
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:1
+msgid "Create an image filled with a topographic map pattern"
+msgstr "Krouiñ ur skeudenn leuniet gant goustur ur gartenn lec'hiadurezh"
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:6
+msgid "Land height"
+msgstr "Sav an tir"
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:10
+msgid "Sea depth"
+msgstr "Donder ar mor"
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:11
+msgid "_Land..."
+msgstr "_Tir..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "Fill the current selection with lava"
+msgstr "Leuniañ an diuzad bremanel gant lava"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:4
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Roughness"
+msgstr "Diblaenegezh"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:5
+msgid "Seed"
+msgstr "Hadenn"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:8
+msgid "Use current gradient"
+msgstr "Arverañ an ilrezenn vremanel"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:9
+msgid "_Lava..."
+msgstr "_Lava..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgstr "Leuniañ un dreuzfollenn gant skinoù o vont er-maez diouzh he c'hreiz oc'h arverañ liv an rakva"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
+msgid "Line _Nova..."
+msgstr "Linennoù _Nova..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
+msgid "Number of lines"
+msgstr "Niver a linennoù"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
+msgid "Offset radius"
+msgstr "Skin al linkañ"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
+msgid "Randomness"
+msgstr "Dargouezhegezh"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
+msgid "Sharpness (degrees)"
+msgstr "Lemmegezh (derezioù)"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "Create a rectangular brush"
+msgstr "Krouiñ ur broust reizhkornek"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "Create a rectangular brush with feathered edges"
+msgstr "Krouiñ ur broust reizhkornek gant riblennoù skañv"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "Create an elliptical brush"
+msgstr "Krouiñ ur broust elipsennek"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "Create an elliptical brush with feathered edges"
+msgstr "Krouiñ ur broust elipsennek gant riblennoù skañv"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
+msgid "Elli_ptical, Feathered..."
+msgstr "E_lipsennek, plaennet..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "Feathering"
+msgstr "O plaenaat"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
+msgid "Name"
+msgstr "Anv"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
+msgid "Re_ctangular, Feathered..."
+msgstr "R_eizhkornek plaennet..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+msgid "Spacing"
+msgstr "Oc'h esaouiñ"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
+msgid "_Elliptical..."
+msgstr "_Elipsennek..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
+msgid "_Rectangular..."
+msgstr "_Reizhkornek..."
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "Convert the selected region (or alpha) into a neon-sign like object"
+msgstr "Amdreiñ ar maez diuzet (pe an alfa) d'un ergorenn evel un arouezinti dre neon"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
+msgid "Create a logo in the style of a neon sign"
+msgstr "Krouiñ ur siell gant stil un arouezinti dre neon"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
+msgid "Create shadow"
+msgstr "Krouiñ un disheol"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
+msgid "N_eon..."
+msgstr "N_eon..."
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:3
+msgid "Cell size (pixels)"
+msgstr "Ment ar c'helligoù (pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Create a logo in the style of newspaper printing"
+msgstr "Krouiñ ur siell gant stil doare moullañ ur gazetenn"
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
+#, no-c-format
+msgid "Density (%)"
+msgstr "Douester (%)"
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:9
+msgid "Newsprint Te_xt..."
+msgstr "Te_stenn Newsprint..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
+msgid "Defocus"
+msgstr "Distiañ"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
+msgid "Make an image look like an old photo"
+msgstr "Sevel neuz ur skeudenn evel ul luc'hskeudenn gozh"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
+msgid "Mottle"
+msgstr "Marbraat"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
+msgid "Sepia"
+msgstr "Sepia"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
+msgid "_Old Photo..."
+msgstr "Luc'hsk. k_ozh..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+msgid "Brush name"
+msgstr "Anv ar broust"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "File name"
+msgstr "Anv ar restr"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
+msgid "New _Brush..."
+msgstr "_Broust nevez..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
+msgid "Paste the clipboard contents into a new brush"
+msgstr "Pegañ ar golverad e-barzh ur broust nevez"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "N'eus tamm roadenn skeudenn ebet er golver da begañ."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
+msgid "New _Pattern..."
+msgstr "_Goustur nevez..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "Pegañ ar golverad e-barzh ur goustur nevez"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
+msgid "Pattern name"
+msgstr "Anv ar goustur"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "Ouzhpennañ un disheol dre ziarsell d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "Korn"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Interpolation"
+msgstr "Etreletodiñ"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Relative distance of horizon"
+msgstr "Pellder daveel an dremmwell"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "Relative length of shadow"
+msgstr "Led daveel an disheol"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
+msgid "_Perspective..."
+msgstr "_Diarsell.."
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "Ouzhpennañ un efed mod 'Predator' d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:2
+msgid "Edge amount"
+msgstr "Niver a gerioù"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixel amount"
+msgstr "Niver a bikselioù"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr "Pikselaat"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:7
+msgid "_Predator..."
+msgstr "_Preizher..."
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Create images, each containing an oval button graphic"
+msgstr "Krouiñ skeudennoù, pep hini gant un afell gevregat vigelc'hiek"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
+msgid "Lower color"
+msgstr "Liv en traoñ"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Lower color (active)"
+msgstr "Liv en traoñ (oberiant)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
+msgid "Not pressed"
+msgstr "Dibouez"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Not pressed (active)"
+msgstr "Dibouez (oberiant)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr "Leuniadur X"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr "Leuniadur Y"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
+msgid "Round ratio"
+msgstr "Parenn ar rontâd"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
+msgid "Text color (active)"
+msgstr "Liv an destenn (oberiant)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
+msgid "Upper color"
+msgstr "Liv e lein"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "Upper color (active)"
+msgstr "Liv e lein (oberiant)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
+msgid "_Round Button..."
+msgstr "Afell _ront..."
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
+msgid "Behavior"
+msgstr "Emzalc'h"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Create an image filled with an Earth-like map pattern"
+msgstr "Krouiñ ur skeudenn leuniet gant ur goustur henvel ouzh ur gartenn Douar"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr "Munut e kreiz"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
+msgid "Render _Map..."
+msgstr "Deo_uez..."
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
+msgid "Tile"
+msgstr "Marell"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
+msgid "Reverse Layer Order"
+msgstr "Tuginañ urzh an treuzfollennoù"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
+msgid "Reverse the order of layers in the image"
+msgstr "Tuginañ urzh an treuzfollennoù er skeudenn"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+msgid "Black"
+msgstr "Du"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
+msgstr "Krouiñ ur skeudenn dre liestreuzfollennoù dre ouzhpennañ un efed gwagennañ d'ar skeudenn vremanel"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+msgid "Edge behavior"
+msgstr "Emzalc'h ar riblenn"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Number of frames"
+msgstr "Niver a skeudennoù"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
+msgid "Rippling strength"
+msgstr "Kreñvder ar gwagennañ"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+msgid "Smear"
+msgstr "Ledañ"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Wrap"
+msgstr "Kleuriañ"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
+msgid "_Rippling..."
+msgstr "O _wagennañ..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
+msgid "Add background"
+msgstr "Ouzhpennañ un drekva"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:2
+msgid "Add drop-shadow"
+msgstr "Ouzhpennañ un disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
+msgid "Edge radius"
+msgstr "Skin ar riblenn"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
+msgstr "Rontaat kornioù ar skeudenn ha dre zibarzh ouzhpennañ un drekva hag un disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
+msgid "_Round Corners..."
+msgstr "Kornioù _rontaet..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "Kemmañ kartennad livioù ur skeudenn el livioù war ul livaoueg erspizet."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "Livaoueg"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "Arventenniñ kar_tennad al livioù..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Convert a selection to a brush"
+msgstr "Amdreiñ un diuzad d'ur broust"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+msgid "To _Brush..."
+msgstr "D'ur _broust..."
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
+msgid "Convert a selection to an image"
+msgstr "Amdreiñ un diuzad d'ur skeudenn"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
+msgid "To _Image"
+msgstr "D'ur _skeudenn"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "Convert a selection to a pattern"
+msgstr "Amdreiñ un diuzad d'ur goustur"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+msgid "To _Pattern..."
+msgstr "D'ar _goustur..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "Concave"
+msgstr "Argev"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
+#, no-c-format
+msgid "Radius (%)"
+msgstr "Skin (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
+msgid "Round the corners of the current selection"
+msgstr "Rontaat kornioù an diuzad bremanel"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
+msgid "Rounded R_ectangle..."
+msgstr "R_eizhkorn rontaet..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr "Ouzhpennañ ur frammad heñvel ouzh ur film, toulloù dibunañ ha skritelloù, d'ar skeudenn"
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:3
+msgid "Font color"
+msgstr "Liv an nodrezh"
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:4
+msgid "Number"
+msgstr "Niver"
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:7
+msgid "_Slide..."
+msgstr "_Koc'henn..."
+
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Create a State Of The Art chromed logo"
+msgstr "Krouiñ ur siell kromet mod State Of The Art"
+
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+msgid "SOTA Chrome..."
+msgstr "Krom SOTA..."
+
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
+msgid "Create a logo with a speedy text effect"
+msgstr "Krouiñ ur siell gant un efed testenn herrek"
+
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
+msgid "Speed Text..."
+msgstr "Meneg an tizh..."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "Krouiñ ur bliverezh dre c'hlennañ ar skeudenn vremanel war ur bellenn neudennek"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
+msgid "Frames"
+msgstr "Skeudennoù"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "Ibil gant n liv (0 = chom e RGG)"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+msgid "Turn from left to right"
+msgstr "Treiñ eus an tu kleiz d'an tu dehou"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
+msgid "_Spinning Globe..."
+msgstr "_Boull o treiñ..."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr "Ouzhpennañ krommennoù epitrokoidel, Lissajous ha mod spirograf d'an dreuzfollennad vremanel"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+msgid "Airbrush"
+msgstr "Aervroust"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+msgid "Brush"
+msgstr "Broust"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+msgid "Circle"
+msgstr "Kelc'h"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+msgid "Color method"
+msgstr "Hentenn livañ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid "Epitrochoid"
+msgstr "Epitrokoid"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+msgid "Frame"
+msgstr "Skeudenn"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+msgid "Gradient: Loop Sawtooth"
+msgstr "Ilrezenn : dol mod dent heskenn"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+msgid "Gradient: Loop Triangle"
+msgstr "Ilrezenn : dol mod tric'hor"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+msgid "Hexagon"
+msgstr "C'hwec'htueg"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+msgid "Hole ratio"
+msgstr "Parenn an toull"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+msgid "Inner teeth"
+msgstr "Dent diabarzh"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+msgid "Margin (pixels)"
+msgstr "Marz (pikselioù)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Outer teeth"
+msgstr "Dent diavaez"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+msgid "Pencil"
+msgstr "Kreion"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Pentagon"
+msgstr "Pemptueg"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+msgid "Polygon: 10 sides"
+msgstr "Liestueg : 10 tu"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+msgid "Polygon: 7 sides"
+msgstr "Liestueg : 7 tu"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+msgid "Polygon: 8 sides"
+msgstr "Liestueg : 8 tu"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+msgid "Polygon: 9 sides"
+msgstr "Liestueg : 9 zu"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Rendering Spyro"
+msgstr "Deouez mod Tan"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Shape"
+msgstr "Stumm"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+msgid "Solid Color"
+msgstr "Liv unvan"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+msgid "Spyrograph"
+msgstr "Spirograf"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+msgid "Square"
+msgstr "Karrez"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start angle"
+msgstr "Korn deraouiñ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+msgid "Tool"
+msgstr "Benveg"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+msgid "Triangle"
+msgstr "Tric'horn"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+msgid "Type"
+msgstr "Rizh"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
+msgid "_Spyrogimp..."
+msgstr "_Spirogimp..."
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
+msgstr "Krouiñ ur siell en ur arverañ ur wiadezh heñvel ouzh maen, ur skleur nova ha disheol"
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+msgid "Sta_rscape..."
+msgstr "Luc'hste_red..."
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Create an image filled with a swirled tile effect"
+msgstr "Krouiñ ur skeudenn leuniet gant un efed mod karrell troellennet"
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
+msgid "Swirl-_Tile..."
+msgstr "Troenn..."
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
+msgid "Whirl amount"
+msgstr "Niver a droennoù"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "Create an image filled with a swirly pattern"
+msgstr "Krouiñ ur skeudenn leuniet gant ur goustur troellennek"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+msgid "Number of times to whirl"
+msgstr "Niver a wech da droennañ"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+msgid "Quarter size"
+msgstr "Ment ar c'harter"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+msgid "Whirl angle"
+msgstr "Korn an droenn"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
+msgid "_Swirly..."
+msgstr "Troennek..."
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "Add a Trace of Particles effect to the selected region (or alpha)"
+msgstr "Ouzhpennañ un efed Roudoù an Eufl d'ar maez diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+msgid "Base color"
+msgstr "Liv diazez"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+msgid "Create a logo using a Trace Of Particles effect"
+msgstr "Krouiñ ur siell oc'h arverañ un efed mod Roud an Eufl"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+msgid "Edge only"
+msgstr "Riblennoù hepken"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+msgid "Edge width"
+msgstr "Led ar riblennoù"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "Hit rate"
+msgstr "Parenn an tresoù"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
+msgid "_Particle Trace..."
+msgstr "Roudenn Eufl..."
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
+msgid "Antialias"
+msgstr "Lufrañ"
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgstr "Krouiñ ur siell dre lakaat deouez war an destenn erspizet a-hed amregenn ur c'helc'h"
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
+msgid "Fill angle"
+msgstr "Korn leuniañ"
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
+msgid "Text C_ircle..."
+msgstr "Testenn gelc'hiek..."
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr "Krouiñ ur siell gwiadezhet gant usskedoù, disheolioù hag un drekva dre garellañ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
+msgid "Ending blend"
+msgstr "Mesk diwezhel"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
+msgid "Fill the selected region (or alpha) with a texture and add highlights, shadows, and a mosaic background"
+msgstr "Leuniañ ar maez diuzet (pe an alfa) gant ur wiadezh hag ouzhpennañ usskedoù, disheolioù hag un drekva dre garellañ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Hexagons"
+msgstr "C'hwec'htuegoù"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
+msgid "Mosaic tile type"
+msgstr "Rizh marelladur"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Octagons"
+msgstr "Eizhtuegoù"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
+msgid "Squares"
+msgstr "Karrezioù"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
+msgid "Starting blend"
+msgstr "O teraouiñ ar meskañ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:15
+msgid "Text pattern"
+msgstr "Goustur an destenn"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
+msgid "_Textured..."
+msgstr "Gwiadezhe_t..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
+msgid "Blur horizontally"
+msgstr "Ruzed a-zremm"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "Lakaat ruzed war riblennoù ar skeudenn a-benn ma vo karelletgant un doare anriblenn"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
+msgid "Blur type"
+msgstr "Rizh ruzed"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "Blur vertically"
+msgstr "Ruzed a-serzh"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "IIR"
+msgstr "IIR"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
+msgid "_Tileable Blur..."
+msgstr "Ruzed _marellek..."
+
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "Create a decorative web title header"
+msgstr "Krouiñ ur talbenn web kinklus evit un titl"
+
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:6
+msgid "Web Title Header..."
+msgstr "Talbenn marell web..."
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Create an image filled with a Truchet pattern"
+msgstr "Krouiñ ur skeudenn leuniet gant ur goustur mod Truchet"
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:4
+msgid "Foreground color"
+msgstr "Liv ar rakva"
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "T_ruchet..."
+msgstr "T_ruched..."
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "Mask opacity"
+msgstr "Demerez ar maskl"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask size"
+msgstr "Ment ar maskl"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
+msgid "Amplitude"
+msgstr "Heled"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Create a multi-layer image with an effect like a stone was thrown into the current image"
+msgstr "Krouiñ ur skeudenn dre liestreuzfollennoù gant un efed evel ma oa bet taolet ur maen dre ar skeudenn vremanel"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
+msgid "Invert direction"
+msgstr "Tuginañ ar roud"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
+msgid "Wavelength"
+msgstr "Trohed"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
+msgid "_Waves..."
+msgstr "_Houl..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:1
+msgid "Create a new layer filled with a weave effect to be used as an overlay or bump map"
+msgstr "Krouiñ un dreuzfollenn nevez gant un efed plezhañ da vezañ arveret evel ur glennad treuzwelus pe goagennet"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:2
+msgid "Ribbon spacing"
+msgstr "Esaouiñ ar bandennoù"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:3
+msgid "Ribbon width"
+msgstr "Led ar bandennoù"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:4
+msgid "Shadow darkness"
+msgstr "Teñvalder an disheol"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:5
+msgid "Shadow depth"
+msgstr "Donder an disheol"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:6
+msgid "Thread density"
+msgstr "Douester an neudenn"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:7
+msgid "Thread intensity"
+msgstr "Kreñvder an neudenn"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:8
+msgid "Thread length"
+msgstr "Hed an neudenn"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:9
+msgid "_Weave..."
+msgstr "_Plezhañ..."
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "Merker war lec'hienn web GIMP"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "Merker war dornlevr an arveriad"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "Krouiñ hag arverañ diu_zadoù"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "Krouiñ, digeriñ hag enrollañ _restroù"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "Tresañ er_gorennoù eeun"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Penaos arverañ ar _boestadoù emziviz"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "Marilh an enlugelladoù"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
+msgid "Using _Paths"
+msgstr "Arverañ _treugoù"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
+msgid "_Basic Concepts"
+msgstr "Ergrafoù dia_zez"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
+msgid "_Developer Web Site"
+msgstr "Load internet an diorrenourion"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+msgid "_Main Web Site"
+msgstr "L_oad internet pennañ"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "_Prientiñ ho skeudenn evit ar web"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "L_ec'hienn internet dornlevr an arveriad"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "_Labourat gant ur benveg luc'hskeudennoù niverel"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr "Ouzhpennañ un efed 3M treuzwelus soutil war ar maez bet diuzet (pe d'an alfa)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
+msgid "Drop shadow X offset"
+msgstr "Linkañ X an disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
+msgid "Drop shadow Y offset"
+msgstr "Linkañ Y an disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
+msgid "Drop shadow blur radius"
+msgstr "Skin ruzed an disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
+msgid "Drop shadow color"
+msgstr "Liv an disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
+msgid "Drop shadow opacity"
+msgstr "Demerez an disheol bannet"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+msgid "Highlight X offset"
+msgstr "Linkañ X al lintr"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
+msgid "Highlight Y offset"
+msgstr "Linkañ Y al lintr"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Highlight opacity"
+msgstr "Demerez al lintr"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
+msgid "_Xach-Effect..."
+msgstr "Efed _Xach..."
+

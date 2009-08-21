@@ -135,7 +135,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
                                     TRUST_DIRTY_FLAG_BLURB,
-                                    TRUE,
+                                    FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DEVICE_STATUS,
                                     "save-device-status",
@@ -235,11 +235,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_TYPE_HELP_BROWSER_TYPE,
                                  DEFAULT_HELP_BROWSER,
                                  GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
-                                 "web-browser", WEB_BROWSER_BLURB,
-                                 GIMP_CONFIG_PATH_FILE,
-                                 DEFAULT_WEB_BROWSER,
-                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USER_MANUAL_ONLINE,
                                     "user-manual-online",
                                     USER_MANUAL_ONLINE_BLURB,
@@ -297,6 +292,12 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
+                                 "web-browser", NULL,
+                                 GIMP_CONFIG_PATH_FILE,
+                                 DEFAULT_WEB_BROWSER,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -406,10 +407,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_HELP_BROWSER:
       gui_config->help_browser = g_value_get_enum (value);
       break;
-    case PROP_WEB_BROWSER:
-      g_free (gui_config->web_browser);
-      gui_config->web_browser = g_value_dup_string (value);
-      break;
     case PROP_USER_MANUAL_ONLINE:
       gui_config->user_manual_online = g_value_get_boolean (value);
       break;
@@ -432,6 +429,7 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SHOW_TOOL_TIPS:
     case PROP_SHOW_TIPS:
     case PROP_TRANSIENT_DOCKS:
+    case PROP_WEB_BROWSER:
       /* ignored */
       break;
 
@@ -526,9 +524,6 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_HELP_BROWSER:
       g_value_set_enum (value, gui_config->help_browser);
       break;
-    case PROP_WEB_BROWSER:
-      g_value_set_string (value, gui_config->web_browser);
-      break;
     case PROP_USER_MANUAL_ONLINE:
       g_value_set_boolean (value, gui_config->user_manual_online);
       break;
@@ -550,6 +545,7 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_SHOW_TOOL_TIPS:
     case PROP_SHOW_TIPS:
     case PROP_TRANSIENT_DOCKS:
+    case PROP_WEB_BROWSER:
       /* ignored */
       break;
 

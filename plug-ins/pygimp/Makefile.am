@@ -13,6 +13,7 @@ SUBDIRS = plug-ins
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
+shrext       = -shrext .pyd
 path_separator = ;
 else
 path_separator = :
@@ -43,7 +44,7 @@ gimp_la_SOURCES = \
 	pygimp-intl.h		\
 	pygimp-util.h
 
-gimp_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+gimp_la_LDFLAGS = -module -avoid-version $(no_undefined) $(shrext) \
 	-export-symbols-regex initgimp
 
 gimp_la_LIBADD = \
@@ -57,7 +58,7 @@ gimp_la_LIBADD = \
 _gimpenums_la_SOURCES = \
 	gimpenumsmodule.c
 
-_gimpenums_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+_gimpenums_la_LDFLAGS = -module -avoid-version $(no_undefined) $(shrext) \
 	-export-symbols-regex init_gimpenums
 
 _gimpenums_la_LIBADD = \
@@ -74,7 +75,7 @@ gimpcolor_la_SOURCES = \
 	pygimpcolor.h		\
 	pygimpcolor-api.h
 
-gimpcolor_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+gimpcolor_la_LDFLAGS = -module -avoid-version $(no_undefined) $(shrext) \
 	-export-symbols-regex initgimpcolor
 
 gimpcolor_la_LIBADD = \
@@ -86,7 +87,7 @@ _gimpui_la_SOURCES = \
 	gimpuimodule.c		\
 	gimpui.c
 
-_gimpui_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+_gimpui_la_LDFLAGS = -module -avoid-version $(no_undefined) $(shrext) \
 	-export-symbols-regex init_gimpui
 
 _gimpui_la_LIBADD = \
@@ -106,7 +107,7 @@ gimpthumb_la_SOURCES = \
 	gimpthumbmodule.c \
 	gimpthumb.c
 
-gimpthumb_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+gimpthumb_la_LDFLAGS = -module -avoid-version $(no_undefined) $(shrext) \
 	-export-symbols-regex initgimpthumb
 
 gimpthumb_la_LIBADD = \

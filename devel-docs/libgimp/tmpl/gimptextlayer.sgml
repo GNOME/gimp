@@ -282,3 +282,33 @@ gimptextlayer
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_text_layer_get_hint_style ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_text_layer_set_hint_style ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@style: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_text_layer_resize ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@width: 
+@height: 
+@Returns: 
+
+

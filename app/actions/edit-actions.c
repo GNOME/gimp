@@ -263,12 +263,18 @@ edit_actions_update (GimpActionGroup *group,
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
   gchar        *fade_name    = NULL;
+  gboolean      writable     = FALSE;
   gboolean      undo_enabled = FALSE;
   gboolean      fade_enabled = FALSE;
 
   if (image)
     {
       drawable = gimp_image_get_active_drawable (image);
+
+      if (drawable)
+        {
+          writable = ! gimp_item_get_lock_content (GIMP_ITEM (drawable));
+        }
 
       undo_enabled = gimp_image_undo_is_enabled (image);
 
@@ -329,22 +335,22 @@ edit_actions_update (GimpActionGroup *group,
   g_free (redo_name);
   g_free (fade_name);
 
-  SET_SENSITIVE ("edit-cut",                drawable);
+  SET_SENSITIVE ("edit-cut",                writable);
   SET_SENSITIVE ("edit-copy",               drawable);
   SET_SENSITIVE ("edit-copy-visible",       image);
-  /*             "edit-paste" is always enabled  */
+  SET_SENSITIVE ("edit-paste",              ! image || (! drawable || writable));
   SET_SENSITIVE ("edit-paste-as-new-layer", image);
-  SET_SENSITIVE ("edit-paste-into",         image);
+  SET_SENSITIVE ("edit-paste-into",         image && (! drawable || writable));
 
-  SET_SENSITIVE ("edit-named-cut",          drawable);
+  SET_SENSITIVE ("edit-named-cut",          writable);
   SET_SENSITIVE ("edit-named-copy",         drawable);
   SET_SENSITIVE ("edit-named-copy-visible", drawable);
-  SET_SENSITIVE ("edit-named-paste",        image);
+  SET_SENSITIVE ("edit-named-paste",        image && (! drawable || writable));
 
-  SET_SENSITIVE ("edit-clear",              drawable);
-  SET_SENSITIVE ("edit-fill-fg",            drawable);
-  SET_SENSITIVE ("edit-fill-bg",            drawable);
-  SET_SENSITIVE ("edit-fill-pattern",       drawable);
+  SET_SENSITIVE ("edit-clear",              writable);
+  SET_SENSITIVE ("edit-fill-fg",            writable);
+  SET_SENSITIVE ("edit-fill-bg",            writable);
+  SET_SENSITIVE ("edit-fill-pattern",       writable);
 
 #undef SET_LABEL
 #undef SET_SENSITIVE

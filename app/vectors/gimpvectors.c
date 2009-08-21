@@ -58,58 +58,60 @@ enum
 };
 
 
-static void       gimp_vectors_finalize     (GObject           *object);
+static void       gimp_vectors_finalize      (GObject           *object);
 
-static gint64     gimp_vectors_get_memsize  (GimpObject        *object,
-                                             gint64            *gui_size);
+static gint64     gimp_vectors_get_memsize   (GimpObject        *object,
+                                              gint64            *gui_size);
 
-static gboolean   gimp_vectors_is_attached  (GimpItem          *item);
-static GimpItem * gimp_vectors_duplicate    (GimpItem          *item,
-                                             GType              new_type);
-static void       gimp_vectors_convert      (GimpItem          *item,
-                                             GimpImage         *dest_image);
-static void       gimp_vectors_translate    (GimpItem          *item,
-                                             gint               offset_x,
-                                             gint               offset_y,
-                                             gboolean           push_undo);
-static void       gimp_vectors_scale        (GimpItem          *item,
-                                             gint               new_width,
-                                             gint               new_height,
-                                             gint               new_offset_x,
-                                             gint               new_offset_y,
-                                             GimpInterpolationType  interp_type,
-                                             GimpProgress      *progress);
-static void       gimp_vectors_resize       (GimpItem          *item,
-                                             GimpContext       *context,
-                                             gint               new_width,
-                                             gint               new_height,
-                                             gint               offset_x,
-                                             gint               offset_y);
-static void       gimp_vectors_flip         (GimpItem          *item,
-                                             GimpContext       *context,
-                                             GimpOrientationType  flip_type,
-                                             gdouble            axis,
-                                             gboolean           clip_result);
-static void       gimp_vectors_rotate       (GimpItem          *item,
-                                             GimpContext       *context,
-                                             GimpRotationType   rotate_type,
-                                             gdouble            center_x,
-                                             gdouble            center_y,
-                                             gboolean           clip_result);
-static void       gimp_vectors_transform    (GimpItem          *item,
-                                             GimpContext       *context,
-                                             const GimpMatrix3 *matrix,
-                                             GimpTransformDirection direction,
-                                             GimpInterpolationType interp_type,
-                                             gint               recursion_level,
-                                             GimpTransformResize   clip_result,
-                                             GimpProgress      *progress);
-static gboolean   gimp_vectors_stroke       (GimpItem          *item,
-                                             GimpDrawable      *drawable,
-                                             GimpStrokeOptions *stroke_options,
-                                             gboolean           push_undo,
-                                             GimpProgress      *progress,
-                                             GError           **error);
+static gboolean   gimp_vectors_is_attached   (GimpItem          *item);
+static GimpContainer *
+                  gimp_vectors_get_container (GimpItem          *item);
+static GimpItem * gimp_vectors_duplicate     (GimpItem          *item,
+                                              GType              new_type);
+static void       gimp_vectors_convert       (GimpItem          *item,
+                                              GimpImage         *dest_image);
+static void       gimp_vectors_translate     (GimpItem          *item,
+                                              gint               offset_x,
+                                              gint               offset_y,
+                                              gboolean           push_undo);
+static void       gimp_vectors_scale         (GimpItem          *item,
+                                              gint               new_width,
+                                              gint               new_height,
+                                              gint               new_offset_x,
+                                              gint               new_offset_y,
+                                              GimpInterpolationType  interp_type,
+                                              GimpProgress      *progress);
+static void       gimp_vectors_resize        (GimpItem          *item,
+                                              GimpContext       *context,
+                                              gint               new_width,
+                                              gint               new_height,
+                                              gint               offset_x,
+                                              gint               offset_y);
+static void       gimp_vectors_flip          (GimpItem          *item,
+                                              GimpContext       *context,
+                                              GimpOrientationType  flip_type,
+                                              gdouble            axis,
+                                              gboolean           clip_result);
+static void       gimp_vectors_rotate        (GimpItem          *item,
+                                              GimpContext       *context,
+                                              GimpRotationType   rotate_type,
+                                              gdouble            center_x,
+                                              gdouble            center_y,
+                                              gboolean           clip_result);
+static void       gimp_vectors_transform     (GimpItem          *item,
+                                              GimpContext       *context,
+                                              const GimpMatrix3 *matrix,
+                                              GimpTransformDirection direction,
+                                              GimpInterpolationType interp_type,
+                                              gint               recursion_level,
+                                              GimpTransformResize   clip_result,
+                                              GimpProgress      *progress);
+static gboolean   gimp_vectors_stroke        (GimpItem          *item,
+                                              GimpDrawable      *drawable,
+                                              GimpStrokeOptions *stroke_options,
+                                              gboolean           push_undo,
+                                              GimpProgress      *progress,
+                                              GError           **error);
 
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
 static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
@@ -180,6 +182,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   viewable_class->default_stock_id = "gimp-path";
 
   item_class->is_attached          = gimp_vectors_is_attached;
+  item_class->get_container        = gimp_vectors_get_container;
   item_class->duplicate            = gimp_vectors_duplicate;
   item_class->convert              = gimp_vectors_convert;
   item_class->translate            = gimp_vectors_translate;
@@ -267,6 +270,19 @@ gimp_vectors_is_attached (GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
           gimp_container_have (gimp_item_get_image (item)->vectors, GIMP_OBJECT (item)));
+}
+
+static GimpContainer *
+gimp_vectors_get_container (GimpItem *item)
+{
+  if (gimp_item_is_attached (item))
+    {
+      GimpImage *image = gimp_item_get_image (item);
+
+      return gimp_image_get_vectors (image);
+    }
+
+  return NULL;
 }
 
 static GimpItem *

@@ -47,13 +47,15 @@ struct _GimpToolEditorClass
 };
 
 
-GType       gimp_tool_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_tool_editor_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tool_editor_new      (GimpContainer *container,
-                                       GimpContext   *context,
-                                       GList         *defualt_tool_order,
-                                       gint           view_size,
-                                       gint           view_border_width);
+GtkWidget * gimp_tool_editor_new            (GimpContainer  *container,
+                                             GimpContext    *context,
+                                             GList          *default_tool_order,
+                                             gint            view_size,
+                                             gint            view_border_width);
+
+void        gimp_tool_editor_revert_changes (GimpToolEditor *tool_editor);
 
 
 #endif  /*  __GIMP_TOOL_EDITOR_H__  */

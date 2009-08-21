@@ -216,6 +216,11 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
 {
   GimpPerspectiveCloneTool *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
 
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
+
   if (display != tool->display)
     {
       gint i;

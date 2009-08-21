@@ -80,7 +80,7 @@ floating_sel_attach (GimpLayer    *layer,
   gimp_layer_set_floating_sel_drawable (layer, drawable);
 
   /*  add the layer to the image  */
-  gimp_image_add_layer (image, layer, 0, TRUE);
+  gimp_image_add_layer (image, layer, NULL, 0, TRUE);
 }
 
 void

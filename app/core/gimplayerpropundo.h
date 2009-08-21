@@ -34,12 +34,13 @@ typedef struct _GimpLayerPropUndoClass GimpLayerPropUndoClass;
 
 struct _GimpLayerPropUndo
 {
-  GimpItemUndo         parent_instance;
+  GimpItemUndo          parent_instance;
 
-  gint                 position;
-  GimpLayerModeEffects mode;
-  gdouble              opacity;
-  gboolean             lock_alpha;
+  GimpLayer            *parent;
+  gint                  position;
+  GimpLayerModeEffects  mode;
+  gdouble               opacity;
+  gboolean              lock_alpha;
 };
 
 struct _GimpLayerPropUndoClass

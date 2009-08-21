@@ -361,7 +361,7 @@ run (const gchar      *name,
           else
             {
               /* Once the PDB gets default parameters, remove this hack */
-              if (param[5].data.d_float > 0.05)
+              if (param[5].data.d_float >= 0.01)
                 {
                   jsvals.quality     = 100.0 * param[5].data.d_float;
                   jsvals.smoothing   = param[6].data.d_float;

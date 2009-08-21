@@ -153,7 +153,13 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
     NC_("vectors-action", "_Linked"), NULL, NULL,
     G_CALLBACK (vectors_linked_cmd_callback),
     FALSE,
-    GIMP_HELP_PATH_LINKED }
+    GIMP_HELP_PATH_LINKED },
+
+  { "vectors-lock-content", NULL /* GIMP_STOCK_LOCK */,
+    NC_("vectors-action", "L_ock strokes"), NULL, NULL,
+    G_CALLBACK (vectors_lock_content_cmd_callback),
+    FALSE,
+    NULL /* GIMP_HELP_PATH_LOCK_STROKES */ }
 };
 
 static const GimpEnumActionEntry vectors_to_selection_actions[] =
@@ -244,6 +250,8 @@ vectors_actions_update (GimpActionGroup *group,
   gboolean     global_buf = FALSE;
   gboolean     visible    = FALSE;
   gboolean     linked     = FALSE;
+  gboolean     locked     = FALSE;
+  gboolean     writable   = FALSE;
   GList       *next       = NULL;
   GList       *prev       = NULL;
 
@@ -258,12 +266,17 @@ vectors_actions_update (GimpActionGroup *group,
       if (vectors)
         {
           GimpItem *item = GIMP_ITEM (vectors);
+          GList    *vectors_list;
           GList    *list;
 
-          visible = gimp_item_get_visible (item);
-          linked  = gimp_item_get_linked  (item);
+          visible  = gimp_item_get_visible (item);
+          linked   = gimp_item_get_linked (item);
+          locked   = gimp_item_get_lock_content (item);
+          writable = ! locked;
 
-          list = g_list_find (gimp_image_get_vectors_iter (image), vectors);
+          vectors_list = gimp_item_get_container_iter (item);
+
+          list = g_list_find (vectors_list, vectors);
 
           if (list)
             {
@@ -278,7 +291,7 @@ vectors_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("vectors-path-tool",       vectors);
+  SET_SENSITIVE ("vectors-path-tool",       writable);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
   SET_SENSITIVE ("vectors-new",             image);
@@ -297,11 +310,13 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-export", vectors);
   SET_SENSITIVE ("vectors-import", image);
 
-  SET_SENSITIVE ("vectors-visible", vectors);
-  SET_SENSITIVE ("vectors-linked",  vectors);
+  SET_SENSITIVE ("vectors-visible",      vectors);
+  SET_SENSITIVE ("vectors-linked",       vectors);
+  SET_SENSITIVE ("vectors-lock-content", vectors);
 
-  SET_ACTIVE ("vectors-visible", visible);
-  SET_ACTIVE ("vectors-linked",  linked);
+  SET_ACTIVE ("vectors-visible",      visible);
+  SET_ACTIVE ("vectors-linked",       linked);
+  SET_ACTIVE ("vectors-lock-content", locked);
 
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);

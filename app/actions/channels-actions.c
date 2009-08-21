@@ -25,6 +25,7 @@
 #include "actions-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcomponenteditor.h"
@@ -168,9 +169,12 @@ channels_actions_update (GimpActionGroup *group,
 
           if (channel)
             {
+              GList *channel_list;
               GList *list;
 
-              list = g_list_find (gimp_image_get_channel_iter (image), channel);
+              channel_list = gimp_item_get_container_iter (GIMP_ITEM (channel));
+
+              list = g_list_find (channel_list, channel);
 
               if (list)
                 {

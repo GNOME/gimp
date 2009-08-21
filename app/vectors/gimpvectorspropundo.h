@@ -36,6 +36,7 @@ struct _GimpVectorsPropUndo
 {
   GimpItemUndo  parent_instance;
 
+  GimpVectors  *parent;
   gint          position;
 };
 

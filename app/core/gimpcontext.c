@@ -266,7 +266,7 @@ enum
   GIMP_CONTEXT_PROP_0,
   GIMP_CONTEXT_PROP_GIMP
 
-  /*  remaining values are in core-types.h  */
+  /*  remaining values are in core-enums.h  (GimpContextPropType)  */
 };
 
 enum

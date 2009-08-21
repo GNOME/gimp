@@ -232,7 +232,10 @@ layer_add_alpha_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_layer_add_alpha (layer);
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error))
+        gimp_layer_add_alpha (layer);
+      else
+       success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -254,7 +257,10 @@ layer_flatten_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_layer_flatten (layer, context);
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error))
+        gimp_layer_flatten (layer, context);
+      else
+       success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -282,7 +288,7 @@ layer_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), TRUE, error))
         {
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
@@ -327,7 +333,7 @@ layer_scale_full_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), TRUE, error))
         {
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
@@ -372,7 +378,7 @@ layer_resize_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), TRUE, error))
         gimp_item_resize (GIMP_ITEM (layer), context,
                           new_width, new_height, offx, offy);
       else
@@ -398,7 +404,7 @@ layer_resize_to_image_size_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), TRUE, error))
         gimp_layer_resize_to_image (layer, context);
       else
         success = FALSE;
@@ -637,7 +643,7 @@ layer_remove_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error) &&
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), mode == GIMP_MASK_APPLY, error) &&
           gimp_layer_get_mask (layer))
         gimp_layer_apply_mask (layer, mode, TRUE);
       else

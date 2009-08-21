@@ -97,6 +97,12 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_new_from_visible_cmd_callback),
     GIMP_HELP_LAYER_NEW_FROM_VISIBLE },
 
+  { "layers-new-group", GTK_STOCK_DIRECTORY,
+    NC_("layers-action", "_New Group Layer..."), NULL,
+    NC_("layers-action", "Create a new group layer and add it to the image"),
+    G_CALLBACK (layers_new_group_cmd_callback),
+    GIMP_HELP_LAYER_NEW },
+
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
     NC_("layers-action", "D_uplicate Layer"), "<control><shift>D",
     NC_("layers-action",
@@ -485,18 +491,20 @@ void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage     *image      = action_data_get_image (data);
-  GimpLayer     *layer      = NULL;
-  GimpLayerMask *mask       = NULL;     /*  layer mask             */
-  gboolean       fs         = FALSE;    /*  floating sel           */
-  gboolean       ac         = FALSE;    /*  active channel         */
-  gboolean       sel        = FALSE;
-  gboolean       alpha      = FALSE;    /*  alpha channel present  */
-  gboolean       indexed    = FALSE;    /*  is indexed             */
-  gboolean       lock_alpha = FALSE;
-  gboolean       text_layer = FALSE;
-  GList         *next       = NULL;
-  GList         *prev       = NULL;
+  GimpImage     *image        = action_data_get_image (data);
+  GimpLayer     *layer        = NULL;
+  GimpLayerMask *mask         = NULL;     /*  layer mask             */
+  gboolean       fs           = FALSE;    /*  floating sel           */
+  gboolean       ac           = FALSE;    /*  active channel         */
+  gboolean       sel          = FALSE;
+  gboolean       alpha        = FALSE;    /*  alpha channel present  */
+  gboolean       indexed      = FALSE;    /*  is indexed             */
+  gboolean       lock_alpha   = FALSE;
+  gboolean       text_layer   = FALSE;
+  gboolean       writable     = FALSE;
+  GList         *next         = NULL;
+  GList         *next_visible = NULL;
+  GList         *prev         = NULL;
 
   if (image)
     {
@@ -509,22 +517,33 @@ layers_actions_update (GimpActionGroup *group,
 
       if (layer)
         {
+          GList *layer_list;
           GList *list;
 
           mask       = gimp_layer_get_mask (layer);
           lock_alpha = gimp_layer_get_lock_alpha (layer);
           alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+          writable   = ! gimp_item_get_lock_content (GIMP_ITEM (layer));
 
-          list = g_list_find (gimp_image_get_layer_iter (image), layer);
+          layer_list = gimp_item_get_container_iter (GIMP_ITEM (layer));
+
+          list = g_list_find (layer_list, layer);
 
           if (list)
             {
               prev = g_list_previous (list);
               next = g_list_next (list);
+
+              for (next_visible = next;
+                   next_visible;
+                   next_visible = g_list_next (next_visible))
+                {
+                  if (gimp_item_get_visible (next_visible->data))
+                    break;
+                }
             }
 
-          if (layer)
-            text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
+          text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
         }
     }
 
@@ -541,6 +560,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new",              image);
   SET_SENSITIVE ("layers-new-last-values",  image);
   SET_SENSITIVE ("layers-new-from-visible", image);
+  SET_SENSITIVE ("layers-new-group",        image);
   SET_SENSITIVE ("layers-duplicate",        layer && !fs && !ac);
   SET_SENSITIVE ("layers-delete",           layer && !ac);
 
@@ -555,7 +575,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
 
   SET_SENSITIVE ("layers-anchor",           layer &&  fs && !ac);
-  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && next_visible);
   SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",    layer && !fs && !ac);
 
@@ -567,21 +587,21 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
   SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
 
-  SET_SENSITIVE ("layers-resize",          layer && !ac);
-  SET_SENSITIVE ("layers-resize-to-image", layer && !ac);
-  SET_SENSITIVE ("layers-scale",           layer && !ac);
+  SET_SENSITIVE ("layers-resize",          writable && !ac);
+  SET_SENSITIVE ("layers-resize-to-image", writable && !ac);
+  SET_SENSITIVE ("layers-scale",           writable && !ac);
 
-  SET_SENSITIVE ("layers-crop",            layer && sel);
+  SET_SENSITIVE ("layers-crop",            writable && sel);
 
-  SET_SENSITIVE ("layers-alpha-add",       layer && !fs && !alpha);
-  SET_SENSITIVE ("layers-alpha-remove",    layer && !fs &&  alpha);
+  SET_SENSITIVE ("layers-alpha-add",       writable && !fs && !alpha);
+  SET_SENSITIVE ("layers-alpha-remove",    writable && !fs &&  alpha);
 
   SET_SENSITIVE ("layers-lock-alpha", layer);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !mask);
-  SET_SENSITIVE ("layers-mask-apply",  layer && !fs && !ac &&  mask);
-  SET_SENSITIVE ("layers-mask-delete", layer && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask);
+  SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
 
   SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac &&  mask);
   SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac &&  mask);

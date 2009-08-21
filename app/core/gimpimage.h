@@ -75,6 +75,9 @@
                                             GIMP_INDEXED_IMAGE : -1)
 
 
+#define GIMP_IMAGE_ACTIVE_PARENT           ((gpointer) 1)
+
+
 typedef struct _GimpImageFlushAccumulator GimpImageFlushAccumulator;
 
 struct _GimpImageFlushAccumulator
@@ -421,9 +424,17 @@ GimpContainer * gimp_image_get_layers            (const GimpImage    *image);
 GimpContainer * gimp_image_get_channels          (const GimpImage    *image);
 GimpContainer * gimp_image_get_vectors           (const GimpImage    *image);
 
+gint            gimp_image_get_n_layers          (const GimpImage    *image);
+gint            gimp_image_get_n_channels        (const GimpImage    *image);
+gint            gimp_image_get_n_vectors         (const GimpImage    *image);
+
 GList         * gimp_image_get_layer_iter        (const GimpImage    *image);
 GList         * gimp_image_get_channel_iter      (const GimpImage    *image);
 GList         * gimp_image_get_vectors_iter      (const GimpImage    *image);
+
+GList         * gimp_image_get_layer_list        (const GimpImage    *image);
+GList         * gimp_image_get_channel_list      (const GimpImage    *image);
+GList         * gimp_image_get_vectors_list      (const GimpImage    *image);
 
 GimpDrawable  * gimp_image_get_active_drawable   (const GimpImage    *image);
 GimpLayer     * gimp_image_get_active_layer      (const GimpImage    *image);
@@ -437,24 +448,6 @@ GimpChannel   * gimp_image_set_active_channel    (GimpImage          *image,
 GimpChannel   * gimp_image_unset_active_channel  (GimpImage          *image);
 GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *image,
                                                   GimpVectors        *vectors);
-
-void            gimp_image_active_layer_changed   (GimpImage         *image);
-void            gimp_image_active_channel_changed (GimpImage         *image);
-void            gimp_image_active_vectors_changed (GimpImage         *image);
-
-gint            gimp_image_get_layer_index       (const GimpImage    *image,
-                                                  const GimpLayer    *layer);
-gint            gimp_image_get_channel_index     (const GimpImage    *image,
-                                                  const GimpChannel  *channel);
-gint            gimp_image_get_vectors_index     (const GimpImage    *image,
-                                                  const GimpVectors  *vectors);
-
-GimpLayer     * gimp_image_get_layer_by_index    (const GimpImage    *image,
-                                                  gint                index);
-GimpChannel   * gimp_image_get_channel_by_index  (const GimpImage    *image,
-                                                  gint                index);
-GimpVectors   * gimp_image_get_vectors_by_index  (const GimpImage    *image,
-                                                  gint                index);
 
 GimpLayer     * gimp_image_get_layer_by_tattoo   (const GimpImage    *image,
                                                   GimpTattoo          tattoo);
@@ -472,6 +465,7 @@ GimpVectors   * gimp_image_get_vectors_by_name   (const GimpImage    *image,
 
 gboolean        gimp_image_add_layer             (GimpImage          *image,
                                                   GimpLayer          *layer,
+                                                  GimpLayer          *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
 void            gimp_image_remove_layer          (GimpImage          *image,
@@ -481,6 +475,7 @@ void            gimp_image_remove_layer          (GimpImage          *image,
 
 void            gimp_image_add_layers            (GimpImage          *image,
                                                   GList              *layers,
+                                                  GimpLayer          *parent,
                                                   gint                position,
                                                   gint                x,
                                                   gint                y,
@@ -491,21 +486,23 @@ void            gimp_image_add_layers            (GimpImage          *image,
 gboolean        gimp_image_raise_layer           (GimpImage          *image,
                                                   GimpLayer          *layer,
                                                   GError            **error);
+gboolean        gimp_image_raise_layer_to_top    (GimpImage          *image,
+                                                  GimpLayer          *layer);
 gboolean        gimp_image_lower_layer           (GimpImage          *image,
                                                   GimpLayer          *layer,
                                                   GError            **error);
-gboolean        gimp_image_raise_layer_to_top    (GimpImage          *image,
-                                                  GimpLayer          *layer);
 gboolean        gimp_image_lower_layer_to_bottom (GimpImage          *image,
                                                   GimpLayer          *layer);
-gboolean        gimp_image_position_layer        (GimpImage          *image,
+gboolean        gimp_image_reorder_layer         (GimpImage          *image,
                                                   GimpLayer          *layer,
+                                                  GimpLayer          *new_parent,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
 
 gboolean        gimp_image_add_channel           (GimpImage          *image,
                                                   GimpChannel        *channel,
+                                                  GimpChannel        *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
 void            gimp_image_remove_channel        (GimpImage          *image,
@@ -523,14 +520,16 @@ gboolean        gimp_image_lower_channel         (GimpImage          *image,
                                                   GError            **error);
 gboolean      gimp_image_lower_channel_to_bottom (GimpImage          *image,
                                                   GimpChannel        *channel);
-gboolean        gimp_image_position_channel      (GimpImage          *image,
+gboolean        gimp_image_reorder_channel       (GimpImage          *image,
                                                   GimpChannel        *channel,
+                                                  GimpChannel        *new_parent,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
 
 gboolean        gimp_image_add_vectors           (GimpImage          *image,
                                                   GimpVectors        *vectors,
+                                                  GimpVectors        *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
 void            gimp_image_remove_vectors        (GimpImage          *image,
@@ -548,11 +547,13 @@ gboolean        gimp_image_lower_vectors         (GimpImage          *image,
                                                   GError            **error);
 gboolean      gimp_image_lower_vectors_to_bottom (GimpImage          *image,
                                                   GimpVectors        *vectors);
-gboolean        gimp_image_position_vectors      (GimpImage          *image,
+gboolean        gimp_image_reorder_vectors       (GimpImage          *image,
                                                   GimpVectors        *vectors,
+                                                  GimpVectors        *new_parent,
                                                   gint                new_index,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
+
 gboolean        gimp_image_layer_boundary        (const GimpImage    *image,
                                                   BoundSeg          **segs,
                                                   gint               *n_segs);

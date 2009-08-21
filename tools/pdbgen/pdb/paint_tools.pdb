@@ -54,7 +54,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-airbrush", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -99,7 +99,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-airbrush", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -155,7 +155,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-clone", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -204,7 +204,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-clone", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -245,7 +245,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-convolve", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -288,7 +288,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-convolve", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -332,7 +332,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-eraser", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -376,7 +376,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-eraser", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -425,7 +425,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-eraser", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -479,7 +479,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-heal", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -524,7 +524,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-heal", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -576,7 +576,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-paintbrush", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -633,7 +633,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-paintbrush", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -673,7 +673,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-pencil", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -712,7 +712,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-smudge", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -757,7 +757,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-smudge", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -801,7 +801,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-dodge-burn", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -848,7 +848,7 @@ HELP
 {
   GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-dodge-burn", error);
 
-  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+  if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
     {
       GimpPaintOptions *options = gimp_paint_options_new (info);
 

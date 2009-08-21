@@ -241,7 +241,7 @@ sub path_set_points {
       g_free (points);
 
       if (vectors)
-        success = gimp_image_add_vectors (image, vectors, 0, TRUE);
+        success = gimp_image_add_vectors (image, vectors, NULL, 0, TRUE);
       else
         success = FALSE;
     }
@@ -265,7 +265,8 @@ sub path_stroke_current {
   GimpVectors  *vectors  = gimp_image_get_active_vectors (image);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-  if (vectors && drawable)
+  if (vectors && drawable &&
+      gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error))
     {
       GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
 
@@ -588,7 +589,7 @@ sub path_import {
 	code    => <<'CODE'
 {
   success = gimp_vectors_import_file (image, filename,
-                                      merge, scale, -1, NULL, NULL);
+                                      merge, scale, NULL, -1, NULL, NULL);
 }
 CODE
     );

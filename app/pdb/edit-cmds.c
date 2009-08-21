@@ -63,7 +63,7 @@ edit_cut_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
           GError    *my_error = NULL;
@@ -108,7 +108,7 @@ edit_copy_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error))
         {
           GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
           GError    *my_error = NULL;
@@ -195,7 +195,7 @@ edit_paste_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp->global_buffer &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
                                           drawable, gimp->global_buffer,
@@ -269,7 +269,7 @@ edit_named_cut_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
           GError    *my_error = NULL;
@@ -321,7 +321,7 @@ edit_named_copy_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error))
         {
           GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
           GError    *my_error = NULL;
@@ -423,7 +423,7 @@ edit_named_paste_invoker (GimpProcedure      *procedure,
     {
       GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
-      if (buffer && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (buffer && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
                                           drawable, buffer,
@@ -498,7 +498,7 @@ edit_clear_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -529,7 +529,7 @@ edit_fill_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -573,7 +573,7 @@ edit_bucket_fill_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
           gboolean   do_seed_fill;
@@ -629,7 +629,7 @@ edit_bucket_fill_full_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
           gboolean   do_seed_fill;
@@ -697,7 +697,7 @@ edit_blend_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
 
       if (success && supersample)
         {
@@ -749,7 +749,7 @@ edit_stroke_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           GimpImage         *image   = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
@@ -789,8 +789,8 @@ edit_stroke_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (vectors), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (vectors), FALSE, error))
         {
           GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
 

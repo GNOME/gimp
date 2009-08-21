@@ -18,41 +18,42 @@
 
  ( ) Check that the version number is correct in configure.ac
 
- ( ) Run 'make maintainer-clean -k'
+ ( ) Run 'make maintainer-clean -k' or 'git clean -x -d -f'
 
  ( ) Run ./autogen.sh --enable-gtk-doc
 
  ( ) Do a complete build of the source tree.
 
- ( ) Check if NEWS, authors.xml, README or INSTALL need to be updated.
+ ( ) Check if NEWS, authors.xml, README or INSTALL need to be updated,
+     as well as any release notes on gimp.org. Don't forget to add any
+     "Index of new symbols in GIMP 2.x" to the gtk-doc generated
+     devel-docs.
 
  ( ) Does the splash screen need to be changed?
 
- ( ) Run 'make distcheck'.
+ ( ) Run 'make distcheck'. Avoid passing make -j since that can cause
+     mysterious fails
 
  ( ) If there are problems with 'make distcheck', fix them and try again.
 
  ( ) Commit changes that you had to do to get 'make distcheck' running.
 
- ( ) Add the release entry to the ChangeLog.
+ ( ) Make a release commit so that a release entry is added to the
+     generated ChangeLog.
 
- ( ) Run 'make dist' to create the final tarball.
+ ( ) Run 'make dist' to create the final tarball. This will generate
+     ChangeLog.
 
  ( ) Use md5sum to create a checksum of the tarball (tar.bz2).
 
  ( ) Upload the tarball (tar.bz2) and the .md5 file to your home directory
      on ftp.gimp.org.  Keep a copy of the .md5 file around.
 
- ( ) Commit the changes to ChangeLog and generated files that were changed
-     by running 'make dist'.
+ ( ) Commit the changes to generated files that were changed by
+     running 'make dist'.
 
- ( ) Tag the release.
-      - For a release from trunk:
-        svn cp svn+ssh://svn.gnome.org/svn/gimp/trunk \
-               svn+ssh://svn.gnome.org/svn/gimp/tags/GIMP_2_x_y
-      - For a release from a branch
-        svn cp svn+ssh://svn.gnome.org/svn/gimp/branches/gimp_2_x
-               svn+ssh://svn.gnome.org/svn/gimp/tags/GIMP_2_x_y
+ ( ) Tag the release (don't forget to push the tag)
+        git tag -s GIMP_2_x_y
 
  ( ) Move the tarball and the .md5 file to its final destination in the
      FTP area (/home/ftp/pub/gimp/v2.x).

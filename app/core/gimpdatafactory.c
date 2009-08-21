@@ -42,11 +42,18 @@
 
 #define WRITABLE_PATH_KEY "gimp-data-factory-writable-path"
 
+/* Data files that have this string in their path are considered
+ * obsolete and are only kept around for backwards compatibility
+ */
+#define GIMP_OBSOLETE_DATA_DIR_NAME "gimp-obsolete-files"
+
 
 struct _GimpDataFactoryPriv
 {
   Gimp                             *gimp;
   GimpContainer                    *container;
+
+  GimpContainer                    *container_obsolete;
 
   gchar                            *path_property_name;
   gchar                            *writable_property_name;
@@ -102,6 +109,7 @@ gimp_data_factory_init (GimpDataFactory *factory)
 
   factory->priv->gimp                   = NULL;
   factory->priv->container              = NULL;
+  factory->priv->container_obsolete     = NULL;
   factory->priv->path_property_name     = NULL;
   factory->priv->writable_property_name = NULL;
   factory->priv->loader_entries         = NULL;
@@ -119,6 +127,12 @@ gimp_data_factory_finalize (GObject *object)
     {
       g_object_unref (factory->priv->container);
       factory->priv->container = NULL;
+    }
+
+  if (factory->priv->container_obsolete)
+    {
+      g_object_unref (factory->priv->container_obsolete);
+      factory->priv->container_obsolete = NULL;
     }
 
   if (factory->priv->path_property_name)
@@ -144,6 +158,8 @@ gimp_data_factory_get_memsize (GimpObject *object,
   gint64           memsize = 0;
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (factory->priv->container),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (factory->priv->container_obsolete),
                                       gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
@@ -174,6 +190,9 @@ gimp_data_factory_new (Gimp                             *gimp,
   factory->priv->gimp                   = gimp;
   factory->priv->container              = gimp_list_new (data_type, TRUE);
   gimp_list_set_sort_func (GIMP_LIST (factory->priv->container),
+			   (GCompareFunc) gimp_data_compare);
+  factory->priv->container_obsolete     = gimp_list_new (data_type, TRUE);
+  gimp_list_set_sort_func (GIMP_LIST (factory->priv->container_obsolete),
 			   (GCompareFunc) gimp_data_compare);
 
   factory->priv->path_property_name     = g_strdup (path_property_name);
@@ -630,6 +649,14 @@ gimp_data_factory_get_container (GimpDataFactory *factory)
   return factory->priv->container;
 }
 
+GimpContainer *
+gimp_data_factory_get_container_obsolete (GimpDataFactory *factory)
+{
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+
+  return factory->priv->container_obsolete;
+}
+
 Gimp *
 gimp_data_factory_get_gimp (GimpDataFactory *factory)
 {
@@ -783,7 +810,13 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
                 data->mtime = file_data->mtime;
                 data->dirty = FALSE;
 
-                gimp_container_add (factory->priv->container, GIMP_OBJECT (data));
+                if (strstr (file_data->dirname, GIMP_OBSOLETE_DATA_DIR_NAME))
+                  gimp_container_add (factory->priv->container_obsolete,
+                                      GIMP_OBJECT (data));
+                else
+                  gimp_container_add (factory->priv->container,
+                                      GIMP_OBJECT (data));
+
                 g_object_unref (data);
               }
 

@@ -189,6 +189,8 @@ libappcore_a_sources = \
 	gimpgradient-save.h			\
 	gimpgrid.c				\
 	gimpgrid.h				\
+	gimpgrouplayer.c			\
+	gimpgrouplayer.h			\
 	gimpguide.c				\
 	gimpguide.h				\
 	gimpguideundo.c				\
@@ -350,6 +352,8 @@ libappcore_a_sources = \
 	gimptooloptions.h			\
 	gimptoolpresets.c			\
 	gimptoolpresets.h			\
+	gimptreehandler.c			\
+	gimptreehandler.h			\
 	gimpunit.c				\
 	gimpunit.h				\
 	gimpundo.c				\

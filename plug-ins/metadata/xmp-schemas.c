@@ -18,8 +18,11 @@
  */
 
 #include "config.h"
-#include "xmp-model.h"
+
+#include <gtk/gtk.h>
+
 #include "xmp-schemas.h"
+#include "xmp-model.h"
 
 static XMPProperty dc_properties[] =
 {

@@ -1,6 +1,7 @@
 ## Makefile.am for gimp/data/gradients
 
 gradientdatadir = $(gimpdatadir)/gradients
+obsoletegradientdatadir = $(gimpdatadir)/gradients/gimp-obsolete-files
 
 gradientdata_DATA = \
 	Abstract_1.ggr				\
@@ -36,12 +37,8 @@ gradientdata_DATA = \
 	Flare_Rays_Size_1.ggr			\
 	Flare_Sizefac_101.ggr			\
 	Four_bars.ggr				\
-	French_flag.ggr				\
-	French_flag_smooth.ggr			\
 	Full_saturation_spectrum_CCW.ggr	\
 	Full_saturation_spectrum_CW.ggr		\
-	German_flag.ggr				\
-	German_flag_smooth.ggr			\
 	Golden.ggr				\
 	Greens.ggr				\
 	Horizon_1.ggr				\
@@ -50,8 +47,6 @@ gradientdata_DATA = \
 	Land_1.ggr				\
 	Land_and_Sea.ggr			\
 	Metallic_Something.ggr			\
-	Mexican_flag.ggr			\
-	Mexican_flag_smooth.ggr			\
 	Nauseating_Headache.ggr			\
 	Neon_Cyan.ggr				\
 	Neon_Green.ggr				\
@@ -64,8 +59,6 @@ gradientdata_DATA = \
 	Radial_Eyeball_Green.ggr		\
 	Radial_Glow_1.ggr			\
 	Radial_Rainbow_Hoop.ggr			\
-	Romanian_flag.ggr			\
-	Romanian_flag_smooth.ggr		\
 	Rounded_edge.ggr			\
 	Shadows_1.ggr				\
 	Shadows_2.ggr				\
@@ -81,5 +74,15 @@ gradientdata_DATA = \
 	Wood_2.ggr				\
 	Yellow_Contrast.ggr			\
 	Yellow_Orange.ggr
+
+obsoletegradientdata_DATA = \
+	French_flag.ggr				\
+	French_flag_smooth.ggr			\
+	German_flag.ggr				\
+	German_flag_smooth.ggr			\
+	Mexican_flag.ggr			\
+	Mexican_flag_smooth.ggr			\
+	Romanian_flag.ggr			\
+	Romanian_flag_smooth.ggr
 
 EXTRA_DIST = $(gradientdata_DATA)

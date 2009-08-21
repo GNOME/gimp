@@ -870,7 +870,7 @@
 	official version of TinyScheme which adds entry point for nested
 	calling. Part of making it more suitable for Scheme->C->Scheme
 	calling. See SourceForge bug #1599945. Updated usage information
-	using text from Manual.txt.
+	using text from Manual.txt. See SourceForge bug #1825395.
 
 2008-09-11  Michael Natterer  <mitch@gimp.org>
 

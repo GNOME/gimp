@@ -46,6 +46,8 @@
 
 
 static gboolean   gimp_selection_is_attached   (GimpItem          *item);
+static GimpContainer *
+                  gimp_selection_get_container (GimpItem          *item);
 static void       gimp_selection_translate     (GimpItem          *item,
                                                 gint               offset_x,
                                                 gint               offset_y,
@@ -143,6 +145,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   viewable_class->default_stock_id    = "gimp-selection";
 
   item_class->is_attached             = gimp_selection_is_attached;
+  item_class->get_container           = gimp_selection_get_container;
   item_class->translate               = gimp_selection_translate;
   item_class->scale                   = gimp_selection_scale;
   item_class->resize                  = gimp_selection_resize;
@@ -187,6 +190,12 @@ gimp_selection_is_attached (GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
           gimp_image_get_mask (gimp_item_get_image (item)) == GIMP_CHANNEL (item));
+}
+
+static GimpContainer *
+gimp_selection_get_container (GimpItem *item)
+{
+  return NULL;
 }
 
 static void
@@ -606,7 +615,8 @@ gimp_selection_save (GimpSelection *selection)
   /*  saved selections are not visible by default  */
   gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);
 
-  gimp_image_add_channel (image, new_channel, -1, TRUE);
+  gimp_image_add_channel (image, new_channel,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   return new_channel;
 }

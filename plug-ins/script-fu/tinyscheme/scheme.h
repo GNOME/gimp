@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <glib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
  * Default values for #define'd symbols
  */
@@ -164,8 +168,6 @@ void    putstr(scheme *sc, const char *s);
 int list_length(scheme *sc, pointer a);
 int eqv(pointer a, pointer b);
 
-
-SCHEME_EXPORT void set_safe_foreign (scheme *sc, pointer data);
 SCHEME_EXPORT pointer foreign_error (scheme *sc, const char *s, pointer a);
 
 #if USE_INTERFACE
@@ -200,7 +202,7 @@ struct scheme_interface {
   gunichar (*charvalue)(pointer p);
   int (*is_list)(scheme *sc, pointer p);
   int (*is_vector)(pointer p);
-  int (*list_length)(scheme *sc, pointer a);
+  int (*list_length)(scheme *sc, pointer p);
   long (*vector_length)(pointer vec);
   void (*fill_vector)(pointer vec, pointer elem);
   pointer (*vector_elem)(pointer vec, int ielem);
@@ -237,5 +239,29 @@ struct scheme_interface {
 };
 #endif
 
+#if !STANDALONE
+typedef struct scheme_registerable
+{
+  foreign_func  f;
+  char *       name;
+}
+scheme_registerable;
+
+void scheme_register_foreign_func(scheme * sc, scheme_registerable * sr);
+void scheme_register_foreign_func_list(scheme * sc,
+                                      scheme_registerable * list,
+                                      int n);
+
+#endif /* !STANDALONE */
+
+#ifdef __cplusplus
+}
 #endif
 
+#endif
+
+/*
+Local variables:
+c-file-style: "k&r"
+End:
+*/

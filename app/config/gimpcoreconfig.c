@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_BRUSH     "Circle (11)"
+#define DEFAULT_BRUSH     "Round Fuzzy"
 #define DEFAULT_PATTERN   "Pine"
 #define DEFAULT_PALETTE   "Default"
 #define DEFAULT_GRADIENT  "FG to BG (RGB)"

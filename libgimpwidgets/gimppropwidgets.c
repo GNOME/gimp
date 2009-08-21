@@ -3155,11 +3155,20 @@ gimp_prop_coordinates_notify_x (GObject       *config,
 
   if (value != gimp_size_entry_get_refval (entry, 0))
     {
+      gdouble *old_x_value = g_object_get_data (G_OBJECT (entry),
+                                                "old-x-value");
+
       g_signal_handlers_block_by_func (entry,
                                        gimp_prop_coordinates_callback,
                                        config);
 
       gimp_size_entry_set_refval (entry, 0, value);
+
+      if (old_x_value)
+        *old_x_value = value;
+
+      g_signal_emit_by_name (entry, "value-changed",
+                             gimp_size_entry_get_value (entry, 0));
 
       g_signal_handlers_unblock_by_func (entry,
                                          gimp_prop_coordinates_callback,
@@ -3193,11 +3202,20 @@ gimp_prop_coordinates_notify_y (GObject       *config,
 
   if (value != gimp_size_entry_get_refval (entry, 1))
     {
+      gdouble *old_y_value = g_object_get_data (G_OBJECT (entry),
+                                                "old-y-value");
+
       g_signal_handlers_block_by_func (entry,
                                        gimp_prop_coordinates_callback,
                                        config);
 
       gimp_size_entry_set_refval (entry, 1, value);
+
+      if (old_y_value)
+        *old_y_value = value;
+
+      g_signal_emit_by_name (entry, "value-changed",
+                             gimp_size_entry_get_value (entry, 1));
 
       g_signal_handlers_unblock_by_func (entry,
                                          gimp_prop_coordinates_callback,

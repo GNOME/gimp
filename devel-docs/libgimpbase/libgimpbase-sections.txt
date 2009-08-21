@@ -4,6 +4,8 @@ GimpEnumDesc
 GimpFlagsDesc
 gimp_type_set_translation_domain
 gimp_type_get_translation_domain
+gimp_type_set_translation_context
+gimp_type_get_translation_context
 gimp_enum_set_value_descriptions
 gimp_enum_get_value_descriptions
 gimp_flags_get_value_descriptions

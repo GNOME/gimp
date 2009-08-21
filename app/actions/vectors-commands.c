@@ -187,7 +187,8 @@ vectors_new_last_vals_cmd_callback (GtkAction *action,
   new_vectors = gimp_vectors_new (image,
                                   vectors_name ? vectors_name : _("New Path"));
 
-  gimp_image_add_vectors (image, new_vectors, -1, TRUE);
+  gimp_image_add_vectors (image, new_vectors,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_flush (image);
 }
@@ -247,11 +248,20 @@ vectors_duplicate_cmd_callback (GtkAction *action,
   GimpImage   *image;
   GimpVectors *vectors;
   GimpVectors *new_vectors;
+  GimpVectors *parent;
   return_if_no_vectors (image, vectors, data);
 
   new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
                                                    G_TYPE_FROM_INSTANCE (vectors)));
-  gimp_image_add_vectors (image, new_vectors, -1, TRUE);
+
+  /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
+   *  the latter would add a duplicated group inside itself instead of
+   *  above it
+   */
+  parent = GIMP_VECTORS (gimp_viewable_get_parent (GIMP_VIEWABLE (vectors)));
+
+  gimp_image_add_vectors (image, new_vectors, parent, -1, TRUE);
+
   gimp_image_flush (image);
 }
 
@@ -477,7 +487,9 @@ vectors_paste_cmd_callback (GtkAction *action,
       GError *error = NULL;
 
       if (! gimp_vectors_import_buffer (image, svg, svg_size,
-                                        TRUE, TRUE, -1, NULL, &error))
+                                        TRUE, TRUE,
+                                        GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                        NULL, &error))
         {
           gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
                         "%s", error->message);
@@ -602,6 +614,37 @@ vectors_linked_cmd_callback (GtkAction *action,
     }
 }
 
+void
+vectors_lock_content_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpImage   *image;
+  GimpVectors *vectors;
+  gboolean     locked;
+  return_if_no_vectors (image, vectors, data);
+
+  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (locked != gimp_item_get_lock_content (GIMP_ITEM (vectors)))
+    {
+#if 0
+      GimpUndo *undo;
+#endif
+      gboolean  push_undo = TRUE;
+
+#if 0
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_ITEM_LINKED);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (vectors))
+        push_undo = FALSE;
+#endif
+
+      gimp_item_set_lock_content (GIMP_ITEM (vectors), locked, push_undo);
+      gimp_image_flush (image);
+    }
+}
+
 
 /*  private functions  */
 
@@ -622,7 +665,8 @@ vectors_new_vectors_response (GtkWidget            *widget,
 
       new_vectors = gimp_vectors_new (options->image, vectors_name);
 
-      gimp_image_add_vectors (options->image, new_vectors, -1, TRUE);
+      gimp_image_add_vectors (options->image, new_vectors,
+                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
       gimp_image_flush (options->image);
     }
@@ -670,7 +714,8 @@ vectors_import_response (GtkWidget           *widget,
 
       if (gimp_vectors_import_file (dialog->image, filename,
                                     vectors_import_merge, vectors_import_scale,
-                                    -1, NULL, &error))
+                                    GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                    NULL, &error))
         {
           gimp_image_flush (dialog->image);
         }

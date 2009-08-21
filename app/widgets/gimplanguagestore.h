@@ -56,6 +56,9 @@ GtkListStore * gimp_language_store_new      (void);
 void           gimp_language_store_add      (GimpLanguageStore *store,
                                              const gchar       *lang,
                                              const gchar       *code);
+gboolean       gimp_language_store_lookup   (GimpLanguageStore *store,
+                                             const gchar       *code,
+                                             GtkTreeIter       *iter);
 
 
 #endif  /* __GIMP_LANGUAGE_STORE_H__ */

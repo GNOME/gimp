@@ -45,6 +45,12 @@ xmpdump_SOURCES = \
 	xmpdump.c	\
 	base64.h	\
 	base64.c	\
+	xmp-schemas.h	\
+	xmp-schemas.c	\
+	xmp-encode.h	\
+	xmp-encode.c	\
+	xmp-model.h	\
+	xmp-model.c	\
 	xmp-parse.h	\
 	xmp-parse.c	
 

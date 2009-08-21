@@ -360,8 +360,7 @@ gimp_controller_editor_constructor (GType                  type,
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  editor->grab_button = gtk_check_button_new_with_mnemonic (_("_Grab event"));
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (editor->grab_button), FALSE);
+  editor->grab_button = gtk_toggle_button_new_with_mnemonic (_("_Grab event"));
   gtk_box_pack_start (GTK_BOX (hbox), editor->grab_button, TRUE, TRUE, 0);
   gtk_widget_show (editor->grab_button);
 

@@ -1,4 +1,4 @@
-;    Initialization file for TinySCHEME 1.38
+;    Initialization file for TinySCHEME 1.39
 
 ; Per R5RS, up to four deep compositions should be defined
 (define (caar x) (car (car x)))
@@ -29,6 +29,18 @@
 (define (cddadr x) (cdr (cdr (car (cdr x)))))
 (define (cdddar x) (cdr (cdr (cdr (car x)))))
 (define (cddddr x) (cdr (cdr (cdr (cdr x)))))
+
+;;;; Utility to ease macro creation
+(define (macro-expand form)
+     ((eval (get-closure-code (eval (car form)))) form))
+
+(define (macro-expand-all form)
+   (if (macro? form)
+      (macro-expand-all (macro-expand form))
+      form))
+
+(define *compile-hook* macro-expand-all)
+
 
 (macro (unless form)
      `(if (not ,(cadr form)) (begin ,@(cddr form))))
@@ -64,18 +76,26 @@
      (foldr (lambda (a b) (if (< a b) a b)) (car lst) (cdr lst)))
 (define (succ x) (+ x 1))
 (define (pred x) (- x 1))
-(define (gcd a b)
-  (let ((aa (abs a))
-	(bb (abs b)))
-     (if (= bb 0)
-          aa
-          (gcd bb (remainder aa bb)))))
-(define (lcm a b)
-     (if (or (= a 0) (= b 0))
-          0
-          (abs (* (quotient a (gcd a b)) b))))
+(define gcd
+  (lambda a
+    (if (null? a)
+      0
+      (let ((aa (abs (car a)))
+            (bb (abs (cadr a))))
+         (if (= bb 0)
+              aa
+              (gcd bb (remainder aa bb)))))))
+(define lcm
+  (lambda a
+    (if (null? a)
+      1
+      (let ((aa (abs (car a)))
+            (bb (abs (cadr a))))
+         (if (or (= aa 0) (= bb 0))
+             0
+             (abs (* (quotient aa (gcd aa bb)) bb)))))))
 
-(define call/cc call-with-current-continuation)
+
 
 (define (string . charlist)
      (list->string charlist))
@@ -110,7 +130,7 @@
 (define (string->anyatom str pred)
      (let* ((a (string->atom str)))
        (if (pred a) a
-	   (error "string->xxx: not a xxx" a))))
+     (error "string->xxx: not a xxx" a))))
 
 (define (string->number str) (string->anyatom str number?))
 
@@ -118,9 +138,9 @@
   (if (pred n)
       (atom->string n)
       (error "xxx->string: not a xxx" n)))
-  
 
-(define (number->string n) (anyatom->string n number?))    
+
+(define (number->string n) (anyatom->string n number?))
 
 (define (char-cmp? cmp a b)
      (cmp (char->integer a) (char->integer b)))
@@ -180,31 +200,31 @@
   (if (null? lists)
       (cons cars cdrs)
       (let ((car1 (caar lists))
-	    (cdr1 (cdar lists)))
-	(unzip1-with-cdr-iterative 
-	 (cdr lists) 
-	 (append cars (list car1))
-	 (append cdrs (list cdr1))))))
+      (cdr1 (cdar lists)))
+  (unzip1-with-cdr-iterative
+   (cdr lists)
+   (append cars (list car1))
+   (append cdrs (list cdr1))))))
 
 (define (map proc . lists)
   (if (null? lists)
       (apply proc)
       (if (null? (car lists))
-	  '()
-	  (let* ((unz (apply unzip1-with-cdr lists))
-		 (cars (car unz))
-		 (cdrs (cdr unz)))
-	    (cons (apply proc cars) (apply map (cons proc cdrs)))))))
+    '()
+    (let* ((unz (apply unzip1-with-cdr lists))
+     (cars (car unz))
+     (cdrs (cdr unz)))
+      (cons (apply proc cars) (apply map (cons proc cdrs)))))))
 
 (define (for-each proc . lists)
   (if (null? lists)
       (apply proc)
       (if (null? (car lists))
-	  #t
-	  (let* ((unz (apply unzip1-with-cdr lists))
-		 (cars (car unz))
-		 (cdrs (cdr unz)))
-	    (apply proc cars) (apply map (cons proc cdrs))))))
+    #t
+    (let* ((unz (apply unzip1-with-cdr lists))
+     (cars (car unz))
+     (cdrs (cdr unz)))
+      (apply proc cars) (apply map (cons proc cdrs))))))
 
 (define (list-tail x k)
     (if (zero? k)
@@ -306,6 +326,115 @@
                                          (foo level (cdr form)))))))))
    (foo 0 (car (cdr l)))))
 
+;;;;;Helper for the dynamic-wind definition.  By Tom Breton (Tehom)
+(define (shared-tail x y)
+   (let (  (len-x (length x))
+           (len-y (length y)))
+      (define (shared-tail-helper x y)
+         (if
+            (eq? x y)
+            x
+            (shared-tail-helper (cdr x) (cdr y))))
+      (cond
+         ((> len-x len-y)
+            (shared-tail-helper
+               (list-tail x (- len-x len-y))
+               y))
+         ((< len-x len-y)
+            (shared-tail-helper
+               x
+               (list-tail y (- len-y len-x))))
+         (#t (shared-tail-helper x y)))))
+
+;;;;;Dynamic-wind by Tom Breton (Tehom)
+
+;;Guarded because we must only eval this once, because doing so
+;;redefines call/cc in terms of old call/cc
+(unless (defined? 'dynamic-wind)
+   (let
+      ;;These functions are defined in the context of a private list of
+      ;;pairs of before/after procs.
+      (  (*active-windings* '())
+         ;;We'll define some functions into the larger environment, so
+         ;;we need to know it.
+         (outer-env (current-environment)))
+
+      ;;Poor-man's structure operations
+      (define before-func car)
+      (define after-func  cdr)
+      (define make-winding cons)
+
+      ;;Manage active windings
+      (define (activate-winding! new)
+         ((before-func new))
+         (set! *active-windings* (cons new *active-windings*)))
+      (define (deactivate-top-winding!)
+         (let ((old-top (car *active-windings*)))
+            ;;Remove it from the list first so it's not active during its
+            ;;own exit.
+            (set! *active-windings* (cdr *active-windings*))
+            ((after-func old-top))))
+
+      (define (set-active-windings! new-ws)
+         (unless (eq? new-ws *active-windings*)
+            (let ((shared (shared-tail new-ws *active-windings*)))
+
+               ;;Define the looping functions.
+               ;;Exit the old list.  Do deeper ones last.  Don't do
+               ;;any shared ones.
+               (define (pop-many)
+                  (unless (eq? *active-windings* shared)
+                     (deactivate-top-winding!)
+                     (pop-many)))
+               ;;Enter the new list.  Do deeper ones first so that the
+               ;;deeper windings will already be active.  Don't do any
+               ;;shared ones.
+               (define (push-many new-ws)
+                  (unless (eq? new-ws shared)
+                     (push-many (cdr new-ws))
+                     (activate-winding! (car new-ws))))
+
+               ;;Do it.
+               (pop-many)
+               (push-many new-ws))))
+
+      ;;The definitions themselves.
+      (eval
+         `(define call-with-current-continuation
+             ;;It internally uses the built-in call/cc, so capture it.
+             ,(let ((old-c/cc call-with-current-continuation))
+                 (lambda (func)
+                    ;;Use old call/cc to get the continuation.
+                    (old-c/cc
+                       (lambda (continuation)
+                          ;;Call func with not the continuation itself
+                          ;;but a procedure that adjusts the active
+                          ;;windings to what they were when we made
+                          ;;this, and only then calls the
+                          ;;continuation.
+                          (func
+                             (let ((current-ws *active-windings*))
+                                (lambda (x)
+                                   (set-active-windings! current-ws)
+                                   (continuation x)))))))))
+         outer-env)
+      ;;We can't just say "define (dynamic-wind before thunk after)"
+      ;;because the lambda it's defined to lives in this environment,
+      ;;not in the global environment.
+      (eval
+         `(define dynamic-wind
+             ,(lambda (before thunk after)
+                 ;;Make a new winding
+                 (activate-winding! (make-winding before after))
+                 (let ((result (thunk)))
+                    ;;Get rid of the new winding.
+                    (deactivate-top-winding!)
+                    ;;The return value is that of thunk.
+                    result)))
+         outer-env)))
+
+(define call/cc call-with-current-continuation)
+
 
 ;;;;; atom? and equal? written by a.k
 
@@ -385,10 +514,6 @@
 
 (define (acons x y z) (cons (cons x y) z))
 
-;;;; Utility to ease macro creation
-(define (macro-expand form)
-     ((eval (get-closure-code (eval (car form)))) form))
-
 ;;;; Handy for imperative programs
 ;;;; Used as: (define-with-return (foo x y) .... (return z) ...)
 (macro (define-with-return form)
@@ -453,8 +578,8 @@
   (let* ((env (if (null? envl) (current-environment) (eval (car envl))))
          (xval (eval x env)))
     (if (closure? xval)
-	(make-closure (get-closure-code xval) env)
-	xval)))
+  (make-closure (get-closure-code xval) env)
+  xval)))
 
 ; Redefine this if you install another package infrastructure
 ; Also redefine 'package'
@@ -466,7 +591,7 @@
      (and (input-port? p) (output-port? p)))
 
 (define (close-port p)
-     (cond 
+     (cond
           ((input-output-port? p) (close-input-port (close-output-port p)))
           ((input-port? p) (close-input-port p))
           ((output-port? p) (close-output-port p))
@@ -539,7 +664,7 @@
                     (* (quotient *seed* q) r)))
           (if (< *seed* 0) (set! *seed* (+ *seed* m)))
           *seed*))
-;; SRFI-0 
+;; SRFI-0
 ;; COND-EXPAND
 ;; Implemented as a macro
 (define *features* '(srfi-0))
@@ -562,15 +687,15 @@
 
 (define (cond-eval condition)
   (cond ((symbol? condition)
-	 (if (member condition *features*) #t #f))
-	((eq? condition #t) #t)
-	((eq? condition #f) #f)
-	(else (case (car condition)
-		((and) (cond-eval-and (cdr condition)))
-		((or) (cond-eval-or (cdr condition)))
-		((not) (if (not (null? (cddr condition)))
-			   (error "cond-expand : 'not' takes 1 argument")
-			   (not (cond-eval (cadr condition)))))
-		(else (error "cond-expand : unknown operator" (car condition)))))))
+   (if (member condition *features*) #t #f))
+  ((eq? condition #t) #t)
+  ((eq? condition #f) #f)
+  (else (case (car condition)
+    ((and) (cond-eval-and (cdr condition)))
+    ((or) (cond-eval-or (cdr condition)))
+    ((not) (if (not (null? (cddr condition)))
+         (error "cond-expand : 'not' takes 1 argument")
+         (not (cond-eval (cadr condition)))))
+    (else (error "cond-expand : unknown operator" (car condition)))))))
 
 (gc-verbose #f)

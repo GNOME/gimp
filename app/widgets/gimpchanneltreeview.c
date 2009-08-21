@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpchanneltreeview.c
- * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,9 +51,9 @@
 
 struct _GimpChannelTreeViewPriv
 {
-  GtkWidget            *component_editor;
+  GtkWidget *component_editor;
 
-  GtkWidget            *toselection_button;
+  GtkWidget *toselection_button;
 };
 
 
@@ -115,7 +115,7 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->get_container    = gimp_image_get_channels;
   iv_class->get_active_item  = (GimpGetItemFunc) gimp_image_get_active_channel;
   iv_class->set_active_item  = (GimpSetItemFunc) gimp_image_set_active_channel;
-  iv_class->reorder_item     = (GimpReorderItemFunc) gimp_image_position_channel;
+  iv_class->reorder_item     = (GimpReorderItemFunc) gimp_image_reorder_channel;
   iv_class->add_item         = (GimpAddItemFunc) gimp_image_add_channel;
   iv_class->remove_item      = (GimpRemoveItemFunc) gimp_image_remove_channel;
   iv_class->new_item         = gimp_channel_tree_view_item_new;
@@ -212,25 +212,22 @@ gimp_channel_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
                                       GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpImage             *image     = gimp_item_tree_view_get_image (item_view);
   GimpItemTreeViewClass *item_view_class;
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
   if (GIMP_IS_DRAWABLE (src_viewable) &&
-      (gimp_item_tree_view_get_image (item_view) != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
+      (image != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
        G_TYPE_FROM_INSTANCE (src_viewable) != item_view_class->item_type))
     {
       GimpItem *new_item;
-      gint      index = -1;
+      GimpItem *parent;
+      gint      index;
 
-      if (dest_viewable)
-        {
-          index = gimp_image_get_channel_index (gimp_item_tree_view_get_image (item_view),
-                                                GIMP_CHANNEL (dest_viewable));
-
-          if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-            index++;
-        }
+      index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+                                                  drop_pos,
+                                                  (GimpViewable **) &parent);
 
       new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
                                     gimp_item_tree_view_get_image (item_view),
@@ -238,8 +235,10 @@ gimp_channel_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
 
       gimp_item_set_linked (new_item, FALSE, FALSE);
 
-      item_view_class->add_item (gimp_item_tree_view_get_image (item_view), new_item, index, TRUE);
-      gimp_image_flush (gimp_item_tree_view_get_image (item_view));
+      item_view_class->add_item (image, new_item, parent, index, TRUE);
+
+      gimp_image_flush (image);
+
       return;
     }
 
@@ -257,19 +256,16 @@ gimp_channel_tree_view_drop_component (GimpContainerTreeView   *tree_view,
                                        GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
   GimpItem         *new_item;
-  gint              index     = -1;
+  GimpChannel      *parent;
+  gint              index;
   const gchar      *desc;
   gchar            *name;
 
-  if (dest_viewable)
-    {
-      index = gimp_image_get_channel_index (gimp_item_tree_view_get_image (item_view),
-                                            GIMP_CHANNEL (dest_viewable));
-
-      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-        index++;
-    }
+  index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+                                              drop_pos,
+                                              (GimpViewable **) &parent);
 
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                        NULL, NULL, &desc, NULL);
@@ -285,12 +281,12 @@ gimp_channel_tree_view_drop_component (GimpContainerTreeView   *tree_view,
 
   g_free (name);
 
-  if (src_image != gimp_item_tree_view_get_image (item_view))
-    GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, gimp_item_tree_view_get_image (item_view));
+  if (src_image != image)
+    GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, image);
 
-  gimp_image_add_channel (gimp_item_tree_view_get_image (item_view), GIMP_CHANNEL (new_item), index,
-                          TRUE);
-  gimp_image_flush (gimp_item_tree_view_get_image (item_view));
+  gimp_image_add_channel (image, GIMP_CHANNEL (new_item), parent, index, TRUE);
+
+  gimp_image_flush (image);
 }
 
 
@@ -348,7 +344,8 @@ gimp_channel_tree_view_item_new (GimpImage *image)
                                   gimp_image_get_height (image),
                                   _("Empty Channel"), &color);
 
-  gimp_image_add_channel (image, new_channel, -1, TRUE);
+  gimp_image_add_channel (image, new_channel,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 

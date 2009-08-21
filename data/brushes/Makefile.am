@@ -1,21 +1,35 @@
 ## Makefile.am for gimp/data/brushes
 
 brushdatadir = $(gimpdatadir)/brushes
+obsoletebrushdatadir = $(gimpdatadir)/brushes/gimp-obsolete-files
 
 brushdata_DATA = \
+	confetti.gbr			\
+	dunes.gbr			\
+	galaxy.gbr			\
+	galaxy_big.gbr			\
+	pepper.gbr			\
+	pixel.gbr			\
+	\
+	Calligraphic.vbr		\
+	Diagonal-Star.vbr		\
+	Round-Fuzzy.vbr			\
+	Round.vbr			\
+	\
+	SketchBrush-64.gih		\
+	confetti.gih			\
+	feltpen.gih			\
+	hsparks.gih			\
+	vine.gih
+
+obsoletebrushdata_DATA = \
 	10x10square.gbr			\
 	10x10squareBlur.gbr		\
 	20x20square.gbr			\
 	20x20squareBlur.gbr		\
 	5x5square.gbr			\
 	5x5squareBlur.gbr		\
-	confetti.gbr			\
-	dunes.gbr			\
-	galaxy.gbr			\
-	galaxy_big.gbr			\
 	galaxy_small.gbr		\
-	pepper.gbr			\
-	pixel.gbr			\
 	\
 	Calligraphic-Brush-0.vbr	\
 	Calligraphic-Brush-1.vbr	\
@@ -45,11 +59,6 @@ brushdata_DATA = \
 	Diagonal-Star-25.vbr		\
 	\
 	SketchBrush-16.gih		\
-	SketchBrush-32.gih		\
-	SketchBrush-64.gih		\
-	confetti.gih			\
-	feltpen.gih			\
-	hsparks.gih			\
-	vine.gih
+	SketchBrush-32.gih
 
-EXTRA_DIST = $(brushdata_DATA)
+EXTRA_DIST = $(brushdata_DATA) $(obsoletebrushdata_DATA)

@@ -1799,6 +1799,7 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
                            GimpStroke       **ret_stroke,
                            GimpVectors      **ret_vectors)
 {
+  GList *all_vectors;
   GList *list;
 
   if (ret_coords)        *ret_coords         = *coords;
@@ -1808,9 +1809,9 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
   if (ret_stroke)        *ret_stroke         = NULL;
   if (ret_vectors)       *ret_vectors        = NULL;
 
-  for (list = gimp_image_get_vectors_iter (display->image);
-       list;
-       list = g_list_next (list))
+  all_vectors = gimp_image_get_vectors_list (display->image);
+
+  for (list = all_vectors; list; list = g_list_next (list))
     {
       GimpVectors *vectors = list->data;
 
@@ -1830,9 +1831,13 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
           if (ret_vectors)
             *ret_vectors = vectors;
 
+          g_list_free (all_vectors);
+
           return TRUE;
         }
     }
+
+  g_list_free (all_vectors);
 
   return FALSE;
 }

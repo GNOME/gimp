@@ -36,6 +36,7 @@
 #define GIMP_HELP_FILE_SAVE_BY_EXTENSION          "gimp-file-save-by-extension"
 #define GIMP_HELP_FILE_EXPORT                     "gimp-file-export"
 #define GIMP_HELP_FILE_EXPORT_TO                  "gimp-file-export-to"
+#define GIMP_HELP_FILE_OVERWRITE                  "gimp-file-overwrite"
 #define GIMP_HELP_FILE_SAVE_AS_TEMPLATE           "gimp-file-save-as-template"
 #define GIMP_HELP_FILE_REVERT                     "gimp-file-revert"
 #define GIMP_HELP_FILE_CLOSE                      "gimp-file-close"

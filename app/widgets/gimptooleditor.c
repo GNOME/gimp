@@ -54,12 +54,20 @@ struct _GimpToolEditorPrivate
   GtkWidget     *lower_button;
   GtkWidget     *reset_button;
 
+  /* State of tools at creation of the editor, stored to support
+   * reverting changes
+   */
+  gchar        **initial_tool_order;
+  gboolean      *initial_tool_visibility;
+  gint           n_tools;
+
   GQuark         visible_handler_id;
   GList         *default_tool_order;
 };
 
 
 static void   gimp_tool_editor_destroy     (GtkObject             *object);
+static void   gimp_tool_editor_finalize    (GObject               *object);
 
 static void   gimp_tool_editor_visible_notify
                                            (GimpToolInfo          *tool_info,
@@ -107,11 +115,13 @@ G_DEFINE_TYPE (GimpToolEditor, gimp_tool_editor, GIMP_TYPE_CONTAINER_TREE_VIEW)
 static void
 gimp_tool_editor_class_init (GimpToolEditorClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 
   g_type_class_add_private (klass, sizeof (GimpToolEditorPrivate));
 
-  object_class->destroy = gimp_tool_editor_destroy;
+  object_class->finalize     = gimp_tool_editor_finalize;
+  gtk_object_class->destroy  = gimp_tool_editor_destroy;
 }
 
 static void
@@ -119,17 +129,54 @@ gimp_tool_editor_init (GimpToolEditor *tool_editor)
 {
   GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
 
-  priv->model              = NULL;
-  priv->context            = NULL;
-  priv->container          = NULL;
-  priv->scrolled           = NULL;
+  priv->model                   = NULL;
+  priv->context                 = NULL;
+  priv->container               = NULL;
+  priv->scrolled                = NULL;
 
-  priv->visible_handler_id = 0;
-  priv->default_tool_order = NULL;
+  priv->visible_handler_id      = 0;
+  priv->default_tool_order      = NULL;
 
-  priv->raise_button       = NULL;
-  priv->lower_button       = NULL;
-  priv->reset_button       = NULL;
+  priv->initial_tool_order      = NULL;
+  priv->initial_tool_visibility = NULL;
+  priv->n_tools                 = 0;
+
+  priv->raise_button            = NULL;
+  priv->lower_button            = NULL;
+  priv->reset_button            = NULL;
+}
+
+static void
+gimp_tool_editor_finalize (GObject *object)
+{
+  GimpToolEditor *tool_editor;
+  GimpToolEditorPrivate *priv;
+
+  tool_editor = GIMP_TOOL_EDITOR (object);
+  priv        = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
+
+  if (priv->initial_tool_order)
+    {
+      int i;
+
+      for (i = 0; i < priv->n_tools; i++)
+        {
+          g_free (priv->initial_tool_order[i]);
+        }
+
+      g_free (priv->initial_tool_order);
+      priv->initial_tool_order      = NULL;
+    }
+
+  if (priv->initial_tool_visibility)
+    {
+      g_slice_free1 (sizeof (gboolean) * priv->n_tools,
+                     priv->initial_tool_visibility);
+
+      priv->initial_tool_visibility = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -163,10 +210,12 @@ gimp_tool_editor_new (GimpContainer *container,
                       gint           view_size,
                       gint           view_border_width)
 {
+  int                    i;
   GimpToolEditor        *tool_editor;
   GimpContainerTreeView *tree_view;
   GimpContainerView     *container_view;
   GObject               *object;
+  GimpObject            *gimp_object;
   GimpToolEditorPrivate *priv;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
@@ -178,10 +227,21 @@ gimp_tool_editor_new (GimpContainer *container,
   container_view = GIMP_CONTAINER_VIEW (object);
   priv           = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
 
-  priv->container          = container;
-  priv->context            = context;
-  priv->model              = tree_view->model;
-  priv->default_tool_order = default_tool_order;
+  priv->container               = container;
+  priv->context                 = context;
+  priv->model                   = tree_view->model;
+  priv->default_tool_order      = default_tool_order;
+  priv->initial_tool_order      = gimp_container_get_name_array (container,
+                                                                 &priv->n_tools);
+  priv->initial_tool_visibility = g_slice_alloc (sizeof (gboolean) *
+                                                 priv->n_tools);
+  for (i = 0; i < priv->n_tools; i++)
+    {
+      gimp_object = gimp_container_get_child_by_index (container, i);
+
+      g_object_get (gimp_object,
+                    "visible", &(priv->initial_tool_visibility[i]), NULL);
+    }
 
   gimp_container_view_set_view_size (container_view,
                                      view_size, view_border_width);
@@ -253,6 +313,32 @@ gimp_tool_editor_new (GimpContainer *container,
                             tool_editor);
 
   return GTK_WIDGET (tool_editor);
+}
+
+/**
+ * gimp_tool_editor_revert_changes:
+ * @tool_editor:
+ *
+ * Reverts the tool order and visibility to the state at creation.
+ **/
+void
+gimp_tool_editor_revert_changes (GimpToolEditor *tool_editor)
+{
+  int i;
+  GimpToolEditorPrivate *priv;
+
+  priv = GIMP_TOOL_EDITOR_GET_PRIVATE (tool_editor);
+
+  for (i = 0; i < priv->n_tools; i++)
+    {
+      GimpObject *object;
+
+      object = gimp_container_get_child_by_name (priv->container,
+                                                 priv->initial_tool_order[i]);
+
+      gimp_container_reorder (priv->container, object, i);
+      g_object_set (object, "visible", priv->initial_tool_visibility[i], NULL);
+    }
 }
 
 static void

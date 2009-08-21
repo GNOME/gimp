@@ -159,7 +159,10 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
 
   gimp_config_reset (GIMP_CONFIG (col_tool->config));
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 
