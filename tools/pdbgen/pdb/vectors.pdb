@@ -322,6 +322,53 @@ CODE
     );
 }
 
+sub vectors_get_lock_content {
+    $blurb = "Gets the 'lock content' state of the vectors object.";
+    $help  = "Gets the 'lock content' state of the vectors object.";
+
+    &mitch_pdb_misc('2009', '2.8');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' }
+    );
+
+    @outargs = (
+        { name => 'lock_content', type => 'boolean',
+          desc => "Whether the path's strokes are locked" }
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  lock_content = gimp_item_get_lock_content (GIMP_ITEM (vectors));
+}
+CODE
+    );
+}
+
+sub vectors_set_lock_content {
+    $blurb = "Sets the 'lock content' state of the vectors object.";
+    $help  = "Sets the 'lock content' state of the vectors object.";
+
+    &mitch_pdb_misc('2009', '2.8');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'lock_content', type => 'boolean',
+	  desc => "Whether the path's strokes are locked" }
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  gimp_item_set_lock_content (GIMP_ITEM (vectors), lock_content, TRUE);
+}
+CODE
+    );
+}
+
 sub vectors_get_tattoo {
     $blurb = 'Get the tattoo of the vectors object.';
     $help  = 'Get the tattoo state of the vectors object.';
@@ -1447,6 +1494,7 @@ CODE
             vectors_get_name vectors_set_name
             vectors_get_visible vectors_set_visible
             vectors_get_linked vectors_set_linked
+            vectors_get_lock_content vectors_set_lock_content
             vectors_get_tattoo vectors_set_tattoo
             vectors_get_strokes 
             vectors_stroke_get_length
