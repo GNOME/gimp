@@ -70,6 +70,7 @@ gboolean        gimp_pdb_image_is_not_base_type (GimpImage          *image,
 
 GimpStroke    * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,
                                                  gint                stroke_ID,
+                                                 gboolean            writable,
                                                  GError            **error);
 
 

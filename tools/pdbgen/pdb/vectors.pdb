@@ -485,7 +485,7 @@ sub vectors_stroke_get_length {
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
   
   if (stroke)
     length = gimp_stroke_get_length (stroke, precision);
@@ -534,7 +534,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
   
   if (stroke)
     {
@@ -571,7 +571,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
   
   if (stroke)
     {
@@ -608,7 +608,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
   
   if (stroke)
     {
@@ -650,7 +650,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
   
   if (stroke)
     {
@@ -691,7 +691,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
   
   if (stroke)
     {
@@ -733,7 +733,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
   
   if (stroke)
     {
@@ -774,7 +774,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
   
   if (stroke)
     {
@@ -820,7 +820,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
   
   if (stroke)
     {
@@ -870,7 +870,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
   
   if (GIMP_IS_BEZIER_STROKE (stroke))
     {
@@ -936,7 +936,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
   
   if (stroke)
     {
@@ -1074,22 +1074,27 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke;
-  GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
+  if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
+    {
+      GimpStroke *stroke;
+      GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-  coord0.x = x0;
-  coord0.y = y0;
+      coord0.x = x0;
+      coord0.y = y0;
 
-  stroke = gimp_bezier_stroke_new_moveto (&coord0);
+      stroke = gimp_bezier_stroke_new_moveto (&coord0);
 
-  if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-    gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                      _("Add path stroke"),
-                                      vectors);
+      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                          _("Add path stroke"),
+                                          vectors);
 
-  gimp_vectors_stroke_add (vectors, stroke);
+      gimp_vectors_stroke_add (vectors, stroke);
 
-  stroke_id = gimp_stroke_get_ID (stroke);
+      stroke_id = gimp_stroke_get_ID (stroke);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -1118,7 +1123,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
   if (stroke)
     {
@@ -1170,7 +1175,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
   if (stroke)
     {
@@ -1228,7 +1233,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
   if (stroke)
     {
@@ -1292,22 +1297,27 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke;
-  GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
+  if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
+    {
+      GimpStroke *stroke;
+      GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-  coord0.x = x0;
-  coord0.y = y0;
+      coord0.x = x0;
+      coord0.y = y0;
 
-  stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
+      stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
 
-  if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-    gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                      _("Add path stroke"),
-                                      vectors);
+      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                          _("Add path stroke"),
+                                          vectors);
 
-  gimp_vectors_stroke_add (vectors, stroke);
+      gimp_vectors_stroke_add (vectors, stroke);
 
-  stroke_id = gimp_stroke_get_ID (stroke);
+      stroke_id = gimp_stroke_get_ID (stroke);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );

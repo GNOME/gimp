@@ -461,20 +461,22 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
 GimpStroke *
 gimp_pdb_get_vectors_stroke (GimpVectors  *vectors,
                              gint          stroke_ID,
+                             gboolean      writable,
                              GError      **error)
 {
-  GimpStroke *stroke;
+  GimpStroke *stroke = NULL;
 
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_ID);
-
-  if (! stroke)
+  if (! writable || gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Vectors object %d does not contain stroke with ID %d"),
-                   gimp_item_get_ID (GIMP_ITEM (vectors)), stroke_ID);
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_ID);
+
+      if (! stroke)
+        g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                     _("Vectors object %d does not contain stroke with ID %d"),
+                     gimp_item_get_ID (GIMP_ITEM (vectors)), stroke_ID);
     }
 
   return stroke;

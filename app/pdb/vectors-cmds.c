@@ -543,7 +543,7 @@ vectors_stroke_get_length_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
 
       if (stroke)
         length = gimp_stroke_get_length (stroke, precision);
@@ -586,7 +586,7 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
 
       if (stroke)
         {
@@ -632,7 +632,7 @@ vectors_remove_stroke_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -668,7 +668,7 @@ vectors_stroke_close_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -708,7 +708,7 @@ vectors_stroke_translate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -748,7 +748,7 @@ vectors_stroke_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -790,7 +790,7 @@ vectors_stroke_rotate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -830,7 +830,7 @@ vectors_stroke_flip_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -874,7 +874,7 @@ vectors_stroke_flip_free_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -915,7 +915,7 @@ vectors_stroke_get_points_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
 
       if (GIMP_IS_BEZIER_STROKE (stroke))
         {
@@ -1055,7 +1055,7 @@ vectors_stroke_interpolate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
 
       if (stroke)
         {
@@ -1118,22 +1118,27 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke;
-      GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
+        {
+          GimpStroke *stroke;
+          GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-      coord0.x = x0;
-      coord0.y = y0;
+          coord0.x = x0;
+          coord0.y = y0;
 
-      stroke = gimp_bezier_stroke_new_moveto (&coord0);
+          stroke = gimp_bezier_stroke_new_moveto (&coord0);
 
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                          _("Add path stroke"),
-                                          vectors);
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Add path stroke"),
+                                              vectors);
 
-      gimp_vectors_stroke_add (vectors, stroke);
+          gimp_vectors_stroke_add (vectors, stroke);
 
-      stroke_id = gimp_stroke_get_ID (stroke);
+          stroke_id = gimp_stroke_get_ID (stroke);
+        }
+      else
+        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1166,7 +1171,7 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -1215,7 +1220,7 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -1272,7 +1277,7 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -1331,22 +1336,27 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke;
-      GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
+        {
+          GimpStroke *stroke;
+          GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-      coord0.x = x0;
-      coord0.y = y0;
+          coord0.x = x0;
+          coord0.y = y0;
 
-      stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
+          stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
 
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                          _("Add path stroke"),
-                                          vectors);
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Add path stroke"),
+                                              vectors);
 
-      gimp_vectors_stroke_add (vectors, stroke);
+          gimp_vectors_stroke_add (vectors, stroke);
 
-      stroke_id = gimp_stroke_get_ID (stroke);
+          stroke_id = gimp_stroke_get_ID (stroke);
+        }
+      else
+        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
