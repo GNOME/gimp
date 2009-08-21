@@ -367,6 +367,14 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
   if (! drawable)
     return;
 
+  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+    {
+      gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+                            GIMP_MESSAGE_ERROR,
+                            _("The active layer's pixels are locked."));
+      return;
+    }
+
   /* FIXME: there should be a virtual method for this that the
    *        GimpTextLayer can override.
    */
@@ -430,6 +438,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
   GimpImage        *image = shell->display->image;
+  GimpDrawable     *drawable;
   GimpBuffer       *buffer;
   gint              x, y, width, height;
 
@@ -441,14 +450,23 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
   if (! image)
     return;
 
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (drawable && gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+    {
+      gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+                            GIMP_MESSAGE_ERROR,
+                            _("The active layer's pixels are locked."));
+      return;
+    }
+
   buffer = GIMP_BUFFER (viewable);
 
   gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
 
   /* FIXME: popup a menu for selecting "Paste Into" */
 
-  gimp_edit_paste (image, gimp_image_get_active_drawable (image),
-                   buffer, FALSE,
+  gimp_edit_paste (image, drawable, buffer, FALSE,
                    x, y, width, height);
 
   gimp_display_shell_dnd_flush (shell, image);
