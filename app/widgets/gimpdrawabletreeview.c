@@ -215,7 +215,8 @@ gimp_drawable_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
       if (src_type == GIMP_DND_TYPE_COLOR ||
           src_type == GIMP_DND_TYPE_PATTERN)
         {
-          if (! dest_viewable)
+          if (! dest_viewable ||
+              gimp_item_get_lock_content (GIMP_ITEM (dest_viewable)))
             return FALSE;
 
           if (return_drop_pos)
