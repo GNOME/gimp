@@ -260,6 +260,9 @@ gimp_blend_tool_button_release (GimpTool              *tool,
 
       gimp_image_flush (image);
     }
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
 }
 
 static void
