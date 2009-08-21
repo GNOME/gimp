@@ -64,6 +64,7 @@ struct _GimpContainerViewInterface
                               GimpContext       *context);
   gpointer (* insert_item)   (GimpContainerView *view,
                               GimpViewable      *object,
+                              gpointer           parent_insert_data,
                               gint               index);
   void     (* remove_item)   (GimpContainerView *view,
                               GimpViewable      *object,
@@ -80,6 +81,7 @@ struct _GimpContainerViewInterface
 
   /*  the destroy notifier for private->hash_table's values  */
   GDestroyNotify  insert_data_free;
+  gboolean        model_is_tree;
 };
 
 

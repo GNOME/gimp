@@ -45,13 +45,15 @@ enum
 };
 
 
-static gboolean   gimp_layer_mask_is_attached  (GimpItem     *item);
-static GimpItem * gimp_layer_mask_duplicate    (GimpItem     *item,
-                                                GType         new_type);
-static gboolean   gimp_layer_mask_rename       (GimpItem     *item,
-                                                const gchar  *new_name,
-                                                const gchar  *undo_desc,
-                                                GError      **error);
+static gboolean   gimp_layer_mask_is_attached   (GimpItem     *item);
+static GimpContainer *
+                  gimp_layer_mask_get_container (GimpItem     *item);
+static GimpItem * gimp_layer_mask_duplicate     (GimpItem     *item,
+                                                 GType         new_type);
+static gboolean   gimp_layer_mask_rename        (GimpItem     *item,
+                                                 const gchar  *new_name,
+                                                 const gchar  *undo_desc,
+                                                 GError      **error);
 
 static void       gimp_layer_mask_real_edit_changed (GimpLayerMask *layer_mask);
 
@@ -100,6 +102,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   klass->edit_changed        = gimp_layer_mask_real_edit_changed;
 
   item_class->is_attached    = gimp_layer_mask_is_attached;
+  item_class->get_container  = gimp_layer_mask_get_container;
   item_class->duplicate      = gimp_layer_mask_duplicate;
   item_class->rename         = gimp_layer_mask_rename;
   item_class->translate_desc = _("Move Layer Mask");
@@ -124,6 +127,12 @@ gimp_layer_mask_is_attached (GimpItem *item)
           GIMP_IS_LAYER (layer)                      &&
           gimp_layer_get_mask (layer) == mask        &&
           gimp_item_is_attached (GIMP_ITEM (layer)));
+}
+
+static GimpContainer *
+gimp_layer_mask_get_container (GimpItem *item)
+{
+  return NULL;
 }
 
 static GimpItem *

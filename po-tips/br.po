@@ -1,0 +1,263 @@
+# Breton translation for gimp
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the gimp package.
+# Alan Monfort <alan.monfort@free.fr>, 2007-2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2009-08-03 20:31+0000\n"
+"PO-Revision-Date: 2009-08-04 22:51+0100\n"
+"Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
+"Language-Team: An Drouizig <drouizig@drouizig.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/tips/gimp-tips.xml.in.h:1
+#| msgid ""
+#| "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the "
+#| "background color instead of the foreground color."
+msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
+msgstr "<tt>Ctrl</tt>-klik gant ar benveg leuniañ evit arverañ liv an drekva e-lec'h liv ar rakva. Heñvel, <tt>Ctrl</tt>-klikañ gant ar benveg "
+
+#: ../data/tips/gimp-tips.xml.in.h:2
+#| msgid ""
+#| "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog "
+#| "toggles the effect of the layer mask."
+msgid "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr "<tt>Ctrl</tt>-klikañ war alberz ar maskl treuzfollenn er voestad emziviz an treuzfollennoù a ziweredeka/weredeka efedoù ar maskl treuzfollenn. <tt>Alt</tt>-klikañ war alberz ar maskl treuzfollenn er voestad emziviz an treuzfollennoù a ziweredeka/weredeka gweladur ar maskl end-eeun."
+
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
+msgstr "<tt>Ctrl</tt>-riklañ gant ar benveg c'hwelañ a zestrizho ar c'hweladenn ouzh kornioù 15 derez."
+
+#: ../data/tips/gimp-tips.xml.in.h:4
+msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr "<tt>Shift</tt>-klikañ war an arlun lagad boestad emziviz an treuzfollennoù evit kuzhat an holl dreuzfollennoù nemet homañ. <tt>Shift</tt>-klikañ en-dro evit diskouez an treuzfollennoù en-dro."
+
+#: ../data/tips/gimp-tips.xml.in.h:5
+msgid "A floating selection must be anchored to a new layer or to the last active layer before doing other operations on the image. Click on the &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or use the menus to do the same."
+msgstr "Ret eo d'un diuzad war neuñv bezañ eoriet ouzh un dreuzfollenn nevez pe ouzh an dreuzfollenn oberiant diwezhañ a-raok ma vo graet gwezhiadurioù all war ar skeudenn. Klikañ war an afelloù 'Treuzfollenn nevez' pe 'Eoriañ an dreuzfollenn' e boestad emziviz an treuzfollennoù, pe arverañ al lañser evit ober heñvel."
+
+#: ../data/tips/gimp-tips.xml.in.h:6
+#| msgid ""
+#| "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the "
+#| "Preferences dialog, you can reassign shortcut keys. Do so by bringing up "
+#| "the menu, selecting a menu item, and pressing the desired key "
+#| "combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key "
+#| "bindings are saved when you exit GIMP."
+msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP. You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning shortcuts."
+msgstr "Ur wech bezañ gweredekaet ar 'Berradennoù klavier dialuskel' e boestad emziviz ar gwellvezioù, e c'hall ar berradennoù bezañ deverket en-dro : skrammit al lañser, diuzit un ergorenn diwar al lañser ha pouezit ar strollad stokelloù a fell deoc'h. Mar bez gweredekaet 'Enrollañ ar Berradennoù klavier dialuskel' e vint enrollet pa vo kuitaet GIMP. Moarvat e vo diweredekaet 'Berradennoù klavier dialuskel' war-lerc'h a-benn mirout ouzh deverkañ/dizeverkañ ar berradennoù dre wallzarvoud."
+
+#: ../data/tips/gimp-tips.xml.in.h:7
+msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
+msgstr "Klikañ war ur reolenn hag he riklañ evit lakaat un dealf war ar skeudenn. An holl ziuzadoù riklet a yay ouzh an dealfoù. Dilamet e vo an dealfoù dre o riklañ e-maez eus ar skeudenn gant ar benveg Dilec'hiañ."
+
+#: ../data/tips/gimp-tips.xml.in.h:8
+#| msgid ""
+#| "The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+#| "<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your "
+#| "image will be saved compressed. Of course loading compressed images works "
+#| "too."
+msgid "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image will be saved compressed. Of course loading compressed images works too."
+msgstr "Skoret eo ar c'hoazhañ gzip diwar nij. Ouzhpennañ an askouezhadenn <tt>.gz</tt> (pe <tt>.bz2</tt> mard eo bet staliet bzip2) da anv ho restr ha koazhet ha gweredet e vo ho skeudenn. Evel just, kargañ skeudennoù koazhet a ya mat kaer en-dro ivez."
+
+#: ../data/tips/gimp-tips.xml.in.h:9
+#| msgid ""
+#| "The GIMP uses layers to let you organize your image. Think of them as a "
+#| "stack of slides or filters, such that looking through them you see a "
+#| "composite of their contents."
+msgid "GIMP uses layers to let you organize your image. Think of them as a stack of slides or filters, such that looking through them you see a composite of their contents."
+msgstr "Treuzfollennoù a vez arveret gant GIMP a-benn o skoazellañ da gempenn ho skeudennoù. O gwelit evel ur berniad treyonennoù pe siloù dre ma vefe gwelet ur skeudenn savet gant ho parzhioù drezo."
+
+#: ../data/tips/gimp-tips.xml.in.h:10
+msgid "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this layer doesn't have an alpha-channel. You can add an alpha-channel using Layer→Transparency→Add Alpha Channel."
+msgstr "Mar bez gwelet anv an dreuzfollenn e boestad emziviz an treuzfollennoù e <b>tev</b>, n'eus ket ur sanell alfa gant an dreuzfollenn. Evit ouzhpennañ ur sanell alfa, arverit Treuzfollenn>Treuzweluster>Ouzhpennañ ur sanell Alfa."
+
+#: ../data/tips/gimp-tips.xml.in.h:11
+#| msgid ""
+#| "If some of your scanned photos do not look colorful enough, you can "
+#| "easily improve their tonal range with the &quot;Auto&quot; button in the "
+#| "Levels tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, "
+#| "you can correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+msgid "If some of your scanned photos do not look colorful enough, you can easily improve their tonal range with the &quot;Auto&quot; button in the Levels tool (Colors→Levels). If there are any color casts, you can correct them with the Curves tool (Colors→Curves)."
+msgstr "Ma ne hañval ket deoc'h ho luc'hskeudennoù c'hwilervet bezañ livet kaer a-walc'h e vez gwellaet aes gant an afell 'Emgefreek' er binvioù Liveoù (Treuzfollenn>Livioù>Liveoù). Mar bez ul liv bennak re greñv e vo reizhet gant ar benveg Krommennoù (Livioù>Krommennoù)."
+
+#: ../data/tips/gimp-tips.xml.in.h:12
+#| msgid ""
+#| "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+#| "with their current settings. You can use the Paintbrush in gradient mode "
+#| "or even the Eraser or the Smudge tool."
+msgid "If you stroke a path (Edit→Stroke Path), the paint tools can be used with their current settings. You can use the Paintbrush in gradient mode or even the Eraser or the Smudge tool."
+msgstr "Mar bez treset un treug (Embann>Tresañ un treug) e vez arveret ar binvioù pentañ gant o arventennoù bremanel. Arverit ivez ar barr livañ e mod ilrezenn pe ar c'hommenn zoken pe ar benveg Bastrouilhañ."
+
+#: ../data/tips/gimp-tips.xml.in.h:13
+#| msgid ""
+#| "If your screen is too cluttered, you can press <tt>Tab</tt> multiple "
+#| "times in an image window to hide or show the toolbox and other dialogs."
+msgid "If your screen is too cluttered, you can press <tt>Tab</tt> in an image window to toggle the visibility of the toolbox and other dialogs."
+msgstr "Mar bez re leun ho skrammad, pouezit meur a wech war ar stokell <tt>Tab</tt> e boestad ur skeudenn evit kuzhat pe ziskouez ar voestad binvioù pe ar boestadoù emziviz all."
+
+#: ../data/tips/gimp-tips.xml.in.h:14
+#| msgid ""
+#| "Most plug-ins work on the current layer of the current image. In some "
+#| "cases, you will have to merge all layers (Image-&gt;Flatten Image) if you "
+#| "want the plug-in to work on the whole image."
+msgid "Most plug-ins work on the current layer of the current image. In some cases, you will have to merge all layers (Image→Flatten Image) if you want the plug-in to work on the whole image."
+msgstr "Labourat a ra an darn vuiañ eus an enlugelladoù war treuzfollenn vremanel ar skeudenn vremanel. Ur wech an amzer e vo ret deoc'h toueziañ an holl dreuzfollennoù (Skeudenn>Pladañ ar skeudenn) mar fell deoc'h e vo efedus an enlugellad war ar skeudenn a-bezh."
+
+#: ../data/tips/gimp-tips.xml.in.h:15
+#| msgid ""
+#| "Not all effects can be applied to all kinds of images. This is indicated "
+#| "by a grayed-out menu-entry. You may need to change the image mode to RGB "
+#| "(Image-&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-"
+#| "&gt;Add Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
+msgid "Not all effects can be applied to all kinds of images. This is indicated by a grayed-out menu-entry. You may need to change the image mode to RGB (Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha Channel) or flatten it (Image→Flatten Image)."
+msgstr "An efedoù ne vezont ket arloet war an holl rizh skeudennoù. Meneget eo an dra-se gant un enankad lañser louedet. Marteze ho po ezhomm kemm mod ar skeudenn da RGG (Skeudenn>Mod>RGG), ouzhpennañ ur sanell alfa (Treuzfollenn>Boullder>Ouzhpennañ ur sanell alfa) pe he fladañ (Skeudenn>Pladañ ar skeudenn)."
+
+#: ../data/tips/gimp-tips.xml.in.h:16
+msgid "Pressing and holding the <tt>Shift</tt> key before making a selection allows you to add to the current selection instead of replacing it. Using <tt>Ctrl</tt> before making a selection subtracts from the current one."
+msgstr "Pouezañ ha derc'hel ar stokell <tt>Shift</tt> kent diuzañ a ro tu deoc'h da ouzhpennañ d'an diuzad bremanel e-lec'h amsaviñ. Arverañ <tt>Ctrl</tt> kent diuzañ a lamo diouzh an diuzad bremanel."
+
+#: ../data/tips/gimp-tips.xml.in.h:17
+#| msgid ""
+#| "When you save an image to work on it again later, try using XCF, the "
+#| "GIMP's native file format (use the file extension <tt>.xcf</tt>). This "
+#| "preserves the layers and every aspect of your work-in-progress. Once a "
+#| "project is completed, you can save it as JPEG, PNG, GIF, ..."
+msgid "When you save an image to work on it again later, try using XCF, GIMP's native file format (use the file extension <tt>.xcf</tt>). This preserves the layers and every aspect of your work-in-progress. Once a project is completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr "Pa vo enrollet ur skeudenn evit adlabourat warni diwezhatoc'h, klaskit ar mentrezh XCF, mentrezh genidik GIMP (askouezhadenn <tt>.xcf</tt>). Miret e vo gantañ an treuzfollennoù hag holl neuzioù ho labour war ar stern. Ur wech echu al labour e vezo enrollet ho skeudenn e mod JPEG, PNG, GIF, ..."
+
+#: ../data/tips/gimp-tips.xml.in.h:18
+#| msgid ""
+#| "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this "
+#| "makes the window move, your window manager uses the <tt>Alt</tt> key "
+#| "already. Try pressing <tt>Shift</tt> at the same time."
+msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already. Most window managers can be configured to ignore the <tt>Alt</tt> key or to use the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr "Dre arverañ <tt>Alt</tt>-riklañ e vez kengeidet pe dilec'hiet un diuzad. Mar bez dilec'hiet ar prenestr gant an ober-mañ e talv ez eo arveret ar stokell <tt>Alt</tt> gant hoc'h ardoer endeo. An darn vrasañ eus an ardoerioù a c'hall bezañ kefluniet evit leuskel a-gostez ar stokell <tt>Alt</tt>pe evit arverañ ar stokell <tt>Dreist</tt>  (pe \"Siell Windows\") kentoc'h."
+
+#: ../data/tips/gimp-tips.xml.in.h:19
+msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
+msgstr "Krouet pe embannet e vez diuzadoù kemplezh dre arverañ ar benveg Treug. Ar voestadoù emziviz a ro tu deoc'h da labourat war meur a dreug pe amdreiñ an treugoù da ziuzadoù."
+
+#: ../data/tips/gimp-tips.xml.in.h:20
+msgid "You can drag a layer from the Layers dialog and drop it onto the toolbox. This will create a new image containing only that layer."
+msgstr "Riklet e vez un dreuzfollenn diouzh boestad emziviz an treuzfollennoù hag he lakaet er voestad binvioù. Krouet e vo neuze ur skeudenn nevez gant an dreuzfollenn-mañ nemetken."
+
+#: ../data/tips/gimp-tips.xml.in.h:21
+#| msgid ""
+#| "You can drag and drop many things in the GIMP. For example, dragging a "
+#| "color from the toolbox or from a color palette and dropping it into an "
+#| "image will fill the current image or selection with that color."
+msgid "You can drag and drop many things in GIMP. For example, dragging a color from the toolbox or from a color palette and dropping it into an image will fill the current selection with that color."
+msgstr "Kalz traoù a vez paket ha kiklet e-barzh GIMP. Da skouer, riklañ ul liv diwar ar voestad binvioù pe ziwar ul livaoueg hag he lakaat war ur skeudenn a leunio ar an diuzad bremanel gant al liv-mañ."
+
+#: ../data/tips/gimp-tips.xml.in.h:22
+#| msgid ""
+#| "You can draw simple squares or circles using Edit-&gt;Stroke Selection. "
+#| "It strokes the edge of your current selection. More complex shapes can be "
+#| "drawn using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgid "You can draw simple squares or circles using Edit→Stroke Selection. It strokes the edge of your current selection. More complex shapes can be drawn using the Path tool or with Filters→Render→Gfig."
+msgstr "Treset e vez karrezioù pe gelc'hioù eeun dre arverañ Embann>Tresañ an diuzad. Treset e vo trolinenn ho tiuzad bremanel. Lunioù mentoniel kempleshoc'h a vez graet gant ar benveg Treug pe gant siloù>Deouez>Lunioù mentoniel."
+
+#: ../data/tips/gimp-tips.xml.in.h:23
+#| msgid ""
+#| "You can get context-sensitive help for most of the GIMP's features by "
+#| "pressing the F1 key at any time. This also works inside the menus."
+msgid "You can get context-sensitive help for most of GIMP's features by pressing the F1 key at any time. This also works inside the menus."
+msgstr "Ur skoazell gizidik gant ar c'hemparzh zo hegerz evit tost holl geweriusterioù GIMP dre bouezañ war ar stokell F1 ne vern pegoulz. El lañserioù ez a en-dro ivez."
+
+#: ../data/tips/gimp-tips.xml.in.h:24
+msgid "You can perform many layer operations by right-clicking on the text label of a layer in the Layers dialog."
+msgstr "Kalz gwezhadurioù a c'hallot ober war ho treuzfollennoù dre glikañ a-zehou war skritell testenn an dreuzfollenn e boestad emziviz an treuzfollennoù."
+
+#: ../data/tips/gimp-tips.xml.in.h:25
+#| msgid ""
+#| "You can save a selection to a channel (Select-&gt;Save to Channel) and "
+#| "then modify this channel with any paint tools. Using the buttons in the "
+#| "Channels dialog, you can toggle the visibility of this new channel or "
+#| "convert it to a selection."
+msgid "You can save a selection to a channel (Select→Save to Channel) and then modify this channel with any paint tools. Using the buttons in the Channels dialog, you can toggle the visibility of this new channel or convert it to a selection."
+msgstr "Enrollet e vez un diuzad etrezek ur sanell (Diuzañ>Enrollañ en ur sanell) ha daskemmet e vez ar sanell-mañ gant ne vern pe venveg pentañ. Dre arverañ an afelloù e boestad emziviz ar sanelloù e vez (diw)gweredekaet hewelusted an sanell nevez-mañ pe hec'h amdreiñ da ziuzad."
+
+#: ../data/tips/gimp-tips.xml.in.h:26
+#| msgid ""
+#| "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
+#| "image (if your window manager doesn't trap those keys...)."
+msgid "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an image (if your window manager doesn't trap those keys...)."
+msgstr "Arveret e vez <tt>Ctrl</tt>-<tt>Tab</tt> evit tremen eus treuzfollenn ur skeudenn d'eben (ma ne vez ket paket ar stokelloù-mañ gant hoc'h ardoer...)."
+
+#: ../data/tips/gimp-tips.xml.in.h:27
+#| msgid ""
+#| "You can use the middle mouse button to pan around the image, if it's "
+#| "larger than its display window."
+msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr "Arveret e vez afell greiz al logodenn evit en em zilec'hiañ tro dro d'ar skeudenn (pe derc'hel <tt>Barrenn esaouiñ</tt> e-pad m'emaoc'h o tilec'hiañ al logodenn)."
+
+#: ../data/tips/gimp-tips.xml.in.h:28
+msgid "You can use the paint tools to change the selection. Click on the &quot;Quick Mask&quot; button at the bottom left of an image window. Change your selection by painting in the image and click on the button again to convert it back to a normal selection."
+msgstr "Arveret e vez ar binvioù tresañ evit kemmañ an diuzad. Klikañ war an afell 'Maskl herrek'  d'an tu kleiz e traoñ ar prenestr eus ar skeudenn. Kemmit ho tiuzad en ur dresañ war ar skeudenn ha klikit war an afell en-dro evit e amdreiñ d'un diuzad reizh."
+
+#~ msgid "<big>Welcome to the GIMP!</big>"
+#~ msgstr "<big>Degemer mat e goulev GIMP !</big>"
+#~ msgid ""
+#~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "
+#~ "toggles viewing the mask directly."
+#~ msgstr ""
+#~ "<tt>Alt</tt>-klikañ war alberz ar maskl treuzfollenn e boestad emziviz an "
+#~ "treufollennoù a ziweredeka/weredeka diskouezadur ar maskl end-eeun."
+#~ msgid ""
+#~ "The GIMP can undo most changes to the image, so feel free to experiment."
+#~ msgstr ""
+#~ "Barrek eo GIMP da zisober an holl zaskemmadurioù graet war ar skeudenn. "
+#~ "Bezit dinec'h ha grit taolioù arnod."
+#~ msgid ""
+#~ "The layer named &quot;Background&quot; is special because it lacks "
+#~ "transparency. This prevents you from moving the layer up in the stack. "
+#~ "You may add transparency to it by right-clicking in the Layers dialog and "
+#~ "selecting &quot;Add Alpha Channel&quot;."
+#~ msgstr ""
+#~ "Dibar eo an dreuzfollenn anvet 'Drekva' rak n'eus boullder ebet ganti. "
+#~ "Dre se ne vo ket ret deoc'h ouzhpennañ ur maskl boullder pe sevel an "
+#~ "dreuzfollenn-mañ er bern. Dre glikañ a-zehou e boestad emziviz an "
+#~ "treuzfollennoù ha dre ziuzañ 'Ouzhpennañ ur sanell alfa' e vo ouzhpennet "
+#~ "boullder dezhi."
+#~ msgid ""
+#~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+#~ "ellipse select. To place a circle precisely, drag horizontal and vertical "
+#~ "guides tangent to the circle you want to select, place your cursor at the "
+#~ "intersection of the guides, and the resulting selection will just touch "
+#~ "the guides."
+#~ msgstr ""
+#~ "Evit krouiñ ur c'helc'h peurvat, derc'hel ar stokell <tt>Shift</tt> e-pad "
+#~ "m'emaoc'h oc'h ober un diuzad elipsennek. Evit lec'hiañ spis ur c'helc'h, "
+#~ "lakaat dealfoù a-zremm hag a-serzh a-spin d'ar c'helc'h a fell deoc'h "
+#~ "tresañ, lakaat ar biz war kenskejadenn an dealfoù ha stekiñ a ray an "
+#~ "diuzad ouzh an dealfoù."
+#~ msgid ""
+#~ "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</"
+#~ "tt>-click will draw a straight line from your last drawing point to your "
+#~ "current cursor position. If you also press <tt>Ctrl</tt>, the line will "
+#~ "be constrained to 15 degree angles."
+#~ msgstr ""
+#~ "Pa vez arveret ur benveg tresañ (Barr livañ, aervroust, kreion), "
+#~ "<tt>Shift</tt>-klik a dreso ul linenn eeun adalek ho poent treset "
+#~ "diwezhañ betek lec'hiadur bremanel ar biz. Mar bez pouezet war  <tt>Ctrl</"
+#~ "tt> e vo destrizhet al linenn ouzh kornioù lies 15 derez."
+#~ msgid ""
+#~ "You can adjust the selection range for fuzzy select by clicking and "
+#~ "dragging left and right."
+#~ msgstr ""
+#~ "Kengeidet e vez led un diuzad evit un diuzad dispis dre glikañ ha riklañ "
+#~ "d'an tu kleiz pe d'an tu dehou."
+#~ msgid ""
+#~ "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while "
+#~ "you are making a selection in order to constrain it to a square or a "
+#~ "circle, or to have it centered on its starting point."
+#~ msgstr ""
+#~ "Pouezañ ha derc'hel ar stokelloù <tt>Shift</tt> ha <tt>Ctrl</tt> a vez "
+#~ "graet pa vez diuzet evit kaout ur c'helc'h pe ur c'harrez peurvat pe evit "
+#~ "kaout poent kreiz al lun d'an derou."
+

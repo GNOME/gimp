@@ -130,6 +130,7 @@ app/core/gimpdrawable.c
 app/core/gimpgradient-load.c
 app/core/gimpgradient-save.c
 app/core/gimpgrid.c
+app/core/gimpgrouplayer.c
 app/core/gimpimage-arrange.c
 app/core/gimpimage-colormap.c
 app/core/gimpimage-convert.c
@@ -446,6 +447,7 @@ app/widgets/gimptoolbox-dnd.c
 app/widgets/gimptoolbox-image-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
+app/widgets/gimptooleditor.c
 app/widgets/gimptooloptionseditor.c
 app/widgets/gimpuimanager.c
 app/widgets/gimpundoeditor.c

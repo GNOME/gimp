@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -68,4 +70,52 @@ gimp_language_store_add (GimpLanguageStore *store,
                       GIMP_LANGUAGE_STORE_LANGUAGE,  lang,
                       GIMP_LANGUAGE_STORE_ISO_639_1, code,
                       -1);
+}
+
+gboolean
+gimp_language_store_lookup (GimpLanguageStore *store,
+                            const gchar       *code,
+                            GtkTreeIter       *iter)
+{
+  GtkTreeModel *model;
+  const gchar  *hyphen;
+  gint          len;
+  gboolean      iter_valid;
+
+  g_return_val_if_fail (GIMP_IS_LANGUAGE_STORE (store), FALSE);
+  g_return_val_if_fail (code != NULL, FALSE);
+  g_return_val_if_fail (iter != NULL, FALSE);
+
+  /*  We accept the code in RFC-3066 format here and only look at what's
+   *  before the first hyphen.
+   */
+  hyphen = strchr (code, '-');
+
+  if (hyphen)
+    len = hyphen - code;
+  else
+    len = strlen (code);
+
+  model = GTK_TREE_MODEL (store);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, iter))
+    {
+      gchar *value;
+
+      gtk_tree_model_get (model, iter,
+                          GIMP_LANGUAGE_STORE_ISO_639_1, &value,
+                          -1);
+
+      if (strncmp (code, value, len) == 0)
+        {
+          g_free (value);
+          break;
+        }
+
+      g_free (value);
+    }
+
+  return iter_valid;
 }

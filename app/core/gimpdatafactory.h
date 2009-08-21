@@ -95,6 +95,8 @@ gboolean        gimp_data_factory_data_save_single  (GimpDataFactory  *factory,
                                                      GimpData         *data,
                                                      GError          **error);
 GimpContainer * gimp_data_factory_get_container     (GimpDataFactory  *factory);
+GimpContainer * gimp_data_factory_get_container_obsolete
+                                                    (GimpDataFactory  *factory);
 Gimp          * gimp_data_factory_get_gimp          (GimpDataFactory  *factory);
 gboolean        gimp_data_factory_has_data_new_func (GimpDataFactory  *factory);
 

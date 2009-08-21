@@ -39,6 +39,15 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_get_uri ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_duplicate ##### -->
 <para>
 

@@ -162,9 +162,7 @@ gimp_gegl_tool_initialize (GimpTool     *tool,
   if (g_tool->config)
     gimp_config_reset (GIMP_CONFIG (g_tool->config));
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
-
-  return TRUE;
+  return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 }
 
 static GeglNode *

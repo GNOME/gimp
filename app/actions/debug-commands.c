@@ -364,7 +364,7 @@ debug_show_image_graph (GimpImage *source_image)
                                      new_name,
                                      1.0,
                                      GIMP_NORMAL_MODE);
-  gimp_image_add_layer (new_image, layer, 0, FALSE);
+  gimp_image_add_layer (new_image, layer, NULL, 0, FALSE);
   gimp_create_display (gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
 
   /* Cleanup */

@@ -77,6 +77,8 @@ static gchar  * gimp_channel_get_description (GimpViewable      *viewable,
                                               gchar            **tooltip);
 
 static gboolean   gimp_channel_is_attached   (GimpItem          *item);
+static GimpContainer *
+                  gimp_channel_get_container (GimpItem          *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem          *item,
                                               GType              new_type);
 static void       gimp_channel_convert       (GimpItem          *item,
@@ -249,6 +251,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   viewable_class->default_stock_id = "gimp-channel";
 
   item_class->is_attached          = gimp_channel_is_attached;
+  item_class->get_container        = gimp_channel_get_container;
   item_class->duplicate            = gimp_channel_duplicate;
   item_class->convert              = gimp_channel_convert;
   item_class->translate            = gimp_channel_translate;
@@ -377,6 +380,19 @@ gimp_channel_is_attached (GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
           gimp_container_have (gimp_item_get_image (item)->channels, GIMP_OBJECT (item)));
+}
+
+static GimpContainer *
+gimp_channel_get_container (GimpItem *item)
+{
+  if (gimp_item_is_attached (item))
+    {
+      GimpImage *image = gimp_item_get_image (item);
+
+      return gimp_image_get_channels (image);
+    }
+
+  return NULL;
 }
 
 static GimpItem *

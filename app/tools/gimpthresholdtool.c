@@ -164,7 +164,10 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
 
   gimp_config_reset (GIMP_CONFIG (t_tool->config));
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
 
   gimp_drawable_calculate_histogram (drawable, t_tool->histogram);
   gimp_histogram_view_set_histogram (t_tool->histogram_box->view,

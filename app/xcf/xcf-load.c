@@ -200,6 +200,7 @@ xcf_load_image (Gimp     *gimp,
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
         gimp_image_add_layer (image, layer,
+                              NULL, /* FIXME tree */
                               gimp_container_get_n_children (image->layers),
                               FALSE);
 
@@ -242,6 +243,7 @@ xcf_load_image (Gimp     *gimp,
       /* add the channel to the image if its not the selection */
       if (channel != gimp_image_get_mask (image))
         gimp_image_add_channel (image, channel,
+                                NULL, /* FIXME tree */
                                 gimp_container_get_n_children (image->channels),
                                 FALSE);
 
@@ -1531,7 +1533,9 @@ xcf_load_old_paths (XcfInfo   *info,
   while (num_paths-- > 0)
     xcf_load_old_path (info, image);
 
-  active_vectors = gimp_image_get_vectors_by_index (image, last_selected_row);
+  active_vectors =
+    GIMP_VECTORS (gimp_container_get_child_by_index (image->vectors,
+                                                     last_selected_row));
 
   if (active_vectors)
     gimp_image_set_active_vectors (image, active_vectors);
@@ -1628,6 +1632,7 @@ xcf_load_old_path (XcfInfo   *info,
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 
   gimp_image_add_vectors (image, vectors,
+                          NULL, /* can't be a tree */
                           gimp_container_get_n_children (image->vectors),
                           FALSE);
 
@@ -1671,7 +1676,10 @@ xcf_load_vectors (XcfInfo   *info,
     if (! xcf_load_vector (info, image))
       return FALSE;
 
-  active_vectors = gimp_image_get_vectors_by_index (image, active_index);
+  /* FIXME tree */
+  active_vectors =
+    GIMP_VECTORS (gimp_container_get_child_by_index (image->vectors,
+                                                     active_index));
 
   if (active_vectors)
     gimp_image_set_active_vectors (image, active_vectors);
@@ -1817,6 +1825,7 @@ xcf_load_vector (XcfInfo   *info,
     }
 
   gimp_image_add_vectors (image, vectors,
+                          NULL, /* FIXME tree */
                           gimp_container_get_n_children (image->vectors),
                           FALSE);
 

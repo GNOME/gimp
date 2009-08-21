@@ -134,7 +134,9 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                  GIMP_TEXT_HINT_STYLE_MEDIUM,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
-                                   "language", NULL,
+                                   "language",
+                                   N_("The text language may have an effect "
+                                      "on the way the text is rendered."),
                                    (const gchar *) gtk_get_default_language (),
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
@@ -429,6 +431,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *button;
   GtkWidget       *entry;
   GtkWidget       *box;
+  GtkWidget       *label;
   GtkWidget       *spinbutton;
   GtkSizeGroup    *size_group;
   gint             row = 0;
@@ -513,6 +516,26 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
+
+  /*  Only add the language entry if the iso-codes package is available.  */
+
+#ifdef HAVE_ISO_CODES
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Language:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  entry = gimp_prop_language_entry_new (config, "language");
+  gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
+  gtk_widget_show (entry);
+#endif
 
   return main_vbox;
 }

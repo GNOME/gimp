@@ -20,6 +20,7 @@
 #define XMP_ENCODE_H
 
 #include <glib.h>
+#include "xmp-schemas.h"
 #include "xmp-model.h"
 
 G_BEGIN_DECLS

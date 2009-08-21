@@ -22,9 +22,10 @@
 
 #include <string.h> /* strlen, strstr */
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -32,7 +33,8 @@
 #include <windows.h>
 #endif
 
-#define PLUG_IN_PROC "plug-in-web-browser"
+#define PLUG_IN_PROC   "plug-in-web-browser"
+#define PLUG_IN_BINARY "web-browser"
 
 
 static void     query            (void);
@@ -43,12 +45,6 @@ static void     run              (const gchar      *name,
                                   GimpParam       **return_vals);
 static gboolean browser_open_url (const gchar      *url,
                                   GError          **error);
-
-#ifndef G_OS_WIN32
-static gchar*   strreplace       (const gchar      *string,
-                                  const gchar      *delimiter,
-                                  const gchar      *replacement);
-#endif
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -134,146 +130,63 @@ browser_open_url (const gchar  *url,
     {
       const gchar *err;
 
-      /* FIXME: should be translated when 2.6 got it's own branch */
       switch ((gint) hinst)
         {
           case 0 :
-            err = ("The operating system is out of memory or resources.");
+            err = _("The operating system is out of memory or resources.");
             break;
           case ERROR_FILE_NOT_FOUND :
-            err = ("The specified file was not found.");
+            err = _("The specified file was not found.");
             break;
           case ERROR_PATH_NOT_FOUND :
-            err = ("The specified path was not found.");
+            err = _("The specified path was not found.");
             break;
           case ERROR_BAD_FORMAT :
-            err = ("The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image).");
+            err = _("The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image).");
             break;
           case SE_ERR_ACCESSDENIED :
-            err = ("The operating system denied access to the specified file.");
+            err = _("The operating system denied access to the specified file.");
             break;
           case SE_ERR_ASSOCINCOMPLETE :
-            err = ("The file name association is incomplete or invalid.");
+            err = _("The file name association is incomplete or invalid.");
             break;
           case SE_ERR_DDEBUSY :
-            err = ("DDE transaction busy");
+            err = _("DDE transaction busy");
             break;
           case SE_ERR_DDEFAIL :
-            err = ("The DDE transaction failed.");
+            err = _("The DDE transaction failed.");
             break;
           case SE_ERR_DDETIMEOUT :
-            err = ("The DDE transaction timed out.");
+            err = _("The DDE transaction timed out.");
             break;
           case SE_ERR_DLLNOTFOUND :
-            err = ("The specified DLL was not found.");
+            err = _("The specified DLL was not found.");
             break;
           case SE_ERR_NOASSOC :
-            err = ("There is no application associated with the given file name extension.");
+            err = _("There is no application associated with the given file name extension.");
             break;
           case SE_ERR_OOM :
-            err = ("There was not enough memory to complete the operation.");
+            err = _("There was not enough memory to complete the operation.");
             break;
           case SE_ERR_SHARE:
-            err = ("A sharing violation occurred.");
+            err = _("A sharing violation occurred.");
             break;
           default :
-            err = ("Unknown Windows error.");
+            err = _("Unknown Windows error.");
         }
 
-      g_set_error (error, 0, 0, ("Failed to open '%s': %s"), url, err);
+      g_set_error (error, 0, 0, _("Failed to open '%s': %s"), url, err);
 
       return FALSE;
     }
 
   return TRUE;
 #else
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  GError    *my_error = NULL;
-  gchar     *browser;
-  gchar     *argument;
-  gchar     *cmd;
-  gchar    **argv;
-  gboolean   retval;
-
-  g_return_val_if_fail (url != NULL, FALSE);
-
-  browser = gimp_gimprc_query ("web-browser");
-
-  if (browser == NULL || ! strlen (browser))
-    {
-      g_set_error (error, 0, 0,
-                   _("Web browser not specified.\n"
-                     "Please specify a web browser using the Preferences dialog."));
-      g_free (browser);
-      return FALSE;
-    }
-
-  /* quote the url since it might contains special chars */
-  argument = g_shell_quote (url);
-
-  /* replace %s with URL */
-  if (strstr (browser, "%s"))
-    cmd = strreplace (browser, "%s", argument);
-  else
-    cmd = g_strconcat (browser, " ", argument, NULL);
-
-  g_free (browser);
-  g_free (argument);
-
-  /* parse the cmd line */
-  if (! g_shell_parse_argv (cmd, NULL, &argv, &my_error))
-    {
-      g_set_error (error, 0, 0,
-                   _("Could not parse the web browser command specified in the "
-                     "Preferences dialog:\n\n%s"),
-                   my_error->message);
-      g_error_free (my_error);
-      g_free (cmd);
-      return FALSE;
-    }
-
-  g_free (cmd);
-
-  retval = g_spawn_async (NULL, argv, NULL,
-                          G_SPAWN_SEARCH_PATH,
-                          NULL, NULL,
-                          NULL, &my_error);
-
-  if (! retval)
-    {
-      g_set_error (error, 0, 0,
-                   _("Could not execute the web browser specified in the "
-                     "Preferences dialog:\n\n%s"),
-                   my_error->message);
-      g_error_free (my_error);
-    }
-
-  g_strfreev (argv);
-
-  return retval;
-
+  return gtk_show_uri (gdk_screen_get_default (),
+                       url,
+                       gtk_get_current_event_time(),
+                       error);
 #endif
 }
-
-#ifndef G_OS_WIN32
-
-static gchar*
-strreplace (const gchar *string,
-            const gchar *delimiter,
-            const gchar *replacement)
-{
-  gchar  *ret;
-  gchar **tmp;
-
-  g_return_val_if_fail (string != NULL, NULL);
-  g_return_val_if_fail (delimiter != NULL, NULL);
-  g_return_val_if_fail (replacement != NULL, NULL);
-
-  tmp = g_strsplit (string, delimiter, 0);
-  ret = g_strjoinv (replacement, tmp);
-  g_strfreev (tmp);
-
-  return ret;
-}
-
-#endif /* !G_OS_WIN32 */

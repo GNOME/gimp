@@ -127,6 +127,8 @@ gimp_window_set_transient_for_display
 GimpExportCapabilities
 GimpExportReturn
 gimp_export_image
+gimp_export_dialog_new
+gimp_export_dialog_get_content_area
 </SECTION>
 
 <SECTION>
@@ -508,6 +510,7 @@ gimp_help
 <FILE>gimpimage</FILE>
 gimp_image_list
 gimp_image_new
+gimp_image_get_uri
 gimp_image_duplicate
 gimp_image_delete
 gimp_image_is_valid
@@ -865,6 +868,9 @@ gimp_text_layer_get_line_spacing
 gimp_text_layer_set_line_spacing
 gimp_text_layer_get_letter_spacing
 gimp_text_layer_set_letter_spacing
+gimp_text_layer_get_hint_style
+gimp_text_layer_set_hint_style
+gimp_text_layer_resize
 </SECTION>
 
 <SECTION>

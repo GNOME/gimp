@@ -1,4 +1,4 @@
-/* T I N Y S C H E M E    1 . 3 8
+/* T I N Y S C H E M E    1 . 3 9
  *   Dimitrios Souflis (dsouflis@acm.org)
  *   Based on MiniScheme (original credits follow)
  * (MINISCM)               coded by Atsushi Moriwaki (11/5/1989)
@@ -17,7 +17,7 @@
 /* character strings. As a result, the length of a string in bytes  */
 /* may not be the same as the length of a string in characters. You */
 /* must keep this in mind at all times while making any changes to  */
-/* the routines in this file, or when adding new features.          */
+/* the routines in this file and when adding new features.          */
 /*                                                                  */
 /* UTF-8 modifications made by Kevin Cozens (kcozens@interlog.com)  */
 /* **************************************************************** */
@@ -32,12 +32,16 @@
 # include <io.h>
 # define access(f,a) _access(f,a)
 #endif
+#ifdef WIN32
+#define snprintf _snprintf
+#endif
 #if USE_DL
 # include "dynload.h"
 #endif
 #if USE_MATH
 # include <math.h>
 #endif
+
 #include <limits.h>
 #include <float.h>
 #include <ctype.h>
@@ -97,7 +101,7 @@ ts_output_string (TsOutputType  type,
  *  Basic memory allocation units
  */
 
-#define banner "TinyScheme 1.38 (with UTF-8 support)"
+#define banner "TinyScheme 1.39 (with UTF-8 support)"
 
 #include <string.h>
 #include <stdlib.h>
@@ -131,7 +135,7 @@ static int utf8_stricmp(const char *s1, const char *s2)
 #endif
 
 #ifndef prompt
-# define prompt "> "
+# define prompt "ts> "
 #endif
 
 #ifndef InitFile
@@ -203,7 +207,7 @@ INTERFACE INLINE int is_string(pointer p)     { return (type(p)==T_STRING); }
 #define strvalue(p)      ((p)->_object._string._svalue)
 #define strlength(p)     ((p)->_object._string._length)
 
-INTERFACE static int is_list(scheme *sc, pointer p);
+INTERFACE static int is_list(scheme *sc, pointer a);
 INTERFACE INLINE int is_vector(pointer p)    { return (type(p)==T_VECTOR); }
 INTERFACE static void fill_vector(pointer vec, pointer obj);
 INTERFACE static pointer vector_elem(pointer vec, int ielem);
@@ -230,8 +234,8 @@ INTERFACE double rvalue(pointer p)    { return (!num_is_integer(p)?(p)->_object.
 INTERFACE  gunichar charvalue(pointer p)  { return (gunichar)ivalue_unchecked(p); }
 
 INTERFACE INLINE int is_port(pointer p)     { return (type(p)==T_PORT); }
-#define is_inport(p) (type(p)==T_PORT && p->_object._port->kind&port_input)
-#define is_outport(p) (type(p)==T_PORT && p->_object._port->kind&port_output)
+INTERFACE INLINE int is_inport(pointer p)  { return is_port(p) && p->_object._port->kind & port_input; }
+INTERFACE INLINE int is_outport(pointer p) { return is_port(p) && p->_object._port->kind & port_output; }
 
 INTERFACE INLINE int is_pair(pointer p)     { return (type(p)==T_PAIR); }
 #define car(p)           ((p)->_object._cons._car)
@@ -391,11 +395,12 @@ static port *port_rep_from_string(scheme *sc, char *start, char *past_the_end, i
 static void port_close(scheme *sc, pointer p, int flag);
 static void mark(pointer a);
 static void gc(scheme *sc, pointer a, pointer b);
+static gunichar basic_inchar(port *pt);
 static gunichar inchar(scheme *sc);
 static void backchar(scheme *sc, gunichar c);
 static char *readstr_upto(scheme *sc, char *delim);
 static pointer readstrexp(scheme *sc);
-static INLINE void skipspace(scheme *sc);
+static INLINE int skipspace(scheme *sc);
 static int token(scheme *sc);
 static void printslashstring(scheme *sc, char *s, int len);
 static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen);
@@ -623,7 +628,7 @@ static int alloc_cellseg(scheme *sc, int n) {
           i = ++sc->last_cell_seg ;
           sc->alloc_seg[i] = cp;
           /* adjust in TYPE_BITS-bit boundary */
-          if (((unsigned long) cp) % adj != 0) {
+          if(((unsigned long)cp)%adj!=0) {
             cp=(char*)(adj*((unsigned long)cp/adj+1));
           }
         /* insert new segment in address order */
@@ -656,7 +661,7 @@ static int alloc_cellseg(scheme *sc, int n) {
      return n;
 }
 
-static INLINE pointer get_cell(scheme *sc, pointer a, pointer b) {
+static INLINE pointer get_cell_x(scheme *sc, pointer a, pointer b) {
   if (sc->free_cell != sc->NIL) {
     pointer x = sc->free_cell;
     sc->free_cell = cdr(x);
@@ -676,8 +681,9 @@ static pointer _get_cell(scheme *sc, pointer a, pointer b) {
   }
 
   if (sc->free_cell == sc->NIL) {
+    const int min_to_be_recovered = sc->last_cell_seg*8;
     gc(sc,a, b);
-    if (sc->fcells < sc->last_cell_seg*8
+    if (sc->fcells < min_to_be_recovered
         || sc->free_cell == sc->NIL) {
       /* if only a few recovered, get more to avoid fruitless gc's */
       if (!alloc_cellseg(sc,1) && sc->free_cell == sc->NIL) {
@@ -721,7 +727,7 @@ static pointer reserve_cells(scheme *sc, int n) {
 static pointer get_consecutive_cells(scheme *sc, int n) {
   pointer x;
 
-  if (sc->no_memory) { return sc->sink; }
+  if(sc->no_memory) { return sc->sink; }
 
   /* Are there any cells available? */
   x=find_consecutive_cells(sc,n);
@@ -774,6 +780,76 @@ static pointer find_consecutive_cells(scheme *sc, int n) {
   }
   return sc->NIL;
 }
+
+/* To retain recent allocs before interpreter knows about them -
+   Tehom */
+
+static void push_recent_alloc(scheme *sc, pointer recent, pointer extra)
+{
+  pointer holder = get_cell_x(sc, recent, extra);
+  typeflag(holder) = T_PAIR | T_IMMUTABLE;
+  car(holder) = recent;
+  cdr(holder) = car(sc->sink);
+  car(sc->sink) = holder;
+}
+
+
+static pointer get_cell(scheme *sc, pointer a, pointer b)
+{
+  pointer cell   = get_cell_x(sc, a, b);
+  /* For right now, include "a" and "b" in "cell" so that gc doesn't
+     think they are garbage. */
+  /* Tentatively record it as a pair so gc understands it. */
+  typeflag(cell) = T_PAIR;
+  car(cell) = a;
+  cdr(cell) = b;
+  push_recent_alloc(sc, cell, sc->NIL);
+  return cell;
+}
+
+static pointer get_vector_object(scheme *sc, int len, pointer init)
+{
+  pointer cells = get_consecutive_cells(sc,len/2+len%2+1);
+  if(sc->no_memory) { return sc->sink; }
+  /* Record it as a vector so that gc understands it. */
+  typeflag(cells) = (T_VECTOR | T_ATOM);
+  ivalue_unchecked(cells)=len;
+  set_num_integer(cells);
+  fill_vector(cells,init);
+  push_recent_alloc(sc, cells, sc->NIL);
+  return cells;
+}
+
+static INLINE void ok_to_freely_gc(scheme *sc)
+{
+  car(sc->sink) = sc->NIL;
+}
+
+
+#if defined TSGRIND
+static void check_cell_alloced(pointer p, int expect_alloced)
+{
+  /* Can't use putstr(sc,str) because callers have no access to
+     sc.  */
+  if(typeflag(p) & !expect_alloced)
+    {
+      fprintf(stderr,"Cell is already allocated!\n");
+    }
+  if(!(typeflag(p)) & expect_alloced)
+    {
+      fprintf(stderr,"Cell is not allocated!\n");
+    }
+}
+static void check_range_alloced(pointer p, int n, int expect_alloced)
+{
+  int i;
+  for(i = 0;i<n;i++)
+    { (void)check_cell_alloced(p+i,expect_alloced); }
+}
+
+#endif
+
+/* Medium level cell allocation */
 
 /* get new cons cell */
 pointer _cons(scheme *sc, pointer a, pointer b, int immutable) {
@@ -939,23 +1015,10 @@ static pointer mk_number(scheme *sc, num n) {
  }
 }
 
-void set_safe_foreign (scheme *sc, pointer data) {
-  if (sc->safe_foreign == sc->NIL) {
-    fprintf (stderr, "get_safe_foreign called outside a foreign function\n");
-  } else {
-    car (sc->safe_foreign) = data;
-  }
-}
-
 pointer foreign_error (scheme *sc, const char *s, pointer a) {
-  if (sc->safe_foreign == sc->NIL) {
-    fprintf (stderr, "set_foreign_error_flag called outside a foreign function\n");
-  } else {
-    sc->foreign_error = cons (sc, mk_string (sc, s), a);
-  }
+  sc->foreign_error = cons (sc, mk_string (sc, s), a);
   return sc->T;
 }
-
 
 /* char_cnt is length of string in chars. */
 /* str points to a NUL terminated string. */
@@ -1009,8 +1072,8 @@ INTERFACE pointer mk_string(scheme *sc, const char *str) {
 INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
-     strvalue(x) = store_string(sc,len,str,0);
      typeflag(x) = (T_STRING | T_ATOM);
+     strvalue(x) = store_string(sc,len,str,0);
      strlength(x) = len;
      return (x);
 }
@@ -1018,21 +1081,14 @@ INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
 INTERFACE pointer mk_empty_string(scheme *sc, int len, gunichar fill) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
-     strvalue(x) = store_string(sc,len,0,fill);
      typeflag(x) = (T_STRING | T_ATOM);
+     strvalue(x) = store_string(sc,len,0,fill);
      strlength(x) = len;
      return (x);
 }
 
-INTERFACE static pointer mk_vector(scheme *sc, int len) {
-     pointer x=get_consecutive_cells(sc,len/2+len%2+1);
-     if(sc->no_memory) { return sc->sink; }
-     typeflag(x) = (T_VECTOR | T_ATOM);
-     ivalue_unchecked(x)=len;
-     set_num_integer(x);
-     fill_vector(x,sc->NIL);
-     return x;
-}
+INTERFACE static pointer mk_vector(scheme *sc, int len)
+{ return get_vector_object(sc,len,sc->NIL); }
 
 INTERFACE static void fill_vector(pointer vec, pointer obj) {
      int i;
@@ -1082,7 +1138,7 @@ INTERFACE pointer gensym(scheme *sc) {
      char name[40];
 
      for(; sc->gensym_cnt<LONG_MAX; sc->gensym_cnt++) {
-          sprintf(name,"gensym-%ld",sc->gensym_cnt);
+          snprintf(name,40,"gensym-%ld",sc->gensym_cnt);
 
           /* first check oblist */
           x = oblist_find_by_name(sc, name);
@@ -1167,21 +1223,21 @@ static pointer mk_atom(scheme *sc, char *q) {
 /* make constant */
 static pointer mk_sharp_const(scheme *sc, char *name) {
      long    x;
-     char    tmp[256];
+     char    tmp[STRBUFFSIZE];
 
      if (!strcmp(name, "t"))
           return (sc->T);
      else if (!strcmp(name, "f"))
           return (sc->F);
      else if (*name == 'o') {/* #o (octal) */
-          sprintf(tmp, "0%s", name+1);
+          snprintf(tmp, STRBUFFSIZE, "0%s", name+1);
           sscanf(tmp, "%lo", &x);
           return (mk_integer(sc, x));
      } else if (*name == 'd') {    /* #d (decimal) */
           sscanf(name+1, "%ld", &x);
           return (mk_integer(sc, x));
      } else if (*name == 'x') {    /* #x (hex) */
-          sprintf(tmp, "0x%s", name+1);
+          snprintf(tmp, STRBUFFSIZE, "0x%s", name+1);
           sscanf(tmp, "%lx", &x);
           return (mk_integer(sc, x));
      } else if (*name == 'b') {    /* #b (binary) */
@@ -1199,7 +1255,7 @@ static pointer mk_sharp_const(scheme *sc, char *name) {
                c='\t';
      } else if(name[1]=='x' && name[2]!=0) {
           int c1=0;
-          if(sscanf(name+2,"%x",&c1)==1 && c1<256) {
+          if(sscanf(name+2,"%x",&c1)==1 && c1 < UCHAR_MAX) {
                c=c1;
           } else {
                return sc->NIL;
@@ -1294,11 +1350,15 @@ static void gc(scheme *sc, pointer a, pointer b) {
   mark(sc->code);
   dump_stack_mark(sc);
   mark(sc->value);
-  mark(sc->safe_foreign);
   mark(sc->inport);
   mark(sc->save_inport);
   mark(sc->outport);
   mark(sc->loadport);
+
+  /* Mark recent objects the interpreter doesn't know about yet. */
+  mark(car(sc->sink));
+  /* Mark any older stuff above nested C calls */
+  mark(sc->c_nest);
 
   /* mark variables a, b */
   mark(a);
@@ -1334,7 +1394,7 @@ static void gc(scheme *sc, pointer a, pointer b) {
 
   if (sc->gc_verbose) {
     char msg[80];
-    sprintf(msg,"done: %ld cells were recovered.\n", sc->fcells);
+    snprintf(msg,80,"done: %ld cells were recovered.\n", sc->fcells);
     putstr(sc,msg);
   }
 }
@@ -1354,7 +1414,11 @@ static void finalize_cell(scheme *sc, pointer a) {
 /* ========== Routines for Reading ========== */
 
 static int file_push(scheme *sc, const char *fname) {
-  FILE *fin=fopen(fname,"rb");
+ FILE *fin = NULL;
+ if (sc->file_i == MAXFIL-1)
+    return 0;
+
+  fin=fopen(fname,"rb");
   if(fin!=0) {
     sc->file_i++;
     sc->load_stack[sc->file_i].kind=port_file|port_input;
@@ -1367,15 +1431,13 @@ static int file_push(scheme *sc, const char *fname) {
 }
 
 static void file_pop(scheme *sc) {
- sc->nesting=sc->nesting_stack[sc->file_i];
- if(sc->file_i!=0) {
-   port_close(sc,sc->loadport,port_input);
-   sc->file_i--;
-   sc->loadport->_object._port=sc->load_stack+sc->file_i;
-   if(file_interactive(sc)) {
-     putstr(sc,prompt);
+ if(sc->file_i != 0)
+   {
+     sc->nesting=sc->nesting_stack[sc->file_i];
+     port_close(sc,sc->loadport,port_input);
+     sc->file_i--;
+     sc->loadport->_object._port=sc->load_stack+sc->file_i;
    }
- }
 }
 
 static int file_interactive(scheme *sc) {
@@ -1412,24 +1474,18 @@ static pointer port_from_filename(scheme *sc, const char *fn, int prop) {
   return mk_port(sc,pt);
 }
 
-static port *port_rep_from_file(scheme *sc, FILE *f, int prop) {
-  char *rw;
-  port *pt;
-  pt=(port*)sc->malloc(sizeof(port));
-  if(pt==0) {
-    return 0;
-  }
-  if(prop==(port_input|port_output)) {
-    rw="a+";
-  } else if(prop==port_output) {
-    rw="w";
-  } else {
-    rw="r";
-  }
-  pt->kind=port_file|prop;
-  pt->rep.stdio.file=f;
-  pt->rep.stdio.closeit=0;
-  return pt;
+static port *port_rep_from_file(scheme *sc, FILE *f, int prop)
+{
+    port *pt;
+
+    pt = (port *)sc->malloc(sizeof *pt);
+    if (pt == NULL) {
+        return NULL;
+    }
+    pt->kind = port_file | prop;
+    pt->rep.stdio.file = f;
+    pt->rep.stdio.closeit = 0;
+    return pt;
 }
 
 static pointer port_from_file(scheme *sc, FILE *f, int prop) {
@@ -1463,6 +1519,37 @@ static pointer port_from_string(scheme *sc, char *start, char *past_the_end, int
   return mk_port(sc,pt);
 }
 
+#define BLOCK_SIZE 256
+
+static port *port_rep_from_scratch(scheme *sc) {
+  port *pt;
+  char *start;
+  pt=(port*)sc->malloc(sizeof(port));
+  if(pt==0) {
+    return 0;
+  }
+  start=sc->malloc(BLOCK_SIZE);
+  if(start==0) {
+    return 0;
+  }
+  memset(start,' ',BLOCK_SIZE-1);
+  start[BLOCK_SIZE-1]='\0';
+  pt->kind=port_string|port_output|port_srfi6;
+  pt->rep.string.start=start;
+  pt->rep.string.curr=start;
+  pt->rep.string.past_the_end=start+BLOCK_SIZE-1;
+  return pt;
+}
+
+static pointer port_from_scratch(scheme *sc) {
+  port *pt;
+  pt=port_rep_from_scratch(sc);
+  if(pt==0) {
+    return sc->NIL;
+  }
+  return mk_port(sc,pt);
+}
+
 static void port_close(scheme *sc, pointer p, int flag) {
   port *pt=p->_object._port;
   pt->kind&=~flag;
@@ -1477,7 +1564,7 @@ static void port_close(scheme *sc, pointer p, int flag) {
 static gunichar basic_inchar(port *pt) {
   int  len;
 
-  if(pt->kind&port_file) {
+  if(pt->kind & port_file) {
     unsigned char utf8[7];
     int  c;
     int  i;
@@ -1525,8 +1612,8 @@ static gunichar basic_inchar(port *pt) {
           }
       }
   } else {
-    if(*pt->rep.string.curr==0
-       || pt->rep.string.curr==pt->rep.string.past_the_end) {
+    if(*pt->rep.string.curr == 0 ||
+       pt->rep.string.curr == pt->rep.string.past_the_end) {
       return EOF;
     } else {
       gunichar c;
@@ -1557,25 +1644,26 @@ static gunichar basic_inchar(port *pt) {
 static gunichar inchar(scheme *sc) {
   gunichar c;
   port *pt;
- again:
-  pt=sc->inport->_object._port;
+
+  pt = sc->inport->_object._port;
+  if(pt->kind & port_saw_EOF)
+    { return(EOF); }
   if(pt->kind&port_file)
   {
     if (sc->bc_flag)
       c = sc->backchar[--sc->bc_flag];
     else
-      c=basic_inchar(pt);
+      c = basic_inchar(pt);
   }
   else
-    c=basic_inchar(pt);
-  if(c==EOF && sc->inport==sc->loadport && sc->file_i!=0) {
-    file_pop(sc);
-    if(sc->nesting!=0) {
-      return EOF;
-    } else {
-      return '\n';
-    }
-    goto again;
+    c = basic_inchar(pt);
+  if(c == EOF && sc->inport == sc->loadport) {
+    /* Instead, set port_saw_EOF */
+    pt->kind |= port_saw_EOF;
+
+    /* file_pop(sc); */
+    return EOF;
+    /* NOTREACHED */
   }
   return c;
 }
@@ -1598,6 +1686,25 @@ static void backchar(scheme *sc, gunichar c) {
       else
         pt->rep.string.curr = pt->rep.string.start;
     }
+  }
+}
+
+static int realloc_port_string(scheme *sc, port *p)
+{
+  char *start=p->rep.string.start;
+  size_t new_size=p->rep.string.past_the_end-start+1+BLOCK_SIZE;
+  char *str=sc->malloc(new_size);
+  if(str) {
+    memset(str,' ',new_size-1);
+    str[new_size-1]='\0';
+    strcpy(str,start);
+    p->rep.string.start=str;
+    p->rep.string.past_the_end=str+new_size-1;
+    p->rep.string.curr-=start-str;
+    sc->free(start);
+    return 1;
+  } else {
+    return 0;
   }
 }
 
@@ -1628,11 +1735,18 @@ static void putchars(scheme *sc, const char *chars, int char_cnt) {
       }
 #endif
   } else {
-    free_bytes = pt->rep.string.past_the_end - pt->rep.string.curr;
-    if (free_bytes > 0)
+    if (pt->rep.string.past_the_end != pt->rep.string.curr)
     {
+       free_bytes = pt->rep.string.past_the_end - pt->rep.string.curr;
        l = min(char_cnt, free_bytes);
        memcpy(pt->rep.string.curr, chars, l);
+       pt->rep.string.curr += l;
+    }
+    else if(pt->kind&port_srfi6&&realloc_port_string(sc,pt))
+    {
+       free_bytes = pt->rep.string.past_the_end - pt->rep.string.curr;
+       l = min(char_cnt, free_bytes);
+       memcpy(pt->rep.string.curr, chars, char_cnt);
        pt->rep.string.curr += l;
     }
   }
@@ -1654,33 +1768,23 @@ static char *readstr_upto(scheme *sc, char *delim) {
   char *p = sc->strbuff;
   gunichar c = 0;
   gunichar c_prev = 0;
-  int  len = 0;
+  int len = 0;
 
-#if 0
-  while (!is_one_of(delim, (*p++ = inchar(sc))))
-      ;
-  if(p==sc->strbuff+2 && p[-2]=='\\') {
-    *p=0;
-  } else {
-    backchar(sc,p[-1]);
-    *--p = '\0';
-  }
-#else
   do {
     c_prev = c;
     c = inchar(sc);
     len = g_unichar_to_utf8(c, p);
     p += len;
-  } while (c && !is_one_of(delim, c));
+  } while ((p - sc->strbuff < sizeof(sc->strbuff)) &&
+           (c && !is_one_of(delim, c)));
 
-  if(p==sc->strbuff+2 && c_prev=='\\')
+  if(p == sc->strbuff+2 && c_prev == '\\')
     *p = '\0';
   else
   {
     backchar(sc,c);    /* put back the delimiter */
     p[-len] = '\0';
   }
-#endif
   return sc->strbuff;
 }
 
@@ -1694,7 +1798,7 @@ static pointer readstrexp(scheme *sc) {
 
   for (;;) {
     c=inchar(sc);
-    if(c==EOF || p-sc->strbuff>sizeof(sc->strbuff)-1) {
+    if(c == EOF || p-sc->strbuff > sizeof(sc->strbuff)-1) {
       return sc->F;
     }
     switch(state) {
@@ -1806,19 +1910,25 @@ static INLINE int is_one_of(char *s, gunichar c) {
 }
 
 /* skip white characters */
-static INLINE void skipspace(scheme *sc) {
+static INLINE int skipspace(scheme *sc) {
      gunichar c;
-     while (g_unichar_isspace(c=inchar(sc)))
-          ;
+     do
+       { c=inchar(sc); }
+     while (g_unichar_isspace(c));
+
      if(c!=EOF) {
           backchar(sc,c);
+          return 1;
      }
+     else
+       { return EOF; }
 }
 
 /* get token */
 static int token(scheme *sc) {
      gunichar c;
-     skipspace(sc);
+     c = skipspace(sc);
+     if(c == EOF) { return (TOK_EOF); }
      switch (c=inchar(sc)) {
      case EOF:
           return (TOK_EOF);
@@ -1840,7 +1950,10 @@ static int token(scheme *sc) {
      case ';':
           while ((c=inchar(sc)) != '\n' && c!=EOF)
             ;
-          return (token(sc));
+       if(c == EOF)
+         { return (TOK_EOF); }
+       else
+         { return (token(sc));}
      case '"':
           return (TOK_DQUOTE);
      case '_':
@@ -1851,9 +1964,9 @@ static int token(scheme *sc) {
      case BACKQUOTE:
           return (TOK_BQUOTE);
      case ',':
-          if ((c=inchar(sc)) == '@')
+          if ((c=inchar(sc)) == '@') {
                return (TOK_ATMARK);
-          else {
+          } else {
                backchar(sc,c);
                return (TOK_COMMA);
           }
@@ -1864,7 +1977,10 @@ static int token(scheme *sc) {
           } else if(c == '!') {
                while ((c=inchar(sc)) != '\n' && c!=EOF)
                    ;
-               return (token(sc));
+           if(c == EOF)
+             { return (TOK_EOF); }
+           else
+             { return (token(sc));}
           } else {
                backchar(sc,c);
                if(is_one_of(" tfodxb\\",c)) {
@@ -1958,14 +2074,13 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           p = "#<EOF>";
      } else if (is_port(l)) {
           p = sc->strbuff;
-          strcpy(p, "#<PORT>");
+          snprintf(p, STRBUFFSIZE, "#<PORT>");
      } else if (is_number(l)) {
           p = sc->strbuff;
           if(num_is_integer(l)) {
-               sprintf(p, "%ld", ivalue_unchecked(l));
+               snprintf(p, STRBUFFSIZE, "%ld", ivalue_unchecked(l));
           } else {
-               g_ascii_formatd (p, sizeof (sc->strbuff), "%.10g",
-                                rvalue_unchecked(l));
+               snprintf(p, STRBUFFSIZE, "%.10g", rvalue_unchecked(l));
           }
      } else if (is_string(l)) {
           if (!f) {
@@ -1986,33 +2101,36 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           } else {
                switch(c) {
                case ' ':
-                    sprintf(p,"#\\space"); break;
+                    snprintf(p,STRBUFFSIZE,"#\\space"); break;
                case '\n':
-                    sprintf(p,"#\\newline"); break;
+                    snprintf(p,STRBUFFSIZE,"#\\newline"); break;
                case '\r':
-                    sprintf(p,"#\\return"); break;
+                    snprintf(p,STRBUFFSIZE,"#\\return"); break;
                case '\t':
-                    sprintf(p,"#\\tab"); break;
+                    snprintf(p,STRBUFFSIZE,"#\\tab"); break;
                default:
 #if USE_ASCII_NAMES
                     if(c==127) {
-                         strcpy(p,"#\\del"); break;
+                         snprintf(p,STRBUFFSIZE, "#\\del");
+                         break;
                     } else if(c<32) {
-                         strcpy(p,"#\\"); strcat(p,charnames[c]); break;
-                    }
+                         snprintf(p,STRBUFFSIZE, "#\\%s", charnames[c]);
+                         break;
+                     }
 #else
                     if(c<32) {
-                      sprintf(p,"#\\x%x",c); break;
+                      snprintf(p,STRBUFFSIZE,"#\\x%x",c); break;
                     }
 #endif
-                    sprintf(p,"#\\%c",c); break;
+                    snprintf(p,STRBUFFSIZE,"#\\x%c",c); break;
                }
           }
      } else if (is_symbol(l)) {
           p = symname(l);
      } else if (is_proc(l)) {
           p = sc->strbuff;
-          sprintf(p, "#<%s PROCEDURE %ld>", procname(l),procnum(l));
+          snprintf(p,STRBUFFSIZE,"#<%s PROCEDURE %ld>",
+                   procname(l),procnum(l));
      } else if (is_macro(l)) {
           p = "#<MACRO>";
      } else if (is_closure(l)) {
@@ -2021,7 +2139,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           p = "#<PROMISE>";
      } else if (is_foreign(l)) {
           p = sc->strbuff;
-          sprintf(p, "#<FOREIGN PROCEDURE %ld>", procnum(l));
+          snprintf(p,STRBUFFSIZE,"#<FOREIGN PROCEDURE %ld>", procnum(l));
      } else if (is_continuation(l)) {
           p = "#<CONTINUATION>";
      } else {
@@ -2473,24 +2591,45 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
                Error_1(sc,"unable to open", car(sc->args));
           }
           else
-            { s_retbool(1); }
+          {
+            sc->args = mk_integer(sc,sc->file_i);
+            s_goto(sc,OP_T0LVL);
+          }
 
      case OP_T0LVL: /* top level */
-          if(file_interactive(sc)) {
-               putstr(sc,"\n");
-          }
-          sc->nesting=0;
-          dump_stack_reset(sc);
-          sc->envir = sc->global_env;
-          sc->save_inport=sc->inport;
-          sc->inport = sc->loadport;
-          s_save(sc,OP_T0LVL, sc->NIL, sc->NIL);
-          s_save(sc,OP_VALUEPRINT, sc->NIL, sc->NIL);
-          s_save(sc,OP_T1LVL, sc->NIL, sc->NIL);
-          if (file_interactive(sc)) {
-              putstr(sc,prompt);
-          }
-          s_goto(sc,OP_READ_INTERNAL);
+       /* If we reached the end of file, this loop is done. */
+       if(sc->loadport->_object._port->kind & port_saw_EOF)
+         {
+           if(sc->file_i == 0)
+             {
+               sc->args=sc->NIL;
+               s_goto(sc,OP_QUIT);
+             }
+           else
+             {
+               file_pop(sc);
+               s_return(sc,sc->value);
+             }
+           /* NOTREACHED */
+         }
+
+       /* If interactive, be nice to user. */
+       if(file_interactive(sc))
+         {
+           sc->envir = sc->global_env;
+           dump_stack_reset(sc);
+           putstr(sc,"\n");
+           putstr(sc,prompt);
+         }
+
+       /* Set up another iteration of REPL */
+       sc->nesting=0;
+       sc->save_inport=sc->inport;
+       sc->inport = sc->loadport;
+       s_save(sc,OP_T0LVL, sc->NIL, sc->NIL);
+       s_save(sc,OP_VALUEPRINT, sc->NIL, sc->NIL);
+       s_save(sc,OP_T1LVL, sc->NIL, sc->NIL);
+       s_goto(sc,OP_READ_INTERNAL);
 
      case OP_T1LVL: /* top level */
           sc->code = sc->value;
@@ -2499,14 +2638,8 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
 
      case OP_READ_INTERNAL:       /* internal read */
           sc->tok = token(sc);
-          if(sc->tok==TOK_EOF) {
-               if(sc->inport==sc->loadport) {
-                    sc->args=sc->NIL;
-                    s_goto(sc,OP_QUIT);
-               } else {
-                    s_return(sc,sc->EOF_OBJ);
-               }
-          }
+          if(sc->tok==TOK_EOF)
+            { s_return(sc,sc->EOF_OBJ); }
           s_goto(sc,OP_RDSEXPR);
 
      case OP_GENSYM:
@@ -2598,7 +2731,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
        if(sc->tracing) {
          s_save(sc,OP_REAL_APPLY,sc->args,sc->code);
          sc->print_flag = 1;
-         /*         sc->args=cons(sc,sc->code,sc->args);*/
+         /*  sc->args=cons(sc,sc->code,sc->args);*/
          putstr(sc,"\nApply to: ");
          s_goto(sc,OP_P0LIST);
        }
@@ -2607,11 +2740,12 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
 #endif
           if (is_proc(sc->code)) {
                s_goto(sc,procnum(sc->code));   /* PROCEDURE */
-          } else if (is_foreign(sc->code)) {
-               sc->safe_foreign = cons (sc, sc->NIL, sc->safe_foreign);
+          } else if (is_foreign(sc->code))
+          {
+               /* Keep nested calls from GC'ing the arglist */
+               push_recent_alloc(sc,sc->args,sc->NIL);
                sc->foreign_error = sc->NIL;
                x=sc->code->_object._ff(sc,sc->args);
-               sc->safe_foreign = cdr (sc->safe_foreign);
                if (sc->foreign_error == sc->NIL) {
                    s_return(sc,x);
                } else {
@@ -2657,8 +2791,31 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           sc->code = sc->value;
           s_goto(sc,OP_EVAL);
 
+#if 1
+     case OP_LAMBDA:     /* lambda */
+          /* If the hook is defined, apply it to sc->code, otherwise
+             set sc->value fall thru */
+          {
+               pointer f=find_slot_in_env(sc,sc->envir,sc->COMPILE_HOOK,1);
+               if(f==sc->NIL) {
+                    sc->value = sc->code;
+                    /* Fallthru */
+               } else {
+                    s_save(sc,OP_LAMBDA1,sc->args,sc->code);
+                    sc->args=cons(sc,sc->code,sc->NIL);
+                    sc->code=slot_value_in_env(f);
+                    s_goto(sc,OP_APPLY);
+               }
+          }
+
+     case OP_LAMBDA1:
+          s_return(sc,mk_closure(sc, sc->value, sc->envir));
+
+#else
      case OP_LAMBDA:     /* lambda */
           s_return(sc,mk_closure(sc, sc->code, sc->envir));
+
+#endif
 
      case OP_MKCLOSURE: /* make-closure */
        x=car(sc->args);
@@ -2679,6 +2836,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
      case OP_DEF0:  /* define */
           if(is_immutable(car(sc->code)))
                 Error_1(sc,"define: unable to alter immutable", car(sc->code));
+
           if (is_pair(car(sc->code))) {
                x = caar(sc->code);
                sc->code = cons(sc, sc->LAMBDA, cons(sc, cdar(sc->code), cdr(sc->code)));
@@ -2711,7 +2869,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
 
      case OP_SET0:       /* set! */
           if(is_immutable(car(sc->code)))
-                Error_1(sc,"set!: unable to alter immutable variable", car(sc->code));
+                Error_1(sc,"set!: unable to alter immutable variable",car(sc->code));
           s_save(sc,OP_SET1, sc->NIL, car(sc->code));
           sc->code = cadr(sc->code);
           s_goto(sc,OP_EVAL);
@@ -2826,7 +2984,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
                s_goto(sc,OP_BEGIN);
           }
      default:
-          sprintf(sc->strbuff, "%d: illegal operator", sc->op);
+          snprintf(sc->strbuff,STRBUFFSIZE,"%d: illegal operator", sc->op);
           Error_0(sc,sc->strbuff);
      }
      return sc->T;
@@ -3036,7 +3194,7 @@ static pointer opexe_1(scheme *sc, enum scheme_opcodes op) {
           s_goto(sc,OP_APPLY);
 
      default:
-          sprintf(sc->strbuff, "%d: illegal operator", sc->op);
+          snprintf(sc->strbuff,STRBUFFSIZE,"%d: illegal operator", sc->op);
           Error_0(sc,sc->strbuff);
      }
      return sc->T;
@@ -3501,60 +3659,43 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
      }
 
      default:
-          sprintf(sc->strbuff, "%d: illegal operator", sc->op);
+          snprintf(sc->strbuff,STRBUFFSIZE,"%d: illegal operator", sc->op);
           Error_0(sc,sc->strbuff);
      }
      return sc->T;
 }
 
-static int is_list(scheme *sc, pointer a) {
-    pointer slow, fast;
+static int is_list(scheme *sc, pointer a)
+{ return list_length(sc,a) >= 0; }
 
-    slow = fast = a;
-    while (1)
-    {
-        if (fast == sc->NIL)
-                return 1;
-        if (!is_pair(fast))
-                return 0;
-        fast = cdr(fast);
-        if (fast == sc->NIL)
-                return 1;
-        if (!is_pair(fast))
-                return 0;
-        fast = cdr(fast);
-
-        slow = cdr(slow);
-        if (fast == slow)
-        {
-            /* the fast pointer has looped back around and caught up
-               with the slow pointer, hence the structure is circular,
-               not of finite length, and therefore not a list */
-            return 0;
-        }
-    }
-}
-
-int list_length(scheme *sc, pointer a) {
+/* Result is:
+   proper list: length
+   circular list: -1
+   not even a pair: -2
+   dotted list: -2 minus length before dot
+*/
+int list_length(scheme *sc, pointer p) {
     int i=0;
     pointer slow, fast;
 
-    slow = fast = a;
+    slow = fast = p;
     while (1)
     {
         if (fast == sc->NIL)
                 return i;
         if (!is_pair(fast))
-                return i;
+                return -2 - i;
         fast = cdr(fast);
         ++i;
         if (fast == sc->NIL)
                 return i;
         if (!is_pair(fast))
-                return i;
+                return -2 - i;
         ++i;
         fast = cdr(fast);
 
+       /* Safe because we would have already returned if `fast'
+          encountered a non-pair. */
         slow = cdr(slow);
         if (fast == slow)
         {
@@ -3645,7 +3786,7 @@ static pointer opexe_3(scheme *sc, enum scheme_opcodes op) {
      case OP_PAIRP:       /* pair? */
           s_retbool(is_pair(car(sc->args)));
      case OP_LISTP:       /* list? */
-          s_retbool(is_list(sc, car(sc->args)));
+          s_retbool(list_length(sc,car(sc->args)) >= 0);
      case OP_ENVP:        /* environment? */
           s_retbool(is_environment(car(sc->args)));
      case OP_VECTORP:     /* vector? */
@@ -3655,7 +3796,7 @@ static pointer opexe_3(scheme *sc, enum scheme_opcodes op) {
      case OP_EQV:        /* eqv? */
           s_retbool(eqv(car(sc->args), cadr(sc->args)));
      default:
-          sprintf(sc->strbuff, "%d: illegal operator", sc->op);
+          snprintf(sc->strbuff,STRBUFFSIZE,"%d: illegal operator", sc->op);
           Error_0(sc,sc->strbuff);
      }
      return sc->T;
@@ -3840,13 +3981,11 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
 
 #if USE_STRING_PORTS
      case OP_OPEN_INSTRING: /* open-input-string */
-     case OP_OPEN_OUTSTRING: /* open-output-string */
      case OP_OPEN_INOUTSTRING: /* open-input-output-string */ {
           int prop=0;
           pointer p;
           switch(op) {
                case OP_OPEN_INSTRING:     prop=port_input; break;
-               case OP_OPEN_OUTSTRING:    prop=port_output; break;
                case OP_OPEN_INOUTSTRING:  prop=port_input|port_output; break;
                default:                   break;  /* Quiet the compiler */
           }
@@ -3856,6 +3995,44 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                s_return(sc,sc->F);
           }
           s_return(sc,p);
+     }
+     case OP_OPEN_OUTSTRING: /* open-output-string */ {
+          pointer p;
+          if(car(sc->args)==sc->NIL) {
+               p=port_from_scratch(sc);
+               if(p==sc->NIL) {
+                    s_return(sc,sc->F);
+               }
+          } else {
+               p=port_from_string(sc, strvalue(car(sc->args)),
+                          strvalue(car(sc->args))+strlength(car(sc->args)),
+                          port_output);
+               if(p==sc->NIL) {
+                    s_return(sc,sc->F);
+               }
+          }
+          s_return(sc,p);
+     }
+     case OP_GET_OUTSTRING: /* get-output-string */ {
+          port *p;
+
+          if ((p=car(sc->args)->_object._port)->kind&port_string) {
+               off_t size;
+               char *str;
+
+               size=p->rep.string.curr-p->rep.string.start+1;
+               str=sc->malloc(size);
+               if(str != NULL) {
+                    pointer s;
+
+                    memcpy(str,p->rep.string.start,size-1);
+                    str[size-1]='\0';
+                    s=mk_string(sc,str);
+                    sc->free(str);
+                    s_return(sc,s);
+               }
+          }
+          s_return(sc,sc->F);
      }
 #endif
 
@@ -3950,12 +4127,8 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
      case OP_RDSEXPR:
           switch (sc->tok) {
           case TOK_EOF:
-               if(sc->inport==sc->loadport) {
-                    sc->args=sc->NIL;
-                    s_goto(sc,OP_QUIT);
-               } else {
-                    s_return(sc,sc->EOF_OBJ);
-               }
+            s_return(sc,sc->EOF_OBJ);
+            /* NOTREACHED */
 /*
  * Commented out because we now skip comments in the scanner
  *
@@ -4088,13 +4261,13 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
      case OP_RDVEC:
           /*sc->code=cons(sc,mk_proc(sc,OP_VECTOR),sc->value);
           s_goto(sc,OP_EVAL); Cannot be quoted*/
-       /*x=cons(sc,mk_proc(sc,OP_VECTOR),sc->value);
-         s_return(sc,x); Cannot be part of pairs*/
-       /*sc->code=mk_proc(sc,OP_VECTOR);
-       sc->args=sc->value;
-       s_goto(sc,OP_APPLY);*/
-       sc->args=sc->value;
-       s_goto(sc,OP_VECTOR);
+          /*x=cons(sc,mk_proc(sc,OP_VECTOR),sc->value);
+          s_return(sc,x); Cannot be part of pairs*/
+          /*sc->code=mk_proc(sc,OP_VECTOR);
+          sc->args=sc->value;
+          s_goto(sc,OP_APPLY);*/
+          sc->args=sc->value;
+          s_goto(sc,OP_VECTOR);
 
      /* ========== printing part ========== */
      case OP_P0LIST:
@@ -4154,7 +4327,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           pointer vec=car(sc->args);
           int len=ivalue_unchecked(vec);
           if(i==len) {
-               putstr(sc," )");
+               putstr(sc,")");
                s_return(sc,sc->T);
           } else {
                pointer elem=vector_elem(vec,i);
@@ -4167,7 +4340,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
      }
 
      default:
-          sprintf(sc->strbuff, "%d: illegal operator", sc->op);
+          snprintf(sc->strbuff,STRBUFFSIZE,"%d: illegal operator", sc->op);
           Error_0(sc,sc->strbuff);
 
      }
@@ -4222,7 +4395,7 @@ static pointer opexe_6(scheme *sc, enum scheme_opcodes op) {
      case OP_MACROP:          /* macro? */
           s_retbool(is_macro(car(sc->args)));
      default:
-          sprintf(sc->strbuff, "%d: illegal operator", sc->op);
+          snprintf(sc->strbuff,STRBUFFSIZE,"%d: illegal operator", sc->op);
           Error_0(sc,sc->strbuff);
      }
      return sc->T; /* NOTREACHED */
@@ -4247,8 +4420,8 @@ static struct {
   {is_string, "string"},
   {is_symbol, "symbol"},
   {is_port, "port"},
-  {0,"input port"},
-  {0,"output_port"},
+  {is_inport,"input port"},
+  {is_outport,"output port"},
   {is_environment, "environment"},
   {is_pair, "pair"},
   {0, "pair or '()"},
@@ -4302,31 +4475,28 @@ static const char *procname(pointer x) {
 
 /* kernel of this interpreter */
 static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
-  int count=0;
-  int old_op;
-
   sc->op = op;
   for (;;) {
     op_code_info *pcd=dispatch_table+sc->op;
     if (pcd->name!=0) { /* if built-in function, check arguments */
-      char msg[512];
+      char msg[STRBUFFSIZE];
       int ok=1;
       int n=list_length(sc,sc->args);
 
       /* Check number of arguments */
       if(n<pcd->min_arity) {
         ok=0;
-        sprintf(msg,"%s: needs%s %d argument(s)",
-                pcd->name,
-                pcd->min_arity==pcd->max_arity?"":" at least",
-                pcd->min_arity);
+        snprintf(msg, STRBUFFSIZE, "%s: needs%s %d argument(s)",
+                 pcd->name,
+                 pcd->min_arity==pcd->max_arity?"":" at least",
+                 pcd->min_arity);
       }
       if(ok && n>pcd->max_arity) {
         ok=0;
-        sprintf(msg,"%s: needs%s %d argument(s)",
-                pcd->name,
-                pcd->min_arity==pcd->max_arity?"":" at most",
-                pcd->max_arity);
+        snprintf(msg, STRBUFFSIZE, "%s: needs%s %d argument(s)",
+                 pcd->name,
+                 pcd->min_arity==pcd->max_arity?"":" at most",
+                 pcd->max_arity);
       }
       if(ok) {
         if(pcd->arg_tests_encoding!=0) {
@@ -4337,11 +4507,7 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
           do {
             pointer arg=car(arglist);
             j=(int)t[0];
-            if(j==TST_INPORT[0]) {
-              if(!is_inport(arg)) break;
-            } else if(j==TST_OUTPORT[0]) {
-              if(!is_outport(arg)) break;
-            } else if(j==TST_LIST[0]) {
+        if(j==TST_LIST[0]) {
               if(arg!=sc->NIL && !is_pair(arg)) break;
             } else {
               if(!tests[j].fct(arg)) break;
@@ -4355,10 +4521,10 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
           } while(i<n);
           if(i<n) {
             ok=0;
-            sprintf(msg,"%s: argument %d must be: %s",
-                    pcd->name,
-                    i+1,
-                    tests[j].kind);
+            snprintf(msg, STRBUFFSIZE, "%s: argument %d must be: %s",
+                     pcd->name,
+                     i+1,
+                     tests[j].kind);
           }
         }
       }
@@ -4369,7 +4535,7 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
         pcd=dispatch_table+sc->op;
       }
     }
-    old_op=sc->op;
+    ok_to_freely_gc(sc);
     if (pcd->func(sc, (enum scheme_opcodes)sc->op) == sc->NIL) {
       return;
     }
@@ -4377,7 +4543,6 @@ static void Eval_Cycle(scheme *sc, enum scheme_opcodes op) {
       fprintf(stderr,"No memory!\n");
       return;
     }
-    count++;
   }
 }
 
@@ -4488,9 +4653,7 @@ static struct scheme_interface vtbl ={
   fill_vector,
   vector_elem,
   set_vector_elem,
-
   is_port,
-
   is_pair,
   pair_car,
   pair_cdr,
@@ -4586,7 +4749,6 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   sc->code = sc->NIL;
   sc->tracing=0;
   sc->bc_flag = 0;
-  sc->safe_foreign = sc->NIL;
 
   /* init sc->NIL */
   typeflag(sc->NIL) = (T_ATOM | MARK);
@@ -4597,6 +4759,12 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   /* init F */
   typeflag(sc->F) = (T_ATOM | MARK);
   car(sc->F) = cdr(sc->F) = sc->F;
+  /* init sink */
+  typeflag(sc->sink) = (T_PAIR | MARK);
+  car(sc->sink) = sc->NIL;
+  /* init c_nest */
+  sc->c_nest = sc->NIL;
+
   sc->oblist = oblist_initial_value(sc);
   /* init global_env */
   new_frame_in_env(sc, sc->NIL);
@@ -4638,6 +4806,7 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   sc->COLON_HOOK = mk_symbol(sc,"*colon-hook*");
   sc->ERROR_HOOK = mk_symbol(sc, "*error-hook*");
   sc->SHARP_HOOK = mk_symbol(sc, "*sharp-hook*");
+  sc->COMPILE_HOOK = mk_symbol(sc, "*compile-hook*");
 
   return !sc->no_memory;
 }
@@ -4705,6 +4874,7 @@ void scheme_load_file(scheme *sc, FILE *fin) {
     sc->interactive_repl=1;
   }
   sc->inport=sc->loadport;
+  sc->args = mk_integer(sc,sc->file_i);
   Eval_Cycle(sc, OP_T0LVL);
   typeflag(sc->loadport)=T_ATOM;
   if(sc->retcode==0) {
@@ -4724,6 +4894,7 @@ void scheme_load_string(scheme *sc, const char *cmd) {
   sc->retcode=0;
   sc->interactive_repl=0;
   sc->inport=sc->loadport;
+  sc->args = mk_integer(sc,sc->file_i);
   Eval_Cycle(sc, OP_T0LVL);
   typeflag(sc->loadport)=T_ATOM;
   if(sc->retcode==0) {
@@ -4743,21 +4914,65 @@ void scheme_define(scheme *sc, pointer envir, pointer symbol, pointer value) {
 }
 
 #if !STANDALONE
+void scheme_register_foreign_func(scheme * sc, scheme_registerable * sr)
+{
+  scheme_define(sc,
+               sc->global_env,
+               mk_symbol(sc,sr->name),
+               mk_foreign_func(sc, sr->f));
+}
+
+void scheme_register_foreign_func_list(scheme * sc,
+                                      scheme_registerable * list,
+                                      int count)
+{
+  int i;
+  for(i = 0; i < count; i++)
+    {
+      scheme_register_foreign_func(sc, list + i);
+    }
+}
+
 pointer scheme_apply0(scheme *sc, const char *procname)
 { return scheme_eval(sc, cons(sc,mk_symbol(sc,procname),sc->NIL)); }
+
+void save_from_C_call(scheme *sc)
+{
+  pointer saved_data =
+    cons(sc,
+        car(sc->sink),
+        cons(sc,
+             sc->envir,
+             sc->dump));
+  /* Push */
+  sc->c_nest = cons(sc, saved_data, sc->c_nest);
+  /* Truncate the dump stack so TS will return here when done, not
+     directly resume pre-C-call operations. */
+  dump_stack_reset(sc);
+}
+
+void restore_from_C_call(scheme *sc)
+{
+  car(sc->sink) = caar(sc->c_nest);
+  sc->envir = cadar(sc->c_nest);
+  sc->dump = cdr(cdar(sc->c_nest));
+  /* Pop */
+  sc->c_nest = cdr(sc->c_nest);
+}
 
 /* "func" and "args" are assumed to be already eval'ed. */
 pointer scheme_call(scheme *sc, pointer func, pointer args)
 {
   int old_repl = sc->interactive_repl;
   sc->interactive_repl = 0;
-  s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
+  save_from_C_call(sc);
   sc->envir = sc->global_env;
   sc->args = args;
   sc->code = func;
   sc->retcode = 0;
   Eval_Cycle(sc, OP_APPLY);
   sc->interactive_repl = old_repl;
+  restore_from_C_call(sc);
   return sc->value;
 }
 
@@ -4765,12 +4980,13 @@ pointer scheme_eval(scheme *sc, pointer obj)
 {
   int old_repl = sc->interactive_repl;
   sc->interactive_repl = 0;
-  s_save(sc,OP_QUIT,sc->NIL,sc->NIL);
+  save_from_C_call(sc);
   sc->args = sc->NIL;
   sc->code = obj;
   sc->retcode = 0;
   Eval_Cycle(sc, OP_EVAL);
   sc->interactive_repl = old_repl;
+  restore_from_C_call(sc);
   return sc->value;
 }
 
@@ -4880,3 +5096,9 @@ int main(int argc, char **argv) {
 }
 
 #endif
+
+/*
+Local variables:
+c-file-style: "k&r"
+End:
+*/

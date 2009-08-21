@@ -65,6 +65,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
                                GimpItemSet   layer_set,
                                GimpProgress *progress)
 {
+  GList   *all_layers;
+  GList   *all_channels;
+  GList   *all_vectors;
   GList   *list;
   GList   *resize_layers;
   gdouble  progress_max;
@@ -78,9 +81,13 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   gimp_set_busy (image->gimp);
 
-  progress_max = (gimp_container_get_n_children (image->channels) +
-                  gimp_container_get_n_children (image->layers)   +
-                  gimp_container_get_n_children (image->vectors)  +
+  all_layers   = gimp_image_get_layer_list (image);
+  all_channels = gimp_image_get_channel_list (image);
+  all_vectors  = gimp_image_get_vectors_list (image);
+
+  progress_max = (g_list_length (all_layers)   +
+                  g_list_length (all_channels) +
+                  g_list_length (all_vectors)  +
                   1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));
@@ -110,9 +117,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
                 NULL);
 
   /*  Resize all channels  */
-  for (list = gimp_image_get_channel_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_channels; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -124,9 +129,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
     }
 
   /*  Resize all vectors  */
-  for (list = gimp_image_get_vectors_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_vectors; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -145,9 +148,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
     gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Reposition all layers  */
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_layers; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
       gint      old_offset_x;
@@ -169,7 +170,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
   g_list_free (resize_layers);
 
   /*  Reposition or remove all guides  */
-  for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
+  for (list = gimp_image_get_guides (image);
+       list;
+       list = g_list_next (list))
     {
       GimpGuide *guide        = list->data;
       gboolean   remove_guide = FALSE;
@@ -200,7 +203,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
     }
 
   /*  Reposition or remove sample points  */
-  for (list = gimp_image_get_sample_points (image); list; list = g_list_next (list))
+  for (list = gimp_image_get_sample_points (image);
+       list;
+       list = g_list_next (list))
     {
       GimpSamplePoint *sample_point        = list->data;
       gboolean         remove_sample_point = FALSE;
@@ -232,6 +237,10 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   g_object_thaw_notify (G_OBJECT (image));
 
+  g_list_free (all_layers);
+  g_list_free (all_channels);
+  g_list_free (all_vectors);
+
   gimp_unset_busy (image->gimp);
 }
 
@@ -240,25 +249,33 @@ gimp_image_resize_to_layers (GimpImage    *image,
                              GimpContext  *context,
                              GimpProgress *progress)
 {
-  GList    *list = gimp_image_get_layer_iter (image);
+  GList    *all_layers;
+  GList    *list;
   GimpItem *item;
   gint      min_x, max_x;
   gint      min_y, max_y;
 
-  if (!list)
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
+  all_layers = gimp_image_get_layer_list (image);
+
+  if (! all_layers)
     return;
+
+  list = all_layers;
 
   /* figure out starting values */
   item = list->data;
+
   min_x = gimp_item_get_offset_x (item);
   min_y = gimp_item_get_offset_y (item);
   max_x = gimp_item_get_offset_x (item) + gimp_item_get_width  (item);
   max_y = gimp_item_get_offset_y (item) + gimp_item_get_height (item);
 
   /*  Respect all layers  */
-  for (list = g_list_next (list);
-       list;
-       list = g_list_next (list))
+  for (list = g_list_next (list); list; list = g_list_next (list))
     {
       item = list->data;
 

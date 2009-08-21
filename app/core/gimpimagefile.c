@@ -824,7 +824,7 @@ gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
                 "image-width",      gimp_image_get_width  (image),
                 "image-height",     gimp_image_get_height (image),
                 "image-type",       desc->value_desc,
-                "image-num-layers", gimp_container_get_n_children (image->layers),
+                "image-num-layers", gimp_image_get_n_layers (image),
                 NULL);
 }
 

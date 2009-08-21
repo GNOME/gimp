@@ -58,6 +58,7 @@ static void     gimp_container_combo_box_set_context  (GimpContainerView      *v
                                                        GimpContext            *context);
 static gpointer gimp_container_combo_box_insert_item  (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
+                                                       gpointer                parent_insert_data,
                                                        gint                    index);
 static void     gimp_container_combo_box_remove_item  (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
@@ -315,6 +316,7 @@ gimp_container_combo_box_set_context (GimpContainerView *view,
 static gpointer
 gimp_container_combo_box_insert_item (GimpContainerView *view,
                                       GimpViewable      *viewable,
+                                      gpointer           parent_insert_data,
                                       gint               index)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));

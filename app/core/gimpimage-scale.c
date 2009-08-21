@@ -51,8 +51,10 @@ gimp_image_scale (GimpImage             *image,
                   GimpProgress          *progress)
 {
   GimpProgress *sub_progress;
+  GList        *all_layers;
+  GList        *all_channels;
+  GList        *all_vectors;
   GList        *list;
-  GList        *remove           = NULL;
   gint          old_width;
   gint          old_height;
   gint          offset_x;
@@ -70,9 +72,13 @@ gimp_image_scale (GimpImage             *image,
 
   sub_progress = gimp_sub_progress_new (progress);
 
-  progress_steps = (gimp_container_get_n_children (image->channels) +
-                    gimp_container_get_n_children (image->layers)   +
-                    gimp_container_get_n_children (image->vectors)  +
+  all_layers   = gimp_image_get_layer_list (image);
+  all_channels = gimp_image_get_channel_list (image);
+  all_vectors  = gimp_image_get_vectors_list (image);
+
+  progress_steps = (g_list_length (all_layers)   +
+                    g_list_length (all_channels) +
+                    g_list_length (all_vectors)  +
                     1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));
@@ -103,9 +109,7 @@ gimp_image_scale (GimpImage             *image,
                 NULL);
 
   /*  Scale all channels  */
-  for (list = gimp_image_get_channel_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_channels; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -118,9 +122,7 @@ gimp_image_scale (GimpImage             *image,
     }
 
   /*  Scale all vectors  */
-  for (list = gimp_image_get_vectors_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_vectors; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -141,9 +143,7 @@ gimp_image_scale (GimpImage             *image,
                    interpolation_type, sub_progress);
 
   /*  Scale all layers  */
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_layers; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -159,23 +159,9 @@ gimp_image_scale (GimpImage             *image,
            * here. Upstream warning implemented in resize_check_layer_scaling(),
            * which offers the user the chance to bail out.
            */
-          remove = g_list_prepend (remove, item);
+          gimp_image_remove_layer (image, GIMP_LAYER (item), TRUE, NULL);
         }
     }
-
-  /* We defer removing layers lost to scaling until now so as not to mix
-   * the operations of iterating over and removal from image->layers.
-   */
-  remove = g_list_reverse (remove);
-
-  for (list = remove; list; list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
-
-      gimp_image_remove_layer (image, layer, TRUE, NULL);
-    }
-
-  g_list_free (remove);
 
   /*  Scale all Guides  */
   for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
@@ -213,6 +199,10 @@ gimp_image_scale (GimpImage             *image,
     }
 
   gimp_image_undo_group_end (image);
+
+  g_list_free (all_layers);
+  g_list_free (all_channels);
+  g_list_free (all_vectors);
 
   g_object_unref (sub_progress);
 
@@ -254,6 +244,7 @@ gimp_image_scale_check (const GimpImage *image,
                         gint64          *new_memsize)
 {
   GList  *drawables;
+  GList  *all_layers;
   GList  *list;
   gint64  current_size;
   gint64  scalable_size;
@@ -330,15 +321,21 @@ gimp_image_scale_check (const GimpImage *image,
   if (new_size > current_size && new_size > max_memsize)
     return GIMP_IMAGE_SCALE_TOO_BIG;
 
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  all_layers = gimp_image_get_layer_list (image);
+
+  for (list = all_layers; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
       if (! gimp_item_check_scaling (item, new_width, new_height))
-        return GIMP_IMAGE_SCALE_TOO_SMALL;
+        {
+          g_list_free (all_layers);
+
+          return GIMP_IMAGE_SCALE_TOO_SMALL;
+        }
     }
+
+  g_list_free (all_layers);
 
   return GIMP_IMAGE_SCALE_OK;
 }

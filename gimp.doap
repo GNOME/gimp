@@ -4,8 +4,8 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <name xml:lang="en">GNU Image Manipulation Program</name>
-  <shortdesc xml:lang="en">GIMP is the GNU Image Manipulation Program. A freely distributed piece of software for such tasks as photo retouching, image composition and image authoring.</shortdesc>
+  <name xml:lang="en">GIMP</name>
+  <shortdesc xml:lang="en">GNU Image Manipulation Program</shortdesc>
   <homepage rdf:resource="http://www.gimp.org" />
   <mailing-list rdf:resource="http://gimp.org/mail_lists.html" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#productivity" />

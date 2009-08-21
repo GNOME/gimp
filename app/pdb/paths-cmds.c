@@ -302,7 +302,7 @@ path_set_points_invoker (GimpProcedure      *procedure,
           g_free (points);
 
           if (vectors)
-            success = gimp_image_add_vectors (image, vectors, 0, TRUE);
+            success = gimp_image_add_vectors (image, vectors, NULL, 0, TRUE);
           else
             success = FALSE;
         }
@@ -330,7 +330,8 @@ path_stroke_current_invoker (GimpProcedure      *procedure,
       GimpVectors  *vectors  = gimp_image_get_active_vectors (image);
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-      if (vectors && drawable)
+      if (vectors && drawable &&
+          gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error))
         {
           GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
 
@@ -676,7 +677,7 @@ path_import_invoker (GimpProcedure      *procedure,
   if (success)
     {
       success = gimp_vectors_import_file (image, filename,
-                                          merge, scale, -1, NULL, NULL);
+                                          merge, scale, NULL, -1, NULL, NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

@@ -188,9 +188,10 @@ static void
 layer_select_advance (LayerSelect *layer_select,
                       gint         move)
 {
-  GimpLayer *current_layer;
-  GimpLayer *next_layer;
-  gint       index;
+  GimpContainer *container;
+  GimpLayer     *current_layer;
+  GimpLayer     *next_layer;
+  gint           index;
 
   if (move == 0)
     return;
@@ -201,17 +202,17 @@ layer_select_advance (LayerSelect *layer_select,
 
   current_layer = gimp_image_get_active_layer (layer_select->image);
 
-  index = gimp_container_get_child_index (layer_select->image->layers,
-                                          GIMP_OBJECT (current_layer));
+  container = gimp_item_get_container (GIMP_ITEM (current_layer));
+  index     = gimp_item_get_index (GIMP_ITEM (current_layer));
 
   index += move;
 
   if (index < 0)
-    index = gimp_container_get_n_children (layer_select->image->layers) - 1;
-  else if (index >= gimp_container_get_n_children (layer_select->image->layers))
+    index = gimp_container_get_n_children (container) - 1;
+  else if (index >= gimp_container_get_n_children (container))
     index = 0;
 
-  next_layer = gimp_image_get_layer_by_index (layer_select->image, index);
+  next_layer = GIMP_LAYER (gimp_container_get_child_by_index (container, index));
 
   if (next_layer && next_layer != current_layer)
     {

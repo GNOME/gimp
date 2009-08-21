@@ -140,9 +140,15 @@ static const GimpEnumActionEntry file_save_actions[] =
 
   { "file-export-to", NULL,
     NC_("file-action", "Export to"), "<control>E",
-    NC_("file-action", "Export the image back to the import source in the import format"),
+    NC_("file-action", "Export the image again"),
     GIMP_SAVE_MODE_EXPORT_TO, FALSE,
     GIMP_HELP_FILE_EXPORT_TO },
+
+  { "file-overwrite", NULL,
+    NC_("file-action", "Overwrite"), "",
+    NC_("file-action", "Export the image back to the imported file in the import format"),
+    GIMP_SAVE_MODE_EXPORT_TO, FALSE,
+    GIMP_HELP_FILE_OVERWRITE },
 
   { "file-export", NULL,
     NC_("file-action", "Export..."), "<control><shift>E",
@@ -254,6 +260,8 @@ file_actions_update (GimpActionGroup *group,
                                      GIMP_FILE_EXPORT_TO_URI_KEY);
     }
 
+#define SET_VISIBLE(action,condition) \
+        gimp_action_group_set_action_visible (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
@@ -261,22 +269,27 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save-as",         image && drawable);
   SET_SENSITIVE ("file-save-a-copy",     image && drawable);
   SET_SENSITIVE ("file-revert",          image && (GIMP_OBJECT (image)->name || source));
-  SET_SENSITIVE ("file-export-to",       source || export_to);
+  SET_SENSITIVE ("file-export-to",       export_to);
+  SET_VISIBLE   ("file-export-to",       export_to || ! source);
+  SET_SENSITIVE ("file-overwrite",       source);
+  SET_VISIBLE   ("file-overwrite",       source);
   SET_SENSITIVE ("file-export",          image && drawable);
   SET_SENSITIVE ("file-create-template", image);
 
-  if (source || export_to)
+  if (export_to)
     {
-      gchar *label = NULL;
-
-      if (! export_to)
-        label = g_strdup_printf (_("Overwrite %s"),
-                                 file_utils_uri_display_basename (source));
-      else
-        label = g_strdup_printf (_("Export to %s"),
-                                 file_utils_uri_display_basename (export_to));
-
+      gchar *label;
+      label = g_strdup_printf (_("Export to %s"),
+                               file_utils_uri_display_basename (export_to));
       gimp_action_group_set_action_label (group, "file-export-to", label);
+      g_free (label);
+    }
+  else if (source)
+    {
+      gchar *label;
+      label = g_strdup_printf (_("Overwrite %s"),
+                               file_utils_uri_display_basename (source));
+      gimp_action_group_set_action_label (group, "file-overwrite", label);
       g_free (label);
     }
   else

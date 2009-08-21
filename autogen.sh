@@ -19,6 +19,7 @@ AUTOCONF_REQUIRED_VERSION=2.54
 AUTOMAKE_REQUIRED_VERSION=1.9.6
 INTLTOOL_REQUIRED_VERSION=0.40.1
 LIBTOOL_REQUIRED_VERSION=1.5
+LIBTOOL_WIN32_REQUIRED_VERSION=2.2
 
 
 PROJECT="GNU Image Manipulation Program"
@@ -79,6 +80,14 @@ echo
 
 DIE=0
 
+OS=`uname -s`
+case $OS in
+    *YGWIN* | *INGW*)
+	echo "Looks like Win32, you will need libtool $LIBTOOL_WIN32_REQUIRED_VERSION or newer."
+	echo
+	LIBTOOL_REQUIRED_VERSION=$LIBTOOL_WIN32_REQUIRED_VERSION
+	;;
+esac
 
 echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
 if ($LIBTOOLIZE --version) < /dev/null > /dev/null 2>&1; then

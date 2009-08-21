@@ -1394,7 +1394,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int32),
                              return_val);
-              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_INT16:
@@ -1402,7 +1401,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int16),
                              return_val);
-              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_INT8:
@@ -1410,7 +1408,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                              sc->vptr->mk_integer (sc,
                                                    values[i + 1].data.d_int8),
                              return_val);
-              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_FLOAT:
@@ -1418,7 +1415,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                              sc->vptr->mk_real (sc,
                                                 values[i + 1].data.d_float),
                              return_val);
-              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_STRING:
@@ -1428,7 +1424,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
               return_val = sc->vptr->cons (sc,
                              sc->vptr->mk_string (sc, string),
                              return_val);
-              set_safe_foreign (sc, return_val);
               break;
 
             case GIMP_PDB_INT32ARRAY:
@@ -1437,15 +1432,14 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 gint32 *array      = (gint32 *) values[i + 1].data.d_int32array;
                 pointer vector     = sc->vptr->mk_vector (sc, num_int32s);
 
-                return_val = sc->vptr->cons (sc, vector, return_val);
-                set_safe_foreign (sc, return_val);
-
                 for (j = 0; j < num_int32s; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_integer (sc,
                                                                      array[j]));
                   }
+
+                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1455,15 +1449,14 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 gint16 *array      = (gint16 *) values[i + 1].data.d_int16array;
                 pointer vector     = sc->vptr->mk_vector (sc, num_int16s);
 
-                return_val = sc->vptr->cons (sc, vector, return_val);
-                set_safe_foreign (sc, return_val);
-
                 for (j = 0; j < num_int16s; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_integer (sc,
                                                                      array[j]));
                   }
+
+                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1473,15 +1466,14 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 guint8 *array     = (guint8 *) values[i + 1].data.d_int8array;
                 pointer vector    = sc->vptr->mk_vector (sc, num_int8s);
 
-                return_val = sc->vptr->cons (sc, vector, return_val);
-                set_safe_foreign (sc, return_val);
-
                 for (j = 0; j < num_int8s; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_integer (sc,
                                                                      array[j]));
                   }
+
+                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1491,15 +1483,14 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 gdouble *array      = (gdouble *) values[i + 1].data.d_floatarray;
                 pointer  vector     = sc->vptr->mk_vector (sc, num_floats);
 
-                return_val = sc->vptr->cons (sc, vector, return_val);
-                set_safe_foreign (sc, return_val);
-
                 for (j = 0; j < num_floats; j++)
                   {
                     sc->vptr->set_vector_elem (vector, j,
                                                sc->vptr->mk_real (sc,
                                                                   array[j]));
                   }
+
+                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1509,9 +1500,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 gchar **array       = (gchar **) values[i + 1].data.d_stringarray;
                 pointer list        = sc->NIL;
 
-                return_val = sc->vptr->cons (sc, list, return_val);
-                set_safe_foreign (sc, return_val);
-
                 for (j = num_strings - 1; j >= 0; j--)
                   {
                     list = sc->vptr->cons (sc,
@@ -1519,14 +1507,9 @@ script_fu_marshal_procedure_call (scheme  *sc,
                                                                 array[j] ?
                                                                 array[j] : ""),
                                            list);
-
-                    /* hook the current list into return_val, so that it
-                     * inherits the set_safe_foreign()-protection.
-                     * May be removed when tinyscheme fixes the GC issue
-                     * with foreign functions
-                     */
-                    sc->vptr->set_car (return_val, list);
                   }
+
+                return_val = sc->vptr->cons (sc, list, return_val);
               }
               break;
 
@@ -1547,7 +1530,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 return_val = sc->vptr->cons (sc,
                                              temp_val,
                                              return_val);
-                set_safe_foreign (sc, return_val);
                 break;
               }
 
@@ -1556,9 +1538,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 gint32   num_colors = values[i].data.d_int32;
                 GimpRGB *array      = (GimpRGB *) values[i + 1].data.d_colorarray;
                 pointer  vector     = sc->vptr->mk_vector (sc, num_colors);
-
-                return_val = sc->vptr->cons (sc, vector, return_val);
-                set_safe_foreign (sc, return_val);
 
                 for (j = 0; j < num_colors; j++)
                   {
@@ -1574,11 +1553,10 @@ script_fu_marshal_procedure_call (scheme  *sc,
                                    sc->vptr->cons (sc,
                                      sc->vptr->mk_integer (sc, b),
                                      sc->NIL)));
-                    return_val = sc->vptr->cons (sc,
-                                                 temp_val,
-                                                 return_val);
-                    set_safe_foreign (sc, return_val);
+                    sc->vptr->set_vector_elem (vector, j, temp_val);
                   }
+
+                return_val = sc->vptr->cons (sc, vector, return_val);
               }
               break;
 
@@ -1604,7 +1582,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 return_val = sc->vptr->cons (sc,
                                              temp_val,
                                              return_val);
-                set_safe_foreign (sc, return_val);
                 break;
               }
               break;
@@ -1635,7 +1612,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
                     return_val = sc->vptr->cons (sc,
                                                  temp_val,
                                                  return_val);
-                    set_safe_foreign (sc, return_val);
 
 #if DEBUG_MARSHALL
                     g_printerr ("      name '%s'\n", p->name);

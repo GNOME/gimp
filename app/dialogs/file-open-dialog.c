@@ -247,7 +247,8 @@ file_open_dialog_open_layers (GtkWidget           *open_dialog,
 
   if (new_layers)
     {
-      gimp_image_add_layers (image, new_layers, -1,
+      gimp_image_add_layers (image, new_layers,
+                             GIMP_IMAGE_ACTIVE_PARENT, -1,
                              0, 0,
                              gimp_image_get_width (image),
                              gimp_image_get_height (image),

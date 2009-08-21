@@ -17,12 +17,16 @@ UI:
    filtering based on these tags (GSoC 2008)
  - Separate the activies of saving an image and exporting it, there is
    now an 'File->Export...' for example
+ - Port file plug-ins to new export API which gets rid of many
+   annoying export dialogs
  - Add a simple parser to size entry widgets, images can be scaled
    to e.g. "50%" or "2 * 37px + 10in"
  - Arrange layer modes into more logical and useful groups
  - Added support for rotation of brushes
  - Make the Pointer dockable show information about selection position
    and size
+ - Get rid of the Tools dockable and move toolbox configuration to
+   Preferences
  - Add status bar feedback for keyboard changes to brush paramaters
  - Add diagonal guides to the Crop Tool
  - New docks are created at the pointer position
@@ -31,6 +35,9 @@ UI:
  - Change default shortcuts for "Shrink Wrap" and "Fit in Window" to
    Ctrl+R and Ctrl+Shift+R respectively since the previous shortcuts
    are now used for the save+export feature
+ - Make Alt+Click on layers in Layers dockable create a selection from
+   the layer
+ - Allow to specify written language in the Text Tool
 
 
 Plug-ins:
@@ -40,6 +47,18 @@ Plug-ins:
  - Add JPEG2000 load plug-in
  - Add X11 mouse cursor plug-in
  - Add support for loading 16bit (RGB565) raw data
+ - Add palette exporter for CSS, PHP, Python, txt and Java, accessed
+   through palette context menu
+ - Add plug-in API for getting image URI, for manipulating size of
+   text layers, for getting and setting text layer hint, and for
+   unified export dialog appearance
+
+
+Data:
+
+ - Add large variants of round brushes and remove duplicate and
+   useless brushes
+ - Add "FG to BG (Hardedge)" gradient
 
 
 GEGL:
@@ -55,6 +74,8 @@ GEGL:
    image
  - Allow to benchmark projection performance with
    File->Debug->Benchmark Projection
+ - When using GEGL for the projection, use CIELCH instead of HSV/HSL
+   for color based layer modes
 
 
 Core:
@@ -68,11 +89,12 @@ Core:
  - Drop support for the obsolete GnomeVFS file-uri backend
  - Allow to dump keyboard shortucts ith File->Debug->Dump Keyboard
    Shortcuts
-
-
-PDB:
-
- - Add procedures to manipulate size of text box
+ - Prepare data structures for layer groups
+ - Remove gimprc setting "menu-mnemonics",
+   "GtkSettings:gtk-enable-mnemonics" shall be used instead
+ - Remove "transient-docks" gimprc setting, the 'Utility window' hint
+   and a sane window manager does a better job
+ - Remove "web-browser" gimprc setting and use gtk_show_uri() instead
 
 General:
 

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-20 21:59+0900\n"
-"PO-Revision-Date: 2009-06-20 23:31+0900\n"
+"POT-Creation-Date: 2009-07-19 08:36+0900\n"
+"PO-Revision-Date: 2009-07-21 22:49+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "レイヤー全体"
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:172
 #: ../plug-ins/common/film.c:965
 #: ../plug-ins/imagemap/imap_selection.c:366
-#: ../plug-ins/selection-to-path/selection-to-path.c:432
+#: ../plug-ins/selection-to-path/selection-to-path.c:433
 msgid "Selection"
 msgstr "選択範囲"
 
@@ -56,7 +56,7 @@ msgstr "状況に応じて"
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:298
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:376
-#: ../plug-ins/common/color-to-alpha.c:409
+#: ../plug-ins/common/color-to-alpha.c:410
 #: ../plug-ins/file-fli/fli-gimp.c:874
 #: ../plug-ins/file-fli/fli-gimp.c:944
 msgid "From:"
@@ -254,31 +254,31 @@ msgstr "エイリアンマップ:  変換しています"
 msgid "Alien Map"
 msgstr "エイリアンマップ"
 
-#: ../plug-ins/common/alien-map.c:440
-#: ../plug-ins/common/alien-map.c:464
-#: ../plug-ins/common/alien-map.c:488
+#: ../plug-ins/common/alien-map.c:441
+#: ../plug-ins/common/alien-map.c:465
+#: ../plug-ins/common/alien-map.c:489
 msgid "Number of cycles covering full value range"
 msgstr "値全体をカバーする周波数"
 
-#: ../plug-ins/common/alien-map.c:452
-#: ../plug-ins/common/alien-map.c:476
-#: ../plug-ins/common/alien-map.c:500
+#: ../plug-ins/common/alien-map.c:453
+#: ../plug-ins/common/alien-map.c:477
+#: ../plug-ins/common/alien-map.c:501
 msgid "Phase angle, range 0-360"
 msgstr "位相角、範囲は 0-360"
 
 #. Propagate Mode
-#: ../plug-ins/common/alien-map.c:514
-#: ../plug-ins/common/hot.c:610
-#: ../plug-ins/common/value-propagate.c:1122
-#: ../plug-ins/common/waves.c:277
+#: ../plug-ins/common/alien-map.c:515
+#: ../plug-ins/common/hot.c:611
+#: ../plug-ins/common/value-propagate.c:1123
+#: ../plug-ins/common/waves.c:278
 msgid "Mode"
 msgstr "モード"
 
-#: ../plug-ins/common/alien-map.c:518
+#: ../plug-ins/common/alien-map.c:519
 msgid "_RGB color model"
 msgstr "RGB カラーモデル(_R)"
 
-#: ../plug-ins/common/alien-map.c:519
+#: ../plug-ins/common/alien-map.c:520
 msgid "_HSL color model"
 msgstr "HSL カラーモデル(_H)"
 
@@ -548,32 +548,32 @@ msgstr "キャンバス地"
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: ../plug-ins/common/apply-canvas.c:1291
-#: ../plug-ins/common/wind.c:944
+#: ../plug-ins/common/apply-canvas.c:1292
+#: ../plug-ins/common/wind.c:945
 #: ../plug-ins/lighting/lighting-ui.c:517
 msgid "Direction"
 msgstr "方向"
 
-#: ../plug-ins/common/apply-canvas.c:1295
+#: ../plug-ins/common/apply-canvas.c:1296
 msgid "_Top-right"
 msgstr "右上(_T)"
 
-#: ../plug-ins/common/apply-canvas.c:1296
+#: ../plug-ins/common/apply-canvas.c:1297
 msgid "Top-_left"
 msgstr "左上(_L)"
 
-#: ../plug-ins/common/apply-canvas.c:1297
+#: ../plug-ins/common/apply-canvas.c:1298
 msgid "_Bottom-left"
 msgstr "左下(_B)"
 
-#: ../plug-ins/common/apply-canvas.c:1298
+#: ../plug-ins/common/apply-canvas.c:1299
 msgid "Bottom-_right"
 msgstr "右下(_R)"
 
-#: ../plug-ins/common/apply-canvas.c:1323
-#: ../plug-ins/common/bump-map.c:915
-#: ../plug-ins/common/emboss.c:523
-#: ../plug-ins/common/fractal-trace.c:795
+#: ../plug-ins/common/apply-canvas.c:1324
+#: ../plug-ins/common/bump-map.c:916
+#: ../plug-ins/common/emboss.c:524
+#: ../plug-ins/common/fractal-trace.c:796
 #: ../plug-ins/map-object/map-object-ui.c:573
 msgid "_Depth:"
 msgstr "深度(_D): "
@@ -595,20 +595,20 @@ msgid "Blinds"
 msgstr "ブラインド"
 
 #. Orientation toggle box
-#: ../plug-ins/common/blinds.c:256
-#: ../plug-ins/common/ripple.c:553
+#: ../plug-ins/common/blinds.c:257
+#: ../plug-ins/common/ripple.c:554
 msgid "Orientation"
 msgstr "向き"
 
-#: ../plug-ins/common/blinds.c:260
-#: ../plug-ins/common/ripple.c:557
+#: ../plug-ins/common/blinds.c:261
+#: ../plug-ins/common/ripple.c:558
 #: ../plug-ins/common/tile-small.c:425
 #: ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Horizontal"
 msgstr "水平(_H)"
 
-#: ../plug-ins/common/blinds.c:263
-#: ../plug-ins/common/ripple.c:560
+#: ../plug-ins/common/blinds.c:264
+#: ../plug-ins/common/ripple.c:561
 #: ../plug-ins/common/tile-small.c:435
 #: ../plug-ins/pagecurl/pagecurl.c:532
 msgid "_Vertical"
@@ -617,7 +617,7 @@ msgstr "垂直(_V)"
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/common/blinds.c:277
+#: ../plug-ins/common/blinds.c:278
 #: ../plug-ins/common/compose.c:934
 #: ../plug-ins/common/decompose.c:722
 #: ../plug-ins/common/file-cel.c:361
@@ -633,7 +633,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/common/file-raw.c:759
 #: ../plug-ins/common/file-sunras.c:974
 #: ../plug-ins/common/file-tga.c:1063
-#: ../plug-ins/common/file-tiff-load.c:997
+#: ../plug-ins/common/file-tiff-load.c:998
 #: ../plug-ins/common/file-xbm.c:896
 #: ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:256
@@ -646,24 +646,24 @@ msgstr "垂直(_V)"
 #: ../plug-ins/file-psd/psd-image-res-load.c:994
 #: ../plug-ins/file-psd/psd-load.c:1525
 #: ../plug-ins/file-sgi/sgi.c:383
-#: ../plug-ins/gfig/gfig-dialog.c:1283
+#: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/twain/twain.c:567
-#: ../plug-ins/win-snap/winsnap.c:1154
+#: ../plug-ins/win-snap/winsnap.c:1155
 msgid "Background"
 msgstr "背景"
 
-#: ../plug-ins/common/blinds.c:281
-#: ../plug-ins/common/fractal-trace.c:737
-#: ../plug-ins/common/tile-paper.c:383
+#: ../plug-ins/common/blinds.c:282
+#: ../plug-ins/common/fractal-trace.c:738
+#: ../plug-ins/common/tile-paper.c:384
 msgid "_Transparent"
 msgstr "透明(_T)"
 
-#: ../plug-ins/common/blinds.c:307
+#: ../plug-ins/common/blinds.c:308
 msgid "_Displacement:"
 msgstr "ずれ(_D): "
 
-#: ../plug-ins/common/blinds.c:319
+#: ../plug-ins/common/blinds.c:320
 msgid "_Number of segments:"
 msgstr "区切りの数(_N): "
 
@@ -690,16 +690,16 @@ msgstr "選択的ガウスぼかし"
 #: ../plug-ins/common/pixelize.c:292
 #: ../plug-ins/common/softglow.c:223
 #: ../plug-ins/file-sgi/sgi.c:535
-#: ../plug-ins/file-xjt/xjt.c:1698
+#: ../plug-ins/file-xjt/xjt.c:1699
 #: ../plug-ins/gradient-flare/gradient-flare.c:965
 msgid "Cannot operate on indexed color images."
 msgstr "インデックス画像には適用できません"
 
-#: ../plug-ins/common/blur-gauss-selective.c:270
+#: ../plug-ins/common/blur-gauss-selective.c:271
 msgid "_Blur radius:"
 msgstr "ぼかし半径(_B): "
 
-#: ../plug-ins/common/blur-gauss-selective.c:280
+#: ../plug-ins/common/blur-gauss-selective.c:281
 msgid "_Max. delta:"
 msgstr "最大Δ(_M): "
 
@@ -724,31 +724,31 @@ msgid "Gaussian Blur"
 msgstr "ガウスぼかし"
 
 #. parameter settings
-#: ../plug-ins/common/blur-gauss.c:507
+#: ../plug-ins/common/blur-gauss.c:508
 msgid "Blur Radius"
 msgstr "ぼかし半径"
 
-#: ../plug-ins/common/blur-gauss.c:521
-#: ../plug-ins/common/jigsaw.c:2456
-#: ../plug-ins/common/noise-spread.c:381
+#: ../plug-ins/common/blur-gauss.c:522
+#: ../plug-ins/common/jigsaw.c:2457
+#: ../plug-ins/common/noise-spread.c:384
 msgid "_Horizontal:"
 msgstr "水平(_H): "
 
-#: ../plug-ins/common/blur-gauss.c:525
-#: ../plug-ins/common/jigsaw.c:2473
-#: ../plug-ins/common/noise-spread.c:385
+#: ../plug-ins/common/blur-gauss.c:526
+#: ../plug-ins/common/jigsaw.c:2474
+#: ../plug-ins/common/noise-spread.c:388
 msgid "_Vertical:"
 msgstr "垂直(_V): "
 
-#: ../plug-ins/common/blur-gauss.c:548
+#: ../plug-ins/common/blur-gauss.c:549
 msgid "Blur Method"
 msgstr "ぼかしの種類"
 
-#: ../plug-ins/common/blur-gauss.c:552
+#: ../plug-ins/common/blur-gauss.c:553
 msgid "_IIR"
 msgstr "_IIR"
 
-#: ../plug-ins/common/blur-gauss.c:553
+#: ../plug-ins/common/blur-gauss.c:554
 msgid "_RLE"
 msgstr "_RLE"
 
@@ -770,63 +770,67 @@ msgstr "モーションぼかしを適用しています"
 msgid "Motion Blur"
 msgstr "モーションぼかし"
 
-#: ../plug-ins/common/blur-motion.c:1044
+#: ../plug-ins/common/blur-motion.c:1045
 msgid "Blur Type"
 msgstr "ぼかしの種類"
 
-#: ../plug-ins/common/blur-motion.c:1048
+#: ../plug-ins/common/blur-motion.c:1049
 msgctxt "blur-type"
 msgid "_Linear"
 msgstr "線形(_L)"
 
-#: ../plug-ins/common/blur-motion.c:1049
+# fixed Bug 588342 reported by SimaMoto, Ryota.
+# ラジオボタンのラベル
+# 「半径(_R)」から変更、フィルタ適用後の結果から意訳
+# (2009-07-18 NISHIBORI Kiyotaka)
+#: ../plug-ins/common/blur-motion.c:1050
 msgctxt "blur-type"
 msgid "_Radial"
-msgstr "半径(_R)"
+msgstr "回転(_R)"
 
-#: ../plug-ins/common/blur-motion.c:1050
+#: ../plug-ins/common/blur-motion.c:1051
 msgctxt "blur-type"
 msgid "_Zoom"
 msgstr "拡大(_Z)"
 
-#: ../plug-ins/common/blur-motion.c:1057
+#: ../plug-ins/common/blur-motion.c:1058
 msgid "Blur Center"
 msgstr "ぼかしの中心"
 
-#: ../plug-ins/common/blur-motion.c:1093
-#: ../plug-ins/common/lens-flare.c:771
-#: ../plug-ins/common/nova.c:462
-#: ../plug-ins/common/tile-paper.c:281
+#: ../plug-ins/common/blur-motion.c:1094
+#: ../plug-ins/common/lens-flare.c:772
+#: ../plug-ins/common/nova.c:463
+#: ../plug-ins/common/tile-paper.c:282
 #: ../plug-ins/flame/flame.c:1250
 #: ../plug-ins/gradient-flare/gradient-flare.c:2724
 #: ../plug-ins/lighting/lighting-ui.c:476
 msgid "_X:"
 msgstr "_X:"
 
-#: ../plug-ins/common/blur-motion.c:1098
-#: ../plug-ins/common/lens-flare.c:776
-#: ../plug-ins/common/nova.c:467
-#: ../plug-ins/common/tile-paper.c:290
+#: ../plug-ins/common/blur-motion.c:1099
+#: ../plug-ins/common/lens-flare.c:777
+#: ../plug-ins/common/nova.c:468
+#: ../plug-ins/common/tile-paper.c:291
 #: ../plug-ins/flame/flame.c:1264
 #: ../plug-ins/gradient-flare/gradient-flare.c:2728
 #: ../plug-ins/lighting/lighting-ui.c:491
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../plug-ins/common/blur-motion.c:1100
+#: ../plug-ins/common/blur-motion.c:1101
 msgid "Blur _outward"
 msgstr "拡大側にぼかす(_O)"
 
-#: ../plug-ins/common/blur-motion.c:1113
+#: ../plug-ins/common/blur-motion.c:1114
 msgid "Blur Parameters"
 msgstr "ぼかしのパラメータ"
 
-#: ../plug-ins/common/blur-motion.c:1124
+#: ../plug-ins/common/blur-motion.c:1125
 #: ../plug-ins/map-object/map-object-ui.c:1252
 msgid "L_ength:"
 msgstr "長さ(_E): "
 
-#: ../plug-ins/common/blur-motion.c:1137
+#: ../plug-ins/common/blur-motion.c:1138
 #: ../plug-ins/common/newsprint.c:1000
 msgid "_Angle:"
 msgstr "角度(_A): "
@@ -860,21 +864,21 @@ msgstr "境界の平均をとっています"
 msgid "Borderaverage"
 msgstr "境界の平均色"
 
-#: ../plug-ins/common/border-average.c:371
+#: ../plug-ins/common/border-average.c:372
 msgid "Border Size"
 msgstr "境界サイズ"
 
-#: ../plug-ins/common/border-average.c:379
+#: ../plug-ins/common/border-average.c:380
 msgid "_Thickness:"
 msgstr "太さ(_T): "
 
 #. Number of Colors frame
-#: ../plug-ins/common/border-average.c:414
+#: ../plug-ins/common/border-average.c:415
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:907
 msgid "Number of Colors"
 msgstr "色数"
 
-#: ../plug-ins/common/border-average.c:422
+#: ../plug-ins/common/border-average.c:423
 msgid "_Bucket size:"
 msgstr "バケツサイズ(_B): "
 
@@ -894,77 +898,77 @@ msgstr "バンプマップしています"
 msgid "Bump Map"
 msgstr "バンプマップ"
 
-#: ../plug-ins/common/bump-map.c:831
+#: ../plug-ins/common/bump-map.c:832
 msgid "_Bump map:"
 msgstr "バンプマップ(_B): "
 
 #. Map type menu
-#: ../plug-ins/common/bump-map.c:834
+#: ../plug-ins/common/bump-map.c:835
 #: ../plug-ins/flame/flame.c:747
 #: ../plug-ins/lighting/lighting-ui.c:841
 msgid "Linear"
 msgstr "線形"
 
-#: ../plug-ins/common/bump-map.c:835
+#: ../plug-ins/common/bump-map.c:836
 #: ../plug-ins/flame/flame.c:749
 #: ../plug-ins/lighting/lighting-ui.c:844
 msgid "Spherical"
 msgstr "球面"
 
-#: ../plug-ins/common/bump-map.c:836
+#: ../plug-ins/common/bump-map.c:837
 #: ../plug-ins/flame/flame.c:748
 #: ../plug-ins/lighting/lighting-ui.c:843
 msgid "Sinusoidal"
 msgstr "波状"
 
-#: ../plug-ins/common/bump-map.c:843
+#: ../plug-ins/common/bump-map.c:844
 msgid "_Map type:"
 msgstr "マップの種類(_M): "
 
 #. Compensate darkening
-#: ../plug-ins/common/bump-map.c:848
+#: ../plug-ins/common/bump-map.c:849
 msgid "Co_mpensate for darkening"
 msgstr "暗くならない様に補正する(_M)"
 
 #. Invert bumpmap
-#: ../plug-ins/common/bump-map.c:862
+#: ../plug-ins/common/bump-map.c:863
 msgid "I_nvert bumpmap"
 msgstr "反転バンプマップ(_N)"
 
 #. Tile bumpmap
-#: ../plug-ins/common/bump-map.c:876
+#: ../plug-ins/common/bump-map.c:877
 msgid "_Tile bumpmap"
 msgstr "タイルバンプマップ(_T)"
 
-#: ../plug-ins/common/bump-map.c:891
-#: ../plug-ins/common/emboss.c:499
+#: ../plug-ins/common/bump-map.c:892
+#: ../plug-ins/common/emboss.c:500
 msgid "_Azimuth:"
 msgstr "方向(_A): "
 
-#: ../plug-ins/common/bump-map.c:903
+#: ../plug-ins/common/bump-map.c:904
 msgid "_Elevation:"
 msgstr "持ち上げ(_E): "
 
-#: ../plug-ins/common/bump-map.c:929
+#: ../plug-ins/common/bump-map.c:930
 #: ../plug-ins/common/file-ps.c:3394
 msgid "_X offset:"
 msgstr "X オフセット(_X): "
 
-#: ../plug-ins/common/bump-map.c:932
-#: ../plug-ins/common/bump-map.c:946
+#: ../plug-ins/common/bump-map.c:933
+#: ../plug-ins/common/bump-map.c:947
 msgid "The offset can be adjusted by dragging the preview using the middle mouse button."
 msgstr "オフセットは、プレビューをマウスの中ボタンでドラッグして調整することもできます"
 
-#: ../plug-ins/common/bump-map.c:943
+#: ../plug-ins/common/bump-map.c:944
 #: ../plug-ins/common/file-ps.c:3403
 msgid "_Y offset:"
 msgstr "Y オフセット(_Y): "
 
-#: ../plug-ins/common/bump-map.c:957
+#: ../plug-ins/common/bump-map.c:958
 msgid "_Waterlevel:"
 msgstr "水位(_W): "
 
-#: ../plug-ins/common/bump-map.c:969
+#: ../plug-ins/common/bump-map.c:970
 msgid "A_mbient:"
 msgstr "飽和度(_M): "
 
@@ -980,12 +984,12 @@ msgstr "漫画(_R)..."
 msgid "Cartoon"
 msgstr "漫画"
 
-#: ../plug-ins/common/cartoon.c:847
-#: ../plug-ins/common/photocopy.c:875
+#: ../plug-ins/common/cartoon.c:848
+#: ../plug-ins/common/photocopy.c:876
 msgid "_Mask radius:"
 msgstr "マスク半径(_M): "
 
-#: ../plug-ins/common/cartoon.c:861
+#: ../plug-ins/common/cartoon.c:862
 msgid "_Percent black:"
 msgstr "黒の割合(_P): "
 
@@ -1005,81 +1009,81 @@ msgstr "チャンネルミキサー(_X)..."
 msgid "Channel Mixer"
 msgstr "チャンネルミキサー"
 
-#: ../plug-ins/common/channel-mixer.c:528
+#: ../plug-ins/common/channel-mixer.c:529
 msgid "O_utput channel:"
 msgstr "出力チャンネル(_U): "
 
 #. Redmode radio frame
-#: ../plug-ins/common/channel-mixer.c:537
+#: ../plug-ins/common/channel-mixer.c:538
 #: ../plug-ins/common/decompose.c:173
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:990
 msgid "Red"
 msgstr "赤チャンネル"
 
 #. Greenmode radio frame
-#: ../plug-ins/common/channel-mixer.c:542
+#: ../plug-ins/common/channel-mixer.c:543
 #: ../plug-ins/common/decompose.c:174
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1031
 msgid "Green"
 msgstr "緑チャンネル"
 
 #. Bluemode radio frame
-#: ../plug-ins/common/channel-mixer.c:547
+#: ../plug-ins/common/channel-mixer.c:548
 #: ../plug-ins/common/decompose.c:175
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1072
 msgid "Blue"
 msgstr "青チャンネル"
 
-#: ../plug-ins/common/channel-mixer.c:582
-#: ../plug-ins/common/color-exchange.c:397
+#: ../plug-ins/common/channel-mixer.c:583
+#: ../plug-ins/common/color-exchange.c:398
 #: ../plug-ins/common/compose.c:189
 #: ../plug-ins/common/compose.c:200
 #: ../plug-ins/common/diffraction.c:500
 #: ../plug-ins/common/diffraction.c:538
 #: ../plug-ins/common/diffraction.c:576
-#: ../plug-ins/common/noise-rgb.c:531
-#: ../plug-ins/common/noise-rgb.c:538
+#: ../plug-ins/common/noise-rgb.c:532
+#: ../plug-ins/common/noise-rgb.c:539
 msgid "_Red:"
 msgstr "赤(_R): "
 
-#: ../plug-ins/common/channel-mixer.c:600
-#: ../plug-ins/common/color-exchange.c:457
+#: ../plug-ins/common/channel-mixer.c:601
+#: ../plug-ins/common/color-exchange.c:458
 #: ../plug-ins/common/compose.c:190
 #: ../plug-ins/common/compose.c:201
 #: ../plug-ins/common/diffraction.c:509
 #: ../plug-ins/common/diffraction.c:547
 #: ../plug-ins/common/diffraction.c:585
-#: ../plug-ins/common/noise-rgb.c:532
-#: ../plug-ins/common/noise-rgb.c:539
+#: ../plug-ins/common/noise-rgb.c:533
+#: ../plug-ins/common/noise-rgb.c:540
 msgid "_Green:"
 msgstr "緑(_G): "
 
-#: ../plug-ins/common/channel-mixer.c:619
-#: ../plug-ins/common/color-exchange.c:518
+#: ../plug-ins/common/channel-mixer.c:620
+#: ../plug-ins/common/color-exchange.c:519
 #: ../plug-ins/common/compose.c:191
 #: ../plug-ins/common/compose.c:202
 #: ../plug-ins/common/diffraction.c:518
 #: ../plug-ins/common/diffraction.c:556
 #: ../plug-ins/common/diffraction.c:594
-#: ../plug-ins/common/noise-rgb.c:533
-#: ../plug-ins/common/noise-rgb.c:540
+#: ../plug-ins/common/noise-rgb.c:534
+#: ../plug-ins/common/noise-rgb.c:541
 msgid "_Blue:"
 msgstr "青(_B): "
 
-#: ../plug-ins/common/channel-mixer.c:635
+#: ../plug-ins/common/channel-mixer.c:636
 msgid "_Monochrome"
 msgstr "モノクロ(_M)"
 
-#: ../plug-ins/common/channel-mixer.c:648
+#: ../plug-ins/common/channel-mixer.c:649
 msgid "Preserve _luminosity"
 msgstr "明度維持(_L)"
 
-#: ../plug-ins/common/channel-mixer.c:877
+#: ../plug-ins/common/channel-mixer.c:878
 msgid "Load Channel Mixer Settings"
 msgstr "チャンネルミキサー設定読み込み"
 
 #. stat error (file does not exist)
-#: ../plug-ins/common/channel-mixer.c:981
+#: ../plug-ins/common/channel-mixer.c:982
 #: ../plug-ins/common/cml-explorer.c:2177
 #: ../plug-ins/common/curve-bend.c:884
 #: ../plug-ins/common/file-cel.c:311
@@ -1100,7 +1104,7 @@ msgstr "チャンネルミキサー設定読み込み"
 #: ../plug-ins/common/file-pnm.c:493
 #: ../plug-ins/common/file-ps.c:1037
 #: ../plug-ins/common/file-ps.c:3044
-#: ../plug-ins/common/file-psp.c:1750
+#: ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:253
 #: ../plug-ins/common/file-raw.c:707
 #: ../plug-ins/common/file-sunras.c:390
@@ -1109,8 +1113,8 @@ msgstr "チャンネルミキサー設定読み込み"
 #: ../plug-ins/common/file-tga.c:441
 #: ../plug-ins/common/file-tiff-load.c:291
 #: ../plug-ins/common/file-xbm.c:736
-#: ../plug-ins/common/file-xmc.c:665
-#: ../plug-ins/common/file-xmc.c:852
+#: ../plug-ins/common/file-xmc.c:666
+#: ../plug-ins/common/file-xmc.c:853
 #: ../plug-ins/common/file-xwd.c:432
 #: ../plug-ins/common/sphere-designer.c:2001
 #: ../plug-ins/file-bmp/bmp-read.c:153
@@ -1125,8 +1129,8 @@ msgstr "チャンネルミキサー設定読み込み"
 #: ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:189
-#: ../plug-ins/file-xjt/xjt.c:2540
-#: ../plug-ins/file-xjt/xjt.c:2548
+#: ../plug-ins/file-xjt/xjt.c:2541
+#: ../plug-ins/file-xjt/xjt.c:2549
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:928
@@ -1140,11 +1144,11 @@ msgstr ""
 "'%s' を開いて読み込むことができません。\n"
 "%s"
 
-#: ../plug-ins/common/channel-mixer.c:1004
+#: ../plug-ins/common/channel-mixer.c:1005
 msgid "Save Channel Mixer Settings"
 msgstr "チャンネルミキサー設定保存"
 
-#: ../plug-ins/common/channel-mixer.c:1059
+#: ../plug-ins/common/channel-mixer.c:1060
 #: ../plug-ins/common/cml-explorer.c:2004
 #: ../plug-ins/common/curve-bend.c:832
 #: ../plug-ins/common/file-cel.c:582
@@ -1156,7 +1160,7 @@ msgstr "チャンネルミキサー設定保存"
 #: ../plug-ins/common/file-dicom.c:800
 #: ../plug-ins/common/file-gbr.c:634
 #: ../plug-ins/common/file-gif-save.c:761
-#: ../plug-ins/common/file-gih.c:1276
+#: ../plug-ins/common/file-gih.c:1277
 #: ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:574
 #: ../plug-ins/common/file-mng.c:908
@@ -1172,7 +1176,7 @@ msgstr "チャンネルミキサー設定保存"
 #: ../plug-ins/common/file-tga.c:1169
 #: ../plug-ins/common/file-tiff-save.c:683
 #: ../plug-ins/common/file-xbm.c:1034
-#: ../plug-ins/common/file-xmc.c:1474
+#: ../plug-ins/common/file-xmc.c:1475
 #: ../plug-ins/common/file-xwd.c:613
 #: ../plug-ins/common/sphere-designer.c:2111
 #: ../plug-ins/file-bmp/bmp-write.c:295
@@ -1182,8 +1186,8 @@ msgstr "チャンネルミキサー設定保存"
 #: ../plug-ins/file-jpeg/jpeg-save.c:329
 #: ../plug-ins/file-psd/psd-save.c:1637
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:162
-#: ../plug-ins/file-xjt/xjt.c:1291
-#: ../plug-ins/file-xjt/xjt.c:1726
+#: ../plug-ins/file-xjt/xjt.c:1292
+#: ../plug-ins/file-xjt/xjt.c:1727
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:793
@@ -1195,7 +1199,7 @@ msgstr ""
 "'%s' を開いて書き込むことができません。\n"
 "%s"
 
-#: ../plug-ins/common/channel-mixer.c:1067
+#: ../plug-ins/common/channel-mixer.c:1068
 #: ../plug-ins/common/cml-explorer.c:2059
 #, c-format
 msgid "Parameters were saved to '%s'"
@@ -1217,13 +1221,13 @@ msgstr "市松模様を描画しています..."
 msgid "Checkerboard"
 msgstr "市松模様"
 
-#: ../plug-ins/common/checkerboard.c:411
-#: ../plug-ins/common/file-xmc.c:1181
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/common/checkerboard.c:412
+#: ../plug-ins/common/file-xmc.c:1182
+#: ../plug-ins/gimpressionist/sizemap.c:511
 msgid "_Size:"
 msgstr "サイズ(_S): "
 
-#: ../plug-ins/common/checkerboard.c:420
+#: ../plug-ins/common/checkerboard.c:421
 msgid "_Psychobilly"
 msgstr "歪みをいれる(_P)"
 
@@ -1472,7 +1476,7 @@ msgstr "乱数種"
 
 #: ../plug-ins/common/cml-explorer.c:1287
 #: ../plug-ins/common/filter-pack.c:699
-#: ../plug-ins/common/van-gogh-lic.c:670
+#: ../plug-ins/common/van-gogh-lic.c:671
 msgid "_Hue"
 msgstr "色相(_H)"
 
@@ -1716,39 +1720,39 @@ msgstr "色交換(_C)..."
 msgid "Color Exchange"
 msgstr "色交換"
 
-#: ../plug-ins/common/color-exchange.c:308
+#: ../plug-ins/common/color-exchange.c:309
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr "プレビューを中クリックすると 「元色」を選択できます"
 
-#: ../plug-ins/common/color-exchange.c:346
+#: ../plug-ins/common/color-exchange.c:347
 msgid "To Color"
 msgstr "交換色"
 
-#: ../plug-ins/common/color-exchange.c:346
+#: ../plug-ins/common/color-exchange.c:347
 msgid "From Color"
 msgstr "元色"
 
-#: ../plug-ins/common/color-exchange.c:364
+#: ../plug-ins/common/color-exchange.c:365
 msgid "Color Exchange: To Color"
 msgstr "交換する色"
 
-#: ../plug-ins/common/color-exchange.c:365
+#: ../plug-ins/common/color-exchange.c:366
 msgid "Color Exchange: From Color"
 msgstr "元の色"
 
-#: ../plug-ins/common/color-exchange.c:423
+#: ../plug-ins/common/color-exchange.c:424
 msgid "R_ed threshold:"
 msgstr "赤しきい値(_E): "
 
-#: ../plug-ins/common/color-exchange.c:483
+#: ../plug-ins/common/color-exchange.c:484
 msgid "G_reen threshold:"
 msgstr "緑しきい値(_R): "
 
-#: ../plug-ins/common/color-exchange.c:544
+#: ../plug-ins/common/color-exchange.c:545
 msgid "B_lue threshold:"
 msgstr "青しきい値(_L): "
 
-#: ../plug-ins/common/color-exchange.c:572
+#: ../plug-ins/common/color-exchange.c:573
 msgid "Lock _thresholds"
 msgstr "しきい値固定(_T)"
 
@@ -1768,11 +1772,11 @@ msgstr "カラーマップを削除しています"
 msgid "Color to Alpha"
 msgstr "色を透明度に"
 
-#: ../plug-ins/common/color-to-alpha.c:413
+#: ../plug-ins/common/color-to-alpha.c:414
 msgid "Color to Alpha Color Picker"
 msgstr "「色を透明度に」色選択"
 
-#: ../plug-ins/common/color-to-alpha.c:428
+#: ../plug-ins/common/color-to-alpha.c:429
 msgid "to alpha"
 msgstr "を透明度に"
 
@@ -1792,11 +1796,11 @@ msgstr "単色に塗っています..."
 msgid "Colorify"
 msgstr "単色塗り"
 
-#: ../plug-ins/common/colorify.c:288
+#: ../plug-ins/common/colorify.c:289
 msgid "Custom color:"
 msgstr "カスタムカラー: "
 
-#: ../plug-ins/common/colorify.c:293
+#: ../plug-ins/common/colorify.c:294
 msgid "Colorify Custom Color"
 msgstr "単色塗り: カスタムカラー"
 
@@ -1850,7 +1854,7 @@ msgstr "順番を元に戻す"
 msgid "Rearrange Colormap"
 msgstr "カラーマップ変更"
 
-#: ../plug-ins/common/colormap-remap.c:698
+#: ../plug-ins/common/colormap-remap.c:699
 msgid "Drag and drop colors to rearrange the colormap.  The numbers shown are the original indices.  Right-click for a menu with sort options."
 msgstr ""
 "色(のアイコン)をドラッグ-ドロップしてカラーマップを変更します。各色の下に表示されている番号はマップでの識別番号です。\n"
@@ -1858,7 +1862,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:188
 #: ../plug-ins/common/decompose.c:169
-#: ../plug-ins/common/file-raw.c:1095
+#: ../plug-ins/common/file-raw.c:1096
 msgid "RGB"
 msgstr "RGB"
 
@@ -1868,8 +1872,8 @@ msgid "RGBA"
 msgstr "RGBA"
 
 #: ../plug-ins/common/compose.c:203
-#: ../plug-ins/common/noise-rgb.c:526
-#: ../plug-ins/common/noise-rgb.c:541
+#: ../plug-ins/common/noise-rgb.c:527
+#: ../plug-ins/common/noise-rgb.c:542
 msgid "_Alpha:"
 msgstr "透明度(_A): "
 
@@ -1885,12 +1889,12 @@ msgstr "色相(_H): "
 
 #: ../plug-ins/common/compose.c:212
 #: ../plug-ins/common/compose.c:220
-#: ../plug-ins/common/noise-hsv.c:423
+#: ../plug-ins/common/noise-hsv.c:424
 msgid "_Saturation:"
 msgstr "彩度(_S): "
 
 #: ../plug-ins/common/compose.c:213
-#: ../plug-ins/common/noise-hsv.c:435
+#: ../plug-ins/common/noise-hsv.c:436
 msgid "_Value:"
 msgstr "明度(_V): "
 
@@ -2019,7 +2023,7 @@ msgid "Composing"
 msgstr "合成しています..."
 
 #: ../plug-ins/common/compose.c:696
-#: ../plug-ins/common/compose.c:1734
+#: ../plug-ins/common/compose.c:1735
 msgid "At least one image is needed to compose"
 msgstr "合成には少なくとも一枚の画像が必要です"
 
@@ -2055,21 +2059,21 @@ msgid "Compose"
 msgstr "チャンネル合成"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1514
+#: ../plug-ins/common/compose.c:1515
 msgid "Compose Channels"
 msgstr "合成チャンネル"
 
-#: ../plug-ins/common/compose.c:1524
+#: ../plug-ins/common/compose.c:1525
 #: ../plug-ins/common/decompose.c:1514
 msgid "Color _model:"
 msgstr "色モデル(_M): "
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1556
+#: ../plug-ins/common/compose.c:1557
 msgid "Channel Representations"
 msgstr "チャンネルの表現"
 
-#: ../plug-ins/common/compose.c:1619
+#: ../plug-ins/common/compose.c:1620
 msgid "Mask value"
 msgstr "マスク値"
 
@@ -2078,7 +2082,7 @@ msgid "Stretch brightness values to cover the full range"
 msgstr "明度を伸長します"
 
 #: ../plug-ins/common/contrast-normalize.c:91
-#: ../plug-ins/common/edge-dog.c:358
+#: ../plug-ins/common/edge-dog.c:359
 msgid "_Normalize"
 msgstr "正規化(_N)"
 
@@ -2102,35 +2106,35 @@ msgstr "レティネックス処理中"
 msgid "Retinex Image Enhancement"
 msgstr "レティネックス画像拡張"
 
-#: ../plug-ins/common/contrast-retinex.c:320
+#: ../plug-ins/common/contrast-retinex.c:321
 msgid "Uniform"
 msgstr "均一"
 
-#: ../plug-ins/common/contrast-retinex.c:321
+#: ../plug-ins/common/contrast-retinex.c:322
 msgid "Low"
 msgstr "低い"
 
-#: ../plug-ins/common/contrast-retinex.c:322
+#: ../plug-ins/common/contrast-retinex.c:323
 msgid "High"
 msgstr "高い"
 
-#: ../plug-ins/common/contrast-retinex.c:333
+#: ../plug-ins/common/contrast-retinex.c:334
 msgid "_Level:"
 msgstr "レベル(_L): "
 
-#: ../plug-ins/common/contrast-retinex.c:338
+#: ../plug-ins/common/contrast-retinex.c:339
 msgid "_Scale:"
 msgstr "スケール(_S): "
 
-#: ../plug-ins/common/contrast-retinex.c:353
+#: ../plug-ins/common/contrast-retinex.c:354
 msgid "Scale _division:"
 msgstr "スケール分割(_S): "
 
-#: ../plug-ins/common/contrast-retinex.c:368
+#: ../plug-ins/common/contrast-retinex.c:369
 msgid "Dy_namic:"
 msgstr "動的(_D): "
 
-#: ../plug-ins/common/contrast-retinex.c:641
+#: ../plug-ins/common/contrast-retinex.c:642
 msgid "Retinex: filtering"
 msgstr "レティネックス: フィルタをかけています"
 
@@ -2193,10 +2197,10 @@ msgid "E_xtend"
 msgstr "拡張(_X)"
 
 #: ../plug-ins/common/convolution-matrix.c:73
-#: ../plug-ins/common/displace.c:471
-#: ../plug-ins/common/edge.c:704
-#: ../plug-ins/common/fractal-trace.c:735
-#: ../plug-ins/common/ripple.c:581
+#: ../plug-ins/common/displace.c:472
+#: ../plug-ins/common/edge.c:705
+#: ../plug-ins/common/fractal-trace.c:736
+#: ../plug-ins/common/ripple.c:582
 msgid "_Wrap"
 msgstr "回り込み(_W)"
 
@@ -2224,33 +2228,33 @@ msgstr "コンボリューション行列を適用しています..."
 msgid "Convolution Matrix"
 msgstr "コンボリューション行列"
 
-#: ../plug-ins/common/convolution-matrix.c:943
+#: ../plug-ins/common/convolution-matrix.c:944
 msgid "Matrix"
 msgstr "行列"
 
-#: ../plug-ins/common/convolution-matrix.c:981
+#: ../plug-ins/common/convolution-matrix.c:982
 msgid "D_ivisor:"
 msgstr "割る数(_I): "
 
-#: ../plug-ins/common/convolution-matrix.c:1007
+#: ../plug-ins/common/convolution-matrix.c:1008
 #: ../plug-ins/common/depth-merge.c:768
-#: ../plug-ins/common/file-raw.c:1116
+#: ../plug-ins/common/file-raw.c:1117
 msgid "O_ffset:"
 msgstr "オフセット(_F): "
 
-#: ../plug-ins/common/convolution-matrix.c:1036
+#: ../plug-ins/common/convolution-matrix.c:1037
 msgid "N_ormalise"
 msgstr "正規化(_N)"
 
-#: ../plug-ins/common/convolution-matrix.c:1048
+#: ../plug-ins/common/convolution-matrix.c:1049
 msgid "A_lpha-weighting"
 msgstr "アルファ加重(_L)"
 
-#: ../plug-ins/common/convolution-matrix.c:1067
+#: ../plug-ins/common/convolution-matrix.c:1068
 msgid "Border"
 msgstr "境界"
 
-#: ../plug-ins/common/convolution-matrix.c:1094
+#: ../plug-ins/common/convolution-matrix.c:1095
 msgid "Channels"
 msgstr "チャンネル"
 
@@ -2302,19 +2306,19 @@ msgstr "キュービズム(_C)..."
 msgid "Cubism"
 msgstr "キュービズム"
 
-#: ../plug-ins/common/cubism.c:304
+#: ../plug-ins/common/cubism.c:305
 msgid "_Tile size:"
 msgstr "タイルサイズ(_T): "
 
-#: ../plug-ins/common/cubism.c:317
+#: ../plug-ins/common/cubism.c:318
 msgid "T_ile saturation:"
 msgstr "タイル彩度(_I): "
 
-#: ../plug-ins/common/cubism.c:328
+#: ../plug-ins/common/cubism.c:329
 msgid "_Use background color"
 msgstr "背景色を使用(_U)"
 
-#: ../plug-ins/common/cubism.c:418
+#: ../plug-ins/common/cubism.c:419
 msgid "Cubistic transformation"
 msgstr "キュービズム変換しています"
 
@@ -2349,133 +2353,133 @@ msgstr ""
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
 #: ../plug-ins/common/curve-bend.c:1216
-#: ../plug-ins/common/curve-bend.c:2937
+#: ../plug-ins/common/curve-bend.c:2938
 msgid "Curve Bend"
 msgstr "ひん曲げる"
 
 #. Preview area, top of column
 #. preview
-#: ../plug-ins/common/curve-bend.c:1252
+#: ../plug-ins/common/curve-bend.c:1253
 #: ../plug-ins/gimpressionist/orientmap.c:591
-#: ../plug-ins/gimpressionist/sizemap.c:460
+#: ../plug-ins/gimpressionist/sizemap.c:461
 #: ../plug-ins/print/print-page-layout.c:171
 msgid "Preview"
 msgstr "プレビュー"
 
 #. The preview button
-#: ../plug-ins/common/curve-bend.c:1281
+#: ../plug-ins/common/curve-bend.c:1282
 msgid "_Preview Once"
 msgstr "プレビュー更新(_P)"
 
 #. The preview toggle
-#: ../plug-ins/common/curve-bend.c:1290
+#: ../plug-ins/common/curve-bend.c:1291
 msgid "Automatic pre_view"
 msgstr "自動プレビュー(_V)"
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve-bend.c:1300
-#: ../plug-ins/common/ripple.c:519
+#: ../plug-ins/common/curve-bend.c:1301
+#: ../plug-ins/common/ripple.c:520
 #: ../plug-ins/gfig/gfig-dialog.c:1206
 msgid "Options"
 msgstr "オプション"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve-bend.c:1314
+#: ../plug-ins/common/curve-bend.c:1315
 msgid "Rotat_e:"
 msgstr "回転(_E): "
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve-bend.c:1333
+#: ../plug-ins/common/curve-bend.c:1334
 msgid "Smoo_thing"
 msgstr "スムージング(_T)"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1343
-#: ../plug-ins/common/mosaic.c:730
+#: ../plug-ins/common/curve-bend.c:1344
+#: ../plug-ins/common/mosaic.c:731
 #: ../plug-ins/common/qbist.c:852
-#: ../plug-ins/common/ripple.c:528
+#: ../plug-ins/common/ripple.c:529
 msgid "_Antialiasing"
 msgstr "滑らかに(_A)"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve-bend.c:1353
+#: ../plug-ins/common/curve-bend.c:1354
 msgid "Work on cop_y"
 msgstr "コピーを操作(_Y)"
 
 #. The curves graph
-#: ../plug-ins/common/curve-bend.c:1363
+#: ../plug-ins/common/curve-bend.c:1364
 msgid "Modify Curves"
 msgstr "カーブ変更"
 
-#: ../plug-ins/common/curve-bend.c:1391
+#: ../plug-ins/common/curve-bend.c:1392
 msgid "Curve for Border"
 msgstr "曲げ操作する端"
 
-#: ../plug-ins/common/curve-bend.c:1395
+#: ../plug-ins/common/curve-bend.c:1396
 msgid "_Upper"
 msgstr "上(_U)"
 
-#: ../plug-ins/common/curve-bend.c:1396
+#: ../plug-ins/common/curve-bend.c:1397
 msgid "_Lower"
 msgstr "下(_L)"
 
-#: ../plug-ins/common/curve-bend.c:1406
+#: ../plug-ins/common/curve-bend.c:1407
 msgid "Curve Type"
 msgstr "カーブタイプ"
 
-#: ../plug-ins/common/curve-bend.c:1410
+#: ../plug-ins/common/curve-bend.c:1411
 msgid "Smoot_h"
 msgstr "滑らか(_H)"
 
-#: ../plug-ins/common/curve-bend.c:1411
+#: ../plug-ins/common/curve-bend.c:1412
 msgid "_Free"
 msgstr "自由(_F)"
 
 #. The Copy button
-#: ../plug-ins/common/curve-bend.c:1426
+#: ../plug-ins/common/curve-bend.c:1427
 msgid "_Copy"
 msgstr "コピー(_C)"
 
-#: ../plug-ins/common/curve-bend.c:1431
+#: ../plug-ins/common/curve-bend.c:1432
 msgid "Copy the active curve to the other border"
 msgstr "このカーブをもう一方の端にコピーする"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve-bend.c:1438
+#: ../plug-ins/common/curve-bend.c:1439
 msgid "_Mirror"
 msgstr "ミラー(_M)"
 
-#: ../plug-ins/common/curve-bend.c:1443
+#: ../plug-ins/common/curve-bend.c:1444
 msgid "Mirror the active curve to the other border"
 msgstr "このカーブをもう一方の端に対称に映す"
 
 #. The Swap button
-#: ../plug-ins/common/curve-bend.c:1451
+#: ../plug-ins/common/curve-bend.c:1452
 msgid "S_wap"
 msgstr "入れ替え(_W)"
 
-#: ../plug-ins/common/curve-bend.c:1456
+#: ../plug-ins/common/curve-bend.c:1457
 msgid "Swap the two curves"
 msgstr "二つのカーブを入れ替える"
 
-#: ../plug-ins/common/curve-bend.c:1468
+#: ../plug-ins/common/curve-bend.c:1469
 msgid "Reset the active curve"
 msgstr "このカーブをリセットする"
 
-#: ../plug-ins/common/curve-bend.c:1485
+#: ../plug-ins/common/curve-bend.c:1486
 msgid "Load the curves from a file"
 msgstr "カーブをファイルから読み込み"
 
-#: ../plug-ins/common/curve-bend.c:1497
+#: ../plug-ins/common/curve-bend.c:1498
 msgid "Save the curves to a file"
 msgstr "カーブをファイルに保存"
 
-#: ../plug-ins/common/curve-bend.c:2035
+#: ../plug-ins/common/curve-bend.c:2036
 msgid "Load Curve Points from File"
 msgstr "カーブ点をファイルから読み込み"
 
-#: ../plug-ins/common/curve-bend.c:2070
+#: ../plug-ins/common/curve-bend.c:2071
 msgid "Save Curve Points to File"
 msgstr "カーブ点をファイルに保存"
 
@@ -2701,11 +2705,11 @@ msgstr "インターレース除去(_D)..."
 msgid "Deinterlace"
 msgstr "インターレース除去"
 
-#: ../plug-ins/common/deinterlace.c:353
+#: ../plug-ins/common/deinterlace.c:354
 msgid "Keep o_dd fields"
 msgstr "奇数ラインを残す(_D)"
 
-#: ../plug-ins/common/deinterlace.c:354
+#: ../plug-ins/common/deinterlace.c:355
 msgid "Keep _even fields"
 msgstr "偶数ラインを残す(_E)"
 
@@ -2761,38 +2765,38 @@ msgid "Des_peckle..."
 msgstr "ノイズ除去(_P)..."
 
 #: ../plug-ins/common/despeckle.c:424
-#: ../plug-ins/common/despeckle.c:644
+#: ../plug-ins/common/despeckle.c:645
 msgid "Despeckle"
 msgstr "ノイズ除去"
 
-#: ../plug-ins/common/despeckle.c:453
+#: ../plug-ins/common/despeckle.c:454
 msgid "Median"
 msgstr "中央値"
 
-#: ../plug-ins/common/despeckle.c:461
+#: ../plug-ins/common/despeckle.c:462
 msgid "_Adaptive"
 msgstr "適応的(_A)"
 
-#: ../plug-ins/common/despeckle.c:471
+#: ../plug-ins/common/despeckle.c:472
 msgid "R_ecursive"
 msgstr "再帰的(_E)"
 
-#: ../plug-ins/common/despeckle.c:492
-#: ../plug-ins/common/edge-neon.c:731
-#: ../plug-ins/common/nl-filter.c:1089
-#: ../plug-ins/common/nova.c:365
-#: ../plug-ins/common/unsharp-mask.c:865
-#: ../plug-ins/common/whirl-pinch.c:588
+#: ../plug-ins/common/despeckle.c:493
+#: ../plug-ins/common/edge-neon.c:732
+#: ../plug-ins/common/nl-filter.c:1090
+#: ../plug-ins/common/nova.c:366
+#: ../plug-ins/common/unsharp-mask.c:866
+#: ../plug-ins/common/whirl-pinch.c:589
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:277
 msgid "_Radius:"
 msgstr "半径(_R): "
 
-#: ../plug-ins/common/despeckle.c:508
+#: ../plug-ins/common/despeckle.c:509
 msgid "_Black level:"
 msgstr "黒レベル(_B): "
 
-#: ../plug-ins/common/despeckle.c:524
+#: ../plug-ins/common/despeckle.c:525
 msgid "_White level:"
 msgstr "白レベル(_W): "
 
@@ -2812,21 +2816,21 @@ msgstr "ストライプを除去しています"
 msgid "Destripe"
 msgstr "ストライプ除去"
 
-#: ../plug-ins/common/destripe.c:472
+#: ../plug-ins/common/destripe.c:473
 #: ../plug-ins/common/file-html-table.c:594
 #: ../plug-ins/common/file-ps.c:3167
 #: ../plug-ins/common/file-ps.c:3376
-#: ../plug-ins/common/file-raw.c:1129
+#: ../plug-ins/common/file-raw.c:1130
 #: ../plug-ins/common/smooth-palette.c:435
-#: ../plug-ins/common/tile-paper.c:301
-#: ../plug-ins/common/tile.c:430
+#: ../plug-ins/common/tile-paper.c:302
+#: ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:402
 #: ../plug-ins/print/print-page-layout.c:264
 msgid "_Width:"
 msgstr "幅(_W): "
 
-#: ../plug-ins/common/destripe.c:483
+#: ../plug-ins/common/destripe.c:484
 msgid "Create _histogram"
 msgstr "ヒストグラム作成(_H)"
 
@@ -2864,7 +2868,7 @@ msgid "Sharp Edges"
 msgstr "明瞭端"
 
 #: ../plug-ins/common/diffraction.c:614
-#: ../plug-ins/common/softglow.c:682
+#: ../plug-ins/common/softglow.c:683
 #: ../plug-ins/flame/flame.c:1080
 msgid "_Brightness:"
 msgstr "明るさ(_B): "
@@ -2914,41 +2918,41 @@ msgid "Displace"
 msgstr "ずらしマップ"
 
 #. X options
-#: ../plug-ins/common/displace.c:361
+#: ../plug-ins/common/displace.c:362
 msgid "_X displacement:"
 msgstr "X ずらし(_X): "
 
 #. Y Options
-#: ../plug-ins/common/displace.c:408
+#: ../plug-ins/common/displace.c:409
 msgid "_Y displacement:"
 msgstr "Y ずらし(_Y): "
 
-#: ../plug-ins/common/displace.c:458
+#: ../plug-ins/common/displace.c:459
 msgid "Displacement Mode"
 msgstr "ずらしモード"
 
-#: ../plug-ins/common/displace.c:461
+#: ../plug-ins/common/displace.c:462
 msgid "_Cartesian"
 msgstr "直交座標(_C)"
 
-#: ../plug-ins/common/displace.c:462
+#: ../plug-ins/common/displace.c:463
 msgid "_Polar"
 msgstr "極座標(_P)"
 
-#: ../plug-ins/common/displace.c:467
+#: ../plug-ins/common/displace.c:468
 msgid "Edge Behavior"
 msgstr "縁の処理"
 
-#: ../plug-ins/common/displace.c:473
-#: ../plug-ins/common/edge.c:717
-#: ../plug-ins/common/ripple.c:582
-#: ../plug-ins/common/waves.c:281
+#: ../plug-ins/common/displace.c:474
+#: ../plug-ins/common/edge.c:718
+#: ../plug-ins/common/ripple.c:583
+#: ../plug-ins/common/waves.c:282
 msgid "_Smear"
 msgstr "ぼかす(_S)"
 
-#: ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:730
-#: ../plug-ins/common/fractal-trace.c:739
+#: ../plug-ins/common/displace.c:476
+#: ../plug-ins/common/edge.c:731
+#: ../plug-ins/common/fractal-trace.c:740
 #: ../plug-ins/common/newsprint.c:397
 msgid "_Black"
 msgstr "黒(_B)"
@@ -2966,19 +2970,19 @@ msgstr "ガウス差分(_D)..."
 msgid "DoG Edge Detect"
 msgstr "ガウス差分輪郭抽出"
 
-#: ../plug-ins/common/edge-dog.c:328
+#: ../plug-ins/common/edge-dog.c:329
 msgid "Smoothing Parameters"
 msgstr "スムーズ化パラメータ"
 
-#: ../plug-ins/common/edge-dog.c:342
+#: ../plug-ins/common/edge-dog.c:343
 msgid "_Radius 1:"
 msgstr "半径 1(_R): "
 
-#: ../plug-ins/common/edge-dog.c:346
+#: ../plug-ins/common/edge-dog.c:347
 msgid "R_adius 2:"
 msgstr "半径 2(_A): "
 
-#: ../plug-ins/common/edge-dog.c:369
+#: ../plug-ins/common/edge-dog.c:370
 #: ../plug-ins/gimpressionist/paper.c:166
 msgid "_Invert"
 msgstr "反転(_I)"
@@ -2992,7 +2996,7 @@ msgid "_Laplace"
 msgstr "ラプラス(_L)"
 
 #: ../plug-ins/common/edge-laplace.c:242
-#: ../plug-ins/common/edge.c:668
+#: ../plug-ins/common/edge.c:669
 msgid "Laplace"
 msgstr "ラプラス"
 
@@ -3016,8 +3020,8 @@ msgstr "ネオン光彩を適用しています"
 msgid "Neon Detection"
 msgstr "ネオン光彩"
 
-#: ../plug-ins/common/edge-neon.c:746
-#: ../plug-ins/common/unsharp-mask.c:878
+#: ../plug-ins/common/edge-neon.c:747
+#: ../plug-ins/common/unsharp-mask.c:879
 msgid "_Amount:"
 msgstr "量(_A): "
 
@@ -3033,19 +3037,19 @@ msgstr "ソーベル(_S)..."
 msgid "Sobel Edge Detection"
 msgstr "ソーベル輪郭抽出"
 
-#: ../plug-ins/common/edge-sobel.c:259
+#: ../plug-ins/common/edge-sobel.c:260
 msgid "Sobel _horizontally"
 msgstr "水平方向ソーベル(_H)"
 
-#: ../plug-ins/common/edge-sobel.c:271
+#: ../plug-ins/common/edge-sobel.c:272
 msgid "Sobel _vertically"
 msgstr "垂直方向ソーベル(_V)"
 
-#: ../plug-ins/common/edge-sobel.c:283
+#: ../plug-ins/common/edge-sobel.c:284
 msgid "_Keep sign of result (one direction only)"
 msgstr "結果の符号を保存する (一方向のみ)(_K)"
 
-#: ../plug-ins/common/edge-sobel.c:369
+#: ../plug-ins/common/edge-sobel.c:370
 msgid "Sobel edge detecting"
 msgstr "ソーベル輪郭を抽出しています"
 
@@ -3065,32 +3069,32 @@ msgstr "輪郭を抽出しています"
 msgid "Edge Detection"
 msgstr "輪郭抽出"
 
-#: ../plug-ins/common/edge.c:663
+#: ../plug-ins/common/edge.c:664
 msgid "Sobel"
 msgstr "ソーベル"
 
-#: ../plug-ins/common/edge.c:664
+#: ../plug-ins/common/edge.c:665
 msgid "Prewitt compass"
 msgstr "プレヴィット"
 
-#: ../plug-ins/common/edge.c:665
+#: ../plug-ins/common/edge.c:666
 #: ../plug-ins/common/sinus.c:903
 msgid "Gradient"
 msgstr "勾配/グラデーション"
 
-#: ../plug-ins/common/edge.c:666
+#: ../plug-ins/common/edge.c:667
 msgid "Roberts"
 msgstr "ロバーツ"
 
-#: ../plug-ins/common/edge.c:667
+#: ../plug-ins/common/edge.c:668
 msgid "Differential"
 msgstr "差分"
 
-#: ../plug-ins/common/edge.c:677
+#: ../plug-ins/common/edge.c:678
 msgid "_Algorithm:"
 msgstr "アルゴリズム(_A): "
 
-#: ../plug-ins/common/edge.c:685
+#: ../plug-ins/common/edge.c:686
 msgid "A_mount:"
 msgstr "量(_M): "
 
@@ -3107,19 +3111,19 @@ msgstr "エンボス(_E)..."
 msgid "Emboss"
 msgstr "エンボス"
 
-#: ../plug-ins/common/emboss.c:474
+#: ../plug-ins/common/emboss.c:475
 msgid "Function"
 msgstr "機能"
 
-#: ../plug-ins/common/emboss.c:478
+#: ../plug-ins/common/emboss.c:479
 msgid "_Bumpmap"
 msgstr "バンプマップ(_B)"
 
-#: ../plug-ins/common/emboss.c:479
+#: ../plug-ins/common/emboss.c:480
 msgid "_Emboss"
 msgstr "エンボス(_E)"
 
-#: ../plug-ins/common/emboss.c:511
+#: ../plug-ins/common/emboss.c:512
 msgid "E_levation:"
 msgstr "持ち上げ(_L): "
 
@@ -3139,22 +3143,22 @@ msgstr "彫金しています"
 msgid "Engrave"
 msgstr "彫金"
 
-#: ../plug-ins/common/engrave.c:243
+#: ../plug-ins/common/engrave.c:244
 #: ../plug-ins/common/file-html-table.c:610
 #: ../plug-ins/common/file-ps.c:3177
 #: ../plug-ins/common/file-ps.c:3385
-#: ../plug-ins/common/file-raw.c:1142
+#: ../plug-ins/common/file-raw.c:1143
 #: ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:440
-#: ../plug-ins/common/tile-paper.c:312
-#: ../plug-ins/common/tile.c:434
+#: ../plug-ins/common/tile-paper.c:313
+#: ../plug-ins/common/tile.c:435
 #: ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:409
 #: ../plug-ins/print/print-page-layout.c:266
 msgid "_Height:"
 msgstr "高さ(_H): "
 
-#: ../plug-ins/common/engrave.c:254
+#: ../plug-ins/common/engrave.c:255
 msgid "_Limit line width"
 msgstr "線幅を制限する(_L)"
 
@@ -3200,10 +3204,10 @@ msgstr "KISS パレットの読み込み"
 #: ../plug-ins/common/file-raw.c:712
 #: ../plug-ins/common/file-sunras.c:485
 #: ../plug-ins/common/file-tga.c:446
-#: ../plug-ins/common/file-tiff-load.c:603
+#: ../plug-ins/common/file-tiff-load.c:604
 #: ../plug-ins/common/file-wmf.c:993
 #: ../plug-ins/common/file-xbm.c:741
-#: ../plug-ins/common/file-xmc.c:677
+#: ../plug-ins/common/file-xmc.c:678
 #: ../plug-ins/common/file-xpm.c:351
 #: ../plug-ins/common/file-xwd.c:519
 #: ../plug-ins/file-bmp/bmp-read.c:158
@@ -3213,7 +3217,7 @@ msgstr "KISS パレットの読み込み"
 #: ../plug-ins/file-jpeg/jpeg-load.c:114
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330
-#: ../plug-ins/file-xjt/xjt.c:3343
+#: ../plug-ins/file-xjt/xjt.c:3344
 #, c-format
 msgid "Opening '%s'"
 msgstr "Opening '%s'"
@@ -3232,7 +3236,7 @@ msgstr "利用できない色数 (%d)!"
 #: ../plug-ins/common/file-cel.c:587
 #: ../plug-ins/common/file-gbr.c:639
 #: ../plug-ins/common/file-gif-save.c:768
-#: ../plug-ins/common/file-gih.c:1281
+#: ../plug-ins/common/file-gih.c:1282
 #: ../plug-ins/common/file-html-table.c:255
 #: ../plug-ins/common/file-pat.c:466
 #: ../plug-ins/common/file-pcx.c:626
@@ -3244,7 +3248,7 @@ msgstr "利用できない色数 (%d)!"
 #: ../plug-ins/common/file-tga.c:1174
 #: ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039
-#: ../plug-ins/common/file-xmc.c:1479
+#: ../plug-ins/common/file-xmc.c:1480
 #: ../plug-ins/common/file-xpm.c:636
 #: ../plug-ins/common/file-xwd.c:618
 #: ../plug-ins/file-bmp/bmp-write.c:306
@@ -3254,7 +3258,7 @@ msgstr "利用できない色数 (%d)!"
 #: ../plug-ins/file-jpeg/jpeg-save.c:286
 #: ../plug-ins/file-psd/psd-save.c:1642
 #: ../plug-ins/file-sgi/sgi.c:553
-#: ../plug-ins/file-xjt/xjt.c:1707
+#: ../plug-ins/file-xjt/xjt.c:1708
 #, c-format
 msgid "Saving '%s'"
 msgstr "'%s' を保存しています"
@@ -3283,45 +3287,45 @@ msgstr "C ソースコード"
 msgid "Save as C-Source"
 msgstr "C ソースコード形式で保存する"
 
-#: ../plug-ins/common/file-csource.c:690
+#: ../plug-ins/common/file-csource.c:691
 msgid "_Prefixed name:"
 msgstr "前置名(_P): "
 
-#: ../plug-ins/common/file-csource.c:699
+#: ../plug-ins/common/file-csource.c:700
 msgid "Co_mment:"
 msgstr "コメント(_M): "
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:706
+#: ../plug-ins/common/file-csource.c:707
 msgid "_Save comment to file"
 msgstr "コメントをファイルに保存する(_S)"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:718
+#: ../plug-ins/common/file-csource.c:719
 msgid "_Use GLib types (guint8*)"
 msgstr "GLib 型を使用する (guint8*)(_U)"
 
 #. Use Macros
 #.
-#: ../plug-ins/common/file-csource.c:730
+#: ../plug-ins/common/file-csource.c:731
 msgid "Us_e macros instead of struct"
 msgstr "struct ではなくマクロを使う(_E)"
 
 #. Use RLE
 #.
-#: ../plug-ins/common/file-csource.c:742
+#: ../plug-ins/common/file-csource.c:743
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "_1 byte Run-Length-Encoding を使う"
 
 #. Alpha
 #.
-#: ../plug-ins/common/file-csource.c:754
+#: ../plug-ins/common/file-csource.c:755
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "アルファチャンネルも保存する (RGBA/RGB)(_V)"
 
-#: ../plug-ins/common/file-csource.c:772
+#: ../plug-ins/common/file-csource.c:773
 msgid "Op_acity:"
 msgstr "不透明度(_A): "
 
@@ -3361,7 +3365,7 @@ msgstr "アルファチャンネルを持った画像は保存できません。
 #: ../plug-ins/common/file-ps.c:1204
 #: ../plug-ins/common/file-xwd.c:603
 #: ../plug-ins/file-fits/fits.c:465
-#: ../plug-ins/file-xjt/xjt.c:1702
+#: ../plug-ins/file-xjt/xjt.c:1703
 msgid "Cannot operate on unknown image types."
 msgstr "不明な画像タイプは扱えません。"
 
@@ -3387,7 +3391,7 @@ msgstr "ブラシファイル '%s' に不正な UTF-8 文字列"
 
 #: ../plug-ins/common/file-gbr.c:438
 #: ../plug-ins/common/file-gih.c:491
-#: ../plug-ins/common/file-gih.c:1155
+#: ../plug-ins/common/file-gih.c:1156
 #: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Unnamed"
 msgstr "名称未設定"
@@ -3401,15 +3405,15 @@ msgid "Save as Brush"
 msgstr "ブラシ形式で保存"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:758
-#: ../plug-ins/common/grid.c:789
+#: ../plug-ins/common/file-gbr.c:759
+#: ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr "間隔: "
 
-#: ../plug-ins/common/file-gbr.c:769
-#: ../plug-ins/common/file-gih.c:906
-#: ../plug-ins/common/file-pat.c:555
-#: ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:770
+#: ../plug-ins/common/file-gih.c:907
+#: ../plug-ins/common/file-pat.c:556
+#: ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "説明: "
 
@@ -3489,66 +3493,66 @@ msgid "Save as GIF"
 msgstr "GIF 形式で保存"
 
 #. regular gif parameter settings
-#: ../plug-ins/common/file-gif-save.c:1030
+#: ../plug-ins/common/file-gif-save.c:1031
 msgid "GIF Options"
 msgstr "GIF オプション"
 
-#: ../plug-ins/common/file-gif-save.c:1036
+#: ../plug-ins/common/file-gif-save.c:1037
 msgid "I_nterlace"
 msgstr "インターレース(_N)"
 
-#: ../plug-ins/common/file-gif-save.c:1052
+#: ../plug-ins/common/file-gif-save.c:1053
 msgid "_GIF comment:"
 msgstr "GIF コメント(_G): "
 
 #. additional animated gif parameter settings
-#: ../plug-ins/common/file-gif-save.c:1110
+#: ../plug-ins/common/file-gif-save.c:1111
 msgid "Animated GIF Options"
 msgstr "動画 GIF オプション"
 
-#: ../plug-ins/common/file-gif-save.c:1116
+#: ../plug-ins/common/file-gif-save.c:1117
 msgid "_Loop forever"
 msgstr "無限ループ(_L)"
 
-#: ../plug-ins/common/file-gif-save.c:1129
+#: ../plug-ins/common/file-gif-save.c:1130
 msgid "_Delay between frames where unspecified:"
 msgstr "指定しない場合のディレイ(_D): "
 
-#: ../plug-ins/common/file-gif-save.c:1144
-#: ../plug-ins/common/file-mng.c:1473
+#: ../plug-ins/common/file-gif-save.c:1145
+#: ../plug-ins/common/file-mng.c:1474
 msgid "milliseconds"
 msgstr "ミリ秒"
 
-#: ../plug-ins/common/file-gif-save.c:1154
+#: ../plug-ins/common/file-gif-save.c:1155
 msgid "_Frame disposal where unspecified:"
 msgstr "指定しない場合のフレーム処理(_F): "
 
-#: ../plug-ins/common/file-gif-save.c:1158
+#: ../plug-ins/common/file-gif-save.c:1159
 msgid "I don't care"
 msgstr "気にしない"
 
-#: ../plug-ins/common/file-gif-save.c:1160
+#: ../plug-ins/common/file-gif-save.c:1161
 msgid "Cumulative layers (combine)"
 msgstr "累積レイヤー (結合)"
 
-#: ../plug-ins/common/file-gif-save.c:1162
+#: ../plug-ins/common/file-gif-save.c:1163
 msgid "One frame per layer (replace)"
 msgstr "レイヤー毎に 1 フレーム (置換)"
 
 #. The "Always use default values" toggles
-#: ../plug-ins/common/file-gif-save.c:1178
+#: ../plug-ins/common/file-gif-save.c:1179
 msgid "_Use delay entered above for all frames"
 msgstr "全フレームのディレイにこの値を使用(_U)"
 
-#: ../plug-ins/common/file-gif-save.c:1188
+#: ../plug-ins/common/file-gif-save.c:1189
 msgid "U_se disposal entered above for all frames"
 msgstr "全フレームのフレーム処理にこの値を使用(_S)"
 
-#: ../plug-ins/common/file-gif-save.c:2341
+#: ../plug-ins/common/file-gif-save.c:2342
 msgid "Error writing output file."
 msgstr "出力ファイル書き込みエラー。"
 
-#: ../plug-ins/common/file-gif-save.c:2411
+#: ../plug-ins/common/file-gif-save.c:2412
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "デフォルトのコメントは %d 文字までです。"
@@ -3574,47 +3578,47 @@ msgstr "パイプ中のブラシが読み込めませんでした。"
 msgid "Save as Brush Pipe"
 msgstr "ブラシパイプ形式で保存"
 
-#: ../plug-ins/common/file-gih.c:892
+#: ../plug-ins/common/file-gih.c:893
 msgid "Spacing (percent):"
 msgstr "間隔 (パーセント): "
 
-#: ../plug-ins/common/file-gih.c:959
+#: ../plug-ins/common/file-gih.c:960
 msgid "Pixels"
 msgstr "ピクセル"
 
-#: ../plug-ins/common/file-gih.c:964
+#: ../plug-ins/common/file-gih.c:965
 msgid "Cell size:"
 msgstr "セルサイズ: "
 
-#: ../plug-ins/common/file-gih.c:976
+#: ../plug-ins/common/file-gih.c:977
 msgid "Number of cells:"
 msgstr "セル数: "
 
-#: ../plug-ins/common/file-gih.c:1001
+#: ../plug-ins/common/file-gih.c:1002
 msgid " Rows of "
 msgstr " 行 "
 
-#: ../plug-ins/common/file-gih.c:1013
+#: ../plug-ins/common/file-gih.c:1014
 msgid " Columns on each layer"
 msgstr " 列 (各レイヤー)"
 
-#: ../plug-ins/common/file-gih.c:1017
+#: ../plug-ins/common/file-gih.c:1018
 msgid " (Width Mismatch!) "
 msgstr " (幅が一致しません) "
 
-#: ../plug-ins/common/file-gih.c:1021
+#: ../plug-ins/common/file-gih.c:1022
 msgid " (Height Mismatch!) "
 msgstr " (高さが一致しません) "
 
-#: ../plug-ins/common/file-gih.c:1026
+#: ../plug-ins/common/file-gih.c:1027
 msgid "Display as:"
 msgstr "表示方法: "
 
-#: ../plug-ins/common/file-gih.c:1035
+#: ../plug-ins/common/file-gih.c:1036
 msgid "Dimension:"
 msgstr "次元: "
 
-#: ../plug-ins/common/file-gih.c:1110
+#: ../plug-ins/common/file-gih.c:1111
 msgid "Ranks:"
 msgstr "並び: "
 
@@ -3765,100 +3769,100 @@ msgstr "透明度を劣化させずに保存できませんでした。不透明
 msgid "Save as MNG"
 msgstr "MNG 形式で保存する"
 
-#: ../plug-ins/common/file-mng.c:1273
+#: ../plug-ins/common/file-mng.c:1274
 msgid "MNG Options"
 msgstr "MNG オプション"
 
-#: ../plug-ins/common/file-mng.c:1279
+#: ../plug-ins/common/file-mng.c:1280
 msgid "Interlace"
 msgstr "インターレース"
 
-#: ../plug-ins/common/file-mng.c:1291
+#: ../plug-ins/common/file-mng.c:1292
 msgid "Save background color"
 msgstr "背景色を保存"
 
-#: ../plug-ins/common/file-mng.c:1302
+#: ../plug-ins/common/file-mng.c:1303
 msgid "Save gamma"
 msgstr "ガンマ値を保存"
 
-#: ../plug-ins/common/file-mng.c:1312
+#: ../plug-ins/common/file-mng.c:1313
 msgid "Save resolution"
 msgstr "解像度を保存"
 
-#: ../plug-ins/common/file-mng.c:1323
+#: ../plug-ins/common/file-mng.c:1324
 msgid "Save creation time"
 msgstr "作成日時を保存"
 
-#: ../plug-ins/common/file-mng.c:1342
+#: ../plug-ins/common/file-mng.c:1343
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/file-mng.c:1343
+#: ../plug-ins/common/file-mng.c:1344
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/file-mng.c:1346
+#: ../plug-ins/common/file-mng.c:1347
 msgid "PNG + delta PNG"
 msgstr "PNG と デルタ PNG"
 
-#: ../plug-ins/common/file-mng.c:1347
+#: ../plug-ins/common/file-mng.c:1348
 msgid "JNG + delta PNG"
 msgstr "JNG と デルタ PNG"
 
-#: ../plug-ins/common/file-mng.c:1348
+#: ../plug-ins/common/file-mng.c:1349
 msgid "All PNG"
 msgstr "すべての PNG"
 
-#: ../plug-ins/common/file-mng.c:1349
+#: ../plug-ins/common/file-mng.c:1350
 msgid "All JNG"
 msgstr "すべての JNG"
 
-#: ../plug-ins/common/file-mng.c:1361
+#: ../plug-ins/common/file-mng.c:1362
 msgid "Default chunks type:"
 msgstr "デフォルトのチャンク型: "
 
-#: ../plug-ins/common/file-mng.c:1364
+#: ../plug-ins/common/file-mng.c:1365
 msgid "Combine"
 msgstr "混ぜる"
 
-#: ../plug-ins/common/file-mng.c:1365
+#: ../plug-ins/common/file-mng.c:1366
 msgid "Replace"
 msgstr "置換"
 
-#: ../plug-ins/common/file-mng.c:1376
+#: ../plug-ins/common/file-mng.c:1377
 msgid "Default frame disposal:"
 msgstr "デフォルトのフレーム配置: "
 
-#: ../plug-ins/common/file-mng.c:1388
+#: ../plug-ins/common/file-mng.c:1389
 msgid "PNG compression level:"
 msgstr "PNG 圧縮レベル: "
 
-#: ../plug-ins/common/file-mng.c:1396
+#: ../plug-ins/common/file-mng.c:1397
 #: ../plug-ins/common/file-png.c:1907
 msgid "Choose a high compression level for small file size"
 msgstr "ファイルサイズを小さくするには高圧縮レベルを選択してください"
 
-#: ../plug-ins/common/file-mng.c:1410
+#: ../plug-ins/common/file-mng.c:1411
 msgid "JPEG compression quality:"
 msgstr "JPEG 圧縮品質: "
 
-#: ../plug-ins/common/file-mng.c:1427
+#: ../plug-ins/common/file-mng.c:1428
 msgid "JPEG smoothing factor:"
 msgstr "JPEG スムージング: "
 
-#: ../plug-ins/common/file-mng.c:1437
+#: ../plug-ins/common/file-mng.c:1438
 msgid "Animated MNG Options"
 msgstr "動画 MNG オプション"
 
-#: ../plug-ins/common/file-mng.c:1443
+#: ../plug-ins/common/file-mng.c:1444
 msgid "Loop"
 msgstr "ループ"
 
-#: ../plug-ins/common/file-mng.c:1457
+#: ../plug-ins/common/file-mng.c:1458
 msgid "Default frame delay:"
 msgstr "デフォルトのフレームディレイ: "
 
-#: ../plug-ins/common/file-mng.c:1530
+#: ../plug-ins/common/file-mng.c:1531
 msgid "MNG animation"
 msgstr "MNG 動画"
 
@@ -3967,19 +3971,19 @@ msgstr "PDF ドキュメントから画像にインポート"
 msgid "_Import"
 msgstr "インポート(_I)"
 
-#: ../plug-ins/common/file-pdf.c:888
+#: ../plug-ins/common/file-pdf.c:889
 msgid "_Width (pixels):"
 msgstr "幅(_W) (ピクセル): "
 
-#: ../plug-ins/common/file-pdf.c:889
+#: ../plug-ins/common/file-pdf.c:890
 msgid "_Height (pixels):"
 msgstr "高さ(_H) (ピクセル): "
 
-#: ../plug-ins/common/file-pdf.c:891
+#: ../plug-ins/common/file-pdf.c:892
 msgid "_Resolution:"
 msgstr "解像度(_R): "
 
-#: ../plug-ins/common/file-pdf.c:1165
+#: ../plug-ins/common/file-pdf.c:1166
 #, c-format
 msgid "pixels/%s"
 msgstr "ピクセル/%s"
@@ -4065,7 +4069,7 @@ msgid "Co_mpression level:"
 msgstr "圧縮レベル(_M): "
 
 #: ../plug-ins/common/file-png.c:1921
-#: ../plug-ins/file-jpeg/jpeg-save.c:1190
+#: ../plug-ins/file-jpeg/jpeg-save.c:1192
 msgid "_Load Defaults"
 msgstr "既定値を読み込み(_L)"
 
@@ -4187,7 +4191,7 @@ msgstr ""
 "(%s)"
 
 #: ../plug-ins/common/file-ps.c:1931
-#: ../plug-ins/common/file-tiff-load.c:999
+#: ../plug-ins/common/file-tiff-load.c:1000
 #, c-format
 msgid "Page %d"
 msgstr "ページ %d"
@@ -4228,7 +4232,7 @@ msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "読み込むページ番号 (例: 1-4 あるいは 1,3,5-7)"
 
 #: ../plug-ins/common/file-ps.c:3200
-#: ../plug-ins/common/sphere-designer.c:2642
+#: ../plug-ins/common/sphere-designer.c:2643
 msgid "Layers"
 msgstr "レイヤー"
 
@@ -4376,81 +4380,81 @@ msgstr "Raw画像データ"
 msgid "Load Image from Raw Data"
 msgstr "Rawデータから画像読み込み"
 
-#: ../plug-ins/common/file-raw.c:1085
+#: ../plug-ins/common/file-raw.c:1086
 msgid "Image"
 msgstr "画像"
 
-#: ../plug-ins/common/file-raw.c:1096
+#: ../plug-ins/common/file-raw.c:1097
 msgid "RGB Alpha"
 msgstr "RGB アルファ"
 
-#: ../plug-ins/common/file-raw.c:1097
+#: ../plug-ins/common/file-raw.c:1098
 msgid "RGB565"
 msgstr "RGB565"
 
-#: ../plug-ins/common/file-raw.c:1098
+#: ../plug-ins/common/file-raw.c:1099
 msgid "Planar RGB"
 msgstr "Planar RGB"
 
-#: ../plug-ins/common/file-raw.c:1099
+#: ../plug-ins/common/file-raw.c:1100
 msgid "Indexed"
 msgstr "インデックス"
 
-#: ../plug-ins/common/file-raw.c:1100
+#: ../plug-ins/common/file-raw.c:1101
 msgid "Indexed Alpha"
 msgstr "インデックス アルファ"
 
-#: ../plug-ins/common/file-raw.c:1105
+#: ../plug-ins/common/file-raw.c:1106
 msgid "Image _Type:"
 msgstr "画像の種類(_T): "
 
-#: ../plug-ins/common/file-raw.c:1155
+#: ../plug-ins/common/file-raw.c:1156
 msgid "Palette"
 msgstr "パレット"
 
-#: ../plug-ins/common/file-raw.c:1165
-#: ../plug-ins/common/file-raw.c:1264
+#: ../plug-ins/common/file-raw.c:1166
+#: ../plug-ins/common/file-raw.c:1265
 msgid "R, G, B (normal)"
 msgstr "R, G, B (通常)"
 
-#: ../plug-ins/common/file-raw.c:1166
-#: ../plug-ins/common/file-raw.c:1266
+#: ../plug-ins/common/file-raw.c:1167
+#: ../plug-ins/common/file-raw.c:1267
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (BMP スタイル)"
 
-#: ../plug-ins/common/file-raw.c:1171
+#: ../plug-ins/common/file-raw.c:1172
 msgid "_Palette Type:"
 msgstr "パレットの種類(_P): "
 
-#: ../plug-ins/common/file-raw.c:1182
+#: ../plug-ins/common/file-raw.c:1183
 msgid "Off_set:"
 msgstr "オフセット(_S): "
 
-#: ../plug-ins/common/file-raw.c:1194
+#: ../plug-ins/common/file-raw.c:1195
 msgid "Select Palette File"
 msgstr "パレットファイルを選択"
 
-#: ../plug-ins/common/file-raw.c:1200
+#: ../plug-ins/common/file-raw.c:1201
 msgid "Pal_ette File:"
 msgstr "パレットファイル(_E): "
 
-#: ../plug-ins/common/file-raw.c:1228
+#: ../plug-ins/common/file-raw.c:1229
 msgid "Raw Image Save"
 msgstr "Raw画像保存"
 
-#: ../plug-ins/common/file-raw.c:1250
+#: ../plug-ins/common/file-raw.c:1251
 msgid "RGB Save Type"
 msgstr "RGB 保存タイプ"
 
-#: ../plug-ins/common/file-raw.c:1254
+#: ../plug-ins/common/file-raw.c:1255
 msgid "Standard (R,G,B)"
 msgstr "標準 (R,G,B)"
 
-#: ../plug-ins/common/file-raw.c:1255
+#: ../plug-ins/common/file-raw.c:1256
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Planar (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/file-raw.c:1260
+#: ../plug-ins/common/file-raw.c:1261
 msgid "Indexed Palette Type"
 msgstr "インデックスパレット型"
 
@@ -4599,7 +4603,7 @@ msgstr "Scalable Vector Graphics を描く"
 #. Width and Height
 #: ../plug-ins/common/file-svg.c:794
 #: ../plug-ins/common/file-wmf.c:570
-#: ../plug-ins/common/grid.c:723
+#: ../plug-ins/common/grid.c:724
 msgid "Width:"
 msgstr "幅: "
 
@@ -4699,16 +4703,16 @@ msgstr "TIFF 形式ファイル '%s' は、ディレクトリを含んでいま�
 msgid "Import from TIFF"
 msgstr "TIFF からインポート"
 
-#: ../plug-ins/common/file-tiff-load.c:780
+#: ../plug-ins/common/file-tiff-load.c:781
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-of-%d-pages"
 
-#: ../plug-ins/common/file-tiff-load.c:1015
+#: ../plug-ins/common/file-tiff-load.c:1016
 msgid "TIFF Channel"
 msgstr "TIFF チャンネル"
 
-#: ../plug-ins/common/file-tiff-load.c:1024
+#: ../plug-ins/common/file-tiff-load.c:1025
 #: ../plug-ins/file-psd/psd-load.c:324
 msgid ""
 "Warning:\n"
@@ -4883,14 +4887,14 @@ msgid "_Mask file extension:"
 msgstr "マスクファイル拡張子(_M): "
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:331
-#: ../plug-ins/common/file-xmc.c:371
+#: ../plug-ins/common/file-xmc.c:332
+#: ../plug-ins/common/file-xmc.c:372
 msgid "X11 Mouse Cursor"
 msgstr "X11 マウスカーソル"
 
 # （要査読）
 # メッセージ
-#: ../plug-ins/common/file-xmc.c:479
+#: ../plug-ins/common/file-xmc.c:480
 #, c-format
 msgid ""
 "Cannot set the hotspot!\n"
@@ -4900,46 +4904,46 @@ msgstr ""
 "すべてのレイヤーが交差するように、レイヤーを調整してください。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:672
+#: ../plug-ins/common/file-xmc.c:673
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "'%s' は正常な X カーソルではありません"
 
 # （要査読）
 # メッセージ
-#: ../plug-ins/common/file-xmc.c:688
+#: ../plug-ins/common/file-xmc.c:689
 #, c-format
 msgid "The width of frame %d of '%s' is too big for X cursor."
 msgstr "'%2$s' の 第 %1$d フレームの幅は、X カーソルには大き過ぎます"
 
 # （要査読）
 # メッセージ
-#: ../plug-ins/common/file-xmc.c:695
+#: ../plug-ins/common/file-xmc.c:696
 #, c-format
 msgid "The height of frame %d of '%s' is too big for X cursor."
 msgstr "'%2$s' の 第 %1$d フレームの高さは、X カーソルには大き過ぎます"
 
 # （要査読）
 # メッセージ
-#: ../plug-ins/common/file-xmc.c:900
+#: ../plug-ins/common/file-xmc.c:901
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "\"%s\" にイメージ・チャンクがありません。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:942
+#: ../plug-ins/common/file-xmc.c:943
 #, c-format
 msgid "The width of '%s' is too big for X cursor."
 msgstr "'%s' の幅は、X カーソルには大き過ぎます"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:949
+#: ../plug-ins/common/file-xmc.c:950
 #, c-format
 msgid "The height of '%s' is too big for X cursor."
 msgstr "'%s' の高さは、X カーソルには大き過ぎます"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1019
+#: ../plug-ins/common/file-xmc.c:1020
 #, c-format
 msgid "A read error occurred."
 msgstr "読み込みエラーが発生しました。"
@@ -4948,7 +4952,7 @@ msgstr "読み込みエラーが発生しました。"
 # ダイアログのタイトル
 # XMC = X11 Mouse Cursor
 # (2009-06-13 NISHIBORI Kiyotaka)
-#: ../plug-ins/common/file-xmc.c:1056
+#: ../plug-ins/common/file-xmc.c:1057
 msgid "Save as X11 Mouse Cursor"
 msgstr "X11 マウスカーソルとして保存"
 
@@ -4956,33 +4960,33 @@ msgstr "X11 マウスカーソルとして保存"
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1076
+#: ../plug-ins/common/file-xmc.c:1077
 msgid "XMC Options"
 msgstr "XMC オプション"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1104
+#: ../plug-ins/common/file-xmc.c:1105
 msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
 msgstr "ホットスポットの X 座標を設定します。ホットスポット初期値は、左上 (0,0) です。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1108
+#: ../plug-ins/common/file-xmc.c:1109
 msgid "Hotspot _X:"
 msgstr "ホットスポット  _X: "
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1122
+#: ../plug-ins/common/file-xmc.c:1123
 msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
 msgstr "ホットスポットの Y 座標を設定します。ホットスポット初期値は、左上 (0,0) です。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1133
+#: ../plug-ins/common/file-xmc.c:1134
 msgid "_Auto-Crop all frames."
 msgstr "すべてのフレームを自動切り取り(_A)"
 
 # （要査読）
 # ツールチップ
-#: ../plug-ins/common/file-xmc.c:1146
+#: ../plug-ins/common/file-xmc.c:1147
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors disorder the screen.\n"
@@ -4994,7 +4998,7 @@ msgstr ""
 
 # （要査読）
 # ツールチップ
-#: ../plug-ins/common/file-xmc.c:1169
+#: ../plug-ins/common/file-xmc.c:1170
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, leave it \"32px\".\n"
@@ -5005,64 +5009,64 @@ msgstr ""
 "この設定値は、アニメーションシーケンスに依存するフレームと \"gtk-cursor-theme-size\" の値に基づいて使用するシーケンスを決定する際に使用される値であり、実際の寸法 (幅と高さ) との関連性はありません。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1186
+#: ../plug-ins/common/file-xmc.c:1187
 msgid "_Use this value only for a frame which size is not specified."
 msgstr "サイズ未指定のフレームにのみ、この値を適用(_U)"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1189
+#: ../plug-ins/common/file-xmc.c:1190
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "サイズ指定済のものを含め全フレームで、この値を適用(_R)"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1223
+#: ../plug-ins/common/file-xmc.c:1224
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "フレーム切り替えまでの時間を指定します。単位はミリ秒です。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1226
+#: ../plug-ins/common/file-xmc.c:1227
 msgid "_Delay:"
 msgstr "ディレイ: "
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1231
+#: ../plug-ins/common/file-xmc.c:1232
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr "ディレイ未指定のフレームにのみ、この値を適用(_U)"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1234
+#: ../plug-ins/common/file-xmc.c:1235
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "ディレイ指定済のものを含め全フレームで、この値を適用(_R)"
 
 # （要査読）
 # メッセージ
-#: ../plug-ins/common/file-xmc.c:1259
+#: ../plug-ins/common/file-xmc.c:1260
 msgid "The part of copyright information that exceeded 65535 characters was removed."
 msgstr "字数制限により、著作権情報中の 65535 字 (半角英数文字換算) を越える部分は削除されました。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1269
+#: ../plug-ins/common/file-xmc.c:1270
 msgid "Enter copyright information."
 msgstr "著作権に関する情報を入力します。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1271
+#: ../plug-ins/common/file-xmc.c:1272
 msgid "_Copyright:"
 msgstr "著作権(_C):"
 
 # （要査読）
 # メッセージ
-#: ../plug-ins/common/file-xmc.c:1287
+#: ../plug-ins/common/file-xmc.c:1288
 msgid "The part of license information that exceeded 65535 characters was removed."
 msgstr "字数制限により、ライセンス情報中の 65535字 (半角英数文字換算) を越える部分は削除されました。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1297
+#: ../plug-ins/common/file-xmc.c:1298
 msgid "Enter license information."
 msgstr "ライセンスに関する情報を入力します。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1299
+#: ../plug-ins/common/file-xmc.c:1300
 msgid "_License:"
 msgstr "ライセンス(_L): "
 
@@ -5072,48 +5076,48 @@ msgstr "ライセンス(_L): "
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1306
+#: ../plug-ins/common/file-xmc.c:1307
 msgid "_Other:"
 msgstr "その他(_O)"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1340
+#: ../plug-ins/common/file-xmc.c:1341
 msgid "Enter other comment if you want."
 msgstr "その他のコメントを入力します。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1390
+#: ../plug-ins/common/file-xmc.c:1391
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "コメントの字数は、 %d 字 (半角英数文字換算) までです。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1508
+#: ../plug-ins/common/file-xmc.c:1509
 #, c-format
 msgid "This plug-in can only handle RGBA image format with 8bit color depth."
 msgstr "このプラグインは、RGBA 8 bit カラーモデルしか扱えません。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1526
+#: ../plug-ins/common/file-xmc.c:1527
 #, c-format
 msgid "Width of '%s' is too large. Please reduce more than %dpx)"
 msgstr "'%s' の幅が大きすぎます。(%d ピクセル以下でなければいけません。)"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1533
+#: ../plug-ins/common/file-xmc.c:1534
 #, c-format
 msgid "Height of '%s' is too large. Please reduce more than %dpx)"
 msgstr "'%s' の高さが大きすぎます。(%d ピクセル以下でなければいけません。)"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1540
+#: ../plug-ins/common/file-xmc.c:1541
 #, c-format
 msgid "The size of '%s' is zero!"
 msgstr "`%s' の幅または高さがゼロです。"
 
 # （要査読）
 # メッセージ
-#: ../plug-ins/common/file-xmc.c:1580
+#: ../plug-ins/common/file-xmc.c:1581
 #, c-format
 msgid ""
 "Cannot save the cursor because the hotspot is not on '%s'.\n"
@@ -5123,7 +5127,7 @@ msgstr ""
 "ホットスポットの位置を変更する、レイヤーの位置を調整する、または [すべてのフレームを自動切り取り] をオフにして保存し直してください。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1735
+#: ../plug-ins/common/file-xmc.c:1736
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames which width or height is more than %ipx.\n"
@@ -5133,7 +5137,7 @@ msgstr ""
 "環境によってはスクリーンを混乱させるかもしれません。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1742
+#: ../plug-ins/common/file-xmc.c:1743
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames which nominal size is not supported by gnome-appearance-properties.\n"
 "You can satisfy it by checking \"Replace the size of all frame...\" in save dialog, or Your cursor may not appear in gnome-appearance-properties."
@@ -5142,7 +5146,7 @@ msgstr ""
 "「外観の設定」でこのカーソルが現れないかもしれませんので、それを避けたいときは [サイズ指定済のものを含め全フレームで、この値を適用] を選択して保存し直してください。"
 
 # （要査読）
-#: ../plug-ins/common/file-xmc.c:1979
+#: ../plug-ins/common/file-xmc.c:1980
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for X cursor.\n"
@@ -5153,7 +5157,7 @@ msgstr ""
 
 # （要査読）
 # メッセージ
-#: ../plug-ins/common/file-xmc.c:2181
+#: ../plug-ins/common/file-xmc.c:2182
 #, c-format
 msgid "Sorry, this plug-in cannot handle a cursor which contains over %i different nominal sizes."
 msgstr "このプラグインは、%i 種類以上のノーマルサイズを持つ X カーソルを扱うことができません。"
@@ -5257,7 +5261,7 @@ msgstr "フィルムの色"
 
 #: ../plug-ins/common/film.c:1025
 #: ../plug-ins/common/film.c:1075
-#: ../plug-ins/common/nova.c:352
+#: ../plug-ins/common/nova.c:353
 msgid "Co_lor:"
 msgstr "色(_L): "
 
@@ -5412,7 +5416,7 @@ msgid "Roughness"
 msgstr "変化率"
 
 #: ../plug-ins/common/filter-pack.c:673
-#: ../plug-ins/common/filter-pack.c:1316
+#: ../plug-ins/common/filter-pack.c:1317
 msgid "Affected Range"
 msgstr "対象領域"
 
@@ -5433,7 +5437,7 @@ msgid "Windows"
 msgstr "ウィンドウ"
 
 #: ../plug-ins/common/filter-pack.c:703
-#: ../plug-ins/common/van-gogh-lic.c:671
+#: ../plug-ins/common/van-gogh-lic.c:672
 msgid "_Saturation"
 msgstr "彩度(_S)"
 
@@ -5485,24 +5489,24 @@ msgstr "コンテキスト中の選択部分(_T)"
 msgid "Filter Pack Simulation"
 msgstr "フィルタパック"
 
-#: ../plug-ins/common/filter-pack.c:1289
+#: ../plug-ins/common/filter-pack.c:1290
 msgid "Shadows:"
 msgstr "シャドウ: "
 
-#: ../plug-ins/common/filter-pack.c:1290
+#: ../plug-ins/common/filter-pack.c:1291
 msgid "Midtones:"
 msgstr "中間色: "
 
-#: ../plug-ins/common/filter-pack.c:1291
+#: ../plug-ins/common/filter-pack.c:1292
 msgid "Highlights:"
 msgstr "ハイライト: "
 
-#: ../plug-ins/common/filter-pack.c:1304
+#: ../plug-ins/common/filter-pack.c:1305
 msgid "Advanced Filter Pack Options"
 msgstr "詳細設定"
 
 #. ****************** MISC OPTIONS **************************
-#: ../plug-ins/common/filter-pack.c:1416
+#: ../plug-ins/common/filter-pack.c:1417
 msgid "Preview Size"
 msgstr "プレビューサイズ"
 
@@ -5520,31 +5524,31 @@ msgid "Fractal Trace"
 msgstr "フラクタルトレース"
 
 #. Settings
-#: ../plug-ins/common/fractal-trace.c:730
+#: ../plug-ins/common/fractal-trace.c:731
 msgid "Outside Type"
 msgstr "外側の種類:"
 
-#: ../plug-ins/common/fractal-trace.c:741
+#: ../plug-ins/common/fractal-trace.c:742
 msgid "_White"
 msgstr "白(_W)"
 
-#: ../plug-ins/common/fractal-trace.c:748
+#: ../plug-ins/common/fractal-trace.c:749
 msgid "Mandelbrot Parameters"
 msgstr "マンデルブロ集合のパラメータ"
 
-#: ../plug-ins/common/fractal-trace.c:759
+#: ../plug-ins/common/fractal-trace.c:760
 msgid "X_1:"
 msgstr "X_1:"
 
-#: ../plug-ins/common/fractal-trace.c:768
+#: ../plug-ins/common/fractal-trace.c:769
 msgid "X_2:"
 msgstr "X_2:"
 
-#: ../plug-ins/common/fractal-trace.c:777
+#: ../plug-ins/common/fractal-trace.c:778
 msgid "Y_1:"
 msgstr "Y_1:"
 
-#: ../plug-ins/common/fractal-trace.c:786
+#: ../plug-ins/common/fractal-trace.c:787
 msgid "Y_2:"
 msgstr "Y_2:"
 
@@ -5615,39 +5619,39 @@ msgid "Drawing grid"
 msgstr "グリッドを描いています"
 
 #: ../plug-ins/common/grid.c:634
-#: ../plug-ins/gfig/gfig-dialog.c:1354
+#: ../plug-ins/gfig/gfig-dialog.c:1355
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
 msgstr "グリッド"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:716
+#: ../plug-ins/common/grid.c:717
 msgid "Horizontal"
 msgstr "水平"
 
-#: ../plug-ins/common/grid.c:718
+#: ../plug-ins/common/grid.c:719
 msgid "Vertical"
 msgstr "垂直"
 
-#: ../plug-ins/common/grid.c:720
+#: ../plug-ins/common/grid.c:721
 msgid "Intersection"
 msgstr "交点"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:856
+#: ../plug-ins/common/grid.c:857
 msgid "Offset:"
 msgstr "オフセット:"
 
 #. attach color selectors
-#: ../plug-ins/common/grid.c:895
+#: ../plug-ins/common/grid.c:896
 msgid "Horizontal Color"
 msgstr "水平色"
 
-#: ../plug-ins/common/grid.c:913
+#: ../plug-ins/common/grid.c:914
 msgid "Vertical Color"
 msgstr "垂直色"
 
-#: ../plug-ins/common/grid.c:931
+#: ../plug-ins/common/grid.c:932
 msgid "Intersection Color"
 msgstr "交点色"
 
@@ -5676,24 +5680,24 @@ msgstr "ホット(_H)..."
 msgid "Hot"
 msgstr "ホット"
 
-#: ../plug-ins/common/hot.c:622
+#: ../plug-ins/common/hot.c:623
 msgid "Create _new layer"
 msgstr "新規レイヤー作成(_N)"
 
-#: ../plug-ins/common/hot.c:631
+#: ../plug-ins/common/hot.c:632
 msgid "Action"
 msgstr "動作"
 
-#: ../plug-ins/common/hot.c:635
+#: ../plug-ins/common/hot.c:636
 msgid "Reduce _Luminance"
 msgstr "発光を減らす(_L)"
 
-#: ../plug-ins/common/hot.c:636
+#: ../plug-ins/common/hot.c:637
 msgid "Reduce _Saturation"
 msgstr "彩度を減らす(_S)"
 
-#: ../plug-ins/common/hot.c:637
-#: ../plug-ins/common/waves.c:282
+#: ../plug-ins/common/hot.c:638
+#: ../plug-ins/common/waves.c:283
 msgid "_Blacken"
 msgstr "黒くする(_B)"
 
@@ -5710,15 +5714,15 @@ msgstr "幻(_I)..."
 msgid "Illusion"
 msgstr "幻"
 
-#: ../plug-ins/common/illusion.c:387
+#: ../plug-ins/common/illusion.c:388
 msgid "_Divisions:"
 msgstr "分割(_D):"
 
-#: ../plug-ins/common/illusion.c:397
+#: ../plug-ins/common/illusion.c:398
 msgid "Mode _1"
 msgstr "モード _1"
 
-#: ../plug-ins/common/illusion.c:412
+#: ../plug-ins/common/illusion.c:413
 msgid "Mode _2"
 msgstr "モード _2"
 
@@ -5850,56 +5854,56 @@ msgstr "ジグソーパズルを組み立てる"
 msgid "Jigsaw"
 msgstr "ジグソーパズル"
 
-#: ../plug-ins/common/jigsaw.c:2444
+#: ../plug-ins/common/jigsaw.c:2445
 msgid "Number of Tiles"
 msgstr "タイル数"
 
-#: ../plug-ins/common/jigsaw.c:2459
+#: ../plug-ins/common/jigsaw.c:2460
 msgid "Number of pieces going across"
 msgstr "横方向のピース数"
 
-#: ../plug-ins/common/jigsaw.c:2476
+#: ../plug-ins/common/jigsaw.c:2477
 msgid "Number of pieces going down"
 msgstr "縦方向のピース数"
 
-#: ../plug-ins/common/jigsaw.c:2490
+#: ../plug-ins/common/jigsaw.c:2491
 msgid "Bevel Edges"
 msgstr "斜角端"
 
-#: ../plug-ins/common/jigsaw.c:2500
+#: ../plug-ins/common/jigsaw.c:2501
 msgid "_Bevel width:"
 msgstr "斜角幅(_B):"
 
-#: ../plug-ins/common/jigsaw.c:2504
+#: ../plug-ins/common/jigsaw.c:2505
 msgid "Degree of slope of each piece's edge"
 msgstr "それぞれのピースの傾斜角度"
 
-#: ../plug-ins/common/jigsaw.c:2517
+#: ../plug-ins/common/jigsaw.c:2518
 msgid "H_ighlight:"
 msgstr "ハイライト(_I):"
 
-#: ../plug-ins/common/jigsaw.c:2521
+#: ../plug-ins/common/jigsaw.c:2522
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "それぞれのピースの端のハイライトの量"
 
 #. frame for primitive radio buttons
-#: ../plug-ins/common/jigsaw.c:2538
+#: ../plug-ins/common/jigsaw.c:2539
 msgid "Jigsaw Style"
 msgstr "ジグソースタイル"
 
-#: ../plug-ins/common/jigsaw.c:2542
+#: ../plug-ins/common/jigsaw.c:2543
 msgid "_Square"
 msgstr "四角(_S)"
 
-#: ../plug-ins/common/jigsaw.c:2543
+#: ../plug-ins/common/jigsaw.c:2544
 msgid "C_urved"
 msgstr "カーブ(_U)"
 
-#: ../plug-ins/common/jigsaw.c:2547
+#: ../plug-ins/common/jigsaw.c:2548
 msgid "Each piece has straight sides"
 msgstr "それぞれのピースの端はまっすぐ"
 
-#: ../plug-ins/common/jigsaw.c:2548
+#: ../plug-ins/common/jigsaw.c:2549
 msgid "Each piece has curved sides"
 msgstr "それぞれのピースの端が丸めてある"
 
@@ -5986,61 +5990,61 @@ msgstr "変換しない(_K)"
 msgid "_Convert"
 msgstr "変換(_C)"
 
-#: ../plug-ins/common/lcms.c:1262
+#: ../plug-ins/common/lcms.c:1263
 #: ../plug-ins/file-jpeg/jpeg-exif.c:376
 msgid "_Don't ask me again"
 msgstr "次回から確認しない(_D)"
 
-#: ../plug-ins/common/lcms.c:1326
+#: ../plug-ins/common/lcms.c:1327
 msgid "Select destination profile"
 msgstr "カラープロファイルの選択"
 
-#: ../plug-ins/common/lcms.c:1353
+#: ../plug-ins/common/lcms.c:1354
 msgid "All files (*.*)"
 msgstr "すべてのファイル (*.*)"
 
-#: ../plug-ins/common/lcms.c:1358
+#: ../plug-ins/common/lcms.c:1359
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC カラープロファイル(*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1401
+#: ../plug-ins/common/lcms.c:1402
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "作業用スペース (%s)"
 
-#: ../plug-ins/common/lcms.c:1451
+#: ../plug-ins/common/lcms.c:1452
 msgid "Convert to ICC Color Profile"
 msgstr "ICC カラープロファイルに変換"
 
-#: ../plug-ins/common/lcms.c:1452
+#: ../plug-ins/common/lcms.c:1453
 msgid "Assign ICC Color Profile"
 msgstr "ICC カラープロファイルの指定"
 
-#: ../plug-ins/common/lcms.c:1460
+#: ../plug-ins/common/lcms.c:1461
 msgid "_Assign"
 msgstr "指定(_A)"
 
-#: ../plug-ins/common/lcms.c:1477
+#: ../plug-ins/common/lcms.c:1479
 msgid "Current Color Profile"
 msgstr "現在のカラープロファイル"
 
-#: ../plug-ins/common/lcms.c:1492
+#: ../plug-ins/common/lcms.c:1494
 msgid "Convert to"
 msgstr "変換後のカラープロファイル"
 
-#: ../plug-ins/common/lcms.c:1492
+#: ../plug-ins/common/lcms.c:1494
 msgid "Assign"
 msgstr "指定するカラープロファイル"
 
-#: ../plug-ins/common/lcms.c:1516
+#: ../plug-ins/common/lcms.c:1518
 msgid "_Rendering Intent:"
 msgstr "レンダリングインテント(_R): "
 
-#: ../plug-ins/common/lcms.c:1532
+#: ../plug-ins/common/lcms.c:1534
 msgid "_Black Point Compensation"
 msgstr "黒点を補正(_B)"
 
-#: ../plug-ins/common/lcms.c:1574
+#: ../plug-ins/common/lcms.c:1576
 msgid "Destination profile is not for RGB color space."
 msgstr "指定のプロファイルは、RGBカラースペース用ではありません"
 
@@ -6061,23 +6065,23 @@ msgstr "レンズ効果を適用しています"
 msgid "Lens Effect"
 msgstr "レンズ効果"
 
-#: ../plug-ins/common/lens-apply.c:426
+#: ../plug-ins/common/lens-apply.c:427
 msgid "_Keep original surroundings"
 msgstr "元画像の周辺部を残す(_K)"
 
-#: ../plug-ins/common/lens-apply.c:441
+#: ../plug-ins/common/lens-apply.c:442
 msgid "_Set surroundings to index 0"
 msgstr "周辺部をインデックス 0 にする(_S)"
 
-#: ../plug-ins/common/lens-apply.c:442
+#: ../plug-ins/common/lens-apply.c:443
 msgid "_Set surroundings to background color"
 msgstr "周辺部を背景色にする(_S)"
 
-#: ../plug-ins/common/lens-apply.c:457
+#: ../plug-ins/common/lens-apply.c:458
 msgid "_Make surroundings transparent"
 msgstr "周辺部を透明にする(_M)"
 
-#: ../plug-ins/common/lens-apply.c:474
+#: ../plug-ins/common/lens-apply.c:475
 msgid "_Lens refraction index:"
 msgstr "レンズ屈折度(_L): "
 
@@ -6097,28 +6101,28 @@ msgstr "レンズ補正"
 msgid "Lens Distortion"
 msgstr "レンズ補正"
 
-#: ../plug-ins/common/lens-distortion.c:518
+#: ../plug-ins/common/lens-distortion.c:519
 msgid "_Main:"
 msgstr "中央部(_M): "
 
-#: ../plug-ins/common/lens-distortion.c:532
+#: ../plug-ins/common/lens-distortion.c:533
 msgid "_Edge:"
 msgstr "周辺部(_E): "
 
-#: ../plug-ins/common/lens-distortion.c:546
+#: ../plug-ins/common/lens-distortion.c:547
 #: ../plug-ins/flame/flame.c:1236
 msgid "_Zoom:"
 msgstr "拡大(_Z):"
 
-#: ../plug-ins/common/lens-distortion.c:560
+#: ../plug-ins/common/lens-distortion.c:561
 msgid "_Brighten:"
 msgstr "明るさ(_B):"
 
-#: ../plug-ins/common/lens-distortion.c:574
+#: ../plug-ins/common/lens-distortion.c:575
 msgid "_X shift:"
 msgstr "X シフト(_X):"
 
-#: ../plug-ins/common/lens-distortion.c:588
+#: ../plug-ins/common/lens-distortion.c:589
 msgid "_Y shift:"
 msgstr "Y シフト(_Y):"
 
@@ -6138,12 +6142,12 @@ msgstr "レンズフレアの描画"
 msgid "Lens Flare"
 msgstr "レンズフレア"
 
-#: ../plug-ins/common/lens-flare.c:752
+#: ../plug-ins/common/lens-flare.c:753
 msgid "Center of Flare Effect"
 msgstr "フレア効果の中心"
 
-#: ../plug-ins/common/lens-flare.c:792
-#: ../plug-ins/common/nova.c:483
+#: ../plug-ins/common/lens-flare.c:793
+#: ../plug-ins/common/nova.c:484
 msgid "Show _position"
 msgstr "中心をガイドで表示(_P)"
 
@@ -6209,11 +6213,11 @@ msgstr "RGB 値最大"
 msgid "Maximum RGB Value"
 msgstr "RGB 値最大"
 
-#: ../plug-ins/common/max-rgb.c:291
+#: ../plug-ins/common/max-rgb.c:292
 msgid "_Hold the maximal channels"
 msgstr "最大値チャンネルを残す(_H)"
 
-#: ../plug-ins/common/max-rgb.c:294
+#: ../plug-ins/common/max-rgb.c:295
 msgid "Ho_ld the minimal channels"
 msgstr "最小値チャンネルを残す(_L)"
 
@@ -6239,64 +6243,64 @@ msgstr "タイルを描画しています"
 msgid "Mosaic"
 msgstr "モザイク"
 
-#: ../plug-ins/common/mosaic.c:632
+#: ../plug-ins/common/mosaic.c:633
 msgid "Squares"
 msgstr "四角形"
 
-#: ../plug-ins/common/mosaic.c:633
+#: ../plug-ins/common/mosaic.c:634
 msgid "Hexagons"
 msgstr "六角形"
 
-#: ../plug-ins/common/mosaic.c:634
+#: ../plug-ins/common/mosaic.c:635
 msgid "Octagons & squares"
 msgstr "八角形と四角形"
 
-#: ../plug-ins/common/mosaic.c:635
+#: ../plug-ins/common/mosaic.c:636
 msgid "Triangles"
 msgstr "三角形"
 
-#: ../plug-ins/common/mosaic.c:643
+#: ../plug-ins/common/mosaic.c:644
 msgid "_Tiling primitives:"
 msgstr "タイルの形状(_T): "
 
-#: ../plug-ins/common/mosaic.c:651
+#: ../plug-ins/common/mosaic.c:652
 msgid "Tile _size:"
 msgstr "タイルサイズ(_T):"
 
-#: ../plug-ins/common/mosaic.c:663
-#: ../plug-ins/common/tile-glass.c:302
+#: ../plug-ins/common/mosaic.c:664
+#: ../plug-ins/common/tile-glass.c:303
 msgid "Tile _height:"
 msgstr "タイル高(_H):"
 
-#: ../plug-ins/common/mosaic.c:676
+#: ../plug-ins/common/mosaic.c:677
 msgid "Til_e spacing:"
 msgstr "タイル間隔(_E):"
 
-#: ../plug-ins/common/mosaic.c:688
+#: ../plug-ins/common/mosaic.c:689
 msgid "Tile _neatness:"
 msgstr "タイル均整度(_N):"
 
-#: ../plug-ins/common/mosaic.c:701
+#: ../plug-ins/common/mosaic.c:702
 msgid "Light _direction:"
 msgstr "光の方向(_D):"
 
-#: ../plug-ins/common/mosaic.c:713
+#: ../plug-ins/common/mosaic.c:714
 msgid "Color _variation:"
 msgstr "色の種類(_V):"
 
-#: ../plug-ins/common/mosaic.c:742
+#: ../plug-ins/common/mosaic.c:743
 msgid "Co_lor averaging"
 msgstr "色の平均を取る(_L)"
 
-#: ../plug-ins/common/mosaic.c:755
+#: ../plug-ins/common/mosaic.c:756
 msgid "Allo_w tile splitting"
 msgstr "タイル分割を許可(_W)"
 
-#: ../plug-ins/common/mosaic.c:768
+#: ../plug-ins/common/mosaic.c:769
 msgid "_Pitted surfaces"
 msgstr "へこんだ表面(_P)"
 
-#: ../plug-ins/common/mosaic.c:781
+#: ../plug-ins/common/mosaic.c:782
 msgid "_FG/BG lighting"
 msgstr "前景/背景 光源(_F)"
 
@@ -6363,63 +6367,63 @@ msgid "_Spot function:"
 msgstr "スポット形状(_S):"
 
 #. resolution settings
-#: ../plug-ins/common/newsprint.c:1239
+#: ../plug-ins/common/newsprint.c:1240
 msgid "Resolution"
 msgstr "解像度"
 
-#: ../plug-ins/common/newsprint.c:1258
+#: ../plug-ins/common/newsprint.c:1259
 msgid "_Input SPI:"
 msgstr "入力 SPI(_I):"
 
-#: ../plug-ins/common/newsprint.c:1272
+#: ../plug-ins/common/newsprint.c:1273
 msgid "O_utput LPI:"
 msgstr "出力 LPI(_U):"
 
-#: ../plug-ins/common/newsprint.c:1285
+#: ../plug-ins/common/newsprint.c:1286
 msgid "C_ell size:"
 msgstr "セルサイズ(_E):"
 
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1298
+#: ../plug-ins/common/newsprint.c:1299
 #: ../plug-ins/gradient-flare/gradient-flare.c:553
 msgid "Screen"
 msgstr "スクリーン"
 
-#: ../plug-ins/common/newsprint.c:1317
+#: ../plug-ins/common/newsprint.c:1318
 msgid "B_lack pullout (%):"
 msgstr "黒弱め (%)(_L):"
 
-#: ../plug-ins/common/newsprint.c:1339
+#: ../plug-ins/common/newsprint.c:1340
 msgid "Separate to:"
 msgstr "分離方法:"
 
-#: ../plug-ins/common/newsprint.c:1343
+#: ../plug-ins/common/newsprint.c:1344
 msgid "_RGB"
 msgstr "RGB(_R)"
 
-#: ../plug-ins/common/newsprint.c:1360
+#: ../plug-ins/common/newsprint.c:1361
 msgid "C_MYK"
 msgstr "CMYK(_M)"
 
-#: ../plug-ins/common/newsprint.c:1377
+#: ../plug-ins/common/newsprint.c:1378
 msgid "I_ntensity"
 msgstr "輝度(_N)"
 
-#: ../plug-ins/common/newsprint.c:1402
+#: ../plug-ins/common/newsprint.c:1403
 msgid "_Lock channels"
 msgstr "チャンネルを固定(_L)"
 
-#: ../plug-ins/common/newsprint.c:1415
+#: ../plug-ins/common/newsprint.c:1416
 msgid "_Factory Defaults"
 msgstr "初期値に戻す(_F)"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1441
-#: ../plug-ins/gfig/gfig-dialog.c:1255
+#: ../plug-ins/common/newsprint.c:1442
+#: ../plug-ins/gfig/gfig-dialog.c:1256
 msgid "Antialiasing"
 msgstr "アンチエイリアス"
 
-#: ../plug-ins/common/newsprint.c:1449
+#: ../plug-ins/common/newsprint.c:1450
 msgid "O_versample:"
 msgstr "オーバーサンプル(_V):"
 
@@ -6436,23 +6440,23 @@ msgstr "非線形フィルタ(_N)..."
 msgid "NL Filter"
 msgstr "非線形フィルタ"
 
-#: ../plug-ins/common/nl-filter.c:1044
+#: ../plug-ins/common/nl-filter.c:1045
 msgid "Filter"
 msgstr "フィルタ"
 
-#: ../plug-ins/common/nl-filter.c:1048
+#: ../plug-ins/common/nl-filter.c:1049
 msgid "_Alpha trimmed mean"
 msgstr "透明度を用いた平均(_A)"
 
-#: ../plug-ins/common/nl-filter.c:1050
+#: ../plug-ins/common/nl-filter.c:1051
 msgid "Op_timal estimation"
 msgstr "最適化(_T)"
 
-#: ../plug-ins/common/nl-filter.c:1052
+#: ../plug-ins/common/nl-filter.c:1053
 msgid "_Edge enhancement"
 msgstr "縁強調(_E)"
 
-#: ../plug-ins/common/nl-filter.c:1077
+#: ../plug-ins/common/nl-filter.c:1078
 msgid "A_lpha:"
 msgstr "アルファ(_L):"
 
@@ -6469,11 +6473,11 @@ msgstr "HSV ノイズ..."
 msgid "HSV Noise"
 msgstr "HSV ノイズを生成しています"
 
-#: ../plug-ins/common/noise-hsv.c:399
+#: ../plug-ins/common/noise-hsv.c:400
 msgid "_Holdness:"
 msgstr "保存度(_H):"
 
-#: ../plug-ins/common/noise-hsv.c:411
+#: ../plug-ins/common/noise-hsv.c:412
 msgid "H_ue:"
 msgstr "色相(_U):"
 
@@ -6513,24 +6517,24 @@ msgstr "つまむ(_P)..."
 msgid "_Slur..."
 msgstr "ごまかす(_S)..."
 
-#: ../plug-ins/common/noise-randomize.c:770
-#: ../plug-ins/common/noise-solid.c:601
+#: ../plug-ins/common/noise-randomize.c:771
+#: ../plug-ins/common/noise-solid.c:602
 msgid "_Random seed:"
 msgstr "乱数種(_R):"
 
-#: ../plug-ins/common/noise-randomize.c:779
+#: ../plug-ins/common/noise-randomize.c:780
 msgid "R_andomization (%):"
 msgstr "乱数度 (%)(_A):"
 
-#: ../plug-ins/common/noise-randomize.c:782
+#: ../plug-ins/common/noise-randomize.c:783
 msgid "Percentage of pixels to be filtered"
 msgstr "フィルタを通すピクセルの割合"
 
-#: ../plug-ins/common/noise-randomize.c:794
+#: ../plug-ins/common/noise-randomize.c:795
 msgid "R_epeat:"
 msgstr "繰り返し(_E):"
 
-#: ../plug-ins/common/noise-randomize.c:797
+#: ../plug-ins/common/noise-randomize.c:798
 msgid "Number of times to apply filter"
 msgstr "フィルタを適用する回数"
 
@@ -6550,20 +6554,20 @@ msgstr "ノイズを追加しています"
 msgid "RGB Noise"
 msgstr "RGB ノイズ"
 
-#: ../plug-ins/common/noise-rgb.c:482
+#: ../plug-ins/common/noise-rgb.c:483
 msgid "Co_rrelated noise"
 msgstr "相関ノイズ(_R)"
 
-#: ../plug-ins/common/noise-rgb.c:497
+#: ../plug-ins/common/noise-rgb.c:498
 msgid "_Independent RGB"
 msgstr "RGB 独立(_I)"
 
-#: ../plug-ins/common/noise-rgb.c:521
-#: ../plug-ins/common/noise-rgb.c:525
+#: ../plug-ins/common/noise-rgb.c:522
+#: ../plug-ins/common/noise-rgb.c:526
 msgid "_Gray:"
 msgstr "グレー(_G):"
 
-#: ../plug-ins/common/noise-rgb.c:551
+#: ../plug-ins/common/noise-rgb.c:552
 #, c-format
 msgid "Channel #%d:"
 msgstr "チャンネル #%d:"
@@ -6582,25 +6586,25 @@ msgstr "ソリッドノイズ(_S)..."
 msgid "Solid Noise"
 msgstr "ソリッドノイズ"
 
-#: ../plug-ins/common/noise-solid.c:614
+#: ../plug-ins/common/noise-solid.c:615
 msgid "_Detail:"
 msgstr "詳細(_D):"
 
 #. Turbulent
-#: ../plug-ins/common/noise-solid.c:624
+#: ../plug-ins/common/noise-solid.c:625
 msgid "T_urbulent"
 msgstr "乱れ(_U)"
 
 #. Tilable
-#: ../plug-ins/common/noise-solid.c:638
+#: ../plug-ins/common/noise-solid.c:639
 msgid "T_ilable"
 msgstr "タイル可能(_I)"
 
-#: ../plug-ins/common/noise-solid.c:653
+#: ../plug-ins/common/noise-solid.c:654
 msgid "_X size:"
 msgstr "_X サイズ:"
 
-#: ../plug-ins/common/noise-solid.c:666
+#: ../plug-ins/common/noise-solid.c:667
 msgid "_Y size:"
 msgstr "_Y サイズ:"
 
@@ -6616,11 +6620,11 @@ msgstr "拡散(_R)..."
 msgid "Spreading"
 msgstr "拡散させています"
 
-#: ../plug-ins/common/noise-spread.c:341
+#: ../plug-ins/common/noise-spread.c:343
 msgid "Spread"
 msgstr "拡散"
 
-#: ../plug-ins/common/noise-spread.c:366
+#: ../plug-ins/common/noise-spread.c:369
 msgid "Spread Amount"
 msgstr "拡散量"
 
@@ -6640,19 +6644,19 @@ msgstr "超新星を描画しています"
 msgid "Supernova"
 msgstr "超新星"
 
-#: ../plug-ins/common/nova.c:348
+#: ../plug-ins/common/nova.c:349
 msgid "Supernova Color Picker"
 msgstr "超新星の色"
 
-#: ../plug-ins/common/nova.c:377
+#: ../plug-ins/common/nova.c:378
 msgid "_Spokes:"
 msgstr "放射(_S):"
 
-#: ../plug-ins/common/nova.c:392
+#: ../plug-ins/common/nova.c:393
 msgid "R_andom hue:"
 msgstr "乱数色相(_A):"
 
-#: ../plug-ins/common/nova.c:445
+#: ../plug-ins/common/nova.c:446
 msgid "Center of Nova"
 msgstr "超新星の中心"
 
@@ -6673,18 +6677,18 @@ msgstr "油絵化しています"
 msgid "Oilify"
 msgstr "油絵化"
 
-#: ../plug-ins/common/oilify.c:814
+#: ../plug-ins/common/oilify.c:815
 msgid "_Mask size:"
 msgstr "マスクサイズ(_M):"
 
 #.
 #. * Mask-size map check button
 #.
-#: ../plug-ins/common/oilify.c:829
+#: ../plug-ins/common/oilify.c:830
 msgid "Use m_ask-size map:"
 msgstr "マスクサイズマップを使用(_A):"
 
-#: ../plug-ins/common/oilify.c:866
+#: ../plug-ins/common/oilify.c:867
 #: ../plug-ins/common/sinus.c:921
 msgid "_Exponent:"
 msgstr "指数(_E):"
@@ -6692,14 +6696,14 @@ msgstr "指数(_E):"
 #.
 #. * Exponent map check button
 #.
-#: ../plug-ins/common/oilify.c:881
+#: ../plug-ins/common/oilify.c:882
 msgid "Use e_xponent map:"
 msgstr "指数マップを使用(_X):"
 
 #.
 #. * Intensity algorithm check button
 #.
-#: ../plug-ins/common/oilify.c:917
+#: ../plug-ins/common/oilify.c:918
 msgid "_Use intensity algorithm"
 msgstr "強度アルゴリズムを使用(_U)"
 
@@ -6715,17 +6719,17 @@ msgstr "写真コピー(_P)..."
 msgid "Photocopy"
 msgstr "写真コピー"
 
-#: ../plug-ins/common/photocopy.c:889
-#: ../plug-ins/common/sharpen.c:510
-#: ../plug-ins/common/softglow.c:696
+#: ../plug-ins/common/photocopy.c:890
+#: ../plug-ins/common/sharpen.c:511
+#: ../plug-ins/common/softglow.c:697
 msgid "_Sharpness:"
 msgstr "シャープ度(_S):"
 
-#: ../plug-ins/common/photocopy.c:903
+#: ../plug-ins/common/photocopy.c:904
 msgid "Percent _black:"
 msgstr "黒パーセント(_B):"
 
-#: ../plug-ins/common/photocopy.c:917
+#: ../plug-ins/common/photocopy.c:918
 msgid "Percent _white:"
 msgstr "白パーセント(_W):"
 
@@ -6745,11 +6749,11 @@ msgstr "ピクセル化しています"
 msgid "Pixelize"
 msgstr "ピクセル化"
 
-#: ../plug-ins/common/pixelize.c:351
+#: ../plug-ins/common/pixelize.c:352
 msgid "Pixel _width:"
 msgstr "ピクセル幅(_W):"
 
-#: ../plug-ins/common/pixelize.c:356
+#: ../plug-ins/common/pixelize.c:357
 msgid "Pixel _height:"
 msgstr "ピクセル高(_H):"
 
@@ -6766,11 +6770,11 @@ msgstr "プラズマ(_P)..."
 msgid "Plasma"
 msgstr "プラズマ"
 
-#: ../plug-ins/common/plasma.c:336
+#: ../plug-ins/common/plasma.c:337
 msgid "Random _seed:"
 msgstr "乱数種(_S):"
 
-#: ../plug-ins/common/plasma.c:347
+#: ../plug-ins/common/plasma.c:348
 msgid "T_urbulence:"
 msgstr "乱れ(_U):"
 
@@ -6855,35 +6859,35 @@ msgstr "極座標を適用しています"
 msgid "Polar Coordinates"
 msgstr "極座標"
 
-#: ../plug-ins/common/polar-coords.c:631
+#: ../plug-ins/common/polar-coords.c:632
 msgid "Circle _depth in percent:"
 msgstr "パーセントで表した円の丸さ(_D):"
 
-#: ../plug-ins/common/polar-coords.c:643
+#: ../plug-ins/common/polar-coords.c:644
 msgid "Offset _angle:"
 msgstr "角度オフセット(_A):"
 
-#: ../plug-ins/common/polar-coords.c:658
+#: ../plug-ins/common/polar-coords.c:659
 msgid "_Map backwards"
 msgstr "逆方向マップ(_M)"
 
-#: ../plug-ins/common/polar-coords.c:664
+#: ../plug-ins/common/polar-coords.c:665
 msgid "If checked the mapping will begin at the right side, as opposed to beginning at the left."
 msgstr "チェックしてある場合には右側から、そうでなければ左側からマッピングします。"
 
-#: ../plug-ins/common/polar-coords.c:675
+#: ../plug-ins/common/polar-coords.c:676
 msgid "Map from _top"
 msgstr "上側からマップ(_T)"
 
-#: ../plug-ins/common/polar-coords.c:681
+#: ../plug-ins/common/polar-coords.c:682
 msgid "If unchecked the mapping will put the bottom row in the middle and the top row on the outside.  If checked it will be the opposite."
 msgstr "チェックしてない場合には画像の下側を中心に、上側を外に向けてマッピングします。チェックした場合には逆になります。"
 
-#: ../plug-ins/common/polar-coords.c:693
+#: ../plug-ins/common/polar-coords.c:694
 msgid "To _polar"
 msgstr "極座標へ(_P)"
 
-#: ../plug-ins/common/polar-coords.c:699
+#: ../plug-ins/common/polar-coords.c:700
 msgid "If unchecked the image will be circularly mapped onto a rectangle.  If checked the image will be mapped onto a circle."
 msgstr "チェックしてない場合には極座標から直交座標への変換、チェックした場合には直交座標から極座標へ変換されます。"
 
@@ -6936,23 +6940,23 @@ msgid "Red Eye Removal"
 msgstr "赤目除去"
 
 # 「閾（しきい）」が読めない、またはディスプレイ上で識別できない人がいる可能性があるため、敢えて「しきい値」とした
-#: ../plug-ins/common/red-eye-removal.c:169
-#: ../plug-ins/common/unsharp-mask.c:891
-#: ../plug-ins/common/wind.c:1007
+#: ../plug-ins/common/red-eye-removal.c:170
+#: ../plug-ins/common/unsharp-mask.c:892
+#: ../plug-ins/common/wind.c:1008
 #: ../plug-ins/imagemap/imap_preferences.c:440
 #: ../plug-ins/map-object/map-object-ui.c:585
 msgid "_Threshold:"
 msgstr "しきい値(_T):"
 
-#: ../plug-ins/common/red-eye-removal.c:175
+#: ../plug-ins/common/red-eye-removal.c:176
 msgid "Threshold for the red eye color to remove."
 msgstr "赤目の領域を決定するしきい値を設定します"
 
-#: ../plug-ins/common/red-eye-removal.c:180
+#: ../plug-ins/common/red-eye-removal.c:181
 msgid "Manually selecting the eyes may improve the results."
 msgstr "あらかじめ「目」の部分の選択範囲を作っておくと、よい結果を生むでしょう。"
 
-#: ../plug-ins/common/red-eye-removal.c:300
+#: ../plug-ins/common/red-eye-removal.c:301
 msgid "Removing red eye"
 msgstr "赤目除去しています..."
 
@@ -6972,41 +6976,41 @@ msgstr "'波紋' を適用しています"
 msgid "Ripple"
 msgstr "波紋"
 
-#: ../plug-ins/common/ripple.c:540
+#: ../plug-ins/common/ripple.c:541
 msgid "_Retain tilability"
 msgstr "タイルメモリを保持する(_R)"
 
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:577
+#: ../plug-ins/common/ripple.c:578
 msgid "Edges"
 msgstr "周辺部"
 
-#: ../plug-ins/common/ripple.c:583
+#: ../plug-ins/common/ripple.c:584
 msgid "_Blank"
 msgstr "空白(_B)"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:605
+#: ../plug-ins/common/ripple.c:606
 msgid "Wave Type"
 msgstr "波の種類"
 
-#: ../plug-ins/common/ripple.c:609
+#: ../plug-ins/common/ripple.c:610
 msgid "Saw_tooth"
 msgstr "鋸歯(_T)"
 
-#: ../plug-ins/common/ripple.c:610
+#: ../plug-ins/common/ripple.c:611
 msgid "S_ine"
 msgstr "サイン波(_I)"
 
-#: ../plug-ins/common/ripple.c:633
+#: ../plug-ins/common/ripple.c:634
 msgid "_Period:"
 msgstr "波長(_P):"
 
-#: ../plug-ins/common/ripple.c:646
+#: ../plug-ins/common/ripple.c:647
 msgid "A_mplitude:"
 msgstr "振幅(_M):"
 
-#: ../plug-ins/common/ripple.c:659
+#: ../plug-ins/common/ripple.c:660
 msgid "Phase _shift:"
 msgstr "位相変位(_S):"
 
@@ -7239,15 +7243,15 @@ msgstr "ずらしています"
 msgid "Shift"
 msgstr "ずらし"
 
-#: ../plug-ins/common/shift.c:387
+#: ../plug-ins/common/shift.c:388
 msgid "Shift _horizontally"
 msgstr "水平方向にずらす(_H)"
 
-#: ../plug-ins/common/shift.c:390
+#: ../plug-ins/common/shift.c:391
 msgid "Shift _vertically"
 msgstr "垂直方向にずらす(_V)"
 
-#: ../plug-ins/common/shift.c:421
+#: ../plug-ins/common/shift.c:422
 msgid "Shift _amount:"
 msgstr "ずれの量(_A):"
 
@@ -7393,7 +7397,7 @@ msgstr "最適なパレットを生成しています..."
 msgid "Smooth Palette"
 msgstr "最適なパレット"
 
-#: ../plug-ins/common/smooth-palette.c:451
+#: ../plug-ins/common/smooth-palette.c:452
 msgid "_Search depth:"
 msgstr "検索回数(_S):"
 
@@ -7409,7 +7413,7 @@ msgstr "柔らかい発光(_S)..."
 msgid "Softglow"
 msgstr "柔らかい発光"
 
-#: ../plug-ins/common/softglow.c:668
+#: ../plug-ins/common/softglow.c:669
 msgid "_Glow radius:"
 msgstr "発光半径(_G):"
 
@@ -7433,123 +7437,123 @@ msgstr "きらめかせています"
 msgid "Sparkle"
 msgstr "きらめき"
 
-#: ../plug-ins/common/sparkle.c:372
+#: ../plug-ins/common/sparkle.c:373
 msgid "Luminosity _threshold:"
 msgstr "光度しきい値(_T):"
 
-#: ../plug-ins/common/sparkle.c:375
+#: ../plug-ins/common/sparkle.c:376
 msgid "Adjust the luminosity threshold"
 msgstr "光度しきい値を設定します"
 
-#: ../plug-ins/common/sparkle.c:385
+#: ../plug-ins/common/sparkle.c:386
 msgid "F_lare intensity:"
 msgstr "フレア強度(_L):"
 
-#: ../plug-ins/common/sparkle.c:388
+#: ../plug-ins/common/sparkle.c:389
 msgid "Adjust the flare intensity"
 msgstr "フレア強度を設定します"
 
-#: ../plug-ins/common/sparkle.c:398
+#: ../plug-ins/common/sparkle.c:399
 msgid "_Spike length:"
 msgstr "尖りの長さ(_S):"
 
-#: ../plug-ins/common/sparkle.c:401
+#: ../plug-ins/common/sparkle.c:402
 msgid "Adjust the spike length"
 msgstr "尖りの長さを設定します"
 
-#: ../plug-ins/common/sparkle.c:411
+#: ../plug-ins/common/sparkle.c:412
 msgid "Sp_ike points:"
 msgstr "尖りの数(_I):"
 
-#: ../plug-ins/common/sparkle.c:414
+#: ../plug-ins/common/sparkle.c:415
 msgid "Adjust the number of spikes"
 msgstr "尖りの数を設定します"
 
-#: ../plug-ins/common/sparkle.c:424
+#: ../plug-ins/common/sparkle.c:425
 msgid "Spi_ke angle (-1: random):"
 msgstr "尖りの角度 (-1: 乱数)(_K):"
 
-#: ../plug-ins/common/sparkle.c:427
+#: ../plug-ins/common/sparkle.c:428
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr "尖りの角度を設定します (-1 を指定するとランダムに角度が設定されます)"
 
-#: ../plug-ins/common/sparkle.c:438
+#: ../plug-ins/common/sparkle.c:439
 msgid "Spik_e density:"
 msgstr "尖り密度(_E):"
 
-#: ../plug-ins/common/sparkle.c:441
+#: ../plug-ins/common/sparkle.c:442
 msgid "Adjust the spike density"
 msgstr "尖りの密度を設定します"
 
-#: ../plug-ins/common/sparkle.c:451
+#: ../plug-ins/common/sparkle.c:452
 msgid "Tr_ansparency:"
 msgstr "不透明度(_A): "
 
-#: ../plug-ins/common/sparkle.c:454
+#: ../plug-ins/common/sparkle.c:455
 msgid "Adjust the opacity of the spikes"
 msgstr "尖りの不透明度を設定します"
 
-#: ../plug-ins/common/sparkle.c:464
+#: ../plug-ins/common/sparkle.c:465
 msgid "_Random hue:"
 msgstr "乱数色相(_R):"
 
-#: ../plug-ins/common/sparkle.c:467
+#: ../plug-ins/common/sparkle.c:468
 msgid "Adjust how much the hue should be changed randomly"
 msgstr "色相をどの程度ランダムに変えるか調節します"
 
-#: ../plug-ins/common/sparkle.c:477
+#: ../plug-ins/common/sparkle.c:478
 msgid "Rando_m saturation:"
 msgstr "乱数彩度(_M):"
 
-#: ../plug-ins/common/sparkle.c:480
+#: ../plug-ins/common/sparkle.c:481
 msgid "Adjust how much the saturation should be changed randomly"
 msgstr "彩度をどの程度ランダムに変えるか調節します"
 
-#: ../plug-ins/common/sparkle.c:497
+#: ../plug-ins/common/sparkle.c:498
 msgid "_Preserve luminosity"
 msgstr "光度を保存する(_P)"
 
-#: ../plug-ins/common/sparkle.c:504
+#: ../plug-ins/common/sparkle.c:505
 msgid "Should the luminosity be preserved?"
 msgstr "有効のときは光度を維持します"
 
-#: ../plug-ins/common/sparkle.c:513
+#: ../plug-ins/common/sparkle.c:514
 msgid "In_verse"
 msgstr "反転(_V)"
 
-#: ../plug-ins/common/sparkle.c:519
+#: ../plug-ins/common/sparkle.c:520
 msgid "Should the effect be inversed?"
 msgstr "有効のときは効果の階調を反転します"
 
-#: ../plug-ins/common/sparkle.c:528
+#: ../plug-ins/common/sparkle.c:529
 msgid "A_dd border"
 msgstr "縁付加(_D)"
 
-#: ../plug-ins/common/sparkle.c:534
+#: ../plug-ins/common/sparkle.c:535
 msgid "Draw a border of spikes around the image"
 msgstr "有効のときは画像の境界にも尖りを描画します"
 
-#: ../plug-ins/common/sparkle.c:548
+#: ../plug-ins/common/sparkle.c:549
 msgid "_Natural color"
 msgstr "自然色(_N)"
 
-#: ../plug-ins/common/sparkle.c:549
+#: ../plug-ins/common/sparkle.c:550
 msgid "_Foreground color"
 msgstr "描画色(_F)"
 
-#: ../plug-ins/common/sparkle.c:550
+#: ../plug-ins/common/sparkle.c:551
 msgid "_Background color"
 msgstr "背景色(_B)"
 
-#: ../plug-ins/common/sparkle.c:557
+#: ../plug-ins/common/sparkle.c:558
 msgid "Use the color of the image"
 msgstr "画像の色を使う"
 
-#: ../plug-ins/common/sparkle.c:558
+#: ../plug-ins/common/sparkle.c:559
 msgid "Use the foreground color"
 msgstr "描画色を使う"
 
-#: ../plug-ins/common/sparkle.c:559
+#: ../plug-ins/common/sparkle.c:560
 msgid "Use the background color"
 msgstr "背景色を使う"
 
@@ -7593,7 +7597,7 @@ msgid "Spots"
 msgstr "スポット"
 
 #: ../plug-ins/common/sphere-designer.c:1741
-#: ../plug-ins/common/sphere-designer.c:2689
+#: ../plug-ins/common/sphere-designer.c:2690
 msgid "Texture"
 msgstr "テクスチャ"
 
@@ -7602,7 +7606,7 @@ msgid "Bumpmap"
 msgstr "バンプマップ"
 
 #: ../plug-ins/common/sphere-designer.c:1745
-#: ../plug-ins/common/sphere-designer.c:2691
+#: ../plug-ins/common/sphere-designer.c:2692
 msgid "Light"
 msgstr "光源"
 
@@ -7623,106 +7627,106 @@ msgstr "ファイルを保存"
 msgid "Sphere Designer"
 msgstr "球面デザイナー"
 
-#: ../plug-ins/common/sphere-designer.c:2674
+#: ../plug-ins/common/sphere-designer.c:2675
 msgid "Properties"
 msgstr "属性"
 
-#: ../plug-ins/common/sphere-designer.c:2690
+#: ../plug-ins/common/sphere-designer.c:2691
 msgid "Bump"
 msgstr "バンプ"
 
 #. row labels
-#: ../plug-ins/common/sphere-designer.c:2698
+#: ../plug-ins/common/sphere-designer.c:2699
 #: ../plug-ins/lighting/lighting-ui.c:404
 msgid "Type:"
 msgstr "種類:"
 
-#: ../plug-ins/common/sphere-designer.c:2717
+#: ../plug-ins/common/sphere-designer.c:2718
 msgid "Texture:"
 msgstr "テクスチャ"
 
-#: ../plug-ins/common/sphere-designer.c:2722
+#: ../plug-ins/common/sphere-designer.c:2723
 msgid "Colors:"
 msgstr "カラー:"
 
-#: ../plug-ins/common/sphere-designer.c:2725
-#: ../plug-ins/common/sphere-designer.c:2736
+#: ../plug-ins/common/sphere-designer.c:2726
+#: ../plug-ins/common/sphere-designer.c:2737
 msgid "Color Selection Dialog"
 msgstr "色選択ダイアログ"
 
 #. Scale
-#: ../plug-ins/common/sphere-designer.c:2747
+#: ../plug-ins/common/sphere-designer.c:2748
 #: ../plug-ins/gimpressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "拡大縮小:"
 
-#: ../plug-ins/common/sphere-designer.c:2755
+#: ../plug-ins/common/sphere-designer.c:2756
 msgid "Turbulence:"
 msgstr "乱れ:"
 
-#: ../plug-ins/common/sphere-designer.c:2762
+#: ../plug-ins/common/sphere-designer.c:2763
 msgid "Amount:"
 msgstr "量:"
 
-#: ../plug-ins/common/sphere-designer.c:2769
+#: ../plug-ins/common/sphere-designer.c:2770
 msgid "Exp.:"
 msgstr "ベキ指数:"
 
-#: ../plug-ins/common/sphere-designer.c:2776
+#: ../plug-ins/common/sphere-designer.c:2777
 msgid "Transformations"
 msgstr "変換"
 
-#: ../plug-ins/common/sphere-designer.c:2792
+#: ../plug-ins/common/sphere-designer.c:2793
 #: ../plug-ins/map-object/map-object-ui.c:1143
 msgid "Scale X:"
 msgstr "拡大縮小 X:"
 
-#: ../plug-ins/common/sphere-designer.c:2799
+#: ../plug-ins/common/sphere-designer.c:2800
 msgid "Scale Y:"
 msgstr "拡大縮小 Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2805
+#: ../plug-ins/common/sphere-designer.c:2806
 msgid "Scale Z:"
 msgstr "拡大縮小 Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2812
+#: ../plug-ins/common/sphere-designer.c:2813
 msgid "Rotate X:"
 msgstr "回転 X:"
 
-#: ../plug-ins/common/sphere-designer.c:2819
+#: ../plug-ins/common/sphere-designer.c:2820
 msgid "Rotate Y:"
 msgstr "回転 Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2826
+#: ../plug-ins/common/sphere-designer.c:2827
 msgid "Rotate Z:"
 msgstr "回転 Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2833
+#: ../plug-ins/common/sphere-designer.c:2834
 msgid "Position X:"
 msgstr "位置 X:"
 
-#: ../plug-ins/common/sphere-designer.c:2840
+#: ../plug-ins/common/sphere-designer.c:2841
 msgid "Position Y:"
 msgstr "位置 Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2847
+#: ../plug-ins/common/sphere-designer.c:2848
 msgid "Position Z:"
 msgstr "位置 Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2962
+#: ../plug-ins/common/sphere-designer.c:2963
 msgid "Rendering sphere"
 msgstr "球体を描画しています"
 
-#: ../plug-ins/common/sphere-designer.c:3012
+#: ../plug-ins/common/sphere-designer.c:3013
 msgid "Create an image of a textured sphere"
 msgstr "テクスチャーマッピングされた球体の画像を生成します"
 
-#: ../plug-ins/common/sphere-designer.c:3019
+#: ../plug-ins/common/sphere-designer.c:3020
 msgid "Sphere _Designer..."
 msgstr "球面デザイナ(_D)..."
 
-#: ../plug-ins/common/sphere-designer.c:3073
+#: ../plug-ins/common/sphere-designer.c:3074
 msgid "Region selected for plug-in is empty"
 msgstr "プラグイン処理用の選択範囲が空です"
 
@@ -7750,7 +7754,7 @@ msgstr "アルファチャンネルを 2 階調化しています..."
 msgid "Threshold Alpha"
 msgstr "アルファチャンネルを 2 階調化"
 
-#: ../plug-ins/common/threshold-alpha.c:282
+#: ../plug-ins/common/threshold-alpha.c:283
 msgid "Threshold:"
 msgstr "しきい値:"
 
@@ -7767,88 +7771,88 @@ msgstr "ガラスタイル(_G)..."
 msgid "Glass Tile"
 msgstr "ガラスタイル"
 
-#: ../plug-ins/common/tile-glass.c:288
+#: ../plug-ins/common/tile-glass.c:289
 msgid "Tile _width:"
 msgstr "タイル幅(_W):"
 
 #: ../plug-ins/common/tile-paper.c:242
-#: ../plug-ins/common/tile-paper.c:555
+#: ../plug-ins/common/tile-paper.c:556
 msgid "Paper Tile"
 msgstr "紙タイル"
 
-#: ../plug-ins/common/tile-paper.c:268
+#: ../plug-ins/common/tile-paper.c:269
 msgid "Division"
 msgstr "分割"
 
-#: ../plug-ins/common/tile-paper.c:318
+#: ../plug-ins/common/tile-paper.c:319
 msgid "Fractional Pixels"
 msgstr "ピクセル断片"
 
-#: ../plug-ins/common/tile-paper.c:323
+#: ../plug-ins/common/tile-paper.c:324
 msgid "_Background"
 msgstr "背景(_B)"
 
-#: ../plug-ins/common/tile-paper.c:325
+#: ../plug-ins/common/tile-paper.c:326
 msgid "_Ignore"
 msgstr "無視(_I)"
 
-#: ../plug-ins/common/tile-paper.c:327
+#: ../plug-ins/common/tile-paper.c:328
 msgid "_Force"
 msgstr "強制(_F)"
 
-#: ../plug-ins/common/tile-paper.c:334
+#: ../plug-ins/common/tile-paper.c:335
 msgid "C_entering"
 msgstr "中央寄せ(_E)"
 
-#: ../plug-ins/common/tile-paper.c:349
+#: ../plug-ins/common/tile-paper.c:350
 msgid "Movement"
 msgstr "移動"
 
-#: ../plug-ins/common/tile-paper.c:362
+#: ../plug-ins/common/tile-paper.c:363
 msgid "_Max (%):"
 msgstr "最大(%)(_M):"
 
-#: ../plug-ins/common/tile-paper.c:368
+#: ../plug-ins/common/tile-paper.c:369
 msgid "_Wrap around"
 msgstr "回り込み(_W)"
 
-#: ../plug-ins/common/tile-paper.c:378
+#: ../plug-ins/common/tile-paper.c:379
 msgid "Background Type"
 msgstr "背景の種類"
 
-#: ../plug-ins/common/tile-paper.c:385
+#: ../plug-ins/common/tile-paper.c:386
 msgid "I_nverted image"
 msgstr "反転画像(_N)"
 
-#: ../plug-ins/common/tile-paper.c:387
+#: ../plug-ins/common/tile-paper.c:388
 msgid "Im_age"
 msgstr "画像(_A)"
 
-#: ../plug-ins/common/tile-paper.c:389
+#: ../plug-ins/common/tile-paper.c:390
 msgid "Fo_reground color"
 msgstr "前景色(_R)"
 
-#: ../plug-ins/common/tile-paper.c:391
+#: ../plug-ins/common/tile-paper.c:392
 msgid "Bac_kground color"
 msgstr "背景色(_K)"
 
-#: ../plug-ins/common/tile-paper.c:393
+#: ../plug-ins/common/tile-paper.c:394
 msgid "S_elect here:"
 msgstr "ここで選択(_E):"
 
-#: ../plug-ins/common/tile-paper.c:400
+#: ../plug-ins/common/tile-paper.c:401
 msgid "Background Color"
 msgstr "背景色"
 
-#: ../plug-ins/common/tile-paper.c:845
+#: ../plug-ins/common/tile-paper.c:846
 msgid "Cut image into paper tiles, and slide them"
 msgstr "画像を細かな紙片の集まりのように切り分けて、それらをずらします"
 
-#: ../plug-ins/common/tile-paper.c:850
+#: ../plug-ins/common/tile-paper.c:851
 msgid "September 31, 1999"
 msgstr "1999 年 9 月 31 日"
 
-#: ../plug-ins/common/tile-paper.c:851
+#: ../plug-ins/common/tile-paper.c:852
 msgid "_Paper Tile..."
 msgstr "紙タイル(_P)..."
 
@@ -7937,11 +7941,11 @@ msgstr "並べる(_T)..."
 msgid "Tile"
 msgstr "並べる"
 
-#: ../plug-ins/common/tile.c:421
+#: ../plug-ins/common/tile.c:422
 msgid "Tile to New Size"
 msgstr "新しい大きさにならべる"
 
-#: ../plug-ins/common/tile.c:443
+#: ../plug-ins/common/tile.c:444
 msgid "C_reate new image"
 msgstr "新規画像を作成(_R)"
 
@@ -8163,43 +8167,43 @@ msgid "Value Propagate"
 msgstr "明度伝搬"
 
 #. Parameter settings
-#: ../plug-ins/common/value-propagate.c:1154
+#: ../plug-ins/common/value-propagate.c:1155
 msgid "Propagate"
 msgstr "伝搬"
 
-#: ../plug-ins/common/value-propagate.c:1167
+#: ../plug-ins/common/value-propagate.c:1168
 msgid "Lower t_hreshold:"
 msgstr "しきい値下限(_H):"
 
-#: ../plug-ins/common/value-propagate.c:1179
+#: ../plug-ins/common/value-propagate.c:1180
 msgid "_Upper threshold:"
 msgstr "しきい値上限(_U):"
 
-#: ../plug-ins/common/value-propagate.c:1191
+#: ../plug-ins/common/value-propagate.c:1192
 msgid "_Propagating rate:"
 msgstr "伝搬率(_P):"
 
-#: ../plug-ins/common/value-propagate.c:1202
+#: ../plug-ins/common/value-propagate.c:1203
 msgid "To l_eft"
 msgstr "左へ(_E)"
 
-#: ../plug-ins/common/value-propagate.c:1205
+#: ../plug-ins/common/value-propagate.c:1206
 msgid "To _right"
 msgstr "右へ(_R)"
 
-#: ../plug-ins/common/value-propagate.c:1208
+#: ../plug-ins/common/value-propagate.c:1209
 msgid "To _top"
 msgstr "上へ(_T)"
 
-#: ../plug-ins/common/value-propagate.c:1211
+#: ../plug-ins/common/value-propagate.c:1212
 msgid "To _bottom"
 msgstr "下へ(_B)"
 
-#: ../plug-ins/common/value-propagate.c:1220
+#: ../plug-ins/common/value-propagate.c:1221
 msgid "Propagating _alpha channel"
 msgstr "アルファチャンネルを伝搬(_A)"
 
-#: ../plug-ins/common/value-propagate.c:1231
+#: ../plug-ins/common/value-propagate.c:1232
 msgid "Propagating value channel"
 msgstr "明度チャンネルを伝搬"
 
@@ -8208,67 +8212,67 @@ msgstr "明度チャンネルを伝搬"
 msgid "Van Gogh (LIC)"
 msgstr "ヴァン ゴッホ風 (LIC)"
 
-#: ../plug-ins/common/van-gogh-lic.c:665
+#: ../plug-ins/common/van-gogh-lic.c:666
 msgid "Effect Channel"
 msgstr "対象チャンネル"
 
-#: ../plug-ins/common/van-gogh-lic.c:672
+#: ../plug-ins/common/van-gogh-lic.c:673
 msgid "_Brightness"
 msgstr "明るさ(_B)"
 
-#: ../plug-ins/common/van-gogh-lic.c:678
+#: ../plug-ins/common/van-gogh-lic.c:679
 msgid "Effect Operator"
 msgstr "操作関数"
 
-#: ../plug-ins/common/van-gogh-lic.c:683
+#: ../plug-ins/common/van-gogh-lic.c:684
 msgid "_Derivative"
 msgstr "導函数(_D)"
 
-#: ../plug-ins/common/van-gogh-lic.c:684
+#: ../plug-ins/common/van-gogh-lic.c:685
 msgid "_Gradient"
 msgstr "勾配/グラデーション(_G)"
 
-#: ../plug-ins/common/van-gogh-lic.c:690
+#: ../plug-ins/common/van-gogh-lic.c:691
 msgid "Convolve"
 msgstr "合成要素"
 
-#: ../plug-ins/common/van-gogh-lic.c:695
+#: ../plug-ins/common/van-gogh-lic.c:696
 msgid "_With white noise"
 msgstr "ホワイトノイズと(_W)"
 
-#: ../plug-ins/common/van-gogh-lic.c:696
+#: ../plug-ins/common/van-gogh-lic.c:697
 msgid "W_ith source image"
 msgstr "元画像と(_I)"
 
-#: ../plug-ins/common/van-gogh-lic.c:715
+#: ../plug-ins/common/van-gogh-lic.c:716
 msgid "_Effect image:"
 msgstr "対象画像(_E):"
 
-#: ../plug-ins/common/van-gogh-lic.c:726
+#: ../plug-ins/common/van-gogh-lic.c:727
 msgid "_Filter length:"
 msgstr "フィルタ長(_F):"
 
-#: ../plug-ins/common/van-gogh-lic.c:735
+#: ../plug-ins/common/van-gogh-lic.c:736
 msgid "_Noise magnitude:"
 msgstr "ノイズ強度(_N):"
 
-#: ../plug-ins/common/van-gogh-lic.c:744
+#: ../plug-ins/common/van-gogh-lic.c:745
 msgid "In_tegration steps:"
 msgstr "積分ステップ(_T):"
 
-#: ../plug-ins/common/van-gogh-lic.c:753
+#: ../plug-ins/common/van-gogh-lic.c:754
 msgid "_Minimum value:"
 msgstr "最小値(_M):"
 
-#: ../plug-ins/common/van-gogh-lic.c:762
+#: ../plug-ins/common/van-gogh-lic.c:763
 msgid "M_aximum value:"
 msgstr "最大値(_A):"
 
-#: ../plug-ins/common/van-gogh-lic.c:808
+#: ../plug-ins/common/van-gogh-lic.c:809
 msgid "Special effects that nobody understands"
 msgstr "ヴァン・ゴッホが描いた絵画のような効果を施します"
 
-#: ../plug-ins/common/van-gogh-lic.c:813
+#: ../plug-ins/common/van-gogh-lic.c:814
 msgid "_Van Gogh (LIC)..."
 msgstr "ヴァン ゴッホ風(LIC)(_V)..."
 
@@ -8322,15 +8326,15 @@ msgid "Video"
 msgstr "ビデオ"
 
 #. frame for the radio buttons
-#: ../plug-ins/common/video.c:2038
+#: ../plug-ins/common/video.c:2039
 msgid "Video Pattern"
 msgstr "ビデオパターン"
 
-#: ../plug-ins/common/video.c:2082
+#: ../plug-ins/common/video.c:2083
 msgid "_Additive"
 msgstr "付加的(_A)"
 
-#: ../plug-ins/common/video.c:2092
+#: ../plug-ins/common/video.c:2093
 msgid "_Rotated"
 msgstr "回転(_R)"
 
@@ -8346,120 +8350,120 @@ msgstr "ワープ(_W)..."
 msgid "Warp"
 msgstr "ワープ"
 
-#: ../plug-ins/common/warp.c:396
+#: ../plug-ins/common/warp.c:397
 msgid "Basic Options"
 msgstr "主オプション"
 
-#: ../plug-ins/common/warp.c:418
+#: ../plug-ins/common/warp.c:419
 msgid "Step size:"
 msgstr "ステップサイズ:"
 
-#: ../plug-ins/common/warp.c:432
+#: ../plug-ins/common/warp.c:433
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:769
 #: ../plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "Iterations:"
 msgstr "繰り返し:"
 
 #. Displacement map menu
-#: ../plug-ins/common/warp.c:441
+#: ../plug-ins/common/warp.c:442
 msgid "Displacement map:"
 msgstr "ずらしマップ:"
 
 #. =======================================================================
 #. Displacement Type
-#: ../plug-ins/common/warp.c:459
+#: ../plug-ins/common/warp.c:460
 msgid "On edges:"
 msgstr "周辺部:"
 
-#: ../plug-ins/common/warp.c:470
+#: ../plug-ins/common/warp.c:471
 msgid "Wrap"
 msgstr "回り込み"
 
-#: ../plug-ins/common/warp.c:485
+#: ../plug-ins/common/warp.c:486
 msgid "Smear"
 msgstr "ぼかす"
 
-#: ../plug-ins/common/warp.c:500
+#: ../plug-ins/common/warp.c:501
 #: ../plug-ins/file-fits/fits.c:1020
 #: ../plug-ins/flame/flame.c:1174
-#: ../plug-ins/gfig/gfig-dialog.c:1459
+#: ../plug-ins/gfig/gfig-dialog.c:1461
 msgid "Black"
 msgstr "黒"
 
-#: ../plug-ins/common/warp.c:515
+#: ../plug-ins/common/warp.c:516
 msgid "Foreground color"
 msgstr "描画色"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: ../plug-ins/common/warp.c:535
+#: ../plug-ins/common/warp.c:536
 msgid "Advanced Options"
 msgstr "詳細設定"
 
-#: ../plug-ins/common/warp.c:551
+#: ../plug-ins/common/warp.c:552
 msgid "Dither size:"
 msgstr "ディザサイズ:"
 
-#: ../plug-ins/common/warp.c:564
+#: ../plug-ins/common/warp.c:565
 msgid "Rotation angle:"
 msgstr "回転角度:"
 
-#: ../plug-ins/common/warp.c:577
+#: ../plug-ins/common/warp.c:578
 msgid "Substeps:"
 msgstr "サブステップ:"
 
 #. Magnitude map menu
-#: ../plug-ins/common/warp.c:586
+#: ../plug-ins/common/warp.c:587
 msgid "Magnitude map:"
 msgstr "強度マップ:"
 
-#: ../plug-ins/common/warp.c:608
+#: ../plug-ins/common/warp.c:609
 msgid "Use magnitude map"
 msgstr "強度マップを使う"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: ../plug-ins/common/warp.c:621
+#: ../plug-ins/common/warp.c:622
 msgid "More Advanced Options"
 msgstr "さらに詳細設定"
 
-#: ../plug-ins/common/warp.c:638
+#: ../plug-ins/common/warp.c:639
 msgid "Gradient scale:"
 msgstr "グラデーションスケール:"
 
-#: ../plug-ins/common/warp.c:657
+#: ../plug-ins/common/warp.c:658
 msgid "Gradient map selection menu"
 msgstr "グラデーションマップ選択メニュー"
 
-#: ../plug-ins/common/warp.c:667
+#: ../plug-ins/common/warp.c:668
 msgid "Vector mag:"
 msgstr "ベクトル拡大:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:682
+#: ../plug-ins/common/warp.c:683
 #: ../plug-ins/ifs-compose/ifs-compose.c:567
 msgid "Angle:"
 msgstr "角度:"
 
-#: ../plug-ins/common/warp.c:701
+#: ../plug-ins/common/warp.c:702
 msgid "Fixed-direction-vector map selection menu"
 msgstr "固定方位ベクトルマップ選択メニュー"
 
 #. make sure layer is visible
-#: ../plug-ins/common/warp.c:1177
+#: ../plug-ins/common/warp.c:1178
 msgid "Smoothing X gradient"
 msgstr "X グラデーションを滑らかにしています"
 
-#: ../plug-ins/common/warp.c:1180
+#: ../plug-ins/common/warp.c:1181
 msgid "Smoothing Y gradient"
 msgstr "Y グラデーションを滑らかにしています"
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1230
+#: ../plug-ins/common/warp.c:1231
 msgid "Finding XY gradient"
 msgstr "XYグラデーションを探しています"
 
-#: ../plug-ins/common/warp.c:1255
+#: ../plug-ins/common/warp.c:1256
 #, c-format
 msgid "Flow step %d"
 msgstr "ステップ %d"
@@ -8477,23 +8481,23 @@ msgstr "波(_W)..."
 msgid "Waves"
 msgstr "波"
 
-#: ../plug-ins/common/waves.c:294
+#: ../plug-ins/common/waves.c:295
 msgid "_Reflective"
 msgstr "反射(_R)"
 
-#: ../plug-ins/common/waves.c:313
+#: ../plug-ins/common/waves.c:314
 msgid "_Amplitude:"
 msgstr "振幅(_A):"
 
-#: ../plug-ins/common/waves.c:325
+#: ../plug-ins/common/waves.c:326
 msgid "_Phase:"
 msgstr "位相(_P):"
 
-#: ../plug-ins/common/waves.c:337
+#: ../plug-ins/common/waves.c:338
 msgid "_Wavelength:"
 msgstr "波長(_W):"
 
-#: ../plug-ins/common/waves.c:448
+#: ../plug-ins/common/waves.c:449
 msgid "Waving"
 msgstr "波立たせています"
 
@@ -8545,11 +8549,11 @@ msgstr "グルグルとひねっています"
 msgid "Whirl and Pinch"
 msgstr "グルグルひねる"
 
-#: ../plug-ins/common/whirl-pinch.c:564
+#: ../plug-ins/common/whirl-pinch.c:565
 msgid "_Whirl angle:"
 msgstr "渦の方向(_W):"
 
-#: ../plug-ins/common/whirl-pinch.c:576
+#: ../plug-ins/common/whirl-pinch.c:577
 msgid "_Pinch amount:"
 msgstr "吸い込む量(_P):"
 
@@ -8576,55 +8580,55 @@ msgstr "風"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: ../plug-ins/common/wind.c:920
+#: ../plug-ins/common/wind.c:921
 msgid "Style"
 msgstr "スタイル"
 
-#: ../plug-ins/common/wind.c:924
+#: ../plug-ins/common/wind.c:925
 msgid "_Wind"
 msgstr "風(_W)"
 
-#: ../plug-ins/common/wind.c:925
+#: ../plug-ins/common/wind.c:926
 msgid "_Blast"
 msgstr "暴風(_B)"
 
-#: ../plug-ins/common/wind.c:948
+#: ../plug-ins/common/wind.c:949
 msgid "_Left"
 msgstr "左(_L)"
 
-#: ../plug-ins/common/wind.c:949
+#: ../plug-ins/common/wind.c:950
 msgid "_Right"
 msgstr "右(_R)"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: ../plug-ins/common/wind.c:968
+#: ../plug-ins/common/wind.c:969
 msgid "Edge Affected"
 msgstr "端の効果"
 
-#: ../plug-ins/common/wind.c:972
+#: ../plug-ins/common/wind.c:973
 msgid "L_eading"
 msgstr "きっかけ(_E)"
 
-#: ../plug-ins/common/wind.c:973
+#: ../plug-ins/common/wind.c:974
 msgid "Tr_ailing"
 msgstr "たなびき(_A)"
 
-#: ../plug-ins/common/wind.c:974
+#: ../plug-ins/common/wind.c:975
 msgid "Bot_h"
 msgstr "両方(_H)"
 
-#: ../plug-ins/common/wind.c:1011
+#: ../plug-ins/common/wind.c:1012
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "値を大きくすると影響を受ける領域が小さくなります"
 
-#: ../plug-ins/common/wind.c:1026
+#: ../plug-ins/common/wind.c:1027
 #: ../plug-ins/gimpressionist/orientmap.c:693
 msgid "_Strength:"
 msgstr "強さ(_S):"
 
-#: ../plug-ins/common/wind.c:1030
+#: ../plug-ins/common/wind.c:1031
 msgid "Higher values increase the magnitude of the effect"
 msgstr "値を大きくすると効果が大きくなります"
 
@@ -8682,24 +8686,24 @@ msgstr "アルファチャンネルは無視されます"
 msgid "Save as BMP"
 msgstr "BMP 形式で保存する"
 
-#: ../plug-ins/file-bmp/bmp-write.c:815
+#: ../plug-ins/file-bmp/bmp-write.c:816
 msgid "_Run-Length Encoded"
 msgstr "RLE エンコード(_R)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:827
-#: ../plug-ins/file-jpeg/jpeg-save.c:904
+#: ../plug-ins/file-bmp/bmp-write.c:828
+#: ../plug-ins/file-jpeg/jpeg-save.c:905
 msgid "_Advanced Options"
 msgstr "詳細設定(_A)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:842
+#: ../plug-ins/file-bmp/bmp-write.c:843
 msgid "16 bits"
 msgstr "16 ビット"
 
-#: ../plug-ins/file-bmp/bmp-write.c:878
+#: ../plug-ins/file-bmp/bmp-write.c:879
 msgid "24 bits"
 msgstr "24 ビット"
 
-#: ../plug-ins/file-bmp/bmp-write.c:895
+#: ../plug-ins/file-bmp/bmp-write.c:896
 msgid "32 bits"
 msgstr "32 ビット"
 
@@ -8738,8 +8742,8 @@ msgid "Replacement for undefined pixels"
 msgstr "未定義のピクセルを置き換える色"
 
 #: ../plug-ins/file-fits/fits.c:1021
-#: ../plug-ins/gfig/gfig-dialog.c:1285
-#: ../plug-ins/gfig/gfig-dialog.c:1460
+#: ../plug-ins/gfig/gfig-dialog.c:1286
+#: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "White"
 msgstr "白"
 
@@ -8863,7 +8867,7 @@ msgid "Calculating file size..."
 msgstr "ファイルサイズを計算しています..."
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:778
-#: ../plug-ins/file-jpeg/jpeg-save.c:880
+#: ../plug-ins/file-jpeg/jpeg-save.c:881
 msgid "File size: unknown"
 msgstr "ファイルサイズ: 不明"
 
@@ -8871,105 +8875,105 @@ msgstr "ファイルサイズ: 不明"
 msgid "Save as JPEG"
 msgstr "JPEG 形式で保存する"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:866
+#: ../plug-ins/file-jpeg/jpeg-save.c:867
 msgid "_Quality:"
 msgstr "品質(_Q):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:870
+#: ../plug-ins/file-jpeg/jpeg-save.c:871
 msgid "JPEG quality parameter"
 msgstr "JPEG 品質パラメータ"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:889
+#: ../plug-ins/file-jpeg/jpeg-save.c:890
 msgid "Enable preview to obtain the file size."
 msgstr "ファイル容量のプレビューを有効にします。"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:892
+#: ../plug-ins/file-jpeg/jpeg-save.c:893
 msgid "Sho_w preview in image window"
 msgstr "画像ウィンドウでプレビュー(_W)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:933
+#: ../plug-ins/file-jpeg/jpeg-save.c:934
 msgid "S_moothing:"
 msgstr "スムージング(_M):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:946
+#: ../plug-ins/file-jpeg/jpeg-save.c:947
 msgid "Frequency (rows):"
 msgstr "頻度(列):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:962
+#: ../plug-ins/file-jpeg/jpeg-save.c:963
 msgid "Use _restart markers"
 msgstr "リスタートマーカーを使用(_R)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:978
+#: ../plug-ins/file-jpeg/jpeg-save.c:979
 msgid "_Optimize"
 msgstr "最適化(_O)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:992
+#: ../plug-ins/file-jpeg/jpeg-save.c:993
 msgid "_Progressive"
 msgstr "プログレッシブ(_P)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1008
+#: ../plug-ins/file-jpeg/jpeg-save.c:1009
 msgid "Save _EXIF data"
 msgstr "EXIF データを保存(_E)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1025
+#: ../plug-ins/file-jpeg/jpeg-save.c:1026
 msgid "Save _thumbnail"
 msgstr "サムネイルを保存(_T)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1042
+#: ../plug-ins/file-jpeg/jpeg-save.c:1043
 msgid "Save _XMP data"
 msgstr "XMP データを保存(_X)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1057
+#: ../plug-ins/file-jpeg/jpeg-save.c:1058
 msgid "_Use quality settings from original image"
 msgstr "原画の品位設定を使用(_U)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1063
+#: ../plug-ins/file-jpeg/jpeg-save.c:1064
 msgid "If the original image was loaded from a JPEG file using non-standard quality settings (quantization tables), enable this option to get almost the same quality and file size."
 msgstr "オリジナル画像が非標準の品位設定を使用しているJPEGファイルから読み込まれている場合、このオプションを有効にするとオリジナル画像とほぼ同じ品位・ファイルサイズで保存できます"
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1087
+#: ../plug-ins/file-jpeg/jpeg-save.c:1088
 msgid "Su_bsampling:"
 msgstr "サブサンプリング(_B):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1094
+#: ../plug-ins/file-jpeg/jpeg-save.c:1095
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (最高品位)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1096
+#: ../plug-ins/file-jpeg/jpeg-save.c:1097
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1098
+#: ../plug-ins/file-jpeg/jpeg-save.c:1099
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1100
+#: ../plug-ins/file-jpeg/jpeg-save.c:1101
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (最小ファイルサイズ)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1130
+#: ../plug-ins/file-jpeg/jpeg-save.c:1131
 msgid "_DCT method:"
 msgstr "DCT 変換方法(_D):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1136
+#: ../plug-ins/file-jpeg/jpeg-save.c:1137
 msgid "Fast Integer"
 msgstr "高速整数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1137
+#: ../plug-ins/file-jpeg/jpeg-save.c:1138
 msgid "Integer"
 msgstr "整数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1138
+#: ../plug-ins/file-jpeg/jpeg-save.c:1139
 msgid "Floating-Point"
 msgstr "浮動小数"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1154
+#: ../plug-ins/file-jpeg/jpeg-save.c:1155
 msgid "Comment"
 msgstr "コメント"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1199
+#: ../plug-ins/file-jpeg/jpeg-save.c:1201
 msgid "Sa_ve Defaults"
 msgstr "既定値として保存(_V)"
 
@@ -9235,34 +9239,34 @@ msgstr "警告: サポートされない単位系 %d が XJT に保存されま�
 msgid "Save as XJT"
 msgstr "XJT 形式で保存"
 
-#: ../plug-ins/file-xjt/xjt.c:888
+#: ../plug-ins/file-xjt/xjt.c:889
 msgid "Optimize"
 msgstr "最適化"
 
-#: ../plug-ins/file-xjt/xjt.c:898
+#: ../plug-ins/file-xjt/xjt.c:899
 msgid "Clear transparent"
 msgstr "透明クリア"
 
-#: ../plug-ins/file-xjt/xjt.c:910
+#: ../plug-ins/file-xjt/xjt.c:911
 msgid "Quality:"
 msgstr "品質:"
 
-#: ../plug-ins/file-xjt/xjt.c:919
+#: ../plug-ins/file-xjt/xjt.c:920
 msgid "Smoothing:"
 msgstr "スムージング:"
 
-#: ../plug-ins/file-xjt/xjt.c:1716
-#: ../plug-ins/file-xjt/xjt.c:3353
+#: ../plug-ins/file-xjt/xjt.c:1717
+#: ../plug-ins/file-xjt/xjt.c:3354
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "作業ディレクトリ %s が作れません: %s"
 
-#: ../plug-ins/file-xjt/xjt.c:3219
+#: ../plug-ins/file-xjt/xjt.c:3220
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "エラー: XJT プロパティファイル %s が読めません。"
 
-#: ../plug-ins/file-xjt/xjt.c:3226
+#: ../plug-ins/file-xjt/xjt.c:3227
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "エラー: XJT プロパティファイル %s が空です。"
@@ -9327,7 +9331,7 @@ msgid "Horseshoe"
 msgstr "蹄鉄"
 
 #: ../plug-ins/flame/flame.c:752
-#: ../plug-ins/gfig/gfig-dialog.c:1441
+#: ../plug-ins/gfig/gfig-dialog.c:1443
 msgid "Polar"
 msgstr "極座標"
 
@@ -9992,113 +9996,113 @@ msgid "This tool has no options"
 msgstr "このツールにはオプションはありません"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1227
+#: ../plug-ins/gfig/gfig-dialog.c:1228
 msgid "Show position"
 msgstr "位置表示"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1239
+#: ../plug-ins/gfig/gfig-dialog.c:1240
 msgid "Show control points"
 msgstr "制御点表示"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1273
+#: ../plug-ins/gfig/gfig-dialog.c:1274
 msgid "Max undo:"
 msgstr "最大アンドゥ数:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1282
+#: ../plug-ins/gfig/gfig-dialog.c:1283
 #: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "透明"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1284
+#: ../plug-ins/gfig/gfig-dialog.c:1285
 msgid "Foreground"
 msgstr "前景"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1286
+#: ../plug-ins/gfig/gfig-dialog.c:1287
 #: ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: ../plug-ins/imagemap/imap_menu.c:159
 msgid "Copy"
 msgstr "コピー"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1295
+#: ../plug-ins/gfig/gfig-dialog.c:1296
 msgid "Layer background type. Copy causes the previous layer to be copied before the draw is performed."
 msgstr "レイヤー背景種。コピーは描かれる前にその前のレイヤーを複製します"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1301
+#: ../plug-ins/gfig/gfig-dialog.c:1302
 msgid "Background:"
 msgstr "背景:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1304
+#: ../plug-ins/gfig/gfig-dialog.c:1305
 msgid "Feather"
 msgstr "ぼかす"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1328
+#: ../plug-ins/gfig/gfig-dialog.c:1329
 msgid "Radius:"
 msgstr "半径:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1385
+#: ../plug-ins/gfig/gfig-dialog.c:1387
 msgid "Grid spacing:"
 msgstr "グリッド間隔"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1402
+#: ../plug-ins/gfig/gfig-dialog.c:1404
 msgid "Polar grid sectors desired:"
 msgstr "極座標グリッドの分割数:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1424
+#: ../plug-ins/gfig/gfig-dialog.c:1426
 msgid "Polar grid radius interval:"
 msgstr "極座標グリッドの半径間隔:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1440
+#: ../plug-ins/gfig/gfig-dialog.c:1442
 #: ../plug-ins/imagemap/imap_menu.c:219
 msgid "Rectangle"
 msgstr "矩形"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1442
+#: ../plug-ins/gfig/gfig-dialog.c:1444
 msgid "Isometric"
 msgstr "正三角形"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1451
+#: ../plug-ins/gfig/gfig-dialog.c:1453
 msgid "Grid type:"
 msgstr "グリッドの種類:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1458
+#: ../plug-ins/gfig/gfig-dialog.c:1460
 #: ../plug-ins/gradient-flare/gradient-flare.c:550
 msgid "Normal"
 msgstr "標準"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1461
+#: ../plug-ins/gfig/gfig-dialog.c:1463
 msgid "Grey"
 msgstr "グレー"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1462
+#: ../plug-ins/gfig/gfig-dialog.c:1464
 msgid "Darker"
 msgstr "暗く"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1463
+#: ../plug-ins/gfig/gfig-dialog.c:1465
 msgid "Lighter"
 msgstr "明るく"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1464
+#: ../plug-ins/gfig/gfig-dialog.c:1466
 msgid "Very dark"
 msgstr "とても暗い"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1473
+#: ../plug-ins/gfig/gfig-dialog.c:1475
 msgid "Grid color:"
 msgstr "グリッドの色:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1696
+#: ../plug-ins/gfig/gfig-dialog.c:1698
 msgid "Sides:"
 msgstr "サイズ:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1706
+#: ../plug-ins/gfig/gfig-dialog.c:1708
 msgid "Right"
 msgstr "右"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1707
+#: ../plug-ins/gfig/gfig-dialog.c:1709
 msgid "Left"
 msgstr "左"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1717
+#: ../plug-ins/gfig/gfig-dialog.c:1719
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "向き:"
@@ -10201,7 +10205,7 @@ msgstr "画像に適用する浮き彫り効果の強度を指定する (単位�
 
 #: ../plug-ins/gimpressionist/color.c:59
 msgid "Co_lor"
-msgstr "色(_L):"
+msgstr "色(_L)"
 
 #: ../plug-ins/gimpressionist/color.c:69
 msgid "A_verage under brush"
@@ -10338,74 +10342,98 @@ msgstr "描画しています"
 msgid "GIMPressionist"
 msgstr "GIMPressionist"
 
+# タブのインデックス
 #: ../plug-ins/gimpressionist/orientation.c:91
 msgid "Or_ientation"
 msgstr "向き(_I)"
 
+# ラベル
+# (2009-07-20 NISHIBORI Kiyotaka)
 #: ../plug-ins/gimpressionist/orientation.c:105
 msgid "Directions:"
-msgstr "方向:"
+msgstr "方向バリエーション数:"
 
+# ツールチップ
+# (2009-07-20 SimaMoto RyoTa)
 #: ../plug-ins/gimpressionist/orientation.c:109
 msgid "The number of directions (i.e. brushes) to use"
-msgstr "使用する方向 (ブラシ) の数"
+msgstr "使用できるストローク方向のバリエーション数を指定します"
 
 #: ../plug-ins/gimpressionist/orientation.c:117
 msgid "Start angle:"
 msgstr "開始角度:"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
-msgstr "最初に作成するブラシの開始角度"
+msgstr "最初のストローク方向（角度）を指定します"
 
 #: ../plug-ins/gimpressionist/orientation.c:129
 msgid "Angle span:"
 msgstr "角度範囲:"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
-msgstr "最初に作成するブラシの角度範囲"
+msgstr "ストローク方向を変化させる範囲（角度）を指定します"
 
+# ツールチップ
+# (2009-07-20 SimaMoto RyoTa)
 #: ../plug-ins/gimpressionist/orientation.c:156
 msgid "Let the value (brightness) of the region determine the direction of the stroke"
-msgstr "部分的な値 (明度) によってストロークの方向を決めさせる"
+msgstr "付近の明度でストローク方向を決定します"
 
+# ラジオボタンのラベル
+# 「半径」から変更、フィルタ適用後の結果から意訳
+# (2009-07-19 NISHIBORI Kiyotaka)
 #: ../plug-ins/gimpressionist/orientation.c:159
 #: ../plug-ins/gimpressionist/size.c:162
 msgid "Radius"
-msgstr "半径"
+msgstr "中央からの距離"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/orientation.c:160
 msgid "The distance from the center of the image determines the direction of the stroke"
-msgstr "画像の中心からの距離がストロークの方向を決める"
+msgstr "画像中央からの距離でストローク方向を決定します"
 
+# ラジオボタンのラベル
 #: ../plug-ins/gimpressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
-msgstr "個々のストロークの方向をランダムに選ぶ"
+msgstr "ストロークごとにランダムなストローク方向を選びます"
 
+# fixed Bug 588342 reported by SimaMoto, Ryota.
+# ラジオボタンのラベル
+# 「半径」から変更、フィルタ適用後の結果から意訳
+# (2009-07-19 NISHIBORI Kiyotaka)
 #: ../plug-ins/gimpressionist/orientation.c:167
 #: ../plug-ins/gimpressionist/size.c:170
 msgid "Radial"
-msgstr "半径"
+msgstr "中央からの方向"
 
+# ラジオボタンのラベル
 #: ../plug-ins/gimpressionist/orientation.c:168
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "中心からの方向によってストロークの方向を決めさせる"
+msgstr "画像中央からの方向でストローク方向を決定します"
 
+# ラジオボタンのラベル
 #: ../plug-ins/gimpressionist/orientation.c:175
 #: ../plug-ins/gimpressionist/size.c:178
 msgid "Flowing"
-msgstr "流れる"
+msgstr "流れるように"
 
+# ラジオボタンのラベル
 #: ../plug-ins/gimpressionist/orientation.c:176
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr "ストロークは「流れる」パターンに従う"
+msgstr "「流れるような」パターンに従ってストロークします"
 
+# ツールチップ
+# (2009-07-20 SimaMoto RyoTa)
 #: ../plug-ins/gimpressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
-msgstr "部分的な色相がストロークの方向を決める"
+msgstr "付近の色相でストローク方向を決定します"
 
+# ラジオボタンのラベル
 #: ../plug-ins/gimpressionist/orientation.c:183
 #: ../plug-ins/gimpressionist/size.c:186
 msgid "Adaptive"
@@ -10413,16 +10441,17 @@ msgstr "適応的"
 
 #: ../plug-ins/gimpressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
-msgstr "オリジナル画像に最も近くなるような方向が選ばれる"
+msgstr "原画に最適なストローク方向を自動的に選びます"
 
+# ラジオボタンのラベル
 #: ../plug-ins/gimpressionist/orientation.c:191
 #: ../plug-ins/gimpressionist/size.c:195
 msgid "Manual"
-msgstr "マニュアル"
+msgstr "手動設定"
 
 #: ../plug-ins/gimpressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
-msgstr "マニュアルでストローク方向を指定する"
+msgstr "ストローク方向を手動で設定します"
 
 #: ../plug-ins/gimpressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
@@ -10441,7 +10470,7 @@ msgid "The vector-field. Left-click to move selected vector, Right-click to poin
 msgstr "ベクトル欄。左クリックで選択したベクトルの移動、右クリックでポイントをマウスの方へ、中クリックで新規ベクトルの追加。"
 
 #: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/gimpressionist/sizemap.c:459
 msgid "Adjust the preview's brightness"
 msgstr "プレビューの明るさを調整する"
 
@@ -10454,7 +10483,7 @@ msgid "Select next vector"
 msgstr "次のベクトルを選択する"
 
 #: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:489
+#: ../plug-ins/gimpressionist/sizemap.c:490
 msgid "A_dd"
 msgstr "追加(_D)"
 
@@ -10463,7 +10492,7 @@ msgid "Add new vector"
 msgstr "新規ベクトルを追加する"
 
 #: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:496
+#: ../plug-ins/gimpressionist/sizemap.c:497
 msgid "_Kill"
 msgstr "削除(_K)"
 
@@ -10492,7 +10521,7 @@ msgid "Vortex_3"
 msgstr "渦 _3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:541
+#: ../plug-ins/gimpressionist/sizemap.c:542
 msgid "_Voronoi"
 msgstr "ボロノイ(_V)"
 
@@ -10525,7 +10554,7 @@ msgid "S_trength exp.:"
 msgstr "強さ指数(_T):"
 
 #: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:536
+#: ../plug-ins/gimpressionist/sizemap.c:537
 msgid "Change the exponent of the strength"
 msgstr "強さの指数を変更する"
 
@@ -10602,31 +10631,31 @@ msgstr "PPM ファイル '%s' の保存に失敗: %s"
 msgid "Save Current"
 msgstr "現状保存"
 
-#: ../plug-ins/gimpressionist/presets.c:893
+#: ../plug-ins/gimpressionist/presets.c:894
 msgid "Gimpressionist Defaults"
 msgstr "Gimpressionist デフォルト"
 
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/gimpressionist/presets.c:1015
 msgid "_Presets"
 msgstr "プリセット(_P)"
 
-#: ../plug-ins/gimpressionist/presets.c:1029
+#: ../plug-ins/gimpressionist/presets.c:1030
 msgid "Save Current..."
 msgstr "現状保存..."
 
-#: ../plug-ins/gimpressionist/presets.c:1037
+#: ../plug-ins/gimpressionist/presets.c:1038
 msgid "Save the current settings to the specified file"
 msgstr "現在の設定を特定のファイルに保存します"
 
-#: ../plug-ins/gimpressionist/presets.c:1065
+#: ../plug-ins/gimpressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
 msgstr "メモリに選択したプリセットを読み込みます"
 
-#: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/gimpressionist/presets.c:1072
 msgid "Deletes the selected Preset"
 msgstr "選択したプリセットを削除します"
 
-#: ../plug-ins/gimpressionist/presets.c:1077
+#: ../plug-ins/gimpressionist/presets.c:1078
 msgid "Reread the folder of Presets"
 msgstr "プリセットのディレクトリを再読み込みします"
 
@@ -10649,18 +10678,23 @@ msgstr "元画像に戻す"
 msgid "_Size"
 msgstr "サイズ(_S)"
 
+# ラベル
+# (2009-07-20 NISHIBORI Kiyotaka)
 #: ../plug-ins/gimpressionist/size.c:108
 msgid "Sizes:"
-msgstr "サイズ:"
+msgstr "サイズバリエーション数:"
 
+# ツールチップ
+# (2009-07-20 NISHIBORI Kiyotaka)
 #: ../plug-ins/gimpressionist/size.c:112
 msgid "The number of sizes of brushes to use"
-msgstr "使用する方向 (ブラシ) の数"
+msgstr "使用できるストロークサイズのバリエーション数を指定します"
 
 #: ../plug-ins/gimpressionist/size.c:120
 msgid "Minimum size:"
 msgstr "最小サイズ:"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:124
 msgid "The smallest brush to create"
 msgstr "作成する最小ブラシサイズ"
@@ -10669,91 +10703,102 @@ msgstr "作成する最小ブラシサイズ"
 msgid "Maximum size:"
 msgstr "最大サイズ:"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:136
 msgid "The largest brush to create"
 msgstr "作成する最大ブラシサイズ"
 
+# ダイアログのラベル
 #: ../plug-ins/gimpressionist/size.c:150
 msgid "Size:"
-msgstr "サイズ:"
+msgstr "サイズの決定基準:"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:159
 msgid "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "部分的な値 (明度) によってストロークサイズを決める"
+msgstr "付近の明度でストロークサイズを決定します"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:163
 msgid "The distance from the center of the image determines the size of the stroke"
-msgstr "画像の中心からの距離によってストロークサイズを決める"
+msgstr "画像中央からの距離でストロークサイズを決定します"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:167
 msgid "Selects a random size for each stroke"
-msgstr "個々のストロークにランダムサイズを選ぶ"
+msgstr "ストロークごとにランダムなブラシサイズを選びます"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr "中心からの方向によってストロークサイズを決めさせる"
+msgstr "画像中央からの方向でストロークサイズを決定します"
 
+# ツールチップ
+# (2009-07-20 SimaMoto RyoTa)
 #: ../plug-ins/gimpressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
-msgstr "部分的な色相によってストロークサイズを決める"
+msgstr "付近の色相でストロークサイズを決定します"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr "オリジナル画像に最も近く適合するブラシサイズが選ばれる"
+msgstr "原画に最適なストロークサイズを自動的に選びます"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:196
 msgid "Manually specify the stroke size"
-msgstr "ストロークサイズをマニュアル指定"
+msgstr "ストロークサイズを手動で設定します"
 
+# ツールチップ
 #: ../plug-ins/gimpressionist/size.c:207
 msgid "Opens up the Size Map Editor"
-msgstr "サイズマップエディタを開く"
+msgstr "サイズマップエディタを開いてストロークサイズを設定します"
 
 #: ../plug-ins/gimpressionist/sizemap.c:400
 msgid "Size Map Editor"
 msgstr "サイズマップエディタ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:428
+#: ../plug-ins/gimpressionist/sizemap.c:429
 msgid "Smvectors"
 msgstr "サイズマップベクトル"
 
-#: ../plug-ins/gimpressionist/sizemap.c:438
+#: ../plug-ins/gimpressionist/sizemap.c:439
 msgid "The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."
 msgstr "サイズマップベクトル欄。左クリックで選択した smvector を移動、右クリックでポイントをマウスの方へ、中クリックで新規 smvector を追加。"
 
-#: ../plug-ins/gimpressionist/sizemap.c:480
+#: ../plug-ins/gimpressionist/sizemap.c:481
 msgid "Select previous smvector"
 msgstr "前の smvector を選択する"
 
-#: ../plug-ins/gimpressionist/sizemap.c:487
+#: ../plug-ins/gimpressionist/sizemap.c:488
 msgid "Select next smvector"
 msgstr "次の smvector を選択する"
 
-#: ../plug-ins/gimpressionist/sizemap.c:494
+#: ../plug-ins/gimpressionist/sizemap.c:495
 msgid "Add new smvector"
 msgstr "新規 smvector を追加する"
 
-#: ../plug-ins/gimpressionist/sizemap.c:501
+#: ../plug-ins/gimpressionist/sizemap.c:502
 msgid "Delete selected smvector"
 msgstr "選択した smvector を削除する"
 
-#: ../plug-ins/gimpressionist/sizemap.c:514
+#: ../plug-ins/gimpressionist/sizemap.c:515
 msgid "Change the angle of the selected smvector"
 msgstr "選択した smvector の角度を変える"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/gimpressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "強さ(_T):"
 
-#: ../plug-ins/gimpressionist/sizemap.c:525
+#: ../plug-ins/gimpressionist/sizemap.c:526
 msgid "Change the strength of the selected smvector"
 msgstr "選択した smvector の強さを変える"
 
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr "強さ指数(_R):"
 
-#: ../plug-ins/gimpressionist/sizemap.c:548
+#: ../plug-ins/gimpressionist/sizemap.c:549
 msgid "Voronoi-mode makes only the smvector closest to the given point have any influence"
 msgstr "ボロノイ-モードでは指定した点から最近接のサイズマップベクトルのみが影響を持ちます"
 
@@ -12664,6 +12709,14 @@ msgstr "迷路(_M)..."
 msgid "Drawing maze"
 msgstr "迷路を描いています"
 
+#: ../plug-ins/metadata/metadata.c:182
+msgid "View and edit metadata (EXIF, IPTC, XMP)"
+msgstr "メタデータ (EXIF, IPTC, XMP) の閲覧や編集を行います"
+
+#: ../plug-ins/metadata/metadata.c:191
+msgid "Propert_ies"
+msgstr "属性(_I)"
+
 #: ../plug-ins/metadata/xmp-parse.c:238
 #, c-format
 msgid "Error: No XMP packet found"
@@ -12889,35 +12942,35 @@ msgstr "スキャナ/カメラからデータを転送しています"
 msgid "Grab"
 msgstr "取り込み範囲"
 
-#: ../plug-ins/win-snap/winsnap.c:880
+#: ../plug-ins/win-snap/winsnap.c:881
 msgid "Grab a single window"
 msgstr "単一ウィンドウ"
 
-#: ../plug-ins/win-snap/winsnap.c:894
+#: ../plug-ins/win-snap/winsnap.c:895
 msgid "Grab the whole screen"
 msgstr "画面全体"
 
-#: ../plug-ins/win-snap/winsnap.c:910
+#: ../plug-ins/win-snap/winsnap.c:911
 msgid "after"
 msgstr "取り込みは"
 
-#: ../plug-ins/win-snap/winsnap.c:922
+#: ../plug-ins/win-snap/winsnap.c:923
 msgid "Seconds delay"
 msgstr "秒後"
 
-#: ../plug-ins/win-snap/winsnap.c:929
+#: ../plug-ins/win-snap/winsnap.c:930
 msgid "Include decorations"
 msgstr "ウィンドウ飾りも含める"
 
-#: ../plug-ins/win-snap/winsnap.c:988
+#: ../plug-ins/win-snap/winsnap.c:989
 msgid "Capture a window or desktop image"
 msgstr "ウィンドウやデスクトップのスクリーンショットを取り込みます"
 
-#: ../plug-ins/win-snap/winsnap.c:993
+#: ../plug-ins/win-snap/winsnap.c:994
 msgid "_Screen Shot..."
 msgstr "スクリーンショット(_S)..."
 
-#: ../plug-ins/win-snap/winsnap.c:1141
+#: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "何も取り込まれませんでした"
 
@@ -17815,8 +17868,6 @@ msgstr "何も取り込まれませんでした"
 #~ msgstr "XMP 読み込み(_I)..."
 #~ msgid "_Export XMP..."
 #~ msgstr "XMP 書き出し(_E)..."
-#~ msgid "Propert_ies"
-#~ msgstr "属性(_I)"
 #~ msgid "Dither algorithm:"
 #~ msgstr "ディザリングアルゴリズム:"
 #~ msgid "Right border:"

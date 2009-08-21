@@ -64,3 +64,23 @@ as it will most probably have to open a dialog.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_export_dialog_new ##### -->
+<para>
+
+</para>
+
+@format_name: 
+@role: 
+@help_id: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_export_dialog_get_content_area ##### -->
+<para>
+
+</para>
+
+@dialog: 
+@Returns: 
+
+

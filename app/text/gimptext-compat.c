@@ -119,7 +119,7 @@ text_render (GimpImage    *image,
   if (drawable == NULL)
     {
       /*  If the drawable is NULL, create a new layer  */
-      gimp_image_add_layer (image, layer, -1, TRUE);
+      gimp_image_add_layer (image, layer, NULL, -1, TRUE);
     }
   else
     {

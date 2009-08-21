@@ -49,6 +49,7 @@ enum
   REMOVED,
   VISIBILITY_CHANGED,
   LINKED_CHANGED,
+  LOCK_CONTENT_CHANGED,
   LAST_SIGNAL
 };
 
@@ -61,7 +62,8 @@ enum
   PROP_OFFSET_X,
   PROP_OFFSET_Y,
   PROP_VISIBLE,
-  PROP_LINKED
+  PROP_LINKED,
+  PROP_LOCK_CONTENT
 };
 
 
@@ -153,6 +155,15 @@ gimp_item_class_init (GimpItemClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gimp_item_signals[LOCK_CONTENT_CHANGED] =
+    g_signal_new ("lock-content-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, lock_content_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->set_property       = gimp_item_set_property;
   object_class->get_property       = gimp_item_get_property;
   object_class->finalize           = gimp_item_finalize;
@@ -165,8 +176,10 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->removed                   = NULL;
   klass->visibility_changed        = gimp_item_real_visibility_changed;
   klass->linked_changed            = NULL;
+  klass->lock_content_changed      = NULL;
 
   klass->is_attached               = NULL;
+  klass->get_container             = NULL;
   klass->duplicate                 = gimp_item_real_duplicate;
   klass->convert                   = gimp_item_real_convert;
   klass->rename                    = gimp_item_real_rename;
@@ -224,6 +237,12 @@ gimp_item_class_init (GimpItemClass *klass)
                                    g_param_spec_boolean ("linked", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_LOCK_CONTENT,
+                                   g_param_spec_boolean ("lock-content",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READABLE));
 }
 
 static void
@@ -231,19 +250,20 @@ gimp_item_init (GimpItem *item)
 {
   g_object_force_floating (G_OBJECT (item));
 
-  item->ID          = 0;
-  item->tattoo      = 0;
-  item->image       = NULL;
-  item->parasites   = gimp_parasite_list_new ();
-  item->width       = 0;
-  item->height      = 0;
-  item->offset_x    = 0;
-  item->offset_y    = 0;
-  item->visible     = TRUE;
-  item->linked      = FALSE;
-  item->removed     = FALSE;
-  item->node        = NULL;
-  item->offset_node = NULL;
+  item->ID           = 0;
+  item->tattoo       = 0;
+  item->image        = NULL;
+  item->parasites    = gimp_parasite_list_new ();
+  item->width        = 0;
+  item->height       = 0;
+  item->offset_x     = 0;
+  item->offset_y     = 0;
+  item->visible      = TRUE;
+  item->linked       = FALSE;
+  item->lock_content = FALSE;
+  item->removed      = FALSE;
+  item->node         = NULL;
+  item->offset_node  = NULL;
 }
 
 static void
@@ -290,6 +310,9 @@ gimp_item_get_property (GObject    *object,
       break;
     case PROP_LINKED:
       g_value_set_boolean (value, item->linked);
+      break;
+    case PROP_LOCK_CONTENT:
+      g_value_set_boolean (value, item->lock_content);
       break;
 
     default:
@@ -413,8 +436,9 @@ gimp_item_real_duplicate (GimpItem *item,
   g_object_unref (new_item->parasites);
   new_item->parasites = gimp_parasite_list_copy (item->parasites);
 
-  new_item->visible = gimp_item_get_visible (item);
-  new_item->linked  = gimp_item_get_linked (item);
+  new_item->visible      = gimp_item_get_visible (item);
+  new_item->linked       = gimp_item_get_linked (item);
+  new_item->lock_content = gimp_item_get_lock_content (item);
 
   return new_item;
 }
@@ -528,9 +552,16 @@ gimp_item_sync_offset_node (GimpItem *item)
 void
 gimp_item_removed (GimpItem *item)
 {
+  GimpContainer *children;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   item->removed = TRUE;
+
+  children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+  if (children)
+    gimp_container_foreach (children, (GFunc) gimp_item_removed, NULL);
 
   g_signal_emit (item, gimp_item_signals[REMOVED], 0);
 }
@@ -630,9 +661,64 @@ gimp_item_configure (GimpItem    *item,
 gboolean
 gimp_item_is_attached (GimpItem *item)
 {
+  GimpViewable *parent;
+
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
+  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+
+  if (parent)
+    return gimp_item_is_attached (GIMP_ITEM (parent));
+
   return GIMP_ITEM_GET_CLASS (item)->is_attached (item);
+}
+
+GimpContainer *
+gimp_item_get_container (GimpItem *item)
+{
+  GimpViewable *parent;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+
+  if (parent)
+    return gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+
+  if (GIMP_ITEM_GET_CLASS (item)->get_container)
+    return GIMP_ITEM_GET_CLASS (item)->get_container (item);
+
+  return NULL;
+}
+
+GList *
+gimp_item_get_container_iter (GimpItem *item)
+{
+  GimpContainer *container;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  container = gimp_item_get_container (item);
+
+  if (container)
+    return GIMP_LIST (container)->list;
+
+  return NULL;
+}
+
+gint
+gimp_item_get_index (GimpItem *item)
+{
+  GimpContainer *container;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
+
+  container = gimp_item_get_container (item);
+
+  if (container)
+    return gimp_container_get_child_index (container, GIMP_OBJECT (item));
+
+  return -1;
 }
 
 /**
@@ -1449,20 +1535,14 @@ gimp_item_parasite_list (const GimpItem *item,
   return list;
 }
 
-gboolean
-gimp_item_get_visible (const GimpItem *item)
-{
-  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
-
-  return item->visible;
-}
-
 void
 gimp_item_set_visible (GimpItem *item,
                        gboolean  visible,
                        gboolean  push_undo)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
+
+  visible = visible ? TRUE : FALSE;
 
   if (gimp_item_get_visible (item) != visible)
     {
@@ -1474,12 +1554,20 @@ gimp_item_set_visible (GimpItem *item,
             gimp_image_undo_push_item_visibility (image, NULL, item);
         }
 
-      item->visible = visible ? TRUE : FALSE;
+      item->visible = visible;
 
       g_signal_emit (item, gimp_item_signals[VISIBILITY_CHANGED], 0);
 
       g_object_notify (G_OBJECT (item), "visible");
     }
+}
+
+gboolean
+gimp_item_get_visible (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return item->visible;
 }
 
 void
@@ -1488,6 +1576,8 @@ gimp_item_set_linked (GimpItem *item,
                       gboolean  push_undo)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
+
+  linked = linked ? TRUE : FALSE;
 
   if (gimp_item_get_linked (item) != linked)
     {
@@ -1499,7 +1589,7 @@ gimp_item_set_linked (GimpItem *item,
             gimp_image_undo_push_item_linked (image, NULL, item);
         }
 
-      item->linked = linked ? TRUE : FALSE;
+      item->linked = linked;
 
       g_signal_emit (item, gimp_item_signals[LINKED_CHANGED], 0);
 
@@ -1513,6 +1603,43 @@ gimp_item_get_linked (const GimpItem *item)
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
   return item->linked;
+}
+
+void
+gimp_item_set_lock_content (GimpItem *item,
+                            gboolean  lock_content,
+                            gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  lock_content = lock_content ? TRUE : FALSE;
+
+  if (gimp_item_get_lock_content (item) != lock_content)
+    {
+      if (push_undo && gimp_item_is_attached (item))
+        {
+          /* Right now I don't think this should be pushed. */
+#if 0
+          GimpImage *image = gimp_item_get_image (item);
+
+          gimp_image_undo_push_item_lock_content (image, NULL, item);
+#endif
+        }
+
+      item->lock_content = lock_content;
+
+      g_signal_emit (item, gimp_item_signals[LOCK_CONTENT_CHANGED], 0);
+
+      g_object_notify (G_OBJECT (item), "lock-content");
+    }
+}
+
+gboolean
+gimp_item_get_lock_content (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return item->lock_content;
 }
 
 gboolean

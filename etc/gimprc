@@ -74,7 +74,7 @@
 # 
 # (brush-path "${gimp_dir}/brushes:${gimp_data_dir}/brushes")
 
-#   This is a colon-separated list of folders to search.
+# This is a colon-separated list of folders to search.
 # 
 # (brush-path-writable "${gimp_dir}/brushes")
 
@@ -83,7 +83,7 @@
 # 
 # (pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
 
-#   This is a colon-separated list of folders to search.
+# This is a colon-separated list of folders to search.
 # 
 # (pattern-path-writable "${gimp_dir}/patterns")
 
@@ -92,7 +92,7 @@
 # 
 # (palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
 
-#   This is a colon-separated list of folders to search.
+# This is a colon-separated list of folders to search.
 # 
 # (palette-path-writable "${gimp_dir}/palettes")
 
@@ -101,7 +101,7 @@
 # 
 # (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
 
-#   This is a colon-separated list of folders to search.
+# This is a colon-separated list of folders to search.
 # 
 # (gradient-path-writable "${gimp_dir}/gradients")
 
@@ -113,7 +113,7 @@
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
 # 
-# (default-brush "Circle (11)")
+# (default-brush "Round Fuzzy")
 
 # Specify a default pattern.  This is a string value.
 # 
@@ -314,7 +314,7 @@
 # When enabled, the X server is queried for the mouse's current position on
 # each motion event, rather than relying on the position hint.  This means
 # painting with large brushes should be more accurate, but it may be slower. 
-# Perversely, on some X servers enabling this option results in faster
+# Conversely, on some X servers enabling this option results in faster
 # painting.  Possible values are yes and no.
 # 
 # (perfect-mouse yes)
@@ -528,7 +528,7 @@
 # When enabled, GIMP will not save an image if it has not been changed since
 # it was opened.  Possible values are yes and no.
 # 
-# (trust-dirty-flag yes)
+# (trust-dirty-flag no)
 
 # Remember the current tool, pattern, color, and brush across GIMP sessions. 
 # Possible values are yes and no.
@@ -638,14 +638,6 @@
 # web-browser.
 # 
 # (help-browser gimp)
-
-# Sets the external web browser to be used.  This can be an absolute path or
-# the name of an executable to search for in the user's PATH. If the command
-# contains '%s' it will be replaced with the URL, else the URL will be
-# appended to the command with a space separating the two.  This is a single
-# filename.
-# 
-# (web-browser "xdg-open %s")
 
 # When enabled, the online user manual will be used by the help system.
 # Otherwise the locally installed copy is used.  Possible values are yes and

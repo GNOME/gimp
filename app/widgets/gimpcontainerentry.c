@@ -46,6 +46,7 @@ static void     gimp_container_entry_set_context  (GimpContainerView      *view,
                                                    GimpContext            *context);
 static gpointer gimp_container_entry_insert_item  (GimpContainerView      *view,
                                                    GimpViewable           *viewable,
+                                                   gpointer                parent_insert_data,
                                                    gint                    index);
 static void     gimp_container_entry_remove_item  (GimpContainerView      *view,
                                                    GimpViewable           *viewable,
@@ -256,6 +257,7 @@ gimp_container_entry_set_context (GimpContainerView *view,
 static gpointer
 gimp_container_entry_insert_item (GimpContainerView *view,
                                   GimpViewable      *viewable,
+                                  gpointer           parent_insert_data,
                                   gint               index)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);

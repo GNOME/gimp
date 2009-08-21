@@ -27,6 +27,7 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpprojection.h"
@@ -266,9 +267,16 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  curr_coords = *coords;
-
   drawable = gimp_image_get_active_drawable (display->image);
+
+  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("The active layer's pixels are locked."));
+      return;
+    }
+
+  curr_coords = *coords;
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 

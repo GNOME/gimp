@@ -174,9 +174,7 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
 
   gimp_config_reset (GIMP_CONFIG (hs_tool->config));
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
-
-  return TRUE;
+  return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 }
 
 static GeglNode *

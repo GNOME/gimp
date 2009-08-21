@@ -1249,12 +1249,12 @@
 	use gtk_widget_get_action() instead of g_object_get_data(),
 	which relies on the name of the data key.
 
-2009-01-23  Kevin Cozens  <kcozens@cvs.gimp.org>
+2009-01-23  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* libgimpcolor/gimprgb-parse.c: Applied patch from Andreas Turtschan
 	to fix more RGB colour values. Fixes bug #568909.
 
-2009-01-23  Kevin Cozens  <kcozens@cvs.gimp.org>
+2009-01-23  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* libgimpcolor/gimprgb-parse.c: Applied patch from Andreas Turtschan
 	to fix colour values for slategray and slategrey. Fixes bug #568839.
@@ -1392,7 +1392,7 @@
 	* configure.in: require intltool >= 0.40.1. Looks like that was
 	the first version with support for the NC_ keyword.
 
-2009-01-13  Kevin Cozens  <kcozens@cvs.gimp.org>
+2009-01-13  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* app/tools/gimpforegroundselecttool.c: Corrected spelling error
 	spotted by David Gowers.

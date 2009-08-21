@@ -190,7 +190,7 @@ selection_float_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 

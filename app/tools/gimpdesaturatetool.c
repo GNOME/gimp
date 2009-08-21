@@ -128,7 +128,10 @@ gimp_desaturate_tool_initialize (GimpTool     *tool,
 
   gimp_config_reset (GIMP_CONFIG (desaturate_tool->config));
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (desaturate_tool->button),
                                    desaturate_tool->config->mode);

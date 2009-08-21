@@ -3,8 +3,10 @@
 #include <string.h>
 
 #include <glib.h>
+#include <gtk/gtk.h>
 
 #include "xmp-parse.h"
+#include "xmp-encode.h"
 
 
 static gpointer
@@ -105,13 +107,22 @@ static XMPParser xmp_parser = {
   print_error
 };
 
+static void
+property_changed (XMPModel     *tree_model,
+                  GtkTreeIter  *iter,
+                  gpointer      user_data)
+{
+  g_print ("Wuff Wuff!\n");
+}
+
 static int
 scan_file (const gchar *filename)
 {
-  gchar *contents;
-  gsize  length;
-  GError *error;
-  XMPParseContext *context;
+  gchar             *contents;
+  gsize              length;
+  GError            *error;
+  XMPParseContext   *context;
+  // XMPModel          *xmp_model = xmp_model_new ();
 
   g_print ("\nFile: %s\n", filename);
   error = NULL;
@@ -129,6 +140,19 @@ scan_file (const gchar *filename)
                                    XMP_FLAG_FIND_XPACKET,
                                    (gpointer) filename,
                                    NULL);
+
+  /*
+   * used for testing the XMPModel
+   *
+  g_signal_connect (xmp_model, "property-changed::xmpMM:DocumentID",
+                    G_CALLBACK (property_changed), NULL);
+
+  if (! xmp_model_parse_file (xmp_model, filename, &error))
+    {
+      xmp_model_free (xmp_model);
+      return 1;
+    }
+  */
 
   if (! xmp_parse_context_parse (context, contents, length, NULL))
     {
@@ -151,10 +175,12 @@ main (int   argc,
       char *argv[])
 {
   g_set_prgname ("xmpdump");
+  g_type_init();
   if (argc > 1)
     {
       for (argv++, argc--; argc; argv++, argc--)
         if (scan_file (*argv) != 0)
+
           return 1;
       return 0;
     }

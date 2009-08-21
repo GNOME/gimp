@@ -21,6 +21,7 @@ GimpHSL
 gimp_hsv_set
 gimp_hsv_clamp
 gimp_hsva_set
+gimp_hsl_set
 GIMP_TYPE_HSV
 GIMP_TYPE_HSL
 <SUBSECTION Standard>

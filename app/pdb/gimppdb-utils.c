@@ -41,6 +41,21 @@
 #include "gimp-intl.h"
 
 
+static GimpObject *
+gimp_pdb_get_data_factory_item (GimpDataFactory *data_factory,
+                                const gchar     *name)
+{
+  GimpObject *gimp_object;
+
+  gimp_object = gimp_container_get_child_by_name (gimp_data_factory_get_container (data_factory), name);
+
+  if (! gimp_object)
+    gimp_object = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (data_factory), name);
+
+  return gimp_object;
+}
+
+
 GimpBrush *
 gimp_pdb_get_brush (Gimp         *gimp,
                     const gchar  *name,
@@ -59,8 +74,7 @@ gimp_pdb_get_brush (Gimp         *gimp,
       return NULL;
     }
 
-  brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->brush_factory), name);
+  brush = (GimpBrush *) gimp_pdb_get_data_factory_item (gimp->brush_factory, name);
 
   if (! brush)
     {
@@ -120,8 +134,7 @@ gimp_pdb_get_pattern (Gimp         *gimp,
       return NULL;
     }
 
-  pattern = (GimpPattern *)
-    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->pattern_factory), name);
+  pattern = (GimpPattern *) gimp_pdb_get_data_factory_item (gimp->pattern_factory, name);
 
   if (! pattern)
     {
@@ -150,8 +163,7 @@ gimp_pdb_get_gradient (Gimp         *gimp,
       return NULL;
     }
 
-  gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->gradient_factory), name);
+  gradient = (GimpGradient *) gimp_pdb_get_data_factory_item (gimp->gradient_factory, name);
 
   if (! gradient)
     {
@@ -186,8 +198,7 @@ gimp_pdb_get_palette (Gimp         *gimp,
       return NULL;
     }
 
-  palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp_data_factory_get_container (gimp->palette_factory), name);
+  palette = (GimpPalette *) gimp_pdb_get_data_factory_item (gimp->palette_factory, name);
 
   if (! palette)
     {
@@ -293,6 +304,7 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
 
 gboolean
 gimp_pdb_item_is_attached (GimpItem  *item,
+                           gboolean   writable,
                            GError   **error)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
@@ -307,6 +319,9 @@ gimp_pdb_item_is_attached (GimpItem  *item,
                    gimp_item_get_ID (item));
       return FALSE;
     }
+
+  if (writable)
+    return gimp_pdb_item_is_writable (item, error);
 
   return TRUE;
 }
@@ -341,6 +356,26 @@ gimp_pdb_item_is_floating (GimpItem  *item,
 }
 
 gboolean
+gimp_pdb_item_is_writable (GimpItem  *item,
+                           GError   **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_item_get_lock_content (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) cannot be modified because its "
+                     "contents are locked"),
+                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
 gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
                               GError    **error)
 {
@@ -358,7 +393,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
       return FALSE;
     }
 
-  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), error);
+  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), FALSE, error);
 }
 
 static const gchar *

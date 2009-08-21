@@ -309,12 +309,9 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
                         gint                w,
                         gint                h)
 {
-  GimpTool        *tool;
-  GimpCropOptions *options;
+  GimpTool        *tool    = GIMP_TOOL (rectangle);
+  GimpCropOptions *options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
   GimpImage       *image;
-
-  tool    = GIMP_TOOL (rectangle);
-  options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_pop_status (tool, tool->display);
 
@@ -323,6 +320,25 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
   /* if rectangle exists, crop it */
   if (w > 0 && h > 0)
     {
+      if (options->layer_only)
+        {
+          GimpLayer *layer = gimp_image_get_active_layer (image);
+
+          if (! layer)
+            {
+              gimp_tool_message_literal (tool, tool->display,
+                                         _("There is no active layer to crop."));
+              return FALSE;
+            }
+
+          if (gimp_item_get_lock_content (GIMP_ITEM (layer)))
+            {
+              gimp_tool_message_literal (tool, tool->display,
+                                         _("The active layer's pixels are locked."));
+              return FALSE;
+            }
+        }
+
       gimp_image_crop (image, GIMP_CONTEXT (options),
                        x, y, w + x, h + y,
                        options->layer_only,

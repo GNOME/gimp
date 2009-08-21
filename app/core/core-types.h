@@ -112,6 +112,7 @@ typedef struct _GimpChannel         GimpChannel;
 typedef struct _GimpLayerMask       GimpLayerMask;
 typedef struct _GimpSelection       GimpSelection;
 typedef struct _GimpLayer           GimpLayer;
+typedef struct _GimpGroupLayer      GimpGroupLayer;
 
 
 /*  undo objects  */
@@ -150,6 +151,7 @@ typedef struct _GimpPdbProgress     GimpPdbProgress;
 typedef struct _GimpProjection      GimpProjection;
 typedef struct _GimpSubProgress     GimpSubProgress;
 typedef struct _GimpTag             GimpTag;
+typedef struct _GimpTreeHandler     GimpTreeHandler;
 
 
 /*  interfaces  */

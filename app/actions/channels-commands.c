@@ -166,7 +166,8 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
                               action_data_get_context (data),
                               GIMP_TRANSPARENT_FILL);
 
-  gimp_image_add_channel (image, new_channel, -1, TRUE);
+  gimp_image_add_channel (image, new_channel,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_undo_group_end (image);
 
@@ -227,6 +228,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
 {
   GimpImage   *image;
   GimpChannel *new_channel;
+  GimpChannel *parent = GIMP_IMAGE_ACTIVE_PARENT;
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
@@ -260,9 +262,16 @@ channels_duplicate_cmd_callback (GtkAction *action,
       new_channel =
         GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
                                            G_TYPE_FROM_INSTANCE (channel)));
+
+      /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
+       *  the latter would add a duplicated group inside itself instead of
+       *  above it
+       */
+      parent = GIMP_CHANNEL (gimp_viewable_get_parent (GIMP_VIEWABLE (channel)));
     }
 
-  gimp_image_add_channel (image, new_channel, -1, TRUE);
+  gimp_image_add_channel (image, new_channel, parent, -1, TRUE);
+
   gimp_image_flush (image);
 }
 
@@ -356,7 +365,9 @@ channels_new_channel_response (GtkWidget            *widget,
                                       GIMP_TRANSPARENT_FILL);
         }
 
-      gimp_image_add_channel (options->image, new_channel, -1, TRUE);
+      gimp_image_add_channel (options->image, new_channel,
+                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+
       gimp_image_flush (options->image);
     }
 
