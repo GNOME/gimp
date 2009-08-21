@@ -26,6 +26,7 @@
 #include "pdb-types.h"
 
 #include "core/gimpchannel-select.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
@@ -634,7 +635,14 @@ vectors_remove_stroke_invoker (GimpProcedure      *procedure,
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
 
       if (stroke)
-        gimp_vectors_stroke_remove (vectors, stroke);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Remove path stroke"),
+                                              vectors);
+
+          gimp_vectors_stroke_remove (vectors, stroke);
+        }
       else
         success = FALSE;
     }
@@ -663,7 +671,14 @@ vectors_stroke_close_invoker (GimpProcedure      *procedure,
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
 
       if (stroke)
-        gimp_stroke_close (stroke);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Close path stroke"),
+                                              vectors);
+
+          gimp_stroke_close (stroke);
+        }
       else
         success = FALSE;
     }
@@ -696,7 +711,14 @@ vectors_stroke_translate_invoker (GimpProcedure      *procedure,
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
 
       if (stroke)
-        gimp_stroke_translate (stroke, off_x, off_y);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Translate path stroke"),
+                                              vectors);
+
+          gimp_stroke_translate (stroke, off_x, off_y);
+        }
       else
         success = FALSE;
     }
@@ -729,7 +751,14 @@ vectors_stroke_scale_invoker (GimpProcedure      *procedure,
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
 
       if (stroke)
-        gimp_stroke_scale (stroke, scale_x, scale_y);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Scale path stroke"),
+                                              vectors);
+
+          gimp_stroke_scale (stroke, scale_x, scale_y);
+        }
       else
         success = FALSE;
     }
@@ -764,7 +793,14 @@ vectors_stroke_rotate_invoker (GimpProcedure      *procedure,
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
 
       if (stroke)
-        gimp_stroke_rotate (stroke, center_x, center_y, angle);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Rotate path stroke"),
+                                              vectors);
+
+          gimp_stroke_rotate (stroke, center_x, center_y, angle);
+        }
       else
         success = FALSE;
     }
@@ -797,7 +833,14 @@ vectors_stroke_flip_invoker (GimpProcedure      *procedure,
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
 
       if (stroke)
-        gimp_stroke_flip (stroke, flip_type, axis);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Flip path stroke"),
+                                              vectors);
+
+          gimp_stroke_flip (stroke, flip_type, axis);
+        }
       else
         success = FALSE;
     }
@@ -834,7 +877,14 @@ vectors_stroke_flip_free_invoker (GimpProcedure      *procedure,
       GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
 
       if (stroke)
-        gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Flip path stroke"),
+                                              vectors);
+
+          gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
+        }
       else
         success = FALSE;
     }
@@ -957,7 +1007,13 @@ vectors_stroke_new_from_points_invoker (GimpProcedure      *procedure,
           stroke = gimp_stroke_new_from_coords (type, coords, num_points/2, closed);
           if (stroke)
             {
+              if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+                gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                                  _("Add path stroke"),
+                                                  vectors);
+
               gimp_vectors_stroke_add (vectors, stroke);
+
               stroke_id = gimp_stroke_get_ID (stroke);
 
               success = TRUE;
@@ -1069,7 +1125,14 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
       coord0.y = y0;
 
       stroke = gimp_bezier_stroke_new_moveto (&coord0);
+
+      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                          _("Add path stroke"),
+                                          vectors);
+
       gimp_vectors_stroke_add (vectors, stroke);
+
       stroke_id = gimp_stroke_get_ID (stroke);
     }
 
@@ -1111,6 +1174,11 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure      *procedure,
 
           coord0.x = x0;
           coord0.y = y0;
+
+         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                             _("Extend path stroke"),
+                                             vectors);
 
           gimp_bezier_stroke_lineto (stroke, &coord0);
         }
@@ -1159,6 +1227,11 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure      *procedure,
 
           coord1.x = x1;
           coord1.y = y1;
+
+         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                             _("Extend path stroke"),
+                                             vectors);
 
           gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
         }
@@ -1216,6 +1289,11 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure      *procedure,
           coord2.x = x2;
           coord2.y = y2;
 
+         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                             _("Extend path stroke"),
+                                             vectors);
+
           gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
         }
       else
@@ -1260,7 +1338,14 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
       coord0.y = y0;
 
       stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
+
+      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                          _("Add path stroke"),
+                                          vectors);
+
       gimp_vectors_stroke_add (vectors, stroke);
+
       stroke_id = gimp_stroke_get_ID (stroke);
     }
 
