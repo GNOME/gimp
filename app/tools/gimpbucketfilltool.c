@@ -195,6 +195,9 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
                                                   release_type, display);
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
 }
 
 static void
