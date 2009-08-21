@@ -237,19 +237,14 @@ void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage         *image   = action_data_get_image (data);
-  GimpPlugInManager *manager = group->gimp->plug_in_manager;
-  GimpImageType      type    = -1;
+  GimpImage         *image    = action_data_get_image (data);
+  GimpPlugInManager *manager  = group->gimp->plug_in_manager;
+  GimpDrawable      *drawable = NULL;
   GSList            *list;
   gint               i;
 
   if (image)
-    {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-
-      if (drawable)
-        type = gimp_drawable_type (drawable);
-    }
+    drawable = gimp_image_get_active_drawable (image);
 
   for (list = manager->plug_in_procedures; list; list = g_slist_next (list))
     {
@@ -260,7 +255,7 @@ plug_in_actions_update (GimpActionGroup *group,
           proc->image_types_val)
         {
           gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc,
-                                                                     type);
+                                                                     drawable);
 
           gimp_action_group_set_action_sensitive (group,
                                                   GIMP_OBJECT (proc)->name,
@@ -269,7 +264,7 @@ plug_in_actions_update (GimpActionGroup *group,
     }
 
   if (manager->history &&
-      gimp_plug_in_procedure_get_sensitive (manager->history->data, type))
+      gimp_plug_in_procedure_get_sensitive (manager->history->data, drawable))
     {
       gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
@@ -287,7 +282,7 @@ plug_in_actions_update (GimpActionGroup *group,
                                                    i + 1);
       gboolean             sensitive;
 
-      sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
+      sensitive = gimp_plug_in_procedure_get_sensitive (proc, drawable);
 
       gimp_action_group_set_action_sensitive (group, name, sensitive);
 

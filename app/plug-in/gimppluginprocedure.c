@@ -21,7 +21,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 
@@ -683,11 +684,16 @@ gimp_plug_in_procedure_get_help_id (const GimpPlugInProcedure *proc)
 
 gboolean
 gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
-                                      GimpImageType              image_type)
+                                      GimpDrawable              *drawable)
 {
-  gboolean sensitive;
+  GimpImageType image_type = -1;
+  gboolean      sensitive  = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  if (drawable)
+    image_type = gimp_drawable_type (drawable);
 
   switch (image_type)
     {
@@ -710,7 +716,6 @@ gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
       sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXEDA_IMAGE;
       break;
     default:
-      sensitive = FALSE;
       break;
     }
 

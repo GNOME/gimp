@@ -116,7 +116,7 @@ GdkPixbuf   * gimp_plug_in_procedure_get_pixbuf      (const GimpPlugInProcedure 
 gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc);
 
 gboolean      gimp_plug_in_procedure_get_sensitive   (const GimpPlugInProcedure *proc,
-                                                      GimpImageType              image_type);
+                                                      GimpDrawable              *drawable);
 
 void          gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure       *proc,
                                                       const gchar               *image_types);
