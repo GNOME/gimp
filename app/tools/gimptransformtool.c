@@ -755,7 +755,14 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
 
   switch (options->type)
     {
+      GimpDrawable *drawable;
+
     case GIMP_TRANSFORM_TYPE_LAYER:
+      drawable = gimp_image_get_active_drawable (display->image);
+      if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+        modifier = GIMP_CURSOR_MODIFIER_BAD;
+      break;
+
     case GIMP_TRANSFORM_TYPE_SELECTION:
       break;
 

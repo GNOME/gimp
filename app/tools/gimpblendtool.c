@@ -350,18 +350,18 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
                                GdkModifierType   state,
                                GimpDisplay      *display)
 {
-  switch (gimp_drawable_type (gimp_image_get_active_drawable (display->image)))
+  GimpDrawable       *drawable;
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
+
+  drawable = gimp_image_get_active_drawable (display->image);
+
+  if (gimp_drawable_is_indexed (drawable) ||
+      gimp_item_get_lock_content (GIMP_ITEM (drawable)))
     {
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_BAD);
-      break;
-    default:
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_NONE);
-      break;
+      modifier = GIMP_CURSOR_MODIFIER_BAD;
     }
+
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

@@ -243,19 +243,24 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
   if (gimp_image_coords_in_active_pickable (display->image, coords,
                                             options->sample_merged, TRUE))
     {
-      switch (options->fill_mode)
+      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+
+      if (! gimp_item_get_lock_content (GIMP_ITEM (drawable)))
         {
-        case GIMP_FG_BUCKET_FILL:
-          modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
-          break;
+          switch (options->fill_mode)
+            {
+            case GIMP_FG_BUCKET_FILL:
+              modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
+              break;
 
-        case GIMP_BG_BUCKET_FILL:
-          modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
-          break;
+            case GIMP_BG_BUCKET_FILL:
+              modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
+              break;
 
-        case GIMP_PATTERN_BUCKET_FILL:
-          modifier = GIMP_CURSOR_MODIFIER_PATTERN;
-          break;
+            case GIMP_PATTERN_BUCKET_FILL:
+              modifier = GIMP_CURSOR_MODIFIER_PATTERN;
+              break;
+            }
         }
     }
 
