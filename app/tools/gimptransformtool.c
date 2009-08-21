@@ -1164,13 +1164,14 @@ static void
 gimp_transform_tool_doit (GimpTransformTool *tr_tool,
                           GimpDisplay       *display)
 {
-  GimpTool             *tool        = GIMP_TOOL (tr_tool);
-  GimpTransformOptions *options     = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-  GimpContext          *context     = GIMP_CONTEXT (options);
-  GimpDisplayShell     *shell       = GIMP_DISPLAY_SHELL (display->shell);
-  GimpItem             *active_item = NULL;
+  GimpTool             *tool           = GIMP_TOOL (tr_tool);
+  GimpTransformOptions *options        = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
+  GimpContext          *context        = GIMP_CONTEXT (options);
+  GimpDisplayShell     *shell          = GIMP_DISPLAY_SHELL (display->shell);
+  GimpItem             *active_item    = NULL;
   TileManager          *new_tiles;
-  const gchar          *message     = NULL;
+  const gchar          *null_message   = NULL;
+  const gchar          *locked_message = NULL;
   gboolean              new_layer;
   gboolean              mask_empty;
 
@@ -1178,24 +1179,35 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
       active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
-      message = _("There is no layer to transform.");
+      null_message   = _("There is no layer to transform.");
+      locked_message = _("The active layer's pixels are locked.");
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       active_item = GIMP_ITEM (gimp_image_get_mask (display->image));
-      /* cannot happen, so don't translate this message */
-      message = "There is no selection to transform.";
+      /* cannot happen, so don't translate these messages */
+      null_message   = "There is no selection to transform.";
+      locked_message = "The selection's pixels are locked.";
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
       active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
-      message = _("There is no path to transform.");
+      null_message   = _("There is no path to transform.");
+      locked_message = _("The active path's strokes are locked.");
       break;
     }
 
   if (! active_item)
     {
-      gimp_tool_message_literal (tool, display, message);
+      gimp_tool_message_literal (tool, display, null_message);
+      gimp_transform_tool_halt (tr_tool);
+      return;
+    }
+
+  if (gimp_item_get_lock_content (active_item))
+    {
+      gimp_tool_message_literal (tool, display, locked_message);
+      gimp_transform_tool_halt (tr_tool);
       return;
     }
 
