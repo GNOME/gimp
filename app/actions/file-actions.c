@@ -35,6 +35,8 @@
 #include "file/file-utils.h"
 #include "file/gimp-file.h"
 
+#include "plug-in/gimppluginmanager-file.h"
+
 #include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -246,10 +248,12 @@ void
 file_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *image     = action_data_get_image (data);
-  GimpDrawable *drawable  = NULL;
-  const gchar  *source    = NULL;
-  const gchar  *export_to = NULL;
+  Gimp         *gimp           = action_data_get_gimp (data);
+  GimpImage    *image          = action_data_get_image (data);
+  GimpDrawable *drawable       = NULL;
+  const gchar  *source         = NULL;
+  const gchar  *export_to      = NULL;
+  gboolean      show_overwrite = FALSE;
 
   if (image)
     {
@@ -259,6 +263,11 @@ file_actions_update (GimpActionGroup *group,
       export_to = g_object_get_data (G_OBJECT (image),
                                      GIMP_FILE_EXPORT_TO_URI_KEY);
     }
+
+  show_overwrite =
+    (source &&
+     gimp_plug_in_manager_uri_has_exporter (gimp->plug_in_manager,
+                                            source));
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
@@ -270,9 +279,9 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save-a-copy",     image && drawable);
   SET_SENSITIVE ("file-revert",          image && (GIMP_OBJECT (image)->name || source));
   SET_SENSITIVE ("file-export-to",       export_to);
-  SET_VISIBLE   ("file-export-to",       export_to || ! source);
-  SET_SENSITIVE ("file-overwrite",       source);
-  SET_VISIBLE   ("file-overwrite",       source);
+  SET_VISIBLE   ("file-export-to",       export_to || ! show_overwrite);
+  SET_SENSITIVE ("file-overwrite",       show_overwrite);
+  SET_VISIBLE   ("file-overwrite",       show_overwrite);
   SET_SENSITIVE ("file-export",          image && drawable);
   SET_SENSITIVE ("file-create-template", image);
 
@@ -284,7 +293,7 @@ file_actions_update (GimpActionGroup *group,
       gimp_action_group_set_action_label (group, "file-export-to", label);
       g_free (label);
     }
-  else if (source)
+  else if (show_overwrite)
     {
       gchar *label;
       label = g_strdup_printf (_("Overwrite %s"),
