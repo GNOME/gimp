@@ -425,6 +425,23 @@ file_open_with_proc_and_display (Gimp                *gimp,
             }
         }
 
+      /* If the file was imported we want to set the layer name to the
+       * file name. For now, assume that multi-layered imported images
+       * have named the layers already, so only rename the layer of
+       * single-layered imported files. Note that this will also
+       * rename already named layers from e.g. single-layered PSD
+       * files. To solve this properly, we would need new file plug-in
+       * API.
+       */
+      if (file_open_file_proc_is_import (file_proc) &&
+          gimp_image_get_n_layers (image) == 1)
+        {
+          GimpObject *layer    = gimp_image_get_layer_iter (image)->data;
+          gchar      *basename = file_utils_uri_display_basename (uri);
+
+          gimp_object_take_name (layer, basename);
+        }
+
       /*  the display owns the image now  */
       g_object_unref (image);
 
