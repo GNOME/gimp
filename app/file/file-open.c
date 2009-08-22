@@ -644,10 +644,8 @@ file_open_convert_items (GimpImage   *dest_image,
         }
       else
         {
-          gchar *name = g_strdup_printf ("%s - %s", basename,
-                                         GIMP_OBJECT (src)->name);
-
-          gimp_object_take_name (GIMP_OBJECT (item), name);
+          gimp_object_set_name (GIMP_OBJECT (item),
+                                gimp_object_get_name (GIMP_OBJECT (src)));
         }
 
       list->data = item;
