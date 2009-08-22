@@ -161,8 +161,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   GtkWidget        *label;
   gint              n_dynamics         = 0;
 
-vbox = gtk_vbox_new (FALSE, 6);
-  //gtk_box_pack_start (GTK_BOX (editor), vbox, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -225,7 +224,7 @@ vbox = gtk_vbox_new (FALSE, 6);
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Fading - new:"));
+      label = gtk_label_new (_("Fading:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
