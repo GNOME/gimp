@@ -190,7 +190,7 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_load_handler (LOAD_PROC, "", "");
+  gimp_register_load_handler (LOAD_PROC, "data", "");
 
   gimp_install_procedure (SAVE_PROC,
                           "Dump images to disk in raw format",
