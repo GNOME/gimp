@@ -82,6 +82,9 @@ static void     file_open_handle_color_profile (GimpImage                 *image
                                                 GimpContext               *context,
                                                 GimpProgress              *progress,
                                                 GimpRunMode                run_mode);
+static GList *  file_open_get_layers           (const GimpImage           *image,
+                                                gboolean                   merge_visible,
+                                                gint                      *n_visible);
 static gboolean file_open_file_proc_is_import  (const GimpPlugInProcedure *file_proc);
 
 
@@ -464,26 +467,11 @@ file_open_layers (Gimp                *gimp,
 
   if (new_image)
     {
-      GList *list;
-      gint   n_visible = 0;
+      gint n_visible = 0;
 
       gimp_image_undo_disable (new_image);
 
-      for (list = gimp_image_get_layer_iter (new_image);
-           list;
-           list = g_list_next (list))
-        {
-          if (! merge_visible)
-            layers = g_list_prepend (layers, list->data);
-
-          if (gimp_item_get_visible (list->data))
-            {
-              n_visible++;
-
-              if (! layers)
-                layers = g_list_prepend (layers, list->data);
-            }
-        }
+      layers = file_open_get_layers (new_image, merge_visible, &n_visible);
 
       if (merge_visible && n_visible > 1)
         {
@@ -722,6 +710,36 @@ file_open_handle_color_profile (GimpImage    *image,
       gimp_image_clean_all (image);
       gimp_image_undo_enable (image);
     }
+}
+
+static GList *
+file_open_get_layers (const GimpImage *image,
+                      gboolean         merge_visible,
+                      gint            *n_visible)
+{
+  GList *iter   = NULL;
+  GList *layers = NULL;
+
+  for (iter = gimp_image_get_layer_iter (image);
+       iter;
+       iter = g_list_next (iter))
+    {
+      GimpItem *item = iter->data;
+
+      if (! merge_visible)
+        layers = g_list_prepend (layers, item);
+
+      if (gimp_item_get_visible (item))
+        {
+          if (n_visible)
+            (*n_visible)++;
+
+          if (! layers)
+            layers = g_list_prepend (layers, item);
+        }
+    }
+
+  return layers;
 }
 
 static gboolean
