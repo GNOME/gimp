@@ -1299,6 +1299,9 @@ gimp_item_tree_view_update_options (GimpItemTreeView *view,
                                          gimp_item_tree_view_lock_content_toggled,
                                          view);
     }
+
+  gtk_widget_set_sensitive (view->priv->lock_content_toggle,
+                            gimp_item_can_lock_content (item));
 }
 
 

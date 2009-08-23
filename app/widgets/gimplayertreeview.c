@@ -1071,6 +1071,9 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
                gimp_layer_tree_view_lock_alpha_button_toggled);
     }
 
+  gtk_widget_set_sensitive (view->priv->lock_alpha_toggle,
+                            gimp_layer_can_lock_alpha (layer));
+
   if (gimp_layer_get_opacity (layer) * 100.0 !=
       gtk_adjustment_get_value (view->priv->opacity_adjustment))
     {
