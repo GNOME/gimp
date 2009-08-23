@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 18:21+0200\n"
-"PO-Revision-Date: 2009-08-20 18:38+0200\n"
+"POT-Creation-Date: 2009-08-23 19:10+0200\n"
+"PO-Revision-Date: 2009-08-23 19:09+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -385,13 +385,11 @@ msgid "percent"
 msgstr "per cento"
 
 #: ../libgimpbase/gimpbaseenums.c:28
-#, fuzzy
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Bianco (opacità completa)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
-#, fuzzy
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Nero (trasparenza completa)"
@@ -417,7 +415,6 @@ msgid "_Grayscale copy of layer"
 msgstr "Copia del livello in scala di _grigi"
 
 #: ../libgimpbase/gimpbaseenums.c:34
-#, fuzzy
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "Ca_nale"
@@ -498,10 +495,7 @@ msgctxt "channel-type"
 msgid "Gray"
 msgstr "Grigio"
 
-# o indicizzata? nel senso di immagine?
-# boh
 #: ../libgimpbase/gimpbaseenums.c:171
-#, fuzzy
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Indicizzato"
@@ -607,7 +601,6 @@ msgid "Radial"
 msgstr "Radiale"
 
 #: ../libgimpbase/gimpbaseenums.c:403
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Quadrangolare"
@@ -624,7 +617,6 @@ msgstr "Conica (asimm.)"
 
 # era "Conformata", ma mi pare errato...
 #: ../libgimpbase/gimpbaseenums.c:406
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Sagomata (angolare)"
@@ -679,21 +671,16 @@ msgstr "Continuo"
 
 # enumer. per tipo di icona
 #: ../libgimpbase/gimpbaseenums.c:476
-#, fuzzy
 msgctxt "icon-type"
 msgid "Stock ID"
-msgstr "ID di stock"
+msgstr "Stock ID"
 
-# enumer. per tipo di icona
 #: ../libgimpbase/gimpbaseenums.c:477
-#, fuzzy
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "Pixbuf incorporata"
 
-# enumer. per tipo di icona
 #: ../libgimpbase/gimpbaseenums.c:478
-#, fuzzy
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "File immagine"
@@ -733,20 +720,16 @@ msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Scala di grigi-alfa"
 
-# o indicizzata? nel senso di immagine?
-# boh
 #: ../libgimpbase/gimpbaseenums.c:547
-#, fuzzy
 msgctxt "image-type"
 msgid "Indexed"
-msgstr "Indicizzato"
+msgstr "Indicizzata"
 
 #: ../libgimpbase/gimpbaseenums.c:548
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indicizzata-alfa"
 
-# repeat-mode
 #: ../libgimpbase/gimpbaseenums.c:579
 msgctxt "interpolation-type"
 msgid "None"
@@ -830,14 +813,12 @@ msgstr "Ombre"
 #: ../libgimpbase/gimpbaseenums.c:737
 msgctxt "transfer-mode"
 msgid "Midtones"
-msgstr "Mezzi toni"
+msgstr "Mezzitoni"
 
-# zone di luce? punti luminosi? punti luce?
 #: ../libgimpbase/gimpbaseenums.c:738
-#, fuzzy
 msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr "Alte luci"
+msgstr "Alteluci"
 
 #: ../libgimpbase/gimpbaseenums.c:767
 msgctxt "transform-direction"
@@ -854,22 +835,17 @@ msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Regola"
 
-# non mi convince molto anche perché taglia
-# è già Cut(ctrl+x).... 
 #: ../libgimpbase/gimpbaseenums.c:800
-#, fuzzy
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Taglia"
 
 #: ../libgimpbase/gimpbaseenums.c:801
-#, fuzzy
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Ritaglia al risultato"
 
 #: ../libgimpbase/gimpbaseenums.c:802
-#, fuzzy
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Ritaglia all'aspetto"
@@ -904,31 +880,25 @@ msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Da destra a sinistra"
 
-# repeat-mode
 #: ../libgimpbase/gimpbaseenums.c:1137
-#, fuzzy
 msgctxt "text-hint-style"
 msgid "None"
-msgstr "Nessuna"
+msgstr "Nessuno"
 
-# zone di luce? punti luminosi? punti luce?
 #: ../libgimpbase/gimpbaseenums.c:1138
-#, fuzzy
 msgctxt "text-hint-style"
 msgid "Slight"
-msgstr "Alte luci"
+msgstr "Leggero"
 
 #: ../libgimpbase/gimpbaseenums.c:1139
-#, fuzzy
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Medio"
 
 #: ../libgimpbase/gimpbaseenums.c:1140
-#, fuzzy
 msgctxt "text-hint-style"
 msgid "Full"
-msgstr "Giustificato"
+msgstr "Pieno"
 
 #: ../libgimpbase/gimpbaseenums.c:1171
 msgctxt "text-justification"
