@@ -2029,6 +2029,7 @@ gimp_layer_set_lock_alpha (GimpLayer *layer,
                            gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_can_lock_alpha (layer));
 
   lock_alpha = lock_alpha ? TRUE : FALSE;
 

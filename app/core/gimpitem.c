@@ -1611,6 +1611,7 @@ gimp_item_set_lock_content (GimpItem *item,
                             gboolean  push_undo)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_can_lock_content (item));
 
   lock_content = lock_content ? TRUE : FALSE;
 
