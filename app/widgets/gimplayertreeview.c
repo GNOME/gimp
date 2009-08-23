@@ -246,6 +246,8 @@ gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->insert_item   = gimp_layer_tree_view_insert_item;
   iface->select_item   = gimp_layer_tree_view_select_item;
   iface->set_view_size = gimp_layer_tree_view_set_view_size;
+
+  iface->model_is_tree = TRUE;
 }
 
 static void
@@ -402,12 +404,17 @@ gimp_layer_tree_view_constructor (GType                  type,
   gtk_widget_hide (gimp_item_tree_view_get_edit_button (GIMP_ITEM_TREE_VIEW (layer_view)));
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+                                          "layers-new-group", NULL);
+  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
+                         button, 2);
+
+  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-anchor", NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
-                         button, 5);
+                         button, 6);
 
   return object;
 }
