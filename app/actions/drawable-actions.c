@@ -163,6 +163,7 @@ drawable_actions_update (GimpActionGroup *group,
   gboolean      visible    = FALSE;
   gboolean      linked     = FALSE;
   gboolean      locked     = FALSE;
+  gboolean      can_lock   = FALSE;
   gboolean      writable   = FALSE;
 
   image = action_data_get_image (data);
@@ -188,6 +189,7 @@ drawable_actions_update (GimpActionGroup *group,
           visible  = gimp_item_get_visible (item);
           linked   = gimp_item_get_linked (item);
           locked   = gimp_item_get_lock_content (item);
+          can_lock = gimp_item_can_lock_content (item);
           writable = ! locked;
         }
     }
@@ -204,7 +206,7 @@ drawable_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("drawable-visible",      drawable);
   SET_SENSITIVE ("drawable-linked",       drawable);
-  SET_SENSITIVE ("drawable-lock-content", drawable);
+  SET_SENSITIVE ("drawable-lock-content", can_lock);
 
   SET_ACTIVE ("drawable-visible",      visible);
   SET_ACTIVE ("drawable-linked",       linked);

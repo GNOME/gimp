@@ -491,20 +491,21 @@ void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage     *image        = action_data_get_image (data);
-  GimpLayer     *layer        = NULL;
-  GimpLayerMask *mask         = NULL;     /*  layer mask             */
-  gboolean       fs           = FALSE;    /*  floating sel           */
-  gboolean       ac           = FALSE;    /*  active channel         */
-  gboolean       sel          = FALSE;
-  gboolean       alpha        = FALSE;    /*  alpha channel present  */
-  gboolean       indexed      = FALSE;    /*  is indexed             */
-  gboolean       lock_alpha   = FALSE;
-  gboolean       text_layer   = FALSE;
-  gboolean       writable     = FALSE;
-  GList         *next         = NULL;
-  GList         *next_visible = NULL;
-  GList         *prev         = NULL;
+  GimpImage     *image          = action_data_get_image (data);
+  GimpLayer     *layer          = NULL;
+  GimpLayerMask *mask           = NULL;     /*  layer mask             */
+  gboolean       fs             = FALSE;    /*  floating sel           */
+  gboolean       ac             = FALSE;    /*  active channel         */
+  gboolean       sel            = FALSE;
+  gboolean       alpha          = FALSE;    /*  alpha channel present  */
+  gboolean       indexed        = FALSE;    /*  is indexed             */
+  gboolean       lock_alpha     = FALSE;
+  gboolean       can_lock_alpha = FALSE;
+  gboolean       text_layer     = FALSE;
+  gboolean       writable       = FALSE;
+  GList         *next           = NULL;
+  GList         *next_visible   = NULL;
+  GList         *prev           = NULL;
 
   if (image)
     {
@@ -520,10 +521,11 @@ layers_actions_update (GimpActionGroup *group,
           GList *layer_list;
           GList *list;
 
-          mask       = gimp_layer_get_mask (layer);
-          lock_alpha = gimp_layer_get_lock_alpha (layer);
-          alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-          writable   = ! gimp_item_get_lock_content (GIMP_ITEM (layer));
+          mask           = gimp_layer_get_mask (layer);
+          lock_alpha     = gimp_layer_get_lock_alpha (layer);
+          can_lock_alpha = gimp_layer_can_lock_alpha (layer);
+          alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+          writable       = ! gimp_item_get_lock_content (GIMP_ITEM (layer));
 
           layer_list = gimp_item_get_container_iter (GIMP_ITEM (layer));
 
@@ -596,7 +598,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-alpha-add",       writable && !fs && !alpha);
   SET_SENSITIVE ("layers-alpha-remove",    writable && !fs &&  alpha);
 
-  SET_SENSITIVE ("layers-lock-alpha", layer);
+  SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
   SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask);
