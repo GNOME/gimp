@@ -36,11 +36,9 @@ struct _GimpDynamicsEditor
   GimpDataEditor  parent_instance;
   GtkWidget      *options_vbox;
 
-  //not sure what to add yet.
-
+  GtkAdjustment  *data;
+  
 };
-
-//GtkWidget  * gimp_paint_options_gui (GimpToolOptions *tool_options);
 
 struct _GimpDynamicsEditorClass
 {
@@ -53,6 +51,6 @@ GType       gimp_dynamics_editor_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_dynamics_editor_new  (GimpContext      *context,
                                        GimpMenuFactory  *menu_factory);
 
-
+//GObject *   get_config_value          (GimpDynamics     *options);
 
 #endif /* __GIMP_DYNAMICS_EDITOR_H__ */

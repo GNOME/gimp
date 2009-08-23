@@ -33,7 +33,7 @@ struct _GimpDynamicsOutput
   gboolean  random;
   gboolean  fade;
 
-  gdouble  fade_length;
+  gdouble   fade_length;
 
   GimpCurve*  pressure_curve;
   GimpCurve*  velocity_curve;
@@ -61,7 +61,7 @@ typedef struct _GimpDynamics GimpDynamics;
 
 struct _GimpDynamics
 {
-   GimpDataClass          parent_instance;
+  GimpDataClass        parent_instance;
 
   GimpDynamicsOutput*  opacity_dynamics;
   GimpDynamicsOutput*  hardness_dynamics;

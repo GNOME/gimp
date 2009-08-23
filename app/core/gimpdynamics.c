@@ -140,7 +140,7 @@ enum
   PROP_FADING_ANGLE,
 };
 
-static void    gimp_dynamics_class_init (GimpDynamicsClass *klass);
+static void    gimp_dynamics_class_init       (GimpDynamicsClass *klass);
 
 static void    gimp_dynamics_finalize         (GObject      *object);
 
@@ -447,9 +447,9 @@ gimp_dynamics_output_finalize  (GimpDynamicsOutput *dynamics)
 
 static void
 gimp_dynamics_set_property (GObject      *object,
-                                    guint         property_id,
-                                    const GValue *value,
-                                    GParamSpec   *pspec)
+							guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
 {
   GimpDynamics *options           = GIMP_DYNAMICS (object);
 

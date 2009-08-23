@@ -42,11 +42,30 @@
 #include "gimp-intl.h"
 
 #include "gimpmenufactory.h"
-#include "widgets/gimpdynamicseditor.h"
+#include "gimpdynamicseditor.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpbrush.h"
 
+#include "core/gimptoolinfo.h"
+#include "tools/gimptooloptions-gui.h"
+#include "gimppropwidgets.h"
 
+static void        pressure_options_gui  (GObject          *config,
+                                          GtkTable         *table,
+                                          gint              row,
+                                          GtkWidget        *labels[]);
+/*static void        velocity_options_gui  (GtkTable         *table,
+                                          gint              row);
+static void        direction_options_gui (GtkTable         *table,
+                                          gint              row);
+static void        tilt_options_gui      (GtkTable         *table,
+                                          gint              row);
+static void        random_options_gui    (GtkTable         *table,
+                                          gint              row);
+static void        fading_options_gui    (GtkTable         *table,
+                                          gint              row);
+*/
+
+static GObject     * get_config_value (GimpDynamicsEditor *editor);										  
 /*  local function prototypes  */
 
 static void   gimp_dynamics_editor_docked_iface_init (GimpDockedInterface *face);
@@ -144,23 +163,31 @@ gimp_dynamics_editor_new (GimpContext     *context,
 
 }
 
-/*
-To do:
-look at other init for dataeditors
-look at how to move gui codes from paintopitons to here
-*/
+
+static GObject *
+get_config_value (GimpDynamicsEditor *editor)
+{
+          
+  g_return_val_if_fail (GIMP_IS_DYNAMICS_EDITOR (editor), NULL);
+
+  GObject  *config  = G_OBJECT (editor);
+  
+  return config;
+}
 
 
 static void
 gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  GtkWidget      *vbox;
-
+  GimpDataEditor   *data_editor = GIMP_DATA_EDITOR (editor);
+  GtkWidget        *vbox;
+  //GimpDynamics     *options = GIMP_
+  GObject          *config  = get_config_value (editor);
   GtkWidget        *table;
   GtkWidget        *label;
   gint              n_dynamics         = 0;
-
+  GtkWidget        *dynamics_labels[7];
+  
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
@@ -176,7 +203,54 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_container_add (GTK_CONTAINER (vbox), data_editor->view);
   gtk_widget_show (data_editor->view);
 
-  n_dynamics = 5;
+  //n_dynamics = 5;
+
+  //if (tool_has_opacity_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Opacity"));
+      n_dynamics++;
+    }
+
+  //if (tool_has_hardness_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Hardness"));
+      n_dynamics++;
+    }
+
+  //if (tool_has_rate_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Rate"));
+      n_dynamics++;
+    }
+
+  //if (tool_has_size_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Size"));
+      n_dynamics++;
+    }
+
+  //if (tool_has_aspect_ratio_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Aspect ratio"));
+      n_dynamics++;
+    }
+
+
+  //if (tool_has_angle_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Angle"));
+      n_dynamics++;
+    }
+
+  //if (tool_has_color_dynamics (tool_type))
+    {
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Color"));
+      n_dynamics++;
+    }
+
+  /* NB: When adding new dynamics, increase size of the
+   * dynamics_labels[] array
+   */
 
   if (n_dynamics > 0)
     {
@@ -230,9 +304,31 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
     }
+	
+      pressure_options_gui (config,
+                            GTK_TABLE (table), 1,
+                            dynamics_labels);
+/*
+      velocity_options_gui (options, tool_type,
+                            GTK_TABLE (table), 2);
+
+      direction_options_gui (options, tool_type,
+                             GTK_TABLE (table), 3);
+
+      tilt_options_gui (options, tool_type,
+                        GTK_TABLE (table), 4);
+
+      random_options_gui (options, tool_type,
+                          GTK_TABLE (table), 5);
+
+      fading_options_gui (options, tool_type,
+                          GTK_TABLE (table), 6);
+
+*/
+
 
 }
-
+	
 /*        SCRAPS!           */
 
 
@@ -368,7 +464,7 @@ tool_has_color_dynamics (GType tool_type)
 {
   return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
 }
-
+*/
 static GtkWidget *
 dynamics_check_button_new (GObject     *config,
                            const gchar *property_name,
@@ -407,18 +503,16 @@ dynamics_check_button_size_allocate (GtkWidget     *toggle,
 }
 
 static void
-pressure_options_gui (GimpPaintOptions *paint_options,
-                      GType             tool_type,
+pressure_options_gui (GObject          *config,
                       GtkTable         *table,
                       gint              row,
                       GtkWidget        *labels[])
 {
-  GObject   *config = G_OBJECT (paint_options);
   GtkWidget *button;
   gint       column = 1;
   GtkWidget *scalebutton;
 
-  if (tool_has_opacity_dynamics (tool_type))
+  //if (tool_has_opacity_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-opacity",
                                           table, column, row);
@@ -428,7 +522,7 @@ pressure_options_gui (GimpPaintOptions *paint_options,
       column++;
     }
 
-  if (tool_has_hardness_dynamics (tool_type))
+  //if (tool_has_hardness_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-hardness",
                                           table, column, row);
@@ -438,7 +532,7 @@ pressure_options_gui (GimpPaintOptions *paint_options,
       column++;
     }
 
-  if (tool_has_rate_dynamics (tool_type))
+  //if (tool_has_rate_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-rate",
                                           table, column, row);
@@ -448,14 +542,14 @@ pressure_options_gui (GimpPaintOptions *paint_options,
       column++;
     }
 
-  if (tool_has_size_dynamics (tool_type))
+  //if (tool_has_size_dynamics (tool_type))
     {
-      if (tool_type != GIMP_TYPE_AIRBRUSH_TOOL)
+      //if (tool_type != GIMP_TYPE_AIRBRUSH_TOOL)
         button = dynamics_check_button_new (config, "pressure-size",
                                             table, column, row);
-      else
-        button = dynamics_check_button_new (config, "pressure-inverse-size",
-                                            table, column, row);
+      //else
+        //button = dynamics_check_button_new (config, "pressure-inverse-size",
+        //                                    table, column, row);
 
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (dynamics_check_button_size_allocate),
@@ -463,7 +557,7 @@ pressure_options_gui (GimpPaintOptions *paint_options,
       column++;
     }
 
-  if (tool_has_aspect_ratio_dynamics (tool_type))
+  //if (tool_has_aspect_ratio_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-aspect_ratio",
                                           table, column, row);
@@ -474,7 +568,7 @@ pressure_options_gui (GimpPaintOptions *paint_options,
       column++;
      }
 
-  if (tool_has_angle_dynamics (tool_type))
+  //if (tool_has_angle_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-angle",
                                           table, column, row);
@@ -484,7 +578,7 @@ pressure_options_gui (GimpPaintOptions *paint_options,
       column++;
     }
 
-  if (tool_has_color_dynamics (tool_type))
+  //if (tool_has_color_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-color",
                                           table, column, row);
@@ -499,7 +593,7 @@ pressure_options_gui (GimpPaintOptions *paint_options,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
    gtk_widget_show (scalebutton);
 }
-
+/*
 static void
 velocity_options_gui (GimpPaintOptions *paint_options,
                       GType             tool_type,
@@ -791,91 +885,5 @@ fading_options_gui (GimpPaintOptions *paint_options,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
    gtk_widget_show (scalebutton);
 }
-
-*/
-/*
-GtkWidget *
-gimp_paint_options_gui (GimpToolOptions *tool_options)
-{
-
-  GObject          *config  = G_OBJECT (tool_options);
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (tool_options);
-  GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
-  GtkWidget        *frame;
-  GtkWidget        *table;
-  GtkWidget        *menu;
-  GtkWidget        *label;
-  GtkWidget        *button;
-  GtkWidget        *incremental_toggle = NULL;
-  gint              table_row          = 0;
-  gint              n_dynamics         = 0;
-  GtkWidget        *dynamics_labels[7];
-  GType             tool_type;
-}
-*/
-
-
-/*dynamics options gui*/
-/*
-static gboolean    tool_has_opacity_dynamics      (GType       tool_type);
-static gboolean    tool_has_hardness_dynamics     (GType       tool_type);
-static gboolean    tool_has_rate_dynamics         (GType       tool_type);
-static gboolean    tool_has_size_dynamics         (GType       tool_type);
-static gboolean    tool_has_color_dynamics        (GType       tool_type);
-static gboolean    tool_has_angle_dynamics        (GType       tool_type);
-static gboolean    tool_has_aspect_ratio_dynamics (GType       tool_type);
-
-static void        pressure_options_gui  (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkTable         *table,
-                                          gint              row,
-                                          GtkWidget        *labels[]);
-static void        velocity_options_gui  (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkTable         *table,
-                                          gint              row);
-static void        direction_options_gui (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkTable         *table,
-                                          gint              row);
-static void        tilt_options_gui      (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkTable         *table,
-                                          gint              row);
-static void        random_options_gui    (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkTable         *table,
-                                          gint              row);
-
-static void        fading_options_gui    (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkTable         *table,
-                                          gint              row);
-*/
-//To do:
-// discard unneeded ones.
-// needs to be fixed to gimppaintdynamics.h when that works.
-
-/*
-#include "paint/gimppaintoptions.h"
-
-#include "core/gimptoolinfo.h"
-
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpviewablebox.h"
-#include "widgets/gimpwidgets-utils.h"
-
-#include "tools/gimpairbrushtool.h"
-#include "tools/gimpclonetool.h"
-#include "tools/gimpconvolvetool.h"
-#include "tools/gimpdodgeburntool.h"
-#include "tools/gimperasertool.h"
-#include "tools/gimphealtool.h"
-#include "tools/gimpinktool.h"
-#include "tools/gimppaintoptions-gui.h"
-#include "tools/gimppenciltool.h"
-#include "tools/gimpperspectiveclonetool.h"
-#include "tools/gimpsmudgetool.h"
-#include "tools/gimptooloptions-gui.h"
 
 */
