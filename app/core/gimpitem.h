@@ -277,6 +277,7 @@ void            gimp_item_set_lock_content   (GimpItem           *item,
                                               gboolean            lock_content,
                                               gboolean            push_undo);
 gboolean        gimp_item_get_lock_content   (const GimpItem     *item);
+gboolean        gimp_item_can_lock_content   (const GimpItem     *item);
 
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);

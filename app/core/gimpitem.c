@@ -1643,6 +1643,17 @@ gimp_item_get_lock_content (const GimpItem *item)
 }
 
 gboolean
+gimp_item_can_lock_content (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+    return FALSE;
+
+  return TRUE;
+}
+
+gboolean
 gimp_item_is_in_set (GimpItem    *item,
                      GimpItemSet  set)
 {

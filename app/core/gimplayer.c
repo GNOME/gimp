@@ -2055,3 +2055,14 @@ gimp_layer_get_lock_alpha (const GimpLayer *layer)
 
   return layer->lock_alpha;
 }
+
+gboolean
+gimp_layer_can_lock_alpha (const GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    return FALSE;
+
+  return TRUE;
+}
