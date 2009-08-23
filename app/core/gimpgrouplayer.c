@@ -74,7 +74,7 @@ static void            gimp_group_layer_child_move   (GimpLayer      *child,
 static void            gimp_group_layer_child_resize (GimpLayer      *child,
                                                       GimpGroupLayer *group);
 
-static void            gimp_group_layer_update_size  (GimpGroupLayer *layer);
+static void            gimp_group_layer_update_size  (GimpGroupLayer *group);
 
 
 G_DEFINE_TYPE (GimpGroupLayer, gimp_group_layer, GIMP_TYPE_LAYER)
@@ -118,28 +118,28 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
 }
 
 static void
-gimp_group_layer_init (GimpGroupLayer *layer)
+gimp_group_layer_init (GimpGroupLayer *group)
 {
-  GIMP_ITEM (layer)->lock_content = TRUE;
+  GIMP_ITEM (group)->lock_content = TRUE;
 
-  layer->children = gimp_drawable_stack_new (GIMP_TYPE_LAYER);
+  group->children = gimp_drawable_stack_new (GIMP_TYPE_LAYER);
 
-  g_signal_connect (layer->children, "add",
+  g_signal_connect (group->children, "add",
                     G_CALLBACK (gimp_group_layer_child_add),
-                    layer);
-  g_signal_connect (layer->children, "remove",
+                    group);
+  g_signal_connect (group->children, "remove",
                     G_CALLBACK (gimp_group_layer_child_remove),
-                    layer);
+                    group);
 
-  gimp_container_add_handler (layer->children, "notify::offset-x",
+  gimp_container_add_handler (group->children, "notify::offset-x",
                               G_CALLBACK (gimp_group_layer_child_move),
-                              layer);
-  gimp_container_add_handler (layer->children, "notify::offset-y",
+                              group);
+  gimp_container_add_handler (group->children, "notify::offset-y",
                               G_CALLBACK (gimp_group_layer_child_move),
-                              layer);
-  gimp_container_add_handler (layer->children, "size-changed",
+                              group);
+  gimp_container_add_handler (group->children, "size-changed",
                               G_CALLBACK (gimp_group_layer_child_resize),
-                              layer);
+                              group);
 }
 
 static void
@@ -179,19 +179,19 @@ gimp_group_layer_get_property (GObject    *object,
 static void
 gimp_group_layer_finalize (GObject *object)
 {
-  GimpGroupLayer *layer = GIMP_GROUP_LAYER (object);
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (object);
 
-  if (layer->children)
+  if (group->children)
     {
-      g_signal_handlers_disconnect_by_func (layer->children,
+      g_signal_handlers_disconnect_by_func (group->children,
                                             gimp_group_layer_child_add,
-                                            layer);
-      g_signal_handlers_disconnect_by_func (layer->children,
+                                            group);
+      g_signal_handlers_disconnect_by_func (group->children,
                                             gimp_group_layer_child_remove,
-                                            layer);
+                                            group);
 
-      g_object_unref (layer->children);
-      layer->children = NULL;
+      g_object_unref (group->children);
+      group->children = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -201,10 +201,10 @@ static gint64
 gimp_group_layer_get_memsize (GimpObject *object,
                               gint64     *gui_size)
 {
-  GimpGroupLayer *layer   = GIMP_GROUP_LAYER (object);
+  GimpGroupLayer *group   = GIMP_GROUP_LAYER (object);
   gint64          memsize = 0;
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->children), gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (group->children), gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -213,9 +213,9 @@ gimp_group_layer_get_memsize (GimpObject *object,
 static GimpContainer *
 gimp_group_layer_get_children (GimpViewable *viewable)
 {
-  GimpGroupLayer *layer = GIMP_GROUP_LAYER (viewable);
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (viewable);
 
-  return layer->children;
+  return group->children;
 }
 
 static GimpItem *
@@ -230,12 +230,12 @@ gimp_group_layer_duplicate (GimpItem *item,
 
   if (GIMP_IS_GROUP_LAYER (new_item))
     {
-      GimpGroupLayer *layer     = GIMP_GROUP_LAYER (item);
-      GimpGroupLayer *new_layer = GIMP_GROUP_LAYER (new_item);
+      GimpGroupLayer *group     = GIMP_GROUP_LAYER (item);
+      GimpGroupLayer *new_group = GIMP_GROUP_LAYER (new_item);
       GList          *list;
       gint            position;
 
-      for (list = GIMP_LIST (layer->children)->list, position = 0;
+      for (list = GIMP_LIST (group->children)->list, position = 0;
            list;
            list = g_list_next (list))
         {
@@ -245,9 +245,9 @@ gimp_group_layer_duplicate (GimpItem *item,
           new_child = gimp_item_duplicate (child, G_TYPE_FROM_INSTANCE (child));
 
           gimp_viewable_set_parent (GIMP_VIEWABLE (new_child),
-                                    GIMP_VIEWABLE (new_layer));
+                                    GIMP_VIEWABLE (new_group));
 
-          gimp_container_insert (new_layer->children,
+          gimp_container_insert (new_group->children,
                                  GIMP_OBJECT (new_child),
                                  position);
         }
@@ -259,19 +259,19 @@ gimp_group_layer_duplicate (GimpItem *item,
 GimpLayer *
 gimp_group_layer_new (GimpImage *image)
 {
-  GimpGroupLayer *layer;
+  GimpGroupLayer *group;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  layer = g_object_new (GIMP_TYPE_GROUP_LAYER, NULL);
+  group = g_object_new (GIMP_TYPE_GROUP_LAYER, NULL);
 
-  gimp_drawable_configure (GIMP_DRAWABLE (layer),
+  gimp_drawable_configure (GIMP_DRAWABLE (group),
                            image,
                            0, 0, 1, 1,
                            gimp_image_base_type_with_alpha (image),
                            _("Group Layer"));
 
-  return GIMP_LAYER (layer);
+  return GIMP_LAYER (group);
 }
 
 
@@ -309,7 +309,7 @@ gimp_group_layer_child_resize (GimpLayer      *child,
 }
 
 static void
-gimp_group_layer_update_size (GimpGroupLayer *layer)
+gimp_group_layer_update_size (GimpGroupLayer *group)
 {
   GList   *list;
   gint     x      = 0;
@@ -318,7 +318,7 @@ gimp_group_layer_update_size (GimpGroupLayer *layer)
   gint     height = 1;
   gboolean first  = TRUE;
 
-  for (list = GIMP_LIST (layer->children)->list;
+  for (list = GIMP_LIST (group->children)->list;
        list;
        list = g_list_next (list))
     {
@@ -344,31 +344,31 @@ gimp_group_layer_update_size (GimpGroupLayer *layer)
         }
     }
 
-  if (x      != gimp_item_get_offset_x (GIMP_ITEM (layer)) ||
-      y      != gimp_item_get_offset_y (GIMP_ITEM (layer)) ||
-      width  != gimp_item_get_width    (GIMP_ITEM (layer)) ||
-      height != gimp_item_get_height   (GIMP_ITEM (layer)))
+  if (x      != gimp_item_get_offset_x (GIMP_ITEM (group)) ||
+      y      != gimp_item_get_offset_y (GIMP_ITEM (group)) ||
+      width  != gimp_item_get_width    (GIMP_ITEM (group)) ||
+      height != gimp_item_get_height   (GIMP_ITEM (group)))
     {
-      if (width  != gimp_item_get_width  (GIMP_ITEM (layer)) ||
-          height != gimp_item_get_height (GIMP_ITEM (layer)))
+      if (width  != gimp_item_get_width  (GIMP_ITEM (group)) ||
+          height != gimp_item_get_height (GIMP_ITEM (group)))
         {
           TileManager *tiles;
 
           tiles = tile_manager_new (width, height,
-                                    gimp_drawable_bytes (GIMP_DRAWABLE (layer)));
+                                    gimp_drawable_bytes (GIMP_DRAWABLE (group)));
 
-          gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer),
+          gimp_drawable_set_tiles_full (GIMP_DRAWABLE (group),
                                         FALSE, NULL,
                                         tiles,
-                                        gimp_drawable_type (GIMP_DRAWABLE (layer)),
+                                        gimp_drawable_type (GIMP_DRAWABLE (group)),
                                         x, y);
           tile_manager_unref (tiles);
         }
       else
         {
-          gimp_item_translate (GIMP_ITEM (layer),
-                               x - gimp_item_get_offset_x (GIMP_ITEM (layer)),
-                               y - gimp_item_get_offset_y (GIMP_ITEM (layer)),
+          gimp_item_translate (GIMP_ITEM (group),
+                               x - gimp_item_get_offset_x (GIMP_ITEM (group)),
+                               y - gimp_item_get_offset_y (GIMP_ITEM (group)),
                                FALSE);
         }
     }
