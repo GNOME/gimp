@@ -770,7 +770,10 @@ drawable_set_lock_content_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_item_set_lock_content (GIMP_ITEM (drawable), lock_content, TRUE);
+      if (gimp_item_can_lock_content (GIMP_ITEM (drawable)))
+        gimp_item_set_lock_content (GIMP_ITEM (drawable), lock_content, TRUE);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

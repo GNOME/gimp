@@ -729,7 +729,10 @@ layer_set_lock_alpha_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+      if (gimp_layer_can_lock_alpha (layer))
+        gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
