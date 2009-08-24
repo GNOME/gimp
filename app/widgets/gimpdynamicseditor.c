@@ -152,7 +152,8 @@ gimp_dynamics_editor_new (GimpContext     *context,
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
+  GimpDynamicsEditor *editor; 
+  editor = g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<DynamicsEditor>",
                        "ui-path",         "/dynamics-editor-popup",
@@ -160,6 +161,10 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "context",         context,
                        "data",            gimp_context_get_dynamics (context),
                        NULL);
+
+  editor->config_data = G_OBJECT(context); 
+  
+  return editor; 
 }
 
 
@@ -186,7 +191,8 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gint              n_dynamics         = 0;
   GtkWidget        *dynamics_labels[7];
   //GObject          *config  = get_config_value (editor);
-  GObject          *config = G_OBJECT(editor);
+  //GObject          *config = G_OBJECT(editor->data);
+  GObject          *config = editor->config_data;
   
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
@@ -518,11 +524,13 @@ pressure_options_gui (GObject          *config,
                         labels[column - 1]);
       column++;
     }
-
+/*
    scalebutton = gimp_prop_scale_button_new (config, "pressure-prescale");
    gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
    gtk_widget_show (scalebutton);
+ */  
+   
 }
 /*
 static void
