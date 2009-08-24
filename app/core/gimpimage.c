@@ -53,7 +53,6 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
-#include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
@@ -2678,7 +2677,7 @@ gimp_image_get_layer_iter (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LIST (image->layers)->list;
+  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (image->layers));
 }
 
 GList *
@@ -2686,7 +2685,7 @@ gimp_image_get_channel_iter (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LIST (image->channels)->list;
+  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (image->channels));
 }
 
 GList *
@@ -2694,7 +2693,7 @@ gimp_image_get_vectors_iter (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LIST (image->vectors)->list;
+  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (image->vectors));
 }
 
 GList *
