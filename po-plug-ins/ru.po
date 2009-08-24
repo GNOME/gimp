@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-28 17:30+0400\n"
-"PO-Revision-Date: 2009-07-28 18:11+0400\n"
+"POT-Creation-Date: 2009-08-24 13:34+0400\n"
+"PO-Revision-Date: 2009-08-24 13:40+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -599,7 +599,7 @@ msgstr "По _вертикали"
 #: ../plug-ins/common/decompose.c:722 ../plug-ins/common/file-cel.c:361
 #: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:556
 #: ../plug-ins/common/file-gif-load.c:927
-#: ../plug-ins/common/file-jp2-load.c:309 ../plug-ins/common/file-pcx.c:411
+#: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:411
 #: ../plug-ins/common/file-pcx.c:417 ../plug-ins/common/file-pix.c:381
 #: ../plug-ins/common/file-png.c:851 ../plug-ins/common/file-pnm.c:584
 #: ../plug-ins/common/file-raw.c:759 ../plug-ins/common/file-sunras.c:974
@@ -3562,18 +3562,74 @@ msgstr "Размер интервала ячеек."
 msgid "JPEG-2000 image"
 msgstr "Изображение JPEG-2000"
 
-#: ../plug-ins/common/file-jp2-load.c:214
-msgid "Couldn't decode image."
+#: ../plug-ins/common/file-jp2-load.c:215
+#, fuzzy, c-format
+msgid "Couldn't decode '%s'."
 msgstr "Не удалось декодировать изображение."
 
-#: ../plug-ins/common/file-jp2-load.c:235
-#: ../plug-ins/common/file-jp2-load.c:258
-#: ../plug-ins/common/file-jp2-load.c:275
-#: ../plug-ins/common/file-jp2-load.c:287
-#: ../plug-ins/common/file-jp2-load.c:294
-#: ../plug-ins/common/file-jp2-load.c:300
-msgid "Image type currently not supported."
-msgstr "Этот тип изображения не поддерживается."
+#: ../plug-ins/common/file-jp2-load.c:238
+#, c-format
+msgid "The image '%s' is in grayscale but does not contain any gray component."
+msgstr ""
+"Изображение '%s' использует градации серого, но не содержит серый компонент."
+
+#: ../plug-ins/common/file-jp2-load.c:264
+#, c-format
+msgid "The image '%s' is in RGB but is missing some of the components."
+msgstr ""
+"Изображение '%s' использует цветовое пространство RGB, но некоторые его "
+"компоненты отсутствуют."
+
+#: ../plug-ins/common/file-jp2-load.c:284
+#, c-format
+msgid ""
+"The image '%s' is in the CIEXYZ color space but there is no code in place to "
+"convert it to RGB."
+msgstr ""
+"Изображение '%s' использует цветовое пространство CIEXYZ, которое пока что "
+"невозможно преобразовать в RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:291
+#, c-format
+msgid ""
+"The image '%s' is in the CIELAB color space but there is no code in place to "
+"convert it to RGB."
+msgstr ""
+"Изображение '%s' использует цветовое пространство CIELAB, которое пока что "
+"невозможно преобразовать в RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:298
+#, c-format
+msgid ""
+"The image '%s' is in the YCbCr color space but there is no code in place to "
+"convert it to RGB."
+msgstr ""
+"Изображение '%s' использует цветовое пространство YCbCr, которое пока что "
+"невозможно преобразовать в RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:306
+#, fuzzy, c-format
+msgid "The image '%s' is in an unkown color space."
+msgstr "Изображение '%s' содержит встроенный цветовой профиль:"
+
+#: ../plug-ins/common/file-jp2-load.c:320
+#, c-format
+msgid ""
+"Image component %d of image '%s' did not have the same size as the image "
+"which is currently not supported."
+msgstr ""
+
+#: ../plug-ins/common/file-jp2-load.c:331
+#, c-format
+msgid "Image component %d of image '%s' does not have both a hstep and vstep."
+msgstr ""
+
+#: ../plug-ins/common/file-jp2-load.c:340
+#, c-format
+msgid ""
+"Image component %d of image '%s' is signed which is currently not supported "
+"by GIMP."
+msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -5876,35 +5932,35 @@ msgstr "Передать это изображение по электронно
 msgid "Send by E_mail..."
 msgstr "Отправить по_чтой..."
 
-#: ../plug-ins/common/mail.c:407
+#: ../plug-ins/common/mail.c:406
 msgid "Send by Email"
 msgstr "Отправка почтой"
 
-#: ../plug-ins/common/mail.c:412
+#: ../plug-ins/common/mail.c:411
 msgid "_Send"
 msgstr "Отпр_авить"
 
-#: ../plug-ins/common/mail.c:444
+#: ../plug-ins/common/mail.c:443
 msgid "_Filename:"
 msgstr "Имя _файла:"
 
-#: ../plug-ins/common/mail.c:456
+#: ../plug-ins/common/mail.c:455
 msgid "_To:"
 msgstr "_Кому:"
 
-#: ../plug-ins/common/mail.c:470
+#: ../plug-ins/common/mail.c:469
 msgid "_From:"
 msgstr "_От:"
 
-#: ../plug-ins/common/mail.c:482
+#: ../plug-ins/common/mail.c:481
 msgid "S_ubject:"
 msgstr "Т_ема:"
 
-#: ../plug-ins/common/mail.c:591
+#: ../plug-ins/common/mail.c:590
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "некоторая ошибка в расширении файла"
 
-#: ../plug-ins/common/mail.c:729
+#: ../plug-ins/common/mail.c:728
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Не удалось запустить sendmail (%s)"
@@ -8226,37 +8282,72 @@ msgstr "_Длина волны:"
 msgid "Waving"
 msgstr "Создание волн"
 
-#: ../plug-ins/common/web-browser.c:205
-#, c-format
-msgid ""
-"Web browser not specified.\n"
-"Please specify a web browser using the Preferences dialog."
+#: ../plug-ins/common/web-browser.c:136
+msgid "The operating system is out of memory or resources."
 msgstr ""
-"Просмотрщик не указан.\n"
-"Необходимо указать его в диалоге настройки программы."
 
-#: ../plug-ins/common/web-browser.c:227
-#, c-format
-msgid ""
-"Could not parse the web browser command specified in the Preferences "
-"dialog:\n"
-"\n"
-"%s"
-msgstr ""
-"Невозможно разобрать команду указанного просмотрщика:\n"
-"\n"
-"%s"
+#: ../plug-ins/common/web-browser.c:139
+#, fuzzy
+msgid "The specified file was not found."
+msgstr "Слой %d не найден"
 
-#: ../plug-ins/common/web-browser.c:245
-#, c-format
+#: ../plug-ins/common/web-browser.c:142
+#, fuzzy
+msgid "The specified path was not found."
+msgstr "Слой %d не найден"
+
+#: ../plug-ins/common/web-browser.c:145
 msgid ""
-"Could not execute the web browser specified in the Preferences dialog:\n"
-"\n"
-"%s"
+"The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
-"Невозможно запустить указанный в параметрах GIMP просмотрщик:\n"
-"\n"
-"%s"
+
+#: ../plug-ins/common/web-browser.c:148
+#, fuzzy
+msgid "The operating system denied access to the specified file."
+msgstr "Сохранить текущие настройки в указанном файле"
+
+#: ../plug-ins/common/web-browser.c:151
+msgid "The file name association is incomplete or invalid."
+msgstr ""
+
+#: ../plug-ins/common/web-browser.c:154
+msgid "DDE transaction busy"
+msgstr ""
+
+#: ../plug-ins/common/web-browser.c:157
+msgid "The DDE transaction failed."
+msgstr ""
+
+#: ../plug-ins/common/web-browser.c:160
+msgid "The DDE transaction timed out."
+msgstr ""
+
+#: ../plug-ins/common/web-browser.c:163
+#, fuzzy
+msgid "The specified DLL was not found."
+msgstr "Указанное окно не найдено"
+
+#: ../plug-ins/common/web-browser.c:166
+msgid "There is no application associated with the given file name extension."
+msgstr ""
+
+#: ../plug-ins/common/web-browser.c:169
+#, fuzzy
+msgid "There was not enough memory to complete the operation."
+msgstr "Недостаточно слоев для выравнивания."
+
+#: ../plug-ins/common/web-browser.c:172
+msgid "A sharing violation occurred."
+msgstr ""
+
+#: ../plug-ins/common/web-browser.c:175
+msgid "Unknown Windows error."
+msgstr ""
+
+#: ../plug-ins/common/web-browser.c:178
+#, fuzzy, c-format
+msgid "Failed to open '%s': %s"
+msgstr "Не удалось открыть файл Град.вспышки \"%s\": %s"
 
 #: ../plug-ins/common/whirl-pinch.c:137
 msgid "Distort an image by whirling and pinching"
@@ -12440,11 +12531,11 @@ msgstr "_Лабиринт..."
 msgid "Drawing maze"
 msgstr "Рисование лабиринта"
 
-#: ../plug-ins/metadata/metadata.c:182
+#: ../plug-ins/metadata/metadata.c:185
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgstr "Просмотр и редактирование метаданных (EXIF, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata.c:191
+#: ../plug-ins/metadata/metadata.c:194
 msgid "Propert_ies"
 msgstr "Сво_йства"
 
@@ -12704,6 +12795,35 @@ msgstr "_Снимок экрана..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "Данные не захвачены"
+
+#~ msgid "Image type currently not supported."
+#~ msgstr "Этот тип изображения не поддерживается."
+
+#~ msgid ""
+#~ "Web browser not specified.\n"
+#~ "Please specify a web browser using the Preferences dialog."
+#~ msgstr ""
+#~ "Просмотрщик не указан.\n"
+#~ "Необходимо указать его в диалоге настройки программы."
+
+#~ msgid ""
+#~ "Could not parse the web browser command specified in the Preferences "
+#~ "dialog:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Невозможно разобрать команду указанного просмотрщика:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Could not execute the web browser specified in the Preferences dialog:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Невозможно запустить указанный в параметрах GIMP просмотрщик:\n"
+#~ "\n"
+#~ "%s"
 
 #~ msgid "Save as Text"
 #~ msgstr "Сохранить как текст"
