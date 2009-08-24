@@ -33,6 +33,9 @@
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpdrawablestack.h"
+#include "gimppickable.h"
+#include "gimpprojectable.h"
+#include "gimpprojection.h"
 
 #include "gimp-intl.h"
 
@@ -44,40 +47,61 @@ enum
 };
 
 
-static void            gimp_group_layer_set_property (GObject        *object,
-                                                      guint           property_id,
-                                                      const GValue   *value,
-                                                      GParamSpec     *pspec);
-static void            gimp_group_layer_get_property (GObject        *object,
-                                                      guint           property_id,
-                                                      GValue         *value,
-                                                      GParamSpec     *pspec);
-static void            gimp_group_layer_finalize     (GObject        *object);
+static void            gimp_projectable_iface_init   (GimpProjectableInterface  *iface);
 
-static gint64          gimp_group_layer_get_memsize  (GimpObject     *object,
-                                                      gint64         *gui_size);
+static void            gimp_group_layer_set_property (GObject         *object,
+                                                      guint            property_id,
+                                                      const GValue    *value,
+                                                      GParamSpec      *pspec);
+static void            gimp_group_layer_get_property (GObject         *object,
+                                                      guint            property_id,
+                                                      GValue          *value,
+                                                      GParamSpec      *pspec);
+static void            gimp_group_layer_finalize     (GObject         *object);
 
-static GimpContainer * gimp_group_layer_get_children (GimpViewable   *viewable);
+static gint64          gimp_group_layer_get_memsize  (GimpObject      *object,
+                                                      gint64          *gui_size);
 
-static GimpItem      * gimp_group_layer_duplicate    (GimpItem       *item,
-                                                      GType           new_type);
+static GimpContainer * gimp_group_layer_get_children (GimpViewable    *viewable);
 
-static void            gimp_group_layer_child_add    (GimpContainer  *container,
-                                                      GimpLayer      *child,
-                                                      GimpGroupLayer *group);
-static void            gimp_group_layer_child_remove (GimpContainer  *container,
-                                                      GimpLayer      *child,
-                                                      GimpGroupLayer *group);
-static void            gimp_group_layer_child_move   (GimpLayer      *child,
-                                                      GParamSpec     *pspec,
-                                                      GimpGroupLayer *group);
-static void            gimp_group_layer_child_resize (GimpLayer      *child,
-                                                      GimpGroupLayer *group);
+static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
+                                                      GType            new_type);
 
-static void            gimp_group_layer_update_size  (GimpGroupLayer *group);
+static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
+static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
+
+static void            gimp_group_layer_child_add    (GimpContainer   *container,
+                                                      GimpLayer       *child,
+                                                      GimpGroupLayer  *group);
+static void            gimp_group_layer_child_remove (GimpContainer   *container,
+                                                      GimpLayer       *child,
+                                                      GimpGroupLayer  *group);
+static void            gimp_group_layer_child_move   (GimpLayer       *child,
+                                                      GParamSpec      *pspec,
+                                                      GimpGroupLayer  *group);
+static void            gimp_group_layer_child_resize (GimpLayer       *child,
+                                                      GimpGroupLayer  *group);
+
+static void            gimp_group_layer_update_size  (GimpGroupLayer    *group);
+
+static void            gimp_group_layer_stack_update (GimpDrawableStack *stack,
+                                                      gint               x,
+                                                      gint               y,
+                                                      gint               width,
+                                                      gint               height,
+                                                      GimpGroupLayer    *group);
+static void            gimp_group_layer_proj_update  (GimpProjection    *proj,
+                                                      gboolean           now,
+                                                      gint               x,
+                                                      gint               y,
+                                                      gint               width,
+                                                      gint               height,
+                                                      GimpGroupLayer    *group);
 
 
-G_DEFINE_TYPE (GimpGroupLayer, gimp_group_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_CODE (GimpGroupLayer, gimp_group_layer, GIMP_TYPE_LAYER,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
+                                                gimp_projectable_iface_init))
 
 #define parent_class gimp_group_layer_parent_class
 
@@ -118,6 +142,18 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
 }
 
 static void
+gimp_projectable_iface_init (GimpProjectableInterface *iface)
+{
+  iface->get_image          = (GimpImage * (*) (GimpProjectable *)) gimp_item_get_image;
+  iface->get_offset         = (void (*) (GimpProjectable*, gint*, gint*)) gimp_item_get_offset;
+  iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_viewable_get_size;
+  iface->get_graph          = gimp_group_layer_get_graph;
+  iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
+  iface->get_layers         = gimp_group_layer_get_layers;
+  iface->get_channels       = NULL;
+}
+
+static void
 gimp_group_layer_init (GimpGroupLayer *group)
 {
   GIMP_ITEM (group)->lock_content = TRUE;
@@ -140,6 +176,16 @@ gimp_group_layer_init (GimpGroupLayer *group)
   gimp_container_add_handler (group->children, "size-changed",
                               G_CALLBACK (gimp_group_layer_child_resize),
                               group);
+
+  g_signal_connect (group->children, "update",
+                    G_CALLBACK (gimp_group_layer_stack_update),
+                    group);
+
+  group->projection = gimp_projection_new (GIMP_PROJECTABLE (group));
+
+  g_signal_connect (group->projection, "update",
+                    G_CALLBACK (gimp_group_layer_proj_update),
+                    group);
 }
 
 static void
@@ -180,6 +226,12 @@ static void
 gimp_group_layer_finalize (GObject *object)
 {
   GimpGroupLayer *group = GIMP_GROUP_LAYER (object);
+
+  if (group->projection)
+    {
+      g_object_unref (group->projection);
+      group->projection = NULL;
+    }
 
   if (group->children)
     {
@@ -256,6 +308,25 @@ gimp_group_layer_duplicate (GimpItem *item,
   return new_item;
 }
 
+static GeglNode *
+gimp_group_layer_get_graph (GimpProjectable *projectable)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (projectable);
+
+  return gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (group->children));
+}
+
+static GList *
+gimp_group_layer_get_layers (GimpProjectable *projectable)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (projectable);
+
+  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+}
+
+
+/*  public functions  */
+
 GimpLayer *
 gimp_group_layer_new (GimpImage *image)
 {
@@ -318,7 +389,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
   gint     height = 1;
   gboolean first  = TRUE;
 
-  for (list = GIMP_LIST (group->children)->list;
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
        list;
        list = g_list_next (list))
     {
@@ -354,15 +425,19 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         {
           TileManager *tiles;
 
-          tiles = tile_manager_new (width, height,
-                                    gimp_drawable_bytes (GIMP_DRAWABLE (group)));
+          GIMP_ITEM (group)->width  = width;
+          GIMP_ITEM (group)->height = height;
+
+          gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
+
+          tiles = gimp_projection_get_tiles_at_level (group->projection,
+                                                      0, NULL);
 
           gimp_drawable_set_tiles_full (GIMP_DRAWABLE (group),
                                         FALSE, NULL,
                                         tiles,
                                         gimp_drawable_type (GIMP_DRAWABLE (group)),
                                         x, y);
-          tile_manager_unref (tiles);
         }
       else
         {
@@ -372,4 +447,45 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
                                FALSE);
         }
     }
+}
+
+static void
+gimp_group_layer_stack_update (GimpDrawableStack *stack,
+                               gint               x,
+                               gint               y,
+                               gint               width,
+                               gint               height,
+                               GimpGroupLayer    *group)
+{
+  /*  the layer stack's update signal speaks in image coordinates,
+   *  pass to the projection as-is.
+   */
+  gimp_projectable_update (GIMP_PROJECTABLE (group),
+                           x, y, width, height);
+
+  /*  flush the pickable not the projectable because flushing the
+   *  pickable will finish all invalidation on the projection so it
+   *  can be used as source (note that it will still be constructed
+   *  when the actual read happens, so this it not a performance
+   *  problem)
+   */
+  gimp_pickable_flush (GIMP_PICKABLE (group->projection));
+}
+
+static void
+gimp_group_layer_proj_update (GimpProjection *proj,
+                              gboolean        now,
+                              gint            x,
+                              gint            y,
+                              gint            width,
+                              gint            height,
+                              GimpGroupLayer *group)
+{
+  /*  the projection speaks in image coordinates, transform to layer
+   *  coordinates when emitting our own update signal.
+   */
+  gimp_drawable_update (GIMP_DRAWABLE (group),
+                        x - gimp_item_get_offset_x (GIMP_ITEM (group)),
+                        y - gimp_item_get_offset_y (GIMP_ITEM (group)),
+                        width, height);
 }

@@ -37,9 +37,10 @@ typedef struct _GimpGroupLayerClass GimpGroupLayerClass;
 
 struct _GimpGroupLayer
 {
-  GimpLayer      parent_instance;
+  GimpLayer       parent_instance;
 
-  GimpContainer *children;
+  GimpContainer  *children;
+  GimpProjection *projection;
 };
 
 struct _GimpGroupLayerClass
