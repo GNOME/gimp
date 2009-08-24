@@ -141,6 +141,14 @@ gimp_item_stack_get_n_items (GimpItemStack *stack)
 }
 
 GList *
+gimp_item_stack_get_item_iter (GimpItemStack *stack)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
+
+  return GIMP_LIST (stack)->list;
+}
+
+GList *
 gimp_item_stack_get_item_list (GimpItemStack *stack)
 {
   GList *list;

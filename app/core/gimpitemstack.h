@@ -48,6 +48,7 @@ GType           gimp_item_stack_get_type            (void) G_GNUC_CONST;
 GimpContainer * gimp_item_stack_new                 (GType          item_type);
 
 gint            gimp_item_stack_get_n_items         (GimpItemStack *stack);
+GList         * gimp_item_stack_get_item_iter       (GimpItemStack *stack);
 GList         * gimp_item_stack_get_item_list       (GimpItemStack *stack);
 GimpItem      * gimp_item_stack_get_item_by_tattoo  (GimpItemStack *stack,
                                                      GimpTattoo     tattoo);
