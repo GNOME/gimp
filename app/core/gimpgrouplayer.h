@@ -41,6 +41,8 @@ struct _GimpGroupLayer
 
   GimpContainer  *children;
   GimpProjection *projection;
+  GeglNode       *graph;
+  GeglNode       *offset_node;
 };
 
 struct _GimpGroupLayerClass

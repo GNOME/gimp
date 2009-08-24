@@ -291,6 +291,12 @@ gimp_group_layer_finalize (GObject *object)
       group->projection = NULL;
     }
 
+  if (group->graph)
+    {
+      g_object_unref (group->graph);
+      group->graph = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -526,8 +532,38 @@ static GeglNode *
 gimp_group_layer_get_graph (GimpProjectable *projectable)
 {
   GimpGroupLayer *group = GIMP_GROUP_LAYER (projectable);
+  GeglNode       *layers_node;
+  GeglNode       *output;
+  gint            off_x;
+  gint            off_y;
 
-  return gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (group->children));
+  if (group->graph)
+    return group->graph;
+
+  group->graph = gegl_node_new ();
+
+  layers_node =
+    gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (group->children));
+
+  gegl_node_add_child (group->graph, layers_node);
+
+  gimp_item_get_offset (GIMP_ITEM (group), &off_x, &off_y);
+
+  group->offset_node = gegl_node_new_child (group->graph,
+                                            "operation", "gegl:translate",
+                                            "x",         (gdouble) -off_x,
+                                            "y",         (gdouble) -off_y,
+                                            NULL);
+
+  gegl_node_connect_to (layers_node,        "output",
+                        group->offset_node, "input");
+
+  output = gegl_node_get_output_proxy (group->graph, "output");
+
+  gegl_node_connect_to (group->offset_node, "output",
+                        output,             "input");
+
+  return group->graph;
 }
 
 static GList *
@@ -657,6 +693,12 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         {
           gimp_item_set_offset (GIMP_ITEM (group), x, y);
         }
+
+      if (group->offset_node)
+        gegl_node_set (group->offset_node,
+                       "x", (gdouble) -x,
+                       "y", (gdouble) -y,
+                       NULL);
     }
 }
 
