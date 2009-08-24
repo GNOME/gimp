@@ -75,6 +75,7 @@ gimp_projection_construct (GimpProjection *proj,
       gint          width, height;
       gint          off_x, off_y;
 
+      gimp_projectable_get_offset (proj->projectable, &proj_off_x, &proj_off_y);
       gimp_projectable_get_size (proj->projectable, &width, &height);
 
       gimp_item_get_offset (item, &off_x, &off_y);
@@ -86,7 +87,9 @@ gimp_projection_construct (GimpProjection *proj,
           ! gimp_drawable_is_indexed (layer)                    &&
           gimp_layer_get_opacity (layer) == GIMP_OPACITY_OPAQUE &&
           off_x == 0                                            &&
-          off_y == 0)
+          off_y == 0                                            &&
+          proj_offset_x == 0                                    &&
+          proj_offset_y == 0)
         {
           PixelRegion srcPR, destPR;
 
@@ -176,6 +179,8 @@ gimp_projection_construct_legacy (GimpProjection *proj,
 {
   GList *list;
   GList *reverse_list = NULL;
+  gint   proj_off_x;
+  gint   proj_off_y;
 
   for (list = gimp_projectable_get_channels (proj->projectable);
        list;
@@ -206,6 +211,8 @@ gimp_projection_construct_legacy (GimpProjection *proj,
         }
     }
 
+  gimp_projectable_get_offset (proj->projectable, &proj_off_x, &proj_off_y);
+
   for (list = reverse_list; list; list = g_list_next (list))
     {
       GimpItem    *item = list->data;
@@ -216,6 +223,13 @@ gimp_projection_construct_legacy (GimpProjection *proj,
       gint         off_y;
 
       gimp_item_get_offset (item, &off_x, &off_y);
+
+      /*  subtract the projectable's offsets because the list of
+       *  update areas is in tile-pyramid coordinates, but our
+       *  external API is always in terms of image coordinates.
+       */
+      off_x -= proj_off_x;
+      off_y -= proj_off_y;
 
       x1 = CLAMP (off_x,                               x, x + w);
       y1 = CLAMP (off_y,                               y, y + h);
@@ -259,7 +273,11 @@ gimp_projection_initialize (GimpProjection *proj,
                             gint            h)
 {
   GList    *list;
+  gint      proj_off_x;
+  gint      proj_off_y;
   gboolean  coverage = FALSE;
+
+  gimp_projectable_get_offset (proj->projectable, &proj_off_x, &proj_off_y);
 
   for (list = gimp_projectable_get_layers (proj->projectable);
        list;
@@ -271,6 +289,13 @@ gimp_projection_initialize (GimpProjection *proj,
       gint          off_x, off_y;
 
       gimp_item_get_offset (item, &off_x, &off_y);
+
+      /*  subtract the projectable's offsets because the list of
+       *  update areas is in tile-pyramid coordinates, but our
+       *  external API is always in terms of image coordinates.
+       */
+      off_x -= proj_off_x;
+      off_y -= proj_off_y;
 
       if (gimp_item_get_visible (item)                          &&
           ! gimp_drawable_has_alpha (drawable)                  &&

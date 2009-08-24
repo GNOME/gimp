@@ -345,6 +345,7 @@ GimpProjection *
 gimp_projection_new (GimpProjectable *projectable)
 {
   GimpProjection *proj;
+  GClosure       *closure;
 
   g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
 
@@ -352,9 +353,18 @@ gimp_projection_new (GimpProjectable *projectable)
 
   proj->projectable = projectable;
 
-  g_signal_connect_object (projectable, "update",
-                           G_CALLBACK (gimp_projection_projectable_update),
-                           proj, 0);
+  closure = g_cclosure_new_object (G_CALLBACK (gimp_projection_projectable_update),
+                                   G_OBJECT (proj));
+
+  /*  connect the "update" signal by ID so we definitely get the signal
+   *  of GimpPickable and not the one of GimpDrawable in case of group
+   *  layers
+   */
+  g_signal_connect_closure_by_id (projectable,
+                                  g_signal_lookup ("update",
+                                                   GIMP_TYPE_PROJECTABLE), 0,
+                                  closure, FALSE);
+
   g_signal_connect_object (projectable, "flush",
                            G_CALLBACK (gimp_projection_projectable_flush),
                            proj, 0);
@@ -501,9 +511,18 @@ gimp_projection_add_update_area (GimpProjection *proj,
                                  gint            h)
 {
   GimpArea *area;
+  gint      off_x, off_y;
   gint      width, height;
 
-  gimp_projectable_get_size (proj->projectable, &width, &height);
+  gimp_projectable_get_offset (proj->projectable, &off_x, &off_y);
+  gimp_projectable_get_size   (proj->projectable, &width, &height);
+
+  /*  subtract the projectable's offsets because the list of update
+   *  areas is in tile-pyramid coordinates, but our external API is
+   *  always in terms of image coordinates.
+   */
+  x -= off_x;
+  y -= off_y;
 
   area = gimp_area_new (CLAMP (x,     0, width),
                         CLAMP (y,     0, height),
@@ -715,10 +734,12 @@ gimp_projection_paint_area (GimpProjection *proj,
                             gint            w,
                             gint            h)
 {
+  gint off_x, off_y;
   gint width, height;
   gint x1, y1, x2, y2;
 
-  gimp_projectable_get_size (proj->projectable, &width, &height);
+  gimp_projectable_get_offset (proj->projectable, &off_x, &off_y);
+  gimp_projectable_get_size   (proj->projectable, &width, &height);
 
   /*  Bounds check  */
   x1 = CLAMP (x,     0, width);
@@ -728,8 +749,16 @@ gimp_projection_paint_area (GimpProjection *proj,
 
   gimp_projection_invalidate (proj, x1, y1, x2 - x1, y2 - y1);
 
+  /*  add the projectable's offsets because the list of update areas
+   *  is in tile-pyramid coordinates, but our external API is always
+   *  in terms of image coordinates.
+   */
   g_signal_emit (proj, projection_signals[UPDATE], 0,
-                 now, x1, y1, x2 - x1, y2 - y1);
+                 now,
+                 x1 + off_x,
+                 y1 + off_y,
+                 x2 - x1,
+                 y2 - y1);
 }
 
 static void
