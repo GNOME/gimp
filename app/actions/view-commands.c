@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpprojection.h"
 
 #include "display/gimpdisplay.h"
@@ -690,6 +691,8 @@ view_use_gegl_cmd_callback (GtkAction *action,
   GimpImage        *image;
   GimpDisplay      *display;
   GimpDisplayShell *shell;
+  GList            *layers;
+  GList            *list;
   gboolean          active;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
@@ -699,6 +702,19 @@ view_use_gegl_cmd_callback (GtkAction *action,
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   image->projection->use_gegl = active;
+
+  layers = gimp_image_get_layer_list (image);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpLayer *layer = list->data;
+
+      if (GIMP_IS_GROUP_LAYER (layer))
+        GIMP_GROUP_LAYER (layer)->projection->use_gegl = active;
+    }
+
+  g_list_free (layers);
+
   gimp_image_update (image, 0, 0, image->width, image->height);
   gimp_image_flush (image);
 }

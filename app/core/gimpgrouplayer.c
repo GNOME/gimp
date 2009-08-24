@@ -592,6 +592,9 @@ gimp_group_layer_new (GimpImage *image)
                            gimp_image_base_type_with_alpha (image),
                            _("Group Layer"));
 
+  if (gimp_image_get_projection (image)->use_gegl)
+    group->projection->use_gegl = TRUE;
+
   return GIMP_LAYER (group);
 }
 
