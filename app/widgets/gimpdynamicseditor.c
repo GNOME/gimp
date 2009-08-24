@@ -160,7 +160,6 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "context",         context,
                        "data",            gimp_context_get_dynamics (context),
                        NULL);
-
 }
 
 
@@ -182,11 +181,12 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   GimpDataEditor   *data_editor = GIMP_DATA_EDITOR (editor);
   GtkWidget        *vbox;
   //GimpDynamics     *options = GIMP_
-  GObject          *config  = get_config_value (editor);
   GtkWidget        *table;
   GtkWidget        *label;
   gint              n_dynamics         = 0;
   GtkWidget        *dynamics_labels[7];
+  //GObject          *config  = get_config_value (editor);
+  GObject          *config = G_OBJECT(editor);
   
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
@@ -395,76 +395,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 */
 
 /*  private functions  */
-/*
-static gboolean
-tool_has_opacity_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-          tool_type == GIMP_TYPE_CLONE_TOOL             ||
-          tool_type == GIMP_TYPE_HEAL_TOOL              ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_ERASER_TOOL);
-}
 
-static gboolean
-tool_has_hardness_dynamics (GType tool_type)
-{
-  return (tool_type == GIMP_TYPE_AIRBRUSH_TOOL          ||
-          tool_type == GIMP_TYPE_CLONE_TOOL             ||
-          tool_type == GIMP_TYPE_HEAL_TOOL              ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
-          tool_type == GIMP_TYPE_ERASER_TOOL            ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_PAINTBRUSH_TOOL        ||
-          tool_type == GIMP_TYPE_SMUDGE_TOOL);
-}
-
-static gboolean
-tool_has_rate_dynamics (GType tool_type)
-{
-  return (tool_type == GIMP_TYPE_AIRBRUSH_TOOL          ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
-          tool_type == GIMP_TYPE_SMUDGE_TOOL);
-}
-
-static gboolean
-tool_has_size_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-          tool_type == GIMP_TYPE_CLONE_TOOL             ||
-          tool_type == GIMP_TYPE_HEAL_TOOL              ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_ERASER_TOOL);
-}
-
-static gboolean
-tool_has_aspect_ratio_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-          tool_type == GIMP_TYPE_CLONE_TOOL             ||
-          tool_type == GIMP_TYPE_HEAL_TOOL              ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_ERASER_TOOL);
-}
-
-static gboolean
-tool_has_angle_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
-}
-
-static gboolean
-tool_has_color_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
-}
-*/
 static GtkWidget *
 dynamics_check_button_new (GObject     *config,
                            const gchar *property_name,
@@ -511,7 +442,7 @@ pressure_options_gui (GObject          *config,
   GtkWidget *button;
   gint       column = 1;
   GtkWidget *scalebutton;
-
+/*
   //if (tool_has_opacity_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-opacity",
@@ -521,7 +452,7 @@ pressure_options_gui (GObject          *config,
                         labels[column - 1]);
       column++;
     }
-
+*/
   //if (tool_has_hardness_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-hardness",
