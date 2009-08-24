@@ -165,6 +165,7 @@ drawable_actions_update (GimpActionGroup *group,
   gboolean      locked     = FALSE;
   gboolean      can_lock   = FALSE;
   gboolean      writable   = FALSE;
+  gboolean      children   = FALSE;
 
   image = action_data_get_image (data);
 
@@ -191,6 +192,9 @@ drawable_actions_update (GimpActionGroup *group,
           locked   = gimp_item_get_lock_content (item);
           can_lock = gimp_item_can_lock_content (item);
           writable = ! locked;
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+            children = TRUE;
         }
     }
 
@@ -212,12 +216,12 @@ drawable_actions_update (GimpActionGroup *group,
   SET_ACTIVE ("drawable-linked",       linked);
   SET_ACTIVE ("drawable-lock-content", locked);
 
-  SET_SENSITIVE ("drawable-flip-horizontal", writable);
-  SET_SENSITIVE ("drawable-flip-vertical",   writable);
+  SET_SENSITIVE ("drawable-flip-horizontal", writable || children);
+  SET_SENSITIVE ("drawable-flip-vertical",   writable || children);
 
-  SET_SENSITIVE ("drawable-rotate-90",  writable);
-  SET_SENSITIVE ("drawable-rotate-180", writable);
-  SET_SENSITIVE ("drawable-rotate-270", writable);
+  SET_SENSITIVE ("drawable-rotate-90",  writable || children);
+  SET_SENSITIVE ("drawable-rotate-180", writable || children);
+  SET_SENSITIVE ("drawable-rotate-270", writable || children);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
