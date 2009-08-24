@@ -66,6 +66,42 @@ static GimpContainer * gimp_group_layer_get_children (GimpViewable    *viewable)
 
 static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
                                                       GType            new_type);
+static void            gimp_group_layer_translate    (GimpItem        *item,
+                                                      gint             offset_x,
+                                                      gint             offset_y,
+                                                      gboolean         push_undo);
+static void            gimp_group_layer_scale        (GimpItem        *item,
+                                                      gint             new_width,
+                                                      gint             new_height,
+                                                      gint             new_offset_x,
+                                                      gint             new_offset_y,
+                                                      GimpInterpolationType  interp_type,
+                                                      GimpProgress    *progress);
+static void            gimp_group_layer_resize       (GimpItem        *item,
+                                                      GimpContext     *context,
+                                                      gint             new_width,
+                                                      gint             new_height,
+                                                      gint             offset_x,
+                                                      gint             offset_y);
+static void            gimp_group_layer_flip         (GimpItem        *item,
+                                                      GimpContext     *context,
+                                                      GimpOrientationType flip_type,
+                                                      gdouble          axis,
+                                                      gboolean         clip_result);
+static void            gimp_group_layer_rotate       (GimpItem        *item,
+                                                      GimpContext     *context,
+                                                      GimpRotationType rotate_type,
+                                                      gdouble          center_x,
+                                                      gdouble          center_y,
+                                                      gboolean         clip_result);
+static void            gimp_group_layer_transform    (GimpItem        *item,
+                                                      GimpContext     *context,
+                                                      const GimpMatrix3 *matrix,
+                                                      GimpTransformDirection direction,
+                                                      GimpInterpolationType  interpolation_type,
+                                                      gint             recursion_level,
+                                                      GimpTransformResize clip_result,
+                                                      GimpProgress    *progress);
 
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
@@ -124,6 +160,12 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   viewable_class->get_children     = gimp_group_layer_get_children;
 
   item_class->duplicate            = gimp_group_layer_duplicate;
+  item_class->translate            = gimp_group_layer_translate;
+  item_class->scale                = gimp_group_layer_scale;
+  item_class->resize               = gimp_group_layer_resize;
+  item_class->flip                 = gimp_group_layer_flip;
+  item_class->rotate               = gimp_group_layer_rotate;
+  item_class->transform            = gimp_group_layer_transform;
 
   item_class->default_name         = _("Group Layer");
   item_class->rename_desc          = _("Rename Group Layer");
@@ -311,6 +353,175 @@ gimp_group_layer_duplicate (GimpItem *item,
   return new_item;
 }
 
+static void
+gimp_group_layer_translate (GimpItem *item,
+                            gint      offset_x,
+                            gint      offset_y,
+                            gboolean  push_undo)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
+  GimpLayerMask  *mask;
+  GList          *list;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *child = list->data;
+
+      gimp_item_translate (child, offset_x, offset_y, push_undo);
+    }
+
+  mask = gimp_layer_get_mask (GIMP_LAYER (group));
+
+  if (mask)
+    {
+      gint off_x, off_y;
+
+      gimp_item_get_offset (item, &off_x, &off_y);
+      gimp_item_set_offset (GIMP_ITEM (mask), off_x, off_y);
+
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (mask));
+    }
+}
+
+static void
+gimp_group_layer_scale (GimpItem              *item,
+                        gint                   new_width,
+                        gint                   new_height,
+                        gint                   new_offset_x,
+                        gint                   new_offset_y,
+                        GimpInterpolationType  interpolation_type,
+                        GimpProgress          *progress)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
+  GimpLayerMask  *mask;
+  GList          *list;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *child = list->data;
+
+      gimp_item_scale (child,
+                       new_width, new_height,
+                       new_offset_x, new_offset_y,
+                       interpolation_type, progress);
+    }
+
+  mask = gimp_layer_get_mask (GIMP_LAYER (group));
+
+  if (mask)
+    gimp_item_scale (GIMP_ITEM (mask),
+                     new_width, new_height,
+                     new_offset_x, new_offset_y,
+                     interpolation_type, progress);
+}
+
+static void
+gimp_group_layer_resize (GimpItem    *item,
+                         GimpContext *context,
+                         gint         new_width,
+                         gint         new_height,
+                         gint         offset_x,
+                         gint         offset_y)
+{
+  /* FIXME */
+}
+
+static void
+gimp_group_layer_flip (GimpItem            *item,
+                       GimpContext         *context,
+                       GimpOrientationType  flip_type,
+                       gdouble              axis,
+                       gboolean             clip_result)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
+  GimpLayerMask  *mask;
+  GList          *list;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *child = list->data;
+
+      gimp_item_flip (child, context,
+                      flip_type, axis, clip_result);
+    }
+
+  mask = gimp_layer_get_mask (GIMP_LAYER (group));
+
+  if (mask)
+    gimp_item_flip (GIMP_ITEM (mask), context,
+                    flip_type, axis, clip_result);
+}
+
+static void
+gimp_group_layer_rotate (GimpItem         *item,
+                         GimpContext      *context,
+                         GimpRotationType  rotate_type,
+                         gdouble           center_x,
+                         gdouble           center_y,
+                         gboolean          clip_result)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
+  GimpLayerMask  *mask;
+  GList          *list;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *child = list->data;
+
+      gimp_item_rotate (child, context,
+                        rotate_type, center_x, center_y, clip_result);
+    }
+
+  mask = gimp_layer_get_mask (GIMP_LAYER (group));
+
+  if (mask)
+    gimp_item_rotate (GIMP_ITEM (mask), context,
+                      rotate_type, center_x, center_y, clip_result);
+}
+
+static void
+gimp_group_layer_transform (GimpItem               *item,
+                            GimpContext            *context,
+                            const GimpMatrix3      *matrix,
+                            GimpTransformDirection  direction,
+                            GimpInterpolationType   interpolation_type,
+                            gint                    recursion_level,
+                            GimpTransformResize     clip_result,
+                            GimpProgress           *progress)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
+  GimpLayerMask  *mask;
+  GList          *list;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *child = list->data;
+
+      gimp_item_transform (child, context,
+                           matrix, direction,
+                           interpolation_type, recursion_level,
+                           clip_result, progress);
+    }
+
+  mask = gimp_layer_get_mask (GIMP_LAYER (group));
+
+  if (mask)
+    gimp_item_transform (GIMP_ITEM (mask), context,
+                         matrix, direction,
+                         interpolation_type, recursion_level,
+                         clip_result, progress);
+}
+
 static GeglNode *
 gimp_group_layer_get_graph (GimpProjectable *projectable)
 {
@@ -444,10 +655,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         }
       else
         {
-          gimp_item_translate (GIMP_ITEM (group),
-                               x - gimp_item_get_offset_x (GIMP_ITEM (group)),
-                               y - gimp_item_get_offset_y (GIMP_ITEM (group)),
-                               FALSE);
+          gimp_item_set_offset (GIMP_ITEM (group), x, y);
         }
     }
 }
