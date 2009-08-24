@@ -165,6 +165,26 @@ gimp_projectable_get_image (GimpProjectable *projectable)
 }
 
 void
+gimp_projectable_get_offset (GimpProjectable *projectable,
+                             gint            *x,
+                             gint            *y)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (x != NULL);
+  g_return_if_fail (y != NULL);
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  *x = 0;
+  *y = 0;
+
+  if (iface->get_offset)
+    iface->get_offset (projectable, x, y);
+}
+
+void
 gimp_projectable_get_size (GimpProjectable *projectable,
                            gint            *width,
                            gint            *height)

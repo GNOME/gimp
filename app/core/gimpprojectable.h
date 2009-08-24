@@ -46,6 +46,9 @@ struct _GimpProjectableInterface
 
   /*  virtual functions  */
   GimpImage    * (* get_image)          (GimpProjectable *projectable);
+  void           (* get_offset)         (GimpProjectable *projectable,
+                                         gint            *x,
+                                         gint            *y);
   void           (* get_size)           (GimpProjectable *projectable,
                                          gint            *width,
                                          gint            *height);
@@ -70,6 +73,9 @@ void           gimp_projectable_flush              (GimpProjectable *projectable
 void           gimp_projectable_structure_changed  (GimpProjectable *projectable);
 
 GimpImage    * gimp_projectable_get_image          (GimpProjectable *projectable);
+void           gimp_projectable_get_offset         (GimpProjectable *projectable,
+                                                    gint            *x,
+                                                    gint            *y);
 void           gimp_projectable_get_size           (GimpProjectable *projectable,
                                                     gint            *width,
                                                     gint            *height);
