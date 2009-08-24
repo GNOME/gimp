@@ -227,12 +227,6 @@ gimp_group_layer_finalize (GObject *object)
 {
   GimpGroupLayer *group = GIMP_GROUP_LAYER (object);
 
-  if (group->projection)
-    {
-      g_object_unref (group->projection);
-      group->projection = NULL;
-    }
-
   if (group->children)
     {
       g_signal_handlers_disconnect_by_func (group->children,
@@ -241,9 +235,18 @@ gimp_group_layer_finalize (GObject *object)
       g_signal_handlers_disconnect_by_func (group->children,
                                             gimp_group_layer_child_remove,
                                             group);
+      g_signal_handlers_disconnect_by_func (group->children,
+                                            gimp_group_layer_stack_update,
+                                            group);
 
       g_object_unref (group->children);
       group->children = NULL;
+    }
+
+  if (group->projection)
+    {
+      g_object_unref (group->projection);
+      group->projection = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
