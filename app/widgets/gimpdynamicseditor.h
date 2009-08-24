@@ -36,7 +36,7 @@ struct _GimpDynamicsEditor
   GimpDataEditor  parent_instance;
   GtkWidget      *options_vbox;
 
-  //GtkAdjustment  *data;
+  GtkAdjustment  *pressure_hardness_data;
   GObject        *config_data;
 };
 

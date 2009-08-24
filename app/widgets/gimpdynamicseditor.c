@@ -32,7 +32,6 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-//#include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 
 #include "gimpdocked.h"
@@ -73,13 +72,19 @@ static void   gimp_dynamics_editor_docked_iface_init (GimpDockedInterface *face)
 static GObject * gimp_dynamics_editor_constructor (GType              type,
                                                    guint              n_params,
                                                    GObjectConstructParam *params);
-
-//static void   gimp_dynamics_editor_set_data       (GimpDataEditor     *editor,
-//                                                   GimpData           *data);
+												
+static void   gimp_dynamics_editor_set_data       (GimpDataEditor     *editor,
+                                                   GimpData           *data);
 
 static void   gimp_dynamics_editor_set_context    (GimpDocked         *docked,
                                                    GimpContext        *context);
 
+static void   gimp_dynamics_editor_update_dynamics(GtkAdjustment      *adjustment,
+                                                   GimpDynamicsEditor    *editor);
+
+static void   gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
+												    GParamSpec           *pspec,
+                                                    GimpDynamicsEditor      *editor)
 
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsEditor, gimp_dynamics_editor,
                          GIMP_TYPE_DATA_EDITOR,
@@ -99,7 +104,7 @@ gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
 
   object_class->constructor = gimp_dynamics_editor_constructor;
 
-  //editor_class->set_data    = gimp_dynamics_editor_set_data;
+  editor_class->set_data    = gimp_dynamics_editor_set_data;
   editor_class->title       = _("Dynamics Editor");
 }
 
@@ -129,6 +134,161 @@ gimp_dynamics_editor_constructor (GType                  type,
 
   return object;
 }
+
+static void
+gimp_dynamics_editor_set_data (GimpDataEditor *editor,
+                               GimpData       *data)
+{
+  GimpDynamicsEditor         *dynamics_editor = GIMP_DYNAMICS_EDITOR (editor);
+  //GimpBrushGeneratedShape  shape        = GIMP_BRUSH_GENERATED_CIRCLE;
+  //gdouble                  radius       = 0.0;
+  GimpDynamics *options; 
+  GimpDynamicsOutput *hardness_dynamics;
+  //= options->hardness_dynamics;
+  
+  gboolean                   pressure_hardness = DEFAULT_PRESSURE_HARDNESS; 
+  
+  if (editor->data)
+    g_signal_handlers_disconnect_by_func (editor->data,
+                                          gimp_dynamics_editor_notify_dynamics,
+                                          editor);
+
+  GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
+
+  if (editor->data)
+    g_signal_connect (editor->data, "notify",
+                      G_CALLBACK (gimp_dynamics_editor_notify_dynamics),
+                      editor);
+
+  gimp_view_set_viewable (GIMP_VIEW (editor->view), GIMP_VIEWABLE (data));
+
+  if (editor->data && GIMP_IS_DYNAMICS (editor->data))
+    {
+      GimpDynamics *options = GIMP_DYNAMICS (editor->data);
+      
+	  
+	  //pressure_opacity = 
+      
+	  /*hardness = gimp_brush_generated_get_hardness     (brush);
+      ratio    = gimp_brush_generated_get_aspect_ratio (brush);
+      angle    = gimp_brush_generated_get_angle        (brush);
+      spacing  = gimp_brush_get_spacing                (GIMP_BRUSH (brush));
+	   */
+	
+    }
+  gtk_adjustment_set_value (dynamics_editor->pressure_hardness_data,       pressure_hardness );
+  /*gtk_adjustment_set_value (brush_editor->spikes_data,       spikes);
+  gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
+  gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
+  gtk_adjustment_set_value (brush_editor->angle_data,        angle);
+  gtk_adjustment_set_value (brush_editor->spacing_data,      spacing);
+
+ */
+}
+
+
+static void
+gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
+                                GParamSpec           *pspec,
+                                GimpDynamicsEditor      *editor)
+{
+  GtkAdjustment *adj   = NULL;
+  gdouble        value = 0.0;
+/*
+  if (! strcmp (pspec->name, "pressure-hardness"))
+    {
+      g_signal_handlers_block_by_func (editor->pressure_hardness_data,
+                                       gimp_brush_editor_update_shape,
+                                       editor);
+
+      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (editor->shape_group),
+                                       brush->shape);
+
+      g_signal_handlers_unblock_by_func (editor->shape_group,
+                                         gimp_brush_editor_update_shape,
+                                         editor);
+
+      adj   = editor->radius_data;
+      value = brush->radius;
+    }
+  else if (! strcmp (pspec->name, "radius"))
+    {
+      adj   = editor->radius_data;
+      value = brush->radius;
+    }
+	*/
+  if (adj)
+    {
+      g_signal_handlers_block_by_func (adj,
+                                       gimp_dynamics_editor_update_dynamics,
+                                       editor);
+
+      gtk_adjustment_set_value (adj, value);
+
+      g_signal_handlers_unblock_by_func (adj,
+                                         gimp_dynamics_editor_update_dynamics,
+                                         editor);
+    }
+}
+
+
+static void
+gimp_dynamics_editor_update_dynamics (GtkAdjustment   *adjustment,
+                                                                       GimpDynamicsEditor *editor)
+{
+  GimpDynamics *options;
+  gboolean             pressure_hardness;
+  /*gint                spikes;
+  gdouble             hardness;
+  gdouble             ratio;
+  gdouble             angle;
+  gdouble             spacing;
+*/
+  if (! GIMP_IS_DYNAMICS (GIMP_DATA_EDITOR (editor)->data))
+    return;
+
+  options = GIMP_DYNAMICS (GIMP_DATA_EDITOR (editor)->data);
+
+  pressure_hardness   = gtk_adjustment_get_value (editor->pressure_hardness_data);
+  /*spikes   = ROUND (gtk_adjustment_get_value (editor->spikes_data));
+  hardness = gtk_adjustment_get_value (editor->hardness_data);
+  ratio    = gtk_adjustment_get_value (editor->aspect_ratio_data);
+  angle    = gtk_adjustment_get_value (editor->angle_data);
+  spacing  = gtk_adjustment_get_value (editor->spacing_data);
+*/
+  if (pressure_hardness   != DEFAULT_PRESSURE_HARDNESS
+  /*||
+      spikes   != gimp_brush_generated_get_spikes       (brush) ||
+      hardness != gimp_brush_generated_get_hardness     (brush) ||
+      ratio    != gimp_brush_generated_get_aspect_ratio (brush) ||
+      angle    != gimp_brush_generated_get_angle        (brush) ||
+      spacing  != gimp_brush_get_spacing                (GIMP_BRUSH (brush)))
+    */{
+      g_signal_handlers_block_by_func (dynamics,
+                                       gimp_dynamics_editor_notify_dynamics,
+                                       editor);
+
+      gimp_data_freeze (GIMP_DATA (dynamics));
+      g_object_freeze_notify (G_OBJECT (dynamics));
+/*
+      gimp_brush_generated_set_radius       (brush, radius);
+      gimp_brush_generated_set_spikes       (brush, spikes);
+      gimp_brush_generated_set_hardness     (brush, hardness);
+      gimp_brush_generated_set_aspect_ratio (brush, ratio);
+      gimp_brush_generated_set_angle        (brush, angle);
+      gimp_brush_set_spacing                (GIMP_BRUSH (brush), spacing);
+*/
+      g_object_thaw_notify (G_OBJECT (dynamics));
+      gimp_data_thaw (GIMP_DATA (dynamics));
+
+      g_signal_handlers_unblock_by_func (dynamics,
+                                         gimp_dynamics_editor_notify_dynamics,
+                                         editor);
+    }
+}
+
+
+
 
 static void
 gimp_dynamics_editor_set_context (GimpDocked  *docked,
@@ -334,71 +494,6 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
 
 }
-	
-/*        SCRAPS!           */
-
-
-      //frame = gimp_prop_expander_new (config, "dynamics-expanded",
-      //                                _("Brush Dynamics"));
-/*      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-*/
-
-/*
-  //editor->shape_group = NULL;
-  editor->options_vbox = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (editor->options_vbox), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (editor->options_vbox), 2);
-  gtk_box_pack_start (GTK_BOX (editor), editor->options_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (editor->options_vbox);
-
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (editor->options_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-*/
-/*
-  g_object_set_data (G_OBJECT (vbox), "set_options", table);
-
-  menu  = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                     _("Mode:"), 0.0, 0.5,
-                                     menu, 2, FALSE);
-
-//  if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
-//      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
-//      tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
-//      tool_type == GIMP_TYPE_SMUDGE_TOOL)
-    {
-      gtk_widget_set_sensitive (menu, FALSE);
-      gtk_widget_set_sensitive (label, FALSE);
-    }
-
-  gimp_prop_opacity_entry_new (config, "opacity",
-                               GTK_TABLE (table), 0, table_row++,
-                               _("Opacity:"));
-*/
-
-/*
-  GtkWidget        *dynamics_labels[7];
-  GtkWidget      *frame;
-  GtkWidget      *box;
-  gint            row = 0;
-  GtkWidget        *menu;
-  GtkWidget        *button;
-  GtkWidget        *incremental_toggle = NULL;
-  gint              table_row          = 0;
-  GType             tool_type;
-*/
-
-/*
-  //add a frame
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-*/
 
 /*  private functions  */
 
@@ -538,291 +633,6 @@ velocity_options_gui (GimpPaintOptions *paint_options,
                       GType             tool_type,
                       GtkTable         *table,
                       gint              row)
-{
-  GObject   *config = G_OBJECT (paint_options);
-  gint       column = 1;
-  GtkWidget *scalebutton;
-
-  if (tool_has_opacity_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "velocity-opacity",
-                                 table, column++, row);
-    }
-
-  if (tool_has_hardness_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "velocity-hardness",
-                                 table, column++, row);
-    }
-
-  if (tool_has_rate_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "velocity-rate",
-                                 table, column++, row);
-    }
-
-  if (tool_has_size_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "velocity-size",
-                                 table, column++, row);
-    }
-
-  if (tool_has_aspect_ratio_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "velocity-aspect-ratio",
-                                 table, column++, row);
-    }
-
-
-  if (tool_has_angle_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "velocity-angle",
-                                 table, column++, row);
-    }
-
-  if (tool_has_color_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "velocity-color",
-                                 table, column++, row);
-    }
-
-  scalebutton = gimp_prop_scale_button_new (config, "velocity-prescale");
-  gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (scalebutton);
-}
-
-static void
-direction_options_gui (GimpPaintOptions *paint_options,
-                       GType             tool_type,
-                       GtkTable         *table,
-                       gint              row)
-{
-  GObject   *config = G_OBJECT (paint_options);
-  gint       column = 1;
-  GtkWidget *scalebutton;
-
-  if (tool_has_opacity_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "direction-opacity",
-                                 table, column++, row);
-    }
-
-  if (tool_has_hardness_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "direction-hardness",
-                                 table, column++, row);
-    }
-
-  if (tool_has_rate_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "direction-rate",
-                                 table, column++, row);
-    }
-
-  if (tool_has_size_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "direction-size",
-                                 table, column++, row);
-    }
-
-  if (tool_has_aspect_ratio_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "direction-aspect-ratio",
-                                 table, column++, row);
-    }
-
-  if (tool_has_angle_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "direction-angle",
-                                 table, column++, row);
-    }
-
-  if (tool_has_color_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "direction-color",
-                                 table, column++, row);
-    }
-
-  scalebutton = gimp_prop_scale_button_new (config, "direction-prescale");
-  gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (scalebutton);
-}
-
-
-static void
-tilt_options_gui (GimpPaintOptions *paint_options,
-                       GType             tool_type,
-                       GtkTable         *table,
-                       gint              row)
-{
-  GObject   *config = G_OBJECT (paint_options);
-  gint       column = 1;
-  GtkWidget *scalebutton;
-
-  if (tool_has_opacity_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "tilt-opacity",
-                                 table, column++, row);
-    }
-
-  if (tool_has_hardness_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "tilt-hardness",
-                                 table, column++, row);
-    }
-
-  if (tool_has_rate_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "tilt-rate",
-                                 table, column++, row);
-    }
-
-  if (tool_has_size_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "tilt-size",
-                                 table, column++, row);
-    }
-
-if (tool_has_aspect_ratio_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "tilt-aspect-ratio",
-                                 table, column++, row);
-    }
-
-  if (tool_has_angle_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "tilt-angle",
-                                 table, column++, row);
-    }
-
-  if (tool_has_color_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "tilt-color",
-                                 table, column++, row);
-    }
-
-  scalebutton = gimp_prop_scale_button_new (config, "tilt-prescale");
-  gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (scalebutton);
-}
-
-static void
-random_options_gui (GimpPaintOptions *paint_options,
-                    GType             tool_type,
-                    GtkTable         *table,
-                    gint              row)
-{
-  GObject   *config = G_OBJECT (paint_options);
-  gint       column = 1;
-  GtkWidget *scalebutton;
-
-  if (tool_has_opacity_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "random-opacity",
-                                 table, column++, row);
-    }
-
-  if (tool_has_hardness_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "random-hardness",
-                                 table, column++, row);
-    }
-
-  if (tool_has_rate_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "random-rate",
-                                 table, column++, row);
-    }
-
-  if (tool_has_size_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "random-size",
-                                 table, column++, row);
-    }
-
-  if (tool_has_aspect_ratio_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "random-aspect-ratio",
-                                 table, column++, row);
-    }
-
-  if (tool_has_angle_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "random-angle",
-                                 table, column++, row);
-    }
-
-  if (tool_has_color_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "random-color",
-                                 table, column++, row);
-    }
-
-   scalebutton = gimp_prop_scale_button_new (config, "random-prescale");
-   gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-   gtk_widget_show (scalebutton);
-}
-
-static void
-fading_options_gui (GimpPaintOptions *paint_options,
-                    GType             tool_type,
-                    GtkTable         *table,
-                    gint              row)
-{
-  GObject   *config = G_OBJECT (paint_options);
-  gint       column = 1;
-  GtkWidget *scalebutton;
-
-  if (tool_has_opacity_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "fading-opacity",
-                                 table, column++, row);
-    }
-
-  if (tool_has_hardness_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "fading-hardness",
-                                 table, column++, row);
-    }
-
-  if (tool_has_rate_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "fading-rate",
-                                 table, column++, row);
-    }
-
-  if (tool_has_size_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "fading-size",
-                                 table, column++, row);
-    }
-
-  if (tool_has_aspect_ratio_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "fading-aspect-ratio",
-                                 table, column++, row);
-    }
-
-  if (tool_has_angle_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "fading-angle",
-                                 table, column++, row);
-    }
-
-  if (tool_has_color_dynamics (tool_type))
-    {
-      dynamics_check_button_new (config, "fading-color",
-                                 table, column++, row);
-    }
-
-   scalebutton = gimp_prop_scale_button_new (config, "fading-prescale");
-   gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-   gtk_widget_show (scalebutton);
-}
-
 */
+
+
