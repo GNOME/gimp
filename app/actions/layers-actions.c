@@ -545,7 +545,13 @@ layers_actions_update (GimpActionGroup *group,
                    next_visible = g_list_next (next_visible))
                 {
                   if (gimp_item_get_visible (next_visible->data))
-                    break;
+                    {
+                      /*  next_visible is actually next_visible_and_writable  */
+                      if (gimp_item_get_lock_content (next_visible->data))
+                        next_visible = NULL;
+
+                      break;
+                    }
                 }
             }
 
@@ -581,7 +587,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
 
   SET_SENSITIVE ("layers-anchor",           layer &&  fs && !ac);
-  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && next_visible);
+  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac &&
+                                            !children && next_visible);
   SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",    layer && !fs && !ac);
 
