@@ -20,6 +20,9 @@
 
 #define DYNAMICS_VIEW_SIZE 96
 
+#define DEFAULT_PRESSURE_OPACITY       TRUE
+#define DEFAULT_PRESSURE_HARDNESS      FALSE
+
 #include "config.h"
 
 #include <string.h>
@@ -84,7 +87,7 @@ static void   gimp_dynamics_editor_update_dynamics(GtkAdjustment      *adjustmen
 
 static void   gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
 												    GParamSpec           *pspec,
-                                                    GimpDynamicsEditor      *editor)
+                                                    GimpDynamicsEditor      *editor);
 
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsEditor, gimp_dynamics_editor,
                          GIMP_TYPE_DATA_EDITOR,
@@ -142,9 +145,6 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
   GimpDynamicsEditor         *dynamics_editor = GIMP_DYNAMICS_EDITOR (editor);
   //GimpBrushGeneratedShape  shape        = GIMP_BRUSH_GENERATED_CIRCLE;
   //gdouble                  radius       = 0.0;
-  GimpDynamics *options; 
-  GimpDynamicsOutput *hardness_dynamics;
-  //= options->hardness_dynamics;
   
   gboolean                   pressure_hardness = DEFAULT_PRESSURE_HARDNESS; 
   
@@ -236,7 +236,7 @@ static void
 gimp_dynamics_editor_update_dynamics (GtkAdjustment   *adjustment,
                                                                        GimpDynamicsEditor *editor)
 {
-  GimpDynamics *options;
+  GimpDynamics *dynamics;
   gboolean             pressure_hardness;
   /*gint                spikes;
   gdouble             hardness;
@@ -247,7 +247,7 @@ gimp_dynamics_editor_update_dynamics (GtkAdjustment   *adjustment,
   if (! GIMP_IS_DYNAMICS (GIMP_DATA_EDITOR (editor)->data))
     return;
 
-  options = GIMP_DYNAMICS (GIMP_DATA_EDITOR (editor)->data);
+  dynamics = GIMP_DYNAMICS (GIMP_DATA_EDITOR (editor)->data);
 
   pressure_hardness   = gtk_adjustment_get_value (editor->pressure_hardness_data);
   /*spikes   = ROUND (gtk_adjustment_get_value (editor->spikes_data));
@@ -256,7 +256,7 @@ gimp_dynamics_editor_update_dynamics (GtkAdjustment   *adjustment,
   angle    = gtk_adjustment_get_value (editor->angle_data);
   spacing  = gtk_adjustment_get_value (editor->spacing_data);
 */
-  if (pressure_hardness   != DEFAULT_PRESSURE_HARDNESS
+  if (pressure_hardness   != DEFAULT_PRESSURE_HARDNESS)
   /*||
       spikes   != gimp_brush_generated_get_spikes       (brush) ||
       hardness != gimp_brush_generated_get_hardness     (brush) ||
@@ -324,6 +324,7 @@ gimp_dynamics_editor_new (GimpContext     *context,
 
   editor->config_data = G_OBJECT(context); 
   
+  
   return editor; 
 }
 
@@ -345,7 +346,6 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor   *data_editor = GIMP_DATA_EDITOR (editor);
   GtkWidget        *vbox;
-  //GimpDynamics     *options = GIMP_
   GtkWidget        *table;
   GtkWidget        *label;
   gint              n_dynamics         = 0;
@@ -421,10 +421,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   if (n_dynamics > 0)
     {
       GtkWidget *inner_frame;
-      GtkWidget *fixed;
-      gint       i;
-      gboolean   rtl = gtk_widget_get_direction (vbox) == GTK_TEXT_DIR_RTL;
-
+      
       inner_frame = gimp_frame_new (NULL);
       gtk_container_add (GTK_CONTAINER (vbox), inner_frame);
       gtk_widget_show (inner_frame);
