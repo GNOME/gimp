@@ -503,6 +503,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       can_lock_alpha = FALSE;
   gboolean       text_layer     = FALSE;
   gboolean       writable       = FALSE;
+  gboolean       children       = FALSE;
   GList         *next           = NULL;
   GList         *next_visible   = NULL;
   GList         *prev           = NULL;
@@ -526,6 +527,9 @@ layers_actions_update (GimpActionGroup *group,
           can_lock_alpha = gimp_layer_can_lock_alpha (layer);
           alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
           writable       = ! gimp_item_get_lock_content (GIMP_ITEM (layer));
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+            children = TRUE;
 
           layer_list = gimp_item_get_container_iter (GIMP_ITEM (layer));
 
@@ -591,7 +595,7 @@ layers_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("layers-resize",          writable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", writable && !ac);
-  SET_SENSITIVE ("layers-scale",           writable && !ac);
+  SET_SENSITIVE ("layers-scale",           (writable || children) && !ac);
 
   SET_SENSITIVE ("layers-crop",            writable && sel);
 
