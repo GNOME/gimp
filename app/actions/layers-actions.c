@@ -593,7 +593,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
   SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
 
-  SET_SENSITIVE ("layers-resize",          writable && !ac);
+  SET_SENSITIVE ("layers-resize",          (writable || children) && !ac);
   SET_SENSITIVE ("layers-resize-to-image", writable && !ac);
   SET_SENSITIVE ("layers-scale",           (writable || children) && !ac);
 
