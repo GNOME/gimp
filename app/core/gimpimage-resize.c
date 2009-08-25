@@ -154,6 +154,10 @@ gimp_image_resize_with_layers (GimpImage    *image,
       gint      old_offset_x;
       gint      old_offset_y;
 
+      /*  group layers are updated automatically  */
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+        continue;
+
       gimp_item_get_offset (item, &old_offset_x, &old_offset_y);
 
       gimp_item_translate (item, offset_x, offset_y, TRUE);

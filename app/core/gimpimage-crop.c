@@ -178,6 +178,10 @@ gimp_image_crop (GimpImage   *image,
         {
           item = (GimpItem *) list->data;
 
+          /*  group layers are updated automatically  */
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+            continue;
+
           gimp_item_translate (item, -x1, -y1, TRUE);
 
           if (crop_layers)

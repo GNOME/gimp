@@ -116,6 +116,10 @@ gimp_image_flip (GimpImage           *image,
     {
       GimpItem *item = list->data;
 
+      /*  group layers are updated automatically  */
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+        continue;
+
       gimp_item_flip (item, context, flip_type, axis, FALSE);
 
       if (progress)

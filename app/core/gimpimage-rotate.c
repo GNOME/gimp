@@ -176,6 +176,10 @@ gimp_image_rotate (GimpImage        *image,
       gint      off_x;
       gint      off_y;
 
+      /*  group layers are updated automatically  */
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+        continue;
+
       gimp_item_get_offset (item, &off_x, &off_y);
 
       gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);

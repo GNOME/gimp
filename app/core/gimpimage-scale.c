@@ -150,6 +150,10 @@ gimp_image_scale (GimpImage             *image,
       gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
                                   progress_current++, progress_steps);
 
+      /*  group layers are updated automatically  */
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+        continue;
+
       if (! gimp_item_scale_by_factors (item,
                                         img_scale_w, img_scale_h,
                                         interpolation_type, sub_progress))
@@ -326,6 +330,10 @@ gimp_image_scale_check (const GimpImage *image,
   for (list = all_layers; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
+
+      /*  group layers are updated automatically  */
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+        continue;
 
       if (! gimp_item_check_scaling (item, new_width, new_height))
         {
