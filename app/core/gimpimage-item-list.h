@@ -52,5 +52,10 @@ GList * gimp_image_item_list_get_list  (const GimpImage        *image,
                                         GimpItemTypeMask        type,
                                         GimpItemSet             set);
 
+GList * gimp_image_item_list_filter    (const GimpItem         *exclude,
+                                        GList                  *list,
+                                        gboolean                remove_children,
+                                        gboolean                remove_locked);
+
 
 #endif /* __GIMP_IMAGE_ITEM_LIST_H__ */

@@ -216,3 +216,71 @@ gimp_image_item_list_get_list (const GimpImage  *image,
 
   return g_list_reverse (return_list);
 }
+
+static GList *
+gimp_image_item_list_remove_children (GList          *list,
+                                      const GimpItem *parent)
+{
+  GList *l = list;
+
+  while (l)
+    {
+      GimpItem *item = l->data;
+
+      l = g_list_next (l);
+
+      if (gimp_viewable_is_ancestor (GIMP_VIEWABLE (parent),
+                                     GIMP_VIEWABLE (item)))
+        {
+          list = g_list_remove (list, item);
+        }
+    }
+
+  return list;
+}
+
+GList *
+gimp_image_item_list_filter (const GimpItem *exclude,
+                             GList          *list,
+                             gboolean        remove_children,
+                             gboolean        remove_locked)
+{
+  GList *l;
+
+  g_return_val_if_fail (exclude == NULL || GIMP_IS_ITEM (exclude), NULL);
+
+  if (! list)
+    return NULL;
+
+  if (exclude)
+    list = gimp_image_item_list_remove_children (list, exclude);
+
+  for (l = list; l; l = g_list_next (l))
+    {
+      GimpItem *item = l->data;
+      GList    *next;
+
+      next = gimp_image_item_list_remove_children (g_list_next (l), item);
+
+      l->next = next;
+      if (next)
+        next->prev = l;
+    }
+
+  if (remove_locked)
+    {
+      l = list;
+
+      while (l)
+        {
+          GimpItem *item = l->data;
+
+          l = g_list_next (l);
+
+          if (gimp_item_get_lock_content (item))
+            list = g_list_remove (list, item);
+        }
+    }
+
+  return list;
+}
