@@ -501,7 +501,7 @@ layers_merge_down_cmd_callback (GtkAction *action,
   return_if_no_layer (image, layer, data);
 
   gimp_image_merge_down (image, layer, action_data_get_context (data),
-                         GIMP_EXPAND_AS_NECESSARY);
+                         GIMP_EXPAND_AS_NECESSARY, NULL);
   gimp_image_flush (image);
 }
 

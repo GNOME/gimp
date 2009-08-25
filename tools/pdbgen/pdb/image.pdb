@@ -941,9 +941,15 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_merge_down (image, merge_layer, context, merge_type);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), FALSE, error))
+    {
+      layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
+                                     error);
 
-  if (! layer)
+      if (! layer)
+        success = FALSE;
+    }
+  else
     success = FALSE;
 }
 CODE

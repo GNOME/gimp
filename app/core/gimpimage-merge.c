@@ -174,10 +174,11 @@ gimp_image_flatten (GimpImage   *image,
 }
 
 GimpLayer *
-gimp_image_merge_down (GimpImage     *image,
-                       GimpLayer     *current_layer,
-                       GimpContext   *context,
-                       GimpMergeType  merge_type)
+gimp_image_merge_down (GimpImage      *image,
+                       GimpLayer      *current_layer,
+                       GimpContext    *context,
+                       GimpMergeType   merge_type,
+                       GError        **error)
 {
   GimpLayer *layer;
   GList     *list;
@@ -187,9 +188,15 @@ gimp_image_merge_down (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (current_layer), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (current_layer)), NULL);
-  g_return_val_if_fail (gimp_viewable_get_children (GIMP_VIEWABLE (current_layer)) == NULL,
-                        NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (current_layer)))
+    {
+      g_set_error_literal (error, 0, 0,
+                           _("Cannot merge down a group layer."));
+      return NULL;
+    }
 
   for (list = gimp_item_get_container_iter (GIMP_ITEM (current_layer));
        list;
@@ -209,12 +216,23 @@ gimp_image_merge_down (GimpImage     *image,
 
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
         {
-          g_return_val_if_fail (! gimp_item_get_lock_content (GIMP_ITEM (layer)),
-                                NULL);
+          if (gimp_item_get_lock_content (GIMP_ITEM (layer)))
+            {
+              g_set_error_literal (error, 0, 0,
+                                   _("The layer to merge down to is locked."));
+              return NULL;
+            }
 
           merge_list = g_slist_append (NULL, layer);
           break;
         }
+    }
+
+  if (! merge_list)
+    {
+      g_set_error_literal (error, 0, 0,
+                           _("There is no visible layer to merge down to."));
+      return NULL;
     }
 
   merge_list = g_slist_prepend (merge_list, current_layer);

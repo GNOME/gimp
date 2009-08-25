@@ -1508,9 +1508,15 @@ image_merge_down_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      layer = gimp_image_merge_down (image, merge_layer, context, merge_type);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), FALSE, error))
+        {
+          layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
+                                         error);
 
-      if (! layer)
+          if (! layer)
+            success = FALSE;
+        }
+      else
         success = FALSE;
     }
 
