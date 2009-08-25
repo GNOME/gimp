@@ -496,7 +496,63 @@ gimp_group_layer_resize (GimpItem    *item,
                          gint         offset_x,
                          gint         offset_y)
 {
-  /* FIXME */
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
+  GimpLayerMask  *mask;
+  GList          *list;
+  gint            x, y;
+
+  x = gimp_item_get_offset_x (item) - offset_x;
+  y = gimp_item_get_offset_y (item) - offset_y;
+
+  list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+
+  while (list)
+    {
+      GimpItem *child = list->data;
+      gint      child_width;
+      gint      child_height;
+      gint      child_x;
+      gint      child_y;
+
+      list = g_list_next (list);
+
+      if (gimp_rectangle_intersect (x,
+                                    y,
+                                    new_width,
+                                    new_height,
+                                    gimp_item_get_offset_x (child),
+                                    gimp_item_get_offset_y (child),
+                                    gimp_item_get_width  (child),
+                                    gimp_item_get_height (child),
+                                    &child_x,
+                                    &child_y,
+                                    &child_width,
+                                    &child_height))
+        {
+          gint child_offset_x = gimp_item_get_offset_x (child) - child_x;
+          gint child_offset_y = gimp_item_get_offset_y (child) - child_y;
+
+          gimp_item_resize (child, context,
+                            child_width, child_height,
+                            child_offset_x, child_offset_y);
+        }
+      else if (gimp_item_is_attached (item))
+        {
+          gimp_image_remove_layer (gimp_item_get_image (item),
+                                   GIMP_LAYER (child),
+                                   TRUE, NULL);
+        }
+      else
+        {
+          gimp_container_remove (group->children, GIMP_OBJECT (child));
+        }
+    }
+
+  mask = gimp_layer_get_mask (GIMP_LAYER (group));
+
+  if (mask)
+    gimp_item_resize (GIMP_ITEM (mask), context,
+                      new_width, new_height, offset_x, offset_y);
 }
 
 static void
