@@ -557,7 +557,7 @@ gboolean        gimp_image_reorder_vectors       (GimpImage          *image,
 gboolean        gimp_image_layer_boundary        (const GimpImage    *image,
                                                   BoundSeg          **segs,
                                                   gint               *n_segs);
-GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage    *image,
+GimpLayer     * gimp_image_pick_layer            (const GimpImage    *image,
                                                   gint                x,
                                                   gint                y);
 gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,

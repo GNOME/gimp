@@ -715,7 +715,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer = gimp_image_pick_correlate_layer (image, x, y);
+  layer = gimp_image_pick_layer (image, x, y);
 }
 CODE
     );

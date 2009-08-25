@@ -4095,9 +4095,9 @@ gimp_image_layer_boundary (const GimpImage  *image,
 }
 
 GimpLayer *
-gimp_image_pick_correlate_layer (const GimpImage *image,
-                                 gint             x,
-                                 gint             y)
+gimp_image_pick_layer (const GimpImage *image,
+                       gint             x,
+                       gint             y)
 {
   GList *all_layers;
   GList *list;
