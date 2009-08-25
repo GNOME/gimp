@@ -66,6 +66,8 @@ static GimpContainer * gimp_group_layer_get_children (GimpViewable    *viewable)
 
 static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
                                                       GType            new_type);
+static void            gimp_group_layer_convert      (GimpItem        *item,
+                                                      GimpImage       *dest_image);
 static void            gimp_group_layer_translate    (GimpItem        *item,
                                                       gint             offset_x,
                                                       gint             offset_y,
@@ -160,6 +162,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   viewable_class->get_children     = gimp_group_layer_get_children;
 
   item_class->duplicate            = gimp_group_layer_duplicate;
+  item_class->convert              = gimp_group_layer_convert;
   item_class->translate            = gimp_group_layer_translate;
   item_class->scale                = gimp_group_layer_scale;
   item_class->resize               = gimp_group_layer_resize;
@@ -357,6 +360,25 @@ gimp_group_layer_duplicate (GimpItem *item,
     }
 
   return new_item;
+}
+
+static void
+gimp_group_layer_convert (GimpItem  *item,
+                          GimpImage *dest_image)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
+  GList          *list;
+
+  for (list = GIMP_LIST (group->children)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *child = list->data;
+
+      GIMP_ITEM_GET_CLASS (child)->convert (child, dest_image);
+    }
+
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
 }
 
 static void
