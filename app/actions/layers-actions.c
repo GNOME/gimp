@@ -597,7 +597,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-resize-to-image", writable && !ac);
   SET_SENSITIVE ("layers-scale",           (writable || children) && !ac);
 
-  SET_SENSITIVE ("layers-crop",            writable && sel);
+  SET_SENSITIVE ("layers-crop",            (writable || children) && sel);
 
   SET_SENSITIVE ("layers-alpha-add",       writable && !fs && !alpha);
   SET_SENSITIVE ("layers-alpha-remove",    writable && !fs &&  alpha);
