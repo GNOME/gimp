@@ -346,10 +346,26 @@ gimp_group_layer_duplicate (GimpItem *item,
            list;
            list = g_list_next (list), position++)
         {
-          GimpItem *child = list->data;
-          GimpItem *new_child;
+          GimpItem      *child = list->data;
+          GimpItem      *new_child;
+          GimpLayerMask *mask;
 
           new_child = gimp_item_duplicate (child, G_TYPE_FROM_INSTANCE (child));
+
+          gimp_object_set_name (GIMP_OBJECT (new_child),
+                                gimp_object_get_name (GIMP_OBJECT (child)));
+
+          mask = gimp_layer_get_mask (GIMP_LAYER (child));
+
+          if (mask)
+            {
+              GimpLayerMask *new_mask;
+
+              new_mask = gimp_layer_get_mask (GIMP_LAYER (new_child));
+
+              gimp_object_set_name (GIMP_OBJECT (new_mask),
+                                    gimp_object_get_name (GIMP_OBJECT (mask)));
+            }
 
           gimp_viewable_set_parent (GIMP_VIEWABLE (new_child),
                                     GIMP_VIEWABLE (new_group));
