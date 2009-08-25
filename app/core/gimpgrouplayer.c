@@ -25,6 +25,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -425,16 +426,40 @@ gimp_group_layer_scale (GimpItem              *item,
   GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
   GimpLayerMask  *mask;
   GList          *list;
+  gdouble         width_factor;
+  gdouble         height_factor;
+  gint            old_offset_x;
+  gint            old_offset_y;
+
+  width_factor  = (gdouble) new_width  / (gdouble) gimp_item_get_width  (item);
+  height_factor = (gdouble) new_height / (gdouble) gimp_item_get_height (item);
+
+  old_offset_x = gimp_item_get_offset_x (item);
+  old_offset_y = gimp_item_get_offset_y (item);
 
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
        list;
        list = g_list_next (list))
     {
       GimpItem *child = list->data;
+      gint      child_width;
+      gint      child_height;
+      gint      child_offset_x;
+      gint      child_offset_y;
+
+      child_width    = ROUND (width_factor  * gimp_item_get_width  (child));
+      child_height   = ROUND (height_factor * gimp_item_get_height (child));
+      child_offset_x = ROUND (width_factor  * (gimp_item_get_offset_x (child) -
+                                               old_offset_x));
+      child_offset_y = ROUND (height_factor * (gimp_item_get_offset_y (child) -
+                                               old_offset_y));
+
+      child_offset_x += new_offset_x;
+      child_offset_y += new_offset_y;
 
       gimp_item_scale (child,
-                       new_width, new_height,
-                       new_offset_x, new_offset_y,
+                       child_width, child_height,
+                       child_offset_x, child_offset_y,
                        interpolation_type, progress);
     }
 
