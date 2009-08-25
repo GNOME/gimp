@@ -66,20 +66,16 @@ gimp_image_merge_visible_layers (GimpImage     *image,
                                  gboolean       discard_invisible)
 {
   GList     *list;
-  GSList    *merge_list       = NULL;
-  GSList    *invisible_list   = NULL;
-  gboolean   had_floating_sel = FALSE;
-  GimpLayer *layer            = NULL;
+  GSList    *merge_list     = NULL;
+  GSList    *invisible_list = NULL;
+  GimpLayer *layer          = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   /* if there's a floating selection, anchor it */
   if (gimp_image_get_floating_selection (image))
-    {
-      floating_sel_anchor (gimp_image_get_floating_selection (image));
-      had_floating_sel = TRUE;
-    }
+    floating_sel_anchor (gimp_image_get_floating_selection (image));
 
   for (list = gimp_image_get_layer_iter (image);
        list;
