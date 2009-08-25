@@ -34,13 +34,16 @@ typedef struct _GimpDynamicsEditorClass GimpDynamicsEditorClass;
 struct _GimpDynamicsEditor
 {
   GimpDataEditor  parent_instance;
+  GimpDynamics   *dynamics_model;
+
   GtkWidget      *options_vbox;
 
+  /*
   GimpContext    *context_dynamics;
   GimpContext    *context;
   GObject        *config_data;
-  GtkAdjustment  *pressure_hardness_data;
-  
+  GtkAdjustment  *pressure_hardness_data;*/
+
 };
 
 struct _GimpDynamicsEditorClass

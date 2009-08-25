@@ -55,19 +55,28 @@ static void        pressure_options_gui  (GObject          *config,
                                           GtkTable         *table,
                                           gint              row,
                                           GtkWidget        *labels[]);
-/*static void        velocity_options_gui  (GtkTable         *table,
+static void        velocity_options_gui  (GObject          *config,
+                                          GtkTable         *table,
                                           gint              row);
-static void        direction_options_gui (GtkTable         *table,
-                                          gint              row);
-static void        tilt_options_gui      (GtkTable         *table,
-                                          gint              row);
-static void        random_options_gui    (GtkTable         *table,
-                                          gint              row);
-static void        fading_options_gui    (GtkTable         *table,
-                                          gint              row);
-*/
 
-static GObject     * get_config_value (GimpDynamicsEditor *editor);										  
+static void        direction_options_gui  (GObject          *config,
+                                          GtkTable         *table,
+                                          gint              row);
+
+static void        tilt_options_gui      (GObject          *config,
+                                          GtkTable         *table,
+                                          gint              row);
+
+static void        random_options_gui    (GObject          *config,
+                                          GtkTable         *table,
+                                          gint              row);
+
+static void        fading_options_gui    (GObject          *config,
+                                          GtkTable         *table,
+                                          gint              row);
+
+
+static GObject     * get_config_value (GimpDynamicsEditor *editor);
 /*  local function prototypes  */
 
 static void   gimp_dynamics_editor_docked_iface_init (GimpDockedInterface *face);
@@ -75,7 +84,7 @@ static void   gimp_dynamics_editor_docked_iface_init (GimpDockedInterface *face)
 static GObject * gimp_dynamics_editor_constructor (GType              type,
                                                    guint              n_params,
                                                    GObjectConstructParam *params);
-												
+
 static void   gimp_dynamics_editor_set_data       (GimpDataEditor     *editor,
                                                    GimpData           *data);
 
@@ -86,7 +95,7 @@ static void   gimp_dynamics_editor_update_dynamics(GtkAdjustment      *adjustmen
                                                    GimpDynamicsEditor    *editor);
 
 static void   gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
-												    GParamSpec           *pspec,
+                                                    GParamSpec           *pspec,
                                                     GimpDynamicsEditor      *editor);
 
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsEditor, gimp_dynamics_editor,
@@ -145,9 +154,9 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
   GimpDynamicsEditor         *dynamics_editor = GIMP_DYNAMICS_EDITOR (editor);
   //GimpBrushGeneratedShape  shape        = GIMP_BRUSH_GENERATED_CIRCLE;
   //gdouble                  radius       = 0.0;
-  
-  gboolean                   pressure_hardness = DEFAULT_PRESSURE_HARDNESS; 
-  
+
+  gboolean                   pressure_hardness = DEFAULT_PRESSURE_HARDNESS;
+
   if (editor->data)
     g_signal_handlers_disconnect_by_func (editor->data,
                                           gimp_dynamics_editor_notify_dynamics,
@@ -165,25 +174,10 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
   if (editor->data && GIMP_IS_DYNAMICS (editor->data))
     {
       GimpDynamics *options = GIMP_DYNAMICS (editor->data);
-      
-	  
-	  //pressure_opacity = 
-      
-	  /*hardness = gimp_brush_generated_get_hardness     (brush);
-      ratio    = gimp_brush_generated_get_aspect_ratio (brush);
-      angle    = gimp_brush_generated_get_angle        (brush);
-      spacing  = gimp_brush_get_spacing                (GIMP_BRUSH (brush));
-	   */
-	
+   //   dynamics_editor->pressure_hardness_data = options->hardness_dynamics->pressure;
     }
-  gtk_adjustment_set_value (dynamics_editor->pressure_hardness_data,       pressure_hardness );
-  /*gtk_adjustment_set_value (brush_editor->spikes_data,       spikes);
-  gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
-  gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
-  gtk_adjustment_set_value (brush_editor->angle_data,        angle);
-  gtk_adjustment_set_value (brush_editor->spacing_data,      spacing);
+  //gtk_adjustment_set_value (dynamics_editor->pressure_hardness_data,       pressure_hardness );
 
- */
 }
 
 
@@ -249,7 +243,7 @@ gimp_dynamics_editor_update_dynamics (GtkAdjustment   *adjustment,
 
   dynamics = GIMP_DYNAMICS (GIMP_DATA_EDITOR (editor)->data);
 
-  pressure_hardness   = gtk_adjustment_get_value (editor->pressure_hardness_data);
+  //pressure_hardness   = gtk_adjustment_get_value (editor->pressure_hardness_data);
   /*spikes   = ROUND (gtk_adjustment_get_value (editor->spikes_data));
   hardness = gtk_adjustment_get_value (editor->hardness_data);
   ratio    = gtk_adjustment_get_value (editor->aspect_ratio_data);
@@ -312,7 +306,7 @@ gimp_dynamics_editor_new (GimpContext     *context,
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  GimpDynamicsEditor *editor; 
+  GimpDynamicsEditor *editor;
   editor = g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<DynamicsEditor>",
@@ -322,21 +316,18 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "data",            gimp_context_get_dynamics (context),
                        NULL);
 
-  editor->config_data = G_OBJECT(context); 
-  
-  
-  return editor; 
+  return editor;
 }
 
 
 static GObject *
 get_config_value (GimpDynamicsEditor *editor)
 {
-          
+
   g_return_val_if_fail (GIMP_IS_DYNAMICS_EDITOR (editor), NULL);
 
   GObject  *config  = G_OBJECT (editor);
-  
+
   return config;
 }
 
@@ -345,6 +336,12 @@ static void
 gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor   *data_editor = GIMP_DATA_EDITOR (editor);
+  editor->dynamics_model = g_object_new(GIMP_TYPE_DYNAMICS,
+                                        "name", "Default",
+                                        NULL);
+
+  GimpDynamics     *dynamics    = editor->dynamics_model;
+
   GtkWidget        *vbox;
   GtkWidget        *table;
   GtkWidget        *label;
@@ -352,8 +349,8 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   GtkWidget        *dynamics_labels[7];
   //GObject          *config  = get_config_value (editor);
   //GObject          *config = G_OBJECT(editor->data);
-  GObject          *config = editor->config_data;
-  
+  GObject          *config = G_OBJECT(dynamics);
+
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
@@ -371,48 +368,28 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
   //n_dynamics = 5;
 
-  //if (tool_has_opacity_dynamics (tool_type))
-    {
-      dynamics_labels[n_dynamics] = gtk_label_new (_("Opacity"));
-      n_dynamics++;
-    }
+  dynamics_labels[n_dynamics] = gtk_label_new (_("Opacity"));
+  n_dynamics++;
 
-  //if (tool_has_hardness_dynamics (tool_type))
-    {
-      dynamics_labels[n_dynamics] = gtk_label_new (_("Hardness"));
-      n_dynamics++;
-    }
+  dynamics_labels[n_dynamics] = gtk_label_new (_("Hardness"));
+  n_dynamics++;
 
-  //if (tool_has_rate_dynamics (tool_type))
-    {
-      dynamics_labels[n_dynamics] = gtk_label_new (_("Rate"));
-      n_dynamics++;
-    }
+  dynamics_labels[n_dynamics] = gtk_label_new (_("Rate"));
+  n_dynamics++;
 
-  //if (tool_has_size_dynamics (tool_type))
-    {
-      dynamics_labels[n_dynamics] = gtk_label_new (_("Size"));
-      n_dynamics++;
-    }
-
-  //if (tool_has_aspect_ratio_dynamics (tool_type))
-    {
-      dynamics_labels[n_dynamics] = gtk_label_new (_("Aspect ratio"));
-      n_dynamics++;
-    }
+  dynamics_labels[n_dynamics] = gtk_label_new (_("Size"));
+  n_dynamics++;
 
 
-  //if (tool_has_angle_dynamics (tool_type))
-    {
-      dynamics_labels[n_dynamics] = gtk_label_new (_("Angle"));
-      n_dynamics++;
-    }
+  dynamics_labels[n_dynamics] = gtk_label_new (_("Aspect ratio"));
+  n_dynamics++;
 
-  //if (tool_has_color_dynamics (tool_type))
-    {
-      dynamics_labels[n_dynamics] = gtk_label_new (_("Color"));
-      n_dynamics++;
-    }
+  dynamics_labels[n_dynamics] = gtk_label_new (_("Angle"));
+  n_dynamics++;
+
+  dynamics_labels[n_dynamics] = gtk_label_new (_("Color"));
+  n_dynamics++;
+
 
   /* NB: When adding new dynamics, increase size of the
    * dynamics_labels[] array
@@ -421,7 +398,11 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   if (n_dynamics > 0)
     {
       GtkWidget *inner_frame;
-      
+      GtkWidget *fixed;
+      gint       i;
+      gboolean   rtl = gtk_widget_get_direction (vbox) == GTK_TEXT_DIR_RTL;
+
+
       inner_frame = gimp_frame_new (NULL);
       gtk_container_add (GTK_CONTAINER (vbox), inner_frame);
       gtk_widget_show (inner_frame);
@@ -466,30 +447,39 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
-    }
-	
-      pressure_options_gui (config,
+
+
+
+     pressure_options_gui (config,
                             GTK_TABLE (table), 1,
                             dynamics_labels);
-/*
-      velocity_options_gui (options, tool_type,
-                            GTK_TABLE (table), 2);
 
-      direction_options_gui (options, tool_type,
-                             GTK_TABLE (table), 3);
+      velocity_options_gui (config, GTK_TABLE (table), 2);
 
-      tilt_options_gui (options, tool_type,
-                        GTK_TABLE (table), 4);
+      direction_options_gui (config, GTK_TABLE (table), 3);
 
-      random_options_gui (options, tool_type,
-                          GTK_TABLE (table), 5);
+      tilt_options_gui (config, GTK_TABLE (table), 4);
 
-      fading_options_gui (options, tool_type,
-                          GTK_TABLE (table), 6);
+      random_options_gui (config, GTK_TABLE (table), 5);
 
-*/
+      fading_options_gui (config, GTK_TABLE (table), 6);
 
 
+      fixed = gtk_fixed_new ();
+      gtk_table_attach (GTK_TABLE (table), fixed, 0, n_dynamics + 2, 0, 1,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (fixed);
+
+      for (i = 0; i < n_dynamics; i++)
+        {
+          gtk_label_set_angle (GTK_LABEL (dynamics_labels[i]),
+                               rtl ? 315 : 45);
+          gtk_misc_set_alignment (GTK_MISC (dynamics_labels[i]), 1.0, 1.0);
+          gtk_fixed_put (GTK_FIXED (fixed), dynamics_labels[i], 0, 0);
+          gtk_widget_show (dynamics_labels[i]);
+        }
+
+    }
 }
 
 /*  private functions  */
@@ -540,54 +530,37 @@ pressure_options_gui (GObject          *config,
   GtkWidget *button;
   gint       column = 1;
   GtkWidget *scalebutton;
-/*
-  //if (tool_has_opacity_dynamics (tool_type))
-    {
+
       button = dynamics_check_button_new (config, "pressure-opacity",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
-    }
-*/
-  //if (tool_has_hardness_dynamics (tool_type))
-    {
+
+
       button = dynamics_check_button_new (config, "pressure-hardness",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
-    }
 
-  //if (tool_has_rate_dynamics (tool_type))
-    {
       button = dynamics_check_button_new (config, "pressure-rate",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
-    }
 
-  //if (tool_has_size_dynamics (tool_type))
-    {
-      //if (tool_type != GIMP_TYPE_AIRBRUSH_TOOL)
-        button = dynamics_check_button_new (config, "pressure-size",
+      button = dynamics_check_button_new (config, "pressure-size",
                                             table, column, row);
-      //else
-        //button = dynamics_check_button_new (config, "pressure-inverse-size",
-        //                                    table, column, row);
 
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
-    }
 
-  //if (tool_has_aspect_ratio_dynamics (tool_type))
-    {
       button = dynamics_check_button_new (config, "pressure-aspect_ratio",
                                           table, column, row);
 
@@ -595,41 +568,219 @@ pressure_options_gui (GObject          *config,
                         G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
-     }
 
-  //if (tool_has_angle_dynamics (tool_type))
-    {
       button = dynamics_check_button_new (config, "pressure-angle",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
-    }
 
-  //if (tool_has_color_dynamics (tool_type))
-    {
       button = dynamics_check_button_new (config, "pressure-color",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
-    }
-/*
-   scalebutton = gimp_prop_scale_button_new (config, "pressure-prescale");
-   gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-   gtk_widget_show (scalebutton);
- */  
-   
+
 }
-/*
+
 static void
-velocity_options_gui (GimpPaintOptions *paint_options,
-                      GType             tool_type,
+velocity_options_gui (GObject          *config,
                       GtkTable         *table,
                       gint              row)
-*/
+{
+  GtkWidget *button;
+  gint       column = 1;
+  GtkWidget *scalebutton;
+
+      button = dynamics_check_button_new (config, "velocity-opacity",
+                                          table, column, row);
+      column++;
 
 
+      button = dynamics_check_button_new (config, "velocity-hardness",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "velocity-rate",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "velocity-size",
+                                            table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "velocity-aspect_ratio",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "velocity-angle",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "velocity-color",
+                                          table, column, row);
+      column++;
+
+}
+
+static void
+direction_options_gui (GObject          *config,
+                      GtkTable         *table,
+                      gint              row)
+{
+  GtkWidget *button;
+  gint       column = 1;
+  GtkWidget *scalebutton;
+
+      button = dynamics_check_button_new (config, "direction-opacity",
+                                          table, column, row);
+      column++;
+
+
+      button = dynamics_check_button_new (config, "direction-hardness",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "direction-rate",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "direction-size",
+                                            table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "direction-aspect_ratio",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "direction-angle",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "direction-color",
+                                          table, column, row);
+      column++;
+
+}
+
+static void
+tilt_options_gui (GObject          *config,
+                      GtkTable         *table,
+                      gint              row)
+{
+  GtkWidget *button;
+  gint       column = 1;
+  GtkWidget *scalebutton;
+
+      button = dynamics_check_button_new (config, "tilt-opacity",
+                                          table, column, row);
+      column++;
+
+
+      button = dynamics_check_button_new (config, "tilt-hardness",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "tilt-rate",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "tilt-size",
+                                            table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "tilt-aspect_ratio",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "tilt-angle",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "tilt-color",
+                                          table, column, row);
+      column++;
+
+}
+
+static void
+random_options_gui (GObject          *config,
+                      GtkTable         *table,
+                      gint              row)
+{
+  GtkWidget *button;
+  gint       column = 1;
+  GtkWidget *scalebutton;
+
+      button = dynamics_check_button_new (config, "random-opacity",
+                                          table, column, row);
+      column++;
+
+
+      button = dynamics_check_button_new (config, "random-hardness",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "random-rate",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "random-size",
+                                            table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "random-aspect_ratio",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "random-angle",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "random-color",
+                                          table, column, row);
+      column++;
+
+}
+
+static void
+fading_options_gui (GObject          *config,
+                      GtkTable         *table,
+                      gint              row)
+{
+  GtkWidget *button;
+  gint       column = 1;
+  GtkWidget *scalebutton;
+
+      button = dynamics_check_button_new (config, "fading-opacity",
+                                          table, column, row);
+      column++;
+
+
+      button = dynamics_check_button_new (config, "fading-hardness",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "fading-rate",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "fading-size",
+                                            table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "fading-aspect_ratio",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "fading-angle",
+                                          table, column, row);
+      column++;
+
+      button = dynamics_check_button_new (config, "fading-color",
+                                          table, column, row);
+      column++;
+
+}
