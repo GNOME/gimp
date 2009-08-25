@@ -340,7 +340,7 @@ gimp_group_layer_duplicate (GimpItem *item,
 
       for (list = GIMP_LIST (group->children)->list, position = 0;
            list;
-           list = g_list_next (list))
+           list = g_list_next (list), position++)
         {
           GimpItem *child = list->data;
           GimpItem *new_child;
