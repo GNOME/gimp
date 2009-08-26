@@ -1393,10 +1393,14 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
                             gimp_item_get_height (item));
     }
 
+  g_object_freeze_notify (G_OBJECT (drawable));
+
   GIMP_DRAWABLE_GET_CLASS (drawable)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type,
                                                  offset_x, offset_y);
+
+  g_object_thaw_notify (G_OBJECT (drawable));
 
   gimp_drawable_update (drawable,
                         0, 0,
