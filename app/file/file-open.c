@@ -613,10 +613,10 @@ file_open_sanitize_image (GimpImage *image,
    * load plug-ins are not required to call gimp_drawable_update() or
    * anything.
    */
-  gimp_image_update (image,
-                     0, 0,
-                     gimp_image_get_width  (image),
-                     gimp_image_get_height (image));
+  gimp_image_invalidate (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
   gimp_image_flush (image);
 
   /* same for drawable previews */

@@ -31,7 +31,7 @@
 
 enum
 {
-  UPDATE,
+  INVALIDATE,
   FLUSH,
   STRUCTURE_CHANGED,
   LAST_SIGNAL
@@ -79,11 +79,11 @@ gimp_projectable_iface_base_init (GimpProjectableInterface *iface)
 
   if (! initialized)
     {
-      projectable_signals[UPDATE] =
-        g_signal_new ("update",
+      projectable_signals[INVALIDATE] =
+        g_signal_new ("invalidate",
                       G_TYPE_FROM_CLASS (iface),
                       G_SIGNAL_RUN_FIRST,
-                      G_STRUCT_OFFSET (GimpProjectableInterface, update),
+                      G_STRUCT_OFFSET (GimpProjectableInterface, invalidate),
                       NULL, NULL,
                       gimp_marshal_VOID__INT_INT_INT_INT,
                       G_TYPE_NONE, 4,
@@ -119,15 +119,15 @@ gimp_projectable_iface_base_init (GimpProjectableInterface *iface)
 /*  public functions  */
 
 void
-gimp_projectable_update (GimpProjectable *projectable,
-                         gint             x,
-                         gint             y,
-                         gint             width,
-                         gint             height)
+gimp_projectable_invalidate (GimpProjectable *projectable,
+                             gint             x,
+                             gint             y,
+                             gint             width,
+                             gint             height)
 {
   g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
 
-  g_signal_emit (projectable, projectable_signals[UPDATE], 0,
+  g_signal_emit (projectable, projectable_signals[INVALIDATE], 0,
                  x, y, width, height);
 }
 

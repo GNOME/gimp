@@ -35,7 +35,7 @@ struct _GimpProjectableInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  void           (* update)             (GimpProjectable *projectable,
+  void           (* invalidate)         (GimpProjectable *projectable,
                                          gint             x,
                                          gint             y,
                                          gint             width,
@@ -63,7 +63,7 @@ struct _GimpProjectableInterface
 
 GType          gimp_projectable_interface_get_type (void) G_GNUC_CONST;
 
-void           gimp_projectable_update             (GimpProjectable *projectable,
+void           gimp_projectable_invalidate         (GimpProjectable *projectable,
                                                     gint             x,
                                                     gint             y,
                                                     gint             width,

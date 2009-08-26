@@ -715,7 +715,7 @@ view_use_gegl_cmd_callback (GtkAction *action,
 
   g_list_free (layers);
 
-  gimp_image_update (image, 0, 0, image->width, image->height);
+  gimp_image_invalidate (image, 0, 0, image->width, image->height);
   gimp_image_flush (image);
 }
 

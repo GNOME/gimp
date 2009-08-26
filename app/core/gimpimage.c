@@ -618,7 +618,7 @@ gimp_image_init (GimpImage *image)
   image->layer_stack           = NULL;
 
   g_signal_connect_swapped (image->layers, "update",
-                            G_CALLBACK (gimp_image_update),
+                            G_CALLBACK (gimp_image_invalidate),
                             image);
 
   image->layer_alpha_handler =
@@ -627,7 +627,7 @@ gimp_image_init (GimpImage *image)
                                 image);
 
   g_signal_connect_swapped (image->channels, "update",
-                            G_CALLBACK (gimp_image_update),
+                            G_CALLBACK (gimp_image_invalidate),
                             image);
 
   image->channel_name_changed_handler =
@@ -824,14 +824,14 @@ gimp_image_dispose (GObject *object)
   gimp_image_undo_free (image);
 
   g_signal_handlers_disconnect_by_func (image->layers,
-                                        gimp_image_update,
+                                        gimp_image_invalidate,
                                         image);
 
   gimp_container_remove_handler (image->layers,
                                  image->layer_alpha_handler);
 
   g_signal_handlers_disconnect_by_func (image->channels,
-                                        gimp_image_update,
+                                        gimp_image_invalidate,
                                         image);
 
   gimp_container_remove_handler (image->channels,
@@ -1142,10 +1142,10 @@ gimp_image_real_colormap_changed (GimpImage *image,
       gimp_image_color_hash_invalidate (image, color_index);
 
       /* A colormap alteration affects the whole image */
-      gimp_image_update (image,
-                         0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
+      gimp_image_invalidate (image,
+                             0, 0,
+                             gimp_image_get_width  (image),
+                             gimp_image_get_height (image));
 
       gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (image->layers));
     }
@@ -1769,10 +1769,10 @@ gimp_image_set_component_visible (GimpImage       *image,
                      gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
                      channel);
 
-      gimp_image_update (image,
-                         0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
+      gimp_image_invalidate (image,
+                             0, 0,
+                             gimp_image_get_width  (image),
+                             gimp_image_get_height (image));
     }
 }
 
@@ -1809,16 +1809,16 @@ gimp_image_alpha_changed (GimpImage *image)
 }
 
 void
-gimp_image_update (GimpImage *image,
-                   gint       x,
-                   gint       y,
-                   gint       width,
-                   gint       height)
+gimp_image_invalidate (GimpImage *image,
+                       gint       x,
+                       gint       y,
+                       gint       width,
+                       gint       height)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  gimp_projectable_update (GIMP_PROJECTABLE (image),
-                           x, y, width, height);
+  gimp_projectable_invalidate (GIMP_PROJECTABLE (image),
+                               x, y, width, height);
 
   image->flush_accum.preview_invalidated = TRUE;
 }

@@ -95,7 +95,7 @@ static void        gimp_projection_validate_tile         (TileManager     *tm,
                                                           Tile            *tile,
                                                           GimpProjection  *proj);
 
-static void        gimp_projection_projectable_update    (GimpProjectable *projectable,
+static void        gimp_projection_projectable_invalidate(GimpProjectable *projectable,
                                                           gint             x,
                                                           gint             y,
                                                           gint             w,
@@ -345,7 +345,6 @@ GimpProjection *
 gimp_projection_new (GimpProjectable *projectable)
 {
   GimpProjection *proj;
-  GClosure       *closure;
 
   g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
 
@@ -353,18 +352,9 @@ gimp_projection_new (GimpProjectable *projectable)
 
   proj->projectable = projectable;
 
-  closure = g_cclosure_new_object (G_CALLBACK (gimp_projection_projectable_update),
-                                   G_OBJECT (proj));
-
-  /*  connect the "update" signal by ID so we definitely get the signal
-   *  of GimpPickable and not the one of GimpDrawable in case of group
-   *  layers
-   */
-  g_signal_connect_closure_by_id (projectable,
-                                  g_signal_lookup ("update",
-                                                   GIMP_TYPE_PROJECTABLE), 0,
-                                  closure, FALSE);
-
+  g_signal_connect_object (projectable, "invalidate",
+                           G_CALLBACK (gimp_projection_projectable_invalidate),
+                           proj, 0);
   g_signal_connect_object (projectable, "flush",
                            G_CALLBACK (gimp_projection_projectable_flush),
                            proj, 0);
@@ -836,12 +826,12 @@ gimp_projection_validate_tile (TileManager    *tm,
 /*  image callbacks  */
 
 static void
-gimp_projection_projectable_update (GimpProjectable *projectable,
-                                    gint             x,
-                                    gint             y,
-                                    gint             w,
-                                    gint             h,
-                                    GimpProjection  *proj)
+gimp_projection_projectable_invalidate (GimpProjectable *projectable,
+                                        gint             x,
+                                        gint             y,
+                                        gint             w,
+                                        gint             h,
+                                        GimpProjection  *proj)
 {
   gimp_projection_add_update_area (proj, x, y, w, h);
 }

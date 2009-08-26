@@ -314,7 +314,7 @@ gboolean        gimp_image_get_component_visible (const GimpImage    *image,
 
 void            gimp_image_mode_changed          (GimpImage          *image);
 void            gimp_image_alpha_changed         (GimpImage          *image);
-void            gimp_image_update                (GimpImage          *image,
+void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                x,
                                                   gint                y,
                                                   gint                width,

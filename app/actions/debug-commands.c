@@ -290,10 +290,10 @@ debug_benchmark_projection (GimpImage *image)
   GTimer         *timer;
   gint            x, y;
 
-  gimp_image_update (image,
-                     0, 0,
-                     gimp_image_get_width  (image),
-                     gimp_image_get_height (image));
+  gimp_image_invalidate (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
   gimp_projection_flush_now (projection);
 
   tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (projection));

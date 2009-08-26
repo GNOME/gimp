@@ -832,11 +832,17 @@ gimp_group_layer_stack_update (GimpDrawableStack *stack,
                                gint               height,
                                GimpGroupLayer    *group)
 {
+#if 0
+  g_printerr ("%s (%s) %d, %d (%d, %d)\n",
+              G_STRFUNC, gimp_object_get_name (GIMP_OBJECT (group)),
+              x, y, width, height);
+#endif
+
   /*  the layer stack's update signal speaks in image coordinates,
    *  pass to the projection as-is.
    */
-  gimp_projectable_update (GIMP_PROJECTABLE (group),
-                           x, y, width, height);
+  gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
+                               x, y, width, height);
 
   /*  flush the pickable not the projectable because flushing the
    *  pickable will finish all invalidation on the projection so it
@@ -856,6 +862,12 @@ gimp_group_layer_proj_update (GimpProjection *proj,
                               gint            height,
                               GimpGroupLayer *group)
 {
+#if 0
+  g_printerr ("%s (%s) %d, %d (%d, %d)\n",
+              G_STRFUNC, gimp_object_get_name (GIMP_OBJECT (group)),
+              x, y, width, height);
+#endif
+
   /*  the projection speaks in image coordinates, transform to layer
    *  coordinates when emitting our own update signal.
    */
