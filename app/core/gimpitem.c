@@ -830,6 +830,36 @@ gimp_item_get_height (const GimpItem *item)
   return item->height;
 }
 
+void
+gimp_item_set_size (GimpItem *item,
+                    gint      width,
+                    gint      height)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (item->width  != width ||
+      item->height != height)
+    {
+      g_object_freeze_notify (G_OBJECT (item));
+
+      if (item->width != width)
+        {
+          item->width = width;
+          g_object_notify (G_OBJECT (item), "width");
+        }
+
+      if (item->height != height)
+        {
+          item->height = height;
+          g_object_notify (G_OBJECT (item), "height");
+        }
+
+      g_object_thaw_notify (G_OBJECT (item));
+
+      gimp_viewable_size_changed (GIMP_VIEWABLE (item));
+    }
+}
+
 /**
  * gimp_item_get_offset:
  * @item:     The #GimpItem to check.
