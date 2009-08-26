@@ -39,6 +39,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimppdb.h"
+#include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 

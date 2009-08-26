@@ -604,6 +604,7 @@ CODE
               "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h"
               "vectors/gimpvectors-compat.h"
+              "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(path_list path_get_current path_set_current path_delete
