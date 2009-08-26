@@ -310,8 +310,9 @@ static void
 gimp_vectors_convert (GimpItem  *item,
                       GimpImage *dest_image)
 {
-  item->width  = gimp_image_get_width  (dest_image);
-  item->height = gimp_image_get_height (dest_image);
+  gimp_item_set_size (item,
+                      gimp_image_get_width  (dest_image),
+                      gimp_image_get_height (dest_image));
 
   GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
 }

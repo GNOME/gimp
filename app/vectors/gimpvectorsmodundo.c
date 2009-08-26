@@ -125,11 +125,12 @@ gimp_vectors_mod_undo_pop (GimpUndo            *undo,
 
   gimp_vectors_copy_strokes (temp, vectors);
 
-  GIMP_ITEM (vectors)->width  = gimp_item_get_width  (GIMP_ITEM (temp));
-  GIMP_ITEM (vectors)->height = gimp_item_get_height (GIMP_ITEM (temp));
-
   gimp_item_get_offset (GIMP_ITEM (temp), &offset_x, &offset_y);
   gimp_item_set_offset (GIMP_ITEM (vectors), offset_x, offset_y);
+
+  gimp_item_set_size (GIMP_ITEM (vectors),
+                      gimp_item_get_width  (GIMP_ITEM (temp)),
+                      gimp_item_get_height (GIMP_ITEM (temp)));
 
   g_object_unref (temp);
 

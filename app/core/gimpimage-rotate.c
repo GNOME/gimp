@@ -139,13 +139,8 @@ gimp_image_rotate (GimpImage        *image,
 
       gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
-      item->width  = new_image_width;
-      item->height = new_image_height;
-
-      g_object_notify (G_OBJECT (item), "width");
-      g_object_notify (G_OBJECT (item), "height");
-
       gimp_item_set_offset (item, 0, 0);
+      gimp_item_set_size (item, new_image_width, new_image_height);
 
       gimp_item_translate (item,
                            (new_image_width  - gimp_image_get_width  (image)) / 2,

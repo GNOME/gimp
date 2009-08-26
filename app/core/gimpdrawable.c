@@ -756,15 +756,9 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   drawable->has_alpha      = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
 
   gimp_item_set_offset (item, offset_x, offset_y);
-
-  if (gimp_item_get_width  (item) != tile_manager_width (tiles) ||
-      gimp_item_get_height (item) != tile_manager_height (tiles))
-    {
-      item->width  = tile_manager_width (tiles);
-      item->height = tile_manager_height (tiles);
-
-      gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
-    }
+  gimp_item_set_size (item,
+                      tile_manager_width  (tiles),
+                      tile_manager_height (tiles));
 
   if (old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
