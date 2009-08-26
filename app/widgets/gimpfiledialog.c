@@ -56,6 +56,10 @@
 #include "gimp-intl.h"
 
 
+/*  an arbitrary limit to keep the file dialog from becoming too wide  */
+#define MAX_EXTENSIONS  4
+
+
 struct _GimpFileDialogState
 {
   gchar *filter_name;
@@ -792,9 +796,6 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
           gint           i;
 
           str = g_string_new (gimp_plug_in_procedure_get_label (file_proc));
-
-/*  an arbitrary limit to keep the file dialog from becoming too wide  */
-#define MAX_EXTENSIONS  4
 
           for (ext = file_proc->extensions_list, i = 0;
                ext;
