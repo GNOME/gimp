@@ -339,12 +339,12 @@ gimp_group_layer_duplicate (GimpItem *item,
     {
       GimpGroupLayer *group     = GIMP_GROUP_LAYER (item);
       GimpGroupLayer *new_group = GIMP_GROUP_LAYER (new_item);
+      gint            position  = 0;
       GList          *list;
-      gint            position;
 
-      for (list = GIMP_LIST (group->children)->list, position = 0;
+      for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
            list;
-           list = g_list_next (list), position++)
+           list = g_list_next (list))
         {
           GimpItem      *child = list->data;
           GimpItem      *new_child;
@@ -372,7 +372,7 @@ gimp_group_layer_duplicate (GimpItem *item,
 
           gimp_container_insert (new_group->children,
                                  GIMP_OBJECT (new_child),
-                                 position);
+                                 position++);
         }
     }
 
@@ -386,7 +386,7 @@ gimp_group_layer_convert (GimpItem  *item,
   GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
   GList          *list;
 
-  for (list = GIMP_LIST (group->children)->list;
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
        list;
        list = g_list_next (list))
     {
