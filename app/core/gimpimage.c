@@ -3177,6 +3177,24 @@ gimp_image_remove_layer (GimpImage *image,
   gimp_container_remove (container, GIMP_OBJECT (layer));
   image->layer_stack = g_slist_remove (image->layer_stack, layer);
 
+  /*  Also remove all children of a group layer from the layer_stack  */
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    {
+      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
+      GList         *children;
+      GList         *list;
+
+      children = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (stack));
+
+      for (list = children; list; list = g_list_next (list))
+        {
+          image->layer_stack = g_slist_remove (image->layer_stack,
+                                               list->data);
+        }
+
+      g_list_free (children);
+    }
+
   if (parent)
     gimp_viewable_set_parent (GIMP_VIEWABLE (layer), NULL);
 
