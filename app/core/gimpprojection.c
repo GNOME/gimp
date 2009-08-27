@@ -153,8 +153,6 @@ gimp_projection_init (GimpProjection *proj)
   proj->construct_flag           = FALSE;
 }
 
-/* sorry for the evil casts */
-
 static void
 gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
 {
