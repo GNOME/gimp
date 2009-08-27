@@ -453,15 +453,17 @@ gimp_group_layer_scale (GimpItem              *item,
   old_offset_x = gimp_item_get_offset_x (item);
   old_offset_y = gimp_item_get_offset_y (item);
 
-  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
-       list;
-       list = g_list_next (list))
+  list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+
+  while (list)
     {
       GimpItem *child = list->data;
       gint      child_width;
       gint      child_height;
       gint      child_offset_x;
       gint      child_offset_y;
+
+      list = g_list_next (list);
 
       child_width    = ROUND (width_factor  * gimp_item_get_width  (child));
       child_height   = ROUND (height_factor * gimp_item_get_height (child));
@@ -473,10 +475,23 @@ gimp_group_layer_scale (GimpItem              *item,
       child_offset_x += new_offset_x;
       child_offset_y += new_offset_y;
 
-      gimp_item_scale (child,
-                       child_width, child_height,
-                       child_offset_x, child_offset_y,
-                       interpolation_type, progress);
+      if (child_width > 0 && child_height > 0)
+        {
+          gimp_item_scale (child,
+                           child_width, child_height,
+                           child_offset_x, child_offset_y,
+                           interpolation_type, progress);
+        }
+      else if (gimp_item_is_attached (item))
+        {
+          gimp_image_remove_layer (gimp_item_get_image (item),
+                                   GIMP_LAYER (child),
+                                   TRUE, NULL);
+        }
+      else
+        {
+          gimp_container_remove (group->children, GIMP_OBJECT (child));
+        }
     }
 
   mask = gimp_layer_get_mask (GIMP_LAYER (group));
