@@ -18,8 +18,8 @@
 /* Misc data definitions used by the convert.c code module.  Moved
    out here simply to unclutter convert.c, mostly. */
 
-#ifndef __CONVERT_DATA_H__
-#define __CONVERT_DATA_H__
+#ifndef __GIMP_IMAGE_CONVERT_DATA_H__
+#define __GIMP_IMAGE_CONVERT_DATA_H__
 
 #include <glib.h>
 
@@ -140,4 +140,4 @@ static const guchar DM_ORIGINAL[32][32] = {
   {170,106,154, 90,166,102,150, 86,169,105,153, 89,165,101,149, 85,170,106,154, 90,166,102,150, 86,169,105,153, 89,165,101,149, 85}
 };
 
-#endif /* __CONVERT_DATA_H__ */
+#endif /* __GIMP_IMAGE_CONVERT_DATA_H__ */
