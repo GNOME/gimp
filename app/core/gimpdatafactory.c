@@ -350,7 +350,7 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
                              WRITABLE_PATH_KEY, writable_list);
         }
 
-      gimp_datafiles_read_directories (path, G_FILE_TEST_EXISTS,
+      gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
                                        gimp_data_factory_load_data, &context);
 
       gimp_datafiles_read_directories (path, G_FILE_TEST_IS_DIR,
@@ -729,7 +729,7 @@ gimp_data_factory_load_data_recursive (const GimpDatafileData *file_data,
 {
   GimpDataLoadContext *context = data;
 
-  gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_EXISTS,
+  gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_IS_REGULAR,
                                    gimp_data_factory_load_data, context);
 
   gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_IS_DIR,
@@ -773,7 +773,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
             GList *list;
 
             for (list = cached_data; list; list = g_list_next (list))
-              gimp_container_add (factory->priv->container, GIMP_OBJECT (list->data));
+              gimp_container_add (factory->priv->container, list->data);
           }
       }
 
@@ -783,7 +783,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
         GError *error = NULL;
 
         data_list = factory->priv->loader_entries[i].load_func (file_data->filename,
-                                                          &error);
+                                                                &error);
 
         if (G_LIKELY (data_list))
           {
