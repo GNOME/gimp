@@ -818,6 +818,34 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
   parent_view_iface->clear_items (view);
 }
 
+typedef struct
+{
+  gint view_size;
+  gint border_width;
+} SetSizeForeachData;
+
+static gboolean
+gimp_container_tree_view_set_view_size_foreach (GtkTreeModel *model,
+                                                GtkTreePath  *path,
+                                                GtkTreeIter  *iter,
+                                                gpointer      data)
+{
+  SetSizeForeachData *size_data = data;
+  GimpViewRenderer   *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                      -1);
+
+  gimp_view_renderer_set_size (renderer,
+                               size_data->view_size,
+                               size_data->border_width);
+
+  g_object_unref (renderer);
+
+  return FALSE;
+}
+
 static void
 gimp_container_tree_view_set_view_size (GimpContainerView *view)
 {
@@ -831,22 +859,11 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
 
   if (tree_view->model)
     {
-      GtkTreeIter iter;
-      gboolean    iter_valid;
+      SetSizeForeachData size_data = { view_size, border_width };
 
-      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (tree_view->model, &iter,
-                              GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
-                              -1);
-
-          gimp_view_renderer_set_size (renderer, view_size, border_width);
-          g_object_unref (renderer);
-        }
+      gtk_tree_model_foreach (tree_view->model,
+                              gimp_container_tree_view_set_view_size_foreach,
+                              &size_data);
     }
 
   tree_widget = GTK_WIDGET (tree_view->view);
