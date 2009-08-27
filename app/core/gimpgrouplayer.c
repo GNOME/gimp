@@ -816,12 +816,15 @@ gimp_group_layer_child_resize (GimpLayer      *child,
 static void
 gimp_group_layer_update_size (GimpGroupLayer *group)
 {
-  GList   *list;
-  gint     x      = 0;
-  gint     y      = 0;
-  gint     width  = 1;
-  gint     height = 1;
-  gboolean first  = TRUE;
+  GimpItem *item       = GIMP_ITEM (group);
+  gint      old_width  = gimp_item_get_width  (item);
+  gint      old_height = gimp_item_get_height (item);
+  gint      x          = 0;
+  gint      y          = 0;
+  gint      width      = 1;
+  gint      height     = 1;
+  gboolean  first      = TRUE;
+  GList    *list;
 
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
        list;
@@ -849,23 +852,34 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         }
     }
 
-  if (x      != gimp_item_get_offset_x (GIMP_ITEM (group)) ||
-      y      != gimp_item_get_offset_y (GIMP_ITEM (group)) ||
-      width  != gimp_item_get_width    (GIMP_ITEM (group)) ||
-      height != gimp_item_get_height   (GIMP_ITEM (group)))
+  if (x      != gimp_item_get_offset_x (item) ||
+      y      != gimp_item_get_offset_y (item) ||
+      width  != old_width                     ||
+      height != old_height)
     {
-      if (width  != gimp_item_get_width  (GIMP_ITEM (group)) ||
-          height != gimp_item_get_height (GIMP_ITEM (group)))
+      if (width  != old_width ||
+          height != old_height)
         {
           TileManager *tiles;
 
-          GIMP_ITEM (group)->width  = width;
-          GIMP_ITEM (group)->height = height;
+          /*  FIXME: find a better way to do this: need to set the item's
+           *  extents to the new values so the projection will create
+           *  its tiles with the right size
+           */
+          item->width  = width;
+          item->height = height;
 
           gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
 
           tiles = gimp_projection_get_tiles_at_level (group->projection,
                                                       0, NULL);
+
+          /*  FIXME: need to set the item's extents back to the old
+           *  values so gimp_drawable_set_tiles_full() will emit all
+           *  signals needed by the layer tree to update itself
+           */
+          item->width  = old_width;
+          item->height = old_height;
 
           gimp_drawable_set_tiles_full (GIMP_DRAWABLE (group),
                                         FALSE, NULL,
@@ -875,7 +889,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         }
       else
         {
-          gimp_item_set_offset (GIMP_ITEM (group), x, y);
+          gimp_item_set_offset (item, x, y);
         }
 
       if (group->offset_node)
