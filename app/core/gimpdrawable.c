@@ -1361,13 +1361,13 @@ gimp_drawable_set_tiles (GimpDrawable  *drawable,
 }
 
 void
-gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
-                              gboolean            push_undo,
-                              const gchar        *undo_desc,
-                              TileManager        *tiles,
-                              GimpImageType       type,
-                              gint                offset_x,
-                              gint                offset_y)
+gimp_drawable_set_tiles_full (GimpDrawable  *drawable,
+                              gboolean       push_undo,
+                              const gchar   *undo_desc,
+                              TileManager   *tiles,
+                              GimpImageType  type,
+                              gint           offset_x,
+                              gint           offset_y)
 {
   GimpItem  *item;
   GimpImage *image;
