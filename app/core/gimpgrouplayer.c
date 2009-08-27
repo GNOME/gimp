@@ -312,6 +312,7 @@ gimp_group_layer_get_memsize (GimpObject *object,
   gint64          memsize = 0;
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (group->children), gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (group->projection), gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
