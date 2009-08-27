@@ -106,6 +106,10 @@ static void            gimp_group_layer_transform    (GimpItem        *item,
                                                       GimpTransformResize clip_result,
                                                       GimpProgress    *progress);
 
+static gint64      gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
+                                                      gint             width,
+                                                      gint             height);
+
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
 
@@ -152,6 +156,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
+  GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
 
   object_class->set_property       = gimp_group_layer_set_property;
   object_class->get_property       = gimp_group_layer_get_property;
@@ -179,6 +184,8 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->flip_desc            = _("Flip Group Layer");
   item_class->rotate_desc          = _("Rotate Group Layer");
   item_class->transform_desc       = _("Transform Group Layer");
+
+  drawable_class->estimate_memsize = gimp_group_layer_estimate_memsize;
 
   g_object_class_install_property (object_class, PROP_LOCK_CONTENT,
                                    g_param_spec_boolean ("lock-content",
@@ -661,6 +668,45 @@ gimp_group_layer_transform (GimpItem               *item,
                          matrix, direction,
                          interpolation_type, recursion_level,
                          clip_result, progress);
+}
+
+static gint64
+gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
+                                   gint                width,
+                                   gint                height)
+{
+  GimpGroupLayer    *group   = GIMP_GROUP_LAYER (drawable);
+  GList             *list;
+  GimpImageBaseType  base_type;
+  gint64             memsize = 0;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpDrawable *child = list->data;
+      gint          child_width;
+      gint          child_height;
+
+      child_width  = (gimp_item_get_width (GIMP_ITEM (child)) *
+                      width /
+                      gimp_item_get_width (GIMP_ITEM (drawable)));
+      child_height = (gimp_item_get_height (GIMP_ITEM (child)) *
+                      height /
+                      gimp_item_get_height (GIMP_ITEM (drawable)));
+
+      memsize += gimp_drawable_estimate_memsize (child,
+                                                 child_width,
+                                                 child_height);
+    }
+
+  base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+
+  memsize += gimp_projection_estimate_memsize (base_type, width, height);
+
+  return memsize + GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
+                                                                         width,
+                                                                         height);
 }
 
 static GeglNode *
