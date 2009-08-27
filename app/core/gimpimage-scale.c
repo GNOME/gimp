@@ -168,7 +168,9 @@ gimp_image_scale (GimpImage             *image,
     }
 
   /*  Scale all Guides  */
-  for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
+  for (list = gimp_image_get_guides (image);
+       list;
+       list = g_list_next (list))
     {
       GimpGuide *guide    = list->data;
       gint       position = gimp_guide_get_position (guide);

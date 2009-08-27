@@ -19,6 +19,8 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gimp.h"
@@ -65,9 +67,6 @@ gimp_image_resize_with_layers (GimpImage    *image,
                                GimpItemSet   layer_set,
                                GimpProgress *progress)
 {
-  GList   *all_layers;
-  GList   *all_channels;
-  GList   *all_vectors;
   GList   *list;
   GList   *resize_layers;
   gdouble  progress_max;
@@ -81,15 +80,6 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   gimp_set_busy (image->gimp);
 
-  all_layers   = gimp_image_get_layer_list (image);
-  all_channels = gimp_image_get_channel_list (image);
-  all_vectors  = gimp_image_get_vectors_list (image);
-
-  progress_max = (g_list_length (all_layers)   +
-                  g_list_length (all_channels) +
-                  g_list_length (all_vectors)  +
-                  1 /* selection */);
-
   g_object_freeze_notify (G_OBJECT (image));
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
@@ -98,6 +88,12 @@ gimp_image_resize_with_layers (GimpImage    *image,
   resize_layers = gimp_image_item_list_get_list (image, NULL,
                                                  GIMP_ITEM_TYPE_LAYERS,
                                                  layer_set);
+
+  progress_max = (gimp_container_get_n_children (image->layers)   +
+                  gimp_container_get_n_children (image->channels) +
+                  gimp_container_get_n_children (image->vectors)  +
+                  g_list_length (resize_layers)                   +
+                  1 /* selection */);
 
   old_width  = gimp_image_get_width  (image);
   old_height = gimp_image_get_height (image);
@@ -117,7 +113,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
                 NULL);
 
   /*  Resize all channels  */
-  for (list = all_channels; list; list = g_list_next (list))
+  for (list = gimp_image_get_channel_iter (image);
+       list;
+       list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -129,7 +127,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
     }
 
   /*  Resize all vectors  */
-  for (list = all_vectors; list; list = g_list_next (list))
+  for (list = gimp_image_get_vectors_iter (image);
+       list;
+       list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
@@ -148,24 +148,34 @@ gimp_image_resize_with_layers (GimpImage    *image,
     gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Reposition all layers  */
-  for (list = all_layers; list; list = g_list_next (list))
+  for (list = gimp_image_get_layer_iter (image);
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *item = list->data;
+
+      gimp_item_translate (item, offset_x, offset_y, TRUE);
+
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
+    }
+
+  /*  Resize all resize_layers to image size  */
+  for (list = resize_layers; list; list = g_list_next (list))
     {
       GimpItem *item = list->data;
       gint      old_offset_x;
       gint      old_offset_y;
 
-      /*  group layers are updated automatically  */
+      /*  group layers can't be resized here  */
       if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
         continue;
 
       gimp_item_get_offset (item, &old_offset_x, &old_offset_y);
 
-      gimp_item_translate (item, offset_x, offset_y, TRUE);
-
-      if (g_list_find (resize_layers, item))
-        gimp_item_resize (item, context,
-                          new_width, new_height,
-                          offset_x + old_offset_x, offset_y + old_offset_y);
+      gimp_item_resize (item, context,
+                        new_width, new_height,
+                        old_offset_x, old_offset_y);
 
       if (progress)
         gimp_progress_set_value (progress, progress_current++ / progress_max);
@@ -241,10 +251,6 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   g_object_thaw_notify (G_OBJECT (image));
 
-  g_list_free (all_layers);
-  g_list_free (all_channels);
-  g_list_free (all_vectors);
-
   gimp_unset_busy (image->gimp);
 }
 
@@ -253,45 +259,45 @@ gimp_image_resize_to_layers (GimpImage    *image,
                              GimpContext  *context,
                              GimpProgress *progress)
 {
-  GList    *all_layers;
   GList    *list;
   GimpItem *item;
-  gint      min_x, max_x;
-  gint      min_y, max_y;
+  gint      x, y;
+  gint      width, height;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  all_layers = gimp_image_get_layer_list (image);
+  list = gimp_image_get_layer_iter (image);
 
-  if (! all_layers)
+  if (! list)
     return;
-
-  list = all_layers;
 
   /* figure out starting values */
   item = list->data;
 
-  min_x = gimp_item_get_offset_x (item);
-  min_y = gimp_item_get_offset_y (item);
-  max_x = gimp_item_get_offset_x (item) + gimp_item_get_width  (item);
-  max_y = gimp_item_get_offset_y (item) + gimp_item_get_height (item);
+  x      = gimp_item_get_offset_x (item);
+  y      = gimp_item_get_offset_y (item);
+  width  = gimp_item_get_width  (item);
+  height = gimp_item_get_height (item);
 
   /*  Respect all layers  */
   for (list = g_list_next (list); list; list = g_list_next (list))
     {
       item = list->data;
 
-      min_x = MIN (min_x, gimp_item_get_offset_x (item));
-      min_y = MIN (min_y, gimp_item_get_offset_y (item));
-      max_x = MAX (max_x, gimp_item_get_offset_x (item) + gimp_item_get_width  (item));
-      max_y = MAX (max_y, gimp_item_get_offset_y (item) + gimp_item_get_height (item));
+      gimp_rectangle_union (x, y,
+                            width, height,
+                            gimp_item_get_offset_x (item),
+                            gimp_item_get_offset_y (item),
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item),
+                            &x, &y,
+                            &width, &height);
     }
 
   gimp_image_resize (image, context,
-                     max_x - min_x, max_y - min_y,
-                     - min_x, - min_y,
+                     width, height, -x, -y,
                      progress);
 }
 
