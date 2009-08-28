@@ -269,6 +269,13 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
   drawable = gimp_image_get_active_drawable (display->image);
 
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Cannot modify the pixels of group layers."));
+      return FALSE;
+    }
+
   if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,

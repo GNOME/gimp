@@ -274,6 +274,13 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
   drawable = gimp_image_get_active_drawable (display->image);
 
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("Cannot paint on group layers."));
+      return;
+    }
+
   if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
     {
       gimp_tool_message_literal (tool, display,
@@ -533,7 +540,8 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
     {
       GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
 
-      if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
+          gimp_item_get_lock_content (GIMP_ITEM (drawable)))
         {
           modifier        = GIMP_CURSOR_MODIFIER_BAD;
           toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
