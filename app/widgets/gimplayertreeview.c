@@ -500,6 +500,35 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
     }
 }
 
+typedef struct
+{
+  gint         mask_column;
+  GimpContext *context;
+} SetContextForeachData;
+
+static gboolean
+gimp_layer_tree_view_set_context_foreach (GtkTreeModel *model,
+                                          GtkTreePath  *path,
+                                          GtkTreeIter  *iter,
+                                          gpointer      data)
+{
+  SetContextForeachData *context_data = data;
+  GimpViewRenderer      *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      context_data->mask_column, &renderer,
+                      -1);
+
+  if (renderer)
+    {
+      gimp_view_renderer_set_context (renderer, context_data->context);
+
+      g_object_unref (renderer);
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_layer_tree_view_set_context (GimpContainerView *view,
                                   GimpContext       *context)
@@ -511,25 +540,12 @@ gimp_layer_tree_view_set_context (GimpContainerView *view,
 
   if (tree_view->model)
     {
-      GtkTreeIter iter;
-      gboolean    iter_valid;
+      SetContextForeachData context_data = { layer_view->priv->model_column_mask,
+                                             context };
 
-      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (tree_view->model, &iter,
-                              layer_view->priv->model_column_mask, &renderer,
-                              -1);
-
-          if (renderer)
-            {
-              gimp_view_renderer_set_context (renderer, context);
-              g_object_unref (renderer);
-            }
-        }
+      gtk_tree_model_foreach (tree_view->model,
+                              gimp_layer_tree_view_set_context_foreach,
+                              &context_data);
     }
 }
 
