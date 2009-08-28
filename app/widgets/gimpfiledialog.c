@@ -93,7 +93,8 @@ static void     gimp_file_dialog_add_preview            (GimpFileDialog   *dialo
                                                          Gimp             *gimp);
 static void     gimp_file_dialog_add_filters            (GimpFileDialog   *dialog,
                                                          Gimp             *gimp,
-                                                         GSList           *file_procs);
+                                                         GSList           *file_procs,
+                                                         GSList           *file_procs_all_images);
 static void     gimp_file_dialog_process_procedure      (GimpPlugInProcedure
                                                                           *file_proc,
                                                          GtkFileFilter    **filter_out,
@@ -302,12 +303,13 @@ gimp_file_dialog_new (Gimp                  *gimp,
                       const gchar           *stock_id,
                       const gchar           *help_id)
 {
-  GimpFileDialog       *dialog;
-  GSList               *file_procs;
-  const gchar          *automatic;
-  const gchar          *automatic_help_id;
-  gboolean              local_only;
-  GtkFileChooserAction  gtk_action;
+  GimpFileDialog       *dialog                = NULL;
+  GSList               *file_procs            = NULL;
+  GSList               *file_procs_all_images = NULL;
+  const gchar          *automatic             = NULL;
+  const gchar          *automatic_help_id     = NULL;
+  gboolean              local_only            = FALSE;
+  GtkFileChooserAction  gtk_action            = 0;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -318,10 +320,11 @@ gimp_file_dialog_new (Gimp                  *gimp,
   switch (action)
     {
     case GIMP_FILE_CHOOSER_ACTION_OPEN:
-      gtk_action = GTK_FILE_CHOOSER_ACTION_OPEN;
-      file_procs = gimp->plug_in_manager->load_procs;
-      automatic  = _("Automatically Detected");
-      automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
+      gtk_action            = GTK_FILE_CHOOSER_ACTION_OPEN;
+      file_procs            = gimp->plug_in_manager->load_procs;
+      file_procs_all_images = NULL;
+      automatic             = _("Automatically Detected");
+      automatic_help_id     = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
 
       /* FIXME */
       local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
@@ -330,12 +333,15 @@ gimp_file_dialog_new (Gimp                  *gimp,
 
     case GIMP_FILE_CHOOSER_ACTION_SAVE:
     case GIMP_FILE_CHOOSER_ACTION_EXPORT:
-      gtk_action = GTK_FILE_CHOOSER_ACTION_SAVE;
-      file_procs = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
-                    gimp->plug_in_manager->save_procs :
-                    gimp->plug_in_manager->export_procs);
-      automatic  = _("By Extension");
-      automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
+      gtk_action            = GTK_FILE_CHOOSER_ACTION_SAVE;
+      file_procs            = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
+                               gimp->plug_in_manager->save_procs :
+                               gimp->plug_in_manager->export_procs);
+      file_procs_all_images = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
+                               gimp->plug_in_manager->export_procs :
+                               gimp->plug_in_manager->save_procs);
+      automatic             = _("By Extension");
+      automatic_help_id     = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
       /* FIXME */
       local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
@@ -395,7 +401,10 @@ gimp_file_dialog_new (Gimp                  *gimp,
 
   gimp_file_dialog_add_preview (dialog, gimp);
 
-  gimp_file_dialog_add_filters (dialog, gimp, file_procs);
+  gimp_file_dialog_add_filters (dialog,
+                                gimp,
+                                file_procs,
+                                file_procs_all_images);
 
   gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
                                        automatic_help_id);
@@ -771,10 +780,21 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog,
 #endif
 }
 
+/**
+ * gimp_file_dialog_add_filters:
+ * @dialog:
+ * @gimp:
+ * @file_procs:            The image types that can be chosen from
+ *                         the drop down
+ * @file_procs_all_images: The additional images types shown when
+ *                         "All images" is selected
+ *
+ **/
 static void
 gimp_file_dialog_add_filters (GimpFileDialog *dialog,
                               Gimp           *gimp,
-                              GSList         *file_procs)
+                              GSList         *file_procs,
+                              GSList         *file_procs_all_images)
 {
   GtkFileFilter *all;
   GSList        *list;
@@ -788,6 +808,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
   gtk_file_filter_set_name (all, _("All images"));
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
 
+  /* Add the normal file procs */
   for (list = file_procs; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *file_proc = list->data;
@@ -802,6 +823,18 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
                                        filter);
           g_object_unref (filter);
         }
+    }
+
+  /* Add the "rest" of the file procs only as filters to
+   * "All images"
+   */
+  for (list = file_procs_all_images; list; list = g_slist_next (list))
+    {
+      GimpPlugInProcedure *file_proc = list->data;
+
+      gimp_file_dialog_process_procedure (file_proc,
+                                          NULL,
+                                          all);
     }
 
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all);
