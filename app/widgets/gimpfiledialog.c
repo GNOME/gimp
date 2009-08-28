@@ -94,6 +94,10 @@ static void     gimp_file_dialog_add_preview            (GimpFileDialog   *dialo
 static void     gimp_file_dialog_add_filters            (GimpFileDialog   *dialog,
                                                          Gimp             *gimp,
                                                          GSList           *file_procs);
+static void     gimp_file_dialog_process_procedure      (GimpPlugInProcedure
+                                                                          *file_proc,
+                                                         GtkFileFilter    **filter_out,
+                                                         GtkFileFilter    *all);
 static void     gimp_file_dialog_add_proc_selection     (GimpFileDialog   *dialog,
                                                          Gimp             *gimp,
                                                          GSList           *file_procs,
@@ -787,61 +791,98 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
   for (list = file_procs; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *file_proc = list->data;
+      GtkFileFilter       *filter    = NULL;
 
-      if (file_proc->extensions_list)
+      gimp_file_dialog_process_procedure (file_proc,
+                                          &filter,
+                                          all);
+      if (filter)
         {
-          GtkFileFilter *filter = gtk_file_filter_new ();
-          GString       *str;
-          GSList        *ext;
-          gint           i;
-
-          str = g_string_new (gimp_plug_in_procedure_get_label (file_proc));
-
-          for (ext = file_proc->extensions_list, i = 0;
-               ext;
-               ext = g_slist_next (ext), i++)
-            {
-              const gchar *extension = ext->data;
-              gchar       *pattern;
-
-              pattern = gimp_file_dialog_pattern_from_extension (extension);
-              gtk_file_filter_add_pattern (filter, pattern);
-              gtk_file_filter_add_pattern (all, pattern);
-              g_free (pattern);
-
-              if (i == 0)
-                {
-                  g_string_append (str, " (");
-                }
-              else if (i <= MAX_EXTENSIONS)
-                {
-                  g_string_append (str, ", ");
-                }
-
-              if (i < MAX_EXTENSIONS)
-                {
-                  g_string_append (str, "*.");
-                  g_string_append (str, extension);
-                }
-              else if (i == MAX_EXTENSIONS)
-                {
-                  g_string_append (str, "...");
-                }
-
-              if (! ext->next)
-                {
-                  g_string_append (str, ")");
-                }
-            }
-
-          gtk_file_filter_set_name (filter, str->str);
-          g_string_free (str, TRUE);
-
-          gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+          gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog),
+                                       filter);
+          g_object_unref (filter);
         }
     }
 
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all);
+}
+
+
+/**
+ * gimp_file_dialog_process_procedure:
+ * @file_proc:
+ * @filter_out:
+ * @all:
+ *
+ * Creates a #GtkFileFilter of @file_proc and adds the extensions to
+ * the @all filter. The returned #GtkFileFilter has a normal ref and
+ * must be unreffed when used.
+ **/
+static void
+gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
+                                    GtkFileFilter       **filter_out,
+                                    GtkFileFilter        *all)
+{
+  GtkFileFilter *filter = NULL;
+  GString       *str    = NULL;
+  GSList        *ext    = NULL;
+  gint           i      = 0;
+
+  if (!file_proc->extensions_list)
+    return;
+
+  filter = gtk_file_filter_new ();
+  str    = g_string_new (gimp_plug_in_procedure_get_label (file_proc));
+
+  /* Take ownership directly so we don't have to mess with a floating
+   * ref
+   */
+  g_object_ref_sink (filter);
+
+  for (ext = file_proc->extensions_list, i = 0;
+       ext;
+       ext = g_slist_next (ext), i++)
+    {
+      const gchar *extension = ext->data;
+      gchar       *pattern;
+
+      pattern = gimp_file_dialog_pattern_from_extension (extension);
+      gtk_file_filter_add_pattern (filter, pattern);
+      gtk_file_filter_add_pattern (all, pattern);
+      g_free (pattern);
+
+      if (i == 0)
+        {
+          g_string_append (str, " (");
+        }
+      else if (i <= MAX_EXTENSIONS)
+        {
+          g_string_append (str, ", ");
+        }
+
+      if (i < MAX_EXTENSIONS)
+        {
+          g_string_append (str, "*.");
+          g_string_append (str, extension);
+        }
+      else if (i == MAX_EXTENSIONS)
+        {
+          g_string_append (str, "...");
+        }
+
+      if (! ext->next)
+        {
+          g_string_append (str, ")");
+        }
+    }
+
+  gtk_file_filter_set_name (filter, str->str);
+  g_string_free (str, TRUE);
+
+  if (filter_out)
+    *filter_out = g_object_ref (filter);
+
+  g_object_unref (filter);
 }
 
 static void
