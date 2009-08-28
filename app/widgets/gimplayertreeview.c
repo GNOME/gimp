@@ -379,8 +379,8 @@ gimp_layer_tree_view_constructor (GType                  type,
                                        layer_view->priv->model_column_mask_visible,
                                        NULL);
 
-  gimp_container_tree_view_prepend_cell_renderer (tree_view,
-                                                  layer_view->priv->mask_cell);
+  gimp_container_tree_view_add_renderer_cell (tree_view,
+                                              layer_view->priv->mask_cell);
 
   g_signal_connect (tree_view->renderer_cell, "clicked",
                     G_CALLBACK (gimp_layer_tree_view_layer_clicked),

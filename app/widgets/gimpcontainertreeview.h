@@ -114,19 +114,19 @@ void        gimp_container_tree_view_set_main_column_title
                                               (GimpContainerTreeView *tree_view,
                                                const gchar           *title);
 
-void        gimp_container_tree_view_prepend_toggle_cell_renderer
+void        gimp_container_tree_view_add_toggle_cell
                                               (GimpContainerTreeView *tree_view,
-                                               GtkCellRenderer       *cell_renderer);
+                                               GtkCellRenderer       *cell);
 
-void        gimp_container_tree_view_prepend_cell_renderer
+void        gimp_container_tree_view_add_renderer_cell
                                               (GimpContainerTreeView *tree_view,
-                                               GtkCellRenderer       *cell_renderer);
+                                               GtkCellRenderer       *cell);
 
 void        gimp_container_tree_view_set_dnd_drop_to_empty
                                               (GimpContainerTreeView *tree_view,
                                                gboolean               dnd_drop_to_emtpy);
-void
- gimp_container_tree_view_connect_name_edited (GimpContainerTreeView *tree_view,
+void        gimp_container_tree_view_connect_name_edited
+                                              (GimpContainerTreeView *tree_view,
                                                GCallback              callback,
                                                gpointer               data);
 

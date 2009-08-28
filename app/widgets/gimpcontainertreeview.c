@@ -409,25 +409,25 @@ gimp_container_tree_view_set_main_column_title (GimpContainerTreeView *tree_view
 }
 
 void
-gimp_container_tree_view_prepend_toggle_cell_renderer (GimpContainerTreeView *tree_view,
-                                                       GtkCellRenderer       *cell_renderer)
+gimp_container_tree_view_add_toggle_cell (GimpContainerTreeView *tree_view,
+                                          GtkCellRenderer       *cell)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
-  g_return_if_fail (GTK_IS_CELL_RENDERER (cell_renderer));
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_TOGGLE (cell));
 
   tree_view->priv->toggle_cells = g_list_prepend (tree_view->priv->toggle_cells,
-                                                  cell_renderer);
+                                                  cell);
 }
 
 void
-gimp_container_tree_view_prepend_cell_renderer (GimpContainerTreeView *tree_view,
-                                                GtkCellRenderer       *cell_renderer)
+gimp_container_tree_view_add_renderer_cell (GimpContainerTreeView *tree_view,
+                                            GtkCellRenderer       *cell)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
-  g_return_if_fail (GTK_IS_CELL_RENDERER (cell_renderer));
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_VIEWABLE (cell));
 
   tree_view->priv->renderer_cells = g_list_prepend (tree_view->priv->renderer_cells,
-                                                    cell_renderer);
+                                                    cell);
 }
 
 void
