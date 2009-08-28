@@ -1036,7 +1036,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                                FALSE, FALSE);
 
       if (bevent->button == 1                                     &&
-          bevent->type == GDK_BUTTON_PRESS                        &&
           gtk_tree_model_iter_has_child (tree_view->model, &iter) &&
           column == gtk_tree_view_get_expander_column (tree_view->view))
         {
