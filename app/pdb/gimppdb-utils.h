@@ -56,6 +56,8 @@ gboolean        gimp_pdb_item_is_floating       (GimpItem           *item,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_writable       (GimpItem           *item,
                                                  GError            **error);
+gboolean        gimp_pdb_item_is_not_group      (GimpItem           *item,
+                                                 GError            **error);
 
 gboolean        gimp_pdb_layer_is_text_layer    (GimpLayer          *layer,
                                                  gboolean            writable,

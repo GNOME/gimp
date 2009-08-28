@@ -376,6 +376,26 @@ gimp_pdb_item_is_writable (GimpItem  *item,
 }
 
 gboolean
+gimp_pdb_item_is_not_group (GimpItem  *item,
+                            GError   **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) cannot be modified because it "
+                     "is a group item"),
+                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
 gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
                               gboolean    writable,
                               GError    **error)
@@ -468,6 +488,9 @@ gimp_pdb_get_vectors_stroke (GimpVectors  *vectors,
 
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (! gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+    return NULL;
 
   if (! writable || gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
     {
