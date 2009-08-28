@@ -586,6 +586,38 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
   return success;
 }
 
+typedef struct
+{
+  gint mask_column;
+  gint view_size;
+  gint border_width;
+} SetSizeForeachData;
+
+static gboolean
+gimp_layer_tree_view_set_view_size_foreach (GtkTreeModel *model,
+                                            GtkTreePath  *path,
+                                            GtkTreeIter  *iter,
+                                            gpointer      data)
+{
+  SetSizeForeachData *size_data = data;
+  GimpViewRenderer   *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      size_data->mask_column, &renderer,
+                      -1);
+
+  if (renderer)
+    {
+      gimp_view_renderer_set_size (renderer,
+                                   size_data->view_size,
+                                   size_data->border_width);
+
+      g_object_unref (renderer);
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_layer_tree_view_set_view_size (GimpContainerView *view)
 {
@@ -594,29 +626,16 @@ gimp_layer_tree_view_set_view_size (GimpContainerView *view)
   if (tree_view->model)
     {
       GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
-      GtkTreeIter        iter;
-      gboolean           iter_valid;
-      gint               view_size;
-      gint               border_width;
+      SetSizeForeachData size_data;
 
-      view_size = gimp_container_view_get_view_size (view, &border_width);
+      size_data.mask_column = layer_view->priv->model_column_mask;
 
-      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-        {
-          GimpViewRenderer *renderer;
+      size_data.view_size =
+        gimp_container_view_get_view_size (view, &size_data.border_width);
 
-          gtk_tree_model_get (tree_view->model, &iter,
-                              layer_view->priv->model_column_mask, &renderer,
-                              -1);
-
-          if (renderer)
-            {
-              gimp_view_renderer_set_size (renderer, view_size, border_width);
-              g_object_unref (renderer);
-            }
-        }
+      gtk_tree_model_foreach (tree_view->model,
+                              gimp_layer_tree_view_set_view_size_foreach,
+                              &size_data);
     }
 
   parent_view_iface->set_view_size (view);
