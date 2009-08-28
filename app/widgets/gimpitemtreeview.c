@@ -343,6 +343,10 @@ gimp_item_tree_view_constructor (GType                  type,
   gtk_tree_view_insert_column (tree_view->view, column, 0);
 
   item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
+  g_object_set (item_view->priv->eye_cell,
+                "xpad", 0,
+                "ypad", 0,
+                NULL);
   gtk_tree_view_column_pack_start (column, item_view->priv->eye_cell, FALSE);
   gtk_tree_view_column_set_attributes (column, item_view->priv->eye_cell,
                                        "active",
@@ -360,6 +364,10 @@ gimp_item_tree_view_constructor (GType                  type,
   gtk_tree_view_insert_column (tree_view->view, column, 1);
 
   item_view->priv->chain_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_LINKED);
+  g_object_set (item_view->priv->chain_cell,
+                "xpad", 0,
+                "ypad", 0,
+                NULL);
   gtk_tree_view_column_pack_start (column, item_view->priv->chain_cell, FALSE);
   gtk_tree_view_column_set_attributes (column, item_view->priv->chain_cell,
                                        "active",
