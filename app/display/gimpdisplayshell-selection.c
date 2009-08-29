@@ -382,11 +382,20 @@ selection_layer_draw (Selection *selection)
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (selection->segs_layer)
-    gimp_canvas_draw_segments (canvas, GIMP_IS_LAYER_MASK (drawable) ?
-                               GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE:
-                               GIMP_CANVAS_STYLE_LAYER_BOUNDARY,
-                               selection->segs_layer,
-                               selection->num_segs_layer);
+    {
+      GimpCanvasStyle style;
+
+      if (GIMP_IS_LAYER_MASK (drawable))
+        style = GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE;
+      else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        style = GIMP_CANVAS_STYLE_LAYER_GROUP_BOUNDARY;
+      else
+        style = GIMP_CANVAS_STYLE_LAYER_BOUNDARY;
+
+      gimp_canvas_draw_segments (canvas, style,
+                                 selection->segs_layer,
+                                 selection->num_segs_layer);
+    }
 }
 
 static void
