@@ -1678,9 +1678,6 @@ gimp_item_can_lock_content (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
-    return FALSE;
-
   return TRUE;
 }
 
