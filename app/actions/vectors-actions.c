@@ -274,7 +274,7 @@ vectors_actions_update (GimpActionGroup *group,
           linked   = gimp_item_get_linked (item);
           locked   = gimp_item_get_lock_content (item);
           can_lock = gimp_item_can_lock_content (item);
-          writable = ! locked;
+          writable = ! gimp_item_is_content_locked (item);
 
           vectors_list = gimp_item_get_container_iter (item);
 

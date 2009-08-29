@@ -174,7 +174,7 @@ gimp_blend_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("The active layer's pixels are locked."));
@@ -364,7 +364,7 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
 
   if (gimp_drawable_is_indexed (drawable)                   ||
       gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-      gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+      gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       modifier = GIMP_CURSOR_MODIFIER_BAD;
     }

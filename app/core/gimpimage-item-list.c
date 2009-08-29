@@ -280,7 +280,7 @@ gimp_image_item_list_filter (const GimpItem *exclude,
 
           l = g_list_next (l);
 
-          if (gimp_item_get_lock_content (item))
+          if (gimp_item_is_content_locked (item))
             list = g_list_remove (list, item);
         }
     }

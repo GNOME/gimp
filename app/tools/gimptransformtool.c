@@ -343,7 +343,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("The active layer's pixels are locked."));
@@ -759,7 +759,7 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
 
     case GIMP_TRANSFORM_TYPE_LAYER:
       drawable = gimp_image_get_active_drawable (display->image);
-      if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
 
@@ -1211,7 +1211,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
       return;
     }
 
-  if (gimp_item_get_lock_content (active_item))
+  if (gimp_item_is_content_locked (active_item))
     {
       gimp_tool_message_literal (tool, display, locked_message);
       gimp_transform_tool_halt (tr_tool);

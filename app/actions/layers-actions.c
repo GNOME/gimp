@@ -526,7 +526,7 @@ layers_actions_update (GimpActionGroup *group,
           lock_alpha     = gimp_layer_get_lock_alpha (layer);
           can_lock_alpha = gimp_layer_can_lock_alpha (layer);
           alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-          writable       = ! gimp_item_get_lock_content (GIMP_ITEM (layer));
+          writable       = ! gimp_item_is_content_locked (GIMP_ITEM (layer));
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
             children = TRUE;
@@ -546,10 +546,10 @@ layers_actions_update (GimpActionGroup *group,
                 {
                   if (gimp_item_get_visible (next_visible->data))
                     {
-                      /*  next_visible is actually next_visible and
-                       *  writable not group
+                      /*  "next_visible" is actually "next_visible" and
+                       *  "writable" and "not group"
                        */
-                      if (gimp_item_get_lock_content (next_visible->data) ||
+                      if (gimp_item_is_content_locked (next_visible->data) ||
                           gimp_viewable_get_children (next_visible->data))
                         next_visible = NULL;
 

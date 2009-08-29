@@ -375,7 +375,7 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
       return;
     }
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                             GIMP_MESSAGE_ERROR,
@@ -470,7 +470,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
           return;
         }
 
-      if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
         {
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,

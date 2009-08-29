@@ -276,7 +276,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("The active layer's pixels are locked."));

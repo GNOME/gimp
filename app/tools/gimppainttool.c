@@ -281,7 +281,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer's pixels are locked."));
@@ -541,7 +541,7 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
       GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-          gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+          gimp_item_is_content_locked (GIMP_ITEM (drawable)))
         {
           modifier        = GIMP_CURSOR_MODIFIER_BAD;
           toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;

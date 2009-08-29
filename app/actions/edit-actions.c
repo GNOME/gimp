@@ -274,7 +274,7 @@ edit_actions_update (GimpActionGroup *group,
 
       if (drawable)
         {
-          writable = ! gimp_item_get_lock_content (GIMP_ITEM (drawable));
+          writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable));
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             children = TRUE;

@@ -223,7 +223,7 @@ gimp_image_merge_down (GimpImage      *image,
               return NULL;
             }
 
-          if (gimp_item_get_lock_content (GIMP_ITEM (layer)))
+          if (gimp_item_is_content_locked (GIMP_ITEM (layer)))
             {
               g_set_error_literal (error, 0, 0,
                                    _("The layer to merge down to is locked."));

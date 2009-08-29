@@ -331,7 +331,7 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
               return FALSE;
             }
 
-          if (gimp_item_get_lock_content (GIMP_ITEM (layer)))
+          if (gimp_item_is_content_locked (GIMP_ITEM (layer)))
             {
               gimp_tool_message_literal (tool, tool->display,
                                          _("The active layer's pixels are locked."));
