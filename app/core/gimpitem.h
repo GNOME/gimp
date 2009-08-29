@@ -69,6 +69,7 @@ struct _GimpItemClass
 
   /*  virtual functions  */
   gboolean        (* is_attached)        (GimpItem               *item);
+  gboolean        (* is_content_locked)  (const GimpItem         *item);
   GimpContainer * (* get_container)      (GimpItem               *item);
   GimpItem      * (* duplicate)          (GimpItem               *item,
                                           GType                   new_type);
@@ -281,6 +282,7 @@ void            gimp_item_set_lock_content   (GimpItem           *item,
                                               gboolean            push_undo);
 gboolean        gimp_item_get_lock_content   (const GimpItem     *item);
 gboolean        gimp_item_can_lock_content   (const GimpItem     *item);
+gboolean        gimp_item_is_content_locked  (const GimpItem     *item);
 
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);
