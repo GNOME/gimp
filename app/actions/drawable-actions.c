@@ -203,10 +203,10 @@ drawable_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("drawable-equalize",       writable && ! is_indexed);
-  SET_SENSITIVE ("drawable-invert",         writable && ! is_indexed);
-  SET_SENSITIVE ("drawable-levels-stretch", writable &&   is_rgb);
-  SET_SENSITIVE ("drawable-offset",         writable);
+  SET_SENSITIVE ("drawable-equalize",       writable && !children && !is_indexed);
+  SET_SENSITIVE ("drawable-invert",         writable && !children && !is_indexed);
+  SET_SENSITIVE ("drawable-levels-stretch", writable && !children &&  is_rgb);
+  SET_SENSITIVE ("drawable-offset",         writable && !children);
 
   SET_SENSITIVE ("drawable-visible",      drawable);
   SET_SENSITIVE ("drawable-linked",       drawable);
@@ -216,12 +216,12 @@ drawable_actions_update (GimpActionGroup *group,
   SET_ACTIVE ("drawable-linked",       linked);
   SET_ACTIVE ("drawable-lock-content", locked);
 
-  SET_SENSITIVE ("drawable-flip-horizontal", writable || children);
-  SET_SENSITIVE ("drawable-flip-vertical",   writable || children);
+  SET_SENSITIVE ("drawable-flip-horizontal", writable);
+  SET_SENSITIVE ("drawable-flip-vertical",   writable);
 
-  SET_SENSITIVE ("drawable-rotate-90",  writable || children);
-  SET_SENSITIVE ("drawable-rotate-180", writable || children);
-  SET_SENSITIVE ("drawable-rotate-270", writable || children);
+  SET_SENSITIVE ("drawable-rotate-90",  writable);
+  SET_SENSITIVE ("drawable-rotate-180", writable);
+  SET_SENSITIVE ("drawable-rotate-270", writable);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

@@ -546,8 +546,11 @@ layers_actions_update (GimpActionGroup *group,
                 {
                   if (gimp_item_get_visible (next_visible->data))
                     {
-                      /*  next_visible is actually next_visible_and_writable  */
-                      if (gimp_item_get_lock_content (next_visible->data))
+                      /*  next_visible is actually next_visible and
+                       *  writable not group
+                       */
+                      if (gimp_item_get_lock_content (next_visible->data) ||
+                          gimp_viewable_get_children (next_visible->data))
                         next_visible = NULL;
 
                       break;
@@ -600,20 +603,20 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
   SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
 
-  SET_SENSITIVE ("layers-resize",          (writable || children) && !ac);
+  SET_SENSITIVE ("layers-resize",          writable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", writable && !ac);
-  SET_SENSITIVE ("layers-scale",           (writable || children) && !ac);
+  SET_SENSITIVE ("layers-scale",           writable && !ac);
 
-  SET_SENSITIVE ("layers-crop",            (writable || children) && sel);
+  SET_SENSITIVE ("layers-crop",            writable && sel);
 
-  SET_SENSITIVE ("layers-alpha-add",       writable && !fs && !alpha);
-  SET_SENSITIVE ("layers-alpha-remove",    writable && !fs &&  alpha);
+  SET_SENSITIVE ("layers-alpha-add",       writable && !children && !fs && !alpha);
+  SET_SENSITIVE ("layers-alpha-remove",    writable && !children && !fs &&  alpha);
 
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
   SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask);
-  SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask && !children);
   SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
 
   SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac &&  mask);

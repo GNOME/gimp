@@ -264,6 +264,7 @@ edit_actions_update (GimpActionGroup *group,
   gchar        *redo_name    = NULL;
   gchar        *fade_name    = NULL;
   gboolean      writable     = FALSE;
+  gboolean      children     = FALSE;
   gboolean      undo_enabled = FALSE;
   gboolean      fade_enabled = FALSE;
 
@@ -274,6 +275,9 @@ edit_actions_update (GimpActionGroup *group,
       if (drawable)
         {
           writable = ! gimp_item_get_lock_content (GIMP_ITEM (drawable));
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+            children = TRUE;
         }
 
       undo_enabled = gimp_image_undo_is_enabled (image);
@@ -335,22 +339,25 @@ edit_actions_update (GimpActionGroup *group,
   g_free (redo_name);
   g_free (fade_name);
 
-  SET_SENSITIVE ("edit-cut",                writable);
+  SET_SENSITIVE ("edit-cut",                writable && !children);
   SET_SENSITIVE ("edit-copy",               drawable);
   SET_SENSITIVE ("edit-copy-visible",       image);
-  SET_SENSITIVE ("edit-paste",              ! image || (! drawable || writable));
+  SET_SENSITIVE ("edit-paste",              !image || (!drawable ||
+                                                       (writable && !children)));
   SET_SENSITIVE ("edit-paste-as-new-layer", image);
-  SET_SENSITIVE ("edit-paste-into",         image && (! drawable || writable));
+  SET_SENSITIVE ("edit-paste-into",         image && (!drawable ||
+                                                      (writable  && !children)));
 
-  SET_SENSITIVE ("edit-named-cut",          writable);
+  SET_SENSITIVE ("edit-named-cut",          writable && !children);
   SET_SENSITIVE ("edit-named-copy",         drawable);
   SET_SENSITIVE ("edit-named-copy-visible", drawable);
-  SET_SENSITIVE ("edit-named-paste",        image && (! drawable || writable));
+  SET_SENSITIVE ("edit-named-paste",        image && (!drawable ||
+                                                      (writable && !children)));
 
-  SET_SENSITIVE ("edit-clear",              writable);
-  SET_SENSITIVE ("edit-fill-fg",            writable);
-  SET_SENSITIVE ("edit-fill-bg",            writable);
-  SET_SENSITIVE ("edit-fill-pattern",       writable);
+  SET_SENSITIVE ("edit-clear",              writable && !children);
+  SET_SENSITIVE ("edit-fill-fg",            writable && !children);
+  SET_SENSITIVE ("edit-fill-bg",            writable && !children);
+  SET_SENSITIVE ("edit-fill-pattern",       writable && !children);
 
 #undef SET_LABEL
 #undef SET_SENSITIVE
