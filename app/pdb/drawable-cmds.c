@@ -935,7 +935,8 @@ drawable_merge_shadow_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           const gchar *undo_desc = _("Plug-In");
 
@@ -1093,6 +1094,7 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
           y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
           num_channels == gimp_drawable_bytes (drawable))
@@ -1139,7 +1141,8 @@ drawable_fill_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
       else
         success = FALSE;
@@ -1172,7 +1175,8 @@ drawable_offset_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         gimp_drawable_offset (drawable, context, wrap_around, fill_type,
                               offset_x, offset_y);
       else

@@ -42,6 +42,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
@@ -94,6 +95,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
@@ -136,6 +138,7 @@ HELP
         code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
@@ -159,6 +162,7 @@ sub levels_auto {
         code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
@@ -192,6 +196,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
@@ -222,6 +227,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       ! gimp_drawable_is_rgb (drawable))
     success = FALSE;
 
@@ -259,6 +265,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       ! gimp_drawable_is_rgb (drawable))
     success = FALSE;
 
@@ -296,6 +303,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
@@ -327,6 +335,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
@@ -369,6 +378,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
@@ -415,6 +425,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
@@ -466,6 +477,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
@@ -506,6 +518,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       ! gimp_drawable_is_rgb (drawable))
     success = FALSE;
 
@@ -633,6 +646,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
@@ -670,6 +684,7 @@ HELP
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable) ||
       (low_threshold > high_threshold))
     success = FALSE;

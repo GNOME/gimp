@@ -68,10 +68,7 @@ drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      /*  group items are transformable even though they appear locked  */
-      success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error) &&
-                 (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-                  gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error)));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -444,10 +441,7 @@ drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      /*  group items are transformable even though they appear locked  */
-      success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error) &&
-                 (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-                  gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error)));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))

@@ -232,7 +232,8 @@ layer_add_alpha_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
         gimp_layer_add_alpha (layer);
       else
        success = FALSE;
@@ -257,7 +258,8 @@ layer_flatten_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
         gimp_layer_flatten (layer, context);
       else
        success = FALSE;
@@ -288,10 +290,7 @@ layer_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      /*  group items are transformable even though they appear locked  */
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), FALSE, error) &&
-          (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) ||
-           gimp_pdb_item_is_writable (GIMP_ITEM (layer), error)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), TRUE, error))
         {
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
@@ -336,10 +335,7 @@ layer_scale_full_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      /*  group items are transformable even though they appear locked  */
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), FALSE, error) &&
-          (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) ||
-           gimp_pdb_item_is_writable (GIMP_ITEM (layer), error)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), TRUE, error))
         {
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);

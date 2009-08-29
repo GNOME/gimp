@@ -46,7 +46,8 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
       GError    *my_error = NULL;
@@ -200,7 +201,8 @@ HELP
 	code => <<CODE
 {
   if (gimp->global_buffer &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
                                       drawable, gimp->global_buffer,
@@ -277,7 +279,8 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
       GError    *my_error = NULL;
@@ -435,7 +438,9 @@ HELP
 {
   GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
-  if (buffer && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (buffer &&
+      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
                                       drawable, buffer,
@@ -510,7 +515,8 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -550,7 +556,8 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -618,7 +625,8 @@ HELP
 	                 "core/gimpchannel.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       gboolean   do_seed_fill;
@@ -702,7 +710,8 @@ HELP
 	                 "core/gimpchannel.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       gboolean   do_seed_fill;
@@ -779,7 +788,8 @@ HELP
         headers => [ qw("core/gimpdrawable-blend.h") ],
 	code => <<'CODE'
 {
-  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
+  success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+             gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error));
 
   if (success && supersample)
     {
@@ -835,7 +845,8 @@ HELP
 	headers => [ qw("core/gimpstrokeoptions.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GimpImage         *image   = gimp_item_get_image (GIMP_ITEM (drawable));
       GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
@@ -879,6 +890,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
       gimp_pdb_item_is_attached (GIMP_ITEM (vectors), FALSE, error))
     {
       GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);

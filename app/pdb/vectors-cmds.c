@@ -1121,7 +1121,8 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
         {
           GimpStroke *stroke;
           GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
@@ -1339,7 +1340,8 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
         {
           GimpStroke *stroke;
           GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
