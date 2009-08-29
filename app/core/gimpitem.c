@@ -388,6 +388,11 @@ gimp_item_real_visibility_changed (GimpItem *item)
 static gboolean
 gimp_item_real_is_content_locked (const GimpItem *item)
 {
+  GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+
+  if (parent && gimp_item_is_content_locked (GIMP_ITEM (parent)))
+    return TRUE;
+
   return item->lock_content;
 }
 
