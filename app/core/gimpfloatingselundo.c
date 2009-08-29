@@ -123,7 +123,7 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
         }
 
       /* When the floating selection is converted to/from a normal
-       * layer it does something resembling a name, so emit the
+       * layer it does something resembling a name change, so emit the
        * "name-changed" signal
        */
       gimp_object_name_changed (GIMP_OBJECT (floating_layer));

@@ -150,8 +150,8 @@ floating_sel_to_layer (GimpLayer  *layer,
   gimp_image_undo_group_end (image);
 
   /* When the floating selection is converted to/from a normal layer
-   * it does something resembling a name, so emit the "name-changed"
-   * signal
+   * it does something resembling a name change, so emit the
+   * "name-changed" signal
    */
   gimp_object_name_changed (GIMP_OBJECT (layer));
 
