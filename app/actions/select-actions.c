@@ -171,8 +171,8 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-border",  drawable && sel);
 
   SET_SENSITIVE ("select-save",               drawable && !fs);
-  SET_SENSITIVE ("select-stroke",             writable && sel);
-  SET_SENSITIVE ("select-stroke-last-values", writable && sel);
+  SET_SENSITIVE ("select-stroke",             writable && !children && sel);
+  SET_SENSITIVE ("select-stroke-last-values", writable && !children && sel);
 
 #undef SET_SENSITIVE
 }

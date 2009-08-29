@@ -243,18 +243,21 @@ void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage   *image      = action_data_get_image (data);
-  GimpVectors *vectors    = NULL;
-  gint         n_vectors  = 0;
-  gboolean     mask_empty = TRUE;
-  gboolean     global_buf = FALSE;
-  gboolean     visible    = FALSE;
-  gboolean     linked     = FALSE;
-  gboolean     locked     = FALSE;
-  gboolean     can_lock   = FALSE;
-  gboolean     writable   = FALSE;
-  GList       *next       = NULL;
-  GList       *prev       = NULL;
+  GimpImage    *image       = action_data_get_image (data);
+  GimpVectors  *vectors     = NULL;
+  GimpDrawable *drawable    = NULL;
+  gint          n_vectors   = 0;
+  gboolean      mask_empty  = TRUE;
+  gboolean      global_buf  = FALSE;
+  gboolean      visible     = FALSE;
+  gboolean      linked      = FALSE;
+  gboolean      locked      = FALSE;
+  gboolean      can_lock    = FALSE;
+  gboolean      writable    = FALSE;
+  gboolean      dr_writable = FALSE;
+  gboolean      dr_children = FALSE;
+  GList        *next        = NULL;
+  GList        *prev        = NULL;
 
   if (image)
     {
@@ -285,6 +288,18 @@ vectors_actions_update (GimpActionGroup *group,
               prev = g_list_previous (list);
               next = g_list_next (list);
             }
+        }
+
+      drawable = gimp_image_get_active_drawable (image);
+
+      if (drawable)
+        {
+          GimpItem *item = GIMP_ITEM (drawable);
+
+          dr_writable = ! gimp_item_is_content_locked (item);
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+            dr_children = TRUE;
         }
     }
 
@@ -323,8 +338,12 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", image && !mask_empty);
-  SET_SENSITIVE ("vectors-stroke",                        vectors);
-  SET_SENSITIVE ("vectors-stroke-last-values",            vectors);
+  SET_SENSITIVE ("vectors-stroke",                        vectors &&
+                                                          dr_writable &&
+                                                          !dr_children);
+  SET_SENSITIVE ("vectors-stroke-last-values",            vectors &&
+                                                          dr_writable &&
+                                                          !dr_children);
 
   SET_SENSITIVE ("vectors-selection-replace",      vectors);
   SET_SENSITIVE ("vectors-selection-from-vectors", vectors);
