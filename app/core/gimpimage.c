@@ -978,13 +978,13 @@ gimp_image_name_changed (GimpObject *object)
       image->display_name = NULL;
     }
 
+  /* We never want the empty string as a name, so change empty strings
+   * to NULL strings (without emitting the "name-changed" signal
+   * again)
+   */
   name = gimp_object_get_name (object);
-
-  if (! (name && strlen (name)))
-    {
-      g_free (object->name);
-      object->name = NULL;
-    }
+  if (name && strlen (name) == 0)
+    gimp_object_name_free (object);
 }
 
 static gint64
