@@ -259,7 +259,7 @@ plug_in_menus_unregister_procedure (GimpPDB       *pdb,
                   guint  merge_id;
 
                   merge_key = g_strdup_printf ("%s-merge-id",
-                                               GIMP_OBJECT (plug_in_proc)->name);
+                                               gimp_object_get_name (plug_in_proc));
                   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                                   merge_key));
                   g_free (merge_key);
@@ -386,7 +386,7 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
       *p = '\0';
     }
 
-  merge_key = g_strdup_printf ("%s-merge-id", GIMP_OBJECT (proc)->name);
+  merge_key = g_strdup_printf ("%s-merge-id", gimp_object_get_name (proc));
 
   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                   merge_key));
@@ -422,12 +422,12 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
     }
 
   GIMP_LOG (MENUS, "adding menu item for '%s' (@ %s)",
-            GIMP_OBJECT (proc)->name, action_path);
+            gimp_object_get_name (proc), action_path);
 
   gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
                          action_path,
-                         GIMP_OBJECT (proc)->name,
-                         GIMP_OBJECT (proc)->name,
+                         gimp_object_get_name (proc),
+                         gimp_object_get_name (proc),
                          GTK_UI_MANAGER_MENUITEM,
                          FALSE);
 

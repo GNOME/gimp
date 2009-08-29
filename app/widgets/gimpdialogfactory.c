@@ -201,10 +201,10 @@ gimp_dialog_factory_dispose (GObject *object)
       factory->session_infos = NULL;
     }
 
-  if (strcmp (GIMP_OBJECT (factory)->name, "toolbox") == 0)
+  if (strcmp (gimp_object_get_name (factory), "toolbox") == 0)
     key = "";
   else
-    key = GIMP_OBJECT (factory)->name;
+    key = (gpointer)gimp_object_get_name (factory);
 
   g_hash_table_remove (GIMP_DIALOG_FACTORY_GET_CLASS (object)->factories,
                        key);
@@ -270,7 +270,7 @@ gimp_dialog_factory_new (const gchar       *name,
   if (strcmp (name, "toolbox") == 0)
     key = "";
   else
-    key = GIMP_OBJECT (factory)->name;
+    key = (gpointer)gimp_object_get_name (factory);
 
   g_hash_table_insert (GIMP_DIALOG_FACTORY_GET_CLASS (factory)->factories,
                        key, factory);

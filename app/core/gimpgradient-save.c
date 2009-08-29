@@ -65,7 +65,7 @@ gimp_gradient_save (GimpData  *data,
 
   fprintf (file, "GIMP Gradient\n");
 
-  fprintf (file, "Name: %s\n", GIMP_OBJECT (gradient)->name);
+  fprintf (file, "Name: %s\n", gimp_object_get_name (gradient));
 
   /* Count number of segments */
   num_segments = 0;

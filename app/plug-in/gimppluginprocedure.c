@@ -280,7 +280,7 @@ gimp_plug_in_procedure_find (GSList      *list,
     {
       GimpObject *object = l->data;
 
-      if (! strcmp (proc_name, object->name))
+      if (! strcmp (proc_name, gimp_object_get_name (object)))
         return GIMP_PLUG_IN_PROCEDURE (object);
     }
 
@@ -358,7 +358,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "The menu path must look like either \"<Prefix>\" "
                    "or \"<Prefix>/path/to/item\".",
                    basename, gimp_filename_to_utf8 (proc->prog),
-                   GIMP_OBJECT (proc)->name,
+                   gimp_object_get_name (proc),
                    menu_path);
       goto failure;
     }
@@ -481,7 +481,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "\"<Brushes>\", \"<Gradients>\", \"<Palettes>\", "
                    "\"<Patterns>\" or \"<Buffers>\".",
                    basename, gimp_filename_to_utf8 (proc->prog),
-                   GIMP_OBJECT (proc)->name,
+                   gimp_object_get_name (proc),
                    menu_path);
       goto failure;
     }
@@ -513,7 +513,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "which does not take the standard %s Plug-In "
                    "arguments: (%s).",
                    basename, gimp_filename_to_utf8 (proc->prog),
-                   prefix, GIMP_OBJECT (proc)->name, prefix,
+                   prefix, gimp_object_get_name (proc), prefix,
                    required);
 
       g_free (prefix);
@@ -677,9 +677,9 @@ gimp_plug_in_procedure_get_help_id (const GimpPlugInProcedure *proc)
   domain = gimp_plug_in_procedure_get_help_domain (proc);
 
   if (domain)
-    return g_strconcat (domain, "?", GIMP_OBJECT (proc)->name, NULL);
+    return g_strconcat (domain, "?", gimp_object_get_name (proc), NULL);
 
-  return g_strdup (GIMP_OBJECT (proc)->name);
+  return g_strdup (gimp_object_get_name (proc));
 }
 
 gboolean

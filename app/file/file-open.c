@@ -154,7 +154,7 @@ file_open_image (Gimp                *gimp,
   return_vals =
     gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                         context, progress, error,
-                                        GIMP_OBJECT (file_proc)->name,
+                                        gimp_object_get_name (file_proc),
                                         GIMP_TYPE_INT32, run_mode,
                                         G_TYPE_STRING,   filename,
                                         G_TYPE_STRING,   entered_filename,
@@ -293,7 +293,7 @@ file_open_thumbnail (Gimp           *gimp,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             context, progress, error,
-                                            GIMP_OBJECT (procedure)->name,
+                                            gimp_object_get_name (procedure),
                                             G_TYPE_STRING,   filename,
                                             GIMP_TYPE_INT32, size,
                                             G_TYPE_NONE);

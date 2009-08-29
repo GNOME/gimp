@@ -256,10 +256,10 @@ gimp_tool_presets_save (GimpToolPresets  *presets,
 
       gimp_tool_options_create_folder ();
 
-      footer = g_strdup_printf ("end of %s", GIMP_OBJECT (presets)->name);
+      footer = g_strdup_printf ("end of %s", gimp_object_get_name (presets));
 
       retval = gimp_config_serialize_to_file (GIMP_CONFIG (presets), filename,
-                                              GIMP_OBJECT (presets)->name,
+                                              gimp_object_get_name (presets),
                                               footer,
                                               NULL, error);
 

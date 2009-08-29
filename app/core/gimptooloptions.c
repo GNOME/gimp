@@ -169,9 +169,9 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
     g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
   header = g_strdup_printf ("GIMP %s options",
-                            GIMP_OBJECT (tool_options->tool_info)->name);
+                            gimp_object_get_name (tool_options->tool_info));
   footer = g_strdup_printf ("end of %s options",
-                            GIMP_OBJECT (tool_options->tool_info)->name);
+                            gimp_object_get_name (tool_options->tool_info));
 
   retval = gimp_config_serialize_to_file (GIMP_CONFIG (tool_options),
                                           filename,

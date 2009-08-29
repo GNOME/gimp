@@ -80,7 +80,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
 
   dialog = g_object_new (GIMP_TYPE_TOOL_DIALOG,
                          "title",        tool_info->blurb,
-                         "role",         GIMP_OBJECT (tool_info)->name,
+                         "role",         gimp_object_get_name (tool_info),
                          "help-func",    gimp_standard_help_func,
                          "help-id",      tool_info->help_id,
                          "stock-id",     stock_id,
@@ -92,7 +92,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
   va_end (args);
 
-  identifier = g_strconcat (GIMP_OBJECT (tool_info)->name, "-dialog", NULL);
+  identifier = g_strconcat (gimp_object_get_name (tool_info), "-dialog", NULL);
 
   gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
                                    identifier,

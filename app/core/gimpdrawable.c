@@ -405,7 +405,7 @@ gimp_drawable_duplicate (GimpItem *item,
                                gimp_item_get_width  (item),
                                gimp_item_get_height (item),
                                gimp_drawable_type (drawable),
-                               GIMP_OBJECT (new_drawable)->name);
+                               gimp_object_get_name (new_drawable));
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          0, 0,

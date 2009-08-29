@@ -91,7 +91,7 @@ file_load_invoker (GimpProcedure      *procedure,
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
                                              context, progress, error,
-                                             GIMP_OBJECT (proc)->name,
+                                             gimp_object_get_name (proc),
                                              new_args);
 
   g_value_array_free (new_args);
@@ -280,7 +280,7 @@ file_save_invoker (GimpProcedure      *procedure,
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
                                              context, progress, error,
-                                             GIMP_OBJECT (proc)->name,
+                                             gimp_object_get_name (proc),
                                              new_args);
 
   g_value_array_free (new_args);

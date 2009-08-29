@@ -410,7 +410,7 @@ gimp_curve_get_description (GimpViewable  *viewable,
 {
   GimpCurve *curve = GIMP_CURVE (viewable);
 
-  return g_strdup_printf ("%s", GIMP_OBJECT (curve)->name);
+  return g_strdup_printf ("%s", gimp_object_get_name (curve));
 }
 
 static void

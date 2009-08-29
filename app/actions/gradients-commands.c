@@ -63,7 +63,7 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
     return;
 
   title = g_strdup_printf (_("Save '%s' as POV-Ray"),
-                           GIMP_OBJECT (gradient)->name);
+                           gimp_object_get_name (gradient));
 
   chooser = GTK_FILE_CHOOSER
     (gtk_file_chooser_dialog_new (title, NULL,

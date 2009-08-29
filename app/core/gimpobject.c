@@ -272,11 +272,12 @@ gimp_object_take_name (GimpObject *object,
  * Return value: a pointer to the @object's name
  **/
 const gchar *
-gimp_object_get_name (const GimpObject *object)
+gimp_object_get_name (gconstpointer object)
 {
-  g_return_val_if_fail (GIMP_IS_OBJECT (object), NULL);
+  const GimpObject *object_typed = object;
+  g_return_val_if_fail (GIMP_IS_OBJECT (object_typed), NULL);
 
-  return object->name;
+  return object_typed->name;
 }
 
 /**

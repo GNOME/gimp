@@ -59,7 +59,7 @@ gimp_palette_save (GimpData  *data,
     }
 
   fprintf (file, "GIMP Palette\n");
-  fprintf (file, "Name: %s\n", GIMP_OBJECT (palette)->name);
+  fprintf (file, "Name: %s\n", gimp_object_get_name (palette));
   fprintf (file, "Columns: %d\n#\n", CLAMP (palette->n_columns, 0, 256));
 
   for (list = palette->colors; list; list = g_list_next (list))

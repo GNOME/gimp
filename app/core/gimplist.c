@@ -304,7 +304,7 @@ gimp_list_get_child_by_name (const GimpContainer *container,
     {
       GimpObject *object = glist->data;
 
-      if (! strcmp (object->name, name))
+      if (! strcmp (gimp_object_get_name (object), name))
         return object;
     }
 

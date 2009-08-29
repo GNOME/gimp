@@ -159,7 +159,7 @@ layer_select_new (GimpImage *image,
   gtk_widget_show (alignment);
 
   /*  the layer name label */
-  layer_select->label = gtk_label_new (GIMP_OBJECT (layer)->name);
+  layer_select->label = gtk_label_new (gimp_object_get_name (layer));
   gtk_box_pack_start (GTK_BOX (hbox), layer_select->label, FALSE, FALSE, 0);
   gtk_widget_show (layer_select->label);
 
@@ -224,7 +224,7 @@ layer_select_advance (LayerSelect *layer_select,
           gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
                                   GIMP_VIEWABLE (current_layer));
           gtk_label_set_text (GTK_LABEL (layer_select->label),
-                              GIMP_OBJECT (current_layer)->name);
+                              gimp_object_get_name (current_layer));
         }
     }
 }

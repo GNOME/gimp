@@ -835,7 +835,7 @@ undo_pop_cantundo (GimpUndo            *undo,
     {
     case GIMP_UNDO_MODE_UNDO:
       gimp_message (undo->image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("Can't undo %s"), GIMP_OBJECT (undo)->name);
+                    _("Can't undo %s"), gimp_object_get_name (undo));
       break;
 
     case GIMP_UNDO_MODE_REDO:

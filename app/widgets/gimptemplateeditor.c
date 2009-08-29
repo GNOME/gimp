@@ -695,6 +695,6 @@ gimp_template_editor_icon_changed (GimpContext        *context,
                                    GimpTemplateEditor *editor)
 {
   g_object_set (editor->template,
-                "stock-id", GIMP_OBJECT (template)->name,
+                "stock-id", gimp_object_get_name (template),
                 NULL);
 }

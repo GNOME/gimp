@@ -579,7 +579,7 @@ gimp_pdb_get_strings (PDBStrings    *strings,
   if (compat)
     {
       strings->blurb     = g_strdup_printf (COMPAT_BLURB,
-                                            GIMP_OBJECT (procedure)->name);
+                                            gimp_object_get_name (procedure));
       strings->help      = g_strdup (strings->blurb);
       strings->author    = NULL;
       strings->copyright = NULL;

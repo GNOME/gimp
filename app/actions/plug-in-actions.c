@@ -258,7 +258,7 @@ plug_in_actions_update (GimpActionGroup *group,
                                                                      drawable);
 
           gimp_action_group_set_action_sensitive (group,
-                                                  GIMP_OBJECT (proc)->name,
+                                                  gimp_object_get_name (proc),
                                                   sensitive);
         }
     }
@@ -374,7 +374,7 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
 #endif
 
           action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                GIMP_OBJECT (procedure)->name);
+                                                gimp_object_get_name (procedure));
 
           if (action)
             gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
@@ -444,7 +444,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       label = p2 + 1;
     }
 
-  entry.name        = GIMP_OBJECT (proc)->name;
+  entry.name        = gimp_object_get_name (proc);
   entry.stock_id    = gimp_plug_in_procedure_get_stock_id (proc);
   entry.label       = label;
   entry.accelerator = NULL;
@@ -454,7 +454,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 
 #if 0
   g_print ("adding plug-in action '%s' (%s)\n",
-           GIMP_OBJECT (proc)->name, label);
+           gimp_object_get_name (proc), label);
 #endif
 
   gimp_action_group_add_plug_in_actions (group, &entry, 1,
@@ -511,7 +511,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
        *  all images' actions. See bug #517683.
        */
       actual_action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                   GIMP_OBJECT (proc)->name);
+                                                   gimp_object_get_name (proc));
       if (actual_action)
         sensitive = gtk_action_get_sensitive (actual_action);
 
@@ -566,7 +566,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
 
       /*  see comment above  */
       actual_action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                   GIMP_OBJECT (proc)->name);
+                                                   gimp_object_get_name (proc));
       if (actual_action)
         sensitive = gtk_action_get_sensitive (actual_action);
 

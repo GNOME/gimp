@@ -1836,7 +1836,7 @@ gimp_context_tool_dirty (GimpToolInfo *tool_info,
                          GimpContext  *context)
 {
   g_free (context->tool_name);
-  context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
+  context->tool_name = g_strdup (gimp_object_get_name (tool_info));
 }
 
 /*  the global tool list is there again after refresh  */
@@ -1913,7 +1913,7 @@ gimp_context_real_set_tool (GimpContext  *context,
                                0);
 
       if (tool_info != standard_tool_info)
-        context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
+        context->tool_name = g_strdup (gimp_object_get_name (tool_info));
 
       if (tool_info->paint_info)
         gimp_context_real_set_paint_info (context, tool_info->paint_info);
@@ -1962,7 +1962,7 @@ gimp_context_paint_info_dirty (GimpPaintInfo *paint_info,
                                GimpContext   *context)
 {
   g_free (context->paint_name);
-  context->paint_name = g_strdup (GIMP_OBJECT (paint_info)->name);
+  context->paint_name = g_strdup (gimp_object_get_name (paint_info));
 }
 
 /*  the global paint info list is there again after refresh  */
@@ -2039,7 +2039,7 @@ gimp_context_real_set_paint_info (GimpContext   *context,
                                0);
 
       if (paint_info != standard_paint_info)
-        context->paint_name = g_strdup (GIMP_OBJECT (paint_info)->name);
+        context->paint_name = g_strdup (gimp_object_get_name (paint_info));
     }
 
   g_object_notify (G_OBJECT (context), "paint-info");
@@ -2319,7 +2319,7 @@ gimp_context_brush_dirty (GimpBrush   *brush,
                           GimpContext *context)
 {
   g_free (context->brush_name);
-  context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
+  context->brush_name = g_strdup (gimp_object_get_name (brush));
 }
 
 /*  the global brush list is there again after refresh  */
@@ -2396,7 +2396,7 @@ gimp_context_real_set_brush (GimpContext *context,
                                0);
 
       if (brush != standard_brush)
-        context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
+        context->brush_name = g_strdup (gimp_object_get_name (brush));
     }
 
   g_object_notify (G_OBJECT (context), "brush");
@@ -2441,7 +2441,7 @@ gimp_context_pattern_dirty (GimpPattern *pattern,
                             GimpContext *context)
 {
   g_free (context->pattern_name);
-  context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);
+  context->pattern_name = g_strdup (gimp_object_get_name (pattern));
 }
 
 /*  the global pattern list is there again after refresh  */
@@ -2518,7 +2518,7 @@ gimp_context_real_set_pattern (GimpContext *context,
                                0);
 
       if (pattern != standard_pattern)
-        context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);
+        context->pattern_name = g_strdup (gimp_object_get_name (pattern));
     }
 
   g_object_notify (G_OBJECT (context), "pattern");
@@ -2563,7 +2563,7 @@ gimp_context_gradient_dirty (GimpGradient *gradient,
                              GimpContext  *context)
 {
   g_free (context->gradient_name);
-  context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
+  context->gradient_name = g_strdup (gimp_object_get_name (gradient));
 }
 
 /*  the global gradient list is there again after refresh  */
@@ -2640,7 +2640,7 @@ gimp_context_real_set_gradient (GimpContext  *context,
                                0);
 
       if (gradient != standard_gradient)
-        context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
+        context->gradient_name = g_strdup (gimp_object_get_name (gradient));
     }
 
   g_object_notify (G_OBJECT (context), "gradient");
@@ -2685,7 +2685,7 @@ gimp_context_palette_dirty (GimpPalette *palette,
                             GimpContext *context)
 {
   g_free (context->palette_name);
-  context->palette_name = g_strdup (GIMP_OBJECT (palette)->name);
+  context->palette_name = g_strdup (gimp_object_get_name (palette));
 }
 
 /*  the global palette list is there again after refresh  */
@@ -2762,7 +2762,7 @@ gimp_context_real_set_palette (GimpContext *context,
                                0);
 
       if (palette != standard_palette)
-        context->palette_name = g_strdup (GIMP_OBJECT (palette)->name);
+        context->palette_name = g_strdup (gimp_object_get_name (palette));
     }
 
   g_object_notify (G_OBJECT (context), "palette");
@@ -2829,7 +2829,7 @@ gimp_context_font_dirty (GimpFont    *font,
                          GimpContext *context)
 {
   g_free (context->font_name);
-  context->font_name = g_strdup (GIMP_OBJECT (font)->name);
+  context->font_name = g_strdup (gimp_object_get_name (font));
 }
 
 /*  the global font list is there again after refresh  */
@@ -2906,7 +2906,7 @@ gimp_context_real_set_font (GimpContext *context,
                                0);
 
       if (font != standard_font)
-        context->font_name = g_strdup (GIMP_OBJECT (font)->name);
+        context->font_name = g_strdup (gimp_object_get_name (font));
     }
 
   g_object_notify (G_OBJECT (context), "font");
@@ -2955,7 +2955,7 @@ gimp_context_buffer_dirty (GimpBuffer  *buffer,
                            GimpContext *context)
 {
   g_free (context->buffer_name);
-  context->buffer_name = g_strdup (GIMP_OBJECT (buffer)->name);
+  context->buffer_name = g_strdup (gimp_object_get_name (buffer));
 }
 
 /*  the global buffer list is there again after refresh  */
@@ -3046,7 +3046,7 @@ gimp_context_real_set_buffer (GimpContext *context,
       /*
       if (buffer != standard_buffer)
       */
-      context->buffer_name = g_strdup (GIMP_OBJECT (buffer)->name);
+      context->buffer_name = g_strdup (gimp_object_get_name (buffer));
     }
 
   g_object_notify (G_OBJECT (context), "buffer");
@@ -3095,7 +3095,7 @@ gimp_context_imagefile_dirty (GimpImagefile *imagefile,
                               GimpContext   *context)
 {
   g_free (context->imagefile_name);
-  context->imagefile_name = g_strdup (GIMP_OBJECT (imagefile)->name);
+  context->imagefile_name = g_strdup (gimp_object_get_name (imagefile));
 }
 
 /*  the global imagefile list is there again after refresh  */
@@ -3186,7 +3186,7 @@ gimp_context_real_set_imagefile (GimpContext   *context,
       /*
       if (imagefile != standard_imagefile)
       */
-      context->imagefile_name = g_strdup (GIMP_OBJECT (imagefile)->name);
+      context->imagefile_name = g_strdup (gimp_object_get_name (imagefile));
     }
 
   g_object_notify (G_OBJECT (context), "imagefile");
@@ -3235,7 +3235,7 @@ gimp_context_template_dirty (GimpTemplate *template,
                              GimpContext  *context)
 {
   g_free (context->template_name);
-  context->template_name = g_strdup (GIMP_OBJECT (template)->name);
+  context->template_name = g_strdup (gimp_object_get_name (template));
 }
 
 /*  the global template list is there again after refresh  */
@@ -3326,7 +3326,7 @@ gimp_context_real_set_template (GimpContext  *context,
       /*
       if (template != standard_template)
       */
-      context->template_name = g_strdup (GIMP_OBJECT (template)->name);
+      context->template_name = g_strdup (gimp_object_get_name (template));
     }
 
   g_object_notify (G_OBJECT (context), "template");

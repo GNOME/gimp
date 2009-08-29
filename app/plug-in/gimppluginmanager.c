@@ -346,8 +346,8 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
     {
       GimpPlugInProcedure *tmp_proc = list->data;
 
-      if (strcmp (GIMP_OBJECT (procedure)->name,
-                  GIMP_OBJECT (tmp_proc)->name) == 0)
+      if (strcmp (gimp_object_get_name (procedure),
+                  gimp_object_get_name (tmp_proc)) == 0)
         {
           GSList *list2;
 
@@ -355,7 +355,7 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
 
           g_printerr ("Removing duplicate PDB procedure '%s' "
                       "registered by '%s'\n",
-                      GIMP_OBJECT (tmp_proc)->name,
+                      gimp_object_get_name (tmp_proc),
                       gimp_filename_to_utf8 (tmp_proc->prog));
 
           /* search the plugin list to see if any plugins had references to

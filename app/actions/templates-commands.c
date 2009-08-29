@@ -239,7 +239,7 @@ templates_delete_cmd_callback (GtkAction *action,
                                          _("Are you sure you want to delete "
                                            "template '%s' from the list and "
                                            "from disk?"),
-                                         GIMP_OBJECT (template)->name);
+                                         gimp_object_get_name (template));
       gtk_widget_show (dialog);
     }
 }

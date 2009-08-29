@@ -983,7 +983,7 @@ gimp_plug_in_add_temp_proc (GimpPlugIn             *plug_in,
   g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
 
   overridden = gimp_plug_in_procedure_find (plug_in->temp_procedures,
-                                            GIMP_OBJECT (proc)->name);
+                                            gimp_object_get_name (proc));
 
   if (overridden)
     gimp_plug_in_remove_temp_proc (plug_in,

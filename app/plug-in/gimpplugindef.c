@@ -119,7 +119,7 @@ gimp_plug_in_def_add_procedure (GimpPlugInDef       *plug_in_def,
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   overridden = gimp_plug_in_procedure_find (plug_in_def->procedures,
-                                            GIMP_OBJECT (proc)->name);
+                                            gimp_object_get_name (proc));
 
   if (overridden)
     gimp_plug_in_def_remove_procedure (plug_in_def, overridden);

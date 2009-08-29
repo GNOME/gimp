@@ -314,7 +314,7 @@ palette_import_dialog_new (GimpContext *context)
   dialog->entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (dialog->entry),
                       gradient ?
-                      GIMP_OBJECT (gradient)->name : _("New import"));
+                      gimp_object_get_name (gradient) : _("New import"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Palette _name:"), 0.0, 0.5,
                              dialog->entry, 2, FALSE);
@@ -476,7 +476,7 @@ palette_import_gradient_changed (GimpContext  *context,
   if (gradient && dialog->import_type == GRADIENT_IMPORT)
     {
       gtk_entry_set_text (GTK_ENTRY (dialog->entry),
-                          GIMP_OBJECT (gradient)->name);
+                          gimp_object_get_name (gradient));
 
       palette_import_make_palette (dialog);
     }
@@ -654,7 +654,7 @@ palette_import_grad_callback (GtkWidget    *widget,
   gradient = gimp_context_get_gradient (dialog->context);
 
   gtk_entry_set_text (GTK_ENTRY (dialog->entry),
-                      GIMP_OBJECT (gradient)->name);
+                      gimp_object_get_name (gradient));
 
   palette_import_set_sensitive (dialog);
 

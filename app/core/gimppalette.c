@@ -267,7 +267,7 @@ gimp_palette_get_description (GimpViewable  *viewable,
   GimpPalette *palette = GIMP_PALETTE (viewable);
 
   return g_strdup_printf ("%s (%d)",
-                          GIMP_OBJECT (palette)->name,
+                          gimp_object_get_name (palette),
                           palette->n_colors);
 }
 
