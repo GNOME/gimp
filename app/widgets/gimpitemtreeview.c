@@ -812,7 +812,7 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
                                    view);
 
       item_view->priv->lock_content_changed_handler =
-        gimp_tree_handler_connect (container, "lock-alpha-changed",
+        gimp_tree_handler_connect (container, "lock-content-changed",
                                    G_CALLBACK (gimp_item_tree_view_lock_content_changed),
                                    view);
     }
