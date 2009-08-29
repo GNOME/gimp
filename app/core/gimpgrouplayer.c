@@ -41,13 +41,6 @@
 #include "gimp-intl.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_LOCK_CONTENT
-};
-
-
 static void            gimp_projectable_iface_init   (GimpProjectableInterface  *iface);
 
 static void            gimp_group_layer_set_property (GObject         *object,
@@ -186,12 +179,6 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->transform_desc       = _("Transform Group Layer");
 
   drawable_class->estimate_memsize = gimp_group_layer_estimate_memsize;
-
-  g_object_class_install_property (object_class, PROP_LOCK_CONTENT,
-                                   g_param_spec_boolean ("lock-content",
-                                                         NULL, NULL,
-                                                         TRUE,
-                                                         GIMP_PARAM_READABLE));
 }
 
 static void
@@ -209,8 +196,6 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
 static void
 gimp_group_layer_init (GimpGroupLayer *group)
 {
-  GIMP_ITEM (group)->lock_content = TRUE;
-
   group->children = gimp_drawable_stack_new (GIMP_TYPE_LAYER);
 
   g_signal_connect (group->children, "add",
@@ -261,14 +246,8 @@ gimp_group_layer_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpItem *item = GIMP_ITEM (object);
-
   switch (property_id)
     {
-    case PROP_LOCK_CONTENT:
-      g_value_set_boolean (value, gimp_item_get_lock_content (item));
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
