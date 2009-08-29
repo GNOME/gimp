@@ -76,7 +76,7 @@ static gint64     gimp_channel_get_memsize   (GimpObject        *object,
 static gchar  * gimp_channel_get_description (GimpViewable      *viewable,
                                               gchar            **tooltip);
 
-static gboolean   gimp_channel_is_attached   (GimpItem          *item);
+static gboolean   gimp_channel_is_attached   (const GimpItem    *item);
 static GimpContainer *
                   gimp_channel_get_container (GimpItem          *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem          *item,
@@ -376,10 +376,11 @@ gimp_channel_get_description (GimpViewable  *viewable,
 }
 
 static gboolean
-gimp_channel_is_attached (GimpItem *item)
+gimp_channel_is_attached (const GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
-          gimp_container_have (gimp_item_get_image (item)->channels, GIMP_OBJECT (item)));
+          gimp_container_have (gimp_item_get_image (item)->channels,
+                               GIMP_OBJECT (item)));
 }
 
 static GimpContainer *

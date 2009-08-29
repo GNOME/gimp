@@ -45,7 +45,7 @@ enum
 };
 
 
-static gboolean        gimp_layer_mask_is_attached       (GimpItem       *item);
+static gboolean        gimp_layer_mask_is_attached       (const GimpItem *item);
 static gboolean        gimp_layer_mask_is_content_locked (const GimpItem *item);
 static GimpContainer * gimp_layer_mask_get_container     (GimpItem       *item);
 static GimpItem      * gimp_layer_mask_duplicate         (GimpItem       *item,
@@ -132,7 +132,7 @@ gimp_layer_mask_is_content_locked (const GimpItem *item)
 }
 
 static gboolean
-gimp_layer_mask_is_attached (GimpItem *item)
+gimp_layer_mask_is_attached (const GimpItem *item)
 {
   GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
   GimpLayer     *layer = gimp_layer_mask_get_layer (mask);

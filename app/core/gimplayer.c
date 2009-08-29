@@ -96,7 +96,7 @@ static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
                                                  gchar             **tooltip);
 
 static void       gimp_layer_removed            (GimpItem           *item);
-static gboolean   gimp_layer_is_attached        (GimpItem           *item);
+static gboolean   gimp_layer_is_attached        (const GimpItem     *item);
 static GimpContainer *
                   gimp_layer_get_container      (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
@@ -539,10 +539,11 @@ gimp_layer_removed (GimpItem *item)
 }
 
 static gboolean
-gimp_layer_is_attached (GimpItem *item)
+gimp_layer_is_attached (const GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
-          gimp_container_have (gimp_item_get_image (item)->layers, GIMP_OBJECT (item)));
+          gimp_container_have (gimp_item_get_image (item)->layers,
+                               GIMP_OBJECT (item)));
 }
 
 static GimpContainer *

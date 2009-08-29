@@ -68,7 +68,7 @@ struct _GimpItemClass
   void            (* lock_content_changed) (GimpItem             *item);
 
   /*  virtual functions  */
-  gboolean        (* is_attached)        (GimpItem               *item);
+  gboolean        (* is_attached)        (const GimpItem         *item);
   gboolean        (* is_content_locked)  (const GimpItem         *item);
   GimpContainer * (* get_container)      (GimpItem               *item);
   GimpItem      * (* duplicate)          (GimpItem               *item,
@@ -141,7 +141,7 @@ GType           gimp_item_get_type           (void) G_GNUC_CONST;
 void            gimp_item_removed            (GimpItem           *item);
 gboolean        gimp_item_is_removed         (const GimpItem     *item);
 
-gboolean        gimp_item_is_attached        (GimpItem           *item);
+gboolean        gimp_item_is_attached        (const GimpItem     *item);
 
 GimpContainer * gimp_item_get_container      (GimpItem           *item);
 GList         * gimp_item_get_container_iter (GimpItem           *item);

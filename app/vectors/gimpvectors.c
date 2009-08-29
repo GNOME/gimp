@@ -63,7 +63,7 @@ static void       gimp_vectors_finalize      (GObject           *object);
 static gint64     gimp_vectors_get_memsize   (GimpObject        *object,
                                               gint64            *gui_size);
 
-static gboolean   gimp_vectors_is_attached   (GimpItem          *item);
+static gboolean   gimp_vectors_is_attached   (const GimpItem    *item);
 static GimpContainer *
                   gimp_vectors_get_container (GimpItem          *item);
 static GimpItem * gimp_vectors_duplicate     (GimpItem          *item,
@@ -266,10 +266,11 @@ gimp_vectors_get_memsize (GimpObject *object,
 }
 
 static gboolean
-gimp_vectors_is_attached (GimpItem *item)
+gimp_vectors_is_attached (const GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
-          gimp_container_have (gimp_item_get_image (item)->vectors, GIMP_OBJECT (item)));
+          gimp_container_have (gimp_item_get_image (item)->vectors,
+                               GIMP_OBJECT (item)));
 }
 
 static GimpContainer *

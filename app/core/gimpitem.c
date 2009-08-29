@@ -671,7 +671,7 @@ gimp_item_configure (GimpItem    *item,
  * Returns: %TRUE if the item is attached to an image, %FALSE otherwise.
  */
 gboolean
-gimp_item_is_attached (GimpItem *item)
+gimp_item_is_attached (const GimpItem *item)
 {
   GimpViewable *parent;
 
