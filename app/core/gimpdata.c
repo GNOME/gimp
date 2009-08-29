@@ -355,6 +355,7 @@ gimp_data_real_dirty (GimpData *data)
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
 
+  /* Emit the "name-changed" to signal general dirtiness */
   gimp_object_name_changed (GIMP_OBJECT (data));
 }
 
