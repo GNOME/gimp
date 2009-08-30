@@ -213,18 +213,19 @@ xcf_save_image (XcfInfo    *info,
                 GimpImage  *image,
                 GError    **error)
 {
-  GList    *list;
-  guint32   saved_pos;
-  guint32   offset;
-  guint32   value;
-  guint     n_layers;
-  guint     n_channels;
-  guint     progress = 0;
-  guint     max_progress;
-  gboolean  have_selection;
-  gint      t1, t2, t3, t4;
-  gchar     version_tag[16];
-  GError   *tmp_error = NULL;
+  GList   *all_layers;
+  GList   *all_channels;
+  GList   *list;
+  guint32  saved_pos;
+  guint32  offset;
+  guint32  value;
+  guint    n_layers;
+  guint    n_channels;
+  guint    progress = 0;
+  guint    max_progress;
+  gint     t1, t2, t3, t4;
+  gchar    version_tag[16];
+  GError  *tmp_error = NULL;
 
   /* write out the tag information for the image */
   if (info->file_version > 0)
@@ -249,16 +250,20 @@ xcf_save_image (XcfInfo    *info,
   xcf_write_int32_check_error (info, &value, 1);
 
   /* determine the number of layers and channels in the image */
-  n_layers   = (guint) gimp_container_get_n_children (image->layers);
-  n_channels = (guint) gimp_container_get_n_children (image->channels);
-
-  max_progress = 1 + n_layers + n_channels;
+  all_layers   = gimp_image_get_layer_list (image);
+  all_channels = gimp_image_get_channel_list (image);
 
   /* check and see if we have to save out the selection */
-  have_selection = gimp_channel_bounds (gimp_image_get_mask (image),
-                                        &t1, &t2, &t3, &t4);
-  if (have_selection)
-    n_channels += 1;
+  if (gimp_channel_bounds (gimp_image_get_mask (image),
+                           &t1, &t2, &t3, &t4))
+    {
+      all_channels = g_list_append (all_channels, gimp_image_get_mask (image));
+    }
+
+  n_layers   = (guint) g_list_length (all_layers);
+  n_channels = (guint) g_list_length (all_channels);
+
+  max_progress = 1 + n_layers + n_channels;
 
   /* write the property information for the image.
    */
@@ -277,9 +282,7 @@ xcf_save_image (XcfInfo    *info,
                                  info->cp + (n_layers + n_channels + 2) * 4,
                                  error));
 
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_layers; list; list = g_list_next (list))
     {
       GimpLayer *layer = list->data;
 
@@ -319,23 +322,9 @@ xcf_save_image (XcfInfo    *info,
   saved_pos = info->cp;
   xcf_check_error (xcf_seek_end (info, error));
 
-  list = gimp_image_get_channel_iter (image);
-
-  while (list || have_selection)
+  for (list = all_channels; list; list = g_list_next (list))
     {
-      GimpChannel *channel;
-
-      if (list)
-        {
-          channel = list->data;
-
-          list = g_list_next (list);
-        }
-      else
-        {
-          channel = gimp_image_get_mask (image);
-          have_selection = FALSE;
-        }
+      GimpChannel *channel = list->data;
 
       /* save the start offset of where we are writing
        *  out the next channel.
@@ -363,6 +352,9 @@ xcf_save_image (XcfInfo    *info,
        */
       xcf_check_error (xcf_seek_end (info, error));
     }
+
+  g_list_free (all_layers);
+  g_list_free (all_channels);
 
   /* write out a '0' offset position to indicate the end
    *  of the channel offsets.
