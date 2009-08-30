@@ -96,7 +96,7 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
     {
       *layer = gimp_text_layer_from_layer (*layer, text);
 
-      /*  let the text layer know what parasite was used to create it  */
+      /*  let the text layer knows what parasite was used to create it  */
       GIMP_TEXT_LAYER (*layer)->text_parasite = name;
     }
 
