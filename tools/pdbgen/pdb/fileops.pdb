@@ -88,7 +88,7 @@ HELP
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
                                              context, progress, error,
-                                             GIMP_OBJECT (proc)->name,
+                                             gimp_object_get_name (proc),
                                              new_args);
 
   g_value_array_free (new_args);
@@ -306,7 +306,7 @@ HELP
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
                                              context, progress, error,
-                                             GIMP_OBJECT (proc)->name,
+                                             gimp_object_get_name (proc),
                                              new_args);
 
   g_value_array_free (new_args);
