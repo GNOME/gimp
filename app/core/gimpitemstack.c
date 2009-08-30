@@ -247,6 +247,49 @@ gimp_item_stack_get_item_by_name (GimpItemStack *stack,
   return NULL;
 }
 
+GimpItem *
+gimp_item_stack_get_parent_by_path (GimpItemStack *stack,
+                                    GList         *path,
+                                    gint          *index)
+{
+  GimpItem *parent = NULL;
+  guint32   i;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
+  g_return_val_if_fail (path != NULL, NULL);
+
+  i = GPOINTER_TO_UINT (path->data);
+
+  if (index)
+    *index = i;
+
+  while (path->next)
+    {
+      GimpObject    *child;
+      GimpContainer *children;
+
+      child = gimp_container_get_child_by_index (GIMP_CONTAINER (stack), i);
+
+      g_return_val_if_fail (GIMP_IS_ITEM (child), parent);
+
+      children = gimp_viewable_get_children (GIMP_VIEWABLE (child));
+
+      g_return_val_if_fail (GIMP_IS_ITEM_STACK (children), parent);
+
+      parent = GIMP_ITEM (child);
+      stack  = GIMP_ITEM_STACK (children);
+
+      path = path->next;
+
+      i = GPOINTER_TO_UINT (path->data);
+
+      if (index)
+        *index = i;
+    }
+
+  return parent;
+}
+
 static void
 gimp_item_stack_invalidate_preview (GimpViewable *viewable)
 {

@@ -54,6 +54,9 @@ GimpItem      * gimp_item_stack_get_item_by_tattoo  (GimpItemStack *stack,
                                                      GimpTattoo     tattoo);
 GimpItem      * gimp_item_stack_get_item_by_name    (GimpItemStack *stack,
                                                      const gchar   *name);
+GimpItem      * gimp_item_stack_get_parent_by_path  (GimpItemStack *stack,
+                                                     GList         *path,
+                                                     gint          *index);
 
 void            gimp_item_stack_invalidate_previews (GimpItemStack *stack);
 
