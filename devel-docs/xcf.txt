@@ -399,7 +399,7 @@ PROP_RESOLUTION (not editing state, but not _really_ essential either)
   resolution.
   
 PROP_UNIT (editing state)
-  uint32  22  The type number for PROP_UNIT is 21
+  uint32  22  The type number for PROP_UNIT is 22
   uint32  4   Four bytes of payload
   uint32  c   Magic number specifying the unit; one of
                 1: Inches (25.4 mm)
