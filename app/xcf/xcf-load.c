@@ -231,7 +231,7 @@ xcf_load_image (Gimp     *gimp,
       if (! xcf_seek_pos (info, offset, NULL))
         goto error;
 
-      /* read in the layer */
+      /* read in the channel */
       channel = xcf_load_channel (info, image);
       if (!channel)
         goto error;
