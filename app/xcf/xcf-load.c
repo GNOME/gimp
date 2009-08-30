@@ -673,7 +673,10 @@ xcf_load_layer_props (XcfInfo    *info,
             gboolean lock_content;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_content, 1);
-            gimp_item_set_lock_content (GIMP_ITEM (*layer), lock_content, FALSE);
+
+            if (gimp_item_can_lock_content (GIMP_ITEM (*layer)))
+              gimp_item_set_lock_content (GIMP_ITEM (*layer),
+                                          lock_content, FALSE);
           }
           break;
 
@@ -682,7 +685,9 @@ xcf_load_layer_props (XcfInfo    *info,
             gboolean lock_alpha;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_alpha, 1);
-            gimp_layer_set_lock_alpha (*layer, lock_alpha, FALSE);
+
+            if (gimp_layer_can_lock_alpha (*layer))
+              gimp_layer_set_lock_alpha (*layer, lock_alpha, FALSE);
           }
           break;
 
