@@ -668,6 +668,15 @@ xcf_load_layer_props (XcfInfo   *info,
           }
           break;
 
+        case PROP_LOCK_CONTENT:
+          {
+            gboolean lock_content;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_content, 1);
+            gimp_item_set_lock_content (GIMP_ITEM (layer), lock_content, FALSE);
+          }
+          break;
+
         case PROP_LOCK_ALPHA:
           {
             gboolean lock_alpha;
@@ -840,6 +849,16 @@ xcf_load_channel_props (XcfInfo      *info,
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
             gimp_item_set_linked (GIMP_ITEM (*channel),
                                   linked ? TRUE : FALSE, FALSE);
+          }
+          break;
+
+        case PROP_LOCK_CONTENT:
+          {
+            gboolean lock_content;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_content, 1);
+            gimp_item_set_lock_content (GIMP_ITEM (*channel),
+                                        lock_content ? TRUE : FALSE, FALSE);
           }
           break;
 
