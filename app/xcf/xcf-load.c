@@ -124,8 +124,6 @@ xcf_load_image (Gimp     *gimp,
                 GError  **error)
 {
   GimpImage          *image;
-  GimpLayer          *layer;
-  GimpChannel        *channel;
   const GimpParasite *parasite;
   guint32             saved_pos;
   guint32             offset;
@@ -170,6 +168,8 @@ xcf_load_image (Gimp     *gimp,
 
   while (TRUE)
     {
+      GimpLayer *layer;
+
       /* read in the offset of the next layer */
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
 
@@ -213,6 +213,8 @@ xcf_load_image (Gimp     *gimp,
 
   while (TRUE)
     {
+      GimpChannel *channel;
+
       /* read in the offset of the next channel */
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
 

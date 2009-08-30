@@ -213,20 +213,18 @@ xcf_save_image (XcfInfo    *info,
                 GimpImage  *image,
                 GError    **error)
 {
-  GimpLayer   *layer;
-  GimpChannel *channel;
-  GList       *list;
-  guint32      saved_pos;
-  guint32      offset;
-  guint32      value;
-  guint        n_layers;
-  guint        n_channels;
-  guint        progress = 0;
-  guint        max_progress;
-  gboolean     have_selection;
-  gint         t1, t2, t3, t4;
-  gchar        version_tag[16];
-  GError      *tmp_error = NULL;
+  GList    *list;
+  guint32   saved_pos;
+  guint32   offset;
+  guint32   value;
+  guint     n_layers;
+  guint     n_channels;
+  guint     progress = 0;
+  guint     max_progress;
+  gboolean  have_selection;
+  gint      t1, t2, t3, t4;
+  gchar     version_tag[16];
+  GError   *tmp_error = NULL;
 
   /* write out the tag information for the image */
   if (info->file_version > 0)
@@ -283,7 +281,7 @@ xcf_save_image (XcfInfo    *info,
        list;
        list = g_list_next (list))
     {
-      layer = list->data;
+      GimpLayer *layer = list->data;
 
       /* save the start offset of where we are writing
        *  out the next layer.
@@ -325,6 +323,8 @@ xcf_save_image (XcfInfo    *info,
 
   while (list || have_selection)
     {
+      GimpChannel *channel;
+
       if (list)
         {
           channel = list->data;
