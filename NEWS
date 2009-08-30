@@ -27,6 +27,7 @@ UI:
    and size
  - Get rid of the Tools dockable and move toolbox configuration to
    Preferences
+ - Allow closing the toolbox without closing the whole application
  - Add status bar feedback for keyboard changes to brush paramaters
  - Add diagonal guides to the Crop Tool
  - New docks are created at the pointer position
