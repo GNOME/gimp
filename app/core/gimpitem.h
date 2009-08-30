@@ -146,6 +146,7 @@ gboolean        gimp_item_is_attached        (const GimpItem     *item);
 GimpContainer * gimp_item_get_container      (GimpItem           *item);
 GList         * gimp_item_get_container_iter (GimpItem           *item);
 gint            gimp_item_get_index          (GimpItem           *item);
+GList         * gimp_item_get_path           (GimpItem           *item);
 
 void            gimp_item_configure          (GimpItem           *item,
                                               GimpImage          *image,

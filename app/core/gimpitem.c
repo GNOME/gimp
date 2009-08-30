@@ -733,6 +733,35 @@ gimp_item_get_index (GimpItem *item)
   return -1;
 }
 
+GList *
+gimp_item_get_path (GimpItem *item)
+{
+  GimpContainer *container;
+  GList         *path = NULL;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
+
+  container = gimp_item_get_container (item);
+
+  while (container)
+    {
+      guint32 index = gimp_container_get_child_index (container,
+                                                      GIMP_OBJECT (item));
+
+      path = g_list_prepend (path, GUINT_TO_POINTER (index));
+
+      item = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+
+      if (item)
+        container = gimp_item_get_container (item);
+      else
+        container = NULL;
+    }
+
+  return path;
+}
+
 /**
  * gimp_item_duplicate:
  * @item:     The #GimpItem to duplicate.
