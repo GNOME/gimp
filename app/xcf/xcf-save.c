@@ -453,6 +453,19 @@ xcf_save_layer_props (XcfInfo    *info,
   gint          offset_x;
   gint          offset_y;
 
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    xcf_check_error (xcf_save_prop (info, image, PROP_GROUP_ITEM, error));
+
+  if (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)))
+    {
+      GList *path;
+
+      path = gimp_item_get_path (GIMP_ITEM (layer));
+      xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_PATH, error,
+                                      path));
+      g_list_free (path);
+    }
+
   if (layer == gimp_image_get_active_layer (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_LAYER, error));
 
@@ -617,6 +630,7 @@ xcf_save_prop (XcfInfo    *info,
     case PROP_ACTIVE_LAYER:
     case PROP_ACTIVE_CHANNEL:
     case PROP_SELECTION:
+    case PROP_GROUP_ITEM:
       size = 0;
 
       xcf_write_prop_type_check_error (info, prop_type);
@@ -1069,6 +1083,27 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
         xcf_write_int32_check_error (info, &flags, 1);
+      }
+      break;
+
+    case PROP_ITEM_PATH:
+      {
+        GList *path;
+
+        path = va_arg (args, GList *);
+        size = 4 * g_list_length (path);
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+
+        while (path)
+          {
+            guint32 index = GPOINTER_TO_UINT (path->data);
+
+            xcf_write_int32_check_error (info, &index, 1);
+
+            path = g_list_next (path);
+          }
       }
       break;
     }

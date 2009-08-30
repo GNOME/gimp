@@ -49,7 +49,9 @@ typedef enum
   PROP_VECTORS            = 25,
   PROP_TEXT_LAYER_FLAGS   = 26,
   PROP_SAMPLE_POINTS      = 27,
-  PROP_LOCK_CONTENT       = 28
+  PROP_LOCK_CONTENT       = 28,
+  PROP_GROUP_ITEM         = 29,
+  PROP_ITEM_PATH          = 30
 } PropType;
 
 typedef enum
