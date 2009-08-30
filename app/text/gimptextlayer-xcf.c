@@ -214,8 +214,9 @@ gimp_text_layer_from_layer (GimpLayer *layer,
                       gimp_item_get_width  (GIMP_ITEM (layer)),
                       gimp_item_get_height (GIMP_ITEM (layer)));
 
-  gimp_item_set_visible (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
-  gimp_item_set_linked  (item, gimp_item_get_linked  (GIMP_ITEM (layer)), FALSE);
+  gimp_item_set_visible      (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
+  gimp_item_set_linked       (item, gimp_item_get_linked (GIMP_ITEM (layer)), FALSE);
+  gimp_item_set_lock_content (item, gimp_item_get_lock_content (GIMP_ITEM (layer)), FALSE);
 
   drawable->private->tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer));
   GIMP_DRAWABLE (layer)->private->tiles = NULL;
