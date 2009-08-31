@@ -1837,30 +1837,33 @@ gimp_layer_boundary (GimpLayer *layer,
 
   item = GIMP_ITEM (layer);
 
-  /*  Create the four boundary segments that encompass this
-   *  layer's boundary.
-   */
-  new_segs  = g_new (BoundSeg, 4);
-  *num_segs = 4;
-
-  /*  if the layer is a floating selection  */
   if (gimp_layer_is_floating_sel (layer))
     {
-      if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
+      GimpDrawable *fs_drawable;
+
+      fs_drawable = gimp_layer_get_floating_sel_drawable (layer);
+
+      if (GIMP_IS_CHANNEL (fs_drawable))
         {
           /*  if the owner drawable is a channel, just return nothing  */
 
-          g_free (new_segs);
           *num_segs = 0;
+
           return NULL;
         }
       else
         {
           /*  otherwise, set the layer to the owner drawable  */
 
-          layer = GIMP_LAYER (gimp_layer_get_floating_sel_drawable (layer));
+          layer = GIMP_LAYER (fs_drawable);
         }
     }
+
+  /*  Create the four boundary segments that encompass this
+   *  layer's boundary.
+   */
+  new_segs  = g_new (BoundSeg, 4);
+  *num_segs = 4;
 
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
