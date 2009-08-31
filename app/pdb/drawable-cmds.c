@@ -582,7 +582,7 @@ drawable_get_name_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (drawable)));
+      name = g_strdup (gimp_object_get_name (drawable));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

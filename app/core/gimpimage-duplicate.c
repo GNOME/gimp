@@ -178,7 +178,7 @@ gimp_image_duplicate_save_source_uri (GimpImage *image,
                                       GimpImage *new_image)
 {
   g_object_set_data_full (G_OBJECT (new_image), "gimp-image-source-uri",
-                          g_strdup (gimp_object_get_name (GIMP_OBJECT (image))),
+                          g_strdup (gimp_object_get_name (image)),
                           (GDestroyNotify) g_free);
 }
 
@@ -224,14 +224,14 @@ gimp_image_duplicate_layers (GimpImage     *image,
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_layer),
-                            gimp_object_get_name (GIMP_OBJECT (layer)));
+                            gimp_object_get_name (layer));
 
       /*  Make sure that if the layer has a layer mask,
        *  its name isn't screwed up
        */
       if (new_layer->mask)
         gimp_object_set_name (GIMP_OBJECT (new_layer->mask),
-                              gimp_object_get_name (GIMP_OBJECT (layer->mask)));
+                              gimp_object_get_name (layer->mask));
 
       if (gimp_image_get_active_layer (image) == layer)
         active_layer = new_layer;
@@ -273,7 +273,7 @@ gimp_image_duplicate_channels (GimpImage     *image,
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_channel),
-                            gimp_object_get_name (GIMP_OBJECT (channel)));
+                            gimp_object_get_name (channel));
 
       if (gimp_image_get_active_channel (image) == channel)
         active_channel = new_channel;
@@ -309,7 +309,7 @@ gimp_image_duplicate_vectors (GimpImage *image,
 
       /*  Make sure the copied vectors doesn't say: "<old vectors> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_vectors),
-                            gimp_object_get_name (GIMP_OBJECT (vectors)));
+                            gimp_object_get_name (vectors));
 
       if (gimp_image_get_active_vectors (image) == vectors)
         active_vectors = new_vectors;

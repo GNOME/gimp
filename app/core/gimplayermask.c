@@ -231,8 +231,7 @@ gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
       gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
       gimp_item_set_offset (GIMP_ITEM (layer_mask), offset_x, offset_y);
 
-      mask_name = g_strdup_printf (_("%s mask"),
-                                   gimp_object_get_name (GIMP_OBJECT (layer)));
+      mask_name = g_strdup_printf (_("%s mask"), gimp_object_get_name (layer));
 
       gimp_object_take_name (GIMP_OBJECT (layer_mask), mask_name);
     }

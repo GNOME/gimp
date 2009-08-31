@@ -471,7 +471,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
           return;
 
         shell->space_shaded_tool =
-          gimp_object_get_name (GIMP_OBJECT (active_tool->tool_info));
+          gimp_object_get_name (active_tool->tool_info);
 
         gimp_context_set_tool (gimp_get_user_context (gimp),
                                gimp_get_tool_info (gimp, "gimp-move-tool"));

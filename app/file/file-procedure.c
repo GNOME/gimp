@@ -223,7 +223,7 @@ gboolean
 file_procedure_in_group (GimpPlugInProcedure *file_proc,
                          FileProcedureGroup   group)
 {
-  const gchar *name        = gimp_object_get_name (GIMP_OBJECT (file_proc));
+  const gchar *name        = gimp_object_get_name (file_proc);
   gboolean     is_xcf_save = FALSE;
   gboolean     is_filter   = FALSE;
 

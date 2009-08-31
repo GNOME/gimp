@@ -254,10 +254,10 @@ gimp_device_status_device_add (GimpContainer    *devices,
   /*  the device name  */
 
   if (device_info->display == gdk_display_get_default ())
-    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (device_info)));
+    name = g_strdup (gimp_object_get_name (device_info));
   else
     name = g_strdup_printf ("%s (%s)",
-                            gimp_object_get_name (GIMP_OBJECT (device_info)),
+                            gimp_object_get_name (device_info),
                             gdk_display_get_name (device_info->display));
 
   entry->label = gtk_label_new (name);

@@ -200,7 +200,7 @@ tool_options_actions_update_presets (GimpActionGroup *group,
           GimpToolOptions *options = list->data;
 
           entry.name  = g_strdup_printf ("%s%03d", action_prefix, i);
-          entry.label = gimp_object_get_name (GIMP_OBJECT (options));
+          entry.label = gimp_object_get_name (options);
           entry.value = i;
 
           gimp_action_group_add_enum_actions (group, NULL, &entry, 1, callback);

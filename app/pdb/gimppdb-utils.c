@@ -315,7 +315,7 @@ gimp_pdb_item_is_attached (GimpItem  *item,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Item '%s' (%d) can not be used because it has not "
                      "been added to an image"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -339,7 +339,7 @@ gimp_pdb_item_is_floating (GimpItem  *item,
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Item '%s' (%d) has already been added to an image"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -347,7 +347,7 @@ gimp_pdb_item_is_floating (GimpItem  *item,
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Trying to add item '%s' (%d) to wrong image"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -367,7 +367,7 @@ gimp_pdb_item_is_writable (GimpItem  *item,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be modified because its "
                      "contents are locked"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -387,7 +387,7 @@ gimp_pdb_item_is_not_group (GimpItem  *item,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be modified because it "
                      "is a group item"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -408,7 +408,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Layer '%s' (%d) can not be used because it is not "
                      "a text layer"),
-                   gimp_object_get_name (GIMP_OBJECT (layer)),
+                   gimp_object_get_name (layer),
                    gimp_item_get_ID (GIMP_ITEM (layer)));
 
       return FALSE;

@@ -364,9 +364,9 @@ windows_actions_recent_add (GimpContainer   *container,
 
   entry.name        = action_name;
   entry.stock_id    = NULL;
-  entry.label       = gimp_object_get_name (GIMP_OBJECT (info));
+  entry.label       = gimp_object_get_name (info);
   entry.accelerator = NULL;
-  entry.tooltip     = gimp_object_get_name (GIMP_OBJECT (info));
+  entry.tooltip     = gimp_object_get_name (info);
   entry.callback    = G_CALLBACK (windows_open_recent_cmd_callback);
   entry.help_id     = GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK;
 

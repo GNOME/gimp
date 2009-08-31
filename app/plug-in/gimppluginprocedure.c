@@ -826,7 +826,7 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
     g_free (proc->image_types);
 
   proc->image_types     = g_strdup (image_types);
-  proc->image_types_val = image_types_parse (gimp_object_get_name (GIMP_OBJECT (proc)),
+  proc->image_types_val = image_types_parse (gimp_object_get_name (proc),
                                              proc->image_types);
 }
 

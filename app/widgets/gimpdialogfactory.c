@@ -1411,7 +1411,7 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
 
       gimp_config_writer_open (writer, "session-info");
       gimp_config_writer_string (writer,
-                                 gimp_object_get_name (GIMP_OBJECT (factory)));
+                                 gimp_object_get_name (factory));
       gimp_config_writer_string (writer,
                                  info->toplevel_entry ?
                                  info->toplevel_entry->identifier :

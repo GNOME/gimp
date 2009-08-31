@@ -346,7 +346,7 @@ file_actions_last_opened_update (GimpContainer   *container,
               gchar       *basename;
               gchar       *escaped;
 
-              uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+              uri = gimp_object_get_name (imagefile);
 
               filename = file_utils_uri_display_name (uri);
               basename = file_utils_uri_display_basename (uri);

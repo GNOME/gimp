@@ -1146,8 +1146,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                         {
                           const gchar *real_name;
 
-                          real_name =
-                            gimp_object_get_name (GIMP_OBJECT (renderer->viewable));
+                          real_name = gimp_object_get_name (renderer->viewable);
 
                           gtk_tree_store_set (GTK_TREE_STORE (tree_view->model),
                                               &iter,

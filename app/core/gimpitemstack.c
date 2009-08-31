@@ -229,7 +229,7 @@ gimp_item_stack_get_item_by_name (GimpItemStack *stack,
       GimpItem      *item = list->data;
       GimpContainer *children;
 
-      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (item)), name))
+      if (! strcmp (gimp_object_get_name (item), name))
         return item;
 
       children = gimp_viewable_get_children (GIMP_VIEWABLE (item));

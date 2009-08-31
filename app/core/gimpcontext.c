@@ -2796,8 +2796,7 @@ gimp_context_get_font_name (GimpContext *context)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  return (context->font ?
-          gimp_object_get_name (GIMP_OBJECT (context->font)) : NULL);
+  return (context->font ? gimp_object_get_name (context->font) : NULL);
 }
 
 void

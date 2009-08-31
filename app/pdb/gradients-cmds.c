@@ -248,7 +248,7 @@ gradients_get_gradient_data_invoker (GimpProcedure      *procedure,
           pos   = 0.0;
           delta = 1.0 / (sample_size - 1);
 
-          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
+          actual_name = g_strdup (gimp_object_get_name (gradient));
           grad_data   = g_new (gdouble, sample_size * 4);
           width       = sample_size * 4;
 

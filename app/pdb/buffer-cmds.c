@@ -95,7 +95,7 @@ buffer_rename_invoker (GimpProcedure      *procedure,
       if (buffer)
         {
           gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
-          real_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (buffer)));
+          real_name = g_strdup (gimp_object_get_name (buffer));
         }
       else
         success = FALSE;

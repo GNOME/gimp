@@ -1132,7 +1132,7 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
       item = GIMP_ITEM (renderer->viewable);
 
-      old_name = gimp_object_get_name (GIMP_OBJECT (item));
+      old_name = gimp_object_get_name (item);
 
       if (! old_name) old_name = "";
       if (! new_name) new_name = "";

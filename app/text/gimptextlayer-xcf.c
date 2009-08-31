@@ -77,7 +77,7 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
                           "Some text properties may be wrong. "
                           "Unless you want to edit the text layer, "
                           "you don't need to worry about this."),
-                        gimp_object_get_name (GIMP_OBJECT (*layer)),
+                        gimp_object_get_name (*layer),
                         error->message);
           g_clear_error (&error);
         }
@@ -189,7 +189,7 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   drawable = GIMP_DRAWABLE (text_layer);
 
   gimp_object_set_name (GIMP_OBJECT (text_layer),
-                        gimp_object_get_name (GIMP_OBJECT (layer)));
+                        gimp_object_get_name (layer));
 
   item->ID = gimp_item_get_ID (GIMP_ITEM (layer));
 

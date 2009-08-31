@@ -107,8 +107,7 @@ fade_dialog_new (GimpImage *image,
                 "opacity",    undo->opacity,
                 NULL);
 
-  title = g_strdup_printf (_("Fade %s"),
-                           gimp_object_get_name (GIMP_OBJECT (undo)));
+  title = g_strdup_printf (_("Fade %s"), gimp_object_get_name (undo));
 
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable),

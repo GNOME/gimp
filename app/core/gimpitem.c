@@ -414,7 +414,7 @@ gimp_item_real_duplicate (GimpItem *item,
     gint         number;
     gint         len;
 
-    name = gimp_object_get_name (GIMP_OBJECT (item));
+    name = gimp_object_get_name (item);
 
     g_return_val_if_fail (name != NULL, NULL);
 
@@ -837,7 +837,7 @@ gimp_item_rename (GimpItem     *item,
   if (! new_name || ! *new_name)
     new_name = item_class->default_name;
 
-  if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (item))))
+  if (strcmp (new_name, gimp_object_get_name (item)))
     return item_class->rename (item, new_name, item_class->rename_desc, error);
 
   return TRUE;

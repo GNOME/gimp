@@ -134,7 +134,7 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
   options = vectors_options_dialog_new (image, vectors,
                                         action_data_get_context (data),
                                         widget,
-                                        gimp_object_get_name (GIMP_OBJECT (vectors)),
+                                        gimp_object_get_name (vectors),
                                         _("Path Attributes"),
                                         "gimp-vectors-edit",
                                         GTK_STOCK_EDIT,
@@ -686,7 +686,7 @@ vectors_edit_vectors_response (GtkWidget            *widget,
 
       new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
 
-      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (vectors))))
+      if (strcmp (new_name, gimp_object_get_name (vectors)))
         {
           gimp_item_rename (GIMP_ITEM (vectors), new_name, NULL);
           gimp_image_flush (options->image);

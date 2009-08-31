@@ -242,7 +242,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
   thumbnail = imagefile->thumbnail;
 
   gimp_thumbnail_set_uri (thumbnail,
-                          gimp_object_get_name (GIMP_OBJECT (imagefile)));
+                          gimp_object_get_name (imagefile));
 
   image_state = gimp_thumbnail_peek_image (thumbnail);
 
@@ -334,7 +334,7 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
   if (size < 1)
     return;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+  uri = gimp_object_get_name (imagefile);
   if (! uri)
     return;
 
@@ -346,10 +346,10 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
 
   if (imagefile)
     {
-      uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+      uri = gimp_object_get_name (imagefile);
 
       if (uri &&
-          strcmp (uri, gimp_object_get_name (GIMP_OBJECT (local))) == 0)
+          strcmp (uri, gimp_object_get_name (local)) == 0)
         {
           gimp_imagefile_update (imagefile);
         }
@@ -459,7 +459,7 @@ gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
 {
   GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
 
-  if (! gimp_object_get_name (GIMP_OBJECT (imagefile)))
+  if (! gimp_object_get_name (imagefile))
     return NULL;
 
   return gimp_imagefile_load_thumb (imagefile, width, height);

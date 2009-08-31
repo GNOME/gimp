@@ -688,7 +688,7 @@ tools_actions_setup (GimpActionGroup *group)
           gchar                 *name;
 
           stock_id   = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-          identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
+          identifier = gimp_object_get_name (tool_info);
 
           tmp = g_strndup (identifier + strlen ("gimp-"),
                            strlen (identifier) - strlen ("gimp--tool"));

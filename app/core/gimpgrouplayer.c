@@ -340,7 +340,7 @@ gimp_group_layer_duplicate (GimpItem *item,
           new_child = gimp_item_duplicate (child, G_TYPE_FROM_INSTANCE (child));
 
           gimp_object_set_name (GIMP_OBJECT (new_child),
-                                gimp_object_get_name (GIMP_OBJECT (child)));
+                                gimp_object_get_name (child));
 
           mask = gimp_layer_get_mask (GIMP_LAYER (child));
 
@@ -351,7 +351,7 @@ gimp_group_layer_duplicate (GimpItem *item,
               new_mask = gimp_layer_get_mask (GIMP_LAYER (new_child));
 
               gimp_object_set_name (GIMP_OBJECT (new_mask),
-                                    gimp_object_get_name (GIMP_OBJECT (mask)));
+                                    gimp_object_get_name (mask));
             }
 
           gimp_viewable_set_parent (GIMP_VIEWABLE (new_child),
@@ -889,7 +889,7 @@ gimp_group_layer_stack_update (GimpDrawableStack *stack,
 {
 #if 0
   g_printerr ("%s (%s) %d, %d (%d, %d)\n",
-              G_STRFUNC, gimp_object_get_name (GIMP_OBJECT (group)),
+              G_STRFUNC, gimp_object_get_name (group),
               x, y, width, height);
 #endif
 
@@ -919,7 +919,7 @@ gimp_group_layer_proj_update (GimpProjection *proj,
 {
 #if 0
   g_printerr ("%s (%s) %d, %d (%d, %d)\n",
-              G_STRFUNC, gimp_object_get_name (GIMP_OBJECT (group)),
+              G_STRFUNC, gimp_object_get_name (group),
               x, y, width, height);
 #endif
 

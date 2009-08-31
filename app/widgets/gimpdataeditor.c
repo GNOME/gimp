@@ -422,7 +422,7 @@ gimp_data_editor_get_aux_info (GimpDocked *docked)
     {
       const gchar *value;
 
-      value = gimp_object_get_name (GIMP_OBJECT (editor->data));
+      value = gimp_object_get_name (editor->data);
 
       aux = gimp_session_info_aux_new (AUX_INFO_CURRENT_DATA, value);
       aux_info = g_list_append (aux_info, aux);
@@ -469,7 +469,7 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
                         editor);
 
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
-                          gimp_object_get_name (GIMP_OBJECT (editor->data)));
+                          gimp_object_get_name (editor->data));
     }
   else
     {
@@ -569,7 +569,7 @@ gimp_data_editor_name_key_press (GtkWidget      *widget,
   if (kevent->keyval == GDK_Escape)
     {
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
-                          gimp_object_get_name (GIMP_OBJECT (editor->data)));
+                          gimp_object_get_name (editor->data));
       return TRUE;
     }
 
@@ -594,7 +594,7 @@ gimp_data_editor_name_activate (GtkWidget      *widget,
       else
         {
           gtk_entry_set_text (GTK_ENTRY (widget),
-                              gimp_object_get_name (GIMP_OBJECT (editor->data)));
+                              gimp_object_get_name (editor->data));
           g_free (new_name);
         }
     }

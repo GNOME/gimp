@@ -92,7 +92,7 @@ tool_options_save_to_cmd_callback (GtkAction *action,
 
   if (options)
     {
-      gchar *name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
+      gchar *name = g_strdup (gimp_object_get_name (options));
 
       gimp_config_sync (G_OBJECT (tool_info->tool_options),
                         G_OBJECT (options),

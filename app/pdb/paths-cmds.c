@@ -99,7 +99,7 @@ path_get_current_invoker (GimpProcedure      *procedure,
       GimpVectors *vectors = gimp_image_get_active_vectors (image);
 
       if (vectors)
-        name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+        name = g_strdup (gimp_object_get_name (vectors));
       else
         success = FALSE;
     }
@@ -529,7 +529,7 @@ get_path_by_tattoo_invoker (GimpProcedure      *procedure,
       GimpVectors *vectors = gimp_image_get_vectors_by_tattoo (image, tattoo);
 
       if (vectors)
-        name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+        name = g_strdup (gimp_object_get_name (vectors));
       else
         success = FALSE;
     }

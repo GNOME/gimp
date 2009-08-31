@@ -245,7 +245,7 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Unable to run plug-in \"%s\"\n(%s)\n\npipe() failed: %s",
-                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_object_get_name (plug_in),
                     gimp_filename_to_utf8 (plug_in->prog),
                     g_strerror (errno));
       return FALSE;
@@ -366,7 +366,7 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Unable to run plug-in \"%s\"\n(%s)\n\n%s",
-                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_object_get_name (plug_in),
                     gimp_filename_to_utf8 (plug_in->prog),
                     error->message);
       g_error_free (error);
@@ -539,7 +539,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
 #ifdef GIMP_UNSTABLE
       g_printerr ("plug-in '%s' aborted before sending its "
                   "temporary procedure return values\n",
-                  gimp_object_get_name (GIMP_OBJECT (plug_in)));
+                  gimp_object_get_name (plug_in));
 #endif
 
       if (proc_frame->main_loop &&
@@ -555,7 +555,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
 #ifdef GIMP_UNSTABLE
       g_printerr ("plug-in '%s' aborted before sending its "
                   "procedure return values\n",
-                  gimp_object_get_name (GIMP_OBJECT (plug_in)));
+                  gimp_object_get_name (plug_in));
 #endif
 
       g_main_loop_quit (plug_in->main_proc_frame.main_loop);
@@ -567,7 +567,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
 #ifdef GIMP_UNSTABLE
       g_printerr ("extension '%s' aborted before sending its "
                   "extension_ack message\n",
-                  gimp_object_get_name (GIMP_OBJECT (plug_in)));
+                  gimp_object_get_name (plug_in));
 #endif
 
       g_main_loop_quit (plug_in->ext_main_loop);
@@ -639,7 +639,7 @@ gimp_plug_in_recv_message (GIOChannel   *channel,
                       "The dying plug-in may have messed up GIMP's internal "
                       "state. You may want to save your images and restart "
                       "GIMP to be on the safe side."),
-                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_object_get_name (plug_in),
                     gimp_filename_to_utf8 (plug_in->prog));
     }
 
@@ -859,7 +859,7 @@ gimp_plug_in_get_undo_desc (GimpPlugIn *plug_in)
         undo_desc = gimp_plug_in_procedure_get_label (proc);
     }
 
-  return undo_desc ? undo_desc : gimp_object_get_name (GIMP_OBJECT (plug_in));
+  return undo_desc ? undo_desc : gimp_object_get_name (plug_in);
 }
 
 /*  called from the PDB (gimp_plugin_menu_register)  */
@@ -890,7 +890,7 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
                     "for the procedure \"%s\".\n"
                     "It has however not installed that procedure.  This "
                     "is not allowed.",
-                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_object_get_name (plug_in),
                     gimp_filename_to_utf8 (plug_in->prog),
                     menu_path, proc_name);
 
@@ -922,7 +922,7 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
                     "already contained a path.  To make this work, "
                     "pass just the menu's label to "
                     "gimp_install_procedure().",
-                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_object_get_name (plug_in),
                     gimp_filename_to_utf8 (plug_in->prog),
                     menu_path, proc_name);
 

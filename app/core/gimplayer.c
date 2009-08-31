@@ -453,7 +453,7 @@ gimp_layer_get_description (GimpViewable  *viewable,
   if (gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
     {
       return g_strdup_printf (_("Floating Selection\n(%s)"),
-                              gimp_object_get_name (GIMP_OBJECT (viewable)));
+                              gimp_object_get_name (viewable));
     }
 
   return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
@@ -1390,7 +1390,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
   image    = gimp_item_get_image (item);
 
   mask_name = g_strdup_printf (_("%s mask"),
-                               gimp_object_get_name (GIMP_OBJECT (layer)));
+                               gimp_object_get_name (layer));
 
   mask = gimp_layer_mask_new (image,
                               gimp_item_get_width  (item),

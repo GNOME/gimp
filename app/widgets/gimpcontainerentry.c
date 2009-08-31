@@ -216,7 +216,7 @@ gimp_container_entry_set (GimpContainerEntry *entry,
                       GIMP_CONTAINER_ENTRY_COLUMN_RENDERER,
                       renderer,
                       GIMP_CONTAINER_ENTRY_COLUMN_NAME,
-                      gimp_object_get_name (GIMP_OBJECT (viewable)),
+                      gimp_object_get_name (viewable),
                       -1);
 
   g_object_unref (renderer);
@@ -343,7 +343,7 @@ gimp_container_entry_rename_item (GimpContainerView *view,
   if (iter)
     gtk_list_store_set (GTK_LIST_STORE (model), iter,
                         GIMP_CONTAINER_ENTRY_COLUMN_NAME,
-                        gimp_object_get_name (GIMP_OBJECT (viewable)),
+                        gimp_object_get_name (viewable),
                         -1);
 }
 
@@ -359,9 +359,7 @@ gimp_container_entry_select_item (GimpContainerView *view,
                                    gimp_container_entry_changed,
                                    view);
 
-  gtk_entry_set_text (entry,
-                      iter ?
-                      gimp_object_get_name (GIMP_OBJECT (viewable)) : "");
+  gtk_entry_set_text (entry, iter ? gimp_object_get_name (viewable) : "");
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_container_entry_changed,

@@ -222,7 +222,7 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
     {
       if (factory->priv->gimp->be_verbose)
         {
-          const gchar *name = gimp_object_get_name (GIMP_OBJECT (factory));
+          const gchar *name = gimp_object_get_name (factory);
 
           g_print ("Loading '%s' data\n", name ? name : "???");
         }
@@ -522,13 +522,11 @@ gimp_data_factory_data_duplicate (GimpDataFactory *factory,
 
   if (new_data)
     {
-      const gchar *name;
+      const gchar *name = gimp_object_get_name (data);
       gchar       *ext;
       gint         copy_len;
       gint         number;
       gchar       *new_name;
-
-      name = gimp_object_get_name (GIMP_OBJECT (data));
 
       ext      = strrchr (name, '#');
       copy_len = strlen (_("copy"));

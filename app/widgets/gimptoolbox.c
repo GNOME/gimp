@@ -726,7 +726,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           gchar       *tmp;
           gchar       *name;
 
-          identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
+          identifier = gimp_object_get_name (tool_info);
 
           tmp = g_strndup (identifier + strlen ("gimp-"),
                            strlen (identifier) - strlen ("gimp--tool"));

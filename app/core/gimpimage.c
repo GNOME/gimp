@@ -1279,7 +1279,7 @@ gimp_image_channel_add (GimpContainer *container,
                         GimpImage     *image)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (channel))))
+                gimp_object_get_name (channel)))
     {
       gimp_image_set_quick_mask_state (image, TRUE);
     }
@@ -1291,7 +1291,7 @@ gimp_image_channel_remove (GimpContainer *container,
                            GimpImage     *image)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (channel))))
+                gimp_object_get_name (channel)))
     {
       gimp_image_set_quick_mask_state (image, FALSE);
     }
@@ -1302,7 +1302,7 @@ gimp_image_channel_name_changed (GimpChannel *channel,
                                  GimpImage   *image)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (channel))))
+                gimp_object_get_name (channel)))
     {
       gimp_image_set_quick_mask_state (image, TRUE);
     }
@@ -1318,7 +1318,7 @@ gimp_image_channel_color_changed (GimpChannel *channel,
                                   GimpImage   *image)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (channel))))
+                gimp_object_get_name (channel)))
     {
       image->quick_mask_color = channel->color;
     }
@@ -1420,7 +1420,7 @@ gimp_image_get_uri (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (GIMP_OBJECT (image));
+  uri = gimp_object_get_name (image);
 
   return uri ? uri : _("Untitled");
 }
@@ -1451,7 +1451,7 @@ gimp_image_get_filename (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (GIMP_OBJECT (image));
+  uri = gimp_object_get_name (image);
 
   if (! uri)
     return NULL;

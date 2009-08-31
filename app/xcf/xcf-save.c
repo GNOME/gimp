@@ -1147,7 +1147,7 @@ xcf_save_layer (XcfInfo    *info,
   xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the layers name */
-  string = gimp_object_get_name (GIMP_OBJECT (layer));
+  string = gimp_object_get_name (layer);
   xcf_write_string_check_error (info, (gchar **) &string, 1);
 
   /* write out the layer properties */
@@ -1221,7 +1221,7 @@ xcf_save_channel (XcfInfo      *info,
   xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the channels name */
-  string = gimp_object_get_name (GIMP_OBJECT (channel));
+  string = gimp_object_get_name (channel);
   xcf_write_string_check_error (info, (gchar **) &string, 1);
 
   /* write out the channel properties */
@@ -1696,7 +1696,7 @@ xcf_save_old_paths (XcfInfo    *info,
        * we already saved the number of paths and I wont start seeking
        * around to fix that cruft  */
 
-      name     = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
+      name     = (gchar *) gimp_object_get_name (vectors);
       locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
       state    = closed ? 4 : 2;  /* EDIT : ADD  (editing state, 1.2 compat) */
       version  = 3;
@@ -1798,7 +1798,7 @@ xcf_save_vectors (XcfInfo    *info,
 
       parasites = GIMP_ITEM (vectors)->parasites;
 
-      name          = gimp_object_get_name (GIMP_OBJECT (vectors));
+      name          = gimp_object_get_name (vectors);
       visible       = gimp_item_get_visible (GIMP_ITEM (vectors));
       linked        = gimp_item_get_linked (GIMP_ITEM (vectors));
       tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));

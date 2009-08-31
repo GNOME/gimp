@@ -645,7 +645,7 @@ file_open_convert_items (GimpImage   *dest_image,
       else
         {
           gimp_object_set_name (GIMP_OBJECT (item),
-                                gimp_object_get_name (GIMP_OBJECT (src)));
+                                gimp_object_get_name (src));
         }
 
       list->data = item;

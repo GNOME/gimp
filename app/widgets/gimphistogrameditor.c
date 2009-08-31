@@ -500,7 +500,7 @@ gimp_histogram_editor_name_update (GimpHistogramEditor *editor)
   const gchar *name = NULL;
 
   if (editor->drawable)
-    name = gimp_object_get_name (GIMP_OBJECT (editor->drawable));
+    name = gimp_object_get_name (editor->drawable);
 
   gimp_editor_set_name (GIMP_EDITOR (editor), name);
 }

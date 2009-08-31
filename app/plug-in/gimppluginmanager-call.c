@@ -166,7 +166,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
       if (! gimp_plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
         {
-          const gchar *name  = gimp_object_get_name (GIMP_OBJECT (plug_in));
+          const gchar *name  = gimp_object_get_name (plug_in);
           GError      *error = g_error_new (GIMP_PLUG_IN_ERROR,
                                             GIMP_PLUG_IN_EXECUTION_FAILED,
                                             _("Failed to run plug-in \"%s\""),
@@ -216,7 +216,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
-          const gchar *name  = gimp_object_get_name (GIMP_OBJECT (plug_in));
+          const gchar *name  = gimp_object_get_name (plug_in);
           GError      *error = g_error_new (GIMP_PLUG_IN_ERROR,
                                             GIMP_PLUG_IN_EXECUTION_FAILED,
                                             _("Failed to run plug-in \"%s\""),
@@ -314,7 +314,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
-          const gchar *name  = gimp_object_get_name (GIMP_OBJECT (plug_in));
+          const gchar *name  = gimp_object_get_name (plug_in);
           GError      *error = g_error_new (GIMP_PLUG_IN_ERROR,
                                             GIMP_PLUG_IN_EXECUTION_FAILED,
                                             _("Failed to run plug-in \"%s\""),

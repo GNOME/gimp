@@ -47,7 +47,7 @@ gimp_brush_generated_save (GimpData  *data,
                            GError   **error)
 {
   GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
-  const gchar        *name  = gimp_object_get_name (GIMP_OBJECT (data));
+  const gchar        *name  = gimp_object_get_name (data);
   FILE               *file;
   gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
   gboolean            have_shape = FALSE;

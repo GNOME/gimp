@@ -342,7 +342,7 @@ plug_in_actions_register_procedure (GimpPDB         *pdb,
         {
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
-                   gimp_object_get_name (GIMP_OBJECT (procedure)));
+                   gimp_object_get_name (procedure));
 #endif
 
           plug_in_actions_add_proc (group, plug_in_proc);
@@ -370,7 +370,7 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
 
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
-                   gimp_object_get_name (GIMP_OBJECT (procedure)));
+                   gimp_object_get_name (procedure));
 #endif
 
           action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
@@ -392,7 +392,7 @@ plug_in_actions_menu_path_added (GimpPlugInProcedure *plug_in_proc,
 
 #if 0
   g_print ("%s: %s (%s)\n", G_STRFUNC,
-           gimp_object_get_name (GIMP_OBJECT (plug_in_proc)), menu_path);
+           gimp_object_get_name (plug_in_proc), menu_path);
 #endif
 
   locale_domain = gimp_plug_in_procedure_get_locale_domain (plug_in_proc);

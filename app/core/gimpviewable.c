@@ -374,7 +374,7 @@ static gchar *
 gimp_viewable_real_get_description (GimpViewable  *viewable,
                                     gchar        **tooltip)
 {
-  return g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable)));
+  return g_strdup (gimp_object_get_name (viewable));
 }
 
 static GimpContainer *

@@ -59,7 +59,7 @@ brush_new_invoker (GimpProcedure      *procedure,
       GimpData *data = gimp_data_factory_data_new (gimp->brush_factory, name);
 
       if (data)
-        actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
+        actual_name = g_strdup (gimp_object_get_name (data));
       else
         success = FALSE;
     }
@@ -99,7 +99,7 @@ brush_duplicate_invoker (GimpProcedure      *procedure,
                                               GIMP_DATA (brush));
 
           if (brush_copy)
-            copy_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush_copy)));
+            copy_name = g_strdup (gimp_object_get_name (brush_copy));
           else
             success = FALSE;
         }
@@ -174,7 +174,7 @@ brush_rename_invoker (GimpProcedure      *procedure,
       if (brush)
         {
           gimp_object_set_name (GIMP_OBJECT (brush), new_name);
-          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
+          actual_name = g_strdup (gimp_object_get_name (brush));
         }
       else
         success = FALSE;

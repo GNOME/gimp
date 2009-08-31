@@ -113,7 +113,7 @@ documents_raise_or_open_cmd_callback (GtkAction *action,
     {
       RaiseClosure closure;
 
-      closure.name  = gimp_object_get_name (GIMP_OBJECT (imagefile));
+      closure.name  = gimp_object_get_name (imagefile);
       closure.found = FALSE;
 
       gimp_container_foreach (context->gimp->displays,
@@ -142,7 +142,7 @@ documents_file_open_dialog_cmd_callback (GtkAction *action,
   if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
     {
       file_file_open_dialog (context->gimp,
-                             gimp_object_get_name (GIMP_OBJECT (imagefile)),
+                             gimp_object_get_name (imagefile),
                              GTK_WIDGET (editor));
     }
 }
@@ -160,7 +160,7 @@ documents_copy_location_cmd_callback (GtkAction *action,
 
   if (imagefile)
     gimp_clipboard_set_text (context->gimp,
-                             gimp_object_get_name (GIMP_OBJECT (imagefile)));
+                             gimp_object_get_name (imagefile));
 }
 
 void
@@ -172,7 +172,7 @@ documents_remove_cmd_callback (GtkAction *action,
   GimpImagefile       *imagefile = gimp_context_get_imagefile (context);
   const gchar         *uri;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+  uri = gimp_object_get_name (imagefile);
 
   gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri, NULL);
 
@@ -293,7 +293,7 @@ documents_remove_dangling_foreach (GimpImagefile *imagefile,
   if (gimp_thumbnail_peek_image (imagefile->thumbnail) ==
       GIMP_THUMB_STATE_NOT_FOUND)
     {
-      const gchar *uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+      const gchar *uri = gimp_object_get_name (imagefile);
 
       gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri,
                                       NULL);
@@ -329,7 +329,7 @@ documents_open_image (GtkWidget     *editor,
   GimpPDBStatusType   status;
   GError             *error = NULL;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+  uri = gimp_object_get_name (imagefile);
 
   image = file_open_with_display (context->gimp, context, NULL, uri, FALSE,
                                   &status, &error);
@@ -351,7 +351,7 @@ static void
 documents_raise_display (GimpDisplay  *display,
                          RaiseClosure *closure)
 {
-  const gchar  *uri = gimp_object_get_name (GIMP_OBJECT (display->image));
+  const gchar  *uri = gimp_object_get_name (display->image);
 
   if (uri && ! strcmp (closure->name, uri))
     {

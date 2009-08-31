@@ -213,8 +213,7 @@ gimp_tool_presets_new (GimpToolInfo *tool_info)
                           "policy",        GIMP_CONTAINER_POLICY_STRONG,
                           NULL);
 
-  name = g_strdup_printf ("%s options",
-                          gimp_object_get_name (GIMP_OBJECT (tool_info)));
+  name = g_strdup_printf ("%s options", gimp_object_get_name (tool_info));
 
   gimp_object_take_name (GIMP_OBJECT (presets), name);
 

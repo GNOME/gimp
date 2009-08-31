@@ -363,7 +363,7 @@ gimp_container_serialize_foreach (GObject       *object,
   gimp_config_writer_open (serialize_data->writer,
                            g_type_name (G_TYPE_FROM_INSTANCE (object)));
 
-  name = gimp_object_get_name (GIMP_OBJECT (object));
+  name = gimp_object_get_name (object);
 
   if (name)
     gimp_config_writer_string (serialize_data->writer, name);

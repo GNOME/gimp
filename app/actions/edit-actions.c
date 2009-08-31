@@ -291,14 +291,14 @@ edit_actions_update (GimpActionGroup *group,
             {
               undo_name =
                 g_strdup_printf (_("_Undo %s"),
-                                 gimp_object_get_name (GIMP_OBJECT (undo)));
+                                 gimp_object_get_name (undo));
             }
 
           if (redo)
             {
               redo_name =
                 g_strdup_printf (_("_Redo %s"),
-                                 gimp_object_get_name (GIMP_OBJECT (redo)));
+                                 gimp_object_get_name (redo));
             }
 
           undo = gimp_image_undo_get_fadeable (image);
@@ -313,7 +313,7 @@ edit_actions_update (GimpActionGroup *group,
             {
               fade_name =
                 g_strdup_printf (_("_Fade %s..."),
-                                 gimp_object_get_name (GIMP_OBJECT (undo)));
+                                 gimp_object_get_name (undo));
             }
         }
     }

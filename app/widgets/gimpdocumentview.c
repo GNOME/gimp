@@ -168,7 +168,7 @@ gimp_document_view_drag_uri_list (GtkWidget *widget,
 
   if (viewable)
     {
-      const gchar *uri = gimp_object_get_name (GIMP_OBJECT (viewable));
+      const gchar *uri = gimp_object_get_name (viewable);
 
       return g_list_append (NULL, g_strdup (uri));
     }

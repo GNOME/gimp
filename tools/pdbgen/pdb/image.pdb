@@ -2247,7 +2247,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  uri = g_strdup (gimp_object_get_name (GIMP_OBJECT (image)));
+  uri = g_strdup (gimp_object_get_name (image));
 }
 CODE
     );

@@ -294,7 +294,7 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
       cur_item = merge_list;
       vectors = GIMP_VECTORS (cur_item->data);
 
-      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+      name = g_strdup (gimp_object_get_name (vectors));
       target_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
                                                           GIMP_TYPE_VECTORS));
       pos = gimp_item_get_index (GIMP_ITEM (vectors));
@@ -455,7 +455,7 @@ gimp_image_merge_layers (GimpImage     *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
                                undo_desc);
 
-  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
+  name = g_strdup (gimp_object_get_name (layer));
 
   if (merge_type == GIMP_FLATTEN_IMAGE ||
       gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
@@ -466,7 +466,7 @@ gimp_image_merge_layers (GimpImage     *image,
 
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
                                     type,
-                                    gimp_object_get_name (GIMP_OBJECT (layer)),
+                                    gimp_object_get_name (layer),
                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       if (! merge_layer)
         {

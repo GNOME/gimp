@@ -362,7 +362,7 @@ gimp_edit_named_cut (GimpImage     *image,
       gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
       g_object_unref (buffer);
 
-      return gimp_object_get_name (GIMP_OBJECT (buffer));
+      return gimp_object_get_name (buffer);
     }
 
   return NULL;
@@ -393,7 +393,7 @@ gimp_edit_named_copy (GimpImage     *image,
       gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
       g_object_unref (buffer);
 
-      return gimp_object_get_name (GIMP_OBJECT (buffer));
+      return gimp_object_get_name (buffer);
     }
 
   return NULL;
@@ -421,7 +421,7 @@ gimp_edit_named_copy_visible (GimpImage    *image,
       gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
       g_object_unref (buffer);
 
-      return gimp_object_get_name (GIMP_OBJECT (buffer));
+      return gimp_object_get_name (buffer);
     }
 
   return NULL;
@@ -523,7 +523,7 @@ gimp_edit_fade (GimpImage   *image,
 
       gimp_drawable_apply_region (drawable, &src2PR,
                                   TRUE,
-                                  gimp_object_get_name (GIMP_OBJECT (undo)),
+                                  gimp_object_get_name (undo),
                                   gimp_context_get_opacity (context),
                                   gimp_context_get_paint_mode (context),
                                   NULL, NULL,

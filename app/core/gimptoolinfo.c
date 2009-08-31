@@ -324,7 +324,7 @@ gimp_tool_info_build_options_filename (GimpToolInfo *tool_info,
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
-  name = gimp_object_get_name (GIMP_OBJECT (tool_info));
+  name = gimp_object_get_name (tool_info);
 
   if (suffix)
     basename = g_strconcat (name, suffix, NULL);
