@@ -156,6 +156,12 @@ static void       gimp_drawable_sync_source_node   (GimpDrawable      *drawable,
 static void       gimp_drawable_fs_notify          (GimpLayer         *fs,
                                                     const GParamSpec  *pspec,
                                                     GimpDrawable      *drawable);
+static void       gimp_drawable_fs_update          (GimpLayer         *fs,
+                                                    gint               x,
+                                                    gint               y,
+                                                    gint               width,
+                                                    gint               height,
+                                                    GimpDrawable      *drawable);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
@@ -1061,6 +1067,40 @@ gimp_drawable_fs_notify (GimpLayer        *fs,
     }
 }
 
+static void
+gimp_drawable_fs_update (GimpLayer    *fs,
+                         gint          x,
+                         gint          y,
+                         gint          width,
+                         gint          height,
+                         GimpDrawable *drawable)
+{
+  gint fs_off_x, fs_off_y;
+  gint off_x, off_y;
+  gint dr_x, dr_y, dr_width, dr_height;
+
+  gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+  if (gimp_rectangle_intersect (x + fs_off_x,
+                                y + fs_off_y,
+                                width,
+                                height,
+                                off_y,
+                                off_y,
+                                gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                gimp_item_get_height (GIMP_ITEM (drawable)),
+                                &dr_x,
+                                &dr_y,
+                                &dr_width,
+                                &dr_height))
+    {
+      gimp_drawable_update (drawable,
+                            dr_x - off_x, dr_y - off_y,
+                            dr_width, dr_height);
+    }
+}
+
 
 /*  public functions  */
 
@@ -1855,8 +1895,15 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
 
   gimp_drawable_sync_source_node (drawable, FALSE);
 
-  /* FIXME: remove this hack when the floating sel is no layer any longer */
-  g_signal_emit_by_name (floating_sel, "visibility-changed");
+  g_signal_connect (floating_sel, "update",
+                    G_CALLBACK (gimp_drawable_fs_update),
+                    drawable);
+
+  gimp_drawable_fs_update (GIMP_DRAWABLE (floating_sel),
+                           0, 0,
+                           gimp_item_get_width  (GIMP_ITEM (floating_sel)),
+                           gimp_item_get_height (GIMP_ITEM (floating_sel)),
+                           drawable);
 }
 
 void
@@ -1874,15 +1921,15 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
 
   gimp_drawable_sync_source_node (drawable, TRUE);
 
-  /* FIXME: remove this hack when the floating sel is no layer any longer */
-  g_signal_emit_by_name (floating_sel, "visibility-changed");
+  g_signal_handlers_disconnect_by_func (floating_sel,
+                                        gimp_drawable_fs_update,
+                                        drawable);
 
-  /*  Invalidate the preview of the obscured drawable.  We do this here
-   *  because it will not be done until the floating selection is removed,
-   *  at which point the obscured drawable's preview will not be declared
-   *  invalid.
-   */
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_sel));
+  gimp_drawable_fs_update (GIMP_DRAWABLE (floating_sel),
+                           0, 0,
+                           gimp_item_get_width  (GIMP_ITEM (floating_sel)),
+                           gimp_item_get_height (GIMP_ITEM (floating_sel)),
+                           drawable);
 
   /*  clear the selection  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
