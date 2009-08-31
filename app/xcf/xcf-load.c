@@ -210,6 +210,22 @@ xcf_load_image (Gimp     *gimp,
 
           if (item_path)
             {
+              if (info->floating_sel)
+                {
+                  /* there is a floating selection, but it will get
+                   * added after all layers are loaded, so toplevel
+                   * layer indices are off-by-one. Adjust item paths
+                   * accordingly:
+                   */
+                  gint toplevel_index;
+
+                  toplevel_index = GPOINTER_TO_UINT (item_path->data);
+
+                  toplevel_index--;
+
+                  item_path->data = GUINT_TO_POINTER (toplevel_index);
+                }
+
               parent = GIMP_LAYER
                 (gimp_item_stack_get_parent_by_path (GIMP_ITEM_STACK (layers),
                                                      item_path,
