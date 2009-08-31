@@ -4083,35 +4083,6 @@ gimp_image_reorder_vectors (GimpImage   *image,
   return TRUE;
 }
 
-gboolean
-gimp_image_layer_boundary (const GimpImage  *image,
-                           BoundSeg        **segs,
-                           gint             *n_segs)
-{
-  GimpLayer *layer;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (segs != NULL, FALSE);
-  g_return_val_if_fail (n_segs != NULL, FALSE);
-
-  /*  The second boundary corresponds to the active layer's
-   *  perimeter...
-   */
-  layer = gimp_image_get_active_layer (image);
-
-  if (layer)
-    {
-      *segs = gimp_layer_boundary (layer, n_segs);
-      return TRUE;
-    }
-  else
-    {
-      *segs = NULL;
-      *n_segs = 0;
-      return FALSE;
-    }
-}
-
 GimpLayer *
 gimp_image_pick_layer (const GimpImage *image,
                        gint             x,

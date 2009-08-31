@@ -554,9 +554,6 @@ gboolean        gimp_image_reorder_vectors       (GimpImage          *image,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
 
-gboolean        gimp_image_layer_boundary        (const GimpImage    *image,
-                                                  BoundSeg          **segs,
-                                                  gint               *n_segs);
 GimpLayer     * gimp_image_pick_layer            (const GimpImage    *image,
                                                   gint                x,
                                                   gint                y);

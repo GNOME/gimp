@@ -611,14 +611,15 @@ selection_transform_segs (Selection      *selection,
 static void
 selection_generate_segs (Selection *selection)
 {
+  GimpImage      *image = selection->shell->display->image;
   const BoundSeg *segs_in;
   const BoundSeg *segs_out;
-  BoundSeg       *segs_layer;
+  GimpLayer      *layer;
 
   /*  Ask the image for the boundary of its selected region...
    *  Then transform that information into a new buffer of GdkSegments
    */
-  gimp_channel_boundary (gimp_image_get_mask (selection->shell->display->image),
+  gimp_channel_boundary (gimp_image_get_mask (image),
                          &segs_in, &segs_out,
                          &selection->num_segs_in, &selection->num_segs_out,
                          0, 0, 0, 0);
@@ -650,23 +651,25 @@ selection_generate_segs (Selection *selection)
       selection->segs_out = NULL;
     }
 
-  /*  The active layer's boundary  */
-  gimp_image_layer_boundary (selection->shell->display->image,
-                             &segs_layer, &selection->num_segs_layer);
+  layer = gimp_image_get_active_layer (image);
 
-  if (selection->num_segs_layer)
+  if (layer)
     {
-      selection->segs_layer = g_new (GdkSegment, selection->num_segs_layer);
-      selection_transform_segs (selection, segs_layer,
-                                selection->segs_layer,
-                                selection->num_segs_layer);
-    }
-  else
-    {
-      selection->segs_layer = NULL;
-    }
+      BoundSeg *segs;
 
-  g_free (segs_layer);
+      segs = gimp_layer_boundary (layer, &selection->num_segs_layer);
+
+      if (selection->num_segs_layer)
+        {
+          selection->segs_layer = g_new (GdkSegment, selection->num_segs_layer);
+
+          selection_transform_segs (selection, segs,
+                                    selection->segs_layer,
+                                    selection->num_segs_layer);
+
+          g_free (segs);
+        }
+    }
 }
 
 static void
