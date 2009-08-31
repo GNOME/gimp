@@ -181,7 +181,8 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
           break;
 
         case GIMP_SELECTION_LAYER_ON:
-          selection_layer_draw (selection);
+          if (! selection->layer_hidden)
+            selection_layer_draw (selection);
           break;
 
         case GIMP_SELECTION_ON:
