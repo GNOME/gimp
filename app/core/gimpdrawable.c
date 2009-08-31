@@ -1899,7 +1899,7 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
                     G_CALLBACK (gimp_drawable_fs_update),
                     drawable);
 
-  gimp_drawable_fs_update (GIMP_DRAWABLE (floating_sel),
+  gimp_drawable_fs_update (floating_sel,
                            0, 0,
                            gimp_item_get_width  (GIMP_ITEM (floating_sel)),
                            gimp_item_get_height (GIMP_ITEM (floating_sel)),
@@ -1925,7 +1925,7 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
                                         gimp_drawable_fs_update,
                                         drawable);
 
-  gimp_drawable_fs_update (GIMP_DRAWABLE (floating_sel),
+  gimp_drawable_fs_update (floating_sel,
                            0, 0,
                            gimp_item_get_width  (GIMP_ITEM (floating_sel)),
                            gimp_item_get_height (GIMP_ITEM (floating_sel)),
