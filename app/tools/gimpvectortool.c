@@ -243,6 +243,22 @@ gimp_vector_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
+static gboolean
+gimp_vector_tool_check_writable (GimpVectorTool *vector_tool)
+{
+  if (gimp_item_is_content_locked (GIMP_ITEM (vector_tool->vectors)))
+    {
+      gimp_tool_message_literal (GIMP_TOOL (vector_tool),
+                                 GIMP_TOOL (vector_tool)->display,
+                                 _("The active path is locked."));
+      vector_tool->function = VECTORS_FINISHED;
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
 static void
 gimp_vector_tool_button_press (GimpTool            *tool,
                                const GimpCoords    *coords,
@@ -318,10 +334,9 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* create a new stroke */
 
-  if (vector_tool->function == VECTORS_CREATE_STROKE)
+  if (vector_tool->function == VECTORS_CREATE_STROKE &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
-      g_return_if_fail (vector_tool->vectors != NULL);
-
       gimp_vector_tool_undo_push (vector_tool, _("Add Stroke"));
 
       vector_tool->cur_stroke = gimp_bezier_stroke_new ();
@@ -338,7 +353,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* add an anchor to an existing stroke */
 
-  if (vector_tool->function == VECTORS_ADD_ANCHOR)
+  if (vector_tool->function == VECTORS_ADD_ANCHOR &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       GimpCoords position = GIMP_COORDS_DEFAULT_VALUES;
 
@@ -368,7 +384,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* insertion of an anchor in a curve segment */
 
-  if (vector_tool->function == VECTORS_INSERT_ANCHOR)
+  if (vector_tool->function == VECTORS_INSERT_ANCHOR &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Insert Anchor"));
 
@@ -398,7 +415,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* move a handle */
 
-  if (vector_tool->function == VECTORS_MOVE_HANDLE)
+  if (vector_tool->function == VECTORS_MOVE_HANDLE &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Drag Handle"));
 
@@ -427,7 +445,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* move an anchor */
 
-  if (vector_tool->function == VECTORS_MOVE_ANCHOR)
+  if (vector_tool->function == VECTORS_MOVE_ANCHOR &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Drag Anchor"));
 
@@ -444,7 +463,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* move multiple anchors */
 
-  if (vector_tool->function == VECTORS_MOVE_ANCHORSET)
+  if (vector_tool->function == VECTORS_MOVE_ANCHORSET &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Drag Anchors"));
 
@@ -466,7 +486,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* move a curve segment directly */
 
-  if (vector_tool->function == VECTORS_MOVE_CURVE)
+  if (vector_tool->function == VECTORS_MOVE_CURVE &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Drag Curve"));
 
@@ -494,7 +515,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* connect two strokes */
 
-  if (vector_tool->function == VECTORS_CONNECT_STROKES)
+  if (vector_tool->function == VECTORS_CONNECT_STROKES &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Connect Strokes"));
 
@@ -524,8 +546,9 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* move a stroke or all strokes of a vectors object */
 
-  if (vector_tool->function == VECTORS_MOVE_STROKE ||
-      vector_tool->function == VECTORS_MOVE_VECTORS)
+  if ((vector_tool->function == VECTORS_MOVE_STROKE ||
+       vector_tool->function == VECTORS_MOVE_VECTORS) &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Drag Path"));
 
@@ -535,7 +558,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* convert an anchor to something that looks like an edge */
 
-  if (vector_tool->function == VECTORS_CONVERT_EDGE)
+  if (vector_tool->function == VECTORS_CONVERT_EDGE &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Convert Edge"));
 
@@ -565,7 +589,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* removal of a node in a stroke */
 
-  if (vector_tool->function == VECTORS_DELETE_ANCHOR)
+  if (vector_tool->function == VECTORS_DELETE_ANCHOR &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       gimp_vector_tool_undo_push (vector_tool, _("Delete Anchor"));
 
@@ -585,7 +610,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
   /* deleting a segment (opening up a stroke) */
 
-  if (vector_tool->function == VECTORS_DELETE_SEGMENT)
+  if (vector_tool->function == VECTORS_DELETE_SEGMENT &&
+      gimp_vector_tool_check_writable (vector_tool))
     {
       GimpStroke *new_stroke;
 
