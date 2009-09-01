@@ -74,12 +74,10 @@ floating_sel_attach (GimpLayer    *layer,
         drawable = gimp_image_get_active_drawable (image);
     }
 
-  /*  set the drawable  */
   gimp_layer_set_lock_alpha (layer, TRUE, FALSE);
 
   gimp_layer_set_floating_sel_drawable (layer, drawable);
 
-  /*  add the layer to the image  */
   gimp_image_add_layer (image, layer, NULL, 0, TRUE);
 }
 
@@ -93,17 +91,14 @@ floating_sel_anchor (GimpLayer *layer)
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  /*  Start a floating selection anchoring undo  */
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_ANCHOR,
                                _("Anchor Floating Selection"));
 
   /*  Composite the floating selection contents  */
   floating_sel_composite (layer);
 
-  /*  remove the floating selection  */
   gimp_image_remove_layer (image, layer, TRUE, NULL);
 
-  /*  end the group undo  */
   gimp_image_undo_group_end (image);
 
   /*  invalidate the boundaries  */
@@ -124,7 +119,7 @@ floating_sel_to_layer (GimpLayer  *layer,
   item  = GIMP_ITEM (layer);
   image = gimp_item_get_image (item);
 
-  /*  Check if the floating layer belongs to a channel...  */
+  /*  Check if the floating layer belongs to a channel  */
   if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
@@ -307,9 +302,6 @@ floating_sel_composite (GimpLayer *layer)
   gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
   gimp_item_get_offset (GIMP_ITEM (drawable), &dr_off_x, &dr_off_y);
 
-  /*  First restore what's behind the image if necessary,
-   *  then check for visibility
-   */
   if (gimp_item_get_visible (GIMP_ITEM (layer)) &&
       gimp_rectangle_intersect (off_x, off_y,
                                 gimp_item_get_width  (GIMP_ITEM (layer)),
@@ -343,9 +335,6 @@ floating_sel_composite (GimpLayer *layer)
             gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
         }
 
-      /*  apply the fs with the undo specified by the value
-       *  passed to this function
-       */
       gimp_drawable_apply_region (drawable, &fsPR,
                                   TRUE, NULL,
                                   gimp_layer_get_opacity (layer),
