@@ -1052,8 +1052,7 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
 
-  if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
-    GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
+  GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
 
   if (image->preview)
     {

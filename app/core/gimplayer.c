@@ -439,8 +439,7 @@ gimp_layer_invalidate_preview (GimpViewable *viewable)
 {
   GimpLayer *layer = GIMP_LAYER (viewable);
 
-  if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
-    GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
+  GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
