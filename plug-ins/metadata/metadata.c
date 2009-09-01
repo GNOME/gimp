@@ -558,8 +558,9 @@ run (const gchar      *name,
                                               + METADATA_MARKER_LEN);
         }
       g_string_free (buffer, TRUE);
-      xmp_model_free (xmp_model);
     }
+
+  g_object_unref (xmp_model);
 
   values[0].data.d_status = status;
 }

@@ -39,21 +39,34 @@ enum
   LAST_SIGNAL
 };
 
-static void
-xmp_model_iface_init (GtkTreeModelIface *iface)
-{
-}
+
+static void xmp_model_finalize (GObject *object);
 
 
-
-G_DEFINE_TYPE_WITH_CODE (XMPModel, xmp_model,
-                         GTK_TYPE_TREE_STORE,
-                         G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
-                                                xmp_model_iface_init));
+G_DEFINE_TYPE (XMPModel, xmp_model, GTK_TYPE_TREE_STORE);
 
 static guint xmp_model_signals[LAST_SIGNAL] = { 0 };
 
 
+static void
+xmp_model_class_init (XMPModelClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  xmp_model_signals[PROPERTY_CHANGED] =
+    g_signal_new ("property-changed",
+                  GIMP_TYPE_XMP_MODEL,
+                  G_SIGNAL_DETAILED,
+                  G_STRUCT_OFFSET (XMPModelClass, property_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__BOXED,
+                  G_TYPE_NONE, 1,
+                  GTK_TYPE_TREE_ITER);
+
+  object_class->finalize  = xmp_model_finalize;
+
+  klass->property_changed = NULL;
+}
 
 static void
 xmp_model_init (XMPModel *xmp_model)
@@ -80,53 +93,17 @@ xmp_model_init (XMPModel *xmp_model)
 }
 
 static void
-xmp_model_class_init (XMPModelClass *klass)
+xmp_model_finalize (GObject *object)
 {
-  xmp_model_signals[PROPERTY_CHANGED] =
-    g_signal_new ("property-changed",
-                  GIMP_TYPE_XMP_MODEL,
-                  G_SIGNAL_DETAILED,
-                  G_STRUCT_OFFSET (XMPModelClass, property_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__BOXED,
-                  G_TYPE_NONE, 1,
-                  GTK_TYPE_TREE_ITER);
-
-  klass->property_changed = NULL;
-}
-
-
-/**
- * xmp_model_new:
- *
- * Return value: a new #XMPModel.
- **/
-XMPModel *
-xmp_model_new (void)
-{
-  return g_object_new (GIMP_TYPE_XMP_MODEL, NULL);
-}
-
-/**
- * xmp_model_free:
- * @xmp_model: an #XMPModel
- *
- * Frees an #XMPModel.
- **/
-void
-xmp_model_free (XMPModel *xmp_model)
-{
-  GtkTreeModel  *model;
+  XMPModel      *xmp_model = XMP_MODEL (object);
+  GtkTreeModel  *model     = xmp_model_get_tree_model (xmp_model);
   GtkTreeIter    iter;
   GtkTreeIter    child;
   gchar        **value_array;
   gint           i;
 
-  g_return_if_fail (xmp_model != NULL);
-
   /* we used XMP_FLAG_DEFER_VALUE_FREE for the parser, so now we must free
      all value arrays */
-  model = xmp_model_get_tree_model (xmp_model);
 
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (model), &iter))
     {
@@ -157,10 +134,19 @@ xmp_model_free (XMPModel *xmp_model)
       while (gtk_tree_model_iter_next (model, &iter));
     }
 
-  g_object_unref (xmp_model);
-  /* FIXME: free custom schemas */
-  g_free (xmp_model);
+  G_OBJECT_CLASS (xmp_model_parent_class)->finalize (object);
+}
 
+
+/**
+ * xmp_model_new:
+ *
+ * Return value: a new #XMPModel.
+ **/
+XMPModel *
+xmp_model_new (void)
+{
+  return g_object_new (GIMP_TYPE_XMP_MODEL, NULL);
 }
 
 /**
