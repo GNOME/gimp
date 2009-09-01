@@ -35,8 +35,7 @@
 
 /*  local function prototypes  */
 
-static void   gimp_action_editor_filter_clear   (GtkButton        *button,
-                                                 GtkEntry         *entry);
+static void   gimp_action_editor_filter_clear   (GtkEntry         *entry);
 static void   gimp_action_editor_filter_changed (GtkEntry         *entry,
                                                  GimpActionEditor *editor);
 
@@ -55,11 +54,8 @@ static void
 gimp_action_editor_init (GimpActionEditor *editor)
 {
   GtkWidget *hbox;
-  GtkWidget *entrybox;
   GtkWidget *label;
   GtkWidget *entry;
-  GtkWidget *button;
-  GtkWidget *image;
 
   gtk_box_set_spacing (GTK_BOX (editor), 12);
 
@@ -71,30 +67,22 @@ gimp_action_editor_init (GimpActionEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  entrybox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (hbox), entrybox, TRUE, TRUE, 0);
-  gtk_widget_show (entrybox);
-
   entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (entrybox), entry, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
-  button = gtk_button_new ();
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_box_pack_start (GTK_BOX (entrybox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_entry_set_icon_from_stock (GTK_ENTRY (entry),
+                                 GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_CLEAR);
+  gtk_entry_set_icon_activatable (GTK_ENTRY (entry),
+                                  GTK_ENTRY_ICON_SECONDARY, TRUE);
+  gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),
+                                GTK_ENTRY_ICON_SECONDARY, FALSE);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  g_signal_connect (button, "clicked",
+  g_signal_connect (entry, "icon-press",
                     G_CALLBACK (gimp_action_editor_filter_clear),
-                    entry);
-
+                    NULL);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (gimp_action_editor_filter_changed),
                     editor);
@@ -132,8 +120,7 @@ gimp_action_editor_new (GimpUIManager *manager,
 /*  private functions  */
 
 static void
-gimp_action_editor_filter_clear (GtkButton *button,
-                                 GtkEntry  *entry)
+gimp_action_editor_filter_clear (GtkEntry *entry)
 {
   gtk_entry_set_text (entry, "");
 }
@@ -144,5 +131,8 @@ gimp_action_editor_filter_changed (GtkEntry         *entry,
 {
   gimp_action_view_set_filter (GIMP_ACTION_VIEW (editor->view),
                                gtk_entry_get_text (entry));
+  gtk_entry_set_icon_sensitive (entry,
+                                GTK_ENTRY_ICON_SECONDARY,
+                                gtk_entry_get_text_length (entry) > 0);
 }
 
