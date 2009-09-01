@@ -253,7 +253,6 @@ vectors_actions_update (GimpActionGroup *group,
   gboolean      linked      = FALSE;
   gboolean      locked      = FALSE;
   gboolean      can_lock    = FALSE;
-  gboolean      writable    = FALSE;
   gboolean      dr_writable = FALSE;
   gboolean      dr_children = FALSE;
   GList        *next        = NULL;
@@ -277,7 +276,6 @@ vectors_actions_update (GimpActionGroup *group,
           linked   = gimp_item_get_linked (item);
           locked   = gimp_item_get_lock_content (item);
           can_lock = gimp_item_can_lock_content (item);
-          writable = ! gimp_item_is_content_locked (item);
 
           vectors_list = gimp_item_get_container_iter (item);
 
@@ -308,7 +306,7 @@ vectors_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("vectors-path-tool",       writable);
+  SET_SENSITIVE ("vectors-path-tool",       vectors);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
   SET_SENSITIVE ("vectors-new",             image);
