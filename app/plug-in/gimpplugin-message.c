@@ -257,12 +257,40 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
 
   if (tile_info->shadow)
     {
+      /*  don't check whether the drawable is a group or locked here,
+       *  the plugin will get a proper error message when it tries to
+       *  merge the shadow tiles, which is much better than just
+       *  killing it.
+       */
       tm = gimp_drawable_get_shadow_tiles (drawable);
 
       gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
     }
   else
     {
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+        {
+          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "Plug-In \"%s\"\n(%s)\n\n"
+                        "tried writing to a locked drawable %d (killing)",
+                        gimp_object_get_name (plug_in),
+                        gimp_filename_to_utf8 (plug_in->prog),
+                        tile_info->drawable_ID);
+          gimp_plug_in_close (plug_in, TRUE);
+          return;
+        }
+      else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        {
+          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "Plug-In \"%s\"\n(%s)\n\n"
+                        "tried writing to a group layer %d (killing)",
+                        gimp_object_get_name (plug_in),
+                        gimp_filename_to_utf8 (plug_in->prog),
+                        tile_info->drawable_ID);
+          gimp_plug_in_close (plug_in, TRUE);
+          return;
+        }
+
       tm = gimp_drawable_get_tiles (drawable);
     }
 
