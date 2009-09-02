@@ -849,7 +849,17 @@ static void
 gimp_projection_projectable_changed (GimpProjectable *projectable,
                                      GimpProjection  *proj)
 {
+  gint off_x, off_y;
   gint width, height;
+
+  if (proj->idle_render.idle_id)
+    {
+      g_source_remove (proj->idle_render.idle_id);
+      proj->idle_render.idle_id = 0;
+    }
+
+  gimp_area_list_free (proj->update_areas);
+  proj->update_areas = NULL;
 
   if (proj->pyramid)
     {
@@ -857,7 +867,8 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
       proj->pyramid = NULL;
     }
 
+  gimp_projectable_get_offset (proj->projectable, &off_x, &off_y);
   gimp_projectable_get_size (projectable, &width, &height);
 
-  gimp_projection_add_update_area (proj, 0, 0, width, height);
+  gimp_projection_add_update_area (proj, off_x, off_y, width, height);
 }
