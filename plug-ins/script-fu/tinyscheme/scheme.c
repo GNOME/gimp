@@ -4216,7 +4216,9 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                sc->tok = token(sc);
           }
 */
-          if (sc->tok == TOK_RPAREN) {
+          if (sc->tok == TOK_EOF)
+               { s_return(sc,sc->EOF_OBJ); }
+          else if (sc->tok == TOK_RPAREN) {
                gunichar c = inchar(sc);
                if (c != '\n') backchar(sc,c);
                sc->nesting_stack[sc->file_i]--;
