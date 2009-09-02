@@ -33,8 +33,8 @@ typedef void (*FARPROC)();
    LPVOID msg_buf;
 
    FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER,
-		 NULL, GetLastError(), 0,
-		 (LPTSTR)&msg_buf, 0, NULL);
+                 NULL, GetLastError(), 0,
+                 (LPTSTR)&msg_buf, 0, NULL);
    fprintf(stderr, "scheme load-extension: %s: %s", additional_message, msg_buf);
    LocalFree(msg_buf);
  }
@@ -135,9 +135,3 @@ static void make_init_fn(const char *name, char *init_fn) {
  strcpy(init_fn,"init_");
  strcat(init_fn,p);
 }
-
-
-
-
-
-
