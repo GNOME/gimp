@@ -487,8 +487,8 @@ gimp_text_tool_button_press (GimpTool            *tool,
           gdouble   x    = coords->x - gimp_item_get_offset_x (item);
           gdouble   y    = coords->y - gimp_item_get_offset_y (item);
 
-          if (x < 0 || x >= item->width ||
-              y < 0 || y >= item->height)
+          if (x < 0 || x >= gimp_item_get_width  (item) ||
+              y < 0 || y >= gimp_item_get_height (item))
             {
               gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
