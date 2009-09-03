@@ -1153,12 +1153,12 @@ xcf_save_layer (XcfInfo    *info,
   /* write out the layer properties */
   xcf_save_layer_props (info, image, layer, error);
 
-  /* save the current position which is where the hierarchy offset
+  /*  save the current position which is where the hierarchy offset
    *  will be stored.
    */
   saved_pos = info->cp;
 
-  /* write out the layer tile hierarchy */
+  /*  write out the layer tile hierarchy  */
   xcf_check_error (xcf_seek_pos (info, info->cp + 8, error));
   offset = info->cp;
 
@@ -1168,6 +1168,10 @@ xcf_save_layer (XcfInfo    *info,
 
   xcf_check_error (xcf_seek_pos (info, saved_pos, error));
   xcf_write_int32_check_error (info, &offset, 1);
+
+  /*  save the current position which is where the layer mask offset
+   *  will be stored.
+   */
   saved_pos = info->cp;
 
   /* write out the layer mask */
