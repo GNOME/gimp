@@ -487,29 +487,68 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
                                GtkStyle  *prev_style)
 {
   GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (widget);
+  GList            *children;
+  GList            *list;
+  GtkReliefStyle    button_relief;
+  GtkIconSize       button_icon_size;
+  gint              content_spacing;
+  gint              button_spacing;
+
+  gtk_widget_style_get (widget,
+                        "button-relief",    &button_relief,
+                        "button-icon-size", &button_icon_size,
+                        "content-spacing",  &content_spacing,
+                        "button-spacing",   &button_spacing,
+                        NULL);
 
   if (view->priv->options_box)
     {
-      GList *children;
-      GList *list;
-      gint   content_spacing;
-      gint   button_spacing;
-
-      gtk_widget_style_get (widget,
-                            "content-spacing", &content_spacing,
-                            "button-spacing",  &button_spacing,
-                            NULL);
-
       gtk_box_set_spacing (GTK_BOX (view->priv->options_box), content_spacing);
-      gtk_box_set_spacing (GTK_BOX (view->priv->lock_box), button_spacing);
 
-      children = gtk_container_get_children (GTK_CONTAINER (view->priv->options_box));
+      children =
+        gtk_container_get_children (GTK_CONTAINER (view->priv->options_box));
 
       for (list = children; list; list = g_list_next (list))
         {
           GtkWidget *child = list->data;
 
           gtk_box_set_spacing (GTK_BOX (child), button_spacing);
+        }
+
+      g_list_free (list);
+    }
+
+  if (view->priv->lock_box)
+    {
+      gtk_box_set_spacing (GTK_BOX (view->priv->lock_box), button_spacing);
+
+      children =
+        gtk_container_get_children (GTK_CONTAINER (view->priv->lock_box));
+
+      for (list = children; list; list = g_list_next (list))
+        {
+          GtkWidget *child = list->data;
+
+          if (GTK_IS_BUTTON (child))
+            {
+              GtkWidget *image;
+
+              gtk_button_set_relief (GTK_BUTTON (child), button_relief);
+
+              image = gtk_bin_get_child (GTK_BIN (child));
+
+              if (GTK_IS_IMAGE (image))
+                {
+                  GtkIconSize  old_size;
+                  gchar       *stock_id;
+
+                  gtk_image_get_stock (GTK_IMAGE (image), &stock_id, &old_size);
+
+                  if (button_icon_size != old_size)
+                    gtk_image_set_from_stock (GTK_IMAGE (image),
+                                              stock_id, button_icon_size);
+                }
+            }
         }
 
       g_list_free (list);
