@@ -52,18 +52,18 @@
 
 /*  local function prototypes  */
 
-static void   file_actions_last_opened_update  (GimpContainer   *container,
-                                                GimpImagefile   *unused,
-                                                GimpActionGroup *group);
-static void   file_actions_last_opened_reorder (GimpContainer   *container,
-                                                GimpImagefile   *unused1,
-                                                gint             unused2,
-                                                GimpActionGroup *group);
-static void   file_actions_close_all_update    (GimpContainer   *images,
-                                                GimpObject      *unused,
-                                                GimpActionGroup *group);
-static gchar *file_actions_create_label        (const gchar     *format,
-                                                const gchar     *uri);
+static void    file_actions_last_opened_update  (GimpContainer   *container,
+                                                 GimpImagefile   *unused,
+                                                 GimpActionGroup *group);
+static void    file_actions_last_opened_reorder (GimpContainer   *container,
+                                                 GimpImagefile   *unused1,
+                                                 gint             unused2,
+                                                 GimpActionGroup *group);
+static void    file_actions_close_all_update    (GimpContainer   *images,
+                                                 GimpObject      *unused,
+                                                 GimpActionGroup *group);
+static gchar * file_actions_create_label        (const gchar     *format,
+                                                 const gchar     *uri);
 
 
 static const GimpActionEntry file_actions[] =
@@ -289,7 +289,7 @@ file_actions_update (GimpActionGroup *group,
 
   if (export_to)
     {
-      gchar *label = file_actions_create_label(_("Export to %s"), export_to);
+      gchar *label = file_actions_create_label (_("Export to %s"), export_to);
       gimp_action_group_set_action_label (group, "file-export-to", label);
       g_free (label);
     }
@@ -411,8 +411,8 @@ file_actions_close_all_update (GimpContainer   *images,
 }
 
 static gchar *
-file_actions_create_label (const gchar     *format,
-                           const gchar     *uri)
+file_actions_create_label (const gchar *format,
+                           const gchar *uri)
 {
   gchar *basename         = file_utils_uri_display_basename (uri);
   gchar *escaped_basename = gimp_escape_uline (basename);
