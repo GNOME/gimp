@@ -71,6 +71,7 @@
 
 /* #define GIMP_XCF_PATH_DEBUG */
 
+static void            xcf_load_add_masks     (GimpImage    *image);
 static gboolean        xcf_load_image_props   (XcfInfo      *info,
                                                GimpImage    *image);
 static gboolean        xcf_load_layer_props   (XcfInfo      *info,
@@ -297,6 +298,8 @@ xcf_load_image (Gimp     *gimp,
         goto error;
     }
 
+  xcf_load_add_masks (image);
+
   if (info->floating_sel && info->floating_sel_drawable)
     floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
 
@@ -323,6 +326,8 @@ xcf_load_image (Gimp     *gimp,
 			_("This XCF file is corrupt!  I have loaded as much "
 			  "of it as I can, but it is incomplete."));
 
+  xcf_load_add_masks (image);
+
   gimp_image_undo_enable (image);
 
   return image;
@@ -335,6 +340,32 @@ xcf_load_image (Gimp     *gimp,
   g_object_unref (image);
 
   return NULL;
+}
+
+static void
+xcf_load_add_masks (GimpImage *image)
+{
+  GList *layers;
+  GList *list;
+
+  layers = gimp_image_get_layer_list (image);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpLayer     *layer = list->data;
+      GimpLayerMask *mask;
+
+      mask = g_object_get_data (G_OBJECT (layer), "gimp-layer-mask");
+
+      if (mask)
+        {
+          gimp_layer_add_mask (layer, mask, FALSE, NULL);
+
+          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask", NULL);
+        }
+    }
+
+  g_list_free (layers);
 }
 
 static gboolean
@@ -1136,7 +1167,14 @@ xcf_load_layer (XcfInfo    *info,
       gimp_layer_mask_set_edit  (layer_mask, edit_mask);
       gimp_layer_mask_set_show  (layer_mask, show_mask, FALSE);
 
-      gimp_layer_add_mask (layer, layer_mask, FALSE, NULL);
+      /* don't add the layer mask yet, that won't work for group
+       * layers which update their size automatically; instead
+       * attach it so it can be added when all layers are loaded
+       */
+      g_object_set_data_full (G_OBJECT (layer), "gimp-layer-mask",
+                              g_object_ref (layer_mask),
+                              (GDestroyNotify) g_object_unref);
+      g_object_ref_sink (layer_mask);
     }
 
   /* attach the floating selection... */
