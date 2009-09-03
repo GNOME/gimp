@@ -775,11 +775,14 @@ gimp_editor_set_box_style (GimpEditor *editor,
 
           if (GTK_IS_IMAGE (child))
             {
-              gchar *stock_id;
+              GtkIconSize  old_size;
+              gchar       *stock_id;
 
-              gtk_image_get_stock (GTK_IMAGE (child), &stock_id, NULL);
-              gtk_image_set_from_stock (GTK_IMAGE (child),
-                                        stock_id, button_icon_size);
+              gtk_image_get_stock (GTK_IMAGE (child), &stock_id, &old_size);
+
+              if (button_icon_size != old_size)
+                gtk_image_set_from_stock (GTK_IMAGE (child),
+                                          stock_id, button_icon_size);
             }
         }
     }
