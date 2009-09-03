@@ -98,7 +98,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_NEW_FROM_VISIBLE },
 
   { "layers-new-group", GTK_STOCK_DIRECTORY,
-    NC_("layers-action", "_New Group Layer..."), NULL,
+    NC_("layers-action", "New _Group Layer..."), NULL,
     NC_("layers-action", "Create a new group layer and add it to the image"),
     G_CALLBACK (layers_new_group_cmd_callback),
     GIMP_HELP_LAYER_NEW },
