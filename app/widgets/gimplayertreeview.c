@@ -319,7 +319,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   hbox = gimp_item_tree_view_get_lock_box (GIMP_ITEM_TREE_VIEW (view));
 
-  view->priv->lock_alpha_toggle = gtk_check_button_new ();
+  view->priv->lock_alpha_toggle = gtk_toggle_button_new ();
   gtk_box_pack_start (GTK_BOX (hbox), view->priv->lock_alpha_toggle,
                       FALSE, FALSE, 0);
   gtk_widget_show (view->priv->lock_alpha_toggle);

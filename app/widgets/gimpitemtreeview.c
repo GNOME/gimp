@@ -443,7 +443,7 @@ gimp_item_tree_view_constructor (GType                  type,
 
   hbox = gimp_item_tree_view_get_lock_box (item_view);
 
-  item_view->priv->lock_content_toggle = gtk_check_button_new ();
+  item_view->priv->lock_content_toggle = gtk_toggle_button_new ();
   gtk_box_pack_start (GTK_BOX (hbox), item_view->priv->lock_content_toggle,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (hbox),
