@@ -62,6 +62,8 @@ static void   file_actions_last_opened_reorder (GimpContainer   *container,
 static void   file_actions_close_all_update    (GimpContainer   *images,
                                                 GimpObject      *unused,
                                                 GimpActionGroup *group);
+static gchar *file_actions_create_label        (const gchar     *format,
+                                                const gchar     *uri);
 
 
 static const GimpActionEntry file_actions[] =
@@ -287,19 +289,16 @@ file_actions_update (GimpActionGroup *group,
 
   if (export_to)
     {
-      gchar *label;
-      label = g_strdup_printf (_("Export to %s"),
-                               file_utils_uri_display_basename (export_to));
+      gchar *label = file_actions_create_label(_("Export to %s"), export_to);
       gimp_action_group_set_action_label (group, "file-export-to", label);
       g_free (label);
     }
   else if (show_overwrite)
     {
-      gchar *label;
-      label = g_strdup_printf (_("Overwrite %s"),
-                               file_utils_uri_display_basename (source));
+      gchar *label = file_actions_create_label (_("Overwrite %s"), source);
       gimp_action_group_set_action_label (group, "file-overwrite", label);
       g_free (label);
+
     }
   else
     {
@@ -409,4 +408,18 @@ file_actions_close_all_update (GimpContainer   *images,
     }
 
   gimp_action_group_set_action_sensitive (group, "file-close-all", sensitive);
+}
+
+static gchar *
+file_actions_create_label (const gchar     *format,
+                           const gchar     *uri)
+{
+  gchar *basename         = file_utils_uri_display_basename (uri);
+  gchar *escaped_basename = gimp_escape_uline (basename);
+  gchar *label            = g_strdup_printf (format, escaped_basename);
+
+  g_free (escaped_basename);
+  g_free (basename);
+
+  return label;
 }
