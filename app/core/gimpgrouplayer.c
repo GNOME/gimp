@@ -169,14 +169,14 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->rotate               = gimp_group_layer_rotate;
   item_class->transform            = gimp_group_layer_transform;
 
-  item_class->default_name         = _("Group Layer");
-  item_class->rename_desc          = _("Rename Group Layer");
-  item_class->translate_desc       = _("Move Group Layer");
-  item_class->scale_desc           = _("Scale Group Layer");
-  item_class->resize_desc          = _("Resize Group Layer");
-  item_class->flip_desc            = _("Flip Group Layer");
-  item_class->rotate_desc          = _("Rotate Group Layer");
-  item_class->transform_desc       = _("Transform Group Layer");
+  item_class->default_name         = _("Layer Group");
+  item_class->rename_desc          = _("Rename Layer Group");
+  item_class->translate_desc       = _("Move Layer Group");
+  item_class->scale_desc           = _("Scale Layer Group");
+  item_class->resize_desc          = _("Resize Layer Group");
+  item_class->flip_desc            = _("Flip Layer Group");
+  item_class->rotate_desc          = _("Rotate Layer Group");
+  item_class->transform_desc       = _("Transform Layer Group");
 
   drawable_class->estimate_memsize = gimp_group_layer_estimate_memsize;
 }

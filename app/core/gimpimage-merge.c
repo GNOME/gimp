@@ -194,7 +194,7 @@ gimp_image_merge_down (GimpImage      *image,
   if (gimp_viewable_get_children (GIMP_VIEWABLE (current_layer)))
     {
       g_set_error_literal (error, 0, 0,
-                           _("Cannot merge down a group layer."));
+                           _("Cannot merge down a layer group."));
       return NULL;
     }
 
@@ -219,7 +219,7 @@ gimp_image_merge_down (GimpImage      *image,
           if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
             {
               g_set_error_literal (error, 0, 0,
-                                   _("Cannot merge down to a group layer."));
+                                   _("Cannot merge down to a layer group."));
               return NULL;
             }
 

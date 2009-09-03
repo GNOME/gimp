@@ -131,7 +131,7 @@ gimp_bucket_fill_tool_initialize (GimpTool     *tool,
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot modify the pixels of group layers."));
+			   _("Cannot modify the pixels of layer groups."));
       return FALSE;
     }
 

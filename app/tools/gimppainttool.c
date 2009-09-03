@@ -277,7 +277,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       gimp_tool_message_literal (tool, display,
-                                 _("Cannot paint on group layers."));
+                                 _("Cannot paint on layer groups."));
       return;
     }
 

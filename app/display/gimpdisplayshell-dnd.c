@@ -371,7 +371,7 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
     {
       gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                             GIMP_MESSAGE_ERROR,
-                            _("Cannot modify the pixels of group layers."));
+                            _("Cannot modify the pixels of layer groups."));
       return;
     }
 
@@ -466,7 +466,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
         {
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,
-                                _("Cannot modify the pixels of group layers."));
+                                _("Cannot modify the pixels of layer groups."));
           return;
         }
 
