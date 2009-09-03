@@ -770,7 +770,7 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
 
   if (drawable->private->tile_source_node)
     gegl_node_set (drawable->private->tile_source_node,
-                   "tile-manager", drawable->private->tiles,
+                   "tile-manager", gimp_drawable_get_tiles (drawable),
                    NULL);
 }
 
@@ -1146,7 +1146,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
   if (drawable->private->tile_source_node)
     gegl_node_set (drawable->private->tile_source_node,
-                   "tile-manager", drawable->private->tiles,
+                   "tile-manager", gimp_drawable_get_tiles (drawable),
                    NULL);
 }
 
@@ -1460,7 +1460,7 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
   drawable->private->tile_source_node =
     gegl_node_new_child (drawable->private->source_node,
                          "operation",    "gimp:tilemanager-source",
-                         "tile-manager", drawable->private->tiles,
+                         "tile-manager", gimp_drawable_get_tiles (drawable),
                          "linear",       TRUE,
                          NULL);
 
