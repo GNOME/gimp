@@ -143,6 +143,7 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  gint                recursion_level,
                                                  GimpTransformResize    clip_result,
                                                  GimpProgress       *progress);
+static GeglNode * gimp_layer_get_node           (GimpItem           *item);
 
 static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
                                                  gint                width,
@@ -150,7 +151,6 @@ static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
-static GeglNode * gimp_layer_get_node           (GimpItem           *item);
 
 static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
@@ -457,72 +457,6 @@ gimp_layer_get_description (GimpViewable  *viewable,
 
   return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
                                                               tooltip);
-}
-
-static void
-gimp_layer_get_active_components (const GimpDrawable *drawable,
-                                  gboolean           *active)
-{
-  GimpLayer *layer = GIMP_LAYER (drawable);
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  gint       i;
-
-  /*  first copy the image active channels  */
-  for (i = 0; i < MAX_CHANNELS; i++)
-    active[i] = image->active[i];
-
-  if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
-    active[gimp_drawable_bytes (drawable) - 1] = FALSE;
-}
-
-static GeglNode *
-gimp_layer_get_node (GimpItem *item)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GimpLayer    *layer    = GIMP_LAYER (item);
-  GeglNode     *node;
-  GeglNode     *offset_node;
-  GeglNode     *source;
-  GeglNode     *mode_node;
-
-  node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
-
-  source = gimp_drawable_get_source_node (drawable);
-  gegl_node_add_child (node, source);
-
-  layer->opacity_node = gegl_node_new_child (node,
-                                             "operation", "gegl:opacity",
-                                             "value",     layer->opacity,
-                                             NULL);
-  gegl_node_connect_to (source,              "output",
-                        layer->opacity_node, "input");
-
-  if (layer->mask)
-    {
-      GeglNode *mask;
-
-      mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
-
-      gegl_node_connect_to (mask,                "output",
-                            layer->opacity_node, "aux");
-    }
-
-  offset_node = gimp_item_get_offset_node (GIMP_ITEM (layer));
-
-  gegl_node_connect_to (layer->opacity_node, "output",
-                        offset_node,         "input");
-
-  mode_node = gimp_drawable_get_mode_node (drawable);
-
-  gegl_node_set (mode_node,
-                 "operation",  "gimp:point-layer-mode",
-                 "blend-mode", layer->mode,
-                 NULL);
-
-  gegl_node_connect_to (offset_node, "output",
-                        mode_node,   "aux");
-
-  return node;
 }
 
 static void
@@ -857,6 +791,56 @@ gimp_layer_transform (GimpItem               *item,
                          clip_result, progress);
 }
 
+static GeglNode *
+gimp_layer_get_node (GimpItem *item)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  GimpLayer    *layer    = GIMP_LAYER (item);
+  GeglNode     *node;
+  GeglNode     *offset_node;
+  GeglNode     *source;
+  GeglNode     *mode_node;
+
+  node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
+
+  source = gimp_drawable_get_source_node (drawable);
+  gegl_node_add_child (node, source);
+
+  layer->opacity_node = gegl_node_new_child (node,
+                                             "operation", "gegl:opacity",
+                                             "value",     layer->opacity,
+                                             NULL);
+  gegl_node_connect_to (source,              "output",
+                        layer->opacity_node, "input");
+
+  if (layer->mask)
+    {
+      GeglNode *mask;
+
+      mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
+
+      gegl_node_connect_to (mask,                "output",
+                            layer->opacity_node, "aux");
+    }
+
+  offset_node = gimp_item_get_offset_node (GIMP_ITEM (layer));
+
+  gegl_node_connect_to (layer->opacity_node, "output",
+                        offset_node,         "input");
+
+  mode_node = gimp_drawable_get_mode_node (drawable);
+
+  gegl_node_set (mode_node,
+                 "operation",  "gimp:point-layer-mode",
+                 "blend-mode", layer->mode,
+                 NULL);
+
+  gegl_node_connect_to (offset_node, "output",
+                        mode_node,   "aux");
+
+  return node;
+}
+
 static gint64
 gimp_layer_estimate_memsize (const GimpDrawable *drawable,
                              gint                width,
@@ -902,6 +886,22 @@ gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
+}
+
+static void
+gimp_layer_get_active_components (const GimpDrawable *drawable,
+                                  gboolean           *active)
+{
+  GimpLayer *layer = GIMP_LAYER (drawable);
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  gint       i;
+
+  /*  first copy the image active channels  */
+  for (i = 0; i < MAX_CHANNELS; i++)
+    active[i] = image->active[i];
+
+  if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
+    active[gimp_drawable_bytes (drawable) - 1] = FALSE;
 }
 
 static gint
