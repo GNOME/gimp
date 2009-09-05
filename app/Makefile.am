@@ -9,28 +9,28 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 
+# Sort this by architectural depenendencies
 SUBDIRS = \
-	paint-funcs	\
-	composite	\
-	base 		\
-	gegl		\
-	config		\
-	core		\
-	paint		\
-	text		\
-	vectors		\
-	plug-in		\
-	file		\
-	xcf		\
-	pdb		\
-	widgets		\
-	display		\
-	tools		\
-	dialogs		\
-	actions		\
+	gui		\
 	menus		\
-	gui
-
+	actions		\
+	dialogs		\
+	tools		\
+	display		\
+	widgets		\
+	pdb		\
+	file		\
+	plug-in		\
+	core		\
+	xcf		\
+	vectors		\
+	text		\
+	composite	\
+	gegl		\
+	paint		\
+	config		\
+	paint-funcs	\
+	base
 
 if ENABLE_GIMP_CONSOLE
 bin_PROGRAMS = gimp-2.7 gimp-console-2.7
@@ -94,56 +94,90 @@ INCLUDES = \
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
+# FIXME: core should not depend on xcf
+workaround_that_core_depends_on_xcf = \
+	-u $(SYMPREFIX)xcf_init
+
+# FIXME: core should not depend on pdb
+workaround_that_core_depends_on_pdb = \
+	-u $(SYMPREFIX)internal_procs_init		\
+	-u $(SYMPREFIX)gimp_plug_in_manager_restore
+
+# FIXME: plug-in should not depend on pdb
+workaround_that_plug_in_depends_on_pdb = \
+	-u $(SYMPREFIX)gimp_pdb_compat_param_spec
+
+# FIXME: file should not depend on plug-in
+workaround_that_file_depends_on_plug_in = \
+	-u $(SYMPREFIX)plug_in_icc_profile_apply_rgb	\
+	-u $(SYMPREFIX)gimp_image_map_config_get_type
+
+# core, vectors and gegl are on the same architectural layer, prevent
+# the linker from panicing
+calm_down_linker = \
+	-u $(SYMPREFIX)gimp_vectors_undo_get_type	\
+	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
+	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
+	-u $(SYMPREFIX)gimp_curve_map_pixels
+
 AM_LDFLAGS = \
 	$(munix)					\
 	$(CARBON_LDFLAGS)				\
-	-u $(SYMPREFIX)xcf_init				\
-	-u $(SYMPREFIX)internal_procs_init		\
-	-u $(SYMPREFIX)gimp_coords_interpolate_bezier	\
-	-u $(SYMPREFIX)gimp_curve_map_pixels		\
-	-u $(SYMPREFIX)gimp_image_map_config_get_type	\
-	-u $(SYMPREFIX)gimp_plug_in_manager_restore
+	$(calm_down_linker)				\
+	$(workaround_that_core_depends_on_xcf)		\
+	$(workaround_that_core_depends_on_pdb)		\
+	$(workaround_that_plug_in_depends_on_pdb)	\
+	$(workaround_that_file_depends_on_plug_in)
 
-gimp_2_7_LDFLAGS = $(AM_LDFLAGS) $(win32_ldflags) 
+gimpconsoleldadd = \
+	display/gimpdisplayoptions.o	\
+	display/display-enums.o		\
+	widgets/widgets-enums.o		\
+	xcf/libappxcf.a			\
+	pdb/libappinternal-procs.a	\
+	pdb/libapppdb.a			\
+	plug-in/libappplug-in.a		\
+	vectors/libappvectors.a		\
+	core/libappcore.a		\
+	file/libappfile.a		\
+	text/libapptext.a		\
+	paint/libapppaint.a		\
+	composite/libappcomposite.a	\
+	gegl/libappgegl.a		\
+	config/libappconfig.a		\
+	paint-funcs/libapppaint-funcs.a	\
+	base/libappbase.a		\
+	$(libgimpconfig)		\
+	$(libgimpmath)			\
+	$(libgimpthumb)			\
+	$(libgimpcolor)			\
+	$(libgimpmodule)		\
+	$(libgimpbase)			\
+	$(GIMPICONRC)			\
+	$(GDK_PIXBUF_LIBS)		\
+	$(FREETYPE_LIBS)		\
+	$(FONTCONFIG_LIBS)		\
+	$(PANGOCAIRO_LIBS)		\
+	$(CAIRO_LIBS)			\
+	$(GEGL_LIBS)			\
+	$(GLIB_LIBS)			\
+	$(INTLLIBS)			\
+	$(RT_LIBS)
+
+gimp_2_7_LDFLAGS = $(AM_LDFLAGS) $(win32_ldflags)
 
 gimp_2_7_LDADD = \
-	gui/libappgui.a			\
-	actions/libappactions.a		\
-	dialogs/libappdialogs.a		\
-	menus/libappmenus.a		\
-	display/libappdisplay.a		\
-	tools/libapptools.a		\
-	widgets/libappwidgets.a		\
-	pdb/libappinternal-procs.a	\
-	xcf/libappxcf.a			\
-	file/libappfile.a		\
-	plug-in/libappplug-in.a		\
-	pdb/libapppdb.a			\
-	core/libappcore.a		\
-	vectors/libappvectors.a		\
-	paint/libapppaint.a		\
-	text/libapptext.a		\
-	config/libappconfig.a		\
-	gegl/libappgegl.a		\
-	paint-funcs/libapppaint-funcs.a	\
-	composite/libappcomposite.a	\
-	base/libappbase.a		\
-	$(libgimpwidgets)		\
-	$(libgimpmodule)		\
-	$(libgimpcolor)			\
-	$(libgimpthumb)			\
-	$(libgimpmath)			\
-	$(libgimpconfig)		\
-	$(libgimpbase)			\
-	$(GTK_LIBS)			\
-	$(PANGOCAIRO_LIBS)		\
-	$(FONTCONFIG_LIBS)		\
-	$(FREETYPE_LIBS)		\
-	$(DBUS_GLIB_LIBS)		\
-	$(GEGL_LIBS)			\
-	$(RT_LIBS)			\
-	$(INTLLIBS)			\
-	$(GIMPICONRC)
+	gui/libappgui.a		\
+	menus/libappmenus.a	\
+	actions/libappactions.a	\
+	dialogs/libappdialogs.a	\
+	tools/libapptools.a	\
+	display/libappdisplay.a	\
+	widgets/libappwidgets.a	\
+	$(libgimpwidgets)	\
+	$(GTK_LIBS)		\
+	$(DBUS_GLIB_LIBS)	\
+	$(gimpconsoleldadd)
 
 
 if ENABLE_GIMP_CONSOLE
@@ -155,39 +189,7 @@ gimp_console_2_7_CPPFLAGS = \
 	-DGIMP_CONSOLE_COMPILATION
 
 gimp_console_2_7_LDADD = \
-	widgets/widgets-enums.o		\
-	display/display-enums.o		\
-	display/gimpdisplayoptions.o	\
-	pdb/libappinternal-procs.a	\
-	xcf/libappxcf.a			\
-	file/libappfile.a		\
-	plug-in/libappplug-in.a		\
-	pdb/libapppdb.a			\
-	core/libappcore.a		\
-	vectors/libappvectors.a		\
-	paint/libapppaint.a		\
-	text/libapptext.a		\
-	config/libappconfig.a		\
-	gegl/libappgegl.a		\
-	paint-funcs/libapppaint-funcs.a	\
-	composite/libappcomposite.a	\
-	base/libappbase.a		\
-	$(libgimpmodule)		\
-	$(libgimpcolor)			\
-	$(libgimpthumb)			\
-	$(libgimpmath)			\
-	$(libgimpconfig)		\
-	$(libgimpbase)			\
-	$(GDK_PIXBUF_LIBS)		\
-	$(CAIRO_LIBS)			\
-	$(PANGOCAIRO_LIBS)		\
-	$(FONTCONFIG_LIBS)		\
-	$(FREETYPE_LIBS)		\
-	$(GEGL_LIBS)			\
-	$(GLIB_LIBS)			\
-	$(RT_LIBS)			\
-	$(INTLLIBS)			\
-	$(GIMPICONRC)
+	$(gimpconsoleldadd)
 
 endif
 

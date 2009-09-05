@@ -63,30 +63,36 @@ TESTS = test-config
 
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
+# We need this due to circular dependencies, see more detailed
+# comments about it in app/Makefile.am
 test_config_LDFLAGS = \
 	-u $(SYMPREFIX)xcf_init				\
+	-u $(SYMPREFIX)gimp_pdb_new			\
 	-u $(SYMPREFIX)internal_procs_init		\
-	-u $(SYMPREFIX)gimp_coords_interpolate_bezier	\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore	\
+	-u $(SYMPREFIX)plug_in_icc_profile_apply_rgb	\
+	-u $(SYMPREFIX)gimp_vectors_undo_get_type	\
+	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
+	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
 	-u $(SYMPREFIX)gimp_image_map_config_get_type
 
 test_config_LDADD = \
-	../widgets/widgets-enums.o		\
-	../display/display-enums.o		\
 	../display/gimpdisplayoptions.o		\
-	../pdb/libappinternal-procs.a		\
+	../display/display-enums.o		\
+	../widgets/widgets-enums.o		\
 	../xcf/libappxcf.a			\
-	../file/libappfile.a			\
-	../plug-in/libappplug-in.a		\
+	../pdb/libappinternal-procs.a		\
 	../pdb/libapppdb.a			\
-	../core/libappcore.a			\
+	../plug-in/libappplug-in.a		\
 	../vectors/libappvectors.a		\
-	../paint/libapppaint.a			\
+	../core/libappcore.a			\
+	../file/libappfile.a			\
 	../text/libapptext.a			\
+	../paint/libapppaint.a			\
+	../composite/libappcomposite.a		\
 	../gegl/libappgegl.a			\
 	libappconfig.a				\
 	../paint-funcs/libapppaint-funcs.a	\
-	../composite/libappcomposite.a		\
 	../base/libappbase.a			\
 	../gimp-log.o				\
 	$(libgimpmodule)			\
