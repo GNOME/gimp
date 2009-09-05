@@ -11,6 +11,7 @@ libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 # Sort this by architectural depenendencies
 SUBDIRS = \
+	tests		\
 	gui		\
 	menus		\
 	actions		\
@@ -51,6 +52,8 @@ app_sources = \
 	sanity.h	\
 	signals.c	\
 	signals.h	\
+	tests.c		\
+	tests.h		\
 	unique.c	\
 	unique.h	\
 	units.c		\

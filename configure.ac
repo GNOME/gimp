@@ -1979,6 +1979,7 @@ app/tools/Makefile
 app/vectors/Makefile
 app/widgets/Makefile
 app/xcf/Makefile
+app/tests/Makefile
 plug-ins/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile
