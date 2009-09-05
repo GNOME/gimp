@@ -36,7 +36,7 @@
 Gimp *
 gimp_init_for_testing (void)
 {
-  Gimp *gimp  = gimp_new ("Unit Tested GIMP", NULL, TRUE, TRUE, TRUE, TRUE,
+  Gimp *gimp  = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
                           FALSE, TRUE, TRUE, FALSE);
 
   units_init (gimp);
