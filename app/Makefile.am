@@ -16,13 +16,13 @@ SUBDIRS = \
 	base		\
 	paint-funcs	\
 	config		\
-	paint		\
 	gegl		\
 	composite	\
 	text		\
-	vectors		\
 	xcf		\
 	core		\
+	vectors		\
+	paint		\
 	plug-in		\
 	file		\
 	pdb		\
