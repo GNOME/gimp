@@ -35,6 +35,9 @@
 
 typedef struct _GimpImageDockClass   GimpImageDockClass;
 
+/**
+ * Adds some GimpImage specific hooks and logic to GimpDock.
+ */
 struct _GimpImageDock
 {
   GimpDock       parent_instance;

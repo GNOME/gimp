@@ -30,6 +30,9 @@
 
 typedef struct _GimpDockedInterface GimpDockedInterface;
 
+/**
+ * Interface with common methods for stuff that is docked.
+ */
 struct _GimpDockedInterface
 {
   GTypeInterface base_iface;

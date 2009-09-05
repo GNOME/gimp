@@ -36,6 +36,9 @@
 typedef struct _GimpDockClass GimpDockClass;
 typedef struct _GimpDockPriv  GimpDockPriv;
 
+/**
+ * A top-level window containing GimpDockbooks.
+ */
 struct _GimpDock
 {
   GimpWindow    parent_instance;

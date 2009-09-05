@@ -32,6 +32,10 @@
 
 typedef struct _GimpDockSeparatorClass GimpDockSeparatorClass;
 
+/**
+ * Separates dockable and acts as drop-targets to allow rearrangements
+ * of them.
+ */
 struct _GimpDockSeparator
 {
   GtkEventBox    parent_instance;

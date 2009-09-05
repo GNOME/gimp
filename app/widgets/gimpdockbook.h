@@ -32,6 +32,10 @@
 
 typedef struct _GimpDockbookClass  GimpDockbookClass;
 
+/**
+ * Holds GimpDockables which are presented on different tabs using
+ * GtkNotebook.
+ */
 struct _GimpDockbook
 {
   GtkNotebook    parent_instance;
