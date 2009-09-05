@@ -615,7 +615,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask);
+  SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask && !children);
   SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask && !children);
   SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
 
