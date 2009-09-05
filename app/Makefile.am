@@ -9,29 +9,31 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 
-# Sort this by architectural depenendencies
+# Sort this by architectural depenendencies, lowest level at the top,
+# so that when e.g. changing a header-file the subdirs are built in
+# the right order
 SUBDIRS = \
-	tests		\
-	gui		\
-	menus		\
-	actions		\
-	dialogs		\
-	tools		\
-	display		\
-	widgets		\
-	pdb		\
-	file		\
-	plug-in		\
-	core		\
-	xcf		\
-	vectors		\
-	text		\
-	composite	\
-	gegl		\
-	paint		\
-	config		\
+	base		\
 	paint-funcs	\
-	base
+	config		\
+	paint		\
+	gegl		\
+	composite	\
+	text		\
+	vectors		\
+	xcf		\
+	core		\
+	plug-in		\
+	file		\
+	pdb		\
+	widgets		\
+	display		\
+	tools		\
+	dialogs		\
+	actions		\
+	menus		\
+	gui		\
+	tests
 
 if ENABLE_GIMP_CONSOLE
 bin_PROGRAMS = gimp-2.7 gimp-console-2.7
