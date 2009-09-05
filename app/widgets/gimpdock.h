@@ -33,17 +33,17 @@
 #define GIMP_DOCK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCK, GimpDockClass))
 
 
-typedef struct _GimpDockClass GimpDockClass;
-typedef struct _GimpDockPriv  GimpDockPriv;
+typedef struct _GimpDockClass    GimpDockClass;
+typedef struct _GimpDockPrivate  GimpDockPrivate;
 
 /**
  * A top-level window containing GimpDockbooks.
  */
 struct _GimpDock
 {
-  GimpWindow    parent_instance;
+  GimpWindow       parent_instance;
 
-  GimpDockPriv *priv;
+  GimpDockPrivate *p;
 };
 
 struct _GimpDockClass
