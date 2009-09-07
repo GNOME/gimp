@@ -21,6 +21,10 @@
 
 #include "core/core-types.h"
 
+#include "base/base.h"
+
+#include "config/gimpbaseconfig.h"
+
 #include "core/gimp.h"
 
 #include "tests.h"
@@ -34,14 +38,16 @@
  * selected subset of the initialization happning in app_run().
  **/
 Gimp *
-gimp_init_for_testing (void)
+gimp_init_for_testing (gboolean use_cpu_accel)
 {
-  Gimp *gimp  = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
-                          FALSE, TRUE, TRUE, FALSE);
+  Gimp *gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
+                         FALSE, TRUE, TRUE, FALSE);
 
   units_init (gimp);
 
   gimp_load_config (gimp, NULL, NULL);
+
+  base_init (GIMP_BASE_CONFIG (gimp->config), FALSE, use_cpu_accel);
 
   return gimp;
 }

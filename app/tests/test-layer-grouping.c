@@ -50,11 +50,13 @@ int
 main (int    argc,
       char **argv)
 {
+  g_thread_init (NULL);
   g_type_init ();
+
   g_test_init (&argc, &argv, NULL);
 
   /* We share the same application instance across all tests */
-  gimp = gimp_init_for_testing ();
+  gimp = gimp_init_for_testing (TRUE);
 
   /* Setup the tests */
   g_test_add ("/gimp-layer-grouping/add-layer",

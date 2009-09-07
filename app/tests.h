@@ -18,6 +18,8 @@
 #ifndef __TESTS_H__
 #define __TESTS_H__
 
-Gimp * gimp_init_for_testing (void);
+
+Gimp * gimp_init_for_testing (gboolean use_cpu_accel);
+
 
 #endif /* __TESTS_H__ */
