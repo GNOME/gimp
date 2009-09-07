@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-05-24 15:24+0000\n"
-"PO-Revision-Date: 2009-05-02 22:15+0800\n"
+"POT-Creation-Date: 2009-09-02 19:58+0000\n"
+"PO-Revision-Date: 2009-08-12 14:51+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgstr "导出文件"
 msgid "_Ignore"
 msgstr "忽略(_I)"
 
-#: ../libgimp/gimpexport.c:498
+#: ../libgimp/gimpexport.c:498 ../libgimp/gimpexport.c:969
 msgid "_Export"
 msgstr "导出(_E)"
 
@@ -194,7 +194,7 @@ msgstr "您的图像在保存为 %s 之前应该先进行导出，因为："
 msgid "The export conversion won't modify your original image."
 msgstr "导出转换不会改变您原来的图像。"
 
-#: ../libgimp/gimpexport.c:701
+#: ../libgimp/gimpexport.c:705
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -203,7 +203,7 @@ msgstr ""
 "您将要把图层蒙板保存为 %s。\n"
 "这将不会保存可见的图层。"
 
-#: ../libgimp/gimpexport.c:707
+#: ../libgimp/gimpexport.c:711
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -211,6 +211,10 @@ msgid ""
 msgstr ""
 "您将要把通道(已保存的选区)保存为 %s。\n"
 "这将不会保存可见的图层。"
+
+#: ../libgimp/gimpexport.c:960
+msgid "Export Image as "
+msgstr "图像导出为"
 
 #: ../libgimp/gimpfontselectbutton.c:129
 msgid "Font Selection"
@@ -993,8 +997,8 @@ msgid "while parsing token '%s': %s"
 msgstr "解析 “%s” 时：%s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:473
-#: ../libgimpconfig/gimpconfig-iface.c:486 ../libgimpconfig/gimpscanner.c:497
-#: ../libgimpconfig/gimpscanner.c:578
+#: ../libgimpconfig/gimpconfig-iface.c:486 ../libgimpconfig/gimpscanner.c:501
+#: ../libgimpconfig/gimpscanner.c:582
 #: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "严重解析错误"
@@ -1044,12 +1048,12 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "无法创建“%s”：%s"
 
-#: ../libgimpconfig/gimpscanner.c:254
+#: ../libgimpconfig/gimpscanner.c:258
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "无效的 UTF-8 字符串"
 
-#: ../libgimpconfig/gimpscanner.c:605
+#: ../libgimpconfig/gimpscanner.c:609
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "解析 “%s” 第 %d 行时出错：%s"
@@ -1336,11 +1340,11 @@ msgstr "更多..."
 msgid "Unit Selection"
 msgstr "单位选择"
 
-#: ../libgimpwidgets/gimpunitmenu.c:628
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "单位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:632
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "因子"
 
