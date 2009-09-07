@@ -35,13 +35,17 @@ SUBDIRS = \
 	gui		\
 	tests
 
+# Put the GIMP core in a lib so we can conveniently link against that
+# in test cases
+noinst_LIBRARIES = libapp.a
+
 if ENABLE_GIMP_CONSOLE
 bin_PROGRAMS = gimp-2.7 gimp-console-2.7
 else
 bin_PROGRAMS = gimp-2.7
 endif
 
-app_sources = \
+libapp_sources = \
 	about.h		\
 	app.c		\
 	app.h		\
@@ -49,7 +53,6 @@ app_sources = \
 	batch.h		\
 	errors.c	\
 	errors.h	\
-	main.c		\
 	sanity.c	\
 	sanity.h	\
 	signals.c	\
@@ -66,7 +69,9 @@ app_sources = \
 	gimp-log.h	\
 	gimp-intl.h
 
-gimp_2_7_SOURCES = $(app_sources)
+libapp_a_SOURCES = $(libapp_sources)
+
+gimp_2_7_SOURCES = $(libapp_sources) main.c
 
 
 EXTRA_DIST = \
@@ -187,7 +192,7 @@ gimp_2_7_LDADD = \
 
 if ENABLE_GIMP_CONSOLE
 
-gimp_console_2_7_SOURCES = $(app_sources)
+gimp_console_2_7_SOURCES = $(libapp_sources) main.c
 
 gimp_console_2_7_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\

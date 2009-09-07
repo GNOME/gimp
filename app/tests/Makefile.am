@@ -28,6 +28,7 @@ AM_CPPFLAGS = \
 # comments about it in app/Makefile.am
 AM_LDFLAGS = \
 	-u $(SYMPREFIX)xcf_init				\
+	-u $(SYMPREFIX)base_init			\
 	-u $(SYMPREFIX)internal_procs_init		\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore	\
 	-u $(SYMPREFIX)gimp_pdb_compat_param_spec	\
@@ -56,9 +57,7 @@ LDADD = \
 	$(top_builddir)/app/display/libappdisplay.a		\
 	$(top_builddir)/app/paint-funcs/libapppaint-funcs.a	\
 	$(top_builddir)/app/base/libappbase.a			\
-	$(top_builddir)/app/gimp-log.o				\
-	$(top_builddir)/app/tests.o				\
-	$(top_builddir)/app/units.o				\
+	$(top_builddir)/app/libapp.a				\
 	$(libgimpconfig)					\
 	$(libgimpmath)						\
 	$(libgimpthumb)						\
