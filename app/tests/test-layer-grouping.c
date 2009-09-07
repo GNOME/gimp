@@ -46,7 +46,9 @@ static void gimp_test_add_layer      (GimpTestFixture *fixture,
 static Gimp *gimp = NULL;
 
 
-int main(int argc, char **argv)
+int
+main (int    argc,
+      char **argv)
 {
   g_type_init ();
   g_test_init (&argc, &argv, NULL);
@@ -75,7 +77,7 @@ int main(int argc, char **argv)
  **/
 static void
 gimp_test_image_setup (GimpTestFixture *fixture,
-                 gconstpointer    data)
+                       gconstpointer    data)
 {
   fixture->image = gimp_image_new (gimp,
                                    GIMP_TEST_IMAGE_SIZE,
