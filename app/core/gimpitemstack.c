@@ -140,6 +140,24 @@ gimp_item_stack_get_n_items (GimpItemStack *stack)
   return n_items;
 }
 
+gboolean
+gimp_item_stack_is_flat (GimpItemStack *stack)
+{
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), TRUE);
+
+  for (list = GIMP_LIST (stack)->list; list; list = g_list_next (list))
+    {
+      GimpViewable *viewable = list->data;
+
+      if (gimp_viewable_get_children (viewable))
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
 GList *
 gimp_item_stack_get_item_iter (GimpItemStack *stack)
 {
