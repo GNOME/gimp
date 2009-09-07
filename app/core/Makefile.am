@@ -185,6 +185,8 @@ libappcore_a_sources = \
 	gimpgrid.h				\
 	gimpgrouplayer.c			\
 	gimpgrouplayer.h			\
+	gimpgrouplayerundo.c			\
+	gimpgrouplayerundo.h			\
 	gimpguide.c				\
 	gimpguide.h				\
 	gimpguideundo.c				\

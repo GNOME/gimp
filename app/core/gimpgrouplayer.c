@@ -33,6 +33,7 @@
 
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
+#include "gimpimage-undo-push.h"
 #include "gimpdrawablestack.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
@@ -118,7 +119,8 @@ static void            gimp_group_layer_child_move   (GimpLayer       *child,
 static void            gimp_group_layer_child_resize (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
 
-static void            gimp_group_layer_update_size  (GimpGroupLayer    *group);
+static void            gimp_group_layer_update       (GimpGroupLayer  *group);
+static void            gimp_group_layer_update_size  (GimpGroupLayer  *group);
 
 static void            gimp_group_layer_stack_update (GimpDrawableStack *stack,
                                                       gint               x,
@@ -395,6 +397,9 @@ gimp_group_layer_translate (GimpItem *item,
   GimpLayerMask  *mask;
   GList          *list;
 
+  /*  don't push an undo here because undo will call us again  */
+  gimp_group_layer_suspend_resize (group, FALSE);
+
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
        list;
        list = g_list_next (list))
@@ -415,6 +420,9 @@ gimp_group_layer_translate (GimpItem *item,
 
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (mask));
     }
+
+  /*  don't push an undo here because undo will call us again  */
+  gimp_group_layer_resume_resize (group, FALSE);
 }
 
 static void
@@ -439,6 +447,8 @@ gimp_group_layer_scale (GimpItem              *item,
 
   old_offset_x = gimp_item_get_offset_x (item);
   old_offset_y = gimp_item_get_offset_y (item);
+
+  gimp_group_layer_suspend_resize (group, TRUE);
 
   list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
 
@@ -488,6 +498,8 @@ gimp_group_layer_scale (GimpItem              *item,
                      new_width, new_height,
                      new_offset_x, new_offset_y,
                      interpolation_type, progress);
+
+  gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static void
@@ -505,6 +517,8 @@ gimp_group_layer_resize (GimpItem    *item,
 
   x = gimp_item_get_offset_x (item) - offset_x;
   y = gimp_item_get_offset_y (item) - offset_y;
+
+  gimp_group_layer_suspend_resize (group, TRUE);
 
   list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
 
@@ -555,6 +569,8 @@ gimp_group_layer_resize (GimpItem    *item,
   if (mask)
     gimp_item_resize (GIMP_ITEM (mask), context,
                       new_width, new_height, offset_x, offset_y);
+
+  gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static void
@@ -567,6 +583,8 @@ gimp_group_layer_flip (GimpItem            *item,
   GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
   GimpLayerMask  *mask;
   GList          *list;
+
+  gimp_group_layer_suspend_resize (group, TRUE);
 
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
        list;
@@ -583,6 +601,8 @@ gimp_group_layer_flip (GimpItem            *item,
   if (mask)
     gimp_item_flip (GIMP_ITEM (mask), context,
                     flip_type, axis, clip_result);
+
+  gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static void
@@ -596,6 +616,8 @@ gimp_group_layer_rotate (GimpItem         *item,
   GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
   GimpLayerMask  *mask;
   GList          *list;
+
+  gimp_group_layer_suspend_resize (group, TRUE);
 
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
        list;
@@ -612,6 +634,8 @@ gimp_group_layer_rotate (GimpItem         *item,
   if (mask)
     gimp_item_rotate (GIMP_ITEM (mask), context,
                       rotate_type, center_x, center_y, clip_result);
+
+  gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static void
@@ -627,6 +651,8 @@ gimp_group_layer_transform (GimpItem               *item,
   GimpGroupLayer *group = GIMP_GROUP_LAYER (item);
   GimpLayerMask  *mask;
   GList          *list;
+
+  gimp_group_layer_suspend_resize (group, TRUE);
 
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
        list;
@@ -647,6 +673,8 @@ gimp_group_layer_transform (GimpItem               *item,
                          matrix, direction,
                          interpolation_type, recursion_level,
                          clip_result, progress);
+
+  gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static gint64
@@ -758,6 +786,52 @@ gimp_group_layer_new (GimpImage *image)
   return GIMP_LAYER (group);
 }
 
+void
+gimp_group_layer_suspend_resize (GimpGroupLayer *group,
+                                 gboolean        push_undo)
+{
+  GimpItem *item;
+
+  g_return_if_fail (GIMP_IS_GROUP_LAYER (group));
+
+  item = GIMP_ITEM (group);
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
+    gimp_image_undo_push_group_layer_suspend (gimp_item_get_image (item),
+                                              NULL, group);
+
+  group->suspend_resize++;
+}
+
+void
+gimp_group_layer_resume_resize (GimpGroupLayer *group,
+                                gboolean        push_undo)
+{
+  GimpItem *item;
+
+  g_return_if_fail (GIMP_IS_GROUP_LAYER (group));
+  g_return_if_fail (group->suspend_resize > 0);
+
+  item = GIMP_ITEM (group);
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
+    gimp_image_undo_push_group_layer_resume (gimp_item_get_image (item),
+                                             NULL, group);
+
+  group->suspend_resize--;
+
+  if (group->suspend_resize == 0)
+    {
+      gimp_group_layer_update_size (group);
+    }
+}
+
 
 /*  private functions  */
 
@@ -766,7 +840,7 @@ gimp_group_layer_child_add (GimpContainer  *container,
                             GimpLayer      *child,
                             GimpGroupLayer *group)
 {
-  gimp_group_layer_update_size (group);
+  gimp_group_layer_update (group);
 }
 
 static void
@@ -774,7 +848,7 @@ gimp_group_layer_child_remove (GimpContainer  *container,
                                GimpLayer      *child,
                                GimpGroupLayer *group)
 {
-  gimp_group_layer_update_size (group);
+  gimp_group_layer_update (group);
 }
 
 static void
@@ -782,20 +856,31 @@ gimp_group_layer_child_move (GimpLayer      *child,
                              GParamSpec     *pspec,
                              GimpGroupLayer *group)
 {
-  gimp_group_layer_update_size (group);
+  gimp_group_layer_update (group);
 }
 
 static void
 gimp_group_layer_child_resize (GimpLayer      *child,
                                GimpGroupLayer *group)
 {
-  gimp_group_layer_update_size (group);
+  gimp_group_layer_update (group);
+}
+
+static void
+gimp_group_layer_update (GimpGroupLayer *group)
+{
+  if (group->suspend_resize == 0)
+    {
+      gimp_group_layer_update_size (group);
+    }
 }
 
 static void
 gimp_group_layer_update_size (GimpGroupLayer *group)
 {
   GimpItem *item       = GIMP_ITEM (group);
+  gint      old_x      = gimp_item_get_offset_x (item);
+  gint      old_y      = gimp_item_get_offset_y (item);
   gint      old_width  = gimp_item_get_width  (item);
   gint      old_height = gimp_item_get_height (item);
   gint      x          = 0;
@@ -831,9 +916,9 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         }
     }
 
-  if (x      != gimp_item_get_offset_x (item) ||
-      y      != gimp_item_get_offset_y (item) ||
-      width  != old_width                     ||
+  if (x      != old_x     ||
+      y      != old_y     ||
+      width  != old_width ||
       height != old_height)
     {
       if (width  != old_width ||

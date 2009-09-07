@@ -128,6 +128,16 @@ GimpUndo * gimp_image_undo_push_layer_lock_alpha    (GimpImage     *image,
                                                      GimpLayer     *layer);
 
 
+/*  group layer undos  */
+
+GimpUndo * gimp_image_undo_push_group_layer_suspend (GimpImage      *image,
+                                                     const gchar    *undo_desc,
+                                                     GimpGroupLayer *group);
+GimpUndo * gimp_image_undo_push_group_layer_resume  (GimpImage      *image,
+                                                     const gchar    *undo_desc,
+                                                     GimpGroupLayer *group);
+
+
 /*  text layer undos  */
 
 GimpUndo * gimp_image_undo_push_text_layer          (GimpImage     *image,

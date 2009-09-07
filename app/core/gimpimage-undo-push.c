@@ -32,6 +32,8 @@
 #include "gimpdrawableundo.h"
 #include "gimpfloatingselundo.h"
 #include "gimpgrid.h"
+#include "gimpgrouplayer.h"
+#include "gimpgrouplayerundo.h"
 #include "gimpguide.h"
 #include "gimpguideundo.h"
 #include "gimpimage.h"
@@ -39,7 +41,6 @@
 #include "gimpimage-undo-push.h"
 #include "gimpimageundo.h"
 #include "gimpitempropundo.h"
-#include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimplayermaskpropundo.h"
 #include "gimplayermaskundo.h"
@@ -510,6 +511,43 @@ gimp_image_undo_push_layer_lock_alpha (GimpImage   *image,
                                GIMP_UNDO_LAYER_LOCK_ALPHA, undo_desc,
                                GIMP_DIRTY_ITEM_META,
                                "item", layer,
+                               NULL);
+}
+
+
+/***********************/
+/*  Group Layer Undos  */
+/***********************/
+
+GimpUndo *
+gimp_image_undo_push_group_layer_suspend (GimpImage      *image,
+                                          const gchar    *undo_desc,
+                                          GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_SUSPEND, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  group,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_group_layer_resume (GimpImage      *image,
+                                         const gchar    *undo_desc,
+                                         GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_RESUME, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  group,
                                NULL);
 }
 

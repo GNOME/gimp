@@ -129,6 +129,7 @@ typedef struct _GimpLayerMaskUndo     GimpLayerMaskUndo;
 typedef struct _GimpLayerMaskPropUndo GimpLayerMaskPropUndo;
 typedef struct _GimpLayerUndo         GimpLayerUndo;
 typedef struct _GimpLayerPropUndo     GimpLayerPropUndo;
+typedef struct _GimpGroupLayerUndo    GimpGroupLayerUndo;
 typedef struct _GimpMaskUndo          GimpMaskUndo;
 typedef struct _GimpGuideUndo         GimpGuideUndo;
 typedef struct _GimpSamplePointUndo   GimpSamplePointUndo;
