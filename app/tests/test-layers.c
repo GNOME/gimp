@@ -122,22 +122,28 @@ gimp_test_add_layer (GimpTestFixture *fixture,
                      gconstpointer    data)
 {
   GimpImage *image = fixture->image;
-  GimpLayer *layer = gimp_layer_new (image,
-                                     GIMP_TEST_IMAGE_SIZE,
-                                     GIMP_TEST_IMAGE_SIZE,
-                                     GIMP_RGBA_IMAGE,
-                                     "Test Layer",
-                                     1.0,
-                                     GIMP_NORMAL_MODE);
+  GimpLayer *layer;
+  gboolean   result;
 
   g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
 
-  gimp_image_add_layer (image,
-                        layer,
-                        GIMP_IMAGE_ACTIVE_PARENT,
-                        0,
-                        FALSE);
+  layer = gimp_layer_new (image,
+                          GIMP_TEST_IMAGE_SIZE,
+                          GIMP_TEST_IMAGE_SIZE,
+                          GIMP_RGBA_IMAGE,
+                          "Test Layer",
+                          1.0,
+                          GIMP_NORMAL_MODE);
 
+  g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
+
+  result = gimp_image_add_layer (image,
+                                 layer,
+                                 GIMP_IMAGE_ACTIVE_PARENT,
+                                 0,
+                                 FALSE);
+
+  g_assert_cmpint (result, ==, TRUE);
   g_assert_cmpint (gimp_image_get_n_layers (image), ==, 1);
 }
 
@@ -153,22 +159,28 @@ gimp_test_remove_layer (GimpTestFixture *fixture,
                         gconstpointer    data)
 {
   GimpImage *image = fixture->image;
-  GimpLayer *layer = gimp_layer_new (image,
-                                     GIMP_TEST_IMAGE_SIZE,
-                                     GIMP_TEST_IMAGE_SIZE,
-                                     GIMP_RGBA_IMAGE,
-                                     "Test Layer",
-                                     1.0,
-                                     GIMP_NORMAL_MODE);
+  GimpLayer *layer;
+  gboolean   result;
 
   g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
 
-  gimp_image_add_layer (image,
-                        layer,
-                        GIMP_IMAGE_ACTIVE_PARENT,
-                        0,
-                        FALSE);
+  layer = gimp_layer_new (image,
+                          GIMP_TEST_IMAGE_SIZE,
+                          GIMP_TEST_IMAGE_SIZE,
+                          GIMP_RGBA_IMAGE,
+                          "Test Layer",
+                          1.0,
+                          GIMP_NORMAL_MODE);
 
+  g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
+
+  result = gimp_image_add_layer (image,
+                                 layer,
+                                 GIMP_IMAGE_ACTIVE_PARENT,
+                                 0,
+                                 FALSE);
+
+  g_assert_cmpint (result, ==, TRUE);
   g_assert_cmpint (gimp_image_get_n_layers (image), ==, 1);
 
   gimp_image_remove_layer (image,
