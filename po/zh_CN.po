@@ -13,9 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&component=general\n"
-"POT-Creation-Date: 2009-07-26 19:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-07 16:11+0800\n"
 "PO-Revision-Date: 2009-07-27 21:50+0800\n"
 "Last-Translator: Aron Xu <aronxu@gnome.org>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
@@ -119,7 +118,7 @@ msgstr "不加载画笔、渐变、图案等"
 
 #: ../app/main.c:179
 msgid "Do not load any fonts"
-msgstr "不装入任何字体"
+msgstr "不载入任何字体"
 
 #: ../app/main.c:184
 msgid "Do not show a startup window"
@@ -1928,7 +1927,7 @@ msgstr "恢复(_V)"
 #
 #: ../app/actions/file-actions.c:96
 msgid "Reload the image file from disk"
-msgstr "从磁盘重新装入图像文件"
+msgstr "从磁盘重新载入图像文件"
 
 #
 #: ../app/actions/file-actions.c:101
@@ -4421,7 +4420,7 @@ msgstr "从路径(_O)"
 
 #: ../app/actions/vectors-actions.c:174
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #
 #: ../app/actions/vectors-actions.c:180 ../app/base/base-enums.c:119
@@ -5545,7 +5544,7 @@ msgid ""
 "you may want to set this to a higher value."
 msgstr ""
 "当像素数据量超过限制时，GIMP 将开始交换数据到磁盘。这将使速度极大减慢但它却使"
-"得处理无法装入内存的图像成为可能。如果您的内存很多，您可能希望设置一个更大的"
+"得处理无法载入内存的图像成为可能。如果您的内存很多，您可能希望设置一个更大的"
 "值。"
 
 #: ../app/config/gimprc-blurbs.h:390
@@ -6662,7 +6661,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"装入数据失败：\n"
+"载入数据失败：\n"
 "\n"
 "%s"
 
@@ -7483,10 +7482,12 @@ msgstr "访问 GIMP 网站"
 #: ../app/dialogs/about-dialog.c:128
 msgid "translator-credits"
 msgstr ""
-"Yuheng Xie\n"
-"Funda Wang\n"
-"Cai Qian\n"
-"神州散人"
+"Yuheng Xie <elephant@linux.net.cn>\n"
+"Funda Wang <fundawang@linux.net.cn>\n"
+"Cai Qian <caiqian@gnome.org>\n"
+"Shawn Syu <shawn@msn.cn>\n"
+"神州散人 <kappa8086@gmail.com>\n"
+"Aron Xu　<aronxu@gnome.org>"
 
 #: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
