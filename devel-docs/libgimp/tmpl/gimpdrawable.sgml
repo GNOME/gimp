@@ -132,6 +132,25 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_set_lock_content ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@lock_content: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_get_lock_content ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_drawable_get_tattoo ##### -->
 <para>
 

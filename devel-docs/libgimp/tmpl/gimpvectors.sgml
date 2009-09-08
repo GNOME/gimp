@@ -74,15 +74,6 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_get_linked ##### -->
-<para>
-
-</para>
-
-@vectors_ID: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_vectors_get_name ##### -->
 <para>
 
@@ -92,7 +83,17 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_get_tattoo ##### -->
+<!-- ##### FUNCTION gimp_vectors_set_name ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_visible ##### -->
 <para>
 
 </para>
@@ -101,7 +102,17 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_get_visible ##### -->
+<!-- ##### FUNCTION gimp_vectors_set_visible ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@visible: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_linked ##### -->
 <para>
 
 </para>
@@ -120,13 +131,31 @@ gimpvectors
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vectors_set_name ##### -->
+<!-- ##### FUNCTION gimp_vectors_get_lock_content ##### -->
 <para>
 
 </para>
 
 @vectors_ID: 
-@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_set_lock_content ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@lock_content: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_get_tattoo ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
 @Returns: 
 
 
@@ -137,16 +166,6 @@ gimpvectors
 
 @vectors_ID: 
 @tattoo: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vectors_set_visible ##### -->
-<para>
-
-</para>
-
-@vectors_ID: 
-@visible: 
 @Returns: 
 
 
