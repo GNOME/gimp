@@ -542,32 +542,31 @@ gimp_layer_convert (GimpItem  *item,
 
   if (old_base_type != new_base_type)
     {
-      TileManager   *new_tiles;
-      GimpImageType  new_type;
-
-      new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
-
-      if (gimp_drawable_has_alpha (drawable))
-        new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
-
-      new_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                    gimp_item_get_height (item),
-                                    GIMP_IMAGE_TYPE_BYTES (new_type));
-
       switch (new_base_type)
         {
         case GIMP_RGB:
-          gimp_drawable_convert_tiles_rgb (drawable, new_tiles);
+          gimp_drawable_convert_rgb (drawable);
           break;
 
         case GIMP_GRAY:
-          gimp_drawable_convert_tiles_grayscale (drawable, new_tiles);
+          gimp_drawable_convert_grayscale (drawable);
           break;
 
         case GIMP_INDEXED:
           {
-            PixelRegion layerPR;
-            PixelRegion newPR;
+            TileManager   *new_tiles;
+            GimpImageType  new_type;
+            PixelRegion    layerPR;
+            PixelRegion    newPR;
+
+            new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
+
+            if (gimp_drawable_has_alpha (drawable))
+              new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
+
+            new_tiles = tile_manager_new (gimp_item_get_width  (item),
+                                          gimp_item_get_height (item),
+                                          GIMP_IMAGE_TYPE_BYTES (new_type));
 
             pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
                                0, 0,
@@ -583,13 +582,13 @@ gimp_layer_convert (GimpItem  *item,
             gimp_layer_transform_color (dest_image,
                                         &layerPR, gimp_drawable_type (drawable),
                                         &newPR,   new_type);
+
+            gimp_drawable_set_tiles (drawable, FALSE, NULL,
+                                     new_tiles, new_type);
+            tile_manager_unref (new_tiles);
           }
           break;
         }
-
-      gimp_drawable_set_tiles (drawable, FALSE, NULL,
-                               new_tiles, new_type);
-      tile_manager_unref (new_tiles);
     }
 
   if (layer->mask)

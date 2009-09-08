@@ -19,6 +19,9 @@
 #define __GIMP_DRAWABLE_CONVERT_H__
 
 
+void   gimp_drawable_convert_rgb             (GimpDrawable *drawable);
+void   gimp_drawable_convert_grayscale       (GimpDrawable *drawable);
+
 void   gimp_drawable_convert_tiles_rgb       (GimpDrawable *drawable,
                                               TileManager  *new_tiles);
 void   gimp_drawable_convert_tiles_grayscale (GimpDrawable *drawable,

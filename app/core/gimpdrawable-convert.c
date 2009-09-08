@@ -33,6 +33,58 @@
 
 
 void
+gimp_drawable_convert_rgb (GimpDrawable *drawable)
+{
+  GimpImageType  type;
+  TileManager   *tiles;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_rgb (drawable));
+
+  type = GIMP_RGB_IMAGE;
+
+  if (gimp_drawable_has_alpha (drawable))
+    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+
+  tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (drawable)),
+                            gimp_item_get_height (GIMP_ITEM (drawable)),
+                            GIMP_IMAGE_TYPE_BYTES (type));
+
+  gimp_drawable_convert_tiles_rgb (drawable, tiles);
+
+  gimp_drawable_set_tiles (drawable,
+                           gimp_item_is_attached (GIMP_ITEM (drawable)), NULL,
+                           tiles, type);
+  tile_manager_unref (tiles);
+}
+
+void
+gimp_drawable_convert_grayscale (GimpDrawable *drawable)
+{
+  GimpImageType  type;
+  TileManager   *tiles;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_gray (drawable));
+
+  type = GIMP_GRAY_IMAGE;
+
+  if (gimp_drawable_has_alpha (drawable))
+    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+
+  tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (drawable)),
+                            gimp_item_get_height (GIMP_ITEM (drawable)),
+                            GIMP_IMAGE_TYPE_BYTES (type));
+
+  gimp_drawable_convert_tiles_grayscale (drawable, tiles);
+
+  gimp_drawable_set_tiles (drawable,
+                           gimp_item_is_attached (GIMP_ITEM (drawable)), NULL,
+                           tiles, type);
+  tile_manager_unref (tiles);
+}
+
+void
 gimp_drawable_convert_tiles_rgb (GimpDrawable *drawable,
                                  TileManager  *new_tiles)
 {
