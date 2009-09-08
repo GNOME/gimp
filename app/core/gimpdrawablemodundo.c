@@ -127,7 +127,7 @@ gimp_drawable_mod_undo_pop (GimpUndo            *undo,
   offset_y = drawable_mod_undo->offset_y;
 
   drawable_mod_undo->tiles = tile_manager_ref (gimp_drawable_get_tiles (drawable));
-  drawable_mod_undo->type  = drawable->type;
+  drawable_mod_undo->type  = gimp_drawable_type (drawable);
 
   gimp_item_get_offset (GIMP_ITEM (drawable),
                         &drawable_mod_undo->offset_x,

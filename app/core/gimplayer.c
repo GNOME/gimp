@@ -1530,9 +1530,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_COPY_MASK:
       {
         TileManager   *copy_tiles = NULL;
-        GimpImageType  layer_type;
-
-        layer_type = drawable->type;
+        GimpImageType  layer_type = gimp_drawable_type (drawable);
 
         if (GIMP_IMAGE_TYPE_BASE_TYPE (layer_type) != GIMP_GRAY)
           {
