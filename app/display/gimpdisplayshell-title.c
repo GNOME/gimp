@@ -31,6 +31,7 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimpcontainer.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimpunit.h"
@@ -138,6 +139,17 @@ gimp_display_shell_title_image_type (GimpImage *image)
   return name;
 }
 
+static const gchar *
+gimp_display_shell_title_drawable_type (GimpDrawable *drawable)
+{
+  const gchar *name = "";
+
+  gimp_enum_get_value (GIMP_TYPE_IMAGE_TYPE,
+                       gimp_drawable_type (drawable), NULL, NULL, &name, NULL);
+
+  return name;
+}
+
 static gint print (gchar       *buf,
                    gint         len,
                    gint         start,
@@ -233,9 +245,19 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               i += print (title, title_len, i, "%d", shell->display->instance);
               break;
 
-            case 't': /* type */
+            case 't': /* image type */
               i += print (title, title_len, i, "%s",
                           gimp_display_shell_title_image_type (image));
+              break;
+
+            case 'T': /* drawable type */
+              {
+                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+                if (drawable)
+                  i += print (title, title_len, i, "%s",
+                              gimp_display_shell_title_drawable_type (drawable));
+              }
               break;
 
             case 's': /* user source zoom factor */
