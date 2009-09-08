@@ -913,8 +913,9 @@ gimp_layer_transform_color (GimpImage     *image,
                             PixelRegion   *destPR,
                             GimpImageType  dest_type)
 {
-  GimpImageBaseType base_type = GIMP_IMAGE_TYPE_BASE_TYPE (src_type);
-  gboolean          alpha     = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
+  GimpImageBaseType base_type  = GIMP_IMAGE_TYPE_BASE_TYPE (src_type);
+  gboolean          src_alpha  = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
+  gboolean          dest_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (dest_type);
   gpointer          pr;
 
   for (pr = pixel_regions_register (2, srcPR, destPR);
@@ -935,9 +936,9 @@ gimp_layer_transform_color (GimpImage     *image,
             {
               gimp_image_transform_color (image, dest_type, d, base_type, s);
 
-              /*  alpha channel  */
-              d[destPR->bytes - 1] = (alpha ?
-                                      s[srcPR->bytes - 1] : OPAQUE_OPACITY);
+              if (dest_alpha)
+                d[destPR->bytes - 1] = (src_alpha ?
+                                        s[srcPR->bytes - 1] : OPAQUE_OPACITY);
 
               s += srcPR->bytes;
               d += destPR->bytes;
