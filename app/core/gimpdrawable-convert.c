@@ -40,7 +40,7 @@ gimp_drawable_convert_tiles_rgb (GimpDrawable *drawable,
   gint          row, col;
   gint          offset;
   GimpImageType type;
-  gint          has_alpha;
+  gboolean      has_alpha;
   const guchar *src, *s;
   guchar       *dest, *d;
   const guchar *cmap;
