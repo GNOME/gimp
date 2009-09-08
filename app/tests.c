@@ -17,15 +17,24 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "gui/gui-types.h"
+
+#include "gui/gui.h"
+
+#include "actions/actions.h"
+
+#include "dialogs/dialogs.h"
+
+#include "menus/menus.h"
 
 #include "base/base.h"
 
 #include "config/gimpbaseconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-contexts.h"
 
 #include "tests.h"
 #include "units.h"
@@ -51,3 +60,47 @@ gimp_init_for_testing (gboolean use_cpu_accel)
 
   return gimp;
 }
+
+
+#ifndef GIMP_CONSOLE_COMPILATION
+
+static void
+gimp_status_func_dummy (const gchar *text1,
+                        const gchar *text2,
+                        gdouble      percentage)
+{
+}
+
+/**
+ * gimp_init_for_gui_testing:
+ * @use_cpu_accel:
+ *
+ * Initializes a #Gimp instance for use in test cases that rely on GUI
+ * code to be initialized.
+ *
+ * Returns: The #Gimp instance.
+ **/
+Gimp *
+gimp_init_for_gui_testing (gboolean use_cpu_accel)
+{
+  Gimp *gimp;
+
+  /* from main() */
+  g_thread_init(NULL);
+  g_type_init();
+
+  /* from app_run() */
+  gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
+                   FALSE, TRUE, TRUE, FALSE);
+  gimp_set_show_gui (gimp, FALSE);
+  units_init (gimp);
+  gimp_load_config (gimp, NULL, NULL);
+  base_init (GIMP_BASE_CONFIG (gimp->config), FALSE, use_cpu_accel);
+  gui_init (gimp, TRUE);
+  gimp_initialize (gimp, gimp_status_func_dummy);
+  gimp_restore (gimp, gimp_status_func_dummy);
+
+  return gimp;
+}
+
+#endif /* GIMP_CONSOLE_COMPILATION */

@@ -19,7 +19,8 @@
 #define __TESTS_H__
 
 
-Gimp * gimp_init_for_testing (gboolean use_cpu_accel);
+Gimp * gimp_init_for_testing     (gboolean use_cpu_accel);
+Gimp * gimp_init_for_gui_testing (gboolean use_cpu_accel);
 
 
 #endif /* __TESTS_H__ */
