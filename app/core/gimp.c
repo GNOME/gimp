@@ -191,6 +191,7 @@ gimp_init (Gimp *gimp)
   gimp->be_verbose       = FALSE;
   gimp->no_data          = FALSE;
   gimp->no_interface     = FALSE;
+  gimp->show_gui         = TRUE;
   gimp->use_shm          = FALSE;
   gimp->message_handler  = GIMP_CONSOLE;
   gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
@@ -709,6 +710,37 @@ gimp_new (const gchar       *name,
   gimp->pdb_compat_mode  = pdb_compat_mode;
 
   return gimp;
+}
+
+/**
+ * gimp_set_show_gui:
+ * @gimp:
+ * @show:
+ *
+ * Test cases that tests the UI typically don't want any windows to be
+ * presented during the test run. Allow them to set this.
+ **/
+void
+gimp_set_show_gui (Gimp     *gimp,
+                   gboolean  show_gui)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp->show_gui = show_gui;
+}
+
+/**
+ * gimp_get_show_gui:
+ * @gimp:
+ *
+ * Returns: %TRUE if the GUI should be shown, %FALSE otherwise.
+ **/
+gboolean
+gimp_get_show_gui (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  return gimp->show_gui;
 }
 
 static void
