@@ -2885,63 +2885,81 @@ GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *image,
                                 GimpTattoo       tattoo)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LAYER (gimp_item_stack_get_item_by_tattoo (GIMP_ITEM_STACK (image->layers),
-                                                         tattoo));
+  stack = GIMP_ITEM_STACK (image->layers);
+
+  return GIMP_LAYER (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
 GimpChannel *
 gimp_image_get_channel_by_tattoo (const GimpImage *image,
                                   GimpTattoo       tattoo)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_CHANNEL (gimp_item_stack_get_item_by_tattoo (GIMP_ITEM_STACK (image->channels),
-                                                           tattoo));
+  stack = GIMP_ITEM_STACK (image->channels);
+
+  return GIMP_CHANNEL (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
 GimpVectors *
 gimp_image_get_vectors_by_tattoo (const GimpImage *image,
                                   GimpTattoo       tattoo)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (GIMP_ITEM_STACK (image->vectors),
-                                                           tattoo));
+  stack = GIMP_ITEM_STACK (image->vectors);
+
+  return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
 GimpLayer *
 gimp_image_get_layer_by_name (const GimpImage *image,
                               const gchar     *name)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_LAYER (gimp_item_stack_get_item_by_name (GIMP_ITEM_STACK (image->layers),
-                                                       name));
+  stack = GIMP_ITEM_STACK (image->layers);
+
+  return GIMP_LAYER (gimp_item_stack_get_item_by_name (stack, name));
 }
 
 GimpChannel *
 gimp_image_get_channel_by_name (const GimpImage *image,
                                 const gchar     *name)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_CHANNEL (gimp_item_stack_get_item_by_name (GIMP_ITEM_STACK (image->channels),
-                                                         name));
+  stack = GIMP_ITEM_STACK (image->channels);
+
+  return GIMP_CHANNEL (gimp_item_stack_get_item_by_name (stack, name));
 }
 
 GimpVectors *
 gimp_image_get_vectors_by_name (const GimpImage *image,
                                 const gchar     *name)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_VECTORS (gimp_item_stack_get_item_by_name (GIMP_ITEM_STACK (image->vectors),
-                                                         name));
+  stack = GIMP_ITEM_STACK (image->vectors);
+
+  return GIMP_VECTORS (gimp_item_stack_get_item_by_name (stack, name));
 }
 
 static GimpItem *
