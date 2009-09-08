@@ -557,15 +557,11 @@ gimp_layer_convert (GimpItem  *item,
       switch (new_base_type)
         {
         case GIMP_RGB:
-          gimp_drawable_convert_tiles_rgb (drawable,
-                                           new_tiles,
-                                           old_base_type);
+          gimp_drawable_convert_tiles_rgb (drawable, new_tiles);
           break;
 
         case GIMP_GRAY:
-          gimp_drawable_convert_tiles_grayscale (drawable,
-                                                 new_tiles,
-                                                 old_base_type);
+          gimp_drawable_convert_tiles_grayscale (drawable, new_tiles);
           break;
 
         case GIMP_INDEXED:
@@ -1529,23 +1525,20 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
     case GIMP_ADD_COPY_MASK:
       {
-        TileManager   *copy_tiles = NULL;
-        GimpImageType  layer_type = gimp_drawable_type (drawable);
+        TileManager *copy_tiles = NULL;
 
-        if (GIMP_IMAGE_TYPE_BASE_TYPE (layer_type) != GIMP_GRAY)
+        if (! gimp_drawable_is_gray (drawable))
           {
             GimpImageType copy_type;
 
-            copy_type = (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type) ?
+            copy_type = (gimp_drawable_has_alpha (drawable) ?
                          GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
 
             copy_tiles = tile_manager_new (gimp_item_get_width  (item),
                                            gimp_item_get_height (item),
                                            GIMP_IMAGE_TYPE_BYTES (copy_type));
 
-            gimp_drawable_convert_tiles_grayscale (drawable,
-                                                   copy_tiles,
-                                                   GIMP_IMAGE_TYPE_BASE_TYPE (layer_type));
+            gimp_drawable_convert_tiles_grayscale (drawable, copy_tiles);
 
             pixel_region_init (&srcPR, copy_tiles,
                                0, 0,

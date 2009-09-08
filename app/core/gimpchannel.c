@@ -430,13 +430,10 @@ static void
 gimp_channel_convert (GimpItem  *item,
                       GimpImage *dest_image)
 {
-  GimpChannel       *channel  = GIMP_CHANNEL (item);
-  GimpDrawable      *drawable = GIMP_DRAWABLE (item);
-  GimpImageBaseType  old_base_type;
+  GimpChannel  *channel  = GIMP_CHANNEL (item);
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
 
-  old_base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
-
-  if (old_base_type != GIMP_GRAY)
+  if (! gimp_drawable_is_gray (drawable))
     {
       TileManager   *new_tiles;
       GimpImageType  new_type = GIMP_GRAY_IMAGE;
@@ -448,7 +445,7 @@ gimp_channel_convert (GimpItem  *item,
                                     gimp_item_get_height (item),
                                     GIMP_IMAGE_TYPE_BYTES (new_type));
 
-      gimp_drawable_convert_tiles_grayscale (drawable, new_tiles, old_base_type);
+      gimp_drawable_convert_tiles_grayscale (drawable, new_tiles);
 
       gimp_drawable_set_tiles (drawable, FALSE, NULL,
                                new_tiles, new_type);

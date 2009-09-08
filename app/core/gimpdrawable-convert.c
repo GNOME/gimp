@@ -29,16 +29,17 @@
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-convert.h"
+#include "gimpimage.h"
 
 
 void
-gimp_drawable_convert_tiles_rgb (GimpDrawable      *drawable,
-                                 TileManager       *new_tiles,
-                                 GimpImageBaseType  old_base_type)
+gimp_drawable_convert_tiles_rgb (GimpDrawable *drawable,
+                                 TileManager  *new_tiles)
 {
   PixelRegion   srcPR, destPR;
   gint          row, col;
   gint          offset;
+  GimpImageType type;
   gint          has_alpha;
   const guchar *src, *s;
   guchar       *dest, *d;
@@ -48,6 +49,7 @@ gimp_drawable_convert_tiles_rgb (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (new_tiles != NULL);
 
+  type      = gimp_drawable_type (drawable);
   has_alpha = gimp_drawable_has_alpha (drawable);
 
   g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 4 : 3));
@@ -65,8 +67,7 @@ gimp_drawable_convert_tiles_rgb (GimpDrawable      *drawable,
                      gimp_item_get_height (GIMP_ITEM (drawable)),
                      TRUE);
 
-
-  switch (old_base_type)
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
     {
     case GIMP_GRAY:
       for (pr = pixel_regions_register (2, &srcPR, &destPR);
@@ -136,13 +137,13 @@ gimp_drawable_convert_tiles_rgb (GimpDrawable      *drawable,
 }
 
 void
-gimp_drawable_convert_tiles_grayscale (GimpDrawable      *drawable,
-                                       TileManager       *new_tiles,
-                                       GimpImageBaseType  old_base_type)
+gimp_drawable_convert_tiles_grayscale (GimpDrawable *drawable,
+                                       TileManager  *new_tiles)
 {
   PixelRegion   srcPR, destPR;
   gint          row, col;
   gint          offset, val;
+  GimpImageType type;
   gboolean      has_alpha;
   const guchar *src, *s;
   guchar       *dest, *d;
@@ -152,6 +153,7 @@ gimp_drawable_convert_tiles_grayscale (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (new_tiles != NULL);
 
+  type      = gimp_drawable_type (drawable);
   has_alpha = gimp_drawable_has_alpha (drawable);
 
   g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 2 : 1));
@@ -169,7 +171,7 @@ gimp_drawable_convert_tiles_grayscale (GimpDrawable      *drawable,
                      gimp_item_get_height (GIMP_ITEM (drawable)),
                      TRUE);
 
-  switch (old_base_type)
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
     {
     case GIMP_RGB:
       for (pr = pixel_regions_register (2, &srcPR, &destPR);
