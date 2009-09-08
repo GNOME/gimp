@@ -507,12 +507,12 @@ gimp_layer_duplicate (GimpItem *item,
       GimpLayer *layer     = GIMP_LAYER (item);
       GimpLayer *new_layer = GIMP_LAYER (new_item);
 
-      gimp_layer_set_mode       (new_layer,
-                                 gimp_layer_get_mode (layer), FALSE);
-      gimp_layer_set_opacity    (new_layer,
-                                 gimp_layer_get_opacity (layer), FALSE);
-      gimp_layer_set_lock_alpha (new_layer,
-                                 gimp_layer_get_lock_alpha (layer), FALSE);
+      gimp_layer_set_mode    (new_layer, gimp_layer_get_mode (layer),    FALSE);
+      gimp_layer_set_opacity (new_layer, gimp_layer_get_opacity (layer), FALSE);
+
+      if (gimp_layer_can_lock_alpha (new_layer))
+        gimp_layer_set_lock_alpha (new_layer,
+                                   gimp_layer_get_lock_alpha (layer), FALSE);
 
       /*  duplicate the layer mask if necessary  */
       if (layer->mask)
