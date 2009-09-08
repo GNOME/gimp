@@ -448,7 +448,7 @@ gimp_channel_convert (GimpItem  *item,
                                     gimp_item_get_height (item),
                                     GIMP_IMAGE_TYPE_BYTES (new_type));
 
-      gimp_drawable_convert_grayscale (drawable, new_tiles, old_base_type);
+      gimp_drawable_convert_tiles_grayscale (drawable, new_tiles, old_base_type);
 
       gimp_drawable_set_tiles (drawable, FALSE, NULL,
                                new_tiles, new_type);

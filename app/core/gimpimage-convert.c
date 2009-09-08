@@ -974,12 +974,12 @@ gimp_image_convert (GimpImage               *image,
       switch (new_type)
         {
         case GIMP_RGB:
-          gimp_drawable_convert_rgb (GIMP_DRAWABLE (layer),
-                                     new_tiles, old_type);
+          gimp_drawable_convert_tiles_rgb (GIMP_DRAWABLE (layer),
+                                           new_tiles, old_type);
           break;
         case GIMP_GRAY:
-          gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer),
-                                           new_tiles, old_type);
+          gimp_drawable_convert_tiles_grayscale (GIMP_DRAWABLE (layer),
+                                                 new_tiles, old_type);
           break;
         case GIMP_INDEXED:
           quantobj->nth_layer = nth_layer;

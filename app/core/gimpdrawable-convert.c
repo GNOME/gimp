@@ -32,9 +32,9 @@
 
 
 void
-gimp_drawable_convert_rgb (GimpDrawable      *drawable,
-                           TileManager       *new_tiles,
-                           GimpImageBaseType  old_base_type)
+gimp_drawable_convert_tiles_rgb (GimpDrawable      *drawable,
+                                 TileManager       *new_tiles,
+                                 GimpImageBaseType  old_base_type)
 {
   PixelRegion   srcPR, destPR;
   gint          row, col;
@@ -136,9 +136,9 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
 }
 
 void
-gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
-                                 TileManager       *new_tiles,
-                                 GimpImageBaseType  old_base_type)
+gimp_drawable_convert_tiles_grayscale (GimpDrawable      *drawable,
+                                       TileManager       *new_tiles,
+                                       GimpImageBaseType  old_base_type)
 {
   PixelRegion   srcPR, destPR;
   gint          row, col;

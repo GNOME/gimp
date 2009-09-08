@@ -557,15 +557,15 @@ gimp_layer_convert (GimpItem  *item,
       switch (new_base_type)
         {
         case GIMP_RGB:
-          gimp_drawable_convert_rgb (drawable,
-                                     new_tiles,
-                                     old_base_type);
+          gimp_drawable_convert_tiles_rgb (drawable,
+                                           new_tiles,
+                                           old_base_type);
           break;
 
         case GIMP_GRAY:
-          gimp_drawable_convert_grayscale (drawable,
-                                           new_tiles,
-                                           old_base_type);
+          gimp_drawable_convert_tiles_grayscale (drawable,
+                                                 new_tiles,
+                                                 old_base_type);
           break;
 
         case GIMP_INDEXED:
@@ -1543,9 +1543,9 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                            gimp_item_get_height (item),
                                            GIMP_IMAGE_TYPE_BYTES (copy_type));
 
-            gimp_drawable_convert_grayscale (drawable,
-                                             copy_tiles,
-                                             GIMP_IMAGE_TYPE_BASE_TYPE (layer_type));
+            gimp_drawable_convert_tiles_grayscale (drawable,
+                                                   copy_tiles,
+                                                   GIMP_IMAGE_TYPE_BASE_TYPE (layer_type));
 
             pixel_region_init (&srcPR, copy_tiles,
                                0, 0,
