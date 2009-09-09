@@ -103,7 +103,7 @@ static void      gimp_dock_real_book_removed (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
 
 
-G_DEFINE_TYPE (GimpDock, gimp_dock, GIMP_TYPE_WINDOW)
+G_DEFINE_TYPE (GimpDock, gimp_dock, GIMP_TYPE_DOCK_WINDOW)
 
 #define parent_class gimp_dock_parent_class
 

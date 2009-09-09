@@ -134,6 +134,8 @@ libappwidgets_a_sources = \
 	gimpdocked.h			\
 	gimpdockseparator.c		\
 	gimpdockseparator.h		\
+	gimpdockwindow.c		\
+	gimpdockwindow.h		\
 	gimpdocumentview.c		\
 	gimpdocumentview.h		\
 	gimpdrawabletreeview.c		\
