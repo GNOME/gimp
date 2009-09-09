@@ -101,8 +101,9 @@ N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
 "Sets the default settings used when an image is viewed in fullscreen mode."
 
 #define DOCK_WINDOW_HINT_BLURB \
-N_("The window type hint that is set on dock windows. This may affect " \
-   "the way your window manager decorates and handles dock windows.")
+N_("The window type hint that is set on dock windows and the toolbox " \
+   "window. This may affect the way your window manager decorates and " \
+   "handles these windows.")
 
 #define ENVIRON_PATH_BLURB \
 "Sets the environ search path."
@@ -403,10 +404,6 @@ N_("Show the currently active image in the toolbox.")
 
 #define TOOLBOX_WILBER_BLURB \
 "Show the GIMP mascot at the top of the toolbox."
-
-#define TOOLBOX_WINDOW_HINT_BLURB \
-N_("The window type hint that is set on the toolbox. This may affect " \
-   "how your window manager decorates and handles the toolbox window.")
 
 #define TRANSPARENCY_TYPE_BLURB \
 N_("Sets the manner in which transparency is displayed in images.")

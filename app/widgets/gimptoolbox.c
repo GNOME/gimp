@@ -199,7 +199,7 @@ gimp_toolbox_constructor (GType                  type,
   context = gimp_dock_get_context (GIMP_DOCK (toolbox));
   config  = GIMP_GUI_CONFIG (context->gimp->config);
 
-  gimp_window_set_hint (GTK_WINDOW (toolbox), config->toolbox_window_hint);
+  gimp_window_set_hint (GTK_WINDOW (toolbox), config->dock_window_hint);
 
   main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
 
