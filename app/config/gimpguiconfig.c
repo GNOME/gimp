@@ -39,14 +39,6 @@
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
   "http://docs.gimp.org/" GIMP_APP_VERSION_STRING
 
-#ifdef G_OS_WIN32
-#  define DEFAULT_WEB_BROWSER  "not used on Windows"
-#elif PLATFORM_OSX
-#  define DEFAULT_WEB_BROWSER  "open %s"
-#else
-#  define DEFAULT_WEB_BROWSER  "xdg-open %s"
-#endif
-
 
 enum
 {
@@ -76,7 +68,6 @@ enum
   PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
   PROP_HELP_BROWSER,
-  PROP_WEB_BROWSER,
   PROP_USER_MANUAL_ONLINE,
   PROP_USER_MANUAL_ONLINE_URI,
   PROP_DOCK_WINDOW_HINT,
@@ -89,6 +80,7 @@ enum
   PROP_SHOW_TIPS,
   PROP_TOOLBOX_WINDOW_HINT,
   PROP_TRANSIENT_DOCKS
+  PROP_WEB_BROWSER,
 };
 
 
@@ -294,7 +286,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
                                  "web-browser", NULL,
                                  GIMP_CONFIG_PATH_FILE,
-                                 DEFAULT_WEB_BROWSER,
+                                 "not used any longer",
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_IGNORE);
 }
