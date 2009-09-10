@@ -27,16 +27,35 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "gimpdockwindow.h"
 #include "gimpwindow.h"
 
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_CONTEXT,
+};
+
+
 struct _GimpDockWindowPrivate
 {
-  gint dummy;
+  GimpContext *context;
 };
+
+static void      gimp_dock_window_dispose           (GObject               *object);
+static void      gimp_dock_window_set_property      (GObject               *object,
+                                                     guint                  property_id,
+                                                     const GValue          *value,
+                                                     GParamSpec            *pspec);
+static void      gimp_dock_window_get_property      (GObject               *object,
+                                                     guint                  property_id,
+                                                     GValue                *value,
+                                                     GParamSpec            *pspec);
 
 
 G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
@@ -46,6 +65,18 @@ G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
 static void
 gimp_dock_window_class_init (GimpDockWindowClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->dispose         = gimp_dock_window_dispose;
+  object_class->set_property    = gimp_dock_window_set_property;
+  object_class->get_property    = gimp_dock_window_get_property;
+
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("gimp-context", NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_type_class_add_private (klass, sizeof (GimpDockWindowPrivate));
 }
 
@@ -55,4 +86,59 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   dock_window->p = G_TYPE_INSTANCE_GET_PRIVATE (dock_window,
                                                 GIMP_TYPE_DOCK_WINDOW,
                                                 GimpDockWindowPrivate);
+  dock_window->p->context = NULL;
+}
+
+static void
+gimp_dock_window_dispose (GObject *object)
+{
+  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+
+  if (dock_window->p->context)
+    {
+      g_object_unref (dock_window->p->context);
+      dock_window->p->context = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_dock_window_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT:
+      dock_window->p->context = g_value_dup_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_dock_window_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT:
+      g_value_set_object (value, dock_window->p->context);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
