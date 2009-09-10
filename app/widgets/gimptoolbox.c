@@ -173,8 +173,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
 static void
 gimp_toolbox_init (GimpToolbox *toolbox)
 {
-  gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
-
   gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
                      GIMP_HELP_TOOLBOX, NULL);
 }
@@ -623,6 +621,7 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
                           "title",          _("Toolbox"),
+                          "role",           "gimp-toolbox",
                           "gimp-context",   context,
                           "context",        context,
                           "dialog-factory", dialog_factory,

@@ -192,8 +192,6 @@ gimp_dock_init (GimpDock *dock)
   gtk_widget_set_name (GTK_WIDGET (dock), name);
   g_free (name);
 
-  gtk_window_set_role (GTK_WINDOW (dock), "gimp-dock");
-
   dock->p->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (dock), dock->p->main_vbox);
   gtk_widget_show (dock->p->main_vbox);
