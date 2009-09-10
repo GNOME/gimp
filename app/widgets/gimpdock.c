@@ -26,8 +26,6 @@
 
 #include "widgets-types.h"
 
-#include "config/gimpguiconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
@@ -37,7 +35,6 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdockseparator.h"
-#include "gimpwidgets-utils.h"
 
 #include "gimpsessioninfo.h"    /* FIXME */
 #include "core/gimpcontainer.h" /* FIXME */
@@ -78,9 +75,6 @@ struct _GimpDockPrivate
 };
 
 
-static GObject * gimp_dock_constructor       (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params);
 static void      gimp_dock_set_property      (GObject               *object,
                                               guint                  property_id,
                                               const GValue          *value,
@@ -137,7 +131,6 @@ gimp_dock_class_init (GimpDockClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCKBOOK);
 
-  object_class->constructor     = gimp_dock_constructor;
   object_class->set_property    = gimp_dock_set_property;
   object_class->get_property    = gimp_dock_get_property;
 
@@ -214,29 +207,6 @@ gimp_dock_init (GimpDock *dock)
   separator = gimp_dock_separator_new (dock, GTK_ANCHOR_NORTH);
   gtk_box_pack_start (GTK_BOX (dock->p->vbox), separator, FALSE, FALSE, 0);
   gtk_widget_show (separator);
-}
-
-static GObject *
-gimp_dock_constructor (GType                  type,
-                       guint                  n_params,
-                       GObjectConstructParam *params)
-{
-  GObject       *object;
-  GimpDock      *dock;
-  GimpGuiConfig *config;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  dock = GIMP_DOCK (object);
-
-  g_assert (GIMP_IS_CONTEXT (dock->p->context));
-  g_assert (GIMP_IS_DIALOG_FACTORY (dock->p->dialog_factory));
-
-  config = GIMP_GUI_CONFIG (dock->p->context->gimp->config);
-
-  gimp_window_set_hint (GTK_WINDOW (dock), config->dock_window_hint);
-
-  return object;
 }
 
 static void

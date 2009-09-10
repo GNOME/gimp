@@ -27,9 +27,13 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 
 #include "gimpdockwindow.h"
+#include "gimpwidgets-utils.h"
 #include "gimpwindow.h"
 
 #include "gimp-intl.h"
@@ -47,6 +51,9 @@ struct _GimpDockWindowPrivate
   GimpContext *context;
 };
 
+static GObject * gimp_dock_window_constructor       (GType                  type,
+                                                     guint                  n_params,
+                                                     GObjectConstructParam *params);
 static void      gimp_dock_window_dispose           (GObject               *object);
 static void      gimp_dock_window_set_property      (GObject               *object,
                                                      guint                  property_id,
@@ -67,6 +74,7 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructor     = gimp_dock_window_constructor;
   object_class->dispose         = gimp_dock_window_dispose;
   object_class->set_property    = gimp_dock_window_set_property;
   object_class->get_property    = gimp_dock_window_get_property;
@@ -87,6 +95,24 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
                                                 GIMP_TYPE_DOCK_WINDOW,
                                                 GimpDockWindowPrivate);
   dock_window->p->context = NULL;
+}
+
+static GObject *
+gimp_dock_window_constructor (GType                  type,
+                              guint                  n_params,
+                              GObjectConstructParam *params)
+{
+  GObject        *object;
+  GimpDockWindow *dock_window;
+  GimpGuiConfig  *config;
+
+  object      = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  dock_window = GIMP_DOCK_WINDOW (object);
+  config      = GIMP_GUI_CONFIG (dock_window->p->context->gimp->config);
+
+  gimp_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
+
+  return object;
 }
 
 static void
