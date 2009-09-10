@@ -61,12 +61,13 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(libgimp)		\
 	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(libgimpmath)		\
 	$(EXIF_LIBS)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
