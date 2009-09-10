@@ -193,8 +193,6 @@ gimp_dock_init (GimpDock *dock)
   g_free (name);
 
   gtk_window_set_role (GTK_WINDOW (dock), "gimp-dock");
-  gtk_window_set_resizable (GTK_WINDOW (dock), TRUE);
-  gtk_window_set_focus_on_map (GTK_WINDOW (dock), FALSE);
 
   dock->p->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (dock), dock->p->main_vbox);

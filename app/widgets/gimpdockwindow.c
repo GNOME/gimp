@@ -95,6 +95,9 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
                                                 GIMP_TYPE_DOCK_WINDOW,
                                                 GimpDockWindowPrivate);
   dock_window->p->context = NULL;
+
+  gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
+  gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
 }
 
 static GObject *
