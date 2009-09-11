@@ -103,6 +103,9 @@ static void            gimp_group_layer_transform    (GimpItem        *item,
 static gint64      gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
                                                       gint             width,
                                                       gint             height);
+static void            gimp_group_layer_convert_type (GimpDrawable      *drawable,
+                                                      GimpImage         *dest_image,
+                                                      GimpImageBaseType  new_base_type);
 
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
@@ -181,6 +184,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->transform_desc       = _("Transform Layer Group");
 
   drawable_class->estimate_memsize = gimp_group_layer_estimate_memsize;
+  drawable_class->convert_type     = gimp_group_layer_convert_type;
 }
 
 static void
@@ -714,6 +718,39 @@ gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
   return memsize + GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
                                                                          width,
                                                                          height);
+}
+
+static void
+gimp_group_layer_convert_type (GimpDrawable      *drawable,
+                               GimpImage         *dest_image,
+                               GimpImageBaseType  new_base_type)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (drawable);
+  TileManager    *tiles;
+  GimpImageType   new_type;
+
+  new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
+
+  if (gimp_drawable_has_alpha (drawable))
+    new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
+
+  /*  FIXME: find a better way to do this: need to set the drawable's
+   *  type to the new values so the projection will create its tiles
+   *  with the right depth
+   */
+  drawable->type  = new_type;
+  drawable->bytes = GIMP_IMAGE_TYPE_BYTES (new_type);
+
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
+
+  tiles = gimp_projection_get_tiles_at_level (group->projection,
+                                              0, NULL);
+
+  gimp_drawable_set_tiles_full (drawable,
+                                FALSE, NULL,
+                                tiles, new_type,
+                                gimp_item_get_offset_x (GIMP_ITEM (drawable)),
+                                gimp_item_get_offset_y (GIMP_ITEM (drawable)));
 }
 
 static GeglNode *
