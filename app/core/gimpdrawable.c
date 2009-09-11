@@ -35,6 +35,7 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
+#include "gimpdrawable-convert.h"
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-private.h"
 #include "gimpdrawable-shadow.h"
@@ -124,6 +125,10 @@ static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
 static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
                                                     gint               width,
                                                     gint               height);
+
+static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
+                                                    GimpImage         *dest_image,
+                                                    GimpImageBaseType  new_base_type);
 
 static TileManager * gimp_drawable_real_get_tiles  (GimpDrawable      *drawable);
 static void       gimp_drawable_real_set_tiles     (GimpDrawable      *drawable,
@@ -226,6 +231,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->estimate_memsize            = gimp_drawable_real_estimate_memsize;
   klass->invalidate_boundary         = NULL;
   klass->get_active_components       = NULL;
+  klass->convert_type                = gimp_drawable_real_convert_type;
   klass->apply_region                = gimp_drawable_real_apply_region;
   klass->replace_region              = gimp_drawable_real_replace_region;
   klass->get_tiles                   = gimp_drawable_real_get_tiles;
@@ -719,6 +725,28 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
   return (gint64) gimp_drawable_bytes (drawable) * width * height;
 }
 
+static void
+gimp_drawable_real_convert_type (GimpDrawable      *drawable,
+                                 GimpImage         *dest_image,
+                                 GimpImageBaseType  new_base_type)
+{
+  g_return_if_fail (new_base_type != GIMP_INDEXED);
+
+  switch (new_base_type)
+    {
+    case GIMP_RGB:
+      gimp_drawable_convert_rgb (drawable);
+      break;
+
+    case GIMP_GRAY:
+      gimp_drawable_convert_grayscale (drawable);
+      break;
+
+    default:
+      break;
+    }
+}
+
 static TileManager *
 gimp_drawable_real_get_tiles (GimpDrawable *drawable)
 {
@@ -1197,6 +1225,25 @@ gimp_drawable_get_active_components (const GimpDrawable *drawable,
 
   if (drawable_class->get_active_components)
     drawable_class->get_active_components (drawable, active);
+}
+
+void
+gimp_drawable_convert_type (GimpDrawable      *drawable,
+                            GimpImage         *dest_image,
+                            GimpImageBaseType  new_base_type)
+{
+  GimpImageType type;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (dest_image == NULL || GIMP_IS_IMAGE (dest_image));
+  g_return_if_fail (new_base_type != GIMP_INDEXED || GIMP_IS_IMAGE (dest_image));
+
+  type = gimp_drawable_type (drawable);
+
+  g_return_if_fail (new_base_type != GIMP_IMAGE_TYPE_BASE_TYPE (type));
+
+  GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
+                                                    new_base_type);
 }
 
 void
