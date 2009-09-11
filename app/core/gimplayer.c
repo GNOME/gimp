@@ -151,6 +151,9 @@ static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
+static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
+                                                 GimpImage          *dest_image,
+                                                 GimpImageBaseType   new_base_type);
 
 static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
@@ -261,6 +264,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
+  drawable_class->convert_type          = gimp_layer_convert_type;
   drawable_class->project_region        = gimp_layer_project_region;
 
   klass->opacity_changed              = NULL;
@@ -541,55 +545,7 @@ gimp_layer_convert (GimpItem  *item,
   new_base_type = gimp_image_base_type (dest_image);
 
   if (old_base_type != new_base_type)
-    {
-      switch (new_base_type)
-        {
-        case GIMP_RGB:
-          gimp_drawable_convert_rgb (drawable);
-          break;
-
-        case GIMP_GRAY:
-          gimp_drawable_convert_grayscale (drawable);
-          break;
-
-        case GIMP_INDEXED:
-          {
-            TileManager   *new_tiles;
-            GimpImageType  new_type;
-            PixelRegion    layerPR;
-            PixelRegion    newPR;
-
-            new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
-
-            if (gimp_drawable_has_alpha (drawable))
-              new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
-
-            new_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                          gimp_item_get_height (item),
-                                          GIMP_IMAGE_TYPE_BYTES (new_type));
-
-            pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
-                               0, 0,
-                               gimp_item_get_width  (item),
-                               gimp_item_get_height (item),
-                               FALSE);
-            pixel_region_init (&newPR, new_tiles,
-                               0, 0,
-                               gimp_item_get_width  (item),
-                               gimp_item_get_height (item),
-                               TRUE);
-
-            gimp_layer_transform_color (dest_image,
-                                        &layerPR, gimp_drawable_type (drawable),
-                                        &newPR,   new_type);
-
-            gimp_drawable_set_tiles (drawable, FALSE, NULL,
-                                     new_tiles, new_type);
-            tile_manager_unref (new_tiles);
-          }
-          break;
-        }
-    }
+    gimp_drawable_convert_type (drawable, dest_image, new_base_type);
 
   if (layer->mask)
     gimp_item_set_image (GIMP_ITEM (layer->mask), dest_image);
@@ -897,6 +853,60 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 
   if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
     active[gimp_drawable_bytes (drawable) - 1] = FALSE;
+}
+
+static void
+gimp_layer_convert_type (GimpDrawable      *drawable,
+                         GimpImage         *dest_image,
+                         GimpImageBaseType  new_base_type)
+{
+  switch (new_base_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
+                                                        new_base_type);
+      break;
+
+    case GIMP_INDEXED:
+      {
+        GimpItem      *item = GIMP_ITEM (drawable);
+        TileManager   *new_tiles;
+        GimpImageType  new_type;
+        PixelRegion    layerPR;
+        PixelRegion    newPR;
+
+        new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
+
+        if (gimp_drawable_has_alpha (drawable))
+          new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
+
+        new_tiles = tile_manager_new (gimp_item_get_width  (item),
+                                      gimp_item_get_height (item),
+                                      GIMP_IMAGE_TYPE_BYTES (new_type));
+
+        pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
+                           0, 0,
+                           gimp_item_get_width  (item),
+                           gimp_item_get_height (item),
+                           FALSE);
+        pixel_region_init (&newPR, new_tiles,
+                           0, 0,
+                           gimp_item_get_width  (item),
+                           gimp_item_get_height (item),
+                           TRUE);
+
+        gimp_layer_transform_color (dest_image,
+                                    &layerPR, gimp_drawable_type (drawable),
+                                    &newPR,   new_type);
+
+        gimp_drawable_set_tiles (drawable,
+                                 gimp_item_is_attached (GIMP_ITEM (drawable)),
+                                 NULL,
+                                 new_tiles, new_type);
+        tile_manager_unref (new_tiles);
+      }
+    }
 }
 
 static gint
