@@ -146,7 +146,6 @@
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
-#include "gimpdrawable-convert.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -963,11 +962,8 @@ gimp_image_convert (GimpImage               *image,
       switch (new_type)
         {
         case GIMP_RGB:
-          gimp_drawable_convert_rgb (GIMP_DRAWABLE (layer));
-          break;
-
         case GIMP_GRAY:
-          gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer));
+          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), NULL, new_type);
           break;
 
         case GIMP_INDEXED:
