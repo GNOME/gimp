@@ -41,7 +41,6 @@
 #include "gimp.h"
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
-#include "gimpdrawable-convert.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-quick-mask.h"
@@ -435,7 +434,7 @@ gimp_channel_convert (GimpItem  *item,
 
   if (! gimp_drawable_is_gray (drawable))
     {
-      gimp_drawable_convert_grayscale (drawable);
+      gimp_drawable_convert_type (drawable, NULL, GIMP_GRAY);
     }
 
   if (gimp_drawable_has_alpha (drawable))
