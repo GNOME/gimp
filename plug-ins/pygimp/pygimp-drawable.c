@@ -1404,7 +1404,8 @@ lay_scale(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     int interpolation = -1;
     gboolean local_origin = FALSE;
 
-    static char *kwlist[] = { "width", "height", "local_origin", NULL };
+    static char *kwlist[] = { "width", "height", "local_origin",
+                              "interpolation", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs, "ii|ii:scale", kwlist,
 				     &new_width, &new_height,
