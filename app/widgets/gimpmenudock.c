@@ -381,6 +381,10 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (display_container), NULL);
 
+  /* Create a separate context per dock so that docks can be bound to
+   * a specific image and does not necessarily have to follow the
+   * active image in the user context
+   */
   context = gimp_context_new (dialog_factory->context->gimp,
                               "Dock Context", NULL);
 
