@@ -47,6 +47,9 @@ static void      gimp_image_dock_destroy      (GtkObject             *object);
 static void      gimp_image_dock_display_changed  (GimpContext       *context,
                                                    GimpObject        *display,
                                                    GimpImageDock     *dock);
+static void      gimp_image_dock_image_changed    (GimpContext       *context,
+                                                   GimpImage         *image,
+                                                   GimpImageDock     *dock);
 static void      gimp_image_dock_image_flush      (GimpImage         *image,
                                                    gboolean           invalidate_preview,
                                                    GimpImageDock     *dock);
@@ -112,6 +115,9 @@ gimp_image_dock_constructor (GType                  type,
   g_signal_connect_object (gimp_dock_get_context (GIMP_DOCK (dock)), "display-changed",
                            G_CALLBACK (gimp_image_dock_display_changed),
                            dock, 0);
+  g_signal_connect_object (gimp_dock_get_context (GIMP_DOCK (dock)), "image-changed",
+                           G_CALLBACK (gimp_image_dock_image_changed),
+                           dock, 0);
 
   return object;
 }
@@ -143,6 +149,14 @@ gimp_image_dock_display_changed (GimpContext   *context,
                                  GimpImageDock *dock)
 {
   gimp_ui_manager_update (dock->ui_manager, display);
+}
+
+static void
+gimp_image_dock_image_changed (GimpContext   *context,
+                               GimpImage     *image,
+                               GimpImageDock *dock)
+{
+  gimp_ui_manager_update (dock->ui_manager, gimp_context_get_display (context));
 }
 
 static void
