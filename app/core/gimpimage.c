@@ -167,6 +167,7 @@ static void        gimp_image_projectable_flush  (GimpProjectable   *projectable
                                                   gboolean           invalidate_preview);
 static GeglNode     * gimp_image_get_graph       (GimpProjectable   *projectable);
 static GimpImage    * gimp_image_get_image       (GimpProjectable   *projectable);
+static GimpImageType  gimp_image_get_image_type  (GimpProjectable   *projectable);
 
 static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               x,
@@ -568,6 +569,7 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
 {
   iface->flush              = gimp_image_projectable_flush;
   iface->get_image          = gimp_image_get_image;
+  iface->get_image_type     = gimp_image_get_image_type;
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_image_get_size;
   iface->get_graph          = gimp_image_get_graph;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
@@ -1210,6 +1212,17 @@ static GimpImage *
 gimp_image_get_image (GimpProjectable *projectable)
 {
   return GIMP_IMAGE (projectable);
+}
+
+static GimpImageType
+gimp_image_get_image_type (GimpProjectable *projectable)
+{
+  GimpImage     *image = GIMP_IMAGE (projectable);
+  GimpImageType  type;
+
+  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (image->base_type);
+
+  return GIMP_IMAGE_TYPE_WITH_ALPHA (type);
 }
 
 static GeglNode *

@@ -283,7 +283,12 @@ gimp_projection_get_image (GimpPickable *pickable)
 static GimpImageType
 gimp_projection_get_image_type (GimpPickable *pickable)
 {
-  switch (gimp_image_base_type (gimp_projection_get_image (pickable)))
+  GimpProjection *proj = GIMP_PROJECTION (pickable);
+  GimpImageType   type;
+
+  type = gimp_projectable_get_image_type (proj->projectable);
+
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
     {
     case GIMP_RGB:
     case GIMP_INDEXED:

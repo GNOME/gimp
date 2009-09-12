@@ -164,6 +164,21 @@ gimp_projectable_get_image (GimpProjectable *projectable)
   return NULL;
 }
 
+GimpImageType
+gimp_projectable_get_image_type (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), 0);
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->get_image_type)
+    return iface->get_image_type (projectable);
+
+  return 0;
+}
+
 void
 gimp_projectable_get_offset (GimpProjectable *projectable,
                              gint            *x,

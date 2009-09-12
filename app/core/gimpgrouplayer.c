@@ -191,6 +191,7 @@ static void
 gimp_projectable_iface_init (GimpProjectableInterface *iface)
 {
   iface->get_image          = (GimpImage * (*) (GimpProjectable *)) gimp_item_get_image;
+  iface->get_image_type     = (GimpImageType (*) (GimpProjectable *)) gimp_drawable_type;
   iface->get_offset         = (void (*) (GimpProjectable*, gint*, gint*)) gimp_item_get_offset;
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_viewable_get_size;
   iface->get_graph          = gimp_group_layer_get_graph;
