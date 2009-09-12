@@ -19,9 +19,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The GIMP HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-05 22:53+0100\n"
-"PO-Revision-Date: 2009-03-02 21:07+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-07-08 19:34+0000\n"
+"PO-Revision-Date: 2009-07-23 21:07+0100\n"
 "Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -221,7 +222,7 @@ msgstr "(saisissez n'importe quel caractère pour fermer cette fenêtre)\n"
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Sortie GIMP. Vous pouvez réduire cette fenêtre mais ne la fermez pas."
 
-#: ../app/sanity.c:342
+#: ../app/sanity.c:365
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -233,7 +234,7 @@ msgstr ""
 "\n"
 "Vérifiez la valeur de la variable d'environnement G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:361
+#: ../app/sanity.c:384
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -415,7 +416,7 @@ msgid "Text Editor"
 msgstr "Éditeur de texte"
 
 #: ../app/actions/actions.c:200 ../app/dialogs/dialogs.c:138
-#: ../app/dialogs/preferences-dialog.c:1880 ../app/gui/gui.c:423
+#: ../app/dialogs/preferences-dialog.c:1880 ../app/gui/gui.c:429
 msgid "Tool Options"
 msgstr "Options des outils"
 
@@ -855,7 +856,7 @@ msgstr "Échantillonner sur tous les calques"
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:537
 #: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
-#: ../app/widgets/gimptoolbox.c:979
+#: ../app/widgets/gimptoolbox.c:981
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -891,11 +892,11 @@ msgstr "Voulez-vous vraiment supprimer « %s » de la liste et du disque ?"
 
 #: ../app/actions/dialogs-actions.c:39
 msgid "Tool _Options"
-msgstr "Options des ou_tils"
+msgstr "Options de l'ou_til"
 
 #: ../app/actions/dialogs-actions.c:40
 msgid "Open the tool options dialog"
-msgstr "Ouvre la boîte de dialogue Options des outils"
+msgstr "Ouvre la boîte de dialogue des options de l'outil"
 
 #: ../app/actions/dialogs-actions.c:45
 msgid "_Device Status"
@@ -1130,7 +1131,7 @@ msgid "_About"
 msgstr "À _propos"
 
 #: ../app/actions/dialogs-actions.c:231 ../app/dialogs/about-dialog.c:114
-#: ../app/gui/gui.c:473
+#: ../app/gui/gui.c:479
 msgid "About GIMP"
 msgstr "À propos de GIMP"
 
@@ -1240,7 +1241,7 @@ msgstr "_État & Texte"
 
 #: ../app/actions/dockable-actions.c:108
 msgid "Loc_k Tab to Dock"
-msgstr "_Verrouille l'onglet à la fenêtre ancrable"
+msgstr "_Verrouille l'onglet au groupe de fenêtres"
 
 #: ../app/actions/dockable-actions.c:109
 msgid "Protect this tab from being dragged with the mouse pointer"
@@ -1252,11 +1253,11 @@ msgstr "Afficher la ba_rre des boutons"
 
 #: ../app/actions/dockable-actions.c:124
 msgid "View as _List"
-msgstr "Voir comme une _liste"
+msgstr "Afficher en _liste"
 
 #: ../app/actions/dockable-actions.c:129
 msgid "View as _Grid"
-msgstr "Voir comme une _grille"
+msgstr "Afficher en _grille"
 
 #: ../app/actions/documents-actions.c:42
 msgid "Documents Menu"
@@ -2405,7 +2406,7 @@ msgstr "_Auto"
 
 #: ../app/actions/image-actions.c:62 ../app/actions/plug-in-actions.c:95
 msgid "_Map"
-msgstr "Cart_e"
+msgstr "Mappag_e"
 
 #: ../app/actions/image-actions.c:63
 msgid "C_omponents"
@@ -2413,7 +2414,7 @@ msgstr "C_omposants"
 
 #: ../app/actions/image-actions.c:66
 msgid "_New..."
-msgstr "_Nouveau..."
+msgstr "_Nouvelle image..."
 
 #: ../app/actions/image-actions.c:67
 msgid "Create a new image"
@@ -2425,7 +2426,7 @@ msgstr "Taille du _canevas..."
 
 #: ../app/actions/image-actions.c:73
 msgid "Adjust the image dimensions"
-msgstr "Ajuster les dimensions de l'image"
+msgstr "Ajuste de ce fait les dimensions de l'image"
 
 #: ../app/actions/image-actions.c:78
 msgid "F_it Canvas to Layers"
@@ -3357,7 +3358,7 @@ msgid "Toggle _Quick Mask"
 msgstr "(Dés)activ_er le masque rapide"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1167
+#: ../app/display/gimpdisplayshell.c:1169
 msgid "Toggle Quick Mask"
 msgstr "(Dés)activer le masque rapide"
 
@@ -6006,7 +6007,7 @@ msgstr "Retourner le canal"
 msgid "Rotate Channel"
 msgstr "Rotation du canal"
 
-#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:843
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:886
 msgid "Transform Channel"
 msgstr "Transformation du canal"
 
@@ -6195,21 +6196,21 @@ msgstr "Tracer"
 msgid "Threshold"
 msgstr "Seuil"
 
-#: ../app/core/gimpdrawable-transform.c:629 ../app/tools/gimpfliptool.c:116
+#: ../app/core/gimpdrawable-transform.c:645 ../app/tools/gimpfliptool.c:116
 msgctxt "command"
 msgid "Flip"
 msgstr "Retourner"
 
-#: ../app/core/gimpdrawable-transform.c:716 ../app/tools/gimprotatetool.c:121
+#: ../app/core/gimpdrawable-transform.c:745 ../app/tools/gimprotatetool.c:121
 msgctxt "command"
 msgid "Rotate"
 msgstr "Rotation"
 
-#: ../app/core/gimpdrawable-transform.c:841 ../app/core/gimplayer.c:255
+#: ../app/core/gimpdrawable-transform.c:884 ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Transformation du calque"
 
-#: ../app/core/gimpdrawable-transform.c:856
+#: ../app/core/gimpdrawable-transform.c:899
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -7033,7 +7034,7 @@ msgstr "Convertir en couleurs indexées"
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Impossible de convertir vers une palette ayant plus de 256 couleurs."
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:158
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:161
 #: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
 msgstr "Message de GIMP"
@@ -7807,7 +7808,7 @@ msgstr "Outil de déplacement"
 msgid "Set layer or path as active"
 msgstr "Définir le calque ou le chemin comme actif"
 
-#: ../app/dialogs/preferences-dialog.c:1966 ../app/widgets/gimptoolbox.c:631
+#: ../app/dialogs/preferences-dialog.c:1966 ../app/widgets/gimptoolbox.c:633
 msgid "Toolbox"
 msgstr "Boîte à outils"
 
@@ -8536,20 +8537,20 @@ msgstr "Élevée"
 msgid "Image saved to '%s'"
 msgstr "Image enregistrée comme %s"
 
-#: ../app/display/gimpdisplayshell.c:1033
+#: ../app/display/gimpdisplayshell.c:1035
 msgid "Access the image menu"
 msgstr "Accéder au menu d'image"
 
-#: ../app/display/gimpdisplayshell.c:1138
+#: ../app/display/gimpdisplayshell.c:1140
 msgid "Zoom image when window size changes"
 msgstr "Zoom l'image quand la fenêtre change de taille"
 
-#: ../app/display/gimpdisplayshell.c:1188
+#: ../app/display/gimpdisplayshell.c:1190
 msgid "Navigate the image display"
 msgstr "Naviguer dans l'affichage d'image"
 
-#: ../app/display/gimpdisplayshell.c:1283
-#: ../app/display/gimpdisplayshell.c:1373 ../app/widgets/gimptoolbox.c:222
+#: ../app/display/gimpdisplayshell.c:1285
+#: ../app/display/gimpdisplayshell.c:1375 ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
 msgstr "Déposer les fichiers d'images ici pour les ouvrir"
 
@@ -8765,7 +8766,7 @@ msgid "not a GIMP Levels file"
 msgstr "pas un fichier de niveaux GIMP"
 
 #. initialize the document history
-#: ../app/gui/gui.c:420
+#: ../app/gui/gui.c:426
 msgid "Documents"
 msgstr "Documents"
 
@@ -10784,7 +10785,7 @@ msgstr "Brosse :"
 
 #: ../app/tools/gimppaintoptions-gui.c:142
 msgid "Scale:"
-msgstr "Étirer ou rétrécir :"
+msgstr "Échelle :"
 
 #: ../app/tools/gimppaintoptions-gui.c:150
 msgid "Opacity"
@@ -11293,7 +11294,7 @@ msgstr "15 degrés (%s)"
 #: ../app/tools/gimptransformoptions.c:393
 #, c-format
 msgid "Keep aspect  (%s)"
-msgstr "Conserver le rapport (%s)"
+msgstr "Conserver les proportions (%s)"
 
 #: ../app/tools/gimptransformtool.c:238
 msgid "Transforming"
@@ -12278,15 +12279,15 @@ msgstr "_Arrière-plan :"
 msgid "Spacing"
 msgstr "Espacement"
 
-#: ../app/widgets/gimphelp.c:276
+#: ../app/widgets/gimphelp.c:294
 msgid "Help browser is missing"
 msgstr "Le navigateur d'aide est manquant."
 
-#: ../app/widgets/gimphelp.c:277
+#: ../app/widgets/gimphelp.c:295
 msgid "The GIMP help browser is not available."
 msgstr "Le navigateur d'aide GIMP n'est pas disponible."
 
-#: ../app/widgets/gimphelp.c:278
+#: ../app/widgets/gimphelp.c:296
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -12295,32 +12296,32 @@ msgstr ""
 "Vous pouvez utiliser un navigateur Web à la place pour consulter l'aide en "
 "ligne."
 
-#: ../app/widgets/gimphelp.c:319
+#: ../app/widgets/gimphelp.c:337
 msgid "Help browser doesn't start"
 msgstr "Le navigateur d'aide ne démarre pas"
 
-#: ../app/widgets/gimphelp.c:320
+#: ../app/widgets/gimphelp.c:338
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Impossible de démarrer le greffon du navigateur d'aide de GIMP"
 
-#: ../app/widgets/gimphelp.c:347
+#: ../app/widgets/gimphelp.c:365
 msgid "Use _Web Browser"
 msgstr "Utiliser un navigateur _Web"
 
-#: ../app/widgets/gimphelp.c:596
+#: ../app/widgets/gimphelp.c:614
 msgid "GIMP user manual is missing"
 msgstr "Le manuel de l'utilisateur de GIMP est manquant"
 
-#: ../app/widgets/gimphelp.c:603
+#: ../app/widgets/gimphelp.c:621
 msgid "_Read Online"
 msgstr "_Consulter en ligne"
 
-#: ../app/widgets/gimphelp.c:627
+#: ../app/widgets/gimphelp.c:645
 msgid "The GIMP user manual is not installed on your computer."
 msgstr ""
 "Le manuel de l'utilisateur de GIMP n'est pas installé sur votre ordinateur."
 
-#: ../app/widgets/gimphelp.c:630
+#: ../app/widgets/gimphelp.c:648
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
