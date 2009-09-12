@@ -717,12 +717,13 @@ toolbox_create_tools (GimpToolbox *toolbox,
                         G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      if (GIMP_IMAGE_DOCK (toolbox)->ui_manager)
+      if (gimp_image_dock_get_ui_manager (GIMP_IMAGE_DOCK (toolbox)))
         {
-          GtkAction   *action;
-          const gchar *identifier;
-          gchar       *tmp;
-          gchar       *name;
+          GimpUIManager *ui_manager;
+          GtkAction     *action;
+          const gchar   *identifier;
+          gchar         *tmp;
+          gchar         *name;
 
           identifier = gimp_object_get_name (tool_info);
 
@@ -731,8 +732,8 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          action = gimp_ui_manager_find_action (GIMP_IMAGE_DOCK (toolbox)->ui_manager,
-                                                "tools", name);
+          ui_manager = gimp_image_dock_get_ui_manager (GIMP_IMAGE_DOCK (toolbox));
+          action = gimp_ui_manager_find_action (ui_manager, "tools", name);
           g_free (name);
 
           if (action)

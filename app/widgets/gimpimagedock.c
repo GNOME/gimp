@@ -172,3 +172,11 @@ gimp_image_dock_image_flush (GimpImage     *image,
         gimp_ui_manager_update (dock->ui_manager, display);
     }
 }
+
+GimpUIManager *
+gimp_image_dock_get_ui_manager (GimpImageDock *image_dock)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_DOCK (image_dock), NULL);
+
+  return image_dock->ui_manager;
+}

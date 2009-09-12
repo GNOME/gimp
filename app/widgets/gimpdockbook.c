@@ -451,7 +451,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
 
   /* EEK */
   if (GIMP_IS_IMAGE_DOCK (dockbook->dock) &&
-      GIMP_IMAGE_DOCK (dockbook->dock)->ui_manager != NULL)
+      gimp_image_dock_get_ui_manager (GIMP_IMAGE_DOCK (dockbook->dock)))
     {
       const gchar *dialog_id;
 
@@ -463,7 +463,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
           GimpActionGroup *group;
 
           group = gimp_ui_manager_get_action_group
-            (GIMP_IMAGE_DOCK (dockbook->dock)->ui_manager, "dialogs");
+            (gimp_image_dock_get_ui_manager (GIMP_IMAGE_DOCK (dockbook->dock)), "dialogs");
 
           if (group)
             {

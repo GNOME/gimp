@@ -54,7 +54,8 @@ struct _GimpImageDockClass
 };
 
 
-GType   gimp_image_dock_get_type (void) G_GNUC_CONST;
+GType           gimp_image_dock_get_type       (void) G_GNUC_CONST;
+GimpUIManager * gimp_image_dock_get_ui_manager (GimpImageDock *image_dock);
 
 
 #endif /* __GIMP_IMAGE_DOCK_H__ */
