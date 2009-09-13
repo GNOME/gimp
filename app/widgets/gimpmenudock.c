@@ -64,6 +64,7 @@ static void   gimp_menu_dock_setup                   (GimpDock       *dock,
 static void   gimp_menu_dock_set_aux_info            (GimpDock       *dock,
                                                       GList          *aux_info);
 static GList *gimp_menu_dock_get_aux_info            (GimpDock       *dock);
+static gchar *gimp_menu_dock_get_title               (GimpDock       *dock);
 static void   gimp_menu_dock_book_added              (GimpDock       *dock,
                                                       GimpDockbook   *dockbook);
 static void   gimp_menu_dock_book_removed            (GimpDock       *dock,
@@ -72,7 +73,6 @@ static void   gimp_menu_dock_book_removed            (GimpDock       *dock,
 static void   gimp_menu_dock_dockbook_changed        (GimpDockbook   *dockbook,
                                                       GimpDockable   *dockable,
                                                       GimpMenuDock   *dock);
-static void   gimp_menu_dock_update_title            (GimpMenuDock   *dock);
 
 static void   gimp_menu_dock_factory_display_changed (GimpContext    *context,
                                                       GimpObject     *display,
@@ -109,6 +109,7 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
   dock_class->setup         = gimp_menu_dock_setup;
   dock_class->set_aux_info  = gimp_menu_dock_set_aux_info;
   dock_class->get_aux_info  = gimp_menu_dock_get_aux_info;
+  dock_class->get_title     = gimp_menu_dock_get_title;
   dock_class->book_added    = gimp_menu_dock_book_added;
   dock_class->book_removed  = gimp_menu_dock_book_removed;
 
@@ -136,7 +137,6 @@ gimp_menu_dock_init (GimpMenuDock *dock)
   dock->display_container    = NULL;
   dock->show_image_menu      = FALSE;
   dock->auto_follow_active   = TRUE;
-  dock->update_title_idle_id = 0;
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (gimp_dock_get_main_vbox (GIMP_DOCK (dock))), hbox,
@@ -191,12 +191,6 @@ static void
 gimp_menu_dock_destroy (GtkObject *object)
 {
   GimpMenuDock *dock = GIMP_MENU_DOCK (object);
-
-  if (dock->update_title_idle_id)
-    {
-      g_source_remove (dock->update_title_idle_id);
-      dock->update_title_idle_id = 0;
-    }
 
   /*  remove the image menu and the auto button manually here because
    *  of weird cross-connections with GimpDock's context
@@ -348,7 +342,7 @@ gimp_menu_dock_book_added (GimpDock     *dock,
                     G_CALLBACK (gimp_menu_dock_dockbook_changed),
                     dock);
 
-  gimp_menu_dock_update_title (GIMP_MENU_DOCK (dock));
+  gimp_dock_invalidate_title (GIMP_DOCK (dock));
 
   GIMP_DOCK_CLASS (parent_class)->book_added (dock, dockbook);
 }
@@ -361,7 +355,7 @@ gimp_menu_dock_book_removed (GimpDock     *dock,
                                         gimp_menu_dock_dockbook_changed,
                                         dock);
 
-  gimp_menu_dock_update_title (GIMP_MENU_DOCK (dock));
+  gimp_dock_invalidate_title (GIMP_DOCK (dock));
 
   GIMP_DOCK_CLASS (parent_class)->book_removed (dock, dockbook);
 }
@@ -482,18 +476,18 @@ gimp_menu_dock_dockbook_changed (GimpDockbook *dockbook,
                                  GimpDockable *dockable,
                                  GimpMenuDock *dock)
 {
-  gimp_menu_dock_update_title (dock);
+  gimp_dock_invalidate_title (GIMP_DOCK (dock));
 }
 
-static gboolean
-gimp_menu_dock_update_title_idle (GimpMenuDock *menu_dock)
+static gchar *
+gimp_menu_dock_get_title (GimpDock *dock)
 {
   GString *title;
   GList   *list;
 
   title = g_string_new (NULL);
 
-  for (list = gimp_dock_get_dockbooks (GIMP_DOCK (menu_dock));
+  for (list = gimp_dock_get_dockbooks (dock);
        list;
        list = g_list_next (list))
     {
@@ -519,24 +513,7 @@ gimp_menu_dock_update_title_idle (GimpMenuDock *menu_dock)
         g_string_append (title, " - ");
     }
 
-  gtk_window_set_title (GTK_WINDOW (menu_dock), title->str);
-
-  g_string_free (title, TRUE);
-
-  menu_dock->update_title_idle_id = 0;
-
-  return FALSE;
-}
-
-static void
-gimp_menu_dock_update_title (GimpMenuDock *menu_dock)
-{
-  if (menu_dock->update_title_idle_id)
-    g_source_remove (menu_dock->update_title_idle_id);
-
-  menu_dock->update_title_idle_id =
-    g_idle_add ((GSourceFunc) gimp_menu_dock_update_title_idle,
-                menu_dock);
+  return g_string_free (title, FALSE);
 }
 
 static void

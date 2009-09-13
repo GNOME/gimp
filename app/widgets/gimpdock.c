@@ -50,6 +50,7 @@ enum
 {
   BOOK_ADDED,
   BOOK_REMOVED,
+  TITLE_INVALIDATED,
   LAST_SIGNAL
 };
 
@@ -116,6 +117,15 @@ gimp_dock_class_init (GimpDockClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCKBOOK);
 
+  dock_signals[TITLE_INVALIDATED] =
+    g_signal_new ("title-invalidated",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDockClass, title_invalidated),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->set_property    = gimp_dock_set_property;
   object_class->get_property    = gimp_dock_get_property;
 
@@ -124,6 +134,7 @@ gimp_dock_class_init (GimpDockClass *klass)
   klass->setup                  = NULL;
   klass->book_added             = gimp_dock_real_book_added;
   klass->book_removed           = gimp_dock_real_book_removed;
+  klass->title_invalidated      = NULL;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
@@ -278,6 +289,25 @@ gimp_dock_get_aux_info (GimpDock *dock)
     return GIMP_DOCK_GET_CLASS (dock)->get_aux_info (dock);
 
   return NULL;
+}
+
+gchar *
+gimp_dock_get_title (GimpDock *dock)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+  
+  if (GIMP_DOCK_GET_CLASS (dock)->get_title)
+    return GIMP_DOCK_GET_CLASS (dock)->get_title (dock);
+
+  return NULL;
+}
+
+void
+gimp_dock_invalidate_title (GimpDock *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+  
+  g_signal_emit (dock, dock_signals[TITLE_INVALIDATED], 0);
 }
 
 GimpContext *

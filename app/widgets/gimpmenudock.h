@@ -47,8 +47,6 @@ struct _GimpMenuDock
 
   GtkWidget     *image_combo;
   GtkWidget     *auto_button;
-
-  guint          update_title_idle_id;
 };
 
 struct _GimpMenuDockClass

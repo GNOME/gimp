@@ -72,6 +72,8 @@ struct _GimpDockWindowPrivate
   GimpUIManager     *ui_manager;
   GQuark             image_flush_handler_id;
 
+  guint              update_title_idle_id;
+
   gint               ID;
 };
 
@@ -101,6 +103,8 @@ static void       gimp_dock_window_image_changed     (GimpDockWindow        *doc
 static void       gimp_dock_window_image_flush       (GimpImage             *image,
                                                       gboolean               invalidate_preview,
                                                       GimpDockWindow        *dock_window);
+static void       gimp_dock_window_update_title      (GimpDockWindow        *dock_window);
+static gboolean   gimp_dock_window_update_title_idle (GimpDockWindow        *dock_window);
 
 
 G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
@@ -174,6 +178,7 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   dock_window->p->ui_manager             = NULL;
   dock_window->p->image_flush_handler_id = 0;
   dock_window->p->ID                     = dock_ID++;
+  dock_window->p->update_title_idle_id   = 0;
 
   /* Some common initialization for all dock windows */
   gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
@@ -194,6 +199,7 @@ gimp_dock_window_constructor (GType                  type,
   GimpDockWindow *dock_window;
   GimpGuiConfig  *config;
   GtkAccelGroup  *accel_group;
+  GimpDock       *dock;
 
   /* Init */
   object      = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -230,6 +236,14 @@ gimp_dock_window_constructor (GType                  type,
                                 G_CALLBACK (gimp_dock_window_image_flush),
                                 dock_window);
 
+  /* Update window title now and when docks title is invalidated */
+  gimp_dock_window_update_title (dock_window);
+  dock = gimp_dock_window_get_dock (dock_window);
+  g_signal_connect_object (dock, "title-invalidated",
+                           G_CALLBACK (gimp_dock_window_update_title),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
+
   /* Done! */
   return object;
 }
@@ -238,6 +252,12 @@ static void
 gimp_dock_window_dispose (GObject *object)
 {
   GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+
+  if (dock_window->p->update_title_idle_id)
+    {
+      g_source_remove (dock_window->p->update_title_idle_id);
+      dock_window->p->update_title_idle_id = 0;
+    }
 
   if (dock_window->p->image_flush_handler_id)
     {
@@ -455,6 +475,33 @@ gimp_dock_window_image_flush (GimpImage      *image,
       if (display)
         gimp_ui_manager_update (dock_window->p->ui_manager, display);
     }
+}
+
+static void
+gimp_dock_window_update_title (GimpDockWindow *dock_window)
+{
+  if (dock_window->p->update_title_idle_id)
+    g_source_remove (dock_window->p->update_title_idle_id);
+
+  dock_window->p->update_title_idle_id =
+    g_idle_add ((GSourceFunc) gimp_dock_window_update_title_idle,
+                dock_window);
+}
+
+static gboolean
+gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
+{
+  GimpDock *dock  = gimp_dock_window_get_dock (dock_window);
+  gchar    *title = gimp_dock_get_title (dock);
+
+  if (title)
+    gtk_window_set_title (GTK_WINDOW (dock_window), title);
+
+  g_free (title);
+
+  dock_window->p->update_title_idle_id = 0;
+
+  return FALSE;
 }
 
 gint

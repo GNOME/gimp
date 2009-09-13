@@ -78,6 +78,7 @@ static gboolean    gimp_toolbox_button_press_event (GtkWidget      *widget,
 static gboolean    gimp_toolbox_expose_event       (GtkWidget      *widget,
                                                     GdkEventExpose *event);
 
+static gchar     * gimp_toolbox_get_title          (GimpDock       *dock);
 static void        gimp_toolbox_book_added         (GimpDock       *dock,
                                                     GimpDockbook   *dockbook);
 static void        gimp_toolbox_book_removed       (GimpDock       *dock,
@@ -149,6 +150,7 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   widget_class->button_press_event  = gimp_toolbox_button_press_event;
   widget_class->expose_event        = gimp_toolbox_expose_event;
 
+  dock_class->get_title             = gimp_toolbox_get_title;
   dock_class->book_added            = gimp_toolbox_book_added;
   dock_class->book_removed          = gimp_toolbox_book_removed;
 
@@ -538,6 +540,12 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
   return FALSE;
 }
 
+static gchar *
+gimp_toolbox_get_title (GimpDock *dock)
+{
+  return g_strdup (_("Toolbox"));
+}
+
 static void
 gimp_toolbox_book_added (GimpDock     *dock,
                          GimpDockbook *dockbook)
@@ -617,7 +625,6 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
-                          "title",               _("Toolbox"),
                           "role",                "gimp-toolbox",
                           "context",             context,
                           "dialog-factory",      dialog_factory,
