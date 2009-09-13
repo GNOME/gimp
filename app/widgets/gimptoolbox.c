@@ -137,10 +137,9 @@ G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_IMAGE_DOCK)
 static void
 gimp_toolbox_class_init (GimpToolboxClass *klass)
 {
-  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
-  GtkWidgetClass     *widget_class     = GTK_WIDGET_CLASS (klass);
-  GimpDockClass      *dock_class       = GIMP_DOCK_CLASS (klass);
-  GimpImageDockClass *image_dock_class = GIMP_IMAGE_DOCK_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
 
   object_class->constructor         = gimp_toolbox_constructor;
 
@@ -152,8 +151,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
 
   dock_class->book_added            = gimp_toolbox_book_added;
   dock_class->book_removed          = gimp_toolbox_book_removed;
-
-  image_dock_class->ui_manager_name = "<Toolbox>";
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tool-icon-size",
@@ -620,11 +617,12 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
-                          "title",          _("Toolbox"),
-                          "role",           "gimp-toolbox",
-                          "gimp-context",   context,
-                          "context",        context,
-                          "dialog-factory", dialog_factory,
+                          "title",           _("Toolbox"),
+                          "role",            "gimp-toolbox",
+                          "gimp-context",    context,
+                          "context",         context,
+                          "dialog-factory",  dialog_factory,
+                          "ui-manager-name", "<Toolbox>",
                           NULL);
 
   return GTK_WIDGET (toolbox);
@@ -717,7 +715,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
                         G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      if (gimp_image_dock_get_ui_manager (GIMP_IMAGE_DOCK (toolbox)))
+      if (gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (toolbox)))
         {
           GimpUIManager *ui_manager;
           GtkAction     *action;
@@ -732,7 +730,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          ui_manager = gimp_image_dock_get_ui_manager (GIMP_IMAGE_DOCK (toolbox));
+          ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (toolbox));
           action = gimp_ui_manager_find_action (ui_manager, "tools", name);
           g_free (name);
 

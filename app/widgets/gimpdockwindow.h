@@ -53,7 +53,8 @@ struct _GimpDockWindowClass
 };
 
 
-GType               gimp_dock_window_get_type         (void) G_GNUC_CONST;
+GType               gimp_dock_window_get_type       (void) G_GNUC_CONST;
+GimpUIManager *     gimp_dock_window_get_ui_manager (GimpDockWindow *dock_window);
 
 
 #endif /* __GIMP_DOCK_WINDOW_H__ */

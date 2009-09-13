@@ -31,8 +31,13 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpcontainer.h"
 
+#include "gimpdialogfactory.h"
+#include "gimpdock.h"
 #include "gimpdockwindow.h"
+#include "gimpmenufactory.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindow.h"
 
@@ -43,12 +48,17 @@ enum
 {
   PROP_0,
   PROP_CONTEXT,
+  PROP_UI_MANAGER_NAME,
 };
 
 
 struct _GimpDockWindowPrivate
 {
-  GimpContext *context;
+  GimpContext   *context;
+
+  gchar         *ui_manager_name;
+  GimpUIManager *ui_manager;
+  GQuark         image_flush_handler_id;
 };
 
 static GObject * gimp_dock_window_constructor       (GType                  type,
@@ -63,6 +73,15 @@ static void      gimp_dock_window_get_property      (GObject               *obje
                                                      guint                  property_id,
                                                      GValue                *value,
                                                      GParamSpec            *pspec);
+static void      gimp_dock_window_display_changed   (GimpDockWindow        *dock_window,
+                                                     GimpObject            *display,
+                                                     GimpContext           *context);
+static void      gimp_dock_window_image_changed     (GimpDockWindow        *dock_window,
+                                                     GimpImage             *image,
+                                                     GimpContext           *context);
+static void      gimp_dock_window_image_flush       (GimpImage             *image,
+                                                     gboolean               invalidate_preview,
+                                                     GimpDockWindow        *dock_window);
 
 
 G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
@@ -85,6 +104,13 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_UI_MANAGER_NAME,
+                                   g_param_spec_string ("ui-manager-name",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_type_class_add_private (klass, sizeof (GimpDockWindowPrivate));
 }
 
@@ -94,7 +120,10 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   dock_window->p = G_TYPE_INSTANCE_GET_PRIVATE (dock_window,
                                                 GIMP_TYPE_DOCK_WINDOW,
                                                 GimpDockWindowPrivate);
-  dock_window->p->context = NULL;
+  dock_window->p->context                = NULL;
+  dock_window->p->ui_manager_name        = NULL;
+  dock_window->p->ui_manager             = NULL;
+  dock_window->p->image_flush_handler_id = 0;
 
   gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
@@ -108,13 +137,44 @@ gimp_dock_window_constructor (GType                  type,
   GObject        *object;
   GimpDockWindow *dock_window;
   GimpGuiConfig  *config;
+  GtkAccelGroup  *accel_group;
 
+  /* Init */
   object      = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
   dock_window = GIMP_DOCK_WINDOW (object);
   config      = GIMP_GUI_CONFIG (dock_window->p->context->gimp->config);
 
+  /* Setup hints */
   gimp_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
 
+  /* Make image window related keyboard shortcuts work also when a
+   * dock window is the focused window
+   */
+  dock_window->p->ui_manager =
+    gimp_menu_factory_manager_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock_window))->menu_factory,
+                                   dock_window->p->ui_manager_name,
+                                   dock_window,
+                                   config->tearoff_menus);
+  accel_group =
+    gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (dock_window->p->ui_manager));
+
+  gtk_window_add_accel_group (GTK_WINDOW (dock_window), accel_group);
+
+  g_signal_connect_object (dock_window->p->context, "display-changed",
+                           G_CALLBACK (gimp_dock_window_display_changed),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (dock_window->p->context, "image-changed",
+                           G_CALLBACK (gimp_dock_window_image_changed),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
+
+  dock_window->p->image_flush_handler_id =
+    gimp_container_add_handler (dock_window->p->context->gimp->images, "flush",
+                                G_CALLBACK (gimp_dock_window_image_flush),
+                                dock_window);
+
+  /* Done! */
   return object;
 }
 
@@ -122,6 +182,19 @@ static void
 gimp_dock_window_dispose (GObject *object)
 {
   GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+
+  if (dock_window->p->image_flush_handler_id)
+    {
+      gimp_container_remove_handler (dock_window->p->context->gimp->images,
+                                     dock_window->p->image_flush_handler_id);
+      dock_window->p->image_flush_handler_id = 0;
+    }
+
+  if (dock_window->p->ui_manager)
+    {
+      g_object_unref (dock_window->p->ui_manager);
+      dock_window->p->ui_manager = NULL;
+    }
 
   if (dock_window->p->context)
     {
@@ -146,6 +219,11 @@ gimp_dock_window_set_property (GObject      *object,
       dock_window->p->context = g_value_dup_object (value);
       break;
 
+    case PROP_UI_MANAGER_NAME:
+      g_free (dock_window->p->ui_manager_name);
+      dock_window->p->ui_manager_name = g_value_dup_string (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -166,8 +244,52 @@ gimp_dock_window_get_property (GObject    *object,
       g_value_set_object (value, dock_window->p->context);
       break;
 
+    case PROP_UI_MANAGER_NAME:
+      g_value_set_string (value, dock_window->p->ui_manager_name);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_dock_window_display_changed (GimpDockWindow *dock_window,
+                                  GimpObject     *display,
+                                  GimpContext    *context)
+{
+  gimp_ui_manager_update (dock_window->p->ui_manager,
+                          display);
+}
+
+static void
+gimp_dock_window_image_changed (GimpDockWindow *dock_window,
+                                GimpImage     *image,
+                                GimpContext   *context)
+{
+  gimp_ui_manager_update (dock_window->p->ui_manager,
+                          gimp_context_get_display (context));
+}
+
+static void
+gimp_dock_window_image_flush (GimpImage      *image,
+                              gboolean        invalidate_preview,
+                              GimpDockWindow *dock_window)
+{
+  if (image == gimp_context_get_image (dock_window->p->context))
+    {
+      GimpObject *display = gimp_context_get_display (dock_window->p->context);
+
+      if (display)
+        gimp_ui_manager_update (dock_window->p->ui_manager, display);
+    }
+}
+
+GimpUIManager *
+gimp_dock_window_get_ui_manager (GimpDockWindow *dock_window)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
+
+  return dock_window->p->ui_manager;
 }

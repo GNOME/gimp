@@ -389,10 +389,11 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
                               "Dock Context", NULL);
 
   menu_dock = g_object_new (GIMP_TYPE_MENU_DOCK,
-                            "role",           "gimp-dock",
-                            "gimp-context",   context,
-                            "context",        context,
-                            "dialog-factory", dialog_factory,
+                            "role",            "gimp-dock",
+                            "gimp-context",    context,
+                            "context",         context,
+                            "dialog-factory",  dialog_factory,
+                            "ui-manager-name", "<Dock>",
                             NULL);
   g_object_unref (context);
 

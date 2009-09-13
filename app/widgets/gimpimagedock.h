@@ -40,22 +40,16 @@ typedef struct _GimpImageDockClass   GimpImageDockClass;
  */
 struct _GimpImageDock
 {
-  GimpDock       parent_instance;
-
-  GimpUIManager *ui_manager;
-  GQuark         image_flush_handler_id;
+  GimpDock  parent_instance;
 };
 
 struct _GimpImageDockClass
 {
   GimpDockClass  parent_class;
-
-  const gchar   *ui_manager_name;
 };
 
 
 GType           gimp_image_dock_get_type       (void) G_GNUC_CONST;
-GimpUIManager * gimp_image_dock_get_ui_manager (GimpImageDock *image_dock);
 
 
 #endif /* __GIMP_IMAGE_DOCK_H__ */
