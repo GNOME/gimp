@@ -43,6 +43,10 @@
 #include "gimp-intl.h"
 
 
+#define DEFAULT_DOCK_HEIGHT     300
+#define DEFAULT_DOCK_FONT_SCALE PANGO_SCALE_SMALL
+
+
 enum
 {
   PROP_0,
@@ -61,6 +65,8 @@ struct _GimpDockWindowPrivate
   gchar             *ui_manager_name;
   GimpUIManager     *ui_manager;
   GQuark             image_flush_handler_id;
+
+  gint               ID;
 };
 
 static GObject * gimp_dock_window_constructor       (GType                  type,
@@ -75,6 +81,8 @@ static void      gimp_dock_window_get_property      (GObject               *obje
                                                      guint                  property_id,
                                                      GValue                *value,
                                                      GParamSpec            *pspec);
+static void      gimp_dock_window_style_set         (GtkWidget             *widget,
+                                                     GtkStyle              *prev_style);
 static void      gimp_dock_window_display_changed   (GimpDockWindow        *dock_window,
                                                      GimpObject            *display,
                                                      GimpContext           *context);
@@ -93,12 +101,15 @@ G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
 static void
 gimp_dock_window_class_init (GimpDockWindowClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructor     = gimp_dock_window_constructor;
   object_class->dispose         = gimp_dock_window_dispose;
   object_class->set_property    = gimp_dock_window_set_property;
   object_class->get_property    = gimp_dock_window_get_property;
+
+  widget_class->style_set       = gimp_dock_window_style_set;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("gimp-context", NULL, NULL,
@@ -120,12 +131,30 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("default-height",
+                                                             NULL, NULL,
+                                                             -1, G_MAXINT,
+                                                             DEFAULT_DOCK_HEIGHT,
+                                                             GIMP_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_double ("font-scale",
+                                                                NULL, NULL,
+                                                                0.0,
+                                                                G_MAXDOUBLE,
+                                                                DEFAULT_DOCK_FONT_SCALE,
+                                                                GIMP_PARAM_READABLE));
+
   g_type_class_add_private (klass, sizeof (GimpDockWindowPrivate));
 }
 
 static void
 gimp_dock_window_init (GimpDockWindow *dock_window)
 {
+  static gint  dock_ID = 1;
+  gchar       *name;
+
+  /* Initialize members */
   dock_window->p = G_TYPE_INSTANCE_GET_PRIVATE (dock_window,
                                                 GIMP_TYPE_DOCK_WINDOW,
                                                 GimpDockWindowPrivate);
@@ -134,9 +163,16 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   dock_window->p->ui_manager_name        = NULL;
   dock_window->p->ui_manager             = NULL;
   dock_window->p->image_flush_handler_id = 0;
+  dock_window->p->ID                     = dock_ID++;
 
+  /* Some common initialization for all dock windows */
   gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
+
+  /* Initialize theming and style-setting stuff */
+  name = g_strdup_printf ("gimp-dock-%d", dock_window->p->ID);
+  gtk_widget_set_name (GTK_WIDGET (dock_window), name);
+  g_free (name);
 }
 
 static GObject *
@@ -279,6 +315,60 @@ gimp_dock_window_get_property (GObject    *object,
 }
 
 static void
+gimp_dock_window_style_set (GtkWidget *widget,
+                            GtkStyle  *prev_style)
+{
+  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (widget);
+  gint            default_height;
+  gdouble         font_scale;
+
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_style_get (widget,
+                        "default-height", &default_height,
+                        "font-scale",     &font_scale,
+                        NULL);
+
+  gtk_window_set_default_size (GTK_WINDOW (widget), -1, default_height);
+
+  if (font_scale != 1.0)
+    {
+      PangoContext         *context;
+      PangoFontDescription *font_desc;
+      gint                  font_size;
+      gchar                *font_str;
+      gchar                *rc_string;
+
+      context = gtk_widget_get_pango_context (widget);
+      font_desc = pango_context_get_font_description (context);
+      font_desc = pango_font_description_copy (font_desc);
+
+      font_size = pango_font_description_get_size (font_desc);
+      font_size = font_scale * font_size;
+      pango_font_description_set_size (font_desc, font_size);
+
+      font_str = pango_font_description_to_string (font_desc);
+      pango_font_description_free (font_desc);
+
+      rc_string =
+        g_strdup_printf ("style \"gimp-dock-style\""
+                         "{"
+                         "  font_name = \"%s\""
+                         "}"
+                         "widget \"gimp-dock-%d.*\" style \"gimp-dock-style\"",
+                         font_str,
+                         dock_window->p->ID);
+      g_free (font_str);
+
+      gtk_rc_parse_string (rc_string);
+      g_free (rc_string);
+
+      if (gtk_bin_get_child (GTK_BIN (widget)))
+        gtk_widget_reset_rc_styles (gtk_bin_get_child (GTK_BIN (widget)));
+    }
+}
+
+static void
 gimp_dock_window_display_changed (GimpDockWindow *dock_window,
                                   GimpObject     *display,
                                   GimpContext    *context)
@@ -308,6 +398,14 @@ gimp_dock_window_image_flush (GimpImage      *image,
       if (display)
         gimp_ui_manager_update (dock_window->p->ui_manager, display);
     }
+}
+
+gint
+gimp_dock_window_get_id (GimpDockWindow *dock_window)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), 0);
+
+  return dock_window->p->ID;
 }
 
 GimpUIManager *

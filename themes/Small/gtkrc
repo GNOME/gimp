@@ -44,8 +44,8 @@ style "gimp-default-style"
   GtkOptionMenu::indicator-spacing = { 4, 3, 1, 1 }
 
   GtkPaned::handle-size             = 5
-  GimpDock::default-height          = 240
-  GimpDock::font-scale              = 0.8333
+  GimpDockWindow::default-height    = 240
+  GimpDockWindow::font-scale        = 0.8333
   GimpDockSeparator::height         = 5
   GimpMenuDock::minimal-width       = 200
   GimpMenuDock::menu-preview-size   = small-toolbar
