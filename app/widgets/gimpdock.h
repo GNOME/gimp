@@ -75,6 +75,7 @@ GList             * gimp_dock_get_aux_info       (GimpDock       *dock);
 GimpContext       * gimp_dock_get_context        (GimpDock       *dock);
 GimpDialogFactory * gimp_dock_get_dialog_factory (GimpDock       *dock);
 GList             * gimp_dock_get_dockbooks      (GimpDock       *dock);
+gint                gimp_dock_get_n_dockables    (GimpDock       *dock);
 GtkWidget         * gimp_dock_get_main_vbox      (GimpDock       *dock);
 GtkWidget         * gimp_dock_get_vbox           (GimpDock       *dock);
 gint                gimp_dock_get_id             (GimpDock       *dock);

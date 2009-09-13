@@ -246,13 +246,8 @@ gimp_dock_delete_event (GtkWidget   *widget,
                         GdkEventAny *event)
 {
   GimpDock *dock = GIMP_DOCK (widget);
-  GList    *list;
-  gint      n;
 
-  for (list = dock->p->dockbooks, n = 0; list; list = list->next)
-    n += gtk_notebook_get_n_pages (GTK_NOTEBOOK (list->data));
-
-  if (n > 1)
+  if (gimp_dock_get_n_dockables (dock) > 1)
     {
       GimpSessionInfo *info = gimp_session_info_new ();
 
@@ -341,6 +336,20 @@ gimp_dock_get_dockbooks (GimpDock *dock)
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
   return dock->p->dockbooks;
+}
+
+gint
+gimp_dock_get_n_dockables (GimpDock *dock)
+{
+  GList *list = NULL;
+  gint   n    = 0;
+
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), 0);
+
+  for (list = dock->p->dockbooks; list; list = list->next)
+    n += gtk_notebook_get_n_pages (GTK_NOTEBOOK (list->data));
+
+  return n;
 }
 
 GtkWidget *
