@@ -129,7 +129,7 @@ static void        toolbox_paste_received          (GtkClipboard   *clipboard,
                                                     gpointer        data);
 
 
-G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_IMAGE_DOCK)
+G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_DOCK)
 
 #define parent_class gimp_toolbox_parent_class
 

@@ -22,7 +22,7 @@
 #define __GIMP_MENU_DOCK_H__
 
 
-#include "gimpimagedock.h"
+#include "gimpdock.h"
 
 
 #define GIMP_TYPE_MENU_DOCK            (gimp_menu_dock_get_type ())
@@ -37,7 +37,7 @@ typedef struct _GimpMenuDockClass  GimpMenuDockClass;
 
 struct _GimpMenuDock
 {
-  GimpImageDock  parent_instance;
+  GimpDock       parent_instance;
 
   GimpContainer *image_container;
   GimpContainer *display_container;
@@ -53,7 +53,7 @@ struct _GimpMenuDock
 
 struct _GimpMenuDockClass
 {
-  GimpImageDockClass  parent_class;
+  GimpDockClass  parent_class;
 };
 
 

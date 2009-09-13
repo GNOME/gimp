@@ -32,11 +32,11 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpdnd.h"
+#include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdocked.h"
 #include "gimphelp-ids.h"
-#include "gimpimagedock.h"
 #include "gimpmenufactory.h"
 #include "gimpstringaction.h"
 #include "gimpuimanager.h"
@@ -450,7 +450,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
     }
 
   /* EEK */
-  if (GIMP_IS_IMAGE_DOCK (dockbook->dock) &&
+  if (GIMP_IS_DOCK_WINDOW (dockbook->dock) &&
       gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dockbook->dock)))
     {
       const gchar *dialog_id;
