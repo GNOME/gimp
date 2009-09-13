@@ -51,6 +51,7 @@ enum
   BOOK_ADDED,
   BOOK_REMOVED,
   TITLE_INVALIDATED,
+  GEOMETRY_INVALIDATED,
   LAST_SIGNAL
 };
 
@@ -126,15 +127,26 @@ gimp_dock_class_init (GimpDockClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->set_property    = gimp_dock_set_property;
-  object_class->get_property    = gimp_dock_get_property;
+  dock_signals[GEOMETRY_INVALIDATED] =
+    g_signal_new ("geometry-invalidated",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDockClass, geometry_invalidated),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
-  gtk_object_class->destroy     = gimp_dock_destroy;
+  object_class->set_property     = gimp_dock_set_property;
+  object_class->get_property     = gimp_dock_get_property;
 
-  klass->setup                  = NULL;
-  klass->book_added             = gimp_dock_real_book_added;
-  klass->book_removed           = gimp_dock_real_book_removed;
-  klass->title_invalidated      = NULL;
+  gtk_object_class->destroy      = gimp_dock_destroy;
+
+  klass->setup                   = NULL;
+  klass->set_host_geometry_hints = NULL;
+  klass->book_added              = gimp_dock_real_book_added;
+  klass->book_removed            = gimp_dock_real_book_removed;
+  klass->title_invalidated       = NULL;
+  klass->geometry_invalidated    = NULL;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
@@ -295,7 +307,7 @@ gchar *
 gimp_dock_get_title (GimpDock *dock)
 {
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
-  
+
   if (GIMP_DOCK_GET_CLASS (dock)->get_title)
     return GIMP_DOCK_GET_CLASS (dock)->get_title (dock);
 
@@ -306,8 +318,43 @@ void
 gimp_dock_invalidate_title (GimpDock *dock)
 {
   g_return_if_fail (GIMP_IS_DOCK (dock));
-  
+
   g_signal_emit (dock, dock_signals[TITLE_INVALIDATED], 0);
+}
+
+/**
+ * gimp_dock_set_host_geometry_hints:
+ * @dock:   The dock
+ * @window: The #GtkWindow to adapt to hosting the dock
+ *
+ * Some docks have some specific needs on the #GtkWindow they are
+ * in. This function allows such docks to perform any such setup on
+ * the #GtkWindow they are in/will be put in.
+ **/
+void
+gimp_dock_set_host_geometry_hints (GimpDock  *dock,
+                                   GtkWindow *window)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_if_fail (GTK_IS_WINDOW (window));
+
+  if (GIMP_DOCK_GET_CLASS (dock)->set_host_geometry_hints)
+    GIMP_DOCK_GET_CLASS (dock)->set_host_geometry_hints (dock, window);
+}
+
+/**
+ * gimp_dock_invalidate_geometry:
+ * @dock:
+ *
+ * Call when the dock needs to setup its host #GtkWindow with
+ * GtkDock::set_host_geometry_hints().
+ **/
+void
+gimp_dock_invalidate_geometry (GimpDock *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  g_signal_emit (dock, dock_signals[GEOMETRY_INVALIDATED], 0);
 }
 
 GimpContext *

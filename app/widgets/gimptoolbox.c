@@ -79,11 +79,13 @@ static gboolean    gimp_toolbox_expose_event       (GtkWidget      *widget,
                                                     GdkEventExpose *event);
 
 static gchar     * gimp_toolbox_get_title          (GimpDock       *dock);
+static void        gimp_toolbox_set_host_geometry_hints
+                                                   (GimpDock       *dock,
+                                                    GtkWindow      *window);
 static void        gimp_toolbox_book_added         (GimpDock       *dock,
                                                     GimpDockbook   *dockbook);
 static void        gimp_toolbox_book_removed       (GimpDock       *dock,
                                                     GimpDockbook   *dockbook);
-static void        gimp_toolbox_set_geometry       (GimpToolbox    *toolbox);
 
 static void        toolbox_separator_expand        (GimpToolbox    *toolbox);
 static void        toolbox_separator_collapse      (GimpToolbox    *toolbox);
@@ -142,17 +144,18 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
 
-  object_class->constructor         = gimp_toolbox_constructor;
+  object_class->constructor           = gimp_toolbox_constructor;
 
-  widget_class->delete_event        = gimp_toolbox_delete_event;
-  widget_class->size_allocate       = gimp_toolbox_size_allocate;
-  widget_class->style_set           = gimp_toolbox_style_set;
-  widget_class->button_press_event  = gimp_toolbox_button_press_event;
-  widget_class->expose_event        = gimp_toolbox_expose_event;
+  widget_class->delete_event          = gimp_toolbox_delete_event;
+  widget_class->size_allocate         = gimp_toolbox_size_allocate;
+  widget_class->style_set             = gimp_toolbox_style_set;
+  widget_class->button_press_event    = gimp_toolbox_button_press_event;
+  widget_class->expose_event          = gimp_toolbox_expose_event;
 
-  dock_class->get_title             = gimp_toolbox_get_title;
-  dock_class->book_added            = gimp_toolbox_book_added;
-  dock_class->book_removed          = gimp_toolbox_book_removed;
+  dock_class->get_title               = gimp_toolbox_get_title;
+  dock_class->set_host_geometry_hints = gimp_toolbox_set_host_geometry_hints;
+  dock_class->book_added              = gimp_toolbox_book_added;
+  dock_class->book_removed            = gimp_toolbox_book_removed;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tool-icon-size",
@@ -466,7 +469,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
         }
     }
 
-  gimp_toolbox_set_geometry (GIMP_TOOLBOX (widget));
+  gimp_dock_invalidate_geometry (GIMP_DOCK (widget));
 }
 
 static gboolean
@@ -552,7 +555,7 @@ gimp_toolbox_book_added (GimpDock     *dock,
 {
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 1)
     {
-      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
+      gimp_dock_invalidate_geometry (dock);
       toolbox_separator_collapse (GIMP_TOOLBOX (dock));
     }
 }
@@ -564,14 +567,16 @@ gimp_toolbox_book_removed (GimpDock     *dock,
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 0 &&
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
     {
-      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
+      gimp_dock_invalidate_geometry (dock);
       toolbox_separator_expand (GIMP_TOOLBOX (dock));
     }
 }
 
 static void
-gimp_toolbox_set_geometry (GimpToolbox *toolbox)
+gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
+                                      GtkWindow *window)
 {
+  GimpToolbox  *toolbox = GIMP_TOOLBOX (dock);
   Gimp         *gimp;
   GimpToolInfo *tool_info;
   GtkWidget    *tool_button;
@@ -604,14 +609,14 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
       geometry.height_inc = (gimp_dock_get_dockbooks (GIMP_DOCK (toolbox)) ?
                              1 : button_requisition.height);
 
-      gtk_window_set_geometry_hints (GTK_WINDOW (toolbox),
+      gtk_window_set_geometry_hints (window,
                                      NULL,
                                      &geometry,
                                      GDK_HINT_MIN_SIZE   |
                                      GDK_HINT_RESIZE_INC |
                                      GDK_HINT_USER_POS);
 
-      gimp_dialog_factory_set_has_min_size (GTK_WINDOW (toolbox), TRUE);
+      gimp_dialog_factory_set_has_min_size (window, TRUE);
     }
 }
 

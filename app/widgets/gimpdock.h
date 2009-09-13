@@ -51,19 +51,22 @@ struct _GimpDockClass
   GimpDockWindowClass  parent_class;
 
   /*  virtual functions  */
-  void    (* setup)             (GimpDock       *dock,
-                                 const GimpDock *template);
-  void    (* set_aux_info)      (GimpDock       *dock,
-                                 GList          *aux_info);
-  GList * (* get_aux_info)      (GimpDock       *dock);
-  gchar * (* get_title)         (GimpDock       *dock);
+  void    (* setup)                   (GimpDock       *dock,
+                                       const GimpDock *template);
+  void    (* set_aux_info)            (GimpDock       *dock,
+                                       GList          *aux_info);
+  GList * (* get_aux_info)            (GimpDock       *dock);
+  gchar * (* get_title)               (GimpDock       *dock);
+  void    (* set_host_geometry_hints) (GimpDock       *dock,
+                                       GtkWindow      *window);
 
   /*  signals  */
-  void    (* book_added)        (GimpDock       *dock,
-                                 GimpDockbook   *dockbook);
-  void    (* book_removed)      (GimpDock       *dock,
-                                 GimpDockbook   *dockbook);
-  void    (* title_invalidated) (GimpDock       *dock);
+  void    (* book_added)              (GimpDock       *dock,
+                                       GimpDockbook   *dockbook);
+  void    (* book_removed)            (GimpDock       *dock,
+                                       GimpDockbook   *dockbook);
+  void    (* title_invalidated)       (GimpDock       *dock);
+  void    (* geometry_invalidated)    (GimpDock       *dock);
 };
 
 
@@ -76,6 +79,10 @@ void                gimp_dock_set_aux_info       (GimpDock       *dock,
 GList             * gimp_dock_get_aux_info       (GimpDock       *dock);
 gchar             * gimp_dock_get_title          (GimpDock       *dock);
 void                gimp_dock_invalidate_title   (GimpDock       *dock);
+void                gimp_dock_set_host_geometry_hints
+                                                 (GimpDock       *dock,
+                                                  GtkWindow      *window);
+void                gimp_dock_invalidate_geometry(GimpDock       *dock);
 GimpContext       * gimp_dock_get_context        (GimpDock       *dock);
 GimpDialogFactory * gimp_dock_get_dialog_factory (GimpDock       *dock);
 GList             * gimp_dock_get_dockbooks      (GimpDock       *dock);

@@ -244,6 +244,14 @@ gimp_dock_window_constructor (GType                  type,
                            dock_window,
                            G_CONNECT_SWAPPED);
 
+  /* Some docks like the toolbox dock needs to maintain special hints
+   * on its container GtkWindow, allow those to do so
+   */
+  gimp_dock_set_host_geometry_hints (dock, GTK_WINDOW (dock_window));
+  g_signal_connect_object (dock, "geometry-invalidated",
+                           G_CALLBACK (gimp_dock_set_host_geometry_hints),
+                           dock_window, 0);
+
   /* Done! */
   return object;
 }
