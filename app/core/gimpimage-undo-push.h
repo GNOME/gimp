@@ -136,6 +136,9 @@ GimpUndo * gimp_image_undo_push_group_layer_suspend (GimpImage      *image,
 GimpUndo * gimp_image_undo_push_group_layer_resume  (GimpImage      *image,
                                                      const gchar    *undo_desc,
                                                      GimpGroupLayer *group);
+GimpUndo * gimp_image_undo_push_group_layer_convert (GimpImage      *image,
+                                                     const gchar    *undo_desc,
+                                                     GimpGroupLayer *group);
 
 
 /*  text layer undos  */

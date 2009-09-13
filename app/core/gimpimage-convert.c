@@ -963,7 +963,8 @@ gimp_image_convert (GimpImage               *image,
         {
         case GIMP_RGB:
         case GIMP_GRAY:
-          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), NULL, new_type);
+          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), NULL, new_type,
+                                      TRUE);
           break;
 
         case GIMP_INDEXED:

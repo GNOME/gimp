@@ -33,7 +33,8 @@
 
 
 void
-gimp_drawable_convert_rgb (GimpDrawable *drawable)
+gimp_drawable_convert_rgb (GimpDrawable *drawable,
+                           gboolean      push_undo)
 {
   GimpImageType  type;
   TileManager   *tiles;
@@ -52,14 +53,14 @@ gimp_drawable_convert_rgb (GimpDrawable *drawable)
 
   gimp_drawable_convert_tiles_rgb (drawable, tiles);
 
-  gimp_drawable_set_tiles (drawable,
-                           gimp_item_is_attached (GIMP_ITEM (drawable)), NULL,
+  gimp_drawable_set_tiles (drawable, push_undo, NULL,
                            tiles, type);
   tile_manager_unref (tiles);
 }
 
 void
-gimp_drawable_convert_grayscale (GimpDrawable *drawable)
+gimp_drawable_convert_grayscale (GimpDrawable *drawable,
+                                 gboolean      push_undo)
 {
   GimpImageType  type;
   TileManager   *tiles;
@@ -78,8 +79,7 @@ gimp_drawable_convert_grayscale (GimpDrawable *drawable)
 
   gimp_drawable_convert_tiles_grayscale (drawable, tiles);
 
-  gimp_drawable_set_tiles (drawable,
-                           gimp_item_is_attached (GIMP_ITEM (drawable)), NULL,
+  gimp_drawable_set_tiles (drawable, push_undo, NULL,
                            tiles, type);
   tile_manager_unref (tiles);
 }

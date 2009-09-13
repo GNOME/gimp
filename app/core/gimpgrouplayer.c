@@ -105,7 +105,8 @@ static gint64      gimp_group_layer_estimate_memsize (const GimpDrawable *drawab
                                                       gint             height);
 static void            gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                                       GimpImage         *dest_image,
-                                                      GimpImageBaseType  new_base_type);
+                                                      GimpImageBaseType  new_base_type,
+                                                      gboolean           push_undo);
 
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
@@ -724,11 +725,19 @@ gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
 static void
 gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                GimpImage         *dest_image,
-                               GimpImageBaseType  new_base_type)
+                               GimpImageBaseType  new_base_type,
+                               gboolean           push_undo)
 {
   GimpGroupLayer *group = GIMP_GROUP_LAYER (drawable);
   TileManager    *tiles;
   GimpImageType   new_type;
+
+  if (push_undo)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (group));
+
+      gimp_image_undo_push_group_layer_convert (image, NULL, group);
+    }
 
   new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
 

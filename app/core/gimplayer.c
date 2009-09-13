@@ -153,7 +153,8 @@ static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
 static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
                                                  GimpImage          *dest_image,
-                                                 GimpImageBaseType   new_base_type);
+                                                 GimpImageBaseType   new_base_type,
+                                                 gboolean            push_undo);
 
 static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
@@ -545,7 +546,7 @@ gimp_layer_convert (GimpItem  *item,
   new_base_type = gimp_image_base_type (dest_image);
 
   if (old_base_type != new_base_type)
-    gimp_drawable_convert_type (drawable, dest_image, new_base_type);
+    gimp_drawable_convert_type (drawable, dest_image, new_base_type, FALSE);
 
   if (layer->mask)
     gimp_item_set_image (GIMP_ITEM (layer->mask), dest_image);
@@ -858,14 +859,16 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 static void
 gimp_layer_convert_type (GimpDrawable      *drawable,
                          GimpImage         *dest_image,
-                         GimpImageBaseType  new_base_type)
+                         GimpImageBaseType  new_base_type,
+                         gboolean           push_undo)
 {
   switch (new_base_type)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
       GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
-                                                        new_base_type);
+                                                        new_base_type,
+                                                        push_undo);
       break;
 
     case GIMP_INDEXED:
@@ -900,9 +903,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                                     &layerPR, gimp_drawable_type (drawable),
                                     &newPR,   new_type);
 
-        gimp_drawable_set_tiles (drawable,
-                                 gimp_item_is_attached (GIMP_ITEM (drawable)),
-                                 NULL,
+        gimp_drawable_set_tiles (drawable, push_undo, NULL,
                                  new_tiles, new_type);
         tile_manager_unref (new_tiles);
       }

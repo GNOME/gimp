@@ -551,6 +551,22 @@ gimp_image_undo_push_group_layer_resume (GimpImage      *image,
                                NULL);
 }
 
+GimpUndo *
+gimp_image_undo_push_group_layer_convert (GimpImage      *image,
+                                          const gchar    *undo_desc,
+                                          GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_CONVERT, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item", group,
+                               NULL);
+}
+
 
 /**********************/
 /*  Text Layer Undos  */

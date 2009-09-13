@@ -34,7 +34,9 @@ typedef struct _GimpGroupLayerUndoClass GimpGroupLayerUndoClass;
 
 struct _GimpGroupLayerUndo
 {
-  GimpItemUndo   parent_instance;
+  GimpItemUndo       parent_instance;
+
+  GimpImageBaseType  prev_type;
 };
 
 struct _GimpGroupLayerUndoClass

@@ -128,7 +128,8 @@ static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable
 
 static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
-                                                    GimpImageBaseType  new_base_type);
+                                                    GimpImageBaseType  new_base_type,
+                                                    gboolean           push_undo);
 
 static TileManager * gimp_drawable_real_get_tiles  (GimpDrawable      *drawable);
 static void       gimp_drawable_real_set_tiles     (GimpDrawable      *drawable,
@@ -728,18 +729,19 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
 static void
 gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImage         *dest_image,
-                                 GimpImageBaseType  new_base_type)
+                                 GimpImageBaseType  new_base_type,
+                                 gboolean           push_undo)
 {
   g_return_if_fail (new_base_type != GIMP_INDEXED);
 
   switch (new_base_type)
     {
     case GIMP_RGB:
-      gimp_drawable_convert_rgb (drawable);
+      gimp_drawable_convert_rgb (drawable, push_undo);
       break;
 
     case GIMP_GRAY:
-      gimp_drawable_convert_grayscale (drawable);
+      gimp_drawable_convert_grayscale (drawable, push_undo);
       break;
 
     default:
@@ -1230,7 +1232,8 @@ gimp_drawable_get_active_components (const GimpDrawable *drawable,
 void
 gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImage         *dest_image,
-                            GimpImageBaseType  new_base_type)
+                            GimpImageBaseType  new_base_type,
+                            gboolean           push_undo)
 {
   GimpImageType type;
 
@@ -1238,12 +1241,15 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   g_return_if_fail (dest_image == NULL || GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (new_base_type != GIMP_INDEXED || GIMP_IS_IMAGE (dest_image));
 
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
+    push_undo = FALSE;
+
   type = gimp_drawable_type (drawable);
 
   g_return_if_fail (new_base_type != GIMP_IMAGE_TYPE_BASE_TYPE (type));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
-                                                    new_base_type);
+                                                    new_base_type, push_undo);
 }
 
 void

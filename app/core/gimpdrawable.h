@@ -65,7 +65,8 @@ struct _GimpDrawableClass
                                            gboolean             *active);
   void          (* convert_type)          (GimpDrawable         *drawable,
                                            GimpImage            *dest_image,
-                                           GimpImageBaseType     new_base_type);
+                                           GimpImageBaseType     new_base_type,
+                                           gboolean              push_undo);
   void          (* apply_region)          (GimpDrawable         *drawable,
                                            PixelRegion          *src2PR,
                                            gboolean              push_undo,
@@ -145,7 +146,8 @@ void         gimp_drawable_get_active_components (const GimpDrawable *drawable,
 
 void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImage          *dest_image,
-                                                  GimpImageBaseType   new_base_type);
+                                                  GimpImageBaseType   new_base_type,
+                                                  gboolean            push_undo);
 
 void            gimp_drawable_apply_region       (GimpDrawable       *drawable,
                                                   PixelRegion        *src2PR,
