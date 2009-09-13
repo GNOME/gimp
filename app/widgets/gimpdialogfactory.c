@@ -547,7 +547,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     {
       GimpDockable *dockable = GIMP_DOCKABLE (dialog);
 
-      if (dockable->dockbook && dockable->dockbook->dock)
+      if (dockable->dockbook && gimp_dockbook_get_dock (dockable->dockbook))
         {
           GtkNotebook *notebook = GTK_NOTEBOOK (dockable->dockbook);
           gint         num      = gtk_notebook_page_num (notebook, dialog);

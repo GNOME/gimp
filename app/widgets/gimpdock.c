@@ -435,7 +435,7 @@ gimp_dock_remove (GimpDock     *dock,
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (dockable->dockbook != NULL);
-  g_return_if_fail (dockable->dockbook->dock == dock);
+  g_return_if_fail (gimp_dockbook_get_dock (dockable->dockbook) == dock);
 
   gimp_dockbook_remove (dockable->dockbook, dockable);
 }
@@ -449,14 +449,14 @@ gimp_dock_add_book (GimpDock     *dock,
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
-  g_return_if_fail (dockbook->dock == NULL);
+  g_return_if_fail (gimp_dockbook_get_dock (dockbook) == NULL);
 
   old_length = g_list_length (dock->p->dockbooks);
 
   if (index >= old_length || index < 0)
     index = old_length;
 
-  dockbook->dock  = dock;
+  gimp_dockbook_set_dock (dockbook, dock);
   dock->p->dockbooks = g_list_insert (dock->p->dockbooks, dockbook, index);
 
   if (old_length == 0)
@@ -539,12 +539,12 @@ gimp_dock_remove_book (GimpDock     *dock,
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
 
-  g_return_if_fail (dockbook->dock == dock);
+  g_return_if_fail (gimp_dockbook_get_dock (dockbook) == dock);
 
   old_length = g_list_length (dock->p->dockbooks);
   index      = g_list_index (dock->p->dockbooks, dockbook);
 
-  dockbook->dock  = NULL;
+  gimp_dockbook_set_dock (dockbook, NULL);
   dock->p->dockbooks = g_list_remove (dock->p->dockbooks, dockbook);
 
   g_object_ref (dockbook);

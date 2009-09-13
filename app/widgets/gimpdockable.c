@@ -998,7 +998,7 @@ gimp_dockable_detach (GimpDockable *dockable)
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockable->dockbook));
 
-  src_dock = dockable->dockbook->dock;
+  src_dock = gimp_dockbook_get_dock (dockable->dockbook);
 
   dock = gimp_dialog_factory_dock_new (gimp_dock_get_dialog_factory (src_dock),
                                        gtk_widget_get_screen (GTK_WIDGET (dockable)));
@@ -1164,7 +1164,7 @@ gimp_dockable_menu_end (GimpDockable *dockable)
 static gboolean
 gimp_dockable_show_menu (GimpDockable *dockable)
 {
-  GimpUIManager *dockbook_ui_manager = dockable->dockbook->ui_manager;
+  GimpUIManager *dockbook_ui_manager = gimp_dockbook_get_ui_manager (dockable->dockbook);
   GimpUIManager *dialog_ui_manager;
   const gchar   *dialog_ui_path;
   gpointer       dialog_popup_data;

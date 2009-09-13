@@ -54,6 +54,7 @@ dockable_add_tab_cmd_callback (GtkAction   *action,
   if (value)
     {
       GtkWidget *dockable;
+      GimpDock  *dock;
       gchar     *identifier;
       gchar     *p;
 
@@ -64,10 +65,10 @@ dockable_add_tab_cmd_callback (GtkAction   *action,
       if (p)
         *p = '\0';
 
-      dockable =
-        gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dockbook->dock),
-                                          dockbook->dock,
-                                          identifier, -1);
+      dock     = gimp_dockbook_get_dock (dockbook);
+      dockable = gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dock),
+                                                   dock,
+                                                   identifier, -1);
 
       g_free (identifier);
 
@@ -165,6 +166,7 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
             {
               GimpContainerView *old_view;
               GtkWidget         *new_dockable;
+              GimpDock          *dock;
               gint               view_size = -1;
 
               if (view_type == GIMP_VIEW_TYPE_LIST)
@@ -177,12 +179,11 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
               if (old_view)
                 view_size = gimp_container_view_get_view_size (old_view, NULL);
 
-
-              new_dockable =
-                gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dockbook->dock),
-                                                  dockbook->dock,
-                                                  identifier,
-                                                  view_size);
+              dock         = gimp_dockbook_get_dock (dockbook);
+              new_dockable = gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dock),
+                                                               dock,
+                                                               identifier,
+                                                               view_size);
 
               if (new_dockable)
                 {

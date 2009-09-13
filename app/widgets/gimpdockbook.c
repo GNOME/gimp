@@ -60,6 +60,15 @@ enum
   LAST_SIGNAL
 };
 
+struct _GimpDockbookPrivate
+{
+  GimpDock      *dock;
+  GimpUIManager *ui_manager;
+
+  guint          tab_hover_timeout;
+  GimpDockable  *tab_hover_dockable;
+};
+
 
 static void      gimp_dockbook_dispose            (GObject        *object);
 static void      gimp_dockbook_finalize           (GObject        *object);
@@ -183,13 +192,18 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_TAB_ICON_SIZE,
                                                               GIMP_PARAM_READABLE));
+
+  g_type_class_add_private (klass, sizeof (GimpDockbookPrivate));
 }
 
 static void
 gimp_dockbook_init (GimpDockbook *dockbook)
 {
-  dockbook->dock       = NULL;
-  dockbook->ui_manager = NULL;
+  dockbook->p = G_TYPE_INSTANCE_GET_PRIVATE (dockbook,
+                                             GIMP_TYPE_DOCKBOOK,
+                                             GimpDockbookPrivate);
+  dockbook->p->dock       = NULL;
+  dockbook->p->ui_manager = NULL;
 
   gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
   gtk_notebook_set_scrollable (GTK_NOTEBOOK (dockbook), TRUE);
@@ -216,10 +230,10 @@ gimp_dockbook_finalize (GObject *object)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (object);
 
-  if (dockbook->ui_manager)
+  if (dockbook->p->ui_manager)
     {
-      g_object_unref (dockbook->ui_manager);
-      dockbook->ui_manager = NULL;
+      g_object_unref (dockbook->p->ui_manager);
+      dockbook->p->ui_manager = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -318,7 +332,7 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
 
   dockbook = g_object_new (GIMP_TYPE_DOCKBOOK, NULL);
 
-  dockbook->ui_manager = gimp_menu_factory_manager_new (menu_factory,
+  dockbook->p->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                         "<Dockable>",
                                                         dockbook,
                                                         FALSE);
@@ -327,6 +341,32 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
                      GIMP_HELP_DOCK, dockbook);
 
   return GTK_WIDGET (dockbook);
+}
+
+GimpDock *
+gimp_dockbook_get_dock (GimpDockbook *dockbook)
+{
+  g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
+
+  return dockbook->p->dock;
+}
+
+void
+gimp_dockbook_set_dock (GimpDockbook *dockbook,
+                        GimpDock     *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
+  g_return_if_fail (dock == NULL || GIMP_IS_DOCK (dock));
+
+  dockbook->p->dock = dock;
+}
+
+GimpUIManager *
+gimp_dockbook_get_ui_manager (GimpDockbook *dockbook)
+{
+  g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
+
+  return dockbook->p->ui_manager;
 }
 
 void
@@ -338,7 +378,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
   GtkWidget *menu_widget;
 
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
-  g_return_if_fail (dockbook->dock != NULL);
+  g_return_if_fail (dockbook->p->dock != NULL);
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (dockable->dockbook == NULL);
 
@@ -347,7 +387,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
   g_return_if_fail (GTK_IS_WIDGET (tab_widget));
 
   menu_widget = gimp_dockable_get_tab_widget (dockable,
-                                              gimp_dock_get_context (dockbook->dock),
+                                              gimp_dock_get_context (dockbook->p->dock),
                                               GIMP_TAB_STYLE_ICON_BLURB,
                                               MENU_WIDGET_ICON_SIZE);
 
@@ -373,7 +413,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   dockable->dockbook = dockbook;
 
-  gimp_dockable_set_context (dockable, gimp_dock_get_context (dockbook->dock));
+  gimp_dockable_set_context (dockable, gimp_dock_get_context (dockbook->p->dock));
 
   g_signal_connect (dockable, "notify::locked",
                     G_CALLBACK (gimp_dockbook_tab_locked_notify),
@@ -398,7 +438,7 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
                                         G_CALLBACK (gimp_dockbook_tab_locked_notify),
                                         dockbook);
 
-  if (dockbook->tab_hover_dockable == dockable)
+  if (dockbook->p->tab_hover_dockable == dockable)
     gimp_dockbook_remove_tab_timeout (dockbook);
 
   dockable->dockbook = NULL;
@@ -414,7 +454,7 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
   children = gtk_container_get_children (GTK_CONTAINER (dockbook));
 
   if (! g_list_length (children))
-    gimp_dock_remove_book (dockbook->dock, dockbook);
+    gimp_dock_remove_book (dockbook->p->dock, dockbook);
 
   g_list_free (children);
 }
@@ -432,7 +472,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
                         NULL);
 
   tab_widget = gimp_dockable_get_tab_widget (dockable,
-                                             gimp_dock_get_context (dockbook->dock),
+                                             gimp_dock_get_context (dockbook->p->dock),
                                              dockable->tab_style,
                                              tab_size);
 
@@ -450,8 +490,8 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
     }
 
   /* EEK */
-  if (GIMP_IS_DOCK_WINDOW (dockbook->dock) &&
-      gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dockbook->dock)))
+  if (GIMP_IS_DOCK_WINDOW (dockbook->p->dock) &&
+      gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dockbook->p->dock)))
     {
       const gchar *dialog_id;
 
@@ -463,7 +503,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
           GimpActionGroup *group;
 
           group = gimp_ui_manager_get_action_group
-            (gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dockbook->dock)), "dialogs");
+            (gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dockbook->p->dock)), "dialogs");
 
           if (group)
             {
@@ -690,8 +730,8 @@ gimp_dockbook_tab_drag_motion (GtkWidget      *widget,
   GtkTargetList *target_list;
   GdkAtom        target_atom;
 
-  if (! dockbook->tab_hover_timeout ||
-      dockbook->tab_hover_dockable != dockable)
+  if (! dockbook->p->tab_hover_timeout ||
+      dockbook->p->tab_hover_dockable != dockable)
     {
       gint page_num;
 
@@ -790,22 +830,22 @@ static void
 gimp_dockbook_add_tab_timeout (GimpDockbook *dockbook,
                                GimpDockable *dockable)
 {
-  dockbook->tab_hover_timeout =
+  dockbook->p->tab_hover_timeout =
     g_timeout_add (TAB_HOVER_TIMEOUT,
                    (GSourceFunc) gimp_dockbook_tab_timeout,
                    dockbook);
 
-  dockbook->tab_hover_dockable = dockable;
+  dockbook->p->tab_hover_dockable = dockable;
 }
 
 static void
 gimp_dockbook_remove_tab_timeout (GimpDockbook *dockbook)
 {
-  if (dockbook->tab_hover_timeout)
+  if (dockbook->p->tab_hover_timeout)
     {
-      g_source_remove (dockbook->tab_hover_timeout);
-      dockbook->tab_hover_timeout  = 0;
-      dockbook->tab_hover_dockable = NULL;
+      g_source_remove (dockbook->p->tab_hover_timeout);
+      dockbook->p->tab_hover_timeout  = 0;
+      dockbook->p->tab_hover_dockable = NULL;
     }
 }
 
@@ -817,11 +857,11 @@ gimp_dockbook_tab_timeout (GimpDockbook *dockbook)
   GDK_THREADS_ENTER ();
 
   page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
-                                    GTK_WIDGET (dockbook->tab_hover_dockable));
+                                    GTK_WIDGET (dockbook->p->tab_hover_dockable));
   gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook), page_num);
 
-  dockbook->tab_hover_timeout  = 0;
-  dockbook->tab_hover_dockable = NULL;
+  dockbook->p->tab_hover_timeout  = 0;
+  dockbook->p->tab_hover_dockable = NULL;
 
   GDK_THREADS_LEAVE ();
 
