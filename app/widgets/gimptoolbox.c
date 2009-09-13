@@ -617,12 +617,13 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
-                          "title",           _("Toolbox"),
-                          "role",            "gimp-toolbox",
-                          "gimp-context",    context,
-                          "context",         context,
-                          "dialog-factory",  dialog_factory,
-                          "ui-manager-name", "<Toolbox>",
+                          "title",               _("Toolbox"),
+                          "role",                "gimp-toolbox",
+                          "context",             context,
+                          "dialog-factory",      dialog_factory,
+                          "ui-manager-name",     "<Toolbox>",
+                          "gimp-context",        context,
+                          "gimp-dialog-factory", dialog_factory,
                           NULL);
 
   return GTK_WIDGET (toolbox);

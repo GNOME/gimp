@@ -34,7 +34,6 @@
 #include "core/gimpcontainer.h"
 
 #include "gimpdialogfactory.h"
-#include "gimpdock.h"
 #include "gimpdockwindow.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
@@ -48,17 +47,20 @@ enum
 {
   PROP_0,
   PROP_CONTEXT,
+  PROP_DIALOG_FACTORY,
   PROP_UI_MANAGER_NAME,
 };
 
 
 struct _GimpDockWindowPrivate
 {
-  GimpContext   *context;
+  GimpContext       *context;
 
-  gchar         *ui_manager_name;
-  GimpUIManager *ui_manager;
-  GQuark         image_flush_handler_id;
+  GimpDialogFactory *dialog_factory;
+
+  gchar             *ui_manager_name;
+  GimpUIManager     *ui_manager;
+  GQuark             image_flush_handler_id;
 };
 
 static GObject * gimp_dock_window_constructor       (GType                  type,
@@ -101,6 +103,13 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("gimp-context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
+                                   g_param_spec_object ("gimp-dialog-factory",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DIALOG_FACTORY,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -151,7 +160,7 @@ gimp_dock_window_constructor (GType                  type,
    * dock window is the focused window
    */
   dock_window->p->ui_manager =
-    gimp_menu_factory_manager_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock_window))->menu_factory,
+    gimp_menu_factory_manager_new (dock_window->p->dialog_factory->menu_factory,
                                    dock_window->p->ui_manager_name,
                                    dock_window,
                                    config->tearoff_menus);
@@ -196,6 +205,12 @@ gimp_dock_window_dispose (GObject *object)
       dock_window->p->ui_manager = NULL;
     }
 
+  if (dock_window->p->dialog_factory)
+    {
+      g_object_unref (dock_window->p->dialog_factory);
+      dock_window->p->dialog_factory = NULL;
+    }
+
   if (dock_window->p->context)
     {
       g_object_unref (dock_window->p->context);
@@ -217,6 +232,10 @@ gimp_dock_window_set_property (GObject      *object,
     {
     case PROP_CONTEXT:
       dock_window->p->context = g_value_dup_object (value);
+      break;
+
+    case PROP_DIALOG_FACTORY:
+      dock_window->p->dialog_factory = g_value_dup_object (value);
       break;
 
     case PROP_UI_MANAGER_NAME:
@@ -242,6 +261,10 @@ gimp_dock_window_get_property (GObject    *object,
     {
     case PROP_CONTEXT:
       g_value_set_object (value, dock_window->p->context);
+      break;
+
+    case PROP_DIALOG_FACTORY:
+      g_value_set_object (value, dock_window->p->dialog_factory);
       break;
 
     case PROP_UI_MANAGER_NAME:
