@@ -88,6 +88,8 @@ struct _GimpItemTreeViewPriv
   GimpTreeHandler *visible_changed_handler;
   GimpTreeHandler *linked_changed_handler;
   GimpTreeHandler *lock_content_changed_handler;
+
+  gboolean         inserting_item; /* EEK */
 };
 
 
@@ -185,6 +187,11 @@ static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *togg
                                                      GdkModifierType    state,
                                                      GimpItemTreeView  *view,
                                                      GimpUndoType       undo_type);
+
+static void   gimp_item_tree_view_row_expanded      (GtkTreeView       *tree_view,
+                                                     GtkTreeIter       *iter,
+                                                     GtkTreePath       *path,
+                                                     GimpItemTreeView  *item_view);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
@@ -338,6 +345,10 @@ gimp_item_tree_view_constructor (GType                  type,
   gimp_container_tree_view_connect_name_edited (tree_view,
                                                 G_CALLBACK (gimp_item_tree_view_name_edited),
                                                 item_view);
+
+  g_signal_connect (tree_view->view, "row-expanded",
+                    G_CALLBACK (gimp_item_tree_view_row_expanded),
+                    tree_view);
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, column, 0);
@@ -903,8 +914,12 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   GimpItem              *item      = GIMP_ITEM (viewable);
   GtkTreeIter           *iter;
 
+  item_view->priv->inserting_item = TRUE;
+
   iter = parent_view_iface->insert_item (view, viewable,
                                          parent_insert_data, index);
+
+  item_view->priv->inserting_item = FALSE;
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       item_view->priv->model_column_visible,
@@ -1533,4 +1548,29 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
     }
 
   gtk_tree_path_free (path);
+}
+
+
+/*  GtkTreeView callbacks  */
+
+static void
+gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
+                                  GtkTreeIter      *iter,
+                                  GtkTreePath      *path,
+                                  GimpItemTreeView *item_view)
+{
+  /*  don't select the item while it is being inserted  */
+  if (! item_view->priv->inserting_item)
+    {
+      GimpItemTreeViewClass *item_view_class;
+      GimpItem              *active_item;
+
+      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+
+      active_item = item_view_class->get_active_item (item_view->priv->image);
+
+      if (active_item)
+        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (item_view),
+                                         GIMP_VIEWABLE (active_item));
+    }
 }
