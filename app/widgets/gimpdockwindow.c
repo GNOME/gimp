@@ -27,15 +27,21 @@
 
 #include "widgets-types.h"
 
+#include "dialogs/dialogs.h" /* FIXME, we are in the widget layer */
+
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontainer.h"
 
 #include "gimpdialogfactory.h"
+#include "gimpdock.h"
+#include "gimpdockbook.h"
 #include "gimpdockwindow.h"
 #include "gimpmenufactory.h"
+#include "gimpsessioninfo.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindow.h"
@@ -69,29 +75,32 @@ struct _GimpDockWindowPrivate
   gint               ID;
 };
 
-static GObject * gimp_dock_window_constructor       (GType                  type,
-                                                     guint                  n_params,
-                                                     GObjectConstructParam *params);
-static void      gimp_dock_window_dispose           (GObject               *object);
-static void      gimp_dock_window_set_property      (GObject               *object,
-                                                     guint                  property_id,
-                                                     const GValue          *value,
-                                                     GParamSpec            *pspec);
-static void      gimp_dock_window_get_property      (GObject               *object,
-                                                     guint                  property_id,
-                                                     GValue                *value,
-                                                     GParamSpec            *pspec);
-static void      gimp_dock_window_style_set         (GtkWidget             *widget,
-                                                     GtkStyle              *prev_style);
-static void      gimp_dock_window_display_changed   (GimpDockWindow        *dock_window,
-                                                     GimpObject            *display,
-                                                     GimpContext           *context);
-static void      gimp_dock_window_image_changed     (GimpDockWindow        *dock_window,
-                                                     GimpImage             *image,
-                                                     GimpContext           *context);
-static void      gimp_dock_window_image_flush       (GimpImage             *image,
-                                                     gboolean               invalidate_preview,
-                                                     GimpDockWindow        *dock_window);
+static GObject *  gimp_dock_window_constructor       (GType                  type,
+                                                      guint                  n_params,
+                                                      GObjectConstructParam *params);
+static void       gimp_dock_window_dispose           (GObject               *object);
+static void       gimp_dock_window_set_property      (GObject               *object,
+                                                      guint                  property_id,
+                                                      const GValue          *value,
+                                                      GParamSpec            *pspec);
+static void       gimp_dock_window_get_property      (GObject               *object,
+                                                      guint                  property_id,
+                                                      GValue                *value,
+                                                      GParamSpec            *pspec);
+static void       gimp_dock_window_style_set         (GtkWidget             *widget,
+                                                      GtkStyle              *prev_style);
+static gboolean   gimp_dock_window_delete_event      (GtkWidget             *widget,
+                                                      GdkEventAny           *event);
+static GimpDock * gimp_dock_window_get_dock          (GimpDockWindow        *dock_window);
+static void       gimp_dock_window_display_changed   (GimpDockWindow        *dock_window,
+                                                      GimpObject            *display,
+                                                      GimpContext           *context);
+static void       gimp_dock_window_image_changed     (GimpDockWindow        *dock_window,
+                                                      GimpImage             *image,
+                                                      GimpContext           *context);
+static void       gimp_dock_window_image_flush       (GimpImage             *image,
+                                                      gboolean               invalidate_preview,
+                                                      GimpDockWindow        *dock_window);
 
 
 G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
@@ -110,6 +119,7 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
   object_class->get_property    = gimp_dock_window_get_property;
 
   widget_class->style_set       = gimp_dock_window_style_set;
+  widget_class->delete_event    = gimp_dock_window_delete_event;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("gimp-context", NULL, NULL,
@@ -366,6 +376,53 @@ gimp_dock_window_style_set (GtkWidget *widget,
       if (gtk_bin_get_child (GTK_BIN (widget)))
         gtk_widget_reset_rc_styles (gtk_bin_get_child (GTK_BIN (widget)));
     }
+}
+
+/**
+ * gimp_dock_window_delete_event:
+ * @widget:
+ * @event:
+ *
+ * Makes sure that when dock windows are closed they are added to the
+ * list of recently closed docks so that they are easy to bring back.
+ **/
+static gboolean
+gimp_dock_window_delete_event (GtkWidget   *widget,
+                               GdkEventAny *event)
+{
+  GimpDockWindow  *dock_window = GIMP_DOCK_WINDOW (widget);
+  GimpDock        *dock        = gimp_dock_window_get_dock (dock_window);
+  GimpSessionInfo *info        = NULL;
+
+  /* Don't add docks with just a singe dockable to the list of
+   * recently closed dock since those can be brought back through the
+   * normal Windows->Dockable Dialogs menu
+   */ 
+  if (gimp_dock_get_n_dockables (dock) < 2)
+    return FALSE;
+
+  info = gimp_session_info_new ();
+
+  gimp_object_set_name (GIMP_OBJECT (info),
+                        gtk_window_get_title (GTK_WINDOW (dock_window)));
+
+  info->widget = GTK_WIDGET (dock);
+  gimp_session_info_get_info (info);
+  info->widget = NULL;
+
+  gimp_container_add (global_recent_docks, GIMP_OBJECT (info));
+  g_object_unref (info);
+
+  return FALSE;
+}
+
+static GimpDock *
+gimp_dock_window_get_dock (GimpDockWindow *dock_window)
+{
+  /* Change this to return the GimpDock *inside* the GimpDockWindow
+   * once GimpDock is not a subclass of GimpDockWindow any longer
+   */
+  return GIMP_DOCK (dock_window);
 }
 
 static void

@@ -36,10 +36,6 @@
 #include "gimpdockbook.h"
 #include "gimpdockseparator.h"
 
-#include "gimpsessioninfo.h"    /* FIXME */
-#include "core/gimpcontainer.h" /* FIXME */
-#include "dialogs/dialogs.h"    /* FIXME */
-
 #include "gimp-intl.h"
 
 
@@ -81,9 +77,6 @@ static void      gimp_dock_get_property      (GObject               *object,
 
 static void      gimp_dock_destroy           (GtkObject             *object);
 
-static gboolean  gimp_dock_delete_event      (GtkWidget             *widget,
-                                              GdkEventAny           *event);
-
 static void      gimp_dock_real_book_added   (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
 static void      gimp_dock_real_book_removed (GimpDock              *dock,
@@ -102,7 +95,6 @@ gimp_dock_class_init (GimpDockClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
   dock_signals[BOOK_ADDED] =
     g_signal_new ("book-added",
@@ -128,8 +120,6 @@ gimp_dock_class_init (GimpDockClass *klass)
   object_class->get_property    = gimp_dock_get_property;
 
   gtk_object_class->destroy     = gimp_dock_destroy;
-
-  widget_class->delete_event    = gimp_dock_delete_event;
 
   klass->setup                  = NULL;
   klass->book_added             = gimp_dock_real_book_added;
@@ -239,30 +229,6 @@ gimp_dock_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static gboolean
-gimp_dock_delete_event (GtkWidget   *widget,
-                        GdkEventAny *event)
-{
-  GimpDock *dock = GIMP_DOCK (widget);
-
-  if (gimp_dock_get_n_dockables (dock) > 1)
-    {
-      GimpSessionInfo *info = gimp_session_info_new ();
-
-      gimp_object_set_name (GIMP_OBJECT (info),
-                            gtk_window_get_title (GTK_WINDOW (widget)));
-
-      info->widget = widget;
-      gimp_session_info_get_info (info);
-      info->widget = NULL;
-
-      gimp_container_add (global_recent_docks, GIMP_OBJECT (info));
-      g_object_unref (info);
-    }
-
-  return FALSE;
 }
 
 static void
