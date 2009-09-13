@@ -130,6 +130,7 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
                                                 GIMP_TYPE_DOCK_WINDOW,
                                                 GimpDockWindowPrivate);
   dock_window->p->context                = NULL;
+  dock_window->p->dialog_factory         = NULL;
   dock_window->p->ui_manager_name        = NULL;
   dock_window->p->ui_manager             = NULL;
   dock_window->p->image_flush_handler_id = 0;
