@@ -558,7 +558,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
 
       if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_EXPORT_TO_URI_KEY);
+                                      GIMP_FILE_EXPORT_URI_KEY);
 
       if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),
@@ -620,8 +620,8 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       /* Priority of default basenames for Export:
        *
        *   1. Last Export name
-       *   2. Source file name
        *   3. Save URI
+       *   2. Source file name
        *   3. 'Untitled'
        */
 
@@ -629,15 +629,11 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                     GIMP_FILE_EXPORT_URI_KEY);
 
       if (! name_uri)
+        name_uri = gimp_object_get_name (image);
+
+      if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),
                                       GIMP_FILE_IMPORT_SOURCE_URI_KEY);
-
-      if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_EXPORT_TO_URI_KEY);
-
-      if (! name_uri)
-        name_uri = gimp_object_get_name (image);
 
       if (! name_uri)
         name_uri = gimp_image_get_uri (image); /* Untitled */
