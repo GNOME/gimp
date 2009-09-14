@@ -578,7 +578,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  * @screen:       the #GdkScreen the dialog should appear on
  * @identifier:   the identifier of the dialog as registered with
  *                gimp_dialog_factory_register_entry()
- * @view_size:
+ * @view_size:    the initial preview size
  * @present:      whether gtk_window_present() should be called
  *
  * Creates a new toplevel dialog or a #GimpDockable, depending on whether
@@ -613,7 +613,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
  * @screen:       the #GdkScreen the dialog should appear on
  * @identifiers:  a '|' separated list of identifiers of dialogs as
  *                registered with gimp_dialog_factory_register_entry()
- * @view_size:
+ * @view_size:    the initial preview size if a dialog needs to be created
  *
  * Raises any of a list of already existing toplevel dialog or
  * #GimpDockable if it was already created by this %facory.
