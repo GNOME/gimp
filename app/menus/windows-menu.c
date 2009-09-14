@@ -41,6 +41,8 @@
 
 #include "dialogs/dialogs.h"
 
+#include "actions/windows-actions.h"
+
 #include "windows-menu.h"
 
 
@@ -256,8 +258,7 @@ windows_menu_dock_added (GimpDialogFactory *factory,
 
   ui_path = g_object_get_data (G_OBJECT (manager), "image-menu-ui-path");
 
-  action_name = g_strdup_printf ("windows-dock-%04d",
-                                 gimp_dock_window_get_id (GIMP_DOCK_WINDOW (dock)));
+  action_name = windows_actions_dock_to_action_name (dock);
   action_path = g_strdup_printf ("%s/Windows/Docks",
                                  ui_path);
 
