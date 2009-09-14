@@ -53,6 +53,8 @@ static void  wilber_get_extents     (cairo_t     *cr);
 /**
  * gimp_cairo_wilber:
  * @cr: Cairo context
+ * @x: x position
+ * @y: y position
  *
  * Draw a Wilber path at position @x, @y.
  */
