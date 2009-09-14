@@ -73,19 +73,6 @@ enum
 };
 
 
-struct _GimpOperationPointLayerModeClass
-{
-  GeglOperationPointComposerClass  parent_class;
-};
-
-struct _GimpOperationPointLayerMode
-{
-  GeglOperationPointComposer  parent_instance;
-
-  GimpLayerModeEffects        blend_mode;
-};
-
-
 static void     gimp_operation_point_layer_mode_set_property (GObject             *object,
                                                               guint                property_id,
                                                               const GValue        *value,
