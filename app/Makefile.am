@@ -33,6 +33,7 @@ SUBDIRS = \
 	actions		\
 	menus		\
 	gui		\
+	.		\
 	tests
 
 # Put the GIMP core in a lib so we can conveniently link against that
