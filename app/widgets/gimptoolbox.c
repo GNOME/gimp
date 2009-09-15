@@ -39,6 +39,7 @@
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
 #include "gimpdockseparator.h"
+#include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
@@ -690,10 +691,11 @@ toolbox_create_tools (GimpToolbox *toolbox,
        list;
        list = g_list_next (list))
     {
-      GimpToolInfo *tool_info = list->data;
-      GtkWidget    *button;
-      GtkWidget    *image;
-      const gchar  *stock_id;
+      GimpToolInfo   *tool_info = list->data;
+      GtkWidget      *button;
+      GtkWidget      *image;
+      GimpDockWindow *dock_window;
+      const gchar    *stock_id;
 
       button = gtk_radio_button_new (group);
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
@@ -728,7 +730,8 @@ toolbox_create_tools (GimpToolbox *toolbox,
                         G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      if (gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (toolbox)))
+      dock_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
+      if (gimp_dock_window_get_ui_manager (dock_window))
         {
           GimpUIManager *ui_manager;
           GtkAction     *action;
@@ -743,8 +746,8 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (toolbox));
-          action = gimp_ui_manager_find_action (ui_manager, "tools", name);
+          ui_manager  = gimp_dock_window_get_ui_manager (dock_window);
+          action      = gimp_ui_manager_find_action (ui_manager, "tools", name);
           g_free (name);
 
           if (action)

@@ -295,8 +295,10 @@ windows_menu_dock_removed (GimpDialogFactory *factory,
 static gchar *
 windows_menu_dock_to_merge_id (GimpDock *dock)
 {
+  GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
+
   return g_strdup_printf ("windows-dock-%04d-merge-id",
-                          gimp_dock_window_get_id (GIMP_DOCK_WINDOW (dock)));
+                          gimp_dock_window_get_id (dock_window));
 }
 
 static void

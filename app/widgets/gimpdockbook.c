@@ -36,6 +36,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdocked.h"
+#include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
 #include "gimpstringaction.h"
@@ -463,9 +464,10 @@ GtkWidget *
 gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
                                  GimpDockable *dockable)
 {
-  GtkWidget   *tab_widget;
-  GtkIconSize  tab_size = DEFAULT_TAB_ICON_SIZE;
-  GtkAction   *action   = NULL;
+  GtkWidget      *tab_widget;
+  GimpDockWindow *dock_window;
+  GtkIconSize     tab_size = DEFAULT_TAB_ICON_SIZE;
+  GtkAction      *action   = NULL;
 
   gtk_widget_style_get (GTK_WIDGET (dockbook),
                         "tab-icon-size", &tab_size,
@@ -490,8 +492,8 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
     }
 
   /* EEK */
-  if (GIMP_IS_DOCK_WINDOW (dockbook->p->dock) &&
-      gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dockbook->p->dock)))
+  dock_window = gimp_dock_window_from_dock (dockbook->p->dock);
+  if (dock_window && gimp_dock_window_get_ui_manager (dock_window))
     {
       const gchar *dialog_id;
 
@@ -503,7 +505,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
           GimpActionGroup *group;
 
           group = gimp_ui_manager_get_action_group
-            (gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dockbook->p->dock)), "dialogs");
+            (gimp_dock_window_get_ui_manager (dock_window), "dialogs");
 
           if (group)
             {

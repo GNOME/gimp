@@ -34,6 +34,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
+#include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
@@ -161,10 +162,10 @@ windows_actions_update (GimpActionGroup *group,
 gchar *
 windows_actions_dock_to_action_name (GimpDock *dock)
 {
-  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+  GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
 
   return g_strdup_printf ("windows-dock-%04d",
-                          gimp_dock_window_get_id (GIMP_DOCK_WINDOW (dock)));
+                          gimp_dock_window_get_id (dock_window));
 }
 
 
