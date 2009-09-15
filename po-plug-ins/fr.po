@@ -18,10 +18,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP po-plugins fr\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-05 22:48+0200\n"
-"PO-Revision-Date: 2009-05-09 21:03+0100\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-09-15 05:55+0000\n"
+"PO-Revision-Date: 2009-09-15 13:59+0200\n"
+"Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1915,7 +1916,7 @@ msgstr "Au minimum une image est nécessaire pour composer"
 #: ../plug-ins/common/compose.c:707 ../plug-ins/common/compose.c:721
 #, c-format
 msgid "Specified layer %d not found"
-msgstr "Calque %d spécifié non trouvé"
+msgstr "Calque %d indiqué non trouvé"
 
 #: ../plug-ins/common/compose.c:729
 msgid "Drawables have different size"
@@ -3312,7 +3313,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1008
 msgid "GIF"
-msgstr ""
+msgstr "GIF"
 
 #. regular gif parameter settings
 #: ../plug-ins/common/file-gif-save.c:1017
@@ -3338,7 +3339,7 @@ msgstr "_Boucle infinie"
 
 #: ../plug-ins/common/file-gif-save.c:1116
 msgid "_Delay between frames where unspecified:"
-msgstr "_Délai entre les images lorsque non spécifié :"
+msgstr "_Délai entre les images lorsque non indiqué :"
 
 #: ../plug-ins/common/file-gif-save.c:1131 ../plug-ins/common/file-mng.c:1493
 msgid "milliseconds"
@@ -3346,7 +3347,7 @@ msgstr "millisecondes"
 
 #: ../plug-ins/common/file-gif-save.c:1141
 msgid "_Frame disposal where unspecified:"
-msgstr "_Arrangement des images lorsque non spécifié :"
+msgstr "_Arrangement des images lorsque non indiqué :"
 
 #: ../plug-ins/common/file-gif-save.c:1145
 msgid "I don't care"
@@ -3590,7 +3591,9 @@ msgstr "Impossible de décoder « %s »."
 #: ../plug-ins/common/file-jp2-load.c:238
 #, c-format
 msgid "The image '%s' is in grayscale but does not contain any gray component."
-msgstr "L'image « %s » est en niveaux de gris mais ne contient aucune composante de gris."
+msgstr ""
+"L'image « %s » est en niveaux de gris mais ne contient aucune composante de "
+"gris."
 
 #: ../plug-ins/common/file-jp2-load.c:264
 #, c-format
@@ -3603,8 +3606,8 @@ msgid ""
 "The image '%s' is in the CIEXYZ color space but there is no code in place to "
 "convert it to RGB."
 msgstr ""
-"L'image « %s » est dans l'espace colorimétrique CIEXYZ mais aucun code n'est présent "
-"pour la convertir en RVB."
+"L'image « %s » est dans l'espace colorimétrique CIEXYZ mais aucun code n'est "
+"présent pour la convertir en RVB."
 
 #: ../plug-ins/common/file-jp2-load.c:291
 #, c-format
@@ -3612,8 +3615,8 @@ msgid ""
 "The image '%s' is in the CIELAB color space but there is no code in place to "
 "convert it to RGB."
 msgstr ""
-"L'image « %s » est dans l'espace colorimétrique CIELAB mais aucun code n'est présent "
-"pour la convertir en RVB."
+"L'image « %s » est dans l'espace colorimétrique CIELAB mais aucun code n'est "
+"présent pour la convertir en RVB."
 
 #: ../plug-ins/common/file-jp2-load.c:298
 #, c-format
@@ -3621,8 +3624,8 @@ msgid ""
 "The image '%s' is in the YCbCr color space but there is no code in place to "
 "convert it to RGB."
 msgstr ""
-"L'image « %s » est dans l'espace colorimétrique YCbCr mais aucun code n'est présent "
-"pour la convertir en RVB."
+"L'image « %s » est dans l'espace colorimétrique YCbCr mais aucun code n'est "
+"présent pour la convertir en RVB."
 
 #: ../plug-ins/common/file-jp2-load.c:306
 #, c-format
@@ -3635,11 +3638,14 @@ msgid ""
 "Image component %d of image '%s' did not have the same size as the image "
 "which is currently not supported."
 msgstr ""
+"Le composant d'image %d de l'image « %s » n'a pas la même taille que l'image, "
+"ce qui n'est actuellement pas pris en charge."
 
 #: ../plug-ins/common/file-jp2-load.c:331
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
 msgstr ""
+"Le composant %d de l'image « %s » n'a pas à la fois un « hstep » et un « vstep »."
 
 #: ../plug-ins/common/file-jp2-load.c:340
 #, c-format
@@ -3647,6 +3653,8 @@ msgid ""
 "Image component %d of image '%s' is signed which is currently not supported "
 "by GIMP."
 msgstr ""
+"Le composant %d de l'image « %s » est signé, ce qui n'est actuellement pas pris "
+"en charge par GIMP."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -4217,7 +4225,7 @@ msgstr "Image Paint Shop Pro"
 
 #: ../plug-ins/common/file-psp.c:639
 msgid "PSP"
-msgstr ""
+msgstr "PSP"
 
 #. file save type
 #: ../plug-ins/common/file-psp.c:642
@@ -4297,9 +4305,8 @@ msgid "Pal_ette File:"
 msgstr "Fichier de _palettes :"
 
 #: ../plug-ins/common/file-raw.c:1229
-#, fuzzy
 msgid "Raw Image"
-msgstr "Enregistrer l'image Raw"
+msgstr "Image Raw"
 
 #: ../plug-ins/common/file-raw.c:1237
 msgid "RGB Save Type"
@@ -4347,7 +4354,7 @@ msgid ""
 "No image width specified"
 msgstr ""
 "« %s » :\n"
-"Largeur d'image non spécifiée"
+"Largeur d'image non indiquée"
 
 #: ../plug-ins/common/file-sunras.c:463 ../plug-ins/common/file-xbm.c:833
 #: ../plug-ins/common/file-xwd.c:497
@@ -4367,7 +4374,7 @@ msgid ""
 "No image height specified"
 msgstr ""
 "« %s » :\n"
-"Hauteur d'image non spécifiée"
+"Hauteur d'image non indiquée"
 
 #: ../plug-ins/common/file-sunras.c:479 ../plug-ins/common/file-xbm.c:847
 #: ../plug-ins/common/file-xwd.c:513
@@ -4514,7 +4521,7 @@ msgstr "Impossible de lire l'en-tête depuis « %s »"
 
 #: ../plug-ins/common/file-tga.c:1367
 msgid "TGA"
-msgstr ""
+msgstr "TGA"
 
 #. rle
 #: ../plug-ins/common/file-tga.c:1376
@@ -4580,7 +4587,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-tiff-save.c:1061
 msgid "TIFF"
-msgstr ""
+msgstr "TIFF"
 
 #. compression
 #: ../plug-ins/common/file-tiff-save.c:1069
@@ -4668,7 +4675,7 @@ msgid ""
 "No image data type specified"
 msgstr ""
 "« %s » :\n"
-"Type d'image non spécifié"
+"Type d'image non indiqué"
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:997
@@ -4693,7 +4700,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xbm.c:1185
 msgid "XBM"
-msgstr ""
+msgstr "XBM"
 
 #. parameter settings
 #: ../plug-ins/common/file-xbm.c:1188
@@ -4712,15 +4719,15 @@ msgstr "Préfixe d'_identification :"
 #. hotspot toggle
 #: ../plug-ins/common/file-xbm.c:1240
 msgid "_Write hot spot values"
-msgstr "Écrire les valeurs du point c_haud"
+msgstr "Écrire les valeurs du point acti_f"
 
 #: ../plug-ins/common/file-xbm.c:1262
 msgid "Hot spot _X:"
-msgstr "Point chaud _X :"
+msgstr "Point actif _X :"
 
 #: ../plug-ins/common/file-xbm.c:1272
 msgid "Hot spot _Y:"
-msgstr "Point chaud _Y :"
+msgstr "Point actif _Y :"
 
 #. mask file
 #: ../plug-ins/common/file-xbm.c:1279
@@ -4746,6 +4753,8 @@ msgid ""
 "Cannot set the hotspot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
+"Impossible de fixer le point actif !\n"
+"Vous devez disposer les calques pour qu'ils aient tous une intersection."
 
 #: ../plug-ins/common/file-xmc.c:673
 #, c-format
@@ -4755,17 +4764,17 @@ msgstr "« %s » n'est pas un curseur X valide."
 #: ../plug-ins/common/file-xmc.c:689
 #, c-format
 msgid "The width of frame %d of '%s' is too big for X cursor."
-msgstr ""
+msgstr "Le cadre %d de « %s » est trop large pour le curseur X."
 
 #: ../plug-ins/common/file-xmc.c:696
 #, c-format
 msgid "The height of frame %d of '%s' is too big for X cursor."
-msgstr ""
+msgstr "Le cadre %d de « %s » est trop haut pour le curseur X."
 
 #: ../plug-ins/common/file-xmc.c:901
 #, c-format
 msgid "there is no image chunk in \"%s\"."
-msgstr ""
+msgstr "il n'y a pas d'élément d'image dans « %s »."
 
 #: ../plug-ins/common/file-xmc.c:943
 #, c-format
@@ -4775,7 +4784,7 @@ msgstr "« %s » est trop large pour le curseur X."
 #: ../plug-ins/common/file-xmc.c:950
 #, c-format
 msgid "The height of '%s' is too big for X cursor."
-msgstr ""
+msgstr "« %s » est trop haute pour le curseur X."
 
 #: ../plug-ins/common/file-xmc.c:1020
 #, c-format
@@ -4792,18 +4801,22 @@ msgstr "Options XMC"
 #: ../plug-ins/common/file-xmc.c:1090
 msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
 msgstr ""
+"Saisissez la coordonnée X du point actif. L'origine est le coin en haut à "
+"gauche."
 
 #: ../plug-ins/common/file-xmc.c:1094
 msgid "Hotspot _X:"
-msgstr "Point chaud _X :"
+msgstr "Point actif _X :"
 
 #: ../plug-ins/common/file-xmc.c:1108
 msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
 msgstr ""
+"Saisissez la coordonnée Y du point actif. L'origine est le coin en haut à "
+"gauche."
 
 #: ../plug-ins/common/file-xmc.c:1119
 msgid "_Auto-Crop all frames."
-msgstr ""
+msgstr "Rogner _automatiquement tous les cadres"
 
 #: ../plug-ins/common/file-xmc.c:1132
 msgid ""
@@ -4812,6 +4825,11 @@ msgid ""
 "disorder the screen.\n"
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
+"Supprime les bordures vides de tous les cadres.\n"
+"Ceci réduit la taille du fichier et peut régler le problème de "
+"désorganisation de l'écran par certains grands curseurs.\n"
+"Décochez cette option si vous envisagez de modifier le curseur exporté en "
+"utilisant d'autres programmes."
 
 #: ../plug-ins/common/file-xmc.c:1155
 msgid ""
@@ -4823,18 +4841,26 @@ msgid ""
 "sequence, and which sequence is used based on the value of \"gtk-cursor-"
 "theme-size\"."
 msgstr ""
+"Choisissez la taille nominale des cadres.\n"
+"Si vous n'avez pas l'intention de créer un curseur multi-taille ou si vous "
+"n'avez pas d'idée, laissez « 32px ».\n"
+"La taille nominale n'a pas de rapport avec la taille effective (largeur ou "
+"hauteur).\n"
+"Elle ne sert qu'à déterminer quel cadre dépend de quelle séquence "
+"d'animation, et quelle séquence est utilisée sur la base de la valeur de "
+"« gtk-cursor-theme-size »."
 
 #: ../plug-ins/common/file-xmc.c:1172
 msgid "_Use this value only for a frame which size is not specified."
-msgstr ""
+msgstr "N'_utiliser cette valeur que pour un cadre sans taille indiquée"
 
 #: ../plug-ins/common/file-xmc.c:1175
 msgid "_Replace the size of all frames even if it is specified."
-msgstr ""
+msgstr "_Remplacer la taille de tous les cadres même si elle est indiquée"
 
 #: ../plug-ins/common/file-xmc.c:1209
 msgid "Enter time span in milliseconds in which each frame is rendered."
-msgstr ""
+msgstr "Saisissez la durée d'apparition de chaque cadre, en millisecondes."
 
 #: ../plug-ins/common/file-xmc.c:1212
 msgid "_Delay:"
@@ -4842,29 +4868,33 @@ msgstr "_Délai :"
 
 #: ../plug-ins/common/file-xmc.c:1217
 msgid "_Use this value only for a frame which delay is not specified."
-msgstr ""
+msgstr "N'_utiliser cette valeur que pour un cadre sans délai indiqué"
 
 #: ../plug-ins/common/file-xmc.c:1220
 msgid "_Replace the delay of all frames even if it is specified."
-msgstr ""
+msgstr "_Remplacer le délai de tous les cadres même s'il est indiqué"
 
 #: ../plug-ins/common/file-xmc.c:1245
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
+"La partie des informations de copyright excédant 65535 caractères a été "
+"supprimée."
 
 #: ../plug-ins/common/file-xmc.c:1255
 msgid "Enter copyright information."
-msgstr ""
+msgstr "Saisissez les informations de copyright."
 
 #: ../plug-ins/common/file-xmc.c:1257
 msgid "_Copyright:"
-msgstr ""
+msgstr "_Copyright :"
 
 #: ../plug-ins/common/file-xmc.c:1273
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
+"La partie des informations de licence excédant 65535 caractères a été "
+"supprimée."
 
 #: ../plug-ins/common/file-xmc.c:1283
 msgid "Enter license information."
@@ -4896,18 +4926,18 @@ msgstr "Le commentaire est limité à %d caractères."
 #, c-format
 msgid "This plug-in can only handle RGBA image format with 8bit color depth."
 msgstr ""
-"Ce greffon ne peut gérer que le format d'image RVBA avec une profondeur de couleurs "
-"de 8 bits."
+"Ce greffon ne peut gérer que le format d'image RVBA avec une profondeur de "
+"couleurs de 8 bits."
 
 #: ../plug-ins/common/file-xmc.c:1512
 #, c-format
 msgid "Width of '%s' is too large. Please reduce more than %dpx)"
-msgstr ""
+msgstr "« %s » est trop large. Réduisez au-delà de %dpx"
 
 #: ../plug-ins/common/file-xmc.c:1519
 #, c-format
 msgid "Height of '%s' is too large. Please reduce more than %dpx)"
-msgstr ""
+msgstr " %s » est trop haute. Réduisez au-delà de %dpx"
 
 #: ../plug-ins/common/file-xmc.c:1526
 #, c-format
@@ -4920,6 +4950,9 @@ msgid ""
 "Cannot save the cursor because the hotspot is not on '%s'.\n"
 "Try to change the hotspot position, layer geometry or save without auto-crop."
 msgstr ""
+"Impossible d'enregistrer le curseur car le point actif n'est pas sur « %s ».\n"
+"Essayez de changer la position du point actif, la géométrie du calque ou "
+"enregistrez sans rognage automatique."
 
 #: ../plug-ins/common/file-xmc.c:1721
 #, c-format
@@ -4928,6 +4961,9 @@ msgid ""
 "width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
+"Votre curseur a été enregistré avec succès, mais il contient un ou plusieurs "
+"cadres dont la largeur ou la hauteur dépasse %ipx.\n"
+"Cela risque de perturber l'écran dans certains environnements."
 
 #: ../plug-ins/common/file-xmc.c:1728
 msgid ""
@@ -4936,6 +4972,12 @@ msgid ""
 "You can satisfy it by checking \"Replace the size of all frame...\" in save "
 "dialog, or Your cursor may not appear in gnome-appearance-properties."
 msgstr ""
+"Votre curseur a été enregistré avec succès, mais il contient un ou plusieurs "
+"cadres dont la taille nominale n'est pas reconnue par gnome-appearance-"
+"properties.\n"
+"Vous pouvez régler cela en cochant « Remplacer la taille de tous les "
+"cadres... » dans la fenêtre d'enregistrement, ou votre curseur n'apparaîtra "
+"pas dans les propriétés d'apparence de GNOME."
 
 #: ../plug-ins/common/file-xmc.c:1965
 #, c-format
@@ -4943,6 +4985,8 @@ msgid ""
 "The parasite \"%s\" is too long for X cursor.\n"
 "The overflowed string was dropped."
 msgstr ""
+"Le parasite « %s » est trop long pour le curseur X.\n"
+"La chaîne excédentaire a été rejetée."
 
 #: ../plug-ins/common/file-xmc.c:2167
 #, c-format
@@ -4950,6 +4994,8 @@ msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
 msgstr ""
+"Désolé, ce greffon ne sait pas gérer un curseur qui contient plus de %i "
+"tailles nominales différentes."
 
 #: ../plug-ins/common/file-xpm.c:173 ../plug-ins/common/file-xpm.c:198
 msgid "X PixMap image"
@@ -4966,7 +5012,7 @@ msgstr "Fichier XPM non valide"
 
 #: ../plug-ins/common/file-xpm.c:804
 msgid "XPM"
-msgstr ""
+msgstr "XPM"
 
 #: ../plug-ins/common/file-xpm.c:814
 msgid "_Alpha threshold:"
@@ -5178,15 +5224,15 @@ msgstr "Collection de _filtres..."
 
 #: ../plug-ins/common/filter-pack.c:371
 msgid "FP can only be used on RGB images."
-msgstr "Le paquet de filtre ne peut opérer que sur des images RVB."
+msgstr "La collection de filtres ne peut opérer que sur des images RVB."
 
 #: ../plug-ins/common/filter-pack.c:381
 msgid "FP can only be run interactively."
-msgstr "PF ne peut être utilisé qu'interactivement."
+msgstr "CF ne peut être utilisée qu'interactivement."
 
 #: ../plug-ins/common/filter-pack.c:399
 msgid "Applying filter pack"
-msgstr "Application du paquet de filtres"
+msgstr "Application de la collection de filtres"
 
 #: ../plug-ins/common/filter-pack.c:523
 msgid "Original:"
@@ -5270,7 +5316,7 @@ msgstr "Sélection dans le conte_xte"
 
 #: ../plug-ins/common/filter-pack.c:1200
 msgid "Filter Pack Simulation"
-msgstr "Paquets de filtres"
+msgstr "Simulation de la collection de filtres"
 
 #: ../plug-ins/common/filter-pack.c:1290
 msgid "Shadows:"
@@ -5680,11 +5726,11 @@ msgstr "Co_urbé"
 
 #: ../plug-ins/common/jigsaw.c:2548
 msgid "Each piece has straight sides"
-msgstr "Chaque pièce a des cotés droits"
+msgstr "Chaque pièce a des côtés droits"
 
 #: ../plug-ins/common/jigsaw.c:2549
 msgid "Each piece has curved sides"
-msgstr "Chaque pièce a des cotés courbés"
+msgstr "Chaque pièce a des côtés courbés"
 
 #: ../plug-ins/common/lcms.c:217
 msgid "Set a color profile on the image"
@@ -6642,11 +6688,11 @@ msgstr "Sens _inverse"
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
-msgstr "Si coché, le tracé commencera du coté droit et non du coté gauche."
+msgstr "Si coché, le mappage commencera du côté droit et non du côté gauche."
 
 #: ../plug-ins/common/polar-coords.c:676
 msgid "Map from _top"
-msgstr "Tracer à partir du hau_t"
+msgstr "Mapper à partir du hau_t"
 
 #: ../plug-ins/common/polar-coords.c:682
 msgid ""
@@ -6819,7 +6865,7 @@ msgstr "Color_ier à partir d'un échantillon..."
 # ce que fait cette fonction, elle colorie à partir d'un échantillon
 #: ../plug-ins/common/sample-colorize.c:1317
 msgid "Sample Colorize"
-msgstr "Colorier à partir d'un échant."
+msgstr "Colorier à partir d'un échantillon"
 
 #: ../plug-ins/common/sample-colorize.c:1322
 msgid "Get _Sample Colors"
@@ -6917,7 +6963,7 @@ msgstr "Pointeur de la souris"
 
 #: ../plug-ins/common/screenshot.c:948
 msgid "Specified window not found"
-msgstr "Fenêtre spécifiée non trouvée"
+msgstr "Fenêtre indiquée non trouvée"
 
 #: ../plug-ins/common/screenshot.c:974
 msgid "There was an error taking the screenshot."
@@ -8289,7 +8335,7 @@ msgstr "Calcul d'ondulations"
 
 #: ../plug-ins/common/web-browser.c:136
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "Le système d'exploitation n'a plus assez de mémoire ou de ressources."
 
 #: ../plug-ins/common/web-browser.c:139
 msgid "The specified file was not found."
@@ -8303,26 +8349,28 @@ msgstr "Le chemin indiqué n'a pas été trouvé."
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
+"Le fichier .exe n'est pas valide (ce n'est pas un .exe Microsoft Win32 ou "
+"l'image .exe contient une erreur)."
 
 #: ../plug-ins/common/web-browser.c:148
 msgid "The operating system denied access to the specified file."
-msgstr ""
+msgstr "Le système d'exploitation a refusé l'accès au fichier indiqué."
 
 #: ../plug-ins/common/web-browser.c:151
 msgid "The file name association is incomplete or invalid."
-msgstr ""
+msgstr "L'association de nom de fichier est incomplète ou non valide."
 
 #: ../plug-ins/common/web-browser.c:154
 msgid "DDE transaction busy"
-msgstr ""
+msgstr "La transaction DDE est occupée"
 
 #: ../plug-ins/common/web-browser.c:157
 msgid "The DDE transaction failed."
-msgstr ""
+msgstr "La transaction DDE a échoué."
 
 #: ../plug-ins/common/web-browser.c:160
 msgid "The DDE transaction timed out."
-msgstr ""
+msgstr "Le délai de la transaction DDE est expiré."
 
 #: ../plug-ins/common/web-browser.c:163
 msgid "The specified DLL was not found."
@@ -8331,6 +8379,7 @@ msgstr "La DLL indiquée n'a pas été trouvée."
 #: ../plug-ins/common/web-browser.c:166
 msgid "There is no application associated with the given file name extension."
 msgstr ""
+"Aucune application n'est associée à l'extension de nom de fichier fournie."
 
 #: ../plug-ins/common/web-browser.c:169
 msgid "There was not enough memory to complete the operation."
@@ -8493,7 +8542,7 @@ msgstr "La canal alpha sera ignoré."
 
 #: ../plug-ins/file-bmp/bmp-write.c:792
 msgid "BMP"
-msgstr ""
+msgstr "BMP"
 
 #: ../plug-ins/file-bmp/bmp-write.c:802
 msgid "_Run-Length Encoded"
@@ -8916,7 +8965,7 @@ msgstr "Impossible d'ouvrir le fichier « %s » en écriture."
 
 #: ../plug-ins/file-sgi/sgi.c:628
 msgid "SGI"
-msgstr ""
+msgstr "SGI"
 
 #: ../plug-ins/file-sgi/sgi.c:630
 msgid "Compression type"
@@ -9059,7 +9108,7 @@ msgstr ""
 
 #: ../plug-ins/file-xjt/xjt.c:863
 msgid "XJT"
-msgstr ""
+msgstr "XJT"
 
 #: ../plug-ins/file-xjt/xjt.c:873
 msgid "Optimize"
@@ -9511,14 +9560,14 @@ msgstr "Mode couleur"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1122
 msgid "As specified above"
-msgstr "Comme spécifié ci-dessus"
+msgstr "Comme indiqué ci-dessus"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1134
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Crée une palette de couleurs avec les options spécifiées au dessus (densité "
+"Crée une palette de couleurs avec les options indiquées ci-dessus (densité "
 "de couleur, fonction). Le résultat est visible dans l'aperçu."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1144
@@ -9962,7 +10011,7 @@ msgstr "Étoile : nombre de points"
 
 #: ../plug-ins/gfig/gfig-stock.c:40
 msgid "Create bezier curve"
-msgstr "Créer une, courbe de Bézier"
+msgstr "Créer une courbe de Bézier"
 
 #: ../plug-ins/gfig/gfig.c:123
 msgid "Create geometric shapes"
@@ -10617,7 +10666,7 @@ msgstr "Modifie la longueur du vecteur sélectionné"
 
 #: ../plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
-msgstr "Exp. lon_gueur :"
+msgstr "Exp. fo_rce :"
 
 #: ../plug-ins/gimpressionist/sizemap.c:549
 msgid ""
@@ -10682,7 +10731,7 @@ msgstr ""
 #: ../plug-ins/gradient-flare/gradient-flare.c:1483
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "Je n'ai pas pu écrire le fichier éblouissement graduel « %s » : %s"
+msgstr "Impossible d'écrire le fichier éblouissement graduel « %s » : %s"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2413
 msgid "A_uto update preview"
@@ -11264,7 +11313,7 @@ msgstr "Supprimer le point"
 
 #: ../plug-ins/imagemap/imap_cmd_edit_object.c:53
 msgid "Edit Object"
-msgstr "Éditer l'objet"
+msgstr "Modifier l'objet"
 
 #. Create the areas
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
@@ -11583,7 +11632,7 @@ msgstr "_Image cliquable Web..."
 #: ../plug-ins/imagemap/imap_main.c:516
 #: ../plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
-msgstr "<SansTitre>"
+msgstr "<Sans titre>"
 
 #: ../plug-ins/imagemap/imap_main.c:659
 msgid "Some data has been changed!"
@@ -11719,11 +11768,11 @@ msgstr "_Cartographie :"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
 msgid "Edit Map Info..."
-msgstr "Éditer l'information de carte..."
+msgstr "Modifier l'information de carte..."
 
 #: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Edit Map Info"
-msgstr "Éditer l'information de carte"
+msgstr "Modifie l'information de carte"
 
 #: ../plug-ins/imagemap/imap_menu.c:190
 msgid "_Tools"
@@ -12186,11 +12235,11 @@ msgstr "Hauteur maximum des bosses"
 
 #: ../plug-ins/lighting/lighting-ui.c:893
 msgid "E_nable environment mapping"
-msgstr "Activer la cartographie d'envir_onnement"
+msgstr "Activer le mappage d'envir_onnement"
 
 #: ../plug-ins/lighting/lighting-ui.c:907
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "(Dés)active la cartographie d'environnement (réflexion)"
+msgstr "(Dés)active le mappage d'environnement (réflexion)"
 
 #: ../plug-ins/lighting/lighting-ui.c:924
 msgid "En_vironment image:"
@@ -12555,7 +12604,7 @@ msgstr "Dessin du labyrinthe en cours"
 
 #: ../plug-ins/metadata/metadata.c:185
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
-msgstr ""
+msgstr "Afficher et modifier les métadonnées (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata.c:194
 msgid "Propert_ies"
@@ -12695,7 +12744,7 @@ msgstr "Ignorer les _marges de pages"
 #. crop marks toggle
 #: ../plug-ins/print/print-page-layout.c:160
 msgid "_Draw Crop Marks"
-msgstr ""
+msgstr "Tracer des _repères de coupe"
 
 #: ../plug-ins/print/print-page-layout.c:306
 msgid "_X resolution:"
@@ -12818,72 +12867,3 @@ msgstr "_Capture d'écran..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "Aucune donnée capturée"
-
-#~ msgid "Layer %s doesn't have an alpha channel, skipped"
-#~ msgstr "Le calque %s n'a pas de canal alpha (transparence), je l'ignore."
-
-#~ msgid ""
-#~ "Web browser not specified.\n"
-#~ "Please specify a web browser using the Preferences dialog."
-#~ msgstr ""
-#~ "Navigateur Web non indiqué.\n"
-#~ "Indiquez un navigateur Web dans la boîte de dialogue des préférences."
-
-#~ msgid ""
-#~ "Could not parse the web browser command specified in the Preferences "
-#~ "dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossible d'interpréter la commande du navigateur Web indiquée dans les "
-#~ "préférences :\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Could not execute the web browser specified in the Preferences dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossible de lancer le navigateur Web indiqué dans les préférences :\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Co_nnect"
-#~ msgstr "Se co_nnecter"
-
-#~ msgid "Connect _anonymously"
-#~ msgstr "Se connecter _anonymement"
-
-#~ msgid "Connect as u_ser:"
-#~ msgstr "Se connecter en tant qu'_utilisateur :"
-
-#~ msgid "_Username:"
-#~ msgstr "_Nom d'utilisateur :"
-
-#~ msgid "_Domain:"
-#~ msgstr "_Domaine :"
-
-#~ msgid "_Password:"
-#~ msgstr "_Mot de passe :"
-
-#~ msgid "_Forget password immediately"
-#~ msgstr "_Oublier immédiatement le mot de passe"
-
-#~ msgid "_Remember password until you logout"
-#~ msgstr "Se _souvenir du mot de passe durant la session"
-
-#~ msgid "_Remember forever"
-#~ msgstr "Se souvenir _indéfiniment"
-
-#~ msgid "Uploading %s of image data"
-#~ msgstr "Envoi de %s de données d'image"
-
-#~ msgid "Failed to read %s from '%s': %s"
-#~ msgstr "Échec de lecture de %s depuis « %s » : %s"
-
-#~ msgid "Failed to write %s to '%s': %s"
-#~ msgstr "Échec d'enregistrement de %s vers « %s » : %s"
-
-#~ msgid "Save as XJT"
-#~ msgstr "Enregistrer en XJT"
