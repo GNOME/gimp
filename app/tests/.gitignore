@@ -3,4 +3,5 @@
 /Makefile.in
 /test-layer-grouping*
 /test-layers*
+/test-session-management*
 /test-window-management*

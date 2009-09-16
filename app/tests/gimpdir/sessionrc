@@ -1,0 +1,86 @@
+# GIMP sessionrc
+# 
+# This file takes session-specific info (that is info, you want to keep
+# between two GIMP sessions).  You are not supposed to edit it manually, but
+# of course you can do.  The sessionrc will be entirely rewritten every time
+# you quit GIMP.  If this file isn't found, defaults are used.
+
+(session-info "dock" "dock"
+    (position 428 198)
+    (size 210 523)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "true")
+        (follow-active-image "true"))
+    (dock
+        (book
+            (current-page 1)
+            (dockable "gimp-layer-list"
+                (tab-style icon)
+                (preview-size 32))
+            (dockable "gimp-undo-history"
+                (tab-style icon)))
+        (book
+            (position 259)
+            (current-page 0)
+            (dockable "gimp-brush-grid"
+                (tab-style preview)))))
+(session-info "dock" "dock"
+    (position 184 358)
+    (size 200 300)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "false")
+        (follow-active-image "true"))
+    (dock
+        (book
+            (current-page 0)
+            (dockable "gimp-tool-options"
+                (tab-style icon)))))
+(session-info "dock" "dock"
+    (position 769 64)
+    (size 200 265)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "true")
+        (follow-active-image "true"))
+    (dock
+        (book
+            (current-page 1)
+            (dockable "gimp-pattern-grid"
+                (tab-style preview))
+            (dockable "gimp-gradient-list"
+                (tab-style preview)))))
+(session-info "dock" "dock"
+    (position 714 320)
+    (size 200 384)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "true")
+        (follow-active-image "true"))
+    (dock
+        (book
+            (current-page 0)
+            (dockable "gimp-channel-list"
+                (tab-style icon)
+                (preview-size 32)))
+        (book
+            (position 169)
+            (current-page 0)
+            (dockable "gimp-vectors-list"
+                (tab-style icon)
+                (preview-size 32)))))
+(session-info "toolbox" "dock"
+    (position 44 104)
+    (size 102 526)
+    (open-on-exit))
+(session-info "toplevel" "gimp-file-open-dialog"
+    (position 392 140)
+    (size 902 816))
+(session-info "display" "gimp-empty-image-window"
+    (position 178 35)
+    (size 563 190))
+
+(last-tip-shown 0)
+
+# end of sessionrc
