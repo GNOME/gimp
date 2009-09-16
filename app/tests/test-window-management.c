@@ -52,7 +52,7 @@ int main(int argc, char **argv)
   g_test_init (&argc, &argv, NULL);
 
   /* We share the same application instance across all tests */
-  gimp = gimp_init_for_gui_testing (FALSE);
+  gimp = gimp_init_for_gui_testing (FALSE, FALSE);
 
   /* Setup the tests */
   g_test_add ("/gimp-window-management/window-roles",

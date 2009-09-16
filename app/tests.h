@@ -20,7 +20,8 @@
 
 
 Gimp * gimp_init_for_testing     (gboolean use_cpu_accel);
-Gimp * gimp_init_for_gui_testing (gboolean use_cpu_accel);
+Gimp * gimp_init_for_gui_testing (gboolean use_cpu_accel,
+                                  gboolean show_gui);
 
 
 #endif /* __TESTS_H__ */

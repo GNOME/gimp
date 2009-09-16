@@ -81,7 +81,7 @@ gimp_status_func_dummy (const gchar *text1,
  * Returns: The #Gimp instance.
  **/
 Gimp *
-gimp_init_for_gui_testing (gboolean use_cpu_accel)
+gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
 {
   Gimp *gimp;
 
@@ -90,9 +90,9 @@ gimp_init_for_gui_testing (gboolean use_cpu_accel)
   g_type_init();
 
   /* from app_run() */
-  gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
+  gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, !show_gui,
                    FALSE, TRUE, TRUE, FALSE);
-  gimp_set_show_gui (gimp, FALSE);
+  gimp_set_show_gui (gimp, show_gui);
   units_init (gimp);
   gimp_load_config (gimp, NULL, NULL);
   base_init (GIMP_BASE_CONFIG (gimp->config), FALSE, use_cpu_accel);
