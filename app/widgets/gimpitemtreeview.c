@@ -121,6 +121,9 @@ static gpointer gimp_item_tree_view_insert_item     (GimpContainerView *view,
                                                      GimpViewable      *viewable,
                                                      gpointer           parent_insert_data,
                                                      gint               index);
+static void   gimp_item_tree_view_insert_item_after (GimpContainerView *view,
+                                                     GimpViewable      *viewable,
+                                                     gpointer           insert_data);
 static gboolean gimp_item_tree_view_select_item     (GimpContainerView *view,
                                                      GimpViewable      *item,
                                                      gpointer           insert_data);
@@ -275,12 +278,13 @@ gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->set_container = gimp_item_tree_view_set_container;
-  iface->set_context   = gimp_item_tree_view_set_context;
-  iface->insert_item   = gimp_item_tree_view_insert_item;
-  iface->select_item   = gimp_item_tree_view_select_item;
-  iface->activate_item = gimp_item_tree_view_activate_item;
-  iface->context_item  = gimp_item_tree_view_context_item;
+  iface->set_container     = gimp_item_tree_view_set_container;
+  iface->set_context       = gimp_item_tree_view_set_context;
+  iface->insert_item       = gimp_item_tree_view_insert_item;
+  iface->insert_item_after = gimp_item_tree_view_insert_item_after;
+  iface->select_item       = gimp_item_tree_view_select_item;
+  iface->activate_item     = gimp_item_tree_view_activate_item;
+  iface->context_item      = gimp_item_tree_view_context_item;
 }
 
 static void
@@ -929,6 +933,23 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
                       -1);
 
   return iter;
+}
+
+static void
+gimp_item_tree_view_insert_item_after (GimpContainerView *view,
+                                       GimpViewable      *viewable,
+                                       gpointer           insert_data)
+{
+  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpItemTreeViewClass *item_view_class;
+  GimpItem              *active_item;
+
+  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+
+  active_item = item_view_class->get_active_item (item_view->priv->image);
+
+  if (active_item == (GimpItem *) viewable)
+    gimp_container_view_select_item (view, viewable);
 }
 
 static gboolean
