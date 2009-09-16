@@ -104,3 +104,36 @@ gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
 }
 
 #endif /* GIMP_CONSOLE_COMPILATION */
+
+static gboolean
+gimp_tests_quit_mainloop (GMainLoop *loop)
+{
+  g_main_loop_quit (loop);
+
+  return FALSE;
+}
+
+/**
+ * gimp_test_run_temp_mainloop:
+ * @running_time: The time to run the main loop.
+ *
+ * Helper function for tests that wants to run a main loop for a
+ * while. Useful when you want GIMP's state to settle before doing
+ * tests.
+ **/
+void
+gimp_test_run_temp_mainloop (guint32 running_time)
+{
+  GMainLoop *loop;
+  loop = g_main_loop_new (NULL, FALSE);
+
+  g_timeout_add (running_time,
+                 (GSourceFunc) gimp_tests_quit_mainloop,
+                 loop);
+
+  g_main_loop_run (loop);
+
+  g_main_loop_unref (loop);
+}
+
+
