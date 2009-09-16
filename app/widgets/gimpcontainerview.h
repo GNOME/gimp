@@ -47,37 +47,40 @@ struct _GimpContainerViewInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  gboolean (* select_item)   (GimpContainerView *view,
-                              GimpViewable      *object,
-                              gpointer           insert_data);
-  void     (* activate_item) (GimpContainerView *view,
-                              GimpViewable      *object,
-                              gpointer           insert_data);
-  void     (* context_item)  (GimpContainerView *view,
-                              GimpViewable      *object,
-                              gpointer           insert_data);
+  gboolean (* select_item)       (GimpContainerView *view,
+                                  GimpViewable      *object,
+                                  gpointer           insert_data);
+  void     (* activate_item)     (GimpContainerView *view,
+                                  GimpViewable      *object,
+                                  gpointer           insert_data);
+  void     (* context_item)      (GimpContainerView *view,
+                                  GimpViewable      *object,
+                                  gpointer           insert_data);
 
   /*  virtual functions  */
-  void     (* set_container) (GimpContainerView *view,
-                              GimpContainer     *container);
-  void     (* set_context)   (GimpContainerView *view,
-                              GimpContext       *context);
-  gpointer (* insert_item)   (GimpContainerView *view,
-                              GimpViewable      *object,
-                              gpointer           parent_insert_data,
-                              gint               index);
-  void     (* remove_item)   (GimpContainerView *view,
-                              GimpViewable      *object,
-                              gpointer           insert_data);
-  void     (* reorder_item)  (GimpContainerView *view,
-                              GimpViewable      *object,
-                              gint               new_index,
-                              gpointer           insert_data);
-  void     (* rename_item)   (GimpContainerView *view,
-                              GimpViewable      *object,
-                              gpointer           insert_data);
-  void     (* clear_items)   (GimpContainerView *view);
-  void     (* set_view_size) (GimpContainerView *view);
+  void     (* set_container)     (GimpContainerView *view,
+                                  GimpContainer     *container);
+  void     (* set_context)       (GimpContainerView *view,
+                                  GimpContext       *context);
+  gpointer (* insert_item)       (GimpContainerView *view,
+                                  GimpViewable      *object,
+                                  gpointer           parent_insert_data,
+                                  gint               index);
+  void     (* insert_item_after) (GimpContainerView *view,
+                                  GimpViewable      *object,
+                                  gpointer           insert_data);
+  void     (* remove_item)       (GimpContainerView *view,
+                                  GimpViewable      *object,
+                                  gpointer           insert_data);
+  void     (* reorder_item)      (GimpContainerView *view,
+                                  GimpViewable      *object,
+                                  gint               new_index,
+                                  gpointer           insert_data);
+  void     (* rename_item)       (GimpContainerView *view,
+                                  GimpViewable      *object,
+                                  gpointer           insert_data);
+  void     (* clear_items)       (GimpContainerView *view);
+  void     (* set_view_size)     (GimpContainerView *view);
 
   /*  the destroy notifier for private->hash_table's values  */
   GDestroyNotify  insert_data_free;

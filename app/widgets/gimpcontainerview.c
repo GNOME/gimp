@@ -197,21 +197,22 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                   GIMP_TYPE_OBJECT,
                   G_TYPE_POINTER);
 
-  view_iface->select_item   = NULL;
-  view_iface->activate_item = NULL;
-  view_iface->context_item  = NULL;
+  view_iface->select_item       = NULL;
+  view_iface->activate_item     = NULL;
+  view_iface->context_item      = NULL;
 
-  view_iface->set_container = gimp_container_view_real_set_container;
-  view_iface->set_context   = gimp_container_view_real_set_context;
-  view_iface->insert_item   = NULL;
-  view_iface->remove_item   = NULL;
-  view_iface->reorder_item  = NULL;
-  view_iface->rename_item   = NULL;
-  view_iface->clear_items   = gimp_container_view_real_clear_items;
-  view_iface->set_view_size = NULL;
+  view_iface->set_container     = gimp_container_view_real_set_container;
+  view_iface->set_context       = gimp_container_view_real_set_context;
+  view_iface->insert_item       = NULL;
+  view_iface->insert_item_after = NULL;
+  view_iface->remove_item       = NULL;
+  view_iface->reorder_item      = NULL;
+  view_iface->rename_item       = NULL;
+  view_iface->clear_items       = gimp_container_view_real_clear_items;
+  view_iface->set_view_size     = NULL;
 
-  view_iface->insert_data_free = NULL;
-  view_iface->model_is_tree    = FALSE;
+  view_iface->insert_data_free  = NULL;
+  view_iface->model_is_tree     = FALSE;
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_object ("container",
@@ -904,6 +905,9 @@ gimp_container_view_add_foreach (GimpViewable      *viewable,
 
   g_hash_table_insert (private->item_hash, viewable, insert_data);
 
+  if (view_iface->insert_item_after)
+    view_iface->insert_item_after (view, viewable, insert_data);
+
   children = gimp_viewable_get_children (viewable);
 
   if (children)
@@ -938,6 +942,9 @@ gimp_container_view_add (GimpContainerView *view,
                                          parent_insert_data, index);
 
   g_hash_table_insert (private->item_hash, viewable, insert_data);
+
+  if (view_iface->insert_item_after)
+    view_iface->insert_item_after (view, viewable, insert_data);
 
   children = gimp_viewable_get_children (viewable);
 
