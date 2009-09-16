@@ -272,10 +272,14 @@ session_save (Gimp     *gimp,
   gimp_dialog_factories_session_save (writer);
   gimp_config_writer_linefeed (writer);
 
-  /* save last tip shown */
+  /* save last tip shown
+   *
+   * FIXME: Make last-tip-shown increment only when used within the
+   * session
+   */
   gimp_config_writer_open (writer, "last-tip-shown");
   gimp_config_writer_printf (writer, "%d",
-                             GIMP_GUI_CONFIG (gimp->config)->last_tip + 1);
+                             GIMP_GUI_CONFIG (gimp->config)->last_tip);
   gimp_config_writer_close (writer);
 
   if (! gimp_config_writer_finish (writer, "end of sessionrc", &error))
