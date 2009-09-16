@@ -45,6 +45,8 @@ static Gimp *gimp = NULL;
 
 int main(int argc, char **argv)
 {
+  int test_result;
+
   g_type_init ();
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
@@ -61,7 +63,12 @@ int main(int argc, char **argv)
               NULL);
 
   /* Run the tests and return status */
-  return g_test_run ();
+  test_result = g_test_run ();
+
+  /* Exit somewhat properly to avoid annoying warnings */
+  gimp_exit (gimp, TRUE);
+
+  return test_result;
 }
 
 /**
