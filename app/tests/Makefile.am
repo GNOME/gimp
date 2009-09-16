@@ -1,6 +1,6 @@
 # Don't mess with user's dir
 TESTS_ENVIRONMENT = \
-	GIMP2_DIRECTORY=/tmp/gimp-testing
+	GIMP2_DIRECTORY=$(abs_top_srcdir)/app/tests/gimpdir
 
 TESTS = \
 	test-layers		\
