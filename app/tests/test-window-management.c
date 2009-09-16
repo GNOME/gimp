@@ -47,6 +47,9 @@ int main(int argc, char **argv)
 {
   int test_result;
 
+  /* Disable the user dir for this test */
+  g_setenv ("GIMP2_DIRECTORY", "/tmp/gimpdir", TRUE);
+
   g_type_init ();
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
