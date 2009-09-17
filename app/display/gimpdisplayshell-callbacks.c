@@ -1375,8 +1375,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                          shell->last_read_motion_time = history_events[i]->time;
                       }
 
-                      tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME,
-                                                   display);
+                    tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME,
+                                                 display);
 
                     gdk_device_free_history (history_events, n_history_events);
                   }
