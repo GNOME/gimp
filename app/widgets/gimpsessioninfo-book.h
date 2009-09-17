@@ -22,6 +22,10 @@
 #define __GIMP_SESSION_INFO_BOOK_H__
 
 
+/**
+ * Contains information about a book (a GtkNotebook of dockables) in
+ * the interface.
+ */
 struct _GimpSessionInfoBook
 {
   gint   position;
