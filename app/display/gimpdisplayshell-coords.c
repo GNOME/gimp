@@ -295,6 +295,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           /* Speed needs upper limit */
           coords->velocity = MIN (coords->velocity, 1.0);
         }
+
       if ((fabs (delta_x) > 1.5) && (fabs (delta_y) > 1.5))
         {
           dir_delta_x = delta_x;
@@ -434,11 +435,9 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
             if (shell->event_delay)
               {
                 shell->event_delay = FALSE;
-
               }
-              gimp_display_shell_push_event_history (shell, coords);
 
-
+            gimp_display_shell_push_event_history (shell, coords);
           }
 
 #ifdef VERBOSE
@@ -453,7 +452,6 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
     }
 
   g_array_append_val (shell->event_queue, *coords);
-
 
   shell->last_coords            = *coords;
   shell->last_motion_time       = time;
@@ -473,6 +471,7 @@ gimp_display_shell_push_event_history (GimpDisplayShell *shell,
 {
    if (shell->event_history->len == 4)
      g_array_remove_index (shell->event_history, 0);
+
    g_array_append_val (shell->event_history, *coords);
 }
 
@@ -480,8 +479,8 @@ static void
 gimp_display_shell_interpolate_stroke (GimpDisplayShell *shell,
                                        GimpCoords       *coords)
 {
-  GArray     *ret_coords;
-  gint       i = shell->event_history->len - 1;
+  GArray *ret_coords;
+  gint    i = shell->event_history->len - 1;
 
   /* Note that there must be exactly one event in buffer or bad things
    * can happen. This should never get called under other circumstances.
@@ -504,11 +503,11 @@ gimp_display_shell_interpolate_stroke (GimpDisplayShell *shell,
                                          &g_array_index (shell->event_queue,
                                                          GimpCoords, 0));
 
-  g_array_set_size(shell->event_queue, 0);
+  g_array_set_size (shell->event_queue, 0);
 
   g_array_append_vals (shell->event_queue,
                        &g_array_index (ret_coords, GimpCoords, 0),
                        ret_coords->len);
 
-  g_array_free(ret_coords, TRUE);
+  g_array_free (ret_coords, TRUE);
 }
