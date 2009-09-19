@@ -41,63 +41,79 @@ typedef struct
   int dummy;
 } GimpTestFixture;
 
+typedef struct
+{
+  gchar    *md5;
+  GTimeVal  modtime;
+} GimpTestFileState;
 
-static gboolean gimp_test_get_sessionrc_timestamp_and_md5 (gchar    **checksum,
-                                                           GTimeVal  *modtime);
+
+static gboolean  gimp_test_get_file_state_verbose (gchar             *filename,
+                                                   GimpTestFileState *filestate);
+static gboolean  gimp_test_file_state_changes     (gchar             *filename,
+                                                   GimpTestFileState *state1,
+                                                   GimpTestFileState *state2);
 
 static Gimp *gimp = NULL;
 
 
 int main(int argc, char **argv)
 {
-  gchar    *initial_md5     = NULL;
-  gchar    *final_md5       = NULL;
-  GTimeVal  initial_modtime = { 0, };
-  GTimeVal  final_modtime   = { 0, };
+  GimpTestFileState  initial_sessionrc_state = { NULL, { 0, 0 } };
+  GimpTestFileState  initial_dockrc_state    = { NULL, { 0, 0 } };
+  GimpTestFileState  final_sessionrc_state   = { NULL, { 0, 0 } };
+  GimpTestFileState  final_dockrc_state      = { NULL, { 0, 0 } };
+  gchar             *sessionrc_filename      = gimp_personal_rc_file ("sessionrc");
+  gchar             *dockrc_filename         = gimp_personal_rc_file ("dockrc");
 
   g_type_init ();
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
 
-  /* Remeber the timestamp and MD5 on sessionrc */
-  if (!gimp_test_get_sessionrc_timestamp_and_md5 (&initial_md5,
-                                                  &initial_modtime))
+  /* Remeber the modtimes and MD5s */
+  if (!gimp_test_get_file_state_verbose (sessionrc_filename,
+                                         &initial_sessionrc_state))
+    goto fail;
+  if (!gimp_test_get_file_state_verbose (dockrc_filename,
+                                         &initial_dockrc_state))
     goto fail;
 
-  /* Start up GIMP and let the main loop run for a while (quits after
-   * a short timeout) to let things stabilize. This includes parsing
-   * sessionrc
-   */
+  /* Start up GIMP */
   gimp = gimp_init_for_gui_testing (FALSE, TRUE);
+
+  /* Let the main loop run for a while (quits after a short timeout)
+   * to let things stabilize. This includes parsing sessionrc and
+   * dockrc
+   */
   gimp_test_run_temp_mainloop (4000);
 
-  /* Exit. This includes writing sessionrc */
+  /* Exit. This includes writing sessionrc and dockrc*/
   gimp_exit (gimp, TRUE);
 
-  /* Now get the new MD5 and modtime */
-  if (!gimp_test_get_sessionrc_timestamp_and_md5 (&final_md5,
-                                                  &final_modtime))
+  /* Now get the new modtimes and MD5s */
+  if (!gimp_test_get_file_state_verbose (sessionrc_filename,
+                                         &final_sessionrc_state))
+    goto fail;
+  if (!gimp_test_get_file_state_verbose (dockrc_filename,
+                                         &final_dockrc_state))
     goto fail;
 
   /* If things have gone our way, GIMP will have deserialized
-   * sessionrc, shown the GUI, and then serialized the new sessionrc.
-   * To make sure we have a new sessionrc we check the modtime, and to
-   * make sure that the sessionrc remains the same we compare its MD5
+   * sessionrc and dockrc, shown the GUI, and then serialized the new
+   * files. To make sure we have new files we check the modtime, and
+   * to make sure that their content remains the same we compare their
+   * MD5
    */
-  if (initial_modtime.tv_sec == final_modtime.tv_sec)
-    {
-      g_printerr ("A new sessionrc was not created\n");
-      goto fail;
-    }
-  if (strcmp (initial_md5, final_md5) != 0)
-    {
-      g_printerr ("The new sessionrc is not identical to the old one\n");
-      goto fail;
-    }
+  if (!gimp_test_file_state_changes ("sessionrc",
+                                     &initial_sessionrc_state,
+                                     &final_sessionrc_state))
+    goto fail;
+  if (!gimp_test_file_state_changes ("dockrc",
+                                     &initial_dockrc_state,
+                                     &final_dockrc_state))
+    goto fail;
 
-  g_free (initial_md5);
-  g_free (final_md5);
-
+  /* Don't bother freeing stuff, the process is short-lived */
   return 0;
 
  fail:
@@ -105,13 +121,10 @@ int main(int argc, char **argv)
 }
 
 static gboolean
-gimp_test_get_sessionrc_timestamp_and_md5 (gchar    **checksum,
-                                           GTimeVal  *modtime)
+gimp_test_get_file_state_verbose (gchar             *filename,
+                                  GimpTestFileState *filestate)
 {
-  gchar    *filename = NULL;
-  gboolean  success  = TRUE;
-
-  filename = gimp_personal_rc_file ("sessionrc");
+  gboolean success = TRUE;
 
   /* Get checksum */
   if (success)
@@ -125,9 +138,9 @@ gimp_test_get_sessionrc_timestamp_and_md5 (gchar    **checksum,
                                      NULL);
       if (success)
         {
-          *checksum = g_compute_checksum_for_string (G_CHECKSUM_MD5,
-                                                     contents,
-                                                     length);
+          filestate->md5 = g_compute_checksum_for_string (G_CHECKSUM_MD5,
+                                                          contents,
+                                                          length);
         }
 
       g_free (contents);
@@ -142,7 +155,7 @@ gimp_test_get_sessionrc_timestamp_and_md5 (gchar    **checksum,
                                            NULL, NULL);
       if (info)
         {
-          g_file_info_get_modification_time (info, modtime);
+          g_file_info_get_modification_time (info, &filestate->modtime);
           success = TRUE;
           g_object_unref (info);
         }
@@ -154,7 +167,29 @@ gimp_test_get_sessionrc_timestamp_and_md5 (gchar    **checksum,
       g_object_unref (file);
     }
 
-  g_free (filename);
+  if (! success)
+    g_printerr ("Failed to get initial file info for '%s'\n", filename);
 
   return success;
+}
+
+static gboolean
+gimp_test_file_state_changes (gchar             *filename,
+                              GimpTestFileState *state1,
+                              GimpTestFileState *state2)
+{
+  if (state1->modtime.tv_sec  == state2->modtime.tv_sec &&
+      state1->modtime.tv_usec == state2->modtime.tv_usec)
+    {
+      g_printerr ("A new '%s' was not created\n", filename);
+      return FALSE;
+    }
+
+  if (strcmp (state1->md5, state2->md5) != 0)
+    {
+      g_printerr ("'%s' was changed but should not have been\n", filename);
+      return FALSE;
+    }
+
+  return TRUE;
 }
