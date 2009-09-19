@@ -69,37 +69,44 @@ struct _GimpConfigInterface
 
 GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
 
-gboolean      gimp_config_serialize_to_file     (GimpConfig   *config,
-                                                 const gchar  *filename,
-                                                 const gchar  *header,
-                                                 const gchar  *footer,
-                                                 gpointer      data,
-                                                 GError      **error);
-gboolean      gimp_config_serialize_to_fd       (GimpConfig   *config,
-                                                 gint          fd,
-                                                 gpointer      data);
-gchar       * gimp_config_serialize_to_string   (GimpConfig   *config,
-                                                 gpointer      data);
-gboolean      gimp_config_deserialize_file      (GimpConfig   *config,
-                                                 const gchar  *filename,
-                                                 gpointer      data,
-                                                 GError      **error);
-gboolean      gimp_config_deserialize_string    (GimpConfig   *config,
-                                                 const gchar  *text,
-                                                 gint          text_len,
-                                                 gpointer      data,
-                                                 GError      **error);
-gboolean      gimp_config_deserialize_return    (GScanner     *scanner,
-                                                 GTokenType    expected_token,
-                                                 gint          nest_level);
+gboolean      gimp_config_serialize_to_file     (GimpConfig       *config,
+                                                 const gchar      *filename,
+                                                 const gchar      *header,
+                                                 const gchar      *footer,
+                                                 gpointer          data,
+                                                 GError          **error);
+gboolean      gimp_config_serialize_to_fd       (GimpConfig       *config,
+                                                 gint              fd,
+                                                 gpointer          data);
+gchar       * gimp_config_serialize_to_string   (GimpConfig       *config,
+                                                 gpointer          data);
+gboolean      gimp_config_deserialize_file      (GimpConfig       *config,
+                                                 const gchar      *filename,
+                                                 gpointer          data,
+                                                 GError          **error);
+gboolean      gimp_config_deserialize_string    (GimpConfig       *config,
+                                                 const gchar      *text,
+                                                 gint              text_len,
+                                                 gpointer          data,
+                                                 GError          **error);
+gboolean      gimp_config_deserialize_return    (GScanner         *scanner,
+                                                 GTokenType        expected_token,
+                                                 gint              nest_level);
 
-gpointer      gimp_config_duplicate             (GimpConfig   *config);
-gboolean      gimp_config_is_equal_to           (GimpConfig   *a,
-                                                 GimpConfig   *b);
-void          gimp_config_reset                 (GimpConfig   *config);
-gboolean      gimp_config_copy                  (GimpConfig   *src,
-                                                 GimpConfig   *dest,
-                                                 GParamFlags   flags);
+gboolean      gimp_config_serialize             (GimpConfig       *config,
+                                                 GimpConfigWriter *writer,
+                                                 gpointer          data);
+gboolean      gimp_config_deserialize           (GimpConfig       *config,
+                                                 GScanner         *scanner,
+                                                 gint              nest_level,
+                                                 gpointer          data);
+gpointer      gimp_config_duplicate             (GimpConfig       *config);
+gboolean      gimp_config_is_equal_to           (GimpConfig       *a,
+                                                 GimpConfig       *b);
+void          gimp_config_reset                 (GimpConfig       *config);
+gboolean      gimp_config_copy                  (GimpConfig       *src,
+                                                 GimpConfig       *dest,
+                                                 GParamFlags       flags);
 
 
 G_END_DECLS
