@@ -93,7 +93,6 @@ static void       gimp_dock_window_style_set         (GtkWidget             *wid
                                                       GtkStyle              *prev_style);
 static gboolean   gimp_dock_window_delete_event      (GtkWidget             *widget,
                                                       GdkEventAny           *event);
-static GimpDock * gimp_dock_window_get_dock          (GimpDockWindow        *dock_window);
 static void       gimp_dock_window_display_changed   (GimpDockWindow        *dock_window,
                                                       GimpObject            *display,
                                                       GimpContext           *context);
@@ -444,15 +443,6 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   return FALSE;
 }
 
-static GimpDock *
-gimp_dock_window_get_dock (GimpDockWindow *dock_window)
-{
-  /* Change this to return the GimpDock *inside* the GimpDockWindow
-   * once GimpDock is not a subclass of GimpDockWindow any longer
-   */
-  return GIMP_DOCK (dock_window);
-}
-
 static void
 gimp_dock_window_display_changed (GimpDockWindow *dock_window,
                                   GimpObject     *display,
@@ -550,4 +540,21 @@ gimp_dock_window_from_dock (GimpDock *dock)
     return GIMP_DOCK_WINDOW (toplevel);
   else
     return NULL;
+}
+
+/**
+ * gimp_dock_window_get_dock:
+ * @dock_window:
+ *
+ * Get the #GimpDock within the #GimpDockWindow.
+ *
+ * Returns: 
+ **/
+GimpDock *
+gimp_dock_window_get_dock (GimpDockWindow *dock_window)
+{
+  /* Change this to return the GimpDock *inside* the GimpDockWindow
+   * once GimpDock is not a subclass of GimpDockWindow any longer
+   */
+  return GIMP_DOCK (dock_window);
 }
