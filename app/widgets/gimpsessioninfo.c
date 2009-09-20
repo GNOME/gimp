@@ -654,3 +654,77 @@ gimp_session_info_get_remember_if_open (GimpSessionInfo *info)
           (info->factory_entry &&
            info->factory_entry->remember_if_open));
 }
+
+GtkWidget *
+gimp_session_info_get_widget (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
+
+  return info->widget;
+}
+
+void
+gimp_session_info_set_widget (GimpSessionInfo *info,
+                              GtkWidget       *widget)
+{
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
+
+  info->widget = widget;
+}
+
+GimpDialogFactoryEntry *
+gimp_session_info_get_factory_entry (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
+
+  return info->factory_entry;
+}
+
+void
+gimp_session_info_set_factory_entry (GimpSessionInfo        *info,
+                                     GimpDialogFactoryEntry *entry)
+{
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
+
+  info->factory_entry = entry;
+}
+
+gboolean
+gimp_session_info_get_open (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
+
+  return info->open;
+}
+
+gint
+gimp_session_info_get_x (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), 0);
+
+  return info->x;
+}
+
+gint
+gimp_session_info_get_y (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), 0);
+
+  return info->y;
+}
+
+gint
+gimp_session_info_get_width (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), 0);
+
+  return info->width;
+}
+
+gint
+gimp_session_info_get_height (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), 0);
+
+  return info->height;
+}

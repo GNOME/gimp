@@ -675,11 +675,11 @@ gui_device_change_notify (Gimp *gimp)
   session_info = gimp_dialog_factory_find_session_info (global_dock_factory,
                                                         "gimp-device-status");
 
-  if (session_info && session_info->widget)
+  if (session_info && gimp_session_info_get_widget (session_info))
     {
       GtkWidget *device_status;
 
-      device_status = gtk_bin_get_child (GTK_BIN (session_info->widget));
+      device_status = gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (session_info)));
 
       gimp_device_status_update (GIMP_DEVICE_STATUS (device_status));
     }

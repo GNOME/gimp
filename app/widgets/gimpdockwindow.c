@@ -434,9 +434,9 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   gimp_object_set_name (GIMP_OBJECT (info),
                         gtk_window_get_title (GTK_WINDOW (dock_window)));
 
-  info->widget = GTK_WIDGET (dock);
+  gimp_session_info_set_widget (info, GTK_WIDGET (dock));
   gimp_session_info_get_info (info);
-  info->widget = NULL;
+  gimp_session_info_set_widget (info, NULL);
 
   gimp_container_add (global_recent_docks, GIMP_OBJECT (info));
   g_object_unref (info);

@@ -646,11 +646,11 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
         {
           info = gimp_dialog_factory_find_session_info (dialog_factory,
                                                         "gimp-indexed-palette");
-          if (info && info->widget)
+          if (info && gimp_session_info_get_widget (info))
             {
               GimpColormapEditor *editor;
 
-              editor = GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (info->widget)));
+              editor = GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));
 
               gimp_colormap_editor_set_index (editor, color_index, NULL);
             }
@@ -660,12 +660,12 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
         {
           info = gimp_dialog_factory_find_session_info (dialog_factory,
                                                         "gimp-palette-editor");
-          if (info && info->widget)
+          if (info && gimp_session_info_get_widget (info))
             {
               GimpPaletteEditor *editor;
               gint               index;
 
-              editor = GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (info->widget)));
+              editor = GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));
 
               index = gimp_palette_editor_get_index (editor, color);
               if (index != -1)

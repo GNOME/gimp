@@ -387,8 +387,9 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
     {
       GimpSessionInfo *info = list->data;
 
-      if (info->factory_entry &&
-          g_str_equal (identifier, info->factory_entry->identifier))
+      if (gimp_session_info_get_factory_entry (info) &&
+          g_str_equal (identifier,
+                       gimp_session_info_get_factory_entry (info)->identifier))
         {
           return info;
         }
@@ -472,7 +473,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       info = gimp_dialog_factory_find_session_info (factory, identifier);
 
       if (info)
-        dialog = info->widget;
+        dialog = gimp_session_info_get_widget (info);
     }
 
   /*  create the dialog if it was not found  */
@@ -682,7 +683,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
           GimpSessionInfo *info;
 
           info = gimp_dialog_factory_find_session_info (factory, ids[i]);
-          if (info && info->widget)
+          if (info && gimp_session_info_get_widget (info))
             break;
         }
 
@@ -821,9 +822,9 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
         {
           GimpSessionInfo *current_info = list->data;
 
-          if (current_info->factory_entry == entry)
+          if (gimp_session_info_get_factory_entry (current_info) == entry)
             {
-              if (current_info->widget)
+              if (gimp_session_info_get_widget (current_info))
                 {
                   if (gimp_session_info_is_singleton (current_info))
                     {
@@ -832,7 +833,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
                       GIMP_LOG (DIALOG_FACTORY,
                                 "corrupt session info: %p (widget %p)",
-                                current_info, current_info->widget);
+                                current_info,
+                                gimp_session_info_get_widget (current_info));
 
                       return;
                     }
@@ -840,11 +842,11 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                   continue;
                 }
 
-              current_info->widget = dialog;
+              gimp_session_info_set_widget (current_info, dialog);
 
               GIMP_LOG (DIALOG_FACTORY,
                         "updating session info %p (widget %p) for %s \"%s\"",
-                        current_info, current_info->widget,
+                        current_info,  gimp_session_info_get_widget (current_info),
                         toplevel ? "toplevel" : "dockable",
                         entry->identifier);
 
@@ -864,15 +866,15 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
         {
           info = gimp_session_info_new ();
 
-          info->widget = dialog;
+          gimp_session_info_set_widget (info, dialog);
 
           GIMP_LOG (DIALOG_FACTORY,
                     "creating session info %p (widget %p) for %s \"%s\"",
-                    info, info->widget,
+                    info, gimp_session_info_get_widget (info),
                     toplevel ? "toplevel" : "dockable",
                     entry->identifier);
 
-          info->factory_entry = entry;
+          gimp_session_info_set_factory_entry (info, entry);
 
           /*  if we create a new session info, we never call
            *  gimp_session_info_apply_geometry(), but still the
@@ -896,14 +898,14 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
           GimpSessionInfo *current_info = list->data;
 
           /*  take the first empty slot  */
-          if (! current_info->factory_entry &&
-              ! current_info->widget)
+          if (! gimp_session_info_get_factory_entry (current_info) &&
+              ! gimp_session_info_get_widget        (current_info))
             {
-              current_info->widget = dialog;
+              gimp_session_info_set_widget (current_info, dialog);
 
               GIMP_LOG (DIALOG_FACTORY,
                         "updating session info %p (widget %p) for dock",
-                        current_info, current_info->widget);
+                        current_info, gimp_session_info_get_widget (current_info));
 
               gimp_session_info_apply_geometry (current_info);
 
@@ -917,11 +919,11 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
         {
           info = gimp_session_info_new ();
 
-          info->widget = dialog;
+          gimp_session_info_set_widget (info, dialog);
 
           GIMP_LOG (DIALOG_FACTORY,
                     "creating session info %p (widget %p) for dock",
-                    info, info->widget);
+                    info, gimp_session_info_get_widget (info));
 
           /*  let new docks appear at the pointer position  */
           gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
@@ -1032,14 +1034,14 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
     {
       GimpSessionInfo *session_info = list->data;
 
-      if (session_info->widget == dialog)
+      if (gimp_session_info_get_widget (session_info) == dialog)
         {
           GIMP_LOG (DIALOG_FACTORY,
                     "clearing session info %p (widget %p) for \"%s\"",
-                    session_info, session_info->widget,
+                    session_info, gimp_session_info_get_widget (session_info),
                     entry ? entry->identifier : "dock");
 
-          session_info->widget = NULL;
+          gimp_session_info_set_widget (session_info, NULL);
 
           gimp_dialog_factory_unset_widget_data (dialog);
 
@@ -1375,7 +1377,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
     {
       GimpSessionInfo *session_info = list->data;
 
-      if (session_info->widget == dialog)
+      if (gimp_session_info_get_widget (session_info) == dialog)
         {
           gimp_session_info_read_geometry (session_info);
 
@@ -1383,8 +1385,10 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
                     "updated session info for \"%s\" from window geometry "
                     "(x=%d y=%d  %dx%d)",
                     entry ? entry->identifier : "dock",
-                    session_info->x, session_info->y,
-                    session_info->width, session_info->height);
+                    gimp_session_info_get_x (session_info),
+                    gimp_session_info_get_y (session_info),
+                    gimp_session_info_get_width (session_info),
+                    gimp_session_info_get_height (session_info));
 
           break;
         }
@@ -1411,15 +1415,15 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
       if (! gimp_session_info_is_session_managed (info))
         continue;
 
-      if (info->widget)
+      if (gimp_session_info_get_widget (info))
         gimp_session_info_get_info (info);
 
       gimp_config_writer_open (writer, "session-info");
       gimp_config_writer_string (writer,
                                  gimp_object_get_name (factory));
       gimp_config_writer_string (writer,
-                                 info->factory_entry ?
-                                 info->factory_entry->identifier :
+                                 gimp_session_info_get_factory_entry (info) ?
+                                 gimp_session_info_get_factory_entry (info)->identifier :
                                  "dock");
 
       GIMP_CONFIG_GET_INTERFACE (info)->serialize (GIMP_CONFIG (info),
@@ -1428,7 +1432,7 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
 
       gimp_config_writer_close (writer);
 
-      if (info->widget)
+      if (gimp_session_info_get_widget (info))
         gimp_session_info_clear_info (info);
     }
 }
@@ -1444,7 +1448,7 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
     {
       GimpSessionInfo *info = infos->data;
 
-      if (info->open)
+      if (gimp_session_info_get_open (info))
         {
           gimp_session_info_restore (info, factory);
           gimp_session_info_clear_info (info);
@@ -1463,7 +1467,7 @@ gimp_dialog_factories_clear_foreach (gconstpointer      key,
     {
       GimpSessionInfo *info = list->data;
 
-      if (info->widget)
+      if (gimp_session_info_get_widget (info))
         continue;
 
       /* FIXME: implement session info deletion */
