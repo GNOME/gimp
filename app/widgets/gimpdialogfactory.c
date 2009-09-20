@@ -399,6 +399,42 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
   return NULL;
 }
 
+/**
+ * gimp_dialog_factory_dialog_sane:
+ * @factory:
+ * @widget_factory:
+ * @widget_entry:
+ * @widget:
+ *
+ * Makes sure that the @widget with the given @widget_entry that was
+ * created by the given @widget_factory belongs to @efactory.
+ *
+ * Returns: %TRUE if that is the case, %FALSE otherwise.
+ **/
+static gboolean
+gimp_dialog_factory_dialog_sane (GimpDialogFactory      *factory,
+                                 GimpDialogFactory      *widget_factory,
+                                 GimpDialogFactoryEntry *widget_entry,
+                                 GtkWidget              *widget)
+{
+  /* Note that GimpDocks don't have any entry */
+  if (! widget_factory || (! widget_entry && ! GIMP_IS_DOCK (widget)))
+    {
+      g_warning ("%s: dialog was not created by a GimpDialogFactory",
+                 G_STRFUNC);
+      return FALSE;
+    }
+
+  if (widget_factory != factory)
+    {
+      g_warning ("%s: dialog was created by a different GimpDialogFactory",
+                 G_STRFUNC);
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
 static GtkWidget *
 gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                          GdkScreen         *screen,
@@ -768,19 +804,11 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
-  if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
-    {
-      g_warning ("%s: dialog was not created by a GimpDialogFactory",
-                 G_STRFUNC);
-      return;
-    }
-
-  if (dialog_factory != factory)
-    {
-      g_warning ("%s: dialog was created by a different GimpDialogFactory",
-                 G_STRFUNC);
-      return;
-    }
+  if (! gimp_dialog_factory_dialog_sane (factory,
+                                         dialog_factory,
+                                         entry,
+                                         dialog))
+    return;
 
   toplevel = GTK_WIDGET_TOPLEVEL (dialog);
 
@@ -997,19 +1025,11 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
-  if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
-    {
-      g_warning ("%s: dialog was not created by a GimpDialogFactory",
-                 G_STRFUNC);
-      return;
-    }
-
-  if (dialog_factory != factory)
-    {
-      g_warning ("%s: dialog was created by a different GimpDialogFactory",
-                 G_STRFUNC);
-      return;
-    }
+  if (! gimp_dialog_factory_dialog_sane (factory,
+                                         dialog_factory,
+                                         entry,
+                                         dialog))
+    return;
 
   GIMP_LOG (DIALOG_FACTORY, "removing \"%s\"",
             entry ? entry->identifier : "dock");
@@ -1351,19 +1371,11 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
-  if (! dialog_factory || (! entry && ! GIMP_IS_DOCK (dialog)))
-    {
-      g_warning ("%s: dialog was not created by a GimpDialogFactory",
-                 G_STRFUNC);
-      return FALSE;
-    }
-
-  if (dialog_factory != factory)
-    {
-      g_warning ("%s: dialog was created by a different GimpDialogFactory",
-                 G_STRFUNC);
-      return FALSE;
-    }
+  if (! gimp_dialog_factory_dialog_sane (factory,
+                                         dialog_factory,
+                                         entry,
+                                         dialog))
+    return FALSE;
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
