@@ -788,10 +788,11 @@ void
 gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                                 GtkWidget         *dialog)
 {
-  GimpDialogFactory      *dialog_factory;
-  GimpDialogFactoryEntry *entry;
-  GList                  *list;
-  gboolean                toplevel;
+  GimpDialogFactory      *dialog_factory = NULL;
+  GimpDialogFactoryEntry *entry          = NULL;
+  GimpSessionInfo        *info           = NULL;
+  GList                  *list           = NULL;
+  gboolean                toplevel       = FALSE;
 
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GTK_IS_WIDGET (dialog));
@@ -820,12 +821,12 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
-          GimpSessionInfo *info = list->data;
+          GimpSessionInfo *current_info = list->data;
 
-          if ((info->toplevel_entry == entry) ||
-              (info->dockable_entry == entry))
+          if ((current_info->toplevel_entry == entry) ||
+              (current_info->dockable_entry == entry))
             {
-              if (info->widget)
+              if (current_info->widget)
                 {
                   if (entry->singleton)
                     {
@@ -834,7 +835,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
                       GIMP_LOG (DIALOG_FACTORY,
                                 "corrupt session info: %p (widget %p)",
-                                info, info->widget);
+                                current_info, current_info->widget);
 
                       return;
                     }
@@ -842,27 +843,28 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                   continue;
                 }
 
-              info->widget = dialog;
+              current_info->widget = dialog;
 
               GIMP_LOG (DIALOG_FACTORY,
                         "updating session info %p (widget %p) for %s \"%s\"",
-                        info, info->widget,
+                        current_info, current_info->widget,
                         toplevel ? "toplevel" : "dockable",
                         entry->identifier);
 
               if (toplevel && entry->session_managed &&
                   ! GTK_WIDGET_VISIBLE (dialog))
                 {
-                  gimp_session_info_set_geometry (info);
+                  gimp_session_info_set_geometry (current_info);
                 }
 
+              info = current_info;
               break;
             }
         }
 
-      if (! list) /*  didn't find a session info  */
+      if (! info)
         {
-          GimpSessionInfo *info = gimp_session_info_new ();
+          info = gimp_session_info_new ();
 
           info->widget = dialog;
 
@@ -900,28 +902,30 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
-          GimpSessionInfo *info = list->data;
+          GimpSessionInfo *current_info = list->data;
 
           /*  take the first empty slot  */
-          if (! info->toplevel_entry &&
-              ! info->dockable_entry &&
-              ! info->widget)
+          if (! current_info->toplevel_entry &&
+              ! current_info->dockable_entry &&
+              ! current_info->widget)
             {
-              info->widget = dialog;
+              current_info->widget = dialog;
 
               GIMP_LOG (DIALOG_FACTORY,
                         "updating session info %p (widget %p) for dock",
-                        info, info->widget);
+                        current_info, current_info->widget);
 
-              gimp_session_info_set_geometry (info);
+              gimp_session_info_set_geometry (current_info);
+
+              info = current_info;
 
               break;
             }
         }
 
-      if (! list) /*  didn't find a session info  */
+      if (! info)
         {
-          GimpSessionInfo *info = gimp_session_info_new ();
+          info = gimp_session_info_new ();
 
           info->widget = dialog;
 
