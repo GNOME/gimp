@@ -257,6 +257,7 @@ libappwidgets_a_sources = \
 	gimpsessioninfo-dock.h		\
 	gimpsessioninfo-dockable.c	\
 	gimpsessioninfo-dockable.h	\
+	gimpsessioninfo-private.h	\
 	gimpsettingsbox.c		\
 	gimpsettingsbox.h		\
 	gimpsettingseditor.c		\

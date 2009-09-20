@@ -32,6 +32,7 @@
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dock.h"
+#include "gimpsessioninfo-private.h"
 
 
 enum
@@ -96,7 +97,7 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
 
               if (token == G_TOKEN_LEFT_PAREN)
                 {
-                  info->books = g_list_append (info->books, book);
+                  info->p->books = g_list_append (info->p->books, book);
                   g_scanner_set_scope (scanner, scope);
                 }
               else
@@ -183,10 +184,10 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
 
   dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory, screen));
 
-  if (dock && info->aux_info)
-    gimp_session_info_aux_set_list (GTK_WIDGET (dock), info->aux_info);
+  if (dock && info->p->aux_info)
+    gimp_session_info_aux_set_list (GTK_WIDGET (dock), info->p->aux_info);
 
-  for (books = info->books; books; books = g_list_next (books))
+  for (books = info->p->books; books; books = g_list_next (books))
     {
       GimpSessionInfoBook *book_info = books->data;
       GtkWidget           *dockbook;

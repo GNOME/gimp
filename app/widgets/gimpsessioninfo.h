@@ -33,7 +33,8 @@
 #define GIMP_SESSION_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SESSION_INFO, GimpSessionInfoClass))
 
 
-typedef struct _GimpSessionInfoClass  GimpSessionInfoClass;
+typedef struct _GimpSessionInfoPrivate  GimpSessionInfoPrivate;
+typedef struct _GimpSessionInfoClass    GimpSessionInfoClass;
 
 /**
  * Contains session info for one toplevel window in the interface such
@@ -41,31 +42,9 @@ typedef struct _GimpSessionInfoClass  GimpSessionInfoClass;
  */
 struct _GimpSessionInfo
 {
-  GimpObject              parent_instance;
+  GimpObject  parent_instance;
 
-  gint                    x;
-  gint                    y;
-  gint                    width;
-  gint                    height;
-  gboolean                right_align;
-  gboolean                bottom_align;
-
-  /*  only valid while restoring and saving the session  */
-  gboolean                open;
-  gint                    screen;
-
-  /*  dialog specific list of GimpSessionInfoAux  */
-  GList                  *aux_info;
-
-  GtkWidget              *widget;
-
-  /*  the dialog factory entry for object we have session info for
-   *  note that pure "dock" entries don't have any factory entry
-   */
-  GimpDialogFactoryEntry *factory_entry;
-
-  /*  list of GimpSessionInfoBook  */
-  GList                  *books;
+  GimpSessionInfoPrivate *p;
 };
 
 struct _GimpSessionInfoClass
