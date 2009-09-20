@@ -36,6 +36,8 @@
 #include "gimpsessioninfo-dock.h"
 #include "gimpsessioninfo-private.h"
 
+#include "gimp-log.h"
+
 
 enum
 {
@@ -370,6 +372,10 @@ gimp_session_info_restore (GimpSessionInfo   *info,
     {
       GtkWidget *dialog;
 
+      GIMP_LOG (DIALOG_FACTORY, "restoring toplevel \"%s\" (info %p)",
+                info->p->factory_entry->identifier,
+                info);
+
       dialog =
         gimp_dialog_factory_dialog_new (factory, screen,
                                         info->p->factory_entry->identifier,
@@ -381,6 +387,9 @@ gimp_session_info_restore (GimpSessionInfo   *info,
     }
   else
     {
+      GIMP_LOG (DIALOG_FACTORY, "restoring dock  (info %p)",
+                info);
+
       gimp_session_info_dock_restore (info, factory, screen);
     }
 }

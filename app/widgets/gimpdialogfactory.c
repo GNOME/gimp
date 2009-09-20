@@ -1453,6 +1453,12 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
           gimp_session_info_restore (info, factory);
           gimp_session_info_clear_info (info);
         }
+      else
+        {
+          GIMP_LOG (DIALOG_FACTORY,
+                    "skipping to restore session info %p, not open",
+                    info);
+        }
     }
 }
 

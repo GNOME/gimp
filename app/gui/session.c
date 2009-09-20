@@ -50,6 +50,7 @@
 #include "dialogs/dialogs.h"
 
 #include "session.h"
+#include "gimp-log.h"
 
 #include "gimp-intl.h"
 
@@ -175,11 +176,19 @@ session_init (Gimp *gimp)
                 {
                   if (! skip)
                     {
+                      GIMP_LOG (DIALOG_FACTORY,
+                                "successfully parsed and added session info %p",
+                                info);
+
                       factory->session_infos =
                         g_list_append (factory->session_infos, info);
                     }
                   else
                     {
+                      GIMP_LOG (DIALOG_FACTORY,
+                                "failed to parse session info %p, not adding",
+                                info);
+
                       g_object_unref (info);
                     }
                 }
