@@ -152,7 +152,7 @@ session_init (Gimp *gimp)
                * entries and don't have any dialog factory entry, so
                * don't bother looking for entires for them
                */
-              if (!g_str_equal (entry_name, "dock"))
+              if (strcmp (entry_name, "dock"))
                 {
                   GimpDialogFactoryEntry *entry =
                     gimp_dialog_factory_find_entry (factory,
