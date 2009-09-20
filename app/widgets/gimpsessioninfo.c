@@ -62,6 +62,7 @@ static gboolean gimp_session_info_deserialize       (GimpConfig       *config,
                                                      GScanner         *scanner,
                                                      gint              nest_level,
                                                      gpointer          data);
+static gboolean gimp_session_info_is_for_dock       (GimpSessionInfo  *info);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT,
@@ -309,6 +310,27 @@ gimp_session_info_deserialize (GimpConfig *config,
   return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
+/**
+ * gimp_session_info_is_for_dock:
+ * @info:
+ *
+ * Helper function to determine if the session info is for a dock. It
+ * uses the dialog factory entry state and the associated widget state
+ * if any to determine that.
+ *
+ * Returns: %TRUE if session info is for a dock, %FALSE otherwise.
+ **/
+static gboolean
+gimp_session_info_is_for_dock (GimpSessionInfo *info)
+{
+  gboolean entry_state_for_dock  = (! info->toplevel_entry &&
+                                    ! info->dockable_entry);
+  gboolean widget_state_for_dock = (info->widget == NULL ||
+                                    GIMP_IS_DOCK (info->widget));
+
+  return entry_state_for_dock && widget_state_for_dock;
+}
+
 
 /*  public functions  */
 
@@ -417,8 +439,9 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
 
   screen = gtk_widget_get_screen (info->widget);
 
-  use_size = ((! info->toplevel_entry || info->toplevel_entry->remember_size) &&
-              (info->width > 0 && info->height > 0));
+  use_size = (gimp_session_info_get_remember_size (info) &&
+              info->width  > 0 &&
+              info->height > 0);
 
   if (use_size)
     {
@@ -491,7 +514,7 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
       info->x = MAX (0, x);
       info->y = MAX (0, y);
 
-      if (! info->toplevel_entry || info->toplevel_entry->remember_size)
+      if (gimp_session_info_get_remember_size (info))
         {
           gdk_drawable_get_size (GDK_DRAWABLE (window),
                                  &info->width, &info->height);
@@ -505,7 +528,7 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
 
   info->open = FALSE;
 
-  if (! info->toplevel_entry || info->toplevel_entry->remember_if_open)
+  if (gimp_session_info_get_remember_if_open (info))
     {
       GimpDialogVisibilityState visibility;
 
@@ -575,4 +598,45 @@ gimp_session_info_clear_info (GimpSessionInfo *info)
        g_list_free (info->books);
        info->books = NULL;
      }
+}
+
+gboolean
+gimp_session_info_is_singleton (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
+
+  return (! gimp_session_info_is_for_dock (info) &&
+          info->toplevel_entry &&
+          info->toplevel_entry->singleton);
+}
+
+gboolean
+gimp_session_info_is_session_managed (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
+
+  return (gimp_session_info_is_for_dock (info) ||
+          (info->toplevel_entry &&
+           info->toplevel_entry->session_managed));
+}
+
+
+gboolean
+gimp_session_info_get_remember_size (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
+
+  return (gimp_session_info_is_for_dock (info) ||
+          (info->toplevel_entry &&
+           info->toplevel_entry->remember_size));
+}
+
+gboolean
+gimp_session_info_get_remember_if_open (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
+
+  return (gimp_session_info_is_for_dock (info) ||
+          (info->toplevel_entry &&
+           info->toplevel_entry->remember_if_open));
 }

@@ -73,18 +73,18 @@ struct _GimpSessionInfoClass
 };
 
 
-GType             gimp_session_info_get_type     (void) G_GNUC_CONST;
-
-GimpSessionInfo * gimp_session_info_new          (void);
-
-void              gimp_session_info_restore      (GimpSessionInfo   *info,
-                                                  GimpDialogFactory *factory);
-
-void              gimp_session_info_set_geometry (GimpSessionInfo   *info);
-void              gimp_session_info_get_geometry (GimpSessionInfo   *info);
-
-void              gimp_session_info_get_info     (GimpSessionInfo   *info);
-void              gimp_session_info_clear_info   (GimpSessionInfo   *info);
+GType             gimp_session_info_get_type             (void) G_GNUC_CONST;
+GimpSessionInfo * gimp_session_info_new                  (void);
+void              gimp_session_info_restore              (GimpSessionInfo   *info,
+                                                          GimpDialogFactory *factory);
+void              gimp_session_info_set_geometry         (GimpSessionInfo   *info);
+void              gimp_session_info_get_geometry         (GimpSessionInfo   *info);
+void              gimp_session_info_get_info             (GimpSessionInfo   *info);
+void              gimp_session_info_clear_info           (GimpSessionInfo   *info);
+gboolean          gimp_session_info_is_singleton         (GimpSessionInfo   *info);
+gboolean          gimp_session_info_is_session_managed   (GimpSessionInfo   *info);
+gboolean          gimp_session_info_get_remember_size    (GimpSessionInfo   *info);
+gboolean          gimp_session_info_get_remember_if_open (GimpSessionInfo   *info);
 
 
 #endif  /* __GIMP_SESSION_INFO_H__ */

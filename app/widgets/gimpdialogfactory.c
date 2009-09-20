@@ -828,7 +828,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
             {
               if (current_info->widget)
                 {
-                  if (entry->singleton)
+                  if (gimp_session_info_is_singleton (current_info))
                     {
                       g_warning ("%s: singleton dialog \"%s\" created twice",
                                  G_STRFUNC, entry->identifier);
@@ -851,7 +851,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                         toplevel ? "toplevel" : "dockable",
                         entry->identifier);
 
-              if (toplevel && entry->session_managed &&
+              if (toplevel &&
+                  gimp_session_info_is_session_managed (current_info) &&
                   ! GTK_WIDGET_VISIBLE (dialog))
                 {
                   gimp_session_info_set_geometry (current_info);
@@ -883,7 +884,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                *  dialog needs GDK_HINT_USER_POS so it keeps its
                *  position when hidden/shown within this(!) session.
                */
-              if (entry->session_managed)
+              if (gimp_session_info_is_session_managed (info))
                 g_signal_connect (dialog, "configure-event",
                                   G_CALLBACK (gimp_dialog_factory_set_user_pos),
                                   NULL);
@@ -958,7 +959,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                            factory,
                            G_CONNECT_SWAPPED);
 
-  if ((entry && entry->session_managed && toplevel) || GIMP_IS_DOCK (dialog))
+  if (gimp_session_info_is_session_managed (info))
     g_signal_connect_object (dialog, "configure-event",
                              G_CALLBACK (gimp_dialog_factory_dialog_configure),
                              factory,
@@ -1060,7 +1061,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                                                 gimp_dialog_factory_remove_dialog,
                                                 factory);
 
-          if (entry && entry->session_managed && GTK_WIDGET_TOPLEVEL (dialog))
+          if (gimp_session_info_is_session_managed (session_info))
             g_signal_handlers_disconnect_by_func (dialog,
                                                   gimp_dialog_factory_dialog_configure,
                                                   factory);
@@ -1418,8 +1419,7 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
        *  by the factory but don't save them if they don't want to be
        *  managed
        */
-      if (info->dockable_entry ||
-          (info->toplevel_entry && ! info->toplevel_entry->session_managed))
+      if (! gimp_session_info_is_session_managed (info))
         continue;
 
       if (info->widget)
