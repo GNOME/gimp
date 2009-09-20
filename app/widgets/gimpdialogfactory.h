@@ -58,6 +58,11 @@ struct _GimpDialogFactoryEntry
   gboolean           session_managed;
   gboolean           remember_size;
   gboolean           remember_if_open;
+
+  /* If TRUE the entry is for a dockable, otherwise it is for a
+   * toplevel
+   */
+  gboolean           dockable;
 };
 
 

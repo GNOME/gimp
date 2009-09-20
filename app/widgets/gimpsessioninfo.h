@@ -59,9 +59,10 @@ struct _GimpSessionInfo
 
   GtkWidget              *widget;
 
-  /*  only one of these is valid  */
-  GimpDialogFactoryEntry *toplevel_entry;
-  GimpDialogFactoryEntry *dockable_entry;
+  /*  the dialog factory entry for object we have session info for
+   *  note that pure "dock" entries don't have any factory entry
+   */
+  GimpDialogFactoryEntry *factory_entry;
 
   /*  list of GimpSessionInfoBook  */
   GList                  *books;

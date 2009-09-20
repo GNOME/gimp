@@ -50,11 +50,11 @@ GimpContainer     *global_recent_docks    = NULL;
 
 #define FOREIGN(id, singleton, remember_size) \
   { id, NULL, NULL, NULL, NULL, \
-    NULL, 0, singleton,  TRUE, remember_size, FALSE }
+    NULL, 0, singleton,  TRUE, remember_size, FALSE, FALSE }
 
 #define TOPLEVEL(id, new_func, singleton, session_managed, remember_size) \
   { id, NULL, NULL, NULL, NULL, \
-    new_func, 0, singleton, session_managed, remember_size, FALSE }
+    new_func, 0, singleton, session_managed, remember_size, FALSE, FALSE }
 
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
@@ -123,14 +123,14 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
 #define DOCKABLE(id,name,blurb,stock_id,help_id,\
                  new_func,view_size,singleton) \
   { id, name, blurb, stock_id, help_id, \
-    new_func, view_size, singleton, FALSE, FALSE, TRUE }
+    new_func, view_size, singleton, FALSE, FALSE, TRUE, TRUE }
 
 #define LISTGRID(id,name,blurb,stock_id,help_id,\
                  view_size) \
   { "gimp-"#id"-list", name, blurb, stock_id, help_id, \
-    dialogs_##id##_list_view_new, view_size, FALSE, FALSE, FALSE, TRUE }, \
+    dialogs_##id##_list_view_new, view_size, FALSE, FALSE, FALSE, TRUE, TRUE }, \
   { "gimp-"#id"-grid", name, blurb, stock_id, help_id, \
-    dialogs_##id##_grid_view_new, view_size, FALSE, FALSE, FALSE, TRUE }
+    dialogs_##id##_grid_view_new, view_size, FALSE, FALSE, FALSE, TRUE, TRUE }
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {

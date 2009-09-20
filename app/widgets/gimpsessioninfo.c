@@ -268,7 +268,7 @@ gimp_session_info_deserialize (GimpConfig *config,
               break;
 
             case SESSION_INFO_DOCK:
-              if (info->toplevel_entry)
+              if (info->factory_entry)
                 goto error;
 
               g_scanner_set_scope (scanner, scope_id + 1);
@@ -323,8 +323,7 @@ gimp_session_info_deserialize (GimpConfig *config,
 static gboolean
 gimp_session_info_is_for_dock (GimpSessionInfo *info)
 {
-  gboolean entry_state_for_dock  = (! info->toplevel_entry &&
-                                    ! info->dockable_entry);
+  gboolean entry_state_for_dock  =  info->factory_entry == NULL;
   gboolean widget_state_for_dock = (info->widget == NULL ||
                                     GIMP_IS_DOCK (info->widget));
 
@@ -361,14 +360,14 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   info->open   = FALSE;
   info->screen = DEFAULT_SCREEN;
 
-  if (info->toplevel_entry)
+  if (info->factory_entry && ! info->factory_entry->dockable)
     {
       GtkWidget *dialog;
 
       dialog =
         gimp_dialog_factory_dialog_new (factory, screen,
-                                        info->toplevel_entry->identifier,
-                                        info->toplevel_entry->view_size,
+                                        info->factory_entry->identifier,
+                                        info->factory_entry->view_size,
                                         TRUE);
 
       if (dialog && info->aux_info)
@@ -574,7 +573,9 @@ gimp_session_info_get_info (GimpSessionInfo *info)
 
   info->aux_info = gimp_session_info_aux_get_list (info->widget);
 
-  if (! info->toplevel_entry)
+  if (info->factory_entry == NULL ||
+      (info->factory_entry &&
+       info->factory_entry->dockable))
     info->books = gimp_session_info_dock_from_widget (GIMP_DOCK (info->widget));
 }
 
@@ -606,8 +607,8 @@ gimp_session_info_is_singleton (GimpSessionInfo *info)
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
 
   return (! gimp_session_info_is_for_dock (info) &&
-          info->toplevel_entry &&
-          info->toplevel_entry->singleton);
+          info->factory_entry &&
+          info->factory_entry->singleton);
 }
 
 gboolean
@@ -616,8 +617,8 @@ gimp_session_info_is_session_managed (GimpSessionInfo *info)
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
 
   return (gimp_session_info_is_for_dock (info) ||
-          (info->toplevel_entry &&
-           info->toplevel_entry->session_managed));
+          (info->factory_entry &&
+           info->factory_entry->session_managed));
 }
 
 
@@ -627,8 +628,8 @@ gimp_session_info_get_remember_size (GimpSessionInfo *info)
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
 
   return (gimp_session_info_is_for_dock (info) ||
-          (info->toplevel_entry &&
-           info->toplevel_entry->remember_size));
+          (info->factory_entry &&
+           info->factory_entry->remember_size));
 }
 
 gboolean
@@ -637,6 +638,6 @@ gimp_session_info_get_remember_if_open (GimpSessionInfo *info)
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
 
   return (gimp_session_info_is_for_dock (info) ||
-          (info->toplevel_entry &&
-           info->toplevel_entry->remember_if_open));
+          (info->factory_entry &&
+           info->factory_entry->remember_if_open));
 }

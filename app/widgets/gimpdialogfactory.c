@@ -387,10 +387,8 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
     {
       GimpSessionInfo *info = list->data;
 
-      if ((info->toplevel_entry &&
-           ! strcmp (identifier, info->toplevel_entry->identifier)) ||
-          (info->dockable_entry &&
-           ! strcmp (identifier, info->dockable_entry->identifier)))
+      if (info->factory_entry &&
+          g_str_equal (identifier, info->factory_entry->identifier))
         {
           return info;
         }
@@ -823,8 +821,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
         {
           GimpSessionInfo *current_info = list->data;
 
-          if ((current_info->toplevel_entry == entry) ||
-              (current_info->dockable_entry == entry))
+          if (current_info->factory_entry == entry)
             {
               if (current_info->widget)
                 {
@@ -875,24 +872,17 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                     toplevel ? "toplevel" : "dockable",
                     entry->identifier);
 
-          if (toplevel)
-            {
-              info->toplevel_entry = entry;
+          info->factory_entry = entry;
 
-              /*  if we create a new session info, we never call
-               *  gimp_session_info_set_geometry(), but still the
-               *  dialog needs GDK_HINT_USER_POS so it keeps its
-               *  position when hidden/shown within this(!) session.
-               */
-              if (gimp_session_info_is_session_managed (info))
-                g_signal_connect (dialog, "configure-event",
-                                  G_CALLBACK (gimp_dialog_factory_set_user_pos),
-                                  NULL);
-            }
-          else
-            {
-              info->dockable_entry = entry;
-            }
+          /*  if we create a new session info, we never call
+           *  gimp_session_info_set_geometry(), but still the
+           *  dialog needs GDK_HINT_USER_POS so it keeps its
+           *  position when hidden/shown within this(!) session.
+           */
+          if (gimp_session_info_is_session_managed (info))
+            g_signal_connect (dialog, "configure-event",
+                              G_CALLBACK (gimp_dialog_factory_set_user_pos),
+                              NULL);
 
           factory->session_infos = g_list_append (factory->session_infos, info);
         }
@@ -906,8 +896,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
           GimpSessionInfo *current_info = list->data;
 
           /*  take the first empty slot  */
-          if (! current_info->toplevel_entry &&
-              ! current_info->dockable_entry &&
+          if (! current_info->factory_entry &&
               ! current_info->widget)
             {
               current_info->widget = dialog;
@@ -1429,8 +1418,8 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
       gimp_config_writer_string (writer,
                                  gimp_object_get_name (factory));
       gimp_config_writer_string (writer,
-                                 info->toplevel_entry ?
-                                 info->toplevel_entry->identifier :
+                                 info->factory_entry ?
+                                 info->factory_entry->identifier :
                                  "dock");
 
       GIMP_CONFIG_GET_INTERFACE (info)->serialize (GIMP_CONFIG (info),

@@ -153,13 +153,13 @@ session_init (Gimp *gimp)
                */
               if (!g_str_equal (entry_name, "dock"))
                 {
-                  info->toplevel_entry = gimp_dialog_factory_find_entry (factory,
-                                                                         entry_name);
+                  info->factory_entry = gimp_dialog_factory_find_entry (factory,
+                                                                        entry_name);
 
                   /* If we expected a dialog factory entry but failed
                    * to find one, skip to add this session info object
                    */
-                  skip = (info->toplevel_entry == NULL);
+                  skip = (info->factory_entry == NULL);
                 }
 
               g_free (entry_name);
