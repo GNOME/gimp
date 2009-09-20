@@ -424,8 +424,15 @@ gimp_session_info_get_appropriate_monitor (GdkScreen *screen,
                                             rect.y + rect.height / 2);
 }
 
+/**
+ * gimp_session_info_apply_geometry:
+ * @info:
+ *
+ * Apply the geometry stored in the session info object to the
+ * associated widget.
+ **/
 void
-gimp_session_info_set_geometry (GimpSessionInfo *info)
+gimp_session_info_apply_geometry (GimpSessionInfo *info)
 {
   GdkScreen   *screen;
   GdkRectangle rect;
@@ -490,8 +497,14 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
                                  info->width, info->height);
 }
 
+/**
+ * gimp_session_info_read_geometry:
+ * @info:
+ *
+ * Read geometry related information from the associated widget.
+ **/
 void
-gimp_session_info_get_geometry (GimpSessionInfo *info)
+gimp_session_info_read_geometry (GimpSessionInfo *info)
 {
   GdkWindow *window;
 
@@ -569,7 +582,7 @@ gimp_session_info_get_info (GimpSessionInfo *info)
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WIDGET (info->widget));
 
-  gimp_session_info_get_geometry (info);
+  gimp_session_info_read_geometry (info);
 
   info->aux_info = gimp_session_info_aux_get_list (info->widget);
 

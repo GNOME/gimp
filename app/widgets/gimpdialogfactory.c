@@ -852,7 +852,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                   gimp_session_info_is_session_managed (current_info) &&
                   ! GTK_WIDGET_VISIBLE (dialog))
                 {
-                  gimp_session_info_set_geometry (current_info);
+                  gimp_session_info_apply_geometry (current_info);
                 }
 
               info = current_info;
@@ -875,7 +875,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
           info->factory_entry = entry;
 
           /*  if we create a new session info, we never call
-           *  gimp_session_info_set_geometry(), but still the
+           *  gimp_session_info_apply_geometry(), but still the
            *  dialog needs GDK_HINT_USER_POS so it keeps its
            *  position when hidden/shown within this(!) session.
            */
@@ -905,7 +905,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                         "updating session info %p (widget %p) for dock",
                         current_info, current_info->widget);
 
-              gimp_session_info_set_geometry (current_info);
+              gimp_session_info_apply_geometry (current_info);
 
               info = current_info;
 
@@ -927,7 +927,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
           gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 
           /*  if we create a new session info, we never call
-           *  gimp_session_info_set_geometry(), but still the
+           *  gimp_session_info_apply_geometry(), but still the
            *  dialog needs GDK_HINT_USER_POS so it keeps its
            *  position when hidden/shown within this(!) session.
            */
@@ -1377,7 +1377,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
       if (session_info->widget == dialog)
         {
-          gimp_session_info_get_geometry (session_info);
+          gimp_session_info_read_geometry (session_info);
 
           GIMP_LOG (DIALOG_FACTORY,
                     "updated session info for \"%s\" from window geometry "
