@@ -81,7 +81,7 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
                                         action_data_get_context (data),
                                         widget,
                                         &channel->color,
-                                        gimp_object_get_name (GIMP_OBJECT (channel)),
+                                        gimp_object_get_name (channel),
                                         _("Channel Attributes"),
                                         "gimp-channel-edit",
                                         GTK_STOCK_EDIT,
@@ -392,7 +392,7 @@ channels_edit_channel_response (GtkWidget            *widget,
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
                                    &color);
 
-      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (channel))))
+      if (strcmp (new_name, gimp_object_get_name (channel)))
         name_changed = TRUE;
 
       if (gimp_rgba_distance (&color, &channel->color) > 0.0001)

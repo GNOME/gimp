@@ -715,7 +715,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer = gimp_image_pick_correlate_layer (image, x, y);
+  layer = gimp_image_pick_layer (image, x, y);
 }
 CODE
     );
@@ -941,9 +941,15 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_merge_down (image, merge_layer, context, merge_type);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), FALSE, error))
+    {
+      layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
+                                     error);
 
-  if (! layer)
+      if (! layer)
+        success = FALSE;
+    }
+  else
     success = FALSE;
 }
 CODE
@@ -1071,7 +1077,8 @@ sub image_add_layer_mask {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error))
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
     success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
   else
     success = FALSE;
@@ -2241,7 +2248,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  uri = g_strdup (gimp_object_get_name (GIMP_OBJECT (image)));
+  uri = g_strdup (gimp_object_get_name (image));
 }
 CODE
     );

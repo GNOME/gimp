@@ -744,6 +744,8 @@ siox_cache_remove_fg (gpointer key,
  * Initializes the SIOX segmentator.
  * Creates and returns a SioxState struct that has to be passed to all
  * function calls of this module as it maintaines the state.
+ *
+'* Returns: a new siox state structure.
  */
 SioxState *
 siox_init (TileManager  *pixels,
@@ -806,6 +808,8 @@ siox_init (TileManager  *pixels,
  *               a good value is: { 0.64, 1.28, 2.56 }
  * @smoothness:  boundary smoothness (a good value is 3)
  * @multiblob:   allow multiple blobs (true) or only one (false)
+ * @progress_callback: a progress callback
+ * @progress_data: data passed to @progress_callback
  *
  * Writes the resulting segmentation into @mask. The region of
  * interest as specified using @x1, @y1, @x2 and @y2 defines the

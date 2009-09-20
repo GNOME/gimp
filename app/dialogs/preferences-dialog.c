@@ -2629,14 +2629,10 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Window Manager Hints"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
-
-  prefs_enum_combo_box_add (object, "toolbox-window-hint", 0, 0,
-                            _("Hint for the _toolbox:"),
-                            GTK_TABLE (table), 0, size_group);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "dock-window-hint", 0, 0,
-                            _("Hint for other _docks:"),
+                            _("Hint for _docks and toolbox:"),
                             GTK_TABLE (table), 1, size_group);
 
   vbox2 = prefs_frame_new (_("Focus"),

@@ -38,6 +38,8 @@ gboolean   gimp_plug_in_manager_register_mime_type    (GimpPlugInManager *manage
 gboolean   gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
                                                        const gchar       *load_proc,
                                                        const gchar       *thumb_proc);
+gboolean   gimp_plug_in_manager_uri_has_exporter      (GimpPlugInManager *manager,
+                                                       const gchar       *uri);
 
 
 #endif /* __GIMP_PLUG_IN_MANAGER_FILE_H__ */

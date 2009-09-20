@@ -16,6 +16,13 @@ brushdata_DATA = \
 	Round-Fuzzy.vbr			\
 	Round.vbr			\
 	\
+	Acrylic1.gih			\
+	Acrylic2.gih			\
+	Acrylic3.gih			\
+	Acrylic4.gih			\
+	Chalk1.gih			\
+	Chalk2.gih			\
+	Grass1.gih			\
 	SketchBrush-64.gih		\
 	confetti.gih			\
 	feltpen.gih			\

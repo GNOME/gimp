@@ -35,6 +35,8 @@
 #include "file/file-utils.h"
 #include "file/gimp-file.h"
 
+#include "plug-in/gimppluginmanager-file.h"
+
 #include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -50,16 +52,18 @@
 
 /*  local function prototypes  */
 
-static void   file_actions_last_opened_update  (GimpContainer   *container,
-                                                GimpImagefile   *unused,
-                                                GimpActionGroup *group);
-static void   file_actions_last_opened_reorder (GimpContainer   *container,
-                                                GimpImagefile   *unused1,
-                                                gint             unused2,
-                                                GimpActionGroup *group);
-static void   file_actions_close_all_update    (GimpContainer   *images,
-                                                GimpObject      *unused,
-                                                GimpActionGroup *group);
+static void    file_actions_last_opened_update  (GimpContainer   *container,
+                                                 GimpImagefile   *unused,
+                                                 GimpActionGroup *group);
+static void    file_actions_last_opened_reorder (GimpContainer   *container,
+                                                 GimpImagefile   *unused1,
+                                                 gint             unused2,
+                                                 GimpActionGroup *group);
+static void    file_actions_close_all_update    (GimpContainer   *images,
+                                                 GimpObject      *unused,
+                                                 GimpActionGroup *group);
+static gchar * file_actions_create_label        (const gchar     *format,
+                                                 const gchar     *uri);
 
 
 static const GimpActionEntry file_actions[] =
@@ -246,10 +250,12 @@ void
 file_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *image     = action_data_get_image (data);
-  GimpDrawable *drawable  = NULL;
-  const gchar  *source    = NULL;
-  const gchar  *export_to = NULL;
+  Gimp         *gimp           = action_data_get_gimp (data);
+  GimpImage    *image          = action_data_get_image (data);
+  GimpDrawable *drawable       = NULL;
+  const gchar  *source         = NULL;
+  const gchar  *export_to      = NULL;
+  gboolean      show_overwrite = FALSE;
 
   if (image)
     {
@@ -260,6 +266,11 @@ file_actions_update (GimpActionGroup *group,
                                      GIMP_FILE_EXPORT_TO_URI_KEY);
     }
 
+  show_overwrite =
+    (source &&
+     gimp_plug_in_manager_uri_has_exporter (gimp->plug_in_manager,
+                                            source));
+
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
@@ -268,29 +279,26 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save",            image && drawable);
   SET_SENSITIVE ("file-save-as",         image && drawable);
   SET_SENSITIVE ("file-save-a-copy",     image && drawable);
-  SET_SENSITIVE ("file-revert",          image && (GIMP_OBJECT (image)->name || source));
+  SET_SENSITIVE ("file-revert",          image && (gimp_object_get_name (image) || source));
   SET_SENSITIVE ("file-export-to",       export_to);
-  SET_VISIBLE   ("file-export-to",       export_to || ! source);
-  SET_SENSITIVE ("file-overwrite",       source);
-  SET_VISIBLE   ("file-overwrite",       source);
+  SET_VISIBLE   ("file-export-to",       export_to || ! show_overwrite);
+  SET_SENSITIVE ("file-overwrite",       show_overwrite);
+  SET_VISIBLE   ("file-overwrite",       show_overwrite);
   SET_SENSITIVE ("file-export",          image && drawable);
   SET_SENSITIVE ("file-create-template", image);
 
   if (export_to)
     {
-      gchar *label;
-      label = g_strdup_printf (_("Export to %s"),
-                               file_utils_uri_display_basename (export_to));
+      gchar *label = file_actions_create_label (_("Export to %s"), export_to);
       gimp_action_group_set_action_label (group, "file-export-to", label);
       g_free (label);
     }
-  else if (source)
+  else if (show_overwrite)
     {
-      gchar *label;
-      label = g_strdup_printf (_("Overwrite %s"),
-                               file_utils_uri_display_basename (source));
+      gchar *label = file_actions_create_label (_("Overwrite %s"), source);
       gimp_action_group_set_action_label (group, "file-overwrite", label);
       g_free (label);
+
     }
   else
     {
@@ -337,7 +345,7 @@ file_actions_last_opened_update (GimpContainer   *container,
               gchar       *basename;
               gchar       *escaped;
 
-              uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+              uri = gimp_object_get_name (imagefile);
 
               filename = file_utils_uri_display_name (uri);
               basename = file_utils_uri_display_basename (uri);
@@ -400,4 +408,18 @@ file_actions_close_all_update (GimpContainer   *images,
     }
 
   gimp_action_group_set_action_sensitive (group, "file-close-all", sensitive);
+}
+
+static gchar *
+file_actions_create_label (const gchar *format,
+                           const gchar *uri)
+{
+  gchar *basename         = file_utils_uri_display_basename (uri);
+  gchar *escaped_basename = gimp_escape_uline (basename);
+  gchar *label            = g_strdup_printf (format, escaped_basename);
+
+  g_free (escaped_basename);
+  g_free (basename);
+
+  return label;
 }

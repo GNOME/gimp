@@ -88,6 +88,8 @@ struct _GimpItemTreeViewPriv
   GimpTreeHandler *visible_changed_handler;
   GimpTreeHandler *linked_changed_handler;
   GimpTreeHandler *lock_content_changed_handler;
+
+  gboolean         inserting_item; /* EEK */
 };
 
 
@@ -119,6 +121,9 @@ static gpointer gimp_item_tree_view_insert_item     (GimpContainerView *view,
                                                      GimpViewable      *viewable,
                                                      gpointer           parent_insert_data,
                                                      gint               index);
+static void   gimp_item_tree_view_insert_item_after (GimpContainerView *view,
+                                                     GimpViewable      *viewable,
+                                                     gpointer           insert_data);
 static gboolean gimp_item_tree_view_select_item     (GimpContainerView *view,
                                                      GimpViewable      *item,
                                                      gpointer           insert_data);
@@ -185,6 +190,11 @@ static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *togg
                                                      GdkModifierType    state,
                                                      GimpItemTreeView  *view,
                                                      GimpUndoType       undo_type);
+
+static void   gimp_item_tree_view_row_expanded      (GtkTreeView       *tree_view,
+                                                     GtkTreeIter       *iter,
+                                                     GtkTreePath       *path,
+                                                     GimpItemTreeView  *item_view);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
@@ -268,12 +278,13 @@ gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->set_container = gimp_item_tree_view_set_container;
-  iface->set_context   = gimp_item_tree_view_set_context;
-  iface->insert_item   = gimp_item_tree_view_insert_item;
-  iface->select_item   = gimp_item_tree_view_select_item;
-  iface->activate_item = gimp_item_tree_view_activate_item;
-  iface->context_item  = gimp_item_tree_view_context_item;
+  iface->set_container     = gimp_item_tree_view_set_container;
+  iface->set_context       = gimp_item_tree_view_set_context;
+  iface->insert_item       = gimp_item_tree_view_insert_item;
+  iface->insert_item_after = gimp_item_tree_view_insert_item_after;
+  iface->select_item       = gimp_item_tree_view_select_item;
+  iface->activate_item     = gimp_item_tree_view_activate_item;
+  iface->context_item      = gimp_item_tree_view_context_item;
 }
 
 static void
@@ -339,18 +350,26 @@ gimp_item_tree_view_constructor (GType                  type,
                                                 G_CALLBACK (gimp_item_tree_view_name_edited),
                                                 item_view);
 
+  g_signal_connect (tree_view->view, "row-expanded",
+                    G_CALLBACK (gimp_item_tree_view_row_expanded),
+                    tree_view);
+
   column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, column, 0);
 
   item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
+  g_object_set (item_view->priv->eye_cell,
+                "xpad", 0,
+                "ypad", 0,
+                NULL);
   gtk_tree_view_column_pack_start (column, item_view->priv->eye_cell, FALSE);
   gtk_tree_view_column_set_attributes (column, item_view->priv->eye_cell,
                                        "active",
                                        item_view->priv->model_column_visible,
                                        NULL);
 
-  gimp_container_tree_view_prepend_toggle_cell_renderer (tree_view,
-                                                         item_view->priv->eye_cell);
+  gimp_container_tree_view_add_toggle_cell (tree_view,
+                                            item_view->priv->eye_cell);
 
   g_signal_connect (item_view->priv->eye_cell, "clicked",
                     G_CALLBACK (gimp_item_tree_view_eye_clicked),
@@ -360,14 +379,18 @@ gimp_item_tree_view_constructor (GType                  type,
   gtk_tree_view_insert_column (tree_view->view, column, 1);
 
   item_view->priv->chain_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_LINKED);
+  g_object_set (item_view->priv->chain_cell,
+                "xpad", 0,
+                "ypad", 0,
+                NULL);
   gtk_tree_view_column_pack_start (column, item_view->priv->chain_cell, FALSE);
   gtk_tree_view_column_set_attributes (column, item_view->priv->chain_cell,
                                        "active",
                                        item_view->priv->model_column_linked,
                                        NULL);
 
-  gimp_container_tree_view_prepend_toggle_cell_renderer (tree_view,
-                                                         item_view->priv->chain_cell);
+  gimp_container_tree_view_add_toggle_cell (tree_view,
+                                            item_view->priv->chain_cell);
 
   g_signal_connect (item_view->priv->chain_cell, "clicked",
                     G_CALLBACK (gimp_item_tree_view_chain_clicked),
@@ -435,7 +458,7 @@ gimp_item_tree_view_constructor (GType                  type,
 
   hbox = gimp_item_tree_view_get_lock_box (item_view);
 
-  item_view->priv->lock_content_toggle = gtk_check_button_new ();
+  item_view->priv->lock_content_toggle = gtk_toggle_button_new ();
   gtk_box_pack_start (GTK_BOX (hbox), item_view->priv->lock_content_toggle,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (hbox),
@@ -479,29 +502,68 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
                                GtkStyle  *prev_style)
 {
   GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (widget);
+  GList            *children;
+  GList            *list;
+  GtkReliefStyle    button_relief;
+  GtkIconSize       button_icon_size;
+  gint              content_spacing;
+  gint              button_spacing;
+
+  gtk_widget_style_get (widget,
+                        "button-relief",    &button_relief,
+                        "button-icon-size", &button_icon_size,
+                        "content-spacing",  &content_spacing,
+                        "button-spacing",   &button_spacing,
+                        NULL);
 
   if (view->priv->options_box)
     {
-      GList *children;
-      GList *list;
-      gint   content_spacing;
-      gint   button_spacing;
-
-      gtk_widget_style_get (widget,
-                            "content-spacing", &content_spacing,
-                            "button-spacing",  &button_spacing,
-                            NULL);
-
       gtk_box_set_spacing (GTK_BOX (view->priv->options_box), content_spacing);
-      gtk_box_set_spacing (GTK_BOX (view->priv->lock_box), button_spacing);
 
-      children = gtk_container_get_children (GTK_CONTAINER (view->priv->options_box));
+      children =
+        gtk_container_get_children (GTK_CONTAINER (view->priv->options_box));
 
       for (list = children; list; list = g_list_next (list))
         {
           GtkWidget *child = list->data;
 
           gtk_box_set_spacing (GTK_BOX (child), button_spacing);
+        }
+
+      g_list_free (list);
+    }
+
+  if (view->priv->lock_box)
+    {
+      gtk_box_set_spacing (GTK_BOX (view->priv->lock_box), button_spacing);
+
+      children =
+        gtk_container_get_children (GTK_CONTAINER (view->priv->lock_box));
+
+      for (list = children; list; list = g_list_next (list))
+        {
+          GtkWidget *child = list->data;
+
+          if (GTK_IS_BUTTON (child))
+            {
+              GtkWidget *image;
+
+              gtk_button_set_relief (GTK_BUTTON (child), button_relief);
+
+              image = gtk_bin_get_child (GTK_BIN (child));
+
+              if (GTK_IS_IMAGE (image))
+                {
+                  GtkIconSize  old_size;
+                  gchar       *stock_id;
+
+                  gtk_image_get_stock (GTK_IMAGE (image), &stock_id, &old_size);
+
+                  if (button_icon_size != old_size)
+                    gtk_image_set_from_stock (GTK_IMAGE (image),
+                                              stock_id, button_icon_size);
+                }
+            }
         }
 
       g_list_free (list);
@@ -804,7 +866,7 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
                                    view);
 
       item_view->priv->lock_content_changed_handler =
-        gimp_tree_handler_connect (container, "lock-alpha-changed",
+        gimp_tree_handler_connect (container, "lock-content-changed",
                                    G_CALLBACK (gimp_item_tree_view_lock_content_changed),
                                    view);
     }
@@ -856,8 +918,12 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   GimpItem              *item      = GIMP_ITEM (viewable);
   GtkTreeIter           *iter;
 
+  item_view->priv->inserting_item = TRUE;
+
   iter = parent_view_iface->insert_item (view, viewable,
                                          parent_insert_data, index);
+
+  item_view->priv->inserting_item = FALSE;
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       item_view->priv->model_column_visible,
@@ -867,6 +933,23 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
                       -1);
 
   return iter;
+}
+
+static void
+gimp_item_tree_view_insert_item_after (GimpContainerView *view,
+                                       GimpViewable      *viewable,
+                                       gpointer           insert_data)
+{
+  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpItemTreeViewClass *item_view_class;
+  GimpItem              *active_item;
+
+  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+
+  active_item = item_view_class->get_active_item (item_view->priv->image);
+
+  if (active_item == (GimpItem *) viewable)
+    gimp_container_view_select_item (view, viewable);
 }
 
 static gboolean
@@ -1124,7 +1207,7 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
       item = GIMP_ITEM (renderer->viewable);
 
-      old_name = gimp_object_get_name (GIMP_OBJECT (item));
+      old_name = gimp_object_get_name (item);
 
       if (! old_name) old_name = "";
       if (! new_name) new_name = "";
@@ -1299,6 +1382,9 @@ gimp_item_tree_view_update_options (GimpItemTreeView *view,
                                          gimp_item_tree_view_lock_content_toggled,
                                          view);
     }
+
+  gtk_widget_set_sensitive (view->priv->lock_content_toggle,
+                            gimp_item_can_lock_content (item));
 }
 
 
@@ -1483,4 +1569,29 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
     }
 
   gtk_tree_path_free (path);
+}
+
+
+/*  GtkTreeView callbacks  */
+
+static void
+gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
+                                  GtkTreeIter      *iter,
+                                  GtkTreePath      *path,
+                                  GimpItemTreeView *item_view)
+{
+  /*  don't select the item while it is being inserted  */
+  if (! item_view->priv->inserting_item)
+    {
+      GimpItemTreeViewClass *item_view_class;
+      GimpItem              *active_item;
+
+      item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+
+      active_item = item_view_class->get_active_item (item_view->priv->image);
+
+      if (active_item)
+        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (item_view),
+                                         GIMP_VIEWABLE (active_item));
+    }
 }

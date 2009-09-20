@@ -144,7 +144,7 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
       (*accel_strs)[i]    = NULL;
       (*prog_strs)[i]     = g_strdup (proc->prog);
       (*types_strs)[i]    = g_strdup (proc->image_types);
-      (*realname_strs)[i] = g_strdup (GIMP_OBJECT (proc)->name);
+      (*realname_strs)[i] = g_strdup (gimp_object_get_name (proc));
       (*time_ints)[i]     = proc->mtime;
 
       g_free (name);

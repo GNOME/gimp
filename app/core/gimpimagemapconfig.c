@@ -136,8 +136,8 @@ gint
 gimp_image_map_config_compare (GimpImageMapConfig *a,
                                GimpImageMapConfig *b)
 {
-  const gchar *name_a = gimp_object_get_name (GIMP_OBJECT (a));
-  const gchar *name_b = gimp_object_get_name (GIMP_OBJECT (b));
+  const gchar *name_a = gimp_object_get_name (a);
+  const gchar *name_b = gimp_object_get_name (b);
 
   if (a->time > 0 && b->time > 0)
     {

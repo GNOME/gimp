@@ -194,6 +194,7 @@ dockable_actions_update (GimpActionGroup *group,
   GimpDockable           *dockable;
   GimpDockbook           *dockbook;
   GimpDocked             *docked;
+  GimpDock               *dock;
   GimpDialogFactoryEntry *entry;
   GimpContainerView      *view;
   GimpViewType            view_type           = -1;
@@ -227,6 +228,8 @@ dockable_actions_update (GimpActionGroup *group,
     }
 
   docked = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
+  dock   = gimp_dockbook_get_dock (dockbook);
+
 
   gimp_dialog_factory_from_widget (GTK_WIDGET (dockable), &entry);
 
@@ -245,12 +248,12 @@ dockable_actions_update (GimpActionGroup *group,
       if (substring)
         {
           memcpy (substring, "list", 4);
-          if (gimp_dialog_factory_find_entry (gimp_dock_get_dialog_factory (dockbook->dock),
+          if (gimp_dialog_factory_find_entry (gimp_dock_get_dialog_factory (dock),
                                               identifier))
             list_view_available = TRUE;
 
           memcpy (substring, "grid", 4);
-          if (gimp_dialog_factory_find_entry (gimp_dock_get_dialog_factory (dockbook->dock),
+          if (gimp_dialog_factory_find_entry (gimp_dock_get_dialog_factory (dock),
                                               identifier))
             grid_view_available = TRUE;
         }
@@ -266,7 +269,7 @@ dockable_actions_update (GimpActionGroup *group,
   tab_style = dockable->tab_style;
 
   n_pages = gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook));
-  n_books = g_list_length (gimp_dock_get_dockbooks (dockbook->dock));
+  n_books = g_list_length (gimp_dock_get_dockbooks (dock));
 
 #define SET_ACTIVE(action,active) \
         gimp_action_group_set_action_active (group, action, (active) != 0)

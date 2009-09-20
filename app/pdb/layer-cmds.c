@@ -232,7 +232,8 @@ layer_add_alpha_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
         gimp_layer_add_alpha (layer);
       else
        success = FALSE;
@@ -257,7 +258,8 @@ layer_flatten_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error))
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (layer), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
         gimp_layer_flatten (layer, context);
       else
        success = FALSE;
@@ -616,7 +618,8 @@ layer_add_mask_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (mask),
                                      gimp_item_get_image (GIMP_ITEM (layer)),
-                                     error))
+                                     error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
         success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
       else
         success = FALSE;
@@ -729,7 +732,10 @@ layer_set_lock_alpha_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+      if (gimp_layer_can_lock_alpha (layer))
+        gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

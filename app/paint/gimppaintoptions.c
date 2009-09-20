@@ -513,7 +513,7 @@ gimp_paint_options_new (GimpPaintInfo *paint_info)
 
   options = g_object_new (paint_info->paint_options_type,
                           "gimp",       paint_info->gimp,
-                          "name",       GIMP_OBJECT (paint_info)->name,
+                          "name",       gimp_object_get_name (paint_info),
                           "paint-info", paint_info,
                           NULL);
 

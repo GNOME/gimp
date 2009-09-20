@@ -203,3 +203,10 @@ gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
 
   return TRUE;
 }
+
+gboolean
+gimp_plug_in_manager_uri_has_exporter (GimpPlugInManager *manager,
+                                       const gchar       *uri)
+{
+  return file_procedure_find (manager->export_procs, uri, NULL) != NULL;
+}

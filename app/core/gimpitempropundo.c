@@ -110,7 +110,7 @@ gimp_item_prop_undo_constructor (GType                  type,
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_ITEM_RENAME:
-      item_prop_undo->name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
+      item_prop_undo->name = g_strdup (gimp_object_get_name (item));
       break;
 
     case GIMP_UNDO_ITEM_DISPLACE:
@@ -213,7 +213,7 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
       {
         gchar *name;
 
-        name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
+        name = g_strdup (gimp_object_get_name (item));
         gimp_object_take_name (GIMP_OBJECT (item), item_prop_undo->name);
         item_prop_undo->name = name;
       }

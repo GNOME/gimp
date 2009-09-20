@@ -988,7 +988,7 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
   GList      *list;
 
   new_stroke = g_object_new (G_TYPE_FROM_INSTANCE (stroke),
-                             "name", GIMP_OBJECT (stroke)->name,
+                             "name", gimp_object_get_name (stroke),
                              NULL);
 
   new_stroke->anchors = g_list_copy (stroke->anchors);

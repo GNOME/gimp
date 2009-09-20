@@ -36,7 +36,7 @@ sub gradient_new {
   GimpData *data = gimp_data_factory_data_new (gimp->gradient_factory, name);
 
   if (data)
-    actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
+    actual_name = g_strdup (gimp_object_get_name (data));
   else
     success = FALSE;
 }
@@ -72,7 +72,7 @@ sub gradient_duplicate {
                                           GIMP_DATA (gradient));
 
       if (gradient_copy)
-        copy_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient_copy)));
+        copy_name = g_strdup (gimp_object_get_name (gradient_copy));
       else
         success = FALSE;
     }
@@ -139,7 +139,7 @@ sub gradient_rename {
   if (gradient)
     {
       gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
-      actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
+      actual_name = g_strdup (gimp_object_get_name (gradient));
     }
   else
     success = FALSE;

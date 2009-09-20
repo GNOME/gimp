@@ -243,17 +243,20 @@ void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage   *image      = action_data_get_image (data);
-  GimpVectors *vectors    = NULL;
-  gint         n_vectors  = 0;
-  gboolean     mask_empty = TRUE;
-  gboolean     global_buf = FALSE;
-  gboolean     visible    = FALSE;
-  gboolean     linked     = FALSE;
-  gboolean     locked     = FALSE;
-  gboolean     writable   = FALSE;
-  GList       *next       = NULL;
-  GList       *prev       = NULL;
+  GimpImage    *image       = action_data_get_image (data);
+  GimpVectors  *vectors     = NULL;
+  GimpDrawable *drawable    = NULL;
+  gint          n_vectors   = 0;
+  gboolean      mask_empty  = TRUE;
+  gboolean      global_buf  = FALSE;
+  gboolean      visible     = FALSE;
+  gboolean      linked      = FALSE;
+  gboolean      locked      = FALSE;
+  gboolean      can_lock    = FALSE;
+  gboolean      dr_writable = FALSE;
+  gboolean      dr_children = FALSE;
+  GList        *next        = NULL;
+  GList        *prev        = NULL;
 
   if (image)
     {
@@ -272,7 +275,7 @@ vectors_actions_update (GimpActionGroup *group,
           visible  = gimp_item_get_visible (item);
           linked   = gimp_item_get_linked (item);
           locked   = gimp_item_get_lock_content (item);
-          writable = ! locked;
+          can_lock = gimp_item_can_lock_content (item);
 
           vectors_list = gimp_item_get_container_iter (item);
 
@@ -284,6 +287,18 @@ vectors_actions_update (GimpActionGroup *group,
               next = g_list_next (list);
             }
         }
+
+      drawable = gimp_image_get_active_drawable (image);
+
+      if (drawable)
+        {
+          GimpItem *item = GIMP_ITEM (drawable);
+
+          dr_writable = ! gimp_item_is_content_locked (item);
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+            dr_children = TRUE;
+        }
     }
 
 #define SET_SENSITIVE(action,condition) \
@@ -291,7 +306,7 @@ vectors_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("vectors-path-tool",       writable);
+  SET_SENSITIVE ("vectors-path-tool",       vectors);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
   SET_SENSITIVE ("vectors-new",             image);
@@ -312,7 +327,7 @@ vectors_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("vectors-visible",      vectors);
   SET_SENSITIVE ("vectors-linked",       vectors);
-  SET_SENSITIVE ("vectors-lock-content", vectors);
+  SET_SENSITIVE ("vectors-lock-content", can_lock);
 
   SET_ACTIVE ("vectors-visible",      visible);
   SET_ACTIVE ("vectors-linked",       linked);
@@ -321,8 +336,12 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", image && !mask_empty);
-  SET_SENSITIVE ("vectors-stroke",                        vectors);
-  SET_SENSITIVE ("vectors-stroke-last-values",            vectors);
+  SET_SENSITIVE ("vectors-stroke",                        vectors &&
+                                                          dr_writable &&
+                                                          !dr_children);
+  SET_SENSITIVE ("vectors-stroke-last-values",            vectors &&
+                                                          dr_writable &&
+                                                          !dr_children);
 
   SET_SENSITIVE ("vectors-selection-replace",      vectors);
   SET_SENSITIVE ("vectors-selection-from-vectors", vectors);

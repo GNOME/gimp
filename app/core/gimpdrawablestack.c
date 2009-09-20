@@ -158,7 +158,12 @@ gimp_drawable_stack_add (GimpContainer *container,
   GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
 
   if (stack->graph)
-    gimp_drawable_stack_add_node (stack, GIMP_DRAWABLE (object));
+    {
+      gegl_node_add_child (stack->graph,
+                           gimp_item_get_node (GIMP_ITEM (object)));
+
+      gimp_drawable_stack_add_node (stack, GIMP_DRAWABLE (object));
+    }
 
   if (gimp_item_get_visible (GIMP_ITEM (object)))
     gimp_drawable_stack_drawable_visible (GIMP_ITEM (object), stack);

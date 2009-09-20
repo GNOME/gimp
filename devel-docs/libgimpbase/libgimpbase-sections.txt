@@ -43,6 +43,7 @@ GimpRunMode
 GimpSizeType
 GimpStackTraceMode
 GimpTextDirection
+GimpTextHintStyle
 GimpTextJustification
 GimpTransferMode
 GimpTransformDirection
@@ -79,6 +80,7 @@ GIMP_TYPE_RUN_MODE
 GIMP_TYPE_SIZE_TYPE
 GIMP_TYPE_STACK_TRACE_MODE
 GIMP_TYPE_TEXT_DIRECTION
+GIMP_TYPE_TEXT_HINT_STYLE
 GIMP_TYPE_TEXT_JUSTIFICATION
 GIMP_TYPE_TRANSFER_MODE
 GIMP_TYPE_TRANSFORM_DIRECTION
@@ -114,6 +116,7 @@ gimp_run_mode_get_type
 gimp_size_type_get_type
 gimp_stack_trace_mode_get_type
 gimp_text_direction_get_type
+gimp_text_hint_style_get_type
 gimp_text_justification_get_type
 gimp_transfer_mode_get_type
 gimp_transform_direction_get_type
@@ -182,6 +185,7 @@ gimp_param_memsize_get_type
 <SECTION>
 <FILE>gimprectangle</FILE>
 gimp_rectangle_intersect
+gimp_rectangle_union
 </SECTION>
 
 <SECTION>

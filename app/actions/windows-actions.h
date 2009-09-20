@@ -19,9 +19,10 @@
 #define __WINDOWS_ACTIONS_H__
 
 
-void   windows_actions_setup  (GimpActionGroup *group);
-void   windows_actions_update (GimpActionGroup *group,
-                               gpointer         data);
+void    windows_actions_setup               (GimpActionGroup *group);
+void    windows_actions_update              (GimpActionGroup *group,
+                                             gpointer         data);
+gchar * windows_actions_dock_to_action_name (GimpDock        *dock);
 
 
 #endif /* __WINDOWS_ACTIONS_H__ */

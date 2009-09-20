@@ -37,9 +37,13 @@ typedef struct _GimpGroupLayerClass GimpGroupLayerClass;
 
 struct _GimpGroupLayer
 {
-  GimpLayer      parent_instance;
+  GimpLayer       parent_instance;
 
-  GimpContainer *children;
+  GimpContainer  *children;
+  GimpProjection *projection;
+  GeglNode       *graph;
+  GeglNode       *offset_node;
+  gint            suspend_resize;
 };
 
 struct _GimpGroupLayerClass
@@ -48,9 +52,14 @@ struct _GimpGroupLayerClass
 };
 
 
-GType       gimp_group_layer_get_type (void) G_GNUC_CONST;
+GType       gimp_group_layer_get_type       (void) G_GNUC_CONST;
 
-GimpLayer * gimp_group_layer_new      (GimpImage  *image);
+GimpLayer * gimp_group_layer_new            (GimpImage      *image);
+
+void        gimp_group_layer_suspend_resize (GimpGroupLayer *group,
+                                             gboolean        push_undo);
+void        gimp_group_layer_resume_resize  (GimpGroupLayer *group,
+                                             gboolean        push_undo);
 
 
 #endif /* __GIMP_GROUP_LAYER_H__ */

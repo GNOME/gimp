@@ -41,7 +41,6 @@
 #include "gimp.h"
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
-#include "gimpdrawable-convert.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-quick-mask.h"
@@ -76,7 +75,7 @@ static gint64     gimp_channel_get_memsize   (GimpObject        *object,
 static gchar  * gimp_channel_get_description (GimpViewable      *viewable,
                                               gchar            **tooltip);
 
-static gboolean   gimp_channel_is_attached   (GimpItem          *item);
+static gboolean   gimp_channel_is_attached   (const GimpItem    *item);
 static GimpContainer *
                   gimp_channel_get_container (GimpItem          *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem          *item,
@@ -366,7 +365,7 @@ gimp_channel_get_description (GimpViewable  *viewable,
                               gchar        **tooltip)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (viewable))))
+                gimp_object_get_name (viewable)))
     {
       return g_strdup (_("Quick Mask"));
     }
@@ -376,10 +375,11 @@ gimp_channel_get_description (GimpViewable  *viewable,
 }
 
 static gboolean
-gimp_channel_is_attached (GimpItem *item)
+gimp_channel_is_attached (const GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
-          gimp_container_have (gimp_item_get_image (item)->channels, GIMP_OBJECT (item)));
+          gimp_container_have (gimp_item_get_image (item)->channels,
+                               GIMP_OBJECT (item)));
 }
 
 static GimpContainer *
@@ -429,29 +429,12 @@ static void
 gimp_channel_convert (GimpItem  *item,
                       GimpImage *dest_image)
 {
-  GimpChannel       *channel  = GIMP_CHANNEL (item);
-  GimpDrawable      *drawable = GIMP_DRAWABLE (item);
-  GimpImageBaseType  old_base_type;
+  GimpChannel  *channel  = GIMP_CHANNEL (item);
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
 
-  old_base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
-
-  if (old_base_type != GIMP_GRAY)
+  if (! gimp_drawable_is_gray (drawable))
     {
-      TileManager   *new_tiles;
-      GimpImageType  new_type = GIMP_GRAY_IMAGE;
-
-      if (gimp_drawable_has_alpha (drawable))
-        new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
-
-      new_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                    gimp_item_get_height (item),
-                                    GIMP_IMAGE_TYPE_BYTES (new_type));
-
-      gimp_drawable_convert_grayscale (drawable, new_tiles, old_base_type);
-
-      gimp_drawable_set_tiles (drawable, FALSE, NULL,
-                               new_tiles, new_type);
-      tile_manager_unref (new_tiles);
+      gimp_drawable_convert_type (drawable, NULL, GIMP_GRAY, FALSE);
     }
 
   if (gimp_drawable_has_alpha (drawable))

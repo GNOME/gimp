@@ -86,6 +86,7 @@ EXPORTS
 	gimp_plug_in_directory
 	gimp_progress_command_get_type
 	gimp_rectangle_intersect
+	gimp_rectangle_union
 	gimp_repeat_mode_get_type
 	gimp_run_mode_get_type
 	gimp_signal_private

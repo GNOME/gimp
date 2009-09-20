@@ -206,7 +206,7 @@ gimp_plug_in_proc_frame_get_return_values (GimpPlugInProcFrame *proc_frame)
 
       error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
                            _("Procedure '%s' returned no return values"),
-                           gimp_object_get_name (GIMP_OBJECT (procedure)));
+                           gimp_object_get_name (procedure));
 
       return_vals = gimp_procedure_get_return_values (procedure, FALSE,
                                                       error);

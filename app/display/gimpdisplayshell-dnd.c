@@ -367,7 +367,15 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
   if (! drawable)
     return;
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+                            GIMP_MESSAGE_ERROR,
+                            _("Cannot modify the pixels of layer groups."));
+      return;
+    }
+
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                             GIMP_MESSAGE_ERROR,
@@ -452,12 +460,23 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   drawable = gimp_image_get_active_drawable (image);
 
-  if (drawable && gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (drawable)
     {
-      gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                            GIMP_MESSAGE_ERROR,
-                            _("The active layer's pixels are locked."));
-      return;
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        {
+          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+                                GIMP_MESSAGE_ERROR,
+                                _("Cannot modify the pixels of layer groups."));
+          return;
+        }
+
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+        {
+          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+                                GIMP_MESSAGE_ERROR,
+                                _("The active layer's pixels are locked."));
+          return;
+        }
     }
 
   buffer = GIMP_BUFFER (viewable);

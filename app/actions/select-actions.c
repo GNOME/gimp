@@ -133,11 +133,12 @@ void
 select_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage    *image   = action_data_get_image (data);
+  GimpImage    *image    = action_data_get_image (data);
   GimpDrawable *drawable = NULL;
   gboolean      fs       = FALSE;
   gboolean      sel      = FALSE;
   gboolean      writable = FALSE;
+  gboolean      children = FALSE;
 
   if (image)
     {
@@ -145,7 +146,10 @@ select_actions_update (GimpActionGroup *group,
 
       if (drawable)
         {
-          writable = ! gimp_item_get_lock_content (GIMP_ITEM (drawable));
+          writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable));
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+            children = TRUE;
         }
 
       fs  = (gimp_image_get_floating_selection (image) != NULL);
@@ -158,7 +162,7 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-all",    drawable);
   SET_SENSITIVE ("select-none",   drawable && sel);
   SET_SENSITIVE ("select-invert", drawable);
-  SET_SENSITIVE ("select-float",  writable && sel);
+  SET_SENSITIVE ("select-float",  writable && !children && sel);
 
   SET_SENSITIVE ("select-feather", drawable && sel);
   SET_SENSITIVE ("select-sharpen", drawable && sel);
@@ -167,8 +171,8 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-border",  drawable && sel);
 
   SET_SENSITIVE ("select-save",               drawable && !fs);
-  SET_SENSITIVE ("select-stroke",             writable && sel);
-  SET_SENSITIVE ("select-stroke-last-values", writable && sel);
+  SET_SENSITIVE ("select-stroke",             writable && !children && sel);
+  SET_SENSITIVE ("select-stroke-last-values", writable && !children && sel);
 
 #undef SET_SENSITIVE
 }

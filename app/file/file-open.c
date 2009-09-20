@@ -82,6 +82,9 @@ static void     file_open_handle_color_profile (GimpImage                 *image
                                                 GimpContext               *context,
                                                 GimpProgress              *progress,
                                                 GimpRunMode                run_mode);
+static GList *  file_open_get_layers           (const GimpImage           *image,
+                                                gboolean                   merge_visible,
+                                                gint                      *n_visible);
 static gboolean file_open_file_proc_is_import  (const GimpPlugInProcedure *file_proc);
 
 
@@ -151,7 +154,7 @@ file_open_image (Gimp                *gimp,
   return_vals =
     gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                         context, progress, error,
-                                        GIMP_OBJECT (file_proc)->name,
+                                        gimp_object_get_name (file_proc),
                                         GIMP_TYPE_INT32, run_mode,
                                         G_TYPE_STRING,   filename,
                                         G_TYPE_STRING,   entered_filename,
@@ -290,7 +293,7 @@ file_open_thumbnail (Gimp           *gimp,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             context, progress, error,
-                                            GIMP_OBJECT (procedure)->name,
+                                            gimp_object_get_name (procedure),
                                             G_TYPE_STRING,   filename,
                                             GIMP_TYPE_INT32, size,
                                             G_TYPE_NONE);
@@ -422,6 +425,23 @@ file_open_with_proc_and_display (Gimp                *gimp,
             }
         }
 
+      /* If the file was imported we want to set the layer name to the
+       * file name. For now, assume that multi-layered imported images
+       * have named the layers already, so only rename the layer of
+       * single-layered imported files. Note that this will also
+       * rename already named layers from e.g. single-layered PSD
+       * files. To solve this properly, we would need new file plug-in
+       * API.
+       */
+      if (file_open_file_proc_is_import (file_proc) &&
+          gimp_image_get_n_layers (image) == 1)
+        {
+          GimpObject *layer    = gimp_image_get_layer_iter (image)->data;
+          gchar      *basename = file_utils_uri_display_basename (uri);
+
+          gimp_object_take_name (layer, basename);
+        }
+
       /*  the display owns the image now  */
       g_object_unref (image);
 
@@ -464,26 +484,11 @@ file_open_layers (Gimp                *gimp,
 
   if (new_image)
     {
-      GList *list;
-      gint   n_visible = 0;
+      gint n_visible = 0;
 
       gimp_image_undo_disable (new_image);
 
-      for (list = gimp_image_get_layer_iter (new_image);
-           list;
-           list = g_list_next (list))
-        {
-          if (! merge_visible)
-            layers = g_list_prepend (layers, list->data);
-
-          if (gimp_item_get_visible (list->data))
-            {
-              n_visible++;
-
-              if (! layers)
-                layers = g_list_prepend (layers, list->data);
-            }
-        }
+      layers = file_open_get_layers (new_image, merge_visible, &n_visible);
 
       if (merge_visible && n_visible > 1)
         {
@@ -608,10 +613,10 @@ file_open_sanitize_image (GimpImage *image,
    * load plug-ins are not required to call gimp_drawable_update() or
    * anything.
    */
-  gimp_image_update (image,
-                     0, 0,
-                     gimp_image_get_width  (image),
-                     gimp_image_get_height (image));
+  gimp_image_invalidate (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
   gimp_image_flush (image);
 
   /* same for drawable previews */
@@ -639,10 +644,8 @@ file_open_convert_items (GimpImage   *dest_image,
         }
       else
         {
-          gchar *name = g_strdup_printf ("%s - %s", basename,
-                                         GIMP_OBJECT (src)->name);
-
-          gimp_object_take_name (GIMP_OBJECT (item), name);
+          gimp_object_set_name (GIMP_OBJECT (item),
+                                gimp_object_get_name (src));
         }
 
       list->data = item;
@@ -722,6 +725,36 @@ file_open_handle_color_profile (GimpImage    *image,
       gimp_image_clean_all (image);
       gimp_image_undo_enable (image);
     }
+}
+
+static GList *
+file_open_get_layers (const GimpImage *image,
+                      gboolean         merge_visible,
+                      gint            *n_visible)
+{
+  GList *iter   = NULL;
+  GList *layers = NULL;
+
+  for (iter = gimp_image_get_layer_iter (image);
+       iter;
+       iter = g_list_next (iter))
+    {
+      GimpItem *item = iter->data;
+
+      if (! merge_visible)
+        layers = g_list_prepend (layers, item);
+
+      if (gimp_item_get_visible (item))
+        {
+          if (n_visible)
+            (*n_visible)++;
+
+          if (! layers)
+            layers = g_list_prepend (layers, item);
+        }
+    }
+
+  return layers;
 }
 
 static gboolean

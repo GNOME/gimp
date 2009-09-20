@@ -4216,7 +4216,9 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                sc->tok = token(sc);
           }
 */
-          if (sc->tok == TOK_RPAREN) {
+          if (sc->tok == TOK_EOF)
+               { s_return(sc,sc->EOF_OBJ); }
+          else if (sc->tok == TOK_RPAREN) {
                gunichar c = inchar(sc);
                if (c != '\n') backchar(sc,c);
                sc->nesting_stack[sc->file_i]--;
@@ -4936,7 +4938,7 @@ void scheme_register_foreign_func_list(scheme * sc,
 pointer scheme_apply0(scheme *sc, const char *procname)
 { return scheme_eval(sc, cons(sc,mk_symbol(sc,procname),sc->NIL)); }
 
-void save_from_C_call(scheme *sc)
+static void save_from_C_call(scheme *sc)
 {
   pointer saved_data =
     cons(sc,
@@ -4951,7 +4953,7 @@ void save_from_C_call(scheme *sc)
   dump_stack_reset(sc);
 }
 
-void restore_from_C_call(scheme *sc)
+static void restore_from_C_call(scheme *sc)
 {
   car(sc->sink) = caar(sc->c_nest);
   sc->envir = cadar(sc->c_nest);

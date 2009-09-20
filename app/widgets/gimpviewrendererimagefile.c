@@ -160,7 +160,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
   GtkIconTheme *icon_theme = gtk_icon_theme_get_for_screen (screen);
   GdkPixbuf    *pixbuf     = NULL;
 
-  if (! gimp_object_get_name (GIMP_OBJECT (imagefile)))
+  if (! gimp_object_get_name (imagefile))
     return NULL;
 
   if (! pixbuf)
@@ -169,7 +169,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
       GFileInfo   *file_info;
       GtkIconInfo *info;
 
-      file = g_file_new_for_uri (gimp_object_get_name (GIMP_OBJECT (imagefile)));
+      file = g_file_new_for_uri (gimp_object_get_name (imagefile));
       file_info = g_file_query_info (file, "standard::icon", 0, NULL, NULL);
 
       if (file_info)

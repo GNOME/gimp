@@ -460,15 +460,16 @@ gimp_tag_cache_load (GimpTagCache *cache)
   markup_parser.error         = gimp_tag_cache_load_error;
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parse_data);
-  if (! gimp_xml_parser_parse_file (xml_parser, filename, &error))
-    {
-      g_printerr ("Failed to parse tag cache.\n");
-    }
-  else
+  if (gimp_xml_parser_parse_file (xml_parser, filename, &error))
     {
       cache->priv->records = g_array_append_vals (cache->priv->records,
                                                   parse_data.records->data,
                                                   parse_data.records->len);
+    }
+  else
+    {
+      g_printerr ("Failed to parse tag cache: %s\n",
+                  error ? error->message : NULL);
     }
 
   g_free (filename);

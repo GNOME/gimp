@@ -237,19 +237,14 @@ void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage         *image   = action_data_get_image (data);
-  GimpPlugInManager *manager = group->gimp->plug_in_manager;
-  GimpImageType      type    = -1;
+  GimpImage         *image    = action_data_get_image (data);
+  GimpPlugInManager *manager  = group->gimp->plug_in_manager;
+  GimpDrawable      *drawable = NULL;
   GSList            *list;
   gint               i;
 
   if (image)
-    {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-
-      if (drawable)
-        type = gimp_drawable_type (drawable);
-    }
+    drawable = gimp_image_get_active_drawable (image);
 
   for (list = manager->plug_in_procedures; list; list = g_slist_next (list))
     {
@@ -260,16 +255,16 @@ plug_in_actions_update (GimpActionGroup *group,
           proc->image_types_val)
         {
           gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc,
-                                                                     type);
+                                                                     drawable);
 
           gimp_action_group_set_action_sensitive (group,
-                                                  GIMP_OBJECT (proc)->name,
+                                                  gimp_object_get_name (proc),
                                                   sensitive);
         }
     }
 
   if (manager->history &&
-      gimp_plug_in_procedure_get_sensitive (manager->history->data, type))
+      gimp_plug_in_procedure_get_sensitive (manager->history->data, drawable))
     {
       gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
@@ -287,7 +282,7 @@ plug_in_actions_update (GimpActionGroup *group,
                                                    i + 1);
       gboolean             sensitive;
 
-      sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
+      sensitive = gimp_plug_in_procedure_get_sensitive (proc, drawable);
 
       gimp_action_group_set_action_sensitive (group, name, sensitive);
 
@@ -347,7 +342,7 @@ plug_in_actions_register_procedure (GimpPDB         *pdb,
         {
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
-                   gimp_object_get_name (GIMP_OBJECT (procedure)));
+                   gimp_object_get_name (procedure));
 #endif
 
           plug_in_actions_add_proc (group, plug_in_proc);
@@ -375,11 +370,11 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
 
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
-                   gimp_object_get_name (GIMP_OBJECT (procedure)));
+                   gimp_object_get_name (procedure));
 #endif
 
           action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                GIMP_OBJECT (procedure)->name);
+                                                gimp_object_get_name (procedure));
 
           if (action)
             gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
@@ -397,7 +392,7 @@ plug_in_actions_menu_path_added (GimpPlugInProcedure *plug_in_proc,
 
 #if 0
   g_print ("%s: %s (%s)\n", G_STRFUNC,
-           gimp_object_get_name (GIMP_OBJECT (plug_in_proc)), menu_path);
+           gimp_object_get_name (plug_in_proc), menu_path);
 #endif
 
   locale_domain = gimp_plug_in_procedure_get_locale_domain (plug_in_proc);
@@ -449,7 +444,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       label = p2 + 1;
     }
 
-  entry.name        = GIMP_OBJECT (proc)->name;
+  entry.name        = gimp_object_get_name (proc);
   entry.stock_id    = gimp_plug_in_procedure_get_stock_id (proc);
   entry.label       = label;
   entry.accelerator = NULL;
@@ -459,7 +454,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 
 #if 0
   g_print ("adding plug-in action '%s' (%s)\n",
-           GIMP_OBJECT (proc)->name, label);
+           gimp_object_get_name (proc), label);
 #endif
 
   gimp_action_group_add_plug_in_actions (group, &entry, 1,
@@ -516,7 +511,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
        *  all images' actions. See bug #517683.
        */
       actual_action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                   GIMP_OBJECT (proc)->name);
+                                                   gimp_object_get_name (proc));
       if (actual_action)
         sensitive = gtk_action_get_sensitive (actual_action);
 
@@ -571,7 +566,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
 
       /*  see comment above  */
       actual_action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                   GIMP_OBJECT (proc)->name);
+                                                   gimp_object_get_name (proc));
       if (actual_action)
         sensitive = gtk_action_get_sensitive (actual_action);
 

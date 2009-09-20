@@ -48,11 +48,16 @@ GType           gimp_item_stack_get_type            (void) G_GNUC_CONST;
 GimpContainer * gimp_item_stack_new                 (GType          item_type);
 
 gint            gimp_item_stack_get_n_items         (GimpItemStack *stack);
+gboolean        gimp_item_stack_is_flat             (GimpItemStack *stack);
+GList         * gimp_item_stack_get_item_iter       (GimpItemStack *stack);
 GList         * gimp_item_stack_get_item_list       (GimpItemStack *stack);
 GimpItem      * gimp_item_stack_get_item_by_tattoo  (GimpItemStack *stack,
                                                      GimpTattoo     tattoo);
 GimpItem      * gimp_item_stack_get_item_by_name    (GimpItemStack *stack,
                                                      const gchar   *name);
+GimpItem      * gimp_item_stack_get_parent_by_path  (GimpItemStack *stack,
+                                                     GList         *path,
+                                                     gint          *index);
 
 void            gimp_item_stack_invalidate_previews (GimpItemStack *stack);
 

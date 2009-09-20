@@ -77,7 +77,7 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
                           "Some text properties may be wrong. "
                           "Unless you want to edit the text layer, "
                           "you don't need to worry about this."),
-                        gimp_object_get_name (GIMP_OBJECT (*layer)),
+                        gimp_object_get_name (*layer),
                         error->message);
           g_clear_error (&error);
         }
@@ -96,7 +96,7 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
     {
       *layer = gimp_text_layer_from_layer (*layer, text);
 
-      /*  let the text layer know what parasite was used to create it  */
+      /*  let the text layer knows what parasite was used to create it  */
       GIMP_TEXT_LAYER (*layer)->text_parasite = name;
     }
 
@@ -189,7 +189,7 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   drawable = GIMP_DRAWABLE (text_layer);
 
   gimp_object_set_name (GIMP_OBJECT (text_layer),
-                        gimp_object_get_name (GIMP_OBJECT (layer)));
+                        gimp_object_get_name (layer));
 
   item->ID = gimp_item_get_ID (GIMP_ITEM (layer));
 
@@ -207,14 +207,16 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   item->parasites = GIMP_ITEM (layer)->parasites;
   GIMP_ITEM (layer)->parasites = NULL;
 
-  item->width  = gimp_item_get_width (GIMP_ITEM (layer));
-  item->height = gimp_item_get_height (GIMP_ITEM (layer));
-
   gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
   gimp_item_set_offset (item, offset_x, offset_y);
 
-  gimp_item_set_visible (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
-  gimp_item_set_linked  (item, gimp_item_get_linked  (GIMP_ITEM (layer)), FALSE);
+  gimp_item_set_size (item,
+                      gimp_item_get_width  (GIMP_ITEM (layer)),
+                      gimp_item_get_height (GIMP_ITEM (layer)));
+
+  gimp_item_set_visible      (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
+  gimp_item_set_linked       (item, gimp_item_get_linked (GIMP_ITEM (layer)), FALSE);
+  gimp_item_set_lock_content (item, gimp_item_get_lock_content (GIMP_ITEM (layer)), FALSE);
 
   drawable->private->tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer));
   GIMP_DRAWABLE (layer)->private->tiles = NULL;

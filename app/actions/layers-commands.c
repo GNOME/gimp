@@ -198,7 +198,7 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
                                      layer,
                                      action_data_get_context (data),
                                      widget,
-                                     gimp_object_get_name (GIMP_OBJECT (layer)),
+                                     gimp_object_get_name (layer),
                                      layer_fill_type,
                                      _("Layer Attributes"),
                                      "gimp-layer-edit",
@@ -501,7 +501,7 @@ layers_merge_down_cmd_callback (GtkAction *action,
   return_if_no_layer (image, layer, data);
 
   gimp_image_merge_down (image, layer, action_data_get_context (data),
-                         GIMP_EXPAND_AS_NECESSARY);
+                         GIMP_EXPAND_AS_NECESSARY, NULL);
   gimp_image_flush (image);
 }
 
@@ -1019,7 +1019,7 @@ layers_edit_layer_response (GtkWidget          *widget,
 
       new_name = gtk_entry_get_text (GTK_ENTRY (dialog->name_entry));
 
-      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
+      if (strcmp (new_name, gimp_object_get_name (layer)))
         {
           GError *error = NULL;
 

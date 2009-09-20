@@ -324,6 +324,16 @@ Basic GIMP enumeration data types.
 @GIMP_TEXT_DIRECTION_LTR: 
 @GIMP_TEXT_DIRECTION_RTL: 
 
+<!-- ##### ENUM GimpTextHintStyle ##### -->
+<para>
+
+</para>
+
+@GIMP_TEXT_HINT_STYLE_NONE: 
+@GIMP_TEXT_HINT_STYLE_SLIGHT: 
+@GIMP_TEXT_HINT_STYLE_MEDIUM: 
+@GIMP_TEXT_HINT_STYLE_FULL: 
+
 <!-- ##### ENUM GimpTextJustification ##### -->
 <para>
 

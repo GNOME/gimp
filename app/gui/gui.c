@@ -254,7 +254,7 @@ gui_sanity_check (void)
 {
 #define GTK_REQUIRED_MAJOR 2
 #define GTK_REQUIRED_MINOR 16
-#define GTK_REQUIRED_MICRO 1
+#define GTK_REQUIRED_MICRO 6
 
   const gchar *mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
                                              GTK_REQUIRED_MINOR,
@@ -516,17 +516,23 @@ gui_restore_after_callback (Gimp               *gimp,
 
   color_history_restore (gimp);
 
-  /*  create the empty display  */
-  display = GIMP_DISPLAY (gimp_create_display (gimp,
-                                               NULL, GIMP_UNIT_PIXEL, 1.0));
+  if (gimp_get_show_gui (gimp))
+    {
+      /*  create the empty display  */
+      display = GIMP_DISPLAY (gimp_create_display (gimp,
+                                                   NULL,
+                                                   GIMP_UNIT_PIXEL,
+                                                   1.0));
 
-  if (gui_config->restore_session)
-    session_restore (gimp);
+      if (gui_config->restore_session)
+        session_restore (gimp);
 
-  windows_show_toolbox ();
+      windows_show_toolbox ();
 
-  /*  move keyboard focus to the display  */
-  gtk_window_present (GTK_WINDOW (display->shell));
+      /*  move keyboard focus to the display  */
+      gtk_window_present (GTK_WINDOW (display->shell));
+
+    }
 
   /*  indicate that the application has finished loading  */
   gdk_notify_startup_complete ();

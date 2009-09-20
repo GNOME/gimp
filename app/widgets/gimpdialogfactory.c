@@ -201,10 +201,10 @@ gimp_dialog_factory_dispose (GObject *object)
       factory->session_infos = NULL;
     }
 
-  if (strcmp (GIMP_OBJECT (factory)->name, "toolbox") == 0)
+  if (strcmp (gimp_object_get_name (factory), "toolbox") == 0)
     key = "";
   else
-    key = GIMP_OBJECT (factory)->name;
+    key = (gpointer)gimp_object_get_name (factory);
 
   g_hash_table_remove (GIMP_DIALOG_FACTORY_GET_CLASS (object)->factories,
                        key);
@@ -270,7 +270,7 @@ gimp_dialog_factory_new (const gchar       *name,
   if (strcmp (name, "toolbox") == 0)
     key = "";
   else
-    key = GIMP_OBJECT (factory)->name;
+    key = (gpointer)gimp_object_get_name (factory);
 
   g_hash_table_insert (GIMP_DIALOG_FACTORY_GET_CLASS (factory)->factories,
                        key, factory);
@@ -547,7 +547,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     {
       GimpDockable *dockable = GIMP_DOCKABLE (dialog);
 
-      if (dockable->dockbook && dockable->dockbook->dock)
+      if (dockable->dockbook && gimp_dockbook_get_dock (dockable->dockbook))
         {
           GtkNotebook *notebook = GTK_NOTEBOOK (dockable->dockbook);
           gint         num      = gtk_notebook_page_num (notebook, dialog);
@@ -578,7 +578,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  * @screen:       the #GdkScreen the dialog should appear on
  * @identifier:   the identifier of the dialog as registered with
  *                gimp_dialog_factory_register_entry()
- * @view_size:
+ * @view_size:    the initial preview size
  * @present:      whether gtk_window_present() should be called
  *
  * Creates a new toplevel dialog or a #GimpDockable, depending on whether
@@ -613,7 +613,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
  * @screen:       the #GdkScreen the dialog should appear on
  * @identifiers:  a '|' separated list of identifiers of dialogs as
  *                registered with gimp_dialog_factory_register_entry()
- * @view_size:
+ * @view_size:    the initial preview size if a dialog needs to be created
  *
  * Raises any of a list of already existing toplevel dialog or
  * #GimpDockable if it was already created by this %facory.
@@ -1411,7 +1411,7 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
 
       gimp_config_writer_open (writer, "session-info");
       gimp_config_writer_string (writer,
-                                 gimp_object_get_name (GIMP_OBJECT (factory)));
+                                 gimp_object_get_name (factory));
       gimp_config_writer_string (writer,
                                  info->toplevel_entry ?
                                  info->toplevel_entry->identifier :

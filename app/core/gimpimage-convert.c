@@ -146,7 +146,6 @@
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
-#include "gimpdrawable-convert.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -958,40 +957,42 @@ gimp_image_convert (GimpImage               *image,
        list;
        list = g_list_next (list), nth_layer++)
     {
-      GimpLayer     *layer = list->data;
-      GimpImageType  new_layer_type;
-      TileManager   *new_tiles;
-
-      new_layer_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_type);
-
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-        new_layer_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_layer_type);
-
-      new_tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (layer)),
-                                    gimp_item_get_height (GIMP_ITEM (layer)),
-                                    GIMP_IMAGE_TYPE_BYTES (new_layer_type));
+      GimpLayer *layer = list->data;
 
       switch (new_type)
         {
         case GIMP_RGB:
-          gimp_drawable_convert_rgb (GIMP_DRAWABLE (layer),
-                                     new_tiles, old_type);
-          break;
         case GIMP_GRAY:
-          gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer),
-                                           new_tiles, old_type);
+          gimp_drawable_convert_type (GIMP_DRAWABLE (layer), NULL, new_type,
+                                      TRUE);
           break;
+
         case GIMP_INDEXED:
-          quantobj->nth_layer = nth_layer;
-          (* quantobj->second_pass) (quantobj, layer, new_tiles);
+          {
+            GimpImageType  new_layer_type;
+            TileManager   *new_tiles;
+
+            new_layer_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_type);
+
+            if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+              new_layer_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_layer_type);
+
+            new_tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (layer)),
+                                          gimp_item_get_height (GIMP_ITEM (layer)),
+                                          GIMP_IMAGE_TYPE_BYTES (new_layer_type));
+
+            quantobj->nth_layer = nth_layer;
+            (* quantobj->second_pass) (quantobj, layer, new_tiles);
+
+            gimp_drawable_set_tiles (GIMP_DRAWABLE (layer), TRUE, NULL,
+                                     new_tiles, new_layer_type);
+            tile_manager_unref (new_tiles);
+          }
           break;
+
         default:
           break;
         }
-
-      gimp_drawable_set_tiles (GIMP_DRAWABLE (layer), TRUE, NULL,
-                               new_tiles, new_layer_type);
-      tile_manager_unref (new_tiles);
     }
 
   switch (new_type)

@@ -27,18 +27,14 @@
 #define GIMP_OBJECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OBJECT, GimpObjectClass))
 
 
-typedef struct _GimpObjectClass GimpObjectClass;
+typedef struct _GimpObjectPrivate  GimpObjectPrivate;
+typedef struct _GimpObjectClass    GimpObjectClass;
 
 struct _GimpObject
 {
-  GObject  parent_instance;
+  GObject            parent_instance;
 
-  gchar   *name;
-
-  /*<  private  >*/
-  gchar   *normalized;
-  guint    static_name  : 1;
-  guint    disconnected : 1;
+  GimpObjectPrivate *p;
 };
 
 struct _GimpObjectClass
@@ -65,7 +61,7 @@ void          gimp_object_set_static_name (GimpObject       *object,
                                            const gchar      *name);
 void          gimp_object_take_name       (GimpObject       *object,
                                            gchar            *name);
-const gchar * gimp_object_get_name        (const GimpObject *object);
+const gchar * gimp_object_get_name        (gconstpointer     object);
 void          gimp_object_name_changed    (GimpObject       *object);
 void          gimp_object_name_free       (GimpObject       *object);
 

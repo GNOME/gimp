@@ -92,7 +92,7 @@ tool_options_save_to_cmd_callback (GtkAction *action,
 
   if (options)
     {
-      gchar *name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
+      gchar *name = g_strdup (gimp_object_get_name (options));
 
       gimp_config_sync (G_OBJECT (tool_info->tool_options),
                         G_OBJECT (options),
@@ -140,7 +140,7 @@ tool_options_rename_saved_cmd_callback (GtkAction *action,
                                       gimp_standard_help_func,
                                       GIMP_HELP_TOOL_OPTIONS_DIALOG,
                                       _("Enter a new name for the saved options"),
-                                      GIMP_OBJECT (options)->name,
+                                      gimp_object_get_name (options),
                                       NULL, NULL,
                                       tool_options_rename_callback, options);
       gtk_widget_show (dialog);

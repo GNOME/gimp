@@ -27,6 +27,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontainer.h"
+
 #include "text/gimptextlayer.h"
 
 #include "gimpviewrendererlayer.h"
@@ -68,6 +70,13 @@ gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
   else if (gimp_drawable_is_text_layer (GIMP_DRAWABLE (renderer->viewable)))
     {
       stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+    }
+  else
+    {
+      GimpContainer *children = gimp_viewable_get_children (renderer->viewable);
+
+      if (children && gimp_container_get_n_children (children) == 0)
+        stock_id = GTK_STOCK_DIRECTORY;
     }
 
   if (stock_id)

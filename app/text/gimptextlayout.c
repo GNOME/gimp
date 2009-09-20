@@ -564,7 +564,9 @@ gimp_text_get_pango_context (GimpText *text,
   PangoCairoFontMap    *fontmap;
   cairo_font_options_t *options;
 
-  fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new ());
+  fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT));
+  if (fontmap == NULL)
+    g_error ("You are using a Pango that has been built against a cairo that lacks the Freetype font backend");
 
   pango_cairo_font_map_set_resolution (fontmap, yres);
 

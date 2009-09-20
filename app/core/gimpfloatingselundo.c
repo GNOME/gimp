@@ -122,6 +122,10 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
           gimp_layer_set_floating_sel_drawable (floating_layer, NULL);
         }
 
+      /* When the floating selection is converted to/from a normal
+       * layer it does something resembling a name change, so emit the
+       * "name-changed" signal
+       */
       gimp_object_name_changed (GIMP_OBJECT (floating_layer));
 
       gimp_drawable_update (GIMP_DRAWABLE (floating_layer),

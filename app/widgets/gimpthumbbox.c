@@ -716,7 +716,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
 {
   Gimp          *gimp  = box->imagefile->gimp;
   GimpThumbnail *thumb = box->imagefile->thumbnail;
-  const gchar   *uri   = gimp_object_get_name (GIMP_OBJECT (box->imagefile));
+  const gchar   *uri   = gimp_object_get_name (box->imagefile);
 
   box->idle_id = 0;
 

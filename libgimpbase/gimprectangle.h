@@ -37,6 +37,19 @@ gboolean  gimp_rectangle_intersect (gint  x1,
                                     gint *dest_width,
                                     gint *dest_height);
 
+void      gimp_rectangle_union     (gint  x1,
+                                    gint  y1,
+                                    gint  width1,
+                                    gint  height1,
+                                    gint  x2,
+                                    gint  y2,
+                                    gint  width2,
+                                    gint  height2,
+                                    gint *dest_x,
+                                    gint *dest_y,
+                                    gint *dest_width,
+                                    gint *dest_height);
+
 
 G_END_DECLS
 

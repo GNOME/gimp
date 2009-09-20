@@ -118,7 +118,7 @@ context_get_paint_method_invoker (GimpProcedure      *procedure,
   GimpPaintInfo *paint_info = gimp_context_get_paint_info (context);
 
   if (paint_info)
-    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (paint_info)));
+    name = g_strdup (gimp_object_get_name (paint_info));
   else
     success = FALSE;
 
@@ -367,7 +367,7 @@ context_get_brush_invoker (GimpProcedure      *procedure,
   GimpBrush *brush = gimp_context_get_brush (context);
 
   if (brush)
-    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
+    name = g_strdup (gimp_object_get_name (brush));
   else
     success = FALSE;
 
@@ -422,7 +422,7 @@ context_get_pattern_invoker (GimpProcedure      *procedure,
   GimpPattern *pattern = gimp_context_get_pattern (context);
 
   if (pattern)
-    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (pattern)));
+    name = g_strdup (gimp_object_get_name (pattern));
   else
     success = FALSE;
 
@@ -477,7 +477,7 @@ context_get_gradient_invoker (GimpProcedure      *procedure,
   GimpGradient *gradient = gimp_context_get_gradient (context);
 
   if (gradient)
-    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
+    name = g_strdup (gimp_object_get_name (gradient));
   else
     success = FALSE;
 
@@ -532,7 +532,7 @@ context_get_palette_invoker (GimpProcedure      *procedure,
   GimpPalette *palette = gimp_context_get_palette (context);
 
   if (palette)
-    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
+    name = g_strdup (gimp_object_get_name (palette));
   else
     success = FALSE;
 
@@ -587,7 +587,7 @@ context_get_font_invoker (GimpProcedure      *procedure,
   GimpFont *font = gimp_context_get_font (context);
 
   if (font)
-    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (font)));
+    name = g_strdup (gimp_object_get_name (font));
   else
     success = FALSE;
 

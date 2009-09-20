@@ -201,7 +201,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   if (! font->pango_context)
     return FALSE;
 
-  name = gimp_object_get_name (GIMP_OBJECT (font));
+  name = gimp_object_get_name (font);
 
   font_desc = pango_font_description_from_string (name);
   g_return_val_if_fail (font_desc != NULL, FALSE);
@@ -257,7 +257,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
       PangoFontDescription *font_desc;
       const gchar          *name;
 
-      name = gimp_object_get_name (GIMP_OBJECT (font));
+      name = gimp_object_get_name (font);
 
       DEBUGPRINT (("%s: ", name));
 

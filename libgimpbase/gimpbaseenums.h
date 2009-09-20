@@ -481,7 +481,7 @@ typedef enum
   GIMP_TEXT_HINT_STYLE_NONE,     /*< desc="None"   >*/
   GIMP_TEXT_HINT_STYLE_SLIGHT,   /*< desc="Slight" >*/
   GIMP_TEXT_HINT_STYLE_MEDIUM,   /*< desc="Medium" >*/
-  GIMP_TEXT_HINT_STYLE_FULL,     /*< desc="Full"   >*/
+  GIMP_TEXT_HINT_STYLE_FULL      /*< desc="Full"   >*/
 } GimpTextHintStyle;
 
 

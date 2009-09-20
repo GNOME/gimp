@@ -71,7 +71,8 @@ HELP
                         "plug-in/gimppluginmanager.h") ],
 	code    => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       const gchar *undo_desc = _("Plug-In");
 
@@ -148,7 +149,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error))
+  if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
   else
     success = FALSE;
@@ -736,7 +738,7 @@ sub drawable_get_name {
     %invoke = (
 	code => <<'CODE'
 {
-  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (drawable)));
+  name = g_strdup (gimp_object_get_name (drawable));
 }
 CODE
     );
@@ -858,6 +860,58 @@ sub drawable_set_linked {
 	code => <<'CODE'
 {
   gimp_item_set_linked (GIMP_ITEM (drawable), linked, TRUE);
+}
+CODE
+    );
+}
+
+sub drawable_get_lock_content {
+    $blurb = "Get the 'lock content' state of the specified drawable.";
+
+    $help = "This procedure returns the specified drawable's lock content state.";
+
+    &mitch_pdb_misc('2009', '2.8');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'lock_content', type => 'boolean',
+	  desc => "Whether the drawable's pixels are locked" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  lock_content = gimp_item_get_lock_content (GIMP_ITEM (drawable));
+}
+CODE
+    );
+}
+
+sub drawable_set_lock_content {
+    $blurb = "Set the 'lock content' state of the specified drawable.";
+
+    $help = "This procedure sets the specified drawable's lock content state.";
+
+    &mitch_pdb_misc('2009', '2.8');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'lock_content', type => 'boolean',
+	  desc => "The new drawable 'lock content' state" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_item_can_lock_content (GIMP_ITEM (drawable)))
+    gimp_item_set_lock_content (GIMP_ITEM (drawable), lock_content, TRUE);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -1013,6 +1067,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
       x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
       y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
       num_channels == gimp_drawable_bytes (drawable))
@@ -1257,7 +1312,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     gimp_drawable_offset (drawable, context, wrap_around, fill_type,
                           offset_x, offset_y);
   else
@@ -1361,6 +1417,7 @@ CODE
             drawable_get_name drawable_set_name
             drawable_get_visible drawable_set_visible
             drawable_get_linked drawable_set_linked
+            drawable_get_lock_content drawable_set_lock_content
             drawable_get_tattoo drawable_set_tattoo
             drawable_mask_bounds
             drawable_mask_intersect

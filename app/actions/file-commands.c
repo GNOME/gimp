@@ -181,13 +181,13 @@ file_open_recent_cmd_callback (GtkAction *action,
 
       image = file_open_with_display (gimp, action_data_get_context (data),
                                       progress,
-                                      GIMP_OBJECT (imagefile)->name, FALSE,
+                                      gimp_object_get_name (imagefile), FALSE,
                                       &status, &error);
 
       if (! image && status != GIMP_PDB_CANCEL)
         {
           gchar *filename =
-            file_utils_uri_display_name (GIMP_OBJECT (imagefile)->name);
+            file_utils_uri_display_name (gimp_object_get_name (imagefile));
 
           gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
@@ -225,7 +225,7 @@ file_save_cmd_callback (GtkAction *action,
   if (! gimp_image_get_active_drawable (image))
     return;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (image));
+  uri = gimp_object_get_name (image);
 
   switch (save_mode)
     {
@@ -355,7 +355,7 @@ file_revert_cmd_callback (GtkAction *action,
 
   image = display->image;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (image));
+  uri = gimp_object_get_name (image);
 
   if (! uri)
     {
@@ -491,7 +491,7 @@ file_open_dialog_show (Gimp        *gimp,
   if (dialog)
     {
       if (! uri && image)
-        uri = gimp_object_get_name (GIMP_OBJECT (image));
+        uri = gimp_object_get_name (image);
 
       if (! uri)
         uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_URI_KEY);
@@ -654,7 +654,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      uri = gimp_object_get_name (GIMP_OBJECT (old_image));
+      uri = gimp_object_get_name (old_image);
 
       if (! uri)
         uri = g_object_get_data (G_OBJECT (old_image),

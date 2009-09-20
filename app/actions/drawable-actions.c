@@ -163,7 +163,9 @@ drawable_actions_update (GimpActionGroup *group,
   gboolean      visible    = FALSE;
   gboolean      linked     = FALSE;
   gboolean      locked     = FALSE;
+  gboolean      can_lock   = FALSE;
   gboolean      writable   = FALSE;
+  gboolean      children   = FALSE;
 
   image = action_data_get_image (data);
 
@@ -188,7 +190,11 @@ drawable_actions_update (GimpActionGroup *group,
           visible  = gimp_item_get_visible (item);
           linked   = gimp_item_get_linked (item);
           locked   = gimp_item_get_lock_content (item);
-          writable = ! locked;
+          can_lock = gimp_item_can_lock_content (item);
+          writable = ! gimp_item_is_content_locked (item);
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+            children = TRUE;
         }
     }
 
@@ -197,14 +203,14 @@ drawable_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("drawable-equalize",       writable && ! is_indexed);
-  SET_SENSITIVE ("drawable-invert",         writable && ! is_indexed);
-  SET_SENSITIVE ("drawable-levels-stretch", writable &&   is_rgb);
-  SET_SENSITIVE ("drawable-offset",         writable);
+  SET_SENSITIVE ("drawable-equalize",       writable && !children && !is_indexed);
+  SET_SENSITIVE ("drawable-invert",         writable && !children && !is_indexed);
+  SET_SENSITIVE ("drawable-levels-stretch", writable && !children &&  is_rgb);
+  SET_SENSITIVE ("drawable-offset",         writable && !children);
 
   SET_SENSITIVE ("drawable-visible",      drawable);
   SET_SENSITIVE ("drawable-linked",       drawable);
-  SET_SENSITIVE ("drawable-lock-content", drawable);
+  SET_SENSITIVE ("drawable-lock-content", can_lock);
 
   SET_ACTIVE ("drawable-visible",      visible);
   SET_ACTIVE ("drawable-linked",       linked);

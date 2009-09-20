@@ -361,7 +361,7 @@ convert_dialog_palette_box (IndexedDialog *dialog)
 
       /* Preferentially, the initial default is 'Web' if available */
       if (web_palette == NULL &&
-          g_ascii_strcasecmp (GIMP_OBJECT (palette)->name, "Web") == 0)
+          g_ascii_strcasecmp (gimp_object_get_name (palette), "Web") == 0)
         {
           web_palette = palette;
         }

@@ -30,6 +30,9 @@ gimp_log_init (void)
 {
   const gchar *env_log_val = g_getenv ("GIMP_LOG");
 
+  if (! env_log_val)
+    env_log_val = g_getenv ("GIMP_DEBUG");
+
   if (env_log_val)
     {
       const GDebugKey log_keys[] =

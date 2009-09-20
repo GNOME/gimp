@@ -314,7 +314,7 @@ gboolean        gimp_image_get_component_visible (const GimpImage    *image,
 
 void            gimp_image_mode_changed          (GimpImage          *image);
 void            gimp_image_alpha_changed         (GimpImage          *image);
-void            gimp_image_update                (GimpImage          *image,
+void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                x,
                                                   gint                y,
                                                   gint                width,
@@ -554,10 +554,7 @@ gboolean        gimp_image_reorder_vectors       (GimpImage          *image,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
 
-gboolean        gimp_image_layer_boundary        (const GimpImage    *image,
-                                                  BoundSeg          **segs,
-                                                  gint               *n_segs);
-GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage    *image,
+GimpLayer     * gimp_image_pick_layer            (const GimpImage    *image,
                                                   gint                x,
                                                   gint                y);
 gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,

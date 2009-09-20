@@ -409,25 +409,25 @@ gimp_container_tree_view_set_main_column_title (GimpContainerTreeView *tree_view
 }
 
 void
-gimp_container_tree_view_prepend_toggle_cell_renderer (GimpContainerTreeView *tree_view,
-                                                       GtkCellRenderer       *cell_renderer)
+gimp_container_tree_view_add_toggle_cell (GimpContainerTreeView *tree_view,
+                                          GtkCellRenderer       *cell)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
-  g_return_if_fail (GTK_IS_CELL_RENDERER (cell_renderer));
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_TOGGLE (cell));
 
   tree_view->priv->toggle_cells = g_list_prepend (tree_view->priv->toggle_cells,
-                                                  cell_renderer);
+                                                  cell);
 }
 
 void
-gimp_container_tree_view_prepend_cell_renderer (GimpContainerTreeView *tree_view,
-                                                GtkCellRenderer       *cell_renderer)
+gimp_container_tree_view_add_renderer_cell (GimpContainerTreeView *tree_view,
+                                            GtkCellRenderer       *cell)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
-  g_return_if_fail (GTK_IS_CELL_RENDERER (cell_renderer));
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_VIEWABLE (cell));
 
   tree_view->priv->renderer_cells = g_list_prepend (tree_view->priv->renderer_cells,
-                                                    cell_renderer);
+                                                    cell);
 }
 
 void
@@ -556,6 +556,26 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
   gtk_tree_view_columns_autosize (tree_view->view);
 }
 
+static gboolean
+gimp_container_tree_view_set_context_foreach (GtkTreeModel *model,
+                                              GtkTreePath  *path,
+                                              GtkTreeIter  *iter,
+                                              gpointer      data)
+{
+  GimpContext      *context = data;
+  GimpViewRenderer *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                      -1);
+
+  gimp_view_renderer_set_context (renderer, context);
+
+  g_object_unref (renderer);
+
+  return FALSE;
+}
+
 static void
 gimp_container_tree_view_set_context (GimpContainerView *view,
                                       GimpContext       *context)
@@ -566,22 +586,9 @@ gimp_container_tree_view_set_context (GimpContainerView *view,
 
   if (tree_view->model)
     {
-      GtkTreeIter iter;
-      gboolean    iter_valid;
-
-      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (tree_view->model, &iter,
-                              GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
-                              -1);
-
-          gimp_view_renderer_set_context (renderer, context);
-          g_object_unref (renderer);
-        }
+      gtk_tree_model_foreach (tree_view->model,
+                              gimp_container_tree_view_set_context_foreach,
+                              context);
     }
 }
 
@@ -818,6 +825,34 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
   parent_view_iface->clear_items (view);
 }
 
+typedef struct
+{
+  gint view_size;
+  gint border_width;
+} SetSizeForeachData;
+
+static gboolean
+gimp_container_tree_view_set_view_size_foreach (GtkTreeModel *model,
+                                                GtkTreePath  *path,
+                                                GtkTreeIter  *iter,
+                                                gpointer      data)
+{
+  SetSizeForeachData *size_data = data;
+  GimpViewRenderer   *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                      -1);
+
+  gimp_view_renderer_set_size (renderer,
+                               size_data->view_size,
+                               size_data->border_width);
+
+  g_object_unref (renderer);
+
+  return FALSE;
+}
+
 static void
 gimp_container_tree_view_set_view_size (GimpContainerView *view)
 {
@@ -831,22 +866,11 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
 
   if (tree_view->model)
     {
-      GtkTreeIter iter;
-      gboolean    iter_valid;
+      SetSizeForeachData size_data = { view_size, border_width };
 
-      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (tree_view->model, &iter,
-                              GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
-                              -1);
-
-          gimp_view_renderer_set_size (renderer, view_size, border_width);
-          g_object_unref (renderer);
-        }
+      gtk_tree_model_foreach (tree_view->model,
+                              gimp_container_tree_view_set_view_size_foreach,
+                              &size_data);
     }
 
   tree_widget = GTK_WIDGET (tree_view->view);
@@ -1011,6 +1035,34 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                                &iter,
                                                FALSE, FALSE);
 
+      if (bevent->button == 1                                     &&
+          gtk_tree_model_iter_has_child (tree_view->model, &iter) &&
+          column == gtk_tree_view_get_expander_column (tree_view->view))
+        {
+          GList *cells;
+
+          cells = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
+
+          if (! gimp_container_tree_view_find_click_cell (widget,
+                                                          cells,
+                                                          column, &column_area,
+                                                          bevent->x, bevent->y))
+            {
+              /*  we didn't click on any cell, but we clicked on empty
+               *  space in the expander column of a row that has
+               *  children; let GtkTreeView process the button press
+               *  to maybe handle a click on an expander.
+               */
+              g_list_free (cells);
+              gtk_tree_path_free (path);
+              g_object_unref (renderer);
+
+              return FALSE;
+            }
+
+          g_list_free (cells);
+        }
+
       toggled_cell = (GimpCellRendererToggle *)
         gimp_container_tree_view_find_click_cell (widget,
                                                   tree_view->priv->toggle_cells,
@@ -1094,8 +1146,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                         {
                           const gchar *real_name;
 
-                          real_name =
-                            gimp_object_get_name (GIMP_OBJECT (renderer->viewable));
+                          real_name = gimp_object_get_name (renderer->viewable);
 
                           gtk_tree_store_set (GTK_TREE_STORE (tree_view->model),
                                               &iter,

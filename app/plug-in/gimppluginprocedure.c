@@ -21,7 +21,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 
@@ -279,7 +280,7 @@ gimp_plug_in_procedure_find (GSList      *list,
     {
       GimpObject *object = l->data;
 
-      if (! strcmp (proc_name, object->name))
+      if (! strcmp (proc_name, gimp_object_get_name (object)))
         return GIMP_PLUG_IN_PROCEDURE (object);
     }
 
@@ -357,7 +358,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "The menu path must look like either \"<Prefix>\" "
                    "or \"<Prefix>/path/to/item\".",
                    basename, gimp_filename_to_utf8 (proc->prog),
-                   GIMP_OBJECT (proc)->name,
+                   gimp_object_get_name (proc),
                    menu_path);
       goto failure;
     }
@@ -480,7 +481,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "\"<Brushes>\", \"<Gradients>\", \"<Palettes>\", "
                    "\"<Patterns>\" or \"<Buffers>\".",
                    basename, gimp_filename_to_utf8 (proc->prog),
-                   GIMP_OBJECT (proc)->name,
+                   gimp_object_get_name (proc),
                    menu_path);
       goto failure;
     }
@@ -512,7 +513,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "which does not take the standard %s Plug-In "
                    "arguments: (%s).",
                    basename, gimp_filename_to_utf8 (proc->prog),
-                   prefix, GIMP_OBJECT (proc)->name, prefix,
+                   prefix, gimp_object_get_name (proc), prefix,
                    required);
 
       g_free (prefix);
@@ -676,18 +677,23 @@ gimp_plug_in_procedure_get_help_id (const GimpPlugInProcedure *proc)
   domain = gimp_plug_in_procedure_get_help_domain (proc);
 
   if (domain)
-    return g_strconcat (domain, "?", GIMP_OBJECT (proc)->name, NULL);
+    return g_strconcat (domain, "?", gimp_object_get_name (proc), NULL);
 
-  return g_strdup (GIMP_OBJECT (proc)->name);
+  return g_strdup (gimp_object_get_name (proc));
 }
 
 gboolean
 gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
-                                      GimpImageType              image_type)
+                                      GimpDrawable              *drawable)
 {
-  gboolean sensitive;
+  GimpImageType image_type = -1;
+  gboolean      sensitive  = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  if (drawable)
+    image_type = gimp_drawable_type (drawable);
 
   switch (image_type)
     {
@@ -710,7 +716,6 @@ gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
       sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXEDA_IMAGE;
       break;
     default:
-      sensitive = FALSE;
       break;
     }
 
@@ -821,7 +826,7 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
     g_free (proc->image_types);
 
   proc->image_types     = g_strdup (image_types);
-  proc->image_types_val = image_types_parse (gimp_object_get_name (GIMP_OBJECT (proc)),
+  proc->image_types_val = image_types_parse (gimp_object_get_name (proc),
                                              proc->image_types);
 }
 

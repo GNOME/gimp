@@ -355,6 +355,7 @@ gimp_data_real_dirty (GimpData *data)
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
 
+  /* Emit the "name-changed" to signal general dirtiness */
   gimp_object_name_changed (GIMP_OBJECT (data));
 }
 
@@ -671,13 +672,13 @@ gimp_data_create_filename (GimpData    *data,
   if (data->internal)
     return;
 
-  safename = g_filename_from_utf8 (gimp_object_get_name (GIMP_OBJECT (data)),
+  safename = g_filename_from_utf8 (gimp_object_get_name (data),
                                    -1, NULL, NULL, &error);
   if (! safename)
     {
       g_warning ("gimp_data_create_filename:\n"
                  "g_filename_from_utf8() failed for '%s': %s",
-                 gimp_object_get_name (GIMP_OBJECT (data)), error->message);
+                 gimp_object_get_name (data), error->message);
       g_error_free (error);
       return;
     }

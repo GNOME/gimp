@@ -167,7 +167,7 @@ gimp_pattern_get_description (GimpViewable  *viewable,
   GimpPattern *pattern = GIMP_PATTERN (viewable);
 
   return g_strdup_printf ("%s (%d × %d)",
-                          GIMP_OBJECT (pattern)->name,
+                          gimp_object_get_name (pattern),
                           pattern->mask->width,
                           pattern->mask->height);
 }

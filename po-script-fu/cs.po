@@ -1,70 +1,69 @@
 # Czech translation of GIMP script-fu.
-# Copyright (C) 2001, 2003, 2006, 2007, 2008 the author(s) of the GIMP.
+# Copyright (C) 2001, 2003, 2006, 2007, 2008, 2009 the author(s) of the GIMP.
 # Copyright (C) 2004, 2005 Miloslav Trmac <mitr@volny.cz>.
 # This file is distributed under the same license as the gimp-script-fu package.
 # Stanislav Brabec <utx@penguin.cz>, 2000-2001.
 # Michal Bukovjan <bukm@centrum.cz>, 2003.
 # Miloslav Trmac <mitr@volny.cz>, 2003 - 2005.
 # Jakub Friedl <jfriedl@suse.cz>, 2006, 2007.
-#
+# JardaK <krejci@zstenis.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu\n"
+"Project-Id-Version: script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-28 00:37+0100\n"
-"PO-Revision-Date: 2008-10-28 00:05+0100\n"
-"Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
+"POT-Creation-Date: 2009-09-06 01:04+0200\n"
+"PO-Revision-Date: 2009-08-24 19:15+0200\n"
+"Last-Translator: JardaK <krejci@zstenis.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:131
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Konzola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Vítá vás TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Interaktivní vývoj ve Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "_Procházet..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:294
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Uložit výstup konzoly Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:341
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nelze otevřít '%s' pro zápis: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Prohlížeč procedur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:63
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Evaluační režim Script-fu umožňuje pouze neinteraktivní spuštění"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu nemůže zároveň zpracovávat dva skripty."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Již spouštíte skript \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:224
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -72,154 +71,146 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:288
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu výběr barvy"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu výběr souboru"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:448
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu výběr adresáře"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu výběr písma"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu výběr palety"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:478
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu výběr vzorku"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:487
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu výběr přechodu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:496
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu výběr stopy"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
-#, fuzzy, c-format
+#: ../plug-ins/script-fu/script-fu-interface.c:823
+#, c-format
 msgid "Error while executing %s:"
-msgstr ""
-"Chyba při spouštění\n"
-"%s\n"
-"\n"
-"%s"
+msgstr "Chyba při spouštění %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:150
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
-msgstr ""
+msgstr "Příliš málo argumentů pro volání 'script-fu-register'"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:609
-#, fuzzy, c-format
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
+#, c-format
 msgid "Error while loading %s:"
-msgstr ""
-"Chyba při spouštění\n"
-"%s\n"
-"\n"
-"%s"
+msgstr "Chyba při nahrávání %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:713
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "Volby serveru Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:718
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "_Spustit server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:746
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "Port serveru:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:752
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "Žurnálový soubor serveru:"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktivní konzola pro vývoj Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "_Console"
 msgstr "_Konzola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:141
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "Server pro vzdálené vykonávání Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:146
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "_Spustit server..."
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP online"
 
-#: ../plug-ins/script-fu/script-fu.c:303
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "_Uživatelská příručka"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
 msgstr "_Tlačítka"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
 msgstr "_Loga"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
 msgstr "_Vzorky"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "_Témata WWW stránek"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "Mimozemská _záře"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "_Zkosený vzorek"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alfa do _loga"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Načíst znovu všechny dostupné skripty Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Obnovit skripty"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -1617,6 +1608,62 @@ msgstr "_Obecné popisky..."
 msgid "_Tube Button Label..."
 msgstr "Popisek _tlačítka I. úrovně..."
 
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "Záložka pro web GIMPu"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "Záložka pro uživatelskou příručku"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "Tvorba a používání _výběrů"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "Vytváření, otvírání a ukládání _souborů"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "Kreslení _jednoduchých objektů"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Jak používat _Dialogy"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "_Registr zásuvných modulů"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "Používání _cest"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "_Základní koncepce"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "WWW stránky _vývojářů"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "_Hlavní WWW stránky"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "_Příprava obrázků pro web"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "_Web uživatelské příručky"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "_Práce s digitálními fotografiemi"
+
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
@@ -2663,62 +2710,6 @@ msgstr "Délka vlákna"
 msgid "_Weave..."
 msgstr "_Tkát..."
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "Záložka pro web GIMPu"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "Záložka pro uživatelskou příručku"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "Tvorba a používání _výběrů"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "Vytváření, otvírání a ukládání _souborů"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "Kreslení _jednoduchých objektů"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "Jak používat _Dialogy"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "_Registr zásuvných modulů"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "Používání _cest"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "_Základní koncepce"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "WWW stránky _vývojářů"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "_Hlavní WWW stránky"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "_Příprava obrázků pro web"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "_Web uživatelské příručky"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "_Práce s digitálními fotografiemi"
-
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr "Přidat jemný průsvitný 3D efekt do vybrané oblasti (či alfy)"
@@ -2758,121 +2749,3 @@ msgstr "Krytí světel"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efekt _Xach..."
-
-#~ msgid "_Misc"
-#~ msgstr "_Různé"
-
-#~ msgid "_Utilities"
-#~ msgstr "_Pomůcky"
-
-#~ msgid "An_imation"
-#~ msgstr "An_imace"
-
-#~ msgid "_Animators"
-#~ msgstr "_Animátory"
-
-#~ msgid "_Artistic"
-#~ msgstr "_Umění"
-
-#~ msgid "_Blur"
-#~ msgstr "_Rozostření"
-
-#~ msgid "_Decor"
-#~ msgstr "_Dekorace"
-
-#~ msgid "_Effects"
-#~ msgstr "_Efekty"
-
-#~ msgid "En_hance"
-#~ msgstr "Vy_lepšit"
-
-#~ msgid "_Light and Shadow"
-#~ msgstr "_Světlo a stín"
-
-#~ msgid "S_hadow"
-#~ msgstr "_Stín"
-
-#~ msgid "_Render"
-#~ msgstr "_Vykreslit"
-
-#~ msgid "_Alchemy"
-#~ msgstr "_Alchymie"
-
-#~ msgid "Effect size (pixels * 3)"
-#~ msgstr "Velikost efektu (pixely * 3)"
-
-#~ msgid "BG opacity"
-#~ msgstr "Krytí pozadí"
-
-#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
-#~ msgstr "Vytvořit graf distribuce odstíny, sytosti a hodnoty"
-
-#~ msgid "Draw _HSV Graph..."
-#~ msgstr "Nakreslit graf _HSV..."
-
-#~ msgid "End X"
-#~ msgstr "Konec X"
-
-#~ msgid "End Y"
-#~ msgstr "Konec Y"
-
-#~ msgid "From top-left to bottom-right"
-#~ msgstr "Odshora zleva dolů doprava"
-
-#~ msgid "Graph scale"
-#~ msgstr "Měřítko grafu"
-
-#~ msgid "Start X"
-#~ msgstr "X počátek"
-
-#~ msgid "Start Y"
-#~ msgstr "Y počátek"
-
-#~ msgid "Use selection bounds instead of values below"
-#~ msgstr "Použít hranice výběru místo hodnot uvedených níže"
-
-#~ msgid "Effect size (pixels * 5)"
-#~ msgstr "Velikost efektu (pixely * 5)"
-
-#~ msgid "Create a simple sphere with a drop shadow"
-#~ msgstr "Vytvořit jednoduchou kouli vrhající stín"
-
-#~ msgid "Lighting (degrees)"
-#~ msgstr "Osvětlení (stupně)"
-
-#~ msgid "Radius (pixels)"
-#~ msgstr "Poloměr (pixely)"
-
-#~ msgid "Sphere color"
-#~ msgstr "Barva koule"
-
-#~ msgid "_Sphere..."
-#~ msgstr "_Koule..."
-
-#~ msgid "Burst color"
-#~ msgstr "Barva výbuchu"
-
-#~ msgid "Create a logo using a starburst gradient"
-#~ msgstr "Vytvořit logo s přechodem v podobě výbuchu hvězdy"
-
-#~ msgid "Effect size (pixels * 30)"
-#~ msgstr "Velikost efektu (pixely * 30)"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
-#~ "shadow"
-#~ msgstr ""
-#~ "Vyplnit vybranou oblast (či alfu) přechodem v podobě výbuchu hvězdy a "
-#~ "přidat stín"
-
-#~ msgid "Starb_urst..."
-#~ msgstr "_Výbuch hvězdy..."
-
-#~ msgid "Effect size (pixels * 4)"
-#~ msgstr "Velikost efektu (pixely * 4)"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
-#~ "glow, and shadow"
-#~ msgstr ""
-#~ "Vyplnit vybranou oblast (nebo alfu) texturou skály, září novy a stínem."

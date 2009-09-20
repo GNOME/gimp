@@ -30,6 +30,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpitemstack.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -218,15 +219,17 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image = action_data_get_image (data);
-  gboolean   fs    = FALSE;
-  gboolean   aux   = FALSE;
-  gboolean   lp    = FALSE;
-  gboolean   sel   = FALSE;
+  GimpImage *image  = action_data_get_image (data);
+  gboolean   fs     = FALSE;
+  gboolean   aux    = FALSE;
+  gboolean   lp     = FALSE;
+  gboolean   sel    = FALSE;
+  gboolean   groups = FALSE;
 
   if (image)
     {
-      const gchar *action = NULL;
+      GimpContainer *layers;
+      const gchar   *action = NULL;
 
       switch (gimp_image_base_type (image))
         {
@@ -249,6 +252,10 @@ image_actions_update (GimpActionGroup *group,
       aux = (gimp_image_get_active_channel (image) != NULL);
       lp  = ! gimp_image_is_empty (image);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+
+      layers = gimp_image_get_layers (image);
+
+      groups = ! gimp_item_stack_is_flat (GIMP_ITEM_STACK (layers));
     }
 
 #define SET_SENSITIVE(action,condition) \
@@ -256,7 +263,7 @@ image_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("image-convert-rgb",       image);
   SET_SENSITIVE ("image-convert-grayscale", image);
-  SET_SENSITIVE ("image-convert-indexed",   image);
+  SET_SENSITIVE ("image-convert-indexed",   image && !groups);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);

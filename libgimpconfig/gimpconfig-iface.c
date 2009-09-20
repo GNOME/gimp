@@ -493,6 +493,57 @@ gimp_config_deserialize_return (GScanner     *scanner,
 
 
 /**
+ * gimp_config_serialize:
+ * @config: a #GObject that implements the #GimpConfigInterface.
+ * @writer: the #GimpConfigWriter to use.
+ * @data: client data
+ *
+ * Serialize the #GimpConfig object.
+ *
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_config_serialize (GimpConfig       *config,
+                       GimpConfigWriter *writer,
+                       gpointer          data)
+{
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
+
+  return GIMP_CONFIG_GET_INTERFACE (config)->serialize (config,
+                                                        writer,
+                                                        data);
+}
+
+/**
+ * gimp_config_deserialize:
+ * @config: a #GObject that implements the #GimpConfigInterface.
+ * @scanner: the #GScanner to use.
+ * @nest_level: the nest level.
+ * @data: client data.
+ *
+ * Deserialize the #GimpConfig object.
+ *
+ * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_config_deserialize (GimpConfig *config,
+                         GScanner   *scanner,
+                         gint        nest_level,
+                         gpointer    data)
+{
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
+
+  return GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
+                                                          scanner,
+                                                          nest_level,
+                                                          data);
+}
+
+/**
  * gimp_config_duplicate:
  * @config: a #GObject that implements the #GimpConfigInterface.
  *

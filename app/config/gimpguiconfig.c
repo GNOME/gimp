@@ -39,14 +39,6 @@
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
   "http://docs.gimp.org/" GIMP_APP_VERSION_STRING
 
-#ifdef G_OS_WIN32
-#  define DEFAULT_WEB_BROWSER  "not used on Windows"
-#elif PLATFORM_OSX
-#  define DEFAULT_WEB_BROWSER  "open %s"
-#else
-#  define DEFAULT_WEB_BROWSER  "xdg-open %s"
-#endif
-
 
 enum
 {
@@ -76,10 +68,8 @@ enum
   PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
   PROP_HELP_BROWSER,
-  PROP_WEB_BROWSER,
   PROP_USER_MANUAL_ONLINE,
   PROP_USER_MANUAL_ONLINE_URI,
-  PROP_TOOLBOX_WINDOW_HINT,
   PROP_DOCK_WINDOW_HINT,
   PROP_CURSOR_FORMAT,
 
@@ -88,7 +78,9 @@ enum
   PROP_MENU_MNEMONICS,
   PROP_SHOW_TOOL_TIPS,
   PROP_SHOW_TIPS,
-  PROP_TRANSIENT_DOCKS
+  PROP_TOOLBOX_WINDOW_HINT,
+  PROP_TRANSIENT_DOCKS,
+  PROP_WEB_BROWSER
 };
 
 
@@ -245,13 +237,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                    USER_MANUAL_ONLINE_URI_BLURB,
                                    DEFAULT_USER_MANUAL_ONLINE_URI,
                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
-                                 "toolbox-window-hint",
-                                 TOOLBOX_WINDOW_HINT_BLURB,
-                                 GIMP_TYPE_WINDOW_HINT,
-                                 GIMP_WINDOW_HINT_UTILITY,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DOCK_WINDOW_HINT,
                                  "dock-window-hint",
                                  DOCK_WINDOW_HINT_BLURB,
@@ -287,6 +272,12 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
+                                 "toolbox-window-hint", NULL,
+                                 GIMP_TYPE_WINDOW_HINT,
+                                 GIMP_WINDOW_HINT_UTILITY,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
                                     "transient-docks", NULL,
                                     FALSE,
@@ -295,7 +286,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
                                  "web-browser", NULL,
                                  GIMP_CONFIG_PATH_FILE,
-                                 DEFAULT_WEB_BROWSER,
+                                 "not used any longer",
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_IGNORE);
 }
@@ -414,9 +405,6 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->user_manual_online_uri);
       gui_config->user_manual_online_uri = g_value_dup_string (value);
       break;
-    case PROP_TOOLBOX_WINDOW_HINT:
-      gui_config->toolbox_window_hint = g_value_get_enum (value);
-      break;
     case PROP_DOCK_WINDOW_HINT:
       gui_config->dock_window_hint = g_value_get_enum (value);
       break;
@@ -428,6 +416,7 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_MENU_MNEMONICS:
     case PROP_SHOW_TOOL_TIPS:
     case PROP_SHOW_TIPS:
+    case PROP_TOOLBOX_WINDOW_HINT:
     case PROP_TRANSIENT_DOCKS:
     case PROP_WEB_BROWSER:
       /* ignored */
@@ -530,9 +519,6 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_USER_MANUAL_ONLINE_URI:
       g_value_set_string (value, gui_config->user_manual_online_uri);
       break;
-    case PROP_TOOLBOX_WINDOW_HINT:
-      g_value_set_enum (value, gui_config->toolbox_window_hint);
-      break;
     case PROP_DOCK_WINDOW_HINT:
       g_value_set_enum (value, gui_config->dock_window_hint);
       break;
@@ -544,6 +530,7 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_MENU_MNEMONICS:
     case PROP_SHOW_TOOL_TIPS:
     case PROP_SHOW_TIPS:
+    case PROP_TOOLBOX_WINDOW_HINT:
     case PROP_TRANSIENT_DOCKS:
     case PROP_WEB_BROWSER:
       /* ignored */

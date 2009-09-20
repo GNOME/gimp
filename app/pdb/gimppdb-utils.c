@@ -315,7 +315,7 @@ gimp_pdb_item_is_attached (GimpItem  *item,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Item '%s' (%d) can not be used because it has not "
                      "been added to an image"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -339,7 +339,7 @@ gimp_pdb_item_is_floating (GimpItem  *item,
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Item '%s' (%d) has already been added to an image"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -347,7 +347,7 @@ gimp_pdb_item_is_floating (GimpItem  *item,
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Trying to add item '%s' (%d) to wrong image"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -362,12 +362,32 @@ gimp_pdb_item_is_writable (GimpItem  *item,
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (gimp_item_get_lock_content (item))
+  if (gimp_item_is_content_locked (item))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be modified because its "
                      "contents are locked"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_object_get_name (item),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
+gimp_pdb_item_is_not_group (GimpItem  *item,
+                            GError   **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) cannot be modified because it "
+                     "is a group item"),
+                   gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
     }
@@ -377,6 +397,7 @@ gimp_pdb_item_is_writable (GimpItem  *item,
 
 gboolean
 gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
+                              gboolean    writable,
                               GError    **error)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
@@ -387,13 +408,13 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Layer '%s' (%d) can not be used because it is not "
                      "a text layer"),
-                   gimp_object_get_name (GIMP_OBJECT (layer)),
+                   gimp_object_get_name (layer),
                    gimp_item_get_ID (GIMP_ITEM (layer)));
 
       return FALSE;
     }
 
-  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), FALSE, error);
+  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), writable, error);
 }
 
 static const gchar *
@@ -460,20 +481,25 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
 GimpStroke *
 gimp_pdb_get_vectors_stroke (GimpVectors  *vectors,
                              gint          stroke_ID,
+                             gboolean      writable,
                              GError      **error)
 {
-  GimpStroke *stroke;
+  GimpStroke *stroke = NULL;
 
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_ID);
+  if (! gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+    return NULL;
 
-  if (! stroke)
+  if (! writable || gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Vectors object %d does not contain stroke with ID %d"),
-                   gimp_item_get_ID (GIMP_ITEM (vectors)), stroke_ID);
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_ID);
+
+      if (! stroke)
+        g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                     _("Vectors object %d does not contain stroke with ID %d"),
+                     gimp_item_get_ID (GIMP_ITEM (vectors)), stroke_ID);
     }
 
   return stroke;

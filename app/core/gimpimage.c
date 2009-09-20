@@ -53,7 +53,6 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
-#include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
@@ -168,6 +167,7 @@ static void        gimp_image_projectable_flush  (GimpProjectable   *projectable
                                                   gboolean           invalidate_preview);
 static GeglNode     * gimp_image_get_graph       (GimpProjectable   *projectable);
 static GimpImage    * gimp_image_get_image       (GimpProjectable   *projectable);
+static GimpImageType  gimp_image_get_image_type  (GimpProjectable   *projectable);
 
 static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               x,
@@ -569,6 +569,7 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
 {
   iface->flush              = gimp_image_projectable_flush;
   iface->get_image          = gimp_image_get_image;
+  iface->get_image_type     = gimp_image_get_image_type;
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_image_get_size;
   iface->get_graph          = gimp_image_get_graph;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
@@ -619,7 +620,7 @@ gimp_image_init (GimpImage *image)
   image->layer_stack           = NULL;
 
   g_signal_connect_swapped (image->layers, "update",
-                            G_CALLBACK (gimp_image_update),
+                            G_CALLBACK (gimp_image_invalidate),
                             image);
 
   image->layer_alpha_handler =
@@ -628,7 +629,7 @@ gimp_image_init (GimpImage *image)
                                 image);
 
   g_signal_connect_swapped (image->channels, "update",
-                            G_CALLBACK (gimp_image_update),
+                            G_CALLBACK (gimp_image_invalidate),
                             image);
 
   image->channel_name_changed_handler =
@@ -825,14 +826,14 @@ gimp_image_dispose (GObject *object)
   gimp_image_undo_free (image);
 
   g_signal_handlers_disconnect_by_func (image->layers,
-                                        gimp_image_update,
+                                        gimp_image_invalidate,
                                         image);
 
   gimp_container_remove_handler (image->layers,
                                  image->layer_alpha_handler);
 
   g_signal_handlers_disconnect_by_func (image->channels,
-                                        gimp_image_update,
+                                        gimp_image_invalidate,
                                         image);
 
   gimp_container_remove_handler (image->channels,
@@ -979,13 +980,13 @@ gimp_image_name_changed (GimpObject *object)
       image->display_name = NULL;
     }
 
+  /* We never want the empty string as a name, so change empty strings
+   * to NULL strings (without emitting the "name-changed" signal
+   * again)
+   */
   name = gimp_object_get_name (object);
-
-  if (! (name && strlen (name)))
-    {
-      g_free (object->name);
-      object->name = NULL;
-    }
+  if (name && strlen (name) == 0)
+    gimp_object_name_free (object);
 }
 
 static gint64
@@ -1053,8 +1054,7 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
 
-  if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
-    GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
+  GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
 
   if (image->preview)
     {
@@ -1143,10 +1143,10 @@ gimp_image_real_colormap_changed (GimpImage *image,
       gimp_image_color_hash_invalidate (image, color_index);
 
       /* A colormap alteration affects the whole image */
-      gimp_image_update (image,
-                         0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
+      gimp_image_invalidate (image,
+                             0, 0,
+                             gimp_image_get_width  (image),
+                             gimp_image_get_height (image));
 
       gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (image->layers));
     }
@@ -1212,6 +1212,17 @@ static GimpImage *
 gimp_image_get_image (GimpProjectable *projectable)
 {
   return GIMP_IMAGE (projectable);
+}
+
+static GimpImageType
+gimp_image_get_image_type (GimpProjectable *projectable)
+{
+  GimpImage     *image = GIMP_IMAGE (projectable);
+  GimpImageType  type;
+
+  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (image->base_type);
+
+  return GIMP_IMAGE_TYPE_WITH_ALPHA (type);
 }
 
 static GeglNode *
@@ -1280,7 +1291,7 @@ gimp_image_channel_add (GimpContainer *container,
                         GimpImage     *image)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (channel))))
+                gimp_object_get_name (channel)))
     {
       gimp_image_set_quick_mask_state (image, TRUE);
     }
@@ -1292,7 +1303,7 @@ gimp_image_channel_remove (GimpContainer *container,
                            GimpImage     *image)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (channel))))
+                gimp_object_get_name (channel)))
     {
       gimp_image_set_quick_mask_state (image, FALSE);
     }
@@ -1303,7 +1314,7 @@ gimp_image_channel_name_changed (GimpChannel *channel,
                                  GimpImage   *image)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (channel))))
+                gimp_object_get_name (channel)))
     {
       gimp_image_set_quick_mask_state (image, TRUE);
     }
@@ -1319,7 +1330,7 @@ gimp_image_channel_color_changed (GimpChannel *channel,
                                   GimpImage   *image)
 {
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
-                gimp_object_get_name (GIMP_OBJECT (channel))))
+                gimp_object_get_name (channel)))
     {
       image->quick_mask_color = channel->color;
     }
@@ -1421,7 +1432,7 @@ gimp_image_get_uri (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (GIMP_OBJECT (image));
+  uri = gimp_object_get_name (image);
 
   return uri ? uri : _("Untitled");
 }
@@ -1452,7 +1463,7 @@ gimp_image_get_filename (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (GIMP_OBJECT (image));
+  uri = gimp_object_get_name (image);
 
   if (! uri)
     return NULL;
@@ -1770,10 +1781,10 @@ gimp_image_set_component_visible (GimpImage       *image,
                      gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
                      channel);
 
-      gimp_image_update (image,
-                         0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
+      gimp_image_invalidate (image,
+                             0, 0,
+                             gimp_image_get_width  (image),
+                             gimp_image_get_height (image));
     }
 }
 
@@ -1810,16 +1821,16 @@ gimp_image_alpha_changed (GimpImage *image)
 }
 
 void
-gimp_image_update (GimpImage *image,
-                   gint       x,
-                   gint       y,
-                   gint       width,
-                   gint       height)
+gimp_image_invalidate (GimpImage *image,
+                       gint       x,
+                       gint       y,
+                       gint       width,
+                       gint       height)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  gimp_projectable_update (GIMP_PROJECTABLE (image),
-                           x, y, width, height);
+  gimp_projectable_invalidate (GIMP_PROJECTABLE (image),
+                               x, y, width, height);
 
   image->flush_accum.preview_invalidated = TRUE;
 }
@@ -2678,7 +2689,7 @@ gimp_image_get_layer_iter (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LIST (image->layers)->list;
+  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (image->layers));
 }
 
 GList *
@@ -2686,7 +2697,7 @@ gimp_image_get_channel_iter (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LIST (image->channels)->list;
+  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (image->channels));
 }
 
 GList *
@@ -2694,7 +2705,7 @@ gimp_image_get_vectors_iter (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LIST (image->vectors)->list;
+  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (image->vectors));
 }
 
 GList *
@@ -2887,63 +2898,81 @@ GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *image,
                                 GimpTattoo       tattoo)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LAYER (gimp_item_stack_get_item_by_tattoo (GIMP_ITEM_STACK (image->layers),
-                                                         tattoo));
+  stack = GIMP_ITEM_STACK (image->layers);
+
+  return GIMP_LAYER (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
 GimpChannel *
 gimp_image_get_channel_by_tattoo (const GimpImage *image,
                                   GimpTattoo       tattoo)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_CHANNEL (gimp_item_stack_get_item_by_tattoo (GIMP_ITEM_STACK (image->channels),
-                                                           tattoo));
+  stack = GIMP_ITEM_STACK (image->channels);
+
+  return GIMP_CHANNEL (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
 GimpVectors *
 gimp_image_get_vectors_by_tattoo (const GimpImage *image,
                                   GimpTattoo       tattoo)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (GIMP_ITEM_STACK (image->vectors),
-                                                           tattoo));
+  stack = GIMP_ITEM_STACK (image->vectors);
+
+  return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
 GimpLayer *
 gimp_image_get_layer_by_name (const GimpImage *image,
                               const gchar     *name)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_LAYER (gimp_item_stack_get_item_by_name (GIMP_ITEM_STACK (image->layers),
-                                                       name));
+  stack = GIMP_ITEM_STACK (image->layers);
+
+  return GIMP_LAYER (gimp_item_stack_get_item_by_name (stack, name));
 }
 
 GimpChannel *
 gimp_image_get_channel_by_name (const GimpImage *image,
                                 const gchar     *name)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_CHANNEL (gimp_item_stack_get_item_by_name (GIMP_ITEM_STACK (image->channels),
-                                                         name));
+  stack = GIMP_ITEM_STACK (image->channels);
+
+  return GIMP_CHANNEL (gimp_item_stack_get_item_by_name (stack, name));
 }
 
 GimpVectors *
 gimp_image_get_vectors_by_name (const GimpImage *image,
                                 const gchar     *name)
 {
+  GimpItemStack *stack;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return GIMP_VECTORS (gimp_item_stack_get_item_by_name (GIMP_ITEM_STACK (image->vectors),
-                                                         name));
+  stack = GIMP_ITEM_STACK (image->vectors);
+
+  return GIMP_VECTORS (gimp_item_stack_get_item_by_name (stack, name));
 }
 
 static GimpItem *
@@ -3177,6 +3206,24 @@ gimp_image_remove_layer (GimpImage *image,
 
   gimp_container_remove (container, GIMP_OBJECT (layer));
   image->layer_stack = g_slist_remove (image->layer_stack, layer);
+
+  /*  Also remove all children of a group layer from the layer_stack  */
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    {
+      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
+      GList         *children;
+      GList         *list;
+
+      children = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (stack));
+
+      for (list = children; list; list = g_list_next (list))
+        {
+          image->layer_stack = g_slist_remove (image->layer_stack,
+                                               list->data);
+        }
+
+      g_list_free (children);
+    }
 
   if (parent)
     gimp_viewable_set_parent (GIMP_VIEWABLE (layer), NULL);
@@ -4066,39 +4113,10 @@ gimp_image_reorder_vectors (GimpImage   *image,
   return TRUE;
 }
 
-gboolean
-gimp_image_layer_boundary (const GimpImage  *image,
-                           BoundSeg        **segs,
-                           gint             *n_segs)
-{
-  GimpLayer *layer;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (segs != NULL, FALSE);
-  g_return_val_if_fail (n_segs != NULL, FALSE);
-
-  /*  The second boundary corresponds to the active layer's
-   *  perimeter...
-   */
-  layer = gimp_image_get_active_layer (image);
-
-  if (layer)
-    {
-      *segs = gimp_layer_boundary (layer, n_segs);
-      return TRUE;
-    }
-  else
-    {
-      *segs = NULL;
-      *n_segs = 0;
-      return FALSE;
-    }
-}
-
 GimpLayer *
-gimp_image_pick_correlate_layer (const GimpImage *image,
-                                 gint             x,
-                                 gint             y)
+gimp_image_pick_layer (const GimpImage *image,
+                       gint             x,
+                       gint             y)
 {
   GList *all_layers;
   GList *list;

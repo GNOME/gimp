@@ -37,12 +37,13 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable-private.h" /* eek */
 #include "core/gimpgrid.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
-#include "core/gimplayer.h"
+#include "core/gimpitemstack.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
@@ -70,11 +71,13 @@
 
 /* #define GIMP_XCF_PATH_DEBUG */
 
+static void            xcf_load_add_masks     (GimpImage    *image);
 static gboolean        xcf_load_image_props   (XcfInfo      *info,
                                                GimpImage    *image);
 static gboolean        xcf_load_layer_props   (XcfInfo      *info,
                                                GimpImage    *image,
-                                               GimpLayer    *layer,
+                                               GimpLayer   **layer,
+                                               GList       **item_path,
                                                gboolean     *apply_mask,
                                                gboolean     *edit_mask,
                                                gboolean     *show_mask,
@@ -86,7 +89,8 @@ static gboolean        xcf_load_prop          (XcfInfo      *info,
                                                PropType     *prop_type,
                                                guint32      *prop_size);
 static GimpLayer     * xcf_load_layer         (XcfInfo      *info,
-                                               GimpImage    *image);
+                                               GimpImage    *image,
+                                               GList       **item_path);
 static GimpChannel   * xcf_load_channel       (XcfInfo      *info,
                                                GimpImage    *image);
 static GimpLayerMask * xcf_load_layer_mask    (XcfInfo      *info,
@@ -124,8 +128,6 @@ xcf_load_image (Gimp     *gimp,
                 GError  **error)
 {
   GimpImage          *image;
-  GimpLayer          *layer;
-  GimpChannel        *channel;
   const GimpParasite *parasite;
   guint32             saved_pos;
   guint32             offset;
@@ -170,6 +172,9 @@ xcf_load_image (Gimp     *gimp,
 
   while (TRUE)
     {
+      GimpLayer *layer;
+      GList     *item_path = NULL;
+
       /* read in the offset of the next layer */
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
 
@@ -189,7 +194,7 @@ xcf_load_image (Gimp     *gimp,
         goto error;
 
       /* read in the layer */
-      layer = xcf_load_layer (info, image);
+      layer = xcf_load_layer (info, image, &item_path);
       if (!layer)
         goto error;
 
@@ -199,10 +204,47 @@ xcf_load_image (Gimp     *gimp,
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
-        gimp_image_add_layer (image, layer,
-                              NULL, /* FIXME tree */
-                              gimp_container_get_n_children (image->layers),
-                              FALSE);
+        {
+          GimpContainer *layers = gimp_image_get_layers (image);
+          GimpContainer *container;
+          GimpLayer     *parent;
+
+          if (item_path)
+            {
+              if (info->floating_sel)
+                {
+                  /* there is a floating selection, but it will get
+                   * added after all layers are loaded, so toplevel
+                   * layer indices are off-by-one. Adjust item paths
+                   * accordingly:
+                   */
+                  gint toplevel_index;
+
+                  toplevel_index = GPOINTER_TO_UINT (item_path->data);
+
+                  toplevel_index--;
+
+                  item_path->data = GUINT_TO_POINTER (toplevel_index);
+                }
+
+              parent = GIMP_LAYER
+                (gimp_item_stack_get_parent_by_path (GIMP_ITEM_STACK (layers),
+                                                     item_path,
+                                                     NULL));
+
+              container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+            }
+          else
+            {
+              parent    = NULL;
+              container = layers;
+            }
+
+          gimp_image_add_layer (image, layer,
+                                parent,
+                                gimp_container_get_n_children (container),
+                                FALSE);
+        }
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -213,6 +255,8 @@ xcf_load_image (Gimp     *gimp,
 
   while (TRUE)
     {
+      GimpChannel *channel;
+
       /* read in the offset of the next channel */
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
 
@@ -231,7 +275,7 @@ xcf_load_image (Gimp     *gimp,
       if (! xcf_seek_pos (info, offset, NULL))
         goto error;
 
-      /* read in the layer */
+      /* read in the channel */
       channel = xcf_load_channel (info, image);
       if (!channel)
         goto error;
@@ -253,6 +297,8 @@ xcf_load_image (Gimp     *gimp,
       if (! xcf_seek_pos (info, saved_pos, NULL))
         goto error;
     }
+
+  xcf_load_add_masks (image);
 
   if (info->floating_sel && info->floating_sel_drawable)
     floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
@@ -280,6 +326,8 @@ xcf_load_image (Gimp     *gimp,
 			_("This XCF file is corrupt!  I have loaded as much "
 			  "of it as I can, but it is incomplete."));
 
+  xcf_load_add_masks (image);
+
   gimp_image_undo_enable (image);
 
   return image;
@@ -292,6 +340,32 @@ xcf_load_image (Gimp     *gimp,
   g_object_unref (image);
 
   return NULL;
+}
+
+static void
+xcf_load_add_masks (GimpImage *image)
+{
+  GList *layers;
+  GList *list;
+
+  layers = gimp_image_get_layer_list (image);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpLayer     *layer = list->data;
+      GimpLayerMask *mask;
+
+      mask = g_object_get_data (G_OBJECT (layer), "gimp-layer-mask");
+
+      if (mask)
+        {
+          gimp_layer_add_mask (layer, mask, FALSE, NULL);
+
+          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask", NULL);
+        }
+    }
+
+  g_list_free (layers);
 }
 
 static gboolean
@@ -609,13 +683,14 @@ xcf_load_image_props (XcfInfo   *info,
 }
 
 static gboolean
-xcf_load_layer_props (XcfInfo   *info,
-                      GimpImage *image,
-                      GimpLayer *layer,
-                      gboolean  *apply_mask,
-                      gboolean  *edit_mask,
-                      gboolean  *show_mask,
-                      guint32   *text_layer_flags)
+xcf_load_layer_props (XcfInfo    *info,
+                      GimpImage  *image,
+                      GimpLayer **layer,
+                      GList     **item_path,
+                      gboolean   *apply_mask,
+                      gboolean   *edit_mask,
+                      gboolean   *show_mask,
+                      guint32    *text_layer_flags)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -631,11 +706,11 @@ xcf_load_layer_props (XcfInfo   *info,
           return TRUE;
 
         case PROP_ACTIVE_LAYER:
-          info->active_layer = layer;
+          info->active_layer = *layer;
           break;
 
         case PROP_FLOATING_SELECTION:
-          info->floating_sel = layer;
+          info->floating_sel = *layer;
           info->cp +=
             xcf_read_int32 (info->fp,
                             (guint32 *) &info->floating_sel_offset, 1);
@@ -646,7 +721,7 @@ xcf_load_layer_props (XcfInfo   *info,
             guint32 opacity;
 
             info->cp += xcf_read_int32 (info->fp, &opacity, 1);
-            gimp_layer_set_opacity (layer, (gdouble) opacity / 255.0, FALSE);
+            gimp_layer_set_opacity (*layer, (gdouble) opacity / 255.0, FALSE);
           }
           break;
 
@@ -655,7 +730,7 @@ xcf_load_layer_props (XcfInfo   *info,
             gboolean visible;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
-            gimp_item_set_visible (GIMP_ITEM (layer), visible, FALSE);
+            gimp_item_set_visible (GIMP_ITEM (*layer), visible, FALSE);
           }
           break;
 
@@ -664,7 +739,19 @@ xcf_load_layer_props (XcfInfo   *info,
             gboolean linked;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
-            gimp_item_set_linked (GIMP_ITEM (layer), linked, FALSE);
+            gimp_item_set_linked (GIMP_ITEM (*layer), linked, FALSE);
+          }
+          break;
+
+        case PROP_LOCK_CONTENT:
+          {
+            gboolean lock_content;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_content, 1);
+
+            if (gimp_item_can_lock_content (GIMP_ITEM (*layer)))
+              gimp_item_set_lock_content (GIMP_ITEM (*layer),
+                                          lock_content, FALSE);
           }
           break;
 
@@ -673,7 +760,9 @@ xcf_load_layer_props (XcfInfo   *info,
             gboolean lock_alpha;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_alpha, 1);
-            gimp_layer_set_lock_alpha (layer, lock_alpha, FALSE);
+
+            if (gimp_layer_can_lock_alpha (*layer))
+              gimp_layer_set_lock_alpha (*layer, lock_alpha, FALSE);
           }
           break;
 
@@ -697,7 +786,7 @@ xcf_load_layer_props (XcfInfo   *info,
             info->cp += xcf_read_int32 (info->fp, &offset_x, 1);
             info->cp += xcf_read_int32 (info->fp, &offset_y, 1);
 
-            gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
+            gimp_item_set_offset (GIMP_ITEM (*layer), offset_x, offset_y);
           }
           break;
 
@@ -706,7 +795,7 @@ xcf_load_layer_props (XcfInfo   *info,
             guint32 mode;
 
             info->cp += xcf_read_int32 (info->fp, &mode, 1);
-            gimp_layer_set_mode (layer, (GimpLayerModeEffects) mode, FALSE);
+            gimp_layer_set_mode (*layer, (GimpLayerModeEffects) mode, FALSE);
           }
           break;
 
@@ -715,7 +804,7 @@ xcf_load_layer_props (XcfInfo   *info,
             GimpTattoo tattoo;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
-            gimp_item_set_tattoo (GIMP_ITEM (layer), tattoo);
+            gimp_item_set_tattoo (GIMP_ITEM (*layer), tattoo);
           }
           break;
 
@@ -727,7 +816,7 @@ xcf_load_layer_props (XcfInfo   *info,
             while (info->cp - base < prop_size)
               {
                 p = xcf_load_parasite (info);
-                gimp_item_parasite_attach (GIMP_ITEM (layer), p);
+                gimp_item_parasite_attach (GIMP_ITEM (*layer), p);
                 gimp_parasite_free (p);
               }
 
@@ -740,6 +829,42 @@ xcf_load_layer_props (XcfInfo   *info,
 
         case PROP_TEXT_LAYER_FLAGS:
           info->cp += xcf_read_int32 (info->fp, text_layer_flags, 1);
+          break;
+
+        case PROP_GROUP_ITEM:
+          {
+            GimpLayer *group;
+
+            group = gimp_group_layer_new (image);
+
+            gimp_object_set_name (GIMP_OBJECT (group),
+                                  gimp_object_get_name (*layer));
+
+            GIMP_DRAWABLE (group)->type =
+              gimp_drawable_type (GIMP_DRAWABLE (*layer));
+
+            g_object_ref_sink (*layer);
+            g_object_unref (*layer);
+            *layer = group;
+          }
+          break;
+
+        case PROP_ITEM_PATH:
+          {
+            glong  base = info->cp;
+            GList *path = NULL;
+
+            while (info->cp - base < prop_size)
+              {
+                guint32 index;
+
+                info->cp += xcf_read_int32 (info->fp, &index, 1);
+
+                path = g_list_append (path, GUINT_TO_POINTER (index));
+              }
+
+            *item_path = path;
+          }
           break;
 
         default:
@@ -843,6 +968,16 @@ xcf_load_channel_props (XcfInfo      *info,
           }
           break;
 
+        case PROP_LOCK_CONTENT:
+          {
+            gboolean lock_content;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_content, 1);
+            gimp_item_set_lock_content (GIMP_ITEM (*channel),
+                                        lock_content ? TRUE : FALSE, FALSE);
+          }
+          break;
+
         case PROP_SHOW_MASKED:
           {
             gboolean show_masked;
@@ -935,8 +1070,9 @@ xcf_load_prop (XcfInfo  *info,
 }
 
 static GimpLayer *
-xcf_load_layer (XcfInfo   *info,
-                GimpImage *image)
+xcf_load_layer (XcfInfo    *info,
+                GimpImage  *image,
+                GList     **item_path)
 {
   GimpLayer     *layer;
   GimpLayerMask *layer_mask;
@@ -973,7 +1109,7 @@ xcf_load_layer (XcfInfo   *info,
     return NULL;
 
   /* read in the layer properties */
-  if (! xcf_load_layer_props (info, image, layer,
+  if (! xcf_load_layer_props (info, image, &layer, item_path,
                               &apply_mask, &edit_mask, &show_mask,
                               &text_layer_flags))
     goto error;
@@ -999,15 +1135,21 @@ xcf_load_layer (XcfInfo   *info,
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
   info->cp += xcf_read_int32 (info->fp, &layer_mask_offset, 1);
 
-  /* read in the hierarchy */
-  if (! xcf_seek_pos (info, hierarchy_offset, NULL))
-    goto error;
+  /* read in the hierarchy (ignore it for group layers, both as an
+   * optimization and because the hierarchy's extents don't match
+   * the group layer's tiles)
+   */
+  if (! gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    {
+      if (! xcf_seek_pos (info, hierarchy_offset, NULL))
+        goto error;
 
-  if (! xcf_load_hierarchy (info,
-                            gimp_drawable_get_tiles (GIMP_DRAWABLE (layer))))
-    goto error;
+      if (! xcf_load_hierarchy (info,
+                                gimp_drawable_get_tiles (GIMP_DRAWABLE (layer))))
+        goto error;
 
-  xcf_progress_update (info);
+      xcf_progress_update (info);
+    }
 
   /* read in the layer mask */
   if (layer_mask_offset != 0)
@@ -1025,7 +1167,14 @@ xcf_load_layer (XcfInfo   *info,
       gimp_layer_mask_set_edit  (layer_mask, edit_mask);
       gimp_layer_mask_set_show  (layer_mask, show_mask, FALSE);
 
-      gimp_layer_add_mask (layer, layer_mask, FALSE, NULL);
+      /* don't add the layer mask yet, that won't work for group
+       * layers which update their size automatically; instead
+       * attach it so it can be added when all layers are loaded
+       */
+      g_object_set_data_full (G_OBJECT (layer), "gimp-layer-mask",
+                              g_object_ref (layer_mask),
+                              (GDestroyNotify) g_object_unref);
+      g_object_ref_sink (layer_mask);
     }
 
   /* attach the floating selection... */

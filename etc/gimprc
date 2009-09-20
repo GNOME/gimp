@@ -650,15 +650,9 @@
 # 
 # (user-manual-online-uri "http://docs.gimp.org/2.7")
 
-# The window type hint that is set on the toolbox. This may affect how your
-# window manager decorates and handles the toolbox window.  Possible values
-# are normal, utility and keep-above.
-# 
-# (toolbox-window-hint utility)
-
-# The window type hint that is set on dock windows. This may affect the way
-# your window manager decorates and handles dock windows.  Possible values
-# are normal, utility and keep-above.
+# The window type hint that is set on dock windows and the toolbox window.
+# This may affect the way your window manager decorates and handles these
+# windows.  Possible values are normal, utility and keep-above.
 # 
 # (dock-window-hint utility)
 

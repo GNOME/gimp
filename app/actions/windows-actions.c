@@ -34,6 +34,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
+#include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
@@ -158,6 +159,15 @@ windows_actions_update (GimpActionGroup *group,
 {
 }
 
+gchar *
+windows_actions_dock_to_action_name (GimpDock *dock)
+{
+  GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
+
+  return g_strdup_printf ("windows-dock-%04d",
+                          gimp_dock_window_get_id (dock_window));
+}
+
 
 /*  private functions  */
 
@@ -271,8 +281,7 @@ windows_actions_dock_added (GimpDialogFactory *factory,
 {
   GtkAction       *action;
   GimpActionEntry  entry;
-  gchar           *action_name = g_strdup_printf ("windows-dock-%04d",
-                                                  gimp_dock_get_id (dock));
+  gchar           *action_name = windows_actions_dock_to_action_name (dock);
 
   entry.name        = action_name;
   entry.stock_id    = NULL;
@@ -309,7 +318,7 @@ windows_actions_dock_removed (GimpDialogFactory *factory,
                               GimpActionGroup   *group)
 {
   GtkAction *action;
-  gchar     *action_name = g_strdup_printf ("windows-dock-%04d", gimp_dock_get_id (dock));
+  gchar     *action_name = windows_actions_dock_to_action_name (dock);
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
@@ -327,7 +336,7 @@ windows_actions_dock_notify (GimpDock         *dock,
   GtkAction *action;
   gchar     *action_name;
 
-  action_name = g_strdup_printf ("windows-dock-%04d", gimp_dock_get_id (dock));
+  action_name = windows_actions_dock_to_action_name (dock);
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
   g_free (action_name);
 
@@ -364,9 +373,9 @@ windows_actions_recent_add (GimpContainer   *container,
 
   entry.name        = action_name;
   entry.stock_id    = NULL;
-  entry.label       = gimp_object_get_name (GIMP_OBJECT (info));
+  entry.label       = gimp_object_get_name (info);
   entry.accelerator = NULL;
-  entry.tooltip     = gimp_object_get_name (GIMP_OBJECT (info));
+  entry.tooltip     = gimp_object_get_name (info);
   entry.callback    = G_CALLBACK (windows_open_recent_cmd_callback);
   entry.help_id     = GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK;
 

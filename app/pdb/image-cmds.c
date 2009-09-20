@@ -878,7 +878,7 @@ image_pick_correlate_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      layer = gimp_image_pick_correlate_layer (image, x, y);
+      layer = gimp_image_pick_layer (image, x, y);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1508,9 +1508,15 @@ image_merge_down_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      layer = gimp_image_merge_down (image, merge_layer, context, merge_type);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), FALSE, error))
+        {
+          layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
+                                         error);
 
-      if (! layer)
+          if (! layer)
+            success = FALSE;
+        }
+      else
         success = FALSE;
     }
 
@@ -1542,7 +1548,8 @@ image_add_layer_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error))
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
         success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
       else
         success = FALSE;
@@ -2195,7 +2202,7 @@ image_get_uri_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      uri = g_strdup (gimp_object_get_name (GIMP_OBJECT (image)));
+      uri = g_strdup (gimp_object_get_name (image));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

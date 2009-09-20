@@ -438,9 +438,9 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
           GError              *error = NULL;
 
           if (gimp->be_verbose)
-            g_print ("Starting extension: '%s'\n", GIMP_OBJECT (proc)->name);
+            g_print ("Starting extension: '%s'\n", gimp_object_get_name (proc));
 
-          status_callback (NULL, GIMP_OBJECT (proc)->name,
+          status_callback (NULL, gimp_object_get_name (proc),
                            (gdouble) nth / (gdouble) n_extensions);
 
           args = g_value_array_new (0);
@@ -633,7 +633,7 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
             gimp_pdb_execute_procedure_by_name (manager->gimp->pdb,
                                                 context, NULL, &error,
                                                 "gimp-register-save-handler",
-                                                G_TYPE_STRING, GIMP_OBJECT (proc)->name,
+                                                G_TYPE_STRING, gimp_object_get_name (proc),
                                                 G_TYPE_STRING, proc->extensions,
                                                 G_TYPE_STRING, proc->prefixes,
                                                 G_TYPE_NONE);
@@ -644,7 +644,7 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
             gimp_pdb_execute_procedure_by_name (manager->gimp->pdb,
                                                 context, NULL, &error,
                                                 "gimp-register-magic-load-handler",
-                                                G_TYPE_STRING, GIMP_OBJECT (proc)->name,
+                                                G_TYPE_STRING, gimp_object_get_name (proc),
                                                 G_TYPE_STRING, proc->extensions,
                                                 G_TYPE_STRING, proc->prefixes,
                                                 G_TYPE_STRING, proc->magics,

@@ -26,6 +26,7 @@
 #include "pdb-types.h"
 
 #include "core/gimpchannel-select.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
@@ -120,7 +121,7 @@ vectors_new_from_text_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, error))
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
         {
           gint x, y;
 
@@ -224,7 +225,7 @@ vectors_get_name_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+      name = g_strdup (gimp_object_get_name (vectors));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -367,6 +368,62 @@ vectors_set_linked_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+vectors_get_lock_content_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpVectors *vectors;
+  gboolean lock_content = FALSE;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+
+  if (success)
+    {
+      lock_content = gimp_item_get_lock_content (GIMP_ITEM (vectors));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], lock_content);
+
+  return return_vals;
+}
+
+static GValueArray *
+vectors_set_lock_content_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gboolean lock_content;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+  lock_content = g_value_get_boolean (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp_item_can_lock_content (GIMP_ITEM (vectors)))
+        gimp_item_set_lock_content (GIMP_ITEM (vectors), lock_content, TRUE);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
 vectors_get_tattoo_invoker (GimpProcedure      *procedure,
                             Gimp               *gimp,
                             GimpContext        *context,
@@ -489,7 +546,7 @@ vectors_stroke_get_length_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
 
       if (stroke)
         length = gimp_stroke_get_length (stroke, precision);
@@ -532,7 +589,7 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
 
       if (stroke)
         {
@@ -578,10 +635,17 @@ vectors_remove_stroke_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
-        gimp_vectors_stroke_remove (vectors, stroke);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Remove path stroke"),
+                                              vectors);
+
+          gimp_vectors_stroke_remove (vectors, stroke);
+        }
       else
         success = FALSE;
     }
@@ -607,10 +671,17 @@ vectors_stroke_close_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
-        gimp_stroke_close (stroke);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Close path stroke"),
+                                              vectors);
+
+          gimp_stroke_close (stroke);
+        }
       else
         success = FALSE;
     }
@@ -640,10 +711,17 @@ vectors_stroke_translate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
-        gimp_stroke_translate (stroke, off_x, off_y);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Translate path stroke"),
+                                              vectors);
+
+          gimp_stroke_translate (stroke, off_x, off_y);
+        }
       else
         success = FALSE;
     }
@@ -673,10 +751,17 @@ vectors_stroke_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
-        gimp_stroke_scale (stroke, scale_x, scale_y);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Scale path stroke"),
+                                              vectors);
+
+          gimp_stroke_scale (stroke, scale_x, scale_y);
+        }
       else
         success = FALSE;
     }
@@ -708,10 +793,17 @@ vectors_stroke_rotate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
-        gimp_stroke_rotate (stroke, center_x, center_y, angle);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Rotate path stroke"),
+                                              vectors);
+
+          gimp_stroke_rotate (stroke, center_x, center_y, angle);
+        }
       else
         success = FALSE;
     }
@@ -741,10 +833,17 @@ vectors_stroke_flip_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
-        gimp_stroke_flip (stroke, flip_type, axis);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Flip path stroke"),
+                                              vectors);
+
+          gimp_stroke_flip (stroke, flip_type, axis);
+        }
       else
         success = FALSE;
     }
@@ -778,10 +877,17 @@ vectors_stroke_flip_free_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
-        gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Flip path stroke"),
+                                              vectors);
+
+          gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
+        }
       else
         success = FALSE;
     }
@@ -812,7 +918,7 @@ vectors_stroke_get_points_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
 
       if (GIMP_IS_BEZIER_STROKE (stroke))
         {
@@ -904,7 +1010,13 @@ vectors_stroke_new_from_points_invoker (GimpProcedure      *procedure,
           stroke = gimp_stroke_new_from_coords (type, coords, num_points/2, closed);
           if (stroke)
             {
+              if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+                gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                                  _("Add path stroke"),
+                                                  vectors);
+
               gimp_vectors_stroke_add (vectors, stroke);
+
               stroke_id = gimp_stroke_get_ID (stroke);
 
               success = TRUE;
@@ -946,7 +1058,7 @@ vectors_stroke_interpolate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, FALSE, error);
 
       if (stroke)
         {
@@ -1009,15 +1121,28 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke;
-      GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+        {
+          GimpStroke *stroke;
+          GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-      coord0.x = x0;
-      coord0.y = y0;
+          coord0.x = x0;
+          coord0.y = y0;
 
-      stroke = gimp_bezier_stroke_new_moveto (&coord0);
-      gimp_vectors_stroke_add (vectors, stroke);
-      stroke_id = gimp_stroke_get_ID (stroke);
+          stroke = gimp_bezier_stroke_new_moveto (&coord0);
+
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Add path stroke"),
+                                              vectors);
+
+          gimp_vectors_stroke_add (vectors, stroke);
+
+          stroke_id = gimp_stroke_get_ID (stroke);
+        }
+      else
+        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1050,7 +1175,7 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -1058,6 +1183,11 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure      *procedure,
 
           coord0.x = x0;
           coord0.y = y0;
+
+         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                             _("Extend path stroke"),
+                                             vectors);
 
           gimp_bezier_stroke_lineto (stroke, &coord0);
         }
@@ -1094,7 +1224,7 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -1106,6 +1236,11 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure      *procedure,
 
           coord1.x = x1;
           coord1.y = y1;
+
+         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                             _("Extend path stroke"),
+                                             vectors);
 
           gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
         }
@@ -1146,7 +1281,7 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, error);
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, TRUE, error);
 
       if (stroke)
         {
@@ -1162,6 +1297,11 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure      *procedure,
 
           coord2.x = x2;
           coord2.y = y2;
+
+         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                             _("Extend path stroke"),
+                                             vectors);
 
           gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
         }
@@ -1200,15 +1340,28 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpStroke *stroke;
-      GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (vectors), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+        {
+          GimpStroke *stroke;
+          GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-      coord0.x = x0;
-      coord0.y = y0;
+          coord0.x = x0;
+          coord0.y = y0;
 
-      stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
-      gimp_vectors_stroke_add (vectors, stroke);
-      stroke_id = gimp_stroke_get_ID (stroke);
+          stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
+
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Add path stroke"),
+                                              vectors);
+
+          gimp_vectors_stroke_add (vectors, stroke);
+
+          stroke_id = gimp_stroke_get_ID (stroke);
+        }
+      else
+        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1784,6 +1937,64 @@ register_vectors_procs (GimpPDB *pdb)
                                g_param_spec_boolean ("linked",
                                                      "linked",
                                                      "Whether the path is linked",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-get-lock-content
+   */
+  procedure = gimp_procedure_new (vectors_get_lock_content_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-get-lock-content");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-get-lock-content",
+                                     "Gets the 'lock content' state of the vectors object.",
+                                     "Gets the 'lock content' state of the vectors object.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2009",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("lock-content",
+                                                         "lock content",
+                                                         "Whether the path's strokes are locked",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-set-lock-content
+   */
+  procedure = gimp_procedure_new (vectors_set_lock_content_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-set-lock-content");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-set-lock-content",
+                                     "Sets the 'lock content' state of the vectors object.",
+                                     "Sets the 'lock content' state of the vectors object.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2009",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("lock-content",
+                                                     "lock content",
+                                                     "Whether the path's strokes are locked",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

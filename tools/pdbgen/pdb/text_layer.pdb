@@ -102,7 +102,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "text", &text,
@@ -136,7 +136,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -174,7 +174,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "font", &font,
@@ -208,7 +208,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -250,7 +250,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "font-size",      &font_size,
@@ -288,7 +288,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -323,7 +323,7 @@ sub text_layer_get_hinting {
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "hinting", &hinting,
@@ -363,7 +363,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -401,7 +401,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "antialias", &antialias,
@@ -435,7 +435,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -475,7 +475,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "hint-style", &style,
@@ -511,7 +511,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -549,7 +549,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "kerning", &kerning,
@@ -583,7 +583,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -622,7 +622,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "language", &language,
@@ -657,7 +657,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -696,7 +696,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "base-direction", &direction,
@@ -731,7 +731,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -770,7 +770,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "justify", &justify,
@@ -805,7 +805,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -843,7 +843,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       color = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer))->color;
     }
@@ -875,7 +875,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -913,7 +913,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "indent", &indent,
@@ -947,7 +947,7 @@ HELP
      %invoke = (
          code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -985,7 +985,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "line-spacing", &line_spacing,
@@ -1019,7 +1019,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -1058,7 +1058,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
     {
       g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
                     "letter-spacing", &letter_spacing,
@@ -1093,7 +1093,7 @@ HELP
     %invoke = (    
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
@@ -1135,7 +1135,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, error))
+  if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),

@@ -7,6 +7,61 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.8.
 
 
+Changes in GIMP 2.7.1
+=====================
+
+
+UI:
+
+ - Add "lock content" button to the layers, channels and paths dialogs,
+   make the lock buttons more compact
+ - Refuse to edit locked items
+ - Show layer groups in the layers dialog and add a menu item to
+   create group layers
+ - Improve internals and GUI of the save/export functionality
+ - Move the shortcut dialog's "clear" button into the entry
+
+
+Core:
+
+ - Make all GimpItems lockable so their contents can't be changed
+ - Make more sense when naming imported layers
+ - Make group layers work except for layer masks and save them in
+   the XCF
+ - Change GimpProjectable::update to GimpProjectable:invalidate
+ - Make sure we don't mix font backends (and crash) by explicitely
+   asking for FT/Fontconfig backends
+ - Move members of GimpObject to a private struct
+ - gimp_object_get_name() takes a gconstpointer now, remove casts
+   from all callers
+ - Let drawables connect to their floating selection's "update" signal
+   instead of letting the image do this job
+
+
+GEGL:
+
+ - Make sure all nodes are added to their resp. graphs
+
+
+Plug-ins:
+
+ - Updated script-fu's scheme to latest upstream fixes
+ - Don't store image-specific print settings globally
+
+
+Data:
+
+ - Add texture/grunge brushes made by Johannes Engelhardt
+
+
+General:
+
+ - Lots of bug fixes and cleanup
+ - Lots of translation updates
+ - Clean up subsystem linking dependencies in app/
+ - Add unit testing framework in app/tests/ and some basic tests
+
+
 Changes in GIMP 2.7.0
 =====================
 
@@ -27,6 +82,7 @@ UI:
    and size
  - Get rid of the Tools dockable and move toolbox configuration to
    Preferences
+ - Allow closing the toolbox without closing the whole application
  - Add status bar feedback for keyboard changes to brush paramaters
  - Add diagonal guides to the Crop Tool
  - New docks are created at the pointer position

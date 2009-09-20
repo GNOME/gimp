@@ -56,6 +56,10 @@
 #include "gimp-intl.h"
 
 
+/*  an arbitrary limit to keep the file dialog from becoming too wide  */
+#define MAX_EXTENSIONS  4
+
+
 struct _GimpFileDialogState
 {
   gchar *filter_name;
@@ -89,7 +93,12 @@ static void     gimp_file_dialog_add_preview            (GimpFileDialog   *dialo
                                                          Gimp             *gimp);
 static void     gimp_file_dialog_add_filters            (GimpFileDialog   *dialog,
                                                          Gimp             *gimp,
-                                                         GSList           *file_procs);
+                                                         GSList           *file_procs,
+                                                         GSList           *file_procs_all_images);
+static void     gimp_file_dialog_process_procedure      (GimpPlugInProcedure
+                                                                          *file_proc,
+                                                         GtkFileFilter    **filter_out,
+                                                         GtkFileFilter    *all);
 static void     gimp_file_dialog_add_proc_selection     (GimpFileDialog   *dialog,
                                                          Gimp             *gimp,
                                                          GSList           *file_procs,
@@ -294,12 +303,13 @@ gimp_file_dialog_new (Gimp                  *gimp,
                       const gchar           *stock_id,
                       const gchar           *help_id)
 {
-  GimpFileDialog       *dialog;
-  GSList               *file_procs;
-  const gchar          *automatic;
-  const gchar          *automatic_help_id;
-  gboolean              local_only;
-  GtkFileChooserAction  gtk_action;
+  GimpFileDialog       *dialog                = NULL;
+  GSList               *file_procs            = NULL;
+  GSList               *file_procs_all_images = NULL;
+  const gchar          *automatic             = NULL;
+  const gchar          *automatic_help_id     = NULL;
+  gboolean              local_only            = FALSE;
+  GtkFileChooserAction  gtk_action            = 0;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -310,10 +320,11 @@ gimp_file_dialog_new (Gimp                  *gimp,
   switch (action)
     {
     case GIMP_FILE_CHOOSER_ACTION_OPEN:
-      gtk_action = GTK_FILE_CHOOSER_ACTION_OPEN;
-      file_procs = gimp->plug_in_manager->load_procs;
-      automatic  = _("Automatically Detected");
-      automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
+      gtk_action            = GTK_FILE_CHOOSER_ACTION_OPEN;
+      file_procs            = gimp->plug_in_manager->load_procs;
+      file_procs_all_images = NULL;
+      automatic             = _("Automatically Detected");
+      automatic_help_id     = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
 
       /* FIXME */
       local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
@@ -322,12 +333,15 @@ gimp_file_dialog_new (Gimp                  *gimp,
 
     case GIMP_FILE_CHOOSER_ACTION_SAVE:
     case GIMP_FILE_CHOOSER_ACTION_EXPORT:
-      gtk_action = GTK_FILE_CHOOSER_ACTION_SAVE;
-      file_procs = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
-                    gimp->plug_in_manager->save_procs :
-                    gimp->plug_in_manager->export_procs);
-      automatic  = _("By Extension");
-      automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
+      gtk_action            = GTK_FILE_CHOOSER_ACTION_SAVE;
+      file_procs            = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
+                               gimp->plug_in_manager->save_procs :
+                               gimp->plug_in_manager->export_procs);
+      file_procs_all_images = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
+                               gimp->plug_in_manager->export_procs :
+                               gimp->plug_in_manager->save_procs);
+      automatic             = _("By Extension");
+      automatic_help_id     = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
       /* FIXME */
       local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
@@ -387,7 +401,10 @@ gimp_file_dialog_new (Gimp                  *gimp,
 
   gimp_file_dialog_add_preview (dialog, gimp);
 
-  gimp_file_dialog_add_filters (dialog, gimp, file_procs);
+  gimp_file_dialog_add_filters (dialog,
+                                gimp,
+                                file_procs,
+                                file_procs_all_images);
 
   gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
                                        automatic_help_id);
@@ -505,7 +522,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                      GIMP_FILE_SAVE_A_COPY_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = gimp_object_get_name (GIMP_OBJECT (image));
+        dir_uri = gimp_object_get_name (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (image),
@@ -537,11 +554,11 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                       GIMP_FILE_SAVE_A_COPY_URI_KEY);
 
       if (! name_uri)
-        name_uri = gimp_object_get_name (GIMP_OBJECT (image));
+        name_uri = gimp_object_get_name (image);
 
       if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_EXPORT_TO_URI_KEY);
+                                      GIMP_FILE_EXPORT_URI_KEY);
 
       if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),
@@ -556,7 +573,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   1. Type of last Save
        *   2. .xcf (which we don't explicitly append)
        */
-      ext_uri = gimp_object_get_name (GIMP_OBJECT (image));
+      ext_uri = gimp_object_get_name (image);
 
       if (! ext_uri)
         ext_uri = "file:///we/only/care/about/extension.xcf";
@@ -590,7 +607,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                      GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = gimp_object_get_name (GIMP_OBJECT (image));
+        dir_uri = gimp_object_get_name (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (gimp),
@@ -603,8 +620,8 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       /* Priority of default basenames for Export:
        *
        *   1. Last Export name
-       *   2. Source file name
        *   3. Save URI
+       *   2. Source file name
        *   3. 'Untitled'
        */
 
@@ -612,15 +629,11 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                     GIMP_FILE_EXPORT_URI_KEY);
 
       if (! name_uri)
+        name_uri = gimp_object_get_name (image);
+
+      if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),
                                       GIMP_FILE_IMPORT_SOURCE_URI_KEY);
-
-      if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_EXPORT_TO_URI_KEY);
-
-      if (! name_uri)
-        name_uri = gimp_object_get_name (GIMP_OBJECT (image));
 
       if (! name_uri)
         name_uri = gimp_image_get_uri (image); /* Untitled */
@@ -763,10 +776,21 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog,
 #endif
 }
 
+/**
+ * gimp_file_dialog_add_filters:
+ * @dialog:
+ * @gimp:
+ * @file_procs:            The image types that can be chosen from
+ *                         the drop down
+ * @file_procs_all_images: The additional images types shown when
+ *                         "All images" is selected
+ *
+ **/
 static void
 gimp_file_dialog_add_filters (GimpFileDialog *dialog,
                               Gimp           *gimp,
-                              GSList         *file_procs)
+                              GSList         *file_procs,
+                              GSList         *file_procs_all_images)
 {
   GtkFileFilter *all;
   GSList        *list;
@@ -780,67 +804,114 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
   gtk_file_filter_set_name (all, _("All images"));
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
 
+  /* Add the normal file procs */
   for (list = file_procs; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *file_proc = list->data;
+      GtkFileFilter       *filter    = NULL;
 
-      if (file_proc->extensions_list)
+      gimp_file_dialog_process_procedure (file_proc,
+                                          &filter,
+                                          all);
+      if (filter)
         {
-          GtkFileFilter *filter = gtk_file_filter_new ();
-          GString       *str;
-          GSList        *ext;
-          gint           i;
-
-          str = g_string_new (gimp_plug_in_procedure_get_label (file_proc));
-
-/*  an arbitrary limit to keep the file dialog from becoming too wide  */
-#define MAX_EXTENSIONS  4
-
-          for (ext = file_proc->extensions_list, i = 0;
-               ext;
-               ext = g_slist_next (ext), i++)
-            {
-              const gchar *extension = ext->data;
-              gchar       *pattern;
-
-              pattern = gimp_file_dialog_pattern_from_extension (extension);
-              gtk_file_filter_add_pattern (filter, pattern);
-              gtk_file_filter_add_pattern (all, pattern);
-              g_free (pattern);
-
-              if (i == 0)
-                {
-                  g_string_append (str, " (");
-                }
-              else if (i <= MAX_EXTENSIONS)
-                {
-                  g_string_append (str, ", ");
-                }
-
-              if (i < MAX_EXTENSIONS)
-                {
-                  g_string_append (str, "*.");
-                  g_string_append (str, extension);
-                }
-              else if (i == MAX_EXTENSIONS)
-                {
-                  g_string_append (str, "...");
-                }
-
-              if (! ext->next)
-                {
-                  g_string_append (str, ")");
-                }
-            }
-
-          gtk_file_filter_set_name (filter, str->str);
-          g_string_free (str, TRUE);
-
-          gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+          gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog),
+                                       filter);
+          g_object_unref (filter);
         }
     }
 
+  /* Add the "rest" of the file procs only as filters to
+   * "All images"
+   */
+  for (list = file_procs_all_images; list; list = g_slist_next (list))
+    {
+      GimpPlugInProcedure *file_proc = list->data;
+
+      gimp_file_dialog_process_procedure (file_proc,
+                                          NULL,
+                                          all);
+    }
+
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all);
+}
+
+
+/**
+ * gimp_file_dialog_process_procedure:
+ * @file_proc:
+ * @filter_out:
+ * @all:
+ *
+ * Creates a #GtkFileFilter of @file_proc and adds the extensions to
+ * the @all filter. The returned #GtkFileFilter has a normal ref and
+ * must be unreffed when used.
+ **/
+static void
+gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
+                                    GtkFileFilter       **filter_out,
+                                    GtkFileFilter        *all)
+{
+  GtkFileFilter *filter = NULL;
+  GString       *str    = NULL;
+  GSList        *ext    = NULL;
+  gint           i      = 0;
+
+  if (!file_proc->extensions_list)
+    return;
+
+  filter = gtk_file_filter_new ();
+  str    = g_string_new (gimp_plug_in_procedure_get_label (file_proc));
+
+  /* Take ownership directly so we don't have to mess with a floating
+   * ref
+   */
+  g_object_ref_sink (filter);
+
+  for (ext = file_proc->extensions_list, i = 0;
+       ext;
+       ext = g_slist_next (ext), i++)
+    {
+      const gchar *extension = ext->data;
+      gchar       *pattern;
+
+      pattern = gimp_file_dialog_pattern_from_extension (extension);
+      gtk_file_filter_add_pattern (filter, pattern);
+      gtk_file_filter_add_pattern (all, pattern);
+      g_free (pattern);
+
+      if (i == 0)
+        {
+          g_string_append (str, " (");
+        }
+      else if (i <= MAX_EXTENSIONS)
+        {
+          g_string_append (str, ", ");
+        }
+
+      if (i < MAX_EXTENSIONS)
+        {
+          g_string_append (str, "*.");
+          g_string_append (str, extension);
+        }
+      else if (i == MAX_EXTENSIONS)
+        {
+          g_string_append (str, "...");
+        }
+
+      if (! ext->next)
+        {
+          g_string_append (str, ")");
+        }
+    }
+
+  gtk_file_filter_set_name (filter, str->str);
+  g_string_free (str, TRUE);
+
+  if (filter_out)
+    *filter_out = g_object_ref (filter);
+
+  g_object_unref (filter);
 }
 
 static void

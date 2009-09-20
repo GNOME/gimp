@@ -319,7 +319,7 @@ static void
 gimp_image_prop_view_label_set_filename (GtkWidget *label,
                                          GimpImage *image)
 {
-  const gchar *uri = gimp_object_get_name (GIMP_OBJECT (image));
+  const gchar *uri = gimp_object_get_name (image);
 
   if (uri)
     {

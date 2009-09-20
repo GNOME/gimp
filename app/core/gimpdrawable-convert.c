@@ -29,17 +29,70 @@
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-convert.h"
+#include "gimpimage.h"
 
 
 void
-gimp_drawable_convert_rgb (GimpDrawable      *drawable,
-                           TileManager       *new_tiles,
-                           GimpImageBaseType  old_base_type)
+gimp_drawable_convert_rgb (GimpDrawable *drawable,
+                           gboolean      push_undo)
+{
+  GimpImageType  type;
+  TileManager   *tiles;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_rgb (drawable));
+
+  type = GIMP_RGB_IMAGE;
+
+  if (gimp_drawable_has_alpha (drawable))
+    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+
+  tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (drawable)),
+                            gimp_item_get_height (GIMP_ITEM (drawable)),
+                            GIMP_IMAGE_TYPE_BYTES (type));
+
+  gimp_drawable_convert_tiles_rgb (drawable, tiles);
+
+  gimp_drawable_set_tiles (drawable, push_undo, NULL,
+                           tiles, type);
+  tile_manager_unref (tiles);
+}
+
+void
+gimp_drawable_convert_grayscale (GimpDrawable *drawable,
+                                 gboolean      push_undo)
+{
+  GimpImageType  type;
+  TileManager   *tiles;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_gray (drawable));
+
+  type = GIMP_GRAY_IMAGE;
+
+  if (gimp_drawable_has_alpha (drawable))
+    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+
+  tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (drawable)),
+                            gimp_item_get_height (GIMP_ITEM (drawable)),
+                            GIMP_IMAGE_TYPE_BYTES (type));
+
+  gimp_drawable_convert_tiles_grayscale (drawable, tiles);
+
+  gimp_drawable_set_tiles (drawable, push_undo, NULL,
+                           tiles, type);
+  tile_manager_unref (tiles);
+}
+
+void
+gimp_drawable_convert_tiles_rgb (GimpDrawable *drawable,
+                                 TileManager  *new_tiles)
 {
   PixelRegion   srcPR, destPR;
   gint          row, col;
   gint          offset;
-  gint          has_alpha;
+  GimpImageType type;
+  gboolean      has_alpha;
   const guchar *src, *s;
   guchar       *dest, *d;
   const guchar *cmap;
@@ -48,6 +101,7 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (new_tiles != NULL);
 
+  type      = gimp_drawable_type (drawable);
   has_alpha = gimp_drawable_has_alpha (drawable);
 
   g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 4 : 3));
@@ -65,8 +119,7 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
                      gimp_item_get_height (GIMP_ITEM (drawable)),
                      TRUE);
 
-
-  switch (old_base_type)
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
     {
     case GIMP_GRAY:
       for (pr = pixel_regions_register (2, &srcPR, &destPR);
@@ -136,13 +189,13 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
 }
 
 void
-gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
-                                 TileManager       *new_tiles,
-                                 GimpImageBaseType  old_base_type)
+gimp_drawable_convert_tiles_grayscale (GimpDrawable *drawable,
+                                       TileManager  *new_tiles)
 {
   PixelRegion   srcPR, destPR;
   gint          row, col;
   gint          offset, val;
+  GimpImageType type;
   gboolean      has_alpha;
   const guchar *src, *s;
   guchar       *dest, *d;
@@ -152,6 +205,7 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (new_tiles != NULL);
 
+  type      = gimp_drawable_type (drawable);
   has_alpha = gimp_drawable_has_alpha (drawable);
 
   g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 2 : 1));
@@ -169,7 +223,7 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
                      gimp_item_get_height (GIMP_ITEM (drawable)),
                      TRUE);
 
-  switch (old_base_type)
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
     {
     case GIMP_RGB:
       for (pr = pixel_regions_register (2, &srcPR, &destPR);

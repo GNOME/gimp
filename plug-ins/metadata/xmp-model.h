@@ -91,8 +91,6 @@ GType         xmp_model_get_type            (void) G_GNUC_CONST;
 
 XMPModel     *xmp_model_new                 (void);
 
-void          xmp_model_free                (XMPModel     *xmp_model);
-
 gboolean      xmp_model_is_empty            (XMPModel     *xmp_model);
 
 gboolean      xmp_model_parse_buffer        (XMPModel     *xmp_model,

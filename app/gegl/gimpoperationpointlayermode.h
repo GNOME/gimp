@@ -32,6 +32,18 @@
 
 typedef struct _GimpOperationPointLayerModeClass GimpOperationPointLayerModeClass;
 
+struct _GimpOperationPointLayerModeClass
+{
+  GeglOperationPointComposerClass  parent_class;
+};
+
+struct _GimpOperationPointLayerMode
+{
+  GeglOperationPointComposer  parent_instance;
+
+  GimpLayerModeEffects        blend_mode;
+};
+
 
 GType   gimp_operation_point_layer_mode_get_type (void) G_GNUC_CONST;
 

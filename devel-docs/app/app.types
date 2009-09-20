@@ -105,6 +105,7 @@ gimp_display_options_get_type
 gimp_display_shell_get_type
 gimp_dock_get_type
 gimp_dock_separator_get_type
+gimp_dock_window_get_type
 gimp_dockable_get_type
 gimp_dockbook_get_type
 gimp_docked_interface_get_type
@@ -116,6 +117,7 @@ gimp_dodge_burn_tool_get_type
 gimp_draw_tool_get_type
 gimp_drawable_get_type
 gimp_drawable_mod_undo_get_type
+gimp_drawable_stack_get_type
 gimp_drawable_tree_view_get_type
 gimp_drawable_undo_get_type
 gimp_edit_selection_tool_get_type
@@ -132,6 +134,8 @@ gimp_fg_bg_editor_get_type
 gimp_fg_bg_view_get_type
 gimp_file_dialog_get_type
 gimp_file_proc_view_get_type
+gimp_fill_editor_get_type
+gimp_fill_options_get_type
 gimp_filtered_container_get_type
 gimp_flip_options_get_type
 gimp_flip_tool_get_type
@@ -152,6 +156,8 @@ gimp_gradient_get_type
 gimp_gradient_select_get_type
 gimp_grid_editor_get_type
 gimp_grid_get_type
+gimp_group_layer_get_type
+gimp_group_layer_undo_get_type
 gimp_gui_config_get_type
 gimp_guide_get_type
 gimp_guide_undo_get_type
@@ -165,7 +171,6 @@ gimp_histogram_view_get_type
 gimp_hue_saturation_config_get_type
 gimp_hue_saturation_tool_get_type
 gimp_image_comment_editor_get_type
-gimp_image_dock_get_type
 gimp_image_editor_get_type
 gimp_image_get_type
 gimp_image_map_config_get_type
@@ -187,6 +192,7 @@ gimp_iscissors_options_get_type
 gimp_iscissors_tool_get_type
 gimp_item_get_type
 gimp_item_prop_undo_get_type
+gimp_item_stack_get_type
 gimp_item_tree_view_get_type
 gimp_item_undo_get_type
 gimp_language_entry_get_type
@@ -221,6 +227,7 @@ gimp_operation_desaturate_get_type
 gimp_operation_hue_saturation_get_type
 gimp_operation_levels_get_type
 gimp_operation_point_filter_get_type
+gimp_operation_point_layer_mode_get_type
 gimp_operation_posterize_get_type
 gimp_operation_threshold_get_type
 gimp_operation_tile_sink_get_type
@@ -264,6 +271,7 @@ gimp_profile_chooser_dialog_get_type
 gimp_progress_box_get_type
 gimp_progress_dialog_get_type
 gimp_progress_interface_get_type
+gimp_projectable_interface_get_type
 gimp_projection_get_type
 gimp_radio_action_get_type
 gimp_rc_get_type
@@ -276,6 +284,7 @@ gimp_region_select_tool_get_type
 gimp_rotate_tool_get_type
 gimp_sample_point_editor_get_type
 gimp_sample_point_undo_get_type
+gimp_scale_button_get_type
 gimp_scale_combo_box_get_type
 gimp_scale_tool_get_type
 gimp_selection_editor_get_type
@@ -284,9 +293,9 @@ gimp_selection_options_get_type
 gimp_selection_tool_get_type
 gimp_session_info_get_type
 gimp_settings_box_get_type
+gimp_settings_editor_get_type
 gimp_shear_tool_get_type
 gimp_size_box_get_type
-gimp_settings_editor_get_type
 gimp_smudge_get_type
 gimp_smudge_options_get_type
 gimp_smudge_tool_get_type
@@ -295,7 +304,6 @@ gimp_source_options_get_type
 gimp_source_tool_get_type
 gimp_statusbar_get_type
 gimp_string_action_get_type
-gimp_stroke_desc_get_type
 gimp_stroke_editor_get_type
 gimp_stroke_get_type
 gimp_stroke_options_get_type
@@ -315,6 +323,7 @@ gimp_text_get_type
 gimp_text_layer_get_type
 gimp_text_layout_get_type
 gimp_text_options_get_type
+gimp_text_proxy_get_type
 gimp_text_tool_get_type
 gimp_text_undo_get_type
 gimp_threshold_config_get_type
@@ -323,16 +332,17 @@ gimp_thumb_box_get_type
 gimp_toggle_action_get_type
 gimp_tool_control_get_type
 gimp_tool_dialog_get_type
+gimp_tool_editor_get_type
 gimp_tool_get_type
 gimp_tool_info_get_type
 gimp_tool_options_editor_get_type
 gimp_tool_options_get_type
 gimp_tool_presets_get_type
-gimp_tool_view_get_type
 gimp_toolbox_get_type
 gimp_transform_options_get_type
 gimp_transform_tool_get_type
 gimp_transform_tool_undo_get_type
+gimp_tree_handler_get_type
 gimp_ui_manager_get_type
 gimp_undo_editor_get_type
 gimp_undo_get_type

@@ -45,7 +45,7 @@
  * Return value: %TRUE if the intersection is non-empty, %FALSE otherwise
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_rectangle_intersect (gint  x1,
                           gint  y1,
@@ -74,4 +74,51 @@ gimp_rectangle_intersect (gint  x1,
   if (dest_height) *dest_height = d_h;
 
   return (d_w > 0 && d_h > 0);
+}
+
+/**
+ * gimp_rectangle_union:
+ * @x1:          origin of first rectangle
+ * @y1:          origin of first rectangle
+ * @width1:      width of first rectangle
+ * @height1:     height of first rectangle
+ * @x2:          origin of second rectangle
+ * @y2:          origin of second rectangle
+ * @width2:      width of second rectangle
+ * @height2:     height of second rectangle
+ * @dest_x:      return location for origin of union (may be %NULL)
+ * @dest_y:      return location for origin of union (may be %NULL)
+ * @dest_width:  return location for width of union (may be %NULL)
+ * @dest_height: return location for height of union (may be %NULL)
+ *
+ * Calculates the union of two rectangles.
+ *
+ * Since: GIMP 2.8
+ **/
+void
+gimp_rectangle_union (gint  x1,
+                      gint  y1,
+                      gint  width1,
+                      gint  height1,
+                      gint  x2,
+                      gint  y2,
+                      gint  width2,
+                      gint  height2,
+                      gint *dest_x,
+                      gint *dest_y,
+                      gint *dest_width,
+                      gint *dest_height)
+{
+  gint d_x, d_y;
+  gint d_w, d_h;
+
+  d_x = MIN (x1, x2);
+  d_y = MIN (y1, y2);
+  d_w = MAX (x1 + width1,  x2 + width2)  - d_x;
+  d_h = MAX (y1 + height1, y2 + height2) - d_y;
+
+  if (dest_x)      *dest_x      = d_x;
+  if (dest_y)      *dest_y      = d_y;
+  if (dest_width)  *dest_width  = d_w;
+  if (dest_height) *dest_height = d_h;
 }

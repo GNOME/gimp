@@ -339,7 +339,7 @@ gimp_plug_in_cleanup_item (GimpPlugInProcFrame   *proc_frame,
 
       GIMP_LOG (SHADOW_TILES,
                 "Freeing shadow tiles of drawable '%s' on behalf of '%s'.",
-                gimp_object_get_name (GIMP_OBJECT (item)),
+                gimp_object_get_name (item),
                 gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)));
 
       gimp_drawable_free_shadow_tiles (GIMP_DRAWABLE (item));

@@ -24,6 +24,7 @@
 
 #define GIMP_TYPE_TAG_POPUP            (gimp_tag_popup_get_type ())
 #define GIMP_TAG_POPUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAG_POPUP, GimpTagPopup))
+#define GIMP_TAG_POPUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAG_POPUP, GimpTagPopupClass))
 #define GIMP_IS_TAG_POPUP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TAG_POPUP))
 #define GIMP_IS_TAG_POPUP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TAG_POPUP))
 #define GIMP_TAG_POPUP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG_POPUP, GimpTagPopupClass))

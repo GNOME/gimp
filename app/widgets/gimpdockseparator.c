@@ -208,7 +208,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
           /*  if dropping to the same dock, take care that we don't try
            *  to reorder the *only* dockable in the dock
            */
-          if (dockable->dockbook->dock == dock)
+          if (gimp_dockbook_get_dock (dockable->dockbook) == dock)
             {
               GList *children;
               gint   n_books;

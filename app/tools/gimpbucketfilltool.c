@@ -128,7 +128,14 @@ gimp_bucket_fill_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Cannot modify the pixels of layer groups."));
+      return FALSE;
+    }
+
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("The active layer's pixels are locked."));
@@ -195,6 +202,9 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
                                                   release_type, display);
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
 }
 
 static void
@@ -240,19 +250,25 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
   if (gimp_image_coords_in_active_pickable (display->image, coords,
                                             options->sample_merged, TRUE))
     {
-      switch (options->fill_mode)
+      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+
+      if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+          ! gimp_item_is_content_locked (GIMP_ITEM (drawable)))
         {
-        case GIMP_FG_BUCKET_FILL:
-          modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
-          break;
+          switch (options->fill_mode)
+            {
+            case GIMP_FG_BUCKET_FILL:
+              modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
+              break;
 
-        case GIMP_BG_BUCKET_FILL:
-          modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
-          break;
+            case GIMP_BG_BUCKET_FILL:
+              modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
+              break;
 
-        case GIMP_PATTERN_BUCKET_FILL:
-          modifier = GIMP_CURSOR_MODIFIER_PATTERN;
-          break;
+            case GIMP_PATTERN_BUCKET_FILL:
+              modifier = GIMP_CURSOR_MODIFIER_PATTERN;
+              break;
+            }
         }
     }
 

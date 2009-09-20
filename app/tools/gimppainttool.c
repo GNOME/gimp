@@ -84,6 +84,10 @@ static void   gimp_paint_tool_modifier_key   (GimpTool              *tool,
                                               gboolean               press,
                                               GdkModifierType        state,
                                               GimpDisplay           *display);
+static void   gimp_paint_tool_cursor_update  (GimpTool              *tool,
+                                              const GimpCoords      *coords,
+                                              GdkModifierType        state,
+                                              GimpDisplay           *display);
 static void   gimp_paint_tool_oper_update    (GimpTool              *tool,
                                               const GimpCoords      *coords,
                                               GdkModifierType        state,
@@ -117,6 +121,7 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class->button_release = gimp_paint_tool_button_release;
   tool_class->motion         = gimp_paint_tool_motion;
   tool_class->modifier_key   = gimp_paint_tool_modifier_key;
+  tool_class->cursor_update  = gimp_paint_tool_cursor_update;
   tool_class->oper_update    = gimp_paint_tool_oper_update;
 
   draw_tool_class->draw      = gimp_paint_tool_draw;
@@ -269,7 +274,14 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
   drawable = gimp_image_get_active_drawable (display->image);
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("Cannot paint on layer groups."));
+      return;
+    }
+
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer's pixels are locked."));
@@ -505,6 +517,52 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
             }
         }
     }
+}
+
+static void
+gimp_paint_tool_cursor_update (GimpTool         *tool,
+                               const GimpCoords *coords,
+                               GdkModifierType   state,
+                               GimpDisplay      *display)
+{
+  GimpCursorModifier  modifier;
+  GimpCursorModifier  toggle_modifier;
+  GimpCursorModifier  old_modifier;
+  GimpCursorModifier  old_toggle_modifier;
+
+  modifier        = tool->control->cursor_modifier;
+  toggle_modifier = tool->control->toggle_cursor_modifier;
+
+  old_modifier        = modifier;
+  old_toggle_modifier = toggle_modifier;
+
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    {
+      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
+          gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+        {
+          modifier        = GIMP_CURSOR_MODIFIER_BAD;
+          toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
+        }
+
+      gimp_tool_control_set_cursor_modifier        (tool->control,
+                                                    modifier);
+      gimp_tool_control_set_toggle_cursor_modifier (tool->control,
+                                                    toggle_modifier);
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+                                                 display);
+
+  /*  reset old stuff here so we are not interferring with the modifiers
+   *  set by our subclasses
+   */
+  gimp_tool_control_set_cursor_modifier        (tool->control,
+                                                old_modifier);
+  gimp_tool_control_set_toggle_cursor_modifier (tool->control,
+                                                old_toggle_modifier);
 }
 
 static void

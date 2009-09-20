@@ -210,7 +210,7 @@ gimp_buffer_get_description (GimpViewable  *viewable,
   GimpBuffer *buffer = GIMP_BUFFER (viewable);
 
   return g_strdup_printf ("%s (%d × %d)",
-                          GIMP_OBJECT (buffer)->name,
+                          gimp_object_get_name (buffer),
                           gimp_buffer_get_width (buffer),
                           gimp_buffer_get_height (buffer));
 }

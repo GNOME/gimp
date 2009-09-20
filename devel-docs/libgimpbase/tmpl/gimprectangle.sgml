@@ -37,3 +37,22 @@ gimprectangle
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_rectangle_union ##### -->
+<para>
+
+</para>
+
+@x1: 
+@y1: 
+@width1: 
+@height1: 
+@x2: 
+@y2: 
+@width2: 
+@height2: 
+@dest_x: 
+@dest_y: 
+@dest_width: 
+@dest_height: 
+
+

@@ -471,7 +471,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
           return;
 
         shell->space_shaded_tool =
-          gimp_object_get_name (GIMP_OBJECT (active_tool->tool_info));
+          gimp_object_get_name (active_tool->tool_info);
 
         gimp_context_set_tool (gimp_get_user_context (gimp),
                                gimp_get_tool_info (gimp, "gimp-move-tool"));
@@ -787,8 +787,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (! GTK_WIDGET_HAS_FOCUS (canvas))
           gtk_widget_grab_focus (canvas);
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_PRESS (%d)",
-                  display, bevent->button);
+        GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                  display, bevent->button, bevent->x, bevent->y);
 
         /*  if the toplevel window didn't have focus, the above
          *  gtk_widget_grab_focus() didn't set the canvas' HAS_FOCUS
@@ -981,8 +981,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): 2BUTTON_PRESS (%d)",
-                  display, bevent->button);
+        GIMP_LOG (TOOL_EVENTS, "event (display %p): 2BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                  display, bevent->button, bevent->x, bevent->y);
 
         if (gimp->busy)
           return TRUE;
@@ -1009,8 +1009,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): 3BUTTON_PRESS (%d)",
-                  display, bevent->button);
+        GIMP_LOG (TOOL_EVENTS, "event (display %p): 3BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                  display, bevent->button, bevent->x, bevent->y);
 
         if (gimp->busy)
           return TRUE;
@@ -1037,8 +1037,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_RELEASE (%d)",
-                  display, bevent->button);
+        GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_RELEASE (%d @ %0.0f:%0.0f)",
+                  display, bevent->button, bevent->x, bevent->y);
 
         gimp_display_shell_autoscroll_stop (shell);
 
@@ -1221,7 +1221,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventMotion *mevent            = (GdkEventMotion *) event;
         GdkEvent       *compressed_motion = NULL;
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): MOTION_NOTIFY", display);
+        GIMP_LOG (TOOL_EVENTS, "event (display %p): MOTION_NOTIFY (%0.0f:%0.0f %d)",
+                  display, mevent->x, mevent->y, mevent->time);
 
         if (gimp->busy)
           return TRUE;
@@ -1330,11 +1331,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   {
                     gint i;
 
-                    tool_manager_control_active (gimp, GIMP_TOOL_ACTION_PAUSE, display);
+                    tool_manager_control_active (gimp, GIMP_TOOL_ACTION_PAUSE,
+                                                 display);
 
                     for (i = 0; i < n_history_events; i++)
                       {
-
                         gimp_display_shell_get_time_coords (shell,
                                                             mevent->device,
                                                             history_events[i],
@@ -1374,13 +1375,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                          shell->last_read_motion_time = history_events[i]->time;
                       }
 
-                      tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME, display);
+                    tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME,
+                                                 display);
 
                     gdk_device_free_history (history_events, n_history_events);
                   }
                 else
                   {
-
                     /* Early removal of useless events saves CPU time.
                      */
                     if (gimp_display_shell_eval_event (shell,
@@ -1404,22 +1405,22 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /* Early removal of useless events saves CPU time.
              * Smoothing is 0.0 here for coasting.
              */
-
             if (gimp_display_shell_eval_event (shell,
                                                &image_coords,
                                                0.0,
                                                time))
               {
-                  /* then update the tool. */
-                  GimpCoords *buf_coords = &g_array_index (shell->event_queue,
-                                                           GimpCoords, 0);
-                  tool_manager_oper_update_active (gimp,
-                                                   buf_coords, state,
-                                                   shell->proximity,
-                                                   display);
-                  /* remove used event */
-                  g_array_remove_index (shell->event_queue, 0);
+                /* then update the tool. */
+                GimpCoords *buf_coords = &g_array_index (shell->event_queue,
+                                                         GimpCoords, 0);
 
+                tool_manager_oper_update_active (gimp,
+                                                 buf_coords, state,
+                                                 shell->proximity,
+                                                 display);
+
+                /* remove used event */
+                g_array_remove_index (shell->event_queue, 0);
               }
 
             gimp_display_shell_push_event_history (shell, &image_coords);
@@ -1945,7 +1946,6 @@ gimp_display_shell_process_tool_event_queue (GimpDisplayShell *shell,
                                   time,
                                   event_state,
                                   shell->display);
-
     }
 
   tool_manager_control_active (shell->display->gimp,

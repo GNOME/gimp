@@ -230,7 +230,7 @@ output_unknown_token (const gchar *key,
 
   if (*header)
     {
-      g_print (*header);
+      g_print ("%s", *header);
       *header = NULL;
     }
 

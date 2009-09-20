@@ -91,7 +91,7 @@ file_load_invoker (GimpProcedure      *procedure,
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
                                              context, progress, error,
-                                             GIMP_OBJECT (proc)->name,
+                                             gimp_object_get_name (proc),
                                              new_args);
 
   g_value_array_free (new_args);
@@ -255,7 +255,7 @@ file_save_invoker (GimpProcedure      *procedure,
                                              error ? *error : NULL);
 
   file_proc =
-    file_procedure_find (gimp->plug_in_manager->save_procs, uri, error);
+    file_procedure_find (gimp->plug_in_manager->save_procs, uri, NULL);
 
   if (! file_proc)
     file_proc = file_procedure_find (gimp->plug_in_manager->export_procs, uri, error);
@@ -280,7 +280,7 @@ file_save_invoker (GimpProcedure      *procedure,
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
                                              context, progress, error,
-                                             GIMP_OBJECT (proc)->name,
+                                             gimp_object_get_name (proc),
                                              new_args);
 
   g_value_array_free (new_args);

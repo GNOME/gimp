@@ -441,7 +441,7 @@ drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))

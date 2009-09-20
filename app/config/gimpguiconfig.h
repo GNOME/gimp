@@ -67,7 +67,6 @@ struct _GimpGuiConfig
   gchar               *web_browser;
   gboolean             user_manual_online;
   gchar               *user_manual_online_uri;
-  GimpWindowHint       toolbox_window_hint;
   GimpWindowHint       dock_window_hint;
   GimpCursorFormat     cursor_format;
 

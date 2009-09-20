@@ -96,7 +96,7 @@ static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
                                                  gchar             **tooltip);
 
 static void       gimp_layer_removed            (GimpItem           *item);
-static gboolean   gimp_layer_is_attached        (GimpItem           *item);
+static gboolean   gimp_layer_is_attached        (const GimpItem     *item);
 static GimpContainer *
                   gimp_layer_get_container      (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
@@ -143,6 +143,7 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  gint                recursion_level,
                                                  GimpTransformResize    clip_result,
                                                  GimpProgress       *progress);
+static GeglNode * gimp_layer_get_node           (GimpItem           *item);
 
 static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
                                                  gint                width,
@@ -150,7 +151,10 @@ static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
-static GeglNode * gimp_layer_get_node           (GimpItem           *item);
+static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
+                                                 GimpImage          *dest_image,
+                                                 GimpImageBaseType   new_base_type,
+                                                 gboolean            push_undo);
 
 static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
@@ -261,6 +265,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
+  drawable_class->convert_type          = gimp_layer_convert_type;
   drawable_class->project_region        = gimp_layer_project_region;
 
   klass->opacity_changed              = NULL;
@@ -439,8 +444,7 @@ gimp_layer_invalidate_preview (GimpViewable *viewable)
 {
   GimpLayer *layer = GIMP_LAYER (viewable);
 
-  if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
-    GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
+  GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
@@ -453,77 +457,11 @@ gimp_layer_get_description (GimpViewable  *viewable,
   if (gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
     {
       return g_strdup_printf (_("Floating Selection\n(%s)"),
-                              gimp_object_get_name (GIMP_OBJECT (viewable)));
+                              gimp_object_get_name (viewable));
     }
 
   return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
                                                               tooltip);
-}
-
-static void
-gimp_layer_get_active_components (const GimpDrawable *drawable,
-                                  gboolean           *active)
-{
-  GimpLayer *layer = GIMP_LAYER (drawable);
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  gint       i;
-
-  /*  first copy the image active channels  */
-  for (i = 0; i < MAX_CHANNELS; i++)
-    active[i] = image->active[i];
-
-  if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
-    active[gimp_drawable_bytes (drawable) - 1] = FALSE;
-}
-
-static GeglNode *
-gimp_layer_get_node (GimpItem *item)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GimpLayer    *layer    = GIMP_LAYER (item);
-  GeglNode     *node;
-  GeglNode     *offset_node;
-  GeglNode     *source;
-  GeglNode     *mode_node;
-
-  node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
-
-  source = gimp_drawable_get_source_node (drawable);
-  gegl_node_add_child (node, source);
-
-  layer->opacity_node = gegl_node_new_child (node,
-                                             "operation", "gegl:opacity",
-                                             "value",     layer->opacity,
-                                             NULL);
-  gegl_node_connect_to (source,              "output",
-                        layer->opacity_node, "input");
-
-  if (layer->mask)
-    {
-      GeglNode *mask;
-
-      mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
-
-      gegl_node_connect_to (mask,                "output",
-                            layer->opacity_node, "aux");
-    }
-
-  offset_node = gimp_item_get_offset_node (GIMP_ITEM (layer));
-
-  gegl_node_connect_to (layer->opacity_node, "output",
-                        offset_node,         "input");
-
-  mode_node = gimp_drawable_get_mode_node (drawable);
-
-  gegl_node_set (mode_node,
-                 "operation",  "gimp:point-layer-mode",
-                 "blend-mode", layer->mode,
-                 NULL);
-
-  gegl_node_connect_to (offset_node, "output",
-                        mode_node,   "aux");
-
-  return node;
 }
 
 static void
@@ -539,10 +477,11 @@ gimp_layer_removed (GimpItem *item)
 }
 
 static gboolean
-gimp_layer_is_attached (GimpItem *item)
+gimp_layer_is_attached (const GimpItem *item)
 {
   return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
-          gimp_container_have (gimp_item_get_image (item)->layers, GIMP_OBJECT (item)));
+          gimp_container_have (gimp_item_get_image (item)->layers,
+                               GIMP_OBJECT (item)));
 }
 
 static GimpContainer *
@@ -573,12 +512,12 @@ gimp_layer_duplicate (GimpItem *item,
       GimpLayer *layer     = GIMP_LAYER (item);
       GimpLayer *new_layer = GIMP_LAYER (new_item);
 
-      gimp_layer_set_mode       (new_layer,
-                                 gimp_layer_get_mode (layer), FALSE);
-      gimp_layer_set_opacity    (new_layer,
-                                 gimp_layer_get_opacity (layer), FALSE);
-      gimp_layer_set_lock_alpha (new_layer,
-                                 gimp_layer_get_lock_alpha (layer), FALSE);
+      gimp_layer_set_mode    (new_layer, gimp_layer_get_mode (layer),    FALSE);
+      gimp_layer_set_opacity (new_layer, gimp_layer_get_opacity (layer), FALSE);
+
+      if (gimp_layer_can_lock_alpha (new_layer))
+        gimp_layer_set_lock_alpha (new_layer,
+                                   gimp_layer_get_lock_alpha (layer), FALSE);
 
       /*  duplicate the layer mask if necessary  */
       if (layer->mask)
@@ -607,60 +546,7 @@ gimp_layer_convert (GimpItem  *item,
   new_base_type = gimp_image_base_type (dest_image);
 
   if (old_base_type != new_base_type)
-    {
-      TileManager   *new_tiles;
-      GimpImageType  new_type;
-
-      new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
-
-      if (gimp_drawable_has_alpha (drawable))
-        new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
-
-      new_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                    gimp_item_get_height (item),
-                                    GIMP_IMAGE_TYPE_BYTES (new_type));
-
-      switch (new_base_type)
-        {
-        case GIMP_RGB:
-          gimp_drawable_convert_rgb (drawable,
-                                     new_tiles,
-                                     old_base_type);
-          break;
-
-        case GIMP_GRAY:
-          gimp_drawable_convert_grayscale (drawable,
-                                           new_tiles,
-                                           old_base_type);
-          break;
-
-        case GIMP_INDEXED:
-          {
-            PixelRegion layerPR;
-            PixelRegion newPR;
-
-            pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
-                               0, 0,
-                               gimp_item_get_width  (item),
-                               gimp_item_get_height (item),
-                               FALSE);
-            pixel_region_init (&newPR, new_tiles,
-                               0, 0,
-                               gimp_item_get_width  (item),
-                               gimp_item_get_height (item),
-                               TRUE);
-
-            gimp_layer_transform_color (dest_image,
-                                        &layerPR, gimp_drawable_type (drawable),
-                                        &newPR,   new_type);
-          }
-          break;
-        }
-
-      gimp_drawable_set_tiles (drawable, FALSE, NULL,
-                               new_tiles, new_type);
-      tile_manager_unref (new_tiles);
-    }
+    gimp_drawable_convert_type (drawable, dest_image, new_base_type, FALSE);
 
   if (layer->mask)
     gimp_item_set_image (GIMP_ITEM (layer->mask), dest_image);
@@ -857,6 +743,56 @@ gimp_layer_transform (GimpItem               *item,
                          clip_result, progress);
 }
 
+static GeglNode *
+gimp_layer_get_node (GimpItem *item)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  GimpLayer    *layer    = GIMP_LAYER (item);
+  GeglNode     *node;
+  GeglNode     *offset_node;
+  GeglNode     *source;
+  GeglNode     *mode_node;
+
+  node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
+
+  source = gimp_drawable_get_source_node (drawable);
+  gegl_node_add_child (node, source);
+
+  layer->opacity_node = gegl_node_new_child (node,
+                                             "operation", "gegl:opacity",
+                                             "value",     layer->opacity,
+                                             NULL);
+  gegl_node_connect_to (source,              "output",
+                        layer->opacity_node, "input");
+
+  if (layer->mask)
+    {
+      GeglNode *mask;
+
+      mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
+
+      gegl_node_connect_to (mask,                "output",
+                            layer->opacity_node, "aux");
+    }
+
+  offset_node = gimp_item_get_offset_node (GIMP_ITEM (layer));
+
+  gegl_node_connect_to (layer->opacity_node, "output",
+                        offset_node,         "input");
+
+  mode_node = gimp_drawable_get_mode_node (drawable);
+
+  gegl_node_set (mode_node,
+                 "operation",  "gimp:point-layer-mode",
+                 "blend-mode", layer->mode,
+                 NULL);
+
+  gegl_node_connect_to (offset_node, "output",
+                        mode_node,   "aux");
+
+  return node;
+}
+
 static gint64
 gimp_layer_estimate_memsize (const GimpDrawable *drawable,
                              gint                width,
@@ -902,6 +838,76 @@ gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
+}
+
+static void
+gimp_layer_get_active_components (const GimpDrawable *drawable,
+                                  gboolean           *active)
+{
+  GimpLayer *layer = GIMP_LAYER (drawable);
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  gint       i;
+
+  /*  first copy the image active channels  */
+  for (i = 0; i < MAX_CHANNELS; i++)
+    active[i] = image->active[i];
+
+  if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
+    active[gimp_drawable_bytes (drawable) - 1] = FALSE;
+}
+
+static void
+gimp_layer_convert_type (GimpDrawable      *drawable,
+                         GimpImage         *dest_image,
+                         GimpImageBaseType  new_base_type,
+                         gboolean           push_undo)
+{
+  switch (new_base_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
+                                                        new_base_type,
+                                                        push_undo);
+      break;
+
+    case GIMP_INDEXED:
+      {
+        GimpItem      *item = GIMP_ITEM (drawable);
+        TileManager   *new_tiles;
+        GimpImageType  new_type;
+        PixelRegion    layerPR;
+        PixelRegion    newPR;
+
+        new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
+
+        if (gimp_drawable_has_alpha (drawable))
+          new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
+
+        new_tiles = tile_manager_new (gimp_item_get_width  (item),
+                                      gimp_item_get_height (item),
+                                      GIMP_IMAGE_TYPE_BYTES (new_type));
+
+        pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
+                           0, 0,
+                           gimp_item_get_width  (item),
+                           gimp_item_get_height (item),
+                           FALSE);
+        pixel_region_init (&newPR, new_tiles,
+                           0, 0,
+                           gimp_item_get_width  (item),
+                           gimp_item_get_height (item),
+                           TRUE);
+
+        gimp_layer_transform_color (dest_image,
+                                    &layerPR, gimp_drawable_type (drawable),
+                                    &newPR,   new_type);
+
+        gimp_drawable_set_tiles (drawable, push_undo, NULL,
+                                 new_tiles, new_type);
+        tile_manager_unref (new_tiles);
+      }
+    }
 }
 
 static gint
@@ -955,8 +961,9 @@ gimp_layer_transform_color (GimpImage     *image,
                             PixelRegion   *destPR,
                             GimpImageType  dest_type)
 {
-  GimpImageBaseType base_type = GIMP_IMAGE_TYPE_BASE_TYPE (src_type);
-  gboolean          alpha     = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
+  GimpImageBaseType base_type  = GIMP_IMAGE_TYPE_BASE_TYPE (src_type);
+  gboolean          src_alpha  = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
+  gboolean          dest_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (dest_type);
   gpointer          pr;
 
   for (pr = pixel_regions_register (2, srcPR, destPR);
@@ -977,9 +984,9 @@ gimp_layer_transform_color (GimpImage     *image,
             {
               gimp_image_transform_color (image, dest_type, d, base_type, s);
 
-              /*  alpha channel  */
-              d[destPR->bytes - 1] = (alpha ?
-                                      s[srcPR->bytes - 1] : OPAQUE_OPACITY);
+              if (dest_alpha)
+                d[destPR->bytes - 1] = (src_alpha ?
+                                        s[srcPR->bytes - 1] : OPAQUE_OPACITY);
 
               s += srcPR->bytes;
               d += destPR->bytes;
@@ -1389,7 +1396,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
   image    = gimp_item_get_image (item);
 
   mask_name = g_strdup_printf (_("%s mask"),
-                               gimp_object_get_name (GIMP_OBJECT (layer)));
+                               gimp_object_get_name (layer));
 
   mask = gimp_layer_mask_new (image,
                               gimp_item_get_width  (item),
@@ -1529,25 +1536,20 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
     case GIMP_ADD_COPY_MASK:
       {
-        TileManager   *copy_tiles = NULL;
-        GimpImageType  layer_type;
+        TileManager *copy_tiles = NULL;
 
-        layer_type = drawable->type;
-
-        if (GIMP_IMAGE_TYPE_BASE_TYPE (layer_type) != GIMP_GRAY)
+        if (! gimp_drawable_is_gray (drawable))
           {
             GimpImageType copy_type;
 
-            copy_type = (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type) ?
+            copy_type = (gimp_drawable_has_alpha (drawable) ?
                          GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
 
             copy_tiles = tile_manager_new (gimp_item_get_width  (item),
                                            gimp_item_get_height (item),
                                            GIMP_IMAGE_TYPE_BYTES (copy_type));
 
-            gimp_drawable_convert_grayscale (drawable,
-                                             copy_tiles,
-                                             GIMP_IMAGE_TYPE_BASE_TYPE (layer_type));
+            gimp_drawable_convert_tiles_grayscale (drawable, copy_tiles);
 
             pixel_region_init (&srcPR, copy_tiles,
                                0, 0,
@@ -1836,30 +1838,33 @@ gimp_layer_boundary (GimpLayer *layer,
 
   item = GIMP_ITEM (layer);
 
-  /*  Create the four boundary segments that encompass this
-   *  layer's boundary.
-   */
-  new_segs  = g_new (BoundSeg, 4);
-  *num_segs = 4;
-
-  /*  if the layer is a floating selection  */
   if (gimp_layer_is_floating_sel (layer))
     {
-      if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
+      GimpDrawable *fs_drawable;
+
+      fs_drawable = gimp_layer_get_floating_sel_drawable (layer);
+
+      if (GIMP_IS_CHANNEL (fs_drawable))
         {
           /*  if the owner drawable is a channel, just return nothing  */
 
-          g_free (new_segs);
           *num_segs = 0;
+
           return NULL;
         }
       else
         {
           /*  otherwise, set the layer to the owner drawable  */
 
-          layer = GIMP_LAYER (gimp_layer_get_floating_sel_drawable (layer));
+          layer = GIMP_LAYER (fs_drawable);
         }
     }
+
+  /*  Create the four boundary segments that encompass this
+   *  layer's boundary.
+   */
+  new_segs  = g_new (BoundSeg, 4);
+  *num_segs = 4;
 
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
@@ -2029,6 +2034,7 @@ gimp_layer_set_lock_alpha (GimpLayer *layer,
                            gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_can_lock_alpha (layer));
 
   lock_alpha = lock_alpha ? TRUE : FALSE;
 
@@ -2054,4 +2060,15 @@ gimp_layer_get_lock_alpha (const GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   return layer->lock_alpha;
+}
+
+gboolean
+gimp_layer_can_lock_alpha (const GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    return FALSE;
+
+  return TRUE;
 }

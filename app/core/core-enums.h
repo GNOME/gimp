@@ -420,6 +420,9 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_LAYER_MODE,               /*< desc="Set layer mode"              >*/
   GIMP_UNDO_LAYER_OPACITY,            /*< desc="Set layer opacity"           >*/
   GIMP_UNDO_LAYER_LOCK_ALPHA,         /*< desc="Lock/Unlock alpha channel"   >*/
+  GIMP_UNDO_GROUP_LAYER_SUSPEND,      /*< desc="Suspend group layer resize"  >*/
+  GIMP_UNDO_GROUP_LAYER_RESUME,       /*< desc="Resume group layer resize"   >*/
+  GIMP_UNDO_GROUP_LAYER_CONVERT,      /*< desc="Convert group layer"         >*/
   GIMP_UNDO_TEXT_LAYER,               /*< desc="Text layer"                  >*/
   GIMP_UNDO_TEXT_LAYER_MODIFIED,      /*< desc="Text layer modification"     >*/
   GIMP_UNDO_LAYER_MASK_ADD,           /*< desc="Add layer mask"              >*/

@@ -68,7 +68,8 @@ struct _GimpItemClass
   void            (* lock_content_changed) (GimpItem             *item);
 
   /*  virtual functions  */
-  gboolean        (* is_attached)        (GimpItem               *item);
+  gboolean        (* is_attached)        (const GimpItem         *item);
+  gboolean        (* is_content_locked)  (const GimpItem         *item);
   GimpContainer * (* get_container)      (GimpItem               *item);
   GimpItem      * (* duplicate)          (GimpItem               *item,
                                           GType                   new_type);
@@ -140,11 +141,12 @@ GType           gimp_item_get_type           (void) G_GNUC_CONST;
 void            gimp_item_removed            (GimpItem           *item);
 gboolean        gimp_item_is_removed         (const GimpItem     *item);
 
-gboolean        gimp_item_is_attached        (GimpItem           *item);
+gboolean        gimp_item_is_attached        (const GimpItem     *item);
 
 GimpContainer * gimp_item_get_container      (GimpItem           *item);
 GList         * gimp_item_get_container_iter (GimpItem           *item);
 gint            gimp_item_get_index          (GimpItem           *item);
+GList         * gimp_item_get_path           (GimpItem           *item);
 
 void            gimp_item_configure          (GimpItem           *item,
                                               GimpImage          *image,
@@ -165,6 +167,9 @@ gboolean        gimp_item_rename             (GimpItem           *item,
 
 gint            gimp_item_get_width          (const GimpItem     *item);
 gint            gimp_item_get_height         (const GimpItem     *item);
+void            gimp_item_set_size           (GimpItem           *item,
+                                              gint                width,
+                                              gint                height);
 
 void            gimp_item_get_offset         (const GimpItem     *item,
                                               gint               *offset_x,
@@ -277,6 +282,8 @@ void            gimp_item_set_lock_content   (GimpItem           *item,
                                               gboolean            lock_content,
                                               gboolean            push_undo);
 gboolean        gimp_item_get_lock_content   (const GimpItem     *item);
+gboolean        gimp_item_can_lock_content   (const GimpItem     *item);
+gboolean        gimp_item_is_content_locked  (const GimpItem     *item);
 
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);

@@ -582,7 +582,7 @@ drawable_get_name_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (drawable)));
+      name = g_strdup (gimp_object_get_name (drawable));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -718,6 +718,62 @@ drawable_set_linked_invoker (GimpProcedure      *procedure,
   if (success)
     {
       gimp_item_set_linked (GIMP_ITEM (drawable), linked, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+drawable_get_lock_content_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpDrawable *drawable;
+  gboolean lock_content = FALSE;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+
+  if (success)
+    {
+      lock_content = gimp_item_get_lock_content (GIMP_ITEM (drawable));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], lock_content);
+
+  return return_vals;
+}
+
+static GValueArray *
+drawable_set_lock_content_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean lock_content;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  lock_content = g_value_get_boolean (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp_item_can_lock_content (GIMP_ITEM (drawable)))
+        gimp_item_set_lock_content (GIMP_ITEM (drawable), lock_content, TRUE);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -879,7 +935,8 @@ drawable_merge_shadow_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           const gchar *undo_desc = _("Plug-In");
 
@@ -1037,6 +1094,7 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
           y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
           num_channels == gimp_drawable_bytes (drawable))
@@ -1083,7 +1141,8 @@ drawable_fill_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error))
+      if (gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
       else
         success = FALSE;
@@ -1116,7 +1175,8 @@ drawable_offset_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         gimp_drawable_offset (drawable, context, wrap_around, fill_type,
                               offset_x, offset_y);
       else
@@ -2024,6 +2084,64 @@ register_drawable_procs (GimpPDB *pdb)
                                g_param_spec_boolean ("linked",
                                                      "linked",
                                                      "The new drawable linked state",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-get-lock-content
+   */
+  procedure = gimp_procedure_new (drawable_get_lock_content_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-lock-content");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-drawable-get-lock-content",
+                                     "Get the 'lock content' state of the specified drawable.",
+                                     "This procedure returns the specified drawable's lock content state.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2009",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("lock-content",
+                                                         "lock content",
+                                                         "Whether the drawable's pixels are locked",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-set-lock-content
+   */
+  procedure = gimp_procedure_new (drawable_set_lock_content_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-set-lock-content");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-drawable-set-lock-content",
+                                     "Set the 'lock content' state of the specified drawable.",
+                                     "This procedure sets the specified drawable's lock content state.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2009",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("lock-content",
+                                                     "lock content",
+                                                     "The new drawable 'lock content' state",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

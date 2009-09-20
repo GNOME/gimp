@@ -147,19 +147,24 @@ session_init (Gimp *gimp)
 
               info = gimp_session_info_new ();
 
-              if (strcmp (entry_name, "dock"))
+              /* "dock" entries in the "dock" factory are just dummy
+               * entries and don't have any dialog factory entry, so
+               * don't bother looking for entires for them
+               */
+              if (!g_str_equal (entry_name, "dock"))
                 {
                   info->toplevel_entry = gimp_dialog_factory_find_entry (factory,
                                                                          entry_name);
+
+                  /* If we expected a dialog factory entry but failed
+                   * to find one, skip to add this session info object
+                   */
                   skip = (info->toplevel_entry == NULL);
                 }
 
               g_free (entry_name);
 
-              if (GIMP_CONFIG_GET_INTERFACE (info)->deserialize (GIMP_CONFIG (info),
-                                                                 scanner,
-                                                                 1,
-                                                                 NULL))
+              if (gimp_config_deserialize (GIMP_CONFIG (info), scanner, 1, NULL))
                 {
                   if (! skip)
                     {
@@ -272,10 +277,14 @@ session_save (Gimp     *gimp,
   gimp_dialog_factories_session_save (writer);
   gimp_config_writer_linefeed (writer);
 
-  /* save last tip shown */
+  /* save last tip shown
+   *
+   * FIXME: Make last-tip-shown increment only when used within the
+   * session
+   */
   gimp_config_writer_open (writer, "last-tip-shown");
   gimp_config_writer_printf (writer, "%d",
-                             GIMP_GUI_CONFIG (gimp->config)->last_tip + 1);
+                             GIMP_GUI_CONFIG (gimp->config)->last_tip);
   gimp_config_writer_close (writer);
 
   if (! gimp_config_writer_finish (writer, "end of sessionrc", &error))

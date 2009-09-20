@@ -32,6 +32,8 @@
 #include "gimpdrawableundo.h"
 #include "gimpfloatingselundo.h"
 #include "gimpgrid.h"
+#include "gimpgrouplayer.h"
+#include "gimpgrouplayerundo.h"
 #include "gimpguide.h"
 #include "gimpguideundo.h"
 #include "gimpimage.h"
@@ -39,7 +41,6 @@
 #include "gimpimage-undo-push.h"
 #include "gimpimageundo.h"
 #include "gimpitempropundo.h"
-#include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimplayermaskpropundo.h"
 #include "gimplayermaskundo.h"
@@ -514,6 +515,59 @@ gimp_image_undo_push_layer_lock_alpha (GimpImage   *image,
 }
 
 
+/***********************/
+/*  Group Layer Undos  */
+/***********************/
+
+GimpUndo *
+gimp_image_undo_push_group_layer_suspend (GimpImage      *image,
+                                          const gchar    *undo_desc,
+                                          GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_SUSPEND, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  group,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_group_layer_resume (GimpImage      *image,
+                                         const gchar    *undo_desc,
+                                         GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_RESUME, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  group,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_group_layer_convert (GimpImage      *image,
+                                          const gchar    *undo_desc,
+                                          GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_CONVERT, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item", group,
+                               NULL);
+}
+
+
 /**********************/
 /*  Text Layer Undos  */
 /**********************/
@@ -835,7 +889,7 @@ undo_pop_cantundo (GimpUndo            *undo,
     {
     case GIMP_UNDO_MODE_UNDO:
       gimp_message (undo->image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("Can't undo %s"), GIMP_OBJECT (undo)->name);
+                    _("Can't undo %s"), gimp_object_get_name (undo));
       break;
 
     case GIMP_UNDO_MODE_REDO:

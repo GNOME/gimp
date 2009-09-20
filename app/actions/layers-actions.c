@@ -98,8 +98,8 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_NEW_FROM_VISIBLE },
 
   { "layers-new-group", GTK_STOCK_DIRECTORY,
-    NC_("layers-action", "_New Group Layer..."), NULL,
-    NC_("layers-action", "Create a new group layer and add it to the image"),
+    NC_("layers-action", "New Layer _Group..."), NULL,
+    NC_("layers-action", "Create a new layer group and add it to the image"),
     G_CALLBACK (layers_new_group_cmd_callback),
     GIMP_HELP_LAYER_NEW },
 
@@ -491,20 +491,22 @@ void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage     *image        = action_data_get_image (data);
-  GimpLayer     *layer        = NULL;
-  GimpLayerMask *mask         = NULL;     /*  layer mask             */
-  gboolean       fs           = FALSE;    /*  floating sel           */
-  gboolean       ac           = FALSE;    /*  active channel         */
-  gboolean       sel          = FALSE;
-  gboolean       alpha        = FALSE;    /*  alpha channel present  */
-  gboolean       indexed      = FALSE;    /*  is indexed             */
-  gboolean       lock_alpha   = FALSE;
-  gboolean       text_layer   = FALSE;
-  gboolean       writable     = FALSE;
-  GList         *next         = NULL;
-  GList         *next_visible = NULL;
-  GList         *prev         = NULL;
+  GimpImage     *image          = action_data_get_image (data);
+  GimpLayer     *layer          = NULL;
+  GimpLayerMask *mask           = NULL;     /*  layer mask             */
+  gboolean       fs             = FALSE;    /*  floating sel           */
+  gboolean       ac             = FALSE;    /*  active channel         */
+  gboolean       sel            = FALSE;
+  gboolean       alpha          = FALSE;    /*  alpha channel present  */
+  gboolean       indexed        = FALSE;    /*  is indexed             */
+  gboolean       lock_alpha     = FALSE;
+  gboolean       can_lock_alpha = FALSE;
+  gboolean       text_layer     = FALSE;
+  gboolean       writable       = FALSE;
+  gboolean       children       = FALSE;
+  GList         *next           = NULL;
+  GList         *next_visible   = NULL;
+  GList         *prev           = NULL;
 
   if (image)
     {
@@ -520,10 +522,14 @@ layers_actions_update (GimpActionGroup *group,
           GList *layer_list;
           GList *list;
 
-          mask       = gimp_layer_get_mask (layer);
-          lock_alpha = gimp_layer_get_lock_alpha (layer);
-          alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-          writable   = ! gimp_item_get_lock_content (GIMP_ITEM (layer));
+          mask           = gimp_layer_get_mask (layer);
+          lock_alpha     = gimp_layer_get_lock_alpha (layer);
+          can_lock_alpha = gimp_layer_can_lock_alpha (layer);
+          alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+          writable       = ! gimp_item_is_content_locked (GIMP_ITEM (layer));
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+            children = TRUE;
 
           layer_list = gimp_item_get_container_iter (GIMP_ITEM (layer));
 
@@ -539,7 +545,16 @@ layers_actions_update (GimpActionGroup *group,
                    next_visible = g_list_next (next_visible))
                 {
                   if (gimp_item_get_visible (next_visible->data))
-                    break;
+                    {
+                      /*  "next_visible" is actually "next_visible" and
+                       *  "writable" and "not group"
+                       */
+                      if (gimp_item_is_content_locked (next_visible->data) ||
+                          gimp_viewable_get_children (next_visible->data))
+                        next_visible = NULL;
+
+                      break;
+                    }
                 }
             }
 
@@ -560,7 +575,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new",              image);
   SET_SENSITIVE ("layers-new-last-values",  image);
   SET_SENSITIVE ("layers-new-from-visible", image);
-  SET_SENSITIVE ("layers-new-group",        image);
+  SET_SENSITIVE ("layers-new-group",        image && !indexed);
   SET_SENSITIVE ("layers-duplicate",        layer && !fs && !ac);
   SET_SENSITIVE ("layers-delete",           layer && !ac);
 
@@ -575,7 +590,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
 
   SET_SENSITIVE ("layers-anchor",           layer &&  fs && !ac);
-  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && next_visible);
+  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac &&
+                                            !children && next_visible);
   SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",    layer && !fs && !ac);
 
@@ -593,14 +609,14 @@ layers_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("layers-crop",            writable && sel);
 
-  SET_SENSITIVE ("layers-alpha-add",       writable && !fs && !alpha);
-  SET_SENSITIVE ("layers-alpha-remove",    writable && !fs &&  alpha);
+  SET_SENSITIVE ("layers-alpha-add",       writable && !children && !fs && !alpha);
+  SET_SENSITIVE ("layers-alpha-remove",    writable && !children && !fs &&  alpha);
 
-  SET_SENSITIVE ("layers-lock-alpha", layer);
+  SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask);
-  SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask && !children);
+  SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask && !children);
   SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
 
   SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac &&  mask);

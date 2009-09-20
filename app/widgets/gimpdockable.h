@@ -35,6 +35,11 @@
 
 typedef struct _GimpDockableClass GimpDockableClass;
 
+/**
+ * A kind of adpater to make other widgets dockable. The widget to
+ * dock is put inside the GimpDockable, which is put in a
+ * GimpDockbook.
+ */
 struct _GimpDockable
 {
   GtkBin        parent_instance;

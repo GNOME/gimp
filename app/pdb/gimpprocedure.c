@@ -363,7 +363,7 @@ gimp_procedure_execute (GimpProcedure  *procedure,
 
       pdb_error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
                                _("Procedure '%s' returned no return values"),
-                               gimp_object_get_name (GIMP_OBJECT (procedure)));
+                               gimp_object_get_name (procedure));
 
       return_vals = gimp_procedure_get_return_values (procedure, FALSE,
                                                       pdb_error);
@@ -554,7 +554,7 @@ gimp_procedure_create_override (GimpProcedure   *procedure,
   int            i             = 0;
 
   new_procedure = gimp_procedure_new (new_marshal_func);
-  name          = gimp_object_get_name (GIMP_OBJECT (procedure));
+  name          = gimp_object_get_name (procedure);
 
   gimp_object_set_static_name (GIMP_OBJECT (new_procedure), name);
 
@@ -621,7 +621,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                            _("Procedure '%s' returned a wrong value type "
                              "for return value '%s' (#%d). "
                              "Expected %s, got %s."),
-                           gimp_object_get_name (GIMP_OBJECT (procedure)),
+                           gimp_object_get_name (procedure),
                            g_param_spec_get_name (pspec),
                            i + 1, g_type_name (spec_type),
                            g_type_name (arg_type));
@@ -633,7 +633,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                            _("Procedure '%s' has been called with a "
                              "wrong value type for argument '%s' (#%d). "
                              "Expected %s, got %s."),
-                           gimp_object_get_name (GIMP_OBJECT (procedure)),
+                           gimp_object_get_name (procedure),
                            g_param_spec_get_name (pspec),
                            i + 1, g_type_name (spec_type),
                            g_type_name (arg_type));
@@ -667,7 +667,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                      "Most likely a plug-in is trying "
                                      "to work on a layer that doesn't "
                                      "exist any longer."),
-                                   gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                   gimp_object_get_name (procedure),
                                    g_param_spec_get_name (pspec));
                     }
                   else
@@ -679,7 +679,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                      "Most likely a plug-in is trying "
                                      "to work on a layer that doesn't "
                                      "exist any longer."),
-                                   gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                   gimp_object_get_name (procedure),
                                    g_param_spec_get_name (pspec));
                     }
                 }
@@ -695,7 +695,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                      "Most likely a plug-in is trying "
                                      "to work on an image that doesn't "
                                      "exist any longer."),
-                                   gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                   gimp_object_get_name (procedure),
                                    g_param_spec_get_name (pspec));
                     }
                   else
@@ -707,7 +707,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                      "Most likely a plug-in is trying "
                                      "to work on an image that doesn't "
                                      "exist any longer."),
-                                   gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                   gimp_object_get_name (procedure),
                                    g_param_spec_get_name (pspec));
                     }
                 }
@@ -726,7 +726,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                      "'%s' as return value '%s' "
                                      "(#%d, type %s). "
                                      "This value is out of range."),
-                                   gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                   gimp_object_get_name (procedure),
                                    value,
                                    g_param_spec_get_name (pspec),
                                    i + 1, g_type_name (spec_type));
@@ -739,7 +739,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                      "value '%s' for argument '%s' "
                                      "(#%d, type %s). "
                                      "This value is out of range."),
-                                   gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                   gimp_object_get_name (procedure),
                                    value,
                                    g_param_spec_get_name (pspec),
                                    i + 1, g_type_name (spec_type));

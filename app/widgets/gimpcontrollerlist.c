@@ -565,7 +565,7 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
                                            RESPONSE_DISABLE,
                                            -1);
 
-  name = gimp_object_get_name (GIMP_OBJECT (list->dest_info));
+  name = gimp_object_get_name (list->dest_info);
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("Remove Controller '%s'?"), name);
 

@@ -366,6 +366,7 @@
       <placeholder name="New">
         <menuitem action="layers-new" />
         <menuitem action="layers-new-from-visible" />
+	<menuitem action="layers-new-group" />
         <menuitem action="layers-duplicate" />
       </placeholder>
       <placeholder name="Structure">

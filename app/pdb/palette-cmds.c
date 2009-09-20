@@ -59,7 +59,7 @@ palette_new_invoker (GimpProcedure      *procedure,
       GimpData *data = gimp_data_factory_data_new (gimp->palette_factory, name);
 
       if (data)
-        actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
+        actual_name = g_strdup (gimp_object_get_name (data));
       else
         success = FALSE;
     }
@@ -99,7 +99,7 @@ palette_duplicate_invoker (GimpProcedure      *procedure,
                                               GIMP_DATA (palette));
 
           if (palette_copy)
-            copy_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette_copy)));
+            copy_name = g_strdup (gimp_object_get_name (palette_copy));
           else
             success = FALSE;
         }
@@ -140,7 +140,7 @@ palette_rename_invoker (GimpProcedure      *procedure,
       if (palette)
         {
           gimp_object_set_name (GIMP_OBJECT (palette), new_name);
-          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
+          actual_name = g_strdup (gimp_object_get_name (palette));
         }
       else
         success = FALSE;

@@ -69,49 +69,49 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_item_set_property      (GObject       *object,
-                                               guint          property_id,
-                                               const GValue  *value,
-                                               GParamSpec    *pspec);
-static void       gimp_item_get_property      (GObject       *object,
-                                               guint          property_id,
-                                               GValue        *value,
-                                               GParamSpec    *pspec);
-static void       gimp_item_finalize          (GObject       *object);
+static void       gimp_item_set_property            (GObject        *object,
+                                                     guint           property_id,
+                                                     const GValue   *value,
+                                                     GParamSpec     *pspec);
+static void       gimp_item_get_property            (GObject        *object,
+                                                     guint           property_id,
+                                                     GValue         *value,
+                                                     GParamSpec     *pspec);
+static void       gimp_item_finalize                (GObject        *object);
 
-static gint64     gimp_item_get_memsize       (GimpObject    *object,
-                                               gint64        *gui_size);
+static gint64     gimp_item_get_memsize             (GimpObject     *object,
+                                                     gint64         *gui_size);
 
-static void       gimp_item_real_visibility_changed
-                                              (GimpItem      *item);
+static void       gimp_item_real_visibility_changed (GimpItem       *item);
 
-static GimpItem * gimp_item_real_duplicate    (GimpItem      *item,
-                                               GType          new_type);
-static void       gimp_item_real_convert      (GimpItem      *item,
-                                               GimpImage     *dest_image);
-static gboolean   gimp_item_real_rename       (GimpItem      *item,
-                                               const gchar   *new_name,
-                                               const gchar   *undo_desc,
-                                               GError       **error);
-static void       gimp_item_real_translate    (GimpItem      *item,
-                                               gint           offset_x,
-                                               gint           offset_y,
-                                               gboolean       push_undo);
-static void       gimp_item_real_scale        (GimpItem      *item,
-                                               gint           new_width,
-                                               gint           new_height,
-                                               gint           new_offset_x,
-                                               gint           new_offset_y,
-                                               GimpInterpolationType  interpolation,
-                                               GimpProgress  *progress);
-static void       gimp_item_real_resize       (GimpItem      *item,
-                                               GimpContext   *context,
-                                               gint           new_width,
-                                               gint           new_height,
-                                               gint           offset_x,
-                                               gint           offset_y);
-static GeglNode * gimp_item_real_get_node     (GimpItem      *item);
-static void       gimp_item_sync_offset_node  (GimpItem      *item);
+static gboolean   gimp_item_real_is_content_locked  (const GimpItem *item);
+static GimpItem * gimp_item_real_duplicate          (GimpItem       *item,
+                                                     GType           new_type);
+static void       gimp_item_real_convert            (GimpItem       *item,
+                                                     GimpImage      *dest_image);
+static gboolean   gimp_item_real_rename             (GimpItem       *item,
+                                                     const gchar    *new_name,
+                                                     const gchar    *undo_desc,
+                                                     GError        **error);
+static void       gimp_item_real_translate          (GimpItem       *item,
+                                                     gint            offset_x,
+                                                     gint            offset_y,
+                                                     gboolean        push_undo);
+static void       gimp_item_real_scale              (GimpItem       *item,
+                                                     gint            new_width,
+                                                     gint            new_height,
+                                                     gint            new_offset_x,
+                                                     gint            new_offset_y,
+                                                     GimpInterpolationType interpolation,
+                                                     GimpProgress   *progress);
+static void       gimp_item_real_resize             (GimpItem       *item,
+                                                     GimpContext    *context,
+                                                     gint            new_width,
+                                                     gint            new_height,
+                                                     gint            offset_x,
+                                                     gint            offset_y);
+static GeglNode * gimp_item_real_get_node           (GimpItem       *item);
+static void       gimp_item_sync_offset_node        (GimpItem       *item);
 
 
 G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_VIEWABLE)
@@ -179,6 +179,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->lock_content_changed      = NULL;
 
   klass->is_attached               = NULL;
+  klass->is_content_locked         = gimp_item_real_is_content_locked;
   klass->get_container             = NULL;
   klass->duplicate                 = gimp_item_real_duplicate;
   klass->convert                   = gimp_item_real_convert;
@@ -384,6 +385,17 @@ gimp_item_real_visibility_changed (GimpItem *item)
     }
 }
 
+static gboolean
+gimp_item_real_is_content_locked (const GimpItem *item)
+{
+  GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+
+  if (parent && gimp_item_is_content_locked (GIMP_ITEM (parent)))
+    return TRUE;
+
+  return item->lock_content;
+}
+
 static GimpItem *
 gimp_item_real_duplicate (GimpItem *item,
                           GType     new_type)
@@ -402,7 +414,7 @@ gimp_item_real_duplicate (GimpItem *item,
     gint         number;
     gint         len;
 
-    name = gimp_object_get_name (GIMP_OBJECT (item));
+    name = gimp_object_get_name (item);
 
     g_return_val_if_fail (name != NULL, NULL);
 
@@ -436,9 +448,12 @@ gimp_item_real_duplicate (GimpItem *item,
   g_object_unref (new_item->parasites);
   new_item->parasites = gimp_parasite_list_copy (item->parasites);
 
-  new_item->visible      = gimp_item_get_visible (item);
-  new_item->linked       = gimp_item_get_linked (item);
-  new_item->lock_content = gimp_item_get_lock_content (item);
+  gimp_item_set_visible (new_item, gimp_item_get_visible (item), FALSE);
+  gimp_item_set_linked  (new_item, gimp_item_get_linked (item),  FALSE);
+
+  if (gimp_item_can_lock_content (new_item))
+    gimp_item_set_lock_content (new_item, gimp_item_get_lock_content (item),
+                                FALSE);
 
   return new_item;
 }
@@ -659,7 +674,7 @@ gimp_item_configure (GimpItem    *item,
  * Returns: %TRUE if the item is attached to an image, %FALSE otherwise.
  */
 gboolean
-gimp_item_is_attached (GimpItem *item)
+gimp_item_is_attached (const GimpItem *item)
 {
   GimpViewable *parent;
 
@@ -719,6 +734,35 @@ gimp_item_get_index (GimpItem *item)
     return gimp_container_get_child_index (container, GIMP_OBJECT (item));
 
   return -1;
+}
+
+GList *
+gimp_item_get_path (GimpItem *item)
+{
+  GimpContainer *container;
+  GList         *path = NULL;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
+
+  container = gimp_item_get_container (item);
+
+  while (container)
+    {
+      guint32 index = gimp_container_get_child_index (container,
+                                                      GIMP_OBJECT (item));
+
+      path = g_list_prepend (path, GUINT_TO_POINTER (index));
+
+      item = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+
+      if (item)
+        container = gimp_item_get_container (item);
+      else
+        container = NULL;
+    }
+
+  return path;
 }
 
 /**
@@ -796,7 +840,7 @@ gimp_item_rename (GimpItem     *item,
   if (! new_name || ! *new_name)
     new_name = item_class->default_name;
 
-  if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (item))))
+  if (strcmp (new_name, gimp_object_get_name (item)))
     return item_class->rename (item, new_name, item_class->rename_desc, error);
 
   return TRUE;
@@ -828,6 +872,36 @@ gimp_item_get_height (const GimpItem *item)
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
   return item->height;
+}
+
+void
+gimp_item_set_size (GimpItem *item,
+                    gint      width,
+                    gint      height)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (item->width  != width ||
+      item->height != height)
+    {
+      g_object_freeze_notify (G_OBJECT (item));
+
+      if (item->width != width)
+        {
+          item->width = width;
+          g_object_notify (G_OBJECT (item), "width");
+        }
+
+      if (item->height != height)
+        {
+          item->height = height;
+          g_object_notify (G_OBJECT (item), "height");
+        }
+
+      g_object_thaw_notify (G_OBJECT (item));
+
+      gimp_viewable_size_changed (GIMP_VIEWABLE (item));
+    }
 }
 
 /**
@@ -1611,6 +1685,7 @@ gimp_item_set_lock_content (GimpItem *item,
                             gboolean  push_undo)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_can_lock_content (item));
 
   lock_content = lock_content ? TRUE : FALSE;
 
@@ -1640,6 +1715,22 @@ gimp_item_get_lock_content (const GimpItem *item)
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
   return item->lock_content;
+}
+
+gboolean
+gimp_item_can_lock_content (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return TRUE;
+}
+
+gboolean
+gimp_item_is_content_locked (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return GIMP_ITEM_GET_CLASS (item)->is_content_locked (item);
 }
 
 gboolean

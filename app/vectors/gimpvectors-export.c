@@ -209,7 +209,7 @@ static void
 gimp_vectors_export_path (const GimpVectors *vectors,
                           GString           *str)
 {
-  const gchar *name = gimp_object_get_name (GIMP_OBJECT (vectors));
+  const gchar *name = gimp_object_get_name (vectors);
   gchar       *data = gimp_vectors_export_path_data (vectors);
   gchar       *esc_name;
 

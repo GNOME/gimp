@@ -95,7 +95,7 @@ static void        gimp_projection_validate_tile         (TileManager     *tm,
                                                           Tile            *tile,
                                                           GimpProjection  *proj);
 
-static void        gimp_projection_projectable_update    (GimpProjectable *projectable,
+static void        gimp_projection_projectable_invalidate(GimpProjectable *projectable,
                                                           gint             x,
                                                           gint             y,
                                                           gint             w,
@@ -152,8 +152,6 @@ gimp_projection_init (GimpProjection *proj)
   proj->idle_render.update_areas = NULL;
   proj->construct_flag           = FALSE;
 }
-
-/* sorry for the evil casts */
 
 static void
 gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
@@ -285,7 +283,12 @@ gimp_projection_get_image (GimpPickable *pickable)
 static GimpImageType
 gimp_projection_get_image_type (GimpPickable *pickable)
 {
-  switch (gimp_image_base_type (gimp_projection_get_image (pickable)))
+  GimpProjection *proj = GIMP_PROJECTION (pickable);
+  GimpImageType   type;
+
+  type = gimp_projectable_get_image_type (proj->projectable);
+
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
@@ -352,8 +355,8 @@ gimp_projection_new (GimpProjectable *projectable)
 
   proj->projectable = projectable;
 
-  g_signal_connect_object (projectable, "update",
-                           G_CALLBACK (gimp_projection_projectable_update),
+  g_signal_connect_object (projectable, "invalidate",
+                           G_CALLBACK (gimp_projection_projectable_invalidate),
                            proj, 0);
   g_signal_connect_object (projectable, "flush",
                            G_CALLBACK (gimp_projection_projectable_flush),
@@ -501,9 +504,18 @@ gimp_projection_add_update_area (GimpProjection *proj,
                                  gint            h)
 {
   GimpArea *area;
+  gint      off_x, off_y;
   gint      width, height;
 
-  gimp_projectable_get_size (proj->projectable, &width, &height);
+  gimp_projectable_get_offset (proj->projectable, &off_x, &off_y);
+  gimp_projectable_get_size   (proj->projectable, &width, &height);
+
+  /*  subtract the projectable's offsets because the list of update
+   *  areas is in tile-pyramid coordinates, but our external API is
+   *  always in terms of image coordinates.
+   */
+  x -= off_x;
+  y -= off_y;
 
   area = gimp_area_new (CLAMP (x,     0, width),
                         CLAMP (y,     0, height),
@@ -715,10 +727,12 @@ gimp_projection_paint_area (GimpProjection *proj,
                             gint            w,
                             gint            h)
 {
+  gint off_x, off_y;
   gint width, height;
   gint x1, y1, x2, y2;
 
-  gimp_projectable_get_size (proj->projectable, &width, &height);
+  gimp_projectable_get_offset (proj->projectable, &off_x, &off_y);
+  gimp_projectable_get_size   (proj->projectable, &width, &height);
 
   /*  Bounds check  */
   x1 = CLAMP (x,     0, width);
@@ -728,8 +742,16 @@ gimp_projection_paint_area (GimpProjection *proj,
 
   gimp_projection_invalidate (proj, x1, y1, x2 - x1, y2 - y1);
 
+  /*  add the projectable's offsets because the list of update areas
+   *  is in tile-pyramid coordinates, but our external API is always
+   *  in terms of image coordinates.
+   */
   g_signal_emit (proj, projection_signals[UPDATE], 0,
-                 now, x1, y1, x2 - x1, y2 - y1);
+                 now,
+                 x1 + off_x,
+                 y1 + off_y,
+                 x2 - x1,
+                 y2 - y1);
 }
 
 static void
@@ -807,12 +829,12 @@ gimp_projection_validate_tile (TileManager    *tm,
 /*  image callbacks  */
 
 static void
-gimp_projection_projectable_update (GimpProjectable *projectable,
-                                    gint             x,
-                                    gint             y,
-                                    gint             w,
-                                    gint             h,
-                                    GimpProjection  *proj)
+gimp_projection_projectable_invalidate (GimpProjectable *projectable,
+                                        gint             x,
+                                        gint             y,
+                                        gint             w,
+                                        gint             h,
+                                        GimpProjection  *proj)
 {
   gimp_projection_add_update_area (proj, x, y, w, h);
 }
@@ -832,7 +854,17 @@ static void
 gimp_projection_projectable_changed (GimpProjectable *projectable,
                                      GimpProjection  *proj)
 {
+  gint off_x, off_y;
   gint width, height;
+
+  if (proj->idle_render.idle_id)
+    {
+      g_source_remove (proj->idle_render.idle_id);
+      proj->idle_render.idle_id = 0;
+    }
+
+  gimp_area_list_free (proj->update_areas);
+  proj->update_areas = NULL;
 
   if (proj->pyramid)
     {
@@ -840,7 +872,8 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
       proj->pyramid = NULL;
     }
 
+  gimp_projectable_get_offset (proj->projectable, &off_x, &off_y);
   gimp_projectable_get_size (projectable, &width, &height);
 
-  gimp_projection_add_update_area (proj, 0, 0, width, height);
+  gimp_projection_add_update_area (proj, off_x, off_y, width, height);
 }

@@ -246,6 +246,8 @@ gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->insert_item   = gimp_layer_tree_view_insert_item;
   iface->select_item   = gimp_layer_tree_view_select_item;
   iface->set_view_size = gimp_layer_tree_view_set_view_size;
+
+  iface->model_is_tree = TRUE;
 }
 
 static void
@@ -317,7 +319,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   hbox = gimp_item_tree_view_get_lock_box (GIMP_ITEM_TREE_VIEW (view));
 
-  view->priv->lock_alpha_toggle = gtk_check_button_new ();
+  view->priv->lock_alpha_toggle = gtk_toggle_button_new ();
   gtk_box_pack_start (GTK_BOX (hbox), view->priv->lock_alpha_toggle,
                       FALSE, FALSE, 0);
   gtk_widget_show (view->priv->lock_alpha_toggle);
@@ -377,8 +379,8 @@ gimp_layer_tree_view_constructor (GType                  type,
                                        layer_view->priv->model_column_mask_visible,
                                        NULL);
 
-  gimp_container_tree_view_prepend_cell_renderer (tree_view,
-                                                  layer_view->priv->mask_cell);
+  gimp_container_tree_view_add_renderer_cell (tree_view,
+                                              layer_view->priv->mask_cell);
 
   g_signal_connect (tree_view->renderer_cell, "clicked",
                     G_CALLBACK (gimp_layer_tree_view_layer_clicked),
@@ -402,12 +404,17 @@ gimp_layer_tree_view_constructor (GType                  type,
   gtk_widget_hide (gimp_item_tree_view_get_edit_button (GIMP_ITEM_TREE_VIEW (layer_view)));
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+                                          "layers-new-group", NULL);
+  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
+                         button, 2);
+
+  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-anchor", NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
-                         button, 5);
+                         button, 6);
 
   return object;
 }
@@ -493,6 +500,35 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
     }
 }
 
+typedef struct
+{
+  gint         mask_column;
+  GimpContext *context;
+} SetContextForeachData;
+
+static gboolean
+gimp_layer_tree_view_set_context_foreach (GtkTreeModel *model,
+                                          GtkTreePath  *path,
+                                          GtkTreeIter  *iter,
+                                          gpointer      data)
+{
+  SetContextForeachData *context_data = data;
+  GimpViewRenderer      *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      context_data->mask_column, &renderer,
+                      -1);
+
+  if (renderer)
+    {
+      gimp_view_renderer_set_context (renderer, context_data->context);
+
+      g_object_unref (renderer);
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_layer_tree_view_set_context (GimpContainerView *view,
                                   GimpContext       *context)
@@ -504,25 +540,12 @@ gimp_layer_tree_view_set_context (GimpContainerView *view,
 
   if (tree_view->model)
     {
-      GtkTreeIter iter;
-      gboolean    iter_valid;
+      SetContextForeachData context_data = { layer_view->priv->model_column_mask,
+                                             context };
 
-      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (tree_view->model, &iter,
-                              layer_view->priv->model_column_mask, &renderer,
-                              -1);
-
-          if (renderer)
-            {
-              gimp_view_renderer_set_context (renderer, context);
-              g_object_unref (renderer);
-            }
-        }
+      gtk_tree_model_foreach (tree_view->model,
+                              gimp_layer_tree_view_set_context_foreach,
+                              &context_data);
     }
 }
 
@@ -579,6 +602,38 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
   return success;
 }
 
+typedef struct
+{
+  gint mask_column;
+  gint view_size;
+  gint border_width;
+} SetSizeForeachData;
+
+static gboolean
+gimp_layer_tree_view_set_view_size_foreach (GtkTreeModel *model,
+                                            GtkTreePath  *path,
+                                            GtkTreeIter  *iter,
+                                            gpointer      data)
+{
+  SetSizeForeachData *size_data = data;
+  GimpViewRenderer   *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      size_data->mask_column, &renderer,
+                      -1);
+
+  if (renderer)
+    {
+      gimp_view_renderer_set_size (renderer,
+                                   size_data->view_size,
+                                   size_data->border_width);
+
+      g_object_unref (renderer);
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_layer_tree_view_set_view_size (GimpContainerView *view)
 {
@@ -587,29 +642,16 @@ gimp_layer_tree_view_set_view_size (GimpContainerView *view)
   if (tree_view->model)
     {
       GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
-      GtkTreeIter        iter;
-      gboolean           iter_valid;
-      gint               view_size;
-      gint               border_width;
+      SetSizeForeachData size_data;
 
-      view_size = gimp_container_view_get_view_size (view, &border_width);
+      size_data.mask_column = layer_view->priv->model_column_mask;
 
-      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-        {
-          GimpViewRenderer *renderer;
+      size_data.view_size =
+        gimp_container_view_get_view_size (view, &size_data.border_width);
 
-          gtk_tree_model_get (tree_view->model, &iter,
-                              layer_view->priv->model_column_mask, &renderer,
-                              -1);
-
-          if (renderer)
-            {
-              gimp_view_renderer_set_size (renderer, view_size, border_width);
-              g_object_unref (renderer);
-            }
-        }
+      gtk_tree_model_foreach (tree_view->model,
+                              gimp_layer_tree_view_set_view_size_foreach,
+                              &size_data);
     }
 
   parent_view_iface->set_view_size (view);
@@ -1070,6 +1112,9 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
       UNBLOCK (view->priv->lock_alpha_toggle,
                gimp_layer_tree_view_lock_alpha_button_toggled);
     }
+
+  gtk_widget_set_sensitive (view->priv->lock_alpha_toggle,
+                            gimp_layer_can_lock_alpha (layer));
 
   if (gimp_layer_get_opacity (layer) * 100.0 !=
       gtk_adjustment_get_value (view->priv->opacity_adjustment))

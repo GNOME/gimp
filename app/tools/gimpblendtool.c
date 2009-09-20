@@ -167,7 +167,14 @@ gimp_blend_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   _("Cannot modify the pixels of layer groups."));
+      return FALSE;
+    }
+
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("The active layer's pixels are locked."));
@@ -260,6 +267,9 @@ gimp_blend_tool_button_release (GimpTool              *tool,
 
       gimp_image_flush (image);
     }
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
 }
 
 static void
@@ -347,18 +357,19 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
                                GdkModifierType   state,
                                GimpDisplay      *display)
 {
-  switch (gimp_drawable_type (gimp_image_get_active_drawable (display->image)))
+  GimpDrawable       *drawable;
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
+
+  drawable = gimp_image_get_active_drawable (display->image);
+
+  if (gimp_drawable_is_indexed (drawable)                   ||
+      gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
+      gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_BAD);
-      break;
-    default:
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_NONE);
-      break;
+      modifier = GIMP_CURSOR_MODIFIER_BAD;
     }
+
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

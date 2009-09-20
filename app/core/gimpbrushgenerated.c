@@ -279,7 +279,7 @@ gimp_brush_generated_duplicate (GimpData *data)
 {
   GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
 
-  return gimp_brush_generated_new (GIMP_OBJECT (brush)->name,
+  return gimp_brush_generated_new (gimp_object_get_name (brush),
                                    brush->shape,
                                    brush->radius,
                                    brush->spikes,

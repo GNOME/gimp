@@ -213,20 +213,19 @@ xcf_save_image (XcfInfo    *info,
                 GimpImage  *image,
                 GError    **error)
 {
-  GimpLayer   *layer;
-  GimpChannel *channel;
-  GList       *list;
-  guint32      saved_pos;
-  guint32      offset;
-  guint32      value;
-  guint        n_layers;
-  guint        n_channels;
-  guint        progress = 0;
-  guint        max_progress;
-  gboolean     have_selection;
-  gint         t1, t2, t3, t4;
-  gchar        version_tag[16];
-  GError      *tmp_error = NULL;
+  GList   *all_layers;
+  GList   *all_channels;
+  GList   *list;
+  guint32  saved_pos;
+  guint32  offset;
+  guint32  value;
+  guint    n_layers;
+  guint    n_channels;
+  guint    progress = 0;
+  guint    max_progress;
+  gint     t1, t2, t3, t4;
+  gchar    version_tag[16];
+  GError  *tmp_error = NULL;
 
   /* write out the tag information for the image */
   if (info->file_version > 0)
@@ -251,16 +250,20 @@ xcf_save_image (XcfInfo    *info,
   xcf_write_int32_check_error (info, &value, 1);
 
   /* determine the number of layers and channels in the image */
-  n_layers   = (guint) gimp_container_get_n_children (image->layers);
-  n_channels = (guint) gimp_container_get_n_children (image->channels);
-
-  max_progress = 1 + n_layers + n_channels;
+  all_layers   = gimp_image_get_layer_list (image);
+  all_channels = gimp_image_get_channel_list (image);
 
   /* check and see if we have to save out the selection */
-  have_selection = gimp_channel_bounds (gimp_image_get_mask (image),
-                                        &t1, &t2, &t3, &t4);
-  if (have_selection)
-    n_channels += 1;
+  if (gimp_channel_bounds (gimp_image_get_mask (image),
+                           &t1, &t2, &t3, &t4))
+    {
+      all_channels = g_list_append (all_channels, gimp_image_get_mask (image));
+    }
+
+  n_layers   = (guint) g_list_length (all_layers);
+  n_channels = (guint) g_list_length (all_channels);
+
+  max_progress = 1 + n_layers + n_channels;
 
   /* write the property information for the image.
    */
@@ -279,11 +282,9 @@ xcf_save_image (XcfInfo    *info,
                                  info->cp + (n_layers + n_channels + 2) * 4,
                                  error));
 
-  for (list = gimp_image_get_layer_iter (image);
-       list;
-       list = g_list_next (list))
+  for (list = all_layers; list; list = g_list_next (list))
     {
-      layer = list->data;
+      GimpLayer *layer = list->data;
 
       /* save the start offset of where we are writing
        *  out the next layer.
@@ -321,21 +322,9 @@ xcf_save_image (XcfInfo    *info,
   saved_pos = info->cp;
   xcf_check_error (xcf_seek_end (info, error));
 
-  list = gimp_image_get_channel_iter (image);
-
-  while (list || have_selection)
+  for (list = all_channels; list; list = g_list_next (list))
     {
-      if (list)
-        {
-          channel = list->data;
-
-          list = g_list_next (list);
-        }
-      else
-        {
-          channel = gimp_image_get_mask (image);
-          have_selection = FALSE;
-        }
+      GimpChannel *channel = list->data;
 
       /* save the start offset of where we are writing
        *  out the next channel.
@@ -363,6 +352,9 @@ xcf_save_image (XcfInfo    *info,
        */
       xcf_check_error (xcf_seek_end (info, error));
     }
+
+  g_list_free (all_layers);
+  g_list_free (all_channels);
 
   /* write out a '0' offset position to indicate the end
    *  of the channel offsets.
@@ -461,6 +453,19 @@ xcf_save_layer_props (XcfInfo    *info,
   gint          offset_x;
   gint          offset_y;
 
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    xcf_check_error (xcf_save_prop (info, image, PROP_GROUP_ITEM, error));
+
+  if (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)))
+    {
+      GList *path;
+
+      path = gimp_item_get_path (GIMP_ITEM (layer));
+      xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_PATH, error,
+                                      path));
+      g_list_free (path);
+    }
+
   if (layer == gimp_image_get_active_layer (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_LAYER, error));
 
@@ -477,6 +482,8 @@ xcf_save_layer_props (XcfInfo    *info,
                                   gimp_item_get_visible (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LINKED, error,
                                   gimp_item_get_linked (GIMP_ITEM (layer))));
+  xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
+                                  gimp_item_get_lock_content (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_ALPHA, error,
                                   gimp_layer_get_lock_alpha (layer)));
 
@@ -561,6 +568,8 @@ xcf_save_channel_props (XcfInfo      *info,
                                   gimp_item_get_visible (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LINKED, error,
                                   gimp_item_get_linked (GIMP_ITEM (channel))));
+  xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
+                                  gimp_item_get_lock_content (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_SHOW_MASKED, error,
                                   gimp_channel_get_show_masked (channel)));
 
@@ -621,6 +630,7 @@ xcf_save_prop (XcfInfo    *info,
     case PROP_ACTIVE_LAYER:
     case PROP_ACTIVE_CHANNEL:
     case PROP_SELECTION:
+    case PROP_GROUP_ITEM:
       size = 0;
 
       xcf_write_prop_type_check_error (info, prop_type);
@@ -694,6 +704,19 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
         xcf_write_int32_check_error (info, &linked, 1);
+      }
+      break;
+
+    case PROP_LOCK_CONTENT:
+      {
+        guint32 lock_content;
+
+        lock_content = va_arg (args, guint32);
+        size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+        xcf_write_int32_check_error (info, &lock_content, 1);
       }
       break;
 
@@ -1062,6 +1085,27 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_int32_check_error (info, &flags, 1);
       }
       break;
+
+    case PROP_ITEM_PATH:
+      {
+        GList *path;
+
+        path = va_arg (args, GList *);
+        size = 4 * g_list_length (path);
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+
+        while (path)
+          {
+            guint32 index = GPOINTER_TO_UINT (path->data);
+
+            xcf_write_int32_check_error (info, &index, 1);
+
+            path = g_list_next (path);
+          }
+      }
+      break;
     }
 
   va_end (args);
@@ -1103,18 +1147,18 @@ xcf_save_layer (XcfInfo    *info,
   xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the layers name */
-  string = gimp_object_get_name (GIMP_OBJECT (layer));
+  string = gimp_object_get_name (layer);
   xcf_write_string_check_error (info, (gchar **) &string, 1);
 
   /* write out the layer properties */
   xcf_save_layer_props (info, image, layer, error);
 
-  /* save the current position which is where the hierarchy offset
+  /*  save the current position which is where the hierarchy offset
    *  will be stored.
    */
   saved_pos = info->cp;
 
-  /* write out the layer tile hierarchy */
+  /*  write out the layer tile hierarchy  */
   xcf_check_error (xcf_seek_pos (info, info->cp + 8, error));
   offset = info->cp;
 
@@ -1124,6 +1168,10 @@ xcf_save_layer (XcfInfo    *info,
 
   xcf_check_error (xcf_seek_pos (info, saved_pos, error));
   xcf_write_int32_check_error (info, &offset, 1);
+
+  /*  save the current position which is where the layer mask offset
+   *  will be stored.
+   */
   saved_pos = info->cp;
 
   /* write out the layer mask */
@@ -1177,7 +1225,7 @@ xcf_save_channel (XcfInfo      *info,
   xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the channels name */
-  string = gimp_object_get_name (GIMP_OBJECT (channel));
+  string = gimp_object_get_name (channel);
   xcf_write_string_check_error (info, (gchar **) &string, 1);
 
   /* write out the channel properties */
@@ -1652,7 +1700,7 @@ xcf_save_old_paths (XcfInfo    *info,
        * we already saved the number of paths and I wont start seeking
        * around to fix that cruft  */
 
-      name     = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
+      name     = (gchar *) gimp_object_get_name (vectors);
       locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
       state    = closed ? 4 : 2;  /* EDIT : ADD  (editing state, 1.2 compat) */
       version  = 3;
@@ -1754,7 +1802,7 @@ xcf_save_vectors (XcfInfo    *info,
 
       parasites = GIMP_ITEM (vectors)->parasites;
 
-      name          = gimp_object_get_name (GIMP_OBJECT (vectors));
+      name          = gimp_object_get_name (vectors);
       visible       = gimp_item_get_visible (GIMP_ITEM (vectors));
       linked        = gimp_item_get_linked (GIMP_ITEM (vectors));
       tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));

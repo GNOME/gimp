@@ -30,17 +30,18 @@
 #define GIMP_DOCKBOOK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCKBOOK, GimpDockbookClass))
 
 
-typedef struct _GimpDockbookClass  GimpDockbookClass;
+typedef struct _GimpDockbookClass    GimpDockbookClass;
+typedef struct _GimpDockbookPrivate  GimpDockbookPrivate;
 
+/**
+ * Holds GimpDockables which are presented on different tabs using
+ * GtkNotebook.
+ */
 struct _GimpDockbook
 {
-  GtkNotebook    parent_instance;
+  GtkNotebook parent_instance;
 
-  GimpDock      *dock;
-  GimpUIManager *ui_manager;
-
-  guint          tab_hover_timeout;
-  GimpDockable  *tab_hover_dockable;
+  GimpDockbookPrivate *p;
 };
 
 struct _GimpDockbookClass
@@ -59,6 +60,12 @@ struct _GimpDockbookClass
 GType       gimp_dockbook_get_type          (void) G_GNUC_CONST;
 
 GtkWidget * gimp_dockbook_new               (GimpMenuFactory  *menu_factory);
+
+GimpDock  * gimp_dockbook_get_dock          (GimpDockbook     *dockbook);
+void        gimp_dockbook_set_dock          (GimpDockbook     *dockbook,
+                                             GimpDock         *dock);
+GimpUIManager *
+            gimp_dockbook_get_ui_manager    (GimpDockbook     *dockbook);
 
 void        gimp_dockbook_add               (GimpDockbook     *dockbook,
                                              GimpDockable     *dockable,

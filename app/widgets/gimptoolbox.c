@@ -39,6 +39,7 @@
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
 #include "gimpdockseparator.h"
+#include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
@@ -78,11 +79,14 @@ static gboolean    gimp_toolbox_button_press_event (GtkWidget      *widget,
 static gboolean    gimp_toolbox_expose_event       (GtkWidget      *widget,
                                                     GdkEventExpose *event);
 
+static gchar     * gimp_toolbox_get_title          (GimpDock       *dock);
+static void        gimp_toolbox_set_host_geometry_hints
+                                                   (GimpDock       *dock,
+                                                    GtkWindow      *window);
 static void        gimp_toolbox_book_added         (GimpDock       *dock,
                                                     GimpDockbook   *dockbook);
 static void        gimp_toolbox_book_removed       (GimpDock       *dock,
                                                     GimpDockbook   *dockbook);
-static void        gimp_toolbox_set_geometry       (GimpToolbox    *toolbox);
 
 static void        toolbox_separator_expand        (GimpToolbox    *toolbox);
 static void        toolbox_separator_collapse      (GimpToolbox    *toolbox);
@@ -129,7 +133,7 @@ static void        toolbox_paste_received          (GtkClipboard   *clipboard,
                                                     gpointer        data);
 
 
-G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_IMAGE_DOCK)
+G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_DOCK)
 
 #define parent_class gimp_toolbox_parent_class
 
@@ -137,23 +141,22 @@ G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_IMAGE_DOCK)
 static void
 gimp_toolbox_class_init (GimpToolboxClass *klass)
 {
-  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
-  GtkWidgetClass     *widget_class     = GTK_WIDGET_CLASS (klass);
-  GimpDockClass      *dock_class       = GIMP_DOCK_CLASS (klass);
-  GimpImageDockClass *image_dock_class = GIMP_IMAGE_DOCK_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
 
-  object_class->constructor         = gimp_toolbox_constructor;
+  object_class->constructor           = gimp_toolbox_constructor;
 
-  widget_class->delete_event        = gimp_toolbox_delete_event;
-  widget_class->size_allocate       = gimp_toolbox_size_allocate;
-  widget_class->style_set           = gimp_toolbox_style_set;
-  widget_class->button_press_event  = gimp_toolbox_button_press_event;
-  widget_class->expose_event        = gimp_toolbox_expose_event;
+  widget_class->delete_event          = gimp_toolbox_delete_event;
+  widget_class->size_allocate         = gimp_toolbox_size_allocate;
+  widget_class->style_set             = gimp_toolbox_style_set;
+  widget_class->button_press_event    = gimp_toolbox_button_press_event;
+  widget_class->expose_event          = gimp_toolbox_expose_event;
 
-  dock_class->book_added            = gimp_toolbox_book_added;
-  dock_class->book_removed          = gimp_toolbox_book_removed;
-
-  image_dock_class->ui_manager_name = "<Toolbox>";
+  dock_class->get_title               = gimp_toolbox_get_title;
+  dock_class->set_host_geometry_hints = gimp_toolbox_set_host_geometry_hints;
+  dock_class->book_added              = gimp_toolbox_book_added;
+  dock_class->book_removed            = gimp_toolbox_book_removed;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tool-icon-size",
@@ -173,8 +176,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
 static void
 gimp_toolbox_init (GimpToolbox *toolbox)
 {
-  gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
-
   gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
                      GIMP_HELP_TOOLBOX, NULL);
 }
@@ -198,8 +199,6 @@ gimp_toolbox_constructor (GType                  type,
 
   context = gimp_dock_get_context (GIMP_DOCK (toolbox));
   config  = GIMP_GUI_CONFIG (context->gimp->config);
-
-  gimp_window_set_hint (GTK_WINDOW (toolbox), config->toolbox_window_hint);
 
   main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
 
@@ -471,7 +470,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
         }
     }
 
-  gimp_toolbox_set_geometry (GIMP_TOOLBOX (widget));
+  gimp_dock_invalidate_geometry (GIMP_DOCK (widget));
 }
 
 static gboolean
@@ -545,13 +544,19 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
   return FALSE;
 }
 
+static gchar *
+gimp_toolbox_get_title (GimpDock *dock)
+{
+  return g_strdup (_("Toolbox"));
+}
+
 static void
 gimp_toolbox_book_added (GimpDock     *dock,
                          GimpDockbook *dockbook)
 {
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 1)
     {
-      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
+      gimp_dock_invalidate_geometry (dock);
       toolbox_separator_collapse (GIMP_TOOLBOX (dock));
     }
 }
@@ -563,14 +568,16 @@ gimp_toolbox_book_removed (GimpDock     *dock,
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 0 &&
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
     {
-      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
+      gimp_dock_invalidate_geometry (dock);
       toolbox_separator_expand (GIMP_TOOLBOX (dock));
     }
 }
 
 static void
-gimp_toolbox_set_geometry (GimpToolbox *toolbox)
+gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
+                                      GtkWindow *window)
 {
+  GimpToolbox  *toolbox = GIMP_TOOLBOX (dock);
   Gimp         *gimp;
   GimpToolInfo *tool_info;
   GtkWidget    *tool_button;
@@ -603,14 +610,14 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
       geometry.height_inc = (gimp_dock_get_dockbooks (GIMP_DOCK (toolbox)) ?
                              1 : button_requisition.height);
 
-      gtk_window_set_geometry_hints (GTK_WINDOW (toolbox),
+      gtk_window_set_geometry_hints (window,
                                      NULL,
                                      &geometry,
                                      GDK_HINT_MIN_SIZE   |
                                      GDK_HINT_RESIZE_INC |
                                      GDK_HINT_USER_POS);
 
-      gimp_dialog_factory_set_has_min_size (GTK_WINDOW (toolbox), TRUE);
+      gimp_dialog_factory_set_has_min_size (window, TRUE);
     }
 }
 
@@ -624,9 +631,12 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
-                          "title",          _("Toolbox"),
-                          "context",        context,
-                          "dialog-factory", dialog_factory,
+                          "role",                "gimp-toolbox",
+                          "context",             context,
+                          "dialog-factory",      dialog_factory,
+                          "ui-manager-name",     "<Toolbox>",
+                          "gimp-context",        context,
+                          "gimp-dialog-factory", dialog_factory,
                           NULL);
 
   return GTK_WIDGET (toolbox);
@@ -681,10 +691,11 @@ toolbox_create_tools (GimpToolbox *toolbox,
        list;
        list = g_list_next (list))
     {
-      GimpToolInfo *tool_info = list->data;
-      GtkWidget    *button;
-      GtkWidget    *image;
-      const gchar  *stock_id;
+      GimpToolInfo   *tool_info = list->data;
+      GtkWidget      *button;
+      GtkWidget      *image;
+      GimpDockWindow *dock_window;
+      const gchar    *stock_id;
 
       button = gtk_radio_button_new (group);
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
@@ -719,22 +730,24 @@ toolbox_create_tools (GimpToolbox *toolbox,
                         G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      if (GIMP_IMAGE_DOCK (toolbox)->ui_manager)
+      dock_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
+      if (gimp_dock_window_get_ui_manager (dock_window))
         {
-          GtkAction   *action;
-          const gchar *identifier;
-          gchar       *tmp;
-          gchar       *name;
+          GimpUIManager *ui_manager;
+          GtkAction     *action;
+          const gchar   *identifier;
+          gchar         *tmp;
+          gchar         *name;
 
-          identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
+          identifier = gimp_object_get_name (tool_info);
 
           tmp = g_strndup (identifier + strlen ("gimp-"),
                            strlen (identifier) - strlen ("gimp--tool"));
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          action = gimp_ui_manager_find_action (GIMP_IMAGE_DOCK (toolbox)->ui_manager,
-                                                "tools", name);
+          ui_manager  = gimp_dock_window_get_ui_manager (dock_window);
+          action      = gimp_ui_manager_find_action (ui_manager, "tools", name);
           g_free (name);
 
           if (action)

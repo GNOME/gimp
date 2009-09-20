@@ -25,6 +25,7 @@
 
 #include "core/gimpimage-convert.h"
 #include "core/gimpimage.h"
+#include "core/gimpitemstack.h"
 #include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
 
@@ -128,7 +129,8 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
     {
       GimpPalette *pal = NULL;
 
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error))
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+          gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
         {
           switch (palette_type)
             {

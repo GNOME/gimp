@@ -45,17 +45,18 @@ enum
 };
 
 
-static gboolean   gimp_layer_mask_is_attached   (GimpItem     *item);
-static GimpContainer *
-                  gimp_layer_mask_get_container (GimpItem     *item);
-static GimpItem * gimp_layer_mask_duplicate     (GimpItem     *item,
-                                                 GType         new_type);
-static gboolean   gimp_layer_mask_rename        (GimpItem     *item,
-                                                 const gchar  *new_name,
-                                                 const gchar  *undo_desc,
-                                                 GError      **error);
+static gboolean        gimp_layer_mask_is_attached       (const GimpItem *item);
+static gboolean        gimp_layer_mask_is_content_locked (const GimpItem *item);
+static GimpContainer * gimp_layer_mask_get_container     (GimpItem       *item);
+static GimpItem      * gimp_layer_mask_duplicate         (GimpItem       *item,
+                                                          GType           new_type);
+static gboolean        gimp_layer_mask_rename            (GimpItem       *item,
+                                                          const gchar    *new_name,
+                                                          const gchar    *undo_desc,
+                                                          GError        **error);
 
-static void       gimp_layer_mask_real_edit_changed (GimpLayerMask *layer_mask);
+static void            gimp_layer_mask_real_edit_changed (GimpLayerMask  *layer_mask);
+
 
 G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
 
@@ -99,13 +100,14 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 
   viewable_class->default_stock_id = "gimp-layer-mask";
 
-  klass->edit_changed        = gimp_layer_mask_real_edit_changed;
+  klass->edit_changed           = gimp_layer_mask_real_edit_changed;
 
-  item_class->is_attached    = gimp_layer_mask_is_attached;
-  item_class->get_container  = gimp_layer_mask_get_container;
-  item_class->duplicate      = gimp_layer_mask_duplicate;
-  item_class->rename         = gimp_layer_mask_rename;
-  item_class->translate_desc = _("Move Layer Mask");
+  item_class->is_attached       = gimp_layer_mask_is_attached;
+  item_class->is_content_locked = gimp_layer_mask_is_content_locked;
+  item_class->get_container     = gimp_layer_mask_get_container;
+  item_class->duplicate         = gimp_layer_mask_duplicate;
+  item_class->rename            = gimp_layer_mask_rename;
+  item_class->translate_desc    = _("Move Layer Mask");
 }
 
 static void
@@ -118,7 +120,19 @@ gimp_layer_mask_init (GimpLayerMask *layer_mask)
 }
 
 static gboolean
-gimp_layer_mask_is_attached (GimpItem *item)
+gimp_layer_mask_is_content_locked (const GimpItem *item)
+{
+  GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
+  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+
+  if (layer)
+    return gimp_item_is_content_locked (GIMP_ITEM (layer));
+
+  return FALSE;
+}
+
+static gboolean
+gimp_layer_mask_is_attached (const GimpItem *item)
 {
   GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
   GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
@@ -217,8 +231,7 @@ gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
       gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
       gimp_item_set_offset (GIMP_ITEM (layer_mask), offset_x, offset_y);
 
-      mask_name = g_strdup_printf (_("%s mask"),
-                                   gimp_object_get_name (GIMP_OBJECT (layer)));
+      mask_name = g_strdup_printf (_("%s mask"), gimp_object_get_name (layer));
 
       gimp_object_take_name (GIMP_OBJECT (layer_mask), mask_name);
     }

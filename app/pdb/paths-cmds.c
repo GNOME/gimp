@@ -39,6 +39,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimppdb.h"
+#include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -98,7 +99,7 @@ path_get_current_invoker (GimpProcedure      *procedure,
       GimpVectors *vectors = gimp_image_get_active_vectors (image);
 
       if (vectors)
-        name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+        name = g_strdup (gimp_object_get_name (vectors));
       else
         success = FALSE;
     }
@@ -331,7 +332,8 @@ path_stroke_current_invoker (GimpProcedure      *procedure,
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (vectors && drawable &&
-          gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error))
+          gimp_pdb_item_is_writable (GIMP_ITEM (drawable), error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
 
@@ -527,7 +529,7 @@ get_path_by_tattoo_invoker (GimpProcedure      *procedure,
       GimpVectors *vectors = gimp_image_get_vectors_by_tattoo (image, tattoo);
 
       if (vectors)
-        name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+        name = g_strdup (gimp_object_get_name (vectors));
       else
         success = FALSE;
     }

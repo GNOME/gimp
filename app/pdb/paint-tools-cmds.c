@@ -116,7 +116,9 @@ airbrush_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-airbrush", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -158,7 +160,9 @@ airbrush_default_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-airbrush", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -204,7 +208,9 @@ clone_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-clone", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -249,7 +255,9 @@ clone_default_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-clone", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -291,7 +299,9 @@ convolve_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-convolve", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -334,7 +344,9 @@ convolve_default_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-convolve", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -378,7 +390,9 @@ dodgeburn_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-dodge-burn", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -422,7 +436,9 @@ dodgeburn_default_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-dodge-burn", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -464,7 +480,9 @@ eraser_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-eraser", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -507,7 +525,9 @@ eraser_default_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-eraser", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -551,7 +571,9 @@ heal_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-heal", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -592,7 +614,9 @@ heal_default_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-heal", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -636,7 +660,9 @@ paintbrush_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-paintbrush", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -682,7 +708,9 @@ paintbrush_default_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-paintbrush", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -720,7 +748,9 @@ pencil_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-pencil", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -760,7 +790,9 @@ smudge_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-smudge", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -802,7 +834,9 @@ smudge_default_invoker (GimpProcedure      *procedure,
     {
       GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-smudge", error);
 
-      if (info && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error))
+      if (info &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 

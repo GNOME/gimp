@@ -1,0 +1,42 @@
+# recently closed docks
+
+(GimpSessionInfo "Palettes - FG/BG - Images"
+    (position 586 116)
+    (size 200 573)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "false")
+        (follow-active-image "true"))
+    (dock
+        (book
+            (current-page 0)
+            (dockable "gimp-palette-list"
+                (tab-style preview)))
+        (book
+            (position 141)
+            (current-page 0)
+            (dockable "gimp-color-editor"
+                (tab-style preview)
+                (aux-info
+                    (current-page "GimpColorSelect"))))
+        (book
+            (position 414)
+            (current-page 0)
+            (dockable "gimp-image-list"
+                (tab-style preview)))))
+(GimpSessionInfo "Selection, Fonts"
+    (position 200 179)
+    (size 200 300)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "false")
+        (follow-active-image "true"))
+    (dock
+        (book
+            (current-page 1)
+            (dockable "gimp-selection-editor"
+                (tab-style icon))
+            (dockable "gimp-font-list"
+                (tab-style preview)))))
+
+# end of recently closed docks

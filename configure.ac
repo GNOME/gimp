@@ -43,7 +43,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 m4_define([babl_required_version], [0.1.0])
 m4_define([gegl_required_version], [0.1.0])
 m4_define([glib_required_version], [2.20.0])
-m4_define([gtk_required_version], [2.16.1])
+m4_define([gtk_required_version], [2.16.6])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([cairo_required_version], [1.6.0])
 m4_define([pangocairo_required_version], [1.20.1])
@@ -1979,6 +1979,7 @@ app/tools/Makefile
 app/vectors/Makefile
 app/widgets/Makefile
 app/xcf/Makefile
+app/tests/Makefile
 plug-ins/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile

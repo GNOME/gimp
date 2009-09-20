@@ -157,7 +157,7 @@ gimp_pdb_real_register_procedure (GimpPDB       *pdb,
   const gchar *name;
   GList       *list;
 
-  name = gimp_object_get_name (GIMP_OBJECT (procedure));
+  name = gimp_object_get_name (procedure);
 
   list = g_hash_table_lookup (pdb->procedures, name);
 
@@ -172,7 +172,7 @@ gimp_pdb_real_unregister_procedure (GimpPDB       *pdb,
   const gchar *name;
   GList       *list;
 
-  name = gimp_object_get_name (GIMP_OBJECT (procedure));
+  name = gimp_object_get_name (procedure);
 
   list = g_hash_table_lookup (pdb->procedures, name);
 
@@ -182,7 +182,7 @@ gimp_pdb_real_unregister_procedure (GimpPDB       *pdb,
 
       if (list)
         {
-          name = gimp_object_get_name (GIMP_OBJECT (list->data));
+          name = gimp_object_get_name (list->data);
           g_hash_table_replace (pdb->procedures, (gpointer) name, list);
         }
       else
@@ -410,7 +410,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
                                    _("Procedure '%s' has been called with a "
                                      "wrong type for argument #%d. "
                                      "Expected %s, got %s."),
-                                   gimp_object_get_name (GIMP_OBJECT (procedure)),
+                                   gimp_object_get_name (procedure),
                                    i + 1, expected, got);
 
           return_vals = gimp_procedure_get_return_values (procedure,

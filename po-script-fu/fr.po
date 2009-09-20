@@ -14,9 +14,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-07 11:13+0100\n"
-"PO-Revision-Date: 2009-03-02 08:19+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-07-08 19:33+0000\n"
+"PO-Revision-Date: 2009-07-23 08:19+0100\n"
 "Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -439,7 +440,7 @@ msgstr "Crée une image remplie avec un motif 3D truchet"
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "End blend"
-msgstr "Mélange final"
+msgstr "Fin du mélange"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:5
@@ -994,11 +995,11 @@ msgstr "Entailler les zones blanches"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Image to carve"
-msgstr "Image à entailler"
+msgstr "Image à graver"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Stencil C_arve..."
-msgstr "Patron de t_aillage..."
+msgstr "Patron de gr_avure..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "Background Image"
@@ -1010,7 +1011,7 @@ msgstr "Entaille le texte agrandi"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carved..."
-msgstr "Taillé..."
+msgstr "Gravé..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid ""
@@ -1044,7 +1045,7 @@ msgstr "C_raie..."
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
 msgstr ""
-"Ajoute un effet de sculpture sur bois à la région sélectionnée (ou alpha)"
+"Ajoute un effet de gravure sur bois à la région sélectionnée (ou alpha)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1052,15 +1053,15 @@ msgstr "Importance du flou"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Chip Awa_y..."
-msgstr "Éclaté..."
+msgstr "Gravure au _burin..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip amount"
-msgstr "Quantité d'éclats"
+msgstr "Nombre d'éclats"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
-msgstr "Crée un logo ressemblant à du bois sculpté"
+msgstr "Crée un logo ressemblant à du bois gravé au burin"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
@@ -1322,7 +1323,7 @@ msgstr "Seuil (plus grand 1<-->255 plus petit)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
-msgstr "_Perturbation..."
+msgstr "_Déformation..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop shadow to the selected region (or alpha)"
