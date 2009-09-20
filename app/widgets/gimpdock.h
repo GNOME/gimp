@@ -85,6 +85,7 @@ void                gimp_dock_set_host_geometry_hints
 void                gimp_dock_invalidate_geometry(GimpDock       *dock);
 GimpContext       * gimp_dock_get_context        (GimpDock       *dock);
 GimpDialogFactory * gimp_dock_get_dialog_factory (GimpDock       *dock);
+GimpUIManager     * gimp_dock_get_ui_manager     (GimpDock       *dock);
 GList             * gimp_dock_get_dockbooks      (GimpDock       *dock);
 gint                gimp_dock_get_n_dockables    (GimpDock       *dock);
 GtkWidget         * gimp_dock_get_main_vbox      (GimpDock       *dock);
