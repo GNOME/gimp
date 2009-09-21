@@ -326,7 +326,7 @@ gimp_group_layer_duplicate (GimpItem *item,
 {
   GimpItem *new_item;
 
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_GROUP_LAYER), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
   new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
