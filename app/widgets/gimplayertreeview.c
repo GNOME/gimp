@@ -1168,9 +1168,10 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
                       layer_view->model_column_mask_visible, mask_visible,
                       -1);
 
+  gimp_layer_tree_view_update_borders (layer_view, iter);
+
   if (renderer)
     {
-      gimp_layer_tree_view_update_borders (layer_view, iter);
       gimp_view_renderer_remove_idle (renderer);
       g_object_unref (renderer);
     }
