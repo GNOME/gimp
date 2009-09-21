@@ -337,6 +337,8 @@ gimp_group_layer_duplicate (GimpItem *item,
       gint            position  = 0;
       GList          *list;
 
+      gimp_group_layer_suspend_resize (new_group, FALSE);
+
       for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
            list;
            list = g_list_next (list))
@@ -369,6 +371,13 @@ gimp_group_layer_duplicate (GimpItem *item,
                                  GIMP_OBJECT (new_child),
                                  position++);
         }
+
+      /* FIXME: need to change the item's extents to resume_resize()
+       * will actually reallocate the projection's pyramid
+       */
+      GIMP_ITEM (new_group)->width++;
+
+      gimp_group_layer_resume_resize (new_group, FALSE);
     }
 
   return new_item;
