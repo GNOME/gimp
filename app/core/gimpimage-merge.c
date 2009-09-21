@@ -37,11 +37,11 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimperror.h"
+#include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-merge.h"
 #include "gimpimage-undo.h"
-#include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
@@ -256,6 +256,39 @@ gimp_image_merge_down (GimpImage      *image,
 
   return layer;
 }
+
+GimpLayer *
+gimp_image_merge_group_layer (GimpImage      *image,
+                              GimpGroupLayer *group)
+{
+  GimpLayer *parent;
+  GimpLayer *layer;
+  gint       index;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (group)) == image, NULL);
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+                               _("Merge Layer Group"));
+
+  parent = GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (group)));
+  index  = gimp_item_get_index (GIMP_ITEM (group));
+
+  layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (group),
+                                           GIMP_TYPE_LAYER));
+
+  gimp_object_set_name (GIMP_OBJECT (layer), gimp_object_get_name (group));
+
+  gimp_image_remove_layer (image, GIMP_LAYER (group), TRUE, NULL);
+  gimp_image_add_layer (image, layer, parent, index, TRUE);
+
+  gimp_image_undo_group_end (image);
+
+  return layer;
+}
+
 
 /* merging vectors */
 
