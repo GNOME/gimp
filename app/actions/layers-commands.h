@@ -53,6 +53,8 @@ void   layers_anchor_cmd_callback             (GtkAction   *action,
                                                gpointer     data);
 void   layers_merge_down_cmd_callback         (GtkAction   *action,
                                                gpointer     data);
+void   layers_merge_group_cmd_callback        (GtkAction   *action,
+                                               gpointer     data);
 void   layers_delete_cmd_callback             (GtkAction   *action,
                                                gpointer     data);
 void   layers_text_discard_cmd_callback       (GtkAction   *action,

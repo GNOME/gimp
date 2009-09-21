@@ -152,6 +152,12 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_merge_down_cmd_callback),
     GIMP_HELP_LAYER_MERGE_DOWN },
 
+  { "layers-merge-group", NULL,
+    NC_("layers-action", "Merge Layer Group"), NULL,
+    NC_("layers-action", "Merge the layer group's layers into one normal layer"),
+    G_CALLBACK (layers_merge_group_cmd_callback),
+    GIMP_HELP_LAYER_MERGE_GROUP },
+
   { "layers-merge-layers", NULL,
     NC_("layers-action", "Merge _Visible Layers..."), NULL,
     NC_("layers-action", "Merge all visible layers into one layer"),
@@ -592,6 +598,9 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-anchor",           layer &&  fs && !ac);
   SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac &&
                                             !children && next_visible);
+  SET_VISIBLE   ("layers-merge-group",      children);
+  SET_SENSITIVE ("layers-merge-group",      layer && !fs && !ac &&
+                                            children);
   SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",    layer && !fs && !ac);
 

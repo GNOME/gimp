@@ -144,6 +144,7 @@
 #define GIMP_HELP_LAYER_DUPLICATE                 "gimp-layer-duplicate"
 #define GIMP_HELP_LAYER_ANCHOR                    "gimp-layer-anchor"
 #define GIMP_HELP_LAYER_MERGE_DOWN                "gimp-layer-merge-down"
+#define GIMP_HELP_LAYER_MERGE_GROUP               "gimp-layer-merge-group"
 #define GIMP_HELP_LAYER_DELETE                    "gimp-layer-delete"
 #define GIMP_HELP_LAYER_TEXT_DISCARD              "gimp-layer-text-discard"
 #define GIMP_HELP_LAYER_TEXT_TO_PATH              "gimp-layer-text-to-path"

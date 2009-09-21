@@ -365,6 +365,7 @@
       <placeholder name="Structure">
         <menuitem action="layers-anchor" />
         <menuitem action="layers-merge-down" />
+        <menuitem action="layers-merge-group" />
         <menuitem action="layers-delete" />
       </placeholder>
       <separator />
