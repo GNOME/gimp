@@ -34,7 +34,6 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimp.h"
-#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimperror.h"
 #include "gimpgrouplayer.h"
@@ -42,6 +41,7 @@
 #include "gimpimage-colorhash.h"
 #include "gimpimage-merge.h"
 #include "gimpimage-undo.h"
+#include "gimpitemstack.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
@@ -66,19 +66,28 @@ gimp_image_merge_visible_layers (GimpImage     *image,
                                  GimpMergeType  merge_type,
                                  gboolean       discard_invisible)
 {
-  GList     *list;
-  GSList    *merge_list     = NULL;
-  GSList    *invisible_list = NULL;
-  GimpLayer *layer          = NULL;
+  GimpLayer     *active_layer;
+  GimpContainer *container;
+  GList         *list;
+  GSList        *merge_list     = NULL;
+  GSList        *invisible_list = NULL;
+  GimpLayer     *layer          = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  active_layer = gimp_image_get_active_layer (image);
+
+  if (active_layer)
+    container = gimp_item_get_container (GIMP_ITEM (active_layer));
+  else
+    container = gimp_image_get_layers (image);
 
   /* if there's a floating selection, anchor it */
   if (gimp_image_get_floating_selection (image))
     floating_sel_anchor (gimp_image_get_floating_selection (image));
 
-  for (list = gimp_image_get_layer_iter (image);
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (container));
        list;
        list = g_list_next (list))
     {
@@ -108,7 +117,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
         }
 
       layer = gimp_image_merge_layers (image,
-                                       gimp_image_get_layers (image),
+                                       container,
                                        merge_list, context, merge_type,
                                        _("Merge Visible Layers"));
       g_slist_free (merge_list);
@@ -121,6 +130,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
             gimp_image_remove_layer (image, list->data, TRUE, NULL);
 
           gimp_image_undo_group_end (image);
+
           g_slist_free (invisible_list);
         }
 
