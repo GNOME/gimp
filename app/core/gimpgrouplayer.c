@@ -1011,7 +1011,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         {
           gimp_item_set_offset (item, x, y);
 
-          /*  invalidate the entire projection since the poition of
+          /*  invalidate the entire projection since the position of
            *  the children relative to each other might have changed
            *  in a way that happens to leave the group's width and
            *  height the same
