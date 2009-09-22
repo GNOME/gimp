@@ -2280,7 +2280,7 @@ msgstr "Đang tự động kéo giãn HSV"
 
 #: ../plug-ins/common/autostretch_hsv.c:193
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-msgstr "autostretch_hsv: cmap VÔ GIÁ TRỊ nên thoạt...\n"
+msgstr "autostretch_hsv: cmap VÔ GIÁ TRỊ nên thoát...\n"
 
 #: ../plug-ins/common/blinds.c:116
 msgid "Simulate an image painted on window blinds"
