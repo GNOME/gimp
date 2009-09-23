@@ -42,6 +42,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpimagewindow.h"
 #include "display/gimpnavigationeditor.h"
 #include "display/gimpstatusbar.h"
 
@@ -262,6 +263,8 @@ action_data_get_gimp (gpointer data)
 
   if (GIMP_IS_DISPLAY (data))
     return ((GimpDisplay *) data)->gimp;
+  else if (GIMP_IS_IMAGE_WINDOW (data))
+    return gimp_image_window_get_active_display (data)->gimp;
   else if (GIMP_IS_GIMP (data))
     return data;
   else if (GIMP_IS_DOCK (data))
@@ -289,6 +292,8 @@ action_data_get_context (gpointer data)
 
   if (GIMP_IS_DISPLAY (data))
     return gimp_get_user_context (((GimpDisplay *) data)->gimp);
+  else if (GIMP_IS_IMAGE_WINDOW (data))
+    return gimp_get_user_context (gimp_image_window_get_active_display (data)->gimp);
   else if (GIMP_IS_GIMP (data))
     return gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
@@ -315,6 +320,8 @@ action_data_get_image (gpointer data)
 
   if (GIMP_IS_DISPLAY (data))
     return ((GimpDisplay *) data)->image;
+  else if (GIMP_IS_IMAGE_WINDOW (data))
+    return gimp_image_window_get_active_display (data)->image;
   else if (GIMP_IS_GIMP (data))
     context = gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
@@ -342,6 +349,8 @@ action_data_get_display (gpointer data)
 
   if (GIMP_IS_DISPLAY (data))
     return data;
+  else if (GIMP_IS_IMAGE_WINDOW (data))
+    return gimp_image_window_get_active_display (data);
   else if (GIMP_IS_GIMP (data))
     context = gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
