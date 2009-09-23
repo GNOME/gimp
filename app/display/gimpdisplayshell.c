@@ -902,6 +902,7 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
+                        "menu-factory",    menu_factory,
                         "unit",            unit,
                         /* The window position will be overridden by the
                          * dialog factory, it is only really used on first

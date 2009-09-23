@@ -35,6 +35,8 @@ typedef struct _GimpImageWindowClass  GimpImageWindowClass;
 struct _GimpImageWindow
 {
   GimpWindow       parent_instance;
+
+  GimpUIManager   *menubar_manager;
 };
 
 struct _GimpImageWindowClass
