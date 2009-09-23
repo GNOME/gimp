@@ -144,7 +144,8 @@ static const guint8 * gimp_display_shell_get_icc_profile
                                                     gsize            *len);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell, GIMP_TYPE_WINDOW,
+G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
+                         GIMP_TYPE_IMAGE_WINDOW,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_shell_progress_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,

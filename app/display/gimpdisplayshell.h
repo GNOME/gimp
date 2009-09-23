@@ -19,7 +19,7 @@
 #define __GIMP_DISPLAY_SHELL_H__
 
 
-#include "widgets/gimpwindow.h"
+#include "gimpimagewindow.h"
 
 
 /* Apply to a float the same rounding mode used in the renderer */
@@ -60,7 +60,7 @@ typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
 
 struct _GimpDisplayShell
 {
-  GimpWindow         parent_instance;
+  GimpImageWindow    parent_instance;
 
   /* --- cacheline 2 boundary (128 bytes) was 20 bytes ago --- */
 
@@ -217,7 +217,7 @@ struct _GimpDisplayShell
 
 struct _GimpDisplayShellClass
 {
-  GimpWindowClass    parent_class;
+  GimpImageWindowClass  parent_class;
 
   void (* scaled)    (GimpDisplayShell *shell);
   void (* scrolled)  (GimpDisplayShell *shell);
