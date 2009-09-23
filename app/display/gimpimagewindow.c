@@ -71,6 +71,14 @@ G_DEFINE_TYPE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW)
 #define parent_class gimp_image_window_parent_class
 
 
+static const gchar image_window_rc_style[] =
+  "style \"fullscreen-menubar-style\"\n"
+  "{\n"
+  "  GtkMenuBar::shadow-type      = none\n"
+  "  GtkMenuBar::internal-padding = 0\n"
+  "}\n"
+  "widget \"*.gimp-menubar-fullscreen\" style \"fullscreen-menubar-style\"\n";
+
 static void
 gimp_image_window_class_init (GimpImageWindowClass *klass)
 {
@@ -93,6 +101,8 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         GIMP_TYPE_MENU_FACTORY,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  gtk_rc_parse_string (image_window_rc_style);
 }
 
 static void

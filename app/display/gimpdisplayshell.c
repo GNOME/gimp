@@ -157,13 +157,6 @@ static guint display_shell_signals[LAST_SIGNAL] = { 0 };
 
 
 static const gchar display_rc_style[] =
-  "style \"fullscreen-menubar-style\"\n"
-  "{\n"
-  "  GtkMenuBar::shadow-type      = none\n"
-  "  GtkMenuBar::internal-padding = 0\n"
-  "}\n"
-  "widget \"*.gimp-menubar-fullscreen\" style \"fullscreen-menubar-style\"\n"
-  "\n"
   "style \"check-button-style\"\n"
   "{\n"
   "  GtkToggleButton::child-displacement-x = 0\n"
