@@ -37,6 +37,8 @@ struct _GimpImageWindow
   GimpWindow       parent_instance;
 
   GimpUIManager   *menubar_manager;
+
+  GdkWindowState   window_state;
 };
 
 struct _GimpImageWindowClass

@@ -643,6 +643,8 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
   Gimp             *gimp  = shell->display->gimp;
 
+  GTK_WIDGET_CLASS (parent_class)->window_state_event (widget, event);
+
   shell->window_state = event->new_window_state;
 
   if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)

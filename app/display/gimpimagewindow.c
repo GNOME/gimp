@@ -30,6 +30,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpimagewindow.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -42,20 +43,23 @@ enum
 
 /*  local function prototypes  */
 
-static GObject * gimp_image_window_constructor  (GType         type,
-                                                 guint         n_params,
+static GObject * gimp_image_window_constructor  (GType                type,
+                                                 guint                n_params,
                                                  GObjectConstructParam *params);
-static void      gimp_image_window_finalize     (GObject      *object);
-static void      gimp_image_window_set_property (GObject      *object,
-                                                 guint         property_id,
-                                                 const GValue *value,
-                                                 GParamSpec   *pspec);
-static void      gimp_image_window_get_property (GObject      *object,
-                                                 guint         property_id,
-                                                 GValue       *value,
-                                                 GParamSpec   *pspec);
+static void      gimp_image_window_finalize     (GObject             *object);
+static void      gimp_image_window_set_property (GObject             *object,
+                                                 guint                property_id,
+                                                 const GValue        *value,
+                                                 GParamSpec          *pspec);
+static void      gimp_image_window_get_property (GObject             *object,
+                                                 guint                property_id,
+                                                 GValue              *value,
+                                                 GParamSpec          *pspec);
 
-static void      gimp_image_window_destroy      (GtkObject    *object);
+static void      gimp_image_window_destroy      (GtkObject           *object);
+
+static gboolean  gimp_image_window_window_state (GtkWidget           *widget,
+                                                 GdkEventWindowState *event);
 
 
 G_DEFINE_TYPE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW)
@@ -68,13 +72,16 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor  = gimp_image_window_constructor;
-  object_class->finalize     = gimp_image_window_finalize;
-  object_class->set_property = gimp_image_window_set_property;
-  object_class->get_property = gimp_image_window_get_property;
+  object_class->constructor        = gimp_image_window_constructor;
+  object_class->finalize           = gimp_image_window_finalize;
+  object_class->set_property       = gimp_image_window_set_property;
+  object_class->get_property       = gimp_image_window_get_property;
 
-  gtk_object_class->destroy  = gimp_image_window_destroy;
+  gtk_object_class->destroy        = gimp_image_window_destroy;
+
+  widget_class->window_state_event = gimp_image_window_window_state;
 
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
                                    g_param_spec_object ("menu-factory",
@@ -169,6 +176,17 @@ gimp_image_window_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static gboolean
+gimp_image_window_window_state (GtkWidget           *widget,
+                                GdkEventWindowState *event)
+{
+  GimpImageWindow *window = GIMP_IMAGE_WINDOW (widget);
+
+  window->window_state = event->new_window_state;
+
+  return FALSE;
 }
 
 
