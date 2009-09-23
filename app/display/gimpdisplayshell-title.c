@@ -67,11 +67,6 @@ static gint     gimp_display_shell_format_filename   (gchar            *buf,
 /*  public functions  */
 
 void
-gimp_display_shell_title_init (GimpDisplayShell *shell)
-{
-}
-
-void
 gimp_display_shell_title_update (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));

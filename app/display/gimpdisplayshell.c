@@ -1221,8 +1221,6 @@ gimp_display_shell_new (GimpDisplay       *display,
                                NULL);
     }
 
-  gimp_display_shell_title_init (shell);
-
   /* make sure the information is up-to-date */
   gimp_display_shell_scale_changed (shell);
 
