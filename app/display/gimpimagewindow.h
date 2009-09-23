@@ -51,6 +51,9 @@ GType         gimp_image_window_get_type           (void) G_GNUC_CONST;
 
 GimpDisplay * gimp_image_window_get_active_display (GimpImageWindow *window);
 
+void          gimp_image_window_set_fullscreen     (GimpImageWindow *window,
+                                                    gboolean         fullscreen);
+gboolean      gimp_image_window_get_fullscreen     (GimpImageWindow *window);
 
 
 #endif /* __GIMP_IMAGE_WINDOW_H__ */

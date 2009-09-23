@@ -42,6 +42,7 @@
 #include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-scale-dialog.h"
 #include "display/gimpdisplayshell-scroll.h"
+#include "display/gimpimagewindow.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcolordialog.h"
@@ -573,14 +574,17 @@ view_padding_color_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDisplay        *display;
+  GtkWidget          *window;
   GimpDisplayShell   *shell;
   GimpDisplayOptions *options;
   gboolean            fullscreen;
   return_if_no_display (display, data);
 
+  window = gtk_widget_get_toplevel (display->shell);
+
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  fullscreen = gimp_display_shell_get_fullscreen (shell);
+  fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
 
   if (fullscreen)
     options = shell->fullscreen_options;
@@ -672,16 +676,16 @@ void
 view_fullscreen_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  gboolean          active;
+  GimpDisplay *display;
+  GtkWidget   *window;
+  gboolean     active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  window = gtk_widget_get_toplevel (display->shell);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  gimp_display_shell_set_fullscreen (shell, active);
+  gimp_image_window_set_fullscreen (GIMP_IMAGE_WINDOW (window), active);
 }
 
 void
@@ -730,10 +734,13 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
                                   GimpColorDialogState  state,
                                   GimpDisplayShell     *shell)
 {
+  GtkWidget          *window;
   GimpDisplayOptions *options;
   gboolean            fullscreen;
 
-  fullscreen = gimp_display_shell_get_fullscreen (shell);
+  window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
+  fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
 
   if (fullscreen)
     options = shell->fullscreen_options;

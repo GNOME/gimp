@@ -338,7 +338,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->paused_count           = 0;
 
-  shell->window_state           = 0;
   shell->zoom_on_resize         = FALSE;
   shell->show_transform_preview = FALSE;
 
@@ -645,21 +644,17 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
 
   GTK_WIDGET_CLASS (parent_class)->window_state_event (widget, event);
 
-  shell->window_state = event->new_window_state;
-
   if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)
     {
+      GtkWidget       *window;
       GimpActionGroup *group;
       gboolean         fullscreen;
 
+      window = gtk_widget_get_toplevel (widget);
+
       gimp_display_shell_appearance_update (shell);
 
-      fullscreen = gimp_display_shell_get_fullscreen (shell);
-
-      GIMP_LOG (WM, "Display shell '%s' [%p] set fullscreen %s",
-                gtk_window_get_title (GTK_WINDOW (widget)),
-                widget,
-                fullscreen ? "TURE" : "FALSE");
+      fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
 
       group = gimp_ui_manager_get_action_group (shell->menubar_manager, "view");
       gimp_action_group_set_action_active (group,
@@ -679,11 +674,6 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
     {
       gboolean iconified = (event->new_window_state &
                             GDK_WINDOW_STATE_ICONIFIED) != 0;
-
-      GIMP_LOG (WM, "Display shell '%s' [%p] set %s",
-                gtk_window_get_title (GTK_WINDOW (widget)),
-                widget,
-                iconified ? "iconified" : "uniconified");
 
       if (iconified)
         {

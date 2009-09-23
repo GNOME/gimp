@@ -43,12 +43,13 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-selection.h"
+#include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
 
 #define GET_OPTIONS(shell) \
   (shell->display->image ? \
-   (gimp_display_shell_get_fullscreen (shell) ? \
+   (gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell)))) ? \
     shell->fullscreen_options : shell->options) : \
    shell->no_image_options)
 
@@ -78,7 +79,8 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 
   options = GET_OPTIONS (shell);
 
-  fullscreen = gimp_display_shell_get_fullscreen (shell);
+  /* FIXME temp image window hack */
+  fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (shell));
 
   if (shell->menubar)
     gtk_widget_set_name (GTK_WIDGET (shell->menubar),
@@ -108,29 +110,6 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
   gimp_display_shell_set_padding            (shell,
                                              options->padding_mode,
                                              &options->padding_color);
-}
-
-void
-gimp_display_shell_set_fullscreen (GimpDisplayShell *shell,
-                                   gboolean          fullscreen)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (fullscreen != gimp_display_shell_get_fullscreen (shell))
-    {
-      if (fullscreen)
-        gtk_window_fullscreen (GTK_WINDOW (shell));
-      else
-        gtk_window_unfullscreen (GTK_WINDOW (shell));
-    }
-}
-
-gboolean
-gimp_display_shell_get_fullscreen (const GimpDisplayShell *shell)
-{
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-
-  return (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
 }
 
 void

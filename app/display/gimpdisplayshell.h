@@ -184,7 +184,6 @@ struct _GimpDisplayShell
   GimpTreeHandler   *vectors_thaw_handler;
   GimpTreeHandler   *vectors_visible_handler;
 
-  GdkWindowState     window_state;     /* for fullscreen display              */
   gboolean           zoom_on_resize;
   gboolean           show_transform_preview;
 

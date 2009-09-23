@@ -48,6 +48,7 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
+#include "gimpimagewindow.h"
 
 
 /*  local function prototypes  */
@@ -671,13 +672,16 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
                                            GimpDisplayShell *shell)
 {
   GimpDisplayConfig     *display_config;
+  GtkWidget             *window;
   gboolean               fullscreen;
   GimpCanvasPaddingMode  padding_mode;
   GimpRGB                padding_color;
 
   display_config = shell->display->config;
 
-  fullscreen = gimp_display_shell_get_fullscreen (shell);
+  window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
+  fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
 
   /*  if the user did not set the padding mode for this display explicitely  */
   if (! shell->fullscreen_options->padding_mode_set)

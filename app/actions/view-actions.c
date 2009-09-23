@@ -44,6 +44,7 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-selection.h"
+#include "display/gimpimagewindow.h"
 
 #include "actions.h"
 #include "view-actions.h"
@@ -549,10 +550,12 @@ view_actions_update (GimpActionGroup *group,
 
   if (display)
     {
+      GtkWidget *window = gtk_widget_get_toplevel (display->shell);
+
       image = display->image;
       shell = GIMP_DISPLAY_SHELL (display->shell);
 
-      fullscreen = gimp_display_shell_get_fullscreen (shell);
+      fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
 
       options = (image ?
                  (fullscreen ? shell->fullscreen_options : shell->options) :

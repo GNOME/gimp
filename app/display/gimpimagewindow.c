@@ -24,6 +24,7 @@
 
 #include "display-types.h"
 
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 
@@ -186,6 +187,34 @@ gimp_image_window_window_state (GtkWidget           *widget,
 
   window->window_state = event->new_window_state;
 
+  if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)
+    {
+      GimpActionGroup *group;
+      gboolean         fullscreen;
+
+      fullscreen = gimp_image_window_get_fullscreen (window);
+
+      GIMP_LOG (WM, "Image window '%s' [%p] set fullscreen %s",
+                gtk_window_get_title (GTK_WINDOW (widget)),
+                widget,
+                fullscreen ? "TURE" : "FALSE");
+
+      group = gimp_ui_manager_get_action_group (window->menubar_manager, "view");
+      gimp_action_group_set_action_active (group,
+                                           "view-fullscreen", fullscreen);
+    }
+
+  if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
+    {
+      gboolean iconified = (event->new_window_state &
+                            GDK_WINDOW_STATE_ICONIFIED) != 0;
+
+      GIMP_LOG (WM, "Image window '%s' [%p] set %s",
+                gtk_window_get_title (GTK_WINDOW (widget)),
+                widget,
+                iconified ? "iconified" : "uniconified");
+    }
+
   return FALSE;
 }
 
@@ -198,4 +227,27 @@ gimp_image_window_get_active_display (GimpImageWindow *window)
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
 
   return GIMP_DISPLAY_SHELL (window)->display;
+}
+
+void
+gimp_image_window_set_fullscreen (GimpImageWindow *window,
+                                  gboolean         fullscreen)
+{
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  if (fullscreen != gimp_image_window_get_fullscreen (window))
+    {
+      if (fullscreen)
+        gtk_window_fullscreen (GTK_WINDOW (window));
+      else
+        gtk_window_unfullscreen (GTK_WINDOW (window));
+    }
+}
+
+gboolean
+gimp_image_window_get_fullscreen (GimpImageWindow *window)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  return (window->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
 }

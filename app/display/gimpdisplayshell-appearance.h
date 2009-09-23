@@ -21,10 +21,6 @@
 
 void       gimp_display_shell_appearance_update      (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_fullscreen         (GimpDisplayShell       *shell,
-                                                      gboolean                fullscreen);
-gboolean   gimp_display_shell_get_fullscreen         (const GimpDisplayShell *shell);
-
 void       gimp_display_shell_set_show_menubar       (GimpDisplayShell       *shell,
                                                       gboolean                show);
 gboolean   gimp_display_shell_get_show_menubar       (const GimpDisplayShell *shell);
