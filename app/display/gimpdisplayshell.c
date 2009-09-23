@@ -123,8 +123,6 @@ static gboolean
              gimp_display_shell_window_state_event (GtkWidget        *widget,
                                                     GdkEventWindowState *event);
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
-static void      gimp_display_shell_style_set      (GtkWidget        *widget,
-                                                    GtkStyle         *prev_style);
 
 static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
 
@@ -205,7 +203,6 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class->configure_event    = gimp_display_shell_configure_event;
   widget_class->window_state_event = gimp_display_shell_window_state_event;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
-  widget_class->style_set          = gimp_display_shell_style_set;
 
   klass->scaled                    = gimp_display_shell_real_scaled;
   klass->scrolled                  = NULL;
@@ -666,48 +663,6 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
                             NULL, NULL);
 
   return TRUE;
-}
-
-static void
-gimp_display_shell_style_set (GtkWidget *widget,
-                              GtkStyle  *prev_style)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
-  GtkRequisition    requisition;
-  GdkGeometry       geometry;
-  GdkWindowHints    geometry_mask;
-
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
-  /* FIXME image window */
-  gtk_widget_size_request (GIMP_IMAGE_WINDOW (shell)->statusbar, &requisition);
-
-  geometry.min_height = 23;
-
-  geometry.min_width  = requisition.width;
-  geometry.min_height += requisition.height;
-
-  /* FIXME image window */
-  if (GIMP_IMAGE_WINDOW (shell)->menubar)
-    {
-      gtk_widget_size_request (GIMP_IMAGE_WINDOW (shell)->menubar, &requisition);
-
-      geometry.min_height += requisition.height;
-    }
-
-  geometry_mask = GDK_HINT_MIN_SIZE;
-
-  /*  Only set user pos on the empty display because it gets a pos
-   *  set by gimp. All other displays should be placed by the window
-   *  manager. See http://bugzilla.gnome.org/show_bug.cgi?id=559580
-   */
-  if (! shell->display->image)
-    geometry_mask |= GDK_HINT_USER_POS;
-
-  gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
-                                 &geometry, geometry_mask);
-
-  gimp_dialog_factory_set_has_min_size (GTK_WINDOW (widget), TRUE);
 }
 
 static void

@@ -66,6 +66,8 @@ static void      gimp_image_window_destroy      (GtkObject           *object);
 
 static gboolean  gimp_image_window_window_state (GtkWidget           *widget,
                                                  GdkEventWindowState *event);
+static void      gimp_image_window_style_set    (GtkWidget           *widget,
+                                                 GtkStyle            *prev_style);
 
 static void      gimp_image_window_show_tooltip (GimpUIManager       *manager,
                                                  const gchar         *tooltip,
@@ -102,6 +104,7 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
   gtk_object_class->destroy        = gimp_image_window_destroy;
 
   widget_class->window_state_event = gimp_image_window_window_state;
+  widget_class->style_set          = gimp_image_window_style_set;
 
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
                                    g_param_spec_object ("menu-factory",
@@ -300,6 +303,46 @@ gimp_image_window_window_state (GtkWidget           *widget,
     }
 
   return FALSE;
+}
+
+static void
+gimp_image_window_style_set (GtkWidget *widget,
+                             GtkStyle  *prev_style)
+{
+  GimpImageWindow *window = GIMP_IMAGE_WINDOW (widget);
+  GtkRequisition   requisition;
+  GdkGeometry      geometry;
+  GdkWindowHints   geometry_mask;
+
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_size_request (window->statusbar, &requisition);
+
+  geometry.min_height = 23;
+
+  geometry.min_width   = requisition.width;
+  geometry.min_height += requisition.height;
+
+  if (window->menubar)
+    {
+      gtk_widget_size_request (window->menubar, &requisition);
+
+      geometry.min_height += requisition.height;
+    }
+
+  geometry_mask = GDK_HINT_MIN_SIZE;
+
+  /*  Only set user pos on the empty display because it gets a pos
+   *  set by gimp. All other displays should be placed by the window
+   *  manager. See http://bugzilla.gnome.org/show_bug.cgi?id=559580
+   */
+  if (! gimp_image_window_get_active_display (window)->image)
+    geometry_mask |= GDK_HINT_USER_POS;
+
+  gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
+                                 &geometry, geometry_mask);
+
+  gimp_dialog_factory_set_has_min_size (GTK_WINDOW (widget), TRUE);
 }
 
 
