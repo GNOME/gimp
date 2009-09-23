@@ -75,8 +75,14 @@ static void      gimp_image_window_show_tooltip (GimpUIManager       *manager,
 static void      gimp_image_window_hide_tooltip (GimpUIManager       *manager,
                                                  GimpImageWindow     *window);
 
-static void      gimp_image_window_shell_scaled (GimpDisplayShell    *shell,
-                                                 GimpImageWindow     *window);
+static void      gimp_image_window_shell_scaled        (GimpDisplayShell    *shell,
+                                                        GimpImageWindow     *window);
+static void      gimp_image_window_shell_title_notify  (GimpDisplayShell    *shell,
+                                                        const GParamSpec    *pspec,
+                                                        GimpImageWindow     *window);
+static void      gimp_image_window_shell_status_notify (GimpDisplayShell    *shell,
+                                                        const GParamSpec    *pspec,
+                                                        GimpImageWindow     *window);
 
 
 G_DEFINE_TYPE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW)
@@ -372,6 +378,12 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
       g_signal_handlers_disconnect_by_func (active_shell,
                                             gimp_image_window_shell_scaled,
                                             window);
+      g_signal_handlers_disconnect_by_func (active_shell,
+                                            gimp_image_window_shell_title_notify,
+                                            window);
+      g_signal_handlers_disconnect_by_func (active_shell,
+                                            gimp_image_window_shell_status_notify,
+                                            window);
     }
 
   window->active_display = display;
@@ -381,6 +393,13 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
 
   g_signal_connect (active_shell, "scaled",
                     G_CALLBACK (gimp_image_window_shell_scaled),
+                    window);
+  /* FIXME: "title" later */
+  g_signal_connect (active_shell, "notify::gimp-title",
+                    G_CALLBACK (gimp_image_window_shell_title_notify),
+                    window);
+  g_signal_connect (active_shell, "notify::status",
+                    G_CALLBACK (gimp_image_window_shell_status_notify),
                     window);
 
   gimp_ui_manager_update (window->menubar_manager,
@@ -444,4 +463,21 @@ gimp_image_window_shell_scaled (GimpDisplayShell *shell,
   /* update the <Image>/View/Zoom menu */
   gimp_ui_manager_update (window->menubar_manager,
                           shell->display);
+}
+
+static void
+gimp_image_window_shell_title_notify (GimpDisplayShell *shell,
+                                      const GParamSpec *pspec,
+                                      GimpImageWindow  *window)
+{
+  gtk_window_set_title (GTK_WINDOW (window), shell->title);
+}
+
+static void
+gimp_image_window_shell_status_notify (GimpDisplayShell *shell,
+                                       const GParamSpec *pspec,
+                                       GimpImageWindow  *window)
+{
+  gimp_statusbar_replace (GIMP_STATUSBAR (window->statusbar), "title",
+                          NULL, "%s", shell->status);
 }

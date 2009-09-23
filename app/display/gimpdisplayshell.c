@@ -84,7 +84,9 @@
 enum
 {
   PROP_0,
-  PROP_UNIT
+  PROP_UNIT,
+  PROP_TITLE,
+  PROP_STATUS
 };
 
 enum
@@ -213,6 +215,17 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                          TRUE, FALSE,
                                                          GIMP_UNIT_PIXEL,
                                                          GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_TITLE,
+                                   /* FIXME: "title" later */
+                                   g_param_spec_string ("gimp-title", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_STATUS,
+                                   g_param_spec_string ("status", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
 
   gtk_rc_parse_string (display_rc_style);
 }
@@ -400,6 +413,12 @@ gimp_display_shell_finalize (GObject *object)
   if (shell->no_image_options)
     g_object_unref (shell->no_image_options);
 
+  if (shell->title)
+    g_free (shell->title);
+
+  if (shell->status)
+    g_free (shell->status);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -415,6 +434,14 @@ gimp_display_shell_set_property (GObject      *object,
     {
     case PROP_UNIT:
       gimp_display_shell_set_unit (shell, g_value_get_int (value));
+      break;
+    case PROP_TITLE:
+      g_free (shell->title);
+      shell->title = g_value_dup_string (value);
+      break;
+    case PROP_STATUS:
+      g_free (shell->status);
+      shell->status = g_value_dup_string (value);
       break;
 
     default:
@@ -435,6 +462,12 @@ gimp_display_shell_get_property (GObject    *object,
     {
     case PROP_UNIT:
       g_value_set_int (value, shell->unit);
+      break;
+    case PROP_TITLE:
+      g_value_set_string (value, shell->title);
+      break;
+    case PROP_STATUS:
+      g_value_set_string (value, shell->status);
       break;
 
     default:

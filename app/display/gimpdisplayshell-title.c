@@ -92,6 +92,7 @@ gimp_display_shell_update_title_idle (gpointer data)
     {
       GimpDisplayConfig *config = shell->display->config;
       gchar              title[MAX_TITLE_BUF];
+      gchar              status[MAX_TITLE_BUF];
       gint               len;
 
       /* format the title */
@@ -103,23 +104,23 @@ gimp_display_shell_update_title_idle (gpointer data)
 
       g_strlcpy (title + len, GIMP_ACRONYM, sizeof (title) - len);
 
-      gtk_window_set_title (GTK_WINDOW (shell), title);
-
       /* format the statusbar */
-      gimp_display_shell_format_title (shell, title, sizeof (title),
+      gimp_display_shell_format_title (shell, status, sizeof (status),
                                        config->image_status_format);
 
-      /* FIXME image window */
-      gimp_statusbar_replace (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar), "title",
-                              NULL, "%s", title);
+      g_object_set (shell,
+                    /* FIXME: "title" later */
+                    "gimp-title",  title,
+                    "status", status,
+                    NULL);
     }
   else
     {
-      gtk_window_set_title (GTK_WINDOW (shell), GIMP_NAME);
-
-      /* FIXME image window */
-      gimp_statusbar_replace (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar), "title",
-                              NULL, " ");
+      g_object_set (shell,
+                    /* FIXME: "title" later */
+                    "gimp-title",  GIMP_NAME,
+                    "status", " ",
+                    NULL);
     }
 
   return FALSE;
