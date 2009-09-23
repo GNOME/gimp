@@ -59,7 +59,6 @@
 
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
-#include "gimpdisplay-foreach.h"
 #include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -672,23 +671,6 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
     {
-      gboolean iconified = (event->new_window_state &
-                            GDK_WINDOW_STATE_ICONIFIED) != 0;
-
-      if (iconified)
-        {
-          if (gimp_displays_get_num_visible (gimp) == 0)
-            {
-              GIMP_LOG (WM, "No displays visible any longer");
-
-              gimp_dialog_factories_hide_with_display ();
-            }
-        }
-      else
-        {
-          gimp_dialog_factories_show_with_display ();
-        }
-
       gimp_display_shell_progress_window_state_changed (shell);
     }
 

@@ -25,9 +25,12 @@
 #include "display-types.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 
+#include "gimpdisplay.h"
+#include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpimagewindow.h"
 
@@ -183,7 +186,8 @@ static gboolean
 gimp_image_window_window_state (GtkWidget           *widget,
                                 GdkEventWindowState *event)
 {
-  GimpImageWindow *window = GIMP_IMAGE_WINDOW (widget);
+  GimpImageWindow *window  = GIMP_IMAGE_WINDOW (widget);
+  GimpDisplay     *display = gimp_image_window_get_active_display (window);
 
   window->window_state = event->new_window_state;
 
@@ -213,6 +217,21 @@ gimp_image_window_window_state (GtkWidget           *widget,
                 gtk_window_get_title (GTK_WINDOW (widget)),
                 widget,
                 iconified ? "iconified" : "uniconified");
+
+      if (iconified)
+        {
+          if (gimp_displays_get_num_visible (display->gimp) == 0)
+            {
+              GIMP_LOG (WM, "No displays visible any longer");
+
+              gimp_dialog_factories_hide_with_display ();
+            }
+        }
+      else
+        {
+          gimp_dialog_factories_show_with_display ();
+        }
+
     }
 
   return FALSE;
