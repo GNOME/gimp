@@ -246,8 +246,9 @@ gimp_displays_get_num_visible (Gimp *gimp)
 
       if (GTK_WIDGET_DRAWABLE (display->shell))
         {
-          GdkWindow      *window = gtk_widget_get_window (display->shell);
-          GdkWindowState  state  = gdk_window_get_state (window);
+          GtkWidget      *toplevel = gtk_widget_get_toplevel (display->shell);
+          GdkWindow      *window   = gtk_widget_get_window (toplevel);
+          GdkWindowState  state    = gdk_window_get_state (window);
 
           if ((state & (GDK_WINDOW_STATE_WITHDRAWN |
                         GDK_WINDOW_STATE_ICONIFIED)) == 0)

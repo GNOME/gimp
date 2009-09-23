@@ -162,10 +162,11 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
 static gboolean
 gimp_display_shell_is_iconified (GimpDisplayShell *shell)
 {
-  GtkWidget *widget = GTK_WIDGET (shell);
+  GtkWidget *widget   = GTK_WIDGET (shell);
+  GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
 
   return (GTK_WIDGET_DRAWABLE (widget) &&
-          gdk_window_get_state (gtk_widget_get_window (widget)) ==
+          gdk_window_get_state (gtk_widget_get_window (toplevel)) ==
           GDK_WINDOW_STATE_ICONIFIED);
 }
 
