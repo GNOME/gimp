@@ -75,6 +75,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-title.h		\
 	gimpdisplayshell-transform.c		\
 	gimpdisplayshell-transform.h		\
+	gimpimagewindow.c			\
+	gimpimagewindow.h			\
 	gimpnavigationeditor.c			\
 	gimpnavigationeditor.h			\
 	gimpscalecombobox.c			\

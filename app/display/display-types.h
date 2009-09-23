@@ -30,6 +30,8 @@ typedef struct _GimpDisplay           GimpDisplay;
 typedef struct _GimpDisplayShell      GimpDisplayShell;
 /* typedef struct _GimpDisplayOptions GimpDisplayOptions; in config-types.h */
 
+typedef struct _GimpImageWindow       GimpImageWindow;
+
 typedef struct _GimpCursorView        GimpCursorView;
 typedef struct _GimpNavigationEditor  GimpNavigationEditor;
 typedef struct _GimpScaleComboBox     GimpScaleComboBox;
