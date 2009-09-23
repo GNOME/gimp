@@ -387,6 +387,10 @@ gimp_display_new (Gimp              *gimp,
   gtk_widget_show (display->shell);
 
   /* FIXME image window */
+  gimp_image_window_set_active_display (GIMP_IMAGE_WINDOW (display->shell),
+                                        display);
+
+  /* FIXME image window */
   g_signal_connect (GIMP_IMAGE_WINDOW (display->shell)->statusbar, "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
                     display);

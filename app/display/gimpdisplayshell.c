@@ -675,11 +675,6 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 
   gimp_display_shell_title_update (shell);
 
-  /* FIXME image window */
-  /* update the <Image>/View/Zoom menu */
-  gimp_ui_manager_update (GIMP_IMAGE_WINDOW (shell)->menubar_manager,
-                          shell->display);
-
   user_context = gimp_get_user_context (shell->display->gimp);
 
   if (shell->display == gimp_context_get_display (user_context))
@@ -804,12 +799,11 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   shell->display = display;
 
+  /* FIXME image window */
+  GIMP_IMAGE_WINDOW (shell)->active_display = display;
+
   shell->popup_manager   = popup_manager;
   shell->display_factory = display_factory;
-
-  /* FIXME image window */
-  gimp_image_window_set_active_display (GIMP_IMAGE_WINDOW (shell),
-                                        display);
 
   if (display->image)
     {

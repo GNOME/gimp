@@ -75,6 +75,9 @@ static void      gimp_image_window_show_tooltip (GimpUIManager       *manager,
 static void      gimp_image_window_hide_tooltip (GimpUIManager       *manager,
                                                  GimpImageWindow     *window);
 
+static void      gimp_image_window_shell_scaled (GimpDisplayShell    *shell,
+                                                 GimpImageWindow     *window);
+
 
 G_DEFINE_TYPE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW)
 
@@ -352,17 +355,36 @@ void
 gimp_image_window_set_active_display (GimpImageWindow *window,
                                       GimpDisplay     *display)
 {
+  GimpDisplayShell *active_shell;
+
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
+#if 0
+  /* FIXME enable this when the display is a separate widget */
   if (display == window->active_display)
     return;
 
   if (window->active_display)
     {
+      active_shell = GIMP_DISPLAY_SHELL (window->active_display->shell);
+
+      g_signal_handlers_disconnect_by_func (active_shell,
+                                            gimp_image_window_shell_scaled,
+                                            window);
     }
 
   window->active_display = display;
+#endif
+
+  active_shell = GIMP_DISPLAY_SHELL (window->active_display->shell);
+
+  g_signal_connect (active_shell, "scaled",
+                    G_CALLBACK (gimp_image_window_shell_scaled),
+                    window);
+
+  gimp_ui_manager_update (window->menubar_manager,
+                          window->active_display);
 }
 
 GimpDisplay *
@@ -415,3 +437,11 @@ gimp_image_window_hide_tooltip (GimpUIManager   *manager,
   gimp_statusbar_pop (GIMP_STATUSBAR (window->statusbar), "menu-tooltip");
 }
 
+static void
+gimp_image_window_shell_scaled (GimpDisplayShell *shell,
+                                GimpImageWindow  *window)
+{
+  /* update the <Image>/View/Zoom menu */
+  gimp_ui_manager_update (window->menubar_manager,
+                          shell->display);
+}
