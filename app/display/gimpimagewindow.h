@@ -38,6 +38,8 @@ struct _GimpImageWindow
 
   GimpUIManager   *menubar_manager;
 
+  GtkWidget       *main_vbox;
+
   GdkWindowState   window_state;
 };
 

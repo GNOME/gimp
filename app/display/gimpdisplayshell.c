@@ -855,7 +855,6 @@ gimp_display_shell_new (GimpDisplay       *display,
   GimpDisplayShell      *shell;
   GimpDisplayOptions    *options;
   GimpColorDisplayStack *filter;
-  GtkWidget             *main_vbox;
   GtkWidget             *disp_vbox;
   GtkWidget             *upper_hbox;
   GtkWidget             *right_vbox;
@@ -997,9 +996,6 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  the vbox containing all widgets  */
 
-  main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (shell), main_vbox);
-
 #ifndef GDK_WINDOWING_QUARTZ
   shell->menubar =
     gtk_ui_manager_get_widget (GTK_UI_MANAGER (shell->menubar_manager),
@@ -1008,7 +1004,8 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   if (shell->menubar)
     {
-      gtk_box_pack_start (GTK_BOX (main_vbox), shell->menubar, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (GIMP_IMAGE_WINDOW (shell)->main_vbox),
+                          shell->menubar, FALSE, FALSE, 0);
 
       if (options->show_menubar)
         gtk_widget_show (shell->menubar);
@@ -1036,7 +1033,8 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  another vbox for everything except the statusbar  */
   disp_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (main_vbox), disp_vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GIMP_IMAGE_WINDOW (shell)->main_vbox),
+                      disp_vbox, TRUE, TRUE, 0);
   gtk_widget_show (disp_vbox);
 
   /*  a hbox for the inner_table and the vertical scrollbar  */
@@ -1284,7 +1282,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   gtk_box_pack_start (GTK_BOX (lower_hbox),
                       shell->nav_ebox, FALSE, FALSE, 0);
 
-  gtk_box_pack_end (GTK_BOX (main_vbox),
+  gtk_box_pack_end (GTK_BOX (GIMP_IMAGE_WINDOW (shell)->main_vbox),
                     shell->statusbar, FALSE, FALSE, 0);
 
   /*  show everything  *******************************************************/
@@ -1309,8 +1307,6 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   if (options->show_statusbar)
     gtk_widget_show (shell->statusbar);
-
-  gtk_widget_show (main_vbox);
 
   /*  add display filter for color management  */
 

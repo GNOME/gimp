@@ -114,6 +114,10 @@ gimp_image_window_constructor (GType                  type,
 
   g_assert (GIMP_IS_UI_MANAGER (window->menubar_manager));
 
+  window->main_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (window), window->main_vbox);
+  gtk_widget_show (window->main_vbox);
+
   return object;
 }
 
