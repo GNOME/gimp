@@ -27,6 +27,7 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 
+#include "gimpdisplayshell.h"
 #include "gimpimagewindow.h"
 
 #include "gimp-intl.h"
@@ -168,4 +169,15 @@ gimp_image_window_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+
+/*  public functions  */
+
+GimpDisplay *
+gimp_image_window_get_active_display (GimpImageWindow *window)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
+
+  return GIMP_DISPLAY_SHELL (window)->display;
 }
