@@ -110,10 +110,12 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     }
   else
     {
+      GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
       /* Activate the action instead of simply calling gimp_exit(), so
        * the quit action's sensitivity is taken into account.
        */
-      gimp_ui_manager_activate_action (shell->menubar_manager,
+      gimp_ui_manager_activate_action (GIMP_IMAGE_WINDOW (window)->menubar_manager,
                                        "file", "file-quit");
     }
 }
@@ -295,8 +297,14 @@ gimp_display_shell_close_response (GtkWidget        *widget,
       break;
 
     case RESPONSE_SAVE:
-      gimp_ui_manager_activate_action (shell->menubar_manager,
-                                       "file", "file-save-and-close");
+      {
+        GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
+        /* FIXME image window: set this display active */
+
+        gimp_ui_manager_activate_action (GIMP_IMAGE_WINDOW (window)->menubar_manager,
+                                         "file", "file-save-and-close");
+      }
       break;
 
     default:

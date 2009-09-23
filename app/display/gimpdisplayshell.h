@@ -66,7 +66,6 @@ struct _GimpDisplayShell
 
   GimpDisplay       *display;
 
-  GimpUIManager     *menubar_manager;
   GimpUIManager     *popup_manager;
 
   GimpDialogFactory *display_factory;
@@ -145,7 +144,6 @@ struct _GimpDisplayShell
   GtkWidget         *zoom_button;      /*  NE: zoom toggle button             */
   GtkWidget         *nav_ebox;         /*  SE: navigation event box           */
 
-  GtkWidget         *menubar;          /*  menubar                            */
   GtkWidget         *statusbar;        /*  statusbar                          */
 
   guchar            *render_buf;       /*  buffer for rendering the image     */

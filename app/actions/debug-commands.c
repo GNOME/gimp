@@ -44,6 +44,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpimagewindow.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpmenufactory.h"
@@ -187,17 +188,21 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
                                             gpointer   data)
 {
   GimpDisplay      *display     = NULL;
-  GimpDisplayShell *shell       = NULL;
+  GtkWidget        *window      = NULL;
+  GtkUIManager     *manager     = NULL;
   GtkAccelGroup    *accel_group = NULL;
   GList            *group_it    = NULL;
   GList            *strings     = NULL;
   return_if_no_display (display, data);
 
-  shell       = GIMP_DISPLAY_SHELL (display->shell);
-  accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager));
+  window = gtk_widget_get_toplevel (display->shell);
+
+  manager = GTK_UI_MANAGER (GIMP_IMAGE_WINDOW (window)->menubar_manager);
+
+  accel_group = gtk_ui_manager_get_accel_group (manager);
 
   /* Gather formated strings of keyboard shortcuts */
-  for (group_it = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (shell->menubar_manager));
+  for (group_it = gtk_ui_manager_get_action_groups (manager);
        group_it;
        group_it = g_list_next (group_it))
     {

@@ -230,7 +230,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 {
   shell->display                = NULL;
 
-  shell->menubar_manager        = NULL;
   shell->popup_manager          = NULL;
 
   shell->options                = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
@@ -292,7 +291,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->zoom_button            = NULL;
   shell->nav_ebox               = NULL;
 
-  shell->menubar                = NULL;
   shell->statusbar              = NULL;
 
   shell->render_buf             = g_new (guchar,
@@ -462,12 +460,6 @@ gimp_display_shell_destroy (GtkObject *object)
 
   if (shell->display && shell->display->image)
     gimp_display_shell_disconnect (shell);
-
-  if (shell->menubar_manager)
-    {
-      g_object_unref (shell->menubar_manager);
-      shell->menubar_manager = NULL;
-    }
 
   shell->popup_manager = NULL;
 
@@ -648,10 +640,6 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
 
       fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
 
-      group = gimp_ui_manager_get_action_group (shell->menubar_manager, "view");
-      gimp_action_group_set_action_active (group,
-                                           "view-fullscreen", fullscreen);
-
       if (shell->display ==
           gimp_context_get_display (gimp_get_user_context (gimp)))
         {
@@ -705,9 +693,10 @@ gimp_display_shell_style_set (GtkWidget *widget,
   geometry.min_width  = requisition.width;
   geometry.min_height += requisition.height;
 
-  if (shell->menubar)
+  /* FIXME image window */
+  if (GIMP_IMAGE_WINDOW (shell)->menubar)
     {
-      gtk_widget_size_request (shell->menubar, &requisition);
+      gtk_widget_size_request (GIMP_IMAGE_WINDOW (shell)->menubar, &requisition);
 
       geometry.min_height += requisition.height;
     }
@@ -737,8 +726,10 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 
   gimp_display_shell_title_update (shell);
 
+  /* FIXME image window */
   /* update the <Image>/View/Zoom menu */
-  gimp_ui_manager_update (shell->menubar_manager, shell->display);
+  gimp_ui_manager_update (GIMP_IMAGE_WINDOW (shell)->menubar_manager,
+                          shell->display);
 
   user_context = gimp_get_user_context (shell->display->gimp);
 
@@ -929,20 +920,13 @@ gimp_display_shell_new (GimpDisplay       *display,
       shell_height = image_height;
     }
 
-  shell->menubar_manager = gimp_menu_factory_manager_new (menu_factory,
-                                                          "<Image>",
-                                                          display,
-                                                          FALSE);
-
   shell->popup_manager = popup_manager;
 
-  gtk_window_add_accel_group (GTK_WINDOW (shell),
-                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager)));
-
-  g_signal_connect (shell->menubar_manager, "show-tooltip",
+  /* FIXME image window */
+  g_signal_connect (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "show-tooltip",
                     G_CALLBACK (gimp_display_shell_show_tooltip),
                     shell);
-  g_signal_connect (shell->menubar_manager, "hide-tooltip",
+  g_signal_connect (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "hide-tooltip",
                     G_CALLBACK (gimp_display_shell_hide_tooltip),
                     shell);
 
@@ -989,37 +973,24 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  the vbox containing all widgets  */
 
-#ifndef GDK_WINDOWING_QUARTZ
-  shell->menubar =
-    gtk_ui_manager_get_widget (GTK_UI_MANAGER (shell->menubar_manager),
-                               "/image-menubar");
-#endif /* !GDK_WINDOWING_QUARTZ */
-
-  if (shell->menubar)
+  /* FIXME image window */
+  if (GIMP_IMAGE_WINDOW (shell)->menubar)
     {
-      gtk_box_pack_start (GTK_BOX (GIMP_IMAGE_WINDOW (shell)->main_vbox),
-                          shell->menubar, FALSE, FALSE, 0);
+      GtkWidget *menubar = GIMP_IMAGE_WINDOW (shell)->menubar;
 
       if (options->show_menubar)
-        gtk_widget_show (shell->menubar);
+        gtk_widget_show (menubar);
       else
-        gtk_widget_hide (shell->menubar);
-
-      /*  make sure we can activate accels even if the menubar is invisible
-       *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
-       */
-      g_signal_connect (shell->menubar, "can-activate-accel",
-                        G_CALLBACK (gtk_true),
-                        NULL);
+        gtk_widget_hide (menubar);
 
       /*  active display callback  */
-      g_signal_connect (shell->menubar, "button-press-event",
+      g_signal_connect (menubar, "button-press-event",
                         G_CALLBACK (gimp_display_shell_events),
                         shell);
-      g_signal_connect (shell->menubar, "button-release-event",
+      g_signal_connect (menubar, "button-release-event",
                         G_CALLBACK (gimp_display_shell_events),
                         shell);
-      g_signal_connect (shell->menubar, "key-press-event",
+      g_signal_connect (menubar, "key-press-event",
                         G_CALLBACK (gimp_display_shell_events),
                         shell);
     }
@@ -1211,7 +1182,8 @@ gimp_display_shell_new (GimpDisplay       *display,
   gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), image);
   gtk_widget_show (image);
 
-  action = gimp_ui_manager_find_action (shell->menubar_manager,
+  /* FIXME image window */
+  action = gimp_ui_manager_find_action (GIMP_IMAGE_WINDOW (shell)->menubar_manager,
                                         "quick-mask", "quick-mask-toggle");
   if (action)
     gimp_widget_set_accel_help (shell->quick_mask_button, action);
@@ -1430,7 +1402,9 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   /*  update the ui managers  */
 
-  gimp_ui_manager_update (shell->menubar_manager, shell->display);
+  /* FIXME image window */
+  gimp_ui_manager_update (GIMP_IMAGE_WINDOW (shell)->menubar_manager,
+                          shell->display);
 
   user_context = gimp_get_user_context (shell->display->gimp);
 
@@ -1824,7 +1798,9 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
     {
       GimpContext *user_context;
 
-      gimp_ui_manager_update (shell->menubar_manager, shell->display);
+      /* FIXME image window */
+      gimp_ui_manager_update (GIMP_IMAGE_WINDOW (shell)->menubar_manager,
+                              shell->display);
 
       user_context = gimp_get_user_context (shell->display->gimp);
 

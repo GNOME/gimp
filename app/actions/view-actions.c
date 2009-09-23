@@ -524,7 +524,7 @@ view_actions_setup (GimpActionGroup *group)
   view_actions_check_type_notify (GIMP_DISPLAY_CONFIG (group->gimp->config),
                                   NULL, group);
 
-  if (GIMP_IS_DISPLAY (group->user_data) ||
+  if (GIMP_IS_IMAGE_WINDOW (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))
     {
       /*  add window actions only if the context of the group is
@@ -670,11 +670,16 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
   SET_ACTIVE    ("view-use-gegl",    image && display->image->projection->use_gegl);
 
-  if (GIMP_IS_DISPLAY (group->user_data) ||
+  if (GIMP_IS_IMAGE_WINDOW (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))
     {
+      GtkWidget *window = NULL;
+
+      if (shell)
+        window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
       /*  see view_actions_setup()  */
-      window_actions_update (group, GTK_WIDGET (shell));
+      window_actions_update (group, window);
     }
 
 #undef SET_ACTIVE

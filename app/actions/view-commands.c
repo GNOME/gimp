@@ -260,10 +260,12 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
 
   if (active != shell->dot_for_dot)
     {
+      GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
       gimp_display_shell_scale_set_dot_for_dot (shell, active);
 
-      SET_ACTIVE (shell->menubar_manager, "view-dot-for-dot",
-                  shell->dot_for_dot);
+      SET_ACTIVE (GIMP_IMAGE_WINDOW (window)->menubar_manager,
+                  "view-dot-for-dot", shell->dot_for_dot);
 
       if (IS_ACTIVE_DISPLAY (display))
         SET_ACTIVE (shell->popup_manager, "view-dot-for-dot",

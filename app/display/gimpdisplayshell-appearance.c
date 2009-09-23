@@ -82,10 +82,6 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
   /* FIXME temp image window hack */
   fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (shell));
 
-  if (shell->menubar)
-    gtk_widget_set_name (GTK_WIDGET (shell->menubar),
-                         fullscreen ? "gimp-menubar-fullscreen" : NULL);
-
   gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar),
                                      ! fullscreen);
 
@@ -124,15 +120,17 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  if (shell->menubar)
+  /* FIXME image window */
+  if (GIMP_IMAGE_WINDOW (shell)->menubar)
     {
       if (show)
-        gtk_widget_show (shell->menubar);
+        gtk_widget_show (GIMP_IMAGE_WINDOW (shell)->menubar);
       else
-        gtk_widget_hide (shell->menubar);
+        gtk_widget_hide (GIMP_IMAGE_WINDOW (shell)->menubar);
     }
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-menubar", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-menubar", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-menubar", show);
@@ -180,7 +178,8 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
       gtk_table_set_row_spacing (table, 0, 0);
     }
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-rulers", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-rulers", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-rulers", show);
@@ -238,7 +237,8 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
       gtk_box_set_spacing (vbox, 0);
     }
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-scrollbars", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-scrollbars", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-scrollbars", show);
@@ -266,7 +266,8 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
 
   gimp_statusbar_set_visible (GIMP_STATUSBAR (shell->statusbar), show);
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-statusbar", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-statusbar", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-statusbar", show);
@@ -294,7 +295,8 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
 
   gimp_display_shell_selection_set_hidden (shell, ! show);
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-selection", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-selection", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-selection", show);
@@ -322,7 +324,8 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
 
   gimp_display_shell_selection_layer_set_hidden (shell, ! show);
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-layer-boundary", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-layer-boundary", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-layer-boundary", show);
@@ -371,7 +374,8 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
       gimp_display_shell_expose_full (shell);
     }
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-guides", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-guides", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-guides", show);
@@ -403,7 +407,8 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
       gimp_display_shell_expose_full (shell);
     }
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-grid", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-grid", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-grid", show);
@@ -435,7 +440,8 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
       gimp_display_shell_expose_full (shell);
     }
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-sample-points", show);
+  /* FIXME image window */
+  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-sample-points", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-sample-points", show);
@@ -459,7 +465,8 @@ gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
     {
       shell->snap_to_grid = snap ? TRUE : FALSE;
 
-      SET_ACTIVE (shell->menubar_manager, "view-snap-to-grid", snap);
+      /* FIXME image window */
+      SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-snap-to-grid", snap);
 
       if (IS_ACTIVE_DISPLAY (shell))
         SET_ACTIVE (shell->popup_manager, "view-snap-to-grid", snap);
@@ -484,7 +491,8 @@ gimp_display_shell_set_snap_to_guides (GimpDisplayShell *shell,
     {
       shell->snap_to_guides = snap ? TRUE : FALSE;
 
-      SET_ACTIVE (shell->menubar_manager, "view-snap-to-guides", snap);
+      /* FIXME image window */
+      SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-snap-to-guides", snap);
 
       if (IS_ACTIVE_DISPLAY (shell))
         SET_ACTIVE (shell->popup_manager, "view-snap-to-guides", snap);
@@ -509,7 +517,8 @@ gimp_display_shell_set_snap_to_canvas (GimpDisplayShell *shell,
     {
       shell->snap_to_canvas = snap ? TRUE : FALSE;
 
-      SET_ACTIVE (shell->menubar_manager, "view-snap-to-canvas", snap);
+      /* FIXME image window */
+      SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-snap-to-canvas", snap);
 
       if (IS_ACTIVE_DISPLAY (shell))
         SET_ACTIVE (shell->popup_manager, "view-snap-to-canvas", snap);
@@ -534,7 +543,8 @@ gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
     {
       shell->snap_to_vectors = snap ? TRUE : FALSE;
 
-      SET_ACTIVE (shell->menubar_manager, "view-snap-to-vectors", snap);
+      /* FIXME image window */
+      SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-snap-to-vectors", snap);
 
       if (IS_ACTIVE_DISPLAY (shell))
         SET_ACTIVE (shell->popup_manager, "view-snap-to-vectors", snap);
@@ -598,7 +608,8 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 
   gimp_canvas_set_bg_color (GIMP_CANVAS (shell->canvas), &color);
 
-  SET_COLOR (shell->menubar_manager, "view-padding-color-menu",
+  /* FIXME image window */
+  SET_COLOR (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-padding-color-menu",
              &options->padding_color);
 
   if (IS_ACTIVE_DISPLAY (shell))

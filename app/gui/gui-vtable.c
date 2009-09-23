@@ -356,7 +356,8 @@ gui_display_create (Gimp      *gimp,
       gimp_context_set_display (context, display);
     }
 
-  gimp_ui_manager_update (GIMP_DISPLAY_SHELL (display->shell)->menubar_manager,
+  /* FIXME image window */
+  gimp_ui_manager_update (GIMP_IMAGE_WINDOW (display->shell)->menubar_manager,
                           display);
 
   return GIMP_OBJECT (display);
