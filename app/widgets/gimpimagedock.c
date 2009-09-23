@@ -118,7 +118,7 @@ gimp_image_dock_constructor (GType                  type,
   g_signal_connect_object (GIMP_DOCK (dock)->context, "display-changed",
                            G_CALLBACK (gimp_image_dock_display_changed),
                            dock, 0);
-  g_signal_connect_object (gimp_dock_get_context (GIMP_DOCK (dock)), "image-changed",
+  g_signal_connect_object (GIMP_DOCK (dock)->context, "image-changed",
                            G_CALLBACK (gimp_image_dock_image_changed),
                            dock, 0);
 
