@@ -73,17 +73,10 @@ void
 gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 {
   GimpDisplayOptions *options;
-  gboolean            fullscreen;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   options = GET_OPTIONS (shell);
-
-  /* FIXME temp image window hack */
-  fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (shell));
-
-  gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar),
-                                     ! fullscreen);
 
   gimp_display_shell_set_show_menubar       (shell,
                                              options->show_menubar);
@@ -264,7 +257,8 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  gimp_statusbar_set_visible (GIMP_STATUSBAR (shell->statusbar), show);
+  /* FIXME image window */
+  gimp_statusbar_set_visible (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar), show);
 
   /* FIXME image window */
   SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-statusbar", show);

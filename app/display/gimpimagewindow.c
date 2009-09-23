@@ -26,6 +26,7 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 
@@ -33,6 +34,7 @@
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpimagewindow.h"
+#include "gimpstatusbar.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
@@ -64,6 +66,12 @@ static void      gimp_image_window_destroy      (GtkObject           *object);
 
 static gboolean  gimp_image_window_window_state (GtkWidget           *widget,
                                                  GdkEventWindowState *event);
+
+static void      gimp_image_window_show_tooltip (GimpUIManager       *manager,
+                                                 const gchar         *tooltip,
+                                                 GimpImageWindow     *window);
+static void      gimp_image_window_hide_tooltip (GimpUIManager       *manager,
+                                                 GimpImageWindow     *window);
 
 
 G_DEFINE_TYPE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW)
@@ -127,6 +135,13 @@ gimp_image_window_constructor (GType                  type,
   gtk_window_add_accel_group (GTK_WINDOW (window),
                               gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (window->menubar_manager)));
 
+  g_signal_connect (window->menubar_manager, "show-tooltip",
+                    G_CALLBACK (gimp_image_window_show_tooltip),
+                    window);
+  g_signal_connect (window->menubar_manager, "hide-tooltip",
+                    G_CALLBACK (gimp_image_window_hide_tooltip),
+                    window);
+
   window->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), window->main_vbox);
   gtk_widget_show (window->main_vbox);
@@ -149,6 +164,13 @@ gimp_image_window_constructor (GType                  type,
                         G_CALLBACK (gtk_true),
                         NULL);
     }
+
+  /* FIXME display shell */
+  window->statusbar = gimp_statusbar_new (GIMP_DISPLAY_SHELL (window));
+  gimp_help_set_help_data (window->statusbar, NULL,
+                           GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
+  gtk_box_pack_end (GTK_BOX (window->main_vbox), window->statusbar,
+                    FALSE, FALSE, 0);
 
   return object;
 }
@@ -243,6 +265,9 @@ gimp_image_window_window_state (GtkWidget           *widget,
         gtk_widget_set_name (window->menubar,
                              fullscreen ? "gimp-menubar-fullscreen" : NULL);
 
+      gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->statusbar),
+                                         ! fullscreen);
+
       group = gimp_ui_manager_get_action_group (window->menubar_manager, "view");
       gimp_action_group_set_action_active (group,
                                            "view-fullscreen", fullscreen);
@@ -310,3 +335,23 @@ gimp_image_window_get_fullscreen (GimpImageWindow *window)
 
   return (window->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
 }
+
+
+/*  private functions  */
+
+static void
+gimp_image_window_show_tooltip (GimpUIManager   *manager,
+                                const gchar     *tooltip,
+                                GimpImageWindow *window)
+{
+  gimp_statusbar_push (GIMP_STATUSBAR (window->statusbar), "menu-tooltip",
+                       NULL, "%s", tooltip);
+}
+
+static void
+gimp_image_window_hide_tooltip (GimpUIManager   *manager,
+                                GimpImageWindow *window)
+{
+  gimp_statusbar_pop (GIMP_STATUSBAR (window->statusbar), "menu-tooltip");
+}
+

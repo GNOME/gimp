@@ -114,14 +114,16 @@ gimp_display_shell_update_title_idle (gpointer data)
       gimp_display_shell_format_title (shell, title, sizeof (title),
                                        config->image_status_format);
 
-      gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
+      /* FIXME image window */
+      gimp_statusbar_replace (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar), "title",
                               NULL, "%s", title);
     }
   else
     {
       gtk_window_set_title (GTK_WINDOW (shell), GIMP_NAME);
 
-      gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
+      /* FIXME image window */
+      gimp_statusbar_replace (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar), "title",
                               NULL, " ");
     }
 

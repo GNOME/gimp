@@ -610,9 +610,13 @@ action_message (GimpDisplay *display,
                 const gchar *format,
                 ...)
 {
-  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (display->shell);
-  const gchar      *stock_id = NULL;
-  va_list           args;
+  GtkWidget   *toplevel;
+  GtkWidget   *statusbar;
+  const gchar *stock_id = NULL;
+  va_list      args;
+
+  toplevel  = gtk_widget_get_toplevel (display->shell);
+  statusbar = GIMP_IMAGE_WINDOW (toplevel)->statusbar;
 
   if (GIMP_IS_TOOL_OPTIONS (object))
     {
@@ -626,7 +630,7 @@ action_message (GimpDisplay *display,
     }
 
   va_start (args, format);
-  gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (shell->statusbar),
+  gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (statusbar),
                                    GIMP_MESSAGE_INFO, stock_id,
                                    format, args);
   va_end (args);

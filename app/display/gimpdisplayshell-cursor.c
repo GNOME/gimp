@@ -159,7 +159,8 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
   /*  use the passed image_coords for the statusbar because they are
    *  possibly snapped...
    */
-  gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar),
+  /* FIXME image window */
+  gimp_statusbar_update_cursor (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar),
                                 precision, image_x, image_y);
 
   factory = gimp_dialog_factory_from_name ("dock");
@@ -196,7 +197,8 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_statusbar_clear_cursor (GIMP_STATUSBAR (shell->statusbar));
+  /* FIXME image window */
+  gimp_statusbar_clear_cursor (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar));
 
   factory = gimp_dialog_factory_from_name ("dock");
   session_info = gimp_dialog_factory_find_session_info (factory,

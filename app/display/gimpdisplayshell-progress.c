@@ -46,7 +46,8 @@ gimp_display_shell_progress_start (GimpProgress *progress,
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (shell->statusbar),
+  /* FIXME image window */
+  progress = gimp_progress_start (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar),
                                   message, cancelable);
 
   if (progress && gimp_display_shell_is_iconified (shell))
@@ -62,7 +63,8 @@ gimp_display_shell_progress_end (GimpProgress *progress)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  gimp_progress_end (GIMP_PROGRESS (shell->statusbar));
+  /* FIXME image window */
+  gimp_progress_end (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
 
   if (gimp_display_shell_is_iconified (shell))
     gimp_display_shell_title_update (shell);
@@ -73,7 +75,8 @@ gimp_display_shell_progress_is_active (GimpProgress *progress)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  return gimp_progress_is_active (GIMP_PROGRESS (shell->statusbar));
+  /* FIXME image window */
+  return gimp_progress_is_active (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
 }
 
 static void
@@ -82,9 +85,11 @@ gimp_display_shell_progress_set_text (GimpProgress *progress,
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  gimp_progress_set_text (GIMP_PROGRESS (shell->statusbar), message);
+  /* FIXME image window */
+  gimp_progress_set_text (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), message);
 
-  if (gimp_progress_is_active (GIMP_PROGRESS (shell->statusbar)) &&
+  /* FIXME image window */
+  if (gimp_progress_is_active (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar)) &&
       gimp_display_shell_is_iconified (shell))
     {
       gtk_window_set_title (GTK_WINDOW (shell), message);
@@ -97,7 +102,8 @@ gimp_display_shell_progress_set_value (GimpProgress *progress,
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  gimp_progress_set_value (GIMP_PROGRESS (shell->statusbar), percentage);
+  /* FIXME image window */
+  gimp_progress_set_value (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), percentage);
 }
 
 static gdouble
@@ -105,7 +111,8 @@ gimp_display_shell_progress_get_value (GimpProgress *progress)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  return gimp_progress_get_value (GIMP_PROGRESS (shell->statusbar));
+  /* FIXME image window */
+  return gimp_progress_get_value (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
 }
 
 static void
@@ -113,7 +120,8 @@ gimp_display_shell_progress_pulse (GimpProgress *progress)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  gimp_progress_pulse (GIMP_PROGRESS (shell->statusbar));
+  /* FIXME image window */
+  gimp_progress_pulse (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
 }
 
 static guint32
@@ -141,17 +149,20 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
 
     case GIMP_MESSAGE_WARNING:
       /* warning messages go to the statusbar, if it's visible */
-      if (! gimp_statusbar_get_visible (GIMP_STATUSBAR (shell->statusbar)))
+      /* FIXME image window */
+      if (! gimp_statusbar_get_visible (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar)))
         break;
       else
-	return gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
+        /* FIXME image window */
+	return gimp_progress_message (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), gimp,
 				      severity, domain, message);
 
     case GIMP_MESSAGE_INFO:
       /* info messages go to the statusbar;
        * if they are not handled there, they are swallowed
        */
-      gimp_progress_message (GIMP_PROGRESS (shell->statusbar), gimp,
+      /* FIXME image window */
+      gimp_progress_message (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), gimp,
 			     severity, domain, message);
       return TRUE;
     }
@@ -193,7 +204,8 @@ gimp_display_shell_progress_window_state_changed (GimpDisplayShell *shell)
 
   if (gimp_display_shell_is_iconified (shell))
     {
-      const gchar *msg = gimp_statusbar_peek (GIMP_STATUSBAR (shell->statusbar),
+      /* FIXME image window */
+      const gchar *msg = gimp_statusbar_peek (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar),
                                               "progress");
       if (msg)
         {

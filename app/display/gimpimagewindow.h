@@ -40,6 +40,7 @@ struct _GimpImageWindow
 
   GtkWidget       *main_vbox;
   GtkWidget       *menubar;
+  GtkWidget       *statusbar;
 
   GdkWindowState   window_state;
 };

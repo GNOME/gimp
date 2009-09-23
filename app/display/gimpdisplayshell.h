@@ -144,8 +144,6 @@ struct _GimpDisplayShell
   GtkWidget         *zoom_button;      /*  NE: zoom toggle button             */
   GtkWidget         *nav_ebox;         /*  SE: navigation event box           */
 
-  GtkWidget         *statusbar;        /*  statusbar                          */
-
   guchar            *render_buf;       /*  buffer for rendering the image     */
 
   guint              title_idle_id;    /*  title update idle ID               */

@@ -132,11 +132,6 @@ static void      gimp_display_shell_menu_position  (GtkMenu          *menu,
                                                     gint             *x,
                                                     gint             *y,
                                                     gpointer          data);
-static void      gimp_display_shell_show_tooltip   (GimpUIManager    *manager,
-                                                    const gchar      *tooltip,
-                                                    GimpDisplayShell *shell);
-static void      gimp_display_shell_hide_tooltip   (GimpUIManager    *manager,
-                                                    GimpDisplayShell *shell);
 
 static const guint8 * gimp_display_shell_get_icc_profile
                                                    (GimpColorManaged *managed,
@@ -290,8 +285,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->quick_mask_button      = NULL;
   shell->zoom_button            = NULL;
   shell->nav_ebox               = NULL;
-
-  shell->statusbar              = NULL;
 
   shell->render_buf             = g_new (guchar,
                                          GIMP_DISPLAY_RENDER_BUF_WIDTH  *
@@ -686,7 +679,8 @@ gimp_display_shell_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  gtk_widget_size_request (shell->statusbar, &requisition);
+  /* FIXME image window */
+  gtk_widget_size_request (GIMP_IMAGE_WINDOW (shell)->statusbar, &requisition);
 
   geometry.min_height = 23;
 
@@ -744,22 +738,6 @@ gimp_display_shell_menu_position (GtkMenu  *menu,
                                   gpointer  data)
 {
   gimp_button_menu_position (GTK_WIDGET (data), menu, GTK_POS_RIGHT, x, y);
-}
-
-static void
-gimp_display_shell_show_tooltip (GimpUIManager    *manager,
-                                 const gchar      *tooltip,
-                                 GimpDisplayShell *shell)
-{
-  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip",
-                       NULL, "%s", tooltip);
-}
-
-static void
-gimp_display_shell_hide_tooltip (GimpUIManager    *manager,
-                                 GimpDisplayShell *shell)
-{
-  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip");
 }
 
 static const guint8 *
@@ -871,6 +849,7 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   shell->display = display;
 
+  shell->popup_manager   = popup_manager;
   shell->display_factory = display_factory;
 
   if (display->image)
@@ -919,16 +898,6 @@ gimp_display_shell_new (GimpDisplay       *display,
       shell_width  = -1;
       shell_height = image_height;
     }
-
-  shell->popup_manager = popup_manager;
-
-  /* FIXME image window */
-  g_signal_connect (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "show-tooltip",
-                    G_CALLBACK (gimp_display_shell_show_tooltip),
-                    shell);
-  g_signal_connect (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "hide-tooltip",
-                    G_CALLBACK (gimp_display_shell_hide_tooltip),
-                    shell);
 
   gimp_display_shell_sync_config (shell, display->config);
 
@@ -1213,13 +1182,6 @@ gimp_display_shell_new (GimpDisplay       *display,
                            _("Navigate the image display"),
                            GIMP_HELP_IMAGE_WINDOW_NAV_BUTTON);
 
-  /*  create the contents of the status area *********************************/
-
-  /*  the statusbar  */
-  shell->statusbar = gimp_statusbar_new (shell);
-  gimp_help_set_help_data (shell->statusbar, NULL,
-                           GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
-
   /*  pack all the widgets  **************************************************/
 
   /*  fill the inner_table  */
@@ -1247,9 +1209,6 @@ gimp_display_shell_new (GimpDisplay       *display,
   gtk_box_pack_start (GTK_BOX (lower_hbox),
                       shell->nav_ebox, FALSE, FALSE, 0);
 
-  gtk_box_pack_end (GTK_BOX (GIMP_IMAGE_WINDOW (shell)->main_vbox),
-                    shell->statusbar, FALSE, FALSE, 0);
-
   /*  show everything  *******************************************************/
 
   if (options->show_rulers)
@@ -1271,7 +1230,8 @@ gimp_display_shell_new (GimpDisplay       *display,
     }
 
   if (options->show_statusbar)
-    gtk_widget_show (shell->statusbar);
+    /* FIXME image window */
+    gtk_widget_show (GIMP_IMAGE_WINDOW (shell)->statusbar);
 
   /*  add display filter for color management  */
 
@@ -1298,7 +1258,8 @@ gimp_display_shell_new (GimpDisplay       *display,
     }
   else
     {
-      gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
+      /* FIXME image window */
+      gimp_statusbar_empty (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar));
       gimp_dialog_factory_add_foreign (display_factory,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (shell));
@@ -1388,7 +1349,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_unset_cursor (shell);
 
-  gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
+  /* FIXME image window */
+  gimp_statusbar_empty (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar));
 
   gimp_display_shell_appearance_update (shell);
 
@@ -1441,7 +1403,8 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
   gimp_display_shell_scale_changed (shell);
 
-  gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
+  /* FIXME image window */
+  gimp_statusbar_fill (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar));
 
   gimp_display_shell_sync_config (shell, shell->display->config);
 
@@ -1947,8 +1910,9 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
 
   if (resize)
     {
-      if (width < shell->statusbar->requisition.width)
-        width = shell->statusbar->requisition.width;
+      /* FIXME image window */
+      if (width < GIMP_IMAGE_WINDOW (shell)->statusbar->requisition.width)
+        width = GIMP_IMAGE_WINDOW (shell)->statusbar->requisition.width;
 
       width  = width  + border_width;
       height = height + border_height;

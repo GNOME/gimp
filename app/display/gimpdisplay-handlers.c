@@ -162,7 +162,8 @@ gimp_display_saved_handler (GimpImage   *image,
                             const gchar *uri,
                             GimpDisplay *display)
 {
-  GtkWidget *statusbar = GIMP_DISPLAY_SHELL (display->shell)->statusbar;
+  /* FIXME image window */
+  GtkWidget *statusbar = GIMP_IMAGE_WINDOW (display->shell)->statusbar;
   gchar     *filename  = file_utils_uri_display_name (uri);
 
   gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
@@ -176,7 +177,8 @@ gimp_display_exported_handler (GimpImage   *image,
                                const gchar *uri,
                                GimpDisplay *display)
 {
-  GtkWidget *statusbar = GIMP_DISPLAY_SHELL (display->shell)->statusbar;
+  /* FIXME image window */
+  GtkWidget *statusbar = GIMP_IMAGE_WINDOW (display->shell)->statusbar;
   gchar     *filename  = file_utils_uri_display_name (uri);
 
   gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
