@@ -807,6 +807,10 @@ gimp_display_shell_new (GimpDisplay       *display,
   shell->popup_manager   = popup_manager;
   shell->display_factory = display_factory;
 
+  /* FIXME image window */
+  gimp_image_window_set_active_display (GIMP_IMAGE_WINDOW (shell),
+                                        display);
+
   if (display->image)
     {
       options = shell->options;

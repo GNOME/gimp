@@ -348,12 +348,29 @@ gimp_image_window_style_set (GtkWidget *widget,
 
 /*  public functions  */
 
+void
+gimp_image_window_set_active_display (GimpImageWindow *window,
+                                      GimpDisplay     *display)
+{
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  if (display == window->active_display)
+    return;
+
+  if (window->active_display)
+    {
+    }
+
+  window->active_display = display;
+}
+
 GimpDisplay *
 gimp_image_window_get_active_display (GimpImageWindow *window)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
 
-  return GIMP_DISPLAY_SHELL (window)->display;
+  return window->active_display;
 }
 
 void

@@ -36,6 +36,8 @@ struct _GimpImageWindow
 {
   GimpWindow       parent_instance;
 
+  GimpDisplay     *active_display;
+
   GimpUIManager   *menubar_manager;
 
   GtkWidget       *main_vbox;
@@ -53,6 +55,8 @@ struct _GimpImageWindowClass
 
 GType         gimp_image_window_get_type           (void) G_GNUC_CONST;
 
+void          gimp_image_window_set_active_display (GimpImageWindow *window,
+                                                    GimpDisplay     *display);
 GimpDisplay * gimp_image_window_get_active_display (GimpImageWindow *window);
 
 void          gimp_image_window_set_fullscreen     (GimpImageWindow *window,
