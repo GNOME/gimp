@@ -1151,8 +1151,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), image);
   gtk_widget_show (image);
 
-  /* FIXME image window */
-  action = gimp_ui_manager_find_action (GIMP_IMAGE_WINDOW (shell)->menubar_manager,
+  action = gimp_ui_manager_find_action (popup_manager,
                                         "quick-mask", "quick-mask-toggle");
   if (action)
     gimp_widget_set_accel_help (shell->quick_mask_button, action);
