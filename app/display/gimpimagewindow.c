@@ -43,7 +43,8 @@
 enum
 {
   PROP_0,
-  PROP_MENU_FACTORY
+  PROP_MENU_FACTORY,
+  PROP_DISPLAY_FACTORY
 };
 
 
@@ -126,6 +127,13 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_MENU_FACTORY,
                                                         GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_DISPLAY_FACTORY,
+                                   g_param_spec_object ("display-factory",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DIALOG_FACTORY,
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   gtk_rc_parse_string (image_window_rc_style);
@@ -222,6 +230,9 @@ gimp_image_window_set_property (GObject      *object,
                                                                  FALSE);
       }
       break;
+    case PROP_DISPLAY_FACTORY:
+      window->display_factory = g_value_get_object (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -239,6 +250,11 @@ gimp_image_window_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_DISPLAY_FACTORY:
+      g_value_set_object (value, window->display_factory);
+      break;
+
+    case PROP_MENU_FACTORY:
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

@@ -34,17 +34,18 @@ typedef struct _GimpImageWindowClass  GimpImageWindowClass;
 
 struct _GimpImageWindow
 {
-  GimpWindow       parent_instance;
+  GimpWindow         parent_instance;
 
-  GimpDisplay     *active_display;
+  GimpDisplay       *active_display;
 
-  GimpUIManager   *menubar_manager;
+  GimpUIManager     *menubar_manager;
+  GimpDialogFactory *display_factory;
 
-  GtkWidget       *main_vbox;
-  GtkWidget       *menubar;
-  GtkWidget       *statusbar;
+  GtkWidget         *main_vbox;
+  GtkWidget         *menubar;
+  GtkWidget         *statusbar;
 
-  GdkWindowState   window_state;
+  GdkWindowState     window_state;
 };
 
 struct _GimpImageWindowClass
