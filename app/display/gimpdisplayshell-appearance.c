@@ -72,12 +72,13 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 
   gimp_display_shell_set_show_menubar       (shell,
                                              options->show_menubar);
+  gimp_display_shell_set_show_statusbar     (shell,
+                                             options->show_statusbar);
+
   gimp_display_shell_set_show_rulers        (shell,
                                              options->show_rulers);
   gimp_display_shell_set_show_scrollbars    (shell,
                                              options->show_scrollbars);
-  gimp_display_shell_set_show_statusbar     (shell,
-                                             options->show_statusbar);
   gimp_display_shell_set_show_selection     (shell,
                                              options->show_selection);
   gimp_display_shell_set_show_layer         (shell,
@@ -127,6 +128,38 @@ gimp_display_shell_get_show_menubar (const GimpDisplayShell *shell)
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_menubar;
+}
+
+void
+gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
+                                       gboolean          show)
+{
+  GimpDisplayOptions *options;
+  GtkWidget          *toplevel;
+  GimpImageWindow    *window;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options  = appearance_get_options (shell);
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  window   = GIMP_IMAGE_WINDOW (toplevel);
+
+  g_object_set (options, "show-statusbar", show, NULL);
+
+  if (gimp_image_window_get_active_display (window) == shell->display)
+    {
+      gimp_statusbar_set_visible (GIMP_STATUSBAR (window->statusbar), show);
+    }
+
+  appearance_set_action_active (shell, "view-show-statusbar", show);
+}
+
+gboolean
+gimp_display_shell_get_show_statusbar (const GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return appearance_get_options (shell)->show_statusbar;
 }
 
 void
@@ -227,38 +260,6 @@ gimp_display_shell_get_show_scrollbars (const GimpDisplayShell *shell)
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_scrollbars;
-}
-
-void
-gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
-                                       gboolean          show)
-{
-  GimpDisplayOptions *options;
-  GtkWidget          *toplevel;
-  GimpImageWindow    *window;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  options  = appearance_get_options (shell);
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  window   = GIMP_IMAGE_WINDOW (toplevel);
-
-  g_object_set (options, "show-statusbar", show, NULL);
-
-  if (gimp_image_window_get_active_display (window) == shell->display)
-    {
-      gimp_statusbar_set_visible (GIMP_STATUSBAR (window->statusbar), show);
-    }
-
-  appearance_set_action_active (shell, "view-show-statusbar", show);
-}
-
-gboolean
-gimp_display_shell_get_show_statusbar (const GimpDisplayShell *shell)
-{
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-
-  return appearance_get_options (shell)->show_statusbar;
 }
 
 void
