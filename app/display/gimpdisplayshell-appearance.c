@@ -47,27 +47,19 @@
 #include "gimpstatusbar.h"
 
 
-#define GET_OPTIONS(shell) \
-  (shell->display->image ? \
-   (gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell)))) ? \
-    shell->fullscreen_options : shell->options) : \
-   shell->no_image_options)
+/*  local function prototypes  */
 
-#define SET_ACTIVE(manager,action_name,active) \
-  { GimpActionGroup *group = \
-      gimp_ui_manager_get_action_group (manager, "view"); \
-    gimp_action_group_set_action_active (group, action_name, active); }
+static GimpDisplayOptions *
+              appearance_get_options       (const GimpDisplayShell *shell);
+static void   appearance_set_action_active (GimpDisplayShell       *shell,
+                                            const gchar            *action,
+                                            gboolean                active);
+static void   appearance_set_action_color  (GimpDisplayShell       *shell,
+                                            const gchar            *action,
+                                            const GimpRGB          *color);
 
-#define SET_COLOR(manager,action_name,color) \
-  { GimpActionGroup *group = \
-      gimp_ui_manager_get_action_group (manager, "view"); \
-    gimp_action_group_set_action_color (group, action_name, color, FALSE); }
 
-#define IS_ACTIVE_DISPLAY(shell) \
-  ((shell)->display == \
-   gimp_context_get_display (gimp_get_user_context \
-                             ((shell)->display->gimp)))
-
+/*  public functions  */
 
 void
 gimp_display_shell_appearance_update (GimpDisplayShell *shell)
@@ -76,7 +68,7 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   gimp_display_shell_set_show_menubar       (shell,
                                              options->show_menubar);
@@ -106,27 +98,27 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
                                      gboolean          show)
 {
   GimpDisplayOptions *options;
+  GtkWidget          *toplevel;
+  GimpImageWindow    *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options  = appearance_get_options (shell);
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  window   = GIMP_IMAGE_WINDOW (toplevel);
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  /* FIXME image window */
-  if (GIMP_IMAGE_WINDOW (shell)->menubar)
+  if (gimp_image_window_get_active_display (window) == shell->display &&
+      window->menubar)
     {
       if (show)
-        gtk_widget_show (GIMP_IMAGE_WINDOW (shell)->menubar);
+        gtk_widget_show (window->menubar);
       else
-        gtk_widget_hide (GIMP_IMAGE_WINDOW (shell)->menubar);
+        gtk_widget_hide (window->menubar);
     }
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-menubar", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-menubar", show);
+  appearance_set_action_active (shell, "view-show-menubar", show);
 }
 
 gboolean
@@ -134,7 +126,7 @@ gimp_display_shell_get_show_menubar (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_menubar;
+  return appearance_get_options (shell)->show_menubar;
 }
 
 void
@@ -146,7 +138,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   g_object_set (options, "show-rulers", show, NULL);
 
@@ -171,11 +163,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
       gtk_table_set_row_spacing (table, 0, 0);
     }
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-rulers", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-rulers", show);
+  appearance_set_action_active (shell, "view-show-rulers", show);
 }
 
 gboolean
@@ -183,7 +171,7 @@ gimp_display_shell_get_show_rulers (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_rulers;
+  return appearance_get_options (shell)->show_rulers;
 }
 
 void
@@ -197,7 +185,7 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   g_object_set (options, "show-scrollbars", show, NULL);
 
@@ -230,11 +218,7 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
       gtk_box_set_spacing (vbox, 0);
     }
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-scrollbars", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-scrollbars", show);
+  appearance_set_action_active (shell, "view-show-scrollbars", show);
 }
 
 gboolean
@@ -242,7 +226,7 @@ gimp_display_shell_get_show_scrollbars (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_scrollbars;
+  return appearance_get_options (shell)->show_scrollbars;
 }
 
 void
@@ -250,21 +234,23 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
                                        gboolean          show)
 {
   GimpDisplayOptions *options;
+  GtkWidget          *toplevel;
+  GimpImageWindow    *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options  = appearance_get_options (shell);
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  window   = GIMP_IMAGE_WINDOW (toplevel);
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  /* FIXME image window */
-  gimp_statusbar_set_visible (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar), show);
+  if (gimp_image_window_get_active_display (window) == shell->display)
+    {
+      gimp_statusbar_set_visible (GIMP_STATUSBAR (window->statusbar), show);
+    }
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-statusbar", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-statusbar", show);
+  appearance_set_action_active (shell, "view-show-statusbar", show);
 }
 
 gboolean
@@ -272,7 +258,7 @@ gimp_display_shell_get_show_statusbar (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_statusbar;
+  return appearance_get_options (shell)->show_statusbar;
 }
 
 void
@@ -283,17 +269,13 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   g_object_set (options, "show-selection", show, NULL);
 
   gimp_display_shell_selection_set_hidden (shell, ! show);
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-selection", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-selection", show);
+  appearance_set_action_active (shell, "view-show-selection", show);
 }
 
 gboolean
@@ -301,7 +283,7 @@ gimp_display_shell_get_show_selection (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_selection;
+  return appearance_get_options (shell)->show_selection;
 }
 
 void
@@ -312,17 +294,13 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   g_object_set (options, "show-layer-boundary", show, NULL);
 
   gimp_display_shell_selection_layer_set_hidden (shell, ! show);
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-layer-boundary", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-layer-boundary", show);
+  appearance_set_action_active (shell, "view-show-layer-boundary", show);
 }
 
 gboolean
@@ -330,7 +308,7 @@ gimp_display_shell_get_show_layer (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_layer_boundary;
+  return appearance_get_options (shell)->show_layer_boundary;
 }
 
 void
@@ -358,7 +336,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   g_object_set (options, "show-guides", show, NULL);
 
@@ -368,11 +346,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
       gimp_display_shell_expose_full (shell);
     }
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-guides", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-guides", show);
+  appearance_set_action_active (shell, "view-show-guides", show);
 }
 
 gboolean
@@ -380,7 +354,7 @@ gimp_display_shell_get_show_guides (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_guides;
+  return appearance_get_options (shell)->show_guides;
 }
 
 void
@@ -391,7 +365,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   g_object_set (options, "show-grid", show, NULL);
 
@@ -401,11 +375,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
       gimp_display_shell_expose_full (shell);
     }
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-grid", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-grid", show);
+  appearance_set_action_active (shell, "view-show-grid", show);
 }
 
 gboolean
@@ -413,7 +383,7 @@ gimp_display_shell_get_show_grid (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_grid;
+  return appearance_get_options (shell)->show_grid;
 }
 
 void
@@ -424,7 +394,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   g_object_set (options, "show-sample-points", show, NULL);
 
@@ -434,11 +404,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
       gimp_display_shell_expose_full (shell);
     }
 
-  /* FIXME image window */
-  SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-show-sample-points", show);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-sample-points", show);
+  appearance_set_action_active (shell, "view-show-sample-points", show);
 }
 
 gboolean
@@ -446,7 +412,7 @@ gimp_display_shell_get_show_sample_points (const GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_sample_points;
+  return appearance_get_options (shell)->show_sample_points;
 }
 
 void
@@ -459,11 +425,7 @@ gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
     {
       shell->snap_to_grid = snap ? TRUE : FALSE;
 
-      /* FIXME image window */
-      SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-snap-to-grid", snap);
-
-      if (IS_ACTIVE_DISPLAY (shell))
-        SET_ACTIVE (shell->popup_manager, "view-snap-to-grid", snap);
+      appearance_set_action_active (shell, "view-snap-to-grid", snap);
     }
 }
 
@@ -485,11 +447,7 @@ gimp_display_shell_set_snap_to_guides (GimpDisplayShell *shell,
     {
       shell->snap_to_guides = snap ? TRUE : FALSE;
 
-      /* FIXME image window */
-      SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-snap-to-guides", snap);
-
-      if (IS_ACTIVE_DISPLAY (shell))
-        SET_ACTIVE (shell->popup_manager, "view-snap-to-guides", snap);
+      appearance_set_action_active (shell, "view-snap-to-guides", snap);
     }
 }
 
@@ -511,11 +469,7 @@ gimp_display_shell_set_snap_to_canvas (GimpDisplayShell *shell,
     {
       shell->snap_to_canvas = snap ? TRUE : FALSE;
 
-      /* FIXME image window */
-      SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-snap-to-canvas", snap);
-
-      if (IS_ACTIVE_DISPLAY (shell))
-        SET_ACTIVE (shell->popup_manager, "view-snap-to-canvas", snap);
+      appearance_set_action_active (shell, "view-snap-to-canvas", snap);
     }
 }
 
@@ -537,11 +491,7 @@ gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
     {
       shell->snap_to_vectors = snap ? TRUE : FALSE;
 
-      /* FIXME image window */
-      SET_ACTIVE (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-snap-to-vectors", snap);
-
-      if (IS_ACTIVE_DISPLAY (shell))
-        SET_ACTIVE (shell->popup_manager, "view-snap-to-vectors", snap);
+      appearance_set_action_active (shell, "view-snap-to-vectors", snap);
     }
 }
 
@@ -564,7 +514,7 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (padding_color != NULL);
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
   color   = *padding_color;
 
   switch (padding_mode)
@@ -602,13 +552,8 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 
   gimp_canvas_set_bg_color (GIMP_CANVAS (shell->canvas), &color);
 
-  /* FIXME image window */
-  SET_COLOR (GIMP_IMAGE_WINDOW (shell)->menubar_manager, "view-padding-color-menu",
-             &options->padding_color);
-
-  if (IS_ACTIVE_DISPLAY (shell))
-    SET_COLOR (shell->popup_manager, "view-padding-color-menu",
-               &options->padding_color);
+  appearance_set_action_color (shell, "view-padding-color-menu",
+                               &options->padding_color);
 
   gimp_display_shell_expose_full (shell);
 }
@@ -622,11 +567,99 @@ gimp_display_shell_get_padding (const GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = GET_OPTIONS (shell);
+  options = appearance_get_options (shell);
 
   if (padding_mode)
     *padding_mode = options->padding_mode;
 
   if (padding_color)
     *padding_color = options->padding_color;
+}
+
+
+/*  private functions  */
+
+static GimpDisplayOptions *
+appearance_get_options (const GimpDisplayShell *shell)
+{
+  if (shell->display->image)
+    {
+      GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+      GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+
+      if (gimp_image_window_get_fullscreen (window))
+        return shell->fullscreen_options;
+      else
+        return shell->options;
+    }
+
+  return shell->no_image_options;
+}
+
+static void
+appearance_set_action_active (GimpDisplayShell *shell,
+                              const gchar      *action,
+                              gboolean          active)
+{
+  GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+  GimpContext     *context;
+
+  if (gimp_image_window_get_active_display (window) == shell->display)
+    {
+      GimpActionGroup *action_group;
+
+      action_group = gimp_ui_manager_get_action_group (window->menubar_manager,
+                                                       "view");
+
+      if (action_group)
+        gimp_action_group_set_action_active (action_group, action, active);
+    }
+
+  context = gimp_get_user_context (shell->display->gimp);
+
+  if (shell->display == gimp_context_get_display (context))
+    {
+      GimpActionGroup *action_group;
+
+      action_group = gimp_ui_manager_get_action_group (shell->popup_manager,
+                                                       "view");
+
+      if (action_group)
+        gimp_action_group_set_action_active (action_group, action, active);
+    }
+}
+
+static void
+appearance_set_action_color (GimpDisplayShell *shell,
+                             const gchar      *action,
+                             const GimpRGB    *color)
+{
+  GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+  GimpContext     *context;
+
+  if (gimp_image_window_get_active_display (window) == shell->display)
+    {
+      GimpActionGroup *action_group;
+
+      action_group = gimp_ui_manager_get_action_group (window->menubar_manager,
+                                                       "view");
+
+      if (action_group)
+        gimp_action_group_set_action_color (action_group, action, color, FALSE);
+    }
+
+  context = gimp_get_user_context (shell->display->gimp);
+
+  if (shell->display == gimp_context_get_display (context))
+    {
+      GimpActionGroup *action_group;
+
+      action_group = gimp_ui_manager_get_action_group (shell->popup_manager,
+                                                       "view");
+
+      if (action_group)
+        gimp_action_group_set_action_color (action_group, action, color, FALSE);
+    }
 }
