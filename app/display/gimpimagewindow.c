@@ -75,6 +75,9 @@ static void      gimp_image_window_show_tooltip (GimpUIManager       *manager,
 static void      gimp_image_window_hide_tooltip (GimpUIManager       *manager,
                                                  GimpImageWindow     *window);
 
+static void      gimp_image_window_image_notify        (GimpDisplay         *display,
+                                                        const GParamSpec    *pspec,
+                                                        GimpImageWindow     *window);
 static void      gimp_image_window_shell_scaled        (GimpDisplayShell    *shell,
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_shell_title_notify  (GimpDisplayShell    *shell,
@@ -377,6 +380,10 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
 
   if (window->active_display)
     {
+      g_signal_handlers_disconnect_by_func (window->active_display,
+                                            gimp_image_window_image_notify,
+                                            window);
+
       active_shell = GIMP_DISPLAY_SHELL (window->active_display->shell);
 
       g_signal_handlers_disconnect_by_func (active_shell,
@@ -395,6 +402,10 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
 
   window->active_display = display;
 #endif
+
+  g_signal_connect (window->active_display, "notify::image",
+                    G_CALLBACK (gimp_image_window_image_notify),
+                    window);
 
   active_shell = GIMP_DISPLAY_SHELL (window->active_display->shell);
 
@@ -467,6 +478,19 @@ gimp_image_window_hide_tooltip (GimpUIManager   *manager,
                                 GimpImageWindow *window)
 {
   gimp_statusbar_pop (GIMP_STATUSBAR (window->statusbar), "menu-tooltip");
+}
+
+static void
+gimp_image_window_image_notify (GimpDisplay      *display,
+                                const GParamSpec *pspec,
+                                GimpImageWindow  *window)
+{
+  if (display->image)
+    {
+    }
+  else
+    {
+    }
 }
 
 static void
