@@ -207,6 +207,12 @@ gimp_image_window_finalize (GObject *object)
 {
   GimpImageWindow *window = GIMP_IMAGE_WINDOW (object);
 
+  if (window->menubar_manager)
+    {
+      g_object_unref (window->menubar_manager);
+      window->menubar_manager = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
