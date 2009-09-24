@@ -131,6 +131,8 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
 static void
 gimp_image_window_init (GimpImageWindow *window)
 {
+  gtk_window_set_role (GTK_WINDOW (window), "gimp-image-window");
+  gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
 }
 
 static GObject *

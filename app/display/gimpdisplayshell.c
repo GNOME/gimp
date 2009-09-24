@@ -365,10 +365,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->last_active_state      = 0;
 
-
-  gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
-  gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
-
   gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK      |
                                               GDK_POINTER_MOTION_HINT_MASK |
                                               GDK_BUTTON_PRESS_MASK        |
