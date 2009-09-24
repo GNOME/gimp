@@ -28,6 +28,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
 
 #include "gimpdisplay.h"
@@ -512,6 +513,41 @@ gimp_image_window_image_notify (GimpDisplay      *display,
     }
   else
     {
+      GimpSessionInfo *session_info;
+      gint             width;
+      gint             height;
+
+      gtk_window_unfullscreen (GTK_WINDOW (window));
+
+      /*  get the NIW size before adding the display to the dialog
+       *  factory so the window's current size doesn't affect the
+       *  stored session info entry.
+       */
+      session_info =
+        gimp_dialog_factory_find_session_info (window->display_factory,
+                                               "gimp-empty-image-window");
+
+      if (session_info)
+        {
+          width  = gimp_session_info_get_width  (session_info);
+          height = gimp_session_info_get_height (session_info);
+        }
+      else
+        {
+          width  = GTK_WIDGET (window)->allocation.width;
+          height = GTK_WIDGET (window)->allocation.height;
+        }
+
+      gimp_dialog_factory_add_foreign (window->display_factory,
+                                       "gimp-empty-image-window",
+                                       GTK_WIDGET (window));
+
+      gimp_statusbar_empty (GIMP_STATUSBAR (window->statusbar));
+
+      gtk_window_unmaximize (GTK_WINDOW (window));
+      gtk_window_resize (GTK_WINDOW (window), width, height);
+
+      gimp_ui_manager_update (window->menubar_manager, display);
     }
 }
 

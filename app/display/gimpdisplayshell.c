@@ -51,7 +51,6 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
-#include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -1303,39 +1302,11 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 void
 gimp_display_shell_empty (GimpDisplayShell *shell)
 {
-  GimpSessionInfo *session_info;
-  GimpContext     *user_context;
-  gint             width;
-  gint             height;
+  GimpContext *user_context;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (shell->display->image == NULL);
-
-  gtk_window_unfullscreen (GTK_WINDOW (shell));
-
-  /*  get the NIW size before adding the display to the dialog factory
-   *  so the window's current size doesn't affect the stored session
-   *  info entry.
-   */
-  session_info =
-    gimp_dialog_factory_find_session_info (shell->display_factory,
-                                           "gimp-empty-image-window");
-
-  if (session_info)
-    {
-      width  = gimp_session_info_get_width  (session_info);
-      height = gimp_session_info_get_height (session_info);
-    }
-  else
-    {
-      width  = GTK_WIDGET (shell)->allocation.width;
-      height = GTK_WIDGET (shell)->allocation.height;
-    }
-
-  gimp_dialog_factory_add_foreign (shell->display_factory,
-                                   "gimp-empty-image-window",
-                                   GTK_WIDGET (shell));
 
   if (shell->fill_idle_id)
     {
@@ -1347,24 +1318,12 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_unset_cursor (shell);
 
-  /* FIXME image window */
-  gimp_statusbar_empty (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar));
-
   gimp_display_shell_appearance_update (shell);
 
   gimp_help_set_help_data (shell->canvas,
                            _("Drop image files here to open them"), NULL);
 
   gimp_display_shell_expose_full (shell);
-
-  gtk_window_unmaximize (GTK_WINDOW (shell));
-  gtk_window_resize (GTK_WINDOW (shell), width, height);
-
-  /*  update the ui managers  */
-
-  /* FIXME image window */
-  gimp_ui_manager_update (GIMP_IMAGE_WINDOW (shell)->menubar_manager,
-                          shell->display);
 
   user_context = gimp_get_user_context (shell->display->gimp);
 
