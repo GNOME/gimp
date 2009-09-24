@@ -124,6 +124,8 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
                                   gdouble              image_x,
                                   gdouble              image_y)
 {
+  GtkWidget         *toplevel;
+  GtkWidget         *statusbar;
   GimpDialogFactory *factory;
   GimpSessionInfo   *session_info;
   GimpImage         *image;
@@ -159,8 +161,10 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
   /*  use the passed image_coords for the statusbar because they are
    *  possibly snapped...
    */
-  /* FIXME image window */
-  gimp_statusbar_update_cursor (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar),
+  toplevel  = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  statusbar = GIMP_IMAGE_WINDOW (toplevel)->statusbar;
+
+  gimp_statusbar_update_cursor (GIMP_STATUSBAR (statusbar),
                                 precision, image_x, image_y);
 
   factory = gimp_dialog_factory_from_name ("dock");
@@ -192,13 +196,17 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
 void
 gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 {
+  GtkWidget         *toplevel;
+  GtkWidget         *statusbar;
   GimpDialogFactory *factory;
   GimpSessionInfo   *session_info;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  /* FIXME image window */
-  gimp_statusbar_clear_cursor (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar));
+  toplevel  = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  statusbar = GIMP_IMAGE_WINDOW (toplevel)->statusbar;
+
+  gimp_statusbar_clear_cursor (GIMP_STATUSBAR (statusbar));
 
   factory = gimp_dialog_factory_from_name ("dock");
   session_info = gimp_dialog_factory_find_session_info (factory,
