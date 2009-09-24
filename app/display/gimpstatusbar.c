@@ -105,6 +105,8 @@ static void     gimp_statusbar_unit_changed       (GimpUnitComboBox  *combo,
                                                    GimpStatusbar     *statusbar);
 static void     gimp_statusbar_scale_changed      (GimpScaleComboBox *combo,
                                                    GimpStatusbar     *statusbar);
+static void     gimp_statusbar_scale_activated    (GimpScaleComboBox *combo,
+                                                   GimpStatusbar     *statusbar);
 static void     gimp_statusbar_shell_scaled       (GimpDisplayShell  *shell,
                                                    GimpStatusbar     *statusbar);
 static guint    gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
@@ -205,6 +207,10 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   g_signal_connect (statusbar->scale_combo, "changed",
                     G_CALLBACK (gimp_statusbar_scale_changed),
+                    statusbar);
+
+  g_signal_connect (statusbar->scale_combo, "entry-activated",
+                    G_CALLBACK (gimp_statusbar_scale_activated),
                     statusbar);
 
   /*  put the label back into our hbox  */
@@ -651,17 +657,33 @@ gimp_statusbar_new (GimpDisplayShell *shell)
 
   statusbar = g_object_new (GIMP_TYPE_STATUSBAR, NULL);
 
-  statusbar->shell = shell;
-
-  g_signal_connect_object (shell, "scaled",
-                           G_CALLBACK (gimp_statusbar_shell_scaled),
-                           statusbar, 0);
-
-  g_signal_connect_object (statusbar->scale_combo, "entry-activated",
-                           G_CALLBACK (gtk_widget_grab_focus),
-                           shell->canvas, G_CONNECT_SWAPPED);
+  gimp_statusbar_set_shell (statusbar, shell);
 
   return GTK_WIDGET (statusbar);
+}
+
+void
+gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
+                          GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell == statusbar->shell)
+    return;
+
+  if (statusbar->shell)
+    {
+      g_signal_handlers_disconnect_by_func (statusbar->shell,
+                                            gimp_statusbar_shell_scaled,
+                                            statusbar);
+    }
+
+  statusbar->shell = shell;
+
+  g_signal_connect_object (statusbar->shell, "scaled",
+                           G_CALLBACK (gimp_statusbar_shell_scaled),
+                           statusbar, 0);
 }
 
 gboolean
@@ -1389,6 +1411,13 @@ gimp_statusbar_scale_changed (GimpScaleComboBox *combo,
                             GIMP_ZOOM_TO,
                             gimp_scale_combo_box_get_scale (combo),
                             GIMP_ZOOM_FOCUS_BEST_GUESS);
+}
+
+static void
+gimp_statusbar_scale_activated (GimpScaleComboBox *combo,
+                                GimpStatusbar     *statusbar)
+{
+  gtk_widget_grab_focus (statusbar->shell->canvas);
 }
 
 static guint
