@@ -529,7 +529,8 @@ gimp_display_set_image (GimpDisplay *display,
   else
     gimp_display_shell_icon_update (GIMP_DISPLAY_SHELL (display->shell));
 
-  g_object_notify (G_OBJECT (display), "image");
+  if (old_image != image)
+    g_object_notify (G_OBJECT (display), "image");
 }
 
 void
