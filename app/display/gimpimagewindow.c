@@ -182,8 +182,7 @@ gimp_image_window_constructor (GType                  type,
                         NULL);
     }
 
-  /* FIXME display shell */
-  window->statusbar = gimp_statusbar_new (GIMP_DISPLAY_SHELL (window));
+  window->statusbar = gimp_statusbar_new ();
   gimp_help_set_help_data (window->statusbar, NULL,
                            GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
   gtk_box_pack_end (GTK_BOX (window->main_vbox), window->statusbar,
@@ -398,6 +397,8 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
 #endif
 
   active_shell = GIMP_DISPLAY_SHELL (window->active_display->shell);
+
+  gimp_statusbar_set_shell (GIMP_STATUSBAR (window->statusbar), active_shell);
 
   g_signal_connect (active_shell, "scaled",
                     G_CALLBACK (gimp_image_window_shell_scaled),

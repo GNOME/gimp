@@ -649,17 +649,9 @@ gimp_statusbar_update (GimpStatusbar *statusbar)
 /*  public functions  */
 
 GtkWidget *
-gimp_statusbar_new (GimpDisplayShell *shell)
+gimp_statusbar_new (void)
 {
-  GimpStatusbar *statusbar;
-
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-
-  statusbar = g_object_new (GIMP_TYPE_STATUSBAR, NULL);
-
-  gimp_statusbar_set_shell (statusbar, shell);
-
-  return GTK_WIDGET (statusbar);
+  return g_object_new (GIMP_TYPE_STATUSBAR, NULL);
 }
 
 void
