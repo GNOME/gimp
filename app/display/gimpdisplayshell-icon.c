@@ -69,11 +69,11 @@ gimp_display_shell_icon_update (GimpDisplayShell *shell)
                                          gimp_get_user_context (gimp),
                                          width, height);
 
-      gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
+      g_object_set (shell, "gimp-icon", pixbuf, NULL);
     }
   else
     {
-      gtk_window_set_icon (GTK_WINDOW (shell), NULL);
+      g_object_set (shell, "gimp-icon", NULL, NULL);
     }
 }
 

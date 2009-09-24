@@ -83,6 +83,9 @@ static void      gimp_image_window_shell_title_notify  (GimpDisplayShell    *she
 static void      gimp_image_window_shell_status_notify (GimpDisplayShell    *shell,
                                                         const GParamSpec    *pspec,
                                                         GimpImageWindow     *window);
+static void      gimp_image_window_shell_icon_notify   (GimpDisplayShell    *shell,
+                                                        const GParamSpec    *pspec,
+                                                        GimpImageWindow     *window);
 
 
 G_DEFINE_TYPE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW)
@@ -384,6 +387,9 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
       g_signal_handlers_disconnect_by_func (active_shell,
                                             gimp_image_window_shell_status_notify,
                                             window);
+      g_signal_handlers_disconnect_by_func (active_shell,
+                                            gimp_image_window_shell_icon_notify,
+                                            window);
     }
 
   window->active_display = display;
@@ -400,6 +406,10 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
                     window);
   g_signal_connect (active_shell, "notify::status",
                     G_CALLBACK (gimp_image_window_shell_status_notify),
+                    window);
+  /* FIXME: "icon" later */
+  g_signal_connect (active_shell, "notify::gimp-icon",
+                    G_CALLBACK (gimp_image_window_shell_icon_notify),
                     window);
 
   gimp_ui_manager_update (window->menubar_manager,
@@ -480,4 +490,12 @@ gimp_image_window_shell_status_notify (GimpDisplayShell *shell,
 {
   gimp_statusbar_replace (GIMP_STATUSBAR (window->statusbar), "title",
                           NULL, "%s", shell->status);
+}
+
+static void
+gimp_image_window_shell_icon_notify (GimpDisplayShell *shell,
+                                     const GParamSpec *pspec,
+                                     GimpImageWindow  *window)
+{
+  gtk_window_set_icon (GTK_WINDOW (window), shell->icon);
 }

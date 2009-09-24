@@ -147,12 +147,12 @@ struct _GimpDisplayShell
   guchar            *render_buf;       /*  buffer for rendering the image     */
 
   guint              title_idle_id;    /*  title update idle ID               */
-
   gchar             *title;            /*  current title                      */
   gchar             *status;           /*  current default statusbar content  */
 
   gint               icon_size;        /*  size of the icon pixmap            */
   guint              icon_idle_id;     /*  ID of the idle-function            */
+  GdkPixbuf         *icon;             /*  icon                               */
 
   guint              fill_idle_id;     /*  display_shell_fill() idle ID       */
 

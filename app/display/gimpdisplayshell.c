@@ -86,7 +86,8 @@ enum
   PROP_0,
   PROP_UNIT,
   PROP_TITLE,
-  PROP_STATUS
+  PROP_STATUS,
+  PROP_ICON
 };
 
 enum
@@ -225,6 +226,12 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   g_object_class_install_property (object_class, PROP_STATUS,
                                    g_param_spec_string ("status", NULL, NULL,
                                                         NULL,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_ICON,
+                                   /* FIXME: "icon" later */
+                                   g_param_spec_object ("gimp-icon", NULL, NULL,
+                                                        GDK_TYPE_PIXBUF,
                                                         GIMP_PARAM_READWRITE));
 
   gtk_rc_parse_string (display_rc_style);
@@ -419,6 +426,9 @@ gimp_display_shell_finalize (GObject *object)
   if (shell->status)
     g_free (shell->status);
 
+  if (shell->icon)
+    g_object_unref (shell->icon);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -442,6 +452,11 @@ gimp_display_shell_set_property (GObject      *object,
     case PROP_STATUS:
       g_free (shell->status);
       shell->status = g_value_dup_string (value);
+      break;
+    case PROP_ICON:
+      if (shell->icon)
+        g_object_unref (shell->icon);
+      shell->icon = g_value_dup_object (value);
       break;
 
     default:
@@ -468,6 +483,9 @@ gimp_display_shell_get_property (GObject    *object,
       break;
     case PROP_STATUS:
       g_value_set_string (value, shell->status);
+      break;
+    case PROP_ICON:
+      g_value_set_object (value, shell->icon);
       break;
 
     default:
