@@ -52,35 +52,35 @@ enum
 
 /*  local function prototypes  */
 
-static GObject * gimp_image_window_constructor     (GType                type,
-                                                    guint                n_params,
-                                                    GObjectConstructParam *params);
-static void      gimp_image_window_finalize        (GObject             *object);
-static void      gimp_image_window_set_property    (GObject             *object,
-                                                    guint                property_id,
-                                                    const GValue        *value,
-                                                    GParamSpec          *pspec);
-static void      gimp_image_window_get_property    (GObject             *object,
-                                                    guint                property_id,
-                                                    GValue              *value,
-                                                    GParamSpec          *pspec);
+static GObject * gimp_image_window_constructor         (GType                type,
+                                                        guint                n_params,
+                                                        GObjectConstructParam *params);
+static void      gimp_image_window_finalize            (GObject             *object);
+static void      gimp_image_window_set_property        (GObject             *object,
+                                                        guint                property_id,
+                                                        const GValue        *value,
+                                                        GParamSpec          *pspec);
+static void      gimp_image_window_get_property        (GObject             *object,
+                                                        guint                property_id,
+                                                        GValue              *value,
+                                                        GParamSpec          *pspec);
 
-static void      gimp_image_window_destroy         (GtkObject           *object);
+static void      gimp_image_window_destroy             (GtkObject           *object);
 
-static gboolean  gimp_image_window_delete_event    (GtkWidget           *widget,
-                                                    GdkEventAny         *event);
-static gboolean  gimp_image_window_configure_event (GtkWidget           *widget,
-                                                    GdkEventConfigure   *event);
-static gboolean  gimp_image_window_window_state    (GtkWidget           *widget,
-                                                    GdkEventWindowState *event);
-static void      gimp_image_window_style_set       (GtkWidget           *widget,
-                                                    GtkStyle            *prev_style);
+static gboolean  gimp_image_window_delete_event        (GtkWidget           *widget,
+                                                        GdkEventAny         *event);
+static gboolean  gimp_image_window_configure_event     (GtkWidget           *widget,
+                                                        GdkEventConfigure   *event);
+static gboolean  gimp_image_window_window_state_event  (GtkWidget           *widget,
+                                                        GdkEventWindowState *event);
+static void      gimp_image_window_style_set           (GtkWidget           *widget,
+                                                        GtkStyle            *prev_style);
 
-static void      gimp_image_window_show_tooltip    (GimpUIManager       *manager,
-                                                    const gchar         *tooltip,
-                                                    GimpImageWindow     *window);
-static void      gimp_image_window_hide_tooltip    (GimpUIManager       *manager,
-                                                    GimpImageWindow     *window);
+static void      gimp_image_window_show_tooltip        (GimpUIManager       *manager,
+                                                        const gchar         *tooltip,
+                                                        GimpImageWindow     *window);
+static void      gimp_image_window_hide_tooltip        (GimpUIManager       *manager,
+                                                        GimpImageWindow     *window);
 
 static void      gimp_image_window_image_notify        (GimpDisplay         *display,
                                                         const GParamSpec    *pspec,
@@ -127,7 +127,7 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
 
   widget_class->delete_event       = gimp_image_window_delete_event;
   widget_class->configure_event    = gimp_image_window_configure_event;
-  widget_class->window_state_event = gimp_image_window_window_state;
+  widget_class->window_state_event = gimp_image_window_window_state_event;
   widget_class->style_set          = gimp_image_window_style_set;
 
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
@@ -339,8 +339,8 @@ gimp_image_window_configure_event (GtkWidget         *widget,
 }
 
 static gboolean
-gimp_image_window_window_state (GtkWidget           *widget,
-                                GdkEventWindowState *event)
+gimp_image_window_window_state_event (GtkWidget           *widget,
+                                      GdkEventWindowState *event)
 {
   GimpImageWindow *window  = GIMP_IMAGE_WINDOW (widget);
   GimpDisplay     *display = gimp_image_window_get_active_display (window);
