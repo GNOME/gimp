@@ -41,9 +41,9 @@ enum
 {
   PROP_0,
   PROP_SHOW_MENUBAR,
+  PROP_SHOW_STATUSBAR,
   PROP_SHOW_RULERS,
   PROP_SHOW_SCROLLBARS,
-  PROP_SHOW_STATUSBAR,
   PROP_SHOW_SELECTION,
   PROP_SHOW_LAYER_BOUNDARY,
   PROP_SHOW_GUIDES,
@@ -105,16 +105,16 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                                     "show-menubar", SHOW_MENUBAR_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
+                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                                     "show-rulers", SHOW_RULERS_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
                                     "show-scrollbars", SHOW_SCROLLBARS_BLURB,
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
-                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
@@ -163,16 +163,16 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                                     "show-menubar", SHOW_MENUBAR_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
+                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                                     "show-rulers", SHOW_RULERS_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
                                     "show-scrollbars", SHOW_SCROLLBARS_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
-                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
@@ -263,14 +263,14 @@ gimp_display_options_set_property (GObject      *object,
     case PROP_SHOW_MENUBAR:
       options->show_menubar = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_STATUSBAR:
+      options->show_statusbar = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_RULERS:
       options->show_rulers = g_value_get_boolean (value);
       break;
     case PROP_SHOW_SCROLLBARS:
       options->show_scrollbars = g_value_get_boolean (value);
-      break;
-    case PROP_SHOW_STATUSBAR:
-      options->show_statusbar = g_value_get_boolean (value);
       break;
     case PROP_SHOW_SELECTION:
       options->show_selection = g_value_get_boolean (value);
@@ -313,14 +313,14 @@ gimp_display_options_get_property (GObject    *object,
     case PROP_SHOW_MENUBAR:
       g_value_set_boolean (value, options->show_menubar);
       break;
+    case PROP_SHOW_STATUSBAR:
+      g_value_set_boolean (value, options->show_statusbar);
+      break;
     case PROP_SHOW_RULERS:
       g_value_set_boolean (value, options->show_rulers);
       break;
     case PROP_SHOW_SCROLLBARS:
       g_value_set_boolean (value, options->show_scrollbars);
-      break;
-    case PROP_SHOW_STATUSBAR:
-      g_value_set_boolean (value, options->show_statusbar);
       break;
     case PROP_SHOW_SELECTION:
       g_value_set_boolean (value, options->show_selection);

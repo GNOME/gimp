@@ -39,11 +39,13 @@ struct _GimpDisplayOptions
 {
   GObject                parent_instance;
 
-  /*  GimpDisplayShell options  */
+  /*  GimpImageWindow options  */
   gboolean               show_menubar;
+  gboolean               show_statusbar;
+
+  /*  GimpDisplayShell options  */
   gboolean               show_rulers;
   gboolean               show_scrollbars;
-  gboolean               show_statusbar;
 
   /*  GimpCanvas options  */
   gboolean               show_selection;
