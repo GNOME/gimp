@@ -26,6 +26,7 @@
 #include "display-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
@@ -39,7 +40,6 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
-#include "gimpdisplayshell-progress.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
@@ -395,8 +395,16 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
           gimp_dialog_factories_show_with_display ();
         }
 
-      /* FIXME multiple shells */
-      gimp_display_shell_progress_window_state_changed (GIMP_DISPLAY_SHELL (display->shell));
+      if (gimp_progress_is_active (GIMP_PROGRESS (window->statusbar)))
+        {
+          GimpStatusbar    *statusbar = GIMP_STATUSBAR (window->statusbar);
+          GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (display->shell);
+
+          if (iconified)
+            gimp_statusbar_override_window_title (statusbar);
+          else
+            gtk_window_set_title (GTK_WINDOW (window), shell->title);
+        }
     }
 
   return FALSE;

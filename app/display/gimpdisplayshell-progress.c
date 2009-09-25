@@ -27,16 +27,7 @@
 
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-progress.h"
-#include "gimpdisplayshell-title.h"
 #include "gimpstatusbar.h"
-
-
-/*  Progress is shown in the status-bar. If the image window is iconified,
- *  the progress messages are also shown in the window title so that they
- *  appear in the task bar.
- */
-
-static gboolean gimp_display_shell_is_iconified (GimpDisplayShell *shell);
 
 
 static GimpProgress *
@@ -50,11 +41,6 @@ gimp_display_shell_progress_start (GimpProgress *progress,
   progress = gimp_progress_start (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar),
                                   message, cancelable);
 
-  if (progress && gimp_display_shell_is_iconified (shell))
-    {
-      gtk_window_set_title (GTK_WINDOW (shell), message);
-    }
-
   return progress;
 }
 
@@ -65,9 +51,6 @@ gimp_display_shell_progress_end (GimpProgress *progress)
 
   /* FIXME image window */
   gimp_progress_end (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
-
-  if (gimp_display_shell_is_iconified (shell))
-    gimp_display_shell_title_update (shell);
 }
 
 static gboolean
@@ -87,13 +70,6 @@ gimp_display_shell_progress_set_text (GimpProgress *progress,
 
   /* FIXME image window */
   gimp_progress_set_text (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), message);
-
-  /* FIXME image window */
-  if (gimp_progress_is_active (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar)) &&
-      gimp_display_shell_is_iconified (shell))
-    {
-      gtk_window_set_title (GTK_WINDOW (shell), message);
-    }
 }
 
 static void
@@ -170,18 +146,6 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
   return FALSE;
 }
 
-static gboolean
-gimp_display_shell_is_iconified (GimpDisplayShell *shell)
-{
-  GtkWidget *widget   = GTK_WIDGET (shell);
-  GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
-
-  return (GTK_WIDGET_DRAWABLE (widget) &&
-          gdk_window_get_state (gtk_widget_get_window (toplevel)) ==
-          GDK_WINDOW_STATE_ICONIFIED);
-}
-
-
 void
 gimp_display_shell_progress_iface_init (GimpProgressInterface *iface)
 {
@@ -194,25 +158,4 @@ gimp_display_shell_progress_iface_init (GimpProgressInterface *iface)
   iface->pulse      = gimp_display_shell_progress_pulse;
   iface->get_window = gimp_display_shell_progress_get_window;
   iface->message    = gimp_display_shell_progress_message;
-}
-
-void
-gimp_display_shell_progress_window_state_changed (GimpDisplayShell *shell)
-{
-  if (! gimp_progress_is_active (GIMP_PROGRESS (shell)))
-    return;
-
-  if (gimp_display_shell_is_iconified (shell))
-    {
-      /* FIXME image window */
-      const gchar *msg = gimp_statusbar_peek (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar),
-                                              "progress");
-      if (msg)
-        {
-          gtk_window_set_title (GTK_WINDOW (shell), msg);
-          return;
-        }
-    }
-
-  gimp_display_shell_title_update (shell);
 }

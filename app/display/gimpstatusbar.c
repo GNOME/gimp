@@ -376,6 +376,8 @@ gimp_statusbar_progress_start (GimpProgress *progress,
       if (GTK_WIDGET_DRAWABLE (bar))
         gdk_window_process_updates (gtk_widget_get_window (bar), TRUE);
 
+      gimp_statusbar_override_window_title (statusbar);
+
       return progress;
     }
 
@@ -408,6 +410,8 @@ gimp_statusbar_progress_end (GimpProgress *progress)
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
       gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
       gtk_widget_hide (statusbar->cancel_button);
+
+      gimp_statusbar_restore_window_title (statusbar);
     }
 }
 
@@ -433,6 +437,8 @@ gimp_statusbar_progress_set_text (GimpProgress *progress,
 
       if (GTK_WIDGET_DRAWABLE (bar))
         gdk_window_process_updates (gtk_widget_get_window (bar), TRUE);
+
+      gimp_statusbar_override_window_title (statusbar);
     }
 }
 
@@ -728,6 +734,40 @@ gimp_statusbar_fill (GimpStatusbar *statusbar)
   gtk_widget_show (statusbar->cursor_label);
   gtk_widget_show (statusbar->unit_combo);
   gtk_widget_show (statusbar->scale_combo);
+}
+
+void
+gimp_statusbar_override_window_title (GimpStatusbar *statusbar)
+{
+  GtkWidget *toplevel;
+
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (statusbar));
+
+  if (gimp_image_window_is_iconified (GIMP_IMAGE_WINDOW (toplevel)))
+    {
+      const gchar *message = gimp_statusbar_peek (statusbar, "progress");
+
+      if (message)
+        gtk_window_set_title (GTK_WINDOW (toplevel), message);
+    }
+}
+
+void
+gimp_statusbar_restore_window_title (GimpStatusbar *statusbar)
+{
+  GtkWidget *toplevel;
+
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (statusbar));
+
+  if (gimp_image_window_is_iconified (GIMP_IMAGE_WINDOW (toplevel)))
+    {
+      /* FIXME title later */
+      g_object_notify (G_OBJECT (statusbar->shell), "gimp-title");
+    }
 }
 
 void
