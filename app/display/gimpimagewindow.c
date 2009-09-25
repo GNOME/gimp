@@ -34,6 +34,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-close.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
@@ -66,6 +67,8 @@ static void      gimp_image_window_get_property (GObject             *object,
 
 static void      gimp_image_window_destroy      (GtkObject           *object);
 
+static gboolean  gimp_image_window_delete_event (GtkWidget           *widget,
+                                                 GdkEventAny         *event);
 static gboolean  gimp_image_window_window_state (GtkWidget           *widget,
                                                  GdkEventWindowState *event);
 static void      gimp_image_window_style_set    (GtkWidget           *widget,
@@ -120,6 +123,7 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
 
   gtk_object_class->destroy        = gimp_image_window_destroy;
 
+  widget_class->delete_event       = gimp_image_window_delete_event;
   widget_class->window_state_event = gimp_image_window_window_state;
   widget_class->style_set          = gimp_image_window_style_set;
 
@@ -280,6 +284,19 @@ gimp_image_window_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static gboolean
+gimp_image_window_delete_event (GtkWidget   *widget,
+                                GdkEventAny *event)
+{
+  GimpImageWindow *window  = GIMP_IMAGE_WINDOW (widget);
+  GimpDisplay     *display = gimp_image_window_get_active_display (window);
+
+  /* FIXME multiple shells */
+  gimp_display_shell_close (GIMP_DISPLAY_SHELL (display->shell), FALSE);
+
+  return TRUE;
 }
 
 static gboolean
