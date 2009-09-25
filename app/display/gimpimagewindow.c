@@ -548,6 +548,8 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
                     G_CALLBACK (gimp_image_window_shell_icon_notify),
                     window);
 
+  gimp_display_shell_appearance_update (active_shell);
+
   if (! display->image)
     {
       gimp_statusbar_empty (GIMP_STATUSBAR (window->statusbar));
