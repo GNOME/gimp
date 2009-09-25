@@ -121,8 +121,6 @@ static void      gimp_display_shell_destroy        (GtkObject        *object);
 static void      gimp_display_shell_unrealize      (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
-static gboolean  gimp_display_shell_configure_event(GtkWidget        *widget,
-                                                    GdkEventConfigure*cevent);
 static gboolean
              gimp_display_shell_window_state_event (GtkWidget        *widget,
                                                     GdkEventWindowState *event);
@@ -204,7 +202,6 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 
   widget_class->unrealize          = gimp_display_shell_unrealize;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
-  widget_class->configure_event    = gimp_display_shell_configure_event;
   widget_class->window_state_event = gimp_display_shell_window_state_event;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
 
@@ -657,36 +654,6 @@ gimp_display_shell_screen_changed (GtkWidget *widget,
       shell->monitor_xres = shell->display->config->monitor_xres;
       shell->monitor_yres = shell->display->config->monitor_yres;
     }
-}
-
-static gboolean
-gimp_display_shell_configure_event (GtkWidget         *widget,
-                                    GdkEventConfigure *cevent)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
-  gint              current_width;
-  gint              current_height;
-
-  /* Grab the size before we run the parent implementation */
-  current_width  = widget->allocation.width;
-  current_height = widget->allocation.height;
-
-  /* Run the parent implementation */
-  if (GTK_WIDGET_CLASS (parent_class)->configure_event)
-    GTK_WIDGET_CLASS (parent_class)->configure_event (widget, cevent);
-
-  /* If the window size has changed, make sure additoinal logic is run
-   * on size-allocate
-   */
-  if (shell->display        &&
-      shell->display->image &&
-      (cevent->width  != current_width ||
-       cevent->height != current_height))
-    {
-      shell->size_allocate_from_configure_event = TRUE;
-    }
-
-  return TRUE;
 }
 
 static gboolean
@@ -1355,6 +1322,7 @@ gimp_display_shell_fill_idle (GimpDisplayShell *shell)
 
   gimp_display_shell_scale_shrink_wrap (shell, TRUE);
 
+  /* FIXME image window */
   gtk_window_present (GTK_WINDOW (shell));
 
   return FALSE;
