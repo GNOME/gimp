@@ -277,9 +277,6 @@ void        gimp_display_shell_flush               (GimpDisplayShell   *shell,
 void        gimp_display_shell_pause               (GimpDisplayShell   *shell);
 void        gimp_display_shell_resume              (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_shrink_wrap         (GimpDisplayShell   *shell,
-                                                    gboolean            grow_only);
-
 void        gimp_display_shell_set_highlight       (GimpDisplayShell   *shell,
                                                     const GdkRectangle *highlight);
 void        gimp_display_shell_set_mask            (GimpDisplayShell   *shell,

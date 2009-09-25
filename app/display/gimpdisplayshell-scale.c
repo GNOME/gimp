@@ -366,13 +366,22 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
     {
       if (shell->display->config->resize_windows_on_zoom)
         {
+          GtkWidget       *toplevel;
+          GimpImageWindow *window;
+
+          toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+          window   = GIMP_IMAGE_WINDOW (toplevel);
+
           /* If the window is resized on zoom, simply do the zoom and
            * get things rolling
            */
           gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, real_new_scale);
           gimp_display_shell_scaled (shell);
 
-          gimp_display_shell_shrink_wrap (shell, FALSE);
+          if (gimp_image_window_get_active_display (window) == shell->display)
+            {
+              gimp_image_window_shrink_wrap (window, FALSE);
+            }
         }
       else
         {
@@ -657,7 +666,15 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp_display_shell_pause (shell);
 
   if (resize_window)
-    gimp_display_shell_shrink_wrap (shell, grow_only);
+    {
+      GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+      GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+
+      if (gimp_image_window_get_active_display (window) == shell->display)
+        {
+          gimp_image_window_shrink_wrap (window, grow_only);
+        }
+    }
 
   gimp_display_shell_scroll_clamp_and_update (shell);
   gimp_display_shell_scaled (shell);

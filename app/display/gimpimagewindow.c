@@ -20,9 +20,12 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
+
+#include "core/gimpimage.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
@@ -37,6 +40,7 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
 #include "gimpdisplayshell-progress.h"
+#include "gimpdisplayshell-scroll.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
@@ -543,6 +547,124 @@ gimp_image_window_get_fullscreen (GimpImageWindow *window)
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
 
   return (window->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
+}
+
+void
+gimp_image_window_shrink_wrap (GimpImageWindow *window,
+                               gboolean         grow_only)
+{
+  GimpDisplay      *active_display;
+  GimpDisplayShell *active_shell;
+  GtkWidget        *widget;
+  GdkScreen        *screen;
+  GdkRectangle      rect;
+  gint              monitor;
+  gint              disp_width, disp_height;
+  gint              width, height;
+  gint              max_auto_width, max_auto_height;
+  gint              border_width, border_height;
+  gboolean          resize = FALSE;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  if (! GTK_WIDGET_REALIZED (window))
+    return;
+
+  /* FIXME this so needs cleanup and shell/window separation */
+
+  active_display = gimp_image_window_get_active_display (window);
+  active_shell   = GIMP_DISPLAY_SHELL (active_display->shell);
+
+  widget = GTK_WIDGET (window);
+  screen = gtk_widget_get_screen (widget);
+
+  monitor = gdk_screen_get_monitor_at_window (screen,
+                                              gtk_widget_get_window (widget));
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+  width  = SCALEX (active_shell, gimp_image_get_width  (active_display->image));
+  height = SCALEY (active_shell, gimp_image_get_height (active_display->image));
+
+  disp_width  = active_shell->disp_width;
+  disp_height = active_shell->disp_height;
+
+
+  /* As long as the disp_width/disp_height is larger than 1 we
+   * can reliably depend on it to calculate the
+   * border_width/border_height because that means there is enough
+   * room in the top-level for the canvas as well as the rulers and
+   * scrollbars. If it is 1 or smaller it is likely that the rulers
+   * and scrollbars are overlapping each other and thus we cannot use
+   * the normal approach to border size, so special case that.
+   */
+  if (disp_width > 1 || !active_shell->vsb)
+    border_width = widget->allocation.width - disp_width;
+  else
+    border_width = widget->allocation.width - disp_width + active_shell->vsb->allocation.width;
+
+  if (disp_height > 1 || !active_shell->hsb)
+    border_height = widget->allocation.height - disp_height;
+  else
+    border_height = widget->allocation.height - disp_height + active_shell->hsb->allocation.height;
+
+
+  max_auto_width  = (rect.width  - border_width)  * 0.75;
+  max_auto_height = (rect.height - border_height) * 0.75;
+
+  /* If one of the display dimensions has changed and one of the
+   * dimensions fits inside the screen
+   */
+  if (((width  + border_width)  < rect.width ||
+       (height + border_height) < rect.height) &&
+      (width  != disp_width ||
+       height != disp_height))
+    {
+      width  = ((width  + border_width)  < rect.width)  ? width  : max_auto_width;
+      height = ((height + border_height) < rect.height) ? height : max_auto_height;
+
+      resize = TRUE;
+    }
+
+  /*  If the projected dimension is greater than current, but less than
+   *  3/4 of the screen size, expand automagically
+   */
+  else if ((width  > disp_width ||
+            height > disp_height) &&
+           (disp_width  < max_auto_width ||
+            disp_height < max_auto_height))
+    {
+      width  = MIN (max_auto_width,  width);
+      height = MIN (max_auto_height, height);
+
+      resize = TRUE;
+    }
+
+  if (resize)
+    {
+      if (width < window->statusbar->requisition.width)
+        width = window->statusbar->requisition.width;
+
+      width  = width  + border_width;
+      height = height + border_height;
+
+      if (grow_only)
+        {
+          if (width < widget->allocation.width)
+            width = widget->allocation.width;
+
+          if (height < widget->allocation.height)
+            height = widget->allocation.height;
+        }
+
+      gtk_window_resize (GTK_WINDOW (window), width, height);
+    }
+
+  /* A wrap always means that we should center the image too. If the
+   * window changes size another center will be done in
+   * GimpDisplayShell::configure_event().
+   */
+  /* FIXME multiple shells */
+  gimp_display_shell_scroll_center_image (active_shell, TRUE, TRUE);
 }
 
 

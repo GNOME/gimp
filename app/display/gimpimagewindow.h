@@ -64,5 +64,8 @@ void          gimp_image_window_set_fullscreen     (GimpImageWindow *window,
                                                     gboolean         fullscreen);
 gboolean      gimp_image_window_get_fullscreen     (GimpImageWindow *window);
 
+void          gimp_image_window_shrink_wrap        (GimpImageWindow *window,
+                                                    gboolean         grow_only);
+
 
 #endif /* __GIMP_IMAGE_WINDOW_H__ */
