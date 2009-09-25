@@ -83,6 +83,7 @@
 enum
 {
   PROP_0,
+  PROP_POPUP_MANAGER,
   PROP_DISPLAY,
   PROP_UNIT,
   PROP_TITLE,
@@ -210,6 +211,13 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   klass->scaled                    = gimp_display_shell_real_scaled;
   klass->scrolled                  = NULL;
   klass->reconnect                 = NULL;
+
+  g_object_class_install_property (object_class, PROP_POPUP_MANAGER,
+                                   g_param_spec_object ("popup-manager",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_UI_MANAGER,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DISPLAY,
                                    g_param_spec_object ("display", NULL, NULL,
@@ -444,6 +452,9 @@ gimp_display_shell_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_POPUP_MANAGER:
+      shell->popup_manager = g_value_get_object (value);
+      break;
     case PROP_DISPLAY:
       shell->display = g_value_get_object (value);
       break;
@@ -480,6 +491,9 @@ gimp_display_shell_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_POPUP_MANAGER:
+      g_value_set_object (value, shell->popup_manager);
+      break;
     case PROP_DISPLAY:
       g_value_set_object (value, shell->display);
       break;
@@ -848,6 +862,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
                         "menu-factory",    menu_factory,
                         "display-factory", display_factory,
+                        "popup-manager",   popup_manager,
                         "display",         display,
                         "unit",            unit,
                         /* The window position will be overridden by the
@@ -857,8 +872,6 @@ gimp_display_shell_new (GimpDisplay       *display,
                         display->image ? NULL : "window-position",
                         GTK_WIN_POS_CENTER,
                         NULL);
-
-  shell->popup_manager = popup_manager;
 
   if (display->image)
     {
