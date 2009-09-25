@@ -36,6 +36,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
 

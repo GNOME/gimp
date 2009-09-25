@@ -31,6 +31,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
 #include "gimpdisplayshell.h"
+#include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
 #include "gimp-intl.h"

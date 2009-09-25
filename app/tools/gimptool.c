@@ -32,6 +32,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-cursor.h"
+#include "display/gimpimagewindow.h"
 #include "display/gimpstatusbar.h"
 
 #include "gimptool.h"

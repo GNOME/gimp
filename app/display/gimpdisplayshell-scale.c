@@ -38,6 +38,7 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 
 
 #define SCALE_TIMEOUT             2

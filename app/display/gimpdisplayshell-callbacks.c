@@ -72,6 +72,7 @@
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 #include "gimpnavigationeditor.h"
 
 #include "gimp-log.h"

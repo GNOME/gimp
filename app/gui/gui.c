@@ -43,6 +43,7 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-render.h"
+#include "display/gimpimagewindow.h"
 #include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"

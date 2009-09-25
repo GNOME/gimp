@@ -43,6 +43,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-close.h"
+#include "gimpimagewindow.h"
 
 #include "gimp-intl.h"
 

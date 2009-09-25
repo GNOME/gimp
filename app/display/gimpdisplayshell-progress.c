@@ -27,6 +27,7 @@
 
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-progress.h"
+#include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
 

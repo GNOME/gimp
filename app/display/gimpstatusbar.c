@@ -40,6 +40,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-scale.h"
+#include "gimpimagewindow.h"
 #include "gimpscalecombobox.h"
 #include "gimpstatusbar.h"
 
