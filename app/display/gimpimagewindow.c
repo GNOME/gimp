@@ -374,8 +374,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
     {
-      gboolean iconified = (event->new_window_state &
-                            GDK_WINDOW_STATE_ICONIFIED) != 0;
+      gboolean iconified = gimp_image_window_is_iconified (window);
 
       GIMP_LOG (WM, "Image window '%s' [%p] set %s",
                 gtk_window_get_title (GTK_WINDOW (widget)),
@@ -567,6 +566,14 @@ gimp_image_window_get_fullscreen (GimpImageWindow *window)
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
 
   return (window->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
+}
+
+gboolean
+gimp_image_window_is_iconified (GimpImageWindow *window)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  return (window->window_state & GDK_WINDOW_STATE_ICONIFIED) != 0;
 }
 
 void
