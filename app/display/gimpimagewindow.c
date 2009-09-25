@@ -396,8 +396,6 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-#if 0
-  /* FIXME enable this when the display is a separate widget */
   if (display == window->active_display)
     return;
 
@@ -424,7 +422,6 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
     }
 
   window->active_display = display;
-#endif
 
   g_signal_connect (window->active_display, "notify::image",
                     G_CALLBACK (gimp_image_window_image_notify),
