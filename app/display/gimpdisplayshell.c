@@ -769,7 +769,6 @@ gimp_display_shell_new (GimpDisplay       *display,
                         GimpDialogFactory *display_factory)
 {
   GimpDisplayShell      *shell;
-  GimpDisplayOptions    *options;
   GimpColorDisplayStack *filter;
   GtkWidget             *upper_hbox;
   GtkWidget             *right_vbox;
@@ -805,17 +804,12 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   if (display->image)
     {
-      options = shell->options;
-
       image_width  = gimp_image_get_width  (display->image);
       image_height = gimp_image_get_height (display->image);
     }
   else
     {
-      options = shell->no_image_options;
-
-      /*
-       * These values are arbitrary. The width is determined by the
+      /* These values are arbitrary. The width is determined by the
        * menubar and the height is chosen to give a window aspect
        * ratio of roughly 3:1 (as requested by the UI team).
        */
@@ -886,17 +880,6 @@ gimp_display_shell_new (GimpDisplay       *display,
   /*  first, set up the container hierarchy  *********************************/
 
   /*  the vbox containing all widgets  */
-
-  /* FIXME image window */
-  if (GIMP_IMAGE_WINDOW (shell)->menubar)
-    {
-      GtkWidget *menubar = GIMP_IMAGE_WINDOW (shell)->menubar;
-
-      if (options->show_menubar)
-        gtk_widget_show (menubar);
-      else
-        gtk_widget_hide (menubar);
-    }
 
   /*  FIXME this will be the shell  */
   shell->disp_vbox = gtk_vbox_new (FALSE, 1);
@@ -1139,29 +1122,9 @@ gimp_display_shell_new (GimpDisplay       *display,
   gtk_box_pack_start (GTK_BOX (lower_hbox),
                       shell->nav_ebox, FALSE, FALSE, 0);
 
-  /*  show everything  *******************************************************/
-
-  if (options->show_rulers)
-    {
-      gtk_widget_show (shell->origin);
-      gtk_widget_show (shell->hrule);
-      gtk_widget_show (shell->vrule);
-    }
+  /*  show everything that is always shwon***********************************/
 
   gtk_widget_show (GTK_WIDGET (shell->canvas));
-
-  if (options->show_scrollbars)
-    {
-      gtk_widget_show (shell->vsb);
-      gtk_widget_show (shell->hsb);
-      gtk_widget_show (shell->zoom_button);
-      gtk_widget_show (shell->quick_mask_button);
-      gtk_widget_show (shell->nav_ebox);
-    }
-
-  if (options->show_statusbar)
-    /* FIXME image window */
-    gtk_widget_show (GIMP_IMAGE_WINDOW (shell)->statusbar);
 
   /*  add display filter for color management  */
 
