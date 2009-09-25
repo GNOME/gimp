@@ -1652,16 +1652,21 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
     }
   else
     {
-      GimpContext *user_context;
+      GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+      GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+      GimpContext     *context;
 
-      /* FIXME image window */
-      gimp_ui_manager_update (GIMP_IMAGE_WINDOW (shell)->menubar_manager,
-                              shell->display);
+      if (gimp_image_window_get_active_display (window) == shell->display)
+        {
+          gimp_ui_manager_update (window->menubar_manager, shell->display);
+        }
 
-      user_context = gimp_get_user_context (shell->display->gimp);
+      context = gimp_get_user_context (shell->display->gimp);
 
-      if (shell->display == gimp_context_get_display (user_context))
-        gimp_ui_manager_update (shell->popup_manager, shell->display);
+      if (shell->display == gimp_context_get_display (context))
+        {
+          gimp_ui_manager_update (shell->popup_manager, shell->display);
+        }
     }
 }
 
