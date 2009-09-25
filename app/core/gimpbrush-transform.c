@@ -60,9 +60,11 @@ gimp_brush_real_transform_size (GimpBrush *brush,
   gint        x, y;
 
   if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (brush, scale * aspect_ratio, scale, angle, &matrix);
+    gimp_brush_transform_matrix (brush,
+                                 scale * aspect_ratio, scale, angle, &matrix);
   else
-    gimp_brush_transform_matrix (brush, scale, scale / aspect_ratio, angle, &matrix);
+    gimp_brush_transform_matrix (brush,
+                                 scale, scale / aspect_ratio, angle, &matrix);
 
   gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
 }
@@ -89,6 +91,9 @@ gimp_brush_real_transform_size (GimpBrush *brush,
  * than the input brush size.
  *
  * There are no floating point calculations in the inner loop for speed.
+ *
+ * Some variables end with the suffix _i to indicate they have been
+ * premultiplied by int_multiple
  */
 TempBuf *
 gimp_brush_real_transform_mask (GimpBrush *brush,
@@ -102,6 +107,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   GimpMatrix3   matrix;
   gint          src_width;
   gint          src_height;
+  gint          src_width_minus_one;
+  gint          src_height_minus_one;
   gint          dest_width;
   gint          dest_height;
   gint          x, y;
@@ -111,24 +118,23 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gdouble       src_tl_to_tr_delta_y;
   gdouble       src_tl_to_bl_delta_x;
   gdouble       src_tl_to_bl_delta_y;
-  gint          src_walk_ux;
-  gint          src_walk_uy;
-  gint          src_walk_vx;
-  gint          src_walk_vy;
+  gint          src_walk_ux_i;
+  gint          src_walk_uy_i;
+  gint          src_walk_vx_i;
+  gint          src_walk_vy_i;
   gint          src_space_cur_pos_x;
   gint          src_space_cur_pos_y;
-  gint          src_space_row_start_x;
-  gint          src_space_row_start_y;
+  gint          src_space_cur_pos_x_i;
+  gint          src_space_cur_pos_y_i;
+  gint          src_space_row_start_x_i;
+  gint          src_space_row_start_y_i;
   const guchar *src_walker;
   const guchar *pixel_next;
   const guchar *pixel_below;
   const guchar *pixel_below_next;
   gint          opposite_x, distance_from_true_x;
   gint          opposite_y, distance_from_true_y;
-  gint          src_height_times_int_multiple;
-  gint          src_width_times_int_multiple;
-  gint          src_heightm1_times_int_multiple;
-  gint          src_widthm1_times_int_multiple;
+
 
   /*
    * tl, tr etc are used because it is easier to visualize top left,
@@ -136,7 +142,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
    * rectangle.
    */
   const gint fraction_bits = 12;
-  const gint int_multiple  = pow(2,fraction_bits);
+  const gint int_multiple  = pow (2, fraction_bits);
 
   /* In inner loop's bilinear calculation, two numbers that were each
    * previously multiplied by int_multiple are multiplied together.
@@ -162,15 +168,19 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
 
    if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (brush, scale * aspect_ratio, scale, angle, &matrix);
+    gimp_brush_transform_matrix (brush,
+                                 scale * aspect_ratio, scale, angle, &matrix);
   else
-    gimp_brush_transform_matrix (brush, scale, scale / aspect_ratio, angle, &matrix);
+    gimp_brush_transform_matrix (brush,
+                                 scale, scale / aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return temp_buf_copy (brush->mask, NULL);
 
   src_width  = brush->mask->width;
   src_height = brush->mask->height;
+  src_width_minus_one  = src_width  - 1;
+  src_height_minus_one = src_height - 1;
 
   gimp_brush_transform_bounding_box (brush, &matrix,
                                      &x, &y, &dest_width, &dest_height);
@@ -210,34 +220,29 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   src_tl_to_bl_delta_y = bly - tly;
 
   /* speed optimized, note conversion to int precision */
-  src_walk_ux = (gint) ((src_tl_to_tr_delta_x / dest_width)* int_multiple);
-  src_walk_uy = (gint) ((src_tl_to_tr_delta_y / dest_width)* int_multiple);
-  src_walk_vx = (gint) ((src_tl_to_bl_delta_x / dest_height)* int_multiple);
-  src_walk_vy = (gint) ((src_tl_to_bl_delta_y / dest_height)* int_multiple);
+  src_walk_ux_i = (gint) ((src_tl_to_tr_delta_x / dest_width)* int_multiple);
+  src_walk_uy_i = (gint) ((src_tl_to_tr_delta_y / dest_width)* int_multiple);
+  src_walk_vx_i = (gint) ((src_tl_to_bl_delta_x / dest_height)* int_multiple);
+  src_walk_vy_i = (gint) ((src_tl_to_bl_delta_y / dest_height)* int_multiple);
 
   /* initialize current position in source space to the start position (tl)
    * speed optimized, note conversion to int precision
    */
-  src_space_cur_pos_x    = (gint) (tlx* int_multiple);
-  src_space_cur_pos_y    = (gint) (tly* int_multiple);
-  src_space_row_start_x  = (gint) (tlx* int_multiple);
-  src_space_row_start_y  = (gint) (tly* int_multiple);
+  src_space_cur_pos_x_i   = (gint) (tlx* int_multiple);
+  src_space_cur_pos_y_i   = (gint) (tly* int_multiple);
+  src_space_cur_pos_x     = (gint) (src_space_cur_pos_x_i >> fraction_bits);
+  src_space_cur_pos_y     = (gint) (src_space_cur_pos_y_i >> fraction_bits);
+  src_space_row_start_x_i = (gint) (tlx* int_multiple);
+  src_space_row_start_y_i = (gint) (tly* int_multiple);
 
-  src_walker = src;
-
-  src_height_times_int_multiple = src_height << fraction_bits; /* mult by int_multiple */
-  src_width_times_int_multiple  = src_width  << fraction_bits; /* mult by int_multiple */
-
-  src_heightm1_times_int_multiple = src_height_times_int_multiple - int_multiple;
-  src_widthm1_times_int_multiple  = src_width_times_int_multiple - int_multiple;
 
   for (y = 0; y < dest_height; y++)
     {
       for (x = 0; x < dest_width; x++)
         {
-          if (src_space_cur_pos_x > src_width_times_int_multiple  ||
+          if (src_space_cur_pos_x > src_width_minus_one ||
               src_space_cur_pos_x < 0     ||
-              src_space_cur_pos_y > src_height_times_int_multiple ||
+              src_space_cur_pos_y > src_height_minus_one ||
               src_space_cur_pos_y < 0)
               /* no corresponding pixel in source space */
             {
@@ -246,15 +251,15 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
           else /* reverse transformed point hits source pixel */
             {
               src_walker = src
-                        + (src_space_cur_pos_y>>fraction_bits) * src_width
-                        + (src_space_cur_pos_x>>fraction_bits);
+                        + src_space_cur_pos_y * src_width
+                        + src_space_cur_pos_x;
 
               /* bottom right corner
                * no pixel below, reuse current pixel instead
                * no next pixel to the right so reuse current pixel instead
                */
-              if (src_space_cur_pos_y > (src_heightm1_times_int_multiple) &&
-                  src_space_cur_pos_x > (src_widthm1_times_int_multiple) )
+              if (src_space_cur_pos_y == src_height_minus_one &&
+                  src_space_cur_pos_x == src_width_minus_one )
                 {
                   pixel_next       = src_walker;
                   pixel_below      = src_walker;
@@ -263,7 +268,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
               /* bottom edge pixel row, except rightmost corner
                * no pixel below, reuse current pixel instead  */
-              else if (src_space_cur_pos_y > (src_heightm1_times_int_multiple))
+              else if (src_space_cur_pos_y == src_height_minus_one)
                 {
                   pixel_next       = src_walker + 1;
                   pixel_below      = src_walker;
@@ -272,7 +277,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
               /* right edge pixel column, except bottom corner
                * no next pixel to the right so reuse current pixel instead */
-              else if (src_space_cur_pos_x > (src_widthm1_times_int_multiple))
+              else if (src_space_cur_pos_x == src_width_minus_one)
                 {
                   pixel_next       = src_walker;
                   pixel_below      = src_walker + src_width;
@@ -287,25 +292,34 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
                   pixel_below_next = pixel_below + 1;
                 }
 
-              distance_from_true_x = src_space_cur_pos_x & fraction_bitmask;
-              distance_from_true_y = src_space_cur_pos_y & fraction_bitmask;
+              distance_from_true_x = src_space_cur_pos_x_i & fraction_bitmask;
+              distance_from_true_y = src_space_cur_pos_y_i & fraction_bitmask;
               opposite_x =  int_multiple - distance_from_true_x;
               opposite_y =  int_multiple - distance_from_true_y;
 
-              *dest = ((src_walker[0] * opposite_x + pixel_next[0] * distance_from_true_x) * opposite_y +
-                       (pixel_below[0] * opposite_x + pixel_below_next[0] *distance_from_true_x) * distance_from_true_y
+              *dest = ((src_walker[0] * opposite_x +
+                        pixel_next[0] * distance_from_true_x) * opposite_y +
+                       (pixel_below[0] * opposite_x +
+                        pixel_below_next[0] *distance_from_true_x) * distance_from_true_y
                        ) >> recovery_bits;
             }
 
-          src_space_cur_pos_x+=src_walk_ux;
-          src_space_cur_pos_y+=src_walk_uy;
+          src_space_cur_pos_x_i+=src_walk_ux_i;
+          src_space_cur_pos_y_i+=src_walk_uy_i;
+
+          src_space_cur_pos_x = src_space_cur_pos_x_i >> fraction_bits;
+          src_space_cur_pos_y = src_space_cur_pos_y_i >> fraction_bits;
+
           dest ++;
         } /* end for x */
 
-        src_space_row_start_x +=src_walk_vx;
-        src_space_row_start_y +=src_walk_vy;
-        src_space_cur_pos_x = src_space_row_start_x;
-        src_space_cur_pos_y = src_space_row_start_y;
+        src_space_row_start_x_i +=src_walk_vx_i;
+        src_space_row_start_y_i +=src_walk_vy_i;
+        src_space_cur_pos_x_i = src_space_row_start_x_i;
+        src_space_cur_pos_y_i = src_space_row_start_y_i;
+
+        src_space_cur_pos_x = src_space_cur_pos_x_i >> fraction_bits;
+        src_space_cur_pos_y = src_space_cur_pos_y_i >> fraction_bits;
 
     } /* end for y */
 
@@ -339,6 +353,9 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
  * than the input brush size.
  *
  * There are no floating point calculations in the inner loop for speed.
+ *
+ * Some variables end with the suffix _i to indicate they have been
+ * premultiplied by int_multiple
  */
 TempBuf *
 gimp_brush_real_transform_pixmap (GimpBrush *brush,
@@ -352,6 +369,8 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   GimpMatrix3   matrix;
   gint          src_width;
   gint          src_height;
+  gint          src_width_minus_one;
+  gint          src_height_minus_one;
   gint          dest_width;
   gint          dest_height;
   gint          x, y;
@@ -361,24 +380,23 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gdouble       src_tl_to_tr_delta_y;
   gdouble       src_tl_to_bl_delta_x;
   gdouble       src_tl_to_bl_delta_y;
-  gint          src_walk_ux;
-  gint          src_walk_uy;
-  gint          src_walk_vx;
-  gint          src_walk_vy;
+  gint          src_walk_ux_i;
+  gint          src_walk_uy_i;
+  gint          src_walk_vx_i;
+  gint          src_walk_vy_i;
   gint          src_space_cur_pos_x;
   gint          src_space_cur_pos_y;
-  gint          src_space_row_start_x;
-  gint          src_space_row_start_y;
+  gint          src_space_cur_pos_x_i;
+  gint          src_space_cur_pos_y_i;
+  gint          src_space_row_start_x_i;
+  gint          src_space_row_start_y_i;
   const guchar *src_walker;
   const guchar *pixel_next;
   const guchar *pixel_below;
   const guchar *pixel_below_next;
   gint          opposite_x, distance_from_true_x;
   gint          opposite_y, distance_from_true_y;
-  gint          src_height_times_int_multiple;
-  gint          src_width_times_int_multiple;
-  gint          src_heightm1_times_int_multiple;
-  gint          src_widthm1_times_int_multiple;
+
 
   /*
    * tl, tr etc are used because it is easier to visualize top left,
@@ -412,15 +430,19 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
 
   if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (brush, scale * aspect_ratio, scale, angle, &matrix);
+    gimp_brush_transform_matrix (brush,
+                                 scale * aspect_ratio, scale, angle, &matrix);
   else
-    gimp_brush_transform_matrix (brush, scale, scale / aspect_ratio, angle, &matrix);
+    gimp_brush_transform_matrix (brush,
+                                 scale, scale / aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return temp_buf_copy (brush->pixmap, NULL);
 
   src_width  = brush->pixmap->width;
   src_height = brush->pixmap->height;
+  src_width_minus_one  = src_width  - 1;
+  src_height_minus_one = src_height - 1;
 
   gimp_brush_transform_bounding_box (brush, &matrix,
                                      &x, &y, &dest_width, &dest_height);
@@ -451,34 +473,29 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   src_tl_to_bl_delta_y = bly - tly;
 
   /* speed optimized, note conversion to int precision */
-  src_walk_ux = (gint) ((src_tl_to_tr_delta_x / dest_width)* int_multiple);
-  src_walk_uy = (gint) ((src_tl_to_tr_delta_y / dest_width)* int_multiple);
-  src_walk_vx = (gint) ((src_tl_to_bl_delta_x / dest_height)* int_multiple);
-  src_walk_vy = (gint) ((src_tl_to_bl_delta_y / dest_height)* int_multiple);
+  src_walk_ux_i = (gint) ((src_tl_to_tr_delta_x / dest_width)* int_multiple);
+  src_walk_uy_i = (gint) ((src_tl_to_tr_delta_y / dest_width)* int_multiple);
+  src_walk_vx_i = (gint) ((src_tl_to_bl_delta_x / dest_height)* int_multiple);
+  src_walk_vy_i = (gint) ((src_tl_to_bl_delta_y / dest_height)* int_multiple);
 
   /* initialize current position in source space to the start position (tl)
    * speed optimized, note conversion to int precision
    */
-  src_space_cur_pos_x    = (gint) (tlx* int_multiple);
-  src_space_cur_pos_y    = (gint) (tly* int_multiple);
-  src_space_row_start_x  = (gint) (tlx* int_multiple);
-  src_space_row_start_y  = (gint) (tly* int_multiple);
+  src_space_cur_pos_x_i    = (gint) (tlx* int_multiple);
+  src_space_cur_pos_y_i    = (gint) (tly* int_multiple);
+  src_space_cur_pos_x      = (gint) (src_space_cur_pos_x_i >> fraction_bits);
+  src_space_cur_pos_y      = (gint) (src_space_cur_pos_y_i >> fraction_bits);
+  src_space_row_start_x_i  = (gint) (tlx* int_multiple);
+  src_space_row_start_y_i  = (gint) (tly* int_multiple);
 
-  src_walker = src;
-
-  src_height_times_int_multiple = src_height << fraction_bits; /* mult by int_multiple */
-  src_width_times_int_multiple  = src_width  << fraction_bits; /* mult by int_multiple */
-
-  src_heightm1_times_int_multiple = src_height_times_int_multiple - int_multiple;
-  src_widthm1_times_int_multiple  = src_width_times_int_multiple - int_multiple;
 
   for (y = 0; y < dest_height; y++)
     {
       for (x = 0; x < dest_width; x++)
         {
-          if (src_space_cur_pos_x > src_width_times_int_multiple  ||
+          if (src_space_cur_pos_x > src_width_minus_one  ||
               src_space_cur_pos_x < 0     ||
-              src_space_cur_pos_y > src_height_times_int_multiple ||
+              src_space_cur_pos_y > src_height_minus_one ||
               src_space_cur_pos_y < 0)
               /* no corresponding pixel in source space */
             {
@@ -490,15 +507,15 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
             {
               src_walker = src
                         + 3 * (
-                          (src_space_cur_pos_y >> fraction_bits) * src_width
-                        + (src_space_cur_pos_x >> fraction_bits));
+                          src_space_cur_pos_y * src_width
+                        + src_space_cur_pos_x);
 
               /* bottom right corner
                * no pixel below, reuse current pixel instead
                * no next pixel to the right so reuse current pixel instead
                */
-              if (src_space_cur_pos_y > (src_heightm1_times_int_multiple) &&
-                  src_space_cur_pos_x > (src_widthm1_times_int_multiple) )
+              if (src_space_cur_pos_y == src_height_minus_one &&
+                  src_space_cur_pos_x == src_width_minus_one )
                 {
                   pixel_next  = src_walker;
                   pixel_below = src_walker;
@@ -507,7 +524,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
               /* bottom edge pixel row, except rightmost corner
                * no pixel below, reuse current pixel instead  */
-              else if (src_space_cur_pos_y > (src_heightm1_times_int_multiple))
+              else if (src_space_cur_pos_y == src_height_minus_one)
                 {
                   pixel_next  = src_walker + 3;
                   pixel_below = src_walker;
@@ -516,7 +533,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
               /* right edge pixel column, except bottom corner
                * no next pixel to the right so reuse current pixel instead */
-              else if (src_space_cur_pos_x > (src_widthm1_times_int_multiple))
+              else if (src_space_cur_pos_x == src_width_minus_one)
                 {
                   pixel_next  = src_walker;
                   pixel_below = src_walker + src_width * 3;
@@ -531,35 +548,47 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
                   pixel_below_next = pixel_below + 3;
                 }
 
-              distance_from_true_x = src_space_cur_pos_x & fraction_bitmask;
-              distance_from_true_y = src_space_cur_pos_y & fraction_bitmask;
+              distance_from_true_x = src_space_cur_pos_x_i & fraction_bitmask;
+              distance_from_true_y = src_space_cur_pos_y_i & fraction_bitmask;
               opposite_x =  int_multiple - distance_from_true_x;
               opposite_y =  int_multiple - distance_from_true_y;
 
-              dest[0] = ((src_walker[0] * opposite_x + pixel_next[0] * distance_from_true_x) * opposite_y +
-                         (pixel_below[0] * opposite_x + pixel_below_next[0] *distance_from_true_x) * distance_from_true_y
+              dest[0] = ((src_walker[0] * opposite_x +
+                          pixel_next[0] * distance_from_true_x) * opposite_y +
+                         (pixel_below[0] * opposite_x +
+                          pixel_below_next[0] *distance_from_true_x) * distance_from_true_y
                         ) >> recovery_bits;
 
-              dest[1] = ((src_walker[1] * opposite_x + pixel_next[1] * distance_from_true_x) * opposite_y +
-                         (pixel_below[1] * opposite_x + pixel_below_next[1] *distance_from_true_x) * distance_from_true_y
+              dest[1] = ((src_walker[1] * opposite_x +
+                          pixel_next[1] * distance_from_true_x) * opposite_y +
+                         (pixel_below[1] * opposite_x +
+                          pixel_below_next[1] *distance_from_true_x) * distance_from_true_y
                         ) >> recovery_bits;
 
-              dest[2] = ((src_walker[2] * opposite_x + pixel_next[2] * distance_from_true_x) * opposite_y +
-                         (pixel_below[2] * opposite_x + pixel_below_next[2] *distance_from_true_x) * distance_from_true_y
+              dest[2] = ((src_walker[2] * opposite_x +
+                          pixel_next[2] * distance_from_true_x) * opposite_y +
+                         (pixel_below[2] * opposite_x +
+                          pixel_below_next[2] *distance_from_true_x) * distance_from_true_y
                         ) >> recovery_bits;
             }
 
-          src_space_cur_pos_x += src_walk_ux;
-          src_space_cur_pos_y += src_walk_uy;
+          src_space_cur_pos_x_i += src_walk_ux_i;
+          src_space_cur_pos_y_i += src_walk_uy_i;
+
+          src_space_cur_pos_x = src_space_cur_pos_x_i >> fraction_bits;
+          src_space_cur_pos_y = src_space_cur_pos_y_i >> fraction_bits;
+
           dest += 3;
         } /* end for x */
-        src_space_row_start_x +=src_walk_vx;
-        src_space_row_start_y +=src_walk_vy;
-        src_space_cur_pos_x = src_space_row_start_x;
-        src_space_cur_pos_y = src_space_row_start_y;
 
+        src_space_row_start_x_i +=src_walk_vx_i;
+        src_space_row_start_y_i +=src_walk_vy_i;
+        src_space_cur_pos_x_i = src_space_row_start_x_i;
+        src_space_cur_pos_y_i = src_space_row_start_y_i;
+
+        src_space_cur_pos_x = src_space_cur_pos_x_i >> fraction_bits;
+        src_space_cur_pos_y = src_space_cur_pos_y_i >> fraction_bits;
     } /* end for y */
-
 
   return result;
 }
