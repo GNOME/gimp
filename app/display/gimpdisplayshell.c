@@ -937,33 +937,27 @@ gimp_display_shell_new (GimpDisplay       *display,
    *
    *  Changed the packing to use hboxes and vboxes which behave nicer:
    *
-   *  main_vbox
+   *  disp_vbox
    *     |
-   *     +-- menubar
-   *     |
-   *     +-- disp_vbox
+   *     +-- upper_hbox
    *     |      |
-   *     |      +-- upper_hbox
+   *     |      +-- inner_table
    *     |      |      |
-   *     |      |      +-- inner_table
-   *     |      |      |      |
-   *     |      |      |      +-- origin
-   *     |      |      |      +-- hruler
-   *     |      |      |      +-- vruler
-   *     |      |      |      +-- canvas
-   *     |      |      |
-   *     |      |      +-- right_vbox
-   *     |      |             |
-   *     |      |             +-- zoom_on_resize_button
-   *     |      |             +-- vscrollbar
+   *     |      |      +-- origin
+   *     |      |      +-- hruler
+   *     |      |      +-- vruler
+   *     |      |      +-- canvas
    *     |      |
-   *     |      +-- lower_hbox
+   *     |      +-- right_vbox
    *     |             |
-   *     |             +-- quick_mask
-   *     |             +-- hscrollbar
-   *     |             +-- navbutton
+   *     |             +-- zoom_on_resize_button
+   *     |             +-- vscrollbar
    *     |
-   *     +-- statusbar
+   *     +-- lower_hbox
+   *            |
+   *            +-- quick_mask
+   *            +-- hscrollbar
+   *            +-- navbutton
    */
 
   /*  first, set up the container hierarchy  *********************************/
