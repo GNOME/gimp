@@ -64,6 +64,8 @@ struct _GimpDisplayShell
 
   /* --- cacheline 2 boundary (128 bytes) was 20 bytes ago --- */
 
+  GtkWidget         *disp_vbox; /* FIXME temp hack */
+
   GimpDisplay       *display;
 
   GimpUIManager     *popup_manager;

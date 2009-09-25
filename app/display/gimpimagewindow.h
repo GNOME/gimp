@@ -36,6 +36,7 @@ struct _GimpImageWindow
 {
   GimpWindow         parent_instance;
 
+  GList             *displays;
   GimpDisplay       *active_display;
 
   GimpUIManager     *menubar_manager;
@@ -55,6 +56,9 @@ struct _GimpImageWindowClass
 
 
 GType         gimp_image_window_get_type           (void) G_GNUC_CONST;
+
+void          gimp_image_window_add_display        (GimpImageWindow *window,
+                                                    GimpDisplay     *display);
 
 void          gimp_image_window_set_active_display (GimpImageWindow *window,
                                                     GimpDisplay     *display);

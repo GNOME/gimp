@@ -447,6 +447,26 @@ gimp_image_window_style_set (GtkWidget *widget,
 /*  public functions  */
 
 void
+gimp_image_window_add_display (GimpImageWindow *window,
+                               GimpDisplay     *display)
+{
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (g_list_find (window->displays, display) == NULL);
+
+  /* FIXME multiple shells */
+  g_assert (window->displays == NULL);
+
+  window->displays = g_list_append (window->displays, display);
+
+  /* FIXME multiple shells */
+  gtk_box_pack_start (GTK_BOX (window->main_vbox),
+                      GIMP_DISPLAY_SHELL (display->shell)->disp_vbox,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (GIMP_DISPLAY_SHELL (display->shell)->disp_vbox);
+}
+
+void
 gimp_image_window_set_active_display (GimpImageWindow *window,
                                       GimpDisplay     *display)
 {

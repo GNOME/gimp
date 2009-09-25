@@ -771,7 +771,6 @@ gimp_display_shell_new (GimpDisplay       *display,
   GimpDisplayShell      *shell;
   GimpDisplayOptions    *options;
   GimpColorDisplayStack *filter;
-  GtkWidget             *disp_vbox;
   GtkWidget             *upper_hbox;
   GtkWidget             *right_vbox;
   GtkWidget             *lower_hbox;
@@ -911,14 +910,17 @@ gimp_display_shell_new (GimpDisplay       *display,
     }
 
   /*  another vbox for everything except the statusbar  */
-  disp_vbox = gtk_vbox_new (FALSE, 1);
+  shell->disp_vbox = gtk_vbox_new (FALSE, 1);
+
+#if 0
   gtk_box_pack_start (GTK_BOX (GIMP_IMAGE_WINDOW (shell)->main_vbox),
                       disp_vbox, TRUE, TRUE, 0);
   gtk_widget_show (disp_vbox);
+#endif
 
   /*  a hbox for the inner_table and the vertical scrollbar  */
   upper_hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (disp_vbox), upper_hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (shell->disp_vbox), upper_hbox, TRUE, TRUE, 0);
   gtk_widget_show (upper_hbox);
 
   /*  the table containing origin, rulers and the canvas  */
@@ -936,7 +938,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   /*  the hbox containing the quickmask button, vertical scrollbar and
       the navigation button  */
   lower_hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (disp_vbox), lower_hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (shell->disp_vbox), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
 
   /*  create the scrollbars  *************************************************/

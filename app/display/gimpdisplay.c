@@ -386,6 +386,10 @@ gimp_display_new (Gimp              *gimp,
                                            display_factory);
 
   /* FIXME image window */
+  gimp_image_window_add_display (GIMP_IMAGE_WINDOW (display->shell),
+                                 display);
+
+  /* FIXME image window */
   gimp_image_window_set_active_display (GIMP_IMAGE_WINDOW (display->shell),
                                         display);
 
