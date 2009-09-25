@@ -83,6 +83,7 @@
 enum
 {
   PROP_0,
+  PROP_DISPLAY,
   PROP_UNIT,
   PROP_TITLE,
   PROP_STATUS,
@@ -209,6 +210,12 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   klass->scaled                    = gimp_display_shell_real_scaled;
   klass->scrolled                  = NULL;
   klass->reconnect                 = NULL;
+
+  g_object_class_install_property (object_class, PROP_DISPLAY,
+                                   g_param_spec_object ("display", NULL, NULL,
+                                                        GIMP_TYPE_DISPLAY,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_UNIT,
                                    gimp_param_spec_unit ("unit", NULL, NULL,
@@ -437,6 +444,9 @@ gimp_display_shell_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_DISPLAY:
+      shell->display = g_value_get_object (value);
+      break;
     case PROP_UNIT:
       gimp_display_shell_set_unit (shell, g_value_get_int (value));
       break;
@@ -470,6 +480,9 @@ gimp_display_shell_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_DISPLAY:
+      g_value_set_object (value, shell->display);
+      break;
     case PROP_UNIT:
       g_value_set_int (value, shell->unit);
       break;
@@ -835,6 +848,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
                         "menu-factory",    menu_factory,
                         "display-factory", display_factory,
+                        "display",         display,
                         "unit",            unit,
                         /* The window position will be overridden by the
                          * dialog factory, it is only really used on first
@@ -843,8 +857,6 @@ gimp_display_shell_new (GimpDisplay       *display,
                         display->image ? NULL : "window-position",
                         GTK_WIN_POS_CENTER,
                         NULL);
-
-  shell->display = display;
 
   shell->popup_manager = popup_manager;
 
