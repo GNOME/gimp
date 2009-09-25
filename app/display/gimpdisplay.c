@@ -437,14 +437,29 @@ gimp_display_delete (GimpDisplay *display)
 
   if (display->shell)
     {
-      GtkWidget *shell = display->shell;
+      GtkWidget       *shell    = display->shell;
+      GtkWidget       *toplevel = gtk_widget_get_toplevel (shell);
+#if 0
+      GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+#endif
 
       /*  set display->shell to NULL *before* destroying the shell.
        *  all callbacks in gimpdisplayshell-callbacks.c will check
        *  this pointer and do nothing if the shell is in destruction.
        */
       display->shell = NULL;
-      gtk_widget_destroy (shell);
+
+      /* FIXME image window: enable this code for multiple shells */
+#if 0
+      if (gimp_image_window_get_n_displays (window) > 1)
+        {
+          gimp_image_window_remove_display (window, display);
+        }
+      else
+#endif
+        {
+          gtk_widget_destroy (toplevel);
+        }
     }
 
   g_object_unref (display);
