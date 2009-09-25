@@ -1353,15 +1353,9 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  gimp_dialog_factory_remove_dialog (shell->display_factory,
-                                     GTK_WIDGET (shell));
-
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
   gimp_display_shell_scale_changed (shell);
-
-  /* FIXME image window */
-  gimp_statusbar_fill (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar));
 
   gimp_display_shell_sync_config (shell, shell->display->config);
 

@@ -510,6 +510,12 @@ gimp_image_window_image_notify (GimpDisplay      *display,
 {
   if (display->image)
     {
+      /* FIXME don't run this code for revert */
+
+      gimp_dialog_factory_remove_dialog (window->display_factory,
+                                         GTK_WIDGET (window));
+
+      gimp_statusbar_fill (GIMP_STATUSBAR (window->statusbar));
     }
   else
     {
