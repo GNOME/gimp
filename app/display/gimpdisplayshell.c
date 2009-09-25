@@ -860,7 +860,7 @@ gimp_display_shell_new (GimpDisplay       *display,
    *
    *  Changed the packing to use hboxes and vboxes which behave nicer:
    *
-   *  disp_vbox
+   *  shell
    *     |
    *     +-- upper_hbox
    *     |      |
@@ -898,14 +898,8 @@ gimp_display_shell_new (GimpDisplay       *display,
         gtk_widget_hide (menubar);
     }
 
-  /*  another vbox for everything except the statusbar  */
+  /*  FIXME this will be the shell  */
   shell->disp_vbox = gtk_vbox_new (FALSE, 1);
-
-#if 0
-  gtk_box_pack_start (GTK_BOX (GIMP_IMAGE_WINDOW (shell)->main_vbox),
-                      disp_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (disp_vbox);
-#endif
 
   /*  a hbox for the inner_table and the vertical scrollbar  */
   upper_hbox = gtk_hbox_new (FALSE, 1);
