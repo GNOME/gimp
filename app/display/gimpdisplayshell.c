@@ -1256,11 +1256,6 @@ gimp_display_shell_new (GimpDisplay       *display,
     }
   else
     {
-      /* FIXME image window */
-      gimp_statusbar_empty (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar));
-      gimp_dialog_factory_add_foreign (display_factory,
-                                       "gimp-empty-image-window",
-                                       GTK_WIDGET (shell));
       gimp_help_set_help_data (shell->canvas,
                                _("Drop image files here to open them"),
                                NULL);

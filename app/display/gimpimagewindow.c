@@ -449,6 +449,15 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
                     G_CALLBACK (gimp_image_window_shell_icon_notify),
                     window);
 
+  if (! display->image)
+    {
+      gimp_statusbar_empty (GIMP_STATUSBAR (window->statusbar));
+
+      gimp_dialog_factory_add_foreign (window->display_factory,
+                                       "gimp-empty-image-window",
+                                       GTK_WIDGET (window));
+    }
+
   gimp_ui_manager_update (window->menubar_manager,
                           window->active_display);
 }
