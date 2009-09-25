@@ -39,6 +39,7 @@
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-close.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpimagewindow.h"
@@ -86,6 +87,10 @@ static void      gimp_image_window_show_tooltip        (GimpUIManager       *man
                                                         const gchar         *tooltip,
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_hide_tooltip        (GimpUIManager       *manager,
+                                                        GimpImageWindow     *window);
+
+static gboolean  gimp_image_window_shell_events        (GtkWidget           *widget,
+                                                        GdkEvent            *event,
                                                         GimpImageWindow     *window);
 
 static void      gimp_image_window_image_notify        (GimpDisplay         *display,
@@ -205,6 +210,17 @@ gimp_image_window_constructor (GType                  type,
       g_signal_connect (window->menubar, "can-activate-accel",
                         G_CALLBACK (gtk_true),
                         NULL);
+
+      /*  active display callback  */
+      g_signal_connect (window->menubar, "button-press-event",
+                        G_CALLBACK (gimp_image_window_shell_events),
+                        window);
+      g_signal_connect (window->menubar, "button-release-event",
+                        G_CALLBACK (gimp_image_window_shell_events),
+                        window);
+      g_signal_connect (window->menubar, "key-press-event",
+                        G_CALLBACK (gimp_image_window_shell_events),
+                        window);
     }
 
   window->statusbar = gimp_statusbar_new ();
@@ -719,6 +735,17 @@ gimp_image_window_hide_tooltip (GimpUIManager   *manager,
                                 GimpImageWindow *window)
 {
   gimp_statusbar_pop (GIMP_STATUSBAR (window->statusbar), "menu-tooltip");
+}
+
+static gboolean
+gimp_image_window_shell_events (GtkWidget       *widget,
+                                GdkEvent        *event,
+                                GimpImageWindow *window)
+{
+  GimpDisplay *display = gimp_image_window_get_active_display (window);
+
+  return gimp_display_shell_events (widget, event,
+                                    GIMP_DISPLAY_SHELL (display->shell));
 }
 
 static void

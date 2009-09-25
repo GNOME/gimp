@@ -896,17 +896,6 @@ gimp_display_shell_new (GimpDisplay       *display,
         gtk_widget_show (menubar);
       else
         gtk_widget_hide (menubar);
-
-      /*  active display callback  */
-      g_signal_connect (menubar, "button-press-event",
-                        G_CALLBACK (gimp_display_shell_events),
-                        shell);
-      g_signal_connect (menubar, "button-release-event",
-                        G_CALLBACK (gimp_display_shell_events),
-                        shell);
-      g_signal_connect (menubar, "key-press-event",
-                        G_CALLBACK (gimp_display_shell_events),
-                        shell);
     }
 
   /*  another vbox for everything except the statusbar  */
