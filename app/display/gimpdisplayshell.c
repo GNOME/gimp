@@ -104,6 +104,9 @@ enum
 
 static void      gimp_color_managed_iface_init     (GimpColorManagedInterface *iface);
 
+static GObject * gimp_display_shell_constructor    (GType             type,
+                                                    guint             n_params,
+                                                    GObjectConstructParam *params);
 static void      gimp_display_shell_finalize       (GObject          *object);
 static void      gimp_display_shell_set_property   (GObject          *object,
                                                     guint             property_id,
@@ -195,6 +198,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->constructor        = gimp_display_shell_constructor;
   object_class->finalize           = gimp_display_shell_finalize;
   object_class->set_property       = gimp_display_shell_set_property;
   object_class->get_property       = gimp_display_shell_get_property;
@@ -412,6 +416,24 @@ static void
 gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 {
   iface->get_icc_profile = gimp_display_shell_get_icc_profile;
+}
+
+static GObject *
+gimp_display_shell_constructor (GType                  type,
+                                guint                  n_params,
+                                GObjectConstructParam *params)
+{
+  GObject          *object;
+  GimpDisplayShell *shell;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  shell = GIMP_DISPLAY_SHELL (object);
+
+  g_assert (GIMP_IS_UI_MANAGER (shell->popup_manager));
+  g_assert (GIMP_IS_DISPLAY (shell->display));
+
+  return object;
 }
 
 static void
