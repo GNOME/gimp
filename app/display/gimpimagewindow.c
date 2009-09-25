@@ -36,6 +36,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
+#include "gimpdisplayshell-progress.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
@@ -391,6 +392,8 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
           gimp_dialog_factories_show_with_display ();
         }
 
+      /* FIXME multiple shells */
+      gimp_display_shell_progress_window_state_changed (GIMP_DISPLAY_SHELL (display->shell));
     }
 
   return FALSE;

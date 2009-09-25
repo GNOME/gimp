@@ -121,9 +121,6 @@ static void      gimp_display_shell_destroy        (GtkObject        *object);
 static void      gimp_display_shell_unrealize      (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
-static gboolean
-             gimp_display_shell_window_state_event (GtkWidget        *widget,
-                                                    GdkEventWindowState *event);
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
 
 static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
@@ -202,7 +199,6 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 
   widget_class->unrealize          = gimp_display_shell_unrealize;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
-  widget_class->window_state_event = gimp_display_shell_window_state_event;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
 
   klass->scaled                    = gimp_display_shell_real_scaled;
@@ -654,22 +650,6 @@ gimp_display_shell_screen_changed (GtkWidget *widget,
       shell->monitor_xres = shell->display->config->monitor_xres;
       shell->monitor_yres = shell->display->config->monitor_yres;
     }
-}
-
-static gboolean
-gimp_display_shell_window_state_event (GtkWidget           *widget,
-                                       GdkEventWindowState *event)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
-
-  GTK_WIDGET_CLASS (parent_class)->window_state_event (widget, event);
-
-  if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
-    {
-      gimp_display_shell_progress_window_state_changed (shell);
-    }
-
-  return FALSE;
 }
 
 static gboolean
