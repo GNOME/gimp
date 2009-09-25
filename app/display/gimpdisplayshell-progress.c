@@ -30,82 +30,105 @@
 #include "gimpstatusbar.h"
 
 
+/* FIXME: need to store the shell's progress state in the shell itself
+ * instead of simply dispatching to the statusbar. Otherwise it's
+ * impossible to switch an image window between two shells that both
+ * have active progress messages.
+ */
+
+
+static GimpProgress *
+gimp_display_shell_progress_get_real_progress (GimpProgress *progress)
+{
+  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (progress);
+  GtkWidget        *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  GimpImageWindow  *window   = GIMP_IMAGE_WINDOW (toplevel);
+
+  if (gimp_image_window_get_active_display (window) == shell->display)
+    return GIMP_PROGRESS (window->statusbar);
+  else
+    return NULL;
+}
+
 static GimpProgress *
 gimp_display_shell_progress_start (GimpProgress *progress,
                                    const gchar  *message,
                                    gboolean      cancelable)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  progress = gimp_display_shell_progress_get_real_progress (progress);
 
-  /* FIXME image window */
-  progress = gimp_progress_start (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar),
-                                  message, cancelable);
+  if (progress)
+    return gimp_progress_start (progress, message, cancelable);
 
-  return progress;
+  return NULL;
 }
 
 static void
 gimp_display_shell_progress_end (GimpProgress *progress)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  progress = gimp_display_shell_progress_get_real_progress (progress);
 
-  /* FIXME image window */
-  gimp_progress_end (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
+  if (progress)
+    gimp_progress_end (progress);
 }
 
 static gboolean
 gimp_display_shell_progress_is_active (GimpProgress *progress)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  progress = gimp_display_shell_progress_get_real_progress (progress);
 
-  /* FIXME image window */
-  return gimp_progress_is_active (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
+  if (progress)
+    return gimp_progress_is_active (progress);
+
+  return FALSE;
 }
 
 static void
 gimp_display_shell_progress_set_text (GimpProgress *progress,
                                       const gchar  *message)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  progress = gimp_display_shell_progress_get_real_progress (progress);
 
-  /* FIXME image window */
-  gimp_progress_set_text (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), message);
+  if (progress)
+    gimp_progress_set_text (progress, message);
 }
 
 static void
 gimp_display_shell_progress_set_value (GimpProgress *progress,
                                        gdouble       percentage)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  progress = gimp_display_shell_progress_get_real_progress (progress);
 
-  /* FIXME image window */
-  gimp_progress_set_value (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), percentage);
+  if (progress)
+    gimp_progress_set_value (progress, percentage);
 }
 
 static gdouble
 gimp_display_shell_progress_get_value (GimpProgress *progress)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  progress = gimp_display_shell_progress_get_real_progress (progress);
 
-  /* FIXME image window */
-  return gimp_progress_get_value (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
+  if (progress)
+    return gimp_progress_get_value (progress);
+
+  return 0.0;
 }
 
 static void
 gimp_display_shell_progress_pulse (GimpProgress *progress)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  progress = gimp_display_shell_progress_get_real_progress (progress);
 
-  /* FIXME image window */
-  gimp_progress_pulse (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar));
+  if (progress)
+    gimp_progress_pulse (progress);
 }
 
 static guint32
 gimp_display_shell_progress_get_window (GimpProgress *progress)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));
 
-  return (guint32) gimp_window_get_native (GTK_WINDOW (shell));
+  return (guint32) gimp_window_get_native (GTK_WINDOW (toplevel));
 }
 
 static gboolean
@@ -115,32 +138,32 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
                                      const gchar         *domain,
                                      const gchar         *message)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
+  progress = gimp_display_shell_progress_get_real_progress (progress);
 
-  switch (severity)
+  if (progress)
     {
-    case GIMP_MESSAGE_ERROR:
-      /* error messages are never handled here */
-      break;
+      switch (severity)
+        {
+        case GIMP_MESSAGE_ERROR:
+          /* error messages are never handled here */
+          break;
 
-    case GIMP_MESSAGE_WARNING:
-      /* warning messages go to the statusbar, if it's visible */
-      /* FIXME image window */
-      if (! gimp_statusbar_get_visible (GIMP_STATUSBAR (GIMP_IMAGE_WINDOW (shell)->statusbar)))
-        break;
-      else
-        /* FIXME image window */
-	return gimp_progress_message (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), gimp,
-				      severity, domain, message);
+        case GIMP_MESSAGE_WARNING:
+          /* warning messages go to the statusbar, if it's visible */
+          if (! gimp_statusbar_get_visible (GIMP_STATUSBAR (progress)))
+            break;
+          else
+            return gimp_progress_message (progress, gimp,
+                                          severity, domain, message);
 
-    case GIMP_MESSAGE_INFO:
-      /* info messages go to the statusbar;
-       * if they are not handled there, they are swallowed
-       */
-      /* FIXME image window */
-      gimp_progress_message (GIMP_PROGRESS (GIMP_IMAGE_WINDOW (shell)->statusbar), gimp,
-			     severity, domain, message);
-      return TRUE;
+        case GIMP_MESSAGE_INFO:
+          /* info messages go to the statusbar;
+           * if they are not handled there, they are swallowed
+           */
+          gimp_progress_message (progress, gimp,
+                                 severity, domain, message);
+          return TRUE;
+        }
     }
 
   return FALSE;
