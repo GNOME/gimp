@@ -6,6 +6,7 @@ EXPORTS
 	gimp_config_build_plug_in_path
 	gimp_config_build_writable_path
 	gimp_config_copy
+	gimp_config_deserialize
 	gimp_config_deserialize_file
 	gimp_config_deserialize_properties
 	gimp_config_deserialize_property
