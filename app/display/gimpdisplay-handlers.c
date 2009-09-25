@@ -162,14 +162,19 @@ gimp_display_saved_handler (GimpImage   *image,
                             const gchar *uri,
                             GimpDisplay *display)
 {
-  /* FIXME image window */
-  GtkWidget *statusbar = GIMP_IMAGE_WINDOW (display->shell)->statusbar;
-  gchar     *filename  = file_utils_uri_display_name (uri);
+  GtkWidget       *toplevel = gtk_widget_get_toplevel (display->shell);
+  GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
 
-  gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
-                            GTK_STOCK_SAVE, _("Image saved to '%s'"),
-                            filename);
-  g_free (filename);
+  if (gimp_image_window_get_active_display (window) == display)
+    {
+      gchar *filename  = file_utils_uri_display_name (uri);
+
+      gimp_statusbar_push_temp (GIMP_STATUSBAR (window->statusbar),
+                                GIMP_MESSAGE_INFO,
+                                GTK_STOCK_SAVE, _("Image saved to '%s'"),
+                                filename);
+      g_free (filename);
+    }
 }
 
 static void
@@ -177,13 +182,18 @@ gimp_display_exported_handler (GimpImage   *image,
                                const gchar *uri,
                                GimpDisplay *display)
 {
-  /* FIXME image window */
-  GtkWidget *statusbar = GIMP_IMAGE_WINDOW (display->shell)->statusbar;
-  gchar     *filename  = file_utils_uri_display_name (uri);
+  GtkWidget       *toplevel = gtk_widget_get_toplevel (display->shell);
+  GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
 
-  gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
-                            GTK_STOCK_SAVE, _("Image exported to '%s'"),
-                            filename);
-  g_free (filename);
+  if (gimp_image_window_get_active_display (window) == display)
+    {
+      gchar *filename  = file_utils_uri_display_name (uri);
+
+      gimp_statusbar_push_temp (GIMP_STATUSBAR (window->statusbar),
+                                GIMP_MESSAGE_INFO,
+                                GTK_STOCK_SAVE, _("Image exported to '%s'"),
+                                filename);
+      g_free (filename);
+    }
 }
 
