@@ -673,8 +673,6 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
 
       window = gtk_widget_get_toplevel (widget);
 
-      gimp_display_shell_appearance_update (shell);
-
       fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
 
       if (shell->display ==

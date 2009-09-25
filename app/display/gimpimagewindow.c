@@ -34,6 +34,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
@@ -365,6 +366,8 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
       gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->statusbar),
                                          ! fullscreen);
+
+      gimp_display_shell_appearance_update (GIMP_DISPLAY_SHELL (display->shell));
 
       group = gimp_ui_manager_get_action_group (window->menubar_manager, "view");
       gimp_action_group_set_action_active (group,
