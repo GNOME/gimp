@@ -65,10 +65,17 @@ void
 gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 {
   GimpDisplayOptions *options;
+  GtkWidget          *toplevel;
+  GimpImageWindow    *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options = appearance_get_options (shell);
+  options  = appearance_get_options (shell);
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  window   = GIMP_IMAGE_WINDOW (toplevel);
+
+  appearance_set_action_active (shell, "view-fullscreen",
+                                gimp_image_window_get_fullscreen (window));
 
   gimp_display_shell_set_show_menubar       (shell,
                                              options->show_menubar);

@@ -661,29 +661,8 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
                                        GdkEventWindowState *event)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
-  Gimp             *gimp  = shell->display->gimp;
 
   GTK_WIDGET_CLASS (parent_class)->window_state_event (widget, event);
-
-  if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)
-    {
-      GtkWidget       *window;
-      GimpActionGroup *group;
-      gboolean         fullscreen;
-
-      window = gtk_widget_get_toplevel (widget);
-
-      fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
-
-      if (shell->display ==
-          gimp_context_get_display (gimp_get_user_context (gimp)))
-        {
-          group = gimp_ui_manager_get_action_group (shell->popup_manager,
-                                                    "view");
-          gimp_action_group_set_action_active (group,
-                                               "view-fullscreen", fullscreen);
-        }
-    }
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
     {
