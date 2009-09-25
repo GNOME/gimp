@@ -1275,12 +1275,13 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 static gboolean
 gimp_display_shell_fill_idle (GimpDisplayShell *shell)
 {
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
   shell->fill_idle_id = 0;
 
   gimp_display_shell_scale_shrink_wrap (shell, TRUE);
 
-  /* FIXME image window */
-  gtk_window_present (GTK_WINDOW (shell));
+  gtk_window_present (GTK_WINDOW (toplevel));
 
   return FALSE;
 }
