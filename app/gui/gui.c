@@ -531,7 +531,7 @@ gui_restore_after_callback (Gimp               *gimp,
       windows_show_toolbox ();
 
       /*  move keyboard focus to the display  */
-      gtk_window_present (GTK_WINDOW (display->shell));
+      gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (display->shell)));
 
     }
 
