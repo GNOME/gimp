@@ -384,7 +384,6 @@ gimp_display_new (Gimp              *gimp,
   display->shell = gimp_display_shell_new (display, unit, scale,
                                            menu_factory, popup_manager,
                                            display_factory);
-  gtk_widget_show (display->shell);
 
   /* FIXME image window */
   gimp_image_window_set_active_display (GIMP_IMAGE_WINDOW (display->shell),
@@ -394,6 +393,8 @@ gimp_display_new (Gimp              *gimp,
   g_signal_connect (GIMP_IMAGE_WINDOW (display->shell)->statusbar, "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
                     display);
+
+  gtk_widget_show (display->shell);
 
   /* add the display to the list */
   gimp_container_add (gimp->displays, GIMP_OBJECT (display));
