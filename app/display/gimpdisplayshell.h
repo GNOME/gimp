@@ -68,8 +68,6 @@ struct _GimpDisplayShell
 
   GimpUIManager     *popup_manager;
 
-  GimpDialogFactory *display_factory;
-
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;
   GimpDisplayOptions *no_image_options;

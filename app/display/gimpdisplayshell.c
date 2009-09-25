@@ -849,8 +849,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   /* FIXME image window */
   GIMP_IMAGE_WINDOW (shell)->active_display = display;
 
-  shell->popup_manager   = popup_manager;
-  shell->display_factory = display_factory;
+  shell->popup_manager = popup_manager;
 
   if (display->image)
     {
