@@ -122,7 +122,7 @@ scan_file (const gchar *filename)
   gsize              length;
   GError            *error;
   XMPParseContext   *context;
-  // XMPModel          *xmp_model = xmp_model_new ();
+  XMPModel          *xmp_model = xmp_model_new ();
 
   g_print ("\nFile: %s\n", filename);
   error = NULL;
@@ -143,16 +143,14 @@ scan_file (const gchar *filename)
 
   /*
    * used for testing the XMPModel
-   *
+   */
   g_signal_connect (xmp_model, "property-changed::xmpMM:DocumentID",
                     G_CALLBACK (property_changed), NULL);
 
   if (! xmp_model_parse_file (xmp_model, filename, &error))
     {
-      xmp_model_free (xmp_model);
       return 1;
     }
-  */
 
   if (! xmp_parse_context_parse (context, contents, length, NULL))
     {

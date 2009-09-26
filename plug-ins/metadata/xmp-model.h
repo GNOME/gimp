@@ -25,8 +25,8 @@ G_BEGIN_DECLS
 #include <glib-object.h>
 
 #define GIMP_TYPE_XMP_MODEL             (xmp_model_get_type ())
-#define XMP_MODEL(obj)                  (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_XMP_MODEL, XMPModel))
-#define XMP_MODEL_CLASS(klass)          (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_XMP_MODEL, XMPModelClass))
+#define XMP_MODEL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_XMP_MODEL, XMPModel))
+#define XMP_MODEL_CLASS(klass)     (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_XMP_MODEL, XMPModelClass))
 #define GIMP_IS_XMP_MODEL(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_XMP_MODEL))
 #define GIMP_IS_XMP_MODEL_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_XMP_MODEL))
 #define GIMP_XMP_MODEL_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_XMP_MODEL, XMPModelClass))
@@ -113,6 +113,7 @@ gboolean      xmp_model_set_scalar_property (XMPModel    *xmp_model,
                                              const gchar *schema_name,
                                              const gchar *property_name,
                                              const gchar *property_value);
+
 
 /* Signals */
 void          xmp_model_property_changed    (XMPModel     *xmp_model,

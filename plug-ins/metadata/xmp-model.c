@@ -31,6 +31,19 @@
 #include "xmp-parse.h"
 #include "xmp-model.h"
 
+/* Used for converting row-changed events into property-changed and
+ * schema-changed events.*/
+#define XMP_MODEL_SCHEMA    0
+#define XMP_MODEL_PROPERTY  1
+
+/* local function declarations */
+static void         tree_model_row_changed  (GtkTreeModel    *model,
+                                             GtkTreePath     *path,
+                                             GtkTreeIter     *iter,
+                                             gpointer         user_data);
+
+static XMPSchema *  find_xmp_schema_by_iter (XMPModel       *xmp_model,
+                                             GtkTreeIter    *iter);
 
 enum
 {
@@ -90,6 +103,10 @@ xmp_model_init (XMPModel *xmp_model)
   xmp_model->custom_schemas     = NULL;
   xmp_model->custom_properties  = NULL;
   xmp_model->cached_schema      = NULL;
+
+  g_signal_connect (GTK_TREE_MODEL (xmp_model), "row-changed",
+                    G_CALLBACK (tree_model_row_changed),
+                    NULL);
 }
 
 static void
@@ -168,10 +185,53 @@ xmp_model_is_empty (XMPModel *xmp_model)
                                          &iter);
 }
 
+/* translate a row-changed event into a property-changed or
+ * schema-changed event with the detail.
+ */
+static void
+tree_model_row_changed (GtkTreeModel    *model,
+                        GtkTreePath     *path,
+                        GtkTreeIter     *iter,
+                        gpointer         user_data)
+{
+  gint       depth;
+  XMPSchema *schema;
+
+  /* 1. check which iter depth the change was: 0 for schema 1 for
+   * property? */
+  depth = gtk_tree_store_iter_depth (GTK_TREE_STORE (model), iter);
+  if (depth == XMP_MODEL_SCHEMA)
+  {
+    /* 2. If a schema has changed, emit a schema changed signal */
+  }
+
+  if (depth == XMP_MODEL_PROPERTY)
+  {
+    schema = find_xmp_schema_by_iter (XMP_MODEL (model), iter);
+    xmp_model_property_changed (XMP_MODEL (model), schema, iter);
+  }
+}
+
+static XMPSchema *
+find_xmp_schema_by_iter (XMPModel       *xmp_model,
+                         GtkTreeIter    *child)
+{
+  GtkTreeIter  parent;
+  XMPSchema   *schema;
+
+  if (! gtk_tree_model_iter_parent (GTK_TREE_MODEL (xmp_model), &parent, child))
+    return NULL;
+
+  gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), &parent,
+                      COL_XMP_TYPE_XREF, &schema,
+                      -1);
+  return schema;
+}
+
 /* check if the given schema_uri matches a known schema; else return NULL */
 static XMPSchema *
-find_xmp_schema (XMPModel    *xmp_model,
-                 const gchar *schema_uri)
+find_xmp_schema_by_uri (XMPModel    *xmp_model,
+                        const gchar *schema_uri)
 {
   int          i;
   GSList      *list;
@@ -392,9 +452,7 @@ parse_start_schema (XMPParseContext     *context,
   XMPSchema   *schema;
 
   g_return_val_if_fail (xmp_model != NULL, NULL);
-
-  schema = find_xmp_schema (xmp_model, ns_uri);
-
+  schema = find_xmp_schema_by_uri (xmp_model, ns_uri);
   if (schema == NULL)
     {
       /* add schema to custom_schemas */
@@ -521,7 +579,6 @@ parse_set_property (XMPParseContext     *context,
                           COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
                           COL_XMP_WEIGHT_SET, FALSE,
                           -1);
-      xmp_model_property_changed (xmp_model, schema, &child_iter);
       break;
 
     case XMP_PTYPE_RESOURCE:
@@ -859,9 +916,7 @@ xmp_model_get_scalar_property (XMPModel    *xmp_model,
   g_return_val_if_fail (xmp_model != NULL, NULL);
   g_return_val_if_fail (schema_name != NULL, NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
-
-  schema = find_xmp_schema (xmp_model, schema_name);
-
+  schema = find_xmp_schema_by_uri (xmp_model, schema_name);
   if (! schema)
     schema = find_xmp_schema_prefix (xmp_model, schema_name);
 
@@ -930,9 +985,7 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
   g_return_val_if_fail (schema_name != NULL, FALSE);
   g_return_val_if_fail (property_name != NULL, FALSE);
   g_return_val_if_fail (property_value != NULL, FALSE);
-
-  schema = find_xmp_schema (xmp_model, schema_name);
-
+  schema = find_xmp_schema_by_uri (xmp_model, schema_name);
   if (! schema)
     schema = find_xmp_schema_prefix (xmp_model, schema_name);
 
@@ -981,8 +1034,6 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
                       COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
                       COL_XMP_WEIGHT_SET, FALSE,
                       -1);
-  xmp_model_property_changed (xmp_model, schema, &child_iter);
-
   return TRUE;
 }
 
