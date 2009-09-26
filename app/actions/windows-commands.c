@@ -57,9 +57,9 @@ void
 windows_show_dock_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  GtkWindow *dock = g_object_get_data (G_OBJECT (action), "dock");
+  GtkWindow *dock_window = g_object_get_data (G_OBJECT (action), "dock-window");
 
-  gtk_window_present (dock);
+  gtk_window_present (dock_window);
 }
 
 void

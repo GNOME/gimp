@@ -38,6 +38,7 @@
 #include "gimpdock.h"
 #include "gimpdockbook.h"
 #include "gimpdockable.h"
+#include "gimpdockwindow.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
 
@@ -53,8 +54,8 @@ typedef enum
 
 enum
 {
-  DOCK_ADDED,
-  DOCK_REMOVED,
+  DOCK_WINDOW_ADDED,
+  DOCK_WINDOW_REMOVED,
   LAST_SIGNAL
 };
 
@@ -122,25 +123,25 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
 
   klass->factories = g_hash_table_new (g_str_hash, g_str_equal);
 
-  factory_signals[DOCK_ADDED] =
-    g_signal_new ("dock-added",
+  factory_signals[DOCK_WINDOW_ADDED] =
+    g_signal_new ("dock-window-added",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_added),
+                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_window_added),
                   NULL, NULL,
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_DOCK);
+                  GIMP_TYPE_DOCK_WINDOW);
 
-  factory_signals[DOCK_REMOVED] =
-    g_signal_new ("dock-removed",
+  factory_signals[DOCK_WINDOW_REMOVED] =
+    g_signal_new ("dock-window-removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_removed),
+                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_window_removed),
                   NULL, NULL,
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_DOCK);
+                  GIMP_TYPE_DOCK_WINDOW);
 }
 
 static void
@@ -940,7 +941,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
           factory->session_infos = g_list_append (factory->session_infos, info);
         }
 
-      g_signal_emit (factory, factory_signals[DOCK_ADDED], 0, dialog);
+      g_signal_emit (factory, factory_signals[DOCK_WINDOW_ADDED], 0, dialog);
     }
 
   factory->open_dialogs = g_list_prepend (factory->open_dialogs, dialog);
@@ -1064,7 +1065,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                                                       session_info);
               g_object_unref (session_info);
 
-              g_signal_emit (factory, factory_signals[DOCK_REMOVED], 0,
+              g_signal_emit (factory, factory_signals[DOCK_WINDOW_REMOVED], 0,
                              dialog);
             }
 

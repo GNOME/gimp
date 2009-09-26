@@ -100,10 +100,10 @@ struct _GimpDialogFactoryClass
 
   GHashTable      *factories;
 
-  void (* dock_added)   (GimpDialogFactory *factory,
-                         GimpDock          *dock);
-  void (* dock_removed) (GimpDialogFactory *factory,
-                         GimpDock          *dock);
+  void (* dock_window_added)   (GimpDialogFactory *factory,
+                                GimpDockWindow    *dock_window);
+  void (* dock_window_removed) (GimpDialogFactory *factory,
+                                GimpDockWindow    *dock_window);
 };
 
 
