@@ -19,16 +19,17 @@
 #define __WINDOWS_COMMANDS_H__
 
 
-void   windows_show_toolbox_cmd_callback (GtkAction *action,
-                                          gpointer   data);
-void   windows_show_display_cmd_callback (GtkAction *action,
-                                          gpointer   data);
-void   windows_show_dock_cmd_callback    (GtkAction *action,
-                                          gpointer   data);
-void   windows_open_recent_cmd_callback  (GtkAction *action,
-                                          gpointer   data);
-
-void   windows_show_toolbox              (void);
+void  windows_show_toolbox_cmd_callback           (GtkAction *action,
+                                                   gpointer   data);
+void  windows_use_single_window_mode_cmd_callback (GtkAction *action,
+                                                   gpointer   data);
+void  windows_show_display_cmd_callback           (GtkAction *action,
+                                                   gpointer   data);
+void  windows_show_dock_cmd_callback              (GtkAction *action,
+                                                   gpointer   data);
+void  windows_open_recent_cmd_callback            (GtkAction *action,
+                                                   gpointer   data);
+void  windows_show_toolbox                        (void);
 
 
 #endif /* __WINDOWS_COMMANDS_H__ */

@@ -25,6 +25,9 @@
 
 #include "actions-types.h"
 
+#include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
@@ -47,30 +50,33 @@
 #include "gimp-intl.h"
 
 
-static void  windows_actions_display_add         (GimpContainer     *container,
-                                                  GimpDisplay       *display,
-                                                  GimpActionGroup   *group);
-static void  windows_actions_display_remove      (GimpContainer     *container,
-                                                  GimpDisplay       *display,
-                                                  GimpActionGroup   *group);
-static void  windows_actions_image_notify        (GimpDisplay       *display,
-                                                  const GParamSpec  *unused,
-                                                  GimpActionGroup   *group);
-static void  windows_actions_dock_window_added   (GimpDialogFactory *factory,
-                                                  GimpDockWindow    *dock_window,
-                                                  GimpActionGroup   *group);
-static void  windows_actions_dock_window_removed (GimpDialogFactory *factory,
-                                                  GimpDockWindow    *dock_window,
-                                                  GimpActionGroup   *group);
-static void  windows_actions_dock_window_notify  (GimpDockWindow    *dock,
-                                                  const GParamSpec  *pspec,
-                                                  GimpActionGroup   *group);
-static void  windows_actions_recent_add          (GimpContainer     *container,
-                                                  GimpSessionInfo   *info,
-                                                  GimpActionGroup   *group);
-static void  windows_actions_recent_remove       (GimpContainer     *container,
-                                                  GimpSessionInfo   *info,
-                                                  GimpActionGroup   *group);
+static void  windows_actions_display_add               (GimpContainer     *container,
+                                                        GimpDisplay       *display,
+                                                        GimpActionGroup   *group);
+static void  windows_actions_display_remove            (GimpContainer     *container,
+                                                        GimpDisplay       *display,
+                                                        GimpActionGroup   *group);
+static void  windows_actions_image_notify              (GimpDisplay       *display,
+                                                        const GParamSpec  *unused,
+                                                        GimpActionGroup   *group);
+static void  windows_actions_dock_window_added         (GimpDialogFactory *factory,
+                                                        GimpDockWindow    *dock_window,
+                                                        GimpActionGroup   *group);
+static void  windows_actions_dock_window_removed       (GimpDialogFactory *factory,
+                                                        GimpDockWindow    *dock_window,
+                                                        GimpActionGroup   *group);
+static void  windows_actions_dock_window_notify        (GimpDockWindow    *dock,
+                                                        const GParamSpec  *pspec,
+                                                        GimpActionGroup   *group);
+static void  windows_actions_recent_add                (GimpContainer     *container,
+                                                        GimpSessionInfo   *info,
+                                                        GimpActionGroup   *group);
+static void  windows_actions_recent_remove             (GimpContainer     *container,
+                                                        GimpSessionInfo   *info,
+                                                        GimpActionGroup   *group);
+static void  windows_actions_single_window_mode_notify (GimpDisplayConfig *config,
+                                                        GParamSpec        *pspec,
+                                                        GimpActionGroup   *group);
 
 
 static const GimpActionEntry windows_actions[] =
@@ -89,6 +95,16 @@ static const GimpActionEntry windows_actions[] =
     GIMP_HELP_TOOLBOX }
 };
 
+static const GimpToggleActionEntry windows_toggle_actions[] =
+{
+  { "windows-use-single-window-mode", NULL,
+    NC_("windows-action", "Single-window mode"), NULL,
+    NC_("windows-action", "When enabled GIMP is in a single-window mode. Far from completely implemented!"),
+    G_CALLBACK (windows_use_single_window_mode_cmd_callback),
+    FALSE,
+    GIMP_HELP_WINDOWS_USE_SINGLE_WINDOW_MODE }
+};
+
 
 void
 windows_actions_setup (GimpActionGroup *group)
@@ -98,6 +114,10 @@ windows_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group, "windows-action",
                                  windows_actions,
                                  G_N_ELEMENTS (windows_actions));
+
+  gimp_action_group_add_toggle_actions (group, "windows-action",
+                                        windows_toggle_actions,
+                                        G_N_ELEMENTS (windows_toggle_actions));
 
   gimp_action_group_set_action_hide_empty (group, "windows-docks-menu", FALSE);
 
@@ -149,12 +169,24 @@ windows_actions_setup (GimpActionGroup *group)
 
       windows_actions_recent_add (global_recent_docks, info, group);
     }
+
+  g_signal_connect_object (group->gimp->config, "notify::single-window-mode",
+                           G_CALLBACK (windows_actions_single_window_mode_notify),
+                           group, 0);
 }
 
 void
 windows_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
+  GimpGuiConfig *config = GIMP_GUI_CONFIG (group->gimp->config);
+
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
+
+  SET_ACTIVE ("windows-use-single-window-mode", config->single_window_mode);
+
+#undef SET_ACTIVE
 }
 
 gchar *
@@ -410,4 +442,14 @@ windows_actions_recent_remove (GimpContainer   *container,
     gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
 
   g_free (action_name);
+}
+
+static void
+windows_actions_single_window_mode_notify (GimpDisplayConfig *config,
+                                           GParamSpec        *pspec,
+                                           GimpActionGroup   *group)
+{
+  gimp_action_group_set_action_active (group,
+                                       "windows-use-single-window-mode",
+                                       GIMP_GUI_CONFIG (config)->single_window_mode);
 }

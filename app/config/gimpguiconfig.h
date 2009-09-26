@@ -48,6 +48,7 @@ struct _GimpGuiConfig
   gboolean             restore_session;
   gboolean             save_tool_options;
   gboolean             show_tooltips;
+  gboolean             single_window_mode;
   gboolean             tearoff_menus;
   gboolean             can_change_accels;
   gboolean             save_accels;
