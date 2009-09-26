@@ -106,7 +106,7 @@ dock_actions_update (GimpActionGroup *group,
       
       if (GIMP_IS_MENU_DOCK (dock))
         {
-          GimpMenuDock *menu_dock = GIMP_MENU_DOCK (toplevel);
+          GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
           SET_VISIBLE ("dock-show-image-menu",    TRUE);
           SET_VISIBLE ("dock-auto-follow-active", TRUE);
