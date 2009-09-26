@@ -417,7 +417,7 @@ gimp_dialog_factory_dialog_sane (GimpDialogFactory      *factory,
                                  GimpDialogFactoryEntry *widget_entry,
                                  GtkWidget              *widget)
 {
-  /* Note that GimpDocks don't have any entry */
+  /* Note that GimpDockWindows don't have any entry */
   if (! widget_factory || (! widget_entry && ! GIMP_IS_DOCK_WINDOW (widget)))
     {
       g_warning ("%s: dialog was not created by a GimpDialogFactory",
@@ -813,7 +813,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   toplevel = GTK_WIDGET_TOPLEVEL (dialog);
 
-  if (entry) /* dialog is a toplevel (but not a GimpDock) or a GimpDockable */
+  if (entry) /* dialog is a toplevel (but not a GimpDockWindow) or a GimpDockable */
     {
       GIMP_LOG (DIALOG_FACTORY, "adding %s \"%s\"",
                 toplevel ? "toplevel" : "dockable",
@@ -890,7 +890,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
           factory->session_infos = g_list_append (factory->session_infos, info);
         }
     }
-  else /*  dialog is a GimpDock  */
+  else /*  dialog is a GimpDockWindow  */
     {
       GIMP_LOG (DIALOG_FACTORY, "adding dock");
 
