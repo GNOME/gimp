@@ -30,6 +30,7 @@
 
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
+#include "gimpdockwindow.h"
 #include "gimpsessioninfo.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo-book.h"
@@ -51,21 +52,18 @@ enum
 #define DEFAULT_SCREEN  -1
 
 
-static void     gimp_session_info_config_iface_init (GimpConfigInterface *iface);
-
-static void     gimp_session_info_finalize          (GObject          *object);
-
-static gint64   gimp_session_info_get_memsize       (GimpObject       *object,
-                                                     gint64           *gui_size);
-
-static gboolean gimp_session_info_serialize         (GimpConfig       *config,
-                                                     GimpConfigWriter *writer,
-                                                     gpointer          data);
-static gboolean gimp_session_info_deserialize       (GimpConfig       *config,
-                                                     GScanner         *scanner,
-                                                     gint              nest_level,
-                                                     gpointer          data);
-static gboolean gimp_session_info_is_for_dock       (GimpSessionInfo  *info);
+static void      gimp_session_info_config_iface_init  (GimpConfigInterface *iface);
+static void      gimp_session_info_finalize           (GObject             *object);
+static gint64    gimp_session_info_get_memsize        (GimpObject          *object,
+                                                       gint64              *gui_size);
+static gboolean  gimp_session_info_serialize          (GimpConfig          *config,
+                                                       GimpConfigWriter    *writer,
+                                                       gpointer             data);
+static gboolean  gimp_session_info_deserialize        (GimpConfig          *config,
+                                                       GScanner            *scanner,
+                                                       gint                 nest_level,
+                                                       gpointer             data);
+static gboolean  gimp_session_info_is_for_dock_window (GimpSessionInfo     *info);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT,
@@ -319,7 +317,7 @@ gimp_session_info_deserialize (GimpConfig *config,
 }
 
 /**
- * gimp_session_info_is_for_dock:
+ * gimp_session_info_is_for_dock_window:
  * @info:
  *
  * Helper function to determine if the session info is for a dock. It
@@ -329,11 +327,11 @@ gimp_session_info_deserialize (GimpConfig *config,
  * Returns: %TRUE if session info is for a dock, %FALSE otherwise.
  **/
 static gboolean
-gimp_session_info_is_for_dock (GimpSessionInfo *info)
+gimp_session_info_is_for_dock_window (GimpSessionInfo *info)
 {
   gboolean entry_state_for_dock  =  info->p->factory_entry == NULL;
   gboolean widget_state_for_dock = (info->p->widget == NULL ||
-                                    GIMP_IS_DOCK (info->p->widget));
+                                    GIMP_IS_DOCK_WINDOW (info->p->widget));
 
   return entry_state_for_dock && widget_state_for_dock;
 }
@@ -604,7 +602,13 @@ gimp_session_info_get_info (GimpSessionInfo *info)
   if (info->p->factory_entry == NULL ||
       (info->p->factory_entry &&
        info->p->factory_entry->dockable))
-    info->p->books = gimp_session_info_dock_from_widget (GIMP_DOCK (info->p->widget));
+    {
+      GimpDock *dock = NULL;
+
+      dock = gimp_dock_window_get_dock (GIMP_DOCK_WINDOW (info->p->widget));
+
+      info->p->books = gimp_session_info_dock_from_widget (dock);
+    }
 }
 
 void
@@ -634,7 +638,7 @@ gimp_session_info_is_singleton (GimpSessionInfo *info)
 {
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
 
-  return (! gimp_session_info_is_for_dock (info) &&
+  return (! gimp_session_info_is_for_dock_window (info) &&
           info->p->factory_entry &&
           info->p->factory_entry->singleton);
 }
@@ -644,7 +648,7 @@ gimp_session_info_is_session_managed (GimpSessionInfo *info)
 {
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
 
-  return (gimp_session_info_is_for_dock (info) ||
+  return (gimp_session_info_is_for_dock_window (info) ||
           (info->p->factory_entry &&
            info->p->factory_entry->session_managed));
 }
@@ -655,7 +659,7 @@ gimp_session_info_get_remember_size (GimpSessionInfo *info)
 {
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
 
-  return (gimp_session_info_is_for_dock (info) ||
+  return (gimp_session_info_is_for_dock_window (info) ||
           (info->p->factory_entry &&
            info->p->factory_entry->remember_size));
 }
@@ -665,7 +669,7 @@ gimp_session_info_get_remember_if_open (GimpSessionInfo *info)
 {
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), FALSE);
 
-  return (gimp_session_info_is_for_dock (info) ||
+  return (gimp_session_info_is_for_dock_window (info) ||
           (info->p->factory_entry &&
            info->p->factory_entry->remember_if_open));
 }

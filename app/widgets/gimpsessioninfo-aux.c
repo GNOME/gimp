@@ -30,6 +30,7 @@
 
 #include "gimpdock.h"
 #include "gimpdockable.h"
+#include "gimpdockwindow.h"
 #include "gimpsessioninfo-aux.h"
 
 
@@ -287,8 +288,8 @@ gimp_session_info_aux_set_list (GtkWidget *dialog,
 {
   /* FIXME: make the aux-info stuff generic */
 
-  if (GIMP_IS_DOCK (dialog))
-    gimp_dock_set_aux_info (GIMP_DOCK (dialog), aux_list);
+  if (GIMP_IS_DOCK_WINDOW (dialog))
+    gimp_dock_set_aux_info (gimp_dock_window_get_dock (GIMP_DOCK_WINDOW (dialog)), aux_list);
   else if (GIMP_IS_DOCKABLE (dialog))
     gimp_dockable_set_aux_info (GIMP_DOCKABLE (dialog), aux_list);
 }
@@ -298,8 +299,8 @@ gimp_session_info_aux_get_list (GtkWidget *dialog)
 {
   /* FIXME: make the aux-info stuff generic */
 
-  if (GIMP_IS_DOCK (dialog))
-    return gimp_dock_get_aux_info (GIMP_DOCK (dialog));
+  if (GIMP_IS_DOCK_WINDOW (dialog))
+    return gimp_dock_get_aux_info (gimp_dock_window_get_dock (GIMP_DOCK_WINDOW (dialog)));
   else if (GIMP_IS_DOCKABLE (dialog))
     return gimp_dockable_get_aux_info (GIMP_DOCKABLE (dialog));
 

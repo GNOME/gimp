@@ -418,7 +418,7 @@ gimp_dialog_factory_dialog_sane (GimpDialogFactory      *factory,
                                  GtkWidget              *widget)
 {
   /* Note that GimpDocks don't have any entry */
-  if (! widget_factory || (! widget_entry && ! GIMP_IS_DOCK (widget)))
+  if (! widget_factory || (! widget_entry && ! GIMP_IS_DOCK_WINDOW (widget)))
     {
       g_warning ("%s: dialog was not created by a GimpDialogFactory",
                  G_STRFUNC);
@@ -1058,7 +1058,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                                                   gimp_dialog_factory_dialog_configure,
                                                   factory);
 
-          if (GIMP_IS_DOCK (dialog))
+          if (GIMP_IS_DOCK_WINDOW (dialog))
             {
               /*  don't save session info for empty docks  */
               factory->session_infos = g_list_remove (factory->session_infos,

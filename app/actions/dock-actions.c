@@ -99,24 +99,26 @@ dock_actions_update (GimpActionGroup *group,
 #define SET_VISIBLE(action,active) \
         gimp_action_group_set_action_visible (group, action, (active) != 0)
 
-  if (GIMP_IS_MENU_DOCK (toplevel))
+  if (GIMP_IS_DOCK_WINDOW (toplevel))
     {
-      GimpMenuDock *menu_dock = GIMP_MENU_DOCK (toplevel);
+      GimpDock *dock = gimp_dock_window_get_dock (GIMP_DOCK_WINDOW (toplevel));
+      
+      if (GIMP_IS_MENU_DOCK (dock))
+        {
+          GimpMenuDock *menu_dock = GIMP_MENU_DOCK (toplevel);
 
-      SET_VISIBLE ("dock-show-image-menu",    TRUE);
-      SET_VISIBLE ("dock-auto-follow-active", TRUE);
+          SET_VISIBLE ("dock-show-image-menu",    TRUE);
+          SET_VISIBLE ("dock-auto-follow-active", TRUE);
 
-      SET_ACTIVE ("dock-show-image-menu",    menu_dock->show_image_menu);
-      SET_ACTIVE ("dock-auto-follow-active", menu_dock->auto_follow_active);
-    }
-  else
-    {
-      SET_VISIBLE ("dock-show-image-menu",    FALSE);
-      SET_VISIBLE ("dock-auto-follow-active", FALSE);
-    }
+          SET_ACTIVE ("dock-show-image-menu",    menu_dock->show_image_menu);
+          SET_ACTIVE ("dock-auto-follow-active", menu_dock->auto_follow_active);
+        }
+      else
+        {
+          SET_VISIBLE ("dock-show-image-menu",    FALSE);
+          SET_VISIBLE ("dock-auto-follow-active", FALSE);
+        }
 
-  if (GIMP_IS_DOCK (toplevel))
-    {
       /*  update the window actions only in the context of their
        *  own window (not in the context of some display or NULL)
        *  (see view-actions.c)
