@@ -23,6 +23,8 @@
 #include "dialogs/dialogs.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
+#include "widgets/gimpdockwindow.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -85,15 +87,22 @@ static void
 gimp_test_window_roles (GimpTestFixture *fixture,
                         gconstpointer    data)
 {
-  GtkWidget *dock    = gimp_dialog_factory_dock_new (global_dock_factory,
-                                                     gdk_screen_get_default ());
-  GtkWidget *toolbox = gimp_dialog_factory_dock_new (global_toolbox_factory,
-                                                     gdk_screen_get_default ());
+  GtkWidget      *dock           = NULL;
+  GtkWidget      *toolbox        = NULL;
+  GimpDockWindow *dock_window    = NULL;
+  GimpDockWindow *toolbox_window = NULL;
 
-  g_assert_cmpstr (gtk_window_get_role (GTK_WINDOW (toolbox)), ==,
-                   "gimp-toolbox");
-  g_assert_cmpstr (gtk_window_get_role (GTK_WINDOW (dock)), ==,
+  dock           = gimp_dialog_factory_dock_new (global_dock_factory,
+                                                 gdk_screen_get_default ());
+  toolbox        = gimp_dialog_factory_dock_new (global_toolbox_factory,
+                                                 gdk_screen_get_default ());
+  dock_window    = gimp_dock_window_from_dock (GIMP_DOCK (dock));
+  toolbox_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
+
+  g_assert_cmpstr (gtk_window_get_role (GTK_WINDOW (dock_window)), ==,
                    "gimp-dock");
+  g_assert_cmpstr (gtk_window_get_role (GTK_WINDOW (toolbox_window)), ==,
+                   "gimp-toolbox");
 
   /* When we get here we have a ref count of one, but the signals we
    * emit cause the reference count to become less than zero for some
