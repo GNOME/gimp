@@ -288,8 +288,6 @@ static void
 gimp_dock_real_book_removed (GimpDock     *dock,
                              GimpDockbook *dockbook)
 {
-  if (dock->p->dockbooks == NULL)
-    gtk_widget_destroy (GTK_WIDGET (dock));
 }
 
 

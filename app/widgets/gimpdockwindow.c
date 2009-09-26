@@ -104,6 +104,9 @@ static void       gimp_dock_window_image_flush       (GimpImage             *ima
                                                       GimpDockWindow        *dock_window);
 static void       gimp_dock_window_update_title      (GimpDockWindow        *dock_window);
 static gboolean   gimp_dock_window_update_title_idle (GimpDockWindow        *dock_window);
+static void       gimp_dock_window_dock_book_removed (GimpDockWindow        *dock_window,
+                                                      GimpDockbook          *dockbook,
+                                                      GimpDock              *dock);
 
 
 G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
@@ -250,6 +253,12 @@ gimp_dock_window_constructor (GType                  type,
   g_signal_connect_object (dock, "geometry-invalidated",
                            G_CALLBACK (gimp_dock_set_host_geometry_hints),
                            dock_window, 0);
+
+  /* Destroy the dock window when the last book is removed */
+  g_signal_connect_object (dock, "book-removed",
+                           G_CALLBACK (gimp_dock_window_dock_book_removed),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
 
   /* Done! */
   return object;
@@ -500,6 +509,17 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
   dock_window->p->update_title_idle_id = 0;
 
   return FALSE;
+}
+
+static void
+gimp_dock_window_dock_book_removed (GimpDockWindow *dock_window,
+                                    GimpDockbook   *dockbook,
+                                    GimpDock       *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  if (gimp_dock_get_dockbooks (dock) == NULL)
+    gtk_widget_destroy (GTK_WIDGET (dock_window));
 }
 
 gint
