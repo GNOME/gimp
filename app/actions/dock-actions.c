@@ -24,6 +24,7 @@
 #include "actions-types.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenudock.h"
 
