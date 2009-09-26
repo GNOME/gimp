@@ -128,13 +128,13 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
   widget_class->delete_event    = gimp_dock_window_delete_event;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
-                                   g_param_spec_object ("gimp-context", NULL, NULL,
+                                   g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
-                                   g_param_spec_object ("gimp-dialog-factory",
+                                   g_param_spec_object ("dialog-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DIALOG_FACTORY,
                                                         GIMP_PARAM_READWRITE |
