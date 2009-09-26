@@ -285,7 +285,6 @@ add_description_tab (GtkWidget   *notebook,
                              entry, 1, FALSE);
 
   entry = gimp_xmp_model_entry_new (XMP_SCHEMA_DUBLIN_CORE, "creator", mgui->xmp_model);
-  //register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "creator", mgui);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Author:"), 0.0, 0.5,
                              entry, 1, FALSE);
@@ -309,8 +308,7 @@ add_description_tab (GtkWidget   *notebook,
            _("_Description:"), 0.0, 0.5,
            scrolled_window, 1, FALSE);
 
-  entry = gtk_entry_new ();
-  register_entry_xref (entry, XMP_SCHEMA_PHOTOSHOP, "CaptionWriter", mgui);
+  entry = gimp_xmp_model_entry_new (XMP_SCHEMA_PHOTOSHOP, "CaptionWriter", mgui->xmp_model);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
            _("Description _writer:"), 0.0, 0.5,
            entry, 1, FALSE);
