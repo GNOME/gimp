@@ -245,12 +245,14 @@ dialogs_init (Gimp            *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
+  /* Toplevel */
   global_dialog_factory = gimp_dialog_factory_new ("toplevel",
                                                    gimp_get_user_context (gimp),
                                                    menu_factory,
                                                    NULL,
                                                    TRUE);
 
+  /* Toolbox */
   global_toolbox_factory = gimp_dialog_factory_new ("toolbox",
                                                     gimp_get_user_context (gimp),
                                                     menu_factory,
@@ -258,7 +260,10 @@ dialogs_init (Gimp            *gimp,
                                                     TRUE);
   gimp_dialog_factory_set_constructor (global_toolbox_factory,
                                        dialogs_dockable_constructor);
+  gimp_dialog_factory_set_dock_window_func (global_toolbox_factory,
+                                            dialogs_toolbox_dock_window_new);
 
+  /* Dock */
   global_dock_factory = gimp_dialog_factory_new ("dock",
                                                  gimp_get_user_context (gimp),
                                                  menu_factory,
@@ -266,12 +271,16 @@ dialogs_init (Gimp            *gimp,
                                                  TRUE);
   gimp_dialog_factory_set_constructor (global_dock_factory,
                                        dialogs_dockable_constructor);
+  gimp_dialog_factory_set_dock_window_func (global_dock_factory,
+                                            dialogs_dock_window_new);
 
+  /* Display */
   global_display_factory = gimp_dialog_factory_new ("display",
                                                     gimp_get_user_context (gimp),
                                                     menu_factory,
                                                     NULL,
                                                     FALSE);
+
 
   for (i = 0; i < G_N_ELEMENTS (toplevel_entries); i++)
     gimp_dialog_factory_register_entry (global_dialog_factory,

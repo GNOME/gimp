@@ -623,7 +623,8 @@ gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
 
 GtkWidget *
 gimp_toolbox_new (GimpDialogFactory *dialog_factory,
-                  GimpContext       *context)
+                  GimpContext       *context,
+                  GimpUIManager     *ui_manager)
 {
   GimpToolbox *toolbox;
 
@@ -631,12 +632,9 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
-                          "role",                "gimp-toolbox",
                           "context",             context,
                           "dialog-factory",      dialog_factory,
-                          "ui-manager-name",     "<Toolbox>",
-                          "gimp-context",        context,
-                          "gimp-dialog-factory", dialog_factory,
+                          "ui-manager",          ui_manager,
                           NULL);
 
   return GTK_WIDGET (toolbox);
@@ -694,7 +692,6 @@ toolbox_create_tools (GimpToolbox *toolbox,
       GimpToolInfo   *tool_info = list->data;
       GtkWidget      *button;
       GtkWidget      *image;
-      GimpDockWindow *dock_window;
       const gchar    *stock_id;
 
       button = gtk_radio_button_new (group);
@@ -730,8 +727,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
                         G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      dock_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
-      if (gimp_dock_window_get_ui_manager (dock_window))
+      if (gimp_dock_get_ui_manager (GIMP_DOCK (toolbox)))
         {
           GimpUIManager *ui_manager;
           GtkAction     *action;
@@ -746,7 +742,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          ui_manager  = gimp_dock_window_get_ui_manager (dock_window);
+          ui_manager  = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox));
           action      = gimp_ui_manager_find_action (ui_manager, "tools", name);
           g_free (name);
 

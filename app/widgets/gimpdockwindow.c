@@ -237,8 +237,6 @@ gimp_dock_window_constructor (GType                  type,
                                 G_CALLBACK (gimp_dock_window_image_flush),
                                 dock_window);
 
-  gimp_dock_window_set_dock (dock_window, GIMP_DOCK (dock_window));
-
   /* Done! */
   return object;
 }
@@ -421,7 +419,7 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   gimp_object_set_name (GIMP_OBJECT (info),
                         gtk_window_get_title (GTK_WINDOW (dock_window)));
 
-  gimp_session_info_set_widget (info, GTK_WIDGET (dock));
+  gimp_session_info_set_widget (info, GTK_WIDGET (dock_window));
   gimp_session_info_get_info (info);
   gimp_session_info_set_widget (info, NULL);
 
@@ -477,8 +475,15 @@ gimp_dock_window_update_title (GimpDockWindow *dock_window)
 static gboolean
 gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
 {
-  GimpDock *dock  = gimp_dock_window_get_dock (dock_window);
-  gchar    *title = gimp_dock_get_title (dock);
+  GimpDock *dock  = NULL;
+  gchar    *title = NULL;
+
+  dock = gimp_dock_window_get_dock (dock_window);
+
+  if (! dock)
+    return FALSE;
+
+  title = gimp_dock_get_title (dock);
 
   if (title)
     gtk_window_set_title (GTK_WINDOW (dock_window), title);
@@ -507,6 +512,9 @@ gimp_dock_window_set_dock (GimpDockWindow *dock_window,
 {
   g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_window));
   g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  /* FIXME: Handle more than one call to this function */
+  gtk_container_add (GTK_CONTAINER (dock_window), GTK_WIDGET (dock));
 
   /* Update window title now and when docks title is invalidated */
   gimp_dock_window_update_title (dock_window);
@@ -581,8 +589,5 @@ gimp_dock_window_from_dock (GimpDock *dock)
 GimpDock *
 gimp_dock_window_get_dock (GimpDockWindow *dock_window)
 {
-  /* Change this to return the GimpDock *inside* the GimpDockWindow
-   * once GimpDock is not a subclass of GimpDockWindow any longer
-   */
-  return GIMP_DOCK (dock_window);
+  return GIMP_DOCK (gtk_bin_get_child (GTK_BIN (dock_window)));
 }

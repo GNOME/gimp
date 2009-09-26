@@ -22,9 +22,6 @@
 #define __GIMP_DOCK_H__
 
 
-#include "widgets/gimpdockwindow.h"
-
-
 #define GIMP_TYPE_DOCK            (gimp_dock_get_type ())
 #define GIMP_DOCK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCK, GimpDock))
 #define GIMP_DOCK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCK, GimpDockClass))
@@ -37,18 +34,18 @@ typedef struct _GimpDockClass    GimpDockClass;
 typedef struct _GimpDockPrivate  GimpDockPrivate;
 
 /**
- * A top-level window containing GimpDockbooks.
+ * Contains a column of GimpDockbooks.
  */
 struct _GimpDock
 {
-  GimpDockWindow   parent_instance;
+  GtkVBox  parent_instance;
 
   GimpDockPrivate *p;
 };
 
 struct _GimpDockClass
 {
-  GimpDockWindowClass  parent_class;
+  GtkVBoxClass  parent_class;
 
   /*  virtual functions  */
   void    (* setup)                   (GimpDock       *dock,

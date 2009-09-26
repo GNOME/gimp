@@ -36,6 +36,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdocked.h"
+#include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpuimanager.h"
@@ -991,9 +992,10 @@ gimp_dockable_get_menu (GimpDockable  *dockable,
 void
 gimp_dockable_detach (GimpDockable *dockable)
 {
-  GimpDock  *src_dock;
-  GtkWidget *dock;
-  GtkWidget *dockbook;
+  GimpDock       *src_dock    = NULL;
+  GtkWidget      *dock        = NULL;
+  GtkWidget      *dockbook    = NULL;
+  GimpDockWindow *dock_window = NULL;
 
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockable->dockbook));
@@ -1002,7 +1004,8 @@ gimp_dockable_detach (GimpDockable *dockable)
 
   dock = gimp_dialog_factory_dock_new (gimp_dock_get_dialog_factory (src_dock),
                                        gtk_widget_get_screen (GTK_WIDGET (dockable)));
-  gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
+  dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
+  gtk_window_set_position (GTK_WINDOW (dock_window), GTK_WIN_POS_MOUSE);
   gimp_dock_setup (GIMP_DOCK (dock), src_dock);
 
   dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock))->menu_factory);
@@ -1016,6 +1019,7 @@ gimp_dockable_detach (GimpDockable *dockable)
 
   g_object_unref (dockable);
 
+  gtk_widget_show (GTK_WIDGET (dock_window));
   gtk_widget_show (dock);
 }
 

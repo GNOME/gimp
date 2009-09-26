@@ -37,6 +37,9 @@ typedef enum
 typedef GtkWidget * (* GimpDialogNewFunc)     (GimpDialogFactory      *factory,
                                                GimpContext            *context,
                                                gint                    view_size);
+typedef GtkWidget * (* GimpDialogNewDockFunc) (GimpDialogFactory      *factory,
+                                               GimpContext            *context,
+                                               GimpUIManager          *ui_manager);
 typedef GtkWidget * (* GimpDialogConstructor) (GimpDialogFactory      *factory,
                                                GimpDialogFactoryEntry *entry,
                                                GimpContext            *context,
@@ -84,7 +87,8 @@ struct _GimpDialogFactory
   GimpMenuFactory       *menu_factory;
 
   /*< private >*/
-  GimpDialogNewFunc      new_dock_func;
+  GimpDialogNewFunc      new_dock_window_func;
+  GimpDialogNewDockFunc  new_dock_func;
   GimpDialogConstructor  constructor;
 
   GList                 *registered_dialogs;
@@ -112,13 +116,16 @@ GType               gimp_dialog_factory_get_type    (void) G_GNUC_CONST;
 GimpDialogFactory * gimp_dialog_factory_new         (const gchar       *name,
                                                      GimpContext       *context,
                                                      GimpMenuFactory   *menu_factory,
-                                                     GimpDialogNewFunc  new_dock_func,
+                                                     GimpDialogNewDockFunc
+                                                                        new_dock_func,
                                                      gboolean           toggle_visibility);
 
 GimpDialogFactory * gimp_dialog_factory_from_name   (const gchar       *name);
 
 void        gimp_dialog_factory_set_constructor     (GimpDialogFactory *factory,
                                                      GimpDialogConstructor constructor);
+void        gimp_dialog_factory_set_dock_window_func(GimpDialogFactory *factory,
+                                                     GimpDialogNewFunc  new_dock_window_func);
 
 void        gimp_dialog_factory_register_entry      (GimpDialogFactory *factory,
                                                      const gchar       *identifier,

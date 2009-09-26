@@ -69,8 +69,15 @@ GtkWidget * dialogs_quit_get               (GimpDialogFactory *factory,
 
 GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory,
                                             GimpContext       *context,
+                                            GimpUIManager     *ui_manager);
+GtkWidget * dialogs_toolbox_dock_window_new
+                                           (GimpDialogFactory *factory,
+                                            GimpContext       *context,
                                             gint               view_size);
 GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            GimpUIManager     *ui_manager);
+GtkWidget * dialogs_dock_window_new        (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
 
