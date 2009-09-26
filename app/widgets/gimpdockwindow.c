@@ -201,7 +201,6 @@ gimp_dock_window_constructor (GType                  type,
   GimpDockWindow *dock_window;
   GimpGuiConfig  *config;
   GtkAccelGroup  *accel_group;
-  GimpDock       *dock;
 
   /* Init */
   object      = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -238,27 +237,7 @@ gimp_dock_window_constructor (GType                  type,
                                 G_CALLBACK (gimp_dock_window_image_flush),
                                 dock_window);
 
-  /* Update window title now and when docks title is invalidated */
-  gimp_dock_window_update_title (dock_window);
-  dock = gimp_dock_window_get_dock (dock_window);
-  g_signal_connect_object (dock, "title-invalidated",
-                           G_CALLBACK (gimp_dock_window_update_title),
-                           dock_window,
-                           G_CONNECT_SWAPPED);
-
-  /* Some docks like the toolbox dock needs to maintain special hints
-   * on its container GtkWindow, allow those to do so
-   */
-  gimp_dock_set_host_geometry_hints (dock, GTK_WINDOW (dock_window));
-  g_signal_connect_object (dock, "geometry-invalidated",
-                           G_CALLBACK (gimp_dock_set_host_geometry_hints),
-                           dock_window, 0);
-
-  /* Destroy the dock window when the last book is removed */
-  g_signal_connect_object (dock, "book-removed",
-                           G_CALLBACK (gimp_dock_window_dock_book_removed),
-                           dock_window,
-                           G_CONNECT_SWAPPED);
+  gimp_dock_window_set_dock (dock_window, GIMP_DOCK (dock_window));
 
   /* Done! */
   return object;
@@ -520,6 +499,35 @@ gimp_dock_window_dock_book_removed (GimpDockWindow *dock_window,
 
   if (gimp_dock_get_dockbooks (dock) == NULL)
     gtk_widget_destroy (GTK_WIDGET (dock_window));
+}
+
+void
+gimp_dock_window_set_dock (GimpDockWindow *dock_window,
+                           GimpDock       *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_window));
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  /* Update window title now and when docks title is invalidated */
+  gimp_dock_window_update_title (dock_window);
+  g_signal_connect_object (dock, "title-invalidated",
+                           G_CALLBACK (gimp_dock_window_update_title),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
+
+  /* Some docks like the toolbox dock needs to maintain special hints
+   * on its container GtkWindow, allow those to do so
+   */
+  gimp_dock_set_host_geometry_hints (dock, GTK_WINDOW (dock_window));
+  g_signal_connect_object (dock, "geometry-invalidated",
+                           G_CALLBACK (gimp_dock_set_host_geometry_hints),
+                           dock_window, 0);
+
+  /* Destroy the dock window when the last book is removed */
+  g_signal_connect_object (dock, "book-removed",
+                           G_CALLBACK (gimp_dock_window_dock_book_removed),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
 }
 
 gint
