@@ -200,36 +200,6 @@ typedef struct
 } WidgetXRef;
 
 static void
-entry_changed (GtkEntry *entry,
-               gpointer  user_data)
-{
-  WidgetXRef *xref = user_data;
-
-  xmp_model_set_scalar_property (xref->mgui->xmp_model,
-                                 xref->schema,
-                                 xref->property_name,
-                                 gtk_entry_get_text (entry));
-  update_icons (xref->mgui);
-}
-
-static void
-register_entry_xref (GtkWidget   *entry,
-                     const gchar *schema,
-                     const gchar *property_name,
-                     MetadataGui *mgui)
-{
-  WidgetXRef *xref;
-
-  xref = g_new (WidgetXRef, 1);
-  xref->schema = schema;
-  xref->property_name = property_name;
-  xref->widget_list = g_slist_prepend (NULL, entry);
-  xref->mgui = mgui;
-  g_signal_connect (GTK_ENTRY (entry), "changed",
-                    G_CALLBACK (entry_changed), xref);
-}
-
-static void
 text_changed (GtkTextBuffer *text_buffer,
               gpointer       user_data)
 {

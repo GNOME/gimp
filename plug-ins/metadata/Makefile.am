@@ -1,6 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpxmpmodelentry = libgimpxmpmodelentry.a
 libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
@@ -15,35 +14,29 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-noinst_LIBRARIES = libgimpxmpmodelentry.a
-
-libgimpxmpmodelentry_a_SOURCES = \
-	gimpxmpmodelentry.h	\
-	gimpxmpmodelentry.c	\
-	xmp-model.c		\
-	xmp-model.h
-
 libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = metadata
 
 metadata_SOURCES = \
-	metadata.c	\
-	metadata.h	\
-	base64.h	\
-	base64.c	\
-	xmp-model.h	\
-	xmp-model.c	\
-	xmp-parse.h	\
-	xmp-parse.c	\
-	xmp-encode.h	\
-	xmp-encode.c	\
-	xmp-schemas.h	\
-	xmp-schemas.c	\
-	interface.h	\
-	interface.c	\
-	exif-decode.h	\
-	exif-decode.c	
+	metadata.c		\
+	metadata.h		\
+	base64.h		\
+	base64.c		\
+	xmp-model.h		\
+	xmp-model.c		\
+	xmp-parse.h		\
+	xmp-parse.c		\
+	xmp-encode.h		\
+	xmp-encode.c		\
+	xmp-schemas.h		\
+	xmp-schemas.c		\
+	interface.h		\
+	interface.c		\
+	gimpxmpmodelentry.h	\
+	gimpxmpmodelentry.c	\
+	exif-decode.h		\
+	exif-decode.c
 #	exif-encode.h	\
 #	exif-encode.c	\
 #	iptc-decode.h	\
@@ -70,7 +63,6 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(libgimpxmpmodelentry)	\
 	$(libgimp)		\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\

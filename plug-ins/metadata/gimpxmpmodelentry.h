@@ -1,4 +1,4 @@
-/* gimpxmpmodelentry.h - custom entry widget linked to the xmp model
+/* GimpXmpModelEntry.h - custom entry widget linked to the xmp model
  *
  * Copyright (C) 2009, Róman Joost <romanofski@gimp.org>
  *
@@ -22,25 +22,37 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_XMP_MODEL_ENTRY   (gimp_xmp_model_entry_get_type ())
-#define GIMP_XMP_MODEL_ENTRY(obj)   (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_XMP_MODEL_ENTRY, GimpXMPModelEntry))
+#define GIMP_TYPE_XMP_MODEL_ENTRY               (gimp_xmp_model_entry_get_type ())
+#define GIMP_XMP_MODEL_ENTRY(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_XMP_MODEL_ENTRY, GimpXmpModelEntry))
+#define GIMP_XMP_MODEL_ENTRY_CLASS(klass)       (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_XMP_MODEL_ENTRY, XMPModelClass))
+#define GIMP_IS_XMP_MODEL_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_XMP_MODEL_ENTRY))
+#define GIMP_IS_XMP_MODEL_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_XMP_MODEL_ENTRY))
+#define GIMP_XMP_MODEL_ENTRY_GET_CLASS(obj)     (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_XMP_MODEL_ENTRY, XMPModelClass))
 
 
-typedef struct _GimpXMPModelEntry       GimpXMPModelEntry;
-typedef struct _GimpXMPModelEntryClass  GimpXMPModelEntryClass;
+typedef struct _GimpXmpModelEntry           GimpXmpModelEntry;
+typedef struct _GimpXmpModelEntryClass      GimpXmpModelEntryClass;
+typedef struct _GimpXmpModelEntryPrivate    GimpXmpModelEntryPrivate;
 
-struct _GimpXMPModelEntry
+
+struct _GimpXmpModelEntry
 {
   GtkEntry      parent_instance;
 
+  GimpXmpModelEntryPrivate  *p;
+};
+
+struct _GimpXmpModelEntryClass
+{
+  GtkEntryClass parent_class;
+};
+
+struct _GimpXmpModelEntryPrivate
+{
   const gchar   *schema_uri;
   const gchar   *property_name;
   XMPModel      *xmp_model;
-};
 
-struct _GimpXMPModelEntryClass
-{
-  GtkEntryClass parent_class;
 };
 
 
