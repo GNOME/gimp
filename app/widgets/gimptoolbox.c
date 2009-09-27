@@ -108,7 +108,7 @@ static void        toolbox_wilber_notify           (GimpGuiConfig  *config,
 
 static void        toolbox_tool_changed            (GimpContext    *context,
                                                     GimpToolInfo   *tool_info,
-                                                    gpointer        data);
+                                                    GimpToolbox    *toolbox);
 
 static void        toolbox_tool_reorder            (GimpContainer  *container,
                                                     GimpToolInfo   *tool_info,
@@ -119,7 +119,7 @@ static void        toolbox_tool_visible_notify     (GimpToolInfo   *tool_info,
                                                     GtkWidget      *button);
 
 static void        toolbox_tool_button_toggled     (GtkWidget      *widget,
-                                                    GimpToolInfo   *tool_info);
+                                                    GimpToolbox    *toolbox);
 static gboolean    toolbox_tool_button_press       (GtkWidget      *widget,
                                                     GdkEventButton *bevent,
                                                     GimpToolbox    *toolbox);
@@ -300,7 +300,7 @@ gimp_toolbox_constructor (GType                  type,
 
   g_signal_connect_object (context, "tool-changed",
                            G_CALLBACK (toolbox_tool_changed),
-                           toolbox->tool_wbox,
+                           toolbox,
                            0);
 
   gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox));
@@ -721,7 +721,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
 
       g_signal_connect (button, "toggled",
                         G_CALLBACK (toolbox_tool_button_toggled),
-                        tool_info);
+                        toolbox);
 
       g_signal_connect (button, "button-press-event",
                         G_CALLBACK (toolbox_tool_button_press),
@@ -860,7 +860,7 @@ toolbox_wilber_notify (GimpGuiConfig *config,
 static void
 toolbox_tool_changed (GimpContext  *context,
                       GimpToolInfo *tool_info,
-                      gpointer      data)
+                      GimpToolbox  *toolbox)
 {
   if (tool_info)
     {
@@ -872,14 +872,14 @@ toolbox_tool_changed (GimpContext  *context,
         {
           g_signal_handlers_block_by_func (toolbox_button,
                                            toolbox_tool_button_toggled,
-                                           tool_info);
+                                           toolbox);
 
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toolbox_button),
                                         TRUE);
 
           g_signal_handlers_unblock_by_func (toolbox_button,
                                              toolbox_tool_button_toggled,
-                                             tool_info);
+                                             toolbox);
         }
     }
 }
@@ -911,10 +911,11 @@ toolbox_tool_visible_notify (GimpToolInfo *tool_info,
 }
 
 static void
-toolbox_tool_button_toggled (GtkWidget    *widget,
-                             GimpToolInfo *tool_info)
+toolbox_tool_button_toggled (GtkWidget   *widget,
+                             GimpToolbox *toolbox)
 {
-  GtkWidget *toolbox = gtk_widget_get_toplevel (widget);
+  GimpToolInfo *tool_info = g_object_get_data (G_OBJECT (widget),
+                                               TOOL_INFO_DATA_KEY);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     gimp_context_set_tool (gimp_dock_get_context (GIMP_DOCK (toolbox)), tool_info);
