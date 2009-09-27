@@ -59,6 +59,7 @@ enum
   PROP_CONTEXT,
   PROP_DIALOG_FACTORY,
   PROP_UI_MANAGER_NAME,
+  PROP_ALLOW_DOCKBOOK_ABSENCE
 };
 
 
@@ -71,6 +72,8 @@ struct _GimpDockWindowPrivate
   gchar             *ui_manager_name;
   GimpUIManager     *ui_manager;
   GQuark             image_flush_handler_id;
+
+  gboolean           allow_dockbook_absence;
 
   guint              update_title_idle_id;
 
@@ -146,6 +149,13 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_ALLOW_DOCKBOOK_ABSENCE,
+                                   g_param_spec_boolean ("allow-dockbook-absence",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("default-height",
@@ -303,6 +313,10 @@ gimp_dock_window_set_property (GObject      *object,
       dock_window->p->ui_manager_name = g_value_dup_string (value);
       break;
 
+    case PROP_ALLOW_DOCKBOOK_ABSENCE:
+      dock_window->p->allow_dockbook_absence = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -329,6 +343,10 @@ gimp_dock_window_get_property (GObject    *object,
 
     case PROP_UI_MANAGER_NAME:
       g_value_set_string (value, dock_window->p->ui_manager_name);
+      break;
+
+    case PROP_ALLOW_DOCKBOOK_ABSENCE:
+      g_value_set_boolean (value, dock_window->p->allow_dockbook_absence);
       break;
 
     default:
@@ -502,7 +520,8 @@ gimp_dock_window_dock_book_removed (GimpDockWindow *dock_window,
 {
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
-  if (gimp_dock_get_dockbooks (dock) == NULL)
+  if (gimp_dock_get_dockbooks (dock) == NULL &&
+      ! dock_window->p->allow_dockbook_absence)
     gtk_widget_destroy (GTK_WIDGET (dock_window));
 }
 
