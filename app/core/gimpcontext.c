@@ -2521,7 +2521,7 @@ gimp_context_dynamics_dirty (GimpDynamicsOptions   *dynamics,
                              GimpContext           *context)
 {
   g_free (context->dynamics_name);
-  context->dynamics_name = g_strdup (GIMP_OBJECT (dynamics)->name);
+  context->dynamics_name = g_strdup (GIMP_DYNAMICS (dynamics)->name);
 }
 
 static void gimp_context_dynamics_removed    (GimpContainer    *container,
@@ -2596,7 +2596,7 @@ gimp_context_real_set_dynamics (GimpContext           *context,
                                0);
 
       if (dynamics != standard_dynamics)
-        context->dynamics_name = g_strdup (GIMP_OBJECT (dynamics)->name);
+        context->dynamics_name = g_strdup (GIMP_DYNAMICS (dynamics)->name);
     }
 
   g_object_notify (G_OBJECT (context), "dynamics");

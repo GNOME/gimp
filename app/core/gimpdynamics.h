@@ -26,6 +26,7 @@ typedef struct _GimpDynamicsOutput  GimpDynamicsOutput;
 
 struct _GimpDynamicsOutput
 {
+
   gboolean  pressure;
   gboolean  velocity;
   gboolean  direction;
@@ -62,6 +63,8 @@ typedef struct _GimpDynamics GimpDynamics;
 struct _GimpDynamics
 {
   GimpDataClass        parent_instance;
+
+  gchar               *name;
 
   GimpDynamicsOutput*  opacity_dynamics;
   GimpDynamicsOutput*  hardness_dynamics;
