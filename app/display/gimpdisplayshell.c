@@ -1162,6 +1162,15 @@ gimp_display_shell_new (GimpDisplay       *display,
   return GTK_WIDGET (shell);
 }
 
+GimpImageWindow *
+gimp_display_shell_get_window (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  return GIMP_IMAGE_WINDOW (gtk_widget_get_ancestor (GTK_WIDGET (shell),
+                                                     GIMP_TYPE_IMAGE_WINDOW));
+}
+
 void
 gimp_display_shell_reconnect (GimpDisplayShell *shell)
 {
