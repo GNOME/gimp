@@ -50,6 +50,7 @@
 #include "dialogs/dialogs.h"
 
 #include "session.h"
+#include "gimp-log.h"
 
 #include "gimp-intl.h"
 
@@ -151,15 +152,22 @@ session_init (Gimp *gimp)
                * entries and don't have any dialog factory entry, so
                * don't bother looking for entires for them
                */
-              if (!g_str_equal (entry_name, "dock"))
+              if (strcmp (entry_name, "dock"))
                 {
-                  info->toplevel_entry = gimp_dialog_factory_find_entry (factory,
-                                                                         entry_name);
-
-                  /* If we expected a dialog factory entry but failed
-                   * to find one, skip to add this session info object
-                   */
-                  skip = (info->toplevel_entry == NULL);
+                  GimpDialogFactoryEntry *entry =
+                    gimp_dialog_factory_find_entry (factory,
+                                                    entry_name);
+                  if (entry)
+                    {
+                      gimp_session_info_set_factory_entry (info, entry);
+                    }
+                  else
+                    {
+                      /* If we expected a dialog factory entry but failed
+                       * to find one, skip to add this session info object
+                       */
+                      skip = TRUE;
+                    }
                 }
 
               g_free (entry_name);
@@ -168,11 +176,19 @@ session_init (Gimp *gimp)
                 {
                   if (! skip)
                     {
+                      GIMP_LOG (DIALOG_FACTORY,
+                                "successfully parsed and added session info %p",
+                                info);
+
                       factory->session_infos =
                         g_list_append (factory->session_infos, info);
                     }
                   else
                     {
+                      GIMP_LOG (DIALOG_FACTORY,
+                                "failed to parse session info %p, not adding",
+                                info);
+
                       g_object_unref (info);
                     }
                 }

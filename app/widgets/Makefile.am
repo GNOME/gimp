@@ -128,6 +128,8 @@ libappwidgets_a_sources = \
 	gimpdnd-xds.h			\
 	gimpdock.c			\
 	gimpdock.h			\
+	gimpdockcolumns.c		\
+	gimpdockcolumns.h		\
 	gimpdockable.c			\
 	gimpdockable.h			\
 	gimpdockbook.c			\
@@ -259,6 +261,7 @@ libappwidgets_a_sources = \
 	gimpsessioninfo-dock.h		\
 	gimpsessioninfo-dockable.c	\
 	gimpsessioninfo-dockable.h	\
+	gimpsessioninfo-private.h	\
 	gimpsettingsbox.c		\
 	gimpsettingsbox.h		\
 	gimpsettingseditor.c		\

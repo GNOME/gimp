@@ -35,6 +35,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdockseparator.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
@@ -43,7 +44,8 @@ enum
 {
   PROP_0,
   PROP_CONTEXT,
-  PROP_DIALOG_FACTORY
+  PROP_DIALOG_FACTORY,
+  PROP_UI_MANAGER
 };
 
 enum
@@ -60,6 +62,7 @@ struct _GimpDockPrivate
 {
   GimpDialogFactory *dialog_factory;
   GimpContext       *context;
+  GimpUIManager     *ui_manager;
 
   GtkWidget         *main_vbox;
   GtkWidget         *vbox;
@@ -85,7 +88,7 @@ static void      gimp_dock_real_book_removed (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
 
 
-G_DEFINE_TYPE (GimpDock, gimp_dock, GIMP_TYPE_DOCK_WINDOW)
+G_DEFINE_TYPE (GimpDock, gimp_dock, GTK_TYPE_VBOX)
 
 #define parent_class gimp_dock_parent_class
 
@@ -161,6 +164,13 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_UI_MANAGER,
+                                   g_param_spec_object ("ui-manager",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_UI_MANAGER,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_type_class_add_private (klass, sizeof (GimpDockPrivate));
 }
 
@@ -207,6 +217,10 @@ gimp_dock_set_property (GObject      *object,
       dock->p->dialog_factory = g_value_get_object (value);
       break;
 
+    case PROP_UI_MANAGER:
+      dock->p->ui_manager = g_value_dup_object (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -231,6 +245,10 @@ gimp_dock_get_property (GObject    *object,
       g_value_set_object (value, dock->p->dialog_factory);
       break;
 
+    case PROP_UI_MANAGER:
+      g_value_set_object (value, dock->p->ui_manager);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -244,6 +262,12 @@ gimp_dock_destroy (GtkObject *object)
 
   while (dock->p->dockbooks)
     gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->p->dockbooks->data));
+
+  if (dock->p->ui_manager)
+    {
+      g_object_unref (dock->p->ui_manager);
+      dock->p->ui_manager = NULL;
+    }
 
   if (dock->p->context)
     {
@@ -264,8 +288,6 @@ static void
 gimp_dock_real_book_removed (GimpDock     *dock,
                              GimpDockbook *dockbook)
 {
-  if (dock->p->dockbooks == NULL)
-    gtk_widget_destroy (GTK_WIDGET (dock));
 }
 
 
@@ -371,6 +393,14 @@ gimp_dock_get_dialog_factory (GimpDock *dock)
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
   return dock->p->dialog_factory;
+}
+
+GimpUIManager *
+gimp_dock_get_ui_manager (GimpDock *dock)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+
+  return dock->p->ui_manager;
 }
 
 GList *

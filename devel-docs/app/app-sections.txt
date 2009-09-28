@@ -593,6 +593,7 @@ gimp_parasiterc_save
 
 <SECTION>
 <FILE>gimp-tags</FILE>
+<TITLE>Gimp-tags</TITLE>
 gimp_tags_user_install
 </SECTION>
 
@@ -914,6 +915,7 @@ gimp_channel_combine_mask
 
 <SECTION>
 <FILE>gimpchannel-project</FILE>
+<TITLE>GimpChannel-project</TITLE>
 gimp_channel_project_region
 </SECTION>
 
@@ -1948,6 +1950,7 @@ floating_sel_invalidate
 
 <SECTION>
 <FILE>gimplayer-project</FILE>
+<TITLE>GimpLayer-project</TITLE>
 gimp_layer_project_region
 </SECTION>
 
@@ -9527,6 +9530,7 @@ gimp_preview_cache_get_memsize
 
 <SECTION>
 <FILE>gimpprojectable</FILE>
+<TITLE>GimpProjectable</TITLE>
 GIMP_PROJECTABLE_GET_INTERFACE
 GimpProjectable
 gimp_projectable_invalidate

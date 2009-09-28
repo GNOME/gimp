@@ -18,6 +18,7 @@
     <menuitem action="layers-duplicate" />
     <menuitem action="layers-anchor" />
     <menuitem action="layers-merge-down" />
+    <menuitem action="layers-merge-group" />
     <menuitem action="layers-delete" />
     <separator />
     <menuitem action="layers-text-discard" />

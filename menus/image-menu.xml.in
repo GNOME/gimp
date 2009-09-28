@@ -372,6 +372,7 @@
       <placeholder name="Structure">
         <menuitem action="layers-anchor" />
         <menuitem action="layers-merge-down" />
+        <menuitem action="layers-merge-group" />
         <menuitem action="layers-delete" />
       </placeholder>
       <separator />
@@ -640,6 +641,9 @@
       <placeholder name="Docks">
         <menuitem action="windows-show-toolbox" />
       </placeholder>
+      <separator />
+      <menuitem action="windows-use-single-window-mode" />
+      <separator />
     </menu>
 
     <menu action="help-menu" name="Help">

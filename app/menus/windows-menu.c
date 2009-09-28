@@ -46,34 +46,34 @@
 #include "windows-menu.h"
 
 
-static void      windows_menu_display_add           (GimpContainer     *container,
-                                                     GimpDisplay       *display,
-                                                     GimpUIManager     *manager);
-static void      windows_menu_display_remove        (GimpContainer     *container,
-                                                     GimpDisplay       *display,
-                                                     GimpUIManager     *manager);
-static void      windows_menu_image_notify          (GimpDisplay       *display,
-                                                     const GParamSpec  *unused,
-                                                     GimpUIManager     *manager);
-static void      windows_menu_dock_added            (GimpDialogFactory *factory,
-                                                     GimpDock          *dock,
-                                                     GimpUIManager     *manager);
-static void      windows_menu_dock_removed          (GimpDialogFactory *factory,
-                                                     GimpDock          *dock,
-                                                     GimpUIManager     *manager);
-static gchar   * windows_menu_dock_to_merge_id      (GimpDock          *dock);
-static void      windows_menu_recent_add            (GimpContainer     *container,
-                                                     GimpSessionInfo   *info,
-                                                     GimpUIManager     *manager);
-static void      windows_menu_recent_remove         (GimpContainer     *container,
-                                                     GimpSessionInfo   *info,
-                                                     GimpUIManager     *manager);
-static gboolean  windows_menu_display_query_tooltip (GtkWidget         *widget,
-                                                     gint               x,
-                                                     gint               y,
-                                                     gboolean           keyboard_mode,
-                                                     GtkTooltip        *tooltip,
-                                                     GimpAction        *action);
+static void      windows_menu_display_add             (GimpContainer     *container,
+                                                       GimpDisplay       *display,
+                                                       GimpUIManager     *manager);
+static void      windows_menu_display_remove          (GimpContainer     *container,
+                                                       GimpDisplay       *display,
+                                                       GimpUIManager     *manager);
+static void      windows_menu_image_notify            (GimpDisplay       *display,
+                                                       const GParamSpec  *unused,
+                                                       GimpUIManager     *manager);
+static void      windows_menu_dock_window_added       (GimpDialogFactory *factory,
+                                                       GimpDockWindow    *dock_window,
+                                                       GimpUIManager     *manager);
+static void      windows_menu_dock_window_removed     (GimpDialogFactory *factory,
+                                                       GimpDockWindow    *dock_window,
+                                                       GimpUIManager     *manager);
+static gchar   * windows_menu_dock_window_to_merge_id (GimpDockWindow    *dock_window);
+static void      windows_menu_recent_add              (GimpContainer     *container,
+                                                       GimpSessionInfo   *info,
+                                                       GimpUIManager     *manager);
+static void      windows_menu_recent_remove           (GimpContainer     *container,
+                                                       GimpSessionInfo   *info,
+                                                       GimpUIManager     *manager);
+static gboolean  windows_menu_display_query_tooltip   (GtkWidget         *widget,
+                                                       gint               x,
+                                                       gint               y,
+                                                       gboolean           keyboard_mode,
+                                                       GtkTooltip        *tooltip,
+                                                       GimpAction        *action);
 
 
 void
@@ -104,21 +104,21 @@ windows_menu_setup (GimpUIManager *manager,
       windows_menu_display_add (manager->gimp->displays, display, manager);
     }
 
-  g_signal_connect_object (global_dock_factory, "dock-added",
-                           G_CALLBACK (windows_menu_dock_added),
+  g_signal_connect_object (global_dock_factory, "dock-window-added",
+                           G_CALLBACK (windows_menu_dock_window_added),
                            manager, 0);
-  g_signal_connect_object (global_dock_factory, "dock-removed",
-                           G_CALLBACK (windows_menu_dock_removed),
+  g_signal_connect_object (global_dock_factory, "dock-window-removed",
+                           G_CALLBACK (windows_menu_dock_window_removed),
                            manager, 0);
 
   for (list = global_dock_factory->open_dialogs;
        list;
        list = g_list_next (list))
     {
-      GimpDock *dock = list->data;
+      GimpDockWindow *dock_window = list->data;
 
-      if (GIMP_IS_DOCK (dock))
-        windows_menu_dock_added (global_dock_factory, dock, manager);
+      if (GIMP_IS_DOCK_WINDOW (dock_window))
+        windows_menu_dock_window_added (global_dock_factory, dock_window, manager);
     }
 
   g_signal_connect_object (global_recent_docks, "add",
@@ -244,9 +244,9 @@ windows_menu_image_notify (GimpDisplay      *display,
 }
 
 static void
-windows_menu_dock_added (GimpDialogFactory *factory,
-                         GimpDock          *dock,
-                         GimpUIManager     *manager)
+windows_menu_dock_window_added (GimpDialogFactory *factory,
+                                GimpDockWindow    *dock_window,
+                                GimpUIManager     *manager)
 {
   const gchar *ui_path;
   gchar       *action_name;
@@ -256,11 +256,11 @@ windows_menu_dock_added (GimpDialogFactory *factory,
 
   ui_path = g_object_get_data (G_OBJECT (manager), "image-menu-ui-path");
 
-  action_name = windows_actions_dock_to_action_name (dock);
+  action_name = windows_actions_dock_window_to_action_name (dock_window);
   action_path = g_strdup_printf ("%s/Windows/Docks",
                                  ui_path);
 
-  merge_key = windows_menu_dock_to_merge_id (dock);
+  merge_key = windows_menu_dock_window_to_merge_id (dock_window);
   merge_id  = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
 
   g_object_set_data (G_OBJECT (manager), merge_key,
@@ -277,11 +277,11 @@ windows_menu_dock_added (GimpDialogFactory *factory,
 }
 
 static void
-windows_menu_dock_removed (GimpDialogFactory *factory,
-                           GimpDock          *dock,
-                           GimpUIManager     *manager)
+windows_menu_dock_window_removed (GimpDialogFactory *factory,
+                                  GimpDockWindow    *dock_window,
+                                  GimpUIManager     *manager)
 {
-  gchar *merge_key = windows_menu_dock_to_merge_id (dock);
+  gchar *merge_key = windows_menu_dock_window_to_merge_id (dock_window);
   guint  merge_id  = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                           merge_key));
   if (merge_id)
@@ -293,10 +293,8 @@ windows_menu_dock_removed (GimpDialogFactory *factory,
 }
 
 static gchar *
-windows_menu_dock_to_merge_id (GimpDock *dock)
+windows_menu_dock_window_to_merge_id (GimpDockWindow *dock_window)
 {
-  GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
-
   return g_strdup_printf ("windows-dock-%04d-merge-id",
                           gimp_dock_window_get_id (dock_window));
 }

@@ -38,6 +38,7 @@
 #include "gimpdock.h"
 #include "gimpdockbook.h"
 #include "gimpdockable.h"
+#include "gimpdockwindow.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
 
@@ -53,8 +54,8 @@ typedef enum
 
 enum
 {
-  DOCK_ADDED,
-  DOCK_REMOVED,
+  DOCK_WINDOW_ADDED,
+  DOCK_WINDOW_REMOVED,
   LAST_SIGNAL
 };
 
@@ -122,25 +123,25 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
 
   klass->factories = g_hash_table_new (g_str_hash, g_str_equal);
 
-  factory_signals[DOCK_ADDED] =
-    g_signal_new ("dock-added",
+  factory_signals[DOCK_WINDOW_ADDED] =
+    g_signal_new ("dock-window-added",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_added),
+                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_window_added),
                   NULL, NULL,
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_DOCK);
+                  GIMP_TYPE_DOCK_WINDOW);
 
-  factory_signals[DOCK_REMOVED] =
-    g_signal_new ("dock-removed",
+  factory_signals[DOCK_WINDOW_REMOVED] =
+    g_signal_new ("dock-window-removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_removed),
+                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_window_removed),
                   NULL, NULL,
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_DOCK);
+                  GIMP_TYPE_DOCK_WINDOW);
 }
 
 static void
@@ -241,11 +242,11 @@ gimp_dialog_factory_finalize (GObject *object)
 }
 
 GimpDialogFactory *
-gimp_dialog_factory_new (const gchar       *name,
-                         GimpContext       *context,
-                         GimpMenuFactory   *menu_factory,
-                         GimpDialogNewFunc  new_dock_func,
-                         gboolean           toggle_visibility)
+gimp_dialog_factory_new (const gchar           *name,
+                         GimpContext           *context,
+                         GimpMenuFactory       *menu_factory,
+                         GimpDialogNewDockFunc  new_dock_func,
+                         gboolean               toggle_visibility)
 {
   GimpDialogFactory *factory;
   gpointer           key;
@@ -318,6 +319,16 @@ gimp_dialog_factory_set_constructor (GimpDialogFactory     *factory,
 }
 
 void
+gimp_dialog_factory_set_dock_window_func (GimpDialogFactory *factory,
+                                          GimpDialogNewFunc  new_dock_window_func)
+{
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+  g_return_if_fail (new_dock_window_func != NULL);
+
+  factory->new_dock_window_func = new_dock_window_func;
+}
+
+void
 gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
                                     const gchar       *identifier,
                                     const gchar       *name,
@@ -387,16 +398,51 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
     {
       GimpSessionInfo *info = list->data;
 
-      if ((info->toplevel_entry &&
-           ! strcmp (identifier, info->toplevel_entry->identifier)) ||
-          (info->dockable_entry &&
-           ! strcmp (identifier, info->dockable_entry->identifier)))
+      if (gimp_session_info_get_factory_entry (info) &&
+          g_str_equal (identifier,
+                       gimp_session_info_get_factory_entry (info)->identifier))
         {
           return info;
         }
     }
 
   return NULL;
+}
+
+/**
+ * gimp_dialog_factory_dialog_sane:
+ * @factory:
+ * @widget_factory:
+ * @widget_entry:
+ * @widget:
+ *
+ * Makes sure that the @widget with the given @widget_entry that was
+ * created by the given @widget_factory belongs to @efactory.
+ *
+ * Returns: %TRUE if that is the case, %FALSE otherwise.
+ **/
+static gboolean
+gimp_dialog_factory_dialog_sane (GimpDialogFactory      *factory,
+                                 GimpDialogFactory      *widget_factory,
+                                 GimpDialogFactoryEntry *widget_entry,
+                                 GtkWidget              *widget)
+{
+  /* Note that GimpDockWindows don't have any entry */
+  if (! widget_factory || (! widget_entry && ! GIMP_IS_DOCK_WINDOW (widget)))
+    {
+      g_warning ("%s: dialog was not created by a GimpDialogFactory",
+                 G_STRFUNC);
+      return FALSE;
+    }
+
+  if (widget_factory != factory)
+    {
+      g_warning ("%s: dialog was created by a different GimpDialogFactory",
+                 G_STRFUNC);
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static GtkWidget *
@@ -438,7 +484,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       info = gimp_dialog_factory_find_session_info (factory, identifier);
 
       if (info)
-        dialog = info->widget;
+        dialog = gimp_session_info_get_widget (info);
     }
 
   /*  create the dialog if it was not found  */
@@ -648,7 +694,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
           GimpSessionInfo *info;
 
           info = gimp_dialog_factory_find_session_info (factory, ids[i]);
-          if (info && info->widget)
+          if (info && gimp_session_info_get_widget (info))
             break;
         }
 
@@ -728,21 +774,36 @@ GtkWidget *
 gimp_dialog_factory_dock_new (GimpDialogFactory *factory,
                               GdkScreen         *screen)
 {
-  GtkWidget *dock;
+  GtkWidget     *dock_window = NULL;
+  GtkWidget     *dock        = NULL;
+  GimpUIManager *ui_manager  = NULL;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
   g_return_val_if_fail (factory->new_dock_func != NULL, NULL);
 
-  dock = factory->new_dock_func (factory, factory->context, 0);
+  /* Create a dock window to put the dock in. We need to create the
+   * dock window before the dock because the dock has a dependnecy to
+   * the ui manager in the dock window
+   */
+  dock_window = factory->new_dock_window_func (factory,
+                                               factory->context,
+                                               0);
+  gtk_window_set_screen (GTK_WINDOW (dock_window), screen);
+  gimp_dialog_factory_set_widget_data (dock_window, factory, NULL);
+
+  /* Create the dock */
+  ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
+  dock = factory->new_dock_func (factory, factory->context, ui_manager); 
 
   if (dock)
     {
-      gtk_window_set_screen (GTK_WINDOW (dock), screen);
+      /* Put the dock in the dock window */
+      gimp_dock_window_set_dock (GIMP_DOCK_WINDOW (dock_window),
+                                 GIMP_DOCK (dock));
 
-      gimp_dialog_factory_set_widget_data (dock, factory, NULL);
-
-      gimp_dialog_factory_add_dialog (factory, dock);
+      /* Add the dock window to the dialog factory */
+      gimp_dialog_factory_add_dialog (factory, dock_window);
     }
 
   return dock;
@@ -752,10 +813,11 @@ void
 gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                                 GtkWidget         *dialog)
 {
-  GimpDialogFactory      *dialog_factory;
-  GimpDialogFactoryEntry *entry;
-  GList                  *list;
-  gboolean                toplevel;
+  GimpDialogFactory      *dialog_factory = NULL;
+  GimpDialogFactoryEntry *entry          = NULL;
+  GimpSessionInfo        *info           = NULL;
+  GList                  *list           = NULL;
+  gboolean                toplevel       = FALSE;
 
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GTK_IS_WIDGET (dialog));
@@ -768,23 +830,15 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
-  if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
-    {
-      g_warning ("%s: dialog was not created by a GimpDialogFactory",
-                 G_STRFUNC);
-      return;
-    }
-
-  if (dialog_factory != factory)
-    {
-      g_warning ("%s: dialog was created by a different GimpDialogFactory",
-                 G_STRFUNC);
-      return;
-    }
+  if (! gimp_dialog_factory_dialog_sane (factory,
+                                         dialog_factory,
+                                         entry,
+                                         dialog))
+    return;
 
   toplevel = GTK_WIDGET_TOPLEVEL (dialog);
 
-  if (entry) /* dialog is a toplevel (but not a GimpDock) or a GimpDockable */
+  if (entry) /* dialog is a toplevel (but not a GimpDockWindow) or a GimpDockable */
     {
       GIMP_LOG (DIALOG_FACTORY, "adding %s \"%s\"",
                 toplevel ? "toplevel" : "dockable",
@@ -792,21 +846,21 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
-          GimpSessionInfo *info = list->data;
+          GimpSessionInfo *current_info = list->data;
 
-          if ((info->toplevel_entry == entry) ||
-              (info->dockable_entry == entry))
+          if (gimp_session_info_get_factory_entry (current_info) == entry)
             {
-              if (info->widget)
+              if (gimp_session_info_get_widget (current_info))
                 {
-                  if (entry->singleton)
+                  if (gimp_session_info_is_singleton (current_info))
                     {
                       g_warning ("%s: singleton dialog \"%s\" created twice",
                                  G_STRFUNC, entry->identifier);
 
                       GIMP_LOG (DIALOG_FACTORY,
                                 "corrupt session info: %p (widget %p)",
-                                info, info->widget);
+                                current_info,
+                                gimp_session_info_get_widget (current_info));
 
                       return;
                     }
@@ -814,98 +868,94 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                   continue;
                 }
 
-              info->widget = dialog;
+              gimp_session_info_set_widget (current_info, dialog);
 
               GIMP_LOG (DIALOG_FACTORY,
                         "updating session info %p (widget %p) for %s \"%s\"",
-                        info, info->widget,
+                        current_info,  gimp_session_info_get_widget (current_info),
                         toplevel ? "toplevel" : "dockable",
                         entry->identifier);
 
-              if (toplevel && entry->session_managed &&
+              if (toplevel &&
+                  gimp_session_info_is_session_managed (current_info) &&
                   ! GTK_WIDGET_VISIBLE (dialog))
                 {
-                  gimp_session_info_set_geometry (info);
+                  gimp_session_info_apply_geometry (current_info);
                 }
 
+              info = current_info;
               break;
             }
         }
 
-      if (! list) /*  didn't find a session info  */
+      if (! info)
         {
-          GimpSessionInfo *info = gimp_session_info_new ();
+          info = gimp_session_info_new ();
 
-          info->widget = dialog;
+          gimp_session_info_set_widget (info, dialog);
 
           GIMP_LOG (DIALOG_FACTORY,
                     "creating session info %p (widget %p) for %s \"%s\"",
-                    info, info->widget,
+                    info, gimp_session_info_get_widget (info),
                     toplevel ? "toplevel" : "dockable",
                     entry->identifier);
 
-          if (toplevel)
-            {
-              info->toplevel_entry = entry;
+          gimp_session_info_set_factory_entry (info, entry);
 
-              /*  if we create a new session info, we never call
-               *  gimp_session_info_set_geometry(), but still the
-               *  dialog needs GDK_HINT_USER_POS so it keeps its
-               *  position when hidden/shown within this(!) session.
-               */
-              if (entry->session_managed)
-                g_signal_connect (dialog, "configure-event",
-                                  G_CALLBACK (gimp_dialog_factory_set_user_pos),
-                                  NULL);
-            }
-          else
-            {
-              info->dockable_entry = entry;
-            }
+          /*  if we create a new session info, we never call
+           *  gimp_session_info_apply_geometry(), but still the
+           *  dialog needs GDK_HINT_USER_POS so it keeps its
+           *  position when hidden/shown within this(!) session.
+           */
+          if (gimp_session_info_is_session_managed (info))
+            g_signal_connect (dialog, "configure-event",
+                              G_CALLBACK (gimp_dialog_factory_set_user_pos),
+                              NULL);
 
           factory->session_infos = g_list_append (factory->session_infos, info);
         }
     }
-  else /*  dialog is a GimpDock  */
+  else /*  dialog is a GimpDockWindow  */
     {
       GIMP_LOG (DIALOG_FACTORY, "adding dock");
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
-          GimpSessionInfo *info = list->data;
+          GimpSessionInfo *current_info = list->data;
 
           /*  take the first empty slot  */
-          if (! info->toplevel_entry &&
-              ! info->dockable_entry &&
-              ! info->widget)
+          if (! gimp_session_info_get_factory_entry (current_info) &&
+              ! gimp_session_info_get_widget        (current_info))
             {
-              info->widget = dialog;
+              gimp_session_info_set_widget (current_info, dialog);
 
               GIMP_LOG (DIALOG_FACTORY,
                         "updating session info %p (widget %p) for dock",
-                        info, info->widget);
+                        current_info, gimp_session_info_get_widget (current_info));
 
-              gimp_session_info_set_geometry (info);
+              gimp_session_info_apply_geometry (current_info);
+
+              info = current_info;
 
               break;
             }
         }
 
-      if (! list) /*  didn't find a session info  */
+      if (! info)
         {
-          GimpSessionInfo *info = gimp_session_info_new ();
+          info = gimp_session_info_new ();
 
-          info->widget = dialog;
+          gimp_session_info_set_widget (info, dialog);
 
           GIMP_LOG (DIALOG_FACTORY,
                     "creating session info %p (widget %p) for dock",
-                    info, info->widget);
+                    info, gimp_session_info_get_widget (info));
 
           /*  let new docks appear at the pointer position  */
           gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 
           /*  if we create a new session info, we never call
-           *  gimp_session_info_set_geometry(), but still the
+           *  gimp_session_info_apply_geometry(), but still the
            *  dialog needs GDK_HINT_USER_POS so it keeps its
            *  position when hidden/shown within this(!) session.
            */
@@ -916,7 +966,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
           factory->session_infos = g_list_append (factory->session_infos, info);
         }
 
-      g_signal_emit (factory, factory_signals[DOCK_ADDED], 0, dialog);
+      g_signal_emit (factory, factory_signals[DOCK_WINDOW_ADDED], 0, dialog);
     }
 
   factory->open_dialogs = g_list_prepend (factory->open_dialogs, dialog);
@@ -926,7 +976,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                            factory,
                            G_CONNECT_SWAPPED);
 
-  if ((entry && entry->session_managed && toplevel) || GIMP_IS_DOCK (dialog))
+  if (gimp_session_info_is_session_managed (info))
     g_signal_connect_object (dialog, "configure-event",
                              G_CALLBACK (gimp_dialog_factory_dialog_configure),
                              factory,
@@ -997,19 +1047,11 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
-  if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
-    {
-      g_warning ("%s: dialog was not created by a GimpDialogFactory",
-                 G_STRFUNC);
-      return;
-    }
-
-  if (dialog_factory != factory)
-    {
-      g_warning ("%s: dialog was created by a different GimpDialogFactory",
-                 G_STRFUNC);
-      return;
-    }
+  if (! gimp_dialog_factory_dialog_sane (factory,
+                                         dialog_factory,
+                                         entry,
+                                         dialog))
+    return;
 
   GIMP_LOG (DIALOG_FACTORY, "removing \"%s\"",
             entry ? entry->identifier : "dock");
@@ -1018,14 +1060,14 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
     {
       GimpSessionInfo *session_info = list->data;
 
-      if (session_info->widget == dialog)
+      if (gimp_session_info_get_widget (session_info) == dialog)
         {
           GIMP_LOG (DIALOG_FACTORY,
                     "clearing session info %p (widget %p) for \"%s\"",
-                    session_info, session_info->widget,
+                    session_info, gimp_session_info_get_widget (session_info),
                     entry ? entry->identifier : "dock");
 
-          session_info->widget = NULL;
+          gimp_session_info_set_widget (session_info, NULL);
 
           gimp_dialog_factory_unset_widget_data (dialog);
 
@@ -1036,19 +1078,19 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                                                 gimp_dialog_factory_remove_dialog,
                                                 factory);
 
-          if (entry && entry->session_managed && GTK_WIDGET_TOPLEVEL (dialog))
+          if (gimp_session_info_is_session_managed (session_info))
             g_signal_handlers_disconnect_by_func (dialog,
                                                   gimp_dialog_factory_dialog_configure,
                                                   factory);
 
-          if (GIMP_IS_DOCK (dialog))
+          if (GIMP_IS_DOCK_WINDOW (dialog))
             {
               /*  don't save session info for empty docks  */
               factory->session_infos = g_list_remove (factory->session_infos,
                                                       session_info);
               g_object_unref (session_info);
 
-              g_signal_emit (factory, factory_signals[DOCK_REMOVED], 0,
+              g_signal_emit (factory, factory_signals[DOCK_WINDOW_REMOVED], 0,
                              dialog);
             }
 
@@ -1351,34 +1393,28 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
-  if (! dialog_factory || (! entry && ! GIMP_IS_DOCK (dialog)))
-    {
-      g_warning ("%s: dialog was not created by a GimpDialogFactory",
-                 G_STRFUNC);
-      return FALSE;
-    }
-
-  if (dialog_factory != factory)
-    {
-      g_warning ("%s: dialog was created by a different GimpDialogFactory",
-                 G_STRFUNC);
-      return FALSE;
-    }
+  if (! gimp_dialog_factory_dialog_sane (factory,
+                                         dialog_factory,
+                                         entry,
+                                         dialog))
+    return FALSE;
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
       GimpSessionInfo *session_info = list->data;
 
-      if (session_info->widget == dialog)
+      if (gimp_session_info_get_widget (session_info) == dialog)
         {
-          gimp_session_info_get_geometry (session_info);
+          gimp_session_info_read_geometry (session_info);
 
           GIMP_LOG (DIALOG_FACTORY,
                     "updated session info for \"%s\" from window geometry "
                     "(x=%d y=%d  %dx%d)",
                     entry ? entry->identifier : "dock",
-                    session_info->x, session_info->y,
-                    session_info->width, session_info->height);
+                    gimp_session_info_get_x (session_info),
+                    gimp_session_info_get_y (session_info),
+                    gimp_session_info_get_width (session_info),
+                    gimp_session_info_get_height (session_info));
 
           break;
         }
@@ -1402,19 +1438,18 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
        *  by the factory but don't save them if they don't want to be
        *  managed
        */
-      if (info->dockable_entry ||
-          (info->toplevel_entry && ! info->toplevel_entry->session_managed))
+      if (! gimp_session_info_is_session_managed (info))
         continue;
 
-      if (info->widget)
+      if (gimp_session_info_get_widget (info))
         gimp_session_info_get_info (info);
 
       gimp_config_writer_open (writer, "session-info");
       gimp_config_writer_string (writer,
                                  gimp_object_get_name (factory));
       gimp_config_writer_string (writer,
-                                 info->toplevel_entry ?
-                                 info->toplevel_entry->identifier :
+                                 gimp_session_info_get_factory_entry (info) ?
+                                 gimp_session_info_get_factory_entry (info)->identifier :
                                  "dock");
 
       GIMP_CONFIG_GET_INTERFACE (info)->serialize (GIMP_CONFIG (info),
@@ -1423,7 +1458,7 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
 
       gimp_config_writer_close (writer);
 
-      if (info->widget)
+      if (gimp_session_info_get_widget (info))
         gimp_session_info_clear_info (info);
     }
 }
@@ -1439,10 +1474,16 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
     {
       GimpSessionInfo *info = infos->data;
 
-      if (info->open)
+      if (gimp_session_info_get_open (info))
         {
           gimp_session_info_restore (info, factory);
           gimp_session_info_clear_info (info);
+        }
+      else
+        {
+          GIMP_LOG (DIALOG_FACTORY,
+                    "skipping to restore session info %p, not open",
+                    info);
         }
     }
 }
@@ -1458,7 +1499,7 @@ gimp_dialog_factories_clear_foreach (gconstpointer      key,
     {
       GimpSessionInfo *info = list->data;
 
-      if (info->widget)
+      if (gimp_session_info_get_widget (info))
         continue;
 
       /* FIXME: implement session info deletion */

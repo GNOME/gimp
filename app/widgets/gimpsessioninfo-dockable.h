@@ -22,6 +22,9 @@
 #define __GIMP_SESSION_INFO_DOCKABLE_H__
 
 
+/**
+ * Contains information about a dockable in the interface.
+ */
 struct _GimpSessionInfoDockable
 {
   gchar        *identifier;

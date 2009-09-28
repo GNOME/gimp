@@ -871,8 +871,8 @@ context_get_palette_editor (void)
 
   info = gimp_dialog_factory_find_session_info (dialog_factory,
                                                 "gimp-palette-editor");
-  if (info && info->widget)
-    return GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (info->widget)));
+  if (info && gimp_session_info_get_widget (info))
+    return GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));
 
   return NULL;
 }
@@ -889,8 +889,8 @@ context_get_colormap_editor (void)
 
   info = gimp_dialog_factory_find_session_info (dialog_factory,
                                                 "gimp-indexed-palette");
-  if (info && info->widget)
-    return GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (info->widget)));
+  if (info && gimp_session_info_get_widget (info))
+    return GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));
 
   return NULL;
 }

@@ -506,6 +506,18 @@ layers_merge_down_cmd_callback (GtkAction *action,
 }
 
 void
+layers_merge_group_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  gimp_image_merge_group_layer (image, GIMP_GROUP_LAYER (layer));
+  gimp_image_flush (image);
+}
+
+void
 layers_delete_cmd_callback (GtkAction *action,
                             gpointer   data)
 {

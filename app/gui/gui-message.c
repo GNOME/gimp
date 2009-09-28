@@ -105,8 +105,8 @@ gui_message_error_console (GimpMessageSeverity  severity,
       info = gimp_dialog_factory_find_session_info (global_dock_factory,
                                                     "gimp-error-console");
 
-      if (info && GIMP_IS_DOCKABLE (info->widget))
-        dockable = info->widget;
+      if (info && GIMP_IS_DOCKABLE (gimp_session_info_get_widget (info)))
+        dockable = gimp_session_info_get_widget (info);
     }
 
   if (! dockable)

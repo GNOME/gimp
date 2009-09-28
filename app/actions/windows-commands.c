@@ -23,15 +23,21 @@
 
 #include "actions-types.h"
 
+#include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "dialogs/dialogs.h"
 
+#include "actions.h"
 #include "windows-commands.h"
 
 
@@ -42,6 +48,22 @@ windows_show_toolbox_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   windows_show_toolbox ();
+}
+
+void
+windows_use_single_window_mode_cmd_callback (GtkAction *action,
+                                             gpointer   data)
+{
+  gboolean  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  Gimp     *gimp   = NULL;
+  return_if_no_gimp (gimp, data);
+
+  if (GIMP_GUI_CONFIG (gimp->config)->single_window_mode == active)
+    return;
+
+  g_object_set (gimp->config,
+                "single-window-mode", active,
+                NULL);
 }
 
 void
@@ -57,9 +79,9 @@ void
 windows_show_dock_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  GtkWindow *dock = g_object_get_data (G_OBJECT (action), "dock");
+  GtkWindow *dock_window = g_object_get_data (G_OBJECT (action), "dock-window");
 
-  gtk_window_present (dock);
+  gtk_window_present (dock_window);
 }
 
 void

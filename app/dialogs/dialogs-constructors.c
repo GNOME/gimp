@@ -45,6 +45,7 @@
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
+#include "widgets/gimpdockwindow.h"
 #include "widgets/gimpdocumentview.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimperrordialog.h"
@@ -216,23 +217,53 @@ dialogs_quit_get (GimpDialogFactory *factory,
 GtkWidget *
 dialogs_toolbox_get (GimpDialogFactory *factory,
                      GimpContext       *context,
-                     gint               view_size)
+                     GimpUIManager     *ui_manager)
 {
   /*  we pass "global_dock_factory", _not_ "global_toolbox_factory" to
    *  the toolbox constructor, because the global_toolbox_factory has no
    *  dockables registered
    */
-  return gimp_toolbox_new (global_dock_factory, context);
+  return gimp_toolbox_new (global_dock_factory,
+                           context,
+                           ui_manager);
+}
+
+GtkWidget *
+dialogs_toolbox_dock_window_new (GimpDialogFactory *factory,
+                                 GimpContext       *context,
+                                 gint               view_size)
+{
+  return g_object_new (GIMP_TYPE_DOCK_WINDOW,
+                       "role",                   "gimp-toolbox",
+                       "ui-manager-name",        "<Toolbox>",
+                       "allow-dockbook-absence", TRUE,
+                       "dialog-factory",         factory,
+                       "context",                context,
+                       NULL);
 }
 
 GtkWidget *
 dialogs_dock_new (GimpDialogFactory *factory,
                   GimpContext       *context,
-                  gint               view_size)
+                  GimpUIManager     *ui_manager)
 {
   return gimp_menu_dock_new (factory,
                              context->gimp->images,
                              context->gimp->displays);
+}
+
+GtkWidget *
+dialogs_dock_window_new (GimpDialogFactory *factory,
+                         GimpContext       *context,
+                         gint               view_size)
+{
+  return g_object_new (GIMP_TYPE_DOCK_WINDOW,
+                       "role",                   "gimp-dock",
+                       "ui-manager-name",        "<Dock>",
+                       "allow-dockbook-absence", FALSE,
+                       "dialog-factory",         factory,
+                       "context",                context,
+                       NULL);
 }
 
 

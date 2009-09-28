@@ -174,7 +174,7 @@ resize_dialog_new (GimpViewable       *viewable,
                                "unit",            unit,
                                "xresolution",     xres,
                                "yresolution",     yres,
-                               "keep-aspect",     TRUE,
+                               "keep-aspect",     FALSE,
                                "edit-resolution", FALSE,
                                NULL);
 
@@ -362,10 +362,6 @@ resize_dialog_reset (ResizeDialog *private)
                 "width",       private->old_width,
                 "height",      private->old_height,
                 "unit",        private->old_unit,
-                NULL);
-
-  g_object_set (private->box,
-                "keep-aspect", TRUE,
                 NULL);
 }
 

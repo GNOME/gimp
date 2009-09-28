@@ -165,11 +165,11 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
   factory = gimp_dialog_factory_from_name ("dock");
   session_info = gimp_dialog_factory_find_session_info (factory,
                                                         "gimp-cursor-view");
-  if (session_info && session_info->widget)
+  if (session_info && gimp_session_info_get_widget (session_info))
     {
       GtkWidget *cursor_view;
 
-      cursor_view = gtk_bin_get_child (GTK_BIN (session_info->widget));
+      cursor_view = gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (session_info)));
 
       if (cursor_view)
         {
@@ -201,11 +201,11 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
   factory = gimp_dialog_factory_from_name ("dock");
   session_info = gimp_dialog_factory_find_session_info (factory,
                                                         "gimp-cursor-view");
-  if (session_info && session_info->widget)
+  if (session_info && gimp_session_info_get_widget (session_info))
     {
       GtkWidget *cursor_view;
 
-      cursor_view = gtk_bin_get_child (GTK_BIN (session_info->widget));
+      cursor_view = gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (session_info)));
 
       if (cursor_view)
         gimp_cursor_view_clear_cursor (GIMP_CURSOR_VIEW (cursor_view));

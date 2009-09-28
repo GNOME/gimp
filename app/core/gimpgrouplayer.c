@@ -326,7 +326,7 @@ gimp_group_layer_duplicate (GimpItem *item,
 {
   GimpItem *new_item;
 
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_GROUP_LAYER), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
   new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
@@ -336,6 +336,8 @@ gimp_group_layer_duplicate (GimpItem *item,
       GimpGroupLayer *new_group = GIMP_GROUP_LAYER (new_item);
       gint            position  = 0;
       GList          *list;
+
+      gimp_group_layer_suspend_resize (new_group, FALSE);
 
       for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (group->children));
            list;
@@ -369,6 +371,13 @@ gimp_group_layer_duplicate (GimpItem *item,
                                  GIMP_OBJECT (new_child),
                                  position++);
         }
+
+      /* FIXME: need to change the item's extents to resume_resize()
+       * will actually reallocate the projection's pyramid
+       */
+      GIMP_ITEM (new_group)->width++;
+
+      gimp_group_layer_resume_resize (new_group, FALSE);
     }
 
   return new_item;
@@ -1002,7 +1011,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         {
           gimp_item_set_offset (item, x, y);
 
-          /*  invalidate the entire projection since the poition of
+          /*  invalidate the entire projection since the position of
            *  the children relative to each other might have changed
            *  in a way that happens to leave the group's width and
            *  height the same

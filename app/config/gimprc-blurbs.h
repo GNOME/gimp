@@ -343,6 +343,9 @@ N_("When enabled, the sample points are visible by default. This can also be " \
 #define SHOW_TOOLTIPS_BLURB \
 N_("Show a tooltip when the pointer hovers over an item.")
 
+#define SINGLE_WINDOW_MODE_BLURB \
+N_("Use GIMP in a single-window mode.")
+
 #define SPACE_BAR_ACTION_BLURB \
 N_("What to do when the space bar is pressed in the image window.")
 

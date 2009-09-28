@@ -33,34 +33,18 @@
 #define GIMP_SESSION_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SESSION_INFO, GimpSessionInfoClass))
 
 
-typedef struct _GimpSessionInfoClass  GimpSessionInfoClass;
+typedef struct _GimpSessionInfoPrivate  GimpSessionInfoPrivate;
+typedef struct _GimpSessionInfoClass    GimpSessionInfoClass;
 
+/**
+ * Contains session info for one toplevel window in the interface such
+ * as a dock, the empty-image-window, or the open/save dialog.
+ */
 struct _GimpSessionInfo
 {
-  GimpObject              parent_instance;
+  GimpObject  parent_instance;
 
-  gint                    x;
-  gint                    y;
-  gint                    width;
-  gint                    height;
-  gboolean                right_align;
-  gboolean                bottom_align;
-
-  /*  only valid while restoring and saving the session  */
-  gboolean                open;
-  gint                    screen;
-
-  /*  dialog specific list of GimpSessionInfoAux  */
-  GList                  *aux_info;
-
-  GtkWidget              *widget;
-
-  /*  only one of these is valid  */
-  GimpDialogFactoryEntry *toplevel_entry;
-  GimpDialogFactoryEntry *dockable_entry;
-
-  /*  list of GimpSessionInfoBook  */
-  GList                  *books;
+  GimpSessionInfoPrivate *p;
 };
 
 struct _GimpSessionInfoClass
@@ -69,18 +53,31 @@ struct _GimpSessionInfoClass
 };
 
 
-GType             gimp_session_info_get_type     (void) G_GNUC_CONST;
-
-GimpSessionInfo * gimp_session_info_new          (void);
-
-void              gimp_session_info_restore      (GimpSessionInfo   *info,
-                                                  GimpDialogFactory *factory);
-
-void              gimp_session_info_set_geometry (GimpSessionInfo   *info);
-void              gimp_session_info_get_geometry (GimpSessionInfo   *info);
-
-void              gimp_session_info_get_info     (GimpSessionInfo   *info);
-void              gimp_session_info_clear_info   (GimpSessionInfo   *info);
+GType                    gimp_session_info_get_type             (void) G_GNUC_CONST;
+GimpSessionInfo *        gimp_session_info_new                  (void);
+void                     gimp_session_info_restore              (GimpSessionInfo        *info,
+                                                                 GimpDialogFactory      *factory);
+void                     gimp_session_info_apply_geometry       (GimpSessionInfo        *info);
+void                     gimp_session_info_read_geometry        (GimpSessionInfo        *info);
+void                     gimp_session_info_get_info             (GimpSessionInfo        *info);
+void                     gimp_session_info_clear_info           (GimpSessionInfo        *info);
+gboolean                 gimp_session_info_is_singleton         (GimpSessionInfo        *info);
+gboolean                 gimp_session_info_is_session_managed   (GimpSessionInfo        *info);
+gboolean                 gimp_session_info_get_remember_size    (GimpSessionInfo        *info);
+gboolean                 gimp_session_info_get_remember_if_open (GimpSessionInfo        *info);
+GtkWidget              * gimp_session_info_get_widget           (GimpSessionInfo        *info);
+void                     gimp_session_info_set_widget           (GimpSessionInfo        *info,
+                                                                 GtkWidget              *widget);
+GimpDialogFactoryEntry * gimp_session_info_get_factory_entry    (GimpSessionInfo        *info);
+void                     gimp_session_info_set_factory_entry    (GimpSessionInfo        *info,
+                                                                 GimpDialogFactoryEntry *entry);
+gboolean                 gimp_session_info_get_open             (GimpSessionInfo        *info);
+void                     gimp_session_info_append_book          (GimpSessionInfo        *info,
+                                                                 GimpSessionInfoBook    *book);
+gint                     gimp_session_info_get_x                (GimpSessionInfo        *info);
+gint                     gimp_session_info_get_y                (GimpSessionInfo        *info);
+gint                     gimp_session_info_get_width            (GimpSessionInfo        *info);
+gint                     gimp_session_info_get_height           (GimpSessionInfo        *info);
 
 
 #endif  /* __GIMP_SESSION_INFO_H__ */

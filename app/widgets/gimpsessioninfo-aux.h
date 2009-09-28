@@ -22,6 +22,10 @@
 #define __GIMP_SESSION_INFO_AUX_H__
 
 
+/**
+ * Contains arbitrary data in the session management system, used for
+ * example by dockables to manage dockable-specific data.
+ */
 struct _GimpSessionInfoAux
 {
   gchar *name;

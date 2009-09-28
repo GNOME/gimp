@@ -28,10 +28,12 @@
 
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
+#include "gimpdockwindow.h"
 #include "gimpsessioninfo.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dock.h"
+#include "gimpsessioninfo-private.h"
 
 
 enum
@@ -96,7 +98,7 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
 
               if (token == G_TOKEN_LEFT_PAREN)
                 {
-                  info->books = g_list_append (info->books, book);
+                  info->p->books = g_list_append (info->p->books, book);
                   g_scanner_set_scope (scanner, scope);
                 }
               else
@@ -174,19 +176,21 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
                                 GimpDialogFactory *factory,
                                 GdkScreen         *screen)
 {
-  GimpDock *dock;
-  GList    *books;
+  GimpDock       *dock        = NULL;
+  GimpDockWindow *dock_window = NULL;
+  GList          *books       = NULL;
 
   g_return_if_fail (info != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory, screen));
+  dock        = GIMP_DOCK (gimp_dialog_factory_dock_new (factory, screen));
+  dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
 
-  if (dock && info->aux_info)
-    gimp_session_info_aux_set_list (GTK_WIDGET (dock), info->aux_info);
+  if (dock && info->p->aux_info)
+    gimp_session_info_aux_set_list (GTK_WIDGET (dock_window), info->p->aux_info);
 
-  for (books = info->books; books; books = g_list_next (books))
+  for (books = info->p->books; books; books = g_list_next (books))
     {
       GimpSessionInfoBook *book_info = books->data;
       GtkWidget           *dockbook;
@@ -207,5 +211,6 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
         }
     }
 
+  gtk_widget_show (GTK_WIDGET (dock_window));
   gtk_widget_show (GTK_WIDGET (dock));
 }

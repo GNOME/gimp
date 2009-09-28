@@ -59,6 +59,7 @@ enum
   PROP_CONTEXT,
   PROP_DIALOG_FACTORY,
   PROP_UI_MANAGER_NAME,
+  PROP_ALLOW_DOCKBOOK_ABSENCE
 };
 
 
@@ -71,6 +72,8 @@ struct _GimpDockWindowPrivate
   gchar             *ui_manager_name;
   GimpUIManager     *ui_manager;
   GQuark             image_flush_handler_id;
+
+  gboolean           allow_dockbook_absence;
 
   guint              update_title_idle_id;
 
@@ -93,7 +96,6 @@ static void       gimp_dock_window_style_set         (GtkWidget             *wid
                                                       GtkStyle              *prev_style);
 static gboolean   gimp_dock_window_delete_event      (GtkWidget             *widget,
                                                       GdkEventAny           *event);
-static GimpDock * gimp_dock_window_get_dock          (GimpDockWindow        *dock_window);
 static void       gimp_dock_window_display_changed   (GimpDockWindow        *dock_window,
                                                       GimpObject            *display,
                                                       GimpContext           *context);
@@ -105,6 +107,9 @@ static void       gimp_dock_window_image_flush       (GimpImage             *ima
                                                       GimpDockWindow        *dock_window);
 static void       gimp_dock_window_update_title      (GimpDockWindow        *dock_window);
 static gboolean   gimp_dock_window_update_title_idle (GimpDockWindow        *dock_window);
+static void       gimp_dock_window_dock_book_removed (GimpDockWindow        *dock_window,
+                                                      GimpDockbook          *dockbook,
+                                                      GimpDock              *dock);
 
 
 G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
@@ -126,13 +131,13 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
   widget_class->delete_event    = gimp_dock_window_delete_event;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
-                                   g_param_spec_object ("gimp-context", NULL, NULL,
+                                   g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
-                                   g_param_spec_object ("gimp-dialog-factory",
+                                   g_param_spec_object ("dialog-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DIALOG_FACTORY,
                                                         GIMP_PARAM_READWRITE |
@@ -144,6 +149,13 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_ALLOW_DOCKBOOK_ABSENCE,
+                                   g_param_spec_boolean ("allow-dockbook-absence",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("default-height",
@@ -199,7 +211,6 @@ gimp_dock_window_constructor (GType                  type,
   GimpDockWindow *dock_window;
   GimpGuiConfig  *config;
   GtkAccelGroup  *accel_group;
-  GimpDock       *dock;
 
   /* Init */
   object      = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -235,22 +246,6 @@ gimp_dock_window_constructor (GType                  type,
     gimp_container_add_handler (dock_window->p->context->gimp->images, "flush",
                                 G_CALLBACK (gimp_dock_window_image_flush),
                                 dock_window);
-
-  /* Update window title now and when docks title is invalidated */
-  gimp_dock_window_update_title (dock_window);
-  dock = gimp_dock_window_get_dock (dock_window);
-  g_signal_connect_object (dock, "title-invalidated",
-                           G_CALLBACK (gimp_dock_window_update_title),
-                           dock_window,
-                           G_CONNECT_SWAPPED);
-
-  /* Some docks like the toolbox dock needs to maintain special hints
-   * on its container GtkWindow, allow those to do so
-   */
-  gimp_dock_set_host_geometry_hints (dock, GTK_WINDOW (dock_window));
-  g_signal_connect_object (dock, "geometry-invalidated",
-                           G_CALLBACK (gimp_dock_set_host_geometry_hints),
-                           dock_window, 0);
 
   /* Done! */
   return object;
@@ -318,6 +313,10 @@ gimp_dock_window_set_property (GObject      *object,
       dock_window->p->ui_manager_name = g_value_dup_string (value);
       break;
 
+    case PROP_ALLOW_DOCKBOOK_ABSENCE:
+      dock_window->p->allow_dockbook_absence = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -344,6 +343,10 @@ gimp_dock_window_get_property (GObject    *object,
 
     case PROP_UI_MANAGER_NAME:
       g_value_set_string (value, dock_window->p->ui_manager_name);
+      break;
+
+    case PROP_ALLOW_DOCKBOOK_ABSENCE:
+      g_value_set_boolean (value, dock_window->p->allow_dockbook_absence);
       break;
 
     default:
@@ -434,23 +437,14 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   gimp_object_set_name (GIMP_OBJECT (info),
                         gtk_window_get_title (GTK_WINDOW (dock_window)));
 
-  info->widget = GTK_WIDGET (dock);
+  gimp_session_info_set_widget (info, GTK_WIDGET (dock_window));
   gimp_session_info_get_info (info);
-  info->widget = NULL;
+  gimp_session_info_set_widget (info, NULL);
 
   gimp_container_add (global_recent_docks, GIMP_OBJECT (info));
   g_object_unref (info);
 
   return FALSE;
-}
-
-static GimpDock *
-gimp_dock_window_get_dock (GimpDockWindow *dock_window)
-{
-  /* Change this to return the GimpDock *inside* the GimpDockWindow
-   * once GimpDock is not a subclass of GimpDockWindow any longer
-   */
-  return GIMP_DOCK (dock_window);
 }
 
 static void
@@ -499,8 +493,15 @@ gimp_dock_window_update_title (GimpDockWindow *dock_window)
 static gboolean
 gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
 {
-  GimpDock *dock  = gimp_dock_window_get_dock (dock_window);
-  gchar    *title = gimp_dock_get_title (dock);
+  GimpDock *dock  = NULL;
+  gchar    *title = NULL;
+
+  dock = gimp_dock_window_get_dock (dock_window);
+
+  if (! dock)
+    return FALSE;
+
+  title = gimp_dock_get_title (dock);
 
   if (title)
     gtk_window_set_title (GTK_WINDOW (dock_window), title);
@@ -510,6 +511,50 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
   dock_window->p->update_title_idle_id = 0;
 
   return FALSE;
+}
+
+static void
+gimp_dock_window_dock_book_removed (GimpDockWindow *dock_window,
+                                    GimpDockbook   *dockbook,
+                                    GimpDock       *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  if (gimp_dock_get_dockbooks (dock) == NULL &&
+      ! dock_window->p->allow_dockbook_absence)
+    gtk_widget_destroy (GTK_WIDGET (dock_window));
+}
+
+void
+gimp_dock_window_set_dock (GimpDockWindow *dock_window,
+                           GimpDock       *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_window));
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  /* FIXME: Handle more than one call to this function */
+  gtk_container_add (GTK_CONTAINER (dock_window), GTK_WIDGET (dock));
+
+  /* Update window title now and when docks title is invalidated */
+  gimp_dock_window_update_title (dock_window);
+  g_signal_connect_object (dock, "title-invalidated",
+                           G_CALLBACK (gimp_dock_window_update_title),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
+
+  /* Some docks like the toolbox dock needs to maintain special hints
+   * on its container GtkWindow, allow those to do so
+   */
+  gimp_dock_set_host_geometry_hints (dock, GTK_WINDOW (dock_window));
+  g_signal_connect_object (dock, "geometry-invalidated",
+                           G_CALLBACK (gimp_dock_set_host_geometry_hints),
+                           dock_window, 0);
+
+  /* Destroy the dock window when the last book is removed */
+  g_signal_connect_object (dock, "book-removed",
+                           G_CALLBACK (gimp_dock_window_dock_book_removed),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
 }
 
 gint
@@ -550,4 +595,18 @@ gimp_dock_window_from_dock (GimpDock *dock)
     return GIMP_DOCK_WINDOW (toplevel);
   else
     return NULL;
+}
+
+/**
+ * gimp_dock_window_get_dock:
+ * @dock_window:
+ *
+ * Get the #GimpDock within the #GimpDockWindow.
+ *
+ * Returns: 
+ **/
+GimpDock *
+gimp_dock_window_get_dock (GimpDockWindow *dock_window)
+{
+  return GIMP_DOCK (gtk_bin_get_child (GTK_BIN (dock_window)));
 }

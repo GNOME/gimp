@@ -1428,8 +1428,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   if (session_info)
     {
-      width  = session_info->width;
-      height = session_info->height;
+      width  = gimp_session_info_get_width  (session_info);
+      height = gimp_session_info_get_height (session_info);
     }
   else
     {
