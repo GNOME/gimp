@@ -503,7 +503,7 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
       GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
       GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
 
-      if (gimp_image_window_get_active_display (window) == shell->display)
+      if (gimp_image_window_get_active_shell (window) == shell)
         {
           /* If the window is resized just center the image in it when it
            * has change size

@@ -386,12 +386,12 @@ gimp_display_new (Gimp              *gimp,
                                            display_factory);
 
   /* FIXME image window */
-  gimp_image_window_add_display (GIMP_IMAGE_WINDOW (display->shell),
-                                 display);
+  gimp_image_window_add_shell (GIMP_IMAGE_WINDOW (display->shell),
+                               GIMP_DISPLAY_SHELL (display->shell));
 
   /* FIXME image window */
-  gimp_image_window_set_active_display (GIMP_IMAGE_WINDOW (display->shell),
-                                        display);
+  gimp_image_window_set_active_shell (GIMP_IMAGE_WINDOW (display->shell),
+                                      GIMP_DISPLAY_SHELL (display->shell));
 
   /* FIXME image window */
   g_signal_connect (GIMP_IMAGE_WINDOW (display->shell)->statusbar, "cancel",

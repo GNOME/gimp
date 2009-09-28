@@ -315,11 +315,11 @@ static gboolean
 gimp_image_window_delete_event (GtkWidget   *widget,
                                 GdkEventAny *event)
 {
-  GimpImageWindow *window  = GIMP_IMAGE_WINDOW (widget);
-  GimpDisplay     *display = gimp_image_window_get_active_display (window);
+  GimpImageWindow  *window = GIMP_IMAGE_WINDOW (widget);
+  GimpDisplayShell *shell  = gimp_image_window_get_active_shell (window);
 
   /* FIXME multiple shells */
-  gimp_display_shell_close (GIMP_DISPLAY_SHELL (display->shell), FALSE);
+  gimp_display_shell_close (shell, FALSE);
 
   return TRUE;
 }
@@ -347,14 +347,10 @@ gimp_image_window_configure_event (GtkWidget         *widget,
       event->height != current_height)
     {
       /* FIXME multiple shells */
-      GimpDisplay *display = gimp_image_window_get_active_display (window);
+      GimpDisplayShell *shell = gimp_image_window_get_active_shell (window);
 
-      if (display->image)
-        {
-          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
-
-          shell->size_allocate_from_configure_event = TRUE;
-        }
+      if (shell->display->image)
+        shell->size_allocate_from_configure_event = TRUE;
     }
 
   return TRUE;
@@ -364,8 +360,8 @@ static gboolean
 gimp_image_window_window_state_event (GtkWidget           *widget,
                                       GdkEventWindowState *event)
 {
-  GimpImageWindow *window  = GIMP_IMAGE_WINDOW (widget);
-  GimpDisplay     *display = gimp_image_window_get_active_display (window);
+  GimpImageWindow  *window = GIMP_IMAGE_WINDOW (widget);
+  GimpDisplayShell *shell  = gimp_image_window_get_active_shell (window);
 
   window->window_state = event->new_window_state;
 
@@ -385,7 +381,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
       gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->statusbar),
                                          ! fullscreen);
 
-      gimp_display_shell_appearance_update (GIMP_DISPLAY_SHELL (display->shell));
+      gimp_display_shell_appearance_update (shell);
     }
 
   if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
@@ -399,7 +395,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
       if (iconified)
         {
-          if (gimp_displays_get_num_visible (display->gimp) == 0)
+          if (gimp_displays_get_num_visible (shell->display->gimp) == 0)
             {
               GIMP_LOG (WM, "No displays visible any longer");
 
@@ -413,8 +409,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
       if (gimp_progress_is_active (GIMP_PROGRESS (window->statusbar)))
         {
-          GimpStatusbar    *statusbar = GIMP_STATUSBAR (window->statusbar);
-          GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (display->shell);
+          GimpStatusbar *statusbar = GIMP_STATUSBAR (window->statusbar);
 
           if (iconified)
             gimp_statusbar_override_window_title (statusbar);
@@ -457,7 +452,7 @@ gimp_image_window_style_set (GtkWidget *widget,
    *  set by gimp. All other displays should be placed by the window
    *  manager. See http://bugzilla.gnome.org/show_bug.cgi?id=559580
    */
-  if (! gimp_image_window_get_active_display (window)->image)
+  if (! gimp_image_window_get_active_shell (window)->display->image)
     geometry_mask |= GDK_HINT_USER_POS;
 
   gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
@@ -470,87 +465,88 @@ gimp_image_window_style_set (GtkWidget *widget,
 /*  public functions  */
 
 void
-gimp_image_window_add_display (GimpImageWindow *window,
-                               GimpDisplay     *display)
+gimp_image_window_add_shell (GimpImageWindow  *window,
+                             GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (g_list_find (window->displays, display) == NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (g_list_find (window->shells, shell) == NULL);
 
   /* FIXME multiple shells */
-  g_assert (window->displays == NULL);
+  g_assert (window->shells == NULL);
 
-  window->displays = g_list_append (window->displays, display);
+  window->shells = g_list_append (window->shells, shell);
 
   /* FIXME multiple shells */
   gtk_box_pack_start (GTK_BOX (window->main_vbox),
-                      GIMP_DISPLAY_SHELL (display->shell)->disp_vbox,
+                      shell->disp_vbox,
                       TRUE, TRUE, 0);
-  gtk_widget_show (GIMP_DISPLAY_SHELL (display->shell)->disp_vbox);
+  gtk_widget_show (shell->disp_vbox);
 }
 
 void
-gimp_image_window_set_active_display (GimpImageWindow *window,
-                                      GimpDisplay     *display)
+gimp_image_window_set_active_shell (GimpImageWindow  *window,
+                                    GimpDisplayShell *shell)
 {
-  GimpDisplayShell *active_shell;
+  GimpDisplay *active_display;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (display == window->active_display)
+  if (shell == window->active_shell)
     return;
 
-  if (window->active_display)
+  if (window->active_shell)
     {
-      g_signal_handlers_disconnect_by_func (window->active_display,
+      active_display = window->active_shell->display;
+
+      g_signal_handlers_disconnect_by_func (active_display,
                                             gimp_image_window_image_notify,
                                             window);
 
-      active_shell = GIMP_DISPLAY_SHELL (window->active_display->shell);
-
-      g_signal_handlers_disconnect_by_func (active_shell,
+      g_signal_handlers_disconnect_by_func (window->active_shell,
                                             gimp_image_window_shell_scaled,
                                             window);
-      g_signal_handlers_disconnect_by_func (active_shell,
+      g_signal_handlers_disconnect_by_func (window->active_shell,
                                             gimp_image_window_shell_title_notify,
                                             window);
-      g_signal_handlers_disconnect_by_func (active_shell,
+      g_signal_handlers_disconnect_by_func (window->active_shell,
                                             gimp_image_window_shell_status_notify,
                                             window);
-      g_signal_handlers_disconnect_by_func (active_shell,
+      g_signal_handlers_disconnect_by_func (window->active_shell,
                                             gimp_image_window_shell_icon_notify,
                                             window);
     }
 
-  window->active_display = display;
+  window->active_shell = shell;
 
-  g_signal_connect (window->active_display, "notify::image",
+  active_display = window->active_shell->display;
+
+  g_signal_connect (active_display, "notify::image",
                     G_CALLBACK (gimp_image_window_image_notify),
                     window);
 
-  active_shell = GIMP_DISPLAY_SHELL (window->active_display->shell);
+  gimp_statusbar_set_shell (GIMP_STATUSBAR (window->statusbar),
+                            window->active_shell);
 
-  gimp_statusbar_set_shell (GIMP_STATUSBAR (window->statusbar), active_shell);
-
-  g_signal_connect (active_shell, "scaled",
+  g_signal_connect (window->active_shell, "scaled",
                     G_CALLBACK (gimp_image_window_shell_scaled),
                     window);
   /* FIXME: "title" later */
-  g_signal_connect (active_shell, "notify::gimp-title",
+  g_signal_connect (window->active_shell, "notify::gimp-title",
                     G_CALLBACK (gimp_image_window_shell_title_notify),
                     window);
-  g_signal_connect (active_shell, "notify::status",
+  g_signal_connect (window->active_shell, "notify::status",
                     G_CALLBACK (gimp_image_window_shell_status_notify),
                     window);
   /* FIXME: "icon" later */
-  g_signal_connect (active_shell, "notify::gimp-icon",
+  g_signal_connect (window->active_shell, "notify::gimp-icon",
                     G_CALLBACK (gimp_image_window_shell_icon_notify),
                     window);
 
-  gimp_display_shell_appearance_update (active_shell);
+  gimp_display_shell_appearance_update (window->active_shell);
 
-  if (! display->image)
+  if (! active_display->image)
     {
       gimp_statusbar_empty (GIMP_STATUSBAR (window->statusbar));
 
@@ -559,16 +555,15 @@ gimp_image_window_set_active_display (GimpImageWindow *window,
                                        GTK_WIDGET (window));
     }
 
-  gimp_ui_manager_update (window->menubar_manager,
-                          window->active_display);
+  gimp_ui_manager_update (window->menubar_manager, active_display);
 }
 
-GimpDisplay *
-gimp_image_window_get_active_display (GimpImageWindow *window)
+GimpDisplayShell *
+gimp_image_window_get_active_shell (GimpImageWindow *window)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
 
-  return window->active_display;
+  return window->active_shell;
 }
 
 void
@@ -606,7 +601,6 @@ void
 gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                gboolean         grow_only)
 {
-  GimpDisplay      *active_display;
   GimpDisplayShell *active_shell;
   GtkWidget        *widget;
   GdkScreen        *screen;
@@ -625,8 +619,7 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   /* FIXME this so needs cleanup and shell/window separation */
 
-  active_display = gimp_image_window_get_active_display (window);
-  active_shell   = GIMP_DISPLAY_SHELL (active_display->shell);
+  active_shell = gimp_image_window_get_active_shell (window);
 
   widget = GTK_WIDGET (window);
   screen = gtk_widget_get_screen (widget);
@@ -635,8 +628,8 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                               gtk_widget_get_window (widget));
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
-  width  = SCALEX (active_shell, gimp_image_get_width  (active_display->image));
-  height = SCALEY (active_shell, gimp_image_get_height (active_display->image));
+  width  = SCALEX (active_shell, gimp_image_get_width  (active_shell->display->image));
+  height = SCALEY (active_shell, gimp_image_get_height (active_shell->display->image));
 
   disp_width  = active_shell->disp_width;
   disp_height = active_shell->disp_height;
@@ -744,10 +737,9 @@ gimp_image_window_shell_events (GtkWidget       *widget,
                                 GdkEvent        *event,
                                 GimpImageWindow *window)
 {
-  GimpDisplay *display = gimp_image_window_get_active_display (window);
+  GimpDisplayShell *shell = gimp_image_window_get_active_shell (window);
 
-  return gimp_display_shell_events (widget, event,
-                                    GIMP_DISPLAY_SHELL (display->shell));
+  return gimp_display_shell_events (widget, event, shell);
 }
 
 static void

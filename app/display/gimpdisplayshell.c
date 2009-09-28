@@ -1605,7 +1605,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
       GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
       GimpContext     *context;
 
-      if (gimp_image_window_get_active_display (window) == shell->display)
+      if (gimp_image_window_get_active_shell (window) == shell)
         {
           gimp_ui_manager_update (window->menubar_manager, shell->display);
         }

@@ -379,7 +379,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
           gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, real_new_scale);
           gimp_display_shell_scaled (shell);
 
-          if (gimp_image_window_get_active_display (window) == shell->display)
+          if (gimp_image_window_get_active_shell (window) == shell)
             {
               gimp_image_window_shrink_wrap (window, FALSE);
             }
@@ -671,7 +671,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
       GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
       GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
 
-      if (gimp_image_window_get_active_display (window) == shell->display)
+      if (gimp_image_window_get_active_shell (window) == shell)
         {
           gimp_image_window_shrink_wrap (window, grow_only);
         }

@@ -117,7 +117,7 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  if (gimp_image_window_get_active_display (window) == shell->display &&
+  if (gimp_image_window_get_active_shell (window) == shell &&
       window->menubar)
     {
       if (show)
@@ -153,7 +153,7 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  if (gimp_image_window_get_active_display (window) == shell->display)
+  if (gimp_image_window_get_active_shell (window) == shell)
     {
       gimp_statusbar_set_visible (GIMP_STATUSBAR (window->statusbar), show);
     }
@@ -613,7 +613,7 @@ appearance_set_action_active (GimpDisplayShell *shell,
   GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
   GimpContext     *context;
 
-  if (gimp_image_window_get_active_display (window) == shell->display)
+  if (gimp_image_window_get_active_shell (window) == shell)
     {
       GimpActionGroup *action_group;
 
@@ -647,7 +647,7 @@ appearance_set_action_color (GimpDisplayShell *shell,
   GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
   GimpContext     *context;
 
-  if (gimp_image_window_get_active_display (window) == shell->display)
+  if (gimp_image_window_get_active_shell (window) == shell)
     {
       GimpActionGroup *action_group;
 

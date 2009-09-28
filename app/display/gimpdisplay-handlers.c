@@ -166,7 +166,7 @@ gimp_display_saved_handler (GimpImage   *image,
   GtkWidget       *toplevel = gtk_widget_get_toplevel (display->shell);
   GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
 
-  if (gimp_image_window_get_active_display (window) == display)
+  if (gimp_image_window_get_active_shell (window)->display == display)
     {
       gchar *filename  = file_utils_uri_display_name (uri);
 
@@ -186,7 +186,7 @@ gimp_display_exported_handler (GimpImage   *image,
   GtkWidget       *toplevel = gtk_widget_get_toplevel (display->shell);
   GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
 
-  if (gimp_image_window_get_active_display (window) == display)
+  if (gimp_image_window_get_active_shell (window)->display == display)
     {
       gchar *filename  = file_utils_uri_display_name (uri);
 

@@ -45,7 +45,7 @@ gimp_display_shell_progress_get_real_progress (GimpProgress *progress)
   GtkWidget        *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
   GimpImageWindow  *window   = GIMP_IMAGE_WINDOW (toplevel);
 
-  if (gimp_image_window_get_active_display (window) == shell->display)
+  if (gimp_image_window_get_active_shell (window) == shell)
     return GIMP_PROGRESS (window->statusbar);
   else
     return NULL;
