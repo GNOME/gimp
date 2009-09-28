@@ -1,22 +1,22 @@
-# gimp ro translation
+# Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-22 23:29+0200\n"
-"PO-Revision-Date: 2009-03-20 17:09+0200\n"
+"POT-Creation-Date: 2009-09-28 23:09+0300\n"
+"PO-Revision-Date: 2009-09-20 23:30+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
-"Language-Team: Română <ro@li.org>\n"
+"Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Poedit-Bookmarks: 1111,2471,1245,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-Bookmarks: 77,2471,1245,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -213,7 +213,7 @@ msgstr "(Scrieți orice caracter pentru a închide această fereastră)\n"
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Ieșire GIMP. Puteți imnimiza această feeastră, dar nu o închideți."
 
-#: ../app/sanity.c:342
+#: ../app/sanity.c:365
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -224,7 +224,7 @@ msgstr ""
 "\n"
 "Verificați valoarea variabilei de mediu G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:361
+#: ../app/sanity.c:384
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -430,11 +430,11 @@ msgstr "Ferestre"
 
 #: ../app/actions/brush-editor-actions.c:43
 msgid "Brush Editor Menu"
-msgstr "Meniu editare penel"
+msgstr "Meniu de editor de penel"
 
 #: ../app/actions/brush-editor-actions.c:50
 msgid "Edit Active Brush"
-msgstr "Editare penel activ"
+msgstr "Editează penelul activ"
 
 #: ../app/actions/brushes-actions.c:43
 msgid "Brushes Menu"
@@ -490,11 +490,11 @@ msgstr "Reîmprospătează penelurile"
 
 #: ../app/actions/brushes-actions.c:86
 msgid "_Edit Brush..."
-msgstr "_Editare penel..."
+msgstr "_Editează penelul..."
 
 #: ../app/actions/brushes-actions.c:87
 msgid "Edit brush"
-msgstr "Editare penel"
+msgstr "Editează penelul"
 
 #: ../app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
@@ -538,11 +538,11 @@ msgstr "Meniu canale"
 
 #: ../app/actions/channels-actions.c:48
 msgid "_Edit Channel Attributes..."
-msgstr "_Editare atribute canal..."
+msgstr "_Editează atributele de canal..."
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
-msgstr "Editare nume canal, culoare și opacitate"
+msgstr "Editează numele de canal, culoare și opacitate"
 
 #: ../app/actions/channels-actions.c:54
 msgid "_New Channel..."
@@ -652,7 +652,7 @@ msgstr "Atribute canal"
 
 #: ../app/actions/channels-commands.c:88
 msgid "Edit Channel Attributes"
-msgstr "Editare atribute canal"
+msgstr "Editare atribute de canal"
 
 #: ../app/actions/channels-commands.c:90
 msgid "Edit Channel Color"
@@ -699,12 +699,12 @@ msgstr "Meniu paletă de culori"
 #: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:48
 msgid "_Edit Color..."
-msgstr "_Editare culoare..."
+msgstr "_Editează culoarea..."
 
 #: ../app/actions/colormap-actions.c:49
 #: ../app/actions/palette-editor-actions.c:49
 msgid "Edit color"
-msgstr "Editare culoare"
+msgstr "Editează culoarea"
 
 #: ../app/actions/colormap-actions.c:57
 msgid "_Add Color from FG"
@@ -725,7 +725,7 @@ msgstr "Adaugă culoarea de fundal actuală"
 #: ../app/actions/colormap-commands.c:73
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Editarea intrării #%d din paleta de culori"
+msgstr "Editare intrare #%d din paleta de culori"
 
 #: ../app/actions/colormap-commands.c:80
 msgid "Edit Colormap Entry"
@@ -846,7 +846,7 @@ msgstr "Eșantion combinat"
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:537
 #: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
-#: ../app/widgets/gimptoolbox.c:979
+#: ../app/widgets/gimptoolbox.c:981
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1352,7 +1352,7 @@ msgstr "_Egalizează"
 
 #: ../app/actions/drawable-actions.c:46
 msgid "Automatic contrast enhancement"
-msgstr "Ameliorare automată de contrast"
+msgstr "Îmbunătățire automată de contrast"
 
 #: ../app/actions/drawable-actions.c:51
 msgid "In_vert"
@@ -1836,9 +1836,10 @@ msgstr "Închide toate i_maginile"
 msgid "Close all opened images"
 msgstr "Închide toate imaginile deschise"
 
+# hm ? cu părăsire dă aiurea, a se vedea comentarii la
 #: ../app/actions/file-actions.c:107
 msgid "_Quit"
-msgstr "Părăs_ește"
+msgstr "Părăs_ește aplicația"
 
 # hm ?
 #: ../app/actions/file-actions.c:108
@@ -1976,7 +1977,7 @@ msgstr "Scanează din nou lista de fonturi"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
-msgstr "Meniu editor degrade"
+msgstr "Meniu de editor de degrade"
 
 #: ../app/actions/gradient-editor-actions.c:50
 msgid "Left Color Type"
@@ -2359,11 +2360,11 @@ msgstr "Reîmprospătează degradeurile"
 
 #: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
-msgstr "_Editare degrade..."
+msgstr "_Editează degradeul..."
 
 #: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
-msgstr "Editare degrade"
+msgstr "Editează degradeul"
 
 # hm ? sau ca fișier POV-Ray ?
 #: ../app/actions/gradients-commands.c:66
@@ -2594,10 +2595,12 @@ msgstr "Nu se poate decupa deoarece selecția curentă este goală."
 msgid "Change Print Size"
 msgstr "Schimbă dimensiunea de tipărire"
 
+# apare la contextul lui undo
 #: ../app/actions/image-commands.c:647 ../app/core/gimpimage-scale.c:82
 msgid "Scale Image"
-msgstr "Scalează imaginea"
+msgstr "Scalare imagine"
 
+# apare pe bara de progres
 #. Scaling
 #: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1101
 #: ../app/dialogs/preferences-dialog.c:1925
@@ -2679,7 +2682,7 @@ msgstr "Activează instrumentul text pe acest strat de text"
 
 #: ../app/actions/layers-actions.c:68
 msgid "_Edit Layer Attributes..."
-msgstr "_Editare atribute strat..."
+msgstr "_Editează atributele de strat..."
 
 #: ../app/actions/layers-actions.c:69
 msgid "Edit the layer's name"
@@ -2863,7 +2866,7 @@ msgstr "Păstrează informațiile despre transparență "
 
 #: ../app/actions/layers-actions.c:222
 msgid "_Edit Layer Mask"
-msgstr "_Editare mască de strat"
+msgstr "_Editează masca de strat"
 
 #: ../app/actions/layers-actions.c:223
 msgid "Work on the layer mask"
@@ -3000,11 +3003,11 @@ msgstr "Stabilește opacitatea"
 
 #: ../app/actions/layers-commands.c:203
 msgid "Layer Attributes"
-msgstr "Atribute strat"
+msgstr "Atribute de strat"
 
 #: ../app/actions/layers-commands.c:206
 msgid "Edit Layer Attributes"
-msgstr "Editare atribute strat"
+msgstr "Editare atribute de strat"
 
 #: ../app/actions/layers-commands.c:249 ../app/actions/layers-commands.c:251
 #: ../app/actions/layers-commands.c:319 ../app/actions/layers-commands.c:323
@@ -3041,7 +3044,8 @@ msgstr "Mască de strat la selecție"
 msgid "Please select a channel first"
 msgstr "Mai întâi selectați un canal"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
+# apare la contextul lui undo
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1283
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Adăugare mască de strat"
@@ -3231,11 +3235,11 @@ msgstr "Reîmprospătează modelele"
 
 #: ../app/actions/patterns-actions.c:86
 msgid "_Edit Pattern..."
-msgstr "_Editare model..."
+msgstr "_Editează modelul..."
 
 #: ../app/actions/patterns-actions.c:87
 msgid "Edit pattern"
-msgstr "Editare model"
+msgstr "Editează modelul"
 
 #: ../app/actions/plug-in-actions.c:83
 msgid "Filte_rs"
@@ -3287,7 +3291,7 @@ msgstr "D_ecor"
 
 #: ../app/actions/plug-in-actions.c:96
 msgid "_Render"
-msgstr "_Render"
+msgstr "_Randare"
 
 #: ../app/actions/plug-in-actions.c:97
 msgid "_Clouds"
@@ -3373,7 +3377,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Comută _masca rapidă"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1167
+#: ../app/display/gimpdisplayshell.c:1169
 msgid "Toggle Quick Mask"
 msgstr "Comută masca rapidă"
 
@@ -3601,11 +3605,11 @@ msgstr "Duplică șablonul selectat"
 
 #: ../app/actions/templates-actions.c:64
 msgid "_Edit Template..."
-msgstr "_Editare șablon"
+msgstr "_Editează șablonul..."
 
 #: ../app/actions/templates-actions.c:65
 msgid "Edit the selected template"
-msgstr "Editare șablon selectat"
+msgstr "Editează șablonul selectat"
 
 #: ../app/actions/templates-actions.c:70
 msgid "_Delete Template"
@@ -3626,7 +3630,7 @@ msgstr "Creează un șablon nou"
 #: ../app/actions/templates-commands.c:175
 #: ../app/actions/templates-commands.c:178
 msgid "Edit Template"
-msgstr "Editare șablon"
+msgstr "Editează șablonul"
 
 #: ../app/actions/templates-commands.c:213
 msgid "Delete Template"
@@ -3854,11 +3858,11 @@ msgstr "Instrument _cale"
 
 #: ../app/actions/vectors-actions.c:53
 msgid "_Edit Path Attributes..."
-msgstr "_Editare atribute cale..."
+msgstr "_Editează atributele de cale..."
 
 #: ../app/actions/vectors-actions.c:54
 msgid "Edit path attributes"
-msgstr "Editare atribute cale"
+msgstr "Editează atributele de cale"
 
 #: ../app/actions/vectors-actions.c:59
 msgid "_New Path..."
@@ -5184,6 +5188,7 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "valoarea reprezentării %s nu este un șir UTF-8 valid"
 
 # la alinierea de la healing tool
+# la redimensionare canava
 #. no undo (or redo) steps available
 #: ../app/core/core-enums.c:53 ../app/core/core-enums.c:252
 #: ../app/core/core-enums.c:504 ../app/paint/paint-enums.c:81
@@ -5366,7 +5371,7 @@ msgstr "Toate straturile"
 
 #: ../app/core/core-enums.c:506
 msgid "Image-sized layers"
-msgstr "Straturi de dimensiunea imaginii"
+msgstr "Straturile de dimensiunea imaginii"
 
 #: ../app/core/core-enums.c:507
 msgid "All visible layers"
@@ -6023,7 +6028,7 @@ msgstr "Întoarce canalul"
 msgid "Rotate Channel"
 msgstr "Rotește canalul"
 
-#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:843
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:886
 msgid "Transform Channel"
 msgstr "Transformă canalul"
 
@@ -6146,6 +6151,8 @@ msgctxt "command"
 msgid "Bucket Fill"
 msgstr "Umplere cu găleata"
 
+# titlu pe bara de fereastră
+# apare la contextul lui undo
 #: ../app/core/gimpdrawable-color-balance.c:80
 #: ../app/core/gimpdrawable-color-balance.c:90
 #: ../app/tools/gimpcolorbalancetool.c:94
@@ -6213,21 +6220,21 @@ msgstr "Randare tușă"
 msgid "Threshold"
 msgstr "Prag"
 
-#: ../app/core/gimpdrawable-transform.c:629 ../app/tools/gimpfliptool.c:116
+#: ../app/core/gimpdrawable-transform.c:645 ../app/tools/gimpfliptool.c:116
 msgctxt "command"
 msgid "Flip"
 msgstr "Întoarcere"
 
-#: ../app/core/gimpdrawable-transform.c:716 ../app/tools/gimprotatetool.c:121
+#: ../app/core/gimpdrawable-transform.c:745 ../app/tools/gimprotatetool.c:121
 msgctxt "command"
 msgid "Rotate"
 msgstr "Rotire"
 
-#: ../app/core/gimpdrawable-transform.c:841 ../app/core/gimplayer.c:255
+#: ../app/core/gimpdrawable-transform.c:884 ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Strat de transformare"
 
-#: ../app/core/gimpdrawable-transform.c:856
+#: ../app/core/gimpdrawable-transform.c:899
 msgid "Transformation"
 msgstr "Transformare"
 
@@ -6672,7 +6679,7 @@ msgid "Rotate Layer"
 msgstr "Rotire strat"
 
 # hm ? sau mască ?
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1330
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6687,39 +6694,40 @@ msgstr ""
 "Selecție plutitoare\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1265
+#: ../app/core/gimplayer.c:1266
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nu se poate adăuga o mască de strat deoarece stratul are deja una."
 
-#: ../app/core/gimplayer.c:1276
+#: ../app/core/gimplayer.c:1277
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Nu se poate adăuga un strat de mască de dimensiune diferită față de stratul "
 "specificat."
 
-#: ../app/core/gimplayer.c:1384
+#: ../app/core/gimplayer.c:1385
 msgid "Transfer Alpha to Mask"
 msgstr "Transfer alfa la mască"
 
-#: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1557 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Aplicare mască de strat"
 
-#: ../app/core/gimplayer.c:1557
+#: ../app/core/gimplayer.c:1558
 msgid "Delete Layer Mask"
 msgstr "Ștergere mască de strat"
 
-#: ../app/core/gimplayer.c:1669
+# apare la contextul lui undo
+#: ../app/core/gimplayer.c:1670
 msgid "Add Alpha Channel"
 msgstr "Adăugare canal alfa"
 
-#: ../app/core/gimplayer.c:1723
+#: ../app/core/gimplayer.c:1724
 msgid "Remove Alpha Channel"
 msgstr "Eliminare canal alfa"
 
-#: ../app/core/gimplayer.c:1745
+#: ../app/core/gimplayer.c:1746
 msgid "Layer to Image Size"
 msgstr "Strat la dimensiunea imaginii"
 
@@ -7814,7 +7822,7 @@ msgstr "Instrument de mutare"
 msgid "Set layer or path as active"
 msgstr "Stabilește ca activ stratul sau calea"
 
-#: ../app/dialogs/preferences-dialog.c:1966 ../app/widgets/gimptoolbox.c:631
+#: ../app/dialogs/preferences-dialog.c:1966 ../app/widgets/gimptoolbox.c:633
 msgid "Toolbox"
 msgstr "Trusă de instrumente"
 
@@ -8543,20 +8551,20 @@ msgstr "Înaltă"
 msgid "Image saved to '%s'"
 msgstr "Imaginea a fost salvată în „%s”"
 
-#: ../app/display/gimpdisplayshell.c:1033
+#: ../app/display/gimpdisplayshell.c:1035
 msgid "Access the image menu"
 msgstr "Accesează meniul de imagine"
 
-#: ../app/display/gimpdisplayshell.c:1138
+#: ../app/display/gimpdisplayshell.c:1140
 msgid "Zoom image when window size changes"
 msgstr "Zoomează imaginea la schimbarea dimensiunii ferestrei"
 
-#: ../app/display/gimpdisplayshell.c:1188
+#: ../app/display/gimpdisplayshell.c:1190
 msgid "Navigate the image display"
 msgstr "Navighează afișarea imaginii"
 
-#: ../app/display/gimpdisplayshell.c:1283
-#: ../app/display/gimpdisplayshell.c:1373 ../app/widgets/gimptoolbox.c:222
+#: ../app/display/gimpdisplayshell.c:1285
+#: ../app/display/gimpdisplayshell.c:1375 ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
 msgstr "Aruncați aici fișierele de imagine pentru a le deschide"
 
@@ -9632,7 +9640,7 @@ msgstr "Con_trast:"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:354
 msgid "Edit these Settings as Levels"
-msgstr "Editarea acestor configurări ca niveluri"
+msgstr "Editează aceste configurări ca niveluri"
 
 #: ../app/tools/gimpbucketfilloptions.c:100
 msgid "Allow completely transparent regions to be filled"
@@ -10481,7 +10489,7 @@ msgstr "Configurările au fost salvate în „%s”"
 
 #: ../app/tools/gimpimagemaptool.c:318
 msgid "_Preview"
-msgstr "_Previzualizare"
+msgstr "_Previzualizează"
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:56
@@ -10633,7 +10641,7 @@ msgstr "Ajustează automat nivelurile"
 
 #: ../app/tools/gimplevelstool.c:682
 msgid "Edit these Settings as Curves"
-msgstr "Editarea acestor configurări ca curbe"
+msgstr "Editează aceste configurări ca curbe"
 
 #: ../app/tools/gimplevelstool.c:825
 msgid "Use _old levels file format"
@@ -10995,7 +11003,7 @@ msgstr "Permite selectarea zonelor complet transparente"
 
 #: ../app/tools/gimpregionselectoptions.c:90
 msgid "Base region_select on all visible layers"
-msgstr "Bazează selecția zonei pe toate straturile vizibile"
+msgstr "Bazează _selecția zonei pe toate straturile vizibile"
 
 #: ../app/tools/gimpregionselectoptions.c:202
 msgid "Select transparent areas"
@@ -11215,7 +11223,7 @@ msgstr "Confirmare editare text"
 
 #: ../app/tools/gimptexttool.c:1079
 msgid "Create _New Layer"
-msgstr "Crează un strat _nou"
+msgstr "Creează un strat _nou"
 
 #: ../app/tools/gimptexttool.c:1103
 msgid ""
@@ -11263,7 +11271,7 @@ msgstr "Pragul nu operează pe imagini indexate."
 
 #: ../app/tools/gimpthresholdtool.c:266
 msgid "Automatically adjust to optimal binarization threshold"
-msgstr "Ajustează automat la pragul de binarizare optimă"
+msgstr "Ajustează automat la pragul de binarizare optim"
 
 #: ../app/tools/gimptransformoptions.c:273
 msgid "Transform:"
