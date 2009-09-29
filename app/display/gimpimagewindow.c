@@ -570,6 +570,40 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
 }
 
 void
+gimp_image_window_remove_shell (GimpImageWindow  *window,
+                                GimpDisplayShell *shell)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  g_return_if_fail (g_list_find (private->shells, shell) != NULL);
+
+  private->shells = g_list_remove (private->shells, shell);
+
+  gtk_container_remove (GTK_CONTAINER (private->notebook),
+                        GTK_WIDGET (shell));
+
+  if (g_list_length (private->shells) == 1)
+    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
+}
+
+gint
+gimp_image_window_get_n_shells (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), 0);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return g_list_length (private->shells);
+}
+
+void
 gimp_image_window_set_active_shell (GimpImageWindow  *window,
                                     GimpDisplayShell *shell)
 {
