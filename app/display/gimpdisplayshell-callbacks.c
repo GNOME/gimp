@@ -1836,10 +1836,14 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
       if (window)
-        gimp_ui_manager_ui_popup (window->menubar_manager,
-                                  "/quick-mask-popup",
-                                  GTK_WIDGET (shell),
-                                  NULL, NULL, NULL, NULL);
+        {
+          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+
+          gimp_ui_manager_ui_popup (manager,
+                                    "/quick-mask-popup",
+                                    GTK_WIDGET (shell),
+                                    NULL, NULL, NULL, NULL);
+        }
 
       return TRUE;
     }

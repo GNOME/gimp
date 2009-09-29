@@ -114,13 +114,9 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell &&
-      window->menubar)
+  if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      if (show)
-        gtk_widget_show (window->menubar);
-      else
-        gtk_widget_hide (window->menubar);
+      gimp_image_window_set_show_menubar (window, show);
     }
 
   appearance_set_action_active (shell, "view-show-menubar", show);
@@ -150,7 +146,7 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      gimp_statusbar_set_visible (GIMP_STATUSBAR (window->statusbar), show);
+      gimp_image_window_set_show_statusbar (window, show);
     }
 
   appearance_set_action_active (shell, "view-show-statusbar", show);
@@ -608,10 +604,10 @@ appearance_set_action_active (GimpDisplayShell *shell,
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
     {
+      GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
       GimpActionGroup *action_group;
 
-      action_group = gimp_ui_manager_get_action_group (window->menubar_manager,
-                                                       "view");
+      action_group = gimp_ui_manager_get_action_group (manager, "view");
 
       if (action_group)
         gimp_action_group_set_action_active (action_group, action, active);
@@ -641,10 +637,10 @@ appearance_set_action_color (GimpDisplayShell *shell,
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
     {
+      GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
       GimpActionGroup *action_group;
 
-      action_group = gimp_ui_manager_get_action_group (window->menubar_manager,
-                                                       "view");
+      action_group = gimp_ui_manager_get_action_group (manager, "view");
 
       if (action_group)
         gimp_action_group_set_action_color (action_group, action, color, FALSE);

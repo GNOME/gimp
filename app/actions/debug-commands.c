@@ -195,9 +195,8 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
   GList            *strings = NULL;
   return_if_no_display (display, data);
 
-  window = gimp_display_shell_get_window (GIMP_DISPLAY_SHELL (display->shell));
-
-  manager = GTK_UI_MANAGER (window->menubar_manager);
+  window  = gimp_display_shell_get_window (GIMP_DISPLAY_SHELL (display->shell));
+  manager = GTK_UI_MANAGER (gimp_image_window_get_ui_manager (window));
 
   accel_group = gtk_ui_manager_get_accel_group (manager);
 

@@ -165,8 +165,9 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
 
   if (window && gimp_image_window_get_active_shell (window))
     {
-      gimp_statusbar_update_cursor (GIMP_STATUSBAR (window->statusbar),
-                                    precision, image_x, image_y);
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+      gimp_statusbar_update_cursor (statusbar, precision, image_x, image_y);
     }
 
   factory = gimp_dialog_factory_from_name ("dock");
@@ -208,7 +209,9 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      gimp_statusbar_clear_cursor (GIMP_STATUSBAR (window->statusbar));
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+      gimp_statusbar_clear_cursor (statusbar);
     }
 
   factory = gimp_dialog_factory_from_name ("dock");

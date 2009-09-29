@@ -57,6 +57,29 @@ enum
 };
 
 
+typedef struct _GimpImageWindowPrivate GimpImageWindowPrivate;
+
+struct _GimpImageWindowPrivate
+{
+  GimpUIManager     *menubar_manager;
+  GimpDialogFactory *display_factory;
+
+  GList             *shells;
+  GimpDisplayShell  *active_shell;
+
+  GtkWidget         *main_vbox;
+  GtkWidget         *menubar;
+  GtkWidget         *statusbar;
+
+  GdkWindowState     window_state;
+};
+
+#define GIMP_IMAGE_WINDOW_GET_PRIVATE(window) \
+        G_TYPE_INSTANCE_GET_PRIVATE (window, \
+                                     GIMP_TYPE_IMAGE_WINDOW, \
+                                     GimpImageWindowPrivate)
+
+
 /*  local function prototypes  */
 
 static GObject * gimp_image_window_constructor         (GType                type,
@@ -155,6 +178,8 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_type_class_add_private (klass, sizeof (GimpImageWindowPrivate));
+
   gtk_rc_parse_string (image_window_rc_style);
 }
 
@@ -170,63 +195,65 @@ gimp_image_window_constructor (GType                  type,
                                guint                  n_params,
                                GObjectConstructParam *params)
 {
-  GObject         *object;
-  GimpImageWindow *window;
+  GObject                *object;
+  GimpImageWindow        *window;
+  GimpImageWindowPrivate *private;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  window = GIMP_IMAGE_WINDOW (object);
+  window  = GIMP_IMAGE_WINDOW (object);
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  g_assert (GIMP_IS_UI_MANAGER (window->menubar_manager));
+  g_assert (GIMP_IS_UI_MANAGER (private->menubar_manager));
 
   gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (window->menubar_manager)));
+                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (private->menubar_manager)));
 
-  g_signal_connect (window->menubar_manager, "show-tooltip",
+  g_signal_connect (private->menubar_manager, "show-tooltip",
                     G_CALLBACK (gimp_image_window_show_tooltip),
                     window);
-  g_signal_connect (window->menubar_manager, "hide-tooltip",
+  g_signal_connect (private->menubar_manager, "hide-tooltip",
                     G_CALLBACK (gimp_image_window_hide_tooltip),
                     window);
 
-  window->main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (window), window->main_vbox);
-  gtk_widget_show (window->main_vbox);
+  private->main_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (window), private->main_vbox);
+  gtk_widget_show (private->main_vbox);
 
 #ifndef GDK_WINDOWING_QUARTZ
-  window->menubar =
-    gtk_ui_manager_get_widget (GTK_UI_MANAGER (window->menubar_manager),
+  private->menubar =
+    gtk_ui_manager_get_widget (GTK_UI_MANAGER (private->menubar_manager),
                                "/image-menubar");
 #endif /* !GDK_WINDOWING_QUARTZ */
 
-  if (window->menubar)
+  if (private->menubar)
     {
-      gtk_box_pack_start (GTK_BOX (window->main_vbox),
-                          window->menubar, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (private->main_vbox),
+                          private->menubar, FALSE, FALSE, 0);
 
       /*  make sure we can activate accels even if the menubar is invisible
        *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
        */
-      g_signal_connect (window->menubar, "can-activate-accel",
+      g_signal_connect (private->menubar, "can-activate-accel",
                         G_CALLBACK (gtk_true),
                         NULL);
 
       /*  active display callback  */
-      g_signal_connect (window->menubar, "button-press-event",
+      g_signal_connect (private->menubar, "button-press-event",
                         G_CALLBACK (gimp_image_window_shell_events),
                         window);
-      g_signal_connect (window->menubar, "button-release-event",
+      g_signal_connect (private->menubar, "button-release-event",
                         G_CALLBACK (gimp_image_window_shell_events),
                         window);
-      g_signal_connect (window->menubar, "key-press-event",
+      g_signal_connect (private->menubar, "key-press-event",
                         G_CALLBACK (gimp_image_window_shell_events),
                         window);
     }
 
-  window->statusbar = gimp_statusbar_new ();
-  gimp_help_set_help_data (window->statusbar, NULL,
+  private->statusbar = gimp_statusbar_new ();
+  gimp_help_set_help_data (private->statusbar, NULL,
                            GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
-  gtk_box_pack_end (GTK_BOX (window->main_vbox), window->statusbar,
+  gtk_box_pack_end (GTK_BOX (private->main_vbox), private->statusbar,
                     FALSE, FALSE, 0);
 
   return object;
@@ -235,12 +262,13 @@ gimp_image_window_constructor (GType                  type,
 static void
 gimp_image_window_finalize (GObject *object)
 {
-  GimpImageWindow *window = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  if (window->menubar_manager)
+  if (private->menubar_manager)
     {
-      g_object_unref (window->menubar_manager);
-      window->menubar_manager = NULL;
+      g_object_unref (private->menubar_manager);
+      private->menubar_manager = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -252,7 +280,8 @@ gimp_image_window_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpImageWindow *window = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   switch (property_id)
     {
@@ -260,14 +289,14 @@ gimp_image_window_set_property (GObject      *object,
       {
         GimpMenuFactory *factory = g_value_get_object (value);
 
-        window->menubar_manager = gimp_menu_factory_manager_new (factory,
-                                                                 "<Image>",
-                                                                 window,
-                                                                 FALSE);
+        private->menubar_manager = gimp_menu_factory_manager_new (factory,
+                                                                  "<Image>",
+                                                                  window,
+                                                                  FALSE);
       }
       break;
     case PROP_DISPLAY_FACTORY:
-      window->display_factory = g_value_get_object (value);
+      private->display_factory = g_value_get_object (value);
       break;
 
     default:
@@ -282,12 +311,13 @@ gimp_image_window_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpImageWindow *window = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   switch (property_id)
     {
     case PROP_DISPLAY_FACTORY:
-      g_value_set_object (value, window->display_factory);
+      g_value_set_object (value, private->display_factory);
       break;
 
     case PROP_MENU_FACTORY:
@@ -300,12 +330,13 @@ gimp_image_window_get_property (GObject    *object,
 static void
 gimp_image_window_destroy (GtkObject *object)
 {
-  GimpImageWindow *window = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  if (window->menubar_manager)
+  if (private->menubar_manager)
     {
-      g_object_unref (window->menubar_manager);
-      window->menubar_manager = NULL;
+      g_object_unref (private->menubar_manager);
+      private->menubar_manager = NULL;
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -360,10 +391,11 @@ static gboolean
 gimp_image_window_window_state_event (GtkWidget           *widget,
                                       GdkEventWindowState *event)
 {
-  GimpImageWindow  *window = GIMP_IMAGE_WINDOW (widget);
-  GimpDisplayShell *shell  = gimp_image_window_get_active_shell (window);
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpDisplayShell       *shell   = gimp_image_window_get_active_shell (window);
 
-  window->window_state = event->new_window_state;
+  private->window_state = event->new_window_state;
 
   if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)
     {
@@ -374,11 +406,11 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
                 widget,
                 fullscreen ? "TURE" : "FALSE");
 
-      if (window->menubar)
-        gtk_widget_set_name (window->menubar,
+      if (private->menubar)
+        gtk_widget_set_name (private->menubar,
                              fullscreen ? "gimp-menubar-fullscreen" : NULL);
 
-      gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (window->statusbar),
+      gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (private->statusbar),
                                          ! fullscreen);
 
       gimp_display_shell_appearance_update (shell);
@@ -407,9 +439,9 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
           gimp_dialog_factories_show_with_display ();
         }
 
-      if (gimp_progress_is_active (GIMP_PROGRESS (window->statusbar)))
+      if (gimp_progress_is_active (GIMP_PROGRESS (private->statusbar)))
         {
-          GimpStatusbar *statusbar = GIMP_STATUSBAR (window->statusbar);
+          GimpStatusbar *statusbar = GIMP_STATUSBAR (private->statusbar);
 
           if (iconified)
             gimp_statusbar_override_window_title (statusbar);
@@ -425,23 +457,24 @@ static void
 gimp_image_window_style_set (GtkWidget *widget,
                              GtkStyle  *prev_style)
 {
-  GimpImageWindow *window = GIMP_IMAGE_WINDOW (widget);
-  GtkRequisition   requisition;
-  GdkGeometry      geometry;
-  GdkWindowHints   geometry_mask;
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GtkRequisition          requisition;
+  GdkGeometry             geometry;
+  GdkWindowHints          geometry_mask;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  gtk_widget_size_request (window->statusbar, &requisition);
+  gtk_widget_size_request (private->statusbar, &requisition);
 
   geometry.min_height = 23;
 
   geometry.min_width   = requisition.width;
   geometry.min_height += requisition.height;
 
-  if (window->menubar)
+  if (private->menubar)
     {
-      gtk_widget_size_request (window->menubar, &requisition);
+      gtk_widget_size_request (private->menubar, &requisition);
 
       geometry.min_height += requisition.height;
     }
@@ -464,21 +497,50 @@ gimp_image_window_style_set (GtkWidget *widget,
 
 /*  public functions  */
 
+GimpUIManager *
+gimp_image_window_get_ui_manager (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return private->menubar_manager;
+}
+
+GimpStatusbar *
+gimp_image_window_get_statusbar (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return GIMP_STATUSBAR (private->statusbar);
+}
+
 void
 gimp_image_window_add_shell (GimpImageWindow  *window,
                              GimpDisplayShell *shell)
 {
+  GimpImageWindowPrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (g_list_find (window->shells, shell) == NULL);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  g_return_if_fail (g_list_find (private->shells, shell) == NULL);
 
   /* FIXME multiple shells */
-  g_assert (window->shells == NULL);
+  g_assert (private->shells == NULL);
 
-  window->shells = g_list_append (window->shells, shell);
+  private->shells = g_list_append (private->shells, shell);
 
   /* FIXME multiple shells */
-  gtk_box_pack_start (GTK_BOX (window->main_vbox), GTK_WIDGET (shell),
+  gtk_box_pack_start (GTK_BOX (private->main_vbox), GTK_WIDGET (shell),
                       TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (shell));
 }
@@ -487,82 +549,89 @@ void
 gimp_image_window_set_active_shell (GimpImageWindow  *window,
                                     GimpDisplayShell *shell)
 {
-  GimpDisplay *active_display;
+  GimpImageWindowPrivate *private;
+  GimpDisplay            *active_display;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell == window->active_shell)
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  if (shell == private->active_shell)
     return;
 
-  if (window->active_shell)
+  if (private->active_shell)
     {
-      active_display = window->active_shell->display;
+      active_display = private->active_shell->display;
 
       g_signal_handlers_disconnect_by_func (active_display,
                                             gimp_image_window_image_notify,
                                             window);
 
-      g_signal_handlers_disconnect_by_func (window->active_shell,
+      g_signal_handlers_disconnect_by_func (private->active_shell,
                                             gimp_image_window_shell_scaled,
                                             window);
-      g_signal_handlers_disconnect_by_func (window->active_shell,
+      g_signal_handlers_disconnect_by_func (private->active_shell,
                                             gimp_image_window_shell_title_notify,
                                             window);
-      g_signal_handlers_disconnect_by_func (window->active_shell,
+      g_signal_handlers_disconnect_by_func (private->active_shell,
                                             gimp_image_window_shell_status_notify,
                                             window);
-      g_signal_handlers_disconnect_by_func (window->active_shell,
+      g_signal_handlers_disconnect_by_func (private->active_shell,
                                             gimp_image_window_shell_icon_notify,
                                             window);
     }
 
-  window->active_shell = shell;
+  private->active_shell = shell;
 
-  active_display = window->active_shell->display;
+  active_display = private->active_shell->display;
 
   g_signal_connect (active_display, "notify::image",
                     G_CALLBACK (gimp_image_window_image_notify),
                     window);
 
-  gimp_statusbar_set_shell (GIMP_STATUSBAR (window->statusbar),
-                            window->active_shell);
+  gimp_statusbar_set_shell (GIMP_STATUSBAR (private->statusbar),
+                            private->active_shell);
 
-  g_signal_connect (window->active_shell, "scaled",
+  g_signal_connect (private->active_shell, "scaled",
                     G_CALLBACK (gimp_image_window_shell_scaled),
                     window);
   /* FIXME: "title" later */
-  g_signal_connect (window->active_shell, "notify::gimp-title",
+  g_signal_connect (private->active_shell, "notify::gimp-title",
                     G_CALLBACK (gimp_image_window_shell_title_notify),
                     window);
-  g_signal_connect (window->active_shell, "notify::status",
+  g_signal_connect (private->active_shell, "notify::status",
                     G_CALLBACK (gimp_image_window_shell_status_notify),
                     window);
   /* FIXME: "icon" later */
-  g_signal_connect (window->active_shell, "notify::gimp-icon",
+  g_signal_connect (private->active_shell, "notify::gimp-icon",
                     G_CALLBACK (gimp_image_window_shell_icon_notify),
                     window);
 
-  gimp_display_shell_appearance_update (window->active_shell);
+  gimp_display_shell_appearance_update (private->active_shell);
 
   if (! active_display->image)
     {
-      gimp_statusbar_empty (GIMP_STATUSBAR (window->statusbar));
+      gimp_statusbar_empty (GIMP_STATUSBAR (private->statusbar));
 
-      gimp_dialog_factory_add_foreign (window->display_factory,
+      gimp_dialog_factory_add_foreign (private->display_factory,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (window));
     }
 
-  gimp_ui_manager_update (window->menubar_manager, active_display);
+  gimp_ui_manager_update (private->menubar_manager, active_display);
 }
 
 GimpDisplayShell *
 gimp_image_window_get_active_shell (GimpImageWindow *window)
 {
+  GimpImageWindowPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
 
-  return window->active_shell;
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return private->active_shell;
 }
 
 void
@@ -583,35 +652,99 @@ gimp_image_window_set_fullscreen (GimpImageWindow *window,
 gboolean
 gimp_image_window_get_fullscreen (GimpImageWindow *window)
 {
+  GimpImageWindowPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
 
-  return (window->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return (private->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
+}
+
+void
+gimp_image_window_set_show_menubar (GimpImageWindow *window,
+                                    gboolean         show)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  if (show)
+    gtk_widget_show (private->menubar);
+  else
+    gtk_widget_hide (private->menubar);
+}
+
+gboolean
+gimp_image_window_get_show_menubar (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return GTK_WIDGET_VISIBLE (private->menubar);
+}
+
+void
+gimp_image_window_set_show_statusbar (GimpImageWindow *window,
+                                      gboolean         show)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  gimp_statusbar_set_visible (GIMP_STATUSBAR (private->statusbar), show);
+}
+
+gboolean
+gimp_image_window_get_show_statusbar (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return GTK_WIDGET_VISIBLE (private->statusbar);
 }
 
 gboolean
 gimp_image_window_is_iconified (GimpImageWindow *window)
 {
+  GimpImageWindowPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
 
-  return (window->window_state & GDK_WINDOW_STATE_ICONIFIED) != 0;
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return (private->window_state & GDK_WINDOW_STATE_ICONIFIED) != 0;
 }
 
 void
 gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                gboolean         grow_only)
 {
-  GimpDisplayShell *active_shell;
-  GtkWidget        *widget;
-  GdkScreen        *screen;
-  GdkRectangle      rect;
-  gint              monitor;
-  gint              disp_width, disp_height;
-  gint              width, height;
-  gint              max_auto_width, max_auto_height;
-  gint              border_width, border_height;
-  gboolean          resize = FALSE;
+  GimpImageWindowPrivate *private;
+  GimpDisplayShell       *active_shell;
+  GtkWidget              *widget;
+  GdkScreen              *screen;
+  GdkRectangle            rect;
+  gint                    monitor;
+  gint                    disp_width, disp_height;
+  gint                    width, height;
+  gint                    max_auto_width, max_auto_height;
+  gint                    border_width, border_height;
+  gboolean                resize = FALSE;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   if (! GTK_WIDGET_REALIZED (window))
     return;
@@ -686,8 +819,8 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   if (resize)
     {
-      if (width < window->statusbar->requisition.width)
-        width = window->statusbar->requisition.width;
+      if (width < private->statusbar->requisition.width)
+        width = private->statusbar->requisition.width;
 
       width  = width  + border_width;
       height = height + border_height;
@@ -720,7 +853,9 @@ gimp_image_window_show_tooltip (GimpUIManager   *manager,
                                 const gchar     *tooltip,
                                 GimpImageWindow *window)
 {
-  gimp_statusbar_push (GIMP_STATUSBAR (window->statusbar), "menu-tooltip",
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  gimp_statusbar_push (GIMP_STATUSBAR (private->statusbar), "menu-tooltip",
                        NULL, "%s", tooltip);
 }
 
@@ -728,7 +863,9 @@ static void
 gimp_image_window_hide_tooltip (GimpUIManager   *manager,
                                 GimpImageWindow *window)
 {
-  gimp_statusbar_pop (GIMP_STATUSBAR (window->statusbar), "menu-tooltip");
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  gimp_statusbar_pop (GIMP_STATUSBAR (private->statusbar), "menu-tooltip");
 }
 
 static gboolean
@@ -746,14 +883,16 @@ gimp_image_window_image_notify (GimpDisplay      *display,
                                 const GParamSpec *pspec,
                                 GimpImageWindow  *window)
 {
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
   if (display->image)
     {
       /* FIXME don't run this code for revert */
 
-      gimp_dialog_factory_remove_dialog (window->display_factory,
+      gimp_dialog_factory_remove_dialog (private->display_factory,
                                          GTK_WIDGET (window));
 
-      gimp_statusbar_fill (GIMP_STATUSBAR (window->statusbar));
+      gimp_statusbar_fill (GIMP_STATUSBAR (private->statusbar));
     }
   else
     {
@@ -768,7 +907,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
        *  stored session info entry.
        */
       session_info =
-        gimp_dialog_factory_find_session_info (window->display_factory,
+        gimp_dialog_factory_find_session_info (private->display_factory,
                                                "gimp-empty-image-window");
 
       if (session_info)
@@ -782,16 +921,16 @@ gimp_image_window_image_notify (GimpDisplay      *display,
           height = GTK_WIDGET (window)->allocation.height;
         }
 
-      gimp_dialog_factory_add_foreign (window->display_factory,
+      gimp_dialog_factory_add_foreign (private->display_factory,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (window));
 
-      gimp_statusbar_empty (GIMP_STATUSBAR (window->statusbar));
+      gimp_statusbar_empty (GIMP_STATUSBAR (private->statusbar));
 
       gtk_window_unmaximize (GTK_WINDOW (window));
       gtk_window_resize (GTK_WINDOW (window), width, height);
 
-      gimp_ui_manager_update (window->menubar_manager, display);
+      gimp_ui_manager_update (private->menubar_manager, display);
     }
 }
 
@@ -799,8 +938,10 @@ static void
 gimp_image_window_shell_scaled (GimpDisplayShell *shell,
                                 GimpImageWindow  *window)
 {
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
   /* update the <Image>/View/Zoom menu */
-  gimp_ui_manager_update (window->menubar_manager,
+  gimp_ui_manager_update (private->menubar_manager,
                           shell->display);
 }
 
@@ -817,7 +958,9 @@ gimp_image_window_shell_status_notify (GimpDisplayShell *shell,
                                        const GParamSpec *pspec,
                                        GimpImageWindow  *window)
 {
-  gimp_statusbar_replace (GIMP_STATUSBAR (window->statusbar), "title",
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  gimp_statusbar_replace (GIMP_STATUSBAR (private->statusbar), "title",
                           NULL, "%s", shell->status);
 }
 

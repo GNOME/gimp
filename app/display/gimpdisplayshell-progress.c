@@ -45,9 +45,13 @@ gimp_display_shell_progress_get_real_progress (GimpProgress *progress)
   GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
   if (window && gimp_image_window_get_active_shell (window) == shell)
-    return GIMP_PROGRESS (window->statusbar);
-  else
-    return NULL;
+    {
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+      return GIMP_PROGRESS (statusbar);
+    }
+
+  return NULL;
 }
 
 static GimpProgress *

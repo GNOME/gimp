@@ -336,7 +336,7 @@ gimp_measure_tool_button_press (GimpTool            *tool,
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
       if (options->use_info_window ||
-          ! GTK_WIDGET_VISIBLE (window->statusbar))
+          ! gimp_image_window_get_show_statusbar (window))
         {
           measure->dialog = gimp_measure_tool_dialog_new (measure);
           g_object_add_weak_pointer (G_OBJECT (measure->dialog),

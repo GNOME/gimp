@@ -705,8 +705,12 @@ gui_menu_show_tooltip (GimpUIManager *manager,
       GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
       if (window)
-        gimp_statusbar_push (GIMP_STATUSBAR (window->statusbar), "menu-tooltip",
-                             NULL, "%s", tooltip);
+        {
+          GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+          gimp_statusbar_push (statusbar, "menu-tooltip",
+                               NULL, "%s", tooltip);
+        }
     }
 }
 
@@ -723,7 +727,11 @@ gui_menu_hide_tooltip (GimpUIManager *manager,
       GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
       if (window)
-        gimp_statusbar_pop (GIMP_STATUSBAR (window->statusbar), "menu-tooltip");
+        {
+          GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+          gimp_statusbar_pop (statusbar, "menu-tooltip");
+        }
     }
 }
 

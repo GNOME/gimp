@@ -907,14 +907,15 @@ gimp_tool_push_status (GimpTool    *tool,
 
   if (window)
     {
-      const gchar *stock_id;
-      va_list      args;
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+      const gchar   *stock_id;
+      va_list        args;
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
       va_start (args, format);
 
-      gimp_statusbar_push_valist (GIMP_STATUSBAR (window->statusbar),
+      gimp_statusbar_push_valist (statusbar,
                                   G_OBJECT_TYPE_NAME (tool), stock_id,
                                   format, args);
 
@@ -946,11 +947,12 @@ gimp_tool_push_status_coords (GimpTool            *tool,
 
   if (window)
     {
-      const gchar *stock_id;
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+      const gchar   *stock_id;
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
-      gimp_statusbar_push_coords (GIMP_STATUSBAR (window->statusbar),
+      gimp_statusbar_push_coords (statusbar,
                                   G_OBJECT_TYPE_NAME (tool), stock_id,
                                   precision, title, x, separator, y,
                                   help);
@@ -979,11 +981,12 @@ gimp_tool_push_status_length (GimpTool            *tool,
 
   if (window)
     {
-      const gchar *stock_id;
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+      const gchar   *stock_id;
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
-      gimp_statusbar_push_length (GIMP_STATUSBAR (window->statusbar),
+      gimp_statusbar_push_length (statusbar,
                                   G_OBJECT_TYPE_NAME (tool), stock_id,
                                   title, axis, value, help);
     }
@@ -1010,14 +1013,15 @@ gimp_tool_replace_status (GimpTool    *tool,
 
   if (window)
     {
-      const gchar *stock_id;
-      va_list      args;
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+      const gchar   *stock_id;
+      va_list        args;
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
       va_start (args, format);
 
-      gimp_statusbar_replace_valist (GIMP_STATUSBAR (window->statusbar),
+      gimp_statusbar_replace_valist (statusbar,
                                      G_OBJECT_TYPE_NAME (tool), stock_id,
                                      format, args);
 
@@ -1043,7 +1047,9 @@ gimp_tool_pop_status (GimpTool    *tool,
 
   if (window)
     {
-      gimp_statusbar_pop (GIMP_STATUSBAR (window->statusbar),
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+      gimp_statusbar_pop (statusbar,
                           G_OBJECT_TYPE_NAME (tool));
     }
 

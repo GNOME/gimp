@@ -616,8 +616,9 @@ action_message (GimpDisplay *display,
 
   if (window)
     {
-      const gchar *stock_id = NULL;
-      va_list      args;
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+      const gchar   *stock_id  = NULL;
+      va_list        args;
 
       if (GIMP_IS_TOOL_OPTIONS (object))
         {
@@ -631,9 +632,8 @@ action_message (GimpDisplay *display,
         }
 
       va_start (args, format);
-      gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (window->statusbar),
-                                       GIMP_MESSAGE_INFO, stock_id,
-                                       format, args);
+      gimp_statusbar_push_temp_valist (statusbar, GIMP_MESSAGE_INFO,
+                                       stock_id, format, args);
       va_end (args);
     }
 }

@@ -265,7 +265,7 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
       gimp_display_shell_scale_set_dot_for_dot (shell, active);
 
       if (window)
-        SET_ACTIVE (window->menubar_manager,
+        SET_ACTIVE (gimp_image_window_get_ui_manager (window),
                     "view-dot-for-dot", shell->dot_for_dot);
 
       if (IS_ACTIVE_DISPLAY (display))

@@ -34,19 +34,7 @@ typedef struct _GimpImageWindowClass  GimpImageWindowClass;
 
 struct _GimpImageWindow
 {
-  GimpWindow         parent_instance;
-
-  GList             *shells;
-  GimpDisplayShell  *active_shell;
-
-  GimpUIManager     *menubar_manager;
-  GimpDialogFactory *display_factory;
-
-  GtkWidget         *main_vbox;
-  GtkWidget         *menubar;
-  GtkWidget         *statusbar;
-
-  GdkWindowState     window_state;
+  GimpWindow  parent_instance;
 };
 
 struct _GimpImageWindowClass
@@ -55,23 +43,34 @@ struct _GimpImageWindowClass
 };
 
 
-GType              gimp_image_window_get_type         (void) G_GNUC_CONST;
+GType              gimp_image_window_get_type           (void) G_GNUC_CONST;
 
-void               gimp_image_window_add_shell        (GimpImageWindow  *window,
-                                                       GimpDisplayShell *shell);
+GimpUIManager    * gimp_image_window_get_ui_manager     (GimpImageWindow  *window);
+GimpStatusbar    * gimp_image_window_get_statusbar      (GimpImageWindow  *window);
 
-void               gimp_image_window_set_active_shell (GimpImageWindow  *window,
-                                                       GimpDisplayShell *shell);
-GimpDisplayShell * gimp_image_window_get_active_shell (GimpImageWindow  *window);
+void               gimp_image_window_add_shell          (GimpImageWindow  *window,
+                                                         GimpDisplayShell *shell);
 
-void               gimp_image_window_set_fullscreen   (GimpImageWindow  *window,
-                                                       gboolean          fullscreen);
-gboolean           gimp_image_window_get_fullscreen   (GimpImageWindow  *window);
+void               gimp_image_window_set_active_shell   (GimpImageWindow  *window,
+                                                         GimpDisplayShell *shell);
+GimpDisplayShell * gimp_image_window_get_active_shell   (GimpImageWindow  *window);
 
-gboolean           gimp_image_window_is_iconified     (GimpImageWindow  *window);
+void               gimp_image_window_set_fullscreen     (GimpImageWindow  *window,
+                                                         gboolean          fullscreen);
+gboolean           gimp_image_window_get_fullscreen     (GimpImageWindow  *window);
 
-void               gimp_image_window_shrink_wrap      (GimpImageWindow  *window,
-                                                       gboolean          grow_only);
+void               gimp_image_window_set_show_menubar   (GimpImageWindow  *window,
+                                                         gboolean          show);
+gboolean           gimp_image_window_get_show_menubar   (GimpImageWindow  *window);
+
+void               gimp_image_window_set_show_statusbar (GimpImageWindow  *window,
+                                                         gboolean          show);
+gboolean           gimp_image_window_get_show_statusbar (GimpImageWindow  *window);
+
+gboolean           gimp_image_window_is_iconified       (GimpImageWindow  *window);
+
+void               gimp_image_window_shrink_wrap        (GimpImageWindow  *window,
+                                                         gboolean          grow_only);
 
 
 #endif /* __GIMP_IMAGE_WINDOW_H__ */
