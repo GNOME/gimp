@@ -226,8 +226,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                          GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_TITLE,
-                                   /* FIXME: "title" later */
-                                   g_param_spec_string ("gimp-title", NULL, NULL,
+                                   g_param_spec_string ("title", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
 
@@ -237,8 +236,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ICON,
-                                   /* FIXME: "icon" later */
-                                   g_param_spec_object ("gimp-icon", NULL, NULL,
+                                   g_param_spec_object ("icon", NULL, NULL,
                                                         GDK_TYPE_PIXBUF,
                                                         GIMP_PARAM_READWRITE));
 

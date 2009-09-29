@@ -40,6 +40,7 @@ void
 gimp_display_shell_icon_update (GimpDisplayShell *shell)
 {
   GimpImage *image;
+  GdkPixbuf *pixbuf = NULL;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -47,12 +48,11 @@ gimp_display_shell_icon_update (GimpDisplayShell *shell)
 
   if (image)
     {
-      Gimp      *gimp   = shell->display->gimp;
-      GdkPixbuf *pixbuf;
-      gint       width;
-      gint       height;
-      gdouble    factor = ((gdouble) gimp_image_get_height (image) /
-                           (gdouble) gimp_image_get_width  (image));
+      Gimp    *gimp   = shell->display->gimp;
+      gint     width;
+      gint     height;
+      gdouble  factor = ((gdouble) gimp_image_get_height (image) /
+                         (gdouble) gimp_image_get_width  (image));
 
       if (factor >= 1)
         {
@@ -68,13 +68,9 @@ gimp_display_shell_icon_update (GimpDisplayShell *shell)
       pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (image),
                                          gimp_get_user_context (gimp),
                                          width, height);
+    }
 
-      g_object_set (shell, "gimp-icon", pixbuf, NULL);
-    }
-  else
-    {
-      g_object_set (shell, "gimp-icon", NULL, NULL);
-    }
+  g_object_set (shell, "icon", pixbuf, NULL);
 }
 
 void

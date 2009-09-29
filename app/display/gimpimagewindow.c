@@ -896,15 +896,13 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
   g_signal_connect (private->active_shell, "scaled",
                     G_CALLBACK (gimp_image_window_shell_scaled),
                     window);
-  /* FIXME: "title" later */
-  g_signal_connect (private->active_shell, "notify::gimp-title",
+  g_signal_connect (private->active_shell, "notify::title",
                     G_CALLBACK (gimp_image_window_shell_title_notify),
                     window);
   g_signal_connect (private->active_shell, "notify::status",
                     G_CALLBACK (gimp_image_window_shell_status_notify),
                     window);
-  /* FIXME: "icon" later */
-  g_signal_connect (private->active_shell, "notify::gimp-icon",
+  g_signal_connect (private->active_shell, "notify::icon",
                     G_CALLBACK (gimp_image_window_shell_icon_notify),
                     window);
 

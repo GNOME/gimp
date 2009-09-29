@@ -109,16 +109,14 @@ gimp_display_shell_update_title_idle (gpointer data)
                                        config->image_status_format);
 
       g_object_set (shell,
-                    /* FIXME: "title" later */
-                    "gimp-title",  title,
+                    "title",  title,
                     "status", status,
                     NULL);
     }
   else
     {
       g_object_set (shell,
-                    /* FIXME: "title" later */
-                    "gimp-title",  GIMP_NAME,
+                    "title",  GIMP_NAME,
                     "status", " ",
                     NULL);
     }

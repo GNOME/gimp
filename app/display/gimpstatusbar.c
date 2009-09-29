@@ -766,8 +766,7 @@ gimp_statusbar_restore_window_title (GimpStatusbar *statusbar)
 
   if (gimp_image_window_is_iconified (GIMP_IMAGE_WINDOW (toplevel)))
     {
-      /* FIXME title later */
-      g_object_notify (G_OBJECT (statusbar->shell), "gimp-title");
+      g_object_notify (G_OBJECT (statusbar->shell), "title");
     }
 }
 
