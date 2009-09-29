@@ -357,15 +357,6 @@ gui_display_create (Gimp      *gimp,
       gimp_context_set_display (context, display);
     }
 
-  /* FIXME image window: do this elsewhere */
-  {
-    GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (display->shell);
-    GimpImageWindow  *window  = gimp_display_shell_get_window (shell);
-    GimpUIManager    *manager = gimp_image_window_get_ui_manager (window);
-
-    gimp_ui_manager_update (manager, display);
-  }
-
   return GIMP_OBJECT (display);
 }
 

@@ -1006,8 +1006,9 @@ gimp_image_window_image_notify (GimpDisplay      *display,
       gtk_window_unmaximize (GTK_WINDOW (window));
       gtk_window_resize (GTK_WINDOW (window), width, height);
 
-      gimp_ui_manager_update (private->menubar_manager, display);
     }
+
+  gimp_ui_manager_update (private->menubar_manager, display);
 }
 
 static void
