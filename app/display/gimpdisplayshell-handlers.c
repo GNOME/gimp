@@ -34,6 +34,8 @@
 #include "core/gimpitem.h"
 #include "core/gimptreehandler.h"
 
+#include "file/file-utils.h"
+
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
@@ -49,6 +51,9 @@
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpimagewindow.h"
+#include "gimpstatusbar.h"
+
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */
@@ -88,6 +93,12 @@ static void   gimp_display_shell_update_sample_point_handler(GimpImage        *i
 static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_profile_changed_handler    (GimpColorManaged *image,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_saved_handler              (GimpImage        *image,
+                                                             const gchar      *uri,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_exported_handler           (GimpImage        *image,
+                                                             const gchar      *uri,
                                                              GimpDisplayShell *shell);
 
 static void   gimp_display_shell_vectors_freeze_handler     (GimpVectors      *vectors,
@@ -177,6 +188,12 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
   g_signal_connect (image, "profile-changed",
                     G_CALLBACK (gimp_display_shell_profile_changed_handler),
+                    shell);
+  g_signal_connect (image, "saved",
+                    G_CALLBACK (gimp_display_shell_saved_handler),
+                    shell);
+  g_signal_connect (image, "exported",
+                    G_CALLBACK (gimp_display_shell_exported_handler),
                     shell);
 
   shell->vectors_freeze_handler =
@@ -330,6 +347,12 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   gimp_tree_handler_disconnect (shell->vectors_freeze_handler);
   shell->vectors_freeze_handler = NULL;
 
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_exported_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_saved_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_profile_changed_handler,
                                         shell);
@@ -554,6 +577,45 @@ gimp_display_shell_profile_changed_handler (GimpColorManaged *image,
                                             GimpDisplayShell *shell)
 {
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
+}
+
+
+static void
+gimp_display_shell_saved_handler (GimpImage        *image,
+                                  const gchar      *uri,
+                                  GimpDisplayShell *shell)
+{
+  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+  if (window && gimp_image_window_get_active_shell (window) == shell)
+    {
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+      gchar         *filename  = file_utils_uri_display_name (uri);
+
+      gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                                GTK_STOCK_SAVE, _("Image saved to '%s'"),
+                                filename);
+      g_free (filename);
+    }
+}
+
+static void
+gimp_display_shell_exported_handler (GimpImage        *image,
+                                     const gchar      *uri,
+                                     GimpDisplayShell *shell)
+{
+  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+  if (window && gimp_image_window_get_active_shell (window) == shell)
+    {
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+      gchar         *filename  = file_utils_uri_display_name (uri);
+
+      gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                                GTK_STOCK_SAVE, _("Image exported to '%s'"),
+                                filename);
+      g_free (filename);
+    }
 }
 
 static void
