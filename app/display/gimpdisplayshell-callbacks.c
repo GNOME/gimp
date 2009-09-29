@@ -1833,12 +1833,13 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
 
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
-      GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
-      gimp_ui_manager_ui_popup (GIMP_IMAGE_WINDOW (window)->menubar_manager,
-                                "/quick-mask-popup",
-                                GTK_WIDGET (shell),
-                                NULL, NULL, NULL, NULL);
+      if (window)
+        gimp_ui_manager_ui_popup (window->menubar_manager,
+                                  "/quick-mask-popup",
+                                  GTK_WIDGET (shell),
+                                  NULL, NULL, NULL, NULL);
 
       return TRUE;
     }

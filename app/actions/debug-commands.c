@@ -187,17 +187,17 @@ void
 debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
                                             gpointer   data)
 {
-  GimpDisplay      *display     = NULL;
-  GtkWidget        *window      = NULL;
-  GtkUIManager     *manager     = NULL;
-  GtkAccelGroup    *accel_group = NULL;
-  GList            *group_it    = NULL;
-  GList            *strings     = NULL;
+  GimpDisplay      *display;
+  GimpImageWindow  *window;
+  GtkUIManager     *manager;
+  GtkAccelGroup    *accel_group;
+  GList            *group_it;
+  GList            *strings = NULL;
   return_if_no_display (display, data);
 
-  window = gtk_widget_get_toplevel (display->shell);
+  window = gimp_display_shell_get_window (GIMP_DISPLAY_SHELL (display->shell));
 
-  manager = GTK_UI_MANAGER (GIMP_IMAGE_WINDOW (window)->menubar_manager);
+  manager = GTK_UI_MANAGER (window->menubar_manager);
 
   accel_group = gtk_ui_manager_get_accel_group (manager);
 

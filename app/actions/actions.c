@@ -610,28 +610,30 @@ action_message (GimpDisplay *display,
                 const gchar *format,
                 ...)
 {
-  GtkWidget   *toplevel;
-  GtkWidget   *statusbar;
-  const gchar *stock_id = NULL;
-  va_list      args;
+  GimpImageWindow *window;
 
-  toplevel  = gtk_widget_get_toplevel (display->shell);
-  statusbar = GIMP_IMAGE_WINDOW (toplevel)->statusbar;
+  window = gimp_display_shell_get_window (GIMP_DISPLAY_SHELL (display->shell));
 
-  if (GIMP_IS_TOOL_OPTIONS (object))
+  if (window)
     {
-      GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
+      const gchar *stock_id = NULL;
+      va_list      args;
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-    }
-  else if (GIMP_IS_VIEWABLE (object))
-    {
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
-    }
+      if (GIMP_IS_TOOL_OPTIONS (object))
+        {
+          GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
 
-  va_start (args, format);
-  gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (statusbar),
-                                   GIMP_MESSAGE_INFO, stock_id,
-                                   format, args);
-  va_end (args);
+          stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+        }
+      else if (GIMP_IS_VIEWABLE (object))
+        {
+          stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
+        }
+
+      va_start (args, format);
+      gimp_statusbar_push_temp_valist (GIMP_STATUSBAR (window->statusbar),
+                                       GIMP_MESSAGE_INFO, stock_id,
+                                       format, args);
+      va_end (args);
+    }
 }

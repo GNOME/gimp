@@ -500,10 +500,9 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
 {
   if (shell->display->config->resize_windows_on_resize)
     {
-      GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-      GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
-      if (gimp_image_window_get_active_shell (window) == shell)
+      if (window && gimp_image_window_get_active_shell (window) == shell)
         {
           /* If the window is resized just center the image in it when it
            * has change size
@@ -678,16 +677,19 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
                                            GimpDisplayShell *shell)
 {
   GimpDisplayConfig     *display_config;
-  GtkWidget             *window;
+  GimpImageWindow       *window;
   gboolean               fullscreen;
   GimpCanvasPaddingMode  padding_mode;
   GimpRGB                padding_color;
 
   display_config = shell->display->config;
 
-  window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  window = gimp_display_shell_get_window (shell);
 
-  fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
+  if (window)
+    fullscreen = gimp_image_window_get_fullscreen (window);
+  else
+    fullscreen = FALSE;
 
   /*  if the user did not set the padding mode for this display explicitely  */
   if (! shell->fullscreen_options->padding_mode_set)

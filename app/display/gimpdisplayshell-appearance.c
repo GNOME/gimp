@@ -65,17 +65,16 @@ void
 gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 {
   GimpDisplayOptions *options;
-  GtkWidget          *toplevel;
   GimpImageWindow    *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options  = appearance_get_options (shell);
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  window   = GIMP_IMAGE_WINDOW (toplevel);
+  options = appearance_get_options (shell);
+  window  = gimp_display_shell_get_window (shell);
 
-  appearance_set_action_active (shell, "view-fullscreen",
-                                gimp_image_window_get_fullscreen (window));
+  if (window)
+    appearance_set_action_active (shell, "view-fullscreen",
+                                  gimp_image_window_get_fullscreen (window));
 
   gimp_display_shell_set_show_menubar       (shell,
                                              options->show_menubar);
@@ -106,18 +105,16 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
                                      gboolean          show)
 {
   GimpDisplayOptions *options;
-  GtkWidget          *toplevel;
   GimpImageWindow    *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options  = appearance_get_options (shell);
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  window   = GIMP_IMAGE_WINDOW (toplevel);
+  options = appearance_get_options (shell);
+  window  = gimp_display_shell_get_window (shell);
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  if (gimp_image_window_get_active_shell (window) == shell &&
+  if (window && gimp_image_window_get_active_shell (window) == shell &&
       window->menubar)
     {
       if (show)
@@ -142,18 +139,16 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
                                        gboolean          show)
 {
   GimpDisplayOptions *options;
-  GtkWidget          *toplevel;
   GimpImageWindow    *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  options  = appearance_get_options (shell);
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  window   = GIMP_IMAGE_WINDOW (toplevel);
+  options = appearance_get_options (shell);
+  window  = gimp_display_shell_get_window (shell);
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  if (gimp_image_window_get_active_shell (window) == shell)
+  if (window && gimp_image_window_get_active_shell (window) == shell)
     {
       gimp_statusbar_set_visible (GIMP_STATUSBAR (window->statusbar), show);
     }
@@ -592,10 +587,9 @@ appearance_get_options (const GimpDisplayShell *shell)
 {
   if (shell->display->image)
     {
-      GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-      GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
-      if (gimp_image_window_get_fullscreen (window))
+      if (window && gimp_image_window_get_fullscreen (window))
         return shell->fullscreen_options;
       else
         return shell->options;
@@ -609,11 +603,10 @@ appearance_set_action_active (GimpDisplayShell *shell,
                               const gchar      *action,
                               gboolean          active)
 {
-  GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+  GimpImageWindow *window = gimp_display_shell_get_window (shell);
   GimpContext     *context;
 
-  if (gimp_image_window_get_active_shell (window) == shell)
+  if (window && gimp_image_window_get_active_shell (window) == shell)
     {
       GimpActionGroup *action_group;
 
@@ -643,11 +636,10 @@ appearance_set_action_color (GimpDisplayShell *shell,
                              const gchar      *action,
                              const GimpRGB    *color)
 {
-  GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+  GimpImageWindow *window = gimp_display_shell_get_window (shell);
   GimpContext     *context;
 
-  if (gimp_image_window_get_active_shell (window) == shell)
+  if (window && gimp_image_window_get_active_shell (window) == shell)
     {
       GimpActionGroup *action_group;
 

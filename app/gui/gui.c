@@ -532,7 +532,6 @@ gui_restore_after_callback (Gimp               *gimp,
 
       /*  move keyboard focus to the display  */
       gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (display->shell)));
-
     }
 
   /*  indicate that the application has finished loading  */
@@ -702,11 +701,12 @@ gui_menu_show_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GtkWidget *toplevel  = gtk_widget_get_toplevel (display->shell);
-      GtkWidget *statusbar = GIMP_IMAGE_WINDOW (toplevel)->statusbar;
+      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
+      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
-      gimp_statusbar_push (GIMP_STATUSBAR (statusbar), "menu-tooltip",
-                           NULL, "%s", tooltip);
+      if (window)
+        gimp_statusbar_push (GIMP_STATUSBAR (window->statusbar), "menu-tooltip",
+                             NULL, "%s", tooltip);
     }
 }
 
@@ -719,10 +719,11 @@ gui_menu_hide_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GtkWidget *toplevel  = gtk_widget_get_toplevel (display->shell);
-      GtkWidget *statusbar = GIMP_IMAGE_WINDOW (toplevel)->statusbar;
+      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
+      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
-      gimp_statusbar_pop (GIMP_STATUSBAR (statusbar), "menu-tooltip");
+      if (window)
+        gimp_statusbar_pop (GIMP_STATUSBAR (window->statusbar), "menu-tooltip");
     }
 }
 

@@ -260,12 +260,13 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
 
   if (active != shell->dot_for_dot)
     {
-      GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
       gimp_display_shell_scale_set_dot_for_dot (shell, active);
 
-      SET_ACTIVE (GIMP_IMAGE_WINDOW (window)->menubar_manager,
-                  "view-dot-for-dot", shell->dot_for_dot);
+      if (window)
+        SET_ACTIVE (window->menubar_manager,
+                    "view-dot-for-dot", shell->dot_for_dot);
 
       if (IS_ACTIVE_DISPLAY (display))
         SET_ACTIVE (shell->popup_manager, "view-dot-for-dot",
@@ -576,17 +577,19 @@ view_padding_color_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDisplay        *display;
-  GtkWidget          *window;
+  GimpImageWindow    *window;
   GimpDisplayShell   *shell;
   GimpDisplayOptions *options;
   gboolean            fullscreen;
   return_if_no_display (display, data);
 
-  window = gtk_widget_get_toplevel (display->shell);
+  shell  = GIMP_DISPLAY_SHELL (display->shell);
+  window = gimp_display_shell_get_window (shell);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
+  if (window)
+    fullscreen = gimp_image_window_get_fullscreen (window);
+  else
+    fullscreen = FALSE;
 
   if (fullscreen)
     options = shell->fullscreen_options;
@@ -678,16 +681,22 @@ void
 view_fullscreen_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpDisplay *display;
-  GtkWidget   *window;
-  gboolean     active;
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  GimpImageWindow  *window;
   return_if_no_display (display, data);
 
-  window = gtk_widget_get_toplevel (display->shell);
+  shell  = GIMP_DISPLAY_SHELL (display->shell);
+  window = gimp_display_shell_get_window (shell);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (window)
+    {
+      gboolean active;
 
-  gimp_image_window_set_fullscreen (GIMP_IMAGE_WINDOW (window), active);
+      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+      gimp_image_window_set_fullscreen (window, active);
+    }
 }
 
 void
@@ -736,13 +745,16 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
                                   GimpColorDialogState  state,
                                   GimpDisplayShell     *shell)
 {
-  GtkWidget          *window;
+  GimpImageWindow    *window;
   GimpDisplayOptions *options;
   gboolean            fullscreen;
 
-  window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  window = gimp_display_shell_get_window (shell);
 
-  fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
+  if (window)
+    fullscreen = gimp_image_window_get_fullscreen (window);
+  else
+    fullscreen = FALSE;
 
   if (fullscreen)
     options = shell->fullscreen_options;

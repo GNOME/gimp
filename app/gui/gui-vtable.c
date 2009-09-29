@@ -359,10 +359,11 @@ gui_display_create (Gimp      *gimp,
 
   /* FIXME image window: do this elsewhere */
   {
-    GtkWidget *toplevel = gtk_widget_get_toplevel (display->shell);
+    GimpImageWindow *window;
 
-    gimp_ui_manager_update (GIMP_IMAGE_WINDOW (toplevel)->menubar_manager,
-                            display);
+    window = gimp_display_shell_get_window (GIMP_DISPLAY_SHELL (display->shell));
+
+    gimp_ui_manager_update (window->menubar_manager, display);
   }
 
   return GIMP_OBJECT (display);

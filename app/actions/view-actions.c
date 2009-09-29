@@ -550,12 +550,14 @@ view_actions_update (GimpActionGroup *group,
 
   if (display)
     {
-      GtkWidget *window = gtk_widget_get_toplevel (display->shell);
+      GimpImageWindow *window;
 
-      image = display->image;
-      shell = GIMP_DISPLAY_SHELL (display->shell);
+      image  = display->image;
+      shell  = GIMP_DISPLAY_SHELL (display->shell);
+      window = gimp_display_shell_get_window (shell);
 
-      fullscreen = gimp_image_window_get_fullscreen (GIMP_IMAGE_WINDOW (window));
+      if (window)
+        fullscreen = gimp_image_window_get_fullscreen (window);
 
       options = (image ?
                  (fullscreen ? shell->fullscreen_options : shell->options) :
@@ -679,7 +681,8 @@ view_actions_update (GimpActionGroup *group,
         window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
       /*  see view_actions_setup()  */
-      window_actions_update (group, window);
+      if (GTK_IS_WINDOW (window))
+        window_actions_update (group, window);
     }
 
 #undef SET_ACTIVE

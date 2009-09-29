@@ -41,11 +41,10 @@
 static GimpProgress *
 gimp_display_shell_progress_get_real_progress (GimpProgress *progress)
 {
-  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (progress);
-  GtkWidget        *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  GimpImageWindow  *window   = GIMP_IMAGE_WINDOW (toplevel);
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (progress);
+  GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
-  if (gimp_image_window_get_active_shell (window) == shell)
+  if (window && gimp_image_window_get_active_shell (window) == shell)
     return GIMP_PROGRESS (window->statusbar);
   else
     return NULL;
@@ -129,7 +128,10 @@ gimp_display_shell_progress_get_window (GimpProgress *progress)
 {
   GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));
 
-  return (guint32) gimp_window_get_native (GTK_WINDOW (toplevel));
+  if (GTK_IS_WINDOW (toplevel))
+    return (guint32) gimp_window_get_native (GTK_WINDOW (toplevel));
+
+  return 0;
 }
 
 static gboolean

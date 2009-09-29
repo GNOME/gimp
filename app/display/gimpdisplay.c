@@ -437,11 +437,8 @@ gimp_display_delete (GimpDisplay *display)
 
   if (display->shell)
     {
-      GtkWidget       *shell    = display->shell;
-      GtkWidget       *toplevel = gtk_widget_get_toplevel (shell);
-#if 0
-      GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
-#endif
+      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
+      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
       /*  set display->shell to NULL *before* destroying the shell.
        *  all callbacks in gimpdisplayshell-callbacks.c will check
@@ -451,14 +448,14 @@ gimp_display_delete (GimpDisplay *display)
 
       /* FIXME image window: enable this code for multiple shells */
 #if 0
-      if (gimp_image_window_get_n_displays (window) > 1)
+      if (window && gimp_image_window_get_n_displays (window) > 1)
         {
           gimp_image_window_remove_display (window, display);
         }
-      else
+      else if (window)
 #endif
         {
-          gtk_widget_destroy (toplevel);
+          gtk_widget_destroy (GTK_WIDGET (window));
         }
     }
 

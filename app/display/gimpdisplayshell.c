@@ -1236,9 +1236,12 @@ gimp_display_shell_fill_idle (GimpDisplayShell *shell)
 
   shell->fill_idle_id = 0;
 
-  gimp_display_shell_scale_shrink_wrap (shell, TRUE);
+  if (GTK_IS_WINDOW (toplevel))
+    {
+      gimp_display_shell_scale_shrink_wrap (shell, TRUE);
 
-  gtk_window_present (GTK_WINDOW (toplevel));
+      gtk_window_present (GTK_WINDOW (toplevel));
+    }
 
   return FALSE;
 }
@@ -1610,11 +1613,10 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
     }
   else
     {
-      GtkWidget       *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-      GimpImageWindow *window   = GIMP_IMAGE_WINDOW (toplevel);
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
       GimpContext     *context;
 
-      if (gimp_image_window_get_active_shell (window) == shell)
+      if (window && gimp_image_window_get_active_shell (window) == shell)
         {
           gimp_ui_manager_update (window->menubar_manager, shell->display);
         }
