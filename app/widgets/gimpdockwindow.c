@@ -428,7 +428,7 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   /* Don't add docks with just a singe dockable to the list of
    * recently closed dock since those can be brought back through the
    * normal Windows->Dockable Dialogs menu
-   */ 
+   */
   if (gimp_dock_get_n_dockables (dock) < 2)
     return FALSE;
 

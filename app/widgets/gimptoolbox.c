@@ -68,8 +68,6 @@ static GObject   * gimp_toolbox_constructor        (GType           type,
                                                     guint           n_params,
                                                     GObjectConstructParam *params);
 
-static gboolean    gimp_toolbox_delete_event       (GtkWidget      *widget,
-                                                    GdkEventAny    *event);
 static void        gimp_toolbox_size_allocate      (GtkWidget      *widget,
                                                     GtkAllocation  *allocation);
 static void        gimp_toolbox_style_set          (GtkWidget      *widget,
@@ -147,7 +145,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
 
   object_class->constructor           = gimp_toolbox_constructor;
 
-  widget_class->delete_event          = gimp_toolbox_delete_event;
   widget_class->size_allocate         = gimp_toolbox_size_allocate;
   widget_class->style_set             = gimp_toolbox_style_set;
   widget_class->button_press_event    = gimp_toolbox_button_press_event;
@@ -311,15 +308,6 @@ gimp_toolbox_constructor (GType                  type,
   toolbox_separator_expand (toolbox);
 
   return object;
-}
-
-static gboolean
-gimp_toolbox_delete_event (GtkWidget   *widget,
-                           GdkEventAny *event)
-{
-  gimp_dialog_factory_hide_dialog (widget);
-
-  return TRUE;
 }
 
 static void
