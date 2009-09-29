@@ -459,16 +459,20 @@ gimp_display_delete (GimpDisplay *display)
        */
       display->shell = NULL;
 
-      /* FIXME image window: enable this code for multiple shells */
-#if 0
-      if (window && gimp_image_window_get_n_displays (window) > 1)
+      if (window)
         {
-          gimp_image_window_remove_display (window, display);
+          if (gimp_image_window_get_n_shells (window) > 1)
+            {
+              gimp_image_window_remove_shell (window, shell);
+            }
+          else
+            {
+              gtk_widget_destroy (GTK_WIDGET (window));
+            }
         }
-      else if (window)
-#endif
+      else
         {
-          gtk_widget_destroy (GTK_WIDGET (window));
+          g_object_unref (shell);
         }
     }
 
