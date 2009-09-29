@@ -74,6 +74,7 @@
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
 #include "gimp-log.h"
@@ -136,7 +137,7 @@ static const guint8 * gimp_display_shell_get_icc_profile
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
-                         GIMP_TYPE_IMAGE_WINDOW,
+                         GTK_TYPE_VBOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_shell_progress_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
@@ -380,6 +381,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                               GDK_FOCUS_CHANGE_MASK        |
                                               GDK_VISIBILITY_NOTIFY_MASK   |
                                               GDK_SCROLL_MASK));
+
+  gtk_box_set_spacing (GTK_BOX (shell), 1);
 
   /*  zoom model callback  */
   g_signal_connect_swapped (shell->zoom, "zoomed",
@@ -764,9 +767,7 @@ GtkWidget *
 gimp_display_shell_new (GimpDisplay       *display,
                         GimpUnit           unit,
                         gdouble            scale,
-                        GimpMenuFactory   *menu_factory,
-                        GimpUIManager     *popup_manager,
-                        GimpDialogFactory *display_factory)
+                        GimpUIManager     *popup_manager)
 {
   GimpDisplayShell      *shell;
   GimpColorDisplayStack *filter;
@@ -783,23 +784,13 @@ gimp_display_shell_new (GimpDisplay       *display,
   gint                   shell_height;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (popup_manager), NULL);
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (display_factory), NULL);
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
-                        "menu-factory",    menu_factory,
-                        "display-factory", display_factory,
-                        "popup-manager",   popup_manager,
-                        "display",         display,
-                        "unit",            unit,
-                        /* The window position will be overridden by the
-                         * dialog factory, it is only really used on first
-                         * startup.
-                         */
-                        display->image ? NULL : "window-position",
-                        GTK_WIN_POS_CENTER,
+                        "popup-manager", popup_manager,
+                        "display",       display,
+                        "unit",          unit,
                         NULL);
 
   if (display->image)
@@ -879,14 +870,9 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  first, set up the container hierarchy  *********************************/
 
-  /*  the vbox containing all widgets  */
-
-  /*  FIXME this will be the shell  */
-  shell->disp_vbox = gtk_vbox_new (FALSE, 1);
-
   /*  a hbox for the inner_table and the vertical scrollbar  */
   upper_hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (shell->disp_vbox), upper_hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (shell), upper_hbox, TRUE, TRUE, 0);
   gtk_widget_show (upper_hbox);
 
   /*  the table containing origin, rulers and the canvas  */
@@ -904,7 +890,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   /*  the hbox containing the quickmask button, vertical scrollbar and
       the navigation button  */
   lower_hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (shell->disp_vbox), lower_hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (shell), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
 
   /*  create the scrollbars  *************************************************/

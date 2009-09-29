@@ -478,10 +478,9 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   window->shells = g_list_append (window->shells, shell);
 
   /* FIXME multiple shells */
-  gtk_box_pack_start (GTK_BOX (window->main_vbox),
-                      shell->disp_vbox,
+  gtk_box_pack_start (GTK_BOX (window->main_vbox), GTK_WIDGET (shell),
                       TRUE, TRUE, 0);
-  gtk_widget_show (shell->disp_vbox);
+  gtk_widget_show (GTK_WIDGET (shell));
 }
 
 void

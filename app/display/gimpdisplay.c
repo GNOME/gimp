@@ -42,6 +42,7 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 
 #include "gimp-intl.h"
 
@@ -353,6 +354,7 @@ gimp_display_new (Gimp              *gimp,
                   GimpDialogFactory *display_factory)
 {
   GimpDisplay *display;
+  GtkWidget   *window;
   gint         ID;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -381,24 +383,34 @@ gimp_display_new (Gimp              *gimp,
     gimp_display_connect (display, image);
 
   /*  create the shell for the image  */
+  window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
+                         "menu-factory",    menu_factory,
+                         "display-factory", display_factory,
+                         /* The window position will be overridden by the
+                          * dialog factory, it is only really used on first
+                          * startup.
+                          */
+                         display->image ? NULL : "window-position",
+                         GTK_WIN_POS_CENTER,
+                         NULL);
+
   display->shell = gimp_display_shell_new (display, unit, scale,
-                                           menu_factory, popup_manager,
-                                           display_factory);
+                                           popup_manager);
 
   /* FIXME image window */
-  gimp_image_window_add_shell (GIMP_IMAGE_WINDOW (display->shell),
+  gimp_image_window_add_shell (GIMP_IMAGE_WINDOW (window),
                                GIMP_DISPLAY_SHELL (display->shell));
 
   /* FIXME image window */
-  gimp_image_window_set_active_shell (GIMP_IMAGE_WINDOW (display->shell),
+  gimp_image_window_set_active_shell (GIMP_IMAGE_WINDOW (window),
                                       GIMP_DISPLAY_SHELL (display->shell));
 
   /* FIXME image window */
-  g_signal_connect (GIMP_IMAGE_WINDOW (display->shell)->statusbar, "cancel",
+  g_signal_connect (GIMP_IMAGE_WINDOW (window)->statusbar, "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
                     display);
 
-  gtk_widget_show (display->shell);
+  gtk_widget_show (window);
 
   /* add the display to the list */
   gimp_container_add (gimp->displays, GIMP_OBJECT (display));

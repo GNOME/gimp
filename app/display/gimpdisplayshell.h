@@ -19,9 +19,6 @@
 #define __GIMP_DISPLAY_SHELL_H__
 
 
-#include "gimpimagewindow.h"
-
-
 /* Apply to a float the same rounding mode used in the renderer */
 #define  PROJ_ROUND(coord)   ((gint) RINT (coord))
 #define  PROJ_ROUND64(coord) ((gint64) RINT (coord))
@@ -60,11 +57,9 @@ typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
 
 struct _GimpDisplayShell
 {
-  GimpImageWindow    parent_instance;
+  GtkVBox            parent_instance;
 
   /* --- cacheline 2 boundary (128 bytes) was 20 bytes ago --- */
-
-  GtkWidget         *disp_vbox; /* FIXME temp hack */
 
   GimpDisplay       *display;
 
@@ -215,7 +210,7 @@ struct _GimpDisplayShell
 
 struct _GimpDisplayShellClass
 {
-  GimpImageWindowClass  parent_class;
+  GtkVBoxClass  parent_class;
 
   void (* scaled)    (GimpDisplayShell *shell);
   void (* scrolled)  (GimpDisplayShell *shell);
@@ -228,9 +223,7 @@ GType       gimp_display_shell_get_type            (void) G_GNUC_CONST;
 GtkWidget * gimp_display_shell_new                 (GimpDisplay        *display,
                                                     GimpUnit            unit,
                                                     gdouble             scale,
-                                                    GimpMenuFactory    *menu_factory,
-                                                    GimpUIManager      *popup_manager,
-                                                    GimpDialogFactory  *display_factory);
+                                                    GimpUIManager      *popup_manager);
 
 GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
 
