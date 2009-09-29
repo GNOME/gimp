@@ -70,6 +70,7 @@ struct _GimpImageWindowPrivate
   GtkWidget         *main_vbox;
   GtkWidget         *menubar;
   GtkWidget         *hbox;
+  GtkWidget         *notebook;
   GtkWidget         *statusbar;
 
   GdkWindowState     window_state;
@@ -255,6 +256,13 @@ gimp_image_window_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (private->main_vbox), private->hbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (private->hbox);
+
+  private->notebook = gtk_notebook_new ();
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
+  gtk_box_pack_start (GTK_BOX (private->hbox), private->notebook,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (private->notebook);
 
   private->statusbar = gimp_statusbar_new ();
   gimp_help_set_help_data (private->statusbar, NULL,
@@ -546,8 +554,13 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   private->shells = g_list_append (private->shells, shell);
 
   /* FIXME multiple shells */
-  gtk_box_pack_start (GTK_BOX (private->hbox), GTK_WIDGET (shell),
-                      TRUE, TRUE, 0);
+  gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
+                            GTK_WIDGET (shell),
+                            gtk_label_new ("foo"));
+
+  if (g_list_length (private->shells) > 1)
+    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
+
   gtk_widget_show (GTK_WIDGET (shell));
 }
 
