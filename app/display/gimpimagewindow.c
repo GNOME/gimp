@@ -118,6 +118,11 @@ static gboolean  gimp_image_window_shell_events        (GtkWidget           *wid
                                                         GdkEvent            *event,
                                                         GimpImageWindow     *window);
 
+static void      gimp_image_window_switch_page         (GtkNotebook         *notebook,
+                                                        GtkNotebookPage     *page,
+                                                        gint                 page_num,
+                                                        GimpImageWindow     *window);
+
 static void      gimp_image_window_image_notify        (GimpDisplay         *display,
                                                         const GParamSpec    *pspec,
                                                         GimpImageWindow     *window);
@@ -263,6 +268,10 @@ gimp_image_window_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (private->hbox), private->notebook,
                       TRUE, TRUE, 0);
   gtk_widget_show (private->notebook);
+
+  g_signal_connect (private->notebook, "switch-page",
+                    G_CALLBACK (gimp_image_window_switch_page),
+                    window);
 
   private->statusbar = gimp_statusbar_new ();
   gimp_help_set_help_data (private->statusbar, NULL,
@@ -548,12 +557,8 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
 
   g_return_if_fail (g_list_find (private->shells, shell) == NULL);
 
-  /* FIXME multiple shells */
-  g_assert (private->shells == NULL);
-
   private->shells = g_list_append (private->shells, shell);
 
-  /* FIXME multiple shells */
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
                             GTK_WIDGET (shell),
                             gtk_label_new ("foo"));
@@ -569,76 +574,19 @@ gimp_image_window_set_active_shell (GimpImageWindow  *window,
                                     GimpDisplayShell *shell)
 {
   GimpImageWindowPrivate *private;
-  GimpDisplay            *active_display;
+  gint                    page_num;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  if (shell == private->active_shell)
-    return;
+  g_return_if_fail (g_list_find (private->shells, shell));
 
-  if (private->active_shell)
-    {
-      active_display = private->active_shell->display;
+  page_num = gtk_notebook_page_num (GTK_NOTEBOOK (private->notebook),
+                                    GTK_WIDGET (shell));
 
-      g_signal_handlers_disconnect_by_func (active_display,
-                                            gimp_image_window_image_notify,
-                                            window);
-
-      g_signal_handlers_disconnect_by_func (private->active_shell,
-                                            gimp_image_window_shell_scaled,
-                                            window);
-      g_signal_handlers_disconnect_by_func (private->active_shell,
-                                            gimp_image_window_shell_title_notify,
-                                            window);
-      g_signal_handlers_disconnect_by_func (private->active_shell,
-                                            gimp_image_window_shell_status_notify,
-                                            window);
-      g_signal_handlers_disconnect_by_func (private->active_shell,
-                                            gimp_image_window_shell_icon_notify,
-                                            window);
-    }
-
-  private->active_shell = shell;
-
-  active_display = private->active_shell->display;
-
-  g_signal_connect (active_display, "notify::image",
-                    G_CALLBACK (gimp_image_window_image_notify),
-                    window);
-
-  gimp_statusbar_set_shell (GIMP_STATUSBAR (private->statusbar),
-                            private->active_shell);
-
-  g_signal_connect (private->active_shell, "scaled",
-                    G_CALLBACK (gimp_image_window_shell_scaled),
-                    window);
-  /* FIXME: "title" later */
-  g_signal_connect (private->active_shell, "notify::gimp-title",
-                    G_CALLBACK (gimp_image_window_shell_title_notify),
-                    window);
-  g_signal_connect (private->active_shell, "notify::status",
-                    G_CALLBACK (gimp_image_window_shell_status_notify),
-                    window);
-  /* FIXME: "icon" later */
-  g_signal_connect (private->active_shell, "notify::gimp-icon",
-                    G_CALLBACK (gimp_image_window_shell_icon_notify),
-                    window);
-
-  gimp_display_shell_appearance_update (private->active_shell);
-
-  if (! active_display->image)
-    {
-      gimp_statusbar_empty (GIMP_STATUSBAR (private->statusbar));
-
-      gimp_dialog_factory_add_foreign (private->display_factory,
-                                       "gimp-empty-image-window",
-                                       GTK_WIDGET (window));
-    }
-
-  gimp_ui_manager_update (private->menubar_manager, active_display);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook), page_num);
 }
 
 GimpDisplayShell *
@@ -895,6 +843,83 @@ gimp_image_window_shell_events (GtkWidget       *widget,
   GimpDisplayShell *shell = gimp_image_window_get_active_shell (window);
 
   return gimp_display_shell_events (widget, event, shell);
+}
+
+static void
+gimp_image_window_switch_page (GtkNotebook     *notebook,
+                               GtkNotebookPage *page,
+                               gint             page_num,
+                               GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpDisplayShell       *shell;
+  GimpDisplay            *active_display;
+
+  shell = GIMP_DISPLAY_SHELL (gtk_notebook_get_nth_page (notebook, page_num));
+
+  if (shell == private->active_shell)
+    return;
+
+  if (private->active_shell)
+    {
+      active_display = private->active_shell->display;
+
+      g_signal_handlers_disconnect_by_func (active_display,
+                                            gimp_image_window_image_notify,
+                                            window);
+
+      g_signal_handlers_disconnect_by_func (private->active_shell,
+                                            gimp_image_window_shell_scaled,
+                                            window);
+      g_signal_handlers_disconnect_by_func (private->active_shell,
+                                            gimp_image_window_shell_title_notify,
+                                            window);
+      g_signal_handlers_disconnect_by_func (private->active_shell,
+                                            gimp_image_window_shell_status_notify,
+                                            window);
+      g_signal_handlers_disconnect_by_func (private->active_shell,
+                                            gimp_image_window_shell_icon_notify,
+                                            window);
+    }
+
+  private->active_shell = shell;
+
+  active_display = private->active_shell->display;
+
+  g_signal_connect (active_display, "notify::image",
+                    G_CALLBACK (gimp_image_window_image_notify),
+                    window);
+
+  gimp_statusbar_set_shell (GIMP_STATUSBAR (private->statusbar),
+                            private->active_shell);
+
+  g_signal_connect (private->active_shell, "scaled",
+                    G_CALLBACK (gimp_image_window_shell_scaled),
+                    window);
+  /* FIXME: "title" later */
+  g_signal_connect (private->active_shell, "notify::gimp-title",
+                    G_CALLBACK (gimp_image_window_shell_title_notify),
+                    window);
+  g_signal_connect (private->active_shell, "notify::status",
+                    G_CALLBACK (gimp_image_window_shell_status_notify),
+                    window);
+  /* FIXME: "icon" later */
+  g_signal_connect (private->active_shell, "notify::gimp-icon",
+                    G_CALLBACK (gimp_image_window_shell_icon_notify),
+                    window);
+
+  gimp_display_shell_appearance_update (private->active_shell);
+
+  if (! active_display->image)
+    {
+      gimp_statusbar_empty (GIMP_STATUSBAR (private->statusbar));
+
+      gimp_dialog_factory_add_foreign (private->display_factory,
+                                       "gimp-empty-image-window",
+                                       GTK_WIDGET (window));
+    }
+
+  gimp_ui_manager_update (private->menubar_manager, active_display);
 }
 
 static void
