@@ -69,6 +69,7 @@ struct _GimpImageWindowPrivate
 
   GtkWidget         *main_vbox;
   GtkWidget         *menubar;
+  GtkWidget         *hbox;
   GtkWidget         *statusbar;
 
   GdkWindowState     window_state;
@@ -249,6 +250,11 @@ gimp_image_window_constructor (GType                  type,
                         G_CALLBACK (gimp_image_window_shell_events),
                         window);
     }
+
+  private->hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (private->main_vbox), private->hbox,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (private->hbox);
 
   private->statusbar = gimp_statusbar_new ();
   gimp_help_set_help_data (private->statusbar, NULL,
@@ -540,7 +546,7 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   private->shells = g_list_append (private->shells, shell);
 
   /* FIXME multiple shells */
-  gtk_box_pack_start (GTK_BOX (private->main_vbox), GTK_WIDGET (shell),
+  gtk_box_pack_start (GTK_BOX (private->hbox), GTK_WIDGET (shell),
                       TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (shell));
 }
