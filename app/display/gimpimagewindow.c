@@ -25,6 +25,7 @@
 
 #include "display-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
@@ -34,6 +35,8 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpview.h"
+#include "widgets/gimpviewrenderer-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
@@ -549,6 +552,7 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
                              GimpDisplayShell *shell)
 {
   GimpImageWindowPrivate *private;
+  GtkWidget              *view;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -559,9 +563,16 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
 
   private->shells = g_list_append (private->shells, shell);
 
+  view = gimp_view_new_by_types (gimp_get_user_context (shell->display->gimp),
+                                 GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
+                                 GIMP_VIEW_SIZE_LARGE, 0, FALSE);
+
+  if (shell->display->image)
+    gimp_view_set_viewable (GIMP_VIEW (view),
+                            GIMP_VIEWABLE (shell->display->image));
+
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
-                            GTK_WIDGET (shell),
-                            gtk_label_new ("foo"));
+                            GTK_WIDGET (shell), view);
 
   if (g_list_length (private->shells) > 1)
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
@@ -960,6 +971,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
                                 GimpImageWindow  *window)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GtkWidget              *view;
 
   if (display->image)
     {
@@ -1007,6 +1019,12 @@ gimp_image_window_image_notify (GimpDisplay      *display,
       gtk_window_resize (GTK_WINDOW (window), width, height);
 
     }
+
+  view = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
+                                     display->shell);
+
+  gimp_view_set_viewable (GIMP_VIEW (view),
+                          GIMP_VIEWABLE (display->image));
 
   gimp_ui_manager_update (private->menubar_manager, display);
 }
