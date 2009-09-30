@@ -316,7 +316,12 @@ gui_display_get_window (GimpObject *display)
   GimpDisplay *disp = GIMP_DISPLAY (display);
 
   if (disp->shell)
-    return (guint32) gimp_window_get_native (GTK_WINDOW (disp->shell));
+    {
+      GtkWidget *toplevel = gtk_widget_get_toplevel (disp->shell);
+
+      if (GTK_IS_WINDOW (toplevel))
+        return (guint32) gimp_window_get_native (GTK_WINDOW (toplevel));
+    }
 
   return 0;
 }
