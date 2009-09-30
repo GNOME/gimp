@@ -65,7 +65,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpimagewindow.h"
 
 #include "actions/plug-in-actions.h"
 
