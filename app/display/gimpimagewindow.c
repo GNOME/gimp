@@ -36,7 +36,6 @@
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpview.h"
-#include "widgets/gimpviewrenderer-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
