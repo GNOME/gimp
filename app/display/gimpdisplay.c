@@ -463,7 +463,12 @@ gimp_display_delete (GimpDisplay *display)
         {
           if (gimp_image_window_get_n_shells (window) > 1)
             {
+              g_object_ref (shell);
+
               gimp_image_window_remove_shell (window, shell);
+              gtk_widget_destroy (GTK_WIDGET (shell));
+
+              g_object_unref (shell);
             }
           else
             {
