@@ -76,6 +76,7 @@ struct _GimpImageWindowPrivate
   GtkWidget         *statusbar;
 
   GdkWindowState     window_state;
+  gboolean           is_empty;
 };
 
 #define GIMP_IMAGE_WINDOW_GET_PRIVATE(window) \
@@ -195,8 +196,12 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
 static void
 gimp_image_window_init (GimpImageWindow *window)
 {
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
   gtk_window_set_role (GTK_WINDOW (window), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
+
+  private->is_empty = TRUE;
 }
 
 static GObject *
@@ -566,12 +571,17 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
                                  GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
                                  GIMP_VIEW_SIZE_LARGE, 0, FALSE);
 
-  if (shell->display->image)
-    gimp_view_set_viewable (GIMP_VIEW (view),
-                            GIMP_VIEWABLE (shell->display->image));
-
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
                             GTK_WIDGET (shell), view);
+
+  if (shell->display->image)
+    {
+      gimp_view_set_viewable (GIMP_VIEW (view),
+                              GIMP_VIEWABLE (shell->display->image));
+
+      if (g_list_length (private->shells) == 1)
+        private->is_empty = FALSE;
+    }
 
   if (g_list_length (private->shells) > 1)
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
@@ -599,6 +609,9 @@ gimp_image_window_remove_shell (GimpImageWindow  *window,
 
   if (g_list_length (private->shells) == 1)
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
+
+  if (! private->shells)
+    private->is_empty = TRUE;
 }
 
 gint
@@ -974,18 +987,23 @@ gimp_image_window_image_notify (GimpDisplay      *display,
 
   if (display->image)
     {
-      /* FIXME don't run this code for revert */
+      if (private->is_empty)
+        {
+          private->is_empty = FALSE;
 
-      gimp_dialog_factory_remove_dialog (private->display_factory,
-                                         GTK_WIDGET (window));
+          gimp_dialog_factory_remove_dialog (private->display_factory,
+                                             GTK_WIDGET (window));
 
-      gimp_statusbar_fill (GIMP_STATUSBAR (private->statusbar));
+          gimp_statusbar_fill (GIMP_STATUSBAR (private->statusbar));
+        }
     }
-  else
+  else if (g_list_length (private->shells) == 1)
     {
       GimpSessionInfo *session_info;
       gint             width;
       gint             height;
+
+      private->is_empty = TRUE;
 
       gtk_window_unfullscreen (GTK_WINDOW (window));
 
@@ -1016,7 +1034,6 @@ gimp_image_window_image_notify (GimpDisplay      *display,
 
       gtk_window_unmaximize (GTK_WINDOW (window));
       gtk_window_resize (GTK_WINDOW (window), width, height);
-
     }
 
   view = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
