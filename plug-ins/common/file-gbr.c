@@ -606,7 +606,7 @@ save_image (const gchar  *filename,
   gint          x;
   gint          bpp;
   GimpPixelRgn  pixel_rgn;
-  GimpRGB gray, white;
+  GimpRGB       gray, white;
 
   gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
