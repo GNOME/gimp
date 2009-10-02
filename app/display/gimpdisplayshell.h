@@ -218,54 +218,54 @@ struct _GimpDisplayShellClass
 };
 
 
-GType       gimp_display_shell_get_type            (void) G_GNUC_CONST;
+GType             gimp_display_shell_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_display_shell_new                 (GimpDisplay        *display,
+GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
                                                     GimpUnit            unit,
                                                     gdouble             scale,
                                                     GimpUIManager      *popup_manager);
 
 GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_reconnect           (GimpDisplayShell   *shell);
+void              gimp_display_shell_reconnect     (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_empty               (GimpDisplayShell   *shell);
-void        gimp_display_shell_fill                (GimpDisplayShell   *shell,
+void              gimp_display_shell_empty         (GimpDisplayShell   *shell);
+void              gimp_display_shell_fill          (GimpDisplayShell   *shell,
                                                     GimpImage          *image,
                                                     GimpUnit            unit,
                                                     gdouble             scale);
 
-void        gimp_display_shell_scale_changed       (GimpDisplayShell   *shell);
+void              gimp_display_shell_scale_changed (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_scaled              (GimpDisplayShell   *shell);
-void        gimp_display_shell_scrolled            (GimpDisplayShell   *shell);
+void              gimp_display_shell_scaled        (GimpDisplayShell   *shell);
+void              gimp_display_shell_scrolled      (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_set_unit            (GimpDisplayShell   *shell,
+void              gimp_display_shell_set_unit      (GimpDisplayShell   *shell,
                                                     GimpUnit            unit);
-GimpUnit    gimp_display_shell_get_unit            (GimpDisplayShell   *shell);
+GimpUnit          gimp_display_shell_get_unit      (GimpDisplayShell   *shell);
 
-gboolean    gimp_display_shell_snap_coords         (GimpDisplayShell   *shell,
+gboolean          gimp_display_shell_snap_coords   (GimpDisplayShell   *shell,
                                                     GimpCoords         *coords,
                                                     gint                snap_offset_x,
                                                     gint                snap_offset_y,
                                                     gint                snap_width,
                                                     gint                snap_height);
 
-gboolean    gimp_display_shell_mask_bounds         (GimpDisplayShell   *shell,
+gboolean          gimp_display_shell_mask_bounds   (GimpDisplayShell   *shell,
                                                     gint               *x1,
                                                     gint               *y1,
                                                     gint               *x2,
                                                     gint               *y2);
 
-void        gimp_display_shell_flush               (GimpDisplayShell   *shell,
+void              gimp_display_shell_flush         (GimpDisplayShell   *shell,
                                                     gboolean            now);
 
-void        gimp_display_shell_pause               (GimpDisplayShell   *shell);
-void        gimp_display_shell_resume              (GimpDisplayShell   *shell);
+void              gimp_display_shell_pause         (GimpDisplayShell   *shell);
+void              gimp_display_shell_resume        (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_set_highlight       (GimpDisplayShell   *shell,
+void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
                                                     const GdkRectangle *highlight);
-void        gimp_display_shell_set_mask            (GimpDisplayShell   *shell,
+void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     GimpDrawable       *mask,
                                                     GimpChannelType     color);
 
