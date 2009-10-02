@@ -886,7 +886,8 @@ gimp_display_shell_new (GimpDisplay       *display,
   gtk_widget_show (right_vbox);
 
   /*  the hbox containing the quickmask button, vertical scrollbar and
-      the navigation button  */
+   *  the navigation button
+   */
   lower_hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (shell), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
@@ -1012,6 +1013,7 @@ gimp_display_shell_new (GimpDisplay       *display,
                     shell);
 
   /*  create the contents of the right_vbox  *********************************/
+
   shell->zoom_button = g_object_new (GTK_TYPE_CHECK_BUTTON,
                                      "draw-indicator", FALSE,
                                      "relief",         GTK_RELIEF_NONE,
@@ -1106,7 +1108,7 @@ gimp_display_shell_new (GimpDisplay       *display,
   gtk_box_pack_start (GTK_BOX (lower_hbox),
                       shell->nav_ebox, FALSE, FALSE, 0);
 
-  /*  show everything that is always shwon***********************************/
+  /*  show everything that is always shown ***********************************/
 
   gtk_widget_show (GTK_WIDGET (shell->canvas));
 
@@ -1262,8 +1264,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
                                          shell, NULL);
 }
 
-/*
- * We used to calculate the scale factor in the SCALEFACTOR_X() and
+/* We used to calculate the scale factor in the SCALEFACTOR_X() and
  * SCALEFACTOR_Y() macros. But since these are rather frequently
  * called and the values rarely change, we now store them in the
  * shell and call this function whenever they need to be recalculated.
