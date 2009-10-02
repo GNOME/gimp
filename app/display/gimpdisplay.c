@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimparea.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
@@ -385,14 +386,19 @@ gimp_display_new (Gimp              *gimp,
   /*  get an image window  */
   if (GIMP_GUI_CONFIG (display->config)->single_window_mode)
     {
-      GimpDisplay *first_display;
+      GimpDisplay *active_display;
 
-      first_display =
-        GIMP_DISPLAY (gimp_container_get_first_child (gimp->displays));
+      active_display = gimp_context_get_display (gimp_get_user_context (gimp));
 
-      if (first_display)
+      if (! active_display)
         {
-          GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (first_display->shell);
+          active_display =
+            GIMP_DISPLAY (gimp_container_get_first_child (gimp->displays));
+        }
+
+      if (active_display)
+        {
+          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (active_display->shell);
 
           window = gimp_display_shell_get_window (shell);
         }
