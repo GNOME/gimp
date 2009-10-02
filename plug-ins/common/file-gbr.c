@@ -606,6 +606,9 @@ save_image (const gchar  *filename,
   gint          x;
   gint          bpp;
   GimpPixelRgn  pixel_rgn;
+  GimpRGB gray, white;
+
+  gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
   switch (gimp_drawable_type (drawable_ID))
     {
@@ -667,7 +670,7 @@ save_image (const gchar  *filename,
                        0, 0, drawable->width, drawable->height,
                        FALSE, FALSE);
 
-  buffer = g_new (guchar, drawable->width * bpp);
+  buffer = g_new (guchar, drawable->width * MAX (bpp, drawable->bpp));
 
   for (line = 0; line < drawable->height; line++)
     {
@@ -682,9 +685,19 @@ save_image (const gchar  *filename,
           break;
 
         case 2:
-          /*  invert and drop alpha channel  */
           for (x = 0; x < drawable->width; x++)
-            buffer[x] = 255 - buffer[2 * x];
+            {
+              /*  apply alpha channel  */
+              gimp_rgba_set_uchar (&gray,
+                                   buffer[2 * x],
+                                   buffer[2 * x],
+                                   buffer[2 * x],
+                                   buffer[2 * x + 1]);
+              gimp_rgb_composite (&gray, &white, GIMP_RGB_COMPOSITE_BEHIND);
+              gimp_rgba_get_uchar (&gray, &buffer[x], NULL, NULL, NULL);
+              /* invert */
+              buffer[x] = 255 - buffer[x];
+            }
           break;
 
         case 3:
