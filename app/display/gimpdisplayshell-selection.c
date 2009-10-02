@@ -35,6 +35,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-transform.h"
 

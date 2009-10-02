@@ -40,6 +40,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-transform.h"

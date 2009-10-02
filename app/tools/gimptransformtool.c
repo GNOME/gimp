@@ -55,6 +55,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
+#include "display/gimpdisplayshell-expose.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimptoolcontrol.h"

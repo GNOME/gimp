@@ -35,6 +35,7 @@
 #include "gimpcursorview.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-cursor.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"

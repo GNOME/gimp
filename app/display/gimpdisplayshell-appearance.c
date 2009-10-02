@@ -42,6 +42,7 @@
 #include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
