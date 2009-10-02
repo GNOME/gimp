@@ -25,7 +25,7 @@
 #include "display-types.h"
 #include "tools/tools-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimparea.h"
@@ -353,9 +353,9 @@ gimp_display_new (Gimp              *gimp,
                   GimpUIManager     *popup_manager,
                   GimpDialogFactory *display_factory)
 {
-  GimpDisplay *display;
-  GtkWidget   *window;
-  gint         ID;
+  GimpDisplay     *display;
+  GimpImageWindow *window = NULL;
+  gint             ID;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
@@ -382,27 +382,41 @@ gimp_display_new (Gimp              *gimp,
   if (image)
     gimp_display_connect (display, image);
 
-  /*  create the shell for the image  */
-  window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
-                         "menu-factory",    menu_factory,
-                         "display-factory", display_factory,
-                         /* The window position will be overridden by the
-                          * dialog factory, it is only really used on first
-                          * startup.
-                          */
-                         display->image ? NULL : "window-position",
-                         GTK_WIN_POS_CENTER,
-                         NULL);
+  /*  get an image window  */
+  if (GIMP_GUI_CONFIG (display->config)->single_window_mode)
+    {
+      GimpDisplay *first_display;
 
+      first_display =
+        GIMP_DISPLAY (gimp_container_get_first_child (gimp->displays));
+
+      if (first_display)
+        {
+          GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (first_display->shell);
+
+          window = gimp_display_shell_get_window (shell);
+        }
+    }
+
+  if (! window)
+    window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
+                           "menu-factory",    menu_factory,
+                           "display-factory", display_factory,
+                           /* The window position will be overridden by the
+                            * dialog factory, it is only really used on first
+                            * startup.
+                            */
+                           display->image ? NULL : "window-position",
+                           GTK_WIN_POS_CENTER,
+                           NULL);
+
+  /*  create the shell for the image  */
   display->shell = gimp_display_shell_new (display, unit, scale,
                                            popup_manager);
 
-  /* FIXME image window */
-  gimp_image_window_add_shell (GIMP_IMAGE_WINDOW (window),
+  gimp_image_window_add_shell (window,
                                GIMP_DISPLAY_SHELL (display->shell));
-
-  /* FIXME image window */
-  gimp_image_window_set_active_shell (GIMP_IMAGE_WINDOW (window),
+  gimp_image_window_set_active_shell (window,
                                       GIMP_DISPLAY_SHELL (display->shell));
 
   /* FIXME image window */
@@ -411,7 +425,7 @@ gimp_display_new (Gimp              *gimp,
                     G_CALLBACK (gimp_display_progress_canceled),
                     display);
 
-  gtk_widget_show (window);
+  gtk_window_present (GTK_WINDOW (window));
 
   /* add the display to the list */
   gimp_container_add (gimp->displays, GIMP_OBJECT (display));
