@@ -56,8 +56,6 @@
                                                100% and 200% zoom)
                                              */
 
-#define GIMP_DISPLAY_RENDER_BUF_WIDTH  256
-
 
 typedef struct _RenderInfo  RenderInfo;
 

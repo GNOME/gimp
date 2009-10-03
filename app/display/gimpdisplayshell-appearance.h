@@ -21,13 +21,13 @@
 
 void       gimp_display_shell_appearance_update      (GimpDisplayShell       *shell);
 
-void       gimp_display_shell_set_fullscreen         (GimpDisplayShell       *shell,
-                                                      gboolean                fullscreen);
-gboolean   gimp_display_shell_get_fullscreen         (const GimpDisplayShell *shell);
-
 void       gimp_display_shell_set_show_menubar       (GimpDisplayShell       *shell,
                                                       gboolean                show);
 gboolean   gimp_display_shell_get_show_menubar       (const GimpDisplayShell *shell);
+
+void       gimp_display_shell_set_show_statusbar     (GimpDisplayShell       *shell,
+                                                      gboolean                show);
+gboolean   gimp_display_shell_get_show_statusbar     (const GimpDisplayShell *shell);
 
 void       gimp_display_shell_set_show_rulers        (GimpDisplayShell       *shell,
                                                       gboolean                show);
@@ -36,10 +36,6 @@ gboolean   gimp_display_shell_get_show_rulers        (const GimpDisplayShell *sh
 void       gimp_display_shell_set_show_scrollbars    (GimpDisplayShell       *shell,
                                                       gboolean                show);
 gboolean   gimp_display_shell_get_show_scrollbars    (const GimpDisplayShell *shell);
-
-void       gimp_display_shell_set_show_statusbar     (GimpDisplayShell       *shell,
-                                                      gboolean                show);
-gboolean   gimp_display_shell_get_show_statusbar     (const GimpDisplayShell *shell);
 
 void       gimp_display_shell_set_show_selection     (GimpDisplayShell       *shell,
                                                       gboolean                show);

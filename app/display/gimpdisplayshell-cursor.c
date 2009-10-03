@@ -35,7 +35,9 @@
 #include "gimpcursorview.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-cursor.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
 
@@ -124,6 +126,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
                                   gdouble              image_x,
                                   gdouble              image_y)
 {
+  GimpImageWindow   *window;
   GimpDialogFactory *factory;
   GimpSessionInfo   *session_info;
   GimpImage         *image;
@@ -159,8 +162,14 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
   /*  use the passed image_coords for the statusbar because they are
    *  possibly snapped...
    */
-  gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar),
-                                precision, image_x, image_y);
+  window = gimp_display_shell_get_window (shell);
+
+  if (window && gimp_image_window_get_active_shell (window))
+    {
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+      gimp_statusbar_update_cursor (statusbar, precision, image_x, image_y);
+    }
 
   factory = gimp_dialog_factory_from_name ("dock");
   session_info = gimp_dialog_factory_find_session_info (factory,
@@ -191,12 +200,20 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
 void
 gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 {
+  GimpImageWindow   *window;
   GimpDialogFactory *factory;
   GimpSessionInfo   *session_info;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_statusbar_clear_cursor (GIMP_STATUSBAR (shell->statusbar));
+  window = gimp_display_shell_get_window (shell);
+
+  if (window && gimp_image_window_get_active_shell (window) == shell)
+    {
+      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+      gimp_statusbar_clear_cursor (statusbar);
+    }
 
   factory = gimp_dialog_factory_from_name ("dock");
   session_info = gimp_dialog_factory_find_session_info (factory,

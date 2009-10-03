@@ -18,12 +18,11 @@
 #ifndef __GIMP_DISPLAY_SHELL_PROGRESS_H__
 #define __GIMP_DISPLAY_SHELL_PROGRESS_H__
 
+
 #include "core/gimpprogress.h"
 
 
-void gimp_display_shell_progress_iface_init      (GimpProgressInterface *iface);
-
-void gimp_display_shell_progress_window_state_changed (GimpDisplayShell *shell);
+void   gimp_display_shell_progress_iface_init (GimpProgressInterface *iface);
 
 
 #endif /*  __GIMP_DISPLAY_SHELL_PROGRESS_H__  */

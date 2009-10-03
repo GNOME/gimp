@@ -44,6 +44,7 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-selection.h"
+#include "display/gimpimagewindow.h"
 
 #include "actions.h"
 #include "view-actions.h"
@@ -523,7 +524,7 @@ view_actions_setup (GimpActionGroup *group)
   view_actions_check_type_notify (GIMP_DISPLAY_CONFIG (group->gimp->config),
                                   NULL, group);
 
-  if (GIMP_IS_DISPLAY (group->user_data) ||
+  if (GIMP_IS_IMAGE_WINDOW (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))
     {
       /*  add window actions only if the context of the group is
@@ -549,10 +550,14 @@ view_actions_update (GimpActionGroup *group,
 
   if (display)
     {
-      image = display->image;
-      shell = GIMP_DISPLAY_SHELL (display->shell);
+      GimpImageWindow *window;
 
-      fullscreen = gimp_display_shell_get_fullscreen (shell);
+      image  = display->image;
+      shell  = GIMP_DISPLAY_SHELL (display->shell);
+      window = gimp_display_shell_get_window (shell);
+
+      if (window)
+        fullscreen = gimp_image_window_get_fullscreen (window);
 
       options = (image ?
                  (fullscreen ? shell->fullscreen_options : shell->options) :
@@ -667,11 +672,17 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
   SET_ACTIVE    ("view-use-gegl",    image && display->image->projection->use_gegl);
 
-  if (GIMP_IS_DISPLAY (group->user_data) ||
+  if (GIMP_IS_IMAGE_WINDOW (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))
     {
+      GtkWidget *window = NULL;
+
+      if (shell)
+        window = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
       /*  see view_actions_setup()  */
-      window_actions_update (group, GTK_WIDGET (shell));
+      if (GTK_IS_WINDOW (window))
+        window_actions_update (group, window);
     }
 
 #undef SET_ACTIVE

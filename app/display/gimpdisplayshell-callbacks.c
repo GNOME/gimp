@@ -72,6 +72,7 @@
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 #include "gimpnavigationeditor.h"
 
 #include "gimp-log.h"
@@ -1832,9 +1833,17 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
 
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
-      gimp_ui_manager_ui_popup (shell->menubar_manager, "/quick-mask-popup",
-                                GTK_WIDGET (shell),
-                                NULL, NULL, NULL, NULL);
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+      if (window)
+        {
+          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+
+          gimp_ui_manager_ui_popup (manager,
+                                    "/quick-mask-popup",
+                                    GTK_WIDGET (shell),
+                                    NULL, NULL, NULL, NULL);
+        }
 
       return TRUE;
     }

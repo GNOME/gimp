@@ -182,7 +182,10 @@ static void
 gimp_display_shell_dnd_flush (GimpDisplayShell *shell,
                               GimpImage        *image)
 {
-  gtk_window_present (GTK_WINDOW (shell));
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
+  if (GTK_IS_WINDOW (toplevel))
+    gtk_window_present (GTK_WINDOW (toplevel));
 
   gimp_image_flush (image);
 

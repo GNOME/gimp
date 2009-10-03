@@ -43,6 +43,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-close.h"
+#include "gimpimagewindow.h"
 
 #include "gimp-intl.h"
 
@@ -110,11 +111,17 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     }
   else
     {
-      /* Activate the action instead of simply calling gimp_exit(), so
-       * the quit action's sensitivity is taken into account.
-       */
-      gimp_ui_manager_activate_action (shell->menubar_manager,
-                                       "file", "file-quit");
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+      if (window)
+        {
+          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+
+          /* Activate the action instead of simply calling gimp_exit(), so
+           * the quit action's sensitivity is taken into account.
+           */
+          gimp_ui_manager_activate_action (manager, "file", "file-quit");
+        }
     }
 }
 
@@ -211,7 +218,7 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
 {
   GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (box));
 
-  if (window)
+  if (GTK_IS_WINDOW (window))
     {
       gchar *title = g_strdup_printf (_("Close %s"),
 				      gimp_image_get_display_name (image));
@@ -295,8 +302,19 @@ gimp_display_shell_close_response (GtkWidget        *widget,
       break;
 
     case RESPONSE_SAVE:
-      gimp_ui_manager_activate_action (shell->menubar_manager,
-                                       "file", "file-save-and-close");
+      {
+        GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+        if (window)
+          {
+            GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+
+            /* FIXME image window: set this display active */
+
+            gimp_ui_manager_activate_action (manager,
+                                             "file", "file-save-and-close");
+          }
+      }
       break;
 
     default:

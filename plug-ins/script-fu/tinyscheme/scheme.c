@@ -30,7 +30,6 @@
 #endif
 #ifdef WIN32
 # include <io.h>
-# define access(f,a) _access(f,a)
 #endif
 #ifdef WIN32
 #define snprintf _snprintf
@@ -1418,7 +1417,7 @@ static int file_push(scheme *sc, const char *fname) {
  if (sc->file_i == MAXFIL-1)
     return 0;
 
-  fin=fopen(fname,"rb");
+  fin=g_fopen(fname,"rb");
   if(fin!=0) {
     sc->file_i++;
     sc->load_stack[sc->file_i].kind=port_file|port_input;
@@ -1456,7 +1455,7 @@ static port *port_rep_from_filename(scheme *sc, const char *fn, int prop) {
   } else {
     rw="rb";
   }
-  f=fopen(fn,rw);
+  f=g_fopen(fn,rw);
   if(f==0) {
     return 0;
   }
@@ -5041,7 +5040,7 @@ int main(int argc, char **argv) {
   scheme_define(&sc,sc.global_env,mk_symbol(&sc,"load-extension"),mk_foreign_func(&sc, scm_load_ext));
 #endif
   argv++;
-  if(access(file_name,0)!=0) {
+  if(g_access(file_name,0)!=0) {
     char *p=getenv("TINYSCHEMEINIT");
     if(p!=0) {
       file_name=p;
@@ -5057,7 +5056,7 @@ int main(int argc, char **argv) {
       if(strcmp(file_name,"-")==0) {
         fin=stdin;
       } else if(isfile) {
-        fin=fopen(file_name,"r");
+        fin=g_fopen(file_name,"r");
       }
       for(;*argv;argv++) {
         pointer value=mk_string(&sc,*argv);
@@ -5067,7 +5066,7 @@ int main(int argc, char **argv) {
       scheme_define(&sc,sc.global_env,mk_symbol(&sc,"*args*"),args);
 
     } else {
-      fin=fopen(file_name,"r");
+      fin=g_fopen(file_name,"r");
     }
     if(isfile && fin==0) {
       fprintf(stderr,"Could not open file %s\n",file_name);

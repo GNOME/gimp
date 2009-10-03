@@ -43,6 +43,7 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-render.h"
+#include "display/gimpimagewindow.h"
 #include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"
@@ -530,8 +531,7 @@ gui_restore_after_callback (Gimp               *gimp,
       windows_show_toolbox ();
 
       /*  move keyboard focus to the display  */
-      gtk_window_present (GTK_WINDOW (display->shell));
-
+      gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (display->shell)));
     }
 
   /*  indicate that the application has finished loading  */
@@ -701,10 +701,16 @@ gui_menu_show_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
+      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
-      gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip",
-                           NULL, "%s", tooltip);
+      if (window)
+        {
+          GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+          gimp_statusbar_push (statusbar, "menu-tooltip",
+                               NULL, "%s", tooltip);
+        }
     }
 }
 
@@ -717,9 +723,15 @@ gui_menu_hide_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
+      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
-      gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip");
+      if (window)
+        {
+          GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
+
+          gimp_statusbar_pop (statusbar, "menu-tooltip");
+        }
     }
 }
 

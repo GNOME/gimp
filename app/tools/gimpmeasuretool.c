@@ -44,6 +44,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpimagewindow.h"
 
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
@@ -330,12 +331,17 @@ gimp_measure_tool_button_press (GimpTool            *tool,
     }
 
   /*  create the info window if necessary  */
-  if (! measure->dialog && (options->use_info_window ||
-                            ! GTK_WIDGET_VISIBLE (shell->statusbar)))
+  if (! measure->dialog)
     {
-      measure->dialog = gimp_measure_tool_dialog_new (measure);
-      g_object_add_weak_pointer (G_OBJECT (measure->dialog),
-                                 (gpointer) &measure->dialog);
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+      if (options->use_info_window ||
+          ! gimp_image_window_get_show_statusbar (window))
+        {
+          measure->dialog = gimp_measure_tool_dialog_new (measure);
+          g_object_add_weak_pointer (G_OBJECT (measure->dialog),
+                                     (gpointer) &measure->dialog);
+        }
     }
 
   if (measure->dialog)

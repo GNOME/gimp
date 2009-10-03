@@ -70,9 +70,11 @@ void
 windows_show_display_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  GimpDisplay *display = g_object_get_data (G_OBJECT (action), "display");
+  GimpDisplay *display  = g_object_get_data (G_OBJECT (action), "display");
+  GtkWidget   *toplevel = gtk_widget_get_toplevel (display->shell);
 
-  gtk_window_present (GTK_WINDOW (display->shell));
+  if (GTK_IS_WINDOW (toplevel))
+    gtk_window_present (GTK_WINDOW (toplevel));
 }
 
 void

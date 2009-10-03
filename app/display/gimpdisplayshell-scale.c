@@ -34,10 +34,12 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-draw.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 
 
 #define SCALE_TIMEOUT             2
@@ -366,13 +368,18 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
     {
       if (shell->display->config->resize_windows_on_zoom)
         {
+          GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
           /* If the window is resized on zoom, simply do the zoom and
            * get things rolling
            */
           gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, real_new_scale);
           gimp_display_shell_scaled (shell);
 
-          gimp_display_shell_shrink_wrap (shell, FALSE);
+          if (window && gimp_image_window_get_active_shell (window) == shell)
+            {
+              gimp_image_window_shrink_wrap (window, FALSE);
+            }
         }
       else
         {
@@ -657,7 +664,14 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp_display_shell_pause (shell);
 
   if (resize_window)
-    gimp_display_shell_shrink_wrap (shell, grow_only);
+    {
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+      if (window && gimp_image_window_get_active_shell (window) == shell)
+        {
+          gimp_image_window_shrink_wrap (window, grow_only);
+        }
+    }
 
   gimp_display_shell_scroll_clamp_and_update (shell);
   gimp_display_shell_scaled (shell);

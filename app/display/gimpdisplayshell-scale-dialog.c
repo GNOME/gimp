@@ -78,6 +78,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 {
   ScaleDialogData *data;
   GimpImage       *image;
+  GtkWidget       *toplevel;
   GtkWidget       *hbox;
   GtkWidget       *table;
   GtkWidget       *spin;
@@ -135,8 +136,10 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   g_object_add_weak_pointer (G_OBJECT (shell->scale_dialog),
                              (gpointer) &shell->scale_dialog);
 
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
   gtk_window_set_transient_for (GTK_WINDOW (shell->scale_dialog),
-                                GTK_WINDOW (shell));
+                                GTK_WINDOW (toplevel));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->scale_dialog), TRUE);
 
   g_signal_connect (shell->scale_dialog, "response",

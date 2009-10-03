@@ -25,11 +25,12 @@
 #include "display-types.h"
 #include "tools/tools-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimparea.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
@@ -39,9 +40,11 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpimagewindow.h"
 
 #include "gimp-intl.h"
 
@@ -352,8 +355,9 @@ gimp_display_new (Gimp              *gimp,
                   GimpUIManager     *popup_manager,
                   GimpDialogFactory *display_factory)
 {
-  GimpDisplay *display;
-  gint         ID;
+  GimpDisplay     *display;
+  GimpImageWindow *window = NULL;
+  gint             ID;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
@@ -380,15 +384,55 @@ gimp_display_new (Gimp              *gimp,
   if (image)
     gimp_display_connect (display, image);
 
+  /*  get an image window  */
+  if (GIMP_GUI_CONFIG (display->config)->single_window_mode)
+    {
+      GimpDisplay *active_display;
+
+      active_display = gimp_context_get_display (gimp_get_user_context (gimp));
+
+      if (! active_display)
+        {
+          active_display =
+            GIMP_DISPLAY (gimp_container_get_first_child (gimp->displays));
+        }
+
+      if (active_display)
+        {
+          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (active_display->shell);
+
+          window = gimp_display_shell_get_window (shell);
+        }
+    }
+
+  if (! window)
+    window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
+                           "menu-factory",    menu_factory,
+                           "display-factory", display_factory,
+                           /* The window position will be overridden by the
+                            * dialog factory, it is only really used on first
+                            * startup.
+                            */
+                           display->image ? NULL : "window-position",
+                           GTK_WIN_POS_CENTER,
+                           NULL);
+
   /*  create the shell for the image  */
   display->shell = gimp_display_shell_new (display, unit, scale,
-                                           menu_factory, popup_manager,
-                                           display_factory);
-  gtk_widget_show (display->shell);
+                                           popup_manager);
 
-  g_signal_connect (GIMP_DISPLAY_SHELL (display->shell)->statusbar, "cancel",
+  gimp_image_window_add_shell (window,
+                               GIMP_DISPLAY_SHELL (display->shell));
+  gimp_image_window_set_active_shell (window,
+                                      GIMP_DISPLAY_SHELL (display->shell));
+
+  /* FIXME image window */
+  g_signal_connect (gimp_image_window_get_statusbar (GIMP_IMAGE_WINDOW (window)),
+                    "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
                     display);
+
+  gtk_window_present (GTK_WINDOW (window));
 
   /* add the display to the list */
   gimp_container_add (gimp->displays, GIMP_OBJECT (display));
@@ -427,14 +471,35 @@ gimp_display_delete (GimpDisplay *display)
 
   if (display->shell)
     {
-      GtkWidget *shell = display->shell;
+      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
+      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
       /*  set display->shell to NULL *before* destroying the shell.
        *  all callbacks in gimpdisplayshell-callbacks.c will check
        *  this pointer and do nothing if the shell is in destruction.
        */
       display->shell = NULL;
-      gtk_widget_destroy (shell);
+
+      if (window)
+        {
+          if (gimp_image_window_get_n_shells (window) > 1)
+            {
+              g_object_ref (shell);
+
+              gimp_image_window_remove_shell (window, shell);
+              gtk_widget_destroy (GTK_WIDGET (shell));
+
+              g_object_unref (shell);
+            }
+          else
+            {
+              gtk_widget_destroy (GTK_WIDGET (window));
+            }
+        }
+      else
+        {
+          g_object_unref (shell);
+        }
     }
 
   g_object_unref (display);
@@ -524,7 +589,8 @@ gimp_display_set_image (GimpDisplay *display,
   else
     gimp_display_shell_icon_update (GIMP_DISPLAY_SHELL (display->shell));
 
-  g_object_notify (G_OBJECT (display), "image");
+  if (old_image != image)
+    g_object_notify (G_OBJECT (display), "image");
 }
 
 void

@@ -47,6 +47,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-dnd.h			\
 	gimpdisplayshell-draw.c			\
 	gimpdisplayshell-draw.h			\
+	gimpdisplayshell-expose.c		\
+	gimpdisplayshell-expose.h		\
 	gimpdisplayshell-handlers.c		\
 	gimpdisplayshell-handlers.h		\
 	gimpdisplayshell-filter.c		\
@@ -75,6 +77,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-title.h		\
 	gimpdisplayshell-transform.c		\
 	gimpdisplayshell-transform.h		\
+	gimpimagewindow.c			\
+	gimpimagewindow.h			\
 	gimpnavigationeditor.c			\
 	gimpnavigationeditor.h			\
 	gimpscalecombobox.c			\

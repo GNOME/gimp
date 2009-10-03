@@ -27,6 +27,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-filter.h"
 
 

@@ -22,18 +22,10 @@
 
 #include "display-types.h"
 
-#include "config/gimpdisplayconfig.h"
-
 #include "core/gimpimage.h"
-
-#include "file/file-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
-#include "gimpdisplayshell.h"
-#include "gimpstatusbar.h"
-
-#include "gimp-intl.h"
 
 
 /*  local function prototypes  */
@@ -47,12 +39,6 @@ static void   gimp_display_update_handler    (GimpProjection *projection,
                                               GimpDisplay    *display);
 static void   gimp_display_flush_handler     (GimpImage      *image,
                                               gboolean        invalidate_preview,
-                                              GimpDisplay    *display);
-static void   gimp_display_saved_handler     (GimpImage      *image,
-                                              const gchar    *uri,
-                                              GimpDisplay    *display);
-static void   gimp_display_exported_handler  (GimpImage      *image,
-                                              const gchar    *uri,
                                               GimpDisplay    *display);
 
 
@@ -86,12 +72,6 @@ gimp_display_connect (GimpDisplay *display,
   g_signal_connect (image, "flush",
                     G_CALLBACK (gimp_display_flush_handler),
                     display);
-  g_signal_connect (image, "saved",
-                    G_CALLBACK (gimp_display_saved_handler),
-                    display);
-  g_signal_connect (image, "exported",
-                    G_CALLBACK (gimp_display_exported_handler),
-                    display);
 }
 
 void
@@ -104,12 +84,6 @@ gimp_display_disconnect (GimpDisplay *display)
 
   image = display->image;
 
-  g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_saved_handler,
-                                        display);
-  g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_exported_handler,
-                                        display);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_flush_handler,
                                         display);
@@ -156,32 +130,3 @@ gimp_display_flush_handler (GimpImage   *image,
 {
   gimp_display_flush (display);
 }
-
-static void
-gimp_display_saved_handler (GimpImage   *image,
-                            const gchar *uri,
-                            GimpDisplay *display)
-{
-  GtkWidget *statusbar = GIMP_DISPLAY_SHELL (display->shell)->statusbar;
-  gchar     *filename  = file_utils_uri_display_name (uri);
-
-  gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
-                            GTK_STOCK_SAVE, _("Image saved to '%s'"),
-                            filename);
-  g_free (filename);
-}
-
-static void
-gimp_display_exported_handler (GimpImage   *image,
-                               const gchar *uri,
-                               GimpDisplay *display)
-{
-  GtkWidget *statusbar = GIMP_DISPLAY_SHELL (display->shell)->statusbar;
-  gchar     *filename  = file_utils_uri_display_name (uri);
-
-  gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GIMP_MESSAGE_INFO,
-                            GTK_STOCK_SAVE, _("Image exported to '%s'"),
-                            filename);
-  g_free (filename);
-}
-

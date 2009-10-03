@@ -19,9 +19,6 @@
 #define __GIMP_DISPLAY_SHELL_H__
 
 
-#include "widgets/gimpwindow.h"
-
-
 /* Apply to a float the same rounding mode used in the renderer */
 #define  PROJ_ROUND(coord)   ((gint) RINT (coord))
 #define  PROJ_ROUND64(coord) ((gint64) RINT (coord))
@@ -43,10 +40,6 @@
 #define  FUNSCALEX(s,x)   ((x) / (s)->scale_x)
 #define  FUNSCALEY(s,y)   ((y) / (s)->scale_y)
 
-/*  the size of the display render buffer  */
-#define GIMP_DISPLAY_RENDER_BUF_WIDTH  256
-#define GIMP_DISPLAY_RENDER_BUF_HEIGHT 256
-
 
 #define GIMP_TYPE_DISPLAY_SHELL            (gimp_display_shell_get_type ())
 #define GIMP_DISPLAY_SHELL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShell))
@@ -60,16 +53,13 @@ typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
 
 struct _GimpDisplayShell
 {
-  GimpWindow         parent_instance;
+  GtkVBox            parent_instance;
 
   /* --- cacheline 2 boundary (128 bytes) was 20 bytes ago --- */
 
   GimpDisplay       *display;
 
-  GimpUIManager     *menubar_manager;
   GimpUIManager     *popup_manager;
-
-  GimpDialogFactory *display_factory;
 
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;
@@ -145,15 +135,15 @@ struct _GimpDisplayShell
   GtkWidget         *zoom_button;      /*  NE: zoom toggle button             */
   GtkWidget         *nav_ebox;         /*  SE: navigation event box           */
 
-  GtkWidget         *menubar;          /*  menubar                            */
-  GtkWidget         *statusbar;        /*  statusbar                          */
-
   guchar            *render_buf;       /*  buffer for rendering the image     */
 
   guint              title_idle_id;    /*  title update idle ID               */
+  gchar             *title;            /*  current title                      */
+  gchar             *status;           /*  current default statusbar content  */
 
   gint               icon_size;        /*  size of the icon pixmap            */
   guint              icon_idle_id;     /*  ID of the idle-function            */
+  GdkPixbuf         *icon;             /*  icon                               */
 
   guint              fill_idle_id;     /*  display_shell_fill() idle ID       */
 
@@ -184,7 +174,6 @@ struct _GimpDisplayShell
   GimpTreeHandler   *vectors_thaw_handler;
   GimpTreeHandler   *vectors_visible_handler;
 
-  GdkWindowState     window_state;     /* for fullscreen display              */
   gboolean           zoom_on_resize;
   gboolean           show_transform_preview;
 
@@ -217,7 +206,7 @@ struct _GimpDisplayShell
 
 struct _GimpDisplayShellClass
 {
-  GimpWindowClass    parent_class;
+  GtkVBoxClass  parent_class;
 
   void (* scaled)    (GimpDisplayShell *shell);
   void (* scrolled)  (GimpDisplayShell *shell);
@@ -225,70 +214,54 @@ struct _GimpDisplayShellClass
 };
 
 
-GType       gimp_display_shell_get_type            (void) G_GNUC_CONST;
+GType             gimp_display_shell_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_display_shell_new                 (GimpDisplay        *display,
+GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
                                                     GimpUnit            unit,
                                                     gdouble             scale,
-                                                    GimpMenuFactory    *menu_factory,
-                                                    GimpUIManager      *popup_manager,
-                                                    GimpDialogFactory  *display_factory);
+                                                    GimpUIManager      *popup_manager);
 
-void        gimp_display_shell_reconnect           (GimpDisplayShell   *shell);
+GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_empty               (GimpDisplayShell   *shell);
-void        gimp_display_shell_fill                (GimpDisplayShell   *shell,
+void              gimp_display_shell_reconnect     (GimpDisplayShell   *shell);
+
+void              gimp_display_shell_empty         (GimpDisplayShell   *shell);
+void              gimp_display_shell_fill          (GimpDisplayShell   *shell,
                                                     GimpImage          *image,
                                                     GimpUnit            unit,
                                                     gdouble             scale);
 
-void        gimp_display_shell_scale_changed       (GimpDisplayShell   *shell);
+void              gimp_display_shell_scale_changed (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_scaled              (GimpDisplayShell   *shell);
-void        gimp_display_shell_scrolled            (GimpDisplayShell   *shell);
+void              gimp_display_shell_scaled        (GimpDisplayShell   *shell);
+void              gimp_display_shell_scrolled      (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_set_unit            (GimpDisplayShell   *shell,
+void              gimp_display_shell_set_unit      (GimpDisplayShell   *shell,
                                                     GimpUnit            unit);
-GimpUnit    gimp_display_shell_get_unit            (GimpDisplayShell   *shell);
+GimpUnit          gimp_display_shell_get_unit      (GimpDisplayShell   *shell);
 
-gboolean    gimp_display_shell_snap_coords         (GimpDisplayShell   *shell,
+gboolean          gimp_display_shell_snap_coords   (GimpDisplayShell   *shell,
                                                     GimpCoords         *coords,
                                                     gint                snap_offset_x,
                                                     gint                snap_offset_y,
                                                     gint                snap_width,
                                                     gint                snap_height);
 
-gboolean    gimp_display_shell_mask_bounds         (GimpDisplayShell   *shell,
+gboolean          gimp_display_shell_mask_bounds   (GimpDisplayShell   *shell,
                                                     gint               *x1,
                                                     gint               *y1,
                                                     gint               *x2,
                                                     gint               *y2);
 
-void        gimp_display_shell_expose_area         (GimpDisplayShell   *shell,
-                                                    gint                x,
-                                                    gint                y,
-                                                    gint                w,
-                                                    gint                h);
-void        gimp_display_shell_expose_guide        (GimpDisplayShell   *shell,
-                                                    GimpGuide          *guide);
-void        gimp_display_shell_expose_sample_point (GimpDisplayShell   *shell,
-                                                    GimpSamplePoint    *sample_point);
-void        gimp_display_shell_expose_full         (GimpDisplayShell   *shell);
-
-void        gimp_display_shell_flush               (GimpDisplayShell   *shell,
+void              gimp_display_shell_flush         (GimpDisplayShell   *shell,
                                                     gboolean            now);
 
-void        gimp_display_shell_pause               (GimpDisplayShell   *shell);
-void        gimp_display_shell_resume              (GimpDisplayShell   *shell);
+void              gimp_display_shell_pause         (GimpDisplayShell   *shell);
+void              gimp_display_shell_resume        (GimpDisplayShell   *shell);
 
-void        gimp_display_shell_update_icon         (GimpDisplayShell   *shell);
-
-void        gimp_display_shell_shrink_wrap         (GimpDisplayShell   *shell,
-                                                    gboolean            grow_only);
-
-void        gimp_display_shell_set_highlight       (GimpDisplayShell   *shell,
+void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
                                                     const GdkRectangle *highlight);
-void        gimp_display_shell_set_mask            (GimpDisplayShell   *shell,
+void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     GimpDrawable       *mask,
                                                     GimpChannelType     color);
 
