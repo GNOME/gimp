@@ -593,7 +593,7 @@ gimp_real_initialize (Gimp               *gimp,
   gimp->dynamics_factory =
     gimp_data_factory_new (gimp,
                            GIMP_TYPE_DYNAMICS,
-                           "dynamics-path", "dynamics-path-writable",
+                           "brush-path", "brush-path-writable",
                            dynamics_loader_entries,
                            G_N_ELEMENTS (dynamics_loader_entries),
                            gimp_dynamics_new,
@@ -700,6 +700,7 @@ gimp_real_exit (Gimp     *gimp,
   gimp_tag_cache_save (gimp->tag_cache);
 
   gimp_data_factory_data_save (gimp->brush_factory);
+  gimp_data_factory_data_save (gimp->dynamics_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
@@ -921,33 +922,37 @@ gimp_restore (Gimp               *gimp,
   status_callback (NULL, _("Brushes"), 0.1);
   gimp_data_factory_data_init (gimp->brush_factory, gimp->no_data);
 
+    /*  initialize the list of gimp dynamics   */
+  status_callback (NULL, _("Dynamics"), 0.2);
+  gimp_data_factory_data_init (gimp->dynamics_factory, gimp->no_data);
+
   /*  initialize the list of gimp patterns   */
-  status_callback (NULL, _("Patterns"), 0.2);
+  status_callback (NULL, _("Patterns"), 0.3);
   gimp_data_factory_data_init (gimp->pattern_factory, gimp->no_data);
 
   /*  initialize the list of gimp palettes   */
-  status_callback (NULL, _("Palettes"), 0.3);
+  status_callback (NULL, _("Palettes"), 0.4);
   gimp_data_factory_data_init (gimp->palette_factory, gimp->no_data);
 
   /*  initialize the list of gimp gradients  */
-  status_callback (NULL, _("Gradients"), 0.4);
+  status_callback (NULL, _("Gradients"), 0.5);
   gimp_data_factory_data_init (gimp->gradient_factory, gimp->no_data);
 
   /*  initialize the list of fonts  */
-  status_callback (NULL, _("Fonts (this may take a while)"), 0.5);
+  status_callback (NULL, _("Fonts (this may take a while)"), 0.6);
   if (! gimp->no_fonts)
     gimp_fonts_load (gimp);
 
   /*  initialize the template list  */
-  status_callback (NULL, _("Templates"), 0.6);
+  status_callback (NULL, _("Templates"), 0.7);
   gimp_templates_load (gimp);
 
   /*  initialize the module list  */
-  status_callback (NULL, _("Modules"), 0.7);
+  status_callback (NULL, _("Modules"), 0.8);
   gimp_modules_load (gimp);
 
   /* update tag cache */
-  status_callback (NULL, _("Updating tag cache"), 0.8);
+  status_callback (NULL, _("Updating tag cache"), 0.9);
   gimp_tag_cache_load (gimp->tag_cache);
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->brush_factory));

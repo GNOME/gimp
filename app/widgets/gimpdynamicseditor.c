@@ -37,6 +37,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "gimpdocked.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
@@ -90,9 +92,9 @@ static void   gimp_dynamics_editor_set_data       (GimpDataEditor     *editor,
 
 static void   gimp_dynamics_editor_set_context    (GimpDocked         *docked,
                                                    GimpContext        *context);
-
+/*
 static void   gimp_dynamics_editor_update_dynamics(GtkAdjustment      *adjustment,
-                                                   GimpDynamicsEditor    *editor);
+                                                   GimpDynamicsEditor    *editor);*/
 
 static void   gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
                                                     GParamSpec           *pspec,
@@ -152,10 +154,7 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
                                GimpData       *data)
 {
   GimpDynamicsEditor         *dynamics_editor = GIMP_DYNAMICS_EDITOR (editor);
-  //GimpBrushGeneratedShape  shape        = GIMP_BRUSH_GENERATED_CIRCLE;
-  //gdouble                  radius       = 0.0;
 
-  gboolean                   pressure_hardness = DEFAULT_PRESSURE_HARDNESS;
 
   if (editor->data)
     g_signal_handlers_disconnect_by_func (editor->data,
@@ -174,111 +173,26 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
   if (editor->data && GIMP_IS_DYNAMICS (editor->data))
     {
       GimpDynamics *options = GIMP_DYNAMICS (editor->data);
-   //   dynamics_editor->pressure_hardness_data = options->hardness_dynamics->pressure;
     }
-  //gtk_adjustment_set_value (dynamics_editor->pressure_hardness_data,       pressure_hardness );
-
 }
 
 
 static void
 gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
-                                GParamSpec           *pspec,
-                                GimpDynamicsEditor      *editor)
+                                      GParamSpec           *pspec,
+                                      GimpDynamicsEditor      *editor)
 {
-  GtkAdjustment *adj   = NULL;
-  gdouble        value = 0.0;
-/*
-  if (! strcmp (pspec->name, "pressure-hardness"))
-    {
-      g_signal_handlers_block_by_func (editor->pressure_hardness_data,
-                                       gimp_brush_editor_update_shape,
-                                       editor);
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
 
-      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (editor->shape_group),
-                                       brush->shape);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (data_editor->context), NULL);
 
-      g_signal_handlers_unblock_by_func (editor->shape_group,
-                                         gimp_brush_editor_update_shape,
-                                         editor);
+  GimpDynamics *context_dyn = gimp_get_user_context(data_editor->context->gimp)->dynamics;
 
-      adj   = editor->radius_data;
-      value = brush->radius;
-    }
-  else if (! strcmp (pspec->name, "radius"))
-    {
-      adj   = editor->radius_data;
-      value = brush->radius;
-    }
-	*/
-  if (adj)
-    {
-      g_signal_handlers_block_by_func (adj,
-                                       gimp_dynamics_editor_update_dynamics,
-                                       editor);
+  g_return_val_if_fail (GIMP_IS_DYNAMICS (context_dyn), NULL);
 
-      gtk_adjustment_set_value (adj, value);
+  gimp_config_copy(options, context_dyn, 0);
+  printf("SET to context %d\n", gimp_get_user_context(data_editor->context->gimp));
 
-      g_signal_handlers_unblock_by_func (adj,
-                                         gimp_dynamics_editor_update_dynamics,
-                                         editor);
-    }
-}
-
-
-static void
-gimp_dynamics_editor_update_dynamics (GtkAdjustment   *adjustment,
-                                                                       GimpDynamicsEditor *editor)
-{
-  GimpDynamics *dynamics;
-  gboolean             pressure_hardness;
-  /*gint                spikes;
-  gdouble             hardness;
-  gdouble             ratio;
-  gdouble             angle;
-  gdouble             spacing;
-*/
-  if (! GIMP_IS_DYNAMICS (GIMP_DATA_EDITOR (editor)->data))
-    return;
-
-  dynamics = GIMP_DYNAMICS (GIMP_DATA_EDITOR (editor)->data);
-
-  //pressure_hardness   = gtk_adjustment_get_value (editor->pressure_hardness_data);
-  /*spikes   = ROUND (gtk_adjustment_get_value (editor->spikes_data));
-  hardness = gtk_adjustment_get_value (editor->hardness_data);
-  ratio    = gtk_adjustment_get_value (editor->aspect_ratio_data);
-  angle    = gtk_adjustment_get_value (editor->angle_data);
-  spacing  = gtk_adjustment_get_value (editor->spacing_data);
-*/
-  if (pressure_hardness   != DEFAULT_PRESSURE_HARDNESS)
-  /*||
-      spikes   != gimp_brush_generated_get_spikes       (brush) ||
-      hardness != gimp_brush_generated_get_hardness     (brush) ||
-      ratio    != gimp_brush_generated_get_aspect_ratio (brush) ||
-      angle    != gimp_brush_generated_get_angle        (brush) ||
-      spacing  != gimp_brush_get_spacing                (GIMP_BRUSH (brush)))
-    */{
-      g_signal_handlers_block_by_func (dynamics,
-                                       gimp_dynamics_editor_notify_dynamics,
-                                       editor);
-
-      gimp_data_freeze (GIMP_DATA (dynamics));
-      g_object_freeze_notify (G_OBJECT (dynamics));
-/*
-      gimp_brush_generated_set_radius       (brush, radius);
-      gimp_brush_generated_set_spikes       (brush, spikes);
-      gimp_brush_generated_set_hardness     (brush, hardness);
-      gimp_brush_generated_set_aspect_ratio (brush, ratio);
-      gimp_brush_generated_set_angle        (brush, angle);
-      gimp_brush_set_spacing                (GIMP_BRUSH (brush), spacing);
-*/
-      g_object_thaw_notify (G_OBJECT (dynamics));
-      gimp_data_thaw (GIMP_DATA (dynamics));
-
-      g_signal_handlers_unblock_by_func (dynamics,
-                                         gimp_dynamics_editor_notify_dynamics,
-                                         editor);
-    }
 }
 
 
@@ -316,6 +230,11 @@ gimp_dynamics_editor_new (GimpContext     *context,
                        "data",            gimp_context_get_dynamics (context),
                        NULL);
 
+
+  g_signal_connect (editor->dynamics_model, "notify",
+                    G_CALLBACK (gimp_dynamics_editor_notify_dynamics),
+                    editor);
+
   return editor;
 }
 
@@ -342,18 +261,20 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
   GimpDynamics     *dynamics    = editor->dynamics_model;
 
+  GtkWidget        *frame;
+  GtkWidget        *box;
+
   GtkWidget        *vbox;
   GtkWidget        *table;
   GtkWidget        *label;
   gint              n_dynamics         = 0;
   GtkWidget        *dynamics_labels[7];
-  //GObject          *config  = get_config_value (editor);
-  //GObject          *config = G_OBJECT(editor->data);
   GObject          *config = G_OBJECT(dynamics);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   data_editor->view = gimp_view_new_full_by_types (NULL,
                                                    GIMP_TYPE_VIEW,
@@ -361,10 +282,18 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                                                    DYNAMICS_VIEW_SIZE,
                                                    DYNAMICS_VIEW_SIZE, 0,
                                                    FALSE, FALSE, TRUE);
+
   gtk_widget_set_size_request (data_editor->view, -1, DYNAMICS_VIEW_SIZE);
   gimp_view_set_expand (GIMP_VIEW (data_editor->view), TRUE);
-  gtk_container_add (GTK_CONTAINER (vbox), data_editor->view);
+  gtk_container_add (GTK_CONTAINER (frame), data_editor->view);
   gtk_widget_show (data_editor->view);
+
+
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (data_editor->view), vbox);
+  //gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   //n_dynamics = 5;
 

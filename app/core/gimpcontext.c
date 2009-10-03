@@ -164,10 +164,10 @@ static void gimp_context_real_set_brush      (GimpContext      *context,
 
 /*  dynamics  */
 
-static void gimp_context_dynamics_dirty      (GimpDynamicsOptions   *dynamics,
-                                              GimpContext           *context);
+static void gimp_context_dynamics_dirty      (GimpDynamics   *dynamics,
+                                              GimpContext    *context);
 static void gimp_context_dynamics_removed    (GimpContainer    *container,
-                                              GimpDynamicsOptions  *dynamics,
+                                              GimpDynamics     *dynamics,
                                               GimpContext      *context);
 static void gimp_context_dynamics_list_thaw  (GimpContainer    *container,
                                               GimpContext      *context);
@@ -351,7 +351,7 @@ static guint gimp_context_signals[LAST_SIGNAL] = { 0 };
 static GimpToolInfo  *standard_tool_info  = NULL;
 static GimpPaintInfo *standard_paint_info = NULL;
 static GimpBrush     *standard_brush      = NULL;
-static GimpDynamicsOptions *standard_dynamics      = NULL;
+static GimpDynamics  *standard_dynamics      = NULL;
 static GimpPattern   *standard_pattern    = NULL;
 static GimpGradient  *standard_gradient   = NULL;
 static GimpPalette   *standard_palette    = NULL;
@@ -2491,6 +2491,7 @@ GimpDynamics *
 gimp_context_get_dynamics (GimpContext *context)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_DYNAMICS (context->dynamics), NULL);
 
   return context->dynamics;
 }
@@ -2503,6 +2504,7 @@ gimp_context_set_dynamics (GimpContext           *context,
   g_return_if_fail (! dynamics || GIMP_IS_DYNAMICS (dynamics));
   context_find_defined (context, GIMP_CONTEXT_PROP_DYNAMICS);
 
+  printf("setting&OK\n");
   gimp_context_real_set_dynamics (context, dynamics);
 }
 
@@ -2517,7 +2519,7 @@ gimp_context_dynamics_changed (GimpContext *context)
 }
 
 static void
-gimp_context_dynamics_dirty (GimpDynamicsOptions   *dynamics,
+gimp_context_dynamics_dirty (GimpDynamics   *dynamics,
                              GimpContext           *context)
 {
   g_free (context->dynamics_name);
@@ -2525,7 +2527,7 @@ gimp_context_dynamics_dirty (GimpDynamicsOptions   *dynamics,
 }
 
 static void gimp_context_dynamics_removed    (GimpContainer    *container,
-                                              GimpDynamicsOptions  *dynamics,
+                                              GimpDynamics  *dynamics,
                                               GimpContext      *context)
 {
   if (dynamics == context->dynamics)
@@ -2546,7 +2548,7 @@ static void gimp_context_dynamics_removed    (GimpContainer    *container,
 static void gimp_context_dynamics_list_thaw  (GimpContainer    *container,
                                               GimpContext      *context)
 {
-  GimpDynamicsOptions *dynamics;
+  GimpDynamics *dynamics;
   /*
   if (! context->dynamics_name)
     context->dynamics_name = g_strdup (context->gimp->config->default_dynamics);
@@ -2563,11 +2565,18 @@ static void
 gimp_context_real_set_dynamics (GimpContext           *context,
                                 GimpDynamics          *dynamics)
 {
+  g_return_val_if_fail (GIMP_IS_DYNAMICS (dynamics), NULL);
+
   if (! standard_dynamics)
-    standard_dynamics = GIMP_DYNAMICS (gimp_dynamics_get_standard ());
+    {
+      standard_dynamics = GIMP_DYNAMICS (gimp_dynamics_get_standard ());
+    }
 
   if (context->dynamics == dynamics)
-    return;
+    {
+      return;
+    }
+
 
   if (context->dynamics_name && dynamics != standard_dynamics)
     {
@@ -2575,7 +2584,7 @@ gimp_context_real_set_dynamics (GimpContext           *context,
       context->dynamics_name = NULL;
     }
 
-  /*  disconnect from the old brush's signals  */
+  /*  disconnect from the old 's signals  */
   if (context->dynamics)
     {
       g_signal_handlers_disconnect_by_func (context->dynamics,
@@ -2585,6 +2594,7 @@ gimp_context_real_set_dynamics (GimpContext           *context,
     }
 
   context->dynamics = dynamics;
+
 
   if (dynamics)
     {

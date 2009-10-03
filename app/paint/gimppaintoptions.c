@@ -172,14 +172,6 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    "jitter-amount", NULL,
                                    0.0, 50.0, DEFAULT_JITTER_AMOUNT,
                                    GIMP_PARAM_STATIC_STRINGS);
-/*(object_class, PROP_RANDOM_ASPECT_RATIO,
-                                    "random-aspect-ratio", NULL,
-                                    DEFAULT_RANDOM_ASPECT_RATIO,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_ASPECT_RATIO,
-                                    "fading-aspect-ratio", NULL,
-                                    DEFAULT_FADING_ASPECT_RATIO,
-                                    GIMP_PARAM_STATIC_STRINGS);*/
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
                                     "use-gradient", NULL,
                                     DEFAULT_USE_GRADIENT,

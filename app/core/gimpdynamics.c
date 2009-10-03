@@ -26,7 +26,6 @@
 #include "paint/paint-types.h"
 
 
-
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpcurve.h"
@@ -146,7 +145,7 @@ static void    gimp_dynamics_finalize         (GObject      *object);
 
 
 static void    gimp_dynamics_notify           (GObject      *object,
-                                                       GParamSpec   *pspec);
+                                               GParamSpec   *pspec);
 
 static void    gimp_dynamics_set_property     (GObject      *object,
                                                guint         property_id,
@@ -840,29 +839,11 @@ gimp_dynamics_get_property (GObject    *object,
 
 static void
 gimp_dynamics_notify (GObject    *object,
-                              GParamSpec *pspec)
+                      GParamSpec *pspec)
 {
-/*
+
   GimpDynamics *options = GIMP_DYNAMICS (object);
 
-  if (pspec->param_id == PROP_USE_GRADIENT)
-    {
-      if (options->gradient_options->use_gradient)
-        {
-          options->application_mode_save = options->application_mode;
-          options->application_mode      = GIMP_PAINT_INCREMENTAL;
-        }
-      else
-        {
-          options->application_mode = options->application_mode_save;
-        }
-
-      g_object_notify (object, "application-mode");
-    }
-
-  if (G_OBJECT_CLASS (parent_class)->notify)
-    G_OBJECT_CLASS (parent_class)->notify (object, pspec);
-    */
 
 }
 

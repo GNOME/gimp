@@ -378,12 +378,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
   GimpBrush     *brush;
   core->dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-  /* If context does not have dynamics object for us, lets get standard*/
-  if (!core->dynamics)
-    {
-      core->dynamics = GIMP_DYNAMICS(gimp_dynamics_get_standard());
-      gimp_context_set_dynamics (GIMP_CONTEXT (paint_options), core->dynamics);
-    }
+  printf("PC: %d\n", GIMP_CONTEXT (paint_options));
 
 
   brush    = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
