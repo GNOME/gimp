@@ -170,10 +170,6 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
 
   gimp_view_set_viewable (GIMP_VIEW (editor->view), GIMP_VIEWABLE (data));
 
-  if (editor->data && GIMP_IS_DYNAMICS (editor->data))
-    {
-      GimpDynamics *options = GIMP_DYNAMICS (editor->data);
-    }
 }
 
 

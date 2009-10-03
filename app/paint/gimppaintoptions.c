@@ -42,7 +42,6 @@
 #define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                   FALSE
 
-#define DEFAULT_USE_FADE               FALSE
 #define DEFAULT_FADE_LENGTH            100.0
 #define DEFAULT_FADE_UNIT              GIMP_UNIT_PIXEL
 
@@ -69,7 +68,6 @@ enum
   PROP_APPLICATION_MODE,
   PROP_HARD,
 
-  PROP_USE_FADE,
   PROP_FADE_LENGTH,
   PROP_FADE_UNIT,
 
@@ -151,10 +149,6 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     DEFAULT_HARD,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
-                                    "use-fade", NULL,
-                                    DEFAULT_USE_FADE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
                                    "fade-length", NULL,
                                    0.0, 32767.0, DEFAULT_FADE_LENGTH,
@@ -293,10 +287,6 @@ gimp_paint_options_set_property (GObject      *object,
       options->hard = g_value_get_boolean (value);
       break;
 
-    case PROP_USE_FADE:
-      fade_options->use_fade = g_value_get_boolean (value);
-      break;
-
     case PROP_FADE_LENGTH:
       fade_options->fade_length = g_value_get_double (value);
       break;
@@ -398,11 +388,6 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_HARD:
       g_value_set_boolean (value, options->hard);
-      break;
-
-
-    case PROP_USE_FADE:
-      g_value_set_boolean (value, fade_options->use_fade);
       break;
 
     case PROP_FADE_LENGTH:
@@ -527,7 +512,7 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
 
   fade_options = paint_options->fade_options;
 
-  if (fade_options->use_fade)
+  if (gimp_dynamics_input_fade_enabled(gimp_context_get_dynamics (GIMP_CONTEXT (paint_options))))
     {
       gdouble fade_out = 0.0;
       gdouble unit_factor;
@@ -679,15 +664,17 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 GimpBrushApplicationMode
 gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 {
+  GimpDynamics *dynamics;
+
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), GIMP_BRUSH_SOFT);
 
   if (paint_options->hard)
     return GIMP_BRUSH_HARD;
 
-/*  if (paint_options->pressure_options->hardness ||
-      paint_options->velocity_options->hardness ||
-      paint_options->random_options->hardness)
-    return GIMP_BRUSH_PRESSURE;*/
+  dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+
+  if (gimp_dynamics_output_get_enabled(dynamics->hardness_dynamics))
+    return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
 }

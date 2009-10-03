@@ -137,6 +137,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   gdouble              rate;
   gint                 bytes;
 
+  gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                    paint_core->pixel_dist);
+
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
@@ -154,8 +157,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   rate = options->rate;
 
-  rate *= 1;/*gimp_paint_options_get_dynamic_rate (paint_options, coords,
-                                               paint_core->pixel_dist);*/
+  rate *= gimp_dynamics_get_linear_output_val(GIMP_BRUSH_CORE(paint_core)->dynamics->rate_dynamics, *coords, fade_point);
 
   gimp_convolve_calculate_matrix (convolve, options->type,
                                   brush_core->brush->mask->width / 2,

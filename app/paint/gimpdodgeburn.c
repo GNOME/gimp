@@ -176,6 +176,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gdouble        opacity;
   gdouble        hardness;
 
+  gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                    paint_core->pixel_dist);
+
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
@@ -246,11 +249,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   g_free (temp_data);
 
-  opacity *= 1; /*gimp_paint_options_get_dynamic_opacity (paint_options, coords,
-                                                     paint_core->pixel_dist);*/
+  opacity *= gimp_dynamics_get_linear_output_val(GIMP_BRUSH_CORE(paint_core)->dynamics->opacity_dynamics, *coords, fade_point);
 
-  hardness = 1; /*gimp_paint_options_get_dynamic_hardness (paint_options, coords,
-                                                      paint_core->pixel_dist);*/
+  hardness = gimp_dynamics_get_linear_output_val(GIMP_BRUSH_CORE(paint_core)->dynamics->hardness_dynamics, *coords, fade_point);
 
   /* Replace the newly dodgedburned area (canvas_buf) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,

@@ -112,6 +112,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 {
   GimpAirbrush        *airbrush = GIMP_AIRBRUSH (paint_core);
   GimpAirbrushOptions *options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
+  GimpDynamics        *dynamics = gimp_context_get_dynamics(GIMP_CONTEXT(paint_options));
 
   switch (paint_state)
     {
@@ -141,13 +142,13 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
         {
           gdouble dynamic_rate;
           gint    timeout;
+          gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                            paint_core->pixel_dist);
 
           airbrush->drawable      = drawable;
           airbrush->paint_options = paint_options;
 
-          dynamic_rate = 1;// gimp_paint_options_get_dynamic_rate (paint_options,
-                                       //                       coords,
-                                       //                        paint_core->pixel_dist);
+          dynamic_rate = gimp_dynamics_get_linear_output_val(dynamics->rate_dynamics, *coords, fade_point);
 
           timeout = 10000 / (options->rate * dynamic_rate);
 

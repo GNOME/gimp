@@ -90,17 +90,19 @@ GimpData           * gimp_dynamics_new   (const gchar *name);
 
 GimpData           * gimp_dynamics_get_standard     (void);
 
-gdouble            gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coords);
+gdouble            gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point);
 
 
-gdouble            gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coords);
+gdouble            gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point);
 
 
-gdouble            gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coords);
+gdouble            gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point);
 
 
-gdouble            gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coords);
+gdouble            gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point);
 
 gboolean           gimp_dynamics_output_get_enabled (GimpDynamicsOutput *output);
+
+gboolean           gimp_dynamics_input_fade_enabled (GimpDynamics *dynamics);
 
 #endif  /*  __GIMP_DYNAMICS_OPTIONS_H__  */

@@ -879,7 +879,7 @@ gimp_dynamics_get_standard (void)
 }
 
 gdouble
-gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coords)
+gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point)
 {
   gdouble total = 0.0;
   gdouble factors = 0.0;
@@ -918,9 +918,8 @@ gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coor
 
   if (output->fade)
     {
-      //total += g_random_double_range (0.0, 1.0);
-      //factors++;
-      /*Implementation needs fixing*/
+      total += fade_point;
+      factors++;
     }
 
   if (factors > 0)
@@ -931,7 +930,7 @@ gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coor
 }
 
 gdouble
-gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coords)
+gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point)
 {
   gdouble total = 0.0;
   gdouble factors = 0.0;
@@ -999,9 +998,8 @@ gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coo
 
   if (output->fade)
     {
-      //total += g_random_double_range (0.0, 1.0);
-      //factors++;
-      /*Implementation needs fixing*/
+      total += fade_point;
+      factors++;
     }
 
   if (factors > 0)
@@ -1012,7 +1010,7 @@ gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coo
 
 
 gdouble
-gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coords)
+gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point)
 {
   gdouble total = 0.0;
   gdouble factors = 0.0;
@@ -1066,9 +1064,8 @@ gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coor
 
   if (output->fade)
     {
-      //total += g_random_double_range (0.0, 1.0);
-      //factors++;
-      /*Implementation needs fixing*/
+      total += fade_point;
+      factors++;
     }
 
   if (factors > 0)
@@ -1080,7 +1077,7 @@ gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coor
 
 
 gdouble
-gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coords)
+gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point)
 {
   gdouble total = 0.0;
   gdouble factors = 0.0;
@@ -1119,9 +1116,8 @@ gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coord
 
   if (output->fade)
     {
-      //total += g_random_double_range (0.0, 1.0);
-      //factors++;
-      /*Implementation needs fixing*/
+      total += fade_point;
+      factors++;
     }
 
   if (factors > 0)
@@ -1141,4 +1137,17 @@ gimp_dynamics_output_get_enabled(GimpDynamicsOutput *output)
 {
   return (output->pressure || output->velocity || output->direction ||
          output->tilt      || output->random   || output->fade);
+}
+
+gboolean
+gimp_dynamics_input_fade_enabled(GimpDynamics *dynamics)
+{
+  return (dynamics->opacity_dynamics->fade ||
+          dynamics->hardness_dynamics->fade ||
+          dynamics->rate_dynamics->fade ||
+          dynamics->size_dynamics->fade ||
+          dynamics->aspect_ratio_dynamics->fade ||
+          dynamics->color_dynamics->fade ||
+          dynamics->angle_dynamics->fade);
+
 }
