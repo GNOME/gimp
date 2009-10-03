@@ -1,21 +1,22 @@
 # This is the Japanese locale definition for the GIMP tips.
-# Copyright (C) 1999,2002,2003,2004,2008 Free Software Foundation, Inc.
+# Copyright (C) 1999,2002,2003,2004,2008-2009 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1999
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2002
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2004
-# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008.
+# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2009.
 #
 # Replaced: & -> ＆
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 11:14+0900\n"
-"PO-Revision-Date: 2008-10-13 15:15+0900\n"
+"Project-Id-Version: gimp gimp-2-6\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=Internationalisation\n"
+"POT-Creation-Date: 2009-10-03 21:36+0900\n"
+"PO-Revision-Date: 2009-09-28 22:55+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
-"Language-Team: Japanese <translation@gnome.gr.jp>\n"
+"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -265,7 +266,7 @@ msgid ""
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
 "F1 キーを押すと、いつでもその機能のヘルプを呼び出すことができるんだ。これはメ"
-"ニューの中でも使えるよ。（ヘルプは英語表示だけどね・・・）"
+"ニューの中でも使えるよ。"
 
 #: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""

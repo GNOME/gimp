@@ -1,23 +1,24 @@
 # Japanese message table for GIMP 2.0
-# Copyright (C) 1998-2005,2008 Free Software Foundation, Inc.
+# Copyright (C) 1998-2005,2008-2009 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2001, 2004.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003, 2004.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
-# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008
+# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 11:08+0900\n"
-"PO-Revision-Date: 2008-10-30 23:08+0900\n"
+"Project-Id-Version: gimp gimp-2-6\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=Internationalisation\n"
+"POT-Creation-Date: 2009-10-03 21:11+0900\n"
+"PO-Revision-Date: 2009-10-03 21:20+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
-"Language-Team: Japanese <translation@gnome.gr.jp>\n"
+"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1045
@@ -304,7 +305,6 @@ msgstr "型で検索中"
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d 個のプロシージャ"
-msgstr[1] "%d 個のプロシージャ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
@@ -315,7 +315,6 @@ msgstr "条件に合致するものがありません"
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d 個のプロシージャが合致しました"
-msgstr[1] "%d 個のプロシージャが合致しました"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
@@ -876,7 +875,7 @@ msgid "Cannot expand ${%s}"
 msgstr "${%s} を展開できません"
 
 #: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:693
+#: ../libgimpconfig/gimpconfigwriter.c:718
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr ""
@@ -900,7 +899,8 @@ msgstr ""
 "（詳細または原因は次のとおりです）\n"
 "  %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -912,7 +912,7 @@ msgstr ""
 "\n"
 "元ファイルは変更されていません"
 
-#: ../libgimpconfig/gimpconfigwriter.c:682
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -924,7 +924,7 @@ msgstr ""
 "\n"
 "ファイルは作成されませんでした"
 
-#: ../libgimpconfig/gimpconfigwriter.c:711
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr ""
@@ -1123,7 +1123,6 @@ msgstr "1 ページを選択"
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d ページを選択"
-msgstr[1] "複数ページ(%dページ)を選択"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
@@ -1159,7 +1158,6 @@ msgstr "プレビュー(_P)"
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "この文字入力フィールドは %d 文字に制限されています。"
-msgstr[1] "この文字入力フィールドは %d 文字に制限されています。"
 
 #: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
@@ -1896,7 +1894,6 @@ msgstr "GIMP MIDI 入力コントローラ"
 #~ msgid "%d Byte"
 #~ msgid_plural "%d Bytes"
 #~ msgstr[0] "%d バイト"
-#~ msgstr[1] "%d バイト"
 
 #~ msgid "%.2f KB"
 #~ msgstr "%.2f KB"

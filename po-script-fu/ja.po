@@ -1,21 +1,22 @@
 # GIMP Script-Fu Japanese message catalog
-# Copyright (C) 2000,2003,2005,2008 Free Software Foundation, Inc.
+# Copyright (C) 2000,2003,2005,2008-2009 Free Software Foundation, Inc.
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
-# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008.
+# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-30 23:39+0900\n"
-"PO-Revision-Date: 2008-10-12 19:41+0900\n"
+"Project-Id-Version: gimp gimp-2-6\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=Internationalisation\n"
+"POT-Creation-Date: 2009-10-03 21:33+0900\n"
+"PO-Revision-Date: 2009-09-28 22:45+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
-"Language-Team: Japanese <translation@gnome.gr.jp>\n"
+"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -513,7 +514,7 @@ msgstr "枠の色"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
-msgstr "色のデフォルト値"
+msgstr "色のデルタ値"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 msgid "Create an arrow graphic with an eerie glow for web pages"
@@ -531,7 +532,7 @@ msgstr "下"
 #: ../plug-ins/script-fu/scripts/camo.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten image"
-msgstr "平坦画像"
+msgstr "画像を統合"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
@@ -1231,7 +1232,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Darken only"
-msgstr "ダーク色"
+msgstr "レイヤーモードを [比較(暗)] に"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1555,7 +1556,7 @@ msgstr "粒状度 (1 が最低)"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow weight (%)"
-msgstr "影の幅 (%)"
+msgstr "影の濃さ (%)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
@@ -2741,19 +2742,19 @@ msgstr "ユーザーマニュアルへのブックマーク"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
-msgstr "選択範囲の作成と使用 (英語) (_S)"
+msgstr "選択範囲の作成と使用(_S)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "Create, Open and Save _Files"
-msgstr "ファイルを開く・作成・保存 (英語) (_F)"
+msgstr "ファイルを開く・作成・保存(_F)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Drawing _Simple Objects"
-msgstr "シンプルなオブジェクトを描く (英語) (_S)"
+msgstr "シンプルなオブジェクトを描く(_S)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
 msgid "How to Use _Dialogs"
-msgstr "ダイアログの使い方 (英語) (_D)"
+msgstr "ダイアログの使い方(_D)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
 msgid "Plug-in _Registry"
@@ -2761,11 +2762,11 @@ msgstr "プラグインレジストリ (英語) (_R)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "Using _Paths"
-msgstr "パスを使う (英語) (_P)"
+msgstr "パスを使う(_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Basic Concepts"
-msgstr "基本コンセプト (英語) (_B)"
+msgstr "基本コンセプト(_B)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
@@ -2777,15 +2778,15 @@ msgstr "メインのウェブサイト (英語) (_M)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr "ウェブ用画像を作成するには (英語) (_P)"
+msgstr "ウェブ用画像を作成するには(_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
 msgid "_User Manual Web Site"
-msgstr "ユーザーマニュアル (英語) (_U)"
+msgstr "ユーザーマニュアル(_U)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr "デジカメ画像を修正する (英語) (_W)"
+msgstr "デジカメ画像を修正する(_W)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
