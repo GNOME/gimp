@@ -191,7 +191,6 @@ gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
   g_return_val_if_fail (GIMP_IS_DYNAMICS (context_dyn), NULL);
 
   gimp_config_copy(options, context_dyn, 0);
-  printf("SET to context %d\n", gimp_get_user_context(data_editor->context->gimp));
 
 }
 
@@ -291,8 +290,8 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
 
   vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (data_editor->view), vbox);
-  //gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
+  //gtk_container_add (GTK_CONTAINER (data_editor->view), vbox);
+  gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   //n_dynamics = 5;
