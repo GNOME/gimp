@@ -23,8 +23,6 @@ libappactions_a_SOURCES = \
 	brush-editor-actions.h		\
 	brushes-actions.c		\
 	brushes-actions.h		\
-	dynamics-editor-actions.c		\
-	dynamics-editor-actions.h		\
 	buffers-actions.c		\
 	buffers-actions.h		\
 	buffers-commands.c		\
@@ -77,6 +75,8 @@ libappactions_a_SOURCES = \
 	drawable-actions.h		\
 	drawable-commands.c		\
 	drawable-commands.h		\
+	dynamics-editor-actions.c	\
+	dynamics-editor-actions.h	\
 	edit-actions.c			\
 	edit-actions.h			\
 	edit-commands.c			\
@@ -180,6 +180,4 @@ libappactions_a_SOURCES = \
 	windows-commands.c		\
 	windows-commands.h
 
-EXTRA_DIST = makefile.msc \
-	dynamics-editor-actions.c\
-	dynamics-editor-actions.h
+EXTRA_DIST = makefile.msc
