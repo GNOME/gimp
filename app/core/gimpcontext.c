@@ -280,6 +280,7 @@ enum
   OPACITY_CHANGED,
   PAINT_MODE_CHANGED,
   BRUSH_CHANGED,
+  DYNAMICS_CHANGED,
   PATTERN_CHANGED,
   GRADIENT_CHANGED,
   PALETTE_CHANGED,
@@ -287,7 +288,6 @@ enum
   BUFFER_CHANGED,
   IMAGEFILE_CHANGED,
   TEMPLATE_CHANGED,
-  DYNAMICS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -304,14 +304,14 @@ static const gchar * const gimp_context_prop_names[] =
   "opacity",
   "paint-mode",
   "brush",
+  "dynamics",
   "pattern",
   "gradient",
   "palette",
   "font",
   "buffer",
   "imagefile",
-  "template",
-  "dynamics"
+  "template"
 };
 
 static GType gimp_context_prop_types[] =
