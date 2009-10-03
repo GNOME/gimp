@@ -844,7 +844,6 @@ gimp_dynamics_notify (GObject    *object,
 
   GimpDynamics *options = GIMP_DYNAMICS (object);
 
-
 }
 
 GimpData *
@@ -880,7 +879,7 @@ gimp_dynamics_get_standard (void)
 }
 
 gdouble
-gimp_dynamics_get_output_val (GimpDynamicsOutput *output, GimpCoords coords)
+gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coords)
 {
   gdouble total = 0.0;
   gdouble factors = 0.0;
@@ -898,10 +897,17 @@ gimp_dynamics_get_output_val (GimpDynamicsOutput *output, GimpCoords coords)
       total += (1.0 - coords.velocity);
       factors++;
     }
+
+  if (output->random)
+    {
+      total += g_random_double_range (0.0, 1.0);
+      factors++;
+    }
+
   if (factors > 0)
     result = total / factors;
 
-  //printf("Dynamics queried. Result: %f, vel %f, f: %f, t: %f \n", result, coords.velocity, factors, total);
+  printf("Dynamics queried. Result: %f, factors: %f, total: %f \n", result, factors, total);
   return result;
 }
 

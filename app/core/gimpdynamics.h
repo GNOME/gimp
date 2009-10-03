@@ -90,6 +90,6 @@ GimpData           * gimp_dynamics_new   (const gchar *name);
 
 GimpData           * gimp_dynamics_get_standard     (void);
 
-gdouble            gimp_dynamics_get_output_val (GimpDynamicsOutput *output, GimpCoords coords);
+gdouble            gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coords);
 
 #endif  /*  __GIMP_DYNAMICS_OPTIONS_H__  */

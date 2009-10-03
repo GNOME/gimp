@@ -2491,7 +2491,6 @@ GimpDynamics *
 gimp_context_get_dynamics (GimpContext *context)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (GIMP_IS_DYNAMICS (context->dynamics), NULL);
 
   return context->dynamics;
 }
@@ -2504,7 +2503,6 @@ gimp_context_set_dynamics (GimpContext           *context,
   g_return_if_fail (! dynamics || GIMP_IS_DYNAMICS (dynamics));
   context_find_defined (context, GIMP_CONTEXT_PROP_DYNAMICS);
 
-  printf("setting&OK\n");
   gimp_context_real_set_dynamics (context, dynamics);
 }
 
@@ -2565,7 +2563,6 @@ static void
 gimp_context_real_set_dynamics (GimpContext           *context,
                                 GimpDynamics          *dynamics)
 {
-  g_return_val_if_fail (GIMP_IS_DYNAMICS (dynamics), NULL);
 
   if (! standard_dynamics)
     {

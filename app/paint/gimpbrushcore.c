@@ -403,11 +403,11 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
       if (core->dynamics)
         {
-          core->scale *= gimp_dynamics_get_output_val(core->dynamics->size_dynamics, *coords);
+          core->scale *= gimp_dynamics_get_linear_output_val(core->dynamics->size_dynamics, *coords);
 
-          core->angle += gimp_dynamics_get_output_val(core->dynamics->angle_dynamics, *coords);
+          core->angle += gimp_dynamics_get_linear_output_val(core->dynamics->angle_dynamics, *coords);
 
-          core->aspect_ratio *= gimp_dynamics_get_output_val(core->dynamics->aspect_ratio_dynamics, *coords);
+          core->aspect_ratio *= gimp_dynamics_get_linear_output_val(core->dynamics->aspect_ratio_dynamics, *coords);
         }
     }
 
@@ -756,11 +756,11 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
       if (core->dynamics)
       {
-        core->scale *= gimp_dynamics_get_output_val(core->dynamics->size_dynamics, *coords);
+        core->scale *= gimp_dynamics_get_linear_output_val(core->dynamics->size_dynamics, *coords);
 
-        core->angle += gimp_dynamics_get_output_val(core->dynamics->angle_dynamics, *coords);
+        core->angle += gimp_dynamics_get_linear_output_val(core->dynamics->angle_dynamics, *coords);
 
-        core->aspect_ratio *= gimp_dynamics_get_output_val(core->dynamics->aspect_ratio_dynamics, *coords);
+        core->aspect_ratio *= gimp_dynamics_get_linear_output_val(core->dynamics->aspect_ratio_dynamics, *coords);
 
       }
     }
