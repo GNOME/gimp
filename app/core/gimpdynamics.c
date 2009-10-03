@@ -898,22 +898,242 @@ gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coor
       factors++;
     }
 
+  if (output->direction)
+    {
+      total += coords.direction + 0.5;
+      factors++;
+    }
+
+  if (output->tilt)
+    {
+      total += 1.0 - sqrt (SQR (coords.xtilt) + SQR (coords.ytilt));
+      factors++;
+    }
+
   if (output->random)
     {
       total += g_random_double_range (0.0, 1.0);
       factors++;
     }
 
+  if (output->fade)
+    {
+      //total += g_random_double_range (0.0, 1.0);
+      //factors++;
+      /*Implementation needs fixing*/
+    }
+
   if (factors > 0)
     result = total / factors;
 
-  printf("Dynamics queried. Result: %f, factors: %f, total: %f \n", result, factors, total);
+  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
   return result;
 }
 
-/* Calculates dynamics mix to be used for same parameter
- * (velocity/pressure/direction/tilt/random) mix Needed in may places and tools.
- *
- * Added one parameter: fading, the 6th driving factor.
- * (velocity/pressure/direction/tilt/random/fading)
- */
+gdouble
+gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coords)
+{
+  gdouble total = 0.0;
+  gdouble factors = 0.0;
+
+  gdouble result = 1.0;
+
+  if (output->pressure)
+    {
+      total += coords.pressure;
+      factors++;
+    }
+
+  if (output->velocity)
+    {
+      total += (1.0 - coords.velocity);
+      factors++;
+    }
+
+  if (output->direction)
+    {
+      total += coords.direction + 0.5;
+      factors++;
+    }
+/* For tilt to make sense, it needs to be converted to an angle, not just vector */
+  if (output->tilt)
+    {
+
+      gdouble tilt_x = coords.xtilt;
+      gdouble tilt_y = coords.ytilt;
+      gdouble tilt = 0.0;
+
+      if (tilt_x == 0.0)
+        {
+          if (tilt_y >= 0.0)
+            tilt = 0.5;
+          else if (tilt_y < 0.0)
+            tilt = 0.0;
+          else tilt = -1.0;
+        }
+      else
+        {
+          tilt = atan ((- 1.0 * tilt_y) /
+                                tilt_x) / (2 * G_PI);
+
+           if (tilt_x > 0.0)
+             tilt = tilt + 0.5;
+         }
+
+      tilt = tilt + 0.5; /* correct the angle, its wrong by 180 degrees */
+
+      while (tilt > 1.0)
+        tilt -= 1.0;
+
+      while (tilt < 0.0)
+        tilt += 1.0;
+      total += tilt;
+      factors++;
+    }
+
+  if (output->random)
+    {
+      total += g_random_double_range (0.0, 1.0);
+      factors++;
+    }
+
+  if (output->fade)
+    {
+      //total += g_random_double_range (0.0, 1.0);
+      //factors++;
+      /*Implementation needs fixing*/
+    }
+
+  if (factors > 0)
+    result = total / factors;
+
+  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
+  return result;
+}
+
+
+gdouble
+gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coords)
+{
+  gdouble total = 0.0;
+  gdouble factors = 0.0;
+
+  gdouble result = 1.0;
+
+  if (output->pressure)
+    {
+      total += 2 * coords.pressure;
+      factors++;
+    }
+
+  if (output->velocity)
+    {
+      total += 2 * coords.velocity;
+      factors++;
+    }
+
+  if (output->direction)
+    {
+      gdouble direction = 0.0;
+      direction = fmod (1 + coords.direction, 0.5) / 0.25;
+
+      if ((coords.direction > 0.0) && (coords.direction < 0.5))
+        direction = 1 / direction;
+
+      total += direction;
+      factors++;
+    }
+
+  if (output->tilt)
+    {
+      total += sqrt ((1 - fabs (coords.xtilt)) / (1 - fabs (coords.ytilt)));
+      factors++;
+    }
+
+  if (output->random)
+    {
+      gdouble random = g_random_double_range (0.0, 1.0);
+      if (random <= 0.5)
+        {
+          random = 1 / (random / 0.5 * (2.0 - 1.0) + 1.0);
+        }
+      else
+        {
+          random = (random - 0.5) / (1.0 - 0.5) * (2.0 - 1.0) + 1.0;
+        }
+      total += random;
+      factors++;
+    }
+
+  if (output->fade)
+    {
+      //total += g_random_double_range (0.0, 1.0);
+      //factors++;
+      /*Implementation needs fixing*/
+    }
+
+  if (factors > 0)
+    result = total / factors;
+
+  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
+  return result;
+}
+
+
+gdouble
+gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coords)
+{
+  gdouble total = 0.0;
+  gdouble factors = 0.0;
+
+  gdouble scale = 1.0;
+
+  if (output->pressure)
+    {
+      total += coords.pressure;
+      factors++;
+    }
+
+  if (output->velocity)
+    {
+      total += 1.0 - sqrt (coords.velocity);
+      factors++;
+    }
+
+  if (output->direction)
+    {
+      total += coords.direction + 0.5;
+      factors++;
+    }
+
+  if (output->tilt)
+    {
+      total += 1.0 - sqrt (SQR (coords.xtilt) + SQR (coords.ytilt));
+      factors++;
+    }
+
+  if (output->random)
+    {
+      total += 1.0 - g_random_double_range (0.0, 1.0);
+      factors++;
+    }
+
+  if (output->fade)
+    {
+      //total += g_random_double_range (0.0, 1.0);
+      //factors++;
+      /*Implementation needs fixing*/
+    }
+
+  if (factors > 0)
+    scale = total / factors;
+
+  if (scale < 1 / 64.0)
+    scale = 1 / 8.0;
+  else
+    scale = sqrt (scale);
+
+  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
+  return scale;
+}
+
