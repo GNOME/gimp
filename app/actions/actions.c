@@ -51,7 +51,6 @@
 
 #include "actions.h"
 #include "brush-editor-actions.h"
-#include "dynamics-editor-actions.h"
 #include "brushes-actions.h"
 #include "buffers-actions.h"
 #include "channels-actions.h"
@@ -65,6 +64,7 @@
 #include "dockable-actions.h"
 #include "documents-actions.h"
 #include "drawable-actions.h"
+#include "dynamics-editor-actions.h"
 #include "edit-actions.h"
 #include "error-console-actions.h"
 #include "file-actions.h"
@@ -106,9 +106,6 @@ static const GimpActionFactoryEntry action_groups[] =
   { "brush-editor", N_("Brush Editor"), GIMP_STOCK_BRUSH,
     brush_editor_actions_setup,
     brush_editor_actions_update },
-  { "dynamics-editor", N_("Dynamics Editor"), GIMP_STOCK_DYNAMICS,
-    dynamics_editor_actions_setup,
-    dynamics_editor_actions_update },
   { "brushes", N_("Brushes"), GIMP_STOCK_BRUSH,
     brushes_actions_setup,
     brushes_actions_update },
@@ -148,6 +145,9 @@ static const GimpActionFactoryEntry action_groups[] =
   { "drawable", N_("Drawable"), GIMP_STOCK_LAYER,
     drawable_actions_setup,
     drawable_actions_update },
+  { "dynamics-editor", N_("Dynamics Editor"), GIMP_STOCK_DYNAMICS,
+    dynamics_editor_actions_setup,
+    dynamics_editor_actions_update },
   { "edit", N_("Edit"), GTK_STOCK_EDIT,
     edit_actions_setup,
     edit_actions_update },
