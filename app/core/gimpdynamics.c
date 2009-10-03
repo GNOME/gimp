@@ -1007,8 +1007,7 @@ gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coo
   if (factors > 0)
     result = total / factors;
 
-  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
-  return result;
+   return result + 0.5;
 }
 
 
@@ -1075,7 +1074,7 @@ gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coor
   if (factors > 0)
     result = total / factors;
 
-  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
+  /* printf("Dynamics queried(aspect). Result: %f, factors: %f, total: %f \n", result, factors, total);*/
   return result;
 }
 
@@ -1133,7 +1132,13 @@ gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coord
   else
     scale = sqrt (scale);
 
-  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
+  /* printf("Dynamics queried(scale). Result: %f, factors: %f, total: %f \n", result, factors, total);*/
   return scale;
 }
 
+gboolean
+gimp_dynamics_output_get_enabled(GimpDynamicsOutput *output)
+{
+  return (output->pressure || output->velocity || output->direction ||
+         output->tilt      || output->random   || output->fade);
+}

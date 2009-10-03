@@ -101,4 +101,6 @@ gdouble            gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *outp
 
 gdouble            gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coords);
 
+gboolean           gimp_dynamics_output_get_enabled (GimpDynamicsOutput *output);
+
 #endif  /*  __GIMP_DYNAMICS_OPTIONS_H__  */

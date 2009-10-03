@@ -599,6 +599,7 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 {
   GimpGradientOptions *gradient_options;
   GimpGradient        *gradient;
+  GimpDynamics        *dynamics;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -607,13 +608,10 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
   gradient_options = paint_options->gradient_options;
 
   gradient = gimp_context_get_gradient (GIMP_CONTEXT (paint_options));
-/*
-  if (paint_options->pressure_options->color  ||
-      paint_options->velocity_options->color  ||
-      paint_options->direction_options->color ||
-      paint_options->tilt_options->color      ||
-      paint_options->random_options->color ||
-      paint_options->fading_options->color)
+
+  dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+
+  if (gimp_dynamics_output_get_enabled(dynamics->color_dynamics))
     {
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
                                   NULL, grad_point,
@@ -622,10 +620,7 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 
       return TRUE;
     }
-
-
-  else*/
-  if (gradient_options->use_gradient)
+  else if (gradient_options->use_gradient)
     {
       gdouble gradient_length = 0.0;
       gdouble unit_factor;
