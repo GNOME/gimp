@@ -152,6 +152,7 @@ Core:
    and a sane window manager does a better job
  - Remove "web-browser" gimprc setting and use gtk_show_uri() instead
 
+
 General:
 
  - Changed licence to (L)GPLv3+
