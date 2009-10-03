@@ -28,8 +28,23 @@
 #include "gimpxmpmodelentry.h"
 
 
-static void         gimp_xmp_model_entry_init           (GimpXmpModelEntry *entry);
+enum
+{
+  PROP_0,
+  PROP_SCHEMA_URI,
+  PROP_PROPERTY_NAME,
+  PROP_XMPMODEL
+};
 
+
+static void         gimp_xmp_model_entry_set_property   (GObject      *object,
+                                                         guint         property_id,
+                                                         const GValue *value,
+                                                         GParamSpec   *pspec);
+static void         gimp_xmp_model_entry_get_property   (GObject      *object,
+                                                         guint         property_id,
+                                                         GValue       *value,
+                                                         GParamSpec   *pspec);
 static void         gimp_entry_xmp_model_changed        (XMPModel     *xmp_model,
                                                          GtkTreeIter  *iter,
                                                          gpointer     *user_data);
@@ -47,9 +62,60 @@ G_DEFINE_TYPE (GimpXmpModelEntry, gimp_xmp_model_entry, GTK_TYPE_ENTRY)
 #define parent_class gimp_xmp_model_entry_parent_class
 #define GIMP_XMP_MODEL_ENTRY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_XMP_MODEL_ENTRY, GimpXmpModelEntryPrivate))
 
+static GObject *
+gimp_xmp_model_entry_constructor (GType                  gtype,
+                                  guint                  n_properties,
+                                  GObjectConstructParam *properties)
+{
+  GObject           *obj;
+  GimpXmpModelEntry *entry;
+  const gchar       *signal;
+  const gchar       *signal_detail;
+  const gchar       *schema_prefix;
+
+  obj = G_OBJECT_CLASS (gimp_xmp_model_entry_parent_class)->constructor (gtype,
+                                                                         n_properties,
+                                                                         properties);
+  entry = GIMP_XMP_MODEL_ENTRY (obj);
+  schema_prefix = find_schema_prefix (entry->p->schema_uri);
+  signal_detail = g_strjoin (":", schema_prefix, entry->p->property_name, NULL);
+  signal = g_strjoin ("::", "property-changed", signal_detail, NULL);
+
+  g_signal_connect (entry->p->xmp_model,
+                    signal,
+                    G_CALLBACK (gimp_entry_xmp_model_changed),
+                    entry);
+  return obj;
+}
+
 static void
 gimp_xmp_model_entry_class_init (GimpXmpModelEntryClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->constructor  = gimp_xmp_model_entry_constructor;
+  object_class->set_property = gimp_xmp_model_entry_set_property;
+  object_class->get_property = gimp_xmp_model_entry_get_property;
+
+  g_object_class_install_property (object_class, PROP_SCHEMA_URI,
+                                   g_param_spec_string ("schema-uri", NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_CONSTRUCT |
+                                                        G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_PROPERTY_NAME,
+                                   g_param_spec_string ("property-name", NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_CONSTRUCT |
+                                                        G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_XMPMODEL,
+                                   g_param_spec_object ("xmp-model",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_XMP_MODEL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_type_class_add_private (klass, sizeof (GimpXmpModelEntryPrivate));
 }
 
@@ -66,45 +132,60 @@ gimp_xmp_model_entry_init (GimpXmpModelEntry *entry)
                     G_CALLBACK (gimp_xmp_model_entry_entry_changed), NULL);
 }
 
-/**
- * gimp_xmp_model_entry_new:
- * @schema_uri: the XMP schema_uri this entry belongs to
- * @property_name: the property name this entry changes in the XMP model
- * @xmp_model: the xmp_model for itself
- *
- * Returns: a new #GimpXmpModelEntry widget
- *
- **/
-GtkWidget*
-gimp_xmp_model_entry_new (const gchar *schema_uri,
-                          const gchar *property_name,
-                          XMPModel    *xmp_model)
+static void
+gimp_xmp_model_entry_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
 {
-  GimpXmpModelEntry *entry;
-  const gchar       *value;
-  const gchar       *signal;
-  const gchar       *signal_detail;
-  const gchar       *schema_prefix;
+  GimpXmpModelEntry *entry = GIMP_XMP_MODEL_ENTRY (object);
 
-  entry = g_object_new (GIMP_TYPE_XMP_MODEL_ENTRY, NULL);
-  entry->p->schema_uri     = schema_uri;
-  entry->p->property_name  = property_name;
-  entry->p->xmp_model      = xmp_model;
+  switch (property_id)
+    {
+    case PROP_SCHEMA_URI:
+      entry->p->schema_uri = g_value_dup_string (value);
+      break;
 
-  value = xmp_model_get_scalar_property (xmp_model, schema_uri, property_name);
-  if (value != NULL)
-    gtk_entry_set_text (GTK_ENTRY (entry), value);
-  else
-    gtk_entry_set_text (GTK_ENTRY (entry), "");
+    case PROP_PROPERTY_NAME:
+      entry->p->property_name = g_value_dup_string (value);
+      break;
 
-  schema_prefix = find_schema_prefix (schema_uri);
-  signal_detail = g_strjoin (":", schema_prefix, property_name, NULL);
-  signal = g_strjoin ("::", "property-changed", signal_detail, NULL);
+    case PROP_XMPMODEL:
+      entry->p->xmp_model = g_value_dup_object (value);
+      break;
 
-  g_signal_connect (xmp_model, signal,
-                    G_CALLBACK (gimp_entry_xmp_model_changed),
-                    entry);
-  return GTK_WIDGET (entry);
+    default:
+       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+       break;
+    }
+}
+
+static void
+gimp_xmp_model_entry_get_property (GObject      *object,
+                                   guint         property_id,
+                                   GValue       *value,
+                                   GParamSpec   *pspec)
+{
+  GimpXmpModelEntry *entry = GIMP_XMP_MODEL_ENTRY (object);
+
+  switch (property_id)
+    {
+    case PROP_SCHEMA_URI:
+      g_value_set_string (value, entry->p->schema_uri);
+      break;
+
+    case PROP_PROPERTY_NAME:
+      g_value_set_string (value, entry->p->property_name);
+      break;
+
+    case PROP_XMPMODEL:
+      g_value_set_object (value, entry->p->xmp_model);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void

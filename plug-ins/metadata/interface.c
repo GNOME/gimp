@@ -249,12 +249,20 @@ add_description_tab (GtkWidget   *notebook,
   gtk_container_add (GTK_CONTAINER (frame), table);
   /* gtk_widget_show (table); */
 
-  entry = gimp_xmp_model_entry_new (XMP_SCHEMA_DUBLIN_CORE, "title", mgui->xmp_model);
+  entry = g_object_new (GIMP_TYPE_XMP_MODEL_ENTRY,
+                        "schema-uri",    XMP_SCHEMA_DUBLIN_CORE,
+                        "property-name", "title",
+                        "xmp-model",     mgui->xmp_model,
+                        NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Image _title:"), 0.0, 0.5,
                              entry, 1, FALSE);
 
-  entry = gimp_xmp_model_entry_new (XMP_SCHEMA_DUBLIN_CORE, "creator", mgui->xmp_model);
+  entry = g_object_new (GIMP_TYPE_XMP_MODEL_ENTRY,
+                        "schema-uri",    XMP_SCHEMA_DUBLIN_CORE,
+                        "property-name", "creator",
+                        "xmp-model",     mgui->xmp_model,
+                        NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Author:"), 0.0, 0.5,
                              entry, 1, FALSE);
@@ -278,7 +286,11 @@ add_description_tab (GtkWidget   *notebook,
            _("_Description:"), 0.0, 0.5,
            scrolled_window, 1, FALSE);
 
-  entry = gimp_xmp_model_entry_new (XMP_SCHEMA_PHOTOSHOP, "CaptionWriter", mgui->xmp_model);
+  entry = g_object_new (GIMP_TYPE_XMP_MODEL_ENTRY,
+                        "schema-uri",    XMP_SCHEMA_PHOTOSHOP,
+                        "property-name", "CaptionWriter",
+                        "xmp-model",     mgui->xmp_model,
+                        NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
            _("Description _writer:"), 0.0, 0.5,
            entry, 1, FALSE);
