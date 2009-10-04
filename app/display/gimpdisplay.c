@@ -355,9 +355,10 @@ gimp_display_new (Gimp              *gimp,
                   GimpUIManager     *popup_manager,
                   GimpDialogFactory *display_factory)
 {
-  GimpDisplay     *display;
-  GimpImageWindow *window = NULL;
-  gint             ID;
+  GimpDisplay      *display;
+  GimpImageWindow  *window = NULL;
+  GimpDisplayShell *shell;
+  gint              ID;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
@@ -424,12 +425,12 @@ gimp_display_new (Gimp              *gimp,
   display->shell = gimp_display_shell_new (display, unit, scale,
                                            popup_manager);
 
-  gimp_image_window_add_shell (window,
-                               GIMP_DISPLAY_SHELL (display->shell));
-  gimp_display_shell_present (GIMP_DISPLAY_SHELL (display->shell));
+  shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  g_signal_connect (gimp_display_shell_get_statusbar (GIMP_DISPLAY_SHELL (display->shell)),
-                    "cancel",
+  gimp_image_window_add_shell (window, shell);
+  gimp_display_shell_present (shell);
+
+  g_signal_connect (gimp_display_shell_get_statusbar (shell), "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
                     display);
 
