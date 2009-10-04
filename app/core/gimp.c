@@ -232,6 +232,8 @@ gimp_init (Gimp *gimp)
 
   gimp->next_display_ID     = 1;
 
+  gimp->image_windows       = NULL;
+
   gimp->global_buffer       = NULL;
   gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
@@ -980,6 +982,14 @@ gimp_get_display_iter (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return GIMP_LIST (gimp->displays)->list;
+}
+
+GList *
+gimp_get_image_window_iter (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return gimp->image_windows;
 }
 
 GList *
