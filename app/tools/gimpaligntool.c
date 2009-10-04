@@ -351,9 +351,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
       GimpVectors *vectors;
       GimpGuide   *guide;
       GimpLayer   *layer;
-      gint         snap_distance;
-
-      snap_distance = GIMP_DISPLAY_CONFIG (display->gimp->config)->snap_distance;
+      gint         snap_distance = display->config->snap_distance;
 
       if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
                                      coords, snap_distance, snap_distance,
@@ -477,11 +475,9 @@ gimp_align_tool_oper_update (GimpTool         *tool,
                              gboolean          proximity,
                              GimpDisplay      *display)
 {
-  GimpAlignTool      *align_tool  = GIMP_ALIGN_TOOL (tool);
-  GimpDisplayShell   *shell       = gimp_display_get_shell (display);
-  gint                snap_distance;
-
-  snap_distance = GIMP_DISPLAY_CONFIG (display->gimp->config)->snap_distance;
+  GimpAlignTool      *align_tool    = GIMP_ALIGN_TOOL (tool);
+  GimpDisplayShell   *shell         = gimp_display_get_shell (display);
+  gint                snap_distance = display->config->snap_distance;
 
   if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
                                  coords, snap_distance, snap_distance,

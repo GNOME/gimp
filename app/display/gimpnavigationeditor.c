@@ -346,7 +346,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
   if (shell)
     {
       Gimp              *gimp   = shell->display->gimp;
-      GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimp->config);
+      GimpDisplayConfig *config = shell->display->config;
       GimpView          *view;
 
       editor = g_object_new (GIMP_TYPE_NAVIGATION_EDITOR, NULL);
