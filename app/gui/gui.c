@@ -72,6 +72,7 @@
 #include "dialogs/dialogs.h"
 
 #include "color-history.h"
+#include "gimpuiconfigurer.h"
 #include "gui.h"
 #include "gui-unique.h"
 #include "gui-vtable.h"
@@ -115,6 +116,9 @@ static void       gui_show_help_button_notify   (GimpGuiConfig      *gui_config,
 static void       gui_user_manual_notify        (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  Gimp               *gimp);
+static void       gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
+                                                 GParamSpec         *pspec,
+                                                 GimpUIConfigurer   *ui_configurer);
 static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GtkUIManager       *manager);
@@ -136,8 +140,9 @@ static void       gui_display_remove            (GimpContainer      *displays);
 
 /*  private variables  */
 
-static Gimp          *the_gui_gimp     = NULL;
-static GimpUIManager *image_ui_manager = NULL;
+static Gimp             *the_gui_gimp     = NULL;
+static GimpUIManager    *image_ui_manager = NULL;
+static GimpUIConfigurer *ui_configurer    = NULL;
 
 
 /*  public functions  */
@@ -446,6 +451,10 @@ gui_restore_after_callback (Gimp               *gimp,
   if (gui_config->restore_accels)
     menus_restore (gimp);
 
+  ui_configurer = g_object_new (GIMP_TYPE_UI_CONFIGURER,
+                                "gimp", gimp,
+                                NULL);
+
   image_ui_manager = gimp_menu_factory_manager_new (global_menu_factory,
                                                     "<Image>",
                                                     gimp,
@@ -499,6 +508,9 @@ gui_restore_after_callback (Gimp               *gimp,
   }
 #endif /* GDK_WINDOWING_QUARTZ */
 
+  g_signal_connect_object (gui_config, "notify::single-window-mode",
+                           G_CALLBACK (gui_single_window_mode_notify),
+                           ui_configurer, 0);
   g_signal_connect_object (gui_config, "notify::tearoff-menus",
                            G_CALLBACK (gui_tearoff_menus_notify),
                            image_ui_manager, 0);
@@ -659,6 +671,14 @@ gui_user_manual_notify (GimpGuiConfig *gui_config,
   gimp_help_user_manual_changed (gimp);
 }
 
+static void
+gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
+                               GParamSpec         *pspec,
+                               GimpUIConfigurer   *ui_configurer)
+{
+  gimp_ui_configurer_configure (ui_configurer,
+                                gui_config->single_window_mode);
+}
 static void
 gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
                           GParamSpec    *pspec,

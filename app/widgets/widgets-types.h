@@ -220,6 +220,7 @@ typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 /*  misc utilities & constructors  */
 
 typedef struct _GimpDialogFactory            GimpDialogFactory;
+typedef struct _GimpUIConfigurer             GimpUIConfigurer;
 
 
 /*  session management objects and structs  */

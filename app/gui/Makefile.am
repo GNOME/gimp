@@ -21,6 +21,8 @@ libappgui_a_sources = \
 	color-history.h		\
 	gimpdbusservice.c	\
 	gimpdbusservice.h	\
+	gimpuiconfigurer.c	\
+	gimpuiconfigurer.h	\
 	gui.c			\
 	gui.h			\
 	gui-message.c		\
