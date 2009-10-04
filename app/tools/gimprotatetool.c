@@ -260,7 +260,7 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
                                    tr_tool);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (rotate->sizeentry),
-                            GIMP_DISPLAY_SHELL (display->shell)->unit);
+                            gimp_display_get_shell (display)->unit);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                                   xres, FALSE);

@@ -277,7 +277,7 @@ gimp_displays_set_busy (Gimp *gimp)
        list = g_list_next (list))
     {
       GimpDisplayShell *shell =
-        GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
+        gimp_display_get_shell (GIMP_DISPLAY (list->data));
 
       gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
     }
@@ -295,7 +295,7 @@ gimp_displays_unset_busy (Gimp *gimp)
        list = g_list_next (list))
     {
       GimpDisplayShell *shell =
-        GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
+        gimp_display_get_shell (GIMP_DISPLAY (list->data));
 
       gimp_display_shell_unset_override_cursor (shell);
     }

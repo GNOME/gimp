@@ -302,7 +302,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
 
   if (brush_core->brush_bound_segs)
     {
-      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
       gdouble           width  = brush_core->brush_bound_width;
       gdouble           height = brush_core->brush_bound_height;
 

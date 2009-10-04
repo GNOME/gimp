@@ -450,7 +450,7 @@ gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
 static void
 gimp_image_map_tool_map (GimpImageMapTool *tool)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (GIMP_TOOL (tool)->display->shell);
+  GimpDisplayShell *shell = gimp_display_get_shell (GIMP_TOOL (tool)->display);
   GimpItem         *item  = GIMP_ITEM (tool->drawable);
   gint              x, y;
   gint              w, h;

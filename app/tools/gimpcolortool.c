@@ -200,7 +200,7 @@ gimp_color_tool_control (GimpTool       *tool,
                          GimpDisplay    *display)
 {
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
-  GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell      = gimp_display_get_shell (display);
 
   switch (action)
     {
@@ -234,7 +234,7 @@ gimp_color_tool_button_press (GimpTool            *tool,
                               GimpDisplay         *display)
 {
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
-  GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell      = gimp_display_get_shell (display);
 
   /*  Chain up to activate the tool  */
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
@@ -289,7 +289,7 @@ gimp_color_tool_button_release (GimpTool              *tool,
                                 GimpDisplay           *display)
 {
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
-  GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell      = gimp_display_get_shell (display);
 
   /*  Chain up to halt the tool  */
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
@@ -376,7 +376,7 @@ gimp_color_tool_motion (GimpTool         *tool,
                         GimpDisplay      *display)
 {
   GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
-  GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell      = gimp_display_get_shell (display);
 
   if (! color_tool->enabled)
     return;
@@ -470,7 +470,7 @@ gimp_color_tool_oper_update (GimpTool         *tool,
                              GimpDisplay      *display)
 {
   GimpColorTool    *color_tool   = GIMP_COLOR_TOOL (tool);
-  GimpDisplayShell *shell        = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell        = gimp_display_get_shell (display);
   GimpSamplePoint  *sample_point = NULL;
 
   if (color_tool->enabled &&
@@ -813,7 +813,7 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
 
   color_tool = GIMP_COLOR_TOOL (tool);
 
-  gimp_display_shell_selection_control (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_selection_control (gimp_display_get_shell (display),
                                         GIMP_SELECTION_PAUSE);
 
   tool->display = display;
@@ -821,7 +821,7 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
   if (color_tool->sample_point)
-    gimp_display_shell_draw_sample_point (GIMP_DISPLAY_SHELL (display->shell),
+    gimp_display_shell_draw_sample_point (gimp_display_get_shell (display),
                                           color_tool->sample_point, FALSE);
 
   color_tool->sample_point        = NULL;

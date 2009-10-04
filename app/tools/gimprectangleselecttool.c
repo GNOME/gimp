@@ -382,7 +382,7 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
 
   rectangle     = GIMP_RECTANGLE_TOOL (tool);
   rect_sel_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
-  shell         = GIMP_DISPLAY_SHELL (display->shell);
+  shell         = gimp_display_get_shell (display);
   priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
   if (tool->display && display != tool->display)
@@ -475,7 +475,7 @@ gimp_rectangle_select_tool_button_release (GimpTool              *tool,
   priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
   gimp_tool_pop_status (tool, display);
-  gimp_display_shell_set_show_selection (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_set_show_selection (gimp_display_get_shell (display),
                                          priv->saved_show_selection);
 
   /*

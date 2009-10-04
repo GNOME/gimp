@@ -720,7 +720,7 @@ gui_menu_show_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (display->shell);
+      GimpDisplayShell *shell     = gimp_display_get_shell (display);
       GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
       gimp_statusbar_push (statusbar, "menu-tooltip",
@@ -737,7 +737,7 @@ gui_menu_hide_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (display->shell);
+      GimpDisplayShell *shell     = gimp_display_get_shell (display);
       GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
       gimp_statusbar_pop (statusbar, "menu-tooltip");

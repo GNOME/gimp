@@ -189,7 +189,7 @@ gimp_measure_tool_button_press (GimpTool            *tool,
 {
   GimpMeasureTool    *measure = GIMP_MEASURE_TOOL (tool);
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell   *shell   = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
   gint                i;
 
   /*  if we are changing displays, pop the statusbar of the old one  */
@@ -741,7 +741,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
               gdouble           target;
               gdouble           arc_radius;
 
-              shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+              shell = gimp_display_get_shell (tool->display);
 
               target     = FUNSCALEX (shell, (TARGET >> 1));
               arc_radius = FUNSCALEX (shell, ARC_RADIUS);
@@ -811,7 +811,7 @@ static void
 gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
                                  GimpDisplay     *display)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell = gimp_display_get_shell (display);
   GimpImage        *image = display->image;
   gint              ax, ay;
   gint              bx, by;

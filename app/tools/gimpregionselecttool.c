@@ -328,7 +328,7 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
     {
       GimpDisplayShell *shell;
 
-      shell = GIMP_DISPLAY_SHELL (GIMP_TOOL (draw_tool)->display->shell);
+      shell = gimp_display_get_shell (GIMP_TOOL (draw_tool)->display);
 
       gimp_canvas_draw_segments (GIMP_CANVAS (shell->canvas),
                                  GIMP_CANVAS_STYLE_XOR,
@@ -343,7 +343,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
 {
   GimpTool                *tool    = GIMP_TOOL (region_sel);
   GimpRegionSelectOptions *options = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell        *shell   = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell        *shell   = gimp_display_get_shell (display);
   GimpDrawable            *drawable;
   GdkSegment              *segs;
   BoundSeg                *bsegs;

@@ -322,7 +322,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
                                 GimpDisplay           *display)
 {
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
-  GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell      = gimp_display_get_shell (display);
   GObject          *object     = NULL;
   GimpImage        *image      = display->image;
   gint              i;
@@ -479,7 +479,7 @@ gimp_align_tool_oper_update (GimpTool         *tool,
                              GimpDisplay      *display)
 {
   GimpAlignTool      *align_tool  = GIMP_ALIGN_TOOL (tool);
-  GimpDisplayShell   *shell       = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell   *shell       = gimp_display_get_shell (display);
   gint                snap_distance;
 
   snap_distance =

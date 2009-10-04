@@ -205,7 +205,7 @@ gimp_dbus_service_activate (GimpDBusService  *service,
   display = gimp_container_get_first_child (service->gimp->displays);
 
   if (display)
-    gimp_display_shell_present (GIMP_DISPLAY_SHELL (GIMP_DISPLAY (display)->shell));
+    gimp_display_shell_present (gimp_display_get_shell (GIMP_DISPLAY (display)));
 
   return TRUE;
 }

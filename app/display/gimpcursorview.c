@@ -589,7 +589,7 @@ gimp_cursor_view_diplay_changed (GimpCursorView *view,
   GimpDisplayShell *shell = NULL;
 
   if (display)
-    shell = GIMP_DISPLAY_SHELL (display->shell);
+    shell = gimp_display_get_shell (display);
 
   if (view->priv->shell)
     {

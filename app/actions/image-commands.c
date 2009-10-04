@@ -229,7 +229,7 @@ image_resize_cmd_callback (GtkAction *action,
   options->context = action_data_get_context (data);
 
   if (image_resize_unit != GIMP_UNIT_PERCENT)
-    image_resize_unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
+    image_resize_unit = gimp_display_get_shell (display)->unit;
 
   dialog = resize_dialog_new (GIMP_VIEWABLE (image),
                               action_data_get_context (data),
@@ -330,7 +330,7 @@ image_scale_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   if (image_scale_unit != GIMP_UNIT_PERCENT)
-    image_scale_unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
+    image_scale_unit = gimp_display_get_shell (display)->unit;
 
   if (image_scale_interp == -1)
     image_scale_interp = display->image->gimp->config->interpolation_type;
@@ -425,7 +425,7 @@ image_duplicate_cmd_callback (GtkAction *action,
   GimpImage        *new_image;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   new_image = gimp_image_duplicate (display->image);
 
@@ -480,7 +480,7 @@ image_configure_grid_cmd_callback (GtkAction *action,
   GimpImage        *image;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
   image = display->image;
 
   if (! shell->grid_dialog)
@@ -511,7 +511,7 @@ image_properties_cmd_callback (GtkAction *action,
   GtkWidget        *dialog;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
   image = display->image;
 
   dialog = image_properties_dialog_new (display->image,

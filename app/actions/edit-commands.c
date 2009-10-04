@@ -514,7 +514,7 @@ edit_paste (GimpDisplay *display,
 
       if (buffer)
         {
-          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+          GimpDisplayShell *shell = gimp_display_get_shell (display);
           gint              x, y;
           gint              width, height;
 

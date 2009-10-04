@@ -631,7 +631,7 @@ action_message (GimpDisplay *display,
                 const gchar *format,
                 ...)
 {
-  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell     = gimp_display_get_shell (display);
   GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
   const gchar      *stock_id  = NULL;
   va_list           args;

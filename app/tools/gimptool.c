@@ -563,7 +563,7 @@ gimp_tool_check_click_distance (GimpTool         *tool,
     }
   else
     {
-      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+      GimpDisplayShell *shell = gimp_display_get_shell (display);
       gdouble           dx;
       gdouble           dy;
 
@@ -902,7 +902,7 @@ gimp_tool_push_status (GimpTool    *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (format != NULL);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
@@ -934,7 +934,7 @@ gimp_tool_push_status_coords (GimpTool            *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
@@ -961,7 +961,7 @@ gimp_tool_push_status_length (GimpTool            *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
@@ -987,7 +987,7 @@ gimp_tool_replace_status (GimpTool    *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (format != NULL);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
@@ -1012,7 +1012,7 @@ gimp_tool_pop_status (GimpTool    *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   gimp_statusbar_pop (gimp_display_shell_get_statusbar (shell),
                       G_OBJECT_TYPE_NAME (tool));
@@ -1063,7 +1063,7 @@ gimp_tool_set_cursor (GimpTool           *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  gimp_display_shell_set_cursor (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_set_cursor (gimp_display_get_shell (display),
                                  cursor, tool_cursor, modifier);
 }
 

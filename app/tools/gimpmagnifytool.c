@@ -163,7 +163,7 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
 {
   GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (tool);
   GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell   *shell   = GIMP_DISPLAY_SHELL (tool->display->shell);
+  GimpDisplayShell   *shell   = gimp_display_get_shell (tool->display);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 

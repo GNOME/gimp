@@ -167,7 +167,7 @@ gimp_navigation_editor_display_changed (GimpContext          *context,
   GimpDisplayShell *shell = NULL;
 
   if (display)
-    shell = GIMP_DISPLAY_SHELL (display->shell);
+    shell = gimp_display_get_shell (display);
 
   gimp_navigation_editor_set_shell (editor, shell);
 }

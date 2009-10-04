@@ -576,7 +576,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
   GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
-  GimpDisplayShell *shell         = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell         = gimp_display_get_shell (display);
   GimpDrawable     *drawable;
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))

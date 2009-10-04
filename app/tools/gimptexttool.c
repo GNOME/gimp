@@ -2248,7 +2248,7 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
   GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
 
   gtk_im_context_set_client_window (text_tool->im_context,
-                                    GIMP_DISPLAY_SHELL (tool->display->shell)->canvas->window);
+                                    gimp_display_get_shell (tool->display)->canvas->window);
 
   gtk_im_context_focus_in (text_tool->im_context);
 

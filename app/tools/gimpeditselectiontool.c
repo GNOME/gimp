@@ -204,7 +204,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
   tool = GIMP_TOOL (edit_select);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   /*  Make a check to see if it should be a floating selection translation  */
   if ((edit_mode == GIMP_TRANSLATE_MODE_MASK_TO_LAYER ||
@@ -475,7 +475,7 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
                                          GimpDisplay           *display)
 {
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
-  GimpDisplayShell      *shell       = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell      *shell       = gimp_display_get_shell (display);
   GimpItem              *active_item;
 
   /*  resume the current selection  */
@@ -1147,7 +1147,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
 
   /*  adapt arrow velocity to the zoom factor when holding <shift>  */
   velocity = (ARROW_VELOCITY /
-              gimp_zoom_model_get_factor (GIMP_DISPLAY_SHELL (display->shell)->zoom));
+              gimp_zoom_model_get_factor (gimp_display_get_shell (display)->zoom));
   velocity = MAX (1.0, velocity);
 
   /*  check the event queue for key events with the same modifier mask

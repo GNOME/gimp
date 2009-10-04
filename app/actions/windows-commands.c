@@ -72,7 +72,7 @@ windows_show_display_cmd_callback (GtkAction *action,
 {
   GimpDisplay *display  = g_object_get_data (G_OBJECT (action), "display");
 
-  gimp_display_shell_present (GIMP_DISPLAY_SHELL (display->shell));
+  gimp_display_shell_present (gimp_display_get_shell (display));
 }
 
 void

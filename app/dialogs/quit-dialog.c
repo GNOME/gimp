@@ -256,6 +256,6 @@ quit_close_all_dialog_image_activated (GimpContainerView *view,
       GimpDisplay *display = list->data;
 
       if (display->image == image)
-        gimp_display_shell_present (GIMP_DISPLAY_SHELL (display->shell));
+        gimp_display_shell_present (gimp_display_get_shell (display));
     }
 }

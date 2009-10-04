@@ -805,7 +805,7 @@ gimp_vector_tool_key_press (GimpTool     *tool,
   if (display != draw_tool->display)
     return FALSE;
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   if (kevent->state & GDK_SHIFT_MASK)
     pixels = 10.0;

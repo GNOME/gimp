@@ -553,7 +553,7 @@ view_actions_update (GimpActionGroup *group,
       GimpImageWindow *window;
 
       image  = display->image;
-      shell  = GIMP_DISPLAY_SHELL (display->shell);
+      shell  = gimp_display_get_shell (display);
       window = gimp_display_shell_get_window (shell);
 
       if (window)

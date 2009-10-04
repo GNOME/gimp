@@ -357,6 +357,6 @@ documents_raise_display (GimpDisplay  *display,
   if (uri && ! strcmp (closure->name, uri))
     {
       closure->found = TRUE;
-      gimp_display_shell_present (GIMP_DISPLAY_SHELL (display->shell));
+      gimp_display_shell_present (gimp_display_get_shell (display));
     }
 }
