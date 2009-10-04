@@ -315,7 +315,7 @@ gimp_image_window_constructor (GType                  type,
   /* Create the right dock columns widget */
   private->right_docks = g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
   gtk_paned_pack2 (GTK_PANED (private->right_hpane), private->right_docks,
-                   TRUE, FALSE);
+                   FALSE, FALSE);
   if (config->single_window_mode)
     gtk_widget_show (private->right_docks);
 
