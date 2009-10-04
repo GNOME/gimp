@@ -73,6 +73,7 @@ struct _GimpDynamics
   GimpDynamicsOutput*  aspect_ratio_dynamics;
   GimpDynamicsOutput*  color_dynamics;
   GimpDynamicsOutput*  angle_dynamics;
+  GimpDynamicsOutput*  jitter_dynamics;
 
 };
 

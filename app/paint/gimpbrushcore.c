@@ -376,8 +376,12 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   GimpBrush     *brush;
+  gdouble        fade_point;
 
   core->dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+
+  fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                    paint_core->pixel_dist);
 
   brush    = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
@@ -393,6 +397,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
+
       core->scale = paint_options->brush_scale;
 
       core->angle = paint_options->brush_angle;
@@ -401,8 +406,6 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
       if (core->dynamics)
         {
-          gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                            paint_core->pixel_dist);
 
           core->scale *= gimp_dynamics_get_scale_output_val(core->dynamics->size_dynamics, *coords, fade_point);
 
@@ -419,6 +422,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
   core->jitter =
     gimp_paint_options_get_jitter (paint_options,
                                    gimp_item_get_image (GIMP_ITEM (drawable)));
+  core->jitter *= gimp_dynamics_get_linear_output_val(core->dynamics->jitter_dynamics, *coords, fade_point);
 
   return TRUE;
 }

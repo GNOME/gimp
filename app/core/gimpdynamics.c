@@ -43,6 +43,8 @@
 #define DEFAULT_PRESSURE_ASPECT_RATIO  FALSE
 #define DEFAULT_PRESSURE_COLOR         FALSE
 #define DEFAULT_PRESSURE_ANGLE         FALSE
+#define DEFAULT_PRESSURE_JITTER        FALSE
+
 
 #define DEFAULT_VELOCITY_OPACITY       FALSE
 #define DEFAULT_VELOCITY_HARDNESS      FALSE
@@ -51,6 +53,7 @@
 #define DEFAULT_VELOCITY_ASPECT_RATIO  FALSE
 #define DEFAULT_VELOCITY_COLOR         FALSE
 #define DEFAULT_VELOCITY_ANGLE         FALSE
+#define DEFAULT_VELOCITY_JITTER        TRUE
 
 #define DEFAULT_DIRECTION_OPACITY      FALSE
 #define DEFAULT_DIRECTION_HARDNESS     FALSE
@@ -59,6 +62,7 @@
 #define DEFAULT_DIRECTION_ASPECT_RATIO FALSE
 #define DEFAULT_DIRECTION_COLOR        FALSE
 #define DEFAULT_DIRECTION_ANGLE        FALSE
+#define DEFAULT_DIRECTION_JITTER       FALSE
 
 #define DEFAULT_TILT_OPACITY           FALSE
 #define DEFAULT_TILT_HARDNESS          FALSE
@@ -67,6 +71,7 @@
 #define DEFAULT_TILT_ASPECT_RATIO      FALSE
 #define DEFAULT_TILT_COLOR             FALSE
 #define DEFAULT_TILT_ANGLE             FALSE
+#define DEFAULT_TILT_JITTER            FALSE
 
 #define DEFAULT_RANDOM_OPACITY         FALSE
 #define DEFAULT_RANDOM_HARDNESS        FALSE
@@ -75,6 +80,7 @@
 #define DEFAULT_RANDOM_ASPECT_RATIO    FALSE
 #define DEFAULT_RANDOM_COLOR           FALSE
 #define DEFAULT_RANDOM_ANGLE           FALSE
+#define DEFAULT_RANDOM_JITTER          FALSE
 
 #define DEFAULT_FADING_OPACITY         FALSE
 #define DEFAULT_FADING_HARDNESS        FALSE
@@ -83,8 +89,7 @@
 #define DEFAULT_FADING_ASPECT_RATIO    FALSE
 #define DEFAULT_FADING_COLOR           FALSE
 #define DEFAULT_FADING_ANGLE           FALSE
-
-#define DEFAULT_FADE_LENGTH            100.0
+#define DEFAULT_FADING_JITTER          FALSE
 
 enum
 {
@@ -97,6 +102,7 @@ enum
   PROP_PRESSURE_ASPECT_RATIO,
   PROP_PRESSURE_COLOR,
   PROP_PRESSURE_ANGLE,
+  PROP_PRESSURE_JITTER,
 
   PROP_VELOCITY_OPACITY,
   PROP_VELOCITY_HARDNESS,
@@ -105,6 +111,7 @@ enum
   PROP_VELOCITY_ASPECT_RATIO,
   PROP_VELOCITY_COLOR,
   PROP_VELOCITY_ANGLE,
+  PROP_VELOCITY_JITTER,
 
   PROP_DIRECTION_OPACITY,
   PROP_DIRECTION_HARDNESS,
@@ -113,6 +120,7 @@ enum
   PROP_DIRECTION_ASPECT_RATIO,
   PROP_DIRECTION_COLOR,
   PROP_DIRECTION_ANGLE,
+  PROP_DIRECTION_JITTER,
 
   PROP_TILT_OPACITY,
   PROP_TILT_HARDNESS,
@@ -121,6 +129,7 @@ enum
   PROP_TILT_ASPECT_RATIO,
   PROP_TILT_COLOR,
   PROP_TILT_ANGLE,
+  PROP_TILT_JITTER,
 
   PROP_RANDOM_OPACITY,
   PROP_RANDOM_HARDNESS,
@@ -129,6 +138,7 @@ enum
   PROP_RANDOM_ASPECT_RATIO,
   PROP_RANDOM_COLOR,
   PROP_RANDOM_ANGLE,
+  PROP_RANDOM_JITTER,
 
   PROP_FADING_OPACITY,
   PROP_FADING_HARDNESS,
@@ -137,6 +147,7 @@ enum
   PROP_FADING_ASPECT_RATIO,
   PROP_FADING_COLOR,
   PROP_FADING_ANGLE,
+  PROP_FADING_JITTER,
 };
 
 static void    gimp_dynamics_class_init       (GimpDynamicsClass *klass);
@@ -208,6 +219,10 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                     "pressure-aspect-ratio", NULL,
                                     DEFAULT_PRESSURE_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_JITTER,
+                                    "pressure-jitter", NULL,
+                                    DEFAULT_PRESSURE_JITTER,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_OPACITY,
                                     "velocity-opacity", NULL,
@@ -236,6 +251,10 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_ASPECT_RATIO,
                                     "velocity-aspect-ratio", NULL,
                                     DEFAULT_VELOCITY_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_JITTER,
+                                    "velocity-jitter", NULL,
+                                    DEFAULT_VELOCITY_JITTER,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_OPACITY,
@@ -266,6 +285,10 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                     "direction-aspect-ratio", NULL,
                                     DEFAULT_DIRECTION_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION_JITTER,
+                                    "direction-jitter", NULL,
+                                    DEFAULT_DIRECTION_JITTER,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT_OPACITY,
                                     "tilt-opacity", NULL,
@@ -294,6 +317,10 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT_ASPECT_RATIO,
                                     "tilt-aspect-ratio", NULL,
                                     DEFAULT_TILT_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT_JITTER,
+                                    "tilt-jitter", NULL,
+                                    DEFAULT_TILT_JITTER,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_OPACITY,
@@ -324,6 +351,10 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                     "random-aspect-ratio", NULL,
                                     DEFAULT_RANDOM_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_JITTER,
+                                    "random-jitter", NULL,
+                                    DEFAULT_RANDOM_JITTER,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_OPACITY,
                                     "fading-opacity", NULL,
@@ -353,6 +384,10 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                     "fading-aspect-ratio", NULL,
                                     DEFAULT_FADING_ASPECT_RATIO,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADING_JITTER,
+                                    "fading-jitter", NULL,
+                                    DEFAULT_FADING_JITTER,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
 }
 
@@ -372,6 +407,8 @@ gimp_dynamics_init (GimpDynamics *options)
   options->color_dynamics        = gimp_dynamics_output_init();
 
   options->angle_dynamics        = gimp_dynamics_output_init();
+
+  options->jitter_dynamics        = gimp_dynamics_output_init();
 
 }
 
@@ -394,6 +431,8 @@ gimp_dynamics_finalize (GObject *object)
   gimp_dynamics_output_finalize   (options->color_dynamics);
 
   gimp_dynamics_output_finalize   (options->angle_dynamics);
+
+  gimp_dynamics_output_finalize   (options->jitter_dynamics);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -459,6 +498,7 @@ gimp_dynamics_set_property (GObject      *object,
   GimpDynamicsOutput *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
   GimpDynamicsOutput *color_dynamics        = options->color_dynamics;
   GimpDynamicsOutput *angle_dynamics        = options->angle_dynamics;
+  GimpDynamicsOutput *jitter_dynamics       = options->jitter_dynamics;
 
   switch (property_id)
     {
@@ -491,6 +531,10 @@ gimp_dynamics_set_property (GObject      *object,
       angle_dynamics->pressure = g_value_get_boolean (value);
       break;
 
+    case PROP_PRESSURE_JITTER:
+      jitter_dynamics->pressure = g_value_get_boolean (value);
+      break;
+
     case PROP_VELOCITY_OPACITY:
       opacity_dynamics->velocity = g_value_get_boolean (value);
       break;
@@ -517,6 +561,10 @@ gimp_dynamics_set_property (GObject      *object,
 
     case PROP_VELOCITY_ANGLE:
       angle_dynamics->velocity = g_value_get_boolean (value);
+      break;
+
+    case PROP_VELOCITY_JITTER:
+      jitter_dynamics->velocity = g_value_get_boolean (value);
       break;
 
     case PROP_DIRECTION_OPACITY:
@@ -547,6 +595,10 @@ gimp_dynamics_set_property (GObject      *object,
       angle_dynamics->direction = g_value_get_boolean (value);
       break;
 
+    case PROP_DIRECTION_JITTER:
+      jitter_dynamics->direction = g_value_get_boolean (value);
+      break;
+
     case PROP_TILT_OPACITY:
       opacity_dynamics->tilt = g_value_get_boolean (value);
       break;
@@ -573,6 +625,10 @@ gimp_dynamics_set_property (GObject      *object,
 
     case PROP_TILT_ANGLE:
       angle_dynamics->tilt = g_value_get_boolean (value);
+      break;
+
+    case PROP_TILT_JITTER:
+      jitter_dynamics->tilt = g_value_get_boolean (value);
       break;
 
     case PROP_RANDOM_OPACITY:
@@ -603,8 +659,10 @@ gimp_dynamics_set_property (GObject      *object,
       angle_dynamics->random = g_value_get_boolean (value);
       break;
 
+    case PROP_RANDOM_JITTER:
+      jitter_dynamics->random = g_value_get_boolean (value);
+      break;
 
-/*Fading*/
     case PROP_FADING_OPACITY:
       opacity_dynamics->fade = g_value_get_boolean (value);
       break;
@@ -633,6 +691,11 @@ gimp_dynamics_set_property (GObject      *object,
       angle_dynamics->fade = g_value_get_boolean (value);
       break;
 
+    case PROP_FADING_JITTER:
+      jitter_dynamics->fade = g_value_get_boolean (value);
+      break;
+
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -655,6 +718,7 @@ gimp_dynamics_get_property (GObject    *object,
   GimpDynamicsOutput *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
   GimpDynamicsOutput *color_dynamics        = options->color_dynamics;
   GimpDynamicsOutput *angle_dynamics        = options->angle_dynamics;
+  GimpDynamicsOutput *jitter_dynamics       = options->jitter_dynamics;
 
   switch (property_id)
     {
@@ -687,6 +751,10 @@ gimp_dynamics_get_property (GObject    *object,
       g_value_set_boolean (value, angle_dynamics->pressure);
       break;
 
+    case PROP_PRESSURE_JITTER:
+      g_value_set_boolean (value, jitter_dynamics->pressure);
+      break;
+
     case PROP_VELOCITY_OPACITY:
       g_value_set_boolean (value, opacity_dynamics->velocity);
       break;
@@ -713,6 +781,10 @@ gimp_dynamics_get_property (GObject    *object,
 
     case PROP_VELOCITY_ANGLE:
       g_value_set_boolean (value, angle_dynamics->velocity);
+      break;
+
+    case PROP_VELOCITY_JITTER:
+      g_value_set_boolean (value, jitter_dynamics->velocity);
       break;
 
     case PROP_DIRECTION_OPACITY:
@@ -743,6 +815,9 @@ gimp_dynamics_get_property (GObject    *object,
       g_value_set_boolean (value, angle_dynamics->direction);
       break;
 
+    case PROP_DIRECTION_JITTER:
+      g_value_set_boolean (value, jitter_dynamics->direction);
+      break;
 
     case PROP_TILT_OPACITY:
       g_value_set_boolean (value, opacity_dynamics->tilt);
@@ -770,6 +845,10 @@ gimp_dynamics_get_property (GObject    *object,
 
     case PROP_TILT_ANGLE:
       g_value_set_boolean (value, angle_dynamics->tilt);
+      break;
+
+    case PROP_TILT_JITTER:
+      g_value_set_boolean (value, jitter_dynamics->tilt);
       break;
 
     case PROP_RANDOM_OPACITY:
@@ -800,6 +879,11 @@ gimp_dynamics_get_property (GObject    *object,
       g_value_set_boolean (value, angle_dynamics->random);
       break;
 
+    case PROP_RANDOM_JITTER:
+      g_value_set_boolean (value, jitter_dynamics->random);
+      break;
+
+
 /*fading*/
 
     case PROP_FADING_OPACITY:
@@ -828,6 +912,10 @@ gimp_dynamics_get_property (GObject    *object,
 
     case PROP_FADING_ANGLE:
       g_value_set_boolean (value, angle_dynamics->fade);
+      break;
+
+    case PROP_FADING_JITTER:
+      g_value_set_boolean (value, jitter_dynamics->fade);
       break;
 
     default:
@@ -1148,6 +1236,7 @@ gimp_dynamics_input_fade_enabled(GimpDynamics *dynamics)
           dynamics->size_dynamics->fade ||
           dynamics->aspect_ratio_dynamics->fade ||
           dynamics->color_dynamics->fade ||
+          dynamics->jitter_dynamics->fade ||
           dynamics->angle_dynamics->fade);
 
 }
