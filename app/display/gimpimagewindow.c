@@ -25,12 +25,16 @@
 
 #include "display-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockcolumns.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpsessioninfo.h"
@@ -72,7 +76,9 @@ struct _GimpImageWindowPrivate
   GtkWidget         *main_vbox;
   GtkWidget         *menubar;
   GtkWidget         *hbox;
+  GtkWidget         *left_docks;
   GtkWidget         *notebook;
+  GtkWidget         *right_docks;
   GtkWidget         *statusbar;
 
   GdkWindowState     window_state;
@@ -210,6 +216,7 @@ gimp_image_window_constructor (GType                  type,
                                GObjectConstructParam *params)
 {
   GObject                *object;
+  GimpGuiConfig          *config;
   GimpImageWindow        *window;
   GimpImageWindowPrivate *private;
 
@@ -230,16 +237,19 @@ gimp_image_window_constructor (GType                  type,
                     G_CALLBACK (gimp_image_window_hide_tooltip),
                     window);
 
+  config = GIMP_GUI_CONFIG (private->display_factory->context->gimp->config);
+
+  /* Create the window toplevel container */
   private->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), private->main_vbox);
   gtk_widget_show (private->main_vbox);
 
+  /* Create the menubar */
 #ifndef GDK_WINDOWING_QUARTZ
   private->menubar =
     gtk_ui_manager_get_widget (GTK_UI_MANAGER (private->menubar_manager),
                                "/image-menubar");
 #endif /* !GDK_WINDOWING_QUARTZ */
-
   if (private->menubar)
     {
       gtk_box_pack_start (GTK_BOX (private->main_vbox),
@@ -264,22 +274,38 @@ gimp_image_window_constructor (GType                  type,
                         window);
     }
 
+  /* Create the hbox that contains docks and images */
   private->hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (private->main_vbox), private->hbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (private->hbox);
 
+  /* Create the left dock columns widget */
+  private->left_docks = g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
+  gtk_box_pack_start (GTK_BOX (private->hbox), private->left_docks,
+                      FALSE, TRUE, 0);
+  if (config->single_window_mode)
+    gtk_widget_show (private->left_docks);
+
+  /* Create notebook that contains images */
   private->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_box_pack_start (GTK_BOX (private->hbox), private->notebook,
                       TRUE, TRUE, 0);
-  gtk_widget_show (private->notebook);
-
   g_signal_connect (private->notebook, "switch-page",
                     G_CALLBACK (gimp_image_window_switch_page),
                     window);
+  gtk_widget_show (private->notebook);
 
+  /* Create the right dock columns widget */
+  private->right_docks = g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
+  gtk_box_pack_start (GTK_BOX (private->hbox), private->right_docks,
+                      FALSE, TRUE, 0);
+  if (config->single_window_mode)
+    gtk_widget_show (private->right_docks);
+
+  /* Create the statusbar */
   private->statusbar = gimp_statusbar_new ();
   gimp_help_set_help_data (private->statusbar, NULL,
                            GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
@@ -551,6 +577,30 @@ gimp_image_window_get_statusbar (GimpImageWindow *window)
   return GIMP_STATUSBAR (private->statusbar);
 }
 
+GimpDockColumns  *
+gimp_image_window_get_left_docks (GimpImageWindow  *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return GIMP_DOCK_COLUMNS (private->left_docks);
+}
+
+GimpDockColumns  *
+gimp_image_window_get_right_docks (GimpImageWindow  *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return GIMP_DOCK_COLUMNS (private->right_docks);
+}
+
 void
 gimp_image_window_add_shell (GimpImageWindow  *window,
                              GimpDisplayShell *shell)
@@ -736,6 +786,41 @@ gimp_image_window_get_show_statusbar (GimpImageWindow *window)
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return GTK_WIDGET_VISIBLE (private->statusbar);
+}
+
+void
+gimp_image_window_set_show_docks (GimpImageWindow *window,
+                                  gboolean         show)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  if (show)
+    {
+      gtk_widget_show (private->left_docks);
+      gtk_widget_show (private->right_docks);
+    }
+  else
+    {
+      gtk_widget_hide (private->left_docks);
+      gtk_widget_hide (private->right_docks);
+    }
+}
+
+gboolean
+gimp_image_window_get_show_docks (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return (GTK_WIDGET_VISIBLE (private->left_docks) &&
+          GTK_WIDGET_VISIBLE (private->right_docks));
 }
 
 gboolean

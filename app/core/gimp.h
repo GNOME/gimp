@@ -85,6 +85,8 @@ struct _Gimp
   GimpContainer          *displays;
   gint                    next_display_ID;
 
+  GList                  *image_windows;
+
   GimpBuffer             *global_buffer;
   GimpContainer          *named_buffers;
 
@@ -169,6 +171,7 @@ void           gimp_exit                 (Gimp                *gimp,
 
 GList        * gimp_get_image_iter       (Gimp                *gimp);
 GList        * gimp_get_display_iter     (Gimp                *gimp);
+GList        * gimp_get_image_window_iter(Gimp                *gimp);
 GList        * gimp_get_tool_info_iter   (Gimp                *gimp);
 
 void           gimp_set_global_buffer    (Gimp                *gimp,

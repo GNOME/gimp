@@ -47,6 +47,8 @@ GType              gimp_image_window_get_type           (void) G_GNUC_CONST;
 
 GimpUIManager    * gimp_image_window_get_ui_manager     (GimpImageWindow  *window);
 GimpStatusbar    * gimp_image_window_get_statusbar      (GimpImageWindow  *window);
+GimpDockColumns  * gimp_image_window_get_left_docks     (GimpImageWindow  *window);
+GimpDockColumns  * gimp_image_window_get_right_docks    (GimpImageWindow  *window);
 
 void               gimp_image_window_add_shell          (GimpImageWindow  *window,
                                                          GimpDisplayShell *shell);
@@ -70,6 +72,10 @@ gboolean           gimp_image_window_get_show_menubar   (GimpImageWindow  *windo
 void               gimp_image_window_set_show_statusbar (GimpImageWindow  *window,
                                                          gboolean          show);
 gboolean           gimp_image_window_get_show_statusbar (GimpImageWindow  *window);
+
+void               gimp_image_window_set_show_docks     (GimpImageWindow  *window,
+                                                         gboolean          show);
+gboolean           gimp_image_window_get_show_docks     (GimpImageWindow  *window);
 
 gboolean           gimp_image_window_is_iconified       (GimpImageWindow  *window);
 
