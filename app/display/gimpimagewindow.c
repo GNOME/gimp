@@ -76,7 +76,9 @@ struct _GimpImageWindowPrivate
   GtkWidget         *main_vbox;
   GtkWidget         *menubar;
   GtkWidget         *hbox;
+  GtkWidget         *left_hpane;
   GtkWidget         *left_docks;
+  GtkWidget         *right_hpane;
   GtkWidget         *notebook;
   GtkWidget         *right_docks;
   GtkWidget         *statusbar;
@@ -280,19 +282,31 @@ gimp_image_window_constructor (GType                  type,
                       TRUE, TRUE, 0);
   gtk_widget_show (private->hbox);
 
+  /* Create the left pane */
+  private->left_hpane = gtk_hpaned_new ();
+  gtk_box_pack_start (GTK_BOX (private->hbox), private->left_hpane,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (private->left_hpane);
+
   /* Create the left dock columns widget */
   private->left_docks = g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
-  gtk_box_pack_start (GTK_BOX (private->hbox), private->left_docks,
-                      FALSE, TRUE, 0);
+  gtk_paned_pack1 (GTK_PANED (private->left_hpane), private->left_docks,
+                   TRUE, FALSE);
   if (config->single_window_mode)
     gtk_widget_show (private->left_docks);
+
+  /* Create the right pane */
+  private->right_hpane = gtk_hpaned_new ();
+  gtk_paned_pack2 (GTK_PANED (private->left_hpane), private->right_hpane,
+                   TRUE, FALSE);
+  gtk_widget_show (private->right_hpane);
 
   /* Create notebook that contains images */
   private->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
-  gtk_box_pack_start (GTK_BOX (private->hbox), private->notebook,
-                      TRUE, TRUE, 0);
+  gtk_paned_pack1 (GTK_PANED (private->right_hpane), private->notebook,
+                   TRUE, TRUE);
   g_signal_connect (private->notebook, "switch-page",
                     G_CALLBACK (gimp_image_window_switch_page),
                     window);
@@ -300,8 +314,8 @@ gimp_image_window_constructor (GType                  type,
 
   /* Create the right dock columns widget */
   private->right_docks = g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
-  gtk_box_pack_start (GTK_BOX (private->hbox), private->right_docks,
-                      FALSE, TRUE, 0);
+  gtk_paned_pack2 (GTK_PANED (private->right_hpane), private->right_docks,
+                   TRUE, FALSE);
   if (config->single_window_mode)
     gtk_widget_show (private->right_docks);
 
