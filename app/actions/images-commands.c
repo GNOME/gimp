@@ -31,6 +31,7 @@
 #include "widgets/gimpimageview.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "images-commands.h"
 
@@ -62,12 +63,7 @@ images_raise_views_cmd_callback (GtkAction *action,
           GimpDisplay *display = list->data;
 
           if (display->image == image)
-            {
-              GtkWidget *toplevel = gtk_widget_get_toplevel (display->shell);
-
-              if (GTK_IS_WINDOW (toplevel))
-                gtk_window_present (GTK_WINDOW (display->shell));
-            }
+            gimp_display_shell_present (GIMP_DISPLAY_SHELL (display->shell));
         }
     }
 }

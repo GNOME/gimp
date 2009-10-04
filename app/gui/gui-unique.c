@@ -173,7 +173,7 @@ gui_unique_win32_idle_open (IdleOpenData *data)
 
       display = gimp_container_get_first_child (unique_gimp->displays);
 
-      gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
+      gimp_display_shell_present (GIMP_DISPLAY_SHELL (GIMP_DISPLAY (display)->shell));
     }
 
   return FALSE;

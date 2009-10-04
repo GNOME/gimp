@@ -426,15 +426,12 @@ gimp_display_new (Gimp              *gimp,
 
   gimp_image_window_add_shell (window,
                                GIMP_DISPLAY_SHELL (display->shell));
-  gimp_image_window_set_active_shell (window,
-                                      GIMP_DISPLAY_SHELL (display->shell));
+  gimp_display_shell_present (GIMP_DISPLAY_SHELL (display->shell));
 
   g_signal_connect (gimp_display_shell_get_statusbar (GIMP_DISPLAY_SHELL (display->shell)),
                     "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
                     display);
-
-  gtk_window_present (GTK_WINDOW (window));
 
   /* add the display to the list */
   gimp_container_add (gimp->displays, GIMP_OBJECT (display));

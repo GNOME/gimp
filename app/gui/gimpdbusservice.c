@@ -33,6 +33,7 @@
 #include "file/file-open.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpdbusservice.h"
 #include "gimpdbusservice-glue.h"
@@ -204,14 +205,7 @@ gimp_dbus_service_activate (GimpDBusService  *service,
   display = gimp_container_get_first_child (service->gimp->displays);
 
   if (display)
-    {
-      GtkWidget *toplevel;
-
-      toplevel = gtk_widget_get_toplevel (GIMP_DISPLAY (display)->shell);
-
-      if (GTK_IS_WINDOW (toplevel))
-        gtk_window_present (GTK_WINDOW (toplevel));
-    }
+    gimp_display_shell_present (GIMP_DISPLAY_SHELL (GIMP_DISPLAY (display)->shell));
 
   return TRUE;
 }

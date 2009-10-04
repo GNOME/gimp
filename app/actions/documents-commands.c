@@ -45,6 +45,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "documents-commands.h"
 #include "file-commands.h"
@@ -356,6 +357,6 @@ documents_raise_display (GimpDisplay  *display,
   if (uri && ! strcmp (closure->name, uri))
     {
       closure->found = TRUE;
-      gtk_window_present (GTK_WINDOW (display->shell));
+      gimp_display_shell_present (GIMP_DISPLAY_SHELL (display->shell));
     }
 }
