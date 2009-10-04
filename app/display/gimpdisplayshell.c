@@ -1177,6 +1177,23 @@ gimp_display_shell_get_statusbar (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_present (GimpDisplayShell *shell)
+{
+  GimpImageWindow *window;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  window = gimp_display_shell_get_window (shell);
+
+  if (window)
+    {
+      gimp_image_window_set_active_shell (window, shell);
+
+      gtk_window_present (GTK_WINDOW (window));
+    }
+}
+
+void
 gimp_display_shell_reconnect (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));

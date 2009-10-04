@@ -224,8 +224,9 @@ GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
                                                     GimpUIManager      *popup_manager);
 
 GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
-
 GimpStatusbar   * gimp_display_shell_get_statusbar (GimpDisplayShell   *shell);
+
+void              gimp_display_shell_present       (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_reconnect     (GimpDisplayShell   *shell);
 
