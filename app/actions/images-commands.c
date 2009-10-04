@@ -62,7 +62,12 @@ images_raise_views_cmd_callback (GtkAction *action,
           GimpDisplay *display = list->data;
 
           if (display->image == image)
-            gtk_window_present (GTK_WINDOW (display->shell));
+            {
+              GtkWidget *toplevel = gtk_widget_get_toplevel (display->shell);
+
+              if (GTK_IS_WINDOW (toplevel))
+                gtk_window_present (GTK_WINDOW (display->shell));
+            }
         }
     }
 }
