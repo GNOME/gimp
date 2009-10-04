@@ -65,7 +65,7 @@
 
 #define IS_ACTIVE_DISPLAY(display) \
   ((display) == \
-   gimp_context_get_display (gimp_get_user_context ((display)->image->gimp)))
+   gimp_context_get_display (gimp_get_user_context ((display)->gimp)))
 
 
 /*  local function prototypes  */
@@ -88,7 +88,7 @@ view_new_cmd_callback (GtkAction *action,
 
   shell = gimp_display_get_shell (display);
 
-  gimp_create_display (display->image->gimp,
+  gimp_create_display (display->gimp,
                        display->image,
                        shell->unit, gimp_zoom_model_get_factor (shell->zoom));
 }

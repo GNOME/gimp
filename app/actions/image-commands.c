@@ -333,7 +333,7 @@ image_scale_cmd_callback (GtkAction *action,
     image_scale_unit = gimp_display_get_shell (display)->unit;
 
   if (image_scale_interp == -1)
-    image_scale_interp = display->image->gimp->config->interpolation_type;
+    image_scale_interp = display->gimp->config->interpolation_type;
 
   dialog = image_scale_dialog_new (display->image,
                                    action_data_get_context (data),

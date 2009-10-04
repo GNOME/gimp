@@ -492,7 +492,7 @@ edit_paste (GimpDisplay *display,
   gchar *svg;
   gsize  svg_size;
 
-  svg = gimp_clipboard_get_svg (display->image->gimp, &svg_size);
+  svg = gimp_clipboard_get_svg (display->gimp, &svg_size);
 
   if (svg)
     {
@@ -510,7 +510,7 @@ edit_paste (GimpDisplay *display,
     {
       GimpBuffer *buffer;
 
-      buffer = gimp_clipboard_get_buffer (display->image->gimp);
+      buffer = gimp_clipboard_get_buffer (display->gimp);
 
       if (buffer)
         {
@@ -532,7 +532,7 @@ edit_paste (GimpDisplay *display,
         }
       else
         {
-          gimp_message_literal (display->image->gimp, G_OBJECT (display),
+          gimp_message_literal (display->gimp, G_OBJECT (display),
 				GIMP_MESSAGE_WARNING,
 				_("There is no image data in the clipboard to paste."));
         }

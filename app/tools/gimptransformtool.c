@@ -1223,7 +1223,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
 
   mask_empty = gimp_channel_is_empty (gimp_image_get_mask (display->image));
 
-  gimp_set_busy (display->image->gimp);
+  gimp_set_busy (display->gimp);
 
   /* undraw the tool before we muck around with the transform matrix */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
@@ -1337,7 +1337,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
       gtk_widget_queue_draw (shell->canvas);
     }
 
-  gimp_unset_busy (display->image->gimp);
+  gimp_unset_busy (display->gimp);
 
   gimp_image_flush (display->image);
 

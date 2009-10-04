@@ -478,7 +478,7 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
     {
       if (press)
         {
-          GimpToolInfo *info = gimp_get_tool_info (display->image->gimp,
+          GimpToolInfo *info = gimp_get_tool_info (display->gimp,
                                                    "gimp-color-picker-tool");
 
           if (GIMP_IS_TOOL_INFO (info))

@@ -452,7 +452,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   gimp_tool_control_activate (tool->control);
   tool->display = display;
 
-  tool_manager_push_tool (display->image->gimp, tool);
+  tool_manager_push_tool (display->gimp, tool);
 
   /*  pause the current selection  */
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
@@ -486,7 +486,7 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
   /*  Stop and free the selection core  */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (edit_select));
 
-  tool_manager_pop_tool (display->image->gimp);
+  tool_manager_pop_tool (display->gimp);
 
   active_item = gimp_edit_selection_tool_get_active_item (edit_select,
                                                           display->image);
@@ -576,9 +576,9 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
   edit_select->num_segs_out = 0;
 
   if (edit_select->propagate_release &&
-      tool_manager_get_active (display->image->gimp))
+      tool_manager_get_active (display->gimp))
     {
-      tool_manager_button_release_active (display->image->gimp,
+      tool_manager_button_release_active (display->gimp,
                                           coords, time, state,
                                           display);
     }
@@ -692,13 +692,13 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
         case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
           if (! gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (display->image)),
                                       GIMP_DRAWABLE (active_item),
-                                      gimp_get_user_context (display->image->gimp),
+                                      gimp_get_user_context (display->gimp),
                                       edit_select->edit_mode ==
                                       GIMP_TRANSLATE_MODE_MASK_TO_LAYER,
                                       0, 0, &error))
             {
               /* no region to float, abort safely */
-              gimp_message_literal (display->image->gimp, G_OBJECT (display),
+              gimp_message_literal (display->gimp, G_OBJECT (display),
 				    GIMP_MESSAGE_WARNING,
 				    error->message);
               g_clear_error (&error);
@@ -1318,7 +1318,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
     gimp_image_undo_group_end (display->image);
   else
     gimp_undo_refresh_preview (undo,
-                               gimp_get_user_context (display->image->gimp));
+                               gimp_get_user_context (display->gimp));
 
   gimp_image_flush (display->image);
 

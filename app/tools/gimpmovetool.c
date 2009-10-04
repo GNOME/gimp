@@ -250,7 +250,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
           gint       snap_distance;
 
           snap_distance =
-            GIMP_DISPLAY_CONFIG (display->image->gimp->config)->snap_distance;
+            GIMP_DISPLAY_CONFIG (display->gimp->config)->snap_distance;
 
           if (gimp_display_shell_get_show_guides (shell) &&
               (guide = gimp_image_find_guide (display->image,
@@ -360,7 +360,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
 {
   GimpMoveTool     *move   = GIMP_MOVE_TOOL (tool);
   GimpDisplayShell *shell  = gimp_display_get_shell (display);
-  GimpGuiConfig    *config = GIMP_GUI_CONFIG (display->image->gimp->config);
+  GimpGuiConfig    *config = GIMP_GUI_CONFIG (display->gimp->config);
 
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);
@@ -665,8 +665,7 @@ gimp_move_tool_oper_update (GimpTool         *tool,
     {
       gint snap_distance;
 
-      snap_distance =
-        GIMP_DISPLAY_CONFIG (display->image->gimp->config)->snap_distance;
+      snap_distance = GIMP_DISPLAY_CONFIG (display->gimp->config)->snap_distance;
 
       guide = gimp_image_find_guide (display->image, coords->x, coords->y,
                                      FUNSCALEX (shell, snap_distance),
@@ -737,8 +736,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
       GimpLayer *layer;
       gint       snap_distance;
 
-      snap_distance =
-        GIMP_DISPLAY_CONFIG (display->image->gimp->config)->snap_distance;
+      snap_distance = GIMP_DISPLAY_CONFIG (display->gimp->config)->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
           (guide = gimp_image_find_guide (display->image, coords->x, coords->y,

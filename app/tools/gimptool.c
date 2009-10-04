@@ -1034,7 +1034,7 @@ gimp_tool_message (GimpTool    *tool,
 
   va_start (args, format);
 
-  gimp_message_valist (display->image->gimp, G_OBJECT (display),
+  gimp_message_valist (display->gimp, G_OBJECT (display),
                        GIMP_MESSAGE_WARNING, format, args);
 
   va_end (args);
@@ -1049,7 +1049,7 @@ gimp_tool_message_literal (GimpTool    *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (message != NULL);
 
-  gimp_message_literal (display->image->gimp, G_OBJECT (display),
+  gimp_message_literal (display->gimp, G_OBJECT (display),
 			GIMP_MESSAGE_WARNING, message);
 }
 

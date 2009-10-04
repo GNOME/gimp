@@ -478,8 +478,7 @@ gimp_color_tool_oper_update (GimpTool         *tool,
     {
       gint snap_distance;
 
-      snap_distance =
-        GIMP_DISPLAY_CONFIG (display->image->gimp->config)->snap_distance;
+      snap_distance = GIMP_DISPLAY_CONFIG (display->gimp->config)->snap_distance;
 
       sample_point =
         gimp_image_find_sample_point (display->image,
