@@ -121,8 +121,7 @@ gimp_display_class_init (GimpDisplayClass *klass)
                                    g_param_spec_int ("id",
                                                      NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT_ONLY));
+                                                     GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -183,15 +182,27 @@ gimp_display_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_ID:
-      display->ID = g_value_get_int (value);
-      break;
-
     case PROP_GIMP:
-      display->gimp = g_value_get_object (value); /* don't ref the gimp */
-      display->config = GIMP_DISPLAY_CONFIG (display->gimp->config);
+      {
+        gint ID;
+
+        display->gimp = g_value_get_object (value); /* don't ref the gimp */
+        display->config = GIMP_DISPLAY_CONFIG (display->gimp->config);
+
+        do
+          {
+            ID = display->gimp->next_display_ID++;
+
+            if (display->gimp->next_display_ID == G_MAXINT)
+              display->gimp->next_display_ID = 1;
+          }
+        while (gimp_display_get_by_ID (display->gimp, ID));
+
+        display->ID = ID;
+      }
       break;
 
+    case PROP_ID:
     case PROP_IMAGE:
     case PROP_SHELL:
       g_assert_not_reached ();
@@ -358,7 +369,6 @@ gimp_display_new (Gimp              *gimp,
   GimpDisplay      *display;
   GimpImageWindow  *window = NULL;
   GimpDisplayShell *shell;
-  gint              ID;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
@@ -367,17 +377,7 @@ gimp_display_new (Gimp              *gimp,
   if (gimp->no_interface)
     return NULL;
 
-  do
-    {
-      ID = gimp->next_display_ID++;
-
-      if (gimp->next_display_ID == G_MAXINT)
-        gimp->next_display_ID = 1;
-    }
-  while (gimp_display_get_by_ID (gimp, ID));
-
   display = g_object_new (GIMP_TYPE_DISPLAY,
-                          "id",   ID,
                           "gimp", gimp,
                           NULL);
 
