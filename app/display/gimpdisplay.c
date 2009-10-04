@@ -558,6 +558,22 @@ gimp_display_get_by_ID (Gimp *gimp,
   return NULL;
 }
 
+Gimp *
+gimp_display_get_gimp (GimpDisplay *display)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+
+  return display->gimp;
+}
+
+GimpImage *
+gimp_display_get_image (GimpDisplay *display)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+
+  return display->image;
+}
+
 void
 gimp_display_set_image (GimpDisplay *display,
                         GimpImage   *image)
@@ -593,6 +609,14 @@ gimp_display_set_image (GimpDisplay *display,
 
   if (old_image != image)
     g_object_notify (G_OBJECT (display), "image");
+}
+
+GimpDisplayShell *
+gimp_display_get_shell (GimpDisplay *display)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+
+  return GIMP_DISPLAY_SHELL (display->shell);
 }
 
 void
