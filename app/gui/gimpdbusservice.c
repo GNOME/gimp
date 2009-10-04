@@ -204,7 +204,14 @@ gimp_dbus_service_activate (GimpDBusService  *service,
   display = gimp_container_get_first_child (service->gimp->displays);
 
   if (display)
-    gtk_window_present (GTK_WINDOW (GIMP_DISPLAY (display)->shell));
+    {
+      GtkWidget *toplevel;
+
+      toplevel = gtk_widget_get_toplevel (GIMP_DISPLAY (display)->shell);
+
+      if (GTK_IS_WINDOW (toplevel))
+        gtk_window_present (GTK_WINDOW (toplevel));
+    }
 
   return TRUE;
 }
