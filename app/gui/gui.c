@@ -43,7 +43,6 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-render.h"
-#include "display/gimpimagewindow.h"
 #include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"
@@ -721,16 +720,11 @@ gui_menu_show_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
-      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
+      GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (display->shell);
+      GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-      if (window)
-        {
-          GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-
-          gimp_statusbar_push (statusbar, "menu-tooltip",
-                               NULL, "%s", tooltip);
-        }
+      gimp_statusbar_push (statusbar, "menu-tooltip",
+                           NULL, "%s", tooltip);
     }
 }
 
@@ -743,15 +737,10 @@ gui_menu_hide_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
-      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
+      GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (display->shell);
+      GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-      if (window)
-        {
-          GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-
-          gimp_statusbar_pop (statusbar, "menu-tooltip");
-        }
+      gimp_statusbar_pop (statusbar, "menu-tooltip");
     }
 }
 

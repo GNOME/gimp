@@ -74,8 +74,14 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
   window  = gimp_display_shell_get_window (shell);
 
   if (window)
-    appearance_set_action_active (shell, "view-fullscreen",
-                                  gimp_image_window_get_fullscreen (window));
+    {
+      gboolean fullscreen = gimp_image_window_get_fullscreen (window);
+
+      appearance_set_action_active (shell, "view-fullscreen", fullscreen);
+
+      gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar),
+                                         ! fullscreen);
+    }
 
   gimp_display_shell_set_show_menubar       (shell,
                                              options->show_menubar);
@@ -136,19 +142,14 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
                                        gboolean          show)
 {
   GimpDisplayOptions *options;
-  GimpImageWindow    *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
-  window  = gimp_display_shell_get_window (shell);
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
-    {
-      gimp_image_window_set_show_statusbar (window, show);
-    }
+  gimp_statusbar_set_visible (GIMP_STATUSBAR (shell->statusbar), show);
 
   appearance_set_action_active (shell, "view-show-statusbar", show);
 }

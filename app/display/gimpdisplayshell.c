@@ -859,10 +859,12 @@ gimp_display_shell_new (GimpDisplay       *display,
    *     |             +-- vscrollbar
    *     |
    *     +-- lower_hbox
-   *            |
-   *            +-- quick_mask
-   *            +-- hscrollbar
-   *            +-- navbutton
+   *     |      |
+   *     |      +-- quick_mask
+   *     |      +-- hscrollbar
+   *     |      +-- navbutton
+   *     |
+   *     +-- statusbar
    */
 
   /*  first, set up the container hierarchy  *********************************/
@@ -1080,6 +1082,14 @@ gimp_display_shell_new (GimpDisplay       *display,
                            _("Navigate the image display"),
                            GIMP_HELP_IMAGE_WINDOW_NAV_BUTTON);
 
+  /*  the statusbar  ********************************************************/
+
+  shell->statusbar = gimp_statusbar_new ();
+  gimp_statusbar_set_shell (GIMP_STATUSBAR (shell->statusbar), shell);
+  gimp_help_set_help_data (shell->statusbar, NULL,
+                           GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
+  gtk_box_pack_end (GTK_BOX (shell), shell->statusbar, FALSE, FALSE, 0);
+
   /*  pack all the widgets  **************************************************/
 
   /*  fill the inner_table  */
@@ -1139,6 +1149,8 @@ gimp_display_shell_new (GimpDisplay       *display,
       gimp_help_set_help_data (shell->canvas,
                                _("Drop image files here to open them"),
                                NULL);
+
+      gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
     }
 
   /* make sure the information is up-to-date */
@@ -1154,6 +1166,14 @@ gimp_display_shell_get_window (GimpDisplayShell *shell)
 
   return GIMP_IMAGE_WINDOW (gtk_widget_get_ancestor (GTK_WIDGET (shell),
                                                      GIMP_TYPE_IMAGE_WINDOW));
+}
+
+GimpStatusbar *
+gimp_display_shell_get_statusbar (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  return GIMP_STATUSBAR (shell->statusbar);
 }
 
 void
@@ -1206,6 +1226,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   gimp_help_set_help_data (shell->canvas,
                            _("Drop image files here to open them"), NULL);
 
+  gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
+
   gimp_display_shell_expose_full (shell);
 
   user_context = gimp_get_user_context (shell->display->gimp);
@@ -1250,6 +1272,8 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_appearance_update (shell);
 
   gimp_help_set_help_data (shell->canvas, NULL, NULL);
+
+  gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
 
   /* A size-allocate will always occur because the scrollbars will
    * become visible forcing the canvas to become smaller

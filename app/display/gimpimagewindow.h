@@ -46,7 +46,6 @@ struct _GimpImageWindowClass
 GType              gimp_image_window_get_type           (void) G_GNUC_CONST;
 
 GimpUIManager    * gimp_image_window_get_ui_manager     (GimpImageWindow  *window);
-GimpStatusbar    * gimp_image_window_get_statusbar      (GimpImageWindow  *window);
 GimpDockColumns  * gimp_image_window_get_left_docks     (GimpImageWindow  *window);
 GimpDockColumns  * gimp_image_window_get_right_docks    (GimpImageWindow  *window);
 

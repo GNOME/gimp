@@ -586,18 +586,13 @@ gimp_display_shell_saved_handler (GimpImage        *image,
                                   const gchar      *uri,
                                   GimpDisplayShell *shell)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+  GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
+  gchar         *filename  = file_utils_uri_display_name (uri);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      gchar         *filename  = file_utils_uri_display_name (uri);
-
-      gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                                GTK_STOCK_SAVE, _("Image saved to '%s'"),
-                                filename);
-      g_free (filename);
-    }
+  gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                            GTK_STOCK_SAVE, _("Image saved to '%s'"),
+                            filename);
+  g_free (filename);
 }
 
 static void
@@ -605,18 +600,13 @@ gimp_display_shell_exported_handler (GimpImage        *image,
                                      const gchar      *uri,
                                      GimpDisplayShell *shell)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+  GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
+  gchar         *filename  = file_utils_uri_display_name (uri);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      gchar         *filename  = file_utils_uri_display_name (uri);
-
-      gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                                GTK_STOCK_SAVE, _("Image exported to '%s'"),
-                                filename);
-      g_free (filename);
-    }
+  gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                            GTK_STOCK_SAVE, _("Image exported to '%s'"),
+                            filename);
+  g_free (filename);
 }
 
 static void

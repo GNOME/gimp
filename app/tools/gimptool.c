@@ -32,7 +32,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-cursor.h"
-#include "display/gimpimagewindow.h"
 #include "display/gimpstatusbar.h"
 
 #include "gimptool.h"
@@ -896,31 +895,24 @@ gimp_tool_push_status (GimpTool    *tool,
                        ...)
 {
   GimpDisplayShell *shell;
-  GimpImageWindow  *window;
+  const gchar      *stock_id;
+  va_list           args;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (format != NULL);
 
-  shell  = GIMP_DISPLAY_SHELL (display->shell);
-  window = gimp_display_shell_get_window (shell);
+  shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  if (window)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      const gchar   *stock_id;
-      va_list        args;
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
+  va_start (args, format);
 
-      va_start (args, format);
+  gimp_statusbar_push_valist (gimp_display_shell_get_statusbar (shell),
+                              G_OBJECT_TYPE_NAME (tool), stock_id,
+                              format, args);
 
-      gimp_statusbar_push_valist (statusbar,
-                                  G_OBJECT_TYPE_NAME (tool), stock_id,
-                                  format, args);
-
-      va_end (args);
-    }
+  va_end (args);
 
   tool->status_displays = g_list_remove (tool->status_displays, display);
   tool->status_displays = g_list_prepend (tool->status_displays, display);
@@ -937,26 +929,19 @@ gimp_tool_push_status_coords (GimpTool            *tool,
                               const gchar         *help)
 {
   GimpDisplayShell *shell;
-  GimpImageWindow  *window;
+  const gchar      *stock_id;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  shell  = GIMP_DISPLAY_SHELL (display->shell);
-  window = gimp_display_shell_get_window (shell);
+  shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  if (window)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      const gchar   *stock_id;
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
-
-      gimp_statusbar_push_coords (statusbar,
-                                  G_OBJECT_TYPE_NAME (tool), stock_id,
-                                  precision, title, x, separator, y,
-                                  help);
-    }
+  gimp_statusbar_push_coords (gimp_display_shell_get_statusbar (shell),
+                              G_OBJECT_TYPE_NAME (tool), stock_id,
+                              precision, title, x, separator, y,
+                              help);
 
   tool->status_displays = g_list_remove (tool->status_displays, display);
   tool->status_displays = g_list_prepend (tool->status_displays, display);
@@ -971,25 +956,18 @@ gimp_tool_push_status_length (GimpTool            *tool,
                               const gchar         *help)
 {
   GimpDisplayShell *shell;
-  GimpImageWindow  *window;
+  const gchar      *stock_id;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  shell  = GIMP_DISPLAY_SHELL (display->shell);
-  window = gimp_display_shell_get_window (shell);
+  shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  if (window)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      const gchar   *stock_id;
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
-
-      gimp_statusbar_push_length (statusbar,
-                                  G_OBJECT_TYPE_NAME (tool), stock_id,
-                                  title, axis, value, help);
-    }
+  gimp_statusbar_push_length (gimp_display_shell_get_statusbar (shell),
+                              G_OBJECT_TYPE_NAME (tool), stock_id,
+                              title, axis, value, help);
 
   tool->status_displays = g_list_remove (tool->status_displays, display);
   tool->status_displays = g_list_prepend (tool->status_displays, display);
@@ -1002,31 +980,24 @@ gimp_tool_replace_status (GimpTool    *tool,
                           ...)
 {
   GimpDisplayShell *shell;
-  GimpImageWindow  *window;
+  const gchar      *stock_id;
+  va_list           args;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (format != NULL);
 
-  shell  = GIMP_DISPLAY_SHELL (display->shell);
-  window = gimp_display_shell_get_window (shell);
+  shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  if (window)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      const gchar   *stock_id;
-      va_list        args;
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
+  va_start (args, format);
 
-      va_start (args, format);
+  gimp_statusbar_replace_valist (gimp_display_shell_get_statusbar (shell),
+                                 G_OBJECT_TYPE_NAME (tool), stock_id,
+                                 format, args);
 
-      gimp_statusbar_replace_valist (statusbar,
-                                     G_OBJECT_TYPE_NAME (tool), stock_id,
-                                     format, args);
-
-      va_end (args);
-    }
+  va_end (args);
 
   tool->status_displays = g_list_remove (tool->status_displays, display);
   tool->status_displays = g_list_prepend (tool->status_displays, display);
@@ -1037,21 +1008,14 @@ gimp_tool_pop_status (GimpTool    *tool,
                       GimpDisplay *display)
 {
   GimpDisplayShell *shell;
-  GimpImageWindow  *window;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  shell  = GIMP_DISPLAY_SHELL (display->shell);
-  window = gimp_display_shell_get_window (shell);
+  shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  if (window)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-
-      gimp_statusbar_pop (statusbar,
-                          G_OBJECT_TYPE_NAME (tool));
-    }
+  gimp_statusbar_pop (gimp_display_shell_get_statusbar (shell),
+                      G_OBJECT_TYPE_NAME (tool));
 
   tool->status_displays = g_list_remove (tool->status_displays, display);
 }

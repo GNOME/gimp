@@ -110,6 +110,9 @@ static void     gimp_statusbar_scale_activated    (GimpScaleComboBox *combo,
                                                    GimpStatusbar     *statusbar);
 static void     gimp_statusbar_shell_scaled       (GimpDisplayShell  *shell,
                                                    GimpStatusbar     *statusbar);
+static void     gimp_statusbar_shell_status_notify(GimpDisplayShell  *shell,
+                                                   const GParamSpec  *pspec,
+                                                   GimpStatusbar     *statusbar);
 static guint    gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
                                                    const gchar       *context);
 static gboolean gimp_statusbar_temp_timeout       (GimpStatusbar     *statusbar);
@@ -676,12 +679,20 @@ gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
       g_signal_handlers_disconnect_by_func (statusbar->shell,
                                             gimp_statusbar_shell_scaled,
                                             statusbar);
+
+      g_signal_handlers_disconnect_by_func (statusbar->shell,
+                                            gimp_statusbar_shell_status_notify,
+                                            statusbar);
     }
 
   statusbar->shell = shell;
 
   g_signal_connect_object (statusbar->shell, "scaled",
                            G_CALLBACK (gimp_statusbar_shell_scaled),
+                           statusbar, 0);
+
+  g_signal_connect_object (statusbar->shell, "notify::status",
+                           G_CALLBACK (gimp_statusbar_shell_status_notify),
                            statusbar, 0);
 }
 
@@ -1425,6 +1436,15 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   gtk_widget_queue_resize (GTK_STATUSBAR (statusbar)->frame);
 
   gimp_statusbar_clear_cursor (statusbar);
+}
+
+static void
+gimp_statusbar_shell_status_notify (GimpDisplayShell *shell,
+                                    const GParamSpec *pspec,
+                                    GimpStatusbar    *statusbar)
+{
+  gimp_statusbar_replace (statusbar, "title",
+                          NULL, "%s", shell->status);
 }
 
 static void

@@ -135,6 +135,8 @@ struct _GimpDisplayShell
   GtkWidget         *zoom_button;      /*  NE: zoom toggle button             */
   GtkWidget         *nav_ebox;         /*  SE: navigation event box           */
 
+  GtkWidget         *statusbar;        /*  statusbar                          */
+
   guchar            *render_buf;       /*  buffer for rendering the image     */
 
   guint              title_idle_id;    /*  title update idle ID               */
@@ -222,6 +224,8 @@ GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
                                                     GimpUIManager      *popup_manager);
 
 GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
+
+GimpStatusbar   * gimp_display_shell_get_statusbar (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_reconnect     (GimpDisplayShell   *shell);
 
