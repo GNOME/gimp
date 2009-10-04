@@ -917,7 +917,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
     }
   else /*  dialog is a GimpDockWindow  */
     {
-      GIMP_LOG (DIALOG_FACTORY, "adding dock");
+      GIMP_LOG (DIALOG_FACTORY, "adding dock (dialog = %p)", dialog);
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
@@ -1053,8 +1053,9 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                                          dialog))
     return;
 
-  GIMP_LOG (DIALOG_FACTORY, "removing \"%s\"",
-            entry ? entry->identifier : "dock");
+  GIMP_LOG (DIALOG_FACTORY, "removing \"%s\" (dialog = %p)",
+            entry ? entry->identifier : "dock",
+            dialog);
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
