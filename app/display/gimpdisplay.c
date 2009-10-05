@@ -400,7 +400,7 @@ gimp_display_new (Gimp              *gimp,
 
       if (active_display)
         {
-          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (active_display->shell);
+          GimpDisplayShell *shell = gimp_display_get_shell (active_display);
 
           window = gimp_display_shell_get_window (shell);
         }
@@ -425,7 +425,7 @@ gimp_display_new (Gimp              *gimp,
   display->shell = gimp_display_shell_new (display, unit, scale,
                                            popup_manager);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   gimp_image_window_add_shell (window, shell);
   gimp_display_shell_present (shell);
@@ -471,7 +471,7 @@ gimp_display_delete (GimpDisplay *display)
 
   if (display->shell)
     {
-      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
+      GimpDisplayShell *shell  = gimp_display_get_shell (display);
       GimpImageWindow  *window = gimp_display_shell_get_window (shell);
 
       /*  set display->shell to NULL *before* destroying the shell.
@@ -589,7 +589,7 @@ gimp_display_set_image (GimpDisplay *display,
       tool_manager_control_active (display->gimp, GIMP_TOOL_ACTION_HALT,
                                    display);
 
-      gimp_display_shell_disconnect (GIMP_DISPLAY_SHELL (display->shell));
+      gimp_display_shell_disconnect (gimp_display_get_shell (display));
 
       old_image = g_object_ref (display->image);
 
@@ -603,9 +603,9 @@ gimp_display_set_image (GimpDisplay *display,
     g_object_unref (old_image);
 
   if (image)
-    gimp_display_shell_reconnect (GIMP_DISPLAY_SHELL (display->shell));
+    gimp_display_shell_reconnect (gimp_display_get_shell (display));
   else
-    gimp_display_shell_icon_update (GIMP_DISPLAY_SHELL (display->shell));
+    gimp_display_shell_icon_update (gimp_display_get_shell (display));
 
   if (old_image != image)
     g_object_notify (G_OBJECT (display), "image");
@@ -627,7 +627,7 @@ gimp_display_empty (GimpDisplay *display)
 
   gimp_display_set_image (display, NULL);
 
-  gimp_display_shell_empty (GIMP_DISPLAY_SHELL (display->shell));
+  gimp_display_shell_empty (gimp_display_get_shell (display));
 }
 
 void
@@ -641,7 +641,7 @@ gimp_display_fill (GimpDisplay *display,
 
   gimp_display_set_image (display, image);
 
-  gimp_display_shell_fill (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_fill (gimp_display_get_shell (display),
                            image, unit, scale);
 }
 
@@ -720,7 +720,7 @@ gimp_display_flush_whenever (GimpDisplay *display,
       display->update_areas = NULL;
     }
 
-  gimp_display_shell_flush (GIMP_DISPLAY_SHELL (display->shell), now);
+  gimp_display_shell_flush (gimp_display_get_shell (display), now);
 }
 
 static void
@@ -730,7 +730,7 @@ gimp_display_paint_area (GimpDisplay *display,
                          gint         w,
                          gint         h)
 {
-  GimpDisplayShell *shell        = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell        = gimp_display_get_shell (display);
   gint              image_width  = gimp_image_get_width  (display->image);
   gint              image_height = gimp_image_get_height (display->image);
   gint              x1, y1, x2, y2;
