@@ -2780,7 +2780,7 @@ msgstr "Lañser Skeudenn"
 #: ../app/actions/image-actions.c:54
 msgctxt "image-action"
 msgid "_Image"
-msgstr "_Skeudenn"
+msgstr "S_keudenn"
 
 #: ../app/actions/image-actions.c:55
 msgctxt "image-action"
@@ -3889,7 +3889,7 @@ msgstr "Embann ar goustur"
 #: ../app/actions/plug-in-actions.c:84
 msgctxt "plug-in-action"
 msgid "Filte_rs"
-msgstr "Silo_ù"
+msgstr "Sil_où"
 
 #: ../app/actions/plug-in-actions.c:86
 msgctxt "plug-in-action"
@@ -4890,7 +4890,7 @@ msgstr "Tresañ an treug"
 #: ../app/actions/view-actions.c:68
 msgctxt "view-action"
 msgid "_View"
-msgstr "_Skrammañ"
+msgstr "Skra_mmañ"
 
 #: ../app/actions/view-actions.c:69
 msgctxt "view-action"
