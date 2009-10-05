@@ -44,10 +44,6 @@ struct _GimpDisplay
   GimpImage         *image;        /*  pointer to the associated image     */
   gint               instance;     /*  the instance # of this display as   */
                                    /*  taken from the image at creation    */
-
-  GtkWidget         *shell;        /*  shell widget for this display       */
-
-  GSList            *update_areas; /*  Update areas list                   */
 };
 
 struct _GimpDisplayClass
