@@ -36,8 +36,6 @@ struct _GimpDisplay
 {
   GimpObject  parent_instance;
 
-  gint               ID;           /*  unique identifier for this display  */
-
   Gimp              *gimp;         /*  global gimp instance                */
   GimpDisplayConfig *config;
 

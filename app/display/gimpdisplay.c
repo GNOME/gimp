@@ -63,6 +63,7 @@ typedef struct _GimpDisplayPrivate GimpDisplayPrivate;
 
 struct _GimpDisplayPrivate
 {
+  gint       ID;           /*  unique identifier for this display  */
   GtkWidget *shell;
   GSList    *update_areas;
 };
@@ -162,8 +163,6 @@ gimp_display_class_init (GimpDisplayClass *klass)
 static void
 gimp_display_init (GimpDisplay *display)
 {
-  display->ID       = 0;
-
   display->gimp     = NULL;
 
   display->image    = NULL;
@@ -190,7 +189,8 @@ gimp_display_set_property (GObject      *object,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpDisplay *display = GIMP_DISPLAY (object);
+  GimpDisplay        *display = GIMP_DISPLAY (object);
+  GimpDisplayPrivate *private = GIMP_DISPLAY_GET_PRIVATE (display);
 
   switch (property_id)
     {
@@ -210,7 +210,7 @@ gimp_display_set_property (GObject      *object,
           }
         while (gimp_display_get_by_ID (display->gimp, ID));
 
-        display->ID = ID;
+        private->ID = ID;
       }
       break;
 
@@ -238,7 +238,7 @@ gimp_display_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_ID:
-      g_value_set_int (value, display->ID);
+      g_value_set_int (value, private->ID);
       break;
 
     case PROP_GIMP:
@@ -560,9 +560,13 @@ gimp_display_close (GimpDisplay *display)
 gint
 gimp_display_get_ID (GimpDisplay *display)
 {
+  GimpDisplayPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), -1);
 
-  return display->ID;
+  private = GIMP_DISPLAY_GET_PRIVATE (display);
+
+  return private->ID;
 }
 
 GimpDisplay *
@@ -579,7 +583,7 @@ gimp_display_get_by_ID (Gimp *gimp,
     {
       GimpDisplay *display = list->data;
 
-      if (display->ID == ID)
+      if (gimp_display_get_ID (display) == ID)
         return display;
     }
 
