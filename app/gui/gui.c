@@ -530,11 +530,15 @@ gui_restore_after_callback (Gimp               *gimp,
 
   if (gimp_get_show_gui (gimp))
     {
+      GimpDisplayShell *shell;
+
       /*  create the empty display  */
       display = GIMP_DISPLAY (gimp_create_display (gimp,
                                                    NULL,
                                                    GIMP_UNIT_PIXEL,
                                                    1.0));
+
+      shell = gimp_display_get_shell (display);
 
       if (gui_config->restore_session)
         session_restore (gimp);
@@ -542,7 +546,7 @@ gui_restore_after_callback (Gimp               *gimp,
       windows_show_toolbox ();
 
       /*  move keyboard focus to the display  */
-      gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (display->shell)));
+      gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
     }
 
   /*  indicate that the application has finished loading  */

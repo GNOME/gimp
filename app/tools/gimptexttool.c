@@ -636,9 +636,10 @@ gimp_text_tool_button_release (GimpTool              *tool,
     {
       if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
         {
-          GtkClipboard *clipboard;
+          GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+          GtkClipboard     *clipboard;
 
-          clipboard = gtk_widget_get_clipboard (tool->display->shell,
+          clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                                 GDK_SELECTION_PRIMARY);
 
           gtk_text_buffer_copy_clipboard (text_tool->text_buffer, clipboard);
@@ -1351,21 +1352,22 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 static void
 gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
 {
-  GimpTool *tool = GIMP_TOOL (text_tool);
+  GimpTool         *tool  = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
 
   if (text_tool->offscreen_window &&
       gtk_widget_get_screen (text_tool->offscreen_window) !=
-      gtk_widget_get_screen (tool->display->shell))
+      gtk_widget_get_screen (GTK_WIDGET (shell)))
     {
       gtk_window_set_screen (GTK_WINDOW (text_tool->offscreen_window),
-                             gtk_widget_get_screen (tool->display->shell));
+                             gtk_widget_get_screen (GTK_WIDGET (shell)));
       gtk_window_move (GTK_WINDOW (text_tool->offscreen_window), -200, -200);
     }
   else if (! text_tool->offscreen_window)
     {
       text_tool->offscreen_window = gtk_window_new (GTK_WINDOW_POPUP);
       gtk_window_set_screen (GTK_WINDOW (text_tool->offscreen_window),
-                             gtk_widget_get_screen (tool->display->shell));
+                             gtk_widget_get_screen (GTK_WIDGET (shell)));
       gtk_window_move (GTK_WINDOW (text_tool->offscreen_window), -200, -200);
       gtk_widget_show (text_tool->offscreen_window);
 
@@ -2224,7 +2226,11 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
   dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
   if (tool->display)
-    parent = GTK_WINDOW (tool->display->shell);
+    {
+      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+
+      parent = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell)));
+    }
 
   text_tool->editor = gimp_text_options_editor_new (parent, options,
                                                     dialog_factory->menu_factory,
@@ -2335,10 +2341,11 @@ gimp_text_tool_confirm_response (GtkWidget    *widget,
 static void
 gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
 {
-  GimpTool  *tool = GIMP_TOOL (text_tool);
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *label;
+  GimpTool         *tool  = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  GtkWidget        *dialog;
+  GtkWidget        *vbox;
+  GtkWidget        *label;
 
   g_return_if_fail (text_tool->layer != NULL);
 
@@ -2354,7 +2361,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                                      "gimp-text-tool-confirm",
                                      GIMP_STOCK_TEXT_LAYER,
                                      _("Confirm Text Editing"),
-                                     tool->display->shell,
+                                     GTK_WIDGET (shell),
                                      gimp_standard_help_func, NULL,
 
                                      _("Create _New Layer"), RESPONSE_NEW,
@@ -2736,11 +2743,14 @@ gimp_text_tool_delete_selection (GimpTextTool *text_tool)
 void
 gimp_text_tool_cut_clipboard (GimpTextTool *text_tool)
 {
-  GtkClipboard *clipboard;
+  GimpDisplayShell *shell;
+  GtkClipboard     *clipboard;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
-  clipboard = gtk_widget_get_clipboard (GIMP_TOOL (text_tool)->display->shell,
+  shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+
+  clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
   gtk_text_buffer_cut_clipboard (text_tool->text_buffer, clipboard, TRUE);
 }
@@ -2748,11 +2758,14 @@ gimp_text_tool_cut_clipboard (GimpTextTool *text_tool)
 void
 gimp_text_tool_copy_clipboard (GimpTextTool *text_tool)
 {
-  GtkClipboard *clipboard;
+  GimpDisplayShell *shell;
+  GtkClipboard     *clipboard;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
-  clipboard = gtk_widget_get_clipboard (GIMP_TOOL (text_tool)->display->shell,
+  shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+
+  clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
 
   gtk_text_buffer_copy_clipboard (text_tool->text_buffer, clipboard);
@@ -2761,11 +2774,14 @@ gimp_text_tool_copy_clipboard (GimpTextTool *text_tool)
 void
 gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
 {
-  GtkClipboard *clipboard;
+  GimpDisplayShell *shell;
+  GtkClipboard     *clipboard;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
-  clipboard = gtk_widget_get_clipboard (GIMP_TOOL (text_tool)->display->shell,
+  shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+
+  clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
 
   gtk_text_buffer_paste_clipboard (text_tool->text_buffer, clipboard, NULL, TRUE);

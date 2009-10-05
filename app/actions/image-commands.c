@@ -487,10 +487,10 @@ image_configure_grid_cmd_callback (GtkAction *action,
     {
       shell->grid_dialog = grid_dialog_new (display->image,
                                             action_data_get_context (data),
-                                            display->shell);
+                                            GTK_WIDGET (shell));
 
       gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
-                                    GTK_WINDOW (display->shell));
+                                    GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
       gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->grid_dialog),
                                           TRUE);
 
@@ -516,10 +516,10 @@ image_properties_cmd_callback (GtkAction *action,
 
   dialog = image_properties_dialog_new (display->image,
                                         action_data_get_context (data),
-                                        display->shell);
+                                        GTK_WIDGET (shell));
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                GTK_WINDOW (display->shell));
+                                GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog),
                                       TRUE);
 

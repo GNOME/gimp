@@ -731,7 +731,7 @@ gimp_display_shell_sync_config (GimpDisplayShell  *shell,
   gimp_config_sync (G_OBJECT (config->default_fullscreen_view),
                     G_OBJECT (shell->fullscreen_options), 0);
 
-  if (shell->display && shell->display->shell)
+  if (shell->display && gimp_display_get_shell (shell->display))
     {
       /*  if the shell is already fully constructed, use proper API
        *  so the actions are updated accordingly.

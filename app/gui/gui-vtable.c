@@ -242,9 +242,11 @@ gui_get_display_name (Gimp *gimp,
 
   if (display)
     {
-      screen  = gtk_widget_get_screen (display->shell);
+      GimpDisplayShell *shell = gimp_display_get_shell (display);
+
+      screen  = gtk_widget_get_screen (GTK_WIDGET (shell));
       monitor = gdk_screen_get_monitor_at_window (screen,
-                                                  display->shell->window);
+                                                  GTK_WIDGET (shell)->window);
     }
   else
     {
@@ -313,11 +315,12 @@ gui_display_get_ID (GimpObject *display)
 static guint32
 gui_display_get_window (GimpObject *display)
 {
-  GimpDisplay *disp = GIMP_DISPLAY (display);
+  GimpDisplay      *disp  = GIMP_DISPLAY (display);
+  GimpDisplayShell *shell = gimp_display_get_shell (disp);
 
-  if (disp->shell)
+  if (shell)
     {
-      GtkWidget *toplevel = gtk_widget_get_toplevel (disp->shell);
+      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
       if (GTK_IS_WINDOW (toplevel))
         return (guint32) gimp_window_get_native (GTK_WINDOW (toplevel));

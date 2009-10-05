@@ -546,13 +546,16 @@ gimp_tool_check_click_distance (GimpTool         *tool,
                                 guint32           time,
                                 GimpDisplay      *display)
 {
-  gint double_click_time;
-  gint double_click_distance;
+  GimpDisplayShell *shell;
+  gint              double_click_time;
+  gint              double_click_distance;
 
   if (! tool->in_click_distance)
     return FALSE;
 
-  g_object_get (gtk_widget_get_settings (display->shell),
+  shell = gimp_display_get_shell (display);
+
+  g_object_get (gtk_widget_get_settings (GTK_WIDGET (shell)),
                 "gtk-double-click-time",     &double_click_time,
                 "gtk-double-click-distance", &double_click_distance,
                 NULL);

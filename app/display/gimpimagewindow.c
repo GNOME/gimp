@@ -1077,7 +1077,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
     }
 
   view = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
-                                     display->shell);
+                                     GTK_WIDGET (gimp_display_get_shell (display)));
 
   gimp_view_set_viewable (GIMP_VIEW (view),
                           GIMP_VIEWABLE (display->image));

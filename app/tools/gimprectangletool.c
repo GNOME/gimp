@@ -914,9 +914,9 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
     {
       if (gimp_draw_tool_is_active (draw_tool))
         {
-          GtkWidget *shell = draw_tool->display->shell;
+          GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
 
-          gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (shell), NULL);
+          gimp_display_shell_set_highlight (shell, NULL);
           gimp_draw_tool_stop (draw_tool);
         }
 
@@ -2078,7 +2078,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
 
   tool->display = display;
 
-  g_signal_connect_object (tool->display->shell, "scrolled",
+  g_signal_connect_object (gimp_display_get_shell (tool->display), "scrolled",
                            G_CALLBACK (gimp_rectangle_tool_shell_scrolled),
                            rect_tool, 0);
 

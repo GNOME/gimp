@@ -152,7 +152,7 @@ select_feather_cmd_callback (GtkAction *action,
   gimp_image_get_resolution (display->image, &xres, &yres);
 
   dialog = gimp_query_size_box (_("Feather Selection"),
-                                display->shell,
+                                GTK_WIDGET (gimp_display_get_shell (display)),
                                 gimp_standard_help_func,
                                 GIMP_HELP_SELECTION_FEATHER,
                                 _("Feather selection by"),
@@ -190,7 +190,7 @@ select_shrink_cmd_callback (GtkAction *action,
   gimp_image_get_resolution (display->image, &xres, &yres);
 
   dialog = gimp_query_size_box (_("Shrink Selection"),
-                                display->shell,
+                                GTK_WIDGET (gimp_display_get_shell (display)),
                                 gimp_standard_help_func,
                                 GIMP_HELP_SELECTION_SHRINK,
                                 _("Shrink selection by"),
@@ -227,7 +227,7 @@ select_grow_cmd_callback (GtkAction *action,
   gimp_image_get_resolution (display->image, &xres, &yres);
 
   dialog = gimp_query_size_box (_("Grow Selection"),
-                                display->shell,
+                                GTK_WIDGET (gimp_display_get_shell (display)),
                                 gimp_standard_help_func,
                                 GIMP_HELP_SELECTION_GROW,
                                 _("Grow selection by"),
@@ -254,7 +254,7 @@ select_border_cmd_callback (GtkAction *action,
   gimp_image_get_resolution (display->image, &xres, &yres);
 
   dialog = gimp_query_size_box (_("Border Selection"),
-                                display->shell,
+                                GTK_WIDGET (gimp_display_get_shell (display)),
                                 gimp_standard_help_func,
                                 GIMP_HELP_SELECTION_BORDER,
                                 _("Border selection by"),

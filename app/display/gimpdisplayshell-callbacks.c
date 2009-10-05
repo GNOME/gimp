@@ -119,7 +119,7 @@ gimp_display_shell_events (GtkWidget        *widget,
   gboolean  set_display = FALSE;
 
   /*  are we in destruction?  */
-  if (! shell->display || ! shell->display->shell)
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
     return TRUE;
 
   gimp = shell->display->gimp;
@@ -270,7 +270,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
                                          GimpDisplayShell *shell)
 {
   /*  are we in destruction?  */
-  if (! shell->display || ! shell->display->shell)
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
     return;
 
   if ((shell->disp_width  != allocation->width) ||
@@ -367,10 +367,8 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
                                   GimpDisplayShell *shell)
 {
   /*  are we in destruction?  */
-  if (! shell->display || ! shell->display->shell)
-    {
-      return TRUE;
-    }
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return TRUE;
 
   if (shell->display->image)
     {
@@ -605,7 +603,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   g_return_val_if_fail (GTK_WIDGET_REALIZED (canvas), FALSE);
 
   /*  are we in destruction?  */
-  if (! shell->display || ! shell->display->shell)
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
     return TRUE;
 
   /*  set the active display before doing any other canvas event processing  */

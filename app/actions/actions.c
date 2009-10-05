@@ -401,7 +401,7 @@ action_data_get_widget (gpointer data)
     return data;
 
   if (display)
-    return display->shell;
+    return GTK_WIDGET (gimp_display_get_shell (display));
 
   return dialogs_get_toolbox ();
 }

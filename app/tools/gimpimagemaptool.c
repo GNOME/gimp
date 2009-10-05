@@ -300,7 +300,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
       image_map_tool->shell = shell =
         gimp_tool_dialog_new (tool_info,
-                              display->shell,
+                              GTK_WIDGET (gimp_display_get_shell (display)),
                               klass->shell_desc,
 
                               GIMP_STOCK_RESET, RESPONSE_RESET,

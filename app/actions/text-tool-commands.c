@@ -105,7 +105,13 @@ text_tool_load_cmd_callback (GtkAction *action,
     }
 
   if (GIMP_TOOL (text_tool)->display)
-    parent = GIMP_TOOL (text_tool)->display->shell;
+    {
+      GimpDisplayShell *shell;
+
+      shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+
+      parent = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+    }
 
   dialog = gtk_file_chooser_dialog_new (_("Open Text File (UTF-8)"),
 					parent ? GTK_WINDOW (parent) : NULL,

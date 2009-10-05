@@ -337,7 +337,7 @@ view_navigation_window_cmd_callback (GtkAction *action,
   shell = gimp_display_get_shell (display);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gtk_widget_get_screen (display->shell),
+                                    gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     "gimp-navigation-view", -1);
 }
 
@@ -618,20 +618,22 @@ view_padding_color_cmd_callback (GtkAction *action,
 
         if (! color_dialog)
           {
+            GimpDisplayShell *shell = gimp_display_get_shell (display);
+
             color_dialog =
               gimp_color_dialog_new (GIMP_VIEWABLE (display->image),
                                      action_data_get_context (data),
                                      _("Set Canvas Padding Color"),
                                      GTK_STOCK_SELECT_COLOR,
                                      _("Set Custom Canvas Padding Color"),
-                                     display->shell,
+                                     GTK_WIDGET (shell),
                                      NULL, NULL,
                                      &options->padding_color,
                                      FALSE, FALSE);
 
             g_signal_connect (color_dialog, "update",
                               G_CALLBACK (view_padding_color_dialog_update),
-                              display->shell);
+                              shell);
 
             g_object_set_data_full (G_OBJECT (shell), "padding-color-dialog",
                                     color_dialog,

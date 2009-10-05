@@ -332,7 +332,7 @@ file_create_template_cmd_callback (GtkAction *action,
   return_if_no_display (display, data);
 
   dialog = gimp_query_string_box (_("Create New Template"),
-                                  display->shell,
+                                  GTK_WIDGET (gimp_display_get_shell (display)),
                                   gimp_standard_help_func,
                                   GIMP_HELP_FILE_CREATE_TEMPLATE,
                                   _("Enter a name for this template"),
@@ -384,7 +384,8 @@ file_revert_cmd_callback (GtkAction *action,
 
       dialog =
         gimp_message_dialog_new (_("Revert Image"), GTK_STOCK_REVERT_TO_SAVED,
-                                 display->shell, 0,
+                                 GTK_WIDGET (gimp_display_get_shell (display)),
+                                 0,
                                  gimp_standard_help_func, GIMP_HELP_FILE_REVERT,
 
                                  GTK_STOCK_CANCEL,          GTK_RESPONSE_CANCEL,

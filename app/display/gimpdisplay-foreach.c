@@ -242,11 +242,12 @@ gimp_displays_get_num_visible (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      GimpDisplay *display = list->data;
+      GimpDisplay      *display = list->data;
+      GimpDisplayShell *shell   = gimp_display_get_shell (display);
 
-      if (GTK_WIDGET_DRAWABLE (display->shell))
+      if (GTK_WIDGET_DRAWABLE (shell))
         {
-          GtkWidget *toplevel = gtk_widget_get_toplevel (display->shell);
+          GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
           if (GTK_IS_WINDOW (toplevel))
             {
