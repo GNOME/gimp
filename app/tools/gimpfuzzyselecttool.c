@@ -97,10 +97,9 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
   GimpTool                *tool        = GIMP_TOOL (region_select);
   GimpSelectionOptions    *sel_options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpRegionSelectOptions *options     = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
-  GimpDrawable            *drawable;
+  GimpImage               *image       = gimp_display_get_image (display);
+  GimpDrawable            *drawable    = gimp_image_get_active_drawable (image);
   gint                     x, y;
-
-  drawable = gimp_image_get_active_drawable (display->image);
 
   x = region_select->x;
   y = region_select->y;
@@ -115,7 +114,7 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
       y -= off_y;
     }
 
-  return gimp_image_contiguous_region_by_seed (display->image, drawable,
+  return gimp_image_contiguous_region_by_seed (image, drawable,
                                                options->sample_merged,
                                                sel_options->antialias,
                                                options->threshold,

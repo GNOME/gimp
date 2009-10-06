@@ -467,8 +467,10 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
 
   if (editor->shell)
     {
+      GimpImage *image = gimp_display_get_image (shell->display);
+
       gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                              GIMP_VIEWABLE (shell->display->image));
+                              GIMP_VIEWABLE (image));
 
       g_signal_connect (editor->shell, "scaled",
                         G_CALLBACK (gimp_navigation_editor_shell_scaled),
@@ -650,8 +652,10 @@ static void
 gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
                                         GimpNavigationEditor *editor)
 {
+  GimpImage *image = gimp_display_get_image (shell->display);
+
   gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                          GIMP_VIEWABLE (shell->display->image));
+                          GIMP_VIEWABLE (image));
 
   if (GIMP_EDITOR (editor)->ui_manager)
     gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,

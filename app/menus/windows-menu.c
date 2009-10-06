@@ -150,7 +150,7 @@ windows_menu_display_add (GimpContainer *container,
                            G_CALLBACK (windows_menu_image_notify),
                            manager, 0);
 
-  if (display->image)
+  if (gimp_display_get_image (display))
     windows_menu_image_notify (display, NULL, manager);
 }
 
@@ -179,7 +179,7 @@ windows_menu_image_notify (GimpDisplay      *display,
                            const GParamSpec *unused,
                            GimpUIManager    *manager)
 {
-  if (display->image)
+  if (gimp_display_get_image (display))
     {
       gchar *merge_key = g_strdup_printf ("windows-display-%04d-merge-id",
                                           gimp_display_get_ID (display));

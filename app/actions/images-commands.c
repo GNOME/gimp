@@ -62,7 +62,7 @@ images_raise_views_cmd_callback (GtkAction *action,
         {
           GimpDisplay *display = list->data;
 
-          if (display->image == image)
+          if (gimp_display_get_image (display) == image)
             gimp_display_shell_present (gimp_display_get_shell (display));
         }
     }

@@ -352,7 +352,7 @@ static void
 documents_raise_display (GimpDisplay  *display,
                          RaiseClosure *closure)
 {
-  const gchar  *uri = gimp_object_get_name (display->image);
+  const gchar *uri = gimp_object_get_name (gimp_display_get_image (display));
 
   if (uri && ! strcmp (closure->name, uri))
     {

@@ -311,11 +311,9 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 {
   GimpTool        *tool    = GIMP_TOOL (rectangle);
   GimpCropOptions *options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
-  GimpImage       *image;
+  GimpImage       *image   = gimp_display_get_image (tool->display);
 
   gimp_tool_pop_status (tool, tool->display);
-
-  image = tool->display->image;
 
   /* if rectangle exists, crop it */
   if (w > 0 && h > 0)

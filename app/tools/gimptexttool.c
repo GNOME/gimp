@@ -497,7 +497,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
         }
     }
 
-  drawable = gimp_image_get_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (gimp_display_get_image (display));
 
   gimp_text_tool_set_drawable (text_tool, drawable, FALSE);
 
@@ -2118,7 +2118,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 {
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (text_tool);
   GimpTool          *tool      = GIMP_TOOL (text_tool);
-  GimpImage         *image     = tool->display->image;
+  GimpImage         *image     = gimp_display_get_image (tool->display);
   GimpLayer         *layer;
   gint               x1, y1;
   gint               x2, y2;
@@ -2531,7 +2531,8 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
       context = gimp_get_user_context (tool->tool_info->gimp);
       display = gimp_context_get_display (context);
 
-      if (! display || display->image != gimp_item_get_image (item))
+      if (! display ||
+          gimp_display_get_image (display) != gimp_item_get_image (item))
         {
           GList *list;
 
@@ -2543,7 +2544,7 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
             {
               display = list->data;
 
-              if (display->image == gimp_item_get_image (item))
+              if (gimp_display_get_image (display) == gimp_item_get_image (item))
                 {
                   gimp_context_set_display (context, display);
                   break;

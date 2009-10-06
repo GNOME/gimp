@@ -155,8 +155,9 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
 {
   GimpFlipOptions    *options  = GIMP_FLIP_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_BAD;
+  GimpImage          *image    = gimp_display_get_image (display);
 
-  if (gimp_image_coords_in_active_pickable (display->image, coords,
+  if (gimp_image_coords_in_active_pickable (image, coords,
                                             FALSE, TRUE))
     {
       modifier = GIMP_CURSOR_MODIFIER_NONE;

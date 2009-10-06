@@ -325,14 +325,15 @@ GimpImage *
 action_data_get_image (gpointer data)
 {
   GimpContext *context = NULL;
+  GimpDisplay *display = NULL;
 
   if (! data)
     return NULL;
 
   if (GIMP_IS_DISPLAY (data))
-    return ((GimpDisplay *) data)->image;
+    display = (GimpDisplay *) data;
   else if (GIMP_IS_IMAGE_WINDOW (data))
-    return gimp_image_window_get_active_shell (data)->display->image;
+    display = gimp_image_window_get_active_shell (data)->display;
   else if (GIMP_IS_GIMP (data))
     context = gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
@@ -351,6 +352,8 @@ action_data_get_image (gpointer data)
 
   if (context)
     return gimp_context_get_image (context);
+  else if (display)
+    return gimp_display_get_image (display);
 
   return NULL;
 }

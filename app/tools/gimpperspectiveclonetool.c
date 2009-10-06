@@ -223,11 +223,12 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
 
   if (display != tool->display)
     {
-      gint i;
+      GimpImage *image = gimp_display_get_image (display);
+      gint       i;
 
       /*  Set the pointer to the active display  */
       tool->display  = display;
-      tool->drawable = gimp_image_get_active_drawable (display->image);
+      tool->drawable = gimp_image_get_active_drawable (image);
 
       /*  Find the transform bounds initializing */
       gimp_perspective_clone_tool_bounds (clone_tool, display);
@@ -271,7 +272,7 @@ gimp_perspective_clone_tool_has_image (GimpTool  *tool,
 
   if (! display && clone_tool->src_display)
     {
-      if (image && clone_tool->src_display->image == image)
+      if (image && gimp_display_get_image (clone_tool->src_display) == image)
         display = clone_tool->src_display;
 
       /*  NULL image means any display  */
@@ -543,13 +544,16 @@ gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
 {
   GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
   GimpPerspectiveCloneOptions *options;
+  GimpImage                   *image;
   GimpToolClass               *tool_class;
   GimpCursorType               cursor     = GIMP_CURSOR_MOUSE;
   GimpCursorModifier           modifier   = GIMP_CURSOR_MODIFIER_NONE;
 
   options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
-  if (gimp_image_coords_in_active_pickable (display->image, coords,
+  image = gimp_display_get_image (display);
+
+  if (gimp_image_coords_in_active_pickable (image, coords,
                                             FALSE, TRUE))
     {
       cursor = GIMP_CURSOR_MOUSE;
@@ -865,12 +869,16 @@ static void
 gimp_perspective_clone_tool_bounds (GimpPerspectiveCloneTool *tool,
                                     GimpDisplay              *display)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  image = gimp_display_get_image (display);
 
   tool->x1 = 0;
   tool->y1 = 0;
-  tool->x2 = gimp_image_get_width  (display->image);
-  tool->y2 = gimp_image_get_height (display->image);
+  tool->x2 = gimp_image_get_width  (image);
+  tool->y2 = gimp_image_get_height (image);
 }
 
 static void

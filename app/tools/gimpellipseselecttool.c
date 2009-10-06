@@ -128,8 +128,9 @@ gimp_ellipse_select_tool_select (GimpRectangleSelectTool *rect_tool,
 {
   GimpTool             *tool    = GIMP_TOOL (rect_tool);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (rect_tool);
+  GimpImage            *image   = gimp_display_get_image (tool->display);
 
-  gimp_channel_select_ellipse (gimp_image_get_mask (tool->display->image),
+  gimp_channel_select_ellipse (gimp_image_get_mask (image),
                                x, y, w, h,
                                operation,
                                options->antialias,

@@ -108,9 +108,9 @@ gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
 
   if (use_offsets)
     {
-      GimpItem *item;
+      GimpImage *image = gimp_display_get_image (shell->display);
+      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_get_offset (item, &offset_x, &offset_y);
 
       x += offset_x;
@@ -165,9 +165,9 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
 
   if (use_offsets)
     {
-      GimpItem *item;
+      GimpImage *image = gimp_display_get_image (shell->display);
+      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
@@ -217,9 +217,9 @@ gimp_display_shell_transform_xy_f  (const GimpDisplayShell *shell,
 
   if (use_offsets)
     {
-      GimpItem *item;
+      GimpImage *image = gimp_display_get_image (shell->display);
+      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
@@ -258,9 +258,9 @@ gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
 
   if (use_offsets)
     {
-      GimpItem *item;
+      GimpImage *image = gimp_display_get_image (shell->display);
+      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
@@ -295,9 +295,9 @@ gimp_display_shell_transform_points (const GimpDisplayShell *shell,
 
   if (use_offsets)
     {
-      GimpItem *item;
+      GimpImage *image = gimp_display_get_image (shell->display);
+      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
@@ -343,9 +343,9 @@ gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
 
   if (use_offsets)
     {
-      GimpItem *item;
+      GimpImage *image = gimp_display_get_image (shell->display);
+      GimpItem  *item  =GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
@@ -391,9 +391,9 @@ gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
 
   if (use_offsets)
     {
-      GimpItem *item;
+      GimpImage *image = gimp_display_get_image (shell->display);
+      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_get_offset (item, &offset_x, &offset_y);
     }
 
@@ -437,7 +437,8 @@ gimp_display_shell_untransform_viewport (const GimpDisplayShell *shell,
                                          gint                   *width,
                                          gint                   *height)
 {
-  gint x1, y1, x2, y2;
+  GimpImage *image;
+  gint       x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -450,12 +451,19 @@ gimp_display_shell_untransform_viewport (const GimpDisplayShell *shell,
                                      &x2, &y2,
                                      FALSE, FALSE);
 
-  if (x1 < 0) x1 = 0;
-  if (y1 < 0) y1 = 0;
-  if (x2 > gimp_image_get_width (shell->display->image))
-    x2 = gimp_image_get_width (shell->display->image);
-  if (y2 > gimp_image_get_height (shell->display->image))
-    y2 = gimp_image_get_height (shell->display->image);
+  image = gimp_display_get_image (shell->display);
+
+  if (x1 < 0)
+    x1 = 0;
+
+  if (y1 < 0)
+    y1 = 0;
+
+  if (x2 > gimp_image_get_width (image))
+    x2 = gimp_image_get_width (image);
+
+  if (y2 > gimp_image_get_height (image))
+    y2 = gimp_image_get_height (image);
 
   if (x)      *x      = x1;
   if (y)      *y      = y1;

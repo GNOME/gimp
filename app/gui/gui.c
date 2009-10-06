@@ -767,7 +767,7 @@ gui_display_changed (GimpContext *context,
             {
               GimpDisplay *display2 = list->data;
 
-              if (display2->image == image)
+              if (gimp_display_get_image (display2) == image)
                 {
                   gimp_context_set_display (context, display2);
 

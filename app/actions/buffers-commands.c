@@ -139,7 +139,7 @@ buffers_paste (GimpBufferView *view,
           gimp_display_shell_untransform_viewport (shell,
                                                    &x, &y, &width, &height);
 
-          image = display->image;
+          image = gimp_display_get_image (display);
         }
       else
         {

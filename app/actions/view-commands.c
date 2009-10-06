@@ -89,7 +89,7 @@ view_new_cmd_callback (GtkAction *action,
   shell = gimp_display_get_shell (display);
 
   gimp_create_display (display->gimp,
-                       display->image,
+                       gimp_display_get_image (display),
                        shell->unit, gimp_zoom_model_get_factor (shell->zoom));
 }
 
@@ -618,10 +618,11 @@ view_padding_color_cmd_callback (GtkAction *action,
 
         if (! color_dialog)
           {
+            GimpImage        *image = gimp_display_get_image (display);
             GimpDisplayShell *shell = gimp_display_get_shell (display);
 
             color_dialog =
-              gimp_color_dialog_new (GIMP_VIEWABLE (display->image),
+              gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                      action_data_get_context (data),
                                      _("Set Canvas Padding Color"),
                                      GTK_STOCK_SELECT_COLOR,

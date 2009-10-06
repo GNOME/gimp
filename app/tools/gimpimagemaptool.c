@@ -265,9 +265,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
   GimpToolInfo     *tool_info      = tool->tool_info;
-  GimpDrawable     *drawable;
-
-  drawable = gimp_image_get_active_drawable (display->image);
+  GimpImage        *image          = gimp_display_get_image (display);
+  GimpDrawable     *drawable       = gimp_image_get_active_drawable (image);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
@@ -542,11 +541,11 @@ static void
 gimp_image_map_tool_flush (GimpImageMap     *image_map,
                            GimpImageMapTool *image_map_tool)
 {
-  GimpTool    *tool = GIMP_TOOL (image_map_tool);
-  GimpDisplay *display = tool->display;
+  GimpTool  *tool  = GIMP_TOOL (image_map_tool);
+  GimpImage *image = gimp_display_get_image (tool->display);
 
-  gimp_projection_flush_now (gimp_image_get_projection (display->image));
-  gimp_display_flush_now (display);
+  gimp_projection_flush_now (gimp_image_get_projection (image));
+  gimp_display_flush_now (tool->display);
 }
 
 static void
@@ -581,7 +580,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->display->image);
+          gimp_image_flush (gimp_display_get_image (tool->display));
 
           if (image_map_tool->config)
             gimp_settings_box_add_current (GIMP_SETTINGS_BOX (image_map_tool->settings_box),
@@ -605,7 +604,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->display->image);
+          gimp_image_flush (gimp_display_get_image (tool->display));
         }
 
       tool->display  = NULL;

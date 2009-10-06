@@ -112,9 +112,8 @@ gimp_desaturate_tool_initialize (GimpTool     *tool,
                                 GError      **error)
 {
   GimpDesaturateTool *desaturate_tool = GIMP_DESATURATE_TOOL (tool);
-  GimpDrawable       *drawable;
-
-  drawable = gimp_image_get_active_drawable (display->image);
+  GimpImage          *image           = gimp_display_get_image (display);
+  GimpDrawable       *drawable        = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return FALSE;

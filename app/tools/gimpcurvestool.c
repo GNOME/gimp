@@ -209,7 +209,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                              GError      **error)
 {
   GimpCurvesTool *c_tool   = GIMP_CURVES_TOOL (tool);
-  GimpDrawable   *drawable = gimp_image_get_active_drawable (display->image);
+  GimpImage      *image    = gimp_display_get_image (display);
+  GimpDrawable   *drawable = gimp_image_get_active_drawable (image);
   GimpHistogram  *histogram;
 
   if (! drawable)

@@ -552,7 +552,7 @@ view_actions_update (GimpActionGroup *group,
     {
       GimpImageWindow *window;
 
-      image  = display->image;
+      image  = gimp_display_get_image (display);
       shell  = gimp_display_get_shell (display);
       window = gimp_display_shell_get_window (shell);
 
@@ -670,7 +670,7 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-shrink-wrap", image);
   SET_SENSITIVE ("view-fullscreen",  image);
   SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
-  SET_ACTIVE    ("view-use-gegl",    image && display->image->projection->use_gegl);
+  SET_ACTIVE    ("view-use-gegl",    image && image->projection->use_gegl);
 
   if (GIMP_IS_IMAGE_WINDOW (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))

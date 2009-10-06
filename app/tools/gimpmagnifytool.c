@@ -229,7 +229,8 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
             gint    offset_x = 0;
             gint    offset_y = 0;
 
-            gimp_image_get_resolution (display->image, &xres, &yres);
+            gimp_image_get_resolution (gimp_display_get_image (display),
+                                       &xres, &yres);
 
             switch (options->zoom_type)
               {

@@ -334,6 +334,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
                                     gboolean          show)
 {
   GimpDisplayOptions *options;
+  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -341,8 +342,9 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 
   g_object_set (options, "show-guides", show, NULL);
 
-  if (shell->display->image &&
-      gimp_image_get_guides (shell->display->image))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_image_get_guides (image))
     {
       gimp_display_shell_expose_full (shell);
     }
@@ -363,6 +365,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
                                   gboolean          show)
 {
   GimpDisplayOptions *options;
+  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -370,8 +373,9 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
 
   g_object_set (options, "show-grid", show, NULL);
 
-  if (shell->display->image &&
-      gimp_image_get_grid (shell->display->image))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_image_get_grid (image))
     {
       gimp_display_shell_expose_full (shell);
     }
@@ -392,6 +396,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
                                            gboolean          show)
 {
   GimpDisplayOptions *options;
+  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -399,8 +404,9 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 
   g_object_set (options, "show-sample-points", show, NULL);
 
-  if (shell->display->image &&
-      gimp_image_get_sample_points (shell->display->image))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_image_get_sample_points (image))
     {
       gimp_display_shell_expose_full (shell);
     }
@@ -583,7 +589,7 @@ gimp_display_shell_get_padding (const GimpDisplayShell *shell,
 static GimpDisplayOptions *
 appearance_get_options (const GimpDisplayShell *shell)
 {
-  if (shell->display->image)
+  if (gimp_display_get_image (shell->display))
     {
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
 

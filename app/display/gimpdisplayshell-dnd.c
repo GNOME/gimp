@@ -198,7 +198,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                   gpointer      data)
 {
   GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image     = shell->display->image;
+  GimpImage        *image     = gimp_display_get_image (shell->display);
   GType             new_type;
   GimpItem         *new_item;
   gboolean          new_image = FALSE;
@@ -280,7 +280,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
                                  gpointer      data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->display->image;
+  GimpImage        *image = gimp_display_get_image (shell->display);
   GimpItem         *new_item;
 
   GIMP_LOG (DND, NULL);
@@ -319,7 +319,7 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
                              gpointer       data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->display->image;
+  GimpImage        *image = gimp_display_get_image (shell->display);
   GError           *error  = NULL;
 
   GIMP_LOG (DND, NULL);
@@ -353,7 +353,7 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
                                     const GimpRGB      *color,
                                     GimpPattern        *pattern)
 {
-  GimpImage    *image = shell->display->image;
+  GimpImage    *image = gimp_display_get_image (shell->display);
   GimpDrawable *drawable;
 
   if (shell->display->gimp->busy)
@@ -445,7 +445,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
                                 gpointer      data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->display->image;
+  GimpImage        *image = gimp_display_get_image (shell->display);
   GimpDrawable     *drawable;
   GimpBuffer       *buffer;
   gint              x, y, width, height;
@@ -499,14 +499,14 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                   gpointer   data)
 {
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image   = shell->display->image;
+  GimpImage        *image   = gimp_display_get_image (shell->display);
   GimpContext      *context = gimp_get_user_context (shell->display->gimp);
   GList            *list;
   gboolean          open_as_layers;
 
   GIMP_LOG (DND, NULL);
 
-  open_as_layers = (shell->display->image != NULL);
+  open_as_layers = (image != NULL);
 
   for (list = uri_list; list; list = g_list_next (list))
     {
@@ -545,7 +545,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
               warn = TRUE;
             }
         }
-      else if (shell->display->image)
+      else if (gimp_display_get_image (shell->display))
         {
           /*  open any subsequent images in a new display  */
           GimpImage *new_image;
@@ -597,7 +597,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
                                    gpointer         data)
 {
   GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *dest_image = shell->display->image;
+  GimpImage        *dest_image = gimp_display_get_image (shell->display);
   GimpChannel      *channel;
   GimpItem         *new_item;
   const gchar      *desc;
@@ -647,7 +647,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
                                 gpointer   data)
 {
   GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image     = shell->display->image;
+  GimpImage        *image     = gimp_display_get_image (shell->display);
   GimpLayer        *new_layer;
   GimpImageType     image_type;
   gboolean          new_image = FALSE;

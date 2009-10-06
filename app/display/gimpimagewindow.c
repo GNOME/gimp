@@ -439,7 +439,7 @@ gimp_image_window_configure_event (GtkWidget         *widget,
       /* FIXME multiple shells */
       GimpDisplayShell *shell = gimp_image_window_get_active_shell (window);
 
-      if (shell->display->image)
+      if (gimp_display_get_image (shell->display))
         shell->size_allocate_from_configure_event = TRUE;
     }
 
@@ -542,7 +542,7 @@ gimp_image_window_style_set (GtkWidget *widget,
    *  set by gimp. All other displays should be placed by the window
    *  manager. See http://bugzilla.gnome.org/show_bug.cgi?id=559580
    */
-  if (! gimp_image_window_get_active_shell (window)->display->image)
+  if (! gimp_display_get_image (shell->display))
     geometry_mask |= GDK_HINT_USER_POS;
 
   gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
@@ -596,6 +596,7 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
 {
   GimpImageWindowPrivate *private;
   GtkWidget              *view;
+  GimpImage              *image;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -613,10 +614,11 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
                             GTK_WIDGET (shell), view);
 
-  if (shell->display->image)
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
     {
-      gimp_view_set_viewable (GIMP_VIEW (view),
-                              GIMP_VIEWABLE (shell->display->image));
+      gimp_view_set_viewable (GIMP_VIEW (view), GIMP_VIEWABLE (image));
 
       if (g_list_length (private->shells) == 1)
         private->is_empty = FALSE;
@@ -805,6 +807,7 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 {
   GimpImageWindowPrivate *private;
   GimpDisplayShell       *active_shell;
+  GimpImage              *image;
   GtkWidget              *widget;
   GdkScreen              *screen;
   GdkRectangle            rect;
@@ -826,6 +829,8 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   active_shell = gimp_image_window_get_active_shell (window);
 
+  image = gimp_display_get_image (active_shell->display);
+
   widget = GTK_WIDGET (window);
   screen = gtk_widget_get_screen (widget);
 
@@ -833,8 +838,8 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                               gtk_widget_get_window (widget));
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
-  width  = SCALEX (active_shell, gimp_image_get_width  (active_shell->display->image));
-  height = SCALEY (active_shell, gimp_image_get_height (active_shell->display->image));
+  width  = SCALEX (active_shell, gimp_image_get_width  (image));
+  height = SCALEY (active_shell, gimp_image_get_height (image));
 
   disp_width  = active_shell->disp_width;
   disp_height = active_shell->disp_height;
@@ -1014,7 +1019,7 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
 
   gimp_display_shell_appearance_update (private->active_shell);
 
-  if (! active_display->image)
+  if (! gimp_display_get_image (active_display))
     {
       gimp_dialog_factory_add_foreign (private->display_factory,
                                        "gimp-empty-image-window",
@@ -1032,7 +1037,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GtkWidget              *view;
 
-  if (display->image)
+  if (gimp_display_get_image (display))
     {
       if (private->is_empty)
         {
@@ -1083,7 +1088,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
                                      GTK_WIDGET (gimp_display_get_shell (display)));
 
   gimp_view_set_viewable (GIMP_VIEW (view),
-                          GIMP_VIEWABLE (display->image));
+                          GIMP_VIEWABLE (gimp_display_get_image (display)));
 
   gimp_ui_manager_update (private->menubar_manager, display);
 }

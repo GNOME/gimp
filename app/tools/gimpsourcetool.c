@@ -128,7 +128,7 @@ gimp_source_tool_has_image (GimpTool  *tool,
 
   if (! display && source_tool->src_display)
     {
-      if (image && source_tool->src_display->image == image)
+      if (image && gimp_display_get_image (source_tool->src_display) == image)
         display = source_tool->src_display;
 
       /*  NULL image means any display  */

@@ -289,7 +289,7 @@ gui_get_empty_display (Gimp *gimp)
     {
       display = gimp_container_get_first_child (gimp->displays);
 
-      if (GIMP_DISPLAY (display)->image)
+      if (gimp_display_get_image (GIMP_DISPLAY (display)))
         {
           /* The display was not empty */
           display = NULL;

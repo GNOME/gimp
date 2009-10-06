@@ -252,7 +252,7 @@ gimp_tool_real_has_image (GimpTool  *tool,
 {
   if (tool->display)
     {
-      if (image && tool->display->image == image)
+      if (image && gimp_display_get_image (tool->display) == image)
         return tool->display;
 
       /*  NULL image means any display  */
@@ -298,8 +298,10 @@ gimp_tool_real_button_press (GimpTool            *tool,
 {
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
     {
+      GimpImage *image = gimp_display_get_image (display);
+
       tool->display  = display;
-      tool->drawable = gimp_image_get_active_drawable (display->image);
+      tool->drawable = gimp_image_get_active_drawable (image);
 
       gimp_tool_control_activate (tool->control);
     }
@@ -428,7 +430,7 @@ gimp_tool_has_image (GimpTool  *tool,
         {
           GimpDisplay *status_display = list->data;
 
-          if (status_display->image == image)
+          if (gimp_display_get_image (status_display) == image)
             return status_display;
         }
 
@@ -852,7 +854,7 @@ gimp_tool_oper_update (GimpTool         *tool,
   GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, proximity,
                                            display);
 
-  if (G_UNLIKELY (gimp_image_is_empty (display->image) &&
+  if (G_UNLIKELY (gimp_image_is_empty (gimp_display_get_image (display)) &&
                   ! gimp_tool_control_get_handle_empty_image (tool->control)))
     {
       gimp_tool_replace_status (tool, display,

@@ -278,7 +278,7 @@ edit_paste_cmd_callback (GtkAction *action,
 {
   GimpDisplay *display = action_data_get_display (data);
 
-  if (display && display->image)
+  if (display && gimp_display_get_image (display))
     edit_paste (display, FALSE);
   else
     edit_paste_as_new_cmd_callback (action, data);
@@ -489,19 +489,20 @@ static void
 edit_paste (GimpDisplay *display,
             gboolean     paste_into)
 {
-  gchar *svg;
-  gsize  svg_size;
+  GimpImage *image = gimp_display_get_image (display);
+  gchar     *svg;
+  gsize      svg_size;
 
   svg = gimp_clipboard_get_svg (display->gimp, &svg_size);
 
   if (svg)
     {
-      if (gimp_vectors_import_buffer (display->image, svg, svg_size,
+      if (gimp_vectors_import_buffer (image, svg, svg_size,
                                       TRUE, TRUE,
                                       GIMP_IMAGE_ACTIVE_PARENT, -1,
                                       NULL, NULL))
         {
-          gimp_image_flush (display->image);
+          gimp_image_flush (image);
         }
 
       g_free (svg);
@@ -521,11 +522,11 @@ edit_paste (GimpDisplay *display,
           gimp_display_shell_untransform_viewport (shell,
                                                    &x, &y, &width, &height);
 
-          if (gimp_edit_paste (display->image,
-                               gimp_image_get_active_drawable (display->image),
+          if (gimp_edit_paste (image,
+                               gimp_image_get_active_drawable (image),
                                buffer, paste_into, x, y, width, height))
             {
-              gimp_image_flush (display->image);
+              gimp_image_flush (image);
             }
 
           g_object_unref (buffer);

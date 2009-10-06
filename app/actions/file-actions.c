@@ -403,7 +403,7 @@ file_actions_close_all_update (GimpContainer   *images,
 
       display = GIMP_DISPLAY (gimp_container_get_first_child (container));
 
-      if (! display->image)
+      if (! gimp_display_get_image (display))
         sensitive = FALSE;
     }
 

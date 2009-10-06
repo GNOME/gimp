@@ -118,7 +118,7 @@ gimp_draw_tool_has_image (GimpTool  *tool,
 
   if (! display && draw_tool->display)
     {
-      if (image && draw_tool->display->image == image)
+      if (image && gimp_display_get_image (draw_tool->display) == image)
         display = draw_tool->display;
 
       /*  NULL image means any display  */
@@ -1805,7 +1805,7 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
   if (ret_stroke)        *ret_stroke         = NULL;
   if (ret_vectors)       *ret_vectors        = NULL;
 
-  all_vectors = gimp_image_get_vectors_list (display->image);
+  all_vectors = gimp_image_get_vectors_list (gimp_display_get_image (display));
 
   for (list = all_vectors; list; list = g_list_next (list))
     {

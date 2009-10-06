@@ -535,7 +535,7 @@ gimp_display_shell_destroy (GtkObject *object)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
 
-  if (shell->display && shell->display->image)
+  if (shell->display && gimp_display_get_shell (shell->display))
     gimp_display_shell_disconnect (shell);
 
   shell->popup_manager = NULL;
@@ -702,7 +702,7 @@ gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
                                     gsize            *len)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (managed);
-  GimpImage        *image = shell->display->image;
+  GimpImage        *image = gimp_display_get_image (shell->display);
 
   if (image)
     return gimp_color_managed_get_icc_profile (GIMP_COLOR_MANAGED (image), len);
@@ -770,12 +770,13 @@ gimp_display_shell_new (GimpDisplay       *display,
                         GimpUIManager     *popup_manager)
 {
   GimpDisplayShell      *shell;
+  GimpImage             *image;
   GimpColorDisplayStack *filter;
   GtkWidget             *upper_hbox;
   GtkWidget             *right_vbox;
   GtkWidget             *lower_hbox;
   GtkWidget             *inner_table;
-  GtkWidget             *image;
+  GtkWidget             *gtk_image;
   GdkScreen             *screen;
   GtkAction             *action;
   gint                   image_width;
@@ -793,10 +794,12 @@ gimp_display_shell_new (GimpDisplay       *display,
                         "unit",          unit,
                         NULL);
 
-  if (display->image)
+  image = gimp_display_get_image (display);
+
+  if (image)
     {
-      image_width  = gimp_image_get_width  (display->image);
-      image_height = gimp_image_get_height (display->image);
+      image_width  = gimp_image_get_width  (image);
+      image_height = gimp_image_get_height (image);
     }
   else
     {
@@ -824,7 +827,7 @@ gimp_display_shell_new (GimpDisplay       *display,
     }
 
   /* adjust the initial scale -- so that window fits on screen. */
-  if (display->image)
+  if (image)
     {
       gimp_display_shell_set_initial_scale (shell, scale,
                                             &shell_width, &shell_height);
@@ -917,9 +920,10 @@ gimp_display_shell_new (GimpDisplay       *display,
   /*  the menu popup button  */
   shell->origin = gtk_event_box_new ();
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_MENU_RIGHT, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->origin), image);
-  gtk_widget_show (image);
+  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_MENU_RIGHT,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->origin), gtk_image);
+  gtk_widget_show (gtk_image);
 
   g_signal_connect (shell->origin, "button-press-event",
                     G_CALLBACK (gimp_display_shell_origin_button_press),
@@ -1026,10 +1030,10 @@ gimp_display_shell_new (GimpDisplay       *display,
                                      NULL);
   GTK_WIDGET_UNSET_FLAGS (shell->zoom_button, GTK_CAN_FOCUS);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_ZOOM_FOLLOW_WINDOW,
-                                    GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->zoom_button), image);
-  gtk_widget_show (image);
+  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_ZOOM_FOLLOW_WINDOW,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->zoom_button), gtk_image);
+  gtk_widget_show (gtk_image);
 
   gimp_help_set_help_data (shell->zoom_button,
                            _("Zoom image when window size changes"),
@@ -1050,10 +1054,10 @@ gimp_display_shell_new (GimpDisplay       *display,
                                            NULL);
   GTK_WIDGET_UNSET_FLAGS (shell->quick_mask_button, GTK_CAN_FOCUS);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_QUICK_MASK_OFF,
-                                    GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), image);
-  gtk_widget_show (image);
+  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_QUICK_MASK_OFF,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), gtk_image);
+  gtk_widget_show (gtk_image);
 
   action = gimp_ui_manager_find_action (popup_manager,
                                         "quick-mask", "quick-mask-toggle");
@@ -1073,9 +1077,11 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  the navigation window button  */
   shell->nav_ebox = gtk_event_box_new ();
-  image = gtk_image_new_from_stock (GIMP_STOCK_NAVIGATION, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->nav_ebox), image);
-  gtk_widget_show (image);
+
+  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_NAVIGATION,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->nav_ebox), gtk_image);
+  gtk_widget_show (gtk_image);
 
   g_signal_connect (shell->nav_ebox, "button-press-event",
                     G_CALLBACK (gimp_display_shell_nav_button_press),
@@ -1135,7 +1141,7 @@ gimp_display_shell_new (GimpDisplay       *display,
       g_object_unref (filter);
     }
 
-  if (display->image)
+  if (image)
     {
       gimp_display_shell_connect (shell);
 
@@ -1201,7 +1207,7 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
-  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
+  g_return_if_fail (gimp_display_get_image (shell->display) != NULL);
 
   if (shell->fill_idle_id)
     {
@@ -1229,7 +1235,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
-  g_return_if_fail (shell->display->image == NULL);
+  g_return_if_fail (gimp_display_get_image (shell->display) == NULL);
 
   if (shell->fill_idle_id)
     {
@@ -1319,7 +1325,7 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   if (image)
     {
@@ -1411,7 +1417,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   if (gimp_display_shell_get_snap_to_guides (shell) &&
       gimp_image_get_guides (image))
@@ -1442,7 +1448,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
 
       if (snap_width > 0 && snap_height > 0)
         {
-          snapped = gimp_image_snap_rectangle (shell->display->image,
+          snapped = gimp_image_snap_rectangle (image,
                                                coords->x + snap_offset_x,
                                                coords->y + snap_offset_y,
                                                coords->x + snap_offset_x +
@@ -1460,7 +1466,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
         }
       else
         {
-          snapped = gimp_image_snap_point (shell->display->image,
+          snapped = gimp_image_snap_point (image,
                                            coords->x + snap_offset_x,
                                            coords->y + snap_offset_y,
                                            &tx,
@@ -1490,6 +1496,7 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
                                 gint             *x2,
                                 gint             *y2)
 {
+  GimpImage *image;
   GimpLayer *layer;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
@@ -1498,15 +1505,17 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
   g_return_val_if_fail (x2 != NULL, FALSE);
   g_return_val_if_fail (y2 != NULL, FALSE);
 
+  image = gimp_display_get_image (shell->display);
+
   /*  If there is a floating selection, handle things differently  */
-  if ((layer = gimp_image_get_floating_selection (shell->display->image)))
+  if ((layer = gimp_image_get_floating_selection (image)))
     {
       gint off_x;
       gint off_y;
 
       gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
-      if (! gimp_channel_bounds (gimp_image_get_mask (shell->display->image),
+      if (! gimp_channel_bounds (gimp_image_get_mask (image),
                                  x1, y1, x2, y2))
         {
           *x1 = off_x;
@@ -1522,7 +1531,7 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
           *y2 = MAX (off_y + gimp_item_get_height (GIMP_ITEM (layer)), *y2);
         }
     }
-  else if (! gimp_channel_bounds (gimp_image_get_mask (shell->display->image),
+  else if (! gimp_channel_bounds (gimp_image_get_mask (image),
                                   x1, y1, x2, y2))
     {
       return FALSE;
