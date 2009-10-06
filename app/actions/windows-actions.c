@@ -280,7 +280,7 @@ windows_actions_image_notify (GimpDisplay      *display,
 
         title = g_strdup_printf ("%s-%d.%d", escaped,
                                  gimp_image_get_ID (display->image),
-                                 display->instance);
+                                 gimp_display_get_instance (display));
         g_free (escaped);
 
         g_object_set (action,

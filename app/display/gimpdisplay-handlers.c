@@ -52,18 +52,14 @@ gimp_display_connect (GimpDisplay *display,
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (display->image == NULL);
 
-  display->image    = image;
-  display->instance = image->instance_count;
-
-  image->instance_count++;   /* this is obsolete */
-  image->disp_count++;
-
 #if 0
   g_print ("%s: image->ref_count before refing: %d\n",
            G_STRFUNC, G_OBJECT (display->image)->ref_count);
 #endif
 
-  g_object_ref (image);
+  display->image = g_object_ref (image);
+
+  image->disp_count++;
 
   g_signal_connect (gimp_image_get_projection (image), "update",
                     G_CALLBACK (gimp_display_update_handler),

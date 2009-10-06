@@ -64,6 +64,8 @@ typedef struct _GimpDisplayPrivate GimpDisplayPrivate;
 struct _GimpDisplayPrivate
 {
   gint       ID;           /*  unique identifier for this display  */
+  gint       instance;     /*  the instance # of this display as
+                            *  taken from the image at creation    */
   GtkWidget *shell;
   GSList    *update_areas;
 };
@@ -163,10 +165,6 @@ gimp_display_class_init (GimpDisplayClass *klass)
 static void
 gimp_display_init (GimpDisplay *display)
 {
-  display->gimp     = NULL;
-
-  display->image    = NULL;
-  display->instance = 0;
 }
 
 static void
@@ -408,7 +406,11 @@ gimp_display_new (Gimp              *gimp,
 
   /*  refs the image  */
   if (image)
-    gimp_display_connect (display, image);
+    {
+      private->instance = image->instance_count++;
+
+      gimp_display_connect (display, image);
+    }
 
   /*  get an image window  */
   if (GIMP_GUI_CONFIG (display->config)->single_window_mode)
@@ -610,10 +612,13 @@ void
 gimp_display_set_image (GimpDisplay *display,
                         GimpImage   *image)
 {
-  GimpImage *old_image = NULL;
+  GimpDisplayPrivate *private;
+  GimpImage          *old_image = NULL;
 
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+
+  private = GIMP_DISPLAY_GET_PRIVATE (display);
 
   if (display->image)
     {
@@ -629,7 +634,11 @@ gimp_display_set_image (GimpDisplay *display,
     }
 
   if (image)
-    gimp_display_connect (display, image);
+    {
+      private->instance = image->instance_count++;
+
+      gimp_display_connect (display, image);
+    }
 
   if (old_image)
     g_object_unref (old_image);
@@ -641,6 +650,18 @@ gimp_display_set_image (GimpDisplay *display,
 
   if (old_image != image)
     g_object_notify (G_OBJECT (display), "image");
+}
+
+gint
+gimp_display_get_instance (GimpDisplay *display)
+{
+  GimpDisplayPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), 0);
+
+  private = GIMP_DISPLAY_GET_PRIVATE (display);
+
+  return private->instance;
 }
 
 GimpDisplayShell *

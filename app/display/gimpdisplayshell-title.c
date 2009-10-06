@@ -238,7 +238,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'i': /* instance */
-              i += print (title, title_len, i, "%d", shell->display->instance);
+              i += print (title, title_len, i, "%d",
+                          gimp_display_get_instance (shell->display));
               break;
 
             case 't': /* image type */
