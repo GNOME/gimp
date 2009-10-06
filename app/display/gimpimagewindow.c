@@ -1009,6 +1009,9 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
                     G_CALLBACK (gimp_image_window_shell_icon_notify),
                     window);
 
+  gtk_window_set_title (GTK_WINDOW (window), shell->title);
+  gtk_window_set_icon (GTK_WINDOW (window), shell->icon);
+
   gimp_display_shell_appearance_update (private->active_shell);
 
   if (! active_display->image)
