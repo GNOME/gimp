@@ -789,7 +789,7 @@ gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
       gimp_free_select_tool_select (fst, display);
     }
 
-  gimp_image_flush (display->image);
+  gimp_image_flush (gimp_display_get_image (display));
 }
 
 static void
@@ -846,12 +846,13 @@ gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
                                     guint32             time,
                                     GimpDisplay        *display)
 {
-  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
+  GimpFreeSelectToolPrivate *priv  = GET_PRIVATE (fst);
+  GimpImage                 *image = gimp_display_get_image (display);
 
   /*  If there is a floating selection, anchor it  */
-  if (gimp_image_get_floating_selection (display->image))
+  if (gimp_image_get_floating_selection (image))
     {
-      floating_sel_anchor (gimp_image_get_floating_selection (display->image));
+      floating_sel_anchor (gimp_image_get_floating_selection (image));
       gimp_free_select_tool_halt (fst);
     }
   else
@@ -1578,8 +1579,9 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *fst,
 {
   GimpSelectionOptions      *options = GIMP_SELECTION_TOOL_GET_OPTIONS (fst);
   GimpFreeSelectToolPrivate *priv    = GET_PRIVATE (fst);
+  GimpImage                 *image   = gimp_display_get_image (display);
 
-  gimp_channel_select_polygon (gimp_image_get_mask (display->image),
+  gimp_channel_select_polygon (gimp_image_get_mask (image),
                                C_("command", "Free Select"),
                                priv->n_points,
                                priv->points,

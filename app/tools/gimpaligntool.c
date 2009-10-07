@@ -324,7 +324,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
   GimpDisplayShell *shell      = gimp_display_get_shell (display);
   GObject          *object     = NULL;
-  GimpImage        *image      = display->image;
+  GimpImage        *image      = gimp_display_get_image (display);
   gint              i;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -361,7 +361,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
           object = G_OBJECT (vectors);
         }
       else if (gimp_display_shell_get_show_guides (shell) &&
-               (guide = gimp_image_find_guide (display->image,
+               (guide = gimp_image_find_guide (image,
                                                coords->x, coords->y,
                                                FUNSCALEX (shell, snap_distance),
                                                FUNSCALEY (shell, snap_distance))))
@@ -370,7 +370,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
         }
       else
         {
-          if ((layer = select_layer_by_coords (display->image,
+          if ((layer = select_layer_by_coords (image,
                                                coords->x, coords->y)))
             {
               object = G_OBJECT (layer);
@@ -475,9 +475,10 @@ gimp_align_tool_oper_update (GimpTool         *tool,
                              gboolean          proximity,
                              GimpDisplay      *display)
 {
-  GimpAlignTool      *align_tool    = GIMP_ALIGN_TOOL (tool);
-  GimpDisplayShell   *shell         = gimp_display_get_shell (display);
-  gint                snap_distance = display->config->snap_distance;
+  GimpAlignTool    *align_tool    = GIMP_ALIGN_TOOL (tool);
+  GimpDisplayShell *shell         = gimp_display_get_shell (display);
+  GimpImage        *image         = gimp_display_get_image (display);
+  gint              snap_distance = display->config->snap_distance;
 
   if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
                                  coords, snap_distance, snap_distance,
@@ -489,7 +490,7 @@ gimp_align_tool_oper_update (GimpTool         *tool,
         align_tool->function = ALIGN_TOOL_PICK_PATH;
     }
   else if (gimp_display_shell_get_show_guides (shell) &&
-           (NULL != gimp_image_find_guide (display->image,
+           (NULL != gimp_image_find_guide (image,
                                            coords->x, coords->y,
                                            FUNSCALEX (shell, snap_distance),
                                            FUNSCALEY (shell, snap_distance))))
@@ -501,7 +502,7 @@ gimp_align_tool_oper_update (GimpTool         *tool,
     }
   else
     {
-      GimpLayer *layer = select_layer_by_coords (display->image,
+      GimpLayer *layer = select_layer_by_coords (image,
                                                  coords->x, coords->y);
 
       if (layer)
@@ -714,7 +715,7 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
       else if (GIMP_IS_GUIDE (list->data))
         {
           GimpGuide *guide = GIMP_GUIDE (list->data);
-          GimpImage *image = GIMP_TOOL (draw_tool)->display->image;
+          GimpImage *image = gimp_display_get_image (GIMP_TOOL (draw_tool)->display);
           gint       x, y;
           gint       w, h;
 
@@ -916,13 +917,13 @@ do_alignment (GtkWidget *widget,
               gpointer   data)
 {
   GimpAlignTool     *align_tool       = GIMP_ALIGN_TOOL (data);
-  GimpAlignmentType  action;
   GimpImage         *image;
+  GimpAlignmentType  action;
   GObject           *reference_object = NULL;
   GList             *list;
   gint               offset;
 
-  image  = GIMP_TOOL (align_tool)->display->image;
+  image  = gimp_display_get_image (GIMP_TOOL (align_tool)->display);
   action = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "action"));
   offset = align_tool->horz_offset;
 

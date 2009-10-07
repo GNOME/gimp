@@ -334,10 +334,9 @@ gimp_transform_tool_initialize (GimpTool     *tool,
                                 GimpDisplay  *display,
                                 GError      **error)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpDrawable      *drawable;
-
-  drawable = gimp_image_get_active_drawable (display->image);
+  GimpTransformTool *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
+  GimpImage         *image    = gimp_display_get_image (display);
+  GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -704,6 +703,7 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpCursorType        cursor;
   GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
+  GimpImage            *image    = gimp_display_get_image (display);
 
   cursor = gimp_tool_control_get_cursor (tool->control);
 
@@ -759,7 +759,7 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
       GimpDrawable *drawable;
 
     case GIMP_TRANSFORM_TYPE_LAYER:
-      drawable = gimp_image_get_active_drawable (display->image);
+      drawable = gimp_image_get_active_drawable (image);
       if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
@@ -768,7 +768,7 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      if (! gimp_image_get_active_vectors (display->image))
+      if (! gimp_image_get_active_vectors (image))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
     }
@@ -784,6 +784,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTool          *tool    = GIMP_TOOL (draw_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
+  GimpImage         *image   = gimp_display_get_image (tool->display);
   gdouble            z1, z2, z3, z4;
 
   if (tr_tool->use_grid)
@@ -948,7 +949,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       gint            num_groups;
       gint            i;
 
-      gimp_channel_boundary (gimp_image_get_mask (tool->display->image),
+      gimp_channel_boundary (gimp_image_get_mask (image),
                              &orig_in, &orig_out,
                              &num_segs_in, &num_segs_out,
                              0, 0, 0, 0);
@@ -1029,7 +1030,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       GimpStroke  *stroke = NULL;
       GimpMatrix3  matrix = tr_tool->transform;
 
-      vectors = gimp_image_get_active_vectors (tool->display->image);
+      vectors = gimp_image_get_active_vectors (image);
 
       if (vectors)
         {
@@ -1176,6 +1177,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   GimpTransformOptions *options        = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpContext          *context        = GIMP_CONTEXT (options);
   GimpDisplayShell     *shell          = gimp_display_get_shell (display);
+  GimpImage            *image          = gimp_display_get_image (display);
   GimpItem             *active_item    = NULL;
   TileManager          *new_tiles;
   const gchar          *null_message   = NULL;
@@ -1186,20 +1188,20 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
+      active_item = GIMP_ITEM (gimp_image_get_active_drawable (image));
       null_message   = _("There is no layer to transform.");
       locked_message = _("The active layer's pixels are locked.");
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      active_item = GIMP_ITEM (gimp_image_get_mask (display->image));
+      active_item = GIMP_ITEM (gimp_image_get_mask (image));
       /* cannot happen, so don't translate these messages */
       null_message   = "There is no selection to transform.";
       locked_message = "The selection's pixels are locked.";
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
+      active_item = GIMP_ITEM (gimp_image_get_active_vectors (image));
       null_message   = _("There is no path to transform.");
       locked_message = _("The active path's strokes are locked.");
       break;
@@ -1221,7 +1223,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
 
   gimp_dialog_factory_hide_dialog (tr_tool->dialog);
 
-  mask_empty = gimp_channel_is_empty (gimp_image_get_mask (display->image));
+  mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
   gimp_set_busy (display->gimp);
 
@@ -1232,7 +1234,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
   /*  Start a transform undo group  */
-  gimp_image_undo_group_start (display->image, GIMP_UNDO_GROUP_TRANSFORM,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                tr_tool->undo_desc);
 
   /* With the old UI, if original is NULL, then this is the
@@ -1244,7 +1246,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
    *  selection pointer, so that the original source can be repeatedly
    *  modified.
    */
-  tool->drawable = gimp_image_get_active_drawable (display->image);
+  tool->drawable = gimp_image_get_active_drawable (image);
 
   switch (options->type)
     {
@@ -1313,16 +1315,16 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   /*  Make a note of the new current drawable (since we may have
    *  a floating selection, etc now.
    */
-  tool->drawable = gimp_image_get_active_drawable (display->image);
+  tool->drawable = gimp_image_get_active_drawable (image);
 
-  gimp_image_undo_push (display->image, GIMP_TYPE_TRANSFORM_TOOL_UNDO,
+  gimp_image_undo_push (image, GIMP_TYPE_TRANSFORM_TOOL_UNDO,
                         GIMP_UNDO_TRANSFORM, NULL,
                         0,
                         "transform-tool", tr_tool,
                         NULL);
 
   /*  push the undo group end  */
-  gimp_image_undo_group_end (display->image);
+  gimp_image_undo_group_end (image);
 
   /*  We're done dirtying the image, and would like to be restarted
    *  if the image gets dirty while the tool exists
@@ -1339,7 +1341,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
 
   gimp_unset_busy (display->gimp);
 
-  gimp_image_flush (display->image);
+  gimp_image_flush (image);
 
   gimp_transform_tool_halt (tr_tool);
 }
@@ -1513,8 +1515,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
                             GimpDisplay       *display)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  GimpImage            *image   = gimp_display_get_image (display);
 
   /*  find the boundaries  */
   if (tr_tool->original)
@@ -1534,7 +1535,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
             gint          offset_x;
             gint          offset_y;
 
-            drawable = gimp_image_get_active_drawable (display->image);
+            drawable = gimp_image_get_active_drawable (image);
 
             gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
@@ -1550,7 +1551,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 
         case GIMP_TRANSFORM_TYPE_SELECTION:
         case GIMP_TRANSFORM_TYPE_PATH:
-          gimp_channel_bounds (gimp_image_get_mask (display->image),
+          gimp_channel_bounds (gimp_image_get_mask (image),
                                &tr_tool->x1, &tr_tool->y1,
                                &tr_tool->x2, &tr_tool->y2);
           break;
@@ -1737,6 +1738,7 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                              GimpDisplay       *display)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpImage            *image   = gimp_display_get_image (display);
   gboolean              show_transform;
 
   show_transform =
@@ -1750,7 +1752,7 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
 
   if (tr_tool->dialog)
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->dialog),
                                          GIMP_VIEWABLE (drawable),

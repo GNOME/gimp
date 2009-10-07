@@ -121,7 +121,8 @@ gimp_bucket_fill_tool_initialize (GimpTool     *tool,
                                   GimpDisplay  *display,
                                   GError      **error)
 {
-  GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+  GimpImage    *image    = gimp_display_get_image (display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -154,13 +155,14 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                       GimpDisplay           *display)
 {
   GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpImage             *image   = gimp_display_get_image (display);
 
   if ((release_type == GIMP_BUTTON_RELEASE_CLICK ||
        release_type == GIMP_BUTTON_RELEASE_NO_MOTION) &&
-      gimp_image_coords_in_active_pickable (display->image, coords,
+      gimp_image_coords_in_active_pickable (image, coords,
                                             options->sample_merged, TRUE))
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
       GimpContext  *context  = GIMP_CONTEXT (options);
       gint          x, y;
       GError       *error    = NULL;
@@ -196,7 +198,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
         }
       else
         {
-          gimp_image_flush (display->image);
+          gimp_image_flush (image);
         }
     }
 
@@ -246,11 +248,12 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
 {
   GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier     modifier = GIMP_CURSOR_MODIFIER_BAD;
+  GimpImage             *image    = gimp_display_get_image (display);
 
-  if (gimp_image_coords_in_active_pickable (display->image, coords,
+  if (gimp_image_coords_in_active_pickable (image, coords,
                                             options->sample_merged, TRUE))
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
           ! gimp_item_is_content_locked (GIMP_ITEM (drawable)))
