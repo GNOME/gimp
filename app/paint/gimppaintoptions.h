@@ -77,7 +77,7 @@ struct _GimpGradientOptions
 #define GIMP_IS_PAINT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_OPTIONS))
 #define GIMP_PAINT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_OPTIONS, GimpPaintOptionsClass))
 
-#define GIMP_PAINT_PRESSURE_SCALE 1.5
+#define GIMP_PAINT_PRESSURE_SCALE 1.0
 #define GIMP_PAINT_VELOCITY_SCALE 1.0
 
 typedef struct _GimpPaintOptionsClass GimpPaintOptionsClass;
