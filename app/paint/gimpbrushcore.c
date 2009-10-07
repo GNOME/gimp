@@ -422,7 +422,6 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
   core->jitter =
     gimp_paint_options_get_jitter (paint_options,
                                    gimp_item_get_image (GIMP_ITEM (drawable)));
-  core->jitter *= gimp_dynamics_get_linear_output_val(core->dynamics->jitter_dynamics, *coords, fade_point);
 
   return TRUE;
 }
@@ -701,10 +700,14 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
       if (core->jitter > 0.0)
         {
+          gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                            paint_core->pixel_dist);
+          gdouble dyn_jitter = core->jitter * gimp_dynamics_get_linear_output_val(core->dynamics->jitter_dynamics, current_coords, fade_point);
+
           gdouble jitter_dist;
           gint32  jitter_angle;
 
-          jitter_dist  = g_rand_double_range (core->rand, 0, core->jitter);
+          jitter_dist  = g_rand_double_range (core->rand, 0, dyn_jitter);
           jitter_angle = g_rand_int_range (core->rand,
                                            0, BRUSH_CORE_JITTER_LUTSIZE);
 

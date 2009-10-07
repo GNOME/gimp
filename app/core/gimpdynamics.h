@@ -34,7 +34,6 @@ struct _GimpDynamicsOutput
   gboolean  random;
   gboolean  fade;
 
-  gdouble   fade_length;
 
   GimpCurve*  pressure_curve;
   GimpCurve*  velocity_curve;
@@ -44,10 +43,6 @@ struct _GimpDynamicsOutput
   GimpCurve*  fade_curve;
 
 };
-
-
-#define GIMP_PAINT_PRESSURE_SCALE 1.5
-#define GIMP_PAINT_VELOCITY_SCALE 1.0
 
 
 #define GIMP_TYPE_DYNAMICS            (gimp_dynamics_get_type ())

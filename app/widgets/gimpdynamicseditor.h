@@ -38,11 +38,7 @@ struct _GimpDynamicsEditor
 
   GtkWidget      *options_vbox;
 
-  /*
-  GimpContext    *context_dynamics;
-  GimpContext    *context;
-  GObject        *config_data;
-  GtkAdjustment  *pressure_hardness_data;*/
+
 
 };
 
