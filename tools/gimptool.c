@@ -628,7 +628,7 @@ maybe_append_exe (const gchar *what)
   gchar *p = strrchr (what, '.');
 
   if (p == NULL || g_ascii_strcasecmp (p, ".exe") != 0)
-    return g_strconcat (what, ".exe");
+    return g_strconcat (what, ".exe", NULL);
 #endif
 
   return what;
