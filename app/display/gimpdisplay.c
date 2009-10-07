@@ -637,6 +637,9 @@ gimp_display_set_image (GimpDisplay *display,
       private->instance = image->instance_count++;
 
       gimp_display_connect (display, image);
+
+      if (shell)
+        gimp_display_shell_connect (shell);
     }
 
   if (old_image)
