@@ -397,7 +397,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
       for (i = 0; i < n_dynamics; i++)
         {
           gtk_label_set_angle (GTK_LABEL (dynamics_labels[i]),
-                               rtl ? 315 : 45);
+                               90);
           gtk_misc_set_alignment (GTK_MISC (dynamics_labels[i]), 1.0, 1.0);
           gtk_fixed_put (GTK_FIXED (fixed), dynamics_labels[i], 0, 0);
           gtk_widget_show (dynamics_labels[i]);
