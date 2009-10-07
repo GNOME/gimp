@@ -617,13 +617,15 @@ gimp_display_set_image (GimpDisplay *display,
 
   private = GIMP_DISPLAY_GET_PRIVATE (display);
 
+  shell = gimp_display_get_shell (display);
+
   if (display->image)
     {
       /*  stop any active tool  */
       tool_manager_control_active (display->gimp, GIMP_TOOL_ACTION_HALT,
                                    display);
 
-      gimp_display_shell_disconnect (gimp_display_get_shell (display));
+      gimp_display_shell_disconnect (shell);
 
       old_image = g_object_ref (display->image);
 
@@ -639,8 +641,6 @@ gimp_display_set_image (GimpDisplay *display,
 
   if (old_image)
     g_object_unref (old_image);
-
-  shell = gimp_display_get_shell (display);
 
   if (shell)
     {
