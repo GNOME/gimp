@@ -99,7 +99,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
       shell->other_scale = gimp_zoom_model_get_factor (shell->zoom);
     }
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   data = g_slice_new (ScaleDialogData);
 

@@ -119,10 +119,10 @@ gimp_display_shell_events (GtkWidget        *widget,
   gboolean  set_display = FALSE;
 
   /*  are we in destruction?  */
-  if (! shell->display || ! shell->display->shell)
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
     return TRUE;
 
-  gimp = shell->display->gimp;
+  gimp = gimp_display_get_gimp (shell->display);
 
   switch (event->type)
     {
@@ -270,7 +270,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
                                          GimpDisplayShell *shell)
 {
   /*  are we in destruction?  */
-  if (! shell->display || ! shell->display->shell)
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
     return;
 
   if ((shell->disp_width  != allocation->width) ||
@@ -367,12 +367,10 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
                                   GimpDisplayShell *shell)
 {
   /*  are we in destruction?  */
-  if (! shell->display || ! shell->display->shell)
-    {
-      return TRUE;
-    }
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return TRUE;
 
-  if (shell->display->image)
+  if (gimp_display_get_image (shell->display))
     {
       gimp_display_shell_canvas_expose_image (shell, eevent);
 
@@ -437,7 +435,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
                                   GdkModifierType   state,
                                   guint32           time)
 {
-  Gimp *gimp = shell->display->gimp;
+  Gimp *gimp = gimp_display_get_gimp (shell->display);
 
   if (shell->space_pressed)
     return;
@@ -493,7 +491,7 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
                                    GdkModifierType   state,
                                    guint32           time)
 {
-  Gimp *gimp = shell->display->gimp;
+  Gimp *gimp = gimp_display_get_gimp (shell->display);
 
   if (! shell->space_pressed && ! shell->space_release_pending)
     return;
@@ -530,7 +528,7 @@ gimp_display_shell_update_focus (GimpDisplayShell *shell,
                                  GimpCoords       *image_coords,
                                  GdkModifierType   state)
 {
-  Gimp *gimp = shell->display->gimp;
+  Gimp *gimp = gimp_display_get_gimp (shell->display);
 
   tool_manager_focus_display_active (gimp, shell->display);
   tool_manager_modifier_state_active (gimp, state, shell->display);
@@ -605,7 +603,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   g_return_val_if_fail (GTK_WIDGET_REALIZED (canvas), FALSE);
 
   /*  are we in destruction?  */
-  if (! shell->display || ! shell->display->shell)
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
     return TRUE;
 
   /*  set the active display before doing any other canvas event processing  */
@@ -613,8 +611,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     return TRUE;
 
   display = shell->display;
-  gimp    = display->gimp;
-  image   = display->image;
+  gimp    = gimp_display_get_gimp (display);
+  image   = gimp_display_get_image (display);
 
   if (! image)
     {
@@ -1710,7 +1708,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
   if (display->gimp->busy)
     return TRUE;
 
-  if (! display->image)
+  if (! gimp_display_get_image (display))
     return TRUE;
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
@@ -1828,7 +1826,7 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
                                             GdkEventButton   *bevent,
                                             GimpDisplayShell *shell)
 {
-  if (! shell->display->image)
+  if (! gimp_display_get_image (shell->display))
     return TRUE;
 
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
@@ -1855,13 +1853,14 @@ void
 gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
                                        GimpDisplayShell *shell)
 {
-  gboolean active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+  GimpImage *image  = gimp_display_get_image (shell->display);
+  gboolean   active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
-  if (active != gimp_image_get_quick_mask_state (shell->display->image))
+  if (active != gimp_image_get_quick_mask_state (image))
     {
-      gimp_image_set_quick_mask_state (shell->display->image, active);
+      gimp_image_set_quick_mask_state (image, active);
 
-      gimp_image_flush (shell->display->image);
+      gimp_image_flush (image);
     }
 }
 
@@ -1870,7 +1869,7 @@ gimp_display_shell_nav_button_press (GtkWidget        *widget,
                                      GdkEventButton   *bevent,
                                      GimpDisplayShell *shell)
 {
-  if (! shell->display->image)
+  if (! gimp_display_get_image (shell->display))
     return TRUE;
 
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 1))
@@ -1883,10 +1882,10 @@ gimp_display_shell_nav_button_press (GtkWidget        *widget,
 
 
 /* Event delay timeout handler & generic event flusher */
+
 gboolean
 gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
 {
-
   GimpTool *active_tool = tool_manager_get_active (shell->display->gimp);
 
   shell->event_delay = FALSE;
@@ -1914,16 +1913,17 @@ gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
 
 
 /*  private functions  */
+
 static void
 gimp_display_shell_process_tool_event_queue (GimpDisplayShell *shell,
                                              GdkModifierType   state,
                                              guint32           time)
 {
-  gint i;
-  gint keep = 0;
-  GdkModifierType event_state;
-  GimpCoords keep_event;
-  GimpCoords *buf_coords = NULL;
+  gint             i;
+  gint             keep = 0;
+  GdkModifierType  event_state;
+  GimpCoords       keep_event;
+  GimpCoords      *buf_coords = NULL;
 
   if (shell->event_delay)
     {

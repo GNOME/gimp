@@ -436,7 +436,7 @@ plug_in_collect_display_args (GtkAction    *action,
   if (args->n_values > n_args &&
       GIMP_IS_PARAM_SPEC_IMAGE_ID (pspecs[n_args]))
     {
-      GimpImage *image = display ? display->image : NULL;
+      GimpImage *image = display ? gimp_display_get_image (display) : NULL;
 
       if (image)
         {

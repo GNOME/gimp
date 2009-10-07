@@ -167,7 +167,7 @@ gimp_navigation_editor_display_changed (GimpContext          *context,
   GimpDisplayShell *shell = NULL;
 
   if (display)
-    shell = GIMP_DISPLAY_SHELL (display->shell);
+    shell = gimp_display_get_shell (display);
 
   gimp_navigation_editor_set_shell (editor, shell);
 }
@@ -346,7 +346,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
   if (shell)
     {
       Gimp              *gimp   = shell->display->gimp;
-      GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimp->config);
+      GimpDisplayConfig *config = shell->display->config;
       GimpView          *view;
 
       editor = g_object_new (GIMP_TYPE_NAVIGATION_EDITOR, NULL);
@@ -467,8 +467,10 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
 
   if (editor->shell)
     {
+      GimpImage *image = gimp_display_get_image (shell->display);
+
       gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                              GIMP_VIEWABLE (shell->display->image));
+                              GIMP_VIEWABLE (image));
 
       g_signal_connect (editor->shell, "scaled",
                         G_CALLBACK (gimp_navigation_editor_shell_scaled),
@@ -650,8 +652,10 @@ static void
 gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
                                         GimpNavigationEditor *editor)
 {
+  GimpImage *image = gimp_display_get_image (shell->display);
+
   gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                          GIMP_VIEWABLE (shell->display->image));
+                          GIMP_VIEWABLE (image));
 
   if (GIMP_EDITOR (editor)->ui_manager)
     gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,

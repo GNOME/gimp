@@ -165,9 +165,13 @@ gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
 void
 gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->display->image)
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
     {
       gint sw, sh;
       gint min_offset_x;
@@ -175,8 +179,8 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
       gint min_offset_y;
       gint max_offset_y;
 
-      sw = SCALEX (shell, gimp_image_get_width  (shell->display->image));
-      sh = SCALEY (shell, gimp_image_get_height (shell->display->image));
+      sw = SCALEX (shell, gimp_image_get_width  (image));
+      sh = SCALEY (shell, gimp_image_get_height (image));
 
       if (shell->disp_width < sw)
         {
@@ -337,8 +341,8 @@ gimp_display_shell_scroll_center_image (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display ||
-      ! shell->display->image ||
+  if (! shell->display                          ||
+      ! gimp_display_get_image (shell->display) ||
       (! vertically && ! horizontally))
     return;
 
@@ -547,7 +551,7 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (! shell->display ||
-      ! shell->display->image)
+      ! gimp_display_get_image (shell->display))
     return;
 
   gimp_display_shell_draw_get_scaled_image_size (shell, &sw, NULL);
@@ -589,7 +593,7 @@ gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (! shell->display ||
-      ! shell->display->image)
+      ! gimp_display_get_image (shell->display))
     return;
 
   gimp_display_shell_draw_get_scaled_image_size (shell, NULL, &sh);

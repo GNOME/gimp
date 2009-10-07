@@ -44,11 +44,11 @@ gimp_display_shell_icon_update (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   if (image)
     {
-      Gimp    *gimp   = shell->display->gimp;
+      Gimp    *gimp   = gimp_display_get_gimp (shell->display);
       gint     width;
       gint     height;
       gdouble  factor = ((gdouble) gimp_image_get_height (image) /

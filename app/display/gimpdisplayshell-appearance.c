@@ -74,8 +74,14 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
   window  = gimp_display_shell_get_window (shell);
 
   if (window)
-    appearance_set_action_active (shell, "view-fullscreen",
-                                  gimp_image_window_get_fullscreen (window));
+    {
+      gboolean fullscreen = gimp_image_window_get_fullscreen (window);
+
+      appearance_set_action_active (shell, "view-fullscreen", fullscreen);
+
+      gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar),
+                                         ! fullscreen);
+    }
 
   gimp_display_shell_set_show_menubar       (shell,
                                              options->show_menubar);
@@ -136,19 +142,14 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
                                        gboolean          show)
 {
   GimpDisplayOptions *options;
-  GimpImageWindow    *window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   options = appearance_get_options (shell);
-  window  = gimp_display_shell_get_window (shell);
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
-    {
-      gimp_image_window_set_show_statusbar (window, show);
-    }
+  gimp_statusbar_set_visible (GIMP_STATUSBAR (shell->statusbar), show);
 
   appearance_set_action_active (shell, "view-show-statusbar", show);
 }
@@ -333,6 +334,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
                                     gboolean          show)
 {
   GimpDisplayOptions *options;
+  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -340,8 +342,9 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 
   g_object_set (options, "show-guides", show, NULL);
 
-  if (shell->display->image &&
-      gimp_image_get_guides (shell->display->image))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_image_get_guides (image))
     {
       gimp_display_shell_expose_full (shell);
     }
@@ -362,6 +365,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
                                   gboolean          show)
 {
   GimpDisplayOptions *options;
+  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -369,8 +373,9 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
 
   g_object_set (options, "show-grid", show, NULL);
 
-  if (shell->display->image &&
-      gimp_image_get_grid (shell->display->image))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_image_get_grid (image))
     {
       gimp_display_shell_expose_full (shell);
     }
@@ -391,6 +396,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
                                            gboolean          show)
 {
   GimpDisplayOptions *options;
+  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -398,8 +404,9 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 
   g_object_set (options, "show-sample-points", show, NULL);
 
-  if (shell->display->image &&
-      gimp_image_get_sample_points (shell->display->image))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_image_get_sample_points (image))
     {
       gimp_display_shell_expose_full (shell);
     }
@@ -582,7 +589,7 @@ gimp_display_shell_get_padding (const GimpDisplayShell *shell,
 static GimpDisplayOptions *
 appearance_get_options (const GimpDisplayShell *shell)
 {
-  if (shell->display->image)
+  if (gimp_display_get_image (shell->display))
     {
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
 

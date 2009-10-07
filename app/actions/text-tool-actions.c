@@ -128,8 +128,7 @@ text_tool_actions_setup (GimpActionGroup *group)
                                        G_CALLBACK (text_tool_direction_cmd_callback));
 }
 
-/*
- * The following code is written on the assumption that this is for a
+/* The following code is written on the assumption that this is for a
  * context menu, activated by right-clicking in a text layer.
  * Therefore, the tool must have a display.  If for any reason the
  * code is adapted to a different situation, some existence testing
@@ -139,14 +138,16 @@ void
 text_tool_actions_update (GimpActionGroup *group,
                           gpointer         data)
 {
-  GimpTextTool  *text_tool  = GIMP_TEXT_TOOL (data);
-  GimpImage     *image      = GIMP_TOOL (text_tool)->display->image;
-  GimpLayer     *layer;
-  GimpVectors   *vectors;
-  GtkClipboard  *clipboard;
-  gboolean       text_layer = FALSE;
-  gboolean       text_sel   = FALSE;   /* some text is selected        */
-  gboolean       clip       = FALSE;   /* clipboard has text available */
+  GimpTextTool     *text_tool  = GIMP_TEXT_TOOL (data);
+  GimpDisplay      *display    = GIMP_TOOL (text_tool)->display;
+  GimpImage        *image      = gimp_display_get_image (display);
+  GimpLayer        *layer;
+  GimpVectors      *vectors;
+  GimpDisplayShell *shell;
+  GtkClipboard     *clipboard;
+  gboolean          text_layer = FALSE;
+  gboolean          text_sel   = FALSE;   /* some text is selected        */
+  gboolean          clip       = FALSE;   /* clipboard has text available */
 
   layer = gimp_image_get_active_layer (image);
 
@@ -160,7 +161,8 @@ text_tool_actions_update (GimpActionGroup *group,
   /*
    * see whether there is text available for pasting
    */
-  clipboard = gtk_widget_get_clipboard (GIMP_TOOL (text_tool)->display->shell,
+  shell = gimp_display_get_shell (display);
+  clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
   clip = gtk_clipboard_wait_is_text_available (clipboard);
 

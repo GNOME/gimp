@@ -41,7 +41,7 @@
 
 typedef struct
 {
-  GtkWidget *shell;
+  GtkWidget *window;
   GtkWidget *view;
   GtkWidget *label;
 
@@ -77,7 +77,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   layer = gimp_image_get_active_layer (image);
 
@@ -88,12 +88,12 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
                                    image->gimp->config->layer_preview_size);
   layer_select_advance (layer_select, move);
 
-  gtk_window_set_screen (GTK_WINDOW (layer_select->shell),
+  gtk_window_set_screen (GTK_WINDOW (layer_select->window),
                          gtk_widget_get_screen (GTK_WIDGET (shell)));
 
-  gtk_widget_show (layer_select->shell);
+  gtk_widget_show (layer_select->window);
 
-  gdk_keyboard_grab (gtk_widget_get_window (layer_select->shell), FALSE, time);
+  gdk_keyboard_grab (gtk_widget_get_window (layer_select->window), FALSE, time);
 }
 
 
@@ -115,21 +115,22 @@ layer_select_new (GimpImage *image,
   layer_select->image      = image;
   layer_select->orig_layer = layer;
 
-  layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_role (GTK_WINDOW (layer_select->shell), "gimp-layer-select");
-  gtk_window_set_title (GTK_WINDOW (layer_select->shell), _("Layer Select"));
-  gtk_window_set_position (GTK_WINDOW (layer_select->shell), GTK_WIN_POS_MOUSE);
-  gtk_widget_set_events (layer_select->shell, (GDK_KEY_PRESS_MASK   |
-                                               GDK_KEY_RELEASE_MASK |
-                                               GDK_BUTTON_PRESS_MASK));
+  layer_select->window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_window_set_role (GTK_WINDOW (layer_select->window), "gimp-layer-select");
+  gtk_window_set_title (GTK_WINDOW (layer_select->window), _("Layer Select"));
+  gtk_window_set_position (GTK_WINDOW (layer_select->window), GTK_WIN_POS_MOUSE);
+  gtk_widget_set_events (layer_select->window,
+                         GDK_KEY_PRESS_MASK   |
+                         GDK_KEY_RELEASE_MASK |
+                         GDK_BUTTON_PRESS_MASK);
 
-  g_signal_connect (layer_select->shell, "event",
+  g_signal_connect (layer_select->window, "event",
                     G_CALLBACK (layer_select_events),
                     layer_select);
 
   frame1 = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (layer_select->shell), frame1);
+  gtk_container_add (GTK_CONTAINER (layer_select->window), frame1);
   gtk_widget_show (frame1);
 
   frame2 = gtk_frame_new (NULL);
@@ -170,10 +171,10 @@ static void
 layer_select_destroy (LayerSelect *layer_select,
                       guint32      time)
 {
-  gdk_display_keyboard_ungrab (gtk_widget_get_display (layer_select->shell),
+  gdk_display_keyboard_ungrab (gtk_widget_get_display (layer_select->window),
                                                        time);
 
-  gtk_widget_destroy (layer_select->shell);
+  gtk_widget_destroy (layer_select->window);
 
   if (layer_select->orig_layer !=
       gimp_image_get_active_layer (layer_select->image))

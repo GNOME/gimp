@@ -229,7 +229,7 @@ image_resize_cmd_callback (GtkAction *action,
   options->context = action_data_get_context (data);
 
   if (image_resize_unit != GIMP_UNIT_PERCENT)
-    image_resize_unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
+    image_resize_unit = gimp_display_get_shell (display)->unit;
 
   dialog = resize_dialog_new (GIMP_VIEWABLE (image),
                               action_data_get_context (data),
@@ -255,20 +255,23 @@ image_resize_to_layers_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpDisplay  *display;
+  GimpImage    *image;
   GimpProgress *progress;
   return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
 
   progress = gimp_progress_start (GIMP_PROGRESS (display),
                                   _("Resizing"), FALSE);
 
-  gimp_image_resize_to_layers (display->image,
+  gimp_image_resize_to_layers (image,
                                action_data_get_context (data),
                                progress);
 
   if (progress)
     gimp_progress_end (progress);
 
-  gimp_image_flush (display->image);
+  gimp_image_flush (image);
 }
 
 void
@@ -276,33 +279,39 @@ image_resize_to_selection_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpDisplay  *display;
+  GimpImage    *image;
   GimpProgress *progress;
   return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
 
   progress = gimp_progress_start (GIMP_PROGRESS (display),
                                   _("Resizing"), FALSE);
 
-  gimp_image_resize_to_selection (display->image,
+  gimp_image_resize_to_selection (image,
                                   action_data_get_context (data),
                                   progress);
 
   if (progress)
     gimp_progress_end (progress);
 
-  gimp_image_flush (display->image);
+  gimp_image_flush (image);
 }
 
 void
 image_print_size_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
-  GtkWidget   *dialog;
   GimpDisplay *display;
+  GimpImage   *image;
   GtkWidget   *widget;
+  GtkWidget   *dialog;
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  dialog = print_size_dialog_new (display->image,
+  image = gimp_display_get_image (display);
+
+  dialog = print_size_dialog_new (image,
                                   action_data_get_context (data),
                                   _("Set Image Print Resolution"),
                                   "gimp-image-print-size",
@@ -324,18 +333,21 @@ image_scale_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
   GimpDisplay *display;
+  GimpImage   *image;
   GtkWidget   *widget;
   GtkWidget   *dialog;
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
+  image = gimp_display_get_image (display);
+
   if (image_scale_unit != GIMP_UNIT_PERCENT)
-    image_scale_unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
+    image_scale_unit = gimp_display_get_shell (display)->unit;
 
   if (image_scale_interp == -1)
-    image_scale_interp = display->image->gimp->config->interpolation_type;
+    image_scale_interp = display->gimp->config->interpolation_type;
 
-  dialog = image_scale_dialog_new (display->image,
+  dialog = image_scale_dialog_new (image,
                                    action_data_get_context (data),
                                    widget,
                                    image_scale_unit,
@@ -356,19 +368,22 @@ image_flip_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
   GimpDisplay  *display;
+  GimpImage    *image;
   GimpProgress *progress;
   return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
 
   progress = gimp_progress_start (GIMP_PROGRESS (display),
                                   _("Flipping"), FALSE);
 
-  gimp_image_flip (display->image, action_data_get_context (data),
+  gimp_image_flip (image, action_data_get_context (data),
                    (GimpOrientationType) value, progress);
 
   if (progress)
     gimp_progress_end (progress);
 
-  gimp_image_flush (display->image);
+  gimp_image_flush (image);
 }
 
 void
@@ -377,19 +392,22 @@ image_rotate_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
   GimpDisplay  *display;
+  GimpImage    *image;
   GimpProgress *progress;
   return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
 
   progress = gimp_progress_start (GIMP_PROGRESS (display),
                                   _("Rotating"), FALSE);
 
-  gimp_image_rotate (display->image, action_data_get_context (data),
+  gimp_image_rotate (image, action_data_get_context (data),
                      (GimpRotationType) value, progress);
 
   if (progress)
     gimp_progress_end (progress);
 
-  gimp_image_flush (display->image);
+  gimp_image_flush (image);
 }
 
 void
@@ -421,13 +439,15 @@ image_duplicate_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpDisplay      *display;
+  GimpImage        *image;
   GimpDisplayShell *shell;
   GimpImage        *new_image;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  image = gimp_display_get_image (display);
+  shell = gimp_display_get_shell (display);
 
-  new_image = gimp_image_duplicate (display->image);
+  new_image = gimp_image_duplicate (image);
 
   gimp_create_display (new_image->gimp,
                        new_image,
@@ -476,21 +496,21 @@ image_configure_grid_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpDisplay      *display;
-  GimpDisplayShell *shell;
   GimpImage        *image;
+  GimpDisplayShell *shell;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-  image = display->image;
+  image = gimp_display_get_image (display);
+  shell = gimp_display_get_shell (display);
 
   if (! shell->grid_dialog)
     {
-      shell->grid_dialog = grid_dialog_new (display->image,
+      shell->grid_dialog = grid_dialog_new (image,
                                             action_data_get_context (data),
-                                            display->shell);
+                                            GTK_WIDGET (shell));
 
       gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
-                                    GTK_WINDOW (display->shell));
+                                    GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
       gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->grid_dialog),
                                           TRUE);
 
@@ -506,20 +526,20 @@ image_properties_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpDisplay      *display;
-  GimpDisplayShell *shell;
   GimpImage        *image;
+  GimpDisplayShell *shell;
   GtkWidget        *dialog;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-  image = display->image;
+  image = gimp_display_get_image (display);
+  shell = gimp_display_get_shell (display);
 
-  dialog = image_properties_dialog_new (display->image,
+  dialog = image_properties_dialog_new (image,
                                         action_data_get_context (data),
-                                        display->shell);
+                                        GTK_WIDGET (shell));
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                GTK_WINDOW (display->shell));
+                                GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog),
                                       TRUE);
 

@@ -43,7 +43,6 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-render.h"
-#include "display/gimpimagewindow.h"
 #include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"
@@ -531,11 +530,15 @@ gui_restore_after_callback (Gimp               *gimp,
 
   if (gimp_get_show_gui (gimp))
     {
+      GimpDisplayShell *shell;
+
       /*  create the empty display  */
       display = GIMP_DISPLAY (gimp_create_display (gimp,
                                                    NULL,
                                                    GIMP_UNIT_PIXEL,
                                                    1.0));
+
+      shell = gimp_display_get_shell (display);
 
       if (gui_config->restore_session)
         session_restore (gimp);
@@ -543,7 +546,7 @@ gui_restore_after_callback (Gimp               *gimp,
       windows_show_toolbox ();
 
       /*  move keyboard focus to the display  */
-      gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (display->shell)));
+      gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
     }
 
   /*  indicate that the application has finished loading  */
@@ -721,16 +724,11 @@ gui_menu_show_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
-      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
+      GimpDisplayShell *shell     = gimp_display_get_shell (display);
+      GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-      if (window)
-        {
-          GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-
-          gimp_statusbar_push (statusbar, "menu-tooltip",
-                               NULL, "%s", tooltip);
-        }
+      gimp_statusbar_push (statusbar, "menu-tooltip",
+                           NULL, "%s", tooltip);
     }
 }
 
@@ -743,15 +741,10 @@ gui_menu_hide_tooltip (GimpUIManager *manager,
 
   if (display)
     {
-      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
-      GimpImageWindow  *window = gimp_display_shell_get_window (shell);
+      GimpDisplayShell *shell     = gimp_display_get_shell (display);
+      GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-      if (window)
-        {
-          GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-
-          gimp_statusbar_pop (statusbar, "menu-tooltip");
-        }
+      gimp_statusbar_pop (statusbar, "menu-tooltip");
     }
 }
 
@@ -774,7 +767,7 @@ gui_display_changed (GimpContext *context,
             {
               GimpDisplay *display2 = list->data;
 
-              if (display2->image == image)
+              if (gimp_display_get_image (display2) == image)
                 {
                   gimp_context_set_display (context, display2);
 

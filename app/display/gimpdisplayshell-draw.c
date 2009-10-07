@@ -100,6 +100,7 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (const GimpDisplayShell 
                                                          gint                   *w,
                                                          gint                   *h)
 {
+  GimpImage      *image;
   GimpProjection *proj;
   TileManager    *tiles;
   gdouble         scale_x;
@@ -109,9 +110,12 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (const GimpDisplayShell 
   gint            level_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
-  proj = gimp_image_get_projection (shell->display->image);
+  image = gimp_display_get_image (shell->display);
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  proj = gimp_image_get_projection (image);
 
   gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
 
@@ -173,14 +177,17 @@ gimp_display_shell_draw_guide (const GimpDisplayShell *shell,
 void
 gimp_display_shell_draw_guides (const GimpDisplayShell *shell)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->display->image &&
-      gimp_display_shell_get_show_guides (shell))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_display_shell_get_show_guides (shell))
     {
       GList *list;
 
-      for (list = gimp_image_get_guides (shell->display->image);
+      for (list = gimp_image_get_guides (image);
            list;
            list = g_list_next (list))
         {
@@ -193,11 +200,14 @@ void
 gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
                               const GdkRectangle *area)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (area != NULL);
 
-  if (shell->display->image &&
-      gimp_display_shell_get_show_grid (shell))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_display_shell_get_show_grid (shell))
     {
       GimpGrid   *grid;
       GimpCanvas *canvas;
@@ -210,7 +220,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
 
 #define CROSSHAIR 2
 
-      grid = GIMP_GRID (shell->display->image->grid);
+      grid = GIMP_GRID (image->grid);
       if (! grid)
         return;
 
@@ -221,8 +231,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       x2 = area->x + area->width;
       y2 = area->y + area->height;
 
-      width  = gimp_image_get_width  (shell->display->image);
-      height = gimp_image_get_height (shell->display->image);
+      width  = gimp_image_get_width  (image);
+      height = gimp_image_get_height (image);
 
       x_offset = grid->xoffset;
       while (x_offset > 0)
@@ -407,17 +417,20 @@ gimp_display_shell_draw_sample_point (const GimpDisplayShell *shell,
                                       GimpSamplePoint        *sample_point,
                                       gboolean                active)
 {
-  GimpCanvasStyle style;
-  gdouble         x, y;
-  gint            x1, x2;
-  gint            y1, y2;
-  gint            w, h;
+  GimpImage       *image;
+  GimpCanvasStyle  style;
+  gdouble          x, y;
+  gint             x1, x2;
+  gint             y1, y2;
+  gint             w, h;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (sample_point != NULL);
 
   if (sample_point->x < 0)
     return;
+
+  image = gimp_display_get_image (shell->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      sample_point->x + 0.5,
@@ -464,21 +477,24 @@ gimp_display_shell_draw_sample_point (const GimpDisplayShell *shell,
   gimp_canvas_draw_text (GIMP_CANVAS (shell->canvas), style,
                          x + 2, y + 2,
                          "%d",
-                         g_list_index (gimp_image_get_sample_points (shell->display->image),
+                         g_list_index (gimp_image_get_sample_points (image),
                                        sample_point) + 1);
 }
 
 void
 gimp_display_shell_draw_sample_points (const GimpDisplayShell *shell)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->display->image &&
-      gimp_display_shell_get_show_sample_points (shell))
+  image = gimp_display_get_image (shell->display);
+
+  if (image && gimp_display_shell_get_show_sample_points (shell))
     {
       GList *list;
 
-      for (list = gimp_image_get_sample_points (shell->display->image);
+      for (list = gimp_image_get_sample_points (image);
            list;
            list = g_list_next (list))
         {
@@ -529,15 +545,18 @@ gimp_display_shell_draw_vector (const GimpDisplayShell *shell,
 void
 gimp_display_shell_draw_vectors (const GimpDisplayShell *shell)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->display->image &&
-      TRUE /* gimp_display_shell_get_show_vectors (shell) */)
+  image = gimp_display_get_image (shell->display);
+
+  if (image && TRUE /* gimp_display_shell_get_show_vectors (shell) */)
     {
       GList *all_vectors;
       GList *list;
 
-      all_vectors = gimp_image_get_vectors_list (shell->display->image);
+      all_vectors = gimp_image_get_vectors_list (image);
 
       for (list = all_vectors; list; list = list->next)
         {
@@ -573,7 +592,7 @@ gimp_display_shell_draw_area (const GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display->image)
+  if (! gimp_display_get_image (shell->display))
     return;
 
   sx = - shell->offset_x;

@@ -329,14 +329,15 @@ GimpImage *
 action_data_get_image (gpointer data)
 {
   GimpContext *context = NULL;
+  GimpDisplay *display = NULL;
 
   if (! data)
     return NULL;
 
   if (GIMP_IS_DISPLAY (data))
-    return ((GimpDisplay *) data)->image;
+    display = (GimpDisplay *) data;
   else if (GIMP_IS_IMAGE_WINDOW (data))
-    return gimp_image_window_get_active_shell (data)->display->image;
+    display = gimp_image_window_get_active_shell (data)->display;
   else if (GIMP_IS_GIMP (data))
     context = gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
@@ -355,6 +356,8 @@ action_data_get_image (gpointer data)
 
   if (context)
     return gimp_context_get_image (context);
+  else if (display)
+    return gimp_display_get_image (display);
 
   return NULL;
 }
@@ -405,7 +408,7 @@ action_data_get_widget (gpointer data)
     return data;
 
   if (display)
-    return display->shell;
+    return GTK_WIDGET (gimp_display_get_shell (display));
 
   return dialogs_get_toolbox ();
 }
@@ -635,30 +638,24 @@ action_message (GimpDisplay *display,
                 const gchar *format,
                 ...)
 {
-  GimpImageWindow *window;
+  GimpDisplayShell *shell     = gimp_display_get_shell (display);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  const gchar      *stock_id  = NULL;
+  va_list           args;
 
-  window = gimp_display_shell_get_window (GIMP_DISPLAY_SHELL (display->shell));
-
-  if (window)
+  if (GIMP_IS_TOOL_OPTIONS (object))
     {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      const gchar   *stock_id  = NULL;
-      va_list        args;
+      GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
 
-      if (GIMP_IS_TOOL_OPTIONS (object))
-        {
-          GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
-
-          stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-        }
-      else if (GIMP_IS_VIEWABLE (object))
-        {
-          stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
-        }
-
-      va_start (args, format);
-      gimp_statusbar_push_temp_valist (statusbar, GIMP_MESSAGE_INFO,
-                                       stock_id, format, args);
-      va_end (args);
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
     }
+  else if (GIMP_IS_VIEWABLE (object))
+    {
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
+    }
+
+  va_start (args, format);
+  gimp_statusbar_push_temp_valist (statusbar, GIMP_MESSAGE_INFO,
+                                   stock_id, format, args);
+  va_end (args);
 }

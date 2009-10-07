@@ -62,15 +62,18 @@ static void gimp_display_shell_filter_dialog_free     (ColorDisplayDialog *cdd);
 GtkWidget *
 gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 {
+  GimpImage          *image;
   ColorDisplayDialog *cdd;
   GtkWidget          *editor;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
+  image = gimp_display_get_image (shell->display);
+
   cdd = g_slice_new0 (ColorDisplayDialog);
 
   cdd->shell  = shell;
-  cdd->dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->display->image),
+  cdd->dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
                                           gimp_get_user_context (shell->display->gimp),
                                           _("Color Display Filters"),
                                           "gimp-display-filters",

@@ -213,8 +213,9 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                proximity, display);
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
-      gimp_image_get_active_drawable (display->image) && proximity)
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool))             &&
+      gimp_image_get_active_drawable (gimp_display_get_image (display)) &&
+      proximity)
     {
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
       GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
@@ -302,7 +303,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
 
   if (brush_core->brush_bound_segs)
     {
-      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
       gdouble           width  = brush_core->brush_bound_width;
       gdouble           height = brush_core->brush_bound_height;
 

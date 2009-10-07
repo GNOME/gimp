@@ -88,7 +88,7 @@ gimp_display_shell_update_title_idle (gpointer data)
 
   shell->title_idle_id = 0;
 
-  if (shell->display->image)
+  if (gimp_display_get_image (shell->display))
     {
       GimpDisplayConfig *config = shell->display->config;
       gchar              title[MAX_TITLE_BUF];
@@ -186,8 +186,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0);
 
-  image = shell->display->image;
-  gimp  = shell->display->gimp;
+  image = gimp_display_get_image (shell->display);
+  gimp  = gimp_display_get_gimp (shell->display);
 
   if (! image)
     {
@@ -238,7 +238,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'i': /* instance */
-              i += print (title, title_len, i, "%d", shell->display->instance);
+              i += print (title, title_len, i, "%d",
+                          gimp_display_get_instance (shell->display));
               break;
 
             case 't': /* image type */

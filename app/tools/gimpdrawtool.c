@@ -118,7 +118,7 @@ gimp_draw_tool_has_image (GimpTool  *tool,
 
   if (! display && draw_tool->display)
     {
-      if (image && draw_tool->display->image == image)
+      if (image && gimp_display_get_image (draw_tool->display) == image)
         display = draw_tool->display;
 
       /*  NULL image means any display  */
@@ -175,12 +175,8 @@ void
 gimp_draw_tool_start (GimpDrawTool *draw_tool,
                       GimpDisplay  *display)
 {
-  GimpDisplayShell *shell;
-
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
 
   gimp_draw_tool_stop (draw_tool);
 
@@ -299,7 +295,7 @@ gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), 0.0);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), 0.0);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1, FALSE);
   gimp_display_shell_transform_xy_f (shell, x2, y2, &tx2, &ty2, FALSE);
@@ -344,7 +340,7 @@ gimp_draw_tool_set_clip_rect (GimpDrawTool *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   if (rect)
     {
@@ -400,7 +396,7 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x1, y1,
@@ -443,7 +439,7 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x1, y1,
@@ -479,7 +475,7 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   x1 = 0;
   y1 = 0;
@@ -535,7 +531,7 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      MIN (x, x + width), MIN (y, y + height),
@@ -582,7 +578,7 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      MIN (x, x + width), MIN (y, y + height),
@@ -638,7 +634,7 @@ gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
@@ -680,7 +676,7 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
@@ -719,7 +715,7 @@ gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
@@ -855,7 +851,7 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell  = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell  = gimp_display_get_shell (draw_tool->display);
   canvas = GIMP_CANVAS (shell->canvas);
 
   gimp_display_shell_transform_xy (shell, x1, y1, &tx1, &ty1, use_offsets);
@@ -1263,7 +1259,7 @@ gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
   if (points == NULL || n_points == 0)
     return;
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   coords = g_new (GdkPoint, n_points);
 
@@ -1301,7 +1297,7 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
   if (n_points == 0)
     return;
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   coords = g_new (GdkPoint, n_points);
 
@@ -1357,7 +1353,7 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
   g_return_if_fail (n_bound_segs > 0);
   g_return_if_fail (bound_segs != NULL);
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gdk_points = g_new0 (GdkPoint, n_bound_segs + 1);
   n_gdk_points = 0;
@@ -1467,7 +1463,7 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x1, y1,
@@ -1547,7 +1543,7 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
@@ -1809,7 +1805,7 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
   if (ret_stroke)        *ret_stroke         = NULL;
   if (ret_vectors)       *ret_vectors        = NULL;
 
-  all_vectors = gimp_image_get_vectors_list (display->image);
+  all_vectors = gimp_image_get_vectors_list (gimp_display_get_image (display));
 
   for (list = all_vectors; list; list = g_list_next (list))
     {

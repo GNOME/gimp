@@ -27,104 +27,74 @@
 
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-progress.h"
-#include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
-
-/* FIXME: need to store the shell's progress state in the shell itself
- * instead of simply dispatching to the statusbar. Otherwise it's
- * impossible to switch an image window between two shells that both
- * have active progress messages.
- */
-
-
-static GimpProgress *
-gimp_display_shell_progress_get_real_progress (GimpProgress *progress)
-{
-  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (progress);
-  GimpImageWindow  *window = gimp_display_shell_get_window (shell);
-
-  if (window && gimp_image_window_get_active_shell (window) == shell)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-
-      return GIMP_PROGRESS (statusbar);
-    }
-
-  return NULL;
-}
 
 static GimpProgress *
 gimp_display_shell_progress_start (GimpProgress *progress,
                                    const gchar  *message,
                                    gboolean      cancelable)
 {
-  progress = gimp_display_shell_progress_get_real_progress (progress);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  if (progress)
-    return gimp_progress_start (progress, message, cancelable);
-
-  return NULL;
+  return gimp_progress_start (GIMP_PROGRESS (statusbar), message, cancelable);
 }
 
 static void
 gimp_display_shell_progress_end (GimpProgress *progress)
 {
-  progress = gimp_display_shell_progress_get_real_progress (progress);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  if (progress)
-    gimp_progress_end (progress);
+  gimp_progress_end (GIMP_PROGRESS (statusbar));
 }
 
 static gboolean
 gimp_display_shell_progress_is_active (GimpProgress *progress)
 {
-  progress = gimp_display_shell_progress_get_real_progress (progress);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  if (progress)
-    return gimp_progress_is_active (progress);
-
-  return FALSE;
+  return gimp_progress_is_active (GIMP_PROGRESS (statusbar));
 }
 
 static void
 gimp_display_shell_progress_set_text (GimpProgress *progress,
                                       const gchar  *message)
 {
-  progress = gimp_display_shell_progress_get_real_progress (progress);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  if (progress)
-    gimp_progress_set_text (progress, message);
+  gimp_progress_set_text (GIMP_PROGRESS (statusbar), message);
 }
 
 static void
 gimp_display_shell_progress_set_value (GimpProgress *progress,
                                        gdouble       percentage)
 {
-  progress = gimp_display_shell_progress_get_real_progress (progress);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  if (progress)
-    gimp_progress_set_value (progress, percentage);
+  gimp_progress_set_value (GIMP_PROGRESS (statusbar), percentage);
 }
 
 static gdouble
 gimp_display_shell_progress_get_value (GimpProgress *progress)
 {
-  progress = gimp_display_shell_progress_get_real_progress (progress);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  if (progress)
-    return gimp_progress_get_value (progress);
-
-  return 0.0;
+  return gimp_progress_get_value (GIMP_PROGRESS (statusbar));
 }
 
 static void
 gimp_display_shell_progress_pulse (GimpProgress *progress)
 {
-  progress = gimp_display_shell_progress_get_real_progress (progress);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  if (progress)
-    gimp_progress_pulse (progress);
+  gimp_progress_pulse (GIMP_PROGRESS (statusbar));
 }
 
 static guint32
@@ -145,32 +115,30 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
                                      const gchar         *domain,
                                      const gchar         *message)
 {
-  progress = gimp_display_shell_progress_get_real_progress (progress);
+  GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
+  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  if (progress)
+  switch (severity)
     {
-      switch (severity)
-        {
-        case GIMP_MESSAGE_ERROR:
-          /* error messages are never handled here */
-          break;
+    case GIMP_MESSAGE_ERROR:
+      /* error messages are never handled here */
+      break;
 
-        case GIMP_MESSAGE_WARNING:
-          /* warning messages go to the statusbar, if it's visible */
-          if (! gimp_statusbar_get_visible (GIMP_STATUSBAR (progress)))
-            break;
-          else
-            return gimp_progress_message (progress, gimp,
-                                          severity, domain, message);
+    case GIMP_MESSAGE_WARNING:
+      /* warning messages go to the statusbar, if it's visible */
+      if (! gimp_statusbar_get_visible (statusbar))
+        break;
+      else
+        return gimp_progress_message (GIMP_PROGRESS (statusbar), gimp,
+                                      severity, domain, message);
 
-        case GIMP_MESSAGE_INFO:
-          /* info messages go to the statusbar;
-           * if they are not handled there, they are swallowed
-           */
-          gimp_progress_message (progress, gimp,
-                                 severity, domain, message);
-          return TRUE;
-        }
+    case GIMP_MESSAGE_INFO:
+      /* info messages go to the statusbar;
+       * if they are not handled there, they are swallowed
+       */
+      gimp_progress_message (GIMP_PROGRESS (statusbar), gimp,
+                             severity, domain, message);
+      return TRUE;
     }
 
   return FALSE;

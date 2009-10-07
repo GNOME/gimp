@@ -61,5 +61,5 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
   gtk_box_pack_start (GTK_BOX (dock_columns), GTK_WIDGET (dock),
-                      FALSE, TRUE, 0);
+                      TRUE, TRUE, 0);
 }

@@ -128,7 +128,7 @@ file_open_as_layers_cmd_callback (GtkAction *action,
   display = action_data_get_display (data);
 
   if (display)
-    image = display->image;
+    image = gimp_display_get_image (display);
 
   file_open_dialog_show (gimp, widget,
                          _("Open Image as Layers"),
@@ -177,7 +177,8 @@ file_open_recent_cmd_callback (GtkAction *action,
       g_object_ref (display);
       g_object_ref (imagefile);
 
-      progress = display->image ? NULL : GIMP_PROGRESS (display);
+      progress = gimp_display_get_image (display) ?
+                 NULL : GIMP_PROGRESS (display);
 
       image = file_open_with_display (gimp, action_data_get_context (data),
                                       progress,
@@ -218,7 +219,7 @@ file_save_cmd_callback (GtkAction *action,
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  image = display->image;
+  image = gimp_display_get_image (display);
 
   save_mode = (GimpSaveMode) value;
 
@@ -267,19 +268,19 @@ file_save_cmd_callback (GtkAction *action,
         }
 
     case GIMP_SAVE_MODE_SAVE_AS:
-      file_save_dialog_show (gimp, display->image, widget,
+      file_save_dialog_show (gimp, image, widget,
                              _("Save Image"), FALSE,
                              save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE);
       break;
 
     case GIMP_SAVE_MODE_SAVE_A_COPY:
-      file_save_dialog_show (gimp, display->image, widget,
+      file_save_dialog_show (gimp, image, widget,
                              _("Save a Copy of the Image"), TRUE,
                              FALSE);
       break;
 
     case GIMP_SAVE_MODE_EXPORT:
-      file_export_dialog_show (gimp, display->image, widget);
+      file_export_dialog_show (gimp, image, widget);
       break;
 
     case GIMP_SAVE_MODE_EXPORT_TO:
@@ -317,7 +318,7 @@ file_save_cmd_callback (GtkAction *action,
 
   if (save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE &&
       saved &&
-      ! gimp_image_is_dirty (display->image))
+      ! gimp_image_is_dirty (image))
     {
       gimp_display_close (display);
     }
@@ -328,17 +329,20 @@ file_create_template_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpDisplay *display;
+  GimpImage   *image;
   GtkWidget   *dialog;
   return_if_no_display (display, data);
 
+  image = gimp_display_get_image (display);
+
   dialog = gimp_query_string_box (_("Create New Template"),
-                                  display->shell,
+                                  GTK_WIDGET (gimp_display_get_shell (display)),
                                   gimp_standard_help_func,
                                   GIMP_HELP_FILE_CREATE_TEMPLATE,
                                   _("Enter a name for this template"),
                                   NULL,
-                                  G_OBJECT (display->image), "disconnect",
-                                  file_new_template_callback, display->image);
+                                  G_OBJECT (image), "disconnect",
+                                  file_new_template_callback, image);
   gtk_widget_show (dialog);
 }
 
@@ -353,7 +357,7 @@ file_revert_cmd_callback (GtkAction *action,
   const gchar *source = NULL;
   return_if_no_display (display, data);
 
-  image = display->image;
+  image = gimp_display_get_image (display);
 
   uri = gimp_object_get_name (image);
 
@@ -384,7 +388,8 @@ file_revert_cmd_callback (GtkAction *action,
 
       dialog =
         gimp_message_dialog_new (_("Revert Image"), GTK_STOCK_REVERT_TO_SAVED,
-                                 display->shell, 0,
+                                 GTK_WIDGET (gimp_display_get_shell (display)),
+                                 0,
                                  gimp_standard_help_func, GIMP_HELP_FILE_REVERT,
 
                                  GTK_STOCK_CANCEL,          GTK_RESPONSE_CANCEL,
@@ -640,7 +645,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
                               gint         response_id,
                               GimpDisplay *display)
 {
-  GimpImage *old_image = display->image;
+  GimpImage *old_image = gimp_display_get_image (display);
 
   gtk_widget_destroy (dialog);
 

@@ -36,18 +36,10 @@ struct _GimpDisplay
 {
   GimpObject  parent_instance;
 
-  gint               ID;           /*  unique identifier for this display  */
-
   Gimp              *gimp;         /*  global gimp instance                */
   GimpDisplayConfig *config;
 
   GimpImage         *image;        /*  pointer to the associated image     */
-  gint               instance;     /*  the instance # of this display as   */
-                                   /*  taken from the image at creation    */
-
-  GtkWidget         *shell;        /*  shell widget for this display       */
-
-  GSList            *update_areas; /*  Update areas list                   */
 };
 
 struct _GimpDisplayClass
@@ -56,40 +48,47 @@ struct _GimpDisplayClass
 };
 
 
-GType         gimp_display_get_type    (void) G_GNUC_CONST;
+GType              gimp_display_get_type     (void) G_GNUC_CONST;
 
-GimpDisplay * gimp_display_new         (Gimp              *gimp,
-                                        GimpImage         *image,
-                                        GimpUnit           unit,
-                                        gdouble            scale,
-                                        GimpMenuFactory   *menu_factory,
-                                        GimpUIManager     *popup_manager,
-                                        GimpDialogFactory *display_factory);
-void          gimp_display_delete      (GimpDisplay       *display);
-void          gimp_display_close       (GimpDisplay       *display);
+GimpDisplay      * gimp_display_new          (Gimp              *gimp,
+                                              GimpImage         *image,
+                                              GimpUnit           unit,
+                                              gdouble            scale,
+                                              GimpMenuFactory   *menu_factory,
+                                              GimpUIManager     *popup_manager,
+                                              GimpDialogFactory *display_factory);
+void               gimp_display_delete       (GimpDisplay       *display);
+void               gimp_display_close        (GimpDisplay       *display);
 
-gint          gimp_display_get_ID      (GimpDisplay       *display);
-GimpDisplay * gimp_display_get_by_ID   (Gimp              *gimp,
-                                        gint               ID);
+gint               gimp_display_get_ID       (GimpDisplay       *display);
+GimpDisplay      * gimp_display_get_by_ID    (Gimp              *gimp,
+                                              gint               ID);
 
-void          gimp_display_set_image   (GimpDisplay       *display,
-                                        GimpImage         *image);
+Gimp             * gimp_display_get_gimp     (GimpDisplay       *display);
 
-void          gimp_display_empty       (GimpDisplay       *display);
-void          gimp_display_fill        (GimpDisplay       *display,
-                                        GimpImage         *image,
-                                        GimpUnit           unit,
-                                        gdouble            scale);
+GimpImage        * gimp_display_get_image    (GimpDisplay       *display);
+void               gimp_display_set_image    (GimpDisplay       *display,
+                                              GimpImage         *image);
 
-void          gimp_display_update_area (GimpDisplay       *display,
-                                        gboolean           now,
-                                        gint               x,
-                                        gint               y,
-                                        gint               w,
-                                        gint               h);
+gint               gimp_display_get_instance (GimpDisplay       *display);
 
-void          gimp_display_flush       (GimpDisplay       *display);
-void          gimp_display_flush_now   (GimpDisplay       *display);
+GimpDisplayShell * gimp_display_get_shell    (GimpDisplay       *display);
+
+void               gimp_display_empty        (GimpDisplay       *display);
+void               gimp_display_fill         (GimpDisplay       *display,
+                                              GimpImage         *image,
+                                              GimpUnit           unit,
+                                              gdouble            scale);
+
+void               gimp_display_update_area  (GimpDisplay       *display,
+                                              gboolean           now,
+                                              gint               x,
+                                              gint               y,
+                                              gint               w,
+                                              gint               h);
+
+void               gimp_display_flush        (GimpDisplay       *display);
+void               gimp_display_flush_now    (GimpDisplay       *display);
 
 
 #endif /*  __GIMP_DISPLAY_H__  */

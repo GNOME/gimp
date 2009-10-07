@@ -146,7 +146,8 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   tr_tool->trans_info[X1] = (gdouble) tr_tool->x2;
   tr_tool->trans_info[Y1] = (gdouble) tr_tool->y2;
 
-  gimp_image_get_resolution (display->image, &xres, &yres);
+  gimp_image_get_resolution (gimp_display_get_image (display),
+                             &xres, &yres);
 
   if (scale->box)
     {
@@ -164,7 +165,7 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                   "width",       tr_tool->x2 - tr_tool->x1,
                   "height",      tr_tool->y2 - tr_tool->y1,
                   "keep-aspect", options->constrain,
-                  "unit",        GIMP_DISPLAY_SHELL (display->shell)->unit,
+                  "unit",        gimp_display_get_shell (display)->unit,
                   "xresolution", xres,
                   "yresolution", yres,
                   NULL);

@@ -571,7 +571,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
   if (fg_select->stroke)
     {
-      gimp_display_shell_draw_pen (GIMP_DISPLAY_SHELL (draw_tool->display->shell),
+      gimp_display_shell_draw_pen (gimp_display_get_shell (draw_tool->display),
                                    (const GimpVector2 *)fg_select->stroke->data,
                                    fg_select->stroke->len,
                                    GIMP_CONTEXT (options),
@@ -583,7 +583,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
   if (fg_select->mask)
     {
-      GimpDisplayShell   *shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+      GimpDisplayShell   *shell = gimp_display_get_shell (draw_tool->display);
       gint                x     = fg_select->last_coords.x;
       gint                y     = fg_select->last_coords.y;
       gdouble             radius;
@@ -732,7 +732,7 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
   if (mask)
     fg_select->mask = g_object_ref (mask);
 
-  gimp_display_shell_set_mask (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_set_mask (gimp_display_get_shell (display),
                                GIMP_DRAWABLE (mask), options->mask_color);
 
   if (mask)
@@ -816,7 +816,7 @@ gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
                                          GimpDisplay                 *display,
                                          GimpForegroundSelectOptions *options)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell = gimp_display_get_shell (display);
   FgSelectStroke   *stroke;
 
   g_return_if_fail (fg_select->stroke != NULL);
@@ -891,7 +891,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
       GimpTool *tool = GIMP_TOOL (fg_select);
 
       if (tool->display)
-        gimp_display_shell_set_mask (GIMP_DISPLAY_SHELL (tool->display->shell),
+        gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
                                      GIMP_DRAWABLE (fg_select->mask),
                                      options->mask_color);
     }

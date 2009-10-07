@@ -30,31 +30,19 @@
 #define GIMP_TOOLBOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOLBOX, GimpToolboxClass))
 
 
-typedef struct _GimpToolboxClass GimpToolboxClass;
+typedef struct _GimpToolboxClass   GimpToolboxClass;
+typedef struct _GimpToolboxPrivate GimpToolboxPrivate;
 
 struct _GimpToolbox
 {
-  GimpDock       parent_instance;
+  GimpDock parent_instance;
 
-  GtkWidget     *vbox;
-
-  GtkWidget     *header;
-  GtkWidget     *tool_wbox;
-
-  GtkWidget     *area_wbox;
-  GtkWidget     *color_area;
-  GtkWidget     *foo_area;
-  GtkWidget     *image_area;
-
-  gint           tool_rows;
-  gint           tool_columns;
-  gint           area_rows;
-  gint           area_columns;
+  GimpToolboxPrivate *p;
 };
 
 struct _GimpToolboxClass
 {
-  GimpDockClass  parent_class;
+  GimpDockClass parent_class;
 };
 
 
@@ -63,6 +51,7 @@ GType       gimp_toolbox_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_toolbox_new      (GimpDialogFactory *factory,
                                    GimpContext       *context,
                                    GimpUIManager     *ui_manager);
+GtkWidget * gimp_toolbox_get_vbox (GimpToolbox       *toolbox);
 
 
 #endif /* __GIMP_TOOLBOX_H__ */

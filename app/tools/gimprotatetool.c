@@ -245,6 +245,7 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
                           GimpDisplay       *display)
 {
   GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
+  GimpImage      *image  = gimp_display_get_image (display);
   gdouble         xres;
   gdouble         yres;
 
@@ -253,14 +254,14 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
   tr_tool->trans_info[CENTER_X]   = tr_tool->cx;
   tr_tool->trans_info[CENTER_Y]   = tr_tool->cy;
 
-  gimp_image_get_resolution (display->image, &xres, &yres);
+  gimp_image_get_resolution (image, &xres, &yres);
 
   g_signal_handlers_block_by_func (rotate->sizeentry,
                                    rotate_center_changed,
                                    tr_tool);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (rotate->sizeentry),
-                            GIMP_DISPLAY_SHELL (display->shell)->unit);
+                            gimp_display_get_shell (display)->unit);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                                   xres, FALSE);
@@ -270,11 +271,11 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                                          -65536,
                                          65536 +
-                                         gimp_image_get_width (display->image));
+                                         gimp_image_get_width (image));
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
                                          -65536,
                                          65536 +
-                                         gimp_image_get_height (display->image));
+                                         gimp_image_get_height (image));
 
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                             tr_tool->x1, tr_tool->x2);

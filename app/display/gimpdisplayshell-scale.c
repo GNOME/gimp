@@ -118,7 +118,7 @@ gimp_display_shell_scale_update_scrollbars (GimpDisplayShell *shell)
   if (! shell->display)
     return;
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   if (image)
     {
@@ -175,7 +175,7 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
   if (! shell->display)
     return;
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   if (image)
     {
@@ -456,7 +456,7 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
@@ -532,7 +532,7 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
@@ -696,13 +696,17 @@ gimp_display_shell_calculate_scale_x_and_y (const GimpDisplayShell *shell,
                                             gdouble                *scale_x,
                                             gdouble                *scale_y)
 {
-  gdouble xres;
-  gdouble yres;
+  GimpImage *image;
+  gdouble    xres;
+  gdouble    yres;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
-  gimp_image_get_resolution (shell->display->image, &xres, &yres);
+  image = gimp_display_get_image (shell->display);
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   if (scale_x) *scale_x = scale * SCREEN_XRES (shell) / xres;
   if (scale_y) *scale_y = scale * SCREEN_YRES (shell) / yres;
@@ -714,6 +718,7 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
                                       gint             *display_width,
                                       gint             *display_height)
 {
+  GimpImage *image;
   GdkScreen *screen;
   gint       image_width;
   gint       image_height;
@@ -724,10 +729,12 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  image = gimp_display_get_image (shell->display);
+
   screen = gtk_widget_get_screen (GTK_WIDGET (shell));
 
-  image_width  = gimp_image_get_width  (shell->display->image);
-  image_height = gimp_image_get_height (shell->display->image);
+  image_width  = gimp_image_get_width  (image);
+  image_height = gimp_image_get_height (image);
 
   screen_width  = gdk_screen_get_width (screen)  * 0.75;
   screen_height = gdk_screen_get_height (screen) * 0.75;
@@ -1086,7 +1093,8 @@ img2real (GimpDisplayShell *shell,
   if (shell->unit == GIMP_UNIT_PIXEL)
     return len;
 
-  gimp_image_get_resolution (shell->display->image, &xres, &yres);
+  gimp_image_get_resolution (gimp_display_get_image (shell->display),
+                             &xres, &yres);
 
   if (xdir)
     res = xres;

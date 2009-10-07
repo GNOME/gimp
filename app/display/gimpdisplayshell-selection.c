@@ -163,7 +163,7 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->selection && shell->display->image)
+  if (shell->selection && gimp_display_get_image (shell->display))
     {
       Selection *selection = shell->selection;
 
@@ -208,7 +208,7 @@ gimp_display_shell_selection_set_hidden (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->selection && shell->display->image)
+  if (shell->selection && gimp_display_get_image (shell->display))
     {
       Selection *selection = shell->selection;
 
@@ -230,7 +230,7 @@ gimp_display_shell_selection_layer_set_hidden (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->selection && shell->display->image)
+  if (shell->selection && gimp_display_get_image (shell->display))
     {
       Selection *selection = shell->selection;
 
@@ -379,7 +379,7 @@ static void
 selection_layer_draw (Selection *selection)
 {
   GimpCanvas   *canvas   = GIMP_CANVAS (selection->shell->canvas);
-  GimpImage    *image    = selection->shell->display->image;
+  GimpImage    *image    = gimp_display_get_image (selection->shell->display);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (selection->segs_layer)
@@ -612,7 +612,7 @@ selection_transform_segs (Selection      *selection,
 static void
 selection_generate_segs (Selection *selection)
 {
-  GimpImage      *image = selection->shell->display->image;
+  GimpImage      *image = gimp_display_get_image (selection->shell->display);
   const BoundSeg *segs_in;
   const BoundSeg *segs_out;
   GimpLayer      *layer;
@@ -716,7 +716,7 @@ selection_start_timeout (Selection *selection)
   selection_free_segs (selection);
   selection->timeout = 0;
 
-  if (! selection->shell->display->image)
+  if (! gimp_display_get_image (selection->shell->display))
     return FALSE;
 
   selection_generate_segs (selection);

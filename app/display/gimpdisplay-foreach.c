@@ -46,8 +46,9 @@ gimp_displays_dirty (Gimp *gimp)
        list = g_list_next (list))
     {
       GimpDisplay *display = list->data;
+      GimpImage   *image   = gimp_display_get_image (display);
 
-      if (display->image && gimp_image_is_dirty (display->image))
+      if (image && gimp_image_is_dirty (image))
         return TRUE;
     }
 
@@ -218,7 +219,7 @@ gimp_displays_reconnect (Gimp      *gimp,
     {
       GimpDisplay *display = list->data;
 
-      if (display->image == old)
+      if (gimp_display_get_image (display) == old)
         gimp_display_set_image (display, new);
     }
 
@@ -242,11 +243,12 @@ gimp_displays_get_num_visible (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      GimpDisplay *display = list->data;
+      GimpDisplay      *display = list->data;
+      GimpDisplayShell *shell   = gimp_display_get_shell (display);
 
-      if (GTK_WIDGET_DRAWABLE (display->shell))
+      if (GTK_WIDGET_DRAWABLE (shell))
         {
-          GtkWidget *toplevel = gtk_widget_get_toplevel (display->shell);
+          GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
           if (GTK_IS_WINDOW (toplevel))
             {
@@ -277,7 +279,7 @@ gimp_displays_set_busy (Gimp *gimp)
        list = g_list_next (list))
     {
       GimpDisplayShell *shell =
-        GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
+        gimp_display_get_shell (GIMP_DISPLAY (list->data));
 
       gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
     }
@@ -295,7 +297,7 @@ gimp_displays_unset_busy (Gimp *gimp)
        list = g_list_next (list))
     {
       GimpDisplayShell *shell =
-        GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
+        gimp_display_get_shell (GIMP_DISPLAY (list->data));
 
       gimp_display_shell_unset_override_cursor (shell);
     }

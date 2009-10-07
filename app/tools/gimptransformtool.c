@@ -1175,7 +1175,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   GimpTool             *tool           = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options        = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpContext          *context        = GIMP_CONTEXT (options);
-  GimpDisplayShell     *shell          = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell     *shell          = gimp_display_get_shell (display);
   GimpItem             *active_item    = NULL;
   TileManager          *new_tiles;
   const gchar          *null_message   = NULL;
@@ -1223,7 +1223,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
 
   mask_empty = gimp_channel_is_empty (gimp_image_get_mask (display->image));
 
-  gimp_set_busy (display->image->gimp);
+  gimp_set_busy (display->gimp);
 
   /* undraw the tool before we muck around with the transform matrix */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
@@ -1337,7 +1337,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
       gtk_widget_queue_draw (shell->canvas);
     }
 
-  gimp_unset_busy (display->image->gimp);
+  gimp_unset_busy (display->gimp);
 
   gimp_image_flush (display->image);
 
@@ -1425,7 +1425,7 @@ gimp_transform_tool_force_expose_preview (GimpTransformTool *tr_tool)
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
     return;
 
-  shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->display->shell);
+  shell = gimp_display_get_shell (GIMP_DRAW_TOOL (tr_tool)->display);
 
   gimp_display_shell_transform_xy_f (shell, tr_tool->tx1, tr_tool->ty1,
                                      dx + 0, dy + 0, FALSE);
@@ -1478,7 +1478,7 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
     {
       GimpDisplayShell *shell;
 
-      shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->display->shell);
+      shell = gimp_display_get_shell (GIMP_DRAW_TOOL (tr_tool)->display);
 
       if (gimp_display_shell_get_show_transform (shell))
         {
@@ -1672,19 +1672,19 @@ gimp_transform_tool_handles_recalc (GimpTransformTool *tr_tool,
   gint x1, y1;
   gint x2, y2;
 
-  gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_transform_xy (gimp_display_get_shell (display),
                                    tr_tool->tx1, tr_tool->ty1,
                                    &dx1, &dy1,
                                    FALSE);
-  gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_transform_xy (gimp_display_get_shell (display),
                                    tr_tool->tx2, tr_tool->ty2,
                                    &dx2, &dy2,
                                    FALSE);
-  gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_transform_xy (gimp_display_get_shell (display),
                                    tr_tool->tx3, tr_tool->ty3,
                                    &dx3, &dy3,
                                    FALSE);
-  gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_transform_xy (gimp_display_get_shell (display),
                                    tr_tool->tx4, tr_tool->ty4,
                                    &dx4, &dy4,
                                    FALSE);
@@ -1745,7 +1745,7 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
      options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
      options->direction    == GIMP_TRANSFORM_FORWARD);
 
-  gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_set_show_transform (gimp_display_get_shell (display),
                                          show_transform);
 
   if (tr_tool->dialog)
@@ -1859,7 +1859,7 @@ gimp_transform_tool_notify_preview (GimpTransformOptions *options,
   GimpDisplayShell *shell = NULL;
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
-    shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->display->shell);
+    shell = gimp_display_get_shell (GIMP_DRAW_TOOL (tr_tool)->display);
 
   switch (options->preview_type)
     {

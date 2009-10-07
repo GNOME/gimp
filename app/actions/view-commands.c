@@ -65,7 +65,7 @@
 
 #define IS_ACTIVE_DISPLAY(display) \
   ((display) == \
-   gimp_context_get_display (gimp_get_user_context ((display)->image->gimp)))
+   gimp_context_get_display (gimp_get_user_context ((display)->gimp)))
 
 
 /*  local function prototypes  */
@@ -86,10 +86,10 @@ view_new_cmd_callback (GtkAction *action,
   GimpDisplayShell *shell;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
-  gimp_create_display (display->image->gimp,
-                       display->image,
+  gimp_create_display (display->gimp,
+                       gimp_display_get_image (display),
                        shell->unit, gimp_zoom_model_get_factor (shell->zoom));
 }
 
@@ -100,7 +100,7 @@ view_zoom_fit_in_cmd_callback (GtkAction *action,
   GimpDisplay *display;
   return_if_no_display (display, data);
 
-  gimp_display_shell_scale_fit_in (GIMP_DISPLAY_SHELL (display->shell));
+  gimp_display_shell_scale_fit_in (gimp_display_get_shell (display));
 }
 
 void
@@ -110,7 +110,7 @@ view_zoom_fill_cmd_callback (GtkAction *action,
   GimpDisplay *display;
   return_if_no_display (display, data);
 
-  gimp_display_shell_scale_fill (GIMP_DISPLAY_SHELL (display->shell));
+  gimp_display_shell_scale_fill (gimp_display_get_shell (display));
 }
 
 void
@@ -120,7 +120,7 @@ view_zoom_revert_cmd_callback (GtkAction *action,
   GimpDisplay *display;
   return_if_no_display (display, data);
 
-  gimp_display_shell_scale_revert (GIMP_DISPLAY_SHELL (display->shell));
+  gimp_display_shell_scale_revert (gimp_display_get_shell (display));
 }
 
 void
@@ -132,7 +132,7 @@ view_zoom_cmd_callback (GtkAction *action,
   GimpDisplayShell *shell;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   switch ((GimpActionSelectType) value)
     {
@@ -211,7 +211,7 @@ view_zoom_explicit_cmd_callback (GtkAction *action,
   gint              value;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
@@ -233,7 +233,7 @@ view_zoom_other_cmd_callback (GtkAction *action,
   GimpDisplayShell *shell;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   /* check if we are activated by the user or from
    * view_actions_set_zoom()
@@ -254,7 +254,7 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -284,7 +284,7 @@ view_scroll_horizontal_cmd_callback (GtkAction *action,
   gdouble           offset;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   offset = action_select_value ((GimpActionSelectType) value,
                                 shell->hsbdata->value,
@@ -310,7 +310,7 @@ view_scroll_vertical_cmd_callback (GtkAction *action,
   gdouble           offset;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   offset = action_select_value ((GimpActionSelectType) value,
                                 shell->vsbdata->value,
@@ -334,10 +334,10 @@ view_navigation_window_cmd_callback (GtkAction *action,
   GimpDisplayShell *shell;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gtk_widget_get_screen (display->shell),
+                                    gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     "gimp-navigation-view", -1);
 }
 
@@ -349,7 +349,7 @@ view_display_filters_cmd_callback (GtkAction *action,
   GimpDisplayShell *shell;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   if (! shell->filters_dialog)
     {
@@ -372,7 +372,7 @@ view_toggle_selection_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -388,7 +388,7 @@ view_toggle_layer_boundary_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -404,7 +404,7 @@ view_toggle_menubar_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -420,7 +420,7 @@ view_toggle_rulers_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -436,7 +436,7 @@ view_toggle_scrollbars_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -452,7 +452,7 @@ view_toggle_statusbar_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -468,7 +468,7 @@ view_toggle_guides_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -484,7 +484,7 @@ view_toggle_grid_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -500,7 +500,7 @@ view_toggle_sample_points_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -516,7 +516,7 @@ view_snap_to_guides_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -532,7 +532,7 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -548,7 +548,7 @@ view_snap_to_canvas_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -564,7 +564,7 @@ view_snap_to_vectors_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -583,7 +583,7 @@ view_padding_color_cmd_callback (GtkAction *action,
   gboolean            fullscreen;
   return_if_no_display (display, data);
 
-  shell  = GIMP_DISPLAY_SHELL (display->shell);
+  shell  = gimp_display_get_shell (display);
   window = gimp_display_shell_get_window (shell);
 
   if (window)
@@ -618,20 +618,23 @@ view_padding_color_cmd_callback (GtkAction *action,
 
         if (! color_dialog)
           {
+            GimpImage        *image = gimp_display_get_image (display);
+            GimpDisplayShell *shell = gimp_display_get_shell (display);
+
             color_dialog =
-              gimp_color_dialog_new (GIMP_VIEWABLE (display->image),
+              gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                      action_data_get_context (data),
                                      _("Set Canvas Padding Color"),
                                      GTK_STOCK_SELECT_COLOR,
                                      _("Set Custom Canvas Padding Color"),
-                                     display->shell,
+                                     GTK_WIDGET (shell),
                                      NULL, NULL,
                                      &options->padding_color,
                                      FALSE, FALSE);
 
             g_signal_connect (color_dialog, "update",
                               G_CALLBACK (view_padding_color_dialog_update),
-                              display->shell);
+                              shell);
 
             g_object_set_data_full (G_OBJECT (shell), "padding-color-dialog",
                                     color_dialog,
@@ -671,7 +674,7 @@ view_shrink_wrap_cmd_callback (GtkAction *action,
   GimpDisplayShell *shell;
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   gimp_display_shell_scale_shrink_wrap (shell,
                                         FALSE);
@@ -686,7 +689,7 @@ view_fullscreen_cmd_callback (GtkAction *action,
   GimpImageWindow  *window;
   return_if_no_display (display, data);
 
-  shell  = GIMP_DISPLAY_SHELL (display->shell);
+  shell  = gimp_display_get_shell (display);
   window = gimp_display_shell_get_window (shell);
 
   if (window)
@@ -712,7 +715,7 @@ view_use_gegl_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_display (display, data);
 
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  shell = gimp_display_get_shell (display);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 

@@ -180,7 +180,7 @@ gimp_move_tool_control (GimpTool       *tool,
                         GimpDisplay    *display)
 {
   GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell = gimp_display_get_shell (display);
 
   switch (action)
     {
@@ -210,7 +210,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
                              GimpDisplay         *display)
 {
   GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell   = gimp_display_get_shell (display);
   GimpMoveOptions  *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
 
   tool->display = display;
@@ -247,10 +247,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
         {
           GimpGuide *guide;
           GimpLayer *layer;
-          gint       snap_distance;
-
-          snap_distance =
-            GIMP_DISPLAY_CONFIG (display->image->gimp->config)->snap_distance;
+          gint       snap_distance = display->config->snap_distance;
 
           if (gimp_display_shell_get_show_guides (shell) &&
               (guide = gimp_image_find_guide (display->image,
@@ -359,8 +356,8 @@ gimp_move_tool_button_release (GimpTool              *tool,
                                GimpDisplay           *display)
 {
   GimpMoveTool     *move   = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
-  GimpGuiConfig    *config = GIMP_GUI_CONFIG (display->image->gimp->config);
+  GimpDisplayShell *shell  = gimp_display_get_shell (display);
+  GimpGuiConfig    *config = GIMP_GUI_CONFIG (display->gimp->config);
 
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);
@@ -505,7 +502,7 @@ gimp_move_tool_motion (GimpTool         *tool,
 
 {
   GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell = gimp_display_get_shell (display);
 
   if (move->moving_guide)
     {
@@ -655,7 +652,7 @@ gimp_move_tool_oper_update (GimpTool         *tool,
 {
   GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
   GimpMoveOptions  *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell   = gimp_display_get_shell (display);
   GimpGuide        *guide   = NULL;
 
   if (options->move_type == GIMP_TRANSFORM_TYPE_LAYER &&
@@ -663,10 +660,7 @@ gimp_move_tool_oper_update (GimpTool         *tool,
       gimp_display_shell_get_show_guides (shell)      &&
       proximity)
     {
-      gint snap_distance;
-
-      snap_distance =
-        GIMP_DISPLAY_CONFIG (display->image->gimp->config)->snap_distance;
+      gint snap_distance = display->config->snap_distance;
 
       guide = gimp_image_find_guide (display->image, coords->x, coords->y,
                                      FUNSCALEX (shell, snap_distance),
@@ -688,7 +682,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
-  GimpDisplayShell   *shell       = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell   *shell       = gimp_display_get_shell (display);
   GimpMoveOptions    *options     = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
   GimpCursorType      cursor      = GIMP_CURSOR_MOUSE;
   GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_MOVE;
@@ -735,10 +729,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
     {
       GimpGuide *guide;
       GimpLayer *layer;
-      gint       snap_distance;
-
-      snap_distance =
-        GIMP_DISPLAY_CONFIG (display->image->gimp->config)->snap_distance;
+      gint       snap_distance = display->config->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
           (guide = gimp_image_find_guide (display->image, coords->x, coords->y,
@@ -819,7 +810,7 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
 {
   GimpTool *tool = GIMP_TOOL (move);
 
-  gimp_display_shell_selection_control (GIMP_DISPLAY_SHELL (display->shell),
+  gimp_display_shell_selection_control (gimp_display_get_shell (display),
                                         GIMP_SELECTION_PAUSE);
 
   tool->display = display;
@@ -827,7 +818,7 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
   if (move->guide)
-    gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (display->shell),
+    gimp_display_shell_draw_guide (gimp_display_get_shell (display),
                                    move->guide, FALSE);
 
   move->guide             = NULL;

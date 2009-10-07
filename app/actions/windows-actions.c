@@ -208,7 +208,7 @@ windows_actions_display_add (GimpContainer   *container,
                            G_CALLBACK (windows_actions_image_notify),
                            group, 0);
 
-  if (display->image)
+  if (gimp_display_get_image (display))
     windows_actions_image_notify (display, NULL, group);
 }
 
@@ -234,7 +234,9 @@ windows_actions_image_notify (GimpDisplay      *display,
                               const GParamSpec *unused,
                               GimpActionGroup  *group)
 {
-  if (display->image)
+  GimpImage *image = gimp_display_get_image (display);
+
+  if (image)
     {
       GtkAction *action;
       gchar     *action_name = g_strdup_printf ("windows-display-%04d",
@@ -270,7 +272,7 @@ windows_actions_image_notify (GimpDisplay      *display,
         gchar       *escaped;
         gchar       *title;
 
-        uri = gimp_image_get_uri (display->image);
+        uri = gimp_image_get_uri (image);
 
         filename = file_utils_uri_display_name (uri);
         basename = file_utils_uri_display_basename (uri);
@@ -279,14 +281,14 @@ windows_actions_image_notify (GimpDisplay      *display,
         g_free (basename);
 
         title = g_strdup_printf ("%s-%d.%d", escaped,
-                                 gimp_image_get_ID (display->image),
-                                 display->instance);
+                                 gimp_image_get_ID (image),
+                                 gimp_display_get_instance (display));
         g_free (escaped);
 
         g_object_set (action,
                       "label",    title,
                       "tooltip",  filename,
-                      "viewable", display->image,
+                      "viewable", image,
                       "context",  gimp_get_user_context (group->gimp),
                       NULL);
 

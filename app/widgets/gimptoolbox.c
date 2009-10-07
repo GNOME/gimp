@@ -62,7 +62,24 @@
 #define TOOL_INFO_DATA_KEY     "gimp-tool-info"
 
 
-/*  local function prototypes  */
+struct _GimpToolboxPrivate
+{
+  GtkWidget *vbox;
+
+  GtkWidget *header;
+  GtkWidget *tool_wbox;
+
+  GtkWidget *area_wbox;
+  GtkWidget *color_area;
+  GtkWidget *foo_area;
+  GtkWidget *image_area;
+
+  gint       tool_rows;
+  gint       tool_columns;
+  gint       area_rows;
+  gint       area_columns;
+};
+
 
 static GObject   * gimp_toolbox_constructor        (GType           type,
                                                     guint           n_params,
@@ -168,11 +185,17 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
                                                               GTK_TYPE_RELIEF_STYLE,
                                                               DEFAULT_BUTTON_RELIEF,
                                                               GIMP_PARAM_READABLE));
+
+  g_type_class_add_private (klass, sizeof (GimpToolboxPrivate));
 }
 
 static void
 gimp_toolbox_init (GimpToolbox *toolbox)
 {
+  toolbox->p = G_TYPE_INSTANCE_GET_PRIVATE (toolbox,
+                                            GIMP_TYPE_TOOLBOX,
+                                            GimpToolboxPrivate);
+
   gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
                      GIMP_HELP_TOOLBOX, NULL);
 }
@@ -199,45 +222,45 @@ gimp_toolbox_constructor (GType                  type,
 
   main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
 
-  toolbox->vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), toolbox->vbox, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (main_vbox), toolbox->vbox, 0);
-  gtk_widget_show (toolbox->vbox);
+  toolbox->p->vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toolbox->p->vbox, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (main_vbox), toolbox->p->vbox, 0);
+  gtk_widget_show (toolbox->p->vbox);
 
-  toolbox->header = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (toolbox->header), GTK_SHADOW_NONE);
-  gtk_box_pack_start (GTK_BOX (toolbox->vbox), toolbox->header,
+  toolbox->p->header = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (toolbox->p->header), GTK_SHADOW_NONE);
+  gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->header,
                       FALSE, FALSE, 0);
 
   if (config->toolbox_wilber)
-    gtk_widget_show (toolbox->header);
+    gtk_widget_show (toolbox->p->header);
 
-  gimp_help_set_help_data (toolbox->header,
+  gimp_help_set_help_data (toolbox->p->header,
                            _("Drop image files here to open them"), NULL);
 
   g_signal_connect_object (config, "notify::toolbox-wilber",
                            G_CALLBACK (toolbox_wilber_notify),
-                           toolbox->header, 0);
+                           toolbox->p->header, 0);
 
-  toolbox->tool_wbox = gtk_hwrap_box_new (FALSE);
-  gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->tool_wbox), GTK_JUSTIFY_TOP);
-  gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->tool_wbox),
+  toolbox->p->tool_wbox = gtk_hwrap_box_new (FALSE);
+  gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->p->tool_wbox), GTK_JUSTIFY_TOP);
+  gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->p->tool_wbox),
                                  GTK_JUSTIFY_LEFT);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->tool_wbox), 5.0 / 6.0);
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->p->tool_wbox), 2.0 / 15.0);
 
-  gtk_box_pack_start (GTK_BOX (toolbox->vbox), toolbox->tool_wbox,
+  gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->tool_wbox,
                       FALSE, FALSE, 0);
-  gtk_widget_show (toolbox->tool_wbox);
+  gtk_widget_show (toolbox->p->tool_wbox);
 
-  toolbox->area_wbox = gtk_hwrap_box_new (FALSE);
-  gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->area_wbox), GTK_JUSTIFY_TOP);
-  gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->area_wbox),
+  toolbox->p->area_wbox = gtk_hwrap_box_new (FALSE);
+  gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->p->area_wbox), GTK_JUSTIFY_TOP);
+  gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->p->area_wbox),
                                  GTK_JUSTIFY_LEFT);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->area_wbox), 5.0 / 6.0);
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->p->area_wbox), 2.0 / 15.0);
 
-  gtk_box_pack_start (GTK_BOX (toolbox->vbox), toolbox->area_wbox,
+  gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->area_wbox,
                       FALSE, FALSE, 0);
-  gtk_widget_show (toolbox->area_wbox);
+  gtk_widget_show (toolbox->p->area_wbox);
 
   /* We need to know when the current device changes, so we can update
    * the correct tool - to do this we connect to motion events.
@@ -264,36 +287,36 @@ gimp_toolbox_constructor (GType                  type,
 
   toolbox_create_tools (toolbox, context);
 
-  toolbox->color_area = toolbox_create_color_area (toolbox, context);
-  gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (toolbox->area_wbox),
-                             toolbox->color_area,
+  toolbox->p->color_area = toolbox_create_color_area (toolbox, context);
+  gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (toolbox->p->area_wbox),
+                             toolbox->p->color_area,
                              TRUE, TRUE, FALSE, TRUE, TRUE);
   if (config->toolbox_color_area)
-    gtk_widget_show (toolbox->color_area);
+    gtk_widget_show (toolbox->p->color_area);
 
   g_signal_connect_object (config, "notify::toolbox-color-area",
                            G_CALLBACK (toolbox_area_notify),
-                           toolbox->color_area, 0);
+                           toolbox->p->color_area, 0);
 
-  toolbox->foo_area = toolbox_create_foo_area (toolbox, context);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->area_wbox), toolbox->foo_area,
+  toolbox->p->foo_area = toolbox_create_foo_area (toolbox, context);
+  gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->p->area_wbox), toolbox->p->foo_area,
                      TRUE, TRUE, FALSE, TRUE);
   if (config->toolbox_foo_area)
-    gtk_widget_show (toolbox->foo_area);
+    gtk_widget_show (toolbox->p->foo_area);
 
   g_signal_connect_object (config, "notify::toolbox-foo-area",
                            G_CALLBACK (toolbox_area_notify),
-                           toolbox->foo_area, 0);
+                           toolbox->p->foo_area, 0);
 
-  toolbox->image_area = toolbox_create_image_area (toolbox, context);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->area_wbox), toolbox->image_area,
+  toolbox->p->image_area = toolbox_create_image_area (toolbox, context);
+  gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->p->area_wbox), toolbox->p->image_area,
                      TRUE, TRUE, FALSE, TRUE);
   if (config->toolbox_image_area)
-    gtk_widget_show (toolbox->image_area);
+    gtk_widget_show (toolbox->p->image_area);
 
   g_signal_connect_object (config, "notify::toolbox-image-area",
                            G_CALLBACK (toolbox_area_notify),
-                           toolbox->image_area, 0);
+                           toolbox->p->image_area, 0);
 
   g_signal_connect_object (context, "tool-changed",
                            G_CALLBACK (toolbox_tool_changed),
@@ -359,13 +382,13 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
       if (n_tools % tool_columns)
         tool_rows++;
 
-      if (toolbox->tool_rows    != tool_rows  ||
-          toolbox->tool_columns != tool_columns)
+      if (toolbox->p->tool_rows    != tool_rows  ||
+          toolbox->p->tool_columns != tool_columns)
         {
-          toolbox->tool_rows    = tool_rows;
-          toolbox->tool_columns = tool_columns;
+          toolbox->p->tool_rows    = tool_rows;
+          toolbox->p->tool_columns = tool_columns;
 
-          gtk_widget_set_size_request (toolbox->tool_wbox, -1,
+          gtk_widget_set_size_request (toolbox->p->tool_wbox, -1,
                                        tool_rows * button_requisition.height);
         }
     }
@@ -380,9 +403,9 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
     gint            area_rows;
     gint            area_columns;
 
-    gtk_widget_size_request (toolbox->color_area, &color_requisition);
-    gtk_widget_size_request (toolbox->foo_area,   &foo_requisition);
-    gtk_widget_size_request (toolbox->image_area, &image_requisition);
+    gtk_widget_size_request (toolbox->p->color_area, &color_requisition);
+    gtk_widget_size_request (toolbox->p->foo_area,   &foo_requisition);
+    gtk_widget_size_request (toolbox->p->image_area, &image_requisition);
 
     width  = MAX (color_requisition.width,
                   MAX (foo_requisition.width,
@@ -401,13 +424,13 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
     if (n_areas % area_columns)
       area_rows++;
 
-    if (toolbox->area_rows    != area_rows  ||
-        toolbox->area_columns != area_columns)
+    if (toolbox->p->area_rows    != area_rows  ||
+        toolbox->p->area_columns != area_columns)
       {
-        toolbox->area_rows    = area_rows;
-        toolbox->area_columns = area_columns;
+        toolbox->p->area_rows    = area_rows;
+        toolbox->p->area_columns = area_columns;
 
-        gtk_widget_set_size_request (toolbox->area_wbox, -1,
+        gtk_widget_set_size_request (toolbox->p->area_wbox, -1,
                                      area_rows * height);
       }
   }
@@ -489,9 +512,9 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
 
   GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
-  if (GTK_WIDGET_VISIBLE (toolbox->header) &&
+  if (GTK_WIDGET_VISIBLE (toolbox->p->header) &&
       gdk_rectangle_intersect (&event->area,
-                               &toolbox->header->allocation,
+                               &toolbox->p->header->allocation,
                                &clip_rect))
     {
       GtkStyle *style = gtk_widget_get_style (widget);
@@ -506,8 +529,8 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
       gdk_cairo_rectangle (cr, &clip_rect);
       cairo_clip (cr);
 
-      header_width  = toolbox->header->allocation.width;
-      header_height = toolbox->header->allocation.height;
+      header_width  = toolbox->p->header->allocation.width;
+      header_height = toolbox->p->header->allocation.height;
 
       gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
 
@@ -584,7 +607,7 @@ gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
 
       gtk_widget_size_request (tool_button, &button_requisition);
 
-      gtk_widget_set_size_request (toolbox->header,
+      gtk_widget_set_size_request (toolbox->p->header,
                                    -1,
                                    button_requisition.height *
                                    PANGO_SCALE_SMALL);
@@ -626,6 +649,14 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
                           NULL);
 
   return GTK_WIDGET (toolbox);
+}
+
+GtkWidget *
+gimp_toolbox_get_vbox (GimpToolbox *toolbox)
+{
+  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+
+  return toolbox->p->vbox;
 }
 
 
@@ -686,7 +717,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 
-      gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->tool_wbox), button,
+      gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->p->tool_wbox), button,
                          FALSE, FALSE, FALSE, FALSE);
 
       if (tool_info->visible)
@@ -744,7 +775,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
 
   g_signal_connect_object (context->gimp->tool_info_list, "reorder",
                            G_CALLBACK (toolbox_tool_reorder),
-                           toolbox->tool_wbox, 0);
+                           toolbox->p->tool_wbox, 0);
 }
 
 static GtkWidget *

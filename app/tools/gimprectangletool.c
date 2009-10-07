@@ -914,9 +914,9 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
     {
       if (gimp_draw_tool_is_active (draw_tool))
         {
-          GtkWidget *shell = draw_tool->display->shell;
+          GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
 
-          gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (shell), NULL);
+          gimp_display_shell_set_highlight (shell, NULL);
           gimp_draw_tool_stop (draw_tool);
         }
 
@@ -1949,7 +1949,7 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rect_tool)
   if (! (tool && tool->display))
     return;
 
-  shell   = GIMP_DISPLAY_SHELL (tool->display->shell);
+  shell   = gimp_display_get_shell (tool->display);
 
   gimp_rectangle_tool_get_public_rect (rect_tool,
                                        &pub_x1, &pub_y1, &pub_x2, &pub_y2);
@@ -2054,7 +2054,7 @@ gimp_rectangle_tool_scale_has_changed (GimpRectangleTool *rect_tool)
   if (! tool->display)
     return TRUE;
 
-  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+  shell = gimp_display_get_shell (tool->display);
 
   return (shell->scale_x != private->scale_x_used_for_handle_size_calculations
           ||
@@ -2078,7 +2078,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
 
   tool->display = display;
 
-  g_signal_connect_object (tool->display->shell, "scrolled",
+  g_signal_connect_object (gimp_display_get_shell (tool->display), "scrolled",
                            G_CALLBACK (gimp_rectangle_tool_shell_scrolled),
                            rect_tool, 0);
 
@@ -2169,7 +2169,7 @@ gimp_rectangle_tool_halt (GimpRectangleTool *rect_tool)
 
   if (tool->display)
     {
-      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
 
       gimp_display_shell_set_highlight (shell, NULL);
 
@@ -2651,7 +2651,7 @@ gimp_rectangle_tool_coord_outside (GimpRectangleTool *rect_tool,
 
   private     = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
   narrow_mode = private->narrow_mode;
-  shell       = GIMP_DISPLAY_SHELL (GIMP_TOOL (rect_tool)->display->shell);
+  shell       = gimp_display_get_shell (GIMP_TOOL (rect_tool)->display);
 
   gimp_rectangle_tool_get_public_rect (rect_tool,
                                        &pub_x1, &pub_y1, &pub_x2, &pub_y2);
@@ -2693,7 +2693,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
 
   tool      = GIMP_TOOL (rect_tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
-  shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
+  shell     = gimp_display_get_shell (tool->display);
   private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
 
   gimp_rectangle_tool_get_public_rect (rect_tool,
@@ -2870,7 +2870,7 @@ gimp_rectangle_tool_update_highlight (GimpRectangleTool *rect_tool)
   if (! tool->display)
     return;
 
-  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+  shell = gimp_display_get_shell (tool->display);
 
   g_object_get (options, "highlight", &highlight, NULL);
 

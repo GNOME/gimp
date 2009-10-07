@@ -147,9 +147,10 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
-  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_connect (image, "clean",
                     G_CALLBACK (gimp_display_shell_clean_dirty_handler),
@@ -289,9 +290,10 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
-  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   gimp_display_shell_icon_idle_stop (shell);
 
@@ -484,9 +486,9 @@ gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                    shell);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->quick_mask_button),
-                                shell->display->image->quick_mask_state);
+                                image->quick_mask_state);
 
-  if (shell->display->image->quick_mask_state)
+  if (image->quick_mask_state)
     gtk_image_set_from_stock (gtk_image, GIMP_STOCK_QUICK_MASK_ON,
                               GTK_ICON_SIZE_MENU);
   else
@@ -536,7 +538,7 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
     }
   else
     {
-      GimpImage *image                    = GIMP_IMAGE (shell->display->image);
+      GimpImage *image                    = gimp_display_get_image (shell->display);
       gint       new_width                = gimp_image_get_width  (image);
       gint       new_height               = gimp_image_get_height (image);
       gint       scaled_previous_origin_x = SCALEX (shell, previous_origin_x);
@@ -586,18 +588,13 @@ gimp_display_shell_saved_handler (GimpImage        *image,
                                   const gchar      *uri,
                                   GimpDisplayShell *shell)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+  GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
+  gchar         *filename  = file_utils_uri_display_name (uri);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      gchar         *filename  = file_utils_uri_display_name (uri);
-
-      gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                                GTK_STOCK_SAVE, _("Image saved to '%s'"),
-                                filename);
-      g_free (filename);
-    }
+  gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                            GTK_STOCK_SAVE, _("Image saved to '%s'"),
+                            filename);
+  g_free (filename);
 }
 
 static void
@@ -605,18 +602,13 @@ gimp_display_shell_exported_handler (GimpImage        *image,
                                      const gchar      *uri,
                                      GimpDisplayShell *shell)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+  GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
+  gchar         *filename  = file_utils_uri_display_name (uri);
 
-  if (window && gimp_image_window_get_active_shell (window) == shell)
-    {
-      GimpStatusbar *statusbar = gimp_image_window_get_statusbar (window);
-      gchar         *filename  = file_utils_uri_display_name (uri);
-
-      gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                                GTK_STOCK_SAVE, _("Image exported to '%s'"),
-                                filename);
-      g_free (filename);
-    }
+  gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                            GTK_STOCK_SAVE, _("Image exported to '%s'"),
+                            filename);
+  g_free (filename);
 }
 
 static void

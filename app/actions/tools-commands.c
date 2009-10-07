@@ -98,7 +98,7 @@ tools_select_cmd_callback (GtkAction   *action,
 
   display = gimp_context_get_display (context);
 
-  if (display && display->image)
+  if (display && gimp_display_get_image (display))
     tool_manager_initialize_active (gimp, display);
 }
 

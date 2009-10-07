@@ -44,7 +44,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpimagewindow.h"
+#include "display/gimpdisplayshell-appearance.h"
 
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
@@ -189,7 +189,7 @@ gimp_measure_tool_button_press (GimpTool            *tool,
 {
   GimpMeasureTool    *measure = GIMP_MEASURE_TOOL (tool);
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell   *shell   = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
   gint                i;
 
   /*  if we are changing displays, pop the statusbar of the old one  */
@@ -333,10 +333,8 @@ gimp_measure_tool_button_press (GimpTool            *tool,
   /*  create the info window if necessary  */
   if (! measure->dialog)
     {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
       if (options->use_info_window ||
-          ! gimp_image_window_get_show_statusbar (window))
+          ! gimp_display_shell_get_show_statusbar (shell))
         {
           measure->dialog = gimp_measure_tool_dialog_new (measure);
           g_object_add_weak_pointer (G_OBJECT (measure->dialog),
@@ -743,7 +741,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
               gdouble           target;
               gdouble           arc_radius;
 
-              shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+              shell = gimp_display_get_shell (tool->display);
 
               target     = FUNSCALEX (shell, (TARGET >> 1));
               arc_radius = FUNSCALEX (shell, ARC_RADIUS);
@@ -813,7 +811,7 @@ static void
 gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
                                  GimpDisplay     *display)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell = gimp_display_get_shell (display);
   GimpImage        *image = display->image;
   gint              ax, ay;
   gint              bx, by;

@@ -157,10 +157,9 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
                                      GimpDisplay  *display,
                                      GError      **error)
 {
-  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (tool);
-  GimpDrawable          *drawable;
-
-  drawable = gimp_image_get_active_drawable (display->image);
+  GimpHueSaturationTool *hs_tool  = GIMP_HUE_SATURATION_TOOL (tool);
+  GimpImage             *image    = gimp_display_get_image (display);
+  GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return FALSE;

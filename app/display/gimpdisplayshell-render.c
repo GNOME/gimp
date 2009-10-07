@@ -229,7 +229,7 @@ gimp_display_shell_render (const GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (w > 0 && h > 0);
 
-  image = shell->display->image;
+  image = gimp_display_get_image (shell->display);
 
   projection = gimp_image_get_projection (image);
 

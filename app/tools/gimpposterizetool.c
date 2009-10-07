@@ -138,9 +138,10 @@ gimp_posterize_tool_initialize (GimpTool     *tool,
                                 GError      **error)
 {
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (tool);
+  GimpImage         *image          = gimp_display_get_image (display);
   GimpDrawable      *drawable;
 
-  drawable = gimp_image_get_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return FALSE;

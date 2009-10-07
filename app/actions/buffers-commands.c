@@ -134,12 +134,12 @@ buffers_paste (GimpBufferView *view,
 
       if (display)
         {
-          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+          GimpDisplayShell *shell = gimp_display_get_shell (display);
 
           gimp_display_shell_untransform_viewport (shell,
                                                    &x, &y, &width, &height);
 
-          image = display->image;
+          image = gimp_display_get_image (display);
         }
       else
         {

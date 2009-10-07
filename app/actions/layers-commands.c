@@ -606,7 +606,7 @@ layers_resize_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   if (layer_resize_unit != GIMP_UNIT_PERCENT && GIMP_IS_DISPLAY (data))
-    layer_resize_unit = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (data)->shell)->unit;
+    layer_resize_unit = gimp_display_get_shell (GIMP_DISPLAY (data))->unit;
 
   dialog = resize_dialog_new (GIMP_VIEWABLE (layer),
                               action_data_get_context (data),
@@ -644,7 +644,7 @@ layers_scale_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   if (layer_scale_unit != GIMP_UNIT_PERCENT && GIMP_IS_DISPLAY (data))
-    layer_scale_unit = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (data)->shell)->unit;
+    layer_scale_unit = gimp_display_get_shell (GIMP_DISPLAY (data))->unit;
 
   if (layer_scale_interp == -1)
     layer_scale_interp = image->gimp->config->interpolation_type;
