@@ -627,16 +627,38 @@ gimp_display_set_image (GimpDisplay *display,
 
       gimp_display_shell_disconnect (shell);
 
-      old_image = g_object_ref (display->image);
-
       gimp_display_disconnect (display);
+
+      display->image->disp_count--;
+
+      /*  set display->image before unrefing because there may be code
+       *  that listens for image removals and then iterates the
+       *  display list to find a valid display.
+       */
+      old_image = display->image;
+
+#if 0
+      g_print ("%s: image->ref_count before unrefing: %d\n",
+               G_STRFUNC, G_OBJECT (old_image)->ref_count);
+#endif
     }
+
+  display->image = image;
 
   if (image)
     {
+#if 0
+      g_print ("%s: image->ref_count before refing: %d\n",
+               G_STRFUNC, G_OBJECT (image)->ref_count);
+#endif
+
+      g_object_ref (image);
+
       private->instance = image->instance_count++;
 
-      gimp_display_connect (display, image);
+      image->disp_count++;
+
+      gimp_display_connect (display);
 
       if (shell)
         gimp_display_shell_connect (shell);

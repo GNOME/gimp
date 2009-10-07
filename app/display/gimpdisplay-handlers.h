@@ -19,8 +19,7 @@
 #define __GIMP_DISPLAY_HANDLERS_H__
 
 
-void   gimp_display_connect    (GimpDisplay *display,
-                                GimpImage   *image);
+void   gimp_display_connect    (GimpDisplay *display);
 void   gimp_display_disconnect (GimpDisplay *display);
 
 
