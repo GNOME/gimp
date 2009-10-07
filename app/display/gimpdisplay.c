@@ -406,11 +406,7 @@ gimp_display_new (Gimp              *gimp,
 
   /*  refs the image  */
   if (image)
-    {
-      private->instance = image->instance_count++;
-
-      gimp_display_connect (display, image);
-    }
+    gimp_display_set_image (display, image);
 
   /*  get an image window  */
   if (GIMP_GUI_CONFIG (display->config)->single_window_mode)
@@ -614,6 +610,7 @@ gimp_display_set_image (GimpDisplay *display,
 {
   GimpDisplayPrivate *private;
   GimpImage          *old_image = NULL;
+  GimpDisplayShell   *shell;
 
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
@@ -643,10 +640,15 @@ gimp_display_set_image (GimpDisplay *display,
   if (old_image)
     g_object_unref (old_image);
 
-  if (image)
-    gimp_display_shell_reconnect (gimp_display_get_shell (display));
-  else
-    gimp_display_shell_icon_update (gimp_display_get_shell (display));
+  shell = gimp_display_get_shell (display);
+
+  if (shell)
+    {
+      if (image)
+        gimp_display_shell_reconnect (shell);
+      else
+        gimp_display_shell_icon_update (shell);
+    }
 
   if (old_image != image)
     g_object_notify (G_OBJECT (display), "image");
