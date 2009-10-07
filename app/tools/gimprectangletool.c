@@ -4124,8 +4124,8 @@ gimp_rectangle_tool_get_constraints (GimpRectangleTool       *rect_tool,
                                      gint                    *max_y,
                                      GimpRectangleConstraint  constraint)
 {
-  GimpTool  *tool  = GIMP_TOOL (rect_tool);
-  GimpImage *image = gimp_display_get_image (tool->display);
+  GimpTool  *tool = GIMP_TOOL (rect_tool);
+  GimpImage *image;
   gint       min_x_dummy;
   gint       min_y_dummy;
   gint       max_x_dummy;
@@ -4143,6 +4143,8 @@ gimp_rectangle_tool_get_constraints (GimpRectangleTool       *rect_tool,
 
   if (! tool->display)
     return;
+
+  image = gimp_display_get_image (tool->display);
 
   switch (constraint)
     {
