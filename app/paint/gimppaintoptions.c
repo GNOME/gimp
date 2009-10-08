@@ -1469,10 +1469,10 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
 
 
       if (paint_options->pressure_options->opacity)
-        pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+        pressure = coords->pressure;
 
       if (paint_options->velocity_options->opacity)
-        velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
+        velocity = 1 - coords->velocity;
 
       if (paint_options->random_options->opacity)
         random = g_random_double_range (0.0, 1.0);
@@ -1665,10 +1665,10 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
       gdouble tilt      = -1.0;
 
       if (paint_options->pressure_options->rate)
-        pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+        pressure = coords->pressure;
 
       if (paint_options->velocity_options->rate)
-        velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
+        velocity = 1 - coords->velocity;
 
       if (paint_options->random_options->rate)
         random = g_random_double_range (0.0, 1.0);
@@ -1717,10 +1717,10 @@ gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
       gdouble tilt      = -1.0;
 
       if (paint_options->pressure_options->color)
-        pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+        pressure = coords->pressure;
 
       if (paint_options->velocity_options->color)
-        velocity = GIMP_PAINT_VELOCITY_SCALE * coords->velocity;
+        velocity = coords->velocity;
 
       if (paint_options->random_options->color)
         random = g_random_double_range (0.0, 1.0);
@@ -1768,10 +1768,10 @@ gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
       gdouble tilt      = -1.0;
 
       if (paint_options->pressure_options->hardness)
-        pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+        pressure = coords->pressure;
 
       if (paint_options->velocity_options->hardness)
-        velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
+        velocity = 1 - coords->velocity;
 
       if (paint_options->random_options->hardness)
         random = g_random_double_range (0.0, 1.0);
@@ -1819,10 +1819,10 @@ gimp_paint_options_get_dynamic_angle (GimpPaintOptions *paint_options,
       gdouble tilt      = -1.0;
 
       if (paint_options->pressure_options->angle)
-        pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+        pressure = coords->pressure;
 
       if (paint_options->velocity_options->angle)
-        velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
+        velocity = 1 - coords->velocity;
 
       if (paint_options->random_options->angle)
         random = g_random_double_range (0.0, 1.0);

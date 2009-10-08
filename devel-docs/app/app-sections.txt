@@ -3722,8 +3722,6 @@ GimpDynamicOptions
 GimpFadeOptions
 GimpGradientOptions
 GimpJitterOptions
-GIMP_PAINT_PRESSURE_SCALE
-GIMP_PAINT_VELOCITY_SCALE
 <TITLE>GimpPaintOptions</TITLE>
 GimpPaintOptions
 gimp_paint_options_new

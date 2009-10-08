@@ -189,10 +189,10 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
   saved_velocity = paint_options->velocity_options->hardness;
 
   if (saved_pressure)
-    opacity *= GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+    opacity *= coords->pressure;
 
   if (saved_velocity)
-    opacity *= MAX (0.0, 1 - GIMP_PAINT_VELOCITY_SCALE * coords->velocity);
+    opacity *= MAX (0.0, coords->velocity);
 
   paint_options->pressure_options->hardness = FALSE;
   paint_options->velocity_options->hardness = FALSE;
