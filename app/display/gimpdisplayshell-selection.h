@@ -27,7 +27,7 @@ void   gimp_display_shell_selection_control  (GimpDisplayShell     *shell,
 
 void   gimp_display_shell_selection_set_hidden       (GimpDisplayShell *shell,
                                                       gboolean          hidden);
-void   gimp_display_shell_selection_layer_set_hidden (GimpDisplayShell *shell,
+void   gimp_display_shell_selection_set_layer_hidden (GimpDisplayShell *shell,
                                                       gboolean          hidden);
 
 
