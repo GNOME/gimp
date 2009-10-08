@@ -573,16 +573,19 @@ gimp_navigation_editor_scroll (GimpNavigationView   *view,
         {
         case GDK_SCROLL_LEFT:
         case GDK_SCROLL_UP:
-          value -= adj->page_increment / 2;
+          value -= gtk_adjustment_get_page_increment (adj) / 2;
           break;
 
         case GDK_SCROLL_RIGHT:
         case GDK_SCROLL_DOWN:
-          value += adj->page_increment / 2;
+          value += gtk_adjustment_get_page_increment (adj) / 2;
           break;
         }
 
-      value = CLAMP (value, adj->lower, adj->upper - adj->page_size);
+      value = CLAMP (value,
+                     gtk_adjustment_get_lower (adj),
+                     gtk_adjustment_get_upper (adj) -
+                     gtk_adjustment_get_page_size (adj));
 
       gtk_adjustment_set_value (adj, value);
     }
