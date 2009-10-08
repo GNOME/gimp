@@ -24,7 +24,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpviewable.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -33,18 +32,51 @@
 
 #define GIMP_DISPLAY_UPDATE_ICON_TIMEOUT  1000
 
-static gboolean   gimp_display_shell_idle_update_icon  (gpointer data);
+static gboolean   gimp_display_shell_icon_update_idle (gpointer data);
 
+
+/*  public functions  */
 
 void
 gimp_display_shell_icon_update (GimpDisplayShell *shell)
 {
-  GimpImage *image;
-  GdkPixbuf *pixbuf = NULL;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
+  gimp_display_shell_icon_update_stop (shell);
+
+  if (gimp_display_get_image (shell->display))
+    shell->icon_idle_id = g_timeout_add_full (G_PRIORITY_LOW,
+                                              GIMP_DISPLAY_UPDATE_ICON_TIMEOUT,
+                                              gimp_display_shell_icon_update_idle,
+                                              shell,
+                                              NULL);
+  else
+    gimp_display_shell_icon_update_idle (shell);
+}
+
+void
+gimp_display_shell_icon_update_stop (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->icon_idle_id)
+    {
+      g_source_remove (shell->icon_idle_id);
+      shell->icon_idle_id = 0;
+    }
+}
+
+
+/*  private functions  */
+
+static gboolean
+gimp_display_shell_icon_update_idle (gpointer data)
+{
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *image  = gimp_display_get_image (shell->display);
+  GdkPixbuf        *pixbuf = NULL;
+
+  shell->icon_idle_id = 0;
 
   if (image)
     {
@@ -71,43 +103,6 @@ gimp_display_shell_icon_update (GimpDisplayShell *shell)
     }
 
   g_object_set (shell, "icon", pixbuf, NULL);
-}
-
-void
-gimp_display_shell_icon_idle_update (GimpDisplayShell *shell)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (shell->icon_idle_id)
-    g_source_remove (shell->icon_idle_id);
-
-  shell->icon_idle_id = g_timeout_add_full (G_PRIORITY_LOW,
-                                            GIMP_DISPLAY_UPDATE_ICON_TIMEOUT,
-                                            gimp_display_shell_idle_update_icon,
-                                            shell,
-                                            NULL);
-}
-
-void
-gimp_display_shell_icon_idle_stop (GimpDisplayShell *shell)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (shell->icon_idle_id)
-    {
-      g_source_remove (shell->icon_idle_id);
-      shell->icon_idle_id = 0;
-    }
-}
-
-static gboolean
-gimp_display_shell_idle_update_icon (gpointer data)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-
-  shell->icon_idle_id = 0;
-
-  gimp_display_shell_icon_update (shell);
 
   return FALSE;
 }

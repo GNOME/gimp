@@ -295,7 +295,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  gimp_display_shell_icon_idle_stop (shell);
+  gimp_display_shell_icon_update_stop (shell);
 
   if (shell->grid_gc)
     {
@@ -572,7 +572,7 @@ static void
 gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
                                                GimpDisplayShell *shell)
 {
-  gimp_display_shell_icon_idle_update (shell);
+  gimp_display_shell_icon_update (shell);
 }
 
 static void
