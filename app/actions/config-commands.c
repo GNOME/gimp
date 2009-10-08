@@ -34,7 +34,8 @@ config_use_gegl_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GtkToggleAction *toggle_action = GTK_TOGGLE_ACTION (action);
-  Gimp            *gimp          = action_data_get_gimp (data);
+  Gimp            *gimp   = NULL;
+  return_if_no_gimp (gimp, data);
 
   g_object_set (gimp->config,
                 "use-gegl", gtk_toggle_action_get_active (toggle_action),
