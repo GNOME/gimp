@@ -1490,7 +1490,7 @@ design_area_realize (GtkWidget *widget)
   GdkDisplay *display = gtk_widget_get_display (widget);
   GdkCursor  *cursor  = gdk_cursor_new_for_display (display,
                                                     cursors[ifsDesign->op]);
-  gdk_window_set_cursor (widget->window, cursor);
+  gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
   gdk_cursor_unref (cursor);
 }
 
@@ -1505,7 +1505,7 @@ design_area_expose (GtkWidget      *widget,
 
   if (!ifsDesign->selected_gc)
     {
-      ifsDesign->selected_gc = gdk_gc_new (ifsDesign->area->window);
+      ifsDesign->selected_gc = gdk_gc_new (gtk_widget_get_window (ifsDesign->area));
       gdk_gc_set_line_attributes (ifsDesign->selected_gc, 2,
                                  GDK_LINE_SOLID, GDK_CAP_ROUND,
                                  GDK_JOIN_ROUND);
@@ -1544,7 +1544,7 @@ design_area_expose (GtkWidget      *widget,
 
   g_object_unref (layout);
 
-  gdk_draw_drawable (widget->window,
+  gdk_draw_drawable (gtk_widget_get_window (widget),
                      style->fg_gc[GTK_WIDGET_STATE (widget)],
                      ifsDesign->pixmap,
                      event->area.x, event->area.y,
@@ -1573,10 +1573,10 @@ design_area_configure (GtkWidget         *widget,
     {
       g_object_unref (ifsDesign->pixmap);
     }
-  ifsDesign->pixmap = gdk_pixmap_new (widget->window,
-                                     widget->allocation.width,
-                                     widget->allocation.height,
-                                     -1); /* Is this correct? */
+  ifsDesign->pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
+                                      widget->allocation.width,
+                                      widget->allocation.height,
+                                      -1); /* Is this correct? */
 
   return FALSE;
 }
