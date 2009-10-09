@@ -168,19 +168,21 @@ splash_create (gboolean be_verbose)
                             &values.foreground);
 
   gtk_widget_realize (splash->area);
-  splash->gc = gdk_gc_new_with_values (splash->area->window, &values,
+  splash->gc = gdk_gc_new_with_values (gtk_widget_get_window (splash->area),
+                                       &values,
                                        GDK_GC_FOREGROUND);
 
   if (gdk_pixbuf_animation_is_static_image (pixbuf))
     {
-      GdkPixmap *pixmap = gdk_pixmap_new (splash->area->window,
+      GdkPixmap *pixmap = gdk_pixmap_new (gtk_widget_get_window (splash->area),
 					  splash->width, splash->height, -1);
 
       gdk_draw_pixbuf (pixmap, splash->gc,
 		       gdk_pixbuf_animation_get_static_image (pixbuf),
 		       0, 0, 0, 0, splash->width, splash->height,
 		       GDK_RGB_DITHER_NORMAL, 0, 0);
-      gdk_window_set_back_pixmap (splash->area->window, pixmap, FALSE);
+      gdk_window_set_back_pixmap (gtk_widget_get_window (splash->area),
+                                  pixmap, FALSE);
       g_object_unref (pixmap);
     }
 
@@ -264,10 +266,10 @@ splash_area_expose (GtkWidget      *widget,
 {
   gdk_gc_set_clip_region (splash->gc, event->region);
 
-  gdk_draw_layout (widget->window, splash->gc,
+  gdk_draw_layout (gtk_widget_get_window (widget), splash->gc,
                    splash->upper_x, splash->upper_y, splash->upper);
 
-  gdk_draw_layout (widget->window, splash->gc,
+  gdk_draw_layout (gtk_widget_get_window (widget), splash->gc,
                    splash->lower_x, splash->lower_y, splash->lower);
 
   return FALSE;
