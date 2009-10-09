@@ -54,7 +54,7 @@ void               gimp_image_window_add_shell          (GimpImageWindow  *windo
 void               gimp_image_window_remove_shell       (GimpImageWindow  *window,
                                                          GimpDisplayShell *shell);
 
-gint               gimp_image_window_get_n_shells       (GimpImageWindow *window);
+gint               gimp_image_window_get_n_shells       (GimpImageWindow  *window);
 
 void               gimp_image_window_set_active_shell   (GimpImageWindow  *window,
                                                          GimpDisplayShell *shell);
