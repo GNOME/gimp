@@ -142,10 +142,13 @@ rcm_spinbutton_to_degrees (GtkWidget *button,
   GtkAdjustment *adj;
 
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (button));
-  adj->value = value * rcm_units_factor (Current.Units);
-  adj->upper = 360.0;
-  adj->step_increment = 0.01;
-  adj->page_increment = 1.0;
+
+  gtk_adjustment_configure (adj,
+                            value * rcm_units_factor (Current.Units),
+                            gtk_adjustment_get_lower (adj), 360.0,
+                            0.01, 1.0,
+                            gtk_adjustment_get_page_size (adj));
+
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (button), 2);
 
   gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current.Units));
@@ -193,10 +196,13 @@ rcm_spinbutton_to_radians (GtkWidget *button,
   GtkAdjustment *adj;
 
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (button));
-  adj->value = value * rcm_units_factor (Current.Units);
-  adj->upper = TP;
-  adj->step_increment = 0.0001;
-  adj->page_increment = 0.001;
+
+  gtk_adjustment_configure (adj,
+                            value * rcm_units_factor (Current.Units),
+                            gtk_adjustment_get_lower (adj), TP,
+                            0.0001, 0.001,
+                            gtk_adjustment_get_page_size (adj));
+
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (button), 4);
 
   gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current.Units));
@@ -244,10 +250,13 @@ rcm_spinbutton_to_radians_over_PI (GtkWidget *button,
   GtkAdjustment *adj;
 
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (button));
-  adj->value = value * rcm_units_factor (Current.Units);
-  adj->upper = 2.0;
-  adj->step_increment = 0.0001;
-  adj->page_increment = 0.001;
+
+  gtk_adjustment_configure (adj,
+                            value * rcm_units_factor (Current.Units),
+                            gtk_adjustment_get_lower (adj), 2.0,
+                            0.0001, 0.001,
+                            gtk_adjustment_get_page_size (adj));
+
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (button), 4);
 
   gtk_label_set_text (GTK_LABEL (label), rcm_units_string (Current.Units));
