@@ -308,7 +308,7 @@ draw_handles (void)
       if (backbuf.image != NULL)
         {
           gdk_gc_set_function (gc, GDK_COPY);
-          gdk_draw_image (previewarea->window, gc,
+          gdk_draw_image (gtk_widget_get_window (previewarea), gc,
                           backbuf.image, 0, 0, backbuf.x,
                           backbuf.y, backbuf.w, backbuf.h);
           g_object_unref (backbuf.image);
@@ -361,7 +361,7 @@ draw_handles (void)
           if ((backbuf.y + backbuf.h) > PREVIEW_HEIGHT)
             backbuf.h = (PREVIEW_HEIGHT - backbuf.y);
 
-          backbuf.image = gdk_drawable_get_image (previewarea->window,
+          backbuf.image = gdk_drawable_get_image (gtk_widget_get_window (previewarea),
                                                   backbuf.x, backbuf.y,
                                                   backbuf.w, backbuf.h);
         }
@@ -381,19 +381,19 @@ draw_handles (void)
         {
         case POINT_LIGHT:
         case SPOT_LIGHT:
-          gdk_draw_arc (previewarea->window, gc, TRUE,
+          gdk_draw_arc (gtk_widget_get_window (previewarea), gc, TRUE,
                         handle_xpos - LIGHT_SYMBOL_SIZE / 2,
                         handle_ypos - LIGHT_SYMBOL_SIZE / 2,
                         LIGHT_SYMBOL_SIZE,
                         LIGHT_SYMBOL_SIZE, 0, 360 * 64);
           break;
         case DIRECTIONAL_LIGHT:
-          gdk_draw_arc (previewarea->window, gc, TRUE,
+          gdk_draw_arc (gtk_widget_get_window (previewarea), gc, TRUE,
                         handle_xpos - LIGHT_SYMBOL_SIZE / 2,
                         handle_ypos - LIGHT_SYMBOL_SIZE / 2,
                         LIGHT_SYMBOL_SIZE,
                         LIGHT_SYMBOL_SIZE, 0, 360 * 64);
-          gdk_draw_line (previewarea->window, gc,
+          gdk_draw_line (gtk_widget_get_window (previewarea), gc,
                          handle_xpos, handle_ypos, startx+pw/2 , starty + ph/2);
           break;
         case NO_LIGHT:
@@ -473,12 +473,12 @@ draw_preview_image (gboolean recompute)
 
       cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
 
-      gdk_window_set_cursor (previewarea->window, cursor);
+      gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
       gdk_cursor_unref (cursor);
 
       compute_preview (startx, starty, pw, ph);
       cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
-      gdk_window_set_cursor (previewarea->window, cursor);
+      gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
       gdk_cursor_unref (cursor);
       gdk_flush ();
 
@@ -491,7 +491,7 @@ draw_preview_image (gboolean recompute)
         }
     }
 
-  gdk_draw_rgb_image (previewarea->window, gc,
+  gdk_draw_rgb_image (gtk_widget_get_window (previewarea), gc,
                       0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
                       GDK_RGB_DITHER_MAX, preview_rgb_data,
                       3 * PREVIEW_WIDTH);
@@ -519,7 +519,7 @@ preview_events (GtkWidget *area,
       /* =========================== */
       if (!gc)
         {
-          gc = gdk_gc_new (area->window);
+          gc = gdk_gc_new (gtk_widget_get_window (area));
           draw_preview_image (TRUE);
         }
       else
