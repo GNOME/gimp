@@ -412,5 +412,6 @@ static void
 pressure_adjust_update (GtkAdjustment *adj,
                         ColorselWater *water)
 {
-  water->pressure_adjust = (adj->upper - adj->value) / 100.0;
+  water->pressure_adjust = (gtk_adjustment_get_upper (adj) -
+                            gtk_adjustment_get_value (adj)) / 100.0;
 }
