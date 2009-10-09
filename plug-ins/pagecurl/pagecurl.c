@@ -392,7 +392,7 @@ static void
 dialog_scale_update (GtkAdjustment *adjustment,
 		     gdouble       *value)
 {
-  *value = ((gdouble) adjustment->value) / 100.0;
+  *value = ((gdouble) gtk_adjustment_get_value (adjustment)) / 100.0;
 }
 
 static void
