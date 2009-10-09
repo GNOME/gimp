@@ -86,10 +86,10 @@ select_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
    gint x = get_real_coord((gint) event->x);
    gint y = get_real_coord((gint) event->y);
 
-   object_draw(obj, widget->window);
+   object_draw(obj, gtk_widget_get_window (widget));
    rectangle->width = x - rectangle->x;
    rectangle->height = y - rectangle->y;
-   object_draw(obj, widget->window);
+   object_draw(obj, gtk_widget_get_window (widget));
 }
 
 static void
@@ -106,7 +106,7 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    g_signal_handlers_disconnect_by_func(widget,
                                         select_release, data);
 
-   object_draw(obj, widget->window);
+   object_draw(obj, gtk_widget_get_window (widget));
    object_normalize(obj);
    gdk_gc_set_function(get_preferences()->normal_gc, GDK_COPY);
 

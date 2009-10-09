@@ -123,9 +123,9 @@ button_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
       command->obj_x += dx;
       command->obj_y += dy;
 
-      object_draw(obj, widget->window);
+      object_draw(obj, gtk_widget_get_window (widget));
       object_move(obj, dx, dy);
-      object_draw(obj, widget->window);
+      object_draw(obj, gtk_widget_get_window (widget));
    }
 }
 
