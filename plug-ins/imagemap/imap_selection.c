@@ -268,25 +268,33 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 	    GtkSelectionData *data, guint info, guint time)
 {
   gboolean success = FALSE;
-  if (data->length >= 0 && data->format == 8) {
-    GtkTreePath *path;
-    if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget), x, y,
-				       &path, NULL, NULL, NULL)) {
-      GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-      GtkTreeIter iter;
 
-      if (gtk_tree_model_get_iter (model, &iter, path)) {
-	Object_t *obj = selection_get_object (model, &iter);
-	if (!obj->locked) {
-	  command_list_add(edit_object_command_new (obj));
-	  object_set_url (obj, (const gchar *) data->data);
-	  object_emit_update_signal (obj);
-	  success = TRUE;
-	}
-      }
-      gtk_tree_path_free (path);
+  if (gtk_selection_data_get_length (data) >= 0 &&
+      gtk_selection_data_get_format (data) == 8)
+    {
+      GtkTreePath *path;
+
+      if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget), x, y,
+                                         &path, NULL, NULL, NULL))
+        {
+          GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
+          GtkTreeIter iter;
+
+          if (gtk_tree_model_get_iter (model, &iter, path))
+            {
+              Object_t *obj = selection_get_object (model, &iter);
+
+              if (!obj->locked)
+                {
+                  command_list_add(edit_object_command_new (obj));
+                  object_set_url (obj, (const gchar *) gtk_selection_data_get_data (data));
+                  object_emit_update_signal (obj);
+                  success = TRUE;
+                }
+            }
+          gtk_tree_path_free (path);
+        }
     }
-  }
   gtk_drag_finish(context, success, FALSE, time);
 }
 
