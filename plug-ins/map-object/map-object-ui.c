@@ -202,6 +202,9 @@ static void
 mapmenu_callback (GtkWidget *widget,
 		  gpointer   data)
 {
+  GList *children;
+  gint   n_children;
+
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   draw_preview_image (TRUE);
@@ -230,13 +233,15 @@ mapmenu_callback (GtkWidget *widget,
       linetab[0].x1 = -1;
     }
 
+  children = gtk_container_get_children (GTK_CONTAINER (options_note_book));
+  n_children = g_list_length (children);
+  g_list_free (children);
+
   if (mapvals.maptype == MAP_BOX)
     {
       if (cylinder_page != NULL)
         {
-          gtk_notebook_remove_page
-	    (options_note_book,
-	     g_list_length (options_note_book->children) - 1);
+          gtk_notebook_remove_page (options_note_book, n_children - 1);
           cylinder_page = NULL;
         }
 
@@ -252,9 +257,7 @@ mapmenu_callback (GtkWidget *widget,
     {
       if (box_page != NULL)
         {
-          gtk_notebook_remove_page
-	    (options_note_book,
-	     g_list_length (options_note_book->children) - 1);
+          gtk_notebook_remove_page (options_note_book, n_children - 1);
           box_page = NULL;
         }
 
@@ -270,16 +273,13 @@ mapmenu_callback (GtkWidget *widget,
     {
       if (box_page != NULL)
         {
-          gtk_notebook_remove_page
-	    (options_note_book,
-	     g_list_length (options_note_book->children) - 1);
+          gtk_notebook_remove_page (options_note_book, n_children - 1);
+          n_children--;
         }
 
       if (cylinder_page != NULL)
         {
-          gtk_notebook_remove_page
-	    (options_note_book,
-	     g_list_length (options_note_book->children) - 1);
+          gtk_notebook_remove_page (options_note_book, n_children - 1);
         }
 
       box_page = NULL;
@@ -360,7 +360,7 @@ preview_events (GtkWidget *area,
 
         if (!gc)
           {
-            gc = gdk_gc_new (area->window);
+            gc = gdk_gc_new (gtk_widget_get_window (area));
             draw_preview_image (TRUE);
           }
         else
@@ -1434,7 +1434,7 @@ main_dialog (GimpDrawable *drawable)
 
     cursor = gdk_cursor_new_for_display (gtk_widget_get_display (previewarea),
                                          GDK_HAND2);
-    gdk_window_set_cursor (previewarea->window, cursor);
+    gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
     gdk_cursor_unref (cursor);
   }
 

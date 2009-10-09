@@ -322,11 +322,11 @@ draw_light_marker (gint xpos,
       else if ((backbuf.y + backbuf.h) > PREVIEW_HEIGHT)
         backbuf.h = (PREVIEW_WIDTH - backbuf.y);
 
-      backbuf.image = gdk_drawable_get_image (previewarea->window,
+      backbuf.image = gdk_drawable_get_image (gtk_widget_get_window (previewarea),
                                               backbuf.x, backbuf.y,
                                               backbuf.w, backbuf.h);
 
-      gdk_draw_arc (previewarea->window, gc,
+      gdk_draw_arc (gtk_widget_get_window (previewarea), gc,
 		    TRUE,
 		    lightx - 7, lighty - 7, 14, 14,
 		    0, 360 * 64);
@@ -355,7 +355,7 @@ clear_light_marker (void)
 
       gdk_gc_set_function (gc, GDK_COPY);
 
-      gdk_draw_image (previewarea->window, gc,
+      gdk_draw_image (gtk_widget_get_window (previewarea), gc,
 		      backbuf.image,
 		      0, 0,
 		      backbuf.x, backbuf.y,
@@ -442,22 +442,22 @@ draw_preview_image (gint docompute)
       GdkCursor  *cursor;
 
       cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
-      gdk_window_set_cursor (previewarea->window, cursor);
+      gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
       gdk_cursor_unref (cursor);
 
       compute_preview (0, 0, width - 1, height - 1, pw, ph);
 
       cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
-      gdk_window_set_cursor(previewarea->window, cursor);
+      gdk_window_set_cursor(gtk_widget_get_window (previewarea), cursor);
       gdk_cursor_unref (cursor);
 
       clear_light_marker ();
     }
 
   if (pw != PREVIEW_WIDTH || ph != PREVIEW_HEIGHT)
-    gdk_window_clear (previewarea->window);
+    gdk_window_clear (gtk_widget_get_window (previewarea));
 
-  gdk_draw_rgb_image (previewarea->window, gc,
+  gdk_draw_rgb_image (gtk_widget_get_window (previewarea), gc,
                       startx, starty, pw, ph,
                       GDK_RGB_DITHER_MAX,
                       preview_rgb_data, 3 * pw);
@@ -590,7 +590,7 @@ draw_wireframe_plane (gint startx,
 				      linetab[n].linestyle,
 				      GDK_CAP_NOT_LAST,
 				      GDK_JOIN_MITER);
-          gdk_draw_line (previewarea->window, gc,
+          gdk_draw_line (gtk_widget_get_window (previewarea), gc,
 			 linetab[n].x1, linetab[n].y1,
 			 linetab[n].x2, linetab[n].y2);
           n++;
@@ -614,7 +614,7 @@ draw_wireframe_plane (gint startx,
 				      linetab[n].linestyle,
 				      GDK_CAP_NOT_LAST,
 				      GDK_JOIN_MITER);
-          gdk_draw_line (previewarea->window, gc,
+          gdk_draw_line (gtk_widget_get_window (previewarea), gc,
 			 linetab[n].x1, linetab[n].y1,
 			 linetab[n].x2, linetab[n].y2);
           n++;
@@ -732,7 +732,7 @@ draw_wireframe_sphere (gint startx,
 					  linetab[n].linestyle,
 					  GDK_CAP_NOT_LAST,
 					  GDK_JOIN_MITER);
-              gdk_draw_line (previewarea->window, gc,
+              gdk_draw_line (gtk_widget_get_window (previewarea), gc,
 			     linetab[n].x1, linetab[n].y1,
 			     linetab[n].x2, linetab[n].y2);
               n++;
@@ -773,7 +773,7 @@ draw_wireframe_sphere (gint startx,
 				      linetab[n].linestyle,
 				      GDK_CAP_NOT_LAST,
 				      GDK_JOIN_MITER);
-          gdk_draw_line (previewarea->window, gc,
+          gdk_draw_line (gtk_widget_get_window (previewarea), gc,
 			 linetab[n].x1, linetab[n].y1,
 			 linetab[n].x2, linetab[n].y2);
           n++;
@@ -822,7 +822,7 @@ draw_line (gint        n,
 				  linetab[i].linestyle,
 				  GDK_CAP_NOT_LAST,
 				  GDK_JOIN_MITER);
-      gdk_draw_line (previewarea->window, gc,
+      gdk_draw_line (gtk_widget_get_window (previewarea), gc,
 		     linetab[i].x1, linetab[i].y1,
 		     linetab[i].x2, linetab[i].y2);
       i++;
@@ -982,7 +982,7 @@ clear_wireframe (void)
 				  linetab[n].linestyle,
 				  GDK_CAP_NOT_LAST,
 				  GDK_JOIN_MITER);
-      gdk_draw_line (previewarea->window, gc,
+      gdk_draw_line (gtk_widget_get_window (previewarea), gc,
 		     linetab[n].x1, linetab[n].y1,
 		     linetab[n].x2, linetab[n].y2);
       n++;
