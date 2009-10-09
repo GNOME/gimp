@@ -2160,18 +2160,18 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
 
   if (value_pair->type == VALUE_PAIR_DOUBLE)
     {
-      if ((gdouble) *value_pair->data.d != adjustment->value)
+      if ((gdouble) *value_pair->data.d != gtk_adjustment_get_value (adjustment))
         {
           changed = TRUE;
-          *value_pair->data.d = adjustment->value;
+          *value_pair->data.d = gtk_adjustment_get_value (adjustment);
         }
     }
   else
     {
-      if (*value_pair->data.i != (gint) adjustment->value)
+      if (*value_pair->data.i != (gint) gtk_adjustment_get_value (adjustment))
         {
           changed = TRUE;
-          *value_pair->data.i = adjustment->value;
+          *value_pair->data.i = gtk_adjustment_get_value (adjustment);
         }
     }
 
