@@ -58,6 +58,7 @@
 #include "widgets/gimpmenudock.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppatternfactoryview.h"
+#include "widgets/gimpdynamicsfactoryview.h"
 #include "widgets/gimpsamplepointeditor.h"
 #include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptemplateview.h"
@@ -362,6 +363,18 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
                                       TRUE,
                                       view_size, 1,
                                       factory->menu_factory);
+}
+
+GtkWidget *
+dialogs_dynamics_list_view_new (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                gint               view_size)
+{
+  return gimp_dynamics_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                         context->gimp->dynamics_factory,
+                                         context,
+                                         view_size, 1,
+                                         factory->menu_factory);
 }
 
 GtkWidget *

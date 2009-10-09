@@ -75,6 +75,8 @@ libappactions_a_SOURCES = \
 	drawable-actions.h		\
 	drawable-commands.c		\
 	drawable-commands.h		\
+	dynamics-actions.c		\
+	dynamics-actions.h		\
 	dynamics-editor-actions.c	\
 	dynamics-editor-actions.h	\
 	edit-actions.c			\

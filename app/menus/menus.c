@@ -207,6 +207,14 @@ menus_init (Gimp              *gimp,
                                       "brushes-menu.xml", plug_in_menus_setup,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<Dynamics>",
+                                      "dynamics",
+                                      "plug-in",
+                                      NULL,
+                                      "/dynamics-popup",
+                                      "dynamics-menu.xml", plug_in_menus_setup,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<Patterns>",
                                       "patterns",
                                       "plug-in",
@@ -274,7 +282,7 @@ menus_init (Gimp              *gimp,
                                       "/brush-editor-popup",
                                       "brush-editor-menu.xml", NULL,
                                       NULL);
-	
+
   gimp_menu_factory_manager_register (global_menu_factory, "<DynamicsEditor>",
                                       "dynamics-editor",
                                       NULL,
@@ -351,7 +359,7 @@ menus_init (Gimp              *gimp,
                                       "text-tool-menu.xml",
                                       NULL,
                                       NULL);
-  
+
   gimp_menu_factory_manager_register (global_menu_factory, "<CursorInfo>",
                                       "cursor-info",
                                       NULL,

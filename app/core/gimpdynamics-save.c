@@ -33,8 +33,8 @@
 
 
 gboolean
-gimp_curve_save (GimpData  *data,
-                 GError   **error)
+gimp_dynamics_save (GimpData  *data,
+                    GError   **error)
 {
   GimpDynamics *dynamics;
   FILE         *file;

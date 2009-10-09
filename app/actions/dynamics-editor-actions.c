@@ -60,7 +60,7 @@ dynamics_editor_actions_setup (GimpActionGroup *group)
                                  dynamics_editor_actions,
                                  G_N_ELEMENTS (dynamics_editor_actions));
 
-	   gimp_action_group_add_toggle_actions (group, "dynamics-editor-action",
+  gimp_action_group_add_toggle_actions (group, "dynamics-editor-action",
                                         dynamics_editor_toggle_actions,
                                         G_N_ELEMENTS (dynamics_editor_toggle_actions));
 

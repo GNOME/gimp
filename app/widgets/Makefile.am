@@ -33,8 +33,6 @@ libappwidgets_a_sources = \
 	gimpblobeditor.h		\
 	gimpbrusheditor.c		\
 	gimpbrusheditor.h		\
-	gimpdynamicseditor.c		\
-	gimpdynamicseditor.h		\
 	gimpbrushfactoryview.c		\
 	gimpbrushfactoryview.h		\
 	gimpbrushselect.c		\
@@ -144,6 +142,10 @@ libappwidgets_a_sources = \
 	gimpdocumentview.h		\
 	gimpdrawabletreeview.c		\
 	gimpdrawabletreeview.h		\
+	gimpdynamicseditor.c		\
+	gimpdynamicseditor.h		\
+	gimpdynamicsfactoryview.c		\
+	gimpdynamicsfactoryview.h		\
 	gimpeditor.c			\
 	gimpeditor.h			\
 	gimpenumaction.c		\

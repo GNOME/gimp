@@ -309,6 +309,14 @@
 
 #define GIMP_HELP_DYNAMICS_EDITOR_DIALOG          "gimp-dynamics-editor-dialog"
 
+#define GIMP_HELP_DYNAMICS_DIALOG                 "gimp-dynamics-dialog"
+#define GIMP_HELP_DYNAMICS_EDIT                   "gimp-dynamics-edit"
+#define GIMP_HELP_DYNAMICS_NEW                    "gimp-dynamics-new"
+#define GIMP_HELP_DYNAMICS_DUPLICATE              "gimp-dynamics-duplicate"
+#define GIMP_HELP_DYNAMICS_COPY_LOCATION          "gimp-dynamics-copy-location"
+#define GIMP_HELP_DYNAMICS_DELETE                 "gimp-dynamics-delete"
+#define GIMP_HELP_DYNAMICS_REFRESH                "gimp-dynamics-refresh"
+
 #define GIMP_HELP_PATTERN_DIALOG                  "gimp-pattern-dialog"
 #define GIMP_HELP_PATTERN_EDIT                    "gimp-pattern-edit"
 #define GIMP_HELP_PATTERN_OPEN_AS_IMAGE           "gimp-pattern-open-as-image"

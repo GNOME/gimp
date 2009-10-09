@@ -130,6 +130,13 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-dynamics-editor",
     GIMP_HELP_DYNAMICS_EDITOR_DIALOG },
 
+  { "dialogs-dynamics", GIMP_STOCK_PATTERN,
+    NC_("dialogs-action", "Dynamics"), NULL,
+    NC_("dialogs-action", "Open dynamics list dialog"),
+    "gimp-dynamics-list",
+    GIMP_HELP_DYNAMICS_DIALOG },
+
+
   { "dialogs-patterns", GIMP_STOCK_PATTERN,
     NC_("dialogs-action", "P_atterns"), "<control><shift>P",
     NC_("dialogs-action", "Open the patterns dialog"),

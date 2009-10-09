@@ -108,6 +108,9 @@ GtkWidget * dialogs_image_list_view_new    (GimpDialogFactory *factory,
 GtkWidget * dialogs_brush_list_view_new    (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);
+GtkWidget * dialogs_dynamics_list_view_new (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            gint               view_size);
 GtkWidget * dialogs_pattern_list_view_new  (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);

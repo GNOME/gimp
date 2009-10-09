@@ -64,6 +64,7 @@
 #include "dockable-actions.h"
 #include "documents-actions.h"
 #include "drawable-actions.h"
+#include "dynamics-actions.h"
 #include "dynamics-editor-actions.h"
 #include "edit-actions.h"
 #include "error-console-actions.h"
@@ -187,6 +188,9 @@ static const GimpActionFactoryEntry action_groups[] =
   { "patterns", N_("Patterns"), GIMP_STOCK_PATTERN,
     patterns_actions_setup,
     patterns_actions_update },
+  { "dynamics", N_("Dynamics"), GIMP_STOCK_DYNAMICS,
+    dynamics_actions_setup,
+    dynamics_actions_update },
   { "plug-in", N_("Plug-Ins"), GIMP_STOCK_PLUGIN,
     plug_in_actions_setup,
     plug_in_actions_update },

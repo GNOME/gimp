@@ -132,6 +132,11 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp-"#id"-grid", name, blurb, stock_id, help_id, \
     dialogs_##id##_grid_view_new, view_size, FALSE, FALSE, FALSE, TRUE, TRUE }
 
+#define LIST(id,name,blurb,stock_id,help_id,\
+             view_size) \
+  { "gimp-"#id"-list", name, blurb, stock_id, help_id, \
+    dialogs_##id##_list_view_new, view_size, FALSE, FALSE, FALSE, TRUE, TRUE }
+
 static const GimpDialogFactoryEntry dock_entries[] =
 {
   /*  singleton dockables  */
@@ -171,6 +176,10 @@ static const GimpDialogFactoryEntry dock_entries[] =
             GIMP_HELP_DOCUMENT_DIALOG, GIMP_VIEW_SIZE_LARGE),
   LISTGRID (template, N_("Templates"), N_("Image Templates"), GIMP_STOCK_TEMPLATE,
             GIMP_HELP_TEMPLATE_DIALOG, GIMP_VIEW_SIZE_SMALL),
+
+  /* Some things do not have grids, so just list */
+  LIST (dynamics, N_("Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
+        GIMP_HELP_DYNAMICS_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
 
   /*  image related  */
   DOCKABLE ("gimp-layer-list",
