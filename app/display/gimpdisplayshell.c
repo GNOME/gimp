@@ -1215,8 +1215,6 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
       shell->fill_idle_id = 0;
     }
 
-  gimp_display_shell_connect (shell);
-
   g_signal_emit (shell, display_shell_signals[RECONNECT], 0);
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));

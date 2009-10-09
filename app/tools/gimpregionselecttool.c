@@ -181,6 +181,7 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
   GimpRegionSelectTool    *region_sel  = GIMP_REGION_SELECT_TOOL (tool);
   GimpSelectionOptions    *sel_options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpRegionSelectOptions *options     = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
+  GimpImage               *image       = gimp_display_get_image (display);
 
   gimp_tool_pop_status (tool, display);
 
@@ -192,19 +193,18 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
     {
       if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_ANCHOR)
         {
-          if (gimp_image_get_floating_selection (display->image))
+          if (gimp_image_get_floating_selection (image))
             {
               /*  If there is a floating selection, anchor it  */
-              floating_sel_anchor (gimp_image_get_floating_selection (display->image));
+              floating_sel_anchor (gimp_image_get_floating_selection (image));
             }
           else
             {
               /*  Otherwise, clear the selection mask  */
-              gimp_channel_clear (gimp_image_get_mask (display->image), NULL,
-                                  TRUE);
+              gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
             }
 
-          gimp_image_flush (display->image);
+          gimp_image_flush (image);
         }
       else if (region_sel->region_mask)
         {
@@ -213,14 +213,12 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
 
           if (! options->sample_merged)
             {
-              GimpDrawable *drawable;
-
-              drawable = gimp_image_get_active_drawable (display->image);
+              GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
               gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
             }
 
-          gimp_channel_select_channel (gimp_image_get_mask (display->image),
+          gimp_channel_select_channel (gimp_image_get_mask (image),
                                        GIMP_REGION_SELECT_TOOL_GET_CLASS (tool)->undo_desc,
                                        region_sel->region_mask,
                                        off_x,
@@ -231,7 +229,7 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
                                        sel_options->feather_radius);
 
 
-          gimp_image_flush (display->image);
+          gimp_image_flush (image);
         }
     }
 
@@ -309,8 +307,9 @@ gimp_region_select_tool_cursor_update (GimpTool         *tool,
 {
   GimpRegionSelectOptions *options  = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier       modifier = GIMP_CURSOR_MODIFIER_NONE;
+  GimpImage               *image    = gimp_display_get_image (display);
 
-  if (! gimp_image_coords_in_active_pickable (display->image, coords,
+  if (! gimp_image_coords_in_active_pickable (image, coords,
                                               options->sample_merged, FALSE))
     modifier = GIMP_CURSOR_MODIFIER_BAD;
 
@@ -344,12 +343,9 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
   GimpTool                *tool    = GIMP_TOOL (region_sel);
   GimpRegionSelectOptions *options = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell        *shell   = gimp_display_get_shell (display);
-  GimpDrawable            *drawable;
   GdkSegment              *segs;
   BoundSeg                *bsegs;
   PixelRegion              maskPR;
-
-  drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
 

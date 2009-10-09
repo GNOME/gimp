@@ -30,36 +30,30 @@
 
 /*  local function prototypes  */
 
-static void   gimp_display_update_handler    (GimpProjection *projection,
-                                              gboolean        now,
-                                              gint            x,
-                                              gint            y,
-                                              gint            w,
-                                              gint            h,
-                                              GimpDisplay    *display);
-static void   gimp_display_flush_handler     (GimpImage      *image,
-                                              gboolean        invalidate_preview,
-                                              GimpDisplay    *display);
+static void   gimp_display_update_handler (GimpProjection *projection,
+                                           gboolean        now,
+                                           gint            x,
+                                           gint            y,
+                                           gint            w,
+                                           gint            h,
+                                           GimpDisplay    *display);
+static void   gimp_display_flush_handler  (GimpImage      *image,
+                                           gboolean        invalidate_preview,
+                                           GimpDisplay    *display);
 
 
 /*  public functions  */
 
 void
-gimp_display_connect (GimpDisplay *display,
-                      GimpImage   *image)
+gimp_display_connect (GimpDisplay *display)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  image = gimp_display_get_image (display);
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (display->image == NULL);
-
-#if 0
-  g_print ("%s: image->ref_count before refing: %d\n",
-           G_STRFUNC, G_OBJECT (display->image)->ref_count);
-#endif
-
-  display->image = g_object_ref (image);
-
-  image->disp_count++;
 
   g_signal_connect (gimp_image_get_projection (image), "update",
                     G_CALLBACK (gimp_display_update_handler),
@@ -76,9 +70,10 @@ gimp_display_disconnect (GimpDisplay *display)
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (GIMP_IS_IMAGE (display->image));
 
-  image = display->image;
+  image = gimp_display_get_image (display);
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_flush_handler,
@@ -87,21 +82,6 @@ gimp_display_disconnect (GimpDisplay *display)
   g_signal_handlers_disconnect_by_func (gimp_image_get_projection (image),
                                         gimp_display_update_handler,
                                         display);
-
-  image->disp_count--;
-
-#if 0
-  g_print ("%s: image->ref_count before unrefing: %d\n",
-           G_STRFUNC, G_OBJECT (display->image)->ref_count);
-#endif
-
-  /*  set display->image to NULL before unrefing because there may be code
-   *  that listens for image removals and then iterates the display list
-   *  to find a valid display.
-   */
-  display->image = NULL;
-
-  g_object_unref (image);
 }
 
 

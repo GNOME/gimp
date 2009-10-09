@@ -228,7 +228,8 @@ gimp_paint_tool_control (GimpTool       *tool,
                          GimpDisplay    *display)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpDrawable  *drawable   = gimp_image_get_active_drawable (display->image);
+  GimpImage     *image      = gimp_display_get_image (display);
+  GimpDrawable  *drawable   = gimp_image_get_active_drawable (image);
 
   switch (action)
     {
@@ -260,7 +261,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
-  GimpDrawable     *drawable;
+  GimpImage        *image         = gimp_display_get_image (display);
+  GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
   GimpCoords        curr_coords;
   gint              off_x, off_y;
   GError           *error = NULL;
@@ -271,8 +273,6 @@ gimp_paint_tool_button_press (GimpTool            *tool,
                                                     press_type, display);
       return;
     }
-
-  drawable = gimp_image_get_active_drawable (display->image);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
@@ -298,9 +298,9 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   if (gimp_draw_tool_is_active (draw_tool))
     gimp_draw_tool_stop (draw_tool);
 
-  if (tool->display          &&
+  if (tool->display            &&
       tool->display != display &&
-      tool->display->image == display->image)
+      gimp_display_get_image (tool->display) == image)
     {
       /*  if this is a different display, but the same image, HACK around
        *  in tool internals AFTER stopping the current draw_tool, so
@@ -345,7 +345,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
                                                 press_type, display);
 
   /*  pause the current selection  */
-  gimp_image_selection_control (display->image, GIMP_SELECTION_PAUSE);
+  gimp_image_selection_control (image, GIMP_SELECTION_PAUSE);
 
   /*  Let the specific painting function initialize itself  */
   gimp_paint_core_paint (core, drawable, paint_options,
@@ -363,7 +363,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
                              GIMP_PAINT_STATE_MOTION, time);
     }
 
-  gimp_projection_flush_now (gimp_image_get_projection (display->image));
+  gimp_projection_flush_now (gimp_image_get_projection (image));
   gimp_display_flush_now (display);
 
   gimp_draw_tool_start (draw_tool, display);
@@ -380,7 +380,8 @@ gimp_paint_tool_button_release (GimpTool              *tool,
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
-  GimpDrawable     *drawable;
+  GimpImage        *image         = gimp_display_get_image (display);
+  GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -390,8 +391,6 @@ gimp_paint_tool_button_release (GimpTool              *tool,
       return;
     }
 
-  drawable = gimp_image_get_active_drawable (display->image);
-
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  Let the specific painting function finish up  */
@@ -399,7 +398,7 @@ gimp_paint_tool_button_release (GimpTool              *tool,
                          GIMP_PAINT_STATE_FINISH, time);
 
   /*  resume the current selection  */
-  gimp_image_selection_control (display->image, GIMP_SELECTION_RESUME);
+  gimp_image_selection_control (image, GIMP_SELECTION_RESUME);
 
   /*  chain up to halt the tool */
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
@@ -410,7 +409,7 @@ gimp_paint_tool_button_release (GimpTool              *tool,
   else
     gimp_paint_core_finish (core, drawable, TRUE);
 
-  gimp_image_flush (display->image);
+  gimp_image_flush (image);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -425,7 +424,8 @@ gimp_paint_tool_motion (GimpTool         *tool,
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
-  GimpDrawable     *drawable;
+  GimpImage        *image         = gimp_display_get_image (display);
+  GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
   GimpCoords        curr_coords;
   gint              off_x, off_y;
 
@@ -435,8 +435,6 @@ gimp_paint_tool_motion (GimpTool         *tool,
     return;
 
   curr_coords = *coords;
-
-  drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -455,7 +453,7 @@ gimp_paint_tool_motion (GimpTool         *tool,
   gimp_paint_core_interpolate (core, drawable, paint_options,
                                &curr_coords, time);
 
-  gimp_projection_flush_now (gimp_image_get_projection (display->image));
+  gimp_projection_flush_now (gimp_image_get_projection (image));
   gimp_display_flush_now (display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -538,7 +536,8 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
 
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+      GimpImage    *image    = gimp_display_get_image (display);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
           gimp_item_is_content_locked (GIMP_ITEM (drawable)))
@@ -577,7 +576,8 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
   GimpDisplayShell *shell         = gimp_display_get_shell (display);
-  GimpDrawable     *drawable;
+  GimpImage        *image         = gimp_display_get_image (display);
+  GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -593,7 +593,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
   if (tool->display            &&
       tool->display != display &&
-      tool->display->image == display->image)
+      gimp_display_get_image (tool->display) == image)
     {
       /*  if this is a different display, but the same image, HACK around
        *  in tool internals AFTER stopping the current draw_tool, so
@@ -603,8 +603,6 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
       tool->display = display;
     }
-
-  drawable = gimp_image_get_active_drawable (display->image);
 
   if (drawable && proximity)
     {
@@ -647,10 +645,9 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
             }
           else
             {
-              GimpImage *image = display->image;
-              gdouble    xres;
-              gdouble    yres;
-              gchar      format_str[64];
+              gdouble xres;
+              gdouble yres;
+              gchar   format_str[64];
 
               gimp_image_get_resolution (image, &xres, &yres);
 

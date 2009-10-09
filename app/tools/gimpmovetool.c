@@ -210,8 +210,9 @@ gimp_move_tool_button_press (GimpTool            *tool,
                              GimpDisplay         *display)
 {
   GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell   = gimp_display_get_shell (display);
   GimpMoveOptions  *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell *shell   = gimp_display_get_shell (display);
+  GimpImage        *image   = gimp_display_get_image (display);
 
   tool->display = display;
 
@@ -233,9 +234,9 @@ gimp_move_tool_button_press (GimpTool            *tool,
                                          &vectors))
             {
               move->old_active_vectors =
-                gimp_image_get_active_vectors (display->image);
+                gimp_image_get_active_vectors (image);
 
-              gimp_image_set_active_vectors (display->image, vectors);
+              gimp_image_set_active_vectors (image, vectors);
             }
           else
             {
@@ -250,7 +251,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
           gint       snap_distance = display->config->snap_distance;
 
           if (gimp_display_shell_get_show_guides (shell) &&
-              (guide = gimp_image_find_guide (display->image,
+              (guide = gimp_image_find_guide (image,
                                               coords->x, coords->y,
                                               FUNSCALEX (shell, snap_distance),
                                               FUNSCALEY (shell, snap_distance))))
@@ -279,18 +280,18 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
               return;
             }
-          else if ((layer = gimp_image_pick_layer (display->image,
+          else if ((layer = gimp_image_pick_layer (image,
                                                    coords->x,
                                                    coords->y)))
             {
-              if (gimp_image_get_floating_selection (display->image) &&
+              if (gimp_image_get_floating_selection (image) &&
                   ! gimp_layer_is_floating_sel (layer))
                 {
                   /*  If there is a floating selection, and this aint it,
                    *  use the move tool to anchor it.
                    */
                   move->floating_layer =
-                    gimp_image_get_floating_selection (display->image);
+                    gimp_image_get_floating_selection (image);
 
                   gimp_tool_control_activate (tool->control);
 
@@ -298,10 +299,9 @@ gimp_move_tool_button_press (GimpTool            *tool,
                 }
               else
                 {
-                  move->old_active_layer =
-                    gimp_image_get_active_layer (display->image);
+                  move->old_active_layer = gimp_image_get_active_layer (image);
 
-                  gimp_image_set_active_layer (display->image, layer);
+                  gimp_image_set_active_layer (image, layer);
                 }
             }
           else
@@ -316,22 +316,20 @@ gimp_move_tool_button_press (GimpTool            *tool,
   switch (options->move_type)
     {
     case GIMP_TRANSFORM_TYPE_PATH:
-      if (gimp_image_get_active_vectors (display->image))
+      if (gimp_image_get_active_vectors (image))
         gimp_edit_selection_tool_start (tool, display, coords,
                                         GIMP_TRANSLATE_MODE_VECTORS, TRUE);
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      if (! gimp_channel_is_empty (gimp_image_get_mask (display->image)))
+      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
         gimp_edit_selection_tool_start (tool, display, coords,
                                         GIMP_TRANSLATE_MODE_MASK, TRUE);
       break;
 
     case GIMP_TRANSFORM_TYPE_LAYER:
       {
-        GimpDrawable *drawable;
-
-        drawable = gimp_image_get_active_drawable (display->image);
+        GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
         if (GIMP_IS_LAYER_MASK (drawable))
           gimp_edit_selection_tool_start (tool, display, coords,
@@ -356,8 +354,9 @@ gimp_move_tool_button_release (GimpTool              *tool,
                                GimpDisplay           *display)
 {
   GimpMoveTool     *move   = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell  = gimp_display_get_shell (display);
   GimpGuiConfig    *config = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpDisplayShell *shell  = gimp_display_get_shell (display);
+  GimpImage        *image  = gimp_display_get_image (display);
 
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);
@@ -409,7 +408,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
         {
           if (move->guide)
             {
-              gimp_image_remove_guide (display->image, move->guide, TRUE);
+              gimp_image_remove_guide (image, move->guide, TRUE);
               move->guide = NULL;
             }
         }
@@ -417,7 +416,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
         {
           if (move->guide)
             {
-              gimp_image_move_guide (display->image, move->guide,
+              gimp_image_move_guide (image, move->guide,
                                      move->guide_position, TRUE);
             }
           else
@@ -425,13 +424,13 @@ gimp_move_tool_button_release (GimpTool              *tool,
               switch (move->guide_orientation)
                 {
                 case GIMP_ORIENTATION_HORIZONTAL:
-                  move->guide = gimp_image_add_hguide (display->image,
+                  move->guide = gimp_image_add_hguide (image,
                                                        move->guide_position,
                                                        TRUE);
                   break;
 
                 case GIMP_ORIENTATION_VERTICAL:
-                  move->guide = gimp_image_add_vguide (display->image,
+                  move->guide = gimp_image_add_vguide (image,
                                                        move->guide_position,
                                                        TRUE);
                   break;
@@ -443,7 +442,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
         }
 
       gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
-      gimp_image_flush (display->image);
+      gimp_image_flush (image);
 
       if (move->guide)
         gimp_display_shell_draw_guide (shell, move->guide, TRUE);
@@ -461,8 +460,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
         {
           if (move->old_active_layer)
             {
-              gimp_image_set_active_layer (display->image,
-                                           move->old_active_layer);
+              gimp_image_set_active_layer (image, move->old_active_layer);
               move->old_active_layer = NULL;
 
               flush = TRUE;
@@ -470,8 +468,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
 
           if (move->old_active_vectors)
             {
-              gimp_image_set_active_vectors (display->image,
-                                             move->old_active_vectors);
+              gimp_image_set_active_vectors (image, move->old_active_vectors);
               move->old_active_vectors = NULL;
 
               flush = TRUE;
@@ -489,7 +486,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
         }
 
       if (flush)
-        gimp_image_flush (display->image);
+        gimp_image_flush (image);
     }
 }
 
@@ -653,6 +650,7 @@ gimp_move_tool_oper_update (GimpTool         *tool,
   GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
   GimpMoveOptions  *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell *shell   = gimp_display_get_shell (display);
+  GimpImage        *image   = gimp_display_get_image (display);
   GimpGuide        *guide   = NULL;
 
   if (options->move_type == GIMP_TRANSFORM_TYPE_LAYER &&
@@ -662,7 +660,7 @@ gimp_move_tool_oper_update (GimpTool         *tool,
     {
       gint snap_distance = display->config->snap_distance;
 
-      guide = gimp_image_find_guide (display->image, coords->x, coords->y,
+      guide = gimp_image_find_guide (image, coords->x, coords->y,
                                      FUNSCALEX (shell, snap_distance),
                                      FUNSCALEY (shell, snap_distance));
     }
@@ -682,8 +680,9 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
-  GimpDisplayShell   *shell       = gimp_display_get_shell (display);
   GimpMoveOptions    *options     = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell   *shell       = gimp_display_get_shell (display);
+  GimpImage          *image       = gimp_display_get_image (display);
   GimpCursorType      cursor      = GIMP_CURSOR_MOUSE;
   GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_MOVE;
   GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
@@ -695,7 +694,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
 
       if (options->move_current)
         {
-          if (! gimp_image_get_active_vectors (display->image))
+          if (! gimp_image_get_active_vectors (image))
             modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
       else
@@ -717,12 +716,12 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
       tool_cursor = GIMP_TOOL_CURSOR_RECT_SELECT;
       modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 
-      if (gimp_channel_is_empty (gimp_image_get_mask (display->image)))
+      if (gimp_channel_is_empty (gimp_image_get_mask (image)))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
     }
   else if (options->move_current)
     {
-      if (! gimp_image_get_active_drawable (display->image))
+      if (! gimp_image_get_active_drawable (image))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
     }
   else
@@ -732,24 +731,24 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
       gint       snap_distance = display->config->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
-          (guide = gimp_image_find_guide (display->image, coords->x, coords->y,
+          (guide = gimp_image_find_guide (image, coords->x, coords->y,
                                           FUNSCALEX (shell, snap_distance),
                                           FUNSCALEY (shell, snap_distance))))
         {
           tool_cursor = GIMP_TOOL_CURSOR_HAND;
           modifier    = GIMP_CURSOR_MODIFIER_MOVE;
         }
-      else if ((layer = gimp_image_pick_layer (display->image,
+      else if ((layer = gimp_image_pick_layer (image,
                                                coords->x, coords->y)))
         {
           /*  if there is a floating selection, and this aint it...  */
-          if (gimp_image_get_floating_selection (display->image) &&
+          if (gimp_image_get_floating_selection (image) &&
               ! gimp_layer_is_floating_sel (layer))
             {
               tool_cursor = GIMP_TOOL_CURSOR_MOVE;
               modifier    = GIMP_CURSOR_MODIFIER_ANCHOR;
             }
-          else if (layer != gimp_image_get_active_layer (display->image))
+          else if (layer != gimp_image_get_active_layer (image))
             {
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
               modifier    = GIMP_CURSOR_MODIFIER_MOVE;

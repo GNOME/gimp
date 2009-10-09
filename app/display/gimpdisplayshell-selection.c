@@ -225,7 +225,7 @@ gimp_display_shell_selection_set_hidden (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_selection_layer_set_hidden (GimpDisplayShell *shell,
+gimp_display_shell_selection_set_layer_hidden (GimpDisplayShell *shell,
                                                gboolean          hidden)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));

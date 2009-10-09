@@ -2007,9 +2007,11 @@ gimp_display_shell_hscrollbar_update_range (GtkRange         *range,
       (scroll == GTK_SCROLL_PAGE_FORWARD))
     return FALSE;
 
+  g_object_freeze_notify (G_OBJECT (shell->hsbdata));
+
   gimp_display_shell_scroll_setup_hscrollbar (shell, value);
 
-  gtk_adjustment_changed (shell->hsbdata);
+  g_object_thaw_notify (G_OBJECT (shell->hsbdata)); /* emits "changed" */
 
   return FALSE;
 }
@@ -2028,9 +2030,11 @@ gimp_display_shell_vscrollbar_update_range (GtkRange         *range,
       (scroll == GTK_SCROLL_PAGE_FORWARD))
     return FALSE;
 
+  g_object_freeze_notify (G_OBJECT (shell->vsbdata));
+
   gimp_display_shell_scroll_setup_vscrollbar (shell, value);
 
-  gtk_adjustment_changed (shell->vsbdata);
+  g_object_thaw_notify (G_OBJECT (shell->vsbdata)); /* emits "changed" */
 
   return FALSE;
 }

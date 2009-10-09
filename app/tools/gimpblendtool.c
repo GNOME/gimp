@@ -153,7 +153,8 @@ gimp_blend_tool_initialize (GimpTool     *tool,
                             GimpDisplay  *display,
                             GError      **error)
 {
-  GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+  GimpImage    *image    = gimp_display_get_image (display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -221,7 +222,7 @@ gimp_blend_tool_button_release (GimpTool              *tool,
   GimpBlendOptions *options       = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (options);
   GimpContext      *context       = GIMP_CONTEXT (options);
-  GimpImage        *image         = display->image;
+  GimpImage        *image         = gimp_display_get_image (display);
 
   gimp_tool_pop_status (tool, display);
 
@@ -357,10 +358,9 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
                                GdkModifierType   state,
                                GimpDisplay      *display)
 {
-  GimpDrawable       *drawable;
+  GimpImage          *image    = gimp_display_get_image (display);
+  GimpDrawable       *drawable = gimp_image_get_active_drawable (image);
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
-
-  drawable = gimp_image_get_active_drawable (display->image);
 
   if (gimp_drawable_is_indexed (drawable)                   ||
       gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||

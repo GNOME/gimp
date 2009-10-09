@@ -406,11 +406,7 @@ gimp_display_new (Gimp              *gimp,
 
   /*  refs the image  */
   if (image)
-    {
-      private->instance = image->instance_count++;
-
-      gimp_display_connect (display, image);
-    }
+    gimp_display_set_image (display, image);
 
   /*  get an image window  */
   if (GIMP_GUI_CONFIG (display->config)->single_window_mode)
@@ -614,11 +610,14 @@ gimp_display_set_image (GimpDisplay *display,
 {
   GimpDisplayPrivate *private;
   GimpImage          *old_image = NULL;
+  GimpDisplayShell   *shell;
 
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
   private = GIMP_DISPLAY_GET_PRIVATE (display);
+
+  shell = gimp_display_get_shell (display);
 
   if (display->image)
     {
@@ -626,27 +625,55 @@ gimp_display_set_image (GimpDisplay *display,
       tool_manager_control_active (display->gimp, GIMP_TOOL_ACTION_HALT,
                                    display);
 
-      gimp_display_shell_disconnect (gimp_display_get_shell (display));
-
-      old_image = g_object_ref (display->image);
+      gimp_display_shell_disconnect (shell);
 
       gimp_display_disconnect (display);
+
+      display->image->disp_count--;
+
+      /*  set display->image before unrefing because there may be code
+       *  that listens for image removals and then iterates the
+       *  display list to find a valid display.
+       */
+      old_image = display->image;
+
+#if 0
+      g_print ("%s: image->ref_count before unrefing: %d\n",
+               G_STRFUNC, G_OBJECT (old_image)->ref_count);
+#endif
     }
+
+  display->image = image;
 
   if (image)
     {
+#if 0
+      g_print ("%s: image->ref_count before refing: %d\n",
+               G_STRFUNC, G_OBJECT (image)->ref_count);
+#endif
+
+      g_object_ref (image);
+
       private->instance = image->instance_count++;
 
-      gimp_display_connect (display, image);
+      image->disp_count++;
+
+      gimp_display_connect (display);
+
+      if (shell)
+        gimp_display_shell_connect (shell);
     }
 
   if (old_image)
     g_object_unref (old_image);
 
-  if (image)
-    gimp_display_shell_reconnect (gimp_display_get_shell (display));
-  else
-    gimp_display_shell_icon_update (gimp_display_get_shell (display));
+  if (shell)
+    {
+      if (image)
+        gimp_display_shell_reconnect (shell);
+      else
+        gimp_display_shell_icon_update (shell);
+    }
 
   if (old_image != image)
     g_object_notify (G_OBJECT (display), "image");

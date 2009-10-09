@@ -624,7 +624,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 {
   GimpForegroundSelectTool    *fg_select;
   GimpForegroundSelectOptions *options;
-  GimpImage                   *image = display->image;
+  GimpImage                   *image = gimp_display_get_image (display);
   GimpDrawable                *drawable;
   GimpScanConvert             *scan_convert;
   GimpChannel                 *mask;
@@ -761,10 +761,11 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 {
   GimpTool             *tool    = GIMP_TOOL (fg_select);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpImage            *image   = gimp_display_get_image (display);
 
   g_return_if_fail (fg_select->mask != NULL);
 
-  gimp_channel_select_channel (gimp_image_get_mask (display->image),
+  gimp_channel_select_channel (gimp_image_get_mask (image),
                                C_("command", "Foreground Select"),
                                fg_select->mask, 0, 0,
                                options->operation,
@@ -774,7 +775,7 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 
   gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
-  gimp_image_flush (display->image);
+  gimp_image_flush (image);
 }
 
 static void
