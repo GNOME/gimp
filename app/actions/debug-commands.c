@@ -388,9 +388,12 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
                                gint       depth,
                                gchar     *path)
 {
+  GList *children;
   GList *list;
 
-  for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
+  children = gtk_container_get_children (GTK_CONTAINER (menu));
+
+  for (list = children; list; list = g_list_next (list))
     {
       GtkWidget *menu_item = GTK_WIDGET (list->data);
       GtkWidget *child     = gtk_bin_get_child (GTK_BIN (menu_item));
@@ -424,6 +427,8 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
           g_free (full_path);
         }
     }
+
+  g_list_free (children);
 }
 
 static void
