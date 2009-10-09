@@ -308,24 +308,27 @@ colorsel_cmyk_adj_update (GtkAdjustment *adj,
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
   gint               i;
+  gdouble            value;
 
   for (i = 0; i < 4; i++)
     if (module->adj[i] == adj)
       break;
 
+  value = gtk_adjustment_get_value (adj) / 100.0;
+
   switch (i)
     {
     case 0:
-      module->cmyk.c = adj->value / 100.0;
+      module->cmyk.c = value;
       break;
     case 1:
-      module->cmyk.m = adj->value / 100.0;
+      module->cmyk.m = value;
       break;
     case 2:
-      module->cmyk.y = adj->value / 100.0;
+      module->cmyk.y = value;
       break;
     case 3:
-      module->cmyk.k = adj->value / 100.0;
+      module->cmyk.k = value;
       break;
     default:
       return;
