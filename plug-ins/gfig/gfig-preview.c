@@ -138,7 +138,7 @@ gfig_preview_realize (GtkWidget *widget)
 {
   GdkDisplay *display = gtk_widget_get_display (widget);
 
-  gdk_window_set_cursor (gfig_context->preview->window,
+  gdk_window_set_cursor (gtk_widget_get_window (gfig_context->preview),
                          gdk_cursor_new_for_display (display, GDK_CROSSHAIR));
   gfig_grid_colours (widget);
 }
@@ -152,8 +152,8 @@ draw_background (void)
                                             GIMP_PIXBUF_LARGE_CHECKS);
 
   if (back_pixbuf)
-    gdk_draw_pixbuf (gfig_context->preview->window,
-                     gfig_context->preview->style->fg_gc[GTK_STATE_NORMAL],
+    gdk_draw_pixbuf (gtk_widget_get_window (gfig_context->preview),
+                     gtk_widget_get_style (gfig_context->preview)->fg_gc[GTK_STATE_NORMAL],
                      back_pixbuf, 0, 0,
                      0, 0,
                      gdk_pixbuf_get_width (back_pixbuf),
@@ -165,7 +165,7 @@ gboolean
 gfig_preview_expose (GtkWidget *widget,
                      GdkEvent  *event)
 {
-  gdk_window_clear (gfig_context->preview->window);
+  gdk_window_clear (gtk_widget_get_window (gfig_context->preview));
 
   if (gfig_context->show_background)
     draw_background ();

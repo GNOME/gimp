@@ -786,7 +786,7 @@ draw_circle (GdkPoint *p,
   if (!selvals.opts.showcontrol)
     return;
 
-  gdk_draw_arc (gfig_context->preview->window,
+  gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
                 gfig_gc,
                 selected,
                 p->x - SQ_SIZE/2,
@@ -805,7 +805,7 @@ draw_sqr (GdkPoint *p,
   if (!selvals.opts.showcontrol)
     return;
 
-  gdk_draw_rectangle (gfig_context->preview->window,
+  gdk_draw_rectangle (gtk_widget_get_window (gfig_context->preview),
                       gfig_gc,
                       selected,
                       gfig_scale_x (p->x) - SQ_SIZE / 2,
@@ -2072,7 +2072,8 @@ toggle_obj_type (GtkRadioAction *action,
       p_cursors[selvals.otype] = gdk_cursor_new_for_display (display, ctype);
     }
 
-  gdk_window_set_cursor (gfig_context->preview->window, p_cursors[selvals.otype]);
+  gdk_window_set_cursor (gtk_widget_get_window (gfig_context->preview),
+                         p_cursors[selvals.otype]);
 }
 
 /* This could belong in a separate file ... but makes it easier to lump into
@@ -2145,7 +2146,7 @@ void
 gfig_draw_arc (gint x, gint y, gint width, gint height, gint angle1,
                gint angle2)
 {
-  gdk_draw_arc (gfig_context->preview->window,
+  gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
                 gfig_gc,
                 FALSE,
                 gfig_scale_x (x - width),
@@ -2159,7 +2160,7 @@ gfig_draw_arc (gint x, gint y, gint width, gint height, gint angle1,
 void
 gfig_draw_line (gint x0, gint y0, gint x1, gint y1)
 {
-  gdk_draw_line (gfig_context->preview->window,
+  gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                  gfig_gc,
                  gfig_scale_x (x0),
                  gfig_scale_y (y0),
@@ -2173,7 +2174,7 @@ gfig_new_gc (void)
   GdkColor fg, bg;
 
   /*  create a new graphics context  */
-  gfig_gc = gdk_gc_new (gfig_context->preview->window);
+  gfig_gc = gdk_gc_new (gtk_widget_get_window (gfig_context->preview));
 
   gdk_gc_set_function (gfig_gc, GDK_INVERT);
 

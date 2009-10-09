@@ -590,7 +590,7 @@ d_update_arc_line (GdkPoint *pnt)
       /* Draw square on point */
       draw_circle (&epnt->pnt, TRUE);
 
-      gdk_draw_line (gfig_context->preview->window,
+      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                      /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
                      gfig_gc,
                      spnt->pnt.x,
@@ -606,7 +606,7 @@ d_update_arc_line (GdkPoint *pnt)
 
   epnt = new_dobjpoint (pnt->x, pnt->y);
 
-  gdk_draw_line (gfig_context->preview->window,
+  gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                  /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
                  gfig_gc,
                  spnt->pnt.x,
