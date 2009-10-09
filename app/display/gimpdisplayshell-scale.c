@@ -134,24 +134,32 @@ gimp_display_shell_scale_update_scrollbars (GimpDisplayShell *shell)
 
   /* Horizontal scrollbar */
 
-  shell->hsbdata->value          = shell->offset_x;
-  shell->hsbdata->page_size      = shell->disp_width;
-  shell->hsbdata->page_increment = shell->disp_width / 2;
+  g_object_freeze_notify (G_OBJECT (shell->hsbdata));
+
+  g_object_set (shell->hsbdata,
+                "value",          (gdouble) shell->offset_x,
+                "page-size",      (gdouble) shell->disp_width,
+                "page-increment", (gdouble) shell->disp_width / 2,
+                NULL);
 
   gimp_display_shell_scroll_setup_hscrollbar (shell, shell->offset_x);
 
-  gtk_adjustment_changed (shell->hsbdata);
+  g_object_thaw_notify (G_OBJECT (shell->hsbdata)); /* emits "changed" */
 
 
   /* Vertcal scrollbar */
 
-  shell->vsbdata->value          = shell->offset_y;
-  shell->vsbdata->page_size      = shell->disp_height;
-  shell->vsbdata->page_increment = shell->disp_height / 2;
+  g_object_freeze_notify (G_OBJECT (shell->vsbdata));
+
+  g_object_set (shell->vsbdata,
+                "value",          (gdouble) shell->offset_y,
+                "page-size",      (gdouble) shell->disp_height,
+                "page-increment", (gdouble) shell->disp_height / 2,
+                NULL);
 
   gimp_display_shell_scroll_setup_vscrollbar (shell, shell->offset_y);
 
-  gtk_adjustment_changed (shell->vsbdata);
+  g_object_thaw_notify (G_OBJECT (shell->vsbdata)); /* emits "changed" */
 }
 
 /**

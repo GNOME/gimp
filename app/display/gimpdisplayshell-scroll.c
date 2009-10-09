@@ -546,7 +546,9 @@ void
 gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
                                             gdouble           value)
 {
-  gint sw;
+  gint    sw;
+  gdouble lower;
+  gdouble upper;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -558,22 +560,22 @@ gimp_display_shell_scroll_setup_hscrollbar (GimpDisplayShell *shell,
 
   if (shell->disp_width < sw)
     {
-      shell->hsbdata->lower = MIN (value,
-                                   0);
-
-      shell->hsbdata->upper = MAX (value + shell->disp_width,
-                                   sw);
+      lower = MIN (value, 0);
+      upper = MAX (value + shell->disp_width, sw);
     }
   else
     {
-      shell->hsbdata->lower = MIN (value,
-                                   -(shell->disp_width - sw) / 2);
-
-      shell->hsbdata->upper = MAX (value + shell->disp_width,
-                                   sw + (shell->disp_width - sw) / 2);
+      lower = MIN (value, -(shell->disp_width - sw) / 2);
+      upper = MAX (value + shell->disp_width,
+                   sw + (shell->disp_width - sw) / 2);
     }
 
-  shell->hsbdata->step_increment = MAX (shell->scale_x, MINIMUM_STEP_AMOUNT);
+  g_object_set (shell->hsbdata,
+                "lower",          lower,
+                "upper",          upper,
+                "step-increment", (gdouble) MAX (shell->scale_x,
+                                                 MINIMUM_STEP_AMOUNT),
+                NULL);
 }
 
 /**
@@ -588,7 +590,9 @@ void
 gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
                                             gdouble           value)
 {
-  gint sh;
+  gint    sh;
+  gdouble lower;
+  gdouble upper;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -600,20 +604,20 @@ gimp_display_shell_scroll_setup_vscrollbar (GimpDisplayShell *shell,
 
   if (shell->disp_height < sh)
     {
-      shell->vsbdata->lower = MIN (value,
-                                   0);
-
-      shell->vsbdata->upper = MAX (value + shell->disp_height,
-                                   sh);
+      lower = MIN (value, 0);
+      upper = MAX (value + shell->disp_height, sh);
     }
   else
     {
-      shell->vsbdata->lower = MIN (value,
-                                   -(shell->disp_height - sh) / 2);
-
-      shell->vsbdata->upper = MAX (value + shell->disp_height,
-                                   sh + (shell->disp_height - sh) / 2);
+      lower = MIN (value, -(shell->disp_height - sh) / 2);
+      upper = MAX (value + shell->disp_height,
+                   sh + (shell->disp_height - sh) / 2);
     }
 
-  shell->vsbdata->step_increment = MAX (shell->scale_y, MINIMUM_STEP_AMOUNT);
+  g_object_set (shell->vsbdata,
+                "lower",          lower,
+                "upper",          upper,
+                "step-increment", (gdouble) MAX (shell->scale_y,
+                                                 MINIMUM_STEP_AMOUNT),
+                NULL);
 }
