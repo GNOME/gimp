@@ -171,7 +171,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
             {
               success = TRUE;
 
-              gdk_window_raise (open_dialog->window);
+              gdk_window_raise (gtk_widget_get_window (open_dialog));
             }
         }
 
