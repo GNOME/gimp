@@ -65,7 +65,7 @@ brush_restore (void)
 void
 brush_store (void)
 {
-  pcvals.brushgamma = GTK_ADJUSTMENT (brush_gamma_adjust)->value;
+  pcvals.brushgamma = gtk_adjustment_get_value (GTK_ADJUSTMENT (brush_gamma_adjust));
 }
 
 void
@@ -363,7 +363,7 @@ update_brush_preview (const gchar *fn)
 
       set_colorbrushes (fn);
 
-      sc = GTK_ADJUSTMENT (brush_gamma_adjust)->value;
+      sc = gtk_adjustment_get_value (GTK_ADJUSTMENT (brush_gamma_adjust));
       if (sc != 1.0)
         for (i = 0; i < 256; i++)
           gammatable[i] = pow (i / 255.0, sc) * 255;
@@ -372,7 +372,7 @@ update_brush_preview (const gchar *fn)
           gammatable[i] = i;
 
       newheight = p.height *
-                    pow (10, GTK_ADJUSTMENT (brush_aspect_adjust)->value);
+        pow (10, gtk_adjustment_get_value (GTK_ADJUSTMENT (brush_aspect_adjust)));
 
       sc = p.width > newheight ? p.width : newheight;
       sc = 100.0 / sc;
