@@ -397,6 +397,7 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
 
       if (GTK_IS_LABEL (child))
         {
+          GtkWidget   *submenu;
           const gchar *label;
           gchar       *full_path;
           gchar       *help_page;
@@ -415,9 +416,10 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
           g_free (format_str);
           g_free (help_page);
 
-          if (GTK_MENU_ITEM (menu_item)->submenu)
-            debug_dump_menus_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu,
-                                           depth + 1, full_path);
+          submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu_item));
+
+          if (submenu)
+            debug_dump_menus_recurse_menu (submenu, depth + 1, full_path);
 
           g_free (full_path);
         }
