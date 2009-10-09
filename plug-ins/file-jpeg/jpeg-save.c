@@ -1371,7 +1371,7 @@ save_restart_update (GtkAdjustment *adjustment,
                      GtkWidget     *toggle)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)))
-    jsvals.restart = adjustment->value;
+    jsvals.restart = gtk_adjustment_get_value (adjustment);
   else
     jsvals.restart = 0;
 
