@@ -484,7 +484,9 @@ script_fu_console_idle_scroll_end (GtkWidget *view)
 {
   GtkAdjustment *adj = GTK_TEXT_VIEW (view)->vadjustment;
 
-  gtk_adjustment_set_value (adj, adj->upper - adj->page_size);
+  gtk_adjustment_set_value (adj,
+                            gtk_adjustment_get_upper (adj) -
+                            gtk_adjustment_get_page_size (adj));
 
   g_object_unref (view);
 
