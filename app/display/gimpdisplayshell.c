@@ -45,10 +45,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimptemplate.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
