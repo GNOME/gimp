@@ -245,7 +245,7 @@ select_area_expose (GtkWidget      *widget,
       dest += event->area.width * 3;
     }
 
-  gdk_draw_rgb_image_dithalign (widget->window,
+  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
                                 style->fg_gc[widget->state],
                                 event->area.x, event->area.y,
                                 event->area.width, event->area.height,
