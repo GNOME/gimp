@@ -287,16 +287,17 @@ view_scroll_horizontal_cmd_callback (GtkAction *action,
   shell = gimp_display_get_shell (display);
 
   offset = action_select_value ((GimpActionSelectType) value,
-                                shell->hsbdata->value,
-                                shell->hsbdata->lower,
-                                shell->hsbdata->upper -
-                                shell->hsbdata->page_size,
-                                shell->hsbdata->lower,
+                                gtk_adjustment_get_value (shell->hsbdata),
+                                gtk_adjustment_get_lower (shell->hsbdata),
+                                gtk_adjustment_get_upper (shell->hsbdata) -
+                                gtk_adjustment_get_page_size (shell->hsbdata),
+                                gtk_adjustment_get_lower (shell->hsbdata),
                                 1,
-                                shell->hsbdata->step_increment,
-                                shell->hsbdata->page_increment,
+                                gtk_adjustment_get_step_increment (shell->hsbdata),
+                                gtk_adjustment_get_page_increment (shell->hsbdata),
                                 0,
                                 FALSE);
+
   gtk_adjustment_set_value (shell->hsbdata, offset);
 }
 
@@ -313,16 +314,17 @@ view_scroll_vertical_cmd_callback (GtkAction *action,
   shell = gimp_display_get_shell (display);
 
   offset = action_select_value ((GimpActionSelectType) value,
-                                shell->vsbdata->value,
-                                shell->vsbdata->lower,
-                                shell->vsbdata->upper -
-                                shell->vsbdata->page_size,
-                                shell->vsbdata->lower,
+                                gtk_adjustment_get_value (shell->vsbdata),
+                                gtk_adjustment_get_lower (shell->vsbdata),
+                                gtk_adjustment_get_upper (shell->vsbdata) -
+                                gtk_adjustment_get_page_size (shell->vsbdata),
+                                gtk_adjustment_get_lower (shell->vsbdata),
                                 1,
-                                shell->vsbdata->step_increment,
-                                shell->vsbdata->page_increment,
+                                gtk_adjustment_get_step_increment (shell->vsbdata),
+                                gtk_adjustment_get_page_increment (shell->vsbdata),
                                 0,
                                 FALSE);
+
   gtk_adjustment_set_value (shell->vsbdata, offset);
 }
 
