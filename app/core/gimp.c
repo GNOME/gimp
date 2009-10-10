@@ -547,7 +547,6 @@ gimp_real_initialize (Gimp               *gimp,
 
   static const GimpDataFactoryLoaderEntry dynamics_loader_entries[] =
   {
-    /*TODO: Dynamics need savers and loaders*/
     { gimp_dynamics_load,       GIMP_DYNAMICS_FILE_EXTENSION,         FALSE }
   };
 
