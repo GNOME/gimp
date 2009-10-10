@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -41,8 +43,6 @@ gimp_channel_add_segment (GimpChannel *mask,
                           gint         value)
 {
   PixelRegion  maskPR;
-  guchar      *data;
-  gint         val;
   gint         x2;
   gpointer     pr;
 
@@ -62,18 +62,33 @@ gimp_channel_add_segment (GimpChannel *mask,
   pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                      x, y, width, 1, TRUE);
 
-  for (pr = pixel_regions_register (1, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  /*  If the value is 255, there is no point in adding it to the
+   *  existing selection mask, just set everything to 255.
+   */
+  if (value == 255)
     {
-      data = maskPR.data;
-      width = maskPR.w;
-      while (width--)
+      for (pr = pixel_regions_register (1, &maskPR);
+           pr != NULL;
+           pr = pixel_regions_process (pr))
         {
-          val = *data + value;
-          if (val > 255)
-            val = 255;
-          *data++ = val;
+          memset (maskPR.data, 255, maskPR.w);
+        }
+    }
+  else
+    {
+      for (pr = pixel_regions_register (1, &maskPR);
+           pr != NULL;
+           pr = pixel_regions_process (pr))
+        {
+          guchar *data = maskPR.data;
+
+          width = maskPR.w;
+          while (width--)
+            {
+              const gint val = *data + value;
+
+              *data++ = val < 255 ? val : 255;
+            }
         }
     }
 }
@@ -86,8 +101,6 @@ gimp_channel_sub_segment (GimpChannel *mask,
                           gint         value)
 {
   PixelRegion  maskPR;
-  guchar      *data;
-  gint         val;
   gint         x2;
   gpointer     pr;
 
@@ -108,18 +121,33 @@ gimp_channel_sub_segment (GimpChannel *mask,
   pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                      x, y, width, 1, TRUE);
 
-  for (pr = pixel_regions_register (1, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  /*  If the value is 255, there is no point in subtracting it from
+   *  the existing selection mask, just set everything to 0.
+   */
+  if (value == 255)
     {
-      data = maskPR.data;
-      width = maskPR.w;
-      while (width--)
+      for (pr = pixel_regions_register (1, &maskPR);
+           pr != NULL;
+           pr = pixel_regions_process (pr))
         {
-          val = *data - value;
-          if (val < 0)
-            val = 0;
-          *data++ = val;
+          memset (maskPR.data, 0, maskPR.w);
+        }
+    }
+  else
+    {
+      for (pr = pixel_regions_register (1, &maskPR);
+           pr != NULL;
+           pr = pixel_regions_process (pr))
+        {
+          guchar *data = maskPR.data;
+
+          width = maskPR.w;
+          while (width--)
+            {
+              const gint val = *data - value;
+
+              *data++ = val > 0 ? val : 0;
+            }
         }
     }
 }
@@ -175,7 +203,9 @@ gimp_channel_combine_rect (GimpChannel    *mask,
       mask->y2    = y + h;
     }
   else
-    mask->bounds_known = FALSE;
+    {
+      mask->bounds_known = FALSE;
+    }
 
   mask->x1 = CLAMP (mask->x1, 0, gimp_item_get_width  (GIMP_ITEM (mask)));
   mask->y1 = CLAMP (mask->y1, 0, gimp_item_get_height (GIMP_ITEM (mask)));
@@ -236,7 +266,7 @@ gimp_channel_combine_segment (GimpChannel    *mask,
       break;
 
     case GIMP_CHANNEL_OP_INTERSECT:
-      /* Should not happend */
+      /* Should not happen */
       break;
     }
 }
