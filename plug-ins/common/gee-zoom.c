@@ -473,7 +473,8 @@ render_frame (void)
         }
     }
 
-  gdk_window_get_pointer (drawing_area->window, &rxp, &ryp, &mask);
+  gdk_window_get_pointer (gtk_widget_get_window (drawing_area),
+                          &rxp, &ryp, &mask);
 
   if ((abs(rxp)>60)||(abs(ryp)>60))
     {
@@ -489,7 +490,7 @@ render_frame (void)
              xp+yp, (yp-xp)/2
              );
 
-      gdk_draw_rgb_image (drawing_area->window,
+      gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
                           style->white_gc,
                           0, 0, width, height,
                           GDK_RGB_DITHER_NORMAL,
@@ -545,7 +546,7 @@ render_frame (void)
              xp+yp, (yp-xp)/2
              );
 
-      gdk_draw_gray_image (drawing_area->window,
+      gdk_draw_gray_image (gtk_widget_get_window (drawing_area),
                            style->white_gc,
                            0, 0, width, height,
                            GDK_RGB_DITHER_NORMAL,
