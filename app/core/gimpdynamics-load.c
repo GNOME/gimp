@@ -17,44 +17,36 @@
 
 #include "config.h"
 
-#include <errno.h>
-
 #include <glib-object.h>
-#include <glib/gstdio.h>
 
-#include "libgimpbase/gimpbase.h"
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimpdynamics.h"
 #include "gimpdynamics-load.h"
 
-#include "gimp-intl.h"
-
 
 GList *
 gimp_dynamics_load (const gchar  *filename,
                     GError      **error)
 {
-
-  GimpDynamics *dynamics = g_object_new(GIMP_TYPE_DYNAMICS,
-                                        "name", "Default",
-                                        NULL);
+  GimpDynamics *dynamics;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  gimp_config_deserialize_file (dynamics,
-                                filename, NULL, NULL);
+  dynamics = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
 
-/*      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));*/
+  if (gimp_config_deserialize_file (GIMP_CONFIG (dynamics),
+                                    filename,
+                                    NULL, error))
+    {
+      return g_list_prepend (NULL, dynamics);
+    }
 
-  return g_list_prepend (NULL, dynamics);
+  g_object_unref (dynamics);
+
+  return NULL;
 }

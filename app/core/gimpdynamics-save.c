@@ -17,42 +17,26 @@
 
 #include "config.h"
 
-#include <errno.h>
-
 #include <glib-object.h>
-#include <glib/gstdio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimpdynamics.h"
 #include "gimpdynamics-save.h"
-#include "gimpdynamics-load.h"
-
-#include "config/gimpconfig-file.h"
-#include "gimp-intl.h"
 
 
 gboolean
 gimp_dynamics_save (GimpData  *data,
                     GError   **error)
 {
-  GimpDynamics *dynamics;
-  FILE         *file;
-  GError       *myerror = NULL;
-
   g_return_val_if_fail (GIMP_IS_DYNAMICS (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  dynamics = GIMP_DYNAMICS (data);
-
-  if(!gimp_config_serialize_to_file(dynamics, g_strconcat(data->filename, GIMP_DYNAMICS_FILE_EXTENSION, NULL), "GIMP dynamics save file", "", &myerror))
-    {
-      g_message ("%s", myerror->message);
-      g_error_free (myerror);
-    }
-
-
- return TRUE;
+  return gimp_config_serialize_to_file (GIMP_CONFIG (data),
+                                        data->filename,
+                                        "GIMP dynamics file",
+                                        "end of GIMP dynamics file",
+                                        NULL, error);
 }
