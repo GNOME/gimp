@@ -28,6 +28,7 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpdataeditor.h"
 
 #include "dynamics-editor-actions.h"
 #include "data-editor-commands.h"
