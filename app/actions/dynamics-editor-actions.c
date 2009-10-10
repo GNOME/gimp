@@ -28,12 +28,12 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpbrusheditor.h"
 
 #include "dynamics-editor-actions.h"
 #include "data-editor-commands.h"
 
 #include "gimp-intl.h"
+
 
 static const GimpActionEntry dynamics_editor_actions[] =
 {
@@ -70,10 +70,10 @@ void
 dynamics_editor_actions_update (GimpActionGroup *group,
                                 gpointer         user_data)
 {
-  GimpDataEditor  *data_editor = GIMP_DATA_EDITOR (user_data);
-  GimpData        *data;
-  gboolean         editable    = FALSE;
-  gboolean         edit_active = FALSE;
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (user_data);
+  GimpData       *data;
+  gboolean        editable    = FALSE;
+  gboolean        edit_active = FALSE;
 
   data = data_editor->data;
 
