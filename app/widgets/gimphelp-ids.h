@@ -435,6 +435,7 @@
 #define GIMP_HELP_PREFS_SESSION                   "gimp-prefs-session"
 #define GIMP_HELP_PREFS_FOLDERS                   "gimp-prefs-folders"
 #define GIMP_HELP_PREFS_FOLDERS_BRUSHES           "gimp-prefs-folders-brushes"
+#define GIMP_HELP_PREFS_FOLDERS_DYNAMICS          "gimp-prefs-folders-dynamics"
 #define GIMP_HELP_PREFS_FOLDERS_PATTERNS          "gimp-prefs-folders-patterns"
 #define GIMP_HELP_PREFS_FOLDERS_PALETTES          "gimp-prefs-folders-palettes"
 #define GIMP_HELP_PREFS_FOLDERS_GRADIENTS         "gimp-prefs-folders-gradients"
