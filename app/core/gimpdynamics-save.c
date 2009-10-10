@@ -28,7 +28,9 @@
 
 #include "gimpdynamics.h"
 #include "gimpdynamics-save.h"
+#include "gimpdynamics-load.h"
 
+#include "config/gimpconfig-file.h"
 #include "gimp-intl.h"
 
 
@@ -38,26 +40,19 @@ gimp_dynamics_save (GimpData  *data,
 {
   GimpDynamics *dynamics;
   FILE         *file;
+  GError       *myerror = NULL;
 
   g_return_val_if_fail (GIMP_IS_DYNAMICS (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   dynamics = GIMP_DYNAMICS (data);
 
-  file = g_fopen (data->filename, "wb");
-
-  if (! file)
+  if(!gimp_config_serialize_to_file(dynamics, g_strconcat(data->filename, GIMP_DYNAMICS_FILE_EXTENSION, NULL), "GIMP dynamics save file", "", &myerror))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (data->filename),
-                   g_strerror (errno));
-      return FALSE;
+      g_message ("%s", myerror->message);
+      g_error_free (myerror);
     }
 
-  /* FIXME: write dynamics */
 
-  fclose (file);
-
-  return TRUE;
+ return TRUE;
 }

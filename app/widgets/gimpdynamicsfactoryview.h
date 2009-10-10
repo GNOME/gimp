@@ -32,7 +32,7 @@
 #define GIMP_DYNAMICS_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS_FACTORY_VIEW, GimpDynamicsFactoryViewClass))
 
 
-
+typedef struct _GimpDynamicsFactoryViewClass  GimpDynamicsFactoryViewClass;
 
 struct _GimpDynamicsFactoryView
 {

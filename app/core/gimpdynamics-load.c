@@ -40,25 +40,21 @@ GList *
 gimp_dynamics_load (const gchar  *filename,
                     GError      **error)
 {
-  FILE *file;
+
+  GimpDynamics *dynamics = g_object_new(GIMP_TYPE_DYNAMICS,
+                                        "name", "Default",
+                                        NULL);
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_fopen (filename, "rb");
+  gimp_config_deserialize_file (dynamics,
+                                filename, NULL, NULL);
 
-  if (! file)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+/*      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return NULL;
-    }
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));*/
 
-  /* load dynamics */
-
-  fclose (file);
-
-  return NULL;
+  return g_list_prepend (NULL, dynamics);
 }
