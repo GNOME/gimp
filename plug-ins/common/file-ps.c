@@ -3532,7 +3532,7 @@ save_unit_toggle_update (GtkWidget *widget,
 
       for (i = 0; i < 4; i++)
         {
-          value = GTK_ADJUSTMENT (vals->adjustment[i])->value * factor;
+          value = gtk_adjustment_get_value (GTK_ADJUSTMENT (vals->adjustment[i])) * factor;
 
           gtk_adjustment_set_value (GTK_ADJUSTMENT (vals->adjustment[i]),
                                     value);
@@ -3548,7 +3548,7 @@ resolution_change_callback (GtkAdjustment *adjustment,
   gdouble  ratio;
 
   if (*old_resolution)
-    ratio = (gdouble) adjustment->value / *old_resolution;
+    ratio = (gdouble) gtk_adjustment_get_value (adjustment) / *old_resolution;
   else
     ratio = 1.0;
 
