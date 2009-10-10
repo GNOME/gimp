@@ -576,6 +576,8 @@ tool_manager_tool_changed (GimpContext  *user_context,
 
       if (config->global_brush)
         global_props |= GIMP_CONTEXT_BRUSH_MASK;
+      if (config->global_dynamics)
+        global_props |= GIMP_CONTEXT_DYNAMICS_MASK;
       if (config->global_pattern)
         global_props |= GIMP_CONTEXT_PATTERN_MASK;
       if (config->global_palette)
