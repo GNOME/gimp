@@ -1253,20 +1253,30 @@ gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
 
   if (column == 0)
     {
-      GtkTableChild *child;
-      GList         *list;
+      GList *children;
+      GList *list;
 
-      for (list = GTK_TABLE (gre)->children; list; list = g_list_next (list))
+      children = gtk_container_get_children (GTK_CONTAINER (gre));
+
+      for (list = children; list; list = g_list_next (list))
         {
-          child = list->data;
+          GtkWidget *child = list->data;
+          gint       left_attach;
+          gint       top_attach;
 
-          if (child->left_attach == 1 && child->top_attach == row)
+          gtk_container_child_get (GTK_CONTAINER (gre), child,
+                                   "left-attach", &left_attach,
+                                   "top-attach",  &top_attach,
+                                   NULL);
+
+          if (left_attach == 1 && top_attach == row)
             {
-              gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-                                             child->widget);
+              gtk_label_set_mnemonic_widget (GTK_LABEL (label), child);
               break;
             }
         }
+
+      g_list_free (children);
     }
 
   gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);
