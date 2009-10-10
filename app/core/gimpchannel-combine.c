@@ -85,9 +85,9 @@ gimp_channel_add_segment (GimpChannel *mask,
           width = maskPR.w;
           while (width--)
             {
-              const gint val = *data + value;
+              const guint val = *data + value;
 
-              *data++ = val < 255 ? val : 255;
+              *data++ = val > 255 ? 255 : val;
             }
         }
     }
@@ -378,12 +378,13 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
       /* For a non-antialiased ellipse, use the normal equation for an ellipse
        * with an arbitrary center (ellipse_center_x, ellipse_center_y).
        */
-      if (!antialias)
+      if (! antialias)
         {
           ellipse_center_x = x + a;
 
           half_ellipse_width_at_y =
-            sqrt (a_sqr - a_sqr * SQR (cur_y + 0.5f - ellipse_center_y) / b_sqr);
+            sqrt (a_sqr -
+                  a_sqr * SQR (cur_y + 0.5f - ellipse_center_y) / b_sqr);
 
           x_start = ROUND (ellipse_center_x - half_ellipse_width_at_y);
           x_end   = ROUND (ellipse_center_x + straight_width +
@@ -527,22 +528,19 @@ gimp_channel_combine_sub_region_add (gpointer     unused,
                                      PixelRegion *srcPR,
                                      PixelRegion *destPR)
 {
-  guchar *src, *dest;
-  gint    x, y, val;
-
-  src  = srcPR->data;
-  dest = destPR->data;
+  const guchar *src  = srcPR->data;
+  guchar       *dest = destPR->data;
+  gint          x, y;
 
   for (y = 0; y < srcPR->h; y++)
     {
       for (x = 0; x < srcPR->w; x++)
         {
-          val = dest[x] + src[x];
-          if (val > 255)
-            dest[x] = 255;
-          else
-            dest[x] = val;
+          const guint val = dest[x] + src[x];
+
+          dest[x] = val > 255 ? 255 : val;
         }
+
       src  += srcPR->rowstride;
       dest += destPR->rowstride;
     }
@@ -553,11 +551,9 @@ gimp_channel_combine_sub_region_sub (gpointer     unused,
                                      PixelRegion *srcPR,
                                      PixelRegion *destPR)
 {
-  guchar *src, *dest;
-  gint    x, y;
-
-  src  = srcPR->data;
-  dest = destPR->data;
+  const guchar *src  = srcPR->data;
+  guchar       *dest = destPR->data;
+  gint          x, y;
 
   for (y = 0; y < srcPR->h; y++)
     {
@@ -566,8 +562,9 @@ gimp_channel_combine_sub_region_sub (gpointer     unused,
           if (src[x] > dest[x])
             dest[x] = 0;
           else
-            dest[x]-= src[x];
+            dest[x] -= src[x];
         }
+
       src  += srcPR->rowstride;
       dest += destPR->rowstride;
     }
@@ -578,11 +575,9 @@ gimp_channel_combine_sub_region_intersect (gpointer     unused,
                                            PixelRegion *srcPR,
                                            PixelRegion *destPR)
 {
-  guchar *src, *dest;
-  gint    x, y;
-
-  src  = srcPR->data;
-  dest = destPR->data;
+  const guchar *src  = srcPR->data;
+  guchar       *dest = destPR->data;
+  gint          x, y;
 
   for (y = 0; y < srcPR->h; y++)
     {
