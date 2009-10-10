@@ -19,22 +19,15 @@
 
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "paint/paint-types.h"
-
-
-#include "gimp.h"
-#include "gimpimage.h"
-#include "gimpcurve.h"
+#include "core-types.h"
 
 #include "gimpdynamics.h"
 #include "gimpdynamics-load.h"
 #include "gimpdynamics-save.h"
 
-#include "gimpdata.h"
 #include "gimp-intl.h"
 
 
@@ -48,7 +41,6 @@
 #define DEFAULT_PRESSURE_COLOR         FALSE
 #define DEFAULT_PRESSURE_ANGLE         FALSE
 #define DEFAULT_PRESSURE_JITTER        FALSE
-
 
 #define DEFAULT_VELOCITY_OPACITY       FALSE
 #define DEFAULT_VELOCITY_HARDNESS      FALSE
@@ -153,16 +145,11 @@ enum
   PROP_FADING_ASPECT_RATIO,
   PROP_FADING_COLOR,
   PROP_FADING_ANGLE,
-  PROP_FADING_JITTER,
+  PROP_FADING_JITTER
 };
 
-static void    gimp_dynamics_class_init       (GimpDynamicsClass *klass);
 
 static void    gimp_dynamics_finalize         (GObject      *object);
-
-
-static void    gimp_dynamics_notify           (GObject      *object,
-                                               GParamSpec   *pspec);
 
 static void    gimp_dynamics_set_property     (GObject      *object,
                                                guint         property_id,
@@ -198,10 +185,9 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   object_class->finalize     = gimp_dynamics_finalize;
   object_class->set_property = gimp_dynamics_set_property;
   object_class->get_property = gimp_dynamics_get_property;
-  object_class->notify       = gimp_dynamics_notify;
 
-  data_class->save                 = gimp_dynamics_save;
-  data_class->get_extension        = gimp_dynamics_get_extension;
+  data_class->save           = gimp_dynamics_save;
+  data_class->get_extension  = gimp_dynamics_get_extension;
 
   GIMP_CONFIG_INSTALL_PROP_STRING  (object_class, PROP_NAME,
                                     "name", NULL,
@@ -405,7 +391,6 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                     "fading-jitter", NULL,
                                     DEFAULT_FADING_JITTER,
                                     GIMP_PARAM_STATIC_STRINGS);
-
 }
 
 static void
@@ -506,8 +491,7 @@ gimp_dynamics_set_property (GObject      *object,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpDynamics *dynamics           = GIMP_DYNAMICS (object);
-
+  GimpDynamics       *dynamics              = GIMP_DYNAMICS (object);
   GimpDynamicsOutput *opacity_dynamics      = dynamics->opacity_dynamics;
   GimpDynamicsOutput *hardness_dynamics     = dynamics->hardness_dynamics;
   GimpDynamicsOutput *rate_dynamics         = dynamics->rate_dynamics;
@@ -519,9 +503,8 @@ gimp_dynamics_set_property (GObject      *object,
 
   switch (property_id)
     {
-
     case PROP_NAME:
-      gimp_object_set_name (dynamics, g_value_get_string (value));
+      gimp_object_set_name (GIMP_OBJECT (dynamics), g_value_get_string (value));
       break;
 
     case PROP_PRESSURE_OPACITY:
@@ -723,15 +706,13 @@ gimp_dynamics_set_property (GObject      *object,
     }
 }
 
-
-
 static void
 gimp_dynamics_get_property (GObject    *object,
-                                 guint       property_id,
-                                 GValue     *value,
-                                 GParamSpec *pspec)
+                            guint       property_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
 {
-  GimpDynamics       *dynamics               = GIMP_DYNAMICS (object);
+  GimpDynamics       *dynamics              = GIMP_DYNAMICS (object);
   GimpDynamicsOutput *opacity_dynamics      = dynamics->opacity_dynamics;
   GimpDynamicsOutput *hardness_dynamics     = dynamics->hardness_dynamics;
   GimpDynamicsOutput *rate_dynamics         = dynamics->rate_dynamics;
@@ -948,28 +929,13 @@ gimp_dynamics_get_property (GObject    *object,
     }
 }
 
-
-static void
-gimp_dynamics_notify (GObject    *object,
-                      GParamSpec *pspec)
-{
-
-  GimpDynamics *dynamics = GIMP_DYNAMICS (object);
-
-}
-
 GimpData *
 gimp_dynamics_new (const gchar *name)
 {
-  GimpDynamics *dynamics;
-
-  dynamics = g_object_new (GIMP_TYPE_DYNAMICS,
-                          "name",       name,
-                          NULL);
-
-  return dynamics;
+  return g_object_new (GIMP_TYPE_DYNAMICS,
+                       "name", name,
+                       NULL);
 }
-
 
 GimpData *
 gimp_dynamics_get_standard (void)
