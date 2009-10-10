@@ -33,6 +33,8 @@
 typedef struct _GimpDockSeparatorClass GimpDockSeparatorClass;
 
 /**
+ * GimpDockSeparator:
+ *
  * Separates dockable and acts as drop-targets to allow rearrangements
  * of them.
  */

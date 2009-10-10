@@ -34,6 +34,8 @@ typedef struct _GimpDockColumnsClass    GimpDockColumnsClass;
 typedef struct _GimpDockColumnsPrivate  GimpDockColumnsPrivate;
 
 /**
+ * GimpDockColumns:
+ *
  * A widget containing GimpDocks so that dockables are arranged in
  * columns.
  */

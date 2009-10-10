@@ -37,6 +37,8 @@ typedef struct _GimpSessionInfoPrivate  GimpSessionInfoPrivate;
 typedef struct _GimpSessionInfoClass    GimpSessionInfoClass;
 
 /**
+ * GimpSessionInfo:
+ *
  * Contains session info for one toplevel window in the interface such
  * as a dock, the empty-image-window, or the open/save dialog.
  */

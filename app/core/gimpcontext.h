@@ -35,6 +35,15 @@
 
 typedef struct _GimpContextClass GimpContextClass;
 
+/**
+ * GimpContext:
+ *
+ * Holds state such as the active image, active display, active brush,
+ * active foreground and background color, and so on. There can many
+ * instances of contexts. The user context is what the user sees and
+ * interacts with but there can also be contexts for docks and for
+ * plug-ins.
+ */
 struct _GimpContext
 {
   GimpObject            parent_instance;

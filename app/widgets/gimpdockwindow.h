@@ -38,6 +38,8 @@ typedef struct _GimpDockWindowClass    GimpDockWindowClass;
 typedef struct _GimpDockWindowPrivate  GimpDockWindowPrivate;
 
 /**
+ * GimpDockWindow:
+ *
  * A top-level window containing GimpDocks.
  */
 struct _GimpDockWindow

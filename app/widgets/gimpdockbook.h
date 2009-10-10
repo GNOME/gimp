@@ -34,6 +34,8 @@ typedef struct _GimpDockbookClass    GimpDockbookClass;
 typedef struct _GimpDockbookPrivate  GimpDockbookPrivate;
 
 /**
+ * GimpDockbook:
+ *
  * Holds GimpDockables which are presented on different tabs using
  * GtkNotebook.
  */

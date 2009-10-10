@@ -23,6 +23,8 @@
 
 
 /**
+ * GimpSessionInfoDockable:
+ *
  * Contains information about a dockable in the interface.
  */
 struct _GimpSessionInfoDockable
