@@ -1353,7 +1353,7 @@ gimp_resolution_entry_value_callback (GtkWidget *widget,
   GimpResolutionEntryField *gref = (GimpResolutionEntryField *) data;
   gdouble                   new_value;
 
-  new_value = GTK_ADJUSTMENT (widget)->value;
+  new_value = gtk_adjustment_get_value (GTK_ADJUSTMENT (widget));
 
   if (gref->value != new_value)
     gimp_resolution_entry_update_value (gref, new_value);
