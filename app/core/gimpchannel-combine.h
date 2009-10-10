@@ -19,16 +19,6 @@
 #define __GIMP_CHANNEL_COMBINE_H__
 
 
-void   gimp_channel_add_segment          (GimpChannel    *mask,
-                                          gint            x,
-                                          gint            y,
-                                          gint            width,
-                                          gint            value);
-void   gimp_channel_sub_segment          (GimpChannel    *mask,
-                                          gint            x,
-                                          gint            y,
-                                          gint            width,
-                                          gint            value);
 void   gimp_channel_combine_rect         (GimpChannel    *mask,
                                           GimpChannelOps  op,
                                           gint            x,
