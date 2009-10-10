@@ -289,14 +289,24 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 
-  gimp_config_copy (GIMP_CONFIG (data),
-                    GIMP_CONFIG (dynamics_editor->dynamics_model),
-                    0);
-
   if (editor->data)
-    g_signal_connect (editor->data, "notify",
-                      G_CALLBACK (gimp_dynamics_editor_notify_data),
-                      editor);
+    {
+      g_signal_handlers_block_by_func (dynamics_editor->dynamics_model,
+                                       gimp_dynamics_editor_notify_model,
+                                       editor);
+
+      gimp_config_copy (GIMP_CONFIG (editor->data),
+                        GIMP_CONFIG (dynamics_editor->dynamics_model),
+                        0);
+
+      g_signal_handlers_unblock_by_func (dynamics_editor->dynamics_model,
+                                         gimp_dynamics_editor_notify_model,
+                                         editor);
+
+      g_signal_connect (editor->data, "notify",
+                        G_CALLBACK (gimp_dynamics_editor_notify_data),
+                        editor);
+    }
 }
 
 static void
