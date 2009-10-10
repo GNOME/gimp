@@ -905,8 +905,6 @@ GIMP_CHANNEL_GET_CLASS
 <SECTION>
 <FILE>gimpchannel-combine</FILE>
 <TITLE>GimpChannel-combine</TITLE>
-gimp_channel_add_segment
-gimp_channel_sub_segment
 gimp_channel_combine_rect
 gimp_channel_combine_ellipse
 gimp_channel_combine_ellipse_rect
