@@ -23,6 +23,8 @@
 
 
 /**
+ * GimpSessionInfoBook:
+ *
  * Contains information about a book (a GtkNotebook of dockables) in
  * the interface.
  */

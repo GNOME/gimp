@@ -23,6 +23,8 @@
 
 
 /**
+ * GimpSessionInfoAux:
+ *
  * Contains arbitrary data in the session management system, used for
  * example by dockables to manage dockable-specific data.
  */

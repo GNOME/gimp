@@ -34,6 +34,8 @@ typedef struct _GimpDockClass    GimpDockClass;
 typedef struct _GimpDockPrivate  GimpDockPrivate;
 
 /**
+ * GimpDock:
+ *
  * Contains a column of GimpDockbooks.
  */
 struct _GimpDock
