@@ -27,6 +27,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpdynamics.h"
 #include "core/gimpgradient.h"
 #include "core/gimppaintinfo.h"
 
@@ -681,6 +682,3 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 
   return GIMP_BRUSH_SOFT;
 }
-
-
-

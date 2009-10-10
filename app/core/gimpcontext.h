@@ -23,7 +23,7 @@
 
 
 #include "gimpobject.h"
-#include "gimpdynamics.h"
+
 
 #define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
 #define GIMP_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
@@ -271,12 +271,12 @@ void            gimp_context_set_brush          (GimpContext     *context,
                                                  GimpBrush       *brush);
 void            gimp_context_brush_changed      (GimpContext     *context);
 
+
 /*  dynamics  */
 GimpDynamics  * gimp_context_get_dynamics       (GimpContext     *context);
 void            gimp_context_set_dynamics       (GimpContext     *context,
                                                  GimpDynamics    *dynamics);
 void            gimp_context_dynamics_changed   (GimpContext     *context);
-
 
 
 /*  pattern  */

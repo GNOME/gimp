@@ -53,7 +53,7 @@ struct _GimpDynamicsOutput
 #define GIMP_DYNAMICS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS, GimpDynamicsClass))
 
 
-typedef struct _GimpDynamics GimpDynamics;
+typedef struct _GimpDynamicsClass GimpDynamicsClass;
 
 struct _GimpDynamics
 {
@@ -72,11 +72,9 @@ struct _GimpDynamics
 
 };
 
-typedef struct _GimpDynamicsClass GimpDynamicsClass;
-
 struct _GimpDynamicsClass
 {
-  GimpDataClass  parent_instance;
+  GimpDataClass  parent_class;
 };
 
 

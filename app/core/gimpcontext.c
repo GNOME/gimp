@@ -2484,7 +2484,6 @@ gimp_context_real_set_brush (GimpContext *context,
 /*****************************************************************************/
 /*  dynamics *****************************************************************/
 
-
 GimpDynamics *
 gimp_context_get_dynamics (GimpContext *context)
 {
@@ -2522,9 +2521,10 @@ gimp_context_dynamics_dirty (GimpDynamics *dynamics,
   context->dynamics_name = g_strdup (GIMP_DYNAMICS (dynamics)->name);
 }
 
-static void gimp_context_dynamics_removed (GimpContainer *container,
-                                           GimpDynamics  *dynamics,
-                                           GimpContext   *context)
+static void
+gimp_context_dynamics_removed (GimpContainer *container,
+                               GimpDynamics  *dynamics,
+                               GimpContext   *context)
 {
   if (dynamics == context->dynamics)
     {
@@ -2540,9 +2540,9 @@ static void gimp_context_dynamics_removed (GimpContainer *container,
     }
 }
 
-
-static void gimp_context_dynamics_list_thaw (GimpContainer *container,
-                                             GimpContext   *context)
+static void
+gimp_context_dynamics_list_thaw (GimpContainer *container,
+                                 GimpContext   *context)
 {
   GimpDynamics *dynamics;
   /*
@@ -2555,7 +2555,6 @@ static void gimp_context_dynamics_list_thaw (GimpContainer *container,
 
   gimp_context_real_set_dynamics (context, dynamics);
 }
-
 
 static void
 gimp_context_real_set_dynamics (GimpContext  *context,
