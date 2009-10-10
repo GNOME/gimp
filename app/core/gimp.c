@@ -57,7 +57,8 @@
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
-#include "gimptagcache.h"
+#include "gimpdynamics.h"
+#include "gimpdynamics-load.h"
 #include "gimpdocumentlist.h"
 #include "gimpgradient-load.h"
 #include "gimpgradient.h"
@@ -72,12 +73,9 @@
 #include "gimppattern.h"
 #include "gimppatternclipboard.h"
 #include "gimpprogress.h"
+#include "gimptagcache.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
-
-#include "gimpdynamics.h"
-#include "gimpdynamics-load.h"
-
 
 #include "gimp-intl.h"
 
@@ -547,7 +545,7 @@ gimp_real_initialize (Gimp               *gimp,
 
   static const GimpDataFactoryLoaderEntry dynamics_loader_entries[] =
   {
-    { gimp_dynamics_load,       GIMP_DYNAMICS_FILE_EXTENSION,        TRUE  }
+    { gimp_dynamics_load,        GIMP_DYNAMICS_FILE_EXTENSION,        TRUE  }
   };
 
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
@@ -589,7 +587,6 @@ gimp_real_initialize (Gimp               *gimp,
                            gimp_brush_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->brush_factory),
                                "brush factory");
-
 
   gimp->dynamics_factory =
     gimp_data_factory_new (gimp,
@@ -923,7 +920,7 @@ gimp_restore (Gimp               *gimp,
   status_callback (NULL, _("Brushes"), 0.1);
   gimp_data_factory_data_init (gimp->brush_factory, gimp->no_data);
 
-    /*  initialize the list of gimp dynamics   */
+  /*  initialize the list of gimp dynamics   */
   status_callback (NULL, _("Dynamics"), 0.2);
   gimp_data_factory_data_init (gimp->dynamics_factory, gimp->no_data);
 
