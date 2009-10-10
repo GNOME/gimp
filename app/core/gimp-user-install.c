@@ -82,6 +82,7 @@ gimp_user_install_items[] =
   { "gtkrc",           USER_INSTALL_COPY  },
   { "menurc",          USER_INSTALL_COPY  },
   { "brushes",         USER_INSTALL_MKDIR },
+  { "dynamics",        USER_INSTALL_MKDIR },
   { "fonts",           USER_INSTALL_MKDIR },
   { "gradients",       USER_INSTALL_MKDIR },
   { "palettes",        USER_INSTALL_MKDIR },
