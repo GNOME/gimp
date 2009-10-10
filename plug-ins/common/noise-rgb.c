@@ -621,6 +621,6 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
       for (i = 0; i < n; i++)
         if (adjustment != GTK_ADJUSTMENT (noise_int.channel_adj[i]))
           gtk_adjustment_set_value (GTK_ADJUSTMENT (noise_int.channel_adj[i]),
-                                    adjustment->value);
+                                    gtk_adjustment_get_value (adjustment));
     }
 }

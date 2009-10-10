@@ -1516,7 +1516,8 @@ bender_update (BenderDialog *cd,
 
   if (update & UP_PREVIEW)
     {
-      gdk_window_set_cursor (GTK_WIDGET (cd->shell)->window, cd->cursor_busy);
+      gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (cd->shell)),
+                             cd->cursor_busy);
       gdk_flush ();
 
       if (cd->preview_layer_id2 >= 0)
@@ -1528,7 +1529,8 @@ bender_update (BenderDialog *cd,
       if (update & UP_DRAW)
         gtk_widget_queue_draw (cd->pv_widget);
 
-      gdk_window_set_cursor (GTK_WIDGET (cd->shell)->window, NULL);
+      gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (cd->shell)),
+                             NULL);
     }
   if (update & UP_PREVIEW_EXPOSE)
     {
@@ -1592,7 +1594,8 @@ bender_update (BenderDialog *cd,
                               RADIUS * 2, RADIUS * 2, 0, 23040);
             }
         }
-      gdk_draw_drawable (cd->graph->window, graph_style->black_gc, cd->pixmap,
+      gdk_draw_drawable (gtk_widget_get_window (cd->graph),
+                         graph_style->black_gc, cd->pixmap,
                          0, 0, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
     }
 }
@@ -1790,12 +1793,12 @@ bender_rotate_adj_callback (GtkAdjustment *adjustment,
 {
   BenderDialog *cd = client_data;
 
-  if (adjustment->value != cd->rotation)
-  {
-    cd->rotation = adjustment->value;
-    if (cd->preview)
-      bender_update (cd, UP_PREVIEW | UP_DRAW);
-  }
+  if (gtk_adjustment_get_value (adjustment) != cd->rotation)
+    {
+      cd->rotation = gtk_adjustment_get_value (adjustment);
+      if (cd->preview)
+        bender_update (cd, UP_PREVIEW | UP_DRAW);
+    }
 }
 
 static void
@@ -2144,7 +2147,7 @@ bender_graph_events (GtkWidget    *widget,
   closest_point = 0;
 
   /*  get the pointer position  */
-  gdk_window_get_pointer (cd->graph->window, &tx, &ty, NULL);
+  gdk_window_get_pointer (gtk_widget_get_window (cd->graph), &tx, &ty, NULL);
   x = CLAMP ((tx - RADIUS), 0, 255);
   y = CLAMP ((ty - RADIUS), 0, 255);
 
@@ -2165,7 +2168,7 @@ bender_graph_events (GtkWidget    *widget,
     {
     case GDK_EXPOSE:
       if (cd->pixmap == NULL)
-        cd->pixmap = gdk_pixmap_new (cd->graph->window,
+        cd->pixmap = gdk_pixmap_new (gtk_widget_get_window (cd->graph),
                                      GRAPH_WIDTH + RADIUS * 2,
                                      GRAPH_HEIGHT + RADIUS * 2, -1);
 
@@ -2301,7 +2304,7 @@ bender_graph_events (GtkWidget    *widget,
       if (new_type != cursor_type)
         {
           cursor_type = new_type;
-          /* change_win_cursor (cd->graph->window, cursor_type); */
+          /* change_win_cursor (gtk_widget_get_window (cd->graph), cursor_type); */
         }
       break;
 

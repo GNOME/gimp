@@ -1163,9 +1163,9 @@ fp_scale_update (GtkAdjustment *adjustment,
 {
   static gdouble prevValue = 0.25;
 
-  *scale_val = adjustment->value;
+  *scale_val = gtk_adjustment_get_value (adjustment);
 
-  if (prevValue != adjustment->value)
+  if (prevValue != gtk_adjustment_get_value (adjustment))
     {
       fp_create_nudge (nudgeArray);
       fp_refresh_previews (fpvals.visible_frames);
@@ -1173,7 +1173,7 @@ fp_scale_update (GtkAdjustment *adjustment,
       if (AW.window != NULL && GTK_WIDGET_VISIBLE (AW.window))
         fp_create_smoothness_graph (AW.aliasing_preview);
 
-      prevValue = adjustment->value;
+      prevValue = gtk_adjustment_get_value (adjustment);
     }
 }
 
@@ -1280,7 +1280,7 @@ static void
 fp_preview_scale_update (GtkAdjustment *adjustment,
                          gdouble        *scale_val)
 {
-  fpvals.preview_size = adjustment->value;
+  fpvals.preview_size = gtk_adjustment_get_value (adjustment);
   fp_redraw_all_windows();
 }
 
@@ -1477,17 +1477,17 @@ draw_it (GtkWidget *widget)
 {
   GtkStyle *style = gtk_widget_get_style (AW.aliasing_graph);
 
-  draw_slider (AW.aliasing_graph->window,
+  draw_slider (gtk_widget_get_window (AW.aliasing_graph),
                style->black_gc,
                style->dark_gc[GTK_STATE_NORMAL],
                fpvals.cutoff[SHADOWS]);
 
-  draw_slider (AW.aliasing_graph->window,
+  draw_slider (gtk_widget_get_window (AW.aliasing_graph),
                style->black_gc,
                style->dark_gc[GTK_STATE_NORMAL],
                fpvals.cutoff[MIDTONES]);
 
-  draw_slider (AW.aliasing_graph->window,
+  draw_slider (gtk_widget_get_window (AW.aliasing_graph),
                style->black_gc,
                style->dark_gc[GTK_STATE_SELECTED],
                fpvals.offset);
@@ -1528,7 +1528,7 @@ fp_range_change_events (GtkWidget *widget,
           else
             new = &fpvals.offset;
 
-          slider_erase (AW.aliasing_graph->window, *new);
+          slider_erase (gtk_widget_get_window (AW.aliasing_graph), *new);
           *new = bevent->x;
         }
 
@@ -1549,7 +1549,7 @@ fp_range_change_events (GtkWidget *widget,
 
       if (x >= 0 && x < 256)
         {
-          slider_erase (AW.aliasing_graph->window, *new);
+          slider_erase (gtk_widget_get_window (AW.aliasing_graph), *new);
           *new = x;
           draw_it (NULL);
           fp_range_preview_spill (AW.range_preview, fpvals.value_by);

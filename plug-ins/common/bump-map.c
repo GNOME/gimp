@@ -1136,11 +1136,10 @@ dialog_new_bumpmap (gboolean init_offsets)
       adj = (GtkAdjustment *) bmint.offset_adj_x;
       if (adj)
         {
-          adj->value = bmvals.xofs;
           g_signal_handlers_block_by_func (adj,
                                            gimp_int_adjustment_update,
                                            &bmvals.xofs);
-          gtk_adjustment_value_changed (adj);
+          gtk_adjustment_set_value (adj, bmvals.xofs);
           g_signal_handlers_unblock_by_func (adj,
                                              gimp_int_adjustment_update,
                                              &bmvals.xofs);
@@ -1149,11 +1148,10 @@ dialog_new_bumpmap (gboolean init_offsets)
       adj = (GtkAdjustment *) bmint.offset_adj_y;
       if (adj)
         {
-          adj->value = bmvals.yofs;
           g_signal_handlers_block_by_func (adj,
                                            gimp_int_adjustment_update,
                                            &bmvals.yofs);
-          gtk_adjustment_value_changed (adj);
+          gtk_adjustment_set_value (adj, bmvals.yofs);
           g_signal_handlers_unblock_by_func (adj,
                                              gimp_int_adjustment_update,
                                              &bmvals.yofs);

@@ -541,6 +541,7 @@ browser_dialog_new (void)
   GtkTreeStore      *tree_store;
   GtkWidget         *list_view;
   GtkWidget         *tree_view;
+  GtkWidget         *parent;
   GtkTreeViewColumn *column;
   GtkCellRenderer   *renderer;
   GtkTreeSelection  *selection;
@@ -713,8 +714,10 @@ browser_dialog_new (void)
   gtk_widget_show (scrolled_window);
   gtk_widget_show (notebook);
 
-  gtk_widget_set_size_request (GIMP_BROWSER (browser->browser)->right_vbox->parent->parent,
-                               DBL_WIDTH - DBL_LIST_WIDTH, -1);
+  parent = gtk_widget_get_parent (GIMP_BROWSER (browser->browser)->right_vbox);
+  parent = gtk_widget_get_parent (parent);
+
+  gtk_widget_set_size_request (parent, DBL_WIDTH - DBL_LIST_WIDTH, -1);
 
   /* now build the list */
   browser_search (GIMP_BROWSER (browser->browser), "", 0, browser);

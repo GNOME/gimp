@@ -760,7 +760,7 @@ size_adjustment_callback (GtkWidget *widget,
   adj->guides = NULL;
   gimp_displays_flush ();
 
-  *(adj->value) = GTK_ADJUSTMENT (widget)->value;
+  *(adj->value) = gtk_adjustment_get_value (GTK_ADJUSTMENT (widget));
 
   if (adj->orientation == GIMP_ORIENTATION_VERTICAL)
     {
@@ -830,7 +830,7 @@ dim_callback (GtkAdjustment *adjustment,
 {
   gint i;
 
-  gihparams.dim = RINT (adjustment->value);
+  gihparams.dim = RINT (gtk_adjustment_get_value (adjustment));
 
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {

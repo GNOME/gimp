@@ -222,7 +222,7 @@ reshape_from_bitmap (const gchar *bitmap)
     {
       GdkBitmap *shape_mask;
 
-      shape_mask = gdk_bitmap_create_from_data (shape_window->window,
+      shape_mask = gdk_bitmap_create_from_data (gtk_widget_get_window (shape_window),
                                                 bitmap,
                                                 width, height);
       gtk_widget_shape_combine_mask (shape_window, shape_mask, 0, 0);
@@ -279,12 +279,12 @@ shape_pressed (GtkWidget      *widget,
       p->y = (gint) event->y;
 
       gtk_grab_add (widget);
-      gdk_pointer_grab (widget->window, TRUE,
+      gdk_pointer_grab (gtk_widget_get_window (widget), TRUE,
                         GDK_BUTTON_RELEASE_MASK |
                         GDK_BUTTON_MOTION_MASK  |
                         GDK_POINTER_MOTION_HINT_MASK,
                         NULL, NULL, 0);
-      gdk_window_raise (widget->window);
+      gdk_window_raise (gtk_widget_get_window (widget));
     }
 
   return FALSE;
@@ -344,7 +344,7 @@ repaint_da (GtkWidget      *darea,
 {
   GtkStyle *style = gtk_widget_get_style (darea);
 
-  gdk_draw_rgb_image (darea->window,
+  gdk_draw_rgb_image (gtk_widget_get_window (darea),
                       style->white_gc,
                       0, 0, width, height,
                       (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
@@ -360,7 +360,7 @@ repaint_sda (GtkWidget      *darea,
 {
   GtkStyle *style = gtk_widget_get_style (darea);
 
-  gdk_draw_rgb_image (darea->window,
+  gdk_draw_rgb_image (gtk_widget_get_window (darea),
                       style->white_gc,
                       0, 0, width, height,
                       (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
@@ -412,14 +412,14 @@ detach_callback (GtkToggleAction *action)
         {
           gint x, y;
 
-          gdk_window_get_origin (drawing_area->window, &x, &y);
+          gdk_window_get_origin (gtk_widget_get_window (drawing_area), &x, &y);
 
           gtk_window_move (GTK_WINDOW (shape_window), x + 6, y + 6);
         }
 
       gtk_widget_show (shape_window);
 
-      gdk_window_set_back_pixmap (shape_drawing_area->window, NULL, TRUE);
+      gdk_window_set_back_pixmap (gtk_widget_get_window (shape_drawing_area), NULL, TRUE);
 
       memset (shape_preview_mask, 0, (width * height) / 8 + height);
       render_frame (frame_number);
@@ -696,11 +696,11 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_widget_add_events (shape_drawing_area, GDK_BUTTON_PRESS_MASK);
   gtk_widget_realize (shape_window);
 
-  gdk_window_set_back_pixmap (shape_window->window, NULL, FALSE);
+  gdk_window_set_back_pixmap (gtk_widget_get_window (shape_window), NULL, FALSE);
 
   cursor = gdk_cursor_new_for_display (gtk_widget_get_display (shape_window),
                                        GDK_HAND2);
-  gdk_window_set_cursor (shape_window->window, cursor);
+  gdk_window_set_cursor (gtk_widget_get_window (shape_window), cursor);
   gdk_cursor_unref (cursor);
 
   g_signal_connect (shape_window, "button-press-event",
@@ -922,7 +922,7 @@ render_frame (gint32 whichframe)
           if (detached)
             {
               reshape_from_bitmap (shape_preview_mask);
-              gdk_draw_rgb_image (shape_drawing_area->window,
+              gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
                                   shape_style->white_gc,
                                   0, 0, width, height,
                                   (total_frames == 1 ?
@@ -932,7 +932,7 @@ render_frame (gint32 whichframe)
           else
             {
               reshape_from_bitmap (shape_preview_mask);
-              gdk_draw_rgb_image (drawing_area->window,
+              gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
                                   drawing_style->white_gc,
                                   0, 0, width, height,
                                   (total_frames == 1 ?
@@ -1023,7 +1023,7 @@ render_frame (gint32 whichframe)
                   gint bottom = MIN (rawy + rawheight, height);
 
                   reshape_from_bitmap (shape_preview_mask);
-                  gdk_draw_rgb_image (shape_drawing_area->window,
+                  gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
                                       shape_style->white_gc,
                                       0, top, width, bottom - top,
                                       (total_frames == 1 ?
@@ -1034,7 +1034,7 @@ render_frame (gint32 whichframe)
               else
                 {
                   reshape_from_bitmap (shape_preview_mask);
-                  gdk_draw_rgb_image (shape_drawing_area->window,
+                  gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
                                       shape_style->white_gc,
                                       0, 0, width, height,
                                       (total_frames == 1 ?
@@ -1049,7 +1049,7 @@ render_frame (gint32 whichframe)
                   gint top    = MAX (rawy, 0);
                   gint bottom = MIN (rawy + rawheight, height);
 
-                  gdk_draw_rgb_image (drawing_area->window,
+                  gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
                                       drawing_style->white_gc,
                                       0, top, width, bottom - top,
                                       (total_frames == 1 ?
@@ -1059,7 +1059,7 @@ render_frame (gint32 whichframe)
                 }
               else
                 {
-                  gdk_draw_rgb_image (drawing_area->window,
+                  gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
                                       drawing_style->white_gc,
                                       0, 0, width, height,
                                       (total_frames == 1 ?
@@ -1151,7 +1151,7 @@ render_frame (gint32 whichframe)
           if (detached)
             {
               reshape_from_bitmap (shape_preview_mask);
-              gdk_draw_rgb_image (shape_drawing_area->window,
+              gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
                                   shape_style->white_gc,
                                   0, 0, width, height,
                                   (total_frames == 1 ?
@@ -1160,7 +1160,7 @@ render_frame (gint32 whichframe)
             }
           else
             {
-              gdk_draw_rgb_image (drawing_area->window,
+              gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
                                   drawing_style->white_gc,
                                   0, 0, width, height,
                                   (total_frames == 1 ?
@@ -1256,7 +1256,7 @@ render_frame (gint32 whichframe)
                   gint bottom = MIN (rawy + rawheight, height);
 
                   reshape_from_bitmap (shape_preview_mask);
-                  gdk_draw_rgb_image (shape_drawing_area->window,
+                  gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
                                       shape_style->white_gc,
                                       0, top, width, bottom - top,
                                       (total_frames == 1 ?
@@ -1267,7 +1267,7 @@ render_frame (gint32 whichframe)
               else
                 {
                   reshape_from_bitmap (shape_preview_mask);
-                  gdk_draw_rgb_image (shape_drawing_area->window,
+                  gdk_draw_rgb_image (gtk_widget_get_window (shape_drawing_area),
                                       shape_style->white_gc,
                                       0, 0, width, height,
                                       (total_frames == 1 ?
@@ -1282,7 +1282,7 @@ render_frame (gint32 whichframe)
                   gint top    = MAX (rawy, 0);
                   gint bottom = MIN (rawy + rawheight, height);
 
-                  gdk_draw_rgb_image (drawing_area->window,
+                  gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
                                       drawing_style->white_gc,
                                       0, top, width, bottom - top,
                                       (total_frames == 1 ?
@@ -1292,7 +1292,7 @@ render_frame (gint32 whichframe)
                 }
               else
                 {
-                  gdk_draw_rgb_image (drawing_area->window,
+                  gdk_draw_rgb_image (gtk_widget_get_window (drawing_area),
                                       drawing_style->white_gc,
                                       0, 0, width, height,
                                       (total_frames == 1 ?

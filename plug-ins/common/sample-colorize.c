@@ -559,7 +559,7 @@ smp_adj_lvl_in_max_upd_callback (GtkAdjustment *adjustment)
   gint32 value;
   gint   upd_flags;
 
-  value = CLAMP ((adjustment->value), 1, 255);
+  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 1, 255);
 
   if (value != g_values.lvl_in_max)
     {
@@ -580,7 +580,7 @@ smp_adj_lvl_in_min_upd_callback (GtkAdjustment *adjustment)
   double value;
   gint   upd_flags;
 
-  value = CLAMP ((adjustment->value), 0, 254);
+  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 0, 254);
 
   if (value != g_values.lvl_in_min)
     {
@@ -600,7 +600,7 @@ smp_text_gamma_upd_callback (GtkAdjustment *adjustment)
 {
   double value;
 
-  value = CLAMP ((adjustment->value), 0.1, 10.0);
+  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 0.1, 10.0);
 
   if (value != g_values.lvl_in_gamma)
     {
@@ -615,7 +615,7 @@ smp_adj_lvl_out_max_upd_callback (GtkAdjustment *adjustment)
   gint32 value;
   gint   upd_flags;
 
-  value = CLAMP ((adjustment->value), 1, 255);
+  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 1, 255);
 
   if (value != g_values.lvl_out_max)
     {
@@ -636,7 +636,7 @@ smp_adj_lvl_out_min_upd_callback (GtkAdjustment *adjustment)
   double value;
   gint   upd_flags;
 
-  value = CLAMP ((adjustment->value), 0, 254);
+  value = CLAMP ((gtk_adjustment_get_value (adjustment)), 0, 254);
 
   if (value != g_values.lvl_out_min)
     {
@@ -1020,9 +1020,9 @@ levels_update (gint update)
       GtkStyle *style = gtk_widget_get_style (g_di.in_lvl_drawarea);
       gdouble   width, mid, tmp;
 
-      levels_erase_slider (g_di.in_lvl_drawarea->window, g_di.slider_pos[0]);
-      levels_erase_slider (g_di.in_lvl_drawarea->window, g_di.slider_pos[1]);
-      levels_erase_slider (g_di.in_lvl_drawarea->window, g_di.slider_pos[2]);
+      levels_erase_slider (gtk_widget_get_window (g_di.in_lvl_drawarea), g_di.slider_pos[0]);
+      levels_erase_slider (gtk_widget_get_window (g_di.in_lvl_drawarea), g_di.slider_pos[1]);
+      levels_erase_slider (gtk_widget_get_window (g_di.in_lvl_drawarea), g_di.slider_pos[2]);
 
       g_di.slider_pos[0] = DA_WIDTH * ((double) g_values.lvl_in_min / 255.0);
       g_di.slider_pos[2] = DA_WIDTH * ((double) g_values.lvl_in_max / 255.0);
@@ -1032,15 +1032,15 @@ levels_update (gint update)
       tmp = log10 (1.0 / g_values.lvl_in_gamma);
       g_di.slider_pos[1] = (int) (mid + width * tmp + 0.5);
 
-      levels_draw_slider (g_di.in_lvl_drawarea->window,
+      levels_draw_slider (gtk_widget_get_window (g_di.in_lvl_drawarea),
                           style->black_gc,
                           style->dark_gc[GTK_STATE_NORMAL],
                           g_di.slider_pos[1]);
-      levels_draw_slider (g_di.in_lvl_drawarea->window,
+      levels_draw_slider (gtk_widget_get_window (g_di.in_lvl_drawarea),
                           style->black_gc,
                           style->black_gc,
                           g_di.slider_pos[0]);
-      levels_draw_slider (g_di.in_lvl_drawarea->window,
+      levels_draw_slider (gtk_widget_get_window (g_di.in_lvl_drawarea),
                           style->black_gc,
                           style->white_gc,
                           g_di.slider_pos[2]);
@@ -1050,17 +1050,17 @@ levels_update (gint update)
     {
       GtkStyle *style = gtk_widget_get_style (g_di.sample_drawarea);
 
-      levels_erase_slider (g_di.sample_drawarea->window, g_di.slider_pos[3]);
-      levels_erase_slider (g_di.sample_drawarea->window, g_di.slider_pos[4]);
+      levels_erase_slider (gtk_widget_get_window (g_di.sample_drawarea), g_di.slider_pos[3]);
+      levels_erase_slider (gtk_widget_get_window (g_di.sample_drawarea), g_di.slider_pos[4]);
 
       g_di.slider_pos[3] = DA_WIDTH * ((double) g_values.lvl_out_min / 255.0);
       g_di.slider_pos[4] = DA_WIDTH * ((double) g_values.lvl_out_max / 255.0);
 
-      levels_draw_slider (g_di.sample_drawarea->window,
+      levels_draw_slider (gtk_widget_get_window (g_di.sample_drawarea),
                           style->black_gc,
                           style->black_gc,
                           g_di.slider_pos[3]);
-      levels_draw_slider (g_di.sample_drawarea->window,
+      levels_draw_slider (gtk_widget_get_window (g_di.sample_drawarea),
                           style->black_gc,
                           style->black_gc,
                           g_di.slider_pos[4]);

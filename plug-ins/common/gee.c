@@ -255,7 +255,7 @@ show (void)
     {
       GtkStyle *style = gtk_widget_get_style (drawing_area);
 
-      gdk_draw_rgb_32_image (drawing_area->window,
+      gdk_draw_rgb_32_image (gtk_widget_get_window (drawing_area),
                              style->white_gc,
                              0, 0, IWIDTH, IHEIGHT,
                              GDK_RGB_DITHER_NORMAL,
@@ -448,7 +448,8 @@ iterate (void)
     GdkModifierType mask;
     gint            size, i;
 
-    gdk_window_get_pointer (drawing_area->window, &rxp, &ryp, &mask);
+    gdk_window_get_pointer (gtk_widget_get_window (drawing_area),
+                            &rxp, &ryp, &mask);
 
     for (i = 0; i < BOBS_PER_FRAME; i++)
       {
