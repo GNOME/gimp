@@ -2545,10 +2545,10 @@ gimp_context_dynamics_list_thaw (GimpContainer *container,
                                  GimpContext   *context)
 {
   GimpDynamics *dynamics;
-  /*
+
   if (! context->dynamics_name)
     context->dynamics_name = g_strdup (context->gimp->config->default_dynamics);
-  */
+
   dynamics = gimp_context_find_object (context, container,
                                        context->dynamics_name,
                                        gimp_dynamics_get_standard ());
