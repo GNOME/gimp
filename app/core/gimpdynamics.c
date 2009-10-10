@@ -31,6 +31,7 @@
 #include "gimpcurve.h"
 
 #include "gimpdynamics.h"
+#include "gimpdynamics-load.h"
 #include "gimpdynamics-save.h"
 
 #include "gimpdata.h"
@@ -169,6 +170,8 @@ static void    gimp_dynamics_get_property     (GObject      *object,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
+static const gchar * gimp_dynamics_get_extension (GimpData *data);
+
 static GimpDynamicsOutput* gimp_dynamics_output_init (void);
 
 static void    gimp_dynamics_output_finalize  (GimpDynamicsOutput *dynamics);
@@ -194,6 +197,7 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   object_class->notify       = gimp_dynamics_notify;
 
   data_class->save                 = gimp_dynamics_save;
+  data_class->get_extension        = gimp_dynamics_get_extension;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
@@ -968,6 +972,12 @@ gimp_dynamics_get_standard (void)
     }
 
   return standard_dynamics;
+}
+
+static const gchar *
+gimp_dynamics_get_extension (GimpData *data)
+{
+  return GIMP_DYNAMICS_FILE_EXTENSION;
 }
 
 gdouble
