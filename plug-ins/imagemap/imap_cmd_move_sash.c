@@ -104,10 +104,10 @@ sash_move(GtkWidget *widget, GdkEventMotion *event, gpointer data)
    command->x = x;
    command->y = y;
 
-   object_draw(obj, widget->window);
+   object_draw(obj, gtk_widget_get_window (widget));
    command->sash_func(obj, dx, dy);
    object_emit_geometry_signal(obj);
-   object_draw(obj, widget->window);
+   object_draw(obj, gtk_widget_get_window (widget));
 }
 
 static void

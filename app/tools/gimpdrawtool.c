@@ -480,7 +480,7 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
   x1 = 0;
   y1 = 0;
 
-  gdk_drawable_get_size (shell->canvas->window, &x2, &y2);
+  gdk_drawable_get_size (gtk_widget_get_window (shell->canvas), &x2, &y2);
 
   switch (orientation)
     {

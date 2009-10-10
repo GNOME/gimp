@@ -98,9 +98,10 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 {
    gboolean success = FALSE;
 
-   if (data->length >= 0 && data->format == 8)
+   if (gtk_selection_data_get_length (data) >= 0 &&
+       gtk_selection_data_get_format (data) == 8)
      {
-       const gchar *text = (const gchar *) data->data;
+       const gchar *text = (const gchar *) gtk_selection_data_get_data (data);
 
        if (g_utf8_validate (text, -1, NULL))
          {

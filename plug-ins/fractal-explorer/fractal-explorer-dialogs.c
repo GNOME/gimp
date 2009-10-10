@@ -426,7 +426,7 @@ preview_leave_notify_event (GtkWidget      *widget,
 
   preview_redraw ();
 
-  gdk_window_set_cursor (maindlg->window, NULL);
+  gdk_window_set_cursor (gtk_widget_get_window (maindlg), NULL);
 
   return TRUE;
 }
@@ -445,7 +445,7 @@ preview_enter_notify_event (GtkWidget      *widget,
 
     }
 
-  gdk_window_set_cursor (maindlg->window, cursor);
+  gdk_window_set_cursor (gtk_widget_get_window (maindlg), cursor);
 
   return TRUE;
 }
@@ -1012,7 +1012,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  toggle_vbox = GTK_BIN (frame)->child;
+  toggle_vbox = gtk_bin_get_child (GTK_BIN (frame));
 
   elements->redinvert = toggle =
     gtk_check_button_new_with_label (_("Inversion"));
@@ -1053,7 +1053,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  toggle_vbox = GTK_BIN (frame)->child;
+  toggle_vbox = gtk_bin_get_child (GTK_BIN (frame));
 
   elements->greeninvert = toggle =
     gtk_check_button_new_with_label (_("Inversion"));
@@ -1094,7 +1094,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  toggle_vbox = GTK_BIN (frame)->child;
+  toggle_vbox = gtk_bin_get_child (GTK_BIN (frame));
 
   elements->blueinvert = toggle =
     gtk_check_button_new_with_label (_("Inversion"));

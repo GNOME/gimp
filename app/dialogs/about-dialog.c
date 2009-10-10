@@ -295,7 +295,8 @@ about_dialog_anim_expose (GtkWidget       *widget,
       gdk_region_destroy (covered_region);
     }
 
-  gdk_draw_layout (widget->window, text_gc, x, y, dialog->layout);
+  gdk_draw_layout (gtk_widget_get_window (widget),
+                   text_gc, x, y, dialog->layout);
 
   gdk_gc_set_clip_region (text_gc, NULL);
 

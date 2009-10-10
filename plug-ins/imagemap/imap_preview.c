@@ -360,7 +360,7 @@ preview_set_cursor(Preview_t *preview, GdkCursorType cursor_type)
    GdkCursor     *cursor      = gdk_cursor_new_for_display (display,
                                                             cursor_type);
 
-   gdk_window_set_cursor(preview->window->window, cursor);
+   gdk_window_set_cursor(gtk_widget_get_window (preview->window), cursor);
    gdk_cursor_unref(cursor);
 
    preview->cursor = cursor_type;
@@ -378,22 +378,26 @@ static void
 handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 	    GtkSelectionData *data, guint info, guint time)
 {
-   gboolean success = FALSE;
-   if (data->length >= 0 && data->format == 8) {
+  gboolean success = FALSE;
+
+  if (gtk_selection_data_get_length (data) >= 0 &&
+      gtk_selection_data_get_format (data) == 8)
+    {
       ObjectList_t *list = get_shapes();
       Object_t *obj;
 
       x = get_real_coord(x);
       y = get_real_coord(y);
       obj = object_list_find(list, x, y);
-      if (obj && !obj->locked) {
-	 command_list_add(edit_object_command_new(obj));
-	 object_set_url(obj, (const gchar *) data->data);
-	 object_emit_update_signal(obj);
-	 success = TRUE;
-      }
-   }
-   gtk_drag_finish(context, success, FALSE, time);
+      if (obj && !obj->locked)
+        {
+          command_list_add(edit_object_command_new(obj));
+          object_set_url(obj, (const gchar *) gtk_selection_data_get_data (data));
+          object_emit_update_signal(obj);
+          success = TRUE;
+        }
+    }
+  gtk_drag_finish(context, success, FALSE, time);
 }
 
 static void
@@ -411,7 +415,10 @@ scroll_adj_changed (GtkAdjustment *adj,
                     GimpRuler     *ruler)
 {
   gimp_ruler_set_range (ruler,
-                        adj->value, adj->value + adj->page_size, adj->upper);
+                        gtk_adjustment_get_value (adj),
+                        gtk_adjustment_get_value (adj) +
+                        gtk_adjustment_get_page_size (adj),
+                        gtk_adjustment_get_upper (adj));
 }
 
 Preview_t *

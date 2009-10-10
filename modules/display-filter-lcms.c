@@ -430,7 +430,8 @@ cdisplay_lcms_get_screen (CdisplayLcms *lcms,
     {
       GtkWidget *widget = GTK_WIDGET (managed);
 
-      *monitor = gdk_screen_get_monitor_at_window (screen, widget->window);
+      *monitor = gdk_screen_get_monitor_at_window (screen,
+                                                   gtk_widget_get_window (widget));
     }
   else
     {

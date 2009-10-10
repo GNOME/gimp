@@ -80,8 +80,8 @@ double get_direction (double x, double y, int from)
     {
       n = num_vectors;
       vec = vector;
-      angoff = GTK_ADJUSTMENT (angle_offset_adjust)->value;
-      strexp = GTK_ADJUSTMENT (orient_map_str_exp_adjust)->value;
+      angoff = gtk_adjustment_get_value (GTK_ADJUSTMENT (angle_offset_adjust));
+      strexp = gtk_adjustment_get_value (GTK_ADJUSTMENT (orient_map_str_exp_adjust));
       voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (orient_voronoi));
     }
   else
@@ -225,7 +225,7 @@ update_vector_prev (void)
   guchar         white[3] = {255, 255, 255};
 
   if (vector_preview_brightness_adjust)
-    val = 1.0 - GTK_ADJUSTMENT (vector_preview_brightness_adjust)->value / 100.0;
+    val = 1.0 - gtk_adjustment_get_value (GTK_ADJUSTMENT (vector_preview_brightness_adjust)) / 100.0;
   else
     val = 0.5;
 
@@ -390,7 +390,7 @@ angle_adjust_move_callback (GtkWidget *w, gpointer data)
 {
   if (adjignore)
     return;
-  vector[selectedvector].dir = GTK_ADJUSTMENT (angle_adjust)->value;
+  vector[selectedvector].dir = gtk_adjustment_get_value (GTK_ADJUSTMENT (angle_adjust));
   vector[selectedvector].dx =
     sin (gimp_deg_to_rad (vector[selectedvector].dir));
   vector[selectedvector].dy =
@@ -404,7 +404,7 @@ strength_adjust_move_callback (GtkWidget *w, gpointer data)
 {
   if (adjignore)
     return;
-  vector[selectedvector].str = GTK_ADJUSTMENT (strength_adjust)->value;
+  vector[selectedvector].str = gtk_adjustment_get_value (GTK_ADJUSTMENT (strength_adjust));
   update_vector_prev ();
   update_orient_map_preview_prev ();
 }
@@ -455,8 +455,8 @@ orient_map_response (GtkWidget *widget,
           pcvals.orient_vectors[i] = vector[i];
 
         pcvals.num_orient_vectors = num_vectors;
-        pcvals.orient_strength_exponent  = GTK_ADJUSTMENT (orient_map_str_exp_adjust)->value;
-        pcvals.orient_angle_offset  = GTK_ADJUSTMENT (angle_offset_adjust)->value;
+        pcvals.orient_strength_exponent  = gtk_adjustment_get_value (GTK_ADJUSTMENT (orient_map_str_exp_adjust));
+        pcvals.orient_angle_offset  = gtk_adjustment_get_value (GTK_ADJUSTMENT (angle_offset_adjust));
         pcvals.orient_voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (orient_voronoi));
       }
     };

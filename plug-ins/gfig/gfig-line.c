@@ -152,7 +152,7 @@ d_update_line (GdkPoint *pnt)
       /* Draw square on point */
       draw_circle (&epnt->pnt, TRUE);
 
-      gdk_draw_line (gfig_context->preview->window,
+      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                      gfig_gc,
                      spnt->pnt.x,
                      spnt->pnt.y,
@@ -167,7 +167,7 @@ d_update_line (GdkPoint *pnt)
 
   epnt = new_dobjpoint (pnt->x, pnt->y);
 
-  gdk_draw_line (gfig_context->preview->window,
+  gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                  gfig_gc,
                  spnt->pnt.x,
                  spnt->pnt.y,

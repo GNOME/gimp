@@ -430,9 +430,9 @@ button_motion(GtkWidget *widget, GdkEventMotion *event,
 
    round_to_grid(&x, &y);
 
-   object_draw(factory->obj, widget->window);
+   object_draw(factory->obj, gtk_widget_get_window (widget));
    factory->set_xy(factory->obj, event->state, x, y);
-   object_draw(factory->obj, widget->window);
+   object_draw(factory->obj, gtk_widget_get_window (widget));
 
    return FALSE;
 }
@@ -462,15 +462,15 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	       if (preferences->prompt_for_area_info)
 		  object_edit(obj, FALSE);
 	    } else {
-	       object_draw(obj, widget->window);
-	       object_unref(obj);
+              object_draw(obj, gtk_widget_get_window (widget));
+              object_unref(obj);
 	    }
 	    gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
 	    obj = NULL;
 	    main_clear_dimension();
 	 }
       } else if (event->button == 3) {
-	 object_draw(obj, widget->window);
+           object_draw(obj, gtk_widget_get_window (widget));
 	 if (!factory->cancel || factory->cancel(event, obj)) {
 	    g_signal_handlers_disconnect_by_func(widget,
                                                  button_motion,
@@ -480,7 +480,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	    obj = NULL;
 	    main_clear_dimension();
 	 } else {
-	    object_draw(obj, widget->window);
+           object_draw(obj, gtk_widget_get_window (widget));
 	 }
       }
    } else {

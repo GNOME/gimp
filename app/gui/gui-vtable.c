@@ -242,11 +242,11 @@ gui_get_display_name (Gimp *gimp,
 
   if (display)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
+      GimpDisplayShell *shell  = gimp_display_get_shell (display);
+      GdkWindow        *window = gtk_widget_get_window (GTK_WIDGET (shell));
 
       screen  = gtk_widget_get_screen (GTK_WIDGET (shell));
-      monitor = gdk_screen_get_monitor_at_window (screen,
-                                                  GTK_WIDGET (shell)->window);
+      monitor = gdk_screen_get_monitor_at_window (screen, window);
     }
   else
     {

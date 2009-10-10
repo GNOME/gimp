@@ -655,7 +655,7 @@ entscale_int_scale_update (GtkAdjustment *adjustment,
 
   userdata = g_object_get_data (G_OBJECT (adjustment), "userdata");
 
-  new_val = (gint) adjustment->value;
+  new_val = (gint) gtk_adjustment_get_value (adjustment);
 
   *intvar = new_val;
 
@@ -691,23 +691,23 @@ entscale_int_entry_update (GtkWidget *widget,
 
   new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
   constraint_val = new_val;
-  if ( constraint_val < adjustment->lower )
-    constraint_val = adjustment->lower;
-  if ( constraint_val > adjustment->upper )
-    constraint_val = adjustment->upper;
+
+  if (constraint_val < gtk_adjustment_get_lower (adjustment))
+    constraint_val = gtk_adjustment_get_lower (adjustment);
+
+  if (constraint_val > gtk_adjustment_get_upper (adjustment))
+    constraint_val = gtk_adjustment_get_upper (adjustment);
 
   if ( userdata->constraint )
     *intvar = constraint_val;
   else
     *intvar = new_val;
 
-  adjustment->value = constraint_val;
-
   g_signal_handlers_block_by_func (adjustment,
                                    entscale_int_scale_update,
                                    data);
 
-  gtk_adjustment_value_changed (adjustment);
+  gtk_adjustment_set_value (adjustment, constraint_val);
 
   g_signal_handlers_unblock_by_func (adjustment,
                                      entscale_int_scale_update,

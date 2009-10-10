@@ -210,7 +210,7 @@ d_update_ellipse (GdkPoint *pnt)
 
       draw_circle (&edge_pnt->pnt, TRUE);
 
-      gdk_draw_arc (gfig_context->preview->window,
+      gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
                     gfig_gc,
                     0,
                     top_x,
@@ -242,7 +242,7 @@ d_update_ellipse (GdkPoint *pnt)
   else
     top_y = edge_pnt->pnt.y;
 
-  gdk_draw_arc (gfig_context->preview->window,
+  gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
                 gfig_gc,
                 0,
                 top_x,

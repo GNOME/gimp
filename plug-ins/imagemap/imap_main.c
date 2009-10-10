@@ -204,8 +204,8 @@ get_preferences(void)
 static void
 init_preferences(void)
 {
-   GdkColormap *colormap = gdk_drawable_get_colormap(_dlg->window);
-   ColorSelData_t *colors = &_preferences.colors;
+  GdkColormap *colormap = gdk_drawable_get_colormap(gtk_widget_get_window (_dlg));
+  ColorSelData_t *colors = &_preferences.colors;
 
    colors->normal_fg.red = 0;
    colors->normal_fg.green = 0xFFFF;
@@ -230,8 +230,8 @@ init_preferences(void)
    gdk_colormap_alloc_color(colormap, &colors->selected_fg, FALSE, TRUE);
    gdk_colormap_alloc_color(colormap, &colors->selected_bg, FALSE, TRUE);
 
-   _preferences.normal_gc = gdk_gc_new(_preview->preview->window);
-   _preferences.selected_gc = gdk_gc_new(_preview->preview->window);
+   _preferences.normal_gc = gdk_gc_new(gtk_widget_get_window (_preview->preview));
+   _preferences.selected_gc = gdk_gc_new(gtk_widget_get_window (_preview->preview));
 
    gdk_gc_set_line_attributes(_preferences.normal_gc, 1, GDK_LINE_DOUBLE_DASH,
                               GDK_CAP_BUTT, GDK_JOIN_BEVEL);
@@ -269,7 +269,7 @@ set_busy_cursor(void)
 void
 remove_busy_cursor(void)
 {
-   gdk_window_set_cursor(_dlg->window, NULL);
+  gdk_window_set_cursor(gtk_widget_get_window (_dlg), NULL);
 }
 
 static gint
@@ -627,8 +627,8 @@ do_zoom_out(void)
 void
 draw_shapes(GtkWidget *preview)
 {
-   if (!_preview_redraw_blocked)
-      object_list_draw(_shapes, preview->window);
+  if (!_preview_redraw_blocked)
+    object_list_draw(_shapes, gtk_widget_get_window (preview));
 }
 
 static void
@@ -1000,8 +1000,8 @@ preview_enter(GtkWidget *widget, GdkEventCrossing *event)
 static void
 preview_leave(GtkWidget *widget, GdkEventCrossing *event)
 {
-   gdk_window_set_cursor(_dlg->window, NULL);
-   statusbar_clear_xy(_statusbar);
+  gdk_window_set_cursor(gtk_widget_get_window (_dlg), NULL);
+  statusbar_clear_xy(_statusbar);
 }
 
 static gboolean
@@ -1029,9 +1029,9 @@ move_sash_selected_objects(gint dx, gint dy, gboolean fast)
 
    gdk_gc_set_function(_preferences.normal_gc, GDK_XOR);
    gdk_gc_set_function(_preferences.selected_gc, GDK_XOR);
-   object_list_draw_selected(_shapes, _preview->preview->window);
+   object_list_draw_selected(_shapes, gtk_widget_get_window (_preview->preview));
    object_list_move_sash_selected(_shapes, dx, dy);
-   object_list_draw_selected(_shapes, _preview->preview->window);
+   object_list_draw_selected(_shapes, gtk_widget_get_window (_preview->preview));
    gdk_gc_set_function(_preferences.normal_gc, GDK_COPY);
    gdk_gc_set_function(_preferences.selected_gc, GDK_COPY);
 }
@@ -1048,9 +1048,9 @@ move_selected_objects(gint dx, gint dy, gboolean fast)
 
    gdk_gc_set_function(_preferences.normal_gc, GDK_XOR);
    gdk_gc_set_function(_preferences.selected_gc, GDK_XOR);
-   object_list_draw_selected(_shapes, _preview->preview->window);
+   object_list_draw_selected(_shapes, gtk_widget_get_window (_preview->preview));
    object_list_move_selected(_shapes, dx, dy);
-   object_list_draw_selected(_shapes, _preview->preview->window);
+   object_list_draw_selected(_shapes, gtk_widget_get_window (_preview->preview));
    gdk_gc_set_function(_preferences.normal_gc, GDK_COPY);
    gdk_gc_set_function(_preferences.selected_gc, GDK_COPY);
 }

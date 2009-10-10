@@ -708,7 +708,9 @@ print_size_info_offset_max_changed (GtkAdjustment *adj,
   g_signal_handlers_block_by_func (info.size_entry,
                                    print_size_info_size_changed, NULL);
 
-  gimp_size_entry_set_value (info.size_entry, index, adj->upper - adj->value);
+  gimp_size_entry_set_value (info.size_entry, index,
+                             gtk_adjustment_get_upper (adj) -
+                             gtk_adjustment_get_value (adj));
 
   g_signal_handlers_unblock_by_func (info.size_entry,
                                      print_size_info_size_changed, NULL);

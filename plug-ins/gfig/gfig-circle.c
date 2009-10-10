@@ -177,7 +177,7 @@ d_update_circle (GdkPoint *pnt)
       draw_circle (&edge_pnt->pnt, TRUE);
       radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
 
-      gdk_draw_arc (gfig_context->preview->window,
+      gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
                     gfig_gc,
                     0,
                     center_pnt->pnt.x - (gint) RINT (radius),
@@ -198,7 +198,7 @@ d_update_circle (GdkPoint *pnt)
 
   radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
 
-  gdk_draw_arc (gfig_context->preview->window,
+  gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
                 gfig_gc,
                 0,
                 center_pnt->pnt.x - (gint) RINT (radius),

@@ -44,11 +44,11 @@ window_close_cmd_callback (GtkAction *action,
   if (! GTK_WIDGET_TOPLEVEL (widget))
     widget = gtk_widget_get_toplevel (widget);
 
-  if (widget && widget->window)
+  if (widget && gtk_widget_get_window (widget));
     {
       GdkEvent *event = gdk_event_new (GDK_DELETE);
 
-      event->any.window     = g_object_ref (widget->window);
+      event->any.window     = g_object_ref (gtk_widget_get_window (widget));
       event->any.send_event = TRUE;
 
       gtk_main_do_event (event);

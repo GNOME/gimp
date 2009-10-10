@@ -245,7 +245,7 @@ select_area_expose (GtkWidget      *widget,
       dest += event->area.width * 3;
     }
 
-  gdk_draw_rgb_image_dithalign (widget->window,
+  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
                                 style->fg_gc[widget->state],
                                 event->area.x, event->area.y,
                                 event->area.width, event->area.height,
@@ -412,5 +412,6 @@ static void
 pressure_adjust_update (GtkAdjustment *adj,
                         ColorselWater *water)
 {
-  water->pressure_adjust = (adj->upper - adj->value) / 100.0;
+  water->pressure_adjust = (gtk_adjustment_get_upper (adj) -
+                            gtk_adjustment_get_value (adj)) / 100.0;
 }

@@ -61,7 +61,7 @@ static double
 getsiz_from_gui (double x, double y)
 {
   return getsiz_proto (x,y, numsmvect, smvector,
-                       GTK_ADJUSTMENT (smstrexpadjust)->value,
+                       gtk_adjustment_get_value (GTK_ADJUSTMENT (smstrexpadjust)),
                        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (size_voronoi)));
 }
 
@@ -116,7 +116,7 @@ updatesmvectorprev (void)
   guchar         white[3] = {255, 255, 255};
 
   if (smvectprevbrightadjust)
-    val = 1.0 - GTK_ADJUSTMENT (smvectprevbrightadjust)->value / 100.0;
+    val = 1.0 - gtk_adjustment_get_value (GTK_ADJUSTMENT (smvectprevbrightadjust)) / 100.0;
   else
     val = 0.5;
 
@@ -280,7 +280,7 @@ angsmadjmove (GtkWidget *w, gpointer data)
 {
   if (!smadjignore)
     {
-      smvector[selectedsmvector].siz = GTK_ADJUSTMENT (sizadjust)->value;
+      smvector[selectedsmvector].siz = gtk_adjustment_get_value (GTK_ADJUSTMENT (sizadjust));
       updatesmvectorprev ();
       updatesmpreviewprev ();
     }
@@ -291,7 +291,7 @@ strsmadjmove (GtkWidget *w, gpointer data)
 {
   if (!smadjignore)
     {
-      smvector[selectedsmvector].str = GTK_ADJUSTMENT (smstradjust)->value;
+      smvector[selectedsmvector].str = gtk_adjustment_get_value (GTK_ADJUSTMENT (smstradjust));
       updatesmvectorprev ();
       updatesmpreviewprev ();
     }

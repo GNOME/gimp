@@ -88,7 +88,8 @@ d_draw_rectangle (GfigObject *obj)
               gfig_scale_x (second_pnt->pnt.x));
   ymax = MAX (gfig_scale_y (first_pnt->pnt.y),
               gfig_scale_y (second_pnt->pnt.y));
-  gdk_draw_rectangle (gfig_context->preview->window,
+
+  gdk_draw_rectangle (gtk_widget_get_window (gfig_context->preview),
                       gfig_gc,
                       FALSE,
                       xmin, ymin,
@@ -199,7 +200,7 @@ d_update_rectangle (GdkPoint *pnt)
                   gfig_scale_x (second_pnt->pnt.x));
       ymax = MAX (gfig_scale_y (first_pnt->pnt.y),
                   gfig_scale_y (second_pnt->pnt.y));
-      gdk_draw_rectangle (gfig_context->preview->window,
+      gdk_draw_rectangle (gtk_widget_get_window (gfig_context->preview),
                           gfig_gc,
                           FALSE,
                           xmin, ymin, xmax - xmin, ymax - ymin);
@@ -222,7 +223,7 @@ d_update_rectangle (GdkPoint *pnt)
               gfig_scale_x (second_pnt->pnt.x));
   ymax = MAX (gfig_scale_y (first_pnt->pnt.y),
               gfig_scale_y (second_pnt->pnt.y));
-  gdk_draw_rectangle (gfig_context->preview->window,
+  gdk_draw_rectangle (gtk_widget_get_window (gfig_context->preview),
                       gfig_gc, FALSE,
                       xmin, ymin, xmax - xmin, ymax - ymin);
 }

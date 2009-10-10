@@ -358,7 +358,7 @@ draw_grid(GtkWidget *preview)
 
       if (!grid_gc)
         {
-          grid_gc = gdk_gc_new(preview->window);
+          grid_gc = gdk_gc_new(gtk_widget_get_window (preview));
 
           gdk_gc_set_line_attributes(grid_gc, 1, GDK_LINE_ON_OFF_DASH,
                                      GDK_CAP_BUTT, GDK_JOIN_BEVEL);
@@ -366,13 +366,13 @@ draw_grid(GtkWidget *preview)
 
       if (grid_type == GRID_LINES)
         {
-          draw_lines(preview->window, grid_gc, width, height);
+          draw_lines(gtk_widget_get_window (preview), grid_gc, width, height);
         }
       else
         {
           GtkStyle *style = gtk_widget_get_style (preview);
 
-          draw_crosses(preview->window, style->black_gc, width,
+          draw_crosses(gtk_widget_get_window (preview), style->black_gc, width,
                        height);
         }
     }

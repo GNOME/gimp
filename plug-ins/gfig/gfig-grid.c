@@ -215,9 +215,9 @@ gfig_grid_colours (GtkWidget *widget)
   values.background.pixel = col1.pixel;
   values.foreground.pixel = col2.pixel;
   values.fill    = GDK_OPAQUE_STIPPLED;
-  values.stipple = gdk_bitmap_create_from_data (widget->window,
+  values.stipple = gdk_bitmap_create_from_data (gtk_widget_get_window (widget),
                                                 (gchar *) stipple, 4, 4);
-  grid_hightlight_drawgc = gdk_gc_new_with_values (widget->window,
+  grid_hightlight_drawgc = gdk_gc_new_with_values (gtk_widget_get_window (widget),
                                                    &values,
                                                    GDK_GC_FOREGROUND |
                                                    GDK_GC_BACKGROUND |
@@ -407,7 +407,7 @@ draw_grid_polar (GdkGC *drawgc)
         gdouble t;
         gdouble sector_size = 2 * G_PI / current_sectors;
 
-        gdk_draw_arc (gfig_context->preview->window,
+        gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
                       drawgc,
                       0,
                       0.5 + (preview_width / 2 - outer_radius),
@@ -430,7 +430,7 @@ draw_grid_polar (GdkGC *drawgc)
             gdouble normal_x = cos (selvals.opts.grid_rotation+t);
             gdouble normal_y = sin (selvals.opts.grid_rotation+t);
 
-            gdk_draw_line (gfig_context->preview->window,
+            gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                            drawgc,
                            0.5 + (preview_width / 2 + inner_radius * normal_x),
                            0.5 + (preview_height / 2 - inner_radius * normal_y),
@@ -454,7 +454,7 @@ draw_grid_sq (GdkGC *drawgc)
 
   for (loop = 0 ; loop < preview_height ; loop += step)
     {
-      gdk_draw_line (gfig_context->preview->window,
+      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                      drawgc,
                      0,
                      loop,
@@ -466,7 +466,7 @@ draw_grid_sq (GdkGC *drawgc)
 
   for (loop = 0 ; loop < preview_width ; loop += step)
     {
-      gdk_draw_line (gfig_context->preview->window,
+      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                      drawgc,
                      loop,
                      0,
@@ -492,14 +492,15 @@ draw_grid_iso (GdkGC *drawgc)
   hstep = selvals.opts.gridspacing * COS_1o6PI_RAD;
 
   /* Draw the vertical lines - These are easy */
-  for (loop = 0 ; loop < preview_width ; loop += hstep){
-    gdk_draw_line (gfig_context->preview->window,
-                   drawgc,
-                   (gint)loop,
-                   (gint)0,
-                   (gint)loop,
-                   (gint)preview_height);
-  }
+  for (loop = 0 ; loop < preview_width ; loop += hstep)
+    {
+      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
+                     drawgc,
+                     (gint)loop,
+                     (gint)0,
+                     (gint)loop,
+                     (gint)preview_height);
+    }
 
   /* draw diag lines at a Theta of +/- 1/6 Pi Rad */
 
@@ -514,14 +515,14 @@ draw_grid_iso (GdkGC *drawgc)
   /* Draw diag lines */
   for (loop = diagonal_start ; loop < diagonal_end ; loop += vstep)
     {
-      gdk_draw_line (gfig_context->preview->window,
+      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                       drawgc,
                      (gint)0,
                      (gint)loop,
                      (gint)diagonal_width,
                      (gint)loop + diagonal_height);
 
-      gdk_draw_line (gfig_context->preview->window,
+      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
                      drawgc,
                      (gint)0,
                      (gint)loop,

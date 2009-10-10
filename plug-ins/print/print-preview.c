@@ -258,7 +258,9 @@ print_preview_size_request (GtkWidget      *widget,
   PrintPreview *preview = PRINT_PREVIEW (widget);
   gdouble       paper_width;
   gdouble       paper_height;
-  gint          border  = GTK_CONTAINER (widget)->border_width + 1;
+  gint          border;
+
+  border = gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 
   print_preview_get_page_size (preview, &paper_width, &paper_height);
 
@@ -415,7 +417,9 @@ print_preview_expose_event (GtkWidget      *widget,
   gdouble       top_margin;
   gdouble       bottom_margin;
   gdouble       scale;
-  gint          border = GTK_CONTAINER (widget)->border_width + 1;
+  gint          border;
+
+  border = gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 
   print_preview_get_page_size (preview, &paper_width, &paper_height);
   print_preview_get_page_margins (preview,
@@ -424,7 +428,7 @@ print_preview_expose_event (GtkWidget      *widget,
 
   scale = print_preview_get_scale (preview);
 
-  cr = gdk_cairo_create (widget->window);
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   cairo_translate (cr,
                    widget->allocation.x + border,
@@ -659,7 +663,9 @@ print_preview_is_inside (PrintPreview *preview,
   gdouble    top_margin;
   gdouble    bottom_margin;
   gdouble    scale;
-  gint       border = GTK_CONTAINER (widget)->border_width + 1;
+  gint       border;
+
+  border = gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 
   x -= border;
 
@@ -700,7 +706,7 @@ print_preview_set_inside (PrintPreview *preview,
       preview->inside = inside;
 
       if (GTK_WIDGET_DRAWABLE (widget))
-        gdk_window_set_cursor (widget->window,
+        gdk_window_set_cursor (gtk_widget_get_window (widget),
                                inside ? preview->cursor : NULL);
 
       gtk_widget_queue_draw (widget);
@@ -715,7 +721,9 @@ print_preview_get_scale (PrintPreview *preview)
   gdouble    paper_height;
   gdouble    scale_x;
   gdouble    scale_y;
-  gint       border = GTK_CONTAINER (widget)->border_width + 1;
+  gint       border;
+
+  border = gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 
   print_preview_get_page_size (preview, &paper_width, &paper_height);
 

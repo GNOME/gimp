@@ -246,7 +246,7 @@ gimp_toolbox_constructor (GType                  type,
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->p->tool_wbox), GTK_JUSTIFY_TOP);
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->p->tool_wbox),
                                  GTK_JUSTIFY_LEFT);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->p->tool_wbox), 2.0 / 15.0);
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->p->tool_wbox), 1.0 / 30.0);
 
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->tool_wbox,
                       FALSE, FALSE, 0);
@@ -256,7 +256,7 @@ gimp_toolbox_constructor (GType                  type,
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->p->area_wbox), GTK_JUSTIFY_TOP);
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->p->area_wbox),
                                  GTK_JUSTIFY_LEFT);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->p->area_wbox), 2.0 / 15.0);
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->p->area_wbox), 1.0 / 30.0);
 
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->area_wbox,
                       FALSE, FALSE, 0);
