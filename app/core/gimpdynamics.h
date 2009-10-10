@@ -57,7 +57,7 @@ typedef struct _GimpDynamics GimpDynamics;
 
 struct _GimpDynamics
 {
-  GimpDataClass        parent_instance;
+  GimpData             parent_instance;
 
   gchar               *name;
 

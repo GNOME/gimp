@@ -31,6 +31,7 @@
 #include "gimpcurve.h"
 
 #include "gimpdynamics.h"
+#include "gimpdynamics-save.h"
 
 #include "gimpdata.h"
 #include "gimp-intl.h"
@@ -185,11 +186,14 @@ static void
 gimp_dynamics_class_init (GimpDynamicsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
 
   object_class->finalize     = gimp_dynamics_finalize;
   object_class->set_property = gimp_dynamics_set_property;
   object_class->get_property = gimp_dynamics_get_property;
   object_class->notify       = gimp_dynamics_notify;
+
+  data_class->save                 = gimp_dynamics_save;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
