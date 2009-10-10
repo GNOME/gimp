@@ -591,7 +591,7 @@ gimp_real_initialize (Gimp               *gimp,
   gimp->dynamics_factory =
     gimp_data_factory_new (gimp,
                            GIMP_TYPE_DYNAMICS,
-                           "brush-path", "brush-path-writable",
+                           "dynamics-path", "dynamics-path-writable",
                            dynamics_loader_entries,
                            G_N_ELEMENTS (dynamics_loader_entries),
                            gimp_dynamics_new,
