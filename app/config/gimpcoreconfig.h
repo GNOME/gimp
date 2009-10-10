@@ -46,6 +46,8 @@ struct _GimpCoreConfig
   gchar                  *environ_path;
   gchar                  *brush_path;
   gchar                  *brush_path_writable;
+  gchar                  *dynamics_path;
+  gchar                  *dynamics_path_writable;
   gchar                  *pattern_path;
   gchar                  *pattern_path_writable;
   gchar                  *palette_path;
@@ -55,11 +57,13 @@ struct _GimpCoreConfig
   gchar                  *font_path;
   gchar                  *font_path_writable;  /*  unused  */
   gchar                  *default_brush;
+  gchar                  *default_dynamics;
   gchar                  *default_pattern;
   gchar                  *default_palette;
   gchar                  *default_gradient;
   gchar                  *default_font;
   gboolean                global_brush;
+  gboolean                global_dynamics;
   gboolean                global_pattern;
   gboolean                global_palette;
   gboolean                global_gradient;

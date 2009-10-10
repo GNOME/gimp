@@ -19,6 +19,11 @@ N_("When enabled, an image will become the active image when its image " \
 
 #define BRUSH_PATH_WRITABLE_BLURB ""
 
+#define DYNAMICS_PATH_BLURB \
+"Sets the dynamics search path."
+
+#define DYNAMICS_PATH_WRITABLE_BLURB ""
+
 #define CANVAS_PADDING_COLOR_BLURB \
 N_("Sets the canvas padding color used if the padding mode is set to " \
    "custom color.")
@@ -48,6 +53,10 @@ N_("Context-dependent mouse pointers are helpful.  They are enabled by " \
 #define DEFAULT_BRUSH_BLURB \
 "Specify a default brush.  The brush is searched for in the " \
 "specified brush path."
+
+#define DEFAULT_DYNAMICS_BLURB \
+"Specify a default dynamics.  The dynamics is searched for in the " \
+"specified dynamics path."
 
 #define DEFAULT_DOT_FOR_DOT_BLURB \
 N_("When enabled, this will ensure that each pixel of an image gets " \
@@ -134,6 +143,9 @@ N_("The window type hint that is set on dock windows and the toolbox " \
 
 #define GLOBAL_BRUSH_BLURB \
 N_("When enabled, the selected brush will be used for all tools.")
+
+#define GLOBAL_DYNAMICS_BLURB \
+N_("When enabled, the selected dynamics will be used for all tools.")
 
 #define GLOBAL_FONT_BLURB \
 "When enabled, the selected font will be used for all tools."

@@ -38,6 +38,7 @@
 
 
 #define DEFAULT_BRUSH     "Round Fuzzy"
+#define DEFAULT_DYNAMICS  "Foo" /* alexia, fix me */
 #define DEFAULT_PATTERN   "Pine"
 #define DEFAULT_PALETTE   "Default"
 #define DEFAULT_GRADIENT  "FG to BG (RGB)"
@@ -55,6 +56,8 @@ enum
   PROP_ENVIRON_PATH,
   PROP_BRUSH_PATH,
   PROP_BRUSH_PATH_WRITABLE,
+  PROP_DYNAMICS_PATH,
+  PROP_DYNAMICS_PATH_WRITABLE,
   PROP_PATTERN_PATH,
   PROP_PATTERN_PATH_WRITABLE,
   PROP_PALETTE_PATH,
@@ -64,11 +67,13 @@ enum
   PROP_FONT_PATH,
   PROP_FONT_PATH_WRITABLE,
   PROP_DEFAULT_BRUSH,
+  PROP_DEFAULT_DYNAMICS,
   PROP_DEFAULT_PATTERN,
   PROP_DEFAULT_PALETTE,
   PROP_DEFAULT_GRADIENT,
   PROP_DEFAULT_FONT,
   PROP_GLOBAL_BRUSH,
+  PROP_GLOBAL_DYNAMICS,
   PROP_GLOBAL_PATTERN,
   PROP_GLOBAL_PALETTE,
   PROP_GLOBAL_GRADIENT,
@@ -177,6 +182,21 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+  path = gimp_config_build_data_path ("dynamics");
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_DYNAMICS_PATH,
+                                 "dynamics-path", DYNAMICS_PATH_BLURB,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_writable_path ("dynamics");
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_DYNAMICS_PATH_WRITABLE,
+                                 "dynamics-path-writable",
+                                 DYNAMICS_PATH_WRITABLE_BLURB,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
   path = gimp_config_build_data_path ("patterns");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
                                  "pattern-path", PATTERN_PATH_BLURB,
@@ -238,6 +258,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    "default-brush", DEFAULT_BRUSH_BLURB,
                                    DEFAULT_BRUSH,
                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_DYNAMICS,
+                                   "default-dynamics", DEFAULT_DYNAMICS_BLURB,
+                                   DEFAULT_DYNAMICS,
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
                                    "default-pattern", DEFAULT_PATTERN_BLURB,
                                    DEFAULT_PATTERN,
@@ -256,6 +280,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_BRUSH,
                                     "global-brush", GLOBAL_BRUSH_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_DYNAMICS,
+                                    "global-dynamics", GLOBAL_DYNAMICS_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_PATTERN,
@@ -400,6 +428,8 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->environ_path);
   g_free (core_config->brush_path);
   g_free (core_config->brush_path_writable);
+  g_free (core_config->dynamics_path);
+  g_free (core_config->dynamics_path_writable);
   g_free (core_config->pattern_path);
   g_free (core_config->pattern_path_writable);
   g_free (core_config->palette_path);
@@ -409,6 +439,7 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->font_path);
   g_free (core_config->font_path_writable);
   g_free (core_config->default_brush);
+  g_free (core_config->default_dynamics);
   g_free (core_config->default_pattern);
   g_free (core_config->default_palette);
   g_free (core_config->default_gradient);
@@ -464,6 +495,14 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->brush_path_writable);
       core_config->brush_path_writable = g_value_dup_string (value);
       break;
+    case PROP_DYNAMICS_PATH:
+      g_free (core_config->dynamics_path);
+      core_config->dynamics_path = g_value_dup_string (value);
+      break;
+    case PROP_DYNAMICS_PATH_WRITABLE:
+      g_free (core_config->dynamics_path_writable);
+      core_config->dynamics_path_writable = g_value_dup_string (value);
+      break;
     case PROP_PATTERN_PATH:
       g_free (core_config->pattern_path);
       core_config->pattern_path = g_value_dup_string (value);
@@ -500,6 +539,10 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->default_brush);
       core_config->default_brush = g_value_dup_string (value);
       break;
+    case PROP_DEFAULT_DYNAMICS:
+      g_free (core_config->default_dynamics);
+      core_config->default_dynamics = g_value_dup_string (value);
+      break;
     case PROP_DEFAULT_PATTERN:
       g_free (core_config->default_pattern);
       core_config->default_pattern = g_value_dup_string (value);
@@ -518,6 +561,9 @@ gimp_core_config_set_property (GObject      *object,
       break;
     case PROP_GLOBAL_BRUSH:
       core_config->global_brush = g_value_get_boolean (value);
+      break;
+    case PROP_GLOBAL_DYNAMICS:
+      core_config->global_dynamics = g_value_get_boolean (value);
       break;
     case PROP_GLOBAL_PATTERN:
       core_config->global_pattern = g_value_get_boolean (value);
@@ -627,6 +673,12 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_BRUSH_PATH_WRITABLE:
       g_value_set_string (value, core_config->brush_path_writable);
       break;
+    case PROP_DYNAMICS_PATH:
+      g_value_set_string (value, core_config->dynamics_path);
+      break;
+    case PROP_DYNAMICS_PATH_WRITABLE:
+      g_value_set_string (value, core_config->dynamics_path_writable);
+      break;
     case PROP_PATTERN_PATH:
       g_value_set_string (value, core_config->pattern_path);
       break;
@@ -654,6 +706,9 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_DEFAULT_BRUSH:
       g_value_set_string (value, core_config->default_brush);
       break;
+    case PROP_DEFAULT_DYNAMICS:
+      g_value_set_string (value, core_config->default_dynamics);
+      break;
     case PROP_DEFAULT_PATTERN:
       g_value_set_string (value, core_config->default_pattern);
       break;
@@ -668,6 +723,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_GLOBAL_BRUSH:
       g_value_set_boolean (value, core_config->global_brush);
+      break;
+    case PROP_GLOBAL_DYNAMICS:
+      g_value_set_boolean (value, core_config->global_dynamics);
       break;
     case PROP_GLOBAL_PATTERN:
       g_value_set_boolean (value, core_config->global_pattern);
