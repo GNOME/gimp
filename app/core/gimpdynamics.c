@@ -38,6 +38,8 @@
 #include "gimp-intl.h"
 
 
+#define DEFAULT_NAME                "Nameless dynamics"
+
 #define DEFAULT_PRESSURE_OPACITY       TRUE
 #define DEFAULT_PRESSURE_HARDNESS      FALSE
 #define DEFAULT_PRESSURE_RATE          FALSE
@@ -96,6 +98,8 @@
 enum
 {
   PROP_0,
+
+  PROP_NAME,
 
   PROP_PRESSURE_OPACITY,
   PROP_PRESSURE_HARDNESS,
@@ -188,8 +192,8 @@ G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
 static void
 gimp_dynamics_class_init (GimpDynamicsClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+  GObjectClass      *object_class = G_OBJECT_CLASS (klass);
+  GimpDataClass     *data_class   = GIMP_DATA_CLASS (klass);
 
   object_class->finalize     = gimp_dynamics_finalize;
   object_class->set_property = gimp_dynamics_set_property;
@@ -198,6 +202,11 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
 
   data_class->save                 = gimp_dynamics_save;
   data_class->get_extension        = gimp_dynamics_get_extension;
+
+  GIMP_CONFIG_INSTALL_PROP_STRING  (object_class, PROP_NAME,
+                                    "name", NULL,
+                                    DEFAULT_NAME,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
@@ -400,23 +409,23 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
 }
 
 static void
-gimp_dynamics_init (GimpDynamics *options)
+gimp_dynamics_init (GimpDynamics *dynamics)
 {
-  options->opacity_dynamics      = gimp_dynamics_output_init();
+  dynamics->opacity_dynamics      = gimp_dynamics_output_init();
 
-  options->hardness_dynamics     = gimp_dynamics_output_init();
+  dynamics->hardness_dynamics     = gimp_dynamics_output_init();
 
-  options->rate_dynamics         = gimp_dynamics_output_init();
+  dynamics->rate_dynamics         = gimp_dynamics_output_init();
 
-  options->size_dynamics         = gimp_dynamics_output_init();
+  dynamics->size_dynamics         = gimp_dynamics_output_init();
 
-  options->aspect_ratio_dynamics = gimp_dynamics_output_init();
+  dynamics->aspect_ratio_dynamics = gimp_dynamics_output_init();
 
-  options->color_dynamics        = gimp_dynamics_output_init();
+  dynamics->color_dynamics        = gimp_dynamics_output_init();
 
-  options->angle_dynamics        = gimp_dynamics_output_init();
+  dynamics->angle_dynamics        = gimp_dynamics_output_init();
 
-  options->jitter_dynamics        = gimp_dynamics_output_init();
+  dynamics->jitter_dynamics        = gimp_dynamics_output_init();
 
 }
 
@@ -424,23 +433,23 @@ gimp_dynamics_init (GimpDynamics *options)
 static void
 gimp_dynamics_finalize (GObject *object)
 {
-  GimpDynamics *options = GIMP_DYNAMICS (object);
+  GimpDynamics *dynamics = GIMP_DYNAMICS (object);
 
-  gimp_dynamics_output_finalize   (options->opacity_dynamics);
+  gimp_dynamics_output_finalize   (dynamics->opacity_dynamics);
 
-  gimp_dynamics_output_finalize   (options->hardness_dynamics);
+  gimp_dynamics_output_finalize   (dynamics->hardness_dynamics);
 
-  gimp_dynamics_output_finalize   (options->rate_dynamics);
+  gimp_dynamics_output_finalize   (dynamics->rate_dynamics);
 
-  gimp_dynamics_output_finalize   (options->size_dynamics);
+  gimp_dynamics_output_finalize   (dynamics->size_dynamics);
 
-  gimp_dynamics_output_finalize   (options->aspect_ratio_dynamics);
+  gimp_dynamics_output_finalize   (dynamics->aspect_ratio_dynamics);
 
-  gimp_dynamics_output_finalize   (options->color_dynamics);
+  gimp_dynamics_output_finalize   (dynamics->color_dynamics);
 
-  gimp_dynamics_output_finalize   (options->angle_dynamics);
+  gimp_dynamics_output_finalize   (dynamics->angle_dynamics);
 
-  gimp_dynamics_output_finalize   (options->jitter_dynamics);
+  gimp_dynamics_output_finalize   (dynamics->jitter_dynamics);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -497,19 +506,23 @@ gimp_dynamics_set_property (GObject      *object,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpDynamics *options           = GIMP_DYNAMICS (object);
+  GimpDynamics *dynamics           = GIMP_DYNAMICS (object);
 
-  GimpDynamicsOutput *opacity_dynamics      = options->opacity_dynamics;
-  GimpDynamicsOutput *hardness_dynamics     = options->hardness_dynamics;
-  GimpDynamicsOutput *rate_dynamics         = options->rate_dynamics;
-  GimpDynamicsOutput *size_dynamics         = options->size_dynamics;
-  GimpDynamicsOutput *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
-  GimpDynamicsOutput *color_dynamics        = options->color_dynamics;
-  GimpDynamicsOutput *angle_dynamics        = options->angle_dynamics;
-  GimpDynamicsOutput *jitter_dynamics       = options->jitter_dynamics;
+  GimpDynamicsOutput *opacity_dynamics      = dynamics->opacity_dynamics;
+  GimpDynamicsOutput *hardness_dynamics     = dynamics->hardness_dynamics;
+  GimpDynamicsOutput *rate_dynamics         = dynamics->rate_dynamics;
+  GimpDynamicsOutput *size_dynamics         = dynamics->size_dynamics;
+  GimpDynamicsOutput *aspect_ratio_dynamics = dynamics->aspect_ratio_dynamics;
+  GimpDynamicsOutput *color_dynamics        = dynamics->color_dynamics;
+  GimpDynamicsOutput *angle_dynamics        = dynamics->angle_dynamics;
+  GimpDynamicsOutput *jitter_dynamics       = dynamics->jitter_dynamics;
 
   switch (property_id)
     {
+
+    case PROP_NAME:
+      gimp_object_set_name (dynamics, g_value_get_string (value));
+      break;
 
     case PROP_PRESSURE_OPACITY:
       opacity_dynamics->pressure = g_value_get_boolean (value);
@@ -718,18 +731,21 @@ gimp_dynamics_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDynamics       *options               = GIMP_DYNAMICS (object);
-  GimpDynamicsOutput *opacity_dynamics      = options->opacity_dynamics;
-  GimpDynamicsOutput *hardness_dynamics     = options->hardness_dynamics;
-  GimpDynamicsOutput *rate_dynamics         = options->rate_dynamics;
-  GimpDynamicsOutput *size_dynamics         = options->size_dynamics;
-  GimpDynamicsOutput *aspect_ratio_dynamics = options->aspect_ratio_dynamics;
-  GimpDynamicsOutput *color_dynamics        = options->color_dynamics;
-  GimpDynamicsOutput *angle_dynamics        = options->angle_dynamics;
-  GimpDynamicsOutput *jitter_dynamics       = options->jitter_dynamics;
+  GimpDynamics       *dynamics               = GIMP_DYNAMICS (object);
+  GimpDynamicsOutput *opacity_dynamics      = dynamics->opacity_dynamics;
+  GimpDynamicsOutput *hardness_dynamics     = dynamics->hardness_dynamics;
+  GimpDynamicsOutput *rate_dynamics         = dynamics->rate_dynamics;
+  GimpDynamicsOutput *size_dynamics         = dynamics->size_dynamics;
+  GimpDynamicsOutput *aspect_ratio_dynamics = dynamics->aspect_ratio_dynamics;
+  GimpDynamicsOutput *color_dynamics        = dynamics->color_dynamics;
+  GimpDynamicsOutput *angle_dynamics        = dynamics->angle_dynamics;
+  GimpDynamicsOutput *jitter_dynamics       = dynamics->jitter_dynamics;
 
   switch (property_id)
     {
+    case PROP_NAME:
+      g_value_set_string (value, gimp_object_get_name (dynamics));
+      break;
 
     case PROP_PRESSURE_OPACITY:
       g_value_set_boolean (value, opacity_dynamics->pressure);
@@ -938,20 +954,20 @@ gimp_dynamics_notify (GObject    *object,
                       GParamSpec *pspec)
 {
 
-  GimpDynamics *options = GIMP_DYNAMICS (object);
+  GimpDynamics *dynamics = GIMP_DYNAMICS (object);
 
 }
 
 GimpData *
 gimp_dynamics_new (const gchar *name)
 {
-  GimpDynamics *options;
+  GimpDynamics *dynamics;
 
-  options = g_object_new (GIMP_TYPE_DYNAMICS,
+  dynamics = g_object_new (GIMP_TYPE_DYNAMICS,
                           "name",       name,
                           NULL);
 
-  return options;
+  return dynamics;
 }
 
 
