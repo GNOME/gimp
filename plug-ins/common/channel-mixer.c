@@ -703,20 +703,20 @@ cm_red_scale_callback (GtkAdjustment *adjustment,
 {
   if (mix->monochrome)
     {
-      mix->black.red_gain = adjustment->value / 100.0;
+      mix->black.red_gain = gtk_adjustment_get_value (adjustment) / 100.0;
     }
   else
     {
       switch (mix->output_channel)
         {
         case CM_RED_CHANNEL:
-          mix->red.red_gain = adjustment->value / 100.0;
+          mix->red.red_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         case CM_GREEN_CHANNEL:
-          mix->green.red_gain = adjustment->value / 100.0;
+          mix->green.red_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         case CM_BLUE_CHANNEL:
-          mix->blue.red_gain = adjustment->value / 100.0;
+          mix->blue.red_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         }
     }
@@ -730,20 +730,20 @@ cm_green_scale_callback (GtkAdjustment *adjustment,
 {
   if (mix->monochrome)
     {
-      mix->black.green_gain = adjustment->value / 100.0;
+      mix->black.green_gain = gtk_adjustment_get_value (adjustment) / 100.0;
     }
   else
     {
       switch (mix->output_channel)
         {
         case CM_RED_CHANNEL:
-          mix->red.green_gain = adjustment->value / 100.0;
+          mix->red.green_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         case CM_GREEN_CHANNEL:
-          mix->green.green_gain = adjustment->value / 100.0;
+          mix->green.green_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         case CM_BLUE_CHANNEL:
-          mix->blue.green_gain = adjustment->value / 100.0;
+          mix->blue.green_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         }
     }
@@ -757,20 +757,20 @@ cm_blue_scale_callback (GtkAdjustment *adjustment,
 {
   if (mix->monochrome)
     {
-      mix->black.blue_gain = adjustment->value / 100.0;
+      mix->black.blue_gain = gtk_adjustment_get_value (adjustment) / 100.0;
     }
   else
     {
       switch (mix->output_channel)
         {
         case CM_RED_CHANNEL:
-          mix->red.blue_gain = adjustment->value / 100.0;
+          mix->red.blue_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         case CM_GREEN_CHANNEL:
-          mix->green.blue_gain = adjustment->value / 100.0;
+          mix->green.blue_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         case CM_BLUE_CHANNEL:
-          mix->blue.blue_gain = adjustment->value / 100.0;
+          mix->blue.blue_gain = gtk_adjustment_get_value (adjustment) / 100.0;
           break;
         }
     }
