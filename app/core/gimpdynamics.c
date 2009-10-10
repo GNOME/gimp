@@ -958,7 +958,7 @@ gimp_dynamics_get_standard (void)
 
   if (! standard_dynamics)
     {
-      standard_dynamics = gimp_dynamics_new ("Standard");
+      standard_dynamics = gimp_dynamics_new ("Standard dynamics");
 
       standard_dynamics->dirty = FALSE;
       gimp_data_make_internal (standard_dynamics,

@@ -248,14 +248,6 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  /*gboolean  pressure;
-  gboolean  velocity;
-  gboolean  direction;
-  gboolean  tilt;
-  gboolean  random;
-  gboolean  fade;
-*/
-
   dynamics_labels[n_dynamics] = gtk_label_new (_("Pressure"));
   n_dynamics++;
 
