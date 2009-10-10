@@ -47,7 +47,6 @@
 #include "tools/gimptooloptions-gui.h"
 #include "gimppropwidgets.h"
 
-static GObject     * get_config_value (GimpDynamicsEditor *editor);
 
 /*  local function prototypes  */
 
@@ -63,9 +62,12 @@ static void   gimp_dynamics_editor_set_data        (GimpDataEditor     *editor,
 static void   gimp_dynamics_editor_set_context     (GimpDocked         *docked,
                                                     GimpContext        *context);
 
-static void   gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
-                                                    GParamSpec           *pspec,
-                                                    GimpDynamicsEditor      *editor);
+static void   gimp_dynamics_editor_notify_model    (GimpDynamics       *options,
+                                                    const GParamSpec   *pspec,
+                                                    GimpDynamicsEditor *editor);
+static void   gimp_dynamics_editor_notify_data     (GimpDynamics       *options,
+                                                    const GParamSpec   *pspec,
+                                                    GimpDynamicsEditor *editor);
 
 static void   dynamics_output_maping_row_gui       (GObject     *config,
                                                     const gchar *property_name_part,
@@ -96,143 +98,11 @@ static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 static void
-gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
-{
-  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
-
-  object_class->constructor = gimp_dynamics_editor_constructor;
-
-  editor_class->set_data    = gimp_dynamics_editor_set_data;
-  editor_class->title       = _("Dynamics Editor");
-}
-
-static void
-gimp_dynamics_editor_docked_iface_init (GimpDockedInterface *iface)
-{
-  parent_docked_iface = g_type_interface_peek_parent (iface);
-
-  if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
-
-  iface->set_context = gimp_dynamics_editor_set_context;
-}
-
-static GObject *
-gimp_dynamics_editor_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
-{
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
-
-  return object;
-}
-
-static void
-gimp_dynamics_editor_set_data (GimpDataEditor *editor,
-                               GimpData       *data)
-{
-  GimpDynamicsEditor         *dynamics_editor = GIMP_DYNAMICS_EDITOR (editor);
-
-
-  if (editor->data)
-    g_signal_handlers_disconnect_by_func (editor->data,
-                                          gimp_dynamics_editor_notify_dynamics,
-                                          editor);
-
-  GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
-
-  if (editor->data)
-    g_signal_connect (editor->data, "notify",
-                      G_CALLBACK (gimp_dynamics_editor_notify_dynamics),
-                      editor);
-
-}
-
-
-static void
-gimp_dynamics_editor_notify_dynamics (GimpDynamics  *options,
-                                      GParamSpec           *pspec,
-                                      GimpDynamicsEditor      *editor)
-{
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-
-  g_return_val_if_fail (GIMP_IS_CONTEXT (data_editor->context), NULL);
-
-  GimpDynamics *context_dyn = gimp_get_user_context(data_editor->context->gimp)->dynamics;
-
-  g_return_val_if_fail (GIMP_IS_DYNAMICS (context_dyn), NULL);
-
-  gimp_config_copy(options, context_dyn, 0);
-
-}
-
-
-
-
-static void
-gimp_dynamics_editor_set_context (GimpDocked  *docked,
-                                  GimpContext *context)
-{
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (docked);
-
-  parent_docked_iface->set_context (docked, context);
-
-}
-
-/*  public functions  */
-
-
-GtkWidget *
-gimp_dynamics_editor_new (GimpContext     *context,
-                          GimpMenuFactory *menu_factory)
-{
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  GimpDynamicsEditor *editor;
-  editor = g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
-                       "menu-factory",    menu_factory,
-                       "menu-identifier", "<DynamicsEditor>",
-                       "ui-path",         "/dynamics-editor-popup",
-                       "data-factory",    context->gimp->dynamics_factory,
-                       "context",         context,
-                       "data",            gimp_context_get_dynamics (context),
-                       NULL);
-
-
-  g_signal_connect (editor->dynamics_model, "notify",
-                    G_CALLBACK (gimp_dynamics_editor_notify_dynamics),
-                    editor);
-
-  return editor;
-}
-
-
-static GObject *
-get_config_value (GimpDynamicsEditor *editor)
-{
-
-  g_return_val_if_fail (GIMP_IS_DYNAMICS_EDITOR (editor), NULL);
-
-  GObject  *config  = G_OBJECT (editor);
-
-  return config;
-}
-
-
-static void
 gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor   *data_editor = GIMP_DATA_EDITOR (editor);
-  editor->dynamics_model = g_object_new(GIMP_TYPE_DYNAMICS,
-                                        NULL);
-
-  GimpDynamics     *dynamics    = editor->dynamics_model;
+  GimpDynamics     *dynamics;
+  GObject          *config;
 
   GtkWidget        *frame;
   GtkWidget        *box;
@@ -242,7 +112,16 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   GtkWidget        *label;
   gint              n_dynamics         = 0;
   GtkWidget        *dynamics_labels[6];
-  GObject          *config = G_OBJECT(dynamics);
+
+  editor->dynamics_model = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
+
+  g_signal_connect (editor->dynamics_model, "notify",
+                    G_CALLBACK (gimp_dynamics_editor_notify_model),
+                    editor);
+
+  dynamics = editor->dynamics_model;
+
+  config = G_OBJECT (dynamics);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
@@ -359,6 +238,139 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
     }
 }
+
+static void
+gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
+{
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
+
+  object_class->constructor = gimp_dynamics_editor_constructor;
+
+  editor_class->set_data    = gimp_dynamics_editor_set_data;
+  editor_class->title       = _("Dynamics Editor");
+}
+
+static void
+gimp_dynamics_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context = gimp_dynamics_editor_set_context;
+}
+
+static GObject *
+gimp_dynamics_editor_constructor (GType                  type,
+                                  guint                  n_params,
+                                  GObjectConstructParam *params)
+{
+  GObject *object;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
+
+  return object;
+}
+
+static void
+gimp_dynamics_editor_set_data (GimpDataEditor *editor,
+                               GimpData       *data)
+{
+  GimpDynamicsEditor *dynamics_editor = GIMP_DYNAMICS_EDITOR (editor);
+
+  if (editor->data)
+    g_signal_handlers_disconnect_by_func (editor->data,
+                                          gimp_dynamics_editor_notify_data,
+                                          editor);
+
+  GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
+
+  gimp_config_copy (GIMP_CONFIG (data),
+                    GIMP_CONFIG (dynamics_editor->dynamics_model),
+                    0);
+
+  if (editor->data)
+    g_signal_connect (editor->data, "notify",
+                      G_CALLBACK (gimp_dynamics_editor_notify_data),
+                      editor);
+}
+
+static void
+gimp_dynamics_editor_notify_model (GimpDynamics       *options,
+                                   const GParamSpec   *pspec,
+                                   GimpDynamicsEditor *editor)
+{
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+
+  if (data_editor->data)
+    {
+      g_signal_handlers_block_by_func (data_editor->data,
+                                       gimp_dynamics_editor_notify_data,
+                                       editor);
+
+      gimp_config_copy (GIMP_CONFIG (editor->dynamics_model),
+                        GIMP_CONFIG (data_editor->data),
+                        0);
+
+      g_signal_handlers_unblock_by_func (data_editor->data,
+                                         gimp_dynamics_editor_notify_data,
+                                         editor);
+    }
+}
+
+static void
+gimp_dynamics_editor_notify_data (GimpDynamics       *options,
+                                  const GParamSpec   *pspec,
+                                  GimpDynamicsEditor *editor)
+{
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+
+  g_signal_handlers_block_by_func (editor->dynamics_model,
+                                   gimp_dynamics_editor_notify_model,
+                                   editor);
+
+  gimp_config_copy (GIMP_CONFIG (data_editor->data),
+                    GIMP_CONFIG (editor->dynamics_model),
+                    0);
+
+  g_signal_handlers_unblock_by_func (editor->dynamics_model,
+                                     gimp_dynamics_editor_notify_model,
+                                     editor);
+}
+
+static void
+gimp_dynamics_editor_set_context (GimpDocked  *docked,
+                                  GimpContext *context)
+{
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (docked);
+
+  parent_docked_iface->set_context (docked, context);
+}
+
+
+/*  public functions  */
+
+GtkWidget *
+gimp_dynamics_editor_new (GimpContext     *context,
+                          GimpMenuFactory *menu_factory)
+{
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return g_object_new (GIMP_TYPE_DYNAMICS_EDITOR,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<DynamicsEditor>",
+                       "ui-path",         "/dynamics-editor-popup",
+                       "data-factory",    context->gimp->dynamics_factory,
+                       "context",         context,
+                       "data",            gimp_context_get_dynamics (context),
+                       NULL);
+}
+
 
 /*  private functions  */
 
