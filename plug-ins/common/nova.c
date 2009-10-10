@@ -530,21 +530,21 @@ nova_center_cursor_draw (NovaCenter *center)
     {
       if (center->cursor_drawn)
         {
-          gdk_draw_line (prvw->window,
+          gdk_draw_line (gtk_widget_get_window (prvw),
                          style->black_gc,
                          center->oldx, 1, center->oldx,
                          height - 1);
-          gdk_draw_line (prvw->window,
+          gdk_draw_line (gtk_widget_get_window (prvw),
                          style->black_gc,
                          1, center->oldy,
                          width - 1, center->oldy);
         }
 
-      gdk_draw_line (prvw->window,
+      gdk_draw_line (gtk_widget_get_window (prvw),
                      style->black_gc,
                      center->curx, 1, center->curx,
                      height - 1);
-      gdk_draw_line (prvw->window,
+      gdk_draw_line (gtk_widget_get_window (prvw),
                      style->black_gc,
                      1, center->cury,
                      width - 1, center->cury);

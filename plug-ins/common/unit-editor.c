@@ -384,6 +384,8 @@ unit_editor_dialog (void)
   GtkListStore      *list_store;
   GtkWidget         *tv;
   GtkTreeViewColumn *col;
+  GtkWidget         *col_widget;
+  GtkWidget         *button;
   GtkCellRenderer   *rend;
   gint               i;
 
@@ -479,8 +481,15 @@ unit_editor_dialog (void)
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button,
-                           gettext (columns[SAVE].help), NULL);
+  col_widget = gtk_tree_view_column_get_widget (col);
+  if (col_widget)
+    {
+      button = gtk_widget_get_ancestor (col_widget, GTK_TYPE_BUTTON);
+
+      if (button)
+        gimp_help_set_help_data (button,
+                                 gettext (columns[SAVE].help), NULL);
+    }
 
   g_signal_connect (rend, "toggled",
                     G_CALLBACK (saved_toggled_callback),
@@ -500,7 +509,14 @@ unit_editor_dialog (void)
 
       gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-      gimp_help_set_help_data (col->button, gettext (columns[i].help), NULL);
+      col_widget = gtk_tree_view_column_get_widget (col);
+      if (col_widget)
+        {
+          button = gtk_widget_get_ancestor (col_widget, GTK_TYPE_BUTTON);
+
+          if (button)
+            gimp_help_set_help_data (button, gettext (columns[i].help), NULL);
+        }
     }
 
   unit_list_init (GTK_TREE_VIEW (tv));
@@ -555,7 +571,7 @@ new_callback (GtkAction   *action,
                                           &iter);
 
           adj = gtk_tree_view_get_vadjustment (tv);
-          gtk_adjustment_set_value (adj, adj->upper);
+          gtk_adjustment_set_value (adj, gtk_adjustment_get_upper (adj));
         }
     }
 }
@@ -597,7 +613,7 @@ duplicate_callback (GtkAction   *action,
               gtk_tree_selection_select_iter (sel, &iter);
 
               adj = gtk_tree_view_get_vadjustment (tv);
-              gtk_adjustment_set_value (adj, adj->upper);
+              gtk_adjustment_set_value (adj, gtk_adjustment_get_upper (adj));
             }
         }
     }

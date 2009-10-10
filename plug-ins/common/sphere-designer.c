@@ -2293,7 +2293,7 @@ expose_event (GtkWidget      *widget,
   GtkStyle *style = gtk_widget_get_style (widget);
   guchar   *data  = img + event->area.y * 3 * PREVIEWSIZE + event->area.x * 3;
 
-  gdk_draw_rgb_image_dithalign (widget->window,
+  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
                                 style->white_gc,
                                 event->area.x, event->area.y,
                                 event->area.width, event->area.height,
@@ -2365,25 +2365,25 @@ getscales (GtkWidget *widget,
   if (!t)
     return;
 
-  t->amount = GTK_ADJUSTMENT (amountscale)->value;
-  t->exp = GTK_ADJUSTMENT (expscale)->value;
+  t->amount = gtk_adjustment_get_value (GTK_ADJUSTMENT (amountscale));
+  t->exp = gtk_adjustment_get_value (GTK_ADJUSTMENT (expscale));
 
-  f = GTK_ADJUSTMENT (turbulencescale)->value;
+  f = gtk_adjustment_get_value (GTK_ADJUSTMENT (turbulencescale));
   vset (&t->turbulence, f, f, f);
 
-  t->oscale = GTK_ADJUSTMENT (scalescale)->value;
+  t->oscale = gtk_adjustment_get_value (GTK_ADJUSTMENT (scalescale));
 
-  t->scale.x = GTK_ADJUSTMENT (scalexscale)->value;
-  t->scale.y = GTK_ADJUSTMENT (scaleyscale)->value;
-  t->scale.z = GTK_ADJUSTMENT (scalezscale)->value;
+  t->scale.x = gtk_adjustment_get_value (GTK_ADJUSTMENT (scalexscale));
+  t->scale.y = gtk_adjustment_get_value (GTK_ADJUSTMENT (scaleyscale));
+  t->scale.z = gtk_adjustment_get_value (GTK_ADJUSTMENT (scalezscale));
 
-  t->rotate.x = GTK_ADJUSTMENT (rotxscale)->value;
-  t->rotate.y = GTK_ADJUSTMENT (rotyscale)->value;
-  t->rotate.z = GTK_ADJUSTMENT (rotzscale)->value;
+  t->rotate.x = gtk_adjustment_get_value (GTK_ADJUSTMENT (rotxscale));
+  t->rotate.y = gtk_adjustment_get_value (GTK_ADJUSTMENT (rotyscale));
+  t->rotate.z = gtk_adjustment_get_value (GTK_ADJUSTMENT (rotzscale));
 
-  t->translate.x = GTK_ADJUSTMENT (posxscale)->value;
-  t->translate.y = GTK_ADJUSTMENT (posyscale)->value;
-  t->translate.z = GTK_ADJUSTMENT (poszscale)->value;
+  t->translate.x = gtk_adjustment_get_value (GTK_ADJUSTMENT (posxscale));
+  t->translate.y = gtk_adjustment_get_value (GTK_ADJUSTMENT (posyscale));
+  t->translate.z = gtk_adjustment_get_value (GTK_ADJUSTMENT (poszscale));
 
   restartrender ();
 }

@@ -566,7 +566,7 @@ alpha_scale_cb (GtkAdjustment *adj,
   color_button = GIMP_COLOR_BUTTON (data);
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (color_button), &color);
-  gimp_rgb_set_alpha (&color, adj->value);
+  gimp_rgb_set_alpha (&color, gtk_adjustment_get_value (adj));
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (color_button), &color);
 }
 

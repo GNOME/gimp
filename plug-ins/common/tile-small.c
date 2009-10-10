@@ -649,21 +649,21 @@ draw_explict_sel (void)
 
       gdk_gc_set_function (style->black_gc, GDK_INVERT);
 
-      gdk_draw_rectangle (tint.preview->window,
+      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
                           style->black_gc,
                           0,
                           (gint) x,
                           (gint) y,
                           (gint) width,
                           (gint) height);
-      gdk_draw_rectangle (tint.preview->window,
+      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
                           style->black_gc,
                           0,
                           (gint) x + 1,
                           (gint) y + 1,
                           (gint) width - 2,
                           (gint) height - 2);
-      gdk_draw_rectangle (tint.preview->window,
+      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
                           style->black_gc,
                           0,
                           (gint) x + 2,
@@ -763,12 +763,12 @@ explict_update (gboolean settile)
   gint x,y;
 
   /* Make sure bounds are OK */
-  y = ROUND (GTK_ADJUSTMENT (exp_call.r_adj)->value);
+  y = ROUND (gtk_adjustment_get_value (GTK_ADJUSTMENT (exp_call.r_adj)));
   if (y > itvals.numtiles || y <= 0)
     {
       y = itvals.numtiles;
     }
-  x = ROUND (GTK_ADJUSTMENT (exp_call.c_adj)->value);
+  x = ROUND (gtk_adjustment_get_value (GTK_ADJUSTMENT (exp_call.c_adj)));
   if (x > itvals.numtiles || x <= 0)
     {
       x = itvals.numtiles;

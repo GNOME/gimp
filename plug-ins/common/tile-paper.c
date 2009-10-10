@@ -180,9 +180,9 @@ static struct
 static void
 tile_width_adj_changed (GtkAdjustment *adj)
 {
-  if (p.params.tile_width != (gint)adj->value)
+  if (p.params.tile_width != (gint)gtk_adjustment_get_value (adj))
     {
-      p.params.tile_width  = adj->value;
+      p.params.tile_width  = gtk_adjustment_get_value (adj);
       p.params.division_x = p.drawable->width  / p.params.tile_width;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_x_adj),
                                 p.params.division_x);
@@ -192,9 +192,9 @@ tile_width_adj_changed (GtkAdjustment *adj)
 static void
 tile_height_adj_changed (GtkAdjustment *adj)
 {
-  if (p.params.tile_height != (gint)adj->value)
+  if (p.params.tile_height != (gint)gtk_adjustment_get_value (adj))
     {
-      p.params.tile_height  = adj->value;
+      p.params.tile_height  = gtk_adjustment_get_value (adj);
       p.params.division_y = p.drawable->height / p.params.tile_height;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_y_adj),
                                 p.params.division_y);
@@ -204,9 +204,9 @@ tile_height_adj_changed (GtkAdjustment *adj)
 static void
 division_x_adj_changed (GtkAdjustment *adj)
 {
-  if (p.params.division_x != (gint) adj->value)
+  if (p.params.division_x != (gint) gtk_adjustment_get_value (adj))
     {
-      p.params.division_x = adj->value;
+      p.params.division_x = gtk_adjustment_get_value (adj);
       p.params.tile_width  = p.drawable->width  / p.params.division_x;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.tile_width_adj),
                                 p.params.tile_width);
@@ -216,9 +216,9 @@ division_x_adj_changed (GtkAdjustment *adj)
 static void
 division_y_adj_changed (GtkAdjustment *adj)
 {
-  if (p.params.division_y != (gint)adj->value)
+  if (p.params.division_y != (gint)gtk_adjustment_get_value (adj))
     {
-      p.params.division_y = adj->value;
+      p.params.division_y = gtk_adjustment_get_value (adj);
       p.params.tile_height  = p.drawable->height / p.params.division_y;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.tile_height_adj),
                                 p.params.tile_height);
