@@ -230,7 +230,6 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor   *data_editor = GIMP_DATA_EDITOR (editor);
   editor->dynamics_model = g_object_new(GIMP_TYPE_DYNAMICS,
-                                        "name", "Default",
                                         NULL);
 
   GimpDynamics     *dynamics    = editor->dynamics_model;

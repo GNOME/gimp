@@ -97,7 +97,7 @@ gdouble            gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *outp
 
 gdouble            gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point);
 
-gboolean           gimp_dynamics_output_get_enabled (GimpDynamicsOutput *output);
+gboolean           gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output);
 
 gboolean           gimp_dynamics_input_fade_enabled (GimpDynamics *dynamics);
 

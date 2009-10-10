@@ -714,7 +714,7 @@ gimp_dynamics_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDynamics *options           = GIMP_DYNAMICS (object);
+  GimpDynamics       *options               = GIMP_DYNAMICS (object);
   GimpDynamicsOutput *opacity_dynamics      = options->opacity_dynamics;
   GimpDynamicsOutput *hardness_dynamics     = options->hardness_dynamics;
   GimpDynamicsOutput *rate_dynamics         = options->rate_dynamics;
@@ -1225,22 +1225,22 @@ gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coord
 }
 
 gboolean
-gimp_dynamics_output_get_enabled(GimpDynamicsOutput *output)
+gimp_dynamics_output_is_enabled(GimpDynamicsOutput *output)
 {
   return (output->pressure || output->velocity || output->direction ||
-         output->tilt      || output->random   || output->fade);
+          output->tilt     || output->random   || output->fade);
 }
 
 gboolean
 gimp_dynamics_input_fade_enabled(GimpDynamics *dynamics)
 {
-  return (dynamics->opacity_dynamics->fade ||
-          dynamics->hardness_dynamics->fade ||
-          dynamics->rate_dynamics->fade ||
-          dynamics->size_dynamics->fade ||
+  return (dynamics->opacity_dynamics->fade      ||
+          dynamics->hardness_dynamics->fade     ||
+          dynamics->rate_dynamics->fade         ||
+          dynamics->size_dynamics->fade         ||
           dynamics->aspect_ratio_dynamics->fade ||
-          dynamics->color_dynamics->fade ||
-          dynamics->jitter_dynamics->fade ||
+          dynamics->color_dynamics->fade        ||
+          dynamics->jitter_dynamics->fade       ||
           dynamics->angle_dynamics->fade);
 
 }

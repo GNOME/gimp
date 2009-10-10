@@ -599,7 +599,7 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-  if (gimp_dynamics_output_get_enabled(dynamics->color_dynamics))
+  if (gimp_dynamics_output_is_enabled(dynamics->color_dynamics))
     {
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
                                   NULL, grad_point,
@@ -676,7 +676,7 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-  if (gimp_dynamics_output_get_enabled(dynamics->hardness_dynamics))
+  if (gimp_dynamics_output_is_enabled(dynamics->hardness_dynamics))
     return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
