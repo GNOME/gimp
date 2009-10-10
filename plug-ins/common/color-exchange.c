@@ -635,7 +635,11 @@ scale_callback (GtkAdjustment *adj,
   if (GIMP_IS_COLOR_BUTTON (object))
     {
       if (color == &xargs.threshold && lock_threshold == TRUE)
-        gimp_rgb_set (color, adj->value, adj->value, adj->value);
+        {
+          gdouble value = gtk_adjustment_get_value (adj);
+
+          gimp_rgb_set (color, value, value, value);
+        }
 
       gimp_color_button_set_color (GIMP_COLOR_BUTTON (object), color);
     }

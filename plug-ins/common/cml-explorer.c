@@ -1783,7 +1783,7 @@ function_graph_expose (GtkWidget      *widget,
       }
     }
 
-  gdk_draw_rgb_image (widget->window, style->black_gc,
+  gdk_draw_rgb_image (gtk_widget_get_window (widget), style->black_gc,
                       0, 0, 256, 256,
                       GDK_RGB_DITHER_NORMAL,
                       buffer,
@@ -1791,7 +1791,7 @@ function_graph_expose (GtkWidget      *widget,
 
   g_free (buffer);
 
-  gdk_draw_line (widget->window, style->white_gc, 0,255, 255, 0);
+  gdk_draw_line (gtk_widget_get_window (widget), style->white_gc, 0,255, 255, 0);
 
   y = 255 * CLAMP (logistic_function (param, 0, param->power),
                      0, 1.0);
@@ -1801,7 +1801,7 @@ function_graph_expose (GtkWidget      *widget,
       /* curve */
       y = 255 * CLAMP (logistic_function (param, x/(gdouble)255, param->power),
                        0, 1.0);
-      gdk_draw_line (widget->window, style->black_gc,
+      gdk_draw_line (gtk_widget_get_window (widget), style->black_gc,
                      x, 255-last_y, x, 255-y);
     }
   return TRUE;
