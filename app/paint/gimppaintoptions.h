@@ -26,7 +26,8 @@
                                         GIMP_CONTEXT_BACKGROUND_MASK | \
                                         GIMP_CONTEXT_OPACITY_MASK    | \
                                         GIMP_CONTEXT_PAINT_MODE_MASK | \
-                                        GIMP_CONTEXT_BRUSH_MASK
+                                        GIMP_CONTEXT_BRUSH_MASK      | \
+                                        GIMP_CONTEXT_DYNAMICS_MASK
 
 
 typedef struct _GimpFadeOptions     GimpFadeOptions;
