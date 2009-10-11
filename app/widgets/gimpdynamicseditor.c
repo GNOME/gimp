@@ -53,7 +53,7 @@ static void   gimp_dynamics_editor_notify_data     (GimpDynamics       *options,
                                                     const GParamSpec   *pspec,
                                                     GimpDynamicsEditor *editor);
 
-static void   dynamics_output_maping_row_gui       (GObject     *config,
+static void   gimp_dynamics_editor_add_output_row  (GObject     *config,
                                                     const gchar *row_label,
                                                     GtkTable    *table,
                                                     gint         row,
@@ -132,45 +132,45 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   input_labels[4] = gtk_label_new (_("Random"));
   input_labels[5] = gtk_label_new (_("Fade"));
 
-  dynamics_output_maping_row_gui (G_OBJECT (dynamics->opacity_dynamics),
-                                  _("Opacity"),
-                                  GTK_TABLE (table),
-                                  1, input_labels);
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->opacity_dynamics),
+                                       _("Opacity"),
+                                       GTK_TABLE (table),
+                                       1, input_labels);
 
-  dynamics_output_maping_row_gui (G_OBJECT (dynamics->hardness_dynamics),
-                                  _("Hardness"),
-                                  GTK_TABLE (table),
-                                  2, NULL);
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->hardness_dynamics),
+                                       _("Hardness"),
+                                       GTK_TABLE (table),
+                                       2, NULL);
 
-  dynamics_output_maping_row_gui (G_OBJECT (dynamics->rate_dynamics),
-                                  _("Rate"),
-                                  GTK_TABLE (table),
-                                  3, NULL);
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->rate_dynamics),
+                                       _("Rate"),
+                                       GTK_TABLE (table),
+                                       3, NULL);
 
-  dynamics_output_maping_row_gui (G_OBJECT (dynamics->size_dynamics),
-                                  _("Size"),
-                                  GTK_TABLE (table),
-                                  4, NULL);
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->size_dynamics),
+                                       _("Size"),
+                                       GTK_TABLE (table),
+                                       4, NULL);
 
-  dynamics_output_maping_row_gui (G_OBJECT (dynamics->aspect_ratio_dynamics),
-                                  _("Aspect ratio"),
-                                  GTK_TABLE (table),
-                                  5, NULL);
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->aspect_ratio_dynamics),
+                                       _("Aspect ratio"),
+                                       GTK_TABLE (table),
+                                       5, NULL);
 
-  dynamics_output_maping_row_gui (G_OBJECT (dynamics->color_dynamics),
-                                  _("Color"),
-                                  GTK_TABLE (table),
-                                  6, NULL);
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->color_dynamics),
+                                       _("Color"),
+                                       GTK_TABLE (table),
+                                       6, NULL);
 
-  dynamics_output_maping_row_gui (G_OBJECT (dynamics->angle_dynamics),
-                                  _("Angle"),
-                                  GTK_TABLE (table),
-                                  7, NULL);
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->angle_dynamics),
+                                       _("Angle"),
+                                       GTK_TABLE (table),
+                                       7, NULL);
 
-  dynamics_output_maping_row_gui (G_OBJECT (dynamics->jitter_dynamics),
-                                  _("Jitter"),
-                                  GTK_TABLE (table),
-                                  8, NULL);
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->jitter_dynamics),
+                                       _("Jitter"),
+                                       GTK_TABLE (table),
+                                       8, NULL);
 
   fixed = gtk_fixed_new ();
   gtk_table_attach (GTK_TABLE (table), fixed, 0, n_inputs + 2, 0, 1,
@@ -301,11 +301,11 @@ gimp_dynamics_editor_notify_data (GimpDynamics       *options,
 }
 
 static void
-dynamics_output_maping_row_gui (GObject     *config,
-                                const gchar *row_label,
-                                GtkTable    *table,
-                                gint         row,
-                                GtkWidget   *labels[])
+gimp_dynamics_editor_add_output_row (GObject     *config,
+                                     const gchar *row_label,
+                                     GtkTable    *table,
+                                     gint         row,
+                                     GtkWidget   *labels[])
 {
   GtkWidget *label;
   GtkWidget *button;
