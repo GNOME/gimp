@@ -3,5 +3,14 @@
 
 <ui>
   <popup action="dynamics-popup">
+    <menuitem action="dynamics-edit" />
+    <separator />
+    <menuitem action="dynamics-new" />
+    <menuitem action="dynamics-duplicate" />
+    <menuitem action="dynamics-copy-location" />
+    <menuitem action="dynamics-delete" />
+    <separator />
+    <menuitem action="dynamics-refresh" />
+    <separator />
   </popup>
 </ui>

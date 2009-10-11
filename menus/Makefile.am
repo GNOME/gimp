@@ -18,6 +18,7 @@ menudata_DATA = \
 	cursor-info-menu.xml		\
 	documents-menu.xml		\
 	dynamics-editor-menu.xml	\
+	dynamics-menu.xml		\
 	error-console-menu.xml		\
 	fonts-menu.xml			\
 	gradient-editor-menu.xml	\
