@@ -92,13 +92,16 @@ gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
 static void
 gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
-  GimpDataEditor   *data_editor = GIMP_DATA_EDITOR (editor);
-  GimpDynamics     *dynamics;
-  GObject          *config;
-  GtkWidget        *vbox;
-  GtkWidget        *table;
-  gint              n_dynamics         = 0;
-  GtkWidget        *dynamics_labels[6];
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GimpDynamics   *dynamics;
+  GObject        *config;
+  GtkWidget      *vbox;
+  GtkWidget      *table;
+  GtkWidget      *inner_frame;
+  GtkWidget      *fixed;
+  GtkWidget      *input_labels[6];
+  gint            n_inputs = G_N_ELEMENTS (input_labels);
+  gint            i;
 
   editor->dynamics_model = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
 
@@ -114,106 +117,73 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  dynamics_labels[n_dynamics] = gtk_label_new (_("Pressure"));
-  n_dynamics++;
+  inner_frame = gimp_frame_new (NULL);
+  gtk_container_add (GTK_CONTAINER (vbox), inner_frame);
+  gtk_widget_show (inner_frame);
 
-  dynamics_labels[n_dynamics] = gtk_label_new (_("Velocity"));
-  n_dynamics++;
+  table = gtk_table_new (9, n_inputs + 2, FALSE);
+  gtk_container_add (GTK_CONTAINER (inner_frame), table);
+  gtk_widget_show (table);
 
-  dynamics_labels[n_dynamics] = gtk_label_new (_("Direction"));
-  n_dynamics++;
+  input_labels[0] = gtk_label_new (_("Pressure"));
+  input_labels[1] = gtk_label_new (_("Velocity"));
+  input_labels[2] = gtk_label_new (_("Direction"));
+  input_labels[3] = gtk_label_new (_("Tilt"));
+  input_labels[4] = gtk_label_new (_("Random"));
+  input_labels[5] = gtk_label_new (_("Fade"));
 
-  dynamics_labels[n_dynamics] = gtk_label_new (_("Tilt"));
-  n_dynamics++;
+  dynamics_output_maping_row_gui (G_OBJECT (dynamics->opacity_dynamics),
+                                  _("Opacity"),
+                                  GTK_TABLE (table),
+                                  1, input_labels);
 
-  dynamics_labels[n_dynamics] = gtk_label_new (_("Random"));
-  n_dynamics++;
+  dynamics_output_maping_row_gui (G_OBJECT (dynamics->hardness_dynamics),
+                                  _("Hardness"),
+                                  GTK_TABLE (table),
+                                  2, NULL);
 
-  dynamics_labels[n_dynamics] = gtk_label_new (_("Fade"));
-  n_dynamics++;
+  dynamics_output_maping_row_gui (G_OBJECT (dynamics->rate_dynamics),
+                                  _("Rate"),
+                                  GTK_TABLE (table),
+                                  3, NULL);
 
-  /* NB: When adding new dynamics driver, increase size of the
-   * dynamics_labels[] array
-   */
+  dynamics_output_maping_row_gui (G_OBJECT (dynamics->size_dynamics),
+                                  _("Size"),
+                                  GTK_TABLE (table),
+                                  4, NULL);
 
-  if (n_dynamics > 0)
+  dynamics_output_maping_row_gui (G_OBJECT (dynamics->aspect_ratio_dynamics),
+                                  _("Aspect ratio"),
+                                  GTK_TABLE (table),
+                                  5, NULL);
+
+  dynamics_output_maping_row_gui (G_OBJECT (dynamics->color_dynamics),
+                                  _("Color"),
+                                  GTK_TABLE (table),
+                                  6, NULL);
+
+  dynamics_output_maping_row_gui (G_OBJECT (dynamics->angle_dynamics),
+                                  _("Angle"),
+                                  GTK_TABLE (table),
+                                  7, NULL);
+
+  dynamics_output_maping_row_gui (G_OBJECT (dynamics->jitter_dynamics),
+                                  _("Jitter"),
+                                  GTK_TABLE (table),
+                                  8, NULL);
+
+  fixed = gtk_fixed_new ();
+  gtk_table_attach (GTK_TABLE (table), fixed, 0, n_inputs + 2, 0, 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (fixed);
+
+  for (i = 0; i < n_inputs; i++)
     {
-      GtkWidget *inner_frame;
-      GtkWidget *fixed;
-      gint       i;
-      gboolean   rtl = gtk_widget_get_direction (vbox) == GTK_TEXT_DIR_RTL;
-
-
-      inner_frame = gimp_frame_new (NULL);
-      gtk_container_add (GTK_CONTAINER (vbox), inner_frame);
-      gtk_widget_show (inner_frame);
-
-      table = gtk_table_new (9, n_dynamics + 2, FALSE);
-      gtk_container_add (GTK_CONTAINER (inner_frame), table);
-      gtk_widget_show (table);
-
-
-      dynamics_output_maping_row_gui (G_OBJECT (dynamics->opacity_dynamics),
-                                      _("Opacity"),
-                                      GTK_TABLE (table),
-                                      1,
-                                      dynamics_labels);
-
-      dynamics_output_maping_row_gui (G_OBJECT (dynamics->hardness_dynamics),
-                                      _("Hardness"),
-                                      GTK_TABLE (table),
-                                      2,
-                                      NULL);
-
-      dynamics_output_maping_row_gui (G_OBJECT (dynamics->rate_dynamics),
-                                      _("Rate"),
-                                      GTK_TABLE (table),
-                                      3,
-                                      NULL);
-
-      dynamics_output_maping_row_gui (G_OBJECT (dynamics->size_dynamics),
-                                      _("Size"),
-                                      GTK_TABLE (table),
-                                      4,
-                                      NULL);
-
-      dynamics_output_maping_row_gui (G_OBJECT (dynamics->aspect_ratio_dynamics),
-                                      _("Aspect ratio"),
-                                      GTK_TABLE (table),
-                                      5,
-                                      NULL);
-
-      dynamics_output_maping_row_gui (G_OBJECT (dynamics->color_dynamics),
-                                      _("Color"),
-                                      GTK_TABLE (table),
-                                      6,
-                                      NULL);
-
-      dynamics_output_maping_row_gui (G_OBJECT (dynamics->angle_dynamics),
-                                      _("Angle"),
-                                      GTK_TABLE (table),
-                                      7,
-                                      NULL);
-
-      dynamics_output_maping_row_gui (G_OBJECT (dynamics->jitter_dynamics),
-                                      _("Jitter"),
-                                      GTK_TABLE (table),
-                                      8,
-                                      NULL);
-
-      fixed = gtk_fixed_new ();
-      gtk_table_attach (GTK_TABLE (table), fixed, 0, n_dynamics + 2, 0, 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (fixed);
-
-      for (i = 0; i < n_dynamics; i++)
-        {
-          gtk_label_set_angle (GTK_LABEL (dynamics_labels[i]),
-                               90);
-          gtk_misc_set_alignment (GTK_MISC (dynamics_labels[i]), 1.0, 1.0);
-          gtk_fixed_put (GTK_FIXED (fixed), dynamics_labels[i], 0, 0);
-          gtk_widget_show (dynamics_labels[i]);
-        }
+      gtk_label_set_angle (GTK_LABEL (input_labels[i]),
+                           90);
+      gtk_misc_set_alignment (GTK_MISC (input_labels[i]), 1.0, 1.0);
+      gtk_fixed_put (GTK_FIXED (fixed), input_labels[i], 0, 0);
+      gtk_widget_show (input_labels[i]);
     }
 }
 
