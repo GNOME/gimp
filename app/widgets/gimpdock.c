@@ -208,11 +208,13 @@ gimp_dock_init (GimpDock *dock)
   dock->p->north_separator = gimp_dock_separator_new (GTK_ANCHOR_NORTH,
                                                       gimp_dock_dropped_cb,
                                                       dock);
-  gtk_box_pack_start (GTK_BOX (dock->p->vbox),
-                      dock->p->north_separator,
-                      FALSE,
-                      FALSE,
-                      0);
+  dock->p->south_separator = gimp_dock_separator_new (GTK_ANCHOR_SOUTH,
+                                                      gimp_dock_dropped_cb,
+                                                      dock);
+  gtk_box_pack_start (GTK_BOX (dock->p->vbox), dock->p->north_separator,
+                      FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (dock->p->vbox), dock->p->south_separator,
+                    FALSE, FALSE, 0);
 
   dock_instances = g_list_prepend (dock_instances, dock);
 }
@@ -378,15 +380,22 @@ static void
 gimp_dock_show_separators (GimpDock *dock,
                            gboolean  show)
 {
-  if (dock->p->north_separator)
-    g_object_set (dock->p->north_separator,
-                  "visible", show,
-                  NULL);
+  if (show)
+    {
+      gtk_widget_show (dock->p->north_separator);
 
-  if (dock->p->south_separator)
-    g_object_set (dock->p->south_separator,
-                  "visible", show,
-                  NULL);
+      /* Only show the south separator if there are any dockbooks */
+      if (g_list_length (dock->p->dockbooks) > 0)
+        gtk_widget_show (dock->p->south_separator);
+    }
+  else /* (! show) */
+    {
+      /* Hide separators unconditionally so we can handle the case
+       * where we remove the last dockbook while separators are shown
+       */
+      gtk_widget_hide (dock->p->north_separator);
+      gtk_widget_hide (dock->p->south_separator);
+    }
 }
 
 /*  public functions  */
@@ -592,12 +601,10 @@ gimp_dock_add_book (GimpDock     *dock,
       gtk_box_pack_start (GTK_BOX (dock->p->vbox), GTK_WIDGET (dockbook),
                           TRUE, TRUE, 0);
 
-      dock->p->south_separator = gimp_dock_separator_new (GTK_ANCHOR_SOUTH,
-                                                          gimp_dock_dropped_cb,
-                                                          dock);
-      gtk_box_pack_end (GTK_BOX (dock->p->vbox),
-                        dock->p->south_separator,
-                        FALSE, FALSE, 0);
+      /* Keep the south separator at the end */
+      gtk_box_reorder_child (GTK_BOX (dock->p->vbox),
+                             dock->p->south_separator,
+                             -1);
     }
   else
     {
@@ -680,9 +687,7 @@ gimp_dock_remove_book (GimpDock     *dock,
 
   if (old_length == 1)
     {
-      gtk_container_remove (GTK_CONTAINER (dock->p->vbox), dock->p->south_separator);
       gtk_container_remove (GTK_CONTAINER (dock->p->vbox), GTK_WIDGET (dockbook));
-      dock->p->south_separator = NULL;
     }
   else
     {
