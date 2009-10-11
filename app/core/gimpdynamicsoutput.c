@@ -64,8 +64,9 @@ static void   gimp_dynamics_output_get_property (GObject      *object,
                                                  GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpDynamicsOutput, gimp_dynamics_output,
-               GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpDynamicsOutput, gimp_dynamics_output,
+                         GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 
 #define parent_class gimp_dynamics_output_parent_class
