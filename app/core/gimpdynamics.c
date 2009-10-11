@@ -1159,60 +1159,6 @@ gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coor
   return result;
 }
 
-
-gdouble
-gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point)
-{
-  gdouble total = 0.0;
-  gdouble factors = 0.0;
-
-  gdouble scale = 1.0;
-
-  if (output->pressure)
-    {
-      total += coords.pressure;
-      factors++;
-    }
-
-  if (output->velocity)
-    {
-      total += 1.0 - sqrt (coords.velocity);
-      factors++;
-    }
-
-  if (output->direction)
-    {
-      total += coords.direction + 0.5;
-      factors++;
-    }
-
-  if (output->tilt)
-    {
-      total += 1.0 - sqrt (SQR (coords.xtilt) + SQR (coords.ytilt));
-      factors++;
-    }
-
-  if (output->random)
-    {
-      total += 1.0 - g_random_double_range (0.0, 1.0);
-      factors++;
-    }
-
-  if (output->fade)
-    {
-      total += fade_point;
-      factors++;
-    }
-
-  if (factors > 0)
-    scale = total / factors;
-
-  scale = sqrt (scale);
-
-  /* printf("Dynamics queried(scale). Result: %f, factors: %f, total: %f \n", result, factors, total);*/
-  return scale;
-}
-
 gboolean
 gimp_dynamics_output_is_enabled(GimpDynamicsOutput *output)
 {

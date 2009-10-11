@@ -407,7 +407,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
       if (core->dynamics)
         {
 
-          core->scale *= gimp_dynamics_get_scale_output_val(core->dynamics->size_dynamics, *coords, fade_point);
+          core->scale *= gimp_dynamics_get_linear_output_val(core->dynamics->size_dynamics, *coords, fade_point);
 
           core->angle += gimp_dynamics_get_angular_output_val(core->dynamics->angle_dynamics, *coords, fade_point);
 
@@ -767,7 +767,7 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
         gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
                                                           paint_core->pixel_dist);
 
-        core->scale *= gimp_dynamics_get_scale_output_val(core->dynamics->size_dynamics, *coords, fade_point);
+        core->scale *= gimp_dynamics_get_linear_output_val(core->dynamics->size_dynamics, *coords, fade_point);
 
         core->angle += gimp_dynamics_get_angular_output_val(core->dynamics->angle_dynamics, *coords, fade_point);
 
