@@ -90,6 +90,9 @@ static void      gimp_dock_real_book_added   (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
 static void      gimp_dock_real_book_removed (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
+static gboolean  gimp_dock_dropped_cb        (GimpDockSeparator     *separator,
+                                              GtkWidget             *source,
+                                              gpointer               data);
 static void      gimp_dock_show_separators   (GimpDock              *dock,
                                               gboolean               show);
 
@@ -202,8 +205,14 @@ gimp_dock_init (GimpDock *dock)
   gtk_container_add (GTK_CONTAINER (dock->p->main_vbox), dock->p->vbox);
   gtk_widget_show (dock->p->vbox);
 
-  dock->p->north_separator = gimp_dock_separator_new (dock, GTK_ANCHOR_NORTH);
-  gtk_box_pack_start (GTK_BOX (dock->p->vbox), dock->p->north_separator, FALSE, FALSE, 0);
+  dock->p->north_separator = gimp_dock_separator_new (GTK_ANCHOR_NORTH,
+                                                      gimp_dock_dropped_cb,
+                                                      dock);
+  gtk_box_pack_start (GTK_BOX (dock->p->vbox),
+                      dock->p->north_separator,
+                      FALSE,
+                      FALSE,
+                      0);
 
   dock_instances = g_list_prepend (dock_instances, dock);
 }
@@ -303,6 +312,66 @@ static void
 gimp_dock_real_book_removed (GimpDock     *dock,
                              GimpDockbook *dockbook)
 {
+}
+
+static gboolean
+gimp_dock_dropped_cb (GimpDockSeparator *separator,
+                      GtkWidget         *source,
+                      gpointer           data)
+{
+  GimpDock     *dock     = GIMP_DOCK (data);
+  GimpDockable *dockable = NULL;
+  GtkWidget    *dockbook = NULL;
+  gint          index    = -1;
+
+  if (GIMP_IS_DOCKABLE (source))
+    dockable = GIMP_DOCKABLE (source);
+  else
+    dockable = g_object_get_data (G_OBJECT (source), "gimp-dockable");
+
+  if (!dockable )
+    return FALSE;
+
+  g_object_set_data (G_OBJECT (dockable),
+                     "gimp-dock-drag-widget", NULL);
+
+  if (gimp_dock_separator_get_anchor (separator) == GTK_ANCHOR_NORTH)
+    index = 0;
+  else if (gimp_dock_separator_get_anchor (separator) == GTK_ANCHOR_SOUTH)
+    index = -1;
+
+  /*  if dropping to the same dock, take care that we don't try
+   *  to reorder the *only* dockable in the dock
+   */
+  if (gimp_dockbook_get_dock (dockable->dockbook) == dock)
+    {
+      GList *children;
+      gint   n_books;
+      gint   n_dockables;
+
+      n_books = g_list_length (gimp_dock_get_dockbooks (dock));
+
+      children = gtk_container_get_children (GTK_CONTAINER (dockable->dockbook));
+      n_dockables = g_list_length (children);
+      g_list_free (children);
+
+      if (n_books == 1 && n_dockables == 1)
+        return TRUE; /* successfully do nothing */
+    }
+
+  /* Detach the dockable from the old dockbook */
+  g_object_ref (dockable);
+  gimp_dockbook_remove (dockable->dockbook, dockable);
+
+  /* Create a new dockbook */
+  dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (dock)->menu_factory);
+  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
+
+  /* Add the dockable to new new dockbook */
+  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
+  g_object_unref (dockable);
+
+  return TRUE;
 }
 
 static void
@@ -523,8 +592,12 @@ gimp_dock_add_book (GimpDock     *dock,
       gtk_box_pack_start (GTK_BOX (dock->p->vbox), GTK_WIDGET (dockbook),
                           TRUE, TRUE, 0);
 
-      dock->p->south_separator = gimp_dock_separator_new (dock, GTK_ANCHOR_SOUTH);
-      gtk_box_pack_end (GTK_BOX (dock->p->vbox), dock->p->south_separator, FALSE, FALSE, 0);
+      dock->p->south_separator = gimp_dock_separator_new (GTK_ANCHOR_SOUTH,
+                                                          gimp_dock_dropped_cb,
+                                                          dock);
+      gtk_box_pack_end (GTK_BOX (dock->p->vbox),
+                        dock->p->south_separator,
+                        FALSE, FALSE, 0);
     }
   else
     {

@@ -29,9 +29,6 @@
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
-#include "gimpdock.h"
-#include "gimpdockable.h"
-#include "gimpdockbook.h"
 #include "gimpdockseparator.h"
 
 #include "gimp-intl.h"
@@ -45,12 +42,13 @@
 
 struct _GimpDockSeparatorPrivate
 {
-  GimpDock      *dock;
+  GimpDockSeparatorDroppedFunc  dropped_cb;
+  gpointer                     *dropped_cb_data;
 
-  GtkWidget     *frame;
-  GtkWidget     *label;
+  GtkWidget                    *frame;
+  GtkWidget                    *label;
 
-  GtkAnchorType  anchor;
+  GtkAnchorType                 anchor;
 };
 
 
@@ -107,8 +105,6 @@ gimp_dock_separator_init (GimpDockSeparator *separator)
   separator->p = G_TYPE_INSTANCE_GET_PRIVATE (separator,
                                               GIMP_TYPE_DOCK_SEPARATOR,
                                               GimpDockSeparatorPrivate);
-  separator->p->dock  = NULL;
-  separator->p->label = NULL;
 
   separator->p->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (separator->p->frame), GTK_SHADOW_OUT);
@@ -196,64 +192,14 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
   if (GTK_WIDGET_CLASS (parent_class)->drag_drop)
     GTK_WIDGET_CLASS (parent_class)->drag_drop (widget, context, x, y, time);
 
+  if (! separator->p->dropped_cb)
+    return FALSE;
+
   source = gtk_drag_get_source_widget (context);
 
   if (source)
     {
-      GimpDock     *dock = separator->p->dock;
-      GimpDockable *dockable;
-
-      if (GIMP_IS_DOCKABLE (source))
-        dockable = GIMP_DOCKABLE (source);
-      else
-        dockable = g_object_get_data (G_OBJECT (source), "gimp-dockable");
-
-      if (dockable)
-        {
-          GtkWidget *dockbook;
-          gint       index = -1;
-
-          g_object_set_data (G_OBJECT (dockable),
-                             "gimp-dock-drag-widget", NULL);
-
-          if (separator->p->anchor == GTK_ANCHOR_NORTH)
-            index = 0;
-          else if (separator->p->anchor == GTK_ANCHOR_SOUTH)
-            index = -1;
-
-          /*  if dropping to the same dock, take care that we don't try
-           *  to reorder the *only* dockable in the dock
-           */
-          if (gimp_dockbook_get_dock (dockable->dockbook) == dock)
-            {
-              GList *children;
-              gint   n_books;
-              gint   n_dockables;
-
-              n_books = g_list_length (gimp_dock_get_dockbooks (dock));
-
-              children =
-                gtk_container_get_children (GTK_CONTAINER (dockable->dockbook));
-              n_dockables = g_list_length (children);
-              g_list_free (children);
-
-              if (n_books == 1 && n_dockables == 1)
-                return TRUE; /* successfully do nothing */
-            }
-
-          g_object_ref (dockable);
-
-          gimp_dockbook_remove (dockable->dockbook, dockable);
-
-          dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (dock)->menu_factory);
-          gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
-
-          gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
-
-          g_object_unref (dockable);
-
-          return TRUE;
-        }
+      return separator->p->dropped_cb (separator, source, separator->p->dropped_cb_data);
     }
 
   return FALSE;
@@ -263,19 +209,27 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 /*  public functions  */
 
 GtkWidget *
-gimp_dock_separator_new (GimpDock      *dock,
-                         GtkAnchorType  anchor)
+gimp_dock_separator_new (GtkAnchorType                anchor,
+                         GimpDockSeparatorDroppedFunc dropped_cb,
+                         gpointer                     dropped_cb_data)
 {
   GimpDockSeparator *separator;
 
-  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
-
   separator = g_object_new (GIMP_TYPE_DOCK_SEPARATOR, NULL);
 
-  separator->p->dock   = dock;
-  separator->p->anchor = anchor;
+  separator->p->anchor          = anchor;
+  separator->p->dropped_cb      = dropped_cb;
+  separator->p->dropped_cb_data = dropped_cb_data;
 
   return GTK_WIDGET (separator);
+}
+
+GtkAnchorType
+gimp_dock_separator_get_anchor (GimpDockSeparator *separator)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK_SEPARATOR (separator), GTK_ANCHOR_CENTER);
+
+  return separator->p->anchor;
 }
 
 void
