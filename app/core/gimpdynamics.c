@@ -1207,10 +1207,7 @@ gimp_dynamics_get_scale_output_val (GimpDynamicsOutput *output, GimpCoords coord
   if (factors > 0)
     scale = total / factors;
 
-  if (scale < 1 / 64.0)
-    scale = 1 / 8.0;
-  else
-    scale = sqrt (scale);
+  scale = sqrt (scale);
 
   /* printf("Dynamics queried(scale). Result: %f, factors: %f, total: %f \n", result, factors, total);*/
   return scale;

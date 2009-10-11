@@ -479,6 +479,10 @@ gimp_brush_transform_size (GimpBrush     *brush,
     }
 
   GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush, scale, aspect_ratio, angle, width, height);
+  /*Transform size can not be less than 1 px*/
+  width  = MAX(1, width);
+  height = MAX(1, height);
+
 }
 
 TempBuf *
