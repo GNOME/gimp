@@ -32,7 +32,6 @@
 #include "config/gimpguiconfig.h"
 
 #include "widgets/gimpbrusheditor.h"
-#include "widgets/gimpdynamicseditor.h"
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpchanneltreeview.h"
@@ -47,6 +46,8 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockwindow.h"
 #include "widgets/gimpdocumentview.h"
+#include "widgets/gimpdynamicseditor.h"
+#include "widgets/gimpdynamicsfactoryview.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimperrordialog.h"
 #include "widgets/gimpfontview.h"
@@ -58,7 +59,6 @@
 #include "widgets/gimpmenudock.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppatternfactoryview.h"
-#include "widgets/gimpdynamicsfactoryview.h"
 #include "widgets/gimpsamplepointeditor.h"
 #include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptemplateview.h"
@@ -719,7 +719,6 @@ dialogs_dynamics_editor_get (GimpDialogFactory *factory,
                           GimpContext       *context,
                           gint               view_size)
 {
-  //return gimp_dynamics_editor_new (factory->menu_factory);
   return gimp_dynamics_editor_new (context,
                                    factory->menu_factory);
 }
