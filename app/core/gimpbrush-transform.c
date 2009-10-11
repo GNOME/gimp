@@ -67,6 +67,11 @@ gimp_brush_real_transform_size (GimpBrush *brush,
                                  scale, scale / aspect_ratio, angle, &matrix);
 
   gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
+
+  /*Transform size can not be less than 1 px*/
+  width  = MAX(1, width);
+  height = MAX(1, height);
+
 }
 
 /*

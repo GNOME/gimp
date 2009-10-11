@@ -322,6 +322,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
 
   *width  = half_width  * 2 + 1;
   *height = half_height * 2 + 1;
+
 }
 
 static TempBuf *
@@ -350,6 +351,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                     brush->aspect_ratio * aspect_ratio,
                                     (brush->angle + 360 * angle),
                                     NULL, NULL);
+
 }
 
 
