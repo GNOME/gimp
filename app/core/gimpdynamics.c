@@ -149,23 +149,24 @@ enum
 };
 
 
-static void    gimp_dynamics_finalize         (GObject      *object);
+static void         gimp_dynamics_finalize      (GObject      *object);
 
-static void    gimp_dynamics_set_property     (GObject      *object,
-                                               guint         property_id,
-                                               const GValue *value,
-                                               GParamSpec   *pspec);
+static void         gimp_dynamics_set_property  (GObject      *object,
+                                                 guint         property_id,
+                                                 const GValue *value,
+                                                 GParamSpec   *pspec);
 
-static void    gimp_dynamics_get_property     (GObject      *object,
-                                               guint         property_id,
-                                               GValue       *value,
-                                               GParamSpec   *pspec);
+static void         gimp_dynamics_get_property  (GObject      *object,
+                                                 guint         property_id,
+                                                 GValue       *value,
+                                                 GParamSpec   *pspec);
 
-static const gchar * gimp_dynamics_get_extension (GimpData *data);
+static const gchar* gimp_dynamics_get_extension (GimpData *data);
 
 static GimpDynamicsOutput* gimp_dynamics_output_init (void);
 
-static void    gimp_dynamics_output_finalize  (GimpDynamicsOutput *dynamics);
+static void                gimp_dynamics_output_finalize
+                                                (GimpDynamicsOutput *dynamics);
 
 
 
