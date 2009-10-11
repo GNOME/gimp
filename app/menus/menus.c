@@ -289,12 +289,7 @@ menus_init (Gimp              *gimp,
                                       "/dynamics-editor-popup",
                                       "dynamics-editor-menu.xml", NULL,
                                       NULL);
-/*
-	   gimp_menu_factory_manager_register (global_menu_factory, "<DynamicsEditor>",
-                                      "dynamics",
-                                      NULL,
-                                      NULL);
-*/
+
   gimp_menu_factory_manager_register (global_menu_factory, "<GradientEditor>",
                                       "gradient-editor",
                                       NULL,
