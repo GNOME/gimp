@@ -24,6 +24,7 @@
 
 #include "core-types.h"
 
+#include "gimpcurve.h"
 #include "gimpdynamics.h"
 #include "gimpdynamics-load.h"
 #include "gimpdynamics-save.h"

@@ -18,30 +18,25 @@
 #ifndef __GIMP_DYNAMICS_H__
 #define __GIMP_DYNAMICS_H__
 
-#include "core/gimpdata.h"
-#include "gimpcurve.h"
 
-typedef struct _GimpDynamicsOutput  GimpDynamicsOutput;
+#include "gimpdata.h"
 
 
 struct _GimpDynamicsOutput
 {
+  gboolean   pressure;
+  gboolean   velocity;
+  gboolean   direction;
+  gboolean   tilt;
+  gboolean   random;
+  gboolean   fade;
 
-  gboolean  pressure;
-  gboolean  velocity;
-  gboolean  direction;
-  gboolean  tilt;
-  gboolean  random;
-  gboolean  fade;
-
-
-  GimpCurve*  pressure_curve;
-  GimpCurve*  velocity_curve;
-  GimpCurve*  direction_curve;
-  GimpCurve*  tilt_curve;
-  GimpCurve*  random_curve;
-  GimpCurve*  fade_curve;
-
+  GimpCurve *pressure_curve;
+  GimpCurve *velocity_curve;
+  GimpCurve *direction_curve;
+  GimpCurve *tilt_curve;
+  GimpCurve *random_curve;
+  GimpCurve *fade_curve;
 };
 
 
@@ -57,19 +52,18 @@ typedef struct _GimpDynamicsClass GimpDynamicsClass;
 
 struct _GimpDynamics
 {
-  GimpData             parent_instance;
+  GimpData            parent_instance;
 
-  gchar               *name;
+  gchar              *name;
 
-  GimpDynamicsOutput*  opacity_dynamics;
-  GimpDynamicsOutput*  hardness_dynamics;
-  GimpDynamicsOutput*  rate_dynamics;
-  GimpDynamicsOutput*  size_dynamics;
-  GimpDynamicsOutput*  aspect_ratio_dynamics;
-  GimpDynamicsOutput*  color_dynamics;
-  GimpDynamicsOutput*  angle_dynamics;
-  GimpDynamicsOutput*  jitter_dynamics;
-
+  GimpDynamicsOutput *opacity_dynamics;
+  GimpDynamicsOutput *hardness_dynamics;
+  GimpDynamicsOutput *rate_dynamics;
+  GimpDynamicsOutput *size_dynamics;
+  GimpDynamicsOutput *aspect_ratio_dynamics;
+  GimpDynamicsOutput *color_dynamics;
+  GimpDynamicsOutput *angle_dynamics;
+  GimpDynamicsOutput *jitter_dynamics;
 };
 
 struct _GimpDynamicsClass
@@ -78,20 +72,27 @@ struct _GimpDynamicsClass
 };
 
 
-GType              gimp_dynamics_get_type (void) G_GNUC_CONST;
+GType      gimp_dynamics_get_type               (void) G_GNUC_CONST;
 
-GimpData           * gimp_dynamics_new   (const gchar *name);
+GimpData * gimp_dynamics_new                    (const gchar        *name);
 
-GimpData           * gimp_dynamics_get_standard     (void);
+GimpData * gimp_dynamics_get_standard           (void);
 
-gdouble            gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point);
+gdouble    gimp_dynamics_get_linear_output_val  (GimpDynamicsOutput *output,
+                                                 GimpCoords          coords,
+                                                 gdouble             fade_point);
 
-gdouble            gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point);
+gdouble    gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output,
+                                                 GimpCoords          coords,
+                                                 gdouble             fade_point);
 
-gdouble            gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point);
+gdouble    gimp_dynamics_get_aspect_output_val  (GimpDynamicsOutput *output,
+                                                 GimpCoords          coords,
+                                                 gdouble             fade_point);
 
-gboolean           gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output);
+gboolean   gimp_dynamics_output_is_enabled      (GimpDynamicsOutput *output);
 
-gboolean           gimp_dynamics_input_fade_enabled (GimpDynamics *dynamics);
+gboolean   gimp_dynamics_input_fade_enabled     (GimpDynamics       *dynamics);
 
-#endif  /*  __GIMP_DYNAMICS_OPTIONS_H__  */
+
+#endif  /*  __GIMP_DYNAMICS_H__  */
