@@ -28,6 +28,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpdynamics.h"
+#include "core/gimpdynamicsoutput.h"
 #include "core/gimpgradient.h"
 #include "core/gimppaintinfo.h"
 

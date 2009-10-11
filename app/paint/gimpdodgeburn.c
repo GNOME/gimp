@@ -32,6 +32,8 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdynamics.h"
+#include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 
 #include "gimpdodgeburn.h"

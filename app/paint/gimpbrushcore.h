@@ -21,9 +21,6 @@
 
 #include "gimppaintcore.h"
 
-#warning FIXME: remove these asap!
-#include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 
 #define BRUSH_CORE_SUBSAMPLE        4
 #define BRUSH_CORE_SOLID_SUBSAMPLE  2
