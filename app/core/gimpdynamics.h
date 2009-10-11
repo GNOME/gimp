@@ -54,8 +54,6 @@ struct _GimpDynamics
 {
   GimpData            parent_instance;
 
-  gchar              *name;
-
   GimpDynamicsOutput *opacity_dynamics;
   GimpDynamicsOutput *hardness_dynamics;
   GimpDynamicsOutput *rate_dynamics;
