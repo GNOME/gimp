@@ -28,6 +28,7 @@
 #include "gimpdynamics.h"
 #include "gimpdynamics-load.h"
 #include "gimpdynamics-save.h"
+#include "gimpdynamicsoutput.h"
 
 #include "gimp-intl.h"
 
@@ -150,25 +151,17 @@ enum
 };
 
 
-static void         gimp_dynamics_finalize      (GObject      *object);
+static void          gimp_dynamics_finalize      (GObject      *object);
+static void          gimp_dynamics_set_property  (GObject      *object,
+                                                  guint         property_id,
+                                                  const GValue *value,
+                                                  GParamSpec   *pspec);
+static void          gimp_dynamics_get_property  (GObject      *object,
+                                                  guint         property_id,
+                                                  GValue       *value,
+                                                  GParamSpec   *pspec);
 
-static void         gimp_dynamics_set_property  (GObject      *object,
-                                                 guint         property_id,
-                                                 const GValue *value,
-                                                 GParamSpec   *pspec);
-
-static void         gimp_dynamics_get_property  (GObject      *object,
-                                                 guint         property_id,
-                                                 GValue       *value,
-                                                 GParamSpec   *pspec);
-
-static const gchar* gimp_dynamics_get_extension (GimpData *data);
-
-static GimpDynamicsOutput* gimp_dynamics_output_init (void);
-
-static void                gimp_dynamics_output_finalize
-                                                (GimpDynamicsOutput *dynamics);
-
+static const gchar * gimp_dynamics_get_extension (GimpData     *data);
 
 
 G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
@@ -398,21 +391,14 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
 static void
 gimp_dynamics_init (GimpDynamics *dynamics)
 {
-  dynamics->opacity_dynamics      = gimp_dynamics_output_init();
-
-  dynamics->hardness_dynamics     = gimp_dynamics_output_init();
-
-  dynamics->rate_dynamics         = gimp_dynamics_output_init();
-
-  dynamics->size_dynamics         = gimp_dynamics_output_init();
-
-  dynamics->aspect_ratio_dynamics = gimp_dynamics_output_init();
-
-  dynamics->color_dynamics        = gimp_dynamics_output_init();
-
-  dynamics->angle_dynamics        = gimp_dynamics_output_init();
-
-  dynamics->jitter_dynamics        = gimp_dynamics_output_init();
+  dynamics->opacity_dynamics      = gimp_dynamics_output_new ("");
+  dynamics->hardness_dynamics     = gimp_dynamics_output_new ("");
+  dynamics->rate_dynamics         = gimp_dynamics_output_new ("");
+  dynamics->size_dynamics         = gimp_dynamics_output_new ("");
+  dynamics->aspect_ratio_dynamics = gimp_dynamics_output_new ("");
+  dynamics->color_dynamics        = gimp_dynamics_output_new ("");
+  dynamics->angle_dynamics        = gimp_dynamics_output_new ("");
+  dynamics->jitter_dynamics       = gimp_dynamics_output_new ("");
 
 }
 
@@ -422,70 +408,17 @@ gimp_dynamics_finalize (GObject *object)
 {
   GimpDynamics *dynamics = GIMP_DYNAMICS (object);
 
-  gimp_dynamics_output_finalize   (dynamics->opacity_dynamics);
-
-  gimp_dynamics_output_finalize   (dynamics->hardness_dynamics);
-
-  gimp_dynamics_output_finalize   (dynamics->rate_dynamics);
-
-  gimp_dynamics_output_finalize   (dynamics->size_dynamics);
-
-  gimp_dynamics_output_finalize   (dynamics->aspect_ratio_dynamics);
-
-  gimp_dynamics_output_finalize   (dynamics->color_dynamics);
-
-  gimp_dynamics_output_finalize   (dynamics->angle_dynamics);
-
-  gimp_dynamics_output_finalize   (dynamics->jitter_dynamics);
+  g_object_unref (dynamics->opacity_dynamics);
+  g_object_unref (dynamics->hardness_dynamics);
+  g_object_unref (dynamics->rate_dynamics);
+  g_object_unref (dynamics->size_dynamics);
+  g_object_unref (dynamics->aspect_ratio_dynamics);
+  g_object_unref (dynamics->color_dynamics);
+  g_object_unref (dynamics->angle_dynamics);
+  g_object_unref (dynamics->jitter_dynamics);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
-
-static GimpDynamicsOutput*
-gimp_dynamics_output_init(void)
-{
-  GimpDynamicsOutput * dynamics = g_slice_new0 (GimpDynamicsOutput);
-
-  dynamics->pressure_curve = g_object_new (GIMP_TYPE_CURVE,
-                             "name",       "Pressure curve",
-                              NULL);
-  dynamics->velocity_curve = g_object_new (GIMP_TYPE_CURVE,
-                             "name",       "Velocity curve",
-                             NULL);
-  dynamics->direction_curve = g_object_new (GIMP_TYPE_CURVE,
-                              "name",       "Direction curve",
-                              NULL);
-  dynamics->tilt_curve      = g_object_new (GIMP_TYPE_CURVE,
-                              "name",       "Tilt curve",
-                              NULL);
-  dynamics->random_curve    = g_object_new (GIMP_TYPE_CURVE,
-                              "name",       "Random curve",
-                              NULL);
-  dynamics->fade_curve      = g_object_new (GIMP_TYPE_CURVE,
-                              "name",       "Fade curve",
-                              NULL);
-  return dynamics;
-}
-
-static void
-gimp_dynamics_output_finalize  (GimpDynamicsOutput *dynamics)
-{
-  g_object_unref(dynamics->pressure_curve);
-
-  g_object_unref(dynamics->velocity_curve);
-
-  g_object_unref(dynamics->direction_curve);
-
-  g_object_unref(dynamics->tilt_curve);
-
-  g_object_unref(dynamics->random_curve);
-
-  g_object_unref(dynamics->fade_curve);
-
-  g_slice_free (GimpDynamicsOutput,  dynamics);
-
-}
-
 
 static void
 gimp_dynamics_set_property (GObject      *object,
@@ -964,212 +897,8 @@ gimp_dynamics_get_extension (GimpData *data)
   return GIMP_DYNAMICS_FILE_EXTENSION;
 }
 
-gdouble
-gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point)
-{
-  gdouble total = 0.0;
-  gdouble factors = 0.0;
-
-  gdouble result = 1.0;
-
-  if (output->pressure)
-    {
-      total += coords.pressure;
-      factors++;
-    }
-
-  if (output->velocity)
-    {
-      total += (1.0 - coords.velocity);
-      factors++;
-    }
-
-  if (output->direction)
-    {
-      total += coords.direction + 0.5;
-      factors++;
-    }
-
-  if (output->tilt)
-    {
-      total += 1.0 - sqrt (SQR (coords.xtilt) + SQR (coords.ytilt));
-      factors++;
-    }
-
-  if (output->random)
-    {
-      total += g_random_double_range (0.0, 1.0);
-      factors++;
-    }
-
-  if (output->fade)
-    {
-      total += fade_point;
-      factors++;
-    }
-
-  if (factors > 0)
-    result = total / factors;
-
-  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
-  return result;
-}
-
-gdouble
-gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point)
-{
-  gdouble total = 0.0;
-  gdouble factors = 0.0;
-
-  gdouble result = 1.0;
-
-  if (output->pressure)
-    {
-      total += coords.pressure;
-      factors++;
-    }
-
-  if (output->velocity)
-    {
-      total += (1.0 - coords.velocity);
-      factors++;
-    }
-
-  if (output->direction)
-    {
-      total += coords.direction + 0.5;
-      factors++;
-    }
-/* For tilt to make sense, it needs to be converted to an angle, not just vector */
-  if (output->tilt)
-    {
-
-      gdouble tilt_x = coords.xtilt;
-      gdouble tilt_y = coords.ytilt;
-      gdouble tilt = 0.0;
-
-      if (tilt_x == 0.0)
-        {
-          if (tilt_y >= 0.0)
-            tilt = 0.5;
-          else if (tilt_y < 0.0)
-            tilt = 0.0;
-          else tilt = -1.0;
-        }
-      else
-        {
-          tilt = atan ((- 1.0 * tilt_y) /
-                                tilt_x) / (2 * G_PI);
-
-           if (tilt_x > 0.0)
-             tilt = tilt + 0.5;
-         }
-
-      tilt = tilt + 0.5; /* correct the angle, its wrong by 180 degrees */
-
-      while (tilt > 1.0)
-        tilt -= 1.0;
-
-      while (tilt < 0.0)
-        tilt += 1.0;
-      total += tilt;
-      factors++;
-    }
-
-  if (output->random)
-    {
-      total += g_random_double_range (0.0, 1.0);
-      factors++;
-    }
-
-  if (output->fade)
-    {
-      total += fade_point;
-      factors++;
-    }
-
-  if (factors > 0)
-    result = total / factors;
-
-   return result + 0.5;
-}
-
-
-gdouble
-gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output, GimpCoords coords, gdouble fade_point)
-{
-  gdouble total = 0.0;
-  gdouble factors = 0.0;
-
-  gdouble result = 1.0;
-
-  if (output->pressure)
-    {
-      total += 2 * coords.pressure;
-      factors++;
-    }
-
-  if (output->velocity)
-    {
-      total += 2 * coords.velocity;
-      factors++;
-    }
-
-  if (output->direction)
-    {
-      gdouble direction = 0.0;
-      direction = fmod (1 + coords.direction, 0.5) / 0.25;
-
-      if ((coords.direction > 0.0) && (coords.direction < 0.5))
-        direction = 1 / direction;
-
-      total += direction;
-      factors++;
-    }
-
-  if (output->tilt)
-    {
-      total += sqrt ((1 - fabs (coords.xtilt)) / (1 - fabs (coords.ytilt)));
-      factors++;
-    }
-
-  if (output->random)
-    {
-      gdouble random = g_random_double_range (0.0, 1.0);
-      if (random <= 0.5)
-        {
-          random = 1 / (random / 0.5 * (2.0 - 1.0) + 1.0);
-        }
-      else
-        {
-          random = (random - 0.5) / (1.0 - 0.5) * (2.0 - 1.0) + 1.0;
-        }
-      total += random;
-      factors++;
-    }
-
-  if (output->fade)
-    {
-      total += fade_point;
-      factors++;
-    }
-
-  if (factors > 0)
-    result = total / factors;
-
-  /* printf("Dynamics queried(aspect). Result: %f, factors: %f, total: %f \n", result, factors, total);*/
-  return result;
-}
-
 gboolean
-gimp_dynamics_output_is_enabled(GimpDynamicsOutput *output)
-{
-  return (output->pressure || output->velocity || output->direction ||
-          output->tilt     || output->random   || output->fade);
-}
-
-gboolean
-gimp_dynamics_input_fade_enabled(GimpDynamics *dynamics)
+gimp_dynamics_input_fade_enabled (GimpDynamics *dynamics)
 {
   return (dynamics->opacity_dynamics->fade      ||
           dynamics->hardness_dynamics->fade     ||
@@ -1179,5 +908,4 @@ gimp_dynamics_input_fade_enabled(GimpDynamics *dynamics)
           dynamics->color_dynamics->fade        ||
           dynamics->jitter_dynamics->fade       ||
           dynamics->angle_dynamics->fade);
-
 }

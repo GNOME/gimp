@@ -173,6 +173,8 @@ libappcore_a_sources = \
 	gimpdynamics-load.h			\
 	gimpdynamics-save.c			\
 	gimpdynamics-save.h			\
+	gimpdynamicsoutput.c			\
+	gimpdynamicsoutput.h			\
 	gimperror.c				\
 	gimperror.h				\
 	gimpfilloptions.c			\
