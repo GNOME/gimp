@@ -61,6 +61,10 @@ static void          gimp_dynamics_get_property  (GObject      *object,
                                                   guint         property_id,
                                                   GValue       *value,
                                                   GParamSpec   *pspec);
+static void
+       gimp_dynamics_dispatch_properties_changed (GObject      *object,
+                                                  guint         n_pspecs,
+                                                  GParamSpec  **pspecs);
 
 static const gchar * gimp_dynamics_get_extension (GimpData     *data);
 
@@ -84,12 +88,13 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
 
-  object_class->finalize     = gimp_dynamics_finalize;
-  object_class->set_property = gimp_dynamics_set_property;
-  object_class->get_property = gimp_dynamics_get_property;
+  object_class->finalize                    = gimp_dynamics_finalize;
+  object_class->set_property                = gimp_dynamics_set_property;
+  object_class->get_property                = gimp_dynamics_get_property;
+  object_class->dispatch_properties_changed = gimp_dynamics_dispatch_properties_changed;
 
-  data_class->save           = gimp_dynamics_save;
-  data_class->get_extension  = gimp_dynamics_get_extension;
+  data_class->save                          = gimp_dynamics_save;
+  data_class->get_extension                 = gimp_dynamics_get_extension;
 
   GIMP_CONFIG_INSTALL_PROP_STRING  (object_class, PROP_NAME,
                                     "name", NULL,
@@ -293,6 +298,26 @@ gimp_dynamics_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_dynamics_dispatch_properties_changed (GObject     *object,
+                                           guint        n_pspecs,
+                                           GParamSpec **pspecs)
+{
+  gint i;
+
+  G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
+                                                              n_pspecs, pspecs);
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      if (pspecs[i]->flags & GIMP_CONFIG_PARAM_SERIALIZE)
+        {
+          gimp_data_dirty (GIMP_DATA (object));
+          break;
+        }
     }
 }
 
