@@ -70,8 +70,7 @@ static void   gimp_dynamics_editor_notify_data     (GimpDynamics       *options,
                                                     GimpDynamicsEditor *editor);
 
 static void   dynamics_output_maping_row_gui       (GObject     *config,
-                                                    const gchar *property_name_part,
-                                                    const gchar *property_label,
+                                                    const gchar *row_label,
                                                     GtkTable    *table,
                                                     gint         row,
                                                     GtkWidget   *labels[]);
@@ -161,67 +160,59 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
       gtk_container_add (GTK_CONTAINER (vbox), inner_frame);
       gtk_widget_show (inner_frame);
 
-
       table = gtk_table_new (9, n_dynamics + 2, FALSE);
       gtk_container_add (GTK_CONTAINER (inner_frame), table);
       gtk_widget_show (table);
 
 
-      dynamics_output_maping_row_gui(G_OBJECT(editor->dynamics_model),
-                                     "opacity",
-                                     _("Opacity"),
-                                     table,
-                                     1,
-                                     dynamics_labels);
+      dynamics_output_maping_row_gui (G_OBJECT (dynamics->opacity_dynamics),
+                                      _("Opacity"),
+                                      GTK_TABLE (table),
+                                      1,
+                                      dynamics_labels);
 
-      dynamics_output_maping_row_gui(G_OBJECT(editor->dynamics_model),
-                                     "hardness",
-                                     _("Hardness"),
-                                     table,
-                                     2,
-                                     dynamics_labels);
+      dynamics_output_maping_row_gui (G_OBJECT (dynamics->hardness_dynamics),
+                                      _("Hardness"),
+                                      GTK_TABLE (table),
+                                      2,
+                                      NULL);
 
-      dynamics_output_maping_row_gui(G_OBJECT(editor->dynamics_model),
-                                     "rate",
-                                     _("Rate"),
-                                     table,
-                                     3,
-                                     dynamics_labels);
+      dynamics_output_maping_row_gui (G_OBJECT (dynamics->rate_dynamics),
+                                      _("Rate"),
+                                      GTK_TABLE (table),
+                                      3,
+                                      NULL);
 
-      dynamics_output_maping_row_gui(G_OBJECT(editor->dynamics_model),
-                                     "size",
-                                     _("Size"),
-                                     table,
-                                     4,
-                                     dynamics_labels);
+      dynamics_output_maping_row_gui (G_OBJECT (dynamics->size_dynamics),
+                                      _("Size"),
+                                      GTK_TABLE (table),
+                                      4,
+                                      NULL);
 
-      dynamics_output_maping_row_gui(G_OBJECT(editor->dynamics_model),
-                                     "aspect-ratio",
-                                     _("Aspect ratio"),
-                                     table,
-                                     5,
-                                     dynamics_labels);
+      dynamics_output_maping_row_gui (G_OBJECT (dynamics->aspect_ratio_dynamics),
+                                      _("Aspect ratio"),
+                                      GTK_TABLE (table),
+                                      5,
+                                      NULL);
 
-      dynamics_output_maping_row_gui(G_OBJECT(editor->dynamics_model),
-                                     "color",
-                                     _("Color"),
-                                     table,
-                                     6,
-                                     dynamics_labels);
+      dynamics_output_maping_row_gui (G_OBJECT (dynamics->color_dynamics),
+                                      _("Color"),
+                                      GTK_TABLE (table),
+                                      6,
+                                      NULL);
 
-      dynamics_output_maping_row_gui(G_OBJECT(editor->dynamics_model),
-                                     "angle",
-                                     _("Angle"),
-                                     table,
-                                     7,
-                                     dynamics_labels);
+      dynamics_output_maping_row_gui (G_OBJECT (dynamics->angle_dynamics),
+                                      _("Angle"),
+                                      GTK_TABLE (table),
+                                      7,
+                                      NULL);
 
-      dynamics_output_maping_row_gui(G_OBJECT(editor->dynamics_model),
-                                     "jitter",
-                                     _("Jitter"),
-                                     table,
-                                     8,
-                                     dynamics_labels);
+      dynamics_output_maping_row_gui (G_OBJECT (dynamics->jitter_dynamics),
+                                      _("Jitter"),
+                                      GTK_TABLE (table),
+                                      8,
+                                      NULL);
+
       fixed = gtk_fixed_new ();
       gtk_table_attach (GTK_TABLE (table), fixed, 0, n_dynamics + 2, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -235,7 +226,6 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
           gtk_fixed_put (GTK_FIXED (fixed), dynamics_labels[i], 0, 0);
           gtk_widget_show (dynamics_labels[i]);
         }
-
     }
 }
 
@@ -297,7 +287,7 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
 
       gimp_config_copy (GIMP_CONFIG (editor->data),
                         GIMP_CONFIG (dynamics_editor->dynamics_model),
-                        0);
+                        GIMP_CONFIG_PARAM_SERIALIZE);
 
       g_signal_handlers_unblock_by_func (dynamics_editor->dynamics_model,
                                          gimp_dynamics_editor_notify_model,
@@ -324,7 +314,7 @@ gimp_dynamics_editor_notify_model (GimpDynamics       *options,
 
       gimp_config_copy (GIMP_CONFIG (editor->dynamics_model),
                         GIMP_CONFIG (data_editor->data),
-                        0);
+                        GIMP_CONFIG_PARAM_SERIALIZE);
 
       g_signal_handlers_unblock_by_func (data_editor->data,
                                          gimp_dynamics_editor_notify_data,
@@ -345,7 +335,7 @@ gimp_dynamics_editor_notify_data (GimpDynamics       *options,
 
   gimp_config_copy (GIMP_CONFIG (data_editor->data),
                     GIMP_CONFIG (editor->dynamics_model),
-                    0);
+                    GIMP_CONFIG_PARAM_SERIALIZE);
 
   g_signal_handlers_unblock_by_func (editor->dynamics_model,
                                      gimp_dynamics_editor_notify_model,
@@ -385,73 +375,69 @@ gimp_dynamics_editor_new (GimpContext     *context,
 /*  private functions  */
 
 static void
-dynamics_output_maping_row_gui(GObject     *config,
-                               const gchar *property_name_part,
-                               const gchar *property_label,
-                               GtkTable    *table,
-                               gint         row,
-                               GtkWidget   *labels[])
+dynamics_output_maping_row_gui (GObject     *config,
+                                const gchar *row_label,
+                                GtkTable    *table,
+                                gint         row,
+                                GtkWidget   *labels[])
 {
-      GtkWidget        *label;
-      GtkWidget        *button;
-      gint              column=1;
+  GtkWidget *label;
+  GtkWidget *button;
+  gint       column = 1;
 
-      label = gtk_label_new (property_label);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row+1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
+  label = gtk_label_new (row_label);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-/*gboolean  pressure;
-  gboolean  velocity;
-  gboolean  direction;
-  gboolean  tilt;
-  gboolean  random;
-  gboolean  fade;
-*/
+  button = dynamics_check_button_new (config, "pressure",
+                                      table, column, row);
+  if (labels)
+    g_signal_connect (button, "size-allocate",
+                      G_CALLBACK (dynamics_check_button_size_allocate),
+                      labels[column - 1]);
+  column++;
 
-      button = dynamics_check_button_new (config,  g_strconcat("pressure-", property_name_part, NULL),
-                                          table, column, row);
-      g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (dynamics_check_button_size_allocate),
-                        labels[column - 1]);
-      column++;
+  button = dynamics_check_button_new (config, "velocity",
+                                      table, column, row);
+  if (labels)
+    g_signal_connect (button, "size-allocate",
+                      G_CALLBACK (dynamics_check_button_size_allocate),
+                      labels[column - 1]);
+  column++;
 
-      button = dynamics_check_button_new (config,  g_strconcat("velocity-", property_name_part, NULL),
-                                          table, column, row);
-      g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (dynamics_check_button_size_allocate),
-                        labels[column - 1]);
-      column++;
+  button = dynamics_check_button_new (config, "direction",
+                                      table, column, row);
+  if (labels)
+    g_signal_connect (button, "size-allocate",
+                      G_CALLBACK (dynamics_check_button_size_allocate),
+                      labels[column - 1]);
+  column++;
 
-      button = dynamics_check_button_new (config,  g_strconcat("direction-", property_name_part, NULL),
-                                          table, column, row);
-      g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (dynamics_check_button_size_allocate),
-                        labels[column - 1]);
-      column++;
+  button = dynamics_check_button_new (config,  "tilt",
+                                      table, column, row);
+  if (labels)
+    g_signal_connect (button, "size-allocate",
+                      G_CALLBACK (dynamics_check_button_size_allocate),
+                      labels[column - 1]);
+  column++;
 
-      button = dynamics_check_button_new (config,  g_strconcat("tilt-", property_name_part, NULL),
-                                          table, column, row);
-      g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (dynamics_check_button_size_allocate),
-                        labels[column - 1]);
-      column++;
+  button = dynamics_check_button_new (config, "random",
+                                      table, column, row);
+  if (labels)
+    g_signal_connect (button, "size-allocate",
+                      G_CALLBACK (dynamics_check_button_size_allocate),
+                      labels[column - 1]);
+  column++;
 
-      button = dynamics_check_button_new (config,  g_strconcat("random-", property_name_part, NULL),
-                                          table, column, row);
-      g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (dynamics_check_button_size_allocate),
-                        labels[column - 1]);
-      column++;
-
-      button = dynamics_check_button_new (config,  g_strconcat("fading-", property_name_part, NULL),
-                                          table, column, row);
-      g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (dynamics_check_button_size_allocate),
-                        labels[column - 1]);
-      column++;
-
+  button = dynamics_check_button_new (config, "fade",
+                                      table, column, row);
+  if (labels)
+    g_signal_connect (button, "size-allocate",
+                      G_CALLBACK (dynamics_check_button_size_allocate),
+                      labels[column - 1]);
+  column++;
 }
 
 static GtkWidget *
