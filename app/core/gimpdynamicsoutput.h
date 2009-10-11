@@ -59,21 +59,19 @@ struct _GimpDynamicsOutputClass
 
 GType                gimp_dynamics_output_get_type (void) G_GNUC_CONST;
 
-GimpDynamicsOutput * gimp_dynamics_output_new      (const gchar *name);
+GimpDynamicsOutput * gimp_dynamics_output_new      (const gchar        *name);
 
-gdouble    gimp_dynamics_get_linear_output_val  (GimpDynamicsOutput *output,
-                                                 GimpCoords          coords,
-                                                 gdouble             fade_point);
+gboolean   gimp_dynamics_output_is_enabled         (GimpDynamicsOutput *output);
 
-gdouble    gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output,
-                                                 GimpCoords          coords,
-                                                 gdouble             fade_point);
-
-gdouble    gimp_dynamics_get_aspect_output_val  (GimpDynamicsOutput *output,
-                                                 GimpCoords          coords,
-                                                 gdouble             fade_point);
-
-gboolean   gimp_dynamics_output_is_enabled      (GimpDynamicsOutput *output);
+gdouble    gimp_dynamics_output_get_linear_value   (GimpDynamicsOutput *output,
+                                                    GimpCoords          coords,
+                                                    gdouble             fade_point);
+gdouble    gimp_dynamics_output_get_angular_value  (GimpDynamicsOutput *output,
+                                                    GimpCoords          coords,
+                                                    gdouble             fade_point);
+gdouble    gimp_dynamics_output_get_aspect_value   (GimpDynamicsOutput *output,
+                                                    GimpCoords          coords,
+                                                    gdouble             fade_point);
 
 
 #endif  /*  __GIMP_DYNAMICS_OUTPUT_H__  */

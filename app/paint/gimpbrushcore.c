@@ -398,21 +398,17 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-
-      core->scale = paint_options->brush_scale;
-
-      core->angle = paint_options->brush_angle;
-
+      core->scale        = paint_options->brush_scale;
+      core->angle        = paint_options->brush_angle;
       core->aspect_ratio = paint_options->brush_aspect_ratio;
 
       if (core->dynamics)
         {
+          core->scale *= gimp_dynamics_output_get_linear_value (core->dynamics->size_dynamics, *coords, fade_point);
 
-          core->scale *= gimp_dynamics_get_linear_output_val(core->dynamics->size_dynamics, *coords, fade_point);
+          core->angle += gimp_dynamics_output_get_angular_value (core->dynamics->angle_dynamics, *coords, fade_point);
 
-          core->angle += gimp_dynamics_get_angular_output_val(core->dynamics->angle_dynamics, *coords, fade_point);
-
-          core->aspect_ratio *= gimp_dynamics_get_aspect_output_val(core->dynamics->aspect_ratio_dynamics, *coords, fade_point);
+          core->aspect_ratio *= gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_dynamics, *coords, fade_point);
         }
     }
 
@@ -703,7 +699,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
         {
           gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
                                                             paint_core->pixel_dist);
-          gdouble dyn_jitter = core->jitter * gimp_dynamics_get_linear_output_val(core->dynamics->jitter_dynamics, current_coords, fade_point);
+          gdouble dyn_jitter = core->jitter * gimp_dynamics_output_get_linear_value (core->dynamics->jitter_dynamics, current_coords, fade_point);
 
           gdouble jitter_dist;
           gint32  jitter_angle;
@@ -768,12 +764,11 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
         gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
                                                           paint_core->pixel_dist);
 
-        core->scale *= gimp_dynamics_get_linear_output_val(core->dynamics->size_dynamics, *coords, fade_point);
+        core->scale *= gimp_dynamics_output_get_linear_value (core->dynamics->size_dynamics, *coords, fade_point);
 
-        core->angle += gimp_dynamics_get_angular_output_val(core->dynamics->angle_dynamics, *coords, fade_point);
+        core->angle += gimp_dynamics_output_get_angular_value (core->dynamics->angle_dynamics, *coords, fade_point);
 
-        core->aspect_ratio *= gimp_dynamics_get_aspect_output_val(core->dynamics->aspect_ratio_dynamics, *coords, fade_point);
-
+        core->aspect_ratio *= gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_dynamics, *coords, fade_point);
       }
     }
 

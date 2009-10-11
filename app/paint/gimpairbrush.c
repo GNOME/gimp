@@ -150,7 +150,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           airbrush->drawable      = drawable;
           airbrush->paint_options = paint_options;
 
-          dynamic_rate = gimp_dynamics_get_linear_output_val(dynamics->rate_dynamics, *coords, fade_point);
+          dynamic_rate = gimp_dynamics_output_get_linear_value (dynamics->rate_dynamics, *coords, fade_point);
 
           timeout = 10000 / (options->rate * dynamic_rate);
 

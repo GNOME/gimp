@@ -217,6 +217,9 @@ gimp_dynamics_output_get_property (GObject    *object,
     }
 }
 
+
+/*  public functions  */
+
 GimpDynamicsOutput *
 gimp_dynamics_output_new (const gchar *name)
 {
@@ -227,15 +230,21 @@ gimp_dynamics_output_new (const gchar *name)
                        NULL);
 }
 
-gdouble
-gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output,
-                                     GimpCoords          coords,
-                                     gdouble             fade_point)
+gboolean
+gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output)
 {
-  gdouble total = 0.0;
-  gdouble factors = 0.0;
+  return (output->pressure || output->velocity || output->direction ||
+          output->tilt     || output->random   || output->fade);
+}
 
-  gdouble result = 1.0;
+gdouble
+gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
+                                       GimpCoords          coords,
+                                       gdouble             fade_point)
+{
+  gdouble total   = 0.0;
+  gdouble factors = 0.0;
+  gdouble result  = 1.0;
 
   if (output->pressure)
     {
@@ -277,18 +286,18 @@ gimp_dynamics_get_linear_output_val (GimpDynamicsOutput *output,
     result = total / factors;
 
   //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
+
   return result;
 }
 
 gdouble
-gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output,
-                                      GimpCoords          coords,
-                                      gdouble             fade_point)
+gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
+                                        GimpCoords          coords,
+                                        gdouble             fade_point)
 {
-  gdouble total = 0.0;
+  gdouble total  = 0.0;
   gdouble factors = 0.0;
-
-  gdouble result = 1.0;
+  gdouble result  = 1.0;
 
   if (output->pressure)
     {
@@ -310,10 +319,9 @@ gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output,
 /* For tilt to make sense, it needs to be converted to an angle, not just vector */
   if (output->tilt)
     {
-
       gdouble tilt_x = coords.xtilt;
       gdouble tilt_y = coords.ytilt;
-      gdouble tilt = 0.0;
+      gdouble tilt   = 0.0;
 
       if (tilt_x == 0.0)
         {
@@ -321,16 +329,17 @@ gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output,
             tilt = 0.5;
           else if (tilt_y < 0.0)
             tilt = 0.0;
-          else tilt = -1.0;
+          else
+            tilt = -1.0;
         }
       else
         {
           tilt = atan ((- 1.0 * tilt_y) /
                                 tilt_x) / (2 * G_PI);
 
-           if (tilt_x > 0.0)
-             tilt = tilt + 0.5;
-         }
+          if (tilt_x > 0.0)
+            tilt = tilt + 0.5;
+        }
 
       tilt = tilt + 0.5; /* correct the angle, its wrong by 180 degrees */
 
@@ -339,6 +348,7 @@ gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output,
 
       while (tilt < 0.0)
         tilt += 1.0;
+
       total += tilt;
       factors++;
     }
@@ -363,14 +373,13 @@ gimp_dynamics_get_angular_output_val (GimpDynamicsOutput *output,
 
 
 gdouble
-gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output,
-                                     GimpCoords          coords,
-                                     gdouble             fade_point)
+gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
+                                       GimpCoords          coords,
+                                       gdouble             fade_point)
 {
-  gdouble total = 0.0;
+  gdouble total   = 0.0;
   gdouble factors = 0.0;
-
-  gdouble result = 1.0;
+  gdouble result  = 1.0;
 
   if (output->pressure)
     {
@@ -427,12 +436,6 @@ gimp_dynamics_get_aspect_output_val (GimpDynamicsOutput *output,
     result = total / factors;
 
   /* printf("Dynamics queried(aspect). Result: %f, factors: %f, total: %f \n", result, factors, total);*/
-  return result;
-}
 
-gboolean
-gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output)
-{
-  return (output->pressure || output->velocity || output->direction ||
-          output->tilt     || output->random   || output->fade);
+  return result;
 }
