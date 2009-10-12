@@ -36,12 +36,12 @@ struct _GimpDynamicsOutput
 {
   GimpObject parent_instance;
 
-  gboolean   pressure;
-  gboolean   velocity;
-  gboolean   direction;
-  gboolean   tilt;
-  gboolean   random;
-  gboolean   fade;
+  gboolean   use_pressure;
+  gboolean   use_velocity;
+  gboolean   use_direction;
+  gboolean   use_tilt;
+  gboolean   use_random;
+  gboolean   use_fade;
 
   GimpCurve *pressure_curve;
   GimpCurve *velocity_curve;

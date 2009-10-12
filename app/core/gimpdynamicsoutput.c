@@ -30,24 +30,24 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_PRESSURE  FALSE
-#define DEFAULT_VELOCITY  FALSE
-#define DEFAULT_DIRECTION FALSE
-#define DEFAULT_TILT      FALSE
-#define DEFAULT_RANDOM    FALSE
-#define DEFAULT_FADE      FALSE
+#define DEFAULT_USE_PRESSURE  FALSE
+#define DEFAULT_USE_VELOCITY  FALSE
+#define DEFAULT_USE_DIRECTION FALSE
+#define DEFAULT_USE_TILT      FALSE
+#define DEFAULT_USE_RANDOM    FALSE
+#define DEFAULT_USE_FADE      FALSE
 
 
 enum
 {
   PROP_0,
 
-  PROP_PRESSURE,
-  PROP_VELOCITY,
-  PROP_DIRECTION,
-  PROP_TILT,
-  PROP_RANDOM,
-  PROP_FADE
+  PROP_USE_PRESSURE,
+  PROP_USE_VELOCITY,
+  PROP_USE_DIRECTION,
+  PROP_USE_TILT,
+  PROP_USE_RANDOM,
+  PROP_USE_FADE
 };
 
 
@@ -81,34 +81,34 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
   object_class->set_property = gimp_dynamics_output_set_property;
   object_class->get_property = gimp_dynamics_output_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE,
-                                    "pressure", NULL,
-                                    DEFAULT_PRESSURE,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_PRESSURE,
+                                    "use-pressure", NULL,
+                                    DEFAULT_USE_PRESSURE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY,
-                                    "velocity", NULL,
-                                    DEFAULT_VELOCITY,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_VELOCITY,
+                                    "use-velocity", NULL,
+                                    DEFAULT_USE_VELOCITY,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DIRECTION,
-                                    "direction", NULL,
-                                    DEFAULT_DIRECTION,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_DIRECTION,
+                                    "use-direction", NULL,
+                                    DEFAULT_USE_DIRECTION,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TILT,
-                                    "tilt", NULL,
-                                    DEFAULT_TILT,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_TILT,
+                                    "use-tilt", NULL,
+                                    DEFAULT_USE_TILT,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM,
-                                    "random", NULL,
-                                    DEFAULT_RANDOM,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_RANDOM,
+                                    "use-random", NULL,
+                                    DEFAULT_USE_RANDOM,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADE,
-                                    "fade", NULL,
-                                    DEFAULT_FADE,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
+                                    "use-fade", NULL,
+                                    DEFAULT_USE_FADE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -148,28 +148,28 @@ gimp_dynamics_output_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_PRESSURE:
-      output->pressure = g_value_get_boolean (value);
+    case PROP_USE_PRESSURE:
+      output->use_pressure = g_value_get_boolean (value);
       break;
 
-    case PROP_VELOCITY:
-      output->velocity = g_value_get_boolean (value);
+    case PROP_USE_VELOCITY:
+      output->use_velocity = g_value_get_boolean (value);
       break;
 
-    case PROP_DIRECTION:
-      output->direction = g_value_get_boolean (value);
+    case PROP_USE_DIRECTION:
+      output->use_direction = g_value_get_boolean (value);
       break;
 
-    case PROP_TILT:
-      output->tilt = g_value_get_boolean (value);
+    case PROP_USE_TILT:
+      output->use_tilt = g_value_get_boolean (value);
       break;
 
-    case PROP_RANDOM:
-      output->random = g_value_get_boolean (value);
+    case PROP_USE_RANDOM:
+      output->use_random = g_value_get_boolean (value);
       break;
 
-    case PROP_FADE:
-      output->fade = g_value_get_boolean (value);
+    case PROP_USE_FADE:
+      output->use_fade = g_value_get_boolean (value);
       break;
 
     default:
@@ -188,28 +188,28 @@ gimp_dynamics_output_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_PRESSURE:
-      g_value_set_boolean (value, output->pressure);
+    case PROP_USE_PRESSURE:
+      g_value_set_boolean (value, output->use_pressure);
       break;
 
-    case PROP_VELOCITY:
-      g_value_set_boolean (value, output->velocity);
+    case PROP_USE_VELOCITY:
+      g_value_set_boolean (value, output->use_velocity);
       break;
 
-    case PROP_DIRECTION:
-      g_value_set_boolean (value, output->direction);
+    case PROP_USE_DIRECTION:
+      g_value_set_boolean (value, output->use_direction);
       break;
 
-    case PROP_TILT:
-      g_value_set_boolean (value, output->tilt);
+    case PROP_USE_TILT:
+      g_value_set_boolean (value, output->use_tilt);
       break;
 
-    case PROP_RANDOM:
-      g_value_set_boolean (value, output->random);
+    case PROP_USE_RANDOM:
+      g_value_set_boolean (value, output->use_random);
       break;
 
-    case PROP_FADE:
-      g_value_set_boolean (value, output->fade);
+    case PROP_USE_FADE:
+      g_value_set_boolean (value, output->use_fade);
       break;
 
     default:
@@ -234,8 +234,12 @@ gimp_dynamics_output_new (const gchar *name)
 gboolean
 gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output)
 {
-  return (output->pressure || output->velocity || output->direction ||
-          output->tilt     || output->random   || output->fade);
+  return (output->use_pressure  ||
+          output->use_velocity  ||
+          output->use_direction ||
+          output->use_tilt      ||
+          output->use_random    ||
+          output->use_fade);
 }
 
 gdouble
@@ -247,37 +251,37 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
   gdouble factors = 0.0;
   gdouble result  = 1.0;
 
-  if (output->pressure)
+  if (output->use_pressure)
     {
       total += coords.pressure;
       factors++;
     }
 
-  if (output->velocity)
+  if (output->use_velocity)
     {
       total += (1.0 - coords.velocity);
       factors++;
     }
 
-  if (output->direction)
+  if (output->use_direction)
     {
       total += coords.direction + 0.5;
       factors++;
     }
 
-  if (output->tilt)
+  if (output->use_tilt)
     {
       total += 1.0 - sqrt (SQR (coords.xtilt) + SQR (coords.ytilt));
       factors++;
     }
 
-  if (output->random)
+  if (output->use_random)
     {
       total += g_random_double_range (0.0, 1.0);
       factors++;
     }
 
-  if (output->fade)
+  if (output->use_fade)
     {
       total += fade_point;
       factors++;
@@ -300,25 +304,25 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
   gdouble factors = 0.0;
   gdouble result  = 1.0;
 
-  if (output->pressure)
+  if (output->use_pressure)
     {
       total += coords.pressure;
       factors++;
     }
 
-  if (output->velocity)
+  if (output->use_velocity)
     {
       total += (1.0 - coords.velocity);
       factors++;
     }
 
-  if (output->direction)
+  if (output->use_direction)
     {
       total += coords.direction + 0.5;
       factors++;
     }
 /* For tilt to make sense, it needs to be converted to an angle, not just vector */
-  if (output->tilt)
+  if (output->use_tilt)
     {
       gdouble tilt_x = coords.xtilt;
       gdouble tilt_y = coords.ytilt;
@@ -354,13 +358,13 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (output->random)
+  if (output->use_random)
     {
       total += g_random_double_range (0.0, 1.0);
       factors++;
     }
 
-  if (output->fade)
+  if (output->use_fade)
     {
       total += fade_point;
       factors++;
@@ -382,19 +386,19 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
   gdouble factors = 0.0;
   gdouble result  = 1.0;
 
-  if (output->pressure)
+  if (output->use_pressure)
     {
       total += 2 * coords.pressure;
       factors++;
     }
 
-  if (output->velocity)
+  if (output->use_velocity)
     {
       total += 2 * coords.velocity;
       factors++;
     }
 
-  if (output->direction)
+  if (output->use_direction)
     {
       gdouble direction = 0.0;
       direction = fmod (1 + coords.direction, 0.5) / 0.25;
@@ -406,13 +410,13 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (output->tilt)
+  if (output->use_tilt)
     {
       total += sqrt ((1 - fabs (coords.xtilt)) / (1 - fabs (coords.ytilt)));
       factors++;
     }
 
-  if (output->random)
+  if (output->use_random)
     {
       gdouble random = g_random_double_range (0.0, 1.0);
       if (random <= 0.5)
@@ -427,7 +431,7 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (output->fade)
+  if (output->use_fade)
     {
       total += fade_point;
       factors++;

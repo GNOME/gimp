@@ -360,14 +360,14 @@ gimp_dynamics_get_standard (void)
 gboolean
 gimp_dynamics_input_fade_enabled (GimpDynamics *dynamics)
 {
-  return (dynamics->opacity_output->fade      ||
-          dynamics->hardness_output->fade     ||
-          dynamics->rate_output->fade         ||
-          dynamics->size_output->fade         ||
-          dynamics->aspect_ratio_output->fade ||
-          dynamics->color_output->fade        ||
-          dynamics->jitter_output->fade       ||
-          dynamics->angle_output->fade);
+  return (dynamics->opacity_output->use_fade      ||
+          dynamics->hardness_output->use_fade     ||
+          dynamics->rate_output->use_fade         ||
+          dynamics->size_output->use_fade         ||
+          dynamics->aspect_ratio_output->use_fade ||
+          dynamics->color_output->use_fade        ||
+          dynamics->jitter_output->use_fade       ||
+          dynamics->angle_output->use_fade);
 }
 
 

@@ -312,7 +312,7 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  button = dynamics_check_button_new (config, "pressure",
+  button = dynamics_check_button_new (config, "use-pressure",
                                       table, column, row);
   if (labels)
     g_signal_connect (button, "size-allocate",
@@ -320,7 +320,7 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
                       labels[column - 1]);
   column++;
 
-  button = dynamics_check_button_new (config, "velocity",
+  button = dynamics_check_button_new (config, "use-velocity",
                                       table, column, row);
   if (labels)
     g_signal_connect (button, "size-allocate",
@@ -328,7 +328,7 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
                       labels[column - 1]);
   column++;
 
-  button = dynamics_check_button_new (config, "direction",
+  button = dynamics_check_button_new (config, "use-direction",
                                       table, column, row);
   if (labels)
     g_signal_connect (button, "size-allocate",
@@ -336,7 +336,7 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
                       labels[column - 1]);
   column++;
 
-  button = dynamics_check_button_new (config,  "tilt",
+  button = dynamics_check_button_new (config,  "use-tilt",
                                       table, column, row);
   if (labels)
     g_signal_connect (button, "size-allocate",
@@ -344,7 +344,7 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
                       labels[column - 1]);
   column++;
 
-  button = dynamics_check_button_new (config, "random",
+  button = dynamics_check_button_new (config, "use-random",
                                       table, column, row);
   if (labels)
     g_signal_connect (button, "size-allocate",
@@ -352,7 +352,7 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
                       labels[column - 1]);
   column++;
 
-  button = dynamics_check_button_new (config, "fade",
+  button = dynamics_check_button_new (config, "use-fade",
                                       table, column, row);
   if (labels)
     g_signal_connect (button, "size-allocate",
