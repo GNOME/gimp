@@ -96,10 +96,10 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   data_class->save                          = gimp_dynamics_save;
   data_class->get_extension                 = gimp_dynamics_get_extension;
 
-  GIMP_CONFIG_INSTALL_PROP_STRING  (object_class, PROP_NAME,
-                                    "name", NULL,
-                                    DEFAULT_NAME,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_NAME,
+                                   "name", NULL,
+                                   DEFAULT_NAME,
+                                   GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_OPACITY_OUTPUT,
                                    "opacity-output", NULL,
