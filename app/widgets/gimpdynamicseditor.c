@@ -94,7 +94,6 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
   GimpDynamics   *dynamics;
-  GObject        *config;
   GtkWidget      *vbox;
   GtkWidget      *table;
   GtkWidget      *inner_frame;
@@ -103,15 +102,11 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   gint            n_inputs = G_N_ELEMENTS (input_labels);
   gint            i;
 
-  editor->dynamics_model = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
+  dynamics = editor->dynamics_model = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
 
-  g_signal_connect (editor->dynamics_model, "notify",
+  g_signal_connect (dynamics, "notify",
                     G_CALLBACK (gimp_dynamics_editor_notify_model),
                     editor);
-
-  dynamics = editor->dynamics_model;
-
-  config = G_OBJECT (dynamics);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
