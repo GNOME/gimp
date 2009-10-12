@@ -77,7 +77,7 @@ phong_shade (GimpVector3 *pos,
       gimp_vector3_mul (&N, NL);
       gimp_vector3_sub (&NN, &N, &L);
       RV = gimp_vector3_inner_product (&NN, &V);
-      RV = pow (RV, mapvals.material.highlight);
+      RV = 0.0 < RV ? pow (RV, mapvals.material.highlight) : 0.0;
 
       /* Compute diffuse and specular intensity contribution */
       /* =================================================== */
