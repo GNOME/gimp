@@ -77,7 +77,7 @@ gimp_2_7_SOURCES = $(libapp_sources) main.c
 
 EXTRA_DIST = \
 	makefile.msc	\
-	gimp.rc		\
+	gimp.rc.in	\
 	fileicon.ico	\
 	wilber.ico
 
@@ -256,5 +256,5 @@ dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
 
 dist-hook: dist-check-gimp-console dist-dump-gimprc
 
-gimprc.o:
+gimprc.o: gimp.rc
 	$(WINDRES) gimp.rc gimprc.o
