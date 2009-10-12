@@ -47,19 +47,6 @@
 #include "gimp-intl.h"
 
 
-static gboolean    tool_has_opacity_dynamics      (GType       tool_type);
-static gboolean    tool_has_hardness_dynamics     (GType       tool_type);
-static gboolean    tool_has_rate_dynamics         (GType       tool_type);
-static gboolean    tool_has_size_dynamics         (GType       tool_type);
-static gboolean    tool_has_color_dynamics        (GType       tool_type);
-static gboolean    tool_has_angle_dynamics        (GType       tool_type);
-static gboolean    tool_has_aspect_ratio_dynamics (GType       tool_type);
-
-static void        fading_options_gui    (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkTable         *table,
-                                          gint              row);
-/**/
 static GtkWidget * fade_options_gui      (GimpPaintOptions *paint_options,
                                           GType             tool_type);
 static GtkWidget * gradient_options_gui  (GimpPaintOptions *paint_options,
@@ -84,8 +71,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *button;
   GtkWidget        *incremental_toggle = NULL;
   gint              table_row          = 0;
-  gint              n_dynamics         = 0;
-  GtkWidget        *dynamics_labels[7];
   GType             tool_type;
 
   tool_type = tool_options->tool_info->tool_type;
@@ -207,112 +192,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
 
 /*  private functions  */
-
-static gboolean
-tool_has_opacity_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-          tool_type == GIMP_TYPE_CLONE_TOOL             ||
-          tool_type == GIMP_TYPE_HEAL_TOOL              ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_ERASER_TOOL);
-}
-
-static gboolean
-tool_has_hardness_dynamics (GType tool_type)
-{
-  return (tool_type == GIMP_TYPE_AIRBRUSH_TOOL          ||
-          tool_type == GIMP_TYPE_CLONE_TOOL             ||
-          tool_type == GIMP_TYPE_HEAL_TOOL              ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
-          tool_type == GIMP_TYPE_ERASER_TOOL            ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_PAINTBRUSH_TOOL        ||
-          tool_type == GIMP_TYPE_SMUDGE_TOOL);
-}
-
-static gboolean
-tool_has_rate_dynamics (GType tool_type)
-{
-  return (tool_type == GIMP_TYPE_AIRBRUSH_TOOL          ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
-          tool_type == GIMP_TYPE_SMUDGE_TOOL);
-}
-
-static gboolean
-tool_has_size_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-          tool_type == GIMP_TYPE_CLONE_TOOL             ||
-          tool_type == GIMP_TYPE_HEAL_TOOL              ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_ERASER_TOOL);
-}
-
-static gboolean
-tool_has_aspect_ratio_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-          tool_type == GIMP_TYPE_CLONE_TOOL             ||
-          tool_type == GIMP_TYPE_HEAL_TOOL              ||
-          tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
-          tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
-          tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
-          tool_type == GIMP_TYPE_ERASER_TOOL);
-}
-
-static gboolean
-tool_has_angle_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
-}
-
-static gboolean
-tool_has_color_dynamics (GType tool_type)
-{
-  return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
-}
-
-static GtkWidget *
-dynamics_check_button_new (GObject     *config,
-                           const gchar *property_name,
-                           GtkTable    *table,
-                           gint         column,
-                           gint         row)
-{
-  GtkWidget *button;
-
-  button = gimp_prop_check_button_new (config, property_name, NULL);
-  gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (button);
-
-  return button;
-}
-
-static void
-dynamics_check_button_size_allocate (GtkWidget     *toggle,
-                                     GtkAllocation *allocation,
-                                     GtkWidget     *label)
-{
-  GtkWidget *fixed = label->parent;
-  gint       x, y;
-
-  if (gtk_widget_get_direction (label) == GTK_TEXT_DIR_LTR)
-    x = allocation->x;
-  else
-    x = allocation->x + allocation->width - label->allocation.width;
-
-  x -= fixed->allocation.x;
-
-  y = fixed->allocation.height - label->allocation.height;
-
-  gtk_fixed_move (GTK_FIXED (fixed), label, x, y);
-}
 
 static GtkWidget *
 fade_options_gui (GimpPaintOptions *paint_options,
