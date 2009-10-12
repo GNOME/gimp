@@ -36,14 +36,14 @@ struct _GimpDynamics
 {
   GimpData            parent_instance;
 
-  GimpDynamicsOutput *opacity_dynamics;
-  GimpDynamicsOutput *hardness_dynamics;
-  GimpDynamicsOutput *rate_dynamics;
-  GimpDynamicsOutput *size_dynamics;
-  GimpDynamicsOutput *aspect_ratio_dynamics;
-  GimpDynamicsOutput *color_dynamics;
-  GimpDynamicsOutput *angle_dynamics;
-  GimpDynamicsOutput *jitter_dynamics;
+  GimpDynamicsOutput *opacity_output;
+  GimpDynamicsOutput *hardness_output;
+  GimpDynamicsOutput *rate_output;
+  GimpDynamicsOutput *size_output;
+  GimpDynamicsOutput *aspect_ratio_output;
+  GimpDynamicsOutput *color_output;
+  GimpDynamicsOutput *angle_output;
+  GimpDynamicsOutput *jitter_output;
 };
 
 struct _GimpDynamicsClass

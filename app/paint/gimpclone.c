@@ -243,9 +243,9 @@ gimp_clone_motion (GimpSourceCore   *source_core,
         }
     }
 
-  opacity *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->opacity_dynamics, *coords, fade_point);
+  opacity *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->opacity_output, *coords, fade_point);
 
-  hardness = gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->hardness_dynamics, *coords, fade_point);
+  hardness = gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->hardness_output, *coords, fade_point);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 coords,

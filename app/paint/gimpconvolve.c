@@ -159,7 +159,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   rate = options->rate;
 
-  rate *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->rate_dynamics, *coords, fade_point);
+  rate *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->rate_output, *coords, fade_point);
 
   gimp_convolve_calculate_matrix (convolve, options->type,
                                   brush_core->brush->mask->width / 2,

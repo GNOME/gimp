@@ -145,22 +145,22 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
 static void
 gimp_dynamics_init (GimpDynamics *dynamics)
 {
-  dynamics->opacity_dynamics      = gimp_dynamics_create_output (dynamics,
-                                                                 "opacity-output");
-  dynamics->hardness_dynamics     = gimp_dynamics_create_output (dynamics,
-                                                                 "hardness-output");
-  dynamics->rate_dynamics         = gimp_dynamics_create_output (dynamics,
-                                                                 "rate-output");
-  dynamics->size_dynamics         = gimp_dynamics_create_output (dynamics,
-                                                                 "size-output");
-  dynamics->aspect_ratio_dynamics = gimp_dynamics_create_output (dynamics,
-                                                                 "aspect-ratio-output");
-  dynamics->color_dynamics        = gimp_dynamics_create_output (dynamics,
-                                                                 "color-output");
-  dynamics->angle_dynamics        = gimp_dynamics_create_output (dynamics,
-                                                                 "angle-output");
-  dynamics->jitter_dynamics       = gimp_dynamics_create_output (dynamics,
-                                                                 "jitter-output");
+  dynamics->opacity_output      = gimp_dynamics_create_output (dynamics,
+                                                               "opacity-output");
+  dynamics->hardness_output     = gimp_dynamics_create_output (dynamics,
+                                                               "hardness-output");
+  dynamics->rate_output         = gimp_dynamics_create_output (dynamics,
+                                                               "rate-output");
+  dynamics->size_output         = gimp_dynamics_create_output (dynamics,
+                                                               "size-output");
+  dynamics->aspect_ratio_output = gimp_dynamics_create_output (dynamics,
+                                                               "aspect-ratio-output");
+  dynamics->color_output        = gimp_dynamics_create_output (dynamics,
+                                                               "color-output");
+  dynamics->angle_output        = gimp_dynamics_create_output (dynamics,
+                                                               "angle-output");
+  dynamics->jitter_output       = gimp_dynamics_create_output (dynamics,
+                                                               "jitter-output");
 }
 
 static void
@@ -168,14 +168,14 @@ gimp_dynamics_finalize (GObject *object)
 {
   GimpDynamics *dynamics = GIMP_DYNAMICS (object);
 
-  g_object_unref (dynamics->opacity_dynamics);
-  g_object_unref (dynamics->hardness_dynamics);
-  g_object_unref (dynamics->rate_dynamics);
-  g_object_unref (dynamics->size_dynamics);
-  g_object_unref (dynamics->aspect_ratio_dynamics);
-  g_object_unref (dynamics->color_dynamics);
-  g_object_unref (dynamics->angle_dynamics);
-  g_object_unref (dynamics->jitter_dynamics);
+  g_object_unref (dynamics->opacity_output);
+  g_object_unref (dynamics->hardness_output);
+  g_object_unref (dynamics->rate_output);
+  g_object_unref (dynamics->size_output);
+  g_object_unref (dynamics->aspect_ratio_output);
+  g_object_unref (dynamics->color_output);
+  g_object_unref (dynamics->angle_output);
+  g_object_unref (dynamics->jitter_output);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -198,42 +198,42 @@ gimp_dynamics_set_property (GObject      *object,
 
     case PROP_OPACITY_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->opacity_dynamics;
+      dest_output = dynamics->opacity_output;
       break;
 
     case PROP_HARDNESS_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->hardness_dynamics;
+      dest_output = dynamics->hardness_output;
       break;
 
     case PROP_RATE_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->rate_dynamics;
+      dest_output = dynamics->rate_output;
       break;
 
     case PROP_SIZE_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->size_dynamics;
+      dest_output = dynamics->size_output;
       break;
 
     case PROP_ASPECT_RATIO_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->aspect_ratio_dynamics;
+      dest_output = dynamics->aspect_ratio_output;
       break;
 
     case PROP_COLOR_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->color_dynamics;
+      dest_output = dynamics->color_output;
       break;
 
     case PROP_ANGLE_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->angle_dynamics;
+      dest_output = dynamics->angle_output;
       break;
 
     case PROP_JITTER_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->jitter_dynamics;
+      dest_output = dynamics->jitter_output;
       break;
 
     default:
@@ -264,35 +264,35 @@ gimp_dynamics_get_property (GObject    *object,
       break;
 
     case PROP_OPACITY_OUTPUT:
-      g_value_set_object (value, dynamics->opacity_dynamics);
+      g_value_set_object (value, dynamics->opacity_output);
       break;
 
     case PROP_HARDNESS_OUTPUT:
-      g_value_set_object (value, dynamics->hardness_dynamics);
+      g_value_set_object (value, dynamics->hardness_output);
       break;
 
     case PROP_RATE_OUTPUT:
-      g_value_set_object (value, dynamics->rate_dynamics);
+      g_value_set_object (value, dynamics->rate_output);
       break;
 
     case PROP_SIZE_OUTPUT:
-      g_value_set_object (value, dynamics->size_dynamics);
+      g_value_set_object (value, dynamics->size_output);
       break;
 
     case PROP_ASPECT_RATIO_OUTPUT:
-      g_value_set_object (value, dynamics->aspect_ratio_dynamics);
+      g_value_set_object (value, dynamics->aspect_ratio_output);
       break;
 
     case PROP_COLOR_OUTPUT:
-      g_value_set_object (value, dynamics->color_dynamics);
+      g_value_set_object (value, dynamics->color_output);
       break;
 
     case PROP_ANGLE_OUTPUT:
-      g_value_set_object (value, dynamics->angle_dynamics);
+      g_value_set_object (value, dynamics->angle_output);
       break;
 
     case PROP_JITTER_OUTPUT:
-      g_value_set_object (value, dynamics->jitter_dynamics);
+      g_value_set_object (value, dynamics->jitter_output);
       break;
 
     default:
@@ -360,14 +360,14 @@ gimp_dynamics_get_standard (void)
 gboolean
 gimp_dynamics_input_fade_enabled (GimpDynamics *dynamics)
 {
-  return (dynamics->opacity_dynamics->fade      ||
-          dynamics->hardness_dynamics->fade     ||
-          dynamics->rate_dynamics->fade         ||
-          dynamics->size_dynamics->fade         ||
-          dynamics->aspect_ratio_dynamics->fade ||
-          dynamics->color_dynamics->fade        ||
-          dynamics->jitter_dynamics->fade       ||
-          dynamics->angle_dynamics->fade);
+  return (dynamics->opacity_output->fade      ||
+          dynamics->hardness_output->fade     ||
+          dynamics->rate_output->fade         ||
+          dynamics->size_output->fade         ||
+          dynamics->aspect_ratio_output->fade ||
+          dynamics->color_output->fade        ||
+          dynamics->jitter_output->fade       ||
+          dynamics->angle_output->fade);
 }
 
 

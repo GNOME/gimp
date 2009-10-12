@@ -132,7 +132,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
   paint_appl_mode = paint_options->application_mode;
 
-  grad_point = gimp_dynamics_output_get_linear_value (brush_core->dynamics->color_dynamics, *coords, fade_point);
+  grad_point = gimp_dynamics_output_get_linear_value (brush_core->dynamics->color_output, *coords, fade_point);
 
   /* optionally take the color from the current gradient */
   if (gimp_paint_options_get_gradient_color (paint_options, image,
@@ -177,9 +177,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                     area->bytes);
     }
 
-  opacity *= gimp_dynamics_output_get_linear_value (brush_core->dynamics->opacity_dynamics, *coords, fade_point);
+  opacity *= gimp_dynamics_output_get_linear_value (brush_core->dynamics->opacity_output, *coords, fade_point);
 
-  hardness = gimp_dynamics_output_get_linear_value (brush_core->dynamics->hardness_dynamics, *coords, fade_point);
+  hardness = gimp_dynamics_output_get_linear_value (brush_core->dynamics->hardness_output, *coords, fade_point);
 
   /* finally, let the brush core paste the colored area on the canvas */
   gimp_brush_core_paste_canvas (brush_core, drawable,

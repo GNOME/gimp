@@ -132,42 +132,42 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   input_labels[4] = gtk_label_new (_("Random"));
   input_labels[5] = gtk_label_new (_("Fade"));
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->opacity_dynamics),
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->opacity_output),
                                        _("Opacity"),
                                        GTK_TABLE (table),
                                        1, input_labels);
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->hardness_dynamics),
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->hardness_output),
                                        _("Hardness"),
                                        GTK_TABLE (table),
                                        2, NULL);
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->rate_dynamics),
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->rate_output),
                                        _("Rate"),
                                        GTK_TABLE (table),
                                        3, NULL);
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->size_dynamics),
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->size_output),
                                        _("Size"),
                                        GTK_TABLE (table),
                                        4, NULL);
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->aspect_ratio_dynamics),
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->aspect_ratio_output),
                                        _("Aspect ratio"),
                                        GTK_TABLE (table),
                                        5, NULL);
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->color_dynamics),
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->color_output),
                                        _("Color"),
                                        GTK_TABLE (table),
                                        6, NULL);
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->angle_dynamics),
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->angle_output),
                                        _("Angle"),
                                        GTK_TABLE (table),
                                        7, NULL);
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->jitter_dynamics),
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->jitter_output),
                                        _("Jitter"),
                                        GTK_TABLE (table),
                                        8, NULL);
