@@ -67,7 +67,6 @@ gimp_brush_real_transform_size (GimpBrush *brush,
                                  scale, scale / aspect_ratio, angle, &matrix);
 
   gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
-
 }
 
 /*
@@ -638,7 +637,7 @@ gimp_brush_transform_bounding_box (GimpBrush         *brush,
   *width  = (gint) (ceil  (MAX (MAX (x1, x2), MAX (x3, x4))) - *x);
   *height = (gint) (ceil  (MAX (MAX (y1, y2), MAX (y3, y4))) - *y);
 
-    /*Transform size can not be less than 1 px*/
+  /* Transform size can not be less than 1 px */
   *width  = MAX(1, *width);
   *height = MAX(1, *height);
 }

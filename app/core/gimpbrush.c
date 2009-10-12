@@ -479,7 +479,6 @@ gimp_brush_transform_size (GimpBrush     *brush,
     }
 
   GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush, scale, aspect_ratio, angle, width, height);
-
 }
 
 TempBuf *

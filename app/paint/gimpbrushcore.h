@@ -95,14 +95,12 @@ struct _GimpBrushCoreClass
   gboolean            handles_changing_brush;
 
   /*  Set for tools that don't mind if the brush scales while painting  */
-
   gboolean            handles_transforming_brush;
 
   void (* set_brush)    (GimpBrushCore *core,
                          GimpBrush     *brush);
-  void (* set_dynamics) (GimpBrushCore       *core,
-                         GimpDynamics *brush);
-
+  void (* set_dynamics) (GimpBrushCore *core,
+                         GimpDynamics  *brush);
 };
 
 

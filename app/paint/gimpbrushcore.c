@@ -43,7 +43,6 @@
 #include "gimpbrushcore-kernels.h"
 #include "gimppaintoptions.h"
 
-
 #include "gimp-intl.h"
 
 
