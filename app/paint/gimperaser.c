@@ -107,21 +107,25 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options,
                     const GimpCoords *coords)
 {
-  GimpEraserOptions *options = GIMP_ERASER_OPTIONS (paint_options);
-  GimpContext       *context = GIMP_CONTEXT (paint_options);
+  GimpEraserOptions *options  = GIMP_ERASER_OPTIONS (paint_options);
+  GimpContext       *context  = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpImage         *image;
+  gdouble            fade_point;
   gdouble            opacity;
   TempBuf           *area;
   guchar             col[MAX_CHANNELS];
   gdouble            hardness;
 
-  gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                    paint_core->pixel_dist);
-
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  opacity = gimp_paint_options_get_fade (paint_options, image,
-                                         paint_core->pixel_dist);
+  fade_point = gimp_paint_options_get_fade (paint_options,
+                                            gimp_item_get_image (GIMP_ITEM (drawable)),
+                                            paint_core->pixel_dist);
+
+  opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
+                                                   *coords,
+                                                   fade_point);
   if (opacity == 0.0)
     return;
 
@@ -140,9 +144,9 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   color_pixels (temp_buf_get_data (area), col,
                 area->width * area->height, area->bytes);
 
-  opacity *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->opacity_output, *coords, fade_point);
-
-  hardness = gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->hardness_output, *coords, fade_point);
+  hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
+                                                    *coords,
+                                                    fade_point);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 coords,
