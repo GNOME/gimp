@@ -124,7 +124,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
-                                          paint_core->pixel_dist);
+                                            paint_core->pixel_dist);
 
   opacity *= gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
                                                     *coords,
