@@ -38,7 +38,6 @@ OBJECTS = \
 	internal-procs.obj \
 	brush-cmds.obj \
 	brushes-cmds.obj \
-	dynamics-cmds.obj \
 	buffer-cmds.obj \
 	channel-cmds.obj \
 	color-cmds.obj \
