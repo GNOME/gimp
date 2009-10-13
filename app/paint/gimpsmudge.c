@@ -237,32 +237,34 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options,
                     const GimpCoords *coords)
 {
-  GimpSmudge        *smudge  = GIMP_SMUDGE (paint_core);
-  GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (paint_options);
-  GimpContext       *context = GIMP_CONTEXT (paint_options);
+  GimpSmudge        *smudge   = GIMP_SMUDGE (paint_core);
+  GimpSmudgeOptions *options  = GIMP_SMUDGE_OPTIONS (paint_options);
+  GimpContext       *context  = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpImage         *image;
   TempBuf           *area;
   PixelRegion        srcPR, destPR, tempPR;
-  gdouble            rate;
+  gdouble            fade_point;
   gdouble            opacity;
+  gdouble            rate;
   gdouble            dynamic_rate;
   gint               x, y, w, h;
   gdouble            hardness;
 
-  gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                    paint_core->pixel_dist);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
   if (gimp_drawable_is_indexed (drawable))
     return;
 
-  opacity = gimp_paint_options_get_fade (paint_options, image,
-                                         paint_core->pixel_dist);
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                            paint_core->pixel_dist);
+
+  opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
+                                                   *coords,
+                                                   fade_point);
   if (opacity == 0.0)
     return;
 
-  /*  Get the paint area */
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
                                          coords);
   if (! area)
@@ -276,7 +278,9 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                      area->x, area->y, area->width, area->height, FALSE);
 
   /* Enable dynamic rate */
-  dynamic_rate = gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->rate_output, *coords, fade_point);
+  dynamic_rate = gimp_dynamics_output_get_linear_value (dynamics->rate_output,
+                                                        *coords,
+                                                        fade_point);
 
   rate = (options->rate / 100.0) * dynamic_rate;
 
@@ -317,9 +321,9 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   else
     copy_region (&tempPR, &destPR);
 
-  opacity *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->opacity_output, *coords, fade_point);
-
-  hardness = gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->hardness_output, *coords, fade_point);
+  hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
+                                                    *coords,
+                                                    fade_point);
 
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                   coords,
