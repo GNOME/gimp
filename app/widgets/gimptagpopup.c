@@ -92,7 +92,6 @@ static gboolean gimp_tag_popup_list_event              (GtkWidget          *widg
 static gboolean gimp_tag_popup_is_in_tag               (PopupTagData       *tag_data,
                                                         gint                x,
                                                         gint                y);
-
 static void     gimp_tag_popup_queue_draw_tag          (GimpTagPopup       *widget,
                                                         PopupTagData       *tag_data);
 static void     gimp_tag_popup_toggle_tag              (GimpTagPopup       *popup,
@@ -193,7 +192,6 @@ gimp_tag_popup_init (GimpTagPopup *popup)
   g_signal_connect (popup->tag_area, "event",
                     G_CALLBACK (gimp_tag_popup_list_event),
                     popup);
-
 }
 
 static GObject *
@@ -413,7 +411,6 @@ gimp_tag_popup_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_OWNER:
-
       popup->combo_entry = g_value_dup_object (value);
       break;
 
@@ -571,7 +568,6 @@ gimp_tag_popup_border_expose (GtkWidget      *widget,
                               GdkEventExpose *event,
                               GimpTagPopup   *popup)
 {
-
   GdkWindow    *window = gtk_widget_get_window (widget);
   GtkStyle     *style  = gtk_widget_get_style (widget);
   GdkRectangle  border;
@@ -679,7 +675,6 @@ gimp_tag_popup_border_event (GtkWidget *widget,
   else if (event->type == GDK_MOTION_NOTIFY)
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
-
       gint            x, y;
 
       gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, NULL);
@@ -881,9 +876,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
   else if (event->type == GDK_MOTION_NOTIFY)
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
-
       PopupTagData   *prelight     = NULL;
-
       gint            x;
       gint            y;
       gint            i;
@@ -1201,7 +1194,6 @@ gimp_tag_popup_scroll_by (GimpTagPopup *popup,
     {
       arrow_state = (popup->upper_arrow_prelight ?
                      GTK_STATE_PRELIGHT : GTK_STATE_NORMAL);
-
     }
 
   if (arrow_state != popup->upper_arrow_state)
