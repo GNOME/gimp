@@ -87,7 +87,6 @@ static TempBuf *gimp_brush_core_get_paint_area     (GimpPaintCore    *paint_core
 
 static void     gimp_brush_core_real_set_brush     (GimpBrushCore    *core,
                                                     GimpBrush        *brush);
-
 static void     gimp_brush_core_real_set_dynamics  (GimpBrushCore    *core,
                                                     GimpDynamics     *dynamics);
 
@@ -840,8 +839,8 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
 }
 
 static void
-gimp_brush_core_real_set_dynamics (GimpBrushCore       *core,
-                                   GimpDynamics        *dynamics)
+gimp_brush_core_real_set_dynamics (GimpBrushCore *core,
+                                   GimpDynamics  *dynamics)
 {
   if (core->dynamics)
     {
@@ -851,7 +850,8 @@ gimp_brush_core_real_set_dynamics (GimpBrushCore       *core,
 
   core->dynamics = dynamics;
 
-
+  if (core->dynamics)
+    g_object_ref (core->dynamics);
 }
 
 void
