@@ -129,26 +129,29 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GimpBrushCore       *brush_core = GIMP_BRUSH_CORE (paint_core);
   GimpConvolveOptions *options    = GIMP_CONVOLVE_OPTIONS (paint_options);
   GimpContext         *context    = GIMP_CONTEXT (paint_options);
+  GimpDynamics        *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpImage           *image;
   TempBuf             *area;
   PixelRegion          srcPR;
   PixelRegion          destPR;
   PixelRegion          tempPR;
   guchar              *buffer;
+  gdouble              fade_point;
   gdouble              opacity;
   gdouble              rate;
   gint                 bytes;
 
-  gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                    paint_core->pixel_dist);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
   if (gimp_drawable_is_indexed (drawable))
     return;
 
-  opacity = gimp_paint_options_get_fade (paint_options, image,
-                                         paint_core->pixel_dist);
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                            paint_core->pixel_dist);
+
+  opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
+                                                   *coords,
+                                                   fade_point);
   if (opacity == 0.0)
     return;
 
@@ -159,7 +162,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   rate = options->rate;
 
-  rate *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->rate_output, *coords, fade_point);
+  rate *= gimp_dynamics_output_get_linear_value (dynamics->rate_output,
+                                                 *coords,
+                                                 fade_point);
 
   gimp_convolve_calculate_matrix (convolve, options->type,
                                   brush_core->brush->mask->width / 2,
