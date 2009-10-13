@@ -124,7 +124,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-brush-editor",
     GIMP_HELP_BRUSH_EDIT },
 
-  { "dialogs-dynamics", GIMP_STOCK_PATTERN,
+  { "dialogs-dynamics", GIMP_STOCK_DYNAMICS,
     NC_("dialogs-action", "Dynamics"), NULL,
     NC_("dialogs-action", "Open dynamics list dialog"),
     "gimp-dynamics-list",
