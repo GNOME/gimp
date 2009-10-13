@@ -168,20 +168,17 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   GimpCloneOptions  *options        = GIMP_CLONE_OPTIONS (paint_options);
   GimpSourceOptions *source_options = GIMP_SOURCE_OPTIONS (paint_options);
   GimpContext       *context        = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics       = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image          = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpImage         *src_image      = NULL;
   GimpImageType      src_type       = 0;
   GimpImageType      dest_type;
-  GimpImage         *image;
   gpointer           pr = NULL;
   gint               y;
   PixelRegion        destPR;
   GimpPattern       *pattern = NULL;
+  gdouble            fade_point;
   gdouble            hardness;
-
-  gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                    paint_core->pixel_dist);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   switch (options->clone_type)
     {
@@ -243,9 +240,12 @@ gimp_clone_motion (GimpSourceCore   *source_core,
         }
     }
 
-  opacity *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->opacity_output, *coords, fade_point);
+  fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                            paint_core->pixel_dist);
 
-  hardness = gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->hardness_output, *coords, fade_point);
+  hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
+                                                    *coords,
+                                                    fade_point);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 coords,
