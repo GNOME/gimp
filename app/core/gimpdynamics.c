@@ -357,19 +357,6 @@ gimp_dynamics_get_standard (void)
   return standard_dynamics;
 }
 
-gboolean
-gimp_dynamics_input_fade_enabled (GimpDynamics *dynamics)
-{
-  return (dynamics->opacity_output->use_fade      ||
-          dynamics->hardness_output->use_fade     ||
-          dynamics->rate_output->use_fade         ||
-          dynamics->size_output->use_fade         ||
-          dynamics->aspect_ratio_output->use_fade ||
-          dynamics->color_output->use_fade        ||
-          dynamics->jitter_output->use_fade       ||
-          dynamics->angle_output->use_fade);
-}
-
 
 /*  private functions  */
 

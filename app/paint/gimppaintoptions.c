@@ -528,7 +528,7 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
 
   fade_options = paint_options->fade_options;
 
-  if (gimp_dynamics_input_fade_enabled (gimp_context_get_dynamics (GIMP_CONTEXT (paint_options))))
+  if (fade_options->use_fade)
     {
       gdouble fade_out = 0.0;
       gdouble unit_factor;
@@ -538,11 +538,13 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
         case GIMP_UNIT_PIXEL:
           fade_out = fade_options->fade_length;
           break;
+
         case GIMP_UNIT_PERCENT:
           fade_out = (MAX (gimp_image_get_width  (image),
                            gimp_image_get_height (image)) *
                       fade_options->fade_length / 100);
           break;
+
         default:
           {
             gdouble xres;

@@ -52,12 +52,10 @@ struct _GimpDynamicsClass
 };
 
 
-GType      gimp_dynamics_get_type           (void) G_GNUC_CONST;
+GType      gimp_dynamics_get_type     (void) G_GNUC_CONST;
 
-GimpData * gimp_dynamics_new                (const gchar  *name);
-GimpData * gimp_dynamics_get_standard       (void);
-
-gboolean   gimp_dynamics_input_fade_enabled (GimpDynamics *dynamics);
+GimpData * gimp_dynamics_new          (const gchar  *name);
+GimpData * gimp_dynamics_get_standard (void);
 
 
 #endif  /*  __GIMP_DYNAMICS_H__  */
