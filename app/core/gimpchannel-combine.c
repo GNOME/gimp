@@ -131,10 +131,10 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 
 static void
 gimp_channel_combine_span (guchar         *data,
-                              GimpChannelOps  op,
-                              gint            x1,
-                              gint            x2,
-                              gint            value)
+                           GimpChannelOps  op,
+                           gint            x1,
+                           gint            x2,
+                           gint            value)
 {
   if (x2 <= x1)
     return;
@@ -304,7 +304,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                * legs are the X and Y distances.  (WES)
                */
               const gfloat yi       = ABS (py + 0.5 - ellipse_center_y);
-              gint         last_val = 0;
+              gint         last_val = -1;
               gint         x_start  = px;
               gint         cur_x;
 
@@ -357,13 +357,14 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                   else
                     val = 0;
 
-                  gimp_channel_combine_span (data, op,
-                                             MAX (x_start - px, 0),
-                                             MIN (cur_x   - px, maskPR.w),
-                                             last_val);
-
                   if (last_val != val)
                     {
+                      if (last_val != -1)
+                        gimp_channel_combine_span (data, op,
+                                                   MAX (x_start - px, 0),
+                                                   MIN (cur_x   - px, maskPR.w),
+                                                   last_val);
+
                       x_start = cur_x;
                       last_val = val;
                     }
@@ -373,6 +374,11 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                    */
                   if (cur_x >= x + a && cur_x < x + w - a)
                     {
+                      gimp_channel_combine_span (data, op,
+                                                 MAX (x_start - px, 0),
+                                                 MIN (cur_x   - px, maskPR.w),
+                                                 last_val);
+
                       x_start = cur_x;
                       cur_x = x + w - a;
                       last_val = val = 255;

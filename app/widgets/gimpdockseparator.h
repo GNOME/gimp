@@ -30,7 +30,8 @@
 #define GIMP_DOCK_SEPARATOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCK_SEPARATOR, GimpDockSeparatorClass))
 
 
-typedef struct _GimpDockSeparatorClass GimpDockSeparatorClass;
+typedef struct _GimpDockSeparatorPrivate GimpDockSeparatorPrivate;
+typedef struct _GimpDockSeparatorClass   GimpDockSeparatorClass;
 
 /**
  * GimpDockSeparator:
@@ -40,14 +41,9 @@ typedef struct _GimpDockSeparatorClass GimpDockSeparatorClass;
  */
 struct _GimpDockSeparator
 {
-  GtkEventBox    parent_instance;
+  GtkEventBox  parent_instance;
 
-  GimpDock      *dock;
-
-  GtkWidget     *frame;
-  GtkWidget     *label;
-
-  GtkAnchorType  anchor;
+  GimpDockSeparatorPrivate  *p;
 };
 
 struct _GimpDockSeparatorClass
@@ -56,13 +52,13 @@ struct _GimpDockSeparatorClass
 };
 
 
-GType       gimp_dock_separator_get_type       (void) G_GNUC_CONST;
-
-GtkWidget * gimp_dock_separator_new            (GimpDock          *dock,
-                                                GtkAnchorType      anchor);
-
-void        gimp_dock_separator_set_show_label (GimpDockSeparator *separator,
-                                                gboolean           show);
+GType          gimp_dock_separator_get_type       (void) G_GNUC_CONST;
+GtkWidget    * gimp_dock_separator_new            (GtkAnchorType                 anchor,
+                                                   GimpDockSeparatorDroppedFunc  dropped_cb,
+                                                   gpointer                      dropped_cb_data);
+GtkAnchorType  gimp_dock_separator_get_anchor     (GimpDockSeparator            *separator);
+void           gimp_dock_separator_set_show_label (GimpDockSeparator            *separator,
+                                                   gboolean                      show);
 
 
 #endif /* __GIMP_DOCK_SEPARATOR_H__ */

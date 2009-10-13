@@ -3,10 +3,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.4\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-12 15:26+0100\n"
-"PO-Revision-Date: 2008-03-05 21:54+0100\n"
-"Last-Translator: Kolbjørn Stuestøl <kol-stue@online.no>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2009-04-17 09:06+0000\n"
+"PO-Revision-Date: 2009-06-12 18:12+0100\n"
+"Last-Translator: Kolbjørn Stuestøl <stuestoel@online.no>\n"
 "Language-Team: Kolbjørn Stuestøl <kol-stue@online.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,6 +14,26 @@ msgstr ""
 "X-Poedit-Language: Norwegian Nynorsk\n"
 "X-Poedit-Country: NORWAY\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1045
+msgid "success"
+msgstr "vellukka"
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1049
+msgid "execution error"
+msgstr "utføringsfeil"
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1053
+msgid "calling error"
+msgstr "oppkallsfeil"
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1057
+msgid "cancelled"
+msgstr "avbrote"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -24,32 +44,37 @@ msgstr "Penselval"
 msgid "_Browse..."
 msgstr "_Bla gjennom..."
 
-#: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
+#: ../libgimp/gimpexport.c:217
+#: ../libgimp/gimpexport.c:253
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Programtillegget %s  kan ikkje handtere lag"
 
-#: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
-#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:218
+#: ../libgimp/gimpexport.c:227
+#: ../libgimp/gimpexport.c:236
+#: ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
 msgstr "Flett saman synlege lag"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr ""
-"Programtillegget %s kan ikkje handtere lagforskyving, storleik og dekkevne"
+msgstr "Programtillegget %s kan ikkje handtere lagforskyving, storleik og dekkevne"
 
-#: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
+#: ../libgimp/gimpexport.c:235
+#: ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Programtillegget %s kan bare handtere lag som animasjonsrammer"
 
-#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
+#: ../libgimp/gimpexport.c:236
+#: ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
 msgstr "Lagra som animasjon"
 
-#: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:245
+#: ../libgimp/gimpexport.c:254
 #: ../libgimp/gimpexport.c:263
 msgid "Flatten Image"
 msgstr "Flat ut biletet"
@@ -73,7 +98,8 @@ msgstr "Legg til lagmasker"
 msgid "%s plug-in can only handle RGB images"
 msgstr "Programtillegget %s kan bare handtere RGB-bilete"
 
-#: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:281
+#: ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
 msgstr "Konverter til RGB"
@@ -83,7 +109,8 @@ msgstr "Konverter til RGB"
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Programtillegget %s kan bare handtere gråtonebilete"
 
-#: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:290
+#: ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
 msgid "Convert to Grayscale"
 msgstr "Konverter til gråtoner"
@@ -93,7 +120,8 @@ msgstr "Konverter til gråtoner"
 msgid "%s plug-in can only handle indexed images"
 msgstr "Programtillegget %s kan bare handtere indekserte bilete"
 
-#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
+#: ../libgimp/gimpexport.c:299
+#: ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
@@ -105,8 +133,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"Programtillegget %s kan bare handtere indekserte punktbilet (to fargar)"
+msgstr "Programtillegget %s kan bare handtere indekserte punktbilet (to fargar)"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -163,16 +190,13 @@ msgstr "_Eksporter"
 #. the headline
 #: ../libgimp/gimpexport.c:499
 #, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
+msgid "Your image should be exported before it can be saved as %s for the following reasons:"
 msgstr "Du bør eksportera biletet før du lagrar det som %s fordi:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
-msgstr ""
-"Endringane gjort for å eksportera biletet vil ikkje endra originalbiletet."
+msgstr "Endringane gjort for å eksportera biletet vil ikkje endra originalbiletet."
 
 #: ../libgimp/gimpexport.c:673
 #, c-format
@@ -204,7 +228,8 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Val av fargeovergang"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
+#: ../libgimp/gimpmenu.c:450
+#: ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Tom)"
 
@@ -295,7 +320,8 @@ msgstr[0] "1 prosedyre passa til spørringa"
 msgstr[1] "%d prosedyrar passa til spørringa"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
+#: ../libgimp/gimpprocbrowserdialog.c:516
+#: ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
 msgstr "Ingen treff"
 
@@ -311,15 +337,15 @@ msgstr "Returverdiar"
 msgid "Additional Information"
 msgstr "Tilleggsinformasjon"
 
-#: ../libgimp/gimpprocview.c:210
+#: ../libgimp/gimpprocview.c:209
 msgid "Author:"
 msgstr "Forfattar:"
 
-#: ../libgimp/gimpprocview.c:222
+#: ../libgimp/gimpprocview.c:221
 msgid "Date:"
 msgstr "Dato:"
 
-#: ../libgimp/gimpprocview.c:234
+#: ../libgimp/gimpprocview.c:233
 msgid "Copyright:"
 msgstr "Opphavsrett:"
 
@@ -399,15 +425,18 @@ msgstr "Erstatt det gjeldande utvalet"
 msgid "Intersect with the current selection"
 msgstr "Snitt med det gjeldande utvalet"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Raud"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:164
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Grøn"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Blå"
 
@@ -415,11 +444,13 @@ msgstr "Blå"
 msgid "Gray"
 msgstr "Grå"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpbase/gimpbaseenums.c:532
+#: ../libgimpbase/gimpbaseenums.c:167
+#: ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed"
 msgstr "Indeksert"
 
-#: ../libgimpbase/gimpbaseenums.c:168 ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:168
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -499,7 +530,8 @@ msgstr "Bi-lineær"
 msgid "Radial"
 msgstr "Radial"
 
-#: ../libgimpbase/gimpbaseenums.c:392 ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libgimpbase/gimpbaseenums.c:392
+#: ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Firkanta"
 
@@ -568,7 +600,8 @@ msgstr "Biletfil"
 msgid "RGB color"
 msgstr "RGB-farge"
 
-#: ../libgimpbase/gimpbaseenums.c:495 ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:495
+#: ../libgimpbase/gimpbaseenums.c:530
 msgid "Grayscale"
 msgstr "Gråtoner"
 
@@ -616,7 +649,8 @@ msgstr "Konstant"
 msgid "Incremental"
 msgstr "Aukande"
 
-#: ../libgimpbase/gimpbaseenums.c:624 ../modules/cdisplay_lcms.c:195
+#: ../libgimpbase/gimpbaseenums.c:624
+#: ../modules/display-filter-lcms.c:191
 msgid "None"
 msgstr "Ingen"
 
@@ -684,77 +718,52 @@ msgstr "Beskjer til resultatet"
 msgid "Crop with aspect"
 msgstr "Beskjer med sideforhold"
 
-#: ../libgimpbase/gimpbaseenums.c:882
+#: ../libgimpbase/gimpbaseenums.c:909
 msgid "Internal GIMP procedure"
 msgstr "Intern GIMP-prosedyre"
 
-#: ../libgimpbase/gimpbaseenums.c:883
+#: ../libgimpbase/gimpbaseenums.c:910
 msgid "GIMP Plug-In"
 msgstr "Programtillegg for GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:884
+#: ../libgimpbase/gimpbaseenums.c:911
 msgid "GIMP Extension"
 msgstr "GIMP-utviding"
 
-#: ../libgimpbase/gimpbaseenums.c:885
+#: ../libgimpbase/gimpbaseenums.c:912
 msgid "Temporary Procedure"
 msgstr "Midlartidig prosedyre"
 
-#: ../libgimpbase/gimpmemsize.c:180
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d byte"
-msgstr[1] "%d byte"
+#: ../libgimpbase/gimpbaseenums.c:1074
+msgid "From left to right"
+msgstr "Får venstre til høgre"
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f KB"
+#: ../libgimpbase/gimpbaseenums.c:1075
+msgid "From right to left"
+msgstr "Frå høgre til venstre"
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f KB"
+#: ../libgimpbase/gimpbaseenums.c:1105
+msgid "Left justified"
+msgstr "Venstrejustert"
 
-#: ../libgimpbase/gimpmemsize.c:194
-#, c-format
-msgid "%d KB"
-msgstr "%d KB"
+#: ../libgimpbase/gimpbaseenums.c:1106
+msgid "Right justified"
+msgstr "Høgrejustert"
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f MB"
+#: ../libgimpbase/gimpbaseenums.c:1107
+#| msgid "C_enter"
+msgid "Centered"
+msgstr "Sentrert"
 
-#: ../libgimpbase/gimpmemsize.c:205
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f MB"
+#: ../libgimpbase/gimpbaseenums.c:1108
+msgid "Filled"
+msgstr "Fylt"
 
-#: ../libgimpbase/gimpmemsize.c:209
-#, c-format
-msgid "%d MB"
-msgstr "%d MB"
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f GB"
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f GB"
-
-#: ../libgimpbase/gimpmemsize.c:224
-#, c-format
-msgid "%d GB"
-msgstr "%d GB"
-
-#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:187 ../modules/colorsel_cmyk_lcms.c:411
-#: ../modules/colorsel_cmyk_lcms.c:417
+#: ../libgimpbase/gimputils.c:170
+#: ../libgimpbase/gimputils.c:175
+#: ../modules/display-filter-lcms.c:183
+#: ../modules/color-selector-cmyk-lcms.c:407
+#: ../modules/color-selector-cmyk-lcms.c:413
 msgid "(invalid UTF-8 string)"
 msgstr "(ugyldig «UTF-8»-streng)"
 
@@ -767,14 +776,8 @@ msgid "The color profile of your (primary) monitor."
 msgstr "Fargeprofilen for (primær)skjermen"
 
 #: ../libgimpconfig/gimpcolorconfig.c:46
-msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
-"windowing system.  The configured monitor profile is then only used as a "
-"fallback."
-msgstr ""
-"Dersom denne er aktivisert, vil GIMP prøve å bruke fargevisingsprofilen frå "
-"vindaugesystemet. Skjermprofilen blir då bare brukt for å ha noe å falle "
-"tilbake på."
+msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
+msgstr "Dersom denne er aktivert, vil GIMP prøve å bruke fargevisingsprofilen frå vindaugesystemet. Skjermprofilen blir då bare brukt for å ha noe å falle tilbake på."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
@@ -786,33 +789,23 @@ msgstr "Fargeprofilen CMYK blir brukt for å omforma mellom RGB og CMYK"
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr ""
-"Fargeprofilen som blir brukt for å simulera ein utskriven versjon (softproof)"
+msgstr "Fargeprofilen som blir brukt for å simulera ein utskriven versjon (softproof)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Bestemmer korleis fargane blir vist på skjermen"
 
 #: ../libgimpconfig/gimpcolorconfig.c:58
-msgid ""
-"Sets how colors are converted from RGB working space to the print simulation "
-"device."
-msgstr ""
-"Bestemmer korleis fargane blir omforma frå RGB-arbeidsområdet til "
-"utskriftsimuleringsutstyret."
+msgid "Sets how colors are converted from RGB working space to the print simulation device."
+msgstr "Bestemmer korleis fargane blir omforma frå RGB-arbeidsområdet til utskriftsimuleringsutstyret."
 
 #: ../libgimpconfig/gimpcolorconfig.c:61
-msgid ""
-"When enabled, the print simulation will mark colors which can not be "
-"represented in the target color space."
-msgstr ""
-"Utskriftsimuleringa vil gi dei fargane som ikkje finst i fargeområdet for "
-"utskrifta den fargen du har vald i ruta til høgre.."
+msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
+msgstr "Utskriftsimuleringa vil gi dei fargane som ikkje finst i fargeområdet for utskrifta den fargen du har vald i ruta til høgre.."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
-msgstr ""
-"Fargen som skal brukast for å merke fargar som ikkje finst i fargeområdet."
+msgstr "Fargen som skal brukast for å merke fargar som ikkje finst i fargeområdet."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -869,9 +862,10 @@ msgid "while parsing token '%s': %s"
 msgstr "under tolking av «%s»: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:474
-#: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:487
+#: ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:654
+#: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "fatal tolkingsfeil"
 
@@ -881,7 +875,7 @@ msgid "Cannot expand ${%s}"
 msgstr "Kan ikkje utvida $(%s)"
 
 #: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:693
+#: ../libgimpconfig/gimpconfigwriter.c:718
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Feil under skriving av «%s»: %s"
@@ -896,7 +890,8 @@ msgstr "Kunne ikkje oppretta ei mellombels fil for «%s»: %s"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kan ikkje opna «%s» for skriving: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -905,7 +900,7 @@ msgstr ""
 "Feil ved skriving til mellombels fil for «%s»: %s\n"
 "Originalfila er uforandra."
 
-#: ../libgimpconfig/gimpconfigwriter.c:682
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -914,7 +909,7 @@ msgstr ""
 "Feil under skriving til mellombels fil for «%s»: %s\n"
 "Det blei ikkje oppratta ny fil."
 
-#: ../libgimpconfig/gimpconfigwriter.c:711
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Kunne ikkje oppretta «%s»: %s"
@@ -931,8 +926,10 @@ msgstr ""
 "Feil ved tolking av «%s» i linje %d:\n"
 " %s"
 
-#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
-#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:153
+#: ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280
+#: ../libgimpmodule/gimpmodule.c:307
 #: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
@@ -954,7 +951,7 @@ msgstr "Lastinga mislukka"
 msgid "Not loaded"
 msgstr "Ikkje lasta"
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libgimpthumb/gimpthumb-utils.c:123
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -963,7 +960,8 @@ msgstr ""
 "Fann ikkje ein gyldig heimekatalog.\n"
 "Miniatyrane blei lagra i mappa for temporære filer (%s) i staden."
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:247
+#: ../libgimpthumb/gimpthumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kunne ikkje oppretta miniatyrbiletmappa «%s.»"
@@ -971,7 +969,7 @@ msgstr "Kunne ikkje oppretta miniatyrbiletmappa «%s.»"
 #: ../libgimpthumb/gimpthumbnail.c:498
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr ""
+msgstr "Miniatyren inneheld ingen «Thumb::URI»-tag"
 
 #: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
@@ -1003,7 +1001,9 @@ msgid "Select color profile from disk..."
 msgstr "Vel fargeprofil frå disk..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-msgid "profile|None"
+#| msgid "None"
+msgctxt "profile"
+msgid "None"
 msgstr "Ingen"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
@@ -1019,16 +1019,16 @@ msgid "Old:"
 msgstr "Gammal:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:286
-msgid ""
-"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
-"CSS color names."
-msgstr ""
-"Hexadesimal fargenotasjon slik som brukt i HTML og CSS. Du kan også bruke "
-"CSS fargenamn."
+msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
+msgstr "Hexadesimal fargenotasjon slik som brukt i HTML og CSS. Du kan også bruke CSS fargenamn."
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML-_notasjon:"
+
+#: ../libgimpwidgets/gimphelpui.c:420
+msgid "Press F1 for more help"
+msgstr "Trykk F1 for meir hjelp"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
@@ -1107,12 +1107,8 @@ msgid "Folder"
 msgstr "Mappe"
 
 #: ../libgimpwidgets/gimppickbutton.c:107
-msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select "
-"that color."
-msgstr ""
-"Klikk på fargeplukkaren. Deretter kan du klikka kvar som helst på skjermen "
-"for å velje farge."
+msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
+msgstr "Klikk på fargeplukkaren. Deretter kan du klikka kvar som helst på skjermen for å velje farge."
 
 #: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
@@ -1127,66 +1123,68 @@ msgstr "Rutestil"
 msgid "_Preview"
 msgstr "_Førehandsvising"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1859
+#: ../libgimpwidgets/gimppropwidgets.c:1860
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Dette tekstfeltet er avgrensa til %d teikn."
 msgstr[1] "Dette tekstfeltet er avgrensa til %d teikn."
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
 msgstr "Anker"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "C_enter"
 msgstr "S_enter"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "_Duplikat"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "R_ediger"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "Lenka"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "Lim inn som nytt"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "Lim inn i"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
-#: ../libgimpwidgets/gimpstock.c:121
+#: ../libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Synleg"
 
-#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+#: ../libgimpwidgets/gimpstock.c:156
+#: ../libgimpwidgets/gimpstock.c:160
 msgid "_Stroke"
 msgstr "_Strek opp"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libgimpwidgets/gimpstock.c:172
 msgid "L_etter Spacing"
 msgstr "_Bokstavmellomrom"
 
-#: ../libgimpwidgets/gimpstock.c:174
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_ine Spacing"
 msgstr "_Linjeavstand"
 
-#: ../libgimpwidgets/gimpstock.c:190
+#: ../libgimpwidgets/gimpstock.c:189
 msgid "_Resize"
 msgstr "_Nytt format"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:321
+#: ../libgimpwidgets/gimpstock.c:190
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Scale"
 msgstr "_Skaler"
 
@@ -1198,11 +1196,11 @@ msgstr "_Beskjer"
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:319
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: ../libgimpwidgets/gimpstock.c:322
+#: ../libgimpwidgets/gimpstock.c:321
 msgid "_Shear"
 msgstr "_Forskyv"
 
@@ -1223,12 +1221,8 @@ msgid "Factor"
 msgstr "Faktor"
 
 #: ../libgimpwidgets/gimpwidgets.c:511
-msgid ""
-"Use this value for random number generator seed - this allows you to repeat "
-"a given \"random\" operation"
-msgstr ""
-"Bruk denne verdien som startverdi for generering av tilfeldige tal - dette "
-"lar deg gjenta ein bestemt «tilfeldig» operasjon"
+msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "Bruk denne verdien som startverdi for generering av tilfeldige tal - dette lar deg gjenta ein bestemt «tilfeldig» operasjon"
 
 #: ../libgimpwidgets/gimpwidgets.c:515
 msgid "_New Seed"
@@ -1236,8 +1230,7 @@ msgstr "_Nytt frø"
 
 #: ../libgimpwidgets/gimpwidgets.c:528
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Gi generator for tilfeldige tal eit generert tilfeldig tall som startverdi"
+msgstr "Gi generator for tilfeldige tal eit generert tilfeldig tall som startverdi"
 
 #: ../libgimpwidgets/gimpwidgets.c:532
 msgid "_Randomize"
@@ -1307,543 +1300,579 @@ msgstr "Forstørr"
 msgid "Zoom out"
 msgstr "Forminsk"
 
-#: ../modules/cdisplay_colorblind.c:67
+#: ../modules/display-filter-color-blind.c:67
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopi (raudblind)"
 
-#: ../modules/cdisplay_colorblind.c:69
+#: ../modules/display-filter-color-blind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopi (grønblind)"
 
-#: ../modules/cdisplay_colorblind.c:71
+#: ../modules/display-filter-color-blind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopi (blåblind)"
 
-#: ../modules/cdisplay_colorblind.c:198
+#: ../modules/display-filter-color-blind.c:198
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-"Simuleringsfilter for avvikande fargesyn (Brettel-Vienot-Mollon-algoritmen)"
+msgstr "Simuleringsfilter for avvikande fargesyn (Brettel-Vienot-Mollon-algoritmen)"
 
-#: ../modules/cdisplay_colorblind.c:261
+#: ../modules/display-filter-color-blind.c:261
 msgid "Color Deficient Vision"
 msgstr "For fargesvakt syn"
 
-#: ../modules/cdisplay_colorblind.c:483
+#: ../modules/display-filter-color-blind.c:483
 msgid "Color _deficiency type:"
 msgstr "Type farge_synssvikt:"
 
-#: ../modules/cdisplay_gamma.c:90
+#: ../modules/display-filter-gamma.c:90
 msgid "Gamma color display filter"
 msgstr "Visingsfilter for gammafargar"
 
-#: ../modules/cdisplay_gamma.c:129
+#: ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:232
+#: ../modules/display-filter-gamma.c:232
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../modules/cdisplay_highcontrast.c:90
+#: ../modules/display-filter-high-contrast.c:90
 msgid "High Contrast color display filter"
 msgstr "Visingsfilter for høgkontrastfargar"
 
-#: ../modules/cdisplay_highcontrast.c:129
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../modules/cdisplay_highcontrast.c:232
+#: ../modules/display-filter-high-contrast.c:232
 msgid "Contrast c_ycles:"
 msgstr "_Kontrastsyklusar:"
 
-#: ../modules/cdisplay_lcms.c:106
+#: ../modules/display-filter-lcms.c:102
 msgid "Color management display filter using ICC color profiles"
 msgstr "Visingsfilter for fargestyring med ICC fargeprofilar"
 
-#: ../modules/cdisplay_lcms.c:138
+#: ../modules/display-filter-lcms.c:134
 msgid "Color Management"
 msgstr "Fargestyring"
 
-#: ../modules/cdisplay_lcms.c:216
-msgid ""
-"This filter takes its configuration from the Color Management section in the "
-"Preferences dialog."
-msgstr ""
-"Filteret hentar innstillingane sine frå seksjonen fargestyring i "
-"brukarinnstillingane."
+#: ../modules/display-filter-lcms.c:212
+msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
+msgstr "Filteret hentar innstillingane sine frå seksjonen fargestyring i brukarinnstillingane."
 
-#: ../modules/cdisplay_lcms.c:230
+#: ../modules/display-filter-lcms.c:226
 msgid "Mode of operation:"
 msgstr "Operasjonsmodus:"
 
-#: ../modules/cdisplay_lcms.c:237
+#: ../modules/display-filter-lcms.c:233
 msgid "Image profile:"
 msgstr "Biletprofil:"
 
-#: ../modules/cdisplay_lcms.c:245
+#: ../modules/display-filter-lcms.c:241
 msgid "Monitor profile:"
 msgstr "Skjermprofil"
 
-#: ../modules/cdisplay_lcms.c:253
+#: ../modules/display-filter-lcms.c:249
 msgid "Print simulation profile:"
 msgstr "Skriv ut simuleringsprofil:"
 
-#: ../modules/cdisplay_proof.c:101
+#: ../modules/display-filter-proof.c:97
 msgid "Color proof filter using ICC color profile"
 msgstr "Fargeprofilfilter for ICC fargeprofil"
 
-#: ../modules/cdisplay_proof.c:149
+#: ../modules/display-filter-proof.c:145
 msgid "Color Proof"
 msgstr "Fargeprøvetrykk"
 
-#: ../modules/cdisplay_proof.c:315
+#: ../modules/display-filter-proof.c:311
 msgid "Choose an ICC Color Profile"
 msgstr "Vel ein ICC-fargeprofil"
 
-#: ../modules/cdisplay_proof.c:342
+#: ../modules/display-filter-proof.c:338
 msgid "All files (*.*)"
 msgstr "Alle filer (*.*)"
 
-#: ../modules/cdisplay_proof.c:347
+#: ../modules/display-filter-proof.c:343
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-fargeprofil (*.icc, *.icm)"
 
-#: ../modules/cdisplay_proof.c:405
+#: ../modules/display-filter-proof.c:401
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:411
+#: ../modules/display-filter-proof.c:407
 msgid "_Intent:"
 msgstr "_Føremål:"
 
-#: ../modules/cdisplay_proof.c:416
+#: ../modules/display-filter-proof.c:412
 msgid "_Black Point Compensation"
 msgstr "_Svartpunktkompensering"
 
-#: ../modules/colorsel_cmyk.c:71
+#: ../modules/color-selector-cmyk.c:71
 msgid "CMYK color selector"
 msgstr "CMYK fargeveljar"
 
-#: ../modules/colorsel_cmyk.c:102 ../modules/colorsel_cmyk_lcms.c:154
+#: ../modules/color-selector-cmyk.c:102
+#: ../modules/color-selector-cmyk-lcms.c:150
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:125 ../modules/colorsel_cmyk_lcms.c:173
+#: ../modules/color-selector-cmyk.c:125
+#: ../modules/color-selector-cmyk-lcms.c:169
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:127 ../modules/colorsel_cmyk_lcms.c:175
+#: ../modules/color-selector-cmyk.c:127
+#: ../modules/color-selector-cmyk-lcms.c:171
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:129 ../modules/colorsel_cmyk_lcms.c:177
+#: ../modules/color-selector-cmyk.c:129
+#: ../modules/color-selector-cmyk-lcms.c:173
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:131 ../modules/colorsel_cmyk_lcms.c:179
+#: ../modules/color-selector-cmyk.c:131
+#: ../modules/color-selector-cmyk-lcms.c:175
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:135 ../modules/colorsel_cmyk_lcms.c:183
+#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk-lcms.c:179
 msgid "Cyan"
 msgstr "Cyanblå"
 
-#: ../modules/colorsel_cmyk.c:136 ../modules/colorsel_cmyk_lcms.c:184
+#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk-lcms.c:180
 msgid "Magenta"
 msgstr "Magentaraud"
 
-#: ../modules/colorsel_cmyk.c:137 ../modules/colorsel_cmyk_lcms.c:185
+#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk-lcms.c:181
 msgid "Yellow"
 msgstr "Gul"
 
-#: ../modules/colorsel_cmyk.c:138 ../modules/colorsel_cmyk_lcms.c:186
+#: ../modules/color-selector-cmyk.c:138
+#: ../modules/color-selector-cmyk-lcms.c:182
 msgid "Black"
 msgstr "Svart"
 
-#: ../modules/colorsel_cmyk.c:172
+#: ../modules/color-selector-cmyk.c:172
 msgid "Black _pullout:"
 msgstr "Svart_mengde:"
 
-#: ../modules/colorsel_cmyk.c:189
+#: ../modules/color-selector-cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Prosentandelen av svart som skal lagast med fargeblekk."
 
-#: ../modules/colorsel_cmyk_lcms.c:91
+#: ../modules/color-selector-cmyk-lcms.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK fargeveljar (med fargeprofil)"
 
-#: ../modules/colorsel_cmyk_lcms.c:399
+#: ../modules/color-selector-cmyk-lcms.c:395
 msgid "Profile: (none)"
 msgstr "Profil: (ingen)"
 
-#: ../modules/colorsel_cmyk_lcms.c:420
+#: ../modules/color-selector-cmyk-lcms.c:416
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: ../modules/colorsel_triangle.c:102
-msgid "Painter-style triangle color selector"
-msgstr "Triangulær fargevelgjar i målarstil"
-
-#: ../modules/colorsel_triangle.c:138
-msgid "Triangle"
-msgstr "Fargetrekant"
-
-#: ../modules/colorsel_water.c:82
+#: ../modules/color-selector-water.c:82
 msgid "Watercolor style color selector"
 msgstr "Fargeveljar i akvarellstil"
 
-#: ../modules/colorsel_water.c:118
+#: ../modules/color-selector-water.c:118
 msgid "Watercolor"
 msgstr "Akvarell"
 
-#: ../modules/colorsel_water.c:186
+#: ../modules/color-selector-water.c:186
 msgid "Pressure"
 msgstr "Trykk"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/color-selector-wheel.c:103
+msgid "HSV color wheel"
+msgstr "HSV-fargehjul"
+
+#: ../modules/color-selector-wheel.c:134
+msgid "Wheel"
+msgstr "Hjul"
+
+#: ../modules/controller-linux-input.c:58
 msgid "Button 0"
 msgstr "Knapp 0"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller-linux-input.c:59
 msgid "Button 1"
 msgstr "Knapp 1"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller-linux-input.c:60
 msgid "Button 2"
 msgstr "Knapp 2"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller-linux-input.c:61
 msgid "Button 3"
 msgstr "Knapp 3"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller-linux-input.c:62
 msgid "Button 4"
 msgstr "Knapp 4"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller-linux-input.c:63
 msgid "Button 5"
 msgstr "Knapp 5"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller-linux-input.c:64
 msgid "Button 6"
 msgstr "Knapp 6"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller-linux-input.c:65
 msgid "Button 7"
 msgstr "Knapp 7"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller-linux-input.c:66
 msgid "Button 8"
 msgstr "Knapp 8"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller-linux-input.c:67
 msgid "Button 9"
 msgstr "Knapp 9"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller-linux-input.c:68
 msgid "Button Mouse"
 msgstr "Museknapp"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller-linux-input.c:69
 msgid "Button Left"
 msgstr "Venstre knapp"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller-linux-input.c:70
 msgid "Button Right"
 msgstr "Høgre knapp"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller-linux-input.c:71
 msgid "Button Middle"
 msgstr "Midtknapp"
 
-#: ../modules/controller_linux_input.c:72
+#: ../modules/controller-linux-input.c:72
 msgid "Button Side"
 msgstr "Sideknapp"
 
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller-linux-input.c:73
 msgid "Button Extra"
 msgstr "Ekstraknapp"
 
-#: ../modules/controller_linux_input.c:74
+#: ../modules/controller-linux-input.c:74
 msgid "Button Forward"
 msgstr "Framoverknapp"
 
-#: ../modules/controller_linux_input.c:75
+#: ../modules/controller-linux-input.c:75
 msgid "Button Back"
 msgstr "Bakoverknapp"
 
-#: ../modules/controller_linux_input.c:76
+#: ../modules/controller-linux-input.c:76
 msgid "Button Task"
 msgstr "Oppgåveknapp"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller-linux-input.c:78
 msgid "Button Wheel"
 msgstr "Musehjul"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller-linux-input.c:81
 msgid "Button Gear Down"
 msgstr "Gir ned knapp"
 
-#: ../modules/controller_linux_input.c:84
+#: ../modules/controller-linux-input.c:84
 msgid "Button Gear Up"
 msgstr "Gir opp knapp"
 
-#: ../modules/controller_linux_input.c:90
-#: ../modules/controller_dx_dinput.c:443
+#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:443
 msgid "X Move Left"
 msgstr "X-flytt venstre"
 
-#: ../modules/controller_linux_input.c:91
-#: ../modules/controller_dx_dinput.c:446
+#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:446
 msgid "X Move Right"
 msgstr "X-flytt høgre"
 
-#: ../modules/controller_linux_input.c:92
+#: ../modules/controller-linux-input.c:92
 msgid "Y Move Forward"
 msgstr "Y-flytt framover"
 
-#: ../modules/controller_linux_input.c:93
+#: ../modules/controller-linux-input.c:93
 msgid "Y Move Back"
 msgstr "Y-flytt bakover"
 
-#: ../modules/controller_linux_input.c:94
-#: ../modules/controller_dx_dinput.c:461
+#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:461
 msgid "Z Move Up"
 msgstr "Z-flytt oppover"
 
-#: ../modules/controller_linux_input.c:95
-#: ../modules/controller_dx_dinput.c:464
+#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:464
 msgid "Z Move Down"
 msgstr "Z-flytt nedover"
 
-#: ../modules/controller_linux_input.c:97
+#: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
 msgstr "X-akse hell framover"
 
-#: ../modules/controller_linux_input.c:98
+#: ../modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
 msgstr "X-akse hell bakover"
 
-#: ../modules/controller_linux_input.c:99
-#: ../modules/controller_dx_dinput.c:479
+#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:479
 msgid "Y Axis Tilt Right"
 msgstr "X-akse hell mot høgre"
 
-#: ../modules/controller_linux_input.c:100
-#: ../modules/controller_dx_dinput.c:482
+#: ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:482
 msgid "Y Axis Tilt Left"
 msgstr "X-akse hell mot venstre"
 
-#: ../modules/controller_linux_input.c:101
-#: ../modules/controller_dx_dinput.c:488
+#: ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:488
 msgid "Z Axis Turn Left"
 msgstr "Z-akse vend mot venstre"
 
-#: ../modules/controller_linux_input.c:102
-#: ../modules/controller_dx_dinput.c:491
+#: ../modules/controller-linux-input.c:102
+#: ../modules/controller-dx-dinput.c:491
 msgid "Z Axis Turn Right"
 msgstr "Z-akse vend mot høgre"
 
-#: ../modules/controller_linux_input.c:104
+#: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
-msgstr ""
+msgstr "Vassrett hjul bakover"
 
-#: ../modules/controller_linux_input.c:105
+#: ../modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
-msgstr ""
+msgstr "Vassrett hjul forover"
 
-#: ../modules/controller_linux_input.c:106
+#: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
 msgstr "Snu til venstre"
 
-#: ../modules/controller_linux_input.c:107
+#: ../modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
 msgstr "Snu til høgre"
 
-#: ../modules/controller_linux_input.c:108
+#: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
 msgstr "Hjulrotasjon venstre"
 
-#: ../modules/controller_linux_input.c:109
+#: ../modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
 msgstr "Hjulrotasjon høgre"
 
-#: ../modules/controller_linux_input.c:178
+#: ../modules/controller-linux-input.c:178
 msgid "Linux input event controller"
 msgstr "Linux hendingskontrollar for inndata"
 
-#: ../modules/controller_linux_input.c:218
-#: ../modules/controller_dx_dinput.c:196 ../modules/controller_midi.c:212
+#: ../modules/controller-linux-input.c:218
+#: ../modules/controller-dx-dinput.c:196
+#: ../modules/controller-midi.c:212
 msgid "Device:"
 msgstr "_Eining:"
 
-#: ../modules/controller_linux_input.c:219
+#: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
 msgstr "Namnet på utstyret som inneheld Linux inndatahendingane"
 
-#: ../modules/controller_linux_input.c:230
+#: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
 msgstr "Linux Input"
 
-#: ../modules/controller_linux_input.c:513
+#: ../modules/controller-linux-input.c:513
 msgid "Linux Input Events"
 msgstr "Linux Input Events"
 
-#: ../modules/controller_linux_input.c:525
-#: ../modules/controller_dx_dinput.c:1095 ../modules/controller_midi.c:505
+#: ../modules/controller-linux-input.c:525
+#: ../modules/controller-dx-dinput.c:1095
+#: ../modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Inga eining er konfigurert"
 
-#: ../modules/controller_linux_input.c:551 ../modules/controller_midi.c:454
-#: ../modules/controller_midi.c:480
+#: ../modules/controller-linux-input.c:551
+#: ../modules/controller-midi.c:454
+#: ../modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "Les frå %s"
 
-#: ../modules/controller_linux_input.c:569
-#: ../modules/controller_linux_input.c:623 ../modules/controller_midi.c:436
-#: ../modules/controller_midi.c:497 ../modules/controller_midi.c:568
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623
+#: ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497
+#: ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "Eininga er ikkje tilgjengeleg: %s"
 
-#: ../modules/controller_linux_input.c:588
-#: ../modules/controller_dx_dinput.c:1120
+#: ../modules/controller-linux-input.c:588
+#: ../modules/controller-dx-dinput.c:1120
 msgid "Device not available"
 msgstr "Eininga er ikkje tilgjengeleg"
 
-#: ../modules/controller_linux_input.c:632 ../modules/controller_midi.c:577
+#: ../modules/controller-linux-input.c:632
+#: ../modules/controller-midi.c:577
 msgid "End of file"
 msgstr "Filslutt"
 
-#: ../modules/controller_dx_dinput.c:156
+#: ../modules/controller-dx-dinput.c:156
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX hendingskontrollar for direkteinngang"
 
-#: ../modules/controller_dx_dinput.c:197
+#: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
 msgstr "Einingar som det skal lesast direkteinngangshendingar from"
 
-#: ../modules/controller_dx_dinput.c:206
+#: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller_dx_dinput.c:420
+#: ../modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "Knapp %d"
 
-#: ../modules/controller_dx_dinput.c:423
+#: ../modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "Knapp %d trykt"
 
-#: ../modules/controller_dx_dinput.c:426
+#: ../modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "Knapp %d ikkje trykt"
 
-#: ../modules/controller_dx_dinput.c:452
+#: ../modules/controller-dx-dinput.c:452
 msgid "Y Move Away"
 msgstr "Flytt tilbake Y"
 
-#: ../modules/controller_dx_dinput.c:455
+#: ../modules/controller-dx-dinput.c:455
 msgid "Y Move Near"
 msgstr "Flytt nærare Y"
 
-#: ../modules/controller_dx_dinput.c:470
+#: ../modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Away"
 msgstr "X-akse hell tilbake"
 
-#: ../modules/controller_dx_dinput.c:473
+#: ../modules/controller-dx-dinput.c:473
 msgid "X Axis Tilt Near"
 msgstr "X-akse hell framover"
 
-#: ../modules/controller_dx_dinput.c:502
+#: ../modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Glidebrytar %d minkar"
 
-#: ../modules/controller_dx_dinput.c:505
+#: ../modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Glidebrytar %d aukar"
 
-#: ../modules/controller_dx_dinput.c:515
+#: ../modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d x-vis"
 
-#: ../modules/controller_dx_dinput.c:518
+#: ../modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d y-vis"
 
-#: ../modules/controller_dx_dinput.c:521
+#: ../modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d return"
 
-#: ../modules/controller_dx_dinput.c:1084
+#: ../modules/controller-dx-dinput.c:1084
 msgid "DirectInput Events"
 msgstr "DirectInput hendingar"
 
-#: ../modules/controller_midi.c:164
+#: ../modules/controller-midi.c:164
 msgid "MIDI event controller"
 msgstr "MIDI hendingskontrollar"
 
-#: ../modules/controller_midi.c:203
+#: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
 msgstr "Namnet på utstyret som inneheld MIDI-hendingane"
 
-#: ../modules/controller_midi.c:206
+#: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Skriv inn  «alsa» for å bruke ALSA-sekvenser."
 
-#: ../modules/controller_midi.c:221
+#: ../modules/controller-midi.c:221
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: ../modules/controller_midi.c:222
-msgid ""
-"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
-"channels."
-msgstr ""
-"Namnet på utstyret som inneheld MIDI-hendingane. Sett til -1 for å lesa frå "
-"alle MIDI-kanalane."
+#: ../modules/controller-midi.c:222
+msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
+msgstr "Namnet på utstyret som inneheld MIDI-hendingane. Sett til -1 for å lesa frå alle MIDI-kanalane."
 
-#: ../modules/controller_midi.c:226
+#: ../modules/controller-midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:355
+#: ../modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "Note %02x på"
 
-#: ../modules/controller_midi.c:358
+#: ../modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "Note %02x av"
 
-#: ../modules/controller_midi.c:361
+#: ../modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "Kontrollar %03d"
 
-#: ../modules/controller_midi.c:408
+#: ../modules/controller-midi.c:408
 msgid "MIDI Events"
 msgstr "MIDI-hendingar"
 
-#: ../modules/controller_midi.c:426
+#: ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller_midi.c:428
+#: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI inndatakontrollar"
+
+#~ msgid "%d Byte"
+#~ msgid_plural "%d Bytes"
+#~ msgstr[0] "%d byte"
+#~ msgstr[1] "%d byte"
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f KB"
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f KB"
+#~ msgid "%d KB"
+#~ msgstr "%d KB"
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f MB"
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f MB"
+#~ msgid "%d MB"
+#~ msgstr "%d MB"
+#~ msgid "%.2f GB"
+#~ msgstr "%.2f GB"
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f GB"
+#~ msgid "%d GB"
+#~ msgstr "%d GB"
+#~ msgid "profile|None"
+#~ msgstr "Ingen"
+#~ msgid "Painter-style triangle color selector"
+#~ msgstr "Triangulær fargevelgjar i målarstil"
+#~ msgid "Triangle"
+#~ msgstr "Fargetrekant"
+

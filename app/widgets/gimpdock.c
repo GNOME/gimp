@@ -36,6 +36,7 @@
 #include "gimpdockbook.h"
 #include "gimpdockseparator.h"
 #include "gimpuimanager.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -90,6 +91,9 @@ static void      gimp_dock_real_book_added   (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
 static void      gimp_dock_real_book_removed (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
+static gboolean  gimp_dock_dropped_cb        (GimpDockSeparator     *separator,
+                                              GtkWidget             *source,
+                                              gpointer               data);
 static void      gimp_dock_show_separators   (GimpDock              *dock,
                                               gboolean               show);
 
@@ -202,8 +206,16 @@ gimp_dock_init (GimpDock *dock)
   gtk_container_add (GTK_CONTAINER (dock->p->main_vbox), dock->p->vbox);
   gtk_widget_show (dock->p->vbox);
 
-  dock->p->north_separator = gimp_dock_separator_new (dock, GTK_ANCHOR_NORTH);
-  gtk_box_pack_start (GTK_BOX (dock->p->vbox), dock->p->north_separator, FALSE, FALSE, 0);
+  dock->p->north_separator = gimp_dock_separator_new (GTK_ANCHOR_NORTH,
+                                                      gimp_dock_dropped_cb,
+                                                      dock);
+  dock->p->south_separator = gimp_dock_separator_new (GTK_ANCHOR_SOUTH,
+                                                      gimp_dock_dropped_cb,
+                                                      dock);
+  gtk_box_pack_start (GTK_BOX (dock->p->vbox), dock->p->north_separator,
+                      FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (dock->p->vbox), dock->p->south_separator,
+                    FALSE, FALSE, 0);
 
   dock_instances = g_list_prepend (dock_instances, dock);
 }
@@ -305,19 +317,86 @@ gimp_dock_real_book_removed (GimpDock     *dock,
 {
 }
 
+static gboolean
+gimp_dock_dropped_cb (GimpDockSeparator *separator,
+                      GtkWidget         *source,
+                      gpointer           data)
+{
+  GimpDock     *dock     = GIMP_DOCK (data);
+  GimpDockable *dockable = NULL;
+  GtkWidget    *dockbook = NULL;
+  gint          index    = -1;
+
+  if (GIMP_IS_DOCKABLE (source))
+    dockable = GIMP_DOCKABLE (source);
+  else
+    dockable = g_object_get_data (G_OBJECT (source), "gimp-dockable");
+
+  if (!dockable )
+    return FALSE;
+
+  g_object_set_data (G_OBJECT (dockable),
+                     "gimp-dock-drag-widget", NULL);
+
+  if (gimp_dock_separator_get_anchor (separator) == GTK_ANCHOR_NORTH)
+    index = 0;
+  else if (gimp_dock_separator_get_anchor (separator) == GTK_ANCHOR_SOUTH)
+    index = -1;
+
+  /*  if dropping to the same dock, take care that we don't try
+   *  to reorder the *only* dockable in the dock
+   */
+  if (gimp_dockbook_get_dock (dockable->dockbook) == dock)
+    {
+      GList *children;
+      gint   n_books;
+      gint   n_dockables;
+
+      n_books = g_list_length (gimp_dock_get_dockbooks (dock));
+
+      children = gtk_container_get_children (GTK_CONTAINER (dockable->dockbook));
+      n_dockables = g_list_length (children);
+      g_list_free (children);
+
+      if (n_books == 1 && n_dockables == 1)
+        return TRUE; /* successfully do nothing */
+    }
+
+  /* Detach the dockable from the old dockbook */
+  g_object_ref (dockable);
+  gimp_dockbook_remove (dockable->dockbook, dockable);
+
+  /* Create a new dockbook */
+  dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (dock)->menu_factory);
+  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
+
+  /* Add the dockable to new new dockbook */
+  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
+  g_object_unref (dockable);
+
+  return TRUE;
+}
+
 static void
 gimp_dock_show_separators (GimpDock *dock,
                            gboolean  show)
 {
-  if (dock->p->north_separator)
-    g_object_set (dock->p->north_separator,
-                  "visible", show,
-                  NULL);
+  if (show)
+    {
+      gtk_widget_show (dock->p->north_separator);
 
-  if (dock->p->south_separator)
-    g_object_set (dock->p->south_separator,
-                  "visible", show,
-                  NULL);
+      /* Only show the south separator if there are any dockbooks */
+      if (g_list_length (dock->p->dockbooks) > 0)
+        gtk_widget_show (dock->p->south_separator);
+    }
+  else /* (! show) */
+    {
+      /* Hide separators unconditionally so we can handle the case
+       * where we remove the last dockbook while separators are shown
+       */
+      gtk_widget_hide (dock->p->north_separator);
+      gtk_widget_hide (dock->p->south_separator);
+    }
 }
 
 /*  public functions  */
@@ -504,81 +583,18 @@ gimp_dock_add_book (GimpDock     *dock,
                     GimpDockbook *dockbook,
                     gint          index)
 {
-  gint old_length;
-
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
   g_return_if_fail (gimp_dockbook_get_dock (dockbook) == NULL);
 
-  old_length = g_list_length (dock->p->dockbooks);
-
-  if (index >= old_length || index < 0)
-    index = old_length;
-
   gimp_dockbook_set_dock (dockbook, dock);
-  dock->p->dockbooks = g_list_insert (dock->p->dockbooks, dockbook, index);
 
-  if (old_length == 0)
-    {
-      gtk_box_pack_start (GTK_BOX (dock->p->vbox), GTK_WIDGET (dockbook),
-                          TRUE, TRUE, 0);
-
-      dock->p->south_separator = gimp_dock_separator_new (dock, GTK_ANCHOR_SOUTH);
-      gtk_box_pack_end (GTK_BOX (dock->p->vbox), dock->p->south_separator, FALSE, FALSE, 0);
-    }
-  else
-    {
-      GtkWidget *old_book;
-      GtkWidget *parent;
-      GtkWidget *paned;
-
-      if (index == 0)
-        old_book = g_list_nth_data (dock->p->dockbooks, index + 1);
-      else
-        old_book = g_list_nth_data (dock->p->dockbooks, index - 1);
-
-      parent = gtk_widget_get_parent (old_book);
-
-      if ((old_length > 1) && (index > 0))
-        {
-          GtkWidget *grandparent;
-
-          grandparent = gtk_widget_get_parent (parent);
-
-          old_book = parent;
-          parent   = grandparent;
-        }
-
-      g_object_ref (old_book);
-
-      gtk_container_remove (GTK_CONTAINER (parent), old_book);
-
-      paned = gtk_vpaned_new ();
-
-      if (GTK_IS_VPANED (parent))
-        gtk_paned_pack1 (GTK_PANED (parent), paned, TRUE, FALSE);
-      else
-        gtk_box_pack_start (GTK_BOX (parent), paned, TRUE, TRUE, 0);
-
-      gtk_widget_show (paned);
-
-      if (index == 0)
-        {
-          gtk_paned_pack1 (GTK_PANED (paned), GTK_WIDGET (dockbook),
-                           TRUE, FALSE);
-          gtk_paned_pack2 (GTK_PANED (paned), old_book,
-                           TRUE, FALSE);
-        }
-      else
-        {
-          gtk_paned_pack1 (GTK_PANED (paned), old_book,
-                           TRUE, FALSE);
-          gtk_paned_pack2 (GTK_PANED (paned), GTK_WIDGET (dockbook),
-                           TRUE, FALSE);
-        }
-
-      g_object_unref (old_book);
-    }
+  /* Add the dockbook to the hierarchy of GtkPaned:s */
+  gimp_widgets_add_paned_widget (GTK_BOX (dock->p->vbox),
+                                 &dock->p->dockbooks,
+                                 dock->p->south_separator,
+                                 GTK_WIDGET (dockbook),
+                                 index);
 
   gtk_widget_show (GTK_WIDGET (dockbook));
 
@@ -589,56 +605,21 @@ void
 gimp_dock_remove_book (GimpDock     *dock,
                        GimpDockbook *dockbook)
 {
-  gint old_length;
-  gint index;
-
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
-
   g_return_if_fail (gimp_dockbook_get_dock (dockbook) == dock);
 
-  old_length = g_list_length (dock->p->dockbooks);
-  index      = g_list_index (dock->p->dockbooks, dockbook);
-
   gimp_dockbook_set_dock (dockbook, NULL);
-  dock->p->dockbooks = g_list_remove (dock->p->dockbooks, dockbook);
 
+  /* Ref the dockbook so we can emit the "book-removed" signal and
+   * pass it as a parameter before it's destroyed
+   */
   g_object_ref (dockbook);
 
-  if (old_length == 1)
-    {
-      gtk_container_remove (GTK_CONTAINER (dock->p->vbox), dock->p->south_separator);
-      gtk_container_remove (GTK_CONTAINER (dock->p->vbox), GTK_WIDGET (dockbook));
-      dock->p->south_separator = NULL;
-    }
-  else
-    {
-      GtkWidget *other_book;
-      GtkWidget *parent;
-      GtkWidget *grandparent;
-
-      parent      = gtk_widget_get_parent (GTK_WIDGET (dockbook));
-      grandparent = gtk_widget_get_parent (parent);
-
-      if (index == 0)
-        other_book = gtk_paned_get_child2 (GTK_PANED (parent));
-      else
-        other_book = gtk_paned_get_child1 (GTK_PANED (parent));
-
-      g_object_ref (other_book);
-
-      gtk_container_remove (GTK_CONTAINER (parent), other_book);
-      gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
-
-      gtk_container_remove (GTK_CONTAINER (grandparent), parent);
-
-      if (GTK_IS_VPANED (grandparent))
-        gtk_paned_pack1 (GTK_PANED (grandparent), other_book, TRUE, FALSE);
-      else
-        gtk_box_pack_start (GTK_BOX (dock->p->vbox), other_book, TRUE, TRUE, 0);
-
-      g_object_unref (other_book);
-    }
+  /* Now remove the dockbook from the hierarchy of GtkPaned:s */
+  gimp_widgets_remove_paned_widget (GTK_BOX (dock->p->vbox),
+                                    &dock->p->dockbooks,
+                                    GTK_WIDGET (dockbook));
 
   g_signal_emit (dock, dock_signals[BOOK_REMOVED], 0, dockbook);
 

@@ -1958,6 +1958,7 @@ libgimpmath/Makefile
 libgimpmodule/Makefile
 libgimpthumb/Makefile
 libgimpwidgets/Makefile
+app/gimp.rc
 app/Makefile
 app/actions/Makefile
 app/base/Makefile
