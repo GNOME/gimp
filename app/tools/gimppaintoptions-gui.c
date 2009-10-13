@@ -206,11 +206,9 @@ fade_options_gui (GimpPaintOptions *paint_options,
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
 
-  gtk_widget_show (table);
-
-  frame = gtk_frame_new (_("Fade settings"));
-
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  frame = gimp_prop_expanding_frame_new (config, "use-fade",
+                                         _("Fade out"),
+                                         table, NULL);
 
   /*  the fade-out sizeentry  */
   spinbutton = gimp_prop_spin_button_new (config, "fade-length",
