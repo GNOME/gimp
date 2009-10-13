@@ -375,14 +375,10 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   GimpBrush     *brush;
-  gdouble        fade_point;
 
   core->dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-  fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                    paint_core->pixel_dist);
-
-  brush    = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+  brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
   if (core->main_brush != brush)
     gimp_brush_core_set_brush (core, brush);
@@ -396,9 +392,15 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
+      gdouble fade_point;
+
       core->scale        = paint_options->brush_scale;
       core->angle        = paint_options->brush_angle;
       core->aspect_ratio = paint_options->brush_aspect_ratio;
+
+      fade_point = gimp_paint_options_get_fade (paint_options,
+                                                gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                paint_core->pixel_dist);
 
       if (core->dynamics)
         {
