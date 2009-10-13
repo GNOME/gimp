@@ -170,24 +170,27 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 {
   GimpDodgeBurn *dodgeburn = GIMP_DODGE_BURN (paint_core);
   GimpContext   *context   = GIMP_CONTEXT (paint_options);
+  GimpDynamics  *dynamics  = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpImage     *image;
   TempBuf       *area;
   TempBuf       *orig;
   PixelRegion    srcPR, destPR, tempPR;
   guchar        *temp_data;
+  gdouble        fade_point;
   gdouble        opacity;
   gdouble        hardness;
-
-  gdouble fade_point = gimp_paint_options_get_fade (paint_options, gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                    paint_core->pixel_dist);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
     return;
 
-  opacity = gimp_paint_options_get_fade (paint_options, image,
-                                         paint_core->pixel_dist);
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                            paint_core->pixel_dist);
+
+  opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
+                                                   *coords,
+                                                   fade_point);
   if (opacity == 0.0)
     return;
 
@@ -251,9 +254,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   g_free (temp_data);
 
-  opacity *= gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->opacity_output, *coords, fade_point);
-
-  hardness = gimp_dynamics_output_get_linear_value (GIMP_BRUSH_CORE (paint_core)->dynamics->hardness_output, *coords, fade_point);
+  hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
+                                                    *coords,
+                                                    fade_point);
 
   /* Replace the newly dodgedburned area (canvas_buf) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
