@@ -52,12 +52,10 @@ enum
 
 
 static void   gimp_dynamics_output_finalize     (GObject      *object);
-
 static void   gimp_dynamics_output_set_property (GObject      *object,
                                                  guint         property_id,
                                                  const GValue *value,
                                                  GParamSpec   *pspec);
-
 static void   gimp_dynamics_output_get_property (GObject      *object,
                                                  guint         property_id,
                                                  GValue       *value,
@@ -248,8 +246,8 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
-  gdouble factors = 0.0;
   gdouble result  = 1.0;
+  gint    factors = 0;
 
   if (output->use_pressure)
     {
@@ -290,7 +288,10 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
   if (factors > 0)
     result = total / factors;
 
-  //printf("Dynamics queried(linear). Result: %f, factors: %f, total: %f \n", result, factors, total);
+#if 0
+  g_printerr ("Dynamics queried(linear). Result: %f, factors: %d, total: %f\n",
+              result, factors, total);
+#endif
 
   return result;
 }
@@ -300,9 +301,9 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
                                         GimpCoords          coords,
                                         gdouble             fade_point)
 {
-  gdouble total  = 0.0;
-  gdouble factors = 0.0;
+  gdouble total   = 0.0;
   gdouble result  = 1.0;
+  gint    factors = 0;
 
   if (output->use_pressure)
     {
@@ -321,7 +322,10 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       total += coords.direction + 0.5;
       factors++;
     }
-/* For tilt to make sense, it needs to be converted to an angle, not just vector */
+
+  /* For tilt to make sense, it needs to be converted to an angle, not
+   * just a vector
+   */
   if (output->use_tilt)
     {
       gdouble tilt_x = coords.xtilt;
@@ -373,6 +377,11 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
   if (factors > 0)
     result = total / factors;
 
+#if 0
+  g_printerr ("Dynamics queried(angle). Result: %f, factors: %d, total: %f\n",
+              result, factors, total);
+#endif
+
    return result + 0.5;
 }
 
@@ -383,8 +392,8 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
-  gdouble factors = 0.0;
   gdouble result  = 1.0;
+  gint    factors = 0;
 
   if (output->use_pressure)
     {
@@ -401,6 +410,7 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
   if (output->use_direction)
     {
       gdouble direction = 0.0;
+
       direction = fmod (1 + coords.direction, 0.5) / 0.25;
 
       if ((coords.direction > 0.0) && (coords.direction < 0.5))
@@ -419,14 +429,12 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
   if (output->use_random)
     {
       gdouble random = g_random_double_range (0.0, 1.0);
+
       if (random <= 0.5)
-        {
-          random = 1 / (random / 0.5 * (2.0 - 1.0) + 1.0);
-        }
+        random = 1 / (random / 0.5 * (2.0 - 1.0) + 1.0);
       else
-        {
-          random = (random - 0.5) / (1.0 - 0.5) * (2.0 - 1.0) + 1.0;
-        }
+        random = (random - 0.5) / (1.0 - 0.5) * (2.0 - 1.0) + 1.0;
+
       total += random;
       factors++;
     }
@@ -440,7 +448,10 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
   if (factors > 0)
     result = total / factors;
 
-  /* printf("Dynamics queried(aspect). Result: %f, factors: %f, total: %f \n", result, factors, total);*/
+#if 0
+  g_printerr ("Dynamics queried(aspect). Result: %f, factors: %d, total: %f\n",
+              result, factors, total);
+#endif
 
   return result;
 }
