@@ -90,7 +90,8 @@ munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
 
 if HAVE_WINDRES
-GIMPICONRC = gimprc.o
+GIMPRC = gimp.rc.o
+GIMPCONSOLERC = gimp-console.rc.o
 endif
 
 AM_CPPFLAGS = \
@@ -164,7 +165,6 @@ gimpconsoleldadd = \
 	$(libgimpcolor)			\
 	$(libgimpmodule)		\
 	$(libgimpbase)			\
-	$(GIMPICONRC)			\
 	$(GDK_PIXBUF_LIBS)		\
 	$(FREETYPE_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
@@ -188,7 +188,8 @@ gimp_2_7_LDADD = \
 	$(libgimpwidgets)	\
 	$(GTK_LIBS)		\
 	$(DBUS_GLIB_LIBS)	\
-	$(gimpconsoleldadd)
+	$(gimpconsoleldadd)	\
+	$(GIMPRC)
 
 
 if ENABLE_GIMP_CONSOLE
@@ -200,7 +201,8 @@ gimp_console_2_7_CPPFLAGS = \
 	-DGIMP_CONSOLE_COMPILATION
 
 gimp_console_2_7_LDADD = \
-	$(gimpconsoleldadd)
+	$(gimpconsoleldadd) \
+	$(GIMPCONSOLERC)
 
 endif
 
@@ -256,5 +258,12 @@ dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
 
 dist-hook: dist-check-gimp-console dist-dump-gimprc
 
-gimprc.o: gimp.rc
-	$(WINDRES) gimp.rc gimprc.o
+gimp.rc.o: gimp.rc
+	$(WINDRES) --define ORIGINALFILENAME_STR="gimp-2.7$(EXEEXT)" \
+		--define INTERNALNAME_STR="gimp-2.7" \
+		gimp.rc gimp.rc.o
+
+gimp-console.rc.o: gimp.rc
+	$(WINDRES) --define ORIGINALFILENAME_STR="gimp-console-2.7$(EXEEXT)" \
+		--define INTERNALNAME_STR="gimp-console-2.7" \
+		gimp.rc gimp-console.rc.o
