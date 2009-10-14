@@ -9,7 +9,7 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 
-# Sort this by architectural depenendencies, lowest level at the top,
+# Sort this by architectural dependencies, lowest level at the top,
 # so that when e.g. changing a header-file the subdirs are built in
 # the right order
 SUBDIRS = \
