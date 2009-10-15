@@ -169,9 +169,10 @@ gimp_user_install_run (GimpUserInstall *install)
     return FALSE;
 
   if (install->migrate)
-    return user_install_migrate_files (install);
-  else
-    return user_install_create_files (install);
+    if (! user_install_migrate_files (install))
+      return FALSE;
+
+  return user_install_create_files (install);
 }
 
 void
@@ -438,9 +439,9 @@ user_install_dir_copy (GimpUserInstall *install,
 static gboolean
 user_install_create_files (GimpUserInstall *install)
 {
-  gchar     dest[1024];
-  gchar     source[1024];
-  gint      i;
+  gchar dest[1024];
+  gchar source[1024];
+  gint  i;
 
   for (i = 0; i < G_N_ELEMENTS (gimp_user_install_items); i++)
     {
@@ -448,6 +449,9 @@ user_install_create_files (GimpUserInstall *install)
                   gimp_directory (),
                   G_DIR_SEPARATOR,
                   gimp_user_install_items[i].name);
+
+      if (g_file_test (dest, G_FILE_TEST_EXISTS))
+        continue;
 
       switch (gimp_user_install_items[i].action)
         {
@@ -467,9 +471,17 @@ user_install_create_files (GimpUserInstall *install)
         }
     }
 
-  if (! gimp_tags_user_install ())
+  g_snprintf (dest, sizeof (dest), "%s%c%s",
+              gimp_directory (), G_DIR_SEPARATOR, "tags.xml");
+
+  if (! g_file_test (dest, G_FILE_TEST_IS_REGULAR))
     {
-      return FALSE;
+      /* if there was no tags.xml, install it with default tag set.
+       */
+      if (! gimp_tags_user_install ())
+        {
+          return FALSE;
+        }
     }
 
   return TRUE;
@@ -549,18 +561,6 @@ user_install_migrate_files (GimpUserInstall *install)
   gimp_rc_migrate (gimprc);
   gimp_rc_save (gimprc);
   g_object_unref (gimprc);
-
-  g_snprintf (dest, sizeof (dest), "%s%c%s",
-              gimp_directory (), G_DIR_SEPARATOR, "tags.xml");
-  if (! g_file_test (dest, G_FILE_TEST_IS_REGULAR))
-    {
-      /* if there was no tags.xml,
-       * install it with default tag set.*/
-      if (! gimp_tags_user_install ())
-        {
-          return FALSE;
-        }
-    }
 
   return TRUE;
 }
