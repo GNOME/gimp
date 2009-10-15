@@ -189,28 +189,20 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 
 {
   GimpAirbrushOptions *options = GIMP_AIRBRUSH_OPTIONS (paint_options);
+  GimpImage           *image   = gimp_item_get_image (GIMP_ITEM (drawable));
   gdouble              opacity;
-  gboolean             saved_pressure;
-  gboolean             saved_velocity;
+  gdouble              fade_point;
 
-  opacity = options->pressure / 100.0;
+  fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                            paint_core->pixel_dist);
+  opacity  = options->pressure / 100.0;
+  opacity *= gimp_dynamics_output_get_linear_value(GIMP_BRUSH_CORE(paint_core)->dynamics->opacity_output,
+                                                   *coords,
+                                                   fade_point);
 
-  saved_pressure = FALSE;//paint_options->pressure_options->hardness;
-  saved_velocity = FALSE;//paint_options->velocity_options->hardness;
-
-  if (saved_pressure)
-    opacity *= coords->pressure;
-
-  if (saved_velocity)
-    opacity *= MAX (0.0, 1 - coords->velocity);
-
-  //paint_options->pressure_options->hardness = FALSE;
-  //paint_options->velocity_options->hardness = FALSE;
 
   _gimp_paintbrush_motion (paint_core, drawable, paint_options, coords, opacity);
 
-  //paint_options->pressure_options->hardness = saved_pressure;
-  //paint_options->velocity_options->hardness = saved_velocity;
 }
 
 static gboolean
