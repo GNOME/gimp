@@ -2,6 +2,7 @@
 
 SUBDIRS = \
 	brushes		\
+	dynamics	\
 	environ		\
 	gradients	\
 	images		\
