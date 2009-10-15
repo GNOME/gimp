@@ -1,0 +1,61 @@
+# GIMP dynamics file
+
+(name "Tilt Angle")
+(opacity-output
+    (use-pressure no)
+    (use-velocity no)
+    (use-direction no)
+    (use-tilt no)
+    (use-random no)
+    (use-fade no))
+(hardness-output
+    (use-pressure no)
+    (use-velocity no)
+    (use-direction no)
+    (use-tilt no)
+    (use-random no)
+    (use-fade no))
+(rate-output
+    (use-pressure no)
+    (use-velocity no)
+    (use-direction no)
+    (use-tilt no)
+    (use-random no)
+    (use-fade no))
+(size-output
+    (use-pressure no)
+    (use-velocity no)
+    (use-direction no)
+    (use-tilt no)
+    (use-random no)
+    (use-fade no))
+(aspect-ratio-output
+    (use-pressure no)
+    (use-velocity no)
+    (use-direction no)
+    (use-tilt no)
+    (use-random no)
+    (use-fade no))
+(color-output
+    (use-pressure no)
+    (use-velocity no)
+    (use-direction no)
+    (use-tilt no)
+    (use-random no)
+    (use-fade no))
+(angle-output
+    (use-pressure no)
+    (use-velocity no)
+    (use-direction no)
+    (use-tilt yes)
+    (use-random no)
+    (use-fade no))
+(jitter-output
+    (use-pressure no)
+    (use-velocity no)
+    (use-direction no)
+    (use-tilt no)
+    (use-random no)
+    (use-fade no))
+
+# end of GIMP dynamics file

@@ -36,7 +36,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = i686-pc-linux-gnu
 host_triplet = i686-pc-linux-gnu
-subdir = data/brushes
+subdir = data/dynamics
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -59,11 +59,9 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(dynamicsdatadir)" \
-	"$(DESTDIR)$(obsoletedynamicsdatadir)"
+am__installdirs = "$(DESTDIR)$(dynamicsdatadir)"
 dynamicsdataDATA_INSTALL = $(INSTALL_DATA)
-obsoletedynamicsdataDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(dynamicsdata_DATA) $(obsoletedynamicsdata_DATA)
+DATA = $(dynamicsdata_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 AA_LIBS = -laa
 ACLOCAL = ${SHELL} /home/alexiade/build/gimp_build/gimp/missing --run aclocal-1.9 
@@ -442,7 +440,13 @@ sysconfdir = ${prefix}/etc
 target_alias = 
 dynamicsdatadir = $(gimpdatadir)/dynamics
 dynamicsdata_DATA = \
-	Basic-Dynamics.gdyn
+	Basic-Dynamics.gdyn		\
+	Dynamics-Off.gdyn		\
+	Fade-Tappering.gdyn		\
+	Random-Color.gdyn		\
+	Tilt-Angle.gdyn			\
+	Track-Direction.gdyn		\
+	Velocity-Tappering.gdyn
 
 EXTRA_DIST = $(dynamicsdata_DATA)
 all: all-am
@@ -457,9 +461,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  data/brushes/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  data/dynamics/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  data/brushes/Makefile
+	  $(AUTOMAKE) --gnu  data/dynamics/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -504,7 +508,6 @@ uninstall-dynamicsdataDATA:
 	  echo " rm -f '$(DESTDIR)$(dynamicsdatadir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(dynamicsdatadir)/$$f"; \
 	done
-
 tags: TAGS
 TAGS:
 
@@ -543,7 +546,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(dynamicsdatadir)" "$(DESTDIR)$(obsoletedynamicsdatadir)"; do \
+	for dir in "$(DESTDIR)$(dynamicsdatadir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -588,7 +591,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dynamicsdataDATA install-obsoletedynamicsdataDATA
+install-data-am: install-dynamicsdataDATA
 
 install-exec-am:
 
@@ -619,13 +622,13 @@ uninstall-am: uninstall-dynamicsdataDATA uninstall-info-am
 .PHONY: all all-am check check-am clean clean-generic clean-libtool \
 	distclean distclean-generic distclean-libtool distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-dynamicsdataDATA install-data install-data-am \
+	install-data install-data-am install-dynamicsdataDATA \
 	install-exec install-exec-am install-info install-info-am \
-	install-man install-obsoletedynamicsdataDATA install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am \
-	uninstall-dynamicsdataDATA uninstall-info-am
+	install-man install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic mostlyclean-libtool pdf pdf-am \
+	ps ps-am uninstall uninstall-am uninstall-dynamicsdataDATA \
+	uninstall-info-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
