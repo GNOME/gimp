@@ -1431,9 +1431,22 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
                                     gtk_text_buffer_get_selection_bound (buffer));
 
   if (extend_selection)
-    sel_start = &selection;
+    {
+      sel_start = &selection;
+    }
   else
-    sel_start = &cursor;
+    {
+      /*  when there is a selection, moving the cursor without
+       *  extending it should move the cursor to the end of the
+       *  selection that is in moving direction
+       */
+      if (count > 0)
+        gtk_text_iter_order (&selection, &cursor);
+      else
+        gtk_text_iter_order (&cursor, &selection);
+
+      sel_start = &cursor;
+    }
 
   switch (step)
     {
