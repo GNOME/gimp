@@ -2060,6 +2060,7 @@ themes/Default/images/preferences/Makefile
 themes/Small/Makefile
 data/Makefile
 data/brushes/Makefile
+data/dynamics/Makefile
 data/environ/Makefile
 data/gradients/Makefile
 data/images/Makefile
