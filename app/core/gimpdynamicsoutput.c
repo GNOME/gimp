@@ -285,7 +285,7 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (factors > 1)
+  if (factors > 0)
     result = total / factors;
 
 #if 0
@@ -374,7 +374,7 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (factors > 1)
+  if (factors > 0)
     result = total / factors;
 
 #if 0
@@ -445,7 +445,7 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (factors > 1)
+  if (factors > 0)
     result = total / factors;
 
 #if 0
