@@ -13,8 +13,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-07 16:11+0800\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-10-12 20:01+0000\n"
 "PO-Revision-Date: 2009-07-27 21:50+0800\n"
 "Last-Translator: Aron Xu <aronxu@gnome.org>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
@@ -2472,7 +2473,7 @@ msgstr "将渐变文件位置复制到剪贴板"
 #
 #: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
-msgstr "保存为 ＿POV-Ray..."
+msgstr "另存为 _POV-Ray..."
 
 #
 #: ../app/actions/gradients-actions.c:67
@@ -3326,7 +3327,7 @@ msgstr "图层蒙板到选区"
 msgid "Please select a channel first"
 msgstr "请先选择通道"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
+#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1283
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "添加图层蒙板"
@@ -7191,7 +7192,7 @@ msgstr "翻转图层"
 msgid "Rotate Layer"
 msgstr "旋转图层"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1330
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -7206,37 +7207,37 @@ msgstr ""
 "浮动选区\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1265
+#: ../app/core/gimplayer.c:1266
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙板，因为已有一个。"
 
-#: ../app/core/gimplayer.c:1276
+#: ../app/core/gimplayer.c:1277
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙板。"
 
-#: ../app/core/gimplayer.c:1384
+#: ../app/core/gimplayer.c:1385
 msgid "Transfer Alpha to Mask"
 msgstr "转移 Alpha 到蒙板"
 
-#: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1557 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "应用图层蒙板"
 
-#: ../app/core/gimplayer.c:1557
+#: ../app/core/gimplayer.c:1558
 msgid "Delete Layer Mask"
 msgstr "删除图层蒙板"
 
-#: ../app/core/gimplayer.c:1669
+#: ../app/core/gimplayer.c:1670
 msgid "Add Alpha Channel"
 msgstr "添加 Alpha 通道"
 
-#: ../app/core/gimplayer.c:1723
+#: ../app/core/gimplayer.c:1724
 msgid "Remove Alpha Channel"
 msgstr "删除 Alpha 通道"
 
-#: ../app/core/gimplayer.c:1745
+#: ../app/core/gimplayer.c:1746
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
@@ -9057,7 +9058,7 @@ msgstr "关闭 %s"
 #
 #: ../app/display/gimpdisplayshell-close.c:159
 msgid "Do_n't Save"
-msgstr "保存(_S)"
+msgstr "不保存(_S)"
 
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
