@@ -299,17 +299,18 @@ gimp_heal_laplace_iteration (gdouble *matrix,
                              gdouble *solution,
                              guchar  *mask)
 {
-  gint     rowstride = width * depth;
-  gint     i, j, k;
-  gdouble  tmp, diff;
-  gdouble  err       = 0.0;
+  const gint  rowstride = width * depth;
+  gint        i, j, k;
+  gdouble     tmp, diff;
+  gdouble     err       = 0.0;
 
   for (i = 0; i < height; i++)
     {
       for (j = 0; j < width; j++)
         {
-          if ((0 == *mask) || (i == 0) || (i == (height - 1)) ||
-              (j == 0) || (j == (height - 1)))
+          if ((0 == *mask) ||
+              (i == 0) || (i == (height - 1)) ||
+              (j == 0) || (j == (width - 1)))
             {
               /* do nothing at the boundary or outside mask */
               for (k = 0; k < depth; k++)
