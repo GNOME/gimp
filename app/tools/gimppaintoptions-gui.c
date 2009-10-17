@@ -447,17 +447,22 @@ dynamics_check_button_size_allocate (GtkWidget     *toggle,
                                      GtkAllocation *allocation,
                                      GtkWidget     *label)
 {
-  GtkWidget *fixed = label->parent;
-  gint       x, y;
+  GtkWidget     *fixed = gtk_widget_get_parent (label);
+  GtkAllocation  label_allocation;
+  GtkAllocation  fixed_allocation;
+  gint           x, y;
+
+  gtk_widget_get_allocation (label, &label_allocation);
+  gtk_widget_get_allocation (fixed, &fixed_allocation);
 
   if (gtk_widget_get_direction (label) == GTK_TEXT_DIR_LTR)
     x = allocation->x;
   else
-    x = allocation->x + allocation->width - label->allocation.width;
+    x = allocation->x + allocation->width - label_allocation.width;
 
-  x -= fixed->allocation.x;
+  x -= fixed_allocation.x;
 
-  y = fixed->allocation.height - label->allocation.height;
+  y = fixed_allocation.height - label_allocation.height;
 
   gtk_fixed_move (GTK_FIXED (fixed), label, x, y);
 }

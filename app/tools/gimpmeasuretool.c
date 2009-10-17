@@ -978,8 +978,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->unit_label[3]), NULL);
         }
 
-      if (GTK_WIDGET_VISIBLE (measure->dialog))
-        gdk_window_show (measure->dialog->window);
+      if (gtk_widget_get_visible (measure->dialog))
+        gdk_window_show (gtk_widget_get_window (measure->dialog));
       else
         gtk_widget_show (measure->dialog);
     }

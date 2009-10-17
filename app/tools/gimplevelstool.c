@@ -860,10 +860,15 @@ gimp_levels_tool_config_notify (GObject        *object,
            ! strcmp (pspec->name, "low-input") ||
            ! strcmp (pspec->name, "high-input"))
     {
-      tool->low_input->upper    = 255;
-      tool->high_input->lower   = 0;
-      tool->gamma_linear->lower = 0;
-      tool->gamma_linear->upper = 255;
+      g_object_freeze_notify (G_OBJECT (tool->low_input));
+      g_object_freeze_notify (G_OBJECT (tool->high_input));
+      g_object_freeze_notify (G_OBJECT (tool->gamma_linear));
+
+      gtk_adjustment_set_upper (tool->low_input,  255);
+      gtk_adjustment_set_lower (tool->high_input, 0);
+
+      gtk_adjustment_set_lower (tool->gamma_linear, 0);
+      gtk_adjustment_set_upper (tool->gamma_linear, 255);
 
       gtk_adjustment_set_value (tool->low_input,
                                 config->low_input[config->channel]  * 255.0);
@@ -872,13 +877,19 @@ gimp_levels_tool_config_notify (GObject        *object,
       gtk_adjustment_set_value (tool->high_input,
                                 config->high_input[config->channel] * 255.0);
 
-      tool->low_input->upper    = gtk_adjustment_get_value (tool->high_input);
-      tool->high_input->lower   = gtk_adjustment_get_value (tool->low_input);
-      tool->gamma_linear->lower = gtk_adjustment_get_value (tool->low_input);
-      tool->gamma_linear->upper = gtk_adjustment_get_value (tool->high_input);
-      gtk_adjustment_changed (tool->low_input);
-      gtk_adjustment_changed (tool->high_input);
-      gtk_adjustment_changed (tool->gamma_linear);
+      gtk_adjustment_set_upper (tool->low_input,
+                                gtk_adjustment_get_value (tool->high_input));
+      gtk_adjustment_set_lower (tool->high_input,
+                                gtk_adjustment_get_value (tool->low_input));
+
+      gtk_adjustment_set_lower (tool->gamma_linear,
+                                gtk_adjustment_get_value (tool->low_input));
+      gtk_adjustment_set_upper (tool->gamma_linear,
+                                gtk_adjustment_get_value (tool->high_input));
+
+      g_object_thaw_notify (G_OBJECT (tool->low_input));
+      g_object_thaw_notify (G_OBJECT (tool->high_input));
+      g_object_thaw_notify (G_OBJECT (tool->gamma_linear));
 
       levels_update_input_bar (tool);
     }
@@ -1055,10 +1066,8 @@ levels_low_input_changed (GtkAdjustment  *adjustment,
   GimpLevelsConfig *config = tool->config;
   gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
 
-  tool->high_input->lower   = value;
-  tool->gamma_linear->lower = value;
-  gtk_adjustment_changed (tool->high_input);
-  gtk_adjustment_changed (tool->gamma_linear);
+  gtk_adjustment_set_lower (tool->high_input, value);
+  gtk_adjustment_set_lower (tool->gamma_linear, value);
 
   if (config->low_input[config->channel] != value / 255.0)
     {
@@ -1094,10 +1103,8 @@ levels_high_input_changed (GtkAdjustment  *adjustment,
   GimpLevelsConfig *config = tool->config;
   gint              value  = ROUND (gtk_adjustment_get_value (adjustment));
 
-  tool->low_input->upper    = value;
-  tool->gamma_linear->upper = value;
-  gtk_adjustment_changed (tool->low_input);
-  gtk_adjustment_changed (tool->gamma_linear);
+  gtk_adjustment_set_upper (tool->low_input, value);
+  gtk_adjustment_set_upper (tool->gamma_linear, value);
 
   if (config->high_input[config->channel] != value / 255.0)
     {
