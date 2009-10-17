@@ -455,7 +455,7 @@ gimp_color_button_state_changed (GtkWidget    *widget,
 {
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (widget));
 
-  if (! GTK_WIDGET_IS_SENSITIVE (widget) && GIMP_COLOR_BUTTON (widget)->dialog)
+  if (! gtk_widget_is_sensitive (widget) && GIMP_COLOR_BUTTON (widget)->dialog)
     gtk_widget_hide (GIMP_COLOR_BUTTON (widget)->dialog);
 
   if (GTK_WIDGET_CLASS (parent_class)->state_changed)

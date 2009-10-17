@@ -391,9 +391,12 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
   GimpOffsetArea *area   = GIMP_OFFSET_AREA (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GdkWindow      *window = gtk_widget_get_window (widget);
+  GtkAllocation   allocation;
   GdkPixbuf      *pixbuf;
   gint            w, h;
   gint            x, y;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   x = (area->display_ratio_x *
        ((area->orig_width <= area->width) ?
@@ -438,7 +441,7 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
       else
         {
           x = -1;
-          w = widget->allocation.width + 2;
+          w = allocation.width + 2;
         }
 
       if (area->orig_height > area->height)
@@ -449,7 +452,7 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
       else
         {
           y = -1;
-          h = widget->allocation.height + 2;
+          h = allocation.height + 2;
         }
 
       w = MAX (w, 1);

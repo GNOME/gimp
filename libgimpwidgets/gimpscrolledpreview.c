@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -664,18 +666,21 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
         GdkEventMotion *mevent = (GdkEventMotion *) event;
         GtkAdjustment  *hadj;
         GtkAdjustment  *vadj;
+        GtkAllocation   allocation;
         gint            cx, cy;
         gdouble         x, y;
 
         hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
         vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
 
+        gtk_widget_get_allocation (widget, &allocation);
+
         gtk_widget_get_pointer (widget, &cx, &cy);
 
         x = cx * (gtk_adjustment_get_upper (hadj) -
-                  gtk_adjustment_get_lower (hadj)) / widget->allocation.width;
+                  gtk_adjustment_get_lower (hadj)) / allocation.width;
         y = cy * (gtk_adjustment_get_upper (vadj) -
-                  gtk_adjustment_get_lower (vadj)) / widget->allocation.height;
+                  gtk_adjustment_get_lower (vadj)) / allocation.height;
 
         x += (gtk_adjustment_get_lower (hadj) -
               gtk_adjustment_get_page_size (hadj) / 2);
@@ -713,11 +718,14 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
                                         GimpScrolledPreview *preview)
 {
   GtkAdjustment *adj;
+  GtkAllocation  allocation;
   cairo_t       *cr;
   gdouble        x, y;
   gdouble        w, h;
 
-  adj   = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
+  adj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   x = (gtk_adjustment_get_value (adj) /
        (gtk_adjustment_get_upper (adj) -
@@ -738,10 +746,10 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
   if (w >= 1.0 && h >= 1.0)
     return FALSE;
 
-  x = floor (x * (gdouble) widget->allocation.width);
-  y = floor (y * (gdouble) widget->allocation.height);
-  w = MAX (1, ceil (w * (gdouble) widget->allocation.width));
-  h = MAX (1, ceil (h * (gdouble) widget->allocation.height));
+  x = floor (x * (gdouble) allocation.width);
+  y = floor (y * (gdouble) allocation.height);
+  w = MAX (1, ceil (w * (gdouble) allocation.width));
+  h = MAX (1, ceil (h * (gdouble) allocation.height));
 
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
@@ -749,7 +757,7 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
   cairo_clip (cr);
 
   cairo_rectangle (cr,
-                   0, 0, widget->allocation.width, widget->allocation.height);
+                   0, 0, allocation.width, allocation.height);
 
   cairo_rectangle (cr, x, y, w, h);
 

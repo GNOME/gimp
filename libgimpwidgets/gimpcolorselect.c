@@ -643,8 +643,8 @@ gimp_color_select_xy_events (GtkWidget       *widget,
                              GdkEvent        *event,
                              GimpColorSelect *select)
 {
-  gint width, height;
-  gint x, y;
+  GtkAllocation allocation;
+  gint          x, y;
 
   switch (event->type)
     {
@@ -701,13 +701,12 @@ gimp_color_select_xy_events (GtkWidget       *widget,
 
   gimp_color_select_draw_xy_marker (select, NULL);
 
-  width  = select->xy_color->allocation.width;
-  height = select->xy_color->allocation.height;
+  gtk_widget_get_allocation (select->xy_color, &allocation);
 
-  if (width > 1 && height > 1)
+  if (allocation.width > 1 && allocation.height > 1)
     {
-      select->pos[0] = (x * 255) / (width - 1);
-      select->pos[1] = 255 - (y * 255) / (height - 1);
+      select->pos[0] = (x * 255) / (allocation.width - 1);
+      select->pos[1] = 255 - (y * 255) / (allocation.height - 1);
     }
 
   select->pos[0] = CLAMP (select->pos[0], 0, 255);
@@ -749,8 +748,8 @@ gimp_color_select_z_events (GtkWidget       *widget,
                             GdkEvent        *event,
                             GimpColorSelect *select)
 {
-  gint height;
-  gint z;
+  GtkAllocation allocation;
+  gint          z;
 
   switch (event->type)
     {
@@ -804,10 +803,10 @@ gimp_color_select_z_events (GtkWidget       *widget,
 
   gimp_color_select_draw_z_marker (select, NULL);
 
-  height = select->z_color->allocation.height;
+  gtk_widget_get_allocation (select->z_color, &allocation);
 
-  if (height > 1)
-    select->pos[2] = 255 - (z * 255) / (height - 1);
+  if (allocation.height > 1)
+    select->pos[2] = 255 - (z * 255) / (allocation.height - 1);
 
   select->pos[2] = CLAMP (select->pos[2], 0, 255);
 
@@ -827,12 +826,15 @@ gimp_color_select_image_fill (GtkWidget           *preview,
                               const GimpHSV       *hsv,
                               const GimpRGB       *rgb)
 {
+  GtkAllocation   allocation;
   ColorSelectFill csf;
+
+  gtk_widget_get_allocation (preview, &allocation);
 
   csf.update = update_procs[fill_type];
 
-  csf.width  = preview->allocation.width;
-  csf.height = preview->allocation.height;
+  csf.width  = allocation.width;
+  csf.height = allocation.height;
   csf.hsv    = *hsv;
   csf.rgb    = *rgb;
 
@@ -856,17 +858,20 @@ static void
 gimp_color_select_draw_z_marker (GimpColorSelect *select,
                                  GdkRectangle    *clip)
 {
-  gint width;
-  gint height;
-  gint y;
-  gint minx;
-  gint miny;
+  GtkAllocation allocation;
+  gint          width;
+  gint          height;
+  gint          y;
+  gint          minx;
+  gint          miny;
 
   if (! select->gc)
     return;
 
-  width  = select->z_color->allocation.width;
-  height = select->z_color->allocation.height;
+  gtk_widget_get_allocation (select->z_color, &allocation);
+
+  width  = allocation.width;
+  height = allocation.height;
 
   if (width < 1 || height < 1)
     return;
@@ -897,16 +902,19 @@ static void
 gimp_color_select_draw_xy_marker (GimpColorSelect *select,
                                   GdkRectangle    *clip)
 {
-  gint width;
-  gint height;
-  gint x, y;
-  gint minx, miny;
+  GtkAllocation allocation;
+  gint          width;
+  gint          height;
+  gint          x, y;
+  gint          minx, miny;
 
   if (! select->gc)
     return;
 
-  width  = select->xy_color->allocation.width;
-  height = select->xy_color->allocation.height;
+  gtk_widget_get_allocation (select->xy_color, &allocation);
+
+  width  = allocation.width;
+  height = allocation.height;
 
   if (width < 1 || height < 1)
     return;

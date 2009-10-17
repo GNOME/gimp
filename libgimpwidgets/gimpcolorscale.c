@@ -24,6 +24,8 @@
 
 #include <string.h>
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -76,11 +78,12 @@ gimp_color_scale_init (GimpColorScale *scale)
 {
   GtkRange *range = GTK_RANGE (scale);
 
-  GTK_SCALE (scale)->draw_value = FALSE;
-
   range->slider_size_fixed = TRUE;
-  range->flippable         = TRUE;
   /* range->update_policy     = GTK_UPDATE_DELAYED; */
+
+  gtk_range_set_flippable (GTK_RANGE (scale), TRUE);
+
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
   scale->channel      = GIMP_COLOR_SELECTOR_VALUE;
   scale->needs_render = TRUE;
@@ -124,7 +127,7 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
                         "trough-border", &trough_border,
                         NULL);
 
-  if (GTK_WIDGET_CAN_FOCUS (widget))
+  if (gtk_widget_get_can_focus (widget))
     {
       gint focus_padding = 0;
 
@@ -175,7 +178,7 @@ static void
 gimp_color_scale_state_changed (GtkWidget    *widget,
                                 GtkStateType  previous_state)
 {
-  if (widget->state == GTK_STATE_INSENSITIVE ||
+  if (gtk_widget_get_state (widget) == GTK_STATE_INSENSITIVE ||
       previous_state == GTK_STATE_INSENSITIVE)
     {
       GIMP_COLOR_SCALE (widget)->needs_render = TRUE;
@@ -239,6 +242,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
   GtkRange       *range  = GTK_RANGE (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GdkWindow      *window = gtk_widget_get_window (widget);
+  GtkAllocation   allocation;
   GdkRectangle    expose_area;        /* Relative to widget->allocation */
   GdkRectangle    area;
   gint            focus = 0;
@@ -247,7 +251,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
   gint            x, y;
   gint            w, h;
 
-  if (! scale->buf || ! GTK_WIDGET_DRAWABLE (widget))
+  if (! scale->buf || ! gtk_widget_is_drawable (widget))
     return FALSE;
 
   /* This is ugly as it relies heavily on GTK+ internals, but I see no
@@ -266,7 +270,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
                         "trough-border", &trough_border,
                         NULL);
 
-  if (GTK_WIDGET_CAN_FOCUS (widget))
+  if (gtk_widget_get_can_focus (widget))
     {
       gint focus_padding = 0;
 
@@ -277,20 +281,22 @@ gimp_color_scale_expose (GtkWidget      *widget,
       focus += focus_padding;
     }
 
-  x = widget->allocation.x + range->range_rect.x + focus;
-  y = widget->allocation.y + range->range_rect.y + focus;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  x = allocation.x + range->range_rect.x + focus;
+  y = allocation.y + range->range_rect.y + focus;
   w = range->range_rect.width  - 2 * focus;
   h = range->range_rect.height - 2 * focus;
 
   slider_size = range->min_slider_size / 2;
 
   expose_area = event->area;
-  expose_area.x -= widget->allocation.x;
-  expose_area.y -= widget->allocation.y;
+  expose_area.x -= allocation.x;
+  expose_area.y -= allocation.y;
 
   if (gdk_rectangle_intersect (&expose_area, &range->range_rect, &area))
     {
-      gboolean sensitive = (GTK_WIDGET_STATE (widget) != GTK_STATE_INSENSITIVE);
+      gboolean sensitive = gtk_widget_is_sensitive (widget);
 
       if (scale->needs_render)
         {
@@ -302,8 +308,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
           scale->needs_render = FALSE;
         }
 
-      area.x += widget->allocation.x;
-      area.y += widget->allocation.y;
+      area.x += allocation.x;
+      area.y += allocation.y;
 
       gtk_paint_box (style, window,
                      sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
@@ -345,18 +351,18 @@ gimp_color_scale_expose (GtkWidget      *widget,
       gdk_gc_set_clip_rectangle (style->black_gc, NULL);
     }
 
-  if (GTK_WIDGET_IS_SENSITIVE (widget) && GTK_WIDGET_HAS_FOCUS (range))
-    gtk_paint_focus (style, window, GTK_WIDGET_STATE (widget),
+  if (gtk_widget_has_focus (widget))
+    gtk_paint_focus (style, window, gtk_widget_get_state (widget),
                      &area, widget, "trough",
-                     widget->allocation.x + range->range_rect.x,
-                     widget->allocation.y + range->range_rect.y,
+                     allocation.x + range->range_rect.x,
+                     allocation.y + range->range_rect.y,
                      range->range_rect.width,
                      range->range_rect.height);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      area.x      = widget->allocation.x + range->slider_start;
+      area.x      = allocation.x + range->slider_start;
       area.y      = y + trough_border;
       area.width  = 2 * slider_size + 1;
       area.height = h - 2 * trough_border;
@@ -364,7 +370,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
     case GTK_ORIENTATION_VERTICAL:
       area.x      = x + trough_border;
-      area.y      = widget->allocation.y + range->slider_start;
+      area.y      = allocation.y + range->slider_start;
       area.width  = w - 2 * trough_border;
       area.height = 2 * slider_size + 1;
       break;
@@ -374,7 +380,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
     {
       GdkGC *gc;
 
-      gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
+      gc = (gtk_widget_is_sensitive (widget) ?
             style->black_gc :
             style->dark_gc[GTK_STATE_INSENSITIVE]);
 
@@ -396,7 +402,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
       gdk_gc_set_clip_rectangle (gc, NULL);
 
-      gc = (GTK_WIDGET_IS_SENSITIVE (widget) ?
+      gc = (gtk_widget_is_sensitive (widget) ?
             style->white_gc :
             style->light_gc[GTK_STATE_INSENSITIVE]);
 
@@ -441,7 +447,8 @@ gimp_color_scale_new (GtkOrientation            orientation,
 
   scale->channel = channel;
 
-  GTK_RANGE (scale)->flippable = (orientation == GTK_ORIENTATION_HORIZONTAL);
+  gtk_range_set_flippable (GTK_RANGE (scale),
+                           orientation == GTK_ORIENTATION_HORIZONTAL);
 
   return GTK_WIDGET (scale);
 }
@@ -496,16 +503,23 @@ gimp_color_scale_set_color (GimpColorScale *scale,
 static gboolean
 should_invert (GtkRange *range)
 {
+  gboolean inverted  = gtk_range_get_inverted (range);
+  gboolean flippable = gtk_range_get_flippable (range);
+
   if (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)) ==
       GTK_ORIENTATION_HORIZONTAL)
-    return
-      (range->inverted && !range->flippable) ||
-      (range->inverted && range->flippable &&
-       gtk_widget_get_direction (GTK_WIDGET (range)) == GTK_TEXT_DIR_LTR) ||
-      (!range->inverted && range->flippable &&
-       gtk_widget_get_direction (GTK_WIDGET (range)) == GTK_TEXT_DIR_RTL);
+    {
+      return
+        (inverted && !flippable) ||
+        (inverted && flippable &&
+         gtk_widget_get_direction (GTK_WIDGET (range)) == GTK_TEXT_DIR_LTR) ||
+        (!inverted && flippable &&
+         gtk_widget_get_direction (GTK_WIDGET (range)) == GTK_TEXT_DIR_RTL);
+    }
   else
-    return range->inverted;
+    {
+      return inverted;
+    }
 }
 
 static void

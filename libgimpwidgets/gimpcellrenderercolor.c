@@ -177,24 +177,29 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer *cell,
   GimpCellRendererColor *color = GIMP_CELL_RENDERER_COLOR (cell);
   gint                   calc_width;
   gint                   calc_height;
+  gfloat                 xalign;
+  gfloat                 yalign;
+  gint                   xpad;
+  gint                   ypad;
 
   gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (widget),
                                      color->size, &calc_width, &calc_height);
+  gtk_cell_renderer_get_alignment (cell, &xalign, &yalign);
+  gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
 
   if (cell_area && calc_width > 0 && calc_height > 0)
     {
       if (x_offset)
         {
           *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
-                        1.0 - cell->xalign : cell->xalign) *
+                        1.0 - xalign : xalign) *
                        (cell_area->width - calc_width));
-          *x_offset = MAX (*x_offset, 0) + cell->xpad;
+          *x_offset = MAX (*x_offset, 0) + xpad;
         }
       if (y_offset)
         {
-          *y_offset = (cell->yalign *
-                       (cell_area->height - calc_height));
-          *y_offset = MAX (*y_offset, 0) + cell->ypad;
+          *y_offset = (yalign * (cell_area->height - calc_height));
+          *y_offset = MAX (*y_offset, 0) + ypad;
         }
     }
   else
@@ -206,9 +211,9 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer *cell,
     }
 
   if (width)
-    *width  = calc_width  + 2 * cell->xpad;
+    *width  = calc_width  + 2 * xpad;
   if (height)
-    *height = calc_height + 2 * cell->ypad;
+    *height = calc_height + 2 * ypad;
 }
 
 static void
@@ -222,6 +227,8 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 {
   GimpCellRendererColor *color = GIMP_CELL_RENDERER_COLOR (cell);
   GdkRectangle           rect;
+  gint                   xpad;
+  gint                   ypad;
 
   gimp_cell_renderer_color_get_size (cell, widget, cell_area,
                                      &rect.x,
@@ -229,10 +236,12 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                                      &rect.width,
                                      &rect.height);
 
-  rect.x      += cell_area->x + cell->xpad;
-  rect.y      += cell_area->y + cell->ypad;
-  rect.width  -= 2 * cell->xpad;
-  rect.height -= 2 * cell->ypad;
+  gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
+
+  rect.x      += cell_area->x + xpad;
+  rect.y      += cell_area->y + ypad;
+  rect.width  -= 2 * xpad;
+  rect.height -= 2 * ypad;
 
   if (rect.width > 2 && rect.height > 2)
     {
@@ -273,8 +282,8 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                        rect.x + 0.5, rect.y + 0.5,
                        rect.width - 1, rect.height - 1);
 
-      if (! cell->sensitive ||
-          GTK_WIDGET_STATE (widget) == GTK_STATE_INSENSITIVE)
+      if (! gtk_cell_renderer_get_sensitive (cell) ||
+          ! gtk_widget_is_sensitive (widget))
         {
           state = GTK_STATE_INSENSITIVE;
         }

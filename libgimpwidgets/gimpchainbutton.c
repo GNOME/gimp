@@ -335,7 +335,7 @@ gimp_chain_line_class_init (GimpChainLineClass *klass)
 static void
 gimp_chain_line_init (GimpChainLine *line)
 {
-  GTK_WIDGET_SET_FLAGS (line, GTK_NO_WINDOW);
+  gtk_widget_set_has_window (GTK_WIDGET (line), FALSE);
 }
 
 static GtkWidget *
@@ -355,14 +355,17 @@ gimp_chain_line_expose_event (GtkWidget       *widget,
                               GdkEventExpose  *event)
 {
   GimpChainLine     *line = ((GimpChainLine *) widget);
+  GtkAllocation      allocation;
   GdkPoint           points[3];
   GdkPoint           buf;
   GtkShadowType      shadow;
   GimpChainPosition  position;
 
+  gtk_widget_get_allocation (widget, &allocation);
+
 #define SHORT_LINE 4
-  points[0].x = widget->allocation.x + widget->allocation.width  / 2;
-  points[0].y = widget->allocation.y + widget->allocation.height / 2;
+  points[0].x = allocation.x + allocation.width  / 2;
+  points[0].y = allocation.y + allocation.height / 2;
 
   position = line->position;
 
@@ -392,8 +395,8 @@ gimp_chain_line_expose_event (GtkWidget       *widget,
       points[1].y = points[0].y;
       points[2].x = points[1].x;
       points[2].y = (line->which == 1 ?
-                     widget->allocation.y + widget->allocation.height - 1 :
-                     widget->allocation.y);
+                     allocation.y + allocation.height - 1 :
+                     allocation.y);
       shadow = GTK_SHADOW_ETCHED_IN;
       break;
 
@@ -403,8 +406,8 @@ gimp_chain_line_expose_event (GtkWidget       *widget,
       points[1].y = points[0].y;
       points[2].x = points[1].x;
       points[2].y = (line->which == 1 ?
-                     widget->allocation.y + widget->allocation.height - 1 :
-                     widget->allocation.y);
+                     allocation.y + allocation.height - 1 :
+                     allocation.y);
       shadow = GTK_SHADOW_ETCHED_OUT;
       break;
 
@@ -413,8 +416,8 @@ gimp_chain_line_expose_event (GtkWidget       *widget,
       points[1].x = points[0].x;
       points[1].y = points[0].y - SHORT_LINE;
       points[2].x = (line->which == 1 ?
-                     widget->allocation.x + widget->allocation.width - 1 :
-                     widget->allocation.x);
+                     allocation.x + allocation.width - 1 :
+                     allocation.x);
       points[2].y = points[1].y;
       shadow = GTK_SHADOW_ETCHED_OUT;
       break;
@@ -424,8 +427,8 @@ gimp_chain_line_expose_event (GtkWidget       *widget,
       points[1].x = points[0].x;
       points[1].y = points[0].y + SHORT_LINE;
       points[2].x = (line->which == 1 ?
-                     widget->allocation.x + widget->allocation.width - 1 :
-                     widget->allocation.x);
+                     allocation.x + allocation.width - 1 :
+                     allocation.x);
       points[2].y = points[1].y;
       shadow = GTK_SHADOW_ETCHED_IN;
       break;
