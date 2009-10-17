@@ -27,7 +27,6 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
@@ -43,47 +42,48 @@
 
 typedef struct
 {
-  const gchar          *locale;
-  GString              *buf;
-  gboolean              locale_matches;
+  const gchar *locale;
+  GString     *buf;
+  gboolean     locale_matches;
 } GimpTagsInstaller;
 
-static  void        gimp_tags_installer_load_start_element  (GMarkupParseContext *context,
-                                                             const gchar         *element_name,
-                                                             const gchar        **attribute_names,
-                                                             const gchar        **attribute_values,
-                                                             gpointer             user_data,
-                                                             GError             **error);
-static void         gimp_tags_installer_load_end_element (GMarkupParseContext *context,
-                                                          const gchar         *element_name,
-                                                          gpointer             user_data,
-                                                          GError             **error);
-static void         gimp_tags_installer_load_text (GMarkupParseContext *context,
-                                                   const gchar         *text,
-                                                   gsize                text_len,
-                                                   gpointer             user_data,
-                                                   GError             **error);
-static const gchar* attribute_name_to_value (const gchar  **attribute_names,
-                                             const gchar  **attribute_values,
-                                             const gchar   *name);
+
+static  void        gimp_tags_installer_load_start_element (GMarkupParseContext *context,
+                                                            const gchar         *element_name,
+                                                            const gchar        **attribute_names,
+                                                            const gchar        **attribute_values,
+                                                            gpointer             user_data,
+                                                            GError             **error);
+static void         gimp_tags_installer_load_end_element   (GMarkupParseContext *context,
+                                                            const gchar         *element_name,
+                                                            gpointer             user_data,
+                                                            GError             **error);
+static void         gimp_tags_installer_load_text          (GMarkupParseContext *context,
+                                                            const gchar         *text,
+                                                            gsize                text_len,
+                                                            gpointer             user_data,
+                                                            GError             **error);
+static const gchar* attribute_name_to_value                (const gchar        **attribute_names,
+                                                            const gchar        **attribute_values,
+                                                            const gchar         *name);
 
 
 gboolean
 gimp_tags_user_install (void)
 {
-  gchar                *filename;
-  GError               *error;
-  GMarkupParser         markup_parser;
-  GimpXmlParser        *xml_parser;
-  const char           *tags_locale;
-  GimpTagsInstaller     tags_installer = { 0, };
-  gboolean              result = TRUE;
+  gchar             *filename;
+  GMarkupParser      markup_parser;
+  GimpXmlParser     *xml_parser;
+  const char        *tags_locale;
+  GimpTagsInstaller  tags_installer = { 0, };
+  GError            *error          = NULL;
+  gboolean           result         = TRUE;
 
   /* This is a special string to specify the language identifier to
-     look for in the gimp-tags-default.xml file. Please translate the
-     C in it according to the name of the po file used for
-     gimp-tags-default.xml. E.g. lithuanian for the translation,
-     that would be "tags-locale:lt".
+   * look for in the gimp-tags-default.xml file. Please translate the
+   * C in it according to the name of the po file used for
+   * gimp-tags-default.xml. E.g. lithuanian for the translation,
+   * that would be "tags-locale:lt".
    */
   tags_locale = _("tags-locale:C");
 
@@ -100,22 +100,26 @@ gimp_tags_user_install (void)
     }
 
   tags_installer.buf = g_string_new (NULL);
+
   g_string_append (tags_installer.buf, "<?xml version='1.0' encoding='UTF-8'?>\n");
   g_string_append (tags_installer.buf, "<tags>\n");
 
   filename = g_build_filename (gimp_data_directory (), "tags",
                                "gimp-tags-default.xml", NULL);
-  error = NULL;
 
   markup_parser.start_element = gimp_tags_installer_load_start_element;
-  markup_parser.end_element = gimp_tags_installer_load_end_element;
-  markup_parser.text = gimp_tags_installer_load_text;
-  markup_parser.passthrough = NULL;
-  markup_parser.error = NULL;
+  markup_parser.end_element   = gimp_tags_installer_load_end_element;
+  markup_parser.text          = gimp_tags_installer_load_text;
+  markup_parser.passthrough   = NULL;
+  markup_parser.error         = NULL;
+
   xml_parser = gimp_xml_parser_new (&markup_parser, &tags_installer);
+
   result = gimp_xml_parser_parse_file (xml_parser, filename, &error);
+
   g_free (filename);
   gimp_xml_parser_free (xml_parser);
+
   if (! result)
     {
       g_string_free (tags_installer.buf, TRUE);
@@ -125,10 +129,13 @@ gimp_tags_user_install (void)
   g_string_append (tags_installer.buf, "\n</tags>\n");
 
   filename = g_build_filename (gimp_directory (), GIMP_TAGS_FILE, NULL);
-  error = NULL;
-  result = g_file_set_contents (filename, tags_installer.buf->str, tags_installer.buf->len, &error);
+
+  result = g_file_set_contents (filename, tags_installer.buf->str,
+                                tags_installer.buf->len, &error);
+
   g_free (filename);
   g_string_free (tags_installer.buf, TRUE);
+
   if (! result)
     {
       g_warning ("Error while creating tags.xml: %s\n", error->message);
@@ -140,18 +147,19 @@ gimp_tags_user_install (void)
 }
 
 static  void
-gimp_tags_installer_load_start_element  (GMarkupParseContext *context,
-                                         const gchar         *element_name,
-                                         const gchar        **attribute_names,
-                                         const gchar        **attribute_values,
-                                         gpointer             user_data,
-                                         GError             **error)
+gimp_tags_installer_load_start_element (GMarkupParseContext  *context,
+                                        const gchar          *element_name,
+                                        const gchar         **attribute_names,
+                                        const gchar         **attribute_values,
+                                        gpointer              user_data,
+                                        GError              **error)
 {
-  GimpTagsInstaller *tags_installer = (GimpTagsInstaller*) user_data;
+  GimpTagsInstaller *tags_installer = user_data;
 
   if (! strcmp (element_name, "resource"))
     {
       g_string_append_printf (tags_installer->buf, "\n  <resource");
+
       while (*attribute_names)
         {
           g_string_append_printf (tags_installer->buf, " %s=\"%s\"",
@@ -160,31 +168,36 @@ gimp_tags_installer_load_start_element  (GMarkupParseContext *context,
           attribute_names++;
           attribute_values++;
         }
+
       g_string_append_printf (tags_installer->buf, ">\n");
     }
   else if (! strcmp (element_name, "thetag"))
     {
       const char *current_locale;
 
-      current_locale = attribute_name_to_value (attribute_names, attribute_values, "xml:lang");
+      current_locale = attribute_name_to_value (attribute_names, attribute_values,
+                                                "xml:lang");
+
       if (current_locale && tags_installer->locale)
         {
-          tags_installer->locale_matches = !strcmp (current_locale, tags_installer->locale);
+          tags_installer->locale_matches = ! strcmp (current_locale,
+                                                     tags_installer->locale);
         }
       else
         {
-          tags_installer->locale_matches = (current_locale == tags_installer->locale);
+          tags_installer->locale_matches = (current_locale ==
+                                            tags_installer->locale);
         }
     }
 }
 
 static void
-gimp_tags_installer_load_end_element (GMarkupParseContext *context,
-                                      const gchar         *element_name,
-                                      gpointer             user_data,
-                                      GError             **error)
+gimp_tags_installer_load_end_element (GMarkupParseContext  *context,
+                                      const gchar          *element_name,
+                                      gpointer              user_data,
+                                      GError              **error)
 {
-  GimpTagsInstaller *tags_installer = (GimpTagsInstaller*) user_data;
+  GimpTagsInstaller *tags_installer = user_data;
 
   if (strcmp (element_name, "resource") == 0)
     {
@@ -193,13 +206,13 @@ gimp_tags_installer_load_end_element (GMarkupParseContext *context,
 }
 
 static void
-gimp_tags_installer_load_text (GMarkupParseContext *context,
-                               const gchar         *text,
-                               gsize                text_len,
-                               gpointer             user_data,
-                               GError             **error)
+gimp_tags_installer_load_text (GMarkupParseContext  *context,
+                               const gchar          *text,
+                               gsize                 text_len,
+                               gpointer              user_data,
+                               GError              **error)
 {
-  GimpTagsInstaller *tags_installer = (GimpTagsInstaller*) user_data;
+  GimpTagsInstaller *tags_installer = user_data;
   const gchar       *current_element;
   gchar             *tag_string;
 
@@ -210,15 +223,16 @@ gimp_tags_installer_load_text (GMarkupParseContext *context,
       strcmp (current_element, "thetag") == 0)
     {
       tag_string = g_markup_escape_text (text, text_len);
-      g_string_append_printf (tags_installer->buf, "    <tag>%s</tag>\n", tag_string);
+      g_string_append_printf (tags_installer->buf, "    <tag>%s</tag>\n",
+                              tag_string);
       g_free (tag_string);
     }
 }
 
-static const gchar*
-attribute_name_to_value (const gchar  **attribute_names,
-                         const gchar  **attribute_values,
-                         const gchar   *name)
+static const gchar *
+attribute_name_to_value (const gchar **attribute_names,
+                         const gchar **attribute_values,
+                         const gchar  *name)
 {
   while (*attribute_names)
     {
@@ -233,4 +247,3 @@ attribute_name_to_value (const gchar  **attribute_names,
 
   return NULL;
 }
-
