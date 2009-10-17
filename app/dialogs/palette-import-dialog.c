@@ -734,7 +734,7 @@ palette_import_image_add (GimpContainer *container,
                           GimpImage     *image,
                           ImportDialog  *dialog)
 {
-  if (! GTK_WIDGET_IS_SENSITIVE (dialog->image_radio))
+  if (! gtk_widget_is_sensitive (dialog->image_radio))
     {
       gtk_widget_set_sensitive (dialog->image_radio, TRUE);
       gimp_context_set_image (dialog->context, image);

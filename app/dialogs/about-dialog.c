@@ -262,20 +262,23 @@ about_dialog_anim_expose (GtkWidget       *widget,
                           GdkEventExpose  *event,
                           GimpAboutDialog *dialog)
 {
-  GtkStyle *style = gtk_widget_get_style (widget);
-  GdkGC    *text_gc;
-  gint      x, y;
-  gint      width, height;
+  GtkStyle      *style = gtk_widget_get_style (widget);
+  GtkAllocation  allocation;
+  GdkGC         *text_gc;
+  gint           x, y;
+  gint           width, height;
 
   if (! dialog->visible)
     return FALSE;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   text_gc = style->text_gc[GTK_STATE_NORMAL];
 
   pango_layout_get_pixel_size (dialog->layout, &width, &height);
 
-  x = (widget->allocation.width - width) / 2;
-  y = (widget->allocation.height - height) / 2;
+  x = (allocation.width  - width)  / 2;
+  y = (allocation.height - height) / 2;
 
   if (dialog->textrange[1] > 0)
     {
