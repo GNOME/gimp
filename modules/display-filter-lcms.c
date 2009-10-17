@@ -426,7 +426,7 @@ cdisplay_lcms_get_screen (CdisplayLcms *lcms,
 
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
-  if (GTK_IS_WIDGET (managed) && GTK_WIDGET_DRAWABLE (managed))
+  if (GTK_IS_WIDGET (managed) && gtk_widget_is_drawable (GTK_WIDGET (managed)))
     {
       GtkWidget *widget = GTK_WIDGET (managed);
 
