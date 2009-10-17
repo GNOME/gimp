@@ -236,7 +236,7 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
     {
       shell->current_cursor = cursor_type;
 
-      if (GTK_WIDGET_DRAWABLE (shell->canvas))
+      if (gtk_widget_is_drawable (shell->canvas))
         gdk_window_set_cursor (gtk_widget_get_window (shell->canvas), NULL);
 
       return;

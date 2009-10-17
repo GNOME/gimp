@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 #include <gegl.h>
@@ -902,15 +904,13 @@ gimp_display_shell_new (GimpDisplay       *display,
   shell->hsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_width,
                                                        1, 1, image_width));
   shell->hsb = gtk_hscrollbar_new (shell->hsbdata);
-
-  GTK_WIDGET_UNSET_FLAGS (shell->hsb, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (shell->hsb, FALSE);
 
   /*  the vertical scrollbar  */
   shell->vsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_height,
                                                        1, 1, image_height));
   shell->vsb = gtk_vscrollbar_new (shell->vsbdata);
-
-  GTK_WIDGET_UNSET_FLAGS (shell->vsb, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (shell->vsb, FALSE);
 
   /*  create the contents of the inner_table  ********************************/
 
@@ -1025,7 +1025,7 @@ gimp_display_shell_new (GimpDisplay       *display,
                                      "width-request",  18,
                                      "height-request", 18,
                                      NULL);
-  GTK_WIDGET_UNSET_FLAGS (shell->zoom_button, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (shell->zoom_button, FALSE);
 
   gtk_image = gtk_image_new_from_stock (GIMP_STOCK_ZOOM_FOLLOW_WINDOW,
                                         GTK_ICON_SIZE_MENU);
@@ -1049,7 +1049,7 @@ gimp_display_shell_new (GimpDisplay       *display,
                                            "width-request",  18,
                                            "height-request", 18,
                                            NULL);
-  GTK_WIDGET_UNSET_FLAGS (shell->quick_mask_button, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (shell->quick_mask_button, FALSE);
 
   gtk_image = gtk_image_new_from_stock (GIMP_STOCK_QUICK_MASK_OFF,
                                         GTK_ICON_SIZE_MENU);

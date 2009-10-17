@@ -19,6 +19,8 @@
 
 #include <string.h>
 
+#undef GSEAL_ENABLE
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -194,7 +196,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->unit_combo = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
-  GTK_WIDGET_UNSET_FLAGS (statusbar->unit_combo, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (statusbar->unit_combo, FALSE);
   g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->unit_combo, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->unit_combo);
@@ -204,7 +206,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     statusbar);
 
   statusbar->scale_combo = gimp_scale_combo_box_new ();
-  GTK_WIDGET_UNSET_FLAGS (statusbar->scale_combo, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (statusbar->scale_combo, FALSE);
   g_object_set (statusbar->scale_combo, "focus-on-click", FALSE, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->scale_combo, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->scale_combo);
@@ -235,12 +237,12 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   /*  don't show the progress bar  */
 
   statusbar->cancel_button = gtk_button_new ();
+  gtk_widget_set_can_focus (statusbar->cancel_button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (statusbar->cancel_button),
                          GTK_RELIEF_NONE);
   gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox),
                       statusbar->cancel_button, FALSE, FALSE, 0);
-  GTK_WIDGET_UNSET_FLAGS (statusbar->cancel_button, GTK_CAN_FOCUS);
   /*  don't show the cancel button  */
 
   image = gtk_image_new_from_stock (GTK_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
@@ -371,13 +373,13 @@ gimp_statusbar_progress_start (GimpProgress *progress,
        */
       gtk_container_resize_children (GTK_CONTAINER (statusbar));
 
-      if (! GTK_WIDGET_VISIBLE (statusbar))
+      if (! gtk_widget_get_visible (GTK_WIDGET (statusbar)))
         {
           gtk_widget_show (GTK_WIDGET (statusbar));
           statusbar->progress_shown = TRUE;
         }
 
-      if (GTK_WIDGET_DRAWABLE (bar))
+      if (gtk_widget_is_drawable (bar))
         gdk_window_process_updates (gtk_widget_get_window (bar), TRUE);
 
       gimp_statusbar_override_window_title (statusbar);
@@ -439,7 +441,7 @@ gimp_statusbar_progress_set_text (GimpProgress *progress,
 
       gimp_statusbar_replace (statusbar, "progress", NULL, "%s", message);
 
-      if (GTK_WIDGET_DRAWABLE (bar))
+      if (gtk_widget_is_drawable (bar))
         gdk_window_process_updates (gtk_widget_get_window (bar), TRUE);
 
       gimp_statusbar_override_window_title (statusbar);
@@ -454,18 +456,21 @@ gimp_statusbar_progress_set_value (GimpProgress *progress,
 
   if (statusbar->progress_active)
     {
-      GtkWidget *bar = statusbar->progressbar;
+      GtkWidget     *bar = statusbar->progressbar;
+      GtkAllocation  allocation;
+
+      gtk_widget_get_allocation (bar, &allocation);
 
       statusbar->progress_value = percentage;
 
       /* only update the progress bar if this causes a visible change */
-      if (fabs (bar->allocation.width *
+      if (fabs (allocation.width *
                 (percentage -
                  gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar)))) > 1.0)
         {
           gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
 
-          if (GTK_WIDGET_DRAWABLE (bar))
+          if (gtk_widget_is_drawable (bar))
             gdk_window_process_updates (gtk_widget_get_window (bar), TRUE);
         }
     }
@@ -477,9 +482,7 @@ gimp_statusbar_progress_get_value (GimpProgress *progress)
   GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
 
   if (statusbar->progress_active)
-    {
-      return statusbar->progress_value;
-    }
+    return statusbar->progress_value;
 
   return 0.0;
 }
@@ -495,7 +498,7 @@ gimp_statusbar_progress_pulse (GimpProgress *progress)
 
       gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
-      if (GTK_WIDGET_DRAWABLE (bar))
+      if (gtk_widget_is_drawable (bar))
         gdk_window_process_updates (gtk_widget_get_window (bar), TRUE);
     }
 }
@@ -524,11 +527,14 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
 
   if (pango_layout_get_line_count (layout) == 1)
     {
-      gint width;
+      GtkAllocation label_allocation;
+      gint          width;
+
+      gtk_widget_get_allocation (label, &label_allocation);
 
       pango_layout_get_pixel_size (layout, &width, NULL);
 
-      if (width < label->allocation.width)
+      if (width < label_allocation.width)
         {
           if (stock_id)
             {
@@ -541,7 +547,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
 
               g_object_unref (pixbuf);
 
-              handle_msg = (width < label->allocation.width);
+              handle_msg = (width < label_allocation.width);
             }
           else
             {
@@ -704,7 +710,7 @@ gimp_statusbar_get_visible (GimpStatusbar *statusbar)
   if (statusbar->progress_shown)
     return FALSE;
 
-  return GTK_WIDGET_VISIBLE (statusbar);
+  return gtk_widget_get_visible (GTK_WIDGET (statusbar));
 }
 
 void

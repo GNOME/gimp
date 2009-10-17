@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -419,12 +421,15 @@ gimp_image_window_configure_event (GtkWidget         *widget,
                                    GdkEventConfigure *event)
 {
   GimpImageWindow *window = GIMP_IMAGE_WINDOW (widget);
+  GtkAllocation    allocation;
   gint             current_width;
   gint             current_height;
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   /* Grab the size before we run the parent implementation */
-  current_width  = widget->allocation.width;
-  current_height = widget->allocation.height;
+  current_width  = allocation.width;
+  current_height = allocation.height;
 
   /* Run the parent implementation */
   if (GTK_WIDGET_CLASS (parent_class)->configure_event)
@@ -748,7 +753,7 @@ gimp_image_window_get_show_menubar (GimpImageWindow *window)
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  return GTK_WIDGET_VISIBLE (private->menubar);
+  return gtk_widget_get_visible (private->menubar);
 }
 
 void
@@ -761,7 +766,7 @@ gimp_image_window_set_show_docks (GimpImageWindow *window,
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  gtk_widget_set_visible (private->left_docks, show);
+  gtk_widget_set_visible (private->left_docks,  show);
   gtk_widget_set_visible (private->right_docks, show);
 }
 
@@ -774,8 +779,8 @@ gimp_image_window_get_show_docks (GimpImageWindow *window)
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  return (GTK_WIDGET_VISIBLE (private->left_docks) &&
-          GTK_WIDGET_VISIBLE (private->right_docks));
+  return (gtk_widget_get_visible (private->left_docks) &&
+          gtk_widget_get_visible (private->right_docks));
 }
 
 gboolean
@@ -798,6 +803,7 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
   GimpDisplayShell       *active_shell;
   GimpImage              *image;
   GtkWidget              *widget;
+  GtkAllocation           allocation;
   GdkScreen              *screen;
   GdkRectangle            rect;
   gint                    monitor;
@@ -823,6 +829,8 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
   widget = GTK_WIDGET (window);
   screen = gtk_widget_get_screen (widget);
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   monitor = gdk_screen_get_monitor_at_window (screen,
                                               gtk_widget_get_window (widget));
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
@@ -843,14 +851,30 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
    * the normal approach to border size, so special case that.
    */
   if (disp_width > 1 || !active_shell->vsb)
-    border_width = widget->allocation.width - disp_width;
+    {
+      border_width = allocation.width - disp_width;
+    }
   else
-    border_width = widget->allocation.width - disp_width + active_shell->vsb->allocation.width;
+    {
+      GtkAllocation vsb_allocation;
+
+      gtk_widget_get_allocation (active_shell->vsb, &vsb_allocation);
+
+      border_width = allocation.width - disp_width + vsb_allocation.width;
+    }
 
   if (disp_height > 1 || !active_shell->hsb)
-    border_height = widget->allocation.height - disp_height;
+    {
+      border_height = allocation.height - disp_height;
+    }
   else
-    border_height = widget->allocation.height - disp_height + active_shell->hsb->allocation.height;
+    {
+      GtkAllocation hsb_allocation;
+
+      gtk_widget_get_allocation (active_shell->hsb, &hsb_allocation);
+
+      border_height = allocation.height - disp_height + hsb_allocation.height;
+    }
 
 
   max_auto_width  = (rect.width  - border_width)  * 0.75;
@@ -887,20 +911,24 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
   if (resize)
     {
       GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (active_shell);
+      gint           statusbar_width;
 
-      if (width < GTK_WIDGET (statusbar)->requisition.width)
-        width = GTK_WIDGET (statusbar)->requisition.width;
+      gtk_widget_get_size_request (GTK_WIDGET (statusbar),
+                                   &statusbar_width, NULL);
+
+      if (width < statusbar_width)
+        width = statusbar_width;
 
       width  = width  + border_width;
       height = height + border_height;
 
       if (grow_only)
         {
-          if (width < widget->allocation.width)
-            width = widget->allocation.width;
+          if (width < allocation.width)
+            width = allocation.width;
 
-          if (height < widget->allocation.height)
-            height = widget->allocation.height;
+          if (height < allocation.height)
+            height = allocation.height;
         }
 
       gtk_window_resize (GTK_WINDOW (window), width, height);
@@ -1061,8 +1089,12 @@ gimp_image_window_image_notify (GimpDisplay      *display,
         }
       else
         {
-          width  = GTK_WIDGET (window)->allocation.width;
-          height = GTK_WIDGET (window)->allocation.height;
+          GtkAllocation allocation;
+
+          gtk_widget_get_allocation (GTK_WIDGET (window), &allocation);
+
+          width  = allocation.width;
+          height = allocation.height;
         }
 
       gimp_dialog_factory_add_foreign (private->display_factory,

@@ -246,7 +246,7 @@ gimp_displays_get_num_visible (Gimp *gimp)
       GimpDisplay      *display = list->data;
       GimpDisplayShell *shell   = gimp_display_get_shell (display);
 
-      if (GTK_WIDGET_DRAWABLE (shell))
+      if (gtk_widget_is_drawable (GTK_WIDGET (shell)))
         {
           GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
