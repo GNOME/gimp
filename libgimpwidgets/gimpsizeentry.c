@@ -1343,10 +1343,7 @@ gimp_size_entry_show_unit_menu (GimpSizeEntry *gse,
 {
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  if (show)
-    gtk_widget_show (gse->unitmenu);
-  else
-    gtk_widget_hide (gse->unitmenu);
+  gtk_widget_set_visible (gse->unitmenu, show);
 }
 
 

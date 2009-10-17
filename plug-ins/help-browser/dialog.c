@@ -838,14 +838,8 @@ static void
 show_index_callback (GtkAction *action,
                      gpointer   data)
 {
-  if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
-    {
-      gtk_widget_show (sidebar);
-    }
-  else
-    {
-      gtk_widget_hide (sidebar);
-    }
+  gtk_widget_set_visible (sidebar,
+                          gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
 }
 
 static void

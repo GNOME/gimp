@@ -416,11 +416,9 @@ gimp_device_status_update (GimpDeviceStatus *status)
     {
       GimpDeviceStatusEntry *entry = list->data;
 
-      if (entry->device_info->device &&
-          entry->device_info->device == status->current_device)
-        gtk_widget_show (entry->arrow);
-      else
-        gtk_widget_hide (entry->arrow);
+      gtk_widget_set_visible (entry->arrow,
+                              entry->device_info->device &&
+                              entry->device_info->device == status->current_device);
     }
 }
 

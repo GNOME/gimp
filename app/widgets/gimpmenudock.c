@@ -459,10 +459,7 @@ gimp_menu_dock_set_show_image_menu (GimpMenuDock *menu_dock,
 
   parent = gtk_widget_get_parent (menu_dock->image_combo);
 
-  if (show)
-    gtk_widget_show (parent);
-  else
-    gtk_widget_hide (parent);
+  gtk_widget_set_visible (parent, show);
 
   menu_dock->show_image_menu = show ? TRUE : FALSE;
 }

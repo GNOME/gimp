@@ -868,8 +868,6 @@ palette_import_make_palette (ImportDialog *dialog)
       dialog->palette = palette;
     }
 
-  if (dialog->palette && dialog->palette->n_colors > 0)
-    gtk_widget_hide (dialog->no_colors_label);
-  else
-    gtk_widget_show (dialog->no_colors_label);
+  gtk_widget_set_visible (dialog->no_colors_label,
+                          dialog->palette && dialog->palette->n_colors > 0);
 }

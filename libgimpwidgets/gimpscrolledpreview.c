@@ -306,10 +306,8 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
   switch (priv->hscr_policy)
     {
     case GTK_POLICY_AUTOMATIC:
-      if (width > GIMP_PREVIEW (preview)->width)
-        gtk_widget_show (preview->hscr);
-      else
-        gtk_widget_hide (preview->hscr);
+      gtk_widget_set_visible (preview->hscr,
+                              width > GIMP_PREVIEW (preview)->width);
       break;
 
     case GTK_POLICY_ALWAYS:
@@ -326,10 +324,8 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
   switch (priv->vscr_policy)
     {
     case GTK_POLICY_AUTOMATIC:
-      if (height > GIMP_PREVIEW (preview)->height)
-        gtk_widget_show (preview->vscr);
-      else
-        gtk_widget_hide (preview->vscr);
+      gtk_widget_set_visible (preview->vscr,
+                              height > GIMP_PREVIEW (preview)->height);
       break;
 
     case GTK_POLICY_ALWAYS:
@@ -341,16 +337,10 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
       break;
     }
 
-  if (GTK_WIDGET_VISIBLE (preview->vscr) &&
-      GTK_WIDGET_VISIBLE (preview->hscr) &&
-      GIMP_PREVIEW_GET_CLASS (preview)->draw_thumb)
-    {
-      gtk_widget_show (preview->nav_icon);
-    }
-  else
-    {
-      gtk_widget_hide (preview->nav_icon);
-    }
+  gtk_widget_set_visible (preview->nav_icon,
+                          GTK_WIDGET_VISIBLE (preview->vscr) &&
+                          GTK_WIDGET_VISIBLE (preview->hscr) &&
+                          GIMP_PREVIEW_GET_CLASS (preview)->draw_thumb);
 
   gimp_scrolled_preview_thaw (preview);
 }

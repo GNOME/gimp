@@ -722,10 +722,7 @@ gimp_statusbar_set_visible (GimpStatusbar *statusbar,
         }
     }
 
-  if (visible)
-    gtk_widget_show (GTK_WIDGET (statusbar));
-  else
-    gtk_widget_hide (GTK_WIDGET (statusbar));
+  gtk_widget_set_visible (GTK_WIDGET (statusbar), visible);
 }
 
 void

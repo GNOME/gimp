@@ -923,10 +923,7 @@ toolbox_tool_visible_notify (GimpToolInfo *tool_info,
                              GParamSpec   *pspec,
                              GtkWidget    *button)
 {
-  if (tool_info->visible)
-    gtk_widget_show (button);
-  else
-    gtk_widget_hide (button);
+  gtk_widget_set_visible (button, tool_info->visible);
 }
 
 static void

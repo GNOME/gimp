@@ -736,10 +736,7 @@ gimp_image_window_set_show_menubar (GimpImageWindow *window,
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  if (show)
-    gtk_widget_show (private->menubar);
-  else
-    gtk_widget_hide (private->menubar);
+  gtk_widget_set_visible (private->menubar, show);
 }
 
 gboolean
@@ -764,16 +761,8 @@ gimp_image_window_set_show_docks (GimpImageWindow *window,
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  if (show)
-    {
-      gtk_widget_show (private->left_docks);
-      gtk_widget_show (private->right_docks);
-    }
-  else
-    {
-      gtk_widget_hide (private->left_docks);
-      gtk_widget_hide (private->right_docks);
-    }
+  gtk_widget_set_visible (private->left_docks, show);
+  gtk_widget_set_visible (private->right_docks, show);
 }
 
 gboolean

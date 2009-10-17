@@ -373,10 +373,7 @@ gimp_color_select_togg_visible (GimpColorSelector *selector,
 {
   GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
 
-  if (visible)
-    gtk_widget_show (select->toggle_box);
-  else
-    gtk_widget_hide (select->toggle_box);
+  gtk_widget_set_visible (select->toggle_box, visible);
 }
 
 static void
