@@ -266,7 +266,7 @@ main (int argc, char **argv)
 
       gtk_widget_show (info->window);
 
-      window = info->window->window;
+      window = gtk_widget_get_window (info->window);
 
       gtk_widget_show_now (info->window);
       gtk_widget_queue_draw (info->window);

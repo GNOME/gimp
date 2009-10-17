@@ -38,8 +38,9 @@ adjust_size_callback (WidgetInfo *info)
   guint  target_width = 0;
   guint  target_height = 0;
 
-  toplevel = GDK_WINDOW_XWINDOW (info->window->window);
-  XGetGeometry (GDK_WINDOW_XDISPLAY (info->window->window), toplevel,
+  toplevel = GDK_WINDOW_XWINDOW (gtk_widget_get_window (info->window));
+  XGetGeometry (GDK_WINDOW_XDISPLAY (gtk_widget_get_window (info->window)),
+                toplevel,
                 &root, &tx, &ty, &twidth, &theight, &tborder_width, &tdepth);
 
   switch (info->size)
@@ -382,6 +383,7 @@ create_dialog (void)
 {
   WidgetInfo *info;
   GtkWidget  *widget;
+  GtkWidget  *content;
   GtkWidget  *label;
 
   widget = gimp_dialog_new ("Gimp Dialog",
@@ -393,7 +395,8 @@ create_dialog (void)
                             NULL);
 
   label = gtk_label_new ("Gimp Dialog");
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (widget)->vbox), label);
+  content = gtk_dialog_get_content_area (GTK_DIALOG (widget));
+  gtk_container_add (GTK_CONTAINER (content), label);
   gtk_widget_show (label);
   info = new_widget_info ("gimp-dialog", widget, MEDIUM);
   info->include_decorations = TRUE;
