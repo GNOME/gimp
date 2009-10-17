@@ -43,7 +43,7 @@ header files installed.
        git://git.gnome.org/babl
        git://git.gnome.org/gegl
 
-  4. You need to have installed GTK+ version 2.16.6 or newer.
+  4. You need to have installed GTK+ version 2.18.1 or newer.
      GIMP also need a recent versions of GLib (>= 2.20.0) and
      Pango (>= 1.20.1). Sources for these can be grabbed from
      ftp://ftp.gtk.org/.
