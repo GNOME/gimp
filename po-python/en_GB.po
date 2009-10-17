@@ -1,51 +1,51 @@
-# This is the English, British catalog for GIMP Python.
+# This is the English, British catalogue for GIMP Python.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Piers Cornwell <piers.cornwell@usa.net>, 2000.
 # Gareth Owen <gowen72@yahoo.com>, David Lodge <dave@cirt.net>, 2004.
-#
+# Bruce Cowan <bcowan@fastmail.co.uk>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP\n"
+"Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 19:21+0000\n"
-"PO-Revision-Date: 2007-03-11 23:16-0000\n"
-"Last-Translator: David Lodge <dave@cirt.net>\n"
-"Language-Team: English, British\n"
+"POT-Creation-Date: 2009-10-17 23:03+0100\n"
+"PO-Revision-Date: 2009-10-17 23:04+0100\n"
+"Last-Translator: Bruce Cowan <bcowan@fastmail.co.uk>\n"
+"Language-Team: British English <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:380
+#: ../plug-ins/pygimp/gimpfu.py:386
 msgid "Missing exception information"
 msgstr "Missing exception information"
 
-#: ../plug-ins/pygimp/gimpfu.py:389
+#: ../plug-ins/pygimp/gimpfu.py:395
 #, python-format
 msgid "An error occured running %s"
-msgstr "An error occured running %s"
+msgstr "An error occurred running %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:406
 msgid "_More Information"
 msgstr "_More Information"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:518 ../plug-ins/pygimp/gimpfu.py:530
+#: ../plug-ins/pygimp/gimpfu.py:536
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:536
 msgid "Yes"
 msgstr "Yes"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:224
+#: ../plug-ins/pygimp/gimpfu.py:587 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu File Selection"
 
-#: ../plug-ins/pygimp/gimpfu.py:569
+#: ../plug-ins/pygimp/gimpfu.py:598
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Folder Selection"
 
-#: ../plug-ins/pygimp/gimpfu.py:659
+#: ../plug-ins/pygimp/gimpfu.py:689
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Invalid input for '%s'"
@@ -94,65 +94,31 @@ msgstr "Fo_nt size in pixels"
 msgid "_Write a separate CSS file"
 msgstr "_Write a separate CSS file"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-msgid "Python Console"
-msgstr "Python Console"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-msgid "_Browse..."
-msgstr "_Browse..."
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-msgid "Python Procedure Browser"
-msgstr "Python Procedure Browser"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Could not open '%s' for writing: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "Could not write to '%s': %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-msgid "Save Python-Fu Console Output"
-msgstr "Save Python-Fu Console Output"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interactive GIMP Python interpreter"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-msgid "_Console"
-msgstr "_Console"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:53
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
 msgid "Add a layer of fog"
 msgstr "Add a layer of fog"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:58
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Fog..."
 msgstr "_Fog..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Layer name"
 msgstr "_Layer name"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "Clouds"
 msgstr "Clouds"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Fog color"
 msgstr "_Fog colour"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "_Turbulence"
 msgstr "_Turbulence"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pygimp/plug-ins/foggify.py:70
 msgid "Op_acity"
 msgstr "Op_acity"
 
@@ -235,50 +201,86 @@ msgstr "Palette to _Gradient"
 msgid "Slice"
 msgstr "Slice"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:418
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Cuts an image along its guides, creates images and a HTML table snippet"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:429
 msgid "_Slice..."
 msgstr "_Slice..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Path for HTML export"
 msgstr "Path for HTML export"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Filename for export"
 msgstr "Filename for export"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Image name prefix"
 msgstr "Image name prefix"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Image format"
 msgstr "Image format"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Separate image folder"
 msgstr "Separate image folder"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Folder for image export"
 msgstr "Folder for image export"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Space between table elements"
 msgstr "Space between table elements"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript for onmouseover and clicked"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Skip animation for table caps"
 msgstr "Skip animation for table caps"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+msgid "Python Console"
+msgstr "Python Console"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+msgid "_Browse..."
+msgstr "_Browse..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:139
+msgid "Python Procedure Browser"
+msgstr "Python Procedure Browser"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:168
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Could not open '%s' for writing: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Could not write to '%s': %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:191
+msgid "Save Python-Fu Console Output"
+msgstr "Save Python-Fu Console Output"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:217
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interactive GIMP Python interpreter"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+msgid "_Console"
+msgstr "_Console"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
