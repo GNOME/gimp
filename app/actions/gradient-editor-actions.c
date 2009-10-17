@@ -552,7 +552,7 @@ gradient_editor_actions_update (GimpActionGroup *group,
    *  insensitive. prevents the gradient from being modified while a
    *  dialog is running. bug #161411 --mitch
    */
-  if (! GTK_WIDGET_SENSITIVE (editor))
+  if (! gtk_widget_is_sensitive (GTK_WIDGET (editor)))
     editable = FALSE;
 
   if (! editable)

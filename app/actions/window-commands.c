@@ -41,7 +41,7 @@ window_close_cmd_callback (GtkAction *action,
   GtkWidget *widget;
   return_if_no_widget (widget, data);
 
-  if (! GTK_WIDGET_TOPLEVEL (widget))
+  if (! gtk_widget_is_toplevel (widget))
     widget = gtk_widget_get_toplevel (widget);
 
   if (widget && gtk_widget_get_window (widget));
@@ -136,7 +136,7 @@ window_move_to_screen_cmd_callback (GtkAction *action,
   GdkScreen *screen;
   return_if_no_widget (widget, data);
 
-  if (! GTK_WIDGET_TOPLEVEL (widget))
+  if (! gtk_widget_is_toplevel (widget))
     widget = gtk_widget_get_toplevel (widget);
 
   screen = g_object_get_data (G_OBJECT (current), "screen");
