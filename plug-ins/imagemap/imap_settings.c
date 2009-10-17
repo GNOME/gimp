@@ -75,8 +75,8 @@ settings_ok_cb(gpointer data)
 static void
 type_toggled_cb(GtkWidget *widget, gpointer data)
 {
-   if (GTK_WIDGET_STATE(widget) & GTK_STATE_SELECTED)
-      _map_format = (MapFormat_t) data;
+  if (gtk_widget_get_state (widget) & GTK_STATE_SELECTED)
+    _map_format = (MapFormat_t) data;
 }
 
 static SettingsDialog_t*

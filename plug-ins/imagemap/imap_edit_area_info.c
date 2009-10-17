@@ -82,32 +82,42 @@ url_changed(GtkWidget *widget, gpointer data)
 static void
 set_url(GtkWidget *widget, AreaInfoDialog_t *param, const gchar *prefix)
 {
-   if (callback_lock) {
-      callback_lock = FALSE;
-   } else {
-      if (GTK_WIDGET_STATE(widget) & GTK_STATE_SELECTED) {
-	 char *p;
-	 gchar *url = g_strdup(gtk_entry_get_text(GTK_ENTRY(param->url)));
+   if (callback_lock)
+     {
+       callback_lock = FALSE;
+     }
+   else
+     {
+       if (gtk_widget_get_state (widget) & GTK_STATE_SELECTED)
+         {
+           char *p;
+           gchar *url = g_strdup(gtk_entry_get_text(GTK_ENTRY(param->url)));
 
-	 p = strstr(url, "//");    /* 'http://' */
-	 if (p) {
-	    p += 2;
-	 } else {
-	    p = strchr(url, ':');	/* 'mailto:' */
-	    if (p) {
-	       p++;
-	       if (*p == '/')	/* 'file:/' */
-		  p++;
-	    } else {
-	       p = url;
-	    }
-	 }
-	 p = g_strconcat(prefix, p, NULL);
-	 gtk_entry_set_text(GTK_ENTRY(param->url), p);
-	 g_free(p);
-	 g_free(url);
-      }
-   }
+           p = strstr(url, "//");    /* 'http://' */
+           if (p)
+             {
+               p += 2;
+             }
+           else
+             {
+               p = strchr(url, ':');	/* 'mailto:' */
+               if (p)
+                 {
+                   p++;
+                   if (*p == '/')	/* 'file:/' */
+                     p++;
+                 }
+               else
+                 {
+                   p = url;
+                 }
+             }
+           p = g_strconcat(prefix, p, NULL);
+           gtk_entry_set_text(GTK_ENTRY(param->url), p);
+           g_free(p);
+           g_free(url);
+         }
+     }
    gtk_widget_grab_focus(param->url);
 }
 

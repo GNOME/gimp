@@ -2021,7 +2021,7 @@ load_gui_defaults (PngSaveGui *pg)
   load_defaults ();
 
 #define SET_ACTIVE(field) \
-  if (GTK_WIDGET_IS_SENSITIVE (pg->field)) \
+  if (gtk_widget_is_sensitive (pg->field)) \
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pg->field), pngvals.field)
 
   SET_ACTIVE (interlaced);

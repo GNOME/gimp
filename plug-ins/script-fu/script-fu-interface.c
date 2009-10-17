@@ -721,7 +721,11 @@ script_fu_response (GtkWidget *widget,
                     gint       response_id,
                     SFScript  *script)
 {
-  if (! GTK_WIDGET_SENSITIVE (GTK_DIALOG (sf_interface->dialog)->action_area))
+  GtkWidget *action_area;
+
+  action_area = gtk_dialog_get_action_area (GTK_DIALOG (sf_interface->dialog));
+
+  if (! gtk_widget_is_sensitive (action_area))
     return;
 
   switch (response_id)
@@ -732,8 +736,7 @@ script_fu_response (GtkWidget *widget,
 
     case GTK_RESPONSE_OK:
       gtk_widget_set_sensitive (sf_interface->table, FALSE);
-      gtk_widget_set_sensitive (GTK_DIALOG (sf_interface->dialog)->action_area,
-                                FALSE);
+      gtk_widget_set_sensitive (action_area, FALSE);
 
       script_fu_ok (script);
       gtk_widget_destroy (sf_interface->dialog);

@@ -34,6 +34,8 @@
 
 #include <string.h>
 
+#undef GSEAL_ENABLE
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

@@ -452,7 +452,7 @@ render_frame (void)
   GdkModifierType mask;
   gint pixels;
 
-  if (! GTK_WIDGET_DRAWABLE (drawing_area))
+  if (! gtk_widget_is_drawable (drawing_area))
     return;
 
   style = gtk_widget_get_style (drawing_area);

@@ -660,7 +660,7 @@ fp_change_current_range (GtkWidget *widget,
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       fp_refresh_previews (fpvals.visible_frames);
-      if (AW.window && GTK_WIDGET_VISIBLE (AW.window))
+      if (AW.window && gtk_widget_get_visible (AW.window))
         fp_create_smoothness_graph (AW.aliasing_preview);
     }
 }
@@ -816,7 +816,7 @@ fp_change_current_pixels_by (GtkWidget *widget,
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       fp_refresh_previews (fpvals.visible_frames);
-      if (AW.window && GTK_WIDGET_VISIBLE (AW.window) && AW.range_preview)
+      if (AW.window && gtk_widget_get_visible (AW.window) && AW.range_preview)
         fp_range_preview_spill (AW.range_preview,fpvals.value_by);
     }
 }
@@ -998,7 +998,7 @@ fp_show_hide_frame (GtkWidget *button,
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
-      if (!GTK_WIDGET_VISIBLE (frame))
+      if (! gtk_widget_get_visible (frame))
         {
           gtk_widget_show (frame);
 
@@ -1016,7 +1016,7 @@ fp_show_hide_frame (GtkWidget *button,
     }
   else
     {
-      if (GTK_WIDGET_VISIBLE (frame))
+      if (gtk_widget_get_visible (frame))
         {
           gtk_widget_hide (frame);
 
@@ -1170,7 +1170,7 @@ fp_scale_update (GtkAdjustment *adjustment,
       fp_create_nudge (nudgeArray);
       fp_refresh_previews (fpvals.visible_frames);
 
-      if (AW.window != NULL && GTK_WIDGET_VISIBLE (AW.window))
+      if (AW.window != NULL && gtk_widget_get_visible (AW.window))
         fp_create_smoothness_graph (AW.aliasing_preview);
 
       prevValue = gtk_adjustment_get_value (adjustment);
