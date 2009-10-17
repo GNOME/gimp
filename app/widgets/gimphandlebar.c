@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -155,7 +157,7 @@ gimp_handle_bar_expose (GtkWidget      *widget,
   width  = widget->allocation.width  - 2 * x;
   height = widget->allocation.height - 2 * y;
 
-  if (GTK_WIDGET_NO_WINDOW (widget))
+  if (! gtk_widget_get_has_window (widget))
     {
       x += widget->allocation.x;
       y += widget->allocation.y;

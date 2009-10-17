@@ -188,11 +188,15 @@ gimp_blob_editor_expose (GtkWidget      *widget,
 {
   GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
+  GtkStateType    state  = gtk_widget_get_state (widget);
+  GtkAllocation   allocation;
   cairo_t        *cr;
   GdkRectangle    rect;
   gint            r0;
 
-  r0 = MIN (widget->allocation.width, widget->allocation.height) / 2;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  r0 = MIN (allocation.width, allocation.height) / 2;
 
   if (r0 < 2)
     return TRUE;
@@ -200,18 +204,18 @@ gimp_blob_editor_expose (GtkWidget      *widget,
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   gimp_blob_editor_draw_blob (editor, cr,
-                              widget->allocation.width  / 2.0,
-                              widget->allocation.height / 2.0,
+                              allocation.width  / 2.0,
+                              allocation.height / 2.0,
                               0.9 * r0);
 
   gimp_blob_editor_get_handle (editor, &rect);
 
   cairo_rectangle (cr,
                    rect.x + 0.5, rect.y + 0.5, rect.width - 1, rect.width - 1);
-  gdk_cairo_set_source_color (cr, &style->light[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->light[state]);
   cairo_fill_preserve (cr);
 
-  gdk_cairo_set_source_color (cr, &style->dark[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->dark[state]);
   cairo_set_line_width (cr, 1);
   cairo_stroke (cr);
 
@@ -257,12 +261,15 @@ gimp_blob_editor_motion_notify (GtkWidget      *widget,
 
   if (editor->active)
     {
-      gint x;
-      gint y;
-      gint rsquare;
+      GtkAllocation allocation;
+      gint          x;
+      gint          y;
+      gint          rsquare;
 
-      x = event->x - widget->allocation.width  / 2;
-      y = event->y - widget->allocation.height / 2;
+      gtk_widget_get_allocation (widget, &allocation);
+
+      x = event->x - allocation.width  / 2;
+      y = event->y - allocation.height / 2;
 
       rsquare = SQR (x) + SQR (y);
 
@@ -272,7 +279,7 @@ gimp_blob_editor_motion_notify (GtkWidget      *widget,
           gdouble  angle;
           gdouble  aspect;
 
-          r0 = MIN (widget->allocation.width, widget->allocation.height) / 2;
+          r0 = MIN (allocation.width, allocation.height) / 2;
 
           angle  = atan2 (y, x);
           aspect = 10.0 * sqrt ((gdouble) rsquare / (r0 * r0)) / 0.85;
@@ -293,16 +300,19 @@ static void
 gimp_blob_editor_get_handle (GimpBlobEditor *editor,
                              GdkRectangle   *rect)
 {
-  GtkWidget *widget = GTK_WIDGET (editor);
-  gint       x, y;
-  gint       r;
+  GtkWidget     *widget = GTK_WIDGET (editor);
+  GtkAllocation  allocation;
+  gint           x, y;
+  gint           r;
 
-  r = MIN (widget->allocation.width, widget->allocation.height) / 2;
+  gtk_widget_get_allocation (widget, &allocation);
 
-  x = (widget->allocation.width / 2 +
+  r = MIN (allocation.width, allocation.height) / 2;
+
+  x = (allocation.width / 2 +
        0.85 * r *editor->aspect / 10.0 * cos (editor->angle));
 
-  y = (widget->allocation.height / 2 +
+  y = (allocation.height / 2 +
        0.85 * r * editor->aspect / 10.0 * sin (editor->angle));
 
   rect->x      = x - 5;
@@ -374,6 +384,6 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
 
   g_free (blob);
 
-  gdk_cairo_set_source_color (cr, &style->fg[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->fg[gtk_widget_get_state (widget)]);
   cairo_fill (cr);
 }

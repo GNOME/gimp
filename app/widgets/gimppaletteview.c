@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -152,7 +154,7 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
 static void
 gimp_palette_view_init (GimpPaletteView *view)
 {
-  GTK_WIDGET_SET_FLAGS (view, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
 
   view->selected  = NULL;
   view->dnd_entry = NULL;
@@ -165,7 +167,7 @@ gimp_palette_view_expose (GtkWidget      *widget,
   GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (widget);
   GimpView        *view     = GIMP_VIEW (widget);
 
-  if (! GTK_WIDGET_DRAWABLE (widget))
+  if (! gtk_widget_is_drawable (widget))
     return FALSE;
 
   GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
@@ -215,7 +217,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
   GimpPaletteView  *view = GIMP_PALETTE_VIEW (widget);
   GimpPaletteEntry *entry;
 
-  if (GTK_WIDGET_CAN_FOCUS (widget) && ! GTK_WIDGET_HAS_FOCUS (widget))
+  if (gtk_widget_get_can_focus (widget) && ! gtk_widget_has_focus (widget))
     gtk_widget_grab_focus (widget);
 
   entry = gimp_palette_view_find_entry (view, bevent->x, bevent->y);
@@ -288,7 +290,7 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
   palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
 
-  if (GTK_WIDGET_CAN_FOCUS (widget) && ! GTK_WIDGET_HAS_FOCUS (widget))
+  if (gtk_widget_get_can_focus (widget) && ! gtk_widget_has_focus (widget))
     {
       gtk_widget_grab_focus (widget);
 

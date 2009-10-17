@@ -324,7 +324,7 @@ static void
 gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
                                        GimpToolOptionsEditor *editor)
 {
-  if (GTK_WIDGET_SENSITIVE (editor->restore_button) /* evil but correct */)
+  if (gtk_widget_get_sensitive (editor->restore_button) /* evil but correct */)
     {
       gimp_tool_options_editor_menu_popup (editor, widget,
                                            "/tool-options-popup/Save");

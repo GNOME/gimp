@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 /* FIXME: #undef GTK_DISABLE_DEPRECATED */

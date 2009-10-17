@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
@@ -147,6 +149,7 @@ gimp_button_menu_position (GtkWidget       *button,
   GdkRectangle    rect;
   gint            monitor;
 
+  g_return_if_fail (GTK_IS_WIDGET (button));
   g_return_if_fail (GTK_WIDGET_REALIZED (button));
   g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
@@ -174,7 +177,7 @@ gimp_button_menu_position (GtkWidget       *button,
 
   gtk_menu_set_screen (menu, screen);
 
-  if (GTK_WIDGET_NO_WINDOW (button))
+  if (! gtk_widget_get_has_window (button))
     *x += button->allocation.x;
 
   switch (position)
@@ -196,7 +199,7 @@ gimp_button_menu_position (GtkWidget       *button,
       break;
     }
 
-  if (GTK_WIDGET_NO_WINDOW (button))
+  if (! gtk_widget_get_has_window (button))
     *y += button->allocation.y;
 
   *y += button->allocation.height / 2;
@@ -823,12 +826,12 @@ gimp_window_get_native (GtkWindow *window)
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
-  if (window && GTK_WIDGET_REALIZED (window))
+  if (window && GTK_WIDGET_REALIZED (GTK_WIDGET (window)))
     return (GdkNativeWindow) GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
-  if (window && GTK_WIDGET_REALIZED (window))
+  if (window && GTK_WIDGET_REALIZED (GTK_WIDGET (window)))
     return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
@@ -864,7 +867,7 @@ gimp_window_set_transient_for (GtkWindow *window,
   if (! parent)
     return;
 
-  if (GTK_WIDGET_REALIZED (window))
+  if (GTK_WIDGET_REALIZED (GTK_WIDGET (window)))
     gdk_window_set_transient_for (gtk_widget_get_window (GTK_WIDGET (window)),
                                   parent);
 

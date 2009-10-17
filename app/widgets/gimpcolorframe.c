@@ -271,11 +271,18 @@ gimp_color_frame_expose (GtkWidget      *widget,
 
   if (frame->has_number)
     {
-      GtkStyle *style = gtk_widget_get_style (widget);
-      cairo_t  *cr;
-      gchar     buf[8];
-      gint      w, h;
-      gdouble   scale;
+      GtkStyle      *style = gtk_widget_get_style (widget);
+      GtkAllocation  allocation;
+      GtkAllocation  menu_allocation;
+      GtkAllocation  color_area_allocation;
+      cairo_t       *cr;
+      gchar          buf[8];
+      gint           w, h;
+      gdouble        scale;
+
+      gtk_widget_get_allocation (widget, &allocation);
+      gtk_widget_get_allocation (frame->menu, &menu_allocation);
+      gtk_widget_get_allocation (frame->color_area, &color_area_allocation);
 
       cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_NORMAL]);
@@ -288,20 +295,20 @@ gimp_color_frame_expose (GtkWidget      *widget,
       pango_layout_set_text (frame->number_layout, buf, -1);
       pango_layout_get_pixel_size (frame->number_layout, &w, &h);
 
-      scale = ((gdouble) (widget->allocation.height -
-                          frame->menu->allocation.height -
-                          frame->color_area->allocation.height) /
+      scale = ((gdouble) (allocation.height -
+                          menu_allocation.height -
+                          color_area_allocation.height) /
                (gdouble) h);
 
       cairo_scale (cr, scale, scale);
 
       cairo_move_to (cr,
-                     (widget->allocation.x +
-                      widget->allocation.width / 2.0) / scale - w / 2.0,
-                     (widget->allocation.y +
-                      widget->allocation.height / 2.0 +
-                      frame->menu->allocation.height / 2.0 +
-                      frame->color_area->allocation.height / 2.0) / scale - h / 2.0);
+                     (allocation.x +
+                      allocation.width / 2.0) / scale - w / 2.0,
+                     (allocation.y +
+                      allocation.height / 2.0 +
+                      menu_allocation.height / 2.0 +
+                      color_area_allocation.height / 2.0) / scale - h / 2.0);
       pango_cairo_show_layout (cr, frame->number_layout);
       cairo_fill (cr);
 

@@ -207,7 +207,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
                     G_CALLBACK (gimp_container_grid_view_button_press),
                     grid_view);
 
-  GTK_WIDGET_SET_FLAGS (grid_view, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (GTK_WIDGET (grid_view), TRUE);
 }
 
 GtkWidget *
@@ -287,7 +287,7 @@ gimp_container_grid_view_move_cursor (GimpContainerGridView *grid_view,
   GimpContainer     *container;
   GimpViewable      *item;
 
-  if (! GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (grid_view)) || count == 0)
+  if (! gtk_widget_has_focus (GTK_WIDGET (grid_view)) || count == 0)
     return FALSE;
 
   container = gimp_container_view_get_container (view);
@@ -321,7 +321,7 @@ gimp_container_grid_view_focus (GtkWidget        *widget,
 {
   GimpContainerGridView *view = GIMP_CONTAINER_GRID_VIEW (widget);
 
-  if (GTK_WIDGET_CAN_FOCUS (widget) && ! GTK_WIDGET_HAS_FOCUS (widget))
+  if (gtk_widget_get_can_focus (widget) && ! gtk_widget_has_focus (widget))
     {
       gtk_widget_grab_focus (GTK_WIDGET (widget));
       return TRUE;
@@ -354,24 +354,27 @@ gimp_container_grid_view_menu_position (GtkMenu  *menu,
 {
   GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (data);
   GtkWidget             *widget;
+  GtkAllocation          allocation;
 
   if (grid_view->selected_item)
     widget = GTK_WIDGET (grid_view->selected_item);
   else
     widget = GTK_WIDGET (grid_view->wrap_box);
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   gdk_window_get_origin (gtk_widget_get_window (widget), x, y);
 
-  if (GTK_WIDGET_NO_WINDOW (widget))
+  if (! gtk_widget_get_has_window (widget))
     {
-      *x += widget->allocation.x;
-      *y += widget->allocation.y;
+      *x += allocation.x;
+      *y += allocation.y;
     }
 
   if (grid_view->selected_item)
     {
-      *x += widget->allocation.width  / 2;
-      *y += widget->allocation.height / 2;
+      *x += allocation.width  / 2;
+      *y += allocation.height / 2;
     }
   else
     {
@@ -553,7 +556,7 @@ gimp_container_grid_view_item_selected (GtkWidget      *widget,
 {
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      if (GTK_WIDGET_CAN_FOCUS (data) && ! GTK_WIDGET_HAS_FOCUS (data))
+      if (gtk_widget_get_can_focus (data) && ! gtk_widget_has_focus (data))
         gtk_widget_grab_focus (GTK_WIDGET (data));
 
       gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),

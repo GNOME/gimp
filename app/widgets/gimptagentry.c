@@ -402,7 +402,7 @@ gimp_tag_entry_changed (GtkEntry *entry)
   text = g_strdup (gtk_entry_get_text (entry));
   text = g_strstrip (text);
 
-  if (! GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (entry))
+  if (! gtk_widget_has_focus (GTK_WIDGET (entry))
       && strlen (text) == 0)
     {
       gimp_tag_entry_toggle_desc (tag_entry, TRUE);

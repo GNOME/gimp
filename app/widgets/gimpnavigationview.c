@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -155,10 +157,11 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
 static void
 gimp_navigation_view_init (GimpNavigationView *view)
 {
-  GTK_WIDGET_SET_FLAGS (view, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
+  gtk_widget_add_events (GTK_WIDGET (view),
+                         GDK_POINTER_MOTION_MASK |
+                         GDK_KEY_PRESS_MASK);
 
-  gtk_widget_add_events (GTK_WIDGET (view), (GDK_POINTER_MOTION_MASK |
-                                             GDK_KEY_PRESS_MASK));
   view->x               = 0.0;
   view->y               = 0.0;
   view->width           = 0.0;
@@ -188,7 +191,7 @@ static gboolean
 gimp_navigation_view_expose (GtkWidget      *widget,
                              GdkEventExpose *event)
 {
-  if (GTK_WIDGET_DRAWABLE (widget))
+  if (gtk_widget_is_drawable (widget))
     {
       cairo_t *cr;
 

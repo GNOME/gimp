@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -341,8 +343,10 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
   GtkAllocation *alloc = &widget->allocation;
   gint           w     = MIN (alloc->width, alloc->height) * 2 / 3;
 
-  gtk_paint_arrow (style, gtk_widget_get_window (widget),
-                   widget->state, GTK_SHADOW_IN,
+  gtk_paint_arrow (style,
+                   gtk_widget_get_window (widget),
+                   gtk_widget_get_state (widget),
+                   GTK_SHADOW_IN,
                    &event->area, widget, NULL,
                    data ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, TRUE,
                    alloc->x + (alloc->width - w) / 2,

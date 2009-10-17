@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -239,7 +241,7 @@ gimp_message_box_size_request (GtkWidget      *widget,
 
   GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
 
-  if (box->image && GTK_WIDGET_VISIBLE (box->image))
+  if (box->image && gtk_widget_get_visible (box->image))
     {
       GtkRequisition  child_requisition;
       gint            border_width;
@@ -266,7 +268,7 @@ gimp_message_box_size_allocate (GtkWidget     *widget,
 
   rtl = (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL);
 
-  if (box->image)
+  if (box->image && gtk_widget_get_visible (box->image))
     {
       GtkRequisition  child_requisition;
       GtkAllocation   child_allocation;

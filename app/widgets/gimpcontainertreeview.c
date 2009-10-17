@@ -318,14 +318,17 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (data);
   GtkWidget             *widget    = GTK_WIDGET (tree_view->view);
+  GtkAllocation          allocation;
   GtkTreeIter            selected_iter;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   gdk_window_get_origin (gtk_widget_get_window (widget), x, y);
 
-  if (GTK_WIDGET_NO_WINDOW (widget))
+  if (! gtk_widget_get_has_window (widget))
     {
-      *x += widget->allocation.x;
-      *y += widget->allocation.y;
+      *x += allocation.x;
+      *y += allocation.y;
     }
 
   if (gtk_tree_selection_get_selected (tree_view->priv->selection, NULL,
@@ -341,9 +344,9 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
       gtk_tree_path_free (path);
 
       center = cell_rect.y + cell_rect.height / 2;
-      center = CLAMP (center, 0, widget->allocation.height);
+      center = CLAMP (center, 0, allocation.height);
 
-      *x += widget->allocation.width / 2;
+      *x += allocation.width / 2;
       *y += center;
     }
   else
@@ -972,19 +975,22 @@ gimp_container_tree_view_find_click_cell (GtkWidget         *widget,
       gint             start;
       gint             width;
 
-      if (renderer->visible &&
+      if (gtk_cell_renderer_get_visible (renderer) &&
           gtk_tree_view_column_cell_get_position (column, renderer,
                                                   &start, &width))
         {
+          gint xpad, ypad;
           gint x;
+
+          gtk_cell_renderer_get_padding (renderer, &xpad, &ypad);
 
           if (rtl)
             x = column_area->x + column_area->width - start - width;
           else
             x = start + column_area->x;
 
-          if (tree_x >= x + renderer->xpad &&
-              tree_x < x + width - renderer->xpad)
+          if (tree_x >= x + xpad &&
+              tree_x <  x + width - xpad)
             {
               return renderer;
             }
@@ -1005,7 +1011,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
   tree_view->priv->dnd_renderer = NULL;
 
-  if (! GTK_WIDGET_HAS_FOCUS (widget))
+  if (! gtk_widget_has_focus (widget))
     gtk_widget_grab_focus (widget);
 
   if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),

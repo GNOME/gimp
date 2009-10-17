@@ -554,7 +554,7 @@ gimp_controller_editor_row_activated (GtkTreeView          *tv,
                                       GtkTreeViewColumn    *column,
                                       GimpControllerEditor *editor)
 {
-  if (GTK_WIDGET_IS_SENSITIVE (editor->edit_button))
+  if (gtk_widget_is_sensitive (editor->edit_button))
     gtk_button_clicked (GTK_BUTTON (editor->edit_button));
 }
 

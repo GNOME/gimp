@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -161,12 +163,12 @@ gimp_view_class_init (GimpViewClass *klass)
 static void
 gimp_view_init (GimpView *view)
 {
-  GTK_WIDGET_SET_FLAGS (view, GTK_NO_WINDOW);
-
-  gtk_widget_add_events (GTK_WIDGET (view), (GDK_BUTTON_PRESS_MASK   |
-                                             GDK_BUTTON_RELEASE_MASK |
-                                             GDK_ENTER_NOTIFY_MASK   |
-                                             GDK_LEAVE_NOTIFY_MASK));
+  gtk_widget_set_has_window (GTK_WIDGET (view), FALSE);
+  gtk_widget_add_events (GTK_WIDGET (view),
+                         GDK_BUTTON_PRESS_MASK   |
+                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_ENTER_NOTIFY_MASK   |
+                         GDK_LEAVE_NOTIFY_MASK);
 
   view->event_window      = NULL;
   view->viewable          = NULL;
@@ -383,7 +385,7 @@ static gboolean
 gimp_view_expose_event (GtkWidget      *widget,
                         GdkEventExpose *event)
 {
-  if (GTK_WIDGET_DRAWABLE (widget))
+  if (gtk_widget_is_drawable (widget))
     {
       gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
                                gtk_widget_get_window (widget), widget,

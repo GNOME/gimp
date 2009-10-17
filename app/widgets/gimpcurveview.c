@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -129,8 +131,7 @@ gimp_curve_view_init (GimpCurveView *view)
   view->cursor_x    = -1.0;
   view->cursor_y    = -1.0;
 
-  GTK_WIDGET_SET_FLAGS (view, GTK_CAN_FOCUS);
-
+  gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
   gtk_widget_add_events (GTK_WIDGET (view),
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
@@ -592,7 +593,7 @@ gimp_curve_view_button_press (GtkWidget      *widget,
       break;
     }
 
-  if (! GTK_WIDGET_HAS_FOCUS (widget))
+  if (! gtk_widget_has_focus (widget))
     gtk_widget_grab_focus (widget);
 
   return TRUE;

@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include "gtkvwrapbox.h"
 
 #include "libgimpmath/gimpmath.h"

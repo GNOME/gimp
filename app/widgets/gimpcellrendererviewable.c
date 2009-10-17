@@ -198,10 +198,15 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
                                       gint            *height)
 {
   GimpCellRendererViewable *cellviewable;
+  gfloat                    xalign, yalign;
+  gint                      xpad, ypad;
   gint                      view_width  = 0;
   gint                      view_height = 0;
   gint                      calc_width;
   gint                      calc_height;
+
+  gtk_cell_renderer_get_alignment (cell, &xalign, &yalign);
+  gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
 
   cellviewable = GIMP_CELL_RENDERER_VIEWABLE (cell);
 
@@ -213,8 +218,8 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
                      2 * cellviewable->renderer->border_width);
     }
 
-  calc_width  = (gint) cell->xpad * 2 + view_width;
-  calc_height = (gint) cell->ypad * 2 + view_height;
+  calc_width  = (gint) xpad * 2 + view_width;
+  calc_height = (gint) ypad * 2 + view_height;
 
   if (x_offset) *x_offset = 0;
   if (y_offset) *y_offset = 0;
@@ -224,15 +229,14 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
       if (x_offset)
         {
           *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
-                        1.0 - cell->xalign : cell->xalign) *
-                       (cell_area->width - calc_width - 2 * cell->xpad));
-          *x_offset = (MAX (*x_offset, 0) + cell->xpad);
+                        1.0 - xalign : xalign) *
+                       (cell_area->width - calc_width - 2 * xpad));
+          *x_offset = (MAX (*x_offset, 0) + xpad);
         }
       if (y_offset)
         {
-          *y_offset = (cell->yalign *
-                       (cell_area->height - calc_height - 2 * cell->ypad));
-          *y_offset = (MAX (*y_offset, 0) + cell->ypad);
+          *y_offset = (yalign * (cell_area->height - calc_height - 2 * ypad));
+          *y_offset = (MAX (*y_offset, 0) + ypad);
         }
     }
 

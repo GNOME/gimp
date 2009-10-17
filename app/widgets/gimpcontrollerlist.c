@@ -452,7 +452,7 @@ gimp_controller_list_row_activated (GtkTreeView        *tv,
                                     GtkTreeViewColumn  *column,
                                     GimpControllerList *list)
 {
-  if (GTK_WIDGET_IS_SENSITIVE (list->add_button))
+  if (gtk_widget_is_sensitive (list->add_button))
     gtk_button_clicked (GTK_BUTTON (list->add_button));
 }
 
@@ -495,7 +495,7 @@ gimp_controller_list_activate_item (GimpContainerView  *view,
                                     gpointer            insert_data,
                                     GimpControllerList *list)
 {
-  if (GTK_WIDGET_IS_SENSITIVE (list->edit_button))
+  if (gtk_widget_is_sensitive (list->edit_button))
     gtk_button_clicked (GTK_BUTTON (list->edit_button));
 }
 

@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -199,7 +201,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   g_signal_connect (eventbox, "button-press-event",
                     G_CALLBACK (palette_editor_eventbox_button_press),
                     editor);
-  g_signal_connect (eventbox->parent, "size-allocate",
+  g_signal_connect (gtk_widget_get_parent (eventbox), "size-allocate",
                     G_CALLBACK (palette_editor_viewport_size_allocate),
                     editor);
 

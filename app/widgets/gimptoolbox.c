@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -512,18 +514,19 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
 
   GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
-  if (GTK_WIDGET_VISIBLE (toolbox->p->header) &&
+  if (gtk_widget_get_visible (toolbox->p->header) &&
       gdk_rectangle_intersect (&event->area,
                                &toolbox->p->header->allocation,
                                &clip_rect))
     {
-      GtkStyle *style = gtk_widget_get_style (widget);
-      cairo_t  *cr;
-      gint      header_height;
-      gint      header_width;
-      gdouble   wilber_width;
-      gdouble   wilber_height;
-      gdouble   factor;
+      GtkStyle     *style = gtk_widget_get_style (widget);
+      GtkStateType  state = gtk_widget_get_state (widget);
+      cairo_t      *cr;
+      gint          header_height;
+      gint          header_width;
+      gdouble       wilber_width;
+      gdouble       wilber_height;
+      gdouble       factor;
 
       cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdk_cairo_rectangle (cr, &clip_rect);
@@ -543,9 +546,9 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
                          (header_height / factor - wilber_height) / 2.0);
 
       cairo_set_source_rgba (cr,
-                             style->fg[widget->state].red   / 65535.0,
-                             style->fg[widget->state].green / 65535.0,
-                             style->fg[widget->state].blue  / 65535.0,
+                             style->fg[state].red   / 65535.0,
+                             style->fg[state].green / 65535.0,
+                             style->fg[state].blue  / 65535.0,
                              0.10);
       cairo_fill (cr);
 
