@@ -190,7 +190,8 @@ file_open_location_response (GtkDialog *dialog,
 
       box = gimp_progress_box_new ();
       gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-      gtk_box_pack_end (GTK_BOX (dialog->vbox), box, FALSE, FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                        box, FALSE, FALSE, 0);
 
       g_object_set_data (G_OBJECT (dialog), "progress-box", box);
 

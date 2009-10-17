@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_WIN32
@@ -107,7 +109,7 @@ gimp_progress_bar_start (const gchar *message,
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (bar), message ? message : " ");
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
 
-  if (GTK_WIDGET_DRAWABLE (bar))
+  if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
     while (gtk_events_pending ())
       gtk_main_iteration ();
 }
@@ -120,7 +122,7 @@ gimp_progress_bar_end (gpointer user_data)
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (bar), " ");
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
 
-  if (GTK_WIDGET_DRAWABLE (bar))
+  if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
     while (gtk_events_pending ())
       gtk_main_iteration ();
 }
@@ -133,7 +135,7 @@ gimp_progress_bar_set_text (const gchar *message,
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (bar), message ? message : " ");
 
-  if (GTK_WIDGET_DRAWABLE (bar))
+  if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
     while (gtk_events_pending ())
       gtk_main_iteration ();
 }
@@ -149,7 +151,7 @@ gimp_progress_bar_set_value (gdouble  percentage,
   else
     gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
-  if (GTK_WIDGET_DRAWABLE (bar))
+  if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
     while (gtk_events_pending ())
       gtk_main_iteration ();
 }
@@ -161,7 +163,7 @@ gimp_progress_bar_pulse (gpointer user_data)
 
   gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
-  if (GTK_WIDGET_DRAWABLE (bar))
+  if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
     while (gtk_events_pending ())
       gtk_main_iteration ();
 }
@@ -178,12 +180,12 @@ gimp_window_get_native (GtkWindow *window)
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
-  if (window && GTK_WIDGET_REALIZED (window))
+  if (window && GTK_WIDGET_REALIZED (GTK_WIDGET (window)))
     return GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
-  if (window && GTK_WIDGET_REALIZED (window))
+  if (window && GTK_WIDGET_REALIZED (GTK_WIDGET (window)))
     return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 

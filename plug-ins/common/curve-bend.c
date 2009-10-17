@@ -1131,7 +1131,7 @@ do_dialog (GimpDrawable *drawable)
   cd->preview_image_id = p_create_pv_image(drawable, &cd->preview_layer_id1);
   cd->preview_layer_id2 = -1;
 
-  if (!GTK_WIDGET_VISIBLE (cd->shell))
+  if (! gtk_widget_get_visible (cd->shell))
     gtk_widget_show (cd->shell);
 
   bender_update (cd, UP_GRAPH | UP_DRAW | UP_PREVIEW_EXPOSE);

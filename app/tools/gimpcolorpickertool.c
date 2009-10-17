@@ -397,8 +397,8 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame2),
                               sample_type, color, color_index);
 
-  if (GTK_WIDGET_VISIBLE (picker_tool->dialog))
-    gdk_window_show (picker_tool->dialog->window);
+  if (gtk_widget_get_visible (picker_tool->dialog))
+    gdk_window_show (gtk_widget_get_window (picker_tool->dialog));
   else
     gtk_widget_show (picker_tool->dialog);
 }

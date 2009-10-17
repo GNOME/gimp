@@ -417,6 +417,7 @@ dialog_info_update (GimpModuleDB *db,
   gchar        *location        = NULL;
   gboolean      iter_valid;
   gint          i;
+  gboolean      show_error;
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
@@ -473,17 +474,12 @@ dialog_info_update (GimpModuleDB *db,
     gtk_label_set_text (GTK_LABEL (dialog->label[i]),
                         text[i] ? text[i] : "--");
 
-  if (module->state == GIMP_MODULE_STATE_ERROR && module->last_module_error)
-    {
-      gtk_label_set_text (GTK_LABEL (dialog->error_label),
-                          module->last_module_error);
-      gtk_widget_show (dialog->error_box);
-    }
-  else
-    {
-      gtk_label_set_text (GTK_LABEL (dialog->error_label), NULL);
-      gtk_widget_hide (dialog->error_box);
-    }
+  /* Show errors */
+  show_error = (module->state == GIMP_MODULE_STATE_ERROR &&
+                module->last_module_error);
+  gtk_label_set_text (GTK_LABEL (dialog->error_label),
+                      show_error ? module->last_module_error : NULL);
+  gtk_widget_set_visible (dialog->error_box, show_error);
 }
 
 static void

@@ -1730,19 +1730,22 @@ iwarp_event_callback (GtkWidget *widget,
 static gboolean
 iwarp_resize_idle (GtkWidget *widget)
 {
-  GimpVector2 *new_deform_vectors;
-  gint         old_preview_width, old_preview_height;
-  gint         new_preview_width, new_preview_height;
-  gint         x, y;
-  gdouble      new2old;
+  GtkAllocation  allocation;
+  GimpVector2   *new_deform_vectors;
+  gint           old_preview_width, old_preview_height;
+  gint           new_preview_width, new_preview_height;
+  gint           x, y;
+  gdouble        new2old;
 
   resize_idle = 0;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   old_preview_width = preview_width;
   old_preview_height = preview_height;
 
-  max_current_preview_width = widget->allocation.width;
-  max_current_preview_height = widget->allocation.height;
+  max_current_preview_width = allocation.width;
+  max_current_preview_height = allocation.height;
 
   /* preview width and height get updated here: */
   iwarp_preview_init ();

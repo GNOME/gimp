@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -182,7 +184,7 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->menu_button = gtk_button_new ();
   gtk_widget_pop_composite_child ();
 
-  GTK_WIDGET_UNSET_FLAGS (dockable->menu_button, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (dockable->menu_button, FALSE);
   gtk_widget_set_parent (dockable->menu_button, GTK_WIDGET (dockable));
   gtk_button_set_relief (GTK_BUTTON (dockable->menu_button), GTK_RELIEF_NONE);
   gtk_widget_show (dockable->menu_button);
@@ -319,7 +321,7 @@ gimp_dockable_size_request (GtkWidget      *widget,
   requisition->width  = border_width * 2;
   requisition->height = border_width * 2;
 
-  if (dockable->menu_button && GTK_WIDGET_VISIBLE (dockable->menu_button))
+  if (dockable->menu_button && gtk_widget_get_visible (dockable->menu_button))
     {
       gtk_widget_size_request (dockable->menu_button, &child_requisition);
 
@@ -329,7 +331,7 @@ gimp_dockable_size_request (GtkWidget      *widget,
       requisition->height += child_requisition.height;
     }
 
-  if (child && GTK_WIDGET_VISIBLE (child))
+  if (child && gtk_widget_get_visible (child))
     {
       gtk_widget_size_request (child, &child_requisition);
 
@@ -354,7 +356,7 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
 
   border_width = gtk_container_get_border_width (container);
 
-  if (dockable->menu_button && GTK_WIDGET_VISIBLE (dockable->menu_button))
+  if (dockable->menu_button && gtk_widget_get_visible (dockable->menu_button))
     {
       gtk_widget_size_request (dockable->menu_button, &button_requisition);
 
@@ -373,7 +375,7 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
       gtk_widget_size_allocate (dockable->menu_button, &child_allocation);
     }
 
-  if (child && GTK_WIDGET_VISIBLE (child))
+  if (child && gtk_widget_get_visible (child))
     {
       child_allocation.x      = allocation->x + border_width;
       child_allocation.y      = allocation->y + border_width;
@@ -544,7 +546,7 @@ static gboolean
 gimp_dockable_expose_event (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
-  if (GTK_WIDGET_DRAWABLE (widget))
+  if (gtk_widget_is_drawable (widget))
     {
       GimpDockable *dockable = GIMP_DOCKABLE (widget);
       GtkStyle     *style    = gtk_widget_get_style (widget);
@@ -592,7 +594,8 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 
           gtk_paint_layout (style, gtk_widget_get_window (widget),
                             (dockable->blink_counter & 1) ?
-                            GTK_STATE_SELECTED : widget->state, TRUE,
+                            GTK_STATE_SELECTED : gtk_widget_get_state (widget),
+                            TRUE,
                             &expose_area, widget, NULL,
                             text_x, text_y, dockable->title_layout);
         }
@@ -1059,7 +1062,7 @@ gimp_dockable_blink_cancel (GimpDockable *dockable)
 static void
 gimp_dockable_cursor_setup (GimpDockable *dockable)
 {
-  if (! GTK_WIDGET_REALIZED (dockable))
+  if (! GTK_WIDGET_REALIZED (GTK_WIDGET (dockable)))
     return;
 
   if (! dockable->title_window)
@@ -1102,7 +1105,7 @@ gimp_dockable_get_title_area (GimpDockable *dockable,
 static void
 gimp_dockable_clear_title_area (GimpDockable *dockable)
 {
-  if (GTK_WIDGET_DRAWABLE (dockable))
+  if (gtk_widget_is_drawable (GTK_WIDGET (dockable)))
     {
       GdkRectangle area;
 
@@ -1310,7 +1313,7 @@ gimp_dockable_title_changed (GimpDocked   *docked,
       dockable->title_layout = NULL;
     }
 
-  if (GTK_WIDGET_DRAWABLE (dockable))
+  if (gtk_widget_is_drawable (GTK_WIDGET (dockable)))
     {
       GdkRectangle area;
 

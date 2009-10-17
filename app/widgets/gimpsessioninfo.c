@@ -564,7 +564,7 @@ gimp_session_info_read_geometry (GimpSessionInfo *info)
       switch (visibility)
         {
         case GIMP_DIALOG_VISIBILITY_UNKNOWN:
-          info->p->open = GTK_WIDGET_VISIBLE (info->p->widget);
+          info->p->open = gtk_widget_get_visible (info->p->widget);
           break;
 
         case GIMP_DIALOG_VISIBILITY_INVISIBLE:

@@ -392,12 +392,7 @@ gimp_editor_set_show_button_bar (GimpDocked *docked,
       editor->show_button_bar = show;
 
       if (editor->button_box)
-        {
-          if (show)
-            gtk_widget_show (editor->button_box);
-          else
-            gtk_widget_hide (editor->button_box);
-        }
+        gtk_widget_set_visible (editor->button_box, show);
     }
 }
 

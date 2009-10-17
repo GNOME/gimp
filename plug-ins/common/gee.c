@@ -251,7 +251,7 @@ do_fun (void)
 static void
 show (void)
 {
-  if (GTK_WIDGET_DRAWABLE (drawing_area))
+  if (gtk_widget_is_drawable (drawing_area))
     {
       GtkStyle *style = gtk_widget_get_style (drawing_area);
 

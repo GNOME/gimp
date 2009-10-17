@@ -407,17 +407,20 @@ static gboolean
 print_preview_expose_event (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
-  PrintPreview *preview = PRINT_PREVIEW (widget);
-  GtkStyle     *style   = gtk_widget_get_style (widget);
-  cairo_t      *cr;
-  gdouble       paper_width;
-  gdouble       paper_height;
-  gdouble       left_margin;
-  gdouble       right_margin;
-  gdouble       top_margin;
-  gdouble       bottom_margin;
-  gdouble       scale;
-  gint          border;
+  PrintPreview  *preview = PRINT_PREVIEW (widget);
+  GtkStyle      *style   = gtk_widget_get_style (widget);
+  GtkAllocation  allocation;
+  cairo_t       *cr;
+  gdouble        paper_width;
+  gdouble        paper_height;
+  gdouble        left_margin;
+  gdouble        right_margin;
+  gdouble        top_margin;
+  gdouble        bottom_margin;
+  gdouble        scale;
+  gint           border;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   border = gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 
@@ -431,12 +434,12 @@ print_preview_expose_event (GtkWidget      *widget,
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   cairo_translate (cr,
-                   widget->allocation.x + border,
-                   widget->allocation.y + border);
+                   allocation.x + border,
+                   allocation.y + border);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
-      gint width = widget->allocation.width - 2 * border;
+      gint width = allocation.width - 2 * border;
 
       cairo_translate (cr, width - scale * paper_width, 0);
     }
@@ -459,7 +462,7 @@ print_preview_expose_event (GtkWidget      *widget,
                    scale * (paper_width - left_margin - right_margin),
                    scale * (paper_height - top_margin - bottom_margin));
 
-  gdk_cairo_set_source_color (cr, &style->mid[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->mid[gtk_widget_get_state (widget)]);
   cairo_stroke (cr);
 
   cairo_translate (cr,
@@ -482,8 +485,8 @@ print_preview_expose_event (GtkWidget      *widget,
     {
       preview->thumbnail =
         print_preview_get_thumbnail (preview->drawable,
-                                     MIN (widget->allocation.width,  1024),
-                                     MIN (widget->allocation.height, 1024));
+                                     MIN (allocation.width,  1024),
+                                     MIN (allocation.height, 1024));
     }
 
   if (preview->thumbnail != NULL)
@@ -657,13 +660,16 @@ print_preview_is_inside (PrintPreview *preview,
                          gdouble       x,
                          gdouble       y)
 {
-  GtkWidget *widget = GTK_WIDGET (preview);
-  gdouble    left_margin;
-  gdouble    right_margin;
-  gdouble    top_margin;
-  gdouble    bottom_margin;
-  gdouble    scale;
-  gint       border;
+  GtkWidget     *widget = GTK_WIDGET (preview);
+  GtkAllocation  allocation;
+  gdouble        left_margin;
+  gdouble        right_margin;
+  gdouble        top_margin;
+  gdouble        bottom_margin;
+  gdouble        scale;
+  gint           border;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   border = gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 
@@ -675,7 +681,7 @@ print_preview_is_inside (PrintPreview *preview,
     {
       gdouble paper_width;
       gdouble paper_height;
-      gint    width = widget->allocation.width - 2 * border;
+      gint    width = allocation.width - 2 * border;
 
       print_preview_get_page_size (preview, &paper_width, &paper_height);
 
@@ -705,7 +711,7 @@ print_preview_set_inside (PrintPreview *preview,
 
       preview->inside = inside;
 
-      if (GTK_WIDGET_DRAWABLE (widget))
+      if (gtk_widget_is_drawable (widget))
         gdk_window_set_cursor (gtk_widget_get_window (widget),
                                inside ? preview->cursor : NULL);
 
@@ -716,19 +722,22 @@ print_preview_set_inside (PrintPreview *preview,
 static gdouble
 print_preview_get_scale (PrintPreview *preview)
 {
-  GtkWidget *widget = GTK_WIDGET (preview);
-  gdouble    paper_width;
-  gdouble    paper_height;
-  gdouble    scale_x;
-  gdouble    scale_y;
-  gint       border;
+  GtkWidget     *widget = GTK_WIDGET (preview);
+  GtkAllocation  allocation;
+  gdouble        paper_width;
+  gdouble        paper_height;
+  gdouble        scale_x;
+  gdouble        scale_y;
+  gint           border;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   border = gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 
   print_preview_get_page_size (preview, &paper_width, &paper_height);
 
-  scale_x = (gdouble) (widget->allocation.width  - 2 * border) / paper_width;
-  scale_y = (gdouble) (widget->allocation.height - 2 * border) / paper_height;
+  scale_x = (gdouble) (allocation.width  - 2 * border) / paper_width;
+  scale_y = (gdouble) (allocation.height - 2 * border) / paper_height;
 
   return MIN (scale_x, scale_y);
 }

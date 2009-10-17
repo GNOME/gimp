@@ -220,13 +220,17 @@ gimp_container_popup_button_press (GtkWidget      *widget,
 
   if (event_widget == widget)
     {
+      GtkAllocation allocation;
+
+      gtk_widget_get_allocation (widget, &allocation);
+
       /*  the event was on the popup, which can either be really on the
        *  popup or outside gimp (owner_events == TRUE, see map())
        */
-      if (bevent->x < 0                        ||
-          bevent->y < 0                        ||
-          bevent->x > widget->allocation.width ||
-          bevent->y > widget->allocation.height)
+      if (bevent->x < 0                ||
+          bevent->y < 0                ||
+          bevent->x > allocation.width ||
+          bevent->y > allocation.height)
         {
           /*  the event was outsde gimp  */
 
@@ -392,6 +396,7 @@ gimp_container_popup_show (GimpContainerPopup *popup,
 {
   GdkScreen      *screen;
   GtkRequisition  requisition;
+  GtkAllocation   allocation;
   GdkRectangle    rect;
   gint            monitor;
   gint            orig_x;
@@ -403,12 +408,14 @@ gimp_container_popup_show (GimpContainerPopup *popup,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gtk_widget_size_request (GTK_WIDGET (popup), &requisition);
+
+  gtk_widget_get_allocation (widget, &allocation);
   gdk_window_get_origin (gtk_widget_get_window (widget), &orig_x, &orig_y);
 
-  if (GTK_WIDGET_NO_WINDOW (widget))
+  if (! gtk_widget_get_has_window (widget))
     {
-      orig_x += widget->allocation.x;
-      orig_y += widget->allocation.y;
+      orig_x += allocation.x;
+      orig_y += allocation.y;
     }
 
   screen = gtk_widget_get_screen (widget);
@@ -418,20 +425,20 @@ gimp_container_popup_show (GimpContainerPopup *popup,
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
-      x = orig_x + widget->allocation.width - requisition.width;
+      x = orig_x + allocation.width - requisition.width;
 
       if (x < rect.x)
-        x -= widget->allocation.width - requisition.width;
+        x -= allocation.width - requisition.width;
     }
   else
     {
       x = orig_x;
 
       if (x + requisition.width > rect.x + rect.width)
-        x += widget->allocation.width - requisition.width;
+        x += allocation.width - requisition.width;
     }
 
-  y = orig_y + widget->allocation.height;
+  y = orig_y + allocation.height;
 
   if (y + requisition.height > rect.y + rect.height)
     y = orig_y - requisition.height;
@@ -476,20 +483,20 @@ void
 gimp_container_popup_set_view_size (GimpContainerPopup *popup,
                                     gint                view_size)
 {
-  GtkWidget *scrolled_win;
-  GtkWidget *viewport;
-  gint       viewport_width;
+  GtkWidget     *scrolled_win;
+  GtkWidget     *viewport;
+  GtkAllocation  allocation;
 
   g_return_if_fail (GIMP_IS_CONTAINER_POPUP (popup));
 
   scrolled_win = GIMP_CONTAINER_BOX (popup->editor->view)->scrolled_win;
   viewport     = gtk_bin_get_child (GTK_BIN (scrolled_win));
 
-  viewport_width = viewport->allocation.width;
+  gtk_widget_get_allocation (viewport, &allocation);
 
   view_size = CLAMP (view_size, GIMP_VIEW_SIZE_TINY,
                      MIN (GIMP_VIEW_SIZE_GIGANTIC,
-                          viewport_width - 2 * popup->view_border_width));
+                          allocation.width - 2 * popup->view_border_width));
 
   if (view_size != popup->view_size)
     {

@@ -496,8 +496,5 @@ ico_dialog_check_compat (GtkWidget   *dialog,
 
   warning = g_object_get_data (G_OBJECT (dialog), "warning");
 
-  if (warn)
-    gtk_widget_show (warning);
-  else
-    gtk_widget_hide (warning);
+  gtk_widget_set_visible (warning, warn);
 }

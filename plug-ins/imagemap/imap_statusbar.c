@@ -56,7 +56,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    statusbar->xy = gtk_entry_new();
    gtk_widget_set_size_request(statusbar->xy, 96, -1);
    gtk_editable_set_editable(GTK_EDITABLE(statusbar->xy), FALSE);
-   GTK_WIDGET_UNSET_FLAGS(statusbar->xy, GTK_CAN_FOCUS);
+   gtk_widget_set_can_focus (statusbar->xy, FALSE);
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->xy, FALSE, FALSE, 0);
    gtk_widget_show(statusbar->xy);
 
@@ -69,7 +69,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    statusbar->dimension = gtk_entry_new();
    gtk_widget_set_size_request(statusbar->dimension, 96, -1);
    gtk_editable_set_editable(GTK_EDITABLE(statusbar->dimension), FALSE);
-   GTK_WIDGET_UNSET_FLAGS(statusbar->dimension, GTK_CAN_FOCUS);
+   gtk_widget_set_can_focus (statusbar->dimension, FALSE);
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->dimension, FALSE, FALSE, 0);
    gtk_widget_show(statusbar->dimension);
 

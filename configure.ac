@@ -42,8 +42,8 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 # required versions of other packages
 m4_define([babl_required_version], [0.1.0])
 m4_define([gegl_required_version], [0.1.0])
-m4_define([glib_required_version], [2.20.0])
-m4_define([gtk_required_version], [2.16.6])
+m4_define([glib_required_version], [2.22.0])
+m4_define([gtk_required_version], [2.18.1])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([cairo_required_version], [1.6.0])
 m4_define([pangocairo_required_version], [1.20.1])
@@ -1864,7 +1864,7 @@ AC_SUBST(MIME_TYPES)
 # Disable deprecated APIs
 #########################
 
-CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED"
+CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEAL_ENABLE"
 
 if test "x$have_glib_2_23" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"

@@ -465,7 +465,7 @@ make_preview (GimpDrawable *drawable)
 
    /* Create button with arrow */
    button = gtk_button_new();
-   GTK_WIDGET_UNSET_FLAGS(button, GTK_CAN_FOCUS);
+   gtk_widget_set_can_focus (button, FALSE);
    gtk_table_attach(GTK_TABLE(table), button, 0, 1, 0, 1, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_set_events(button,

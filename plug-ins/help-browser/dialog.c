@@ -838,14 +838,8 @@ static void
 show_index_callback (GtkAction *action,
                      gpointer   data)
 {
-  if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
-    {
-      gtk_widget_show (sidebar);
-    }
-  else
-    {
-      gtk_widget_hide (sidebar);
-    }
+  gtk_widget_set_visible (sidebar,
+                          gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
 }
 
 static void
@@ -984,7 +978,7 @@ update_actions (void)
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/ui/help-browser-popup/show-index");
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                GTK_WIDGET_VISIBLE (sidebar));
+                                gtk_widget_get_visible (sidebar));
 }
 
 static void
@@ -1027,7 +1021,7 @@ dialog_unmap (GtkWidget *window,
   gtk_window_get_size (GTK_WINDOW (window), &data.width, &data.height);
 
   data.paned_position = gtk_paned_get_position (GTK_PANED (paned));
-  data.show_index     = GTK_WIDGET_VISIBLE (sidebar);
+  data.show_index     = gtk_widget_get_visible (sidebar);
 
   data.zoom = (view ?
                webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (view)) : 1.0);

@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -86,7 +88,7 @@ gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
 static void
 gimp_fg_bg_view_init (GimpFgBgView *view)
 {
-  GTK_WIDGET_SET_FLAGS (view, GTK_NO_WINDOW);
+  gtk_widget_set_has_window (GTK_WIDGET (view), FALSE);
 
   view->context = NULL;
 }
@@ -213,7 +215,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   gint          rect_w, rect_h;
   GimpRGB       color;
 
-  if (! GTK_WIDGET_DRAWABLE (widget))
+  if (! gtk_widget_is_drawable (widget))
     return FALSE;
 
   x      = widget->allocation.x;

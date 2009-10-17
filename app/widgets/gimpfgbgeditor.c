@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -293,7 +295,7 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   gint            rect_w, rect_h;
   GimpRGB         color;
 
-  if (! GTK_WIDGET_DRAWABLE (widget))
+  if (! gtk_widget_is_drawable (widget))
     return FALSE;
 
   width  = widget->allocation.width;

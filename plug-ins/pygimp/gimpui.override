@@ -1009,8 +1009,8 @@ _wrap_gimp_color_scale_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     scale->channel = channel;
 
     range = GTK_RANGE(scale);
-    range->orientation = orientation;
-    range->flippable   = (orientation == GTK_ORIENTATION_HORIZONTAL);
+    gtk_orientable_set_orientation (GTK_ORIENTABLE (range), orientation);
+    gtk_range_set_flippable (range, orientation == GTK_ORIENTATION_HORIZONTAL);
     
     return 0;
 }

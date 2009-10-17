@@ -589,7 +589,7 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
   if (G_UNLIKELY (renderer->context == NULL))
     g_warning ("%s: renderer->context is NULL", G_STRFUNC);
 
-  if (! GTK_WIDGET_DRAWABLE (widget))
+  if (! gtk_widget_is_drawable (widget))
     return;
 
   if (! gdk_rectangle_intersect ((GdkRectangle *) draw_area,

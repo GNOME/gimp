@@ -217,12 +217,14 @@ gimp_combo_tag_entry_expose_event (GtkWidget      *widget,
   gdk_drawable_get_size (GDK_DRAWABLE (event->window), &window_width, &window_height);
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
-      gdk_draw_rectangle (event->window, style->base_gc[widget->state],
+      gdk_draw_rectangle (event->window,
+                          style->base_gc[gtk_widget_get_state (widget)],
                           TRUE, 0, 0, 14, window_height);
     }
   else
     {
-      gdk_draw_rectangle (event->window, style->base_gc[widget->state],
+      gdk_draw_rectangle (event->window,
+                          style->base_gc[gtk_widget_get_state (widget)],
                           TRUE, window_width - 14, 0, 14, window_height);
     }
 
@@ -406,17 +408,20 @@ static void
 gimp_combo_tag_entry_get_arrow_rect (GimpComboTagEntry *entry,
                                      GdkRectangle      *arrow_rect)
 {
-  GtkWidget *widget = GTK_WIDGET (entry);
-  GtkStyle  *style  = gtk_widget_get_style (widget);
+  GtkWidget     *widget = GTK_WIDGET (entry);
+  GtkStyle      *style  = gtk_widget_get_style (widget);
+  GtkAllocation  allocation;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     arrow_rect->x = style->xthickness;
   else
-    arrow_rect->x = widget->allocation.width - 16 - style->xthickness * 2;
+    arrow_rect->x = allocation.width - 16 - style->xthickness * 2;
 
   arrow_rect->y      = 0;
   arrow_rect->width  = 12;
-  arrow_rect->height = widget->allocation.height - style->ythickness * 2;
+  arrow_rect->height = allocation.height - style->ythickness * 2;
 }
 
 static gboolean

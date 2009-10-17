@@ -171,7 +171,7 @@ gimp_dialog_factory_dispose (GObject *object)
     {
       for (list = factory->open_dialogs; list; list = g_list_next (list))
         {
-          if (GTK_WIDGET_TOPLEVEL (list->data))
+          if (gtk_widget_is_toplevel (list->data))
             {
               gtk_widget_destroy (GTK_WIDGET (list->data));
               break;
@@ -582,7 +582,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
   if (! dialog)
     return NULL;
 
-  if (GTK_WIDGET_TOPLEVEL (dialog))
+  if (gtk_widget_is_toplevel (dialog))
     {
       gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
@@ -836,7 +836,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                                          dialog))
     return;
 
-  toplevel = GTK_WIDGET_TOPLEVEL (dialog);
+  toplevel = gtk_widget_is_toplevel (dialog);
 
   if (entry) /* dialog is a toplevel (but not a GimpDockWindow) or a GimpDockable */
     {
@@ -878,7 +878,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
               if (toplevel &&
                   gimp_session_info_is_session_managed (current_info) &&
-                  ! GTK_WIDGET_VISIBLE (dialog))
+                  ! gtk_widget_get_visible (dialog))
                 {
                   gimp_session_info_apply_geometry (current_info);
                 }
@@ -994,7 +994,7 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (GTK_IS_WIDGET (dialog));
-  g_return_if_fail (GTK_WIDGET_TOPLEVEL (dialog));
+  g_return_if_fail (gtk_widget_is_toplevel (dialog));
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
@@ -1117,7 +1117,7 @@ void
 gimp_dialog_factory_hide_dialog (GtkWidget *dialog)
 {
   g_return_if_fail (GTK_IS_WIDGET (dialog));
-  g_return_if_fail (GTK_WIDGET_TOPLEVEL (dialog));
+  g_return_if_fail (gtk_widget_is_toplevel (dialog));
 
   if (! gimp_dialog_factory_from_widget (dialog, NULL))
     {
@@ -1521,11 +1521,11 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
     {
       GtkWidget *widget = list->data;
 
-      if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
+      if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
           GimpDialogVisibilityState visibility = GIMP_DIALOG_VISIBILITY_UNKNOWN;
 
-          if (GTK_WIDGET_VISIBLE (widget))
+          if (gtk_widget_get_visible (widget))
             {
               visibility = GIMP_DIALOG_VISIBILITY_VISIBLE;
 
@@ -1558,7 +1558,7 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
     {
       GtkWidget *widget = list->data;
 
-      if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
+      if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
           GimpDialogVisibilityState visibility;
 
@@ -1566,7 +1566,7 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
             GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                 GIMP_DIALOG_VISIBILITY_KEY));
 
-          if (! GTK_WIDGET_VISIBLE (widget) &&
+          if (! gtk_widget_get_visible (widget) &&
               visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)
             {
               GIMP_LOG (WM, "Showing '%s' [%p]",
@@ -1578,7 +1578,7 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
                */
               gtk_widget_show (widget);
 
-              if (GTK_WIDGET_VISIBLE (widget))
+              if (gtk_widget_get_visible (widget))
                 gdk_window_raise (gtk_widget_get_window (widget));
             }
         }
@@ -1598,7 +1598,7 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
     {
       GtkWidget *widget = list->data;
 
-      if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
+      if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
           if (!display || display != gtk_widget_get_display (widget))
             {
@@ -1634,7 +1634,7 @@ gimp_dialog_factories_unset_busy_foreach (gconstpointer      key,
     {
       GtkWidget *widget = list->data;
 
-      if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
+      if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
           if (gtk_widget_get_window (widget))
             gdk_window_set_cursor (gtk_widget_get_window (widget), NULL);
@@ -1650,7 +1650,7 @@ gimp_dialog_factory_get_toolbox (GimpDialogFactory *toolbox_factory)
 
   for (list = toolbox_factory->open_dialogs; list; list = list->next)
     {
-      if (GTK_IS_WIDGET (list->data) && GTK_WIDGET_TOPLEVEL (list->data))
+      if (GTK_IS_WIDGET (list->data) && gtk_widget_is_toplevel (list->data))
         return list->data;
     }
 

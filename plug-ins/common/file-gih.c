@@ -788,10 +788,8 @@ size_adjustment_callback (GtkWidget *widget,
 
   *(adj->count) = newn;
 
-  if (newn * *(adj->value) != size)
-    gtk_widget_show (GTK_WIDGET (adj->warning_label));
-  else
-    gtk_widget_hide (GTK_WIDGET (adj->warning_label));
+  gtk_widget_set_visible (GTK_WIDGET (adj->warning_label),
+                          newn * *(adj->value) != size);
 
   if (adj->ncells != NULL)
     gtk_adjustment_set_value (GTK_ADJUSTMENT (adj->ncells),

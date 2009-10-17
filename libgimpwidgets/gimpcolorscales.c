@@ -207,12 +207,7 @@ gimp_color_scales_togg_visible (GimpColorSelector *selector,
   gint             i;
 
   for (i = 0; i < 6; i++)
-    {
-      if (visible)
-        gtk_widget_show (scales->toggles[i]);
-      else
-        gtk_widget_hide (scales->toggles[i]);
-    }
+    gtk_widget_set_visible (scales->toggles[i], visible);
 }
 
 static void
@@ -236,18 +231,9 @@ gimp_color_scales_set_show_alpha (GimpColorSelector *selector,
                                  show_alpha ? 3 : 0);
     }
 
-  if (show_alpha)
-    {
-      gtk_widget_show (label);
-      gtk_widget_show (scale);
-      gtk_widget_show (spin);
-    }
-  else
-    {
-      gtk_widget_hide (label);
-      gtk_widget_hide (scale);
-      gtk_widget_hide (spin);
-    }
+  gtk_widget_set_visible (label, show_alpha);
+  gtk_widget_set_visible (scale, show_alpha);
+  gtk_widget_set_visible (spin, show_alpha);
 }
 
 static void

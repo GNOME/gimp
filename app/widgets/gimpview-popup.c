@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -111,7 +113,7 @@ gimp_view_popup_show (GtkWidget      *widget,
   popup->button_x     = bevent->x;
   popup->button_y     = bevent->y;
 
-  if (GTK_WIDGET_NO_WINDOW (widget))
+  if (! gtk_widget_get_has_window (widget))
     {
       popup->button_x += widget->allocation.x;
       popup->button_y += widget->allocation.y;

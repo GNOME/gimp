@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -181,8 +183,7 @@ gimp_canvas_init (GimpCanvas *canvas)
   GtkWidget *widget = GTK_WIDGET (canvas);
   gint       i;
 
-  GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
-
+  gtk_widget_set_can_focus (widget, TRUE);
   gtk_widget_set_extension_events (widget, GDK_EXTENSION_EVENTS_ALL);
 
   for (i = 0; i < GIMP_CANVAS_NUM_STYLES; i++)
@@ -234,15 +235,18 @@ static void
 gimp_canvas_realize (GtkWidget *widget)
 {
   GimpCanvas    *canvas = GIMP_CANVAS (widget);
+  GtkAllocation  allocation;
   GdkWindowAttr  attributes;
   gint           attributes_mask;
 
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
-  attributes.x           = widget->allocation.x;
-  attributes.y           = widget->allocation.y;
-  attributes.width       = widget->allocation.width;
-  attributes.height      = widget->allocation.height;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  attributes.x           = allocation.x;
+  attributes.y           = allocation.y;
+  attributes.width       = allocation.width;
+  attributes.height      = allocation.height;
   attributes.window_type = GDK_WINDOW_CHILD;
   attributes.wclass      = GDK_INPUT_OUTPUT;
   attributes.visual      = gtk_widget_get_visual (widget);
@@ -252,12 +256,15 @@ gimp_canvas_realize (GtkWidget *widget)
 
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
-  widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-                                   &attributes, attributes_mask);
+  gtk_widget_set_window (widget,
+                         gdk_window_new (gtk_widget_get_parent_window (widget),
+                                         &attributes, attributes_mask));
   gdk_window_set_user_data (gtk_widget_get_window (widget), widget);
 
-  widget->style = gtk_style_attach (widget->style, widget->window);
-  gtk_style_set_background (widget->style, gtk_widget_get_window (widget),
+  widget->style = gtk_style_attach (gtk_widget_get_style (widget),
+                                    gtk_widget_get_window (widget));
+  gtk_style_set_background (gtk_widget_get_style (widget),
+                            gtk_widget_get_window (widget),
                             GTK_STATE_NORMAL);
 
   canvas->stipple[0] =
@@ -302,7 +309,7 @@ static void
 gimp_canvas_size_allocate (GtkWidget     *widget,
                            GtkAllocation *allocation)
 {
-  widget->allocation = *allocation;
+  gtk_widget_set_allocation (widget, allocation);
 
   if (GTK_WIDGET_REALIZED (widget))
     gdk_window_move_resize (gtk_widget_get_window (widget),
@@ -351,7 +358,7 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
   GdkColor         fg   = { 0, 0, 0, 0 };
   GdkColor         bg   = { 0, 0, 0, 0 };
 
-  if (! GTK_WIDGET_REALIZED (canvas))
+  if (! GTK_WIDGET_REALIZED (GTK_WIDGET (canvas)))
     return NULL;
 
   switch (style)
@@ -921,22 +928,26 @@ void
 gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                             cairo_t    *cr)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
-  GtkStyle  *style  = gtk_widget_get_style (widget);
-  gdouble    wilber_width;
-  gdouble    wilber_height;
-  gdouble    width;
-  gdouble    height;
-  gdouble    side;
-  gdouble    factor;
+  GtkWidget    *widget = GTK_WIDGET (canvas);
+  GtkStyle     *style  = gtk_widget_get_style (widget);
+  GtkStateType  state  = gtk_widget_get_state (widget);
+  GtkAllocation allocation;
+  gdouble       wilber_width;
+  gdouble       wilber_height;
+  gdouble       width;
+  gdouble       height;
+  gdouble       side;
+  gdouble       factor;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
 
   wilber_width  /= 2;
   wilber_height /= 2;
 
-  side = MIN (MIN (widget->allocation.width, widget->allocation.height),
-              MAX (widget->allocation.width, widget->allocation.height) / 2);
+  side = MIN (MIN (allocation.width, allocation.height),
+              MAX (allocation.width, allocation.height) / 2);
 
   width  = MAX (wilber_width,  side);
   height = MAX (wilber_height, side);
@@ -949,12 +960,12 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
    */
   gimp_cairo_wilber (cr,
                      - wilber_width * 0.6,
-                     widget->allocation.height / factor - wilber_height * 1.1);
+                     allocation.height / factor - wilber_height * 1.1);
 
   cairo_set_source_rgba (cr,
-                         style->fg[widget->state].red   / 65535.0,
-                         style->fg[widget->state].green / 65535.0,
-                         style->fg[widget->state].blue  / 65535.0,
+                         style->fg[state].red   / 65535.0,
+                         style->fg[state].green / 65535.0,
+                         style->fg[state].blue  / 65535.0,
                          0.15);
   cairo_fill (cr);
 }

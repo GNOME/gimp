@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -397,7 +399,8 @@ gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
        * is shown. So don't slow down painting by doing something that
        * is not even seen by the user.
        */
-      if (! editor->bg_histogram && GTK_WIDGET_DRAWABLE (editor))
+      if (! editor->bg_histogram &&
+          gtk_widget_is_drawable (GTK_WIDGET (editor)))
         {
           if (gimp_histogram_editor_validate (editor))
             editor->bg_histogram = gimp_histogram_duplicate (editor->histogram);

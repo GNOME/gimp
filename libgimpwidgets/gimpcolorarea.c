@@ -289,11 +289,11 @@ gimp_color_area_size_allocate (GtkWidget     *widget,
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (widget->allocation.width  != area->width ||
-      widget->allocation.height != area->height)
+  if (allocation->width  != area->width ||
+      allocation->height != area->height)
     {
-      area->width  = widget->allocation.width;
-      area->height = widget->allocation.height;
+      area->width  = allocation->width;
+      area->height = allocation->height;
 
       area->rowstride = (area->width * 3 + 3) & ~0x3;
 
@@ -308,7 +308,7 @@ static void
 gimp_color_area_state_changed (GtkWidget    *widget,
                                GtkStateType  previous_state)
 {
-  if (widget->state == GTK_STATE_INSENSITIVE ||
+  if (gtk_widget_get_state (widget) == GTK_STATE_INSENSITIVE ||
       previous_state == GTK_STATE_INSENSITIVE)
     {
       GIMP_COLOR_AREA (widget)->needs_render = TRUE;
@@ -326,7 +326,7 @@ gimp_color_area_expose (GtkWidget      *widget,
   GtkStyle      *style = gtk_widget_get_style (widget);
   guchar        *buf;
 
-  if (! area->buf || ! GTK_WIDGET_DRAWABLE (widget))
+  if (! area->buf || ! gtk_widget_is_drawable (widget))
     return FALSE;
 
   if (area->needs_render)
@@ -348,7 +348,7 @@ gimp_color_area_expose (GtkWidget      *widget,
 
   if (area->draw_border)
     gdk_draw_rectangle (gtk_widget_get_window (widget),
-                        style->fg_gc[widget->state],
+                        style->fg_gc[gtk_widget_get_state (widget)],
                         FALSE,
                         0, 0,
                         area->width - 1, area->height - 1);
@@ -645,7 +645,7 @@ gimp_color_area_render (GimpColorArea *area)
     return;
 
   _gimp_color_area_render_buf (GTK_WIDGET (area),
-                               ! GTK_WIDGET_IS_SENSITIVE (area),
+                               ! gtk_widget_is_sensitive (GTK_WIDGET (area)),
                                area->type,
                                area->buf,
                                area->width, area->height, area->rowstride,

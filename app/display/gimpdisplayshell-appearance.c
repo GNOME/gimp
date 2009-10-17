@@ -177,24 +177,12 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
 
   table = GTK_TABLE (gtk_widget_get_parent (GTK_WIDGET (shell->canvas)));
 
-  if (show)
-    {
-      gtk_widget_show (shell->origin);
-      gtk_widget_show (shell->hrule);
-      gtk_widget_show (shell->vrule);
+  gtk_widget_set_visible (shell->origin, show);
+  gtk_widget_set_visible (shell->hrule, show);
+  gtk_widget_set_visible (shell->vrule, show);
 
-      gtk_table_set_col_spacing (table, 0, 1);
-      gtk_table_set_row_spacing (table, 0, 1);
-    }
-  else
-    {
-      gtk_widget_hide (shell->origin);
-      gtk_widget_hide (shell->hrule);
-      gtk_widget_hide (shell->vrule);
-
-      gtk_table_set_col_spacing (table, 0, 0);
-      gtk_table_set_row_spacing (table, 0, 0);
-    }
+  gtk_table_set_col_spacing (table, 0, show ? 1 : 0);
+  gtk_table_set_row_spacing (table, 0, show ? 1 : 0);
 
   appearance_set_action_active (shell, "view-show-rulers", show);
 }
@@ -228,28 +216,14 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
   parent = gtk_widget_get_parent (shell->hsb);
   vbox   = GTK_BOX (gtk_widget_get_parent (parent));
 
-  if (show)
-    {
-      gtk_widget_show (shell->nav_ebox);
-      gtk_widget_show (shell->hsb);
-      gtk_widget_show (shell->vsb);
-      gtk_widget_show (shell->quick_mask_button);
-      gtk_widget_show (shell->zoom_button);
+  gtk_widget_set_visible (shell->nav_ebox, show);
+  gtk_widget_set_visible (shell->hsb, show);
+  gtk_widget_set_visible (shell->vsb, show);
+  gtk_widget_set_visible (shell->quick_mask_button, show);
+  gtk_widget_set_visible (shell->zoom_button, show);
 
-      gtk_box_set_spacing (hbox, 1);
-      gtk_box_set_spacing (vbox, 1);
-    }
-  else
-    {
-      gtk_widget_hide (shell->nav_ebox);
-      gtk_widget_hide (shell->hsb);
-      gtk_widget_hide (shell->vsb);
-      gtk_widget_hide (shell->quick_mask_button);
-      gtk_widget_hide (shell->zoom_button);
-
-      gtk_box_set_spacing (hbox, 0);
-      gtk_box_set_spacing (vbox, 0);
-    }
+  gtk_box_set_spacing (hbox, show ? 1 : 0);
+  gtk_box_set_spacing (vbox, show ? 1 : 0);
 
   appearance_set_action_active (shell, "view-show-scrollbars", show);
 }

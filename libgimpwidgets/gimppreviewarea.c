@@ -220,14 +220,17 @@ gimp_preview_area_expose (GtkWidget      *widget,
                           GdkEventExpose *event)
 {
   GimpPreviewArea *area = GIMP_PREVIEW_AREA (widget);
+  GtkAllocation    allocation;
   GdkRectangle     rect;
   GdkRectangle     render;
 
   if (! area->buf)
     return FALSE;
 
-  rect.x      = (widget->allocation.width  - area->width)  / 2;
-  rect.y      = (widget->allocation.height - area->height) / 2;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  rect.x      = (allocation.width  - area->width)  / 2;
+  rect.y      = (allocation.height - area->height) / 2;
   rect.width  = area->width;
   rect.height = area->height;
 
@@ -239,7 +242,7 @@ gimp_preview_area_expose (GtkWidget      *widget,
       guchar   *buf   = area->buf + x * 3 + y * area->rowstride;
 
       gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
-                                    style->fg_gc[widget->state],
+                                    style->fg_gc[gtk_widget_get_state (widget)],
                                     render.x,
                                     render.y,
                                     render.width,
@@ -261,10 +264,13 @@ gimp_preview_area_queue_draw (GimpPreviewArea *area,
                               gint             width,
                               gint             height)
 {
-  GtkWidget *widget = GTK_WIDGET (area);
+  GtkWidget     *widget = GTK_WIDGET (area);
+  GtkAllocation  allocation;
 
-  x += (widget->allocation.width  - area->width)  / 2;
-  y += (widget->allocation.height - area->height) / 2;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  x += (allocation.width  - area->width)  / 2;
+  y += (allocation.height - area->height) / 2;
 
   gtk_widget_queue_draw_area (widget, x, y, width, height);
 }

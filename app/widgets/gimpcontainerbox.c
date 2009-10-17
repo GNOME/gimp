@@ -83,7 +83,7 @@ gimp_container_box_init (GimpContainerBox *box)
 
   sb = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (box->scrolled_win));
 
-  GTK_WIDGET_UNSET_FLAGS (sb, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (sb, FALSE);
 
   gimp_container_view_set_dnd_widget (view, box->scrolled_win);
 }

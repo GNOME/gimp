@@ -203,17 +203,23 @@ static void
 select_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event)
 {
-  GtkStyle *style  = gtk_widget_get_style (widget);
-  gdouble   width  = widget->allocation.width;
-  gdouble   height = widget->allocation.height;
-  gdouble   dx     = 1.0 / width;
-  gdouble   dy     = 1.0 / height;
-  guchar   *buf    = g_alloca (3 * event->area.width * event->area.height);
-  guchar   *dest   = buf;
-  gdouble   y;
-  gint      i, j;
+  GtkStyle      *style  = gtk_widget_get_style (widget);
+  GtkAllocation  allocation;
+  gdouble        dx;
+  gdouble        dy;
+  guchar        *buf    = g_alloca (3 * event->area.width * event->area.height);
+  guchar        *dest   = buf;
+  gdouble        y;
+  gint           i, j;
 
-  for (j = 0, y = event->area.y / height; j < event->area.height; j++, y += dy)
+  gtk_widget_get_allocation (widget, &allocation);
+
+  dx = 1.0 / allocation.width;
+  dy = 1.0 / allocation.height;
+
+  for (j = 0, y = event->area.y / allocation.height;
+       j < event->area.height;
+       j++, y += dy)
     {
       guchar  *d  = dest;
 
@@ -246,7 +252,7 @@ select_area_expose (GtkWidget      *widget,
     }
 
   gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
-                                style->fg_gc[widget->state],
+                                style->fg_gc[gtk_widget_get_state (widget)],
                                 event->area.x, event->area.y,
                                 event->area.width, event->area.height,
                                 GDK_RGB_DITHER_MAX,
@@ -310,10 +316,13 @@ button_press_event (GtkWidget      *widget,
                     GdkEventButton *event,
                     ColorselWater  *water)
 {
-  gboolean erase;
+  GtkAllocation allocation;
+  gboolean      erase;
 
-  water->last_x = event->x / widget->allocation.width;
-  water->last_y = event->y / widget->allocation.height;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  water->last_x = event->x / allocation.width;
+  water->last_y = event->y / allocation.height;
 
   erase = (event->button != 1);
   /* FIXME: (event->source == GDK_SOURCE_ERASER) */
@@ -333,10 +342,13 @@ motion_notify_event (GtkWidget      *widget,
                      GdkEventMotion *event,
                      ColorselWater  *water)
 {
+  GtkAllocation  allocation;
   GdkTimeCoord **coords;
   gint           nevents;
   gint           i;
   gboolean       erase;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   if (event->state & (GDK_BUTTON1_MASK |
                       GDK_BUTTON2_MASK |
@@ -376,8 +388,8 @@ motion_notify_event (GtkWidget      *widget,
                                    GDK_AXIS_PRESSURE, &pressure);
 
               draw_brush (water, widget, erase,
-                          x / widget->allocation.width,
-                          y / widget->allocation.height, pressure);
+                          x / allocation.width,
+                          y / allocation.height, pressure);
             }
 
           g_free (coords);
@@ -389,8 +401,8 @@ motion_notify_event (GtkWidget      *widget,
           gdk_event_get_axis ((GdkEvent *) event, GDK_AXIS_PRESSURE, &pressure);
 
           draw_brush (water, widget, erase,
-                      event->x / widget->allocation.width,
-                      event->y / widget->allocation.height, pressure);
+                      event->x / allocation.width,
+                      event->y / allocation.height, pressure);
         }
     }
 

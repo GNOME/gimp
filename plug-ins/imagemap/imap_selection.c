@@ -471,13 +471,12 @@ make_selection(ObjectList_t *object_list)
 void
 selection_toggle_visibility(Selection_t *selection)
 {
-  if (selection->is_visible) {
-    gtk_widget_hide (selection->container);
-    selection->is_visible = FALSE;
-  } else {
-    gtk_widget_show (selection->container);
-    selection->is_visible = TRUE;
-  }
+  /* Toggle */
+  selection->is_visible = ! selection->is_visible;
+
+  /* Adapt to new state */
+  gtk_widget_set_visible (selection->container,
+                          selection->is_visible);
 }
 
 void

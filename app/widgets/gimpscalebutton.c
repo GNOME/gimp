@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -161,7 +163,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
       cairo_line_to (cr, i, i + 0.5);
     }
 
-  gdk_cairo_set_source_color (cr, &style->fg[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->fg[gtk_widget_get_state (widget)]);
   cairo_stroke (cr);
 
   for ( ; i < steps; i++)

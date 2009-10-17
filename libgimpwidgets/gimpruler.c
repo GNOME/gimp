@@ -20,6 +20,8 @@
 
 #include <string.h>
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -496,16 +498,19 @@ static void
 gimp_ruler_realize (GtkWidget *widget)
 {
   GimpRuler     *ruler = GIMP_RULER (widget);
+  GtkAllocation  allocation;
   GdkWindowAttr  attributes;
   gint           attributes_mask;
 
   GTK_WIDGET_SET_FLAGS (ruler, GTK_REALIZED);
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.x           = widget->allocation.x;
-  attributes.y           = widget->allocation.y;
-  attributes.width       = widget->allocation.width;
-  attributes.height      = widget->allocation.height;
+  attributes.x           = allocation.x;
+  attributes.y           = allocation.y;
+  attributes.width       = allocation.width;
+  attributes.height      = allocation.height;
   attributes.wclass      = GDK_INPUT_OUTPUT;
   attributes.visual      = gtk_widget_get_visual (widget);
   attributes.colormap    = gtk_widget_get_colormap (widget);
@@ -516,12 +521,15 @@ gimp_ruler_realize (GtkWidget *widget)
 
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
-  widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-                                   &attributes, attributes_mask);
-  gdk_window_set_user_data (widget->window, ruler);
+  gtk_widget_set_window (widget,
+                         gdk_window_new (gtk_widget_get_parent_window (widget),
+                                         &attributes, attributes_mask));
+  gdk_window_set_user_data (gtk_widget_get_window (widget), ruler);
 
-  widget->style = gtk_style_attach (widget->style, widget->window);
-  gtk_style_set_background (gtk_widget_get_style (widget), widget->window,
+  widget->style = gtk_style_attach (gtk_widget_get_style (widget),
+                                    gtk_widget_get_window (widget));
+  gtk_style_set_background (gtk_widget_get_style (widget),
+                            gtk_widget_get_window (widget),
                             GTK_STATE_ACTIVE);
 
   gimp_ruler_make_pixmap (ruler);
@@ -560,7 +568,7 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
 {
   GimpRuler *ruler = GIMP_RULER (widget);
 
-  widget->allocation = *allocation;
+  gtk_widget_set_allocation (widget, allocation);
 
   if (GTK_WIDGET_REALIZED (widget))
     {
@@ -624,11 +632,13 @@ gimp_ruler_motion_notify (GtkWidget      *widget,
 {
   GimpRuler        *ruler = GIMP_RULER (widget);
   GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkAllocation     allocation;
   gdouble           lower;
   gdouble           upper;
 
   gdk_event_request_motions (event);
 
+  gtk_widget_get_allocation (widget, &allocation);
   gimp_ruler_get_range (ruler, &lower, &upper, NULL);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
@@ -636,14 +646,14 @@ gimp_ruler_motion_notify (GtkWidget      *widget,
       gimp_ruler_set_position (ruler,
                                lower +
                                (upper - lower) * event->x /
-                               widget->allocation.width);
+                               allocation.width);
     }
   else
     {
       gimp_ruler_set_position (ruler,
                                lower +
                                (upper - lower) * event->y /
-                               widget->allocation.height);
+                               allocation.height);
     }
 
   return FALSE;
@@ -653,10 +663,13 @@ static gboolean
 gimp_ruler_expose (GtkWidget      *widget,
                    GdkEventExpose *event)
 {
-  if (GTK_WIDGET_DRAWABLE (widget))
+  if (gtk_widget_is_drawable (widget))
     {
       GimpRuler        *ruler = GIMP_RULER (widget);
       GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+      GtkAllocation     allocation;
+
+      gtk_widget_get_allocation (widget, &allocation);
 
       gimp_ruler_draw_ticks (ruler);
 
@@ -664,8 +677,8 @@ gimp_ruler_expose (GtkWidget      *widget,
                          priv->non_gr_exp_gc,
                          priv->backing_store,
                          0, 0, 0, 0,
-                         widget->allocation.width,
-                         widget->allocation.height);
+                         allocation.width,
+                         allocation.height);
 
       gimp_ruler_draw_pos (ruler);
     }
@@ -679,6 +692,8 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   GtkWidget        *widget = GTK_WIDGET (ruler);
   GtkStyle         *style  = gtk_widget_get_style (widget);
   GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkStateType      state  = gtk_widget_get_state (widget);
+  GtkAllocation     allocation;
   cairo_t          *cr;
   gint              i;
   gint              width, height;
@@ -699,8 +714,10 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   PangoLayout      *layout;
   PangoRectangle    logical_rect, ink_rect;
 
-  if (! GTK_WIDGET_DRAWABLE (widget))
+  if (! gtk_widget_is_drawable (widget))
     return;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   xthickness = style->xthickness;
   ythickness = style->ythickness;
@@ -713,13 +730,13 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      width  = widget->allocation.width;
-      height = widget->allocation.height - ythickness * 2;
+      width  = allocation.width;
+      height = allocation.height - ythickness * 2;
     }
   else
     {
-      width  = widget->allocation.height;
-      height = widget->allocation.width - ythickness * 2;
+      width  = allocation.height;
+      height = allocation.width - ythickness * 2;
     }
 
   gtk_paint_box (style, priv->backing_store,
@@ -728,17 +745,17 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
                  priv->orientation == GTK_ORIENTATION_HORIZONTAL ?
                  "hruler" : "vruler",
                  0, 0,
-                 widget->allocation.width, widget->allocation.height);
+                 allocation.width, allocation.height);
 
   cr = gdk_cairo_create (priv->backing_store);
-  gdk_cairo_set_source_color (cr, &style->fg[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->fg[state]);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
       cairo_rectangle (cr,
                        xthickness,
                        height + ythickness,
-                       widget->allocation.width - 2 * xthickness,
+                       allocation.width - 2 * xthickness,
                        1);
     }
   else
@@ -747,7 +764,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
                        height + xthickness,
                        ythickness,
                        1,
-                       widget->allocation.height - 2 * ythickness);
+                       allocation.height - 2 * ythickness);
     }
 
   gimp_ruler_get_range (ruler, &lower, &upper, &max_size);
@@ -847,7 +864,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
 
                   gtk_paint_layout (style,
                                     priv->backing_store,
-                                    GTK_WIDGET_STATE (widget),
+                                    state,
                                     FALSE,
                                     NULL,
                                     widget,
@@ -867,7 +884,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
 
                       gtk_paint_layout (style,
                                         priv->backing_store,
-                                        GTK_WIDGET_STATE (widget),
+                                        state,
                                         FALSE,
                                         NULL,
                                         widget,
@@ -892,22 +909,26 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
   GtkWidget        *widget = GTK_WIDGET (ruler);
   GtkStyle         *style  = gtk_widget_get_style (widget);
   GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkStateType      state  = gtk_widget_get_state (widget);
+  GtkAllocation     allocation;
   gint              x, y;
   gint              width, height;
   gint              bs_width, bs_height;
   gint              xthickness;
   gint              ythickness;
 
-  if (! GTK_WIDGET_DRAWABLE (ruler))
+  if (! gtk_widget_is_drawable (widget))
     return;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   xthickness = style->xthickness;
   ythickness = style->ythickness;
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      width  = widget->allocation.width;
-      height = widget->allocation.height - ythickness * 2;
+      width  = allocation.width;
+      height = allocation.height - ythickness * 2;
 
       bs_width = height / 2 + 2;
       bs_width |= 1;  /* make sure it's odd */
@@ -915,8 +936,8 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
     }
   else
     {
-      width  = widget->allocation.width - xthickness * 2;
-      height = widget->allocation.height;
+      width  = allocation.width - xthickness * 2;
+      height = allocation.height;
 
       bs_height = width / 2 + 2;
       bs_height |= 1;  /* make sure it's odd */
@@ -959,7 +980,7 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
           y = ROUND ((position - lower) * increment) + (ythickness - bs_height) / 2 - 1;
         }
 
-      gdk_cairo_set_source_color (cr, &style->fg[widget->state]);
+      gdk_cairo_set_source_color (cr, &style->fg[state]);
 
       cairo_move_to (cr, x, y);
 
@@ -988,22 +1009,25 @@ gimp_ruler_make_pixmap (GimpRuler *ruler)
 {
   GtkWidget        *widget = GTK_WIDGET (ruler);
   GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkAllocation     allocation;
   gint              width;
   gint              height;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   if (priv->backing_store)
     {
       gdk_drawable_get_size (priv->backing_store, &width, &height);
-      if ((width == widget->allocation.width) &&
-          (height == widget->allocation.height))
+      if ((width  == allocation.width) &&
+          (height == allocation.height))
         return;
 
       g_object_unref (priv->backing_store);
     }
 
   priv->backing_store = gdk_pixmap_new (gtk_widget_get_window (widget),
-                                        widget->allocation.width,
-                                        widget->allocation.height,
+                                        allocation.width,
+                                        allocation.height,
                                         -1);
 
   if (!priv->non_gr_exp_gc)

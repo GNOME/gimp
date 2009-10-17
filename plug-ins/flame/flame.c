@@ -452,10 +452,10 @@ file_response_callback (GtkFileChooser *chooser,
 
   gtk_widget_destroy (GTK_WIDGET (chooser));
 
-  if (! GTK_WIDGET_SENSITIVE (load_button))
+  if (! gtk_widget_get_sensitive (load_button))
     gtk_widget_set_sensitive (load_button, TRUE);
 
-  if (! GTK_WIDGET_SENSITIVE (save_button))
+  if (! gtk_widget_get_sensitive (save_button))
     gtk_widget_set_sensitive (save_button, TRUE);
 }
 

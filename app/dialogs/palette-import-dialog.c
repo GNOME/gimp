@@ -734,7 +734,7 @@ palette_import_image_add (GimpContainer *container,
                           GimpImage     *image,
                           ImportDialog  *dialog)
 {
-  if (! GTK_WIDGET_IS_SENSITIVE (dialog->image_radio))
+  if (! gtk_widget_is_sensitive (dialog->image_radio))
     {
       gtk_widget_set_sensitive (dialog->image_radio, TRUE);
       gimp_context_set_image (dialog->context, image);
@@ -868,8 +868,6 @@ palette_import_make_palette (ImportDialog *dialog)
       dialog->palette = palette;
     }
 
-  if (dialog->palette && dialog->palette->n_colors > 0)
-    gtk_widget_hide (dialog->no_colors_label);
-  else
-    gtk_widget_show (dialog->no_colors_label);
+  gtk_widget_set_visible (dialog->no_colors_label,
+                          dialog->palette && dialog->palette->n_colors > 0);
 }

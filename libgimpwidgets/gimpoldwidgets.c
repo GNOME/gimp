@@ -384,14 +384,15 @@ void
 gimp_option_menu_set_history (GtkOptionMenu *option_menu,
                               gpointer       item_data)
 {
+  GList *children;
   GList *list;
   gint   history = 0;
 
   g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
 
-  for (list = GTK_MENU_SHELL (option_menu->menu)->children;
-       list;
-       list = g_list_next (list))
+  children = gtk_container_get_children (GTK_CONTAINER (option_menu->menu));
+
+  for (list = children; list; list = g_list_next (list))
     {
       GtkWidget *menu_item = GTK_WIDGET (list->data);
 
@@ -407,6 +408,8 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
 
   if (list)
     gtk_option_menu_set_history (option_menu, history);
+
+  g_list_free (children);
 }
 
 /**
@@ -446,14 +449,15 @@ gimp_option_menu_set_sensitive (GtkOptionMenu                     *option_menu,
                                 GimpOptionMenuSensitivityCallback  callback,
                                 gpointer                           callback_data)
 {
+  GList *children;
   GList *list;
 
   g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
   g_return_if_fail (callback != NULL);
 
-  for (list = GTK_MENU_SHELL (option_menu->menu)->children;
-       list;
-       list = g_list_next (list))
+  children = gtk_container_get_children (GTK_CONTAINER (option_menu->menu));
+
+  for (list = children; list; list = g_list_next (list))
     {
       GtkWidget *menu_item = GTK_WIDGET (list->data);
 
@@ -468,6 +472,8 @@ gimp_option_menu_set_sensitive (GtkOptionMenu                     *option_menu,
           gtk_widget_set_sensitive (menu_item, sensitive);
         }
     }
+
+  g_list_free (children);
 }
 
 /**
@@ -489,14 +495,15 @@ gimp_int_option_menu_set_sensitive (GtkOptionMenu                        *option
                                     GimpIntOptionMenuSensitivityCallback  callback,
                                     gpointer                              callback_data)
 {
+  GList *children;
   GList *list;
 
   g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
   g_return_if_fail (callback != NULL);
 
-  for (list = GTK_MENU_SHELL (option_menu->menu)->children;
-       list;
-       list = g_list_next (list))
+  children = gtk_container_get_children (GTK_CONTAINER (option_menu->menu));
+
+  for (list = children; list; list = g_list_next (list))
     {
       GtkWidget *menu_item = GTK_WIDGET (list->data);
 
@@ -511,6 +518,8 @@ gimp_int_option_menu_set_sensitive (GtkOptionMenu                        *option
           gtk_widget_set_sensitive (menu_item, sensitive);
         }
     }
+
+  g_list_free (children);
 }
 
 

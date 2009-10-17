@@ -232,10 +232,13 @@ gimp_container_tree_view_drag_motion (GtkWidget             *widget,
                                       guint                  time,
                                       GimpContainerTreeView *tree_view)
 {
+  GtkAllocation            allocation;
   GtkTreePath             *path;
   GtkTreeViewDropPosition  drop_pos;
 
-  if (y < SCROLL_DISTANCE || y > (widget->allocation.height - SCROLL_DISTANCE))
+  gtk_widget_get_allocation (widget, &allocation);
+
+  if (y < SCROLL_DISTANCE || y > (allocation.height - SCROLL_DISTANCE))
     {
       gint distance;
 
@@ -247,7 +250,7 @@ gimp_container_tree_view_drag_motion (GtkWidget             *widget,
       else
         {
           tree_view->priv->scroll_dir = GDK_SCROLL_DOWN;
-          distance = MAX (widget->allocation.height - y, 1);
+          distance = MAX (allocation.height - y, 1);
         }
 
       tree_view->priv->scroll_timeout_interval = SCROLL_INTERVAL * ABS (distance);

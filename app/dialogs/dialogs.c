@@ -444,7 +444,7 @@ dialogs_get_toolbox (void)
        list;
        list = g_list_next (list))
     {
-      if (GTK_WIDGET_TOPLEVEL (list->data))
+      if (gtk_widget_is_toplevel (list->data))
         return list->data;
     }
 

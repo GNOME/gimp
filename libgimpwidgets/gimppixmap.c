@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <stdio.h>
 
 #include <gtk/gtk.h>
@@ -102,10 +104,12 @@ gimp_pixmap_set (GimpPixmap  *pixmap,
             }
           else
             {
-              GTK_WIDGET (pixmap)->requisition.width =
-                width + GTK_MISC (pixmap)->xpad * 2;
-              GTK_WIDGET (pixmap)->requisition.height =
-                height + GTK_MISC (pixmap)->ypad * 2;
+              gint xpad, ypad;
+
+              gtk_misc_get_padding (GTK_MISC (pixmap), &xpad, &ypad);
+
+              GTK_WIDGET (pixmap)->requisition.width  = width + xpad * 2;
+              GTK_WIDGET (pixmap)->requisition.height = height + ypad * 2;
             }
         }
     }

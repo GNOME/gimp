@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#undef GSEAL_ENABLE
+
 #include <stdlib.h>
 
 #include <gegl.h>
@@ -231,16 +233,19 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 {
   GimpCanvasPaddingMode padding_mode;
   GimpRGB               padding_color;
+  GtkAllocation         allocation;
 
   gtk_widget_grab_focus (shell->canvas);
 
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
   gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
 
+  gtk_widget_get_allocation (canvas, &allocation);
+
   gimp_display_shell_title_update (shell);
 
-  shell->disp_width  = canvas->allocation.width;
-  shell->disp_height = canvas->allocation.height;
+  shell->disp_width  = allocation.width;
+  shell->disp_height = allocation.height;
 
   /*  set up the scrollbar observers  */
   g_signal_connect (shell->hsbdata, "value-changed",
@@ -661,7 +666,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   /*  If the device (and maybe the tool) has changed, update the new
    *  tool's state
    */
-  if (device_changed && GTK_WIDGET_HAS_FOCUS (canvas))
+  if (device_changed && gtk_widget_has_focus (canvas))
     {
       gimp_display_shell_update_focus (shell, &image_coords, state);
     }
@@ -783,7 +788,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
          *  canvas immediately, therefore we do this before logging
          *  the BUTTON_PRESS.
          */
-        if (! GTK_WIDGET_HAS_FOCUS (canvas))
+        if (! gtk_widget_has_focus (canvas))
           gtk_widget_grab_focus (canvas);
 
         GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_PRESS (%d @ %0.0f:%0.0f)",
@@ -795,7 +800,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
          *
          *  this happens in "click to focus" mode.
          */
-        if (! GTK_WIDGET_HAS_FOCUS (canvas))
+        if (! gtk_widget_has_focus (canvas))
           {
             /*  do the things a FOCUS_IN event would do and set a flag
              *  preventing it from doing the same.
@@ -1750,7 +1755,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
 
       if (active_tool)
         {
-          if (! GTK_WIDGET_HAS_FOCUS (shell->canvas))
+          if (! gtk_widget_has_focus (shell->canvas))
             {
               gimp_display_shell_update_focus (shell, NULL, event->state);
 

@@ -24,6 +24,8 @@
 
 #include <string.h>
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -472,20 +474,30 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 
   if (column == 0)
     {
-      GtkTableChild *child;
-      GList         *list;
+      GList *children;
+      GList *list;
 
-      for (list = GTK_TABLE (gse)->children; list; list = g_list_next (list))
+      children = gtk_container_get_children (GTK_CONTAINER (gse));
+
+      for (list = children; list; list = g_list_next (list))
         {
-          child = (GtkTableChild *) list->data;
+          GtkWidget *child = list->data;
+          gint       left_attach;
+          gint       top_attach;
 
-          if (child->left_attach == 1 && child->top_attach == row)
+          gtk_container_child_get (GTK_CONTAINER (gse), child,
+                                   "left-attach", &left_attach,
+                                   "top-attach",  &top_attach,
+                                   NULL);
+
+          if (left_attach == 1 && top_attach == row)
             {
-              gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-                                             child->widget);
+              gtk_label_set_mnemonic_widget (GTK_LABEL (label), child);
               break;
             }
         }
+
+      g_list_free (children);
     }
 
   gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);
@@ -798,7 +810,7 @@ gimp_size_entry_value_callback (GtkWidget *widget,
 
   gsef = (GimpSizeEntryField *) data;
 
-  new_value = GTK_ADJUSTMENT (widget)->value;
+  new_value = gtk_adjustment_get_value (GTK_ADJUSTMENT (widget));
 
   if (gsef->value != new_value)
     gimp_size_entry_update_value (gsef, new_value);
@@ -1054,7 +1066,7 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
 
   gsef = (GimpSizeEntryField *) data;
 
-  new_refval = GTK_ADJUSTMENT (widget)->value;
+  new_refval = gtk_adjustment_get_value (GTK_ADJUSTMENT (widget));
 
   if (gsef->refval != new_refval)
     gimp_size_entry_update_refval (gsef, new_refval);
@@ -1343,10 +1355,7 @@ gimp_size_entry_show_unit_menu (GimpSizeEntry *gse,
 {
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  if (show)
-    gtk_widget_show (gse->unitmenu);
-  else
-    gtk_widget_hide (gse->unitmenu);
+  gtk_widget_set_visible (gse->unitmenu, show);
 }
 
 

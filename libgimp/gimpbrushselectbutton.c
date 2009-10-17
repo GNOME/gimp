@@ -734,20 +734,23 @@ gimp_brush_select_preview_update (GtkWidget    *preview,
                                   const guchar *mask_data)
 {
   GimpPreviewArea *area = GIMP_PREVIEW_AREA (preview);
+  GtkAllocation    allocation;
   gint             x, y;
   gint             width, height;
 
-  width  = MIN (brush_width,  preview->allocation.width);
-  height = MIN (brush_height, preview->allocation.height);
+  gtk_widget_get_allocation (preview, &allocation);
 
-  x = ((preview->allocation.width  - width)  / 2);
-  y = ((preview->allocation.height - height) / 2);
+  width  = MIN (brush_width,  allocation.width);
+  height = MIN (brush_height, allocation.height);
+
+  x = ((allocation.width  - width)  / 2);
+  y = ((allocation.height - height) / 2);
 
   if (x || y)
     gimp_preview_area_fill (area,
                             0, 0,
-                            preview->allocation.width,
-                            preview->allocation.height,
+                            allocation.width,
+                            allocation.height,
                             0xFF, 0xFF, 0xFF);
 
   gimp_brush_select_preview_draw (area,
