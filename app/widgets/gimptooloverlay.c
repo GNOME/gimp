@@ -112,14 +112,12 @@ static void
 gimp_tool_overlay_init (GimpToolOverlay *overlay)
 {
   GtkWidget   *widget = GTK_WIDGET (overlay);
-#if 0
   GdkScreen   *screen = gtk_widget_get_screen (widget);
   GdkColormap *rgba   = gdk_screen_get_rgba_colormap (screen);
 
-  g_assert (gdk_screen_get_rgba_visual (screen) != NULL);
+  if (rgba)
+    gtk_widget_set_colormap (widget, rgba);
 
-  gtk_widget_set_colormap (widget, rgba);
-#endif
   gtk_widget_set_app_paintable (widget, TRUE);
 
   overlay->action_area = gtk_hbutton_box_new ();
