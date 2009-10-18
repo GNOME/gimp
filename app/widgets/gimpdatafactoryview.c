@@ -148,7 +148,7 @@ gimp_data_factory_view_new (GimpViewType      view_type,
   return GTK_WIDGET (factory_view);
 }
 
-GtkWidget       *
+GtkWidget *
 gimp_data_factory_view_get_edit_button (GimpDataFactoryView *factory_view)
 {
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), NULL);
@@ -156,7 +156,7 @@ gimp_data_factory_view_get_edit_button (GimpDataFactoryView *factory_view)
   return factory_view->priv->edit_button;
 }
 
-GtkWidget       *
+GtkWidget *
 gimp_data_factory_view_get_duplicate_button (GimpDataFactoryView *factory_view)
 {
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), NULL);
@@ -333,19 +333,22 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
 
   if (view->priv->assign_tag_entry)
     {
-      GList    *active_items = NULL;
+      GList *active_items = NULL;
 
       if (viewable)
         {
           active_items = g_list_append (active_items, viewable);
         }
+
       gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (view->priv->assign_tag_entry),
                                          active_items);
+
       g_list_free (active_items);
     }
   else
     {
-      view->priv->selected_items = g_list_append (view->priv->selected_items, viewable);
+      view->priv->selected_items = g_list_append (view->priv->selected_items,
+                                                  viewable);
     }
 }
 
