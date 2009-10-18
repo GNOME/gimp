@@ -122,7 +122,8 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       shell->offset_x += x_offset;
       shell->offset_y += y_offset;
 
-      gimp_canvas_scroll (GIMP_CANVAS (shell->canvas), -x_offset, -y_offset);
+      gimp_overlay_box_scroll (GIMP_OVERLAY_BOX (shell->canvas),
+                               -x_offset, -y_offset);
 
       /*  Update scrollbars and rulers  */
       gimp_display_shell_update_scrollbars_and_rulers (shell);

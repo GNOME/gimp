@@ -46,27 +46,25 @@ enum
 
 /*  local function prototypes  */
 
-static void    gimp_canvas_set_property  (GObject         *object,
-                                          guint            property_id,
-                                          const GValue    *value,
-                                          GParamSpec      *pspec);
-static void    gimp_canvas_get_property  (GObject         *object,
-                                          guint            property_id,
-                                          GValue          *value,
-                                          GParamSpec      *pspec);
+static void    gimp_canvas_set_property (GObject         *object,
+                                         guint            property_id,
+                                         const GValue    *value,
+                                         GParamSpec      *pspec);
+static void    gimp_canvas_get_property (GObject         *object,
+                                         guint            property_id,
+                                         GValue          *value,
+                                         GParamSpec      *pspec);
 
-static void    gimp_canvas_realize       (GtkWidget       *widget);
-static void    gimp_canvas_unrealize     (GtkWidget       *widget);
-static void    gimp_canvas_size_allocate (GtkWidget       *widget,
-                                          GtkAllocation   *allocation);
-static void    gimp_canvas_style_set     (GtkWidget       *widget,
-                                          GtkStyle        *prev_style);
+static void    gimp_canvas_realize      (GtkWidget       *widget);
+static void    gimp_canvas_unrealize    (GtkWidget       *widget);
+static void    gimp_canvas_style_set    (GtkWidget       *widget,
+                                         GtkStyle        *prev_style);
 
 static GdkGC * gimp_canvas_gc_new       (GimpCanvas      *canvas,
                                          GimpCanvasStyle  style);
 
 
-G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GTK_TYPE_CONTAINER)
+G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GIMP_TYPE_OVERLAY_BOX)
 
 #define parent_class gimp_canvas_parent_class
 
@@ -167,7 +165,6 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
 
   widget_class->realize       = gimp_canvas_realize;
   widget_class->unrealize     = gimp_canvas_unrealize;
-  widget_class->size_allocate = gimp_canvas_size_allocate;
   widget_class->style_set     = gimp_canvas_style_set;
 
   g_object_class_install_property (object_class, PROP_CONFIG,
@@ -184,6 +181,7 @@ gimp_canvas_init (GimpCanvas *canvas)
   gint       i;
 
   gtk_widget_set_can_focus (widget, TRUE);
+  gtk_widget_add_events (widget, GIMP_CANVAS_EVENT_MASK);
   gtk_widget_set_extension_events (widget, GDK_EXTENSION_EVENTS_ALL);
 
   for (i = 0; i < GIMP_CANVAS_NUM_STYLES; i++)
@@ -195,9 +193,9 @@ gimp_canvas_init (GimpCanvas *canvas)
 
 static void
 gimp_canvas_set_property (GObject      *object,
-                           guint         property_id,
-                           const GValue *value,
-                           GParamSpec   *pspec)
+                          guint         property_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
 {
   GimpCanvas *canvas = GIMP_CANVAS (object);
 
@@ -234,38 +232,9 @@ gimp_canvas_get_property (GObject    *object,
 static void
 gimp_canvas_realize (GtkWidget *widget)
 {
-  GimpCanvas    *canvas = GIMP_CANVAS (widget);
-  GtkAllocation  allocation;
-  GdkWindowAttr  attributes;
-  gint           attributes_mask;
+  GimpCanvas *canvas = GIMP_CANVAS (widget);
 
-  GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-
-  gtk_widget_get_allocation (widget, &allocation);
-
-  attributes.x           = allocation.x;
-  attributes.y           = allocation.y;
-  attributes.width       = allocation.width;
-  attributes.height      = allocation.height;
-  attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.wclass      = GDK_INPUT_OUTPUT;
-  attributes.visual      = gtk_widget_get_visual (widget);
-  attributes.colormap    = gtk_widget_get_colormap (widget);
-  attributes.event_mask  = (gtk_widget_get_events (widget) |
-                            GIMP_CANVAS_EVENT_MASK);
-
-  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
-
-  gtk_widget_set_window (widget,
-                         gdk_window_new (gtk_widget_get_parent_window (widget),
-                                         &attributes, attributes_mask));
-  gdk_window_set_user_data (gtk_widget_get_window (widget), widget);
-
-  widget->style = gtk_style_attach (gtk_widget_get_style (widget),
-                                    gtk_widget_get_window (widget));
-  gtk_style_set_background (gtk_widget_get_style (widget),
-                            gtk_widget_get_window (widget),
-                            GTK_STATE_NORMAL);
+  GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
   canvas->stipple[0] =
     gdk_bitmap_create_from_data (gtk_widget_get_window (widget),
@@ -303,18 +272,6 @@ gimp_canvas_unrealize (GtkWidget *widget)
     }
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
-}
-
-static void
-gimp_canvas_size_allocate (GtkWidget     *widget,
-                           GtkAllocation *allocation)
-{
-  gtk_widget_set_allocation (widget, allocation);
-
-  if (GTK_WIDGET_REALIZED (widget))
-    gdk_window_move_resize (gtk_widget_get_window (widget),
-                            allocation->x, allocation->y,
-                            allocation->width, allocation->height);
 }
 
 static void
@@ -561,34 +518,6 @@ gimp_canvas_new (GimpDisplayConfig *config)
                        "name",   "gimp-canvas",
                        "config", config,
                        NULL);
-}
-
-/**
- * gimp_canvas_scroll:
- * @canvas: the #GimpCanvas widget to scroll.
- * @offset_x: the x scroll amount.
- * @offset_y: the y scroll amount.
- *
- * Scrolls the canvas using gdk_window_scroll() and makes sure the result
- * is displayed immediately by calling gdk_window_process_updates().
- **/
-void
-gimp_canvas_scroll (GimpCanvas *canvas,
-                    gint        offset_x,
-                    gint        offset_y)
-{
-  GtkWidget *widget;
-  GdkWindow *window;
-
-  g_return_if_fail (GIMP_IS_CANVAS (canvas));
-
-  widget = GTK_WIDGET (canvas);
-  window = gtk_widget_get_window (widget);
-
-  gdk_window_scroll (window, offset_x, offset_y);
-
-  /*  Make sure expose events are processed before scrolling again  */
-  gdk_window_process_updates (window, FALSE);
 }
 
 /**

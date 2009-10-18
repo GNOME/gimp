@@ -19,6 +19,9 @@
 #define __GIMP_CANVAS_H__
 
 
+#include "widgets/gimpoverlaybox.h"
+
+
 typedef enum
 {
   GIMP_CANVAS_STYLE_BLACK,
@@ -68,7 +71,7 @@ typedef struct _GimpCanvasClass GimpCanvasClass;
 
 struct _GimpCanvas
 {
-  GtkContainer       parent_instance;
+  GimpOverlayBox     parent_instance;
 
   GimpDisplayConfig *config;
 
@@ -79,17 +82,13 @@ struct _GimpCanvas
 
 struct _GimpCanvasClass
 {
-  GtkContainerClass  parent_class;
+  GimpOverlayBoxClass  parent_class;
 };
 
 
 GType        gimp_canvas_get_type          (void) G_GNUC_CONST;
 
 GtkWidget  * gimp_canvas_new               (GimpDisplayConfig *config);
-
-void         gimp_canvas_scroll            (GimpCanvas        *canvas,
-                                            gint               offset_x,
-                                            gint               offset_y);
 
 void         gimp_canvas_draw_cursor       (GimpCanvas        *canvas,
                                             gint               x,

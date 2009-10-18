@@ -375,6 +375,10 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   if (! shell->display || ! gimp_display_get_shell (shell->display))
     return TRUE;
 
+  /*  ignore events on overlays  */
+  if (eevent->window != gtk_widget_get_window (widget))
+    return FALSE;
+
   if (gimp_display_get_image (shell->display))
     {
       gimp_display_shell_canvas_expose_image (shell, eevent);
@@ -382,7 +386,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
       /* Return TRUE here to avoid redrawing the image when it gets the
        * keyboard focus.
        */
-      return TRUE;
+      return FALSE; /* TRUE; */
     }
   else
     {
@@ -614,6 +618,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   /*  set the active display before doing any other canvas event processing  */
   if (gimp_display_shell_events (canvas, event, shell))
     return TRUE;
+
+  /*  ignore events on overlays  */
+  if (((GdkEventAny *) event)->window != canvas->window)
+    return FALSE;
 
   display = shell->display;
   gimp    = gimp_display_get_gimp (display);
