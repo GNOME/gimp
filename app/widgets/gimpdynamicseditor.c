@@ -70,6 +70,7 @@ static void    dynamics_check_button_size_allocate (GtkWidget     *toggle,
                                                     GtkAllocation *allocation,
                                                     GtkWidget     *label);
 
+
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsEditor, gimp_dynamics_editor,
                          GIMP_TYPE_DATA_EDITOR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED, NULL))
@@ -86,7 +87,7 @@ gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
   object_class->constructor = gimp_dynamics_editor_constructor;
 
   editor_class->set_data    = gimp_dynamics_editor_set_data;
-  editor_class->title       = _("Dynamics Editor");
+  editor_class->title       = _("Paint Dynamics Editor");
 }
 
 static void

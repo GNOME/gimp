@@ -178,7 +178,7 @@ static const GimpDialogFactoryEntry dock_entries[] =
             GIMP_HELP_TEMPLATE_DIALOG, GIMP_VIEW_SIZE_SMALL),
 
   /* Some things do not have grids, so just list */
-  LIST (dynamics, N_("Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
+  LIST (dynamics, N_("Paint Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
         GIMP_HELP_DYNAMICS_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
 
   /*  image related  */
@@ -233,7 +233,7 @@ static const GimpDialogFactoryEntry dock_entries[] =
             GIMP_HELP_BRUSH_EDITOR_DIALOG,
             dialogs_brush_editor_get, 0, TRUE),
   DOCKABLE ("gimp-dynamics-editor",
-            N_("Dynamics Editor"), NULL, GIMP_STOCK_DYNAMICS,
+            N_("Paint Dynamics Editor"), NULL, GIMP_STOCK_DYNAMICS,
             GIMP_HELP_DYNAMICS_EDITOR_DIALOG,
             dialogs_dynamics_editor_get, 0, TRUE),
   DOCKABLE ("gimp-gradient-editor",
