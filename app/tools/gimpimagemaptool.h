@@ -49,6 +49,7 @@ struct _GimpImageMapTool
   GimpImageMap          *image_map;
 
   /* dialog */
+  gboolean               overlay;
   GtkWidget             *shell;
   GtkWidget             *main_vbox;
   GtkWidget             *settings_box;

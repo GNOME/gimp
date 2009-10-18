@@ -44,13 +44,16 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpoverlaybox.h"
 #include "widgets/gimpsettingsbox.h"
 #include "widgets/gimptooldialog.h"
+#include "widgets/gimptooloverlay.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
+#include "display/gimpimagewindow.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpimagemaptool.h"
@@ -100,6 +103,7 @@ static void      gimp_image_map_tool_response    (GtkWidget        *widget,
                                                   gint              response_id,
                                                   GimpImageMapTool *im_tool);
 
+static void      gimp_image_map_tool_dialog_hide    (GimpImageMapTool  *im_tool);
 static void      gimp_image_map_tool_dialog_destroy (GimpImageMapTool  *im_tool);
 
 static void      gimp_image_map_tool_notify_preview (GObject           *config,
@@ -267,6 +271,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   GimpToolInfo     *tool_info      = tool->tool_info;
   GimpImage        *image          = gimp_display_get_image (display);
   GimpDrawable     *drawable       = gimp_image_get_active_drawable (image);
+  GimpDisplayShell *display_shell  = gimp_display_get_shell (display);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
@@ -288,6 +293,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   if (! image_map_tool->shell)
     {
       GimpImageMapToolClass *klass;
+      GimpImageWindow       *window;
       GtkWidget             *shell;
       GtkWidget             *vbox;
       GtkWidget             *toggle;
@@ -297,31 +303,60 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
-      image_map_tool->shell = shell =
-        gimp_tool_dialog_new (tool_info,
-                              GTK_WIDGET (gimp_display_get_shell (display)),
-                              klass->shell_desc,
+      window = gimp_display_shell_get_window (display_shell);
 
-                              GIMP_STOCK_RESET, RESPONSE_RESET,
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+      image_map_tool->overlay = gimp_image_window_get_fullscreen (window);
 
-                              NULL);
+      if (image_map_tool->overlay)
+        {
+          image_map_tool->shell = shell =
+            gimp_tool_overlay_new (tool_info,
+                                   klass->shell_desc,
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell),
-                                               RESPONSE_RESET,
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+                                   GIMP_STOCK_RESET, RESPONSE_RESET,
+                                   GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                   GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                                   NULL);
+
+          gtk_container_set_border_width (GTK_CONTAINER (shell), 6);
+
+          gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (display_shell->canvas),
+                                      shell, 1.0, 1.0);
+          gimp_overlay_box_set_child_angle (GIMP_OVERLAY_BOX (display_shell->canvas),
+                                            shell, 0.0);
+
+          image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 6);
+          gtk_container_add (GTK_CONTAINER (shell), vbox);
+        }
+      else
+        {
+          image_map_tool->shell = shell =
+            gimp_tool_dialog_new (tool_info,
+                                  GTK_WIDGET (display_shell),
+                                  klass->shell_desc,
+
+                                  GIMP_STOCK_RESET, RESPONSE_RESET,
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                                  NULL);
+
+          gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell),
+                                                   RESPONSE_RESET,
+                                                   GTK_RESPONSE_OK,
+                                                   GTK_RESPONSE_CANCEL,
+                                                   -1);
+
+          image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 6);
+          gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+          gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
+                             vbox);
+        }
 
       g_signal_connect_object (shell, "response",
                                G_CALLBACK (gimp_image_map_tool_response),
                                G_OBJECT (image_map_tool), 0);
-
-      image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 6);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-      gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
-                         vbox);
 
       if (klass->settings_name)
         gimp_image_map_tool_add_settings_gui (image_map_tool);
@@ -349,10 +384,18 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                  G_CALLBACK (gimp_image_map_tool_gegl_notify),
                                  image_map_tool, 0);
     }
+  else if (GIMP_IS_TOOL_OVERLAY (image_map_tool->shell) &&
+           ! gtk_widget_get_parent (image_map_tool->shell))
+    {
+      gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (display_shell->canvas),
+                                  image_map_tool->shell, 1.0, 1.0);
+      g_object_unref (image_map_tool->shell);
+    }
 
-  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
-                                     GIMP_VIEWABLE (drawable),
-                                     GIMP_CONTEXT (tool_info->tool_options));
+  if (! image_map_tool->overlay)
+    gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
+                                       GIMP_VIEWABLE (drawable),
+                                       GIMP_CONTEXT (tool_info->tool_options));
 
   gtk_widget_show (image_map_tool->shell);
 
@@ -563,7 +606,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      gimp_dialog_factory_hide_dialog (image_map_tool->shell);
+      gimp_image_map_tool_dialog_hide (image_map_tool);
 
       if (image_map_tool->image_map)
         {
@@ -592,7 +635,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       break;
 
     default:
-      gimp_dialog_factory_hide_dialog (image_map_tool->shell);
+      gimp_image_map_tool_dialog_hide (image_map_tool);
 
       if (image_map_tool->image_map)
         {
@@ -614,9 +657,31 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 }
 
 static void
+gimp_image_map_tool_dialog_hide (GimpImageMapTool *image_map_tool)
+{
+  GtkWidget *shell = image_map_tool->shell;
+
+  if (GTK_IS_DIALOG (shell))
+    {
+      gimp_dialog_factory_hide_dialog (shell);
+    }
+  else if (GIMP_IS_TOOL_OVERLAY (shell))
+    {
+      g_object_ref (shell);
+      gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (shell)),
+                            shell);
+    }
+}
+
+static void
 gimp_image_map_tool_dialog_destroy (GimpImageMapTool *image_map_tool)
 {
-  gtk_widget_destroy (image_map_tool->shell);
+  if (GTK_IS_DIALOG (image_map_tool->shell) ||
+      gtk_widget_get_parent (image_map_tool->shell))
+    gtk_widget_destroy (image_map_tool->shell);
+  else
+    g_object_unref (image_map_tool->shell);
+
   image_map_tool->shell        = NULL;
   image_map_tool->main_vbox    = NULL;
   image_map_tool->settings_box = NULL;
