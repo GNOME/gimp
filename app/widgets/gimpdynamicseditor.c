@@ -95,9 +95,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
   GimpDynamics   *dynamics;
-  GtkWidget      *vbox;
   GtkWidget      *table;
-  GtkWidget      *inner_frame;
   GtkWidget      *fixed;
   GtkWidget      *input_labels[6];
   gint            n_inputs = G_N_ELEMENTS (input_labels);
@@ -109,16 +107,8 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                     G_CALLBACK (gimp_dynamics_editor_notify_model),
                     editor);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (data_editor), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  inner_frame = gimp_frame_new (NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), inner_frame);
-  gtk_widget_show (inner_frame);
-
   table = gtk_table_new (9, n_inputs + 2, FALSE);
-  gtk_container_add (GTK_CONTAINER (inner_frame), table);
+  gtk_box_pack_start (GTK_BOX (data_editor), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   input_labels[0] = gtk_label_new (_("Pressure"));
