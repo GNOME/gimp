@@ -217,6 +217,10 @@ libappwidgets_a_sources = \
 	gimpmessagedialog.h		\
 	gimpnavigationview.c		\
 	gimpnavigationview.h		\
+	gimpoverlaybox.c		\
+	gimpoverlaybox.h		\
+	gimpoverlaychild.c		\
+	gimpoverlaychild.h		\
 	gimppaletteeditor.c		\
 	gimppaletteeditor.h		\
 	gimppaletteselect.c		\

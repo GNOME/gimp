@@ -176,6 +176,7 @@ typedef struct _GimpImageProfileView         GimpImageProfileView;
 typedef struct _GimpLanguageStore            GimpLanguageStore;
 typedef struct _GimpLanguageEntry            GimpLanguageEntry;
 typedef struct _GimpMessageBox               GimpMessageBox;
+typedef struct _GimpOverlayBox               GimpOverlayBox;
 typedef struct _GimpProgressBox              GimpProgressBox;
 typedef struct _GimpScaleButton              GimpScaleButton;
 typedef struct _GimpSettingsBox              GimpSettingsBox;
