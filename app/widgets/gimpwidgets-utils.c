@@ -166,7 +166,16 @@ gimp_button_menu_position (GtkWidget       *button,
         }
     }
 
-  gdk_window_get_origin (gtk_widget_get_window (button), x, y);
+  *x = 0;
+  *y = 0;
+
+  if (! gtk_widget_get_has_window (button))
+    {
+      *x += button->allocation.x;
+      *y += button->allocation.y;
+    }
+
+  gdk_window_get_root_coords (gtk_widget_get_window (button), *x, *y, x, y);
 
   gtk_widget_size_request (GTK_WIDGET (menu), &menu_requisition);
 
@@ -176,9 +185,6 @@ gimp_button_menu_position (GtkWidget       *button,
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
   gtk_menu_set_screen (menu, screen);
-
-  if (! gtk_widget_get_has_window (button))
-    *x += button->allocation.x;
 
   switch (position)
     {
