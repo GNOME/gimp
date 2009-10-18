@@ -18,6 +18,7 @@
 #ifndef __GIMP_DYNAMICS_EDITOR_H__
 #define __GIMP_DYNAMICS_EDITOR_H__
 
+
 #include "gimpdataeditor.h"
 
 
@@ -28,18 +29,16 @@
 #define GIMP_IS_DYNAMICS_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DYNAMICS_EDITOR))
 #define GIMP_DYNAMICS_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DYNAMICS_EDITOR, GimpDynamicsEditorClass))
 
-typedef struct _GimpDynamicsEditorClass GimpDynamicsEditorClass;
 
+typedef struct _GimpDynamicsEditorClass GimpDynamicsEditorClass;
 
 struct _GimpDynamicsEditor
 {
   GimpDataEditor  parent_instance;
+
   GimpDynamics   *dynamics_model;
 
-  GtkWidget      *options_vbox;
-
-
-
+  GtkWidget      *table;
 };
 
 struct _GimpDynamicsEditorClass
@@ -50,9 +49,8 @@ struct _GimpDynamicsEditorClass
 
 GType       gimp_dynamics_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dynamics_editor_new  (GimpContext      *context,
-                                       GimpMenuFactory  *menu_factory);
+GtkWidget * gimp_dynamics_editor_new      (GimpContext      *context,
+                                           GimpMenuFactory  *menu_factory);
 
-//GObject *   get_config_value          (GimpDynamics     *options);
 
 #endif /* __GIMP_DYNAMICS_EDITOR_H__ */

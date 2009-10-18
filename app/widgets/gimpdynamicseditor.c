@@ -95,7 +95,6 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
   GimpDynamics   *dynamics;
-  GtkWidget      *table;
   GtkWidget      *fixed;
   GtkWidget      *input_labels[6];
   gint            n_inputs = G_N_ELEMENTS (input_labels);
@@ -107,9 +106,9 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                     G_CALLBACK (gimp_dynamics_editor_notify_model),
                     editor);
 
-  table = gtk_table_new (9, n_inputs + 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (data_editor), table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+  editor->table = gtk_table_new (9, n_inputs + 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (data_editor), editor->table, TRUE, TRUE, 0);
+  gtk_widget_show (editor->table);
 
   input_labels[0] = gtk_label_new (_("Pressure"));
   input_labels[1] = gtk_label_new (_("Velocity"));
@@ -120,46 +119,46 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
   gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->opacity_output),
                                        _("Opacity"),
-                                       GTK_TABLE (table),
+                                       GTK_TABLE (editor->table),
                                        1, input_labels);
 
   gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->hardness_output),
                                        _("Hardness"),
-                                       GTK_TABLE (table),
+                                       GTK_TABLE (editor->table),
                                        2, NULL);
 
   gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->rate_output),
                                        _("Rate"),
-                                       GTK_TABLE (table),
+                                       GTK_TABLE (editor->table),
                                        3, NULL);
 
   gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->size_output),
                                        _("Size"),
-                                       GTK_TABLE (table),
+                                       GTK_TABLE (editor->table),
                                        4, NULL);
 
   gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->aspect_ratio_output),
                                        _("Aspect ratio"),
-                                       GTK_TABLE (table),
+                                       GTK_TABLE (editor->table),
                                        5, NULL);
 
   gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->color_output),
                                        _("Color"),
-                                       GTK_TABLE (table),
+                                       GTK_TABLE (editor->table),
                                        6, NULL);
 
   gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->angle_output),
                                        _("Angle"),
-                                       GTK_TABLE (table),
+                                       GTK_TABLE (editor->table),
                                        7, NULL);
 
   gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->jitter_output),
                                        _("Jitter"),
-                                       GTK_TABLE (table),
+                                       GTK_TABLE (editor->table),
                                        8, NULL);
 
   fixed = gtk_fixed_new ();
-  gtk_table_attach (GTK_TABLE (table), fixed, 0, n_inputs + 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (editor->table), fixed, 0, n_inputs + 2, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (fixed);
 
@@ -218,6 +217,9 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
                         G_CALLBACK (gimp_dynamics_editor_notify_data),
                         editor);
     }
+
+  gtk_widget_set_sensitive (dynamics_editor->table,
+                            editor->data_editable);
 }
 
 
