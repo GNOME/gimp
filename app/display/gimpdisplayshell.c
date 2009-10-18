@@ -932,6 +932,7 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   shell->canvas = gimp_canvas_new (display->config);
   gtk_widget_set_size_request (shell->canvas, shell_width, shell_height);
+  gtk_container_set_border_width (GTK_CONTAINER (shell->canvas), 10);
 
   gimp_display_shell_dnd_init (shell);
   gimp_display_shell_selection_init (shell);
