@@ -19,6 +19,7 @@
 
 #include <string.h>
 
+#undef GTK_DISABLE_DEPRECATED /* GtkInputDialog */
 #undef GSEAL_ENABLE
 
 #include <gtk/gtk.h>
