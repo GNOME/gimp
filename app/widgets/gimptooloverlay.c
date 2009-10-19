@@ -112,11 +112,16 @@ static void
 gimp_tool_overlay_init (GimpToolOverlay *overlay)
 {
   GtkWidget   *widget = GTK_WIDGET (overlay);
+
+#if 0 /* crashes badly beause gtk+ doesn't support offscreen windows
+       * with colormap != parent_colormap yet
+       */
   GdkScreen   *screen = gtk_widget_get_screen (widget);
   GdkColormap *rgba   = gdk_screen_get_rgba_colormap (screen);
 
   if (rgba)
     gtk_widget_set_colormap (widget, rgba);
+#endif
 
   gtk_widget_set_app_paintable (widget, TRUE);
 
