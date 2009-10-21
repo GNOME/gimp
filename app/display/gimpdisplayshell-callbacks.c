@@ -619,9 +619,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   if (gimp_display_shell_events (canvas, event, shell))
     return TRUE;
 
-  /*  ignore events on overlays  */
-  if (((GdkEventAny *) event)->window != canvas->window)
-    return FALSE;
+  /*  ignore events on overlays, but make sure key events go through
+   *  anyway because they are always originating from the toplevel
+   */
+  if (event->type != GDK_KEY_PRESS   &&
+      event->type != GDK_KEY_RELEASE &&
+      ((GdkEventAny *) event)->window != canvas->window)
+    {
+      return FALSE;
+    }
 
   display = shell->display;
   gimp    = gimp_display_get_gimp (display);
