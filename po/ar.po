@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-23 18:37+0200\n"
-"PO-Revision-Date: 2009-10-23 18:35+0300\n"
+"POT-Creation-Date: 2009-10-23 23:24+0200\n"
+"PO-Revision-Date: 2009-10-23 23:23+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -307,6 +307,7 @@ msgid "Paint Dynamics"
 msgstr "حركيات الرسم"
 
 #: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:236
+#: ../app/widgets/gimpdynamicseditor.c:90
 msgid "Paint Dynamics Editor"
 msgstr "محرر حركيات الرسم"
 
@@ -1708,6 +1709,81 @@ msgstr "العكس لا يعمل على الطبقات المفهرسة"
 msgid "White Balance operates only on RGB color layers."
 msgstr "توازن الأبيض يعمل فقط على طبقات ألوان ح‌خ‌ز."
 
+#: ../app/actions/dynamics-actions.c:42
+msgctxt "dynamics-action"
+msgid "Paint Dynamics Menu"
+msgstr "قائمة حركيات الرسم"
+
+#: ../app/actions/dynamics-actions.c:46
+msgctxt "dynamics-action"
+msgid "_New Dynamics"
+msgstr "_حركيات جديدة"
+
+#: ../app/actions/dynamics-actions.c:47
+msgctxt "dynamics-action"
+msgid "Create a new dynamics"
+msgstr "أنشئ حركيات جديدة"
+
+#: ../app/actions/dynamics-actions.c:52
+msgctxt "dynamics-action"
+msgid "D_uplicate Dynamics"
+msgstr "_كرّر الحركيات"
+
+#: ../app/actions/dynamics-actions.c:53
+msgctxt "dynamics-action"
+msgid "Duplicate this dynamics"
+msgstr "كرّر هذه الحركيات"
+
+#: ../app/actions/dynamics-actions.c:58
+msgctxt "dynamics-action"
+msgid "Copy Dynamics _Location"
+msgstr "ا_نسخ مكان الحركيات"
+
+#: ../app/actions/dynamics-actions.c:59
+msgctxt "dynamics-action"
+msgid "Copy dynamics file location to clipboard"
+msgstr "انسخ مكان ملف الحركيات إلى الحافظة"
+
+#: ../app/actions/dynamics-actions.c:64
+msgctxt "dynamics-action"
+msgid "_Delete Dynamics"
+msgstr "اح_ذف الحركيات"
+
+#: ../app/actions/dynamics-actions.c:65
+msgctxt "dynamics-action"
+msgid "Delete this dynamics"
+msgstr "احذف هذه الحركيات"
+
+#: ../app/actions/dynamics-actions.c:70
+msgctxt "dynamics-action"
+msgid "_Refresh Dynamicss"
+msgstr "أ_نعش الحركيات"
+
+#: ../app/actions/dynamics-actions.c:71
+msgctxt "dynamics-action"
+msgid "Refresh dynamics"
+msgstr "أنعش الحركيات"
+
+#: ../app/actions/dynamics-actions.c:79
+msgctxt "dynamics-action"
+msgid "_Edit Dynamics..."
+msgstr "_حرر الحركيات..."
+
+#: ../app/actions/dynamics-actions.c:80
+msgctxt "dynamics-action"
+msgid "Edit dynamics"
+msgstr "حرر الحركيات"
+
+#: ../app/actions/dynamics-editor-actions.c:42
+msgctxt "dynamics-editor-action"
+msgid "Paint Dynamics Editor Menu"
+msgstr "قائمة محرر حركيات الرسم"
+
+#: ../app/actions/dynamics-editor-actions.c:50
+msgctxt "dynamics-editor-action"
+msgid "Edit Active Dynamics"
+msgstr "حرّر الحركيات النشطة"
+
 #: ../app/actions/edit-actions.c:63
 msgctxt "edit-action"
 msgid "_Edit"
@@ -3103,657 +3179,548 @@ msgid "Scaling"
 msgstr "يُحجّم"
 
 #: ../app/actions/images-actions.c:43
-#, fuzzy
 msgctxt "images-action"
 msgid "Images Menu"
 msgstr "قائمة الصور"
 
 #: ../app/actions/images-actions.c:47
-#, fuzzy
 msgctxt "images-action"
 msgid "_Raise Views"
 msgstr "ا_رفع المنظورات"
 
 #: ../app/actions/images-actions.c:48
-#, fuzzy
 msgctxt "images-action"
 msgid "Raise this image's displays"
-msgstr "ارفع عروض هذه الصورة"
+msgstr "ارفع منظورات هذه الصورة"
 
 #: ../app/actions/images-actions.c:53
-#, fuzzy
 msgctxt "images-action"
 msgid "_New View"
 msgstr "_منظور جديد"
 
 #: ../app/actions/images-actions.c:54
-#, fuzzy
 msgctxt "images-action"
 msgid "Create a new display for this image"
 msgstr "أنشئ منظورا جديدا لهذه الصورة"
 
 #: ../app/actions/images-actions.c:59
-#, fuzzy
 msgctxt "images-action"
 msgid "_Delete Image"
 msgstr "ا_حذف الصورة"
 
 #: ../app/actions/images-actions.c:60
-#, fuzzy
 msgctxt "images-action"
 msgid "Delete this image"
 msgstr "احذف هذه الصورة"
 
 #: ../app/actions/layers-actions.c:47
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "قائمة الطبقات"
 
 #: ../app/actions/layers-actions.c:51
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_طبقة"
 
 #: ../app/actions/layers-actions.c:53
-#, fuzzy
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "الر_صّة"
 
 #: ../app/actions/layers-actions.c:55
-#, fuzzy
 msgctxt "layers-action"
 msgid "Te_xt to Selection"
-msgstr "تحديد ال_نص"
+msgstr "_نص إلى التحديد"
 
 #: ../app/actions/layers-actions.c:57
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Mask"
-msgstr "_قناع"
+msgstr "ال_قناع"
 
 #: ../app/actions/layers-actions.c:59
-#, fuzzy
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "ال_شفافية"
 
 #: ../app/actions/layers-actions.c:61
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_حوّل"
 
 #: ../app/actions/layers-actions.c:63
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "ال_خصائص"
 
 #: ../app/actions/layers-actions.c:65
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "الإ_عتام"
 
 #: ../app/actions/layers-actions.c:67
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "طور الطب_قة"
 
 #: ../app/actions/layers-actions.c:70
-#, fuzzy
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "أداة الن_صوص"
 
 #: ../app/actions/layers-actions.c:71
-#, fuzzy
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "نشّط أداة النصوص على هذه الطبقة"
 
 #: ../app/actions/layers-actions.c:76
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "_حرّر صفات الطبقة..."
 
 #: ../app/actions/layers-actions.c:77
-#, fuzzy
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "حرّر اسم الطبقة"
 
 #: ../app/actions/layers-actions.c:82
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "طبقة ج_ديدة..."
 
 #: ../app/actions/layers-actions.c:83
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "أنشئ طبقة جديدة وأضفها إلى الصورة"
 
 #: ../app/actions/layers-actions.c:88
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "طبقة ج_ديدة"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "أنشئ طبقة جديدة بآخر القيم المستخدمة"
 
 #: ../app/actions/layers-actions.c:94
-#, fuzzy
 msgctxt "layers-action"
 msgid "New from _Visible"
-msgstr "جديد من ال_مرئي"
+msgstr "جديدة من ال_مرئي"
 
 #: ../app/actions/layers-actions.c:96
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "أنشئ طبقة جديدة من المرئي في هذه الصورة"
 
 #: ../app/actions/layers-actions.c:101
-#, fuzzy
 msgctxt "layers-action"
 msgid "New Layer _Group..."
-msgstr "طبقة ج_ديدة..."
+msgstr "مجمو_عة طبقات ج_ديدة..."
 
 #: ../app/actions/layers-actions.c:102
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
-msgstr "أنشئ طبقة جديدة وأضفها إلى الصورة"
+msgstr "أنشئ مجموعة طبقات جديدة وأضفها إلى الصورة"
 
 #: ../app/actions/layers-actions.c:107
-#, fuzzy
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "_كرر الطبقة"
 
 #: ../app/actions/layers-actions.c:109
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr "أنشئ تكرارا من الطبقة وأضفه إلى الصورة"
+msgstr "أنشئ نسخة مكررة من الطبقة وأضفها إلى الصورة"
 
 #: ../app/actions/layers-actions.c:114
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "ا_حذف الطبقة"
 
 #: ../app/actions/layers-actions.c:115
-#, fuzzy
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "احذف هذه الطبقة"
 
 #: ../app/actions/layers-actions.c:120
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "ار_فع الطبقة"
 
 #: ../app/actions/layers-actions.c:121
-#, fuzzy
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "ارفع الطبقة درجة واحدة في رصة الطبقات"
 
 #: ../app/actions/layers-actions.c:126
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "الطبقة إلى ال_سطح"
 
 #: ../app/actions/layers-actions.c:127
-#, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "انقل الطبقة إلى أعلى رصة الطبقات"
 
 #: ../app/actions/layers-actions.c:132
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "أ_خفض الطبقة"
 
 #: ../app/actions/layers-actions.c:133
-#, fuzzy
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
-msgstr "اخفض الطبقة درجة واحدة في رصة الطبقات"
+msgstr "أخفض الطبقة درجة واحدة في رصة الطبقات"
 
 #: ../app/actions/layers-actions.c:138
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "الطبقة إلى ال_قاع"
 
 #: ../app/actions/layers-actions.c:139
-#, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "انقل الطبقة إلى أسفل رصة الطبقات"
 
 #: ../app/actions/layers-actions.c:144
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "_ثبّت الطبقة"
 
 #: ../app/actions/layers-actions.c:145
-#, fuzzy
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "ثبّت الطبقة الحرة"
 
 #: ../app/actions/layers-actions.c:150
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "ا_دمج لأسفل"
 
 #: ../app/actions/layers-actions.c:151
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge this layer with the one below it"
 msgstr "ادمج هذه الطبقة بالتي أسفلها"
 
 #: ../app/actions/layers-actions.c:156
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Layer Group"
-msgstr "انقل الطبقة"
+msgstr "ادمج مجموعة الطبقات"
 
 #: ../app/actions/layers-actions.c:157
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
-msgstr "ادمج كل الطبقات الظاهرة في طبقة واحدة"
+msgstr "ادمج طبقات مجموعة الطبقات في طبقة عادية واحدة"
 
 #: ../app/actions/layers-actions.c:162
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "ادمج الطبقات المر_ئية..."
 
 #: ../app/actions/layers-actions.c:163
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
-msgstr "ادمج كل الطبقات الظاهرة في طبقة واحدة"
+msgstr "ادمج كل الطبقات المرئية في طبقة واحدة"
 
 #: ../app/actions/layers-actions.c:168
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "_سطّح الصورة"
 
 #: ../app/actions/layers-actions.c:169
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "ادمج كل الطبقات في واحدة واحذف الشفافية"
 
 #: ../app/actions/layers-actions.c:174
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "_تجاهل معلومات النص"
 
 #: ../app/actions/layers-actions.c:175
-#, fuzzy
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "حوّل هذه الطبقة النصية إلى طبقة عادية"
 
 #: ../app/actions/layers-actions.c:180
-#, fuzzy
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "النص إلى _مسار"
 
 #: ../app/actions/layers-actions.c:181
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "أنشئ مسارا من هذه الطبقة النصية"
 
 #: ../app/actions/layers-actions.c:186
-#, fuzzy
 msgctxt "layers-action"
 msgid "Text alon_g Path"
-msgstr "النص _خلال المسار"
+msgstr "النص ب_محاذاة المسار"
 
 #: ../app/actions/layers-actions.c:187
-#, fuzzy
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
-msgstr "لف نص هذه الطبقة خلال المسار الحالي"
+msgstr "لف نص هذه الطبقة بمحاذاة المسار الحالي"
 
 #: ../app/actions/layers-actions.c:192
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "حجم _حد الطبقة..."
 
 #: ../app/actions/layers-actions.c:193
-#, fuzzy
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "اضبط أبعاد الطبقة"
 
 #: ../app/actions/layers-actions.c:198
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "الطبقة إلى حجم ال_صورة"
 
 #: ../app/actions/layers-actions.c:199
-#, fuzzy
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "أعد تحجيم الطبقة إلى حجم الصورة"
 
 #: ../app/actions/layers-actions.c:204
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "_حجّم الطبقة..."
 
 #: ../app/actions/layers-actions.c:205
-#, fuzzy
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "غيّر حجم محتوى الطبقة"
 
 #: ../app/actions/layers-actions.c:210
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Crop to Selection"
-msgstr "_قصّر التحديد"
+msgstr "_قصّر إلى التحديد"
 
 #: ../app/actions/layers-actions.c:211
-#, fuzzy
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "قصّر الطبقة إلى حدود التحديد"
 
 #: ../app/actions/layers-actions.c:216
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "أضِف ق_ناع طبقة..."
 
 #: ../app/actions/layers-actions.c:218
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr "أضِف قناعا يسمح بتعديل غير مدمّر للشفافية"
 
 #: ../app/actions/layers-actions.c:223
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "أضِف قناة أل_فا"
 
 #: ../app/actions/layers-actions.c:224
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "أضف معلومات الشفافية إلى الطبقة"
 
 #: ../app/actions/layers-actions.c:229
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "ا_حذف قناة ألفا"
 
 #: ../app/actions/layers-actions.c:230
-#, fuzzy
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "احذف معلومات الشفافية من الطبقة"
 
 #: ../app/actions/layers-actions.c:238
-#, fuzzy
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "أوصد طبقة أ_لفا"
 
 #: ../app/actions/layers-actions.c:240
-#, fuzzy
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
-msgstr "احفظ معلومات الشفافية في هذه الطبقة من أن تعدل"
+msgstr "امنع معلومات الشفافية في هذه الطبقة من أن تعدل"
 
 #: ../app/actions/layers-actions.c:246
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "_حرّر قناع الطبقة"
 
 #: ../app/actions/layers-actions.c:247
-#, fuzzy
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "اعمل على قناع الطبقة"
 
 #: ../app/actions/layers-actions.c:253
-#, fuzzy
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
-msgstr "ا_عرض قناع الطبقة"
+msgstr "أ_ظهر قناع الطبقة"
 
 #: ../app/actions/layers-actions.c:259
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "_عطّل قناع الطبقة"
 
 #: ../app/actions/layers-actions.c:260
-#, fuzzy
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "ألغِ تأثير قناع الطبقة"
 
 #: ../app/actions/layers-actions.c:269
-#, fuzzy
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "طبّق _قناع الطبقة"
 
 #: ../app/actions/layers-actions.c:270
-#, fuzzy
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "طبّق تأثير قناع الطبقة ثم احذفه"
 
 #: ../app/actions/layers-actions.c:275
-#, fuzzy
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "احذف قناع ال_طبقة"
 
 #: ../app/actions/layers-actions.c:276
-#, fuzzy
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "احذف قناع الطبقة وتأثيراته"
 
 #: ../app/actions/layers-actions.c:284
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Mask to Selection"
-msgstr "_قناع إلى التحديد"
+msgstr "_قناع من التحديد"
 
 #: ../app/actions/layers-actions.c:285
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "استبدل بالتحديد قناع الطبقة"
 
 #: ../app/actions/layers-actions.c:290
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "أ_ضف إلى التحديد"
 
 #: ../app/actions/layers-actions.c:291
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "أضِف قناع الطبقة إلى التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
 #: ../app/actions/layers-actions.c:355
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "ا_طرح من التحديد"
 
 #: ../app/actions/layers-actions.c:297
-#, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "اطرح قناع الطبقة من التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
 #: ../app/actions/layers-actions.c:362
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "_تقاطع مع التحديد"
 
 #: ../app/actions/layers-actions.c:303
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "قاطِع قناع الطبقة مع التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:311
-#, fuzzy
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
-msgstr "أل_فا إلى التحديد"
+msgstr "أل_فا من التحديد"
 
 #: ../app/actions/layers-actions.c:313
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "استبدل بالتحديد قناة ألفا الطبقة"
 
 #: ../app/actions/layers-actions.c:318 ../app/actions/layers-actions.c:348
-#, fuzzy
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "أ_ضف إلى التحديد"
 
 #: ../app/actions/layers-actions.c:320
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "أضِف قناة ألفا الطبقة إلى التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:327
-#, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "اطرح قناة ألفا الطبقة من التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:334
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "قاطع قناة ألفا الطبقة مع التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:342
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Text to Selection"
 msgstr "ال_نص إلى التحديد"
 
 #: ../app/actions/layers-actions.c:343
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the text layer's outline"
 msgstr "استبدل بالتحديد الخطوط الخارجية للطبقة النصية"
 
 #: ../app/actions/layers-actions.c:350
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the text layer's outline to the current selection"
 msgstr "أضف الخطوط الخارجية للطبقة النصية إلى التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:357
-#, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the text layer's outline from the current selection"
 msgstr "اطرح الخطوط الخارجية للطبقة النصية من التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:364
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the text layer's outline with the current selection"
 msgstr "قاطع الخطوط الخارجية للطبقة النصية مع التحديد الحالي"
 
 #: ../app/actions/layers-actions.c:372
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "ا_ختر طبقة السطح"
 
 #: ../app/actions/layers-actions.c:373
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "اختر الطبقة الأعلى"
 
 #: ../app/actions/layers-actions.c:378
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "اختر طبقة ال_قاع"
 
 #: ../app/actions/layers-actions.c:379
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "اختر الطبقة الأدنى"
 
 #: ../app/actions/layers-actions.c:384
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "اختر الطبقة ال_سابقة"
 
 #: ../app/actions/layers-actions.c:385
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "اختر الطبقة فوق هذه الطبقة"
 
 #: ../app/actions/layers-actions.c:390
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "اختر الطبقة ال_تالية"
 
 #: ../app/actions/layers-actions.c:391
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "اختر الطبقة تحت هذه الطبقة"
@@ -3795,7 +3762,7 @@ msgstr "قصّر الطبقة"
 
 #: ../app/actions/layers-commands.c:831
 msgid "Layer Mask to Selection"
-msgstr "قناع الطبقة إلى التحديد"
+msgstr "قناع طبقة من التحديد"
 
 #: ../app/actions/layers-commands.c:1082
 msgid "Please select a channel first"
@@ -3807,64 +3774,54 @@ msgid "Add Layer Mask"
 msgstr "أضِف قناع طبقة"
 
 #: ../app/actions/palette-editor-actions.c:43
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
 msgstr "قائمة محرر لوحة الألوان"
 
 #: ../app/actions/palette-editor-actions.c:47
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
 msgstr "_حرّر اللون..."
 
 #: ../app/actions/palette-editor-actions.c:48
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Edit this entry"
-msgstr "حرّر التدريج"
+msgstr "حرّر هذه المُدخلة"
 
 #: ../app/actions/palette-editor-actions.c:53
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
 msgstr "ا_حذف اللون"
 
 #: ../app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Delete this entry"
-msgstr "احذف هذه الطبقة"
+msgstr "احذف هذه المُدخلة"
 
 #: ../app/actions/palette-editor-actions.c:62
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Edit Active Palette"
 msgstr "حرّر لوحة الألوان النشطة"
 
 #: ../app/actions/palette-editor-actions.c:71
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
 msgstr "لون جديد من ال_مقدمة"
 
 #: ../app/actions/palette-editor-actions.c:73
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the foreground color"
-msgstr "لون جديد من لون المقدمة"
+msgstr "أنشئ مُدخلة جديدة من لون المقدمة"
 
 #: ../app/actions/palette-editor-actions.c:78
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
 msgstr "لون جديد من ال_خلفية"
 
 #: ../app/actions/palette-editor-actions.c:80
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the background color"
-msgstr "لون جديد من لون الخلفية"
+msgstr "أنشئ مُدخلة جديدة من لون الخلفية"
 
 #: ../app/actions/palette-editor-actions.c:88
 msgid "Zoom _In"
@@ -3887,103 +3844,86 @@ msgid "Edit Color Palette Entry"
 msgstr "حرّر مدخلة لوحة الألوان"
 
 #: ../app/actions/palettes-actions.c:43
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "قائمة ألواح الألوان"
 
 #: ../app/actions/palettes-actions.c:47
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_New Palette"
 msgstr "لوح ألوان ج_ديد"
 
 #: ../app/actions/palettes-actions.c:48
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Create a new palette"
-msgstr "أنشئ قالبا جديدا"
+msgstr "أنشئ لوح ألوان جديد"
 
 #: ../app/actions/palettes-actions.c:53
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Import Palette..."
 msgstr "ا_ستورد لوح ألوان..."
 
 #: ../app/actions/palettes-actions.c:54
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Import palette"
 msgstr "استورد لوح ألوان"
 
 #: ../app/actions/palettes-actions.c:59
-#, fuzzy
 msgctxt "palettes-action"
 msgid "D_uplicate Palette"
 msgstr "_كرّر لوح الألوان"
 
 #: ../app/actions/palettes-actions.c:60
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Duplicate this palette"
-msgstr "كرّر لوح الألوان"
+msgstr "كرّر لوح الألوان هذا"
 
 #: ../app/actions/palettes-actions.c:65
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
 msgstr "ادمج أ_لواح الألوان..."
 
 #: ../app/actions/palettes-actions.c:66
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Merge palettes"
 msgstr "ادمج ألواح الألوان"
 
 #: ../app/actions/palettes-actions.c:71
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Copy Palette _Location"
 msgstr "انسخ م_كان لوح الألوان"
 
 #: ../app/actions/palettes-actions.c:72
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Copy palette file location to clipboard"
 msgstr "انسخ مكان لوح الألوان إلى الحافظة"
 
 #: ../app/actions/palettes-actions.c:77
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Delete Palette"
 msgstr "ا_حذف لوح الألوان"
 
 #: ../app/actions/palettes-actions.c:78
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Delete this palette"
-msgstr "احذف لوح الألوان"
+msgstr "احذف لوح الألوان هذا"
 
 #: ../app/actions/palettes-actions.c:83
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Refresh Palettes"
 msgstr "حدّ_ث ألواح الألوان"
 
 #: ../app/actions/palettes-actions.c:84
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Refresh palettes"
 msgstr "حدّث ألواح الألوان"
 
 #: ../app/actions/palettes-actions.c:92
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
 msgstr "_حرّر لوح الألوان..."
 
 #: ../app/actions/palettes-actions.c:93
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Edit palette"
 msgstr "حرّر لوح الألوان"
@@ -3997,241 +3937,201 @@ msgid "Enter a name for the merged palette"
 msgstr "أدخل اسما للوح الألوان المدموج"
 
 #: ../app/actions/patterns-actions.c:42
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Patterns Menu"
 msgstr "قائمة الأنماط"
 
 #: ../app/actions/patterns-actions.c:46
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Open Pattern as Image"
 msgstr "ا_فتح النمط كصورة"
 
 #: ../app/actions/patterns-actions.c:47
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Open this pattern as an image"
 msgstr "افتح النمط كصورة"
 
 #: ../app/actions/patterns-actions.c:52
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_New Pattern"
 msgstr "نمط ج_ديد"
 
 #: ../app/actions/patterns-actions.c:53
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Create a new pattern"
-msgstr "أنشئ قالبا جديدا"
+msgstr "أنشئ نمطا جديدا"
 
 #: ../app/actions/patterns-actions.c:58
-#, fuzzy
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
 msgstr "_كرّر النمط"
 
 #: ../app/actions/patterns-actions.c:59
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Duplicate this pattern"
-msgstr "كرّر النمط"
+msgstr "كرّر هذا النمط"
 
 #: ../app/actions/patterns-actions.c:64
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Copy Pattern _Location"
 msgstr "انسخ _مكان النمط"
 
 #: ../app/actions/patterns-actions.c:65
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Copy pattern file location to clipboard"
-msgstr "نسخ مكان ملف النمط إلى الحافظة"
+msgstr "انسخ مكان ملف النمط إلى الحافظة"
 
 #: ../app/actions/patterns-actions.c:70
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
 msgstr "ا_حذف النمط"
 
 #: ../app/actions/patterns-actions.c:71
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Delete this pattern"
-msgstr "احذف النمط"
+msgstr "احذف هذا النمط"
 
 #: ../app/actions/patterns-actions.c:76
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Refresh Patterns"
 msgstr "_حدّث الأنماط"
 
 #: ../app/actions/patterns-actions.c:77
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Refresh patterns"
 msgstr "حدّث الأنماط"
 
 #: ../app/actions/patterns-actions.c:85
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
 msgstr "_حرّر النمط..."
 
 #: ../app/actions/patterns-actions.c:86
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Edit pattern"
 msgstr "حرّر النمط"
 
 #: ../app/actions/plug-in-actions.c:84
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Filte_rs"
 msgstr "مر_شّحات"
 
 #: ../app/actions/plug-in-actions.c:86
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Recently Used"
-msgstr "مستخدمة مؤخرا"
+msgstr "المستخدمة مؤخرا"
 
 #: ../app/actions/plug-in-actions.c:88
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Blur"
 msgstr "_تمويه"
 
 #: ../app/actions/plug-in-actions.c:90
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Noise"
 msgstr "_ضجة"
 
 #: ../app/actions/plug-in-actions.c:92
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Edge-De_tect"
 msgstr "اكتشاف الحا_فة"
 
 #: ../app/actions/plug-in-actions.c:94
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "En_hance"
 msgstr "ت_حسين"
 
 #: ../app/actions/plug-in-actions.c:96
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "C_ombine"
 msgstr "_ضم"
 
 #: ../app/actions/plug-in-actions.c:98
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Generic"
 msgstr "_عام"
 
 #: ../app/actions/plug-in-actions.c:100
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Light and Shadow"
-msgstr "ال_ضوء والظل"
+msgstr "_ضوء وظل"
 
 #: ../app/actions/plug-in-actions.c:102
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Distorts"
 msgstr "تحري_ف"
 
 #: ../app/actions/plug-in-actions.c:104
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Artistic"
 msgstr "ف_ني"
 
 #: ../app/actions/plug-in-actions.c:106
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Decor"
 msgstr "_زخرفة"
 
 #: ../app/actions/plug-in-actions.c:108
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Map"
 msgstr "_خريطة"
 
 #: ../app/actions/plug-in-actions.c:110
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Render"
 msgstr "ت_صيير"
 
 #: ../app/actions/plug-in-actions.c:112
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Clouds"
-msgstr "سُ_حب"
+msgstr "سُ_حُب"
 
 #: ../app/actions/plug-in-actions.c:114
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Nature"
 msgstr "طبي_عة"
 
 #: ../app/actions/plug-in-actions.c:116
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Pattern"
-msgstr "ال_نمط"
+msgstr "_نمط"
 
 #: ../app/actions/plug-in-actions.c:118
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Web"
 msgstr "_وب"
 
 #: ../app/actions/plug-in-actions.c:120
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "An_imation"
 msgstr "حرك_ة"
 
 #: ../app/actions/plug-in-actions.c:123
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
 msgstr "صفّر كل المر_شحات"
 
 #: ../app/actions/plug-in-actions.c:124
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
-msgstr "أعِد ضبط كل الملحقات إلى إعداداتها المبدئية"
+msgstr "صفّر كل الملحقات إلى إعداداتها المبدئية"
 
 #: ../app/actions/plug-in-actions.c:132
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
 msgstr "كر_ر الأخير"
 
 #: ../app/actions/plug-in-actions.c:134
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
 msgstr "أعِد تشغيل آخر ملحقة مستخدمة بنفس الإعدادات"
 
 #: ../app/actions/plug-in-actions.c:139
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "R_e-Show Last"
 msgstr "أ_عد إظهار الأخير"
 
 #: ../app/actions/plug-in-actions.c:140
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
 msgstr "اعرض حوار آخر ملحق مستخدم مجددا"
@@ -4260,7 +4160,7 @@ msgstr "صفّر كل المرشحات"
 
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
-msgstr "هل تريد حقا ضبط جميع المرشحات إلى القيم المبدئية؟"
+msgstr "هل تريد حقا تصفير جميع المرشحات إلى القيم المبدئية؟"
 
 #: ../app/actions/quick-mask-actions.c:42
 #, fuzzy
@@ -7812,7 +7712,7 @@ msgstr "حدد إعتام القناة"
 msgid "Selection Mask"
 msgstr "قناع التحديد"
 
-#: ../app/core/gimpcontext.c:622
+#: ../app/core/gimpcontext.c:622 ../app/widgets/gimpdynamicseditor.c:121
 msgid "Opacity"
 msgstr "الإعتام"
 
@@ -10567,6 +10467,16 @@ msgstr "مرشحات عرض الألوان"
 msgid "Configure Color Display Filters"
 msgstr "اضبط مرشحات عرض الألوان"
 
+#: ../app/display/gimpdisplayshell-handlers.c:595
+#, c-format
+msgid "Image saved to '%s'"
+msgstr "الصورة حفظت في '%s'"
+
+#: ../app/display/gimpdisplayshell-handlers.c:609
+#, fuzzy, c-format
+msgid "Image exported to '%s'"
+msgstr "الصورة حفظت في '%s'"
+
 #: ../app/display/gimpdisplayshell-layer-select.c:120
 msgid "Layer Select"
 msgstr "اختيار طبقة"
@@ -13178,6 +13088,7 @@ msgid "Transform:"
 msgstr "التحويل:"
 
 #: ../app/tools/gimptransformoptions.c:281
+#: ../app/widgets/gimpdynamicseditor.c:115
 msgid "Direction"
 msgstr "الاتجاه"
 
@@ -14093,6 +14004,61 @@ msgstr "يمكنك إفلات العناصر القابلة للرصف هنا"
 #, fuzzy
 msgid "Lock pixels"
 msgstr "بكسل"
+
+#: ../app/widgets/gimpdynamicseditor.c:113
+#, fuzzy
+msgid "Pressure"
+msgstr "الضغط:"
+
+#: ../app/widgets/gimpdynamicseditor.c:114
+#, fuzzy
+msgid "Velocity"
+msgstr "السرعة:"
+
+#: ../app/widgets/gimpdynamicseditor.c:116
+#, fuzzy
+msgid "Tilt"
+msgstr "الانحناء:"
+
+#: ../app/widgets/gimpdynamicseditor.c:117
+#, fuzzy
+msgid "Random"
+msgstr "عشوائي:"
+
+#: ../app/widgets/gimpdynamicseditor.c:118
+#, fuzzy
+msgid "Fade"
+msgstr "أب_هت"
+
+#: ../app/widgets/gimpdynamicseditor.c:126
+msgid "Hardness"
+msgstr "الصلابة"
+
+#: ../app/widgets/gimpdynamicseditor.c:131
+msgid "Rate"
+msgstr "المعدل"
+
+#: ../app/widgets/gimpdynamicseditor.c:136
+msgid "Size"
+msgstr "الحجم"
+
+#: ../app/widgets/gimpdynamicseditor.c:141
+msgid "Aspect ratio"
+msgstr "نسبة المظهر"
+
+#: ../app/widgets/gimpdynamicseditor.c:146
+msgid "Color"
+msgstr "اللون"
+
+#: ../app/widgets/gimpdynamicseditor.c:151
+#, fuzzy
+msgid "Angle"
+msgstr "ال_زاوية"
+
+#: ../app/widgets/gimpdynamicseditor.c:156
+#, fuzzy
+msgid "Jitter"
+msgstr "المؤشر"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -15122,45 +15088,13 @@ msgstr "لا يمكن بدء: '%s'‏: %s"
 #~ msgid "tool|_Zoom"
 #~ msgstr "_قرب"
 
-#~ msgid "Hardness"
-#~ msgstr "الصلابة"
-
-#~ msgid "Rate"
-#~ msgstr "المعدل"
-
-#~ msgid "Size"
-#~ msgstr "الحجم"
-
-#~ msgid "Aspect ratio"
-#~ msgstr "نسبة المظهر"
-
-#, fuzzy
-#~ msgid "Angle"
-#~ msgstr "ال_زاوية"
-
-#~ msgid "Color"
-#~ msgstr "اللون"
-
-#~ msgid "Velocity:"
-#~ msgstr "السرعة:"
-
 #, fuzzy
 #~ msgid "Direction:"
 #~ msgstr "الاتجاه"
 
-#~ msgid "Random:"
-#~ msgstr "عشوائي:"
-
 #, fuzzy
 #~ msgid "Cannot merge down a layer group."
 #~ msgstr "لا يمكن تغيير اسم قناع الطبقة."
-
-#~ msgid "Image saved to '%s'"
-#~ msgstr "الصورة حفظت في '%s'"
-
-#, fuzzy
-#~ msgid "Image exported to '%s'"
-#~ msgstr "الصورة حفظت في '%s'"
 
 #~ msgid "New brush"
 #~ msgstr "فرشاة جديدة"
