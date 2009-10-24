@@ -26,12 +26,20 @@
 
 #include "gimpdock.h"
 #include "gimpdockcolumns.h"
+#include "gimppanedbox.h"
 
 
 struct _GimpDockColumnsPrivate
 {
-  int dummy;
+  GList     *docks;
+
+  GtkWidget *paned_hbox;
 };
+
+
+static gboolean   gimp_dock_columns_dropped_cb        (GimpDockSeparator *separator,
+                                                       GtkWidget         *source,
+                                                       gpointer           data);
 
 
 G_DEFINE_TYPE (GimpDockColumns, gimp_dock_columns, GTK_TYPE_HBOX)
@@ -49,17 +57,66 @@ static void
 gimp_dock_columns_init (GimpDockColumns *dock_columns)
 {
   dock_columns->p = G_TYPE_INSTANCE_GET_PRIVATE (dock_columns,
-                                                GIMP_TYPE_DOCK_COLUMNS,
-                                                GimpDockColumnsPrivate);
+                                                 GIMP_TYPE_DOCK_COLUMNS,
+                                                 GimpDockColumnsPrivate);
+
+  dock_columns->p->paned_hbox = gimp_paned_box_new (FALSE, 0,
+                                                    GTK_ORIENTATION_HORIZONTAL);
+  gimp_paned_box_set_dropped_cb (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
+                                 gimp_dock_columns_dropped_cb,
+                                 dock_columns);
+  gtk_container_add (GTK_CONTAINER (dock_columns), dock_columns->p->paned_hbox);
+  gtk_widget_show (dock_columns->p->paned_hbox);
 }
 
+static gboolean
+gimp_dock_columns_dropped_cb (GimpDockSeparator *separator,
+                              GtkWidget         *source,
+                              gpointer           data)
+{
+  g_printerr ("%s: WiP: Will create a new column soon!\n", G_STRFUNC);
+
+  return FALSE;
+}
+
+/**
+ * gimp_dock_columns_add_dock:
+ * @dock_columns:
+ * @dock:
+ *
+ * Add a dock, added to a horizontal GimpPanedBox.
+ **/
 void
 gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
-                            GimpDock        *dock)
+                            GimpDock        *dock,
+                            gint             index)
 {
   g_return_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns));
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
-  gtk_box_pack_start (GTK_BOX (dock_columns), GTK_WIDGET (dock),
-                      TRUE, TRUE, 0);
+  dock_columns->p->docks = g_list_prepend (dock_columns->p->docks, dock);
+
+  gimp_paned_box_add_widget (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
+                             GTK_WIDGET (dock),
+                             index);
+}
+
+
+void
+gimp_dock_columns_remove_dock (GimpDockColumns *dock_columns,
+                               GimpDock        *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns));
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  dock_columns->p->docks = g_list_remove (dock_columns->p->docks, dock);
+
+  gimp_paned_box_remove_widget (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
+                                GTK_WIDGET (dock));
+}
+
+GList *
+gimp_dock_columns_get_docks (GimpDockColumns *dock_columns)
+{
+  return g_list_copy (dock_columns->p->docks);
 }

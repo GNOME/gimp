@@ -54,7 +54,11 @@ struct _GimpDockColumnsClass
 
 GType               gimp_dock_columns_get_type       (void) G_GNUC_CONST;
 void                gimp_dock_columns_add_dock       (GimpDockColumns *dock_columns,
+                                                      GimpDock        *dock,
+                                                      gint             index);
+void                gimp_dock_columns_remove_dock    (GimpDockColumns *dock_columns,
                                                       GimpDock        *dock);
+GList             * gimp_dock_columns_get_docks      (GimpDockColumns *dock_columns);
 
 
 #endif /* __GIMP_DOCK_COLUMNS_H__ */

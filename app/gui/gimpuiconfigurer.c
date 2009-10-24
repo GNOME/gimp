@@ -160,7 +160,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
        */
       g_object_ref (dock);
       gtk_container_remove (GTK_CONTAINER (dock_window), GTK_WIDGET (dock));
-      gimp_dock_columns_add_dock (dock_columns, dock);
+      gimp_dock_columns_add_dock (dock_columns, dock, -1);
       g_object_unref (dock);
 
       /* Queue for removal from the dialog factory. (We can't remove
