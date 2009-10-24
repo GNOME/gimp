@@ -51,7 +51,7 @@
 /*  local function prototypes  */
 
 static GimpDisplayOptions *
-              appearance_get_options       (const GimpDisplayShell *shell);
+              appearance_get_options       (GimpDisplayShell       *shell);
 static void   appearance_set_action_active (GimpDisplayShell       *shell,
                                             const gchar            *action,
                                             gboolean                active);
@@ -130,7 +130,7 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_menubar (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_menubar (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -155,7 +155,7 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_statusbar (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_statusbar (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -188,7 +188,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_rulers (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_rulers (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -229,7 +229,7 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_scrollbars (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_scrollbars (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -254,7 +254,7 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_selection (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_selection (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -279,7 +279,7 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_layer (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_layer (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -296,7 +296,7 @@ gimp_display_shell_set_show_transform (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_transform (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_transform (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -327,7 +327,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_guides (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_guides (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -358,7 +358,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_grid (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_grid (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -389,7 +389,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_show_sample_points (const GimpDisplayShell *shell)
+gimp_display_shell_get_show_sample_points (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -411,7 +411,7 @@ gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_grid (const GimpDisplayShell *shell)
+gimp_display_shell_get_snap_to_grid (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -433,7 +433,7 @@ gimp_display_shell_set_snap_to_guides (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_guides (const GimpDisplayShell *shell)
+gimp_display_shell_get_snap_to_guides (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -455,7 +455,7 @@ gimp_display_shell_set_snap_to_canvas (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_canvas (const GimpDisplayShell *shell)
+gimp_display_shell_get_snap_to_canvas (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -477,7 +477,7 @@ gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
 }
 
 gboolean
-gimp_display_shell_get_snap_to_vectors (const GimpDisplayShell *shell)
+gimp_display_shell_get_snap_to_vectors (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
@@ -540,7 +540,7 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 }
 
 void
-gimp_display_shell_get_padding (const GimpDisplayShell *shell,
+gimp_display_shell_get_padding (GimpDisplayShell       *shell,
                                 GimpCanvasPaddingMode  *padding_mode,
                                 GimpRGB                *padding_color)
 {
@@ -561,7 +561,7 @@ gimp_display_shell_get_padding (const GimpDisplayShell *shell,
 /*  private functions  */
 
 static GimpDisplayOptions *
-appearance_get_options (const GimpDisplayShell *shell)
+appearance_get_options (GimpDisplayShell *shell)
 {
   if (gimp_display_get_image (shell->display))
     {
