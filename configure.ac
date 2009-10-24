@@ -464,13 +464,13 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.23.0 or newer])
-if $PKG_CONFIG --atleast-version=2.23.0 glib-2.0; then
-  have_glib_2_23=yes
+AC_MSG_CHECKING([if GLib is version 2.24.0 or newer])
+if $PKG_CONFIG --atleast-version=2.24.0 glib-2.0; then
+  have_glib_2_24=yes
 else
-  have_glib_2_23=no
+  have_glib_2_24=no
 fi
-AC_MSG_RESULT($have_glib_2_23)
+AC_MSG_RESULT($have_glib_2_24)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -489,13 +489,13 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.19.0 or newer])
-if $PKG_CONFIG --atleast-version=2.19.0 gtk+-2.0; then
-  have_gtk_2_19=yes
+AC_MSG_CHECKING([if GTK+ is version 2.20.0 or newer])
+if $PKG_CONFIG --atleast-version=2.20.0 gtk+-2.0; then
+  have_gtk_2_20=yes
 else
-  have_gtk_2_19=no
+  have_gtk_2_20=no
 fi
-AC_MSG_RESULT($have_gtk_2_19)
+AC_MSG_RESULT($have_gtk_2_20)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 
@@ -517,13 +517,13 @@ CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 
-AC_MSG_CHECKING([if Pango is version 1.21.0 or newer])
-if $PKG_CONFIG --atleast-version=1.21.0 pango; then
-  have_pango_1_21=yes
+AC_MSG_CHECKING([if Pango is version 1.22.0 or newer])
+if $PKG_CONFIG --atleast-version=1.22.0 pango; then
+  have_pango_1_22=yes
 else
-  have_pango_1_21=no
+  have_pango_1_22=no
 fi
-AC_MSG_RESULT($have_pango_1_21)
+AC_MSG_RESULT($have_pango_1_22)
 
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
@@ -1866,15 +1866,19 @@ AC_SUBST(MIME_TYPES)
 
 CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEAL_ENABLE"
 
-if test "x$have_glib_2_23" != "xyes"; then
+# Make sure not to disable deprecated APIs for unreleased version, we
+# must build without problems with future releases of libraries and
+# disabling deprecated API risks breaking the build
+
+if test "x$have_glib_2_24" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gtk_2_19" != "xyes"; then
+if test "x$have_gtk_2_20" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_pango_1_21" != "xyes"; then
+if test "x$have_pango_1_22" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
 
