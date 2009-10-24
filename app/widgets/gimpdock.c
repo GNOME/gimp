@@ -206,12 +206,14 @@ gimp_dock_init (GimpDock *dock)
   gtk_container_add (GTK_CONTAINER (dock->p->main_vbox), dock->p->vbox);
   gtk_widget_show (dock->p->vbox);
 
-  dock->p->north_separator = gimp_dock_separator_new (GTK_ANCHOR_NORTH,
-                                                      gimp_dock_dropped_cb,
-                                                      dock);
-  dock->p->south_separator = gimp_dock_separator_new (GTK_ANCHOR_SOUTH,
-                                                      gimp_dock_dropped_cb,
-                                                      dock);
+  dock->p->north_separator = gimp_dock_separator_new (GTK_ANCHOR_NORTH);
+  gimp_dock_separator_set_dropped_cb (GIMP_DOCK_SEPARATOR (dock->p->north_separator),
+                                      gimp_dock_dropped_cb,
+                                      dock);
+  dock->p->south_separator = gimp_dock_separator_new (GTK_ANCHOR_SOUTH);
+  gimp_dock_separator_set_dropped_cb (GIMP_DOCK_SEPARATOR (dock->p->north_separator),
+                                      gimp_dock_dropped_cb,
+                                      dock);
   gtk_box_pack_start (GTK_BOX (dock->p->vbox), dock->p->north_separator,
                       FALSE, FALSE, 0);
   gtk_box_pack_end (GTK_BOX (dock->p->vbox), dock->p->south_separator,

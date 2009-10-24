@@ -211,19 +211,26 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 /*  public functions  */
 
 GtkWidget *
-gimp_dock_separator_new (GtkAnchorType                anchor,
-                         GimpDockSeparatorDroppedFunc dropped_cb,
-                         gpointer                     dropped_cb_data)
+gimp_dock_separator_new (GtkAnchorType anchor)
 {
   GimpDockSeparator *separator;
 
   separator = g_object_new (GIMP_TYPE_DOCK_SEPARATOR, NULL);
 
-  separator->p->anchor          = anchor;
-  separator->p->dropped_cb      = dropped_cb;
-  separator->p->dropped_cb_data = dropped_cb_data;
+  separator->p->anchor = anchor;
 
   return GTK_WIDGET (separator);
+}
+
+void
+gimp_dock_separator_set_dropped_cb (GimpDockSeparator            *separator,
+                                    GimpDockSeparatorDroppedFunc  dropped_cb,
+                                    gpointer                      dropped_cb_data)
+{
+  g_return_if_fail (GIMP_IS_DOCK_SEPARATOR (separator));
+
+  separator->p->dropped_cb      = dropped_cb;
+  separator->p->dropped_cb_data = dropped_cb_data;
 }
 
 GtkAnchorType

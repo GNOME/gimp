@@ -53,7 +53,8 @@ struct _GimpDockSeparatorClass
 
 
 GType          gimp_dock_separator_get_type       (void) G_GNUC_CONST;
-GtkWidget    * gimp_dock_separator_new            (GtkAnchorType                 anchor,
+GtkWidget    * gimp_dock_separator_new            (GtkAnchorType                 anchor);
+void           gimp_dock_separator_set_dropped_cb (GimpDockSeparator            *separator,
                                                    GimpDockSeparatorDroppedFunc  dropped_cb,
                                                    gpointer                      dropped_cb_data);
 GtkAnchorType  gimp_dock_separator_get_anchor     (GimpDockSeparator            *separator);
