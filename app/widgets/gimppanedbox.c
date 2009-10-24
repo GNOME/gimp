@@ -158,9 +158,10 @@ gimp_paned_box_add_widget (GimpPanedBox *paned_box,
     }
   else
     {
-      GtkWidget *old_widget;
-      GtkWidget *parent;
-      GtkWidget *paned;
+      GtkWidget      *old_widget;
+      GtkWidget      *parent;
+      GtkWidget      *paned;
+      GtkOrientation  orientation;
 
       /* Figure out what widget to detach */
       if (index == 0)
@@ -186,8 +187,13 @@ gimp_paned_box_add_widget (GimpPanedBox *paned_box,
       g_object_ref (old_widget);
       gtk_container_remove (GTK_CONTAINER (parent), old_widget);
 
-      paned = gtk_vpaned_new ();
-      if (GTK_IS_VPANED (parent))
+      /* GtkPaned is abstract :( */
+      orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (paned_box));
+      paned = (orientation == GTK_ORIENTATION_VERTICAL ?
+               gtk_vpaned_new () :
+               gtk_hpaned_new ());
+
+      if (GTK_IS_PANED (parent))
         {
           gtk_paned_pack1 (GTK_PANED (parent), paned, TRUE, FALSE);
         }
@@ -268,7 +274,7 @@ gimp_paned_box_remove_widget (GimpPanedBox *paned_box,
 
       gtk_container_remove (GTK_CONTAINER (grandparent), parent);
 
-      if (GTK_IS_VPANED (grandparent))
+      if (GTK_IS_PANED (grandparent))
         gtk_paned_pack1 (GTK_PANED (grandparent), other_widget, TRUE, FALSE);
       else
         gtk_box_pack_start (GTK_BOX (paned_box), other_widget, TRUE, TRUE, 0);
