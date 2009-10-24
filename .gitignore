@@ -1,6 +1,11 @@
 *.la
 *.lo
 *.o
+/*.config
+/*.creator
+/*.creator.user
+/*.files
+/*.includes
 /ChangeLog
 /Makefile
 /Makefile.in
