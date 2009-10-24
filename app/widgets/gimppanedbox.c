@@ -84,6 +84,8 @@ static void
 gimp_paned_box_finalize (GObject *object)
 {
   paned_box_instances = g_list_remove (paned_box_instances, object);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 
