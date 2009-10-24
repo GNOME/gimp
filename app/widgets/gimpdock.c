@@ -35,6 +35,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdockseparator.h"
+#include "gimppanedbox.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -66,12 +67,9 @@ struct _GimpDockPrivate
   GimpUIManager     *ui_manager;
 
   GtkWidget         *main_vbox;
-  GtkWidget         *vbox;
+  GtkWidget         *paned_vbox;
 
   GList             *dockbooks;
-
-  GtkWidget         *north_separator;
-  GtkWidget         *south_separator;
 };
 
 
@@ -83,7 +81,6 @@ static void      gimp_dock_get_property      (GObject               *object,
                                               guint                  property_id,
                                               GValue                *value,
                                               GParamSpec            *pspec);
-static void      gimp_dock_finalize          (GObject               *object);
 
 static void      gimp_dock_destroy           (GtkObject             *object);
 
@@ -94,8 +91,6 @@ static void      gimp_dock_real_book_removed (GimpDock              *dock,
 static gboolean  gimp_dock_dropped_cb        (GimpDockSeparator     *separator,
                                               GtkWidget             *source,
                                               gpointer               data);
-static void      gimp_dock_show_separators   (GimpDock              *dock,
-                                              gboolean               show);
 
 
 G_DEFINE_TYPE (GimpDock, gimp_dock, GTK_TYPE_VBOX)
@@ -103,9 +98,6 @@ G_DEFINE_TYPE (GimpDock, gimp_dock, GTK_TYPE_VBOX)
 #define parent_class gimp_dock_parent_class
 
 static guint dock_signals[LAST_SIGNAL] = { 0 };
-
-/* Keep the list of instance for gimp_dock_class_show_separators() */
-static GList *dock_instances = NULL;
 
 
 static void
@@ -154,7 +146,6 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   object_class->set_property     = gimp_dock_set_property;
   object_class->get_property     = gimp_dock_get_property;
-  object_class->finalize         = gimp_dock_finalize;
 
   gtk_object_class->destroy      = gimp_dock_destroy;
 
@@ -196,30 +187,17 @@ gimp_dock_init (GimpDock *dock)
                                          GimpDockPrivate);
   dock->p->context        = NULL;
   dock->p->dialog_factory = NULL;
-  dock->p->dockbooks      = NULL;
 
   dock->p->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (dock), dock->p->main_vbox);
   gtk_widget_show (dock->p->main_vbox);
 
-  dock->p->vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (dock->p->main_vbox), dock->p->vbox);
-  gtk_widget_show (dock->p->vbox);
-
-  dock->p->north_separator = gimp_dock_separator_new (GTK_ANCHOR_NORTH);
-  gimp_dock_separator_set_dropped_cb (GIMP_DOCK_SEPARATOR (dock->p->north_separator),
-                                      gimp_dock_dropped_cb,
-                                      dock);
-  dock->p->south_separator = gimp_dock_separator_new (GTK_ANCHOR_SOUTH);
-  gimp_dock_separator_set_dropped_cb (GIMP_DOCK_SEPARATOR (dock->p->north_separator),
-                                      gimp_dock_dropped_cb,
-                                      dock);
-  gtk_box_pack_start (GTK_BOX (dock->p->vbox), dock->p->north_separator,
-                      FALSE, FALSE, 0);
-  gtk_box_pack_end (GTK_BOX (dock->p->vbox), dock->p->south_separator,
-                    FALSE, FALSE, 0);
-
-  dock_instances = g_list_prepend (dock_instances, dock);
+  dock->p->paned_vbox = gimp_paned_box_new (FALSE, 0, GTK_ORIENTATION_VERTICAL);
+  gimp_paned_box_set_dropped_cb (GIMP_PANED_BOX (dock->p->paned_vbox),
+                                 gimp_dock_dropped_cb,
+                                 dock);
+  gtk_container_add (GTK_CONTAINER (dock->p->main_vbox), dock->p->paned_vbox);
+  gtk_widget_show (dock->p->paned_vbox);
 }
 
 static void
@@ -276,12 +254,6 @@ gimp_dock_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_dock_finalize (GObject *object)
-{
-  dock_instances = g_list_remove (dock_instances, object);
 }
 
 static void
@@ -377,28 +349,6 @@ gimp_dock_dropped_cb (GimpDockSeparator *separator,
   g_object_unref (dockable);
 
   return TRUE;
-}
-
-static void
-gimp_dock_show_separators (GimpDock *dock,
-                           gboolean  show)
-{
-  if (show)
-    {
-      gtk_widget_show (dock->p->north_separator);
-
-      /* Only show the south separator if there are any dockbooks */
-      if (g_list_length (dock->p->dockbooks) > 0)
-        gtk_widget_show (dock->p->south_separator);
-    }
-  else /* (! show) */
-    {
-      /* Hide separators unconditionally so we can handle the case
-       * where we remove the last dockbook while separators are shown
-       */
-      gtk_widget_hide (dock->p->north_separator);
-      gtk_widget_hide (dock->p->south_separator);
-    }
 }
 
 /*  public functions  */
@@ -548,7 +498,7 @@ gimp_dock_get_vbox (GimpDock *dock)
 {
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  return dock->p->vbox;
+  return dock->p->paned_vbox;
 }
 
 void
@@ -591,13 +541,10 @@ gimp_dock_add_book (GimpDock     *dock,
 
   gimp_dockbook_set_dock (dockbook, dock);
 
-  /* Add the dockbook to the hierarchy of GtkPaned:s */
-  gimp_widgets_add_paned_widget (GTK_BOX (dock->p->vbox),
-                                 &dock->p->dockbooks,
-                                 dock->p->south_separator,
-                                 GTK_WIDGET (dockbook),
-                                 index);
-
+  dock->p->dockbooks = g_list_prepend (dock->p->dockbooks, dockbook);
+  gimp_paned_box_add_widget (GIMP_PANED_BOX (dock->p->paned_vbox),
+                             GTK_WIDGET (dockbook),
+                             index);
   gtk_widget_show (GTK_WIDGET (dockbook));
 
   g_signal_emit (dock, dock_signals[BOOK_ADDED], 0, dockbook);
@@ -618,36 +565,12 @@ gimp_dock_remove_book (GimpDock     *dock,
    */
   g_object_ref (dockbook);
 
-  /* Now remove the dockbook from the hierarchy of GtkPaned:s */
-  gimp_widgets_remove_paned_widget (GTK_BOX (dock->p->vbox),
-                                    &dock->p->dockbooks,
-                                    GTK_WIDGET (dockbook));
+  dock->p->dockbooks = g_list_remove (dock->p->dockbooks, dockbook);
+  gimp_paned_box_remove_widget (GIMP_PANED_BOX (dock->p->paned_vbox),
+                                GTK_WIDGET (dockbook));
 
   g_signal_emit (dock, dock_signals[BOOK_REMOVED], 0, dockbook);
 
   g_object_unref (dockbook);
 }
 
-/**
- * gimp_dock_class_show_separators:
- * @klass:
- * @show:
- *
- * Show/hide the separators in all docks.
- **/
-void
-gimp_dock_class_show_separators (GimpDockClass *klass,
-                                 gboolean       show)
-{
-  GList *list;
-
-  /* Conceptually this is a class varaible */
-  g_return_if_fail (GIMP_IS_DOCK_CLASS (klass));
-
-  for (list = dock_instances; list != NULL; list = list->next)
-    {
-      GimpDock *dock = GIMP_DOCK (list->data);
-
-      gimp_dock_show_separators (dock, show);
-    }
-}

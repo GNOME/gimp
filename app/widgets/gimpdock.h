@@ -104,8 +104,4 @@ void                gimp_dock_remove_book             (GimpDock       *dock,
                                                        GimpDockbook   *dockbook);
 
 
-void                gimp_dock_class_show_separators   (GimpDockClass  *klass,
-                                                       gboolean        show);
-
-
 #endif /* __GIMP_DOCK_H__ */

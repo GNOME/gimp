@@ -45,6 +45,7 @@ typedef struct _GimpToolbox                  GimpToolbox;
 typedef struct _GimpDockbook                 GimpDockbook;
 typedef struct _GimpDockable                 GimpDockable;
 typedef struct _GimpDocked                   GimpDocked; /* dummy typedef */
+typedef struct _GimpPanedBox                 GimpPanedBox;
 
 
 /*  GimpEditor widgets  */

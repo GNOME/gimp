@@ -41,6 +41,7 @@
 #include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
+#include "gimppanedbox.h"
 #include "gimpstringaction.h"
 #include "gimpuimanager.h"
 #include "gimpview.h"
@@ -651,10 +652,14 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
                               GdkDragContext *context,
                               GimpDockable   *dockable)
 {
-  GimpDockClass  *dock_class = GIMP_DOCK_GET_CLASS (dockable->dockbook->p->dock);
-  GtkWidget      *window;
-  GtkWidget      *view;
-  GtkRequisition  requisition;
+  GimpDock          *dock;
+  GimpPanedBoxClass *paned_box_class;
+  GtkWidget         *window;
+  GtkWidget         *view;
+  GtkRequisition     requisition;
+
+  dock            = GIMP_DOCK (dockable->dockbook->p->dock);
+  paned_box_class = GIMP_PANED_BOX_GET_CLASS (gimp_dock_get_vbox (dock));
 
   window = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_type_hint (GTK_WINDOW (window), GDK_WINDOW_TYPE_HINT_DND);
@@ -684,7 +689,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
    */
   gtk_widget_set_sensitive (GTK_WIDGET (dockable), FALSE);
 
-  gimp_dock_class_show_separators (dock_class, TRUE);
+  gimp_paned_box_class_show_separators (paned_box_class, TRUE);
 }
 
 static void
@@ -692,9 +697,14 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
                             GdkDragContext *context,
                             GimpDockable   *dockable)
 {
-  GimpDockClass *dock_class  = GIMP_DOCK_GET_CLASS (dockable->dockbook->p->dock);
-  GtkWidget     *drag_widget = g_object_get_data (G_OBJECT (dockable),
-                                                  "gimp-dock-drag-widget");
+  GimpDock          *dock;
+  GimpPanedBoxClass *paned_box_class;
+  GtkWidget         *drag_widget;
+
+  dock            = GIMP_DOCK (dockable->dockbook->p->dock);
+  paned_box_class = GIMP_PANED_BOX_GET_CLASS (gimp_dock_get_vbox (dock));
+  drag_widget     = g_object_get_data (G_OBJECT (dockable),
+                                       "gimp-dock-drag-widget");
 
   /*  finding the drag_widget means the drop was not successful, so
    *  pop up a new dock and move the dockable there
@@ -709,7 +719,7 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
   dockable->drag_y = GIMP_DOCKABLE_DRAG_OFFSET;
   gtk_widget_set_sensitive (GTK_WIDGET (dockable), TRUE);
 
-  gimp_dock_class_show_separators (dock_class, FALSE);
+  gimp_paned_box_class_show_separators (paned_box_class, FALSE);
 }
 
 

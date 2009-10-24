@@ -222,6 +222,8 @@ libappwidgets_a_sources = \
 	gimpoverlaychild.c		\
 	gimpoverlaychild.h		\
 	gimppaletteeditor.c		\
+	gimppanedbox.c			\
+	gimppanedbox.h			\
 	gimppaletteeditor.h		\
 	gimppaletteselect.c		\
 	gimppaletteselect.h		\

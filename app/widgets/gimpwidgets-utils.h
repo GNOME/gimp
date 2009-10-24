@@ -87,14 +87,6 @@ void              gimp_pango_layout_set_scale      (PangoLayout          *layout
                                                     double                scale);
 void              gimp_pango_layout_set_weight     (PangoLayout          *layout,
                                                     PangoWeight           weight);
-void              gimp_widgets_add_paned_widget    (GtkBox               *box,
-                                                    GList               **box_widget_list,
-                                                    GtkWidget            *box_widget_keep_last,
-                                                    GtkWidget            *widget,
-                                                    gint                  index);
-void              gimp_widgets_remove_paned_widget (GtkBox               *box,
-                                                    GList               **box_widget_list,
-                                                    GtkWidget            *widget);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */
