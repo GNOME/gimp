@@ -470,7 +470,7 @@ if $PKG_CONFIG --atleast-version=2.23.0 glib-2.0; then
 else
   have_glib_2_23=no
 fi
-AC_MSG_RESULT($have_glib_2_21)
+AC_MSG_RESULT($have_glib_2_23)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -495,7 +495,7 @@ if $PKG_CONFIG --atleast-version=2.19.0 gtk+-2.0; then
 else
   have_gtk_2_19=no
 fi
-AC_MSG_RESULT($have_gtk_2_15)
+AC_MSG_RESULT($have_gtk_2_19)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 
