@@ -24,8 +24,18 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
+
+#include "dialogs/dialogs.h"
+
+#include "gimpdialogfactory.h"
 #include "gimpdock.h"
+#include "gimpdockable.h"
+#include "gimpdockbook.h"
 #include "gimpdockcolumns.h"
+#include "gimpdockseparator.h"
+#include "gimpmenudock.h"
 #include "gimppanedbox.h"
 
 
@@ -74,9 +84,37 @@ gimp_dock_columns_dropped_cb (GimpDockSeparator *separator,
                               GtkWidget         *source,
                               gpointer           data)
 {
-  g_printerr ("%s: WiP: Will create a new column soon!\n", G_STRFUNC);
+  GimpDockColumns *dock_columns = GIMP_DOCK_COLUMNS (data);
+  GimpDockable    *dockable     = gimp_dockbook_drag_source_to_dockable (source);
+  GtkWidget       *dock         = NULL;
+  GtkWidget       *dockbook     = NULL;
+  gint             index        = gimp_dock_separator_get_insert_pos (separator);
 
-  return FALSE;
+  if (!dockable )
+    return FALSE;
+
+  /* Create and insert new dock into columns */
+  dock = gimp_menu_dock_new (global_dock_factory,
+                             global_dock_factory->context->gimp->images,
+                             global_dock_factory->context->gimp->displays);
+  gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), index);
+
+  /* Put a now dockbook in the dock */
+  dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock))->menu_factory);
+  g_object_ref (dockbook);
+  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), -1);
+
+  /* Move the dockable to the new dockbook */
+  g_object_ref (dockable);
+  gimp_dockbook_remove (dockable->dockbook, dockable);
+  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
+  g_object_unref (dockable);
+  g_object_unref (dockbook);
+
+  /* Show! */
+  gtk_widget_show (GTK_WIDGET (dock));
+
+  return TRUE;
 }
 
 /**
