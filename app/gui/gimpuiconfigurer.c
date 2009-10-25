@@ -141,10 +141,10 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
                                           GimpDialogFactory *dialog_factory,
                                           GimpDockColumns   *dock_columns)
 {
-  GList *iter        = NULL;
-  GList *for_removal = NULL;
+  GList *dialogs = g_list_copy (dialog_factory->open_dialogs);
+  GList *iter    = NULL;
 
-  for (iter = dialog_factory->open_dialogs; iter; iter = iter->next)
+  for (iter = dialogs; iter; iter = iter->next)
     {
       GimpDockWindow *dock_window = NULL;
       GimpDock       *dock        = NULL;
@@ -163,18 +163,9 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
       gimp_dock_columns_add_dock (dock_columns, dock, -1);
       g_object_unref (dock);
 
-      /* Queue for removal from the dialog factory. (We can't remove
-       * while we iterate)
-       */
-      for_removal = g_list_prepend (for_removal, dock_window);
-    }
-
-  for (iter = for_removal; iter; iter = iter->next)
-    {
-      GtkWidget *dock_window = GTK_WIDGET (iter->data);
-
       /* Kill the dock window, we don't need it any longer */
-      gimp_dialog_factory_remove_dialog (dialog_factory, dock_window);
+      gimp_dialog_factory_remove_dialog (dialog_factory,
+                                         GTK_WIDGET (dock_window));
       gtk_widget_destroy (GTK_WIDGET (dock_window));
     }
 }
