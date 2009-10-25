@@ -795,8 +795,9 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory,
   if (dock)
     {
       /* Put the dock in the dock window */
-      gimp_dock_window_set_dock (GIMP_DOCK_WINDOW (dock_window),
-                                 GIMP_DOCK (dock));
+      gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
+                                 GIMP_DOCK (dock),
+                                 -1);
     }
 
   return dock;

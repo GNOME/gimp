@@ -39,6 +39,7 @@
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
+#include "gimpdockcolumns.h"
 #include "gimpdockwindow.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
@@ -72,6 +73,8 @@ struct _GimpDockWindowPrivate
   gchar             *ui_manager_name;
   GimpUIManager     *ui_manager;
   GQuark             image_flush_handler_id;
+
+  GimpDockColumns   *dock_columns;
 
   gboolean           allow_dockbook_absence;
 
@@ -191,8 +194,13 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   dock_window->p->image_flush_handler_id = 0;
   dock_window->p->ID                     = dock_ID++;
   dock_window->p->update_title_idle_id   = 0;
+  dock_window->p->dock_columns           = g_object_new (GIMP_TYPE_DOCK_COLUMNS,
+                                                         NULL);
 
   /* Some common initialization for all dock windows */
+  gtk_container_add (GTK_CONTAINER (dock_window),
+                     GTK_WIDGET (dock_window->p->dock_columns));
+  gtk_widget_show (GTK_WIDGET (dock_window->p->dock_columns));
   gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
 
@@ -526,14 +534,16 @@ gimp_dock_window_dock_book_removed (GimpDockWindow *dock_window,
 }
 
 void
-gimp_dock_window_set_dock (GimpDockWindow *dock_window,
-                           GimpDock       *dock)
+gimp_dock_window_add_dock (GimpDockWindow *dock_window,
+                           GimpDock       *dock,
+                           gint            index)
 {
   g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_window));
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
-  /* FIXME: Handle more than one call to this function */
-  gtk_container_add (GTK_CONTAINER (dock_window), GTK_WIDGET (dock));
+  gimp_dock_columns_add_dock (dock_window->p->dock_columns,
+                              GIMP_DOCK (dock),
+                              index);
 
   /* Update window title now and when docks title is invalidated */
   gimp_dock_window_update_title (dock_window);
@@ -555,6 +565,24 @@ gimp_dock_window_set_dock (GimpDockWindow *dock_window,
                            G_CALLBACK (gimp_dock_window_dock_book_removed),
                            dock_window,
                            G_CONNECT_SWAPPED);
+}
+
+void
+gimp_dock_window_remove_dock (GimpDockWindow *dock_window,
+                              GimpDock       *dock)
+{
+  gimp_dock_columns_remove_dock (dock_window->p->dock_columns,
+                                 GIMP_DOCK (dock));
+
+  g_signal_handlers_disconnect_by_func (dock,
+                                        gimp_dock_window_update_title,
+                                        dock_window);
+  g_signal_handlers_disconnect_by_func (dock,
+                                        gimp_dock_set_host_geometry_hints,
+                                        dock_window);
+  g_signal_handlers_disconnect_by_func (dock,
+                                        gimp_dock_window_dock_book_removed,
+                                        dock_window);
 }
 
 gint
@@ -608,5 +636,7 @@ gimp_dock_window_from_dock (GimpDock *dock)
 GimpDock *
 gimp_dock_window_get_dock (GimpDockWindow *dock_window)
 {
-  return GIMP_DOCK (gtk_bin_get_child (GTK_BIN (dock_window)));
+  GList *docks = gimp_dock_columns_get_docks (dock_window->p->dock_columns);
+
+  return g_list_length (docks) > 0 ? GIMP_DOCK (docks->data) : NULL;
 }
