@@ -614,7 +614,7 @@ GimpDockWindow *
 gimp_dock_window_from_dock (GimpDock *dock)
 {
   GtkWidget *toplevel = NULL;
-  
+
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (dock));
@@ -626,12 +626,28 @@ gimp_dock_window_from_dock (GimpDock *dock)
 }
 
 /**
+ * gimp_dock_window_get_docks:
+ * @dock_window:
+ *
+ * Get a list of docks in the dock window.
+ *
+ * Returns:
+ **/
+GList *
+gimp_dock_window_get_docks (GimpDockWindow *dock_window)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
+
+  return gimp_dock_columns_get_docks (dock_window->p->dock_columns);
+}
+
+/**
  * gimp_dock_window_get_dock:
  * @dock_window:
  *
  * Get the #GimpDock within the #GimpDockWindow.
  *
- * Returns: 
+ * Returns:
  **/
 GimpDock *
 gimp_dock_window_get_dock (GimpDockWindow *dock_window)
