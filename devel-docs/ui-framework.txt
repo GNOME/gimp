@@ -1,0 +1,24 @@
+  GIMP UI Framework
+  =================
+
+This document describes how the GIMP UI framework functions and is
+implemented. Here, "UI framework" refers to the system that saves the
+UI layout between GIMP sessions, i.e. how docks, dockable dialogs etc
+are setup.
+
+
+  Key Classes
+  -----------
+
+GimpDockable      - Represents a dockable dialog.
+GimpDockbook      - A GtkNotebook of GimpDockables
+GimpDock          - A columns of GimpDockbooks
+GimpDockColumns   - A set of GimpDocks arranged side by side.
+GimpDockWindow    - A toplevel window containing a GimpDockColumns.
+GimpImageWindow   - A toplevel window containing images and one
+                    GimpDockColumns to the left and to the right.
+GimpDialogFactory - A factory to create and position toplevel windows
+GimpSessionInfo   - Contains session info for one toplevel
+GimpUIConfigurer  - Configures the UI when switching between
+                    single-window and multi-window mode
+
