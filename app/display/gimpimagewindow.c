@@ -411,7 +411,8 @@ gimp_image_window_delete_event (GtkWidget   *widget,
   GimpDisplayShell *shell  = gimp_image_window_get_active_shell (window);
 
   /* FIXME multiple shells */
-  gimp_display_shell_close (shell, FALSE);
+  if (shell)
+    gimp_display_shell_close (shell, FALSE);
 
   return TRUE;
 }
@@ -444,7 +445,7 @@ gimp_image_window_configure_event (GtkWidget         *widget,
       /* FIXME multiple shells */
       GimpDisplayShell *shell = gimp_image_window_get_active_shell (window);
 
-      if (gimp_display_get_image (shell->display))
+      if (shell && gimp_display_get_image (shell->display))
         shell->size_allocate_from_configure_event = TRUE;
     }
 
@@ -458,6 +459,9 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
   GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpDisplayShell       *shell   = gimp_image_window_get_active_shell (window);
+
+  if (! shell)
+    return FALSE;
 
   private->window_state = event->new_window_state;
 
@@ -517,15 +521,20 @@ static void
 gimp_image_window_style_set (GtkWidget *widget,
                              GtkStyle  *prev_style)
 {
-  GimpImageWindow        *window    = GIMP_IMAGE_WINDOW (widget);
-  GimpImageWindowPrivate *private   = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  GimpDisplayShell       *shell     = gimp_image_window_get_active_shell (window);
-  GimpStatusbar          *statusbar = gimp_display_shell_get_statusbar (shell);
-  GtkRequisition          requisition;
-  GdkGeometry             geometry;
-  GdkWindowHints          geometry_mask;
+  GimpImageWindow        *window        = GIMP_IMAGE_WINDOW (widget);
+  GimpImageWindowPrivate *private       = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpDisplayShell       *shell         = gimp_image_window_get_active_shell (window);
+  GimpStatusbar          *statusbar     = NULL;
+  GtkRequisition          requisition   = { 0, };
+  GdkGeometry             geometry      = { 0, };
+  GdkWindowHints          geometry_mask = 0;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  if (! shell)
+    return;
+
+  statusbar = gimp_display_shell_get_statusbar (shell);
 
   gtk_widget_size_request (GTK_WIDGET (statusbar), &requisition);
 
@@ -824,6 +833,9 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   active_shell = gimp_image_window_get_active_shell (window);
 
+  if (!active_shell)
+    return;
+
   image = gimp_display_get_image (active_shell->display);
 
   widget = GTK_WIDGET (window);
@@ -951,7 +963,12 @@ gimp_image_window_show_tooltip (GimpUIManager   *manager,
                                 GimpImageWindow *window)
 {
   GimpDisplayShell *shell     = gimp_image_window_get_active_shell (window);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  GimpStatusbar    *statusbar = NULL;
+
+  if (! shell)
+    return;
+
+  statusbar = gimp_display_shell_get_statusbar (shell);
 
   gimp_statusbar_push (statusbar, "menu-tooltip",
                        NULL, "%s", tooltip);
@@ -962,7 +979,12 @@ gimp_image_window_hide_tooltip (GimpUIManager   *manager,
                                 GimpImageWindow *window)
 {
   GimpDisplayShell *shell     = gimp_image_window_get_active_shell (window);
-  GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
+  GimpStatusbar    *statusbar = NULL;
+
+  if (! shell)
+    return;
+
+  statusbar = gimp_display_shell_get_statusbar (shell);
 
   gimp_statusbar_pop (statusbar, "menu-tooltip");
 }
@@ -973,6 +995,9 @@ gimp_image_window_shell_events (GtkWidget       *widget,
                                 GimpImageWindow *window)
 {
   GimpDisplayShell *shell = gimp_image_window_get_active_shell (window);
+
+  if (! shell)
+    return FALSE;
 
   return gimp_display_shell_events (widget, event, shell);
 }

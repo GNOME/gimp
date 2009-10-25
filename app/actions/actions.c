@@ -273,7 +273,10 @@ action_data_get_gimp (gpointer data)
   if (GIMP_IS_DISPLAY (data))
     return ((GimpDisplay *) data)->gimp;
   else if (GIMP_IS_IMAGE_WINDOW (data))
-    return gimp_image_window_get_active_shell (data)->display->gimp;
+    {
+      GimpDisplayShell *shell = gimp_image_window_get_active_shell (data);
+      return shell ? shell->display->gimp : NULL;
+    }
   else if (GIMP_IS_GIMP (data))
     return data;
   else if (GIMP_IS_DOCK (data))
@@ -307,7 +310,10 @@ action_data_get_context (gpointer data)
   if (GIMP_IS_DISPLAY (data))
     return gimp_get_user_context (((GimpDisplay *) data)->gimp);
   else if (GIMP_IS_IMAGE_WINDOW (data))
-    return gimp_get_user_context (gimp_image_window_get_active_shell (data)->display->gimp);
+    {
+      GimpDisplayShell *shell = gimp_image_window_get_active_shell (data);
+      return shell ? gimp_get_user_context (shell->display->gimp) : NULL;
+    }
   else if (GIMP_IS_GIMP (data))
     return gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
@@ -341,7 +347,10 @@ action_data_get_image (gpointer data)
   if (GIMP_IS_DISPLAY (data))
     display = (GimpDisplay *) data;
   else if (GIMP_IS_IMAGE_WINDOW (data))
-    display = gimp_image_window_get_active_shell (data)->display;
+    {
+      GimpDisplayShell *shell = gimp_image_window_get_active_shell (data);
+      display = shell ? shell->display : NULL;
+    }
   else if (GIMP_IS_GIMP (data))
     context = gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
@@ -377,7 +386,10 @@ action_data_get_display (gpointer data)
   if (GIMP_IS_DISPLAY (data))
     return data;
   else if (GIMP_IS_IMAGE_WINDOW (data))
-    return gimp_image_window_get_active_shell (data)->display;
+    {
+      GimpDisplayShell *shell = gimp_image_window_get_active_shell (data);
+      return shell ? shell->display : NULL;
+    }
   else if (GIMP_IS_GIMP (data))
     context = gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
