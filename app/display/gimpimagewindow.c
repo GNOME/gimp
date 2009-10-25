@@ -60,6 +60,7 @@
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_MENU_FACTORY,
   PROP_DISPLAY_FACTORY
 };
@@ -69,6 +70,7 @@ typedef struct _GimpImageWindowPrivate GimpImageWindowPrivate;
 
 struct _GimpImageWindowPrivate
 {
+  Gimp              *gimp;
   GimpUIManager     *menubar_manager;
   GimpDialogFactory *display_factory;
 
@@ -186,6 +188,12 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
   widget_class->window_state_event = gimp_image_window_window_state_event;
   widget_class->style_set          = gimp_image_window_style_set;
 
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
                                    g_param_spec_object ("menu-factory",
                                                         NULL, NULL,
@@ -355,6 +363,9 @@ gimp_image_window_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      private->gimp = g_value_get_object (value);
+      break;
     case PROP_MENU_FACTORY:
       {
         GimpMenuFactory *factory = g_value_get_object (value);
@@ -386,6 +397,9 @@ gimp_image_window_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, private->gimp);
+      break;
     case PROP_DISPLAY_FACTORY:
       g_value_set_object (value, private->display_factory);
       break;

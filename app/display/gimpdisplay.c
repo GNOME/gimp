@@ -432,6 +432,7 @@ gimp_display_new (Gimp              *gimp,
   if (! window)
     {
       window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
+                             "gimp",            gimp,
                              "menu-factory",    menu_factory,
                              "display-factory", display_factory,
                              /* The window position will be overridden by the
