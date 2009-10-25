@@ -79,6 +79,13 @@ struct _GimpDialogFactoryEntry
 
 typedef struct _GimpDialogFactoryClass  GimpDialogFactoryClass;
 
+/**
+ * GimpDialogFactory:
+ *
+ * A factory with the main purpose of creating toplevel windows and
+ * position them according to the session information kept within the
+ * factory. Over time it has accumulated more functionality than this.
+ */
 struct _GimpDialogFactory
 {
   GimpObject             parent_instance;
