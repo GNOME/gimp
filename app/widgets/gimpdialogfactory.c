@@ -786,27 +786,52 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory,
    * dock window before the dock because the dock has a dependnecy to
    * the ui manager in the dock window
    */
-  dock_window = factory->new_dock_window_func (factory,
-                                               factory->context,
-                                               0);
-  gtk_window_set_screen (GTK_WINDOW (dock_window), screen);
-  gimp_dialog_factory_set_widget_data (dock_window, factory, NULL);
+  dock_window = gimp_dialog_factory_dock_window_new (factory, screen);
 
   /* Create the dock */
   ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
-  dock = factory->new_dock_func (factory, factory->context, ui_manager); 
+  dock = factory->new_dock_func (factory, factory->context, ui_manager);
 
   if (dock)
     {
       /* Put the dock in the dock window */
       gimp_dock_window_set_dock (GIMP_DOCK_WINDOW (dock_window),
                                  GIMP_DOCK (dock));
-
-      /* Add the dock window to the dialog factory */
-      gimp_dialog_factory_add_dialog (factory, dock_window);
     }
 
   return dock;
+}
+
+/**
+ * gimp_dialog_factory_dock_window_new:
+ * @factory:
+ * @screen:
+ *
+ * Creates a new dock window.
+ *
+ * Returns:
+ **/
+GtkWidget *
+gimp_dialog_factory_dock_window_new (GimpDialogFactory *factory,
+                                     GdkScreen         *screen)
+{
+  GtkWidget *dock_window = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (factory->new_dock_window_func != NULL, NULL);
+
+  /* Create the dock window */
+  dock_window = factory->new_dock_window_func (factory, factory->context, 0);
+  gtk_window_set_screen (GTK_WINDOW (dock_window), screen);
+  gimp_dialog_factory_set_widget_data (dock_window, factory, NULL);
+  
+  /* Add it to the dialog factory so it's position is saved when the
+   * app quits
+   */
+  gimp_dialog_factory_add_dialog (factory, dock_window);
+
+  return dock_window;
 }
 
 void
