@@ -51,6 +51,8 @@ GimpDockColumns  * gimp_image_window_get_right_docks    (GimpImageWindow  *windo
 
 void               gimp_image_window_add_shell          (GimpImageWindow  *window,
                                                          GimpDisplayShell *shell);
+GimpDisplayShell * gimp_image_window_get_shell          (GimpImageWindow  *window,
+                                                         gint              index);
 void               gimp_image_window_remove_shell       (GimpImageWindow  *window,
                                                          GimpDisplayShell *shell);
 

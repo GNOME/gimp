@@ -667,6 +667,19 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   gtk_widget_show (GTK_WIDGET (shell));
 }
 
+GimpDisplayShell *
+gimp_image_window_get_shell (GimpImageWindow *window,
+                             gint             index)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), NULL);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return g_list_nth_data (private->shells, index);
+}
+
 void
 gimp_image_window_remove_shell (GimpImageWindow  *window,
                                 GimpDisplayShell *shell)
