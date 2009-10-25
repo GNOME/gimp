@@ -25,15 +25,21 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockcolumns.h"
 #include "widgets/gimpdockwindow.h"
+#include "widgets/gimptoolbox.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 #include "display/gimpimagewindow.h"
 
 #include "dialogs/dialogs.h"
+
+#include "menus/menus.h"
 
 #include "gimpuiconfigurer.h"
 
@@ -51,19 +57,29 @@ struct _GimpUIConfigurerPrivate
 };
 
 
-static void  gimp_ui_configurer_set_property                (GObject           *object,
-                                                             guint              property_id,
-                                                             const GValue      *value,
-                                                             GParamSpec        *pspec);
-static void  gimp_ui_configurer_get_property                (GObject           *object,
-                                                             guint              property_id,
-                                                             GValue            *value,
-                                                             GParamSpec        *pspec);
-static void  gimp_ui_configurer_move_docks_to_columns       (GimpUIConfigurer  *ui_configurer,
-                                                             GimpDialogFactory *dialog_factory,
-                                                             GimpDockColumns   *dock_columns);
-static void  gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer  *ui_configurer);
-static void  gimp_ui_configurer_configure_for_multi_window  (GimpUIConfigurer  *ui_configurer);
+static void              gimp_ui_configurer_set_property                (GObject           *object,
+                                                                         guint              property_id,
+                                                                         const GValue      *value,
+                                                                         GParamSpec        *pspec);
+static void              gimp_ui_configurer_get_property                (GObject           *object,
+                                                                         guint              property_id,
+                                                                         GValue            *value,
+                                                                         GParamSpec        *pspec);
+static void              gimp_ui_configurer_move_docks_to_columns       (GimpUIConfigurer  *ui_configurer,
+                                                                         GimpDialogFactory *dialog_factory,
+                                                                         GimpDockColumns   *dock_columns);
+static void              gimp_ui_configurer_move_shells                 (GimpUIConfigurer  *ui_configurer,
+                                                                         GimpImageWindow   *source_image_window,
+                                                                         GimpImageWindow   *target_image_window);
+static void              gimp_ui_configurer_separate_docks              (GimpUIConfigurer  *ui_configurer,
+                                                                         GimpImageWindow   *source_image_window);
+static void              gimp_ui_configurer_move_docks_to_window        (GimpUIConfigurer  *ui_configurer,
+                                                                         GimpDockColumns   *dock_columns);
+static void              gimp_ui_configurer_separate_shells             (GimpUIConfigurer  *ui_configurer,
+                                                                         GimpImageWindow   *source_image_window);
+static void              gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer  *ui_configurer);
+static void              gimp_ui_configurer_configure_for_multi_window  (GimpUIConfigurer  *ui_configurer);
+static GimpImageWindow * gimp_ui_configurer_get_uber_window             (GimpUIConfigurer  *ui_configurer);
 
 
 G_DEFINE_TYPE (GimpUIConfigurer, gimp_ui_configurer, GIMP_TYPE_OBJECT)
@@ -141,27 +157,34 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
                                           GimpDialogFactory *dialog_factory,
                                           GimpDockColumns   *dock_columns)
 {
-  GList *dialogs = g_list_copy (dialog_factory->open_dialogs);
-  GList *iter    = NULL;
+  GList *dialogs     = g_list_copy (dialog_factory->open_dialogs);
+  GList *dialog_iter = NULL;
 
-  for (iter = dialogs; iter; iter = iter->next)
+  for (dialog_iter = dialogs; dialog_iter; dialog_iter = dialog_iter->next)
     {
       GimpDockWindow *dock_window = NULL;
-      GimpDock       *dock        = NULL;
+      GList          *docks       = NULL;
+      GList          *dock_iter   = NULL;
 
-      if (!GIMP_IS_DOCK_WINDOW (iter->data))
+      if (!GIMP_IS_DOCK_WINDOW (dialog_iter->data))
         continue;
 
-      dock_window = GIMP_DOCK_WINDOW (iter->data);
-      dock        = gimp_dock_window_get_dock (dock_window);
+      dock_window = GIMP_DOCK_WINDOW (dialog_iter->data);
 
-      /* Move the dock from the image window to the dock columns
-       * widget. Note that we need a ref while the dock is parentless
-       */
-      g_object_ref (dock);
-      gimp_dock_window_remove_dock (dock_window, dock);
-      gimp_dock_columns_add_dock (dock_columns, dock, -1);
-      g_object_unref (dock);
+      docks = gimp_dock_window_get_docks (dock_window);
+      for (dock_iter = docks; dock_iter; dock_iter = dock_iter->next)
+        {
+          GimpDock *dock = GIMP_DOCK (dock_iter->data);
+
+          /* Move the dock from the image window to the dock columns
+           * widget. Note that we need a ref while the dock is parentless
+           */
+          g_object_ref (dock);
+          gimp_dock_window_remove_dock (dock_window, dock);
+          gimp_dock_columns_add_dock (dock_columns, dock, -1);
+          g_object_unref (dock);
+        }
+      g_list_free (docks);
 
       /* Kill the dock window, we don't need it any longer */
       gimp_dialog_factory_remove_dialog (dialog_factory,
@@ -170,49 +193,207 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
     }
 }
 
+/**
+ * gimp_ui_configurer_move_shells:
+ * @ui_configurer:
+ * @source_image_window:
+ * @target_image_window:
+ *
+ * Move all display shells from one image window to the another.
+ **/
+static void
+gimp_ui_configurer_move_shells (GimpUIConfigurer  *ui_configurer,
+                                GimpImageWindow   *source_image_window,
+                                GimpImageWindow   *target_image_window)
+{
+  while (gimp_image_window_get_n_shells (source_image_window) > 0)
+    {
+      GimpDisplayShell *shell;
+
+      shell = gimp_image_window_get_shell (source_image_window, 0);
+
+      g_object_ref (shell);
+      gimp_image_window_remove_shell (source_image_window, shell);
+      gimp_image_window_add_shell (target_image_window, shell);
+      g_object_unref (shell);
+    }
+}
+
+/**
+ * gimp_ui_configurer_separate_docks:
+ * @ui_configurer:
+ * @image_window:
+ *
+ * Move out the docks from the image window.
+ **/
+static void
+gimp_ui_configurer_separate_docks (GimpUIConfigurer  *ui_configurer,
+                                   GimpImageWindow   *image_window)
+{
+  GimpDockColumns *left_docks  = NULL;
+  GimpDockColumns *right_docks = NULL;
+
+  left_docks  = gimp_image_window_get_left_docks (image_window);
+  right_docks = gimp_image_window_get_right_docks (image_window);
+
+  gimp_ui_configurer_move_docks_to_window (ui_configurer, left_docks);
+  gimp_ui_configurer_move_docks_to_window (ui_configurer, right_docks);
+}
+
+/**
+ * gimp_ui_configurer_move_docks_to_window:
+ * @dock_columns:
+ *
+ * Moves docks in @dock_columns into a new #GimpDockWindow.
+ * FIXME: Properly session manage
+ */
+static void
+gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer *ui_configurer,
+                                         GimpDockColumns  *dock_columns)
+{
+  GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
+  GList     *docks  = gimp_dock_columns_get_docks (dock_columns);
+  GList     *iter   = NULL;
+
+  for (iter = docks; iter; iter = iter->next)
+    {
+      GimpDock          *dock           = GIMP_DOCK (iter->data);
+      GtkWidget         *dock_window    = NULL;
+      GimpDialogFactory *dialog_factory = NULL;
+
+      /* This is kind of ugly but not a disaster. We need the dock
+       * window correctly configured if we create it for the toolbox
+       */
+      dialog_factory = (GIMP_IS_TOOLBOX (dock) ?
+                        global_toolbox_factory :
+                        global_dock_factory);
+
+      /* Create a dock window to put the dock in */
+      dock_window = gimp_dialog_factory_dock_window_new (dialog_factory,
+                                                         screen);
+
+      /* Move the dock to the window */
+      g_object_ref (dock);
+      gimp_dock_columns_remove_dock (dock_columns, dock);
+      gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window), dock, -1);
+      g_object_unref (dock);
+
+      /* Don't forget to show the window */
+      gtk_widget_show (dock_window);
+    }
+
+  g_list_free (docks);
+}
+
+/**
+ * gimp_ui_configurer_separate_shells:
+ * @ui_configurer:
+ * @source_image_window:
+ *
+ * Create one image window per display shell and move it there.
+ **/
+static void
+gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
+                                    GimpImageWindow  *source_image_window)
+{
+  /* The last display shell remains in its window */
+  while (gimp_image_window_get_n_shells (source_image_window) > 1)
+    {
+      GimpDisplayShell *shell            = NULL;
+      GimpImageWindow  *new_image_window = NULL;
+
+      /* Create a new image window */
+      new_image_window = gimp_image_window_new (ui_configurer->p->gimp,
+                                                NULL,
+                                                global_menu_factory,
+                                                global_display_factory);
+      /* Move the shell there */
+      shell = gimp_image_window_get_shell (source_image_window, 1);
+
+      g_object_ref (shell);
+      gimp_image_window_remove_shell (source_image_window, shell);
+      gimp_image_window_add_shell (new_image_window, shell);
+      g_object_unref (shell);
+
+      /* FIXME: If we don't set a size request here the window will be
+       * too small. Get rid of this hack and fix it the proper way
+       */
+      gtk_widget_set_size_request (GTK_WIDGET (new_image_window), 640, 480);
+
+      /* Show after we have added the shell */
+      gtk_widget_show (GTK_WIDGET (new_image_window));
+    }
+}
+
+/**
+ * gimp_ui_configurer_configure_for_single_window:
+ * @ui_configurer:
+ *
+ * Move docks and display shells into a single window.
+ **/
 static void
 gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
 {
-  Gimp    *gimp        = GIMP (ui_configurer->p->gimp);
-  GList   *windows     = gimp_get_image_windows (gimp);
-  GList   *iter        = NULL;
-  gboolean docks_moved = FALSE;
+  Gimp            *gimp              = GIMP (ui_configurer->p->gimp);
+  GList           *windows           = gimp_get_image_windows (gimp);
+  GList           *iter              = NULL;
+  GimpImageWindow *uber_image_window = NULL;
+  GimpDockColumns *left_docks        = NULL;
+  GimpDockColumns *right_docks       = NULL;
 
+  /* Get and setup the window to put everything in */
+  uber_image_window = gimp_ui_configurer_get_uber_window (ui_configurer);
+
+  /* Get dock areas */
+  left_docks  = gimp_image_window_get_left_docks (uber_image_window);
+  right_docks = gimp_image_window_get_right_docks (uber_image_window);
+
+  /* First move the toolbox to the left side of the image
+   * window
+   */
+  gimp_ui_configurer_move_docks_to_columns (ui_configurer,
+                                            global_toolbox_factory,
+                                            left_docks);
+
+  /* Then move the other docks to the right side of the image
+   * window
+   */
+  gimp_ui_configurer_move_docks_to_columns (ui_configurer,
+                                            global_dock_factory,
+                                            right_docks);
+
+  /* Show the docks in the window */
+  gimp_image_window_set_show_docks (uber_image_window, TRUE);
+
+  /* Move stuff from other windows to the uber image window */
   for (iter = windows; iter; iter = g_list_next (iter))
     {
       GimpImageWindow *image_window = GIMP_IMAGE_WINDOW (iter->data);
 
-      /* Move all docks to the first image window */
-      if (! docks_moved)
-        {
-          GimpDockColumns *left_docks  = gimp_image_window_get_left_docks (image_window);
-          GimpDockColumns *right_docks = gimp_image_window_get_right_docks (image_window);
+      /* Don't move stuff to itself */
+      if (image_window == uber_image_window)
+        continue;
 
-          /* First move the toolbox to the left side of the image
-           * window
-           */
-          gimp_ui_configurer_move_docks_to_columns (ui_configurer,
-                                                    global_toolbox_factory,
-                                                    left_docks);
+      /* Put the displays in the rest of the image windows into
+       * the uber image window
+       */
+      gimp_ui_configurer_move_shells (ui_configurer,
+                                      image_window,
+                                      uber_image_window);
 
-          /* Then move the other docks to the right side of the image
-           * window
-           */
-          gimp_ui_configurer_move_docks_to_columns (ui_configurer,
-                                                    global_dock_factory,
-                                                    right_docks);
-
-          /* Don't do it again */
-          docks_moved = TRUE;
-        }
-
-      /* FIXME: Move all displays to a single window */
-      gimp_image_window_set_show_docks (image_window, TRUE);
+      /* Destroy the window */
+      gimp_image_window_destroy (image_window);
     }
 
   g_list_free (windows);
 }
 
+/**
+ * gimp_ui_configurer_configure_for_multi_window:
+ * @ui_configurer:
+ *
+ * Moves all display shells into their own image window.
+ **/
 static void
 gimp_ui_configurer_configure_for_multi_window (GimpUIConfigurer *ui_configurer)
 {
@@ -224,13 +405,42 @@ gimp_ui_configurer_configure_for_multi_window (GimpUIConfigurer *ui_configurer)
     {
       GimpImageWindow *image_window = GIMP_IMAGE_WINDOW (iter->data);
 
-      /* FIXME: Move all displays to a multiple windows */
+      gimp_ui_configurer_separate_docks (ui_configurer, image_window);
+
+      gimp_ui_configurer_separate_shells (ui_configurer, image_window);
+
+      /* Don't show docks in the new image winows */
       gimp_image_window_set_show_docks (image_window, FALSE);
     }
 
   g_list_free (windows);
 }
 
+/**
+ * gimp_ui_configurer_get_uber_window:
+ * @ui_configurer:
+ *
+ * Returns: The window to be used as the main window for single-window
+ *          mode.
+ **/
+static GimpImageWindow *
+gimp_ui_configurer_get_uber_window (GimpUIConfigurer *ui_configurer)
+{
+  GimpContext      *context      = gimp_get_user_context (ui_configurer->p->gimp);
+  GimpDisplay      *display      = gimp_context_get_display (context);
+  GimpDisplayShell *shell        = gimp_display_get_shell (display);
+  GimpImageWindow  *image_window = gimp_display_shell_get_window (shell);
+
+  return image_window;
+}
+
+/**
+ * gimp_ui_configurer_configure:
+ * @ui_configurer:
+ * @single_window_mode:
+ *
+ * Configure the UI.
+ **/
 void
 gimp_ui_configurer_configure (GimpUIConfigurer *ui_configurer,
                               gboolean          single_window_mode)
