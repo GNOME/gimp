@@ -183,12 +183,11 @@ static void
 gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
 {
   Gimp    *gimp        = GIMP (ui_configurer->p->gimp);
+  GList   *windows     = gimp_get_image_windows (gimp);
   GList   *iter        = NULL;
   gboolean docks_moved = FALSE;
 
-  for (iter = gimp_get_image_window_iter (gimp);
-       iter;
-       iter = g_list_next (iter))
+  for (iter = windows; iter; iter = g_list_next (iter))
     {
       GimpImageWindow *image_window = GIMP_IMAGE_WINDOW (iter->data);
 
@@ -219,23 +218,26 @@ gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
       /* FIXME: Move all displays to a single window */
       gimp_image_window_set_show_docks (image_window, TRUE);
     }
+
+  g_list_free (windows);
 }
 
 static void
 gimp_ui_configurer_configure_for_multi_window (GimpUIConfigurer *ui_configurer)
 {
-  Gimp  *gimp = GIMP (ui_configurer->p->gimp);
-  GList *iter = NULL;
+  Gimp  *gimp    = GIMP (ui_configurer->p->gimp);
+  GList *windows = gimp_get_image_windows (gimp);
+  GList *iter    = NULL;
 
-  for (iter = gimp_get_image_window_iter (gimp);
-       iter;
-       iter = g_list_next (iter))
+  for (iter = windows; iter; iter = g_list_next (iter))
     {
       GimpImageWindow *image_window = GIMP_IMAGE_WINDOW (iter->data);
 
       /* FIXME: Move all displays to a multiple windows */
       gimp_image_window_set_show_docks (image_window, FALSE);
     }
+
+  g_list_free (windows);
 }
 
 void

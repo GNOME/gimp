@@ -1020,11 +1020,11 @@ gimp_get_display_iter (Gimp *gimp)
 }
 
 GList *
-gimp_get_image_window_iter (Gimp *gimp)
+gimp_get_image_windows (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  return gimp->image_windows;
+  return g_list_copy (gimp->image_windows);
 }
 
 GList *
