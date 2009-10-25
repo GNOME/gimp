@@ -111,7 +111,7 @@ static void      gimp_image_window_get_property        (GObject             *obj
                                                         GValue              *value,
                                                         GParamSpec          *pspec);
 
-static void      gimp_image_window_destroy             (GtkObject           *object);
+static void      gimp_image_window_real_destroy        (GtkObject           *object);
 
 static gboolean  gimp_image_window_delete_event        (GtkWidget           *widget,
                                                         GdkEventAny         *event);
@@ -181,7 +181,7 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
   object_class->set_property       = gimp_image_window_set_property;
   object_class->get_property       = gimp_image_window_get_property;
 
-  gtk_object_class->destroy        = gimp_image_window_destroy;
+  gtk_object_class->destroy        = gimp_image_window_real_destroy;
 
   widget_class->delete_event       = gimp_image_window_delete_event;
   widget_class->configure_event    = gimp_image_window_configure_event;
@@ -412,7 +412,7 @@ gimp_image_window_get_property (GObject    *object,
 }
 
 static void
-gimp_image_window_destroy (GtkObject *object)
+gimp_image_window_real_destroy (GtkObject *object)
 {
   GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
@@ -590,6 +590,51 @@ gimp_image_window_style_set (GtkWidget *widget,
 
 
 /*  public functions  */
+
+GimpImageWindow *
+gimp_image_window_new (Gimp              *gimp,
+                       GimpImage         *image,
+                       GimpMenuFactory   *menu_factory,
+                       GimpDialogFactory *display_factory)
+{
+  GimpImageWindow *window;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image) || image == NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (display_factory), NULL);
+
+  window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
+                         "gimp",            gimp,
+                         "menu-factory",    menu_factory,
+                         "display-factory", display_factory,
+                         /* The window position will be overridden by the
+                          * dialog factory, it is only really used on first
+                          * startup.
+                          */
+                         image ? NULL : "window-position",
+                         GTK_WIN_POS_CENTER,
+                         NULL);
+
+  gimp->image_windows = g_list_prepend (gimp->image_windows, window);
+
+  return window;
+}
+
+void
+gimp_image_window_destroy (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  private->gimp->image_windows = g_list_remove (private->gimp->image_windows,
+                                                window);
+
+  gtk_widget_destroy (GTK_WIDGET (window));
+}
 
 GimpUIManager *
 gimp_image_window_get_ui_manager (GimpImageWindow *window)

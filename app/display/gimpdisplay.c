@@ -431,18 +431,10 @@ gimp_display_new (Gimp              *gimp,
 
   if (! window)
     {
-      window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
-                             "gimp",            gimp,
-                             "menu-factory",    menu_factory,
-                             "display-factory", display_factory,
-                             /* The window position will be overridden by the
-                              * dialog factory, it is only really used on first
-                              * startup.
-                              */
-                             display->image ? NULL : "window-position",
-                             GTK_WIN_POS_CENTER,
-                             NULL);
-      gimp->image_windows = g_list_prepend (gimp->image_windows, window);
+      window = gimp_image_window_new (gimp,
+                                      display->image,
+                                      menu_factory,
+                                      display_factory);
     }
 
   /*  create the shell for the image  */
@@ -520,9 +512,7 @@ gimp_display_delete (GimpDisplay *display)
             }
           else
             {
-              Gimp *gimp = display->gimp;
-              gimp->image_windows = g_list_remove (gimp->image_windows, window);
-              gtk_widget_destroy (GTK_WIDGET (window));
+              gimp_image_window_destroy (window);
             }
         }
       else
