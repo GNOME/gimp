@@ -59,26 +59,22 @@ struct _GimpDockbookClass
 };
 
 
-GType       gimp_dockbook_get_type          (void) G_GNUC_CONST;
-
-GtkWidget * gimp_dockbook_new               (GimpMenuFactory  *menu_factory);
-
-GimpDock  * gimp_dockbook_get_dock          (GimpDockbook     *dockbook);
-void        gimp_dockbook_set_dock          (GimpDockbook     *dockbook,
-                                             GimpDock         *dock);
-GimpUIManager *
-            gimp_dockbook_get_ui_manager    (GimpDockbook     *dockbook);
-
-void        gimp_dockbook_add               (GimpDockbook     *dockbook,
-                                             GimpDockable     *dockable,
-                                             gint              position);
-void        gimp_dockbook_remove            (GimpDockbook     *dockbook,
-                                             GimpDockable     *dockable);
-
-GtkWidget * gimp_dockbook_create_tab_widget (GimpDockbook     *dockbook,
-                                             GimpDockable     *dockable);
-gboolean    gimp_dockbook_drop_dockable     (GimpDockbook     *dockbook,
-                                             GtkWidget        *drag_source);
+GType           gimp_dockbook_get_type                  (void) G_GNUC_CONST;
+GtkWidget     * gimp_dockbook_new                       (GimpMenuFactory *menu_factory);
+GimpDock      * gimp_dockbook_get_dock                  (GimpDockbook    *dockbook);
+void            gimp_dockbook_set_dock                  (GimpDockbook    *dockbook,
+                                                         GimpDock        *dock);
+GimpUIManager * gimp_dockbook_get_ui_manager            (GimpDockbook    *dockbook);
+void            gimp_dockbook_add                       (GimpDockbook    *dockbook,
+                                                         GimpDockable    *dockable,
+                                                         gint             position);
+void            gimp_dockbook_remove                    (GimpDockbook    *dockbook,
+                                                         GimpDockable    *dockable);
+GtkWidget    *  gimp_dockbook_create_tab_widget         (GimpDockbook    *dockbook,
+                                                         GimpDockable    *dockable);
+gboolean        gimp_dockbook_drop_dockable             (GimpDockbook    *dockbook,
+                                                         GtkWidget       *drag_source);
+GimpDockable *  gimp_dockbook_drag_source_to_dockable   (GtkWidget       *drag_source);
 
 
 #endif /* __GIMP_DOCKBOOK_H__ */

@@ -581,19 +581,11 @@ gimp_dockbook_drop_dockable (GimpDockbook *dockbook,
 
   if (drag_source)
     {
-      GimpDockable *dockable;
-
-      if (GIMP_IS_DOCKABLE (drag_source))
-        dockable = GIMP_DOCKABLE (drag_source);
-      else
-        dockable = (GimpDockable *) g_object_get_data (G_OBJECT (drag_source),
-                                                       "gimp-dockable");
+      GimpDockable *dockable =
+        gimp_dockbook_drag_source_to_dockable (drag_source);
 
       if (dockable)
         {
-          g_object_set_data (G_OBJECT (dockable),
-                             "gimp-dock-drag-widget", NULL);
-
           if (dockable->dockbook == dockbook)
             {
               gtk_notebook_reorder_child (GTK_NOTEBOOK (dockbook),
@@ -616,6 +608,31 @@ gimp_dockbook_drop_dockable (GimpDockbook *dockbook,
   return FALSE;
 }
 
+/**
+ * gimp_dockbook_drag_source_to_dockable:
+ * @drag_source: A drag-and-drop source widget
+ *
+ * Gets the dockable associated with a drag-and-drop source. If
+ * successfull, the function will also cleanup the dockable.
+ *
+ * Returns: The dockable
+ **/
+GimpDockable *
+gimp_dockbook_drag_source_to_dockable (GtkWidget *drag_source)
+{
+  GimpDockable *dockable = NULL;
+
+  if (GIMP_IS_DOCKABLE (drag_source))
+    dockable = GIMP_DOCKABLE (drag_source);
+  else
+    dockable = g_object_get_data (G_OBJECT (drag_source),
+                                  "gimp-dockable");
+  if (dockable)
+    g_object_set_data (G_OBJECT (dockable),
+                       "gimp-dock-drag-widget", NULL);
+
+  return dockable;
+}
 
 /*  tab DND source side  */
 
@@ -798,12 +815,8 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
 
   if (dest_dockable && source)
     {
-      GimpDockable *src_dockable;
-
-      if (GIMP_IS_DOCKABLE (source))
-        src_dockable = GIMP_DOCKABLE (source);
-      else
-        src_dockable = g_object_get_data (G_OBJECT (source), "gimp-dockable");
+      GimpDockable *src_dockable =
+        gimp_dockbook_drag_source_to_dockable (source);
 
       if (src_dockable)
         {
@@ -812,9 +825,6 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
           dest_index =
             gtk_notebook_page_num (GTK_NOTEBOOK (dest_dockable->dockbook),
                                    GTK_WIDGET (dest_dockable));
-
-          g_object_set_data (G_OBJECT (src_dockable),
-                             "gimp-dock-drag-widget", NULL);
 
           if (src_dockable->dockbook != dest_dockable->dockbook)
             {
