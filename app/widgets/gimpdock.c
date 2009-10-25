@@ -541,7 +541,7 @@ gimp_dock_add_book (GimpDock     *dock,
 
   gimp_dockbook_set_dock (dockbook, dock);
 
-  dock->p->dockbooks = g_list_prepend (dock->p->dockbooks, dockbook);
+  dock->p->dockbooks = g_list_insert (dock->p->dockbooks, dockbook, index);
   gimp_paned_box_add_widget (GIMP_PANED_BOX (dock->p->paned_vbox),
                              GTK_WIDGET (dockbook),
                              index);
