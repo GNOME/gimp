@@ -159,7 +159,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
        * widget. Note that we need a ref while the dock is parentless
        */
       g_object_ref (dock);
-      gtk_container_remove (GTK_CONTAINER (dock_window), GTK_WIDGET (dock));
+      gimp_dock_window_remove_dock (dock_window, dock);
       gimp_dock_columns_add_dock (dock_columns, dock, -1);
       g_object_unref (dock);
 
