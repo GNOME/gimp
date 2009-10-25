@@ -299,7 +299,7 @@ gimp_dock_dropped_cb (GimpDockSeparator *separator,
   GimpDock     *dock     = GIMP_DOCK (data);
   GimpDockable *dockable = NULL;
   GtkWidget    *dockbook = NULL;
-  gint          index    = -1;
+  gint          index    = gimp_dock_separator_get_insert_pos (separator);
 
   if (GIMP_IS_DOCKABLE (source))
     dockable = GIMP_DOCKABLE (source);
@@ -311,11 +311,6 @@ gimp_dock_dropped_cb (GimpDockSeparator *separator,
 
   g_object_set_data (G_OBJECT (dockable),
                      "gimp-dock-drag-widget", NULL);
-
-  if (gimp_dock_separator_get_anchor (separator) == GTK_ANCHOR_NORTH)
-    index = 0;
-  else if (gimp_dock_separator_get_anchor (separator) == GTK_ANCHOR_SOUTH)
-    index = -1;
 
   /*  if dropping to the same dock, take care that we don't try
    *  to reorder the *only* dockable in the dock

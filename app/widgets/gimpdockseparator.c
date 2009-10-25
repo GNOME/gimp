@@ -233,8 +233,14 @@ gimp_dock_separator_set_dropped_cb (GimpDockSeparator            *separator,
   separator->p->dropped_cb_data = dropped_cb_data;
 }
 
-GtkAnchorType
-gimp_dock_separator_get_anchor (GimpDockSeparator *separator)
+/**
+ * gimp_dock_separator_get_index_pos:
+ * @separator:
+ *
+ * Returns: The insert position the separator represents.
+ **/
+gint
+gimp_dock_separator_get_insert_pos (GimpDockSeparator *separator)
 {
   g_return_val_if_fail (GIMP_IS_DOCK_SEPARATOR (separator), GTK_ANCHOR_CENTER);
 
