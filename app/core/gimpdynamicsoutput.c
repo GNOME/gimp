@@ -302,7 +302,7 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
                                         gdouble             fade_point)
 {
   gdouble total   = 0.0;
-  gdouble result  = 1.0;
+  gdouble result  = 0.0; /* angles are additive, so we retun zero for no change. */
   gint    factors = 0;
 
   if (output->use_pressure)
@@ -319,7 +319,7 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 
   if (output->use_direction)
     {
-      total += coords.direction + 0.5;
+      total += coords.direction;
       factors++;
     }
 
@@ -382,7 +382,7 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
               result, factors, total);
 #endif
 
-   return result + 0.5;
+   return result;
 }
 
 
