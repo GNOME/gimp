@@ -134,6 +134,12 @@ static void      gimp_image_window_switch_page         (GtkNotebook         *not
                                                         GtkNotebookPage     *page,
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
+static void      gimp_image_window_page_removed        (GtkNotebook         *notebook,
+                                                        GtkNotebookPage     *page,
+                                                        gint                 page_num,
+                                                        GimpImageWindow     *window);
+static void      gimp_image_window_disconnect_from_active_shell
+                                                       (GimpImageWindow *window);
 
 static void      gimp_image_window_image_notify        (GimpDisplay         *display,
                                                         const GParamSpec    *pspec,
@@ -307,6 +313,9 @@ gimp_image_window_constructor (GType                  type,
                    TRUE, TRUE);
   g_signal_connect (private->notebook, "switch-page",
                     G_CALLBACK (gimp_image_window_switch_page),
+                    window);
+  g_signal_connect (private->notebook, "page-removed",
+                    G_CALLBACK (gimp_image_window_page_removed),
                     window);
   gtk_widget_show (private->notebook);
 
@@ -1017,26 +1026,7 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
   if (shell == private->active_shell)
     return;
 
-  if (private->active_shell)
-    {
-      active_display = private->active_shell->display;
-
-      g_signal_handlers_disconnect_by_func (active_display,
-                                            gimp_image_window_image_notify,
-                                            window);
-
-      g_signal_handlers_disconnect_by_func (private->active_shell,
-                                            gimp_image_window_shell_scaled,
-                                            window);
-      g_signal_handlers_disconnect_by_func (private->active_shell,
-                                            gimp_image_window_shell_title_notify,
-                                            window);
-      g_signal_handlers_disconnect_by_func (private->active_shell,
-                                            gimp_image_window_shell_icon_notify,
-                                            window);
-
-      gimp_image_window_hide_tooltip (private->menubar_manager, window);
-    }
+  gimp_image_window_disconnect_from_active_shell (window);
 
   private->active_shell = shell;
 
@@ -1069,6 +1059,47 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
     }
 
   gimp_ui_manager_update (private->menubar_manager, active_display);
+}
+
+static void
+gimp_image_window_page_removed (GtkNotebook     *notebook,
+                                GtkNotebookPage *page,
+                                gint             page_num,
+                                GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  gimp_image_window_disconnect_from_active_shell (window);
+
+  private->active_shell = NULL;
+}
+
+static void
+gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private        = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpDisplay            *active_display = NULL;
+
+  if (! private->active_shell)
+    return;
+
+  active_display = private->active_shell->display;
+
+  g_signal_handlers_disconnect_by_func (active_display,
+                                        gimp_image_window_image_notify,
+                                        window);
+
+  g_signal_handlers_disconnect_by_func (private->active_shell,
+                                        gimp_image_window_shell_scaled,
+                                        window);
+  g_signal_handlers_disconnect_by_func (private->active_shell,
+                                        gimp_image_window_shell_title_notify,
+                                        window);
+  g_signal_handlers_disconnect_by_func (private->active_shell,
+                                        gimp_image_window_shell_icon_notify,
+                                        window);
+
+  gimp_image_window_hide_tooltip (private->menubar_manager, window);
 }
 
 static void
