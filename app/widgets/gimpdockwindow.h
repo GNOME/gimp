@@ -63,9 +63,10 @@ void                gimp_dock_window_add_dock         (GimpDockWindow *dock_wind
 void                gimp_dock_window_remove_dock      (GimpDockWindow *dock_window,
                                                        GimpDock       *dock);
 GimpUIManager     * gimp_dock_window_get_ui_manager   (GimpDockWindow *dock_window);
-GimpDockWindow    * gimp_dock_window_from_dock        (GimpDock       *dock);
 GList             * gimp_dock_window_get_docks        (GimpDockWindow *dock_window);
 GimpDock          * gimp_dock_window_get_dock         (GimpDockWindow *dock_window);
+
+GimpDockWindow    * gimp_dock_window_from_dock        (GimpDock       *dock);
 
 
 #endif /* __GIMP_DOCK_WINDOW_H__ */

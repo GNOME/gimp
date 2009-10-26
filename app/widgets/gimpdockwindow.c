@@ -602,30 +602,6 @@ gimp_dock_window_get_ui_manager (GimpDockWindow *dock_window)
 }
 
 /**
- * gimp_dock_window_from_dock:
- * @dock:
- *
- * For convenience.
- *
- * Returns: If the toplevel widget for the dock is a GimpDockWindow,
- * return that. Otherwise return %NULL.
- **/
-GimpDockWindow *
-gimp_dock_window_from_dock (GimpDock *dock)
-{
-  GtkWidget *toplevel = NULL;
-
-  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
-
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (dock));
-
-  if (GIMP_IS_DOCK_WINDOW (toplevel))
-    return GIMP_DOCK_WINDOW (toplevel);
-  else
-    return NULL;
-}
-
-/**
  * gimp_dock_window_get_docks:
  * @dock_window:
  *
@@ -655,4 +631,29 @@ gimp_dock_window_get_dock (GimpDockWindow *dock_window)
   GList *docks = gimp_dock_columns_get_docks (dock_window->p->dock_columns);
 
   return g_list_length (docks) > 0 ? GIMP_DOCK (docks->data) : NULL;
+}
+
+
+/**
+ * gimp_dock_window_from_dock:
+ * @dock:
+ *
+ * For convenience.
+ *
+ * Returns: If the toplevel widget for the dock is a GimpDockWindow,
+ * return that. Otherwise return %NULL.
+ **/
+GimpDockWindow *
+gimp_dock_window_from_dock (GimpDock *dock)
+{
+  GtkWidget *toplevel = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (dock));
+
+  if (GIMP_IS_DOCK_WINDOW (toplevel))
+    return GIMP_DOCK_WINDOW (toplevel);
+  else
+    return NULL;
 }
