@@ -137,7 +137,8 @@ gimp_tag_cache_init (GimpTagCache *cache)
                                              GIMP_TYPE_TAG_CACHE,
                                              GimpTagCachePriv);
 
-  cache->priv->records    = g_array_new (FALSE, FALSE, sizeof(GimpTagCacheRecord));
+  cache->priv->records    = g_array_new (FALSE, FALSE,
+                                         sizeof (GimpTagCacheRecord));
   cache->priv->containers = NULL;
 }
 
@@ -151,8 +152,8 @@ gimp_tag_cache_finalize (GObject *object)
     {
       for (i = 0; i < cache->priv->records->len; i++)
         {
-          GimpTagCacheRecord *rec =
-            &g_array_index (cache->priv->records, GimpTagCacheRecord, i);
+          GimpTagCacheRecord *rec = &g_array_index (cache->priv->records,
+                                                    GimpTagCacheRecord, i);
 
           g_list_foreach (rec->tags, (GFunc) g_object_unref, NULL);
           g_list_free (rec->tags);
@@ -317,9 +318,7 @@ static void
 gimp_tag_cache_tagged_to_cache_record_foreach (GimpTagged  *tagged,
                                                GList      **cache_records)
 {
-  gchar *identifier;
-
-  identifier = gimp_tagged_get_identifier (tagged);
+  gchar *identifier = gimp_tagged_get_identifier (tagged);
 
   if (identifier)
     {
@@ -330,7 +329,7 @@ gimp_tag_cache_tagged_to_cache_record_foreach (GimpTagged  *tagged,
 
       cache_rec->identifier = g_quark_from_string (identifier);
       cache_rec->checksum   = g_quark_from_string (checksum);
-      cache_rec->tags = g_list_copy (gimp_tagged_get_tags (tagged));
+      cache_rec->tags       = g_list_copy (gimp_tagged_get_tags (tagged));
 
       g_free (checksum);
 
@@ -361,7 +360,8 @@ gimp_tag_cache_save (GimpTagCache *cache)
   saved_records = NULL;
   for (i = 0; i < cache->priv->records->len; i++)
     {
-      GimpTagCacheRecord *current_record = &g_array_index (cache->priv->records, GimpTagCacheRecord, i);
+      GimpTagCacheRecord *current_record = &g_array_index (cache->priv->records,
+                                                           GimpTagCacheRecord, i);
 
       if (! current_record->referenced && current_record->tags)
         {
@@ -378,7 +378,8 @@ gimp_tag_cache_save (GimpTagCache *cache)
         }
     }
 
-  for (iterator = cache->priv->containers; iterator;
+  for (iterator = cache->priv->containers;
+       iterator;
        iterator = g_list_next (iterator))
     {
       gimp_container_foreach (GIMP_CONTAINER (iterator->data),
@@ -389,6 +390,7 @@ gimp_tag_cache_save (GimpTagCache *cache)
   buf = g_string_new ("");
   g_string_append (buf, "<?xml version='1.0' encoding='UTF-8'?>\n");
   g_string_append (buf, "<tags>\n");
+
   for (iterator = saved_records; iterator; iterator = g_list_next (iterator))
     {
       GimpTagCacheRecord *cache_rec = iterator->data;
@@ -402,7 +404,8 @@ gimp_tag_cache_save (GimpTagCache *cache)
                               g_quark_to_string (cache_rec->checksum));
       g_free (identifier_string);
 
-      for (tag_iterator = cache_rec->tags; tag_iterator;
+      for (tag_iterator = cache_rec->tags;
+           tag_iterator;
            tag_iterator = g_list_next (tag_iterator))
         {
           tag_string = g_markup_escape_text (gimp_tag_get_name (GIMP_TAG (tag_iterator->data)), -1);
@@ -416,6 +419,7 @@ gimp_tag_cache_save (GimpTagCache *cache)
   g_string_append (buf, "</tags>\n");
 
   filename = g_build_filename (gimp_directory (), GIMP_TAG_CACHE_FILE, NULL);
+
   if (! g_file_set_contents (filename, buf->str, buf->len, &error))
     {
       g_printerr ("Error while saving tag cache: %s\n", error->message);
@@ -423,10 +427,12 @@ gimp_tag_cache_save (GimpTagCache *cache)
     }
 
   g_free (filename);
+
   g_string_free (buf, TRUE);
 
-  for (iterator = saved_records; iterator;
-      iterator = g_list_next (iterator))
+  for (iterator = saved_records;
+       iterator;
+       iterator = g_list_next (iterator))
     {
       GimpTagCacheRecord *cache_rec = iterator->data;
 
@@ -469,6 +475,7 @@ gimp_tag_cache_load (GimpTagCache *cache)
   markup_parser.error         = gimp_tag_cache_load_error;
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parse_data);
+
   if (gimp_xml_parser_parse_file (xml_parser, filename, &error))
     {
       cache->priv->records = g_array_append_vals (cache->priv->records,
