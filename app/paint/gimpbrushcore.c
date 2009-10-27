@@ -420,15 +420,15 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
                                                 paint_core->pixel_dist);
 
       core->scale *= gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
-                                                            *coords,
+                                                            coords,
                                                             fade_point);
 
       core->angle += gimp_dynamics_output_get_angular_value (core->dynamics->angle_output,
-                                                             *coords,
+                                                             coords,
                                                              fade_point);
 
       core->aspect_ratio *= gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_output,
-                                                                   *coords,
+                                                                   coords,
                                                                    fade_point);
     }
 
@@ -727,7 +727,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
                                                     paint_core->pixel_dist);
 
           dyn_jitter = core->jitter * gimp_dynamics_output_get_linear_value (core->dynamics->jitter_output,
-                                                                             current_coords,
+                                                                             &current_coords,
                                                                              fade_point);
 
           jitter_dist  = g_rand_double_range (core->rand, 0, dyn_jitter);
@@ -792,15 +792,15 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
                                                 paint_core->pixel_dist);
 
       core->scale *= gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
-                                                            *coords,
+                                                            coords,
                                                             fade_point);
 
       core->angle += gimp_dynamics_output_get_angular_value (core->dynamics->angle_output,
-                                                             *coords,
+                                                             coords,
                                                              fade_point);
 
       core->aspect_ratio *= gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_output,
-                                                                   *coords,
+                                                                   coords,
                                                                    fade_point);
     }
 

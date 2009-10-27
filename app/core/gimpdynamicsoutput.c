@@ -242,7 +242,7 @@ gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output)
 
 gdouble
 gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
-                                       GimpCoords          coords,
+                                       const GimpCoords   *coords,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -251,25 +251,25 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 
   if (output->use_pressure)
     {
-      total += coords.pressure;
+      total += coords->pressure;
       factors++;
     }
 
   if (output->use_velocity)
     {
-      total += (1.0 - coords.velocity);
+      total += (1.0 - coords->velocity);
       factors++;
     }
 
   if (output->use_direction)
     {
-      total += coords.direction + 0.5;
+      total += coords->direction + 0.5;
       factors++;
     }
 
   if (output->use_tilt)
     {
-      total += 1.0 - sqrt (SQR (coords.xtilt) + SQR (coords.ytilt));
+      total += 1.0 - sqrt (SQR (coords->xtilt) + SQR (coords->ytilt));
       factors++;
     }
 
@@ -298,7 +298,7 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 
 gdouble
 gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
-                                        GimpCoords          coords,
+                                        const GimpCoords   *coords,
                                         gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -307,19 +307,19 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 
   if (output->use_pressure)
     {
-      total += coords.pressure;
+      total += coords->pressure;
       factors++;
     }
 
   if (output->use_velocity)
     {
-      total += (1.0 - coords.velocity);
+      total += (1.0 - coords->velocity);
       factors++;
     }
 
   if (output->use_direction)
     {
-      total += coords.direction;
+      total += coords->direction;
       factors++;
     }
 
@@ -328,8 +328,8 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
    */
   if (output->use_tilt)
     {
-      gdouble tilt_x = coords.xtilt;
-      gdouble tilt_y = coords.ytilt;
+      gdouble tilt_x = coords->xtilt;
+      gdouble tilt_y = coords->ytilt;
       gdouble tilt   = 0.0;
 
       if (tilt_x == 0.0)
@@ -385,10 +385,9 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
    return result;
 }
 
-
 gdouble
 gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
-                                       GimpCoords          coords,
+                                       const GimpCoords   *coords,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -397,13 +396,13 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
   if (output->use_pressure)
     {
-      total += 2 * coords.pressure;
+      total += 2 * coords->pressure;
       factors++;
     }
 
   if (output->use_velocity)
     {
-      total += 2 * coords.velocity;
+      total += 2 * coords->velocity;
       factors++;
     }
 
@@ -411,9 +410,9 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
     {
       gdouble direction = 0.0;
 
-      direction = fmod (1 + coords.direction, 0.5) / 0.25;
+      direction = fmod (1 + coords->direction, 0.5) / 0.25;
 
-      if ((coords.direction > 0.0) && (coords.direction < 0.5))
+      if ((coords->direction > 0.0) && (coords->direction < 0.5))
         direction = 1 / direction;
 
       total += direction;
@@ -422,7 +421,7 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
   if (output->use_tilt)
     {
-      total += sqrt ((1 - fabs (coords.xtilt)) / (1 - fabs (coords.ytilt)));
+      total += sqrt ((1 - fabs (coords->xtilt)) / (1 - fabs (coords->ytilt)));
       factors++;
     }
 

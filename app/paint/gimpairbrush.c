@@ -155,7 +155,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
           dynamic_rate =
             gimp_dynamics_output_get_linear_value (dynamics->rate_output,
-                                                   *coords,
+                                                   coords,
                                                    fade_point);
 
           timeout = 10000 / (options->rate * dynamic_rate);
@@ -197,7 +197,7 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
                                             paint_core->pixel_dist);
   opacity  = options->pressure / 100.0;
   opacity *= gimp_dynamics_output_get_linear_value(GIMP_BRUSH_CORE(paint_core)->dynamics->opacity_output,
-                                                   *coords,
+                                                   coords,
                                                    fade_point);
 
 

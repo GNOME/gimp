@@ -365,7 +365,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                             paint_core->pixel_dist);
 
   opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
-                                                   *coords,
+                                                   coords,
                                                    fade_point);
   if (opacity == 0.0)
     return;
@@ -385,7 +385,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
           src_pickable = GIMP_PICKABLE (gimp_image_get_projection (src_image));
 
           gimp_item_get_offset (GIMP_ITEM (source_core->src_drawable),
-                             &off_x, &off_y);
+                                &off_x, &off_y);
 
           src_offset_x += off_x;
           src_offset_y += off_y;

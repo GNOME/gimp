@@ -449,7 +449,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                             paint_core->pixel_dist);
 
   hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
-                                                    *coords,
+                                                    coords,
                                                     fade_point);
 
   mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),

@@ -150,7 +150,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                             paint_core->pixel_dist);
 
   opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
-                                                   *coords,
+                                                   coords,
                                                    fade_point);
   if (opacity == 0.0)
     return;
@@ -163,7 +163,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   rate = options->rate;
 
   rate *= gimp_dynamics_output_get_linear_value (dynamics->rate_output,
-                                                 *coords,
+                                                 coords,
                                                  fade_point);
 
   gimp_convolve_calculate_matrix (convolve, options->type,
