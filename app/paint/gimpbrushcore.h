@@ -96,6 +96,8 @@ struct _GimpBrushCoreClass
 
   /*  Set for tools that don't mind if the brush scales while painting  */
   gboolean            handles_transforming_brush;
+  /*  Set for tools that don't mind if the brush scales mid stroke  */
+  gboolean            handles_dynamic_transforming_brush;
 
   void (* set_brush)    (GimpBrushCore *core,
                          GimpBrush     *brush);
