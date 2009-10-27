@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-27 20:34+0200\n"
+"POT-Creation-Date: 2009-10-27 20:45+0200\n"
 "PO-Revision-Date: 2009-10-27 20:33+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -2907,7 +2907,7 @@ msgstr "الأ_دلة"
 #: ../app/actions/image-actions.c:60
 msgctxt "image-action"
 msgid "_Colors"
-msgstr "الأ_لوان"
+msgstr "أ_لوان"
 
 #: ../app/actions/image-actions.c:61
 msgctxt "image-action"
@@ -4231,7 +4231,7 @@ msgstr "قائمة محرر التحديد"
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
 msgid "_Select"
-msgstr "ح_دّد"
+msgstr "ت_حديد"
 
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
