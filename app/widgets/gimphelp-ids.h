@@ -237,6 +237,7 @@
 #define GIMP_HELP_TOOLS_DIALOG                    "gimp-tools-dialog"
 
 #define GIMP_HELP_TOOL_AIRBRUSH                   "gimp-tool-airbrush"
+#define GIMP_HELP_TOOL_ALIGN                      "gimp-tool-align"
 #define GIMP_HELP_TOOL_BLEND                      "gimp-tool-blend"
 #define GIMP_HELP_TOOL_BRIGHTNESS_CONTRAST        "gimp-tool-brightness-contrast"
 #define GIMP_HELP_TOOL_BUCKET_FILL                "gimp-tool-bucket-fill"
