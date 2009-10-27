@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-23 23:24+0200\n"
-"PO-Revision-Date: 2009-10-23 23:23+0300\n"
+"POT-Creation-Date: 2009-10-27 20:34+0200\n"
+"PO-Revision-Date: 2009-10-27 20:33+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -427,13 +427,13 @@ msgid "Windows"
 msgstr "نوافذ"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:545
+#: ../app/actions/actions.c:557
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:571
+#: ../app/actions/actions.c:583
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -4163,40 +4163,34 @@ msgid "Do you really want to reset all filters to default values?"
 msgstr "هل تريد حقا تصفير جميع المرشحات إلى القيم المبدئية؟"
 
 #: ../app/actions/quick-mask-actions.c:42
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Quick Mask Menu"
 msgstr "قائمة القناع السريع"
 
 #: ../app/actions/quick-mask-actions.c:46
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
 msgstr "ا_ضبط اللون والإعتام..."
 
 #: ../app/actions/quick-mask-actions.c:54
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Toggle _Quick Mask"
 msgstr "بدّل ال_قناع السريع"
 
 #: ../app/actions/quick-mask-actions.c:55
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Toggle Quick Mask on/off"
 msgstr "بدّل القناع السريع"
 
 #: ../app/actions/quick-mask-actions.c:64
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
-msgstr "غلّف المساحات ال_محددة"
+msgstr "ضع قناعا على المناطق ال_محددة"
 
 #: ../app/actions/quick-mask-actions.c:69
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
-msgstr "غلّف المساحات _غير المحددة"
+msgstr "ضع قناعا على المناطق _غير المحددة"
 
 #: ../app/actions/quick-mask-commands.c:105
 msgid "Quick Mask Attributes"
@@ -4215,175 +4209,146 @@ msgid "_Mask opacity:"
 msgstr "إ_عتام القناع:"
 
 #: ../app/actions/sample-points-actions.c:39
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
 msgstr "قائمة عينات النقط"
 
 #: ../app/actions/sample-points-actions.c:46
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
 msgstr "عينة _مدمجة"
 
 #: ../app/actions/sample-points-actions.c:48
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Use the composite color of all visible layers"
-msgstr "منطقة القاعدة المملوءة في كل الطبقات المرئية"
+msgstr "استخدم لونا ممزوجا من كل الطبقات المرئية"
 
 #: ../app/actions/select-actions.c:44
-#, fuzzy
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr "قائمة محرر التحديد"
 
 #: ../app/actions/select-actions.c:47
-#, fuzzy
 msgctxt "select-action"
 msgid "_Select"
-msgstr "ت_حديد"
+msgstr "ح_دّد"
 
 #: ../app/actions/select-actions.c:50
-#, fuzzy
 msgctxt "select-action"
 msgid "_All"
-msgstr "قرّب ال_كل"
+msgstr "ال_كل"
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
 msgctxt "select-action"
 msgid "Select everything"
 msgstr "حدّد كل شيء"
 
 #: ../app/actions/select-actions.c:56
-#, fuzzy
 msgctxt "select-action"
 msgid "_None"
-msgstr "بدون"
+msgstr "_لا شيء"
 
 #: ../app/actions/select-actions.c:57
-#, fuzzy
 msgctxt "select-action"
 msgid "Dismiss the selection"
 msgstr "ألغِ التحديد"
 
 #: ../app/actions/select-actions.c:62
-#, fuzzy
 msgctxt "select-action"
 msgid "_Invert"
 msgstr "ا_عكس"
 
 #: ../app/actions/select-actions.c:63
-#, fuzzy
 msgctxt "select-action"
 msgid "Invert the selection"
-msgstr "ا_عكس التحديد"
+msgstr "اعكس التحديد"
 
 #: ../app/actions/select-actions.c:68
-#, fuzzy
 msgctxt "select-action"
 msgid "_Float"
 msgstr "ا_طفُ"
 
 #: ../app/actions/select-actions.c:69
-#, fuzzy
 msgctxt "select-action"
 msgid "Create a floating selection"
-msgstr "أنشئ تحديد طاف"
+msgstr "أنشئ تحديدا طافيا"
 
 #: ../app/actions/select-actions.c:74
-#, fuzzy
 msgctxt "select-action"
 msgid "Fea_ther..."
 msgstr "_نعّم..."
 
 #: ../app/actions/select-actions.c:76
-#, fuzzy
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
 msgstr "موّه حافة التحديد لتُبهِت بنعومة"
 
 #: ../app/actions/select-actions.c:81
-#, fuzzy
 msgctxt "select-action"
 msgid "_Sharpen"
 msgstr "_حُد"
 
 #: ../app/actions/select-actions.c:82
-#, fuzzy
 msgctxt "select-action"
 msgid "Remove fuzzyness from the selection"
 msgstr "أزِل الضبابية من التحديد"
 
 #: ../app/actions/select-actions.c:87
-#, fuzzy
 msgctxt "select-action"
 msgid "S_hrink..."
 msgstr "_قلّص..."
 
 #: ../app/actions/select-actions.c:88
-#, fuzzy
 msgctxt "select-action"
 msgid "Contract the selection"
 msgstr "قلّص التحديد"
 
 #: ../app/actions/select-actions.c:93
-#, fuzzy
 msgctxt "select-action"
 msgid "_Grow..."
 msgstr "أ_نمِ..."
 
 #: ../app/actions/select-actions.c:94
-#, fuzzy
 msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr "مدّد التحديد"
 
 #: ../app/actions/select-actions.c:99
-#, fuzzy
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "ال_حد..."
+msgstr "ال_حافة..."
 
 #: ../app/actions/select-actions.c:100
-#, fuzzy
 msgctxt "select-action"
 msgid "Replace the selection by its border"
-msgstr "استبدل بالتحديد حاشيته"
+msgstr "استبدل بالتحديد حافته"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr "احفظ إلى _قناة"
 
 #: ../app/actions/select-actions.c:106
-#, fuzzy
 msgctxt "select-action"
 msgid "Save the selection to a channel"
 msgstr "احفظ التحديد إلى قناة"
 
 #: ../app/actions/select-actions.c:111
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "ارسم حوا_ف التحديد..."
 
 #: ../app/actions/select-actions.c:112
-#, fuzzy
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "ارسم عبر الخطوط الخارجية للتحديد"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr "ارسم حوا_ف التحديد"
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "ارسم عبر الخطوط الخارجية للتحديد بآخر قيم مستخدمة"
@@ -4445,70 +4410,59 @@ msgid "Stroke Selection"
 msgstr "ارسم حواف التحديد"
 
 #: ../app/actions/templates-actions.c:41
-#, fuzzy
 msgctxt "templates-action"
 msgid "Templates Menu"
 msgstr "قائمة القوالب"
 
 #: ../app/actions/templates-actions.c:45
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Create Image from Template"
 msgstr "أ_نشئ صورة من قالب"
 
 #: ../app/actions/templates-actions.c:46
-#, fuzzy
 msgctxt "templates-action"
 msgid "Create a new image from the selected template"
 msgstr "أنشئ صورة جديدة من القالب المحدد"
 
 #: ../app/actions/templates-actions.c:51
-#, fuzzy
 msgctxt "templates-action"
 msgid "_New Template..."
 msgstr "قالب ج_ديد..."
 
 #: ../app/actions/templates-actions.c:52
-#, fuzzy
 msgctxt "templates-action"
 msgid "Create a new template"
 msgstr "أنشئ قالبا جديدا"
 
 #: ../app/actions/templates-actions.c:57
-#, fuzzy
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
 msgstr "_كرّر القالب..."
 
 #: ../app/actions/templates-actions.c:58
-#, fuzzy
 msgctxt "templates-action"
 msgid "Duplicate this template"
-msgstr "كرّر القالب المحدد"
+msgstr "كرّر هذا القالب"
 
 #: ../app/actions/templates-actions.c:63
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Edit Template..."
 msgstr "_حرّر القالب..."
 
 #: ../app/actions/templates-actions.c:64
-#, fuzzy
 msgctxt "templates-action"
 msgid "Edit this template"
-msgstr "حرّر القالب"
+msgstr "حرّر هذا القالب"
 
 #: ../app/actions/templates-actions.c:69
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Delete Template"
 msgstr "اح_ذف القالب"
 
 #: ../app/actions/templates-actions.c:70
-#, fuzzy
 msgctxt "templates-action"
 msgid "Delete this template"
-msgstr "احذف هذه الصورة"
+msgstr "احذف هذه القالب"
 
 #: ../app/actions/templates-commands.c:112
 msgid "New Template"
@@ -4534,49 +4488,41 @@ msgid ""
 msgstr "أمتأكد أنك تريد حذف القالب '%s' من القائمة ومن القرص؟"
 
 #: ../app/actions/text-editor-actions.c:43
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Open"
 msgstr "افتح"
 
 #: ../app/actions/text-editor-actions.c:44
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "حمّل نصا من ملف"
 
 #: ../app/actions/text-editor-actions.c:49
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "امسح"
 
 #: ../app/actions/text-editor-actions.c:50
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "امسح كل النص"
 
 #: ../app/actions/text-editor-actions.c:58
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "يسار-يمين"
 
 #: ../app/actions/text-editor-actions.c:59
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "من اليسار إلى اليمين"
 
 #: ../app/actions/text-editor-actions.c:64
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "يمين-يسار"
 
 #: ../app/actions/text-editor-actions.c:65
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "من اليمين إلى اليسار"
@@ -4602,151 +4548,126 @@ msgid "Could not open '%s' for reading: %s"
 msgstr "لا يمكن فتح '%s' للقراءة: %s"
 
 #: ../app/actions/text-tool-actions.c:49
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text Tool Menu"
-msgstr "أداة الن_صوص"
+msgstr "قائمة أداة الن_صوص"
 
 #: ../app/actions/text-tool-actions.c:53
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Input _Methods"
-msgstr "مستويات الدخل"
+msgstr "طرق ال_إدخال"
 
 #: ../app/actions/text-tool-actions.c:57
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cu_t"
 msgstr "_قص"
 
 #: ../app/actions/text-tool-actions.c:62
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Copy"
 msgstr "ا_نسخ"
 
 #: ../app/actions/text-tool-actions.c:67
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Paste"
 msgstr "ال_صق"
 
 #: ../app/actions/text-tool-actions.c:72
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Delete"
-msgstr "اح_ذف المسار"
+msgstr "ا_حذف"
 
 #: ../app/actions/text-tool-actions.c:77
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "ا_فتح العرض..."
+msgstr "ا_فتح ملفا نصيا..."
 
 #: ../app/actions/text-tool-actions.c:82
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "ام_سح"
 
 #: ../app/actions/text-tool-actions.c:83
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "امسح كل النص"
 
 #: ../app/actions/text-tool-actions.c:88
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Path from Text"
-msgstr "مسار من النص"
+msgstr "_مسار من النص"
 
 #: ../app/actions/text-tool-actions.c:90
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
-msgstr "أنشئ مسارا من هذه الطبقة النصية"
+msgstr "أنشئ مسارا من الخطوط الخارجية للنص الحالي"
 
 #: ../app/actions/text-tool-actions.c:95
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text _along Path"
-msgstr "النص مع المسار"
+msgstr "نص ب_محاذاة المسار"
 
 #: ../app/actions/text-tool-actions.c:97
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "لف نص هذه الطبقة خلال المسار الحالي"
 
 #: ../app/actions/text-tool-actions.c:105
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "من اليسار إلى اليمين"
 
 #: ../app/actions/text-tool-actions.c:110
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "من اليمين إلى اليسار"
 
 #: ../app/actions/tool-options-actions.c:55
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "قائمة خيارات الأدوات"
 
 #: ../app/actions/tool-options-actions.c:59
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Save Options To"
 msgstr "ا_حفظ الخيارات في"
 
 #: ../app/actions/tool-options-actions.c:63
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Restore Options From"
 msgstr "اس_ترجع الخيارات من"
 
 #: ../app/actions/tool-options-actions.c:67
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Re_name Saved Options"
 msgstr "_غيّر اسم الخيارات المحفوظة"
 
 #: ../app/actions/tool-options-actions.c:71
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Delete Saved Options"
 msgstr "اح_ذف الخيارات المحفوظة"
 
 #: ../app/actions/tool-options-actions.c:75
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_New Entry..."
 msgstr "مد_خلة جديد..."
 
 #: ../app/actions/tool-options-actions.c:80
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
 msgstr "_صفّر خيارات الأدوات"
 
 #: ../app/actions/tool-options-actions.c:81
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset to default values"
 msgstr "استعد القيم المبدئية"
 
 #: ../app/actions/tool-options-actions.c:86
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
 msgstr "صفّر _كل خيارات الأدوات"
 
 #: ../app/actions/tool-options-actions.c:87
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
 msgstr "صفّر كل خيارات الأدوات"
@@ -4779,340 +4700,285 @@ msgstr "صفّر خيارات الأدوات"
 
 #: ../app/actions/tool-options-commands.c:208
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "هل تريد حقا تصفير إعادة جميع خيارات الأدوات إلى القيم المبدئية؟"
+msgstr "هل تريد حقا تصفير جميع خيارات الأدوات إلى القيم المبدئية؟"
 
 #: ../app/actions/tools-actions.c:45
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "أ_دوات"
 
 #: ../app/actions/tools-actions.c:46
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "أدوات ال_تحديد"
 
 #: ../app/actions/tools-actions.c:47
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "أدوات الت_لوين"
 
 #: ../app/actions/tools-actions.c:48
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "أدوات الت_حويل"
 
 #: ../app/actions/tools-actions.c:49
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Color Tools"
 msgstr "أدوات الألوا_ن"
 
 #: ../app/actions/tools-actions.c:55
-#, fuzzy
 msgctxt "tools-action"
 msgid "_By Color"
 msgstr "با_للون"
 
 #: ../app/actions/tools-actions.c:56
-#, fuzzy
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
 msgstr "حدّد المناطق ذات الألوان المتشابهة"
 
 #: ../app/actions/tools-actions.c:61
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
 msgstr "_تدوير محدد..."
 
 #: ../app/actions/tools-actions.c:62
-#, fuzzy
 msgctxt "tools-action"
 msgid "Rotate by an arbitrary angle"
-msgstr "دوّر بزاوية محددو"
+msgstr "دوّر بزاوية محددة"
 
 #: ../app/actions/vectors-actions.c:44
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "قائمة المسارات"
 
 #: ../app/actions/vectors-actions.c:48
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path _Tool"
 msgstr "أداة ال_مسار"
 
 #: ../app/actions/vectors-actions.c:53
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
 msgstr "_حرّر صفات المسار..."
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Edit path attributes"
 msgstr "حرّر صفات المسار"
 
 #: ../app/actions/vectors-actions.c:59
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path..."
 msgstr "مسار ج_ديد..."
 
 #: ../app/actions/vectors-actions.c:60
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Create a new path..."
 msgstr "أنشئ قالبا جديدا"
 
 #: ../app/actions/vectors-actions.c:65
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path with last values"
-msgstr "مسار جديد بالقيم الأخيرة"
+msgstr "_مسار جديد بالقيم الأخيرة"
 
 #: ../app/actions/vectors-actions.c:66
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
 msgstr "أنشئ طبقة جديدة بآخر القيم المستخدمة"
 
 #: ../app/actions/vectors-actions.c:71
-#, fuzzy
 msgctxt "vectors-action"
 msgid "D_uplicate Path"
 msgstr "_كرّر المسار"
 
 #: ../app/actions/vectors-actions.c:72
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Duplicate this path"
-msgstr "كرّر المسار"
+msgstr "كرّر هذا المسار"
 
 #: ../app/actions/vectors-actions.c:77
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Delete Path"
 msgstr "اح_ذف المسار"
 
 #: ../app/actions/vectors-actions.c:78
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Delete this path"
-msgstr "احذف المسار"
+msgstr "احذف هذا المسار"
 
 #: ../app/actions/vectors-actions.c:83
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Merge _Visible Paths"
 msgstr "ادمج المسارات المر_ئية"
 
 #: ../app/actions/vectors-actions.c:88
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Raise Path"
 msgstr "ار_فع المسار"
 
 #: ../app/actions/vectors-actions.c:89
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise this path"
-msgstr "ارفع المسار"
+msgstr "ارفع هذا المسار"
 
 #: ../app/actions/vectors-actions.c:94
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise Path to _Top"
 msgstr "ارفع المسار إلى ال_سطح"
 
 #: ../app/actions/vectors-actions.c:95
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise this path to the top"
-msgstr "ارفع المسار إلى السطح"
+msgstr "ارفع هذا المسار إلى السطح"
 
 #: ../app/actions/vectors-actions.c:100
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Lower Path"
 msgstr "ا_خفض المسار"
 
 #: ../app/actions/vectors-actions.c:101
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower this path"
-msgstr "اخفض المسار"
+msgstr "اخفض هذا المسار"
 
 #: ../app/actions/vectors-actions.c:106
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower Path to _Bottom"
 msgstr "اخفض المسار إلى ال_قاع"
 
 #: ../app/actions/vectors-actions.c:107
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower this path to the bottom"
-msgstr "اخفض المسار إلى القاع"
+msgstr "اخفض هذا المسار إلى القاع"
 
 #: ../app/actions/vectors-actions.c:112
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
 msgstr "ارسم المسا_ر..."
 
 #: ../app/actions/vectors-actions.c:113
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paint along the path"
 msgstr "ارسم مارا بالمسار"
 
 #: ../app/actions/vectors-actions.c:118
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
 msgstr "ارسم المسا_ر"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paint along the path with last values"
 msgstr "ارسم مارا بالمسار مستخدما القيم الأخيرة"
 
 #: ../app/actions/vectors-actions.c:124
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "ان_سخ المسار"
 
 #: ../app/actions/vectors-actions.c:129
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "ال_صق المسار"
 
 #: ../app/actions/vectors-actions.c:134
-#, fuzzy
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "_صدّر المسار..."
 
 #: ../app/actions/vectors-actions.c:139
-#, fuzzy
 msgctxt "vectors-action"
 msgid "I_mport Path..."
-msgstr "ا_ستورد المسار..."
+msgstr "ا_ستورد مسارا..."
 
 #: ../app/actions/vectors-actions.c:147
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr "مر_ئي"
 
 #: ../app/actions/vectors-actions.c:153
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Linked"
-msgstr "_موصول"
+msgstr "_مربوط"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
 msgctxt "vectors-action"
 msgid "L_ock strokes"
-msgstr ""
+msgstr "أو_صِد الحدود"
 
 #: ../app/actions/vectors-actions.c:168
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr "المسار إلى الت_حديد"
 
 #: ../app/actions/vectors-actions.c:169
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr "المسار إلى التحديد"
 
 #: ../app/actions/vectors-actions.c:174
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr "_من المسار"
 
 #: ../app/actions/vectors-actions.c:175
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Replace selection with path"
 msgstr "استبدل التحديد بهذه القناة"
 
 #: ../app/actions/vectors-actions.c:180
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Add to Selection"
 msgstr "أ_ضف إلى التحديد"
 
 #: ../app/actions/vectors-actions.c:181
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Add path to selection"
-msgstr "المسار إلى التحديد"
+msgstr "أضف المسار إلى التحديد"
 
 #: ../app/actions/vectors-actions.c:186
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
 msgstr "ا_طرح من التحديد"
 
 #: ../app/actions/vectors-actions.c:187
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
-msgstr "ا_طرح من التحديد"
+msgstr "اطرح المسار من التحديد"
 
 #: ../app/actions/vectors-actions.c:192
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
 msgstr "_تقاطع مع التحديد"
 
 #: ../app/actions/vectors-actions.c:193
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
-msgstr "_تقاطع مع التحديد"
+msgstr "قاطع المسار مع التحديد"
 
 #: ../app/actions/vectors-actions.c:201
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
-msgstr "التحديد إلى م_سار"
+msgstr "التحديد إلى الم_سار"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selection to path"
-msgstr "التحديد إلى مسار"
+msgstr "التحديد إلى المسار"
 
 #: ../app/actions/vectors-actions.c:207
-#, fuzzy
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "إلى ال_مسار"
 
 #: ../app/actions/vectors-actions.c:213
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
-msgstr "التحديد إلى مسار (_متقدم)"
+msgstr "التحديد إلى المسار (_متقدم)"
 
 #: ../app/actions/vectors-actions.c:214
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "الخيارات المتقدمة"
@@ -5145,529 +5011,441 @@ msgid "Stroke Path"
 msgstr "ارسم المسار"
 
 #: ../app/actions/view-actions.c:69
-#, fuzzy
 msgctxt "view-action"
 msgid "_View"
 msgstr "_منظور"
 
 #: ../app/actions/view-actions.c:70
-#, fuzzy
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_قرّب"
 
 #: ../app/actions/view-actions.c:71
-#, fuzzy
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "لون ال_توسيد"
 
 #: ../app/actions/view-actions.c:73
-#, fuzzy
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "انقل إلى الشاشة"
 
 #: ../app/actions/view-actions.c:77
-#, fuzzy
 msgctxt "view-action"
 msgid "_New View"
 msgstr "_منظور جديد"
 
 #: ../app/actions/view-actions.c:78
-#, fuzzy
 msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "أنشئ منظورا آخر على هذه الصورة"
 
 #: ../app/actions/view-actions.c:83
-#, fuzzy
 msgctxt "view-action"
 msgid "_Close"
 msgstr "أ_غلق"
 
 #: ../app/actions/view-actions.c:84
-#, fuzzy
 msgctxt "view-action"
 msgid "Close this image window"
 msgstr "أغلق نافذة هذه الصورة"
 
 #: ../app/actions/view-actions.c:89
-#, fuzzy
 msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "لا_ئم الصورة في النافذة"
 
 #: ../app/actions/view-actions.c:90
-#, fuzzy
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "اضبط نسبة التقريب لتصبح الصورة ظاهرة بالكامل"
 
 #: ../app/actions/view-actions.c:95
-#, fuzzy
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "ا_ملأ الناقذة"
 
 #: ../app/actions/view-actions.c:96
-#, fuzzy
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
-msgstr "اضبط نسبة التقريب بحيث تستخدم النافذة كلها"
+msgstr "اضبط نسبة التقريب بحيث تُستخدم النافذة كلها"
 
 #: ../app/actions/view-actions.c:101
-#, fuzzy
 msgctxt "view-action"
 msgid "Re_vert Zoom"
-msgstr "ا_ستعِد التقريب"
+msgstr "ا_عكس التقريب"
 
 #: ../app/actions/view-actions.c:102
-#, fuzzy
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "استعد مستوى التقريب السابق"
 
 #: ../app/actions/view-actions.c:107
-#, fuzzy
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "نافذة الإب_حار"
 
 #: ../app/actions/view-actions.c:108
-#, fuzzy
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "أظهر نافذة نظرة عامة لهذه الصورة"
 
 #: ../app/actions/view-actions.c:113
-#, fuzzy
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "مر_شحات العرض..."
 
 #: ../app/actions/view-actions.c:114
-#, fuzzy
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "اضبط المرشحات المطبقة على هذا المنظور"
 
 #: ../app/actions/view-actions.c:119
-#, fuzzy
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "_قلّص"
 
 #: ../app/actions/view-actions.c:120
-#, fuzzy
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "قلّص نافذة الصورة إلى حجم عرض الصورة"
 
 #: ../app/actions/view-actions.c:125
-#, fuzzy
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "ا_فتح العرض..."
 
 #: ../app/actions/view-actions.c:126
-#, fuzzy
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "اتصل بعرض آخر"
 
 #: ../app/actions/view-actions.c:134
-#, fuzzy
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_نقطة لنقطة"
 
 #: ../app/actions/view-actions.c:135
-#, fuzzy
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "البكسل على الشاشة يمثل بكسل في الصورة"
 
 #: ../app/actions/view-actions.c:141
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "أظهر ال_تحديد"
 
 #: ../app/actions/view-actions.c:142
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "اعرض الخطوط الخارجية للتحديد"
 
 #: ../app/actions/view-actions.c:148
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "أظهر حدود ال_طبقة"
 
 #: ../app/actions/view-actions.c:149
-#, fuzzy
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "ارسم حدا حول الطبقة النشطة"
 
 #: ../app/actions/view-actions.c:155
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "أظهر الأد_لة"
 
 #: ../app/actions/view-actions.c:156
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "اعرض أدلّة الصورة"
 
 #: ../app/actions/view-actions.c:162
-#, fuzzy
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "أظهر ال_شبكة"
 
 #: ../app/actions/view-actions.c:163
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "أظهر شبكة الصورة"
 
 #: ../app/actions/view-actions.c:169
-#, fuzzy
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "أظهر عينات النقاط"
 
 #: ../app/actions/view-actions.c:170
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "أظهر نقاط عينات لون الصورة"
 
 #: ../app/actions/view-actions.c:176
-#, fuzzy
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "ا_تبع الأدلة"
 
 #: ../app/actions/view-actions.c:177
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "عمليات الأداة تتبع الأدلة"
 
 #: ../app/actions/view-actions.c:183
-#, fuzzy
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "اتب_ع الشبكة"
 
 #: ../app/actions/view-actions.c:184
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "عمليات الأداة تتبع الشبكة"
 
 #: ../app/actions/view-actions.c:190
-#, fuzzy
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "اتبع حدود الرق_عة"
 
 #: ../app/actions/view-actions.c:191
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "عمليات الأداة تتبع حدود الرقعة"
 
 #: ../app/actions/view-actions.c:197
-#, fuzzy
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "اتبع الم_سار النشط"
 
 #: ../app/actions/view-actions.c:198
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "عمليات الأداة تتبع المسار النشط"
 
 #: ../app/actions/view-actions.c:204
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "أظهر شريط ال_قوائم"
 
 #: ../app/actions/view-actions.c:205
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "أظهر شريط قوائم هذه النافذة"
 
 #: ../app/actions/view-actions.c:211
-#, fuzzy
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "أظهر المسا_طر"
 
 #: ../app/actions/view-actions.c:212
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "أظهر مساطر هذه النافذة"
 
 #: ../app/actions/view-actions.c:218
-#, fuzzy
 msgctxt "view-action"
 msgid "Show Scroll_bars"
-msgstr "أظهر شريط ال_تمرير"
+msgstr "أظهر أشرطة ال_تمرير"
 
 #: ../app/actions/view-actions.c:219
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
-msgstr "أظهر شريطة التمرير لهذه النافذة"
+msgstr "أظهر أشرطة تمرير هذه النافذة"
 
 #: ../app/actions/view-actions.c:225
-#, fuzzy
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "أظهر شريط ال_حالة"
 
 #: ../app/actions/view-actions.c:226
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "أظهر شريط حالة هذه النافذة"
 
 #: ../app/actions/view-actions.c:232
-#, fuzzy
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "املأ ال_شاشة"
 
 #: ../app/actions/view-actions.c:233
-#, fuzzy
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "تحول إلى منظور ملء الشاشة"
 
 #: ../app/actions/view-actions.c:264
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "ب_عّد"
 
 #: ../app/actions/view-actions.c:265 ../app/actions/view-actions.c:277
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom out"
 msgstr "بعّد"
 
 #: ../app/actions/view-actions.c:270
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_قرّب"
 
 #: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom in"
 msgstr "قرّب"
 
 #: ../app/actions/view-actions.c:276
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "بعّد"
 
 #: ../app/actions/view-actions.c:282
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "قرّب"
 
 #: ../app/actions/view-actions.c:301
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:302
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
-msgstr "قرّب ‮16:1‬"
+msgstr "قرّب 16‏:1"
 
 #: ../app/actions/view-actions.c:307
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
 #: ../app/actions/view-actions.c:308
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "قرّب ‮8:1‬"
 
 #: ../app/actions/view-actions.c:313
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:314
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "قرّب ‮4:1‬"
 
 #: ../app/actions/view-actions.c:319
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
 #: ../app/actions/view-actions.c:320
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "قرّب ‮2:1‬"
 
 #: ../app/actions/view-actions.c:325
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
 #: ../app/actions/view-actions.c:326
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "قرّب ‮1:1‬"
 
 #: ../app/actions/view-actions.c:331
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
 #: ../app/actions/view-actions.c:332
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "قرّب ‮1:2‬"
 
 #: ../app/actions/view-actions.c:337
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:338
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "قرّب ‮1:4‬"
 
 #: ../app/actions/view-actions.c:343
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:344
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "قرّب ‮1:8‬"
 
 #: ../app/actions/view-actions.c:349
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:350
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
-msgstr "قرّب ‮1:16‬"
+msgstr "قرّب 1‏:16"
 
 #: ../app/actions/view-actions.c:355
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "أ_خرى..."
 
 #: ../app/actions/view-actions.c:356
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "استخدم عامل تقريب مخصص"
 
 #: ../app/actions/view-actions.c:364
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "من ال_سّمة"
 
 #: ../app/actions/view-actions.c:365
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
-msgstr "استخدم لون خلفية السّمة الحالي"
+msgstr "استخدم لون خلفية السّمة الحالية"
 
 #: ../app/actions/view-actions.c:370
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "لو ن _فحص فاتح"
 
 #: ../app/actions/view-actions.c:371
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "استخدم لون فحص فاتح"
 
 #: ../app/actions/view-actions.c:376
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "لو ن فحص _غامق"
 
 #: ../app/actions/view-actions.c:377
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "استخدم لون فحص غامق"
 
 #: ../app/actions/view-actions.c:382
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
 msgstr "اختر _لونا مخصصا..."
 
 #: ../app/actions/view-actions.c:383
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
-msgstr "استخدم خطا محددا"
+msgstr "استخدم لونا محددا"
 
 #: ../app/actions/view-actions.c:388
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "كما في ال_تفضيلات"
 
 #: ../app/actions/view-actions.c:390
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "استعد لون التوسيد إلى المضبوط في التفضيلات"
@@ -5710,31 +5488,26 @@ msgid "Move this window to screen %s"
 msgstr "انقل هذه النافذة إلى الشاشة %s"
 
 #: ../app/actions/windows-actions.c:85
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_نوافذ"
 
 #: ../app/actions/windows-actions.c:87
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "الأر_صفة المغلقة مؤخرا"
 
 #: ../app/actions/windows-actions.c:89
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "الحوارات القابلة للتر_صيف"
 
 #: ../app/actions/windows-actions.c:92
-#, fuzzy
 msgctxt "windows-action"
 msgid "Tool_box"
 msgstr "صندوق الأدوا_ت"
 
 #: ../app/actions/windows-actions.c:93
-#, fuzzy
 msgctxt "windows-action"
 msgid "Raise the toolbox"
 msgstr "ارفع صندوق الأدوات"
@@ -5742,215 +5515,181 @@ msgstr "ارفع صندوق الأدوات"
 #: ../app/actions/windows-actions.c:101
 msgctxt "windows-action"
 msgid "Single-window mode"
-msgstr ""
+msgstr "نمط النافذة الواحدة"
 
 #: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
 msgid ""
 "When enabled GIMP is in a single-window mode. Far from completely "
 "implemented!"
-msgstr ""
+msgstr "عند تفعيله سيصبح جمب من نافذة واحدة. لما يكتمل بعد ."
 
 #: ../app/base/base-enums.c:23
-#, fuzzy
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "ناعم"
 
 #: ../app/base/base-enums.c:24
-#, fuzzy
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "يد حرة"
 
 #: ../app/base/base-enums.c:56
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "القيمة"
 
 #: ../app/base/base-enums.c:57
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "أحمر"
 
 #: ../app/base/base-enums.c:58
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "أخضر"
 
 #: ../app/base/base-enums.c:59
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "أزرق"
 
 #: ../app/base/base-enums.c:60
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "ألفا"
 
 #: ../app/base/base-enums.c:61
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "ح‌خ‌ز"
 
 #: ../app/base/base-enums.c:113
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Normal"
 msgstr "عادي"
 
 #: ../app/base/base-enums.c:114
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dissolve"
 msgstr "إذابة"
 
 #: ../app/base/base-enums.c:115
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Behind"
 msgstr "خلف"
 
 #: ../app/base/base-enums.c:116
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Multiply"
-msgstr "ضرب"
+msgstr "تكرار"
 
 #: ../app/base/base-enums.c:117
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Screen"
 msgstr "شاشة"
 
 #: ../app/base/base-enums.c:118
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Overlay"
 msgstr "كسو"
 
 #: ../app/base/base-enums.c:119
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Difference"
 msgstr "فرق"
 
 #: ../app/base/base-enums.c:120
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Addition"
 msgstr "إضافة"
 
 #: ../app/base/base-enums.c:121
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Subtract"
-msgstr "اطرح"
+msgstr "طرح"
 
 #: ../app/base/base-enums.c:122
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Darken only"
 msgstr "تغميق فقط"
 
 #: ../app/base/base-enums.c:123
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Lighten only"
 msgstr "تفتيح فقط"
 
 #: ../app/base/base-enums.c:124
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hue"
 msgstr "التدرج"
 
 #: ../app/base/base-enums.c:125
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Saturation"
 msgstr "التشبّع"
 
 #: ../app/base/base-enums.c:126
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color"
 msgstr "اللون"
 
 #: ../app/base/base-enums.c:127
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Value"
 msgstr "القيمة"
 
 #: ../app/base/base-enums.c:128
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Divide"
 msgstr "قسمة"
 
 #: ../app/base/base-enums.c:129
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dodge"
 msgstr "دودج"
 
 #: ../app/base/base-enums.c:130
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Burn"
 msgstr "حرق"
 
 #: ../app/base/base-enums.c:131
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hard light"
 msgstr "ضوء قاسي"
 
 #: ../app/base/base-enums.c:132
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Soft light"
 msgstr "لون لين"
 
 #: ../app/base/base-enums.c:133
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain extract"
 msgstr "استخراج الحبوب"
 
 #: ../app/base/base-enums.c:134
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain merge"
 msgstr "دمج الحبوب"
 
 #: ../app/base/base-enums.c:135
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color erase"
 msgstr "محو اللون"
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Erase"
 msgstr "محو"
 
 #: ../app/base/base-enums.c:137
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Replace"
 msgstr "استبدال"
 
 #: ../app/base/base-enums.c:138
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Anti erase"
 msgstr "مضاد للمحو"
@@ -6075,20 +5814,19 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:145
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr "عند تفعيله ستستخدم الفرشاة المنتقاة مع كل الأدوات."
+msgstr "عند تفعيله ستستخدم الفرشاة المختارة مع كل الأدوات."
 
 #: ../app/config/gimprc-blurbs.h:148
-#, fuzzy
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "عند تفعيله ستستخدم الفرشاة المنتقاة مع كل الأدوات."
+msgstr "عند تفعيله ستستخدم الحركيات المختارة مع كل الأدوات."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "عند تفعيله سيستخدم التدرج المنتقى مع كل الأدوات."
+msgstr "عند تفعيله سيستخدم التدرج المختار مع كل الأدوات."
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr "عند تفعيله سيتم استخدام النمط المنتقى لكل الأدوات."
+msgstr "عند تفعيله سيتم استخدام النمط المختار لكل الأدوات."
 
 #: ../app/config/gimprc-blurbs.h:171
 msgid "Sets the browser used by the help system."
