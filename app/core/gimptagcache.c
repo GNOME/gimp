@@ -235,17 +235,22 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
 {
   gchar  *identifier;
   GQuark  identifier_quark = 0;
-  gchar  *checksum_string;
-  GQuark  checksum_quark;
-  GList  *list;
-  gint    i;
 
   identifier = gimp_tagged_get_identifier (tagged);
-  identifier_quark = g_quark_try_string (identifier);
-  g_free (identifier);
+
+  if (identifier)
+    {
+      identifier_quark = g_quark_try_string (identifier);
+      g_free (identifier);
+    }
 
   if (! gimp_tagged_get_tags (tagged))
     {
+      gchar  *checksum;
+      GQuark  checksum_quark = 0;
+      GList  *list;
+      gint    i;
+
       if (identifier_quark)
         {
           for (i = 0; i < cache->priv->records->len; i++)
@@ -266,9 +271,13 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
             }
         }
 
-      checksum_string = gimp_tagged_get_checksum (tagged);
-      checksum_quark = g_quark_try_string (checksum_string);
-      g_free (checksum_string);
+      checksum = gimp_tagged_get_checksum (tagged);
+
+      if (checksum)
+        {
+          checksum_quark = g_quark_try_string (checksum);
+          g_free (checksum);
+        }
 
       if (checksum_quark)
         {
