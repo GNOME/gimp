@@ -368,49 +368,38 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
   g_free (writable_path);
 }
 
-static void
-gimp_data_factory_data_reload (GimpDataFactory *factory)
+void
+gimp_data_factory_data_refresh (GimpDataFactory *factory)
 {
-
   GHashTable *cache;
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   gimp_container_freeze (factory->priv->container);
 
+  /*  First, save all dirty data objects  */
+  gimp_data_factory_data_save (factory);
+
   cache = g_hash_table_new (g_str_hash, g_str_equal);
 
   gimp_data_factory_data_foreach (factory,
                                   gimp_data_factory_data_move_to_cache, cache);
 
-  /* Now the cache contains a filename => list-of-objects mapping of
-   * the old objects. So we should now traverse the directory and for
-   * each file load it only if it's mtime is newer.
+  /*  Now the cache contains a filename => list-of-objects mapping of
+   *  the old objects. So we should now traverse the directory and for
+   *  each file load it only if its mtime is newer.
    *
-   * Once a file was added, it is removed from the cache, so the only
-   * objects remaining there will be those that are not present on the
-   * disk (that have to be destroyed)
+   *  Once a file was added, it is removed from the cache, so the only
+   *  objects remaining there will be those that are not present on
+   *  the disk (that have to be destroyed)
    */
   gimp_data_factory_data_load (factory, cache);
 
-  /* Now all the data is loaded. Free what remains in the cache. */
+  /*  Now all the data is loaded. Free what remains in the cache  */
   g_hash_table_foreach_remove (cache,
                                gimp_data_factory_refresh_cache_remove, NULL);
+
   g_hash_table_destroy (cache);
-
-  gimp_container_thaw (factory->priv->container);
-}
-
-void
-gimp_data_factory_data_refresh (GimpDataFactory *factory)
-{
-  g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
-
-  gimp_container_freeze (factory->priv->container);
-
-  gimp_data_factory_data_save (factory);
-
-  gimp_data_factory_data_reload (factory);
 
   gimp_container_thaw (factory->priv->container);
 }
