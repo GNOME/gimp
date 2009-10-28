@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-27 01:56+0000\n"
-"PO-Revision-Date: 2009-10-27 19:30-0000\n"
+"PO-Revision-Date: 2009-10-28 05:21-0000\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1735,28 +1735,24 @@ msgid "Paint Dynamics Menu"
 msgstr "Меню динамики рисования"
 
 #: ../app/actions/dynamics-actions.c:46
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_New Dynamics"
-msgstr "Динамика кисти"
+msgstr "_Создать динамику"
 
 #: ../app/actions/dynamics-actions.c:47
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Create a new dynamics"
-msgstr "Создать новую кисть"
+msgstr "Создать новую динамику"
 
 #: ../app/actions/dynamics-actions.c:52
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "Создать _копию контура"
+msgstr "Создать _копию динамики"
 
 #: ../app/actions/dynamics-actions.c:53
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "Создать копию этого контура"
+msgstr "Создать копию этой динамики"
 
 #: ../app/actions/dynamics-actions.c:58
 msgctxt "dynamics-action"
@@ -1790,10 +1786,9 @@ msgid "Refresh dynamics"
 msgstr "Обновить динамику"
 
 #: ../app/actions/dynamics-actions.c:79
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "_Изменить градиент..."
+msgstr "_Изменить динамику..."
 
 #: ../app/actions/dynamics-actions.c:80
 #, fuzzy
@@ -1808,10 +1803,9 @@ msgid "Paint Dynamics Editor Menu"
 msgstr "Меню редактора градиентов"
 
 #: ../app/actions/dynamics-editor-actions.c:50
-#, fuzzy
 msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
-msgstr "Изменить активную кисть"
+msgstr "Изменить активную динамику"
 
 #: ../app/actions/edit-actions.c:63
 msgctxt "edit-action"
@@ -9082,9 +9076,8 @@ msgid "_Brush"
 msgstr "_Кисть"
 
 #: ../app/dialogs/preferences-dialog.c:1939
-#, fuzzy
 msgid "_Dynamics"
-msgstr "Динамика кисти"
+msgstr "_Динамика"
 
 #: ../app/dialogs/preferences-dialog.c:1942
 msgid "_Pattern"
@@ -10449,14 +10442,14 @@ msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Попытка добавить элемент '%s' (%d) в неправильное изображение"
 
 #: ../app/pdb/gimppdb-utils.c:368
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
-msgstr "Невозможно использовать объект '%s' (%d), потому что он не добавлен в изображение"
+msgstr "Невозможно изменить объект '%s' (%d), потому что его содержимое заперто от изменений"
 
 #: ../app/pdb/gimppdb-utils.c:388
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
-msgstr "Невозможно использовать объект '%s' (%d), потому что он не добавлен в изображение"
+msgstr "Невозможно изменить объект '%s' (%d), потому что это группа объектов"
 
 #: ../app/pdb/gimppdb-utils.c:409
 #, c-format
@@ -12075,10 +12068,9 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "Лупа: изменение масштаба отображения"
 
 #: ../app/tools/gimpmagnifytool.c:89
-#, fuzzy
 msgctxt "tool"
 msgid "_Zoom"
-msgstr "Масштаб"
+msgstr "_Лупа"
 
 #: ../app/tools/gimpmeasureoptions.c:123
 msgid "Use info window"
@@ -12219,7 +12211,7 @@ msgstr "Масштаб:"
 
 #: ../app/tools/gimppaintoptions-gui.c:130
 msgid "Aspect Ratio:"
-msgstr "Соотношение сторон:"
+msgstr "Соотн. сторон:"
 
 #: ../app/tools/gimppaintoptions-gui.c:162
 msgid "Incremental"
@@ -12227,7 +12219,7 @@ msgstr "Дополняющий"
 
 #: ../app/tools/gimppaintoptions-gui.c:178
 msgid "Hard edge"
-msgstr "Жесткие края"
+msgstr "Жёсткие края"
 
 #: ../app/tools/gimppaintoptions-gui.c:210
 msgid "Fade out"
@@ -12541,7 +12533,7 @@ msgstr "Инструктирование изменяет контуры сим�
 
 #: ../app/tools/gimptextoptions.c:138
 msgid "The text language may have an effect on the way the text is rendered."
-msgstr ""
+msgstr "Выбор языка текста может изменить внешний вид текста"
 
 #: ../app/tools/gimptextoptions.c:154
 msgid "Indentation of the first line"
@@ -12873,7 +12865,7 @@ msgstr "Удалить узлы"
 
 #: ../app/tools/gimpvectortool.c:1946
 msgid "Path to selection"
-msgstr "Контур → Выделение"
+msgstr "Контур в выделение"
 
 #: ../app/tools/gimpvectortool.c:1973
 msgid "There is no active layer or channel to stroke to"
@@ -12907,7 +12899,7 @@ msgstr "Диагональные линии"
 #: ../app/tools/tools-enums.c:185
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
-msgstr "Соотношение сторон"
+msgstr "Соотн. сторон"
 
 #: ../app/tools/tools-enums.c:186
 msgctxt "rectangle-tool-fixed-rule"
@@ -13571,22 +13563,18 @@ msgid "Lock pixels"
 msgstr "Запереть точки растра от изменений"
 
 #: ../app/widgets/gimpdynamicseditor.c:113
-#, fuzzy
 msgid "Pressure"
-msgstr "Нажим:"
+msgstr "Нажим"
 
 #: ../app/widgets/gimpdynamicseditor.c:114
-#, fuzzy
 msgid "Velocity"
-msgstr "Скорость:"
+msgstr "Скорость"
 
 #: ../app/widgets/gimpdynamicseditor.c:116
-#, fuzzy
 msgid "Tilt"
-msgstr "Наклон:"
+msgstr "Наклон"
 
 #: ../app/widgets/gimpdynamicseditor.c:117
-#, fuzzy
 msgid "Random"
 msgstr "Случайность"
 
@@ -13609,7 +13597,7 @@ msgstr "Размер"
 
 #: ../app/widgets/gimpdynamicseditor.c:141
 msgid "Aspect ratio"
-msgstr "Соотношение сторон"
+msgstr "Соотн. сторон"
 
 #: ../app/widgets/gimpdynamicseditor.c:146
 msgid "Color"
@@ -13620,9 +13608,8 @@ msgid "Angle"
 msgstr "Угол"
 
 #: ../app/widgets/gimpdynamicseditor.c:156
-#, fuzzy
 msgid "Jitter"
-msgstr "Острое"
+msgstr "Дрожание"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
