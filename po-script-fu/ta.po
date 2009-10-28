@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-05 11:32+0530\n"
+"POT-Creation-Date: 2009-10-28 05:52+0530\n"
 "PO-Revision-Date: 2009-07-05 11:39+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: Tamil <Ubuntu-l10n-tam@lists.ubuntu.com>\n"
@@ -18,33 +18,33 @@ msgstr ""
 "X-Generator: Lokalize 0.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:130
-#: ../plug-ins/script-fu/script-fu-console.c:197
+#: ../plug-ins/script-fu/script-fu-console.c:132
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Script-Fu Console"
 msgstr "ஸ்கிரிப்ட் ஃபூ முனையம்"
 
-#: ../plug-ins/script-fu/script-fu-console.c:193
+#: ../plug-ins/script-fu/script-fu-console.c:195
 msgid "Welcome to TinyScheme"
 msgstr "டைனிஸ்கீமுக்கு நல்வரவு "
 
-#: ../plug-ins/script-fu/script-fu-console.c:199
+#: ../plug-ins/script-fu/script-fu-console.c:201
 msgid "Interactive Scheme Development"
 msgstr "ஊடாடும் திட்ட வளர்ச்சி"
 
-#: ../plug-ins/script-fu/script-fu-console.c:235
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_B மேலோடு..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:293
+#: ../plug-ins/script-fu/script-fu-console.c:295
 msgid "Save Script-Fu Console Output"
 msgstr "ஸ்கிரிப்ட் -ஃபூ ஸ்கிரிப்ட் ஃபூ முனைய வெளியீட்டை சேமி "
 
-#: ../plug-ins/script-fu/script-fu-console.c:340
+#: ../plug-ins/script-fu/script-fu-console.c:342
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "எழுதுவதற்கு '%s'ஐ திறக்கமுடியவில்லை: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:369
+#: ../plug-ins/script-fu/script-fu-console.c:371
 msgid "Script-Fu Procedure Browser"
 msgstr "ஸ்கிரிப்ட் -ஃபூ ஸ்கிரிப்ட் ஃபூ நடைமுறை உலாவி"
 
@@ -106,7 +106,7 @@ msgstr "ஸ்கிரிப்ட் ஃபூ சீரி நிற மா�
 msgid "Script-Fu Brush Selection"
 msgstr "ஸ்கிரிப்ட் ஃபூ தூரிகை தேர்வு"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:823
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
 msgid "Error while executing %s:"
 msgstr " %s ஐசெயலாக்குவதில் பிழை:"
@@ -316,7 +316,8 @@ msgid "Outline blur radius"
 msgstr "தெளிவு நீக்கும் ஆரத்தின் வெளிக்கோடு "
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgid ""
+"Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
 "தேர்ந்தெடுத்த இடத்தை ( அல்லது ஆல்ஃபாவை) ஒரு தோரணியால் வெளிக் கோடிட்டு தொங்கு நிழல் உடன் "
 "சேர் "
@@ -1138,7 +1139,8 @@ msgid "Circuit seed"
 msgstr "சர்க்யூட் விதை"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr "தேர்ந்தெடுத்த இடம் ( அல்லது ஆல்ஃபா) வுக்கு சர்க்யூட் பலகை போன்ற கோடுகளை நிரப்பு"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
@@ -1443,7 +1445,8 @@ msgid "Black on white"
 msgstr "வெள்ளையில் கறுப்பு"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 "ஒரு எழுத்துரு வடிப்பிக்கு பொருத்தமான எழுத்துரு முன்பார்வையால் நிரப்பிய பிம்பம் ஒன்றை "
 "உருவாக்கு"
@@ -1908,7 +1911,8 @@ msgid "_Lava..."
 msgstr "(_L) எரிமலை குழம்பு"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgid ""
+"Fill a layer with rays emanating outward from its center using the FG color"
 msgstr "முன்புல நிறத்தால் கதிர்கள் மையத்தில் இருந்து வெளிச்செல்வதாக ஒரு அடுக்கை நிரப்பு "
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
@@ -2194,7 +2198,8 @@ msgid "Black"
 msgstr "கருப்பு"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid "Create a multi-layer image by adding a ripple effect to the current image"
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current image"
 msgstr "நடப்பு பிம்பத்துக்கு ஒரு நீரலை தோற்றம் கொடுத்து பல அடுக்கு பிம்பம் ஒன்றை உருவாக்கு "
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
@@ -2235,7 +2240,8 @@ msgid "Edge radius"
 msgstr "எட்ஜ் ஆரம்"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid "Round the corners of an image and optionally add a drop-shadow and background"
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 "பிம்பத்தின் மூலைகளை உருண்டையாக்கி தேர்வாக ஒரு தொங்கு நிழல் மற்றும் பின்புலத்தையும் "
 "சேர்க்கவும்."
@@ -2351,7 +2357,8 @@ msgid "_Spinning Globe..."
 msgstr "(_S) சுழலும் பூகோளம்..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr "நடப்பு அடுக்குக்கு சுழல் வரைவி, புறஞ் சில்லுரு, லீஸாஜூஸ் வளைவுகள் ஆகியன சேர்"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
@@ -2477,7 +2484,8 @@ msgstr "_S ஸ்பைரோகிம்ப்..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr "கல் போன்ற  இழை நயம், புதிய நட்சத்திர ஒளி, மற்றும் நிழல் தோற்றத்துடன் ஒரு லோகோவை உருவாக்கு"
+msgstr ""
+"கல் போன்ற  இழை நயம், புதிய நட்சத்திர ஒளி, மற்றும் நிழல் தோற்றத்துடன் ஒரு லோகோவை உருவாக்கு"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
@@ -2548,7 +2556,8 @@ msgid "Antialias"
 msgstr "நிற அலை இசைவிப்பு"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgid ""
+"Create a logo by rendering the specified text along the perimeter of a circle"
 msgstr "ஒரு வட்டத்தின் விளிம்பில் குறித்த உரை எழுதி லோகோ ஒன்றை உருவாக்கு "
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
@@ -2560,8 +2569,10 @@ msgid "Text C_ircle..."
 msgstr "(_i) உரை வட்டம்..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid "Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr "முன்னுறுத்தல் நிழல்கள் மற்றும் ஒரு மொஸைக் பின்புலம் ஆகியன சேர்த்து ஒரு லோகோ உருவாக்கு"
+msgid ""
+"Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr ""
+"முன்னுறுத்தல் நிழல்கள் மற்றும் ஒரு மொஸைக் பின்புலம் ஆகியன சேர்த்து ஒரு லோகோ உருவாக்கு"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
@@ -2724,7 +2735,8 @@ msgstr "(_W) முடை..."
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "தேர்ந்தெடுத்த இடம் ( அல்லது ஆல்ஃபா) வுக்கு மெல்லிய ஒளி ஊடுருவும் முப்பரிமாண தோற்றம் சேர் "
+msgstr ""
+"தேர்ந்தெடுத்த இடம் ( அல்லது ஆல்ஃபா) வுக்கு மெல்லிய ஒளி ஊடுருவும் முப்பரிமாண தோற்றம் சேர் "
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
@@ -2761,4 +2773,3 @@ msgstr "முனைப்புறுத்தல் ஒளிபுகாம�
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-விளைவு...."
-
