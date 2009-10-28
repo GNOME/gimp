@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-27 13:29+0530\n"
-"PO-Revision-Date: 2009-10-27 21:59+0530\n"
+"PO-Revision-Date: 2009-10-28 12:07+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: Tamil <Ubuntu-l10n-tam@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -3414,10 +3414,9 @@ msgid "Merge Layer Group"
 msgstr "அடுக்கு குழுக்களை ஒருங்கிணை"
 
 #: ../app/actions/layers-actions.c:157
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
-msgstr "பார்வையிலுள்ள அனைத்து அடுக்குகளையும் ஒரு அடுக்காக ஆக்கு"
+msgstr "அடுக்கு குழுவிலுள்ள அனைத்து அடுக்குகளையும் ஒரு சாதாரண அடுக்காக ஒருங்கிணை"
 
 #: ../app/actions/layers-actions.c:162
 msgctxt "layers-action"
@@ -4909,10 +4908,9 @@ msgstr "(_L) இணைக்கப்பட்டது"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
-#, fuzzy
 msgctxt "vectors-action"
 msgid "L_ock strokes"
-msgstr "தீட்டுதல்களை இணை"
+msgstr "_o தீட்டுதல்களை பூட்டு"
 
 #: ../app/actions/vectors-actions.c:168
 msgctxt "vectors-action"
@@ -5521,14 +5519,14 @@ msgstr "கருவிப்பெட்டியை உயர்த்து"
 #: ../app/actions/windows-actions.c:101
 msgctxt "windows-action"
 msgid "Single-window mode"
-msgstr ""
+msgstr "ஒற்றை சாளர முறைமை"
 
 #: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
 msgid ""
 "When enabled GIMP is in a single-window mode. Far from completely "
 "implemented!"
-msgstr ""
+msgstr "செயல் படுத்தினால் கிம்ப் ஒற்றை சாளர முறைமையில் இருக்கும். இது இன்னும் முழுமையாகவில்லை!"
 
 #: ../app/base/base-enums.c:23
 msgctxt "curve-type"
@@ -5825,23 +5823,21 @@ msgstr ""
 "சுட்டிக்காட்டுகிறது."
 
 #: ../app/config/gimprc-blurbs.h:113
-#, fuzzy
 msgid ""
 "The window type hint that is set on dock windows and the toolbox window. "
 "This may affect the way your window manager decorates and handles these "
 "windows."
 msgstr ""
-"டாக் சாளரங்களில் அமைக்கப்பட்ட சாளர வகை சாடைக்குறிப்பு. இது உங்க சாளர மேலாளர் டாக் "
-"சாளரங்களை அலங்கரிக்கும் மற்றும் கையாளும் விதத்தை பாதிக்கலாம்."
+"டாக் சாளரங்கள் மற்றும் கருவிப்பெட்டி சாளரங்களில் அமைக்கப்பட்ட சாளர வகை சாடைக்குறிப்பு. இது "
+"உங்கள் சாளர மேலாளர் இந்த சாளரங்களை அலங்கரிக்கும் மற்றும் கையாளும் விதத்தை பாதிக்கலாம்."
 
 #: ../app/config/gimprc-blurbs.h:145
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr "செயலாக்கப்பட்டிருந்தால், தேர்வு செய்த தூரிகை அனைத்து கருவிகளிலும் பயன்படுத்தப்படும்"
 
 #: ../app/config/gimprc-blurbs.h:148
-#, fuzzy
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "செயலாக்கப்பட்டிருந்தால், தேர்வு செய்த தூரிகை அனைத்து கருவிகளிலும் பயன்படுத்தப்படும்"
+msgstr "செயலாக்கப்பட்டிருந்தால், தேர்வு செய்த இயக்கங்கள் அனைத்து கருவிகளிலும் பயன்படுத்தப்படும்"
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -5951,7 +5947,6 @@ msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr "கிம்ப் எத்தனை செயலிகளை ஒரே நேரத்தில் பயன்படுத்த வேண்டும் என அமைக்கிறது."
 
 #: ../app/config/gimprc-blurbs.h:254
-#, fuzzy
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -6127,7 +6122,7 @@ msgstr "ஒரு உருப்படியின் மீது சொடு
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Use GIMP in a single-window mode."
-msgstr ""
+msgstr "கிம்ப் ஐ ஒற்றை சாளர முறைமையில் செயல் படுத்து"
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid "What to do when the space bar is pressed in the image window."
@@ -6823,10 +6818,9 @@ msgid "Delete layer"
 msgstr "அடுக்கை அழி"
 
 #: ../app/core/core-enums.c:926
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder layer"
-msgstr "அடுக்கை மீண்டும் ஒழுங்குப்படுத்து"
+msgstr "அடுக்கை மீண்டும் வரிசைப்படுத்து"
 
 #: ../app/core/core-enums.c:927
 msgctxt "undo-type"
@@ -6846,18 +6840,17 @@ msgstr "ஆல்பா வாய்க்கால் பூட்டு/ ப�
 #: ../app/core/core-enums.c:930
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
-msgstr ""
+msgstr "அடுக்கு குழு மறு அளவாக்கத்தை இடைநிறுத்து"
 
 #: ../app/core/core-enums.c:931
 msgctxt "undo-type"
 msgid "Resume group layer resize"
-msgstr ""
+msgstr "அடுக்கு குழு மறு அளவாக்கத்தை மீள்துவக்கு"
 
 #: ../app/core/core-enums.c:932
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert group layer"
-msgstr "முனையை மாற்று"
+msgstr "குழு அடுக்கை நிலை மாற்று"
 
 #: ../app/core/core-enums.c:933
 msgctxt "undo-type"
@@ -6890,10 +6883,9 @@ msgid "Delete channel"
 msgstr "வாய்க்காலை அழி"
 
 #: ../app/core/core-enums.c:941
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder channel"
-msgstr "வாய்க்காலை மீண்டும் ஒழுங்குப்படுத்து"
+msgstr "வாய்க்காலை மீண்டும் வரிசைப்படுத்து"
 
 #: ../app/core/core-enums.c:942
 msgctxt "undo-type"
@@ -6916,7 +6908,6 @@ msgid "Path modification"
 msgstr "பாதை மாற்றம்"
 
 #: ../app/core/core-enums.c:946
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder path"
 msgstr "பாதையை மீண்டும் ஒழுங்குப்படுத்து"
@@ -7053,9 +7044,8 @@ msgid "FG to BG (RGB)"
 msgstr "முன்புலத்தில் இலிருந்து பின்புலம் (ஆர்ஜிபி)"
 
 #: ../app/core/gimp-gradients.c:70
-#, fuzzy
 msgid "FG to BG (Hardedge)"
-msgstr "முன்புலத்தில் இலிருந்து பின்புலம் (ஆர்ஜிபி)"
+msgstr "முன்புலத்தில் இலிருந்து பின்புலம் (கடின விளிம்பு)"
 
 #: ../app/core/gimp-gradients.c:87
 msgid "FG to BG (HSV counter-clockwise)"
@@ -7132,9 +7122,8 @@ msgstr "ஒட்டுகள்"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:924 ../app/dialogs/preferences-dialog.c:2746
-#, fuzzy
 msgid "Dynamics"
-msgstr "தூரிகை இயக்கம்"
+msgstr "இயக்கம்"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:940
@@ -7642,44 +7631,36 @@ msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "முதல் வலைக்கட்ட வரியின் செங்குத்து குத்து நீட்டம்; இது எதிர்ம எண்ணாக இருக்கலாம்."
 
 #: ../app/core/gimpgrouplayer.c:178 ../app/core/gimpgrouplayer.c:837
-#, fuzzy
 msgid "Layer Group"
-msgstr "(_T) அடுக்கு மேலுக்கு"
+msgstr "அடுக்கு குழு"
 
 #: ../app/core/gimpgrouplayer.c:179
-#, fuzzy
 msgid "Rename Layer Group"
-msgstr "அடுக்கிற்கு மறுபெயரிடுக"
+msgstr "அடுக்கு குழுவுக்கு மறுபெயரிடுக"
 
 #: ../app/core/gimpgrouplayer.c:180
-#, fuzzy
 msgid "Move Layer Group"
-msgstr "அடுக்கை நகர்த்துக"
+msgstr "அடுக்கை குழுவை நகர்த்துக"
 
 #: ../app/core/gimpgrouplayer.c:181
-#, fuzzy
 msgid "Scale Layer Group"
-msgstr "அடுக்கை அளவு மாற்று"
+msgstr "அடுக்கு குழுவை  அளவு மாற்று"
 
 #: ../app/core/gimpgrouplayer.c:182
-#, fuzzy
 msgid "Resize Layer Group"
-msgstr "அடுக்கை மறுஅளவிடு"
+msgstr "அடுக்கு குழுவை  மறுஅளவிடு"
 
 #: ../app/core/gimpgrouplayer.c:183
-#, fuzzy
 msgid "Flip Layer Group"
-msgstr "அடுக்கை புரட்டு"
+msgstr "அடுக்கு குழுவை  புரட்டு"
 
 #: ../app/core/gimpgrouplayer.c:184
-#, fuzzy
 msgid "Rotate Layer Group"
-msgstr "அடுக்கை சுழற்று"
+msgstr "அடுக்கு குழுவை  சுழற்று"
 
 #: ../app/core/gimpgrouplayer.c:185
-#, fuzzy
 msgid "Transform Layer Group"
-msgstr "அடுக்கை உருமாற்று"
+msgstr "அடுக்கு குழுவை  உருமாற்று"
 
 #: ../app/core/gimpimage-arrange.c:142
 msgid "Arrange Objects"
@@ -7775,27 +7756,24 @@ msgid "Flatten Image"
 msgstr "பிம்பத்தை தட்டையாக்கு"
 
 #: ../app/core/gimpimage-merge.c:225
-#, fuzzy
 msgid "Cannot merge down to a layer group."
-msgstr "அடுக்கு மறை மூடிகளை மறு பெயரிட இயலாது"
+msgstr "அடுக்கு குழு மறை மூடிகளை கீழே ஒருங்கிணைக்க இயலாது"
 
 #: ../app/core/gimpimage-merge.c:232
 msgid "The layer to merge down to is locked."
-msgstr ""
+msgstr "கீழே ஒருங்கிணைக்க அடுக்கு பூட்டப்பட்டுள்ளது"
 
 #: ../app/core/gimpimage-merge.c:244
-#, fuzzy
 msgid "There is no visible layer to merge down to."
-msgstr "உரு மாற்ற அடுக்கு ஏதும் இல்லை."
+msgstr "கீழே ஒருங்கிணைக்க காணக்கூடிய அடுக்கு ஏதும் இல்லை."
 
 #: ../app/core/gimpimage-merge.c:255
 msgid "Merge Down"
 msgstr "கீழாக ஒருங்கிணை"
 
 #: ../app/core/gimpimage-merge.c:277
-#, fuzzy
 msgid "Merge Layer Group"
-msgstr "அடுக்குகளை ஒருங்கிணை"
+msgstr "அடுக்கு குழுக்களை ஒருங்கிணை"
 
 #: ../app/core/gimpimage-merge.c:330
 msgid "Merge Visible Paths"
@@ -9208,9 +9186,8 @@ msgid "_Brush"
 msgstr "(_B) தூரிகை"
 
 #: ../app/dialogs/preferences-dialog.c:1939
-#, fuzzy
 msgid "_Dynamics"
-msgstr "தூரிகை இயக்கம்"
+msgstr "_D இயக்கம்"
 
 #: ../app/dialogs/preferences-dialog.c:1942
 msgid "_Pattern"
@@ -9249,9 +9226,8 @@ msgstr "நடப்பில் உள்ள பிம்பத்தை கா
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:1997
-#, fuzzy
 msgid "Tools configuration"
-msgstr "வடிவமைப்பு"
+msgstr "கருவி வடிவமைப்பு"
 
 #: ../app/dialogs/preferences-dialog.c:2012
 msgid "Default New Image"
@@ -9540,9 +9516,8 @@ msgid "Window Manager Hints"
 msgstr "சாளர மேலாளரின் சாடைக்குறிப்புகள்"
 
 #: ../app/dialogs/preferences-dialog.c:2641
-#, fuzzy
 msgid "Hint for _docks and toolbox:"
-msgstr "கருவிப்பட்டைகளுக்கான சாடைக்குறிப்பு (_t):"
+msgstr "டாக்குகள் மற்றும் கருவிப்பட்டைகளுக்கான சாடைக்குறிப்பு (_d):"
 
 #: ../app/dialogs/preferences-dialog.c:2644
 msgid "Focus"
@@ -9598,14 +9573,12 @@ msgid "Select Brush Folders"
 msgstr "தூரிகை அடைவுகளை தேர்வு செய்"
 
 #: ../app/dialogs/preferences-dialog.c:2746
-#, fuzzy
 msgid "Dynamics Folders"
-msgstr "எழுத்துரு அடைவுகள்"
+msgstr "இயக்கங்கள் அடைவுகள்"
 
 #: ../app/dialogs/preferences-dialog.c:2748
-#, fuzzy
 msgid "Select Dynamics Folders"
-msgstr "எழுத்துரு அடைவுகளை தேர்வு செய்"
+msgstr "இயக்கங்கள் அடைவுகளை தேர்வு செய்"
 
 #: ../app/dialogs/preferences-dialog.c:2750
 msgid "Pattern Folders"
@@ -10100,7 +10073,7 @@ msgstr "புதிய பாதையை எறிந்துவிடு"
 #: ../app/display/gimpdisplayshell-dnd.c:469 ../app/tools/gimpblendtool.c:174
 #: ../app/tools/gimpbucketfilltool.c:135 ../app/tools/gimpimagemaptool.c:279
 msgid "Cannot modify the pixels of layer groups."
-msgstr ""
+msgstr "அடுக்கு குழுக்களின் படதுணுக்குகளை மாற்ற இயலாது."
 
 #: ../app/display/gimpdisplayshell-dnd.c:382
 #: ../app/display/gimpdisplayshell-dnd.c:477 ../app/tools/gimpblendtool.c:181
@@ -10108,7 +10081,7 @@ msgstr ""
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:287
 #: ../app/tools/gimptransformtool.c:349 ../app/tools/gimptransformtool.c:1193
 msgid "The active layer's pixels are locked."
-msgstr ""
+msgstr "நடப்பில் உள்ள அடுக்கின் படதுணுக்குகள் பூட்டப்பட்டுள்ளன."
 
 #: ../app/display/gimpdisplayshell-dnd.c:539
 #: ../app/widgets/gimplayertreeview.c:754
@@ -10173,19 +10146,16 @@ msgid "(none)"
 msgstr "(எதுவும் இல்லை)"
 
 #: ../app/display/gimpdisplayshell-title.c:502
-#, fuzzy
 msgid " (exported)"
-msgstr "%s (இறக்குமதி செய்தது)"
+msgstr " (ஏற்றுமதி செய்தது)"
 
 #: ../app/display/gimpdisplayshell-title.c:504
-#, fuzzy
 msgid " (overwritten)"
-msgstr "%s ஐ மேலெழுது"
+msgstr " (மேலெழுதப்பட்டது)"
 
 #: ../app/display/gimpdisplayshell-title.c:510
-#, fuzzy
 msgid " (imported)"
-msgstr "%s (இறக்குமதி செய்தது)"
+msgstr " (இறக்குமதி செய்தது)"
 
 #: ../app/display/gimpstatusbar.c:358
 #, c-format
@@ -10271,9 +10241,8 @@ msgid "No brushes available for use with this tool."
 msgstr "இந்த கருவியுடன் பயன்படுத்த எந்த தூரிகைகளும் இல்லை"
 
 #: ../app/paint/gimpbrushcore.c:406
-#, fuzzy
 msgid "No paint dynamics available for use with this tool."
-msgstr "இந்த கருவியுடன் பயன்படுத்த எந்த தோரணிகளும் இல்லை"
+msgstr "இந்த கருவியுடன் பயன்படுத்த எந்த வண்ண இயக்கங்களும் இல்லை"
 
 #: ../app/paint/gimpclone.c:102 ../app/tools/gimpclonetool.c:60
 msgid "Clone"
@@ -10549,15 +10518,13 @@ msgstr "உருப்படி '%s' (%d)  ஏற்கெனெவே பி�
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "உருப்படி '%s' (%d) ஐ தவறான பிம்பத்தில் சேர்க்க முயற்சிக்கிறீர்கள்."
 
-#: ../app/pdb/gimppdb-utils.c:368
-#, fuzzy, c-format
+#: ../app/pdb/gimppdb-utils.c:368, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
-msgstr "உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அதை பிம்பத்தில் சேர்க்கவில்லை"
+msgstr "உருப்படி '%s' (%d) ஐ மாற்ற முடியாது; ஏனெனில் அதன் உள்ளடக்கங்கள் பூட்டப்பட்டுள்ளன"
 
-#: ../app/pdb/gimppdb-utils.c:388
-#, fuzzy, c-format
+#: ../app/pdb/gimppdb-utils.c:388, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
-msgstr "உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அதை பிம்பத்தில் சேர்க்கவில்லை"
+msgstr "உருப்படி '%s' (%d) ஐ மாற்ற முடியாது; ஏனெனில் அது ஒரு குழு உருப்படி"
 
 #: ../app/pdb/gimppdb-utils.c:409
 #, c-format
@@ -10692,45 +10659,38 @@ msgid "Set text layer attribute"
 msgstr "உரை அடுக்கு மதிப்புரு அமைக்கவும்"
 
 #: ../app/pdb/vectors-cmds.c:644
-#, fuzzy
 msgid "Remove path stroke"
-msgstr "ஒட்டை நீக்கு"
+msgstr "பாதை தீட்டலை நீக்கு"
 
 #: ../app/pdb/vectors-cmds.c:680
-#, fuzzy
 msgid "Close path stroke"
-msgstr "தீட்டுதல்களை இணை"
+msgstr "பாதை தீட்டலை மூடு"
 
 #: ../app/pdb/vectors-cmds.c:720
-#, fuzzy
 msgid "Translate path stroke"
-msgstr "உருப்படிகளை மொழிபெயர்க்கவும்"
+msgstr "பாதை தீட்டலை மொழிபெயர்க்கவும்"
 
 #: ../app/pdb/vectors-cmds.c:760
-#, fuzzy
 msgid "Scale path stroke"
-msgstr "பாதையை அளவிடு"
+msgstr "பாதை தீட்டலை அளவிடு"
 
 #: ../app/pdb/vectors-cmds.c:802
-#, fuzzy
 msgid "Rotate path stroke"
-msgstr "பாதையை சுழற்று"
+msgstr "பாதை தீட்டலை சுழற்று"
 
 #: ../app/pdb/vectors-cmds.c:842 ../app/pdb/vectors-cmds.c:886
-#, fuzzy
 msgid "Flip path stroke"
-msgstr "பாதையை புரட்டு"
+msgstr "பாதை தீட்டலை புரட்டு"
 
 #: ../app/pdb/vectors-cmds.c:1015 ../app/pdb/vectors-cmds.c:1137
 #: ../app/pdb/vectors-cmds.c:1356
-#, fuzzy
 msgid "Add path stroke"
-msgstr "தீட்டுகை சேர் "
+msgstr "பாதை தீட்டலை சேர் "
 
 #: ../app/pdb/vectors-cmds.c:1189 ../app/pdb/vectors-cmds.c:1242
 #: ../app/pdb/vectors-cmds.c:1303
 msgid "Extend path stroke"
-msgstr ""
+msgstr "நீட்டிக்கப்பட்ட பாதை தீட்டல்"
 
 #: ../app/plug-in/gimpenvirontable.c:281
 #, c-format
@@ -11523,9 +11483,8 @@ msgid "Click or press Enter to crop"
 msgstr "வெட்ட சொடுக்கு அல்லது உள்ளீட்டு விசையை அழுத்து"
 
 #: ../app/tools/gimpcroptool.c:328
-#, fuzzy
 msgid "There is no active layer to crop."
-msgstr "வெட்டுவதற்கு எந்த ஒரு அடுக்கும் வாய்காலும் செயலில் இல்லை"
+msgstr "வெட்டுவதற்கு எந்த ஒரு அடுக்கும் செயலில் இல்லை"
 
 #: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
@@ -12191,7 +12150,6 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "அணுகல் கருவி: அணுகலை மாற்றுக"
 
 #: ../app/tools/gimpmagnifytool.c:89
-#, fuzzy
 msgctxt "tool"
 msgid "_Zoom"
 msgstr "அளவிடு (_Z)"
@@ -12375,9 +12333,8 @@ msgid "%s to pick a color"
 msgstr "%s ஒரு வண்ணத்தை தேர்ந்த்தெடுக்க"
 
 #: ../app/tools/gimppainttool.c:280
-#, fuzzy
 msgid "Cannot paint on layer groups."
-msgstr "அடுக்கு மறை மூடிகளை மறு பெயரிட இயலாது"
+msgstr "அடுக்கு குழுக்கள் மீது வண்ணம் தீட்ட இயலாது."
 
 #: ../app/tools/gimppainttool.c:690
 #, c-format
@@ -12657,7 +12614,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:138
 msgid "The text language may have an effect on the way the text is rendered."
-msgstr ""
+msgstr "உரை எப்படி காட்டப்படுகிறது என்பது உரை மொழியையும் பொருத்ததாக இருக்கலாம்"
 
 #: ../app/tools/gimptextoptions.c:154
 msgid "Indentation of the first line"
@@ -12704,9 +12661,8 @@ msgid "Justify:"
 msgstr "சீரமைக்கவும்:"
 
 #: ../app/tools/gimptextoptions.c:531
-#, fuzzy
 msgid "Language:"
-msgstr "(_L) மொழி:"
+msgstr "மொழி:"
 
 #: ../app/tools/gimptexttool.c:225
 msgid "Text"
@@ -12828,7 +12784,7 @@ msgstr "உரு மாற்ற பாதை ஏதும் இல்லை."
 
 #: ../app/tools/gimptransformtool.c:1206
 msgid "The active path's strokes are locked."
-msgstr ""
+msgstr "செயலிலுள்ள பாதையின் தீட்டல்கள் பூட்டப்பட்டுள்ளன."
 
 #: ../app/tools/gimpvectoroptions.c:76
 msgid "Restrict editing to polygons"
@@ -12869,9 +12825,8 @@ msgid "Pat_hs"
 msgstr "(_h) பாதைகள்"
 
 #: ../app/tools/gimpvectortool.c:253
-#, fuzzy
 msgid "The active path is locked."
-msgstr "செயலில் உள்ள பாதையை நகர்த்தவும்"
+msgstr "செயலில் உள்ள பாதை பூட்டப்பட்டது."
 
 #: ../app/tools/gimpvectortool.c:341
 msgid "Add Stroke"
@@ -13690,34 +13645,28 @@ msgid "You can drop dockable dialogs here"
 msgstr "பொருத்தக்கூடிய உரையாடல்களை இங்கு இழுத்துவிடலாம்."
 
 #: ../app/widgets/gimpdrawabletreeview.c:123
-#, fuzzy
 msgid "Lock pixels"
-msgstr "படத்துணுக்குகள்"
+msgstr "படத்துணுக்குகளை பூட்டு"
 
 #: ../app/widgets/gimpdynamicseditor.c:113
-#, fuzzy
 msgid "Pressure"
-msgstr "அழுத்தம்:"
+msgstr "அழுத்தம்"
 
 #: ../app/widgets/gimpdynamicseditor.c:114
-#, fuzzy
 msgid "Velocity"
-msgstr "திசைவேகம்:"
+msgstr "திசைவேகம்"
 
 #: ../app/widgets/gimpdynamicseditor.c:116
-#, fuzzy
 msgid "Tilt"
-msgstr "சாய்வு:"
+msgstr "சாய்வு"
 
 #: ../app/widgets/gimpdynamicseditor.c:117
-#, fuzzy
 msgid "Random"
-msgstr "குறிப்பில்லாத:"
+msgstr "குறிப்பில்லாத"
 
 #: ../app/widgets/gimpdynamicseditor.c:118
-#, fuzzy
 msgid "Fade"
-msgstr "(_F) தேய்ந்துமறை"
+msgstr "தேய்ந்துமறை"
 
 #: ../app/widgets/gimpdynamicseditor.c:126
 msgid "Hardness"
@@ -13744,9 +13693,8 @@ msgid "Angle"
 msgstr "(_n) கோணம்"
 
 #: ../app/widgets/gimpdynamicseditor.c:156
-#, fuzzy
 msgid "Jitter"
-msgstr "முனை முறிப்பு"
+msgstr "நடுக்கம்"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -13994,15 +13942,16 @@ msgstr "வாய்க்கால்"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
-#, fuzzy
 msgid "Use default comment"
-msgstr "முன்னிருப்பு ஒழுங்கு"
+msgstr "முன்னிருப்பு விமரிசனத்தை பயன்படுத்து"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
+"நடப்பு பிம்ப விமர்சனத்தை  திருத்து→விருப்பங்கள்→ முன்னிருப்பு பிம்பம். இல் உள்ள முன்னிருப்பு "
+"விமர்சனங்களால் மாற்று."
 
 #: ../app/widgets/gimpimageprofileview.c:200
 msgid "Querying..."
@@ -14385,27 +14334,22 @@ msgstr ""
 "சீர் நிற மாற்றம் உரையாடலை திறக்க சொடுக்கவும்."
 
 #: ../app/widgets/gimptooleditor.c:294
-#, fuzzy
 msgid "Raise this tool"
-msgstr "கருவிப்பெட்டியை உயர்த்து"
+msgstr "இந்த கருவியை உயர்த்து"
 
 #: ../app/widgets/gimptooleditor.c:295
-#, fuzzy
 msgid "Raise this tool to the top"
-msgstr "கருவியை மேலே ஏற்று"
+msgstr "இந்த கருவியை மேலுக்கு ஏற்று"
 
 #: ../app/widgets/gimptooleditor.c:302
-#, fuzzy
 msgid "Lower this tool"
 msgstr "இந்த கருவியை கீழே இறக்கு"
 
 #: ../app/widgets/gimptooleditor.c:303
-#, fuzzy
 msgid "Lower this tool to the bottom"
 msgstr "இந்த கருவியை அடிக்கு கீழே இறக்கு"
 
 #: ../app/widgets/gimptooleditor.c:310
-#, fuzzy
 msgid "Reset tool order and visibility"
 msgstr "கருவி வரிசை மற்றும் தெளிதிறனை மறுஅமை "
 
@@ -14448,9 +14392,8 @@ msgid "Reorder path"
 msgstr "பாதையை மீண்டும் ஒழுங்குப்படுத்து"
 
 #: ../app/widgets/gimpvectorstreeview.c:118
-#, fuzzy
 msgid "Lock path strokes"
-msgstr "தீட்டுதல்களை இணை"
+msgstr "பாதை தீட்டுதல்களை பூட்டுக"
 
 #: ../app/widgets/gimpvectorstreeview.c:262
 msgid "Empty Path"
@@ -14706,10 +14649,9 @@ msgstr "எக்ஸ்சிஎஃப் கோப்பை சேமிப்�
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "fuzzy"
-msgstr ""
+msgstr "தெளிவில்லாத"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:2
-#, fuzzy
 msgid "round"
 msgstr "உருண்டையான"
 
