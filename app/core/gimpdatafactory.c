@@ -74,7 +74,8 @@ static void    gimp_data_factory_data_load    (GimpDataFactory      *factory,
 static gint64  gimp_data_factory_get_memsize  (GimpObject           *object,
                                                gint64               *gui_size);
 
-static gchar * gimp_data_factory_get_save_dir (GimpDataFactory      *factory);
+static gchar * gimp_data_factory_get_save_dir (GimpDataFactory      *factory,
+                                               GError              **error);
 
 static void    gimp_data_factory_load_data  (const GimpDatafileData *file_data,
                                              gpointer                data);
@@ -407,18 +408,26 @@ gimp_data_factory_data_refresh (GimpDataFactory *factory)
 void
 gimp_data_factory_data_save (GimpDataFactory *factory)
 {
-  GList *list;
-  gchar *writable_dir;
+  GList  *list;
+  gchar  *writable_dir;
+  GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   if (gimp_container_is_empty (factory->priv->container))
     return;
 
-  writable_dir = gimp_data_factory_get_save_dir (factory);
+  writable_dir = gimp_data_factory_get_save_dir (factory, &error);
 
   if (! writable_dir)
-    return;
+    {
+      gimp_message (factory->priv->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    _("Failed to save data:\n\n%s"),
+                    error->message);
+      g_clear_error (&error);
+
+      return;
+    }
 
   for (list = GIMP_LIST (factory->priv->container)->list;
        list;
@@ -594,13 +603,18 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
 
   if (! data->filename)
     {
-      gchar *writable_dir = gimp_data_factory_get_save_dir (factory);
+      gchar  *writable_dir;
+      GError *my_error = NULL;
+
+      writable_dir = gimp_data_factory_get_save_dir (factory, &my_error);
 
       if (! writable_dir)
         {
           g_set_error (error, GIMP_DATA_ERROR, 0,
                        _("Failed to save data:\n\n%s"),
-                       _("You don't have a writable data folder configured."));
+                       my_error->message);
+          g_clear_error (&my_error);
+
           return FALSE;
         }
 
@@ -664,7 +678,8 @@ gimp_data_factory_has_data_new_func (GimpDataFactory *factory)
 /*  private functions  */
 
 static gchar *
-gimp_data_factory_get_save_dir (GimpDataFactory *factory)
+gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
+                                GError          **error)
 {
   gchar *path;
   gchar *writable_path;
@@ -687,21 +702,66 @@ gimp_data_factory_get_save_dir (GimpDataFactory *factory)
   g_free (writable_path);
   writable_path = tmp;
 
-  path_list     = gimp_path_parse (path,          16, TRUE, NULL);
-  writable_list = gimp_path_parse (writable_path, 16, TRUE, NULL);
+  path_list     = gimp_path_parse (path,          16, FALSE, NULL);
+  writable_list = gimp_path_parse (writable_path, 16, FALSE, NULL);
 
   g_free (path);
   g_free (writable_path);
 
-  for (list = writable_list; list; list = g_list_next (list))
+  if (writable_path)
     {
-      GList *found = g_list_find_custom (path_list,
-                                         list->data, (GCompareFunc) strcmp);
-      if (found)
+      gboolean found_any = FALSE;
+
+      for (list = writable_list; list; list = g_list_next (list))
         {
-          writable_dir = g_strdup (found->data);
-          break;
+          GList *found = g_list_find_custom (path_list,
+                                             list->data, (GCompareFunc) strcmp);
+          if (found)
+            {
+              const gchar *dir = found->data;
+
+              found_any = TRUE;
+
+              if (! g_file_test (dir, G_FILE_TEST_IS_DIR))
+                {
+                  /*  error out only if this is the last chance  */
+                  if (! list->next)
+                    {
+                      gchar *utf8 = g_filename_display_name (dir);
+
+                      g_set_error (error, GIMP_DATA_ERROR, 0,
+                                   _("You have a writable data folder "
+                                     "configured (%s), but this folder does "
+                                     "not exist. Please create the folder or "
+                                     "fix your configuation in the "
+                                     "preferences dialog's 'folders' section."),
+                                   utf8);
+
+                      g_free (utf8);
+                    }
+                }
+              else
+                {
+                  writable_dir = g_strdup (dir);
+                  break;
+                }
+            }
         }
+
+      if (! writable_dir && ! found_any)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, 0,
+                       _("You have a writable data folder configured, but this "
+                         "folder is not part of your data search path. This "
+                         "can only happen if you edited gimprc manually, "
+                         "please fix it in the preferences dialog's 'folders' "
+                         "section."));
+        }
+    }
+  else
+    {
+      g_set_error (error, GIMP_DATA_ERROR, 0,
+                   _("You don't have any writable data folder configured."));
     }
 
   gimp_path_free (path_list);
