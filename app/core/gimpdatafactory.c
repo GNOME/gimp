@@ -788,16 +788,19 @@ static void
 gimp_data_factory_load_data (const GimpDatafileData *file_data,
                              gpointer                data)
 {
-  GimpDataLoadContext *context = data;
-  GimpDataFactory     *factory = context->factory;
-  GHashTable          *cache   = context->cache;
-  gint                 i;
+  GimpDataLoadContext              *context = data;
+  GimpDataFactory                  *factory = context->factory;
+  GHashTable                       *cache   = context->cache;
+  const GimpDataFactoryLoaderEntry *loader;
+  gint                              i;
 
   for (i = 0; i < factory->priv->n_loader_entries; i++)
     {
-      if (! factory->priv->loader_entries[i].extension ||
+      loader = &factory->priv->loader_entries[i];
+
+      if (! loader->extension ||
           gimp_datafiles_check_extension (file_data->filename,
-                                          factory->priv->loader_entries[i].extension))
+                                          loader->extension))
         goto insert;
     }
 
@@ -829,8 +832,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
         GList  *data_list;
         GError *error = NULL;
 
-        data_list = factory->priv->loader_entries[i].load_func (file_data->filename,
-                                                                &error);
+        data_list = loader->load_func (file_data->filename, &error);
 
         if (G_LIKELY (data_list))
           {
@@ -846,7 +848,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
                          g_list_find_custom (writable_list, file_data->dirname,
                                              (GCompareFunc) strcmp) != NULL);
 
-            writable = (deletable && factory->priv->loader_entries[i].writable);
+            writable = (deletable && loader->writable);
 
             for (list = data_list; list; list = g_list_next (list))
               {
