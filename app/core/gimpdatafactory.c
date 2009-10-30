@@ -244,17 +244,20 @@ gimp_data_factory_refresh_cache_add (GimpDataFactory *factory,
                                      GimpData        *data,
                                      gpointer         user_data)
 {
-  GHashTable *cache = user_data;
-  GList      *list;
+  if (data->filename)
+    {
+      GHashTable *cache = user_data;
+      GList      *list;
 
-  g_object_ref (data);
+      g_object_ref (data);
 
-  gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
+      gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
 
-  list = g_hash_table_lookup (cache, data->filename);
-  list = g_list_prepend (list, data);
+      list = g_hash_table_lookup (cache, data->filename);
+      list = g_list_prepend (list, data);
 
-  g_hash_table_insert (cache, (gpointer) data->filename, list);
+      g_hash_table_insert (cache, (gpointer) data->filename, list);
+    }
 }
 
 static gboolean
