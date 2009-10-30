@@ -48,6 +48,11 @@
 #define GIMP_OBSOLETE_DATA_DIR_NAME "gimp-obsolete-files"
 
 
+typedef void (* GimpDataForeachFunc) (GimpDataFactory *factory,
+                                      GimpData        *data,
+                                      gpointer         user_data);
+
+
 struct _GimpDataFactoryPriv
 {
   Gimp                             *gimp;
@@ -257,29 +262,26 @@ gimp_data_factory_refresh_cache_remove (gpointer key,
 
 static void
 gimp_data_factory_data_move_to_cache (GimpDataFactory *factory,
-                                      gpointer         object,
-                                      gpointer         data)
+                                      GimpData        *data,
+                                      gpointer         user_data)
 {
-  GHashTable  *cache    = data;
-  GList       *list;
-  const gchar *filename = GIMP_DATA (object)->filename;
+  GHashTable *cache = user_data;
+  GList      *list;
 
-  g_object_ref (object);
+  g_object_ref (data);
 
-  gimp_container_remove (factory->priv->container, GIMP_OBJECT (object));
+  gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
 
-  list = g_hash_table_lookup (cache, filename);
-  list = g_list_prepend (list, object);
+  list = g_hash_table_lookup (cache, data->filename);
+  list = g_list_prepend (list, data);
 
-  g_hash_table_insert (cache, (gpointer) filename, list);
+  g_hash_table_insert (cache, (gpointer) data->filename, list);
 }
 
 static void
-gimp_data_factory_data_foreach (GimpDataFactory *factory,
-                                void (*callback) (GimpDataFactory *factory,
-                                                  gpointer         expr,
-                                                  gpointer         context),
-                                gpointer         context)
+gimp_data_factory_data_foreach (GimpDataFactory     *factory,
+                                GimpDataForeachFunc  callback,
+                                gpointer             user_data)
 {
   GimpList *list;
 
@@ -300,7 +302,7 @@ gimp_data_factory_data_foreach (GimpDataFactory *factory,
               if (glist->next && ! GIMP_DATA (glist->next->data)->internal)
                 {
                   while (glist->next)
-                    callback (factory, glist->next->data, context);
+                    callback (factory, glist->next->data, user_data);
 
                   break;
                 }
@@ -309,7 +311,7 @@ gimp_data_factory_data_foreach (GimpDataFactory *factory,
       else
         {
           while (list->list)
-            callback (factory, list->list->data, context);
+            callback (factory, list->list->data, user_data);
         }
     }
 }
@@ -463,8 +465,8 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
 
 static void
 gimp_data_factory_remove_cb (GimpDataFactory *factory,
-                             gpointer         data,
-                             gpointer         context)
+                             GimpData        *data,
+                             gpointer         user_data)
 {
   gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
 }
