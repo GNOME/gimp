@@ -274,39 +274,25 @@ gimp_data_factory_refresh_cache_remove (gpointer key,
 
 static void
 gimp_data_factory_data_foreach (GimpDataFactory     *factory,
+                                gboolean             skip_internal,
                                 GimpDataForeachFunc  callback,
                                 gpointer             user_data)
 {
-  GimpList *list;
+  GList *list = GIMP_LIST (factory->priv->container)->list;
 
-  if (gimp_container_is_empty (factory->priv->container))
-    return;
-
-  list = GIMP_LIST (factory->priv->container);
-
-  if (list->list)
+  if (skip_internal)
     {
-      if (GIMP_DATA (list->list->data)->internal)
-        {
-          /*  if there are internal objects in the list, skip them  */
-          GList *glist;
+      while (list && GIMP_DATA (list->data)->internal)
+        list = g_list_next (list);
+    }
 
-          for (glist = list->list; glist; glist = g_list_next (glist))
-            {
-              if (glist->next && ! GIMP_DATA (glist->next->data)->internal)
-                {
-                  while (glist->next)
-                    callback (factory, glist->next->data, user_data);
+  while (list)
+    {
+      GList *next = g_list_next (list);
 
-                  break;
-                }
-            }
-        }
-      else
-        {
-          while (list->list)
-            callback (factory, list->list->data, user_data);
-        }
+      callback (factory, list->data, user_data);
+
+      list = next;
     }
 }
 
@@ -385,7 +371,7 @@ gimp_data_factory_data_refresh (GimpDataFactory *factory)
 
   cache = g_hash_table_new (g_str_hash, g_str_equal);
 
-  gimp_data_factory_data_foreach (factory,
+  gimp_data_factory_data_foreach (factory, TRUE,
                                   gimp_data_factory_refresh_cache_add, cache);
 
   /*  Now the cache contains a filename => list-of-objects mapping of
@@ -478,7 +464,8 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
 
   gimp_container_freeze (factory->priv->container);
 
-  gimp_data_factory_data_foreach (factory, gimp_data_factory_remove_cb, NULL);
+  gimp_data_factory_data_foreach (factory, TRUE,
+                                  gimp_data_factory_remove_cb, NULL);
 
   gimp_container_thaw (factory->priv->container);
 }
