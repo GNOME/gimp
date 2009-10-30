@@ -239,11 +239,23 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
   gimp_container_thaw (factory->priv->container);
 }
 
-typedef struct
+static void
+gimp_data_factory_refresh_cache_add (GimpDataFactory *factory,
+                                     GimpData        *data,
+                                     gpointer         user_data)
 {
-  GimpDataFactory *factory;
-  GHashTable      *cache;
-} GimpDataLoadContext;
+  GHashTable *cache = user_data;
+  GList      *list;
+
+  g_object_ref (data);
+
+  gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
+
+  list = g_hash_table_lookup (cache, data->filename);
+  list = g_list_prepend (list, data);
+
+  g_hash_table_insert (cache, (gpointer) data->filename, list);
+}
 
 static gboolean
 gimp_data_factory_refresh_cache_remove (gpointer key,
@@ -258,24 +270,6 @@ gimp_data_factory_refresh_cache_remove (gpointer key,
   g_list_free (value);
 
   return TRUE;
-}
-
-static void
-gimp_data_factory_data_move_to_cache (GimpDataFactory *factory,
-                                      GimpData        *data,
-                                      gpointer         user_data)
-{
-  GHashTable *cache = user_data;
-  GList      *list;
-
-  g_object_ref (data);
-
-  gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
-
-  list = g_hash_table_lookup (cache, data->filename);
-  list = g_list_prepend (list, data);
-
-  g_hash_table_insert (cache, (gpointer) data->filename, list);
 }
 
 static void
@@ -315,6 +309,12 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
         }
     }
 }
+
+typedef struct
+{
+  GimpDataFactory *factory;
+  GHashTable      *cache;
+} GimpDataLoadContext;
 
 static void
 gimp_data_factory_data_load (GimpDataFactory *factory,
@@ -386,7 +386,7 @@ gimp_data_factory_data_refresh (GimpDataFactory *factory)
   cache = g_hash_table_new (g_str_hash, g_str_equal);
 
   gimp_data_factory_data_foreach (factory,
-                                  gimp_data_factory_data_move_to_cache, cache);
+                                  gimp_data_factory_refresh_cache_add, cache);
 
   /*  Now the cache contains a filename => list-of-objects mapping of
    *  the old objects. So we should now traverse the directory and for
