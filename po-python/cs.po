@@ -1,5 +1,3 @@
-# translation of cs.po to Czech
-# translation of cs.po to
 # Czech translation of GIMP python
 # Copyright (C) 2001,2003, 2006, 2007 Free Software Foundation, Inc.
 # Copyright (C) 2004, 2005 Miloslav Trmac <mitr@volny.cz>
@@ -8,56 +6,61 @@
 # Michal Bukovjan <bukm@centrum.cz>, 2003.
 # Miloslav Trmac <mitr@volny.cz>, 2003 - 2005.
 # Jakub Friedl <jfriedl@suse.cz>, 2006, 2007.
+# Marek Černocký <marek@manet.cz>, 2009.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: cs\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-10 17:14+0200\n"
-"PO-Revision-Date: 2007-08-17 18:50+0200\n"
-"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"Project-Id-Version: gimp gnome-2-26\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-10-27 18:14+0000\n"
+"PO-Revision-Date: 2009-10-15 16:41+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:380
+#: ../plug-ins/pygimp/gimpfu.py:386
 msgid "Missing exception information"
 msgstr "Chybějící informace o výjimce"
 
-#: ../plug-ins/pygimp/gimpfu.py:389
+#: ../plug-ins/pygimp/gimpfu.py:395
 #, python-format
 msgid "An error occured running %s"
 msgstr "Při běhu %s došlo k chybě"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:406
 msgid "_More Information"
 msgstr "_Více informací"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:518 ../plug-ins/pygimp/gimpfu.py:530
+#: ../plug-ins/pygimp/gimpfu.py:536
 msgid "No"
 msgstr "Ne"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:536
 msgid "Yes"
 msgstr "Ano"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:587 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Výběr souboru Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:569
+#: ../plug-ins/pygimp/gimpfu.py:598
 msgid "Python-Fu Folder Selection"
 msgstr "Výběr složky Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:659
+#: ../plug-ins/pygimp/gimpfu.py:689
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "Neplatný vstup pro '%s'"
+msgstr "Neplatný vstup pro „%s“"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Výběr barev Python-Fu"
 
@@ -101,65 +104,31 @@ msgstr "_Velikost písma v pixelech"
 msgid "_Write a separate CSS file"
 msgstr "_Zapsat oddělený CSS soubor"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-msgid "Python Console"
-msgstr "Konzole Python-Fu"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
-msgid "_Browse..."
-msgstr "_Procházet..."
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-msgid "Python Procedure Browser"
-msgstr "Prohlížeč procedur Pythonu"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Nelze otevřít '%s' pro zápis: %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "Nelze zapisovat do '%s': %s"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-msgid "Save Python-Fu Console Output"
-msgstr "Uložit výstup konzole Python-Fu"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Interaktivní interpretr Gimp-Pythonu"
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-msgid "_Console"
-msgstr "_Konzole"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
 msgid "Add a layer of fog"
 msgstr "Přidat vrstvu mlhy"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Fog..."
 msgstr "_Mlha..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Layer name"
 msgstr "Jméno _vrstvy"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "Clouds"
 msgstr "Mraky"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Fog color"
 msgstr "Barva _mlhy"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "_Turbulence"
 msgstr "_Turbulence"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:70
 msgid "Op_acity"
 msgstr "_Krytí"
 
@@ -242,49 +211,86 @@ msgstr "Paleta do _přechodu"
 msgid "Slice"
 msgstr "Rozřezat"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:418
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Rozřeže obrázek podle vodítek, vytvoří dílčí obrázky a kód tabulky v HTML"
+msgstr ""
+"Rozřeže obrázek podle vodítek, vytvoří dílčí obrázky a kód tabulky v HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:429
 msgid "_Slice..."
 msgstr "_Rozřezat..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Path for HTML export"
 msgstr "Cesta pro export HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Filename for export"
 msgstr "Jméno souboru pro export"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Image name prefix"
 msgstr "Předpona jména obrázku"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Image format"
 msgstr "Formát obrázku"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Separate image folder"
 msgstr "Oddělená složka pro obrázky"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Folder for image export"
 msgstr "Složka pro export obrázku"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Space between table elements"
 msgstr "Prostor mezi prvky tabulky"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript při přejetí myší a kliknutí"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Skip animation for table caps"
 msgstr "Vynechat animaci záhlaví tabulky"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+msgid "Python Console"
+msgstr "Konzole Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+msgid "_Browse..."
+msgstr "_Procházet..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:139
+msgid "Python Procedure Browser"
+msgstr "Prohlížeč procedur Pythonu"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:168
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Nelze otevřít „%s“ pro zápis: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Nelze zapisovat do „%s“: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:191
+msgid "Save Python-Fu Console Output"
+msgstr "Uložit výstup konzole Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:217
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interaktivní interpretr GIMP Python"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+msgid "_Console"
+msgstr "_Konzole"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
