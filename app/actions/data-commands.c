@@ -220,8 +220,8 @@ data_delete_cmd_callback (GtkAction *action,
     gimp_context_get_by_type (context,
                               gimp_data_factory_view_get_children_type (view));
 
-  if (data &&
-      data->deletable &&
+  if (data                          &&
+      gimp_data_is_deletable (data) &&
       gimp_data_factory_view_have (view,
                                    GIMP_OBJECT (data)))
     {

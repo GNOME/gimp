@@ -172,7 +172,7 @@ palette_delete_invoker (GimpProcedure      *procedure,
     {
       GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
-      if (palette && GIMP_DATA (palette)->deletable)
+      if (palette && gimp_data_is_deletable (GIMP_DATA (palette)))
         success = gimp_data_factory_data_delete (gimp->palette_factory,
                                                  GIMP_DATA (palette),
                                                  TRUE, error);
@@ -204,7 +204,7 @@ palette_is_editable_invoker (GimpProcedure      *procedure,
       GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
       if (palette)
-        editable = GIMP_DATA (palette)->writable;
+        editable = gimp_data_is_writable (GIMP_DATA (palette));
       else
         success = FALSE;
     }

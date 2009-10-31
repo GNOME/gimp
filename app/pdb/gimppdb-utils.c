@@ -81,7 +81,7 @@ gimp_pdb_get_brush (Gimp         *gimp,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Brush '%s' not found"), name);
     }
-  else if (writable && ! GIMP_DATA (brush)->writable)
+  else if (writable && ! gimp_data_is_writable (GIMP_DATA (brush)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Brush '%s' is not editable"), name);
@@ -170,7 +170,7 @@ gimp_pdb_get_gradient (Gimp         *gimp,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Gradient '%s' not found"), name);
     }
-  else if (writable && ! GIMP_DATA (gradient)->writable)
+  else if (writable && ! gimp_data_is_writable (GIMP_DATA (gradient)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Gradient '%s' is not editable"), name);
@@ -205,7 +205,7 @@ gimp_pdb_get_palette (Gimp         *gimp,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Palette '%s' not found"), name);
     }
-  else if (writable && ! GIMP_DATA (palette)->writable)
+  else if (writable && ! gimp_data_is_writable (GIMP_DATA (palette)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Palette '%s' is not editable"), name);

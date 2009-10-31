@@ -76,7 +76,7 @@ gradient_editor_left_color_cmd_callback (GtkAction *action,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  editor->left_saved_dirty    = GIMP_DATA (gradient)->dirty;
+  editor->left_saved_dirty    = gimp_data_is_dirty (GIMP_DATA (gradient));
   editor->left_saved_segments = gradient_editor_save_selection (editor);
 
   editor->color_dialog =
@@ -227,7 +227,7 @@ gradient_editor_right_color_cmd_callback (GtkAction *action,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  editor->right_saved_dirty    = GIMP_DATA (gradient)->dirty;
+  editor->right_saved_dirty    = gimp_data_is_dirty (GIMP_DATA (gradient));
   editor->right_saved_segments = gradient_editor_save_selection (editor);
 
   editor->color_dialog =
@@ -749,7 +749,8 @@ gradient_editor_left_color_update (GimpColorDialog      *dialog,
 
     case GIMP_COLOR_DIALOG_CANCEL:
       gradient_editor_replace_selection (editor, editor->left_saved_segments);
-      GIMP_DATA (gradient)->dirty = editor->left_saved_dirty;
+      if (! editor->left_saved_dirty)
+        gimp_data_clean (GIMP_DATA (gradient));
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
@@ -796,7 +797,8 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
 
     case GIMP_COLOR_DIALOG_CANCEL:
       gradient_editor_replace_selection (editor, editor->right_saved_segments);
-      GIMP_DATA (gradient)->dirty = editor->right_saved_dirty;
+      if (! editor->right_saved_dirty)
+        gimp_data_clean (GIMP_DATA (gradient));
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;

@@ -185,7 +185,7 @@ gradient_is_editable_invoker (GimpProcedure      *procedure,
       GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
       if (gradient)
-        editable = GIMP_DATA (gradient)->writable;
+        editable = gimp_data_is_writable (GIMP_DATA (gradient));
       else
         success = FALSE;
     }
@@ -255,7 +255,7 @@ gradient_delete_invoker (GimpProcedure      *procedure,
     {
       GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
-      if (gradient && GIMP_DATA (gradient)->deletable)
+      if (gradient && gimp_data_is_deletable (GIMP_DATA (gradient)))
         success = gimp_data_factory_data_delete (gimp->gradient_factory,
                                                  GIMP_DATA (gradient),
                                                  TRUE, error);
@@ -1098,7 +1098,7 @@ gradient_segment_range_replicate_invoker (GimpProcedure      *procedure,
       gradient = gradient_get_range (gimp, name, start_segment, end_segment,
                                      &start_seg, &end_seg, error);
 
-      if (start_seg && GIMP_DATA (gradient)->writable)
+      if (start_seg && gimp_data_is_writable (GIMP_DATA (gradient)))
         {
           gimp_gradient_segment_range_replicate (gradient,
                                                  start_seg, end_seg,

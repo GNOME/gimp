@@ -48,21 +48,6 @@ typedef struct _GimpDataClass GimpDataClass;
 struct _GimpData
 {
   GimpViewable  parent_instance;
-
-  GQuark        mime_type;
-  guint         writable  : 1;
-  guint         deletable : 1;
-  guint         dirty     : 1;
-  guint         internal  : 1;
-  gint          freeze_count;
-  time_t        mtime;
-
-  /* Identifies the GimpData object across sessions. Used when there
-   * is not a filename associated with the object.
-   */
-  gchar        *identifier;
-
-  GList        *tags;
 };
 
 struct _GimpDataClass
@@ -86,8 +71,12 @@ gboolean      gimp_data_save             (GimpData     *data,
                                           GError      **error);
 
 void          gimp_data_dirty            (GimpData     *data);
+void          gimp_data_clean            (GimpData     *data);
+gboolean      gimp_data_is_dirty         (GimpData     *data);
+
 void          gimp_data_freeze           (GimpData     *data);
 void          gimp_data_thaw             (GimpData     *data);
+gboolean      gimp_data_is_frozen        (GimpData     *data);
 
 gboolean      gimp_data_delete_from_disk (GimpData     *data,
                                           GError      **error);
@@ -104,10 +93,18 @@ const gchar * gimp_data_get_filename     (GimpData     *data);
 
 const gchar * gimp_data_get_mime_type    (GimpData     *data);
 
+gboolean      gimp_data_is_writable      (GimpData     *data);
+gboolean      gimp_data_is_deletable     (GimpData     *data);
+
+void          gimp_data_set_mtime        (GimpData     *data,
+                                          time_t        mtime);
+time_t        gimp_data_get_mtime        (GimpData     *data);
+
 GimpData    * gimp_data_duplicate        (GimpData     *data);
 
 void          gimp_data_make_internal    (GimpData     *data,
                                           const gchar  *identifier);
+gboolean      gimp_data_is_internal      (GimpData     *data);
 
 gint          gimp_data_compare          (GimpData     *data1,
                                           GimpData     *data2);

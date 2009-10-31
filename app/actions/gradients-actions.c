@@ -131,7 +131,7 @@ gradients_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradients-duplicate",     gradient);
   SET_SENSITIVE ("gradients-save-as-pov",   gradient);
   SET_SENSITIVE ("gradients-copy-location", gradient && filename);
-  SET_SENSITIVE ("gradients-delete",        gradient && data->deletable);
+  SET_SENSITIVE ("gradients-delete",        gradient && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE
 }

@@ -532,7 +532,7 @@ gimp_curve_get_standard (void)
     {
       standard_curve = gimp_curve_new ("Standard");
 
-      standard_curve->dirty = FALSE;
+      gimp_data_clean (standard_curve);
       gimp_data_make_internal (standard_curve,
                                "gimp-curve-standard");
 
@@ -887,7 +887,7 @@ gimp_curve_calculate (GimpCurve *curve)
   gint  num_pts;
   gint  p1, p2, p3, p4;
 
-  if (GIMP_DATA (curve)->freeze_count > 0)
+  if (gimp_data_is_frozen (GIMP_DATA (curve)))
     return;
 
   points = g_newa (gint, curve->n_points);

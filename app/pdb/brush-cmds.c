@@ -206,7 +206,7 @@ brush_delete_invoker (GimpProcedure      *procedure,
     {
       GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
-      if (brush && GIMP_DATA (brush)->deletable)
+      if (brush && gimp_data_is_deletable (GIMP_DATA (brush)))
         success = gimp_data_factory_data_delete (gimp->brush_factory,
                                                  GIMP_DATA (brush),
                                                  TRUE, error);
@@ -238,7 +238,7 @@ brush_is_editable_invoker (GimpProcedure      *procedure,
       GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush)
-        editable = GIMP_DATA (brush)->writable;
+        editable = gimp_data_is_writable (GIMP_DATA (brush));
       else
         success = FALSE;
     }

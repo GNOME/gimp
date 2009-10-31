@@ -402,7 +402,7 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
 
       name = g_strstrip (g_strdup (new_name));
 
-      if (data->writable && strlen (name))
+      if (gimp_data_is_writable (data) && strlen (name))
         {
           gimp_object_take_name (GIMP_OBJECT (data), name);
         }

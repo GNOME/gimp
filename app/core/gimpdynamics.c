@@ -347,9 +347,8 @@ gimp_dynamics_get_standard (void)
     {
       standard_dynamics = gimp_dynamics_new ("Standard dynamics");
 
-      standard_dynamics->dirty = FALSE;
-      gimp_data_make_internal (standard_dynamics,
-                               "gimp-dynamics-standard");
+      gimp_data_clean (standard_dynamics);
+      gimp_data_make_internal (standard_dynamics, "gimp-dynamics-standard");
 
       g_object_ref (standard_dynamics);
     }

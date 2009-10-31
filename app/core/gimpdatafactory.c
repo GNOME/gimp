@@ -287,7 +287,7 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
 
   if (skip_internal)
     {
-      while (list && GIMP_DATA (list->data)->internal)
+      while (list && gimp_data_is_internal (GIMP_DATA (list->data)))
         list = g_list_next (list);
     }
 
@@ -431,7 +431,8 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
       if (! gimp_data_get_filename (data))
         gimp_data_create_filename (data, writable_dir);
 
-      if (data->dirty && data->writable)
+      if (gimp_data_is_dirty (data) &&
+          gimp_data_is_writable (data))
         {
           GError *error = NULL;
 
@@ -592,7 +593,7 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! data->dirty)
+  if (! gimp_data_is_dirty (data))
     return TRUE;
 
   if (! gimp_data_get_filename (data))
@@ -617,7 +618,7 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
       g_free (writable_dir);
     }
 
-  if (! data->writable)
+  if (! gimp_data_is_writable (data))
     return FALSE;
 
   if (! gimp_data_save (data, error))
@@ -810,7 +811,8 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
       {
         GimpData *data = cached_data->data;
 
-        load_from_disk = (data->mtime == 0 || data->mtime != file_data->mtime);
+        load_from_disk = (gimp_data_get_mtime (data) == 0 ||
+                          gimp_data_get_mtime (data) != file_data->mtime);
 
         if (! load_from_disk)
           {
@@ -850,8 +852,9 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
                 gimp_data_set_filename (data, file_data->filename,
                                         writable, deletable);
-                data->mtime = file_data->mtime;
-                data->dirty = FALSE;
+                gimp_data_set_mtime (data, file_data->mtime);
+
+                gimp_data_clean (data);
 
                 if (strstr (file_data->dirname, GIMP_OBSOLETE_DATA_DIR_NAME))
                   gimp_container_add (factory->priv->container_obsolete,

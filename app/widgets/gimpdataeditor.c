@@ -476,7 +476,7 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry), "");
     }
 
-  editable = (editor->data && editor->data->writable);
+  editable = (editor->data && gimp_data_is_writable (editor->data));
 
   if (editor->data_editable != editable)
     {
@@ -637,14 +637,17 @@ gimp_data_editor_save_dirty (GimpDataEditor *editor)
 {
   GimpData *data = editor->data;
 
-  if (data && data->dirty && data->writable)
+  if (data                      &&
+      gimp_data_is_dirty (data) &&
+      gimp_data_is_writable (data))
     {
       GError *error = NULL;
 
       if (! gimp_data_factory_data_save_single (editor->data_factory, data,
                                                 &error))
         {
-          gimp_message_literal (gimp_data_factory_get_gimp (editor->data_factory), G_OBJECT (editor),
+          gimp_message_literal (gimp_data_factory_get_gimp (editor->data_factory),
+                                G_OBJECT (editor),
 				GIMP_MESSAGE_ERROR,
 				error->message);
           g_clear_error (&error);

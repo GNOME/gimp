@@ -511,7 +511,7 @@ context_brush_spacing_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH (brush) && GIMP_DATA (brush)->writable)
+  if (GIMP_IS_BRUSH (brush) && gimp_data_is_writable (GIMP_DATA (brush)))
     {
       action_select_property ((GimpActionSelectType) value,
                               action_data_get_display (data),
@@ -532,7 +532,8 @@ context_brush_shape_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       GimpDisplay        *display;
@@ -564,7 +565,8 @@ context_brush_radius_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       GimpDisplay        *display;
@@ -623,7 +625,8 @@ context_brush_spikes_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       action_select_property ((GimpActionSelectType) value,
                               action_data_get_display (data),
@@ -644,7 +647,8 @@ context_brush_hardness_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       action_select_property ((GimpActionSelectType) value,
                               action_data_get_display (data),
@@ -665,7 +669,8 @@ context_brush_aspect_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       action_select_property ((GimpActionSelectType) value,
                               action_data_get_display (data),
@@ -686,7 +691,8 @@ context_brush_angle_cmd_callback (GtkAction *action,
 
   brush = gimp_context_get_brush (context);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       GimpBrushGenerated *generated = GIMP_BRUSH_GENERATED (brush);
       GimpDisplay        *display;

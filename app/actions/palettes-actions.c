@@ -137,7 +137,7 @@ palettes_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("palettes-duplicate",     palette && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("palettes-merge",         FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
   SET_SENSITIVE ("palettes-copy-location", palette && filename);
-  SET_SENSITIVE ("palettes-delete",        palette && data->deletable);
+  SET_SENSITIVE ("palettes-delete",        palette && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE
 }

@@ -123,7 +123,7 @@ dynamics_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("dynamics-edit",          dynamics);
   SET_SENSITIVE ("dynamics-duplicate",     dynamics && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("dynamics-copy-location", dynamics && filename);
-  SET_SENSITIVE ("dynamics-delete",        dynamics && data->deletable);
+  SET_SENSITIVE ("dynamics-delete",        dynamics && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE
 }
