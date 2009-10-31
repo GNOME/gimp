@@ -35,7 +35,7 @@ gimp_dynamics_save (GimpData  *data,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return gimp_config_serialize_to_file (GIMP_CONFIG (data),
-                                        data->filename,
+                                        gimp_data_get_filename (data),
                                         "GIMP dynamics file",
                                         "end of GIMP dynamics file",
                                         NULL, error);

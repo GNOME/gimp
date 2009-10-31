@@ -83,9 +83,9 @@ data_open_as_image_cmd_callback (GtkAction *action,
     gimp_context_get_by_type (context,
                               gimp_data_factory_view_get_children_type (view));
 
-  if (data && data->filename)
+  if (data && gimp_data_get_filename (data))
     {
-      gchar *uri = g_filename_to_uri (data->filename, NULL, NULL);
+      gchar *uri = g_filename_to_uri (gimp_data_get_filename (data), NULL, NULL);
 
       if (uri)
         {
@@ -188,14 +188,19 @@ data_copy_location_cmd_callback (GtkAction *action,
     gimp_context_get_by_type (context,
                               gimp_data_factory_view_get_children_type (view));
 
-  if (data && data->filename && *data->filename)
+  if (data)
     {
-      gchar *uri = g_filename_to_uri (data->filename, NULL, NULL);
+      const gchar *filename = gimp_data_get_filename (data);
 
-      if (uri)
+      if (filename && *filename)
         {
-          gimp_clipboard_set_text (context->gimp, uri);
-          g_free (uri);
+          gchar *uri = g_filename_to_uri (filename, NULL, NULL);
+
+          if (uri)
+            {
+              gimp_clipboard_set_text (context->gimp, uri);
+              g_free (uri);
+            }
         }
     }
 }

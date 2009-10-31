@@ -106,25 +106,30 @@ void
 brushes_actions_update (GimpActionGroup *group,
                         gpointer         user_data)
 {
-  GimpContext *context = action_data_get_context (user_data);
-  GimpBrush   *brush   = NULL;
-  GimpData    *data    = NULL;
+  GimpContext *context  = action_data_get_context (user_data);
+  GimpBrush   *brush    = NULL;
+  GimpData    *data     = NULL;
+  const gchar *filename = NULL;
 
   if (context)
     {
       brush = gimp_context_get_brush (context);
 
       if (brush)
-        data = GIMP_DATA (brush);
+        {
+          data = GIMP_DATA (brush);
+
+          filename = gimp_data_get_filename (data);
+        }
     }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("brushes-edit",          brush);
-  SET_SENSITIVE ("brushes-open-as-image", brush && data->filename && ! GIMP_IS_BRUSH_GENERATED (brush));
+  SET_SENSITIVE ("brushes-open-as-image", brush && filename && ! GIMP_IS_BRUSH_GENERATED (brush));
   SET_SENSITIVE ("brushes-duplicate",     brush && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("brushes-copy-location", brush && data->filename);
+  SET_SENSITIVE ("brushes-copy-location", brush && filename);
   SET_SENSITIVE ("brushes-delete",        brush && data->deletable);
 
 #undef SET_SENSITIVE

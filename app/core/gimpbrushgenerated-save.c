@@ -54,13 +54,13 @@ gimp_brush_generated_save (GimpData  *data,
 
   g_return_val_if_fail (name != NULL && *name != '\0', FALSE);
 
-  file = g_fopen (data->filename, "wb");
+  file = g_fopen (gimp_data_get_filename (data), "wb");
 
   if (! file)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (data->filename),
+                   gimp_filename_to_utf8 (gimp_data_get_filename (data)),
                    g_strerror (errno));
       return FALSE;
     }

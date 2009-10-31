@@ -110,13 +110,18 @@ gradients_actions_update (GimpActionGroup *group,
   GimpContext  *context  = action_data_get_context (user_data);
   GimpGradient *gradient = NULL;
   GimpData     *data     = NULL;
+  const gchar  *filename = NULL;
 
   if (context)
     {
       gradient = gimp_context_get_gradient (context);
 
       if (gradient)
-        data = GIMP_DATA (gradient);
+        {
+          data = GIMP_DATA (gradient);
+
+          filename = gimp_data_get_filename (data);
+        }
     }
 
 #define SET_SENSITIVE(action,condition) \
@@ -125,7 +130,7 @@ gradients_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradients-edit",          gradient);
   SET_SENSITIVE ("gradients-duplicate",     gradient);
   SET_SENSITIVE ("gradients-save-as-pov",   gradient);
-  SET_SENSITIVE ("gradients-copy-location", gradient && data->filename);
+  SET_SENSITIVE ("gradients-copy-location", gradient && filename);
   SET_SENSITIVE ("gradients-delete",        gradient && data->deletable);
 
 #undef SET_SENSITIVE
