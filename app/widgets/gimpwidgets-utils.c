@@ -56,7 +56,6 @@
 
 #include "widgets-types.h"
 
-#include "gimpdockseparator.h"
 #include "gimperrordialog.h"
 #include "gimpwidgets-utils.h"
 
