@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-30 18:30+0200\n"
-"PO-Revision-Date: 2009-10-30 18:29+0300\n"
+"POT-Creation-Date: 2009-10-31 20:38+0200\n"
+"PO-Revision-Date: 2009-10-31 20:38+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -909,17 +909,17 @@ msgstr "بدّل بين ألوان المقدمة والخلفية"
 msgid "Paint Mode: %s"
 msgstr "نمط ال_تلوين: %s"
 
-#: ../app/actions/context-commands.c:551
+#: ../app/actions/context-commands.c:552
 #, c-format
 msgid "Brush Shape: %s"
 msgstr "شكل الفُرَشاة: %s"
 
-#: ../app/actions/context-commands.c:610
+#: ../app/actions/context-commands.c:612
 #, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "نصف قطر الفرشاة: %2.2f"
 
-#: ../app/actions/context-commands.c:714
+#: ../app/actions/context-commands.c:720
 #, c-format
 msgid "Brush Angle: %2.2f"
 msgstr "زاوية الفرشاة: %2.2f"
@@ -960,21 +960,21 @@ msgstr ""
 #: ../app/actions/data-commands.c:132
 #: ../app/core/gimpbrushgenerated-load.c:124 ../app/core/gimpimage.c:1437
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:222
-#: ../app/core/gimppalette.c:378 ../app/dialogs/palette-import-dialog.c:771
+#: ../app/core/gimppalette.c:377 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "غير معنون"
 
-#: ../app/actions/data-commands.c:232
+#: ../app/actions/data-commands.c:237
 msgid "Delete Object"
 msgstr "احذف الكائن"
 
-#: ../app/actions/data-commands.c:255
+#: ../app/actions/data-commands.c:260
 #, c-format
 msgid "Delete '%s'?"
 msgstr "أأحذف '%s'؟"
 
-#: ../app/actions/data-commands.c:258
+#: ../app/actions/data-commands.c:263
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
@@ -3140,7 +3140,7 @@ msgstr "يغيّر الحجم"
 
 #: ../app/actions/image-commands.c:316
 msgid "Set Image Print Resolution"
-msgstr "اضبط استبانة طباعة الصورة"
+msgstr "اضبط ميْز طباعة الصورة"
 
 #: ../app/actions/image-commands.c:378
 #: ../app/pdb/drawable-transform-cmds.c:147
@@ -5858,7 +5858,7 @@ msgstr "يحدد مستوى الزيادة المستخدم في التحجيم 
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid "How many recently opened image filenames to keep on the File menu."
-msgstr ""
+msgstr "ما عدد الملفات المفتوحة حديثة التي ستوضع في قائمة ملف."
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid ""
@@ -5871,6 +5871,7 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
+"سيُحذّر جمب المُستخدم عند محاولة إنشاء صورة تأخذ ذاكرة أكبر من الحجم المحدد هنا."
 
 #: ../app/config/gimprc-blurbs.h:213
 msgid ""
@@ -5906,7 +5907,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:241
 msgid "Sets how many processors GIMP should try to use simultaneously."
-msgstr ""
+msgstr "تحدد عدد المعالجات التي سيُحاول جمب استخدامها معا."
 
 #: ../app/config/gimprc-blurbs.h:254
 msgid ""
@@ -5929,6 +5930,8 @@ msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr ""
+"يحدد حجم المعاينة المستخدم لمعاينات الطبقات والقنوات في الحوارات المُنشأة "
+"حديثا."
 
 #: ../app/config/gimprc-blurbs.h:279
 msgid ""
@@ -5950,17 +5953,18 @@ msgstr "دع جمب يحاول استعادة آخر جلسة محفوظة عن�
 #: ../app/config/gimprc-blurbs.h:290
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr ""
+msgstr "تذكّر الأداة والنمط واللون والفرشاة الحالية عبر جلسات جمب."
 
 #: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
 msgstr ""
+"احفظ سجلا دائما بكل الملفات المفتوحة والمحفوظة في قائمة المستندات الحديثة."
 
 #: ../app/config/gimprc-blurbs.h:298
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
-msgstr ""
+msgstr "احفظ مواضع وأحجام الحوارات الرئيسية عند غلق جمب."
 
 #: ../app/config/gimprc-blurbs.h:301
 msgid "Save the tool options when GIMP exits."
@@ -6047,11 +6051,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Use GIMP in a single-window mode."
-msgstr ""
+msgstr "استخدم جمب في نمط النافذة المفردة."
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid "What to do when the space bar is pressed in the image window."
-msgstr ""
+msgstr "ماذا يفعل عند ضغط مسطرة المسافات في نافذة الصورة."
 
 #: ../app/config/gimprc-blurbs.h:365
 msgid ""
@@ -6065,7 +6069,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:374
 msgid "When enabled, menus can be torn off."
-msgstr ""
+msgstr "عند تفعيله سيُمكن تعطيل القوائم."
 
 #: ../app/config/gimprc-blurbs.h:377
 msgid ""
@@ -6079,7 +6083,7 @@ msgstr "احفظ اختصارات لوحة المفاتيح المغيّرة ع�
 
 #: ../app/config/gimprc-blurbs.h:384
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr ""
+msgstr "استعد اختصارات لوحة المفاتيح المحفوظة عند كل تشغيل لجِمب."
 
 #: ../app/config/gimprc-blurbs.h:387
 msgid ""
@@ -6091,7 +6095,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:399
 msgid "Sets the size of the thumbnail shown in the Open dialog."
-msgstr ""
+msgstr "تحدد حجم المصغّرة المعروضة في حوار الفتح."
 
 #: ../app/config/gimprc-blurbs.h:402
 msgid ""
@@ -6152,7 +6156,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:446
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr ""
+msgstr "عند تفعيله سيُفتح متصفّح المساعدة عند ضغط F1."
 
 #: ../app/config/gimprc-deserialize.c:134 ../app/core/gimp-modules.c:133
 #: ../app/core/gimp-units.c:163 ../app/gui/session.c:226
@@ -6287,10 +6291,9 @@ msgid "Stroke with a paint tool"
 msgstr "ارسم السطر بأداة الرسم"
 
 #: ../app/core/core-enums.c:345
-#, fuzzy
 msgctxt "join-style"
 msgid "Miter"
-msgstr "المؤشر"
+msgstr "حاد"
 
 #: ../app/core/core-enums.c:346
 msgctxt "join-style"
@@ -6305,7 +6308,7 @@ msgstr "مشطوف"
 #: ../app/core/core-enums.c:376
 msgctxt "cap-style"
 msgid "Butt"
-msgstr "النهاية"
+msgstr "نهاية"
 
 #: ../app/core/core-enums.c:377
 msgctxt "cap-style"
@@ -7306,13 +7309,13 @@ msgstr "الإعتام"
 msgid "Paint Mode"
 msgstr "نمط التلوين"
 
-#: ../app/core/gimpdata.c:570 ../app/core/gimptoolpresets.c:277
+#: ../app/core/gimpdata.c:654 ../app/core/gimptoolpresets.c:277
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "تعذّر حذف '%s'‏: %s"
 
-#: ../app/core/gimpdatafactory.c:444 ../app/core/gimpdatafactory.c:602
-#: ../app/core/gimpdatafactory.c:622
+#: ../app/core/gimpdatafactory.c:418 ../app/core/gimpdatafactory.c:447
+#: ../app/core/gimpdatafactory.c:609 ../app/core/gimpdatafactory.c:631
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7323,21 +7326,43 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:521 ../app/core/gimpdatafactory.c:524
+#: ../app/core/gimpdatafactory.c:525 ../app/core/gimpdatafactory.c:528
 #: ../app/core/gimpitem.c:422 ../app/core/gimpitem.c:425
 msgid "copy"
 msgstr "انسخ"
 
-#: ../app/core/gimpdatafactory.c:533 ../app/core/gimpitem.c:434
+#: ../app/core/gimpdatafactory.c:537 ../app/core/gimpitem.c:434
 #, c-format
 msgid "%s copy"
 msgstr "نسخة %s"
 
-#: ../app/core/gimpdatafactory.c:603
-msgid "You don't have a writable data folder configured."
-msgstr "لا تمتلك مجلد بيانات مُعدّ قابل للكتابة."
+#: ../app/core/gimpdatafactory.c:728
+#, c-format
+msgid ""
+"You have a writable data folder configured (%s), but this folder does not "
+"exist. Please create the folder or fix your configuation in the preferences "
+"dialog's 'folders' section."
+msgstr ""
+"لديك مجلد بيانات مُعدّ قابل للكتابة (%s) لكن هذا المجلد لا وجود له. من فضلك "
+"أنشئ المجلد أو أصلح التضبيطات في قسم المجلدات من حوار التفضيلات."
 
-#: ../app/core/gimpdatafactory.c:816
+#: ../app/core/gimpdatafactory.c:749
+#, c-format
+msgid ""
+"You have a writable data folder configured, but this folder is not part of "
+"your data search path. This can only happen if you edited gimprc manually, "
+"please fix it in the preferences dialog's 'folders' section."
+msgstr ""
+"لديك مجلد بيانات مُعدّ لكن هذا المجلد ليس جزءا من مسار بحث البيانات. لا يحدث "
+"هذا إلا إذا كنت قد حررت ملف gimprc يدويا. من فضلك أصلحه في قسم المجلدات من "
+"حوار التفضيلات."
+
+#: ../app/core/gimpdatafactory.c:759
+#, c-format
+msgid "You don't have any writable data folder configured."
+msgstr "لا تمتلك أي مجلد بيانات مُعدّ قابل للكتابة."
+
+#: ../app/core/gimpdatafactory.c:875
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -7709,7 +7734,7 @@ msgstr "تعذّر التراجع عن %s"
 
 #: ../app/core/gimpimage.c:1539
 msgid "Change Image Resolution"
-msgstr "غيّر استبانة الصورة"
+msgstr "غيّر ميْز الصورة"
 
 #: ../app/core/gimpimage.c:1583
 msgid "Change Image Unit"
@@ -8147,11 +8172,11 @@ msgstr ""
 
 #: ../app/core/gimptemplate.c:112
 msgid "The horizontal image resolution."
-msgstr "الاستبانة الأفقية للشاشة"
+msgstr "الميْز الأفقي للشاشة"
 
 #: ../app/core/gimptemplate.c:118
 msgid "The vertical image resolution."
-msgstr "الاستبانة الرأسية للشاشة"
+msgstr "الميْز الرأسي للشاشة"
 
 #: ../app/core/gimptemplate.c:404
 msgid "Background"
@@ -9277,7 +9302,7 @@ msgstr "افحص ال_حجم:"
 
 #: ../app/dialogs/preferences-dialog.c:2330
 msgid "Monitor Resolution"
-msgstr "استبانة الشاشة"
+msgstr "ميْز الشاشة"
 
 #. Pixels
 #: ../app/dialogs/preferences-dialog.c:2334
@@ -9593,12 +9618,12 @@ msgstr "الار_تفاع:"
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:287
 msgid "_X resolution:"
-msgstr "استبانة _س:"
+msgstr "ميْز _س:"
 
 #: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:266
 #: ../app/widgets/gimptemplateeditor.c:294
 msgid "_Y resolution:"
-msgstr "استبانة _ص:"
+msgstr "ميْز _ص:"
 
 #: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:259
 #: ../app/widgets/gimptemplateeditor.c:307
@@ -9651,7 +9676,7 @@ msgstr "غيّر حجم ال_طبقات:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:71
 msgid "Calibrate Monitor Resolution"
-msgstr "عايِر استبانة الشاشة"
+msgstr "عايِر ميْز الشاشة"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:130
 msgid "Measure the rulers and enter their lengths:"
@@ -10536,7 +10561,7 @@ msgstr ""
 #: ../app/pdb/image-cmds.c:2304
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
-msgstr "استبانة الصورة جاوزت الحد، سأستخدم الاستبانة المبدئية بدلا منها."
+msgstr "ميْز الصورة جاوز الحد، سأستخدم الميْز المبدئي بدلا منه."
 
 #: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:198
 msgid "Free Select"
@@ -11433,7 +11458,7 @@ msgstr "لا يمكن قراءة الترويسة من '%s'‏: %s"
 
 #: ../app/tools/gimpcurvestool.c:717
 msgid "Use _old curves file format"
-msgstr ""
+msgstr "استخدم نسق ملفات المنحنيات ال_قديم"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 msgid "Desaturate Tool: Turn colors into shades of gray"
@@ -12832,7 +12857,7 @@ msgstr "المسار إلى التحديد"
 
 #: ../app/tools/gimpvectortool.c:1973
 msgid "There is no active layer or channel to stroke to"
-msgstr ""
+msgstr "لا توجد طبقة أو قناة نشطة لرسم الحواف بها"
 
 #: ../app/tools/tools-enums.c:91
 msgctxt "rectangle-guide"
@@ -13834,7 +13859,7 @@ msgstr "حجم الطباعة:"
 
 #: ../app/widgets/gimpimagepropview.c:128
 msgid "Resolution:"
-msgstr "الاستبانة:"
+msgstr "الميْز:"
 
 #: ../app/widgets/gimpimagepropview.c:131
 msgid "Color space:"
@@ -13952,7 +13977,7 @@ msgstr "الأعمدة:"
 
 #: ../app/widgets/gimpprofilechooserdialog.c:136
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr ""
+msgstr "لاحة ألوان ICC ‏(‪*.icc‬،‏ ‪*.icm‬)"
 
 #: ../app/widgets/gimpprogressdialog.c:221
 msgid "Progress"
@@ -14471,7 +14496,7 @@ msgstr ""
 
 #: ../app/xcf/xcf-read.c:108
 msgid "Invalid UTF-8 string in XCF file"
-msgstr ""
+msgstr "سلسلة UTF-8 غير صحيحة في ملف XCF"
 
 #: ../app/xcf/xcf-write.c:86
 #, c-format
@@ -14479,9 +14504,9 @@ msgid "Error writing XCF: %s"
 msgstr "خطأ في كتابة إكس.سي.إف: %s"
 
 #: ../app/xcf/xcf-seek.c:43 ../app/xcf/xcf-seek.c:60 ../app/xcf/xcf-seek.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Could not seek in XCF file: %s"
-msgstr "لا يمكن البحث في ملف إكس.سي.إف: %s"
+msgstr "لا يمكن البحث في ملف XCF: %s"
 
 #: ../app/xcf/xcf.c:98 ../app/xcf/xcf.c:166
 msgid "GIMP XCF image"
