@@ -247,130 +247,33 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
-  shell->display                = NULL;
+  shell->options            = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
+  shell->fullscreen_options = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
+  shell->no_image_options   = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
 
-  shell->popup_manager          = NULL;
+  shell->zoom        = gimp_zoom_model_new ();
+  shell->dot_for_dot = TRUE;
+  shell->scale_x     = 1.0;
+  shell->scale_y     = 1.0;
+  shell->x_dest_inc  = 1;
+  shell->y_dest_inc  = 1;
+  shell->x_src_dec   = 1;
+  shell->y_src_dec   = 1;
 
-  shell->options                = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
-  shell->fullscreen_options     = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
-  shell->no_image_options       = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
+  shell->render_buf = g_new (guchar,
+                             GIMP_DISPLAY_RENDER_BUF_WIDTH  *
+                             GIMP_DISPLAY_RENDER_BUF_HEIGHT * 3);
 
-  shell->snap_to_guides         = TRUE;
-  shell->snap_to_grid           = FALSE;
-  shell->snap_to_canvas         = FALSE;
-  shell->snap_to_vectors        = FALSE;
+  shell->icon_size  = 32;
 
-  shell->unit                   = GIMP_UNIT_PIXEL;
+  shell->cursor_format   = GIMP_CURSOR_FORMAT_BITMAP;
+  shell->current_cursor  = (GimpCursorType) -1;
+  shell->tool_cursor     = GIMP_TOOL_CURSOR_NONE;
+  shell->cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
+  shell->override_cursor = (GimpCursorType) -1;
 
-  shell->zoom                   = gimp_zoom_model_new ();
-  shell->other_scale            = 0.0;
-  shell->dot_for_dot            = TRUE;
-
-  shell->offset_x               = 0;
-  shell->offset_y               = 0;
-  shell->scale_x                = 1.0;
-  shell->scale_y                = 1.0;
-  shell->x_dest_inc             = 1;
-  shell->y_dest_inc             = 1;
-  shell->x_src_dec              = 1;
-  shell->y_src_dec              = 1;
-
-  shell->last_scale             = 0.0;
-  shell->last_scale_time        = 0;
-  shell->last_offset_x          = 0;
-  shell->last_offset_y          = 0;
-
-  shell->last_motion_time       = 0;
-  shell->last_motion_delta_x    = 0.0;
-  shell->last_motion_delta_y    = 0.0;
-  shell->last_motion_distance   = 0.0;
-  shell->last_motion_delta_time = 0.0;
-
-  shell->disp_width             = 0;
-  shell->disp_height            = 0;
-
-  shell->proximity              = FALSE;
-
-  shell->selection              = NULL;
-
-  shell->canvas                 = NULL;
-  shell->grid_gc                = NULL;
-  shell->pen_gc                 = NULL;
-
-  shell->hsbdata                = NULL;
-  shell->vsbdata                = NULL;
-  shell->hsb                    = NULL;
-  shell->vsb                    = NULL;
-
-  shell->hrule                  = NULL;
-  shell->vrule                  = NULL;
-
-  shell->origin                 = NULL;
-  shell->quick_mask_button      = NULL;
-  shell->zoom_button            = NULL;
-  shell->nav_ebox               = NULL;
-
-  shell->render_buf             = g_new (guchar,
-                                         GIMP_DISPLAY_RENDER_BUF_WIDTH  *
-                                         GIMP_DISPLAY_RENDER_BUF_HEIGHT * 3);
-
-  shell->title_idle_id          = 0;
-
-  shell->icon_size              = 32;
-  shell->icon_idle_id           = 0;
-
-  shell->fill_idle_id           = 0;
-
-  shell->cursor_format          = GIMP_CURSOR_FORMAT_BITMAP;
-  shell->current_cursor         = (GimpCursorType) -1;
-  shell->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
-  shell->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
-
-  shell->override_cursor        = (GimpCursorType) -1;
-  shell->using_override_cursor  = FALSE;
-
-  shell->draw_cursor            = FALSE;
-  shell->have_cursor            = FALSE;
-  shell->cursor_x               = 0;
-  shell->cursor_y               = 0;
-
-  shell->close_dialog           = NULL;
-  shell->scale_dialog           = NULL;
-  shell->nav_popup              = NULL;
-  shell->grid_dialog            = NULL;
-
-  shell->filter_stack           = NULL;
-  shell->filter_idle_id         = 0;
-  shell->filters_dialog         = NULL;
-
-  shell->paused_count           = 0;
-
-  shell->zoom_on_resize         = FALSE;
-  shell->show_transform_preview = FALSE;
-
-  shell->size_allocate_from_configure_event = FALSE;
-
-  shell->space_pressed          = FALSE;
-  shell->space_release_pending  = FALSE;
-  shell->space_shaded_tool      = NULL;
-
-  shell->scrolling              = FALSE;
-  shell->scroll_start_x         = 0;
-  shell->scroll_start_y         = 0;
-  shell->button_press_before_focus = FALSE;
-
-  shell->highlight              = NULL;
-  shell->mask                   = NULL;
-
-  shell->event_history          = g_array_new (FALSE, FALSE,
-                                               sizeof (GimpCoords));
-  shell->event_queue            = g_array_new (FALSE, FALSE,
-                                               sizeof (GimpCoords));
-  shell->event_delay            = FALSE;
-
-  shell->event_delay_timeout    = 0;
-
-  shell->last_active_state      = 0;
+  shell->event_history = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+  shell->event_queue   = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
 
   gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK      |
                                               GDK_POINTER_MOTION_HINT_MASK |
