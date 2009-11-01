@@ -198,7 +198,7 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
             angle += 2.0 * G_PI;
           else if (angle > 2.0 * G_PI)
             angle -= 2.0 * G_PI;
-          ix = RINT (angle / (2.0 * G_PI) * pipe->rank[i]);
+          ix = (gint) RINT (angle / (2.0 * G_PI) * pipe->rank[i]) % pipe->rank[i];
           break;
 
         case PIPE_SELECT_VELOCITY:
