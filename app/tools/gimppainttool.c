@@ -50,8 +50,7 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE    15
-#define STATUSBAR_SIZE 200
+#define HANDLE_SIZE 15
 
 
 static GObject * gimp_paint_tool_constructor (GType                  type,
