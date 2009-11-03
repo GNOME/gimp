@@ -9,11 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&amp;component=general\n"
-"POT-Creation-Date: 2008-12-21 16:41+0000\n"
-"PO-Revision-Date: 2004-11-18 18:56+0100\n"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-10-31 17:54+0000\n"
+"PO-Revision-Date: 2009-11-03 00:07+0000\n"
 "Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
-"Language-Team: Serbian (sr) <gnom@prevod.org>\n"
+"Language-Team: Serbian <gnome@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,104 +21,104 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1045
+#: ../libgimp/gimp.c:1044
 msgid "success"
 msgstr "uspešno"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1049
+#: ../libgimp/gimp.c:1048
 msgid "execution error"
 msgstr "greška pri pokretanju"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1053
+#: ../libgimp/gimp.c:1052
 msgid "calling error"
 msgstr "greška pri pozivanju"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1057
+#: ../libgimp/gimp.c:1056
 msgid "cancelled"
 msgstr "otkazano"
 
-#: ../libgimp/gimpbrushselectbutton.c:170
+#: ../libgimp/gimpbrushselectbutton.c:169
 msgid "Brush Selection"
 msgstr "Izbor četkice"
 
-#: ../libgimp/gimpbrushselectbutton.c:913
-#: ../libgimp/gimppatternselectbutton.c:714
+#: ../libgimp/gimpbrushselectbutton.c:918
+#: ../libgimp/gimppatternselectbutton.c:716
 msgid "_Browse..."
 msgstr "_Razgledaj..."
 
-#: ../libgimp/gimpexport.c:224 ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:223 ../libgimp/gimpexport.c:259
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Dodatak %s ne radi sa slojevima"
 
-#: ../libgimp/gimpexport.c:225 ../libgimp/gimpexport.c:234
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:224 ../libgimp/gimpexport.c:233
+#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:260
 msgid "Merge Visible Layers"
 msgstr "Spoji uočljive slojeve"
 
-#: ../libgimp/gimpexport.c:233
+#: ../libgimp/gimpexport.c:232
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "Dodatak %s ne radi sa pomerajem, veličinom ili providnošću slojeva"
 
-#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:241 ../libgimp/gimpexport.c:250
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Dodatak %s radi samo sa slojevima u vidu kadrova za animacije"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:251
 msgid "Save as Animation"
 msgstr "Sačuvaj kao animaciju"
 
-#: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:269
 msgid "Flatten Image"
 msgstr "Izravnaj sliku"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:268
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Dodatak %s ne radi na providnim delovima"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:277
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Dodatak %s ne radi na maskama slojeva"
 
-#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:278
 msgid "Apply Layer Masks"
 msgstr "Primeni maske slojeva"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:286
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Dodatak %s radi samo sa RGB slikama"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:287 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:334
 msgid "Convert to RGB"
 msgstr "Prevedi u RGB"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:295
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Dodatak %s radi samo sa crno-belim slikama"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:346
 msgid "Convert to Grayscale"
 msgstr "Prevedi u crno-belo"
 
-#: ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Dodatak %s radi samo sa indeksiranim slikama"
 
-#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:335
-#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:305 ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:344
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -126,12 +126,12 @@ msgstr ""
 "Prevedi u indeksirano sa podrazumevanim vrednostima\n"
 "(Uradite to sami za veću kontrolu rezultata)"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:314
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "Dodatak %s radi samo sa bitmapiranim (dve boje) indeksiranim slikama"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:315
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -139,35 +139,35 @@ msgstr ""
 "Prevedi u indeksirano sa podrazumevanim bitmap vrednostima\n"
 "(Uradite to sami za veću kontrolu rezultata)"
 
-#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:324
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Dodatak %s radi samo sa RGB ili crno-belim slikama"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:333
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "Dodatak %s radi samo sa RGB ili indeksiranim slikama"
 
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:343
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "Dodatak %s radi samo sa crno-belim ili indeksiranim slikama"
 
-#: ../libgimp/gimpexport.c:355
+#: ../libgimp/gimpexport.c:354
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Dodatku %s je potreban alfa kanal"
 
-#: ../libgimp/gimpexport.c:356
+#: ../libgimp/gimpexport.c:355
 msgid "Add Alpha Channel"
 msgstr "Dodaj alfa kanal"
 
-#: ../libgimp/gimpexport.c:411
+#: ../libgimp/gimpexport.c:410
 msgid "Confirm Save"
 msgstr "Potvrdi čuvanje"
 
-#: ../libgimp/gimpexport.c:417
+#: ../libgimp/gimpexport.c:416
 msgid "Confirm"
 msgstr "Potvrdi"
 
@@ -179,12 +179,12 @@ msgstr "Izvezi datoteku"
 msgid "_Ignore"
 msgstr "_Zanemari"
 
-#: ../libgimp/gimpexport.c:498
+#: ../libgimp/gimpexport.c:498 ../libgimp/gimpexport.c:969
 msgid "_Export"
 msgstr "_Izvezi"
 
 #. the headline
-#: ../libgimp/gimpexport.c:527
+#: ../libgimp/gimpexport.c:528
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -194,11 +194,11 @@ msgstr ""
 "razloga:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:601
+#: ../libgimp/gimpexport.c:602
 msgid "The export conversion won't modify your original image."
 msgstr "Prevođenje pri izvozu neće izmeniti originalni snimak."
 
-#: ../libgimp/gimpexport.c:700
+#: ../libgimp/gimpexport.c:705
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -207,7 +207,7 @@ msgstr ""
 "Sačuvaćete masku sloja kao %s.\n"
 "Ovo neće sačuvati vidljive slojeve."
 
-#: ../libgimp/gimpexport.c:706
+#: ../libgimp/gimpexport.c:711
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -216,27 +216,31 @@ msgstr ""
 "Sačuvaćete kanal (sačuvani izbor) kao %s.\n"
 "Ovo neće sačuvati vidljive slojeve."
 
-#: ../libgimp/gimpfontselectbutton.c:130
+#: ../libgimp/gimpexport.c:960
+msgid "Export Image as "
+msgstr "Izvezi sliku kao "
+
+#: ../libgimp/gimpfontselectbutton.c:129
 msgid "Font Selection"
 msgstr "Izbor fonta"
 
-#: ../libgimp/gimpfontselectbutton.c:145
+#: ../libgimp/gimpfontselectbutton.c:144
 msgid "Sans"
 msgstr "Bezserifni"
 
-#: ../libgimp/gimpgradientselectbutton.c:148
+#: ../libgimp/gimpgradientselectbutton.c:147
 msgid "Gradient Selection"
 msgstr "Izbor preliva"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
+#: ../libgimp/gimpmenu.c:449 ../libgimpwidgets/gimpintstore.c:238
 msgid "(Empty)"
 msgstr "(Prazno)"
 
-#: ../libgimp/gimppaletteselectbutton.c:130
+#: ../libgimp/gimppaletteselectbutton.c:129
 msgid "Palette Selection"
 msgstr "Izbor palete"
 
-#: ../libgimp/gimppatternselectbutton.c:156
+#: ../libgimp/gimppatternselectbutton.c:155
 msgid "Pattern Selection"
 msgstr "Izbor mustre"
 
@@ -269,48 +273,48 @@ msgid "by type"
 msgstr "po vrsti"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:383
-#: ../libgimp/gimpprocbrowserdialog.c:534 ../libgimpwidgets/gimpbrowser.c:114
+#: ../libgimp/gimpprocbrowserdialog.c:385
+#: ../libgimp/gimpprocbrowserdialog.c:536 ../libgimpwidgets/gimpbrowser.c:130
 msgid "No matches"
 msgstr "Nema poklapanja"
 
-#: ../libgimp/gimpprocbrowserdialog.c:386
+#: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Search term invalid or incomplete"
 msgstr "Izraz za pretragu je neispravan ili nekompletan"
 
-#: ../libgimp/gimpprocbrowserdialog.c:395
+#: ../libgimp/gimpprocbrowserdialog.c:397
 msgid "Searching"
 msgstr "Tražim"
 
-#: ../libgimp/gimpprocbrowserdialog.c:406
+#: ../libgimp/gimpprocbrowserdialog.c:408
 msgid "Searching by name"
 msgstr "Tražim po nazivu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:427
+#: ../libgimp/gimpprocbrowserdialog.c:429
 msgid "Searching by description"
 msgstr "Tražim po opisu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:434
+#: ../libgimp/gimpprocbrowserdialog.c:436
 msgid "Searching by help"
 msgstr "Tražim po pomoći"
 
-#: ../libgimp/gimpprocbrowserdialog.c:441
+#: ../libgimp/gimpprocbrowserdialog.c:443
 msgid "Searching by author"
 msgstr "Tražim po autoru"
 
-#: ../libgimp/gimpprocbrowserdialog.c:448
+#: ../libgimp/gimpprocbrowserdialog.c:450
 msgid "Searching by copyright"
 msgstr "Tražim po autorskom pravu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:455
+#: ../libgimp/gimpprocbrowserdialog.c:457
 msgid "Searching by date"
 msgstr "Tražim po datumu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:462
+#: ../libgimp/gimpprocbrowserdialog.c:464
 msgid "Searching by type"
 msgstr "Tražim po vrsti"
 
-#: ../libgimp/gimpprocbrowserdialog.c:472
+#: ../libgimp/gimpprocbrowserdialog.c:474
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -319,11 +323,11 @@ msgstr[1] "%d procedure"
 msgstr[2] "%d procedura"
 msgstr[3] "%d procedura"
 
-#: ../libgimp/gimpprocbrowserdialog.c:481
+#: ../libgimp/gimpprocbrowserdialog.c:483
 msgid "No matches for your query"
 msgstr "Ništa se ne poklapa sa vašim zahtevom"
 
-#: ../libgimp/gimpprocbrowserdialog.c:485
+#: ../libgimp/gimpprocbrowserdialog.c:487
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -332,31 +336,31 @@ msgstr[1] "%d procedure se poklapaju sa vašim zahtevom"
 msgstr[2] "%d procedura se poklapaju sa vašim zahtevom"
 msgstr[3] "%d procedura se poklapa sa vašim zahtevom"
 
-#: ../libgimp/gimpprocview.c:163
+#: ../libgimp/gimpprocview.c:162
 msgid "Parameters"
 msgstr "Parametri"
 
-#: ../libgimp/gimpprocview.c:176
+#: ../libgimp/gimpprocview.c:175
 msgid "Return Values"
 msgstr "Povratne vrednosti"
 
-#: ../libgimp/gimpprocview.c:189
+#: ../libgimp/gimpprocview.c:188
 msgid "Additional Information"
 msgstr "Dodatni podaci"
 
-#: ../libgimp/gimpprocview.c:229
+#: ../libgimp/gimpprocview.c:228
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../libgimp/gimpprocview.c:241
+#: ../libgimp/gimpprocview.c:240
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../libgimp/gimpprocview.c:253
+#: ../libgimp/gimpprocview.c:252
 msgid "Copyright:"
 msgstr "Licenca:"
 
-#: ../libgimp/gimpunitcache.c:57
+#: ../libgimp/gimpunitcache.c:56
 msgid "percent"
 msgstr "posto"
 
@@ -886,22 +890,22 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Popunjeno"
 
-#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
-#: ../modules/display-filter-lcms.c:183
+#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../modules/color-selector-cmyk-lcms.c:409
+#: ../modules/color-selector-cmyk-lcms.c:415
+#: ../modules/display-filter-lcms.c:182
 msgid "(invalid UTF-8 string)"
 msgstr "(neispravna UTF-8 niska)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:41
 msgid "Mode of operation for color management."
 msgstr "Režim rada sa upravljanjem bojama"
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:43
 msgid "The color profile of your (primary) monitor."
 msgstr "Profil boja za vaš (primarni) monitor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:46
+#: ../libgimpconfig/gimpcolorconfig.c:45
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -911,23 +915,23 @@ msgstr ""
 "upravnika prozorima.  Podešeni profil monitora se tada koristi ukoliko ova "
 "mogućnost omane."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:49
 msgid "The default RGB working space color profile."
 msgstr "Podrazumevano profil za RGB radno okruženje."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:51
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK profil boja za prevođenje između RGB i CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:53
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "Profil boja za oponašanje štampanog materijala (softpruf)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "Sets how colors are mapped for your display."
 msgstr "Određuje kako su boje mapirane na vašem ekranu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: ../libgimpconfig/gimpcolorconfig.c:57
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
@@ -935,7 +939,7 @@ msgstr ""
 "Određuje način prevođenja boja iz RGB radnog prostora u uređaj za oponašanje "
 "štampe."
 
-#: ../libgimpconfig/gimpcolorconfig.c:61
+#: ../libgimpconfig/gimpcolorconfig.c:60
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -943,7 +947,7 @@ msgstr ""
 "Ukoliko uključite ovu mogućnost, oponašanje štampe će označiti boje koje neće "
 "biti prikazane u ciljnom okruženju boja."
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libgimpconfig/gimpcolorconfig.c:63
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Boja za označavanje boja koje se nalaze van gamuta."
 
@@ -985,63 +989,64 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Apsolutno kalorimetrijski"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:97
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "vrednost za izraz %s nije ispravna UTF-8 reč"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:436
+#: ../libgimpconfig/gimpconfig-deserialize.c:435
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "očekivan je odgovor tipa „da“ ili „ne“ za logički izraz  %s, a dobijen je „ %"
 "s“"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:510
+#: ../libgimpconfig/gimpconfig-deserialize.c:509
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "neispravna vrednost „%s“ za  izraz %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:525
+#: ../libgimpconfig/gimpconfig-deserialize.c:524
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "neispravna vrednost „%ld“ za izraz %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:594
+#: ../libgimpconfig/gimpconfig-deserialize.c:593
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "prilikom obrade izraza „%s“: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:474
-#: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
-#: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:656
+#: ../libgimpconfig/gimpconfig-iface.c:473
+#: ../libgimpconfig/gimpconfig-iface.c:486 ../libgimpconfig/gimpscanner.c:501
+#: ../libgimpconfig/gimpscanner.c:582
+#: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "kobna greška pri obradi"
 
-#: ../libgimpconfig/gimpconfig-path.c:379
+#: ../libgimpconfig/gimpconfig-path.c:378
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Ne mogu da povećam ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:694
+#: ../libgimpconfig/gimpconfigwriter.c:77
+#: ../libgimpconfig/gimpconfigwriter.c:718
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Greška pri upisu u „%s“: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:136
+#: ../libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Ne mogu da da napravim privremenu datoteku za „%s“: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:149
+#: ../libgimpconfig/gimpconfigwriter.c:148
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ne mogu da otvorim „%s“ za upis: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -1050,7 +1055,7 @@ msgstr ""
 "Greška pri upisu u privremenu datoteku za „%s“: %s\n"
 "Originalna datoteka nije menjana."
 
-#: ../libgimpconfig/gimpconfigwriter.c:683
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -1059,45 +1064,45 @@ msgstr ""
 "Greška pri upisu u privremenu datoteku za „%s“: %s\n"
 "Datoteka nije napravljena."
 
-#: ../libgimpconfig/gimpconfigwriter.c:712
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Ne mogu da napravim „%s“: %s"
 
-#: ../libgimpconfig/gimpscanner.c:255
+#: ../libgimpconfig/gimpscanner.c:258
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "neispravna UTF-8 reč"
 
-#: ../libgimpconfig/gimpscanner.c:606
+#: ../libgimpconfig/gimpscanner.c:609
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Greška pri obradi „%s“ u %d. redu: %s"
 
-#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
-#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
-#: ../libgimpmodule/gimpmodule.c:433
+#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:432
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Greška pri učitavanju modula „%s“: %s"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:374
 msgid "Module error"
 msgstr "Greška modula"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Loaded"
 msgstr "Učitan"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Load failed"
 msgstr "Neuspelo učitavanje"
 
-#: ../libgimpmodule/gimpmodule.c:378
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Not loaded"
 msgstr "Nije učitano"
 
-#: ../libgimpthumb/gimpthumb-utils.c:123
+#: ../libgimpthumb/gimpthumb-utils.c:122
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1106,63 +1111,63 @@ msgstr ""
 "Ne mogu da nađem ispravan lični direktorijum.\n"
 "Umanjeni prikazi će biti smeštani u direktorijum za privremene datoteke (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
+#: ../libgimpthumb/gimpthumb-utils.c:246 ../libgimpthumb/gimpthumb-utils.c:314
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Neuspešno pravljenje direktorijuma sa pregledima „%s“."
 
-#: ../libgimpthumb/gimpthumbnail.c:498
+#: ../libgimpthumb/gimpthumbnail.c:497
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Umanjeni prikazi ne sadrže Thumb::URI oznaku"
 
-#: ../libgimpthumb/gimpthumbnail.c:898
+#: ../libgimpthumb/gimpthumbnail.c:893
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Ne mogu da napravim umanjeni prikaz za %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:98
+#: ../libgimpwidgets/gimpbrowser.c:103
 msgid "_Search:"
 msgstr "_Traži:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:118
+#: ../libgimpwidgets/gimpcolorbutton.c:117
 msgid "_Foreground Color"
 msgstr "Boja _četkice"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:122
+#: ../libgimpwidgets/gimpcolorbutton.c:121
 msgid "_Background Color"
 msgstr "Boja _pozadine"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:126
+#: ../libgimpwidgets/gimpcolorbutton.c:125
 msgid "Blac_k"
 msgstr "_Crna"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:130
+#: ../libgimpwidgets/gimpcolorbutton.c:129
 msgid "_White"
 msgstr "B_ela"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:144
+#: ../libgimpwidgets/gimpcolorprofilestore.c:143
 msgid "Select color profile from disk..."
 msgstr "Izaberi profil boja sa diska..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+#: ../libgimpwidgets/gimpcolorprofilestore.c:279
 msgctxt "profile"
 msgid "None"
 msgstr "Nije izabran"
 
-#: ../libgimpwidgets/gimpcolorscales.c:98
+#: ../libgimpwidgets/gimpcolorscales.c:97
 msgid "Scales"
 msgstr "Razmere"
 
-#: ../libgimpwidgets/gimpcolorselection.c:210
+#: ../libgimpwidgets/gimpcolorselection.c:209
 msgid "Current:"
 msgstr "Tekuća:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:232
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr "Stara:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
+#: ../libgimpwidgets/gimpcolorselection.c:285
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1170,76 +1175,76 @@ msgstr ""
 "Heksadekadni zapis boja kakav se koristi u HTML-u i CSS-u.  Ovo polje "
 "prihvata i CSS imena boja."
 
-#: ../libgimpwidgets/gimpcolorselection.c:292
+#: ../libgimpwidgets/gimpcolorselection.c:291
 msgid "HTML _notation:"
 msgstr "HTML _zapis:"
 
-#: ../libgimpwidgets/gimpfileentry.c:174
+#: ../libgimpwidgets/gimpfileentry.c:173
 msgid "Open a file selector to browse your folders"
 msgstr "Otvara izbornik datoteka za razgledanje fascikli"
 
-#: ../libgimpwidgets/gimpfileentry.c:175
+#: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your files"
 msgstr "Otvara izbornik datoteka za razgledanje datoteka"
 
-#: ../libgimpwidgets/gimpfileentry.c:335
+#: ../libgimpwidgets/gimpfileentry.c:334
 msgid "Select Folder"
 msgstr "Izaberite fasciklu"
 
-#: ../libgimpwidgets/gimpfileentry.c:337
+#: ../libgimpwidgets/gimpfileentry.c:336
 msgid "Select File"
 msgstr "Izaberite datoteku"
 
-#: ../libgimpwidgets/gimphelpui.c:420
+#: ../libgimpwidgets/gimphelpui.c:419
 msgid "Press F1 for more help"
 msgstr "Pritisnite F1 za dodatnu pomoć"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Kilobytes"
 msgstr "kilobajta"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Megabytes"
 msgstr "megabajta"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:206
+#: ../libgimpwidgets/gimpmemsizeentry.c:207
 msgid "Gigabytes"
 msgstr "gigabajta"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1166
+#: ../libgimpwidgets/gimppageselector.c:268
+#: ../libgimpwidgets/gimppageselector.c:1165
 msgid "Nothing selected"
 msgstr "Ništa nije izabrano"
 
-#: ../libgimpwidgets/gimppageselector.c:287
+#: ../libgimpwidgets/gimppageselector.c:286
 msgid "Select _All"
 msgstr "Izaberi _sve"
 
-#: ../libgimpwidgets/gimppageselector.c:307
+#: ../libgimpwidgets/gimppageselector.c:306
 msgid "Select _range:"
 msgstr "Izaberi _opseg:"
 
-#: ../libgimpwidgets/gimppageselector.c:319
+#: ../libgimpwidgets/gimppageselector.c:318
 msgid "Open _pages as"
 msgstr "Otvori s_tranice kao"
 
-#: ../libgimpwidgets/gimppageselector.c:420
+#: ../libgimpwidgets/gimppageselector.c:419
 msgid "Page 000"
 msgstr "Stranica 000"
 
-#: ../libgimpwidgets/gimppageselector.c:508
-#: ../libgimpwidgets/gimppageselector.c:744
+#: ../libgimpwidgets/gimppageselector.c:507
+#: ../libgimpwidgets/gimppageselector.c:743
 #, c-format
 msgid "Page %d"
 msgstr "Stranica %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1171
+#: ../libgimpwidgets/gimppageselector.c:1170
 msgid "One page selected"
 msgstr "Izabrana je jedna stranica"
 
-#: ../libgimpwidgets/gimppageselector.c:1178
-#: ../libgimpwidgets/gimppageselector.c:1182
+#: ../libgimpwidgets/gimppageselector.c:1177
+#: ../libgimpwidgets/gimppageselector.c:1181
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1248,15 +1253,15 @@ msgstr[1] "Izabrane su %d stranice"
 msgstr[2] "Izabrane je svih %d stranica"
 msgstr[3] "Izabrana je %d stranica"
 
-#: ../libgimpwidgets/gimppatheditor.c:214
+#: ../libgimpwidgets/gimppatheditor.c:213
 msgid "Writable"
 msgstr "Upisivo"
 
-#: ../libgimpwidgets/gimppatheditor.c:223
+#: ../libgimpwidgets/gimppatheditor.c:222
 msgid "Folder"
 msgstr "Direktorijum"
 
-#: ../libgimpwidgets/gimppickbutton.c:107
+#: ../libgimpwidgets/gimppickbutton.c:106
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1265,19 +1270,19 @@ msgstr ""
 "odaberete tu boju."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:277
+#: ../libgimpwidgets/gimppreview.c:278
 msgid "_Preview"
 msgstr "Pre_gled"
 
-#: ../libgimpwidgets/gimppreviewarea.c:94
+#: ../libgimpwidgets/gimppreviewarea.c:93
 msgid "Check Size"
 msgstr "Veličina polja"
 
-#: ../libgimpwidgets/gimppreviewarea.c:101
+#: ../libgimpwidgets/gimppreviewarea.c:100
 msgid "Check Style"
 msgstr "Stil polja"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1860
+#: ../libgimpwidgets/gimppropwidgets.c:1859
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1286,95 +1291,95 @@ msgstr[1] "Ovo polje za unos teksta je ograničeno na %d znaka."
 msgstr[2] "Ovo polje za unos teksta je ograničeno na %d znakova."
 msgstr[3] "Ovo polje za unos teksta je ograničeno na jedan znak."
 
-#: ../libgimpwidgets/gimpstock.c:112
+#: ../libgimpwidgets/gimpstock.c:111
 msgid "Anchor"
 msgstr "Usidri"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:112
 msgid "C_enter"
 msgstr "_Centriraj"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "_Duplicate"
 msgstr "_Dupliraj"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "_Edit"
 msgstr "_Uredi"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "Linked"
 msgstr "Povezano"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "Paste as New"
 msgstr "Ubaci kao novu sliku"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste Into"
 msgstr "Ubaci u"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "_Reset"
 msgstr "_Ponovo postavi"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "Visible"
 msgstr "Vidljivo"
 
-#: ../libgimpwidgets/gimpstock.c:156 ../libgimpwidgets/gimpstock.c:160
+#: ../libgimpwidgets/gimpstock.c:155 ../libgimpwidgets/gimpstock.c:159
 msgid "_Stroke"
 msgstr "Is_crtaj"
 
-#: ../libgimpwidgets/gimpstock.c:172
+#: ../libgimpwidgets/gimpstock.c:171
 msgid "L_etter Spacing"
 msgstr "Razmak između s_lova"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libgimpwidgets/gimpstock.c:172
 msgid "L_ine Spacing"
 msgstr "_Razmak redova"
 
-#: ../libgimpwidgets/gimpstock.c:189
+#: ../libgimpwidgets/gimpstock.c:188
 msgid "_Resize"
 msgstr "_Promeni veličinu"
 
-#: ../libgimpwidgets/gimpstock.c:190 ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:189 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "_Razmera"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:295
 msgid "Cr_op"
 msgstr "Ise_ci"
 
-#: ../libgimpwidgets/gimpstock.c:315
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "_Transformiši"
 
-#: ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "_Rotiraj"
 
-#: ../libgimpwidgets/gimpstock.c:321
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "_Ostriži"
 
-#: ../libgimpwidgets/gimpunitmenu.c:266
+#: ../libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "Dalje..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:581
+#: ../libgimpwidgets/gimpunitmenu.c:582
 msgid "Unit Selection"
 msgstr "Izbor jedinice"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:631
 msgid "Unit"
 msgstr "Jedinica"
 
-#: ../libgimpwidgets/gimpunitmenu.c:633
+#: ../libgimpwidgets/gimpunitmenu.c:635
 msgid "Factor"
 msgstr "Faktor"
 
-#: ../libgimpwidgets/gimpwidgets.c:511
+#: ../libgimpwidgets/gimpwidgets.c:510
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1382,15 +1387,15 @@ msgstr ""
 "Upotrebite ovu vrednost kao seme slučajno generisanog broja — to će vam "
 "omogućiti da ponovite ovu „slučajnu“ radnju"
 
-#: ../libgimpwidgets/gimpwidgets.c:515
+#: ../libgimpwidgets/gimpwidgets.c:514
 msgid "_New Seed"
 msgstr "_Novo seme"
 
-#: ../libgimpwidgets/gimpwidgets.c:528
+#: ../libgimpwidgets/gimpwidgets.c:527
 msgid "Seed random number generator with a generated random number"
 msgstr "Seme slučajno generisanog broja sa slučajno generisanim brojem"
 
-#: ../libgimpwidgets/gimpwidgets.c:532
+#: ../libgimpwidgets/gimpwidgets.c:531
 msgid "_Randomize"
 msgstr "_Slučajno"
 
@@ -1492,408 +1497,408 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Umanji"
 
-#: ../modules/color-selector-cmyk-lcms.c:87
+#: ../modules/color-selector-cmyk-lcms.c:86
 msgid "CMYK color selector (using color profile)"
 msgstr "Izbor CMYK boje (pomoću profila boja)"
 
-#: ../modules/color-selector-cmyk-lcms.c:150
-#: ../modules/color-selector-cmyk.c:102
+#: ../modules/color-selector-cmyk-lcms.c:149
+#: ../modules/color-selector-cmyk.c:101
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:169
-#: ../modules/color-selector-cmyk.c:125
+#: ../modules/color-selector-cmyk-lcms.c:168
+#: ../modules/color-selector-cmyk.c:124
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:171
-#: ../modules/color-selector-cmyk.c:127
+#: ../modules/color-selector-cmyk-lcms.c:170
+#: ../modules/color-selector-cmyk.c:126
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:173
-#: ../modules/color-selector-cmyk.c:129
+#: ../modules/color-selector-cmyk-lcms.c:172
+#: ../modules/color-selector-cmyk.c:128
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:175
-#: ../modules/color-selector-cmyk.c:131
+#: ../modules/color-selector-cmyk-lcms.c:174
+#: ../modules/color-selector-cmyk.c:130
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:179
-#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk-lcms.c:178
+#: ../modules/color-selector-cmyk.c:134
 msgid "Cyan"
 msgstr "Cijan"
 
-#: ../modules/color-selector-cmyk-lcms.c:180
-#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk.c:135
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/color-selector-cmyk-lcms.c:181
-#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk.c:136
 msgid "Yellow"
 msgstr "Žuta"
 
-#: ../modules/color-selector-cmyk-lcms.c:182
-#: ../modules/color-selector-cmyk.c:138
+#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk.c:137
 msgid "Black"
 msgstr "Crna"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
+#: ../modules/color-selector-cmyk-lcms.c:397
 msgid "Profile: (none)"
 msgstr "Profil: (ni jedan)"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:418
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: ../modules/color-selector-cmyk.c:71
+#: ../modules/color-selector-cmyk.c:70
 msgid "CMYK color selector"
 msgstr "Izbor CMYK boje"
 
-#: ../modules/color-selector-cmyk.c:172
+#: ../modules/color-selector-cmyk.c:171
 msgid "Black _pullout:"
 msgstr "_Izvlačenje crne:"
 
-#: ../modules/color-selector-cmyk.c:189
+#: ../modules/color-selector-cmyk.c:188
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Postotak crne koja se izvlači iz obojenih mastila."
 
-#: ../modules/color-selector-water.c:82
+#: ../modules/color-selector-water.c:81
 msgid "Watercolor style color selector"
 msgstr "Izbor boje stila vodene boje"
 
-#: ../modules/color-selector-water.c:118
+#: ../modules/color-selector-water.c:117
 msgid "Watercolor"
 msgstr "Vodena boja"
 
-#: ../modules/color-selector-water.c:186
+#: ../modules/color-selector-water.c:185
 msgid "Pressure"
 msgstr "Pritisak"
 
-#: ../modules/color-selector-wheel.c:103
+#: ../modules/color-selector-wheel.c:74
 msgid "HSV color wheel"
 msgstr "HSV točak boja"
 
-#: ../modules/color-selector-wheel.c:134
+#: ../modules/color-selector-wheel.c:105
 msgid "Wheel"
 msgstr "Točak"
 
 # Valjda može ovako (miloš)
-#: ../modules/controller-dx-dinput.c:156
+#: ../modules/controller-dx-dinput.c:155
 msgid "DirectX DirectInput event controller"
 msgstr "Upravljač DirectX DirectInput događajima"
 
-#: ../modules/controller-dx-dinput.c:196
-#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
+#: ../modules/controller-dx-dinput.c:195
+#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
 msgid "Device:"
 msgstr "Uređaj:"
 
-#: ../modules/controller-dx-dinput.c:197
+#: ../modules/controller-dx-dinput.c:196
 msgid "The device to read DirectInput events from."
 msgstr "Uređaj sa koga se čitaju DirectInput događaji."
 
-#: ../modules/controller-dx-dinput.c:206
+#: ../modules/controller-dx-dinput.c:205
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller-dx-dinput.c:420
+#: ../modules/controller-dx-dinput.c:419
 #, c-format
 msgid "Button %d"
 msgstr "Dugme %d"
 
-#: ../modules/controller-dx-dinput.c:423
+#: ../modules/controller-dx-dinput.c:422
 #, c-format
 msgid "Button %d Press"
 msgstr "Pritisnuto je dugme %d"
 
-#: ../modules/controller-dx-dinput.c:426
+#: ../modules/controller-dx-dinput.c:425
 #, c-format
 msgid "Button %d Release"
 msgstr "Pušteno je dugme %d"
 
-#: ../modules/controller-dx-dinput.c:443
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-linux-input.c:89
 msgid "X Move Left"
 msgstr "Pomeranje levo po X osi"
 
-#: ../modules/controller-dx-dinput.c:446
-#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-linux-input.c:90
 msgid "X Move Right"
 msgstr "Pomeranje desno po X osi"
 
-#: ../modules/controller-dx-dinput.c:452
+#: ../modules/controller-dx-dinput.c:451
 msgid "Y Move Away"
 msgstr "Udaljavanje po Y osi"
 
-#: ../modules/controller-dx-dinput.c:455
+#: ../modules/controller-dx-dinput.c:454
 msgid "Y Move Near"
 msgstr "Približavanje po Y osi"
 
-#: ../modules/controller-dx-dinput.c:461
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-linux-input.c:93
 msgid "Z Move Up"
 msgstr "Pomeranje gore po Z osi"
 
-#: ../modules/controller-dx-dinput.c:464
-#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-linux-input.c:94
 msgid "Z Move Down"
 msgstr "Pomeranje dole po Z osi"
 
 # Aha, ovo tek komplikuje situaciju :) (miloš)
-#: ../modules/controller-dx-dinput.c:470
+#: ../modules/controller-dx-dinput.c:469
 msgid "X Axis Tilt Away"
 msgstr "Udaljavanje po X osi"
 
-#: ../modules/controller-dx-dinput.c:473
+#: ../modules/controller-dx-dinput.c:472
 msgid "X Axis Tilt Near"
 msgstr "Približavanje po X osi"
 
-#: ../modules/controller-dx-dinput.c:479
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
 msgstr "Nagib desno po Y osi"
 
-#: ../modules/controller-dx-dinput.c:482
-#: ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
 msgstr "Nagib levo po Y osi"
 
-#: ../modules/controller-dx-dinput.c:488
-#: ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:100
 msgid "Z Axis Turn Left"
 msgstr "Okret levo po Z osi"
 
-#: ../modules/controller-dx-dinput.c:491
-#: ../modules/controller-linux-input.c:102
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Right"
 msgstr "Okret desno po Z osi"
 
-#: ../modules/controller-dx-dinput.c:502
+#: ../modules/controller-dx-dinput.c:501
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Klizač %d se povećava"
 
-#: ../modules/controller-dx-dinput.c:505
+#: ../modules/controller-dx-dinput.c:504
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Klizač %d se smanjuje"
 
-#: ../modules/controller-dx-dinput.c:515
+#: ../modules/controller-dx-dinput.c:514
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X pogled"
 
-#: ../modules/controller-dx-dinput.c:518
+#: ../modules/controller-dx-dinput.c:517
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y pogled"
 
-#: ../modules/controller-dx-dinput.c:521
+#: ../modules/controller-dx-dinput.c:520
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d povraćaj"
 
-#: ../modules/controller-dx-dinput.c:1084
+#: ../modules/controller-dx-dinput.c:1083
 msgid "DirectInput Events"
 msgstr "DirectInput događaji"
 
-#: ../modules/controller-dx-dinput.c:1095
-#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
+#: ../modules/controller-dx-dinput.c:1094
+#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "Nije podešen ni jedan uređaj"
 
-#: ../modules/controller-dx-dinput.c:1120
-#: ../modules/controller-linux-input.c:588
+#: ../modules/controller-dx-dinput.c:1119
+#: ../modules/controller-linux-input.c:587
 msgid "Device not available"
 msgstr "Uređaj nije dostupan"
 
-#: ../modules/controller-linux-input.c:58
+#: ../modules/controller-linux-input.c:57
 msgid "Button 0"
 msgstr "Dugme 0"
 
-#: ../modules/controller-linux-input.c:59
+#: ../modules/controller-linux-input.c:58
 msgid "Button 1"
 msgstr "Dugme 1"
 
-#: ../modules/controller-linux-input.c:60
+#: ../modules/controller-linux-input.c:59
 msgid "Button 2"
 msgstr "Dugme 2"
 
-#: ../modules/controller-linux-input.c:61
+#: ../modules/controller-linux-input.c:60
 msgid "Button 3"
 msgstr "Dugme 3"
 
-#: ../modules/controller-linux-input.c:62
+#: ../modules/controller-linux-input.c:61
 msgid "Button 4"
 msgstr "Dugme 4"
 
-#: ../modules/controller-linux-input.c:63
+#: ../modules/controller-linux-input.c:62
 msgid "Button 5"
 msgstr "Dugme 5"
 
-#: ../modules/controller-linux-input.c:64
+#: ../modules/controller-linux-input.c:63
 msgid "Button 6"
 msgstr "Dugme 6"
 
-#: ../modules/controller-linux-input.c:65
+#: ../modules/controller-linux-input.c:64
 msgid "Button 7"
 msgstr "Dugme 7"
 
-#: ../modules/controller-linux-input.c:66
+#: ../modules/controller-linux-input.c:65
 msgid "Button 8"
 msgstr "Dugme 8"
 
-#: ../modules/controller-linux-input.c:67
+#: ../modules/controller-linux-input.c:66
 msgid "Button 9"
 msgstr "Dugme 9"
 
-#: ../modules/controller-linux-input.c:68
+#: ../modules/controller-linux-input.c:67
 msgid "Button Mouse"
 msgstr "Dugme miša"
 
-#: ../modules/controller-linux-input.c:69
+#: ../modules/controller-linux-input.c:68
 msgid "Button Left"
 msgstr "Levo dugme"
 
-#: ../modules/controller-linux-input.c:70
+#: ../modules/controller-linux-input.c:69
 msgid "Button Right"
 msgstr "Desno dugme"
 
-#: ../modules/controller-linux-input.c:71
+#: ../modules/controller-linux-input.c:70
 msgid "Button Middle"
 msgstr "Srednje dugme"
 
-#: ../modules/controller-linux-input.c:72
+#: ../modules/controller-linux-input.c:71
 msgid "Button Side"
 msgstr "Dugme sa strane"
 
-#: ../modules/controller-linux-input.c:73
+#: ../modules/controller-linux-input.c:72
 msgid "Button Extra"
 msgstr "Dodatno dugme"
 
-#: ../modules/controller-linux-input.c:74
+#: ../modules/controller-linux-input.c:73
 msgid "Button Forward"
 msgstr "Prednje dugme"
 
-#: ../modules/controller-linux-input.c:75
+#: ../modules/controller-linux-input.c:74
 msgid "Button Back"
 msgstr "Zadnje dugme"
 
-#: ../modules/controller-linux-input.c:76
+#: ../modules/controller-linux-input.c:75
 msgid "Button Task"
 msgstr "Zadatak za dugme"
 
-#: ../modules/controller-linux-input.c:78
+#: ../modules/controller-linux-input.c:77
 msgid "Button Wheel"
 msgstr "Točak dugmeta"
 
-#: ../modules/controller-linux-input.c:81
+#: ../modules/controller-linux-input.c:80
 msgid "Button Gear Down"
 msgstr "Točak dugmeta na dole"
 
-#: ../modules/controller-linux-input.c:84
+#: ../modules/controller-linux-input.c:83
 msgid "Button Gear Up"
 msgstr "Točak dugmeta na gore"
 
-#: ../modules/controller-linux-input.c:92
+#: ../modules/controller-linux-input.c:91
 msgid "Y Move Forward"
 msgstr "Pomeranje napred po Y osi"
 
-#: ../modules/controller-linux-input.c:93
+#: ../modules/controller-linux-input.c:92
 msgid "Y Move Back"
 msgstr "Pomeranje nazad po Y osi"
 
 # Ups, nid sam help hiar... (miloš)
-#: ../modules/controller-linux-input.c:97
+#: ../modules/controller-linux-input.c:96
 msgid "X Axis Tilt Forward"
 msgstr "Nagib napred po X osi"
 
-#: ../modules/controller-linux-input.c:98
+#: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Back"
 msgstr "Nagib nazad po X osi"
 
-#: ../modules/controller-linux-input.c:104
+#: ../modules/controller-linux-input.c:103
 msgid "Horiz. Wheel Turn Back"
 msgstr "Okret horiz. točkića nazad"
 
-#: ../modules/controller-linux-input.c:105
+#: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Okret horiz. točkića napred"
 
-#: ../modules/controller-linux-input.c:106
+#: ../modules/controller-linux-input.c:105
 msgid "Dial Turn Left"
 msgstr "Okret brojčanika levo"
 
-#: ../modules/controller-linux-input.c:107
+#: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Right"
 msgstr "Okret brojčanika desno"
 
-#: ../modules/controller-linux-input.c:108
+#: ../modules/controller-linux-input.c:107
 msgid "Wheel Turn Left"
 msgstr "Okret točkića levo"
 
-#: ../modules/controller-linux-input.c:109
+#: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Right"
 msgstr "Okret točkića desno"
 
-#: ../modules/controller-linux-input.c:178
+#: ../modules/controller-linux-input.c:177
 msgid "Linux input event controller"
 msgstr "Linuksov upravljač ulaznim događajima"
 
-#: ../modules/controller-linux-input.c:219
+#: ../modules/controller-linux-input.c:218
 msgid "The name of the device to read Linux Input events from."
 msgstr "Ime Linuskovog uređaja sa koga se čitaju događaji."
 
-#: ../modules/controller-linux-input.c:230
+#: ../modules/controller-linux-input.c:229
 msgid "Linux Input"
 msgstr "Linuksov ulaz"
 
-#: ../modules/controller-linux-input.c:513
+#: ../modules/controller-linux-input.c:512
 msgid "Linux Input Events"
 msgstr "Linuksovi ulazni događaji"
 
-#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
-#: ../modules/controller-midi.c:480
+#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
+#: ../modules/controller-midi.c:479
 #, c-format
 msgid "Reading from %s"
 msgstr "Čitam sa %s"
 
-#: ../modules/controller-linux-input.c:569
-#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
-#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
+#: ../modules/controller-linux-input.c:568
+#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
+#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
 #, c-format
 msgid "Device not available: %s"
 msgstr "Uređaj nije dostupan: %s"
 
-#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
+#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
 msgid "End of file"
 msgstr "Kraj datoteke"
 
-#: ../modules/controller-midi.c:164
+#: ../modules/controller-midi.c:163
 msgid "MIDI event controller"
 msgstr "MIDI-jev ulazni uređaj"
 
-#: ../modules/controller-midi.c:203
+#: ../modules/controller-midi.c:202
 msgid "The name of the device to read MIDI events from."
 msgstr "Naziv uređaja sa koga se čitaju MIDI događaji."
 
-#: ../modules/controller-midi.c:206
+#: ../modules/controller-midi.c:205
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Unesite „alsa“ kako bi ALSA sekvensera."
 
-#: ../modules/controller-midi.c:221
+#: ../modules/controller-midi.c:220
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: ../modules/controller-midi.c:222
+#: ../modules/controller-midi.c:221
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1901,148 +1906,148 @@ msgstr ""
 "MIDI kanal sa koga se čitaju komande. Postavite na -1 za čitanje svih MIDI "
 "kanala."
 
-#: ../modules/controller-midi.c:226
+#: ../modules/controller-midi.c:225
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller-midi.c:355
+#: ../modules/controller-midi.c:354
 #, c-format
 msgid "Note %02x on"
 msgstr "Nota %02x uključena"
 
-#: ../modules/controller-midi.c:358
+#: ../modules/controller-midi.c:357
 #, c-format
 msgid "Note %02x off"
 msgstr "Nota %02x isključena"
 
-#: ../modules/controller-midi.c:361
+#: ../modules/controller-midi.c:360
 #, c-format
 msgid "Controller %03d"
 msgstr "Upravljač %03d"
 
-#: ../modules/controller-midi.c:408
+#: ../modules/controller-midi.c:407
 msgid "MIDI Events"
 msgstr "MIDI događaji"
 
-#: ../modules/controller-midi.c:426
+#: ../modules/controller-midi.c:425
 msgid "GIMP"
 msgstr "Gimp"
 
-#: ../modules/controller-midi.c:428
+#: ../modules/controller-midi.c:427
 msgid "GIMP MIDI Input Controller"
 msgstr "Gimpov ulazni MIDI upravljač"
 
-#: ../modules/display-filter-color-blind.c:67
+#: ../modules/display-filter-color-blind.c:66
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopija (neosetljivost na crveno)"
 
-#: ../modules/display-filter-color-blind.c:69
+#: ../modules/display-filter-color-blind.c:68
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopija (neosetljivost na zeleno)"
 
-#: ../modules/display-filter-color-blind.c:71
+#: ../modules/display-filter-color-blind.c:70
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopija (neosetljivost na plavo)"
 
-#: ../modules/display-filter-color-blind.c:198
+#: ../modules/display-filter-color-blind.c:197
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filter za oponašanje slepila za boje (Brettel-Vienot-Mollon algoritam)"
 
-#: ../modules/display-filter-color-blind.c:261
+#: ../modules/display-filter-color-blind.c:260
 msgid "Color Deficient Vision"
 msgstr "Pogled oskudnih boja"
 
-#: ../modules/display-filter-color-blind.c:483
+#: ../modules/display-filter-color-blind.c:482
 msgid "Color _deficiency type:"
 msgstr "Vrsta _slepila za boje:"
 
-#: ../modules/display-filter-gamma.c:90
+#: ../modules/display-filter-gamma.c:89
 msgid "Gamma color display filter"
 msgstr "Ekranski filter gama boja"
 
-#: ../modules/display-filter-gamma.c:129
+#: ../modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "Gama"
 
-#: ../modules/display-filter-gamma.c:232
+#: ../modules/display-filter-gamma.c:231
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: ../modules/display-filter-high-contrast.c:90
+#: ../modules/display-filter-high-contrast.c:89
 msgid "High Contrast color display filter"
 msgstr "Ekranski filter boja visokog kontrasta"
 
-#: ../modules/display-filter-high-contrast.c:129
+#: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../modules/display-filter-high-contrast.c:232
+#: ../modules/display-filter-high-contrast.c:231
 msgid "Contrast c_ycles:"
 msgstr "_Ciklusi kontrasta:"
 
-#: ../modules/display-filter-lcms.c:102
+#: ../modules/display-filter-lcms.c:101
 msgid "Color management display filter using ICC color profiles"
 msgstr "Filter za upravljanje bojom ekrana koji koristi ICC profile boja"
 
-#: ../modules/display-filter-lcms.c:134
+#: ../modules/display-filter-lcms.c:133
 msgid "Color Management"
 msgstr "Upravljanje bojama"
 
-#: ../modules/display-filter-lcms.c:191
+#: ../modules/display-filter-lcms.c:190
 msgid "None"
 msgstr "Nijedan"
 
-#: ../modules/display-filter-lcms.c:212
+#: ../modules/display-filter-lcms.c:211
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "Ovaj filter se podešava unutar Gimpovih postavki za upravljanje bojama."
 
-#: ../modules/display-filter-lcms.c:226
+#: ../modules/display-filter-lcms.c:225
 msgid "Mode of operation:"
 msgstr "Režim radnje:"
 
-#: ../modules/display-filter-lcms.c:233
+#: ../modules/display-filter-lcms.c:232
 msgid "Image profile:"
 msgstr "Profil za sliku:"
 
-#: ../modules/display-filter-lcms.c:241
+#: ../modules/display-filter-lcms.c:240
 msgid "Monitor profile:"
 msgstr "Profil za monitor"
 
-#: ../modules/display-filter-lcms.c:249
+#: ../modules/display-filter-lcms.c:248
 msgid "Print simulation profile:"
 msgstr "Profil za oponašanje štampe:"
 
-#: ../modules/display-filter-proof.c:97
+#: ../modules/display-filter-proof.c:96
 msgid "Color proof filter using ICC color profile"
 msgstr "Filter probe u boji koji koristi ICC profil boja"
 
-#: ../modules/display-filter-proof.c:145
+#: ../modules/display-filter-proof.c:144
 msgid "Color Proof"
 msgstr "Proba u boji"
 
-#: ../modules/display-filter-proof.c:311
+#: ../modules/display-filter-proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "Izaberite ICC profil boja"
 
-#: ../modules/display-filter-proof.c:338
+#: ../modules/display-filter-proof.c:337
 msgid "All files (*.*)"
 msgstr "Sve datoteke (*.*)"
 
-#: ../modules/display-filter-proof.c:343
+#: ../modules/display-filter-proof.c:342
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC profili boja (*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:401
+#: ../modules/display-filter-proof.c:400
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:407
+#: ../modules/display-filter-proof.c:406
 msgid "_Intent:"
 msgstr "_Namera:"
 
-#: ../modules/display-filter-proof.c:412
+#: ../modules/display-filter-proof.c:411
 msgid "_Black Point Compensation"
 msgstr "Zamena za _crnu tačku"
 
