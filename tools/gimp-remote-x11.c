@@ -54,7 +54,7 @@ source_selection_get (GtkWidget        *widget,
                       const gchar      *uri)
 {
   gtk_selection_data_set (selection_data,
-                          selection_data->target,
+                          gtk_selection_data_get_target (selection_data),
                           8, (const guchar *) uri, strlen (uri));
   gtk_main_quit ();
 }
@@ -309,7 +309,7 @@ gimp_remote_drop_files (GdkDisplay *display,
   gtk_selection_add_target (source, sel_id, sel_type, 0);
 
   /*  drag_begin/motion/drop  */
-  context = gdk_drag_begin (source->window, targetlist);
+  context = gdk_drag_begin (gtk_widget_get_window (source), targetlist);
 
   gdk_drag_motion (context, window, protocol, 0, 0,
                    GDK_ACTION_COPY, GDK_ACTION_COPY, GDK_CURRENT_TIME);
