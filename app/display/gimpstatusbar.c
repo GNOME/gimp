@@ -1051,6 +1051,12 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
 
       if (msg->context_id == context_id)
         {
+          if (strcmp (msg->text, message) == 0)
+            {
+              g_free (message);
+              return;
+            }
+
           g_free (msg->stock_id);
           msg->stock_id = g_strdup (stock_id);
 
