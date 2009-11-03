@@ -46,22 +46,26 @@ enum
 
 /*  local function prototypes  */
 
-static void    gimp_canvas_set_property (GObject         *object,
-                                         guint            property_id,
-                                         const GValue    *value,
-                                         GParamSpec      *pspec);
-static void    gimp_canvas_get_property (GObject         *object,
-                                         guint            property_id,
-                                         GValue          *value,
-                                         GParamSpec      *pspec);
+static void       gimp_canvas_set_property    (GObject         *object,
+                                               guint            property_id,
+                                               const GValue    *value,
+                                               GParamSpec      *pspec);
+static void       gimp_canvas_get_property    (GObject         *object,
+                                               guint            property_id,
+                                               GValue          *value,
+                                               GParamSpec      *pspec);
 
-static void    gimp_canvas_realize      (GtkWidget       *widget);
-static void    gimp_canvas_unrealize    (GtkWidget       *widget);
-static void    gimp_canvas_style_set    (GtkWidget       *widget,
-                                         GtkStyle        *prev_style);
+static void       gimp_canvas_realize         (GtkWidget       *widget);
+static void       gimp_canvas_unrealize       (GtkWidget       *widget);
+static void       gimp_canvas_style_set       (GtkWidget       *widget,
+                                               GtkStyle        *prev_style);
+static gboolean   gimp_canvas_focus_in_event  (GtkWidget       *widget,
+                                               GdkEventFocus   *event);
+static gboolean   gimp_canvas_focus_out_event (GtkWidget       *widget,
+                                               GdkEventFocus   *event);
 
-static GdkGC * gimp_canvas_gc_new       (GimpCanvas      *canvas,
-                                         GimpCanvasStyle  style);
+static GdkGC    * gimp_canvas_gc_new          (GimpCanvas      *canvas,
+                                               GimpCanvasStyle  style);
 
 
 G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GIMP_TYPE_OVERLAY_BOX)
@@ -160,12 +164,14 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property  = gimp_canvas_set_property;
-  object_class->get_property  = gimp_canvas_get_property;
+  object_class->set_property    = gimp_canvas_set_property;
+  object_class->get_property    = gimp_canvas_get_property;
 
-  widget_class->realize       = gimp_canvas_realize;
-  widget_class->unrealize     = gimp_canvas_unrealize;
-  widget_class->style_set     = gimp_canvas_style_set;
+  widget_class->realize         = gimp_canvas_realize;
+  widget_class->unrealize       = gimp_canvas_unrealize;
+  widget_class->style_set       = gimp_canvas_style_set;
+  widget_class->focus_in_event  = gimp_canvas_focus_in_event;
+  widget_class->focus_out_event = gimp_canvas_focus_out_event;
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config", NULL, NULL,
@@ -287,6 +293,20 @@ gimp_canvas_style_set (GtkWidget *widget,
       g_object_unref (canvas->layout);
       canvas->layout = NULL;
     }
+}
+
+static gboolean
+gimp_canvas_focus_in_event (GtkWidget     *widget,
+                            GdkEventFocus *event)
+{
+  return FALSE;
+}
+
+static gboolean
+gimp_canvas_focus_out_event (GtkWidget     *widget,
+                             GdkEventFocus *event)
+{
+  return FALSE;
 }
 
 /* Returns: %TRUE if the XOR color is not white */

@@ -784,11 +784,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                              shell->proximity,
                                              display);
           }
-
-        /*  stop the signal because otherwise gtk+ exposes the whole
-         *  canvas to get the non-existant focus indicator drawn
-         */
-        return_val = TRUE;
       }
       break;
 
