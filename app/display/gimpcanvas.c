@@ -299,6 +299,9 @@ static gboolean
 gimp_canvas_focus_in_event (GtkWidget     *widget,
                             GdkEventFocus *event)
 {
+  /*  don't allow the default impl to invalidate the whole widget,
+   *  we don't draw a focus indicator anyway.
+   */
   return FALSE;
 }
 
@@ -306,6 +309,8 @@ static gboolean
 gimp_canvas_focus_out_event (GtkWidget     *widget,
                              GdkEventFocus *event)
 {
+  /*  see focus-in-event
+   */
   return FALSE;
 }
 
