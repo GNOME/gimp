@@ -285,7 +285,7 @@ gimp_combo_tag_entry_event (GtkWidget *widget,
 
           if (gimp_combo_tag_entry_arrow_hit_test (entry, motion_event->x, motion_event->y))
             {
-              cursor_type = GDK_ARROW;
+              cursor_type = -1;
             }
           else
             {
@@ -294,13 +294,20 @@ gimp_combo_tag_entry_event (GtkWidget *widget,
 
           if (cursor_type != entry->cursor_type)
             {
-              GdkDisplay *display;
-              GdkCursor  *cursor;
+              GdkCursor *cursor = NULL;
 
-              display = gtk_widget_get_display (widget);
-              cursor = gdk_cursor_new_for_display (display, cursor_type);
+              if (cursor_type != -1)
+                {
+                  GdkDisplay *display;
+
+                  display = gtk_widget_get_display (widget);
+                  cursor = gdk_cursor_new_for_display (display, cursor_type);
+                }
+
               gdk_window_set_cursor (motion_event->window, cursor);
-              gdk_cursor_unref (cursor);
+
+              if (cursor)
+                gdk_cursor_unref (cursor);
 
               entry->cursor_type = cursor_type;
             }
