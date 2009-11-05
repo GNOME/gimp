@@ -290,8 +290,8 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
               if (rec->checksum == checksum_quark)
                 {
                   g_printerr ("remapping identifier: %s ==> %s\n",
-                              g_quark_to_string (rec->identifier),
-                              g_quark_to_string (identifier_quark));
+                              rec->identifier ? g_quark_to_string (rec->identifier) : "(NULL)",
+                              identifier_quark ? g_quark_to_string (identifier_quark) : "(NULL)");
                   rec->identifier = identifier_quark;
 
                   for (list = rec->tags; list; list = g_list_next (list))
