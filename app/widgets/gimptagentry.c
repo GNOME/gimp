@@ -22,6 +22,8 @@
 
 #include <string.h>
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -1206,7 +1208,7 @@ gimp_tag_entry_expose (GtkWidget      *widget,
   const char     *display_text;
 
   /* eeeeeek */
-  if (gtk_widget_get_window (widget) == event->window)
+  if (event->window != GTK_ENTRY (widget)->text_area)
     return FALSE;
 
   if (! GIMP_TAG_ENTRY (widget)->description_shown)
