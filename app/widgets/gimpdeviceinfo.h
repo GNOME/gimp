@@ -19,8 +19,6 @@
 #define __GIMP_DEVICE_INFO_H__
 
 
-#include <stdio.h>
-
 #include "core/gimpcontext.h"
 
 
@@ -32,6 +30,7 @@ G_BEGIN_DECLS
                                        GIMP_CONTEXT_FOREGROUND_MASK | \
                                        GIMP_CONTEXT_BACKGROUND_MASK | \
                                        GIMP_CONTEXT_BRUSH_MASK      | \
+                                       GIMP_CONTEXT_DYNAMICS_MASK   | \
                                        GIMP_CONTEXT_PATTERN_MASK    | \
                                        GIMP_CONTEXT_GRADIENT_MASK)
 
