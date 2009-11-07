@@ -6,13 +6,13 @@
 <!-- Please do not use separator characters, such as comma, in tags.       -->
 
 <tags>
-  <resource identifier="/home/martin/dev/share/gimp/2.0/brushes/Round.vbr" checksum="a7f02530d3bc7484c8f9240cbe9c65b1">
+  <resource identifier="${gimp_data_dir}/brushes/Round.vbr" checksum="a7f02530d3bc7484c8f9240cbe9c65b1">
     <tag>
       <_thetag>round</_thetag>
     </tag>
   </resource>
 
-  <resource identifier="/home/martin/dev/share/gimp/2.0/brushes/Round-Fuzzy.vbr" checksum="f8cb2466841104a55e42afce4568d103">
+  <resource identifier="${gimp_data_dir}/brushes/Round-Fuzzy.vbr" checksum="f8cb2466841104a55e42afce4568d103">
     <tag>
       <_thetag>fuzzy</_thetag>
       <_thetag>round</_thetag>

@@ -442,7 +442,31 @@ gimp_data_get_identifier (GimpTagged *tagged)
 
   if (private->filename)
     {
-      identifier = g_filename_to_utf8 (private->filename, -1, NULL, NULL, NULL);
+      const gchar *data_dir = gimp_data_directory ();
+      const gchar *gimp_dir = gimp_directory ();
+      gchar       *tmp;
+
+      if (g_str_has_prefix (private->filename, data_dir))
+        {
+          tmp = g_strconcat ("${gimp_data_dir}",
+                             private->filename + strlen (data_dir),
+                             NULL);
+          identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
+          g_free (tmp);
+        }
+      else if (g_str_has_prefix (private->filename, gimp_dir))
+        {
+          tmp = g_strconcat ("${gimp_dir}",
+                             private->filename + strlen (gimp_dir),
+                             NULL);
+          identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
+          g_free (tmp);
+        }
+      else
+        {
+          identifier = g_filename_to_utf8 (private->filename, -1,
+                                           NULL, NULL, NULL);
+        }
 
       if (! identifier)
         {
