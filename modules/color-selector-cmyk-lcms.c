@@ -245,6 +245,8 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
                          const GimpHSV     *hsv)
 {
   ColorselCmyk *module = COLORSEL_CMYK (selector);
+  gdouble       values[4];
+  gint          i;
 
   if (module->rgb2cmyk)
     {
@@ -267,10 +269,23 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
       gimp_rgb_to_cmyk (rgb, 1.0, &module->cmyk);
     }
 
-  gtk_adjustment_set_value (module->adj[0], module->cmyk.c * 100.0);
-  gtk_adjustment_set_value (module->adj[1], module->cmyk.m * 100.0);
-  gtk_adjustment_set_value (module->adj[2], module->cmyk.y * 100.0);
-  gtk_adjustment_set_value (module->adj[3], module->cmyk.k * 100.0);
+  values[0] = module->cmyk.c * 100.0;
+  values[1] = module->cmyk.m * 100.0;
+  values[2] = module->cmyk.y * 100.0;
+  values[3] = module->cmyk.k * 100.0;
+
+  for (i = 0; i < 4; i++)
+    {
+      g_signal_handlers_block_by_func (module->adj[i],
+                                       colorsel_cmyk_adj_update,
+                                       module);
+
+      gtk_adjustment_set_value (module->adj[i], values[i]);
+
+      g_signal_handlers_unblock_by_func (module->adj[i],
+                                         colorsel_cmyk_adj_update,
+                                         module);
+    }
 }
 
 static void
@@ -440,5 +455,5 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
 
  out:
   if (! module->in_destruction)
-    gimp_color_selector_set_color (selector, &selector->rgb, &selector->hsv);
+    colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);
 }
