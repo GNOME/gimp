@@ -32,15 +32,6 @@
  *
  * Tim Harris <tim.harris@acm.org> provided valuable feedback on
  * pre-press issues.
- *
- *
- * 0.52: 10 Jan 1999  <austin@greenend.org.uk>
- *    gtk_label_set() -> gtk_label_set_text()
- * 0.60: 18 Jun 2001  <austin@gimp.org>
- *    fixed long-standing bug where newsprint() function in GREYA images
- *    treated them as RGB (bpp rather than colour_bpp) to select
- *    colourspace to use.  Thanks to warner-gnome.bugzilla@lothar.com for
- *    spotting this and providing the patch.  Bug #52981.
  */
 
 #include "config.h"
