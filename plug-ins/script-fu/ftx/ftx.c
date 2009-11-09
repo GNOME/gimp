@@ -251,16 +251,8 @@ pointer foreign_time(scheme *sc, pointer args)
   if (args != sc->NIL)
     return sc->F;
 
-#if 1
   time(&now);
   now_tm = localtime(&now);
-#else
-GTime time;
-GDate date;
-
-  g_date_set_time(&date, &now);
-  g_date_to_struct_tm(&now, &now_tm);
-#endif
 
   ret = sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) now_tm->tm_year),
          sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) now_tm->tm_mon),
