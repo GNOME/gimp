@@ -176,11 +176,7 @@ gimp_scanner_destroy (GScanner *scanner)
   data = scanner->user_data;
 
   if (data->file)
-#if GLIB_CHECK_VERSION(2, 21, 3)
     g_mapped_file_unref (data->file);
-#else
-    g_mapped_file_free (data->file);
-#endif
 
   g_free (data->name);
   g_slice_free (GimpScannerData, data);
