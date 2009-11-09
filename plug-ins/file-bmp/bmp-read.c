@@ -423,7 +423,8 @@ ReadBMP (const gchar  *name,
       return -1;
     }
 
-  if (Bitmap_Head.biWidth < 0)
+  if (Bitmap_Head.biWidth < 0 ||
+      ABS (Bitmap_Head.biHeight) < 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
@@ -440,6 +441,18 @@ ReadBMP (const gchar  *name,
     }
 
   if (Bitmap_Head.biClrUsed > 256)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("'%s' is not a valid BMP file"),
+                   gimp_filename_to_utf8 (filename));
+      return -1;
+    }
+
+  /* protect against integer overflows caused by malicious BMPs */
+
+  if (((guint64) Bitmap_Head.biWidth) * Bitmap_Head.biBitCnt > G_MAXINT32 ||
+      ((guint64) Bitmap_Head.biWidth) * ABS (Bitmap_Head.biHeight) > G_MAXINT32 ||
+      ((guint64) Bitmap_Head.biWidth) * ABS (Bitmap_Head.biHeight) * 4 > G_MAXINT32)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
