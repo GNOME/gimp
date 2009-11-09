@@ -780,9 +780,9 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
    *   of this displayed text. Use this height to find a scale which
    *   leaves sufficient room for drawing the ruler.
    *
-   *   We calculate the text size as for the vruler instead of using
-   *   text_size = gdk_string_width(font, unit_str), so that the result
-   *   for the scale looks consistent with an accompanying vruler
+   *   We calculate the text size as for the vruler instead of
+   *   actually measuring the text width, so that the result for the
+   *   scale looks consistent with an accompanying vruler.
    */
   scale = ceil (max_size);
   g_snprintf (unit_str, sizeof (unit_str), "%d", scale);
