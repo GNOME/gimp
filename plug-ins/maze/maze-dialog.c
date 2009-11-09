@@ -104,14 +104,6 @@ static gchar buffer[BUFSIZE];
       "friend", so we pull our friend out from where we stuck him in
       the entry's userdata...  Hopefully that does it.  */
 
-/* Questions:
-
-     Gosh that was dumb.  Is there a way to
-       signal_handler_block_by_name?
-     That would make life so much nicer.
-
-         You could pass the handler_id around and use
-         gtk_signal_handler_block ().   (Sven)
 */
 
 static void        maze_message          (const gchar *message);
