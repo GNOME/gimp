@@ -30,13 +30,9 @@ typedef struct {
   GtkListStore		*store;
   GtkTreeSelection	*selection;
 
-  GtkWidget	*container;
-  GtkWidget	*list;
-  GtkWidget	*selected_child;
-  GtkWidget	*arrow_up;
-  GtkWidget	*arrow_down;
-  GtkWidget	*remove;
-  GtkWidget	*edit;
+  GtkWidget    *container;
+  GtkWidget    *list;
+  GtkWidget    *selected_child;
   ObjectList_t *object_list;
   gint		selected_row;
   gint		nr_rows;

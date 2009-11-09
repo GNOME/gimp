@@ -35,29 +35,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static void
-set_buttons(Selection_t *data)
-{
-#ifdef _OLD_
-  if (gtk_tree_selection_count_selected_rows (data->selection)) {
-#ifdef _OLD_
-    gtk_widget_set_sensitive(data->arrow_up,
-			     (data->selected_row) ? TRUE : FALSE);
-    if (data->selected_row < GTK_CLIST(data->list)->rows - 1)
-      gtk_widget_set_sensitive(data->arrow_down, TRUE);
-    else
-      gtk_widget_set_sensitive(data->arrow_down, FALSE);
-#endif
-    gtk_widget_set_sensitive(data->remove, TRUE);
-    gtk_widget_set_sensitive(data->edit, TRUE);
-  } else {
-    gtk_widget_set_sensitive(data->arrow_up, FALSE);
-    gtk_widget_set_sensitive(data->arrow_down, FALSE);
-    gtk_widget_set_sensitive(data->remove, FALSE);
-    gtk_widget_set_sensitive(data->edit, FALSE);
-  }
-#endif
-}
 
 static void
 changed_cb(GtkTreeSelection *selection, gpointer param)
@@ -100,8 +77,6 @@ changed_cb(GtkTreeSelection *selection, gpointer param)
 
         g_list_foreach (selected_rows, (GFunc) gtk_tree_path_free, NULL);
         g_list_free (selected_rows);
-
-        set_buttons (data);
   }
 }
 
@@ -222,7 +197,6 @@ object_removed_cb(Object_t *obj, gpointer data)
 
   if (selection_find_object (selection, obj, &iter)) {
     gtk_list_store_remove (GTK_LIST_STORE (selection->store), &iter);
-    set_buttons(selection);
   }
 }
 
@@ -232,7 +206,6 @@ object_selected_cb(Object_t *obj, gpointer data)
   Selection_t *selection = (Selection_t*) data;
   gint position = object_get_position_in_list (obj);
   selection_set_selected (selection, position);
-  set_buttons(selection);
 }
 
 static void
@@ -455,8 +428,6 @@ make_selection(ObjectList_t *object_list)
   data->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
   gtk_tree_selection_set_mode (data->selection, GTK_SELECTION_MULTIPLE);
   g_signal_connect (data->selection, "changed", G_CALLBACK(changed_cb), data);
-
-  set_buttons (data);
 
   /* Set object list callbacks we're interested in */
   object_list_add_add_cb (object_list, object_added_cb, data);
