@@ -102,8 +102,7 @@ static gchar buffer[BUFSIZE];
     We need to block signal handlers for div_entry this time.  We
       happen to know that div_entry's callback data is our old
       "friend", so we pull our friend out from where we stuck him in
-      the entry's userdata...  Hopefully that does it.  */
-
+      the entry's userdata...  Hopefully that does it.
 */
 
 static void        maze_message          (const gchar *message);
