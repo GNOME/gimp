@@ -1074,7 +1074,7 @@ child_location_foreach (GtkWidget *child,
   struct ChildLocation *child_loc = data;
 
   /* Ignore invisible widgets */
-  if (! GTK_WIDGET_DRAWABLE (child))
+  if (! gtk_widget_is_drawable (child))
     return;
 
   /* (child_loc->x, child_loc->y) are relative to
@@ -1086,20 +1086,24 @@ child_location_foreach (GtkWidget *child,
                                         child_loc->x, child_loc->y,
                                         &x, &y))
     {
+      GtkAllocation child_allocation;
+
+      gtk_widget_get_allocation (child, &child_allocation);
+
 #ifdef DEBUG_TOOLTIP
       g_print ("candidate: %s  alloc=[(%d,%d)  %dx%d]     (%d, %d)->(%d, %d)\n",
                gtk_widget_get_name (child),
-               child->allocation.x,
-               child->allocation.y,
-               child->allocation.width,
-               child->allocation.height,
+               child_allocation.x,
+               child_allocation.y,
+               child_allocation.width,
+               child_allocation.height,
                child_loc->x, child_loc->y,
                x, y);
 #endif /* DEBUG_TOOLTIP */
 
       /* (x, y) relative to child's allocation. */
-      if (x >= 0 && x < child->allocation.width
-          && y >= 0 && y < child->allocation.height)
+      if (x >= 0 && x < child_allocation.width
+          && y >= 0 && y < child_allocation.height)
         {
           if (GTK_IS_CONTAINER (child))
             {
@@ -1138,22 +1142,28 @@ window_to_alloc (GtkWidget *dest_widget,
                  gint      *dest_x,
                  gint      *dest_y)
 {
+  GtkAllocation dest_allocation;
+
+  gtk_widget_get_allocation (dest_widget, &dest_allocation);
+
   /* Translate from window relative to allocation relative */
-  if (! GTK_WIDGET_NO_WINDOW (dest_widget) && dest_widget->parent)
+  if (gtk_widget_get_has_window (dest_widget) &&
+      gtk_widget_get_parent (dest_widget))
     {
       gint wx, wy;
+
       gdk_window_get_position (gtk_widget_get_window (dest_widget), &wx, &wy);
 
       /* Offset coordinates if widget->window is smaller than
        * widget->allocation.
        */
-      src_x += wx - dest_widget->allocation.x;
-      src_y += wy - dest_widget->allocation.y;
+      src_x += wx - dest_allocation.x;
+      src_y += wy - dest_allocation.y;
     }
   else
     {
-      src_x -= dest_widget->allocation.x;
-      src_y -= dest_widget->allocation.y;
+      src_x -= dest_allocation.x;
+      src_y -= dest_allocation.y;
     }
 
   if (dest_x)
