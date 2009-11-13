@@ -49,6 +49,11 @@ struct _GimpDockColumns
 struct _GimpDockColumnsClass
 {
   GtkHBoxClass parent_class;
+
+  void (* dock_added)   (GimpDockColumns *dock_columns,
+                         GimpDock        *dock);
+  void (* dock_removed) (GimpDockColumns *dock_columns,
+                         GimpDock        *dock);
 };
 
 

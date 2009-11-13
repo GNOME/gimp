@@ -26,6 +26,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 
 #include "dialogs/dialogs.h"
 
@@ -39,6 +40,14 @@
 #include "gimppanedbox.h"
 
 
+enum
+{
+  DOCK_ADDED,
+  DOCK_REMOVED,
+  LAST_SIGNAL
+};
+
+
 struct _GimpDockColumnsPrivate
 {
   GList     *docks;
@@ -47,19 +56,48 @@ struct _GimpDockColumnsPrivate
 };
 
 
-static gboolean   gimp_dock_columns_dropped_cb        (GimpDockSeparator *separator,
-                                                       GtkWidget         *source,
-                                                       gpointer           data);
+static gboolean  gimp_dock_columns_dropped_cb        (GimpDockSeparator *separator,
+                                                      GtkWidget         *source,
+                                                      gpointer           data);
+static void      gimp_dock_columns_real_dock_added   (GimpDockColumns   *dock_columns,
+                                                      GimpDock          *dock);
+static void      gimp_dock_columns_real_dock_removed (GimpDockColumns   *dock_columns,
+                                                      GimpDock          *dock);
 
 
 G_DEFINE_TYPE (GimpDockColumns, gimp_dock_columns, GTK_TYPE_HBOX)
 
 #define parent_class gimp_dock_columns_parent_class
 
+static guint dock_columns_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_dock_columns_class_init (GimpDockColumnsClass *klass)
 {
+  klass->dock_added   = gimp_dock_columns_real_dock_added;
+  klass->dock_removed = gimp_dock_columns_real_dock_removed;
+
+  dock_columns_signals[DOCK_ADDED] =
+    g_signal_new ("dock-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDockColumnsClass, dock_added),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DOCK);
+
+  dock_columns_signals[DOCK_REMOVED] =
+    g_signal_new ("dock-removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDockColumnsClass, dock_removed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DOCK);
+
   g_type_class_add_private (klass, sizeof (GimpDockColumnsPrivate));
 }
 
@@ -117,6 +155,19 @@ gimp_dock_columns_dropped_cb (GimpDockSeparator *separator,
   return TRUE;
 }
 
+static void
+gimp_dock_columns_real_dock_added (GimpDockColumns *dock_columns,
+                                   GimpDock        *dock)
+{
+}
+
+static void
+gimp_dock_columns_real_dock_removed (GimpDockColumns *dock_columns,
+                                     GimpDock        *dock)
+{
+}
+
+
 /**
  * gimp_dock_columns_add_dock:
  * @dock_columns:
@@ -137,6 +188,8 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
   gimp_paned_box_add_widget (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
                              GTK_WIDGET (dock),
                              index);
+
+  g_signal_emit (dock_columns, dock_columns_signals[DOCK_ADDED], 0, dock);
 }
 
 
@@ -149,8 +202,12 @@ gimp_dock_columns_remove_dock (GimpDockColumns *dock_columns,
 
   dock_columns->p->docks = g_list_remove (dock_columns->p->docks, dock);
 
+  g_object_ref (dock);
   gimp_paned_box_remove_widget (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
                                 GTK_WIDGET (dock));
+
+  g_signal_emit (dock_columns, dock_columns_signals[DOCK_REMOVED], 0, dock);
+  g_object_unref (dock);
 }
 
 GList *
