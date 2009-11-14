@@ -284,7 +284,7 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 	    value = pygimp_drawable_new(NULL, params[i].data.d_drawable);
 	    break;
 	case GIMP_PDB_SELECTION:
-	    value = pygimp_layer_new(params[i].data.d_selection);
+	    value = pygimp_channel_new(params[i].data.d_selection);
 	    break;
 	case GIMP_PDB_COLORARRAY:
 	    if (params[i].data.d_colorarray == NULL) {
@@ -538,8 +538,12 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    ret[i].data.d_channel = ((PyGimpDrawable *)item)->ID;
 	    break;
 	case GIMP_PDB_SELECTION:
-	    check(!pygimp_layer_check(item));
-	    ret[i].data.d_selection = ((PyGimpLayer *)item)->ID;
+	    if (item == Py_None) {
+		ret[i].data.d_channel = -1;
+		break;
+	    }
+	    check(!pygimp_channel_check(item));
+	    ret[i].data.d_selection = ((PyGimpChannel *)item)->ID;
 	    break;
 	case GIMP_PDB_COLORARRAY:
 	    {
