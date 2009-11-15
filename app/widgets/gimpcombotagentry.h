@@ -38,13 +38,10 @@ struct _GimpComboTagEntry
   GimpTagEntry    parent_instance;
 
   GtkWidget      *popup;
-  gint            focus_width;
   PangoAttrList  *normal_item_attr;
   PangoAttrList  *selected_item_attr;
   PangoAttrList  *insensitive_item_attr;
   GdkColor        selected_item_color;
-  gboolean        interior_focus;
-  GdkCursorType   cursor_type;
 };
 
 struct _GimpComboTagEntryClass

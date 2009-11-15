@@ -42,28 +42,21 @@ static GObject* gimp_combo_tag_entry_constructor       (GType                  t
                                                         guint                  n_params,
                                                         GObjectConstructParam *params);
 static void     gimp_combo_tag_entry_dispose           (GObject                *object);
-static gboolean gimp_combo_tag_entry_expose_event      (GtkWidget              *widget,
-                                                        GdkEventExpose         *event,
-                                                        gpointer                user_data);
-static gboolean gimp_combo_tag_entry_event             (GtkWidget              *widget,
-                                                        GdkEvent               *event,
-                                                        gpointer                user_data);
+
 static void     gimp_combo_tag_entry_style_set         (GtkWidget              *widget,
                                                         GtkStyle               *previous_style);
 
-static void     gimp_combo_tag_entry_popup_list        (GimpComboTagEntry      *entry);
+static void     gimp_combo_tag_entry_icon_press        (GtkWidget              *widget,
+                                                        GtkEntryIconPosition    icon_pos,
+                                                        GdkEvent               *event,
+                                                        gpointer                user_data);
+
 static void     gimp_combo_tag_entry_popup_destroy     (GtkObject              *object,
                                                         GimpComboTagEntry      *entry);
 
 static void     gimp_combo_tag_entry_tag_count_changed (GimpFilteredContainer  *container,
                                                         gint                    tag_count,
                                                         GimpComboTagEntry      *entry);
-
-static void     gimp_combo_tag_entry_get_arrow_rect    (GimpComboTagEntry      *entry,
-                                                        GdkRectangle           *arrow_rect);
-static gboolean gimp_combo_tag_entry_arrow_hit_test    (GimpComboTagEntry      *entry,
-                                                        gint                    x,
-                                                        gint                    y);
 
 
 G_DEFINE_TYPE (GimpComboTagEntry, gimp_combo_tag_entry, GIMP_TYPE_TAG_ENTRY);
@@ -86,41 +79,21 @@ gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
 static void
 gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
 {
-  GtkBorder                     border;
-
-  entry->popup                = NULL;
-  entry->focus_width          = 0;
-  entry->interior_focus       = FALSE;
-  entry->cursor_type          = GDK_XTERM;
-  entry->normal_item_attr     = NULL;
-  entry->selected_item_attr   = NULL;
+  entry->popup                 = NULL;
+  entry->normal_item_attr      = NULL;
+  entry->selected_item_attr    = NULL;
   entry->insensitive_item_attr = NULL;
 
   gtk_widget_add_events (GTK_WIDGET (entry),
-                         GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
+                         GDK_BUTTON_PRESS_MASK |
+                         GDK_POINTER_MOTION_MASK);
 
-  if (gtk_widget_get_direction (GTK_WIDGET (entry)) == GTK_TEXT_DIR_RTL)
-    {
-      border.left   = 18;
-      border.right  = 2;
-    }
-  else
-    {
-      border.left   = 2;
-      border.right  = 18;
-    }
-  border.top    = 2;
-  border.bottom = 2;
-  gtk_entry_set_inner_border (GTK_ENTRY (entry), &border);
+  gtk_entry_set_icon_from_stock (GTK_ENTRY (entry),
+                                 GTK_ENTRY_ICON_SECONDARY,
+                                 GTK_STOCK_GO_DOWN);
 
-  g_signal_connect_after (entry, "expose-event",
-                          G_CALLBACK (gimp_combo_tag_entry_expose_event),
-                          NULL);
-  g_signal_connect (entry, "style-set",
-                    G_CALLBACK (gimp_combo_tag_entry_style_set),
-                    NULL);
-  g_signal_connect (entry, "event",
-                    G_CALLBACK (gimp_combo_tag_entry_event),
+  g_signal_connect (entry, "icon-press",
+                    G_CALLBACK (gimp_combo_tag_entry_icon_press),
                     NULL);
 }
 
@@ -156,11 +129,13 @@ gimp_combo_tag_entry_dispose (GObject *object)
       pango_attr_list_unref (combo_entry->normal_item_attr);
       combo_entry->normal_item_attr = NULL;
     }
+
   if (combo_entry->selected_item_attr)
     {
       pango_attr_list_unref (combo_entry->selected_item_attr);
       combo_entry->selected_item_attr = NULL;
     }
+
   if (combo_entry->insensitive_item_attr)
     {
       pango_attr_list_unref (combo_entry->insensitive_item_attr);
@@ -168,6 +143,56 @@ gimp_combo_tag_entry_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_combo_tag_entry_style_set (GtkWidget *widget,
+                                GtkStyle  *previous_style)
+{
+  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
+  GtkStyle          *style = gtk_widget_get_style (widget);
+  GdkColor           color;
+  PangoAttribute    *attribute;
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
+
+  if (entry->normal_item_attr)
+    pango_attr_list_unref (entry->normal_item_attr);
+  entry->normal_item_attr = pango_attr_list_new ();
+
+  if (style->font_desc)
+    {
+      attribute = pango_attr_font_desc_new (style->font_desc);
+      pango_attr_list_insert (entry->normal_item_attr, attribute);
+    }
+  color = style->text[GTK_STATE_NORMAL];
+  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
+  pango_attr_list_insert (entry->normal_item_attr, attribute);
+
+  if (entry->selected_item_attr)
+    pango_attr_list_unref (entry->selected_item_attr);
+  entry->selected_item_attr = pango_attr_list_copy (entry->normal_item_attr);
+
+  color = style->text[GTK_STATE_SELECTED];
+  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
+  pango_attr_list_insert (entry->selected_item_attr, attribute);
+  color = style->base[GTK_STATE_SELECTED];
+  attribute = pango_attr_background_new (color.red, color.green, color.blue);
+  pango_attr_list_insert (entry->selected_item_attr, attribute);
+
+  if (entry->insensitive_item_attr)
+    pango_attr_list_unref (entry->insensitive_item_attr);
+  entry->insensitive_item_attr = pango_attr_list_copy (entry->normal_item_attr);
+
+  color = style->text[GTK_STATE_INSENSITIVE];
+  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
+  pango_attr_list_insert (entry->insensitive_item_attr, attribute);
+  color = style->base[GTK_STATE_INSENSITIVE];
+  attribute = pango_attr_background_new (color.red, color.green, color.blue);
+  pango_attr_list_insert (entry->insensitive_item_attr, attribute);
+
+  entry->selected_item_color = style->base[GTK_STATE_SELECTED];
 }
 
 /**
@@ -192,153 +217,35 @@ gimp_combo_tag_entry_new (GimpFilteredContainer *container,
                        NULL);
 }
 
-static gboolean
-gimp_combo_tag_entry_expose_event (GtkWidget      *widget,
-                                   GdkEventExpose *event,
-                                   gpointer        user_data)
-{
-  GimpComboTagEntry     *entry     = GIMP_COMBO_TAG_ENTRY (widget);
-  GimpFilteredContainer *container = GIMP_TAG_ENTRY (entry)->container;
-  GtkStyle              *style     = gtk_widget_get_style (widget);
-  GdkRectangle           arrow_rect;
-  gint                   tag_count;
-  gint                   window_width;
-  gint                   window_height;
-  GtkStateType           arrow_state;
-
-  if (gtk_widget_get_window (widget) == event->window)
-    {
-      return FALSE;
-    }
-
-  gimp_combo_tag_entry_get_arrow_rect (entry, &arrow_rect);
-  tag_count = gimp_filtered_container_get_tag_count (container);
-
-  gdk_drawable_get_size (GDK_DRAWABLE (event->window), &window_width, &window_height);
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    {
-      gdk_draw_rectangle (event->window,
-                          style->base_gc[gtk_widget_get_state (widget)],
-                          TRUE, 0, 0, 14, window_height);
-    }
-  else
-    {
-      gdk_draw_rectangle (event->window,
-                          style->base_gc[gtk_widget_get_state (widget)],
-                          TRUE, window_width - 14, 0, 14, window_height);
-    }
-
-  if (tag_count > 0
-      && ! GIMP_TAG_ENTRY (entry)->has_invalid_tags)
-    {
-      arrow_state = GTK_STATE_NORMAL;
-    }
-  else
-    {
-      arrow_state = GTK_STATE_INSENSITIVE;
-    }
-
-  gtk_paint_arrow (style,
-                   event->window, arrow_state,
-                   GTK_SHADOW_NONE, &event->area, widget, NULL,
-                   GTK_ARROW_DOWN, TRUE,
-                   arrow_rect.x + arrow_rect.width / 2 - 4,
-                   arrow_rect.y + arrow_rect.height / 2 - 4, 8, 8);
-
-  return FALSE;
-}
-
-static gboolean
-gimp_combo_tag_entry_event (GtkWidget *widget,
-                            GdkEvent  *event,
-                            gpointer   user_data)
+static void
+gimp_combo_tag_entry_icon_press (GtkWidget            *widget,
+                                 GtkEntryIconPosition  icon_pos,
+                                 GdkEvent             *event,
+                                 gpointer              user_data)
 {
   GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
 
-  switch (event->type)
+  if (! entry->popup)
     {
-      case GDK_BUTTON_PRESS:
+      GimpFilteredContainer *container = GIMP_TAG_ENTRY (entry)->container;
+      gint                   tag_count;
+
+      tag_count = gimp_filtered_container_get_tag_count (container);
+
+      if (tag_count > 0 && ! GIMP_TAG_ENTRY (entry)->has_invalid_tags)
         {
-          GdkEventButton   *button_event = (GdkEventButton *) event;
-
-          if (gimp_combo_tag_entry_arrow_hit_test (entry, button_event->x, button_event->y))
-            {
-              if (! entry->popup)
-                {
-                  gimp_combo_tag_entry_popup_list (entry);
-                }
-              else
-                {
-                  gtk_widget_destroy (entry->popup);
-                }
-
-              return TRUE;
-            }
-
-          return FALSE;
+          entry->popup = gimp_tag_popup_new (entry);
+          g_signal_connect (entry->popup, "destroy",
+                            G_CALLBACK (gimp_combo_tag_entry_popup_destroy),
+                            entry);
+          gimp_tag_popup_show (GIMP_TAG_POPUP (entry->popup));
         }
-
-      case GDK_MOTION_NOTIFY:
-        {
-          GdkEventMotion   *motion_event = (GdkEventMotion *) event;
-          GdkCursorType     cursor_type;
-
-          if (gimp_combo_tag_entry_arrow_hit_test (entry, motion_event->x, motion_event->y))
-            {
-              cursor_type = -1;
-            }
-          else
-            {
-              cursor_type = GDK_XTERM;
-            }
-
-          if (cursor_type != entry->cursor_type)
-            {
-              GdkCursor *cursor = NULL;
-
-              if (cursor_type != -1)
-                {
-                  GdkDisplay *display;
-
-                  display = gtk_widget_get_display (widget);
-                  cursor = gdk_cursor_new_for_display (display, cursor_type);
-                }
-
-              gdk_window_set_cursor (motion_event->window, cursor);
-
-              if (cursor)
-                gdk_cursor_unref (cursor);
-
-              entry->cursor_type = cursor_type;
-            }
-
-          return FALSE;
-        }
-
-      default:
-        return FALSE;
+    }
+  else
+    {
+      gtk_widget_destroy (entry->popup);
     }
 }
-
-static void
-gimp_combo_tag_entry_popup_list (GimpComboTagEntry *entry)
-{
-  GimpFilteredContainer *container = GIMP_TAG_ENTRY (entry)->container;
-  gint                   tag_count;
-
-  tag_count = gimp_filtered_container_get_tag_count (container);
-
-  if (tag_count > 0
-      && ! GIMP_TAG_ENTRY (entry)->has_invalid_tags)
-    {
-      entry->popup = gimp_tag_popup_new (entry);
-      g_signal_connect (entry->popup, "destroy",
-                        G_CALLBACK (gimp_combo_tag_entry_popup_destroy),
-                        entry);
-      gimp_tag_popup_show (GIMP_TAG_POPUP (entry->popup));
-    }
-}
-
 
 static void
 gimp_combo_tag_entry_popup_destroy (GtkObject         *object,
@@ -353,95 +260,11 @@ gimp_combo_tag_entry_tag_count_changed (GimpFilteredContainer *container,
                                         gint                   tag_count,
                                         GimpComboTagEntry     *entry)
 {
-  gtk_widget_queue_draw (GTK_WIDGET (entry));
-}
+  gboolean sensitive;
 
-static void
-gimp_combo_tag_entry_style_set (GtkWidget *widget,
-                                GtkStyle  *previous_style)
-{
-  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
-  GtkStyle          *style = gtk_widget_get_style (widget);
-  GdkColor           color;
-  PangoAttribute    *attribute;
+  sensitive = tag_count > 0 && ! GIMP_TAG_ENTRY (entry)->has_invalid_tags;
 
-  if (entry->normal_item_attr)
-    {
-      pango_attr_list_unref (entry->normal_item_attr);
-    }
-  entry->normal_item_attr = pango_attr_list_new ();
-  if (style->font_desc)
-    {
-      attribute = pango_attr_font_desc_new (style->font_desc);
-      pango_attr_list_insert (entry->normal_item_attr, attribute);
-    }
-  color = style->text[GTK_STATE_NORMAL];
-  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
-  pango_attr_list_insert (entry->normal_item_attr, attribute);
-
-  if (entry->selected_item_attr)
-    {
-      pango_attr_list_unref (entry->selected_item_attr);
-    }
-  entry->selected_item_attr = pango_attr_list_copy (entry->normal_item_attr);
-  color = style->text[GTK_STATE_SELECTED];
-  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
-  pango_attr_list_insert (entry->selected_item_attr, attribute);
-  color = style->base[GTK_STATE_SELECTED];
-  attribute = pango_attr_background_new (color.red, color.green, color.blue);
-  pango_attr_list_insert (entry->selected_item_attr, attribute);
-
-  if (entry->insensitive_item_attr)
-    {
-      pango_attr_list_unref (entry->insensitive_item_attr);
-    }
-  entry->insensitive_item_attr = pango_attr_list_copy (entry->normal_item_attr);
-  color = style->text[GTK_STATE_INSENSITIVE];
-  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
-  pango_attr_list_insert (entry->insensitive_item_attr, attribute);
-  color = style->base[GTK_STATE_INSENSITIVE];
-  attribute = pango_attr_background_new (color.red, color.green, color.blue);
-  pango_attr_list_insert (entry->insensitive_item_attr, attribute);
-
-  entry->selected_item_color = style->base[GTK_STATE_SELECTED];
-
-  if (GTK_WIDGET_CLASS (parent_class))
-    {
-      GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
-    }
-}
-
-static void
-gimp_combo_tag_entry_get_arrow_rect (GimpComboTagEntry *entry,
-                                     GdkRectangle      *arrow_rect)
-{
-  GtkWidget     *widget = GTK_WIDGET (entry);
-  GtkStyle      *style  = gtk_widget_get_style (widget);
-  GtkAllocation  allocation;
-
-  gtk_widget_get_allocation (widget, &allocation);
-
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    arrow_rect->x = style->xthickness;
-  else
-    arrow_rect->x = allocation.width - 16 - style->xthickness * 2;
-
-  arrow_rect->y      = 0;
-  arrow_rect->width  = 12;
-  arrow_rect->height = allocation.height - style->ythickness * 2;
-}
-
-static gboolean
-gimp_combo_tag_entry_arrow_hit_test (GimpComboTagEntry *entry,
-                                     gint               x,
-                                     gint               y)
-{
-  GdkRectangle      arrow_rect;
-
-  gimp_combo_tag_entry_get_arrow_rect (entry, &arrow_rect);
-
-  return (x > arrow_rect.x
-          && y > arrow_rect.y
-          && x < arrow_rect.x + arrow_rect.width
-          && y < arrow_rect.y + arrow_rect.height);
+  gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),
+                                GTK_ENTRY_ICON_SECONDARY,
+                                sensitive);
 }
