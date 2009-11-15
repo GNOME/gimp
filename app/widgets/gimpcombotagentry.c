@@ -43,6 +43,8 @@ static GObject* gimp_combo_tag_entry_constructor       (GType                  t
                                                         GObjectConstructParam *params);
 static void     gimp_combo_tag_entry_dispose           (GObject                *object);
 
+static gboolean gimp_combo_tag_entry_expose            (GtkWidget              *widget,
+                                                        GdkEventExpose         *event);
 static void     gimp_combo_tag_entry_style_set         (GtkWidget              *widget,
                                                         GtkStyle               *previous_style);
 
@@ -70,10 +72,11 @@ gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor = gimp_combo_tag_entry_constructor;
-  object_class->dispose     = gimp_combo_tag_entry_dispose;
+  object_class->constructor  = gimp_combo_tag_entry_constructor;
+  object_class->dispose      = gimp_combo_tag_entry_dispose;
 
-  widget_class->style_set   = gimp_combo_tag_entry_style_set;
+  widget_class->expose_event = gimp_combo_tag_entry_expose;
+  widget_class->style_set    = gimp_combo_tag_entry_style_set;
 }
 
 static void
@@ -124,6 +127,12 @@ gimp_combo_tag_entry_dispose (GObject *object)
 {
   GimpComboTagEntry *combo_entry = GIMP_COMBO_TAG_ENTRY (object);
 
+  if (combo_entry->arrow_pixbuf)
+    {
+      g_object_unref (combo_entry->arrow_pixbuf);
+      combo_entry->arrow_pixbuf = NULL;
+    }
+
   if (combo_entry->normal_item_attr)
     {
       pango_attr_list_unref (combo_entry->normal_item_attr);
@@ -143,6 +152,41 @@ gimp_combo_tag_entry_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static gboolean
+gimp_combo_tag_entry_expose (GtkWidget      *widget,
+                             GdkEventExpose *event)
+{
+  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
+
+  if (! entry->arrow_pixbuf)
+    {
+      GtkStyle  *style  = gtk_widget_get_style (widget);
+      GdkPixmap *pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
+                                          8, 8, -1);
+
+      gdk_draw_rectangle (pixmap,
+                          style->base_gc[GTK_STATE_NORMAL],
+                          TRUE, 0, 0, 8, 8);
+
+      gtk_paint_arrow (style, pixmap,
+                       GTK_STATE_NORMAL,
+                       GTK_SHADOW_NONE, NULL, widget, NULL,
+                       GTK_ARROW_DOWN, TRUE,
+                       0, 0, 8, 8);
+
+      entry->arrow_pixbuf = gdk_pixbuf_get_from_drawable (NULL, pixmap, NULL,
+                                                          0, 0, 0, 0, 8, 8);
+
+      g_object_unref (pixmap);
+
+      gtk_entry_set_icon_from_pixbuf (GTK_ENTRY (entry),
+                                      GTK_ENTRY_ICON_SECONDARY,
+                                      entry->arrow_pixbuf);
+    }
+
+  return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 }
 
 static void
@@ -193,6 +237,12 @@ gimp_combo_tag_entry_style_set (GtkWidget *widget,
   pango_attr_list_insert (entry->insensitive_item_attr, attribute);
 
   entry->selected_item_color = style->base[GTK_STATE_SELECTED];
+
+  if (entry->arrow_pixbuf)
+    {
+      g_object_unref (entry->arrow_pixbuf);
+      entry->arrow_pixbuf = NULL;
+    }
 }
 
 /**
