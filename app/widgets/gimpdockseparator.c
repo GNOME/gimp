@@ -244,7 +244,19 @@ gimp_dock_separator_get_insert_pos (GimpDockSeparator *separator)
 {
   g_return_val_if_fail (GIMP_IS_DOCK_SEPARATOR (separator), GTK_ANCHOR_CENTER);
 
-  return separator->p->anchor;
+  switch (separator->p->anchor)
+    {
+    case GTK_ANCHOR_NORTH:
+    case GTK_ANCHOR_WEST:
+      return 0;
+
+    case GTK_ANCHOR_SOUTH:
+    case GTK_ANCHOR_EAST:
+      return -1;
+      
+    default:
+      g_assert_not_reached ();
+    }
 }
 
 void
