@@ -63,6 +63,9 @@ static void      gimp_dock_columns_real_dock_added   (GimpDockColumns   *dock_co
                                                       GimpDock          *dock);
 static void      gimp_dock_columns_real_dock_removed (GimpDockColumns   *dock_columns,
                                                       GimpDock          *dock);
+static void      gimp_dock_columns_dock_book_remove  (GimpDockColumns   *dock_columns,
+                                                      GimpDockbook      *dockbook,
+                                                      GimpDock          *dock);
 
 
 G_DEFINE_TYPE (GimpDockColumns, gimp_dock_columns, GTK_TYPE_HBOX)
@@ -167,6 +170,17 @@ gimp_dock_columns_real_dock_removed (GimpDockColumns *dock_columns,
 {
 }
 
+static void
+gimp_dock_columns_dock_book_remove (GimpDockColumns *dock_columns,
+                                    GimpDockbook    *dockbook,
+                                    GimpDock        *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  if (gimp_dock_get_dockbooks (dock) == NULL)
+    gimp_dock_columns_remove_dock (dock_columns, dock);
+}
+
 
 /**
  * gimp_dock_columns_add_dock:
@@ -189,6 +203,11 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
                              GTK_WIDGET (dock),
                              index);
 
+  g_signal_connect_object (dock, "book-removed",
+                           G_CALLBACK (gimp_dock_columns_dock_book_remove),
+                           dock_columns,
+                           G_CONNECT_SWAPPED);
+
   g_signal_emit (dock_columns, dock_columns_signals[DOCK_ADDED], 0, dock);
 }
 
@@ -201,6 +220,10 @@ gimp_dock_columns_remove_dock (GimpDockColumns *dock_columns,
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
   dock_columns->p->docks = g_list_remove (dock_columns->p->docks, dock);
+
+  g_signal_handlers_disconnect_by_func (dock,
+                                        gimp_dock_columns_dock_book_remove,
+                                        dock_columns);
 
   g_object_ref (dock);
   gimp_paned_box_remove_widget (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
