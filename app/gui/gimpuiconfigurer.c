@@ -171,7 +171,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
 
       dock_window = GIMP_DOCK_WINDOW (dialog_iter->data);
 
-      docks = gimp_dock_window_get_docks (dock_window);
+      docks = g_list_copy (gimp_dock_window_get_docks (dock_window));
       for (dock_iter = docks; dock_iter; dock_iter = dock_iter->next)
         {
           GimpDock *dock = GIMP_DOCK (dock_iter->data);
@@ -252,7 +252,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer *ui_configurer,
                                          GimpDockColumns  *dock_columns)
 {
   GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
-  GList     *docks  = gimp_dock_columns_get_docks (dock_columns);
+  GList     *docks  = g_list_copy (gimp_dock_columns_get_docks (dock_columns));
   GList     *iter   = NULL;
 
   for (iter = docks; iter; iter = iter->next)

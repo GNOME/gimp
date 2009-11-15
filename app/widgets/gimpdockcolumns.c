@@ -236,5 +236,5 @@ gimp_dock_columns_remove_dock (GimpDockColumns *dock_columns,
 GList *
 gimp_dock_columns_get_docks (GimpDockColumns *dock_columns)
 {
-  return g_list_copy (dock_columns->p->docks);
+  return dock_columns->p->docks;
 }
