@@ -63,7 +63,7 @@ static void      gimp_dock_columns_real_dock_added   (GimpDockColumns   *dock_co
                                                       GimpDock          *dock);
 static void      gimp_dock_columns_real_dock_removed (GimpDockColumns   *dock_columns,
                                                       GimpDock          *dock);
-static void      gimp_dock_columns_dock_book_remove  (GimpDockColumns   *dock_columns,
+static void      gimp_dock_columns_dock_book_removed (GimpDockColumns   *dock_columns,
                                                       GimpDockbook      *dockbook,
                                                       GimpDock          *dock);
 
@@ -171,9 +171,9 @@ gimp_dock_columns_real_dock_removed (GimpDockColumns *dock_columns,
 }
 
 static void
-gimp_dock_columns_dock_book_remove (GimpDockColumns *dock_columns,
-                                    GimpDockbook    *dockbook,
-                                    GimpDock        *dock)
+gimp_dock_columns_dock_book_removed (GimpDockColumns *dock_columns,
+                                     GimpDockbook    *dockbook,
+                                     GimpDock        *dock)
 {
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
@@ -204,7 +204,7 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
                              index);
 
   g_signal_connect_object (dock, "book-removed",
-                           G_CALLBACK (gimp_dock_columns_dock_book_remove),
+                           G_CALLBACK (gimp_dock_columns_dock_book_removed),
                            dock_columns,
                            G_CONNECT_SWAPPED);
 
@@ -222,7 +222,7 @@ gimp_dock_columns_remove_dock (GimpDockColumns *dock_columns,
   dock_columns->p->docks = g_list_remove (dock_columns->p->docks, dock);
 
   g_signal_handlers_disconnect_by_func (dock,
-                                        gimp_dock_columns_dock_book_remove,
+                                        gimp_dock_columns_dock_book_removed,
                                         dock_columns);
 
   g_object_ref (dock);
