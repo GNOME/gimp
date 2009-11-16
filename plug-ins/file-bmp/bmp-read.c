@@ -451,10 +451,10 @@ ReadBMP (const gchar  *name,
     }
 
   /* protect against integer overflows caused by malicious BMPs */
+  /* use divisions in comparisons to avoid type overflows */
 
-  if (((guint64) Bitmap_Head.biWidth) * Bitmap_Head.biBitCnt > G_MAXINT32 ||
-      ((guint64) Bitmap_Head.biWidth) * ABS (Bitmap_Head.biHeight) > G_MAXINT32 ||
-      ((guint64) Bitmap_Head.biWidth) * ABS (Bitmap_Head.biHeight) * 4 > G_MAXINT32)
+  if (((guint64) Bitmap_Head.biWidth) > G_MAXINT32 / Bitmap_Head.biBitCnt ||
+      ((guint64) Bitmap_Head.biWidth) > (G_MAXINT32 / ABS (Bitmap_Head.biHeight)) / 4)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
