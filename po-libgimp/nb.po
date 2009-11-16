@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-16 14:25+0100\n"
-"PO-Revision-Date: 2009-11-16 14:28+0100\n"
+"POT-Creation-Date: 2009-11-16 18:26+0100\n"
+"PO-Revision-Date: 2009-11-16 18:28+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-no@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -760,115 +760,96 @@ msgid "Run non-interactively"
 msgstr "Kjør ikke-interaktivt"
 
 #: ../libgimpbase/gimpbaseenums.c:676
-#, fuzzy
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Kjør med sist brukte verdier"
 
 #: ../libgimpbase/gimpbaseenums.c:705
-#, fuzzy
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Piksler"
 
 #: ../libgimpbase/gimpbaseenums.c:706
-#, fuzzy
 msgctxt "size-type"
 msgid "Points"
 msgstr "Punkter"
 
 #: ../libgimpbase/gimpbaseenums.c:736
-#, fuzzy
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Skygger"
 
 #: ../libgimpbase/gimpbaseenums.c:737
-#, fuzzy
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Mellomtoner"
 
 #: ../libgimpbase/gimpbaseenums.c:738
-#, fuzzy
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Lyse toner"
 
 #: ../libgimpbase/gimpbaseenums.c:767
-#, fuzzy
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (forover)"
 
 #: ../libgimpbase/gimpbaseenums.c:768
-#, fuzzy
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Korrektiv (bakover)"
 
 #: ../libgimpbase/gimpbaseenums.c:799
-#, fuzzy
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Juster"
 
 #: ../libgimpbase/gimpbaseenums.c:800
-#, fuzzy
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Klipp"
 
 #: ../libgimpbase/gimpbaseenums.c:801
-#, fuzzy
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Beskjær til resultatet"
 
 #: ../libgimpbase/gimpbaseenums.c:802
-#, fuzzy
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskjær med fast høyde- til breddeforhold"
 
 #: ../libgimpbase/gimpbaseenums.c:935
-#, fuzzy
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Intern GIMP-prosedyre"
 
 #: ../libgimpbase/gimpbaseenums.c:936
-#, fuzzy
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
-msgstr "GIMP-programtillegg"
+msgstr "GIMP-tillegg"
 
 #: ../libgimpbase/gimpbaseenums.c:937
-#, fuzzy
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "GIMP-utvidelse"
 
 #: ../libgimpbase/gimpbaseenums.c:938
-#, fuzzy
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Midlertidig prosedyre"
 
 #: ../libgimpbase/gimpbaseenums.c:1105
-#, fuzzy
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Fra venstre til høyre"
 
 #: ../libgimpbase/gimpbaseenums.c:1106
-#, fuzzy
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Fra høyre til venstre"
 
 #: ../libgimpbase/gimpbaseenums.c:1137
-#, fuzzy
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Ingen"
@@ -880,7 +861,6 @@ msgid "Slight"
 msgstr "Lyse toner"
 
 #: ../libgimpbase/gimpbaseenums.c:1139
-#, fuzzy
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Middels"
@@ -892,25 +872,21 @@ msgid "Full"
 msgstr "Fylt"
 
 #: ../libgimpbase/gimpbaseenums.c:1171
-#, fuzzy
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Venstrejustert"
 
 #: ../libgimpbase/gimpbaseenums.c:1172
-#, fuzzy
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Høyrejustert"
 
 #: ../libgimpbase/gimpbaseenums.c:1173
-#, fuzzy
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Sentrert"
 
 #: ../libgimpbase/gimpbaseenums.c:1174
-#, fuzzy
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Fylt"
@@ -976,43 +952,36 @@ msgstr ""
 "Farge brukt for å vise farger utenfor tilgjengelig fargeområde (gamut)."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
-#, fuzzy
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Ingen fargehåndtering"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
-#, fuzzy
 msgctxt "color-management-mode"
 msgid "Color managed display"
 msgstr "Fargehåndtert skjerm"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
-#, fuzzy
 msgctxt "color-management-mode"
 msgid "Print simulation"
 msgstr "Utskriftsimulering"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
-#, fuzzy
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Perseptuell"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Relativ fargetilpasning"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
-#, fuzzy
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Metning"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:60
-#, fuzzy
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Absolutt fargetilpasning"
@@ -1425,25 +1394,21 @@ msgid "_Randomize"
 msgstr "Gjør _tilfeldig"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:24
-#, fuzzy
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Kvadrat"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
-#, fuzzy
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Portrett"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
-#, fuzzy
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Landskap"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
-#, fuzzy
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
@@ -1453,7 +1418,6 @@ msgid "Hue"
 msgstr "Glød"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
-#, fuzzy
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
@@ -1463,7 +1427,6 @@ msgid "Saturation"
 msgstr "Metning"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
-#, fuzzy
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
@@ -1473,7 +1436,6 @@ msgid "Value"
 msgstr "Verdi"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
-#, fuzzy
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
@@ -1483,7 +1445,6 @@ msgid "Red"
 msgstr "Rød"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
-#, fuzzy
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
@@ -1493,7 +1454,6 @@ msgid "Green"
 msgstr "Grønn"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
-#, fuzzy
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
@@ -1503,7 +1463,6 @@ msgid "Blue"
 msgstr "Blå"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:132
-#, fuzzy
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
@@ -1513,25 +1472,21 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:161
-#, fuzzy
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Lag"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:162
-#, fuzzy
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Bilder"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:223
-#, fuzzy
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Zoom inn"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:224
-#, fuzzy
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Zoom ut"
