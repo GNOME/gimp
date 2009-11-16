@@ -1,13 +1,13 @@
 # Norwegian translations for GNU gimp package.
 # Copyright (C) 2003 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 2003-2008.
+# Kjartan Maraas <kmaraas@gnome.org>, 2003-2009.
 # Sigurd Gartmann <sigurdga@yahoo-inc.com>, 2004, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU gimp 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 01:51+0200\n"
+"POT-Creation-Date: 2009-11-16 14:28+0100\n"
 "PO-Revision-Date: 2008-09-17 01:52+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
