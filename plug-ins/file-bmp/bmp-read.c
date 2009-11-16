@@ -423,8 +423,10 @@ ReadBMP (const gchar  *name,
       return -1;
     }
 
+  /* biHeight may be negative, but G_MININT32 is dangerous because:
+     G_MININT32 == -(G_MININT32) */
   if (Bitmap_Head.biWidth < 0 ||
-      ABS (Bitmap_Head.biHeight) < 0)
+      Bitmap_Head.biHeight == G_MININT32)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
