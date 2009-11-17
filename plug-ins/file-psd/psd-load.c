@@ -532,10 +532,10 @@ read_layer_block (PSDimage  *img_a,
                   psd_set_error (feof (f), errno, error);
                   return NULL;
                 }
-              lyr_a[lidx]->top = GUINT32_FROM_BE (lyr_a[lidx]->top);
-              lyr_a[lidx]->left = GUINT32_FROM_BE (lyr_a[lidx]->left);
-              lyr_a[lidx]->bottom = GUINT32_FROM_BE (lyr_a[lidx]->bottom);
-              lyr_a[lidx]->right = GUINT32_FROM_BE (lyr_a[lidx]->right);
+              lyr_a[lidx]->top = GINT32_FROM_BE (lyr_a[lidx]->top);
+              lyr_a[lidx]->left = GINT32_FROM_BE (lyr_a[lidx]->left);
+              lyr_a[lidx]->bottom = GINT32_FROM_BE (lyr_a[lidx]->bottom);
+              lyr_a[lidx]->right = GINT32_FROM_BE (lyr_a[lidx]->right);
               lyr_a[lidx]->num_channels = GUINT16_FROM_BE (lyr_a[lidx]->num_channels);
 
               if (lyr_a[lidx]->num_channels > MAX_CHANNELS)
@@ -669,13 +669,13 @@ read_layer_block (PSDimage  *img_a,
                         return NULL;
                       }
                     lyr_a[lidx]->layer_mask.top =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask.top);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask.top);
                     lyr_a[lidx]->layer_mask.left =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask.left);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask.left);
                     lyr_a[lidx]->layer_mask.bottom =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask.bottom);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask.bottom);
                     lyr_a[lidx]->layer_mask.right =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask.right);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask.right);
                     lyr_a[lidx]->layer_mask.mask_flags.relative_pos =
                       lyr_a[lidx]->layer_mask.flags & 1 ? TRUE : FALSE;
                     lyr_a[lidx]->layer_mask.mask_flags.disabled =
@@ -701,21 +701,21 @@ read_layer_block (PSDimage  *img_a,
                         return NULL;
                       }
                     lyr_a[lidx]->layer_mask_extra.top =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.top);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.top);
                     lyr_a[lidx]->layer_mask_extra.left =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.left);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.left);
                     lyr_a[lidx]->layer_mask_extra.bottom =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.bottom);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.bottom);
                     lyr_a[lidx]->layer_mask_extra.right =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.right);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask_extra.right);
                     lyr_a[lidx]->layer_mask.top =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask.top);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask.top);
                     lyr_a[lidx]->layer_mask.left =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask.left);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask.left);
                     lyr_a[lidx]->layer_mask.bottom =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask.bottom);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask.bottom);
                     lyr_a[lidx]->layer_mask.right =
-                      GUINT32_FROM_BE (lyr_a[lidx]->layer_mask.right);
+                      GINT32_FROM_BE (lyr_a[lidx]->layer_mask.right);
                     lyr_a[lidx]->layer_mask.mask_flags.relative_pos =
                       lyr_a[lidx]->layer_mask.flags & 1 ? TRUE : FALSE;
                     lyr_a[lidx]->layer_mask.mask_flags.disabled =

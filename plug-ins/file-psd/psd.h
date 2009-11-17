@@ -446,10 +446,10 @@ typedef struct
 /* PSD Layer mask data (length 20) */
 typedef struct
 {
-  guint32               top;                    /* Layer top */
-  guint32               left;                   /* Layer left */
-  guint32               bottom;                 /* Layer bottom */
-  guint32               right;                  /* Layer right */
+  gint32                top;                    /* Layer top */
+  gint32                left;                   /* Layer left */
+  gint32                bottom;                 /* Layer bottom */
+  gint32                right;                  /* Layer right */
   guchar                def_color;              /* Default background colour */
   guchar                flags;                  /* Layer flags */
   guchar                extra_def_color;        /* Real default background colour */
@@ -460,20 +460,20 @@ typedef struct
 /* PSD Layer mask data (length 36) */
 typedef struct
 {
-  guint32               top;                    /* Layer top */
-  guint32               left;                   /* Layer left */
-  guint32               bottom;                 /* Layer bottom */
-  guint32               right;                  /* Layer right */
+  gint32                top;                    /* Layer top */
+  gint32                left;                   /* Layer left */
+  gint32                bottom;                 /* Layer bottom */
+  gint32                right;                  /* Layer right */
 } LayerMaskExtra;
 
 /* PSD Layer data structure */
 typedef struct
 {
   gboolean              drop;                   /* Do not add layer to GIMP image */
-  guint32               top;                    /* Layer top */
-  guint32               left;                   /* Layer left */
-  guint32               bottom;                 /* Layer bottom */
-  guint32               right;                  /* Layer right */
+  gint32                top;                    /* Layer top */
+  gint32                left;                   /* Layer left */
+  gint32                bottom;                 /* Layer bottom */
+  gint32                right;                  /* Layer right */
   guint16               num_channels;           /* Number of channels */
   ChannelLengthInfo    *chn_info;               /* Channel length info */
   gchar                 mode_key[4];            /* Blend mode key */
