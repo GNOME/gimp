@@ -3168,6 +3168,9 @@ p_vertical_bend (BenderDialog *cd,
             }
         }
     }
+
+  g_free (last_arr);
+  g_free (first_arr);
 }
 
 /* ============================================================================
