@@ -152,14 +152,20 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
           substring = strstr (identifier, "grid");
 
           if (substring && view_type == GIMP_VIEW_TYPE_GRID)
-            return;
+            {
+              g_free (identifier);
+              return;
+            }
 
           if (! substring)
             {
               substring = strstr (identifier, "list");
 
               if (substring && view_type == GIMP_VIEW_TYPE_LIST)
-                return;
+                {
+                  g_free (identifier);
+                  return;
+                }
             }
 
           if (substring)
