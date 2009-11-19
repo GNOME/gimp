@@ -205,21 +205,21 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
 
                   show = gimp_docked_get_show_button_bar (old);
                   gimp_docked_set_show_button_bar (new, show);
-                }
 
-              /*  Maybe gimp_dialog_factory_dockable_new() returned
-               *  an already existing singleton dockable, so check
-               *  if it already is attached to a dockbook.
-               */
-              if (new_dockable && ! GIMP_DOCKABLE (new_dockable)->dockbook)
-                {
-                  gimp_dockbook_add (dockbook, GIMP_DOCKABLE (new_dockable),
-                                     page_num);
+                  /*  Maybe gimp_dialog_factory_dockable_new() returned
+                   *  an already existing singleton dockable, so check
+                   *  if it already is attached to a dockbook.
+                   */
+                  if (! GIMP_DOCKABLE (new_dockable)->dockbook)
+                    {
+                      gimp_dockbook_add (dockbook, GIMP_DOCKABLE (new_dockable),
+                                         page_num);
 
-                  gimp_dockbook_remove (dockbook, dockable);
+                      gimp_dockbook_remove (dockbook, dockable);
 
-                  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
-                                                 page_num);
+                      gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
+                                                     page_num);
+                    }
                 }
             }
 
