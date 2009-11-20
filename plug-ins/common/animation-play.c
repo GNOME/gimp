@@ -1,7 +1,8 @@
 /*
- * Animation Playback plug-in version 0.98.8
+ * Animation Playback plug-in version 0.99.1
  *
  * (c) Adam D. Moss : 1997-2000 : adam@gimp.org : adam@foxbox.org
+ * (c) Mircea Purdea : 2009 : someone_else@exhalus.net
  *
  * GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -27,7 +28,7 @@
  *  speedups (caching?  most bottlenecks seem to be in pixelrgns)
  *    -> do pixelrgns properly!
  *
- *  write other half of the user interface (default timing, disposal &c)
+ *  write other half of the user interface (zoom, disposal &c)
  */
 
 #include "config.h"
@@ -72,7 +73,9 @@ static void        rewind_callback           (GtkAction       *action);
 static void        speed_up_callback         (GtkAction       *action);
 static void        speed_down_callback       (GtkAction       *action);
 static void        speed_reset_callback      (GtkAction       *action);
-static void        speedcombo_changed        (GtkWidget       *scombo,
+static void        speedcombo_changed        (GtkWidget       *combo,
+                                              gpointer         data);
+static void        fpscombo_changed          (GtkWidget       *combo,
                                               gpointer         data);
 static gboolean    repaint_sda               (GtkWidget       *darea,
                                               GdkEventExpose  *event,
@@ -87,6 +90,7 @@ static void        total_alpha_preview       (guchar          *ptr);
 static void        init_preview              (void);
 static void        update_combobox           (void);
 static gdouble     get_duration_factor       (gint             index);
+static gint        get_fps                   (gint             index);
 
 
 /* tag util functions*/
@@ -134,6 +138,7 @@ static GimpImageBaseType  imagetype;
 static guchar            *palette;
 static gint               ncolours;
 static gint               duration_index = 3;
+static gint               default_frame_duration = 100; /* ms */
 
 
 /* for shaping */
@@ -642,15 +647,41 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
+  progress = gtk_progress_bar_new ();
+  gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
+  gtk_widget_show (progress);
+
   speedcombo = gtk_combo_box_new_text ();
-  gtk_box_pack_start (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
+  gtk_widget_show (speedcombo);
+
+  for (index = 0; index < 9; index++)
+    {
+      gchar *text;
+
+      /* list is given in "fps" - frames per second */
+      text = g_strdup_printf  (_("%d fps"), get_fps (index));
+      gtk_combo_box_append_text (GTK_COMBO_BOX (speedcombo), text);
+      g_free (text);
+    }
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (speedcombo), 0);
+
+  g_signal_connect (speedcombo, "changed",
+                    G_CALLBACK (fpscombo_changed),
+                    NULL);
+
+  gimp_help_set_help_data (speedcombo, _("Default framerate"), NULL);
+
+  speedcombo = gtk_combo_box_new_text ();
+  gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
   gtk_widget_show (speedcombo);
 
   for (index = 0; index < 7; index++)
     {
       gchar *text;
 
-      text = g_strdup_printf  ("%g %%", 100.0 / get_duration_factor (index));
+      text = g_strdup_printf  ("%g\303\227", (100 / get_duration_factor (index)) / 100);
       gtk_combo_box_append_text (GTK_COMBO_BOX (speedcombo), text);
       g_free (text);
     }
@@ -662,10 +693,6 @@ build_dialog (GimpImageBaseType  basetype,
                     NULL);
 
   gimp_help_set_help_data (speedcombo, _("Playback speed"), NULL);
-
-  progress = gtk_progress_bar_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
-  gtk_widget_show (progress);
 
   if (total_frames < 2)
     {
@@ -1472,6 +1499,34 @@ get_duration_factor (gint index)
     }
 }
 
+static gint
+get_fps (gint index)
+{
+  switch (index)
+    {
+    case 0:
+      return 10;
+    case 1:
+      return 12;
+    case 2:
+      return 15;
+    case 3:
+      return 24;
+    case 4:
+      return 25;
+    case 5:
+      return 30;
+    case 6:
+      return 50;
+    case 7:
+      return 60;
+    case 8:
+      return 72;
+    default:
+      return 10;
+    }
+}
+
 static void
 step_callback (GtkAction *action)
 {
@@ -1551,11 +1606,11 @@ speed_reset_callback (GtkAction *action)
 
 
 static void
-speedcombo_changed (GtkWidget *scombo, gpointer data)
+speedcombo_changed (GtkWidget *combo, gpointer data)
 {
   GtkAction * action;
 
-  duration_index = gtk_combo_box_get_active (GTK_COMBO_BOX (scombo));
+  duration_index = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-reset");
@@ -1568,6 +1623,12 @@ speedcombo_changed (GtkWidget *scombo, gpointer data)
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/anim-play-popup/speed-up");
   gtk_action_set_sensitive (action, duration_index > 0);
+}
+
+static void
+fpscombo_changed (GtkWidget *combo, gpointer data)
+{
+  default_frame_duration = 1000 / get_fps(gtk_combo_box_get_active (GTK_COMBO_BOX (combo)));
 }
 
 static void
@@ -1604,9 +1665,8 @@ get_frame_duration (guint whichframe)
       g_free (layer_name);
     }
 
-  if (duration < 0) duration = 100;  /* FIXME for default-if-not-said  */
-  else
-    if (duration == 0) duration = 100; /* FIXME - 0-wait is nasty */
+  if (duration <= 0)
+    duration = default_frame_duration;
 
   return (guint32) duration;
 }
