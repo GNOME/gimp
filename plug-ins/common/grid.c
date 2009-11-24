@@ -714,9 +714,9 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 2, grid_cfg.iwidth);
 
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Horizontal"),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Horizontal\nLines"),
                                 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Vertical"),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Vertical\nLines"),
                                 0, 2, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Intersection"),
                                 0, 3, 0.0);
