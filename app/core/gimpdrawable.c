@@ -815,7 +815,7 @@ gimp_drawable_get_node (GimpItem *item)
   node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
 
   drawable->private->mode_node = gegl_node_new_child (node,
-                                                      "operation", "gegl:normal",
+                                                      "operation", "gegl:over",
                                                       NULL);
 
   input  = gegl_node_get_input_proxy  (node, "input");

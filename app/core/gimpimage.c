@@ -1250,7 +1250,7 @@ gimp_image_get_graph (GimpProjectable *projectable)
   gegl_node_add_child (image->graph, channels_node);
 
   blend_node = gegl_node_new_child (image->graph,
-                                    "operation", "gegl:normal",
+                                    "operation", "gegl:over",
                                     NULL);
 
   gegl_node_connect_to (layers_node,   "output",
