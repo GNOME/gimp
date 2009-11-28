@@ -752,7 +752,7 @@ gimp_dockbook_tab_drag_leave (GtkWidget      *widget,
 
   gimp_dockbook_remove_tab_timeout (dockbook);
 
-  gtk_drag_unhighlight (widget);
+  gimp_highlight_widget (widget, FALSE);
 }
 
 static gboolean
@@ -766,6 +766,7 @@ gimp_dockbook_tab_drag_motion (GtkWidget      *widget,
   GimpDockbook  *dockbook = dockable->dockbook;
   GtkTargetList *target_list;
   GdkAtom        target_atom;
+  gboolean       target_exists;
 
   if (! dockbook->p->tab_hover_timeout ||
       dockbook->p->tab_hover_dockable != dockable)
@@ -784,16 +785,9 @@ gimp_dockbook_tab_drag_motion (GtkWidget      *widget,
   target_list = gtk_drag_dest_get_target_list (widget);
   target_atom = gtk_drag_dest_find_target (widget, context, target_list);
 
-  if (gtk_target_list_find (target_list, target_atom, NULL))
-    {
-      gdk_drag_status (context, GDK_ACTION_MOVE, time);
-      gtk_drag_highlight (widget);
-    }
-  else
-    {
-      gdk_drag_status (context, 0, time);
-      gtk_drag_unhighlight (widget);
-    }
+  target_exists = gtk_target_list_find (target_list, target_atom, NULL);
+  gdk_drag_status (context, target_exists ? GDK_ACTION_MOVE : 0, time);
+  gimp_highlight_widget (widget, target_exists);
 
   /*  always return TRUE so drag_leave() is called  */
   return TRUE;

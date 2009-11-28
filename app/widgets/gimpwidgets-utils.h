@@ -87,6 +87,9 @@ void              gimp_pango_layout_set_scale      (PangoLayout          *layout
                                                     double                scale);
 void              gimp_pango_layout_set_weight     (PangoLayout          *layout,
                                                     PangoWeight           weight);
+void              gimp_highlight_widget            (GtkWidget            *widget,
+                                                    gboolean              highlight);
+
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

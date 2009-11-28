@@ -1166,3 +1166,23 @@ gimp_pango_layout_set_weight (PangoLayout *layout,
   pango_layout_set_attributes (layout, attrs);
   pango_attr_list_unref (attrs);
 }
+
+/**
+ * gimp_highlight_widget:
+ * @widget:
+ * @highlight:
+ *
+ * Calls gtk_drag_highlight() on @widget if @highlight is %TRUE,
+ * calls gtk_drag_unhighlight() otherwise.
+ **/
+void
+gimp_highlight_widget (GtkWidget *widget,
+                       gboolean   highlight)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  if (highlight)
+    gtk_drag_highlight (widget);
+  else
+    gtk_drag_unhighlight (widget);
+}
