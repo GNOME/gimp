@@ -668,33 +668,11 @@ gimp_toolbox_get_vbox (GimpToolbox *toolbox)
 static void
 toolbox_separator_expand (GimpToolbox *toolbox)
 {
-  GimpDock  *dock = GIMP_DOCK (toolbox);
-  GList     *children;
-  GtkWidget *separator;
-
-  children = gtk_container_get_children (GTK_CONTAINER (gimp_dock_get_vbox (dock)));
-  separator = children->data;
-  g_list_free (children);
-
-  gtk_box_set_child_packing (GTK_BOX (gimp_dock_get_vbox (dock)), separator,
-                             TRUE, TRUE, 0, GTK_PACK_START);
-  gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), TRUE);
 }
 
 static void
 toolbox_separator_collapse (GimpToolbox *toolbox)
 {
-  GimpDock  *dock = GIMP_DOCK (toolbox);
-  GList     *children;
-  GtkWidget *separator;
-
-  children = gtk_container_get_children (GTK_CONTAINER (gimp_dock_get_vbox (dock)));
-  separator = children->data;
-  g_list_free (children);
-
-  gtk_box_set_child_packing (GTK_BOX (gimp_dock_get_vbox (dock)), separator,
-                             FALSE, FALSE, 0, GTK_PACK_START);
-  gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), FALSE);
 }
 
 static void

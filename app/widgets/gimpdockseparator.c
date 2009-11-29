@@ -44,13 +44,13 @@
 
 struct _GimpDockSeparatorPrivate
 {
-  GimpDockSeparatorDroppedFunc  dropped_cb;
-  gpointer                     *dropped_cb_data;
+  GimpPanedBoxDroppedFunc  dropped_cb;
+  gpointer                *dropped_cb_data;
 
-  GtkWidget                    *frame;
-  GtkWidget                    *label;
+  GtkWidget               *frame;
+  GtkWidget               *label;
 
-  GtkAnchorType                 anchor;
+  GtkAnchorType            anchor;
 };
 
 
@@ -201,7 +201,9 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 
   if (source)
     {
-      return separator->p->dropped_cb (separator, source, separator->p->dropped_cb_data);
+      return separator->p->dropped_cb (source,
+                                       gimp_dock_separator_get_insert_pos (separator),
+                                       separator->p->dropped_cb_data);
     }
 
   return FALSE;
@@ -223,9 +225,9 @@ gimp_dock_separator_new (GtkAnchorType anchor)
 }
 
 void
-gimp_dock_separator_set_dropped_cb (GimpDockSeparator            *separator,
-                                    GimpDockSeparatorDroppedFunc  dropped_cb,
-                                    gpointer                      dropped_cb_data)
+gimp_dock_separator_set_dropped_cb (GimpDockSeparator       *separator,
+                                    GimpPanedBoxDroppedFunc  dropped_cb,
+                                    gpointer                 dropped_cb_data)
 {
   g_return_if_fail (GIMP_IS_DOCK_SEPARATOR (separator));
 

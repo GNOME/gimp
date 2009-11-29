@@ -54,21 +54,25 @@ struct _GimpPanedBoxClass
 
 
 GType               gimp_paned_box_get_type              (void) G_GNUC_CONST;
-GtkWidget         * gimp_paned_box_new                   (gboolean                      homogeneous,
-                                                          gint                          spacing,
-                                                          GtkOrientation                orientation);
-void                gimp_paned_box_set_dropped_cb        (GimpPanedBox                 *paned_box,
-                                                          GimpDockSeparatorDroppedFunc  dropped_cb,
-                                                          gpointer                      dropped_cb_data);
-void                gimp_paned_box_add_widget            (GimpPanedBox                 *paned_box,
-                                                          GtkWidget                    *widget,
-                                                          gint                          index);
-void                gimp_paned_box_remove_widget         (GimpPanedBox                 *paned_box,
-                                                          GtkWidget                    *widget);
-void                gimp_paned_box_show_separators       (GimpPanedBox                 *dock,
-                                                          gboolean                      show);
-void                gimp_paned_box_class_show_separators (GimpPanedBoxClass            *klass,
-                                                          gboolean                      show);
+GtkWidget         * gimp_paned_box_new                   (gboolean                 homogeneous,
+                                                          gint                     spacing,
+                                                          GtkOrientation           orientation);
+void                gimp_paned_box_set_dropped_cb        (GimpPanedBox            *paned_box,
+                                                          GimpPanedBoxDroppedFunc  dropped_cb,
+                                                          gpointer                 dropped_cb_data);
+void                gimp_paned_box_add_widget            (GimpPanedBox            *paned_box,
+                                                          GtkWidget               *widget,
+                                                          gint                     index);
+void                gimp_paned_box_remove_widget         (GimpPanedBox            *paned_box,
+                                                          GtkWidget               *widget);
+gboolean            gimp_paned_box_will_handle_drag      (GimpPanedBox            *paned_box,
+                                                          GtkWidget               *widget,
+                                                          GdkDragContext          *context,
+                                                          gint                     x,
+                                                          gint                     y,
+                                                          gint                     time);
+void                gimp_paned_box_set_drag_handler      (GimpPanedBox            *paned_box,
+                                                          GimpPanedBox            *drag_handler);
 
 
 #endif /* __GIMP_PANED_BOX_H__ */

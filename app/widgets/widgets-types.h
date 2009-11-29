@@ -259,8 +259,8 @@ typedef void     (* GimpMenuPositionFunc)         (GtkMenu         *menu,
                                                    gint            *x,
                                                    gint            *y,
                                                    gpointer         data);
-typedef gboolean (* GimpDockSeparatorDroppedFunc) (GimpDockSeparator *separator,
-                                                   GtkWidget         *source,
+typedef gboolean (* GimpPanedBoxDroppedFunc)      (GtkWidget         *source,
+                                                   gint               insert_index,
                                                    gpointer           data);
 
 

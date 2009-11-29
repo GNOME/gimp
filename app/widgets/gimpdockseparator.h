@@ -53,13 +53,13 @@ struct _GimpDockSeparatorClass
 
 
 GType          gimp_dock_separator_get_type       (void) G_GNUC_CONST;
-GtkWidget    * gimp_dock_separator_new            (GtkAnchorType                 anchor);
-void           gimp_dock_separator_set_dropped_cb (GimpDockSeparator            *separator,
-                                                   GimpDockSeparatorDroppedFunc  dropped_cb,
-                                                   gpointer                      dropped_cb_data);
-gint           gimp_dock_separator_get_insert_pos (GimpDockSeparator            *separator);
-void           gimp_dock_separator_set_show_label (GimpDockSeparator            *separator,
-                                                   gboolean                      show);
+GtkWidget    * gimp_dock_separator_new            (GtkAnchorType            anchor);
+void           gimp_dock_separator_set_dropped_cb (GimpDockSeparator       *separator,
+                                                   GimpPanedBoxDroppedFunc  dropped_cb,
+                                                   gpointer                 dropped_cb_data);
+gint           gimp_dock_separator_get_insert_pos (GimpDockSeparator       *separator);
+void           gimp_dock_separator_set_show_label (GimpDockSeparator       *separator,
+                                                   gboolean                 show);
 
 
 #endif /* __GIMP_DOCK_SEPARATOR_H__ */

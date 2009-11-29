@@ -39,6 +39,7 @@
 #include "gimpmenudock.h"
 #include "gimppanedbox.h"
 
+#include "gimp-log.h"
 
 enum
 {
@@ -56,8 +57,8 @@ struct _GimpDockColumnsPrivate
 };
 
 
-static gboolean  gimp_dock_columns_dropped_cb        (GimpDockSeparator *separator,
-                                                      GtkWidget         *source,
+static gboolean  gimp_dock_columns_dropped_cb        (GtkWidget         *source,
+                                                      gint               insert_index,
                                                       gpointer           data);
 static void      gimp_dock_columns_real_dock_added   (GimpDockColumns   *dock_columns,
                                                       GimpDock          *dock);
@@ -121,15 +122,14 @@ gimp_dock_columns_init (GimpDockColumns *dock_columns)
 }
 
 static gboolean
-gimp_dock_columns_dropped_cb (GimpDockSeparator *separator,
-                              GtkWidget         *source,
+gimp_dock_columns_dropped_cb (GtkWidget         *source,
+                              gint               insert_index,
                               gpointer           data)
 {
   GimpDockColumns *dock_columns = GIMP_DOCK_COLUMNS (data);
   GimpDockable    *dockable     = gimp_dockbook_drag_source_to_dockable (source);
   GtkWidget       *dock         = NULL;
   GtkWidget       *dockbook     = NULL;
-  gint             index        = gimp_dock_separator_get_insert_pos (separator);
 
   if (!dockable )
     return FALSE;
@@ -138,7 +138,7 @@ gimp_dock_columns_dropped_cb (GimpDockSeparator *separator,
   dock = gimp_menu_dock_new (global_dock_factory,
                              global_dock_factory->context->gimp->images,
                              global_dock_factory->context->gimp->displays);
-  gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), index);
+  gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), insert_index);
 
   /* Put a now dockbook in the dock */
   dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock))->menu_factory);
@@ -197,6 +197,8 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
   g_return_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns));
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
+  GIMP_LOG (DND, "Adding GimpDock %p to GimpDockColumns %p", dock, dock_columns);
+
   dock_columns->p->docks = g_list_prepend (dock_columns->p->docks, dock);
 
   gimp_paned_box_add_widget (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
@@ -218,6 +220,8 @@ gimp_dock_columns_remove_dock (GimpDockColumns *dock_columns,
 {
   g_return_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns));
   g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  GIMP_LOG (DND, "Removing GimpDock %p from GimpDockColumns %p", dock, dock_columns);
 
   dock_columns->p->docks = g_list_remove (dock_columns->p->docks, dock);
 

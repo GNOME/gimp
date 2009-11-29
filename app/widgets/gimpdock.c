@@ -88,8 +88,8 @@ static void      gimp_dock_real_book_added   (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
 static void      gimp_dock_real_book_removed (GimpDock              *dock,
                                               GimpDockbook          *dockbook);
-static gboolean  gimp_dock_dropped_cb        (GimpDockSeparator     *separator,
-                                              GtkWidget             *source,
+static gboolean  gimp_dock_dropped_cb        (GtkWidget             *source,
+                                              gint                   insert_index,
                                               gpointer               data);
 
 
@@ -292,14 +292,13 @@ gimp_dock_real_book_removed (GimpDock     *dock,
 }
 
 static gboolean
-gimp_dock_dropped_cb (GimpDockSeparator *separator,
-                      GtkWidget         *source,
-                      gpointer           data)
+gimp_dock_dropped_cb (GtkWidget *source,
+                      gint       insert_index,
+                      gpointer   data)
 {
   GimpDock     *dock     = GIMP_DOCK (data);
   GimpDockable *dockable = gimp_dockbook_drag_source_to_dockable (source);
   GtkWidget    *dockbook = NULL;
-  gint          index    = gimp_dock_separator_get_insert_pos (separator);
 
   if (!dockable )
     return FALSE;
@@ -329,7 +328,7 @@ gimp_dock_dropped_cb (GimpDockSeparator *separator,
 
   /* Create a new dockbook */
   dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (dock)->menu_factory);
-  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
+  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), insert_index);
 
   /* Add the dockable to new new dockbook */
   gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
