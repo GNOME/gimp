@@ -1024,10 +1024,21 @@ gimp_layer_sync_mode_node (GimpLayer *layer)
 
       mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
-      gegl_node_set (mode_node,
-                     "operation",  "gimp:point-layer-mode",
-                     "blend-mode", layer->mode,
-                     NULL);
+      switch (layer->mode)
+        {
+        case GIMP_NORMAL_MODE:
+          gegl_node_set (mode_node,
+                         "operation", "gegl:over",
+                         NULL);
+          break;
+
+        default:
+          gegl_node_set (mode_node,
+                         "operation",  "gimp:point-layer-mode",
+                         "blend-mode", layer->mode,
+                         NULL);
+          break;
+        }
     }
 }
 
