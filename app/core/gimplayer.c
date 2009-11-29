@@ -173,6 +173,8 @@ static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                height,
                                                  GimpLayer          *layer);
 
+static void       gimp_layer_sync_mode_node     (GimpLayer          *layer);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
@@ -780,12 +782,9 @@ gimp_layer_get_node (GimpItem *item)
   gegl_node_connect_to (layer->opacity_node, "output",
                         offset_node,         "input");
 
-  mode_node = gimp_drawable_get_mode_node (drawable);
+  gimp_layer_sync_mode_node (layer);
 
-  gegl_node_set (mode_node,
-                 "operation",  "gimp:point-layer-mode",
-                 "blend-mode", layer->mode,
-                 NULL);
+  mode_node = gimp_drawable_get_mode_node (drawable);
 
   gegl_node_connect_to (offset_node, "output",
                         mode_node,   "aux");
@@ -1013,6 +1012,22 @@ gimp_layer_layer_mask_update (GimpDrawable *drawable,
     {
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             x, y, width, height);
+    }
+}
+
+static void
+gimp_layer_sync_mode_node (GimpLayer *layer)
+{
+  if (layer->opacity_node)
+    {
+      GeglNode *mode_node;
+
+      mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
+
+      gegl_node_set (mode_node,
+                     "operation",  "gimp:point-layer-mode",
+                     "blend-mode", layer->mode,
+                     NULL);
     }
 }
 
@@ -2001,17 +2016,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "mode");
 
-      if (layer->opacity_node)
-        {
-          GeglNode *mode_node;
-
-          mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
-
-          gegl_node_set (mode_node,
-                         "operation",  "gimp:point-layer-mode",
-                         "blend-mode", layer->mode,
-                         NULL);
-        }
+      gimp_layer_sync_mode_node (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
