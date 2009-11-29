@@ -255,7 +255,11 @@ gimp_paned_box_remove_widget (GimpPanedBox *paned_box,
   /* Remove from widget hierarchy */
   if (old_length == 1)
     {
-      gtk_container_remove (GTK_CONTAINER (paned_box), widget);
+      /* The widget might already be parent-less if we are in
+       * destruction, .e.g when closing a dock window.
+       */
+      if (gtk_widget_get_parent (widget) != NULL)
+        gtk_container_remove (GTK_CONTAINER (paned_box), widget);
     }
   else
     {
