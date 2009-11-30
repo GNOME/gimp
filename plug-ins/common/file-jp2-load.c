@@ -93,7 +93,7 @@ query (void)
                           "Aurimas Juška",
                           "Aurimas Juška, Florian Traverse",
                           "2009",
-                          N_("JPEG-2000 image"),
+                          N_("JPEG 2000 image"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
@@ -261,7 +261,7 @@ load_image (const gchar  *filename,
       if (components[0] == -1 || components[1] == -1 || components[2] == -1)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("The image '%s' is in RGB but is missing some of the "
+                       _("The image '%s' is in RGB, but is missing some of the "
                          "components."),
                        gimp_filename_to_utf8 (filename));
           return -1;
@@ -281,21 +281,21 @@ load_image (const gchar  *filename,
 
     case JAS_CLRSPC_FAM_XYZ:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("The image '%s' is in the CIEXYZ color space but there is "
+                   _("The image '%s' is in the CIEXYZ color space, but there is "
                      "no code in place to convert it to RGB."),
                    gimp_filename_to_utf8 (filename));
       return -1;
 
     case JAS_CLRSPC_FAM_LAB:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("The image '%s' is in the CIELAB color space but there is "
+                   _("The image '%s' is in the CIELAB color space, but there is "
                      "no code in place to convert it to RGB."),
                    gimp_filename_to_utf8 (filename));
       return -1;
 
     case JAS_CLRSPC_FAM_YCBCR:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("The image '%s' is in the YCbCr color space but there is "
+                   _("The image '%s' is in the YCbCr color space, but there is "
                      "no code in place to convert it to RGB."),
                    gimp_filename_to_utf8 (filename));
       return -1;
@@ -303,7 +303,7 @@ load_image (const gchar  *filename,
     case JAS_CLRSPC_FAM_UNKNOWN:
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("The image '%s' is in an unkown color space."),
+                   _("The image '%s' is in an unknown color space."),
                    gimp_filename_to_utf8 (filename));
       return -1;
     }
