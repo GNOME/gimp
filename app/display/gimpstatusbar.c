@@ -162,6 +162,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   GtkWidget     *hbox;
   GtkWidget     *image;
   GimpUnitStore *store;
+  GtkWidget     *message_area;
+  GtkWidget     *message_area_parent;
 
   statusbar->shell          = NULL;
   statusbar->messages       = NULL;
@@ -179,12 +181,13 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->progress_active      = FALSE;
   statusbar->progress_shown       = FALSE;
 
-  /* remove the label and insert a hbox */
-  gtk_container_remove (GTK_CONTAINER (GTK_STATUSBAR (statusbar)->frame),
-                        g_object_ref (GTK_STATUSBAR (statusbar)->label));
+  /* remove the message area and insert a hbox */
+  message_area = gtk_statusbar_get_message_area (GTK_STATUSBAR (statusbar));
+  message_area_parent = gtk_widget_get_parent (message_area);
+  gtk_container_remove (GTK_CONTAINER (message_area_parent), g_object_ref (message_area));
 
   hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_add (GTK_CONTAINER (GTK_STATUSBAR (statusbar)->frame), hbox);
+  gtk_container_add (GTK_CONTAINER (message_area_parent), hbox);
   gtk_widget_show (hbox);
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
@@ -219,10 +222,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     G_CALLBACK (gimp_statusbar_scale_activated),
                     statusbar);
 
-  /*  put the label back into our hbox  */
-  gtk_box_pack_start (GTK_BOX (hbox),
-                      GTK_STATUSBAR (statusbar)->label, TRUE, TRUE, 1);
-  g_object_unref (GTK_STATUSBAR (statusbar)->label);
+  /*  put the message area back into our hbox  */
+  gtk_box_pack_start (GTK_BOX (hbox), message_area, TRUE, TRUE, 1);
+  g_object_unref (message_area);
 
   g_signal_connect_after (GTK_STATUSBAR (statusbar)->label, "expose-event",
                           G_CALLBACK (gimp_statusbar_label_expose),
