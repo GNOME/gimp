@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-27 02:01+0000\n"
-"PO-Revision-Date: 2009-10-27 19:32-0000\n"
+"POT-Creation-Date: 2009-11-30 03:27+0300\n"
+"PO-Revision-Date: 2009-11-30 03:34+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "Весь слой"
 #. Create selection
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:172
 #: ../plug-ins/common/film.c:965
-#: ../plug-ins/imagemap/imap_selection.c:374
+#: ../plug-ins/imagemap/imap_selection.c:340
 #: ../plug-ins/selection-to-path/selection-to-path.c:433
 msgid "Selection"
 msgstr "Выделение"
@@ -436,81 +436,91 @@ msgstr "Поиск фона анимации"
 msgid "Optimizing animation"
 msgstr "Оптимизация"
 
-#: ../plug-ins/common/animation-play.c:164
+#: ../plug-ins/common/animation-play.c:169
 msgid "Preview a GIMP layer-based animation"
 msgstr "Предварительный просмотр анимированного изображения"
 
-#: ../plug-ins/common/animation-play.c:169
+#: ../plug-ins/common/animation-play.c:174
 msgid "_Playback..."
 msgstr "_Воспроизведение..."
 
-#: ../plug-ins/common/animation-play.c:448
+#: ../plug-ins/common/animation-play.c:453
 msgid "_Step"
 msgstr "_Шаг"
 
-#: ../plug-ins/common/animation-play.c:448
+#: ../plug-ins/common/animation-play.c:453
 msgid "Step to next frame"
 msgstr "Шаг до следующего кадра"
 
-#: ../plug-ins/common/animation-play.c:452
+#: ../plug-ins/common/animation-play.c:457
 msgid "Rewind the animation"
 msgstr "Перемотать назад"
 
-#: ../plug-ins/common/animation-play.c:470
+#: ../plug-ins/common/animation-play.c:475
 msgid "Faster"
 msgstr "Быстрее"
 
-#: ../plug-ins/common/animation-play.c:470
+#: ../plug-ins/common/animation-play.c:475
 msgid "Increase the speed of the animation"
 msgstr "Увеличить скорость воспроизведения анимации"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:480
 msgid "Slower"
 msgstr "Медленнее"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:480
 msgid "Decrease the speed of the animation"
 msgstr "Уменьшить скорость воспроизведения анимации"
 
-#: ../plug-ins/common/animation-play.c:480
+#: ../plug-ins/common/animation-play.c:485
 msgid "Reset speed"
 msgstr "Сбросить скорость"
 
-#: ../plug-ins/common/animation-play.c:480
+#: ../plug-ins/common/animation-play.c:485
 msgid "Reset the speed of the animation"
 msgstr "Сбросить скорость воспроизведения анимации"
 
-#: ../plug-ins/common/animation-play.c:488
-#: ../plug-ins/common/animation-play.c:1447
+#: ../plug-ins/common/animation-play.c:493
+#: ../plug-ins/common/animation-play.c:1474
 msgid "Start playback"
 msgstr "Начать воспроизведение"
 
-#: ../plug-ins/common/animation-play.c:492
+#: ../plug-ins/common/animation-play.c:497
 msgid "Detach"
 msgstr "Отсоединить"
 
-#: ../plug-ins/common/animation-play.c:493
+#: ../plug-ins/common/animation-play.c:498
 msgid "Detach the animation from the dialog window"
 msgstr "Отсоединить анимацию от окна диалога"
 
-#: ../plug-ins/common/animation-play.c:585
+#: ../plug-ins/common/animation-play.c:590
 msgid "Animation Playback:"
 msgstr "Воспроизведение фильма:"
 
-#: ../plug-ins/common/animation-play.c:664
+#. list is given in "fps" - frames per second
+#: ../plug-ins/common/animation-play.c:663
+#, c-format
+msgid "%d fps"
+msgstr "%d fps"
+
+#: ../plug-ins/common/animation-play.c:674
+msgid "Default framerate"
+msgstr "Частота кадров по умолчанию"
+
+#: ../plug-ins/common/animation-play.c:695
 msgid "Playback speed"
 msgstr "Скорость воспроизведения"
 
-#: ../plug-ins/common/animation-play.c:804
+#: ../plug-ins/common/animation-play.c:831
 msgid "Tried to display an invalid layer."
 msgstr "Была предпринята попытка отобразить некорректный слой."
 
-#: ../plug-ins/common/animation-play.c:1324
+#: ../plug-ins/common/animation-play.c:1351
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Кадр %d из %d"
 
-#: ../plug-ins/common/animation-play.c:1447
+#: ../plug-ins/common/animation-play.c:1474
 msgid "Stop playback"
 msgstr "Остановить воспроизведение"
 
@@ -636,13 +646,13 @@ msgstr "По _вертикали"
 #: ../plug-ins/common/smooth-palette.c:256
 #: ../plug-ins/common/tile.c:266
 #: ../plug-ins/file-bmp/bmp-read.c:381
-#: ../plug-ins/file-bmp/bmp-read.c:616
+#: ../plug-ins/file-bmp/bmp-read.c:648
 #: ../plug-ins/file-faxg3/faxg3.c:477
 #: ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:248
 #: ../plug-ins/file-jpeg/jpeg-load.c:760
 #: ../plug-ins/file-psd/psd-image-res-load.c:994
-#: ../plug-ins/file-psd/psd-load.c:1525
+#: ../plug-ins/file-psd/psd-load.c:1574
 #: ../plug-ins/file-sgi/sgi.c:383
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:139
@@ -825,7 +835,7 @@ msgid "L_ength:"
 msgstr "_Длина:"
 
 #: ../plug-ins/common/blur-motion.c:1138
-#: ../plug-ins/common/newsprint.c:1000
+#: ../plug-ins/common/newsprint.c:991
 msgid "_Angle:"
 msgstr "_Угол:"
 
@@ -1504,7 +1514,7 @@ msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Случайное зерно (только для режима «из зерна»)"
 
 #: ../plug-ins/common/cml-explorer.c:1371
-#: ../plug-ins/maze/maze-dialog.c:260
+#: ../plug-ins/maze/maze-dialog.c:251
 msgid "Seed:"
 msgstr "Зерно:"
 
@@ -2168,12 +2178,12 @@ msgid "Re_d"
 msgstr "_Красный"
 
 #: ../plug-ins/common/convolution-matrix.c:65
-#: ../plug-ins/common/newsprint.c:352
+#: ../plug-ins/common/newsprint.c:343
 msgid "_Green"
 msgstr "_Зеленый"
 
 #: ../plug-ins/common/convolution-matrix.c:66
-#: ../plug-ins/common/newsprint.c:360
+#: ../plug-ins/common/newsprint.c:351
 msgid "_Blue"
 msgstr "С_иний"
 
@@ -2938,7 +2948,7 @@ msgstr "_Размыть"
 #: ../plug-ins/common/displace.c:476
 #: ../plug-ins/common/edge.c:731
 #: ../plug-ins/common/fractal-trace.c:740
-#: ../plug-ins/common/newsprint.c:397
+#: ../plug-ins/common/newsprint.c:388
 msgid "_Black"
 msgstr "_Черный"
 
@@ -3190,7 +3200,7 @@ msgstr "Загрузка палитры KISS"
 #: ../plug-ins/common/file-sunras.c:485
 #: ../plug-ins/common/file-tga.c:446
 #: ../plug-ins/common/file-tiff-load.c:604
-#: ../plug-ins/common/file-wmf.c:1005
+#: ../plug-ins/common/file-wmf.c:993
 #: ../plug-ins/common/file-xbm.c:741
 #: ../plug-ins/common/file-xmc.c:678
 #: ../plug-ins/common/file-xpm.c:351
@@ -3920,14 +3930,14 @@ msgid "'%s' is not a PCX file"
 msgstr "'%s' не является файлом PCX"
 
 #: ../plug-ins/common/file-pcx.c:394
-#: ../plug-ins/file-bmp/bmp-read.c:605
+#: ../plug-ins/file-bmp/bmp-read.c:637
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Неподдерживаемая ширина изображения: %d"
 
 #: ../plug-ins/common/file-pcx.c:399
-#: ../plug-ins/file-bmp/bmp-read.c:611
+#: ../plug-ins/file-bmp/bmp-read.c:643
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -4230,7 +4240,7 @@ msgstr "Визуализация"
 #. Resolution
 #: ../plug-ins/common/file-ps.c:3149
 #: ../plug-ins/common/file-svg.c:928
-#: ../plug-ins/common/file-wmf.c:695
+#: ../plug-ins/common/file-wmf.c:691
 msgid "Resolution:"
 msgstr "Разрешение:"
 
@@ -4589,7 +4599,7 @@ msgid "Rendered SVG"
 msgstr "Визуализованный SVG"
 
 #: ../plug-ins/common/file-svg.c:566
-#: ../plug-ins/common/file-wmf.c:361
+#: ../plug-ins/common/file-wmf.c:357
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
@@ -4609,33 +4619,33 @@ msgstr "Создать Scalable Vector Graphics"
 
 #. Width and Height
 #: ../plug-ins/common/file-svg.c:807
-#: ../plug-ins/common/file-wmf.c:574
+#: ../plug-ins/common/file-wmf.c:570
 #: ../plug-ins/common/grid.c:724
 msgid "Width:"
 msgstr "Ширина:"
 
 #: ../plug-ins/common/file-svg.c:813
-#: ../plug-ins/common/file-wmf.c:580
+#: ../plug-ins/common/file-wmf.c:576
 msgid "Height:"
 msgstr "Высота:"
 
 #: ../plug-ins/common/file-svg.c:887
-#: ../plug-ins/common/file-wmf.c:654
+#: ../plug-ins/common/file-wmf.c:650
 msgid "_X ratio:"
 msgstr "_Масштаб по X:"
 
 #: ../plug-ins/common/file-svg.c:909
-#: ../plug-ins/common/file-wmf.c:676
+#: ../plug-ins/common/file-wmf.c:672
 msgid "_Y ratio:"
 msgstr "М_асштаб по Y:"
 
 #: ../plug-ins/common/file-svg.c:923
-#: ../plug-ins/common/file-wmf.c:690
+#: ../plug-ins/common/file-wmf.c:686
 msgid "Constrain aspect ratio"
 msgstr "Фиксированное соотношение сторон"
 
 #: ../plug-ins/common/file-svg.c:934
-#: ../plug-ins/common/file-wmf.c:701
+#: ../plug-ins/common/file-wmf.c:697
 #: ../plug-ins/print/print-page-layout.c:285
 #, c-format
 msgid "pixels/%a"
@@ -4720,7 +4730,7 @@ msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
 #: ../plug-ins/common/file-tiff-load.c:1025
-#: ../plug-ins/file-psd/psd-load.c:324
+#: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 bit, so it will be converted for you. Information will be lost because of this conversion."
@@ -4790,7 +4800,7 @@ msgstr "Комментарий:"
 msgid "Microsoft WMF file"
 msgstr "Microsoft WMF file"
 
-#: ../plug-ins/common/file-wmf.c:355
+#: ../plug-ins/common/file-wmf.c:351
 msgid ""
 "WMF file does not\n"
 "specify a size!"
@@ -4798,16 +4808,16 @@ msgstr ""
 "В файле WMF\n"
 "не указан размер!"
 
-#: ../plug-ins/common/file-wmf.c:503
+#: ../plug-ins/common/file-wmf.c:499
 msgid "Render Windows Metafile"
 msgstr "Создание файлав формате Windows Metafile"
 
-#: ../plug-ins/common/file-wmf.c:974
+#: ../plug-ins/common/file-wmf.c:962
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Не удалось открыть \"%s\" для чтения"
 
-#: ../plug-ins/common/file-wmf.c:1014
+#: ../plug-ins/common/file-wmf.c:1002
 msgid "Rendered WMF"
 msgstr "Созданный WMF"
 
@@ -5578,12 +5588,20 @@ msgstr "Сетка"
 
 #. attach labels
 #: ../plug-ins/common/grid.c:717
-msgid "Horizontal"
-msgstr "Горизонталь"
+msgid ""
+"Horizontal\n"
+"Lines"
+msgstr ""
+"Горизонтальные\n"
+"линии"
 
 #: ../plug-ins/common/grid.c:719
-msgid "Vertical"
-msgstr "Вертикаль"
+msgid ""
+"Vertical\n"
+"Lines"
+msgstr ""
+"Вертикальные\n"
+"линии"
 
 #: ../plug-ins/common/grid.c:721
 msgid "Intersection"
@@ -5910,93 +5928,93 @@ msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' не похож на ICC-профиль"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:888
+#: ../plug-ins/common/lcms.c:884
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Преобразование из '%s' в '%s'"
 
-#: ../plug-ins/common/lcms.c:1132
+#: ../plug-ins/common/lcms.c:1128
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Не удалось открыть ICC-профиль из '%s'"
 
-#: ../plug-ins/common/lcms.c:1158
+#: ../plug-ins/common/lcms.c:1150
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Изображение '%s' содержит встроенный цветовой профиль:"
 
-#: ../plug-ins/common/lcms.c:1202
+#: ../plug-ins/common/lcms.c:1194
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Преобразовать изображение в рабочее пространство RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:1233
+#: ../plug-ins/common/lcms.c:1225
 msgid "Convert to RGB working space?"
 msgstr "Преобразовать в рабочее пространство RGB?"
 
-#: ../plug-ins/common/lcms.c:1238
+#: ../plug-ins/common/lcms.c:1230
 msgid "_Keep"
 msgstr "_Оставить как есть"
 
-#: ../plug-ins/common/lcms.c:1243
+#: ../plug-ins/common/lcms.c:1235
 msgid "_Convert"
 msgstr "_Преобразовать"
 
-#: ../plug-ins/common/lcms.c:1271
-#: ../plug-ins/file-jpeg/jpeg-exif.c:380
+#: ../plug-ins/common/lcms.c:1263
+#: ../plug-ins/file-jpeg/jpeg-exif.c:376
 msgid "_Don't ask me again"
 msgstr "_Больше не спрашивать"
 
-#: ../plug-ins/common/lcms.c:1335
+#: ../plug-ins/common/lcms.c:1327
 msgid "Select destination profile"
 msgstr "Выберите конечный профиль"
 
-#: ../plug-ins/common/lcms.c:1362
+#: ../plug-ins/common/lcms.c:1354
 msgid "All files (*.*)"
 msgstr "Все файлы (*.*)"
 
-#: ../plug-ins/common/lcms.c:1367
+#: ../plug-ins/common/lcms.c:1359
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Цветовой ICC-профиль (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1410
+#: ../plug-ins/common/lcms.c:1402
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Рабочее пространство RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1460
+#: ../plug-ins/common/lcms.c:1452
 msgid "Convert to ICC Color Profile"
 msgstr "Преобразовать в цветовой ICC-профиль"
 
-#: ../plug-ins/common/lcms.c:1461
+#: ../plug-ins/common/lcms.c:1453
 msgid "Assign ICC Color Profile"
 msgstr "Назначить цветовой профиль"
 
-#: ../plug-ins/common/lcms.c:1469
+#: ../plug-ins/common/lcms.c:1461
 msgid "_Assign"
 msgstr "_Назначить"
 
-#: ../plug-ins/common/lcms.c:1487
+#: ../plug-ins/common/lcms.c:1479
 msgid "Current Color Profile"
 msgstr "Текущий цветовой профиль"
 
-#: ../plug-ins/common/lcms.c:1502
+#: ../plug-ins/common/lcms.c:1494
 msgid "Convert to"
 msgstr "Преобразовать в"
 
-#: ../plug-ins/common/lcms.c:1502
+#: ../plug-ins/common/lcms.c:1494
 msgid "Assign"
 msgstr "Назначить"
 
-#: ../plug-ins/common/lcms.c:1526
+#: ../plug-ins/common/lcms.c:1518
 msgid "_Rendering Intent:"
 msgstr "_Цель цветопередачи:"
 
-#: ../plug-ins/common/lcms.c:1542
+#: ../plug-ins/common/lcms.c:1534
 msgid "_Black Point Compensation"
 msgstr "Использовать _компенсацию черной точки"
 
-#: ../plug-ins/common/lcms.c:1584
+#: ../plug-ins/common/lcms.c:1576
 msgid "Destination profile is not for RGB color space."
 msgstr "Профиль вывода не предназначен для цветового пространства RGB."
 
@@ -6138,7 +6156,7 @@ msgstr "Т_ема:"
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "некоторая ошибка в расширении файла"
 
-#: ../plug-ins/common/mail.c:728
+#: ../plug-ins/common/mail.c:724
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Не удалось запустить sendmail (%s)"
@@ -6255,126 +6273,126 @@ msgstr "Пов_ерхности с выемками"
 msgid "_FG/BG lighting"
 msgstr "Осве_тление переднего плана/фона"
 
-#: ../plug-ins/common/newsprint.c:126
+#: ../plug-ins/common/newsprint.c:117
 msgid "Round"
 msgstr "Круг"
 
-#: ../plug-ins/common/newsprint.c:135
+#: ../plug-ins/common/newsprint.c:126
 msgid "Line"
 msgstr "Линия"
 
-#: ../plug-ins/common/newsprint.c:144
+#: ../plug-ins/common/newsprint.c:135
 #: ../plug-ins/flame/flame.c:757
 msgid "Diamond"
 msgstr "Ромб"
 
-#: ../plug-ins/common/newsprint.c:152
+#: ../plug-ins/common/newsprint.c:143
 msgid "PS Square (Euclidean Dot)"
 msgstr "PS квадрат (Евклидова точка)"
 
-#: ../plug-ins/common/newsprint.c:161
+#: ../plug-ins/common/newsprint.c:152
 msgid "PS Diamond"
 msgstr "PS ромб"
 
-#: ../plug-ins/common/newsprint.c:331
+#: ../plug-ins/common/newsprint.c:322
 msgid "_Grey"
 msgstr "_Серый"
 
-#: ../plug-ins/common/newsprint.c:344
+#: ../plug-ins/common/newsprint.c:335
 msgid "R_ed"
 msgstr "_Красный"
 
-#: ../plug-ins/common/newsprint.c:373
+#: ../plug-ins/common/newsprint.c:364
 msgid "C_yan"
 msgstr "_Голубой"
 
-#: ../plug-ins/common/newsprint.c:381
+#: ../plug-ins/common/newsprint.c:372
 msgid "Magen_ta"
 msgstr "_Пурпурный"
 
-#: ../plug-ins/common/newsprint.c:389
+#: ../plug-ins/common/newsprint.c:380
 msgid "_Yellow"
 msgstr "Желтый"
 
-#: ../plug-ins/common/newsprint.c:410
+#: ../plug-ins/common/newsprint.c:401
 msgid "Luminance"
 msgstr "Яркость"
 
-#: ../plug-ins/common/newsprint.c:516
+#: ../plug-ins/common/newsprint.c:507
 msgid "Halftone the image to give newspaper-like effect"
 msgstr "Преобразует изображение в полутоновые точки, чтобы добиться эффекта газетной печати"
 
-#: ../plug-ins/common/newsprint.c:525
+#: ../plug-ins/common/newsprint.c:516
 msgid "Newsprin_t..."
 msgstr "_Газетная бумага..."
 
-#: ../plug-ins/common/newsprint.c:626
-#: ../plug-ins/common/newsprint.c:1187
+#: ../plug-ins/common/newsprint.c:617
+#: ../plug-ins/common/newsprint.c:1178
 msgid "Newsprint"
 msgstr "Газетная бумага"
 
-#: ../plug-ins/common/newsprint.c:1030
+#: ../plug-ins/common/newsprint.c:1021
 msgid "_Spot function:"
 msgstr "_Спот-функция:"
 
 #. resolution settings
-#: ../plug-ins/common/newsprint.c:1240
+#: ../plug-ins/common/newsprint.c:1231
 msgid "Resolution"
 msgstr "Разрешение"
 
-#: ../plug-ins/common/newsprint.c:1259
+#: ../plug-ins/common/newsprint.c:1250
 msgid "_Input SPI:"
 msgstr "SPI на _входе:"
 
-#: ../plug-ins/common/newsprint.c:1273
+#: ../plug-ins/common/newsprint.c:1264
 msgid "O_utput LPI:"
 msgstr "LPI на в_ыходе:"
 
-#: ../plug-ins/common/newsprint.c:1286
+#: ../plug-ins/common/newsprint.c:1277
 msgid "C_ell size:"
 msgstr "_Размер ячейки:"
 
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1299
+#: ../plug-ins/common/newsprint.c:1290
 #: ../plug-ins/gradient-flare/gradient-flare.c:553
 msgid "Screen"
 msgstr "Экран"
 
-#: ../plug-ins/common/newsprint.c:1318
+#: ../plug-ins/common/newsprint.c:1309
 msgid "B_lack pullout (%):"
 msgstr "_Черная составляющая (%):"
 
-#: ../plug-ins/common/newsprint.c:1340
+#: ../plug-ins/common/newsprint.c:1331
 msgid "Separate to:"
 msgstr "Разделить на:"
 
-#: ../plug-ins/common/newsprint.c:1344
+#: ../plug-ins/common/newsprint.c:1335
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../plug-ins/common/newsprint.c:1361
+#: ../plug-ins/common/newsprint.c:1352
 msgid "C_MYK"
 msgstr "C_MYK"
 
-#: ../plug-ins/common/newsprint.c:1378
+#: ../plug-ins/common/newsprint.c:1369
 msgid "I_ntensity"
 msgstr "_Интенсивность"
 
-#: ../plug-ins/common/newsprint.c:1403
+#: ../plug-ins/common/newsprint.c:1394
 msgid "_Lock channels"
 msgstr "_Фиксировать каналы"
 
-#: ../plug-ins/common/newsprint.c:1416
+#: ../plug-ins/common/newsprint.c:1407
 msgid "_Factory Defaults"
 msgstr "_По умолчанию"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1442
+#: ../plug-ins/common/newsprint.c:1433
 #: ../plug-ins/gfig/gfig-dialog.c:1256
 msgid "Antialiasing"
 msgstr "Сглаживание"
 
-#: ../plug-ins/common/newsprint.c:1450
+#: ../plug-ins/common/newsprint.c:1441
 msgid "O_versample:"
 msgstr "П_ерекрывание:"
 
@@ -8498,9 +8516,8 @@ msgid "There is no application associated with the given file name extension."
 msgstr ""
 
 #: ../plug-ins/common/web-browser.c:169
-#, fuzzy
 msgid "There was not enough memory to complete the operation."
-msgstr "Недостаточно слоев для выравнивания."
+msgstr "Недостаточно памяти для завершения операции."
 
 #: ../plug-ins/common/web-browser.c:172
 msgid "A sharing violation occurred."
@@ -8508,7 +8525,7 @@ msgstr ""
 
 #: ../plug-ins/common/web-browser.c:175
 msgid "Unknown Windows error."
-msgstr ""
+msgstr "Неизвестная ошибка Windows"
 
 #: ../plug-ins/common/web-browser.c:178
 #, c-format
@@ -8623,10 +8640,12 @@ msgstr "Неправильная цветовая карта"
 #: ../plug-ins/file-bmp/bmp-read.c:188
 #: ../plug-ins/file-bmp/bmp-read.c:197
 #: ../plug-ins/file-bmp/bmp-read.c:212
-#: ../plug-ins/file-bmp/bmp-read.c:421
-#: ../plug-ins/file-bmp/bmp-read.c:429
-#: ../plug-ins/file-bmp/bmp-read.c:437
-#: ../plug-ins/file-bmp/bmp-read.c:445
+#: ../plug-ins/file-bmp/bmp-read.c:417
+#: ../plug-ins/file-bmp/bmp-read.c:438
+#: ../plug-ins/file-bmp/bmp-read.c:449
+#: ../plug-ins/file-bmp/bmp-read.c:457
+#: ../plug-ins/file-bmp/bmp-read.c:465
+#: ../plug-ins/file-bmp/bmp-read.c:477
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "\"%s\" не является корректным файлом BMP"
@@ -8642,17 +8661,17 @@ msgstr ""
 "Ошибка считывания заголовка файла BMP\n"
 "из \"%s\""
 
-#: ../plug-ins/file-bmp/bmp-read.c:557
+#: ../plug-ins/file-bmp/bmp-read.c:589
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Неопознанный или неправильный формат сжатия BMP."
 
-#: ../plug-ins/file-bmp/bmp-read.c:599
+#: ../plug-ins/file-bmp/bmp-read.c:631
 msgid "Unsupported or invalid bitdepth."
 msgstr "Неподдерживаемая или некорректная разрядность цветового представления."
 
-#: ../plug-ins/file-bmp/bmp-read.c:787
-#: ../plug-ins/file-bmp/bmp-read.c:828
-#: ../plug-ins/file-bmp/bmp-read.c:878
+#: ../plug-ins/file-bmp/bmp-read.c:819
+#: ../plug-ins/file-bmp/bmp-read.c:860
+#: ../plug-ins/file-bmp/bmp-read.c:910
 msgid "The bitmap ends unexpectedly."
 msgstr "Данные изображения неожиданно закончились."
 
@@ -8819,19 +8838,19 @@ msgstr "Открывается пред.просмотр для '%s'"
 msgid "Microsoft Windows icon"
 msgstr "Значок Microsoft Windows"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:296
+#: ../plug-ins/file-jpeg/jpeg-exif.c:292
 msgid "Rotate Image?"
 msgstr "Повернуть изображение?"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:299
+#: ../plug-ins/file-jpeg/jpeg-exif.c:295
 msgid "_Keep Orientation"
 msgstr "_Сохранить ориентацию"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:355
+#: ../plug-ins/file-jpeg/jpeg-exif.c:351
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Согласно данным EXIF это изображение повёрнуто."
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:370
+#: ../plug-ins/file-jpeg/jpeg-exif.c:366
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Надо ли вернуть его в прежнее состояние?"
 
@@ -8989,48 +9008,78 @@ msgstr "Неподдерживаемая версия формата файло�
 msgid "Too many channels in file: %d"
 msgstr "Слишком много каналов в файле: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:313
+#: ../plug-ins/file-psd/psd-load.c:310
+#, c-format
+msgid "Unsupported or invalid image size: %dx%d"
+msgstr "Неподдерживаемый или некорректный размер изображения: %dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:322
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Неподдерживаемая цветовая модель: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:340
+#: ../plug-ins/file-psd/psd-load.c:349
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Неподдерживаемая разрядность на канал: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:374
-#: ../plug-ins/file-psd/psd-load.c:384
-#: ../plug-ins/file-psd/psd-load.c:603
-#: ../plug-ins/file-psd/psd-load.c:784
+#: ../plug-ins/file-psd/psd-load.c:383
+#: ../plug-ins/file-psd/psd-load.c:393
+#: ../plug-ins/file-psd/psd-load.c:624
+#: ../plug-ins/file-psd/psd-load.c:833
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Этот файл поврежден!"
 
-#: ../plug-ins/file-psd/psd-load.c:544
+#: ../plug-ins/file-psd/psd-load.c:553
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Слишком много каналов в слое: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:551
+#: ../plug-ins/file-psd/psd-load.c:561
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Неподдерживаемая или некорректная высота слоя: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:558
+#: ../plug-ins/file-psd/psd-load.c:569
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Неподдерживаемая или некорректная ширина слоя: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1152
-#: ../plug-ins/file-psd/psd-load.c:1501
+#: ../plug-ins/file-psd/psd-load.c:578
+#, c-format
+msgid "Unsupported or invalid layer size: %dx%d"
+msgstr "Неподдерживаемый или некорректный размер слоя: %dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:762
+#, c-format
+msgid "Unsupported or invalid layer mask height: %d"
+msgstr "Неподдерживаемая или некорректная высота маски слоя: %d"
+
+#: ../plug-ins/file-psd/psd-load.c:770
+#, c-format
+msgid "Unsupported or invalid layer mask width: %d"
+msgstr "Неподдерживаемая или некорректная ширина маски слоя: %d"
+
+#: ../plug-ins/file-psd/psd-load.c:779
+#, c-format
+msgid "Unsupported or invalid layer mask size: %dx%d"
+msgstr "Неподдерживаемый или некорректный размер маски слоя: %dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:1201
+#: ../plug-ins/file-psd/psd-load.c:1550
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Неподдерживаемый режим сжатия: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1594
+#: ../plug-ins/file-psd/psd-load.c:1643
 msgid "Extra"
 msgstr "Дополнительно"
+
+#: ../plug-ins/file-psd/psd-load.c:1818
+#, c-format
+msgid "Unsupported or invalid channel size"
+msgstr "Неподдерживаемый или некорректный размер канала"
 
 #: ../plug-ins/file-psd/psd-save.c:227
 #: ../plug-ins/file-psd/psd.c:113
@@ -10253,7 +10302,7 @@ msgstr "Наносить ли рисунок на все изображение 
 
 #. Tileable checkbox
 #: ../plug-ins/gimpressionist/general.c:212
-#: ../plug-ins/maze/maze-dialog.c:277
+#: ../plug-ins/maze/maze-dialog.c:268
 msgid "Tileable"
 msgstr "Бесшовный элемент мозаики"
 
@@ -11995,19 +12044,19 @@ msgstr "Верхний левый угол X:"
 msgid "Upper left _y:"
 msgstr "Верхний левый угол Y:"
 
-#: ../plug-ins/imagemap/imap_selection.c:384
+#: ../plug-ins/imagemap/imap_selection.c:350
 msgid "#"
 msgstr "#"
 
-#: ../plug-ins/imagemap/imap_selection.c:395
+#: ../plug-ins/imagemap/imap_selection.c:361
 msgid "URL"
 msgstr "URL"
 
-#: ../plug-ins/imagemap/imap_selection.c:413
+#: ../plug-ins/imagemap/imap_selection.c:379
 msgid "ALT Text"
 msgstr "Текст ALT"
 
-#: ../plug-ins/imagemap/imap_selection.c:423
+#: ../plug-ins/imagemap/imap_selection.c:389
 msgid "Target"
 msgstr "Цель"
 
@@ -12599,43 +12648,43 @@ msgstr "Создание лабиринта с использованием ал
 msgid "Constructing tileable maze using Prim's Algorithm"
 msgstr "Конструирование бесшовного лабиринта с использованием алгоритма Prim..."
 
-#: ../plug-ins/maze/maze-dialog.c:171
+#: ../plug-ins/maze/maze-dialog.c:162
 msgid "Maze"
 msgstr "Лабиринт"
 
 #. The maze size frame
-#: ../plug-ins/maze/maze-dialog.c:193
+#: ../plug-ins/maze/maze-dialog.c:184
 msgid "Maze Size"
 msgstr "Размер лабиринта"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/maze/maze-dialog.c:207
+#: ../plug-ins/maze/maze-dialog.c:198
 msgid "Width (pixels):"
 msgstr "Ширина (точек растра):"
 
-#: ../plug-ins/maze/maze-dialog.c:219
-#: ../plug-ins/maze/maze-dialog.c:235
+#: ../plug-ins/maze/maze-dialog.c:210
+#: ../plug-ins/maze/maze-dialog.c:226
 msgid "Pieces:"
 msgstr "Кусочки:"
 
-#: ../plug-ins/maze/maze-dialog.c:224
+#: ../plug-ins/maze/maze-dialog.c:215
 msgid "Height (pixels):"
 msgstr "Высота (точек растра):"
 
 #. The maze algorithm frame
-#: ../plug-ins/maze/maze-dialog.c:243
+#: ../plug-ins/maze/maze-dialog.c:234
 msgid "Algorithm"
 msgstr "Алгоритм"
 
-#: ../plug-ins/maze/maze-dialog.c:269
+#: ../plug-ins/maze/maze-dialog.c:260
 msgid "Depth first"
 msgstr "Сначала в глубину"
 
-#: ../plug-ins/maze/maze-dialog.c:270
+#: ../plug-ins/maze/maze-dialog.c:261
 msgid "Prim's algorithm"
 msgstr "Алгоритм Прима"
 
-#: ../plug-ins/maze/maze-dialog.c:389
+#: ../plug-ins/maze/maze-dialog.c:380
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
