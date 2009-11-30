@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-27 01:56+0000\n"
-"PO-Revision-Date: 2009-10-28 05:21-0000\n"
+"POT-Creation-Date: 2009-11-30 03:14+0300\n"
+"PO-Revision-Date: 2009-11-30 03:26+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -927,17 +927,17 @@ msgstr "Поменять местами цвета переднего плана
 msgid "Paint Mode: %s"
 msgstr "Режим рисования: %s"
 
-#: ../app/actions/context-commands.c:551
+#: ../app/actions/context-commands.c:552
 #, c-format
 msgid "Brush Shape: %s"
 msgstr "Форма кисти: %s"
 
-#: ../app/actions/context-commands.c:610
+#: ../app/actions/context-commands.c:612
 #, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "Радиус кисти: %2.2f"
 
-#: ../app/actions/context-commands.c:714
+#: ../app/actions/context-commands.c:720
 #, c-format
 msgid "Brush Angle: %2.2f"
 msgstr "Угол кисти: %2.2f"
@@ -967,7 +967,7 @@ msgstr "Использовать все видимые слои при выде�
 #: ../app/display/gimpdisplayshell-dnd.c:579
 #: ../app/widgets/gimplayertreeview.c:765
 #: ../app/widgets/gimptoolbox-dnd.c:163
-#: ../app/widgets/gimptoolbox.c:1002
+#: ../app/widgets/gimptoolbox.c:980
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -983,22 +983,22 @@ msgstr ""
 #: ../app/core/gimpimage.c:1437
 #: ../app/core/gimppalette-import.c:210
 #: ../app/core/gimppalette-load.c:222
-#: ../app/core/gimppalette.c:378
+#: ../app/core/gimppalette.c:377
 #: ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Без имени"
 
-#: ../app/actions/data-commands.c:232
+#: ../app/actions/data-commands.c:237
 msgid "Delete Object"
 msgstr "Удалить объект"
 
-#: ../app/actions/data-commands.c:255
+#: ../app/actions/data-commands.c:260
 #, c-format
 msgid "Delete '%s'?"
 msgstr "Удалить '%s'?"
 
-#: ../app/actions/data-commands.c:258
+#: ../app/actions/data-commands.c:263
 #, c-format
 msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Вы действительно хотите удалить '%s' из списка и с диска?"
@@ -1760,10 +1760,9 @@ msgid "Copy Dynamics _Location"
 msgstr "Скопировать _местоположение динамики"
 
 #: ../app/actions/dynamics-actions.c:59
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Copy dynamics file location to clipboard"
-msgstr "Скопировать местоположение файла кисти в буфер обмена"
+msgstr "Скопировать местоположение файла динамики в буфер обмена"
 
 #: ../app/actions/dynamics-actions.c:64
 msgctxt "dynamics-action"
@@ -1791,16 +1790,14 @@ msgid "_Edit Dynamics..."
 msgstr "_Изменить динамику..."
 
 #: ../app/actions/dynamics-actions.c:80
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Edit dynamics"
-msgstr "_Имитировать динамику кисти"
+msgstr "Изменить динамику"
 
 #: ../app/actions/dynamics-editor-actions.c:42
-#, fuzzy
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
-msgstr "Меню редактора градиентов"
+msgstr "Меню редактора динамики рисования"
 
 #: ../app/actions/dynamics-editor-actions.c:50
 msgctxt "dynamics-editor-action"
@@ -3802,7 +3799,7 @@ msgid "Set Layer Boundary Size"
 msgstr "Установить размеры границ слоя"
 
 #: ../app/actions/layers-commands.c:654
-#: ../app/core/gimplayer.c:259
+#: ../app/core/gimplayer.c:261
 msgid "Scale Layer"
 msgstr "Смена размера слоя"
 
@@ -3819,7 +3816,7 @@ msgid "Please select a channel first"
 msgstr "Сначала выберите канал"
 
 #: ../app/actions/layers-commands.c:1090
-#: ../app/core/gimplayer.c:1339
+#: ../app/core/gimplayer.c:1365
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Добавить маску слоя"
@@ -6723,16 +6720,14 @@ msgid "Suspend group layer resize"
 msgstr ""
 
 #: ../app/core/core-enums.c:931
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resume group layer resize"
-msgstr "Переименование группы слоев"
+msgstr "Возобновить изменение размера группы слоев"
 
 #: ../app/core/core-enums.c:932
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert group layer"
-msgstr "Перемещение группы слоев"
+msgstr "Преобразование группы слоев"
 
 #: ../app/core/core-enums.c:933
 msgctxt "undo-type"
@@ -6997,14 +6992,13 @@ msgstr "Поиск файлов данных"
 
 #: ../app/core/gimp.c:916
 msgid "Parasites"
-msgstr "Шумы"
+msgstr "Паразиты"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:924
 #: ../app/dialogs/preferences-dialog.c:2746
-#, fuzzy
 msgid "Dynamics"
-msgstr "Динамика кисти"
+msgstr "Динамика рисования"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:940
@@ -7291,15 +7285,16 @@ msgstr "Непрозрачность"
 msgid "Paint Mode"
 msgstr "Режим рисования"
 
-#: ../app/core/gimpdata.c:570
+#: ../app/core/gimpdata.c:678
 #: ../app/core/gimptoolpresets.c:277
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Невозможно удалить '%s': %s"
 
-#: ../app/core/gimpdatafactory.c:455
-#: ../app/core/gimpdatafactory.c:613
-#: ../app/core/gimpdatafactory.c:633
+#: ../app/core/gimpdatafactory.c:418
+#: ../app/core/gimpdatafactory.c:447
+#: ../app/core/gimpdatafactory.c:609
+#: ../app/core/gimpdatafactory.c:631
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7310,24 +7305,35 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:532
-#: ../app/core/gimpdatafactory.c:535
+#: ../app/core/gimpdatafactory.c:525
+#: ../app/core/gimpdatafactory.c:528
 #: ../app/core/gimpitem.c:422
 #: ../app/core/gimpitem.c:425
 msgid "copy"
 msgstr "копия"
 
-#: ../app/core/gimpdatafactory.c:544
+#: ../app/core/gimpdatafactory.c:537
 #: ../app/core/gimpitem.c:434
 #, c-format
 msgid "%s copy"
 msgstr "Копия %s"
 
-#: ../app/core/gimpdatafactory.c:614
-msgid "You don't have a writable data folder configured."
+#: ../app/core/gimpdatafactory.c:728
+#, c-format
+msgid "You have a writable data folder configured (%s), but this folder does not exist. Please create the folder or fix your configuation in the preferences dialog's 'folders' section."
+msgstr ""
+
+#: ../app/core/gimpdatafactory.c:749
+#, c-format
+msgid "You have a writable data folder configured, but this folder is not part of your data search path. This can only happen if you edited gimprc manually, please fix it in the preferences dialog's 'folders' section."
+msgstr ""
+
+#: ../app/core/gimpdatafactory.c:759
+#, fuzzy, c-format
+msgid "You don't have any writable data folder configured."
 msgstr "Каталог для записи данных не указан."
 
-#: ../app/core/gimpdatafactory.c:827
+#: ../app/core/gimpdatafactory.c:875
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -7450,7 +7456,7 @@ msgid "Rotate"
 msgstr "Вращение"
 
 #: ../app/core/gimpdrawable-transform.c:883
-#: ../app/core/gimplayer.c:263
+#: ../app/core/gimplayer.c:265
 msgid "Transform Layer"
 msgstr "Преобразование слоя"
 
@@ -7681,9 +7687,8 @@ msgid "Merge Down"
 msgstr "Сведение с предыдущим"
 
 #: ../app/core/gimpimage-merge.c:277
-#, fuzzy
 msgid "Merge Layer Group"
-msgstr "Перемещение группы слоёв"
+msgstr "Объединить группу слоёв"
 
 #: ../app/core/gimpimage-merge.c:330
 msgid "Merge Visible Paths"
@@ -7914,7 +7919,7 @@ msgid "Anchor Floating Selection"
 msgstr "Прицепить плавающее выделение"
 
 #: ../app/core/gimplayer-floating-sel.c:126
-#: ../app/core/gimplayer.c:576
+#: ../app/core/gimplayer.c:578
 msgid "Cannot create a new layer from the floating selection because it belongs to a layer mask or channel."
 msgstr ""
 "Невозможно создать новый слой из плавающего\n"
@@ -7925,40 +7930,40 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Плавающее выделение в слой"
 
-#: ../app/core/gimplayer.c:256
+#: ../app/core/gimplayer.c:258
 msgid "Layer"
 msgstr "Слой"
 
-#: ../app/core/gimplayer.c:257
+#: ../app/core/gimplayer.c:259
 msgid "Rename Layer"
 msgstr "Переименование слоя"
 
-#: ../app/core/gimplayer.c:258
+#: ../app/core/gimplayer.c:260
 #: ../app/pdb/layer-cmds.c:441
 #: ../app/pdb/layer-cmds.c:479
 msgid "Move Layer"
 msgstr "Перемещение слоя"
 
-#: ../app/core/gimplayer.c:260
+#: ../app/core/gimplayer.c:262
 msgid "Resize Layer"
 msgstr "Смена размера слоя"
 
-#: ../app/core/gimplayer.c:261
+#: ../app/core/gimplayer.c:263
 msgid "Flip Layer"
 msgstr "Отражение слоя"
 
-#: ../app/core/gimplayer.c:262
+#: ../app/core/gimplayer.c:264
 msgid "Rotate Layer"
 msgstr "Вращение слоя"
 
-#: ../app/core/gimplayer.c:420
-#: ../app/core/gimplayer.c:1398
+#: ../app/core/gimplayer.c:422
+#: ../app/core/gimplayer.c:1424
 #: ../app/core/gimplayermask.c:234
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
 
-#: ../app/core/gimplayer.c:459
+#: ../app/core/gimplayer.c:461
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -7967,38 +7972,38 @@ msgstr ""
 "Плавающее выделение\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1322
+#: ../app/core/gimplayer.c:1348
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не удалось добавить маску слоя, так как у слоя уже есть маска."
 
-#: ../app/core/gimplayer.c:1333
+#: ../app/core/gimplayer.c:1359
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Невозможно добавить маску слоя, отличающуюся\n"
 " размерами от указанного слоя."
 
-#: ../app/core/gimplayer.c:1453
+#: ../app/core/gimplayer.c:1479
 msgid "Transfer Alpha to Mask"
 msgstr "Преобразовать альфа-канал в маску"
 
-#: ../app/core/gimplayer.c:1623
+#: ../app/core/gimplayer.c:1649
 #: ../app/core/gimplayermask.c:260
 msgid "Apply Layer Mask"
 msgstr "Применение маски слоя"
 
-#: ../app/core/gimplayer.c:1624
+#: ../app/core/gimplayer.c:1650
 msgid "Delete Layer Mask"
 msgstr "Удаление маски слоя"
 
-#: ../app/core/gimplayer.c:1743
+#: ../app/core/gimplayer.c:1769
 msgid "Add Alpha Channel"
 msgstr "Добавка альфа-канала"
 
-#: ../app/core/gimplayer.c:1797
+#: ../app/core/gimplayer.c:1823
 msgid "Remove Alpha Channel"
 msgstr "Удаление альфа-канала"
 
-#: ../app/core/gimplayer.c:1817
+#: ../app/core/gimplayer.c:1843
 msgid "Layer to Image Size"
 msgstr "Слой к размеру изображения"
 
@@ -9458,61 +9463,59 @@ msgstr "Выбрать каталог подкачки"
 
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Brush Folders"
-msgstr "Каталоги кистей"
+msgstr "Папки с файлами кистей"
 
 #: ../app/dialogs/preferences-dialog.c:2744
 msgid "Select Brush Folders"
-msgstr "Выбрать каталоги кистей"
+msgstr "Выбрать папки с кистями"
 
 #: ../app/dialogs/preferences-dialog.c:2746
-#, fuzzy
 msgid "Dynamics Folders"
-msgstr "Каталоги шрифтов"
+msgstr "Папки с файлами динамики рисования"
 
 #: ../app/dialogs/preferences-dialog.c:2748
-#, fuzzy
 msgid "Select Dynamics Folders"
-msgstr "Выбрать каталоги шрифтов"
+msgstr "Выбрать папки с файлами динамики рисования"
 
 #: ../app/dialogs/preferences-dialog.c:2750
 msgid "Pattern Folders"
-msgstr "Каталоги текстур"
+msgstr "Папки с файлами текстур"
 
 #: ../app/dialogs/preferences-dialog.c:2752
 msgid "Select Pattern Folders"
-msgstr "Выбрать каталоги текстур"
+msgstr "Выбрать папки с текстурами"
 
 #: ../app/dialogs/preferences-dialog.c:2754
 msgid "Palette Folders"
-msgstr "Каталоги палитр"
+msgstr "Папки с файлами цветовых палитр"
 
 #: ../app/dialogs/preferences-dialog.c:2756
 msgid "Select Palette Folders"
-msgstr "Выбрать каталоги палитр"
+msgstr "Выбрать папки с палитрами"
 
 #: ../app/dialogs/preferences-dialog.c:2758
 msgid "Gradient Folders"
-msgstr "Каталоги градиентов"
+msgstr "Папки с файлами градиентов"
 
 #: ../app/dialogs/preferences-dialog.c:2760
 msgid "Select Gradient Folders"
-msgstr "Выбрать каталоги градиентов"
+msgstr "Выбрать папки с градиентами"
 
 #: ../app/dialogs/preferences-dialog.c:2762
 msgid "Font Folders"
-msgstr "Каталоги шрифтов"
+msgstr "Папки с файлами шрифтов"
 
 #: ../app/dialogs/preferences-dialog.c:2764
 msgid "Select Font Folders"
-msgstr "Выбрать каталоги шрифтов"
+msgstr "Выбрать папки со шрифтами"
 
 #: ../app/dialogs/preferences-dialog.c:2766
 msgid "Plug-In Folders"
-msgstr "Каталоги расширений"
+msgstr "Папки с файлами расширений"
 
 #: ../app/dialogs/preferences-dialog.c:2768
 msgid "Select Plug-In Folders"
-msgstr "Выбрать каталоги расширений"
+msgstr "Выбрать папки с расширениями"
 
 #: ../app/dialogs/preferences-dialog.c:2770
 msgid "Scripts"
@@ -9520,19 +9523,19 @@ msgstr "Сценарии"
 
 #: ../app/dialogs/preferences-dialog.c:2770
 msgid "Script-Fu Folders"
-msgstr "Каталоги Script-Fu"
+msgstr "Папки с файлами сценариев Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:2772
 msgid "Select Script-Fu Folders"
-msgstr "Выбрать каталоги Script-Fu"
+msgstr "Выбрать папки со сценариями Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:2774
 msgid "Module Folders"
-msgstr "Каталоги модулей"
+msgstr "Папки с файлами модулей"
 
 #: ../app/dialogs/preferences-dialog.c:2776
 msgid "Select Module Folders"
-msgstr "Выбрать каталоги модулей"
+msgstr "Выбрать папки с модулями"
 
 #: ../app/dialogs/preferences-dialog.c:2778
 msgid "Interpreters"
@@ -9540,11 +9543,11 @@ msgstr "Интерпретаторы"
 
 #: ../app/dialogs/preferences-dialog.c:2778
 msgid "Interpreter Folders"
-msgstr "Каталоги интерпретаторов"
+msgstr "Папки с файлами интерпретаторов"
 
 #: ../app/dialogs/preferences-dialog.c:2780
 msgid "Select Interpreter Folders"
-msgstr "Выбрать каталоги интерпретаторов"
+msgstr "Выбрать папки с интерпретаторами"
 
 #: ../app/dialogs/preferences-dialog.c:2782
 msgid "Environment Folders"
@@ -9552,7 +9555,7 @@ msgstr "Каталоги окружения"
 
 #: ../app/dialogs/preferences-dialog.c:2784
 msgid "Select Environment Folders"
-msgstr "Выбрать каталоги окружения"
+msgstr "Выбрать папки окружения"
 
 #: ../app/dialogs/preferences-dialog.c:2786
 msgid "Themes"
@@ -9560,11 +9563,11 @@ msgstr "Стили оформления"
 
 #: ../app/dialogs/preferences-dialog.c:2786
 msgid "Theme Folders"
-msgstr "Каталоги стилей оформления"
+msgstr "Папки со стилями оформления"
 
 #: ../app/dialogs/preferences-dialog.c:2788
 msgid "Select Theme Folders"
-msgstr "Выбрать каталоги стилей оформления"
+msgstr "Выбрать папки стилей оформления"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
@@ -9902,24 +9905,24 @@ msgstr "В"
 msgid "_Sample Merged"
 msgstr "_Сводить слои"
 
-#: ../app/display/gimpdisplayshell.c:930
+#: ../app/display/gimpdisplayshell.c:484
 msgid "Access the image menu"
 msgstr "Доступ к меню изображения"
 
-#: ../app/display/gimpdisplayshell.c:1037
+#: ../app/display/gimpdisplayshell.c:591
 msgid "Zoom image when window size changes"
 msgstr "При изменении размера окна изменять размер изображения"
 
-#: ../app/display/gimpdisplayshell.c:1066
+#: ../app/display/gimpdisplayshell.c:620
 msgid "Toggle Quick Mask"
 msgstr "Переключить быструю маску"
 
-#: ../app/display/gimpdisplayshell.c:1089
+#: ../app/display/gimpdisplayshell.c:643
 msgid "Navigate the image display"
 msgstr "Навигация по изображению"
 
-#: ../app/display/gimpdisplayshell.c:1157
-#: ../app/display/gimpdisplayshell.c:1249
+#: ../app/display/gimpdisplayshell.c:711
+#: ../app/display/gimpdisplayshell.c:1154
 #: ../app/widgets/gimptoolbox.c:241
 msgid "Drop image files here to open them"
 msgstr "Перетащите сюда изображения, которые хотите открыть"
@@ -9987,7 +9990,7 @@ msgstr "Невозможно изменять точки растра групп
 #: ../app/tools/gimpbucketfilltool.c:142
 #: ../app/tools/gimpcroptool.c:335
 #: ../app/tools/gimpimagemaptool.c:286
-#: ../app/tools/gimppainttool.c:287
+#: ../app/tools/gimppainttool.c:286
 #: ../app/tools/gimptransformtool.c:349
 #: ../app/tools/gimptransformtool.c:1193
 msgid "The active layer's pixels are locked."
@@ -10147,11 +10150,11 @@ msgstr "Запуск GIMP"
 msgid "Airbrush"
 msgstr "Аэрограф"
 
-#: ../app/paint/gimpbrushcore.c:399
+#: ../app/paint/gimpbrushcore.c:401
 msgid "No brushes available for use with this tool."
 msgstr "Нет кистей, доступных для использования с этим инструментом."
 
-#: ../app/paint/gimpbrushcore.c:406
+#: ../app/paint/gimpbrushcore.c:408
 #, fuzzy
 msgid "No paint dynamics available for use with this tool."
 msgstr "Нет текстур, доступных для использования с этим инструментом."
@@ -10980,7 +10983,7 @@ msgid "Blend does not operate on indexed layers."
 msgstr "Градиентная заливка не действует на индексированные слои."
 
 #: ../app/tools/gimpblendtool.c:423
-#: ../app/tools/gimppainttool.c:635
+#: ../app/tools/gimppainttool.c:634
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для ограничения шага угла"
@@ -11300,12 +11303,12 @@ msgid "Click in any image to view its color"
 msgstr "Щелкните любое изображение для просмотра его цвета"
 
 #: ../app/tools/gimpcolorpickertool.c:249
-#: ../app/tools/gimppainttool.c:494
+#: ../app/tools/gimppainttool.c:493
 msgid "Click in any image to pick the foreground color"
 msgstr "Щелкните любое изображение, чтобы снять его цвет переднего плана"
 
 #: ../app/tools/gimpcolorpickertool.c:257
-#: ../app/tools/gimppainttool.c:500
+#: ../app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the background color"
 msgstr "Щелкните любое изображение, чтобы снять его цвет фона"
 
@@ -12116,7 +12119,7 @@ msgstr "Щелкните и потащите, чтобы переместить 
 #: ../app/tools/gimpmeasuretool.c:1030
 #: ../app/tools/gimpmeasuretool.c:1086
 #: ../app/tools/gimpmeasuretool.c:1114
-#: ../app/tools/gimppainttool.c:644
+#: ../app/tools/gimppainttool.c:643
 msgid "pixels"
 msgstr "точки растра"
 
@@ -12242,24 +12245,24 @@ msgstr "Степень:"
 msgid "Use color from gradient"
 msgstr "Взять цвет из градиента"
 
-#: ../app/tools/gimppainttool.c:143
+#: ../app/tools/gimppainttool.c:142
 msgid "Click to paint"
 msgstr "Нажмите, чтобы нарисовать"
 
-#: ../app/tools/gimppainttool.c:144
+#: ../app/tools/gimppainttool.c:143
 msgid "Click to draw the line"
 msgstr "Нажмите, чтобы нарисовать линию"
 
-#: ../app/tools/gimppainttool.c:145
+#: ../app/tools/gimppainttool.c:144
 #, c-format
 msgid "%s to pick a color"
 msgstr "%s, чтобы взять пипеткой цвет"
 
-#: ../app/tools/gimppainttool.c:280
+#: ../app/tools/gimppainttool.c:279
 msgid "Cannot paint on layer groups."
 msgstr "Невозможно рисовать на группе слоев"
 
-#: ../app/tools/gimppainttool.c:690
+#: ../app/tools/gimppainttool.c:689
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s для рисования прямой линии"
@@ -13550,7 +13553,7 @@ msgstr "Файл с именем '%s' уже существует."
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Вы хотите заменить это изображение тем, которое сейчас сохраняете?"
 
-#: ../app/widgets/gimpdockable.c:196
+#: ../app/widgets/gimpdockable.c:208
 msgid "Configure this tab"
 msgstr "Настроить эту вкладку"
 
@@ -14097,11 +14100,11 @@ msgstr "Шаблон пунктира:"
 msgid "Dash _preset:"
 msgstr "Тип _пунктира:"
 
-#: ../app/widgets/gimptagentry.c:43
+#: ../app/widgets/gimptagentry.c:45
 msgid "filter"
 msgstr "фильтр по меткам"
 
-#: ../app/widgets/gimptagentry.c:44
+#: ../app/widgets/gimptagentry.c:46
 msgid "enter tags"
 msgstr "введите метки"
 
@@ -14109,7 +14112,7 @@ msgstr "введите метки"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1653
+#: ../app/widgets/gimptagentry.c:1655
 msgid ","
 msgstr ","
 
@@ -14332,27 +14335,27 @@ msgstr "Открыть диалог выбора палитры"
 msgid "Open the font selection dialog"
 msgstr "Открыть диалог выбора шрифта"
 
-#: ../app/widgets/gimpwidgets-utils.c:661
+#: ../app/widgets/gimpwidgets-utils.c:660
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (попробуйте %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:661
+#: ../app/widgets/gimpwidgets-utils.c:660
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:665
+#: ../app/widgets/gimpwidgets-utils.c:664
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (попробуйте %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:669
+#: ../app/widgets/gimpwidgets-utils.c:668
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (попробуйте %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:937
+#: ../app/widgets/gimpwidgets-utils.c:936
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Недопустимая строка UTF-8 в файле'%s'."
