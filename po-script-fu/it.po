@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-25 16:19+0100\n"
+"POT-Creation-Date: 2009-11-30 10:39+0100\n"
 "PO-Revision-Date: 2009-03-25 16:21+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -14,33 +14,33 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:130
-#: ../plug-ins/script-fu/script-fu-console.c:197
+#: ../plug-ins/script-fu/script-fu-console.c:132
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:193
+#: ../plug-ins/script-fu/script-fu-console.c:195
 msgid "Welcome to TinyScheme"
 msgstr "Benvenuti a TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:199
+#: ../plug-ins/script-fu/script-fu-console.c:201
 msgid "Interactive Scheme Development"
 msgstr "Sviluppo interattivo in Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:235
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Scorri..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:293
+#: ../plug-ins/script-fu/script-fu-console.c:295
 msgid "Save Script-Fu Console Output"
 msgstr "Salva il risultato della console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:340
+#: ../plug-ins/script-fu/script-fu-console.c:342
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:369
+#: ../plug-ins/script-fu/script-fu-console.c:371
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
 
@@ -104,7 +104,7 @@ msgstr "Selezione gradiente Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:823
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Errore durante l'esecuzione di %s:"

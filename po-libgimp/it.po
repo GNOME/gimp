@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-23 19:10+0200\n"
+"POT-Creation-Date: 2009-11-27 08:04+0100\n"
 "PO-Revision-Date: 2009-08-23 19:09+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -62,7 +62,7 @@ msgstr "annullato"
 msgid "Brush Selection"
 msgstr "Selezione pennello"
 
-#: ../libgimp/gimpbrushselectbutton.c:915
+#: ../libgimp/gimpbrushselectbutton.c:918
 #: ../libgimp/gimppatternselectbutton.c:716
 msgid "_Browse..."
 msgstr "E_splora..."
@@ -921,8 +921,8 @@ msgid "Filled"
 msgstr "Giustificato"
 
 #: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
-#: ../modules/color-selector-cmyk-lcms.c:406
-#: ../modules/color-selector-cmyk-lcms.c:412
+#: ../modules/color-selector-cmyk-lcms.c:424
+#: ../modules/color-selector-cmyk-lcms.c:430
 #: ../modules/display-filter-lcms.c:182
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
@@ -1045,8 +1045,8 @@ msgid "while parsing token '%s': %s"
 msgstr "durante l'analisi del token \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:473
-#: ../libgimpconfig/gimpconfig-iface.c:486 ../libgimpconfig/gimpscanner.c:501
-#: ../libgimpconfig/gimpscanner.c:582
+#: ../libgimpconfig/gimpconfig-iface.c:486 ../libgimpconfig/gimpscanner.c:497
+#: ../libgimpconfig/gimpscanner.c:578
 #: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "errore di analisi irrimediabile"
@@ -1096,12 +1096,12 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "Impossibile creare \"%s\": %s"
 
-#: ../libgimpconfig/gimpscanner.c:258
+#: ../libgimpconfig/gimpscanner.c:254
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "stringa UTF-8 non valida"
 
-#: ../libgimpconfig/gimpscanner.c:609
+#: ../libgimpconfig/gimpscanner.c:605
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'analisi di \"%s\" alla riga %d: %s"
@@ -1297,7 +1297,7 @@ msgstr ""
 "dello schermo per selezionare quel colore."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:276
+#: ../libgimpwidgets/gimppreview.c:278
 msgid "_Preview"
 msgstr "Ante_prima"
 
@@ -1392,19 +1392,19 @@ msgstr "_Ruota"
 msgid "_Shear"
 msgstr "_Inclina"
 
-#: ../libgimpwidgets/gimpunitmenu.c:265
+#: ../libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "Altro..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:580
+#: ../libgimpwidgets/gimpunitmenu.c:582
 msgid "Unit Selection"
 msgstr "Selezione delle unità"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:631
 msgid "Unit"
 msgstr "Unità"
 
-#: ../libgimpwidgets/gimpunitmenu.c:633
+#: ../libgimpwidgets/gimpunitmenu.c:635
 msgid "Factor"
 msgstr "Fattore"
 
@@ -1579,11 +1579,11 @@ msgstr "Giallo"
 msgid "Black"
 msgstr "Nero"
 
-#: ../modules/color-selector-cmyk-lcms.c:394
+#: ../modules/color-selector-cmyk-lcms.c:412
 msgid "Profile: (none)"
 msgstr "Profilo: (nessuno)"
 
-#: ../modules/color-selector-cmyk-lcms.c:415
+#: ../modules/color-selector-cmyk-lcms.c:433
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilo: %s"
