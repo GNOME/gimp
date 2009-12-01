@@ -405,6 +405,13 @@ load_image (const gchar  *filename,
       return -1;
     }
 
+  /* Shield against potential buffer overflows in load_*() functions. */
+  if (G_MAXSIZE / width / height < 3)
+    {
+      g_message (_("Image dimensions too large: width %d x height %d"), width, height);
+      return -1;
+    }
+
   if (pcx_header.planes == 3 && pcx_header.bpp == 8)
     {
       image= gimp_image_new (width, height, GIMP_RGB);
