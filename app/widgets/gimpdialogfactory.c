@@ -502,7 +502,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
         {
           GtkWidget *dockbook;
 
-          dock     = gimp_dialog_factory_dock_new (factory, screen);
+          dock     = gimp_dialog_factory_dock_with_window_new (factory, screen);
           dockbook = gimp_dockbook_new (factory->menu_factory);
 
           gimp_dock_add_book (GIMP_DOCK (dock),
@@ -759,20 +759,21 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 }
 
 /**
- * gimp_dialog_factory_dock_new:
+ * gimp_dialog_factory_dock_with_window_new:
  * @factory: a #GimpDialogFacotry
- * @screen:  the #GdkScreen the dock should appear on
+ * @screen:  the #GdkScreen the dock window should appear on
  *
- * Returns a new #GimpDock in this %factory's context. We use a function
- * pointer passed to this %factory's constructor instead of simply
- * gimp_dock_new() because we may want different instances of
- * #GimpDialogFactory create different subclasses of #GimpDock.
+ * Returns a new #GimpDock in this %factory's context, put inside a
+ * #GimpDockWindow. We use a function pointer passed to this
+ * %factory's constructor instead of simply gimp_dock_new() because we
+ * may want different instances of #GimpDialogFactory create different
+ * subclasses of #GimpDock.
  *
  * Return value: the newly created #GimpDock.
  **/
 GtkWidget *
-gimp_dialog_factory_dock_new (GimpDialogFactory *factory,
-                              GdkScreen         *screen)
+gimp_dialog_factory_dock_with_window_new (GimpDialogFactory *factory,
+                                          GdkScreen         *screen)
 {
   GtkWidget     *dock_window = NULL;
   GtkWidget     *dock        = NULL;

@@ -184,7 +184,7 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  dock        = GIMP_DOCK (gimp_dialog_factory_dock_new (factory, screen));
+  dock        = GIMP_DOCK (gimp_dialog_factory_dock_with_window_new (factory, screen));
   dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
 
   if (dock && info->p->aux_info)

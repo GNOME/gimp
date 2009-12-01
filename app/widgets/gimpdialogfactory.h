@@ -159,7 +159,7 @@ GtkWidget *         gimp_dialog_factory_dockable_new         (GimpDialogFactory 
                                                               GimpDock                *dock,
                                                               const gchar             *identifier,
                                                               gint                     view_size);
-GtkWidget *         gimp_dialog_factory_dock_new             (GimpDialogFactory       *factory,
+GtkWidget *         gimp_dialog_factory_dock_with_window_new (GimpDialogFactory       *factory,
                                                               GdkScreen               *screen);
 GtkWidget *         gimp_dialog_factory_dock_window_new      (GimpDialogFactory       *factory,
                                                               GdkScreen               *screen);

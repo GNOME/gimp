@@ -107,8 +107,8 @@ windows_show_toolbox (void)
     {
       GtkWidget *toolbox;
 
-      toolbox = gimp_dialog_factory_dock_new (global_toolbox_factory,
-                                              gdk_screen_get_default ());
+      toolbox = gimp_dialog_factory_dock_with_window_new (global_toolbox_factory,
+                                                          gdk_screen_get_default ());
 
       gtk_widget_show (toolbox);
     }
