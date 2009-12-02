@@ -431,19 +431,19 @@ load_image (const gchar  *filename,
 
   if (pcx_header.planes == 1 && pcx_header.bpp == 1)
     {
-      dest = g_new (guchar, width * height);
+      dest = g_new (guchar, ((gsize) width) * height);
       load_1 (fd, width, height, dest, bytesperline);
       gimp_image_set_colormap (image, mono, 2);
     }
   else if (pcx_header.planes == 4 && pcx_header.bpp == 1)
     {
-      dest = g_new (guchar, width * height);
+      dest = g_new (guchar, ((gsize) width) * height);
       load_4 (fd, width, height, dest, bytesperline);
       gimp_image_set_colormap (image, pcx_header.colormap, 16);
     }
   else if (pcx_header.planes == 1 && pcx_header.bpp == 8)
     {
-      dest = g_new (guchar, width * height);
+      dest = g_new (guchar, ((gsize) width) * height);
       load_8 (fd, width, height, dest, bytesperline);
       fseek (fd, -768L, SEEK_END);
       fread (cmap, 768, 1, fd);
@@ -451,7 +451,7 @@ load_image (const gchar  *filename,
     }
   else if (pcx_header.planes == 3 && pcx_header.bpp == 8)
     {
-      dest = g_new (guchar, width * height * 3);
+      dest = g_new (guchar, ((gsize) width) * height * 3);
       load_24 (fd, width, height, dest, bytesperline);
     }
   else
