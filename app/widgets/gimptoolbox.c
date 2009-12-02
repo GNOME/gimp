@@ -40,7 +40,6 @@
 #include "gimpcairo-wilber.h"
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
-#include "gimpdockseparator.h"
 #include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimptoolbox.h"
@@ -105,8 +104,6 @@ static void        gimp_toolbox_book_added         (GimpDock       *dock,
 static void        gimp_toolbox_book_removed       (GimpDock       *dock,
                                                     GimpDockbook   *dockbook);
 
-static void        toolbox_separator_expand        (GimpToolbox    *toolbox);
-static void        toolbox_separator_collapse      (GimpToolbox    *toolbox);
 static void        toolbox_create_tools            (GimpToolbox    *toolbox,
                                                     GimpContext    *context);
 static GtkWidget * toolbox_create_color_area       (GimpToolbox    *toolbox,
@@ -329,8 +326,6 @@ gimp_toolbox_constructor (GType                  type,
 
   gimp_toolbox_style_set (GTK_WIDGET (toolbox),
                           gtk_widget_get_style (GTK_WIDGET (toolbox)));
-
-  toolbox_separator_expand (toolbox);
 
   return object;
 }
@@ -571,7 +566,6 @@ gimp_toolbox_book_added (GimpDock     *dock,
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 1)
     {
       gimp_dock_invalidate_geometry (dock);
-      toolbox_separator_collapse (GIMP_TOOLBOX (dock));
     }
 }
 
@@ -583,7 +577,6 @@ gimp_toolbox_book_removed (GimpDock     *dock,
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
     {
       gimp_dock_invalidate_geometry (dock);
-      toolbox_separator_expand (GIMP_TOOLBOX (dock));
     }
 }
 
@@ -664,16 +657,6 @@ gimp_toolbox_get_vbox (GimpToolbox *toolbox)
 
 
 /*  private functions  */
-
-static void
-toolbox_separator_expand (GimpToolbox *toolbox)
-{
-}
-
-static void
-toolbox_separator_collapse (GimpToolbox *toolbox)
-{
-}
 
 static void
 toolbox_create_tools (GimpToolbox *toolbox,

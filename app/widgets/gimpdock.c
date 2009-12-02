@@ -34,7 +34,6 @@
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
-#include "gimpdockseparator.h"
 #include "gimppanedbox.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"

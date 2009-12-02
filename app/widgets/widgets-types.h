@@ -38,7 +38,6 @@ typedef struct _GimpControllerWheel          GimpControllerWheel;
 
 typedef struct _GimpDock                     GimpDock;
 typedef struct _GimpDockColumns              GimpDockColumns;
-typedef struct _GimpDockSeparator            GimpDockSeparator; /* not a dock */
 typedef struct _GimpDockWindow               GimpDockWindow;
 typedef struct _GimpMenuDock                 GimpMenuDock;
 typedef struct _GimpToolbox                  GimpToolbox;

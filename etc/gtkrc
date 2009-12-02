@@ -22,14 +22,3 @@ style "gimp-large-preview"
 }
 
 # class "GimpPreview" style "gimp-large-preview"
-
-
-#
-# Change the dock separator DND highlight color:
-#
-style "gimp-red-separator-style"
-{
-  bg[SELECTED] = "#aa2448"
-}
-
-# widget "*gimp-dock-separator*" style "gimp-red-separator-style"
