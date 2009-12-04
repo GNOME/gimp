@@ -350,7 +350,7 @@ load_image (const gchar  *filename,
   gint               bn_size;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
-  gssize             size;
+  gsize              size;
 
   fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
 
@@ -379,6 +379,18 @@ load_image (const gchar  *filename,
   bh.bytes        = g_ntohl (bh.bytes);
   bh.magic_number = g_ntohl (bh.magic_number);
   bh.spacing      = g_ntohl (bh.spacing);
+
+  /* Sanitize values */
+  if ((bh.width == 0) || (bh.height == 0) || (bh.bytes == 0) ||
+      (G_MAXSIZE / bh.width / bh.height / bh.bytes < 1))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Invalid header data in '%s': width=%lu, height=%lu, "
+                     "bytes=%lu"), gimp_filename_to_utf8 (filename),
+                   (unsigned long int)bh.width, (unsigned long int)bh.height,
+                   (unsigned long int)bh.bytes);
+      return -1;
+    }
 
   switch (bh.version)
     {
