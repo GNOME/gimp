@@ -53,7 +53,7 @@
                 (tab-style preview)))))
 (session-info "dock" "dock"
     (position 714 320)
-    (size 200 384)
+    (size 200 401)
     (open-on-exit)
     (aux-info
         (show-image-menu "true")
@@ -65,11 +65,14 @@
                 (tab-style icon)
                 (preview-size 32)))
         (book
-            (position 169)
+            (position 162)
             (current-page 0)
-            (dockable "gimp-vectors-list"
+            (dockable "gimp-palette-editor"
                 (tab-style icon)
-                (preview-size 32)))))
+                (aux-info
+                    (edit-active "true")
+                    (current-data "Standard")
+                    (zoom-factor "2.80"))))))
 (session-info "toolbox" "dock"
     (position 44 104)
     (size 102 526)
