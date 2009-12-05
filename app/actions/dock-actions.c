@@ -111,8 +111,8 @@ dock_actions_update (GimpActionGroup *group,
           SET_VISIBLE ("dock-show-image-menu",    TRUE);
           SET_VISIBLE ("dock-auto-follow-active", TRUE);
 
-          SET_ACTIVE ("dock-show-image-menu",    menu_dock->show_image_menu);
-          SET_ACTIVE ("dock-auto-follow-active", menu_dock->auto_follow_active);
+          SET_ACTIVE ("dock-show-image-menu",    gimp_menu_dock_get_show_image_menu (menu_dock));
+          SET_ACTIVE ("dock-auto-follow-active", gimp_menu_dock_get_auto_follow_active (menu_dock));
         }
       else
         {

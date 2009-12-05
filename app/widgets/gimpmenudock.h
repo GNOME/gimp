@@ -32,21 +32,14 @@
 #define GIMP_IS_MENU_DOCK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MENU_DOCK))
 #define GIMP_MENU_DOCK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MENU_DOCK, GimpMenuDockClass))
 
-
-typedef struct _GimpMenuDockClass  GimpMenuDockClass;
+typedef struct _GimpMenuDockPrivate GimpMenuDockPrivate;
+typedef struct _GimpMenuDockClass   GimpMenuDockClass;
 
 struct _GimpMenuDock
 {
-  GimpDock       parent_instance;
+  GimpDock             parent_instance;
 
-  GimpContainer *image_container;
-  GimpContainer *display_container;
-
-  gboolean       show_image_menu;
-  gboolean       auto_follow_active;
-
-  GtkWidget     *image_combo;
-  GtkWidget     *auto_button;
+  GimpMenuDockPrivate *p;
 };
 
 struct _GimpMenuDockClass
@@ -61,8 +54,10 @@ GtkWidget * gimp_menu_dock_new      (GimpDialogFactory *dialog_factory,
                                      GimpContainer     *image_container,
                                      GimpContainer     *display_container);
 
+gboolean    gimp_menu_dock_get_auto_follow_active (GimpMenuDock *menu_dock);
 void        gimp_menu_dock_set_auto_follow_active (GimpMenuDock *menu_dock,
                                                    gboolean      show);
+gboolean    gimp_menu_dock_get_show_image_menu    (GimpMenuDock *menu_dock);
 void        gimp_menu_dock_set_show_image_menu    (GimpMenuDock *menu_dock,
                                                    gboolean      show);
 

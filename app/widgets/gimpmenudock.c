@@ -50,6 +50,18 @@
 #define DEFAULT_MINIMAL_WIDTH  200
 #define DEFAULT_MENU_VIEW_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
 
+struct _GimpMenuDockPrivate
+{
+  GimpContainer *image_container;
+  GimpContainer *display_container;
+
+  gboolean       show_image_menu;
+  gboolean       auto_follow_active;
+
+  GtkWidget     *image_combo;
+  GtkWidget     *auto_button;
+};
+
 
 static GObject * gimp_menu_dock_constructor   (GType                  type,
                                                guint                  n_params,
@@ -126,6 +138,8 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_MENU_VIEW_SIZE,
                                                               GIMP_PARAM_READABLE));
+
+  g_type_class_add_private (klass, sizeof (GimpMenuDockPrivate));
 }
 
 static void
@@ -133,40 +147,43 @@ gimp_menu_dock_init (GimpMenuDock *dock)
 {
   GtkWidget *hbox;
 
-  dock->image_container      = NULL;
-  dock->display_container    = NULL;
-  dock->show_image_menu      = FALSE;
-  dock->auto_follow_active   = TRUE;
+  dock->p = G_TYPE_INSTANCE_GET_PRIVATE (dock,
+                                         GIMP_TYPE_MENU_DOCK,
+                                         GimpMenuDockPrivate);
+  dock->p->image_container      = NULL;
+  dock->p->display_container    = NULL;
+  dock->p->show_image_menu      = FALSE;
+  dock->p->auto_follow_active   = TRUE;
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (gimp_dock_get_main_vbox (GIMP_DOCK (dock))), hbox,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (gimp_dock_get_main_vbox (GIMP_DOCK (dock))), hbox, 0);
 
-  if (dock->show_image_menu)
+  if (dock->p->show_image_menu)
     gtk_widget_show (hbox);
 
-  dock->image_combo = gimp_container_combo_box_new (NULL, NULL, 16, 1);
-  gtk_box_pack_start (GTK_BOX (hbox), dock->image_combo, TRUE, TRUE, 0);
-  gtk_widget_show (dock->image_combo);
+  dock->p->image_combo = gimp_container_combo_box_new (NULL, NULL, 16, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), dock->p->image_combo, TRUE, TRUE, 0);
+  gtk_widget_show (dock->p->image_combo);
 
-  g_signal_connect (dock->image_combo, "destroy",
+  g_signal_connect (dock->p->image_combo, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
-                    &dock->image_combo);
+                    &dock->p->image_combo);
 
-  gimp_help_set_help_data (dock->image_combo, NULL, GIMP_HELP_DOCK_IMAGE_MENU);
+  gimp_help_set_help_data (dock->p->image_combo, NULL, GIMP_HELP_DOCK_IMAGE_MENU);
 
-  dock->auto_button = gtk_toggle_button_new_with_label (_("Auto"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock->auto_button),
-                                dock->auto_follow_active);
-  gtk_box_pack_start (GTK_BOX (hbox), dock->auto_button, FALSE, FALSE, 0);
-  gtk_widget_show (dock->auto_button);
+  dock->p->auto_button = gtk_toggle_button_new_with_label (_("Auto"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock->p->auto_button),
+                                dock->p->auto_follow_active);
+  gtk_box_pack_start (GTK_BOX (hbox), dock->p->auto_button, FALSE, FALSE, 0);
+  gtk_widget_show (dock->p->auto_button);
 
-  g_signal_connect (dock->auto_button, "clicked",
+  g_signal_connect (dock->p->auto_button, "clicked",
                     G_CALLBACK (gimp_menu_dock_auto_clicked),
                     dock);
 
-  gimp_help_set_help_data (dock->auto_button,
+  gimp_help_set_help_data (dock->p->auto_button,
                            _("When enabled the dialog automatically "
                              "follows the image you are working on."),
                            GIMP_HELP_DOCK_AUTO_BUTTON);
@@ -195,9 +212,9 @@ gimp_menu_dock_destroy (GtkObject *object)
   /*  remove the image menu and the auto button manually here because
    *  of weird cross-connections with GimpDock's context
    */
-  if (gimp_dock_get_main_vbox (GIMP_DOCK (dock)) && dock->image_combo)
+  if (gimp_dock_get_main_vbox (GIMP_DOCK (dock)) && dock->p->image_combo)
     {
-      GtkWidget *parent = gtk_widget_get_parent (dock->image_combo);
+      GtkWidget *parent = gtk_widget_get_parent (dock->p->image_combo);
 
       if (parent)
         gtk_container_remove (GTK_CONTAINER (gimp_dock_get_main_vbox (GIMP_DOCK (dock))),
@@ -229,13 +246,13 @@ gimp_menu_dock_style_set (GtkWidget *widget,
                         "menu-preview-size", &menu_view_size,
                         NULL);
 
-  settings = gtk_widget_get_settings (menu_dock->image_combo);
+  settings = gtk_widget_get_settings (menu_dock->p->image_combo);
   gtk_icon_size_lookup_for_settings (settings,
                                      menu_view_size,
                                      &menu_view_width,
                                      &menu_view_height);
 
-  gtk_widget_style_get (menu_dock->auto_button,
+  gtk_widget_style_get (menu_dock->p->auto_button,
                         "focus-line-width", &focus_line_width,
                         "focus-padding",    &focus_padding,
                         NULL);
@@ -245,10 +262,10 @@ gimp_menu_dock_style_set (GtkWidget *widget,
 
   gtk_widget_set_size_request (widget, minimal_width, -1);
 
-  gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (menu_dock->image_combo),
+  gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (menu_dock->p->image_combo),
                                      menu_view_height, 1);
 
-  gtk_widget_set_size_request (menu_dock->auto_button, -1,
+  gtk_widget_set_size_request (menu_dock->p->auto_button, -1,
                                menu_view_height +
                                2 * (1 /* CHILD_SPACING */ +
                                     ythickness            +
@@ -265,8 +282,8 @@ gimp_menu_dock_setup (GimpDock       *dock,
       gboolean auto_follow_active;
       gboolean show_image_menu;
 
-      auto_follow_active = GIMP_MENU_DOCK (template)->auto_follow_active;
-      show_image_menu    = GIMP_MENU_DOCK (template)->show_image_menu;
+      auto_follow_active = GIMP_MENU_DOCK (template)->p->auto_follow_active;
+      show_image_menu    = GIMP_MENU_DOCK (template)->p->show_image_menu;
 
       gimp_menu_dock_set_auto_follow_active (GIMP_MENU_DOCK (dock),
                                              auto_follow_active);
@@ -284,8 +301,8 @@ gimp_menu_dock_set_aux_info (GimpDock *dock,
 {
   GimpMenuDock *menu_dock   = GIMP_MENU_DOCK (dock);
   GList        *list;
-  gboolean      menu_shown  = menu_dock->show_image_menu;
-  gboolean      auto_follow = menu_dock->auto_follow_active;
+  gboolean      menu_shown  = menu_dock->p->show_image_menu;
+  gboolean      auto_follow = menu_dock->p->auto_follow_active;
 
   for (list = aux_info; list; list = g_list_next (list))
     {
@@ -301,10 +318,10 @@ gimp_menu_dock_set_aux_info (GimpDock *dock,
         }
     }
 
-  if (menu_shown != menu_dock->show_image_menu)
+  if (menu_shown != menu_dock->p->show_image_menu)
     gimp_menu_dock_set_show_image_menu (menu_dock, menu_shown);
 
-  if (auto_follow != menu_dock->auto_follow_active)
+  if (auto_follow != menu_dock->p->auto_follow_active)
     gimp_menu_dock_set_auto_follow_active (menu_dock, auto_follow);
 }
 
@@ -316,12 +333,12 @@ gimp_menu_dock_get_aux_info (GimpDock *dock)
   GimpSessionInfoAux *aux;
 
   aux = gimp_session_info_aux_new (AUX_INFO_SHOW_IMAGE_MENU,
-                                   menu_dock->show_image_menu ?
+                                   menu_dock->p->show_image_menu ?
                                    "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
   aux = gimp_session_info_aux_new (AUX_INFO_FOLLOW_ACTIVE_IMAGE,
-                                   menu_dock->auto_follow_active ?
+                                   menu_dock->p->auto_follow_active ?
                                    "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
@@ -388,8 +405,8 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
                             NULL);
   g_object_unref (context);
 
-  menu_dock->image_container   = image_container;
-  menu_dock->display_container = display_container;
+  menu_dock->p->image_container   = image_container;
+  menu_dock->p->display_container = display_container;
 
   gimp_help_connect (GTK_WIDGET (menu_dock), gimp_standard_help_func,
                      GIMP_HELP_DOCK, NULL);
@@ -401,7 +418,7 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
                                   FALSE);
   gimp_context_set_parent (context, dialog_factory->context);
 
-  if (menu_dock->auto_follow_active)
+  if (menu_dock->p->auto_follow_active)
     {
       if (gimp_context_get_display (dialog_factory->context))
         gimp_context_copy_property (dialog_factory->context, context,
@@ -431,12 +448,20 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
                                      &menu_view_width,
                                      &menu_view_height);
 
-  g_object_set (menu_dock->image_combo,
+  g_object_set (menu_dock->p->image_combo,
                 "container", image_container,
                 "context",   context,
                 NULL);
 
   return GTK_WIDGET (menu_dock);
+}
+
+gboolean
+gimp_menu_dock_get_auto_follow_active (GimpMenuDock *menu_dock)
+{
+  g_return_val_if_fail (GIMP_IS_MENU_DOCK (menu_dock), FALSE);
+
+  return menu_dock->p->auto_follow_active;
 }
 
 void
@@ -445,8 +470,16 @@ gimp_menu_dock_set_auto_follow_active (GimpMenuDock *menu_dock,
 {
   g_return_if_fail (GIMP_IS_MENU_DOCK (menu_dock));
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (menu_dock->auto_button),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (menu_dock->p->auto_button),
                                 auto_follow_active ? TRUE : FALSE);
+}
+
+gboolean
+gimp_menu_dock_get_show_image_menu (GimpMenuDock *menu_dock)
+{
+  g_return_val_if_fail (GIMP_IS_MENU_DOCK (menu_dock), FALSE);
+
+  return menu_dock->p->show_image_menu;
 }
 
 void
@@ -457,11 +490,11 @@ gimp_menu_dock_set_show_image_menu (GimpMenuDock *menu_dock,
 
   g_return_if_fail (GIMP_IS_MENU_DOCK (menu_dock));
 
-  parent = gtk_widget_get_parent (menu_dock->image_combo);
+  parent = gtk_widget_get_parent (menu_dock->p->image_combo);
 
   gtk_widget_set_visible (parent, show);
 
-  menu_dock->show_image_menu = show ? TRUE : FALSE;
+  menu_dock->p->show_image_menu = show ? TRUE : FALSE;
 }
 
 static void
@@ -516,7 +549,7 @@ gimp_menu_dock_factory_display_changed (GimpContext *context,
 {
   GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
-  if (display && menu_dock->auto_follow_active)
+  if (display && menu_dock->p->auto_follow_active)
     gimp_context_set_display (gimp_dock_get_context (dock), display);
 }
 
@@ -528,7 +561,7 @@ gimp_menu_dock_factory_image_changed (GimpContext *context,
   GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
   /*  won't do anything if we already set the display above  */
-  if (image && menu_dock->auto_follow_active)
+  if (image && menu_dock->p->auto_follow_active)
     gimp_context_set_image (gimp_dock_get_context (dock), image);
 }
 
@@ -538,8 +571,8 @@ gimp_menu_dock_image_changed (GimpContext *context,
                               GimpDock    *dock)
 {
   GimpMenuDock  *menu_dock         = GIMP_MENU_DOCK (dock);
-  GimpContainer *image_container   = menu_dock->image_container;
-  GimpContainer *display_container = menu_dock->display_container;
+  GimpContainer *image_container   = menu_dock->p->image_container;
+  GimpContainer *display_container = menu_dock->p->display_container;
 
   if (image == NULL && ! gimp_container_is_empty (image_container))
     {
@@ -618,9 +651,9 @@ gimp_menu_dock_auto_clicked (GtkWidget *widget,
 {
   GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
-  gimp_toggle_button_update (widget, &menu_dock->auto_follow_active);
+  gimp_toggle_button_update (widget, &menu_dock->p->auto_follow_active);
 
-  if (menu_dock->auto_follow_active)
+  if (menu_dock->p->auto_follow_active)
     {
       gimp_context_copy_properties (gimp_dock_get_dialog_factory (dock)->context,
                                     gimp_dock_get_context (dock),
