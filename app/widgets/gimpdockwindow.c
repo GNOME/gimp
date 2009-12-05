@@ -179,15 +179,8 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   dock_window->p = G_TYPE_INSTANCE_GET_PRIVATE (dock_window,
                                                 GIMP_TYPE_DOCK_WINDOW,
                                                 GimpDockWindowPrivate);
-  dock_window->p->context                = NULL;
-  dock_window->p->dialog_factory         = NULL;
-  dock_window->p->ui_manager_name        = NULL;
-  dock_window->p->ui_manager             = NULL;
-  dock_window->p->image_flush_handler_id = 0;
-  dock_window->p->ID                     = dock_window_ID++;
-  dock_window->p->update_title_idle_id   = 0;
-  dock_window->p->dock_columns           = g_object_new (GIMP_TYPE_DOCK_COLUMNS,
-                                                         NULL);
+  dock_window->p->ID           = dock_window_ID++;
+  dock_window->p->dock_columns = g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
 
   /* Some common initialization for all dock windows */
   gtk_container_add (GTK_CONTAINER (dock_window),
