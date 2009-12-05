@@ -50,11 +50,6 @@ struct _GimpDockClass
   GtkVBoxClass  parent_class;
 
   /*  virtual functions  */
-  void    (* setup)                   (GimpDock       *dock,
-                                       const GimpDock *template);
-  void    (* set_aux_info)            (GimpDock       *dock,
-                                       GList          *aux_info);
-  GList * (* get_aux_info)            (GimpDock       *dock);
   gchar * (* get_title)               (GimpDock       *dock);
   void    (* set_host_geometry_hints) (GimpDock       *dock,
                                        GtkWindow      *window);
@@ -71,11 +66,6 @@ struct _GimpDockClass
 
 GType               gimp_dock_get_type                (void) G_GNUC_CONST;
 
-void                gimp_dock_setup                   (GimpDock       *dock,
-                                                       const GimpDock *template);
-void                gimp_dock_set_aux_info            (GimpDock       *dock,
-                                                       GList          *aux_info);
-GList             * gimp_dock_get_aux_info            (GimpDock       *dock);
 gchar             * gimp_dock_get_title               (GimpDock       *dock);
 void                gimp_dock_invalidate_title        (GimpDock       *dock);
 void                gimp_dock_set_host_geometry_hints (GimpDock       *dock,

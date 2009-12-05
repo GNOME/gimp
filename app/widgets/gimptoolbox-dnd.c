@@ -87,46 +87,46 @@ static void   gimp_toolbox_drop_pixbuf    (GtkWidget       *widget,
 void
 gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 {
-  GimpDock *dock;
+  GimpContext *context = NULL;
 
   g_return_if_fail (GIMP_IS_TOOLBOX (toolbox));
 
-  dock = GIMP_DOCK (toolbox);
+  context = gimp_toolbox_get_context (toolbox);
 
   gimp_dnd_uri_list_dest_add (GTK_WIDGET (toolbox),
                               gimp_toolbox_drop_uri_list,
-                              gimp_dock_get_context (dock));
+                              context);
   gimp_dnd_uri_list_dest_add (gimp_toolbox_get_vbox (toolbox),
                               gimp_toolbox_drop_uri_list,
-                              gimp_dock_get_context (dock));
+                              context);
 
   gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
                               GIMP_TYPE_LAYER,
                               gimp_toolbox_drop_drawable,
-                              gimp_dock_get_context (dock));
+                              context);
   gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
                               GIMP_TYPE_LAYER_MASK,
                               gimp_toolbox_drop_drawable,
-                              gimp_dock_get_context (dock));
+                              context);
   gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
                               GIMP_TYPE_CHANNEL,
                               gimp_toolbox_drop_drawable,
-                              gimp_dock_get_context (dock));
+                              context);
   gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
                               GIMP_TYPE_TOOL_INFO,
                               gimp_toolbox_drop_tool,
-                              gimp_dock_get_context (dock));
+                              context);
   gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
                               GIMP_TYPE_BUFFER,
                               gimp_toolbox_drop_buffer,
-                              gimp_dock_get_context (dock));
+                              context);
 
   gimp_dnd_component_dest_add (gimp_toolbox_get_vbox (toolbox),
                                gimp_toolbox_drop_component,
-                               gimp_dock_get_context (dock));
+                               context);
   gimp_dnd_pixbuf_dest_add    (gimp_toolbox_get_vbox (toolbox),
                                gimp_toolbox_drop_pixbuf,
-                               gimp_dock_get_context (dock));
+                               context);
 }
 
 

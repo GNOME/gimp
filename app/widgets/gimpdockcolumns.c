@@ -134,9 +134,7 @@ gimp_dock_columns_dropped_cb (GtkWidget         *source,
     return FALSE;
 
   /* Create and insert new dock into columns */
-  dock = gimp_menu_dock_new (global_dock_factory,
-                             global_dock_factory->context->gimp->images,
-                             global_dock_factory->context->gimp->displays);
+  dock = gimp_menu_dock_new ();
   gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), insert_index);
 
   /* Put a now dockbook in the dock */

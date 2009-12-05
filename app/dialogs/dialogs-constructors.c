@@ -248,9 +248,7 @@ dialogs_dock_new (GimpDialogFactory *factory,
                   GimpContext       *context,
                   GimpUIManager     *ui_manager)
 {
-  return gimp_menu_dock_new (factory,
-                             context->gimp->images,
-                             context->gimp->displays);
+  return gimp_menu_dock_new ();
 }
 
 GtkWidget *

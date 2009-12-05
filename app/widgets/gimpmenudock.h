@@ -50,16 +50,8 @@ struct _GimpMenuDockClass
 
 GType       gimp_menu_dock_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_menu_dock_new      (GimpDialogFactory *dialog_factory,
-                                     GimpContainer     *image_container,
-                                     GimpContainer     *display_container);
+GtkWidget * gimp_menu_dock_new      (void);
 
-gboolean    gimp_menu_dock_get_auto_follow_active (GimpMenuDock *menu_dock);
-void        gimp_menu_dock_set_auto_follow_active (GimpMenuDock *menu_dock,
-                                                   gboolean      show);
-gboolean    gimp_menu_dock_get_show_image_menu    (GimpMenuDock *menu_dock);
-void        gimp_menu_dock_set_show_image_menu    (GimpMenuDock *menu_dock,
-                                                   gboolean      show);
 
 
 #endif /* __GIMP_MENU_DOCK_H__ */

@@ -40,7 +40,7 @@ style "gimp-default-style"
   GimpDockWindow::default-height    = 300
   GimpDock::font-scale              = 0.8333
   GimpMenuDock::minimal-width       = 200
-  GimpMenuDock::menu-preview-size   = button
+  GimpDockWindow::menu-preview-size = button
   GimpToolbox::tool-icon-size       = button
   GimpToolbox::button-relief        = none
   GimpDockbook::tab-border          = 0

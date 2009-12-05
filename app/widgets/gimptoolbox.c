@@ -62,29 +62,49 @@
 #define TOOL_BUTTON_DATA_KEY   "gimp-tool-button"
 #define TOOL_INFO_DATA_KEY     "gimp-tool-info"
 
+enum
+{
+  PROP_0,
+  PROP_CONTEXT,
+  PROP_DIALOG_FACTORY,
+  PROP_UI_MANAGER
+};
+
 
 struct _GimpToolboxPrivate
 {
-  GtkWidget *vbox;
+  GimpContext       *context;
+  GimpDialogFactory *dialog_factory;
+  GimpUIManager     *ui_manager;
 
-  GtkWidget *header;
-  GtkWidget *tool_wbox;
+  GtkWidget         *vbox;
 
-  GtkWidget *area_wbox;
-  GtkWidget *color_area;
-  GtkWidget *foo_area;
-  GtkWidget *image_area;
+  GtkWidget         *header;
+  GtkWidget         *tool_wbox;
 
-  gint       tool_rows;
-  gint       tool_columns;
-  gint       area_rows;
-  gint       area_columns;
+  GtkWidget         *area_wbox;
+  GtkWidget         *color_area;
+  GtkWidget         *foo_area;
+  GtkWidget         *image_area;
+
+  gint               tool_rows;
+  gint               tool_columns;
+  gint               area_rows;
+  gint               area_columns;
 };
 
 
 static GObject   * gimp_toolbox_constructor        (GType           type,
                                                     guint           n_params,
                                                     GObjectConstructParam *params);
+static void        gimp_toolbox_set_property       (GObject               *object,
+                                                    guint                  property_id,
+                                                    const GValue          *value,
+                                                    GParamSpec            *pspec);
+static void        gimp_toolbox_get_property       (GObject               *object,
+                                                    guint                  property_id,
+                                                    GValue                *value,
+                                                    GParamSpec            *pspec);
 
 static void        gimp_toolbox_size_allocate      (GtkWidget      *widget,
                                                     GtkAllocation  *allocation);
@@ -160,6 +180,8 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
 
   object_class->constructor           = gimp_toolbox_constructor;
+  object_class->set_property          = gimp_toolbox_set_property;
+  object_class->get_property          = gimp_toolbox_get_property;
 
   widget_class->size_allocate         = gimp_toolbox_size_allocate;
   widget_class->style_set             = gimp_toolbox_style_set;
@@ -170,6 +192,27 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   dock_class->set_host_geometry_hints = gimp_toolbox_set_host_geometry_hints;
   dock_class->book_added              = gimp_toolbox_book_added;
   dock_class->book_removed            = gimp_toolbox_book_removed;
+
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
+                                   g_param_spec_object ("dialog-factory",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DIALOG_FACTORY,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_UI_MANAGER,
+                                   g_param_spec_object ("ui-manager",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_UI_MANAGER,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tool-icon-size",
@@ -206,7 +249,6 @@ gimp_toolbox_constructor (GType                  type,
 {
   GObject       *object;
   GimpToolbox   *toolbox;
-  GimpContext   *context;
   GimpGuiConfig *config;
   GtkWidget     *main_vbox;
   GdkDisplay    *display;
@@ -216,8 +258,7 @@ gimp_toolbox_constructor (GType                  type,
 
   toolbox = GIMP_TOOLBOX (object);
 
-  context = gimp_dock_get_context (GIMP_DOCK (toolbox));
-  config  = GIMP_GUI_CONFIG (context->gimp->config);
+  config  = GIMP_GUI_CONFIG (toolbox->p->context->gimp->config);
 
   main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
 
@@ -277,16 +318,16 @@ gimp_toolbox_constructor (GType                  type,
     {
       g_signal_connect (toolbox, "motion-notify-event",
                         G_CALLBACK (toolbox_check_device),
-                        context->gimp);
+                        toolbox->p->context->gimp);
 
       gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (GTK_WIDGET (toolbox),
                                        GDK_EXTENSION_EVENTS_CURSOR);
     }
 
-  toolbox_create_tools (toolbox, context);
+  toolbox_create_tools (toolbox, toolbox->p->context);
 
-  toolbox->p->color_area = toolbox_create_color_area (toolbox, context);
+  toolbox->p->color_area = toolbox_create_color_area (toolbox, toolbox->p->context);
   gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (toolbox->p->area_wbox),
                              toolbox->p->color_area,
                              TRUE, TRUE, FALSE, TRUE, TRUE);
@@ -297,7 +338,7 @@ gimp_toolbox_constructor (GType                  type,
                            G_CALLBACK (toolbox_area_notify),
                            toolbox->p->color_area, 0);
 
-  toolbox->p->foo_area = toolbox_create_foo_area (toolbox, context);
+  toolbox->p->foo_area = toolbox_create_foo_area (toolbox, toolbox->p->context);
   gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->p->area_wbox), toolbox->p->foo_area,
                      TRUE, TRUE, FALSE, TRUE);
   if (config->toolbox_foo_area)
@@ -307,7 +348,7 @@ gimp_toolbox_constructor (GType                  type,
                            G_CALLBACK (toolbox_area_notify),
                            toolbox->p->foo_area, 0);
 
-  toolbox->p->image_area = toolbox_create_image_area (toolbox, context);
+  toolbox->p->image_area = toolbox_create_image_area (toolbox, toolbox->p->context);
   gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->p->area_wbox), toolbox->p->image_area,
                      TRUE, TRUE, FALSE, TRUE);
   if (config->toolbox_image_area)
@@ -317,7 +358,7 @@ gimp_toolbox_constructor (GType                  type,
                            G_CALLBACK (toolbox_area_notify),
                            toolbox->p->image_area, 0);
 
-  g_signal_connect_object (context, "tool-changed",
+  g_signal_connect_object (toolbox->p->context, "tool-changed",
                            G_CALLBACK (toolbox_tool_changed),
                            toolbox,
                            0);
@@ -328,6 +369,62 @@ gimp_toolbox_constructor (GType                  type,
                           gtk_widget_get_style (GTK_WIDGET (toolbox)));
 
   return object;
+}
+
+static void
+gimp_toolbox_set_property (GObject      *object,
+                           guint         property_id,
+                           const GValue *value,
+                           GParamSpec   *pspec)
+{
+  GimpToolbox *toolbox = GIMP_TOOLBOX (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT:
+      toolbox->p->context = g_value_dup_object (value);
+      break;
+
+    case PROP_DIALOG_FACTORY:
+      toolbox->p->dialog_factory = g_value_dup_object (value);
+      break;
+
+    case PROP_UI_MANAGER:
+      toolbox->p->ui_manager = g_value_dup_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_toolbox_get_property (GObject    *object,
+                           guint       property_id,
+                           GValue     *value,
+                           GParamSpec *pspec)
+{
+  GimpToolbox *toolbox = GIMP_TOOLBOX (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT:
+      g_value_set_object (value, toolbox->p->context);
+      break;
+
+    case PROP_DIALOG_FACTORY:
+      g_value_set_object (value, toolbox->p->dialog_factory);
+      break;
+
+    case PROP_UI_MANAGER:
+      g_value_set_object (value, toolbox->p->ui_manager);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -343,10 +440,10 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (! gimp_dock_get_context (GIMP_DOCK (widget)))
+  if (! gimp_toolbox_get_context (toolbox))
     return;
 
-  gimp = gimp_dock_get_context (GIMP_DOCK (widget))->gimp;
+  gimp = gimp_toolbox_get_context (toolbox)->gimp;
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
@@ -437,6 +534,7 @@ static void
 gimp_toolbox_style_set (GtkWidget *widget,
                         GtkStyle  *previous_style)
 {
+  GimpToolbox    *toolbox = GIMP_TOOLBOX (widget);
   Gimp           *gimp;
   GtkIconSize     tool_icon_size;
   GtkReliefStyle  relief;
@@ -444,10 +542,10 @@ gimp_toolbox_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
 
-  if (! gimp_dock_get_context (GIMP_DOCK (widget)))
+  if (! gimp_toolbox_get_context (toolbox))
     return;
 
-  gimp = gimp_dock_get_context (GIMP_DOCK (widget))->gimp;
+  gimp = gimp_toolbox_get_context (toolbox)->gimp;
 
   gtk_widget_style_get (widget,
                         "tool-icon-size", &tool_icon_size,
@@ -492,7 +590,7 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
       clipboard = gtk_widget_get_clipboard (widget, GDK_SELECTION_PRIMARY);
       gtk_clipboard_request_text (clipboard,
                                   toolbox_paste_received,
-                                  g_object_ref (gimp_dock_get_context (GIMP_DOCK (widget))));
+                                  g_object_ref (gimp_toolbox_get_context (GIMP_TOOLBOX (widget))));
 
       return TRUE;
     }
@@ -589,7 +687,7 @@ gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
   GimpToolInfo *tool_info;
   GtkWidget    *tool_button;
 
-  gimp = gimp_dock_get_context (GIMP_DOCK (toolbox))->gimp;
+  gimp = gimp_toolbox_get_context (toolbox)->gimp;
 
   tool_info = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
   tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
@@ -629,22 +727,39 @@ gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
 }
 
 GtkWidget *
-gimp_toolbox_new (GimpDialogFactory *dialog_factory,
+gimp_toolbox_new (GimpDialogFactory *factory,
                   GimpContext       *context,
                   GimpUIManager     *ui_manager)
 {
-  GimpToolbox *toolbox;
+  return g_object_new (GIMP_TYPE_TOOLBOX,
+                       "dialog-factory", factory,
+                       "context",        context,
+                       "ui-manager",     ui_manager,
+                       NULL);
+}
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+GimpContext *
+gimp_toolbox_get_context (GimpToolbox *toolbox)
+{
+  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
 
-  toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
-                          "context",             context,
-                          "dialog-factory",      dialog_factory,
-                          "ui-manager",          ui_manager,
-                          NULL);
+  return toolbox->p->context;
+}
 
-  return GTK_WIDGET (toolbox);
+GimpDialogFactory *
+gimp_toolbox_get_dialog_factory (GimpToolbox *toolbox)
+{
+  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+
+  return toolbox->p->dialog_factory;
+}
+
+GimpUIManager *
+gimp_toolbox_get_ui_manager (GimpToolbox *toolbox)
+{
+  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+
+  return toolbox->p->ui_manager;
 }
 
 GtkWidget *
@@ -710,13 +825,12 @@ toolbox_create_tools (GimpToolbox *toolbox,
                         G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      if (gimp_dock_get_ui_manager (GIMP_DOCK (toolbox)))
+      if (toolbox->p->ui_manager)
         {
-          GimpUIManager *ui_manager;
-          GtkAction     *action;
-          const gchar   *identifier;
-          gchar         *tmp;
-          gchar         *name;
+          GtkAction   *action     = NULL;
+          const gchar *identifier = NULL;
+          gchar       *tmp        = NULL;
+          gchar       *name       = NULL;
 
           identifier = gimp_object_get_name (tool_info);
 
@@ -725,8 +839,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          ui_manager  = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox));
-          action      = gimp_ui_manager_find_action (ui_manager, "tools", name);
+          action = gimp_ui_manager_find_action (toolbox->p->ui_manager, "tools", name);
           g_free (name);
 
           if (action)
@@ -898,7 +1011,7 @@ toolbox_tool_button_toggled (GtkWidget   *widget,
                                                TOOL_INFO_DATA_KEY);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    gimp_context_set_tool (gimp_dock_get_context (GIMP_DOCK (toolbox)), tool_info);
+    gimp_context_set_tool (gimp_toolbox_get_context (toolbox), tool_info);
 }
 
 static gboolean
@@ -908,7 +1021,7 @@ toolbox_tool_button_press (GtkWidget      *widget,
 {
   if (event->type == GDK_2BUTTON_PRESS && event->button == 1)
     {
-      gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
+      gimp_dialog_factory_dialog_raise (toolbox->p->dialog_factory,
                                         gtk_widget_get_screen (widget),
                                         "gimp-tool-options",
                                         -1);

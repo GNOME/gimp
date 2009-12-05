@@ -106,13 +106,13 @@ dock_actions_update (GimpActionGroup *group,
       
       if (GIMP_IS_MENU_DOCK (dock))
         {
-          GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
+          GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
 
           SET_VISIBLE ("dock-show-image-menu",    TRUE);
           SET_VISIBLE ("dock-auto-follow-active", TRUE);
 
-          SET_ACTIVE ("dock-show-image-menu",    gimp_menu_dock_get_show_image_menu (menu_dock));
-          SET_ACTIVE ("dock-auto-follow-active", gimp_menu_dock_get_auto_follow_active (menu_dock));
+          SET_ACTIVE ("dock-show-image-menu",    gimp_dock_window_get_show_image_menu (dock_window));
+          SET_ACTIVE ("dock-auto-follow-active", gimp_dock_window_get_auto_follow_active (dock_window));
         }
       else
         {

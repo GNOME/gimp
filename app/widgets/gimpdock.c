@@ -34,6 +34,7 @@
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimpdockwindow.h"
 #include "gimppanedbox.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
@@ -43,14 +44,6 @@
 
 #define DEFAULT_DOCK_FONT_SCALE  PANGO_SCALE_SMALL
 
-
-enum
-{
-  PROP_0,
-  PROP_CONTEXT,
-  PROP_DIALOG_FACTORY,
-  PROP_UI_MANAGER
-};
 
 enum
 {
@@ -64,10 +57,6 @@ enum
 
 struct _GimpDockPrivate
 {
-  GimpDialogFactory *dialog_factory;
-  GimpContext       *context;
-  GimpUIManager     *ui_manager;
-
   GtkWidget         *main_vbox;
   GtkWidget         *paned_vbox;
 
@@ -77,14 +66,6 @@ struct _GimpDockPrivate
 };
 
 
-static void      gimp_dock_set_property      (GObject               *object,
-                                              guint                  property_id,
-                                              const GValue          *value,
-                                              GParamSpec            *pspec);
-static void      gimp_dock_get_property      (GObject               *object,
-                                              guint                  property_id,
-                                              GValue                *value,
-                                              GParamSpec            *pspec);
 static void      gimp_dock_style_set         (GtkWidget             *widget,
                                               GtkStyle              *prev_style);
 
@@ -109,7 +90,6 @@ static guint dock_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_dock_class_init (GimpDockClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
@@ -151,39 +131,15 @@ gimp_dock_class_init (GimpDockClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->set_property     = gimp_dock_set_property;
-  object_class->get_property     = gimp_dock_get_property;
-
   gtk_object_class->destroy      = gimp_dock_destroy;
 
   widget_class->style_set        = gimp_dock_style_set;
 
-  klass->setup                   = NULL;
   klass->set_host_geometry_hints = NULL;
   klass->book_added              = gimp_dock_real_book_added;
   klass->book_removed            = gimp_dock_real_book_removed;
   klass->title_invalidated       = NULL;
   klass->geometry_invalidated    = NULL;
-
-  g_object_class_install_property (object_class, PROP_CONTEXT,
-                                   g_param_spec_object ("context", NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
-                                   g_param_spec_object ("dialog-factory",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_DIALOG_FACTORY,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_UI_MANAGER,
-                                   g_param_spec_object ("ui-manager",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_UI_MANAGER,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_double ("font-scale",
@@ -205,8 +161,6 @@ gimp_dock_init (GimpDock *dock)
   dock->p = G_TYPE_INSTANCE_GET_PRIVATE (dock,
                                          GIMP_TYPE_DOCK,
                                          GimpDockPrivate);
-  dock->p->context        = NULL;
-  dock->p->dialog_factory = NULL;
   dock->p->ID             = dock_ID++;
 
   name = g_strdup_printf ("gimp-internal-dock-%d", dock->p->ID);
@@ -223,62 +177,6 @@ gimp_dock_init (GimpDock *dock)
                                  dock);
   gtk_container_add (GTK_CONTAINER (dock->p->main_vbox), dock->p->paned_vbox);
   gtk_widget_show (dock->p->paned_vbox);
-}
-
-static void
-gimp_dock_set_property (GObject      *object,
-                        guint         property_id,
-                        const GValue *value,
-                        GParamSpec   *pspec)
-{
-  GimpDock *dock = GIMP_DOCK (object);
-
-  switch (property_id)
-    {
-    case PROP_CONTEXT:
-      dock->p->context = g_value_dup_object (value);
-      break;
-
-    case PROP_DIALOG_FACTORY:
-      dock->p->dialog_factory = g_value_get_object (value);
-      break;
-
-    case PROP_UI_MANAGER:
-      dock->p->ui_manager = g_value_dup_object (value);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_dock_get_property (GObject    *object,
-                        guint       property_id,
-                        GValue     *value,
-                        GParamSpec *pspec)
-{
-  GimpDock *dock = GIMP_DOCK (object);
-
-  switch (property_id)
-    {
-    case PROP_CONTEXT:
-      g_value_set_object (value, dock->p->context);
-      break;
-
-    case PROP_DIALOG_FACTORY:
-      g_value_set_object (value, dock->p->dialog_factory);
-      break;
-
-    case PROP_UI_MANAGER:
-      g_value_set_object (value, dock->p->ui_manager);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
 }
 
 static void
@@ -337,18 +235,6 @@ gimp_dock_destroy (GtkObject *object)
 
   while (dock->p->dockbooks)
     gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->p->dockbooks->data));
-
-  if (dock->p->ui_manager)
-    {
-      g_object_unref (dock->p->ui_manager);
-      dock->p->ui_manager = NULL;
-    }
-
-  if (dock->p->context)
-    {
-      g_object_unref (dock->p->context);
-      dock->p->context = NULL;
-    }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -413,38 +299,6 @@ gimp_dock_dropped_cb (GtkWidget *source,
 
 /*  public functions  */
 
-void
-gimp_dock_setup (GimpDock       *dock,
-                 const GimpDock *template)
-{
-  g_return_if_fail (GIMP_IS_DOCK (dock));
-  g_return_if_fail (GIMP_IS_DOCK (template));
-
-  if (GIMP_DOCK_GET_CLASS (dock)->setup)
-    GIMP_DOCK_GET_CLASS (dock)->setup (dock, template);
-}
-
-void
-gimp_dock_set_aux_info (GimpDock *dock,
-                        GList    *aux_info)
-{
-  g_return_if_fail (GIMP_IS_DOCK (dock));
-
-  if (GIMP_DOCK_GET_CLASS (dock)->set_aux_info)
-    GIMP_DOCK_GET_CLASS (dock)->set_aux_info (dock, aux_info);
-}
-
-GList *
-gimp_dock_get_aux_info (GimpDock *dock)
-{
-  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
-
-  if (GIMP_DOCK_GET_CLASS (dock)->get_aux_info)
-    return GIMP_DOCK_GET_CLASS (dock)->get_aux_info (dock);
-
-  return NULL;
-}
-
 gchar *
 gimp_dock_get_title (GimpDock *dock)
 {
@@ -499,28 +353,60 @@ gimp_dock_invalidate_geometry (GimpDock *dock)
   g_signal_emit (dock, dock_signals[GEOMETRY_INVALIDATED], 0);
 }
 
+/**
+ * gimp_dock_get_context:
+ * @dock:
+ *
+ * Returns: The #GimpContext for the #GimpDockWindow the @dock is in.
+ **/
 GimpContext *
 gimp_dock_get_context (GimpDock *dock)
 {
+  GimpDockWindow *dock_window = NULL;
+
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  return dock->p->context;
+  dock_window = gimp_dock_window_from_dock (dock);
+
+  return gimp_dock_window_get_context (dock_window);
 }
 
+/**
+ * gimp_dock_get_dialog_factory:
+ * @dock:
+ *
+ * Returns: The #GimpDialogFactory for the #GimpDockWindow the @dock
+ *          is in.
+ **/
 GimpDialogFactory *
 gimp_dock_get_dialog_factory (GimpDock *dock)
 {
+  GimpDockWindow *dock_window = NULL;
+
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  return dock->p->dialog_factory;
+  dock_window = gimp_dock_window_from_dock (dock);
+
+  return gimp_dock_window_get_dialog_factory (dock_window);
 }
 
+/**
+ * gimp_dock_get_ui_manager:
+ * @dock:
+ *
+ * Returns: The #GimpUIManager for the #GimpDockWindow the @dock is
+ *          in.
+ **/
 GimpUIManager *
 gimp_dock_get_ui_manager (GimpDock *dock)
 {
+  GimpDockWindow *dock_window = NULL;
+
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  return dock->p->ui_manager;
+  dock_window = gimp_dock_window_from_dock (dock);
+
+  return gimp_dock_window_get_ui_manager (dock_window);
 }
 
 GList *
@@ -633,4 +519,3 @@ gimp_dock_remove_book (GimpDock     *dock,
 
   g_object_unref (dockbook);
 }
-

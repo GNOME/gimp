@@ -24,27 +24,22 @@
 #include "actions-types.h"
 
 #include "widgets/gimpdockwindow.h"
-#include "widgets/gimpmenudock.h"
+#include "widgets/gimpdockwindow.h"
 
 #include "actions.h"
 #include "dock-commands.h"
 
 
-static GimpMenuDock *
-dock_commands_get_menudock_from_widget (GtkWidget *widget)
+static GimpDockWindow *
+dock_commands_get_dock_window_from_widget (GtkWidget *widget)
 {
-  GtkWidget    *toplevel  = gtk_widget_get_toplevel (widget);
-  GimpMenuDock *menu_dock = NULL;
+  GtkWidget      *toplevel    = gtk_widget_get_toplevel (widget);
+  GimpDockWindow *dock_window = NULL;
 
   if (GIMP_IS_DOCK_WINDOW (toplevel))
-    {
-      GimpDock *dock = gimp_dock_window_get_dock (GIMP_DOCK_WINDOW (toplevel));
+    dock_window = GIMP_DOCK_WINDOW (toplevel);
 
-      if (GIMP_IS_MENU_DOCK (dock))
-        menu_dock = GIMP_MENU_DOCK (dock);
-    }
-
-  return menu_dock;
+  return dock_window;
 }
 
 
@@ -54,16 +49,16 @@ void
 dock_toggle_image_menu_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  GtkWidget    *widget    = NULL;
-  GimpMenuDock *menu_dock = NULL;
+  GtkWidget      *widget      = NULL;
+  GimpDockWindow *dock_window = NULL;
   return_if_no_widget (widget, data);
 
-  menu_dock = dock_commands_get_menudock_from_widget (widget);
+  dock_window = dock_commands_get_dock_window_from_widget (widget);
 
-  if (menu_dock)
+  if (dock_window)
     {
       gboolean active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-      gimp_menu_dock_set_show_image_menu (menu_dock, active);
+      gimp_dock_window_set_show_image_menu (dock_window, active);
     }
 }
 
@@ -71,15 +66,15 @@ void
 dock_toggle_auto_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
-  GtkWidget    *widget    = NULL;
-  GimpMenuDock *menu_dock = NULL;
+  GtkWidget      *widget      = NULL;
+  GimpDockWindow *dock_window = NULL;
   return_if_no_widget (widget, data);
 
-  menu_dock = dock_commands_get_menudock_from_widget (widget);
+  dock_window = dock_commands_get_dock_window_from_widget (widget);
 
-  if (menu_dock)
+  if (dock_window)
     {
       gboolean active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-      gimp_menu_dock_set_auto_follow_active (menu_dock, active);
+      gimp_dock_window_set_auto_follow_active (dock_window, active);
     }
 }

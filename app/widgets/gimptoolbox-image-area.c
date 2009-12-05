@@ -91,7 +91,7 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
 
   g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
 
-  context = gimp_dock_get_context (GIMP_DOCK (toolbox));
+  context = gimp_toolbox_get_context (toolbox);
 
   image_view = gimp_view_new_full_by_types (context,
                                             GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,

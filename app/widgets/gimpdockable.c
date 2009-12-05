@@ -1075,21 +1075,23 @@ gimp_dockable_set_drag_handler (GimpDockable *dockable,
 void
 gimp_dockable_detach (GimpDockable *dockable)
 {
-  GimpDock       *src_dock    = NULL;
-  GtkWidget      *dock        = NULL;
-  GtkWidget      *dockbook    = NULL;
-  GimpDockWindow *dock_window = NULL;
+  GimpDockWindow *src_dock_window = NULL;
+  GimpDock       *src_dock        = NULL;
+  GtkWidget      *dock            = NULL;
+  GimpDockWindow *dock_window     = NULL;
+  GtkWidget      *dockbook        = NULL;
 
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockable->dockbook));
 
   src_dock = gimp_dockbook_get_dock (dockable->dockbook);
+  src_dock_window = gimp_dock_window_from_dock (src_dock);
 
   dock = gimp_dialog_factory_dock_with_window_new (gimp_dock_get_dialog_factory (src_dock),
                                                    gtk_widget_get_screen (GTK_WIDGET (dockable)));
   dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
   gtk_window_set_position (GTK_WINDOW (dock_window), GTK_WIN_POS_MOUSE);
-  gimp_dock_setup (GIMP_DOCK (dock), src_dock);
+  gimp_dock_window_setup (dock_window, src_dock_window);
 
   dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock))->menu_factory);
 

@@ -26,13 +26,14 @@
 
 #include "widgets-types.h"
 
-#include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"
+#include "gimpcontainerview.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo-dockable.h"
+#include "gimptoolbox.h"
 
 
 enum
@@ -281,11 +282,12 @@ gimp_session_info_dockable_restore (GimpSessionInfoDockable *info,
       info->view_size > GIMP_VIEW_SIZE_GIGANTIC)
     info->view_size = -1;
 
-  /*  use the new dock's dialog factory to create dockables
-   *  because it may be different from the dialog factory
-   *  the dock was created from.
+  /* FIXME: Merge global_dock_factory and global_toolbox_factory
+   * somehow so we don't need this hack
    */
-  dockable = gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dock),
+  dockable = gimp_dialog_factory_dockable_new ((GIMP_IS_TOOLBOX (dock) ?
+                                                gimp_toolbox_get_dialog_factory (GIMP_TOOLBOX (dock)) :
+                                                gimp_dock_get_dialog_factory (dock)),
                                                dock,
                                                info->identifier,
                                                info->view_size);
