@@ -385,10 +385,22 @@ gimp_session_info_restore (GimpSessionInfo   *info,
     }
   else
     {
-      GIMP_LOG (DIALOG_FACTORY, "restoring dock  (info %p)",
+      GtkWidget *dock_window = NULL;
+
+      GIMP_LOG (DIALOG_FACTORY, "restoring dock window (info %p)",
                 info);
 
-      gimp_session_info_dock_restore (info, factory, screen);
+      dock_window = gimp_dialog_factory_dock_window_new (factory, screen);
+
+      if (dock_window && info->p->aux_info)
+        gimp_session_info_aux_set_list (GTK_WIDGET (dock_window), info->p->aux_info);
+
+      gimp_session_info_dock_restore (info->p->books,
+                                      factory,
+                                      screen,
+                                      GIMP_DOCK_WINDOW (dock_window));
+
+      gtk_widget_show (GTK_WIDGET (dock_window));
     }
 }
 

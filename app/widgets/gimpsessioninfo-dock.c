@@ -172,33 +172,39 @@ gimp_session_info_dock_paned_map (GtkWidget *paned,
 }
 
 void
-gimp_session_info_dock_restore (GimpSessionInfo   *info,
+gimp_session_info_dock_restore (GList             *books,
                                 GimpDialogFactory *factory,
-                                GdkScreen         *screen)
+                                GdkScreen         *screen,
+                                GimpDockWindow    *dock_window)
 {
-  GimpDock       *dock        = NULL;
-  GimpDockWindow *dock_window = NULL;
-  GList          *books       = NULL;
+  GtkWidget     *dock       = NULL;
+  GList         *iter       = NULL;
+  GimpUIManager *ui_manager = NULL;
 
-  g_return_if_fail (info != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  dock        = GIMP_DOCK (gimp_dialog_factory_dock_with_window_new (factory, screen));
-  dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
+  ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
+  dock       = gimp_dialog_factory_dock_new (factory, screen, ui_manager);
 
-  if (dock && info->p->aux_info)
-    gimp_session_info_aux_set_list (GTK_WIDGET (dock_window), info->p->aux_info);
+  g_return_if_fail (GIMP_IS_DOCK (dock));
 
-  for (books = info->p->books; books; books = g_list_next (books))
+  /* Add the dock to the dock window immediately so the stuff in the
+   * dock has access to e.g. a dialog factory
+   */
+  gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
+                             GIMP_DOCK (dock),
+                             -1);
+
+  for (iter = books; iter; iter = g_list_next (iter))
     {
-      GimpSessionInfoBook *book_info = books->data;
+      GimpSessionInfoBook *book_info = iter->data;
       GtkWidget           *dockbook;
       GtkWidget           *parent;
 
-      dockbook = GTK_WIDGET (gimp_session_info_book_restore (book_info, dock));
-
-      parent = gtk_widget_get_parent (dockbook);
+      dockbook = GTK_WIDGET (gimp_session_info_book_restore (book_info,
+                                                             GIMP_DOCK (dock)));
+      parent   = gtk_widget_get_parent (dockbook);
 
       if (GTK_IS_VPANED (parent))
         {
@@ -211,6 +217,5 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
         }
     }
 
-  gtk_widget_show (GTK_WIDGET (dock_window));
-  gtk_widget_show (GTK_WIDGET (dock));
+  gtk_widget_show (dock);
 }
