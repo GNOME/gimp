@@ -131,6 +131,7 @@ gimp_session_info_serialize (GimpConfig       *config,
                              gpointer          data)
 {
   GimpSessionInfo *info = GIMP_SESSION_INFO (config);
+  GList           *iter = NULL;
 
   gimp_config_writer_open (writer, "position");
   gimp_config_writer_printf (writer, "%d %d", info->p->x, info->p->y);
@@ -156,8 +157,8 @@ gimp_session_info_serialize (GimpConfig       *config,
   if (info->p->aux_info)
     gimp_session_info_aux_serialize (writer, info->p->aux_info);
 
-  if (info->p->books)
-    gimp_session_info_dock_serialize (writer, info->p->books);
+  for (iter = info->p->docks; iter; iter = g_list_next (iter))
+    gimp_session_info_dock_serialize (writer, iter->data);
 
   return TRUE;
 }
@@ -274,18 +275,24 @@ gimp_session_info_deserialize (GimpConfig *config,
               break;
 
             case SESSION_INFO_DOCK:
-              if (info->p->factory_entry)
-                goto error;
+              {
+                GimpSessionInfoDock *dock_info = NULL;
 
-              g_scanner_set_scope (scanner, scope_id + 1);
-              token = gimp_session_info_dock_deserialize (scanner, scope_id + 1,
-                                                          info);
+                if (info->p->factory_entry)
+                  goto error;
 
-              if (token == G_TOKEN_LEFT_PAREN)
-                g_scanner_set_scope (scanner, scope_id);
-              else
-                goto error;
+                g_scanner_set_scope (scanner, scope_id + 1);
+                token = gimp_session_info_dock_deserialize (scanner, scope_id + 1,
+                                                            &dock_info);
 
+                if (token == G_TOKEN_LEFT_PAREN)
+                  {
+                    g_scanner_set_scope (scanner, scope_id);
+                    info->p->docks = g_list_append (info->p->docks, dock_info);
+                  }
+                else
+                  goto error;
+              }
               break;
 
             default:
@@ -386,6 +393,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   else
     {
       GtkWidget *dock_window = NULL;
+      GList     *iter        = NULL;
 
       GIMP_LOG (DIALOG_FACTORY, "restoring dock window (info %p)",
                 info);
@@ -395,10 +403,24 @@ gimp_session_info_restore (GimpSessionInfo   *info,
       if (dock_window && info->p->aux_info)
         gimp_session_info_aux_set_list (GTK_WIDGET (dock_window), info->p->aux_info);
 
-      gimp_session_info_dock_restore (info->p->books,
-                                      factory,
-                                      screen,
-                                      GIMP_DOCK_WINDOW (dock_window));
+      /* If we have docks, proceed as usual. If we don't have docks,
+       * assume it is the toolbox and restore the dock anyway
+       */
+      if (info->p->docks)
+        {
+          for (iter = info->p->docks; iter; iter = g_list_next (iter))
+            gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
+                                            factory,
+                                            screen,
+                                            GIMP_DOCK_WINDOW (dock_window));
+        }
+      else
+        {
+          gimp_session_info_dock_restore (NULL,
+                                          factory,
+                                          screen,
+                                          GIMP_DOCK_WINDOW (dock_window));
+        }
 
       gtk_widget_show (GTK_WIDGET (dock_window));
     }
@@ -615,11 +637,18 @@ gimp_session_info_get_info (GimpSessionInfo *info)
       (info->p->factory_entry &&
        info->p->factory_entry->dockable))
     {
-      GimpDock *dock = NULL;
+      GList *iter = NULL;
 
-      dock = gimp_dock_window_get_dock (GIMP_DOCK_WINDOW (info->p->widget));
+      for (iter = gimp_dock_window_get_docks (GIMP_DOCK_WINDOW (info->p->widget));
+           iter;
+           iter = g_list_next (iter))
+        {
+          GimpDock *dock = GIMP_DOCK (iter->data);
 
-      info->p->books = gimp_session_info_dock_from_widget (dock);
+          info->p->docks =
+            g_list_append (info->p->docks,
+                           gimp_session_info_dock_from_widget (dock));
+        }
     }
 }
 
@@ -636,12 +665,12 @@ gimp_session_info_clear_info (GimpSessionInfo *info)
       info->p->aux_info = NULL;
     }
 
-   if (info->p->books)
+   if (info->p->docks)
      {
-       g_list_foreach (info->p->books,
-                       (GFunc) gimp_session_info_book_free, NULL);
-       g_list_free (info->p->books);
-       info->p->books = NULL;
+       g_list_foreach (info->p->docks,
+                       (GFunc) gimp_session_info_dock_free, NULL);
+       g_list_free (info->p->docks);
+       info->p->docks = NULL;
      }
 }
 

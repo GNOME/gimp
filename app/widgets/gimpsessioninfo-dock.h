@@ -22,18 +22,29 @@
 #define __GIMP_SESSION_INFO_DOCK_H__
 
 
-void         gimp_session_info_dock_serialize   (GimpConfigWriter  *writer,
-                                                 GList             *books);
-GTokenType   gimp_session_info_dock_deserialize (GScanner          *scanner,
-                                                 gint               scope,
-                                                 GimpSessionInfo   *info);
+/**
+ * GimpSessionInfoDock:
+ *
+ * Contains information about a dock in the interface.
+ */
+struct _GimpSessionInfoDock
+{
+  /*  list of GimpSessionInfoBook  */
+  GList *books;
+};
 
-GList      * gimp_session_info_dock_from_widget (GimpDock          *dock);
-
-void         gimp_session_info_dock_restore     (GList             *books,
-                                                 GimpDialogFactory *factory,
-                                                 GdkScreen         *screen,
-                                                 GimpDockWindow    *dock_window);
+GimpSessionInfoDock * gimp_session_info_dock_new         (void);
+void                  gimp_session_info_dock_free        (GimpSessionInfoDock  *dock_info);
+void                  gimp_session_info_dock_serialize   (GimpConfigWriter     *writer,
+                                                          GimpSessionInfoDock  *dock);
+GTokenType            gimp_session_info_dock_deserialize (GScanner             *scanner,
+                                                          gint                  scope,
+                                                          GimpSessionInfoDock **info);
+GimpSessionInfoDock * gimp_session_info_dock_from_widget (GimpDock             *dock);
+void                  gimp_session_info_dock_restore     (GimpSessionInfoDock  *dock_info,
+                                                          GimpDialogFactory    *factory,
+                                                          GdkScreen            *screen,
+                                                          GimpDockWindow       *dock_window);
 
 
 #endif  /* __GIMP_SESSION_INFO_DOCK_H__ */

@@ -45,8 +45,8 @@ struct _GimpSessionInfoPrivate
    */
   GimpDialogFactoryEntry *factory_entry;
 
-  /*  list of GimpSessionInfoBook  */
-  GList                  *books;
+  /*  list of GimpSessionInfoDock  */
+  GList                  *docks;
 };
 
 

@@ -44,35 +44,60 @@ enum
 
 /*  public functions  */
 
+GimpSessionInfoDock *
+gimp_session_info_dock_new (void)
+{
+  return g_slice_new0 (GimpSessionInfoDock);
+}
+
 void
-gimp_session_info_dock_serialize (GimpConfigWriter *writer,
-                                  GList            *books)
+gimp_session_info_dock_free (GimpSessionInfoDock *dock_info)
+{
+  g_return_if_fail (dock_info != NULL);
+
+  if (dock_info->books)
+    {
+      g_list_foreach (dock_info->books,
+                      (GFunc) gimp_session_info_book_free,
+                      NULL);
+      g_list_free (dock_info->books);
+      dock_info->books = NULL;
+    }
+
+  g_slice_free (GimpSessionInfoDock, dock_info);
+}
+
+void
+gimp_session_info_dock_serialize (GimpConfigWriter    *writer,
+                                  GimpSessionInfoDock *dock_info)
 {
   GList *list;
 
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (books != NULL);
+  g_return_if_fail (dock_info != NULL);
 
   gimp_config_writer_open (writer, "dock");
 
-  for (list = books; list; list = g_list_next (list))
+  for (list = dock_info->books; list; list = g_list_next (list))
     gimp_session_info_book_serialize (writer, list->data);
 
   gimp_config_writer_close (writer);
 }
 
 GTokenType
-gimp_session_info_dock_deserialize (GScanner        *scanner,
-                                    gint             scope,
-                                    GimpSessionInfo *info)
+gimp_session_info_dock_deserialize (GScanner             *scanner,
+                                    gint                  scope,
+                                    GimpSessionInfoDock **dock_info)
 {
   GTokenType token;
 
   g_return_val_if_fail (scanner != NULL, G_TOKEN_LEFT_PAREN);
-  g_return_val_if_fail (info != NULL, G_TOKEN_LEFT_PAREN);
+  g_return_val_if_fail (dock_info != NULL, G_TOKEN_LEFT_PAREN);
 
   g_scanner_scope_add_symbol (scanner, scope, "book",
                               GINT_TO_POINTER (SESSION_INFO_BOOK));
+
+  *dock_info = gimp_session_info_dock_new ();
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -98,7 +123,7 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
 
               if (token == G_TOKEN_LEFT_PAREN)
                 {
-                  info->p->books = g_list_append (info->p->books, book);
+                  (*dock_info)->books = g_list_append ((*dock_info)->books, book);
                   g_scanner_set_scope (scanner, scope);
                 }
               else
@@ -126,13 +151,15 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
   return token;
 }
 
-GList *
+GimpSessionInfoDock *
 gimp_session_info_dock_from_widget (GimpDock *dock)
 {
-  GList *list;
-  GList *infos = NULL;
+  GimpSessionInfoDock *dock_info = NULL;
+  GList               *list      = NULL;
 
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+
+  dock_info = gimp_session_info_dock_new ();
 
   for (list = gimp_dock_get_dockbooks (dock); list; list = g_list_next (list))
     {
@@ -140,10 +167,12 @@ gimp_session_info_dock_from_widget (GimpDock *dock)
 
       book = gimp_session_info_book_from_widget (list->data);
 
-      infos = g_list_prepend (infos, book);
+      dock_info->books = g_list_prepend (dock_info->books, book);
     }
 
-  return g_list_reverse (infos);
+  dock_info->books = g_list_reverse (dock_info->books);
+  
+  return dock_info;
 }
 
 static void
@@ -172,10 +201,10 @@ gimp_session_info_dock_paned_map (GtkWidget *paned,
 }
 
 void
-gimp_session_info_dock_restore (GList             *books,
-                                GimpDialogFactory *factory,
-                                GdkScreen         *screen,
-                                GimpDockWindow    *dock_window)
+gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
+                                GimpDialogFactory   *factory,
+                                GdkScreen           *screen,
+                                GimpDockWindow      *dock_window)
 {
   GtkWidget     *dock       = NULL;
   GList         *iter       = NULL;
@@ -196,7 +225,12 @@ gimp_session_info_dock_restore (GList             *books,
                              GIMP_DOCK (dock),
                              -1);
 
-  for (iter = books; iter; iter = g_list_next (iter))
+  /* Note that if it is a toolbox, we will get here even though we
+   * don't have any books
+   */
+  for (iter = dock_info ? dock_info->books : NULL;
+       iter;
+       iter = g_list_next (iter))
     {
       GimpSessionInfoBook *book_info = iter->data;
       GtkWidget           *dockbook;

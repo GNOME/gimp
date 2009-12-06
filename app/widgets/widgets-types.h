@@ -229,6 +229,7 @@ typedef struct _GimpUIConfigurer             GimpUIConfigurer;
 
 typedef struct _GimpSessionInfo              GimpSessionInfo;
 typedef struct _GimpSessionInfoBook          GimpSessionInfoBook;
+typedef struct _GimpSessionInfoDock          GimpSessionInfoDock;
 typedef struct _GimpSessionInfoDockable      GimpSessionInfoDockable;
 typedef struct _GimpSessionInfoAux           GimpSessionInfoAux;
 
