@@ -186,10 +186,15 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
         }
       g_list_free (docks);
 
-      /* Kill the dock window, we don't need it any longer */
-      gimp_dialog_factory_remove_dialog (dialog_factory,
-                                         GTK_WIDGET (dock_window));
-      gtk_widget_destroy (GTK_WIDGET (dock_window));
+      /* Kill the window if removing the dock didn't destroy it
+       * already. This will be the case forthe toolbox dock window
+       */
+      if (GTK_IS_WIDGET (dock_window))
+        {
+          gimp_dialog_factory_remove_dialog (dialog_factory,
+                                             GTK_WIDGET (dock_window));
+          gtk_widget_destroy (GTK_WIDGET (dock_window));
+        }
     }
 }
 
