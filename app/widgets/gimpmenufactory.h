@@ -43,15 +43,14 @@ struct _GimpMenuFactoryEntry
 #define GIMP_MENU_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MENU_FACTORY, GimpMenuFactoryClass))
 
 
-typedef struct _GimpMenuFactoryClass  GimpMenuFactoryClass;
+typedef struct _GimpMenuFactoryPrivate  GimpMenuFactoryPrivate;
+typedef struct _GimpMenuFactoryClass    GimpMenuFactoryClass;
 
 struct _GimpMenuFactory
 {
-  GimpObject         parent_instance;
+  GimpObject              parent_instance;
 
-  Gimp              *gimp;
-  GimpActionFactory *action_factory;
-  GList             *registered_menus;
+  GimpMenuFactoryPrivate *p;
 };
 
 struct _GimpMenuFactoryClass
@@ -60,20 +59,19 @@ struct _GimpMenuFactoryClass
 };
 
 
-GType             gimp_menu_factory_get_type      (void) G_GNUC_CONST;
+GType             gimp_menu_factory_get_type             (void) G_GNUC_CONST;
+GimpMenuFactory * gimp_menu_factory_new                  (Gimp              *gimp,
+                                                          GimpActionFactory *action_factory);
+void              gimp_menu_factory_manager_register     (GimpMenuFactory   *factory,
+                                                          const gchar       *identifier,
+                                                          const gchar       *first_group,
+                                                          ...)  G_GNUC_NULL_TERMINATED;
+GList           * gimp_menu_factory_get_registered_menus (GimpMenuFactory   *factory);
+GimpUIManager   * gimp_menu_factory_manager_new          (GimpMenuFactory   *factory,
+                                                          const gchar       *identifier,
+                                                          gpointer           callback_data,
+                                                          gboolean           create_tearoff);
 
-GimpMenuFactory * gimp_menu_factory_new           (Gimp              *gimp,
-                                                   GimpActionFactory *action_factory);
-
-void           gimp_menu_factory_manager_register (GimpMenuFactory *factory,
-                                                   const gchar     *identifier,
-                                                   const gchar     *first_group,
-                                                   ...) G_GNUC_NULL_TERMINATED;
-
-GimpUIManager * gimp_menu_factory_manager_new     (GimpMenuFactory *factory,
-                                                   const gchar     *identifier,
-                                                   gpointer         callback_data,
-                                                   gboolean         create_tearoff);
 
 
 #endif  /*  __GIMP_MENU_FACTORY_H__  */

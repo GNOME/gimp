@@ -120,7 +120,7 @@ debug_dump_menus_cmd_callback (GtkAction *action,
 {
   GList *list;
 
-  for (list = global_menu_factory->registered_menus;
+  for (list = gimp_menu_factory_get_registered_menus (global_menu_factory);
        list;
        list = g_list_next (list))
     {
@@ -161,7 +161,7 @@ debug_dump_managers_cmd_callback (GtkAction *action,
 {
   GList *list;
 
-  for (list = global_menu_factory->registered_menus;
+  for (list = gimp_menu_factory_get_registered_menus (global_menu_factory);
        list;
        list = g_list_next (list))
     {

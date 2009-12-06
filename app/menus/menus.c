@@ -377,7 +377,6 @@ menus_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (global_menu_factory != NULL);
-  g_return_if_fail (global_menu_factory->gimp == gimp);
 
   g_object_unref (global_menu_factory);
   global_menu_factory = NULL;
