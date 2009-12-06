@@ -196,7 +196,7 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
 
   GIMP_LOG (DND, "Adding GimpDock %p to GimpDockColumns %p", dock, dock_columns);
 
-  dock_columns->p->docks = g_list_prepend (dock_columns->p->docks, dock);
+  dock_columns->p->docks = g_list_append (dock_columns->p->docks, dock);
 
   gimp_paned_box_add_widget (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
                              GTK_WIDGET (dock),
