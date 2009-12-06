@@ -202,8 +202,10 @@ fade_options_gui (GimpPaintOptions *paint_options,
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkWidget *menu;
+  GtkWidget *combo;
+  GtkWidget *checkbox;
 
-  table = gtk_table_new (1, 3, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
 
   frame = gimp_prop_expanding_frame_new (config, "use-fade",
@@ -227,6 +229,19 @@ fade_options_gui (GimpPaintOptions *paint_options,
 
   g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
   gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
+
+    /*  the repeat type  */
+  combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("Repeat:"), 0.0, 0.5,
+                             combo, 2, FALSE);
+
+  checkbox = gimp_prop_check_button_new (config,
+                                         "fade-reverse",
+                                          _("Reverse"));
+  gtk_table_attach (GTK_TABLE (table), checkbox, 0, 2, 3, 4,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (checkbox);
 
   return frame;
 }

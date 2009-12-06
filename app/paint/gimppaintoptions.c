@@ -46,6 +46,8 @@
 
 #define DEFAULT_USE_FADE               FALSE
 #define DEFAULT_FADE_LENGTH            100.0
+#define DEFAULT_FADE_REVERSE           FALSE
+#define DEFAULT_FADE_REPEAT            GIMP_REPEAT_NONE
 #define DEFAULT_FADE_UNIT              GIMP_UNIT_PIXEL
 
 #define DEFAULT_USE_JITTER             FALSE
@@ -57,6 +59,8 @@
 #define DEFAULT_GRADIENT_LENGTH        100.0
 #define DEFAULT_GRADIENT_UNIT          GIMP_UNIT_PIXEL
 
+#define DYNAMIC_MAX_VALUE              1.0
+#define DYNAMIC_MIN_VALUE              0.0
 
 enum
 {
@@ -73,6 +77,8 @@ enum
 
   PROP_USE_FADE,
   PROP_FADE_LENGTH,
+  PROP_FADE_REVERSE,
+  PROP_FADE_REPEAT,
   PROP_FADE_UNIT,
 
   PROP_USE_JITTER,
@@ -164,6 +170,15 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FADE_UNIT,
                                  "fade-unit", NULL,
                                  TRUE, TRUE, DEFAULT_FADE_UNIT,
+                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADE_REVERSE,
+                                    "fade-reverse", NULL,
+                                    DEFAULT_FADE_REVERSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FADE_REPEAT,
+                                 "fade-repeat", NULL,
+                                 GIMP_TYPE_REPEAT_MODE,
+                                 DEFAULT_FADE_REPEAT,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
@@ -303,6 +318,14 @@ gimp_paint_options_set_property (GObject      *object,
       fade_options->fade_length = g_value_get_double (value);
       break;
 
+    case PROP_FADE_REVERSE:
+      fade_options->fade_reverse = g_value_get_boolean (value);
+      break;
+
+    case PROP_FADE_REPEAT:
+      fade_options->fade_repeat = g_value_get_enum (value);
+      break;
+
     case PROP_FADE_UNIT:
       fade_options->fade_unit = g_value_get_int (value);
       break;
@@ -408,6 +431,14 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_FADE_LENGTH:
       g_value_set_double (value, fade_options->fade_length);
+      break;
+
+    case PROP_FADE_REVERSE:
+      g_value_set_boolean (value, fade_options->fade_reverse);
+      break;
+
+    case PROP_FADE_REPEAT:
+      g_value_set_enum (value, fade_options->fade_repeat);
       break;
 
     case PROP_FADE_UNIT:
@@ -523,8 +554,8 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
 
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options),
-                        GIMP_OPACITY_OPAQUE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_OPACITY_OPAQUE);
+                        DYNAMIC_MAX_VALUE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), DYNAMIC_MAX_VALUE);
 
   fade_options = paint_options->fade_options;
 
@@ -532,6 +563,8 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
     {
       gdouble fade_out = 0.0;
       gdouble unit_factor;
+      gdouble pos;
+
 
       switch (fade_options->fade_unit)
         {
@@ -562,19 +595,31 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
       /*  factor in the fade out value  */
       if (fade_out > 0.0)
         {
-          gdouble x;
-
-          /*  Model the amount of paint left as a gaussian curve  */
-          x = pixel_dist / fade_out;
-          z = exp (- x * x * 5.541);
-          return z;    /*  ln (1/255)  */
-
+          pos = pixel_dist / fade_out;
         }
+      else
+        pos = DYNAMIC_MAX_VALUE;
 
-      return GIMP_OPACITY_TRANSPARENT;
+      /*  for no repeat, set pos close to 1.0 after the first chunk  */
+      if (fade_options->fade_repeat == GIMP_REPEAT_NONE && pos >= DYNAMIC_MAX_VALUE)
+        pos = DYNAMIC_MAX_VALUE - 0.0000001;
+
+      if (((gint) pos & 1) &&
+          fade_options->fade_repeat != GIMP_REPEAT_SAWTOOTH)
+        pos = DYNAMIC_MAX_VALUE - (pos - (gint) pos);
+      else
+        pos = pos - (gint) pos;
+
+      /*  Model the amount of paint left as a gaussian curve  */
+      z = exp (- pos * pos * 5.541);
+
+      if (fade_options->fade_reverse)
+        z = 1.0 - z;
+
+      return z;    /*  ln (1/255)  */
     }
 
-  return GIMP_OPACITY_OPAQUE;
+  return DYNAMIC_MIN_VALUE;
 }
 
 gdouble
