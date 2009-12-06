@@ -103,7 +103,7 @@ file_save_dialog_new (Gimp     *gimp,
       dialog = gimp_file_dialog_new (gimp,
                                      GIMP_FILE_CHOOSER_ACTION_EXPORT,
                                      _("Export Image"), "gimp-file-export",
-                                     GTK_STOCK_SAVE,
+                                     _("_Export"),
                                      GIMP_HELP_FILE_EXPORT);
 
       state = g_object_get_data (G_OBJECT (gimp), "gimp-file-export-dialog-state");
