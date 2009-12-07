@@ -420,14 +420,14 @@ load_image (const gchar  *filename,
    */
 
   tile_height = gimp_tile_height ();
-  pixel       = g_new (guchar, tile_height * sgip->xsize * bytes);
+  pixel       = g_new (guchar, ((gsize) tile_height) * sgip->xsize * bytes);
   pixels      = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i ++)
     pixels[i] = pixel + sgip->xsize * bytes * i;
 
   rows    = g_new (unsigned short *, sgip->zsize);
-  rows[0] = g_new (unsigned short, sgip->xsize * sgip->zsize);
+  rows[0] = g_new (unsigned short, ((gsize) sgip->xsize) * sgip->zsize);
 
   for (i = 1; i < sgip->zsize; i ++)
     rows[i] = rows[0] + i * sgip->xsize;
@@ -580,14 +580,14 @@ save_image (const gchar  *filename,
    */
 
   tile_height = gimp_tile_height ();
-  pixel       = g_new (guchar, tile_height * drawable->width * zsize);
+  pixel       = g_new (guchar, ((gsize) tile_height) * drawable->width * zsize);
   pixels      = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i ++)
     pixels[i]= pixel + drawable->width * zsize * i;
 
   rows    = g_new (gushort *, sgip->zsize);
-  rows[0] = g_new (gushort, sgip->xsize * sgip->zsize);
+  rows[0] = g_new (gushort, ((gsize) sgip->xsize) * sgip->zsize);
 
   for (i = 1; i < sgip->zsize; i ++)
     rows[i] = rows[0] + i * sgip->xsize;
