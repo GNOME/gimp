@@ -484,9 +484,10 @@ gimp_free_select_tool_remove_last_segment (GimpFreeSelectTool *fst)
 
   gimp_draw_tool_pause (draw_tool);
 
-  priv->n_segment_indices--;
+  if (priv->n_segment_indices > 0)
+    priv->n_segment_indices--;
 
-  if (priv->n_segment_indices == 0)
+  if (priv->n_segment_indices <= 0)
     {
       gimp_free_select_tool_halt (fst);
     }
