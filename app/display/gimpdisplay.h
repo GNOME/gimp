@@ -56,7 +56,8 @@ GimpDisplay      * gimp_display_new          (Gimp              *gimp,
                                               gdouble            scale,
                                               GimpMenuFactory   *menu_factory,
                                               GimpUIManager     *popup_manager,
-                                              GimpDialogFactory *display_factory);
+                                              GimpDialogFactory *display_factory,
+                                              GimpDialogFactory *dock_factory);
 void               gimp_display_delete       (GimpDisplay       *display);
 void               gimp_display_close        (GimpDisplay       *display);
 

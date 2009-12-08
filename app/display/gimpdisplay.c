@@ -384,7 +384,8 @@ gimp_display_new (Gimp              *gimp,
                   gdouble            scale,
                   GimpMenuFactory   *menu_factory,
                   GimpUIManager     *popup_manager,
-                  GimpDialogFactory *display_factory)
+                  GimpDialogFactory *display_factory,
+                  GimpDialogFactory *dock_factory)
 {
   GimpDisplay        *display;
   GimpDisplayPrivate *private;
@@ -434,7 +435,8 @@ gimp_display_new (Gimp              *gimp,
       window = gimp_image_window_new (gimp,
                                       display->image,
                                       menu_factory,
-                                      display_factory);
+                                      display_factory,
+                                      dock_factory);
     }
 
   /*  create the shell for the image  */

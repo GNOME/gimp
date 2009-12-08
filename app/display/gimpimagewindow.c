@@ -62,7 +62,8 @@ enum
   PROP_0,
   PROP_GIMP,
   PROP_MENU_FACTORY,
-  PROP_DISPLAY_FACTORY
+  PROP_DISPLAY_FACTORY,
+  PROP_DOCK_FACTORY
 };
 
 
@@ -73,6 +74,7 @@ struct _GimpImageWindowPrivate
   Gimp              *gimp;
   GimpUIManager     *menubar_manager;
   GimpDialogFactory *display_factory;
+  GimpDialogFactory *dock_factory;
 
   GList             *shells;
   GimpDisplayShell  *active_shell;
@@ -203,6 +205,13 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
 
   g_object_class_install_property (object_class, PROP_DISPLAY_FACTORY,
                                    g_param_spec_object ("display-factory",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DIALOG_FACTORY,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_DOCK_FACTORY,
+                                   g_param_spec_object ("dock-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DIALOG_FACTORY,
                                                         GIMP_PARAM_READWRITE |
@@ -379,6 +388,9 @@ gimp_image_window_set_property (GObject      *object,
     case PROP_DISPLAY_FACTORY:
       private->display_factory = g_value_get_object (value);
       break;
+    case PROP_DOCK_FACTORY:
+      private->dock_factory = g_value_get_object (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -402,6 +414,9 @@ gimp_image_window_get_property (GObject    *object,
       break;
     case PROP_DISPLAY_FACTORY:
       g_value_set_object (value, private->display_factory);
+      break;
+    case PROP_DOCK_FACTORY:
+      g_value_set_object (value, private->dock_factory);
       break;
 
     case PROP_MENU_FACTORY:
@@ -595,7 +610,8 @@ GimpImageWindow *
 gimp_image_window_new (Gimp              *gimp,
                        GimpImage         *image,
                        GimpMenuFactory   *menu_factory,
-                       GimpDialogFactory *display_factory)
+                       GimpDialogFactory *display_factory,
+                       GimpDialogFactory *dock_factory)
 {
   GimpImageWindow *window;
 
@@ -608,6 +624,7 @@ gimp_image_window_new (Gimp              *gimp,
                          "gimp",            gimp,
                          "menu-factory",    menu_factory,
                          "display-factory", display_factory,
+                         "dock-factory",    dock_factory,
                          /* The window position will be overridden by the
                           * dialog factory, it is only really used on first
                           * startup.
@@ -646,6 +663,18 @@ gimp_image_window_get_ui_manager (GimpImageWindow *window)
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return private->menubar_manager;
+}
+
+GimpDialogFactory*
+gimp_image_window_get_dock_factory (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return private->dock_factory;
 }
 
 GimpDockColumns  *
