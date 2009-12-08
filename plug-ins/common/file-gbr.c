@@ -381,7 +381,10 @@ load_image (const gchar  *filename,
   bh.spacing      = g_ntohl (bh.spacing);
 
   /* Sanitize values */
-  if ((bh.width == 0) || (bh.height == 0) || (bh.bytes == 0) ||
+  if ((bh.width == 0) || (bh.width > GIMP_MAX_IMAGE_SIZE) ||
+      (bh.height == 0) || (bh.height > GIMP_MAX_IMAGE_SIZE) ||
+      ((bh.bytes != 1) && (bh.bytes != 2) && (bh.bytes != 4) &&
+       (bh.bytes != 18)) ||
       (G_MAXSIZE / bh.width / bh.height / bh.bytes < 1))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
