@@ -401,6 +401,19 @@ load_image (const gchar  *filename,
       return -1;
     }
 
+  /* Sanitize input dimensions and guard against overflows. */
+  if ((ph.width == 0) || (ph.width > GIMP_MAX_IMAGE_SIZE) ||
+      (ph.height == 0) || (ph.height > GIMP_MAX_IMAGE_SIZE) ||
+      (G_MAXSIZE / ph.width / ph.bytes < 1))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Invalid header data in '%s': width=%lu, height=%lu, "
+                     "bytes=%lu"), gimp_filename_to_utf8 (filename),
+                   (unsigned long int)ph.width, (unsigned long int)ph.height,
+                   (unsigned long int)ph.bytes);
+      return -1;
+    }
+
   image_ID = gimp_image_new (ph.width, ph.height, base_type);
   gimp_image_set_filename (image_ID, filename);
 
@@ -419,6 +432,7 @@ load_image (const gchar  *filename,
                        0, 0, drawable->width, drawable->height,
                        TRUE, FALSE);
 
+  /* this can't overflow because ph.width is <= GIMP_MAX_IMAGE_SIZE */
   buffer = g_malloc (ph.width * ph.bytes);
 
   for (line = 0; line < ph.height; line++)
@@ -489,6 +503,7 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
+  /* this can't overflow because drawable->width is <= GIMP_MAX_IMAGE_SIZE */
   buffer = g_malloc (drawable->width * drawable->bpp);
   if (buffer == NULL)
     {
