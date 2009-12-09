@@ -681,7 +681,7 @@ read_rle8(sgi_t *sgip,		/* I - SGI image to read from */
       return (-1);
     length ++;
 
-    count = ch & 127;
+    count = MIN (ch & 127, xsize);
     if (count == 0)
       break;
 
@@ -726,7 +726,7 @@ read_rle16(sgi_t *sgip,		/* I - SGI image to read from */
       return (-1);
     length ++;
 
-    count = ch & 127;
+    count = MIN (ch & 127, xsize);
     if (count == 0)
       break;
 
