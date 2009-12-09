@@ -12,8 +12,18 @@ Overview of Changes from GIMP 2.6.7 to GIMP 2.6.8
 
 * Bugs fixed:
 
+ 470698 - MapObject cannot modify highlight
+ 593848 - FG color changed to black when FG-BG Editor tab created
+ 594651 - layer.scale() raises RuntimeError
+ 594998 - Keyboard shortcuts does not work for first image when dock
+          is focused
+ 599765 - F1 key on gimp-tool-align in menu have wrong link and it
+          open gimp-tool-move
  600484 - Gimp BMP Integer Overflow Vulnerability
  600741 - "read_channel_data()" Integer Overflow Vulnerability
+ 601891 - gimp_image_get_selection returns None
+ 602761 - plug-in-grid: Parameters Horizontal/Vertical Spacing and
+          Horizontal/Vertical Offset are reversed.
  603995 - PCX plugin doesn't sanitize input to avoid allocation overflows.
  603998 - PCX: Calculating amount of memory to allocate may overflow.
  604000 - SGI: sanitize input
@@ -21,10 +31,22 @@ Overview of Changes from GIMP 2.6.7 to GIMP 2.6.8
  604002 - SGI: RLE encoded input data may write beyond allocated buffers
  604004 - SGI: allocate memory consistently
  604008 - GBR, PAT: sanitize input data
+ 604078 - Crash when pressing Backspace with Free Select Tool
 
 * Updated and new translations:
 
+ Basque (eu)
+ British English (en_GB)
+ Czech (cs)
+ French (fr)
+ Greek (el)
+ Italian (it)
+ Japanese (ja)
+ Norwegian Nynorsk (nn)
+ Polish (pl)
+ Romanian (ro)
  Russian (ru)
+ Simplified Chinese (zh_CN)
 
 
 Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
