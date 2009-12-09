@@ -7,6 +7,26 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.6.7 to GIMP 2.6.8
+=================================================
+
+* Bugs fixed:
+
+ 600484 - Gimp BMP Integer Overflow Vulnerability
+ 600741 - "read_channel_data()" Integer Overflow Vulnerability
+ 603995 - PCX plugin doesn't sanitize input to avoid allocation overflows.
+ 603998 - PCX: Calculating amount of memory to allocate may overflow.
+ 604000 - SGI: sanitize input
+ 604001 - SGI: Calculating amount of memory to allocate may overflow.
+ 604002 - SGI: RLE encoded input data may write beyond allocated buffers
+ 604004 - SGI: allocate memory consistently
+ 604008 - GBR, PAT: sanitize input data
+
+* Updated and new translations:
+
+ Russian (ru)
+
+
 Overview of Changes from GIMP 2.6.6 to GIMP 2.6.7
 =================================================
 
