@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-07 19:34+0200\n"
-"PO-Revision-Date: 2008-09-07 17:42+0200\n"
+"PO-Revision-Date: 2009-12-10 22:19+0100\n"
 "Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -5347,7 +5347,7 @@ msgstr "Utilitza el ratolí per deformar la imatge manualment"
 
 #: ../plug-ins/common/iwarp.c:267
 msgid "_IWarp..."
-msgstr "Deforma _intercativament..."
+msgstr "Deforma _interactivament..."
 
 #: ../plug-ins/common/iwarp.c:697
 msgid "Warping"
