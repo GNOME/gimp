@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-06 11:35+0200\n"
-"PO-Revision-Date: 2008-10-01 23:11+0200\n"
+"PO-Revision-Date: 2009-12-10 21:48+0100\n"
 "Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -2082,7 +2082,7 @@ msgstr "Longitud relativa de l'ombra"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "_Perspective..."
-msgstr "_Prespectiva..."
+msgstr "_Perspectiva..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"

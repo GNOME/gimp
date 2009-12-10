@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-27 19:17+0100\n"
-"PO-Revision-Date: 2009-01-03 21:07+0100\n"
+"PO-Revision-Date: 2009-12-10 22:09+0100\n"
 "Last-Translator: Joaquim Perez Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -2280,9 +2280,9 @@ msgid "Cannot operate on empty selections."
 msgstr "No es pot operar en seleccions buides."
 
 #: ../plug-ins/common/curve-bend.c:894
-#, fuzzy, c-format
+#, c-format
 msgid "Error while reading '%s': %s"
-msgstr "S'ha produït un error en llegir «%s». Potser el fitxer està malmès?"
+msgstr "S'ha produït un error en llegir «%s»: %s"
 
 #  Possibly retrieve data from a previous run
 #  The shell and main vbox
@@ -5345,7 +5345,7 @@ msgstr "Utilitza el ratolí per deformar la imatge manualment"
 
 #: ../plug-ins/common/iwarp.c:269
 msgid "_IWarp..."
-msgstr "Deforma _intercativament..."
+msgstr "Deforma _interactivament..."
 
 #: ../plug-ins/common/iwarp.c:699
 msgid "Warping"
