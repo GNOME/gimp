@@ -204,9 +204,6 @@ gimp_button_menu_position (GtkWidget       *button,
       break;
     }
 
-  if (! gtk_widget_get_has_window (button))
-    *y += button->allocation.y;
-
   *y += button->allocation.height / 2;
 
   if (*y + menu_requisition.height > rect.y + rect.height)
