@@ -30,6 +30,10 @@
 
 #include "widgets-types.h"
 
+#include "menus/menus.h"
+
+#include "dialogs/dialogs.h"
+
 #include "core/gimpcontext.h"
 
 #include "gimpdialogfactory.h"
@@ -1087,13 +1091,14 @@ gimp_dockable_detach (GimpDockable *dockable)
   src_dock = gimp_dockbook_get_dock (dockable->dockbook);
   src_dock_window = gimp_dock_window_from_dock (src_dock);
 
-  dock = gimp_dialog_factory_dock_with_window_new (gimp_dock_get_dialog_factory (src_dock),
+  dock = gimp_dialog_factory_dock_with_window_new (global_dock_factory,
                                                    gtk_widget_get_screen (GTK_WIDGET (dockable)));
   dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
   gtk_window_set_position (GTK_WINDOW (dock_window), GTK_WIN_POS_MOUSE);
-  gimp_dock_window_setup (dock_window, src_dock_window);
+  if (src_dock_window)
+    gimp_dock_window_setup (dock_window, src_dock_window);
 
-  dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock))->menu_factory);
+  dockbook = gimp_dockbook_new (global_menu_factory);
 
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
 

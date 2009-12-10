@@ -26,6 +26,8 @@
 
 #include "widgets-types.h"
 
+#include "menus/menus.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
@@ -287,7 +289,7 @@ gimp_dock_dropped_cb (GtkWidget *source,
   gimp_dockbook_remove (dockable->dockbook, dockable);
 
   /* Create a new dockbook */
-  dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (dock)->menu_factory);
+  dockbook = gimp_dockbook_new (global_menu_factory);
   gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), insert_index);
 
   /* Add the dockable to new new dockbook */

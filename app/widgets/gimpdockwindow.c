@@ -31,6 +31,8 @@
 
 #include "dialogs/dialogs.h" /* FIXME, we are in the widget layer */
 
+#include "menus/menus.h"
+
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
@@ -339,7 +341,7 @@ gimp_dock_window_constructor (GType                  type,
    * dock window is the focused window
    */
   dock_window->p->ui_manager =
-    gimp_menu_factory_manager_new (dock_window->p->dialog_factory->menu_factory,
+    gimp_menu_factory_manager_new (global_menu_factory,
                                    dock_window->p->ui_manager_name,
                                    dock_window,
                                    config->tearoff_menus);

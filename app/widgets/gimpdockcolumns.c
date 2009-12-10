@@ -24,6 +24,8 @@
 
 #include "widgets-types.h"
 
+#include "menus/menus.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
@@ -138,7 +140,7 @@ gimp_dock_columns_dropped_cb (GtkWidget         *source,
   gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), insert_index);
 
   /* Put a now dockbook in the dock */
-  dockbook = gimp_dockbook_new (gimp_dock_get_dialog_factory (GIMP_DOCK (dock))->menu_factory);
+  dockbook = gimp_dockbook_new (global_menu_factory);
   g_object_ref (dockbook);
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), -1);
 
