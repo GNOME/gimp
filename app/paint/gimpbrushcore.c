@@ -501,12 +501,34 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gdouble        pixel_initial;
   gdouble        xd, yd;
   gdouble        mag;
+  gdouble        dyn_spacing;
+  gdouble        fade_point;
+  gboolean       use_dyn_spacing;
 
   g_return_if_fail (GIMP_IS_BRUSH (core->brush));
 
   gimp_paint_core_get_last_coords (paint_core, &last_coords);
   gimp_paint_core_get_current_coords (paint_core, &current_coords);
 
+  fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                            paint_core->pixel_dist);
+
+  use_dyn_spacing = gimp_dynamics_output_is_enabled (core->dynamics->spacing_output);
+
+  if (use_dyn_spacing)
+    {
+      dyn_spacing = gimp_dynamics_output_get_linear_value (core->dynamics->spacing_output,
+                                                           &current_coords,
+                                                           fade_point);
+      /* Dynamic spacing assumes that the value set in core is the min value
+       * and the max is full 200% spacing. This approach differs ofrom the usual
+       * factor from user input approach because making spacing smaller than
+       * the nominal value is unlikely and spacing has a hard defined max.
+       */
+      dyn_spacing = core->spacing + ((2.0 - core->spacing) * ( 1.0 - dyn_spacing));
+
+      dyn_spacing = MAX (core->spacing, dyn_spacing); /*Limiting spacing to minimum 1%*/
+    }
   gimp_avoid_exact_integer (&last_coords.x);
   gimp_avoid_exact_integer (&last_coords.y);
   gimp_avoid_exact_integer (&current_coords.x);
@@ -551,25 +573,6 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   pixel_dist    = gimp_vector2_length (&delta_vec);
   pixel_initial = paint_core->pixel_dist;
 
-  /*  FIXME: need to adapt the spacing to the size                      */
-  /*   lastscale = MIN (last_coords.pressure, 1/256);                   */
-  /*   curscale = MIN (current_coords.pressure,  1/256);                */
-  /*   spacing = core->spacing * sqrt (0.5 * (lastscale + curscale));   */
-
-  /*  Compute spacing parameters such that a brush position will be
-   *  made each time the line crosses the *center* of a pixel row or
-   *  column, according to whether the line is mostly horizontal or
-   *  mostly vertical. The term "stripe" will mean "column" if the
-   *  line is horizontalish; "row" if the line is verticalish.
-   *
-   *  We start by deriving coefficients for a new parameter 's':
-   *      s = t * st_factor + st_offset
-   *  such that the "nice" brush positions are the ones with *integer*
-   *  s values. (Actually the value of s will be 1/2 less than the nice
-   *  brush position's x or y coordinate - note that st_factor may
-   *  be negative!)
-   */
-
   if (delta_vec.x * delta_vec.x > delta_vec.y * delta_vec.y)
     {
       st_factor = delta_vec.x;
@@ -581,7 +584,22 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       st_offset = last_coords.y - 0.5;
     }
 
-  if (fabs (st_factor) > dist / core->spacing)
+  if (use_dyn_spacing)
+    {
+      gint s0;
+
+      num_points = dist / dyn_spacing;
+
+      s0 = (gint) floor (st_offset + 0.5);
+
+      t0 = (s0 - st_offset) / st_factor;
+
+      dt = dyn_spacing / dist;
+
+      if (num_points == 0)
+        return;
+    }
+  else if (fabs (st_factor) > dist / core->spacing)
     {
       /*  The stripe principle leads to brush positions that are spaced
        *  *closer* than the official brush spacing. Use the official
@@ -723,13 +741,9 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
       if (core->jitter > 0.0)
         {
-          gdouble fade_point;
           gdouble dyn_jitter;
           gdouble jitter_dist;
           gint32  jitter_angle;
-
-          fade_point = gimp_paint_options_get_fade (paint_options, image,
-                                                    paint_core->pixel_dist);
 
           dyn_jitter = core->jitter * gimp_dynamics_output_get_linear_value (core->dynamics->jitter_output,
                                                                              &current_coords,

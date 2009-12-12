@@ -106,7 +106,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                     G_CALLBACK (gimp_dynamics_editor_notify_model),
                     editor);
 
-  editor->table = gtk_table_new (9, n_inputs + 2, FALSE);
+  editor->table = gtk_table_new (10, n_inputs + 2, FALSE);
   gtk_box_pack_start (GTK_BOX (data_editor), editor->table, TRUE, TRUE, 0);
   gtk_widget_show (editor->table);
 
@@ -157,6 +157,10 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                                        GTK_TABLE (editor->table),
                                        8, NULL);
 
+  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->spacing_output),
+                                       _("Spacing"),
+                                       GTK_TABLE (editor->table),
+                                       9, NULL);
   fixed = gtk_fixed_new ();
   gtk_table_attach (GTK_TABLE (editor->table), fixed, 0, n_inputs + 2, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

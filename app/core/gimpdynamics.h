@@ -44,6 +44,7 @@ struct _GimpDynamics
   GimpDynamicsOutput *color_output;
   GimpDynamicsOutput *angle_output;
   GimpDynamicsOutput *jitter_output;
+  GimpDynamicsOutput *spacing_output;
 };
 
 struct _GimpDynamicsClass

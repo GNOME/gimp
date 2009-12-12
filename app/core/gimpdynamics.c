@@ -48,7 +48,8 @@ enum
   PROP_ASPECT_RATIO_OUTPUT,
   PROP_COLOR_OUTPUT,
   PROP_ANGLE_OUTPUT,
-  PROP_JITTER_OUTPUT
+  PROP_JITTER_OUTPUT,
+  PROP_SPACING_OUTPUT
 };
 
 
@@ -140,6 +141,11 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                    "jitter-output", NULL,
                                    GIMP_TYPE_DYNAMICS_OUTPUT,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_SPACING_OUTPUT,
+                                   "spacing-output", NULL,
+                                   GIMP_TYPE_DYNAMICS_OUTPUT,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
@@ -161,6 +167,8 @@ gimp_dynamics_init (GimpDynamics *dynamics)
                                                                "angle-output");
   dynamics->jitter_output       = gimp_dynamics_create_output (dynamics,
                                                                "jitter-output");
+  dynamics->spacing_output      = gimp_dynamics_create_output (dynamics,
+                                                               "spacing-output");
 }
 
 static void
@@ -176,6 +184,7 @@ gimp_dynamics_finalize (GObject *object)
   g_object_unref (dynamics->color_output);
   g_object_unref (dynamics->angle_output);
   g_object_unref (dynamics->jitter_output);
+  g_object_unref (dynamics->spacing_output);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -236,6 +245,11 @@ gimp_dynamics_set_property (GObject      *object,
       dest_output = dynamics->jitter_output;
       break;
 
+    case PROP_SPACING_OUTPUT:
+      src_output  = g_value_get_object (value);
+      dest_output = dynamics->spacing_output;
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -293,6 +307,10 @@ gimp_dynamics_get_property (GObject    *object,
 
     case PROP_JITTER_OUTPUT:
       g_value_set_object (value, dynamics->jitter_output);
+      break;
+
+    case PROP_SPACING_OUTPUT:
+      g_value_set_object (value, dynamics->spacing_output);
       break;
 
     default:
