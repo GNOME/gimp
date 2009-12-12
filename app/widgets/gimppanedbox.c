@@ -531,7 +531,7 @@ gimp_paned_box_remove_widget (GimpPanedBox *paned_box,
   paned_box->p->widgets = g_list_remove (paned_box->p->widgets, widget);
 
   /* Reset the drag events hook */
-  gimp_paned_box_set_widget_drag_handler (widget, paned_box);
+  gimp_paned_box_set_widget_drag_handler (widget, NULL);
 
   /* Remove from widget hierarchy */
   if (old_length == 1)
