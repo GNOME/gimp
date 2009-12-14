@@ -103,12 +103,12 @@ gimp_text_vector_coords (const double  x,
                          const double  y,
                          GimpCoords   *coords)
 {
-  coords->x        = x;
-  coords->y        = y;
-  coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-  coords->xtilt    = GIMP_COORDS_DEFAULT_TILT;
-  coords->ytilt    = GIMP_COORDS_DEFAULT_TILT;
-  coords->wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+  const GimpCoords default_values = GIMP_COORDS_DEFAULT_VALUES;
+
+  *coords = default_values;
+
+  coords->x = x;
+  coords->y = y;
 }
 
 static gint
