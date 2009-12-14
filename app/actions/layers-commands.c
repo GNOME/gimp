@@ -348,6 +348,8 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
 
   pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
 
+  gimp_pickable_flush (pickable);
+
   layer = gimp_layer_new_from_tiles (gimp_pickable_get_tiles (pickable),
                                      image,
                                      gimp_image_base_type_with_alpha (image),
