@@ -111,12 +111,11 @@ gimp_text_vector_coords (RenderContext   *context,
                          const FT_Vector *vector,
                          GimpCoords      *coords)
 {
-  coords->x        = context->offset_x + (gdouble) vector->x / 64.0;
-  coords->y        = context->offset_y - (gdouble) vector->y / 64.0;
-  coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-  coords->xtilt    = GIMP_COORDS_DEFAULT_TILT;
-  coords->ytilt    = GIMP_COORDS_DEFAULT_TILT;
-  coords->wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+  const GimpCoords default_values = GIMP_COORDS_DEFAULT_VALUES;
+
+  *coords   = default_values;
+  coords->x = context->offset_x + (gdouble) vector->x / 64.0;
+  coords->y = context->offset_y - (gdouble) vector->y / 64.0;
 }
 
 static gint
