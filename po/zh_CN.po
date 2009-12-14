@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-11-07 20:18+0000\n"
-"PO-Revision-Date: 2009-11-04 12:01+0800\n"
+"POT-Creation-Date: 2009-12-10 18:34+0000\n"
+"PO-Revision-Date: 2009-12-08 14:20+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -949,7 +949,7 @@ msgstr "使用所有可见图层的混合颜色"
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:579
 #: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox-dnd.c:163
-#: ../app/widgets/gimptoolbox.c:1002
+#: ../app/widgets/gimptoolbox.c:1076
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3746,7 +3746,7 @@ msgstr "可见"
 msgid "Set Layer Boundary Size"
 msgstr "设置图层边界大小"
 
-#: ../app/actions/layers-commands.c:654 ../app/core/gimplayer.c:259
+#: ../app/actions/layers-commands.c:654 ../app/core/gimplayer.c:261
 msgid "Scale Layer"
 msgstr "缩放图层"
 
@@ -3762,7 +3762,7 @@ msgstr "图层蒙板到选区"
 msgid "Please select a channel first"
 msgstr "请先选择通道"
 
-#: ../app/actions/layers-commands.c:1090 ../app/core/gimplayer.c:1339
+#: ../app/actions/layers-commands.c:1090 ../app/core/gimplayer.c:1365
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "添加图层蒙板"
@@ -6924,7 +6924,7 @@ msgid "Convert to RGB workspace"
 msgstr "转换为 RGB 工作空间"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:232
-#: ../app/gui/session.c:332 ../app/menus/menus.c:449
+#: ../app/gui/session.c:332 ../app/menus/menus.c:448
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7190,11 +7190,11 @@ msgstr "画笔穗数"
 msgid "Brush Hardness"
 msgstr "画笔硬度"
 
-#: ../app/core/gimpbrushgenerated.c:158 ../app/paint/gimppaintoptions.c:138
+#: ../app/core/gimpbrushgenerated.c:158 ../app/paint/gimppaintoptions.c:144
 msgid "Brush Aspect Ratio"
 msgstr "画笔宽高比"
 
-#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:142
+#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:148
 msgid "Brush Angle"
 msgstr "画笔角度"
 
@@ -7496,7 +7496,7 @@ msgctxt "command"
 msgid "Rotate"
 msgstr "旋转"
 
-#: ../app/core/gimpdrawable-transform.c:883 ../app/core/gimplayer.c:263
+#: ../app/core/gimpdrawable-transform.c:883 ../app/core/gimplayer.c:265
 msgid "Transform Layer"
 msgstr "变换图层"
 
@@ -7937,7 +7937,7 @@ msgstr "从项目删除寄生物"
 msgid "Anchor Floating Selection"
 msgstr "固定浮动选区"
 
-#: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:576
+#: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:578
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -7947,38 +7947,38 @@ msgstr "无法从浮动选区创建新图层，因为它属于一个图层蒙板
 msgid "Floating Selection to Layer"
 msgstr "浮动选区到图层"
 
-#: ../app/core/gimplayer.c:256
+#: ../app/core/gimplayer.c:258
 msgid "Layer"
 msgstr "图层"
 
-#: ../app/core/gimplayer.c:257
+#: ../app/core/gimplayer.c:259
 msgid "Rename Layer"
 msgstr "重命名图层"
 
-#: ../app/core/gimplayer.c:258 ../app/pdb/layer-cmds.c:441
+#: ../app/core/gimplayer.c:260 ../app/pdb/layer-cmds.c:441
 #: ../app/pdb/layer-cmds.c:479
 msgid "Move Layer"
 msgstr "移动图层"
 
-#: ../app/core/gimplayer.c:260
+#: ../app/core/gimplayer.c:262
 msgid "Resize Layer"
 msgstr "改变图层大小"
 
-#: ../app/core/gimplayer.c:261
+#: ../app/core/gimplayer.c:263
 msgid "Flip Layer"
 msgstr "翻转图层"
 
-#: ../app/core/gimplayer.c:262
+#: ../app/core/gimplayer.c:264
 msgid "Rotate Layer"
 msgstr "旋转图层"
 
-#: ../app/core/gimplayer.c:420 ../app/core/gimplayer.c:1398
+#: ../app/core/gimplayer.c:422 ../app/core/gimplayer.c:1424
 #: ../app/core/gimplayermask.c:234
 #, c-format
 msgid "%s mask"
 msgstr "%s蒙板"
 
-#: ../app/core/gimplayer.c:459
+#: ../app/core/gimplayer.c:461
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -7987,35 +7987,35 @@ msgstr ""
 "浮动选区\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1322
+#: ../app/core/gimplayer.c:1348
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙板，因为已有一个。"
 
-#: ../app/core/gimplayer.c:1333
+#: ../app/core/gimplayer.c:1359
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙板。"
 
-#: ../app/core/gimplayer.c:1453
+#: ../app/core/gimplayer.c:1479
 msgid "Transfer Alpha to Mask"
 msgstr "转移 Alpha 到蒙板"
 
-#: ../app/core/gimplayer.c:1623 ../app/core/gimplayermask.c:260
+#: ../app/core/gimplayer.c:1649 ../app/core/gimplayermask.c:260
 msgid "Apply Layer Mask"
 msgstr "应用图层蒙板"
 
-#: ../app/core/gimplayer.c:1624
+#: ../app/core/gimplayer.c:1650
 msgid "Delete Layer Mask"
 msgstr "删除图层蒙板"
 
-#: ../app/core/gimplayer.c:1743
+#: ../app/core/gimplayer.c:1769
 msgid "Add Alpha Channel"
 msgstr "添加 Alpha 通道"
 
-#: ../app/core/gimplayer.c:1797
+#: ../app/core/gimplayer.c:1823
 msgid "Remove Alpha Channel"
 msgstr "删除 Alpha 通道"
 
-#: ../app/core/gimplayer.c:1817
+#: ../app/core/gimplayer.c:1843
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
@@ -8426,6 +8426,10 @@ msgstr "输入位置(URI)："
 #: ../app/dialogs/file-save-dialog.c:105
 msgid "Export Image"
 msgstr "导出图像"
+
+#: ../app/dialogs/file-save-dialog.c:106
+msgid "_Export"
+msgstr "导出(_E)"
 
 #: ../app/dialogs/file-save-dialog.c:468
 msgid ""
@@ -9130,7 +9134,7 @@ msgstr "移动工具"
 msgid "Set layer or path as active"
 msgstr "将图层或路径设置为活动的"
 
-#: ../app/dialogs/preferences-dialog.c:1965 ../app/widgets/gimptoolbox.c:564
+#: ../app/dialogs/preferences-dialog.c:1965 ../app/widgets/gimptoolbox.c:657
 msgid "Toolbox"
 msgstr "工具箱"
 
@@ -9937,7 +9941,7 @@ msgid "Navigate the image display"
 msgstr "导航图像显示"
 
 #: ../app/display/gimpdisplayshell.c:711
-#: ../app/display/gimpdisplayshell.c:1154 ../app/widgets/gimptoolbox.c:241
+#: ../app/display/gimpdisplayshell.c:1154 ../app/widgets/gimptoolbox.c:279
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
 
@@ -10078,7 +10082,7 @@ msgstr " (已覆盖)"
 msgid " (imported)"
 msgstr " (已导入)"
 
-#: ../app/display/gimpstatusbar.c:358
+#: ../app/display/gimpstatusbar.c:364
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "取消 <i>%s</i>"
@@ -10219,7 +10223,7 @@ msgstr "不足够的笔画点"
 msgid "Paint"
 msgstr "涂画"
 
-#: ../app/paint/gimppaintoptions.c:133
+#: ../app/paint/gimppaintoptions.c:139
 msgid "Brush Scale"
 msgstr "画笔缩放"
 
@@ -10939,7 +10943,7 @@ msgstr "分布目标的底部"
 msgid "Offset:"
 msgstr "位移："
 
-#: ../app/tools/gimpblendoptions.c:215 ../app/tools/gimppaintoptions-gui.c:293
+#: ../app/tools/gimpblendoptions.c:215 ../app/tools/gimppaintoptions-gui.c:308
 msgid "Gradient:"
 msgstr "渐变："
 
@@ -10947,7 +10951,8 @@ msgstr "渐变："
 msgid "Shape:"
 msgstr "形状："
 
-#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:317
+#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:236
+#: ../app/tools/gimppaintoptions-gui.c:332
 msgid "Repeat:"
 msgstr "重复："
 
@@ -11702,23 +11707,23 @@ msgstr "自由选择工具：选择手绘区域"
 msgid "_Free Select"
 msgstr "自由选择(_F)"
 
-#: ../app/tools/gimpfreeselecttool.c:1118
+#: ../app/tools/gimpfreeselecttool.c:1119
 msgid "Click to complete selection"
 msgstr "点击并拖动可创建新的选区"
 
-#: ../app/tools/gimpfreeselecttool.c:1122
+#: ../app/tools/gimpfreeselecttool.c:1123
 msgid "Click-Drag to move segment vertex"
 msgstr "点击并拖动可移动组件"
 
-#: ../app/tools/gimpfreeselecttool.c:1127
+#: ../app/tools/gimpfreeselecttool.c:1128
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "回车键以确认，Esc 键以取消，回退键以移除最后片段"
 
-#: ../app/tools/gimpfreeselecttool.c:1131
+#: ../app/tools/gimpfreeselecttool.c:1132
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "点击并拖动以添加自由选区，点击以添加多边形选区"
 
-#: ../app/tools/gimpfreeselecttool.c:1585
+#: ../app/tools/gimpfreeselecttool.c:1586
 msgctxt "command"
 msgid "Free Select"
 msgstr "自由选择"
@@ -12195,24 +12200,29 @@ msgstr "增值"
 msgid "Hard edge"
 msgstr "硬质边界"
 
-#: ../app/tools/gimppaintoptions-gui.c:210
+#: ../app/tools/gimppaintoptions-gui.c:212
 msgid "Fade out"
 msgstr "淡出"
 
-#: ../app/tools/gimppaintoptions-gui.c:219
-#: ../app/tools/gimppaintoptions-gui.c:302
+#: ../app/tools/gimppaintoptions-gui.c:221
+#: ../app/tools/gimppaintoptions-gui.c:317
 msgid "Length:"
 msgstr "长度："
 
-#: ../app/tools/gimppaintoptions-gui.c:246
+#: ../app/tools/gimppaintoptions-gui.c:241
+#: ../app/widgets/gimpviewablebox.c:223
+msgid "Reverse"
+msgstr "反向"
+
+#: ../app/tools/gimppaintoptions-gui.c:261
 msgid "Apply Jitter"
 msgstr "应用抖动"
 
-#: ../app/tools/gimppaintoptions-gui.c:251
+#: ../app/tools/gimppaintoptions-gui.c:266
 msgid "Amount:"
 msgstr "计数："
 
-#: ../app/tools/gimppaintoptions-gui.c:276
+#: ../app/tools/gimppaintoptions-gui.c:291
 msgid "Use color from gradient"
 msgstr "使用渐变中的颜色"
 
@@ -13521,13 +13531,9 @@ msgstr "已存在一个叫“%s”的文件。"
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "您真的要将它替换为您正在保存的图像吗？"
 
-#: ../app/widgets/gimpdockable.c:196
+#: ../app/widgets/gimpdockable.c:212
 msgid "Configure this tab"
 msgstr "配置此页签"
-
-#: ../app/widgets/gimpdockseparator.c:42
-msgid "You can drop dockable dialogs here"
-msgstr "您可以将可停靠的对话框放在这里"
 
 #: ../app/widgets/gimpdrawabletreeview.c:123
 msgid "Lock pixels"
@@ -13938,15 +13944,6 @@ msgstr "锁定 Alpha 通道"
 msgid "Empty Layer"
 msgstr "空白图层"
 
-#: ../app/widgets/gimpmenudock.c:159
-msgid "Auto"
-msgstr "自动"
-
-#: ../app/widgets/gimpmenudock.c:170
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
-msgstr "如果启用，对话框将自动跟随您工作的图像。"
-
 #: ../app/widgets/gimpmessagebox.c:444
 #, c-format
 msgid "Message repeated %d times."
@@ -14294,10 +14291,6 @@ msgstr "打开图案选择对话框"
 msgid "Open the gradient selection dialog"
 msgstr "打开渐变选择对话框"
 
-#: ../app/widgets/gimpviewablebox.c:223
-msgid "Reverse"
-msgstr "反向"
-
 #: ../app/widgets/gimpviewablebox.c:305
 msgid "Open the palette selection dialog"
 msgstr "打开色板选择对话框"
@@ -14306,27 +14299,27 @@ msgstr "打开色板选择对话框"
 msgid "Open the font selection dialog"
 msgstr "打开字体选择对话框"
 
-#: ../app/widgets/gimpwidgets-utils.c:660
+#: ../app/widgets/gimpwidgets-utils.c:657
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (尝试 %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:660
+#: ../app/widgets/gimpwidgets-utils.c:657
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:664
+#: ../app/widgets/gimpwidgets-utils.c:661
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (尝试 %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:668
+#: ../app/widgets/gimpwidgets-utils.c:665
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (尝试 %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:936
+#: ../app/widgets/gimpwidgets-utils.c:933
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "“%s”文件中含有无效的 UTF-8 数据。"
@@ -14571,3 +14564,14 @@ msgstr "确定工具箱可见！"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "无法启动“%s”：%s"
+
+#~ msgid "You can drop dockable dialogs here"
+#~ msgstr "您可以将可停靠的对话框放在这里"
+
+#~ msgid "Auto"
+#~ msgstr "自动"
+
+#~ msgid ""
+#~ "When enabled the dialog automatically follows the image you are working "
+#~ "on."
+#~ msgstr "如果启用，对话框将自动跟随您工作的图像。"
