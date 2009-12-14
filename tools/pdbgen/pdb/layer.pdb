@@ -97,6 +97,8 @@ HELP
 {
   GimpProjection *projection = gimp_image_get_projection (image);
 
+  gimp_pickable_flush (GIMP_PICKABLE (projection));
+
   layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
                                      dest_image,
                                      gimp_image_base_type_with_alpha (dest_image),
@@ -1059,6 +1061,7 @@ CODE
               "core/gimp.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
+              "core/gimppickable.h"
               "core/gimpprogress.h"
               "core/gimpprojection.h"
               "gimppdb-utils.h"

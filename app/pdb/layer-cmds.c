@@ -35,6 +35,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
@@ -113,6 +114,8 @@ layer_new_from_visible_invoker (GimpProcedure      *procedure,
   if (success)
     {
       GimpProjection *projection = gimp_image_get_projection (image);
+
+      gimp_pickable_flush (GIMP_PICKABLE (projection));
 
       layer = gimp_layer_new_from_tiles (gimp_projection_get_tiles (projection),
                                          dest_image,
