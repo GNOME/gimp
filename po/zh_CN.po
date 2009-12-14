@@ -15,9 +15,9 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-10-12 20:01+0000\n"
-"PO-Revision-Date: 2009-07-27 21:50+0800\n"
-"Last-Translator: Aron Xu <aronxu@gnome.org>\n"
+"POT-Creation-Date: 2009-12-10 21:20+0000\n"
+"PO-Revision-Date: 2009-12-12 11:30+0800\n"
+"Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -9020,12 +9020,12 @@ msgstr "切换到移动工具"
 #
 #: ../app/display/display-enums.c:145
 msgid "quality|Low"
-msgstr "质量"
+msgstr "低"
 
 #
 #: ../app/display/display-enums.c:146
 msgid "quality|High"
-msgstr "质量"
+msgstr "高"
 
 #: ../app/display/gimpdisplay-handlers.c:160
 #, c-format
@@ -9058,7 +9058,7 @@ msgstr "关闭 %s"
 #
 #: ../app/display/gimpdisplayshell-close.c:159
 msgid "Do_n't Save"
-msgstr "不保存(_S)"
+msgstr "不保存(_N)"
 
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
@@ -9139,26 +9139,26 @@ msgstr "缩放："
 
 #: ../app/display/gimpdisplayshell-title.c:233
 msgid "RGB-empty"
-msgstr ""
+msgstr "RGB-空"
 
 #
 #: ../app/display/gimpdisplayshell-title.c:236
 msgid "grayscale-empty"
-msgstr "灰度(_G)"
+msgstr "灰度-空"
 
 #
 #: ../app/display/gimpdisplayshell-title.c:236
 msgid "grayscale"
-msgstr "灰度(_G)"
+msgstr "灰度"
 
 #: ../app/display/gimpdisplayshell-title.c:239
 msgid "indexed-empty"
-msgstr ""
+msgstr "索引色-空"
 
 #
 #: ../app/display/gimpdisplayshell-title.c:239
 msgid "indexed"
-msgstr "索引 %d"
+msgstr "索引色"
 
 #: ../app/display/gimpdisplayshell-title.c:293
 msgid "(modified)"
@@ -10725,23 +10725,23 @@ msgstr "自由选择工具：选择手绘区域"
 msgid "_Free Select"
 msgstr "自由选择(_F)"
 
-#: ../app/tools/gimpfreeselecttool.c:1116
+#: ../app/tools/gimpfreeselecttool.c:1117
 msgid "Click to complete selection"
 msgstr "点击并拖动可创建新的选区"
 
-#: ../app/tools/gimpfreeselecttool.c:1120
+#: ../app/tools/gimpfreeselecttool.c:1121
 msgid "Click-Drag to move segment vertex"
 msgstr "点击并拖动可移动组件"
 
-#: ../app/tools/gimpfreeselecttool.c:1125
+#: ../app/tools/gimpfreeselecttool.c:1126
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "回车键以确认，Esc 键以取消，回退键以移除最后片段"
 
-#: ../app/tools/gimpfreeselecttool.c:1129
+#: ../app/tools/gimpfreeselecttool.c:1130
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "点击并拖动以添加自由选区，点击以添加多边形选区"
 
-#: ../app/tools/gimpfreeselecttool.c:1581
+#: ../app/tools/gimpfreeselecttool.c:1582
 msgctxt "command"
 msgid "Free Select"
 msgstr "自由选择"
@@ -11545,7 +11545,7 @@ msgstr "微调将修改字体的轮廓，使之产生清晰的小尺寸位图"
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
-msgstr ""
+msgstr "如果可用，字体中的微调值会被使用，但您可能希望总是使用自动微调"
 
 #: ../app/tools/gimptextoptions.c:159
 msgid "Indentation of the first line"
@@ -11570,7 +11570,7 @@ msgstr "微调："
 
 #: ../app/tools/gimptextoptions.c:466
 msgid "Force auto-hinter"
-msgstr ""
+msgstr "强制自动微调"
 
 #: ../app/tools/gimptextoptions.c:487
 msgid "Text Color"
@@ -13434,803 +13434,3 @@ msgstr "确定工具箱可见！"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "无法启动“%s”：%s"
-
-#~ msgid "Text Tool"
-#~ msgstr "文字工具"
-
-#~ msgid "%s: %.2f"
-#~ msgstr "%s: %.2f"
-
-#~ msgid "%s: %d"
-#~ msgstr "%s：%d"
-
-#~ msgctxt "brushes-action"
-#~ msgid "Create a new brush"
-#~ msgstr "创建新画笔"
-
-#~ msgctxt "brushes-action"
-#~ msgid "Duplicate this brush"
-#~ msgstr "复制此画笔"
-
-#~ msgctxt "brushes-action"
-#~ msgid "Delete this brush"
-#~ msgstr "删除此画笔"
-
-#~ msgctxt "context-action"
-#~ msgid "_Brush"
-#~ msgstr "画笔(_B)"
-
-#~ msgctxt "context-action"
-#~ msgid "_Pattern"
-#~ msgstr "图案(_P)"
-
-#~ msgctxt "context-action"
-#~ msgid "_Gradient"
-#~ msgstr "渐变(_G)"
-
-#~ msgid "Paint Mode: %s"
-#~ msgstr "涂画模式：%s"
-
-#~ msgid "Brush Shape: %s"
-#~ msgstr "画笔形状：%s"
-
-#~ msgid "Brush Radius: %2.2f"
-#~ msgstr "画笔半径：%2.2f"
-
-#~ msgid "Brush Angle: %2.2f"
-#~ msgstr "画笔角度：%2.2f"
-
-#~ msgctxt "cursor-info-action"
-#~ msgid "_Sample Merged"
-#~ msgstr "位样合并(_S)"
-
-#~ msgctxt "cursor-info-action"
-#~ msgid "Use the composite color of all visible layers"
-#~ msgstr "使用所有可见图层的混合颜色"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "Pointer"
-#~ msgstr "指针"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "Brush Editor"
-#~ msgstr "画笔编辑器"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "Gradient Editor"
-#~ msgstr "渐变编辑器"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "Palette Editor"
-#~ msgstr "色板编辑器"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "About GIMP"
-#~ msgstr "关于 GIMP"
-
-#~ msgctxt "documents-action"
-#~ msgid "Remove entries for which the corresponding file is not available"
-#~ msgstr "将不可用的文件的相关项移除"
-
-#~ msgctxt "edit-action"
-#~ msgid "_Undo"
-#~ msgstr "撤消(_U)"
-
-#~ msgctxt "edit-action"
-#~ msgid "_Redo"
-#~ msgstr "重做(_R)"
-
-#~ msgctxt "edit-action"
-#~ msgid "_Fade..."
-#~ msgstr "淡出(_F)..."
-
-#~ msgctxt "edit-action"
-#~ msgid "Fill _with Pattern"
-#~ msgstr "以图案填充(_W)"
-
-#~ msgctxt "error-console-action"
-#~ msgid "Write all error messages to a file"
-#~ msgstr "将所有错误信息写入到文件"
-
-#~ msgctxt "error-console-action"
-#~ msgid "Write the selected error messages to a file"
-#~ msgstr "将选中的错误信息写入到文件"
-
-#~ msgctxt "file-action"
-#~ msgid "Create _Template..."
-#~ msgstr "创建模板(_T)..."
-
-#~ msgctxt "file-action"
-#~ msgid "Export..."
-#~ msgstr "导出..."
-
-#~ msgctxt "file-action"
-#~ msgid "Export the image to various file formats such as PNG or JPEG"
-#~ msgstr "将图像导出到如 PNG 或 JPEG 的多种文件格式"
-
-#~ msgctxt "file-action"
-#~ msgid "Export to"
-#~ msgstr "导出到"
-
-#~ msgctxt "file-action"
-#~ msgid "Export the image back to the import source in the import format"
-#~ msgstr "将图像以导入的格式反相导出到导入源"
-
-#~ msgid "Export to %s"
-#~ msgstr "导出到 %s"
-
-#~ msgid "Export to"
-#~ msgstr "导出到"
-
-#~ msgctxt "fonts-action"
-#~ msgid "Rescan the installed fonts"
-#~ msgstr "重新扫描已安装的字体"
-
-#~ msgctxt "gradient-editor-color-type"
-#~ msgid "_Background Color"
-#~ msgstr "背景色(_B)"
-
-#~ msgctxt "gradient-editor-coloring"
-#~ msgid "(Varies)"
-#~ msgstr "(多种)"
-
-#~ msgctxt "gradients-action"
-#~ msgid "Create a new gradient"
-#~ msgstr "创建新的渐变"
-
-#~ msgctxt "gradients-action"
-#~ msgid "Duplicate this gradient"
-#~ msgstr "复制渐变"
-
-#~ msgctxt "gradients-action"
-#~ msgid "Delete this gradient"
-#~ msgstr "删除此渐变"
-
-#~ msgctxt "image-action"
-#~ msgid "_Colors"
-#~ msgstr "颜色(_C)"
-
-#~ msgctxt "image-action"
-#~ msgid "_Auto"
-#~ msgstr "自动(_A)"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "_RGB"
-#~ msgstr "_RGB"
-
-#~ msgctxt "image-action"
-#~ msgid "Flip _Horizontally"
-#~ msgstr "水平翻转(_H)"
-
-#~ msgctxt "image-action"
-#~ msgid "Flip _Vertically"
-#~ msgstr "垂直翻转(_V)"
-
-#~ msgctxt "image-action"
-#~ msgid "Rotate 90° _clockwise"
-#~ msgstr "顺时针旋转 90 度(_C)"
-
-#~ msgctxt "image-action"
-#~ msgid "Rotate _180°"
-#~ msgstr "旋转 _180 度"
-
-#~ msgctxt "image-action"
-#~ msgid "Rotate 90° counter-clock_wise"
-#~ msgstr "逆时针旋转 90 度(_W)"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Transform"
-#~ msgstr "变换(_T)"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Opacity"
-#~ msgstr "不透明度(_O)"
-
-#~ msgctxt "layers-action"
-#~ msgid "Merge all visible layers into one layer"
-#~ msgstr "将所有的可见图层合并为一个图层"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Flatten Image"
-#~ msgstr "平整图像(_F)"
-
-#~ msgctxt "layers-action"
-#~ msgid "Merge all layers into one and remove transparency"
-#~ msgstr "将所有的图层合并为一个并移除透明"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Crop to Selection"
-#~ msgstr "剪裁到选区(_C)"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Add to Selection"
-#~ msgstr "添加到选区(_A)"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Subtract from Selection"
-#~ msgstr "从选区中减去(_S)"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Intersect with Selection"
-#~ msgstr "与选区相交(_I)"
-
-#~ msgctxt "palette-editor-action"
-#~ msgid "_Edit Color..."
-#~ msgstr "编辑颜色(_E)..."
-
-#~ msgctxt "palette-editor-action"
-#~ msgid "Edit this entry"
-#~ msgstr "编辑此项"
-
-#~ msgctxt "palette-editor-action"
-#~ msgid "Delete this entry"
-#~ msgstr "删除此项"
-
-#~ msgctxt "palette-editor-action"
-#~ msgid "Create a new entry from the foreground color"
-#~ msgstr "从前景色新建颜色项"
-
-#~ msgctxt "palette-editor-action"
-#~ msgid "Create a new entry from the background color"
-#~ msgstr "从背景色新建颜色项"
-
-#~ msgctxt "palettes-action"
-#~ msgid "Create a new palette"
-#~ msgstr "创建新的模板"
-
-#~ msgctxt "palettes-action"
-#~ msgid "Duplicate this palette"
-#~ msgstr "复制色板"
-
-#~ msgctxt "palettes-action"
-#~ msgid "Delete this palette"
-#~ msgstr "删除此色板"
-
-#~ msgctxt "patterns-action"
-#~ msgid "Open this pattern as an image"
-#~ msgstr "作为图像打开图案"
-
-#~ msgctxt "patterns-action"
-#~ msgid "Create a new pattern"
-#~ msgstr "创建新的图案"
-
-#~ msgctxt "patterns-action"
-#~ msgid "Duplicate this pattern"
-#~ msgstr "复制此图案"
-
-#~ msgctxt "patterns-action"
-#~ msgid "Delete this pattern"
-#~ msgstr "删除此图案"
-
-#~ msgctxt "plug-in-action"
-#~ msgid "_Map"
-#~ msgstr "映射(_M)"
-
-#~ msgctxt "plug-in-action"
-#~ msgid "_Pattern"
-#~ msgstr "图案(_P)"
-
-#~ msgctxt "quick-mask-action"
-#~ msgid "Toggle Quick Mask on/off"
-#~ msgstr "切换快速蒙板开/关"
-
-#~ msgctxt "sample-points-action"
-#~ msgid "_Sample Merged"
-#~ msgstr "位样合并(_S)"
-
-#~ msgctxt "sample-points-action"
-#~ msgid "Use the composite color of all visible layers"
-#~ msgstr "使用所有可见图层的混合颜色"
-
-#~ msgctxt "select-action"
-#~ msgid "_All"
-#~ msgstr "全部(_A)"
-
-#~ msgctxt "select-action"
-#~ msgid "_None"
-#~ msgstr "无"
-
-#~ msgctxt "text-editor-action"
-#~ msgid "Clear"
-#~ msgstr "清除"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Text Tool Menu"
-#~ msgstr "文字工具菜单"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Input _Methods"
-#~ msgstr "输入法(_M)"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Cu_t"
-#~ msgstr "剪切(_T)"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "_Copy"
-#~ msgstr "复制(_C)"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "_Paste"
-#~ msgstr "粘贴(_P)"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "_Delete"
-#~ msgstr "删除(_D)"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "_Open text file..."
-#~ msgstr "打开文本文件(_O)..."
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Cl_ear"
-#~ msgstr "清除(_E)"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Clear all text"
-#~ msgstr "清除所有文本"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Create a path from the outlines of the current text"
-#~ msgstr "双当前文字的轮廓创建路径"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Text _along Path"
-#~ msgstr "文字对齐路径(_A)"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Bend the text along the currently active path"
-#~ msgstr "沿当前的活动路径弯曲文字"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "From left to right"
-#~ msgstr "从左到右"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "From right to left"
-#~ msgstr "从右到左"
-
-#~ msgctxt "tools-action"
-#~ msgid "Raise this tool"
-#~ msgstr "提升此工具箱"
-
-#~ msgctxt "tools-action"
-#~ msgid "Lower this tool"
-#~ msgstr "推后此工具箱"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Create a new path..."
-#~ msgstr "创建新的路径..."
-
-#~ msgctxt "vectors-action"
-#~ msgid "Create a new path with last used values"
-#~ msgstr "按上次使用的值新建路径"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Duplicate this path"
-#~ msgstr "复制此路径"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Delete this path"
-#~ msgstr "删除此路径"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Raise this path"
-#~ msgstr "升高此路径"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Raise this path to the top"
-#~ msgstr "提升此路径至顶端"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Lower this path"
-#~ msgstr "降低此路径"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Lower this path to the bottom"
-#~ msgstr "降低此路径至底端"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Visible"
-#~ msgstr "可见(_V)"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Linked"
-#~ msgstr "链接(_L)"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Path to selection"
-#~ msgstr "路径到选区"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Replace selection with path"
-#~ msgstr "用此路径替换选区"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Add to Selection"
-#~ msgstr "添加到选区(_A)"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Add path to selection"
-#~ msgstr "将路径添加到选区"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Subtract from Selection"
-#~ msgstr "从选区中减去(_S)"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Subtract path from selection"
-#~ msgstr "从选区中减去路径"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Intersect with Selection"
-#~ msgstr "与选区相交(_I)"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Intersect path with selection"
-#~ msgstr "将路径与选区相交"
-
-#~ msgctxt "view-action"
-#~ msgid "_New View"
-#~ msgstr "新建视图(_N)"
-
-#~ msgctxt "view-action"
-#~ msgid "Re_vert Zoom"
-#~ msgstr "恢复缩放(_V)"
-
-#~ msgctxt "view-action"
-#~ msgid "_Open Display..."
-#~ msgstr "打开显示(_O)..."
-
-#~ msgctxt "view-action"
-#~ msgid "Connect to another display"
-#~ msgstr "连接到另一个显示"
-
-#~ msgctxt "view-zoom-action"
-#~ msgid "Zoom _Out"
-#~ msgstr "缩小(_O)"
-
-#~ msgctxt "view-action"
-#~ msgid "Zoom out"
-#~ msgstr "缩小"
-
-#~ msgctxt "view-zoom-action"
-#~ msgid "Zoom _In"
-#~ msgstr "放大(_I)"
-
-#~ msgctxt "view-action"
-#~ msgid "Zoom in"
-#~ msgstr "放大"
-
-#~ msgctxt "view-zoom-action"
-#~ msgid "Zoom Out"
-#~ msgstr "缩小"
-
-#~ msgctxt "view-zoom-action"
-#~ msgid "Zoom In"
-#~ msgstr "放大"
-
-#~ msgctxt "histogram-channel"
-#~ msgid "Red"
-#~ msgstr "红色"
-
-#~ msgctxt "histogram-channel"
-#~ msgid "Green"
-#~ msgstr "绿色"
-
-#~ msgctxt "histogram-channel"
-#~ msgid "Blue"
-#~ msgstr "蓝色"
-
-#~ msgctxt "layer-mode-effects"
-#~ msgid "Color"
-#~ msgstr "颜色"
-
-#~ msgctxt "layer-mode-effects"
-#~ msgid "Value"
-#~ msgstr "明度"
-
-#~ msgctxt "convert-dither-type"
-#~ msgid "None"
-#~ msgstr "无"
-
-#~ msgctxt "align-reference-type"
-#~ msgid "Image"
-#~ msgstr "图像"
-
-#~ msgctxt "align-reference-type"
-#~ msgid "Selection"
-#~ msgstr "选区"
-
-#~ msgctxt "fill-type"
-#~ msgid "Transparency"
-#~ msgstr "透明"
-
-#~ msgctxt "fill-type"
-#~ msgid "None"
-#~ msgstr "无"
-
-#~ msgctxt "fill-style"
-#~ msgid "Pattern"
-#~ msgstr "图案"
-
-#~ msgctxt "cap-style"
-#~ msgid "Round"
-#~ msgstr "圆角"
-
-#~ msgctxt "brush-generated-shape"
-#~ msgid "Square"
-#~ msgstr "正方"
-
-#~ msgctxt "orientation-type"
-#~ msgid "Horizontal"
-#~ msgstr "水平"
-
-#~ msgctxt "orientation-type"
-#~ msgid "Vertical"
-#~ msgstr "垂直"
-
-#~ msgctxt "item-set"
-#~ msgid "None"
-#~ msgstr "无"
-
-#~ msgctxt "undo-type"
-#~ msgid "Quick Mask"
-#~ msgstr "快速蒙板"
-
-#~ msgctxt "undo-type"
-#~ msgid "Grid"
-#~ msgstr "网格"
-
-#~ msgctxt "undo-type"
-#~ msgid "Paste"
-#~ msgstr "粘贴"
-
-#~ msgctxt "undo-type"
-#~ msgid "Cut"
-#~ msgstr "剪切"
-
-#~ msgctxt "undo-type"
-#~ msgid "Text"
-#~ msgstr "文字"
-
-#~ msgctxt "undo-type"
-#~ msgid "Transform"
-#~ msgstr "变换"
-
-#~ msgctxt "undo-type"
-#~ msgid "Paint"
-#~ msgstr "涂画"
-
-#~ msgctxt "undo-type"
-#~ msgid "Plug-In"
-#~ msgstr "插件"
-
-#~ msgctxt "undo-type"
-#~ msgid "Ink"
-#~ msgstr "墨水"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Red"
-#~ msgstr "红色"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Green"
-#~ msgstr "绿色"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Blue"
-#~ msgstr "蓝色"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Hue"
-#~ msgstr "色调"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Saturation"
-#~ msgstr "饱和度"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Value"
-#~ msgstr "明度"
-
-#~ msgid "tags-locale:C"
-#~ msgstr "tags-locale:zh_CN"
-
-#~ msgid "Updating tag cache"
-#~ msgstr "正在更新标签缓存"
-
-#~ msgid "Brush Spacing"
-#~ msgstr "画笔间距"
-
-#~ msgid "Brush Shape"
-#~ msgstr "画笔形状"
-
-#~ msgid "Brush Radius"
-#~ msgstr "画笔半径"
-
-#~ msgid "Brush Spikes"
-#~ msgstr "画笔穗数"
-
-#~ msgid "Brush Hardness"
-#~ msgstr "画笔硬度"
-
-#~ msgid "Brush Aspect Ratio"
-#~ msgstr "画笔宽高比"
-
-#~ msgid "Brush Angle"
-#~ msgstr "画笔角度"
-
-#~ msgid "Paint Mode"
-#~ msgstr "涂画模式"
-
-#~ msgid "Could not read header from palette file '%s'"
-#~ msgstr "无法从色板文件“%s”中读取头信息"
-
-#~ msgid "Fatal parse error in palette file '%s'"
-#~ msgstr "色板文件“%s”出现严重解析错误"
-
-#~ msgctxt "unit-plural"
-#~ msgid "pixels"
-#~ msgstr "像素"
-
-#~ msgctxt "plural"
-#~ msgid "percent"
-#~ msgstr "百分点"
-
-#~ msgid "Export Image"
-#~ msgstr "导出图像"
-
-#~ msgid ""
-#~ "You can use this dialog to export to various file formats. If you want to "
-#~ "save the image to the GIMP XCF format, use File→Save instead."
-#~ msgstr ""
-#~ "您可以用此对话框导出多种文件格式。如果您想将图像保存为 GIMP XCF 格式，请改"
-#~ "用文件→保存。"
-
-#~ msgid ""
-#~ "You can use this dialog to save to the GIMP XCF format. Use File→Export "
-#~ "to export to other file formats."
-#~ msgstr ""
-#~ "您可以用此对话框保存到 GIMP XCF 格式。使用文件→导出以导出到其他文件格式。"
-
-#~ msgctxt "zoom-quality"
-#~ msgid "Low"
-#~ msgstr "低"
-
-#~ msgctxt "zoom-quality"
-#~ msgid "High"
-#~ msgstr "高"
-
-#~ msgid "Selection Bounding Box"
-#~ msgstr "选区包围框"
-
-#~ msgid "W"
-#~ msgstr "宽"
-
-#~ msgid "H"
-#~ msgstr "高"
-
-#~ msgid "Image exported to '%s'"
-#~ msgstr "图像已导出到“%s”"
-
-#~ msgid "Close _without Saving"
-#~ msgstr "关闭而不保存(_W)"
-
-#~ msgid "%s (imported from %s)"
-#~ msgstr "%s (导入自 %s)"
-
-#~ msgid "Ink Blob Size"
-#~ msgstr "墨斑大小"
-
-#~ msgid "Ink Blob Aspect Ratio"
-#~ msgstr "墨斑宽高比"
-
-#~ msgid "Ink Blob Angle"
-#~ msgstr "墨斑角度"
-
-#~ msgid "Brush Scale"
-#~ msgstr "画笔缩放"
-
-#~ msgctxt "perspective-clone-mode"
-#~ msgid "Perspective Clone"
-#~ msgstr "透视克隆"
-
-#~ msgctxt "source-align-mode"
-#~ msgid "None"
-#~ msgstr "无"
-
-#~ msgid "Color Picker Average Radius"
-#~ msgstr "颜色拾取平均半径"
-
-#~ msgid "Aspect Ratio:"
-#~ msgstr "宽高比："
-
-#~ msgid "Angle"
-#~ msgstr "角度"
-
-#~ msgid "Direction:"
-#~ msgstr "方向："
-
-#~ msgid ""
-#~ "Use an external editor window for text entry, instead of direct-on-canvas "
-#~ "editing"
-#~ msgstr "文字输入使用外部编辑器窗口，而不是在画布上直接编辑"
-
-#~ msgid "Use editor"
-#~ msgstr "使用编辑器"
-
-#~ msgid "Can't work on an empty image, add a layer first"
-#~ msgstr "不能在空的图像上操作，先添加图层"
-
-#~ msgctxt "rectangle-guide"
-#~ msgid "Diagonal lines"
-#~ msgstr "对角线"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Aspect ratio"
-#~ msgstr "宽高比"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Width"
-#~ msgstr "宽度"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Height"
-#~ msgstr "高度"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Size"
-#~ msgstr "大小"
-
-#~ msgctxt "transform-type"
-#~ msgid "Layer"
-#~ msgstr "图层"
-
-#~ msgctxt "transform-type"
-#~ msgid "Selection"
-#~ msgstr "选区"
-
-#~ msgctxt "transform-type"
-#~ msgid "Path"
-#~ msgstr "路径"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Grid"
-#~ msgstr "网格"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Image"
-#~ msgstr "图像"
-
-#~ msgctxt "vector-mode"
-#~ msgid "Edit"
-#~ msgstr "编辑"
-
-#~ msgctxt "vector-mode"
-#~ msgid "Move"
-#~ msgstr "移动"
-
-#~ msgid "Fill Color"
-#~ msgstr "填充颜色"
-
-#~ msgid "filter"
-#~ msgstr "过滤"
-
-#~ msgid "enter tags"
-#~ msgstr "输入标签"
-
-#~ msgid ","
-#~ msgstr "，"
-
-#~ msgctxt "active-color"
-#~ msgid "Background"
-#~ msgstr "背景"
-
-#~ msgctxt "color-frame-mode"
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
-#~ msgctxt "tab-style"
-#~ msgid "Text"
-#~ msgstr "文字"

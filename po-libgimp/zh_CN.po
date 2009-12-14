@@ -10,10 +10,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-07 16:14+0800\n"
-"PO-Revision-Date: 2009-07-27 22:15+0800\n"
-"Last-Translator: Aron Xu <aronxu@gnome.org>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-12-10 21:21+0000\n"
+"PO-Revision-Date: 2009-12-12 11:37+0800\n"
+"Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -509,7 +510,7 @@ msgstr "加深"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "gradient|Linear"
-msgstr ""
+msgstr "线性"
 
 #: ../libgimpbase/gimpbaseenums.c:390
 msgid "Bi-linear"
@@ -605,19 +606,19 @@ msgstr "RGB-alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:531
 msgid "Grayscale-alpha"
-msgstr "灰度 -alpha"
+msgstr "灰度-alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:533
 msgid "Indexed-alpha"
-msgstr "索引色 -alpha"
+msgstr "索引色-alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|None"
-msgstr ""
+msgstr "无"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "interpolation|Linear"
-msgstr ""
+msgstr "线性"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Cubic"
@@ -745,8 +746,8 @@ msgstr "填充"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/display-filter-lcms.c:183
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
+#: ../modules/color-selector-cmyk-lcms.c:422
+#: ../modules/color-selector-cmyk-lcms.c:428
 msgid "(invalid UTF-8 string)"
 msgstr "(无效的 UTF-8 字符串)"
 
@@ -1462,11 +1463,11 @@ msgstr "彩色墨水中黑色所占的百分比。"
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK 颜色选择器(使用颜色配置文件)"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
+#: ../modules/color-selector-cmyk-lcms.c:410
 msgid "Profile: (none)"
 msgstr "配置文件：(无)"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:431
 #, c-format
 msgid "Profile: %s"
 msgstr "配置文件：%s"

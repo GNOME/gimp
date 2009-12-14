@@ -11,9 +11,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-07 16:15+0800\n"
-"PO-Revision-Date: 2009-07-27 15:47+0800\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-12-10 21:21+0000\n"
+"PO-Revision-Date: 2009-12-12 11:47+0800\n"
 "Last-Translator: Aron Xu <aronxu@gnome.org>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -597,18 +598,18 @@ msgstr "垂直(_V)"
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:935
 #: ../plug-ins/common/decompose.c:723 ../plug-ins/common/file-cel.c:362
 #: ../plug-ins/common/file-cel.c:365 ../plug-ins/common/file-dicom.c:557
-#: ../plug-ins/common/file-gif-load.c:911 ../plug-ins/common/file-pcx.c:412
-#: ../plug-ins/common/file-pcx.c:418 ../plug-ins/common/file-pix.c:382
+#: ../plug-ins/common/file-gif-load.c:911 ../plug-ins/common/file-pcx.c:419
+#: ../plug-ins/common/file-pcx.c:425 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:585
 #: ../plug-ins/common/file-raw.c:712 ../plug-ins/common/file-sunras.c:975
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:896 ../plug-ins/common/film.c:746
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:267
-#: ../plug-ins/file-bmp/bmp-read.c:382 ../plug-ins/file-bmp/bmp-read.c:617
+#: ../plug-ins/file-bmp/bmp-read.c:382 ../plug-ins/file-bmp/bmp-read.c:649
 #: ../plug-ins/file-faxg3/faxg3.c:478 ../plug-ins/file-fits/fits.c:530
 #: ../plug-ins/file-jpeg/jpeg-load.c:249 ../plug-ins/file-jpeg/jpeg-load.c:761
 #: ../plug-ins/file-psd/psd-image-res-load.c:995
-#: ../plug-ins/file-psd/psd-load.c:1526 ../plug-ins/file-sgi/sgi.c:384
+#: ../plug-ins/file-psd/psd-load.c:1575 ../plug-ins/file-sgi/sgi.c:405
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/twain/twain.c:568
 #: ../plug-ins/win-snap/winsnap.c:1155
@@ -646,7 +647,7 @@ msgstr "选择性高斯模糊"
 #: ../plug-ins/common/edge-dog.c:267 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
-#: ../plug-ins/file-sgi/sgi.c:536 ../plug-ins/file-xjt/xjt.c:1701
+#: ../plug-ins/file-sgi/sgi.c:556 ../plug-ins/file-xjt/xjt.c:1701
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
 msgstr "无法对索引颜色图像进行操作。"
@@ -1047,10 +1048,10 @@ msgstr "保存通道混合器设置"
 #: ../plug-ins/common/file-compressor.c:590
 #: ../plug-ins/common/file-compressor.c:677
 #: ../plug-ins/common/file-csource.c:406 ../plug-ins/common/file-dicom.c:801
-#: ../plug-ins/common/file-gbr.c:632 ../plug-ins/common/file-gif-save.c:761
+#: ../plug-ins/common/file-gbr.c:647 ../plug-ins/common/file-gif-save.c:761
 #: ../plug-ins/common/file-gih.c:1275 ../plug-ins/common/file-html-table.c:236
 #: ../plug-ins/common/file-mng.c:610 ../plug-ins/common/file-mng.c:944
-#: ../plug-ins/common/file-pat.c:462 ../plug-ins/common/file-pcx.c:666
+#: ../plug-ins/common/file-pat.c:476 ../plug-ins/common/file-pcx.c:673
 #: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1270
 #: ../plug-ins/common/file-pnm.c:977 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:546 ../plug-ins/common/file-raw.c:574
@@ -1448,7 +1449,7 @@ msgstr "使用循环范围"
 
 #: ../plug-ins/common/cml-explorer.c:1601
 msgid "Mod. rate:"
-msgstr ""
+msgstr "修改率："
 
 #: ../plug-ins/common/cml-explorer.c:1610
 msgid "Env. sensitivity:"
@@ -1464,7 +1465,7 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1637
 msgid "P(ower factor):"
-msgstr "P (幂因子)："
+msgstr "P(幂因子)："
 
 #: ../plug-ins/common/cml-explorer.c:1646
 msgid "Parameter k:"
@@ -2995,7 +2996,7 @@ msgstr "加载 KISS 色板"
 #: ../plug-ins/file-bmp/bmp-read.c:161 ../plug-ins/file-faxg3/faxg3.c:217
 #: ../plug-ins/file-fli/fli-gimp.c:502 ../plug-ins/file-ico/ico-load.c:646
 #: ../plug-ins/file-jpeg/jpeg-load.c:115 ../plug-ins/file-psd/psd-load.c:136
-#: ../plug-ins/file-sgi/sgi.c:331 ../plug-ins/file-xjt/xjt.c:3363
+#: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3363
 #, c-format
 msgid "Opening '%s'"
 msgstr "打开“%s”"
@@ -3011,10 +3012,10 @@ msgstr "不支持的位深度(%d)！"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:588 ../plug-ins/common/file-gbr.c:637
+#: ../plug-ins/common/file-cel.c:588 ../plug-ins/common/file-gbr.c:652
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1280
-#: ../plug-ins/common/file-html-table.c:256 ../plug-ins/common/file-pat.c:467
-#: ../plug-ins/common/file-pcx.c:627 ../plug-ins/common/file-pix.c:529
+#: ../plug-ins/common/file-html-table.c:256 ../plug-ins/common/file-pat.c:481
+#: ../plug-ins/common/file-pcx.c:634 ../plug-ins/common/file-pix.c:529
 #: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:982
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:568
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
@@ -3022,7 +3023,7 @@ msgstr "不支持的位深度(%d)！"
 #: ../plug-ins/common/file-xwd.c:619 ../plug-ins/file-bmp/bmp-write.c:307
 #: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:282
-#: ../plug-ins/file-psd/psd-save.c:1640 ../plug-ins/file-sgi/sgi.c:554
+#: ../plug-ins/file-psd/psd-save.c:1640 ../plug-ins/file-sgi/sgi.c:574
 #: ../plug-ins/file-xjt/xjt.c:1710
 #, c-format
 msgid "Saving '%s'"
@@ -3116,7 +3117,7 @@ msgstr "医学数字成像和通信图像"
 msgid "'%s' is not a DICOM file."
 msgstr "“%s”不是 DICOM 文件。"
 
-#: ../plug-ins/common/file-dicom.c:769 ../plug-ins/common/file-pcx.c:659
+#: ../plug-ins/common/file-dicom.c:769 ../plug-ins/common/file-pcx.c:666
 #: ../plug-ins/common/file-pnm.c:967
 msgid "Cannot save images with alpha channel."
 msgstr "无法保存带有 Alpha 通道的图像。"
@@ -3131,41 +3132,46 @@ msgstr "无法对未知的图像类型操作。"
 msgid "GIMP brush"
 msgstr "GIMP 画笔"
 
-#: ../plug-ins/common/file-gbr.c:401 ../plug-ins/common/file-gbr.c:413
+#: ../plug-ins/common/file-gbr.c:392 ../plug-ins/common/file-pat.c:411
+#, c-format
+msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgstr "“%s”中的无效头数据：width=%lu, height=%lu, bytes=%lu"
+
+#: ../plug-ins/common/file-gbr.c:416 ../plug-ins/common/file-gbr.c:428
 msgid "Unsupported brush format"
 msgstr "不支持的画笔格式"
 
-#: ../plug-ins/common/file-gbr.c:425
+#: ../plug-ins/common/file-gbr.c:440
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "GIMP 画笔文件“%s”有错"
 
-#: ../plug-ins/common/file-gbr.c:433
+#: ../plug-ins/common/file-gbr.c:448
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "画笔文件“%s”中存在无效的 UTF-8 字符串。"
 
-#: ../plug-ins/common/file-gbr.c:439 ../plug-ins/common/file-gih.c:510
+#: ../plug-ins/common/file-gbr.c:454 ../plug-ins/common/file-gih.c:510
 #: ../plug-ins/common/file-gih.c:1173
 #: ../plug-ins/gradient-flare/gradient-flare.c:3063
 msgid "Unnamed"
 msgstr "未命名"
 
-#: ../plug-ins/common/file-gbr.c:622
+#: ../plug-ins/common/file-gbr.c:637
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "GIMP 画笔只能是灰度或 RGBA"
 
-#: ../plug-ins/common/file-gbr.c:720
+#: ../plug-ins/common/file-gbr.c:735
 msgid "Save as Brush"
 msgstr "另存为画笔"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:747 ../plug-ins/common/grid.c:790
+#: ../plug-ins/common/file-gbr.c:762 ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr "间距："
 
-#: ../plug-ins/common/file-gbr.c:758 ../plug-ins/common/file-gih.c:925
-#: ../plug-ins/common/file-pat.c:556 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-gbr.c:773 ../plug-ins/common/file-gih.c:925
+#: ../plug-ins/common/file-pat.c:571 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "描述："
 
@@ -3632,7 +3638,7 @@ msgstr "GIMP 图案"
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "图案文件“%s”中存在无效的 UTF-8 字符串。"
 
-#: ../plug-ins/common/file-pat.c:528
+#: ../plug-ins/common/file-pat.c:543
 msgid "Save as Pattern"
 msgstr "另存为图案"
 
@@ -3650,13 +3656,13 @@ msgstr "无法从“%s”读取文件头"
 msgid "'%s' is not a PCX file"
 msgstr "“%s”不是 PCX 文件"
 
-#: ../plug-ins/common/file-pcx.c:395 ../plug-ins/file-bmp/bmp-read.c:606
+#: ../plug-ins/common/file-pcx.c:395 ../plug-ins/file-bmp/bmp-read.c:638
 #: ../plug-ins/file-psd/psd-load.c:302
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
-#: ../plug-ins/common/file-pcx.c:400 ../plug-ins/file-bmp/bmp-read.c:612
+#: ../plug-ins/common/file-pcx.c:400 ../plug-ins/file-bmp/bmp-read.c:644
 #: ../plug-ins/file-psd/psd-load.c:294
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -3666,31 +3672,36 @@ msgstr "不支持或无效的图像高度：%d"
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "PCX 文件头中的无效的每行字节数"
 
-#: ../plug-ins/common/file-pcx.c:453
-msgid "Unusual PCX flavour, giving up"
-msgstr ""
+#: ../plug-ins/common/file-pcx.c:412
+#, c-format
+msgid "Image dimensions too large: width %d x height %d"
+msgstr "图像尺寸过大：宽 %d x 高 %d"
 
-#: ../plug-ins/common/file-pcx.c:676
+#: ../plug-ins/common/file-pcx.c:460
+msgid "Unusual PCX flavour, giving up"
+msgstr "异常的 PCX 类型，放弃"
+
+#: ../plug-ins/common/file-pcx.c:683
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "无效的 X 偏移量：%d"
 
-#: ../plug-ins/common/file-pcx.c:682
+#: ../plug-ins/common/file-pcx.c:689
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "无效的 Y 偏移量：%d"
 
-#: ../plug-ins/common/file-pcx.c:688
+#: ../plug-ins/common/file-pcx.c:695
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "右边框超出边界(须 < %d)：%d"
 
-#: ../plug-ins/common/file-pcx.c:695
+#: ../plug-ins/common/file-pcx.c:702
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界(须 < %d)：%d"
 
-#: ../plug-ins/common/file-pcx.c:752
+#: ../plug-ins/common/file-pcx.c:759
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -4411,7 +4422,7 @@ msgid "TIFF Channel"
 msgstr "TIFF 通道"
 
 #: ../plug-ins/common/file-tiff-load.c:1024
-#: ../plug-ins/file-psd/psd-load.c:325
+#: ../plug-ins/file-psd/psd-load.c:334
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -8028,9 +8039,10 @@ msgstr "错误的颜色表"
 
 #: ../plug-ins/file-bmp/bmp-read.c:172 ../plug-ins/file-bmp/bmp-read.c:182
 #: ../plug-ins/file-bmp/bmp-read.c:189 ../plug-ins/file-bmp/bmp-read.c:198
-#: ../plug-ins/file-bmp/bmp-read.c:213 ../plug-ins/file-bmp/bmp-read.c:422
-#: ../plug-ins/file-bmp/bmp-read.c:430 ../plug-ins/file-bmp/bmp-read.c:438
-#: ../plug-ins/file-bmp/bmp-read.c:446
+#: ../plug-ins/file-bmp/bmp-read.c:213 ../plug-ins/file-bmp/bmp-read.c:418
+#: ../plug-ins/file-bmp/bmp-read.c:439 ../plug-ins/file-bmp/bmp-read.c:450
+#: ../plug-ins/file-bmp/bmp-read.c:458 ../plug-ins/file-bmp/bmp-read.c:466
+#: ../plug-ins/file-bmp/bmp-read.c:478
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "“%s”不是有效的 BMP 文件"
@@ -8042,16 +8054,16 @@ msgstr "“%s”不是有效的 BMP 文件"
 msgid "Error reading BMP file header from '%s'"
 msgstr "从“%s”读 BMP 文件头出错"
 
-#: ../plug-ins/file-bmp/bmp-read.c:558
+#: ../plug-ins/file-bmp/bmp-read.c:590
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "无法识别或无效的 BMP 压缩格式。"
 
-#: ../plug-ins/file-bmp/bmp-read.c:600
+#: ../plug-ins/file-bmp/bmp-read.c:632
 msgid "Unsupported or invalid bitdepth."
 msgstr "不支持或无效的位深度。"
 
-#: ../plug-ins/file-bmp/bmp-read.c:788 ../plug-ins/file-bmp/bmp-read.c:829
-#: ../plug-ins/file-bmp/bmp-read.c:879
+#: ../plug-ins/file-bmp/bmp-read.c:820 ../plug-ins/file-bmp/bmp-read.c:861
+#: ../plug-ins/file-bmp/bmp-read.c:911
 msgid "The bitmap ends unexpectedly."
 msgstr "位图意外结束。"
 
@@ -8384,45 +8396,75 @@ msgstr "不支持的文件格式版本：%d"
 msgid "Too many channels in file: %d"
 msgstr "文件中的通道数太多：%d"
 
-#: ../plug-ins/file-psd/psd-load.c:314
+#: ../plug-ins/file-psd/psd-load.c:311
+#, c-format
+msgid "Unsupported or invalid image size: %dx%d"
+msgstr "不支持或无效的图像尺寸：%dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:323
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "不支持的色彩模式：%s"
 
-#: ../plug-ins/file-psd/psd-load.c:341
+#: ../plug-ins/file-psd/psd-load.c:350
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "不支持的位深度：%d"
 
-#: ../plug-ins/file-psd/psd-load.c:375 ../plug-ins/file-psd/psd-load.c:385
-#: ../plug-ins/file-psd/psd-load.c:604 ../plug-ins/file-psd/psd-load.c:785
+#: ../plug-ins/file-psd/psd-load.c:384 ../plug-ins/file-psd/psd-load.c:394
+#: ../plug-ins/file-psd/psd-load.c:625 ../plug-ins/file-psd/psd-load.c:834
 #, c-format
 msgid "The file is corrupt!"
 msgstr "文件损坏！"
 
-#: ../plug-ins/file-psd/psd-load.c:545
+#: ../plug-ins/file-psd/psd-load.c:554
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "图层中的通道数太多：%d"
 
-#: ../plug-ins/file-psd/psd-load.c:552
+#: ../plug-ins/file-psd/psd-load.c:562
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "不支持的或无效的图层高度：%d"
 
-#: ../plug-ins/file-psd/psd-load.c:559
+#: ../plug-ins/file-psd/psd-load.c:570
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "不支持的或无效的图层宽度：%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1153 ../plug-ins/file-psd/psd-load.c:1502
+#: ../plug-ins/file-psd/psd-load.c:579
+#, c-format
+msgid "Unsupported or invalid layer size: %dx%d"
+msgstr "不支持的或无效的图层尺寸：%dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:763
+#, c-format
+msgid "Unsupported or invalid layer mask height: %d"
+msgstr "不支持的或无效的图层蒙板高度：%d"
+
+#: ../plug-ins/file-psd/psd-load.c:771
+#, c-format
+msgid "Unsupported or invalid layer mask width: %d"
+msgstr "不支持的或无效的图层蒙板宽度：%d"
+
+#: ../plug-ins/file-psd/psd-load.c:780
+#, c-format
+msgid "Unsupported or invalid layer mask size: %dx%d"
+msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:1202 ../plug-ins/file-psd/psd-load.c:1551
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1595
+#: ../plug-ins/file-psd/psd-load.c:1644
 msgid "Extra"
 msgstr "额外"
+
+#: ../plug-ins/file-psd/psd-load.c:1819
+#, c-format
+msgid "Unsupported or invalid channel size"
+msgstr "不支持或无效的通道尺寸"
 
 #: ../plug-ins/file-psd/psd-save.c:228 ../plug-ins/file-psd/psd.c:114
 #: ../plug-ins/file-psd/psd.c:153
@@ -8465,33 +8507,48 @@ msgstr "意料之外的文件尾"
 msgid "Silicon Graphics IRIS image"
 msgstr "Silicon Graphics IRIS 图像"
 
-#: ../plug-ins/file-sgi/sgi.c:326
+#: ../plug-ins/file-sgi/sgi.c:325
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "无法打开“%s”并读取。"
 
-#: ../plug-ins/file-sgi/sgi.c:549
+#: ../plug-ins/file-sgi/sgi.c:341
+#, c-format
+msgid "Invalid width: %hu"
+msgstr "无效宽度：%hu"
+
+#: ../plug-ins/file-sgi/sgi.c:348
+#, c-format
+msgid "Invalid height: %hu"
+msgstr "无效高度：%hu"
+
+#: ../plug-ins/file-sgi/sgi.c:355
+#, c-format
+msgid "Invalid number of channels: %hu"
+msgstr "无效的通道数：%hu"
+
+#: ../plug-ins/file-sgi/sgi.c:569
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "无法打开“%s”并写入。"
 
-#: ../plug-ins/file-sgi/sgi.c:629
+#: ../plug-ins/file-sgi/sgi.c:649
 msgid "Save as SGI"
 msgstr "另存为 SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:645
+#: ../plug-ins/file-sgi/sgi.c:665
 msgid "Compression type"
 msgstr "压缩类型"
 
-#: ../plug-ins/file-sgi/sgi.c:649
+#: ../plug-ins/file-sgi/sgi.c:669
 msgid "No compression"
 msgstr "无压缩"
 
-#: ../plug-ins/file-sgi/sgi.c:651
+#: ../plug-ins/file-sgi/sgi.c:671
 msgid "RLE compression"
 msgstr "RLE 压缩"
 
-#: ../plug-ins/file-sgi/sgi.c:653
+#: ../plug-ins/file-sgi/sgi.c:673
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
@@ -12353,156 +12410,3 @@ msgstr "屏幕截图(_S)..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "没有取得数据"
-
-#~ msgid "Email the image"
-#~ msgstr "Email 发送图像"
-
-#, fuzzy
-#~ msgid "_Mail Image..."
-#~ msgstr "图像映像(_I)..."
-
-#, fuzzy
-#~ msgid "Send as Mail"
-#~ msgstr "发送为邮件"
-
-#, fuzzy
-#~ msgid "Encapsulation:"
-#~ msgstr "饱和度："
-
-#~ msgid "_MIME"
-#~ msgstr "MIME(_M)"
-
-#~ msgid "_Uuencode"
-#~ msgstr "Uuencode(_U)"
-
-#~ msgid "_Recipient:"
-#~ msgstr "描述(_R)："
-
-#~ msgid "_Sender:"
-#~ msgstr "发送人(_S)"
-
-#~ msgid "Comm_ent:"
-#~ msgstr "注释(_E)："
-
-#~ msgid "First Source Color"
-#~ msgstr "第一源颜色"
-
-#~ msgid "Second Source Color"
-#~ msgstr "第二源颜色"
-
-#~ msgid "First Destination Color"
-#~ msgstr "第一目标颜色"
-
-#~ msgid "Second Destination Color"
-#~ msgstr "第二目标色彩"
-
-#~ msgid "Adjust _Foreground & Background"
-#~ msgstr "调整前景和背景(_F)"
-
-#, fuzzy
-#~ msgid "Color Range _Mapping..."
-#~ msgstr "颜色交换(_C)..."
-
-#, fuzzy
-#~ msgid "Cannot operate on gray or indexed color images."
-#~ msgstr "无法对索引颜色图像进行操作。"
-
-#, fuzzy
-#~ msgid "Adjusting foreground and background colors"
-#~ msgstr "前景/背景色"
-
-#, fuzzy
-#~ msgid "Mapping colors"
-#~ msgstr "旋转颜色"
-
-#, fuzzy
-#~ msgid "Map Color Range"
-#~ msgstr "颜色交换"
-
-#~ msgid "Source Color Range"
-#~ msgstr "源色彩边界"
-
-#~ msgid "Destination Color Range"
-#~ msgstr "目标色彩限制："
-
-#~ msgid "Unable to add additional point.\n"
-#~ msgstr "无法添加更多的点。\n"
-
-#, fuzzy
-#~ msgid "Invalid UTF-8 string in PSD file"
-#~ msgstr "画笔文件“%s”中存在无效的 UTF-8 字符串。"
-
-#~ msgid "Cannot handle bitmap PSD files"
-#~ msgstr "无法处理位图 PSD 文件"
-
-#~ msgid "Cannot handle PSD files in CMYK color"
-#~ msgstr "无法处理 CMYK 色彩的 PSD 文件"
-
-#~ msgid "Cannot handle PSD files in Multichannel color"
-#~ msgstr "无法处理多通道色彩的 PSD 文件"
-
-#~ msgid "Cannot handle PSD files in Duotone color"
-#~ msgstr "无法处理双色的 PSD 文件"
-
-#~ msgid "Cannot handle PSD files in Lab color"
-#~ msgstr "无法处理使用 Lab 色彩的 PSD 文件"
-
-#~ msgid "Cannot handle the color mode %d of the PSD file"
-#~ msgstr "无法处理 PSD 文件的色彩模式 %d"
-
-#, fuzzy
-#~ msgid "Cannot handle PSD file with more than %d channels"
-#~ msgstr "无法保存带有 Alpha 通道的图像。"
-
-#~ msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-#~ msgstr "无法处理多于 5 个通道的 CMYK 色彩的 PSD 文件"
-
-#~ msgid "Cannot handle image mode %d (%s)"
-#~ msgstr "无法处理图像模式 %d (%s)"
-
-#~ msgid "Cannot handle %d bits per channel PSD files"
-#~ msgstr "无法处理每个通道 %d 位的 PSD 文件"
-
-#~ msgid "This is not an Adobe Photoshop PSD file"
-#~ msgstr "这不是 Adobe·Photoshop·PSD 文件"
-
-#~ msgid "The PSD file has bad version number '%d', not 1"
-#~ msgstr "PSD 文件存在错误的版本号“%d”而不是 1"
-
-#, fuzzy
-#~ msgid "Or_igin at bottom left"
-#~ msgstr "左下"
-
-#, fuzzy
-#~ msgid "checkbutton|Snap to grid"
-#~ msgstr "吸附到网格"
-
-#~ msgid "The GIMP help files are not found."
-#~ msgstr "GIMP 帮助文件未找到。"
-
-#~ msgid "There is a problem with the GIMP help files."
-#~ msgstr "GIMP 帮助文件出现问题。"
-
-#~ msgid "Please check your installation."
-#~ msgstr "请检查您的安装。"
-
-#~ msgid "Drag and drop this icon to a web browser"
-#~ msgstr "将此图标拖放到 web 浏览器"
-
-#~ msgid "Document not found"
-#~ msgstr "没有找到文档"
-
-#~ msgid "The requested URL could not be loaded:"
-#~ msgstr "无法加载所请求的 URL："
-
-#~ msgid "_Smoothing:"
-#~ msgstr "平滑（_S）："
-
-#~ msgid "Printable area:"
-#~ msgstr "打印区域："
-
-#~ msgid "Downloading %s of image data..."
-#~ msgstr "正在下载 %s 的图像数据"
-
-#~ msgid "Could not open output file for writing"
-#~ msgstr "无法打开输出文件并写入。"
