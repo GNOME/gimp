@@ -308,29 +308,5 @@ gradient_options_gui (GimpPaintOptions *paint_options,
                              _("Gradient:"), 0.0, 0.5,
                              button, 2, TRUE);
 
-  /*  the gradient length scale  */
-  spinbutton = gimp_prop_spin_button_new (config, "gradient-length",
-                                          1.0, 50.0, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Length:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
-
-  /*  the gradient unitmenu  */
-  menu = gimp_prop_unit_menu_new (config, "gradient-unit", "%a");
-  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 1, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (menu);
-
-  g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
-  gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
-
-  /*  the repeat type  */
-  combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Repeat:"), 0.0, 0.5,
-                             combo, 2, FALSE);
-
   return frame;
 }

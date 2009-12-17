@@ -54,8 +54,6 @@ struct _GimpGradientOptions
 {
   gboolean        use_gradient;
   gboolean        gradient_reverse;
-  gdouble         gradient_length;
-  GimpUnit        gradient_unit;
   GimpRepeatMode  gradient_repeat;
 };
 

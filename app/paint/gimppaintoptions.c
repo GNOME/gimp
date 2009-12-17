@@ -86,9 +86,6 @@ enum
 
   PROP_USE_GRADIENT,
   PROP_GRADIENT_REVERSE,
-  PROP_GRADIENT_REPEAT,
-  PROP_GRADIENT_LENGTH,
-  PROP_GRADIENT_UNIT,
 
   PROP_BRUSH_VIEW_TYPE,
   PROP_BRUSH_VIEW_SIZE,
@@ -197,19 +194,6 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     "gradient-reverse", NULL,
                                     DEFAULT_GRADIENT_REVERSE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
-                                 "gradient-repeat", NULL,
-                                 GIMP_TYPE_REPEAT_MODE,
-                                 DEFAULT_GRADIENT_REPEAT,
-                                 GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GRADIENT_LENGTH,
-                                   "gradient-length", NULL,
-                                   0.0, 32767.0, DEFAULT_GRADIENT_LENGTH,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_GRADIENT_UNIT,
-                                 "gradient-unit", NULL,
-                                 TRUE, TRUE, DEFAULT_GRADIENT_UNIT,
-                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
                                  "brush-view-type", NULL,
@@ -346,18 +330,6 @@ gimp_paint_options_set_property (GObject      *object,
       gradient_options->gradient_reverse = g_value_get_boolean (value);
       break;
 
-    case PROP_GRADIENT_REPEAT:
-      gradient_options->gradient_repeat = g_value_get_enum (value);
-      break;
-
-    case PROP_GRADIENT_LENGTH:
-      gradient_options->gradient_length = g_value_get_double (value);
-      break;
-
-    case PROP_GRADIENT_UNIT:
-      gradient_options->gradient_unit = g_value_get_int (value);
-      break;
-
     case PROP_BRUSH_VIEW_TYPE:
       options->brush_view_type = g_value_get_enum (value);
       break;
@@ -459,18 +431,6 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_GRADIENT_REVERSE:
       g_value_set_boolean (value, gradient_options->gradient_reverse);
-      break;
-
-    case PROP_GRADIENT_REPEAT:
-      g_value_set_enum (value, gradient_options->gradient_repeat);
-      break;
-
-    case PROP_GRADIENT_LENGTH:
-      g_value_set_double (value, gradient_options->gradient_length);
-      break;
-
-    case PROP_GRADIENT_UNIT:
-      g_value_set_int (value, gradient_options->gradient_unit);
       break;
 
     case PROP_BRUSH_VIEW_TYPE:
@@ -661,62 +621,10 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-  if (gimp_dynamics_output_is_enabled(dynamics->color_output))
+  if (gimp_dynamics_output_is_enabled(dynamics->color_output) && gradient_options->use_gradient)
     {
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
                                   NULL, grad_point,
-                                  gradient_options->gradient_reverse,
-                                  color);
-
-      return TRUE;
-    }
-  else if (gradient_options->use_gradient)
-    {
-      gdouble gradient_length = 0.0;
-      gdouble unit_factor;
-      gdouble pos;
-
-      switch (gradient_options->gradient_unit)
-        {
-        case GIMP_UNIT_PIXEL:
-          gradient_length = gradient_options->gradient_length;
-          break;
-        case GIMP_UNIT_PERCENT:
-          gradient_length = (MAX (gimp_image_get_width  (image),
-                                  gimp_image_get_height (image)) *
-                             gradient_options->gradient_length / 100);
-          break;
-        default:
-          {
-            gdouble xres;
-            gdouble yres;
-
-            gimp_image_get_resolution (image, &xres, &yres);
-
-            unit_factor = gimp_unit_get_factor (gradient_options->gradient_unit);
-            gradient_length = (gradient_options->gradient_length *
-                               MAX (xres, yres) / unit_factor);
-          }
-          break;
-        }
-
-      if (gradient_length > 0.0)
-        pos = pixel_dist / gradient_length;
-      else
-        pos = 1.0;
-
-      /*  for no repeat, set pos close to 1.0 after the first chunk  */
-      if (gradient_options->gradient_repeat == GIMP_REPEAT_NONE && pos >= 1.0)
-        pos = 0.9999999;
-
-      if (((gint) pos & 1) &&
-          gradient_options->gradient_repeat != GIMP_REPEAT_SAWTOOTH)
-        pos = 1.0 - (pos - (gint) pos);
-      else
-        pos = pos - (gint) pos;
-
-      gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
-                                  NULL, pos,
                                   gradient_options->gradient_reverse,
                                   color);
 
