@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-06 17:15+0300\n"
-"PO-Revision-Date: 2009-12-06 18:42+0300\n"
+"POT-Creation-Date: 2009-12-18 06:09+0300\n"
+"PO-Revision-Date: 2009-12-18 20:34+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1662,10 +1662,9 @@ msgid "L_ock pixels"
 msgstr "_Запереть точки растра от изменений"
 
 #: ../app/actions/drawable-actions.c:89
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
-msgstr "Предохранить информацию о прозрачности от изменений"
+msgstr "Предохранить пикселы этой части изображения от изменений"
 
 #: ../app/actions/drawable-actions.c:98
 msgctxt "drawable-action"
@@ -3188,7 +3187,7 @@ msgid "Rotating"
 msgstr "Производится вращение..."
 
 #: ../app/actions/image-commands.c:428
-#: ../app/actions/layers-commands.c:682
+#: ../app/actions/layers-commands.c:684
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
@@ -3205,14 +3204,14 @@ msgstr "Смена размера изображения"
 
 #. Scaling
 #: ../app/actions/image-commands.c:680
-#: ../app/actions/layers-commands.c:1147
+#: ../app/actions/layers-commands.c:1149
 #: ../app/dialogs/preferences-dialog.c:1921
 #: ../app/pdb/drawable-transform-cmds.c:681
 #: ../app/pdb/drawable-transform-cmds.c:757
 #: ../app/pdb/image-cmds.c:404
 #: ../app/pdb/image-cmds.c:440
-#: ../app/pdb/layer-cmds.c:296
-#: ../app/pdb/layer-cmds.c:341
+#: ../app/pdb/layer-cmds.c:298
+#: ../app/pdb/layer-cmds.c:343
 #: ../app/pdb/transform-tools-cmds.c:290
 #: ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
@@ -3790,32 +3789,32 @@ msgstr "Новый слой"
 msgid "Create a New Layer"
 msgstr "Создать новый слой"
 
-#: ../app/actions/layers-commands.c:354
+#: ../app/actions/layers-commands.c:356
 msgid "Visible"
 msgstr "Видимое"
 
-#: ../app/actions/layers-commands.c:613
+#: ../app/actions/layers-commands.c:615
 msgid "Set Layer Boundary Size"
 msgstr "Установить размеры границ слоя"
 
-#: ../app/actions/layers-commands.c:654
+#: ../app/actions/layers-commands.c:656
 #: ../app/core/gimplayer.c:261
 msgid "Scale Layer"
 msgstr "Смена размера слоя"
 
-#: ../app/actions/layers-commands.c:692
+#: ../app/actions/layers-commands.c:694
 msgid "Crop Layer"
 msgstr "Кадрировать слой"
 
-#: ../app/actions/layers-commands.c:831
+#: ../app/actions/layers-commands.c:833
 msgid "Layer Mask to Selection"
 msgstr "Маска слоя → Выделение"
 
-#: ../app/actions/layers-commands.c:1082
+#: ../app/actions/layers-commands.c:1084
 msgid "Please select a channel first"
 msgstr "Сначала выберите канал"
 
-#: ../app/actions/layers-commands.c:1090
+#: ../app/actions/layers-commands.c:1092
 #: ../app/core/gimplayer.c:1365
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
@@ -7138,12 +7137,12 @@ msgid "Brush Hardness"
 msgstr "Жесткость кисти"
 
 #: ../app/core/gimpbrushgenerated.c:158
-#: ../app/paint/gimppaintoptions.c:138
+#: ../app/paint/gimppaintoptions.c:144
 msgid "Brush Aspect Ratio"
 msgstr "Соотношение сторон кисти"
 
 #: ../app/core/gimpbrushgenerated.c:165
-#: ../app/paint/gimppaintoptions.c:142
+#: ../app/paint/gimppaintoptions.c:148
 msgid "Brush Angle"
 msgstr "Угол кисти"
 
@@ -7939,8 +7938,8 @@ msgid "Rename Layer"
 msgstr "Переименование слоя"
 
 #: ../app/core/gimplayer.c:260
-#: ../app/pdb/layer-cmds.c:441
-#: ../app/pdb/layer-cmds.c:479
+#: ../app/pdb/layer-cmds.c:443
+#: ../app/pdb/layer-cmds.c:481
 msgid "Move Layer"
 msgstr "Перемещение слоя"
 
@@ -10223,7 +10222,7 @@ msgstr "Недостаточно точек для обводки"
 msgid "Paint"
 msgstr "Рисование"
 
-#: ../app/paint/gimppaintoptions.c:133
+#: ../app/paint/gimppaintoptions.c:139
 msgid "Brush Scale"
 msgstr "Масштаб кисти"
 
@@ -10567,9 +10566,8 @@ msgid "Remove path stroke"
 msgstr "Удаление обводки контура"
 
 #: ../app/pdb/vectors-cmds.c:680
-#, fuzzy
 msgid "Close path stroke"
-msgstr "Соединить контуры"
+msgstr ""
 
 #: ../app/pdb/vectors-cmds.c:720
 msgid "Translate path stroke"
@@ -10945,7 +10943,7 @@ msgid "Offset:"
 msgstr "Смещение:"
 
 #: ../app/tools/gimpblendoptions.c:215
-#: ../app/tools/gimppaintoptions-gui.c:293
+#: ../app/tools/gimppaintoptions-gui.c:308
 msgid "Gradient:"
 msgstr "Градиент:"
 
@@ -10955,7 +10953,8 @@ msgid "Shape:"
 msgstr "Форма:"
 
 #: ../app/tools/gimpblendoptions.c:238
-#: ../app/tools/gimppaintoptions-gui.c:317
+#: ../app/tools/gimppaintoptions-gui.c:236
+#: ../app/tools/gimppaintoptions-gui.c:332
 msgid "Repeat:"
 msgstr "Повтор:"
 
@@ -11719,23 +11718,23 @@ msgstr "Свободное выделение: выделение области
 msgid "_Free Select"
 msgstr "С_вободное выделение"
 
-#: ../app/tools/gimpfreeselecttool.c:1118
+#: ../app/tools/gimpfreeselecttool.c:1119
 msgid "Click to complete selection"
 msgstr "Щелкните для завершения выделения"
 
-#: ../app/tools/gimpfreeselecttool.c:1122
+#: ../app/tools/gimpfreeselecttool.c:1123
 msgid "Click-Drag to move segment vertex"
 msgstr "Щелкните и потащите, чтобы переместить вершину сегмента"
 
-#: ../app/tools/gimpfreeselecttool.c:1127
+#: ../app/tools/gimpfreeselecttool.c:1128
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "Ввод завершает выделение, Escape отменяет его, Забой убирает последний сегмент"
 
-#: ../app/tools/gimpfreeselecttool.c:1131
+#: ../app/tools/gimpfreeselecttool.c:1132
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "Щелчок+перетаскивание рисует произвольную линию, щелчок добавляет прямой отрезок"
 
-#: ../app/tools/gimpfreeselecttool.c:1585
+#: ../app/tools/gimpfreeselecttool.c:1586
 msgctxt "command"
 msgid "Free Select"
 msgstr "Выделение от руки"
@@ -12227,24 +12226,29 @@ msgstr "Дополняющий"
 msgid "Hard edge"
 msgstr "Жёсткие края"
 
-#: ../app/tools/gimppaintoptions-gui.c:210
+#: ../app/tools/gimppaintoptions-gui.c:212
 msgid "Fade out"
 msgstr "Фиксированная длина штриха"
 
-#: ../app/tools/gimppaintoptions-gui.c:219
-#: ../app/tools/gimppaintoptions-gui.c:302
+#: ../app/tools/gimppaintoptions-gui.c:221
+#: ../app/tools/gimppaintoptions-gui.c:317
 msgid "Length:"
 msgstr "Длина:"
 
-#: ../app/tools/gimppaintoptions-gui.c:246
+#: ../app/tools/gimppaintoptions-gui.c:241
+#: ../app/widgets/gimpviewablebox.c:223
+msgid "Reverse"
+msgstr "Развернуть"
+
+#: ../app/tools/gimppaintoptions-gui.c:261
 msgid "Apply Jitter"
 msgstr "Дрожание"
 
-#: ../app/tools/gimppaintoptions-gui.c:251
+#: ../app/tools/gimppaintoptions-gui.c:266
 msgid "Amount:"
 msgstr "Степень:"
 
-#: ../app/tools/gimppaintoptions-gui.c:276
+#: ../app/tools/gimppaintoptions-gui.c:291
 msgid "Use color from gradient"
 msgstr "Взять цвет из градиента"
 
@@ -13556,7 +13560,7 @@ msgstr "Файл с именем '%s' уже существует."
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Вы хотите заменить это изображение тем, которое сейчас сохраняете?"
 
-#: ../app/widgets/gimpdockable.c:208
+#: ../app/widgets/gimpdockable.c:212
 msgid "Configure this tab"
 msgstr "Настроить эту вкладку"
 
@@ -13611,6 +13615,11 @@ msgstr "Угол"
 #: ../app/widgets/gimpdynamicseditor.c:156
 msgid "Jitter"
 msgstr "Дрожание"
+
+#: ../app/widgets/gimpdynamicseditor.c:161
+#: ../app/widgets/gimpgrideditor.c:243
+msgid "Spacing"
+msgstr "Ячейки"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -13768,10 +13777,6 @@ msgstr "Изменить цвет фона сетки"
 #: ../app/widgets/gimpgrideditor.c:238
 msgid "_Background color:"
 msgstr "Цвет _фона:"
-
-#: ../app/widgets/gimpgrideditor.c:243
-msgid "Spacing"
-msgstr "Ячейки"
 
 #: ../app/widgets/gimpgrideditor.c:264
 #: ../app/widgets/gimpgrideditor.c:296
@@ -14313,10 +14318,6 @@ msgstr "Открыть диалог выбора текстуры"
 msgid "Open the gradient selection dialog"
 msgstr "Открыть диалог выбора градиента"
 
-#: ../app/widgets/gimpviewablebox.c:223
-msgid "Reverse"
-msgstr "Развернуть"
-
 #: ../app/widgets/gimpviewablebox.c:305
 msgid "Open the palette selection dialog"
 msgstr "Открыть диалог выбора палитры"
@@ -14325,27 +14326,27 @@ msgstr "Открыть диалог выбора палитры"
 msgid "Open the font selection dialog"
 msgstr "Открыть диалог выбора шрифта"
 
-#: ../app/widgets/gimpwidgets-utils.c:660
+#: ../app/widgets/gimpwidgets-utils.c:657
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (попробуйте %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:660
+#: ../app/widgets/gimpwidgets-utils.c:657
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:664
+#: ../app/widgets/gimpwidgets-utils.c:661
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (попробуйте %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:668
+#: ../app/widgets/gimpwidgets-utils.c:665
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (попробуйте %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:936
+#: ../app/widgets/gimpwidgets-utils.c:933
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Недопустимая строка UTF-8 в файле'%s'."
