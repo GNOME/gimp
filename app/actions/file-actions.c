@@ -69,7 +69,7 @@ static gchar * file_actions_create_label        (const gchar     *format,
 static const GimpActionEntry file_actions[] =
 {
   { "file-menu",             NULL, NC_("file-action", "_File")        },
-  { "file-create-menu",      NULL, NC_("file-action", "Create")       },
+  { "file-create-menu",      NULL, NC_("file-action", "Crea_te")      },
   { "file-open-recent-menu", NULL, NC_("file-action", "Open _Recent") },
 
   { "file-open", GTK_STOCK_OPEN,
@@ -91,7 +91,7 @@ static const GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_OPEN_LOCATION },
 
   { "file-create-template", NULL,
-    NC_("file-action", "Create _Template..."), NULL,
+    NC_("file-action", "Create Template..."), NULL,
     NC_("file-action", "Create a new template from this image"),
     G_CALLBACK (file_create_template_cmd_callback),
     GIMP_HELP_FILE_CREATE_TEMPLATE },
