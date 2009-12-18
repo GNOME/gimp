@@ -5,10 +5,10 @@ dynamicsdatadir = $(gimpdatadir)/dynamics
 dynamicsdata_DATA = \
 	Basic-Dynamics.gdyn		\
 	Dynamics-Off.gdyn		\
-	Fade-Tappering.gdyn		\
+	Fade-Tapering.gdyn		\
 	Random-Color.gdyn		\
 	Tilt-Angle.gdyn			\
 	Track-Direction.gdyn		\
-	Velocity-Tappering.gdyn
+	Velocity-Tapering.gdyn
 
 EXTRA_DIST = $(dynamicsdata_DATA)
