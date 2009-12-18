@@ -245,6 +245,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 
   hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
                                                     coords,
+													paint_options,
                                                     fade_point);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,

@@ -190,6 +190,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
                                                    coords,
+												   paint_options,
                                                    fade_point);
   if (opacity == 0.0)
     return;
@@ -256,6 +257,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
                                                     coords,
+													paint_options,
                                                     fade_point);
 
   /* Replace the newly dodgedburned area (canvas_buf) to the image */

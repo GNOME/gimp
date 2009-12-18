@@ -24,6 +24,9 @@
 
 #include "core-types.h"
 
+#include "paint/gimppaintoptions.h"
+
+
 #include "gimpcurve.h"
 #include "gimpdynamicsoutput.h"
 
@@ -243,6 +246,7 @@ gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output)
 gdouble
 gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
                                        const GimpCoords   *coords,
+									   GimpPaintOptions   *options,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -279,10 +283,15 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (output->use_fade)
+  if ((output->use_fade) && (options))
     {
-      total += fade_point;
-      factors++;
+	  GimpFadeOptions *fade_options = options->fade_options;
+
+	  if (fade_options->use_fade)
+	    {
+          total += fade_point;
+          factors++;
+		}
     }
 
   if (factors > 0)
@@ -299,6 +308,7 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 gdouble
 gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
                                         const GimpCoords   *coords,
+										GimpPaintOptions   *options,
                                         gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -368,10 +378,15 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (output->use_fade)
+  if ((output->use_fade) && (options))
     {
-      total += fade_point;
-      factors++;
+	  GimpFadeOptions *fade_options = options->fade_options;
+
+	  if (fade_options->use_fade)
+	    {
+          total += fade_point;
+          factors++;
+		}
     }
 
   if (factors > 0)
@@ -388,6 +403,7 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 gdouble
 gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
                                        const GimpCoords   *coords,
+									   GimpPaintOptions   *options,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -438,10 +454,15 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if (output->use_fade)
+  if ((output->use_fade) && (options))
     {
-      total += fade_point;
-      factors++;
+	  GimpFadeOptions *fade_options = options->fade_options;
+
+	  if (fade_options->use_fade)
+	    {
+		  total += fade_point;
+          factors++;
+		}
     }
 
   if (factors > 0)
