@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-17 17:00+0200\n"
-"PO-Revision-Date: 2009-08-17 17:00+0200\n"
+"POT-Creation-Date: 2009-12-19 13:40+0100\n"
+"PO-Revision-Date: 2009-12-19 13:39+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -421,15 +421,15 @@ msgstr "Gradiente personalizzato"
 
 #: ../libgimpbase/gimpbaseenums.c:96
 msgid "FG color fill"
-msgstr "Riempi colore PP"
+msgstr "Riempi di colore del PP"
 
 #: ../libgimpbase/gimpbaseenums.c:97
 msgid "BG color fill"
-msgstr "Riempi colore SF"
+msgstr "Riempi di colore dello SF"
 
 #: ../libgimpbase/gimpbaseenums.c:98
 msgid "Pattern fill"
-msgstr "Riempimento con motivo"
+msgstr "Riempi con il motivo"
 
 # questo e i seguenti simili sono commenti
 #: ../libgimpbase/gimpbaseenums.c:128
@@ -791,8 +791,8 @@ msgstr "Giustificato"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/display-filter-lcms.c:183
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
+#: ../modules/color-selector-cmyk-lcms.c:422
+#: ../modules/color-selector-cmyk-lcms.c:428
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
@@ -1532,11 +1532,11 @@ msgstr "La percentuale di estrazione del nero dagli inchiostri colorati."
 msgid "CMYK color selector (using color profile)"
 msgstr "Selettore colore CMYK (che usa i profili di colore)"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
+#: ../modules/color-selector-cmyk-lcms.c:410
 msgid "Profile: (none)"
 msgstr "Profilo: (nessuno)"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:431
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilo: %s"
