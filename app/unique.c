@@ -211,7 +211,7 @@ gimp_unique_win32_open (const gchar **filenames,
                   copydata.dwData = (long) as_new;
 
                   SendMessage (window_handle,
-                               WM_COPYDATA, window_handle, &copydata);
+                               WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata);
                 }
               else
                 {
@@ -225,7 +225,7 @@ gimp_unique_win32_open (const gchar **filenames,
       else
         {
           SendMessage (window_handle,
-                       WM_COPYDATA, window_handle, &copydata);
+                       WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata);
         }
 
       return TRUE;
