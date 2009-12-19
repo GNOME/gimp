@@ -278,10 +278,7 @@ gradient_options_gui (GimpPaintOptions *paint_options,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *spinbutton;
   GtkWidget *button;
-  GtkWidget *menu;
-  GtkWidget *combo;
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
