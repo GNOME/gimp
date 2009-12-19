@@ -49,12 +49,32 @@ GimpContainer     *global_recent_docks    = NULL;
 
 
 #define FOREIGN(id, singleton, remember_size) \
-  { id, NULL, NULL, NULL, NULL, \
-    NULL, 0, singleton,  TRUE, remember_size, FALSE, FALSE }
+  { id            /* identifier       */, \
+    NULL          /* name             */, \
+    NULL          /* blurb            */, \
+    NULL          /* stock_id         */, \
+    NULL          /* help_id          */, \
+    NULL          /* new_func         */, \
+    0             /* view_size        */, \
+    singleton     /* singleton        */, \
+    TRUE          /* session_managed  */, \
+    remember_size /* remember_size    */, \
+    FALSE         /* remember_if_open */, \
+    FALSE         /* dockable         */ }
 
 #define TOPLEVEL(id, new_func, singleton, session_managed, remember_size) \
-  { id, NULL, NULL, NULL, NULL, \
-    new_func, 0, singleton, session_managed, remember_size, FALSE, FALSE }
+  { id              /* identifier       */, \
+    NULL            /* name             */, \
+    NULL            /* blurb            */, \
+    NULL            /* stock_id         */, \
+    NULL            /* help_id          */, \
+    new_func        /* new_func         */, \
+    0               /* view_size        */, \
+    singleton       /* singleton        */, \
+    session_managed /* session_managed  */, \
+    remember_size   /* remember_size    */, \
+    FALSE           /* remember_if_open */, \
+    FALSE           /* dockable         */ }
 
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
