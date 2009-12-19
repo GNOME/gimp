@@ -326,7 +326,7 @@ dialogs_init (Gimp            *gimp,
   global_toolbox_factory = gimp_dialog_factory_new ("toolbox",
                                                     gimp_get_user_context (gimp),
                                                     menu_factory,
-                                                    dialogs_toolbox_get,
+                                                    dialogs_toolbox_new,
                                                     TRUE);
   gimp_dialog_factory_set_constructor (global_toolbox_factory,
                                        dialogs_dockable_constructor);

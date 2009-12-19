@@ -216,7 +216,7 @@ dialogs_quit_get (GimpDialogFactory *factory,
 /***********/
 
 GtkWidget *
-dialogs_toolbox_get (GimpDialogFactory *factory,
+dialogs_toolbox_new (GimpDialogFactory *factory,
                      GimpContext       *context,
                      GimpUIManager     *ui_manager)
 {
