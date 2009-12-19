@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-27 08:04+0100\n"
-"PO-Revision-Date: 2009-08-23 19:09+0200\n"
+"POT-Creation-Date: 2009-12-19 13:39+0100\n"
+"PO-Revision-Date: 2009-12-19 13:39+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -452,7 +452,7 @@ msgstr "Riempi di colore dello SF"
 #: ../libgimpbase/gimpbaseenums.c:100
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Riempi con motivo"
+msgstr "Riempi con il motivo"
 
 # questo e i seguenti simili sono commenti
 #: ../libgimpbase/gimpbaseenums.c:131
