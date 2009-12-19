@@ -285,13 +285,13 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 
   if ((output->use_fade) && (options))
     {
-	  GimpFadeOptions *fade_options = options->fade_options;
+      GimpFadeOptions *fade_options = options->fade_options;
 
-	  if (fade_options->use_fade)
-	    {
+      if (fade_options->use_fade)
+        {
           total += fade_point;
           factors++;
-		}
+        }
     }
 
   if (factors > 0)
@@ -308,7 +308,7 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 gdouble
 gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
                                         const GimpCoords   *coords,
-										GimpPaintOptions   *options,
+                                        GimpPaintOptions   *options,
                                         gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -380,13 +380,13 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 
   if ((output->use_fade) && (options))
     {
-	  GimpFadeOptions *fade_options = options->fade_options;
+      GimpFadeOptions *fade_options = options->fade_options;
 
-	  if (fade_options->use_fade)
-	    {
+      if (fade_options->use_fade)
+        {
           total += fade_point;
           factors++;
-		}
+        }
     }
 
   if (factors > 0)
@@ -403,7 +403,7 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 gdouble
 gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
                                        const GimpCoords   *coords,
-									   GimpPaintOptions   *options,
+                                       GimpPaintOptions   *options,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -456,13 +456,13 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
   if ((output->use_fade) && (options))
     {
-	  GimpFadeOptions *fade_options = options->fade_options;
+      GimpFadeOptions *fade_options = options->fade_options;
 
-	  if (fade_options->use_fade)
-	    {
-		  total += fade_point;
+      if (fade_options->use_fade)
+        {
+          total += fade_point;
           factors++;
-		}
+        }
     }
 
   if (factors > 0)

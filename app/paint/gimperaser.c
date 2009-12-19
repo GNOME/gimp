@@ -125,7 +125,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
 
   opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
                                                    coords,
-												   paint_options,
+                                                   paint_options,
                                                    fade_point);
   if (opacity == 0.0)
     return;
@@ -147,7 +147,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
 
   hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
                                                     coords,
-													paint_options,
+                                                    paint_options,
                                                     fade_point);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,

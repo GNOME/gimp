@@ -366,7 +366,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
   opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
                                                    coords,
-												   paint_options,
+                                                   paint_options,
                                                    fade_point);
   if (opacity == 0.0)
     return;
