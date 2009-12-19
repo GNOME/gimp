@@ -49,32 +49,86 @@ GimpContainer     *global_recent_docks    = NULL;
 
 
 #define FOREIGN(id, singleton, remember_size) \
-  { id            /* identifier       */, \
-    NULL          /* name             */, \
-    NULL          /* blurb            */, \
-    NULL          /* stock_id         */, \
-    NULL          /* help_id          */, \
-    NULL          /* new_func         */, \
-    0             /* view_size        */, \
-    singleton     /* singleton        */, \
-    TRUE          /* session_managed  */, \
-    remember_size /* remember_size    */, \
-    FALSE         /* remember_if_open */, \
-    FALSE         /* dockable         */ }
+  { id             /* identifier       */, \
+    NULL           /* name             */, \
+    NULL           /* blurb            */, \
+    NULL           /* stock_id         */, \
+    NULL           /* help_id          */, \
+    NULL           /* new_func         */, \
+    0              /* view_size        */, \
+    singleton      /* singleton        */, \
+    TRUE           /* session_managed  */, \
+    remember_size  /* remember_size    */, \
+    FALSE          /* remember_if_open */, \
+    FALSE          /* dockable         */}
 
 #define TOPLEVEL(id, new_func, singleton, session_managed, remember_size) \
-  { id              /* identifier       */, \
-    NULL            /* name             */, \
-    NULL            /* blurb            */, \
-    NULL            /* stock_id         */, \
-    NULL            /* help_id          */, \
-    new_func        /* new_func         */, \
-    0               /* view_size        */, \
-    singleton       /* singleton        */, \
-    session_managed /* session_managed  */, \
-    remember_size   /* remember_size    */, \
-    FALSE           /* remember_if_open */, \
-    FALSE           /* dockable         */ }
+  { id               /* identifier       */, \
+    NULL             /* name             */, \
+    NULL             /* blurb            */, \
+    NULL             /* stock_id         */, \
+    NULL             /* help_id          */, \
+    new_func         /* new_func         */, \
+    0                /* view_size        */, \
+    singleton        /* singleton        */, \
+    session_managed  /* session_managed  */, \
+    remember_size    /* remember_size    */, \
+    FALSE            /* remember_if_open */, \
+    FALSE            /* dockable         */}
+
+#define DOCKABLE(id, name, blurb, stock_id, help_id, new_func, view_size, singleton) \
+  { id         /* identifier       */, \
+    name       /* name             */, \
+    blurb      /* blurb            */, \
+    stock_id   /* stock_id         */, \
+    help_id    /* help_id          */, \
+    new_func   /* new_func         */, \
+    view_size  /* view_size        */, \
+    singleton  /* singleton        */, \
+    FALSE      /* session_managed  */, \
+    FALSE      /* remember_size    */, \
+    TRUE       /* remember_if_open */, \
+    TRUE       /* dockable         */}
+
+#define LISTGRID(id, name, blurb, stock_id, help_id, view_size) \
+  { "gimp-"#id"-list"             /* identifier       */,  \
+    name                          /* name             */,  \
+    blurb                         /* blurb            */,  \
+    stock_id                      /* stock_id         */,  \
+    help_id                       /* help_id          */,  \
+    dialogs_##id##_list_view_new  /* new_func         */,  \
+    view_size                     /* view_size        */,  \
+    FALSE                         /* singleton        */,  \
+    FALSE                         /* session_managed  */,  \
+    FALSE                         /* remember_size    */,  \
+    TRUE                          /* remember_if_open */,  \
+    TRUE                          /* dockable         */}, \
+  { "gimp-"#id"-grid"             /* identifier       */,  \
+    name                          /* name             */,  \
+    blurb                         /* blurb            */,  \
+    stock_id                      /* stock_id         */,  \
+    help_id                       /* help_id          */,  \
+    dialogs_##id##_grid_view_new  /* new_func         */,  \
+    view_size                     /* view_size        */,  \
+    FALSE                         /* singleton        */,  \
+    FALSE                         /* session_managed  */,  \
+    FALSE                         /* remember_size    */,  \
+    TRUE                          /* remember_if_open */,  \
+    TRUE                          /* dockable         */}
+
+#define LIST(id, name, blurb, stock_id, help_id, view_size) \
+  { "gimp-"#id"-list"             /* identifier       */, \
+    name                          /* name             */, \
+    blurb                         /* blurb            */, \
+    stock_id                      /* stock_id         */, \
+    help_id                       /* help_id          */, \
+    dialogs_##id##_list_view_new  /* new_func         */, \
+    view_size                     /* view_size        */, \
+    FALSE                         /* singleton        */, \
+    FALSE                         /* session_managed  */, \
+    FALSE                         /* remember_size    */, \
+    TRUE                          /* remember_if_open */, \
+    TRUE                          /* dockable         */}
 
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
@@ -139,23 +193,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   TOPLEVEL ("gimp-quit-dialog",
             dialogs_quit_get,               TRUE, FALSE, FALSE)
 };
-
-#define DOCKABLE(id,name,blurb,stock_id,help_id,\
-                 new_func,view_size,singleton) \
-  { id, name, blurb, stock_id, help_id, \
-    new_func, view_size, singleton, FALSE, FALSE, TRUE, TRUE }
-
-#define LISTGRID(id,name,blurb,stock_id,help_id,\
-                 view_size) \
-  { "gimp-"#id"-list", name, blurb, stock_id, help_id, \
-    dialogs_##id##_list_view_new, view_size, FALSE, FALSE, FALSE, TRUE, TRUE }, \
-  { "gimp-"#id"-grid", name, blurb, stock_id, help_id, \
-    dialogs_##id##_grid_view_new, view_size, FALSE, FALSE, FALSE, TRUE, TRUE }
-
-#define LIST(id,name,blurb,stock_id,help_id,\
-             view_size) \
-  { "gimp-"#id"-list", name, blurb, stock_id, help_id, \
-    dialogs_##id##_list_view_new, view_size, FALSE, FALSE, FALSE, TRUE, TRUE }
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
