@@ -2,13 +2,15 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 # Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
+# Lucian Adrian Grijincu <lucian.grijincu AT gmail DOT com>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 23:09+0300\n"
-"PO-Revision-Date: 2009-09-20 23:30+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-12-19 12:42+0000\n"
+"PO-Revision-Date: 2009-12-19 18:02+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Poedit-Bookmarks: 77,2471,1245,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-Bookmarks: 290,2471,1245,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -24,7 +26,7 @@ msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "GIMP – Programul GNU de editare de imagini"
+msgstr "GIMP – Programul GNU de procesare a imaginilor"
 
 #: ../app/about.h:30
 msgid ""
@@ -74,7 +76,7 @@ msgid ""
 msgstr ""
 "Nu se poate deschide un fișier de memorie virtuală (swap) de test.\n"
 "\n"
-"Pentru a evita pierderea de date, verificați amplasamentul și permisiunile "
+"Pentru a evita pierderea de date, verificați locația și permisiunile "
 "directorului de memorie virtuală definit în preferințele programului (în mod "
 "curent „%s”)."
 
@@ -99,9 +101,10 @@ msgstr "Arată informația despre versiune și ieși"
 msgid "Show license information and exit"
 msgstr "Arată informația despre licență și ieși"
 
+# a fost: Fii mai verbos
 #: ../app/main.c:154
 msgid "Be more verbose"
-msgstr "Fii mai verbos"
+msgstr "Informații detaliate"
 
 #: ../app/main.c:159
 msgid "Start a new GIMP instance"
@@ -174,14 +177,14 @@ msgstr "Depanare în cazul unei avarii la program (never|query|always)"
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Activează rutina de tratare a semnalelor de depanare non-fatale"
 
+# a fost: Formulează toate avertismentele ca fatale
 #: ../app/main.c:246
 msgid "Make all warnings fatal"
-msgstr "Formulează toate avertismentele ca fatale"
+msgstr "Consideră toate avertismentele ca fiind erori fatale"
 
-# hm ? creează ?
 #: ../app/main.c:251
 msgid "Output a gimprc file with default settings"
-msgstr "Creează un fișier gimprc cu setările implicite"
+msgstr "Creează un fișier gimprc cu configurările implicite"
 
 #: ../app/main.c:355
 msgid "[FILE|URI...]"
@@ -200,18 +203,24 @@ msgstr ""
 msgid "Another GIMP instance is already running."
 msgstr "Altă instanță GIMP este deja pornită."
 
+# hm ? apăsați orice tastă nu prea este valabil pentru *orice* tastă
 #: ../app/main.c:462
 msgid "GIMP output. Type any character to close this window."
-msgstr "Ieșire GIMP. Scrieți orice caracter pentru a închide fereastra."
+msgstr ""
+"Rezultate furnizate de GIMP. Apăsați orice tastă pentru a închide această "
+"fereastră."
 
+# hm ? apăsați orice tastă nu prea este valabil pentru *orice* tastă
 #: ../app/main.c:463
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr "(Scrieți orice caracter pentru a închide această fereastră)\n"
+msgstr "(Apăsați orice tastă pentru a închide această fereastră)\n"
 
 #: ../app/main.c:480
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr "Ieșire GIMP. Puteți imnimiza această feeastră, dar nu o închideți."
+msgstr ""
+"Rezultate furnizate de GIMP. Puteți minimiza această feeastră, dar să nu o "
+"închideți."
 
 #: ../app/sanity.c:365
 #, c-format
@@ -466,11 +475,11 @@ msgstr "Duplică penelul"
 
 #: ../app/actions/brushes-actions.c:65
 msgid "Copy Brush _Location"
-msgstr "Copiază _amplasamentul penelului"
+msgstr "Copiază _locația penelului"
 
 #: ../app/actions/brushes-actions.c:66
 msgid "Copy brush file location to clipboard"
-msgstr "Copiază amplasamentul penelului în clipboard"
+msgstr "Copiază în clipboard locația penelului"
 
 #: ../app/actions/brushes-actions.c:71
 msgid "_Delete Brush"
@@ -542,7 +551,7 @@ msgstr "_Editează atributele de canal..."
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
-msgstr "Editează numele de canal, culoare și opacitate"
+msgstr "Editează numele, culoarea și opacitatea canalului"
 
 #: ../app/actions/channels-actions.c:54
 msgid "_New Channel..."
@@ -594,7 +603,7 @@ msgstr "Ridică acest canal sus de tot în stiva canalului"
 
 #: ../app/actions/channels-actions.c:90
 msgid "_Lower Channel"
-msgstr "_Coboară canalul"
+msgstr "Coboară cana_lul"
 
 #: ../app/actions/channels-actions.c:91
 msgid "Lower this channel one step in the channel stack"
@@ -602,7 +611,7 @@ msgstr "Coboară acest canal o treaptă în stiva canalului"
 
 #: ../app/actions/channels-actions.c:96
 msgid "Lower Channel to _Bottom"
-msgstr "C_oboară canalul jos de tot"
+msgstr "Co_boară canalul jos de tot"
 
 #: ../app/actions/channels-actions.c:97
 msgid "Lower this channel to the bottom of the channel stack"
@@ -712,7 +721,7 @@ msgstr "_Adaugă o culoare din prim plan"
 
 #: ../app/actions/colormap-actions.c:58
 msgid "Add current foreground color"
-msgstr "Adaugă culoarea de prim plan actuală"
+msgstr "Adaugă culoarea actuală de prim plan"
 
 #: ../app/actions/colormap-actions.c:63
 msgid "_Add Color from BG"
@@ -720,7 +729,7 @@ msgstr "_Adaugă o culoare din fundal"
 
 #: ../app/actions/colormap-actions.c:64
 msgid "Add current background color"
-msgstr "Adaugă culoarea de fundal actuală"
+msgstr "Adaugă culoarea actuală de fundal"
 
 #: ../app/actions/colormap-commands.c:73
 #, c-format
@@ -887,7 +896,7 @@ msgstr "_Opțiuni instrumente"
 
 #: ../app/actions/dialogs-actions.c:40
 msgid "Open the tool options dialog"
-msgstr "Deschide dialogul de opțiuni pentru instrumente"
+msgstr "Deschide dialogul opțiunilor pentru instrumente"
 
 #: ../app/actions/dialogs-actions.c:45
 msgid "_Device Status"
@@ -927,7 +936,7 @@ msgstr "_Paletă de culori"
 
 #: ../app/actions/dialogs-actions.c:70
 msgid "Open the colormap dialog"
-msgstr "Deschide dialogul de paletă de culori"
+msgstr "Deschide dialogul paletei de culori"
 
 #: ../app/actions/dialogs-actions.c:75
 msgid "Histogra_m"
@@ -956,27 +965,28 @@ msgstr "Deschide dialogul de navigare de afișare"
 
 #: ../app/actions/dialogs-actions.c:93
 msgid "Undo _History"
-msgstr "_Istoric de anulări"
+msgstr "_Istoricul operațiilor"
 
 #: ../app/actions/dialogs-actions.c:94
 msgid "Open the undo history dialog"
-msgstr "Deschide dialogul de istoric de anulări"
+msgstr "Deschide dialogul cu istoricul operațiilor"
 
 #: ../app/actions/dialogs-actions.c:99 ../app/dialogs/dialogs.c:150
 msgid "Pointer"
-msgstr "Cursor"
+msgstr "Indicator"
 
+# hm ? sau dialogul informațiilor de indicator ?
 #: ../app/actions/dialogs-actions.c:100
 msgid "Open the pointer information dialog"
-msgstr "Deschide dialogul de informații cursor"
+msgstr "Deschide dialogul de informații ale indicatorului"
 
 #: ../app/actions/dialogs-actions.c:105
 msgid "_Sample Points"
-msgstr "_Puncte eșantion"
+msgstr "_Puncte de eșantionare"
 
 #: ../app/actions/dialogs-actions.c:106
 msgid "Open the sample points dialog"
-msgstr "Deschide dialogul de puncte eșantion"
+msgstr "Deschide dialogul cu puncte de eșantionare"
 
 #: ../app/actions/dialogs-actions.c:111
 msgid "Colo_rs"
@@ -984,7 +994,7 @@ msgstr "Culo_ri"
 
 #: ../app/actions/dialogs-actions.c:112
 msgid "Open the FG/BG color dialog"
-msgstr "Deschide dialogul de culori de prim plan și fundal"
+msgstr "Deschide dialogul culorilor de prim plan și de fundal"
 
 #: ../app/actions/dialogs-actions.c:117
 msgid "_Brushes"
@@ -1044,7 +1054,7 @@ msgstr "_Zone tampon"
 
 #: ../app/actions/dialogs-actions.c:166
 msgid "Open the named buffers dialog"
-msgstr "Deschide dialogul cu zone tampon numite"
+msgstr "Deschide dialogul zonelor de tampon denumite"
 
 #: ../app/actions/dialogs-actions.c:171
 msgid "_Images"
@@ -1056,11 +1066,11 @@ msgstr "Deschide dialogul de imagini"
 
 #: ../app/actions/dialogs-actions.c:177
 msgid "Document Histor_y"
-msgstr "_Istoric de documente"
+msgstr "_Istoricul documentelor"
 
 #: ../app/actions/dialogs-actions.c:178
 msgid "Open the document history dialog"
-msgstr "Deschide dialogul de istoric de documente"
+msgstr "Deschide dialogul cu istoricul documentelor"
 
 #: ../app/actions/dialogs-actions.c:183
 msgid "_Templates"
@@ -1068,7 +1078,7 @@ msgstr "Șa_bloane"
 
 #: ../app/actions/dialogs-actions.c:184
 msgid "Open the image templates dialog"
-msgstr "Deschide dialogul de șabloane de imagini"
+msgstr "Deschide dialogul cu șabloane de imagini"
 
 #: ../app/actions/dialogs-actions.c:189
 msgid "T_ools"
@@ -1084,7 +1094,7 @@ msgstr "Co_nsolă de erori"
 
 #: ../app/actions/dialogs-actions.c:196
 msgid "Open the error console"
-msgstr "Deschide consola de eroare"
+msgstr "Deschide consola de erori"
 
 #: ../app/actions/dialogs-actions.c:206
 msgid "_Preferences"
@@ -1106,9 +1116,10 @@ msgstr "Deschide editorul de scurtături de tastatură"
 msgid "_Modules"
 msgstr "_Module"
 
+# a fost: gestionarului de module
 #: ../app/actions/dialogs-actions.c:219
 msgid "Open the module manager dialog"
-msgstr "Deschide dialogul gestionarului de module"
+msgstr "Deschide dialogul administratorului de module"
 
 #: ../app/actions/dialogs-actions.c:224
 msgid "_Tip of the Day"
@@ -1262,39 +1273,43 @@ msgstr "_Deschide imaginea"
 
 #: ../app/actions/documents-actions.c:47
 msgid "Open the selected entry"
-msgstr "Deschide poziția selectată"
+msgstr "Deschide intrarea selectată"
 
 #: ../app/actions/documents-actions.c:52
 msgid "_Raise or Open Image"
-msgstr "_Ridică sau deschide imaginea"
+msgstr "Deschide sau adu în _față imaginea"
 
 #: ../app/actions/documents-actions.c:53
 msgid "Raise window if already open"
-msgstr "Ridică fereastra dacă este deja deschisă"
+msgstr ""
+"Deschide imaginea, sau adu fereastra în față dacă imaginea este deja deschisă"
 
 #: ../app/actions/documents-actions.c:58
 msgid "File Open _Dialog"
-msgstr "_Dialog de deschidere fișier"
+msgstr "_Dialog de deschidere fișiere"
 
+# hm ?
 #: ../app/actions/documents-actions.c:59
 msgid "Open image dialog"
-msgstr "Deschide dialogul de deschidere imagine"
+msgstr "Deschide dialogul de deschidere fișiere"
 
 #: ../app/actions/documents-actions.c:64
 msgid "Copy Image _Location"
-msgstr "Copiază amp_lasamentul imaginii"
+msgstr "Copiază _locația imaginii"
 
 #: ../app/actions/documents-actions.c:65
 msgid "Copy image location to clipboard"
-msgstr "Copiază amplasamentul imaginii în clipboard"
+msgstr "Copiază în clipboard locația imaginii"
 
+# hm ? „șterge” poate induce în eroare că se va șterge și imaginea în sine
 #: ../app/actions/documents-actions.c:70
 msgid "Remove _Entry"
-msgstr "_Elimină poziția"
+msgstr "_Elimină intrarea"
 
+# hm ? „șterge” poate induce în eroare că se va șterge și imaginea în sine
 #: ../app/actions/documents-actions.c:71
 msgid "Remove the selected entry"
-msgstr "Elimină poziția selectată"
+msgstr "Elimină intrarea selectată"
 
 #: ../app/actions/documents-actions.c:76
 msgid "_Clear History"
@@ -1310,7 +1325,7 @@ msgstr "Recreează _previzualizarea"
 
 #: ../app/actions/documents-actions.c:83
 msgid "Recreate preview"
-msgstr "Recreează previzualizarea pentru poziția selectată"
+msgstr "Recreează previzualizarea pentru intrarea selectată"
 
 #: ../app/actions/documents-actions.c:88
 msgid "Reload _all Previews"
@@ -1330,13 +1345,14 @@ msgstr "Elimi_nă pozițiile care stau degeaba"
 msgid "Remove dangling entries"
 msgstr "Elimină pozițiile care stau degeaba"
 
+# titlu pe bară
 #: ../app/actions/documents-commands.c:198
 msgid "Clear Document History"
 msgstr "Curățare istoric de documente"
 
 #: ../app/actions/documents-commands.c:221
 msgid "Clear the Recent Documents list?"
-msgstr "Curățați istoricul de documente recente ?"
+msgstr "Curățați documentele recente din listă ?"
 
 #: ../app/actions/documents-commands.c:224
 msgid ""
@@ -1344,7 +1360,7 @@ msgid ""
 "recent documents list in all applications."
 msgstr ""
 "Curățarea istoricului de documente va elimina permanent toate elementele din "
-"lista de documente recente în toate aplicațiile."
+"lista de documente recente, în toate aplicațiile."
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Equalize"
@@ -1352,7 +1368,7 @@ msgstr "_Egalizează"
 
 #: ../app/actions/drawable-actions.c:46
 msgid "Automatic contrast enhancement"
-msgstr "Îmbunătățire automată de contrast"
+msgstr "Îmbunătățire automată a contrastului"
 
 #: ../app/actions/drawable-actions.c:51
 msgid "In_vert"
@@ -1368,7 +1384,7 @@ msgstr "_Balans la alb"
 
 #: ../app/actions/drawable-actions.c:58
 msgid "Automatic white balance correction"
-msgstr "Corecție automată de balans la alb"
+msgstr "Corecție automată a balansului la alb"
 
 #: ../app/actions/drawable-actions.c:63
 msgid "_Offset..."
@@ -1397,19 +1413,19 @@ msgstr "Comută vizibilitatea"
 
 #: ../app/actions/drawable-actions.c:89 ../app/actions/image-actions.c:159
 msgid "Flip _Horizontally"
-msgstr "Întoarce _orizontal"
+msgstr "Inversează _orizontal"
 
 #: ../app/actions/drawable-actions.c:90
 msgid "Flip horizontally"
-msgstr "Întoarce orizontal"
+msgstr "Inversează imaginea pe orizontală"
 
 #: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
 msgid "Flip _Vertically"
-msgstr "Întoarce _vertical"
+msgstr "Răstoarnă _vertical"
 
 #: ../app/actions/drawable-actions.c:96
 msgid "Flip vertically"
-msgstr "Întoarce vertical"
+msgstr "Răstoarnă imaginea pe verticală"
 
 #: ../app/actions/drawable-actions.c:104 ../app/actions/image-actions.c:174
 msgid "Rotate 90° _clockwise"
@@ -1423,9 +1439,10 @@ msgstr "Rotește 90 de grade spre dreapta"
 msgid "Rotate _180°"
 msgstr "Rotește _180°"
 
+# hm ? trebuie evidențiat că se rotește cu totul, nu doar pe o axă
 #: ../app/actions/drawable-actions.c:111
 msgid "Turn upside-down"
-msgstr "Întoarce sus-jos"
+msgstr "Rotește cu 180 de grade"
 
 #: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:186
 msgid "Rotate 90° counter-clock_wise"
@@ -1462,7 +1479,7 @@ msgstr "_Zonă tampon"
 
 #: ../app/actions/edit-actions.c:68
 msgid "Undo History Menu"
-msgstr "Meniu de istoric de anulări"
+msgstr "Meniu istoric"
 
 #: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:313
 msgid "_Undo"
@@ -1500,11 +1517,11 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:96
 msgid "_Clear Undo History"
-msgstr "_Curăță istoricul de anulări"
+msgstr "_Curăță istoricul operațiilor"
 
 #: ../app/actions/edit-actions.c:97
 msgid "Remove all operations from the undo history"
-msgstr "Elimină toate operațiile din istoricul de anulări"
+msgstr "Elimină toate operațiile din istoric"
 
 #: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:315
 msgid "_Fade..."
@@ -1658,19 +1675,20 @@ msgstr "_Refă operația %s"
 msgid "_Fade %s..."
 msgstr "_Estompează operația %s..."
 
+# titlu pe bară
 #: ../app/actions/edit-commands.c:134
 msgid "Clear Undo History"
-msgstr "Curățare istoric de anulări"
+msgstr "Curățare istoric de operații"
 
 #: ../app/actions/edit-commands.c:160
 msgid "Really clear image's undo history?"
-msgstr "Sigur curățați istoricul de anulări ale imaginii ?"
+msgstr "Sigur curățați istoricul de operații al acestei imagini ?"
 
 #: ../app/actions/edit-commands.c:172
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
-"Curățarea istoricului de anulări ale acestei imagini va elibera %s din "
+"Curățarea istoricului de operații al acestei imagini va elibera %s din "
 "memorie."
 
 #: ../app/actions/edit-commands.c:201
@@ -1819,7 +1837,6 @@ msgstr "Salvează ca șa_blon..."
 msgid "Create a new template from this image"
 msgstr "Creează un șablon nou din această imagine"
 
-# hm ?
 #: ../app/actions/file-actions.c:95
 msgid "Re_vert"
 msgstr "Re_vino la forma inițială"
@@ -2327,11 +2344,11 @@ msgstr "Duplică degradeul"
 
 #: ../app/actions/gradients-actions.c:60
 msgid "Copy Gradient _Location"
-msgstr "Copiază amp_lasamentul degradeului"
+msgstr "Copiază _locația degradeului"
 
 #: ../app/actions/gradients-actions.c:61
 msgid "Copy gradient file location to clipboard"
-msgstr "Copiază în clipboard amplasamentul fișierului degrde"
+msgstr "Copiază în clipboard locația fișierului degrade"
 
 #: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
@@ -2553,9 +2570,10 @@ msgstr "Întoarce imaginea pe verticală"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Rotește imaginea cu 90 de grade spre dreapta"
 
+# hm ? trebuie evidențiat că se rotește cu totul, nu doar pe o axă
 #: ../app/actions/image-actions.c:181
 msgid "Turn the image upside-down"
-msgstr "Întoarce imaginea prin rotire cu 180 de grade"
+msgstr "Rotește imaginea cu 180 de grade"
 
 #: ../app/actions/image-actions.c:187
 msgid "Rotate the image 90 degrees to the left"
@@ -2587,7 +2605,7 @@ msgstr "Întoarcere"
 msgid "Rotating"
 msgstr "Rotire"
 
-#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:639
+#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:642
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nu se poate decupa deoarece selecția curentă este goală."
 
@@ -2602,12 +2620,12 @@ msgstr "Scalare imagine"
 
 # apare pe bara de progres
 #. Scaling
-#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1101
+#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1104
 #: ../app/dialogs/preferences-dialog.c:1925
 #: ../app/pdb/drawable-transform-cmds.c:682
 #: ../app/pdb/drawable-transform-cmds.c:758 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:289
-#: ../app/pdb/layer-cmds.c:334 ../app/pdb/transform-tools-cmds.c:291
+#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:292
+#: ../app/pdb/layer-cmds.c:337 ../app/pdb/transform-tools-cmds.c:291
 #: ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
 msgstr "Scalare"
@@ -2862,7 +2880,7 @@ msgstr "Blochează canalul _alfa"
 
 #: ../app/actions/layers-actions.c:216
 msgid "Keep transparency information on this layer from being modified"
-msgstr "Păstrează informațiile despre transparență "
+msgstr "Împiedică modificarea informațiilor de transparență pe acest strat"
 
 #: ../app/actions/layers-actions.c:222
 msgid "_Edit Layer Mask"
@@ -3001,51 +3019,51 @@ msgstr "Selectează stratul de dedesubtul stratului curent"
 msgid "Set Opacity"
 msgstr "Stabilește opacitatea"
 
-#: ../app/actions/layers-commands.c:203
+#: ../app/actions/layers-commands.c:204
 msgid "Layer Attributes"
 msgstr "Atribute de strat"
 
-#: ../app/actions/layers-commands.c:206
+#: ../app/actions/layers-commands.c:207
 msgid "Edit Layer Attributes"
 msgstr "Editare atribute de strat"
 
-#: ../app/actions/layers-commands.c:249 ../app/actions/layers-commands.c:251
-#: ../app/actions/layers-commands.c:319 ../app/actions/layers-commands.c:323
+#: ../app/actions/layers-commands.c:250 ../app/actions/layers-commands.c:252
+#: ../app/actions/layers-commands.c:320 ../app/actions/layers-commands.c:324
 #: ../app/widgets/gimpdrawabletreeview.c:326
 #: ../app/widgets/gimplayertreeview.c:835
 msgid "New Layer"
 msgstr "Strat nou"
 
-#: ../app/actions/layers-commands.c:254
+#: ../app/actions/layers-commands.c:255
 msgid "Create a New Layer"
 msgstr "Creare strat nou"
 
-#: ../app/actions/layers-commands.c:352
+#: ../app/actions/layers-commands.c:355
 msgid "Visible"
 msgstr "Vizibil"
 
-#: ../app/actions/layers-commands.c:571
+#: ../app/actions/layers-commands.c:574
 msgid "Set Layer Boundary Size"
 msgstr "Stabilire dimensiune limite strat"
 
-#: ../app/actions/layers-commands.c:612 ../app/core/gimplayer.c:251
+#: ../app/actions/layers-commands.c:615 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
 msgstr "Scalare strat"
 
-#: ../app/actions/layers-commands.c:649
+#: ../app/actions/layers-commands.c:652
 msgid "Crop Layer"
 msgstr "Decupare strat"
 
-#: ../app/actions/layers-commands.c:788
+#: ../app/actions/layers-commands.c:791
 msgid "Layer Mask to Selection"
 msgstr "Mască de strat la selecție"
 
-#: ../app/actions/layers-commands.c:1036
+#: ../app/actions/layers-commands.c:1039
 msgid "Please select a channel first"
 msgstr "Mai întâi selectați un canal"
 
 # apare la contextul lui undo
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1283
+#: ../app/actions/layers-commands.c:1047 ../app/core/gimplayer.c:1283
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Adăugare mască de strat"
@@ -3143,11 +3161,11 @@ msgstr "Combină paletele"
 
 #: ../app/actions/palettes-actions.c:72
 msgid "Copy Palette _Location"
-msgstr "Copiază amp_lasamentul paletei"
+msgstr "Copiază _locația paletei"
 
 #: ../app/actions/palettes-actions.c:73
 msgid "Copy palette file location to clipboard"
-msgstr "Copiază amplasamentul fișierului paletă în clipboard"
+msgstr "Copiază în clipboard locația fișierului paletă"
 
 #: ../app/actions/palettes-actions.c:78
 msgid "_Delete Palette"
@@ -3211,11 +3229,11 @@ msgstr "Duplică modelul"
 
 #: ../app/actions/patterns-actions.c:65
 msgid "Copy Pattern _Location"
-msgstr "Copiază amp_lasamentul modelului"
+msgstr "Copiază _locația modelului"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Copy pattern file location to clipboard"
-msgstr "Copiază amp_lasamentul fișierului model în clipboard"
+msgstr "Copiază în clipboard locația fișierului model"
 
 #: ../app/actions/patterns-actions.c:71
 msgid "_Delete Pattern"
@@ -3315,7 +3333,7 @@ msgstr "Resetează toate _filtrele"
 
 #: ../app/actions/plug-in-actions.c:105
 msgid "Reset all plug-ins to their default settings"
-msgstr "Resetează toate plugin-urile la setările lor implicite"
+msgstr "Resetează toate plugin-urile la configurările lor implicite"
 
 # hm ? genul ? e vorba de filtru ?
 #: ../app/actions/plug-in-actions.c:113
@@ -3324,7 +3342,7 @@ msgstr "Re_petă ultimul"
 
 #: ../app/actions/plug-in-actions.c:114
 msgid "Rerun the last used plug-in using the same settings"
-msgstr "Execută din nou ultimul plugin, folosind aceeași setări"
+msgstr "Execută din nou ultimul plugin, folosind aceleași configurări"
 
 # hm ? genul ? e vorba de filtru ?
 #: ../app/actions/plug-in-actions.c:119
@@ -3424,7 +3442,7 @@ msgstr "_Tot"
 
 #: ../app/actions/select-actions.c:51
 msgid "Select everything"
-msgstr "Selectează totul"
+msgstr "Selectează tot"
 
 # hm ? ce gen ?
 #: ../app/actions/select-actions.c:56
@@ -4556,7 +4574,7 @@ msgstr ""
 "memorie disponibilă și nu poate folosi fișierul de memorie virtuală. Unele "
 "părți ale imaginii ar putea fi corupte. Încercați să salvați materialul la "
 "care lucrați folosind un nume de fișier diferit, reporniți GIMP și "
-"verificați amplasamentul directorului de memorie virtuală în preferințele "
+"verificați locația directorului de memorie virtuală în preferințele "
 "programului."
 
 #: ../app/base/tile-swap.c:568
@@ -5004,6 +5022,7 @@ msgstr "Arată un indiciu când indicatorul mausului survolează un element."
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Ce este de făcut când se apasă bara de spațiu în fereastra de imagine."
 
+# hm ? dale ?
 #: ../app/config/gimprc-blurbs.h:337
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
@@ -5013,15 +5032,15 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Stabilește amplasamentul fișierului de memorie virtuală (swap). GIMP "
-"folosește o schemă de alocare de memorie bazată pe dale. Fișierul de memorie "
-"virtuală este folosit pentru a schimba rapid aceste dale de pe disc și la "
-"loc pe disc. Țineți cont de faptul că fișierul de memorie virtuală poate "
-"deveni lesne foarte mare dacă GIMP este folosit cu imagini mari. De "
-"easemenea, activitatea poate deveni oribil de lentă dacă fișierul de memorie "
-"virtuală este creat într-un director care este montat peste NFS. Pentru "
-"aceste motive, ar putea fi de dorit ca fișierul de memorie virtuală să fie "
-"pus în „/tmp”."
+"Stabilește locația fișierului de memorie virtuală (swap). GIMP folosește o "
+"schemă de alocare de memorie bazată pe dale. Fișierul de memorie virtuală "
+"este folosit pentru a schimba rapid aceste dale de pe disc și la loc pe "
+"disc. Țineți cont de faptul că fișierul de memorie virtuală poate deveni "
+"lesne foarte mare dacă GIMP este folosit cu imagini mari. De easemenea, "
+"activitatea poate deveni oribil de lentă dacă fișierul de memorie virtuală "
+"este creat într-un director care este montat peste NFS. Pentru aceste "
+"motive, ar putea fi de dorit ca fișierul de memorie virtuală să fie pus în „/"
+"tmp”."
 
 #: ../app/config/gimprc-blurbs.h:346
 msgid "When enabled, menus can be torn off."
@@ -5141,7 +5160,7 @@ msgid ""
 msgstr ""
 "Stabilește numărul minim de operații care pot fi anulate. Sunt păstrate "
 "disponibile mai multe niveluri de anulare până când este atinsă limita de "
-"dimensiune pentru anulări."
+"anulări."
 
 #: ../app/config/gimprc-blurbs.h:420
 msgid ""
@@ -5150,12 +5169,13 @@ msgid ""
 "as configured can be undone."
 msgstr ""
 "Stabilește o limită superioară a memoriei folosită de fiecare imagine pentru "
-"păstrarea operațiilor pe stiva de anulări. Indiferent de această setare, pot "
-"fi anulate cel puțin atâtea niveluri de anulare câte au fost configurate."
+"păstrarea operațiilor pe stiva de anulări. Indiferent de această "
+"configurare, pot fi anulate cel puțin atâtea niveluri de anulare câte au "
+"fost configurate."
 
 #: ../app/config/gimprc-blurbs.h:425
 msgid "Sets the size of the previews in the Undo History."
-msgstr "Stabilește dimensiunea previzualizărilor în istoricul de anulări."
+msgstr "Stabilește dimensiunea previzualizărilor în istoricul operațiilor."
 
 #: ../app/config/gimprc-blurbs.h:428
 msgid "When enabled, pressing F1 will open the help browser."
@@ -5848,7 +5868,7 @@ msgstr "Module"
 #: ../app/core/gimpbrush-load.c:177
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
-msgstr "Nu s-au putut citi %d octeți din „%s”: %s"
+msgstr "Nu s-au putut citi %d baiți din „%s”: %s"
 
 #: ../app/core/gimpbrush-load.c:197
 #, c-format
@@ -5863,7 +5883,7 @@ msgstr "Eroare fatală de prelucrare în fișierul penel „%s”: înălțime =
 #: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Eroare fatală de prelucrare în fișierul penel „%s”: octeți = 0."
+msgstr "Eroare fatală de prelucrare în fișierul penel „%s”: baiți = 0."
 
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
@@ -6178,7 +6198,7 @@ msgstr "Desaturare"
 
 #: ../app/core/gimpdrawable-equalize.c:53
 msgid "Equalize"
-msgstr "Egalizează"
+msgstr "Egalizare"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:138
 msgid "Foreground Extraction"
@@ -6661,8 +6681,8 @@ msgstr "Strat"
 msgid "Rename Layer"
 msgstr "Redenumire strat"
 
-#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:434
-#: ../app/pdb/layer-cmds.c:470
+#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:437
+#: ../app/pdb/layer-cmds.c:473
 msgid "Move Layer"
 msgstr "Mutare strat"
 
@@ -6985,7 +7005,8 @@ msgstr "Vizitați saitul web GIMP"
 msgid "translator-credits"
 msgstr ""
 "Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>\n"
-"Cristian Secară <cristi AT secarica DOT ro>"
+"Cristian Secară <cristi AT secarica DOT ro>\n"
+"Lucian Adrian Grijincu <lucian DOT grijincu AT gmail DOT com>"
 
 #: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
@@ -7062,6 +7083,7 @@ msgstr "Stare dispozitiv"
 msgid "Errors"
 msgstr "Erori"
 
+# titlu pe bara istoricului documentelor
 #: ../app/dialogs/dialogs.c:171
 msgid "History"
 msgstr "Istoric"
@@ -7078,13 +7100,14 @@ msgstr "Histogramă"
 msgid "Selection Editor"
 msgstr "Editor de selecție"
 
+# titlu pe bara istoricului operațiilor
 #: ../app/dialogs/dialogs.c:202
 msgid "Undo"
-msgstr "Anulare"
+msgstr "Istoric"
 
 #: ../app/dialogs/dialogs.c:202
 msgid "Undo History"
-msgstr "Istoric de anulări"
+msgstr "Istoric de operații"
 
 #: ../app/dialogs/dialogs.c:212
 msgid "Navigation"
@@ -8845,7 +8868,7 @@ msgstr "Pensulă de pictură"
 #: ../app/paint/gimppaintcore-stroke.c:332
 #, c-format
 msgid "Not enough points to stroke"
-msgstr "Nu sunt suficiente puncte pentru "
+msgstr "Nu sunt suficiente puncte pentru trasare"
 
 #: ../app/paint/gimppencil.c:42 ../app/tools/gimppenciltool.c:51
 msgid "Pencil"
@@ -9824,11 +9847,11 @@ msgstr "Colorare imagine"
 
 #: ../app/tools/gimpcolorizetool.c:111
 msgid "Import Colorize Settings"
-msgstr "Importă setările de colorizare"
+msgstr "Importă configurările de colorizare"
 
 #: ../app/tools/gimpcolorizetool.c:112
 msgid "Export Colorize Settings"
-msgstr "Exportă setările de colorizare"
+msgstr "Exportă configurările de colorizare"
 
 #: ../app/tools/gimpcolorizetool.c:156
 #, c-format
@@ -10314,29 +10337,29 @@ msgstr ""
 msgid "_Free Select"
 msgstr "Selecție _liberă"
 
-#: ../app/tools/gimpfreeselecttool.c:1116
+#: ../app/tools/gimpfreeselecttool.c:1117
 msgid "Click to complete selection"
 msgstr "Clic pentru a completa selecția"
 
-#: ../app/tools/gimpfreeselecttool.c:1120
+#: ../app/tools/gimpfreeselecttool.c:1121
 msgid "Click-Drag to move segment vertex"
 msgstr "Clic-și-trageți pentru a muta vertexul segmentului"
 
 # hm ?
-#: ../app/tools/gimpfreeselecttool.c:1125
+#: ../app/tools/gimpfreeselecttool.c:1126
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "Tasta Return efectuează, tasta Escape anulează, tasta Backspace elimină "
 "ultimul segment"
 
 # hm ? modificat pentru uniformitate cu celelalte clic-și-trageți
-#: ../app/tools/gimpfreeselecttool.c:1129
+#: ../app/tools/gimpfreeselecttool.c:1130
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Clic-și-trageți pentru a adăuga un segment liber, clic pentru a adăuga un "
 "segment poligonal"
 
-#: ../app/tools/gimpfreeselecttool.c:1581
+#: ../app/tools/gimpfreeselecttool.c:1582
 msgctxt "command"
 msgid "Free Select"
 msgstr "Selecție liberă"
@@ -11521,7 +11544,7 @@ msgstr "Dimensiune fixă"
 
 #: ../app/tools/tools-enums.c:181
 msgid "Fixed aspect ratio"
-msgstr " Raport de aspect fixat"
+msgstr "Raport de aspect fix"
 
 #: ../app/tools/tools-enums.c:211 ../app/vectors/gimpvectors.c:192
 msgid "Path"
@@ -12695,7 +12718,7 @@ msgstr ""
 "Culori de prim plan și de fundal.\n"
 "Pătratele negru și alb resetează culorile.\n"
 "Săgețile interschimbă culorile.\n"
-"Clic pentru a deschide dialogul de selecție de culori."
+"Clic pentru a deschide dialogul selecției de culori."
 
 #: ../app/widgets/gimptoolbox-color-area.c:141
 msgid "Change Foreground Color"
@@ -12788,15 +12811,15 @@ msgstr "Cale goală"
 
 #: ../app/widgets/gimpviewablebox.c:81
 msgid "Open the brush selection dialog"
-msgstr "Deschide dialogul de selecție penel"
+msgstr "Deschide dialogul selecției de penel"
 
 #: ../app/widgets/gimpviewablebox.c:138
 msgid "Open the pattern selection dialog"
-msgstr "Deschide dialogul de selecție model"
+msgstr "Deschide dialogul selecției de model"
 
 #: ../app/widgets/gimpviewablebox.c:204
 msgid "Open the gradient selection dialog"
-msgstr "Deschide dialogul de selecție degrade"
+msgstr "Deschide dialogul selecției de degrade"
 
 #: ../app/widgets/gimpviewablebox.c:224
 msgid "Reverse"
@@ -12804,11 +12827,11 @@ msgstr "Inversează"
 
 #: ../app/widgets/gimpviewablebox.c:306
 msgid "Open the palette selection dialog"
-msgstr "Deschide dialogul de selecție de paletă"
+msgstr "Deschide dialogul selecției de paletă"
 
 #: ../app/widgets/gimpviewablebox.c:364
 msgid "Open the font selection dialog"
-msgstr "Deschide dialogul de selecție de fonturi"
+msgstr "Deschide dialogul selecției de fonturi"
 
 #: ../app/widgets/gimpwidgets-utils.c:608
 #, c-format
