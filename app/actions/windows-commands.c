@@ -41,11 +41,11 @@
 #include "windows-commands.h"
 
 
-static GtkWidget * gimp_dialog_factory_get_toolbox (GimpDialogFactory *toolbox_factory);
+static GtkWidget * windows_commands_get_toolbox (GimpDialogFactory *toolbox_factory);
 
 
 static GtkWidget *
-gimp_dialog_factory_get_toolbox (GimpDialogFactory *toolbox_factory)
+windows_commands_get_toolbox (GimpDialogFactory *toolbox_factory)
 {
   GList *list = NULL;
 
@@ -122,7 +122,7 @@ windows_open_recent_cmd_callback (GtkAction *action,
 void
 windows_show_toolbox (void)
 {
-  GtkWidget *toolbox;
+  GtkWidget *toolbox = NULL;
 
   if (! global_toolbox_factory->open_dialogs)
     {
@@ -133,7 +133,7 @@ windows_show_toolbox (void)
     }
   else
     {
-      toolbox = gimp_dialog_factory_get_toolbox (global_toolbox_factory);
+      toolbox = windows_commands_get_toolbox (global_toolbox_factory);
 
       if (toolbox)
         gtk_window_present (GTK_WINDOW (toolbox));
