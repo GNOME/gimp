@@ -13,6 +13,13 @@ are setup.
 GimpDockable      - Represents a dockable dialog.
 GimpDockbook      - A GtkNotebook of GimpDockables
 GimpDock          - A columns of GimpDockbooks
+GimpToolbox       - Subclasses GimpDock, contains the toolbox.
+                    Dockables are added at the bottom
+GimpMenuDock      - Subclasses GimpDock, contains dockables, should
+                    probably be merged with GimpDock. The name
+                    contains "menu" from the time when it hosted the
+                    Image Selection Menu that is now in the
+                    GimpDockWindow
 GimpDockColumns   - A set of GimpDocks arranged side by side.
 GimpDockWindow    - A toplevel window containing a GimpDockColumns.
 GimpImageWindow   - A toplevel window containing images and one
