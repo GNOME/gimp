@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-18 06:09+0300\n"
-"PO-Revision-Date: 2009-12-18 20:34+0300\n"
+"POT-Creation-Date: 2009-12-20 19:17+0300\n"
+"PO-Revision-Date: 2009-12-20 19:18+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -226,7 +226,7 @@ msgid "%s version %s"
 msgstr "%s версии %s"
 
 #: ../app/actions/actions.c:107
-#: ../app/dialogs/dialogs.c:232
+#: ../app/dialogs/dialogs.c:289
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Редактор кистей"
@@ -234,24 +234,24 @@ msgstr "Редактор кистей"
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:110
 #: ../app/core/gimp.c:920
-#: ../app/dialogs/dialogs.c:163
+#: ../app/dialogs/dialogs.c:220
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Brushes"
 msgstr "Кисти"
 
 #: ../app/actions/actions.c:113
-#: ../app/dialogs/dialogs.c:173
+#: ../app/dialogs/dialogs.c:230
 msgid "Buffers"
 msgstr "Буферы"
 
 #: ../app/actions/actions.c:116
-#: ../app/dialogs/dialogs.c:190
+#: ../app/dialogs/dialogs.c:247
 msgid "Channels"
 msgstr "Каналы"
 
 #: ../app/actions/actions.c:119
 #: ../app/dialogs/convert-dialog.c:174
-#: ../app/dialogs/dialogs.c:198
+#: ../app/dialogs/dialogs.c:255
 msgid "Colormap"
 msgstr "Цветовая карта"
 
@@ -264,7 +264,7 @@ msgid "Context"
 msgstr "Контекст"
 
 #: ../app/actions/actions.c:128
-#: ../app/dialogs/dialogs.c:156
+#: ../app/dialogs/dialogs.c:213
 msgid "Pointer Information"
 msgstr "Информация об указателе"
 
@@ -286,7 +286,7 @@ msgstr "Панель"
 
 #. Document History
 #: ../app/actions/actions.c:143
-#: ../app/dialogs/dialogs.c:175
+#: ../app/dialogs/dialogs.c:232
 #: ../app/dialogs/preferences-dialog.c:1604
 msgid "Document History"
 msgstr "Недавние изображения"
@@ -297,12 +297,12 @@ msgstr "Изображение"
 
 #. Some things do not have grids, so just list
 #: ../app/actions/actions.c:149
-#: ../app/dialogs/dialogs.c:181
+#: ../app/dialogs/dialogs.c:238
 msgid "Paint Dynamics"
 msgstr "Динамика рисования"
 
 #: ../app/actions/actions.c:152
-#: ../app/dialogs/dialogs.c:236
+#: ../app/dialogs/dialogs.c:293
 #: ../app/widgets/gimpdynamicseditor.c:90
 msgid "Paint Dynamics Editor"
 msgstr "Редактор динамики рисования"
@@ -312,7 +312,7 @@ msgid "Edit"
 msgstr "Правка"
 
 #: ../app/actions/actions.c:158
-#: ../app/dialogs/dialogs.c:152
+#: ../app/dialogs/dialogs.c:209
 msgid "Error Console"
 msgstr "Консоль ошибок"
 
@@ -321,13 +321,13 @@ msgid "File"
 msgstr "Файл"
 
 #: ../app/actions/actions.c:164
-#: ../app/dialogs/dialogs.c:171
+#: ../app/dialogs/dialogs.c:228
 #: ../app/dialogs/preferences-dialog.c:2762
 msgid "Fonts"
 msgstr "Шрифты"
 
 #: ../app/actions/actions.c:167
-#: ../app/dialogs/dialogs.c:240
+#: ../app/dialogs/dialogs.c:297
 #: ../app/widgets/gimpgradienteditor.c:277
 msgid "Gradient Editor"
 msgstr "Редактор градиентов"
@@ -335,7 +335,7 @@ msgstr "Редактор градиентов"
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:170
 #: ../app/core/gimp.c:936
-#: ../app/dialogs/dialogs.c:167
+#: ../app/dialogs/dialogs.c:224
 #: ../app/dialogs/preferences-dialog.c:2758
 msgid "Gradients"
 msgstr "Градиенты"
@@ -350,18 +350,18 @@ msgstr "Изображение"
 
 #. list & grid views
 #: ../app/actions/actions.c:179
-#: ../app/dialogs/dialogs.c:161
+#: ../app/dialogs/dialogs.c:218
 msgid "Images"
 msgstr "Изображения"
 
 #: ../app/actions/actions.c:182
-#: ../app/dialogs/dialogs.c:186
+#: ../app/dialogs/dialogs.c:243
 #: ../app/dialogs/resize-dialog.c:287
 msgid "Layers"
 msgstr "Слои"
 
 #: ../app/actions/actions.c:185
-#: ../app/dialogs/dialogs.c:244
+#: ../app/dialogs/dialogs.c:301
 #: ../app/widgets/gimppaletteeditor.c:156
 msgid "Palette Editor"
 msgstr "Редактор палитры образцов"
@@ -369,7 +369,7 @@ msgstr "Редактор палитры образцов"
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:188
 #: ../app/core/gimp.c:932
-#: ../app/dialogs/dialogs.c:169
+#: ../app/dialogs/dialogs.c:226
 #: ../app/dialogs/preferences-dialog.c:2754
 msgid "Palettes"
 msgstr "Палитры цветов"
@@ -377,7 +377,7 @@ msgstr "Палитры цветов"
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:191
 #: ../app/core/gimp.c:928
-#: ../app/dialogs/dialogs.c:165
+#: ../app/dialogs/dialogs.c:222
 #: ../app/dialogs/preferences-dialog.c:2750
 msgid "Patterns"
 msgstr "Текстуры"
@@ -393,7 +393,7 @@ msgid "Quick Mask"
 msgstr "Быстрая маска"
 
 #: ../app/actions/actions.c:200
-#: ../app/dialogs/dialogs.c:214
+#: ../app/dialogs/dialogs.c:271
 msgid "Sample Points"
 msgstr "Образцовые точки"
 
@@ -404,7 +404,7 @@ msgstr "Выделение"
 #. initialize the template list
 #: ../app/actions/actions.c:206
 #: ../app/core/gimp.c:945
-#: ../app/dialogs/dialogs.c:177
+#: ../app/dialogs/dialogs.c:234
 msgid "Templates"
 msgstr "Шаблоны"
 
@@ -417,7 +417,7 @@ msgid "Text Editor"
 msgstr "Редактор текста"
 
 #: ../app/actions/actions.c:215
-#: ../app/dialogs/dialogs.c:144
+#: ../app/dialogs/dialogs.c:201
 #: ../app/dialogs/preferences-dialog.c:1876
 #: ../app/gui/gui.c:434
 msgid "Tool Options"
@@ -428,7 +428,7 @@ msgid "Tools"
 msgstr "Инструменты"
 
 #: ../app/actions/actions.c:221
-#: ../app/dialogs/dialogs.c:194
+#: ../app/dialogs/dialogs.c:251
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths"
 msgstr "Контуры"
@@ -2204,8 +2204,8 @@ msgstr "_Файл"
 
 #: ../app/actions/file-actions.c:72
 msgctxt "file-action"
-msgid "Create"
-msgstr "Создать"
+msgid "Crea_te"
+msgstr "Соз_дать"
 
 #: ../app/actions/file-actions.c:73
 msgctxt "file-action"
@@ -2244,8 +2244,8 @@ msgstr "Открыть файл изображения, хранящийся в 
 
 #: ../app/actions/file-actions.c:94
 msgctxt "file-action"
-msgid "Create _Template..."
-msgstr "Создать _шаблон..."
+msgid "Create Template..."
+msgstr "Создать шаблон..."
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
@@ -7137,12 +7137,12 @@ msgid "Brush Hardness"
 msgstr "Жесткость кисти"
 
 #: ../app/core/gimpbrushgenerated.c:158
-#: ../app/paint/gimppaintoptions.c:144
+#: ../app/paint/gimppaintoptions.c:141
 msgid "Brush Aspect Ratio"
 msgstr "Соотношение сторон кисти"
 
 #: ../app/core/gimpbrushgenerated.c:165
-#: ../app/paint/gimppaintoptions.c:148
+#: ../app/paint/gimppaintoptions.c:145
 msgid "Brush Angle"
 msgstr "Угол кисти"
 
@@ -8326,63 +8326,63 @@ msgstr "Невозможно преобразовать в палитру бол
 msgid "GIMP Message"
 msgstr "Сообщение GIMP"
 
-#: ../app/dialogs/dialogs.c:148
+#: ../app/dialogs/dialogs.c:205
 msgid "Devices"
 msgstr "Устройства"
 
-#: ../app/dialogs/dialogs.c:148
+#: ../app/dialogs/dialogs.c:205
 msgid "Device Status"
 msgstr "Состояние устройства"
 
-#: ../app/dialogs/dialogs.c:152
+#: ../app/dialogs/dialogs.c:209
 msgid "Errors"
 msgstr "Ошибки"
 
-#: ../app/dialogs/dialogs.c:156
+#: ../app/dialogs/dialogs.c:213
 msgid "Pointer"
 msgstr "Курсор мыши"
 
-#: ../app/dialogs/dialogs.c:175
+#: ../app/dialogs/dialogs.c:232
 msgid "History"
 msgstr "История"
 
-#: ../app/dialogs/dialogs.c:177
+#: ../app/dialogs/dialogs.c:234
 msgid "Image Templates"
 msgstr "Шаблоны изображений"
 
-#: ../app/dialogs/dialogs.c:202
+#: ../app/dialogs/dialogs.c:259
 msgid "Histogram"
 msgstr "Гистограмма"
 
-#: ../app/dialogs/dialogs.c:206
+#: ../app/dialogs/dialogs.c:263
 msgid "Selection"
 msgstr "Выделение"
 
-#: ../app/dialogs/dialogs.c:206
+#: ../app/dialogs/dialogs.c:263
 msgid "Selection Editor"
 msgstr "Правка выделенной области"
 
-#: ../app/dialogs/dialogs.c:210
+#: ../app/dialogs/dialogs.c:267
 msgid "Undo"
 msgstr "Отменить"
 
-#: ../app/dialogs/dialogs.c:210
+#: ../app/dialogs/dialogs.c:267
 msgid "Undo History"
 msgstr "История действий"
 
-#: ../app/dialogs/dialogs.c:220
+#: ../app/dialogs/dialogs.c:277
 msgid "Navigation"
 msgstr "Навигация"
 
-#: ../app/dialogs/dialogs.c:220
+#: ../app/dialogs/dialogs.c:277
 msgid "Display Navigation"
 msgstr "Окно навигации"
 
-#: ../app/dialogs/dialogs.c:226
+#: ../app/dialogs/dialogs.c:283
 msgid "FG/BG"
 msgstr "Передний план/Фон"
 
-#: ../app/dialogs/dialogs.c:226
+#: ../app/dialogs/dialogs.c:283
 msgid "FG/BG Color"
 msgstr "Цвет переднего плана/фона"
 
@@ -10222,7 +10222,7 @@ msgstr "Недостаточно точек для обводки"
 msgid "Paint"
 msgstr "Рисование"
 
-#: ../app/paint/gimppaintoptions.c:139
+#: ../app/paint/gimppaintoptions.c:136
 msgid "Brush Scale"
 msgstr "Масштаб кисти"
 
@@ -10943,7 +10943,7 @@ msgid "Offset:"
 msgstr "Смещение:"
 
 #: ../app/tools/gimpblendoptions.c:215
-#: ../app/tools/gimppaintoptions-gui.c:308
+#: ../app/tools/gimppaintoptions-gui.c:305
 msgid "Gradient:"
 msgstr "Градиент:"
 
@@ -10954,7 +10954,6 @@ msgstr "Форма:"
 
 #: ../app/tools/gimpblendoptions.c:238
 #: ../app/tools/gimppaintoptions-gui.c:236
-#: ../app/tools/gimppaintoptions-gui.c:332
 msgid "Repeat:"
 msgstr "Повтор:"
 
@@ -12231,7 +12230,6 @@ msgid "Fade out"
 msgstr "Фиксированная длина штриха"
 
 #: ../app/tools/gimppaintoptions-gui.c:221
-#: ../app/tools/gimppaintoptions-gui.c:317
 msgid "Length:"
 msgstr "Длина:"
 
@@ -12248,7 +12246,7 @@ msgstr "Дрожание"
 msgid "Amount:"
 msgstr "Степень:"
 
-#: ../app/tools/gimppaintoptions-gui.c:291
+#: ../app/tools/gimppaintoptions-gui.c:288
 msgid "Use color from gradient"
 msgstr "Взять цвет из градиента"
 
