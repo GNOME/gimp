@@ -260,7 +260,7 @@ gimp_image_window_constructor (GType                  type,
                     G_CALLBACK (gimp_image_window_hide_tooltip),
                     window);
 
-  config = GIMP_GUI_CONFIG (private->display_factory->context->gimp->config);
+  config = GIMP_GUI_CONFIG (gimp_dialog_factory_get_context (private->display_factory)->gimp->config);
 
   /* Create the window toplevel container */
   private->main_vbox = gtk_vbox_new (FALSE, 0);

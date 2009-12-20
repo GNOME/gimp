@@ -111,7 +111,7 @@ windows_menu_setup (GimpUIManager *manager,
                            G_CALLBACK (windows_menu_dock_window_removed),
                            manager, 0);
 
-  for (list = global_dock_window_factory->open_dialogs;
+  for (list = gimp_dialog_factory_get_open_dialogs (global_dock_window_factory);
        list;
        list = g_list_next (list))
     {

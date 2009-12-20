@@ -368,23 +368,26 @@ gimp_dock_window_constructor (GType                  type,
                                   ~(GIMP_CONTEXT_IMAGE_MASK |
                                     GIMP_CONTEXT_DISPLAY_MASK),
                                   FALSE);
-  gimp_context_set_parent (dock_window->p->context, dock_window->p->dialog_factory->context);
+  gimp_context_set_parent (dock_window->p->context,
+                           gimp_dialog_factory_get_context (dock_window->p->dialog_factory));
 
   if (dock_window->p->auto_follow_active)
     {
-      if (gimp_context_get_display (dock_window->p->dialog_factory->context))
-        gimp_context_copy_property (dock_window->p->dialog_factory->context, dock_window->p->context,
+      if (gimp_context_get_display (gimp_dialog_factory_get_context (dock_window->p->dialog_factory)))
+        gimp_context_copy_property (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
+                                    dock_window->p->context,
                                     GIMP_CONTEXT_PROP_DISPLAY);
       else
-        gimp_context_copy_property (dock_window->p->dialog_factory->context, dock_window->p->context,
+        gimp_context_copy_property (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
+                                    dock_window->p->context,
                                     GIMP_CONTEXT_PROP_IMAGE);
     }
 
-  g_signal_connect_object (dock_window->p->dialog_factory->context, "display-changed",
+  g_signal_connect_object (gimp_dialog_factory_get_context (dock_window->p->dialog_factory), "display-changed",
                            G_CALLBACK (gimp_dock_window_factory_display_changed),
                            dock_window,
                            0);
-  g_signal_connect_object (dock_window->p->dialog_factory->context, "image-changed",
+  g_signal_connect_object (gimp_dialog_factory_get_context (dock_window->p->dialog_factory), "image-changed",
                            G_CALLBACK (gimp_dock_window_factory_image_changed),
                            dock_window,
                            0);
@@ -826,7 +829,7 @@ gimp_dock_window_auto_clicked (GtkWidget *widget,
 
   if (dock_window->p->auto_follow_active)
     {
-      gimp_context_copy_properties (dock_window->p->dialog_factory->context,
+      gimp_context_copy_properties (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
                                     dock_window->p->context,
                                     GIMP_CONTEXT_DISPLAY_MASK |
                                     GIMP_CONTEXT_IMAGE_MASK);

@@ -952,7 +952,7 @@ gimp_text_tool_get_popup (GimpTool         *tool,
           dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
           text_tool->ui_manager =
-            gimp_menu_factory_manager_new (dialog_factory->menu_factory,
+            gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),
                                            "<TextTool>",
                                            text_tool, FALSE);
 
@@ -2246,7 +2246,7 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
     }
 
   text_tool->editor = gimp_text_options_editor_new (parent, options,
-                                                    dialog_factory->menu_factory,
+                                                    gimp_dialog_factory_get_menu_factory (dialog_factory),
                                                     _("GIMP Text Editor"),
                                                     text_tool->text_buffer);
 

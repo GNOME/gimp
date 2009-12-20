@@ -157,7 +157,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
                                           GimpDialogFactory *dialog_factory,
                                           GimpDockColumns   *dock_columns)
 {
-  GList *dialogs     = g_list_copy (dialog_factory->open_dialogs);
+  GList *dialogs     = g_list_copy (gimp_dialog_factory_get_open_dialogs (dialog_factory));
   GList *dialog_iter = NULL;
 
   for (dialog_iter = dialogs; dialog_iter; dialog_iter = dialog_iter->next)

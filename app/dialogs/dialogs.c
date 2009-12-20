@@ -498,7 +498,7 @@ dialogs_get_toolbox (void)
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_toolbox_factory), NULL);
 
-  for (list = global_toolbox_factory->open_dialogs;
+  for (list = gimp_dialog_factory_get_open_dialogs (global_toolbox_factory);
        list;
        list = g_list_next (list))
     {

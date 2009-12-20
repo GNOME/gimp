@@ -62,6 +62,12 @@ enum
 
 struct _GimpDialogFactoryPrivate
 {
+  GimpContext           *context;
+  GimpMenuFactory       *menu_factory;
+
+  GList                 *open_dialogs;
+  GList                 *session_infos;
+
   GimpDialogNewFunc      new_dock_window_func;
   GimpDialogNewDockFunc  new_dock_func;
   GimpDialogConstructor  constructor;
@@ -160,10 +166,6 @@ gimp_dialog_factory_init (GimpDialogFactory *factory)
                                             GIMP_TYPE_DIALOG_FACTORY,
                                             GimpDialogFactoryPrivate);
   factory->p->constructor = gimp_dialog_factory_default_constructor;
-
-  factory->menu_factory   = NULL;
-  factory->session_infos  = NULL;
-  factory->open_dialogs   = NULL;
 }
 
 static void
@@ -175,11 +177,11 @@ gimp_dialog_factory_dispose (GObject *object)
 
   /*  start iterating from the beginning each time we destroyed a
    *  toplevel because destroying a dock may cause lots of items
-   *  to be removed from factory->open_dialogs
+   *  to be removed from factory->p->open_dialogs
    */
-  while (factory->open_dialogs)
+  while (factory->p->open_dialogs)
     {
-      for (list = factory->open_dialogs; list; list = g_list_next (list))
+      for (list = factory->p->open_dialogs; list; list = g_list_next (list))
         {
           if (gtk_widget_is_toplevel (list->data))
             {
@@ -193,23 +195,23 @@ gimp_dialog_factory_dispose (GObject *object)
        */
       if (! list)
         {
-          g_warning ("%s: stale non-toplevel entries in factory->open_dialogs",
+          g_warning ("%s: stale non-toplevel entries in factory->p->open_dialogs",
                      G_STRFUNC);
           break;
         }
     }
 
-  if (factory->open_dialogs)
+  if (factory->p->open_dialogs)
     {
-      g_list_free (factory->open_dialogs);
-      factory->open_dialogs = NULL;
+      g_list_free (factory->p->open_dialogs);
+      factory->p->open_dialogs = NULL;
     }
 
-  if (factory->session_infos)
+  if (factory->p->session_infos)
     {
-      g_list_foreach (factory->session_infos, (GFunc) g_object_unref, NULL);
-      g_list_free (factory->session_infos);
-      factory->session_infos = NULL;
+      g_list_foreach (factory->p->session_infos, (GFunc) g_object_unref, NULL);
+      g_list_free (factory->p->session_infos);
+      factory->p->session_infos = NULL;
     }
 
   if (strcmp (gimp_object_get_name (factory), "toolbox") == 0)
@@ -286,8 +288,8 @@ gimp_dialog_factory_new (const gchar           *name,
   g_hash_table_insert (GIMP_DIALOG_FACTORY_GET_CLASS (factory)->factories,
                        key, factory);
 
-  factory->context              = context;
-  factory->menu_factory         = menu_factory;
+  factory->p->context           = context;
+  factory->p->menu_factory      = menu_factory;
   factory->p->new_dock_func     = new_dock_func;
   factory->p->toggle_visibility = toggle_visibility;
 
@@ -404,7 +406,7 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
-  for (list = factory->session_infos; list; list = g_list_next (list))
+  for (list = factory->p->session_infos; list; list = g_list_next (list))
     {
       GimpSessionInfo *info = list->data;
 
@@ -513,7 +515,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
           GtkWidget *dockbook;
 
           dock     = gimp_dialog_factory_dock_with_window_new (factory, screen);
-          dockbook = gimp_dockbook_new (factory->menu_factory);
+          dockbook = gimp_dockbook_new (factory->p->menu_factory);
 
           gimp_dock_add_book (GIMP_DOCK (dock),
                               GIMP_DOCKBOOK (dockbook),
@@ -539,7 +541,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                           view_size);
       else
         dialog = factory->p->constructor (factory, entry,
-                                          factory->context,
+                                          factory->p->context,
                                           view_size);
 
       if (dialog)
@@ -656,11 +658,52 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 
   return gimp_dialog_factory_dialog_new_internal (factory,
                                                   screen,
-                                                  factory->context,
+                                                  factory->p->context,
                                                   identifier,
                                                   view_size,
                                                   FALSE,
                                                   present);
+}
+
+GimpContext *
+gimp_dialog_factory_get_context (GimpDialogFactory *factory)
+{
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+
+  return factory->p->context;
+}
+
+GimpMenuFactory *
+gimp_dialog_factory_get_menu_factory (GimpDialogFactory *factory)
+{
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+
+  return factory->p->menu_factory;
+}
+
+GList *
+gimp_dialog_factory_get_open_dialogs (GimpDialogFactory *factory)
+{
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+
+  return factory->p->open_dialogs;
+}
+
+GList *
+gimp_dialog_factory_get_session_infos (GimpDialogFactory *factory)
+{
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+
+  return factory->p->session_infos;
+}
+
+void
+gimp_dialog_factory_add_session_info (GimpDialogFactory *factory,
+                                      GimpSessionInfo   *info)
+{
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+  
+  factory->p->session_infos = g_list_append (factory->p->session_infos, info);
 }
 
 /**
@@ -834,7 +877,7 @@ gimp_dialog_factory_dock_window_new (GimpDialogFactory *factory,
   g_return_val_if_fail (factory->p->new_dock_window_func != NULL, NULL);
 
   /* Create the dock window */
-  dock_window = factory->p->new_dock_window_func (factory, factory->context, 0);
+  dock_window = factory->p->new_dock_window_func (factory, factory->p->context, 0);
   gtk_window_set_screen (GTK_WINDOW (dock_window), screen);
   gimp_dialog_factory_set_widget_data (dock_window, factory, NULL);
   
@@ -856,7 +899,7 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory,
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
   g_return_val_if_fail (ui_manager != NULL, NULL);
 
-  return factory->p->new_dock_func (factory, factory->context, ui_manager);
+  return factory->p->new_dock_func (factory, factory->p->context, ui_manager);
 }
 
 void
@@ -872,7 +915,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GTK_IS_WIDGET (dialog));
 
-  if (g_list_find (factory->open_dialogs, dialog))
+  if (g_list_find (factory->p->open_dialogs, dialog))
     {
       g_warning ("%s: dialog already registered", G_STRFUNC);
       return;
@@ -894,7 +937,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                 toplevel ? "toplevel" : "dockable",
                 entry->identifier);
 
-      for (list = factory->session_infos; list; list = g_list_next (list))
+      for (list = factory->p->session_infos; list; list = g_list_next (list))
         {
           GimpSessionInfo *current_info = list->data;
 
@@ -962,14 +1005,14 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                               G_CALLBACK (gimp_dialog_factory_set_user_pos),
                               NULL);
 
-          factory->session_infos = g_list_append (factory->session_infos, info);
+          factory->p->session_infos = g_list_append (factory->p->session_infos, info);
         }
     }
   else /*  dialog is a GimpDockWindow  */
     {
       GIMP_LOG (DIALOG_FACTORY, "adding dock (dialog = %p)", dialog);
 
-      for (list = factory->session_infos; list; list = g_list_next (list))
+      for (list = factory->p->session_infos; list; list = g_list_next (list))
         {
           GimpSessionInfo *current_info = list->data;
 
@@ -1013,13 +1056,13 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                             G_CALLBACK (gimp_dialog_factory_set_user_pos),
                             NULL);
 
-          factory->session_infos = g_list_append (factory->session_infos, info);
+          factory->p->session_infos = g_list_append (factory->p->session_infos, info);
         }
 
       g_signal_emit (factory, factory_signals[DOCK_WINDOW_ADDED], 0, dialog);
     }
 
-  factory->open_dialogs = g_list_prepend (factory->open_dialogs, dialog);
+  factory->p->open_dialogs = g_list_prepend (factory->p->open_dialogs, dialog);
 
   g_signal_connect_object (dialog, "destroy",
                            G_CALLBACK (gimp_dialog_factory_remove_dialog),
@@ -1087,13 +1130,13 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GTK_IS_WIDGET (dialog));
 
-  if (! g_list_find (factory->open_dialogs, dialog))
+  if (! g_list_find (factory->p->open_dialogs, dialog))
     {
       g_warning ("%s: dialog not registered", G_STRFUNC);
       return;
     }
 
-  factory->open_dialogs = g_list_remove (factory->open_dialogs, dialog);
+  factory->p->open_dialogs = g_list_remove (factory->p->open_dialogs, dialog);
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
@@ -1107,7 +1150,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
             entry ? entry->identifier : "dock",
             dialog);
 
-  for (list = factory->session_infos; list; list = g_list_next (list))
+  for (list = factory->p->session_infos; list; list = g_list_next (list))
     {
       GimpSessionInfo *session_info = list->data;
 
@@ -1137,7 +1180,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
           if (GIMP_IS_DOCK_WINDOW (dialog))
             {
               /*  don't save session info for empty docks  */
-              factory->session_infos = g_list_remove (factory->session_infos,
+              factory->p->session_infos = g_list_remove (factory->p->session_infos,
                                                       session_info);
               g_object_unref (session_info);
 
@@ -1423,7 +1466,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
   GimpDialogFactoryEntry *entry;
   GList                  *list;
 
-  if (! g_list_find (factory->open_dialogs, dialog))
+  if (! g_list_find (factory->p->open_dialogs, dialog))
     {
       g_warning ("%s: dialog not registered", G_STRFUNC);
       return FALSE;
@@ -1437,7 +1480,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
                                          dialog))
     return FALSE;
 
-  for (list = factory->session_infos; list; list = g_list_next (list))
+  for (list = factory->p->session_infos; list; list = g_list_next (list))
     {
       GimpSessionInfo *session_info = list->data;
 
@@ -1468,7 +1511,7 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
 {
   GList *infos;
 
-  for (infos = factory->session_infos; infos; infos = g_list_next (infos))
+  for (infos = factory->p->session_infos; infos; infos = g_list_next (infos))
     {
       GimpSessionInfo *info = infos->data;
 
@@ -1508,7 +1551,7 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
 {
   GList *infos;
 
-  for (infos = factory->session_infos; infos; infos = g_list_next (infos))
+  for (infos = factory->p->session_infos; infos; infos = g_list_next (infos))
     {
       GimpSessionInfo *info = infos->data;
 
@@ -1533,7 +1576,7 @@ gimp_dialog_factories_clear_foreach (gconstpointer      key,
 {
   GList *list;
 
-  for (list = factory->session_infos; list; list = g_list_next (list))
+  for (list = factory->p->session_infos; list; list = g_list_next (list))
     {
       GimpSessionInfo *info = list->data;
 
@@ -1554,7 +1597,7 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
   if (! factory->p->toggle_visibility)
     return;
 
-  for (list = factory->open_dialogs; list; list = g_list_next (list))
+  for (list = factory->p->open_dialogs; list; list = g_list_next (list))
     {
       GtkWidget *widget = list->data;
 
@@ -1591,7 +1634,7 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
 {
   GList *list;
 
-  for (list = factory->open_dialogs; list; list = g_list_next (list))
+  for (list = factory->p->open_dialogs; list; list = g_list_next (list))
     {
       GtkWidget *widget = list->data;
 
@@ -1631,7 +1674,7 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
   GdkCursor  *cursor  = NULL;
   GList      *list;
 
-  for (list = factory->open_dialogs; list; list = g_list_next (list))
+  for (list = factory->p->open_dialogs; list; list = g_list_next (list))
     {
       GtkWidget *widget = list->data;
 
@@ -1667,7 +1710,7 @@ gimp_dialog_factories_unset_busy_foreach (gconstpointer      key,
 {
   GList *list;
 
-  for (list = factory->open_dialogs; list; list = g_list_next (list))
+  for (list = factory->p->open_dialogs; list; list = g_list_next (list))
     {
       GtkWidget *widget = list->data;
 

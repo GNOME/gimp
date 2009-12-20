@@ -91,12 +91,6 @@ struct _GimpDialogFactory
 {
   GimpObject                parent_instance;
 
-  GimpContext              *context;
-  GimpMenuFactory          *menu_factory;
-
-  GList                    *open_dialogs;
-  GList                    *session_infos;
-
   GimpDialogFactoryPrivate *p;
 };
 
@@ -146,6 +140,12 @@ GtkWidget *         gimp_dialog_factory_dialog_new           (GimpDialogFactory 
                                                               const gchar             *identifier,
                                                               gint                     view_size,
                                                               gboolean                 present);
+GimpContext *       gimp_dialog_factory_get_context          (GimpDialogFactory       *factory);
+GimpMenuFactory *   gimp_dialog_factory_get_menu_factory     (GimpDialogFactory       *factory);
+GList *             gimp_dialog_factory_get_open_dialogs     (GimpDialogFactory       *factory);
+GList *             gimp_dialog_factory_get_session_infos    (GimpDialogFactory       *factory);
+void                gimp_dialog_factory_add_session_info     (GimpDialogFactory       *factory,
+                                                              GimpSessionInfo         *info);
 GtkWidget *         gimp_dialog_factory_dialog_raise         (GimpDialogFactory       *factory,
                                                               GdkScreen               *screen,
                                                               const gchar             *identifiers,

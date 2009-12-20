@@ -180,8 +180,7 @@ session_init (Gimp *gimp)
                                 "successfully parsed and added session info %p",
                                 info);
 
-                      factory->session_infos =
-                        g_list_append (factory->session_infos, info);
+                      gimp_dialog_factory_add_session_info (factory, info);
                     }
                   else
                     {

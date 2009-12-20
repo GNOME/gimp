@@ -49,7 +49,9 @@ windows_commands_get_toolbox (GimpDialogFactory *toolbox_factory)
 {
   GList *list = NULL;
 
-  for (list = toolbox_factory->open_dialogs; list; list = list->next)
+  for (list = gimp_dialog_factory_get_open_dialogs (toolbox_factory);
+       list;
+       list = list->next)
     {
       /* The only toplevel widget in the toolbox factory is the
        * toolbox
@@ -112,8 +114,7 @@ windows_open_recent_cmd_callback (GtkAction *action,
   g_object_ref (info);
   gimp_container_remove (global_recent_docks, GIMP_OBJECT (info));
 
-  global_dock_window_factory->session_infos =
-    g_list_append (global_dock_window_factory->session_infos, info);
+  gimp_dialog_factory_add_session_info (global_dock_window_factory, info);
 
   gimp_session_info_restore (info, global_dock_window_factory);
   gimp_session_info_clear_info (info);
@@ -124,7 +125,7 @@ windows_show_toolbox (void)
 {
   GtkWidget *toolbox = NULL;
 
-  if (! global_toolbox_factory->open_dialogs)
+  if (! gimp_dialog_factory_get_open_dialogs (global_toolbox_factory))
     {
       toolbox = gimp_dialog_factory_dock_with_window_new (global_toolbox_factory,
                                                           gdk_screen_get_default ());
