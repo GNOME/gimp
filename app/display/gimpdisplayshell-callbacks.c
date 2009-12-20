@@ -1336,6 +1336,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  */
                 if ((gimp_tool_control_get_motion_mode (active_tool->control) ==
                      GIMP_MOTION_MODE_EXACT) &&
+                    shell->display->config->use_event_history &&
                     gdk_device_get_history (mevent->device, mevent->window,
                                             shell->last_read_motion_time + 1,
                                             mevent->time - 1,

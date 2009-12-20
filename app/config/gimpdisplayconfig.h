@@ -73,6 +73,7 @@ struct _GimpDisplayConfig
   GimpSpaceBarAction  space_bar_action;
   GimpRGB             xor_color;
   GimpZoomQuality     zoom_quality;
+  gboolean            use_event_history;
 };
 
 struct _GimpDisplayConfigClass

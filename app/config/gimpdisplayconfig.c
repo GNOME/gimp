@@ -40,6 +40,7 @@
 #define DEFAULT_ACTIVATE_ON_FOCUS    TRUE
 #define DEFAULT_MONITOR_RESOLUTION   96.0
 #define DEFAULT_MARCHING_ANTS_SPEED  200
+#define DEFAULT_USE_EVENT_HISTORY    FALSE
 
 enum
 {
@@ -73,7 +74,8 @@ enum
   PROP_ACTIVATE_ON_FOCUS,
   PROP_SPACE_BAR_ACTION,
   PROP_XOR_COLOR,
-  PROP_ZOOM_QUALITY
+  PROP_ZOOM_QUALITY,
+  PROP_USE_EVENT_HISTORY
 };
 
 
@@ -262,6 +264,12 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                  GIMP_TYPE_ZOOM_QUALITY,
                                  GIMP_ZOOM_QUALITY_HIGH,
                                  GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_EVENT_HISTORY,
+                                    "use-event-history",
+                                    DEFAULT_USE_EVENT_HISTORY_BLURB,
+                                    DEFAULT_USE_EVENT_HISTORY,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -407,6 +415,10 @@ gimp_display_config_set_property (GObject      *object,
       display_config->zoom_quality = g_value_get_enum (value);
       break;
 
+    case PROP_USE_EVENT_HISTORY:
+      display_config->use_event_history = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -512,6 +524,10 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_ZOOM_QUALITY:
       g_value_set_enum (value, display_config->zoom_quality);
+      break;
+
+    case PROP_USE_EVENT_HISTORY:
+      g_value_set_boolean (value, display_config->use_event_history);
       break;
 
     default:
