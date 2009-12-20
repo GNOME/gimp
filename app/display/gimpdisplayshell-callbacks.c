@@ -1311,6 +1311,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 (! gimp_image_is_empty (image) ||
                  gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
+                GdkTimeCoord **history_events;
+                gint           n_history_events;
 
                 /*  if the first mouse button is down, check for automatic
                  *  scrolling...
@@ -1324,19 +1326,89 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     gimp_display_shell_autoscroll_start (shell, state, mevent);
                   }
 
-                /* Early removal of useless events saves CPU time. */
-                if (gimp_display_shell_eval_event (shell,
-                                                   &image_coords,
-                                                   active_tool->max_coord_smooth,
-                                                   time))
+                /* gdk_device_get_history() has several quirks. First is
+                 * that events with borderline timestamps at both ends
+                 * are included. Because of that we need to add 1 to
+                 * lower border. The second is due to poor X event
+                 * resolution. We need to do -1 to ensure that the
+                 * amount of events between timestamps is final or
+                 * risk loosing some.
+                 */
+                if ((gimp_tool_control_get_motion_mode (active_tool->control) ==
+                     GIMP_MOTION_MODE_EXACT) &&
+                    gdk_device_get_history (mevent->device, mevent->window,
+                                            shell->last_read_motion_time + 1,
+                                            mevent->time - 1,
+                                            &history_events,
+                                            &n_history_events))
                   {
-                    gimp_display_shell_process_tool_event_queue (shell,
-                                                                 state,
-                                                                 time);
+                    gint i;
+
+                    tool_manager_control_active (gimp, GIMP_TOOL_ACTION_PAUSE,
+                                                 display);
+
+                    for (i = 0; i < n_history_events; i++)
+                      {
+                        gimp_display_shell_get_time_coords (shell,
+                                                            mevent->device,
+                                                            history_events[i],
+                                                            &display_coords);
+
+                        /*  GimpCoords passed to tools are ALWAYS in
+                         *  image coordinates
+                         */
+                        gimp_display_shell_untransform_coordinate (shell,
+                                                                   &display_coords,
+                                                                   &image_coords);
+
+                        if (gimp_tool_control_get_snap_to (active_tool->control))
+                          {
+                            gint x, y, width, height;
+
+                            gimp_tool_control_get_snap_offsets (active_tool->control,
+                                                                &x, &y, &width, &height);
+
+                            gimp_display_shell_snap_coords (shell,
+                                                            &image_coords,
+                                                            x, y, width, height);
+                          }
+
+                        /* Early removal of useless events saves CPU time.
+                         */
+                        if (gimp_display_shell_eval_event (shell,
+                                                           &image_coords,
+                                                           active_tool->max_coord_smooth,
+                                                           history_events[i]->time))
+                          {
+                            gimp_display_shell_process_tool_event_queue (shell,
+                                                                         state,
+                                                                         history_events[i]->time);
+                          }
+
+                         shell->last_read_motion_time = history_events[i]->time;
+                      }
+
+                    tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME,
+                                                 display);
+
+                    gdk_device_free_history (history_events, n_history_events);
                   }
+                else
+                  {
+                    /* Early removal of useless events saves CPU time.
+                     */
+                    if (gimp_display_shell_eval_event (shell,
+                                                       &image_coords,
+                                                       active_tool->max_coord_smooth,
+                                                       time))
+                      {
+                        gimp_display_shell_process_tool_event_queue (shell,
+                                                                     state,
+                                                                     time);
+                      }
 
-                shell->last_read_motion_time = time;
-
+                    shell->last_read_motion_time = time;
+                  }
               }
           }
 
