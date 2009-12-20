@@ -60,45 +60,43 @@ enum
 };
 
 
-static void   gimp_dialog_factory_dispose             (GObject           *object);
-static void   gimp_dialog_factory_finalize            (GObject           *object);
-
-static GtkWidget *
-              gimp_dialog_factory_default_constructor (GimpDialogFactory *factory,
-                                                       GimpDialogFactoryEntry *entry,
-                                                       GimpContext       *context,
-                                                       gint               view_size);
-static void     gimp_dialog_factory_set_widget_data   (GtkWidget         *dialog,
-                                                       GimpDialogFactory *factory,
-                                                       GimpDialogFactoryEntry *entry);
-static void     gimp_dialog_factory_unset_widget_data (GtkWidget         *dialog);
-static gboolean gimp_dialog_factory_set_user_pos      (GtkWidget         *dialog,
-                                                       GdkEventConfigure *cevent,
-                                                       gpointer           data);
-static gboolean gimp_dialog_factory_dialog_configure  (GtkWidget         *dialog,
-                                                       GdkEventConfigure *cevent,
-                                                       GimpDialogFactory *factory);
-static void   gimp_dialog_factories_save_foreach      (gconstpointer      key,
-                                                       GimpDialogFactory *factory,
-                                                       GimpConfigWriter  *writer);
-static void   gimp_dialog_factories_restore_foreach   (gconstpointer      key,
-                                                       GimpDialogFactory *factory,
-                                                       gpointer           data);
-static void   gimp_dialog_factories_clear_foreach     (gconstpointer      key,
-                                                       GimpDialogFactory *factory,
-                                                       gpointer           data);
-static void   gimp_dialog_factories_hide_foreach      (gconstpointer      key,
-                                                       GimpDialogFactory *factory,
-                                                       gpointer           data);
-static void   gimp_dialog_factories_show_foreach      (gconstpointer      key,
-                                                       GimpDialogFactory *factory,
-                                                       gpointer           data);
-static void   gimp_dialog_factories_set_busy_foreach  (gconstpointer      key,
-                                                       GimpDialogFactory *factory,
-                                                       gpointer           data);
-static void   gimp_dialog_factories_unset_busy_foreach(gconstpointer      key,
-                                                       GimpDialogFactory *factory,
-                                                       gpointer           data);
+static void        gimp_dialog_factory_dispose              (GObject                *object);
+static void        gimp_dialog_factory_finalize             (GObject                *object);
+static GtkWidget * gimp_dialog_factory_default_constructor  (GimpDialogFactory      *factory,
+                                                             GimpDialogFactoryEntry *entry,
+                                                             GimpContext            *context,
+                                                             gint                    view_size);
+static void        gimp_dialog_factory_set_widget_data      (GtkWidget              *dialog,
+                                                             GimpDialogFactory      *factory,
+                                                             GimpDialogFactoryEntry *entry);
+static void        gimp_dialog_factory_unset_widget_data    (GtkWidget              *dialog);
+static gboolean    gimp_dialog_factory_set_user_pos         (GtkWidget              *dialog,
+                                                             GdkEventConfigure      *cevent,
+                                                             gpointer                data);
+static gboolean    gimp_dialog_factory_dialog_configure     (GtkWidget              *dialog,
+                                                             GdkEventConfigure      *cevent,
+                                                             GimpDialogFactory      *factory);
+static void        gimp_dialog_factories_save_foreach       (gconstpointer           key,
+                                                             GimpDialogFactory      *factory,
+                                                             GimpConfigWriter       *writer);
+static void        gimp_dialog_factories_restore_foreach    (gconstpointer           key,
+                                                             GimpDialogFactory      *factory,
+                                                             gpointer                data);
+static void        gimp_dialog_factories_clear_foreach      (gconstpointer           key,
+                                                             GimpDialogFactory      *factory,
+                                                             gpointer                data);
+static void        gimp_dialog_factories_hide_foreach       (gconstpointer           key,
+                                                             GimpDialogFactory      *factory,
+                                                             gpointer                data);
+static void        gimp_dialog_factories_show_foreach       (gconstpointer           key,
+                                                             GimpDialogFactory      *factory,
+                                                             gpointer                data);
+static void        gimp_dialog_factories_set_busy_foreach   (gconstpointer           key,
+                                                             GimpDialogFactory      *factory,
+                                                             gpointer                data);
+static void        gimp_dialog_factories_unset_busy_foreach (gconstpointer           key,
+                                                             GimpDialogFactory      *factory,
+                                                             gpointer                data);
 
 
 G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
