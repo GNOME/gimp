@@ -220,11 +220,11 @@ dialogs_toolbox_new (GimpDialogFactory *factory,
                      GimpContext       *context,
                      GimpUIManager     *ui_manager)
 {
-  /*  we pass "global_dock_factory", _not_ "global_toolbox_factory" to
-   *  the toolbox constructor, because the global_toolbox_factory has no
-   *  dockables registered
+  /*  we pass "global_dock_window_factory", _not_
+   *  "global_toolbox_factory" to the toolbox constructor, because the
+   *  global_toolbox_factory has no dockables registered
    */
-  return gimp_toolbox_new (global_dock_factory,
+  return gimp_toolbox_new (global_dock_window_factory,
                            context,
                            ui_manager);
 }

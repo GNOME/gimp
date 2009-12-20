@@ -271,7 +271,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer *ui_configurer,
        */
       dialog_factory = (GIMP_IS_TOOLBOX (dock) ?
                         global_toolbox_factory :
-                        global_dock_factory);
+                        global_dock_window_factory);
 
       /* Create a dock window to put the dock in */
       dock_window = gimp_dialog_factory_dock_window_new (dialog_factory,
@@ -312,7 +312,7 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
                                                 NULL,
                                                 global_menu_factory,
                                                 global_display_factory,
-                                                global_dock_factory);
+                                                global_dock_window_factory);
       /* Move the shell there */
       shell = gimp_image_window_get_shell (source_image_window, 1);
 
@@ -365,7 +365,7 @@ gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
    * window
    */
   gimp_ui_configurer_move_docks_to_columns (ui_configurer,
-                                            global_dock_factory,
+                                            global_dock_window_factory,
                                             right_docks);
 
   /* Show the docks in the window */
