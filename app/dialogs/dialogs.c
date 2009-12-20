@@ -333,7 +333,7 @@ dialogs_init (Gimp            *gimp,
   gimp_dialog_factory_set_dock_window_func (global_toolbox_factory,
                                             dialogs_toolbox_dock_window_new);
 
-  /* Dock */
+  /* Dock window */
   global_dock_window_factory = gimp_dialog_factory_new ("dock",
                                                         gimp_get_user_context (gimp),
                                                         menu_factory,
