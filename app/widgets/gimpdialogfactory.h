@@ -77,7 +77,8 @@ struct _GimpDialogFactoryEntry
 #define GIMP_DIALOG_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactoryClass))
 
 
-typedef struct _GimpDialogFactoryClass  GimpDialogFactoryClass;
+typedef struct _GimpDialogFactoryPrivate  GimpDialogFactoryPrivate;
+typedef struct _GimpDialogFactoryClass    GimpDialogFactoryClass;
 
 /**
  * GimpDialogFactory:
@@ -88,21 +89,15 @@ typedef struct _GimpDialogFactoryClass  GimpDialogFactoryClass;
  */
 struct _GimpDialogFactory
 {
-  GimpObject             parent_instance;
+  GimpObject                parent_instance;
 
-  GimpContext           *context;
-  GimpMenuFactory       *menu_factory;
+  GimpContext              *context;
+  GimpMenuFactory          *menu_factory;
 
-  /*< private >*/
-  GimpDialogNewFunc      new_dock_window_func;
-  GimpDialogNewDockFunc  new_dock_func;
-  GimpDialogConstructor  constructor;
+  GList                    *open_dialogs;
+  GList                    *session_infos;
 
-  GList                 *registered_dialogs;
-  GList                 *session_infos;
-
-  GList                 *open_dialogs;
-  gboolean               toggle_visibility;
+  GimpDialogFactoryPrivate *p;
 };
 
 struct _GimpDialogFactoryClass

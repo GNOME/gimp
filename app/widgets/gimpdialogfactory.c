@@ -60,6 +60,18 @@ enum
 };
 
 
+struct _GimpDialogFactoryPrivate
+{
+  GimpDialogNewFunc      new_dock_window_func;
+  GimpDialogNewDockFunc  new_dock_func;
+  GimpDialogConstructor  constructor;
+
+  GList                 *registered_dialogs;
+
+  gboolean               toggle_visibility;
+};
+
+
 static void        gimp_dialog_factory_dispose              (GObject                *object);
 static void        gimp_dialog_factory_finalize             (GObject                *object);
 static GtkWidget * gimp_dialog_factory_default_constructor  (GimpDialogFactory      *factory,
@@ -137,18 +149,21 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCK_WINDOW);
+
+  g_type_class_add_private (klass, sizeof (GimpDialogFactoryPrivate));
 }
 
 static void
 gimp_dialog_factory_init (GimpDialogFactory *factory)
 {
-  factory->menu_factory       = NULL;
-  factory->new_dock_func      = NULL;
-  factory->constructor        = gimp_dialog_factory_default_constructor;
-  factory->registered_dialogs = NULL;
-  factory->session_infos      = NULL;
-  factory->open_dialogs       = NULL;
-  factory->toggle_visibility  = FALSE;
+  factory->p = G_TYPE_INSTANCE_GET_PRIVATE (factory,
+                                            GIMP_TYPE_DIALOG_FACTORY,
+                                            GimpDialogFactoryPrivate);
+  factory->p->constructor = gimp_dialog_factory_default_constructor;
+
+  factory->menu_factory   = NULL;
+  factory->session_infos  = NULL;
+  factory->open_dialogs   = NULL;
 }
 
 static void
@@ -214,7 +229,7 @@ gimp_dialog_factory_finalize (GObject *object)
   GimpDialogFactory *factory = GIMP_DIALOG_FACTORY (object);
   GList             *list;
 
-  for (list = factory->registered_dialogs; list; list = g_list_next (list))
+  for (list = factory->p->registered_dialogs; list; list = g_list_next (list))
     {
       GimpDialogFactoryEntry *entry = list->data;
 
@@ -227,10 +242,10 @@ gimp_dialog_factory_finalize (GObject *object)
       g_slice_free (GimpDialogFactoryEntry, entry);
     }
 
-  if (factory->registered_dialogs)
+  if (factory->p->registered_dialogs)
     {
-      g_list_free (factory->registered_dialogs);
-      factory->registered_dialogs = NULL;
+      g_list_free (factory->p->registered_dialogs);
+      factory->p->registered_dialogs = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -271,10 +286,10 @@ gimp_dialog_factory_new (const gchar           *name,
   g_hash_table_insert (GIMP_DIALOG_FACTORY_GET_CLASS (factory)->factories,
                        key, factory);
 
-  factory->context           = context;
-  factory->menu_factory      = menu_factory;
-  factory->new_dock_func     = new_dock_func;
-  factory->toggle_visibility = toggle_visibility;
+  factory->context              = context;
+  factory->menu_factory         = menu_factory;
+  factory->p->new_dock_func     = new_dock_func;
+  factory->p->toggle_visibility = toggle_visibility;
 
   return factory;
 }
@@ -310,7 +325,7 @@ gimp_dialog_factory_set_constructor (GimpDialogFactory     *factory,
   if (! constructor)
     constructor = gimp_dialog_factory_default_constructor;
 
-  factory->constructor = constructor;
+  factory->p->constructor = constructor;
 }
 
 void
@@ -320,7 +335,7 @@ gimp_dialog_factory_set_dock_window_func (GimpDialogFactory *factory,
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (new_dock_window_func != NULL);
 
-  factory->new_dock_window_func = new_dock_window_func;
+  factory->p->new_dock_window_func = new_dock_window_func;
 }
 
 void
@@ -356,8 +371,8 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
   entry->remember_size    = remember_size ? TRUE : FALSE;
   entry->remember_if_open = remember_if_open ? TRUE : FALSE;
 
-  factory->registered_dialogs = g_list_prepend (factory->registered_dialogs,
-                                                entry);
+  factory->p->registered_dialogs = g_list_prepend (factory->p->registered_dialogs,
+                                                   entry);
 }
 
 GimpDialogFactoryEntry *
@@ -369,7 +384,7 @@ gimp_dialog_factory_find_entry (GimpDialogFactory *factory,
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
-  for (list = factory->registered_dialogs; list; list = g_list_next (list))
+  for (list = factory->p->registered_dialogs; list; list = g_list_next (list))
     {
       GimpDialogFactoryEntry *entry = list->data;
 
@@ -487,13 +502,13 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     {
       GtkWidget *dock = NULL;
 
-      /*  If the dialog will be a dockable (factory->new_dock_func) and
+      /*  If the dialog will be a dockable (factory->p->new_dock_func) and
        *  we are called from gimp_dialog_factory_dialog_raise() (! context),
        *  create a new dock _before_ creating the dialog.
        *  We do this because the new dockable needs to be created in it's
        *  dock's context.
        */
-      if (factory->new_dock_func && ! context)
+      if (factory->p->new_dock_func && ! context)
         {
           GtkWidget *dockbook;
 
@@ -515,17 +530,17 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
         view_size = entry->view_size;
 
       if (context)
-        dialog = factory->constructor (factory, entry,
-                                       context,
-                                       view_size);
+        dialog = factory->p->constructor (factory, entry,
+                                          context,
+                                          view_size);
       else if (dock)
-        dialog = factory->constructor (factory, entry,
-                                       gimp_dock_get_context (GIMP_DOCK (dock)),
-                                       view_size);
+        dialog = factory->p->constructor (factory, entry,
+                                          gimp_dock_get_context (GIMP_DOCK (dock)),
+                                          view_size);
       else
-        dialog = factory->constructor (factory, entry,
-                                       factory->context,
-                                       view_size);
+        dialog = factory->p->constructor (factory, entry,
+                                          factory->context,
+                                          view_size);
 
       if (dialog)
         {
@@ -776,7 +791,7 @@ gimp_dialog_factory_dock_with_window_new (GimpDialogFactory *factory,
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-  g_return_val_if_fail (factory->new_dock_func != NULL, NULL);
+  g_return_val_if_fail (factory->p->new_dock_func != NULL, NULL);
 
   /* Create a dock window to put the dock in. We need to create the
    * dock window before the dock because the dock has a dependnecy to
@@ -816,10 +831,10 @@ gimp_dialog_factory_dock_window_new (GimpDialogFactory *factory,
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-  g_return_val_if_fail (factory->new_dock_window_func != NULL, NULL);
+  g_return_val_if_fail (factory->p->new_dock_window_func != NULL, NULL);
 
   /* Create the dock window */
-  dock_window = factory->new_dock_window_func (factory, factory->context, 0);
+  dock_window = factory->p->new_dock_window_func (factory, factory->context, 0);
   gtk_window_set_screen (GTK_WINDOW (dock_window), screen);
   gimp_dialog_factory_set_widget_data (dock_window, factory, NULL);
   
@@ -837,11 +852,11 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory,
                               GimpUIManager     *ui_manager)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-  g_return_val_if_fail (factory->new_dock_func != NULL, NULL);
+  g_return_val_if_fail (factory->p->new_dock_func != NULL, NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
   g_return_val_if_fail (ui_manager != NULL, NULL);
 
-  return factory->new_dock_func (factory, factory->context, ui_manager);
+  return factory->p->new_dock_func (factory, factory->context, ui_manager);
 }
 
 void
@@ -1536,7 +1551,7 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
 {
   GList *list;
 
-  if (! factory->toggle_visibility)
+  if (! factory->p->toggle_visibility)
     return;
 
   for (list = factory->open_dialogs; list; list = g_list_next (list))
