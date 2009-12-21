@@ -351,7 +351,7 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
   gdouble                    dist         = G_MAXDOUBLE;
 
   if (priv->polygon_modified       ||
-      priv->n_segment_indices <= 1 ||
+      priv->n_segment_indices <= 0 ||
       GIMP_TOOL (fst)->display == NULL)
     return FALSE;
 
@@ -1515,27 +1515,60 @@ gimp_free_select_tool_active_modifier_key (GimpTool        *tool,
                                                        display);
 }
 
+/**
+ * gimp_free_select_tool_draw:
+ * @draw_tool:
+ *
+ * Draw the line segments and handles around segment vertices, the
+ * latter if the they are in proximity to cursor.
+ **/
 static void
 gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (draw_tool);
-  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
-  GimpTool                  *tool = GIMP_TOOL (draw_tool);
-
+  GimpFreeSelectTool        *fst                   = GIMP_FREE_SELECT_TOOL (draw_tool);
+  GimpFreeSelectToolPrivate *priv                  = GET_PRIVATE (fst);
+  GimpTool                  *tool                  = GIMP_TOOL (draw_tool);
+  gboolean                   hovering_first_point  = FALSE;
+  gboolean                   handles_wants_to_show = FALSE;
+  GimpCoords                 coords                = { priv->last_coords.x,
+                                                       priv->last_coords.y,
+                                                       /* pad with 0 */ };
   if (! tool->display)
     return;
 
+  hovering_first_point =
+    gimp_free_select_tool_should_close (fst,
+                                        tool->display,
+                                        NO_CLICK_TIME_AVAILABLE,
+                                        &coords);
   gimp_draw_tool_draw_lines (draw_tool,
                              priv->points, priv->n_points,
                              FALSE, FALSE);
 
-  /* Draw handles around segment vertices in the proximity */
-  if (! priv->button1_down &&
+  /* We always show the handle for the first point, even with button1
+   * down, since releasing the button on the first point will close
+   * the polygon, so it's a significant state which we must give
+   * feedback for
+   */
+  handles_wants_to_show = (hovering_first_point ||
+                           ! priv->button1_down);
+
+  if (handles_wants_to_show &&
       ! priv->supress_handles)
     {
-      gint i;
+      gint i = 0;
+      gint n = 0;
 
-      for (i = 0; i < priv->n_segment_indices; i++)
+      /* If the first point is hovered while button1 is held down,
+       * only draw the first handle, the other handles are not
+       * relevant (see comment a few lines up)
+       */
+      if (priv->button1_down && hovering_first_point)
+        n = MIN (priv->n_segment_indices, 1);
+      else
+        n = priv->n_segment_indices;
+
+      for (i = 0; i < n; i++)
         {
           GimpVector2   *point       = NULL;
           gdouble        dist        = 0.0;
