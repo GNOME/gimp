@@ -1537,8 +1537,9 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 
       for (i = 0; i < priv->n_segment_indices; i++)
         {
-          GimpVector2 *point;
-          gdouble      dist;
+          GimpVector2   *point       = NULL;
+          gdouble        dist        = 0.0;
+          GimpHandleType handle_type = -1;
 
           point = &priv->points[priv->segment_indices[i]];
 
@@ -1549,15 +1550,20 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                                        point->x,
                                                        point->y);
 
-          if (dist < POINT_SHOW_THRESHOLD_SQ)
-            {
-              gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CIRCLE,
-                                          point->x,
-                                          point->y,
-                                          HANDLE_SIZE, HANDLE_SIZE,
-                                          GTK_ANCHOR_CENTER, FALSE);
+          /* If the cursor is over the point, fill, if it's just
+           * close, draw an outline
+           */
+          if (dist < POINT_GRAB_THRESHOLD_SQ)
+            handle_type = GIMP_HANDLE_FILLED_CIRCLE;
+          else if (dist < POINT_SHOW_THRESHOLD_SQ)
+            handle_type = GIMP_HANDLE_CIRCLE;
 
-            }
+          if (handle_type != -1)
+            gimp_draw_tool_draw_handle (draw_tool, handle_type,
+                                        point->x,
+                                        point->y,
+                                        HANDLE_SIZE, HANDLE_SIZE,
+                                        GTK_ANCHOR_CENTER, FALSE);
         }
     }
 
