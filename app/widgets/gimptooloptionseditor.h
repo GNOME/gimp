@@ -33,26 +33,14 @@
 #define GIMP_TOOL_OPTIONS_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_OPTIONS_EDITOR, GimpToolOptionsEditorClass))
 
 
-typedef struct _GimpToolOptionsEditorClass  GimpToolOptionsEditorClass;
+typedef struct _GimpToolOptionsEditorPrivate  GimpToolOptionsEditorPrivate;
+typedef struct _GimpToolOptionsEditorClass    GimpToolOptionsEditorClass;
 
 struct _GimpToolOptionsEditor
 {
-  GimpEditor       parent_instance;
+  GimpEditor                    parent_instance;
 
-  Gimp            *gimp;
-
-  GtkWidget       *scrolled_window;
-  GtkWidget       *options_vbox;
-
-  GtkWidget       *save_button;
-  GtkWidget       *restore_button;
-  GtkWidget       *delete_button;
-  GtkWidget       *reset_button;
-
-  GimpToolOptions *visible_tool_options;
-
-  GList           *save_queue;
-  guint            save_idle_id;
+  GimpToolOptionsEditorPrivate *p;
 };
 
 struct _GimpToolOptionsEditorClass
