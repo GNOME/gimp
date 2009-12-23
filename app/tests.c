@@ -136,4 +136,20 @@ gimp_test_run_temp_mainloop (guint32 running_time)
   g_main_loop_unref (loop);
 }
 
+/**
+ * gimp_test_run_mainloop_until_idle:
+ *
+ * Creates and runs a main loop until it is idle, i.e. has no more
+ * work to do.
+ **/
+void
+gimp_test_run_mainloop_until_idle (void)
+{
+  GMainLoop *loop = g_main_loop_new (NULL, FALSE);
 
+  g_idle_add ((GSourceFunc) gimp_tests_quit_mainloop, loop);
+
+  g_main_loop_run (loop);
+
+  g_main_loop_unref (loop);
+}
