@@ -12,11 +12,6 @@ TESTS = \
 
 EXTRA_PROGRAMS = $(TESTS)
 
-test_layers_SOURCES             = test-layers.c
-test_layer_grouping_SOURCES     = test-layer-grouping.c
-test_window_management_SOURCES  = test-window-management.c
-test_session_management_SOURCES = test-session-management.c
-
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
