@@ -35,6 +35,8 @@
 
 #include "tests.h"
 
+#include "gimp-app-test-utils.h"
+
 
 typedef struct
 {
@@ -63,12 +65,18 @@ int main(int argc, char **argv)
   GimpTestFileState  initial_dockrc_state    = { NULL, { 0, 0 } };
   GimpTestFileState  final_sessionrc_state   = { NULL, { 0, 0 } };
   GimpTestFileState  final_dockrc_state      = { NULL, { 0, 0 } };
-  gchar             *sessionrc_filename      = gimp_personal_rc_file ("sessionrc");
-  gchar             *dockrc_filename         = gimp_personal_rc_file ("dockrc");
+  gchar             *sessionrc_filename      = NULL;
+  gchar             *dockrc_filename         = NULL;
 
   g_type_init ();
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
+
+  /* Make sure to run this before we use any GIMP functions */
+  gimp_test_utils_set_gimp2_directory ("gimpdir");
+
+  sessionrc_filename = gimp_personal_rc_file ("sessionrc");
+  dockrc_filename    = gimp_personal_rc_file ("dockrc");
 
   /* Remeber the modtimes and MD5s */
   if (!gimp_test_get_file_state_verbose (sessionrc_filename,

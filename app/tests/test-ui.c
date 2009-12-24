@@ -40,6 +40,8 @@
 
 #include "tests.h"
 
+#include "gimp-app-test-utils.h"
+
 
 typedef struct
 {
@@ -64,6 +66,8 @@ int main(int argc, char **argv)
   g_type_init ();
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
+
+  gimp_test_utils_set_gimp2_directory ("gimpdir");
 
   /* Start up GIMP */
   gimp = gimp_init_for_gui_testing (FALSE, TRUE);

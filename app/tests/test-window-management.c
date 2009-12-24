@@ -31,6 +31,8 @@
 
 #include "tests.h"
 
+#include "gimp-app-test-utils.h"
+
 
 typedef struct
 {
@@ -49,12 +51,11 @@ int main(int argc, char **argv)
 {
   int test_result;
 
-  /* Disable the user dir for this test */
-  g_setenv ("GIMP2_DIRECTORY", "/tmp/gimpdir", TRUE);
-
   g_type_init ();
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
+
+  gimp_test_utils_set_gimp2_directory ("gimpdir-empty");
 
   /* We share the same application instance across all tests */
   gimp = gimp_init_for_gui_testing (FALSE, FALSE);

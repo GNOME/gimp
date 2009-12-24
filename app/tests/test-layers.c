@@ -25,6 +25,8 @@
 
 #include "tests.h"
 
+#include "gimp-app-test-utils.h"
+
 
 #define GIMP_TEST_IMAGE_SIZE 100
 
@@ -54,8 +56,9 @@ main (int    argc,
 {
   g_thread_init (NULL);
   g_type_init ();
-
   g_test_init (&argc, &argv, NULL);
+
+  gimp_test_utils_set_gimp2_directory ("gimpdir");
 
   /* We share the same application instance across all tests */
   gimp = gimp_init_for_testing (TRUE);

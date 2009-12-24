@@ -1,6 +1,8 @@
-# Don't mess with user's dir
+# Don't mess with user's gimpdir. Pass in the abs top srcdir to the
+# tests through an environment variable so they can set the gimpdir
+# they want to use
 TESTS_ENVIRONMENT = \
-	GIMP2_DIRECTORY=$(abs_top_srcdir)/app/tests/gimpdir
+	GIMP_TESTING_ABS_TOP_SRCDIR=$(abs_top_srcdir)
 
 TESTS = \
 	test-layer-grouping	\
@@ -11,6 +13,11 @@ TESTS = \
 	test-ui
 
 EXTRA_PROGRAMS = $(TESTS)
+
+noinst_LIBRARIES = libgimpapptestutils.a
+libgimpapptestutils_a_SOURCES = \
+	gimp-app-test-utils.c	\
+	gimp-app-test-utils.h
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
@@ -77,6 +84,7 @@ LDADD = \
 	$(top_builddir)/app/paint-funcs/libapppaint-funcs.a	\
 	$(top_builddir)/app/base/libappbase.a			\
 	$(top_builddir)/app/libapp.a				\
+	libgimpapptestutils.a					\
 	$(libgimpwidgets)					\
 	$(libgimpconfig)					\
 	$(libgimpmath)						\

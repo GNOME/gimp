@@ -42,6 +42,8 @@
 
 #include "tests.h"
 
+#include "gimp-app-test-utils.h"
+
 
 #define GIMP_MAINIMAGE_WIDTH           100
 #define GIMP_MAINIMAGE_HEIGHT          90
@@ -428,6 +430,8 @@ main (int    argc,
   g_type_init ();
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
+
+  gimp_test_utils_set_gimp2_directory ("gimpdir");
 
   /* We share the same application instance across all tests. We need
    * the GUI variant for the file procs
