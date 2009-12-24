@@ -46,6 +46,11 @@
 
 #include "gimp-intl.h"
 
+enum
+{
+  PROP_0,
+  PROP_GIMP,
+};
 
 struct _GimpToolOptionsEditorPrivate
 {
@@ -70,6 +75,14 @@ static void        gimp_tool_options_editor_docked_iface_init (GimpDockedInterfa
 static GObject   * gimp_tool_options_editor_constructor       (GType                  type,
                                                                guint                  n_params,
                                                                GObjectConstructParam *params);
+static void        gimp_tool_options_editor_set_property      (GObject               *object,
+                                                               guint                  property_id,
+                                                               const GValue          *value,
+                                                               GParamSpec            *pspec);
+static void        gimp_tool_options_editor_get_property      (GObject               *object,
+                                                               guint                  property_id,
+                                                               GValue                *value,
+                                                               GParamSpec            *pspec);
 static void        gimp_tool_options_editor_destroy           (GtkObject             *object);
 static GtkWidget * gimp_tool_options_editor_get_preview       (GimpDocked            *docked,
                                                                GimpContext           *context,
@@ -110,9 +123,18 @@ gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass)
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 
-  object_class->constructor = gimp_tool_options_editor_constructor;
+  object_class->constructor  = gimp_tool_options_editor_constructor;
+  object_class->set_property = gimp_tool_options_editor_set_property;
+  object_class->get_property = gimp_tool_options_editor_get_property;
 
-  gtk_object_class->destroy = gimp_tool_options_editor_destroy;
+  gtk_object_class->destroy  = gimp_tool_options_editor_destroy;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (klass, sizeof (GimpToolOptionsEditorPrivate));
 }
@@ -171,8 +193,9 @@ gimp_tool_options_editor_constructor (GType                  type,
                                       guint                  n_params,
                                       GObjectConstructParam *params)
 {
-  GObject               *object;
-  GimpToolOptionsEditor *editor;
+  GObject               *object       = NULL;
+  GimpToolOptionsEditor *editor       = NULL;
+  GimpContext           *user_context = NULL;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -209,7 +232,58 @@ gimp_tool_options_editor_constructor (GType                  type,
                                    GDK_SHIFT_MASK,
                                    NULL);
 
+  user_context = gimp_get_user_context (editor->p->gimp);
+
+  g_signal_connect_object (user_context, "tool-changed",
+                           G_CALLBACK (gimp_tool_options_editor_tool_changed),
+                           editor,
+                           0);
+
+  gimp_tool_options_editor_tool_changed (user_context,
+                                         gimp_context_get_tool (user_context),
+                                         editor);
+
   return object;
+}
+
+static void
+gimp_tool_options_editor_set_property (GObject      *object,
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec)
+{
+  GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      editor->p->gimp = g_value_get_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_tool_options_editor_get_property (GObject    *object,
+                                       guint       property_id,
+                                       GValue     *value,
+                                       GParamSpec *pspec)
+{
+  GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      g_value_set_object (value, editor->p->gimp);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -282,32 +356,15 @@ GtkWidget *
 gimp_tool_options_editor_new (Gimp            *gimp,
                               GimpMenuFactory *menu_factory)
 {
-  GimpToolOptionsEditor *editor;
-  GimpContext           *user_context;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
-  editor = g_object_new (GIMP_TYPE_TOOL_OPTIONS_EDITOR,
-                         "menu-factory",    menu_factory,
-                         "menu-identifier", "<ToolOptions>",
-                         "ui-path",         "/tool-options-popup",
-                         NULL);
-
-  editor->p->gimp = gimp;
-
-  user_context = gimp_get_user_context (gimp);
-
-  g_signal_connect_object (user_context, "tool-changed",
-                           G_CALLBACK (gimp_tool_options_editor_tool_changed),
-                           editor,
-                           0);
-
-  gimp_tool_options_editor_tool_changed (user_context,
-                                         gimp_context_get_tool (user_context),
-                                         editor);
-
-  return GTK_WIDGET (editor);
+  return g_object_new (GIMP_TYPE_TOOL_OPTIONS_EDITOR,
+                       "gimp",            gimp,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<ToolOptions>",
+                       "ui-path",         "/tool-options-popup",
+                       NULL);
 }
 
 GimpToolOptions *
