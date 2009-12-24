@@ -310,6 +310,13 @@ gimp_tool_options_editor_new (Gimp            *gimp,
   return GTK_WIDGET (editor);
 }
 
+GimpToolOptions *
+gimp_tool_options_editor_get_tool_options (GimpToolOptionsEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS_EDITOR (editor), NULL);
+
+  return editor->p->visible_tool_options;
+}
 
 /*  private functions  */
 
