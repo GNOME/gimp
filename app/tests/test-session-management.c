@@ -85,7 +85,7 @@ int main(int argc, char **argv)
    * to let things stabilize. This includes parsing sessionrc and
    * dockrc
    */
-  gimp_test_run_temp_mainloop (4000);
+  gimp_test_run_mainloop_until_idle ();
 
   /* Exit. This includes writing sessionrc and dockrc*/
   gimp_exit (gimp, TRUE);
