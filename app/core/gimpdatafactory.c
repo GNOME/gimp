@@ -722,17 +722,17 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
                   /*  error out only if this is the last chance  */
                   if (! list->next)
                     {
-                      gchar *utf8 = g_filename_display_name (dir);
+                      gchar *display_name = g_filename_display_name (dir);
 
                       g_set_error (error, GIMP_DATA_ERROR, 0,
                                    _("You have a writable data folder "
                                      "configured (%s), but this folder does "
                                      "not exist. Please create the folder or "
                                      "fix your configuation in the "
-                                     "preferences dialog's 'folders' section."),
-                                   utf8);
+                                     "Preferences dialog's 'Folders' section."),
+                                   display_name);
 
-                      g_free (utf8);
+                      g_free (display_name);
                     }
                 }
               else
@@ -747,9 +747,9 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
         {
           g_set_error (error, GIMP_DATA_ERROR, 0,
                        _("You have a writable data folder configured, but this "
-                         "folder is not part of your data search path. This "
-                         "can only happen if you edited gimprc manually, "
-                         "please fix it in the preferences dialog's 'folders' "
+                         "folder is not part of your data search path. You "
+                         "probably edited the gimprc file manually, "
+                         "please fix it in the Preferences dialog's 'Folders' "
                          "section."));
         }
     }
