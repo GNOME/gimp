@@ -155,7 +155,7 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
         {
           dest[0] = src[0];
           dest[1] = src[1];
-          dest[2] = gimp_curve_map_value (curve_green, src[2]);
+          dest[2] = gimp_curve_map_value (curve_blue, src[2]);
           dest[3] = src[3];
 
           src  += 4;
