@@ -42,16 +42,16 @@
 
 #define METADATA_PARASITE   "gimp-metadata"
 #define METADATA_MARKER     "GIMP_XMP_1"
-#define METADATA_MARKER_LEN (sizeof (METADATA_MARKER) - 1)
+#define METADATA_MARKER_LEN (strlen (METADATA_MARKER))
 
 
 /* prototypes of local functions */
-static void      query (void);
-static void      run   (const gchar      *name,
-                        gint              nparams,
-                        const GimpParam  *param,
-                        gint             *nreturn_vals,
-                        GimpParam       **return_vals);
+static void  query (void);
+static void  run   (const gchar      *name,
+                    gint              nparams,
+                    const GimpParam  *param,
+                    gint             *nreturn_vals,
+                    GimpParam       **return_vals);
 
 
 /* local variables */
@@ -71,7 +71,7 @@ query (void)
 {
   static const GimpParamDef editor_args[] =
   {
-    { GIMP_PDB_INT32,       "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_INT32,       "run-mode",  "Run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_DRAWABLE,    "drawable",  "Input drawable (unused)"      }
   };
@@ -393,13 +393,13 @@ run (const gchar      *name,
       if (!! strncmp (gimp_parasite_data (parasite),
                       METADATA_MARKER, METADATA_MARKER_LEN)
           || ! xmp_model_parse_buffer (xmp_model,
-                                       (const gchar *)gimp_parasite_data (parasite)
+                                       (const gchar *) gimp_parasite_data (parasite)
                                        + METADATA_MARKER_LEN,
                                        gimp_parasite_data_size (parasite)
                                        - METADATA_MARKER_LEN,
                                        TRUE, &error))
         {
-          g_printerr ("\nMetadata parasite seems to be corrupt");
+          g_printerr ("\nMetadata parasite seems to be corrupt\n");
           /* continue anyway, we will attach a clean parasite later */
         }
       gimp_parasite_free (parasite);

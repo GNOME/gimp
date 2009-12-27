@@ -37,9 +37,9 @@ metadata_SOURCES = \
 	gimpxmpmodelentry.c	\
 	exif-decode.h		\
 	exif-decode.c
-#	exif-encode.h	\
-#	exif-encode.c	\
-#	iptc-decode.h	\
+#	exif-encode.h		\
+#	exif-encode.c		\
+#	iptc-decode.h		\
 #	iptc-decode.c	
 
 noinst_PROGRAMS = xmpdump
@@ -63,7 +63,6 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(libgimp)		\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\

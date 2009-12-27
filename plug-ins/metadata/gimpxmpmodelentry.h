@@ -30,37 +30,28 @@ G_BEGIN_DECLS
 #define GIMP_XMP_MODEL_ENTRY_GET_CLASS(obj)     (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_XMP_MODEL_ENTRY, XMPModelClass))
 
 
-typedef struct _GimpXmpModelEntry           GimpXmpModelEntry;
-typedef struct _GimpXmpModelEntryClass      GimpXmpModelEntryClass;
-typedef struct _GimpXmpModelEntryPrivate    GimpXmpModelEntryPrivate;
+typedef struct _GimpXmpModelEntry       GimpXmpModelEntry;
+typedef struct _GimpXmpModelEntryClass  GimpXmpModelEntryClass;
 
-
-struct _GimpXmpModelEntry
-{
-  GtkEntry      parent_instance;
-
-  GimpXmpModelEntryPrivate  *p;
-};
 
 struct _GimpXmpModelEntryClass
 {
   GtkEntryClass parent_class;
 };
 
-struct _GimpXmpModelEntryPrivate
+struct _GimpXmpModelEntry
 {
-  const gchar   *schema_uri;
-  const gchar   *property_name;
-  XMPModel      *xmp_model;
-
+  GtkEntry   parent_instance;
+  gpointer   priv;
 };
 
 
-GType                   gimp_xmp_model_entry_get_type   (void) G_GNUC_CONST;
+GType       gimp_xmp_model_entry_get_type (void) G_GNUC_CONST;
 
-GtkWidget*              gimp_xmp_model_entry_new        (const gchar *schema_uri,
-                                                         const gchar *property,
-                                                         XMPModel    *xmp_model);
+GtkWidget * gimp_xmp_model_entry_new      (const gchar *schema_uri,
+                                           const gchar *property,
+                                           XMPModel    *xmp_model);
+
 
 G_END_DECLS
 
