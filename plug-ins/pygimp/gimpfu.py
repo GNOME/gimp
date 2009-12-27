@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'''Simple interface to writing GIMP plug-ins in Python.
+"""Simple interface for writing GIMP plug-ins in Python.
 
 Instead of worrying about all the user interaction, saving last used
 values and everything, the gimpfu module can take care of it for you.
@@ -35,7 +35,7 @@ A typical gimpfu plug-in would look like this:
   from gimpfu import *
 
   def plugin_func(image, drawable, args):
-              #do what plugins do best
+              # do what plugins do best
   register(
               "plugin_func",
               "blurb",
@@ -69,7 +69,7 @@ If want to localize your plug-in, add an optional domain parameter to
 the register call. It can be the name of the translation domain or a
 tuple that consists of the translation domain and the directory where
 the translations are installed.
-'''
+"""
 
 import string as _string
 import math
@@ -79,7 +79,7 @@ from gimpenums import *
 pdb = gimp.pdb
 
 import gettext
-t = gettext.translation('gimp20-python', gimp.locale_directory, fallback=True)
+t = gettext.translation("gimp20-python", gimp.locale_directory, fallback=True)
 _ = t.ugettext
 
 class error(RuntimeError): pass
@@ -209,11 +209,11 @@ _registered_plugins_ = {}
 def register(proc_name, blurb, help, author, copyright, date, label,
              imagetypes, params, results, function,
              menu=None, domain=None, on_query=None, on_run=None):
-    '''This is called to register a new plug-in.'''
+    """This is called to register a new plug-in."""
 
     # First perform some sanity checks on the data
     def letterCheck(str):
-        allowed = _string.letters + _string.digits + '_' + '-'
+        allowed = _string.letters + _string.digits + "_" + "-"
         for ch in str:
             if not ch in allowed:
 		return 0
@@ -247,27 +247,29 @@ def register(proc_name, blurb, help, author, copyright, date, label,
 
     plugin_type = PLUGIN
 
-    if (not proc_name[:7] == 'python-' and
-        not proc_name[:7] == 'python_' and
-        not proc_name[:10] == 'extension-' and
-        not proc_name[:10] == 'extension_' and
-        not proc_name[:8] == 'plug-in-' and
-        not proc_name[:8] == 'plug_in_' and
-        not proc_name[:5] == 'file-' and
-        not proc_name[:5] == 'file_'):
-           proc_name = 'python-fu-' + proc_name
+    if (not proc_name.startswith("python-") and
+        not proc_name.startswith("python_") and
+        not proc_name.startswith("extension-") and
+        not proc_name.startswith("extension_") and
+        not proc_name.startswith("plug-in-") and
+        not proc_name.startswith("plug_in_") and
+        not proc_name.startswith("file-") and
+        not proc_name.startswith("file_")):
+           proc_name = "python-fu-" + proc_name
 
     # if menu is not given, derive it from label
     need_compat_params = False
     if menu is None and label:
-        fields = label.split('/')
+        fields = label.split("/")
         if fields:
             label = fields.pop()
-            menu = '/'.join(fields)
+            menu = "/".join(fields)
             need_compat_params = True
 
             import warnings
-            message = '%s: passing the full menu path for the menu label is deprecated, use the \'menu\' parameter instead' % (proc_name)
+            message = ("%s: passing the full menu path for the menu label is "
+                       "deprecated, use the 'menu' parameter instead"
+                       % (proc_name))
             warnings.warn(message, DeprecationWarning, 3)
 
         if need_compat_params and plugin_type == PLUGIN:
@@ -276,12 +278,12 @@ def register(proc_name, blurb, help, author, copyright, date, label,
 
             if menu is None:
                 pass
-            elif menu[:6] == '<Load>':
+            elif menu.startswith("<Load>"):
                 params[0:0] = file_params
-            elif menu[:7] == '<Image>' or menu[:6] == '<Save>':
+            elif menu.startswith("<Image>") or menu.startswith("<Save>"):
                 params.insert(0, (PDB_IMAGE, "image", "Input image", None))
                 params.insert(1, (PDB_DRAWABLE, "drawable", "Input drawable", None))
-                if menu[:6] == '<Save>':
+                if menu.startswith("<Save>"):
                     params[2:2] = file_params
 
     _registered_plugins_[proc_name] = (blurb, help, author, copyright,
@@ -327,6 +329,7 @@ def _query():
 
 def _get_defaults(proc_name):
     import gimpshelf
+
     (blurb, help, author, copyright, date,
      label, imagetypes, plugin_type,
      params, results, function, menu, domain,
@@ -388,16 +391,16 @@ def _interact(proc_name, start_params):
     def error_dialog(parent, proc_name):
         import sys, traceback
 
-        exc_str = exc_only_str = _('Missing exception information')
+        exc_str = exc_only_str = _("Missing exception information")
 
         try:
             etype, value, tb = sys.exc_info()
-            exc_str = ''.join(traceback.format_exception(etype, value, tb))
-            exc_only_str = ''.join(traceback.format_exception_only(etype, value))
+            exc_str = "".join(traceback.format_exception(etype, value, tb))
+            exc_only_str = "".join(traceback.format_exception_only(etype, value))
         finally:
             etype = value = tb = None
 
-        title = _("An error occured running %s") % proc_name
+        title = _("An error occurred running %s") % proc_name
         dlg = gtk.MessageDialog(parent, gtk.DIALOG_DESTROY_WITH_PARENT,
                                         gtk.MESSAGE_ERROR, gtk.BUTTONS_CLOSE,
                                         title)
@@ -437,7 +440,7 @@ def _interact(proc_name, start_params):
 
     # define a mapping of param types to edit objects ...
     class StringEntry(gtk.Entry):
-        def __init__(self, default=''):
+        def __init__(self, default=""):
             gtk.Entry.__init__(self)
             self.set_text(str(default))
 
@@ -445,7 +448,7 @@ def _interact(proc_name, start_params):
             return self.get_text()
 
     class TextEntry(gtk.ScrolledWindow):
-        def __init__ (self, default=''):
+        def __init__ (self, default=""):
             gtk.ScrolledWindow.__init__(self)
             self.set_shadow_type(gtk.SHADOW_IN)
 
@@ -578,16 +581,17 @@ def _interact(proc_name, start_params):
         def get_value(self):
             return self.get_active()
 
-    def FileSelector(default=''):
-       if default and default.endswith('/'):
-           selector = DirnameSelector
-           if default == '/': default = ''
-       else:
-           selector = FilenameSelector
-       return selector(default)
+    def FileSelector(default=""):
+        # FIXME: should this be os.path.separator?  If not, perhaps explain why?
+        if default and default.endswith("/"):
+            selector = DirnameSelector
+            if default == "/": default = ""
+        else:
+            selector = FilenameSelector
+        return selector(default)
 
     class FilenameSelector(gtk.FileChooserButton):
-        def __init__(self, default='', save_mode=False):
+        def __init__(self, default="", save_mode=False):
             gtk.FileChooserButton.__init__(self,
                                            _("Python-Fu File Selection"))
             self.set_action(gtk.FILE_CHOOSER_ACTION_OPEN)
@@ -598,7 +602,7 @@ def _interact(proc_name, start_params):
             return self.get_filename()
 
     class DirnameSelector(gtk.FileChooserButton):
-        def __init__(self, default=''):
+        def __init__(self, default=""):
             gtk.FileChooserButton.__init__(self,
                                            _("Python-Fu Folder Selection"))
             self.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
@@ -649,7 +653,7 @@ def _interact(proc_name, start_params):
 
     tooltips = gtk.Tooltips()
 
-    dialog = gimpui.Dialog(proc_name, 'python-fu', None, 0, None, proc_name,
+    dialog = gimpui.Dialog(proc_name, "python-fu", None, 0, None, proc_name,
                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                             gtk.STOCK_OK, gtk.RESPONSE_OK))
 
@@ -729,7 +733,7 @@ def _interact(proc_name, start_params):
         if pf_type != PF_TEXT:
             tooltips.set_tip(wid, desc, None)
         else:
-            #Attach tip to TextView, not to ScrolledWindow
+            # Attach tip to TextView, not to ScrolledWindow
             tooltips.set_tip(wid.view, desc, None)
         wid.show()
 
@@ -760,7 +764,7 @@ def _interact(proc_name, start_params):
 
     gtk.main()
 
-    if hasattr(dialog, 'res'):
+    if hasattr(dialog, "res"):
         res = dialog.res
         dialog.destroy()
         return res
@@ -810,11 +814,11 @@ def _run(proc_name, params):
     return res
 
 def main():
-    '''This should be called after registering the plug-in.'''
+    """This should be called after registering the plug-in."""
     gimp.main(None, None, _query, _run)
 
 def fail(msg):
-    '''Display and error message and quit'''
+    """Display an error message and quit"""
     gimp.message(msg)
     raise error, msg
 

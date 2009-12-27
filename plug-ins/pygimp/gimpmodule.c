@@ -188,7 +188,10 @@ pygimp_main(PyObject *self, PyObject *args)
     PyObject *av;
     int argc, i;
     char **argv;
-    PyObject *ip, *qp, *query, *rp;
+    PyObject *ip;  // init proc
+    PyObject *qp;  // quit proc
+    PyObject *query;  // query proc
+    PyObject *rp;  // run proc
 
     if (!PyArg_ParseTuple(args, "OOOO:main", &ip, &qp, &query, &rp))
         return NULL;
