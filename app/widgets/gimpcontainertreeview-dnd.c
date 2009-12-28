@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainertreeview-dnd.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2009 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
 {
   GimpViewable            *src_viewable  = NULL;
   GimpViewable            *dest_viewable = NULL;
-  GtkTreePath             *path          = NULL;
+  GtkTreePath             *drop_path     = NULL;
   GtkTargetList           *target_list;
   GdkAtom                  target_atom;
   GimpDndType              src_type;
@@ -96,13 +96,13 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
     }
 
   if (gtk_tree_view_get_path_at_pos (tree_view->view, x, y,
-                                     &path, NULL, NULL, NULL))
+                                     &drop_path, NULL, NULL, NULL))
     {
       GimpViewRenderer *renderer;
       GtkTreeIter       iter;
       GdkRectangle      cell_area;
 
-      gtk_tree_model_get_iter (tree_view->model, &iter, path);
+      gtk_tree_model_get_iter (tree_view->model, &iter, drop_path);
 
       gtk_tree_model_get (tree_view->model, &iter,
                           GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
@@ -112,7 +112,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
 
       g_object_unref (renderer);
 
-      gtk_tree_view_get_cell_area (tree_view->view, path, NULL, &cell_area);
+      gtk_tree_view_get_cell_area (tree_view->view, drop_path, NULL, &cell_area);
 
       if (y >= (cell_area.y + cell_area.height / 2))
         {
@@ -130,6 +130,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
                                                                          src_type,
                                                                          src_viewable,
                                                                          dest_viewable,
+                                                                         drop_path,
                                                                          drop_pos,
                                                                          &drop_pos,
                                                                          &drag_action))
@@ -137,9 +138,9 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
           gdk_drag_status (context, drag_action, time);
 
           if (return_path)
-            *return_path = path;
+            *return_path = drop_path;
           else
-            gtk_tree_path_free (path);
+            gtk_tree_path_free (drop_path);
 
           if (return_atom)
             *return_atom = target_atom;
@@ -156,7 +157,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
           return TRUE;
         }
 
-      gtk_tree_path_free (path);
+      gtk_tree_path_free (drop_path);
     }
 
  drop_impossible:
@@ -233,7 +234,7 @@ gimp_container_tree_view_drag_motion (GtkWidget             *widget,
                                       GimpContainerTreeView *tree_view)
 {
   GtkAllocation            allocation;
-  GtkTreePath             *path;
+  GtkTreePath             *drop_path;
   GtkTreeViewDropPosition  drop_pos;
 
   gtk_widget_get_allocation (widget, &allocation);
@@ -274,11 +275,11 @@ gimp_container_tree_view_drag_motion (GtkWidget             *widget,
 
   if (gimp_container_tree_view_drop_status (tree_view,
                                             context, x, y, time,
-                                            &path, NULL, NULL, NULL, NULL,
+                                            &drop_path, NULL, NULL, NULL, NULL,
                                             &drop_pos))
     {
-      gtk_tree_view_set_drag_dest_row (tree_view->view, path, drop_pos);
-      gtk_tree_path_free (path);
+      gtk_tree_view_set_drag_dest_row (tree_view->view, drop_path, drop_pos);
+      gtk_tree_path_free (drop_path);
     }
   else
     {
@@ -480,6 +481,7 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
                                              GimpDndType              src_type,
                                              GimpViewable            *src_viewable,
                                              GimpViewable            *dest_viewable,
+                                             GtkTreePath             *drop_path,
                                              GtkTreeViewDropPosition  drop_pos,
                                              GtkTreeViewDropPosition *return_drop_pos,
                                              GdkDragAction           *return_drag_action)

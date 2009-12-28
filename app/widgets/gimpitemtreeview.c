@@ -138,6 +138,7 @@ static gboolean gimp_item_tree_view_drop_possible   (GimpContainerTreeView *view
                                                      GimpDndType        src_type,
                                                      GimpViewable      *src_viewable,
                                                      GimpViewable      *dest_viewable,
+                                                     GtkTreePath       *drop_path,
                                                      GtkTreeViewDropPosition  drop_pos,
                                                      GtkTreeViewDropPosition *return_drop_pos,
                                                      GdkDragAction     *return_drag_action);
@@ -1027,6 +1028,7 @@ gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                    GimpDndType              src_type,
                                    GimpViewable            *src_viewable,
                                    GimpViewable            *dest_viewable,
+                                   GtkTreePath             *drop_path,
                                    GtkTreeViewDropPosition  drop_pos,
                                    GtkTreeViewDropPosition *return_drop_pos,
                                    GdkDragAction           *return_drag_action)
@@ -1049,6 +1051,7 @@ gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                                                        src_type,
                                                                        src_viewable,
                                                                        dest_viewable,
+                                                                       drop_path,
                                                                        drop_pos,
                                                                        return_drop_pos,
                                                                        return_drag_action);

@@ -71,6 +71,7 @@ struct _GimpContainerTreeViewClass
                                GimpDndType              src_type,
                                GimpViewable            *src_viewable,
                                GimpViewable            *dest_viewable,
+                               GtkTreePath             *drop_path,
                                GtkTreeViewDropPosition  drop_pos,
                                GtkTreeViewDropPosition *return_drop_pos,
                                GdkDragAction           *return_drag_action);
