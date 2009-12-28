@@ -45,14 +45,8 @@
 
 typedef struct
 {
-  int dummy;
+  int avoid_sizeof_zero;
 } GimpTestFixture;
-
-typedef struct
-{
-  gchar    *md5;
-  GTimeVal  modtime;
-} GimpTestFileState;
 
 
 static void gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
