@@ -39,11 +39,13 @@ enum
   CURVE_ALPHA  = 1 << 4
 };
 
-static guint  gimp_curve_get_apply_mask (GimpCurve *curve_colors,
-                                         GimpCurve *curve_red,
-                                         GimpCurve *curve_green,
-                                         GimpCurve *curve_blue,
-                                         GimpCurve *curve_alpha);
+static guint           gimp_curve_get_apply_mask   (GimpCurve *curve_colors,
+                                                    GimpCurve *curve_red,
+                                                    GimpCurve *curve_green,
+                                                    GimpCurve *curve_blue,
+                                                    GimpCurve *curve_alpha);
+static inline gdouble  gimp_curve_map_value_inline (GimpCurve *curve,
+                                                    gdouble    value);
 
 
 gdouble
@@ -52,35 +54,7 @@ gimp_curve_map_value (GimpCurve *curve,
 {
   g_return_val_if_fail (GIMP_IS_CURVE (curve), 0.0);
 
-  if (curve->identity)
-    {
-      return value;
-    }
-
-  if (value < 0.0)
-    {
-      return curve->samples[0];
-    }
-  else if (value >= 1.0)
-    {
-      return curve->samples[curve->n_samples - 1];
-    }
-  else  /* interpolate the curve */
-    {
-      gdouble f;
-      gint    index;
-
-      /*  map value to the sample space  */
-      value = value * (curve->n_samples - 1);
-
-      /*  determine the indices of the closest sample points  */
-      index = (gint) value;
-
-      /*  calculate the position between the sample points  */
-      f = value - index;
-
-      return (1.0 - f) * curve->samples[index] + f * curve->samples[index + 1];
-    }
+  return gimp_curve_map_value_inline (curve, value);
 }
 
 void
@@ -112,9 +86,9 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
     case CURVE_COLORS:
       while (samples--)
         {
-          dest[0] = gimp_curve_map_value (curve_colors, src[0]);
-          dest[1] = gimp_curve_map_value (curve_colors, src[1]);
-          dest[2] = gimp_curve_map_value (curve_colors, src[2]);
+          dest[0] = gimp_curve_map_value_inline (curve_colors, src[0]);
+          dest[1] = gimp_curve_map_value_inline (curve_colors, src[1]);
+          dest[2] = gimp_curve_map_value_inline (curve_colors, src[2]);
           /* don't apply the colors curve to the alpha channel */
           dest[3] = src[3];
 
@@ -126,7 +100,7 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
     case CURVE_RED:
       while (samples--)
         {
-          dest[0] = gimp_curve_map_value (curve_red, src[0]);
+          dest[0] = gimp_curve_map_value_inline (curve_red, src[0]);
           dest[1] = src[1];
           dest[2] = src[2];
           dest[3] = src[3];
@@ -140,7 +114,7 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
       while (samples--)
         {
           dest[0] = src[0];
-          dest[1] = gimp_curve_map_value (curve_green, src[1]);
+          dest[1] = gimp_curve_map_value_inline (curve_green, src[1]);
           dest[2] = src[2];
           dest[3] = src[3];
 
@@ -154,7 +128,7 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
         {
           dest[0] = src[0];
           dest[1] = src[1];
-          dest[2] = gimp_curve_map_value (curve_blue, src[2]);
+          dest[2] = gimp_curve_map_value_inline (curve_blue, src[2]);
           dest[3] = src[3];
 
           src  += 4;
@@ -168,7 +142,7 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
           dest[0] = src[0];
           dest[1] = src[1];
           dest[2] = src[2];
-          dest[3] = gimp_curve_map_value (curve_alpha, src[3]);
+          dest[3] = gimp_curve_map_value_inline (curve_alpha, src[3]);
 
           src  += 4;
           dest += 4;
@@ -178,9 +152,9 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
     case (CURVE_RED | CURVE_GREEN | CURVE_BLUE):
       while (samples--)
         {
-          dest[0] = gimp_curve_map_value (curve_red,   src[0]);
-          dest[1] = gimp_curve_map_value (curve_green, src[1]);
-          dest[2] = gimp_curve_map_value (curve_blue,  src[2]);
+          dest[0] = gimp_curve_map_value_inline (curve_red,   src[0]);
+          dest[1] = gimp_curve_map_value_inline (curve_green, src[1]);
+          dest[2] = gimp_curve_map_value_inline (curve_blue,  src[2]);
           dest[3] = src[3];
 
           src  += 4;
@@ -191,17 +165,17 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
     default:
       while (samples--)
         {
-          dest[0] = gimp_curve_map_value (curve_colors,
-                                          gimp_curve_map_value (curve_red,
-                                                                src[0]));
-          dest[1] = gimp_curve_map_value (curve_colors,
-                                          gimp_curve_map_value (curve_green,
-                                                                src[1]));
-          dest[2] = gimp_curve_map_value (curve_colors,
-                                          gimp_curve_map_value (curve_blue,
-                                                                src[2]));
+          dest[0] = gimp_curve_map_value_inline (curve_colors,
+                                                 gimp_curve_map_value_inline (curve_red,
+                                                                              src[0]));
+          dest[1] = gimp_curve_map_value_inline (curve_colors,
+                                                 gimp_curve_map_value_inline (curve_green,
+                                                                              src[1]));
+          dest[2] = gimp_curve_map_value_inline (curve_colors,
+                                                 gimp_curve_map_value_inline (curve_blue,
+                                                                              src[2]));
           /* don't apply the colors curve to the alpha channel */
-          dest[3] = gimp_curve_map_value (curve_alpha, src[3]);
+          dest[3] = gimp_curve_map_value_inline (curve_alpha, src[3]);
 
           src  += 4;
           dest += 4;
@@ -224,3 +198,37 @@ gimp_curve_get_apply_mask (GimpCurve *curve_colors,
           (gimp_curve_is_identity (curve_alpha)  ? 0 : CURVE_ALPHA));
 }
 
+static inline gdouble
+gimp_curve_map_value_inline (GimpCurve *curve,
+                             gdouble    value)
+{
+  if (curve->identity)
+    {
+      return value;
+    }
+
+  if (value < 0.0)
+    {
+      return curve->samples[0];
+    }
+  else if (value >= 1.0)
+    {
+      return curve->samples[curve->n_samples - 1];
+    }
+  else  /* interpolate the curve */
+    {
+      gdouble f;
+      gint    index;
+
+      /*  map value to the sample space  */
+      value = value * (curve->n_samples - 1);
+
+      /*  determine the indices of the closest sample points  */
+      index = (gint) value;
+
+      /*  calculate the position between the sample points  */
+      f = value - index;
+
+      return (1.0 - f) * curve->samples[index] + f * curve->samples[index + 1];
+    }
+}
