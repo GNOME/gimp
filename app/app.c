@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <locale.h>
 
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
@@ -64,9 +65,11 @@
 
 /*  local prototypes  */
 
-static void       app_init_update_none    (const gchar *text1,
+static void       app_init_update_noop    (const gchar *text1,
                                            const gchar *text2,
                                            gdouble      percentage);
+static void       app_init_language       (const gchar *language);
+
 static gboolean   app_exit_after_callback (Gimp        *gimp,
                                            gboolean     kill_it,
                                            GMainLoop   *loop);
@@ -183,6 +186,9 @@ app_run (const gchar         *full_prog_name,
 
   config = GIMP_BASE_CONFIG (gimp->config);
 
+  /*  change the locale if a language if specified  */
+  app_init_language (gimp->config->language);
+
   /*  initialize lowlevel stuff  */
   swap_is_ok = base_init (config, be_verbose, use_cpu_accel);
 
@@ -194,7 +200,7 @@ app_run (const gchar         *full_prog_name,
 #endif
 
   if (! update_status_func)
-    update_status_func = app_init_update_none;
+    update_status_func = app_init_update_noop;
 
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories
@@ -258,10 +264,26 @@ app_run (const gchar         *full_prog_name,
 /*  private functions  */
 
 static void
-app_init_update_none (const gchar *text1,
+app_init_update_noop (const gchar *text1,
                       const gchar *text2,
                       gdouble      percentage)
 {
+  /*  deliberately do nothing  */
+}
+
+static void
+app_init_language (const gchar *language)
+{
+  /*  We already set the locale according to the environment, so just
+   *  return early if no language is set in gimprc.
+   */
+  if (! language)
+    return;
+
+  g_printerr ("Setting language to %s\n", language);
+
+  g_setenv ("LANGUAGE", language, TRUE);
+  setlocale (LC_ALL, "");
 }
 
 static gboolean

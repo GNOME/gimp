@@ -39,6 +39,7 @@ struct _GimpCoreConfig
 {
   GimpBaseConfig          parent_instance;
 
+  gchar                  *language;
   GimpInterpolationType   interpolation_type;
   gchar                  *plug_in_path;
   gchar                  *module_path;

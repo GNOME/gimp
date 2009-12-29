@@ -615,6 +615,12 @@ gimp_init_malloc (void)
 static void
 gimp_init_i18n (void)
 {
+  /*  We may change the locale later if the user specifies a language
+   *  in the gimprc file. Here we are just initializing the locale
+   *  according to the environment variables and set up the paths to
+   *  the message catalogs.
+   */
+
   setlocale (LC_ALL, "");
 
   bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());

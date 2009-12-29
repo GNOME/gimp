@@ -49,6 +49,7 @@
 enum
 {
   PROP_0,
+  PROP_LANGUAGE,
   PROP_INTERPOLATION_TYPE,
   PROP_PLUG_IN_PATH,
   PROP_MODULE_PATH,
@@ -133,6 +134,11 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   object_class->set_property = gimp_core_config_set_property;
   object_class->get_property = gimp_core_config_get_property;
 
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
+                                   "language", LANGUAGE_BLURB,
+                                   NULL,  /* take from environment */
+                                   GIMP_PARAM_STATIC_STRINGS |
+                                   GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION_TYPE,
                                  "interpolation-type",
                                  INTERPOLATION_TYPE_BLURB,
@@ -422,6 +428,7 @@ gimp_core_config_finalize (GObject *object)
 {
   GimpCoreConfig *core_config = GIMP_CORE_CONFIG (object);
 
+  g_free (core_config->language);
   g_free (core_config->plug_in_path);
   g_free (core_config->module_path);
   g_free (core_config->interpreter_path);
@@ -468,6 +475,10 @@ gimp_core_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_LANGUAGE:
+      g_free (core_config->language);
+      core_config->language = g_value_dup_string (value);
+      break;
     case PROP_INTERPOLATION_TYPE:
       core_config->interpolation_type = g_value_get_enum (value);
       break;
@@ -652,6 +663,9 @@ gimp_core_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_LANGUAGE:
+      g_value_set_string (value, core_config->language);
+      break;
     case PROP_INTERPOLATION_TYPE:
       g_value_set_enum (value, core_config->interpolation_type);
       break;
