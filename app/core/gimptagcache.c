@@ -44,7 +44,9 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_TAG_CACHE_FILE "tags.xml"
+#define GIMP_TAG_CACHE_FILE  "tags.xml"
+
+/* #define DEBUG_GIMP_TAG_CACHE  1 */
 
 
 enum
@@ -289,9 +291,12 @@ gimp_tag_cache_add_object (GimpTagCache *cache,
 
               if (rec->checksum == checksum_quark)
                 {
+#if DEBUG_GIMP_TAG_CACHE
                   g_printerr ("remapping identifier: %s ==> %s\n",
                               rec->identifier ? g_quark_to_string (rec->identifier) : "(NULL)",
                               identifier_quark ? g_quark_to_string (identifier_quark) : "(NULL)");
+#endif
+
                   rec->identifier = identifier_quark;
 
                   for (list = rec->tags; list; list = g_list_next (list))
