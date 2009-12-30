@@ -1026,16 +1026,41 @@ gimp_layer_sync_mode_node (GimpLayer *layer)
 
       switch (layer->mode)
         {
-        case GIMP_NORMAL_MODE:
+        case GIMP_DISSOLVE_MODE:
+        case GIMP_BEHIND_MODE:
+        case GIMP_MULTIPLY_MODE:
+        case GIMP_SCREEN_MODE:
+        case GIMP_OVERLAY_MODE:
+        case GIMP_DIFFERENCE_MODE:
+        case GIMP_ADDITION_MODE:
+        case GIMP_SUBTRACT_MODE:
+        case GIMP_DARKEN_ONLY_MODE:
+        case GIMP_LIGHTEN_ONLY_MODE:
+        case GIMP_HUE_MODE:
+        case GIMP_SATURATION_MODE:
+        case GIMP_COLOR_MODE:
+        case GIMP_VALUE_MODE:
+        case GIMP_DIVIDE_MODE:
+        case GIMP_DODGE_MODE:
+        case GIMP_BURN_MODE:
+        case GIMP_HARDLIGHT_MODE:
+        case GIMP_SOFTLIGHT_MODE:
+        case GIMP_GRAIN_EXTRACT_MODE:
+        case GIMP_GRAIN_MERGE_MODE:
+        case GIMP_COLOR_ERASE_MODE:
+        case GIMP_ERASE_MODE:
+        case GIMP_REPLACE_MODE:
+        case GIMP_ANTI_ERASE_MODE:
           gegl_node_set (mode_node,
-                         "operation", "gegl:over",
+                         "operation",  "gimp:point-layer-mode",
+                         "blend-mode", layer->mode,
                          NULL);
           break;
 
         default:
           gegl_node_set (mode_node,
-                         "operation",  "gimp:point-layer-mode",
-                         "blend-mode", layer->mode,
+                         "operation",
+                         gimp_layer_mode_to_gegl_operation (layer->mode),
                          NULL);
           break;
         }
