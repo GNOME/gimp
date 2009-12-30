@@ -1224,6 +1224,22 @@ prefs_boolean_combo_box_add (GObject      *config,
 }
 
 static GtkWidget *
+prefs_language_combo_box_add (GObject      *config,
+                              const gchar  *property_name,
+                              GtkBox       *vbox)
+{
+  GtkWidget *combo = gimp_prop_language_combo_box_new (config, property_name);
+
+  if (combo)
+    {
+      gtk_box_pack_start (vbox, combo, FALSE, FALSE, 0);
+      gtk_widget_show (combo);
+    }
+
+  return combo;
+}
+
+static GtkWidget *
 prefs_spin_button_add (GObject      *config,
                        const gchar  *property_name,
                        gdouble       step_increment,
@@ -1621,6 +1637,15 @@ prefs_dialog_new (Gimp       *gimp,
                                      NULL,
                                      &top_iter,
                                      page_index++);
+
+  /*  Language  */
+
+  /*  Only add the language entry if the iso-codes package is available.  */
+#ifdef HAVE_ISO_CODES
+  vbox2 = prefs_frame_new (_("Language"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_language_combo_box_add (object, "language", GTK_BOX (vbox2));
+#endif
 
   /*  Previews  */
   vbox2 = prefs_frame_new (_("Previews"), GTK_CONTAINER (vbox), FALSE);

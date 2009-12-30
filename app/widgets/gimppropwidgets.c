@@ -39,6 +39,7 @@
 
 #include "gimpcolorpanel.h"
 #include "gimpdnd.h"
+#include "gimplanguagecombobox.h"
 #include "gimplanguageentry.h"
 #include "gimpscalebutton.h"
 #include "gimpview.h"
@@ -818,6 +819,104 @@ gimp_prop_number_pair_entry_number_pair_user_override_notify (GtkWidget         
     g_object_set (data->config,
                   data->user_override_property, new_config_user_override,
                   NULL);
+}
+
+
+/************************/
+/*  language combo-box  */
+/************************/
+
+static void   gimp_prop_language_combo_box_callback (GtkWidget  *combo,
+                                                     GObject    *config);
+static void   gimp_prop_language_combo_box_notify   (GObject    *config,
+                                                     GParamSpec *param_spec,
+                                                     GtkWidget  *combo);
+
+GtkWidget *
+gimp_prop_language_combo_box_new (GObject     *config,
+                                  const gchar *property_name)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo;
+  gchar      *value;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_STRING, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  combo = gimp_language_combo_box_new ();
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  gimp_language_combo_box_set_iso_code (GIMP_LANGUAGE_COMBO_BOX (combo), value);
+  g_free (value);
+
+  set_param_spec (G_OBJECT (combo), combo, param_spec);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_prop_language_combo_box_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_language_combo_box_notify),
+                  combo);
+
+  return combo;
+}
+
+static void
+gimp_prop_language_combo_box_callback (GtkWidget *combo,
+                                       GObject   *config)
+{
+  GParamSpec *param_spec;
+  gchar      *code;
+
+  param_spec = get_param_spec (G_OBJECT (combo));
+  if (! param_spec)
+    return;
+
+  code = gimp_language_combo_box_get_iso_code (GIMP_LANGUAGE_COMBO_BOX (combo));
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_language_combo_box_notify,
+                                   combo);
+
+  g_object_set (config,
+                param_spec->name, code,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_language_combo_box_notify,
+                                     combo);
+
+  g_free (code);
+}
+
+static void
+gimp_prop_language_combo_box_notify (GObject    *config,
+                                     GParamSpec *param_spec,
+                                     GtkWidget  *combo)
+{
+  gchar *value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (combo,
+                                   gimp_prop_language_combo_box_callback,
+                                   config);
+
+  gimp_language_combo_box_set_iso_code (GIMP_LANGUAGE_COMBO_BOX (combo), value);
+
+  g_signal_handlers_unblock_by_func (combo,
+                                     gimp_prop_language_combo_box_callback,
+                                     config);
+
+  g_free (value);
 }
 
 

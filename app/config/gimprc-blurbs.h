@@ -199,7 +199,7 @@ N_("Sets the level of interpolation used for scaling and other " \
 "Sets the interpreter search path."
 
 #define LANGUAGE_BLURB \
-N_("Specifies the language to use.")
+N_("Specifies the language to use for the user interface.")
 
 #define LAST_OPENED_SIZE_BLURB \
 N_("How many recently opened image filenames to keep on the File menu.")

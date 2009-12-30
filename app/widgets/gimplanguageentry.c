@@ -18,6 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* GimpLanguageEntry is an entry widget that provides completion on
+ * translated language names. It is suited for specifying the language
+ * a text is written in.
+ */
+
 #include "config.h"
 
 #include <string.h>
@@ -26,8 +31,8 @@
 
 #include "widgets-types.h"
 
-#include "gimplanguagestore.h"
 #include "gimplanguageentry.h"
+#include "gimplanguagestore.h"
 
 
 enum

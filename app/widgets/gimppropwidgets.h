@@ -80,8 +80,10 @@ GtkWidget * gimp_prop_number_pair_entry_new
 
 /*  GParamString  */
 
-GtkWidget * gimp_prop_language_entry_new  (GObject     *config,
-                                           const gchar *property_name);
+GtkWidget * gimp_prop_language_combo_box_new (GObject     *config,
+                                              const gchar *property_name);
+GtkWidget * gimp_prop_language_entry_new     (GObject     *config,
+                                              const gchar *property_name);
 
 
 /*  A view on all of an object's properties  */
