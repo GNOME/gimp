@@ -462,7 +462,7 @@ N_("When enabled, pressing F1 will open the help browser.")
 "There's a tradeoff between speed and quality of the zoomed-out display."
 
 #define DEFAULT_USE_EVENT_HISTORY_BLURB \
-"Bugs in event history buffer are frequent so in case of curor " \
+"Bugs in event history buffer are frequent so in case of cursor " \
 "offset problems turning it off helps."
 
 #endif  /* __GIMP_RC_BLURBS_H__ */
