@@ -726,6 +726,14 @@ gimp_vectors_get_n_strokes (const GimpVectors *vectors)
   return g_list_length (vectors->strokes);
 }
 
+GimpStroke *
+gimp_vectors_get_stroke (const GimpVectors *vectors,
+                         int                index)
+{
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0);
+
+  return GIMP_STROKE (g_list_nth_data (vectors->strokes, index));
+}
 
 GimpStroke *
 gimp_vectors_stroke_get (const GimpVectors *vectors,

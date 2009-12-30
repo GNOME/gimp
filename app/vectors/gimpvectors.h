@@ -138,6 +138,8 @@ void            gimp_vectors_stroke_add         (GimpVectors        *vectors,
 void            gimp_vectors_stroke_remove      (GimpVectors        *vectors,
                                                  GimpStroke         *stroke);
 gint            gimp_vectors_get_n_strokes      (const GimpVectors  *vectors);
+GimpStroke    * gimp_vectors_get_stroke         (const GimpVectors  *vectors,
+                                                 int                 index);
 GimpStroke    * gimp_vectors_stroke_get         (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);
 GimpStroke    * gimp_vectors_stroke_get_by_ID   (const GimpVectors  *vectors,
