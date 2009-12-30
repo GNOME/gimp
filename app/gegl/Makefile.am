@@ -65,4 +65,54 @@ libappgegl_a_SOURCES = \
 	gimpoperationthreshold.h	\
 	\
 	gimpoperationpointlayermode.c	\
-	gimpoperationpointlayermode.h
+	gimpoperationpointlayermode.h	\
+	gimpoperationdissolvemode.c     \
+	gimpoperationdissolvemode.h     \
+	gimpoperationbehindmode.c       \
+	gimpoperationbehindmode.h       \
+	gimpoperationmultiplymode.c     \
+	gimpoperationmultiplymode.h     \
+	gimpoperationscreenmode.c       \
+	gimpoperationscreenmode.h       \
+	gimpoperationoverlaymode.c      \
+	gimpoperationoverlaymode.h      \
+	gimpoperationdifferencemode.c   \
+	gimpoperationdifferencemode.h   \
+	gimpoperationadditionmode.c     \
+	gimpoperationadditionmode.h     \
+	gimpoperationsubtractmode.c     \
+	gimpoperationsubtractmode.h     \
+	gimpoperationdarkenonlymode.c   \
+	gimpoperationdarkenonlymode.h   \
+	gimpoperationlightenonlymode.c  \
+	gimpoperationlightenonlymode.h  \
+	gimpoperationhuemode.c          \
+	gimpoperationhuemode.h          \
+	gimpoperationsaturationmode.c   \
+	gimpoperationsaturationmode.h   \
+	gimpoperationcolormode.c        \
+	gimpoperationcolormode.h        \
+	gimpoperationvaluemode.c        \
+	gimpoperationvaluemode.h        \
+	gimpoperationdividemode.c       \
+	gimpoperationdividemode.h       \
+	gimpoperationdodgemode.c        \
+	gimpoperationdodgemode.h        \
+	gimpoperationburnmode.c         \
+	gimpoperationburnmode.h         \
+	gimpoperationhardlightmode.c    \
+	gimpoperationhardlightmode.h    \
+	gimpoperationsoftlightmode.c    \
+	gimpoperationsoftlightmode.h    \
+	gimpoperationgrainextractmode.c \
+	gimpoperationgrainextractmode.h \
+	gimpoperationgrainmergemode.c   \
+	gimpoperationgrainmergemode.h   \
+	gimpoperationcolorerasemode.c   \
+	gimpoperationcolorerasemode.h   \
+	gimpoperationerasemode.c        \
+	gimpoperationerasemode.h        \
+	gimpoperationreplacemode.c      \
+	gimpoperationreplacemode.h      \
+	gimpoperationantierasemode.c    \
+	gimpoperationantierasemode.h

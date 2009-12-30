@@ -43,6 +43,31 @@
 #include "gimpoperationtilesource.h"
 
 #include "gimpoperationpointlayermode.h"
+#include "gimpoperationdissolvemode.h"
+#include "gimpoperationbehindmode.h"
+#include "gimpoperationmultiplymode.h"
+#include "gimpoperationscreenmode.h"
+#include "gimpoperationoverlaymode.h"
+#include "gimpoperationdifferencemode.h"
+#include "gimpoperationadditionmode.h"
+#include "gimpoperationsubtractmode.h"
+#include "gimpoperationdarkenonlymode.h"
+#include "gimpoperationlightenonlymode.h"
+#include "gimpoperationhuemode.h"
+#include "gimpoperationsaturationmode.h"
+#include "gimpoperationcolormode.h"
+#include "gimpoperationvaluemode.h"
+#include "gimpoperationdividemode.h"
+#include "gimpoperationdodgemode.h"
+#include "gimpoperationburnmode.h"
+#include "gimpoperationhardlightmode.h"
+#include "gimpoperationsoftlightmode.h"
+#include "gimpoperationgrainextractmode.h"
+#include "gimpoperationgrainmergemode.h"
+#include "gimpoperationcolorerasemode.h"
+#include "gimpoperationerasemode.h"
+#include "gimpoperationreplacemode.h"
+#include "gimpoperationantierasemode.h"
 
 
 static void  gimp_gegl_notify_tile_cache_size (GimpBaseConfig *config);
@@ -80,6 +105,31 @@ gimp_gegl_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_THRESHOLD);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_POINT_LAYER_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DISSOLVE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_OVERLAY_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DIFFERENCE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_ADDITION_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SUBTRACT_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HUE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SATURATION_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_VALUE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DODGE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_BURN_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HARDLIGHT_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SOFTLIGHT_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_ERASE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_ERASE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE_MODE);
 }
 
 static void
