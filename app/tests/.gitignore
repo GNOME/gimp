@@ -1,4 +1,5 @@
 .deps
+.libs
 Makefile
 Makefile.in
 libgimpapptestutils.a
