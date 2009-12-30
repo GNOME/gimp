@@ -165,8 +165,7 @@ gimp_language_entry_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_MODEL:
-      if (entry->store)
-        g_object_unref (entry->store);
+      g_return_if_fail (entry->store == NULL);
       entry->store = g_value_dup_object (value);
       break;
 

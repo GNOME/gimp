@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimplanguagestore.c
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,33 @@
 #include "gimplanguagestore-parser.h"
 
 
+static GObject * gimp_language_store_constructor (GType                  type,
+                                                  guint                  n_params,
+                                                  GObjectConstructParam *params);
+
+static void  gimp_language_store_real_add (GimpLanguageStore *store,
+                                           const gchar       *lang,
+                                           const gchar       *code);
+
+static gint  gimp_language_store_sort     (GtkTreeModel      *model,
+                                           GtkTreeIter       *a,
+                                           GtkTreeIter       *b,
+                                           gpointer           userdata);
+
+
 G_DEFINE_TYPE (GimpLanguageStore, gimp_language_store, GTK_TYPE_LIST_STORE)
+
+#define parent_class gimp_language_store_parent_class
+
 
 static void
 gimp_language_store_class_init (GimpLanguageStoreClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->constructor = gimp_language_store_constructor;
+
+  klass->add                = gimp_language_store_real_add;
 }
 
 static void
@@ -45,7 +67,81 @@ gimp_language_store_init (GimpLanguageStore *store)
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    G_N_ELEMENTS (column_types), column_types);
 
-  gimp_language_store_populate (store, NULL);
+  gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (store),
+                                   GIMP_LANGUAGE_STORE_LANGUAGE,
+                                   gimp_language_store_sort, NULL, NULL);
+  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store),
+                                        GIMP_LANGUAGE_STORE_LANGUAGE,
+                                        GTK_SORT_ASCENDING);
+}
+
+static GObject *
+gimp_language_store_constructor (GType                  type,
+                                 guint                  n_params,
+                                 GObjectConstructParam *params)
+{
+  GObject *object;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  gimp_language_store_parse_iso_codes (GIMP_LANGUAGE_STORE (object), NULL);
+
+  return object;
+}
+
+static void
+gimp_language_store_real_add (GimpLanguageStore *store,
+                              const gchar       *lang,
+                              const gchar       *code)
+{
+  GtkTreeIter iter;
+
+  gtk_list_store_append (GTK_LIST_STORE (store), &iter);
+  gtk_list_store_set (GTK_LIST_STORE (store), &iter,
+                      GIMP_LANGUAGE_STORE_LANGUAGE,  lang,
+                      GIMP_LANGUAGE_STORE_ISO_639_1, code,
+                      -1);
+}
+
+static gint
+gimp_language_store_sort (GtkTreeModel *model,
+                          GtkTreeIter  *a,
+                          GtkTreeIter  *b,
+                          gpointer      userdata)
+{
+  GValue avalue = { 0, };
+  GValue bvalue = { 0, };
+  gint   cmp    = 0;
+
+  /*  keep system language at the top of the list  */
+  gtk_tree_model_get_value (model, a,
+                            GIMP_LANGUAGE_STORE_ISO_639_1, &avalue);
+  gtk_tree_model_get_value (model, b,
+                            GIMP_LANGUAGE_STORE_ISO_639_1, &bvalue);
+
+  if (! g_value_get_string (&avalue))
+    cmp = -1;
+
+  if (! g_value_get_string (&bvalue))
+    cmp = 1;
+
+  g_value_unset (&avalue);
+  g_value_unset (&bvalue);
+
+  if (cmp)
+    return cmp;
+
+  /*  sort lanugages alphabetically  */
+  gtk_tree_model_get_value (model, a, GIMP_LANGUAGE_STORE_LANGUAGE, &avalue);
+  gtk_tree_model_get_value (model, b, GIMP_LANGUAGE_STORE_LANGUAGE, &bvalue);
+
+  cmp = g_utf8_collate (g_value_get_string (&avalue),
+                        g_value_get_string (&bvalue));
+
+  g_value_unset (&avalue);
+  g_value_unset (&bvalue);
+
+  return cmp;
 }
 
 GtkListStore *
@@ -59,17 +155,10 @@ gimp_language_store_add (GimpLanguageStore *store,
                          const gchar       *lang,
                          const gchar       *code)
 {
-  GtkTreeIter  iter;
-
   g_return_if_fail (GIMP_IS_LANGUAGE_STORE (store));
-  g_return_if_fail (lang != NULL && code != NULL);
+  g_return_if_fail (lang != NULL);
 
-  gtk_list_store_append (GTK_LIST_STORE (store), &iter);
-
-  gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                      GIMP_LANGUAGE_STORE_LANGUAGE,  lang,
-                      GIMP_LANGUAGE_STORE_ISO_639_1, code,
-                      -1);
+  GIMP_LANGUAGE_STORE_GET_CLASS (store)->add (store, lang, code);
 }
 
 gboolean
@@ -108,7 +197,7 @@ gimp_language_store_lookup (GimpLanguageStore *store,
                           GIMP_LANGUAGE_STORE_ISO_639_1, &value,
                           -1);
 
-      if (strncmp (code, value, len) == 0)
+      if (value && strncmp (code, value, len) == 0)
         {
           g_free (value);
           break;

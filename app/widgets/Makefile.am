@@ -314,6 +314,8 @@ libappwidgets_a_sources = \
 	gimptooloptionseditor.h		\
 	gimptooloverlay.c		\
 	gimptooloverlay.h		\
+	gimptranslationstore.c		\
+	gimptranslationstore.h		\
 	gimpuimanager.c			\
 	gimpuimanager.h			\
 	gimpundoeditor.c		\

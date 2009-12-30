@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimplanguagestore-parser.c
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,28 +68,13 @@ static void  iso_codes_parser_start_unknown (IsoCodesParser       *parser);
 static void  iso_codes_parser_end_unknown   (IsoCodesParser       *parser);
 
 
-static const GMarkupParser markup_parser =
+static void
+iso_codes_parser_init (void)
 {
-  iso_codes_parser_start_element,
-  iso_codes_parser_end_element,
-  NULL,  /*  characters   */
-  NULL,  /*  passthrough  */
-  NULL   /*  error        */
-};
+  static gboolean initialized = FALSE;
 
-
-gboolean
-gimp_language_store_populate (GimpLanguageStore  *store,
-                              GError            **error)
-{
-#ifdef HAVE_ISO_CODES
-  GimpXmlParser  *xml_parser;
-  gchar          *filename;
-  gboolean        success;
-  IsoCodesParser  parser = { 0, };
-
-  g_return_val_if_fail (GIMP_IS_LANGUAGE_STORE (store), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+  if (initialized)
+    return;
 
 #ifdef G_OS_WIN32
   /*  on Win32, assume iso-codes is installed in the same location as GIMP  */
@@ -99,6 +84,33 @@ gimp_language_store_populate (GimpLanguageStore  *store,
 #endif
 
   bind_textdomain_codeset ("iso_639", "UTF-8");
+
+  initialized = TRUE;
+}
+
+gboolean
+gimp_language_store_parse_iso_codes (GimpLanguageStore  *store,
+                                     GError            **error)
+{
+#ifdef HAVE_ISO_CODES
+  static const GMarkupParser markup_parser =
+    {
+      iso_codes_parser_start_element,
+      iso_codes_parser_end_element,
+      NULL,  /*  characters   */
+      NULL,  /*  passthrough  */
+      NULL   /*  error        */
+    };
+
+  GimpXmlParser   *xml_parser;
+  gchar           *filename;
+  gboolean         success;
+  IsoCodesParser   parser = { 0, };
+
+  g_return_val_if_fail (GIMP_IS_LANGUAGE_STORE (store), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  iso_codes_parser_init ();
 
   parser.store = g_object_ref (store);
 

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimplanguagestore-parser.h
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@
 #define __GIMP_LANGUAGE_STORE_PARSER_H__
 
 
-gboolean  gimp_language_store_populate (GimpLanguageStore  *store,
-                                        GError            **error);
+gboolean  gimp_language_store_parse_iso_codes (GimpLanguageStore  *store,
+                                               GError            **error);
 
 
 #endif  /* __GIMP_LANGUAGE_STORE_PARSER_H__ */

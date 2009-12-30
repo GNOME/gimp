@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimplanguagestore.h
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,23 +42,30 @@ typedef struct _GimpLanguageStoreClass  GimpLanguageStoreClass;
 struct _GimpLanguageStoreClass
 {
   GtkListStoreClass  parent_class;
+
+  void (* add) (GimpLanguageStore *store,
+                const gchar       *lang,
+                const gchar       *code);
 };
 
 struct _GimpLanguageStore
 {
-  GtkListStore       parent_instance;
+  GtkListStore     parent_instance;
 };
 
 
 GType          gimp_language_store_get_type (void) G_GNUC_CONST;
 
 GtkListStore * gimp_language_store_new      (void);
-void           gimp_language_store_add      (GimpLanguageStore *store,
-                                             const gchar       *lang,
-                                             const gchar       *code);
+
 gboolean       gimp_language_store_lookup   (GimpLanguageStore *store,
                                              const gchar       *code,
                                              GtkTreeIter       *iter);
+
+/*  used from gimplanguagestore-parser.c  */
+void           gimp_language_store_add      (GimpLanguageStore *store,
+                                             const gchar       *lang,
+                                             const gchar       *code);
 
 
 #endif  /* __GIMP_LANGUAGE_STORE_H__ */

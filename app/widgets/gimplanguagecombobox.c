@@ -31,7 +31,7 @@
 #include "widgets-types.h"
 
 #include "gimplanguagecombobox.h"
-#include "gimplanguagestore.h"
+#include "gimptranslationstore.h"
 
 
 struct _GimpLanguageComboBox
@@ -60,7 +60,7 @@ gimp_language_combo_box_init (GimpLanguageComboBox *combo)
 
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), renderer, TRUE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), renderer,
-                                  "text", GIMP_LANGUAGE_STORE_LANGUAGE,
+                                  "text",  GIMP_LANGUAGE_STORE_LANGUAGE,
                                   NULL);
 }
 
@@ -70,7 +70,7 @@ gimp_language_combo_box_new (void)
   GtkWidget    *combo;
   GtkListStore *store;
 
-  store = gimp_language_store_new ();
+  store = gimp_translation_store_new ();
 
   combo = g_object_new (GIMP_TYPE_LANGUAGE_COMBO_BOX,
                         "model", store,

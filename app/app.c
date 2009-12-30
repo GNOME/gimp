@@ -280,8 +280,6 @@ app_init_language (const gchar *language)
   if (! language)
     return;
 
-  g_printerr ("Setting language to %s\n", language);
-
   g_setenv ("LANGUAGE", language, TRUE);
   setlocale (LC_ALL, "");
 }
