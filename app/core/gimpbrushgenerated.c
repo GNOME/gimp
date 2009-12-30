@@ -480,17 +480,20 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
           gdouble tx = c * x - s * y;
           gdouble ty = fabs (s * x + c * y);
 
-          gdouble ang = atan2 (ty, tx);
-
-          while (ang > G_PI / spikes)
+          if (spikes > 2)
             {
-              gdouble sx = tx;
-              gdouble sy = ty;
+              gdouble angle = atan2 (ty, tx);
 
-              tx = cs * sx - ss * sy;
-              ty = ss * sx + cs * sy;
+              while (angle > G_PI / spikes)
+                {
+                  gdouble sx = tx;
+                  gdouble sy = ty;
 
-              ang -= 2 * G_PI / spikes;
+                  tx = cs * sx - ss * sy;
+                  ty = ss * sx + cs * sy;
+
+                  angle -= 2 * G_PI / spikes;
+                }
             }
 
           ty *= aspect_ratio;
