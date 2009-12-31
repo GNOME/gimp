@@ -121,7 +121,7 @@ gimp_language_entry_constructor (GType                  type,
        * otherwise we won't get a cell renderer for free.
        */
       gtk_entry_completion_set_text_column (completion,
-                                            GIMP_LANGUAGE_STORE_LANGUAGE);
+                                            GIMP_LANGUAGE_STORE_LABEL);
 
       gtk_entry_set_completion (GTK_ENTRY (entry), completion);
       g_object_unref (completion);
@@ -204,7 +204,7 @@ gimp_language_entry_language_selected (GtkEntryCompletion *completion,
   g_free (entry->code);
 
   gtk_tree_model_get (model, iter,
-                      GIMP_LANGUAGE_STORE_ISO_639_1, &entry->code,
+                      GIMP_LANGUAGE_STORE_CODE, &entry->code,
                       -1);
 
   return FALSE;
@@ -228,7 +228,7 @@ gimp_language_entry_new (void)
 }
 
 const gchar *
-gimp_language_entry_get_iso_code (GimpLanguageEntry *entry)
+gimp_language_entry_get_code (GimpLanguageEntry *entry)
 {
   g_return_val_if_fail (GIMP_IS_LANGUAGE_ENTRY (entry), NULL);
 
@@ -236,8 +236,8 @@ gimp_language_entry_get_iso_code (GimpLanguageEntry *entry)
 }
 
 gboolean
-gimp_language_entry_set_iso_code (GimpLanguageEntry *entry,
-                                  const gchar       *code)
+gimp_language_entry_set_code (GimpLanguageEntry *entry,
+                              const gchar       *code)
 {
   GtkTreeIter  iter;
 
@@ -259,15 +259,15 @@ gimp_language_entry_set_iso_code (GimpLanguageEntry *entry,
   if (gimp_language_store_lookup (GIMP_LANGUAGE_STORE (entry->store),
                                   code, &iter))
     {
-      gchar *language;
+      gchar *label;
 
       gtk_tree_model_get (GTK_TREE_MODEL (entry->store), &iter,
-                          GIMP_LANGUAGE_STORE_LANGUAGE,  &language,
-                          GIMP_LANGUAGE_STORE_ISO_639_1, &entry->code,
+                          GIMP_LANGUAGE_STORE_LABEL, &label,
+                          GIMP_LANGUAGE_STORE_CODE,  &entry->code,
                           -1);
 
-      gtk_entry_set_text (GTK_ENTRY (entry), language);
-      g_free (language);
+      gtk_entry_set_text (GTK_ENTRY (entry), label);
+      g_free (label);
 
       return TRUE;
     }

@@ -40,11 +40,11 @@ struct _GimpLanguageEntryClass
 
 GType         gimp_language_entry_get_type     (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_language_entry_new          (void);
+GtkWidget   * gimp_language_entry_new      (void);
 
-const gchar * gimp_language_entry_get_iso_code (GimpLanguageEntry *entry);
-gboolean      gimp_language_entry_set_iso_code (GimpLanguageEntry *entry,
-                                                const gchar       *code);
+const gchar * gimp_language_entry_get_code (GimpLanguageEntry *entry);
+gboolean      gimp_language_entry_set_code (GimpLanguageEntry *entry,
+                                            const gchar       *code);
 
 
 #endif  /* __GIMP_LANGUAGE_ENTRY_H__ */

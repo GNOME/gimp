@@ -38,13 +38,13 @@ struct _GimpLanguageComboBoxClass
 };
 
 
-GType       gimp_language_combo_box_get_type     (void) G_GNUC_CONST;
+GType       gimp_language_combo_box_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_language_combo_box_new          (void);
+GtkWidget * gimp_language_combo_box_new      (void);
 
-gchar     * gimp_language_combo_box_get_iso_code (GimpLanguageComboBox *combo);
-gboolean    gimp_language_combo_box_set_iso_code (GimpLanguageComboBox *combo,
-                                                  const gchar          *code);
+gchar     * gimp_language_combo_box_get_code (GimpLanguageComboBox *combo);
+gboolean    gimp_language_combo_box_set_code (GimpLanguageComboBox *combo,
+                                              const gchar          *code);
 
 
 #endif  /* __GIMP_LANGUAGE_COMBO_BOX_H__ */

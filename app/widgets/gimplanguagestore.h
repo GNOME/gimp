@@ -24,8 +24,8 @@
 
 enum
 {
-  GIMP_LANGUAGE_STORE_LANGUAGE,
-  GIMP_LANGUAGE_STORE_ISO_639_1
+  GIMP_LANGUAGE_STORE_LABEL,
+  GIMP_LANGUAGE_STORE_CODE
 };
 
 
@@ -44,7 +44,7 @@ struct _GimpLanguageStoreClass
   GtkListStoreClass  parent_class;
 
   void (* add) (GimpLanguageStore *store,
-                const gchar       *lang,
+                const gchar       *label,
                 const gchar       *code);
 };
 
@@ -64,7 +64,7 @@ gboolean       gimp_language_store_lookup   (GimpLanguageStore *store,
 
 /*  used from gimplanguagestore-parser.c  */
 void           gimp_language_store_add      (GimpLanguageStore *store,
-                                             const gchar       *lang,
+                                             const gchar       *label,
                                              const gchar       *code);
 
 

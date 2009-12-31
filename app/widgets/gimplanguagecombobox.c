@@ -60,7 +60,7 @@ gimp_language_combo_box_init (GimpLanguageComboBox *combo)
 
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), renderer, TRUE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), renderer,
-                                  "text",  GIMP_LANGUAGE_STORE_LANGUAGE,
+                                  "text",  GIMP_LANGUAGE_STORE_LABEL,
                                   NULL);
 }
 
@@ -82,7 +82,7 @@ gimp_language_combo_box_new (void)
 }
 
 gchar *
-gimp_language_combo_box_get_iso_code (GimpLanguageComboBox *combo)
+gimp_language_combo_box_get_code (GimpLanguageComboBox *combo)
 {
   GtkTreeIter  iter;
   gchar       *code;
@@ -93,15 +93,15 @@ gimp_language_combo_box_get_iso_code (GimpLanguageComboBox *combo)
     return NULL;
 
   gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)), &iter,
-                      GIMP_LANGUAGE_STORE_ISO_639_1, &code,
+                      GIMP_LANGUAGE_STORE_CODE, &code,
                       -1);
 
   return code;
 }
 
 gboolean
-gimp_language_combo_box_set_iso_code (GimpLanguageComboBox *combo,
-                                      const gchar          *code)
+gimp_language_combo_box_set_code (GimpLanguageComboBox *combo,
+                                  const gchar          *code)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;

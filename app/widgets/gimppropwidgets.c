@@ -851,7 +851,7 @@ gimp_prop_language_combo_box_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  gimp_language_combo_box_set_iso_code (GIMP_LANGUAGE_COMBO_BOX (combo), value);
+  gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (combo), value);
   g_free (value);
 
   set_param_spec (G_OBJECT (combo), combo, param_spec);
@@ -878,7 +878,7 @@ gimp_prop_language_combo_box_callback (GtkWidget *combo,
   if (! param_spec)
     return;
 
-  code = gimp_language_combo_box_get_iso_code (GIMP_LANGUAGE_COMBO_BOX (combo));
+  code = gimp_language_combo_box_get_code (GIMP_LANGUAGE_COMBO_BOX (combo));
 
   g_signal_handlers_block_by_func (config,
                                    gimp_prop_language_combo_box_notify,
@@ -910,7 +910,7 @@ gimp_prop_language_combo_box_notify (GObject    *config,
                                    gimp_prop_language_combo_box_callback,
                                    config);
 
-  gimp_language_combo_box_set_iso_code (GIMP_LANGUAGE_COMBO_BOX (combo), value);
+  gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (combo), value);
 
   g_signal_handlers_unblock_by_func (combo,
                                      gimp_prop_language_combo_box_callback,
@@ -949,7 +949,7 @@ gimp_prop_language_entry_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  gimp_language_entry_set_iso_code (GIMP_LANGUAGE_ENTRY (entry), value);
+  gimp_language_entry_set_code (GIMP_LANGUAGE_ENTRY (entry), value);
   g_free (value);
 
   set_param_spec (G_OBJECT (entry), entry, param_spec);
@@ -976,7 +976,7 @@ gimp_prop_language_entry_callback (GtkWidget *entry,
   if (! param_spec)
     return;
 
-  code = gimp_language_entry_get_iso_code (GIMP_LANGUAGE_ENTRY (entry));
+  code = gimp_language_entry_get_code (GIMP_LANGUAGE_ENTRY (entry));
 
   g_signal_handlers_block_by_func (config,
                                    gimp_prop_language_entry_notify,
@@ -1006,7 +1006,7 @@ gimp_prop_language_entry_notify (GObject    *config,
                                    gimp_prop_language_entry_callback,
                                    config);
 
-  gimp_language_entry_set_iso_code (GIMP_LANGUAGE_ENTRY (entry), value);
+  gimp_language_entry_set_code (GIMP_LANGUAGE_ENTRY (entry), value);
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_prop_language_entry_callback,
