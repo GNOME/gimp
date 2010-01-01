@@ -246,7 +246,7 @@ gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output)
 gdouble
 gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
                                        const GimpCoords   *coords,
-									   GimpPaintOptions   *options,
+                                       GimpPaintOptions   *options,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
@@ -267,7 +267,7 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 
   if (output->use_direction)
     {
-      total += coords->direction + 0.5;
+      total += fmod (coords->direction + 0.5, 1) ;
       factors++;
     }
 
