@@ -332,7 +332,7 @@ user directory.\n\
 \n\
 For plug-ins which do not use GTK+, the --build and --install options can be\n\
 appended with -noui for appropriate settings. For plug-ins that use GTK+ but\n\
-not libgumpui, append -nogimpui.\n");
+not libgimpui, append -nogimpui.\n");
   exit (exit_status);
 }
 
