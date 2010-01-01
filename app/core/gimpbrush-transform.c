@@ -29,6 +29,7 @@
 #include "gimpbrush-transform.h"
 
 #include "base/temp-buf.h"
+#include "base/pixel-region.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -335,7 +336,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   if (hardness < 1.0)
     {
       TempBuf      *blur_src;
-
+      PixelRegion  srcPR;
+      PixelRegion  destPR;
       gint kernel_size = gimp_brush_transform_blur_kernel_size ( result->height, 
                                                                  result->width,
                                                                  hardness);
@@ -346,9 +348,12 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
       blur_src = temp_buf_copy (result, NULL);
 
-      convolve_tempbuf (blur_src, result, blur_kernel, kernel_size,
-                        gimp_brush_transform_array_sum(blur_kernel, kernel_len),
-                        GIMP_NORMAL_CONVOL, FALSE);
+      pixel_region_init_temp_buf (&srcPR, blur_src, blur_src->x, blur_src->y, blur_src->width, blur_src->height);
+      pixel_region_init_temp_buf (&destPR, result, result->x, result->y, result->width, result->height);
+
+      convolve_region (&srcPR, &destPR, blur_kernel, kernel_size,
+                       gimp_brush_transform_array_sum(blur_kernel, kernel_len),
+                       GIMP_NORMAL_CONVOL, FALSE);
 
     }
   
@@ -428,8 +433,6 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gint          opposite_x, distance_from_true_x;
   gint          opposite_y, distance_from_true_y;
 
-  source = brush->pixmap;
-
   /*
    * tl, tr etc are used because it is easier to visualize top left,
    * top right etc corners of the forward transformed source image
@@ -460,6 +463,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
    */
   const guint fraction_bitmask = pow(2, fraction_bits)- 1 ;
 
+  source = brush->pixmap;
 
   if (aspect_ratio < 1.0)
     gimp_brush_transform_matrix (source,
@@ -625,19 +629,24 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   if (hardness < 1.0)
     {
       TempBuf      *blur_src;
+      PixelRegion  srcPR;
+      PixelRegion  destPR;
       gint kernel_size = gimp_brush_transform_blur_kernel_size ( result->height, 
                                                                  result->width,
                                                                  hardness);
-      gint kernel_len = kernel_size * kernel_size;
+      gint kernel_len  = kernel_size * kernel_size;
       gfloat blur_kernel [kernel_len];
 
       gimp_brush_transform_fill_blur_kernel ( blur_kernel, kernel_len);
 
       blur_src = temp_buf_copy (result, NULL);
 
-      convolve_tempbuf (blur_src, result, blur_kernel, kernel_size,
-                        gimp_brush_transform_array_sum(blur_kernel, kernel_len),
-                        GIMP_NORMAL_CONVOL, FALSE);
+      pixel_region_init_temp_buf (&srcPR, blur_src, blur_src->x, blur_src->y, blur_src->width, blur_src->height);
+      pixel_region_init_temp_buf (&destPR, result, result->x, result->y, result->width, result->height);
+
+      convolve_region (&srcPR, &destPR, blur_kernel, kernel_size,
+                       gimp_brush_transform_array_sum(blur_kernel, kernel_len),
+                       GIMP_NORMAL_CONVOL, FALSE);
 
     }
 
