@@ -189,6 +189,7 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->spacing                      = 1.0;
   core->scale                        = 1.0;
   core->angle                        = 1.0;
+  core->hardness                     = 1.0;
 
   core->pressure_brush               = NULL;
 
@@ -827,6 +828,11 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
                                                                  paint_options,
                                                                  fade_point);
 
+          core->hardness = gimp_dynamics_output_get_linear_value (core->dynamics->hardness_output,
+                                                                  coords,
+                                                                  paint_options,
+                                                                  fade_point);
+
           core->aspect_ratio *= gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_output,
                                                                        coords,
                                                                        paint_options,
@@ -943,6 +949,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
   gdouble  scale;
   gdouble  angle;
   gdouble  aspect_ratio;
+  gdouble  hardness;
 
   g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
   g_return_if_fail (core->main_brush != NULL);
@@ -957,7 +964,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
 
       mask = gimp_brush_transform_mask (core->main_brush,
-                                        scale, aspect_ratio, angle);
+                                        scale, aspect_ratio, angle, 1.0);
     }
 
   if (mask)
@@ -1463,7 +1470,10 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   if (core->scale <= 0.0)
     return NULL; /* Should never happen now, with scale clamping. */
 
-  if ((core->scale == 1.0) && (core->angle == 0.0) && (core->aspect_ratio == 1.0))
+  if ((core->scale == 1.0) &&
+      (core->angle == 0.0) &&
+      (core->hardness == 1.0) && 
+      (core->aspect_ratio == 1.0))
     return brush->mask;
 
   gimp_brush_transform_size (brush,
@@ -1477,6 +1487,7 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
       height             == core->last_transform_height &&
       core->scale        == core->last_scale            &&
       core->angle        == core->last_angle            &&
+      core->hardness     == core->last_hardness         &&
       core->aspect_ratio == core->last_aspect_ratio)
     {
       return core->transform_brush;
@@ -1487,8 +1498,8 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   core->last_transform_height = height;
   core->last_scale        = core->scale;
   core->last_angle        = core->angle;
+  core->last_hardness     = core->hardness;
   core->last_aspect_ratio = core->aspect_ratio;
-
 
   if (core->transform_brush)
     temp_buf_free (core->transform_brush);
@@ -1496,7 +1507,8 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   core->transform_brush = gimp_brush_transform_mask (brush,
                                                      core->scale,
                                                      core->aspect_ratio,
-                                                     core->angle);
+                                                     core->angle,
+                                                     core->hardness);
 
   core->cache_invalid       = TRUE;
   core->solid_cache_invalid = TRUE;
@@ -1514,7 +1526,10 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
   if (core->scale <= 0.0)
     return NULL;
 
-  if ((core->scale == 1.0) && (core->angle == 0.0) && (core->aspect_ratio == 1.0))
+  if ((core->scale        == 1.0) &&
+      (core->angle        == 0.0) &&
+      (core->hardness     == 1.0) &&
+      (core->aspect_ratio == 1.0))
     return brush->pixmap;
 
   gimp_brush_transform_size (brush,
@@ -1527,6 +1542,7 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
       width              == core->last_transform_pixmap_width  &&
       height             == core->last_transform_pixmap_height &&
       core->angle        == core->last_angle                   &&
+      core->hardness     == core->last_hardness                &&
       core->aspect_ratio == core->last_aspect_ratio)
     {
       return core->transform_pixmap;
@@ -1535,8 +1551,9 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
   core->last_transform_pixmap        = brush->pixmap;
   core->last_transform_pixmap_width  = width;
   core->last_transform_pixmap_height = height;
-  core->last_angle = core->angle;
-  core->last_aspect_ratio = core->aspect_ratio;
+  core->last_angle                   = core->angle;
+  core->last_hardness                = core->hardness;
+  core->last_aspect_ratio            = core->aspect_ratio;
 
   if (core->transform_pixmap)
     temp_buf_free (core->transform_pixmap);
@@ -1545,7 +1562,8 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
   core->transform_pixmap = gimp_brush_transform_pixmap (brush,
                                                         core->scale,
                                                         core->aspect_ratio,
-                                                        core->angle);
+                                                        core->angle,
+                                                        core->hardness);
 
   core->cache_invalid = TRUE;
 

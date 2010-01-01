@@ -32,11 +32,13 @@ void      gimp_brush_real_transform_size   (GimpBrush *brush,
 TempBuf * gimp_brush_real_transform_mask   (GimpBrush *brush,
                                             gdouble    scale,
                                             gdouble    aspect_ratio,
-                                            gdouble    angle);
+                                            gdouble    angle,
+                                            gdouble    hardness);
 TempBuf * gimp_brush_real_transform_pixmap (GimpBrush *brush,
                                             gdouble    scale,
                                             gdouble    aspect_ratio,
-                                            gdouble    angle);
+                                            gdouble    angle,
+                                            gdouble    hardness);
 
 
 #endif  /*  __GIMP_BRUSH_SCALE_H__  */

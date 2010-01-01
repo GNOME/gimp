@@ -65,11 +65,13 @@ struct _GimpBrushClass
   TempBuf   * (* transform_mask)   (GimpBrush        *brush,
                                     gdouble           scale_x,
                                     gdouble           scale_y,
-                                    gdouble           angle);
+                                    gdouble           angle,
+                                    gdouble           hardness);
   TempBuf   * (* transform_pixmap) (GimpBrush        *brush,
                                     gdouble           scale_x,
                                     gdouble           scale_y,
-                                    gdouble           angle);
+                                    gdouble           angle,
+                                    gdouble           hardness);
 
   /*  signals  */
   void        (* spacing_changed)  (GimpBrush        *brush);
@@ -98,11 +100,13 @@ void        gimp_brush_transform_size   (GimpBrush        *brush,
 TempBuf   * gimp_brush_transform_mask   (GimpBrush        *brush,
                                          gdouble           scale_x,
                                          gdouble           scale_y,
-                                         gdouble           angle);
+                                         gdouble           angle,
+                                         gdouble           hardness);
 TempBuf   * gimp_brush_transform_pixmap (GimpBrush        *brush,
                                          gdouble           scale_x,
                                          gdouble           scale_y,
-                                         gdouble           angle);
+                                         gdouble           angle,
+                                         gdouble           hardness);
 
 TempBuf   * gimp_brush_get_mask         (const GimpBrush  *brush);
 TempBuf   * gimp_brush_get_pixmap       (const GimpBrush  *brush);

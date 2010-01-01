@@ -74,7 +74,8 @@ static void          gimp_brush_generated_transform_size(GimpBrush    *gbrush,
 static TempBuf     * gimp_brush_generated_transform_mask(GimpBrush    *gbrush,
                                                          gdouble       scale,
                                                          gdouble       aspect_ratio,
-                                                         gdouble       angle);
+                                                         gdouble       angle,
+                                                         gdouble       hardness);
 
 static TempBuf     * gimp_brush_generated_calc          (GimpBrushGenerated      *brush,
                                                          GimpBrushGeneratedShape  shape,
@@ -328,7 +329,8 @@ static TempBuf *
 gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                      gdouble    scale,
                                      gdouble    aspect_ratio,
-                                     gdouble    angle)
+                                     gdouble    angle,
+                                     gdouble    hardness)
 {
   GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
 
@@ -346,7 +348,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                     brush->shape,
                                     brush->radius * scale ,
                                     brush->spikes,
-                                    brush->hardness,
+                                    brush->hardness * hardness,
                                     brush->aspect_ratio * aspect_ratio,
                                     (brush->angle + 360 * angle),
                                     NULL, NULL);

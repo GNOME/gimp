@@ -400,6 +400,14 @@ void  convolve_region                     (PixelRegion         *srcR,
                                            GimpConvolutionType  mode,
                                            gboolean             alpha_weighting);
 
+void  convolve_tempbuf                    (TempBuf             *srcR,
+                                           TempBuf             *destR,
+                                           const gfloat        *matrix,
+                                           gint                 size,
+                                           gdouble              divisor,
+                                           GimpConvolutionType  mode,
+                                           gboolean             alpha_weighting);
+
 void  multiply_alpha_region               (PixelRegion *srcR);
 
 void  separate_alpha_region               (PixelRegion *srcR);
