@@ -40,7 +40,6 @@ that you use \fIpkg-config\fP directly instead of calling \fIgimptool\-2.0\fP.
 
 
 .SH OPTIONS
-.l
 \fIgimptool\-2.0\fP accepts the following options:
 .TP 8
 .B  \-\-version

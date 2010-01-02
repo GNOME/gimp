@@ -48,7 +48,6 @@ GIMP instance and quit.
 
 
 .SH OPTIONS
-.l
 GIMP accepts the following options:
 .TP 8
 .B  \-h, \-\-help
