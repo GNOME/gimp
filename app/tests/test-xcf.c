@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <string.h>
+
 #include <gegl.h>
 
 #include <gtk/gtk.h>
@@ -24,6 +26,8 @@
 #include "core/core-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgrid.h"
 #include "core/gimpguide.h"
@@ -33,6 +37,11 @@
 #include "core/gimpimage-sample-points.h"
 #include "core/gimplayer.h"
 #include "core/gimpsamplepoint.h"
+#include "core/gimpselection.h"
+
+#include "vectors/gimpanchor.h"
+#include "vectors/gimpbezierstroke.h"
+#include "vectors/gimpvectors.h"
 
 #include "file/file-open.h"
 #include "file/file-procedure.h"
@@ -45,31 +54,66 @@
 #include "gimp-app-test-utils.h"
 
 
-#define GIMP_MAINIMAGE_WIDTH           100
-#define GIMP_MAINIMAGE_HEIGHT          90
-#define GIMP_MAINIMAGE_TYPE            GIMP_RGB
-#define GIMP_MAINIMAGE_LAYER1_WIDTH    50
-#define GIMP_MAINIMAGE_LAYER1_HEIGHT   51
-#define GIMP_MAINIMAGE_LAYER1_TYPE     GIMP_RGBA_IMAGE
-#define GIMP_MAINIMAGE_LAYER1_NAME     "foo"
-#define GIMP_MAINIMAGE_LAYER1_OPACITY  1.0
-#define GIMP_MAINIMAGE_LAYER1_MODE     GIMP_NORMAL_MODE
-#define GIMP_MAINIMAGE_VGUIDE1_POS     42
-#define GIMP_MAINIMAGE_VGUIDE2_POS     82
-#define GIMP_MAINIMAGE_HGUIDE1_POS     3
-#define GIMP_MAINIMAGE_HGUIDE2_POS     4
-#define GIMP_MAINIMAGE_SAMPLEPOINT1_X  10
-#define GIMP_MAINIMAGE_SAMPLEPOINT1_Y  12
-#define GIMP_MAINIMAGE_SAMPLEPOINT2_X  41
-#define GIMP_MAINIMAGE_SAMPLEPOINT2_Y  49
-#define GIMP_MAINIMAGE_RESOLUTIONX     400
-#define GIMP_MAINIMAGE_RESOLUTIONY     410
-#define GIMP_MAINIMAGE_PARASITE_NAME   "test-parasite"
-#define GIMP_MAINIMAGE_PARASITE_DATA   "foo"
-#define GIMP_MAINIMAGE_PARASITE_SIZE   4                /* 'f' 'o' 'o' '\0' */
-#define GIMP_MAINIMAGE_UNIT            GIMP_UNIT_PICA
-#define GIMP_MAINIMAGE_GRIDXSPACING    25.0
-#define GIMP_MAINIMAGE_GRIDYSPACING    27.0
+#define GIMP_MAINIMAGE_WIDTH            100
+#define GIMP_MAINIMAGE_HEIGHT           90
+#define GIMP_MAINIMAGE_TYPE             GIMP_RGB
+
+#define GIMP_MAINIMAGE_LAYER1_NAME      "layer1"
+#define GIMP_MAINIMAGE_LAYER1_WIDTH     50
+#define GIMP_MAINIMAGE_LAYER1_HEIGHT    51
+#define GIMP_MAINIMAGE_LAYER1_TYPE      GIMP_RGBA_IMAGE
+#define GIMP_MAINIMAGE_LAYER1_OPACITY   1.0
+#define GIMP_MAINIMAGE_LAYER1_MODE      GIMP_NORMAL_MODE
+
+#define GIMP_MAINIMAGE_LAYER2_NAME      "layer2"
+#define GIMP_MAINIMAGE_LAYER2_WIDTH     25
+#define GIMP_MAINIMAGE_LAYER2_HEIGHT    251
+#define GIMP_MAINIMAGE_LAYER2_TYPE      GIMP_RGB_IMAGE
+#define GIMP_MAINIMAGE_LAYER2_OPACITY   0.0
+#define GIMP_MAINIMAGE_LAYER2_MODE      GIMP_MULTIPLY_MODE
+
+#define GIMP_MAINIMAGE_VGUIDE1_POS      42
+#define GIMP_MAINIMAGE_VGUIDE2_POS      82
+#define GIMP_MAINIMAGE_HGUIDE1_POS      3
+#define GIMP_MAINIMAGE_HGUIDE2_POS      4
+
+#define GIMP_MAINIMAGE_SAMPLEPOINT1_X   10
+#define GIMP_MAINIMAGE_SAMPLEPOINT1_Y   12
+#define GIMP_MAINIMAGE_SAMPLEPOINT2_X   41
+#define GIMP_MAINIMAGE_SAMPLEPOINT2_Y   49
+
+#define GIMP_MAINIMAGE_RESOLUTIONX      400
+#define GIMP_MAINIMAGE_RESOLUTIONY      410
+
+#define GIMP_MAINIMAGE_PARASITE_NAME    "test-parasite"
+#define GIMP_MAINIMAGE_PARASITE_DATA    "foo"
+#define GIMP_MAINIMAGE_PARASITE_SIZE    4                /* 'f' 'o' 'o' '\0' */
+
+#define GIMP_MAINIMAGE_UNIT             GIMP_UNIT_PICA
+
+#define GIMP_MAINIMAGE_GRIDXSPACING     25.0
+#define GIMP_MAINIMAGE_GRIDYSPACING     27.0
+
+#define GIMP_MAINIMAGE_CHANNEL1_NAME    "channel1"
+#define GIMP_MAINIMAGE_CHANNEL1_WIDTH   87
+#define GIMP_MAINIMAGE_CHANNEL1_HEIGHT  9
+#define GIMP_MAINIMAGE_CHANNEL1_COLOR   { 1.0, 0.0, 1.0, 1.0 }
+
+#define GIMP_MAINIMAGE_SELECTION_X      5
+#define GIMP_MAINIMAGE_SELECTION_Y      6
+#define GIMP_MAINIMAGE_SELECTION_W      7
+#define GIMP_MAINIMAGE_SELECTION_H      8
+
+#define GIMP_MAINIMAGE_VECTORS1_NAME    "vectors1"
+#define GIMP_MAINIMAGE_VECTORS1_COORDS  { { 11.0, 12.0, /* pad zeroes */ },\
+                                          { 21.0, 22.0, /* pad zeroes */ },\
+                                          { 31.0, 32.0, /* pad zeroes */ }, }
+
+#define GIMP_MAINIMAGE_VECTORS2_NAME    "vectors2"
+#define GIMP_MAINIMAGE_VECTORS2_COORDS  { { 911.0, 912.0, /* pad zeroes */ },\
+                                          { 921.0, 922.0, /* pad zeroes */ },\
+                                          { 931.0, 932.0, /* pad zeroes */ }, }
+
 
 typedef struct
 {
@@ -77,27 +121,66 @@ typedef struct
 } GimpTestFixture;
 
 
-static void        gimp_write_and_read_current_format (GimpTestFixture *fixture,
-                                                       gconstpointer    data);
-static GimpImage * gimp_create_mainimage              (void);
-static void        gimp_assert_mainimage              (GimpImage       *image);
+static void        gimp_write_and_read_gimp_2_6_format         (GimpTestFixture *fixture,
+                                                                gconstpointer    data);
+static void        gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
+                                                                gconstpointer    data);
+static void        gimp_write_and_read_file                    (gboolean         with_unusual_stuff,
+                                                                gboolean         compat_paths);
+static GimpImage * gimp_create_mainimage                       (gboolean         with_unusual_stuff,
+                                                                gboolean         compat_paths);
+static void        gimp_assert_mainimage                       (GimpImage       *image,
+                                                                gboolean         with_unusual_stuff,
+                                                                gboolean         compat_paths);
 
 
 static Gimp *gimp = NULL;
 
 
 /**
- * gimp_write_and_read_current_format:
+ * gimp_write_and_read_gimp_2_6_format:
  * @fixture:
  * @data:
  *
- * Constructs the main test image and asserts its state, writes it to
- * a file, reads the image from the file, and asserts the state of the
- * loaded file.
+ * Do a write and read test on a file that could as well be
+ * constructed with GIMP 2.6.
  **/
 static void
-gimp_write_and_read_current_format (GimpTestFixture *fixture,
-                                    gconstpointer    data)
+gimp_write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
+                                     gconstpointer    data)
+{
+  gimp_write_and_read_file (FALSE /*with_unusual_stuff*/,
+                            FALSE /*compat_paths*/);
+}
+
+/**
+ * gimp_write_and_read_gimp_2_6_format_unusual:
+ * @fixture:
+ * @data:
+ *
+ * Do a write and read test on a file that could as well be
+ * constructed with GIMP 2.6, and make it unusual, like compatible
+ * vectors and with a floating selection.
+ **/
+static void
+gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
+                                             gconstpointer    data)
+{
+  gimp_write_and_read_file (TRUE /*with_unusual_stuff*/,
+                            TRUE /*compat_paths*/);
+}
+
+/**
+ * gimp_write_and_read_file:
+ *
+ * Constructs the main test image and asserts its state, writes it to
+ * a file, reads the image from the file, and asserts the state of the
+ * loaded file. The function takes various parameters so the same
+ * function can be used for different formats.
+ **/
+static void
+gimp_write_and_read_file (gboolean with_unusual_stuff,
+                          gboolean compat_paths)
 {
   GimpImage           *image        = NULL;
   GimpImage           *loaded_image = NULL;
@@ -106,10 +189,13 @@ gimp_write_and_read_current_format (GimpTestFixture *fixture,
   GimpPDBStatusType    status       = 0;
 
   /* Create the image */
-  image = gimp_create_mainimage ();
+  image = gimp_create_mainimage (with_unusual_stuff,
+                                 compat_paths);
 
   /* Assert valid state */
-  gimp_assert_mainimage (image);
+  gimp_assert_mainimage (image,
+                         with_unusual_stuff,
+                         compat_paths);
 
   /* Write to file */
   uri  = g_build_filename (g_get_tmp_dir (), "gimp-test.xcf", NULL);
@@ -147,7 +233,9 @@ gimp_write_and_read_current_format (GimpTestFixture *fixture,
    * significant information loss when we wrote the image to a file
    * and loaded it again
    */
-  gimp_assert_mainimage (loaded_image);
+  gimp_assert_mainimage (loaded_image,
+                         with_unusual_stuff,
+                         compat_paths);
 }
 
 /**
@@ -159,12 +247,21 @@ gimp_write_and_read_current_format (GimpTestFixture *fixture,
  * Returns: The #GimpImage
  **/
 static GimpImage *
-gimp_create_mainimage (void)
+gimp_create_mainimage (gboolean with_unusual_stuff,
+                       gboolean compat_paths)
 {
-  GimpImage    *image    = NULL;
-  GimpLayer    *layer    = NULL;
-  GimpParasite *parasite = NULL;
-  GimpGrid     *grid     = NULL;
+  GimpImage     *image             = NULL;
+  GimpLayer     *layer             = NULL;
+  GimpParasite  *parasite          = NULL;
+  GimpGrid      *grid              = NULL;
+  GimpChannel   *channel           = NULL;
+  GimpRGB        channel_color     = GIMP_MAINIMAGE_CHANNEL1_COLOR;
+  GimpChannel   *selection         = NULL;
+  GimpVectors   *vectors           = NULL;
+  GimpCoords     vectors1_coords[] = GIMP_MAINIMAGE_VECTORS1_COORDS;
+  GimpCoords     vectors2_coords[] = GIMP_MAINIMAGE_VECTORS2_COORDS;
+  GimpStroke    *stroke            = NULL;
+  GimpLayerMask *layer_mask        = NULL;
 
   /* Image size and type */
   image = gimp_image_new (gimp,
@@ -172,7 +269,7 @@ gimp_create_mainimage (void)
                           GIMP_MAINIMAGE_HEIGHT,
                           GIMP_MAINIMAGE_TYPE);
 
-  /* Layer */
+  /* Layers */
   layer = gimp_layer_new (image,
                           GIMP_MAINIMAGE_LAYER1_WIDTH,
                           GIMP_MAINIMAGE_LAYER1_HEIGHT,
@@ -183,8 +280,29 @@ gimp_create_mainimage (void)
   gimp_image_add_layer (image,
                         layer,
                         NULL,
-                        -1,
+                        0,
                         FALSE/*push_undo*/);
+  layer = gimp_layer_new (image,
+                          GIMP_MAINIMAGE_LAYER2_WIDTH,
+                          GIMP_MAINIMAGE_LAYER2_HEIGHT,
+                          GIMP_MAINIMAGE_LAYER2_TYPE,
+                          GIMP_MAINIMAGE_LAYER2_NAME,
+                          GIMP_MAINIMAGE_LAYER2_OPACITY,
+                          GIMP_MAINIMAGE_LAYER2_MODE);
+  gimp_image_add_layer (image,
+                        layer,
+                        NULL,
+                        0,
+                        FALSE /*push_undo*/);
+
+  /* Layer mask */
+  layer_mask = gimp_layer_create_mask (layer,
+                                       GIMP_ADD_BLACK_MASK,
+                                       NULL /*channel*/);
+  gimp_layer_add_mask (layer,
+                       layer_mask,
+                       FALSE /*push_undo*/,
+                       NULL /*error*/);
 
   /* Image compression type
    *
@@ -249,19 +367,139 @@ gimp_create_mainimage (void)
                        FALSE /*push_undo*/);
   g_object_unref (grid);
 
+  /* Channel */
+  channel = gimp_channel_new (image,
+                              GIMP_MAINIMAGE_CHANNEL1_WIDTH,
+                              GIMP_MAINIMAGE_CHANNEL1_HEIGHT,
+                              GIMP_MAINIMAGE_CHANNEL1_NAME,
+                              &channel_color);
+  gimp_image_add_channel (image,
+                          channel,
+                          NULL,
+                          -1,
+                          FALSE /*push_undo*/);
 
-  /* Todo, test somehow:
+  /* Selection */
+  selection = gimp_image_get_mask (image);
+  gimp_channel_select_rectangle (selection,
+                                 GIMP_MAINIMAGE_SELECTION_X,
+                                 GIMP_MAINIMAGE_SELECTION_Y,
+                                 GIMP_MAINIMAGE_SELECTION_W,
+                                 GIMP_MAINIMAGE_SELECTION_H,
+                                 GIMP_CHANNEL_OP_REPLACE,
+                                 FALSE /*feather*/,
+                                 0.0 /*feather_radius_x*/,
+                                 0.0 /*feather_radius_y*/,
+                                 FALSE /*push_undo*/);
+
+  /* Vectors 1 */
+  vectors = gimp_vectors_new (image,
+                              GIMP_MAINIMAGE_VECTORS1_NAME);
+  /* The XCF file can save vectors in two kind of ways, one old way
+   * and a new way. Parameterize the way so we can test both variants,
+   * i.e. gimp_vectors_compat_is_compatible() must return both TRUE
+   * and FALSE.
+   */
+  if (! compat_paths)
+    {
+      gimp_item_set_visible (GIMP_ITEM (vectors),
+                             TRUE,
+                             FALSE /*push_undo*/);
+    }
+  /* TODO: Add test for non-closed stroke. The order of the anchor
+   * points changes for open strokes, so it's boring to test
+   */
+  stroke = gimp_bezier_stroke_new_from_coords (vectors1_coords,
+                                               G_N_ELEMENTS (vectors1_coords),
+                                               TRUE /*closed*/);
+  gimp_vectors_stroke_add (vectors, stroke);
+  gimp_image_add_vectors (image,
+                          vectors,
+                          NULL /*parent*/,
+                          -1 /*position*/,
+                          FALSE /*push_undo*/);
+
+  /* Vectors 2 */
+  vectors = gimp_vectors_new (image,
+                              GIMP_MAINIMAGE_VECTORS2_NAME);
+
+  stroke = gimp_bezier_stroke_new_from_coords (vectors2_coords,
+                                               G_N_ELEMENTS (vectors2_coords),
+                                               TRUE /*closed*/);
+  gimp_vectors_stroke_add (vectors, stroke);
+  gimp_image_add_vectors (image,
+                          vectors,
+                          NULL /*parent*/,
+                          -1 /*position*/,
+                          FALSE /*push_undo*/);
+
+  /* Some of these things are pretty unusual, parameterize the
+   * inclusion of this in the written file so we can do our test both
+   * with and without
+   */
+  if (with_unusual_stuff)
+    {
+      /* Floating selection */
+      gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
+                            gimp_image_get_active_drawable (image),
+                            gimp_get_user_context (gimp),
+                            TRUE /*cut_image*/,
+                            0 /*off_x*/,
+                            0 /*off_y*/,
+                            NULL /*error*/);
+    }
+
+  /* Todo, should be tested somehow:
    *
    * - Color maps
    * - Custom user units
-   * - Old-style paths, gimp_vectors_compat_is_compatible()
-   * - New-style paths
-   * - Layers, more compliated compositions
-   * - Channels, including selection
-   * - Floating selection
+   * - Text layers
+   * - Layer parasites
+   * - Channel parasites
+   * - Different tile compression methods
    */
-  
+
   return image;
+}
+
+static void
+gimp_assert_vectors (GimpImage   *image,
+                     const gchar *name,
+                     GimpCoords   coords[],
+                     gsize        coords_size,
+                     gboolean     visible)
+{
+  GimpVectors *vectors        = NULL;
+  GimpStroke  *stroke         = NULL;
+  GArray      *control_points = NULL;
+  gboolean     closed         = FALSE;
+  gint         i              = 0;
+
+  vectors = gimp_image_get_vectors_by_name (image, name);
+  stroke = gimp_vectors_get_stroke (vectors, 0);
+  g_assert (stroke != NULL);
+  control_points = gimp_stroke_control_points_get (stroke,
+                                                   &closed);
+  g_assert (closed);
+  g_assert_cmpint (control_points->len,
+                   ==,
+                   coords_size);
+  for (i = 0; i < control_points->len; i++)
+    {
+      g_assert_cmpint (coords[i].x,
+                       ==,
+                       g_array_index (control_points,
+                                      GimpAnchor,
+                                      i).position.x);
+      g_assert_cmpint (coords[i].y,
+                       ==,
+                       g_array_index (control_points,
+                                      GimpAnchor,
+                                      i).position.y);
+    }
+
+  g_assert (gimp_item_get_visible (GIMP_ITEM (vectors)) ? TRUE : FALSE ==
+            visible ? TRUE : FALSE);
 }
 
 /**
@@ -272,18 +510,32 @@ gimp_create_mainimage (void)
  * that was put in it by gimp_create_mainimage().
  **/
 static void
-gimp_assert_mainimage (GimpImage *image)
+gimp_assert_mainimage (GimpImage *image,
+                       gboolean   with_unusual_stuff,
+                       gboolean   compat_paths)
 {
-  const GimpParasite *parasite     = NULL;
-  GimpLayer          *layer        = NULL;
-  GList              *iter         = NULL;
-  GimpGuide          *guide        = NULL;
-  GimpSamplePoint    *sample_point = NULL;
-  gdouble             xres         = 0.0;
-  gdouble             yres         = 0.0;
-  GimpGrid           *grid         = NULL;
-  gdouble             xspacing     = 0.0;
-  gdouble             yspacing     = 0.0;
+  const GimpParasite *parasite               = NULL;
+  GimpLayer          *layer                  = NULL;
+  GList              *iter                   = NULL;
+  GimpGuide          *guide                  = NULL;
+  GimpSamplePoint    *sample_point           = NULL;
+  gdouble             xres                   = 0.0;
+  gdouble             yres                   = 0.0;
+  GimpGrid           *grid                   = NULL;
+  gdouble             xspacing               = 0.0;
+  gdouble             yspacing               = 0.0;
+  GimpChannel        *channel                = NULL;
+  GimpRGB             expected_channel_color = GIMP_MAINIMAGE_CHANNEL1_COLOR;
+  GimpRGB             actual_channel_color   = { 0, };
+  GimpChannel        *selection              = NULL;
+  gint                x1                     = -1;
+  gint                y1                     = -1;
+  gint                x2                     = -1;
+  gint                y2                     = -1;
+  gint                w                      = -1;
+  gint                h                      = -1;
+  GimpCoords          vectors1_coords[]      = GIMP_MAINIMAGE_VECTORS1_COORDS;
+  GimpCoords          vectors2_coords[]      = GIMP_MAINIMAGE_VECTORS2_COORDS;
 
   /* Image size and type */
   g_assert_cmpint (gimp_image_get_width (image),
@@ -296,7 +548,7 @@ gimp_assert_mainimage (GimpImage *image)
                    ==,
                    GIMP_MAINIMAGE_TYPE);
 
-  /* Layer */
+  /* Layers */
   layer = gimp_image_get_layer_by_name (image,
                                         GIMP_MAINIMAGE_LAYER1_NAME);
   g_assert_cmpint (gimp_item_get_width (GIMP_ITEM (layer)),
@@ -317,6 +569,26 @@ gimp_assert_mainimage (GimpImage *image)
   g_assert_cmpint (gimp_layer_get_mode (layer),
                    ==,
                    GIMP_MAINIMAGE_LAYER1_MODE);
+  layer = gimp_image_get_layer_by_name (image,
+                                        GIMP_MAINIMAGE_LAYER2_NAME);
+  g_assert_cmpint (gimp_item_get_width (GIMP_ITEM (layer)),
+                   ==,
+                   GIMP_MAINIMAGE_LAYER2_WIDTH);
+  g_assert_cmpint (gimp_item_get_height (GIMP_ITEM (layer)),
+                   ==,
+                   GIMP_MAINIMAGE_LAYER2_HEIGHT);
+  g_assert_cmpint (gimp_drawable_type (GIMP_DRAWABLE (layer)),
+                   ==,
+                   GIMP_MAINIMAGE_LAYER2_TYPE);
+  g_assert_cmpstr (gimp_object_get_name (GIMP_DRAWABLE (layer)),
+                   ==,
+                   GIMP_MAINIMAGE_LAYER2_NAME);
+  g_assert_cmpfloat (gimp_layer_get_opacity (layer),
+                     ==,
+                     GIMP_MAINIMAGE_LAYER2_OPACITY);
+  g_assert_cmpint (gimp_layer_get_mode (layer),
+                   ==,
+                   GIMP_MAINIMAGE_LAYER2_MODE);
 
   /* Guides, note that we rely on internal ordering */
   iter = gimp_image_get_guides (image);
@@ -393,7 +665,7 @@ gimp_assert_mainimage (GimpImage *image)
   g_assert_cmpint (gimp_image_get_unit (image),
                    ==,
                    GIMP_MAINIMAGE_UNIT);
-  
+
   /* Grid */
   grid = gimp_image_get_grid (image);
   g_object_get (grid,
@@ -406,6 +678,65 @@ gimp_assert_mainimage (GimpImage *image)
   g_assert_cmpint (yspacing,
                    ==,
                    GIMP_MAINIMAGE_GRIDYSPACING);
+
+
+  /* Channel */
+  channel = gimp_image_get_channel_by_name (image,
+                                            GIMP_MAINIMAGE_CHANNEL1_NAME);
+  gimp_channel_get_color (channel, &actual_channel_color);
+  g_assert_cmpint (gimp_item_get_width (GIMP_ITEM (channel)),
+                   ==,
+                   GIMP_MAINIMAGE_CHANNEL1_WIDTH);
+  g_assert_cmpint (gimp_item_get_height (GIMP_ITEM (channel)),
+                   ==,
+                   GIMP_MAINIMAGE_CHANNEL1_HEIGHT);
+  g_assert (memcmp (&expected_channel_color,
+                    &actual_channel_color,
+                    sizeof (GimpRGB)) == 0);
+
+  /* Selection, if the image contains unusual stuff it contains a
+   * floating select, and when floating a selection, the selection
+   * mask is cleared, so don't test for the presence of the selection
+   * mask in that case
+   */
+  if (! with_unusual_stuff)
+    {
+      selection = gimp_image_get_mask (image);
+      gimp_channel_bounds (selection, &x1, &y1, &x2, &y2);
+      w = x2 - x1;
+      h = y2 - y1;
+      g_assert_cmpint (x1,
+                       ==,
+                       GIMP_MAINIMAGE_SELECTION_X);
+      g_assert_cmpint (y1,
+                       ==,
+                       GIMP_MAINIMAGE_SELECTION_Y);
+      g_assert_cmpint (w,
+                       ==,
+                       GIMP_MAINIMAGE_SELECTION_W);
+      g_assert_cmpint (h,
+                       ==,
+                       GIMP_MAINIMAGE_SELECTION_H);
+    }
+
+  /* Vectors 1 */
+  gimp_assert_vectors (image,
+                       GIMP_MAINIMAGE_VECTORS1_NAME,
+                       vectors1_coords,
+                       G_N_ELEMENTS (vectors1_coords),
+                       ! compat_paths /*visible*/);
+
+  /* Vectors 2 (always visible FALSE) */
+  gimp_assert_vectors (image,
+                       GIMP_MAINIMAGE_VECTORS2_NAME,
+                       vectors2_coords,
+                       G_N_ELEMENTS (vectors2_coords),
+                       FALSE /*visible*/);
+
+  if (with_unusual_stuff)
+    g_assert (gimp_image_get_floating_selection (image) != NULL);
+  else /* if (! with_unusual_stuff) */
+    g_assert (gimp_image_get_floating_selection (image) == NULL);
 }
 
 
@@ -439,11 +770,17 @@ main (int    argc,
   gimp = gimp_init_for_gui_testing (TRUE, FALSE);
 
   /* Setup the tests */
-  g_test_add ("/gimp-xcf/write-and-read-current-format",
+  g_test_add ("/gimp-xcf/write-and-read-gimp-2-6",
               GimpTestFixture,
               NULL,
               NULL,
-              gimp_write_and_read_current_format,
+              gimp_write_and_read_gimp_2_6_format,
+              NULL);
+  g_test_add ("/gimp-xcf/write-and-read-gimp-2-6-unusual",
+              GimpTestFixture,
+              NULL,
+              NULL,
+              gimp_write_and_read_gimp_2_6_format_unusual,
               NULL);
 
   /* Exit so we don't break script-fu plug-in wire */
