@@ -131,6 +131,10 @@ static void        gimp_write_and_read_gimp_2_6_format         (GimpTestFixture 
                                                                 gconstpointer    data);
 static void        gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
                                                                 gconstpointer    data);
+static void        gimp_load_gimp_2_6_file                     (GimpTestFixture *fixture,
+                                                                gconstpointer    data);
+GimpImage        * gimp_test_load_image                        (Gimp            *gimp,
+                                                                const gchar     *uri);
 static void        gimp_write_and_read_file                    (gboolean         with_unusual_stuff,
                                                                 gboolean         compat_paths);
 static GimpImage * gimp_create_mainimage                       (gboolean         with_unusual_stuff,
@@ -177,6 +181,64 @@ gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
 }
 
 /**
+ * gimp_load_gimp_2_6_file:
+ * @fixture:
+ * @data:
+ *
+ * Loads a file created with GIMP 2.6 and makes sure it loaded as
+ * expected.
+ **/
+static void
+gimp_load_gimp_2_6_file (GimpTestFixture *fixture,
+                         gconstpointer    data)
+{
+  GimpImage *image = NULL;
+  gchar     *uri   = NULL;
+
+  uri = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                          "app/tests/files/gimp-2-6-file.xcf",
+                          NULL);
+
+  image = gimp_test_load_image (gimp, uri);
+
+  /* The image file was constructed by running
+   * gimp_write_and_read_file (FALSE, FALSE) in GIMP 2.6 by
+   * copy-pasting the code to GIMP 2.6 and adapting it to changes in
+   * the core API, so we can use gimp_assert_mainimage() to make sure
+   * the file was loaded successfully.
+   */
+  gimp_assert_mainimage (image,
+                         FALSE /*with_unusual_stuff*/,
+                         FALSE /*compat_paths*/);
+}
+
+GimpImage *
+gimp_test_load_image (Gimp        *gimp,
+                      const gchar *uri)
+{
+  GimpPlugInProcedure *proc     = NULL;
+  GimpImage           *image    = NULL;
+  GimpPDBStatusType    not_used = 0;
+
+  proc = file_procedure_find (gimp->plug_in_manager->load_procs,
+                              uri,
+                              NULL /*error*/);
+  image = file_open_image (gimp,
+                           gimp_get_user_context (gimp),
+                           NULL /*progress*/,
+                           uri,
+                           "irrelevant" /*entered_filename*/,
+                           FALSE /*as_new*/,
+                           proc,
+                           GIMP_RUN_NONINTERACTIVE,
+                           &not_used /*status*/,
+                           NULL /*mime_type*/,
+                           NULL /*error*/);
+
+  return image;
+}
+
+/**
  * gimp_write_and_read_file:
  *
  * Constructs the main test image and asserts its state, writes it to
@@ -192,7 +254,6 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
   GimpImage           *loaded_image = NULL;
   GimpPlugInProcedure *proc         = NULL;
   gchar               *uri          = NULL;
-  GimpPDBStatusType    status       = 0;
 
   /* Create the image */
   image = gimp_create_mainimage (with_unusual_stuff,
@@ -219,20 +280,7 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
              NULL /*error*/);
 
   /* Load from file */
-  proc = file_procedure_find (image->gimp->plug_in_manager->load_procs,
-                              uri,
-                              NULL /*error*/);
-  loaded_image = file_open_image (gimp,
-                                  gimp_get_user_context (gimp),
-                                  NULL /*progress*/,
-                                  uri,
-                                  "irrelevant" /*entered_filename*/,
-                                  FALSE /*as_new*/,
-                                  proc,
-                                  GIMP_RUN_NONINTERACTIVE,
-                                  &status,
-                                  NULL /*mime_type*/,
-                                  NULL /*error*/);
+  loaded_image = gimp_test_load_image (image->gimp, uri);
   g_free (uri);
 
   /* Assert on the loaded file. If success, it means that there is no
@@ -767,7 +815,7 @@ gimp_assert_mainimage (GimpImage *image,
  * @argc:
  * @argv:
  *
- * These tests, when done, will
+ * These tests intend to
  *
  *  - Make sure that we are backwards compatible with files created by
  *    older version of GIMP, i.e. that we can load files from earlier
@@ -803,6 +851,12 @@ main (int    argc,
               NULL,
               NULL,
               gimp_write_and_read_gimp_2_6_format_unusual,
+              NULL);
+  g_test_add ("/gimp-xcf/load-gimp-2-6-file",
+              GimpTestFixture,
+              NULL,
+              NULL,
+              gimp_load_gimp_2_6_file,
               NULL);
 
   /* Exit so we don't break script-fu plug-in wire */
