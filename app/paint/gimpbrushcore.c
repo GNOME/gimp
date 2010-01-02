@@ -949,7 +949,6 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
   gdouble  scale;
   gdouble  angle;
   gdouble  aspect_ratio;
-  gdouble  hardness;
 
   g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
   g_return_if_fail (core->main_brush != NULL);
