@@ -476,7 +476,7 @@ gimp_assert_vectors (GimpImage   *image,
   gint         i              = 0;
 
   vectors = gimp_image_get_vectors_by_name (image, name);
-  stroke = gimp_vectors_get_stroke (vectors, 0);
+  stroke = gimp_vectors_stroke_get_next (vectors, NULL);
   g_assert (stroke != NULL);
   control_points = gimp_stroke_control_points_get (stroke,
                                                    &closed);
