@@ -8,9 +8,9 @@ TESTS = \
 	test-layer-grouping	\
 	test-layers		\
 	test-session-management	\
+	test-ui			\
 	test-window-management	\
-	test-xcf		\
-	test-ui
+	test-xcf
 
 EXTRA_PROGRAMS = $(TESTS)
 
