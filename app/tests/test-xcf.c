@@ -133,15 +133,20 @@ static void        gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture 
                                                                 gconstpointer    data);
 static void        gimp_load_gimp_2_6_file                     (GimpTestFixture *fixture,
                                                                 gconstpointer    data);
+static void        gimp_write_and_read_gimp_2_8_format         (GimpTestFixture *fixture,
+                                                                gconstpointer    data);
 GimpImage        * gimp_test_load_image                        (Gimp            *gimp,
                                                                 const gchar     *uri);
 static void        gimp_write_and_read_file                    (gboolean         with_unusual_stuff,
-                                                                gboolean         compat_paths);
+                                                                gboolean         compat_paths,
+                                                                gboolean         use_gimp_2_8_features);
 static GimpImage * gimp_create_mainimage                       (gboolean         with_unusual_stuff,
-                                                                gboolean         compat_paths);
+                                                                gboolean         compat_paths,
+                                                                gboolean         use_gimp_2_8_features);
 static void        gimp_assert_mainimage                       (GimpImage       *image,
                                                                 gboolean         with_unusual_stuff,
-                                                                gboolean         compat_paths);
+                                                                gboolean         compat_paths,
+                                                                gboolean         use_gimp_2_8_features);
 
 
 static Gimp *gimp = NULL;
@@ -160,7 +165,8 @@ gimp_write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
                                      gconstpointer    data)
 {
   gimp_write_and_read_file (FALSE /*with_unusual_stuff*/,
-                            FALSE /*compat_paths*/);
+                            FALSE /*compat_paths*/,
+                            FALSE /*use_gimp_2_8_features*/);
 }
 
 /**
@@ -177,7 +183,8 @@ gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
                                              gconstpointer    data)
 {
   gimp_write_and_read_file (TRUE /*with_unusual_stuff*/,
-                            TRUE /*compat_paths*/);
+                            TRUE /*compat_paths*/,
+                            FALSE /*use_gimp_2_8_features*/);
 }
 
 /**
@@ -209,7 +216,26 @@ gimp_load_gimp_2_6_file (GimpTestFixture *fixture,
    */
   gimp_assert_mainimage (image,
                          FALSE /*with_unusual_stuff*/,
-                         FALSE /*compat_paths*/);
+                         FALSE /*compat_paths*/,
+                         FALSE /*use_gimp_2_8_features*/);
+}
+
+/**
+ * gimp_write_and_read_gimp_2_8_format:
+ * @fixture:
+ * @data:
+ *
+ * Writes an XCF file that uses GIMP 2.8 features such as layer
+ * groups, then reads the file and make sure no relevant information
+ * was lost.
+ **/
+static void
+gimp_write_and_read_gimp_2_8_format (GimpTestFixture *fixture,
+                                     gconstpointer    data)
+{
+  gimp_write_and_read_file (FALSE /*with_unusual_stuff*/,
+                            FALSE /*compat_paths*/,
+                            TRUE /*use_gimp_2_8_features*/);
 }
 
 GimpImage *
@@ -248,7 +274,8 @@ gimp_test_load_image (Gimp        *gimp,
  **/
 static void
 gimp_write_and_read_file (gboolean with_unusual_stuff,
-                          gboolean compat_paths)
+                          gboolean compat_paths,
+                          gboolean use_gimp_2_8_features)
 {
   GimpImage           *image        = NULL;
   GimpImage           *loaded_image = NULL;
@@ -257,12 +284,14 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
 
   /* Create the image */
   image = gimp_create_mainimage (with_unusual_stuff,
-                                 compat_paths);
+                                 compat_paths,
+                                 use_gimp_2_8_features);
 
   /* Assert valid state */
   gimp_assert_mainimage (image,
                          with_unusual_stuff,
-                         compat_paths);
+                         compat_paths,
+                         use_gimp_2_8_features);
 
   /* Write to file */
   uri  = g_build_filename (g_get_tmp_dir (), "gimp-test.xcf", NULL);
@@ -289,7 +318,8 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
    */
   gimp_assert_mainimage (loaded_image,
                          with_unusual_stuff,
-                         compat_paths);
+                         compat_paths,
+                         use_gimp_2_8_features);
 }
 
 /**
@@ -302,7 +332,8 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
  **/
 static GimpImage *
 gimp_create_mainimage (gboolean with_unusual_stuff,
-                       gboolean compat_paths)
+                       gboolean compat_paths,
+                       gboolean use_gimp_2_8_features)
 {
   GimpImage     *image             = NULL;
   GimpLayer     *layer             = NULL;
@@ -511,6 +542,12 @@ gimp_create_mainimage (gboolean with_unusual_stuff,
                             NULL /*error*/);
     }
 
+  /* Adds stuff like layer groups */
+  if (use_gimp_2_8_features)
+    {
+      /* TODO: mitch? ;) */
+    }
+
   /* Todo, should be tested somehow:
    *
    * - Color maps
@@ -574,7 +611,8 @@ gimp_assert_vectors (GimpImage   *image,
 static void
 gimp_assert_mainimage (GimpImage *image,
                        gboolean   with_unusual_stuff,
-                       gboolean   compat_paths)
+                       gboolean   compat_paths,
+                       gboolean   use_gimp_2_8_features)
 {
   const GimpParasite *parasite               = NULL;
   GimpLayer          *layer                  = NULL;
@@ -807,6 +845,11 @@ gimp_assert_mainimage (GimpImage *image,
     g_assert (gimp_image_get_floating_selection (image) != NULL);
   else /* if (! with_unusual_stuff) */
     g_assert (gimp_image_get_floating_selection (image) == NULL);
+
+  if (use_gimp_2_8_features)
+    {
+      /* TODO: mitch? ;) */
+    }
 }
 
 
@@ -857,6 +900,12 @@ main (int    argc,
               NULL,
               NULL,
               gimp_load_gimp_2_6_file,
+              NULL);
+  g_test_add ("/gimp-xcf/write-and-read-gimp-2-8",
+              GimpTestFixture,
+              NULL,
+              NULL,
+              gimp_write_and_read_gimp_2_8_format,
               NULL);
 
   /* Exit so we don't break script-fu plug-in wire */
