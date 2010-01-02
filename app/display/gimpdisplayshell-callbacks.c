@@ -1992,20 +1992,28 @@ static void
 gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
                                       GimpDisplayShell *shell)
 {
-  gimp_display_shell_scroll (shell,
-                             0,
-                             gtk_adjustment_get_value (adjustment) -
-                             shell->offset_y);
+  /* If we are panning with mouse, scrollbars are to be ignored
+   * or they will cause jitter in motion
+   */
+  if (! shell->scrolling)
+    gimp_display_shell_scroll (shell,
+                               0,
+                               gtk_adjustment_get_value (adjustment) -
+                               shell->offset_y);
 }
 
 static void
 gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
                                       GimpDisplayShell *shell)
 {
-  gimp_display_shell_scroll (shell,
-                             gtk_adjustment_get_value (adjustment) -
-                             shell->offset_x,
-                             0);
+  /* If we are panning with mouse, scrollbars are to be ignored
+   * or they will cause jitter in motion 
+   */
+  if (! shell->scrolling)
+    gimp_display_shell_scroll (shell,
+                               gtk_adjustment_get_value (adjustment) -
+                               shell->offset_x,
+                               0);
 }
 
 static gboolean
