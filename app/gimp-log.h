@@ -21,17 +21,18 @@
 
 typedef enum
 {
-  GIMP_LOG_TOOL_EVENTS    = 1 << 0,
-  GIMP_LOG_TOOL_FOCUS     = 1 << 1,
-  GIMP_LOG_DND            = 1 << 2,
-  GIMP_LOG_HELP           = 1 << 3,
-  GIMP_LOG_DIALOG_FACTORY = 1 << 4,
-  GIMP_LOG_MENUS          = 1 << 5,
-  GIMP_LOG_SAVE_DIALOG    = 1 << 6,
-  GIMP_LOG_IMAGE_SCALE    = 1 << 7,
-  GIMP_LOG_SHADOW_TILES   = 1 << 8,
-  GIMP_LOG_SCALE          = 1 << 9,
-  GIMP_LOG_WM             = 1 << 10
+  GIMP_LOG_TOOL_EVENTS        = 1 << 0,
+  GIMP_LOG_TOOL_FOCUS         = 1 << 1,
+  GIMP_LOG_DND                = 1 << 2,
+  GIMP_LOG_HELP               = 1 << 3,
+  GIMP_LOG_DIALOG_FACTORY     = 1 << 4,
+  GIMP_LOG_MENUS              = 1 << 5,
+  GIMP_LOG_SAVE_DIALOG        = 1 << 6,
+  GIMP_LOG_IMAGE_SCALE        = 1 << 7,
+  GIMP_LOG_SHADOW_TILES       = 1 << 8,
+  GIMP_LOG_SCALE              = 1 << 9,
+  GIMP_LOG_WM                 = 1 << 10,
+  GIMP_LOG_FLOATING_SELECTION = 1 << 11
 } GimpLogFlags;
 
 
@@ -72,17 +73,18 @@ void   gimp_logv     (const gchar *function,
 /* need to expand all the short forms
  * to make them known constants at compile time
  */
-#define TOOL_EVENTS    GIMP_LOG_TOOL_EVENTS
-#define TOOL_FOCUS     GIMP_LOG_TOOL_FOCUS
-#define DND            GIMP_LOG_DND
-#define HELP           GIMP_LOG_HELP
-#define DIALOG_FACTORY GIMP_LOG_DIALOG_FACTORY
-#define MENUS          GIMP_LOG_MENUS
-#define SAVE_DIALOG    GIMP_LOG_SAVE_DIALOG
-#define IMAGE_SCALE    GIMP_LOG_IMAGE_SCALE
-#define SHADOW_TILES   GIMP_LOG_SHADOW_TILES
-#define SCALE          GIMP_LOG_SCALE
-#define WM             GIMP_LOG_WM
+#define TOOL_EVENTS        GIMP_LOG_TOOL_EVENTS
+#define TOOL_FOCUS         GIMP_LOG_TOOL_FOCUS
+#define DND                GIMP_LOG_DND
+#define HELP               GIMP_LOG_HELP
+#define DIALOG_FACTORY     GIMP_LOG_DIALOG_FACTORY
+#define MENUS              GIMP_LOG_MENUS
+#define SAVE_DIALOG        GIMP_LOG_SAVE_DIALOG
+#define IMAGE_SCALE        GIMP_LOG_IMAGE_SCALE
+#define SHADOW_TILES       GIMP_LOG_SHADOW_TILES
+#define SCALE              GIMP_LOG_SCALE
+#define WM                 GIMP_LOG_WM
+#define FLOATING_SELECTION GIMP_LOG_FLOATING_SELECTION
 
 #if 0 /* last resort */
 #  define GIMP_LOG /* nothing => no varargs, no log */

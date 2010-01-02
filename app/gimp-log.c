@@ -37,17 +37,18 @@ gimp_log_init (void)
     {
       const GDebugKey log_keys[] =
       {
-        { "tool-events",    GIMP_LOG_TOOL_EVENTS    },
-        { "tool-focus",     GIMP_LOG_TOOL_FOCUS     },
-        { "dnd",            GIMP_LOG_DND            },
-        { "help",           GIMP_LOG_HELP           },
-        { "dialog-factory", GIMP_LOG_DIALOG_FACTORY },
-        { "menus",          GIMP_LOG_MENUS          },
-        { "save-dialog",    GIMP_LOG_SAVE_DIALOG    },
-        { "image-scale",    GIMP_LOG_IMAGE_SCALE    },
-        { "shadow-tiles",   GIMP_LOG_SHADOW_TILES   },
-        { "scale",          GIMP_LOG_SCALE          },
-        { "wm",             GIMP_LOG_WM             }
+        { "tool-events",        GIMP_LOG_TOOL_EVENTS        },
+        { "tool-focus",         GIMP_LOG_TOOL_FOCUS         },
+        { "dnd",                GIMP_LOG_DND                },
+        { "help",               GIMP_LOG_HELP               },
+        { "dialog-factory",     GIMP_LOG_DIALOG_FACTORY     },
+        { "menus",              GIMP_LOG_MENUS              },
+        { "save-dialog",        GIMP_LOG_SAVE_DIALOG        },
+        { "image-scale",        GIMP_LOG_IMAGE_SCALE        },
+        { "shadow-tiles",       GIMP_LOG_SHADOW_TILES       },
+        { "scale",              GIMP_LOG_SCALE              },
+        { "wm",                 GIMP_LOG_WM                 },
+        { "floating-selection", GIMP_LOG_FLOATING_SELECTION }
       };
 
       /*  g_parse_debug_string() has special treatment of the string 'help',

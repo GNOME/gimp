@@ -50,6 +50,8 @@
 #include "gimppreviewcache.h"
 #include "gimpprogress.h"
 
+#include "gimp-log.h"
+
 #include "gimp-intl.h"
 
 
@@ -1936,7 +1938,7 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_LAYER (floating_sel));
 
-  g_printerr ("%s\n", G_STRFUNC);
+  GIMP_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -1967,7 +1969,7 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_LAYER (floating_sel));
 
-  g_printerr ("%s\n", G_STRFUNC);
+  GIMP_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
