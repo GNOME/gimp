@@ -89,6 +89,12 @@
 #define GIMP_MAINIMAGE_PARASITE_DATA    "foo"
 #define GIMP_MAINIMAGE_PARASITE_SIZE    4                /* 'f' 'o' 'o' '\0' */
 
+#define GIMP_MAINIMAGE_COMMENT          "Created with code from "\
+                                        "app/tests/test-xcf.c in the GIMP "\
+                                        "source tree, i.e. it was not created "\
+                                        "manually and may thus look weird if "\
+                                        "opened and inspected in GIMP."
+
 #define GIMP_MAINIMAGE_UNIT             GIMP_UNIT_PICA
 
 #define GIMP_MAINIMAGE_GRIDXSPACING     25.0
@@ -352,6 +358,14 @@ gimp_create_mainimage (gboolean with_unusual_stuff,
                                 GIMP_MAINIMAGE_PARASITE_DATA);
   gimp_image_parasite_attach (image,
                               parasite);
+  gimp_parasite_free (parasite);
+  parasite = gimp_parasite_new ("gimp-comment",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (GIMP_MAINIMAGE_COMMENT) + 1,
+                                GIMP_MAINIMAGE_COMMENT);
+  gimp_image_parasite_attach (image, parasite);
+  gimp_parasite_free (parasite);
+
 
   /* Unit */
   gimp_image_set_unit (image,
@@ -660,6 +674,14 @@ gimp_assert_mainimage (GimpImage *image,
   g_assert_cmpstr (gimp_parasite_data (parasite),
                    ==,
                    GIMP_MAINIMAGE_PARASITE_DATA);
+  parasite = gimp_image_parasite_find (image,
+                                       "gimp-comment");
+  g_assert_cmpint (gimp_parasite_data_size (parasite),
+                   ==,
+                   strlen (GIMP_MAINIMAGE_COMMENT) + 1);
+  g_assert_cmpstr (gimp_parasite_data (parasite),
+                   ==,
+                   GIMP_MAINIMAGE_COMMENT);
 
   /* Unit */
   g_assert_cmpint (gimp_image_get_unit (image),
