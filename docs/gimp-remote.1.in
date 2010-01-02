@@ -33,7 +33,6 @@ to use \fIgimp-remote\fP.
 
 
 .SH OPTIONS
-.l 
 \fIgimp\-remote\fP accepts the following options:
 .TP 8
 .B  \-h, \-\-help
