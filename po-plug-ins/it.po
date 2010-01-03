@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-27 21:13+0100\n"
-"PO-Revision-Date: 2009-11-29 01:21+0100\n"
+"POT-Creation-Date: 2010-01-03 01:51+0100\n"
+"PO-Revision-Date: 2010-01-03 01:55+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -517,7 +517,7 @@ msgstr "L'antialias usa l'algoritmo Scale3X di estrapolazione-contorni"
 msgid "_Antialias"
 msgstr "_Antialias"
 
-#: ../plug-ins/common/antialias.c:147
+#: ../plug-ins/common/antialias.c:149
 msgid "Antialiasing..."
 msgstr "Antialias in corso..."
 
@@ -605,8 +605,8 @@ msgstr "_Verticale"
 #: ../plug-ins/common/decompose.c:722 ../plug-ins/common/file-cel.c:361
 #: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:556
 #: ../plug-ins/common/file-gif-load.c:927
-#: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:411
-#: ../plug-ins/common/file-pcx.c:417 ../plug-ins/common/file-pix.c:381
+#: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:418
+#: ../plug-ins/common/file-pcx.c:424 ../plug-ins/common/file-pix.c:381
 #: ../plug-ins/common/file-png.c:851 ../plug-ins/common/file-pnm.c:584
 #: ../plug-ins/common/file-raw.c:759 ../plug-ins/common/file-sunras.c:974
 #: ../plug-ins/common/file-tga.c:1063 ../plug-ins/common/file-tiff-load.c:998
@@ -616,7 +616,7 @@ msgstr "_Verticale"
 #: ../plug-ins/file-faxg3/faxg3.c:477 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:248 ../plug-ins/file-jpeg/jpeg-load.c:760
 #: ../plug-ins/file-psd/psd-image-res-load.c:994
-#: ../plug-ins/file-psd/psd-load.c:1574 ../plug-ins/file-sgi/sgi.c:383
+#: ../plug-ins/file-psd/psd-load.c:1574 ../plug-ins/file-sgi/sgi.c:404
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:139 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1155
@@ -654,7 +654,7 @@ msgstr "Sfocatura selettiva Gaussiana"
 #: ../plug-ins/common/edge-dog.c:266 ../plug-ins/common/edge-neon.c:227
 #: ../plug-ins/common/edge-sobel.c:211 ../plug-ins/common/photocopy.c:243
 #: ../plug-ins/common/pixelize.c:292 ../plug-ins/common/softglow.c:223
-#: ../plug-ins/file-sgi/sgi.c:535 ../plug-ins/file-xjt/xjt.c:1683
+#: ../plug-ins/file-sgi/sgi.c:555 ../plug-ins/file-xjt/xjt.c:1683
 #: ../plug-ins/gradient-flare/gradient-flare.c:965
 msgid "Cannot operate on indexed color images."
 msgstr "Impossibile operare su immagini a colori indicizzati."
@@ -1060,10 +1060,10 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
 #: ../plug-ins/common/file-csource.c:405 ../plug-ins/common/file-dicom.c:800
-#: ../plug-ins/common/file-gbr.c:637 ../plug-ins/common/file-gif-save.c:761
+#: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:761
 #: ../plug-ins/common/file-gih.c:1261 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
-#: ../plug-ins/common/file-pat.c:461 ../plug-ins/common/file-pcx.c:665
+#: ../plug-ins/common/file-pat.c:475 ../plug-ins/common/file-pcx.c:672
 #: ../plug-ins/common/file-pix.c:523 ../plug-ins/common/file-png.c:1269
 #: ../plug-ins/common/file-pnm.c:976 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:587 ../plug-ins/common/file-raw.c:615
@@ -3029,7 +3029,7 @@ msgstr "Carica tavolozza KISS"
 #: ../plug-ins/file-bmp/bmp-read.c:160 ../plug-ins/file-faxg3/faxg3.c:216
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:645
 #: ../plug-ins/file-jpeg/jpeg-load.c:114 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3328
+#: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3328
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
@@ -3045,10 +3045,10 @@ msgstr "Profondità di colore (in bit) non supportata (%d)!"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:642
+#: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:657
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1266
-#: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:466
-#: ../plug-ins/common/file-pcx.c:626 ../plug-ins/common/file-pix.c:528
+#: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:480
+#: ../plug-ins/common/file-pcx.c:633 ../plug-ins/common/file-pix.c:528
 #: ../plug-ins/common/file-png.c:1276 ../plug-ins/common/file-pnm.c:981
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:567
 #: ../plug-ins/common/file-tga.c:1174 ../plug-ins/common/file-tiff-save.c:693
@@ -3057,7 +3057,7 @@ msgstr "Profondità di colore (in bit) non supportata (%d)!"
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:480
 #: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:286 ../plug-ins/file-psd/psd-save.c:1642
-#: ../plug-ins/file-sgi/sgi.c:553 ../plug-ins/file-xjt/xjt.c:1692
+#: ../plug-ins/file-sgi/sgi.c:573 ../plug-ins/file-xjt/xjt.c:1692
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvataggio di '%s'"
@@ -3152,7 +3152,7 @@ msgstr "Immagini digitali e comunicazioni in immagini mediche"
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' non è un file DICOM"
 
-#: ../plug-ins/common/file-dicom.c:768 ../plug-ins/common/file-pcx.c:658
+#: ../plug-ins/common/file-dicom.c:768 ../plug-ins/common/file-pcx.c:665
 #: ../plug-ins/common/file-pnm.c:966
 msgid "Cannot save images with alpha channel."
 msgstr "Impossibile salvare immagini con canali alfa."
@@ -3167,41 +3167,46 @@ msgstr "Impossibile operare su immagini di tipo sconosciuto."
 msgid "GIMP brush"
 msgstr "Pennello GIMP"
 
-#: ../plug-ins/common/file-gbr.c:400 ../plug-ins/common/file-gbr.c:412
+#: ../plug-ins/common/file-gbr.c:391 ../plug-ins/common/file-pat.c:410
+#, c-format
+msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgstr "Intestazione dati non valida in \"%s\": larghezza=%lu, altezza=%lu, byte=%lu"
+
+#: ../plug-ins/common/file-gbr.c:415 ../plug-ins/common/file-gbr.c:427
 msgid "Unsupported brush format"
 msgstr "Formato pennello non supportato"
 
-#: ../plug-ins/common/file-gbr.c:424
+#: ../plug-ins/common/file-gbr.c:439
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Errore in file pennello di GIMP '%s'"
 
-#: ../plug-ins/common/file-gbr.c:432
+#: ../plug-ins/common/file-gbr.c:447
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: ../plug-ins/common/file-gbr.c:438 ../plug-ins/common/file-gih.c:491
+#: ../plug-ins/common/file-gbr.c:453 ../plug-ins/common/file-gih.c:491
 #: ../plug-ins/common/file-gih.c:1140
 #: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Unnamed"
 msgstr "Senzanome"
 
-#: ../plug-ins/common/file-gbr.c:627
+#: ../plug-ins/common/file-gbr.c:642
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "I pennelli di GIMP sono o in scala di grigi o RGBA"
 
-#: ../plug-ins/common/file-gbr.c:744
+#: ../plug-ins/common/file-gbr.c:759
 msgid "Brush"
 msgstr "Pennello"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:758 ../plug-ins/common/grid.c:790
+#: ../plug-ins/common/file-gbr.c:773 ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr "Spaziatura:"
 
-#: ../plug-ins/common/file-gbr.c:769 ../plug-ins/common/file-gih.c:891
-#: ../plug-ins/common/file-pat.c:542 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-gbr.c:784 ../plug-ins/common/file-gih.c:891
+#: ../plug-ins/common/file-pat.c:557 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Descrizione:"
 
@@ -3559,8 +3564,8 @@ msgid "The amount of cellspacing."
 msgstr "Dimensione della spaziatura celle."
 
 #: ../plug-ins/common/file-jp2-load.c:96
-msgid "JPEG-2000 image"
-msgstr "Immagine JPEG-2000"
+msgid "JPEG 2000 image"
+msgstr "Immagine JPEG 2000"
 
 #: ../plug-ins/common/file-jp2-load.c:215
 #, c-format
@@ -3576,39 +3581,33 @@ msgstr ""
 
 #: ../plug-ins/common/file-jp2-load.c:264
 #, c-format
-msgid "The image '%s' is in RGB but is missing some of the components."
+msgid "The image '%s' is in RGB, but is missing some of the components."
 msgstr "L'immagine \"%s\" è in RGB ma manca qualche componente."
 
 #: ../plug-ins/common/file-jp2-load.c:284
 #, c-format
 msgid ""
-"The image '%s' is in the CIEXYZ color space but there is no code in place to "
-"convert it to RGB."
-msgstr ""
-"L'immagine '%s' è espressa nello spazio colore CIEXYZ ma non è presente il "
-"codice per convertirla in RGB."
+"The image '%s' is in the CIEXYZ color space, but there is no code in place "
+"to convert it to RGB."
+msgstr "L'immagine \"%s\" è espressa nello spazio colore CIEXYZ ma non è presente il codice per convertirla in RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:291
 #, c-format
 msgid ""
-"The image '%s' is in the CIELAB color space but there is no code in place to "
-"convert it to RGB."
-msgstr ""
-"L'immagine '%s' è espressa nello spazio colore CIELAB ma non è presente il "
-"codice per convertirla in RGB."
+"The image '%s' is in the CIELAB color space, but there is no code in place "
+"to convert it to RGB."
+msgstr "L'immagine \"%s\" è espressa nello spazio colore CIELAB ma non è presente il codice per convertirla in RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:298
 #, c-format
 msgid ""
-"The image '%s' is in the YCbCr color space but there is no code in place to "
+"The image '%s' is in the YCbCr color space, but there is no code in place to "
 "convert it to RGB."
-msgstr ""
-"L'immagine '%s' è espressa nello spazio colore YCbCr ma non è presente il "
-"codice per convertirla in RGB."
+msgstr "L'immagine \"%s\" è espressa nello spazio colore YCbCr ma non è presente il codice per convertirla in RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:306
 #, c-format
-msgid "The image '%s' is in an unkown color space."
+msgid "The image '%s' is in an unknown color space."
 msgstr "L'immagine \"%s\" possiede uno spazio colore sconosciuto."
 
 #: ../plug-ins/common/file-jp2-load.c:320
@@ -3751,7 +3750,7 @@ msgstr "Motivo Gimp"
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Stringa UTF-8 non valida nel file motivi '%s'."
 
-#: ../plug-ins/common/file-pat.c:527
+#: ../plug-ins/common/file-pat.c:542
 msgid "Pattern"
 msgstr "Motivo"
 
@@ -3785,31 +3784,36 @@ msgstr "Altezza immagine non supportata o non valida: %d"
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Numero di byte per riga nell'intestazione PCX non valido"
 
-#: ../plug-ins/common/file-pcx.c:452
+#: ../plug-ins/common/file-pcx.c:411
+#, c-format
+msgid "Image dimensions too large: width %d x height %d"
+msgstr "Dimensioni immagine troppo ampie: larghezza %d × altezza %d"
+
+#: ../plug-ins/common/file-pcx.c:459
 msgid "Unusual PCX flavour, giving up"
 msgstr "Tipo PCX strano, abbandono"
 
-#: ../plug-ins/common/file-pcx.c:675
+#: ../plug-ins/common/file-pcx.c:682
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Spostamento X non valido: %d"
 
-#: ../plug-ins/common/file-pcx.c:681
+#: ../plug-ins/common/file-pcx.c:688
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Spostamento Y non valido: %d"
 
-#: ../plug-ins/common/file-pcx.c:687
+#: ../plug-ins/common/file-pcx.c:694
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Bordo destro fuori dai limiti (deve essere < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:694
+#: ../plug-ins/common/file-pcx.c:701
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Bordo inferiore fuori dai limiti (deve essere < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:751
+#: ../plug-ins/common/file-pcx.c:758
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
@@ -4773,7 +4777,9 @@ msgstr "Opzioni XMC"
 
 #: ../plug-ins/common/file-xmc.c:1090
 msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
-msgstr "Inserire la coordinata X dell'hotspot. L'origine è l'angolo in alto a sinistra."
+msgstr ""
+"Inserire la coordinata X dell'hotspot. L'origine è l'angolo in alto a "
+"sinistra."
 
 #: ../plug-ins/common/file-xmc.c:1094
 msgid "Hotspot _X:"
@@ -4781,7 +4787,9 @@ msgstr "Punto caldo _X:"
 
 #: ../plug-ins/common/file-xmc.c:1108
 msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
-msgstr "Inserire la coordinata Y dell'hotspot. L'origine è l'angolo in alto a sinistra."
+msgstr ""
+"Inserire la coordinata Y dell'hotspot. L'origine è l'angolo in alto a "
+"sinistra."
 
 #: ../plug-ins/common/file-xmc.c:1119
 msgid "_Auto-Crop all frames."
@@ -4795,8 +4803,10 @@ msgid ""
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
 "Rimuove i bordi vuoti da tutti i quadri.\n"
-"Riduce la dimensione del file e può risolvere il problema di alcuni cursori di grandi dimensioni che rovinano lo schermo.\n"
-"Disabilitare se si pensa di modificare il cursore esportato usando altri programmi."
+"Riduce la dimensione del file e può risolvere il problema di alcuni cursori "
+"di grandi dimensioni che rovinano lo schermo.\n"
+"Disabilitare se si pensa di modificare il cursore esportato usando altri "
+"programmi."
 
 #: ../plug-ins/common/file-xmc.c:1155
 msgid ""
@@ -4809,13 +4819,19 @@ msgid ""
 "theme-size\"."
 msgstr ""
 "Sceglie la dimensione nominale dei quadri.\n"
-"Se non si prevede di creare un cursore multidimensionale, o non si ha un'idea precisa, lasciarlo a \"32px\".\n"
-"La dimensione nominale non ha relazione con le reali dimensioni (larghezza o altezza).\n"
-"Viene usata solamente per determinare da quali quadri dipendano da quali sequenze di animazioni, e quale sequenza viene usata basandosi sul valore di \"gtk-cursor-theme-size\"."
+"Se non si prevede di creare un cursore multidimensionale, o non si ha "
+"un'idea precisa, lasciarlo a \"32px\".\n"
+"La dimensione nominale non ha relazione con le reali dimensioni (larghezza o "
+"altezza).\n"
+"Viene usata solamente per determinare da quali quadri dipendano da quali "
+"sequenze di animazioni, e quale sequenza viene usata basandosi sul valore di "
+"\"gtk-cursor-theme-size\"."
 
 #: ../plug-ins/common/file-xmc.c:1172
 msgid "_Use this value only for a frame which size is not specified."
-msgstr "_Usa questo valore solo per i quadri la cui dimensione non sia già stata impostata."
+msgstr ""
+"_Usa questo valore solo per i quadri la cui dimensione non sia già stata "
+"impostata."
 
 #: ../plug-ins/common/file-xmc.c:1175
 msgid "_Replace the size of all frames even if it is specified."
@@ -4823,7 +4839,8 @@ msgstr "_Rimpiazza la dimensione di tutti i quadri anche se già impostata."
 
 #: ../plug-ins/common/file-xmc.c:1209
 msgid "Enter time span in milliseconds in which each frame is rendered."
-msgstr "Inserire il lasso di tempo in millisecondi nel quale ogni quadro viene reso."
+msgstr ""
+"Inserire il lasso di tempo in millisecondi nel quale ogni quadro viene reso."
 
 #: ../plug-ins/common/file-xmc.c:1212
 msgid "_Delay:"
@@ -4831,11 +4848,15 @@ msgstr "_Ritardo:"
 
 #: ../plug-ins/common/file-xmc.c:1217
 msgid "_Use this value only for a frame which delay is not specified."
-msgstr "_Usa questo valore solo per i quadri il cui ritardo non è ancora stato impostato."
+msgstr ""
+"_Usa questo valore solo per i quadri il cui ritardo non è ancora stato "
+"impostato."
 
 #: ../plug-ins/common/file-xmc.c:1220
 msgid "_Replace the delay of all frames even if it is specified."
-msgstr "_Rimpiazza il ritardo di tutti i quadri anche nel caso in cui questo sia già stato impostato."
+msgstr ""
+"_Rimpiazza il ritardo di tutti i quadri anche nel caso in cui questo sia già "
+"stato impostato."
 
 #: ../plug-ins/common/file-xmc.c:1245
 msgid ""
@@ -4855,7 +4876,9 @@ msgstr "_Copyright:"
 #: ../plug-ins/common/file-xmc.c:1273
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
-msgstr "La parte delle informazioni di licenza che eccede i 65535 caratteri è stata rimossa."
+msgstr ""
+"La parte delle informazioni di licenza che eccede i 65535 caratteri è stata "
+"rimossa."
 
 #: ../plug-ins/common/file-xmc.c:1283
 msgid "Enter license information."
@@ -4886,7 +4909,9 @@ msgstr "Il commento è limitato a %d caratteri."
 #: ../plug-ins/common/file-xmc.c:1494
 #, c-format
 msgid "This plug-in can only handle RGBA image format with 8bit color depth."
-msgstr "Questo plugin può gestire solo immagini in formato RGBA con profondità di colore di 8bit."
+msgstr ""
+"Questo plugin può gestire solo immagini in formato RGBA con profondità di "
+"colore di 8bit."
 
 #: ../plug-ins/common/file-xmc.c:1512
 #, c-format
@@ -4910,7 +4935,8 @@ msgid ""
 "Try to change the hotspot position, layer geometry or save without auto-crop."
 msgstr ""
 "Impossibile salvare il cursore dato che l'hotspot non è su \"%s\".\n"
-"Provare a cambiare la posizione dell'hotspot, la geometria del livello o salvare senza l'autoritaglio."
+"Provare a cambiare la posizione dell'hotspot, la geometria del livello o "
+"salvare senza l'autoritaglio."
 
 #: ../plug-ins/common/file-xmc.c:1721
 #, c-format
@@ -4919,7 +4945,8 @@ msgid ""
 "width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
-"Il cursore è stato salvato ma esso contiene uno o più quadri la cui altezza o larghezza è più di %ipx.\n"
+"Il cursore è stato salvato ma esso contiene uno o più quadri la cui altezza "
+"o larghezza è più di %ipx.\n"
 "In alcuni ambienti potrebbe sporcare lo schermo."
 
 #: ../plug-ins/common/file-xmc.c:1728
@@ -4929,8 +4956,12 @@ msgid ""
 "You can satisfy it by checking \"Replace the size of all frame...\" in save "
 "dialog, or Your cursor may not appear in gnome-appearance-properties."
 msgstr ""
-"Il cursore è stato salvato ma contiene uno o più quadri la cui dimensione nominale non è supportata da gnome-appearance-properties.\n"
-"Si può soddisfare questo requisito selezionando sull'opzione \"Rimpiazza la dimensione di tutti i quadri...\" presente nella finestra di dialogo di salvataggio, altrimenti questo cursore potrebbe non apparire in gnome-appearance-properties."
+"Il cursore è stato salvato ma contiene uno o più quadri la cui dimensione "
+"nominale non è supportata da gnome-appearance-properties.\n"
+"Si può soddisfare questo requisito selezionando sull'opzione \"Rimpiazza la "
+"dimensione di tutti i quadri...\" presente nella finestra di dialogo di "
+"salvataggio, altrimenti questo cursore potrebbe non apparire in gnome-"
+"appearance-properties."
 
 #: ../plug-ins/common/file-xmc.c:1965
 #, c-format
@@ -4946,7 +4977,9 @@ msgstr ""
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
-msgstr "Spiacenti, questo plug-in non può gestire un cursore che contenga più di %i dimensioni nominalmente differenti."
+msgstr ""
+"Spiacenti, questo plug-in non può gestire un cursore che contenga più di %i "
+"dimensioni nominalmente differenti."
 
 #: ../plug-ins/common/file-xpm.c:173 ../plug-ins/common/file-xpm.c:198
 msgid "X PixMap image"
@@ -8938,33 +8971,48 @@ msgstr "Fine del file prematura"
 msgid "Silicon Graphics IRIS image"
 msgstr "Immagine IRIS Silicon Graphics"
 
-#: ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-sgi/sgi.c:324
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Impossibile aprire '%s' in lettura."
 
-#: ../plug-ins/file-sgi/sgi.c:548
+#: ../plug-ins/file-sgi/sgi.c:340
+#, c-format
+msgid "Invalid width: %hu"
+msgstr "Larghezza non valida: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:347
+#, c-format
+msgid "Invalid height: %hu"
+msgstr "Altezza non valida: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:354
+#, c-format
+msgid "Invalid number of channels: %hu"
+msgstr "Numero di canali non valido: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:568
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Impossibile aprire '%s' in scrittura"
 
-#: ../plug-ins/file-sgi/sgi.c:628
+#: ../plug-ins/file-sgi/sgi.c:648
 msgid "SGI"
 msgstr "SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:630
+#: ../plug-ins/file-sgi/sgi.c:650
 msgid "Compression type"
 msgstr "Tipo di compressione"
 
-#: ../plug-ins/file-sgi/sgi.c:634
+#: ../plug-ins/file-sgi/sgi.c:654
 msgid "No compression"
 msgstr "Nessuna compressione"
 
-#: ../plug-ins/file-sgi/sgi.c:636
+#: ../plug-ins/file-sgi/sgi.c:656
 msgid "RLE compression"
 msgstr "Compressione _RLE"
 
-#: ../plug-ins/file-sgi/sgi.c:638
+#: ../plug-ins/file-sgi/sgi.c:658
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
