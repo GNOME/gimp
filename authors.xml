@@ -33,7 +33,7 @@
   <contributor role="author" last-active="1.2">Roberto Boyd</contributor>
   <contributor role="author" last-active="2.0">Stanislav Brabec</contributor>
   <contributor role="author" last-active="2.6">Hans Breuer</contributor>
-  <contributor role="author" last-active="2.6">Simon Budig</contributor>
+  <contributor role="author" last-active="2.8">Simon Budig</contributor>
   <contributor role="author" last-active="2.8">João S. O. Bueno</contributor>
   <contributor role="documenter" last-active="1.2">Carey Bunks</contributor>
   <contributor role="author" last-active="2.4">Seth Burgess</contributor>
@@ -101,6 +101,7 @@
   <contributor role="author" last-active="2.4">Dov Grobgeld</contributor>
   <contributor role="author documenter" last-active="2.4">Michael Hammel</contributor>
   <contributor role="documenter" last-active="2.6">Julien Hardelin</contributor>
+  <contributor role="author" last-active="2.8">Tim Harder</contributor>
   <contributor role="author" last-active="2.6">Marcus Heese</contributor>
   <contributor role="author" last-active="2.4">Robert Helgesson</contributor>
   <contributor role="author" last-active="2.0">James Henstridge</contributor>
@@ -118,8 +119,10 @@
   <contributor role="documenter" last-active="1.2">Simon Janes</contributor>
   <contributor role="author" last-active="2.2">Tim Janik</contributor>
   <contributor role="author" last-active="2.4">Kristian Jantz</contributor>
+  <contributor role="author" last-active="2.8">Javier Jardón</contributor>
   <contributor role="author" last-active="2.8">Tim Jedlicka</contributor>
   <contributor role="author documenter" last-active="2.8">Róman Joost</contributor>
+  <contributor role="author" last-active="2.8">Alexander Jones</contributor>
   <contributor role="documenter" last-active="2.4">Hans de Jonge</contributor>
   <contributor role="author" last-active="2.6">Geert Jordaens</contributor>
   <contributor role="author" last-active="2.8">Aurimas Juška</contributor>
@@ -206,7 +209,8 @@
   <contributor role="author" last-active="1.2">Mike Phillips</contributor>
   <contributor role="author" last-active="2.8">Nils Philippsen</contributor>
   <contributor role="author" last-active="2.4">Ari Pollak</contributor>
-  <contributor role="documenter" last-active="2.6">Alexandre Prokoudine</contributor>
+  <contributor role="documenter" last-active="2.8">Alexandre Prokoudine</contributor>
+  <contributor role="author" last-active="2.8">Mircea Purdea</contributor>
   <contributor role="author" last-active="2.6">Raphaël Quinet</contributor>
   <contributor role="documenter" last-active="2.4">Manuel Quiñones</contributor>
   <contributor role="author" last-active="2.8">Dennis Ranke</contributor>
@@ -231,6 +235,7 @@
   <contributor role="author" last-active="2.8">Peter Sikking</contributor>
   <contributor role="author" last-active="2.4">Ted Shaneyfelt</contributor>
   <contributor role="author" last-active="1.2">Aaron Sherman</contributor>
+  <contributor role="author" last-active="2.8">SHIRAKAWA Akira</contributor>
   <contributor role="documenter" last-active="2.4">Nickolay V. Shmyrev</contributor>
   <contributor role="author" last-active="2.6">Jernej Simončič</contributor>
   <contributor role="author" last-active="2.8">Manish Singh</contributor>
@@ -242,6 +247,7 @@
   <contributor role="author" last-active="2.0">Adam Spiers</contributor>
   <contributor role="documenter" last-active="2.6">Patrycja Stawiarska</contributor>
   <contributor role="artist author" last-active="2.8">Jakub Steiner</contributor>
+  <contributor role="author" last-active="2.8">Omari Stephens</contributor>
   <contributor role="documenter" last-active="2.6">Kolbjørn Stuestøl</contributor>
   <contributor role="author" last-active="2.4">Nathan Summers</contributor>
   <contributor role="author" last-active="1.0">Mike Sweet</contributor>
@@ -271,5 +277,6 @@
   <contributor role="author" last-active="2.4">Karl Günter Wünsch</contributor>
   <contributor role="author" last-active="2.8">Yoshinori Yamakawa</contributor>
   <contributor role="author" last-active="1.2">Shirasaki Yasuhiro</contributor>
+  <contributor role="author" last-active="2.8">Zhenfeng Zhao</contributor>
   <contributor role="author" last-active="2.8">Simon Zilliken</contributor>
 </gimp-authors>

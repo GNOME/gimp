@@ -20,6 +20,18 @@ UI:
    create group layers
  - Improve internals and GUI of the save/export functionality
  - Move the shortcut dialog's "clear" button into the entry
+ - Clean up UI code by introducing GimpDockWindow and GimpImageWindow
+   classes
+ - Support multi-column dock windows
+ - Get rid of docking bars, use highlights in existing widget hierarchy instead
+ - Remove toolbox-window-hint gimprc setting and use dock-window-hint
+   for both toolbox and docks instead
+ - Move GimpDock::default-height style property to GimpDockWindow
+ - Polish save+export path-part precedence rules
+ - Merge the GSoC 2009 Advanced GUI for Brush Dynamics project
+ - Default to non-fixed-aspect in Canvas Size dialog
+ - Add a still incomplete and unstable Single-window mode
+ - Have an Export button, not Save, in export dialogs
 
 
 Core:
@@ -36,6 +48,7 @@ Core:
    from all callers
  - Let drawables connect to their floating selection's "update" signal
    instead of letting the image do this job
+ - Fix brush rotation artifacts at even 90 degree rotation
 
 
 GEGL:
@@ -58,8 +71,10 @@ General:
 
  - Lots of bug fixes and cleanup
  - Lots of translation updates
+ - Add more code documentation
  - Clean up subsystem linking dependencies in app/
- - Add unit testing framework in app/tests/ and some basic tests
+ - Add unit testing framework in app/tests/ and some basic tests,
+   including basic UI tests and XCF tests
 
 
 Changes in GIMP 2.7.0
