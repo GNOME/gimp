@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-03 01:51+0100\n"
+"POT-Creation-Date: 2010-01-03 01:58+0100\n"
 "PO-Revision-Date: 2010-01-03 01:55+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
@@ -3170,7 +3170,8 @@ msgstr "Pennello GIMP"
 #: ../plug-ins/common/file-gbr.c:391 ../plug-ins/common/file-pat.c:410
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr "Intestazione dati non valida in \"%s\": larghezza=%lu, altezza=%lu, byte=%lu"
+msgstr ""
+"Intestazione dati non valida in \"%s\": larghezza=%lu, altezza=%lu, byte=%lu"
 
 #: ../plug-ins/common/file-gbr.c:415 ../plug-ins/common/file-gbr.c:427
 msgid "Unsupported brush format"
@@ -3589,21 +3590,27 @@ msgstr "L'immagine \"%s\" è in RGB ma manca qualche componente."
 msgid ""
 "The image '%s' is in the CIEXYZ color space, but there is no code in place "
 "to convert it to RGB."
-msgstr "L'immagine \"%s\" è espressa nello spazio colore CIEXYZ ma non è presente il codice per convertirla in RGB."
+msgstr ""
+"L'immagine \"%s\" è espressa nello spazio colore CIEXYZ ma non è presente il "
+"codice per convertirla in RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:291
 #, c-format
 msgid ""
 "The image '%s' is in the CIELAB color space, but there is no code in place "
 "to convert it to RGB."
-msgstr "L'immagine \"%s\" è espressa nello spazio colore CIELAB ma non è presente il codice per convertirla in RGB."
+msgstr ""
+"L'immagine \"%s\" è espressa nello spazio colore CIELAB ma non è presente il "
+"codice per convertirla in RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:298
 #, c-format
 msgid ""
 "The image '%s' is in the YCbCr color space, but there is no code in place to "
 "convert it to RGB."
-msgstr "L'immagine \"%s\" è espressa nello spazio colore YCbCr ma non è presente il codice per convertirla in RGB."
+msgstr ""
+"L'immagine \"%s\" è espressa nello spazio colore YCbCr ma non è presente il "
+"codice per convertirla in RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:306
 #, c-format
