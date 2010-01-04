@@ -220,7 +220,7 @@ dockable_actions_update (GimpActionGroup *group,
   else if (GIMP_IS_DOCKABLE (data))
     {
       dockable = GIMP_DOCKABLE (data);
-      dockbook = dockable->dockbook;
+      dockbook = gimp_dockable_get_dockbook (dockable);
     }
   else
     {
@@ -266,7 +266,7 @@ dockable_actions_update (GimpActionGroup *group,
   if (view)
     view_size = gimp_container_view_get_view_size (view, NULL);
 
-  tab_style = dockable->tab_style;
+  tab_style = gimp_dockable_get_tab_style (dockable);
 
   n_pages = gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook));
   n_books = g_list_length (gimp_dock_get_dockbooks (dock));

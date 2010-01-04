@@ -76,7 +76,7 @@ dockable_add_tab_cmd_callback (GtkAction   *action,
        *  existing singleton dockable, so check if it already is
        *  attached to a dockbook.
        */
-      if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
+      if (dockable && ! gimp_dockable_get_dockbook (GIMP_DOCKABLE (dockable)))
         gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
     }
 }
@@ -210,7 +210,7 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
                    *  an already existing singleton dockable, so check
                    *  if it already is attached to a dockbook.
                    */
-                  if (! GIMP_DOCKABLE (new_dockable)->dockbook)
+                  if (! gimp_dockable_get_dockbook (GIMP_DOCKABLE (new_dockable)))
                     {
                       gimp_dockbook_add (dockbook, GIMP_DOCKABLE (new_dockable),
                                          page_num);
@@ -268,7 +268,7 @@ dockable_tab_style_cmd_callback (GtkAction *action,
   tab_style = (GimpTabStyle)
     gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (dockable && dockable->tab_style != tab_style)
+  if (dockable && gimp_dockable_get_tab_style (dockable) != tab_style)
     {
       GtkWidget *tab_widget;
 

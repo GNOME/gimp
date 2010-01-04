@@ -251,9 +251,9 @@ gimp_session_info_dockable_from_widget (GimpDockable *dockable)
 
   info = gimp_session_info_dockable_new ();
 
-  info->locked     = dockable->locked;
+  info->locked     = gimp_dockable_get_locked (dockable);
   info->identifier = g_strdup (entry->identifier);
-  info->tab_style  = dockable->tab_style;
+  info->tab_style  = gimp_dockable_get_tab_style (dockable);
   info->view_size  = -1;
 
   view = gimp_container_view_get_by_dockable (dockable);

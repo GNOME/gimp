@@ -182,7 +182,7 @@ gimp_menu_dock_get_title (GimpDock *dock)
         {
           GimpDockable *dockable = child->data;
 
-          g_string_append (title, dockable->name);
+          g_string_append (title, gimp_dockable_get_name (dockable));
 
           if (g_list_next (child))
             g_string_append (title, ", ");

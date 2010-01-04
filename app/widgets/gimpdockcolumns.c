@@ -146,7 +146,7 @@ gimp_dock_columns_dropped_cb (GtkWidget         *source,
 
   /* Move the dockable to the new dockbook */
   g_object_ref (dockable);
-  gimp_dockbook_remove (dockable->dockbook, dockable);
+  gimp_dockbook_remove (gimp_dockable_get_dockbook (dockable), dockable);
   gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
   g_object_unref (dockable);
   g_object_unref (dockbook);

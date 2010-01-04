@@ -33,7 +33,8 @@
 #define GIMP_DOCKABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCKABLE, GimpDockableClass))
 
 
-typedef struct _GimpDockableClass GimpDockableClass;
+typedef struct _GimpDockablePrivate GimpDockablePrivate;
+typedef struct _GimpDockableClass   GimpDockableClass;
 
 /**
  * GimpDockable:
@@ -44,31 +45,9 @@ typedef struct _GimpDockableClass GimpDockableClass;
  */
 struct _GimpDockable
 {
-  GtkBin        parent_instance;
+  GtkBin               parent_instance;
 
-  gchar        *name;
-  gchar        *blurb;
-  gchar        *stock_id;
-  gchar        *help_id;
-  GimpTabStyle  tab_style;
-  gboolean      locked;
-
-  GimpDockbook *dockbook;
-
-  GimpContext  *context;
-
-  PangoLayout  *title_layout;
-  GdkWindow    *title_window;
-  GtkWidget    *menu_button;
-
-  guint         blink_timeout_id;
-  gint          blink_counter;
-
-  GimpPanedBox *drag_handler;
-
-  /*  drag icon hotspot  */
-  gint          drag_x;
-  gint          drag_y;
+  GimpDockablePrivate *p;
 };
 
 struct _GimpDockableClass
@@ -83,6 +62,21 @@ GtkWidget     * gimp_dockable_new              (const gchar    *name,
                                                 const gchar    *blurb,
                                                 const gchar    *stock_id,
                                                 const gchar    *help_id);
+void            gimp_dockable_set_dockbook     (GimpDockable   *dockable,
+                                                GimpDockbook   *dockbook);
+GimpDockbook  * gimp_dockable_get_dockbook     (GimpDockable   *dockable);
+GimpTabStyle    gimp_dockable_get_tab_style    (GimpDockable   *dockable);
+const gchar   * gimp_dockable_get_name         (GimpDockable   *dockable);
+const gchar   * gimp_dockable_get_blurb        (GimpDockable   *dockable);
+const gchar   * gimp_dockable_get_help_id      (GimpDockable   *dockable);
+gboolean        gimp_dockable_get_locked       (GimpDockable   *dockable);
+void            gimp_dockable_set_drag_pos     (GimpDockable   *dockable,
+                                                gint            drag_x,
+                                                gint            drag_y);
+void            gimp_dockable_get_drag_pos     (GimpDockable   *dockable,
+                                                gint           *drag_x,
+                                                gint           *drag_y);
+GimpPanedBox  * gimp_dockable_get_drag_handler (GimpDockable  *dockable);
 
 void            gimp_dockable_set_aux_info     (GimpDockable   *dockable,
                                                 GList          *aux_info);

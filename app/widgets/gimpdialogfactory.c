@@ -605,9 +605,10 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     {
       GimpDockable *dockable = GIMP_DOCKABLE (dialog);
 
-      if (dockable->dockbook && gimp_dockbook_get_dock (dockable->dockbook))
+      if (gimp_dockable_get_dockbook (dockable) &&
+          gimp_dockbook_get_dock (gimp_dockable_get_dockbook (dockable)))
         {
-          GtkNotebook *notebook = GTK_NOTEBOOK (dockable->dockbook);
+          GtkNotebook *notebook = GTK_NOTEBOOK (gimp_dockable_get_dockbook (dockable));
           gint         num      = gtk_notebook_page_num (notebook, dialog);
 
           if (num != -1)
@@ -786,8 +787,8 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
  * added to.
  *
  * Implicitly raises & returns an already existing singleton dockable,
- * so callers should check that dockable->dockbook is NULL before trying
- * to add it to it's #GimpDockbook.
+ * so callers should check that gimp_dockable_get_dockbook (dockable)
+ * is NULL before trying to add it to it's #GimpDockbook.
  *
  * Return value: the newly created #GimpDockable or an already existing
  *               singleton dockable.

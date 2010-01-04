@@ -268,7 +268,7 @@ gimp_dock_dropped_cb (GtkWidget *source,
   /*  if dropping to the same dock, take care that we don't try
    *  to reorder the *only* dockable in the dock
    */
-  if (gimp_dockbook_get_dock (dockable->dockbook) == dock)
+  if (gimp_dockbook_get_dock (gimp_dockable_get_dockbook (dockable)) == dock)
     {
       GList *children;
       gint   n_books;
@@ -276,7 +276,7 @@ gimp_dock_dropped_cb (GtkWidget *source,
 
       n_books = g_list_length (gimp_dock_get_dockbooks (dock));
 
-      children = gtk_container_get_children (GTK_CONTAINER (dockable->dockbook));
+      children = gtk_container_get_children (GTK_CONTAINER (gimp_dockable_get_dockbook (dockable)));
       n_dockables = g_list_length (children);
       g_list_free (children);
 
@@ -286,7 +286,7 @@ gimp_dock_dropped_cb (GtkWidget *source,
 
   /* Detach the dockable from the old dockbook */
   g_object_ref (dockable);
-  gimp_dockbook_remove (dockable->dockbook, dockable);
+  gimp_dockbook_remove (gimp_dockable_get_dockbook (dockable), dockable);
 
   /* Create a new dockbook */
   dockbook = gimp_dockbook_new (global_menu_factory);
@@ -459,7 +459,7 @@ gimp_dock_add (GimpDock     *dock,
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (dockable->dockbook == NULL);
+  g_return_if_fail (gimp_dockable_get_dockbook (dockable) == NULL);
 
   dockbook = GIMP_DOCKBOOK (dock->p->dockbooks->data);
 
@@ -472,10 +472,10 @@ gimp_dock_remove (GimpDock     *dock,
 {
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (dockable->dockbook != NULL);
-  g_return_if_fail (gimp_dockbook_get_dock (dockable->dockbook) == dock);
+  g_return_if_fail (gimp_dockable_get_dockbook (dockable) != NULL);
+  g_return_if_fail (gimp_dockbook_get_dock (gimp_dockable_get_dockbook (dockable)) == dock);
 
-  gimp_dockbook_remove (dockable->dockbook, dockable);
+  gimp_dockbook_remove (gimp_dockable_get_dockbook (dockable), dockable);
 }
 
 void
