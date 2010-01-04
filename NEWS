@@ -32,6 +32,7 @@ UI:
  - Default to non-fixed-aspect in Canvas Size dialog
  - Add a still incomplete and unstable Single-window mode
  - Have an Export button, not Save, in export dialogs
+ - Improve Free Select Tool handle highlightning
 
 
 Core:
