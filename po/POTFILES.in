@@ -444,6 +444,7 @@ app/widgets/gimptagentry.c
 app/widgets/gimptemplateeditor.c
 app/widgets/gimptexteditor.c
 app/widgets/gimpthumbbox.c
+app/widgets/gimptranslationstore.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-dnd.c
 app/widgets/gimptoolbox-image-area.c
