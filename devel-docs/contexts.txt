@@ -1,0 +1,64 @@
+contexts.txt
+============
+
+Introduction
+------------
+
+This file describes how the GimpContext's in GIMP are used.
+
+
+Overview
+--------
+
+One imporant context is the so called "user context",
+gimp_get_user_context(). This context keeps track on what image the
+user currently has active, for example. Dock windows have their own
+context which does not necessarily mirror the user context. A dock
+window can be set to show information for a specific image. Plug-ins
+also have their own context.
+
+
+Communication between contexts
+------------------------------
+
+So how does the various contexts synchronize and propagate changes?
+This is most easily explained by a sequence diagram. Let's say there
+are two image windows with different images opened in GIMP. Call them
+A and B. Let's say A is currently active. When the user activates B,
+this is the sequence of events from the focus event to the layers
+dockable have been updated with the new image. To understand the
+diagram, you have to know that the dock window has connected signal
+handlers to image changes in the user context (through a dialog
+factory getter), and the layer dockable have connected a signal
+handler to image changes in the dock window context. The sequence of
+events is as follows:
+
+
+                    GimpContext                  GimpContext   GimpItemTreeView,
+ GimpDisplayShell      user      GimpDockWindow  dock window   GimpLayerTreeView
+
+        |                |              |              |             |
+ focus event             |              |              |             |
+------->|                |              |              |             |
+        |  gimp_context_set_display()   |              |             |
+        |--------------->|----------+   |              |             |
+        |                |          |   |              |             |
+        |  gimp_context_set_image() |   |              |             |
+        |                |<---------+   |              |             |
+        |                |              |              |             |
+        |                |    "image-changed"          |             |
+        |                |------------->|              |             |
+        |                |              |  gimp_context_set_image()  |
+        |                |              |------------->|             |
+        |                |              |              |      "image-changed" /
+        |                |              |              |         set_image()
+        |                |              |              |------------>|
+        |                |              |              |             |
+
+
+Parent/child relationships
+--------------------------
+
+TODO
+
+
