@@ -334,6 +334,13 @@ gimp_dock_window_constructor (GType                  type,
   dock_window->p->image_container   = gimp->images;
   dock_window->p->display_container = gimp->displays;
 
+  /* Let the GimpDockColumns mirror the context so that a GimpDock can
+   * get it when inside a dock window. We do the same thing in the
+   * GimpImageWindow so docks can get the GimpContext there as well
+   */
+  gimp_dock_columns_set_context (dock_window->p->dock_columns,
+                                 dock_window->p->context);
+
   /* Setup hints */
   gimp_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
 

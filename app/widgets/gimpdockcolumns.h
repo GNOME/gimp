@@ -64,6 +64,9 @@ void                gimp_dock_columns_add_dock       (GimpDockColumns *dock_colu
 void                gimp_dock_columns_remove_dock    (GimpDockColumns *dock_columns,
                                                       GimpDock        *dock);
 GList             * gimp_dock_columns_get_docks      (GimpDockColumns *dock_columns);
+GimpContext       * gimp_dock_columns_get_context    (GimpDockColumns *dock_columns);
+void                gimp_dock_columns_set_context    (GimpDockColumns *dock_columns,
+                                                      GimpContext     *context);
 
 
 #endif /* __GIMP_DOCK_COLUMNS_H__ */

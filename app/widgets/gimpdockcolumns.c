@@ -52,9 +52,11 @@ enum
 
 struct _GimpDockColumnsPrivate
 {
-  GList     *docks;
+  GimpContext *context;
 
-  GtkWidget *paned_hbox;
+  GList       *docks;
+
+  GtkWidget   *paned_hbox;
 };
 
 
@@ -242,4 +244,21 @@ gimp_dock_columns_get_docks (GimpDockColumns *dock_columns)
   g_return_val_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns), NULL);
 
   return dock_columns->p->docks;
+}
+
+GimpContext *
+gimp_dock_columns_get_context (GimpDockColumns *dock_columns)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns), NULL);
+
+  return dock_columns->p->context;
+}
+
+void
+gimp_dock_columns_set_context (GimpDockColumns *dock_columns,
+                               GimpContext     *context)
+{
+  g_return_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns));
+
+  dock_columns->p->context = context;
 }

@@ -36,6 +36,7 @@
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimpdockcolumns.h"
 #include "gimpdockwindow.h"
 #include "gimppanedbox.h"
 #include "gimpuimanager.h"
@@ -68,18 +69,17 @@ struct _GimpDockPrivate
 };
 
 
-static void      gimp_dock_style_set         (GtkWidget             *widget,
-                                              GtkStyle              *prev_style);
-
-static void      gimp_dock_destroy           (GtkObject             *object);
-
-static void      gimp_dock_real_book_added   (GimpDock              *dock,
-                                              GimpDockbook          *dockbook);
-static void      gimp_dock_real_book_removed (GimpDock              *dock,
-                                              GimpDockbook          *dockbook);
-static gboolean  gimp_dock_dropped_cb        (GtkWidget             *source,
-                                              gint                   insert_index,
-                                              gpointer               data);
+static void              gimp_dock_style_set         (GtkWidget    *widget,
+                                                      GtkStyle     *prev_style);
+static void              gimp_dock_destroy           (GtkObject    *object);
+static void              gimp_dock_real_book_added   (GimpDock     *dock,
+                                                      GimpDockbook *dockbook);
+static void              gimp_dock_real_book_removed (GimpDock     *dock,
+                                                      GimpDockbook *dockbook);
+static gboolean          gimp_dock_dropped_cb        (GtkWidget    *source,
+                                                      gint          insert_index,
+                                                      gpointer      data);
+static GimpDockColumns * gimp_dock_get_dock_columns  (GimpDock     *dock);
 
 
 G_DEFINE_TYPE (GimpDock, gimp_dock, GTK_TYPE_VBOX)
@@ -299,6 +299,24 @@ gimp_dock_dropped_cb (GtkWidget *source,
   return TRUE;
 }
 
+/**
+ * gimp_dock_get_dock_columns:
+ * @dock:
+ *
+ * Returns: The first #GimpDockColumns parent for the dock, or %NULL
+ *          if there is no #GimpDockColumns parent.
+ **/
+static GimpDockColumns *
+gimp_dock_get_dock_columns (GimpDock *dock)
+{
+  GtkWidget *widget = gtk_widget_get_parent (GTK_WIDGET (dock));
+
+  while (widget != NULL && ! GIMP_IS_DOCK_COLUMNS (widget))
+    widget = gtk_widget_get_parent (widget);
+
+  return widget ? GIMP_DOCK_COLUMNS (widget) : NULL;
+}
+
 /*  public functions  */
 
 gchar *
@@ -364,13 +382,29 @@ gimp_dock_invalidate_geometry (GimpDock *dock)
 GimpContext *
 gimp_dock_get_context (GimpDock *dock)
 {
-  GimpDockWindow *dock_window = NULL;
+  GimpContext     *context      = NULL;
 
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  dock_window = gimp_dock_window_from_dock (dock);
+  /* First try GimpDockColumns */
+  if (! context)
+    {
+      GimpDockColumns *dock_columns = gimp_dock_get_dock_columns (dock);
 
-  return gimp_dock_window_get_context (dock_window);
+      if (dock_columns)
+        context = gimp_dock_columns_get_context (dock_columns);
+    }
+
+  /* Then GimpDockWindow */
+  if (! context)
+    {
+      GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
+
+      if (dock_window)
+        context = gimp_dock_window_get_context (dock_window);
+    }
+
+ return context;
 }
 
 /**

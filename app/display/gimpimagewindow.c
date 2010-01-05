@@ -311,6 +311,8 @@ gimp_image_window_constructor (GType                  type,
 
   /* Create the left dock columns widget */
   private->left_docks = g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
+  gimp_dock_columns_set_context (GIMP_DOCK_COLUMNS (private->left_docks),
+                                 gimp_get_user_context (private->gimp));
   gtk_paned_pack1 (GTK_PANED (private->left_hpane), private->left_docks,
                    FALSE, FALSE);
   if (config->single_window_mode)
@@ -338,6 +340,8 @@ gimp_image_window_constructor (GType                  type,
 
   /* Create the right dock columns widget */
   private->right_docks = g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
+  gimp_dock_columns_set_context (GIMP_DOCK_COLUMNS (private->right_docks),
+                                 gimp_get_user_context (private->gimp));
   gtk_paned_pack2 (GTK_PANED (private->right_hpane), private->right_docks,
                    FALSE, FALSE);
   if (config->single_window_mode)
