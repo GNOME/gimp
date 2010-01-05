@@ -925,7 +925,8 @@ gimp_dockable_set_dockbook (GimpDockable *dockable,
                             GimpDockbook *dockbook)
 {
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
+  g_return_if_fail (dockbook == NULL ||
+                    GIMP_IS_DOCKBOOK (dockbook));
 
   dockable->p->dockbook = dockbook;
 }
