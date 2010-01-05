@@ -267,6 +267,15 @@ gimp_dockbook_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
+  /* Don't attempt to construct widgets that require a GimpContext if
+   * we are detached from a top-level, we're either on our way to
+   * destruction, in which case we don't care, or we will be given a
+   * new parent, in which case the widget style will be reset again
+   * anyway, i.e. this function will be called again
+   */
+  if (! gtk_widget_is_toplevel (gtk_widget_get_toplevel (widget)))
+    return;
+
   gtk_widget_style_get (widget,
                         "tab-border", &tab_border,
                         NULL);
