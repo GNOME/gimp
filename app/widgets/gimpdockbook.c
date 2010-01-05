@@ -617,33 +617,33 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
 
   gimp_dockbook_tab_drag_source_setup (tab_widget, dockable);
 
-  g_signal_connect (tab_widget, "drag-begin",
-                    G_CALLBACK (gimp_dockbook_tab_drag_begin),
-                    dockable);
-  g_signal_connect (tab_widget, "drag-end",
-                    G_CALLBACK (gimp_dockbook_tab_drag_end),
-                    dockable);
+  g_signal_connect_object (tab_widget, "drag-begin",
+                           G_CALLBACK (gimp_dockbook_tab_drag_begin),
+                           dockable, 0);
+  g_signal_connect_object (tab_widget, "drag-end",
+                           G_CALLBACK (gimp_dockbook_tab_drag_end),
+                           dockable, 0);
 
-  g_signal_connect (dockable, "drag-begin",
-                    G_CALLBACK (gimp_dockbook_tab_drag_begin),
-                    dockable);
-  g_signal_connect (dockable, "drag-end",
-                    G_CALLBACK (gimp_dockbook_tab_drag_end),
-                    dockable);
+  g_signal_connect_object (dockable, "drag-begin",
+                           G_CALLBACK (gimp_dockbook_tab_drag_begin),
+                           dockable, 0);
+  g_signal_connect_object (dockable, "drag-end",
+                           G_CALLBACK (gimp_dockbook_tab_drag_end),
+                           dockable, 0);
 
   gtk_drag_dest_set (tab_widget,
                      0,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
-  g_signal_connect (tab_widget, "drag-leave",
-                    G_CALLBACK (gimp_dockbook_tab_drag_leave),
-                    dockable);
-  g_signal_connect (tab_widget, "drag-motion",
-                    G_CALLBACK (gimp_dockbook_tab_drag_motion),
-                    dockable);
-  g_signal_connect (tab_widget, "drag-drop",
-                    G_CALLBACK (gimp_dockbook_tab_drag_drop),
-                    dockbook);
+  g_signal_connect_object (tab_widget, "drag-leave",
+                           G_CALLBACK (gimp_dockbook_tab_drag_leave),
+                           dockable, 0);
+  g_signal_connect_object (tab_widget, "drag-motion",
+                           G_CALLBACK (gimp_dockbook_tab_drag_motion),
+                           dockable, 0);
+  g_signal_connect_object (tab_widget, "drag-drop",
+                           G_CALLBACK (gimp_dockbook_tab_drag_drop),
+                           dockbook, 0);
 
   return tab_widget;
 }
