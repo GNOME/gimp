@@ -71,6 +71,8 @@ void                gimp_dock_invalidate_title        (GimpDock       *dock);
 void                gimp_dock_set_host_geometry_hints (GimpDock       *dock,
                                                        GtkWindow      *window);
 void                gimp_dock_invalidate_geometry     (GimpDock       *dock);
+void                gimp_dock_update_with_context     (GimpDock       *dock,
+                                                       GimpContext    *context);
 GimpContext       * gimp_dock_get_context             (GimpDock       *dock);
 GimpDialogFactory * gimp_dock_get_dialog_factory      (GimpDock       *dock);
 GimpUIManager     * gimp_dock_get_ui_manager          (GimpDock       *dock);

@@ -202,6 +202,8 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
 
   dock_columns->p->docks = g_list_append (dock_columns->p->docks, dock);
 
+  gimp_dock_update_with_context (dock, dock_columns->p->context);
+
   gimp_paned_box_add_widget (GIMP_PANED_BOX (dock_columns->p->paned_hbox),
                              GTK_WIDGET (dock),
                              index);
@@ -225,6 +227,8 @@ gimp_dock_columns_remove_dock (GimpDockColumns *dock_columns,
   GIMP_LOG (DND, "Removing GimpDock %p from GimpDockColumns %p", dock, dock_columns);
 
   dock_columns->p->docks = g_list_remove (dock_columns->p->docks, dock);
+
+  gimp_dock_update_with_context (dock, NULL);
 
   g_signal_handlers_disconnect_by_func (dock,
                                         gimp_dock_columns_dock_book_removed,

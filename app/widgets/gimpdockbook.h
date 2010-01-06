@@ -70,6 +70,8 @@ void            gimp_dockbook_add                       (GimpDockbook    *dockbo
                                                          gint             position);
 void            gimp_dockbook_remove                    (GimpDockbook    *dockbook,
                                                          GimpDockable    *dockable);
+void            gimp_dockbook_update_with_context       (GimpDockbook    *dockbook,
+                                                         GimpContext     *context);
 GtkWidget    *  gimp_dockbook_create_tab_widget         (GimpDockbook    *dockbook,
                                                          GimpDockable    *dockable);
 gboolean        gimp_dockbook_drop_dockable             (GimpDockbook    *dockbook,

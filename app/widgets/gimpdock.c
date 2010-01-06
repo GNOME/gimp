@@ -374,6 +374,29 @@ gimp_dock_invalidate_geometry (GimpDock *dock)
 }
 
 /**
+ * gimp_dock_update_with_context:
+ * @dock:
+ * @context:
+ *
+ * Set the @context on all dockables in the @dock.
+ **/
+void
+gimp_dock_update_with_context (GimpDock    *dock,
+                               GimpContext *context)
+{
+  GList *iter = NULL;
+
+  for (iter = gimp_dock_get_dockbooks (dock);
+       iter;
+       iter = g_list_next (iter))
+    {
+      GimpDockbook *dockbook = GIMP_DOCKBOOK (iter->data);
+
+      gimp_dockbook_update_with_context (dockbook, context);
+    }
+}
+
+/**
  * gimp_dock_get_context:
  * @dock:
  *

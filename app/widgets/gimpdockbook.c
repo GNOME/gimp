@@ -545,6 +545,32 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
   g_list_free (children);
 }
 
+/**
+ * gimp_dockbook_update_with_context:
+ * @dockbook:
+ * @context:
+ *
+ * Set @context on all dockables in @dockbook.
+ **/
+void
+gimp_dockbook_update_with_context (GimpDockbook *dockbook,
+                                   GimpContext  *context)
+{
+  GList *children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+  GList *iter     = NULL;
+
+  for (iter = children;
+       iter;
+       iter = g_list_next (iter))
+    {
+      GimpDockable *dockable = GIMP_DOCKABLE (iter->data);
+
+      gimp_dockable_set_context (dockable, context);
+    }
+
+  g_list_free (children);
+}
+
 GtkWidget *
 gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
                                  GimpDockable *dockable)
