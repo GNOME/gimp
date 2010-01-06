@@ -1133,6 +1133,8 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
 
   gimp_image_window_disconnect_from_active_shell (window);
 
+  GIMP_LOG (WM, "GimpImageWindow %p, private->active_shell = %p; \n",
+            window, shell);
   private->active_shell = shell;
 
   active_display = private->active_shell->display;
@@ -1174,9 +1176,13 @@ gimp_image_window_page_removed (GtkNotebook     *notebook,
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  gimp_image_window_disconnect_from_active_shell (window);
-
-  private->active_shell = NULL;
+  if (GTK_WIDGET (private->active_shell) == widget)
+    {
+      GIMP_LOG (WM, "GimpImageWindow %p, private->active_shell = %p; \n",
+                window, NULL);
+      gimp_image_window_disconnect_from_active_shell (window);
+      private->active_shell = NULL;
+    }
 }
 
 static void
