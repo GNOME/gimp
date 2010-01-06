@@ -33,7 +33,6 @@ factory getter), and the layer dockable have connected a signal
 handler to image changes in the dock window context. The sequence of
 events is as follows:
 
-
                     GimpContext                  GimpContext   GimpItemTreeView,
  GimpDisplayShell      user      GimpDockWindow  dock window   GimpLayerTreeView
 
@@ -55,10 +54,36 @@ events is as follows:
         |                |              |              |------------>|
         |                |              |              |             |
 
+In single-window mode, the dockables listens directly to the user
+context. When switching between single-window and multi-window modes,
+the dockables are updated with their new context. Just as when moving
+a dockable between different dock windows and thus also different
+contexts. The sequence diagram for single-window mode is:
+
+                    GimpContext  GimpItemTreeView
+ GimpDisplayShell      user      GimpLayerTreeView
+
+        |                |              |
+ focus event             |              |
+------->|                |              |
+        |  gimp_context_set_display()   |
+        |--------------->|----------+   |
+        |                |          |   |
+        |  gimp_context_set_image() |   |
+        |                |<---------+   |
+        |                |              |
+        |                |    "image-changed" /
+        |                |       set_image()
+        |                |------------->|
+        |                |              |
+        |                |              |
+        |                |              |
+        |                |              |
+        |                |              |
+        |                |              |
+
 
 Parent/child relationships
 --------------------------
 
 TODO
-
-
