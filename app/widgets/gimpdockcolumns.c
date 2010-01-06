@@ -39,6 +39,7 @@
 #include "gimpdockcolumns.h"
 #include "gimpmenudock.h"
 #include "gimppanedbox.h"
+#include "gimptoolbox.h"
 
 #include "gimp-log.h"
 
@@ -178,7 +179,8 @@ gimp_dock_columns_dock_book_removed (GimpDockColumns *dock_columns,
 {
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
-  if (gimp_dock_get_dockbooks (dock) == NULL)
+  if (gimp_dock_get_dockbooks (dock) == NULL &&
+      ! GIMP_IS_TOOLBOX (dock))
     gimp_dock_columns_remove_dock (dock_columns, dock);
 }
 
