@@ -887,6 +887,25 @@ gimp_dock_window_remove_dock (GimpDockWindow *dock_window,
                                         dock_window);
 }
 
+GtkWidget *
+gimp_dock_window_new (const gchar       *role,
+                      const gchar       *ui_manager_name,
+                      gboolean           allow_dockbook_absence,
+                      GimpDialogFactory *factory,
+                      GimpContext       *context)
+{
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return g_object_new (GIMP_TYPE_DOCK_WINDOW,
+                       "role",                   role,
+                       "ui-manager-name",        ui_manager_name,
+                       "allow-dockbook-absence", allow_dockbook_absence,
+                       "dialog-factory",         factory,
+                       "context",                context,
+                       NULL);
+}
+
 gint
 gimp_dock_window_get_id (GimpDockWindow *dock_window)
 {
