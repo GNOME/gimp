@@ -1001,9 +1001,11 @@ save_dialog (gint32 image_ID)
   GimpParasite  *GIF2_CMNT;
 #endif
   gint32         nlayers;
+  gboolean       animation_supported = FALSE;
   gboolean       run;
 
   gimp_image_get_layers (image_ID, &nlayers);
+  animation_supported = nlayers > 1;
 
   dialog = gimp_export_dialog_new (_("GIF"), PLUG_IN_BINARY, SAVE_PROC);
 
@@ -1188,8 +1190,7 @@ save_dialog (gint32 image_ID)
   /* If the image has only one layer it can't be animated, so
      desensitize the animation options. */
 
-  if (nlayers == 1)
-    gtk_widget_set_sensitive (frame, FALSE);
+  gtk_widget_set_sensitive (frame, animation_supported);
 
   gtk_widget_show (frame);
   gtk_widget_show (dialog);
