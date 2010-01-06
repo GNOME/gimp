@@ -562,13 +562,6 @@ gui_exit_callback (Gimp     *gimp,
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  /* Since single-window mode is not session managed yet, force
-   * disabling of the mode before exit to prevent loss of dockables
-   */
-  g_object_set (gui_config,
-                "single-window-mode", FALSE,
-                NULL);
-
   if (! force && gimp_displays_dirty (gimp))
     {
       gimp_dialog_factory_dialog_raise (global_dialog_factory,
@@ -577,6 +570,15 @@ gui_exit_callback (Gimp     *gimp,
 
       return TRUE; /* stop exit for now */
     }
+
+  /* Since single-window mode is not session managed yet, force
+   * disabling of the mode before exit to prevent loss of
+   * dockables. Make sure to do this _after_ we have asked about
+   * saving unsaved images.
+   */
+  g_object_set (gui_config,
+                "single-window-mode", FALSE,
+                NULL);
 
   gimp->message_handler = GIMP_CONSOLE;
 
