@@ -928,9 +928,10 @@ gimp_view_render_to_surface (TempBuf         *temp_buf,
   /* In rare cases we can get here while GIMP is exiting, handle that
    * by checking for availability of the buffers
    */
-  g_return_if_fail (gimp_render_check_buf != NULL);
-  g_return_if_fail (gimp_render_empty_buf != NULL);
-  g_return_if_fail (gimp_render_white_buf != NULL);
+  if (! gimp_render_check_buf ||
+      ! gimp_render_empty_buf ||
+      ! gimp_render_white_buf)
+    return;
 
   dest        = cairo_image_surface_get_data (surface);
   dest_stride = cairo_image_surface_get_stride (surface);
