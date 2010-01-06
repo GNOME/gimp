@@ -139,7 +139,7 @@ static void      gimp_image_window_switch_page         (GtkNotebook         *not
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_page_removed        (GtkNotebook         *notebook,
-                                                        GtkNotebookPage     *page,
+                                                        GtkWidget           *widget,
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_disconnect_from_active_shell
@@ -1168,7 +1168,7 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
 
 static void
 gimp_image_window_page_removed (GtkNotebook     *notebook,
-                                GtkNotebookPage *page,
+                                GtkWidget       *widget,
                                 gint             page_num,
                                 GimpImageWindow *window)
 {
