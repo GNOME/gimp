@@ -43,6 +43,13 @@
 
 #include "gimp-log.h"
 
+
+enum
+{
+  PROP_0,
+  PROP_CONTEXT
+};
+
 enum
 {
   DOCK_ADDED,
@@ -61,16 +68,24 @@ struct _GimpDockColumnsPrivate
 };
 
 
-static gboolean  gimp_dock_columns_dropped_cb        (GtkWidget         *source,
-                                                      gint               insert_index,
-                                                      gpointer           data);
-static void      gimp_dock_columns_real_dock_added   (GimpDockColumns   *dock_columns,
-                                                      GimpDock          *dock);
-static void      gimp_dock_columns_real_dock_removed (GimpDockColumns   *dock_columns,
-                                                      GimpDock          *dock);
-static void      gimp_dock_columns_dock_book_removed (GimpDockColumns   *dock_columns,
-                                                      GimpDockbook      *dockbook,
-                                                      GimpDock          *dock);
+static void      gimp_dock_columns_set_property      (GObject         *object,
+                                                      guint            property_id,
+                                                      const GValue    *value,
+                                                      GParamSpec      *pspec);
+static void      gimp_dock_columns_get_property      (GObject         *object,
+                                                      guint            property_id,
+                                                      GValue          *value,
+                                                      GParamSpec      *pspec);
+static gboolean  gimp_dock_columns_dropped_cb        (GtkWidget       *source,
+                                                      gint             insert_index,
+                                                      gpointer         data);
+static void      gimp_dock_columns_real_dock_added   (GimpDockColumns *dock_columns,
+                                                      GimpDock        *dock);
+static void      gimp_dock_columns_real_dock_removed (GimpDockColumns *dock_columns,
+                                                      GimpDock        *dock);
+static void      gimp_dock_columns_dock_book_removed (GimpDockColumns *dock_columns,
+                                                      GimpDockbook    *dockbook,
+                                                      GimpDock        *dock);
 
 
 G_DEFINE_TYPE (GimpDockColumns, gimp_dock_columns, GTK_TYPE_HBOX)
@@ -83,8 +98,20 @@ static guint dock_columns_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_dock_columns_class_init (GimpDockColumnsClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->set_property = gimp_dock_columns_set_property;
+  object_class->get_property = gimp_dock_columns_get_property;
+
   klass->dock_added   = gimp_dock_columns_real_dock_added;
   klass->dock_removed = gimp_dock_columns_real_dock_removed;
+
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   dock_columns_signals[DOCK_ADDED] =
     g_signal_new ("dock-added",
@@ -123,6 +150,46 @@ gimp_dock_columns_init (GimpDockColumns *dock_columns)
                                  dock_columns);
   gtk_container_add (GTK_CONTAINER (dock_columns), dock_columns->p->paned_hbox);
   gtk_widget_show (dock_columns->p->paned_hbox);
+}
+
+static void
+gimp_dock_columns_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpDockColumns *dock_columns = GIMP_DOCK_COLUMNS (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT:
+      dock_columns->p->context = g_value_get_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_dock_columns_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpDockColumns *dock_columns = GIMP_DOCK_COLUMNS (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT:
+      g_value_set_object (value, dock_columns->p->context);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gboolean
@@ -184,6 +251,22 @@ gimp_dock_columns_dock_book_removed (GimpDockColumns *dock_columns,
     gimp_dock_columns_remove_dock (dock_columns, dock);
 }
 
+
+/**
+ * gimp_dock_columns_new:
+ * @context:
+ *
+ * Returns: A new #GimpDockColumns.
+ **/
+GtkWidget *
+gimp_dock_columns_new (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return g_object_new (GIMP_TYPE_DOCK_COLUMNS,
+                       "context", context,
+                       NULL);
+}
 
 /**
  * gimp_dock_columns_add_dock:

@@ -246,6 +246,73 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   /* Misc */
   gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
+}
+
+static GObject *
+gimp_dock_window_constructor (GType                  type,
+                              guint                  n_params,
+                              GObjectConstructParam *params)
+{
+  GObject        *object           = NULL;
+  GimpDockWindow *dock_window      = NULL;
+  GimpGuiConfig  *config           = NULL;
+  GtkAccelGroup  *accel_group      = NULL;
+  Gimp           *gimp             = NULL;
+  GtkSettings    *settings         = NULL;
+  gint            menu_view_width  = -1;
+  gint            menu_view_height = -1;
+
+  /* Init */
+  object      = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  dock_window = GIMP_DOCK_WINDOW (object);
+  gimp        = GIMP (dock_window->p->context->gimp);
+  config      = GIMP_GUI_CONFIG (gimp->config);
+
+  /* Create a separate context per dock so that docks can be bound to
+   * a specific image and does not necessarily have to follow the
+   * active image in the user context
+   */
+  g_object_unref (dock_window->p->context);
+  dock_window->p->context           = gimp_context_new (gimp, "Dock Context", NULL);
+  dock_window->p->image_container   = gimp->images;
+  dock_window->p->display_container = gimp->displays;
+
+  /* Setup hints */
+  gimp_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
+
+  /* Make image window related keyboard shortcuts work also when a
+   * dock window is the focused window
+   */
+  dock_window->p->ui_manager =
+    gimp_menu_factory_manager_new (global_menu_factory,
+                                   dock_window->p->ui_manager_name,
+                                   dock_window,
+                                   config->tearoff_menus);
+  accel_group = 
+    gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (dock_window->p->ui_manager));
+  gtk_window_add_accel_group (GTK_WINDOW (dock_window), accel_group);
+
+  g_signal_connect_object (dock_window->p->context, "display-changed",
+                           G_CALLBACK (gimp_dock_window_display_changed),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (dock_window->p->context, "image-changed",
+                           G_CALLBACK (gimp_dock_window_image_changed),
+                           dock_window,
+                           G_CONNECT_SWAPPED);
+
+  dock_window->p->image_flush_handler_id =
+    gimp_container_add_handler (gimp->images, "flush",
+                                G_CALLBACK (gimp_dock_window_image_flush),
+                                dock_window);
+
+  gimp_context_define_properties (dock_window->p->context,
+                                  GIMP_CONTEXT_ALL_PROPS_MASK &
+                                  ~(GIMP_CONTEXT_IMAGE_MASK |
+                                    GIMP_CONTEXT_DISPLAY_MASK),
+                                  FALSE);
+  gimp_context_set_parent (dock_window->p->context,
+                           gimp_dialog_factory_get_context (dock_window->p->dialog_factory));
 
   /* Setup widget hierarchy */
   {
@@ -294,7 +361,12 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
     }
 
     /* GimpDockColumns */
-    dock_window->p->dock_columns =g_object_new (GIMP_TYPE_DOCK_COLUMNS, NULL);
+    /* Let the GimpDockColumns mirror the context so that a GimpDock can
+     * get it when inside a dock window. We do the same thing in the
+     * GimpImageWindow so docks can get the GimpContext there as well
+     */
+    dock_window->p->dock_columns =
+      GIMP_DOCK_COLUMNS (gimp_dock_columns_new (dock_window->p->context));
     gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (dock_window->p->dock_columns),
                         TRUE, TRUE, 0);
     gtk_widget_show (GTK_WIDGET (dock_window->p->dock_columns));
@@ -303,92 +375,6 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
                              dock_window,
                              G_CONNECT_SWAPPED);
   }
-}
-
-static GObject *
-gimp_dock_window_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
-{
-  GObject        *object           = NULL;
-  GimpDockWindow *dock_window      = NULL;
-  GimpGuiConfig  *config           = NULL;
-  GtkAccelGroup  *accel_group      = NULL;
-  Gimp           *gimp             = NULL;
-  GtkSettings    *settings         = NULL;
-  gint            menu_view_width  = -1;
-  gint            menu_view_height = -1;
-
-  /* Init */
-  object      = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-  dock_window = GIMP_DOCK_WINDOW (object);
-  gimp        = GIMP (dock_window->p->context->gimp);
-  config      = GIMP_GUI_CONFIG (gimp->config);
-
-  /* Create a separate context per dock so that docks can be bound to
-   * a specific image and does not necessarily have to follow the
-   * active image in the user context
-   */
-  g_object_unref (dock_window->p->context);
-  dock_window->p->context           = gimp_context_new (gimp, "Dock Context", NULL);
-  dock_window->p->image_container   = gimp->images;
-  dock_window->p->display_container = gimp->displays;
-
-  /* Let the GimpDockColumns mirror the context so that a GimpDock can
-   * get it when inside a dock window. We do the same thing in the
-   * GimpImageWindow so docks can get the GimpContext there as well
-   */
-  gimp_dock_columns_set_context (dock_window->p->dock_columns,
-                                 dock_window->p->context);
-
-  /* Setup hints */
-  gimp_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
-
-  /* Make image window related keyboard shortcuts work also when a
-   * dock window is the focused window
-   */
-  dock_window->p->ui_manager =
-    gimp_menu_factory_manager_new (global_menu_factory,
-                                   dock_window->p->ui_manager_name,
-                                   dock_window,
-                                   config->tearoff_menus);
-  accel_group = 
-    gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (dock_window->p->ui_manager));
-  gtk_window_add_accel_group (GTK_WINDOW (dock_window), accel_group);
-
-  g_signal_connect_object (dock_window->p->context, "display-changed",
-                           G_CALLBACK (gimp_dock_window_display_changed),
-                           dock_window,
-                           G_CONNECT_SWAPPED);
-  g_signal_connect_object (dock_window->p->context, "image-changed",
-                           G_CALLBACK (gimp_dock_window_image_changed),
-                           dock_window,
-                           G_CONNECT_SWAPPED);
-
-  dock_window->p->image_flush_handler_id =
-    gimp_container_add_handler (gimp->images, "flush",
-                                G_CALLBACK (gimp_dock_window_image_flush),
-                                dock_window);
-
-  gimp_context_define_properties (dock_window->p->context,
-                                  GIMP_CONTEXT_ALL_PROPS_MASK &
-                                  ~(GIMP_CONTEXT_IMAGE_MASK |
-                                    GIMP_CONTEXT_DISPLAY_MASK),
-                                  FALSE);
-  gimp_context_set_parent (dock_window->p->context,
-                           gimp_dialog_factory_get_context (dock_window->p->dialog_factory));
-
-  if (dock_window->p->auto_follow_active)
-    {
-      if (gimp_context_get_display (gimp_dialog_factory_get_context (dock_window->p->dialog_factory)))
-        gimp_context_copy_property (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
-                                    dock_window->p->context,
-                                    GIMP_CONTEXT_PROP_DISPLAY);
-      else
-        gimp_context_copy_property (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
-                                    dock_window->p->context,
-                                    GIMP_CONTEXT_PROP_IMAGE);
-    }
 
   g_signal_connect_object (gimp_dialog_factory_get_context (dock_window->p->dialog_factory), "display-changed",
                            G_CALLBACK (gimp_dock_window_factory_display_changed),
@@ -412,6 +398,18 @@ gimp_dock_window_constructor (GType                  type,
 
   gimp_help_connect (GTK_WIDGET (dock_window), gimp_standard_help_func,
                      GIMP_HELP_DOCK, NULL);
+
+  if (dock_window->p->auto_follow_active)
+    {
+      if (gimp_context_get_display (gimp_dialog_factory_get_context (dock_window->p->dialog_factory)))
+        gimp_context_copy_property (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
+                                    dock_window->p->context,
+                                    GIMP_CONTEXT_PROP_DISPLAY);
+      else
+        gimp_context_copy_property (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
+                                    dock_window->p->context,
+                                    GIMP_CONTEXT_PROP_IMAGE);
+    }
 
   /* Done! */
   return object;

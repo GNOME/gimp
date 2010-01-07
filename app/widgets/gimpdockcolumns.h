@@ -58,6 +58,7 @@ struct _GimpDockColumnsClass
 
 
 GType               gimp_dock_columns_get_type       (void) G_GNUC_CONST;
+GtkWidget         * gimp_dock_columns_new            (GimpContext     *context);
 void                gimp_dock_columns_add_dock       (GimpDockColumns *dock_columns,
                                                       GimpDock        *dock,
                                                       gint             index);
