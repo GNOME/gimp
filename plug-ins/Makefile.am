@@ -69,6 +69,7 @@ SUBDIRS = \
 	flame			\
 	fractal-explorer	\
 	gfig			\
+	ui			\
 	gimpressionist		\
 	gradient-flare		\
 	help			\

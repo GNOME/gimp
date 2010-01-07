@@ -1768,21 +1768,35 @@ respin_cmap (png_structp   pp,
 
 }
 
+static GtkWidget *
+toggle_button_init (GtkBuilder  *builder,
+                    const gchar *name,
+                    gboolean     initial_value,
+                    gboolean    *value_pointer)
+{
+  GtkWidget *toggle = NULL;
+
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, name));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), initial_value);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    value_pointer);
+
+  return toggle;
+}
+
 static gboolean
 save_dialog (gint32    image_ID,
              gboolean  alpha)
 {
   PngSaveGui    pg;
   GtkWidget    *dialog;
-  GtkWidget    *table;
-  GtkWidget    *toggle;
-  GtkObject    *scale;
-  GtkWidget    *hbox;
-  GtkWidget    *button;
+  GtkBuilder   *builder;
+  gchar        *ui_file;
   GimpParasite *parasite;
 
+  /* Dialog init */
   dialog = gimp_export_dialog_new (_("PNG"), PLUG_IN_BINARY, SAVE_PROC);
-
   g_signal_connect (dialog, "response",
                     G_CALLBACK (save_dialog_response),
                     &pg);
@@ -1790,142 +1804,78 @@ save_dialog (gint32    image_ID,
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  table = gtk_table_new (10, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  /* GtkBuilder init */
+  builder = gtk_builder_new ();
+  ui_file = g_build_filename (gimp_data_directory (),
+                              "ui/file-png.ui",
+                              NULL);
+  gtk_builder_add_from_file (builder, ui_file, NULL /*error*/);
+  g_free (ui_file);
+
+  /* Table */
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+                      GTK_WIDGET (gtk_builder_get_object (builder, "table")),
+                      TRUE, TRUE, 0);
 
-  pg.interlaced = toggle =
-    gtk_check_button_new_with_mnemonic (_("_Interlacing (Adam7)"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                pngvals.interlaced);
-  gtk_widget_show (toggle);
+  /* Toggles */
+  pg.interlaced = toggle_button_init (builder, "interlace",
+                                      pngvals.interlaced,
+                                      &pngvals.interlaced);
+  pg.bkgd = toggle_button_init (builder, "save-background-color",
+                                pngvals.bkgd,
+                                &pngvals.bkgd);
+  pg.gama = toggle_button_init (builder, "save-gamma",
+                                pngvals.gama,
+                                &pngvals.gama);
+  pg.offs = toggle_button_init (builder, "save-layer-offset",
+                                pngvals.offs,
+                                &pngvals.offs);
+  pg.phys = toggle_button_init (builder, "save-resolution",
+                                pngvals.phys,
+                                &pngvals.phys);
+  pg.time = toggle_button_init (builder, "save-creation-time",
+                                pngvals.time,
+                                &pngvals.time);
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pngvals.interlaced);
-
-  pg.bkgd = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save _background color"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.bkgd);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update), &pngvals.bkgd);
-
-  pg.gama = toggle = gtk_check_button_new_with_mnemonic (_("Save _gamma"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 2, 3, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.gama);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pngvals.gama);
-
-  pg.offs = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save layer o_ffset"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.offs);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pngvals.offs);
-
-  pg.phys = toggle = gtk_check_button_new_with_mnemonic (_("Save _resolution"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 4, 5, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.phys);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pngvals.phys);
-
-  pg.time = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save creation _time"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 5, 6, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.time);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pngvals.time);
-
-  pg.comment = toggle = gtk_check_button_new_with_mnemonic (_("Save comme_nt"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 6, 7, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.comment);
-  gtk_widget_show (toggle);
-
+  /* Comment toggle */
   parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                pngvals.comment && parasite != NULL);
-  gtk_widget_set_sensitive (toggle, parasite != NULL);
+  pg.comment =
+    toggle_button_init (builder, "save-comment",
+                        pngvals.comment && parasite != NULL,
+                        &pngvals.comment);
+  gtk_widget_set_sensitive (pg.comment, parasite != NULL);
   gimp_parasite_free (parasite);
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pngvals.comment);
+  /* Transparent pixels toggle */
+  pg.save_transp_pixels =
+    toggle_button_init (builder,
+                        "save-transparent-pixels",
+                        alpha && pngvals.save_transp_pixels,
+                        &pngvals.save_transp_pixels);
+  gtk_widget_set_sensitive (pg.save_transp_pixels, alpha);
 
-  pg.save_transp_pixels = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save color _values from "
-                                          "transparent pixels"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 7, 8, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                alpha && pngvals.save_transp_pixels);
-  gtk_widget_set_sensitive (toggle, alpha);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pngvals.save_transp_pixels);
-
-  pg.compression_level = scale =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
-                          _("Co_mpression level:"),
-                          SCALE_WIDTH, 0,
-                          pngvals.compression_level,
-                          0.0, 9.0, 1.0, 1.0, 0, TRUE, 0.0, 0.0,
-                          _("Choose a high compression level "
-                            "for small file size"), NULL);
-
-  g_signal_connect (scale, "value-changed",
+  /* Compression level scale */
+  pg.compression_level =
+    GTK_OBJECT (gtk_builder_get_object (builder, "compression-level"));
+  g_signal_connect (pg.compression_level, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);
 
-  hbox = gtk_hbutton_box_new ();
-  gtk_box_set_spacing (GTK_BOX (hbox), 6);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_START);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 9, 10,
-                    GTK_FILL | GTK_EXPAND, 0, 0, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
+  /* Load/save defaults buttons */
+  g_signal_connect_swapped (gtk_builder_get_object (builder, "load-defaults"),
+                            "clicked",
                             G_CALLBACK (load_gui_defaults),
                             &pg);
 
-  button = gtk_button_new_with_mnemonic (_("S_ave Defaults"));
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
+  g_signal_connect_swapped (gtk_builder_get_object (builder, "save-defaults"),
+                            "clicked",
                             G_CALLBACK (save_defaults),
                             &pg);
 
+  /* Show dialog and run */
   gtk_widget_show (dialog);
-
   pg.run = FALSE;
-
   gtk_main ();
-
   return pg.run;
 }
 

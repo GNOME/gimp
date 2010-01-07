@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<interface>
+  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkAdjustment" id="compression-level">
+    <property name="upper">9</property>
+
+    <!-- NOTE: Set value _after_ upper so the value don't get clamped -->
+    <property name="value">9</property>
+
+    <property name="step_increment">1</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkTable" id="table">
+    <property name="visible">True</property>
+    <property name="border_width">12</property>
+    <property name="n_rows">10</property>
+    <property name="n_columns">3</property>
+    <property name="column_spacing">6</property>
+    <property name="row_spacing">6</property>
+    <child>
+      <object class="GtkCheckButton" id="interlace">
+        <property name="label" translatable="yes">_Interlacing (Adam7)</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="use_underline">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-background-color">
+        <property name="label" translatable="yes">Save _background color</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="use_underline">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+        <property name="top_attach">1</property>
+        <property name="bottom_attach">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-gamma">
+        <property name="label" translatable="yes">Save gamma</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+        <property name="top_attach">2</property>
+        <property name="bottom_attach">3</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-layer-offset">
+        <property name="label" translatable="yes">Save layer o_ffset</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="use_underline">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+        <property name="top_attach">3</property>
+        <property name="bottom_attach">4</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-resolution">
+        <property name="label" translatable="yes">Save _resolution</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="use_underline">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+        <property name="top_attach">4</property>
+        <property name="bottom_attach">5</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-creation-time">
+        <property name="label" translatable="yes">Save creation _time</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="use_underline">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+        <property name="top_attach">5</property>
+        <property name="bottom_attach">6</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-comment">
+        <property name="label" translatable="yes">Save comme_nt</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="use_underline">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+        <property name="top_attach">6</property>
+        <property name="bottom_attach">7</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-transparent-pixels">
+        <property name="label" translatable="yes">Save color _values from transparent pixels</property>
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="use_underline">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+        <property name="top_attach">7</property>
+        <property name="bottom_attach">8</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="compression-level-label">
+        <property name="visible">True</property>
+        <property name="xalign">0</property>
+        <property name="label" translatable="yes">Co_mpression level:</property>
+        <property name="use_underline">True</property>
+        <property name="mnemonic_widget">compression-level-spin</property>
+      </object>
+      <packing>
+        <property name="top_attach">8</property>
+        <property name="bottom_attach">9</property>
+        <property name="x_options"></property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkHScale" id="compression-level-scale">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="adjustment">compression-level</property>
+        <property name="draw_value">False</property>
+      </object>
+      <packing>
+        <property name="left_attach">1</property>
+        <property name="right_attach">2</property>
+        <property name="top_attach">8</property>
+        <property name="bottom_attach">9</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkSpinButton" id="compression-level-spin">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="has_tooltip">True</property>
+        <property name="tooltip_text" translatable="yes">Choose a high compression level for small file size</property>
+        <property name="invisible_char">&#x25CF;</property>
+        <property name="adjustment">compression-level</property>
+        <property name="numeric">True</property>
+      </object>
+      <packing>
+        <property name="left_attach">2</property>
+        <property name="right_attach">3</property>
+        <property name="top_attach">8</property>
+        <property name="bottom_attach">9</property>
+        <property name="x_options"></property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkHButtonBox" id="hbuttonbox">
+        <property name="visible">True</property>
+        <property name="spacing">6</property>
+        <property name="layout_style">start</property>
+        <child>
+          <object class="GtkButton" id="load-defaults">
+            <property name="label" translatable="yes">_Load Defaults</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_underline">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="save-defaults">
+            <property name="label" translatable="yes">S_ave Defaults</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_underline">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="right_attach">3</property>
+        <property name="top_attach">9</property>
+        <property name="bottom_attach">10</property>
+      </packing>
+    </child>
+  </object>
+</interface>
