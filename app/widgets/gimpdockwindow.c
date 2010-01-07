@@ -366,7 +366,9 @@ gimp_dock_window_constructor (GType                  type,
      * GimpImageWindow so docks can get the GimpContext there as well
      */
     dock_window->p->dock_columns =
-      GIMP_DOCK_COLUMNS (gimp_dock_columns_new (dock_window->p->context));
+      GIMP_DOCK_COLUMNS (gimp_dock_columns_new (dock_window->p->context,
+                                                dock_window->p->dialog_factory,
+                                                dock_window->p->ui_manager));
     gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (dock_window->p->dock_columns),
                         TRUE, TRUE, 0);
     gtk_widget_show (GTK_WIDGET (dock_window->p->dock_columns));
@@ -375,6 +377,18 @@ gimp_dock_window_constructor (GType                  type,
                              dock_window,
                              G_CONNECT_SWAPPED);
   }
+
+  if (dock_window->p->auto_follow_active)
+    {
+      if (gimp_context_get_display (gimp_dialog_factory_get_context (dock_window->p->dialog_factory)))
+        gimp_context_copy_property (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
+                                    dock_window->p->context,
+                                    GIMP_CONTEXT_PROP_DISPLAY);
+      else
+        gimp_context_copy_property (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
+                                    dock_window->p->context,
+                                    GIMP_CONTEXT_PROP_IMAGE);
+    }
 
   g_signal_connect_object (gimp_dialog_factory_get_context (dock_window->p->dialog_factory), "display-changed",
                            G_CALLBACK (gimp_dock_window_factory_display_changed),

@@ -57,17 +57,21 @@ struct _GimpDockColumnsClass
 };
 
 
-GType               gimp_dock_columns_get_type       (void) G_GNUC_CONST;
-GtkWidget         * gimp_dock_columns_new            (GimpContext     *context);
-void                gimp_dock_columns_add_dock       (GimpDockColumns *dock_columns,
-                                                      GimpDock        *dock,
-                                                      gint             index);
-void                gimp_dock_columns_remove_dock    (GimpDockColumns *dock_columns,
-                                                      GimpDock        *dock);
-GList             * gimp_dock_columns_get_docks      (GimpDockColumns *dock_columns);
-GimpContext       * gimp_dock_columns_get_context    (GimpDockColumns *dock_columns);
-void                gimp_dock_columns_set_context    (GimpDockColumns *dock_columns,
-                                                      GimpContext     *context);
+GType               gimp_dock_columns_get_type           (void) G_GNUC_CONST;
+GtkWidget         * gimp_dock_columns_new                (GimpContext       *context,
+                                                          GimpDialogFactory *dialog_factory,
+                                                          GimpUIManager     *ui_manager);
+void                gimp_dock_columns_add_dock           (GimpDockColumns   *dock_columns,
+                                                          GimpDock          *dock,
+                                                          gint               index);
+void                gimp_dock_columns_remove_dock        (GimpDockColumns   *dock_columns,
+                                                          GimpDock          *dock);
+GList             * gimp_dock_columns_get_docks          (GimpDockColumns   *dock_columns);
+GimpContext       * gimp_dock_columns_get_context        (GimpDockColumns   *dock_columns);
+void                gimp_dock_columns_set_context        (GimpDockColumns   *dock_columns,
+                                                          GimpContext       *context);
+GimpDialogFactory * gimp_dock_columns_get_dialog_factory (GimpDockColumns   *dock_columns);
+GimpUIManager     * gimp_dock_columns_get_ui_manager     (GimpDockColumns   *dock_columns);
 
 
 #endif /* __GIMP_DOCK_COLUMNS_H__ */

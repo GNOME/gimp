@@ -405,7 +405,7 @@ gimp_dock_update_with_context (GimpDock    *dock,
 GimpContext *
 gimp_dock_get_context (GimpDock *dock)
 {
-  GimpContext     *context      = NULL;
+  GimpContext *context = NULL;
 
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
@@ -427,7 +427,7 @@ gimp_dock_get_context (GimpDock *dock)
         context = gimp_dock_window_get_context (dock_window);
     }
 
- return context;
+  return context;
 }
 
 /**
@@ -440,13 +440,29 @@ gimp_dock_get_context (GimpDock *dock)
 GimpDialogFactory *
 gimp_dock_get_dialog_factory (GimpDock *dock)
 {
-  GimpDockWindow *dock_window = NULL;
+  GimpDialogFactory *dialog_factory = NULL;
 
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  dock_window = gimp_dock_window_from_dock (dock);
+  /* First try GimpDockColumns */
+  if (! dialog_factory)
+    {
+      GimpDockColumns *dock_columns = gimp_dock_get_dock_columns (dock);
 
-  return gimp_dock_window_get_dialog_factory (dock_window);
+      if (dock_columns)
+        dialog_factory = gimp_dock_columns_get_dialog_factory (dock_columns);
+    }
+
+  /* Then GimpDockWindow */
+  if (! dialog_factory)
+    {
+      GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
+
+      if (dock_window)
+        dialog_factory = gimp_dock_window_get_dialog_factory (dock_window);
+    }
+
+  return dialog_factory;
 }
 
 /**
@@ -459,13 +475,29 @@ gimp_dock_get_dialog_factory (GimpDock *dock)
 GimpUIManager *
 gimp_dock_get_ui_manager (GimpDock *dock)
 {
-  GimpDockWindow *dock_window = NULL;
+  GimpUIManager *ui_manager = NULL;
 
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  dock_window = gimp_dock_window_from_dock (dock);
+  /* First try GimpDockColumns */
+  if (! ui_manager)
+    {
+      GimpDockColumns *dock_columns = gimp_dock_get_dock_columns (dock);
 
-  return gimp_dock_window_get_ui_manager (dock_window);
+      if (dock_columns)
+        ui_manager = gimp_dock_columns_get_ui_manager (dock_columns);
+    }
+
+  /* Then GimpDockWindow */
+  if (! ui_manager)
+    {
+      GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
+
+      if (dock_window)
+        ui_manager = gimp_dock_window_get_ui_manager (dock_window);
+    }
+
+  return ui_manager;
 }
 
 GList *

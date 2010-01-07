@@ -40,6 +40,7 @@
 #include "gimpmenudock.h"
 #include "gimppanedbox.h"
 #include "gimptoolbox.h"
+#include "gimpuimanager.h"
 
 #include "gimp-log.h"
 
@@ -47,7 +48,9 @@
 enum
 {
   PROP_0,
-  PROP_CONTEXT
+  PROP_CONTEXT,
+  PROP_DIALOG_FACTORY,
+  PROP_UI_MANAGER
 };
 
 enum
@@ -60,11 +63,13 @@ enum
 
 struct _GimpDockColumnsPrivate
 {
-  GimpContext *context;
+  GimpContext       *context;
+  GimpDialogFactory *dialog_factory;
+  GimpUIManager     *ui_manager;
 
-  GList       *docks;
+  GList             *docks;
 
-  GtkWidget   *paned_hbox;
+  GtkWidget         *paned_hbox;
 };
 
 
@@ -110,6 +115,18 @@ gimp_dock_columns_class_init (GimpDockColumnsClass *klass)
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
+                                   g_param_spec_object ("dialog-factory",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DIALOG_FACTORY,
+                                                        GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_UI_MANAGER,
+                                   g_param_spec_object ("ui-manager",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_UI_MANAGER,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -165,6 +182,12 @@ gimp_dock_columns_set_property (GObject      *object,
     case PROP_CONTEXT:
       dock_columns->p->context = g_value_get_object (value);
       break;
+    case PROP_DIALOG_FACTORY:
+      dock_columns->p->dialog_factory = g_value_get_object (value);
+      break;
+    case PROP_UI_MANAGER:
+      dock_columns->p->ui_manager = g_value_get_object (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -184,6 +207,12 @@ gimp_dock_columns_get_property (GObject    *object,
     {
     case PROP_CONTEXT:
       g_value_set_object (value, dock_columns->p->context);
+      break;
+    case PROP_DIALOG_FACTORY:
+      g_value_set_object (value, dock_columns->p->dialog_factory);
+      break;
+    case PROP_UI_MANAGER:
+      g_value_set_object (value, dock_columns->p->ui_manager);
       break;
 
     default:
@@ -259,12 +288,18 @@ gimp_dock_columns_dock_book_removed (GimpDockColumns *dock_columns,
  * Returns: A new #GimpDockColumns.
  **/
 GtkWidget *
-gimp_dock_columns_new (GimpContext *context)
+gimp_dock_columns_new (GimpContext       *context,
+                       GimpDialogFactory *dialog_factory,
+                       GimpUIManager     *ui_manager)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_UI_MANAGER (ui_manager), NULL);
 
   return g_object_new (GIMP_TYPE_DOCK_COLUMNS,
-                       "context", context,
+                       "context",        context,
+                       "dialog-factory", dialog_factory,
+                       "ui-manager",     ui_manager,
                        NULL);
 }
 
@@ -350,4 +385,20 @@ gimp_dock_columns_set_context (GimpDockColumns *dock_columns,
   g_return_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns));
 
   dock_columns->p->context = context;
+}
+
+GimpDialogFactory *
+gimp_dock_columns_get_dialog_factory (GimpDockColumns *dock_columns)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns), NULL);
+
+  return dock_columns->p->dialog_factory;
+}
+
+GimpUIManager *
+gimp_dock_columns_get_ui_manager (GimpDockColumns *dock_columns)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK_COLUMNS (dock_columns), NULL);
+
+  return dock_columns->p->ui_manager;
 }
