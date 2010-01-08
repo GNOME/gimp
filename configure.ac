@@ -1985,6 +1985,15 @@ app/vectors/Makefile
 app/widgets/Makefile
 app/xcf/Makefile
 app/tests/Makefile
+app/tests/files/Makefile
+app/tests/gimpdir-empty/Makefile
+app/tests/gimpdir-empty/brushes/Makefile
+app/tests/gimpdir-empty/gradients/Makefile
+app/tests/gimpdir-empty/patterns/Makefile
+app/tests/gimpdir/Makefile
+app/tests/gimpdir/brushes/Makefile
+app/tests/gimpdir/gradients/Makefile
+app/tests/gimpdir/patterns/Makefile
 plug-ins/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile

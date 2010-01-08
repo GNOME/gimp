@@ -1,3 +1,8 @@
+SUBDIRS = \
+	files		\
+	gimpdir		\
+	gimpdir-empty
+
 # Don't mess with user's gimpdir. Pass in the abs top srcdir to the
 # tests through an environment variable so they can set the gimpdir
 # they want to use
