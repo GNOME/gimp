@@ -620,36 +620,36 @@ EXPORTS
 	gimp_text_fontname
 	gimp_text_get_extents
 	gimp_text_get_extents_fontname
- 	gimp_text_layer_get_antialias
- 	gimp_text_layer_get_base_direction
- 	gimp_text_layer_get_color
- 	gimp_text_layer_get_font
- 	gimp_text_layer_get_font_size
+	gimp_text_layer_get_antialias
+	gimp_text_layer_get_base_direction
+	gimp_text_layer_get_color
+	gimp_text_layer_get_font
+	gimp_text_layer_get_font_size
 	gimp_text_layer_get_hint_style
- 	gimp_text_layer_get_hinting
- 	gimp_text_layer_get_indent
- 	gimp_text_layer_get_justification
- 	gimp_text_layer_get_kerning
- 	gimp_text_layer_get_language
- 	gimp_text_layer_get_letter_spacing
- 	gimp_text_layer_get_line_spacing
- 	gimp_text_layer_get_text
- 	gimp_text_layer_new
- 	gimp_text_layer_resize
- 	gimp_text_layer_set_antialias
- 	gimp_text_layer_set_base_direction
- 	gimp_text_layer_set_color
- 	gimp_text_layer_set_font
- 	gimp_text_layer_set_font_size
+	gimp_text_layer_get_hinting
+	gimp_text_layer_get_indent
+	gimp_text_layer_get_justification
+	gimp_text_layer_get_kerning
+	gimp_text_layer_get_language
+	gimp_text_layer_get_letter_spacing
+	gimp_text_layer_get_line_spacing
+	gimp_text_layer_get_text
+	gimp_text_layer_new
+	gimp_text_layer_resize
+	gimp_text_layer_set_antialias
+	gimp_text_layer_set_base_direction
+	gimp_text_layer_set_color
+	gimp_text_layer_set_font
+	gimp_text_layer_set_font_size
 	gimp_text_layer_set_hint_style
- 	gimp_text_layer_set_hinting
- 	gimp_text_layer_set_indent
- 	gimp_text_layer_set_justification
- 	gimp_text_layer_set_kerning
- 	gimp_text_layer_set_language
- 	gimp_text_layer_set_letter_spacing
- 	gimp_text_layer_set_line_spacing
- 	gimp_text_layer_set_text
+	gimp_text_layer_set_hinting
+	gimp_text_layer_set_indent
+	gimp_text_layer_set_justification
+	gimp_text_layer_set_kerning
+	gimp_text_layer_set_language
+	gimp_text_layer_set_letter_spacing
+	gimp_text_layer_set_line_spacing
+	gimp_text_layer_set_text
 	gimp_threshold
 	gimp_tile_cache_ntiles
 	gimp_tile_cache_size
@@ -667,7 +667,7 @@ EXPORTS
 	gimp_vectors_bezier_stroke_lineto
 	gimp_vectors_bezier_stroke_new_ellipse
 	gimp_vectors_bezier_stroke_new_moveto
-        gimp_vectors_copy
+	gimp_vectors_copy
 	gimp_vectors_export_to_file
 	gimp_vectors_export_to_string
 	gimp_vectors_get_image
