@@ -74,6 +74,7 @@ int main(int argc, char **argv)
 
   /* Make sure to run this before we use any GIMP functions */
   gimp_test_utils_set_gimp2_directory ("gimpdir");
+  gimp_test_utils_setup_menus_dir ();
 
   sessionrc_filename = gimp_personal_rc_file ("sessionrc");
   dockrc_filename    = gimp_personal_rc_file ("dockrc");

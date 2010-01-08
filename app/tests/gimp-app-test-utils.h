@@ -19,7 +19,9 @@
 #define  __GIMP_RECTANGLE_SELECT_TOOL_H__
 
 
-void   gimp_test_utils_set_gimp2_directory (const gchar *subdir);
+void    gimp_test_utils_set_gimp2_directory (const gchar *subdir);
+void    gimp_test_utils_setup_menus_dir     (void);
+gchar * gimp_test_utils_get_source_subdir   (const gchar *subdir);
 
 
 #endif /* __GIMP_RECTANGLE_SELECT_TOOL_H__ */

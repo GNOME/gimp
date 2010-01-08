@@ -43,3 +43,37 @@ gimp_test_utils_set_gimp2_directory (const gchar *subdir)
 
   g_free (gimpdir);
 }
+
+/**
+ * gimp_test_utils_setup_menus_dir:
+ *
+ * Sets GIMP_TESTING_MENUS_DIR to "$top_srcdir/menus".
+ **/
+void
+gimp_test_utils_setup_menus_dir (void)
+{
+  gchar *menus_dir = NULL;
+
+  menus_dir = gimp_test_utils_get_source_subdir ("menus");
+
+  g_setenv ("GIMP_TESTING_MENUS_DIR", menus_dir, TRUE);
+
+  g_free (menus_dir);
+}
+
+/**
+ * gimp_test_utils_get_source_subdir:
+ * @subdir:
+ *
+ * Returns: The source directory $top_srcdir/@subdir.
+ **/
+gchar *
+gimp_test_utils_get_source_subdir (const gchar *subdir)
+{
+  /* GIMP_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
+   * see Makefile.am
+   */
+  return g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                           subdir,
+                           NULL);
+}

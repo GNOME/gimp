@@ -62,6 +62,7 @@ int main(int argc, char **argv)
   g_test_init (&argc, &argv, NULL);
 
   gimp_test_utils_set_gimp2_directory ("gimpdir");
+  gimp_test_utils_setup_menus_dir ();
 
   /* Start up GIMP */
   gimp = gimp_init_for_gui_testing (FALSE, TRUE);
