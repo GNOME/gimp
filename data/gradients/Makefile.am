@@ -85,4 +85,4 @@ obsoletegradientdata_DATA = \
 	Romanian_flag.ggr			\
 	Romanian_flag_smooth.ggr
 
-EXTRA_DIST = $(gradientdata_DATA)
+EXTRA_DIST = $(gradientdata_DATA) $(obsoletegradientdata_DATA)
