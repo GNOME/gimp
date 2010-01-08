@@ -127,6 +127,7 @@ EXPORTS
 	gimp_drawable_get_color_uchar
 	gimp_drawable_get_image
 	gimp_drawable_get_linked
+	gimp_drawable_get_lock_content
 	gimp_drawable_get_name
 	gimp_drawable_get_pixel
 	gimp_drawable_get_sub_thumbnail_data
@@ -156,6 +157,7 @@ EXPORTS
 	gimp_drawable_parasite_list
 	gimp_drawable_set_image
 	gimp_drawable_set_linked
+	gimp_drawable_set_lock_content
 	gimp_drawable_set_name
 	gimp_drawable_set_pixel
 	gimp_drawable_set_tattoo
@@ -672,6 +674,7 @@ EXPORTS
 	gimp_vectors_export_to_string
 	gimp_vectors_get_image
 	gimp_vectors_get_linked
+	gimp_vectors_get_lock_content
 	gimp_vectors_get_name
 	gimp_vectors_get_strokes
 	gimp_vectors_get_tattoo
@@ -687,6 +690,7 @@ EXPORTS
 	gimp_vectors_parasite_list
 	gimp_vectors_remove_stroke
 	gimp_vectors_set_linked
+	gimp_vectors_set_lock_content
 	gimp_vectors_set_name
 	gimp_vectors_set_tattoo
 	gimp_vectors_set_visible
