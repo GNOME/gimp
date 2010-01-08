@@ -71,6 +71,10 @@ in bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 size defaults to being specified in kilobytes.
 
 .TP
+
+Specifies the language to use for the user interface.  This is a string value.
+
+.TP
 (interpolation-type cubic)
 
 Sets the level of interpolation used for scaling and other transformations. 
@@ -108,6 +112,17 @@ search.
 
 .TP
 (brush-path-writable "${gimp_dir}/brushes")
+
+This is a colon-separated list of folders to search.
+
+.TP
+(dynamics-path "${gimp_dir}/dynamics:${gimp_data_dir}/dynamics")
+
+Sets the dynamics search path.  This is a colon-separated list of folders to
+search.
+
+.TP
+(dynamics-path-writable "${gimp_dir}/dynamics")
 
 This is a colon-separated list of folders to search.
 
@@ -157,6 +172,12 @@ Specify a default brush.  The brush is searched for in the specified brush
 path.  This is a string value.
 
 .TP
+(default-dynamics "Basic Dynamics")
+
+Specify a default dynamics.  The dynamics is searched for in the specified
+dynamics path.  This is a string value.
+
+.TP
 (default-pattern "Pine")
 
 Specify a default pattern.  This is a string value.
@@ -181,6 +202,12 @@ Specify a default font.  This is a string value.
 
 When enabled, the selected brush will be used for all tools.  Possible values
 are yes and no.
+
+.TP
+(global-dynamics yes)
+
+When enabled, the selected dynamics will be used for all tools.  Possible
+values are yes and no.
 
 .TP
 (global-pattern yes)
@@ -571,9 +598,9 @@ large, extra-large, huge, enormous and gigantic.
 .TP
 (default-view
     (show-menubar yes)
+    (show-statusbar yes)
     (show-rulers yes)
     (show-scrollbars yes)
-    (show-statusbar yes)
     (show-selection yes)
     (show-layer-boundary yes)
     (show-guides yes)
@@ -587,9 +614,9 @@ Sets the default settings for the image view.  This is a parameter list.
 .TP
 (default-fullscreen-view
     (show-menubar yes)
+    (show-statusbar yes)
     (show-rulers yes)
     (show-scrollbars yes)
-    (show-statusbar yes)
     (show-selection yes)
     (show-layer-boundary yes)
     (show-guides yes)
@@ -654,6 +681,12 @@ There's a tradeoff between speed and quality of the zoomed-out display.
 Possible values are low and high.
 
 .TP
+(use-event-history no)
+
+Bugs in event history buffer are frequent so in case of cursor offset problems
+turning it off helps.  Possible values are yes and no.
+
+.TP
 (default-threshold 15)
 
 Tools such as fuzzy-select and bucket fill find regions based on a seed-fill
@@ -709,6 +742,11 @@ Save the tool options when GIMP exits.  Possible values are yes and no.
 
 Show a tooltip when the pointer hovers over an item.  Possible values are yes
 and no.
+
+.TP
+(single-window-mode no)
+
+Use GIMP in a single-window mode.  Possible values are yes and no.
 
 .TP
 (tearoff-menus yes)

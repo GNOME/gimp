@@ -44,6 +44,11 @@
 # 
 # (tile-cache-size 1024M)
 
+# Specifies the language to use for the user interface.  This is a string
+# value.
+# 
+# 
+
 # Sets the level of interpolation used for scaling and other transformations.
 #  Possible values are none, linear, cubic and lanczos.
 # 
@@ -77,6 +82,15 @@
 # This is a colon-separated list of folders to search.
 # 
 # (brush-path-writable "${gimp_dir}/brushes")
+
+# Sets the dynamics search path.  This is a colon-separated list of folders
+# to search.
+# 
+# (dynamics-path "${gimp_dir}/dynamics:${gimp_data_dir}/dynamics")
+
+# This is a colon-separated list of folders to search.
+# 
+# (dynamics-path-writable "${gimp_dir}/dynamics")
 
 # Sets the pattern search path.  This is a colon-separated list of folders to
 # search.
@@ -115,6 +129,11 @@
 # 
 # (default-brush "Round Fuzzy")
 
+# Specify a default dynamics.  The dynamics is searched for in the specified
+# dynamics path.  This is a string value.
+# 
+# (default-dynamics "Basic Dynamics")
+
 # Specify a default pattern.  This is a string value.
 # 
 # (default-pattern "Pine")
@@ -135,6 +154,11 @@
 # values are yes and no.
 # 
 # (global-brush yes)
+
+# When enabled, the selected dynamics will be used for all tools.  Possible
+# values are yes and no.
+# 
+# (global-dynamics yes)
 
 # When enabled, the selected pattern will be used for all tools.  Possible
 # values are yes and no.
@@ -435,9 +459,9 @@
 # 
 # (default-view
 #     (show-menubar yes)
+#     (show-statusbar yes)
 #     (show-rulers yes)
 #     (show-scrollbars yes)
-#     (show-statusbar yes)
 #     (show-selection yes)
 #     (show-layer-boundary yes)
 #     (show-guides yes)
@@ -451,9 +475,9 @@
 # 
 # (default-fullscreen-view
 #     (show-menubar yes)
+#     (show-statusbar yes)
 #     (show-rulers yes)
 #     (show-scrollbars yes)
-#     (show-statusbar yes)
 #     (show-selection yes)
 #     (show-layer-boundary yes)
 #     (show-guides yes)
@@ -506,6 +530,11 @@
 # 
 # (zoom-quality high)
 
+# Bugs in event history buffer are frequent so in case of cursor offset
+# problems turning it off helps.  Possible values are yes and no.
+# 
+# (use-event-history no)
+
 # Tools such as fuzzy-select and bucket fill find regions based on a
 # seed-fill algorithm.  The seed fill starts at the initially selected pixel
 # and progresses in all directions until the difference of pixel intensity
@@ -553,6 +582,10 @@
 # yes and no.
 # 
 # (show-tooltips yes)
+
+# Use GIMP in a single-window mode.  Possible values are yes and no.
+# 
+# (single-window-mode no)
 
 # When enabled, menus can be torn off.  Possible values are yes and no.
 # 
