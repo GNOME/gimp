@@ -1794,6 +1794,7 @@ save_dialog (gint32    image_ID,
   GtkBuilder   *builder;
   gchar        *ui_file;
   GimpParasite *parasite;
+  GError       *error = NULL;
 
   /* Dialog init */
   dialog = gimp_export_dialog_new (_("PNG"), PLUG_IN_BINARY, SAVE_PROC);
@@ -1809,7 +1810,10 @@ save_dialog (gint32    image_ID,
   ui_file = g_build_filename (gimp_data_directory (),
                               "ui/file-png.ui",
                               NULL);
-  gtk_builder_add_from_file (builder, ui_file, NULL /*error*/);
+  if (! gtk_builder_add_from_file (builder, ui_file, &error))
+    g_printerr ("Failed loading '%s': %s",
+                ui_file,
+                error ? error->message : "???");
   g_free (ui_file);
 
   /* Table */
