@@ -1102,13 +1102,14 @@ save_image (const gchar  *filename,
         }
       else
         {
-          gint i;
+          const guchar *c = cmap;
+          gint          i;
 
           for (i = 0; i < num_colors; i++)
             {
-              red[i] = *cmap++;
-              grn[i] = *cmap++;
-              blu[i] = *cmap++;
+              red[i] = *c++;
+              grn[i] = *c++;
+              blu[i] = *c++;
             }
 
           rowinfo.red = red;
@@ -1154,7 +1155,7 @@ save_image (const gchar  *filename,
           d = data;
         }
 
-      (*saverow)(&rowinfo, d);
+      saverow (&rowinfo, d);
       d += xres * (np ? np : 1);
 
       if ((ypos % 20) == 0)
