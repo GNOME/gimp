@@ -1,6 +1,6 @@
-uidatadir = $(gimpdatadir)/ui
+uidatadir = $(gimpdatadir)/ui/plug-ins
 
 uidata_DATA = \
-	file-png.ui
+	plug-in-file-png.ui
 
 EXTRA_DIST = $(uidata_DATA)

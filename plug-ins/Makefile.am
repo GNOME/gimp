@@ -69,7 +69,6 @@ SUBDIRS = \
 	flame			\
 	fractal-explorer	\
 	gfig			\
-	ui			\
 	gimpressionist		\
 	gradient-flare		\
 	help			\
@@ -84,5 +83,6 @@ SUBDIRS = \
 	$(print)		\
 	selection-to-path	\
 	$(twain)		\
+	ui			\
 	$(win_snap)		\
 	common

@@ -1808,7 +1808,7 @@ save_dialog (gint32    image_ID,
   /* GtkBuilder init */
   builder = gtk_builder_new ();
   ui_file = g_build_filename (gimp_data_directory (),
-                              "ui/file-png.ui",
+                              "ui/plug-ins/plug-in-file-png.ui",
                               NULL);
   if (! gtk_builder_add_from_file (builder, ui_file, &error))
     {
@@ -1884,8 +1884,11 @@ save_dialog (gint32    image_ID,
 
   /* Show dialog and run */
   gtk_widget_show (dialog);
+
   pg.run = FALSE;
+
   gtk_main ();
+
   return pg.run;
 }
 
