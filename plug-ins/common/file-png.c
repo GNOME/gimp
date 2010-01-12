@@ -677,7 +677,7 @@ load_image (const gchar  *filename,
     end,                        /* Ending tile row */
     num;                        /* Number of rows to load */
   FILE *fp;                     /* File pointer */
-  volatile gint32 image;        /* Image -- preserved against setjmp() */
+  volatile gint32 image = -1;   /* Image -- preserved against setjmp() */
   gint32 layer;                 /* Layer */
   GimpDrawable *drawable;       /* Drawable for layer */
   GimpPixelRgn pixel_rgn;       /* Pixel region for layer */
@@ -1811,9 +1811,15 @@ save_dialog (gint32    image_ID,
                               "ui/file-png.ui",
                               NULL);
   if (! gtk_builder_add_from_file (builder, ui_file, &error))
-    g_printerr ("Failed loading '%s': %s",
-                ui_file,
-                error ? error->message : "???");
+    {
+      gchar *display_name = g_filename_display_name (ui_file);
+
+      g_printerr (_("Error loading UI file '%s': %s"),
+                  display_name, error ? error->message : "???");
+
+      g_free (display_name);
+    }
+
   g_free (ui_file);
 
   /* Table */
