@@ -1,16 +1,16 @@
 # Swedish messages for the GIMP.
-# Copyright (C) 1999-2009 Free Software Foundation, Inc.
+# Copyright (C) 1999-2010 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
-# Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-09 22:21+0200\n"
-"PO-Revision-Date: 2009-10-09 22:24+0100\n"
+"POT-Creation-Date: 2010-01-13 20:32+0100\n"
+"PO-Revision-Date: 2010-01-13 20:39+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr ""
 "\n"
 "Du bör ha fått en kopia av GNU General Public License tillsammans med detta program. Om inte, se <http://www.gnu.org/licenses/>."
 
-#: ../app/app.c:213
+#: ../app/app.c:219
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -227,218 +227,232 @@ msgstr "använder %s version %s (kompilerad mot version %s)"
 msgid "%s version %s"
 msgstr "%s version %s"
 
-#: ../app/actions/actions.c:105
-#: ../app/dialogs/dialogs.c:223
+#: ../app/actions/actions.c:107
+#: ../app/dialogs/dialogs.c:289
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Penselredigerare"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:108
-#: ../app/core/gimp.c:889
-#: ../app/dialogs/dialogs.c:158
-#: ../app/dialogs/preferences-dialog.c:2736
+#: ../app/actions/actions.c:110
+#: ../app/core/gimp.c:920
+#: ../app/dialogs/dialogs.c:220
+#: ../app/dialogs/preferences-dialog.c:2767
 msgid "Brushes"
 msgstr "Penslar"
 
-#: ../app/actions/actions.c:111
-#: ../app/dialogs/dialogs.c:168
+#: ../app/actions/actions.c:113
+#: ../app/dialogs/dialogs.c:230
 msgid "Buffers"
 msgstr "Buffertar"
 
-#: ../app/actions/actions.c:114
-#: ../app/dialogs/dialogs.c:181
+#: ../app/actions/actions.c:116
+#: ../app/dialogs/dialogs.c:247
 msgid "Channels"
 msgstr "Kanaler"
 
-#: ../app/actions/actions.c:117
+#: ../app/actions/actions.c:119
 #: ../app/dialogs/convert-dialog.c:174
-#: ../app/dialogs/dialogs.c:189
+#: ../app/dialogs/dialogs.c:255
 msgid "Colormap"
 msgstr "Färgkarta"
 
-#: ../app/actions/actions.c:120
+#: ../app/actions/actions.c:122
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: ../app/actions/actions.c:123
+#: ../app/actions/actions.c:125
 msgid "Context"
 msgstr "Sammanhang"
 
-#: ../app/actions/actions.c:126
-#: ../app/dialogs/dialogs.c:151
+#: ../app/actions/actions.c:128
+#: ../app/dialogs/dialogs.c:213
 msgid "Pointer Information"
 msgstr "Pekarinformation"
 
-#: ../app/actions/actions.c:129
+#: ../app/actions/actions.c:131
 msgid "Debug"
 msgstr "Felsök"
 
-#: ../app/actions/actions.c:132
+#: ../app/actions/actions.c:134
 msgid "Dialogs"
 msgstr "Dialoger"
 
-#: ../app/actions/actions.c:135
+#: ../app/actions/actions.c:137
 msgid "Dock"
 msgstr "Docka"
 
-#: ../app/actions/actions.c:138
+#: ../app/actions/actions.c:140
 msgid "Dockable"
 msgstr "Dockningsbar"
 
 #. Document History
-#: ../app/actions/actions.c:141
-#: ../app/dialogs/dialogs.c:170
-#: ../app/dialogs/preferences-dialog.c:1601
+#: ../app/actions/actions.c:143
+#: ../app/dialogs/dialogs.c:232
+#: ../app/dialogs/preferences-dialog.c:1620
 msgid "Document History"
 msgstr "Dokumenthistorik"
 
-#: ../app/actions/actions.c:144
+#: ../app/actions/actions.c:146
 msgid "Drawable"
 msgstr "Rityta"
 
-#: ../app/actions/actions.c:147
+#. Some things do not have grids, so just list
+#: ../app/actions/actions.c:149
+#: ../app/dialogs/dialogs.c:238
+#, fuzzy
+msgid "Paint Dynamics"
+msgstr "Penseldynamik"
+
+#: ../app/actions/actions.c:152
+#: ../app/dialogs/dialogs.c:293
+#: ../app/widgets/gimpdynamicseditor.c:90
+#, fuzzy
+msgid "Paint Dynamics Editor"
+msgstr "Gradientredigerare"
+
+#: ../app/actions/actions.c:155
 msgid "Edit"
 msgstr "Redigera"
 
-#: ../app/actions/actions.c:150
-#: ../app/dialogs/dialogs.c:147
+#: ../app/actions/actions.c:158
+#: ../app/dialogs/dialogs.c:209
 msgid "Error Console"
 msgstr "Felkonsoll"
 
-#: ../app/actions/actions.c:153
+#: ../app/actions/actions.c:161
 msgid "File"
 msgstr "Fil"
 
-#: ../app/actions/actions.c:156
-#: ../app/dialogs/dialogs.c:166
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/actions/actions.c:164
+#: ../app/dialogs/dialogs.c:228
+#: ../app/dialogs/preferences-dialog.c:2787
 msgid "Fonts"
 msgstr "Typsnitt"
 
-#: ../app/actions/actions.c:159
-#: ../app/dialogs/dialogs.c:227
-#: ../app/widgets/gimpgradienteditor.c:275
+#: ../app/actions/actions.c:167
+#: ../app/dialogs/dialogs.c:297
+#: ../app/widgets/gimpgradienteditor.c:277
 msgid "Gradient Editor"
 msgstr "Gradientredigerare"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:162
-#: ../app/core/gimp.c:901
-#: ../app/dialogs/dialogs.c:162
-#: ../app/dialogs/preferences-dialog.c:2748
+#: ../app/actions/actions.c:170
+#: ../app/core/gimp.c:936
+#: ../app/dialogs/dialogs.c:224
+#: ../app/dialogs/preferences-dialog.c:2783
 msgid "Gradients"
 msgstr "Gradienter"
 
-#: ../app/actions/actions.c:165
+#: ../app/actions/actions.c:173
 msgid "Help"
 msgstr "Hjälp"
 
-#: ../app/actions/actions.c:168
+#: ../app/actions/actions.c:176
 msgid "Image"
 msgstr "Bild"
 
 #. list & grid views
-#: ../app/actions/actions.c:171
-#: ../app/dialogs/dialogs.c:156
+#: ../app/actions/actions.c:179
+#: ../app/dialogs/dialogs.c:218
 msgid "Images"
 msgstr "Bilder"
 
-#: ../app/actions/actions.c:174
-#: ../app/dialogs/dialogs.c:177
+#: ../app/actions/actions.c:182
+#: ../app/dialogs/dialogs.c:243
 #: ../app/dialogs/resize-dialog.c:287
 msgid "Layers"
 msgstr "Lager"
 
-#: ../app/actions/actions.c:177
-#: ../app/dialogs/dialogs.c:231
-#: ../app/widgets/gimppaletteeditor.c:154
+#: ../app/actions/actions.c:185
+#: ../app/dialogs/dialogs.c:301
+#: ../app/widgets/gimppaletteeditor.c:156
 msgid "Palette Editor"
 msgstr "Palettredigerare"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:180
-#: ../app/core/gimp.c:897
-#: ../app/dialogs/dialogs.c:164
-#: ../app/dialogs/preferences-dialog.c:2744
+#: ../app/actions/actions.c:188
+#: ../app/core/gimp.c:932
+#: ../app/dialogs/dialogs.c:226
+#: ../app/dialogs/preferences-dialog.c:2779
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:183
-#: ../app/core/gimp.c:893
-#: ../app/dialogs/dialogs.c:160
-#: ../app/dialogs/preferences-dialog.c:2740
+#: ../app/actions/actions.c:191
+#: ../app/core/gimp.c:928
+#: ../app/dialogs/dialogs.c:222
+#: ../app/dialogs/preferences-dialog.c:2775
 msgid "Patterns"
 msgstr "Mönster"
 
-#: ../app/actions/actions.c:186
-#: ../app/dialogs/preferences-dialog.c:2756
+#: ../app/actions/actions.c:194
+#: ../app/dialogs/preferences-dialog.c:2791
 msgid "Plug-Ins"
 msgstr "Insticksmoduler"
 
-#: ../app/actions/actions.c:189
+#: ../app/actions/actions.c:197
 #: ../app/core/gimpchannel.c:370
 msgid "Quick Mask"
 msgstr "Snabbmask"
 
-#: ../app/actions/actions.c:192
-#: ../app/dialogs/dialogs.c:205
+#: ../app/actions/actions.c:200
+#: ../app/dialogs/dialogs.c:271
 msgid "Sample Points"
 msgstr "Sampelspunkter"
 
-#: ../app/actions/actions.c:195
+#: ../app/actions/actions.c:203
 msgid "Select"
 msgstr "Välj"
 
 #. initialize the template list
-#: ../app/actions/actions.c:198
-#: ../app/core/gimp.c:910
-#: ../app/dialogs/dialogs.c:172
+#: ../app/actions/actions.c:206
+#: ../app/core/gimp.c:945
+#: ../app/dialogs/dialogs.c:234
 msgid "Templates"
 msgstr "Mallar"
 
-#: ../app/actions/actions.c:201
+#: ../app/actions/actions.c:209
 msgid "Text Tool"
 msgstr "Textverktyg"
 
-#: ../app/actions/actions.c:204
+#: ../app/actions/actions.c:212
 msgid "Text Editor"
 msgstr "Textredigerare"
 
-#: ../app/actions/actions.c:207
-#: ../app/dialogs/dialogs.c:139
-#: ../app/dialogs/preferences-dialog.c:1873
+#: ../app/actions/actions.c:215
+#: ../app/dialogs/dialogs.c:201
+#: ../app/dialogs/preferences-dialog.c:1901
 #: ../app/gui/gui.c:434
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
-#: ../app/actions/actions.c:210
+#: ../app/actions/actions.c:218
 msgid "Tools"
 msgstr "Verktyg"
 
-#: ../app/actions/actions.c:213
-#: ../app/dialogs/dialogs.c:185
+#: ../app/actions/actions.c:221
+#: ../app/dialogs/dialogs.c:251
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths"
 msgstr "Slingor"
 
-#: ../app/actions/actions.c:216
+#: ../app/actions/actions.c:224
 msgid "View"
 msgstr "Visa"
 
-#: ../app/actions/actions.c:219
+#: ../app/actions/actions.c:227
 msgid "Windows"
 msgstr "Fönster"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:537
+#: ../app/actions/actions.c:557
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:563
+#: ../app/actions/actions.c:583
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -745,7 +759,7 @@ msgstr "Ny kanalfärg"
 #: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:626
 #: ../app/widgets/gimpchanneltreeview.c:272
-#: ../app/widgets/gimplayertreeview.c:805
+#: ../app/widgets/gimplayertreeview.c:808
 #: ../app/widgets/gimptoolbox-dnd.c:318
 #, c-format
 msgid "%s Channel Copy"
@@ -917,17 +931,17 @@ msgstr "Byt för- och bakgrundsfärger"
 msgid "Paint Mode: %s"
 msgstr "Målningsläge: %s"
 
-#: ../app/actions/context-commands.c:551
+#: ../app/actions/context-commands.c:552
 #, c-format
 msgid "Brush Shape: %s"
 msgstr "Penselform: %s"
 
-#: ../app/actions/context-commands.c:610
+#: ../app/actions/context-commands.c:612
 #, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "Penselradie: %2.2f"
 
-#: ../app/actions/context-commands.c:714
+#: ../app/actions/context-commands.c:720
 #, c-format
 msgid "Brush Angle: %2.2f"
 msgstr "Penselvinkel: %2.2f"
@@ -952,12 +966,12 @@ msgstr "Använd kompositfärgen för alla synliga lager"
 #: ../app/actions/file-commands.c:194
 #: ../app/dialogs/file-open-dialog.c:221
 #: ../app/dialogs/file-open-dialog.c:266
-#: ../app/dialogs/file-open-location-dialog.c:212
-#: ../app/dialogs/file-open-location-dialog.c:224
+#: ../app/dialogs/file-open-location-dialog.c:213
+#: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:579
-#: ../app/widgets/gimplayertreeview.c:765
+#: ../app/widgets/gimplayertreeview.c:768
 #: ../app/widgets/gimptoolbox-dnd.c:163
-#: ../app/widgets/gimptoolbox.c:1002
+#: ../app/widgets/gimptoolbox.c:1076
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -973,22 +987,22 @@ msgstr ""
 #: ../app/core/gimpimage.c:1437
 #: ../app/core/gimppalette-import.c:210
 #: ../app/core/gimppalette-load.c:222
-#: ../app/core/gimppalette.c:378
+#: ../app/core/gimppalette.c:377
 #: ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Namnlös"
 
-#: ../app/actions/data-commands.c:232
+#: ../app/actions/data-commands.c:237
 msgid "Delete Object"
 msgstr "Ta bort objekt"
 
-#: ../app/actions/data-commands.c:255
+#: ../app/actions/data-commands.c:260
 #, c-format
 msgid "Delete '%s'?"
 msgstr "Ta bort \"%s\"?"
 
-#: ../app/actions/data-commands.c:258
+#: ../app/actions/data-commands.c:263
 #, c-format
 msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Är du säker att du vill ta bort \"%s\" från listan och ta bort den från disken?"
@@ -1144,161 +1158,185 @@ msgid "Open the brush editor"
 msgstr "Öppna penselredigeraren"
 
 #: ../app/actions/dialogs-actions.c:128
+#, fuzzy
+msgctxt "dialogs-action"
+msgid "Paint Dynamics"
+msgstr "Penseldynamik"
+
+#: ../app/actions/dialogs-actions.c:129
+#, fuzzy
+msgctxt "dialogs-action"
+msgid "Open paint dynamics dialog"
+msgstr "Öppna dialogrutan för slingor"
+
+#: ../app/actions/dialogs-actions.c:134
+#, fuzzy
+msgctxt "dialogs-action"
+msgid "Paint Dynamics Editor"
+msgstr "Gradientredigerare"
+
+#: ../app/actions/dialogs-actions.c:135
+#, fuzzy
+msgctxt "dialogs-action"
+msgid "Open the paint dynamics editor"
+msgstr "Öppna gradientredigeraren"
+
+#: ../app/actions/dialogs-actions.c:140
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "M_önster"
 
-#: ../app/actions/dialogs-actions.c:129
+#: ../app/actions/dialogs-actions.c:141
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Öppna dialogrutan för mönster"
 
-#: ../app/actions/dialogs-actions.c:134
+#: ../app/actions/dialogs-actions.c:146
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "_Gradienter"
 
-#: ../app/actions/dialogs-actions.c:135
+#: ../app/actions/dialogs-actions.c:147
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Öppna dialogrutan för gradienter"
 
-#: ../app/actions/dialogs-actions.c:140
+#: ../app/actions/dialogs-actions.c:152
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Gradientredigerare"
 
-#: ../app/actions/dialogs-actions.c:141
+#: ../app/actions/dialogs-actions.c:153
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Öppna gradientredigeraren"
 
-#: ../app/actions/dialogs-actions.c:146
+#: ../app/actions/dialogs-actions.c:158
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "Pa_letter"
 
-#: ../app/actions/dialogs-actions.c:147
+#: ../app/actions/dialogs-actions.c:159
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Öppna dialogrutan för paletter"
 
-#: ../app/actions/dialogs-actions.c:152
+#: ../app/actions/dialogs-actions.c:164
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr "Palettredigerare"
 
-#: ../app/actions/dialogs-actions.c:153
+#: ../app/actions/dialogs-actions.c:165
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "Öppna palettredigeraren"
 
-#: ../app/actions/dialogs-actions.c:158
+#: ../app/actions/dialogs-actions.c:170
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "_Typsnitt"
 
-#: ../app/actions/dialogs-actions.c:159
+#: ../app/actions/dialogs-actions.c:171
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Öppna dialogrutan för typsnitt"
 
-#: ../app/actions/dialogs-actions.c:164
+#: ../app/actions/dialogs-actions.c:176
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "B_uffertar"
 
-#: ../app/actions/dialogs-actions.c:165
+#: ../app/actions/dialogs-actions.c:177
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Öppna dialogrutan för namngivna buffertar"
 
-#: ../app/actions/dialogs-actions.c:170
+#: ../app/actions/dialogs-actions.c:182
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "B_ilder"
 
-#: ../app/actions/dialogs-actions.c:171
+#: ../app/actions/dialogs-actions.c:183
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Öppna dialogrutan för bilder"
 
-#: ../app/actions/dialogs-actions.c:176
+#: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "_Dokumenthistorik"
 
-#: ../app/actions/dialogs-actions.c:177
+#: ../app/actions/dialogs-actions.c:189
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Öppna dialogrutan för dokumenthistorik"
 
-#: ../app/actions/dialogs-actions.c:182
+#: ../app/actions/dialogs-actions.c:194
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "Ma_llar"
 
-#: ../app/actions/dialogs-actions.c:183
+#: ../app/actions/dialogs-actions.c:195
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Öppna dialogrutan för bildmallar"
 
-#: ../app/actions/dialogs-actions.c:188
+#: ../app/actions/dialogs-actions.c:200
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "_Felkonsoll"
 
-#: ../app/actions/dialogs-actions.c:189
+#: ../app/actions/dialogs-actions.c:201
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Öppna felkonsollen"
 
-#: ../app/actions/dialogs-actions.c:199
+#: ../app/actions/dialogs-actions.c:211
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "I_nställningar"
 
-#: ../app/actions/dialogs-actions.c:200
+#: ../app/actions/dialogs-actions.c:212
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Öppna dialogrutan för inställningar"
 
-#: ../app/actions/dialogs-actions.c:205
+#: ../app/actions/dialogs-actions.c:217
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Tangentbordsgenvägar"
 
-#: ../app/actions/dialogs-actions.c:206
+#: ../app/actions/dialogs-actions.c:218
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Öppna redigeraren för tangentbordsgenvägar"
 
-#: ../app/actions/dialogs-actions.c:211
+#: ../app/actions/dialogs-actions.c:223
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Moduler"
 
-#: ../app/actions/dialogs-actions.c:212
+#: ../app/actions/dialogs-actions.c:224
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Öppna dialogrutan för modulhanteraren"
 
-#: ../app/actions/dialogs-actions.c:217
+#: ../app/actions/dialogs-actions.c:229
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "_Dagens tips"
 
-#: ../app/actions/dialogs-actions.c:218
+#: ../app/actions/dialogs-actions.c:230
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Visa några hjälpfulla tips om användning av GIMP"
 
-#: ../app/actions/dialogs-actions.c:223
+#: ../app/actions/dialogs-actions.c:235
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Om"
 
-#: ../app/actions/dialogs-actions.c:224
+#: ../app/actions/dialogs-actions.c:236
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Om GIMP"
@@ -1627,10 +1665,9 @@ msgstr "Växla länkat tillstånd"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/drawable-actions.c:87
-#, fuzzy
 msgctxt "drawable-action"
 msgid "L_ock pixels"
-msgstr "bildpunkter"
+msgstr "L_ås bildpunkter"
 
 #: ../app/actions/drawable-actions.c:89
 #, fuzzy
@@ -1699,6 +1736,86 @@ msgstr "Kan inte använda invert på indexerade lager."
 #: ../app/actions/drawable-commands.c:111
 msgid "White Balance operates only on RGB color layers."
 msgstr "Vitbalans fungerar endast på RGB-lager."
+
+#: ../app/actions/dynamics-actions.c:42
+#, fuzzy
+msgctxt "dynamics-action"
+msgid "Paint Dynamics Menu"
+msgstr "Mönstermeny"
+
+#: ../app/actions/dynamics-actions.c:46
+msgctxt "dynamics-action"
+msgid "_New Dynamics"
+msgstr "_Ny dynamik"
+
+#: ../app/actions/dynamics-actions.c:47
+msgctxt "dynamics-action"
+msgid "Create a new dynamics"
+msgstr "Skapa en ny dynamik"
+
+#: ../app/actions/dynamics-actions.c:52
+#, fuzzy
+msgctxt "dynamics-action"
+msgid "D_uplicate Dynamics"
+msgstr "_Duplicera slinga"
+
+#: ../app/actions/dynamics-actions.c:53
+msgctxt "dynamics-action"
+msgid "Duplicate this dynamics"
+msgstr "Duplicera denna dynamik"
+
+#: ../app/actions/dynamics-actions.c:58
+#, fuzzy
+msgctxt "dynamics-action"
+msgid "Copy Dynamics _Location"
+msgstr "Kopiera _penselplats"
+
+#: ../app/actions/dynamics-actions.c:59
+#, fuzzy
+msgctxt "dynamics-action"
+msgid "Copy dynamics file location to clipboard"
+msgstr "Kopiera penselfilens plats till urklipp"
+
+#: ../app/actions/dynamics-actions.c:64
+msgctxt "dynamics-action"
+msgid "_Delete Dynamics"
+msgstr "_Ta bort dynamik"
+
+#: ../app/actions/dynamics-actions.c:65
+msgctxt "dynamics-action"
+msgid "Delete this dynamics"
+msgstr "Ta bort denna dynamik"
+
+#: ../app/actions/dynamics-actions.c:70
+msgctxt "dynamics-action"
+msgid "_Refresh Dynamicss"
+msgstr "_Uppdatera dynamik"
+
+#: ../app/actions/dynamics-actions.c:71
+msgctxt "dynamics-action"
+msgid "Refresh dynamics"
+msgstr "Uppdatera dynamik"
+
+#: ../app/actions/dynamics-actions.c:79
+msgctxt "dynamics-action"
+msgid "_Edit Dynamics..."
+msgstr "R_edigera dynamik..."
+
+#: ../app/actions/dynamics-actions.c:80
+msgctxt "dynamics-action"
+msgid "Edit dynamics"
+msgstr "Redigera dynamik"
+
+#: ../app/actions/dynamics-editor-actions.c:42
+#, fuzzy
+msgctxt "dynamics-editor-action"
+msgid "Paint Dynamics Editor Menu"
+msgstr "Gradientredigerarmeny"
+
+#: ../app/actions/dynamics-editor-actions.c:50
+msgctxt "dynamics-editor-action"
+msgid "Edit Active Dynamics"
+msgstr "Redigera aktiv dynamik"
 
 #: ../app/actions/edit-actions.c:63
 msgctxt "edit-action"
@@ -2101,8 +2218,8 @@ msgstr "_Arkiv"
 
 #: ../app/actions/file-actions.c:72
 msgctxt "file-action"
-msgid "Create"
-msgstr "Skapa"
+msgid "Crea_te"
+msgstr "S_kapa"
 
 #: ../app/actions/file-actions.c:73
 msgctxt "file-action"
@@ -2141,8 +2258,8 @@ msgstr "Öppna en bildfil från en angiven plats"
 
 #: ../app/actions/file-actions.c:94
 msgctxt "file-action"
-msgid "Create _Template..."
-msgstr "Skapa _mall..."
+msgid "Create Template..."
+msgstr "Skapa mall..."
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
@@ -2225,10 +2342,9 @@ msgid "Export to"
 msgstr "Exportera till"
 
 #: ../app/actions/file-actions.c:147
-#, fuzzy
 msgctxt "file-action"
 msgid "Export the image again"
-msgstr "Exportera aktuell slinga"
+msgstr "Exportera bilden igen"
 
 #: ../app/actions/file-actions.c:152
 msgctxt "file-action"
@@ -3084,7 +3200,7 @@ msgid "Rotating"
 msgstr "Roterar"
 
 #: ../app/actions/image-commands.c:428
-#: ../app/actions/layers-commands.c:682
+#: ../app/actions/layers-commands.c:684
 msgid "Cannot crop because the current selection is empty."
 msgstr "Kan inte beskära eftersom den aktuella markeringen är tom."
 
@@ -3099,14 +3215,14 @@ msgstr "Skala bild"
 
 #. Scaling
 #: ../app/actions/image-commands.c:680
-#: ../app/actions/layers-commands.c:1147
-#: ../app/dialogs/preferences-dialog.c:1918
+#: ../app/actions/layers-commands.c:1149
+#: ../app/dialogs/preferences-dialog.c:1946
 #: ../app/pdb/drawable-transform-cmds.c:681
 #: ../app/pdb/drawable-transform-cmds.c:757
 #: ../app/pdb/image-cmds.c:404
 #: ../app/pdb/image-cmds.c:440
-#: ../app/pdb/layer-cmds.c:296
-#: ../app/pdb/layer-cmds.c:341
+#: ../app/pdb/layer-cmds.c:298
+#: ../app/pdb/layer-cmds.c:343
 #: ../app/pdb/transform-tools-cmds.c:290
 #: ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
@@ -3253,10 +3369,9 @@ msgid "New Layer _Group..."
 msgstr "Ny lager_grupp..."
 
 #: ../app/actions/layers-actions.c:102
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
-msgstr "Skapa ett nytt lager och lägg till det till bilden"
+msgstr "Skapa en ny lagergrupp och lägg till den till bilden"
 
 #: ../app/actions/layers-actions.c:107
 msgctxt "layers-action"
@@ -3339,16 +3454,14 @@ msgid "Merge this layer with the one below it"
 msgstr "Sammanfoga det här lagret med lagret under det"
 
 #: ../app/actions/layers-actions.c:156
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Layer Group"
-msgstr "Sammanfoga lager"
+msgstr "Sammanfoga lagergrupp"
 
 #: ../app/actions/layers-actions.c:157
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
-msgstr "Sammanfoga alla synliga lager till ett lager"
+msgstr "Sammanfoga lagergruppens lager till ett normalt lager"
 
 #: ../app/actions/layers-actions.c:162
 msgctxt "layers-action"
@@ -3677,8 +3790,8 @@ msgstr "Redigera lagerattribut"
 #: ../app/actions/layers-commands.c:252
 #: ../app/actions/layers-commands.c:320
 #: ../app/actions/layers-commands.c:324
-#: ../app/widgets/gimpdrawabletreeview.c:334
-#: ../app/widgets/gimplayertreeview.c:866
+#: ../app/widgets/gimpdrawabletreeview.c:337
+#: ../app/widgets/gimplayertreeview.c:869
 msgid "New Layer"
 msgstr "Nytt lager"
 
@@ -3686,33 +3799,33 @@ msgstr "Nytt lager"
 msgid "Create a New Layer"
 msgstr "Skapa ett nytt lager"
 
-#: ../app/actions/layers-commands.c:354
+#: ../app/actions/layers-commands.c:356
 msgid "Visible"
 msgstr "Synlig"
 
-#: ../app/actions/layers-commands.c:613
+#: ../app/actions/layers-commands.c:615
 msgid "Set Layer Boundary Size"
 msgstr "Ställ in storlek på lagergräns"
 
-#: ../app/actions/layers-commands.c:654
-#: ../app/core/gimplayer.c:259
+#: ../app/actions/layers-commands.c:656
+#: ../app/core/gimplayer.c:261
 msgid "Scale Layer"
 msgstr "Skala om lager"
 
-#: ../app/actions/layers-commands.c:692
+#: ../app/actions/layers-commands.c:694
 msgid "Crop Layer"
 msgstr "Beskär lager"
 
-#: ../app/actions/layers-commands.c:831
+#: ../app/actions/layers-commands.c:833
 msgid "Layer Mask to Selection"
 msgstr "Lagermask till markering"
 
-#: ../app/actions/layers-commands.c:1082
+#: ../app/actions/layers-commands.c:1084
 msgid "Please select a channel first"
 msgstr "Välj en kanal först"
 
-#: ../app/actions/layers-commands.c:1090
-#: ../app/core/gimplayer.c:1339
+#: ../app/actions/layers-commands.c:1092
+#: ../app/core/gimplayer.c:1390
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Lägg till lagermask"
@@ -5710,304 +5823,314 @@ msgstr "Ett fel uppstod vid tolkningen av filen \"%s\". Standardvärden kommer a
 msgid "When enabled, an image will become the active image when its image window receives the focus. This is useful for window managers using \"click to focus\"."
 msgstr "När aktiverat blir en bild den aktiva bilden när dess bildfönstar får fokus. Detta är användbart för fönsterhanterare med \"klicka för fokus\"."
 
-#: ../app/config/gimprc-blurbs.h:23
+#: ../app/config/gimprc-blurbs.h:28
 msgid "Sets the canvas padding color used if the padding mode is set to custom color."
 msgstr "Ställer in utfyllnadsfärg för rityta om utfyllnadsläget är inställt till anpassad färg."
 
-#: ../app/config/gimprc-blurbs.h:27
+#: ../app/config/gimprc-blurbs.h:32
 msgid "Specifies how the area around the image should be drawn."
 msgstr "Anger hur området runt bilden skall ritas."
 
-#: ../app/config/gimprc-blurbs.h:33
+#: ../app/config/gimprc-blurbs.h:38
 msgid "How to handle embedded color profiles when opening a file."
 msgstr "Hur inbäddade färgprofiler ska hanteras när en fil öppnas."
 
-#: ../app/config/gimprc-blurbs.h:36
+#: ../app/config/gimprc-blurbs.h:41
 msgid "Ask for confirmation before closing an image without saving."
 msgstr "Fråga innan en bild stängs utan att vara sparad."
 
-#: ../app/config/gimprc-blurbs.h:39
+#: ../app/config/gimprc-blurbs.h:44
 msgid "Sets the pixel format to use for mouse pointers."
 msgstr "Ställer in bildpunktsformatet att använda för muspekare."
 
-#: ../app/config/gimprc-blurbs.h:42
+#: ../app/config/gimprc-blurbs.h:47
 msgid "Sets the type of mouse pointers to use."
 msgstr "Ställer in typen av muspekare att använda."
 
-#: ../app/config/gimprc-blurbs.h:45
+#: ../app/config/gimprc-blurbs.h:50
 msgid "Context-dependent mouse pointers are helpful.  They are enabled by default.  However, they require overhead that you may want to do without."
 msgstr "Kontextberoende muspekare är behjälpliga. De är aktiverade som standard. De kräver dock resurser som du kan vilja använda till annat."
 
-#: ../app/config/gimprc-blurbs.h:53
+#: ../app/config/gimprc-blurbs.h:62
 msgid "When enabled, this will ensure that each pixel of an image gets mapped to a pixel on the screen."
 msgstr "När aktiverat ser detta till att varje bildelement i bilden motsvaras av ett bildelement på skärmen."
 
-#: ../app/config/gimprc-blurbs.h:75
+#: ../app/config/gimprc-blurbs.h:84
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr "Detta är avståndet i bildpunkter där fästning mot hjälplinjer och rutnät aktiveras"
 
-#: ../app/config/gimprc-blurbs.h:91
+#: ../app/config/gimprc-blurbs.h:100
 msgid "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill algorithm.  The seed fill starts at the initially selected pixel and progresses in all directions until the difference of pixel intensity from the original is greater than a specified threshold. This value represents the default threshold."
 msgstr "Verktyg som luddig markering och fyllnad hittar regioner baserat på en såddfyllnadsalgoritm. Såddfyllnaden börjar på det valda bildelementet och rör sig utåt i alla riktningar tills skillnaden i intensitet mot originalet är större än ett angivet tröskelvärde. Detta är standardvärdet för tröskelvärdet."
 
-#: ../app/config/gimprc-blurbs.h:104
+#: ../app/config/gimprc-blurbs.h:113
 #, fuzzy
 msgid "The window type hint that is set on dock windows and the toolbox window. This may affect the way your window manager decorates and handles these windows."
 msgstr "Fönstertypens hint som sätts på dockningsfönster. Detta kan påverka hur din fönsterhanterare dekorerar och hanterar dockningsfönster."
 
-#: ../app/config/gimprc-blurbs.h:136
+#: ../app/config/gimprc-blurbs.h:145
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr "Om aktiverad kommer den valda penseln att användas för alla verktyg."
 
-#: ../app/config/gimprc-blurbs.h:142
+#: ../app/config/gimprc-blurbs.h:148
+#, fuzzy
+msgid "When enabled, the selected dynamics will be used for all tools."
+msgstr "Om aktiverad kommer den valda penseln att användas för alla verktyg."
+
+#: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr "Om aktiverad kommer den valda gradienten att användas för alla verktyg."
 
-#: ../app/config/gimprc-blurbs.h:145
+#: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "Om aktiverad kommer det valda mönstret att användas för alla verktyg."
 
-#: ../app/config/gimprc-blurbs.h:159
+#: ../app/config/gimprc-blurbs.h:171
 msgid "Sets the browser used by the help system."
 msgstr "Ställer in webbläsaren som används av hjälpsystemet."
 
-#: ../app/config/gimprc-blurbs.h:170
+#: ../app/config/gimprc-blurbs.h:182
 msgid "Sets the text to appear in image window status bars."
 msgstr "Ställer in texten som visas i statusraden på bildfönster."
 
-#: ../app/config/gimprc-blurbs.h:173
+#: ../app/config/gimprc-blurbs.h:185
 msgid "Sets the text to appear in image window titles."
 msgstr "Ställer in texten som visas i titelraden på bildfönster."
 
-#: ../app/config/gimprc-blurbs.h:176
+#: ../app/config/gimprc-blurbs.h:188
 msgid "When enabled, this will ensure that the full image is visible after a file is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr "När aktiverat säkerställer detta att hela bilden är synlig när filen öppnas, annars visas bilden i skala 1:1."
 
-#: ../app/config/gimprc-blurbs.h:180
+#: ../app/config/gimprc-blurbs.h:192
 msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr "Installera en privat färgkarta; kan vara användbart på 8-bitars (256 färger) skärmar."
 
-#: ../app/config/gimprc-blurbs.h:183
+#: ../app/config/gimprc-blurbs.h:195
 msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr "Ställer in interpolationsnivån för skalning och andra transformationer."
 
-#: ../app/config/gimprc-blurbs.h:190
+#: ../app/config/gimprc-blurbs.h:202
+#, fuzzy
+msgid "Specifies the language to use for the user interface."
+msgstr "Ställer in bildpunktsformatet att använda för muspekare."
+
+#: ../app/config/gimprc-blurbs.h:205
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr "Hur många nyligen använda filer som ska finnas i filmenyn."
 
-#: ../app/config/gimprc-blurbs.h:193
+#: ../app/config/gimprc-blurbs.h:208
 msgid "Speed of marching ants in the selection outline.  This value is in milliseconds (less time indicates faster marching)."
 msgstr "Hastigheten på marscherande myror i markeringens kontur. Detta värde är i millisekunder (mindre tid indikerar snabbare marsch)."
 
-#: ../app/config/gimprc-blurbs.h:197
+#: ../app/config/gimprc-blurbs.h:212
 msgid "GIMP will warn the user if an attempt is made to create an image that would take more memory than the size specified here."
 msgstr "GIMP kommer varna användaren vid försök att skapa en bild som skulle kräva mer minne än det som angivits här."
 
-#: ../app/config/gimprc-blurbs.h:201
+#: ../app/config/gimprc-blurbs.h:216
 msgid "Generally only a concern for 8-bit displays, this sets the minimum number of system colors allocated for GIMP."
 msgstr "Detta gäller oftast bara 8-bitars displayer, detta ställer in minimalt antal systemfärger som allokeras till GIMP."
 
-#: ../app/config/gimprc-blurbs.h:211
+#: ../app/config/gimprc-blurbs.h:226
 msgid "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, forces the X server to be queried for both horizontal and vertical resolution information."
 msgstr "Ställer in skärmens horisontella upplösning i punkter per tum. Om det är satt till 0, frågar vi X-servern efter både horisontell och vertikal upplösning."
 
-#: ../app/config/gimprc-blurbs.h:216
+#: ../app/config/gimprc-blurbs.h:231
 msgid "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, forces the X server to be queried for both horizontal and vertical resolution information."
 msgstr "Ställer in skärmens vertikala upplösning i punkter per tum. Om det är satt till 0, frågar vi X-servern efter både horisontell och vertikal upplösning."
 
-#: ../app/config/gimprc-blurbs.h:221
+#: ../app/config/gimprc-blurbs.h:236
 msgid "If enabled, the move tool sets the edited layer or path as active.  This used to be the default behaviour in older versions."
 msgstr "Om aktiverat ställer flyttningsverktyget in det redigerade lagret eller slingan som aktivt. Detta var standardbeteendet i äldre versioner."
 
-#: ../app/config/gimprc-blurbs.h:225
+#: ../app/config/gimprc-blurbs.h:240
 msgid "Sets the size of the navigation preview available in the lower right corner of the image window."
 msgstr "Ställer in storleken på förhandsvisningen som är tillgänglig i nedre högra hörnet av bildfönstret."
 
-#: ../app/config/gimprc-blurbs.h:229
+#: ../app/config/gimprc-blurbs.h:244
 msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr "Ställer in hur många processorer som GIMP ska försöka använda samtidigt."
 
-#: ../app/config/gimprc-blurbs.h:242
+#: ../app/config/gimprc-blurbs.h:257
 #, fuzzy
 msgid "When enabled, the X server is queried for the mouse's current position on each motion event, rather than relying on the position hint.  This means painting with large brushes should be more accurate, but it may be slower.  Conversely, on some X servers enabling this option results in faster painting."
 msgstr "När aktiverat frågas X-servern om musens aktuella position vid varje rörelsehändelse, snarare än att förlita sig på positionsuppskattning. Detta betyder att målning med stora penslar blir mer exakt, men kan vara långsammare. Konstigt nog blir målandet snabbare med denna inställning på vissa X-servrar."
 
-#: ../app/config/gimprc-blurbs.h:258
+#: ../app/config/gimprc-blurbs.h:273
 msgid "Sets whether GIMP should create previews of layers and channels. Previews in the layers and channels dialog are nice to have but they can slow things down when working with large images."
 msgstr "Ställer in om GIMP ska skapa förhandsvisningar av lager och kanaler. Förhandsvisningar av lager och kanaler är trevliga att ha men de kan göra saker långsammare vid arbete med stora bilder."
 
-#: ../app/config/gimprc-blurbs.h:263
+#: ../app/config/gimprc-blurbs.h:278
 msgid "Sets the preview size used for layers and channel previews in newly created dialogs."
 msgstr "Ställer in förhandsvisningsstorlek för lager och kanaler i nya dialoger."
 
-#: ../app/config/gimprc-blurbs.h:267
+#: ../app/config/gimprc-blurbs.h:282
 msgid "When enabled, the image window will automatically resize itself whenever the physical image size changes."
 msgstr "När aktiverat kommer bildfönstret automatiskt att ändra sin storlek när bildens fysiska storlek ändras."
 
-#: ../app/config/gimprc-blurbs.h:271
+#: ../app/config/gimprc-blurbs.h:286
 msgid "When enabled, the image window will automatically resize itself when zooming into and out of images."
 msgstr "När aktiverat kommer bildfönstret automatiskt att ändra sin storlek när man zoomar in eller ut i bilder."
 
-#: ../app/config/gimprc-blurbs.h:275
+#: ../app/config/gimprc-blurbs.h:290
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "Låt GIMP försöka återskapa din senast sparade session vid varje uppstart."
 
-#: ../app/config/gimprc-blurbs.h:278
+#: ../app/config/gimprc-blurbs.h:293
 msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "Kom ihåg aktuellt verktyg, mönster, färg och pensel mellan GIMP-sessioner."
 
-#: ../app/config/gimprc-blurbs.h:282
+#: ../app/config/gimprc-blurbs.h:297
 msgid "Keep a permanent record of all opened and saved files in the Recent Documents list."
 msgstr "Håll permanent information över alla öppnade och sparade filer till Senaste dokument-listan."
 
-#: ../app/config/gimprc-blurbs.h:286
+#: ../app/config/gimprc-blurbs.h:301
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr "Spara positioner och storlekar på huvuddialogrutorna när GIMP avslutas."
 
-#: ../app/config/gimprc-blurbs.h:289
+#: ../app/config/gimprc-blurbs.h:304
 msgid "Save the tool options when GIMP exits."
 msgstr "Spara verktygsalternativen när GIMP avslutas."
 
-#: ../app/config/gimprc-blurbs.h:295
+#: ../app/config/gimprc-blurbs.h:310
 msgid "When enabled, all paint tools will show a preview of the current brush's outline."
 msgstr "När aktiverat kommer alla målarverktyg att visa en förhandsvisning av den aktuella penselns kontur."
 
-#: ../app/config/gimprc-blurbs.h:299
+#: ../app/config/gimprc-blurbs.h:314
 msgid "When enabled, dialogs will show a help button that gives access to the related help page.  Without this button, the help page can still be reached by pressing F1."
 msgstr "När aktiverat kommer alla dialoger att visa en hjälpknapp som leder till relevant hjälp. Du kan se hjälpen även utan denna knapp genom att trycka F1."
 
-#: ../app/config/gimprc-blurbs.h:304
+#: ../app/config/gimprc-blurbs.h:319
 msgid "When enabled, the mouse pointer will be shown over the image while using a paint tool."
 msgstr "När aktiverad kommer muspekaren att visas över bilden när ett målarverktyg används."
 
-#: ../app/config/gimprc-blurbs.h:308
+#: ../app/config/gimprc-blurbs.h:323
 msgid "When enabled, the menubar is visible by default. This can also be toggled with the \"View->Show Menubar\" command."
 msgstr "När aktiverat är menyraden synlig. Detta kan också ändras med \"Visa -> Visa menyrad\"-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:312
+#: ../app/config/gimprc-blurbs.h:327
 msgid "When enabled, the rulers are visible by default. This can also be toggled with the \"View->Show Rulers\" command."
 msgstr "När aktiverat är linjalerna synliga. Detta kan också ändras med \"Visa -> Visa linjaler\"-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:316
+#: ../app/config/gimprc-blurbs.h:331
 msgid "When enabled, the scrollbars are visible by default. This can also be toggled with the \"View->Show Scrollbars\" command."
 msgstr "När aktiverat är rullningslisterna synliga. Detta kan också ändras med \"Visa -> Visa rullningslister\"-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:320
+#: ../app/config/gimprc-blurbs.h:335
 msgid "When enabled, the statusbar is visible by default. This can also be toggled with the \"View->Show Statusbar\" command."
 msgstr "När aktiverat är statusraden synlig. Detta kan också ändras med \"Visa -> Visa statusrad\"-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:324
+#: ../app/config/gimprc-blurbs.h:339
 msgid "When enabled, the selection is visible by default. This can also be toggled with the \"View->Show Selection\" command."
 msgstr "När aktiverat är urvalet synligt. Detta kan också ändras med \"Visa -> Visa urval\"-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:328
+#: ../app/config/gimprc-blurbs.h:343
 msgid "When enabled, the layer boundary is visible by default. This can also be toggled with the \"View->Show Layer Boundary\" command."
 msgstr "När aktiverat är lagerkanten synlig. Detta kan också ändras med \"Visa -> Visa lagerkant\"-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:332
+#: ../app/config/gimprc-blurbs.h:347
 msgid "When enabled, the guides are visible by default. This can also be toggled with the \"View->Show Guides\" command."
 msgstr "När aktiverat är hjälplinjerna synliga. Detta kan också ändras med \"Visa -> Visa hjälplinjer\"-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:336
+#: ../app/config/gimprc-blurbs.h:351
 msgid "When enabled, the grid is visible by default. This can also be toggled with the \"View->Show Grid\" command."
 msgstr "När aktiverat är rutnätet synligt. Detta kan också ändras med \"Visa -> Visa rutnät\"-kommandot."
 
-#: ../app/config/gimprc-blurbs.h:340
+#: ../app/config/gimprc-blurbs.h:355
 msgid "When enabled, the sample points are visible by default. This can also be toggled with the \"View->Show Sample Points\" command."
 msgstr "När aktiverat är sampelpunkterna synliga. Detta kan också ändras med kommandot \"Visa -> Visa sampelpunkter\"."
 
-#: ../app/config/gimprc-blurbs.h:344
+#: ../app/config/gimprc-blurbs.h:359
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "Visa ett verktygstips när muspekaren befinner sig över ett objekt."
 
-#: ../app/config/gimprc-blurbs.h:347
+#: ../app/config/gimprc-blurbs.h:362
 msgid "Use GIMP in a single-window mode."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:350
+#: ../app/config/gimprc-blurbs.h:365
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Vad som ska göras när blankstegstangenten används i bildfönstret."
 
-#: ../app/config/gimprc-blurbs.h:353
+#: ../app/config/gimprc-blurbs.h:368
 msgid "Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that the swap file can easily get very large if GIMP is used with large images. Also, things can get horribly slow if the swap file is created on a folder that is mounted over NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr "Ställer in platsen för växlingsfilen. GIMP använder en plattbaserad minnesallokeringsmetod. Växlingsfilen används för att snabbt och enkelt lägga ut plattor på hårddisken och sedan tillbaka. Tänk på att växlingsfilen lätt kan bli mycket stor om GIMP används med stora bilder. Saker och ting kan också bli mycket långsamma om växlingsfilen skapas i en katalog som är monterad via NFS. På grund av detta kan det vara en önskvärt att lägga din växlingsfil i \"tmp\"."
 
-#: ../app/config/gimprc-blurbs.h:362
+#: ../app/config/gimprc-blurbs.h:377
 msgid "When enabled, menus can be torn off."
 msgstr "När aktiverad kan menyer ryckas loss."
 
-#: ../app/config/gimprc-blurbs.h:365
+#: ../app/config/gimprc-blurbs.h:380
 msgid "When enabled, you can change keyboard shortcuts for menu items by hitting a key combination while the menu item is highlighted."
 msgstr "När aktiverad kan du ändra tangentbordsgenvägar för menyval genom att trycka på en tangentkombination medan menyvalet är markerat."
 
-#: ../app/config/gimprc-blurbs.h:369
+#: ../app/config/gimprc-blurbs.h:384
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Spara ändrade tangentbordsgenvägar när GIMP avslutas."
 
-#: ../app/config/gimprc-blurbs.h:372
+#: ../app/config/gimprc-blurbs.h:387
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Återställ sparade tangentbordsgenvägar varje gång GIMP startar."
 
-#: ../app/config/gimprc-blurbs.h:375
+#: ../app/config/gimprc-blurbs.h:390
 msgid "Sets the folder for temporary storage. Files will appear here during the course of running GIMP.  Most files will disappear when GIMP exits, but some files are likely to remain, so it is best if this folder not be one that is shared by other users."
 msgstr "Ställer in katalogen för temporär lagring. Filer dyker upp här under tiden man använder GIMP. De flesta filerna försvinner igen när GIMP avslutas, men vissa filer kan komma att finnas kvar så det är bäst om katalogen inte delas med andra användare."
 
-#: ../app/config/gimprc-blurbs.h:387
+#: ../app/config/gimprc-blurbs.h:402
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "Ställer in storleken på miniatyrbilden som visas i öppningsdialogrutan."
 
-#: ../app/config/gimprc-blurbs.h:390
+#: ../app/config/gimprc-blurbs.h:405
 msgid "The thumbnail in the Open dialog will be automatically updated if the file being previewed is smaller than the size set here."
 msgstr "Miniatyrbilden i öppna-dialogen uppdateras automatiskt om filen som förhandsgranskas är mindre än storleken som ställs in här."
 
-#: ../app/config/gimprc-blurbs.h:394
+#: ../app/config/gimprc-blurbs.h:409
 msgid "When the amount of pixel data exceeds this limit, GIMP will start to swap tiles to disk.  This is a lot slower but it makes it possible to work on images that wouldn't fit into memory otherwise.  If you have a lot of RAM, you may want to set this to a higher value."
 msgstr "När mängden bildpunksdata överstiger den här gränsen kommer GIMP att börja skriva ut plattor till disk. Det här är mycket långsammare men det gör det möjligt att arbeta på bilder som annars inte skulle få plats i minnet. Om du har mycket RAM-minne kanske du vill ställa in det här till ett högre värde."
 
-#: ../app/config/gimprc-blurbs.h:400
+#: ../app/config/gimprc-blurbs.h:415
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "Visa de aktuella för- och bakgrundsfärgerna i verktygslådan."
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:418
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "Visa för närvarande aktiv pensel, mönster och gradient i verktygslådan."
 
-#: ../app/config/gimprc-blurbs.h:406
+#: ../app/config/gimprc-blurbs.h:421
 msgid "Show the currently active image in the toolbox."
 msgstr "Visa den för närvarande aktiva bilden i verktygslådan."
 
-#: ../app/config/gimprc-blurbs.h:412
+#: ../app/config/gimprc-blurbs.h:427
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Ställer in sättet på vilket transparens visas i bilder."
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:430
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Ställer in storleken på schackrutorna som används för transparens."
 
-#: ../app/config/gimprc-blurbs.h:418
+#: ../app/config/gimprc-blurbs.h:433
 msgid "When enabled, GIMP will not save an image if it has not been changed since it was opened."
 msgstr "När aktiverad kommer GIMP inte att spara en bild om den inte ändrats sedan den öppnades."
 
-#: ../app/config/gimprc-blurbs.h:422
+#: ../app/config/gimprc-blurbs.h:437
 msgid "Sets the minimal number of operations that can be undone. More undo levels are kept available until the undo-size limit is reached."
 msgstr "Ställer in det minsta antal åtgärder som kan ångras. Fler ångringsnivåer är tillgängliga tills storlekgränsen för ångring har nådd."
 
-#: ../app/config/gimprc-blurbs.h:426
+#: ../app/config/gimprc-blurbs.h:441
 msgid "Sets an upper limit to the memory that is used per image to keep operations on the undo stack. Regardless of this setting, at least as many undo-levels as configured can be undone."
 msgstr "Ställer in en övre gräns för mängden minne som används per bild för att spara åtgärder på ångringsstacken. Oberoende av denna inställning sparas åtminstone så många ångringsåtgärder som angivits på annat håll."
 
-#: ../app/config/gimprc-blurbs.h:431
+#: ../app/config/gimprc-blurbs.h:446
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Ställer in storleken på förhandsgranskningar i ångringshistoriken."
 
-#: ../app/config/gimprc-blurbs.h:434
+#: ../app/config/gimprc-blurbs.h:449
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "När aktiverad öppnar F1 hjälpläsaren."
 
 #: ../app/config/gimprc-deserialize.c:134
 #: ../app/core/gimp-modules.c:133
 #: ../app/core/gimp-units.c:163
-#: ../app/gui/session.c:226
+#: ../app/gui/session.c:225
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
 msgstr "ödesdigert tolkningsfel"
@@ -6771,8 +6894,8 @@ msgstr "Konvertera till RGB-arbetsyta"
 
 #: ../app/core/gimp-contexts.c:154
 #: ../app/core/gimptooloptions.c:232
-#: ../app/gui/session.c:332
-#: ../app/menus/menus.c:434
+#: ../app/gui/session.c:331
+#: ../app/menus/menus.c:448
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -6842,73 +6965,79 @@ msgid "FG to Transparent"
 msgstr "FG till Transparent"
 
 #. This is a special string to specify the language identifier to
-#. look for in the gimp-tags-default.xml file. Please translate the
-#. C in it according to the name of the po file used for
-#. gimp-tags-default.xml. E.g. lithuanian for the translation,
-#. that would be "tags-locale:lt".
+#. * look for in the gimp-tags-default.xml file. Please translate the
+#. * C in it according to the name of the po file used for
+#. * gimp-tags-default.xml. E.g. lithuanian for the translation,
+#. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
 msgstr "tags-locale:sv"
 
-#: ../app/core/gimp-user-install.c:153
+#: ../app/core/gimp-user-install.c:154
 #, c-format
 msgid "It seems you have used GIMP %s before.  GIMP will now migrate your user settings to '%s'."
 msgstr "Det verkar som om du har använt GIMP %s tidigare.  GIMP kommer nu att migrera dina användarinställningar till \"%s\"."
 
-#: ../app/core/gimp-user-install.c:158
+#: ../app/core/gimp-user-install.c:159
 #, c-format
 msgid "It appears that you are using GIMP for the first time.  GIMP will now create a folder named '%s' and copy some files to it."
 msgstr "Det verkar som om du använder GIMP för första gången.  GIMP kommer nu att skapa en mapp med namnet \"%s\" och kopiera några filer dit."
 
-#: ../app/core/gimp-user-install.c:309
+#: ../app/core/gimp-user-install.c:311
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Kopierar filen \"%s\" från \"%s\"..."
 
-#: ../app/core/gimp-user-install.c:324
-#: ../app/core/gimp-user-install.c:350
+#: ../app/core/gimp-user-install.c:326
+#: ../app/core/gimp-user-install.c:352
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Skapar mappen \"%s\"..."
 
-#: ../app/core/gimp-user-install.c:335
-#: ../app/core/gimp-user-install.c:361
+#: ../app/core/gimp-user-install.c:337
+#: ../app/core/gimp-user-install.c:363
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan inte skapa mappen \"%s\": %s"
 
-#: ../app/core/gimp.c:557
+#: ../app/core/gimp.c:576
 msgid "Initialization"
 msgstr "Initiering"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:636
+#: ../app/core/gimp.c:666
 msgid "Internal Procedures"
 msgstr "Interna procedurer"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:885
+#: ../app/core/gimp.c:916
 msgid "Looking for data files"
 msgstr "Letar efter datafiler"
 
-#: ../app/core/gimp.c:885
+#: ../app/core/gimp.c:916
 msgid "Parasites"
 msgstr "Parasiter"
 
+#. initialize the list of gimp dynamics
+#: ../app/core/gimp.c:924
+#: ../app/dialogs/preferences-dialog.c:2771
+msgid "Dynamics"
+msgstr "Dynamik"
+
 #. initialize the list of fonts
-#: ../app/core/gimp.c:905
+#: ../app/core/gimp.c:940
 msgid "Fonts (this may take a while)"
 msgstr "Typsnitt (det här kan ta en stund)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:914
-#: ../app/dialogs/preferences-dialog.c:2764
+#: ../app/core/gimp.c:949
+#: ../app/dialogs/preferences-dialog.c:2799
 msgid "Modules"
 msgstr "Moduler"
 
 #. update tag cache
-#: ../app/core/gimp.c:918
+#: ../app/core/gimp.c:953
 msgid "Updating tag cache"
 msgstr "Uppdaterar taggcache"
 
@@ -7018,30 +7147,30 @@ msgstr "Filen är avkapad på rad %d"
 msgid "Error while reading brush file '%s': %s"
 msgstr "Fel vid läsning av penselfilen \"%s\": %s"
 
-#: ../app/core/gimpbrushgenerated.c:128
+#: ../app/core/gimpbrushgenerated.c:129
 msgid "Brush Shape"
 msgstr "Penselform"
 
-#: ../app/core/gimpbrushgenerated.c:136
+#: ../app/core/gimpbrushgenerated.c:137
 msgid "Brush Radius"
 msgstr "Penselradie"
 
-#: ../app/core/gimpbrushgenerated.c:143
+#: ../app/core/gimpbrushgenerated.c:144
 #, fuzzy
 msgid "Brush Spikes"
 msgstr "Penslar"
 
-#: ../app/core/gimpbrushgenerated.c:150
+#: ../app/core/gimpbrushgenerated.c:151
 msgid "Brush Hardness"
 msgstr "Penselhårdhet"
 
-#: ../app/core/gimpbrushgenerated.c:158
-#: ../app/paint/gimppaintoptions.c:250
+#: ../app/core/gimpbrushgenerated.c:159
+#: ../app/paint/gimppaintoptions.c:141
 msgid "Brush Aspect Ratio"
 msgstr "Penselns aspektförhållande"
 
-#: ../app/core/gimpbrushgenerated.c:165
-#: ../app/paint/gimppaintoptions.c:254
+#: ../app/core/gimpbrushgenerated.c:166
+#: ../app/paint/gimppaintoptions.c:145
 msgid "Brush Angle"
 msgstr "Penselvinkel"
 
@@ -7174,24 +7303,25 @@ msgstr "Ställ in kanalopacitet"
 msgid "Selection Mask"
 msgstr "Markeringsmask"
 
-#: ../app/core/gimpcontext.c:593
-#: ../app/tools/gimppaintoptions-gui.c:175
+#: ../app/core/gimpcontext.c:622
+#: ../app/widgets/gimpdynamicseditor.c:121
 msgid "Opacity"
 msgstr "Opacitet"
 
-#: ../app/core/gimpcontext.c:601
+#: ../app/core/gimpcontext.c:630
 msgid "Paint Mode"
 msgstr "Målningsläge"
 
-#: ../app/core/gimpdata.c:570
+#: ../app/core/gimpdata.c:678
 #: ../app/core/gimptoolpresets.c:277
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Kunde inte ta bort \"%s\": %s"
 
-#: ../app/core/gimpdatafactory.c:455
-#: ../app/core/gimpdatafactory.c:613
-#: ../app/core/gimpdatafactory.c:633
+#: ../app/core/gimpdatafactory.c:418
+#: ../app/core/gimpdatafactory.c:447
+#: ../app/core/gimpdatafactory.c:609
+#: ../app/core/gimpdatafactory.c:631
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7202,24 +7332,35 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:532
-#: ../app/core/gimpdatafactory.c:535
+#: ../app/core/gimpdatafactory.c:525
+#: ../app/core/gimpdatafactory.c:528
 #: ../app/core/gimpitem.c:422
 #: ../app/core/gimpitem.c:425
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:544
+#: ../app/core/gimpdatafactory.c:537
 #: ../app/core/gimpitem.c:434
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopia"
 
-#: ../app/core/gimpdatafactory.c:614
-msgid "You don't have a writable data folder configured."
+#: ../app/core/gimpdatafactory.c:728
+#, c-format
+msgid "You have a writable data folder configured (%s), but this folder does not exist. Please create the folder or fix your configuation in the Preferences dialog's 'Folders' section."
+msgstr ""
+
+#: ../app/core/gimpdatafactory.c:749
+#, c-format
+msgid "You have a writable data folder configured, but this folder is not part of your data search path. You probably edited the gimprc file manually, please fix it in the Preferences dialog's 'Folders' section."
+msgstr ""
+
+#: ../app/core/gimpdatafactory.c:759
+#, fuzzy, c-format
+msgid "You don't have any writable data folder configured."
 msgstr "Du har ingen skrivbar datamapp konfigurerad."
 
-#: ../app/core/gimpdatafactory.c:827
+#: ../app/core/gimpdatafactory.c:875
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -7342,7 +7483,7 @@ msgid "Rotate"
 msgstr "Rotera"
 
 #: ../app/core/gimpdrawable-transform.c:883
-#: ../app/core/gimplayer.c:263
+#: ../app/core/gimplayer.c:265
 msgid "Transform Layer"
 msgstr "Transformera lager"
 
@@ -7563,9 +7704,8 @@ msgid "The layer to merge down to is locked."
 msgstr ""
 
 #: ../app/core/gimpimage-merge.c:244
-#, fuzzy
 msgid "There is no visible layer to merge down to."
-msgstr "Det finns inte tillräckligt många synliga lager för att sammanfoga neråt."
+msgstr "Det finns inget synligt lager att sammanfoga neråt till."
 
 #: ../app/core/gimpimage-merge.c:255
 msgid "Merge Down"
@@ -7728,7 +7868,7 @@ msgid "Lower Path to Bottom"
 msgstr "Sänk slingan till underst"
 
 #: ../app/core/gimpimagefile.c:534
-#: ../app/dialogs/preferences-dialog.c:1730
+#: ../app/dialogs/preferences-dialog.c:1758
 msgid "Folder"
 msgstr "Mapp"
 
@@ -7802,7 +7942,7 @@ msgid "Anchor Floating Selection"
 msgstr "Förankra flytande markering"
 
 #: ../app/core/gimplayer-floating-sel.c:126
-#: ../app/core/gimplayer.c:576
+#: ../app/core/gimplayer.c:578
 msgid "Cannot create a new layer from the floating selection because it belongs to a layer mask or channel."
 msgstr "Kan inte skapa nytt lager från den flytande markeringen då den tillhör en lagermask eller kanal."
 
@@ -7810,40 +7950,40 @@ msgstr "Kan inte skapa nytt lager från den flytande markeringen då den tillhö
 msgid "Floating Selection to Layer"
 msgstr "Flytande markering till lager"
 
-#: ../app/core/gimplayer.c:256
+#: ../app/core/gimplayer.c:258
 msgid "Layer"
 msgstr "Lager"
 
-#: ../app/core/gimplayer.c:257
+#: ../app/core/gimplayer.c:259
 msgid "Rename Layer"
 msgstr "Byt namn på lager"
 
-#: ../app/core/gimplayer.c:258
-#: ../app/pdb/layer-cmds.c:441
-#: ../app/pdb/layer-cmds.c:479
+#: ../app/core/gimplayer.c:260
+#: ../app/pdb/layer-cmds.c:443
+#: ../app/pdb/layer-cmds.c:481
 msgid "Move Layer"
 msgstr "Flytta lager"
 
-#: ../app/core/gimplayer.c:260
+#: ../app/core/gimplayer.c:262
 msgid "Resize Layer"
 msgstr "Ändra storlek på lager"
 
-#: ../app/core/gimplayer.c:261
+#: ../app/core/gimplayer.c:263
 msgid "Flip Layer"
 msgstr "Vänd lager"
 
-#: ../app/core/gimplayer.c:262
+#: ../app/core/gimplayer.c:264
 msgid "Rotate Layer"
 msgstr "Rotera lager"
 
-#: ../app/core/gimplayer.c:420
-#: ../app/core/gimplayer.c:1398
+#: ../app/core/gimplayer.c:422
+#: ../app/core/gimplayer.c:1449
 #: ../app/core/gimplayermask.c:234
 #, c-format
 msgid "%s mask"
 msgstr "%s-mask"
 
-#: ../app/core/gimplayer.c:459
+#: ../app/core/gimplayer.c:461
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -7852,36 +7992,36 @@ msgstr ""
 "Flytande markering\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1322
+#: ../app/core/gimplayer.c:1373
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan inte lägga till lagermask eftersom lagret redan har en."
 
-#: ../app/core/gimplayer.c:1333
+#: ../app/core/gimplayer.c:1384
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Kan inte lägga till lagermask med andra dimensioner än det angivna lagret."
 
-#: ../app/core/gimplayer.c:1453
+#: ../app/core/gimplayer.c:1504
 msgid "Transfer Alpha to Mask"
 msgstr "Överför alfa till mask"
 
-#: ../app/core/gimplayer.c:1623
+#: ../app/core/gimplayer.c:1674
 #: ../app/core/gimplayermask.c:260
 msgid "Apply Layer Mask"
 msgstr "Tillämpa lagermask"
 
-#: ../app/core/gimplayer.c:1624
+#: ../app/core/gimplayer.c:1675
 msgid "Delete Layer Mask"
 msgstr "Ta bort lagermask"
 
-#: ../app/core/gimplayer.c:1743
+#: ../app/core/gimplayer.c:1794
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: ../app/core/gimplayer.c:1797
+#: ../app/core/gimplayer.c:1848
 msgid "Remove Alpha Channel"
 msgstr "Ta bort alfakanal"
 
-#: ../app/core/gimplayer.c:1817
+#: ../app/core/gimplayer.c:1868
 msgid "Layer to Image Size"
 msgstr "Lagerstorlek som bilden"
 
@@ -8143,11 +8283,11 @@ msgstr ""
 "Skicka synpunkter på översättningen\n"
 "till tp-sv@listor.tp-sv.se"
 
-#: ../app/dialogs/about-dialog.c:506
+#: ../app/dialogs/about-dialog.c:509
 msgid "GIMP is brought to you by"
 msgstr "GIMP presenteras av"
 
-#: ../app/dialogs/about-dialog.c:580
+#: ../app/dialogs/about-dialog.c:583
 msgid "This is an unstable development release."
 msgstr "Det här är en instabil utvecklingsutgåva."
 
@@ -8202,69 +8342,69 @@ msgstr "Konverterar till indexerade färger"
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Kan inte konvertera till palett med mer än 256 färger."
 
-#: ../app/dialogs/dialogs-constructors.c:192
+#: ../app/dialogs/dialogs-constructors.c:194
 #: ../app/gui/gui.c:165
 #: ../app/gui/gui-message.c:147
 msgid "GIMP Message"
 msgstr "GIMP-meddelande"
 
-#: ../app/dialogs/dialogs.c:143
+#: ../app/dialogs/dialogs.c:205
 msgid "Devices"
 msgstr "Enheter"
 
-#: ../app/dialogs/dialogs.c:143
+#: ../app/dialogs/dialogs.c:205
 msgid "Device Status"
 msgstr "Enhetsstatus"
 
-#: ../app/dialogs/dialogs.c:147
+#: ../app/dialogs/dialogs.c:209
 msgid "Errors"
 msgstr "Fel"
 
-#: ../app/dialogs/dialogs.c:151
+#: ../app/dialogs/dialogs.c:213
 msgid "Pointer"
 msgstr "Pekare"
 
-#: ../app/dialogs/dialogs.c:170
+#: ../app/dialogs/dialogs.c:232
 msgid "History"
 msgstr "Historik"
 
-#: ../app/dialogs/dialogs.c:172
+#: ../app/dialogs/dialogs.c:234
 msgid "Image Templates"
 msgstr "Bildmallar"
 
-#: ../app/dialogs/dialogs.c:193
+#: ../app/dialogs/dialogs.c:259
 msgid "Histogram"
 msgstr "Histogram"
 
-#: ../app/dialogs/dialogs.c:197
+#: ../app/dialogs/dialogs.c:263
 msgid "Selection"
 msgstr "Markering"
 
-#: ../app/dialogs/dialogs.c:197
+#: ../app/dialogs/dialogs.c:263
 msgid "Selection Editor"
 msgstr "Markeringsredigerare"
 
-#: ../app/dialogs/dialogs.c:201
+#: ../app/dialogs/dialogs.c:267
 msgid "Undo"
 msgstr "Ångra"
 
-#: ../app/dialogs/dialogs.c:201
+#: ../app/dialogs/dialogs.c:267
 msgid "Undo History"
 msgstr "Ångringshistorik"
 
-#: ../app/dialogs/dialogs.c:211
+#: ../app/dialogs/dialogs.c:277
 msgid "Navigation"
 msgstr "Navigering"
 
-#: ../app/dialogs/dialogs.c:211
+#: ../app/dialogs/dialogs.c:277
 msgid "Display Navigation"
 msgstr "Visningsnavigering"
 
-#: ../app/dialogs/dialogs.c:217
+#: ../app/dialogs/dialogs.c:283
 msgid "FG/BG"
 msgstr "FG/BG"
 
-#: ../app/dialogs/dialogs.c:217
+#: ../app/dialogs/dialogs.c:283
 msgid "FG/BG Color"
 msgstr "FG/BG-färg"
 
@@ -8300,6 +8440,10 @@ msgstr "Ange plats (URI):"
 #: ../app/dialogs/file-save-dialog.c:105
 msgid "Export Image"
 msgstr "Exportera bild"
+
+#: ../app/dialogs/file-save-dialog.c:106
+msgid "_Export"
+msgstr "_Exportera"
 
 #: ../app/dialogs/file-save-dialog.c:468
 msgid "Saving remote files needs to determine the file format from the file extension. Please enter a file extension that matches the selected file format or enter no file extension at all."
@@ -8389,7 +8533,7 @@ msgid "Create a New Image"
 msgstr "Skapa en ny bild"
 
 #: ../app/dialogs/image-new-dialog.c:144
-#: ../app/dialogs/preferences-dialog.c:2024
+#: ../app/dialogs/preferences-dialog.c:2055
 msgid "_Template:"
 msgstr "_Mall:"
 
@@ -8506,31 +8650,31 @@ msgstr "Du måste starta om GIMP för att ändringarna ska aktiveras."
 msgid "Module"
 msgstr "Modul"
 
-#: ../app/dialogs/module-dialog.c:464
+#: ../app/dialogs/module-dialog.c:465
 msgid "Only in memory"
 msgstr "Endast i minnet"
 
-#: ../app/dialogs/module-dialog.c:469
+#: ../app/dialogs/module-dialog.c:470
 msgid "No longer available"
 msgstr "Inte längre tillgänglig"
 
-#: ../app/dialogs/module-dialog.c:498
+#: ../app/dialogs/module-dialog.c:494
 msgid "Author:"
 msgstr "Upphovsman:"
 
-#: ../app/dialogs/module-dialog.c:499
+#: ../app/dialogs/module-dialog.c:495
 msgid "Version:"
 msgstr "Version:"
 
-#: ../app/dialogs/module-dialog.c:500
+#: ../app/dialogs/module-dialog.c:496
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../app/dialogs/module-dialog.c:501
+#: ../app/dialogs/module-dialog.c:497
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../app/dialogs/module-dialog.c:502
+#: ../app/dialogs/module-dialog.c:498
 msgid "Location:"
 msgstr "Placering:"
 
@@ -8604,7 +8748,7 @@ msgid "Select Source"
 msgstr "Välj källa"
 
 #: ../app/dialogs/palette-import-dialog.c:214
-#: ../app/dialogs/preferences-dialog.c:1939
+#: ../app/dialogs/preferences-dialog.c:1970
 msgid "_Gradient"
 msgstr "_Gradient"
 
@@ -8663,774 +8807,789 @@ msgstr "Förhandsvisning"
 msgid "The selected source contains no colors."
 msgstr "Den valda källan innehåller inga färger."
 
-#: ../app/dialogs/preferences-dialog.c:268
+#: ../app/dialogs/preferences-dialog.c:271
 msgid "Reset All Preferences"
 msgstr "Återställ alla inställningar"
 
-#: ../app/dialogs/preferences-dialog.c:286
+#: ../app/dialogs/preferences-dialog.c:289
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Vill du verkligen återställa alla inställningar till standardvärden?"
 
-#: ../app/dialogs/preferences-dialog.c:356
+#: ../app/dialogs/preferences-dialog.c:359
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Du måste starta om GIMP för att följande ändringar ska ha effekt:"
 
-#: ../app/dialogs/preferences-dialog.c:505
+#: ../app/dialogs/preferences-dialog.c:508
 msgid "Configure Input Devices"
 msgstr "Konfigurera inmatningsenheter"
 
-#: ../app/dialogs/preferences-dialog.c:582
+#: ../app/dialogs/preferences-dialog.c:585
 msgid "Your keyboard shortcuts will be reset to default values the next time you start GIMP."
 msgstr "Dina tangentbordsgenvägar kommer återställas till standardvärden nästa gång du startar GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:593
+#: ../app/dialogs/preferences-dialog.c:596
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Ta bort alla tangentbordsgenvägar"
 
-#: ../app/dialogs/preferences-dialog.c:615
+#: ../app/dialogs/preferences-dialog.c:618
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "Vill du verkligen ta bort alla tangentbordsgenvägar från alla menyer?"
 
-#: ../app/dialogs/preferences-dialog.c:656
+#: ../app/dialogs/preferences-dialog.c:659
 msgid "Your window setup will be reset to default values the next time you start GIMP."
 msgstr "Din förnsteruppställning kommer återställas till standardvärden nästa gång du startar GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:691
+#: ../app/dialogs/preferences-dialog.c:694
 msgid "Your input device settings will be reset to default values the next time you start GIMP."
 msgstr "Dina inställningar för inmatningsenheter kommer återställas till standardvärden nästa gång du startar GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:726
+#: ../app/dialogs/preferences-dialog.c:729
 msgid "Your tool options will be reset to default values the next time you start GIMP."
 msgstr "Dina verktygsalternativ kommer att återställas till standardvärden nästa gång du startar GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:1294
+#: ../app/dialogs/preferences-dialog.c:1313
 msgid "Show _menubar"
 msgstr "Visa _menyrad"
 
-#: ../app/dialogs/preferences-dialog.c:1298
+#: ../app/dialogs/preferences-dialog.c:1317
 msgid "Show _rulers"
 msgstr "Visa _linjaler"
 
-#: ../app/dialogs/preferences-dialog.c:1301
+#: ../app/dialogs/preferences-dialog.c:1320
 msgid "Show scroll_bars"
 msgstr "Visa rullnings_lister"
 
-#: ../app/dialogs/preferences-dialog.c:1304
+#: ../app/dialogs/preferences-dialog.c:1323
 msgid "Show s_tatusbar"
 msgstr "Visa s_tatusrad"
 
-#: ../app/dialogs/preferences-dialog.c:1312
+#: ../app/dialogs/preferences-dialog.c:1331
 msgid "Show s_election"
 msgstr "Visa m_arkering"
 
-#: ../app/dialogs/preferences-dialog.c:1315
+#: ../app/dialogs/preferences-dialog.c:1334
 msgid "Show _layer boundary"
 msgstr "Visa _lagergräns"
 
-#: ../app/dialogs/preferences-dialog.c:1318
+#: ../app/dialogs/preferences-dialog.c:1337
 msgid "Show _guides"
 msgstr "Visa _hjälplinjer"
 
-#: ../app/dialogs/preferences-dialog.c:1321
+#: ../app/dialogs/preferences-dialog.c:1340
 msgid "Show gri_d"
 msgstr "Visa r_utnät"
 
-#: ../app/dialogs/preferences-dialog.c:1327
+#: ../app/dialogs/preferences-dialog.c:1346
 msgid "Canvas _padding mode:"
 msgstr "_Utfyllnadsläge för rityta:"
 
-#: ../app/dialogs/preferences-dialog.c:1332
+#: ../app/dialogs/preferences-dialog.c:1351
 msgid "Custom p_adding color:"
 msgstr "Anpassad u_tfyllnadsfärg:"
 
-#: ../app/dialogs/preferences-dialog.c:1333
+#: ../app/dialogs/preferences-dialog.c:1352
 msgid "Select Custom Canvas Padding Color"
 msgstr "Välj anpassad utfyllnadsfärg för rityta"
 
-#: ../app/dialogs/preferences-dialog.c:1422
+#: ../app/dialogs/preferences-dialog.c:1441
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: ../app/dialogs/preferences-dialog.c:1535
-#: ../app/dialogs/preferences-dialog.c:2772
+#: ../app/dialogs/preferences-dialog.c:1554
+#: ../app/dialogs/preferences-dialog.c:2807
 msgid "Environment"
 msgstr "Miljö"
 
-#: ../app/dialogs/preferences-dialog.c:1549
+#: ../app/dialogs/preferences-dialog.c:1568
 msgid "Resource Consumption"
 msgstr "Resursanvändning"
 
-#: ../app/dialogs/preferences-dialog.c:1559
+#: ../app/dialogs/preferences-dialog.c:1578
 msgid "Minimal number of _undo levels:"
 msgstr "Minsta antal _ångringsnivåer:"
 
-#: ../app/dialogs/preferences-dialog.c:1562
+#: ../app/dialogs/preferences-dialog.c:1581
 msgid "Maximum undo _memory:"
 msgstr "Maximalt ångrings_minne:"
 
-#: ../app/dialogs/preferences-dialog.c:1565
+#: ../app/dialogs/preferences-dialog.c:1584
 msgid "Tile cache _size:"
 msgstr "Bildblockscache_storlek:"
 
-#: ../app/dialogs/preferences-dialog.c:1568
+#: ../app/dialogs/preferences-dialog.c:1587
 msgid "Maximum _new image size:"
 msgstr "Maximal _ny bildstorlek:"
 
-#: ../app/dialogs/preferences-dialog.c:1573
+#: ../app/dialogs/preferences-dialog.c:1592
 msgid "Number of _processors to use:"
 msgstr "Antalet _processorer att använda:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1578
+#: ../app/dialogs/preferences-dialog.c:1597
 msgid "Image Thumbnails"
 msgstr "Miniatyrbilder"
 
-#: ../app/dialogs/preferences-dialog.c:1583
+#: ../app/dialogs/preferences-dialog.c:1602
 msgid "Size of _thumbnails:"
 msgstr "Storlek på _miniatyrbilder:"
 
-#: ../app/dialogs/preferences-dialog.c:1587
+#: ../app/dialogs/preferences-dialog.c:1606
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Maximal _filstorlek för miniatyrbilder:"
 
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1591
+#: ../app/dialogs/preferences-dialog.c:1610
 msgid "Saving Images"
 msgstr "Sparar bilder"
 
-#: ../app/dialogs/preferences-dialog.c:1594
+#: ../app/dialogs/preferences-dialog.c:1613
 msgid "Confirm closing of unsa_ved images"
 msgstr "Bekräfta stängning av _osparade bilder"
 
-#: ../app/dialogs/preferences-dialog.c:1604
+#: ../app/dialogs/preferences-dialog.c:1623
 msgid "Keep record of used files in the Recent Documents list"
 msgstr "Håll information om använda filer i Senaste dokument-listan"
 
-#: ../app/dialogs/preferences-dialog.c:1613
+#: ../app/dialogs/preferences-dialog.c:1632
 msgid "User Interface"
 msgstr "Användargränssnitt"
 
-#: ../app/dialogs/preferences-dialog.c:1616
+#: ../app/dialogs/preferences-dialog.c:1635
 msgid "Interface"
 msgstr "Gränssnitt"
 
+#: ../app/dialogs/preferences-dialog.c:1645
+msgid "Language"
+msgstr "Språk"
+
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1623
+#: ../app/dialogs/preferences-dialog.c:1651
 msgid "Previews"
 msgstr "Förhandsvisningar"
 
-#: ../app/dialogs/preferences-dialog.c:1626
+#: ../app/dialogs/preferences-dialog.c:1654
 msgid "_Enable layer & channel previews"
 msgstr "_Aktivera förhandsvisning av lager och kanaler"
 
-#: ../app/dialogs/preferences-dialog.c:1632
+#: ../app/dialogs/preferences-dialog.c:1660
 msgid "_Default layer & channel preview size:"
 msgstr "Standardstorlek för förhandsvisning av _lager och kanaler:"
 
-#: ../app/dialogs/preferences-dialog.c:1635
+#: ../app/dialogs/preferences-dialog.c:1663
 msgid "Na_vigation preview size:"
 msgstr "Förhandsvisningsstorlek för _navigering:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1639
+#: ../app/dialogs/preferences-dialog.c:1667
 msgid "Keyboard Shortcuts"
 msgstr "Tangentbordsgenvägar"
 
-#: ../app/dialogs/preferences-dialog.c:1643
+#: ../app/dialogs/preferences-dialog.c:1671
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "Använd dynamiska _tangentbordsgenvägar"
 
-#: ../app/dialogs/preferences-dialog.c:1647
+#: ../app/dialogs/preferences-dialog.c:1675
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Konfigurera _tangentbordsgenvägar..."
 
-#: ../app/dialogs/preferences-dialog.c:1654
+#: ../app/dialogs/preferences-dialog.c:1682
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Spara tangentbordsgenvägar vid avslut"
 
-#: ../app/dialogs/preferences-dialog.c:1658
+#: ../app/dialogs/preferences-dialog.c:1686
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Spara tangentbordsgenvägar _nu"
 
-#: ../app/dialogs/preferences-dialog.c:1665
+#: ../app/dialogs/preferences-dialog.c:1693
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Återställ tangentbordsgenvägar till standardvärden"
 
-#: ../app/dialogs/preferences-dialog.c:1674
+#: ../app/dialogs/preferences-dialog.c:1702
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Ta bort _alla tangentbordsgenvägar"
 
-#: ../app/dialogs/preferences-dialog.c:1686
-#: ../app/dialogs/preferences-dialog.c:1725
+#: ../app/dialogs/preferences-dialog.c:1714
+#: ../app/dialogs/preferences-dialog.c:1753
 msgid "Theme"
 msgstr "Tema"
 
-#: ../app/dialogs/preferences-dialog.c:1695
+#: ../app/dialogs/preferences-dialog.c:1723
 msgid "Select Theme"
 msgstr "Välj tema"
 
-#: ../app/dialogs/preferences-dialog.c:1777
+#: ../app/dialogs/preferences-dialog.c:1805
 msgid "Reload C_urrent Theme"
 msgstr "Läs om a_ktuellt tema"
 
-#: ../app/dialogs/preferences-dialog.c:1789
+#: ../app/dialogs/preferences-dialog.c:1817
 msgid "Help System"
 msgstr "Hjälpsystem"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1801
-#: ../app/dialogs/preferences-dialog.c:1885
-#: ../app/dialogs/preferences-dialog.c:2082
+#: ../app/dialogs/preferences-dialog.c:1829
+#: ../app/dialogs/preferences-dialog.c:1913
+#: ../app/dialogs/preferences-dialog.c:2113
 #: ../app/widgets/gimpcontrollereditor.c:188
 msgid "General"
 msgstr "Generellt"
 
-#: ../app/dialogs/preferences-dialog.c:1804
+#: ../app/dialogs/preferences-dialog.c:1832
 msgid "Show _tooltips"
 msgstr "Visa verktygs_tips"
 
-#: ../app/dialogs/preferences-dialog.c:1807
+#: ../app/dialogs/preferences-dialog.c:1835
 msgid "Show help _buttons"
 msgstr "Visa hjälp_knappar"
 
-#: ../app/dialogs/preferences-dialog.c:1820
+#: ../app/dialogs/preferences-dialog.c:1848
 msgid "Use the online version"
 msgstr "Använd versionen på nätet"
 
-#: ../app/dialogs/preferences-dialog.c:1821
+#: ../app/dialogs/preferences-dialog.c:1849
 msgid "Use a locally installed copy"
 msgstr "Använd en lokalt installerad kopia"
 
-#: ../app/dialogs/preferences-dialog.c:1822
+#: ../app/dialogs/preferences-dialog.c:1850
 msgid "User manual:"
 msgstr "Användarhandbok:"
 
-#: ../app/dialogs/preferences-dialog.c:1829
+#: ../app/dialogs/preferences-dialog.c:1857
 msgid "There's a local installation of the user manual."
 msgstr "Det finns en lokal installation av användarhandboken."
 
-#: ../app/dialogs/preferences-dialog.c:1834
+#: ../app/dialogs/preferences-dialog.c:1862
 msgid "The user manual is not installed locally."
 msgstr "Användarhandboken är inte lokalt installerad."
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1857
+#: ../app/dialogs/preferences-dialog.c:1885
 msgid "Help Browser"
 msgstr "Hjälpläsare"
 
-#: ../app/dialogs/preferences-dialog.c:1861
+#: ../app/dialogs/preferences-dialog.c:1889
 msgid "H_elp browser to use:"
 msgstr "Hjälp_läsare att använda:"
 
-#: ../app/dialogs/preferences-dialog.c:1888
+#: ../app/dialogs/preferences-dialog.c:1916
 msgid "_Save tool options on exit"
 msgstr "_Spara verktygsalternativ vid avslut"
 
-#: ../app/dialogs/preferences-dialog.c:1892
+#: ../app/dialogs/preferences-dialog.c:1920
 msgid "Save Tool Options _Now"
 msgstr "Spara verktygsalternativ _nu"
 
-#: ../app/dialogs/preferences-dialog.c:1899
+#: ../app/dialogs/preferences-dialog.c:1927
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Återställ sparade verktygsalternativ till standardvärden"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1909
+#: ../app/dialogs/preferences-dialog.c:1937
 msgid "Guide & Grid Snapping"
 msgstr "Fäst mot hjälplinjer och rutnät"
 
-#: ../app/dialogs/preferences-dialog.c:1914
+#: ../app/dialogs/preferences-dialog.c:1942
 msgid "_Snap distance:"
 msgstr "_Fästningsavstånd:"
 
-#: ../app/dialogs/preferences-dialog.c:1922
+#: ../app/dialogs/preferences-dialog.c:1950
 msgid "Default _interpolation:"
 msgstr "Standard_interpolation:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1929
+#: ../app/dialogs/preferences-dialog.c:1957
 msgid "Paint Options Shared Between Tools"
 msgstr "Målningsalternativ som delas av verktyg"
 
-#: ../app/dialogs/preferences-dialog.c:1933
+#: ../app/dialogs/preferences-dialog.c:1961
 msgid "_Brush"
 msgstr "_Pensel"
 
-#: ../app/dialogs/preferences-dialog.c:1936
+#: ../app/dialogs/preferences-dialog.c:1964
+msgid "_Dynamics"
+msgstr "_Dynamik"
+
+#: ../app/dialogs/preferences-dialog.c:1967
 msgid "_Pattern"
 msgstr "_Mönster"
 
-#: ../app/dialogs/preferences-dialog.c:1942
+#: ../app/dialogs/preferences-dialog.c:1973
 msgid "Move Tool"
 msgstr "Flyttningsverktyg"
 
-#: ../app/dialogs/preferences-dialog.c:1946
+#: ../app/dialogs/preferences-dialog.c:1977
 msgid "Set layer or path as active"
 msgstr "Ställ in lager eller slinga som aktiv"
 
-#: ../app/dialogs/preferences-dialog.c:1959
-#: ../app/widgets/gimptoolbox.c:561
+#: ../app/dialogs/preferences-dialog.c:1990
+#: ../app/widgets/gimptoolbox.c:657
 msgid "Toolbox"
 msgstr "Verktygslåda"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1971
-#: ../app/dialogs/preferences-dialog.c:2155
+#: ../app/dialogs/preferences-dialog.c:2002
+#: ../app/dialogs/preferences-dialog.c:2186
 #: ../app/widgets/gimpgrideditor.c:203
 msgid "Appearance"
 msgstr "Utseende"
 
-#: ../app/dialogs/preferences-dialog.c:1975
+#: ../app/dialogs/preferences-dialog.c:2006
 msgid "Show _foreground & background color"
 msgstr "Visa _förgrunds- och bakgrundsfärg"
 
-#: ../app/dialogs/preferences-dialog.c:1979
+#: ../app/dialogs/preferences-dialog.c:2010
 msgid "Show active _brush, pattern & gradient"
 msgstr "Visa aktiva _penslar, mönster och gradient"
 
-#: ../app/dialogs/preferences-dialog.c:1983
+#: ../app/dialogs/preferences-dialog.c:2014
 msgid "Show active _image"
 msgstr "Visa aktiv _bild"
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:1991
+#: ../app/dialogs/preferences-dialog.c:2022
 msgid "Tools configuration"
 msgstr "Verktygskonfiguration"
 
-#: ../app/dialogs/preferences-dialog.c:2006
+#: ../app/dialogs/preferences-dialog.c:2037
 msgid "Default New Image"
 msgstr "Standard ny bild"
 
-#: ../app/dialogs/preferences-dialog.c:2009
+#: ../app/dialogs/preferences-dialog.c:2040
 msgid "Default Image"
 msgstr "Standardbild"
 
-#: ../app/dialogs/preferences-dialog.c:2046
+#: ../app/dialogs/preferences-dialog.c:2077
 msgid "Default Image Grid"
 msgstr "Standard bildrutnät"
 
-#: ../app/dialogs/preferences-dialog.c:2049
+#: ../app/dialogs/preferences-dialog.c:2080
 msgid "Default Grid"
 msgstr "Standardrutnät"
 
-#: ../app/dialogs/preferences-dialog.c:2070
+#: ../app/dialogs/preferences-dialog.c:2101
 msgid "Image Windows"
 msgstr "Bildfönster"
 
-#: ../app/dialogs/preferences-dialog.c:2085
+#: ../app/dialogs/preferences-dialog.c:2116
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Använd \"_punkt för punkt\" som standard"
 
-#: ../app/dialogs/preferences-dialog.c:2091
+#: ../app/dialogs/preferences-dialog.c:2122
 msgid "Marching _ants speed:"
 msgstr "Vandrande _myrors hastighet:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2095
+#: ../app/dialogs/preferences-dialog.c:2126
 msgid "Zoom & Resize Behavior"
 msgstr "Zoom- och storleksändringseteende"
 
-#: ../app/dialogs/preferences-dialog.c:2099
+#: ../app/dialogs/preferences-dialog.c:2130
 msgid "Resize window on _zoom"
 msgstr "Ändra storlek på fönstret vid _zoom"
 
-#: ../app/dialogs/preferences-dialog.c:2102
+#: ../app/dialogs/preferences-dialog.c:2133
 msgid "Resize window on image _size change"
 msgstr "Ändra storlek på fönstret vid ändring av bild_storlek"
 
-#: ../app/dialogs/preferences-dialog.c:2108
+#: ../app/dialogs/preferences-dialog.c:2139
 msgid "Fit to window"
 msgstr "Passa till fönster"
 
-#: ../app/dialogs/preferences-dialog.c:2110
+#: ../app/dialogs/preferences-dialog.c:2141
 msgid "Initial zoom _ratio:"
 msgstr "Initial zoom_faktor:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2114
+#: ../app/dialogs/preferences-dialog.c:2145
 msgid "Space Bar"
 msgstr "Blanksteg"
 
-#: ../app/dialogs/preferences-dialog.c:2120
+#: ../app/dialogs/preferences-dialog.c:2151
 msgid "_While space bar is pressed:"
 msgstr "_När blankstegstangenten trycks ned:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2124
+#: ../app/dialogs/preferences-dialog.c:2155
 msgid "Mouse Pointers"
 msgstr "Muspekare"
 
-#: ../app/dialogs/preferences-dialog.c:2128
+#: ../app/dialogs/preferences-dialog.c:2159
 msgid "Show _brush outline"
 msgstr "Visa _penselkontur"
 
-#: ../app/dialogs/preferences-dialog.c:2131
+#: ../app/dialogs/preferences-dialog.c:2162
 msgid "Show pointer for paint _tools"
 msgstr "Visa pekare för målar_verktyg"
 
-#: ../app/dialogs/preferences-dialog.c:2137
+#: ../app/dialogs/preferences-dialog.c:2168
 msgid "Pointer _mode:"
 msgstr "Pekar_läge:"
 
-#: ../app/dialogs/preferences-dialog.c:2140
+#: ../app/dialogs/preferences-dialog.c:2171
 msgid "Pointer re_ndering:"
 msgstr "Pekar_rendering:"
 
-#: ../app/dialogs/preferences-dialog.c:2152
+#: ../app/dialogs/preferences-dialog.c:2183
 msgid "Image Window Appearance"
 msgstr "Bildfönsterutseende"
 
-#: ../app/dialogs/preferences-dialog.c:2163
+#: ../app/dialogs/preferences-dialog.c:2194
 msgid "Default Appearance in Normal Mode"
 msgstr "Standardutseende i normalt läge"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2199
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Standardutseende i helskärmsläge"
 
-#: ../app/dialogs/preferences-dialog.c:2177
+#: ../app/dialogs/preferences-dialog.c:2208
 msgid "Image Title & Statusbar Format"
 msgstr "Bildtitel och statusradsformat"
 
-#: ../app/dialogs/preferences-dialog.c:2180
+#: ../app/dialogs/preferences-dialog.c:2211
 msgid "Title & Status"
 msgstr "Titel och status"
 
-#: ../app/dialogs/preferences-dialog.c:2198
+#: ../app/dialogs/preferences-dialog.c:2229
 msgid "Current format"
 msgstr "Aktuellt format"
 
-#: ../app/dialogs/preferences-dialog.c:2199
+#: ../app/dialogs/preferences-dialog.c:2230
 msgid "Default format"
 msgstr "Standardformat"
 
-#: ../app/dialogs/preferences-dialog.c:2200
+#: ../app/dialogs/preferences-dialog.c:2231
 msgid "Show zoom percentage"
 msgstr "Visa zoomprocent"
 
-#: ../app/dialogs/preferences-dialog.c:2201
+#: ../app/dialogs/preferences-dialog.c:2232
 msgid "Show zoom ratio"
 msgstr "Visa zoomfaktor"
 
-#: ../app/dialogs/preferences-dialog.c:2202
+#: ../app/dialogs/preferences-dialog.c:2233
 msgid "Show image size"
 msgstr "Visa bildstorlek"
 
-#: ../app/dialogs/preferences-dialog.c:2215
+#: ../app/dialogs/preferences-dialog.c:2246
 msgid "Image Title Format"
 msgstr "Bildtitelformat"
 
-#: ../app/dialogs/preferences-dialog.c:2217
+#: ../app/dialogs/preferences-dialog.c:2248
 msgid "Image Statusbar Format"
 msgstr "Bildstatusradsformat"
 
-#: ../app/dialogs/preferences-dialog.c:2302
+#: ../app/dialogs/preferences-dialog.c:2333
 msgid "Display"
 msgstr "Visning"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2345
 msgid "Transparency"
 msgstr "Transparens"
 
-#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/dialogs/preferences-dialog.c:2349
 msgid "_Check style:"
 msgstr "_Rutstil:"
 
-#: ../app/dialogs/preferences-dialog.c:2321
+#: ../app/dialogs/preferences-dialog.c:2352
 msgid "Check _size:"
 msgstr "Rut_storlek:"
 
-#: ../app/dialogs/preferences-dialog.c:2324
+#: ../app/dialogs/preferences-dialog.c:2355
 msgid "Monitor Resolution"
 msgstr "Bildskärmsupplösning"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2328
+#: ../app/dialogs/preferences-dialog.c:2359
 #: ../app/display/gimpcursorview.c:202
 #: ../app/widgets/gimpgrideditor.c:268
 #: ../app/widgets/gimpgrideditor.c:300
 msgid "Pixels"
 msgstr "Bildpunkter"
 
-#: ../app/dialogs/preferences-dialog.c:2346
+#: ../app/dialogs/preferences-dialog.c:2377
 msgid "Horizontal"
 msgstr "Horisontell"
 
-#: ../app/dialogs/preferences-dialog.c:2348
+#: ../app/dialogs/preferences-dialog.c:2379
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: ../app/dialogs/preferences-dialog.c:2350
+#: ../app/dialogs/preferences-dialog.c:2381
 #: ../app/widgets/gimpimagepropview.c:476
 msgid "ppi"
 msgstr "punkter/tum"
 
-#: ../app/dialogs/preferences-dialog.c:2366
+#: ../app/dialogs/preferences-dialog.c:2397
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Identifiera automatiskt (för tillfället %d × %d punkter/tum)"
 
-#: ../app/dialogs/preferences-dialog.c:2386
+#: ../app/dialogs/preferences-dialog.c:2417
 msgid "_Enter manually"
 msgstr "Ange _manuellt"
 
-#: ../app/dialogs/preferences-dialog.c:2401
+#: ../app/dialogs/preferences-dialog.c:2432
 msgid "C_alibrate..."
 msgstr "K_alibrera..."
 
-#: ../app/dialogs/preferences-dialog.c:2424
+#: ../app/dialogs/preferences-dialog.c:2455
 msgid "Color Management"
 msgstr "Färghantering"
 
-#: ../app/dialogs/preferences-dialog.c:2444
+#: ../app/dialogs/preferences-dialog.c:2475
 msgid "_RGB profile:"
 msgstr "_RGB-profil:"
 
-#: ../app/dialogs/preferences-dialog.c:2445
+#: ../app/dialogs/preferences-dialog.c:2476
 msgid "Select RGB Color Profile"
 msgstr "Välj RGB-färgprofil"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2477
 msgid "_CMYK profile:"
 msgstr "_CMYK-profil:"
 
-#: ../app/dialogs/preferences-dialog.c:2447
+#: ../app/dialogs/preferences-dialog.c:2478
 msgid "Select CMYK Color Profile"
 msgstr "Välj CMYK-färgprofil"
 
-#: ../app/dialogs/preferences-dialog.c:2448
+#: ../app/dialogs/preferences-dialog.c:2479
 msgid "_Monitor profile:"
 msgstr "_Skärmprofil:"
 
-#: ../app/dialogs/preferences-dialog.c:2449
+#: ../app/dialogs/preferences-dialog.c:2480
 msgid "Select Monitor Color Profile"
 msgstr "Välj färgprofil för skärm"
 
-#: ../app/dialogs/preferences-dialog.c:2450
+#: ../app/dialogs/preferences-dialog.c:2481
 msgid "_Print simulation profile:"
 msgstr "_Profil för utskriftssimulering:"
 
-#: ../app/dialogs/preferences-dialog.c:2451
+#: ../app/dialogs/preferences-dialog.c:2482
 msgid "Select Printer Color Profile"
 msgstr "Välj färgprofil för skrivare"
 
-#: ../app/dialogs/preferences-dialog.c:2462
+#: ../app/dialogs/preferences-dialog.c:2493
 msgid "_Mode of operation:"
 msgstr "_Åtgärdsläge:"
 
-#: ../app/dialogs/preferences-dialog.c:2492
+#: ../app/dialogs/preferences-dialog.c:2523
 msgid "_Try to use the system monitor profile"
 msgstr "_Försök att använd systemskärmprofilen"
 
-#: ../app/dialogs/preferences-dialog.c:2502
+#: ../app/dialogs/preferences-dialog.c:2533
 msgid "_Display rendering intent:"
 msgstr "_Visa återgivningsmetod:"
 
-#: ../app/dialogs/preferences-dialog.c:2511
+#: ../app/dialogs/preferences-dialog.c:2542
 msgid "_Softproof rendering intent:"
 msgstr "_Softproof återgivningsmetod:"
 
-#: ../app/dialogs/preferences-dialog.c:2524
+#: ../app/dialogs/preferences-dialog.c:2555
 msgid "Mark out of gamut colors"
 msgstr "Markera färger utanför färgomfång"
 
-#: ../app/dialogs/preferences-dialog.c:2529
+#: ../app/dialogs/preferences-dialog.c:2560
 msgid "Select Warning Color"
 msgstr "Välj varningsfärg"
 
-#: ../app/dialogs/preferences-dialog.c:2542
+#: ../app/dialogs/preferences-dialog.c:2573
 msgid "File Open behaviour:"
 msgstr "Beteende för filöppning:"
 
-#: ../app/dialogs/preferences-dialog.c:2554
+#: ../app/dialogs/preferences-dialog.c:2585
 msgid "Input Devices"
 msgstr "Inmatningsenheter"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2564
+#: ../app/dialogs/preferences-dialog.c:2595
 msgid "Extended Input Devices"
 msgstr "Utökade inmatningsenheter"
 
-#: ../app/dialogs/preferences-dialog.c:2568
+#: ../app/dialogs/preferences-dialog.c:2599
 msgid "Configure E_xtended Input Devices..."
 msgstr "Konfigurera _utökade inmatningsenheter..."
 
-#: ../app/dialogs/preferences-dialog.c:2575
+#: ../app/dialogs/preferences-dialog.c:2606
 msgid "_Save input device settings on exit"
 msgstr "_Spara inställningar för inmatningsenheter vid avslutning"
 
-#: ../app/dialogs/preferences-dialog.c:2579
+#: ../app/dialogs/preferences-dialog.c:2610
 msgid "Save Input Device Settings _Now"
 msgstr "Spara inställningar för inmatningsenheter _nu"
 
-#: ../app/dialogs/preferences-dialog.c:2586
+#: ../app/dialogs/preferences-dialog.c:2617
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Återställ sparade inställningar för inmatningsenheter till standardvärden"
 
-#: ../app/dialogs/preferences-dialog.c:2601
+#: ../app/dialogs/preferences-dialog.c:2632
 msgid "Additional Input Controllers"
 msgstr "Ytterligare inmatningsenheter"
 
-#: ../app/dialogs/preferences-dialog.c:2604
+#: ../app/dialogs/preferences-dialog.c:2635
 msgid "Input Controllers"
 msgstr "Inmatningsenheter"
 
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:2651
 msgid "Window Management"
 msgstr "Fönsterhantering"
 
-#: ../app/dialogs/preferences-dialog.c:2629
+#: ../app/dialogs/preferences-dialog.c:2660
 msgid "Window Manager Hints"
 msgstr "Fönsterhintar"
 
-#: ../app/dialogs/preferences-dialog.c:2635
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2666
 msgid "Hint for _docks and toolbox:"
-msgstr "Hint för _verktygslådan:"
+msgstr "Hint för _dockor och verktygslåda:"
 
-#: ../app/dialogs/preferences-dialog.c:2638
+#: ../app/dialogs/preferences-dialog.c:2669
 msgid "Focus"
 msgstr "Fokus"
 
-#: ../app/dialogs/preferences-dialog.c:2642
+#: ../app/dialogs/preferences-dialog.c:2673
 msgid "Activate the _focused image"
 msgstr "Aktivera den _fokuserade bilden"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2646
+#: ../app/dialogs/preferences-dialog.c:2677
 msgid "Window Positions"
 msgstr "Fönsterpositioner"
 
-#: ../app/dialogs/preferences-dialog.c:2649
+#: ../app/dialogs/preferences-dialog.c:2680
 msgid "_Save window positions on exit"
 msgstr "_Spara fönsterpositioner vid avslutning"
 
-#: ../app/dialogs/preferences-dialog.c:2653
+#: ../app/dialogs/preferences-dialog.c:2684
 msgid "Save Window Positions _Now"
 msgstr "Spara fönsterpositioner _nu"
 
-#: ../app/dialogs/preferences-dialog.c:2660
+#: ../app/dialogs/preferences-dialog.c:2691
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Återställ sparade fönsterpositioner till standardvärden"
 
-#: ../app/dialogs/preferences-dialog.c:2675
+#: ../app/dialogs/preferences-dialog.c:2706
 msgid "Folders"
 msgstr "Kataloger"
 
-#: ../app/dialogs/preferences-dialog.c:2695
+#: ../app/dialogs/preferences-dialog.c:2726
 msgid "Temporary folder:"
 msgstr "Temporär mapp:"
 
-#: ../app/dialogs/preferences-dialog.c:2696
+#: ../app/dialogs/preferences-dialog.c:2727
 msgid "Select Folder for Temporary Files"
 msgstr "Välj mapp för temporärfiler"
 
-#: ../app/dialogs/preferences-dialog.c:2700
+#: ../app/dialogs/preferences-dialog.c:2731
 msgid "Swap folder:"
 msgstr "Växlingskatalog:"
 
-#: ../app/dialogs/preferences-dialog.c:2701
+#: ../app/dialogs/preferences-dialog.c:2732
 msgid "Select Swap Folder"
 msgstr "Välj växlingskatalog"
 
-#: ../app/dialogs/preferences-dialog.c:2736
+#: ../app/dialogs/preferences-dialog.c:2767
 msgid "Brush Folders"
 msgstr "Penselmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2738
+#: ../app/dialogs/preferences-dialog.c:2769
 msgid "Select Brush Folders"
 msgstr "Välj penselmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2740
+#: ../app/dialogs/preferences-dialog.c:2771
+msgid "Dynamics Folders"
+msgstr "Dynamikmappar"
+
+#: ../app/dialogs/preferences-dialog.c:2773
+msgid "Select Dynamics Folders"
+msgstr "Välj dynamikmappar"
+
+#: ../app/dialogs/preferences-dialog.c:2775
 msgid "Pattern Folders"
 msgstr "Mönstermappar"
 
-#: ../app/dialogs/preferences-dialog.c:2742
+#: ../app/dialogs/preferences-dialog.c:2777
 msgid "Select Pattern Folders"
 msgstr "Välj mönstermappar"
 
-#: ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/preferences-dialog.c:2779
 msgid "Palette Folders"
 msgstr "Palettmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/preferences-dialog.c:2781
 msgid "Select Palette Folders"
 msgstr "Välj palettmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2748
+#: ../app/dialogs/preferences-dialog.c:2783
 msgid "Gradient Folders"
 msgstr "Gradientmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2750
+#: ../app/dialogs/preferences-dialog.c:2785
 msgid "Select Gradient Folders"
 msgstr "Välj gradientmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/dialogs/preferences-dialog.c:2787
 msgid "Font Folders"
 msgstr "Typsnittsmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2754
+#: ../app/dialogs/preferences-dialog.c:2789
 msgid "Select Font Folders"
 msgstr "Välj typsnittsmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2756
+#: ../app/dialogs/preferences-dialog.c:2791
 msgid "Plug-In Folders"
 msgstr "Mappar för insticksmodul"
 
-#: ../app/dialogs/preferences-dialog.c:2758
+#: ../app/dialogs/preferences-dialog.c:2793
 msgid "Select Plug-In Folders"
 msgstr "Välj mappar för insticksmodul"
 
-#: ../app/dialogs/preferences-dialog.c:2760
+#: ../app/dialogs/preferences-dialog.c:2795
 msgid "Scripts"
 msgstr "Skript"
 
-#: ../app/dialogs/preferences-dialog.c:2760
+#: ../app/dialogs/preferences-dialog.c:2795
 msgid "Script-Fu Folders"
 msgstr "Mappar för Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2762
+#: ../app/dialogs/preferences-dialog.c:2797
 msgid "Select Script-Fu Folders"
 msgstr "Välj mappar för Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2764
+#: ../app/dialogs/preferences-dialog.c:2799
 msgid "Module Folders"
 msgstr "Modulmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2766
+#: ../app/dialogs/preferences-dialog.c:2801
 msgid "Select Module Folders"
 msgstr "Välj modulmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2768
+#: ../app/dialogs/preferences-dialog.c:2803
 msgid "Interpreters"
 msgstr "Tolkar"
 
-#: ../app/dialogs/preferences-dialog.c:2768
+#: ../app/dialogs/preferences-dialog.c:2803
 msgid "Interpreter Folders"
 msgstr "Tolkarmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2770
+#: ../app/dialogs/preferences-dialog.c:2805
 msgid "Select Interpreter Folders"
 msgstr "Välj tolkarmappar"
 
-#: ../app/dialogs/preferences-dialog.c:2772
+#: ../app/dialogs/preferences-dialog.c:2807
 msgid "Environment Folders"
 msgstr "Miljömappar"
 
-#: ../app/dialogs/preferences-dialog.c:2774
+#: ../app/dialogs/preferences-dialog.c:2809
 msgid "Select Environment Folders"
 msgstr "Välj miljömappar"
 
-#: ../app/dialogs/preferences-dialog.c:2776
+#: ../app/dialogs/preferences-dialog.c:2811
 msgid "Themes"
 msgstr "Teman"
 
-#: ../app/dialogs/preferences-dialog.c:2776
+#: ../app/dialogs/preferences-dialog.c:2811
 msgid "Theme Folders"
 msgstr "Temamappar"
 
-#: ../app/dialogs/preferences-dialog.c:2778
+#: ../app/dialogs/preferences-dialog.c:2813
 msgid "Select Theme Folders"
 msgstr "Välj temamappar"
 
@@ -9511,19 +9670,19 @@ msgstr "Lagerstorlek"
 msgid "Resize _layers:"
 msgstr "Ändra storlek på _lager:"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:69
+#: ../app/dialogs/resolution-calibrate-dialog.c:71
 msgid "Calibrate Monitor Resolution"
 msgstr "Kalibrera bildskärmsupplösning"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:128
+#: ../app/dialogs/resolution-calibrate-dialog.c:130
 msgid "Measure the rulers and enter their lengths:"
 msgstr "Mät linjalerna och mata in dess längder:"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:153
+#: ../app/dialogs/resolution-calibrate-dialog.c:155
 msgid "_Horizontal:"
 msgstr "_Horisontell:"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:158
+#: ../app/dialogs/resolution-calibrate-dialog.c:160
 msgid "_Vertical:"
 msgstr "_Vertikal:"
 
@@ -9729,7 +9888,7 @@ msgstr "Hög"
 #: ../app/display/gimpcursorview.c:789
 #: ../app/display/gimpcursorview.c:790
 #: ../app/display/gimpcursorview.c:791
-#: ../app/widgets/gimpcolorframe.c:623
+#: ../app/widgets/gimpcolorframe.c:630
 msgid "n/a"
 msgstr "---"
 
@@ -9770,25 +9929,25 @@ msgstr "N"
 msgid "_Sample Merged"
 msgstr "Sa_mpla sammanfogade"
 
-#: ../app/display/gimpdisplayshell.c:933
+#: ../app/display/gimpdisplayshell.c:484
 msgid "Access the image menu"
 msgstr "Kom åt bildmenyn"
 
-#: ../app/display/gimpdisplayshell.c:1039
+#: ../app/display/gimpdisplayshell.c:591
 msgid "Zoom image when window size changes"
 msgstr "Zooma bild när fönsterstorlek ändras"
 
-#: ../app/display/gimpdisplayshell.c:1068
+#: ../app/display/gimpdisplayshell.c:620
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
-#: ../app/display/gimpdisplayshell.c:1091
+#: ../app/display/gimpdisplayshell.c:643
 msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
-#: ../app/display/gimpdisplayshell.c:1159
-#: ../app/display/gimpdisplayshell.c:1251
-#: ../app/widgets/gimptoolbox.c:239
+#: ../app/display/gimpdisplayshell.c:711
+#: ../app/display/gimpdisplayshell.c:1154
+#: ../app/widgets/gimptoolbox.c:279
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
 
@@ -9842,7 +10001,7 @@ msgstr "Släpp ny slinga"
 #: ../app/display/gimpdisplayshell-dnd.c:469
 #: ../app/tools/gimpblendtool.c:174
 #: ../app/tools/gimpbucketfilltool.c:135
-#: ../app/tools/gimpimagemaptool.c:274
+#: ../app/tools/gimpimagemaptool.c:279
 msgid "Cannot modify the pixels of layer groups."
 msgstr ""
 
@@ -9851,20 +10010,20 @@ msgstr ""
 #: ../app/tools/gimpblendtool.c:181
 #: ../app/tools/gimpbucketfilltool.c:142
 #: ../app/tools/gimpcroptool.c:335
-#: ../app/tools/gimpimagemaptool.c:281
-#: ../app/tools/gimppainttool.c:287
+#: ../app/tools/gimpimagemaptool.c:286
+#: ../app/tools/gimppainttool.c:286
 #: ../app/tools/gimptransformtool.c:349
 #: ../app/tools/gimptransformtool.c:1193
 msgid "The active layer's pixels are locked."
 msgstr ""
 
 #: ../app/display/gimpdisplayshell-dnd.c:539
-#: ../app/widgets/gimplayertreeview.c:754
+#: ../app/widgets/gimplayertreeview.c:757
 msgid "Drop layers"
 msgstr "Förkasta lager"
 
 #: ../app/display/gimpdisplayshell-dnd.c:691
-#: ../app/widgets/gimplayertreeview.c:831
+#: ../app/widgets/gimplayertreeview.c:834
 #: ../app/widgets/gimptoolbox-dnd.c:366
 msgid "Dropped Buffer"
 msgstr "Förkastad buffert"
@@ -9876,6 +10035,16 @@ msgstr "Färgvisningsfilter"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:81
 msgid "Configure Color Display Filters"
 msgstr "Konfigurera färgvisningsfilter"
+
+#: ../app/display/gimpdisplayshell-handlers.c:595
+#, c-format
+msgid "Image saved to '%s'"
+msgstr "Bilden sparades till \"%s\""
+
+#: ../app/display/gimpdisplayshell-handlers.c:609
+#, c-format
+msgid "Image exported to '%s'"
+msgstr "Bilden exporterades till \"%s\""
 
 #: ../app/display/gimpdisplayshell-layer-select.c:120
 msgid "Layer Select"
@@ -9923,7 +10092,7 @@ msgstr " (överskriven)"
 msgid " (imported)"
 msgstr " (importerad)"
 
-#: ../app/display/gimpstatusbar.c:356
+#: ../app/display/gimpstatusbar.c:364
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Avbryt <i>%s</i>"
@@ -9997,43 +10166,48 @@ msgstr "Dokument"
 msgid "GIMP Startup"
 msgstr "Uppstart av GIMP"
 
-#: ../app/paint/gimpairbrush.c:70
+#: ../app/paint/gimpairbrush.c:72
 #: ../app/tools/gimpairbrushtool.c:53
 msgid "Airbrush"
 msgstr "Färgspruta"
 
-#: ../app/paint/gimpbrushcore.c:370
+#: ../app/paint/gimpbrushcore.c:402
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 
-#: ../app/paint/gimpclone.c:100
+#: ../app/paint/gimpbrushcore.c:409
+#, fuzzy
+msgid "No paint dynamics available for use with this tool."
+msgstr "Inga mönster finns tillgängliga för detta verktyg."
+
+#: ../app/paint/gimpclone.c:102
 #: ../app/tools/gimpclonetool.c:60
 msgid "Clone"
 msgstr "Klona"
 
-#: ../app/paint/gimpclone.c:141
+#: ../app/paint/gimpclone.c:143
 msgid "No patterns available for use with this tool."
 msgstr "Inga mönster finns tillgängliga för detta verktyg."
 
-#: ../app/paint/gimpconvolve.c:78
+#: ../app/paint/gimpconvolve.c:80
 msgid "Convolve"
 msgstr "Konvolvera"
 
-#: ../app/paint/gimpdodgeburn.c:89
+#: ../app/paint/gimpdodgeburn.c:91
 msgid "Dodge/Burn"
 msgstr "Blek/Bränna"
 
-#: ../app/paint/gimperaser.c:63
+#: ../app/paint/gimperaser.c:65
 #: ../app/tools/gimperasertool.c:65
 msgid "Eraser"
 msgstr "Suddare"
 
-#: ../app/paint/gimpheal.c:116
+#: ../app/paint/gimpheal.c:118
 #: ../app/tools/gimphealtool.c:52
 msgid "Heal"
 msgstr "Läk"
 
-#: ../app/paint/gimpheal.c:155
+#: ../app/paint/gimpheal.c:157
 msgid "Healing does not operate on indexed layers."
 msgstr "Läkning fungerar inte på indexerade lager."
 
@@ -10055,7 +10229,7 @@ msgstr "Aspektförhållande:"
 msgid "Ink Blob Angle"
 msgstr ""
 
-#: ../app/paint/gimppaintbrush.c:63
+#: ../app/paint/gimppaintbrush.c:65
 #: ../app/tools/gimppaintbrushtool.c:50
 msgid "Paintbrush"
 msgstr "Pensel"
@@ -10068,7 +10242,7 @@ msgstr "Inte tillräckligt många punkter att stryka"
 msgid "Paint"
 msgstr "Måla"
 
-#: ../app/paint/gimppaintoptions.c:245
+#: ../app/paint/gimppaintoptions.c:136
 msgid "Brush Scale"
 msgstr "Penselskala"
 
@@ -10086,12 +10260,12 @@ msgstr "Perspektivkloning"
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Perspektivkloning fungerar inte på indexerade lager."
 
-#: ../app/paint/gimpsmudge.c:81
+#: ../app/paint/gimpsmudge.c:83
 #: ../app/tools/gimpsmudgetool.c:52
 msgid "Smudge"
 msgstr "Smeta"
 
-#: ../app/paint/gimpsourcecore.c:230
+#: ../app/paint/gimpsourcecore.c:232
 msgid "Set a source image first."
 msgstr "Ställ in en källbild först."
 
@@ -10595,7 +10769,7 @@ msgstr ""
 "strax hwila på mjuka tuvor."
 
 #: ../app/text/gimptext-compat.c:107
-#: ../app/tools/gimptexttool.c:2154
+#: ../app/tools/gimptexttool.c:2167
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -10679,7 +10853,6 @@ msgid "Rate:"
 msgstr "Flöde:"
 
 #: ../app/tools/gimpairbrushtool.c:97
-#: ../app/tools/gimppaintoptions-gui.c:241
 msgid "Pressure:"
 msgstr "Tryck:"
 
@@ -10786,7 +10959,7 @@ msgid "Offset:"
 msgstr "Position:"
 
 #: ../app/tools/gimpblendoptions.c:215
-#: ../app/tools/gimppaintoptions-gui.c:890
+#: ../app/tools/gimppaintoptions-gui.c:305
 msgid "Gradient:"
 msgstr "Gradient:"
 
@@ -10796,7 +10969,7 @@ msgid "Shape:"
 msgstr "Form:"
 
 #: ../app/tools/gimpblendoptions.c:238
-#: ../app/tools/gimppaintoptions-gui.c:914
+#: ../app/tools/gimppaintoptions-gui.c:236
 msgid "Repeat:"
 msgstr "Upprepa:"
 
@@ -10827,7 +11000,7 @@ msgid "Blend does not operate on indexed layers."
 msgstr "Toning fungerar inte på indexerade lager."
 
 #: ../app/tools/gimpblendtool.c:423
-#: ../app/tools/gimppainttool.c:635
+#: ../app/tools/gimppainttool.c:634
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
@@ -11148,12 +11321,12 @@ msgid "Click in any image to view its color"
 msgstr "Klicka i en bild för att visa dess färg"
 
 #: ../app/tools/gimpcolorpickertool.c:249
-#: ../app/tools/gimppainttool.c:494
+#: ../app/tools/gimppainttool.c:493
 msgid "Click in any image to pick the foreground color"
 msgstr "Klicka i en bild för att välja förgrundsfärgen"
 
 #: ../app/tools/gimpcolorpickertool.c:257
-#: ../app/tools/gimppainttool.c:500
+#: ../app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the background color"
 msgstr "Klicka i en bild för att välja bakgrundsfärgen"
 
@@ -11248,9 +11421,8 @@ msgid "Click or press Enter to crop"
 msgstr "Klicka eller tryck på Enter för att beskära"
 
 #: ../app/tools/gimpcroptool.c:328
-#, fuzzy
 msgid "There is no active layer to crop."
-msgstr "Det finns inget aktivt lager eller kanal att klippa ifrån."
+msgstr "Det finns inget aktivt lager att beskära."
 
 #: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
@@ -11563,23 +11735,23 @@ msgstr "Fri markering: Markera en handritad region med fria och polygona segment
 msgid "_Free Select"
 msgstr "_Fri markering"
 
-#: ../app/tools/gimpfreeselecttool.c:1118
+#: ../app/tools/gimpfreeselecttool.c:1119
 msgid "Click to complete selection"
 msgstr "Klicka för att färdigställa markeringen"
 
-#: ../app/tools/gimpfreeselecttool.c:1122
+#: ../app/tools/gimpfreeselecttool.c:1123
 msgid "Click-Drag to move segment vertex"
 msgstr "Klicka och dra för att flytta segmenthörnet"
 
-#: ../app/tools/gimpfreeselecttool.c:1127
+#: ../app/tools/gimpfreeselecttool.c:1128
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "Return verkställer, Escape avbryter, Backsteg tar bort sista segmentet"
 
-#: ../app/tools/gimpfreeselecttool.c:1131
+#: ../app/tools/gimpfreeselecttool.c:1132
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "Klicka och dra lägger till ett ledigt segment, Klick lägger till ett polygont segment"
 
-#: ../app/tools/gimpfreeselecttool.c:1585
+#: ../app/tools/gimpfreeselecttool.c:1625
 msgctxt "command"
 msgid "Free Select"
 msgstr "Fri markering"
@@ -11730,7 +11902,7 @@ msgstr "För_val:"
 msgid "Settings saved to '%s'"
 msgstr "Inställningar sparade till \"%s\""
 
-#: ../app/tools/gimpimagemaptool.c:332
+#: ../app/tools/gimpimagemaptool.c:367
 msgid "_Preview"
 msgstr "_Förhandsgranskning"
 
@@ -11748,7 +11920,7 @@ msgstr "Storlek:"
 
 #: ../app/tools/gimpinkoptions-gui.c:75
 #: ../app/tools/gimpmeasuretool.c:1047
-#: ../app/tools/gimppaintoptions-gui.c:168
+#: ../app/tools/gimppaintoptions-gui.c:137
 #: ../app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
 msgstr "Vinkel:"
@@ -11759,7 +11931,6 @@ msgid "Sensitivity"
 msgstr "Känslighet"
 
 #: ../app/tools/gimpinkoptions-gui.c:99
-#: ../app/tools/gimppaintoptions-gui.c:259
 msgid "Tilt:"
 msgstr "Lutning:"
 
@@ -11919,7 +12090,8 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "Zoomverktyg: Justera zoomnivån"
 
 #: ../app/tools/gimpmagnifytool.c:89
-msgid "tool|_Zoom"
+msgctxt "tool"
+msgid "_Zoom"
 msgstr "_Zooma"
 
 #: ../app/tools/gimpmeasureoptions.c:123
@@ -11966,7 +12138,7 @@ msgstr "Klicka och dra för att flytta alla punkter"
 #: ../app/tools/gimpmeasuretool.c:1030
 #: ../app/tools/gimpmeasuretool.c:1086
 #: ../app/tools/gimpmeasuretool.c:1114
-#: ../app/tools/gimppainttool.c:644
+#: ../app/tools/gimppainttool.c:643
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -12037,121 +12209,84 @@ msgstr "Målarpenselverktyg: Måla mjuka penseldrag med en pensel"
 msgid "_Paintbrush"
 msgstr "_Pensel"
 
-#: ../app/tools/gimppaintoptions-gui.c:121
+#: ../app/tools/gimppaintoptions-gui.c:90
 #: ../app/tools/gimpselectionoptions.c:210
 #: ../app/widgets/gimpbrushselect.c:193
-#: ../app/widgets/gimplayertreeview.c:288
+#: ../app/widgets/gimplayertreeview.c:289
 msgid "Mode:"
 msgstr "Läge:"
 
-#: ../app/tools/gimppaintoptions-gui.c:136
+#: ../app/tools/gimppaintoptions-gui.c:105
 #: ../app/tools/gimptransformoptions.c:347
 #: ../app/widgets/gimpbrushselect.c:180
-#: ../app/widgets/gimplayertreeview.c:311
+#: ../app/widgets/gimplayertreeview.c:312
 msgid "Opacity:"
 msgstr "Opacitet:"
 
-#: ../app/tools/gimppaintoptions-gui.c:149
+#: ../app/tools/gimppaintoptions-gui.c:118
 msgid "Brush:"
 msgstr "Pensel:"
 
-#: ../app/tools/gimppaintoptions-gui.c:154
+#: ../app/tools/gimppaintoptions-gui.c:123
 msgid "Scale:"
 msgstr "Skala:"
 
-#: ../app/tools/gimppaintoptions-gui.c:161
+#: ../app/tools/gimppaintoptions-gui.c:130
 msgid "Aspect Ratio:"
 msgstr "Aspektförhållande:"
 
-#: ../app/tools/gimppaintoptions-gui.c:181
-msgid "Hardness"
-msgstr "Hårdhet"
-
-#: ../app/tools/gimppaintoptions-gui.c:187
-msgid "Rate"
-msgstr "Flöde"
-
-#: ../app/tools/gimppaintoptions-gui.c:193
-msgid "Size"
-msgstr "Storlek"
-
-#: ../app/tools/gimppaintoptions-gui.c:199
-msgid "Aspect ratio"
-msgstr "Aspektförhållande"
-
-#: ../app/tools/gimppaintoptions-gui.c:206
-msgid "Angle"
-msgstr "Vinkel"
-
-#: ../app/tools/gimppaintoptions-gui.c:212
-msgid "Color"
-msgstr "Färg"
-
-#: ../app/tools/gimppaintoptions-gui.c:229
-msgid "Brush Dynamics"
-msgstr "Penseldynamik"
-
-#: ../app/tools/gimppaintoptions-gui.c:247
-msgid "Velocity:"
-msgstr "Hastighet:"
-
-#: ../app/tools/gimppaintoptions-gui.c:253
-msgid "Direction:"
-msgstr "Riktning:"
-
-#: ../app/tools/gimppaintoptions-gui.c:265
-msgid "Random:"
-msgstr "Slumpmässig:"
-
-#: ../app/tools/gimppaintoptions-gui.c:325
+#: ../app/tools/gimppaintoptions-gui.c:162
 msgid "Incremental"
 msgstr "Inkrementell"
 
-#: ../app/tools/gimppaintoptions-gui.c:341
+#: ../app/tools/gimppaintoptions-gui.c:178
 msgid "Hard edge"
 msgstr "Hård kant"
 
-#: ../app/tools/gimppaintoptions-gui.c:807
+#: ../app/tools/gimppaintoptions-gui.c:212
 msgid "Fade out"
 msgstr "Tona ut"
 
-#: ../app/tools/gimppaintoptions-gui.c:816
-#: ../app/tools/gimppaintoptions-gui.c:899
+#: ../app/tools/gimppaintoptions-gui.c:221
 msgid "Length:"
 msgstr "Längd:"
 
+#: ../app/tools/gimppaintoptions-gui.c:241
+#: ../app/widgets/gimpviewablebox.c:223
+msgid "Reverse"
+msgstr "Omvänd"
+
 # FIXME: Hitta bättre ord
-#: ../app/tools/gimppaintoptions-gui.c:843
+#: ../app/tools/gimppaintoptions-gui.c:261
 msgid "Apply Jitter"
 msgstr "Tillämpa jitter"
 
-#: ../app/tools/gimppaintoptions-gui.c:848
+#: ../app/tools/gimppaintoptions-gui.c:266
 msgid "Amount:"
 msgstr "Mängd:"
 
-#: ../app/tools/gimppaintoptions-gui.c:873
+#: ../app/tools/gimppaintoptions-gui.c:288
 msgid "Use color from gradient"
 msgstr "Använd färg från gradient"
 
-#: ../app/tools/gimppainttool.c:143
+#: ../app/tools/gimppainttool.c:142
 msgid "Click to paint"
 msgstr "Klicka för att måla"
 
-#: ../app/tools/gimppainttool.c:144
+#: ../app/tools/gimppainttool.c:143
 msgid "Click to draw the line"
 msgstr "Klicka för att rita linjen"
 
-#: ../app/tools/gimppainttool.c:145
+#: ../app/tools/gimppainttool.c:144
 #, c-format
 msgid "%s to pick a color"
 msgstr "%s för att välja en färg"
 
-#: ../app/tools/gimppainttool.c:280
-#, fuzzy
+#: ../app/tools/gimppainttool.c:279
 msgid "Cannot paint on layer groups."
-msgstr "Kan inte höja lager utan alfakanal."
+msgstr "Kan inte måla på lagergrupper."
 
-#: ../app/tools/gimppainttool.c:690
+#: ../app/tools/gimppainttool.c:689
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s för en rak linje"
@@ -12487,20 +12622,20 @@ msgstr "Te_xt"
 msgid "Reshape Text Layer"
 msgstr "Omforma textlager"
 
-#: ../app/tools/gimptexttool.c:2237
+#: ../app/tools/gimptexttool.c:2250
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
-#: ../app/tools/gimptexttool.c:2361
-#: ../app/tools/gimptexttool.c:2364
+#: ../app/tools/gimptexttool.c:2374
+#: ../app/tools/gimptexttool.c:2377
 msgid "Confirm Text Editing"
 msgstr "Bekräfta textredigering"
 
-#: ../app/tools/gimptexttool.c:2368
+#: ../app/tools/gimptexttool.c:2381
 msgid "Create _New Layer"
 msgstr "Skapa _nytt lager"
 
-#: ../app/tools/gimptexttool.c:2392
+#: ../app/tools/gimptexttool.c:2405
 msgid ""
 "The layer you selected is a text layer but it has been modified using other tools. Editing the layer with the text tool will discard these modifications.\n"
 "\n"
@@ -12547,6 +12682,7 @@ msgid "Transform:"
 msgstr "Transformera:"
 
 #: ../app/tools/gimptransformoptions.c:281
+#: ../app/widgets/gimpdynamicseditor.c:115
 msgid "Direction"
 msgstr "Riktning"
 
@@ -12628,9 +12764,8 @@ msgid "Pat_hs"
 msgstr "Slin_gor"
 
 #: ../app/tools/gimpvectortool.c:253
-#, fuzzy
 msgid "The active path is locked."
-msgstr "Flytta den aktiva slingan"
+msgstr "Den aktiva slingan är låst."
 
 #: ../app/tools/gimpvectortool.c:341
 msgid "Add Stroke"
@@ -13023,7 +13158,7 @@ msgstr "Procent av penselns bredd"
 
 #: ../app/widgets/gimpbufferview.c:173
 #: ../app/widgets/gimpbufferview.c:257
-#: ../app/widgets/gimpeditor.c:740
+#: ../app/widgets/gimpeditor.c:735
 msgid "(None)"
 msgstr "(Ingen)"
 
@@ -13077,71 +13212,71 @@ msgstr "Inget filter markerat"
 msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
 msgstr "Hexadecimal färgnotation som används i HTML och CSS.  Den här posten accepterar även CSS-färgnamn."
 
-#: ../app/widgets/gimpcolorframe.c:501
+#: ../app/widgets/gimpcolorframe.c:508
 msgid "Index:"
 msgstr "Index:"
 
-#: ../app/widgets/gimpcolorframe.c:514
-#: ../app/widgets/gimpcolorframe.c:540
+#: ../app/widgets/gimpcolorframe.c:521
+#: ../app/widgets/gimpcolorframe.c:547
 msgid "Red:"
 msgstr "Röd:"
 
-#: ../app/widgets/gimpcolorframe.c:515
-#: ../app/widgets/gimpcolorframe.c:541
+#: ../app/widgets/gimpcolorframe.c:522
+#: ../app/widgets/gimpcolorframe.c:548
 msgid "Green:"
 msgstr "Grön:"
 
-#: ../app/widgets/gimpcolorframe.c:516
-#: ../app/widgets/gimpcolorframe.c:542
+#: ../app/widgets/gimpcolorframe.c:523
+#: ../app/widgets/gimpcolorframe.c:549
 msgid "Blue:"
 msgstr "Blå:"
 
-#: ../app/widgets/gimpcolorframe.c:529
-#: ../app/widgets/gimpcolorframe.c:562
+#: ../app/widgets/gimpcolorframe.c:536
+#: ../app/widgets/gimpcolorframe.c:569
 msgid "Value:"
 msgstr "Värde:"
 
-#: ../app/widgets/gimpcolorframe.c:553
+#: ../app/widgets/gimpcolorframe.c:560
 msgid "Hex:"
 msgstr "Hex:"
 
-#: ../app/widgets/gimpcolorframe.c:560
+#: ../app/widgets/gimpcolorframe.c:567
 msgid "Hue:"
 msgstr "Nyans:"
 
-#: ../app/widgets/gimpcolorframe.c:561
+#: ../app/widgets/gimpcolorframe.c:568
 msgid "Sat.:"
 msgstr "Mättnad:"
 
-#: ../app/widgets/gimpcolorframe.c:579
+#: ../app/widgets/gimpcolorframe.c:586
 msgid "Cyan:"
 msgstr "Cyan:"
 
-#: ../app/widgets/gimpcolorframe.c:580
+#: ../app/widgets/gimpcolorframe.c:587
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: ../app/widgets/gimpcolorframe.c:581
+#: ../app/widgets/gimpcolorframe.c:588
 msgid "Yellow:"
 msgstr "Gul:"
 
-#: ../app/widgets/gimpcolorframe.c:582
+#: ../app/widgets/gimpcolorframe.c:589
 msgid "Black:"
 msgstr "Svart:"
 
-#: ../app/widgets/gimpcolorframe.c:602
+#: ../app/widgets/gimpcolorframe.c:609
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: ../app/widgets/gimpcolormapeditor.c:223
+#: ../app/widgets/gimpcolormapeditor.c:225
 msgid "Color index:"
 msgstr "Färgindex:"
 
-#: ../app/widgets/gimpcolormapeditor.c:233
+#: ../app/widgets/gimpcolormapeditor.c:235
 msgid "HTML notation:"
 msgstr "HTML-notation:"
 
-#: ../app/widgets/gimpcolormapeditor.c:490
+#: ../app/widgets/gimpcolormapeditor.c:492
 msgid "Only indexed images have a colormap."
 msgstr "Endast indexerade bilder har en färgkarta."
 
@@ -13149,11 +13284,11 @@ msgstr "Endast indexerade bilder har en färgkarta."
 msgid "Palette"
 msgstr "Palett"
 
-#: ../app/widgets/gimpcontainerpopup.c:540
+#: ../app/widgets/gimpcontainerpopup.c:547
 msgid "Smaller Previews"
 msgstr "Mindre förhandsvisningar"
 
-#: ../app/widgets/gimpcontainerpopup.c:545
+#: ../app/widgets/gimpcontainerpopup.c:552
 msgid "Larger Previews"
 msgstr "Större förhandsvisningar"
 
@@ -13412,12 +13547,12 @@ msgstr "%s (skrivskyddad)"
 msgid "Save device status"
 msgstr "Spara enhetsstatus"
 
-#: ../app/widgets/gimpdevicestatus.c:447
+#: ../app/widgets/gimpdevicestatus.c:445
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Förgrund: %d, %d, %d"
 
-#: ../app/widgets/gimpdevicestatus.c:452
+#: ../app/widgets/gimpdevicestatus.c:450
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Bakgrund: %d, %d, %d"
@@ -13443,17 +13578,77 @@ msgstr "En fil med namnet \"%s\" finns redan."
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Vill du ersätta den med bilden du sparar?"
 
-#: ../app/widgets/gimpdockable.c:194
+#: ../app/widgets/gimpdockable.c:236
 msgid "Configure this tab"
 msgstr "Konfigurera denna flik"
 
-#: ../app/widgets/gimpdockseparator.c:43
-msgid "You can drop dockable dialogs here"
-msgstr "Du kan släppa dockningbara dialoger här"
+#. Auto button
+#: ../app/widgets/gimpdockwindow.c:347
+msgid "Auto"
+msgstr "Auto"
 
-#: ../app/widgets/gimpdrawabletreeview.c:123
+#: ../app/widgets/gimpdockwindow.c:358
+msgid "When enabled the dialog automatically follows the image you are working on."
+msgstr "När aktiverat följer dialogen automatiskt bilden du arbetar på."
+
+#: ../app/widgets/gimpdrawabletreeview.c:124
 msgid "Lock pixels"
 msgstr "Lås bildpunkter"
+
+#: ../app/widgets/gimpdynamicseditor.c:113
+msgid "Pressure"
+msgstr "Tryck"
+
+#: ../app/widgets/gimpdynamicseditor.c:114
+msgid "Velocity"
+msgstr "Hastighet"
+
+#: ../app/widgets/gimpdynamicseditor.c:116
+#, fuzzy
+msgid "Tilt"
+msgstr "Lutning:"
+
+#: ../app/widgets/gimpdynamicseditor.c:117
+msgid "Random"
+msgstr "Slumpmässig"
+
+#: ../app/widgets/gimpdynamicseditor.c:118
+msgid "Fade"
+msgstr "Tona ut"
+
+#: ../app/widgets/gimpdynamicseditor.c:126
+msgid "Hardness"
+msgstr "Hårdhet"
+
+#: ../app/widgets/gimpdynamicseditor.c:131
+msgid "Rate"
+msgstr "Flöde"
+
+#: ../app/widgets/gimpdynamicseditor.c:136
+msgid "Size"
+msgstr "Storlek"
+
+#: ../app/widgets/gimpdynamicseditor.c:141
+msgid "Aspect ratio"
+msgstr "Aspektförhållande"
+
+#: ../app/widgets/gimpdynamicseditor.c:146
+msgid "Color"
+msgstr "Färg"
+
+#: ../app/widgets/gimpdynamicseditor.c:151
+msgid "Angle"
+msgstr "Vinkel"
+
+#: ../app/widgets/gimpdynamicseditor.c:156
+#, fuzzy
+msgid "Jitter"
+msgstr "Hörn"
+
+#: ../app/widgets/gimpdynamicseditor.c:161
+#: ../app/widgets/gimpgrideditor.c:243
+msgid "Spacing"
+msgstr "Mellanrum"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -13506,88 +13701,88 @@ msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
 #. Instant update toggle
-#: ../app/widgets/gimpgradienteditor.c:413
+#: ../app/widgets/gimpgradienteditor.c:415
 msgid "Instant update"
 msgstr "Direktuppdatering"
 
-#: ../app/widgets/gimpgradienteditor.c:775
+#: ../app/widgets/gimpgradienteditor.c:777
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Zoomfaktor: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:778
+#: ../app/widgets/gimpgradienteditor.c:780
 #, c-format
 msgid "Displaying [%0.4f, %0.4f]"
 msgstr "Visar [%0.4f, %0.4f]"
 
-#: ../app/widgets/gimpgradienteditor.c:997
+#: ../app/widgets/gimpgradienteditor.c:999
 #, c-format
 msgid "Position: %0.4f"
 msgstr "Position: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:998
+#: ../app/widgets/gimpgradienteditor.c:1000
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1000
+#: ../app/widgets/gimpgradienteditor.c:1002
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "NMI (%0.1f, %0.1f, %0.1f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1002
+#: ../app/widgets/gimpgradienteditor.c:1004
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Intensitet: %0.1f    Opacitet: %0.1f"
 
-#: ../app/widgets/gimpgradienteditor.c:1033
+#: ../app/widgets/gimpgradienteditor.c:1035
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1044
+#: ../app/widgets/gimpgradienteditor.c:1046
 msgid "Foreground color set to:"
 msgstr "Förgrundsfärg inställd till:"
 
-#: ../app/widgets/gimpgradienteditor.c:1051
+#: ../app/widgets/gimpgradienteditor.c:1053
 msgid "Background color set to:"
 msgstr "Bakgrundsfärg inställd till:"
 
-#: ../app/widgets/gimpgradienteditor.c:1285
-#: ../app/widgets/gimpgradienteditor.c:1351
+#: ../app/widgets/gimpgradienteditor.c:1287
+#: ../app/widgets/gimpgradienteditor.c:1353
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sdra: flytta och komprimera"
 
-#: ../app/widgets/gimpgradienteditor.c:1291
+#: ../app/widgets/gimpgradienteditor.c:1293
 msgid "Drag: move"
 msgstr "Dra: flytta"
 
-#: ../app/widgets/gimpgradienteditor.c:1298
-#: ../app/widgets/gimpgradienteditor.c:1312
-#: ../app/widgets/gimpgradienteditor.c:1326
-#: ../app/widgets/gimpgradienteditor.c:1348
+#: ../app/widgets/gimpgradienteditor.c:1300
+#: ../app/widgets/gimpgradienteditor.c:1314
+#: ../app/widgets/gimpgradienteditor.c:1328
+#: ../app/widgets/gimpgradienteditor.c:1350
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sklicka: utöka markering"
 
-#: ../app/widgets/gimpgradienteditor.c:1304
-#: ../app/widgets/gimpgradienteditor.c:1318
+#: ../app/widgets/gimpgradienteditor.c:1306
+#: ../app/widgets/gimpgradienteditor.c:1320
 msgid "Click: select"
 msgstr "Klicka: markera"
 
-#: ../app/widgets/gimpgradienteditor.c:1332
-#: ../app/widgets/gimpgradienteditor.c:1356
+#: ../app/widgets/gimpgradienteditor.c:1334
+#: ../app/widgets/gimpgradienteditor.c:1358
 msgid "Click: select    Drag: move"
 msgstr "Klicka: markera  Dra: flytta"
 
-#: ../app/widgets/gimpgradienteditor.c:1571
-#: ../app/widgets/gimpgradienteditor.c:1579
+#: ../app/widgets/gimpgradienteditor.c:1573
+#: ../app/widgets/gimpgradienteditor.c:1581
 #, c-format
 msgid "Handle position: %0.4f"
 msgstr "Handtagsposition: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:1596
+#: ../app/widgets/gimpgradienteditor.c:1598
 #, c-format
 msgid "Distance: %0.4f"
 msgstr "Avstånd: %0.4f"
@@ -13611,10 +13806,6 @@ msgstr "Ändra rutnätets bakgrundsfärg"
 #: ../app/widgets/gimpgrideditor.c:238
 msgid "_Background color:"
 msgstr "_Bakgrundsfärg:"
-
-#: ../app/widgets/gimpgrideditor.c:243
-msgid "Spacing"
-msgstr "Mellanrum"
 
 #: ../app/widgets/gimpgrideditor.c:264
 #: ../app/widgets/gimpgrideditor.c:296
@@ -13666,31 +13857,31 @@ msgstr "GIMP:s användarhandbok är inte installerad på din dator."
 msgid "You may either install the additional help package or change your preferences to use the online version."
 msgstr "Du kan antingen installera det extra hjälppaketet eller ändra dina inställningar till att använda versionen på nätet."
 
-#: ../app/widgets/gimphistogrameditor.c:99
+#: ../app/widgets/gimphistogrameditor.c:101
 msgid "Mean:"
 msgstr "Medel:"
 
-#: ../app/widgets/gimphistogrameditor.c:100
+#: ../app/widgets/gimphistogrameditor.c:102
 msgid "Std dev:"
 msgstr "Med. avvik:"
 
-#: ../app/widgets/gimphistogrameditor.c:101
+#: ../app/widgets/gimphistogrameditor.c:103
 msgid "Median:"
 msgstr "Median:"
 
-#: ../app/widgets/gimphistogrameditor.c:102
+#: ../app/widgets/gimphistogrameditor.c:104
 msgid "Pixels:"
 msgstr "Bildpunkter:"
 
-#: ../app/widgets/gimphistogrameditor.c:103
+#: ../app/widgets/gimphistogrameditor.c:105
 msgid "Count:"
 msgstr "Antal:"
 
-#: ../app/widgets/gimphistogrameditor.c:104
+#: ../app/widgets/gimphistogrameditor.c:106
 msgid "Percentile:"
 msgstr "Procentuellt:"
 
-#: ../app/widgets/gimphistogrameditor.c:122
+#: ../app/widgets/gimphistogrameditor.c:124
 msgid "Channel:"
 msgstr "Kanal:"
 
@@ -13782,53 +13973,45 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "färger"
 
-#: ../app/widgets/gimpitemtreeview.c:707
+#: ../app/widgets/gimpitemtreeview.c:708
 msgid "Lock:"
 msgstr "Lås:"
 
-#: ../app/widgets/gimpitemtreeview.c:1423
+#: ../app/widgets/gimpitemtreeview.c:1426
 msgid "Set Item Exclusive Visible"
 msgstr "Ställ in objekt som ensamt synligt"
 
-#: ../app/widgets/gimpitemtreeview.c:1431
+#: ../app/widgets/gimpitemtreeview.c:1434
 msgid "Set Item Exclusive Linked"
 msgstr "Ställ in objekt som ensamt länkat"
 
-#: ../app/widgets/gimplayertreeview.c:234
+#: ../app/widgets/gimplayertreeview.c:235
 msgid "Reorder Layer"
 msgstr "Ändra ordning på lager"
 
-#: ../app/widgets/gimplayertreeview.c:331
+#: ../app/widgets/gimplayertreeview.c:332
 msgid "Lock alpha channel"
 msgstr "Lås alfakanal"
 
-#: ../app/widgets/gimplayertreeview.c:872
+#: ../app/widgets/gimplayertreeview.c:875
 msgid "Empty Layer"
 msgstr "Tomt lager"
 
-#: ../app/widgets/gimpmenudock.c:159
-msgid "Auto"
-msgstr "Auto"
-
-#: ../app/widgets/gimpmenudock.c:170
-msgid "When enabled the dialog automatically follows the image you are working on."
-msgstr "När aktiverat följer dialogen automatiskt bilden du arbetar på."
-
-#: ../app/widgets/gimpmessagebox.c:442
+#: ../app/widgets/gimpmessagebox.c:444
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Meddelande upprepat %d gånger."
 
-#: ../app/widgets/gimpmessagebox.c:444
+#: ../app/widgets/gimpmessagebox.c:446
 msgid "Message repeated once."
 msgstr "Meddelande upprepat en gång."
 
-#: ../app/widgets/gimppaletteeditor.c:254
-#: ../app/widgets/gimppaletteeditor.c:740
+#: ../app/widgets/gimppaletteeditor.c:256
+#: ../app/widgets/gimppaletteeditor.c:742
 msgid "Undefined"
 msgstr "Odefinerad"
 
-#: ../app/widgets/gimppaletteeditor.c:262
+#: ../app/widgets/gimppaletteeditor.c:264
 msgid "Columns:"
 msgstr "Kolumner:"
 
@@ -13913,39 +14096,39 @@ msgstr "%d × %d punkter/tum"
 msgid "%d ppi"
 msgstr "%d punkter/tum"
 
-#: ../app/widgets/gimpstrokeeditor.c:187
+#: ../app/widgets/gimpstrokeeditor.c:189
 msgid "Line width:"
 msgstr "Linjebredd:"
 
-#: ../app/widgets/gimpstrokeeditor.c:199
+#: ../app/widgets/gimpstrokeeditor.c:201
 msgid "_Line Style"
 msgstr "Linje_stil"
 
-#: ../app/widgets/gimpstrokeeditor.c:218
+#: ../app/widgets/gimpstrokeeditor.c:220
 msgid "_Cap style:"
 msgstr "_Ändpunktsstil:"
 
-#: ../app/widgets/gimpstrokeeditor.c:224
+#: ../app/widgets/gimpstrokeeditor.c:226
 msgid "_Join style:"
 msgstr "_Fogstil:"
 
-#: ../app/widgets/gimpstrokeeditor.c:229
+#: ../app/widgets/gimpstrokeeditor.c:231
 msgid "_Miter limit:"
 msgstr "_Kantgräns:"
 
-#: ../app/widgets/gimpstrokeeditor.c:236
+#: ../app/widgets/gimpstrokeeditor.c:238
 msgid "Dash pattern:"
 msgstr "Streckningsmönster:"
 
-#: ../app/widgets/gimpstrokeeditor.c:299
+#: ../app/widgets/gimpstrokeeditor.c:301
 msgid "Dash _preset:"
 msgstr "Förinställning för s_treckning:"
 
-#: ../app/widgets/gimptagentry.c:43
+#: ../app/widgets/gimptagentry.c:45
 msgid "filter"
 msgstr "filter"
 
-#: ../app/widgets/gimptagentry.c:44
+#: ../app/widgets/gimptagentry.c:46
 msgid "enter tags"
 msgstr "ange taggar"
 
@@ -13953,7 +14136,7 @@ msgstr "ange taggar"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1653
+#: ../app/widgets/gimptagentry.c:1655
 msgid ","
 msgstr ","
 
@@ -14028,6 +14211,14 @@ msgstr "Miniatyrbild %d av %d"
 #: ../app/widgets/gimpthumbbox.c:752
 msgid "Creating preview..."
 msgstr "Skapar förhandsvisning..."
+
+#: ../app/widgets/gimptranslationstore.c:105
+msgid "System Language"
+msgstr "Systemspråk"
+
+#: ../app/widgets/gimptranslationstore.c:107
+msgid "English"
+msgstr "Engelska"
 
 #: ../app/widgets/gimptoolbox-color-area.c:79
 msgid ""
@@ -14109,32 +14300,32 @@ msgstr "Sänk detta verktyg till nederst"
 msgid "Reset tool order and visibility"
 msgstr "Återställ verktygsordning och synlighet"
 
-#: ../app/widgets/gimptooloptionseditor.c:164
+#: ../app/widgets/gimptooloptionseditor.c:206
 msgid "Save options to..."
 msgstr "Spara alternativ till..."
 
-#: ../app/widgets/gimptooloptionseditor.c:172
+#: ../app/widgets/gimptooloptionseditor.c:214
 msgid "Restore options from..."
 msgstr "Återställ alternativ från..."
 
-#: ../app/widgets/gimptooloptionseditor.c:180
+#: ../app/widgets/gimptooloptionseditor.c:222
 msgid "Delete saved options..."
 msgstr "Ta bort sparade alternativ..."
 
-#: ../app/widgets/gimptooloptionseditor.c:479
+#: ../app/widgets/gimptooloptionseditor.c:562
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "Fel vid sparande av förval för verktygsalternativ: %s"
 
-#: ../app/widgets/gimpuimanager.c:740
+#: ../app/widgets/gimpuimanager.c:750
 msgid "Your GIMP installation is incomplete:"
 msgstr "Din GIMP-installation är klar:"
 
-#: ../app/widgets/gimpuimanager.c:742
+#: ../app/widgets/gimpuimanager.c:752
 msgid "Please make sure the menu XML files are correctly installed."
 msgstr "Försäkra dig om att XML-filerna för menyer är korrekt installerade."
 
-#: ../app/widgets/gimpuimanager.c:748
+#: ../app/widgets/gimpuimanager.c:758
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr "Det inträffade ett fel vid tolkning av menydefinitionen från %s: %s"
@@ -14168,10 +14359,6 @@ msgstr "Öppna mönstervalsdialogen"
 msgid "Open the gradient selection dialog"
 msgstr "Öppna dialogrutan för val av gradient"
 
-#: ../app/widgets/gimpviewablebox.c:223
-msgid "Reverse"
-msgstr "Omvänd"
-
 #: ../app/widgets/gimpviewablebox.c:305
 msgid "Open the palette selection dialog"
 msgstr "Öppna palettvalsdialogen"
@@ -14180,27 +14367,27 @@ msgstr "Öppna palettvalsdialogen"
 msgid "Open the font selection dialog"
 msgstr "Öppna typsnittsvalsdialogen"
 
-#: ../app/widgets/gimpwidgets-utils.c:651
+#: ../app/widgets/gimpwidgets-utils.c:657
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (prova %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:651
+#: ../app/widgets/gimpwidgets-utils.c:657
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:655
+#: ../app/widgets/gimpwidgets-utils.c:661
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (prova %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:659
+#: ../app/widgets/gimpwidgets-utils.c:665
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (prova %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:927
+#: ../app/widgets/gimpwidgets-utils.c:933
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ogiltig UTF-8-data i filen \"%s\"."
@@ -14445,16 +14632,12 @@ msgstr "Försäkra dig om att verktygslådan är synlig!"
 msgid "Couldn't start '%s': %s"
 msgstr "Kunde inte starta \"%s\": %s"
 
-#: ../app/display/gimpdisplayshell-handlers.c:595
-#, c-format
-msgid "Image saved to '%s'"
-msgstr "Bilden sparades till \"%s\""
-
-#: ../app/display/gimpdisplayshell-handlers.c:609
-#, c-format
-msgid "Image exported to '%s'"
-msgstr "Bilden exporterades till \"%s\""
-
+#~ msgid "tool|_Zoom"
+#~ msgstr "_Zooma"
+#~ msgid "Direction:"
+#~ msgstr "Riktning:"
+#~ msgid "You can drop dockable dialogs here"
+#~ msgstr "Du kan släppa dockningbara dialoger här"
 #~ msgid ""
 #~ "The window type hint that is set on the toolbox. This may affect how your "
 #~ "window manager decorates and handles the toolbox window."
@@ -17710,8 +17893,6 @@ msgstr "Bilden exporterades till \"%s\""
 #~ msgstr "Färgväljare i vattenfärgsstil"
 #~ msgid "Watercolor"
 #~ msgstr "Vattenfärg"
-#~ msgid "Pressure"
-#~ msgstr "Tryck"
 #~ msgid "S"
 #~ msgstr "M"
 #~ msgid "V"
