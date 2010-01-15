@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -147,20 +145,23 @@ gimp_handle_bar_expose (GtkWidget      *widget,
                         GdkEventExpose *eevent)
 {
   GimpHandleBar *bar = GIMP_HANDLE_BAR (widget);
+  GtkAllocation  allocation;
   cairo_t       *cr;
   gint           x, y;
   gint           width, height;
   gint           i;
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   x = y = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-  width  = widget->allocation.width  - 2 * x;
-  height = widget->allocation.height - 2 * y;
+  width  = allocation.width  - 2 * x;
+  height = allocation.height - 2 * y;
 
   if (! gtk_widget_get_has_window (widget))
     {
-      x += widget->allocation.x;
-      y += widget->allocation.y;
+      x += allocation.x;
+      y += allocation.y;
     }
 
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
@@ -213,12 +214,18 @@ static gboolean
 gimp_handle_bar_button_press (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
-  GimpHandleBar *bar    = GIMP_HANDLE_BAR (widget);
-  gint           border = gtk_container_get_border_width (GTK_CONTAINER (widget));
-  gint           width  = widget->allocation.width - 2 * border;
+  GimpHandleBar *bar= GIMP_HANDLE_BAR (widget);
+  GtkAllocation  allocation;
+  gint           border;
+  gint           width;
   gdouble        value;
   gint           min_dist;
   gint           i;
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  border = gtk_container_get_border_width (GTK_CONTAINER (widget));
+  width  = allocation.width - 2 * border;
 
   if (width < 1)
     return FALSE;
@@ -258,9 +265,15 @@ gimp_handle_bar_motion_notify (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
   GimpHandleBar *bar    = GIMP_HANDLE_BAR (widget);
-  gint           border = gtk_container_get_border_width (GTK_CONTAINER (widget));
-  gint           width  = widget->allocation.width - 2 * border;
+  GtkAllocation  allocation;
+  gint           border;
+  gint           width;
   gdouble        value;
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  border = gtk_container_get_border_width (GTK_CONTAINER (widget));
+  width  = allocation.width - 2 * border;
 
   if (width < 1)
     return FALSE;

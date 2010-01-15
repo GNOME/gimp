@@ -624,7 +624,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
    */
   if (event->type != GDK_KEY_PRESS   &&
       event->type != GDK_KEY_RELEASE &&
-      ((GdkEventAny *) event)->window != canvas->window)
+      ((GdkEventAny *) event)->window != gtk_widget_get_window (canvas))
     {
       return FALSE;
     }

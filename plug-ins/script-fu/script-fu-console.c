@@ -22,8 +22,6 @@
 
 #include <glib/gstdio.h>
 
-#undef GSEAL_ENABLE
-
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
@@ -484,11 +482,18 @@ script_fu_browse_row_activated (GtkDialog *dialog)
 static gboolean
 script_fu_console_idle_scroll_end (GtkWidget *view)
 {
-  GtkAdjustment *adj = GTK_TEXT_VIEW (view)->vadjustment;
+  GtkWidget *parent = gtk_widget_get_parent (view);
 
-  gtk_adjustment_set_value (adj,
-                            gtk_adjustment_get_upper (adj) -
-                            gtk_adjustment_get_page_size (adj));
+  if (parent)
+    {
+      GtkAdjustment *adj;
+
+      adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (parent));
+
+      gtk_adjustment_set_value (adj,
+                                gtk_adjustment_get_upper (adj) -
+                                gtk_adjustment_get_page_size (adj));
+    }
 
   g_object_unref (view);
 

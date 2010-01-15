@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -241,8 +239,11 @@ gimp_dash_editor_expose (GtkWidget      *widget,
   GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
   cairo_t        *cr     = gdk_cairo_create (gtk_widget_get_window (widget));
+  GtkAllocation   allocation;
   gint            x;
   gint            w, h;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   update_blocksize (editor);
 
@@ -257,8 +258,8 @@ gimp_dash_editor_expose (GtkWidget      *widget,
   w = editor->block_width;
   h = editor->block_height;
 
-  editor->x0 = (widget->allocation.width - w * editor->n_segments) / 2;
-  editor->y0 = (widget->allocation.height - h) / 2;
+  editor->x0 = (allocation.width - w * editor->n_segments) / 2;
+  editor->y0 = (allocation.height - h) / 2;
 
   /*  draw the dash segments  */
 
@@ -289,7 +290,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
   gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
   cairo_fill (cr);
 
-  for (; x < widget->allocation.width + w; x += w)
+  for (; x < allocation.width + w; x += w)
     {
       gint index = dash_x_to_index (editor, x);
 
@@ -307,7 +308,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
   if (x > 0)
     x -= w;
 
-  for (; x < widget->allocation.width + w; x += w)
+  for (; x < allocation.width + w; x += w)
     {
       gint index = dash_x_to_index (editor, x);
 
@@ -488,7 +489,10 @@ update_options_from_segments (GimpDashEditor *editor)
 static void
 update_blocksize (GimpDashEditor *editor)
 {
-  GtkWidget *widget = GTK_WIDGET (editor);
+  GtkWidget     *widget = GTK_WIDGET (editor);
+  GtkAllocation  allocation;
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   editor->block_height = 6;
 
@@ -497,7 +501,7 @@ update_blocksize (GimpDashEditor *editor)
                              4);
   editor->block_height = MIN (ROUND (((float) editor->block_width) *
                                      editor->n_segments / editor->dash_length),
-                              widget->allocation.height - 4);
+                              allocation.height - 4);
 }
 
 static gint

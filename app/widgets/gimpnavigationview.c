@@ -23,8 +23,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -517,12 +515,15 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
 
   if (view->renderer->viewable && nav_view->width && nav_view->height)
     {
-      GtkWidget *widget = GTK_WIDGET (view);
+      GtkWidget     *widget = GTK_WIDGET (view);
+      GtkAllocation  allocation;
 
-      cairo_translate (cr, widget->allocation.x, widget->allocation.y);
+      gtk_widget_get_allocation (widget, &allocation);
+
+      cairo_translate (cr, allocation.x, allocation.y);
       cairo_rectangle (cr,
                        0, 0,
-                       widget->allocation.width, widget->allocation.height);
+                       allocation.width, allocation.height);
       cairo_rectangle (cr,
                        nav_view->p_x, nav_view->p_y,
                        nav_view->p_width, nav_view->p_height);

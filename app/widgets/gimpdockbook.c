@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -798,6 +796,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 {
   GimpDock          *dock;
   GimpPanedBoxClass *paned_box_class;
+  GtkAllocation      allocation;
   GtkWidget         *window;
   GtkWidget         *view;
   GtkRequisition     requisition;
@@ -806,6 +805,8 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 
   dock            = GIMP_DOCK (gimp_dockable_get_dockbook (dockable)->p->dock);
   paned_box_class = GIMP_PANED_BOX_GET_CLASS (gimp_dock_get_vbox (dock));
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   window = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_type_hint (GTK_WINDOW (window), GDK_WINDOW_TYPE_HINT_DND);
@@ -817,8 +818,8 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 
   gtk_widget_size_request (view, &requisition);
 
-  if (requisition.width < widget->allocation.width)
-    gtk_widget_set_size_request (view, widget->allocation.width, -1);
+  if (requisition.width < allocation.width)
+    gtk_widget_set_size_request (view, allocation.width, -1);
 
   gtk_widget_show (window);
 

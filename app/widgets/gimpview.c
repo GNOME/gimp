@@ -205,16 +205,19 @@ static void
 gimp_view_realize (GtkWidget *widget)
 {
   GimpView      *view = GIMP_VIEW (widget);
+  GtkAllocation  allocation;
   GdkWindowAttr  attributes;
   gint           attributes_mask;
 
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.x           = widget->allocation.x;
-  attributes.y           = widget->allocation.y;
-  attributes.width       = widget->allocation.width;
-  attributes.height      = widget->allocation.height;
+  attributes.x           = allocation.x;
+  attributes.y           = allocation.y;
+  attributes.width       = allocation.width;
+  attributes.height      = allocation.height;
   attributes.wclass      = GDK_INPUT_ONLY;
   attributes.event_mask  = gtk_widget_get_events (widget);
 
@@ -371,7 +374,7 @@ gimp_view_size_allocate (GtkWidget     *widget,
   allocation->width  = width;
   allocation->height = height;
 
-  widget->allocation = *allocation;
+  gtk_widget_set_allocation (widget, allocation);
 
   if (GTK_WIDGET_REALIZED (widget))
     gdk_window_move_resize (view->event_window,
@@ -387,9 +390,13 @@ gimp_view_expose_event (GtkWidget      *widget,
 {
   if (gtk_widget_is_drawable (widget))
     {
+      GtkAllocation allocation;
+
+      gtk_widget_get_allocation (widget, &allocation);
+
       gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
                                gtk_widget_get_window (widget), widget,
-                               &widget->allocation,
+                               &allocation,
                                &event->area);
     }
 

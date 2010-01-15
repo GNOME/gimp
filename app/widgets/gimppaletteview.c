@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -176,10 +174,13 @@ gimp_palette_view_expose (GtkWidget      *widget,
     {
       GimpViewRendererPalette *renderer;
       GtkStyle                *style = gtk_widget_get_style (widget);
+      GtkAllocation            allocation;
       cairo_t                 *cr;
       gint                     row, col;
 
       renderer = GIMP_VIEW_RENDERER_PALETTE (view->renderer);
+
+      gtk_widget_get_allocation (widget, &allocation);
 
       row = pal_view->selected->position / renderer->columns;
       col = pal_view->selected->position % renderer->columns;
@@ -189,8 +190,8 @@ gimp_palette_view_expose (GtkWidget      *widget,
       cairo_clip (cr);
 
       cairo_rectangle (cr,
-                       widget->allocation.x + col * renderer->cell_width  + 0.5,
-                       widget->allocation.y + row * renderer->cell_height + 0.5,
+                       allocation.x + col * renderer->cell_width  + 0.5,
+                       allocation.y + row * renderer->cell_height + 0.5,
                        renderer->cell_width,
                        renderer->cell_height);
 
@@ -454,15 +455,18 @@ gimp_palette_view_expose_entry (GimpPaletteView  *view,
   GimpViewRendererPalette *renderer;
   gint                     row, col;
   GtkWidget               *widget = GTK_WIDGET (view);
+  GtkAllocation            allocation;
 
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+
+  gtk_widget_get_allocation (widget, &allocation);
 
   row = entry->position / renderer->columns;
   col = entry->position % renderer->columns;
 
   gtk_widget_queue_draw_area (GTK_WIDGET (view),
-                              widget->allocation.x + col * renderer->cell_width,
-                              widget->allocation.y + row * renderer->cell_height,
+                              allocation.x + col * renderer->cell_width,
+                              allocation.y + row * renderer->cell_height,
                               renderer->cell_width  + 1,
                               renderer->cell_height + 1);
 }

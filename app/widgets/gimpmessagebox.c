@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -308,7 +306,7 @@ gimp_message_box_size_allocate (GtkWidget     *widget,
   allocation->x      -= rtl ? 0 : width;
   allocation->width  += width;
 
-  widget->allocation = *allocation;
+  gtk_widget_set_allocation (widget, allocation);
 }
 
 static void

@@ -44,8 +44,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -1895,7 +1893,12 @@ control_calc_p_pos (GimpGradientEditor *editor,
                     gdouble             pos)
 {
   GtkAdjustment *adjustment = GTK_ADJUSTMENT (editor->scroll_data);
-  gint           pwidth     = editor->control->allocation.width;
+  GtkAllocation  allocation;
+  gint           pwidth;
+
+  gtk_widget_get_allocation (editor->control, &allocation);
+
+  pwidth = allocation.width;
 
   /* Calculate the position (in widget's coordinates) of the
    * requested point from the gradient.  Rounding is done to
@@ -1912,7 +1915,12 @@ control_calc_g_pos (GimpGradientEditor *editor,
                     gint                pos)
 {
   GtkAdjustment *adjustment = GTK_ADJUSTMENT (editor->scroll_data);
-  gint           pwidth     = editor->control->allocation.width;
+  GtkAllocation  allocation;
+  gint           pwidth;
+
+  gtk_widget_get_allocation (editor->control, &allocation);
+
+  pwidth = allocation.width;
 
   /* Calculate the gradient position that corresponds to widget's coordinates */
 

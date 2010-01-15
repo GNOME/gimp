@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -191,11 +189,14 @@ gimp_progress_box_progress_set_value (GimpProgress *progress,
     {
       GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
       GtkProgressBar  *bar = GTK_PROGRESS_BAR (box->progress);
+      GtkAllocation    allocation;
+
+      gtk_widget_get_allocation (GTK_WIDGET (bar), &allocation);
 
       box->value = percentage;
 
       /* only update the progress bar if this causes a visible change */
-      if (fabs (GTK_WIDGET (bar)->allocation.width *
+      if (fabs (allocation.width *
                 (percentage - gtk_progress_bar_get_fraction (bar))) > 1.0)
         {
           gtk_progress_bar_set_fraction (bar, box->value);

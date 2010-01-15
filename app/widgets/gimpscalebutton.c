@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -117,13 +115,16 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
                                 GimpScaleButton *button)
 {
   GtkStyle      *style = gtk_widget_get_style (widget);
+  GtkAllocation  allocation;
   GtkAdjustment *adj;
   cairo_t       *cr;
   gint           value;
   gint           steps;
   gint           i;
 
-  steps = MIN (widget->allocation.width, widget->allocation.height) / 2;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  steps = MIN (allocation.width, allocation.height) / 2;
 
   adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
 
@@ -145,15 +146,15 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
       cairo_translate (cr,
-                       widget->allocation.x + widget->allocation.width - 0.5,
-                       widget->allocation.y + widget->allocation.height);
+                       allocation.x + allocation.width - 0.5,
+                       allocation.y + allocation.height);
       cairo_scale (cr, -2.0, -2.0);
     }
   else
     {
       cairo_translate (cr,
-                       widget->allocation.x + 0.5,
-                       widget->allocation.y + widget->allocation.height);
+                       allocation.x + 0.5,
+                       allocation.y + allocation.height);
       cairo_scale (cr, 2.0, -2.0);
     }
 

@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -283,6 +281,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   GimpHistogramView *view   = GIMP_HISTOGRAM_VIEW (widget);
   GtkStyle          *style  = gtk_widget_get_style (widget);
   GdkWindow         *window = gtk_widget_get_window (widget);
+  GtkAllocation      allocation;
   gint               x;
   gint               x1, x2;
   gint               border;
@@ -299,9 +298,11 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   if (! view->histogram && ! view->bg_histogram)
     return FALSE;
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   border = view->border_width;
-  width  = widget->allocation.width  - 2 * border;
-  height = widget->allocation.height - 2 * border;
+  width  = allocation.width  - 2 * border;
+  height = allocation.height - 2 * border;
 
   x1 = CLAMP (MIN (view->start, view->end), 0, 255);
   x2 = CLAMP (MAX (view->start, view->end), 0, 255);
@@ -309,8 +310,8 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   gdk_draw_rectangle (window,
                       style->base_gc[GTK_STATE_NORMAL], TRUE,
                       0, 0,
-                      widget->allocation.width,
-                      widget->allocation.height);
+                      allocation.width,
+                      allocation.height);
 
   /*  Draw the outer border  */
   gdk_draw_rectangle (window,
@@ -506,13 +507,16 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
 
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      gint width;
+      GtkAllocation allocation;
+      gint          width;
 
       gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
                         GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
                         NULL, NULL, bevent->time);
 
-      width = widget->allocation.width - 2 * view->border_width;
+      gtk_widget_get_allocation (widget, &allocation);
+
+      width = allocation.width - 2 * view->border_width;
 
       view->start = CLAMP ((((bevent->x - view->border_width) * 256) / width),
                            0, 255);
@@ -555,9 +559,12 @@ gimp_histogram_view_motion_notify (GtkWidget      *widget,
                                    GdkEventMotion *mevent)
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+  GtkAllocation      allocation;
   gint               width;
 
-  width = widget->allocation.width - 2 * view->border_width;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  width = allocation.width - 2 * view->border_width;
 
   view->start = CLAMP ((((mevent->x - view->border_width) * 256) / width),
                        0, 255);

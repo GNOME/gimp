@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -289,6 +287,7 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GdkWindow      *window = gtk_widget_get_window (widget);
+  GtkAllocation   allocation;
   gint            width, height;
   gint            default_w, default_h;
   gint            swap_w, swap_h;
@@ -298,8 +297,10 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   if (! gtk_widget_is_drawable (widget))
     return FALSE;
 
-  width  = widget->allocation.width;
-  height = widget->allocation.height;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  width  = allocation.width;
+  height = allocation.height;
 
   /*  draw the default colors pixbuf  */
   if (! editor->default_icon)
@@ -395,10 +396,16 @@ gimp_fg_bg_editor_target (GimpFgBgEditor *editor,
                           gint            x,
                           gint            y)
 {
-  gint width  = GTK_WIDGET (editor)->allocation.width;
-  gint height = GTK_WIDGET (editor)->allocation.height;
-  gint rect_w = editor->rect_width;
-  gint rect_h = editor->rect_height;
+  GtkAllocation allocation;
+  gint          width;
+  gint          height;
+  gint          rect_w = editor->rect_width;
+  gint          rect_h = editor->rect_height;
+
+  gtk_widget_get_allocation (GTK_WIDGET (editor), &allocation);
+
+  width  = allocation.width;
+  height = allocation.height;
 
   if (x > 0 && x < rect_w && y > 0 && y < rect_h)
     return FOREGROUND_AREA;

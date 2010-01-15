@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -210,6 +208,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   GimpFgBgView *view   = GIMP_FG_BG_VIEW (widget);
   GtkStyle     *style  = gtk_widget_get_style (widget);
   GdkWindow    *window = gtk_widget_get_window (widget);
+  GtkAllocation allocation;
   gint          x, y;
   gint          width, height;
   gint          rect_w, rect_h;
@@ -218,10 +217,12 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   if (! gtk_widget_is_drawable (widget))
     return FALSE;
 
-  x      = widget->allocation.x;
-  y      = widget->allocation.y;
-  width  = widget->allocation.width;
-  height = widget->allocation.height;
+  gtk_widget_get_allocation (widget, &allocation);
+
+  x      = allocation.x;
+  y      = allocation.y;
+  width  = allocation.width;
+  height = allocation.height;
 
   rect_w = width  * 3 / 4;
   rect_h = height * 3 / 4;

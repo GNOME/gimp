@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -340,6 +338,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
 {
   GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
   GtkStyle      *style = gtk_widget_get_style (widget);
+  GtkAllocation  allocation;
   cairo_t       *cr;
   gint           border;
   gint           width;
@@ -352,10 +351,11 @@ gimp_curve_view_expose (GtkWidget      *widget,
   if (! view->curve)
     return FALSE;
 
-  border = GIMP_HISTOGRAM_VIEW (view)->border_width;
+  gtk_widget_get_allocation (widget, &allocation);
 
-  width  = widget->allocation.width  - 2 * border - 1;
-  height = widget->allocation.height - 2 * border - 1;
+  border = GIMP_HISTOGRAM_VIEW (view)->border_width;
+  width  = allocation.width  - 2 * border - 1;
+  height = allocation.height - 2 * border - 1;
 
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
@@ -522,6 +522,7 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 {
   GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
   GimpCurve     *curve = view->curve;
+  GtkAllocation  allocation;
   gint           border;
   gint           width, height;
   gdouble        x;
@@ -532,9 +533,11 @@ gimp_curve_view_button_press (GtkWidget      *widget,
   if (! curve || bevent->button != 1)
     return TRUE;
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   border = GIMP_HISTOGRAM_VIEW (view)->border_width;
-  width  = widget->allocation.width  - 2 * border;
-  height = widget->allocation.height - 2 * border;
+  width  = allocation.width  - 2 * border;
+  height = allocation.height - 2 * border;
 
   x = (gdouble) (bevent->x - border) / (gdouble) width;
   y = (gdouble) (bevent->y - border) / (gdouble) height;
@@ -621,6 +624,7 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 {
   GimpCurveView  *view       = GIMP_CURVE_VIEW (widget);
   GimpCurve      *curve      = view->curve;
+  GtkAllocation   allocation;
   GimpCursorType  new_cursor = GDK_X_CURSOR;
   gint            border;
   gint            width, height;
@@ -632,9 +636,11 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   if (! curve)
     return TRUE;
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   border = GIMP_HISTOGRAM_VIEW (view)->border_width;
-  width  = widget->allocation.width  - 2 * border;
-  height = widget->allocation.height - 2 * border;
+  width  = allocation.width  - 2 * border;
+  height = allocation.height - 2 * border;
 
   x = (gdouble) (mevent->x - border) / (gdouble) width;
   y = (gdouble) (mevent->y - border) / (gdouble) height;

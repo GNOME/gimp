@@ -392,7 +392,7 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
   GtkAllocation   child_allocation;
   gint            border_width;
 
-  widget->allocation = *allocation;
+  gtk_widget_set_allocation (widget, allocation);
 
   border_width = gtk_container_get_border_width (container);
 
@@ -1290,17 +1290,23 @@ static void
 gimp_dockable_get_title_area (GimpDockable *dockable,
                               GdkRectangle *area)
 {
-  GtkWidget *widget = GTK_WIDGET (dockable);
-  gint       border = gtk_container_get_border_width (GTK_CONTAINER (dockable));
+  GtkWidget     *widget = GTK_WIDGET (dockable);
+  GtkAllocation  allocation;
+  GtkAllocation  button_allocation;
+  gint           border;
 
-  area->x      = widget->allocation.x + border;
-  area->y      = widget->allocation.y + border;
-  area->width  = (widget->allocation.width -
-                  2 * border - dockable->p->menu_button->allocation.width);
-  area->height = dockable->p->menu_button->allocation.height;
+  gtk_widget_get_allocation (widget, &allocation);
+  gtk_widget_get_allocation (dockable->p->menu_button, &button_allocation);
+
+  border = gtk_container_get_border_width (GTK_CONTAINER (dockable));
+
+  area->x      = allocation.x + border;
+  area->y      = allocation.y + border;
+  area->width  = allocation.width - 2 * border - button_allocation.width;
+  area->height = button_allocation.height;
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    area->x += dockable->p->menu_button->allocation.width;
+    area->x += button_allocation.width;
 }
 
 static void

@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 

@@ -115,8 +115,12 @@ gimp_view_popup_show (GtkWidget      *widget,
 
   if (! gtk_widget_get_has_window (widget))
     {
-      popup->button_x += widget->allocation.x;
-      popup->button_y += widget->allocation.y;
+      GtkAllocation allocation;
+
+      gtk_widget_get_allocation (widget, &allocation);
+
+      popup->button_x += allocation.x;
+      popup->button_y += allocation.y;
     }
 
   g_signal_connect (widget, "button-release-event",

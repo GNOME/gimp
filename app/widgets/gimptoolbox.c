@@ -603,13 +603,16 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
                            GdkEventExpose *event)
 {
   GimpToolbox  *toolbox = GIMP_TOOLBOX (widget);
+  GtkAllocation header_allocation;
   GdkRectangle  clip_rect;
 
   GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
+  gtk_widget_get_allocation (toolbox->p->header, &header_allocation);
+
   if (gtk_widget_get_visible (toolbox->p->header) &&
       gdk_rectangle_intersect (&event->area,
-                               &toolbox->p->header->allocation,
+                               &header_allocation,
                                &clip_rect))
     {
       GtkStyle     *style = gtk_widget_get_style (widget);
@@ -625,8 +628,8 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
       gdk_cairo_rectangle (cr, &clip_rect);
       cairo_clip (cr);
 
-      header_width  = toolbox->p->header->allocation.width;
-      header_height = toolbox->p->header->allocation.height;
+      header_width  = header_allocation.width;
+      header_height = header_allocation.height;
 
       gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
 

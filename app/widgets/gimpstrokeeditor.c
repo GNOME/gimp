@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -340,8 +338,12 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
                                  gpointer         data)
 {
   GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkAllocation *alloc = &widget->allocation;
-  gint           w     = MIN (alloc->width, alloc->height) * 2 / 3;
+  GtkAllocation  allocation;
+  gint           w;
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  w = MIN (allocation.width, allocation.height) * 2 / 3;
 
   gtk_paint_arrow (style,
                    gtk_widget_get_window (widget),
@@ -349,8 +351,8 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
                    GTK_SHADOW_IN,
                    &event->area, widget, NULL,
                    data ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, TRUE,
-                   alloc->x + (alloc->width - w) / 2,
-                   alloc->y + (alloc->height - w) / 2,
+                   allocation.x + (allocation.width - w) / 2,
+                   allocation.y + (allocation.height - w) / 2,
                    w, w);
   return FALSE;
 }
