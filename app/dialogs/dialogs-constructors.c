@@ -266,35 +266,6 @@ dialogs_dock_window_new (GimpDialogFactory *factory,
 /*  dockables  */
 /***************/
 
-/*****  the dockable constructor  *****/
-
-GtkWidget *
-dialogs_dockable_constructor (GimpDialogFactory      *factory,
-                              GimpDialogFactoryEntry *entry,
-                              GimpContext            *context,
-                              gint                    view_size)
-{
-  GtkWidget *dockable = NULL;
-  GtkWidget *widget;
-
-  widget = entry->new_func (factory, context, view_size);
-
-  if (widget)
-    {
-      dockable = gimp_dockable_new (entry->name, entry->blurb,
-                                    entry->stock_id, entry->help_id);
-      gtk_container_add (GTK_CONTAINER (dockable), widget);
-      gtk_widget_show (widget);
-
-      /* EEK */
-      g_object_set_data (G_OBJECT (dockable), "gimp-dialog-identifier",
-                         entry->identifier);
-    }
-
-  return dockable;
-}
-
-
 /*****  singleton dialogs  *****/
 
 GtkWidget *

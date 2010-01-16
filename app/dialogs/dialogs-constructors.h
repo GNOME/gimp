@@ -84,11 +84,6 @@ GtkWidget * dialogs_dock_window_new        (GimpDialogFactory *factory,
 
 /*  dockables  */
 
-GtkWidget * dialogs_dockable_constructor   (GimpDialogFactory      *factory,
-                                            GimpDialogFactoryEntry *entry,
-                                            GimpContext            *context,
-                                            gint                    view_size);
-
 GtkWidget * dialogs_tool_options_new       (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               view_size);

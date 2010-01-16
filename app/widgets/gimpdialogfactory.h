@@ -40,10 +40,6 @@ typedef GtkWidget * (* GimpDialogNewFunc)     (GimpDialogFactory      *factory,
 typedef GtkWidget * (* GimpDialogNewDockFunc) (GimpDialogFactory      *factory,
                                                GimpContext            *context,
                                                GimpUIManager          *ui_manager);
-typedef GtkWidget * (* GimpDialogConstructor) (GimpDialogFactory      *factory,
-                                               GimpDialogFactoryEntry *entry,
-                                               GimpContext            *context,
-                                               gint                    view_size);
 
 
 struct _GimpDialogFactoryEntry
@@ -114,8 +110,8 @@ GimpDialogFactory * gimp_dialog_factory_new                  (const gchar       
                                                               GimpDialogNewDockFunc    new_dock_func,
                                                               gboolean                 toggle_visibility);
 GimpDialogFactory * gimp_dialog_factory_from_name            (const gchar             *name);
-void                gimp_dialog_factory_set_constructor      (GimpDialogFactory       *factory,
-                                                              GimpDialogConstructor    constructor);
+void                gimp_dialog_factory_set_put_in_dockables (GimpDialogFactory       *factory,
+                                                              gboolean                 put_in_dockables);
 void                gimp_dialog_factory_set_dock_window_func (GimpDialogFactory       *factory,
                                                               GimpDialogNewFunc        new_dock_window_func);
 void                gimp_dialog_factory_register_entry       (GimpDialogFactory       *factory,
