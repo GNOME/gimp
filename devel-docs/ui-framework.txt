@@ -29,3 +29,18 @@ GimpSessionInfo   - Contains session info for one toplevel
 GimpUIConfigurer  - Configures the UI when switching between
                     single-window and multi-window mode
 
+
+  GimpDialogFactory
+  -----------------
+
+The GimpDialogFactory can be considered to solve two distinct
+problems:
+
+1. Create widgets from text, in particular from text in sessionrc
+2. Session manage toplevel windows so their position is remebered
+   across GIMP sessions
+
+One possible design adjustment would be to have GimpWidgetFactory that
+takes care of 1), and then have GimpDialogFactory inherit from
+GtkWidgetFactory and implementing 2). GimpWidgetFactory could possibly
+use GtkBuilder.
