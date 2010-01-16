@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
