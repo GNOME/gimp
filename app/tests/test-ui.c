@@ -16,6 +16,7 @@
  */
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -51,6 +52,9 @@ typedef struct
 
 static void gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
                                                  gconstpointer    data);
+static void gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
+                                                 gconstpointer    data);
+
 
 int main(int argc, char **argv)
 {
@@ -74,6 +78,12 @@ int main(int argc, char **argv)
               gimp,
               NULL,
               gimp_ui_tool_options_editor_updates,
+              NULL);
+  g_test_add ("/gimp-ui/create-new-image-via-dialog",
+              GimpTestFixture,
+              gimp,
+              NULL,
+              gimp_ui_create_new_image_via_dialog,
               NULL);
 
   /* Run the tests and return status */
@@ -132,4 +142,52 @@ gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
                    gimp_tool_options_editor_get_tool_options (editor)->
                    tool_info->
                    help_id);
+}
+
+static void
+gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
+                                     gconstpointer    data)
+{
+  Gimp              *gimp             = GIMP (data);
+  GimpDisplay       *display          = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+  GimpDisplayShell  *shell            = gimp_display_get_shell (display);
+  GtkWidget         *toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  GimpImageWindow   *image_window     = GIMP_IMAGE_WINDOW (toplevel);
+  GimpUIManager     *ui_manager       = gimp_image_window_get_ui_manager (image_window);
+  GimpDialogFactory *dialog_factory   = gimp_dialog_factory_from_name ("toplevel");
+  GtkWidget         *new_image_dialog = NULL;
+  guint              n_initial_images = g_list_length (gimp_get_image_iter (gimp));
+  guint              n_images         = -1;
+  gint               tries_left       = 100;
+
+  /* Bring up the new image dialog */
+  gimp_ui_manager_activate_action (ui_manager,
+                                   "image",
+                                   "image-new");
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Get the GtkWindow of the dialog */
+  new_image_dialog =
+    gimp_dialog_factory_dialog_raise (dialog_factory,
+                                      gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                      "gimp-image-new-dialog",
+                                      -1 /*view_size*/);
+
+  /* Press the focused widget, it should be the Ok button. It will
+   * take a while for the image to be created to loop for a while
+   */
+  gtk_widget_activate (gtk_window_get_focus (GTK_WINDOW (new_image_dialog)));
+  do
+    {
+      g_usleep (20 * 1000);
+      gimp_test_run_mainloop_until_idle ();
+      n_images = g_list_length (gimp_get_image_iter (gimp));
+    }
+  while (tries_left-- &&
+         n_images != n_initial_images + 1);
+
+  /* Make sure there now is one image more than initially */
+  g_assert_cmpint (n_images,
+                   ==,
+                   n_initial_images + 1);
 }
