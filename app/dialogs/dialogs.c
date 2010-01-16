@@ -362,7 +362,8 @@ dialogs_init (Gimp            *gimp,
                                         toplevel_entries[i].singleton,
                                         toplevel_entries[i].session_managed,
                                         toplevel_entries[i].remember_size,
-                                        toplevel_entries[i].remember_if_open);
+                                        toplevel_entries[i].remember_if_open,
+                                        toplevel_entries[i].dockable);
 
   for (i = 0; i < G_N_ELEMENTS (dock_entries); i++)
     gimp_dialog_factory_register_entry (global_dock_window_factory,
@@ -376,7 +377,8 @@ dialogs_init (Gimp            *gimp,
                                         dock_entries[i].singleton,
                                         dock_entries[i].session_managed,
                                         dock_entries[i].remember_size,
-                                        dock_entries[i].remember_if_open);
+                                        dock_entries[i].remember_if_open,
+                                        dock_entries[i].dockable);
 
   gimp_dialog_factory_register_entry (global_display_factory,
                                       "gimp-empty-image-window",
@@ -387,6 +389,7 @@ dialogs_init (Gimp            *gimp,
                                       TRUE,
                                       TRUE,
                                       TRUE,
+                                      FALSE,
                                       FALSE);
 
   global_recent_docks = gimp_list_new (GIMP_TYPE_SESSION_INFO, FALSE);

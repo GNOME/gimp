@@ -125,7 +125,8 @@ void                gimp_dialog_factory_register_entry       (GimpDialogFactory 
                                                               gboolean                 singleton,
                                                               gboolean                 session_managed,
                                                               gboolean                 remember_size,
-                                                              gboolean                 remember_if_open);
+                                                              gboolean                 remember_if_open,
+                                                              gboolean                 dockable);
 GimpDialogFactoryEntry *
                     gimp_dialog_factory_find_entry           (GimpDialogFactory       *factory,
                                                               const gchar             *identifier);
