@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -535,18 +533,23 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
     case GIMP_ZOOM_OUT_MAX:
     case GIMP_ZOOM_TO: /* abused as ZOOM_ALL */
       {
-        gint height  = editor->view->parent->parent->parent->allocation.height;
-        gint columns = palette->n_columns ? palette->n_columns : COLUMNS;
-        gint rows;
+        GtkWidget     *scrolled_win = GIMP_DATA_EDITOR (editor)->view;
+        GtkWidget     *viewport     = gtk_bin_get_child (GTK_BIN (scrolled_win));
+        GtkAllocation  allocation;
+        gint           columns;
+        gint           rows;
 
-        rows = palette->n_colors / columns;
+        gtk_widget_get_allocation (viewport, &allocation);
+
+        columns = palette->n_columns ? palette->n_columns : COLUMNS;
+        rows    = palette->n_colors / columns;
 
         if (palette->n_colors % columns)
           rows += 1;
 
         rows = MAX (1, rows);
 
-        zoom_factor = (((gdouble) height - 2 * SPACING) /
+        zoom_factor = (((gdouble) allocation.height - 2 * SPACING) /
                        (gdouble) rows - SPACING) / ENTRY_HEIGHT;
       }
       break;
@@ -651,9 +654,9 @@ palette_editor_viewport_size_allocate (GtkWidget         *widget,
                                        GtkAllocation     *allocation,
                                        GimpPaletteEditor *editor)
 {
-  if (widget->allocation.width != editor->last_width)
+  if (allocation->width != editor->last_width)
     {
-      palette_editor_resize (editor, widget->allocation.width,
+      palette_editor_resize (editor, allocation->width,
                              editor->zoom_factor);
     }
 }
