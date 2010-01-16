@@ -34,12 +34,15 @@ typedef enum
 } GimpDialogVisibilityState;
 
 
+/* In order to support constructors of various types, these functions
+ * takes the union of the set of arguments required for each type of
+ * widget constructor. If this set becomes too big we can consider
+ * passing a struct or use varargs.
+ */ 
 typedef GtkWidget * (* GimpDialogNewFunc)     (GimpDialogFactory      *factory,
                                                GimpContext            *context,
+                                               GimpUIManager          *ui_manager,
                                                gint                    view_size);
-typedef GtkWidget * (* GimpDialogNewDockFunc) (GimpDialogFactory      *factory,
-                                               GimpContext            *context,
-                                               GimpUIManager          *ui_manager);
 
 
 struct _GimpDialogFactoryEntry
@@ -105,7 +108,6 @@ GType               gimp_dialog_factory_get_type             (void) G_GNUC_CONST
 GimpDialogFactory * gimp_dialog_factory_new                  (const gchar             *name,
                                                               GimpContext             *context,
                                                               GimpMenuFactory         *menu_factory,
-                                                              GimpDialogNewDockFunc    new_dock_func,
                                                               gboolean                 toggle_visibility);
 GimpDialogFactory * gimp_dialog_factory_from_name            (const gchar             *name);
 void                gimp_dialog_factory_set_dock_window_func (GimpDialogFactory       *factory,
@@ -151,9 +153,6 @@ GtkWidget *         gimp_dialog_factory_dock_with_window_new (GimpDialogFactory 
                                                               GdkScreen               *screen);
 GtkWidget *         gimp_dialog_factory_dock_window_new      (GimpDialogFactory       *factory,
                                                               GdkScreen               *screen);
-GtkWidget *         gimp_dialog_factory_dock_new             (GimpDialogFactory       *factory,
-                                                              GdkScreen               *screen,
-                                                              GimpUIManager           *ui_manager);
 void                gimp_dialog_factory_add_dialog           (GimpDialogFactory       *factory,
                                                               GtkWidget               *dialog);
 void                gimp_dialog_factory_add_foreign          (GimpDialogFactory       *factory,

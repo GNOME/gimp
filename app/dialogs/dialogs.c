@@ -90,6 +90,20 @@ GimpContainer     *global_recent_docks        = NULL;
     TRUE       /* remember_if_open */, \
     TRUE       /* dockable         */}
 
+#define DOCK(id, new_func) \
+  { id         /* identifier       */, \
+    NULL       /* name             */, \
+    NULL       /* blurb            */, \
+    NULL       /* stock_id         */, \
+    NULL       /* help_id          */, \
+    new_func   /* new_func         */, \
+    0          /* view_size        */, \
+    FALSE      /* singleton        */, \
+    FALSE      /* session_managed  */, \
+    FALSE      /* remember_size    */, \
+    FALSE      /* remember_if_open */, \
+    FALSE      /* dockable         */}
+
 #define LISTGRID(id, name, blurb, stock_id, help_id, view_size) \
   { "gimp-"#id"-list"             /* identifier       */,  \
     name                          /* name             */,  \
@@ -196,6 +210,12 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
+  /* docks */
+  DOCK ("gimp-dock",
+        dialogs_dock_new),
+  DOCK ("gimp-toolbox",
+        dialogs_toolbox_new),
+
   /*  singleton dockables  */
   DOCKABLE ("gimp-tool-options",
             N_("Tool Options"), NULL, GIMP_STOCK_TOOL_OPTIONS,
@@ -319,14 +339,12 @@ dialogs_init (Gimp            *gimp,
   global_dialog_factory = gimp_dialog_factory_new ("toplevel",
                                                    gimp_get_user_context (gimp),
                                                    menu_factory,
-                                                   NULL,
                                                    TRUE);
 
   /* Toolbox */
   global_toolbox_factory = gimp_dialog_factory_new ("toolbox",
                                                     gimp_get_user_context (gimp),
                                                     menu_factory,
-                                                    dialogs_toolbox_new,
                                                     TRUE);
   gimp_dialog_factory_set_dock_window_func (global_toolbox_factory,
                                             dialogs_toolbox_dock_window_new);
@@ -335,7 +353,6 @@ dialogs_init (Gimp            *gimp,
   global_dock_window_factory = gimp_dialog_factory_new ("dock",
                                                         gimp_get_user_context (gimp),
                                                         menu_factory,
-                                                        dialogs_dock_new,
                                                         TRUE);
   gimp_dialog_factory_set_dock_window_func (global_dock_window_factory,
                                             dialogs_dock_window_new);
@@ -344,7 +361,6 @@ dialogs_init (Gimp            *gimp,
   global_display_factory = gimp_dialog_factory_new ("display",
                                                     gimp_get_user_context (gimp),
                                                     menu_factory,
-                                                    NULL,
                                                     FALSE);
 
 

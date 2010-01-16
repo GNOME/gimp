@@ -30,6 +30,11 @@
 
 #include "widgets-types.h"
 
+/* FIXME: Remove when the toolbox and dock window factories have been
+ * merged
+ */
+#include "dialogs/dialogs.h"
+
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
@@ -69,7 +74,6 @@ struct _GimpDialogFactoryPrivate
   GList                 *session_infos;
 
   GimpDialogNewFunc      new_dock_window_func;
-  GimpDialogNewDockFunc  new_dock_func;
 
   GList                 *registered_dialogs;
 
@@ -82,6 +86,7 @@ static void        gimp_dialog_factory_finalize             (GObject            
 static GtkWidget * gimp_dialog_factory_constructor          (GimpDialogFactory      *factory,
                                                              GimpDialogFactoryEntry *entry,
                                                              GimpContext            *context,
+                                                             GimpUIManager          *ui_manager,
                                                              gint                    view_size);
 static void        gimp_dialog_factory_set_widget_data      (GtkWidget              *dialog,
                                                              GimpDialogFactory      *factory,
@@ -255,7 +260,6 @@ GimpDialogFactory *
 gimp_dialog_factory_new (const gchar           *name,
                          GimpContext           *context,
                          GimpMenuFactory       *menu_factory,
-                         GimpDialogNewDockFunc  new_dock_func,
                          gboolean               toggle_visibility)
 {
   GimpDialogFactory *factory;
@@ -288,7 +292,6 @@ gimp_dialog_factory_new (const gchar           *name,
 
   factory->p->context           = context;
   factory->p->menu_factory      = menu_factory;
-  factory->p->new_dock_func     = new_dock_func;
   factory->p->toggle_visibility = toggle_visibility;
 
   return factory;
@@ -449,6 +452,7 @@ static GtkWidget *
 gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                          GdkScreen         *screen,
                                          GimpContext       *context,
+                                         GimpUIManager     *ui_manager,
                                          const gchar       *identifier,
                                          gint               view_size,
                                          gboolean           return_existing,
@@ -524,14 +528,17 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       if (context)
         dialog = gimp_dialog_factory_constructor (factory, entry,
                                                   context,
+                                                  ui_manager,
                                                   view_size);
       else if (dock)
         dialog = gimp_dialog_factory_constructor (factory, entry,
                                                   gimp_dock_get_context (GIMP_DOCK (dock)),
+                                                  gimp_dock_get_ui_manager (GIMP_DOCK (dock)),
                                                   view_size);
       else
         dialog = gimp_dialog_factory_constructor (factory, entry,
                                                   factory->p->context,
+                                                  ui_manager,
                                                   view_size);
 
       if (dialog)
@@ -650,6 +657,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
   return gimp_dialog_factory_dialog_new_internal (factory,
                                                   screen,
                                                   factory->p->context,
+                                                  NULL,
                                                   identifier,
                                                   view_size,
                                                   FALSE,
@@ -745,6 +753,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
       dialog = gimp_dialog_factory_dialog_new_internal (factory,
                                                         screen,
                                                         NULL,
+                                                        NULL,
                                                         ids[i] ? ids[i] : ids[0],
                                                         view_size,
                                                         TRUE,
@@ -755,6 +764,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
     {
       dialog = gimp_dialog_factory_dialog_new_internal (factory,
                                                         screen,
+                                                        NULL,
                                                         NULL,
                                                         identifiers,
                                                         view_size,
@@ -796,6 +806,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
   return gimp_dialog_factory_dialog_new_internal (factory,
                                                   gtk_widget_get_screen (GTK_WIDGET (dock)),
                                                   gimp_dock_get_context (dock),
+                                                  gimp_dock_get_ui_manager (dock),
                                                   identifier,
                                                   view_size,
                                                   FALSE,
@@ -820,12 +831,12 @@ gimp_dialog_factory_dock_with_window_new (GimpDialogFactory *factory,
                                           GdkScreen         *screen)
 {
   GtkWidget     *dock_window = NULL;
+  gchar         *dock_id     = NULL;
   GtkWidget     *dock        = NULL;
   GimpUIManager *ui_manager  = NULL;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-  g_return_val_if_fail (factory->p->new_dock_func != NULL, NULL);
 
   /* Create a dock window to put the dock in. We need to create the
    * dock window before the dock because the dock has a dependnecy to
@@ -835,7 +846,14 @@ gimp_dialog_factory_dock_with_window_new (GimpDialogFactory *factory,
 
   /* Create the dock */
   ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
-  dock = gimp_dialog_factory_dock_new (factory, screen, ui_manager);
+  
+  dock_id = g_strconcat ("gimp-", gimp_object_get_name (factory), NULL);
+  dock    = gimp_dialog_factory_dialog_new (global_dock_window_factory,
+                                            screen,
+                                            "gimp-dock",
+                                            -1 /*view_size*/,
+                                            FALSE /*present*/);
+  g_free (dock_id);
 
   if (dock)
     {
@@ -868,7 +886,7 @@ gimp_dialog_factory_dock_window_new (GimpDialogFactory *factory,
   g_return_val_if_fail (factory->p->new_dock_window_func != NULL, NULL);
 
   /* Create the dock window */
-  dock_window = factory->p->new_dock_window_func (factory, factory->p->context, 0);
+  dock_window = factory->p->new_dock_window_func (factory, factory->p->context, NULL, 0);
   gtk_window_set_screen (GTK_WINDOW (dock_window), screen);
   gimp_dialog_factory_set_widget_data (dock_window, factory, NULL);
   
@@ -878,19 +896,6 @@ gimp_dialog_factory_dock_window_new (GimpDialogFactory *factory,
   gimp_dialog_factory_add_dialog (factory, dock_window);
 
   return dock_window;
-}
-
-GtkWidget *
-gimp_dialog_factory_dock_new (GimpDialogFactory *factory,
-                              GdkScreen         *screen,
-                              GimpUIManager     *ui_manager)
-{
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-  g_return_val_if_fail (factory->p->new_dock_func != NULL, NULL);
-  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-  g_return_val_if_fail (ui_manager != NULL, NULL);
-
-  return factory->p->new_dock_func (factory, factory->p->context, ui_manager);
 }
 
 void
@@ -1373,14 +1378,16 @@ gimp_dialog_factory_get_has_min_size (GtkWindow *window)
 /*  private functions  */
 
 static GtkWidget *
+
 gimp_dialog_factory_constructor (GimpDialogFactory      *factory,
                                  GimpDialogFactoryEntry *entry,
                                  GimpContext            *context,
+                                 GimpUIManager          *ui_manager,
                                  gint                    view_size)
 {
   GtkWidget *widget;
 
-  widget = entry->new_func (factory, context, view_size);
+  widget = entry->new_func (factory, context, ui_manager, view_size);
 
   /* The entry is for a dockable, so we simply need to put the created
    * widget in a dockable

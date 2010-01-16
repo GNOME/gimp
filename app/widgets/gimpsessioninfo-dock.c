@@ -26,6 +26,11 @@
 
 #include "widgets-types.h"
 
+/* FIXME: Remove when the toolbox and dock window factories have been
+ * merged
+ */
+#include "dialogs/dialogs.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockwindow.h"
@@ -206,6 +211,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
                                 GdkScreen           *screen,
                                 GimpDockWindow      *dock_window)
 {
+  gchar         *dock_id    = NULL;
   GtkWidget     *dock       = NULL;
   GList         *iter       = NULL;
   GimpUIManager *ui_manager = NULL;
@@ -214,7 +220,18 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
   ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
-  dock       = gimp_dialog_factory_dock_new (factory, screen, ui_manager);
+
+  /* Create the dock. Always use the dock window factory for it (but
+   * we want to refactor away that hard-coding eventually) but the
+   * type of dock depends on the factory
+   */
+  dock_id    = g_strconcat ("gimp-", gimp_object_get_name (factory), NULL);
+  dock       = gimp_dialog_factory_dialog_new (global_dock_window_factory /* FIXME */,
+                                               screen,
+                                               dock_id,
+                                               -1 /*view_size*/,
+                                               FALSE /*present*/);
+  g_free (dock_id);
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
