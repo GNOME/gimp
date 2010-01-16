@@ -70,6 +70,12 @@ gimp_test_utils_setup_menus_dir (void)
 gchar *
 gimp_test_utils_get_source_subdir (const gchar *subdir)
 {
+  const gchar *abs_top_srcdir = g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR");
+
+  if (! abs_top_srcdir)
+    g_printerr ("The env var GIMP_TESTING_ABS_TOP_SRCDIR is not set, you are probably\n"
+                "running in a debugger. Set it manually to e.g. ~/source/gimp");
+
   /* GIMP_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
    * see Makefile.am
    */
