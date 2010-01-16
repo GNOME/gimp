@@ -59,10 +59,6 @@ enum
   LAST_SIGNAL
 };
 
-typedef GtkWidget * (* GimpDialogConstructor) (GimpDialogFactory      *factory,
-                                               GimpDialogFactoryEntry *entry,
-                                               GimpContext            *context,
-                                               gint                    view_size);
 
 struct _GimpDialogFactoryPrivate
 {
@@ -74,7 +70,6 @@ struct _GimpDialogFactoryPrivate
 
   GimpDialogNewFunc      new_dock_window_func;
   GimpDialogNewDockFunc  new_dock_func;
-  GimpDialogConstructor  constructor;
 
   GList                 *registered_dialogs;
 
@@ -84,12 +79,7 @@ struct _GimpDialogFactoryPrivate
 
 static void        gimp_dialog_factory_dispose              (GObject                *object);
 static void        gimp_dialog_factory_finalize             (GObject                *object);
-static GtkWidget * gimp_dialog_factory_default_constructor  (GimpDialogFactory      *factory,
-                                                             GimpDialogFactoryEntry *entry,
-                                                             GimpContext            *context,
-                                                             gint                    view_size);
-static GtkWidget * gimp_dialog_factory_put_in_dockable_constructor
-                                                            (GimpDialogFactory      *factory,
+static GtkWidget * gimp_dialog_factory_constructor          (GimpDialogFactory      *factory,
                                                              GimpDialogFactoryEntry *entry,
                                                              GimpContext            *context,
                                                              gint                    view_size);
@@ -174,7 +164,6 @@ gimp_dialog_factory_init (GimpDialogFactory *factory)
   factory->p = G_TYPE_INSTANCE_GET_PRIVATE (factory,
                                             GIMP_TYPE_DIALOG_FACTORY,
                                             GimpDialogFactoryPrivate);
-  factory->p->constructor = gimp_dialog_factory_default_constructor;
 }
 
 static void
@@ -325,17 +314,6 @@ gimp_dialog_factory_from_name (const gchar *name)
     (GimpDialogFactory *) g_hash_table_lookup (factory_class->factories, name);
 
   return factory;
-}
-
-void
-gimp_dialog_factory_set_put_in_dockables (GimpDialogFactory *factory,
-                                          gboolean           put_in_dockables)
-{
-  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
-
-  factory->p->constructor = (put_in_dockables ?
-                             gimp_dialog_factory_put_in_dockable_constructor :
-                             gimp_dialog_factory_default_constructor);
 }
 
 void
@@ -512,15 +490,12 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
   /*  create the dialog if it was not found  */
   if (! dialog)
     {
-      GtkWidget *dock                    = NULL;
-      gboolean   dialog_will_be_dockable = FALSE;
-      gboolean   called_from_raise       = FALSE;
+      GtkWidget *dock              = NULL;
+      gboolean   called_from_raise = FALSE;
 
-      dialog_will_be_dockable = (factory->p->constructor ==
-                                 gimp_dialog_factory_put_in_dockable_constructor);
-      called_from_raise       = (context == NULL);
+      called_from_raise = (context == NULL);
                                  
-      if (dialog_will_be_dockable && called_from_raise)
+      if (entry->dockable && called_from_raise)
         {
           GtkWidget *dockbook;
 
@@ -547,17 +522,17 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
         view_size = entry->view_size;
 
       if (context)
-        dialog = factory->p->constructor (factory, entry,
-                                          context,
-                                          view_size);
+        dialog = gimp_dialog_factory_constructor (factory, entry,
+                                                  context,
+                                                  view_size);
       else if (dock)
-        dialog = factory->p->constructor (factory, entry,
-                                          gimp_dock_get_context (GIMP_DOCK (dock)),
-                                          view_size);
+        dialog = gimp_dialog_factory_constructor (factory, entry,
+                                                  gimp_dock_get_context (GIMP_DOCK (dock)),
+                                                  view_size);
       else
-        dialog = factory->p->constructor (factory, entry,
-                                          factory->p->context,
-                                          view_size);
+        dialog = gimp_dialog_factory_constructor (factory, entry,
+                                                  factory->p->context,
+                                                  view_size);
 
       if (dialog)
         {
@@ -1398,40 +1373,20 @@ gimp_dialog_factory_get_has_min_size (GtkWindow *window)
 /*  private functions  */
 
 static GtkWidget *
-gimp_dialog_factory_default_constructor (GimpDialogFactory      *factory,
-                                         GimpDialogFactoryEntry *entry,
-                                         GimpContext            *context,
-                                         gint                    view_size)
-{
-  return entry->new_func (factory, context, view_size);
-}
-
-/**
- * gimp_dialog_factory_put_in_dockable_constructor:
- * @factory:
- * @entry:
- * @context:
- * @view_size:
- *
- * Put the created widget inside a #GimpDockable.
- *
- * Returns:
- **/
-static GtkWidget *
-gimp_dialog_factory_put_in_dockable_constructor (GimpDialogFactory      *factory,
-                                                 GimpDialogFactoryEntry *entry,
-                                                 GimpContext            *context,
-                                                 gint                    view_size)
+gimp_dialog_factory_constructor (GimpDialogFactory      *factory,
+                                 GimpDialogFactoryEntry *entry,
+                                 GimpContext            *context,
+                                 gint                    view_size)
 {
   GtkWidget *dockable = NULL;
   GtkWidget *widget;
 
-  widget = gimp_dialog_factory_default_constructor (factory,
-                                                    entry,
-                                                    context,
-                                                    view_size);
+  widget = entry->new_func (factory, context, view_size);
 
-  if (widget)
+  /* The entry is for a dockable, so we simply need to put the created
+   * widget in a dockable
+   */ 
+  if (widget && entry->dockable)
     {
       dockable = gimp_dockable_new (entry->name, entry->blurb,
                                     entry->stock_id, entry->help_id);

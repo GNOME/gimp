@@ -58,9 +58,7 @@ struct _GimpDialogFactoryEntry
   gboolean           remember_size;
   gboolean           remember_if_open;
 
-  /* If TRUE the entry is for a dockable, otherwise it is for a
-   * toplevel
-   */
+  /* If TRUE the entry is for a dockable, FALSE otherwise */
   gboolean           dockable;
 };
 
@@ -110,8 +108,6 @@ GimpDialogFactory * gimp_dialog_factory_new                  (const gchar       
                                                               GimpDialogNewDockFunc    new_dock_func,
                                                               gboolean                 toggle_visibility);
 GimpDialogFactory * gimp_dialog_factory_from_name            (const gchar             *name);
-void                gimp_dialog_factory_set_put_in_dockables (GimpDialogFactory       *factory,
-                                                              gboolean                 put_in_dockables);
 void                gimp_dialog_factory_set_dock_window_func (GimpDialogFactory       *factory,
                                                               GimpDialogNewFunc        new_dock_window_func);
 void                gimp_dialog_factory_register_entry       (GimpDialogFactory       *factory,

@@ -328,7 +328,6 @@ dialogs_init (Gimp            *gimp,
                                                     menu_factory,
                                                     dialogs_toolbox_new,
                                                     TRUE);
-  gimp_dialog_factory_set_put_in_dockables (global_toolbox_factory, TRUE);
   gimp_dialog_factory_set_dock_window_func (global_toolbox_factory,
                                             dialogs_toolbox_dock_window_new);
 
@@ -338,7 +337,6 @@ dialogs_init (Gimp            *gimp,
                                                         menu_factory,
                                                         dialogs_dock_new,
                                                         TRUE);
-  gimp_dialog_factory_set_put_in_dockables (global_dock_window_factory, TRUE);
   gimp_dialog_factory_set_dock_window_func (global_dock_window_factory,
                                             dialogs_dock_window_new);
 
