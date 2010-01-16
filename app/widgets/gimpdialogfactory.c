@@ -1378,16 +1378,17 @@ gimp_dialog_factory_constructor (GimpDialogFactory      *factory,
                                  GimpContext            *context,
                                  gint                    view_size)
 {
-  GtkWidget *dockable = NULL;
   GtkWidget *widget;
 
   widget = entry->new_func (factory, context, view_size);
 
   /* The entry is for a dockable, so we simply need to put the created
    * widget in a dockable
-   */ 
+   */
   if (widget && entry->dockable)
     {
+      GtkWidget *dockable = NULL;
+
       dockable = gimp_dockable_new (entry->name, entry->blurb,
                                     entry->stock_id, entry->help_id);
       gtk_container_add (GTK_CONTAINER (dockable), widget);
@@ -1396,9 +1397,12 @@ gimp_dialog_factory_constructor (GimpDialogFactory      *factory,
       /* EEK */
       g_object_set_data (G_OBJECT (dockable), "gimp-dialog-identifier",
                          entry->identifier);
+
+      /* Return the dockable instead */
+      widget = dockable;
     }
 
-  return dockable;
+  return widget;
 }
 
 static void
