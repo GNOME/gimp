@@ -7,14 +7,14 @@
 # Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
 # Jakub Friedl <jfriedl@suse.cz>, 2006, 2007.
 # JardaK <krejci@zstenis.com>, 2009.
-# Marek Černocký <marek@manet.cz>, 2009.
+# Marek Černocký <marek@manet.cz>, 2009, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-04 20:48+0100\n"
-"PO-Revision-Date: 2009-12-10 11:14+0100\n"
+"POT-Creation-Date: 2010-01-17 22:02+0100\n"
+"PO-Revision-Date: 2010-01-05 11:20+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3146,7 +3146,7 @@ msgstr "Stopa GIMPu"
 #: ../plug-ins/common/file-gbr.c:392 ../plug-ins/common/file-pat.c:411
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr ""
+msgstr "Neplatná data hlavičky v „%s“: šířka=%lu, výška=%lu, bajtů=%lu"
 
 #: ../plug-ins/common/file-gbr.c:416 ../plug-ins/common/file-gbr.c:428
 msgid "Unsupported brush format"
@@ -3697,9 +3697,9 @@ msgid "Invalid number of bytes per line in PCX header"
 msgstr "Neplatný počet bajtů na řádek v hlavičce PCX"
 
 #: ../plug-ins/common/file-pcx.c:412
-#, fuzzy, c-format
+#, c-format
 msgid "Image dimensions too large: width %d x height %d"
-msgstr "Rozměry obrázku: %d × %d"
+msgstr "Rozměry obrázku jsou příliš velké: šířka %d × výška %d"
 
 #: ../plug-ins/common/file-pcx.c:460
 msgid "Unusual PCX flavour, giving up"
@@ -3913,20 +3913,20 @@ msgstr "Neplatná maximální hodnota."
 msgid "Error reading file."
 msgstr "Chyba při čtení souboru."
 
-#: ../plug-ins/common/file-pnm.c:1185
+#: ../plug-ins/common/file-pnm.c:1186
 msgid "Save as PNM"
 msgstr "Zapsat jako PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1202
+#: ../plug-ins/common/file-pnm.c:1203
 msgid "Data formatting"
 msgstr "Formátování dat"
 
-#: ../plug-ins/common/file-pnm.c:1206
+#: ../plug-ins/common/file-pnm.c:1207
 msgid "Raw"
 msgstr "Binární"
 
-#: ../plug-ins/common/file-pnm.c:1207
+#: ../plug-ins/common/file-pnm.c:1208
 msgid "Ascii"
 msgstr "ASCII"
 
@@ -8568,19 +8568,19 @@ msgid "Could not open '%s' for reading."
 msgstr "Nemohu otevřít „%s“ pro čtení."
 
 #: ../plug-ins/file-sgi/sgi.c:341
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid width: %hu"
-msgstr "Neplatný offset X: %d"
+msgstr "Neplatná šířka: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid height: %hu"
-msgstr "Neplatný offset X: %d"
+msgstr "Neplatná výška: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:355
 #, c-format
 msgid "Invalid number of channels: %hu"
-msgstr ""
+msgstr "Neplatný počet kanálů: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:569
 #, c-format
