@@ -340,8 +340,8 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
     }
 
   gtk_widget_set_visible (preview->nav_icon,
-                          GTK_WIDGET_VISIBLE (preview->vscr) &&
-                          GTK_WIDGET_VISIBLE (preview->hscr) &&
+                          gtk_widget_get_visible (preview->vscr) &&
+                          gtk_widget_get_visible (preview->hscr) &&
                           GIMP_PREVIEW_GET_CLASS (preview)->draw_thumb);
 
   gimp_scrolled_preview_thaw (preview);
