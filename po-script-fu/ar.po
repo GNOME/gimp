@@ -1,67 +1,67 @@
 # translation of gimp-script-fu.HEAD.po to Arabic
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
-# Khaled Hosny <khaledhosny@eglug.org>, 2008.
+# Khaled Hosny <khaledhosny@eglug.org>, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-19 14:50+0100\n"
-"PO-Revision-Date: 2008-08-22 16:07+0300\n"
+"POT-Creation-Date: 2010-01-17 12:15+0200\n"
+"PO-Revision-Date: 2010-01-17 12:15+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Virtaal 0.5.1\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:131
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "معراض سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "مرحبًا في المخطط المصغر"
 
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "تطوير المخطط التفاعلي"
 
-#: ../plug-ins/script-fu/script-fu-console.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "_تصفّح..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:294
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "احفظ خرج معراض سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-console.c:341
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "تعذر فتح '%s' للكتابة: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "مستعرض إجراءات سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:63
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "نمط سكربت-فو التقييمي يسمح فقط بالاستدعاءات غير التفاعلية"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "سكربت-فو لا يمكنه إجراء أكثر من سكربت في وقت واحد."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "أنت تشغل حاليًا السكربت \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:224
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "سكربت-فو: %s"
@@ -69,154 +69,146 @@ msgstr "سكربت-فو: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:288
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "اختيار اللون في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
 msgstr "اختيار الملف في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:448
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
 msgstr "اختيار المجلد في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
 msgstr "اختيار الخط في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
 msgstr "اختيار لوحة الألوان في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:478
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
 msgstr "اختيار النمط في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:487
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "تحديد تدرج الألوان في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:496
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
 msgstr "اختيار الفرشاة في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
-#, fuzzy, c-format
+#: ../plug-ins/script-fu/script-fu-interface.c:826
+#, c-format
 msgid "Error while executing %s:"
-msgstr ""
-"خطأ أثناء تنفيذ\n"
-"%s\n"
-"\n"
-"%s"
+msgstr "خطأ أثناء تنفيذ %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:150
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "معطيات قليلة جدا لاستدعاء 'سكربت-فو'"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:609
-#, fuzzy, c-format
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
+#, c-format
 msgid "Error while loading %s:"
-msgstr ""
-"خطأ أثناء تنفيذ\n"
-"%s\n"
-"\n"
-"%s"
+msgstr "خطأ أثناء تحميل %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:713
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "خيارات خادوم سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-server.c:718
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "ا_بدأ الخادوم"
 
-#: ../plug-ins/script-fu/script-fu-server.c:746
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "منفذ الخادوم:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:752
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "ملف سجل الخادوم:"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "معراض تفاعلي لتطوير سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "_Console"
 msgstr "ال_معراض"
 
-#: ../plug-ins/script-fu/script-fu.c:141
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "خادوم لعمليات سكربت-فو البعيدة"
 
-#: ../plug-ins/script-fu/script-fu.c:146
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "اب_دأ الخادوم..."
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_جمب على الخط"
 
-#: ../plug-ins/script-fu/script-fu.c:303
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "د_ليل المستخدم"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "اخ_تبار"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
 msgstr "الأ_زرار"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
 msgstr "ال_شعارات"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
 msgstr "الن_ماذج"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "_سمات صفحات الوب"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "تو_هج غريب"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "نموذج ال_زاوية المنحرفة"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "ألفا إلى ش_عار"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "أعد قراءة سكربتات سكربت-فو المتاحة"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "حدّث السكرب_تات"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -1609,6 +1601,62 @@ msgstr "ملصقا_ت الأنابيب العامة..."
 msgid "_Tube Button Label..."
 msgstr "ملصق زر الأنبو_ب..."
 
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "وضع علامة مرجعية على موقع وب GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "وضع علامة مرجعية على دليل المستخدم"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "إنشاء واستخدام التح_ديدات"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "إنشاء، فتح، وحفظ الملفات"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "رسم أش_كال بسيطة"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "كيفية استخدام الجدا_ول"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "س_جل الملحقات"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "استخدا_م المسارات"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "مفا_هيم أساسية"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "موقع وب الت_طوير"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "موقع الوب الر_ئيسي"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "تحضي_ر صورك للوب"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "موقع وب دليل المست_خدم"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "ال_عمل مع صور الكاميرا الرقمية"
+
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
@@ -2647,62 +2695,6 @@ msgstr "طول الخيط"
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
 msgstr "ن_سيج..."
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "وضع علامة مرجعية على موقع وب GIMP"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "وضع علامة مرجعية على دليل المستخدم"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "إنشاء واستخدام التح_ديدات"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "إنشاء، فتح، وحفظ الملفات"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "رسم أش_كال بسيطة"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "كيفية استخدام الجدا_ول"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "س_جل الملحقات"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "استخدا_م المسارات"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "مفا_هيم أساسية"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "موقع وب الت_طوير"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "موقع الوب الر_ئيسي"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "تحضي_ر صورك للوب"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "موقع وب دليل المست_خدم"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "ال_عمل مع صور الكاميرا الرقمية"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
