@@ -44,3 +44,14 @@ One possible design adjustment would be to have GimpWidgetFactory that
 takes care of 1), and then have GimpDialogFactory inherit from
 GtkWidgetFactory and implementing 2). GimpWidgetFactory could possibly
 use GtkBuilder.
+
+
+  sessionrc
+  ---------
+When GIMP starts, the sessionrc file is parsed. This step puts
+GimpSessionInfo:s into GimpDialogFactories. Later when dialogs are
+created, the dialog factory looks up existing session info entries. If
+one exists, it uses the session info to set e.g. the position of the
+created dialog. If it doesn't exist, it creates a new session info
+object for the dialog. When GIMP exists, the current session infos are
+then written back to sessionrc.
