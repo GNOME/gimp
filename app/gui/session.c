@@ -126,11 +126,12 @@ session_init (Gimp *gimp)
         case G_TOKEN_SYMBOL:
           if (scanner->value.v_symbol == GINT_TO_POINTER (SESSION_INFO))
             {
-              GimpDialogFactory *factory;
-              GimpSessionInfo   *info;
-              gchar             *factory_name;
-              gchar             *entry_name;
-              gboolean           skip = FALSE;
+              GimpDialogFactory      *factory      = NULL;
+              GimpSessionInfo        *info         = NULL;
+              gchar                  *factory_name = NULL;
+              gchar                  *entry_name   = NULL;
+              GimpDialogFactoryEntry *entry        = NULL;
+              gboolean                skip         = FALSE;
 
               token = G_TOKEN_STRING;
 
@@ -138,7 +139,6 @@ session_init (Gimp *gimp)
                 break;
 
               factory = gimp_dialog_factory_from_name (factory_name);
-              g_free (factory_name);
 
               if (! factory)
                 break;
@@ -148,29 +148,39 @@ session_init (Gimp *gimp)
 
               info = gimp_session_info_new ();
 
-              /* "dock" entries in the "dock" factory are just dummy
-               * entries and don't have any dialog factory entry, so
-               * don't bother looking for entires for them
+              /* Previously, GimpDock was a toplevel. That is why
+               * versions <= GIMP 2.6 has "dock" as the entry name. We
+               * want "dock" to be interpreted as 'dock window'
+               * however so have some special-casing for that. When
+               * the entry name is "dock" the factory name is either
+               * "dock" or "toolbox".
                */
-              if (strcmp (entry_name, "dock"))
+              if (strcmp (entry_name, "dock") == 0)
                 {
-                  GimpDialogFactoryEntry *entry =
+                  entry =
                     gimp_dialog_factory_find_entry (factory,
-                                                    entry_name);
-                  if (entry)
-                    {
-                      gimp_session_info_set_factory_entry (info, entry);
-                    }
-                  else
-                    {
-                      /* If we expected a dialog factory entry but failed
-                       * to find one, skip to add this session info object
-                       */
-                      skip = TRUE;
-                    }
+                                                    (strcmp (factory_name, "toolbox") == 0 ?
+                                                     "gimp-toolbox-window" :
+                                                     "gimp-dock-window"));
+                }
+              else
+                {
+                  entry = gimp_dialog_factory_find_entry (factory,
+                                                          entry_name);
                 }
 
+              /* We're done with these now */
+              g_free (factory_name);
               g_free (entry_name);
+
+              if (entry)
+                {
+                  gimp_session_info_set_factory_entry (info, entry);
+                }
+              else
+                {
+                  skip = TRUE;
+                }
 
               if (gimp_config_deserialize (GIMP_CONFIG (info), scanner, 1, NULL))
                 {

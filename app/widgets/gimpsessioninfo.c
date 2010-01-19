@@ -28,6 +28,8 @@
 
 #include "widgets-types.h"
 
+#include "dialogs/dialogs.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockwindow.h"
@@ -278,9 +280,6 @@ gimp_session_info_deserialize (GimpConfig *config,
               {
                 GimpSessionInfoDock *dock_info = NULL;
 
-                if (info->p->factory_entry)
-                  goto error;
-
                 g_scanner_set_scope (scanner, scope_id + 1);
                 token = gimp_session_info_dock_deserialize (scanner, scope_id + 1,
                                                             &dock_info);
@@ -356,8 +355,9 @@ void
 gimp_session_info_restore (GimpSessionInfo   *info,
                            GimpDialogFactory *factory)
 {
-  GdkDisplay *display;
-  GdkScreen  *screen = NULL;
+  GtkWidget  *dialog  = NULL;
+  GdkDisplay *display = NULL;
+  GdkScreen  *screen  = NULL;
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
@@ -373,10 +373,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   info->p->open   = FALSE;
   info->p->screen = DEFAULT_SCREEN;
 
-  if (info->p->factory_entry && ! info->p->factory_entry->dockable)
+  if (! info->p->factory_entry->dockable)
     {
-      GtkWidget *dialog;
-
       GIMP_LOG (DIALOG_FACTORY, "restoring toplevel \"%s\" (info %p)",
                 info->p->factory_entry->identifier,
                 info);
@@ -390,40 +388,29 @@ gimp_session_info_restore (GimpSessionInfo   *info,
       if (dialog && info->p->aux_info)
         gimp_session_info_aux_set_list (dialog, info->p->aux_info);
     }
+
+  /* If we have docks, proceed as usual. If we don't have docks,
+   * assume it is the toolbox and restore the dock anyway
+   */
+  if (info->p->docks)
+    {
+      GList *iter = NULL;
+
+      for (iter = info->p->docks; iter; iter = g_list_next (iter))
+        gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
+                                        factory,
+                                        screen,
+                                        GIMP_DOCK_WINDOW (dialog));
+    }
   else
     {
-      GtkWidget *dock_window = NULL;
-      GList     *iter        = NULL;
-
-      GIMP_LOG (DIALOG_FACTORY, "restoring dock window (info %p)",
-                info);
-
-      dock_window = gimp_dialog_factory_dock_window_new (factory, screen);
-
-      if (dock_window && info->p->aux_info)
-        gimp_session_info_aux_set_list (GTK_WIDGET (dock_window), info->p->aux_info);
-
-      /* If we have docks, proceed as usual. If we don't have docks,
-       * assume it is the toolbox and restore the dock anyway
-       */
-      if (info->p->docks)
-        {
-          for (iter = info->p->docks; iter; iter = g_list_next (iter))
-            gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
-                                            factory,
-                                            screen,
-                                            GIMP_DOCK_WINDOW (dock_window));
-        }
-      else
-        {
-          gimp_session_info_dock_restore (NULL,
-                                          factory,
-                                          screen,
-                                          GIMP_DOCK_WINDOW (dock_window));
-        }
-
-      gtk_widget_show (GTK_WIDGET (dock_window));
+      gimp_session_info_dock_restore (NULL,
+                                      factory,
+                                      screen,
+                                      GIMP_DOCK_WINDOW (dialog));
     }
+
+  gtk_widget_show (dialog);
 }
 
 /* This function mostly lifted from
@@ -633,9 +620,7 @@ gimp_session_info_get_info (GimpSessionInfo *info)
 
   info->p->aux_info = gimp_session_info_aux_get_list (info->p->widget);
 
-  if (info->p->factory_entry == NULL ||
-      (info->p->factory_entry &&
-       info->p->factory_entry->dockable))
+  if (GIMP_IS_DOCK_WINDOW (info->p->widget))
     {
       GList *iter = NULL;
 

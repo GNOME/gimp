@@ -226,7 +226,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
    * type of dock depends on the factory
    */
   dock_id    = g_strconcat ("gimp-", gimp_object_get_name (factory), NULL);
-  dock       = gimp_dialog_factory_dialog_new (global_dock_window_factory /* FIXME */,
+  dock       = gimp_dialog_factory_dialog_new (factory,
                                                screen,
                                                dock_id,
                                                -1 /*view_size*/,

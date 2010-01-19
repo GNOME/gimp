@@ -104,6 +104,20 @@ GimpContainer     *global_recent_docks        = NULL;
     FALSE      /* remember_if_open */, \
     FALSE      /* dockable         */}
 
+#define DOCK_WINDOW(id, new_func) \
+  { id         /* identifier       */, \
+    NULL       /* name             */, \
+    NULL       /* blurb            */, \
+    NULL       /* stock_id         */, \
+    NULL       /* help_id          */, \
+    new_func   /* new_func         */, \
+    0          /* view_size        */, \
+    FALSE      /* singleton        */, \
+    TRUE       /* session_managed  */, \
+    TRUE       /* remember_size    */, \
+    TRUE       /* remember_if_open */, \
+    FALSE      /* dockable         */}
+
 #define LISTGRID(id, name, blurb, stock_id, help_id, view_size) \
   { "gimp-"#id"-list"             /* identifier       */,  \
     name                          /* name             */,  \
@@ -216,6 +230,12 @@ static const GimpDialogFactoryEntry dock_entries[] =
   DOCK ("gimp-toolbox",
         dialogs_toolbox_new),
 
+  /*  dock windows  */
+  DOCK_WINDOW ("gimp-dock-window",
+               dialogs_dock_window_new),
+  DOCK_WINDOW ("gimp-toolbox-window",
+               dialogs_toolbox_dock_window_new),
+
   /*  singleton dockables  */
   DOCKABLE ("gimp-tool-options",
             N_("Tool Options"), NULL, GIMP_STOCK_TOOL_OPTIONS,
@@ -323,6 +343,17 @@ static const GimpDialogFactoryEntry dock_entries[] =
             dialogs_palette_editor_get, 0, TRUE)
 };
 
+static const GimpDialogFactoryEntry toolbox_entries[] =
+{
+  /*  docks  */
+  DOCK ("gimp-toolbox",
+        dialogs_toolbox_new),
+
+  /*  dock windows  */
+  DOCK_WINDOW ("gimp-toolbox-window",
+               dialogs_toolbox_dock_window_new)
+};
+
 
 /*  public functions  */
 
@@ -346,16 +377,12 @@ dialogs_init (Gimp            *gimp,
                                                     gimp_get_user_context (gimp),
                                                     menu_factory,
                                                     TRUE);
-  gimp_dialog_factory_set_dock_window_func (global_toolbox_factory,
-                                            dialogs_toolbox_dock_window_new);
 
   /* Dock window */
   global_dock_window_factory = gimp_dialog_factory_new ("dock",
                                                         gimp_get_user_context (gimp),
                                                         menu_factory,
                                                         TRUE);
-  gimp_dialog_factory_set_dock_window_func (global_dock_window_factory,
-                                            dialogs_dock_window_new);
 
   /* Display */
   global_display_factory = gimp_dialog_factory_new ("display",
@@ -393,6 +420,21 @@ dialogs_init (Gimp            *gimp,
                                         dock_entries[i].remember_size,
                                         dock_entries[i].remember_if_open,
                                         dock_entries[i].dockable);
+
+  for (i = 0; i < G_N_ELEMENTS (toolbox_entries); i++)
+    gimp_dialog_factory_register_entry (global_toolbox_factory,
+                                        toolbox_entries[i].identifier,
+                                        gettext (toolbox_entries[i].name),
+                                        gettext (toolbox_entries[i].blurb),
+                                        toolbox_entries[i].stock_id,
+                                        toolbox_entries[i].help_id,
+                                        toolbox_entries[i].new_func,
+                                        toolbox_entries[i].view_size,
+                                        toolbox_entries[i].singleton,
+                                        toolbox_entries[i].session_managed,
+                                        toolbox_entries[i].remember_size,
+                                        toolbox_entries[i].remember_if_open,
+                                        toolbox_entries[i].dockable);
 
   gimp_dialog_factory_register_entry (global_display_factory,
                                       "gimp-empty-image-window",

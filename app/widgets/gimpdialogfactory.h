@@ -110,8 +110,6 @@ GimpDialogFactory * gimp_dialog_factory_new                  (const gchar       
                                                               GimpMenuFactory         *menu_factory,
                                                               gboolean                 toggle_visibility);
 GimpDialogFactory * gimp_dialog_factory_from_name            (const gchar             *name);
-void                gimp_dialog_factory_set_dock_window_func (GimpDialogFactory       *factory,
-                                                              GimpDialogNewFunc        new_dock_window_func);
 void                gimp_dialog_factory_register_entry       (GimpDialogFactory       *factory,
                                                               const gchar             *identifier,
                                                               const gchar             *name,
@@ -150,8 +148,6 @@ GtkWidget *         gimp_dialog_factory_dockable_new         (GimpDialogFactory 
                                                               const gchar             *identifier,
                                                               gint                     view_size);
 GtkWidget *         gimp_dialog_factory_dock_with_window_new (GimpDialogFactory       *factory,
-                                                              GdkScreen               *screen);
-GtkWidget *         gimp_dialog_factory_dock_window_new      (GimpDialogFactory       *factory,
                                                               GdkScreen               *screen);
 void                gimp_dialog_factory_add_dialog           (GimpDialogFactory       *factory,
                                                               GtkWidget               *dialog);

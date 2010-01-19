@@ -262,20 +262,24 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer *ui_configurer,
 
   for (iter = docks; iter; iter = iter->next)
     {
-      GimpDock          *dock           = GIMP_DOCK (iter->data);
-      GtkWidget         *dock_window    = NULL;
-      GimpDialogFactory *dialog_factory = NULL;
+      GimpDock  *dock        = GIMP_DOCK (iter->data);
+      GtkWidget *dock_window = NULL;
 
-      /* This is kind of ugly but not a disaster. We need the dock
-       * window correctly configured if we create it for the toolbox
+      /* Create a dock window to put the dock in. Checking for
+       * GIMP_IS_TOOLBOX() is kind of ugly but not a disaster. We need
+       * the dock window correctly configured if we create it for the
+       * toolbox
        */
-      dialog_factory = (GIMP_IS_TOOLBOX (dock) ?
-                        global_toolbox_factory :
-                        global_dock_window_factory);
-
-      /* Create a dock window to put the dock in */
-      dock_window = gimp_dialog_factory_dock_window_new (dialog_factory,
-                                                         screen);
+      dock_window =
+        gimp_dialog_factory_dialog_new ((GIMP_IS_TOOLBOX (dock) ?
+                                         global_toolbox_factory :
+                                         global_dock_window_factory),
+                                        screen,
+                                        (GIMP_IS_TOOLBOX (dock) ?
+                                         "gimp-toolbox-window" :
+                                         "gimp-dock-window"),
+                                        -1 /*view_size*/,
+                                        FALSE /*present*/);
 
       /* Move the dock to the window */
       g_object_ref (dock);
