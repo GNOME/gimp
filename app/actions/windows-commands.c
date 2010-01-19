@@ -41,29 +41,6 @@
 #include "windows-commands.h"
 
 
-static GtkWidget * windows_commands_get_toolbox (GimpDialogFactory *toolbox_factory);
-
-
-static GtkWidget *
-windows_commands_get_toolbox (GimpDialogFactory *toolbox_factory)
-{
-  GList *list = NULL;
-
-  for (list = gimp_dialog_factory_get_open_dialogs (toolbox_factory);
-       list;
-       list = list->next)
-    {
-      /* The only toplevel widget in the toolbox factory is the
-       * toolbox
-       */
-      if (GTK_IS_WIDGET (list->data) && gtk_widget_is_toplevel (list->data))
-        return list->data;
-    }
-
-  return NULL;
-}
-
-
 void
 windows_show_toolbox_cmd_callback (GtkAction *action,
                                    gpointer   data)
@@ -134,7 +111,7 @@ windows_show_toolbox (void)
     }
   else
     {
-      toolbox = windows_commands_get_toolbox (global_toolbox_factory);
+      toolbox = dialogs_get_toolbox ();
 
       if (toolbox)
         gtk_window_present (GTK_WINDOW (toolbox));
