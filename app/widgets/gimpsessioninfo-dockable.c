@@ -282,7 +282,7 @@ gimp_session_info_dockable_restore (GimpSessionInfoDockable *info,
       info->view_size > GIMP_VIEW_SIZE_GIGANTIC)
     info->view_size = -1;
 
-  /* FIXME: Merge global_dock_window_factory and global_toolbox_factory
+  /* FIXME: Merge global_dock_factory and global_toolbox_factory
    * somehow so we don't need this hack
    */
   dockable = gimp_dialog_factory_dockable_new ((GIMP_IS_TOOLBOX (dock) ?

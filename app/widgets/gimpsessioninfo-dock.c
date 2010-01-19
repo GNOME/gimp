@@ -26,11 +26,6 @@
 
 #include "widgets-types.h"
 
-/* FIXME: Remove when the toolbox and dock window factories have been
- * merged
- */
-#include "dialogs/dialogs.h"
-
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockwindow.h"

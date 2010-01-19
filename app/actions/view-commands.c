@@ -338,7 +338,7 @@ view_navigation_window_cmd_callback (GtkAction *action,
 
   shell = gimp_display_get_shell (display);
 
-  gimp_dialog_factory_dialog_raise (global_dock_window_factory,
+  gimp_dialog_factory_dialog_raise (global_dock_factory,
                                     gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     "gimp-navigation-view", -1);
 }

@@ -187,7 +187,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
       g_list_free (docks);
 
       /* Kill the window if removing the dock didn't destroy it
-       * already. This will be the case forthe toolbox dock window
+       * already. This will be the case for the toolbox dock window
        */
       if (GTK_IS_WIDGET (dock_window))
         {
@@ -273,7 +273,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer *ui_configurer,
       dock_window =
         gimp_dialog_factory_dialog_new ((GIMP_IS_TOOLBOX (dock) ?
                                          global_toolbox_factory :
-                                         global_dock_window_factory),
+                                         global_dock_factory),
                                         screen,
                                         (GIMP_IS_TOOLBOX (dock) ?
                                          "gimp-toolbox-window" :
@@ -316,7 +316,7 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
                                                 NULL,
                                                 global_menu_factory,
                                                 global_display_factory,
-                                                global_dock_window_factory);
+                                                global_dock_factory);
       /* Move the shell there */
       shell = gimp_image_window_get_shell (source_image_window, 1);
 
@@ -369,7 +369,7 @@ gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
    * window
    */
   gimp_ui_configurer_move_docks_to_columns (ui_configurer,
-                                            global_dock_window_factory,
+                                            global_dock_factory,
                                             right_docks);
 
   /* Show the docks in the window */

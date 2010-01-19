@@ -30,11 +30,6 @@
 
 #include "widgets-types.h"
 
-/* FIXME: Remove when the toolbox and dock window factories have been
- * merged
- */
-#include "dialogs/dialogs.h"
-
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 

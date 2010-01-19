@@ -114,9 +114,9 @@ windows_open_recent_cmd_callback (GtkAction *action,
   g_object_ref (info);
   gimp_container_remove (global_recent_docks, GIMP_OBJECT (info));
 
-  gimp_dialog_factory_add_session_info (global_dock_window_factory, info);
+  gimp_dialog_factory_add_session_info (global_dock_factory, info);
 
-  gimp_session_info_restore (info, global_dock_window_factory);
+  gimp_session_info_restore (info, global_dock_factory);
   gimp_session_info_clear_info (info);
 }
 

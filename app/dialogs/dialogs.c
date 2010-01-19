@@ -40,12 +40,12 @@
 #include "gimp-intl.h"
 
 
-GimpDialogFactory *global_dialog_factory      = NULL;
-GimpDialogFactory *global_dock_window_factory = NULL;
-GimpDialogFactory *global_toolbox_factory     = NULL;
-GimpDialogFactory *global_display_factory     = NULL;
+GimpDialogFactory *global_dialog_factory  = NULL;
+GimpDialogFactory *global_dock_factory    = NULL;
+GimpDialogFactory *global_toolbox_factory = NULL;
+GimpDialogFactory *global_display_factory = NULL;
 
-GimpContainer     *global_recent_docks        = NULL;
+GimpContainer     *global_recent_docks    = NULL;
 
 
 #define FOREIGN(id, singleton, remember_size) \
@@ -224,7 +224,7 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
-  /* docks */
+  /*  docks  */
   DOCK ("gimp-dock",
         dialogs_dock_new),
   DOCK ("gimp-toolbox",
@@ -378,11 +378,11 @@ dialogs_init (Gimp            *gimp,
                                                     menu_factory,
                                                     TRUE);
 
-  /* Dock window */
-  global_dock_window_factory = gimp_dialog_factory_new ("dock",
-                                                        gimp_get_user_context (gimp),
-                                                        menu_factory,
-                                                        TRUE);
+  /* Dock windows and docks */
+  global_dock_factory = gimp_dialog_factory_new ("dock",
+                                                 gimp_get_user_context (gimp),
+                                                 menu_factory,
+                                                 TRUE);
 
   /* Display */
   global_display_factory = gimp_dialog_factory_new ("display",
@@ -407,7 +407,7 @@ dialogs_init (Gimp            *gimp,
                                         toplevel_entries[i].dockable);
 
   for (i = 0; i < G_N_ELEMENTS (dock_entries); i++)
-    gimp_dialog_factory_register_entry (global_dock_window_factory,
+    gimp_dialog_factory_register_entry (global_dock_factory,
                                         dock_entries[i].identifier,
                                         gettext (dock_entries[i].name),
                                         gettext (dock_entries[i].blurb),
@@ -463,11 +463,10 @@ dialogs_exit (Gimp *gimp)
     }
 
   /*  destroy the "global_toolbox_factory" _before_ destroying the
-   *  "global_dock_window_factory" because the
-   *  "global_toolbox_factory" owns dockables which were created by
-   *  the "global_dock_window_factory".  This way they are properly
-   *  removed from the "global_dock_window_factory", which would
-   *  complain about stale entries otherwise.
+   *  "global_dock_factory" because the "global_toolbox_factory" owns
+   *  dockables which were created by the "global_dock_factory".  This
+   *  way they are properly removed from the "global_dock_factory",
+   *  which would complain about stale entries otherwise.
    */
   if (global_toolbox_factory)
     {
@@ -475,10 +474,10 @@ dialogs_exit (Gimp *gimp)
       global_toolbox_factory = NULL;
     }
 
-  if (global_dock_window_factory)
+  if (global_dock_factory)
     {
-      g_object_unref (global_dock_window_factory);
-      global_dock_window_factory = NULL;
+      g_object_unref (global_dock_factory);
+      global_dock_factory = NULL;
     }
 
   if (global_display_factory)
