@@ -291,7 +291,7 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           gint    offset_x;
           gint    offset_y;
 
-          /* FIXMEEEEE!!! */
+          /* FIXME: The code is a bit of a mess */
 
           /*  multiply the zoom_factor with the ratio of the new and
            *  old canvas diagonals
