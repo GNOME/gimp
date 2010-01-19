@@ -468,33 +468,6 @@ gimp_dock_window_dispose (GObject *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
-#if 0
-/* XXX: Do we need this any longer? Doesn't seem like it */
-static void       gimp_dock_window_destroy           (GtkObject      *object);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  gtk_object_class->destroy     = gimp_dock_window_destroy;
-static void
-gimp_dock_window_destroy (GtkObject *object)
-{
-  GimpDockWindow *dock = GIMP_DOCK_WINDOW (object);
-
-  /*  remove the image menu and the auto button manually here because
-   *  of weird cross-connections with GimpDock's context
-   */
-  /*  FIXME: Fix this when fixing GimpContext management */
-  if (gimp_dock_get_main_vbox (GIMP_DOCK (dock)) && dock->p->image_combo)
-    {
-      GtkWidget *parent = gtk_widget_get_parent (dock->p->image_combo);
-
-      if (parent)
-        gtk_container_remove (GTK_CONTAINER (gimp_dock_get_main_vbox (GIMP_DOCK (dock))),
-                              parent);
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-#endif
-
 static void
 gimp_dock_window_set_property (GObject      *object,
                                guint         property_id,
