@@ -30,9 +30,11 @@
 #include "core/gimplist.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimptoolbox.h"
 
 #include "dialogs.h"
 #include "dialogs-constructors.h"
@@ -42,7 +44,6 @@
 
 GimpDialogFactory *global_dialog_factory  = NULL;
 GimpDialogFactory *global_dock_factory    = NULL;
-GimpDialogFactory *global_toolbox_factory = NULL;
 GimpDialogFactory *global_display_factory = NULL;
 
 GimpContainer     *global_recent_docks    = NULL;
@@ -343,17 +344,6 @@ static const GimpDialogFactoryEntry dock_entries[] =
             dialogs_palette_editor_get, 0, TRUE)
 };
 
-static const GimpDialogFactoryEntry toolbox_entries[] =
-{
-  /*  docks  */
-  DOCK ("gimp-toolbox",
-        dialogs_toolbox_new),
-
-  /*  dock windows  */
-  DOCK_WINDOW ("gimp-toolbox-window",
-               dialogs_toolbox_dock_window_new)
-};
-
 
 /*  public functions  */
 
@@ -371,12 +361,6 @@ dialogs_init (Gimp            *gimp,
                                                    gimp_get_user_context (gimp),
                                                    menu_factory,
                                                    TRUE);
-
-  /* Toolbox */
-  global_toolbox_factory = gimp_dialog_factory_new ("toolbox",
-                                                    gimp_get_user_context (gimp),
-                                                    menu_factory,
-                                                    TRUE);
 
   /* Dock windows and docks */
   global_dock_factory = gimp_dialog_factory_new ("dock",
@@ -421,21 +405,6 @@ dialogs_init (Gimp            *gimp,
                                         dock_entries[i].remember_if_open,
                                         dock_entries[i].dockable);
 
-  for (i = 0; i < G_N_ELEMENTS (toolbox_entries); i++)
-    gimp_dialog_factory_register_entry (global_toolbox_factory,
-                                        toolbox_entries[i].identifier,
-                                        gettext (toolbox_entries[i].name),
-                                        gettext (toolbox_entries[i].blurb),
-                                        toolbox_entries[i].stock_id,
-                                        toolbox_entries[i].help_id,
-                                        toolbox_entries[i].new_func,
-                                        toolbox_entries[i].view_size,
-                                        toolbox_entries[i].singleton,
-                                        toolbox_entries[i].session_managed,
-                                        toolbox_entries[i].remember_size,
-                                        toolbox_entries[i].remember_if_open,
-                                        toolbox_entries[i].dockable);
-
   gimp_dialog_factory_register_entry (global_display_factory,
                                       "gimp-empty-image-window",
                                       NULL, NULL,
@@ -460,18 +429,6 @@ dialogs_exit (Gimp *gimp)
     {
       g_object_unref (global_dialog_factory);
       global_dialog_factory = NULL;
-    }
-
-  /*  destroy the "global_toolbox_factory" _before_ destroying the
-   *  "global_dock_factory" because the "global_toolbox_factory" owns
-   *  dockables which were created by the "global_dock_factory".  This
-   *  way they are properly removed from the "global_dock_factory",
-   *  which would complain about stale entries otherwise.
-   */
-  if (global_toolbox_factory)
-    {
-      g_object_unref (global_toolbox_factory);
-      global_toolbox_factory = NULL;
     }
 
   if (global_dock_factory)
@@ -552,13 +509,14 @@ dialogs_get_toolbox (void)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_toolbox_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_dock_factory), NULL);
 
-  for (list = gimp_dialog_factory_get_open_dialogs (global_toolbox_factory);
+  for (list = gimp_dialog_factory_get_open_dialogs (global_dock_factory);
        list;
        list = g_list_next (list))
     {
-      if (gtk_widget_is_toplevel (list->data))
+      if (GIMP_IS_DOCK_WINDOW (list->data) &&
+          gimp_dock_window_has_toolbox (list->data))
         return list->data;
     }
 

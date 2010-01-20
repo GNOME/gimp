@@ -29,17 +29,21 @@
  */
 struct _GimpSessionInfoDock
 {
+  /* Identifier written to/read from sessionrc */
+  gchar *identifier;
+
   /*  list of GimpSessionInfoBook  */
   GList *books;
 };
 
-GimpSessionInfoDock * gimp_session_info_dock_new         (void);
+GimpSessionInfoDock * gimp_session_info_dock_new         (const gchar          *identifier);
 void                  gimp_session_info_dock_free        (GimpSessionInfoDock  *dock_info);
 void                  gimp_session_info_dock_serialize   (GimpConfigWriter     *writer,
                                                           GimpSessionInfoDock  *dock);
 GTokenType            gimp_session_info_dock_deserialize (GScanner             *scanner,
                                                           gint                  scope,
-                                                          GimpSessionInfoDock **info);
+                                                          GimpSessionInfoDock **info,
+                                                          const gchar          *identifier);
 GimpSessionInfoDock * gimp_session_info_dock_from_widget (GimpDock             *dock);
 void                  gimp_session_info_dock_restore     (GimpSessionInfoDock  *dock_info,
                                                           GimpDialogFactory    *factory,

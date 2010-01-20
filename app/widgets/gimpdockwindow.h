@@ -83,8 +83,10 @@ void                gimp_dock_window_setup                  (GimpDockWindow    *
 void                gimp_dock_window_set_aux_info           (GimpDockWindow    *dock,
                                                              GList             *aux_info);
 GList             * gimp_dock_window_get_aux_info           (GimpDockWindow    *dock);
+gboolean            gimp_dock_window_has_toolbox            (GimpDockWindow    *dock_window);
 
 GimpDockWindow    * gimp_dock_window_from_dock              (GimpDock          *dock);
+
 
 
 #endif /* __GIMP_DOCK_WINDOW_H__ */

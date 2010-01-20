@@ -53,6 +53,7 @@
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo.h"
+#include "gimptoolbox.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindow.h"
@@ -1064,6 +1065,31 @@ gimp_dock_window_get_aux_info (GimpDockWindow *dock_window)
   aux_info = g_list_append (aux_info, aux);
 
   return aux_info;
+}
+
+/**
+ * gimp_dock_window_has_toolbox:
+ * @dock_window:
+ *
+ * Returns: %TRUE if the dock window has a GimpToolbox dock, %FALSE
+ * otherwise.
+ **/
+gboolean
+gimp_dock_window_has_toolbox (GimpDockWindow *dock_window)
+{
+  GList *iter = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), FALSE);
+
+  for (iter = gimp_dock_columns_get_docks (dock_window->p->dock_columns);
+       iter;
+       iter = g_list_next (iter))
+    {
+      if (GIMP_IS_TOOLBOX (iter->data))
+        return TRUE;
+    }
+
+  return FALSE;
 }
 
 

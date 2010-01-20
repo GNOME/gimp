@@ -138,7 +138,15 @@ session_init (Gimp *gimp)
               if (! gimp_scanner_parse_string (scanner, &factory_name))
                 break;
 
-              factory = gimp_dialog_factory_from_name (factory_name);
+              /* In versions <= GIMP 2.6 there was a "toolbox" and a
+               * "dock" factory. These are now merged so if the
+               * factory name is "toolbox", get the "dock" factory
+               * instead. We don't change factory_name because we need
+               * it below
+               */
+              factory = gimp_dialog_factory_from_name (strcmp ("toolbox", factory_name) == 0 ?
+                                                       "dock" :
+                                                       factory_name);
 
               if (! factory)
                 break;

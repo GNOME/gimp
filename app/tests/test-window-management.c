@@ -94,9 +94,11 @@ gimp_test_window_roles (GimpTestFixture *fixture,
   GimpDockWindow *toolbox_window = NULL;
 
   dock           = gimp_dialog_factory_dock_with_window_new (global_dock_factory,
-                                                             gdk_screen_get_default ());
-  toolbox        = gimp_dialog_factory_dock_with_window_new (global_toolbox_factory,
-                                                             gdk_screen_get_default ());
+                                                             gdk_screen_get_default (),
+                                                             FALSE /*toolbox*/);
+  toolbox        = gimp_dialog_factory_dock_with_window_new (global_dock_factory,
+                                                             gdk_screen_get_default (),
+                                                             TRUE /*toolbox*/);
   dock_window    = gimp_dock_window_from_dock (GIMP_DOCK (dock));
   toolbox_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
 

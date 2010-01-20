@@ -34,6 +34,7 @@
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dock.h"
 #include "gimpsessioninfo-private.h"
+#include "gimptoolbox.h"
 
 
 enum
@@ -45,15 +46,26 @@ enum
 /*  public functions  */
 
 GimpSessionInfoDock *
-gimp_session_info_dock_new (void)
+gimp_session_info_dock_new (const gchar *identifier)
 {
-  return g_slice_new0 (GimpSessionInfoDock);
+  GimpSessionInfoDock *dock_info = NULL;
+
+  dock_info = g_slice_new0 (GimpSessionInfoDock);
+  dock_info->identifier = g_strdup (identifier);
+
+  return dock_info;
 }
 
 void
 gimp_session_info_dock_free (GimpSessionInfoDock *dock_info)
 {
   g_return_if_fail (dock_info != NULL);
+
+  if (dock_info->identifier)
+    {
+      g_free (dock_info->identifier);
+      dock_info->identifier = NULL;
+    }
 
   if (dock_info->books)
     {
@@ -76,7 +88,7 @@ gimp_session_info_dock_serialize (GimpConfigWriter    *writer,
   g_return_if_fail (writer != NULL);
   g_return_if_fail (dock_info != NULL);
 
-  gimp_config_writer_open (writer, "dock");
+  gimp_config_writer_open (writer, dock_info->identifier);
 
   for (list = dock_info->books; list; list = g_list_next (list))
     gimp_session_info_book_serialize (writer, list->data);
@@ -87,7 +99,8 @@ gimp_session_info_dock_serialize (GimpConfigWriter    *writer,
 GTokenType
 gimp_session_info_dock_deserialize (GScanner             *scanner,
                                     gint                  scope,
-                                    GimpSessionInfoDock **dock_info)
+                                    GimpSessionInfoDock **dock_info,
+                                    const gchar          *identifier)
 {
   GTokenType token;
 
@@ -97,7 +110,7 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
   g_scanner_scope_add_symbol (scanner, scope, "book",
                               GINT_TO_POINTER (SESSION_INFO_BOOK));
 
-  *dock_info = gimp_session_info_dock_new ();
+  *dock_info = gimp_session_info_dock_new (identifier);
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -159,7 +172,9 @@ gimp_session_info_dock_from_widget (GimpDock *dock)
 
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  dock_info = gimp_session_info_dock_new ();
+  dock_info = gimp_session_info_dock_new (GIMP_IS_TOOLBOX (dock) ?
+                                          "gimp-toolbox" :
+                                          "gimp-dock");
 
   for (list = gimp_dock_get_dockbooks (dock); list; list = g_list_next (list))
     {
@@ -206,7 +221,6 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
                                 GdkScreen           *screen,
                                 GimpDockWindow      *dock_window)
 {
-  gchar         *dock_id    = NULL;
   GtkWidget     *dock       = NULL;
   GList         *iter       = NULL;
   GimpUIManager *ui_manager = NULL;
@@ -215,18 +229,11 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
   ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
-
-  /* Create the dock. Always use the dock window factory for it (but
-   * we want to refactor away that hard-coding eventually) but the
-   * type of dock depends on the factory
-   */
-  dock_id    = g_strconcat ("gimp-", gimp_object_get_name (factory), NULL);
   dock       = gimp_dialog_factory_dialog_new (factory,
                                                screen,
-                                               dock_id,
+                                               dock_info->identifier,
                                                -1 /*view_size*/,
                                                FALSE /*present*/);
-  g_free (dock_id);
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
 

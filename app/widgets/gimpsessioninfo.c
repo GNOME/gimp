@@ -48,7 +48,9 @@ enum
   SESSION_INFO_SIZE,
   SESSION_INFO_OPEN,
   SESSION_INFO_AUX,
-  SESSION_INFO_DOCK
+  SESSION_INFO_DOCK,
+  SESSION_INFO_GIMP_DOCK,
+  SESSION_INFO_GIMP_TOOLBOX
 };
 
 #define DEFAULT_SCREEN  -1
@@ -219,6 +221,12 @@ gimp_session_info_deserialize (GimpConfig *config,
                               GINT_TO_POINTER (SESSION_INFO_OPEN));
   g_scanner_scope_add_symbol (scanner, scope_id, "aux-info",
                               GINT_TO_POINTER (SESSION_INFO_AUX));
+  g_scanner_scope_add_symbol (scanner, scope_id, "gimp-dock",
+                              GINT_TO_POINTER (SESSION_INFO_GIMP_DOCK));
+  g_scanner_scope_add_symbol (scanner, scope_id, "gimp-toolbox",
+                              GINT_TO_POINTER (SESSION_INFO_GIMP_TOOLBOX));
+
+  /* For sessionrc files from version <= GIMP 2.6 */
   g_scanner_scope_add_symbol (scanner, scope_id, "dock",
                               GINT_TO_POINTER (SESSION_INFO_DOCK));
 
@@ -276,13 +284,33 @@ gimp_session_info_deserialize (GimpConfig *config,
                 goto error;
               break;
 
+            case SESSION_INFO_GIMP_TOOLBOX:
+            case SESSION_INFO_GIMP_DOCK:
             case SESSION_INFO_DOCK:
               {
-                GimpSessionInfoDock *dock_info = NULL;
+                GimpSessionInfoDock *dock_info  = NULL;
+                const gchar         *identifier = NULL;
+
+                /* Handle old sessionrc:s from versions <= GIMP 2.6 */
+                if (GPOINTER_TO_INT (scanner->value.v_symbol) == SESSION_INFO_DOCK &&
+                    info->p->factory_entry &&
+                    info->p->factory_entry->identifier &&
+                    strcmp ("gimp-toolbox-window", info->p->factory_entry->identifier) == 0)
+                  {
+                    identifier = "gimp-toolbox";
+                  }
+                else
+                  {
+                    identifier = ((GPOINTER_TO_INT (scanner->value.v_symbol) ==
+                                   SESSION_INFO_GIMP_TOOLBOX) ?
+                                  "gimp-toolbox" :
+                                  "gimp-dock");
+                  }
 
                 g_scanner_set_scope (scanner, scope_id + 1);
                 token = gimp_session_info_dock_deserialize (scanner, scope_id + 1,
-                                                            &dock_info);
+                                                            &dock_info,
+                                                            identifier);
 
                 if (token == G_TOKEN_LEFT_PAREN)
                   {
@@ -315,6 +343,8 @@ gimp_session_info_deserialize (GimpConfig *config,
   g_scanner_scope_remove_symbol (scanner, scope_id, "size");
   g_scanner_scope_remove_symbol (scanner, scope_id, "open-on-exit");
   g_scanner_scope_remove_symbol (scanner, scope_id, "aux-info");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "gimp-dock");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "gimp-toolbox");
   g_scanner_scope_remove_symbol (scanner, scope_id, "dock");
 
   g_scanner_set_scope (scanner, old_scope_id);
