@@ -93,9 +93,13 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 
   context = gimp_toolbox_get_context (toolbox);
 
+  /* We need to set this on the toolbox to make gimp-remote
+   * work. Remove this when we have gotten rid of gimp-remote.
+   */
   gimp_dnd_uri_list_dest_add (GTK_WIDGET (toolbox),
                               gimp_toolbox_drop_uri_list,
                               context);
+
   gimp_dnd_uri_list_dest_add (gimp_toolbox_get_vbox (toolbox),
                               gimp_toolbox_drop_uri_list,
                               context);
