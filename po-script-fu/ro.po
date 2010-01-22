@@ -6,15 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-01 23:13+0000\n"
-"PO-Revision-Date: 2009-09-15 17:32+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2010-01-09 11:16+0000\n"
+"PO-Revision-Date: 2010-01-13 01:12+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:131
 #: ../plug-ins/script-fu/script-fu-console.c:198
@@ -207,8 +209,13 @@ msgid "_Refresh Scripts"
 msgstr "_Reîmprospătează scripturile"
 
 #: ../plug-ins/script-fu/script-fu.c:358
-msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
-msgstr "Nu puteți folosi „Reîmprospătează scripturile” în timp ce căsuța de dialog Script-Fu este deschisă. Închideți toate ferestele Script-Fu și încercați din nou."
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Nu puteți folosi „Reîmprospătează scripturile” în timp ce căsuța de dialog "
+"Script-Fu este deschisă. Închideți toate ferestele Script-Fu și încercați "
+"din nou."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -216,7 +223,7 @@ msgstr "C_ontur 3D..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr ""
+msgstr "Rază de neclaritate hartă de stampare (bumpmap) (strat alfa)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -225,7 +232,7 @@ msgstr "Creează o siglă cu text conturat și umbră de perspectivă"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default bumpmap settings"
-msgstr ""
+msgstr "Configurări implicite hartă de stampare (bumpmap)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
@@ -306,11 +313,14 @@ msgstr "Dimensiune font (pixeli)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline blur radius"
-msgstr ""
+msgstr "Rază de neclaritate contur"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr "Conturează zona selectată (sau alfa) cu un model și adaugă o umbră de perspectivă"
+msgid ""
+"Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgstr ""
+"Conturează zona selectată (sau alfa) cu un model și adaugă o umbră de "
+"perspectivă"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -337,7 +347,7 @@ msgstr "Decalaș umbră pe axa Y"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
 msgid "Shadow blur radius"
-msgstr ""
+msgstr "Rază de neclaritate umbră"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
@@ -462,7 +472,7 @@ msgstr "Adaugă la imagine o bordură teșită"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
-msgstr ""
+msgstr "Păstrează stratul de stampare"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -568,7 +578,9 @@ msgstr "Lungime bară"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Create an Hrule graphic with an eerie glow for web pages"
-msgstr "Creează un separator orizontal (hrule) grafic cu strălucire stranie pentru pagini web"
+msgstr ""
+"Creează un separator orizontal (hrule) grafic cu strălucire stranie pentru "
+"pagini web"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
@@ -635,13 +647,14 @@ msgstr "_Strălucire exterioară..."
 msgid "Create a logo with an alien glow around the text"
 msgstr "Creează o siglă cu strălucire exterioară în jurul textului"
 
+# hm ? sau să las * ?
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
-msgstr "Dimensiune strălucire (pixeli * 4)"
+msgstr "Dimensiune strălucire (pixeli × 4)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Add psychedelic outlines to the selected region (or alpha)"
-msgstr ""
+msgstr "Adaugă contururi psihedelice la zona selectată (sau alfa)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
@@ -668,12 +681,18 @@ msgid "Width of gaps"
 msgstr "Lățimea golurilor"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-msgid "Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
+msgid ""
+"Add a gradient effect, a drop shadow, and a background to the selected "
+"region (or alpha)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-msgid "Create a plain text logo with a gradient effect, a drop shadow, and a background"
-msgstr "Creează o siglă de text simplu cu efect de degrade, o umbră de perspectivă și un fundal"
+msgid ""
+"Create a plain text logo with a gradient effect, a drop shadow, and a "
+"background"
+msgstr ""
+"Creează o siglă de text simplu cu efect de degrade, o umbră de perspectivă "
+"și un fundal"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -751,7 +770,9 @@ msgstr "Ant_et..."
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "Create a beveled pattern hrule for webpages"
-msgstr "Creează un separator orizontal (hrule) cu model ieșit în relief pentru pagini web"
+msgstr ""
+"Creează un separator orizontal (hrule) cu model ieșit în relief pentru "
+"pagini web"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -773,8 +794,12 @@ msgid "Blend Animation needs at least three source layers"
 msgstr "Animația amestecată are nevoie de cel puțin trei straturi sursă"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
-msgid "Create intermediate layers to blend two or more layers over a background as an animation"
-msgstr "Creează straturi intermediare pentru amestecul a două sau mai multe straturi peste un fundal ca o animație"
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"Creează straturi intermediare pentru amestecul a două sau mai multe straturi "
+"peste un fundal ca o animație"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -786,15 +811,19 @@ msgstr "Buclat"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "Max. blur radius"
-msgstr ""
+msgstr "Rază maximă de neclaritate"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
-msgstr "_Amestecă..."
+msgstr "_Amestec..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-msgid "Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
-msgstr "Adaugă fundaluri amestecate, părți luminoase și umbre la zona selectată (sau alfa)"
+msgid ""
+"Add blended backgrounds, highlights, and shadows to the selected region (or "
+"alpha)"
+msgstr ""
+"Adaugă fundaluri amestecate, părți luminoase și umbre la zona selectată (sau "
+"alfa)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -879,11 +908,11 @@ msgstr "Adaugă strălucire"
 # hm ?
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After glow"
-msgstr "Post strălucire"
+msgstr "Strălucire"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "B_urn-In..."
-msgstr ""
+msgstr "Ars_ură..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Corona width"
@@ -891,27 +920,33 @@ msgstr "Lățime coroană"
 
 # hm ?
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
-msgid "Create intermediate layers to produce an animated 'burn-in' transition between two layers"
-msgstr "Creează straturi intermediare pentru a produce o tranziție „arsu” între două straturi"
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"Creează straturi intermediare pentru a produce o tranziție de „arsură” "
+"animată între două straturi"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
-msgstr ""
+msgstr "Dizolvă în ieșire"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout width"
-msgstr ""
+msgstr "Lățime dizolvare în ieșire"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "Pregătește pentru GIF"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "Viteză (pixeli/cadru)"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
-msgid "The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer."
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
@@ -974,7 +1009,9 @@ msgid "Carved..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
-msgid "Create a logo with text raised above or carved in to the specified background image"
+msgid ""
+"Create a logo with text raised above or carved in to the specified "
+"background image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
@@ -991,7 +1028,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr "Creează o siglă asemănătoare cu o mâzgăleală de cretă pe o tablă neagră"
+msgstr ""
+"Creează o siglă asemănătoare cu o mâzgăleală de cretă pe o tablă neagră"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
@@ -1034,19 +1072,21 @@ msgid "Keep background"
 msgstr "Păstrează fundalul"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
-msgstr "Balans de crominanţă"
+msgstr "Balans de crominanță"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
-msgstr "Factor de crominanţă"
+msgstr "Factor de crominanță"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
@@ -1089,17 +1129,21 @@ msgstr "_Crom..."
 msgid "Create a simplistic, but cool, chromed logo"
 msgstr ""
 
+# hm ? sau să las * ?
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
-msgstr "Decalaje (pixeli * 2)"
+msgstr "Decalaje (pixeli × 2)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:1
 msgid "Circuit seed"
-msgstr ""
+msgstr "Sămânță circuit"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
+"Umple zona selectată (sau alfa) cu trasee asemănătoare cu cele ale unui "
+"circuit imprimat"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
@@ -1110,11 +1154,11 @@ msgstr "Păstrează selecția"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
-msgstr ""
+msgstr "Fără fundal (numai pentru strat separat)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
-msgstr ""
+msgstr "Dimensiune mască pentru efect de pictură în ulei"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:6
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
@@ -1128,7 +1172,7 @@ msgstr "_Circuit..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr ""
+msgstr "Adaugă la zona selectată (sau alfa) o textură similară cu a hainelor"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -1167,15 +1211,19 @@ msgstr "Mumai întunecare"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
-msgstr ""
+msgstr "Pete"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
 msgstr "Pată de _cafea..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
-msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
-msgstr "Adaugă un efect de carte de benzi desenate comice la zona selectată (sau alfa) prin conturarea și umplerea cu un degrade"
+msgid ""
+"Add a comic-book effect to the selected region (or alpha) by outlining and "
+"filling with a gradient"
+msgstr ""
+"Adaugă un efect de carte de benzi desenate comice la zona selectată (sau "
+"alfa) prin conturarea și umplerea cu un degrade"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1183,7 +1231,9 @@ msgstr "_Benzi comice..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr "Creează o siglă în stilul cărților de benzilor desenate comice prin conturarea și umplerea cu un degrade"
+msgstr ""
+"Creează o siglă în stilul cărților de benzilor desenate comice prin "
+"conturarea și umplerea cu un degrade"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1195,7 +1245,9 @@ msgid "Outline size"
 msgstr "Dimensiune contur"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-msgid "Add a metallic effect to the selected region (or alpha) with reflections and perspective shadows"
+msgid ""
+"Add a metallic effect to the selected region (or alpha) with reflections and "
+"perspective shadows"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
@@ -1251,7 +1303,7 @@ msgstr "Netezește vertical"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
-msgstr "Împrăștiere"
+msgstr "Împrăștie"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
@@ -1276,7 +1328,7 @@ msgstr "Permite redimensionarea"
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:3
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:3
 msgid "Blur radius"
-msgstr "Rază neclaritate"
+msgstr "Rază de neclaritate"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
@@ -1318,7 +1370,7 @@ msgstr "Șterge din două în două rânduri sau coloane"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
-msgstr "Șterge/umple"
+msgstr "Șterge sau umple"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
@@ -1326,11 +1378,11 @@ msgstr "Par"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
 msgid "Even/odd"
-msgstr "Par/impar"
+msgstr "Par sau impar"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
-msgstr "Umple cu culoare de fundal"
+msgstr "Umple cu culoarea de fundal"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
@@ -1342,12 +1394,12 @@ msgstr "Rânduri"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
 msgid "Rows/cols"
-msgstr "Rânduri/coloane"
+msgstr "Rânduri sau coloane"
 
 # hm ?
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
 msgid "_Erase Every Other Row..."
-msgstr "Ștergere d_in două în două rânduri..."
+msgstr "Șterge d_in două în două rânduri..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
@@ -1396,7 +1448,8 @@ msgid "Black on white"
 msgstr "Negru pe alb"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
@@ -1432,7 +1485,9 @@ msgid "_Text"
 msgstr "_Text"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-msgid "Add a frost effect to the selected region (or alpha) with an added drop shadow"
+msgid ""
+"Add a frost effect to the selected region (or alpha) with an added drop "
+"shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
@@ -1492,7 +1547,7 @@ msgstr "Culoare întunecată"
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight color"
-msgstr "Culoare parte luminoasă"
+msgstr "Culoare luminoasă"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
@@ -1528,7 +1583,9 @@ msgid "_Small Header..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid "Create an image of a Tube Button Label Header using the gimp.org webpage theme"
+msgid ""
+"Create an image of a Tube Button Label Header using the gimp.org webpage "
+"theme"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
@@ -1536,11 +1593,15 @@ msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "Create an image of a second level Tube Button Label using the gimp.org webpage theme"
+msgid ""
+"Create an image of a second level Tube Button Label using the gimp.org "
+"webpage theme"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid "Create an image of a third level Tube Button Label using the gimp.org webpage theme"
+msgid ""
+"Create an image of a third level Tube Button Label using the gimp.org "
+"webpage theme"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
@@ -1560,8 +1621,12 @@ msgid "_Tube Button Label..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
-msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
+msgid ""
+"Add gradients, patterns, shadows, and bump maps to the selected region (or "
+"alpha)"
 msgstr ""
+"Adaugă degradeuri, modele, umbre și hărți de stampare (bumpmaps) la zona "
+"selectată (sau alfa)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1574,6 +1639,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
 msgstr ""
+"Creează o siglă cu degradeuri, modele, umbre și hărți de stampare (bumpmaps)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -1617,7 +1683,8 @@ msgstr "Folosește suprapunere de model"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-msgstr "Adaugă un efect de incandescență de metal încins la zona selectată (sau alfa)"
+msgstr ""
+"Adaugă un efect de incandescență de metal încins la zona selectată (sau alfa)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
@@ -1629,7 +1696,9 @@ msgstr "_Căldură incandescentă..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
-msgstr "Adaugă o alură strălucitoare și un efect de ieșire în relief la zona selectată (sau alfa)"
+msgstr ""
+"Adaugă o alură strălucitoare și un efect de ieșire în relief la zona "
+"selectată (sau alfa)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1660,8 +1729,12 @@ msgstr "De_grade personalizat..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
-msgid "Draw a grid as specified by the lists of X and Y locations using the current brush"
-msgstr "Desenează o grilă așa cum este specificat de lista locatorilor X și Y utilizând penelul curent"
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+"Desenează o grilă așa cum este specificat de lista locatorilor X și Y "
+"utilizând penelul curent"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -1681,7 +1754,8 @@ msgstr "Ghidaje noi din _selecție"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr "Adaugă un ghidaj la poziția specificată ca procentaj din dimensiunea imaginii"
+msgstr ""
+"Adaugă un ghidaj la poziția specificată ca procentaj din dimensiunea imaginii"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -1770,7 +1844,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
-msgstr ""
+msgstr "Sămânță"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
@@ -1781,7 +1855,8 @@ msgid "_Lava..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgid ""
+"Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
@@ -2066,14 +2141,14 @@ msgstr "Inversează ordinea straturilor în imagine"
 msgid "Black"
 msgstr "Negru"
 
-# hm ?
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid "Create a multi-layer image by adding a ripple effect to the current image"
-msgstr "Creează o imagine multistrat prin adăugarea de efect de unduire la imaginea curentă"
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current image"
+msgstr "Creează o imagine multistrat cu efect de ondulare a imaginii curente"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
-msgstr "Comportament margine"
+msgstr "Comportament la margine"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
@@ -2082,19 +2157,20 @@ msgstr "Număr de cadre"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling strength"
-msgstr ""
+msgstr "Intensitate de ondulare"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
-msgstr "Mâzgălește"
+msgstr "Mânjit"
 
+# hm ?
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr "Întoarce la capăt"
+msgstr "Întors la capăt"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 msgid "_Rippling..."
-msgstr ""
+msgstr "Ondula_re..."
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "Add background"
@@ -2106,11 +2182,14 @@ msgstr "Adaugă o umbră de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
 msgid "Edge radius"
-msgstr ""
+msgstr "Rază margine"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr "Rotunjește colțurile imaginii și adaugă opțional o umbră de perspectivă și de fundal"
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+"Rotunjește colțurile imaginii și adaugă opțional o umbră de perspectivă și "
+"de fundal"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
@@ -2118,15 +2197,18 @@ msgstr "_Rotunjire colțuri..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr "Schimbă harta de culori a unei imagini cu culorile dintr-o paletă specificată."
+msgstr ""
+"Schimbă harta de culori a unei imagini cu culorile dintr-o paletă "
+"specificată."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
 msgstr "Paletă"
 
+# hm ? este mai în ton cu (i) ce face și (ii) ce apare în lista de operații
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
-msgstr "S_tabilește harta de culori..."
+msgstr "S_tabilește paleta de culori..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
@@ -2171,7 +2253,9 @@ msgstr "Dr_eptunghi rotunjit..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr "Adaugă la imagine un cadru asemănător cu pelicula foto, cu perforații și inscripționări pe margine"
+msgstr ""
+"Adaugă la imagine un cadru asemănător cu pelicula foto, cu perforații și "
+"inscripționări pe margine"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
@@ -2188,7 +2272,8 @@ msgstr "_Peliculă foto..."
 # hm ?
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
-msgstr "Creează un logo cromat cu maxim de perfecțiune (SOTA - State Of The Art)"
+msgstr ""
+"Creează un logo cromat cu maxim de perfecțiune (SOTA - State Of The Art)"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
@@ -2196,15 +2281,15 @@ msgstr "Crom SOTA..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
-msgstr ""
+msgstr "Creează o siglă cu un efect de text în viteză"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
-msgstr ""
+msgstr "Text în viteză..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr ""
+msgstr "Creează o animație prin maparea imaginii curente la o sferă rotitoare"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2212,18 +2297,19 @@ msgstr "Cadre"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n colors (0 = remain RGB)"
-msgstr ""
+msgstr "Index pe n culori (0 = rămâne RGB)"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from left to right"
-msgstr ""
+msgstr "Rotește de la stânga spre dreapta"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
-msgstr ""
+msgstr "_Glob rotitor..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
@@ -2349,7 +2435,9 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr "Creează o siglă folosind o textură cu aspect de piatră, o strălucire nova și o umbră"
+msgstr ""
+"Creează o siglă folosind o textură cu aspect de piatră, o strălucire nova și "
+"o umbră"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
@@ -2420,7 +2508,8 @@ msgid "Antialias"
 msgstr "Antialias"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgid ""
+"Create a logo by rendering the specified text along the perimeter of a circle"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
@@ -2432,16 +2521,22 @@ msgid "Text C_ircle..."
 msgstr "_Cerc de text..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid "Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr "Creează o siglă texturată cu părți luminoase, umbre și un fundal de mozaic"
+msgid ""
+"Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr ""
+"Creează o siglă texturată cu părți luminoase, umbre și un fundal de mozaic"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
 msgstr "Amestec de sfârșit"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
-msgid "Fill the selected region (or alpha) with a texture and add highlights, shadows, and a mosaic background"
-msgstr "Umple zona selectată (sau alfa) cu o textură și adaugă părți luminoase, umbre și un fundal de mozaic"
+msgid ""
+"Fill the selected region (or alpha) with a texture and add highlights, "
+"shadows, and a mosaic background"
+msgstr ""
+"Umple zona selectată (sau alfa) cu o textură și adaugă părți luminoase, "
+"umbre și un fundal de mozaic"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2478,7 +2573,9 @@ msgstr ""
 # hm ?
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr "Atenuează claritatea marginilor imaginii în așa fel încât îmbinarea ca mozaic să nu prezinte urme de racord"
+msgstr ""
+"Atenuează claritatea marginilor imaginii în așa fel încât îmbinarea ca "
+"mozaic să nu prezinte urme de racord"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
@@ -2533,8 +2630,11 @@ msgid "Amplitude"
 msgstr "Amplitudine"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
-msgid "Create a multi-layer image with an effect like a stone was thrown into the current image"
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
 msgstr ""
+"Creează o imagine multistrat cu efect de piatră aruncată în imaginea curentă"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2542,15 +2642,19 @@ msgstr "Inversează direcția"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
-msgstr ""
+msgstr "Lungime de undă"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
-msgstr ""
+msgstr "_Valuri..."
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
-msgid "Create a new layer filled with a weave effect to be used as an overlay or bump map"
-msgstr "Creează un strat nou umplut cu un efect de împletitură pentru a fi folosit ca suprapunere sau bump map"
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"Creează un strat nou umplut cu un efect de împletitură pentru a fi folosit "
+"ca suprapunere, sau ca hartă de stampare (bumpmap)"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2614,7 +2718,7 @@ msgstr "_Registrul de plugin-uri"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "Using _Paths"
-msgstr "_Utilizare căi"
+msgstr "_Folosirea traseelor"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Basic Concepts"
@@ -2646,11 +2750,11 @@ msgstr "Adaugă un efect 3D translucid subtil la zona selectată (sau alfa)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
-msgstr "Decalaj X umbră de perspectivă"
+msgstr "Decalajul X al umbrei de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop shadow Y offset"
-msgstr "Decalaj Y umbră de perspectivă"
+msgstr "Decalajul Y al umbrei de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop shadow blur radius"
@@ -2658,23 +2762,23 @@ msgstr "Raza de neclaritate a umbrei de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop shadow color"
-msgstr "Culoare umbră de perspectivă"
+msgstr "Culoarea umbrei de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop shadow opacity"
-msgstr "Opacitate umbră de perspectivă"
+msgstr "Opacitatea umbrei de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight X offset"
-msgstr "Decalaj X parte luminoasă"
+msgstr "Decalajul X al părții luminoase"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Y offset"
-msgstr "Decalaj Y parte luminoasă"
+msgstr "Decalajul Y al părții luminoase"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
-msgstr "Opacitate parte luminoasă"
+msgstr "Opacitatea părții luminoase"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
@@ -2682,30 +2786,41 @@ msgstr "Efect _Xach..."
 
 #~ msgid "_Misc"
 #~ msgstr "_Diverse"
+
 #~ msgid "_Utilities"
 #~ msgstr "_Utilitare"
+
 #~ msgid "An_imation"
 #~ msgstr "An_imație"
 
 #, fuzzy
 #~ msgid "_Animators"
 #~ msgstr "_Animators"
+
 #~ msgid "_Artistic"
 #~ msgstr "_Artistic"
+
 #~ msgid "_Blur"
 #~ msgstr "_Neclaritate"
+
 #~ msgid "_Decor"
 #~ msgstr "_Decorațiune"
+
 #~ msgid "_Effects"
 #~ msgstr "_Efecte"
+
 #~ msgid "En_hance"
 #~ msgstr "_Ameliorare"
+
 #~ msgid "_Light and Shadow"
 #~ msgstr "_Lumină și umbră"
+
 #~ msgid "S_hadow"
 #~ msgstr "_Umbră"
+
 #~ msgid "_Render"
 #~ msgstr "_Render"
+
 #~ msgid "_Alchemy"
 #~ msgstr "_Alchimie"
 
@@ -2716,14 +2831,19 @@ msgstr "Efect _Xach..."
 #, fuzzy
 #~ msgid "Effect size (pixels * 5)"
 #~ msgstr "Decalaj X:"
+
 #~ msgid "Create a simple sphere with a drop shadow"
 #~ msgstr "Creează o sferă simplă cu o umbră de perspectivă"
+
 #~ msgid "Lighting (degrees)"
 #~ msgstr "Iluminare (grade)"
+
 #~ msgid "Radius (pixels)"
 #~ msgstr "Rază (pixeli)"
+
 #~ msgid "Sphere color"
 #~ msgstr "Culoare sferă"
+
 #~ msgid "_Sphere..."
 #~ msgstr "_Sferă..."
 
@@ -2738,10 +2858,10 @@ msgstr "Efect _Xach..."
 #, fuzzy
 #~ msgid "Effect size (pixels * 4)"
 #~ msgstr "Decalaj X:"
+
 #~ msgid ""
 #~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
 #~ "glow, and shadow"
 #~ msgstr ""
 #~ "Umple zona selectată (sau alfa) cu o textură cu aspect de piatră, o "
 #~ "luminescență nova și umbră"
-
