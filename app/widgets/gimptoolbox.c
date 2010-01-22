@@ -720,8 +720,6 @@ gimp_toolbox_drag_motion (GtkWidget      *widget,
   we_will_handle = (gtk_drag_dest_find_target (widget, context, NULL) !=
                     GDK_NONE);
 
-  g_printerr ("%s: %d %d\n", G_STRFUNC, other_will_handle, we_will_handle);
-
   handled = ! other_will_handle && we_will_handle;
   gdk_drag_status (context, handled ? GDK_ACTION_MOVE : 0, time);
   gimp_highlight_widget (widget, handled);
