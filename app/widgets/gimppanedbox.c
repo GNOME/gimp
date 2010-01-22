@@ -37,6 +37,7 @@
 #include "gimpdockbook.h"
 #include "gimpmenudock.h"
 #include "gimppanedbox.h"
+#include "gimptoolbox.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-log.h"
@@ -157,17 +158,31 @@ gimp_paned_box_set_widget_drag_handler (GtkWidget    *widget,
   /* Hook us in for drag events. We could abstract this properly and
    * put gimp_paned_box_will_handle_drag() in an interface for
    * example, but it doesn't feel worth it at this point
+   *
+   * Note that we don't have 'else if's because a widget can be both a
+   * dock and a toolbox for example, in which case we want to set a
+   * drag handler in two ways
+   *
+   * We so need to introduce som abstractions here...
    */
+
   if (GIMP_IS_DOCKBOOK (widget))
     {
       gimp_dockbook_set_drag_handler (GIMP_DOCKBOOK (widget),
                                       drag_handler);
     }
+
   if (GIMP_IS_DOCK (widget))
     {
       GimpPanedBox *dock_paned_box = NULL;
       dock_paned_box = GIMP_PANED_BOX (gimp_dock_get_vbox (GIMP_DOCK (widget)));
       gimp_paned_box_set_drag_handler (dock_paned_box, drag_handler);
+    }
+
+  if (GIMP_IS_TOOLBOX (widget))
+    {
+      GimpToolbox *toolbox = GIMP_TOOLBOX (widget);
+      gimp_toolbox_set_drag_handler (toolbox, drag_handler);
     }
 }
 

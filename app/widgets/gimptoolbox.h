@@ -54,6 +54,8 @@ GimpContext *       gimp_toolbox_get_context        (GimpToolbox       *toolbox)
 GimpDialogFactory * gimp_toolbox_get_dialog_factory (GimpToolbox       *toolbox);
 GimpUIManager *     gimp_toolbox_get_ui_manager     (GimpToolbox       *toolbox);
 GtkWidget *         gimp_toolbox_get_vbox           (GimpToolbox       *toolbox);
+void                gimp_toolbox_set_drag_handler   (GimpToolbox       *toolbox,
+                                                     GimpPanedBox      *drag_handler);
 
 
 
