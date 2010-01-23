@@ -141,7 +141,6 @@ static void
 gimp_color_selection_init (GimpColorSelection *selection)
 {
   GtkWidget *main_hbox;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *hbox;
   GtkWidget *label;
@@ -195,27 +194,22 @@ gimp_color_selection_init (GimpColorSelection *selection)
 
   /*  The table for the color_areas  */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 0);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_end (GTK_BOX (selection->left_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  The new color area  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_widget_set_size_request (frame, -1, COLOR_AREA_SIZE);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Current:"), 1.0, 0.5,
-                             frame, 1, FALSE);
-
   selection->new_color = gimp_color_area_new (&selection->rgb,
                                               selection->show_alpha ?
                                               GIMP_COLOR_AREA_SMALL_CHECKS :
                                               GIMP_COLOR_AREA_FLAT,
                                               GDK_BUTTON1_MASK |
                                               GDK_BUTTON2_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), selection->new_color);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Current:"), 1.0, 0.5,
+                             selection->new_color, 1,
+                             FALSE);
   gtk_widget_show (selection->new_color);
 
   g_signal_connect (selection->new_color, "color-changed",
@@ -223,22 +217,17 @@ gimp_color_selection_init (GimpColorSelection *selection)
                     selection);
 
   /*  The old color area  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_widget_set_size_request (frame, -1, COLOR_AREA_SIZE);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Old:"), 1.0, 0.5,
-                             frame, 1, FALSE);
-
   selection->old_color = gimp_color_area_new (&selection->rgb,
                                               selection->show_alpha ?
                                               GIMP_COLOR_AREA_SMALL_CHECKS :
                                               GIMP_COLOR_AREA_FLAT,
                                               GDK_BUTTON1_MASK |
                                               GDK_BUTTON2_MASK);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Old:"), 1.0, 0.5,
+                             selection->old_color, 1, FALSE);
+
   gtk_drag_dest_unset (selection->old_color);
-  gtk_container_add (GTK_CONTAINER (frame), selection->old_color);
   gtk_widget_show (selection->old_color);
 
   /*  The right vbox with color scales  */
