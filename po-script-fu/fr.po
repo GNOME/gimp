@@ -6,7 +6,7 @@
 # Christophe Merlet <redfox@redfoxcenter.org>, 2000-2004.
 # Raymond Ostertag <r.ostertag@caramail.com>, 2002-2007.
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
-# Julien Hardelin <jm.hard@wanadoo.fr>, 2007-2009.
+# Julien Hardelin <jhardlinATwanadooPOINTfr>, 2007-2010.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007
 # Laurent Monin <gimp@norz.org>, 2007
@@ -16,9 +16,9 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-07-08 19:33+0000\n"
-"PO-Revision-Date: 2009-07-23 08:19+0100\n"
-"Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
+"POT-Creation-Date: 2010-01-15 14:35+0000\n"
+"PO-Revision-Date: 2010-01-09 08:19+0100\n"
+"Last-Translator: Julien Hardelin <jhardlinATwanadooPOINTfr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,7 +54,7 @@ msgstr "Impossible d'ouvrir « %s » pour écrire : %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigateur de procédures Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:62
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Le mode d'évaluation de Script-Fu autorise uniquement un appel non-interactif"
@@ -113,7 +113,7 @@ msgstr "Sélection du dégradé Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection de la brosse Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:823
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Erreur lors de l'exécution de %s :"
@@ -165,7 +165,7 @@ msgstr "_GIMP en-ligne"
 
 #: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
-msgstr "_Manuel utilisateur"
+msgstr "_Manuel de l'utilisateur"
 
 #: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
@@ -1299,7 +1299,7 @@ msgstr "Bruit plein appliqué avec le mode de calque différence"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
-msgstr "Perturber la sélection"
+msgstr "Déforme la sélection"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
@@ -2177,7 +2177,7 @@ msgstr "Marge Y"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
 msgid "Round ratio"
-msgstr "Proportion de l'arrondi"
+msgstr "Proportions de l'arrondi"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
 msgid "Text color (active)"
@@ -2435,7 +2435,7 @@ msgstr "Hexagone"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hole ratio"
-msgstr "Ratio du trou"
+msgstr "Taille du trou central"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Inner teeth"

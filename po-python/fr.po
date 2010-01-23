@@ -5,51 +5,51 @@
 # Raymond Ostertag <r.ostertag@caramail.com>, 2007.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
 # Laurent Monin <gimp@norz.org>, 2007.
-#
+# Julien Hardelin <jhardlinATwanadooPOINTfr>, 2009-2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-09-15 12:01+0000\n"
-"PO-Revision-Date: 2009-09-15 15:44+0100\n"
-"Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
+"POT-Creation-Date: 2010-01-09 19:08+0000\n"
+"PO-Revision-Date: 2010-01-09 15:44+0100\n"
+"Last-Translator: Julien Hardelin <jhardlinATwanadooPOINTfr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:391
+#: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
 msgstr "Informations manquantes sur l'exception"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
-msgid "An error occured running %s"
+msgid "An error occurred running %s"
 msgstr "Une erreur est survenue durant l'exécution de %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:411
+#: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
 msgstr "_Plus d'informations"
 
-#: ../plug-ins/pygimp/gimpfu.py:523 ../plug-ins/pygimp/gimpfu.py:535
-#: ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
+#: ../plug-ins/pygimp/gimpfu.py:544
 msgid "No"
 msgstr "Non"
 
-#: ../plug-ins/pygimp/gimpfu.py:533 ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
 msgid "Yes"
 msgstr "Oui"
 
-#: ../plug-ins/pygimp/gimpfu.py:592 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Sélection du fichier Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:603
+#: ../plug-ins/pygimp/gimpfu.py:607
 msgid "Python-Fu Folder Selection"
 msgstr "Sélection du dossier Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:694
+#: ../plug-ins/pygimp/gimpfu.py:698
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Entrée non valide pour « %s »"
