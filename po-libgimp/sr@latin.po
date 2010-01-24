@@ -1321,7 +1321,7 @@ msgstr "Ubaci u"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "_Reset"
-msgstr "_Ponovo postavi"
+msgstr "_Vrati"
 
 #: ../libgimpwidgets/gimpstock.c:119
 msgid "Visible"

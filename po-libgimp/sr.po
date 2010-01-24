@@ -1321,7 +1321,7 @@ msgstr "Убаци у"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "_Reset"
-msgstr "_Поново постави"
+msgstr "_Врати"
 
 #: ../libgimpwidgets/gimpstock.c:119
 msgid "Visible"

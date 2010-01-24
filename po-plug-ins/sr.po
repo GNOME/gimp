@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-10-31 17:54+0000\n"
-"PO-Revision-Date: 2009-11-03 00:36+0000\n"
+"POT-Creation-Date: 2010-01-17 21:08+0000\n"
+"PO-Revision-Date: 2010-01-24 15:44+0000\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: Serbian <gnome@prevod.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgstr "Цео слој"
 
 #. Create selection
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:172
-#: ../plug-ins/common/film.c:965 ../plug-ins/imagemap/imap_selection.c:374
+#: ../plug-ins/common/film.c:965 ../plug-ins/imagemap/imap_selection.c:340
 #: ../plug-ins/selection-to-path/selection-to-path.c:433
 msgid "Selection"
 msgstr "Избор"
@@ -441,82 +441,94 @@ msgstr "Тражим позадину анимације"
 msgid "Optimizing animation"
 msgstr "Оптимизујем анимацију"
 
-#: ../plug-ins/common/animation-play.c:164
+#: ../plug-ins/common/animation-play.c:169
 msgid "Preview a GIMP layer-based animation"
 msgstr "Преглед Гимпове слојевите анимације"
 
-#: ../plug-ins/common/animation-play.c:169
+#: ../plug-ins/common/animation-play.c:174
 msgid "_Playback..."
 msgstr "_Пусти..."
 
-#: ../plug-ins/common/animation-play.c:448
+#: ../plug-ins/common/animation-play.c:453
 msgid "_Step"
 msgstr "_Корак"
 
-#: ../plug-ins/common/animation-play.c:448
+#: ../plug-ins/common/animation-play.c:453
 msgid "Step to next frame"
 msgstr "Иде на следећи кадар"
 
-#: ../plug-ins/common/animation-play.c:452
+#: ../plug-ins/common/animation-play.c:457
 msgid "Rewind the animation"
 msgstr "Премотај анимацију"
 
-#: ../plug-ins/common/animation-play.c:470
+#: ../plug-ins/common/animation-play.c:475
 msgid "Faster"
 msgstr "Брже"
 
-#: ../plug-ins/common/animation-play.c:470
+#: ../plug-ins/common/animation-play.c:475
 msgid "Increase the speed of the animation"
 msgstr "Повећава брзину анимације"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:480
 msgid "Slower"
 msgstr "Спорије"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:480
 msgid "Decrease the speed of the animation"
 msgstr "Смањује брзину анимације"
 
 #
-#: ../plug-ins/common/animation-play.c:480
+#: ../plug-ins/common/animation-play.c:485
 msgid "Reset speed"
 msgstr "Поништи брзину"
 
-#: ../plug-ins/common/animation-play.c:480
+#: ../plug-ins/common/animation-play.c:485
 msgid "Reset the speed of the animation"
 msgstr "Поништава подешавања брзине анимације"
 
-#: ../plug-ins/common/animation-play.c:488
-#: ../plug-ins/common/animation-play.c:1447
+#: ../plug-ins/common/animation-play.c:493
+#: ../plug-ins/common/animation-play.c:1474
 msgid "Start playback"
 msgstr "Пусти анимацију"
 
-#: ../plug-ins/common/animation-play.c:492
+#: ../plug-ins/common/animation-play.c:497
 msgid "Detach"
 msgstr "Откачи"
 
-#: ../plug-ins/common/animation-play.c:493
+#: ../plug-ins/common/animation-play.c:498
 msgid "Detach the animation from the dialog window"
 msgstr "Одваја анимацију из прозорчета"
 
-#: ../plug-ins/common/animation-play.c:585
+#: ../plug-ins/common/animation-play.c:590
 msgid "Animation Playback:"
 msgstr "Погледај анимацију:"
 
-#: ../plug-ins/common/animation-play.c:664
+#. list is given in "fps" - frames per second
+#: ../plug-ins/common/animation-play.c:663
+#, c-format
+msgid "%d fps"
+msgstr "%d fps"
+
+#
+#: ../plug-ins/common/animation-play.c:674
+#| msgid "Default frame delay:"
+msgid "Default framerate"
+msgstr "Број кадрова по секунди"
+
+#: ../plug-ins/common/animation-play.c:695
 msgid "Playback speed"
 msgstr "Брзина за пуштање"
 
-#: ../plug-ins/common/animation-play.c:804
+#: ../plug-ins/common/animation-play.c:831
 msgid "Tried to display an invalid layer."
 msgstr "Покушај приказа неисправног слоја."
 
-#: ../plug-ins/common/animation-play.c:1324
+#: ../plug-ins/common/animation-play.c:1351
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Кадар %d од %d"
 
-#: ../plug-ins/common/animation-play.c:1447
+#: ../plug-ins/common/animation-play.c:1474
 msgid "Stop playback"
 msgstr "Заустави анимацију"
 
@@ -529,7 +541,7 @@ msgstr ""
 msgid "_Antialias"
 msgstr "_Умекшавање..."
 
-#: ../plug-ins/common/antialias.c:147
+#: ../plug-ins/common/antialias.c:149
 msgid "Antialiasing..."
 msgstr "Умекшавам"
 
@@ -618,18 +630,18 @@ msgstr "_Вертикално"
 #: ../plug-ins/common/decompose.c:722 ../plug-ins/common/file-cel.c:361
 #: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:556
 #: ../plug-ins/common/file-gif-load.c:927
-#: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:411
-#: ../plug-ins/common/file-pcx.c:417 ../plug-ins/common/file-pix.c:381
+#: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:418
+#: ../plug-ins/common/file-pcx.c:424 ../plug-ins/common/file-pix.c:381
 #: ../plug-ins/common/file-png.c:851 ../plug-ins/common/file-pnm.c:584
 #: ../plug-ins/common/file-raw.c:759 ../plug-ins/common/file-sunras.c:974
 #: ../plug-ins/common/file-tga.c:1063 ../plug-ins/common/file-tiff-load.c:998
 #: ../plug-ins/common/file-xbm.c:896 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:256 ../plug-ins/common/tile.c:266
-#: ../plug-ins/file-bmp/bmp-read.c:381 ../plug-ins/file-bmp/bmp-read.c:616
+#: ../plug-ins/file-bmp/bmp-read.c:381 ../plug-ins/file-bmp/bmp-read.c:648
 #: ../plug-ins/file-faxg3/faxg3.c:477 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:248 ../plug-ins/file-jpeg/jpeg-load.c:760
 #: ../plug-ins/file-psd/psd-image-res-load.c:994
-#: ../plug-ins/file-psd/psd-load.c:1525 ../plug-ins/file-sgi/sgi.c:383
+#: ../plug-ins/file-psd/psd-load.c:1574 ../plug-ins/file-sgi/sgi.c:404
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:139 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1155
@@ -669,7 +681,7 @@ msgstr "Селективно Гауссиан замућење"
 #: ../plug-ins/common/edge-dog.c:266 ../plug-ins/common/edge-neon.c:227
 #: ../plug-ins/common/edge-sobel.c:211 ../plug-ins/common/photocopy.c:243
 #: ../plug-ins/common/pixelize.c:292 ../plug-ins/common/softglow.c:223
-#: ../plug-ins/file-sgi/sgi.c:535 ../plug-ins/file-xjt/xjt.c:1683
+#: ../plug-ins/file-sgi/sgi.c:555 ../plug-ins/file-xjt/xjt.c:1683
 #: ../plug-ins/gradient-flare/gradient-flare.c:965
 msgid "Cannot operate on indexed color images."
 msgstr "Не могу да применим на индексираним сликама."
@@ -804,7 +816,7 @@ msgstr "Параметри замућења"
 msgid "L_ength:"
 msgstr "_Дужина:"
 
-#: ../plug-ins/common/blur-motion.c:1138 ../plug-ins/common/newsprint.c:1000
+#: ../plug-ins/common/blur-motion.c:1138 ../plug-ins/common/newsprint.c:991
 msgid "_Angle:"
 msgstr "_Угао:"
 
@@ -1092,10 +1104,10 @@ msgstr "Сачувај подешавања мешања канала"
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
 #: ../plug-ins/common/file-csource.c:405 ../plug-ins/common/file-dicom.c:800
-#: ../plug-ins/common/file-gbr.c:637 ../plug-ins/common/file-gif-save.c:761
+#: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:761
 #: ../plug-ins/common/file-gih.c:1261 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
-#: ../plug-ins/common/file-pat.c:461 ../plug-ins/common/file-pcx.c:665
+#: ../plug-ins/common/file-pat.c:475 ../plug-ins/common/file-pcx.c:672
 #: ../plug-ins/common/file-pix.c:523 ../plug-ins/common/file-png.c:1269
 #: ../plug-ins/common/file-pnm.c:976 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:587 ../plug-ins/common/file-raw.c:615
@@ -1433,7 +1445,7 @@ msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Насумично семе (само за \"Према семену\" режиме)"
 
 #
-#: ../plug-ins/common/cml-explorer.c:1371 ../plug-ins/maze/maze-dialog.c:260
+#: ../plug-ins/common/cml-explorer.c:1371 ../plug-ins/maze/maze-dialog.c:251
 msgid "Seed:"
 msgstr "Семе:"
 
@@ -2127,12 +2139,12 @@ msgid "Re_d"
 msgstr "_Црвена"
 
 #: ../plug-ins/common/convolution-matrix.c:65
-#: ../plug-ins/common/newsprint.c:352
+#: ../plug-ins/common/newsprint.c:343
 msgid "_Green"
 msgstr "_Зелена"
 
 #: ../plug-ins/common/convolution-matrix.c:66
-#: ../plug-ins/common/newsprint.c:360
+#: ../plug-ins/common/newsprint.c:351
 msgid "_Blue"
 msgstr "_Плава"
 
@@ -2294,7 +2306,6 @@ msgstr "Не могу да применим на празним изборима
 
 #: ../plug-ins/common/curve-bend.c:894
 #, c-format
-#| msgid "Error while reading '%s'. File corrupted?"
 msgid "Error while reading '%s': %s"
 msgstr "Грешка приликом читања „%s“: %s"
 
@@ -2913,7 +2924,7 @@ msgid "_Smear"
 msgstr "_Размаз"
 
 #: ../plug-ins/common/displace.c:476 ../plug-ins/common/edge.c:731
-#: ../plug-ins/common/fractal-trace.c:740 ../plug-ins/common/newsprint.c:397
+#: ../plug-ins/common/fractal-trace.c:740 ../plug-ins/common/newsprint.c:388
 msgid "_Black"
 msgstr "_Црна"
 
@@ -3137,7 +3148,6 @@ msgstr "ASCII уметност"
 
 #. Create the actual window.
 #: ../plug-ins/common/file-aa.c:348
-#| msgid "Texture"
 msgid "Text"
 msgstr "Текст"
 
@@ -3165,13 +3175,13 @@ msgstr "Учитај KISS палету"
 #: ../plug-ins/common/file-png.c:727 ../plug-ins/common/file-pnm.c:498
 #: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:712
 #: ../plug-ins/common/file-sunras.c:485 ../plug-ins/common/file-tga.c:446
-#: ../plug-ins/common/file-tiff-load.c:604 ../plug-ins/common/file-wmf.c:1005
+#: ../plug-ins/common/file-tiff-load.c:604 ../plug-ins/common/file-wmf.c:993
 #: ../plug-ins/common/file-xbm.c:741 ../plug-ins/common/file-xmc.c:678
 #: ../plug-ins/common/file-xpm.c:351 ../plug-ins/common/file-xwd.c:519
 #: ../plug-ins/file-bmp/bmp-read.c:160 ../plug-ins/file-faxg3/faxg3.c:216
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:645
 #: ../plug-ins/file-jpeg/jpeg-load.c:114 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3328
+#: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3328
 #, c-format
 msgid "Opening '%s'"
 msgstr "Отварам „%s“"
@@ -3188,10 +3198,10 @@ msgstr "Неподржана дубина битова (%d)!"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:642
+#: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:657
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1266
-#: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:466
-#: ../plug-ins/common/file-pcx.c:626 ../plug-ins/common/file-pix.c:528
+#: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:480
+#: ../plug-ins/common/file-pcx.c:633 ../plug-ins/common/file-pix.c:528
 #: ../plug-ins/common/file-png.c:1276 ../plug-ins/common/file-pnm.c:981
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:567
 #: ../plug-ins/common/file-tga.c:1174 ../plug-ins/common/file-tiff-save.c:693
@@ -3200,7 +3210,7 @@ msgstr "Неподржана дубина битова (%d)!"
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:480
 #: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:286 ../plug-ins/file-psd/psd-save.c:1642
-#: ../plug-ins/file-sgi/sgi.c:553 ../plug-ins/file-xjt/xjt.c:1692
+#: ../plug-ins/file-sgi/sgi.c:573 ../plug-ins/file-xjt/xjt.c:1692
 #, c-format
 msgid "Saving '%s'"
 msgstr "Чувам „%s“"
@@ -3229,7 +3239,6 @@ msgstr "C изворни код"
 
 #
 #: ../plug-ins/common/file-csource.c:659
-#| msgid "Source 1:"
 msgid "C-Source"
 msgstr "C-код"
 
@@ -3303,7 +3312,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "%s: није ваљана DICOM датотека"
 
 #
-#: ../plug-ins/common/file-dicom.c:768 ../plug-ins/common/file-pcx.c:658
+#: ../plug-ins/common/file-dicom.c:768 ../plug-ins/common/file-pcx.c:665
 #: ../plug-ins/common/file-pnm.c:966
 msgid "Cannot save images with alpha channel."
 msgstr "Не могу да сачувам слику са алфа каналом."
@@ -3318,44 +3327,48 @@ msgstr "Не могу да радим са непознатим типовима
 msgid "GIMP brush"
 msgstr "Гимп четкица"
 
-#: ../plug-ins/common/file-gbr.c:400 ../plug-ins/common/file-gbr.c:412
+#: ../plug-ins/common/file-gbr.c:391 ../plug-ins/common/file-pat.c:410
+#, c-format
+msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgstr "Неисправни подаци заглавља у „%s“: ширина=%lu, висина=%lu, битова=%lu"
+
+#: ../plug-ins/common/file-gbr.c:415 ../plug-ins/common/file-gbr.c:427
 msgid "Unsupported brush format"
 msgstr "Није подржан формат четке"
 
-#: ../plug-ins/common/file-gbr.c:424
+#: ../plug-ins/common/file-gbr.c:439
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Грешка у датотеци са Гимповим четкицама „%s“"
 
-#: ../plug-ins/common/file-gbr.c:432
+#: ../plug-ins/common/file-gbr.c:447
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Неисправна УТФ-8 ниска у датотеци четке „%s“."
 
 #
-#: ../plug-ins/common/file-gbr.c:438 ../plug-ins/common/file-gih.c:491
+#: ../plug-ins/common/file-gbr.c:453 ../plug-ins/common/file-gih.c:491
 #: ../plug-ins/common/file-gih.c:1140
 #: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Unnamed"
 msgstr "Неименовано"
 
-#: ../plug-ins/common/file-gbr.c:627
+#: ../plug-ins/common/file-gbr.c:642
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "Гимп четкице су или у нијансама сиве или РГБА"
 
-#: ../plug-ins/common/file-gbr.c:744
-#| msgid "_Brush"
+#: ../plug-ins/common/file-gbr.c:759
 msgid "Brush"
 msgstr "Четкица"
 
 #
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:758 ../plug-ins/common/grid.c:790
+#: ../plug-ins/common/file-gbr.c:773 ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr "Размак:"
 
-#: ../plug-ins/common/file-gbr.c:769 ../plug-ins/common/file-gih.c:891
-#: ../plug-ins/common/file-pat.c:542 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-gbr.c:784 ../plug-ins/common/file-gih.c:891
+#: ../plug-ins/common/file-pat.c:557 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Опис:"
 
@@ -3545,10 +3558,9 @@ msgstr "Не могу да учитам четкицу, одустајем."
 
 #
 #: ../plug-ins/common/file-gih.c:860
-#, fuzzy
 #| msgid "Save as Brush Pipe"
 msgid "Brush Pipe"
-msgstr "Сачувај као четкицу"
+msgstr "Цевовод четкице"
 
 #: ../plug-ins/common/file-gih.c:877
 msgid "Spacing (percent):"
@@ -3737,13 +3749,12 @@ msgstr "Вредност размака ћелија."
 
 #
 #: ../plug-ins/common/file-jp2-load.c:96
-#| msgid "JPEG image"
-msgid "JPEG-2000 image"
-msgstr "JPEG-2000 слика"
+#| msgid "JPEG-2000 image"
+msgid "JPEG 2000 image"
+msgstr "JPEG 2000 слика"
 
 #: ../plug-ins/common/file-jp2-load.c:215
 #, c-format
-#| msgid "Could not read header from '%s'"
 msgid "Couldn't decode '%s'."
 msgstr "Не могу да отворим „%s“"
 
@@ -3754,40 +3765,50 @@ msgstr "„%s“ је црно-бела слика, али не садржи н�
 
 #: ../plug-ins/common/file-jp2-load.c:264
 #, c-format
-msgid "The image '%s' is in RGB but is missing some of the components."
+#| msgid "The image '%s' is in RGB but is missing some of the components."
+msgid "The image '%s' is in RGB, but is missing some of the components."
 msgstr "„%s“ је РГБ слика, али не садржи све компоненте."
 
 #: ../plug-ins/common/file-jp2-load.c:284
 #, c-format
+#| msgid ""
+#| "The image '%s' is in the CIEXYZ color space but there is no code in place "
+#| "to convert it to RGB."
 msgid ""
-"The image '%s' is in the CIEXYZ color space but there is no code in place to "
-"convert it to RGB."
+"The image '%s' is in the CIEXYZ color space, but there is no code in place "
+"to convert it to RGB."
 msgstr ""
-"„%s“ је слика у CIEXYZ простору боја и још увек није написан део програма за "
-"њено превођење у РГБ."
+"„%s“ је слика у CIEXYZ простору боја, али још увек није написан део програма "
+"за њено превођење у РГБ."
 
 #: ../plug-ins/common/file-jp2-load.c:291
 #, c-format
+#| msgid ""
+#| "The image '%s' is in the CIELAB color space but there is no code in place "
+#| "to convert it to RGB."
 msgid ""
-"The image '%s' is in the CIELAB color space but there is no code in place to "
-"convert it to RGB."
+"The image '%s' is in the CIELAB color space, but there is no code in place "
+"to convert it to RGB."
 msgstr ""
-"„%s“ је слика у CIELAB простору боја и још увек није написан део програма за "
-"њено превођење у РГБ."
+"„%s“ је слика у CIELAB простору боја, али још увек није написан део програма "
+"за њено превођење у РГБ."
 
 #: ../plug-ins/common/file-jp2-load.c:298
 #, c-format
+#| msgid ""
+#| "The image '%s' is in the YCbCr color space but there is no code in place "
+#| "to convert it to RGB."
 msgid ""
-"The image '%s' is in the YCbCr color space but there is no code in place to "
+"The image '%s' is in the YCbCr color space, but there is no code in place to "
 "convert it to RGB."
 msgstr ""
-"„%s“ је слика у YCbCr простору боја и још увек није написан део програма за "
-"њено превођење у РГБ."
+"„%s“ је слика у YCbCr простору боја, али још увек није написан део програма "
+"за њено превођење у РГБ."
 
 #: ../plug-ins/common/file-jp2-load.c:306
 #, c-format
-#| msgid "The image '%s' has an embedded color profile:"
-msgid "The image '%s' is in an unkown color space."
+#| msgid "The image '%s' is in an unkown color space."
+msgid "The image '%s' is in an unknown color space."
 msgstr "„%s“ је слика у непознатом простору боја."
 
 #: ../plug-ins/common/file-jp2-load.c:320
@@ -3818,7 +3839,6 @@ msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Не могу да сачувам провидност без губитака, чувам непровидност."
 
 #: ../plug-ins/common/file-mng.c:1286
-#| msgid "PNG"
 msgid "MNG"
 msgstr "MNG"
 
@@ -3850,7 +3870,8 @@ msgstr "Сачувај резолуцију"
 msgid "Save creation time"
 msgstr "Сачувај време настанка"
 
-#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1784
+#. Dialog init
+#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1800
 msgid "PNG"
 msgstr "PNG"
 
@@ -3896,7 +3917,7 @@ msgstr "Подразумевано брисање слика:"
 msgid "PNG compression level:"
 msgstr "Степен PNG компресије:"
 
-#: ../plug-ins/common/file-mng.c:1416 ../plug-ins/common/file-png.c:1893
+#: ../plug-ins/common/file-mng.c:1416
 msgid "Choose a high compression level for small file size"
 msgstr "Изаберите висок степен компресије за мање датотеке"
 
@@ -3935,8 +3956,7 @@ msgstr "Гимп мустра"
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Неисправна УТФ-8 ниска у датотеци мустре „%s“."
 
-#: ../plug-ins/common/file-pat.c:527
-#| msgid "GIMP pattern"
+#: ../plug-ins/common/file-pat.c:542
 msgid "Pattern"
 msgstr "Мустра"
 
@@ -3954,13 +3974,13 @@ msgstr "Не могу да прочитам заглавље из „%s“"
 msgid "'%s' is not a PCX file"
 msgstr "„%s“ није PCX датотека"
 
-#: ../plug-ins/common/file-pcx.c:394 ../plug-ins/file-bmp/bmp-read.c:605
+#: ../plug-ins/common/file-pcx.c:394 ../plug-ins/file-bmp/bmp-read.c:637
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Неподржана или неисправна ширина слике: %d"
 
-#: ../plug-ins/common/file-pcx.c:399 ../plug-ins/file-bmp/bmp-read.c:611
+#: ../plug-ins/common/file-pcx.c:399 ../plug-ins/file-bmp/bmp-read.c:643
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -3970,31 +3990,37 @@ msgstr "Неподржана или неисправна висина слике
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Неисправан број битова по линији у PCX заглављу"
 
-#: ../plug-ins/common/file-pcx.c:452
+#: ../plug-ins/common/file-pcx.c:411
+#, c-format
+#| msgid "Image dimensions: %d × %d"
+msgid "Image dimensions too large: width %d x height %d"
+msgstr "Слике је превелика: ширина %d × висина %d"
+
+#: ../plug-ins/common/file-pcx.c:459
 msgid "Unusual PCX flavour, giving up"
 msgstr "Неуобичајена PCX врста, одустајем"
 
-#: ../plug-ins/common/file-pcx.c:675
+#: ../plug-ins/common/file-pcx.c:682
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Наисправан X померај: %d"
 
-#: ../plug-ins/common/file-pcx.c:681
+#: ../plug-ins/common/file-pcx.c:688
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Неисправан Y померај: %d"
 
-#: ../plug-ins/common/file-pcx.c:687
+#: ../plug-ins/common/file-pcx.c:694
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Десна ивица је изван квира (мора бити < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:694
+#: ../plug-ins/common/file-pcx.c:701
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Доња ивица је изван оквира (мора бити < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:751
+#: ../plug-ins/common/file-pcx.c:758
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Неуспео упис у датотеку „%s“: %s"
@@ -4075,57 +4101,11 @@ msgstr "PNG датотека одређује померај који је по�
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Грешка при чувању „%s“. Не могу да сачувам слику."
 
-#: ../plug-ins/common/file-png.c:1802
-msgid "_Interlacing (Adam7)"
-msgstr "_Испреплетеност (Адам7)"
-
-#
-#: ../plug-ins/common/file-png.c:1813
-msgid "Save _background color"
-msgstr "Сачувај боју _позадине"
-
-#
-#: ../plug-ins/common/file-png.c:1821
-msgid "Save _gamma"
-msgstr "Сачувај _гаму"
-
-#
-#: ../plug-ins/common/file-png.c:1831
-msgid "Save layer o_ffset"
-msgstr "Сачувај _померај слоја"
-
-#
-#: ../plug-ins/common/file-png.c:1840
-msgid "Save _resolution"
-msgstr "Сачувај _резолуцију"
-
-#
-#: ../plug-ins/common/file-png.c:1850
-msgid "Save creation _time"
-msgstr "Сачувај _време настанка"
-
-#: ../plug-ins/common/file-png.c:1859
-msgid "Save comme_nt"
-msgstr "Сачувај _коментар"
-
-#: ../plug-ins/common/file-png.c:1875
-msgid "Save color _values from transparent pixels"
-msgstr "Сачувај _вредности боје из провидних тачака"
-
-#
-#: ../plug-ins/common/file-png.c:1889
-msgid "Co_mpression level:"
-msgstr "Степен _компресије:"
-
-#
-#: ../plug-ins/common/file-png.c:1907 ../plug-ins/file-jpeg/jpeg-save.c:1179
-msgid "_Load Defaults"
-msgstr "_Учитај подразумевано"
-
-#
-#: ../plug-ins/common/file-png.c:1915
-msgid "S_ave Defaults"
-msgstr "_Сачувај као подразумевано"
+#: ../plug-ins/common/file-png.c:1817
+#, c-format
+#| msgid "Error loading desktop file '%s': %s"
+msgid "Error loading UI file '%s': %s"
+msgstr "Грешка при учитавању датотеке сучеља „%s“: %s"
 
 #
 #: ../plug-ins/common/file-pnm.c:247
@@ -4189,21 +4169,20 @@ msgstr "Неподржана максимална вредност."
 msgid "Error reading file."
 msgstr "Грешка у читању датотеке."
 
-#: ../plug-ins/common/file-pnm.c:1184
-#| msgid "PNG"
+#: ../plug-ins/common/file-pnm.c:1185
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1187
+#: ../plug-ins/common/file-pnm.c:1188
 msgid "Data formatting"
 msgstr "Форматирање података"
 
-#: ../plug-ins/common/file-pnm.c:1191
+#: ../plug-ins/common/file-pnm.c:1192
 msgid "Raw"
 msgstr "Раw"
 
-#: ../plug-ins/common/file-pnm.c:1192
+#: ../plug-ins/common/file-pnm.c:1193
 msgid "Ascii"
 msgstr "Ascii"
 
@@ -4265,7 +4244,7 @@ msgstr "Исцртавам"
 
 #. Resolution
 #: ../plug-ins/common/file-ps.c:3149 ../plug-ins/common/file-svg.c:928
-#: ../plug-ins/common/file-wmf.c:695
+#: ../plug-ins/common/file-wmf.c:691
 msgid "Resolution:"
 msgstr "Резолуција:"
 
@@ -4339,7 +4318,6 @@ msgstr "Омекшавање графике"
 
 #
 #: ../plug-ins/common/file-ps.c:3328
-#| msgid "Save as PostScript"
 msgid "PostScript"
 msgstr "Постскрипт"
 
@@ -4443,7 +4421,6 @@ msgid "RGB Alpha"
 msgstr "РГБ алфа"
 
 #: ../plug-ins/common/file-raw.c:1098
-#| msgid "RGB"
 msgid "RGB565"
 msgstr "РГБ565"
 
@@ -4494,7 +4471,6 @@ msgid "Pal_ette File:"
 msgstr "Датотека са па_летом:"
 
 #: ../plug-ins/common/file-raw.c:1229
-#| msgid "Raw Image Save"
 msgid "Raw Image"
 msgstr "Сирова слика"
 
@@ -4598,7 +4574,6 @@ msgid "EOF encountered on reading"
 msgstr "Наишао на ЕОФ приликом читања"
 
 #: ../plug-ins/common/file-sunras.c:1628
-#| msgid "Save as SUNRAS"
 msgid "SUNRAS"
 msgstr "SUNRAS"
 
@@ -4628,7 +4603,7 @@ msgstr "Исцртавам SVG"
 msgid "Rendered SVG"
 msgstr "Исцртан SVG"
 
-#: ../plug-ins/common/file-svg.c:566 ../plug-ins/common/file-wmf.c:361
+#: ../plug-ins/common/file-svg.c:566 ../plug-ins/common/file-wmf.c:357
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
@@ -4647,28 +4622,28 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Исцртај скалабилну векторску графику (SVG)"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:807 ../plug-ins/common/file-wmf.c:574
+#: ../plug-ins/common/file-svg.c:807 ../plug-ins/common/file-wmf.c:570
 #: ../plug-ins/common/grid.c:724
 msgid "Width:"
 msgstr "Ширина:"
 
-#: ../plug-ins/common/file-svg.c:813 ../plug-ins/common/file-wmf.c:580
+#: ../plug-ins/common/file-svg.c:813 ../plug-ins/common/file-wmf.c:576
 msgid "Height:"
 msgstr "Висина:"
 
-#: ../plug-ins/common/file-svg.c:887 ../plug-ins/common/file-wmf.c:654
+#: ../plug-ins/common/file-svg.c:887 ../plug-ins/common/file-wmf.c:650
 msgid "_X ratio:"
 msgstr "X _однос:"
 
-#: ../plug-ins/common/file-svg.c:909 ../plug-ins/common/file-wmf.c:676
+#: ../plug-ins/common/file-svg.c:909 ../plug-ins/common/file-wmf.c:672
 msgid "_Y ratio:"
 msgstr "Y о_днос:"
 
-#: ../plug-ins/common/file-svg.c:923 ../plug-ins/common/file-wmf.c:690
+#: ../plug-ins/common/file-svg.c:923 ../plug-ins/common/file-wmf.c:686
 msgid "Constrain aspect ratio"
 msgstr "Задржи размеру"
 
-#: ../plug-ins/common/file-svg.c:934 ../plug-ins/common/file-wmf.c:701
+#: ../plug-ins/common/file-svg.c:934 ../plug-ins/common/file-wmf.c:697
 #: ../plug-ins/print/print-page-layout.c:285
 #, c-format
 msgid "pixels/%a"
@@ -4754,7 +4729,7 @@ msgid "TIFF Channel"
 msgstr "TIFF канал"
 
 #: ../plug-ins/common/file-tiff-load.c:1025
-#: ../plug-ins/file-psd/psd-load.c:324
+#: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -4823,7 +4798,7 @@ msgstr "Коментар:"
 msgid "Microsoft WMF file"
 msgstr "Microsoft WMF датотека"
 
-#: ../plug-ins/common/file-wmf.c:355
+#: ../plug-ins/common/file-wmf.c:351
 msgid ""
 "WMF file does not\n"
 "specify a size!"
@@ -4832,16 +4807,16 @@ msgstr ""
 "одређује величину!"
 
 #
-#: ../plug-ins/common/file-wmf.c:503
+#: ../plug-ins/common/file-wmf.c:499
 msgid "Render Windows Metafile"
 msgstr "Исцртај Windows метадатотеку"
 
-#: ../plug-ins/common/file-wmf.c:974
+#: ../plug-ins/common/file-wmf.c:962
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Не могу да отворим „%s“ за читање."
 
-#: ../plug-ins/common/file-wmf.c:1014
+#: ../plug-ins/common/file-wmf.c:1002
 msgid "Rendered WMF"
 msgstr "Исцртавам WMF"
 
@@ -4954,7 +4929,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:673
 #, c-format
-#| msgid "'%s' is not a valid BMP file"
 msgid "'%s' is not a valid X cursor."
 msgstr "„%s“ није исправан показивач миша."
 
@@ -4985,7 +4959,6 @@ msgstr "Висина „%s“ је превелика за показивача 
 
 #: ../plug-ins/common/file-xmc.c:1020
 #, c-format
-#| msgid "Write error occurred"
 msgid "A read error occurred."
 msgstr "Дошло је до грешке приликом читања."
 
@@ -4993,23 +4966,21 @@ msgstr "Дошло је до грешке приликом читања."
 #. * parameter settings
 #.
 #: ../plug-ins/common/file-xmc.c:1062
-#| msgid "XBM Options"
 msgid "XMC Options"
 msgstr "XMC опције"
 
 #: ../plug-ins/common/file-xmc.c:1090
 msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
-msgstr ""
+msgstr "Унесите X координату вруће тачке, у односу на горњи, леви угао."
 
 #
 #: ../plug-ins/common/file-xmc.c:1094
-#| msgid "Hot spot _X:"
 msgid "Hotspot _X:"
 msgstr "Врућа _X тачка:"
 
 #: ../plug-ins/common/file-xmc.c:1108
 msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
-msgstr ""
+msgstr "Унесите Y координату вруће тачке. у односу на горњи, леви угао."
 
 #: ../plug-ins/common/file-xmc.c:1119
 msgid "_Auto-Crop all frames."
@@ -5022,6 +4993,11 @@ msgid ""
 "disorder the screen.\n"
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
+"Уклања празне ивице са свих кадрова.\n"
+"Ово смањује величину датотеке и може решити проблеме са неким великим "
+"курсорима.\n"
+"Искључите ово уколико желите да уредите извезене курсоре у неком другом "
+"програму."
 
 #: ../plug-ins/common/file-xmc.c:1155
 msgid ""
@@ -5043,21 +5019,20 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1172
 msgid "_Use this value only for a frame which size is not specified."
-msgstr ""
+msgstr "_Користи ову вредност само за кадар чија величина није одређена."
 
 #: ../plug-ins/common/file-xmc.c:1175
 msgid "_Replace the size of all frames even if it is specified."
-msgstr ""
+msgstr "_Замени величину свих кадрова, чак и када је она одређена."
 
 #: ../plug-ins/common/file-xmc.c:1209
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1212
-#, fuzzy
 #| msgid "Delay"
 msgid "_Delay:"
-msgstr "Интервал"
+msgstr "_Интервал"
 
 #: ../plug-ins/common/file-xmc.c:1217
 msgid "_Use this value only for a frame which delay is not specified."
@@ -5077,7 +5052,6 @@ msgid "Enter copyright information."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1257
-#| msgid "_Top-right"
 msgid "_Copyright:"
 msgstr "_Ауторска права:"
 
@@ -5088,10 +5062,9 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1283
 msgid "Enter license information."
-msgstr ""
+msgstr "Унесите податке о лиценци."
 
 #: ../plug-ins/common/file-xmc.c:1285
-#| msgid "_Lines"
 msgid "_License:"
 msgstr "_Лиценца:"
 
@@ -5101,19 +5074,18 @@ msgstr "_Лиценца:"
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
 #: ../plug-ins/common/file-xmc.c:1292
-#| msgid "Ot_her"
 msgid "_Other:"
 msgstr "Д_руго:"
 
 #: ../plug-ins/common/file-xmc.c:1326
 msgid "Enter other comment if you want."
-msgstr ""
+msgstr "Унесите додатне коментаре, по жељи."
 
 #: ../plug-ins/common/file-xmc.c:1376
-#, fuzzy, c-format
+#, c-format
 #| msgid "The default comment is limited to %d characters."
 msgid "Comment is limited to %d characters."
-msgstr "Подразумевани коментар је ограничен на %d слова."
+msgstr "Коментар је ограничен на %d слова."
 
 #: ../plug-ins/common/file-xmc.c:1494
 #, c-format
@@ -5188,7 +5160,7 @@ msgstr "Неисправна XPM датотека"
 
 #: ../plug-ins/common/file-xpm.c:804
 msgid "XPM"
-msgstr ""
+msgstr "XPM"
 
 #
 #: ../plug-ins/common/file-xpm.c:814
@@ -5664,12 +5636,22 @@ msgstr "Мрежа"
 
 #. attach labels
 #: ../plug-ins/common/grid.c:717
-msgid "Horizontal"
-msgstr "Хоризонтално"
+#| msgid "Horizontal"
+msgid ""
+"Horizontal\n"
+"Lines"
+msgstr ""
+"Хоризонталне\n"
+"Линије"
 
 #: ../plug-ins/common/grid.c:719
-msgid "Vertical"
-msgstr "Вертикално"
+#| msgid "Vertical"
+msgid ""
+"Vertical\n"
+"Lines"
+msgstr ""
+"Вертикалне\n"
+"Линије"
 
 #: ../plug-ins/common/grid.c:721
 msgid "Intersection"
@@ -6028,94 +6010,94 @@ msgid "'%s' does not appear to be an ICC color profile"
 msgstr "„%s“ не изгледа као исправан ИЦЦ профил боја"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:888
+#: ../plug-ins/common/lcms.c:884
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Преведи из „%s“ у „%s“"
 
-#: ../plug-ins/common/lcms.c:1132
+#: ../plug-ins/common/lcms.c:1128
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Не могу да учитам ИЦЦ профил из „%s“"
 
-#: ../plug-ins/common/lcms.c:1158
+#: ../plug-ins/common/lcms.c:1150
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Слика „%s“ садржи уметнут профил боја:"
 
-#: ../plug-ins/common/lcms.c:1202
+#: ../plug-ins/common/lcms.c:1194
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Да преведем слику у РГБ радни простор (%s)?"
 
-#: ../plug-ins/common/lcms.c:1233
+#: ../plug-ins/common/lcms.c:1225
 msgid "Convert to RGB working space?"
 msgstr "Да преведем РГБ радни простор?"
 
 #
-#: ../plug-ins/common/lcms.c:1238
+#: ../plug-ins/common/lcms.c:1230
 msgid "_Keep"
 msgstr "_Задржи"
 
-#: ../plug-ins/common/lcms.c:1243
+#: ../plug-ins/common/lcms.c:1235
 msgid "_Convert"
 msgstr "_Преведи"
 
-#: ../plug-ins/common/lcms.c:1271 ../plug-ins/file-jpeg/jpeg-exif.c:380
+#: ../plug-ins/common/lcms.c:1263 ../plug-ins/file-jpeg/jpeg-exif.c:376
 msgid "_Don't ask me again"
 msgstr "_Не питај ме више"
 
 #
-#: ../plug-ins/common/lcms.c:1335
+#: ../plug-ins/common/lcms.c:1327
 msgid "Select destination profile"
 msgstr "Изаберите одредишни профил"
 
-#: ../plug-ins/common/lcms.c:1362
+#: ../plug-ins/common/lcms.c:1354
 msgid "All files (*.*)"
 msgstr "_Све датотеке (*.*)"
 
-#: ../plug-ins/common/lcms.c:1367
+#: ../plug-ins/common/lcms.c:1359
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ИЦЦ профили боја (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1410
+#: ../plug-ins/common/lcms.c:1402
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "РГБ радни простор (%s)"
 
-#: ../plug-ins/common/lcms.c:1460
+#: ../plug-ins/common/lcms.c:1452
 msgid "Convert to ICC Color Profile"
 msgstr "Преведи у ИЦЦ профил боја"
 
-#: ../plug-ins/common/lcms.c:1461
+#: ../plug-ins/common/lcms.c:1453
 msgid "Assign ICC Color Profile"
 msgstr "Додељује ИЦЦ профил боја"
 
-#: ../plug-ins/common/lcms.c:1469
+#: ../plug-ins/common/lcms.c:1461
 msgid "_Assign"
 msgstr "_Додели"
 
-#: ../plug-ins/common/lcms.c:1487
+#: ../plug-ins/common/lcms.c:1479
 msgid "Current Color Profile"
 msgstr "Тренутни профил боја"
 
-#: ../plug-ins/common/lcms.c:1502
+#: ../plug-ins/common/lcms.c:1494
 msgid "Convert to"
 msgstr "Преведи у"
 
-#: ../plug-ins/common/lcms.c:1502
+#: ../plug-ins/common/lcms.c:1494
 msgid "Assign"
 msgstr "Додели"
 
-#: ../plug-ins/common/lcms.c:1526
+#: ../plug-ins/common/lcms.c:1518
 msgid "_Rendering Intent:"
 msgstr "_Намера исцртавања:"
 
-#: ../plug-ins/common/lcms.c:1542
+#: ../plug-ins/common/lcms.c:1534
 msgid "_Black Point Compensation"
 msgstr "_Умањење црне тачке"
 
-#: ../plug-ins/common/lcms.c:1584
+#: ../plug-ins/common/lcms.c:1576
 msgid "Destination profile is not for RGB color space."
 msgstr "Циљани профил није прављен за РГБ простор боја."
 
@@ -6269,7 +6251,7 @@ msgstr "_Тема:"
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "нека грешка са екстензијом или недостатком исте"
 
-#: ../plug-ins/common/mail.c:728
+#: ../plug-ins/common/mail.c:724
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Не могу да покренем sendmail (%s)"
@@ -6392,133 +6374,133 @@ msgstr "_Издубљене површине"
 msgid "_FG/BG lighting"
 msgstr "_FG/BG осветљење"
 
-#: ../plug-ins/common/newsprint.c:126
+#: ../plug-ins/common/newsprint.c:117
 msgid "Round"
 msgstr "Кружно"
 
 #
-#: ../plug-ins/common/newsprint.c:135
+#: ../plug-ins/common/newsprint.c:126
 msgid "Line"
 msgstr "Црта"
 
-#: ../plug-ins/common/newsprint.c:144 ../plug-ins/flame/flame.c:757
+#: ../plug-ins/common/newsprint.c:135 ../plug-ins/flame/flame.c:757
 msgid "Diamond"
 msgstr "Дијамант"
 
-#: ../plug-ins/common/newsprint.c:152
+#: ../plug-ins/common/newsprint.c:143
 msgid "PS Square (Euclidean Dot)"
 msgstr "ПС  квадрат (Еуклидова тачка)"
 
-#: ../plug-ins/common/newsprint.c:161
+#: ../plug-ins/common/newsprint.c:152
 msgid "PS Diamond"
 msgstr "ПС дијамант"
 
-#: ../plug-ins/common/newsprint.c:331
+#: ../plug-ins/common/newsprint.c:322
 msgid "_Grey"
 msgstr "_Сива"
 
-#: ../plug-ins/common/newsprint.c:344
+#: ../plug-ins/common/newsprint.c:335
 msgid "R_ed"
 msgstr "_Црвена"
 
-#: ../plug-ins/common/newsprint.c:373
+#: ../plug-ins/common/newsprint.c:364
 msgid "C_yan"
 msgstr "Ц_ијан"
 
-#: ../plug-ins/common/newsprint.c:381
+#: ../plug-ins/common/newsprint.c:372
 msgid "Magen_ta"
 msgstr "_Магента"
 
-#: ../plug-ins/common/newsprint.c:389
+#: ../plug-ins/common/newsprint.c:380
 msgid "_Yellow"
 msgstr "_Жута"
 
-#: ../plug-ins/common/newsprint.c:410
+#: ../plug-ins/common/newsprint.c:401
 msgid "Luminance"
 msgstr "Луминанса"
 
-#: ../plug-ins/common/newsprint.c:516
+#: ../plug-ins/common/newsprint.c:507
 msgid "Halftone the image to give newspaper-like effect"
 msgstr "Исеца половину тонова са слике дајући ефекат новинске штампе"
 
-#: ../plug-ins/common/newsprint.c:525
+#: ../plug-ins/common/newsprint.c:516
 msgid "Newsprin_t..."
 msgstr "_Новинска штампа..."
 
-#: ../plug-ins/common/newsprint.c:626 ../plug-ins/common/newsprint.c:1187
+#: ../plug-ins/common/newsprint.c:617 ../plug-ins/common/newsprint.c:1178
 msgid "Newsprint"
 msgstr "Новинска штампа"
 
 #
-#: ../plug-ins/common/newsprint.c:1030
+#: ../plug-ins/common/newsprint.c:1021
 msgid "_Spot function:"
 msgstr "_Функција тачке:"
 
 #
 #. resolution settings
-#: ../plug-ins/common/newsprint.c:1240
+#: ../plug-ins/common/newsprint.c:1231
 msgid "Resolution"
 msgstr "Резолуција"
 
-#: ../plug-ins/common/newsprint.c:1259
+#: ../plug-ins/common/newsprint.c:1250
 msgid "_Input SPI:"
 msgstr "_Улазни SPI:"
 
 #
-#: ../plug-ins/common/newsprint.c:1273
+#: ../plug-ins/common/newsprint.c:1264
 msgid "O_utput LPI:"
 msgstr "_Излазни LPI:"
 
 #
-#: ../plug-ins/common/newsprint.c:1286
+#: ../plug-ins/common/newsprint.c:1277
 msgid "C_ell size:"
 msgstr "Вели_чина ћелије:"
 
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1299
+#: ../plug-ins/common/newsprint.c:1290
 #: ../plug-ins/gradient-flare/gradient-flare.c:553
 msgid "Screen"
 msgstr "Екран"
 
-#: ../plug-ins/common/newsprint.c:1318
+#: ../plug-ins/common/newsprint.c:1309
 msgid "B_lack pullout (%):"
 msgstr "За_црњење излаза (%):"
 
 #
-#: ../plug-ins/common/newsprint.c:1340
+#: ../plug-ins/common/newsprint.c:1331
 msgid "Separate to:"
 msgstr "Одвоји у:"
 
-#: ../plug-ins/common/newsprint.c:1344
+#: ../plug-ins/common/newsprint.c:1335
 msgid "_RGB"
 msgstr "_РГБ"
 
-#: ../plug-ins/common/newsprint.c:1361
+#: ../plug-ins/common/newsprint.c:1352
 msgid "C_MYK"
 msgstr "Ц_МYК"
 
 #
-#: ../plug-ins/common/newsprint.c:1378
+#: ../plug-ins/common/newsprint.c:1369
 msgid "I_ntensity"
 msgstr "_Интензитет"
 
 #
-#: ../plug-ins/common/newsprint.c:1403
+#: ../plug-ins/common/newsprint.c:1394
 msgid "_Lock channels"
 msgstr "_Закључај канале"
 
 #
-#: ../plug-ins/common/newsprint.c:1416
+#: ../plug-ins/common/newsprint.c:1407
 msgid "_Factory Defaults"
 msgstr "_Подразумевано"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1442 ../plug-ins/gfig/gfig-dialog.c:1256
+#: ../plug-ins/common/newsprint.c:1433 ../plug-ins/gfig/gfig-dialog.c:1256
 msgid "Antialiasing"
 msgstr "Омекшавање"
 
 #
-#: ../plug-ins/common/newsprint.c:1450
+#: ../plug-ins/common/newsprint.c:1441
 msgid "O_versample:"
 msgstr "П_реклапање:"
 
@@ -8750,12 +8732,10 @@ msgid "The operating system is out of memory or resources."
 msgstr "Оперативном систему је понестало меморије или других ресурса."
 
 #: ../plug-ins/common/web-browser.c:139
-#| msgid "Specified layer %d not found"
 msgid "The specified file was not found."
 msgstr "Наведена датотека није пронађена."
 
 #: ../plug-ins/common/web-browser.c:142
-#| msgid "Specified layer %d not found"
 msgid "The specified path was not found."
 msgstr "Наведена путања није пронађена."
 
@@ -8767,7 +8747,6 @@ msgstr ""
 "дошло до грешке у .exe датотеци)."
 
 #: ../plug-ins/common/web-browser.c:148
-#| msgid "Save the current settings to the specified file"
 msgid "The operating system denied access to the specified file."
 msgstr "Оперативни систем не дозвољава приступ наведеној датотеци."
 
@@ -8813,7 +8792,6 @@ msgstr "Непозната Windows грешка."
 
 #: ../plug-ins/common/web-browser.c:178
 #, c-format
-#| msgid "Failed to open GFlare file '%s': %s"
 msgid "Failed to open '%s': %s"
 msgstr "Не могу да отворим „%s“: %s"
 
@@ -8921,9 +8899,10 @@ msgstr "Погрешна мапа боја"
 
 #: ../plug-ins/file-bmp/bmp-read.c:171 ../plug-ins/file-bmp/bmp-read.c:181
 #: ../plug-ins/file-bmp/bmp-read.c:188 ../plug-ins/file-bmp/bmp-read.c:197
-#: ../plug-ins/file-bmp/bmp-read.c:212 ../plug-ins/file-bmp/bmp-read.c:421
-#: ../plug-ins/file-bmp/bmp-read.c:429 ../plug-ins/file-bmp/bmp-read.c:437
-#: ../plug-ins/file-bmp/bmp-read.c:445
+#: ../plug-ins/file-bmp/bmp-read.c:212 ../plug-ins/file-bmp/bmp-read.c:417
+#: ../plug-ins/file-bmp/bmp-read.c:438 ../plug-ins/file-bmp/bmp-read.c:449
+#: ../plug-ins/file-bmp/bmp-read.c:457 ../plug-ins/file-bmp/bmp-read.c:465
+#: ../plug-ins/file-bmp/bmp-read.c:477
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "„%s“ није исправна BMP датотека"
@@ -8935,16 +8914,16 @@ msgstr "„%s“ није исправна BMP датотека"
 msgid "Error reading BMP file header from '%s'"
 msgstr "Грешка при читању BMP заглавља из „%s“"
 
-#: ../plug-ins/file-bmp/bmp-read.c:557
+#: ../plug-ins/file-bmp/bmp-read.c:589
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Непрепознат или неисправан облик BMP компресије."
 
-#: ../plug-ins/file-bmp/bmp-read.c:599
+#: ../plug-ins/file-bmp/bmp-read.c:631
 msgid "Unsupported or invalid bitdepth."
 msgstr "Неподржана или неисправна дубина битова."
 
-#: ../plug-ins/file-bmp/bmp-read.c:787 ../plug-ins/file-bmp/bmp-read.c:828
-#: ../plug-ins/file-bmp/bmp-read.c:878
+#: ../plug-ins/file-bmp/bmp-read.c:819 ../plug-ins/file-bmp/bmp-read.c:860
+#: ../plug-ins/file-bmp/bmp-read.c:910
 msgid "The bitmap ends unexpectedly."
 msgstr "Битмапа се неочекивано завршава."
 
@@ -9057,7 +9036,6 @@ msgstr "GFLI 1.3"
 
 #
 #: ../plug-ins/file-ico/ico-dialog.c:53
-#| msgid "Save as Windows Icon"
 msgid "Windows Icon"
 msgstr "Windows иконица"
 
@@ -9114,19 +9092,19 @@ msgid "Microsoft Windows icon"
 msgstr "Microsoft Windows иконица"
 
 #
-#: ../plug-ins/file-jpeg/jpeg-exif.c:296
+#: ../plug-ins/file-jpeg/jpeg-exif.c:292
 msgid "Rotate Image?"
 msgstr "Да ротирам слику?"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:299
+#: ../plug-ins/file-jpeg/jpeg-exif.c:295
 msgid "_Keep Orientation"
 msgstr "_Задржи орјентацију"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:355
+#: ../plug-ins/file-jpeg/jpeg-exif.c:351
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Судећи по EXIF подацима, ова слика је ротирана."
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:370
+#: ../plug-ins/file-jpeg/jpeg-exif.c:366
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Да ли желите да Гимп окрене слику како је потребно?"
 
@@ -9150,7 +9128,6 @@ msgid "File size: unknown"
 msgstr "Величина датотеке: непозната"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:831
-#| msgid "_JPEG"
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -9266,6 +9243,11 @@ msgid "Comment"
 msgstr "Коментар"
 
 #
+#: ../plug-ins/file-jpeg/jpeg-save.c:1179
+msgid "_Load Defaults"
+msgstr "_Учитај подразумевано"
+
+#
 #: ../plug-ins/file-jpeg/jpeg-save.c:1188
 msgid "Sa_ve Defaults"
 msgstr "_Сачувај подразумевано"
@@ -9302,46 +9284,82 @@ msgstr "Неподржано издање формата датотеке: %d"
 msgid "Too many channels in file: %d"
 msgstr "Превише канала у датотеци: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:313
+#: ../plug-ins/file-psd/psd-load.c:310
+#, c-format
+#| msgid "Unsupported or invalid image width: %d"
+msgid "Unsupported or invalid image size: %dx%d"
+msgstr "Неподржана или неисправна величина слике: %dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:322
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Неподржан режим боја: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:340
+#: ../plug-ins/file-psd/psd-load.c:349
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Неподржана битовна дубина: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:374 ../plug-ins/file-psd/psd-load.c:384
-#: ../plug-ins/file-psd/psd-load.c:603 ../plug-ins/file-psd/psd-load.c:784
+#: ../plug-ins/file-psd/psd-load.c:383 ../plug-ins/file-psd/psd-load.c:393
+#: ../plug-ins/file-psd/psd-load.c:624 ../plug-ins/file-psd/psd-load.c:833
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Датотека је оштећена!"
 
 #
-#: ../plug-ins/file-psd/psd-load.c:544
+#: ../plug-ins/file-psd/psd-load.c:553
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Превише канала у слоју: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:551
+#: ../plug-ins/file-psd/psd-load.c:561
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Неподржана или неисправна висина слоја: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:558
+#: ../plug-ins/file-psd/psd-load.c:569
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
-msgstr "неподржана или неисправна ширина слоја: %d"
+msgstr "Неподржана или неисправна ширина слоја: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1152 ../plug-ins/file-psd/psd-load.c:1501
+#: ../plug-ins/file-psd/psd-load.c:578
+#, c-format
+#| msgid "Unsupported or invalid layer width: %d"
+msgid "Unsupported or invalid layer size: %dx%d"
+msgstr "Неподржана или неисправна величина слоја: %dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:762
+#, c-format
+#| msgid "Unsupported or invalid layer height: %d"
+msgid "Unsupported or invalid layer mask height: %d"
+msgstr "Неподржана или неисправна висина маске слоја: %d"
+
+#: ../plug-ins/file-psd/psd-load.c:770
+#, c-format
+#| msgid "Unsupported or invalid layer width: %d"
+msgid "Unsupported or invalid layer mask width: %d"
+msgstr "Неподржана или неисправна ширина маске слоја: %d"
+
+#: ../plug-ins/file-psd/psd-load.c:779
+#, c-format
+#| msgid "Unsupported or invalid layer width: %d"
+msgid "Unsupported or invalid layer mask size: %dx%d"
+msgstr "Неподржана или неисправна величина маске слоја: %dx%d"
+
+#: ../plug-ins/file-psd/psd-load.c:1201 ../plug-ins/file-psd/psd-load.c:1550
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Неподржан режим паковања: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1594
+#: ../plug-ins/file-psd/psd-load.c:1643
 msgid "Extra"
 msgstr "Додатно"
+
+#: ../plug-ins/file-psd/psd-load.c:1818
+#, c-format
+#| msgid "Unsupported or invalid bitdepth."
+msgid "Unsupported or invalid channel size"
+msgstr "Неподржана или неисправна величина канала"
 
 #: ../plug-ins/file-psd/psd-save.c:227 ../plug-ins/file-psd/psd.c:113
 #: ../plug-ins/file-psd/psd.c:152
@@ -9387,33 +9405,50 @@ msgstr "Неочекиван завршетак датотеке."
 msgid "Silicon Graphics IRIS image"
 msgstr "Silicon Graphics IRIS слика"
 
-#: ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-sgi/sgi.c:324
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Не могу отворити „%s“ за читање."
 
-#: ../plug-ins/file-sgi/sgi.c:548
+#: ../plug-ins/file-sgi/sgi.c:340
+#, c-format
+#| msgid "Invalid X offset: %d"
+msgid "Invalid width: %hu"
+msgstr "Није исправна ширина: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:347
+#, c-format
+#| msgid "Invalid X offset: %d"
+msgid "Invalid height: %hu"
+msgstr "Није исправна висина: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:354
+#, c-format
+msgid "Invalid number of channels: %hu"
+msgstr "Није исправан број канала: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:568
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Не могу отворити „%s“ за писање."
 
-#: ../plug-ins/file-sgi/sgi.c:628
+#: ../plug-ins/file-sgi/sgi.c:648
 msgid "SGI"
 msgstr "SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:630
+#: ../plug-ins/file-sgi/sgi.c:650
 msgid "Compression type"
 msgstr "Врста Компресије"
 
-#: ../plug-ins/file-sgi/sgi.c:634
+#: ../plug-ins/file-sgi/sgi.c:654
 msgid "No compression"
 msgstr "Нема компресије"
 
-#: ../plug-ins/file-sgi/sgi.c:636
+#: ../plug-ins/file-sgi/sgi.c:656
 msgid "RLE compression"
 msgstr "RLE компресија"
 
-#: ../plug-ins/file-sgi/sgi.c:638
+#: ../plug-ins/file-sgi/sgi.c:658
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
@@ -10605,7 +10640,7 @@ msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Одређује да ли потези иду скроз до краја ивице слике"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:277
+#: ../plug-ins/gimpressionist/general.c:212 ../plug-ins/maze/maze-dialog.c:268
 msgid "Tileable"
 msgstr "Растављиво"
 
@@ -12433,19 +12468,19 @@ msgstr "Горњи _леви x:"
 msgid "Upper left _y:"
 msgstr "Горњи л_еви y:"
 
-#: ../plug-ins/imagemap/imap_selection.c:384
+#: ../plug-ins/imagemap/imap_selection.c:350
 msgid "#"
 msgstr "#"
 
-#: ../plug-ins/imagemap/imap_selection.c:395
+#: ../plug-ins/imagemap/imap_selection.c:361
 msgid "URL"
 msgstr "Адреса"
 
-#: ../plug-ins/imagemap/imap_selection.c:413
+#: ../plug-ins/imagemap/imap_selection.c:379
 msgid "ALT Text"
 msgstr "Алтернативни текст"
 
-#: ../plug-ins/imagemap/imap_selection.c:423
+#: ../plug-ins/imagemap/imap_selection.c:389
 msgid "Target"
 msgstr "Мета"
 
@@ -13100,42 +13135,42 @@ msgstr "правим лавиринт Примовим алгоритмом"
 msgid "Constructing tileable maze using Prim's Algorithm"
 msgstr "Правим лавиринт у делићима Примовим алгоритмом"
 
-#: ../plug-ins/maze/maze-dialog.c:171
+#: ../plug-ins/maze/maze-dialog.c:162
 msgid "Maze"
 msgstr "Лавиринт"
 
 #. The maze size frame
-#: ../plug-ins/maze/maze-dialog.c:193
+#: ../plug-ins/maze/maze-dialog.c:184
 msgid "Maze Size"
 msgstr "Величина лавиринта"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/maze/maze-dialog.c:207
+#: ../plug-ins/maze/maze-dialog.c:198
 msgid "Width (pixels):"
 msgstr "Ширина (тачака):"
 
-#: ../plug-ins/maze/maze-dialog.c:219 ../plug-ins/maze/maze-dialog.c:235
+#: ../plug-ins/maze/maze-dialog.c:210 ../plug-ins/maze/maze-dialog.c:226
 msgid "Pieces:"
 msgstr "Комадићи:"
 
-#: ../plug-ins/maze/maze-dialog.c:224
+#: ../plug-ins/maze/maze-dialog.c:215
 msgid "Height (pixels):"
 msgstr "Висина (тачака):"
 
 #. The maze algorithm frame
-#: ../plug-ins/maze/maze-dialog.c:243
+#: ../plug-ins/maze/maze-dialog.c:234
 msgid "Algorithm"
 msgstr "Алгоритам"
 
-#: ../plug-ins/maze/maze-dialog.c:269
+#: ../plug-ins/maze/maze-dialog.c:260
 msgid "Depth first"
 msgstr "Прво дубина"
 
-#: ../plug-ins/maze/maze-dialog.c:270
+#: ../plug-ins/maze/maze-dialog.c:261
 msgid "Prim's algorithm"
 msgstr "Примов алгоритам"
 
-#: ../plug-ins/maze/maze-dialog.c:389
+#: ../plug-ins/maze/maze-dialog.c:380
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
@@ -13160,7 +13195,6 @@ msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgstr "Преглед и уређивање мета података (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata.c:194
-#| msgid "Properties"
 msgid "Propert_ies"
 msgstr "_Особине"
 
@@ -13429,6 +13463,43 @@ msgstr "_Снимак екрана..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "Нема ухваћених података"
+
+#~ msgid "_Interlacing (Adam7)"
+#~ msgstr "_Испреплетеност (Адам7)"
+
+#
+#~ msgid "Save _background color"
+#~ msgstr "Сачувај боју _позадине"
+
+#
+#~ msgid "Save _gamma"
+#~ msgstr "Сачувај _гаму"
+
+#
+#~ msgid "Save layer o_ffset"
+#~ msgstr "Сачувај _померај слоја"
+
+#
+#~ msgid "Save _resolution"
+#~ msgstr "Сачувај _резолуцију"
+
+#
+#~ msgid "Save creation _time"
+#~ msgstr "Сачувај _време настанка"
+
+#~ msgid "Save comme_nt"
+#~ msgstr "Сачувај _коментар"
+
+#~ msgid "Save color _values from transparent pixels"
+#~ msgstr "Сачувај _вредности боје из провидних тачака"
+
+#
+#~ msgid "Co_mpression level:"
+#~ msgstr "Степен _компресије:"
+
+#
+#~ msgid "S_ave Defaults"
+#~ msgstr "_Сачувај као подразумевано"
 
 #~ msgid "Save as Text"
 #~ msgstr "Сачувај као текст"
