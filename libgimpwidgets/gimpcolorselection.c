@@ -140,12 +140,15 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
 static void
 gimp_color_selection_init (GimpColorSelection *selection)
 {
-  GtkWidget *main_hbox;
-  GtkWidget *table;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *button;
+  GtkWidget    *main_hbox;
+  GtkWidget    *hbox;
+  GtkWidget    *vbox;
+  GtkWidget    *frame;
+  GtkWidget    *label;
+  GtkWidget    *entry;
+  GtkWidget    *button;
+  GtkSizeGroup *new_group;
+  GtkSizeGroup *old_group;
 
   selection->show_alpha = TRUE;
 
@@ -192,42 +195,67 @@ gimp_color_selection_init (GimpColorSelection *selection)
                     G_CALLBACK (gimp_color_selection_switch_page),
                     selection);
 
-  /*  The table for the color_areas  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 0);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_end (GTK_BOX (selection->left_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  /*  The hbox for the color_areas  */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_end (GTK_BOX (selection->left_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  /*  The new color area  */
+  /*  The labels  */
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  label = gtk_label_new (_("Current:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
+  new_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
+  gtk_size_group_add_widget (new_group, label);
+  g_object_unref (new_group);
+
+  label = gtk_label_new (_("Old:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
+  old_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
+  gtk_size_group_add_widget (old_group, label);
+  g_object_unref (old_group);
+
+  /*  The color areas  */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   selection->new_color = gimp_color_area_new (&selection->rgb,
                                               selection->show_alpha ?
                                               GIMP_COLOR_AREA_SMALL_CHECKS :
                                               GIMP_COLOR_AREA_FLAT,
                                               GDK_BUTTON1_MASK |
                                               GDK_BUTTON2_MASK);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Current:"), 1.0, 0.5,
-                             selection->new_color, 1,
-                             FALSE);
+  gtk_size_group_add_widget (new_group, selection->new_color);
+  gtk_box_pack_start (GTK_BOX (vbox), selection->new_color, FALSE, FALSE, 0);
   gtk_widget_show (selection->new_color);
 
   g_signal_connect (selection->new_color, "color-changed",
                     G_CALLBACK (gimp_color_selection_new_color_changed),
                     selection);
 
-  /*  The old color area  */
   selection->old_color = gimp_color_area_new (&selection->rgb,
                                               selection->show_alpha ?
                                               GIMP_COLOR_AREA_SMALL_CHECKS :
                                               GIMP_COLOR_AREA_FLAT,
                                               GDK_BUTTON1_MASK |
                                               GDK_BUTTON2_MASK);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Old:"), 1.0, 0.5,
-                             selection->old_color, 1, FALSE);
-
   gtk_drag_dest_unset (selection->old_color);
+  gtk_size_group_add_widget (old_group, selection->old_color);
+  gtk_box_pack_start (GTK_BOX (vbox), selection->old_color, FALSE, FALSE, 0);
   gtk_widget_show (selection->old_color);
 
   /*  The right vbox with color scales  */
