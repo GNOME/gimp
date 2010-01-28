@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
 "POT-Creation-Date: 2010-01-17 21:04+0000\n"
-"PO-Revision-Date: 2010-01-24 15:20+0000\n"
+"PO-Revision-Date: 2010-01-29 00:59+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: Serbian <gnome@prevod.org>\n"
 "MIME-Version: 1.0\n"
@@ -307,7 +307,7 @@ msgstr "Историјат документа"
 
 #: ../app/actions/actions.c:146
 msgid "Drawable"
-msgstr "Цртљиво"
+msgstr "Цртеж"
 
 #. Some things do not have grids, so just list
 #: ../app/actions/actions.c:149 ../app/dialogs/dialogs.c:258
@@ -321,7 +321,7 @@ msgstr "Уређивање динамике цртања"
 
 #: ../app/actions/actions.c:155
 msgid "Edit"
-msgstr "Уреди"
+msgstr "Уређивање"
 
 #: ../app/actions/actions.c:158 ../app/dialogs/dialogs.c:229
 msgid "Error Console"
@@ -396,7 +396,7 @@ msgstr "Рефернетне тачке"
 
 #: ../app/actions/actions.c:203
 msgid "Select"
-msgstr "Изабери"
+msgstr "Избор"
 
 #. initialize the template list
 #: ../app/actions/actions.c:206 ../app/core/gimp.c:945
@@ -12422,7 +12422,7 @@ msgstr "Режим:"
 #: ../app/tools/gimptransformoptions.c:347
 #: ../app/widgets/gimpbrushselect.c:180 ../app/widgets/gimplayertreeview.c:312
 msgid "Opacity:"
-msgstr "Непровидност:"
+msgstr "Провидно:"
 
 #: ../app/tools/gimppaintoptions-gui.c:118
 msgid "Brush:"
