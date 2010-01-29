@@ -1,0 +1,312 @@
+# Burmese translation of gimp-tips.
+# Copyright © 2009, 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
+#
+# Russell Kyaw <rkyaw@yahoo.com>, 2009, 2010.
+# BurmaIT Team <burmait@burmait.net>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-tips 2.7.1\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2009-06-15 17:30+0000\n"
+"PO-Revision-Date: 2010-01-29 17:23+0200\n"
+"Last-Translator: Russell Kyaw <rkyaw@yahoo.com>\n"
+"Language-Team: Burmese <burmait@burmait.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: ../data/tips/gimp-tips.xml.in.h:1
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
+msgstr ""
+"<tt>Ctrl</tt>-အနီးကပ်မြင်ကွင်း အရောင် အစား နောက်ခံ အရောင်ကို သုံးစွဲစေဖို့ ဆွဲပုံးဖြည့် "
+"ကိရိယာနဲ့ နှိုပ်ပါ။ အလားတူ၊ <tt>Ctrl</tt>-မျက်စည်းခတ်ကိရိယာနဲ့ နှိုပ်ချက်က "
+"အနီးကပ်မြင်ကွင်း အရောင် အစား နောက်ခံ အရောင်ကို သတ်မှတ်ပေးတယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:2
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr ""
+"<tt>Ctrl</tt>-အလွှာများ အညွှန်း စာမျက်နှာထဲမှ အလွှာ မျက်နှာဖုံးရဲ့ "
+"အစမ်းမြင်ကွင်းပေါ်မှ နှိုပ်ချက်က အလွှာ မျက်နှာဖုံးရဲ့ သက်ရောက်မှုကို ထိန်းပေးတယ်။ "
+"<tt>Alt</tt>-အလွှာများ အညွှန်းစာမျက်နှာထဲမှ အလွှာ မျက်နှာဖုံးရဲ့ "
+"အစမ်းမြင်ကွင်းပေါ် နှိုပ်ချက်က မျက်နှာဖုံးကို တိုက်ရိုက် ရှုမြင်ခြင်းကို ထိန်းပေးတယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr ""
+"<tt>Ctrl</tt>-လှည့်ပတ်ကိရိယာနဲ့ ဒရွတ်ဆွဲချက်က လှည့်ပတ်မှုကို ထောင့် ၁၅ ဒီဂရီအထိ "
+"ဖျစ်ညှစ်ပေးလိမ့်မယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:4
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"<tt>Shift</tt>-မျက်လုံး ပုံသင်္ကေတ တခုကလွဲလို့ အလွှာများ အညွှန်စာမျက်နှာ အားလုံးကို "
+"ဖျောက်ဖို့ ၄င်းပုံသင်္ကေတကို နှိုပ်ပါ။<tt>Shift</tt>-အလွှာများ အားလုံးကို ပြသဖို့ ပြန်နှိုပ်ပါ။"
+
+#: ../data/tips/gimp-tips.xml.in.h:5
+msgid ""
+"A floating selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
+msgstr ""
+"မျောနေတဲ့ ရွေးချယ်မှု တခုကို ရုပ်ပုံအပေါ် အခြား လုပ်ဆောင်ချက်များ မပြုလုပ်ခင် အလွှာသစ် "
+"(သို့) နောက်ဆုံး သက်ကြွတဲ့ အလွှာ တခုဆီ ချိတ်တွယ်ထား ရမယ်။ အလားတူ လုပ်ဆောင်ဖို့ အလွှာများ "
+"အညွှန်းစာမျက်နှာထဲမှ &quot;အလွှာသစ်&quot; (သို့) &quot;ကျောက်ဆူး အလွှာ&quot;ပေါ် "
+"(သို့) စာရင်းမှတ်များ သုံးစွဲပြီး နှိုပ်ပါ။"
+
+#: ../data/tips/gimp-tips.xml.in.h:6
+msgid ""
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
+"shortcuts."
+msgstr ""
+"ဦးစားပေးချက်များ အညွန်းစာမျက်နှာထဲမှာ &quot;တက်ကြွသော ကီး​ဘုတ် ဖြတ်လမ်းများ&quot;"
+"ကို သင်ဖွင့်လိုက်တဲ့အခါ၊ ဖြတ်လမ်း သော့ချက်များကို သင် ပြန်သတ်မှတ်နိုင်တယ်။ စာရင်းမှတ်ကို "
+"ထွက်ပေါ်စေဖို့၊ စာရင်းမှတ် အချက်တခုကို ရွေးချယ်မှုနဲ့၊ နှစ်သက်တဲ့ သော့ချက် အစု​အဝေးကို "
+"နှိုပ်ခြင်းဖြင့် လုပ်ဆောင်ပါ။ &quot;ကီးဘုတ် ဖြတ်လမ်းများကို သိမ်းဆည်းပါ&quot;ကို "
+"ဖွင့်ထားရင်၊ GIMP ကို သင် ထွက်ခွါတဲ့ အခါ သော့ချက် ချည်နှောင်ချက်များကို သိမ်းထားတယ်။ "
+"ဖြတ်လမ်းများကို အမှတ်တမဲ့ သတ်မှတ်ခြင်းပြန်သတ်မှတ်ခြင်းကို တားဆီးဖို့ &quot;တက်ကြွတဲ့ "
+"ကီးဘုတ် ဖြတ်လမ်းများ&quot;ကို ဆက်ပြီး သင် သေသေချာချာ ပိတ်ထားသင့်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:7
+msgid ""
+"Click and drag on a ruler to place a guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"ရုပ်ပုံတခုပေါ် လမ်းညွှန်တခု ချထားဖို့ ပေတံတခု ​အပေါ် နှိုပ်ပြီး ဒရွတ်ဆွဲပါ။ ဒရွတ်ဆွဲတဲ့ "
+"ရွေးချယ်မှုများ အားလုံးဟာ လမ်းညွှန်များထံ ကူးသွားလိမ့်မယ်။ လမ်းညွှန်များကို ရွှေ့​"
+"လျားကိရိယာ သုံးပြီး ရုပ်ပုံမှ ၄င်းတို့ကို သင် ဒရွတ်ဆွဲထုတ်နိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:8
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"GIMP က ပြေးလွှားရင်း gzip ဖိသိပ်မှုကို ပံ့ပိုးထားတယ်။ သင့် ဖိုင်အမည်မှာ <tt>.gz</tt> ကို "
+"((သို့) သင့်မှာ bzip2 ကို တပ်ဆင်ထားရင်၊ <tt>.bz2</tt>) ပေါင်းထည့်လိုက်ရင် သင့်ရဲ့ ရုပ်ပုံကို "
+"ဖိသိပ်ပြီး သိမ်းဆည်းထားလိမ့်မယ်။ အမှန်ပဲ ဖိသိပ်ထားတဲ့ ရုပ်ပုံများ ဖွင့်ပြမှုလည်း အလုပ်ဖြစ်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:9
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr ""
+"GIMP က သင့်ရဲ့ ရုပ်ပုံကို စီစဉ်စေဖို့ အလွှာများကို သုံးတယ်။ ၄င်းတို့ကို စလိုက်များ (သို့) စစ်ထုတ် "
+"ကိရိယာများရဲ့ ဆင့်စီချက် တခု အဖြစ် မှတ်ယူပြီး ၄င်းတို့မှ တဆင့် ၄င်းတို့ရဲ့ အကြောင်းအရာများရဲ့ "
+"ပေါင်းစပ်မှု တခုကို သင်မြင်နိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:10
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer→Transparency→Add Alpha Channel."
+msgstr ""
+"အလွှာများ အညွှန်းစာမျက်နှာထဲက အလွှာရဲ့ အမည်တခုဟာ <b>bold</b>နဲ့ ​ပြသနေရင်၊ "
+"ဒီအလွှာမှာ အာဖာ-ချာနယ် တခု မရှိဘူး။ အလွှာ→ဖေါက်ထွင်းမြင်နိုင်မှု→အာဖာ ချာမယ် "
+"ပေါင်းထည့်မှုကို သုံးပြီး အာဖာ-ချာနယ် တခုကို သင် ပေါင်းထည့်နိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:11
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Colors→Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Colors→Curves)."
+msgstr ""
+"သင့်ရဲ့ အချို့ စကင်ဖတ်ထားတဲ့ ဓါတ်ပုံများဟာ အရောင်ပါ၀င်မှု မလုံလောက်ရင်၊ အဆင့်များ ကိရိယာ "
+"(အရောင်များ→အဆင့်များ) ထဲက &quot;အလိုအလျှောက်&quot; ခလုတ်နဲ့ ၄င်းတို့ရဲ့ အရည်အသွေး "
+"အတိုင်းအတာကို အလွယ်တကူ တိုးမြှင့်ပေးနိုင်တယ်။ ​အရောင် ချထားမှု တခုခုရှိရင်၊ ၄င်းတို့ကို "
+"မျဉ်းခုံးများ ကိရိယာ (အရောင်များ→အဆင့်များ)နဲ့ ပြုပြင်နိုင်ဘူး။"
+
+#: ../data/tips/gimp-tips.xml.in.h:12
+msgid ""
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
+msgstr ""
+"လမ်းကြောင်းတခု (လမ်းကြောင်းကို တည်းဖြတ်→မှတ်သားပါ) ကို သင် မှတ်သားရင်၊ ရေးဆွဲ "
+"ကိရိယာများကို ၄င်းတို့ရဲ့ လက်ရှိ တပ်ဆင်ချက်များနဲ့ သုံးစွဲနိုင်တယ်။ ရောင်စဉ်တန်း စနစ်ထဲက "
+"ပုံဆွဲစုတ်တံ၊ ခဲဖျက် (သို့) မင်ပျံ့ကိရိယာကို သင် သုံးစွဲနိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:13
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr ""
+"သင့်ရဲ့ ဖန်သားပြင်ဟာ စုပြုံလွန်းနေရင်၊ ကိရိယာအိတ်နဲ့ အခြား အညွှန်းစာမျက်နှာများရဲ့ "
+"မြင်ကွင်းကို ထိန်းဖို့ ရုပ်ပုံ ၀င်းဒိုး တခုထဲက <tt>Tab</tt> ကို သင်နှိုပ်နိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:14
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image→Flatten Image) if you want the plug-"
+"in to work on the whole image."
+msgstr ""
+"ယန္တရားငယ်များ အများစုဟာ လက်ရှိ ရုပ်ပုံရဲ့ လက်ရှိ အလွှာမှာ အလုပ် လုပ်ကြတယ်။ အချို့ "
+"ကိစ္စများမှာ၊ ယန္တရားငယ်ကို ရုပ်ပုံ တခုလုံးမှာ သင် အလုပ်လုပ်စေချင်ရင် အလွှာများ အားလုံး "
+"(ရုပ်ပုံ→ပြေပြန့်တဲ့ ရုပ်ပုံ) ကို သင် ပေါင်းစပ်ဖို့ လိုတယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:15
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
+msgstr ""
+"သက်ရောက်မှုများ အားလုံးကို ရုပ်ပုံများ အမျိုးမျိုးအားလုံးမှာ အသုံးမချနိုင်ဘူး။ ဒါကို မီးခိုးရောင်-"
+"စာရင်းမှတ်-ရေးသွင်းချက် တခုနဲ့ ပြညွှန်ထားတယ်။ ရုပ်ပုံ စနစ်ကို နီစိမ်းပြာ "
+"(ရုပ်ပုံ→စနစ်→နီစိမ်းပြာ) အဖြစ် ပြောင်းလဲဖို့၊ အာဖာ-ချာနယ် "
+"(အလွှာ→ဖေါက်ထွင်းမြင်နိုင်မှု→အာဖာ ချာနယ ပေါင်းထည့်မှု) တခု ပေါင်းထည့်ဖို့ (သို့) ၄င်းကို "
+"သင် ပြန့်ပြား (ရုပ်ပုံ→ပြန့်ပြားတဲ့ ရုပ်ပုံ) စေဖို့ လိုအပ်နိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:16
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"ရွေးချယ်မှု တခုကို မပြုမီ <tt>Shift</tt> ကို ဖိပြီး ထိန်းထားခြင်းဖြင့် လက်ရှိ ရွေးချယ်မှုဆီ "
+"အစားထိုးမဲ့အစား ​သင့်ကို ပေါင်းထည့်​စေတယ်။ ရွေးချယ်မှုတခုကို မပြုမီ <tt>Ctrl</tt> ကို "
+"သုံးစွဲခြင်းက လက်ရှိ အချက်ကို နှုတ်ယူစေတယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:17
+msgid ""
+"When you save an image to work on it again later, try using XCF, GIMP's "
+"native file format (use the file extension <tt>.xcf</tt>). This preserves "
+"the layers and every aspect of your work-in-progress. Once a project is "
+"completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr ""
+"ရုပ်ပုံတခုကို ၄င်းကို နောက်တခါ လုပ်ဆောင်ဖို့ သင် သိမ်းဆည်းတဲ့အခါ၊ GIMP ရဲ့ မူရင် ဖိုင် အမျိုးအစား "
+"(<tt>.xcf</tt> ဖိုင်တိုးချဲ့ချက်ကို သုံးပါ) XCF ကို စမ်းသုံးကြည့်ပါ။ ဒီအရာက အလွှာများနဲ့ သင့်ရဲ့ "
+"လုပ်ဆောင်နေဆဲ ရူထောင့်တိုင်းကို ထိန်းသိမ်းပေးတယ်။ လုပ်ငန်းတခု တကြိမ် ပြီးစီးတိုင်း၊ ၄င်းကို "
+"JPEG, PNG, GIF, ... အဖြစ် သင် သိမ်းဆည်းနိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:18
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr ""
+"ရွေးချယ်မှု တခုကို <tt>Alt</tt> ဒရွတ်ဆွဲချက်ကို သုံးပြီး သင် ချိန်ညှိ (သို့) ရွေ့ရှားနိုင်တယ်။ "
+"ဒီအရာက ၀င်းဒိုးကို ရွေ့ရှားစေရင်၊ သင့် ၀င်းဒိုး မန်နေဂျာက <tt>Alt</tt> သော့ချက်ကို "
+"သုံးစွဲနေပြီး ဖြစ်တယ်။ ၀င်းဒိုး မန်နေဂျာများ အများစုကို <tt>Alt</tt> သော့ချက်ကို "
+"လျစ်လျုရှုဖို့ (သို့) <tt>Super</tt> သော့ချက် ((သို့) \"၀င်းဒိုး အမှတ်တံဆိပ်\") ကို အစားထိုး "
+"သုံးစွဲဖို့ စီစဉ်ဖန်တီးနိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:19
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"လမ်းကြောင်း ကိရိယာကို သုံးပြီး ရှုပ်ထွေးတဲ့ ရွေးချယ်မှုများကို ဖန်တီးနိုင်ပြီး "
+"တည်းဖြတ်နိုင်တယ်။ လမ်းကြောင်းများ အညွန်းစာမျက်နှာက လမ်းကြောင်း အများအပြားမှာ "
+"လုပ်ဆောင်ပြီး ၄င်းတို့ အားလုံးကို ရွေးချယ်ချက်များဆီ အသွင်ပြောင်းဖို့ သင့်ကို အခွင့်ပေးတယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:20
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"အလွှာတခုကို အလွှာများ အညွှန်းစာမျက်နှာမှ သင် ဒရွတ်ဆွဲနိုင်ပြီး ၄င်းကို ကိရိယာအိတ်ထဲ "
+"ချထားနိုင်တယ်။ ဒီအရာက အဲဒီအလွှာပဲ ပါရှိတဲ့ ရုပ်ပုံ အသစ်တခုကို ဖန်တီးပေးလိမ့်မယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:21
+msgid ""
+"You can drag and drop many things in GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current selection with that color."
+msgstr ""
+"GIMP ထဲမှာ အရာ တော်တော်များများ သင် ဒရွတ်ဆွဲပြီး ချထားနိုင်တယ်။ ဥပမာ အားဖြင့်၊ "
+"ကိရိယာအိတ် (သို့) အရောင်စပ်​ ဆေးခွက်တခုမှ အရောင်တခုကို ဒရွတ်ဆွဲပြီး ရုပ်ပုံတခုထဲ ၄င်းကို "
+"ချထားခြင်းက လက်ရှိ ရွေးချယ်မှုကို အဲဒီ အရောင်နဲ့ ဖြည့်စေလိမ့်မယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:22
+msgid ""
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters→Render→Gfig."
+msgstr ""
+"တည်းဖြတ်→မှတ်သားချက် ရွေးချယ်မှုကို သုံးပြီး ရိုးရိုး စတုရန်းပုံများ (သို့) စက်ဝိုင်းများကို "
+"သင်ရေးဆွဲနိုင်တယ်။ ၄င်းက သင့်ရဲ့ လက်ရှိ​ ရွေးချယ်မှုရဲ့ အစွန်ကို မှတ်သားပေးတယ်။ ပိုမို "
+"ရှုပ်ထွေးတဲ့ ပုံသဏ္ဍာန်များကို လမ်းကြောင်း ကိရိယာ (သို့) စစ်ထုတ်ကိရိယာများ→တင်ဆက်မှု→Gfig ကို "
+"သုံးပြီး သင် ရေးဆွဲနိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:23
+msgid ""
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
+msgstr ""
+"GIMP ရဲ့ ဂုဏ်အင်္ဂါရပ်များ အများစုအတွက် အကြောင်းအရာ-အာရုံခံနိုင်တဲ့ အကူအညီကို F1 သော့ချက်ကို "
+"အချိန်မရွေး နှိုပ်ခြင်းဖြင့် သင် ရရှိနိုင်တယ်။ ဒီအရာဟာ စာရင်းမှတ်များ အတွင်းမှာလည်း "
+"အလုပ် လုပ်ဆေင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr ""
+"အလွှာများ အညွှန်း စာမျက်နှာထဲက အလွှာတခုရဲ့ စာသား အမှတ်အသားပေါ် ညာဖက် "
+"နှိုပ်ခြင်းဖြင့် အလွှာ လည်ပတ်မှု အများအပြားကို သင် လုပ်​ဆောင်နိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:25
+msgid ""
+"You can save a selection to a channel (Select→Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr ""
+"ရွေးချယ်မှု တခုကို ချာနယ် တခုထဲမှာ သင် သိမ်းဆည်းနိုင်ပြီးနောက် ဒီချာနယ်ကို ရေးဆွဲ ကိရိယာ "
+"တခုခုဖြင့် ပြုပြင်မွမ်းမံနိုင်တယ်။ ချာနယ်များ အညွန်းစာမျက်နှာထဲမှာ ခလုတ်များကို သုံးပြီး၊ "
+"ဒီ ချာနယ် အသစ်ရဲ့ မြင်ကွင်းကို သင် ထိန်းနိုင် (သို့) ၄င်းကို ရွေးချယ်မှု တခုထဲ "
+"အသွင်ပြောင်းနိုင်တယ်။"
+
+#: ../data/tips/gimp-tips.xml.in.h:26
+msgid ""
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"ရုပ်ပုံ တခုထဲက အလွှာများ အားလုံးကို ဝိုင်းရံဖို့ <tt>Ctrl</tt>-<tt>Tab</tt> ကို သင် "
+"သုံးစွဲနိုင်တယ် (အဲဒီ ​ခလုတ်များကို သင့်ရဲ့ ၀င်းဒိုး ​မန်နေဂျာက မချည်နှောင်ထားရင်)။"
+
+#: ../data/tips/gimp-tips.xml.in.h:27
+msgid ""
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr ""
+"ရုပ်ပုံ ပတ်လည်ကို ရိုက်ဖို့ ကြွက်အလယ် ခလုတ်ကို သင် သုံးစွဲနိုင်တယ် ((သို့) ကြွက်ခလုတ်ကို "
+"ရွေ့ရှားနေစဉ် <tt>Spacebar</tt> ကို ချင့်ချိန်ပြီး ထိန်းထားပါ)။"
+
+#: ../data/tips/gimp-tips.xml.in.h:28
+msgid ""
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
+msgstr ""
+"ရွေးချယ်မှုကို ပြောင်းလဲဖို့ ရေးဆွဲ ကိရိယာများကို သင် သုံးစွဲနိုင်တယ်။ ရုပ်ပုံ ၀င်းဒိုး တခုရဲ့ "
+"အောက်ခြေ ဘယ်ဖက်မှ &quot;အမြန် မျက်နှာဖုံး&quot; ခလုတ်ပေါ် နှိုပ်ပါ။ သင့်ရဲ့ "
+"ရွေးချယ်မှုကို ရုပ်ပုံမှာ ရွေးဆွဲခြင်းဖြင့် ပြောင်းလဲနိုင်ပြီး ၄င်းကို သာမန် ရွေးချယ်မှု "
+"တခုဆီ ပြန် အသွင်ပြောင်းဖို့ ခလုတ်ကို ပြန်နှိုပ်ပါ။"
+

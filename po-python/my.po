@@ -1,0 +1,315 @@
+# Burmese translation of gimp-python.
+# Copyright © 2009, 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
+#
+# Russell Kyaw <rkyaw@yahoo.com>, 2009, 2010.
+# BurmaIT Team <burmait@burmait.net>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python 2.7.1\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2009-06-15 17:30+0000\n"
+"PO-Revision-Date: 2010-01-29 17:24+0200\n"
+"Last-Translator: Russell Kyaw <rkyaw@yahoo.com>\n"
+"Language-Team: Burmese <burmait@burmait.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: ../plug-ins/pygimp/gimpfu.py:391
+msgid "Missing exception information"
+msgstr "ပျောက်ဆုံးနေတဲ့ ချွင်းချက် အချက်အလက်"
+
+#: ../plug-ins/pygimp/gimpfu.py:400
+#, python-format
+msgid "An error occured running %s"
+msgstr "%s လည်ပတ်မှုမှာ အမှားအယွင်းတခု ဖြစ်ပျက်ခဲ့တယ်"
+
+#: ../plug-ins/pygimp/gimpfu.py:411
+msgid "_More Information"
+msgstr "ပိုမို အချက်အလက်"
+
+#: ../plug-ins/pygimp/gimpfu.py:523 ../plug-ins/pygimp/gimpfu.py:535
+#: ../plug-ins/pygimp/gimpfu.py:541
+msgid "No"
+msgstr "မလုပ်ဘူး"
+
+#: ../plug-ins/pygimp/gimpfu.py:533 ../plug-ins/pygimp/gimpfu.py:541
+msgid "Yes"
+msgstr "လုပ်မယ်"
+
+#: ../plug-ins/pygimp/gimpfu.py:592 ../plug-ins/pygimp/gimpui.py:223
+msgid "Python-Fu File Selection"
+msgstr "ပိုင်တွန်-ဖူ ဖိုင် ရွေးချယ်မှု"
+
+#: ../plug-ins/pygimp/gimpfu.py:603
+msgid "Python-Fu Folder Selection"
+msgstr "ပိုင်တွန်-ဖူ ဖိုင်တွဲ ရွေးချယ်မှု"
+
+#: ../plug-ins/pygimp/gimpfu.py:694
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "'%s' အတွက် မမှန်တဲ့ ထည့်သွင်းချက်"
+
+#: ../plug-ins/pygimp/gimpui.py:176
+msgid "Python-Fu Color Selection"
+msgstr "ပိုင်တွန်-ဖူ အရောင် ရွေးချယ်မှု"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+msgid "Saving as colored XHTML"
+msgstr "အရောင်ဆိုးတဲ့ XHTML အဖြစ် သိမ်းဆည်းနေတယ်"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+msgid "Save as colored XHTML"
+msgstr "အရောင်ဆိုးတဲ့ XHTML အဖြစ် သိမ်းဆည်းပါ"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+msgid "Colored XHTML"
+msgstr "အရောင်ဆိုးတဲ့ XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+msgid "Character _source"
+msgstr "အက္ခရာ အရင်းအဖြစ်"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Source code"
+msgstr "အရင်းအမြစ် ကုဒ်"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Text file"
+msgstr "စာသား ဖိုင်"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Entry box"
+msgstr "ရေးသွင်းချက် အကွက်"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "_File to read or characters to use"
+msgstr "ဖတ်ရှုမဲ့ ဖိုင် (သို့) သုံးစွဲမဲ့ အက္ခရာများ"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+msgid "Fo_nt size in pixels"
+msgstr "ပစ်ဆယ်များနဲ့ ဖောင့် အရွယ်"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "_Write a separate CSS file"
+msgstr "သီးခြား CSS ဖိုင်တခုကို ရေးသားပါ"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "Add a layer of fog"
+msgstr "မြူနှင်းရဲ့ အလွှာတခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Fog..."
+msgstr "မြူနှင်း..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+msgid "_Layer name"
+msgstr "အလွှာ အမည်"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+msgid "Clouds"
+msgstr "တိမ်လွှာများ"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+msgid "_Fog color"
+msgstr "မြူနှင်း အရောင်"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+msgid "_Turbulence"
+msgstr "လှိုင်းကြီး"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+msgid "Op_acity"
+msgstr "အလင်းပိတ်မှု"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+msgid "Offset the colors in a palette"
+msgstr "အရောင်စပ်ဆေးခွက် တခုထဲမှ အရောင်များကို ချိတ်ဆက်ပါ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+msgid "_Offset Palette..."
+msgstr "အရောင်စပ်ဆေးခွက်ကို ချိတ်ဆက်ပါ..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+msgid "Palette"
+msgstr "အရောင်စပ်ဆေးခွက်"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+msgid "Off_set"
+msgstr "အော့ဖ်ဆက်"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+msgid "Sort the colors in a palette"
+msgstr "အရောင်စပ်ဆေးခွက် တခုထဲမှ အရောင်များကို မျိုးတူစုပါ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+msgid "_Sort Palette..."
+msgstr "အရောင်စပ်ဆေးခွက်ကို မျိုးတူစုပါ..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+msgid "Color _model"
+msgstr "အရောင် ပုံစံငယ်"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "RGB"
+msgstr "နီစိမ်းပြာ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "Channel to _sort"
+msgstr "မျိုးတူစုမဲ့ ချာနယ်"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Red or Hue"
+msgstr "အနီရောင် (သို့) အရောင်"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Green or Saturation"
+msgstr "အစိမ်းရောင် (သို့) ပျော်၀င်မှု"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Blue or Value"
+msgstr "အပြာရောင် (သို့) တန်ဖိုး"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "_Ascending"
+msgstr "တက်သွားတယ်"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:49
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "အရောင်စပ်ဆေးခွက်မှ အရောင်များကို သုံးပြီး ထပ်ခါဖြစ်နေတဲ့ ရောင်စဉ်တန်း တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
+msgid "Palette to _Repeating Gradient"
+msgstr "ထပ်ခါဖြစ်နေတဲ့ ရောင်စဉ်တန်းအတွက် အရောင်စပ်ဆေးခွက်"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
+msgid "Create a gradient using colors from the palette"
+msgstr "အရောင်စပ်ဆေးခွက်မှ အရောင်များကို သုံးပြီး ရောင်စဉ်တန်း တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
+msgid "Palette to _Gradient"
+msgstr "ရောင်စဉ်တန်းအတွက် အရောင်စပ်ဆေးခွက်"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:56
+msgid "Slice"
+msgstr "လှီးဖြတ်ပါ"
+
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:417
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+"ရုပ်ပုံတခုကို ၄င်းရဲ့ လမ်းညွှန်များနဲ့ ဖြတ်ယူပါ၊ ရုပ်ပုံများနဲ့ HTML ဇယား အတိုအထွာ တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:428
+msgid "_Slice..."
+msgstr "လှီးဖြတ်ပါ..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Path for HTML export"
+msgstr "HTML တင်ပို့မှုအတွက် လမ်းကြောင်း"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Filename for export"
+msgstr "တင်ပို့မဲ့ ဖိုင်အမည်"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+msgid "Image name prefix"
+msgstr "ရုပ်ပုံ အမည် ရှေ့ဆက်"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Image format"
+msgstr "ရုပ်ပုံ အမျိုးအစား"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Separate image folder"
+msgstr "ရုပ်ပုံ ဖိုင်တွဲကို ခွဲခြမ်းပါ"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Folder for image export"
+msgstr "ရုပ်ပုံ တင်ပို့မှုအတွက် ဖိုင်တွဲ"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+msgid "Space between table elements"
+msgstr "ဇယား အစိတ်အပိုင်းများ အကြား ကြားအကွာ​အဝေး"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+msgid "Javascript for onmouseover and clicked"
+msgstr "အွန်မောင်းစ်အိုဗာနဲ့ နှိုပ်ချက် အတွက် ဂျာဗားစခရစ်"
+
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+msgid "Skip animation for table caps"
+msgstr "ဇယား ​စာလုံးကြီးများ အတွက် ပိုင်တွန် သက်၀င်လှုပ်ရှားမှု"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+msgid "Python Console"
+msgstr "ပိုင်တွန် ထိန်းချုပ်ခလုတ်ခုံ"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+msgid "_Browse..."
+msgstr "လှော်​လှန်ပါ..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+msgid "Python Procedure Browser"
+msgstr "ပိုင်တွန် လုပ်ငန်းစဉ် ​ကွန်ရက်ကြည့် ကိရိယာ"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "ရေးသားဖို့ အတွက် '%s' ကို မဖွင့်နိုင်ဘူး - %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "'%s' ထဲ မရေးသားနိုင်ဘူး - %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+msgid "Save Python-Fu Console Output"
+msgstr "ပိုင်တွန်-ဖူ ထိန်းချုပ်ခလုတ်ခုံ ရလဒ်ကို သိမ်းဆည်းပါ"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+msgid "Interactive GIMP Python interpreter"
+msgstr "ပြန်လည်တုံ့ပြန်တဲ့ GIMP ပိုင်တွန် ဘာသာပြန်ကိရိယာ"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+msgid "_Console"
+msgstr "ထိန်းချုပ် ခလုတ်ခုံ"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "အလွှာတခုမှာ အစက် အရိပ်တခုကို ပေါင်းထည့်ပြီး၊ ၄င်းကို ချင့်ချိန်ပြီး ဖော်ပေးပါ"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
+msgid "_Drop Shadow and Bevel..."
+msgstr "အရိပ်ကို ချထားပြီး ဖော်ပေးပါ..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+msgid "_Shadow blur"
+msgstr "အရိပ် မှုန်ဝါးမှု"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Bevel"
+msgstr "အနားစောင်း"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Drop shadow"
+msgstr "အရိပ်ကို ချထားပါ"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "Drop shadow _X displacement"
+msgstr "အရိပ် _X ဖယ်ရှားခြင်းကို ချထားပါ"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _Y displacement"
+msgstr "အရိပ် _Y ဖယ်ရှားခြင်းကို ချထားပါ"
+

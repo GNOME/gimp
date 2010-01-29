@@ -1,0 +1,2786 @@
+# Burmese translation of gimp-script-fu.
+# Copyright © 2009, 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
+#
+# Russell Kyaw <rkyaw@yahoo.com>, 2009, 2010.
+# BurmaIT Team <burmait@burmait.net>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-script-fu 2.7.1\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2009-06-15 17:30+0000\n"
+"PO-Revision-Date: 2010-01-29 17:24+0200\n"
+"Last-Translator: Russell Kyaw <rkyaw@yahoo.com>\n"
+"Language-Team: Burmese <burmait@burmait.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
+msgid "Script-Fu Console"
+msgstr "စခရစ်-ဖူး ထိန်းချုပ်ခလုတ်ခုံ"
+
+#: ../plug-ins/script-fu/script-fu-console.c:193
+msgid "Welcome to TinyScheme"
+msgstr "စီမံချက်ငယ်မှ ကြိုဆိုလျက်"
+
+#: ../plug-ins/script-fu/script-fu-console.c:199
+msgid "Interactive Scheme Development"
+msgstr "ပြန်လှည်တုံ့ပြန်တဲ့ စီမံချက် တည်ဆောက်ရေး"
+
+#: ../plug-ins/script-fu/script-fu-console.c:235
+msgid "_Browse..."
+msgstr "လှော်လှန်ပါ..."
+
+#: ../plug-ins/script-fu/script-fu-console.c:293
+msgid "Save Script-Fu Console Output"
+msgstr "စခရစ်-ဖူး ထိန်းချုပ်ခလုတ်ခုံ ရလဒ်ကို သိမ်းဆည်းပါ"
+
+#: ../plug-ins/script-fu/script-fu-console.c:340
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "'%s' ကို ရေးသားဖို့ မ​ဖွင့်နိုင်ဘူး - %s"
+
+#: ../plug-ins/script-fu/script-fu-console.c:369
+msgid "Script-Fu Procedure Browser"
+msgstr "စခရစ်-ဖူး လုပ်ငန်းစဉ် ကွန်ရက်ကြည့်ယန္တရား"
+
+#: ../plug-ins/script-fu/script-fu-eval.c:60
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "စခရစ်-ဖူး ဆန်းစစ်မှု စနှစ်က ပြန်လှန်မရှိတဲ့ ကိုးကားချက်ကိုသာ ခွင့်ပြုတယ်"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:195
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "စခရစ်-ဖူးက စခရစ် နှစ်ခုကို တကြိမ်ထဲ မဆောင်ရွတ်နိုင်ဘူး။"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:197
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "သင်ဟာ \"%s\" စခရစ်ကို လည်ပတ်နေပြီ။"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:223
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "စခရစ်-ဖူး - %s"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:287
+#, c-format
+msgid "%s:"
+msgstr "%s -"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:335
+msgid "Script-Fu Color Selection"
+msgstr "စခရစ်-ဖူး အရောင် ရွေးချယ်မှု"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:444
+msgid "Script-Fu File Selection"
+msgstr "စခရစ်-ဖူး ဖိုင် ရွေးချယ်မှု"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:447
+msgid "Script-Fu Folder Selection"
+msgstr "စခရစ်-ဖူး ဖိုင်တွဲ ရွေးချယ်မှု"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:460
+msgid "Script-Fu Font Selection"
+msgstr "စခရစ်-ဖူး ဖောင့် ရွေးချယ်မှု"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:468
+msgid "Script-Fu Palette Selection"
+msgstr "စခရစ်-ဖူး အရောင်စပ်ဆေးခွက် ရွေးချယ်မှု"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:477
+msgid "Script-Fu Pattern Selection"
+msgstr "စခရစ်-ဖူး နမူနာပုံစံ ရွေးချယ်မှု"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:486
+msgid "Script-Fu Gradient Selection"
+msgstr "စခရစ်-ဖူး ရောင်စဉ်တန်း ရွေးချယ်မှု"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:495
+msgid "Script-Fu Brush Selection"
+msgstr "စခရစ်-ဖူး စုတ်တံ ရွေးချယ်မှု"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:823
+#, c-format
+msgid "Error while executing %s:"
+msgstr "%s ကို ဆောင်ရွတ်နေစဉ် အမှားအယွင်း -"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "'စခရစ်-ဖူး-မှတ်ပုံတင်ရေး' ခေါ်ဆိုမှုမှ ဆွေးနွေးချက်များ အရမ်းနည်းပါးတယ်"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
+#, c-format
+msgid "Error while loading %s:"
+msgstr "%s ကို ဖွင့်နေတဲ့ အချိန်မှ အမှားအယွင်း -"
+
+#: ../plug-ins/script-fu/script-fu-server.c:712
+msgid "Script-Fu Server Options"
+msgstr "စခရစ်-ဖူး ဆာဗာ ရွေးစရာများ"
+
+#: ../plug-ins/script-fu/script-fu-server.c:717
+msgid "_Start Server"
+msgstr "ဆာဗာကို စတင်ပါ"
+
+#: ../plug-ins/script-fu/script-fu-server.c:745
+msgid "Server port:"
+msgstr "ဆာဗာ အခံ -"
+
+#: ../plug-ins/script-fu/script-fu-server.c:751
+msgid "Server logfile:"
+msgstr "ဆာဗာ မှတ်တမ်းဖိုင် -"
+
+#: ../plug-ins/script-fu/script-fu.c:110
+msgid "Interactive console for Script-Fu development"
+msgstr "စခရစ်-ဖူး တည်ဆောက်ရေးအတွက် ပြန်လှန် တုံ့ပြန်တဲ့ ထိန်းချုပ်ခလုတ်ခုံ"
+
+#: ../plug-ins/script-fu/script-fu.c:116
+msgid "_Console"
+msgstr "ထိန်းချုပ်ခလုတ်ခုံ"
+
+#: ../plug-ins/script-fu/script-fu.c:140
+msgid "Server for remote Script-Fu operation"
+msgstr "အဝေးမှာ စခရစ်-ဖူး လည်ပတ်မှုအတွက် ဆာဗာ"
+
+#: ../plug-ins/script-fu/script-fu.c:145
+msgid "_Start Server..."
+msgstr "ဆာဗာကို စတင်ပါ..."
+
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "_GIMP Online"
+msgstr "_GIMP အွန်လိုင်း"
+
+#: ../plug-ins/script-fu/script-fu.c:302
+msgid "_User Manual"
+msgstr "သုံးစွဲသူ လက်စွဲ"
+
+#: ../plug-ins/script-fu/script-fu.c:305
+msgid "_Script-Fu"
+msgstr "စခရစ်-ဖူး"
+
+#: ../plug-ins/script-fu/script-fu.c:307
+msgid "_Test"
+msgstr "စမ်းသပ်ချက်"
+
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "ခလုတ်များ"
+
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "အမှတ်တံဆိပ်များ"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "နမူနာပုံစံများ"
+
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Web Page Themes"
+msgstr "ကွန်ရက်စာမျက်နှာ အခင်းအကျင်းများ"
+
+#: ../plug-ins/script-fu/script-fu.c:319
+msgid "_Alien Glow"
+msgstr "​မရင်းနှီးတဲ့ တောက်ပမှု"
+
+#: ../plug-ins/script-fu/script-fu.c:321
+msgid "_Beveled Pattern"
+msgstr "အနားစောင်း နမူနာပုံစံ"
+
+#: ../plug-ins/script-fu/script-fu.c:323
+msgid "_Classic.Gimp.Org"
+msgstr "_Classic.Gimp.Org"
+
+#: ../plug-ins/script-fu/script-fu.c:326
+msgid "Alpha to _Logo"
+msgstr "အမှတ်တံဆိပ်အတွက် အာဖာ"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid "Re-read all available Script-Fu scripts"
+msgstr "ရနိုင်တဲ့ စခရစ်-ဖူး စခရစ်များ အားလုံးကို ပြန်ဖတ်ပါ"
+
+#: ../plug-ins/script-fu/script-fu.c:334
+msgid "_Refresh Scripts"
+msgstr "စခရစ်များကို ပြန်နိူးပါ"
+
+#: ../plug-ins/script-fu/script-fu.c:357
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"\"စခရစ်-ဖူးများ ပြန်နိူးပါ\" ကို စခရစ်-ဖူး အညွှန်းစာမျက်နှာ အကွက် တခု ဖြစ်နေစဉ် သင် "
+"မသုံးစွဲနိုင်ဘူး။ စခရစ်-ဖူး ၀င်းဒိုး အားလုံးကို ပိတ်ပြီး ထပ်ကြိုးစားပါ။"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
+msgid "3D _Outline..."
+msgstr "သုံးဖက်မြင် အကြမ်းဆွဲချက်..."
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
+msgid "Bumpmap (alpha layer) blur radius"
+msgstr "မညီညာတဲ့မြေပုံ (အာဖာ အလွှာ) က အချင်း၀က်ကို မှုန်ဝါးစေတယ်"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
+msgid "Create a logo with outlined text and a drop shadow"
+msgstr "အကြမ်းဆွဲချက် စာသားနဲ့ အမှတ်တံဆိပ် တခုနဲ့ အစက် အရိပ်တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
+msgid "Default bumpmap settings"
+msgstr "စံထားချက် မညီညာတဲ့ တပ်ဆင်ချက်များ"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:5
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:7
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/slide.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "ဖောင့်"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:6
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:3
+msgid "Font size (pixels)"
+msgstr "ဖောင့်အရွယ် (ပစ်ဆယ်များ)"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
+msgid "Outline blur radius"
+msgstr "အကြမ်းဆွဲချက်က အချင်း၀က်ကို မှုန်ဝါးစေတယ်"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgstr "ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ကို နမူနာပုံစံတခုနဲ့ အကြမ်းဆွဲပြီး အစက် အရိပ်တခုကို ထည့်သွင်းပါ"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "နမူနာပုံစံ"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
+msgid "Shadow X offset"
+msgstr "အရိပ် X အော့ဖ်ဆက်"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
+msgid "Shadow Y offset"
+msgstr "အရိပ် Y အော့ဖ်ဆက်"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
+msgid "Shadow blur radius"
+msgstr "အရိပ်က အချင်း၀က်ကို မှုန်ဝါးစေတယ်"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:7
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:10
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: ../plug-ins/script-fu/scripts/slide.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:5
+msgid "Text"
+msgstr "စာသား"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+msgid "3_D Truchet..."
+msgstr "သုံးဖက်မြင် ထရှုချက်..."
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:1
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:2
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:1
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:1
+msgid "Background color"
+msgstr "နောက်ခံ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:2
+msgid "Block size"
+msgstr "အရွယ်ကို ပိတ်ဆို့ပါ"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+msgid "Create an image filled with a 3D Truchet pattern"
+msgstr " သုံးဖက်မြင် ထရူချက် နမူနာပုံစံတခုနဲ့ ပြည့်တဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
+msgid "End blend"
+msgstr "ရောစပ်မှုကို အဆုံးသတ်ပါ"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:5
+msgid "Number of X tiles"
+msgstr "X ခင်းကျင်းမှုများ အရေအတွက်"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:6
+msgid "Number of Y tiles"
+msgstr "Y ခင်းကျင်းမှုများ အရေအတွက်"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
+msgid "Start blend"
+msgstr "ရောစပ်မှုကို စတင်ပါ"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+msgid "Supersample"
+msgstr "အထူးနမူနာ"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:8
+msgid "Thickness"
+msgstr "အထူ"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
+msgid "Add B_evel..."
+msgstr "အနားစောင်းကို ပေါင်းထည့်ပါ..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
+msgid "Add a beveled border to an image"
+msgstr "ရုပ်ပုံတခုထဲမှာ အနားစောင်း အနားသတ် တခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
+msgid "Keep bump layer"
+msgstr "မညီညာတဲံ အလွှာကို သိမ်းထားပါ"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: ../plug-ins/script-fu/scripts/slide.scm.h:6
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+msgid "Work on copy"
+msgstr "မိတ္တူအတွက် လုပ်ဆောင်ပါ"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:1
+msgid "Add _Border..."
+msgstr "အနားသတ်ကို ပေါင်းထည့်ပါ..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Add a border around an image"
+msgstr "ရုပ်ပုံတခု ပတ်လည်မှာ အနားသတ် တခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border X size"
+msgstr "​အနားသတ် X အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+msgid "Border Y size"
+msgstr "​အနားသတ် Y အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+msgid "Border color"
+msgstr "အနားသတ် အရောင်"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
+msgid "Delta value on color"
+msgstr "အရောင်အတွက် ဒယ်တာ တန်ဖိုး"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+msgid "Create an arrow graphic with an eerie glow for web pages"
+msgstr "ကွန်ရက်စာမျက်နှာများအတွက် မြှား ရုပ်ကားတခုကို အိုင်ရီ တောက်ပမှုတခုနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "အောက်ဖက်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/camo.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+msgid "Flatten image"
+msgstr "ပြန့်ပြားတဲ့ ရုပ်ပုံ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+msgid "Glow color"
+msgstr "တောက်ပတဲ့ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "ဘယ်ဖက်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+msgid "Orientation"
+msgstr "အနေအ​ထား"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+msgid "Right"
+msgstr "ညာဖက်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:7
+msgid "Size"
+msgstr "အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+msgid "Up"
+msgstr "အထက်ဖက်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
+msgid "_Arrow..."
+msgstr "မြှား..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+msgid "Bar height"
+msgstr "တန်းလျာ အမြင့်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+msgid "Bar length"
+msgstr "တန်းလျာ အရှည်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Create an Hrule graphic with an eerie glow for web pages"
+msgstr "ကွန်ရက်စာမျက်နှာများအတွက် အိပ်ချ်စည်းမျဉ်း တခုကို အိုင်ရီ တောက်ပမှုတခုနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+msgid "_Hrule..."
+msgstr "အိပ်ချ်စည်းမျဉ်း..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+msgid "Create a bullet graphic with an eerie glow for web pages"
+msgstr "ကွန်ရက်စာမျက်နှာများအတွက် အမှတ်စက် ရုပ်ပုံတခု တခုကို အိုင်ရီ တောက်ပမှု တခုနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
+msgid "Radius"
+msgstr "အချင်း၀က်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+msgid "_Bullet..."
+msgstr "အမှတ်စက်..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+msgid "B_utton..."
+msgstr "ခလုတ်..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+msgid "Create a button graphic with an eerie glow for web pages"
+msgstr "ကွန်ရက်စာမျက်နှာများအတွက် ခလုတ် ရုပ်ပုံတခု တခုကို အိုင်ရီ တောက်ပမှု တခုနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+msgid "Glow radius"
+msgstr "တောက်ပတဲ့ အချင်း၀က်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
+msgid "Padding"
+msgstr "အခုအခံ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:11
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:9
+msgid "Text color"
+msgstr "စာသား အရောင်"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "Add an eerie glow around the selected region (or alpha)"
+msgstr "ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ပတ်လည်မှာ အိုင်ရီ တောက်ပမှုတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+msgid "Alien _Glow..."
+msgstr "မရင်းနှီးတဲ့ တောက်ပမှု..."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+msgid "Create a logo with an alien glow around the text"
+msgstr "စာသား ပတ်လည်မှာ အမှတ်တံဆိပ် တခုကို မရင်းနှီးတဲ့ တောက်ပမှုတခုနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+msgid "Glow size (pixels * 4)"
+msgstr "တောက်ပတဲ့ အရွယ် (ပစ်ဆယ်များ * ၄)"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "Add psychedelic outlines to the selected region (or alpha)"
+msgstr "ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ထဲမှာ စူးရှတောက်ပတဲ့ အကြမ်းဆွဲချက်ကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+msgid "Alien _Neon..."
+msgstr "မရင်းနှီးတဲ့ နီယွန်..."
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Create a logo with psychedelic outlines around the text"
+msgstr "စာသား ပတ်လည်မှာ အမှတ်တံဆိပ် တခုကို စူးရှတောက်ပတဲ့ အကြမ်းဆွဲချက်များနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+msgid "Fade away"
+msgstr "မှေးမှိန်ပျေက်ကွယ်သွားတယ်"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+msgid "Number of bands"
+msgstr "စည်းကြိုးများ အရေအတွက်"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+msgid "Width of bands"
+msgstr "စည်းကြိုးများရဲ့ အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
+msgid "Width of gaps"
+msgstr "ကွာဟချက် အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid ""
+"Add a gradient effect, a drop shadow, and a background to the selected "
+"region (or alpha)"
+msgstr ""
+"ရောင်စဉ်တန်း သက်​ရောက်မှုတခု၊ အစက် အရိပ်တခုနဲ့၊ နောက်ခံတခုကို ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ)"
+"မှာ ထည့်သွင်းပါ"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+msgid ""
+"Create a plain text logo with a gradient effect, a drop shadow, and a "
+"background"
+msgstr ""
+"ရောင်စဉ်တန်း သက်ရောက်မှု တခု၊ အစက်အရိပ် တခုနဲ့၊ နောက်ခံတခု ပါရှိတဲ့ ရိုးရှင်းတဲ့ စာသားတခု ကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
+msgid "_Basic I..."
+msgstr "အခြေခံ ၁..."
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "Add a shadow and a highlight to the selected region (or alpha)"
+msgstr "အရိပ်တခုနဲ့ အသားပေးချက်တခုကို ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ)ထဲ ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+msgid "B_asic II..."
+msgstr "အခြေခံ ၁..."
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+msgid "Create a simple logo with a shadow and a highlight"
+msgstr "အရိပ်တခုနဲ့ အ​သားပေးချက် တခုပါရှိတဲ့ ရိုးရိုး အမှတ်တံဆိပ်တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
+msgid "Bevel width"
+msgstr "အနား​စောင်း အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+msgid "Create a simple, beveled button graphic for webpages"
+msgstr "ကွန်ရက်စာမျက်နှာများအတွက် ရိုးရှင်း၊ အနားစောင်း ခလုတ် ရုပ်ကားတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+msgid "Lower-right color"
+msgstr "အောက်ပိုင်း-ညာဖက် အရောင်"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Pressed"
+msgstr "ဖိနှိုပ်ချက်"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
+msgid "Simple _Beveled Button..."
+msgstr "သာမန် အနားစောင်းတဲ့ ခလုတ်..."
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
+msgid "Upper-left color"
+msgstr "​အထက်ပိုင်း-ဘယ်ဖက် အရောင်"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "Create a beveled pattern arrow for webpages"
+msgstr "အနားစောင်းတဲ့ နမူနာပုံစံ မြှားတခုကို ကွန်ရက်စာမျက်နှာများအတွက် ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "Create a beveled pattern bullet for webpages"
+msgstr "အနားစောင်းတဲ့ နမူနာပုံစံ အမှတ်စက်တခုကို ကွန်ရက်စာမျက်နှာများအတွက် ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+msgid "Diameter"
+msgstr "အချင်း"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+msgid "Transparent background"
+msgstr "ဖေါက်ထွင်းမြင်နိုင်တဲ့ နောက်ခံ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+msgid "Create a beveled pattern button for webpages"
+msgstr "အနားစောင်းတဲ့ နမူနာပုံစံ ခလုတ်တခုကို ကွန်ရက်စာမျက်နှာများအတွက် ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+msgid "Create a beveled pattern heading for webpages"
+msgstr "အနားစောင်းတဲ့ နမူနာပုံစံ ခေါင်းစီးတခုကို ကွန်ရက်စာမျက်နှာများအတွက် ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+msgid "H_eading..."
+msgstr "ခေါင်းစဉ်တပ်ခြင်း..."
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "Create a beveled pattern hrule for webpages"
+msgstr "အနားစောင်းတဲ့ နမူနာပုံစံ အိပ်ချ်စည်းကမ်းတခုကို ကွန်ရက်စာမျက်နှာများအတွက် ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Height"
+msgstr "အမြင့်"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
+msgid "Width"
+msgstr "အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "Blend Animation needs at least three source layers"
+msgstr "ရောစပ်ထားတဲ့ သက်၀င်လှုပ်ရှားမှုက အနည်းဆုံး အရင်းအမြစ် အလွှာများ သုံးခု လိုအပ်တယ်"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"သက်၀င်လှုပ်ရှားမှု တခုအဖြစ် နောက်ခံတခုမှာ နှစ်ခု (သို့) ၄င်းထက်များတဲ့ အလွှာများကို "
+"ရောစပ်ဖို့ အလယ်အလတ် အလွှာများကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
+msgid "Intermediate frames"
+msgstr "အလယ်အလတ် ဘောင်များ"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
+msgid "Looped"
+msgstr "လည်ပတ်မှု"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
+msgid "Max. blur radius"
+msgstr "အများဆုံး မှုန်ဝါးတဲ့ အချင်း၀က်"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
+msgid "_Blend..."
+msgstr "ရောစပ်ပါ..."
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid ""
+"Add blended backgrounds, highlights, and shadows to the selected region (or "
+"alpha)"
+msgstr ""
+"ရောစပ်တဲ့ နောက်ခံများ၊ အသားပေးချက်များနဲ့၊ အရိပ်များကို ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ထဲ "
+"ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
+msgid "Blen_ded..."
+msgstr "ရောစပ်ထားချက်..."
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
+msgid "Blend mode"
+msgstr "ရောစပ်တဲ့ စနစ်"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Create a logo with blended backgrounds, highlights, and shadows"
+msgstr "အမှတ်တံဆိပ် တခုကို ရောစပ်တဲ့ နောက်ခံများ၊ အသားပေးချက်များနဲ့၊ အရိပ်များနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
+msgid "Custom Gradient"
+msgstr "စိတ်ကြိုက် ရောင်စဉ်တန်း"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-BG-HSV"
+msgstr "အနီးကပ်မြင်ကွင်း-နောက်ခံ-HSV"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
+msgid "FG-BG-RGB"
+msgstr "အနီးကပ်မြင်ကွင်း-နောက်ခံ-RGB"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
+msgid "FG-Transparent"
+msgstr "အနီးကပ်မြင်ကွင်း-ဖေါက်ထွင်းမြင်နိုင်မှု"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:2
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Gradient"
+msgstr "ရောင်စဉ်တန်း"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:4
+msgid "Gradient reverse"
+msgstr "ရောင်စဉ်တန်း ပြောင်းပြန်လှန်ချက်"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
+msgid "Offset (pixels)"
+msgstr "အော့ဖ်ဆက် (ပစ်ဆက်များ)"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "Add 'cow spots' to the selected region (or alpha)"
+msgstr "ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) 'ခေါင်း အကွက်များ' ကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+msgid "Background Color"
+msgstr "နောက်ခံ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+msgid "Bo_vination..."
+msgstr "ဘိုဗင်နေရှင်..."
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+msgid "Create a logo with text in the style of 'cow spots'"
+msgstr "'ခေါင်း အကွက်များ' စတိုင်နဲ့ အမှတ်တံဆိပ်တခုကို စာသားနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+msgid "Spots density X"
+msgstr "အကွက်များ သိပ်သည်းမှု X"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
+msgid "Spots density Y"
+msgstr "အကွက်များ သိပ်သည်းမှု Y"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+msgid "Add glowing"
+msgstr "တောက်ပခြင်းကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+msgid "After glow"
+msgstr "တောက်ပမှု နောက်မှာ"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+msgid "B_urn-In..."
+msgstr "လောင်ကျွမ်းမှု..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+msgid "Corona width"
+msgstr "ရောင်ခြည်၀န်း အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"အလွှာနှစ်ခုကြားမှာ သက်၀င်တဲ့ 'လောင်ကျွမ်းမှု' ကူးပြောင်းခြင်းတခုကို ထုတ်လုပ်ဖို့ အလယ်အလတ် "
+"အလွှာများကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+msgid "Fadeout"
+msgstr "မှေးမှိန်ပျေက်ကွယ်မှု"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+msgid "Fadeout width"
+msgstr "မှေးမှိန်ပျေက်ကွယ်မှု အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+msgid "Prepare for GIF"
+msgstr "GIF အတွက် ပြင်ဆင်ပါ"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+msgid "Speed (pixels/frame)"
+msgstr "အမြန်နှုန်း (ပစ်ဆယ်များ/ဘောင်)"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"လောင်ကျွမ်းမှု စခရစ်က စုစုပေါင်း အလွှာ နှစ်ခု လိုအပ်တယ်။ ဖေါက်ထွင်းမှု ပါတဲ့ ​အ​"
+"နီးကပ်မြင်ကွင်း တခုနဲ့ နောက်ခံ အလွှာ တခု။"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:1
+msgid "Color 1"
+msgstr "အရောင် ၁"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:2
+msgid "Color 2"
+msgstr "အရောင် ၂"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:3
+msgid "Color 3"
+msgstr "အရောင် ၃"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Create an image filled with a camouflage pattern"
+msgstr "အရောင်ဖျောက်ထားတဲ့ နမူနာပုံစံတခုနဲ့ ပြည့်တဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:6
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Granularity"
+msgstr "ကြမ်းတမ်းမှု"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:7
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Image size"
+msgstr "ရုပ်ပုံ အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:8
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
+msgid "Smooth"
+msgstr "ချောမွေ့စေပါ"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:9
+msgid "_Camouflage..."
+msgstr "အရောင်ဖျောက်ထားပါ..."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
+msgid "Carve white areas"
+msgstr "အဖြူရောင် နယ်ပယ်များကို ထွင်းထုပါ"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "Image to carve"
+msgstr "ထွင်းထုမဲ့ ရုပ်ပုံ"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Stencil C_arve..."
+msgstr "စာတန်းထိုး ထွင်းထုချက်..."
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
+msgid "Background Image"
+msgstr "နောက်ခံ ရုပ်ပုံ"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
+msgid "Carve raised text"
+msgstr "မြှင့်တင်ထားတဲ့ စာသားကို ထွင်းထုပါ"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
+msgid "Carved..."
+msgstr "ထွင်းထုချက်..."
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
+msgid ""
+"Create a logo with text raised above or carved in to the specified "
+"background image"
+msgstr ""
+"အထက်မှာ မြှင့်ထား (သို့) ထွင်းထုထားတဲ့ စာသား ပါတဲ့ အမှတ်တံဆိပ် တခုကို သတ်မှတ်ထားတဲ့ "
+"နောက်ခံရုပ်ပုံထဲမှာ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+msgid "Padding around text"
+msgstr "စာသား ပတ်လည်မှာ အခုအခံ"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:2
+msgid "Chalk color"
+msgstr "မြေဖြူ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:3
+msgid "Create a chalk drawing effect for the selected region (or alpha)"
+msgstr "ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) အတွက် မြေဖြူ ရေးဆွဲတဲ့ သက်ရောက်မှု တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Create a logo resembling chalk scribbled on a blackboard"
+msgstr "ကျောက်သင်ပုန်း တခုအပေါ်မှာ မြေဖြူနဲ့တူတဲ့ ရေးခြစ်ထားတဲ့ အမှတ်တံဆိပ် တခုကို ဖန်တိးပါ"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:8
+msgid "_Chalk..."
+msgstr "ပုံကြမ်းဆွဲပါ..."
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
+msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
+msgstr "ဖဲ့ထုတ်ထားတဲ့ သစ်ထွင်းထုချက် သက်ရောက်မှုတခုကို ရေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ထဲ ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
+msgid "Blur amount"
+msgstr "မှုန်ဝါးတဲ့ ပမာဏ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
+msgid "Chip Awa_y..."
+msgstr "ဖဲ့ထုတ်ထားမှု..."
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip amount"
+msgstr "ဖဲ့ထုတ်တဲ့ ပမာဏ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Create a logo resembling a chipped wood carving"
+msgstr "ဖဲ့ထုတ်ထားတဲ့ သစ်ထွင်းထုချက် တခုနဲ့ ဆင်တူတဲ့ အမှတ်တံဆိပ် တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
+msgid "Drop shadow"
+msgstr "အရိပ်ကို ချထားပါ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
+msgid "Fill BG with pattern"
+msgstr "နောက်ခံကို နမူနာပုံစံနဲ့ ဖြည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Invert"
+msgstr "ပြောင်းပြန်လှန်ပါ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
+msgid "Keep background"
+msgstr "နောက်ခံကို ထိန်းထားပါ"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"သတ်မှတ်ထားတဲ့ (မီးခိုးရောင်) စာတန်းထိုး တခုကို သုံးပြီး ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ "
+"သတ္တူထည် သက်ရောက်မှု တခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+msgid "Chrome balance"
+msgstr "သတ္တူထည် ညီမျှမှု"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+msgid "Chrome factor"
+msgstr "သတ္တူထည် အကြောင်းရင်း"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+msgid "Chrome lightness"
+msgstr "သတ္တူထည် လင်းလက်မှု"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+msgid "Chrome saturation"
+msgstr "သတ္တူထည် ပျော်၀င်မှု"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
+msgid "Chrome white areas"
+msgstr "သတ္တူထည် အဖြူရောင် နယ်ပယ်များ"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+msgid "Environment map"
+msgstr "ပတ်၀န်းကျင် မြေပုံ"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+msgid "Highlight balance"
+msgstr "အသားပေးချက် ညီမျှမှု"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+msgid "Stencil C_hrome..."
+msgstr "စာတန်းထိုး သတ္တူထည်..."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "Add a simple chrome effect to the selected region (or alpha)"
+msgstr "သာမန် သတ္တူထည် သက်ရောက်မှု တခုကို သတ်မှတ်ထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+msgid "C_hrome..."
+msgstr "သတ္တူထည်..."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+msgid "Create a simplistic, but cool, chromed logo"
+msgstr "ရိုးရှင်း​ပေမဲ့၊ အေးမြပြီး သတ္တူထည်နဲ့ပြီးတဲ့ အမှတ်တံဆိပ် တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
+msgid "Offsets (pixels * 2)"
+msgstr "အော့ဖ်ဆက်များ (ပစ်ဆယ်များ * ၂)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:1
+msgid "Circuit seed"
+msgstr "ပတ်လမ်း မျိုးစေ့"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+"သတ်မှတ်ထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ကို ပတ်လမ်း ပျဉ်ချပ်တခုပေါ်ကလို ခြေရာများနဲ့ "
+"ဖြည့်ဆည်းပါ"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:3
+#: ../plug-ins/script-fu/scripts/predator.scm.h:3
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
+msgid "Keep selection"
+msgstr "ရွေးချယ်မှုကို ထိန်းပါ"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
+msgid "No background (only for separate layer)"
+msgstr "နောက်ခံ မပါဘူး (သီးခြား အလွှာအတွက်သာ)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
+msgid "Oilify mask size"
+msgstr "ဆီသုံးစွဲတဲ့ မျက်နှာဖုံး အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/lava.scm.h:6
+#: ../plug-ins/script-fu/scripts/predator.scm.h:6
+msgid "Separate layer"
+msgstr "သီးခြား အလွှာ"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
+msgid "_Circuit..."
+msgstr "ပတ်လမ်း..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "အ၀တ်နဲ့တူတဲ့ ထုံးဖွဲ့ပုံတခုကို ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:2
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
+msgid "Azimuth"
+msgstr "စက်ဝိုင်းပြတ်"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur X"
+msgstr "မှုန်ဝါးမှု X"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:4
+msgid "Blur Y"
+msgstr "မှုန်ဝါးမှု Y"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:5
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Depth"
+msgstr "အနက်"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:6
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Elevation"
+msgstr "မြှင့်တင်ခြင်း"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:7
+msgid "_Clothify..."
+msgstr "ခလိုသီဖိုင်း..."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:1
+msgid "Add realistic looking coffee stains to the image"
+msgstr "ရုပ်ပုံမှာ စွန်းထင်းတဲ့ တကယ့်ပုံစံ ကော်ဖီကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:2
+msgid "Darken only"
+msgstr "ပိုမိုမဲမှောင်မူ သာလျှင်"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "Stains"
+msgstr "အစွန်းအထင်းများ"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:4
+msgid "_Coffee Stain..."
+msgstr "ကော်ဖီ စွန်းထင်းမှု..."
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid ""
+"Add a comic-book effect to the selected region (or alpha) by outlining and "
+"filling with a gradient"
+msgstr ""
+"ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ ရောင်စဉ်တန်း တခုရဲ့ အကြမ်းရေးဆွဲခြင်းနဲ့ "
+"ဖြည့်ဆည်းခြင်းဖြင့် ဟာသဆန်တဲ့ စာအုပ် သက်ရောက်မှုတခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
+msgid "Comic Boo_k..."
+msgstr "ဟာသ ​စာအုပ်..."
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
+msgid "Create a comic-book style logo by outlining and filling with a gradient"
+msgstr ""
+"ရောင်စဉ်တန်း တခုရဲ့ အကြမ်းရေးဆွဲခြင်းနဲ့ ဖြည့်ဆည်းခြင်းဖြင့် ဟာသဆန်တဲ့ စာအုပ် စတိုင် "
+"အမှတ်တံဆိပ် တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
+msgid "Outline color"
+msgstr "အကြမ်း​ဆွဲချက် အရောင်"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
+msgid "Outline size"
+msgstr "အကြမ်းဆွဲချက် အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid ""
+"Add a metallic effect to the selected region (or alpha) with reflections and "
+"perspective shadows"
+msgstr ""
+"သတ္တူဆန်တဲ့ သက်ရောက်မှုတခုကို ရောင်ပြန်ဟပ်ချက်များနဲ့ ရှုထောင့် အရိပ်များနဲ့ ရွေးထားတဲ့ "
+"နယ်ပယ် ((သို့) အာဖာ) ထဲ ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+msgid "Cool _Metal..."
+msgstr "အေးမြတဲ့ သတ္တူ..."
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+msgid "Create a metallic logo with reflections and perspective shadows"
+msgstr "သတ္တူဆန်တဲ့ အမှတ်တံဆိပ် တခုကို ရောင်ပြန်ဟပ်ချက်များနဲ့ ရှုထောင့် အရိပ်များနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
+msgid "Effect size (pixels)"
+msgstr "သက်ရောက်မှု အရွယ် (ပစ်ဆယ်များ)"
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "နောက်ခံ ရုပ်ပုံ"
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+msgid "Create a logo with a crystal/gel effect displacing the image underneath"
+msgstr "ရုပ်ပုံ အောက်မှာ ဖယ်ရှားနေတဲ့ ကြည်လင်/အဆီပျစ် သက်ရောက်မှု တခုပါတဲ့ အမှတ်တံဆိပ်တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+msgid "Crystal..."
+msgstr "သလင်းကျောက်..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
+msgid "Difference Clouds..."
+msgstr "အမျိုးမျိုးသော မြူတိမ်များ..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+msgid "Solid noise applied with Difference layer mode"
+msgstr "အမျိုးမျိုးသော အလွှာ စနစ်နဲ့ သုံးစွဲထားတဲ့ ခိုင်မာတဲ့ လှိုင်း"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
+msgid "Distress the selection"
+msgstr "ရွေးချယ်ချက်ကို ဖိစီးစေပါ"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
+msgid "Granularity (1 is low)"
+msgstr "ကြမ်းတမ်းမှု (နည်းပါးမှုအတွက် ၁)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
+msgid "Smooth horizontally"
+msgstr "ပြင်ညီကို ချောမွေ့စေပါ"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
+msgid "Smooth vertically"
+msgstr "ဒေါင်လိုက်ကို ချောမွေ့စေပါ"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
+msgid "Spread"
+msgstr "ဖြန့်နှံ့ပါ"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
+msgid "Threshold (bigger 1<-->255 smaller)"
+msgstr "အတိုင်းအတာ (ပိုကြီးမှု ၁ <--> ၂၅၅ ပိုသေးငယ်​မှု)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
+msgid "_Distort..."
+msgstr "တွန့်လိမ်မှု..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "ရွေးထားချက် နယ်ပယ် ((သို့) အာဖာ) အစက် အရိပ်တခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+msgid "Allow resizing"
+msgstr "အရွယ်ညှိခြင်းကို ခွင့်ပြုပါ"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:3
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:3
+msgid "Blur radius"
+msgstr "အချင်း၀က်ကို မှုန်ဝါးစေပါ"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+msgid "Color"
+msgstr "အရောင်"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+msgid "Offset X"
+msgstr "အော့ဖ်ဆက် X"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+msgid "Offset Y"
+msgstr "အော့ဖ်ဆက် Y"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Opacity"
+msgstr "အလင်းပိတ်မှု"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
+msgid "_Drop Shadow..."
+msgstr "အစက် အရိပ်..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
+msgid "Columns"
+msgstr "ကော်လံများ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Erase"
+msgstr "ပယ်ဖျက်ပါ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase every other row or column"
+msgstr "အခြား အတန်း (သို့) ကော်လံတိုင်းကို ပယ်ဖျက်ပါ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
+msgid "Erase/fill"
+msgstr "ပယ်ဖျက်/ဖြည့်ဆည်းပါ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
+msgid "Even"
+msgstr "စုံကိန်း"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
+msgid "Even/odd"
+msgstr "စုံကိန်း/မကိန်း"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
+msgid "Fill with BG"
+msgstr "အနီးကပ်မြင်ကွင်းနဲ့ ဖြည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Odd"
+msgstr "မကိန်း"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows"
+msgstr "အတန်း"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
+msgid "Rows/cols"
+msgstr "အတန်းများ/ကော်လံများ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
+msgid "_Erase Every Other Row..."
+msgstr "အခြား အတန်းတိုင်းကို ပယ်ဖျက်ပါ..."
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:1
+msgid "Create an image filled with a Land Pattern"
+msgstr "မြေပြင် နမူနာပုံစံ တခုနဲ့ ပြည့်တဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:2
+#: ../plug-ins/script-fu/scripts/land.scm.h:2
+msgid "Detail level"
+msgstr "အဆင့် အသေးစိတ်"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:3
+#: ../plug-ins/script-fu/scripts/land.scm.h:4
+msgid "Image height"
+msgstr "ရုပ်ပုံ အမြင့်"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:4
+#: ../plug-ins/script-fu/scripts/land.scm.h:5
+msgid "Image width"
+msgstr "ရုပ်ပုံ အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:5
+#: ../plug-ins/script-fu/scripts/land.scm.h:7
+msgid "Random seed"
+msgstr "ကျပန်း မျိုးစေ့"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:6
+#: ../plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale X"
+msgstr "စကေး X"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:7
+#: ../plug-ins/script-fu/scripts/land.scm.h:9
+msgid "Scale Y"
+msgstr "စကေး Y"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:8
+msgid "_Flatland..."
+msgstr "မြေပြန့်..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:1
+msgid "Active colors"
+msgstr "သက်ကြွတဲ့ အရောင်များ"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:2
+msgid "Black on white"
+msgstr "အဖြူရောင်ပေါ်က အနက်ရောင်"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:3
+msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+"ဖောင့်အမည် စစ်ထုတ်ကိရိယာ တခုနဲ့ ကိုက်ညီတဲ့ ဖောင့်များ အစမ်းမြင်ကွင်းနဲ့ ပြည့်တဲ့ ရုပ်ပုံတခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Font _size (pixels)"
+msgstr "ဖောင့် အရွယ် (ပစ်ဆယ်များ)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
+msgid "Render _Font Map..."
+msgstr "ဖောင့် မြေပုံကို တင်ဆက်ပါ..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
+msgid "Use font _name as text"
+msgstr "ဖောင့်အမည်ကို စာသားလို သုံးစွဲပါ"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
+msgid "_Border (pixels)"
+msgstr "အနားသတ် (ပစ်ဆယ်များ)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
+msgid "_Color scheme"
+msgstr "အရောင် စီမံချက်"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:9
+msgid "_Filter (regexp)"
+msgstr "စစ်ထုတ်ကိရိယာ (regexp)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:10
+msgid "_Labels"
+msgstr "အမှတ်တံဆိပ်များ"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:11
+msgid "_Text"
+msgstr "စာသား"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid ""
+"Add a frost effect to the selected region (or alpha) with an added drop "
+"shadow"
+msgstr ""
+"ဆီးနှင်း သက်ရောက်မှု တခုကို ပေါင်းထည့်တဲ့ အစက် အရိပ်တခုနဲ့ ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ)ထဲ "
+"ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+msgid "Create frozen logo with an added drop shadow"
+msgstr "အေးခဲတဲ့ အမှတ်တံဆိပ်ကို ပေါင်းထည့်တဲ့ အစက် အရိပ်နဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
+msgid "_Frosty..."
+msgstr "ဆီးနှင်းထူ..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "ရုပ်ပုံတခုထဲမှာ  လွှသွားပုံစံ၊ မှုန်ဝါးတဲ့ အနားသတ် တခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+msgid "Add shadow"
+msgstr "အရိပ်ကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+msgid "Blur border"
+msgstr "မူန်ဝါးတဲ့ အနားသတ်"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "အနားသတ် အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr "ကြမ်းတမ်းမှု (နည်းပါးမှုအတွက် ၁)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#, no-c-format
+msgid "Shadow weight (%)"
+msgstr "အရိပ် အထူ (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
+msgid "_Fuzzy Border..."
+msgstr "မှုန်ဝါးတဲ့ အနားသတ်..."
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+msgid "Autocrop"
+msgstr "အလိုအလျှောက်လှီးဖြတ်မှု"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "Create an image of a large header using the gimp.org webpage theme"
+msgstr ""
+"gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပိုကြီးတဲ့ ​ခေါင်းစီးတခုရဲ့ ရုပ်ပုံတခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "Create an image of a small header using the gimp.org webpage theme"
+msgstr ""
+"gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပိုငယ်တဲ့ ​ခေါင်းစီးတခုရဲ့ ရုပ်ပုံတခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+msgid "Dark color"
+msgstr "မဲနက်တဲ့ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight color"
+msgstr "အသားပေးတဲ့ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+msgid "Index image"
+msgstr "အညွှန်း ရုပ်ပုံ"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+msgid "Number of colors"
+msgstr "အရောင်များရဲ့ အရေအတွက်"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+msgid "Remove background"
+msgstr "နောက်ခံကို ဖယ်ရှားပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+msgid "Select-by-color threshold"
+msgstr "အရောင်နဲ့ ရွေးတဲ့ အတိုင်းအတာ"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+msgid "Shadow color"
+msgstr "အရိပ် အရောင်"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
+msgid "_Big Header..."
+msgstr "ကြီးမားတဲ့ ခေါင်းစီး..."
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
+msgid "_Small Header..."
+msgstr "ငယ်တဲ့ ခေါင်းစီး..."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+msgid ""
+"Create an image of a Tube Button Label Header using the gimp.org webpage "
+"theme"
+msgstr ""
+"gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပြွန် ခလုတ် အမှတ်တံဆိပ် "
+"ခေါင်းစဉ်တခုရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
+msgstr ""
+"gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ပြွန် ခလုတ် အမှတ်တံဆိပ်ရဲ့ ရုပ်ပုံတခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+msgid ""
+"Create an image of a second level Tube Button Label using the gimp.org "
+"webpage theme"
+msgstr ""
+"gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး ဒုတိယအဆင့် ပြွန် ခလုတ် အမှတ်တံဆိပ် "
+"တခုရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+msgid ""
+"Create an image of a third level Tube Button Label using the gimp.org "
+"webpage theme"
+msgstr ""
+"gimp.org ကွန်ရက် စာမျက်နှာ အခင်းအကျင်းကို သုံးပြီး တတိယအဆင့် ပြွန် ခလုတ် အမှတ်တံဆိပ် "
+"တခုရဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+msgid "T_ube Sub-Button Label..."
+msgstr "ပြွန် ခလုတ်ငယ် အမှတ်တံဆိပ်"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
+msgid "Tub_e Sub-Sub-Button Label..."
+msgstr "ပြွန် ခလုတ်ငယ်ဆင့်ပွား အမှတ်တံဆိပ်..."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
+msgid "_General Tube Labels..."
+msgstr "အထွေထွေ ပြွန် အမှတ်တံဆိပ်..."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
+msgid "_Tube Button Label..."
+msgstr "ပြွန် ခလုတ် အမှတ်တံဆိပ်..."
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "GIMP ကွန်ရက်စာမျက်နှာကို မှတ်သားပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "သုံးစွဲသူ လက်စွဲကို မှတ်သားပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "ရွေးချယ်ချက်များကို ဖန်တီးပြီး သုံးစွဲပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "ဖိုင်များကို ဖန်တီး၊ ဖွင့်နဲ့ သိမ်းဆည်းပါ"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "ရိုးရိုး ၀တ္ထူများ ရေးဆွဲခြင်း"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "အညွှန်းစာမျက်နှာများကို သုံးစွဲနည်း"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "ယန္တရားငယ် မှတ်ပုံတင်ဌာန"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "လမ်းကြောင်းများကို သုံးစွဲခြင်း"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "အခြေခံ အယူအဆ"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "တည်ဆောက်သူများ ကွန်ရက်စာမျက်နှာ"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "ပင်မ ကွန်ရက် စာမျက်နှာ"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "ကွန်ရက်အတွက် သင့်ရဲ့ ရုပ်ပုံများကို ပြင်ဆင်ခြင်း"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "သုံးစွဲသူ လက်စွဲ ကွန်ရက် စာမျက်နှာ"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "ဒစ်ဂျစ်တယ် ကင်မရာ ဓါတ်ပုံများနဲ့ လုပ်ဆောင်ခြင်း"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid ""
+"Add gradients, patterns, shadows, and bump maps to the selected region (or "
+"alpha)"
+msgstr ""
+"ရောင်စဉ်တန်းများ၊ နမူနာပုံစံများ၊ အရိပ်များနဲ့၊ မညီညာတဲ့ မြေပုံများကို ရွေးထားတဲ့ နယ်ပယ် "
+"((သို့) အာဖာ) မှာ ထည့်သွင်းပါ"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
+msgid "Blend gradient (outline)"
+msgstr "ရောင်စဉ်တန်းကို ရောစပ်ပါ (အကြမ်းဆွဲချက်)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
+msgid "Blend gradient (text)"
+msgstr "ရောင်စဉ်တန်းကို ရောစပ်ပါ (စာသား)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Create a logo with gradients, patterns, shadows, and bump maps"
+msgstr "အမှတ်တံဆိပ်ကို ရောင်စဉ်တန်းများ၊ နမူနာပုံစံများ၊ အရိပ်များနဲ့၊ မညီညာတဲ့ မြေပုံများနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
+msgid "Glo_ssy..."
+msgstr "ချောမွေ့တောက်ပမှု..."
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
+msgid "Outline gradient reverse"
+msgstr "အကြမ်းဆွဲချက် ရောင်စဉ်တန်း ပြောင်းပြန်"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
+msgid "Pattern (outline)"
+msgstr "နမူနာပုံစံ (အကြမ်းဆွဲချက်)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
+msgid "Pattern (overlay)"
+msgstr "နမူနာပုံစံ (အထပ်လွှာ)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
+msgid "Pattern (text)"
+msgstr "နမူနာပုံစံ (စာသား)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+msgid "Shadow"
+msgstr "အရိပ်"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
+msgid "Text gradient reverse"
+msgstr "စာသား ရောင်စဉ်တန်း ပြောင်းပြန်"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
+msgid "Use pattern for outline instead of gradient"
+msgstr "အကြမ်းဆွဲချက်အတွက် ရောင်စဉ်တန်း အစား နမူနာပုံစံကကို သုံးစွဲပါ"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
+msgid "Use pattern for text instead of gradient"
+msgstr "စာသားအတွက် ရောင်စဉ်တန်း အစား နမူနာပုံစံကကို သုံးစွဲပါ"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:22
+msgid "Use pattern overlay"
+msgstr "နမူနာပုံစံ အထပ်လွှာကို သုံးစွဲပါ"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "Add a glowing hot metal effect to the selected region (or alpha)"
+msgstr "ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ တောက်ပတဲ့ သတ္တူပူ သက်ရောက်မှု တခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+msgid "Create a logo that looks like glowing hot metal"
+msgstr "တောက်ပတဲ့ သတ္တူပူနဲ့ တူတဲ့ အမှတ်တံဆိပ်တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+msgid "Glo_wing Hot..."
+msgstr "တောက်ပတဲ့ အပူ..."
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
+msgstr ""
+"ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ တောက်ပတဲ့ အမြင်နဲ့ အနားစောင်း သက်ရောက်မှု တခု "
+"ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+msgid "Bevel height (sharpness)"
+msgstr "အနားစောင်း အမြင့် (စူးရှထင်ရှားမှု)"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
+msgid "Border size (pixels)"
+msgstr "အနားသတ် အရွယ် (ပစ်ဆယ်များ)"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+msgid "Create a logo with a shiny look and beveled edges"
+msgstr "တောက်ပတဲ့ အမြင်တခုနဲ့ အနားစောင်းတဲ့ အစွန်းများ ပါတဲ့ အမှတ်တံဆိပ် တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+msgid "Gradient Beve_l..."
+msgstr "ရောင်စဉ်တန်း အနားစောင်း..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "Create an image filled with an example of the current gradient"
+msgstr "လက်ရှိ ရောင်စဉ်တန်းရဲ့ ဥပမာနဲ့ ပြည့်တဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+msgid "Custom _Gradient..."
+msgstr "စိတ်ကြိုက် ရောင်စဉ်တန်း..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+"လက်ရှိ စုတ်တံကို သုံးပြီး X နဲ့ Y တည်နေရာများရဲ့ စာရင်းများ သတ်မှတ်ထား သလို ဂရစ်ကွက် တခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
+msgid "X divisions"
+msgstr "X အပိုင်းအခြားများ"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
+msgid "Y divisions"
+msgstr "Y အပိုင်းအခြားများ"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
+msgid "_Grid..."
+msgstr "ဂရစ်ကွက်..."
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
+msgid "New Guides from _Selection"
+msgstr "ရွေးချယ်ချက်မှ လမ်းညွန်အသစ်"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr "ရုပ်ပုံအရွယ်ရဲ့ ​ရာခိုင်နှုန်း တခုလို သတ်မှတ်ထားတဲ့ တည်နေရာမှာ လမ်းညွန် တခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
+msgid "Direction"
+msgstr "ဦးတည်ချက်"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
+msgid "Horizontal"
+msgstr "ပြင်ညီ"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
+msgid "New Guide (by _Percent)..."
+msgstr "လမ်းညွှန်သစ် (ရာခိုင်နှုန်းဖြင့်)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
+#, no-c-format
+msgid "Position (in %)"
+msgstr "တည်နေရာ (% ဖြင့်)"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
+msgid "Vertical"
+msgstr "ဒေါင်လိုက်"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "သတ်မှတ်ထားတဲ့ အနေအထားနဲ့ တည်နေရာမှာ လမ်းညွှန် တခုကို ပေါင်းထည့်ပါ (ပစ်ဆယ်များဖြင့်)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "New _Guide..."
+msgstr "လမ်းညွှန်သစ်..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
+msgid "Position"
+msgstr "တည်နေရာ"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+msgid "Remove all horizontal and vertical guides"
+msgstr "ပြင်ညီနဲ့ ဒေါင်လိုက် လမ်းညွှန်းများ အားလုံးကို ဖယ်ရှားပါ"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
+msgid "_Remove all Guides"
+msgstr "လမ်းညွှန်များ အားလုံးကို ဖယ်ရှားပါ"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "Create a logo in a two-color, scribbled text style"
+msgstr "အရောင်နှစ်မျိုး၊ ရေးခြစ်ထားတဲ့ စာသား စတိုင် အမှတ်တံဆိပ် တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+msgid "Frame color"
+msgstr "ဘောင်  အရောင်"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+msgid "Frame size"
+msgstr "ဘောင် အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+msgid "Imigre-_26..."
+msgstr "Imigre-၂၆..."
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:1
+msgid "Create an image filled with a topographic map pattern"
+msgstr "မြေမျက်နှာသွင်ပြင် မြေပုံ နမူနာပုံစံတခုနဲ့ ဖြည့်ထားတဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:6
+msgid "Land height"
+msgstr "မြေပြင် အမြင့်"
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:10
+msgid "Sea depth"
+msgstr "ပင်လယ် အနက်"
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:11
+msgid "_Land..."
+msgstr "မြေပြင်..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "Fill the current selection with lava"
+msgstr "လက်ရှိ ရွေးချယ်မှုကို လာဗာနဲ့ ဖြည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:4
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Roughness"
+msgstr "ကြမ်းတမ်းမှု"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:5
+msgid "Seed"
+msgstr "မျိုးစေ့"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:8
+msgid "Use current gradient"
+msgstr "လက်ရှိ ရောင်စဉ်တန်းကို သုံးစွဲပါ"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:9
+msgid "_Lava..."
+msgstr "လာဗာ..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgstr ""
+"အနီးကပ်မြင်ကွင်း အရောင်ကို သုံးပြီး ၄င်းရဲ့ အလယ်မှ အပြင်ဖက် အလင်းတန်းများ ပေါ်ထွက်တဲ့ "
+"အလွှာတခုကို ဖြည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
+msgid "Line _Nova..."
+msgstr "လိုင်င်း နို​ဗာ..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
+msgid "Number of lines"
+msgstr "လိုင်းများ အရေအတွက်"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
+msgid "Offset radius"
+msgstr "အော့ဖ်ဆက် အချင်း၀က်"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
+msgid "Randomness"
+msgstr "ကျပန်းဖြစ်မှု"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
+msgid "Sharpness (degrees)"
+msgstr "စူးရှထင်ရှားမှု (ဒီဂရီများ)"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "Create a rectangular brush"
+msgstr "စတုဂံပုံ စုတ်တံ တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "Create a rectangular brush with feathered edges"
+msgstr "ချောမွေ့တဲ့ အနားများပါတဲ့ စတုဂံပုံ စုတ်တံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "Create an elliptical brush"
+msgstr "ဘဲဥပုံ စုတ်တံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "Create an elliptical brush with feathered edges"
+msgstr "ချောမွေ့တဲ့ အနားများပါတဲ့ ဘဲဥပုံ စုတ်တံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
+msgid "Elli_ptical, Feathered..."
+msgstr "ဘဲဥပုံ၊ ချောမွေ့မှု..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "Feathering"
+msgstr "ချောမွေ့ခြင်း"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
+msgid "Name"
+msgstr "အမည်"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
+msgid "Re_ctangular, Feathered..."
+msgstr "စတုဂံပုံ၊ ချောမွေ့မှု..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+msgid "Spacing"
+msgstr "ကြားအကွာ​အဝေး"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
+msgid "_Elliptical..."
+msgstr "ဘဲဥပုံ"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
+msgid "_Rectangular..."
+msgstr "စတုဂံပုံ..."
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "Convert the selected region (or alpha) into a neon-sign like object"
+msgstr "ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ကို ၀တ္ထူလို နီယွန်-လက္ခဏာတခု အဖြစ် အသွင်ပြောင်းပါ"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
+msgid "Create a logo in the style of a neon sign"
+msgstr "နီယွန် လက္ခဏာ တခုရဲ့ စတိုင်နဲ့ အမှတ်တံဆိပ် တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
+msgid "Create shadow"
+msgstr "အရိပ်ကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
+msgid "N_eon..."
+msgstr "နီယွန်..."
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:3
+msgid "Cell size (pixels)"
+msgstr "အခန်းငယ် အရွယ် (ပစ်ဆယ်များ)"
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Create a logo in the style of newspaper printing"
+msgstr "သတင်းစား ပုံနှိုပ်ခြင်း ပုံစံနဲ့ အမှတ်တံဆိပ်တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
+#, no-c-format
+msgid "Density (%)"
+msgstr "သိပ်သည်းမှု (%)"
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:9
+msgid "Newsprint Te_xt..."
+msgstr "သတင်းစာစက္ကူ စာသား..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
+msgid "Defocus"
+msgstr "ဗဟိုလွှဲပါ"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
+msgid "Make an image look like an old photo"
+msgstr "ရုပ်ပုံတခုကို ဓါတ်ပုံဟောင်းတခု နဲ့ တူအောင် လုပ်ပါ"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
+msgid "Mottle"
+msgstr "ပြောက်ကျား"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
+msgid "Sepia"
+msgstr "နီညိုရောင်"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
+msgid "_Old Photo..."
+msgstr "ဓါတ်ပုံဟောင်း..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+msgid "Brush name"
+msgstr "စုတ်တံ အမည်"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "File name"
+msgstr "ဖိုင် အမည်"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
+msgid "New _Brush..."
+msgstr "စုတ်တံအသစ်..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
+msgid "Paste the clipboard contents into a new brush"
+msgstr "အောက်ခံကတ်ပြား အကြောင်းအရာများကို စုတ်တံအသစ် တခုထဲမှာ ပွားယူပါ"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "အောက်ခံကတ်ပြားထဲမှာ ပွားယူဖို့ ရုပ်ပုံ အချက်အလက်ကြမ်း မရှိဘူး။"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
+msgid "New _Pattern..."
+msgstr "နမူနာပုံစံ အသစ်..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "အောက်ခံကတ်ပြား အကြောင်းအရာများကို နမူနာပုံစံ အသစ်တခုထဲ ပွားယူပါ"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
+msgid "Pattern name"
+msgstr "နမူနာပုံစံ အမည်"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "ရှုထောင့် အရိပ် တခုကို ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ဆီ ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "ထောင့်"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Interpolation"
+msgstr "ဆက်စပ်ဖန်တီးခြင်း"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Relative distance of horizon"
+msgstr "မိုးကုပ်စက်ဝိုင်းနဲ့ သက်ဆိုင်တဲ့ အကွာအ​ဝေး"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "Relative length of shadow"
+msgstr "အရိပ်နဲ့ သက်ဆိုင်တဲ့ အရှည်"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
+msgid "_Perspective..."
+msgstr "ရုထောင့်..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "'အလျင်ကျသူ' သက်ရောက်မှု တခုကို ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:2
+msgid "Edge amount"
+msgstr "အစွန်း ပမာဏ"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixel amount"
+msgstr "ပစ်ဆယ် ပမာဏ"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr "ပစ်ဆယ်သတ်မှတ်ချက်"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:7
+msgid "_Predator..."
+msgstr "အလျင်ကျသူ..."
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Create images, each containing an oval button graphic"
+msgstr "တခုစီမှာ ဘဲဥပုံစံ ခလုတ် ရုပ်ကားပါတဲ့ ရုပ်ပုံများကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
+msgid "Lower color"
+msgstr "အောင်ပိုင်း အရောင်"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Lower color (active)"
+msgstr "အောက်ပိုင်း အရောင် (သက်ကြွမှု)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
+msgid "Not pressed"
+msgstr "မဖိနှိုပ်ထားဘူး"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Not pressed (active)"
+msgstr "မဖိနှိုပ်ထားဘူး (သက်ကြွမှု)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr "အခုအခံ X"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr "အခုအခံ Y"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
+msgid "Round ratio"
+msgstr "အချိုး ပတ်လည်"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
+msgid "Text color (active)"
+msgstr "စာသားအရောင် (သက်ကြွမှု)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
+msgid "Upper color"
+msgstr "အထက်ပိုင်း အရောင်"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "Upper color (active)"
+msgstr "အထက်ပိုင်း အရောင် (သက်ကြွမှု)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
+msgid "_Round Button..."
+msgstr "ခလုတ် ပတ်လည်..."
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
+msgid "Behavior"
+msgstr "လုပ်ဆောင်ပုံ"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Create an image filled with an Earth-like map pattern"
+msgstr "ကမ္ဘာနဲ့တူတဲ့ မြေပုံ နမူနာပုံစံ တခုနဲ့ ဖြည့်ထားတဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr "အလယ်မှ အသေးစိတ်"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
+msgid "Render _Map..."
+msgstr "မြေပုံကို တင်ဆက်ပါ..."
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
+msgid "Tile"
+msgstr "ခင်းကျင်းပါ"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
+msgid "Reverse Layer Order"
+msgstr "အလွှာ အစီအစဉ်ကို ပြောင်းပြန်လှန်ပါ"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
+msgid "Reverse the order of layers in the image"
+msgstr "ရုပ်ပုံထဲမှာ အလွှာများရဲ့ အစီအစဉ်ကို ပြောင်းပြန်လှန်ပါ"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+msgid "Black"
+msgstr "အနက်ရောင်"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
+msgstr ""
+"လက်ရှိ ရုပ်ပုံမှာ လှိုင်းတွန့်တဲ့ သက်ရောက်မှု တခုကို ပေါင်းထည့်ပြီး အလွှာများတဲ့ ရုပ်ပုံတခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+msgid "Edge behavior"
+msgstr "အစွန်း လုပ်ဆောင်ပုံ"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Number of frames"
+msgstr "ဘောင်များ အရေအတွက်"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
+msgid "Rippling strength"
+msgstr "လှိုင်းတွန့်နေတဲ့ အား"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+msgid "Smear"
+msgstr "လိမ်းကျံပါ"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Wrap"
+msgstr "ထုပ်ပိုးပါ"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
+msgid "_Rippling..."
+msgstr "လှိုင်းတွန့်နေတယ်..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
+msgid "Add background"
+msgstr "နောက်ခံကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:2
+msgid "Add drop-shadow"
+msgstr "အစက်-အရိပ်ကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
+msgid "Edge radius"
+msgstr "အစွန်း အချင်း၀က်"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+"ရုပ်ပုံတခုရဲ့ ထောင့်များကို ဝိုင်းရံပြီး ချင့်ချင့်ချိန်ချိန်နဲ့ အစက်-အရိပ်နဲ့ နောက်ခံတခုကို "
+"ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
+msgid "_Round Corners..."
+msgstr "ထောင့်များကို ဝိုင်းရံပါ..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "ရုပ်ပုံတပုံရဲ့ အရောင်ဇယားကို သတ်မှတ်ထားတဲ့ အရောင်စပ်ဆေးခွက် တခုထဲမှ ​အရောင်များထဲ ပြောင်းလဲပါ"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "အရောင်စပ်ဆေးခွက်"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "အရောင်ဇယားကို ချမှတ်ပါ..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Convert a selection to a brush"
+msgstr "ရွေးချယ်မှုတခုကို စုတ်တံတခုအဖြစ် အသွင်ပြောင်းပါ"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+msgid "To _Brush..."
+msgstr "စုတ်တံသို့..."
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
+msgid "Convert a selection to an image"
+msgstr "ရွေးချယ်မှုတခုကို ရုပ်ပုံတခု အဖြစ် အသွင်ပြောင်းပါ"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
+msgid "To _Image"
+msgstr "ရုပ်ပုံသို့"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "Convert a selection to a pattern"
+msgstr "ရွေးချယ်မှုတခုကို နမူနာပုံစံတခုအဖြစ် အသွင်ပြောင်းပါ"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+msgid "To _Pattern..."
+msgstr "နမူနာပုံစံ သို့..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "Concave"
+msgstr "မှန်ဘီလူးခွက်"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
+#, no-c-format
+msgid "Radius (%)"
+msgstr "အချင်း၀က် (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
+msgid "Round the corners of the current selection"
+msgstr "လက်ရှိ ရွေးချယ်မှုရဲ့ ထောင့်များကို ဝိုင်းရံပါ"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
+msgid "Rounded R_ectangle..."
+msgstr "ဝိုင်းတဲ့ စတုဂံပုံ..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+"ဘောင်နဲ့တူတဲ့ စလိုက်-ဇတ်ကား တခု၊ ခွေးသွားစိပ် အပေါက်များနဲ့၊ အမှတ်တံဆိပ်များကို ရုပ်ပုံတခုထဲ "
+"ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:3
+msgid "Font color"
+msgstr "ဖောင့် အရောင်"
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:4
+msgid "Number"
+msgstr "အရေအတွက်"
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:7
+msgid "_Slide..."
+msgstr "လျှိုသွင်းပါ..."
+
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Create a State Of The Art chromed logo"
+msgstr "အနုပညာ သတ္တူထည်နဲ့ပြီးတဲ့ အမှတ်တံဆိပ်နဲ့ ​အနေအထားတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+msgid "SOTA Chrome..."
+msgstr "ဆိုသာ သတ္တူထည်..."
+
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
+msgid "Create a logo with a speedy text effect"
+msgstr "အမှတ်တံဆိပ် တခုကို မြန်နှုန်းကောင်းတဲ့ စာသား သက်ရောက်မှု တခုနဲ့ ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
+msgid "Speed Text..."
+msgstr "မြန်နှုန်းကောင်းတဲ့ စာသား..."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "လက်ရှိ ရုပ်ပုံကို လည်နေတဲ့ စက်၀န်းတခုထဲ ပုံဖေါ်ပြီး သက်ကြွလှုပ်ရှားမှု တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
+msgid "Frames"
+msgstr "ဘောင်များ"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "n အရောင်များကို ရည်ညွှန်းပါ (၀ = နီစိမ်းပြာ ကျန်တယ်)"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+msgid "Turn from left to right"
+msgstr "ဘယ်ဖက်မှ ညာဖက်ကို လှည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
+msgid "_Spinning Globe..."
+msgstr "လည်နေတဲ့ ကမ္ဘာလုံး..."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr "လက်ရှိအလွာမှာ စပိုင်ရိုဂရပ်များ၊ အီပီထရိုချုပ်များနဲ့၊ လီဆာဂျော် မျဉ်းခုံးများကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+msgid "Airbrush"
+msgstr "လေစုတ်တံ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+msgid "Brush"
+msgstr "စုတ်တံ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+msgid "Circle"
+msgstr "စက်ဝိုင်း"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+msgid "Color method"
+msgstr "အရောင် နည်းလမ်း"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid "Epitrochoid"
+msgstr "အီပီထရိုချုပ်"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+msgid "Frame"
+msgstr "ဘောင်"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+msgid "Gradient: Loop Sawtooth"
+msgstr "ရောင်စဉ်တန်း - လွှာသွားပုံစံ လည်ပတ်မှု"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+msgid "Gradient: Loop Triangle"
+msgstr "ရောင်စဉ်တန်း - တြိဂံပုံပုံစံ လည်ပတ်မှု"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+msgid "Hexagon"
+msgstr "ဆဋ္ဌဂံ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+msgid "Hole ratio"
+msgstr "အပေါက် အချိုး"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+msgid "Inner teeth"
+msgstr "အတွင်း သွားများ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+msgid "Lissajous"
+msgstr "လီဆာဂျော်"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+msgid "Margin (pixels)"
+msgstr "အနားသတ် (ပစ်ဆယ်များ)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Outer teeth"
+msgstr "အပြင်ဖက် သွား"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+msgid "Pencil"
+msgstr "ခဲတံ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Pentagon"
+msgstr "ပဉ္စဂံ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+msgid "Polygon: 10 sides"
+msgstr "ဗဟုဂံ - အနား ၁၀ ခု"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+msgid "Polygon: 7 sides"
+msgstr "ဗဟုဂံ - အနား ၇ ခု"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+msgid "Polygon: 8 sides"
+msgstr "ဗဟုဂံ - အနား ၈ ခု"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+msgid "Polygon: 9 sides"
+msgstr "ဗဟုဂံ - အနား ၉ ခု"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Rendering Spyro"
+msgstr "စပိုင်ရိုကို တင်ဆက်နေတယ်"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Shape"
+msgstr "ပုံသဏ္ဍာန်"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+msgid "Solid Color"
+msgstr "ခိုင်မာတဲ့ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+msgid "Spyrograph"
+msgstr "စပိုင်ရိုဂရပ်"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+msgid "Square"
+msgstr "စတုရန်းပုံ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start angle"
+msgstr "ထောင့်ကို စတင်ပါ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+msgid "Tool"
+msgstr "ကိရိယာ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+msgid "Triangle"
+msgstr "တြိဂံ"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+msgid "Type"
+msgstr "အမျိုးအစား"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
+msgid "_Spyrogimp..."
+msgstr "စပိုင်ရိုgimp..."
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
+msgstr "ကျောက်နဲ့တူတဲ့ ထုံးဖွဲ့ပုံတခု၊ နိုဗာ တောက်ပမှု တခုနဲ့ အရိပ်ကို ​ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+msgid "Sta_rscape..."
+msgstr "စတားစဂဲတ်..."
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Create an image filled with a swirled tile effect"
+msgstr "ဝေ့လည်တဲ့ အခင်းအကျင်း သက်ရောက်မှု တခုနဲ့ ပြည့်တဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
+msgid "Swirl-_Tile..."
+msgstr "ဝေ့လည်တဲ့ ခင်းကျင်းမှု..."
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
+msgid "Whirl amount"
+msgstr "ဝေ့လည်တဲ့ ပမာဏ"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "Create an image filled with a swirly pattern"
+msgstr "ဝေ့လည်တဲ့ နမူနာပုံစံ တခုနဲ့ ဖြည့်ထားတဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+msgid "Number of times to whirl"
+msgstr "ဝေ့လည်မဲ့ အကြိမ်ပေါင်း ပမဏ"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+msgid "Quarter size"
+msgstr "ကွာတာ အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+msgid "Whirl angle"
+msgstr "ဝေ့လည်တဲ့ ထောင့်"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
+msgid "_Swirly..."
+msgstr "ဝေ့လည်၍..."
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "Add a Trace of Particles effect to the selected region (or alpha)"
+msgstr ""
+"ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ အမှုန်များ သက်ရောက်မှုရဲ့ ခြေရာခံချက် တခုကို "
+"ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+msgid "Base color"
+msgstr "အရင်းခံ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+msgid "Create a logo using a Trace Of Particles effect"
+msgstr "အမှုန်းများ သက်ရောက်မှုရဲ့ ခြေရာတခုကို သုံးပြီး အမှတ်တံဆိပ်တခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+msgid "Edge only"
+msgstr "အစွန်းသာလျှင်"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+msgid "Edge width"
+msgstr "အစွန်း အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "Hit rate"
+msgstr "ထိမှန် နှုန်း"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
+msgid "_Particle Trace..."
+msgstr "အမှုန် ခြေရာ..."
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
+msgid "Antialias"
+msgstr "ချောမွေ့စေမှု"
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgstr ""
+"စက်ဝိုင်းတခုရဲ့ အ၀န်းတလျှောက် သတ်မှတ်ထားတဲ့ စာသားကို တင်ဆက်ခြင်းဖြင့် အမှတ်တံဆိပ် တခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
+msgid "Fill angle"
+msgstr "ထောင့်ကို ဖြည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
+msgid "Text C_ircle..."
+msgstr "စာသား စက်ဝိုင်း..."
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr ""
+"အသားပေးချက်များ၊ အရိပ်များပါတဲ့ ထုံးဖွဲ့ထားတဲ့ အမှတ်တံဆိပ်တခုနဲ့၊ မှန်စီရွှေချမှု နောက်ခံတခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
+msgid "Ending blend"
+msgstr "ရောစပ်မှု အဆုံးသတ်မှု"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
+msgid ""
+"Fill the selected region (or alpha) with a texture and add highlights, "
+"shadows, and a mosaic background"
+msgstr ""
+"ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) ကို ထုံးဖွဲ့ချက်တခုနဲ့ ​ဖြည့်ပြီး အသားပေးချက်များ၊ အရိပ်များနဲ့ "
+"မှန်စီရွှေချတဲ့ နောက်ခံ တခုကို ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Hexagons"
+msgstr "ဆဋ္ဌဂံများ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
+msgid "Mosaic tile type"
+msgstr "မှန်စီရွှေချ ခင်းကျင်းမှု ပုံစံ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Octagons"
+msgstr "အဌဂံများ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
+msgid "Squares"
+msgstr "စတုရန်းပုံများ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
+msgid "Starting blend"
+msgstr "ရောစပ်မှု စတင်ခြင်း"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:15
+msgid "Text pattern"
+msgstr "စာသား နမူနာပုံစံ"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
+msgid "_Textured..."
+msgstr "ထုံးဖွဲ့ချက်..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
+msgid "Blur horizontally"
+msgstr "ပြင်ညီကို မှုန်ဝါးစေပါ"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "ရလဒ် ခင်းကျင်းမှု စင်းကြောင်းမဲ့ဖို့ ရုပ်ပုံတခုရဲ့ အစွန်းများကို မှုန်ဝါးစေပါ"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
+msgid "Blur type"
+msgstr "အမျိုးအစားကို မှုန်ဝါးစေပါ"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "Blur vertically"
+msgstr "ဒေါင်လိုက်မှုန်ဝါးစေပါ"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "IIR"
+msgstr "IIR"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
+msgid "_Tileable Blur..."
+msgstr "ခင်းကျင်းနိုင်တဲ့ မှုန်ဝါးမှု..."
+
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "Create a decorative web title header"
+msgstr "ပြင်ဆင်ထားတဲ့ ကွန်ရက် ခေါင်းစဉ် ခေါင်းစီးတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:6
+msgid "Web Title Header..."
+msgstr "ကွန်ရက် ခေါင်းစဉ် ခေါင်းစီး..."
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Create an image filled with a Truchet pattern"
+msgstr "ထရူချက် နမူနာပုံစံ တခုနဲ့ ဖြည့်ထားတဲ့ ရုပ်ပုံတခုကို ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:4
+msgid "Foreground color"
+msgstr "နောက်ခံ အရောင်"
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "T_ruchet..."
+msgstr "ထရူချက်..."
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "Mask opacity"
+msgstr "မျက်နှာဖုံး အလင်းပိတ်မှု"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask size"
+msgstr "မျက်နှာဖုံး အရွယ်"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
+msgid "Amplitude"
+msgstr "ကျယ်ပြန့်မှု"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"လက်ရှိ ရုပ်ပုံထဲ ပစ်ထည့်လိုက်တဲ့ ကျောက်ခံတခုလို သက်ရောက်မှုတခု ပါရှိတဲ့ အလွှာအများပါ ရုပ်ပုံတခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
+msgid "Invert direction"
+msgstr "ဦးတည်ချက်ကို ပြောင်းပြန်လှန်ပါ"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
+msgid "Wavelength"
+msgstr "လှိုင်းအရှည်"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
+msgid "_Waves..."
+msgstr "လှိုင်းများ..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:1
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"အထပ်လွှာ (သို့) မညီညာတဲ့ မြေပုံတခုလို သုံးစွဲနိုင်တဲ့ ရက်လုပ်တဲ့ သက်ရောက်မှုတခုနဲ့ပြည့်တဲ့ အလွှာ အသစ်တခုကို "
+"ဖန်တီးပါ"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:2
+msgid "Ribbon spacing"
+msgstr "ဖဲကြိုး ကြားအကွာအဝေး"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:3
+msgid "Ribbon width"
+msgstr "ဖဲကြိုး အကျယ်"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:4
+msgid "Shadow darkness"
+msgstr "အရိပ် အမှောင်ထု"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:5
+msgid "Shadow depth"
+msgstr "အရိပ် အနက်"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:6
+msgid "Thread density"
+msgstr "အပိုင်းအစ သိပ်သည်းမှု"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:7
+msgid "Thread intensity"
+msgstr "အပိုင်းအစ လွန်ကဲမှု"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:8
+msgid "Thread length"
+msgstr "အပိုင်းအစ အရှည်"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:9
+msgid "_Weave..."
+msgstr "ရက်လုပ်ပါ..."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+"ရွေးထားတဲ့ နယ်ပယ် ((သို့) အာဖာ) မှာ သိမ်မွေ့တဲ့ အလင်းဖေါက်နိုင်တဲ့ သုံးဖက်မြင် သက်ရောက်မှုကို "
+"ပေါင်းထည့်ပါ"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
+msgid "Drop shadow X offset"
+msgstr "အရိပ် X အော့ဖ်ဆက်ကို ချထားပါ"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
+msgid "Drop shadow Y offset"
+msgstr "အရိပ် Y အော့ဖ်ဆက်ကို ချထားပါ"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
+msgid "Drop shadow blur radius"
+msgstr "အစက် အရိပ်က အချင်း၀က်ကို မှုန်ဝါးစေတယ်"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
+msgid "Drop shadow color"
+msgstr "အရိပ် အရောင်ကို ချထားပါ"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
+msgid "Drop shadow opacity"
+msgstr "အရိပ် အလင်းပိတ်ချက်ကို ချထားပါ"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+msgid "Highlight X offset"
+msgstr "X အော့ဖ်ဆက်ကို အသားပေးပါ"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
+msgid "Highlight Y offset"
+msgstr "Y အော့ဖ်ဆက်ကို အသားပေးပါ"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Highlight opacity"
+msgstr "အလင်းပိတ်မှုကို အသားပေးပါ"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
+msgid "_Xach-Effect..."
+msgstr "_Xach-သက်ရောက်မှု..."
+

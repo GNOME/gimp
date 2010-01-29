@@ -1,0 +1,2030 @@
+# Burmese translation of gimp-libgimp.
+# Copyright © 2009, 2010 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
+#
+# Russell Kyaw <rkyaw@yahoo.com>, 2009, 2010.
+# BurmaIT Team <burmait@burmait.net>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-libgimp 2.7.1\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2009-06-15 17:30+0000\n"
+"PO-Revision-Date: 2010-01-29 17:26+0200\n"
+"Last-Translator: Russell Kyaw <rkyaw@yahoo.com>\n"
+"Language-Team: Burmese <burmait@burmait.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.0\n"
+
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1044
+msgid "success"
+msgstr "အောင်မြင်တယ်"
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1048
+msgid "execution error"
+msgstr "ဆောင်ရွတ်မှု အမှားအယွင်း"
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1052
+msgid "calling error"
+msgstr "ခေါ်ဆိုမှု အမှားအယွင်း"
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1056
+msgid "cancelled"
+msgstr "ရပ်ဆိုင်းလိုက်တယ်"
+
+#: ../libgimp/gimpbrushselectbutton.c:169
+msgid "Brush Selection"
+msgstr "စုတ်တံ ရွေးချယ်မှု"
+
+#: ../libgimp/gimpbrushselectbutton.c:915
+#: ../libgimp/gimppatternselectbutton.c:716
+msgid "_Browse..."
+msgstr "လှော်လှန်ပါ..."
+
+#: ../libgimp/gimpexport.c:223 ../libgimp/gimpexport.c:259
+#, c-format
+msgid "%s plug-in can't handle layers"
+msgstr "%s ယန္တရားငယ်က အလွှာများကို မကိုင်တွယ်နိုင်ဘူး"
+
+#: ../libgimp/gimpexport.c:224 ../libgimp/gimpexport.c:233
+#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:260
+msgid "Merge Visible Layers"
+msgstr "မြင်နိုင်တဲ့ အလွှာများကို ပေါင်းစပ်ပါ"
+
+#: ../libgimp/gimpexport.c:232
+#, c-format
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "%s ယန္တရားငယ်က အလွှာ အော့ဖ်​ဆက်များ၊ အရွယ် (သို့) အလင်းပိတ်မှုကို မကိုင်တွယ်နိုင်ဘူး"
+
+#: ../libgimp/gimpexport.c:241 ../libgimp/gimpexport.c:250
+#, c-format
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "%s ယန္တရားငယ်က အလွှာများကို သက်ဝင်လှုပ်ရှားမှု ဘောင်များ အဖြစ်သာ ကိုင်တွယ်နိုင်တယ်"
+
+#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:251
+msgid "Save as Animation"
+msgstr "သက်၀င်လှုပ်ရှားမှု အ​ဖြစ် သိမ်းဆည်းပါ"
+
+#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:269
+msgid "Flatten Image"
+msgstr "ပြေပြန့်သွားတဲ့ ရုပ်ပုံ"
+
+#: ../libgimp/gimpexport.c:268
+#, c-format
+msgid "%s plug-in can't handle transparency"
+msgstr "%s ယန္တရားငယ်က ဖေါက်ထွင်းမြင်နိုင်မှုကို မကိုင်တွယ်နိုင်ဘူး"
+
+#: ../libgimp/gimpexport.c:277
+#, c-format
+msgid "%s plug-in can't handle layer masks"
+msgstr "%s ယန္တရားငယ်က အလွှာ မျက်နှာဖုံးကို မကိုင်တွယ်နိုင်ဘူး"
+
+#: ../libgimp/gimpexport.c:278
+msgid "Apply Layer Masks"
+msgstr "အလွှာ မျက်နှာဖုံးများကို အသုံးချပါ"
+
+#: ../libgimp/gimpexport.c:286
+#, c-format
+msgid "%s plug-in can only handle RGB images"
+msgstr "%s ယန္တရားငယ်က နီစိမ်းပြာ ရုပ်ပုံများကိုသာ ကိုင်တွယ်နိုင်တယ်"
+
+#: ../libgimp/gimpexport.c:287 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:334
+msgid "Convert to RGB"
+msgstr "နီစိမ်းပြာ အဖြစ် အသွင်းပြောင်းပါ"
+
+#: ../libgimp/gimpexport.c:295
+#, c-format
+msgid "%s plug-in can only handle grayscale images"
+msgstr "%s ယန္တရားငယ်က မီးခိုးရောင် ရုပ်ပုံများကိုသာ ကိုင်တွယ်နိုင်တယ်"
+
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:346
+msgid "Convert to Grayscale"
+msgstr "မီးခိုးရောင် အဖြစ် အသွင်ပြောင်းပါ"
+
+#: ../libgimp/gimpexport.c:304
+#, c-format
+msgid "%s plug-in can only handle indexed images"
+msgstr "%s ယန္တရားငယ်က ညွှန်းထားတဲ့ ရုပ်ပုံများကိုသာ ကိုင်တွယ်နိုင်တယ်"
+
+#: ../libgimp/gimpexport.c:305 ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:344
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"စံထားချက် တပ်ဆင်မှုများကို သုံးပြီး ညွှန်းထားချက်ဆီ အသွင်ပြောင်းပါ\n"
+"(ရလဒ်ကို ညှိဖို့ ၄င်းကို လက်ဖြင့် လုပ်ပါ)"
+
+#: ../libgimp/gimpexport.c:314
+#, c-format
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "%s ယန္တရားငယ်က ဘစ်မက် (အရောင် နှစ်ခု) ညွှန်းထားတဲ့ ရုပ်ပုံများကိုသာ ကိုင်တွယ်နိုင်တယ်"
+
+#: ../libgimp/gimpexport.c:315
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"ဘစ်မက် စံထားချက် တပ်ဆင်မှုများကို သုံးပြီး ညွှန်းထားချက်ဆီ အသွင်ပြောင်းပါ\n"
+"(ရလဒ်ကို ညှိဖို့ ၄င်းကို လက်ဖြင့် လုပ်ပါ)"
+
+#: ../libgimp/gimpexport.c:324
+#, c-format
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "%s ယန္တရားငယ်က နီစိမ်းပြာ  (သို့) မီးခိုးရောင် ရုပ်ပုံများကိုသာ ကိုင်တွယ်နိုင်တယ်"
+
+#: ../libgimp/gimpexport.c:333
+#, c-format
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "%s ယန္တရားငယ်က နီစိမ်းပြာ  (သို့) ညွှန်းထားတဲ့ ရုပ်ပုံများကိုသာ ကိုင်တွယ်နိုင်တယ်"
+
+#: ../libgimp/gimpexport.c:343
+#, c-format
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "%s ယန္တရားငယ်က မီးခိုးရောင် (သို့) ညွှန်းထားတဲ့ ရုပ်ပုံများကိုသာ ကိုင်တွယ်နိုင်တယ်"
+
+#: ../libgimp/gimpexport.c:354
+#, c-format
+msgid "%s plug-in needs an alpha channel"
+msgstr "%s ယန္တရားငယ်က အာဖာ ချာနယ်တခု လိုအပ်တယ်"
+
+#: ../libgimp/gimpexport.c:355
+msgid "Add Alpha Channel"
+msgstr "အာဖာ ချာနယ်ကို ပေါင်းထည့်ပါ"
+
+#: ../libgimp/gimpexport.c:410
+msgid "Confirm Save"
+msgstr "သိမ်းဆည်းမှုကို အတည်ပြုပါ"
+
+#: ../libgimp/gimpexport.c:416
+msgid "Confirm"
+msgstr "အတည်ပြုပါ"
+
+#: ../libgimp/gimpexport.c:492
+msgid "Export File"
+msgstr "ဖိုင်ကို တင်ပို့ပါ"
+
+#: ../libgimp/gimpexport.c:496
+msgid "_Ignore"
+msgstr "လျစ်လျုရှုပါ"
+
+#: ../libgimp/gimpexport.c:498
+msgid "_Export"
+msgstr "တင်ပို့ပါ"
+
+#. the headline
+#: ../libgimp/gimpexport.c:528
+#, c-format
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr ""
+"သင့်ရုပ်ပုံကို အောက်ဖေါ်ပြပါ အကြောင်းများကြောင့် %s အဖြစ် ၄င်းကို မသိမ်းဆည်းနိုင်ခင် "
+"တင်ပို့သင့်တယ် -"
+
+#. the footline
+#: ../libgimp/gimpexport.c:602
+msgid "The export conversion won't modify your original image."
+msgstr "တင်ပို့တဲ့ အသွင်ပြောင်းချက်က သင့်ရဲ့ မူရင်း ရုပ်ပုံကို ပြုပြင်မွမ်းမံမှာ မဟုတ်ဘူး။"
+
+#: ../libgimp/gimpexport.c:701
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"သင်ဟာ အလွှာ မျက်နှာဖုံးတခုကို %s အဖြစ် သိမ်းဆည်းတော့မယ်။\n"
+"ဒီအရာက မြင်နိုင်တဲ့ အလွှာများကို သိမ်းဆည်းမှာ မဟုတ်ဘူး။"
+
+#: ../libgimp/gimpexport.c:707
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"သင်ဟာ ချာနယ် (သိမ်းဆည်းထားတဲ့ ရွေးချယ်မှု) တခုကို %s အဖြစ် သိမ်းဆည်းတော့မယ်။\n"
+"ဒီအရာက မြင်နိုင်တဲ့ အလွှာများကို သိမ်းဆည်းမှာ မဟုတ်ဘူး။"
+
+#: ../libgimp/gimpfontselectbutton.c:129
+msgid "Font Selection"
+msgstr "ဖောင့် ရွေးချယ်မှု"
+
+#: ../libgimp/gimpfontselectbutton.c:144
+msgid "Sans"
+msgstr "Sans"
+
+#: ../libgimp/gimpgradientselectbutton.c:147
+msgid "Gradient Selection"
+msgstr "ရောင်စဉ်တန်း ရွေးချယ်မှု"
+
+#: ../libgimp/gimpmenu.c:449 ../libgimpwidgets/gimpintstore.c:238
+msgid "(Empty)"
+msgstr "(နေရာလွတ်)"
+
+#: ../libgimp/gimppaletteselectbutton.c:129
+msgid "Palette Selection"
+msgstr "အရောင်စပ်ဆေးခွက် ရွေးချယ်မှု"
+
+#: ../libgimp/gimppatternselectbutton.c:155
+msgid "Pattern Selection"
+msgstr "နမူနာပုံစံ ရွေးချယ်မှု"
+
+#: ../libgimp/gimpprocbrowserdialog.c:140
+msgid "by name"
+msgstr "အမည်အလိုက်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:141
+msgid "by description"
+msgstr "ဖေါ်ပြချက်အလိုက်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:142
+msgid "by help"
+msgstr "အကူအညီအလိုက်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:143
+msgid "by author"
+msgstr "ရေးသားသူအလိုက်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:144
+msgid "by copyright"
+msgstr "မူပိုင်ခွင့်အလိုက်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:145
+msgid "by date"
+msgstr "ရက်​စွဲအလိုက်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:146
+msgid "by type"
+msgstr "အမျိုးအစားအလိုက်"
+
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:385
+#: ../libgimp/gimpprocbrowserdialog.c:536 ../libgimpwidgets/gimpbrowser.c:130
+msgid "No matches"
+msgstr "ကိုက်ညီချက်များ မရှိဘူး"
+
+#: ../libgimp/gimpprocbrowserdialog.c:388
+msgid "Search term invalid or incomplete"
+msgstr "​ရှာဖွေတဲ့ စကားရပ် မမှန်ဘူး (သို့) မပြည့်စုံဘူး"
+
+#: ../libgimp/gimpprocbrowserdialog.c:397
+msgid "Searching"
+msgstr "ရှာဖွေနေတယ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:408
+msgid "Searching by name"
+msgstr "အမည်အလိုက် ရှာဖွေနေတယ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:429
+msgid "Searching by description"
+msgstr "ဖေါ်ပြချက်အလိုက် ရှာဖွေနေတယ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:436
+msgid "Searching by help"
+msgstr "အကူအညီအလိုက် ရှာဖွေနေတယ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:443
+msgid "Searching by author"
+msgstr "ရေးသားသူအလိုက် ရှာဖွေနေတယ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:450
+msgid "Searching by copyright"
+msgstr "မူပိုင်ခွင့်အလိုက် ​ရှာဖွေနေတယ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:457
+msgid "Searching by date"
+msgstr "ရက်​စွဲအလိုက် ရှာဖွေနေတယ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:464
+msgid "Searching by type"
+msgstr "အမျိုးအစားအလိုက် ရှာဖွေနေတယ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:474
+#, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d ဖြစ်စဉ်"
+
+#: ../libgimp/gimpprocbrowserdialog.c:483
+msgid "No matches for your query"
+msgstr "သင့်ရဲ့ မေးမြန်းချက်အတွက် ကိုက်ညီချက်များ မရှိဘူး"
+
+#: ../libgimp/gimpprocbrowserdialog.c:487
+#, c-format
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] "သင့်ရဲ့ မေးမြန်းချက်နဲ့ %d ဖြစ်စဉ် ကိုက်ညီတယ်"
+
+#: ../libgimp/gimpprocview.c:162
+msgid "Parameters"
+msgstr "အကန့်အသတ်များ"
+
+#: ../libgimp/gimpprocview.c:175
+msgid "Return Values"
+msgstr "တန်ဖိုးများကို ထုတ်ပေးပါ"
+
+#: ../libgimp/gimpprocview.c:188
+msgid "Additional Information"
+msgstr "ဖြည့်စွတ်တဲ့ အချက်အလက်"
+
+#: ../libgimp/gimpprocview.c:228
+msgid "Author:"
+msgstr "ရေးသားသူ -"
+
+#: ../libgimp/gimpprocview.c:240
+msgid "Date:"
+msgstr "ရက်စွဲ -"
+
+#: ../libgimp/gimpprocview.c:252
+msgid "Copyright:"
+msgstr "မူပိုင်ခွင့် -"
+
+#: ../libgimp/gimpunitcache.c:56
+msgid "percent"
+msgstr "ရာခိုင်နှုန်း"
+
+#: ../libgimpbase/gimpbaseenums.c:28
+msgctxt "add-mask-type"
+msgid "_White (full opacity)"
+msgstr "အဖြူ​ရောင် (အလင်းပိတ်မှု အပြည့်)"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+msgctxt "add-mask-type"
+msgid "_Black (full transparency)"
+msgstr "အနက်ရောင် (ဖေါက်ထွင်းမြင်နိုင်မှု အပြည့်)"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+msgctxt "add-mask-type"
+msgid "Layer's _alpha channel"
+msgstr "အလွှာရဲ့ အာဖာ ချာနယ်"
+
+#: ../libgimpbase/gimpbaseenums.c:31
+msgctxt "add-mask-type"
+msgid "_Transfer layer's alpha channel"
+msgstr "အလွှာရဲ့ အာဖာ ချာနယ်ကို လွှဲပြောင်းပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:32
+msgctxt "add-mask-type"
+msgid "_Selection"
+msgstr "ရွေးချယ်မှု"
+
+#: ../libgimpbase/gimpbaseenums.c:33
+msgctxt "add-mask-type"
+msgid "_Grayscale copy of layer"
+msgstr "အလွှာရဲ့ မီးခိုးရောင် မိတ္တူ"
+
+#: ../libgimpbase/gimpbaseenums.c:34
+msgctxt "add-mask-type"
+msgid "C_hannel"
+msgstr "ချာနယ်"
+
+#: ../libgimpbase/gimpbaseenums.c:65
+msgctxt "blend-mode"
+msgid "FG to BG (RGB)"
+msgstr "အနီးကပ်မြင်ကွင်းမှ နောက်ခံသို့ (နီစိမ်းပြာ)"
+
+#: ../libgimpbase/gimpbaseenums.c:66
+msgctxt "blend-mode"
+msgid "FG to BG (HSV)"
+msgstr "အနီးကပ်မြင်ကွင်းမှ နောက်ခံသို့ (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:67
+msgctxt "blend-mode"
+msgid "FG to transparent"
+msgstr "အနီးကပ်မြင်ကွင်းမှ ဖေါက်ထွင်းမြင်နိုင်မှုသို့"
+
+#: ../libgimpbase/gimpbaseenums.c:68
+msgctxt "blend-mode"
+msgid "Custom gradient"
+msgstr "စိတ်ကြိုက် ရောင်စဉ်တန်း"
+
+#: ../libgimpbase/gimpbaseenums.c:98
+msgctxt "bucket-fill-mode"
+msgid "FG color fill"
+msgstr "အနီးကပ်မြင်ကွင်း အရောင် ဖြည့်စွတ်ချက်"
+
+#: ../libgimpbase/gimpbaseenums.c:99
+msgctxt "bucket-fill-mode"
+msgid "BG color fill"
+msgstr "နောက်ခံ အရောင် ဖြည့်စွတ်ချက်"
+
+#: ../libgimpbase/gimpbaseenums.c:100
+msgctxt "bucket-fill-mode"
+msgid "Pattern fill"
+msgstr "နမူနာပုံစံ ဖြည့်စွတ်ချက်"
+
+#: ../libgimpbase/gimpbaseenums.c:131
+msgctxt "channel-ops"
+msgid "Add to the current selection"
+msgstr "လက်ရှိ ရွေးချယ်မှုထဲ ပေါင်းထည့်ပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:132
+msgctxt "channel-ops"
+msgid "Subtract from the current selection"
+msgstr "လက်ရှိ​ ရွေးချယ်မှုမှ နှုတ်ယူပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:133
+msgctxt "channel-ops"
+msgid "Replace the current selection"
+msgstr "လက်ရှိ ရွေးချယ်မှုကို အစားထိုးပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:134
+msgctxt "channel-ops"
+msgid "Intersect with the current selection"
+msgstr "လက်ရှိ ရွေးချယ်မှုနဲ့ ပိုင်းဖြတ်ပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:167
+msgctxt "channel-type"
+msgid "Red"
+msgstr "အ​နီရောင်"
+
+#: ../libgimpbase/gimpbaseenums.c:168
+msgctxt "channel-type"
+msgid "Green"
+msgstr "အစိမ်းရောင်"
+
+#: ../libgimpbase/gimpbaseenums.c:169
+msgctxt "channel-type"
+msgid "Blue"
+msgstr "အပြာရောင်"
+
+#: ../libgimpbase/gimpbaseenums.c:170
+msgctxt "channel-type"
+msgid "Gray"
+msgstr "မီး​ခိုးရောင်"
+
+#: ../libgimpbase/gimpbaseenums.c:171
+msgctxt "channel-type"
+msgid "Indexed"
+msgstr "ညွန်းထားချက်"
+
+#: ../libgimpbase/gimpbaseenums.c:172
+msgctxt "channel-type"
+msgid "Alpha"
+msgstr "အာဖာ"
+
+#: ../libgimpbase/gimpbaseenums.c:202
+msgctxt "check-size"
+msgid "Small"
+msgstr "သေးငယ်မှု"
+
+#: ../libgimpbase/gimpbaseenums.c:203
+msgctxt "check-size"
+msgid "Medium"
+msgstr "အလယ်အလတ်"
+
+#: ../libgimpbase/gimpbaseenums.c:204
+msgctxt "check-size"
+msgid "Large"
+msgstr "ကြီးကျယ်မှု"
+
+#: ../libgimpbase/gimpbaseenums.c:237
+msgctxt "check-type"
+msgid "Light checks"
+msgstr "အလင်းရောင် စစ်​ဆေးချက်များ"
+
+#: ../libgimpbase/gimpbaseenums.c:238
+msgctxt "check-type"
+msgid "Mid-tone checks"
+msgstr "အလယ်အလတ်အရည်အသွေး စစ်ဆေးချက်များ"
+
+#: ../libgimpbase/gimpbaseenums.c:239
+msgctxt "check-type"
+msgid "Dark checks"
+msgstr "အနက်ရောင် စစ်ဆေးချက်များ"
+
+#: ../libgimpbase/gimpbaseenums.c:240
+msgctxt "check-type"
+msgid "White only"
+msgstr "အဖြူရောင်သာလျှင်"
+
+#: ../libgimpbase/gimpbaseenums.c:241
+msgctxt "check-type"
+msgid "Gray only"
+msgstr "မီးခိုးရောင်သာလျှင်"
+
+#: ../libgimpbase/gimpbaseenums.c:242
+msgctxt "check-type"
+msgid "Black only"
+msgstr "အနက်ရောင်သာလျှင်"
+
+#: ../libgimpbase/gimpbaseenums.c:271
+msgctxt "clone-type"
+msgid "Image"
+msgstr "ရုပ်ပုံ"
+
+#: ../libgimpbase/gimpbaseenums.c:272
+msgctxt "clone-type"
+msgid "Pattern"
+msgstr "နမူနာပုံစံ"
+
+#: ../libgimpbase/gimpbaseenums.c:302
+msgctxt "desaturate-mode"
+msgid "Lightness"
+msgstr "လင်းလက်မှု"
+
+#: ../libgimpbase/gimpbaseenums.c:303
+msgctxt "desaturate-mode"
+msgid "Luminosity"
+msgstr "တောက်ပမှု"
+
+#: ../libgimpbase/gimpbaseenums.c:304
+msgctxt "desaturate-mode"
+msgid "Average"
+msgstr "ပျမ်းမျှ"
+
+#: ../libgimpbase/gimpbaseenums.c:333
+msgctxt "dodge-burn-type"
+msgid "Dodge"
+msgstr "ရှောင်တိမ်းမှု"
+
+#: ../libgimpbase/gimpbaseenums.c:334
+msgctxt "dodge-burn-type"
+msgid "Burn"
+msgstr "လောင်ကျွမ်းမှု"
+
+#: ../libgimpbase/gimpbaseenums.c:400
+msgctxt "gradient-type"
+msgid "Linear"
+msgstr "အစဉ်လိုက်"
+
+#: ../libgimpbase/gimpbaseenums.c:401
+msgctxt "gradient-type"
+msgid "Bi-linear"
+msgstr "အစဉ်လိုက်နှစ်ခု"
+
+#: ../libgimpbase/gimpbaseenums.c:402
+msgctxt "gradient-type"
+msgid "Radial"
+msgstr "ဖြာထွက်မှု"
+
+#: ../libgimpbase/gimpbaseenums.c:403
+msgctxt "gradient-type"
+msgid "Square"
+msgstr "စတုရန်းပုံ"
+
+#: ../libgimpbase/gimpbaseenums.c:404
+msgctxt "gradient-type"
+msgid "Conical (sym)"
+msgstr "ကတော့ပုံ (sym)"
+
+#: ../libgimpbase/gimpbaseenums.c:405
+msgctxt "gradient-type"
+msgid "Conical (asym)"
+msgstr "ကတော့ပုံ (asym)"
+
+#: ../libgimpbase/gimpbaseenums.c:406
+msgctxt "gradient-type"
+msgid "Shaped (angular)"
+msgstr "ပုံဖေါ်ချက် (ထောင့်ချွန်)"
+
+#: ../libgimpbase/gimpbaseenums.c:407
+msgctxt "gradient-type"
+msgid "Shaped (spherical)"
+msgstr "ပုံဖေါ်ချက် (စက်လုံး)"
+
+#: ../libgimpbase/gimpbaseenums.c:408
+msgctxt "gradient-type"
+msgid "Shaped (dimpled)"
+msgstr "ပုံဖေါ်ချက် (ပါးချိုင့်)"
+
+#: ../libgimpbase/gimpbaseenums.c:409
+msgctxt "gradient-type"
+msgid "Spiral (cw)"
+msgstr "၀က်အူရစ်ပုံ (cw)"
+
+#: ../libgimpbase/gimpbaseenums.c:410
+msgctxt "gradient-type"
+msgid "Spiral (ccw)"
+msgstr "၀က်အူရစ်ပုံ (ccw)"
+
+#: ../libgimpbase/gimpbaseenums.c:442
+msgctxt "grid-style"
+msgid "Intersections (dots)"
+msgstr "ဆုံချက်များ (အစက်များ)"
+
+#: ../libgimpbase/gimpbaseenums.c:443
+msgctxt "grid-style"
+msgid "Intersections (crosshairs)"
+msgstr "ဆုံချက်များ (ခရော့စ်ဟေးများ)"
+
+#: ../libgimpbase/gimpbaseenums.c:444
+msgctxt "grid-style"
+msgid "Dashed"
+msgstr "မျဉ်းရှည်လေး"
+
+#: ../libgimpbase/gimpbaseenums.c:445
+msgctxt "grid-style"
+msgid "Double dashed"
+msgstr "မျဉ်းရှည် နှစ်ထပ်"
+
+#: ../libgimpbase/gimpbaseenums.c:446
+msgctxt "grid-style"
+msgid "Solid"
+msgstr "ခိုင်မာ​မှု"
+
+#: ../libgimpbase/gimpbaseenums.c:476
+msgctxt "icon-type"
+msgid "Stock ID"
+msgstr "ကုန်အမှတ် ID"
+
+#: ../libgimpbase/gimpbaseenums.c:477
+msgctxt "icon-type"
+msgid "Inline pixbuf"
+msgstr "မျဉ်းပေါ် ပစ်ဘူးဖ်"
+
+#: ../libgimpbase/gimpbaseenums.c:478
+msgctxt "icon-type"
+msgid "Image file"
+msgstr "ရုပ်ပုံ ဖိုင်"
+
+#: ../libgimpbase/gimpbaseenums.c:508
+msgctxt "image-base-type"
+msgid "RGB color"
+msgstr "နီးစိမ်းပြာ အရောင်"
+
+#: ../libgimpbase/gimpbaseenums.c:509
+msgctxt "image-base-type"
+msgid "Grayscale"
+msgstr "မီးခိုးရောင်"
+
+#: ../libgimpbase/gimpbaseenums.c:510
+msgctxt "image-base-type"
+msgid "Indexed color"
+msgstr "ညွှန်းထားတဲ့ အရောင်"
+
+#: ../libgimpbase/gimpbaseenums.c:543
+msgctxt "image-type"
+msgid "RGB"
+msgstr "နီးစိမ်းပြာ"
+
+#: ../libgimpbase/gimpbaseenums.c:544
+msgctxt "image-type"
+msgid "RGB-alpha"
+msgstr "နီးစိမ်းပြာ-အာဖာ"
+
+#: ../libgimpbase/gimpbaseenums.c:545
+msgctxt "image-type"
+msgid "Grayscale"
+msgstr "မီးခိုးရောင်"
+
+#: ../libgimpbase/gimpbaseenums.c:546
+msgctxt "image-type"
+msgid "Grayscale-alpha"
+msgstr "မီး​ခိုးရောင်-အာဖာ"
+
+#: ../libgimpbase/gimpbaseenums.c:547
+msgctxt "image-type"
+msgid "Indexed"
+msgstr "ညွှန်းထားချက်"
+
+#: ../libgimpbase/gimpbaseenums.c:548
+msgctxt "image-type"
+msgid "Indexed-alpha"
+msgstr "ညွှန်းထားချက်-အာဖာ"
+
+#: ../libgimpbase/gimpbaseenums.c:579
+msgctxt "interpolation-type"
+msgid "None"
+msgstr "ဘာမျှမရှိ"
+
+#: ../libgimpbase/gimpbaseenums.c:580
+msgctxt "interpolation-type"
+msgid "Linear"
+msgstr "အစဉ်လိုက်"
+
+#: ../libgimpbase/gimpbaseenums.c:581
+msgctxt "interpolation-type"
+msgid "Cubic"
+msgstr "ထုထည်"
+
+#: ../libgimpbase/gimpbaseenums.c:582
+msgctxt "interpolation-type"
+msgid "Sinc (Lanczos3)"
+msgstr "ဆင်း (Lanczos3)"
+
+#: ../libgimpbase/gimpbaseenums.c:611
+msgctxt "paint-application-mode"
+msgid "Constant"
+msgstr "အမြဲတမ်း"
+
+#: ../libgimpbase/gimpbaseenums.c:612
+msgctxt "paint-application-mode"
+msgid "Incremental"
+msgstr "တိုးတက်မှု"
+
+#: ../libgimpbase/gimpbaseenums.c:642
+msgctxt "repeat-mode"
+msgid "None"
+msgstr "ဘာမျှမရှိ"
+
+#: ../libgimpbase/gimpbaseenums.c:643
+msgctxt "repeat-mode"
+msgid "Sawtooth wave"
+msgstr "လွှသွား လှိုင်း"
+
+#: ../libgimpbase/gimpbaseenums.c:644
+msgctxt "repeat-mode"
+msgid "Triangular wave"
+msgstr "တြိဂံပုံ လှိုင်း"
+
+#: ../libgimpbase/gimpbaseenums.c:674
+msgctxt "run-mode"
+msgid "Run interactively"
+msgstr "အပြန်အလှန် ​မောင်းနှင်ပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:675
+msgctxt "run-mode"
+msgid "Run non-interactively"
+msgstr "အပြန်အလှန်မဟုတ် မောင်းနှင်ပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:676
+msgctxt "run-mode"
+msgid "Run with last used values"
+msgstr "နောက်ဆုံး သုံးစွဲတဲ့ တန်ဖိုးများနဲ့ မောင်းနှင်ပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:705
+msgctxt "size-type"
+msgid "Pixels"
+msgstr "ပစ်ဆယ်များ"
+
+#: ../libgimpbase/gimpbaseenums.c:706
+msgctxt "size-type"
+msgid "Points"
+msgstr "အမှတ်များ"
+
+#: ../libgimpbase/gimpbaseenums.c:736
+msgctxt "transfer-mode"
+msgid "Shadows"
+msgstr "အရိပ်များ"
+
+#: ../libgimpbase/gimpbaseenums.c:737
+msgctxt "transfer-mode"
+msgid "Midtones"
+msgstr "အလယ်အလတ်အရည်အသွေးများ"
+
+#: ../libgimpbase/gimpbaseenums.c:738
+msgctxt "transfer-mode"
+msgid "Highlights"
+msgstr "အ​သားပေးချက်များ"
+
+#: ../libgimpbase/gimpbaseenums.c:767
+msgctxt "transform-direction"
+msgid "Normal (Forward)"
+msgstr "သာမန် (ရှေ့သို့)"
+
+#: ../libgimpbase/gimpbaseenums.c:768
+msgctxt "transform-direction"
+msgid "Corrective (Backward)"
+msgstr "ပြုပြင်ပေးချက် (နောက်သို့)"
+
+#: ../libgimpbase/gimpbaseenums.c:799
+msgctxt "transform-resize"
+msgid "Adjust"
+msgstr "ချိန်ညှိပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:800
+msgctxt "transform-resize"
+msgid "Clip"
+msgstr "ညှပ်စ"
+
+#: ../libgimpbase/gimpbaseenums.c:801
+msgctxt "transform-resize"
+msgid "Crop to result"
+msgstr "ရလဒ်ကို လှီးဖြတ်ပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:802
+msgctxt "transform-resize"
+msgid "Crop with aspect"
+msgstr "ရူထောင့်နဲ့ လှီးဖြတ်ပါ"
+
+#: ../libgimpbase/gimpbaseenums.c:935
+msgctxt "pdb-proc-type"
+msgid "Internal GIMP procedure"
+msgstr "အတွင်းပိုင်း GIMP လုပ်ငန်းစဉ်"
+
+#: ../libgimpbase/gimpbaseenums.c:936
+msgctxt "pdb-proc-type"
+msgid "GIMP Plug-In"
+msgstr "GIMP ယန္တရားငယ်"
+
+#: ../libgimpbase/gimpbaseenums.c:937
+msgctxt "pdb-proc-type"
+msgid "GIMP Extension"
+msgstr "GIMP တိုးချဲ့ချက်"
+
+#: ../libgimpbase/gimpbaseenums.c:938
+msgctxt "pdb-proc-type"
+msgid "Temporary Procedure"
+msgstr "ယာယီ လုပ်ငန်းစဉ်"
+
+#: ../libgimpbase/gimpbaseenums.c:1105
+msgctxt "text-direction"
+msgid "From left to right"
+msgstr "ဘယ်မှ ညာသို့"
+
+#: ../libgimpbase/gimpbaseenums.c:1106
+msgctxt "text-direction"
+msgid "From right to left"
+msgstr "ညာမှ ဘယ်သို့"
+
+#: ../libgimpbase/gimpbaseenums.c:1137
+msgctxt "text-hint-style"
+msgid "None"
+msgstr "ဘာမျှမရှိ"
+
+#: ../libgimpbase/gimpbaseenums.c:1138
+msgctxt "text-hint-style"
+msgid "Slight"
+msgstr "အနည်းငယ်"
+
+#: ../libgimpbase/gimpbaseenums.c:1139
+msgctxt "text-hint-style"
+msgid "Medium"
+msgstr "အလယ်အလတ်"
+
+#: ../libgimpbase/gimpbaseenums.c:1140
+msgctxt "text-hint-style"
+msgid "Full"
+msgstr "ပြည့်၀မှု"
+
+#: ../libgimpbase/gimpbaseenums.c:1171
+msgctxt "text-justification"
+msgid "Left justified"
+msgstr "ဘယ်ဖက် တန်းညှိချက်"
+
+#: ../libgimpbase/gimpbaseenums.c:1172
+msgctxt "text-justification"
+msgid "Right justified"
+msgstr "ညာဖက် တန်းညှိချက်"
+
+#: ../libgimpbase/gimpbaseenums.c:1173
+msgctxt "text-justification"
+msgid "Centered"
+msgstr "အလယ်ဗဟိုကျမှု"
+
+#: ../libgimpbase/gimpbaseenums.c:1174
+msgctxt "text-justification"
+msgid "Filled"
+msgstr "ဖြည့်ဆည်းထားမှု"
+
+#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../modules/color-selector-cmyk-lcms.c:406
+#: ../modules/color-selector-cmyk-lcms.c:412
+#: ../modules/display-filter-lcms.c:182
+msgid "(invalid UTF-8 string)"
+msgstr "(မမှန်တဲ့ UTF-8 စာတန်း)"
+
+#: ../libgimpconfig/gimpcolorconfig.c:41
+msgid "Mode of operation for color management."
+msgstr "အရောင် စီမံခန့်ခွဲရေ။အတွက် လည်ပတ်မှု စနစ်။"
+
+#: ../libgimpconfig/gimpcolorconfig.c:43
+msgid "The color profile of your (primary) monitor."
+msgstr "သင့်ရဲ့ (အရင်းခံ) မော်နီတာရဲ့ အရောင် ခြုံငုံချက်။"
+
+#: ../libgimpconfig/gimpcolorconfig.c:45
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+"ဖွင့်ထားတဲ့အ​ခါ၊ GIMP က ၀င်းဒိုး နည်းစနစ်မှ ပြသမှု အရောင် ခြုံငုံချက်ကို သုံးစွဲဖို့ "
+"ကြိုးစားလိမ့်မယ်။ စီမံဖန်တီးထားတဲ့ မော်နီတာ ခြုံငုံချက်ကို နောက်မှ လျှော့ချမှု တခုအဖြစ်သာ "
+"သုံးစွဲလိမ့်မယ်။"
+
+#: ../libgimpconfig/gimpcolorconfig.c:49
+msgid "The default RGB working space color profile."
+msgstr "စံထားချက် နီစိမ်းပြာ လုပ်ကွက် အရောင် ခြုံငုံချက်။"
+
+#: ../libgimpconfig/gimpcolorconfig.c:51
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "CMYK အရောင် ခြုံငုံချက်က နီစိမ်းပြာနဲ့ CMYK အကြား အသွင်းပြောင်းလေ့ရှိတယ်။"
+
+#: ../libgimpconfig/gimpcolorconfig.c:53
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "ပုံနှိုပ်တဲ့ မူအဆင့် (အနုစိတ်ပြချက်) တခုကို တုပဖန်တီးဖို့ အရောင် ခြုံငုံချက်ကို သုံးစွဲတယ်။"
+
+#: ../libgimpconfig/gimpcolorconfig.c:55
+msgid "Sets how colors are mapped for your display."
+msgstr "သင့်ရဲ့ ပြသမှုအတွက် အရောင်များကို ပုံဖေါ်တဲ့ သတ်မှတ်ချက်များ"
+
+#: ../libgimpconfig/gimpcolorconfig.c:57
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr ""
+"နီစိမ်းပြာ လုပ်ကွက်မှ ပုံနှိုပ်ရေး တုပဖန်တီးမှုမှု ကိရိယာသို့ အရောင်များကို အသွင်ပြောင်းတဲ့ "
+"သတ်မှတ်ချက်များ"
+
+#: ../libgimpconfig/gimpcolorconfig.c:60
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"ဖွင့်ထားတဲ့အခါ၊ ပုံနှိုပ်ရေး တုပဖန်တီးမှုက ပစ်မှတ်ထားတဲ့ အရောင် နေရာလပ်မှာ ကိုယ်စားမပြုနိုင်တဲ့ "
+"အရောင်များကို မှတ်သားပေးလိမ့်မယ်။"
+
+#: ../libgimpconfig/gimpcolorconfig.c:63
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "အားလုံးထဲမှ အရောင်များကို လုပ်ဆောင်ရာမှာ သုံးစွဲမဲ့ အရောင်။"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr "အရောင် စီမံခန့်ခွဲမှု မရှိဘူး"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+msgctxt "color-management-mode"
+msgid "Color managed display"
+msgstr "အရောင်က ပြသမှုကို စီမံပေးတယ်"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+msgctxt "color-management-mode"
+msgid "Print simulation"
+msgstr "ပုံနှိုပ်မှု တုပဖန်တီးခြင်း"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr "ထိုးထွင်းသိမြင်မှု"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "သက်ဆိုင်ရာ ကာလာရီမက်ထရစ်"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "ပျော်၀င်ခြင်း"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr "ပကတိ ကာလာမက်ထရစ်"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr "အမှတ်အသား %s အတွက် တန်ဖိုးဟာ မှန်ကန်တဲ့ UTF-8 စာတန်းတခု မဟုတ်ဘူး"
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpconfig-deserialize.c:435
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgstr ""
+"ယုတ္တိတန် အမှတ်အသား %s အတွက် 'လုပ်မယ်' (သို့) 'မလုပ်ဘူး' ကို မျှော်လင့်ခဲ့​တယ်၊ '%s' ကို "
+"ရရှိတယ်"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:509
+#, c-format
+msgid "invalid value '%s' for token %s"
+msgstr "အမှတ်အသား %2$s အတွက် မမှန်တဲ့ တန်ဖိုး '%1$s'"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:524
+#, c-format
+msgid "invalid value '%ld' for token %s"
+msgstr "အမှတ်အသား %2$s အတွက် မမှန်တဲ့ တန်ဖိုး '%1$ld'"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:593
+#, c-format
+msgid "while parsing token '%s': %s"
+msgstr "'%s' ကို ဖေါ်ပြနေတဲ့ အမှတ်အသား - %s"
+
+#: ../libgimpconfig/gimpconfig-iface.c:473
+#: ../libgimpconfig/gimpconfig-iface.c:486 ../libgimpconfig/gimpscanner.c:497
+#: ../libgimpconfig/gimpscanner.c:578
+#: ../libgimpwidgets/gimpcolorprofilestore.c:655
+msgid "fatal parse error"
+msgstr "ဆိုးရွားတဲ့ ဖေါ်ပြချက် အမှားအယွင်း"
+
+#: ../libgimpconfig/gimpconfig-path.c:378
+#, c-format
+msgid "Cannot expand ${%s}"
+msgstr "မချဲ့ကားနိုင်ဘူး ${%s}"
+
+#: ../libgimpconfig/gimpconfigwriter.c:77
+#: ../libgimpconfig/gimpconfigwriter.c:718
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "'%s' မှာ မှားယွင်းတဲ့ ရေးသားချက် - %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:135
+#, c-format
+msgid "Could not create temporary file for '%s': %s"
+msgstr "'%s' အတွက် ယာယီ ဖိုင်ကို မဖန်တီးနိုင်ဘူး - %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:148
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "ရေးသားဖို့ '%s' ကို မဖွင့်နိုင်ဘူး - %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"The original file has not been touched."
+msgstr ""
+"'%s' အတွက် ယာယီဖိုင် ရေးသားမှု အမှားအယွင်း - %s\n"
+"မူရင်း ဖိုင်ကို မကိုင်တွယ်ရသေးဘူး။"
+
+#: ../libgimpconfig/gimpconfigwriter.c:707
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"No file has been created."
+msgstr ""
+"'%s' အတွက် ယာယီဖိုင် ရေးသားမှု အမှားအယွင်း - %s\n"
+"ဘယ်ဖိုင်ကိုမျှ မဖန်တီးထားဘူး။"
+
+#: ../libgimpconfig/gimpconfigwriter.c:731
+#, c-format
+msgid "Could not create '%s': %s"
+msgstr "'%s' ကို မဖန်တီးနိုင်ဘူး - %s"
+
+#: ../libgimpconfig/gimpscanner.c:254
+#, c-format
+msgid "invalid UTF-8 string"
+msgstr "မမှန်တဲ့ UTF-8 စာတန်း"
+
+#: ../libgimpconfig/gimpscanner.c:605
+#, c-format
+msgid "Error while parsing '%s' in line %d: %s"
+msgstr "%2$d မှာ '%1$s' ဖေါ်ပြနေစဉ် အမှားအယွင်း - %3$s"
+
+#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:432
+#, c-format
+msgid "Module '%s' load error: %s"
+msgstr "အစိတ်အပိုင်း '%s' ဖွင့်လှစ်မှု အမှားအယွင်း - %s"
+
+#: ../libgimpmodule/gimpmodule.c:374
+msgid "Module error"
+msgstr "အစိတ်အပိုင်း အမှားအယွင်း"
+
+#: ../libgimpmodule/gimpmodule.c:375
+msgid "Loaded"
+msgstr "ဖွင့်ထားချက်"
+
+#: ../libgimpmodule/gimpmodule.c:376
+msgid "Load failed"
+msgstr "ဖွင့်လှစ်မှု ​မအောင်မြင်ဘူး"
+
+#: ../libgimpmodule/gimpmodule.c:377
+msgid "Not loaded"
+msgstr "မဖွင့်လှစ်ဘူး"
+
+#: ../libgimpthumb/gimpthumb-utils.c:122
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+"မှန်ကန်တဲ့ ပင်မ ဖိုင်တွဲတခုကို မဆုံးဖြတ်နိုင်ဘူး။\n"
+"လက်သည်းပုံများကို ဖိုင်တွဲထဲမှာ ယာယီ ဖိုင်များ (%s) အ​စား သိုလှောင်ထားလိမ့်မယ်။"
+
+#: ../libgimpthumb/gimpthumb-utils.c:246 ../libgimpthumb/gimpthumb-utils.c:314
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "လက်သည်းပုံ ဖိုင်တွဲ '%s' ကို မဖန်တီးဖို့ မအောင်မြင်ဘူး။"
+
+#: ../libgimpthumb/gimpthumbnail.c:497
+#, c-format
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "လက်သည်းပုံမှာ Thumb::URI စာအမှတ် မပါရှိဘူး"
+
+#: ../libgimpthumb/gimpthumbnail.c:893
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "%s အတွက် လက်သည်းပုံကို မဖန်တီးနိုင်ဘူး - %s"
+
+#: ../libgimpwidgets/gimpbrowser.c:103
+msgid "_Search:"
+msgstr "ရှာဖွေပါ -"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:117
+msgid "_Foreground Color"
+msgstr "အနီးကပ်မြင်ကွင်း အရောင်"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:121
+msgid "_Background Color"
+msgstr "နောက်ခံ အရောင်"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:125
+msgid "Blac_k"
+msgstr "အ​နက်ရောင်"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:129
+msgid "_White"
+msgstr "အ​မြူရောင်"
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:143
+msgid "Select color profile from disk..."
+msgstr "ဓါတ်ပြားမှ ​အရောင် ခြုံငုံချက်ကို ရွေးပါ..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:279
+msgctxt "profile"
+msgid "None"
+msgstr "ဘာမျှမရှိ"
+
+#: ../libgimpwidgets/gimpcolorscales.c:97
+msgid "Scales"
+msgstr "စကေးများ"
+
+#: ../libgimpwidgets/gimpcolorselection.c:209
+msgid "Current:"
+msgstr "လက်ရှိ -"
+
+#: ../libgimpwidgets/gimpcolorselection.c:231
+msgid "Old:"
+msgstr "အဟောင်း -"
+
+#: ../libgimpwidgets/gimpcolorselection.c:285
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"HTML နဲ့ CSS အဖြစ် သုံးစွဲခဲ့တဲ့ ဟိုက်ဇာဆယ်လီ အရောင် ရေးမှတ်ခြင်း။ ဒီရေးသွင်းချက်က CSS "
+"အရောင်ကို လက်ခံတယ်။"
+
+#: ../libgimpwidgets/gimpcolorselection.c:291
+msgid "HTML _notation:"
+msgstr "HTML ရေးမှတ်ခြင်း -"
+
+#: ../libgimpwidgets/gimpfileentry.c:173
+msgid "Open a file selector to browse your folders"
+msgstr "သင့်ရဲ့ ဖိုင်တွဲများကို လှော်လှန်ဖို့ ဖိုင်ရွေးကိရိယာ တခုကို ဖွင့်ပါ"
+
+#: ../libgimpwidgets/gimpfileentry.c:174
+msgid "Open a file selector to browse your files"
+msgstr "သင့်ရဲ့ ဖိုင်များကို လှော်လှန်ဖို့ ဖိုင်ရွေးကိရိယာ တခုကို ဖွင့်ပါ"
+
+#: ../libgimpwidgets/gimpfileentry.c:334
+msgid "Select Folder"
+msgstr "ဖိုင်တွဲကို ရွေးပါ"
+
+#: ../libgimpwidgets/gimpfileentry.c:336
+msgid "Select File"
+msgstr "ဖိုင်​ကို ရွေးပါ"
+
+#: ../libgimpwidgets/gimphelpui.c:419
+msgid "Press F1 for more help"
+msgstr "ပိုမို အကူအညီအတွက် F1 ကို ဖိနှိုပ်ပါ"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
+msgid "Kilobytes"
+msgstr "ကီလိုဘိုက်များ"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
+msgid "Megabytes"
+msgstr "မီဂါဘိုက်များ"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:207
+msgid "Gigabytes"
+msgstr "ဂီဂါဘိုက်များ"
+
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:268
+#: ../libgimpwidgets/gimppageselector.c:1165
+msgid "Nothing selected"
+msgstr "ဘာမျှ မရွေးထားဘူး"
+
+#: ../libgimpwidgets/gimppageselector.c:286
+msgid "Select _All"
+msgstr "အားလုံးကို ရွေးပါ"
+
+#: ../libgimpwidgets/gimppageselector.c:306
+msgid "Select _range:"
+msgstr "အတိုင်းအတာကို ရွေးပါ -"
+
+#: ../libgimpwidgets/gimppageselector.c:318
+msgid "Open _pages as"
+msgstr "စာမျက်နှာများ အဖြစ် ဖွင့်ပါ"
+
+#: ../libgimpwidgets/gimppageselector.c:419
+msgid "Page 000"
+msgstr "စာမျက်နှာ ၀၀၀"
+
+#: ../libgimpwidgets/gimppageselector.c:507
+#: ../libgimpwidgets/gimppageselector.c:743
+#, c-format
+msgid "Page %d"
+msgstr "စာမျက်နှာ %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1170
+msgid "One page selected"
+msgstr "တမျက်နှာကို ရွေးထားတယ်"
+
+#: ../libgimpwidgets/gimppageselector.c:1177
+#: ../libgimpwidgets/gimppageselector.c:1181
+#, c-format
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "%d စာမျက်နှာ ရွေးထားချက်"
+
+#: ../libgimpwidgets/gimppatheditor.c:213
+msgid "Writable"
+msgstr "ရေးသားနိုင်တယ်"
+
+#: ../libgimpwidgets/gimppatheditor.c:222
+msgid "Folder"
+msgstr "ဖိုင်တွဲ"
+
+#: ../libgimpwidgets/gimppickbutton.c:106
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"မျက်စည်းခတ်ကိရိယာကို နှိုပ်ပါ၊ နောက်ပြီး အဲဒီ အရောင်ကို ရွေးဖို့ သင့်ရဲ့ မျက်နှာပြင် တနေရာမှာ "
+"အရောင်တခုကို နှိုက်ပါ။"
+
+#. toggle button to (de)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:276
+msgid "_Preview"
+msgstr "အစမ်းမြင်ကွင်း"
+
+#: ../libgimpwidgets/gimppreviewarea.c:93
+msgid "Check Size"
+msgstr "အရွယ်ကို စစ်ဆေးပါ"
+
+#: ../libgimpwidgets/gimppreviewarea.c:100
+msgid "Check Style"
+msgstr "စတိုင်ကို စစ်ဆေးပါ"
+
+#: ../libgimpwidgets/gimppropwidgets.c:1859
+#, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "ဒီစာသား ထည့်သွင်းမဲ့ နေရာကွက်ဟာ အက္ခရာ %d အထိ ကန့်သတ်ထားတယ်။"
+
+#: ../libgimpwidgets/gimpstock.c:111
+msgid "Anchor"
+msgstr "ကျောက်ဆူး"
+
+#: ../libgimpwidgets/gimpstock.c:112
+msgid "C_enter"
+msgstr "အလယ်ဗဟို"
+
+#: ../libgimpwidgets/gimpstock.c:113
+msgid "_Duplicate"
+msgstr "ပုံတူပွားပါ"
+
+#: ../libgimpwidgets/gimpstock.c:114
+msgid "_Edit"
+msgstr "တည်းဖြတ်ပါ"
+
+#: ../libgimpwidgets/gimpstock.c:115
+msgid "Linked"
+msgstr "ချိတ်ဆက်မှု"
+
+#: ../libgimpwidgets/gimpstock.c:116
+msgid "Paste as New"
+msgstr "အသစ် အဖြစ် ပွားယူပါ"
+
+#: ../libgimpwidgets/gimpstock.c:117
+msgid "Paste Into"
+msgstr "ပွားယူမဲ့ နေရာ"
+
+#: ../libgimpwidgets/gimpstock.c:118
+msgid "_Reset"
+msgstr "ပြန်ချိန်ပါ"
+
+#: ../libgimpwidgets/gimpstock.c:119
+msgid "Visible"
+msgstr "မြင်နိုင်တယ်"
+
+#: ../libgimpwidgets/gimpstock.c:155 ../libgimpwidgets/gimpstock.c:159
+msgid "_Stroke"
+msgstr "စုတ်ချက်"
+
+#: ../libgimpwidgets/gimpstock.c:171
+msgid "L_etter Spacing"
+msgstr "စာလုံး ကြားအကွာအဝေး"
+
+#: ../libgimpwidgets/gimpstock.c:172
+msgid "L_ine Spacing"
+msgstr "စာလုံး ကြားအကွာအဝေး"
+
+#: ../libgimpwidgets/gimpstock.c:188
+msgid "_Resize"
+msgstr "အရွယ်ပြန်ညှိပါ"
+
+#: ../libgimpwidgets/gimpstock.c:189 ../libgimpwidgets/gimpstock.c:319
+msgid "_Scale"
+msgstr "စကေး"
+
+#: ../libgimpwidgets/gimpstock.c:295
+msgid "Cr_op"
+msgstr "လှီးဖြတ်ပါ"
+
+#: ../libgimpwidgets/gimpstock.c:314
+msgid "_Transform"
+msgstr "အသွင်ပြောင်းပါ"
+
+#: ../libgimpwidgets/gimpstock.c:318
+msgid "_Rotate"
+msgstr "လှည့်လည်ပါ"
+
+#: ../libgimpwidgets/gimpstock.c:320
+msgid "_Shear"
+msgstr "ဖြတ်ညှပ်ပါ"
+
+#: ../libgimpwidgets/gimpunitmenu.c:265
+msgid "More..."
+msgstr "ပိုမို၍..."
+
+#: ../libgimpwidgets/gimpunitmenu.c:580
+msgid "Unit Selection"
+msgstr "ယူနစ် ရွေးချယ်ခြင်း"
+
+#: ../libgimpwidgets/gimpunitmenu.c:628
+msgid "Unit"
+msgstr "ယူနစ်"
+
+#: ../libgimpwidgets/gimpunitmenu.c:632
+msgid "Factor"
+msgstr "အကြောင်းရင်း"
+
+#: ../libgimpwidgets/gimpwidgets.c:510
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"ကျပန်း ကိန်းဂဏန်း ထုတ်လုပ်ကိရိယာ မျိုးစေ့အတွက် ဒီတန်ဖိုးကို သုံးပါ - ဒီအရာက ပေးထားတဲ့ \"ကျပန်း"
+"\" လုပ်ဆောင်မှု တခုကို ထပ်လုပ်ဖို့ သင့်ကို အခွင့်ပေးတယ်"
+
+#: ../libgimpwidgets/gimpwidgets.c:514
+msgid "_New Seed"
+msgstr "မျိုးစေ့အသစ်"
+
+#: ../libgimpwidgets/gimpwidgets.c:527
+msgid "Seed random number generator with a generated random number"
+msgstr "ထုတ်လုပ်ထားတဲ့ ကျပန်း ကိန်းဂဏန်း တခု ပါတဲ့ မျိုးစေ့ ကျပန်း ကိန်းဂဏန်း ထုတ်လုပ်ကိရိယာ"
+
+#: ../libgimpwidgets/gimpwidgets.c:531
+msgid "_Randomize"
+msgstr "ကျပန်းစီစဉ်မှု"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:24
+msgctxt "aspect-type"
+msgid "Square"
+msgstr "စတုရန်းပုံ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgctxt "aspect-type"
+msgid "Portrait"
+msgstr "ထောင်လိုက်"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgctxt "aspect-type"
+msgid "Landscape"
+msgstr "အလှဲလိုက်"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+msgctxt "color-selector-channel"
+msgid "_H"
+msgstr "_ရ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+msgid "Hue"
+msgstr "အရောင်"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgctxt "color-selector-channel"
+msgid "_S"
+msgstr "_၀"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Saturation"
+msgstr "ပျော်၀င်မှု"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
+msgctxt "color-selector-channel"
+msgid "_V"
+msgstr "_တ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
+msgid "Value"
+msgstr "တန်ဖိုး"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+msgctxt "color-selector-channel"
+msgid "_R"
+msgstr "_န"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+msgid "Red"
+msgstr "အနီရောင်"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+msgctxt "color-selector-channel"
+msgid "_G"
+msgstr "_စ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+msgid "Green"
+msgstr "အစိမ်းရောင်"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+msgctxt "color-selector-channel"
+msgid "_B"
+msgstr "_ပ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+msgid "Blue"
+msgstr "အ​ပြာရောင်"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+msgctxt "color-selector-channel"
+msgid "_A"
+msgstr "_အ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+msgid "Alpha"
+msgstr "အာဖာ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:161
+msgctxt "page-selector-target"
+msgid "Layers"
+msgstr "အလွှာများ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:162
+msgctxt "page-selector-target"
+msgid "Images"
+msgstr "ရုပ်ပုံများ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:223
+msgctxt "zoom-type"
+msgid "Zoom in"
+msgstr "ချဲ့ကားပါ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:224
+msgctxt "zoom-type"
+msgid "Zoom out"
+msgstr "ကျုံ့ပါ"
+
+#: ../modules/color-selector-cmyk-lcms.c:86
+msgid "CMYK color selector (using color profile)"
+msgstr "CMYK အရောင် ရွေးကိရိယာ (အရောင် ခြုံငုံချက် သုံးစွဲပြီး)"
+
+#: ../modules/color-selector-cmyk-lcms.c:149
+#: ../modules/color-selector-cmyk.c:101
+msgid "CMYK"
+msgstr "CMYK"
+
+#. Cyan
+#: ../modules/color-selector-cmyk-lcms.c:168
+#: ../modules/color-selector-cmyk.c:124
+msgid "_C"
+msgstr "_C"
+
+#. Magenta
+#: ../modules/color-selector-cmyk-lcms.c:170
+#: ../modules/color-selector-cmyk.c:126
+msgid "_M"
+msgstr "_M"
+
+#. Yellow
+#: ../modules/color-selector-cmyk-lcms.c:172
+#: ../modules/color-selector-cmyk.c:128
+msgid "_Y"
+msgstr "_Y"
+
+#. Key (Black)
+#: ../modules/color-selector-cmyk-lcms.c:174
+#: ../modules/color-selector-cmyk.c:130
+msgid "_K"
+msgstr "_K"
+
+#: ../modules/color-selector-cmyk-lcms.c:178
+#: ../modules/color-selector-cmyk.c:134
+msgid "Cyan"
+msgstr "အပြာနုရောင်"
+
+#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk.c:135
+msgid "Magenta"
+msgstr "ပန်းခရမ်းရောင်"
+
+#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk.c:136
+msgid "Yellow"
+msgstr "အဝါရောင်"
+
+#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk.c:137
+msgid "Black"
+msgstr "အနက်ရောင်"
+
+#: ../modules/color-selector-cmyk-lcms.c:394
+msgid "Profile: (none)"
+msgstr "ခြုံငုံချက် - (ဘာမျှမရှိ)"
+
+#: ../modules/color-selector-cmyk-lcms.c:415
+#, c-format
+msgid "Profile: %s"
+msgstr "ခြုံငုံချက် - %s"
+
+#: ../modules/color-selector-cmyk.c:70
+msgid "CMYK color selector"
+msgstr "CMYK ​အရောင်ရွေးကိရိယာ"
+
+#: ../modules/color-selector-cmyk.c:171
+msgid "Black _pullout:"
+msgstr "အနက်ရောင် ထုတ်ယူချက် -"
+
+#: ../modules/color-selector-cmyk.c:188
+msgid "The percentage of black to pull out of the colored inks."
+msgstr "အရောင်ဆိုးထားတဲ့ မင်ရည်များမှ ထုတ်ယူမဲ့ အနက်ရောင် ရာခိုင်နှုန်း"
+
+#: ../modules/color-selector-water.c:81
+msgid "Watercolor style color selector"
+msgstr "ရေအရောင် စတိုင် အရောင်ရွေးကိရိယာ"
+
+#: ../modules/color-selector-water.c:117
+msgid "Watercolor"
+msgstr "ရေအရောင်"
+
+#: ../modules/color-selector-water.c:185
+msgid "Pressure"
+msgstr "ဖိအား"
+
+#: ../modules/color-selector-wheel.c:74
+msgid "HSV color wheel"
+msgstr "HSV ​အရောင် ဘီးလုံး"
+
+#: ../modules/color-selector-wheel.c:105
+msgid "Wheel"
+msgstr "ဘီးလုံး"
+
+#: ../modules/controller-dx-dinput.c:155
+msgid "DirectX DirectInput event controller"
+msgstr "DirectX DirectInput ဖြစ်ရပ် အထိန်း"
+
+#: ../modules/controller-dx-dinput.c:195
+#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
+msgid "Device:"
+msgstr "ကိရိယာ -"
+
+#: ../modules/controller-dx-dinput.c:196
+msgid "The device to read DirectInput events from."
+msgstr "DirectInput ဖြစ်ရပ်များကို ဖတ်ရှုရမည့် ကိရိယာ။"
+
+#: ../modules/controller-dx-dinput.c:205
+msgid "DirectX DirectInput"
+msgstr "DirectX DirectInput"
+
+#: ../modules/controller-dx-dinput.c:419
+#, c-format
+msgid "Button %d"
+msgstr "ခလုတ် %d"
+
+#: ../modules/controller-dx-dinput.c:422
+#, c-format
+msgid "Button %d Press"
+msgstr "ခလုတ် %d ဖိနှိုပ်ချက်"
+
+#: ../modules/controller-dx-dinput.c:425
+#, c-format
+msgid "Button %d Release"
+msgstr "ခလုတ် %d ထုတ်ပြန်ချက်"
+
+#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-linux-input.c:89
+msgid "X Move Left"
+msgstr "X ဘယ်ဖက် ရွှေ့ပါ"
+
+#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-linux-input.c:90
+msgid "X Move Right"
+msgstr "X ညာဖက် ရွှေ့ပါ"
+
+#: ../modules/controller-dx-dinput.c:451
+msgid "Y Move Away"
+msgstr "Y အဝေး ရွှေ့လိုက်ပါ"
+
+#: ../modules/controller-dx-dinput.c:454
+msgid "Y Move Near"
+msgstr "Y အနီး ရွှေ့လိုက်ပါ"
+
+#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-linux-input.c:93
+msgid "Z Move Up"
+msgstr "Z အထက်ကို ရွှေ့ပါ"
+
+#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-linux-input.c:94
+msgid "Z Move Down"
+msgstr "Z အောက်ကို ရွှေ့ပါ"
+
+#: ../modules/controller-dx-dinput.c:469
+msgid "X Axis Tilt Away"
+msgstr "X ၀င်ရိုး အဝေး တိမ်းစောင်းသွားတယ်"
+
+#: ../modules/controller-dx-dinput.c:472
+msgid "X Axis Tilt Near"
+msgstr "X ၀င်ရိုး အနီး တိမ်းစောင်းသွားတယ်"
+
+#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-linux-input.c:98
+msgid "Y Axis Tilt Right"
+msgstr "Y ၀င်ရိုး ညာဖက် တိမ်းစောင်းသွားတယ်"
+
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:99
+msgid "Y Axis Tilt Left"
+msgstr "Y ၀င်ရိုး ဘယ်ဖက် တိမ်းစောင်းသွားတယ်"
+
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:100
+msgid "Z Axis Turn Left"
+msgstr "Z ၀င်ရိုး ဘယ်ဖက် လှည့်သွားတယ်"
+
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:101
+msgid "Z Axis Turn Right"
+msgstr "Z ၀င်ရိုး ညာဖက် လှည့်သွားတယ်"
+
+#: ../modules/controller-dx-dinput.c:501
+#, c-format
+msgid "Slider %d Increase"
+msgstr "စလိုင်ဒါ %d တိုးတက်မှု"
+
+#: ../modules/controller-dx-dinput.c:504
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "စလိုင်ဒါ %d ဆုတ်ယုတ်မှု"
+
+#: ../modules/controller-dx-dinput.c:514
+#, c-format
+msgid "POV %d X View"
+msgstr "POV %d X ရှုမြင်ချက်"
+
+#: ../modules/controller-dx-dinput.c:517
+#, c-format
+msgid "POV %d Y View"
+msgstr "POV %d Y ရှုမြင်ချက်"
+
+#: ../modules/controller-dx-dinput.c:520
+#, c-format
+msgid "POV %d Return"
+msgstr "POV %d ပြန်ပို့ချက်"
+
+#: ../modules/controller-dx-dinput.c:1083
+msgid "DirectInput Events"
+msgstr "DirectInput ဖြစ်ရပ်များ"
+
+#: ../modules/controller-dx-dinput.c:1094
+#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
+msgid "No device configured"
+msgstr "စီစဉ်ဖန်တီးထားတဲ့ ကိရိယာ မရှိဘူး"
+
+#: ../modules/controller-dx-dinput.c:1119
+#: ../modules/controller-linux-input.c:587
+msgid "Device not available"
+msgstr "ကိရိယာ မရနိုင်ဘူး"
+
+#: ../modules/controller-linux-input.c:57
+msgid "Button 0"
+msgstr "ခလုတ် ၀"
+
+#: ../modules/controller-linux-input.c:58
+msgid "Button 1"
+msgstr "ခလုတ် ၁"
+
+#: ../modules/controller-linux-input.c:59
+msgid "Button 2"
+msgstr "ခလုတ် ၂"
+
+#: ../modules/controller-linux-input.c:60
+msgid "Button 3"
+msgstr "ခလုတ် ၃"
+
+#: ../modules/controller-linux-input.c:61
+msgid "Button 4"
+msgstr "ခလုတ် ၄"
+
+#: ../modules/controller-linux-input.c:62
+msgid "Button 5"
+msgstr "ခလုတ် ၅"
+
+#: ../modules/controller-linux-input.c:63
+msgid "Button 6"
+msgstr "ခလုတ် ၆"
+
+#: ../modules/controller-linux-input.c:64
+msgid "Button 7"
+msgstr "ခလုတ် ၇"
+
+#: ../modules/controller-linux-input.c:65
+msgid "Button 8"
+msgstr "ခလုတ် ၈"
+
+#: ../modules/controller-linux-input.c:66
+msgid "Button 9"
+msgstr "ခလုတ် ၉"
+
+#: ../modules/controller-linux-input.c:67
+msgid "Button Mouse"
+msgstr "ခလုတ် ကြွက်ခလုတ်"
+
+#: ../modules/controller-linux-input.c:68
+msgid "Button Left"
+msgstr "ခလုတ် ဘယ်ဖက်"
+
+#: ../modules/controller-linux-input.c:69
+msgid "Button Right"
+msgstr "ခလုတ် ညာဖက်"
+
+#: ../modules/controller-linux-input.c:70
+msgid "Button Middle"
+msgstr "ခလုတ် အလယ်"
+
+#: ../modules/controller-linux-input.c:71
+msgid "Button Side"
+msgstr "ခလုတ် ဘက်ခြမ်း"
+
+#: ../modules/controller-linux-input.c:72
+msgid "Button Extra"
+msgstr "ခလုတ် အပို"
+
+#: ../modules/controller-linux-input.c:73
+msgid "Button Forward"
+msgstr "ခလုတ် ရှေ့သို့"
+
+#: ../modules/controller-linux-input.c:74
+msgid "Button Back"
+msgstr "ခလုတ် နောက်သို့"
+
+#: ../modules/controller-linux-input.c:75
+msgid "Button Task"
+msgstr "ခလုတ် လုပ်ငန်း"
+
+#: ../modules/controller-linux-input.c:77
+msgid "Button Wheel"
+msgstr "ခလုတ် ဘီးလုံး"
+
+#: ../modules/controller-linux-input.c:80
+msgid "Button Gear Down"
+msgstr "ခလုတ် ဂီယာ အောက်သို့"
+
+#: ../modules/controller-linux-input.c:83
+msgid "Button Gear Up"
+msgstr "ခလုတ် ဂီယာ အထက်သို့"
+
+#: ../modules/controller-linux-input.c:91
+msgid "Y Move Forward"
+msgstr "Y အရှေ့ဖက်ကို ရွှေ့သွားတယ်"
+
+#: ../modules/controller-linux-input.c:92
+msgid "Y Move Back"
+msgstr "Y အနောက်ဖက်ကို ရွှေ့သွားတယ်"
+
+#: ../modules/controller-linux-input.c:96
+msgid "X Axis Tilt Forward"
+msgstr "X ၀င်ရိုး အရှေ့ဖက်ကို တိမ်းစောင်းနေတယ်"
+
+#: ../modules/controller-linux-input.c:97
+msgid "X Axis Tilt Back"
+msgstr "X ၀င်ရိုး အနောက်ဖက်ကို တိမ်းစောင်းနေတယ်"
+
+#: ../modules/controller-linux-input.c:103
+msgid "Horiz. Wheel Turn Back"
+msgstr "ပြင်ညီ ဘီးလုံး အနောက်ဖက် လှည့်သွားတယ်"
+
+#: ../modules/controller-linux-input.c:104
+msgid "Horiz. Wheel Turn Forward"
+msgstr "ပြင်ညီ ဘီးလုံး အရှေ့ဖက် လှည့်သွားတယ်"
+
+#: ../modules/controller-linux-input.c:105
+msgid "Dial Turn Left"
+msgstr "ဒိုင်ခွက် ဘယ်ဖက် လှည့်သွားတယ်"
+
+#: ../modules/controller-linux-input.c:106
+msgid "Dial Turn Right"
+msgstr "ဒိုင်ခွက် ညာဖက် လှည့်သွားတယ်"
+
+#: ../modules/controller-linux-input.c:107
+msgid "Wheel Turn Left"
+msgstr "ဘီးလုံး ဘယ်ဖက် လှည့်သွားတယ်"
+
+#: ../modules/controller-linux-input.c:108
+msgid "Wheel Turn Right"
+msgstr "ဘီးလုံး ညာဖက် လှည့်သွားတယ်"
+
+#: ../modules/controller-linux-input.c:177
+msgid "Linux input event controller"
+msgstr "လင်းနတ် ထည့်သွင်းချက် ဖြစ်စဉ် အ​ထိန်း"
+
+#: ../modules/controller-linux-input.c:218
+msgid "The name of the device to read Linux Input events from."
+msgstr "လင်းနတ် ထည့်သွင်းချက် ဖြစ်စဉ်မှ ဖတ်ရှုမဲ့ ကိရိယာ အမည်"
+
+#: ../modules/controller-linux-input.c:229
+msgid "Linux Input"
+msgstr "လင်းနတ် ထည့်သွင်းချက်"
+
+#: ../modules/controller-linux-input.c:512
+msgid "Linux Input Events"
+msgstr "လင်းနတ် ထည့်သွင်းချက် ဖြစ်စဉ်များ"
+
+#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
+#: ../modules/controller-midi.c:479
+#, c-format
+msgid "Reading from %s"
+msgstr "%s မှ ဖတ်ရှုနေတယ်"
+
+#: ../modules/controller-linux-input.c:568
+#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
+#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
+#, c-format
+msgid "Device not available: %s"
+msgstr "ကိရိယာ မရနိုင်ဘူး - %s"
+
+#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
+msgid "End of file"
+msgstr "ဖိုင် အဆုံးသတ်"
+
+#: ../modules/controller-midi.c:163
+msgid "MIDI event controller"
+msgstr "MIDI ဖြစ်စဉ် အထိန်း"
+
+#: ../modules/controller-midi.c:202
+msgid "The name of the device to read MIDI events from."
+msgstr "MIDI ဖြစ်စဉ်များမှ ဖတ်ရှုမဲ့ ကိရိယာ အမည်"
+
+#: ../modules/controller-midi.c:205
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "ALSA စီစဉ်သူ သုံးစွဲမဲ့ 'အာဆာ' ကို ရေးသွင်းပါ"
+
+#: ../modules/controller-midi.c:220
+msgid "Channel:"
+msgstr "ချာနယ် -"
+
+#: ../modules/controller-midi.c:221
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+"ဖြစ်စဉ်များမှ ဖတ်ရှုမဲ့ MIDI ချာနယ်။ MIDI ချာနယ် အားလုံးမှ ဖတ်ရှုဖို့ -၁ မှာ "
+"သတ်မှတ်ပါ။"
+
+#: ../modules/controller-midi.c:225
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../modules/controller-midi.c:354
+#, c-format
+msgid "Note %02x on"
+msgstr "မှတ်ချက် %02x အဖွင့်"
+
+#: ../modules/controller-midi.c:357
+#, c-format
+msgid "Note %02x off"
+msgstr "မှတ်ချက် %02x အပိတ်"
+
+#: ../modules/controller-midi.c:360
+#, c-format
+msgid "Controller %03d"
+msgstr "အထိန်း %03d"
+
+#: ../modules/controller-midi.c:407
+msgid "MIDI Events"
+msgstr "MIDI ဖြစ်စဉ်များ"
+
+#: ../modules/controller-midi.c:425
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../modules/controller-midi.c:427
+msgid "GIMP MIDI Input Controller"
+msgstr "GIMP MIDI ထည့်သွင်းချက် အထိန်း"
+
+#: ../modules/display-filter-color-blind.c:66
+msgid "Protanopia (insensitivity to red)"
+msgstr "ပရိုတန်နှိုပီယား (အနီရောင် အာရုံခံကင်းမဲ့မှု)"
+
+#: ../modules/display-filter-color-blind.c:68
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "ဒီအိုတာရန်နှုပီးယား (အစိမ်းရောင် အာရုံခံကင်းမဲ့မှု)"
+
+#: ../modules/display-filter-color-blind.c:70
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "ထရီတန်နှုပီးယား (အပြာရောင် အာရုံခံကင်းမဲ့မှု)"
+
+#: ../modules/display-filter-color-blind.c:197
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "အရောင် အားနည်းမှု တုပဖန်တီးရေး စစ်ထုတ်ကိရယာ (ဘရက်တဲလ်-ဗီယံနုတ်-မော်လန် ဖြေရှင်းနည်း)"
+
+#: ../modules/display-filter-color-blind.c:260
+msgid "Color Deficient Vision"
+msgstr "အရောင် အားနည်းမှု မြင်ကွင်း"
+
+#: ../modules/display-filter-color-blind.c:482
+msgid "Color _deficiency type:"
+msgstr "အရောင် အားနည်းမှု အမျိုးအစား -"
+
+#: ../modules/display-filter-gamma.c:89
+msgid "Gamma color display filter"
+msgstr "ဂါမာ ​အရောင် ပြသရေး စစ်ထုတ်ကိရိယာ"
+
+#: ../modules/display-filter-gamma.c:128
+msgid "Gamma"
+msgstr "ဂါမာ"
+
+#: ../modules/display-filter-gamma.c:231
+msgid "_Gamma:"
+msgstr "ဂါမာ -"
+
+#: ../modules/display-filter-high-contrast.c:89
+msgid "High Contrast color display filter"
+msgstr "ခြားနားချက် မြင့်မားတဲ့ အရောင် ပြသရေး စစ်​ထုတ်ကိရိယာ"
+
+#: ../modules/display-filter-high-contrast.c:128
+msgid "Contrast"
+msgstr "ခြားနားချက်"
+
+#: ../modules/display-filter-high-contrast.c:231
+msgid "Contrast c_ycles:"
+msgstr "ခြားနားတဲ့ စက်ဝိုင်းများ -"
+
+#: ../modules/display-filter-lcms.c:101
+msgid "Color management display filter using ICC color profiles"
+msgstr "ICC အရောင် ခြုံငုံချက်များ သုံးစွဲတဲ့ အရောင် စီမံခန့်ခွဲရေး ပြသမှု စစ်ထုတ်ကိရိယာ"
+
+#: ../modules/display-filter-lcms.c:133
+msgid "Color Management"
+msgstr "အရောင် စီမံခန့်ခွဲရေး"
+
+#: ../modules/display-filter-lcms.c:190
+msgid "None"
+msgstr "ဘာမျှမရှိ"
+
+#: ../modules/display-filter-lcms.c:211
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr ""
+"ဒီစစ်ထုတ်ကိရိယာက ၄င်းရဲ့ စီမံဖန်တီးမှုကို ဦးစားပေးချက်များ အညွန်းစာမျက်နှာမှ အရောင် "
+"စီမံခန့်ခွဲရေး ကဏ္ဍမှ ရယူထားတယ်။"
+
+#: ../modules/display-filter-lcms.c:225
+msgid "Mode of operation:"
+msgstr "လည်ပတ်မှု စနစ် -"
+
+#: ../modules/display-filter-lcms.c:232
+msgid "Image profile:"
+msgstr "ရုပ်ပုံ ခြုံငုံချက် -"
+
+#: ../modules/display-filter-lcms.c:240
+msgid "Monitor profile:"
+msgstr "မော်နီတာ ခြုံငုံချက် -"
+
+#: ../modules/display-filter-lcms.c:248
+msgid "Print simulation profile:"
+msgstr "ပုံနှိုပ်ချက် တုပဖန်တီးမှု ခြုံငုံချက် -"
+
+#: ../modules/display-filter-proof.c:96
+msgid "Color proof filter using ICC color profile"
+msgstr "ICC အရောင် ခြုံငုံချက်ကို သုံးစွဲတဲ့ အရောင် မူကြမ်း စစ်ထုတ်ကိရိယာ"
+
+#: ../modules/display-filter-proof.c:144
+msgid "Color Proof"
+msgstr "အရောင် မူကြမ်း"
+
+#: ../modules/display-filter-proof.c:310
+msgid "Choose an ICC Color Profile"
+msgstr "ICC အရောင် ခြုံငုံချက် တခုကို ရွေးချယ်ပါ"
+
+#: ../modules/display-filter-proof.c:337
+msgid "All files (*.*)"
+msgstr "ဖိုင်များ အားလုံး (*.*)"
+
+#: ../modules/display-filter-proof.c:342
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC အရောင် ခြုံငုံချက် (*.icc, *.icm)"
+
+#: ../modules/display-filter-proof.c:400
+msgid "_Profile:"
+msgstr "ခြုံငုံချက် -"
+
+#: ../modules/display-filter-proof.c:406
+msgid "_Intent:"
+msgstr "ဦးတည်ချက် -"
+
+#: ../modules/display-filter-proof.c:411
+msgid "_Black Point Compensation"
+msgstr "အနက်ရောက် အမှတ် ဖာထေးခြင်း"
+
