@@ -1,5 +1,6 @@
 .deps
 .libs
+/gimpdir-output
 Makefile
 Makefile.in
 libgimpapptestutils.a

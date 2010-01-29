@@ -5,14 +5,14 @@
 # of course you can do.  The sessionrc will be entirely rewritten every time
 # you quit GIMP.  If this file isn't found, defaults are used.
 
-(session-info "dock" "dock"
+(session-info "dock" "gimp-dock-window"
     (position 566 171)
     (size 210 535)
     (open-on-exit)
     (aux-info
         (show-image-menu "false")
         (follow-active-image "true"))
-    (dock
+    (gimp-dock
         (book
             (current-page 1)
             (dockable "gimp-layer-list"
@@ -25,45 +25,45 @@
             (current-page 0)
             (dockable "gimp-brush-grid"
                 (tab-style preview)))))
-(session-info "dock" "dock"
+(session-info "dock" "gimp-dock-window"
     (position 141 291)
     (size 406 300)
     (open-on-exit)
     (aux-info
         (show-image-menu "false")
         (follow-active-image "true"))
-    (dock
+    (gimp-dock
         (book
             (current-page 0)
             (dockable "gimp-tool-options"
                 (tab-style icon))))
-    (dock
+    (gimp-dock
         (book
             (current-page 0)
             (dockable "gimp-device-status"
                 (tab-style icon)))))
-(session-info "dock" "dock"
+(session-info "dock" "gimp-dock-window"
     (position 795 43)
     (size 200 265)
     (open-on-exit)
     (aux-info
         (show-image-menu "true")
         (follow-active-image "true"))
-    (dock
+    (gimp-dock
         (book
             (current-page 1)
             (dockable "gimp-pattern-grid"
                 (tab-style preview))
             (dockable "gimp-gradient-list"
                 (tab-style preview)))))
-(session-info "dock" "dock"
+(session-info "dock" "gimp-dock-window"
     (position 803 344)
     (size 200 404)
     (open-on-exit)
     (aux-info
         (show-image-menu "true")
         (follow-active-image "true"))
-    (dock
+    (gimp-dock
         (book
             (current-page 0)
             (dockable "gimp-channel-list"
@@ -78,11 +78,11 @@
                     (edit-active "true")
                     (current-data "Standard")
                     (zoom-factor "2.80"))))))
-(session-info "toolbox" "dock"
+(session-info "dock" "gimp-toolbox-window"
     (position 13 37)
     (size 96 620)
     (open-on-exit)
-    (dock))
+    (gimp-toolbox))
 (session-info "toplevel" "gimp-file-open-dialog"
     (position 392 140)
     (size 902 816))

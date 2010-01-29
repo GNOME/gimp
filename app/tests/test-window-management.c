@@ -55,7 +55,7 @@ int main(int argc, char **argv)
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp2_directory ("gimpdir-empty");
+  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir-empty");
 
   /* We share the same application instance across all tests */
   gimp = gimp_init_for_gui_testing (FALSE, FALSE);
@@ -70,6 +70,9 @@ int main(int argc, char **argv)
 
   /* Run the tests and return status */
   test_result = g_test_run ();
+
+  /* Don't write files to the source dir */
+  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir-output");
 
   /* Exit somewhat properly to avoid annoying warnings */
   gimp_exit (gimp, TRUE);

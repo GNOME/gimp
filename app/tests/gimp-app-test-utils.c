@@ -19,9 +19,34 @@
 
 #include "gimp-app-test-utils.h"
 
+
+static void
+gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
+                                   const gchar *subdir,
+                                   const gchar *target_env_var)
+{
+  const gchar *root_dir   = NULL;
+  gchar       *target_dir = NULL;
+
+  /* Get root dir */
+  root_dir = g_getenv (root_env_var);
+  if (! root_dir)
+    g_printerr ("The env var %s is not set, you are probably running\n"
+                "in a debugger. Set it manually, e.g.:\n"
+                "set env %s=%s/source/gimp\n",
+                root_env_var,
+                root_env_var, g_get_home_dir ());
+
+  /* Construct path and setup target env var */
+  target_dir = g_build_filename (root_dir, subdir, NULL);
+  g_setenv (target_env_var, target_dir, TRUE);
+  g_free (target_dir);
+}
+
+
 /**
  * gimp_test_utils_set_gimp2_directory:
- * @subdir:
+ * @subdir: Subdir, may be %NULL
  *
  * Sets GIMP2_DIRECTORY to the source dir ./app/tests/@subdir. Make
  * sure to run it before using any of the GIMP functions.
@@ -29,19 +54,12 @@
 void
 gimp_test_utils_set_gimp2_directory (const gchar *subdir)
 {
-  gchar *gimpdir = NULL;
-
   /* GIMP_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
    * see Makefile.am
    */
-  gimpdir = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                              "app/tests",
-                              subdir,
-                              NULL);
-
-  g_setenv ("GIMP2_DIRECTORY", gimpdir, TRUE);
-
-  g_free (gimpdir);
+  gimp_test_utils_set_env_to_subdir ("GIMP_TESTING_ABS_TOP_SRCDIR" /*root_env_var*/,
+                                     subdir,
+                                     "GIMP2_DIRECTORY" /*target_env_var*/);
 }
 
 /**
@@ -52,34 +70,10 @@ gimp_test_utils_set_gimp2_directory (const gchar *subdir)
 void
 gimp_test_utils_setup_menus_dir (void)
 {
-  gchar *menus_dir = NULL;
-
-  menus_dir = gimp_test_utils_get_source_subdir ("menus");
-
-  g_setenv ("GIMP_TESTING_MENUS_DIR", menus_dir, TRUE);
-
-  g_free (menus_dir);
-}
-
-/**
- * gimp_test_utils_get_source_subdir:
- * @subdir:
- *
- * Returns: The source directory $top_srcdir/@subdir.
- **/
-gchar *
-gimp_test_utils_get_source_subdir (const gchar *subdir)
-{
-  const gchar *abs_top_srcdir = g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR");
-
-  if (! abs_top_srcdir)
-    g_printerr ("The env var GIMP_TESTING_ABS_TOP_SRCDIR is not set, you are probably\n"
-                "running in a debugger. Set it manually to e.g. ~/source/gimp");
-
   /* GIMP_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
    * see Makefile.am
    */
-  return g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                           subdir,
-                           NULL);
+  gimp_test_utils_set_env_to_subdir ("GIMP_TESTING_ABS_TOP_SRCDIR" /*root_env_var*/,
+                                     "menus" /*subdir*/,
+                                     "GIMP_TESTING_MENUS_DIR" /*target_env_var*/);
 }

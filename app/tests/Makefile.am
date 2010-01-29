@@ -7,7 +7,8 @@ SUBDIRS = \
 # tests through an environment variable so they can set the gimpdir
 # they want to use
 TESTS_ENVIRONMENT = \
-	GIMP_TESTING_ABS_TOP_SRCDIR=$(abs_top_srcdir)
+	GIMP_TESTING_ABS_TOP_SRCDIR=$(abs_top_srcdir) \
+	GIMP_TESTING_ABS_TOP_BUILDDIR=$(abs_top_builddir)
 
 TESTS = \
 	test-layer-grouping	\
@@ -16,6 +17,7 @@ TESTS = \
 	test-ui			\
 	test-window-management	\
 	test-xcf
+
 
 EXTRA_PROGRAMS = $(TESTS)
 
@@ -110,3 +112,14 @@ LDADD = \
 	$(INTLLIBS)						\
 	$(RT_LIBS)
 
+check-local:
+	@mkdir -p gimpdir-output
+	@mkdir -p gimpdir-output/brushes
+	@mkdir -p gimpdir-output/patterns
+	@mkdir -p gimpdir-output/gradients
+
+clean-local:
+	@rm -rf gimpdir-output
+	@rm -rf gimpdir-output/brushes
+	@rm -rf gimpdir-output/patterns
+	@rm -rf gimpdir-output/gradients

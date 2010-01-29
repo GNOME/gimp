@@ -73,10 +73,14 @@ int main(int argc, char **argv)
   g_test_init (&argc, &argv, NULL);
 
   /* Make sure to run this before we use any GIMP functions */
-  gimp_test_utils_set_gimp2_directory ("gimpdir");
+  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir");
   gimp_test_utils_setup_menus_dir ();
 
-  sessionrc_filename = gimp_personal_rc_file ("sessionrc");
+  /* Note that we expect the resulting sessionrc to be different from
+   * the read file, which is why we check the MD5 of the -expected
+   * variant
+   */
+  sessionrc_filename = gimp_personal_rc_file ("sessionrc-expected");
   dockrc_filename    = gimp_personal_rc_file ("dockrc");
 
   /* Remeber the modtimes and MD5s */
@@ -90,11 +94,21 @@ int main(int argc, char **argv)
   /* Start up GIMP */
   gimp = gimp_init_for_gui_testing (FALSE, TRUE);
 
-  /* Let the main loop run for a while (quits after a short timeout)
-   * to let things stabilize. This includes parsing sessionrc and
-   * dockrc
+  /* Let the main loop run until idle to let things stabilize. This
+   * includes parsing sessionrc and dockrc
    */
   gimp_test_run_mainloop_until_idle ();
+
+  /* Change the gimp dir to the output dir so files are written there,
+   * we don't want to (can't always) write to files in the source
+   * dir. There is a hook in Makefile.am that makes sure the output
+   * dir exists
+   */
+  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir-output");
+  g_free (sessionrc_filename);
+  g_free (dockrc_filename);
+  sessionrc_filename = gimp_personal_rc_file ("sessionrc");
+  dockrc_filename    = gimp_personal_rc_file ("dockrc");
 
   /* Exit. This includes writing sessionrc and dockrc*/
   gimp_exit (gimp, TRUE);

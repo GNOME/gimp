@@ -875,7 +875,7 @@ main (int    argc,
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp2_directory ("gimpdir");
+  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir");
 
   /* We share the same application instance across all tests. We need
    * the GUI variant for the file procs
@@ -907,6 +907,9 @@ main (int    argc,
               NULL,
               gimp_write_and_read_gimp_2_8_format,
               NULL);
+
+  /* Don't write files to the source dir */
+  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir-output");
 
   /* Exit so we don't break script-fu plug-in wire */
   gimp_exit (gimp, TRUE);
