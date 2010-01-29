@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
 "POT-Creation-Date: 2010-01-17 21:04+0000\n"
-"PO-Revision-Date: 2010-01-29 00:59+0100\n"
+"PO-Revision-Date: 2010-01-29 21:20+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: Serbian <gnome@prevod.org>\n"
 "MIME-Version: 1.0\n"
@@ -277,7 +277,7 @@ msgstr "Подешавање"
 
 #: ../app/actions/actions.c:125
 msgid "Context"
-msgstr "Контекст"
+msgstr "Сучеље"
 
 #: ../app/actions/actions.c:128 ../app/dialogs/dialogs.c:233
 msgid "Pointer Information"
@@ -4075,7 +4075,7 @@ msgstr "Ос_ветљење и сенке"
 #: ../app/actions/plug-in-actions.c:102
 msgctxt "plug-in-action"
 msgid "_Distorts"
-msgstr "_Дисторзије"
+msgstr "Из_обличења"
 
 #: ../app/actions/plug-in-actions.c:104
 msgctxt "plug-in-action"
