@@ -151,16 +151,50 @@ gimp_env_init (gboolean plug_in)
 const gchar *
 gimp_directory (void)
 {
-  static gchar *gimp_dir = NULL;
+  static gchar *gimp_dir          = NULL;
+  static gchar *last_env_gimp_dir = NULL;
 
   const gchar  *env_gimp_dir;
   const gchar  *home_dir;
 
-  if (gimp_dir)
-    return gimp_dir;
-
   env_gimp_dir = g_getenv ("GIMP2_DIRECTORY");
-  home_dir     = g_get_home_dir ();
+
+  if (gimp_dir)
+    {
+      gboolean gimp2_directory_changed = FALSE;
+
+      /* We have constructed the gimp_dir already. We can return
+       * gimp_dir unless some parameter gimp_dir depends on has
+       * changed. For now we just check for changes to GIMP2_DIRECTORY
+       */
+      gimp2_directory_changed =
+        (env_gimp_dir == NULL &&
+         last_env_gimp_dir != NULL) ||
+        (env_gimp_dir != NULL &&
+         last_env_gimp_dir == NULL) ||
+        (env_gimp_dir != NULL &&
+         last_env_gimp_dir != NULL &&
+         strcmp (env_gimp_dir, last_env_gimp_dir) != 0);
+
+      if (! gimp2_directory_changed)
+        {
+          return gimp_dir;
+        }
+      else
+        {
+          /* Free the old gimp_dir and go on to update it */
+          g_free (gimp_dir);
+          gimp_dir = NULL;
+        }
+    }
+
+  /* Remember the GIMP2_DIRECTORY to next invocation so we can check
+   * if it changes
+   */
+  g_free (last_env_gimp_dir);
+  last_env_gimp_dir = g_strdup (env_gimp_dir);
+
+  home_dir = g_get_home_dir ();
 
   if (env_gimp_dir)
     {
