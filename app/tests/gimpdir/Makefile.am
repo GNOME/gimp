@@ -4,6 +4,7 @@ SUBDIRS = \
 	patterns
 
 EXTRA_DIST = \
-	dockrc		\
-	sessionrc	\
+	dockrc			\
+	sessionrc		\
+	sessionrc-expected	\
 	tags.xml
