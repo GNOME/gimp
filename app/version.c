@@ -34,6 +34,7 @@
 
 #include "about.h"
 #include "version.h"
+#include "git-version.h"
 
 #include "gimp-intl.h"
 
@@ -128,6 +129,9 @@ gimp_version_show (gboolean be_verbose)
 
   if (be_verbose)
     {
+      g_print (_("git commit %s"), GIMP_GIT_VERSION);
+      g_print ("\n");
+
       g_print ("\n");
       gimp_show_library_versions ();
     }

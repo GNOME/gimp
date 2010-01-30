@@ -70,7 +70,12 @@ libapp_sources = \
 	gimp-log.h	\
 	gimp-intl.h
 
-libapp_a_SOURCES = $(libapp_sources)
+libapp_generated_sources = \
+	git-version.h
+
+$(srcdir)/version.c: git-version.h
+
+libapp_a_SOURCES = $(libapp_sources) $(libapp_generated_sources)
 
 gimp_2_7_SOURCES = $(libapp_sources) main.c
 
@@ -264,3 +269,22 @@ gimp-console.rc.o: gimp.rc
 	$(WINDRES) --define ORIGINALFILENAME_STR="gimp-console-2.7$(EXEEXT)" \
 		--define INTERNALNAME_STR="gimp-console-2.7" \
 		gimp.rc gimp-console.rc.o
+
+# If git is available, always check if git-version.h should be
+# updated. If git is not avaialbe, don't do anything if git-version.h
+# already exists because then we are probably working with a tarball
+# in which case the git-version.h we ship is correct.
+git-version.h: update-git-version-header
+	@if test -d "$(top_srcdir)/.git"; then \
+	  echo "#define GIMP_GIT_VERSION \"`git log HEAD^..HEAD --pretty=format:%H`\"" > "$@.tmp"; \
+	elif test ! -f "$@"; then \
+	  echo "#define GIMP_GIT_VERSION \"Unknown, shouldn't happen\"" > "$@.tmp"; \
+	fi
+	@if ( test -f "$@" && cmp "$@.tmp" "$@" > /dev/null); then \
+	  rm -f "$@.tmp"; \
+	elif test -f "$@.tmp"; then \
+	  mv "$@.tmp" "$@"; \
+	  echo "  git HEAD changed: git-version.h regenerated"; \
+	fi
+
+.PHONY: update-git-version-header

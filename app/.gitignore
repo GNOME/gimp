@@ -1,9 +1,10 @@
-/Makefile
-/Makefile.in
-/makefile.mingw
 /.deps
 /.libs
+/Makefile
+/Makefile.in
 /gimp-2.*
 /gimp-console-2.*
-/libapp.a
 /gimp.rc
+/git-version.h
+/libapp.a
+/makefile.mingw
