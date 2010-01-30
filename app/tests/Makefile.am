@@ -21,6 +21,8 @@ TESTS = \
 
 EXTRA_PROGRAMS = $(TESTS)
 
+$(TESTS): gimpdir-output
+
 noinst_LIBRARIES = libgimpapptestutils.a
 libgimpapptestutils_a_SOURCES = \
 	gimp-app-test-utils.c	\
@@ -112,14 +114,11 @@ LDADD = \
 	$(INTLLIBS)						\
 	$(RT_LIBS)
 
-check-local:
-	@mkdir -p gimpdir-output
-	@mkdir -p gimpdir-output/brushes
-	@mkdir -p gimpdir-output/patterns
-	@mkdir -p gimpdir-output/gradients
+gimpdir-output:
+	mkdir -p gimpdir-output
+	mkdir -p gimpdir-output/brushes
+	mkdir -p gimpdir-output/patterns
+	mkdir -p gimpdir-output/gradients
 
 clean-local:
-	@rm -rf gimpdir-output
-	@rm -rf gimpdir-output/brushes
-	@rm -rf gimpdir-output/patterns
-	@rm -rf gimpdir-output/gradients
+	rm -rf gimpdir-output
