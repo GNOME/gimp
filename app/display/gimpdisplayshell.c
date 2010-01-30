@@ -293,8 +293,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                               GDK_VISIBILITY_NOTIFY_MASK   |
                                               GDK_SCROLL_MASK));
 
-  gtk_box_set_spacing (GTK_BOX (shell), 1);
-
   /*  zoom model callback  */
   g_signal_connect_swapped (shell->zoom, "zoomed",
                             G_CALLBACK (gimp_display_shell_scale_changed),
@@ -427,14 +425,14 @@ gimp_display_shell_constructor (GType                  type,
   /*  first, set up the container hierarchy  *********************************/
 
   /*  a hbox for the inner_table and the vertical scrollbar  */
-  upper_hbox = gtk_hbox_new (FALSE, 1);
+  upper_hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (shell), upper_hbox, TRUE, TRUE, 0);
   gtk_widget_show (upper_hbox);
 
   /*  the table containing origin, rulers and the canvas  */
   inner_table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (inner_table), 0, 1);
-  gtk_table_set_row_spacing (GTK_TABLE (inner_table), 0, 1);
+  gtk_table_set_col_spacing (GTK_TABLE (inner_table), 0, 0);
+  gtk_table_set_row_spacing (GTK_TABLE (inner_table), 0, 0);
   gtk_box_pack_start (GTK_BOX (upper_hbox), inner_table, TRUE, TRUE, 0);
   gtk_widget_show (inner_table);
 

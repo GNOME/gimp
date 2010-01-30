@@ -167,7 +167,6 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
                                     gboolean          show)
 {
   GimpDisplayOptions *options;
-  GtkTable           *table;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -175,14 +174,9 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
 
   g_object_set (options, "show-rulers", show, NULL);
 
-  table = GTK_TABLE (gtk_widget_get_parent (GTK_WIDGET (shell->canvas)));
-
   gtk_widget_set_visible (shell->origin, show);
   gtk_widget_set_visible (shell->hrule, show);
   gtk_widget_set_visible (shell->vrule, show);
-
-  gtk_table_set_col_spacing (table, 0, show ? 1 : 0);
-  gtk_table_set_row_spacing (table, 0, show ? 1 : 0);
 
   appearance_set_action_active (shell, "view-show-rulers", show);
 }
@@ -200,9 +194,6 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
                                         gboolean          show)
 {
   GimpDisplayOptions *options;
-  GtkWidget          *parent;
-  GtkBox             *hbox;
-  GtkBox             *vbox;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -210,20 +201,11 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
 
   g_object_set (options, "show-scrollbars", show, NULL);
 
-  parent = gtk_widget_get_parent (shell->vsb);
-  hbox   = GTK_BOX (gtk_widget_get_parent (parent));
-
-  parent = gtk_widget_get_parent (shell->hsb);
-  vbox   = GTK_BOX (gtk_widget_get_parent (parent));
-
   gtk_widget_set_visible (shell->nav_ebox, show);
   gtk_widget_set_visible (shell->hsb, show);
   gtk_widget_set_visible (shell->vsb, show);
   gtk_widget_set_visible (shell->quick_mask_button, show);
   gtk_widget_set_visible (shell->zoom_button, show);
-
-  gtk_box_set_spacing (hbox, show ? 1 : 0);
-  gtk_box_set_spacing (vbox, show ? 1 : 0);
 
   appearance_set_action_active (shell, "view-show-scrollbars", show);
 }
