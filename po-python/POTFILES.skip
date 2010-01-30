@@ -40,5 +40,6 @@ plug-ins/print
 plug-ins/script-fu
 plug-ins/selection-to-path
 plug-ins/twain
+plug-ins/ui
 plug-ins/win-snap
 tools
