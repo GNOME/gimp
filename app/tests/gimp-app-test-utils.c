@@ -46,18 +46,18 @@ gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
 
 /**
  * gimp_test_utils_set_gimp2_directory:
- * @subdir: Subdir, may be %NULL
+ * @root_env_var: Either "GIMP_TESTING_ABS_TOP_SRCDIR" or
+ *                "GIMP_TESTING_ABS_TOP_BUILDDIR"
+ * @subdir:       Subdir, may be %NULL
  *
- * Sets GIMP2_DIRECTORY to the source dir ./app/tests/@subdir. Make
- * sure to run it before using any of the GIMP functions.
+ * Sets GIMP2_DIRECTORY to the source dir @root_env_var/@subdir. The
+ * environment variables is set up by the test runner, see Makefile.am
  **/
 void
-gimp_test_utils_set_gimp2_directory (const gchar *subdir)
+gimp_test_utils_set_gimp2_directory (const gchar *root_env_var,
+                                     const gchar *subdir)
 {
-  /* GIMP_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
-   * see Makefile.am
-   */
-  gimp_test_utils_set_env_to_subdir ("GIMP_TESTING_ABS_TOP_SRCDIR" /*root_env_var*/,
+  gimp_test_utils_set_env_to_subdir (root_env_var,
                                      subdir,
                                      "GIMP2_DIRECTORY" /*target_env_var*/);
 }

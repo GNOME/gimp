@@ -56,7 +56,8 @@ main (int    argc,
   g_type_init ();
   g_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir");
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/gimpdir");
 
   /* We share the same application instance across all tests */
   gimp = gimp_init_for_testing (TRUE);

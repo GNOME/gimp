@@ -70,7 +70,8 @@ int main(int argc, char **argv)
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir");
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/gimpdir");
   gimp_test_utils_setup_menus_dir ();
 
   /* Start up GIMP */
@@ -107,7 +108,8 @@ int main(int argc, char **argv)
   result = g_test_run ();
 
   /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir-output");
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/gimpdir-output");
 
   /* Exit properly so we don't break script-fu plug-in wire */
   gimp_exit (gimp, TRUE);

@@ -73,7 +73,8 @@ int main(int argc, char **argv)
   g_test_init (&argc, &argv, NULL);
 
   /* Make sure to run this before we use any GIMP functions */
-  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir");
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/gimpdir");
   gimp_test_utils_setup_menus_dir ();
 
   /* Note that we expect the resulting sessionrc to be different from
@@ -104,7 +105,8 @@ int main(int argc, char **argv)
    * dir. There is a hook in Makefile.am that makes sure the output
    * dir exists
    */
-  gimp_test_utils_set_gimp2_directory ("app/tests/gimpdir-output");
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/gimpdir-output");
   g_free (sessionrc_filename);
   g_free (dockrc_filename);
   sessionrc_filename = gimp_personal_rc_file ("sessionrc");
