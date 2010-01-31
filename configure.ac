@@ -68,6 +68,7 @@ AC_INIT([GIMP], [gimp_version],
         [gimp])
 
 AC_CONFIG_SRCDIR([app/core/gimp.c])
+AC_CONFIG_MACRO_DIR([m4macros])
 
 AM_INIT_AUTOMAKE(no-define dist-bzip2)
 AM_CONFIG_HEADER(config.h)
