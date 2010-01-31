@@ -129,18 +129,13 @@
 ;may be useful enough to keep around
 
 (define (delq item lis)
-  (let ((l))
-    (if (null? lis)
-      (set! l '())
-      (begin
-        (set! l (car lis))
-        (set! lis (cdr lis))
-        (while (not (null? lis))
-          (if (not (= item (car lis)))
-            (set! l (append l (list (car lis))))
-          )
-          (set! lis (cdr lis))
+  (let ((l '()))
+    (unless (null? lis)
+      (while (pair? lis)
+        (if (<> item (car lis))
+          (set! l (append l (list (car lis))))
         )
+        (set! lis (cdr lis))
       )
     )
 
@@ -158,7 +153,7 @@
         (start 0)
         (end (string-length str))
         (i start)
-        (l)
+        (l '())
         )
 
     (if (= seplen 0)
@@ -290,7 +285,7 @@
   (define (fread-get-chars count file)
     (let (
          (str "")
-         (c)
+         (c 0)
          )
 
       (while (> count 0)
