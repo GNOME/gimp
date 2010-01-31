@@ -238,6 +238,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name)
     "gimp-",
     "convert-format", "gegl:convert-format",
     "introspect",     "gegl:introspect",
+    "path",           "gegl:path",
     "stress",         "gegl:stress",
     "text",           "gegl:text"
   };
