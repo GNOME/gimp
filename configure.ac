@@ -60,7 +60,7 @@ m4_define([dbus_glib_required_version], [0.70])
 m4_define([libhal_required_version], [0.5.7])
 m4_define([exif_required_version], [0.6.15])
 m4_define([lcms_required_version], [1.16])
-m4_define([libpng_required_version], [1.2.42])
+m4_define([libpng_required_version], [1.2.37])
 
 
 AC_INIT([GIMP], [gimp_version],
