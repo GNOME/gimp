@@ -342,7 +342,9 @@ gimp_session_info_deserialize (GimpConfig *config,
   /* If we don't have docks, assume it is a toolbox dock window from a
    * sessionrc file from GIMP <= 2.6 and add a toolbox dock manually
    */
-  if (! info->p->docks)
+  if (! info->p->docks &&
+      strcmp ("gimp-toolbox-window",
+              info->p->factory_entry->identifier) == 0)
     {
       info->p->docks =
         g_list_append (info->p->docks,
