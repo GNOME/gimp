@@ -339,6 +339,16 @@ gimp_session_info_deserialize (GimpConfig *config,
 
  error:
 
+  /* If we don't have docks, assume it is a toolbox dock window from a
+   * sessionrc file from GIMP <= 2.6 and add a toolbox dock manually
+   */
+  if (! info->p->docks)
+    {
+      info->p->docks =
+        g_list_append (info->p->docks,
+                       gimp_session_info_dock_new ("gimp-toolbox"));
+    }
+
   g_scanner_scope_remove_symbol (scanner, scope_id, "position");
   g_scanner_scope_remove_symbol (scanner, scope_id, "size");
   g_scanner_scope_remove_symbol (scanner, scope_id, "open-on-exit");
@@ -388,6 +398,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   GtkWidget  *dialog  = NULL;
   GdkDisplay *display = NULL;
   GdkScreen  *screen  = NULL;
+  GList      *iter    = NULL;
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
@@ -419,26 +430,15 @@ gimp_session_info_restore (GimpSessionInfo   *info,
         gimp_session_info_aux_set_list (dialog, info->p->aux_info);
     }
 
-  /* If we have docks, proceed as usual. If we don't have docks,
-   * assume it is the toolbox and restore the dock anyway
+  /* We expect expect there to always be docks. In sessionrc files
+   * from <= 2.6 not all dock window entries had dock entries, but we
+   * take care of that during sessionrc parsing
    */
-  if (info->p->docks)
-    {
-      GList *iter = NULL;
-
-      for (iter = info->p->docks; iter; iter = g_list_next (iter))
-        gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
-                                        factory,
-                                        screen,
-                                        GIMP_DOCK_WINDOW (dialog));
-    }
-  else
-    {
-      gimp_session_info_dock_restore (NULL,
-                                      factory,
-                                      screen,
-                                      GIMP_DOCK_WINDOW (dialog));
-    }
+  for (iter = info->p->docks; iter; iter = g_list_next (iter))
+    gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
+                                    factory,
+                                    screen,
+                                    GIMP_DOCK_WINDOW (dialog));
 
   gtk_widget_show (dialog);
 }
