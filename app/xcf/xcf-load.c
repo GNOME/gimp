@@ -1895,7 +1895,7 @@ xcf_load_vector (XcfInfo   *info,
       guint32      num_axes;
       guint32      num_control_points;
       guint32      type;
-      gfloat       coords[7] = GIMP_COORDS_DEFAULT_VALUES;
+      gfloat       coords[8] = GIMP_COORDS_DEFAULT_VALUES;
       GimpStroke  *stroke;
       gint         j;
 
