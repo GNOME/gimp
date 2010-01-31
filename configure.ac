@@ -60,6 +60,7 @@ m4_define([dbus_glib_required_version], [0.70])
 m4_define([libhal_required_version], [0.5.7])
 m4_define([exif_required_version], [0.6.15])
 m4_define([lcms_required_version], [1.16])
+m4_define([libpng_required_version], [1.2.42])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1133,7 +1134,7 @@ AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
 have_libpng=no
 if test "x$with_libpng" != xno; then
   have_libpng=yes
-  PKG_CHECK_MODULES(PNG, libpng,
+  PKG_CHECK_MODULES(PNG, libpng >= libpng_required_version,
     FILE_PNG='file-png$(EXEEXT)',
     [have_libpng="no (libpng not found)"
      AC_MSG_ERROR([
