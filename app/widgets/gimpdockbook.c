@@ -215,15 +215,15 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
 static void
 gimp_dockbook_init (GimpDockbook *dockbook)
 {
+  GtkNotebook *notebook = GTK_NOTEBOOK (dockbook);
+
   dockbook->p = G_TYPE_INSTANCE_GET_PRIVATE (dockbook,
                                              GIMP_TYPE_DOCKBOOK,
                                              GimpDockbookPrivate);
-  dockbook->p->dock       = NULL;
-  dockbook->p->ui_manager = NULL;
 
-  gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
-  gtk_notebook_set_scrollable (GTK_NOTEBOOK (dockbook), TRUE);
-  gtk_notebook_set_show_border (GTK_NOTEBOOK (dockbook), FALSE);
+  gtk_notebook_popup_enable (notebook);
+  gtk_notebook_set_scrollable (notebook, TRUE);
+  gtk_notebook_set_show_border (notebook, FALSE);
 
   gtk_drag_dest_set (GTK_WIDGET (dockbook),
                      0,
