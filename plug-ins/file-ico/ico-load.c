@@ -287,14 +287,22 @@ ico_read_png (FILE    *fp,
   switch (color_type)
     {
     case PNG_COLOR_TYPE_GRAY:
+#if PNG_LIBPNG_VER < 10227
       png_set_gray_1_2_4_to_8 (png_ptr);
+#else
+      png_set_expand_gray_1_2_4_to_8 (png_ptr);
+#endif
       if ( bit_depth == 16 )
         png_set_strip_16 (png_ptr);
       png_set_gray_to_rgb (png_ptr);
       png_set_add_alpha (png_ptr, 0xff, PNG_FILLER_AFTER);
       break;
     case PNG_COLOR_TYPE_GRAY_ALPHA:
+#if PNG_LIBPNG_VER < 10227
       png_set_gray_1_2_4_to_8 (png_ptr);
+#else
+      png_set_expand_gray_1_2_4_to_8 (png_ptr);
+#endif
       if ( bit_depth == 16 )
         png_set_strip_16 (png_ptr);
       png_set_gray_to_rgb (png_ptr);
