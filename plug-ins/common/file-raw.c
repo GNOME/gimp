@@ -221,6 +221,8 @@ run (const gchar      *name,
   gint32             image_id;
   gint32             drawable_id;
 
+  INIT_I18N ();
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
