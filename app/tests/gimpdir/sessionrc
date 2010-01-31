@@ -81,8 +81,7 @@
 (session-info "toolbox" "dock"
     (position 13 37)
     (size 96 620)
-    (open-on-exit)
-    (dock))
+    (open-on-exit))
 (session-info "toplevel" "gimp-file-open-dialog"
     (position 392 140)
     (size 902 816))
