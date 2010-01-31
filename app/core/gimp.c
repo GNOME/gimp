@@ -955,6 +955,8 @@ gimp_restore (Gimp               *gimp,
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->brush_factory));
   gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp_data_factory_get_container (gimp->dynamics_factory));
+  gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->pattern_factory));
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->gradient_factory));
