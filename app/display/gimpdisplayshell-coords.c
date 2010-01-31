@@ -30,6 +30,9 @@
 /* Velocity unit is screen pixels per millisecond we pass to tools as 1. */
 #define VELOCITY_UNIT 3.0
 
+static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
+
+
 /*  public functions  */
 
 gboolean
@@ -38,38 +41,34 @@ gimp_display_shell_get_event_coords (GimpDisplayShell *shell,
                                      GdkDevice        *device,
                                      GimpCoords       *coords)
 {
-  if (gdk_event_get_axis (event, GDK_AXIS_X, &coords->x))
+  gdouble x;
+
+  if (gdk_event_get_axis (event, GDK_AXIS_X, &x))
     {
+      *coords = default_coords;
+
+      coords->x = x;
       gdk_event_get_axis (event, GDK_AXIS_Y, &coords->y);
 
       /*  CLAMP() the return value of each *_get_axis() call to be safe
-       *  against buggy XInput drivers. Provide default values if the
-       *  requested axis does not exist.
+       *  against buggy XInput drivers.
        */
 
       if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure))
         coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
                                   GIMP_COORDS_MAX_PRESSURE);
-      else
-        coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
 
       if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &coords->xtilt))
         coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
                                GIMP_COORDS_MAX_TILT);
-      else
-        coords->xtilt = GIMP_COORDS_DEFAULT_TILT;
 
       if (gdk_event_get_axis (event, GDK_AXIS_YTILT, &coords->ytilt))
         coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
                                GIMP_COORDS_MAX_TILT);
-      else
-        coords->ytilt = GIMP_COORDS_DEFAULT_TILT;
 
       if (gdk_event_get_axis (event, GDK_AXIS_WHEEL, &coords->wheel))
         coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
                                GIMP_COORDS_MAX_WHEEL);
-      else
-        coords->wheel = GIMP_COORDS_DEFAULT_WHEEL;
 
       return TRUE;
     }
@@ -86,39 +85,32 @@ gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
 {
   gdouble axes[GDK_AXIS_LAST];
 
+  *coords = default_coords;
+
   gdk_device_get_state (device, shell->canvas->window, axes, NULL);
 
   gdk_device_get_axis (device, axes, GDK_AXIS_X, &coords->x);
   gdk_device_get_axis (device, axes, GDK_AXIS_Y, &coords->y);
 
   /*  CLAMP() the return value of each *_get_axis() call to be safe
-   *  against buggy XInput drivers. Provide default values if the
-   *  requested axis does not exist.
+   *  against buggy XInput drivers.
    */
 
   if (gdk_device_get_axis (device, axes, GDK_AXIS_PRESSURE, &coords->pressure))
     coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
                               GIMP_COORDS_MAX_PRESSURE);
-  else
-    coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
 
   if (gdk_device_get_axis (device, axes, GDK_AXIS_XTILT, &coords->xtilt))
     coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
                            GIMP_COORDS_MAX_TILT);
-  else
-    coords->xtilt = GIMP_COORDS_DEFAULT_TILT;
 
   if (gdk_device_get_axis (device, axes, GDK_AXIS_YTILT, &coords->ytilt))
     coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
                            GIMP_COORDS_MAX_TILT);
-  else
-    coords->ytilt = GIMP_COORDS_DEFAULT_TILT;
 
   if (gdk_device_get_axis (device, axes, GDK_AXIS_WHEEL, &coords->wheel))
     coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
                            GIMP_COORDS_MAX_WHEEL);
-  else
-    coords->wheel = GIMP_COORDS_DEFAULT_WHEEL;
 }
 
 void
@@ -127,38 +119,31 @@ gimp_display_shell_get_time_coords (GimpDisplayShell *shell,
                                     GdkTimeCoord     *event,
                                     GimpCoords       *coords)
 {
+  *coords = default_coords;
+
   gdk_device_get_axis (device, event->axes, GDK_AXIS_X, &coords->x);
   gdk_device_get_axis (device, event->axes, GDK_AXIS_Y, &coords->y);
 
   /*  CLAMP() the return value of each *_get_axis() call to be safe
-   *  against buggy XInput drivers. Provide default values if the
-   *  requested axis does not exist.
+   *  against buggy XInput drivers.
    */
 
   if (gdk_device_get_axis (device,
                            event->axes, GDK_AXIS_PRESSURE, &coords->pressure))
     coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
                               GIMP_COORDS_MAX_PRESSURE);
-  else
-    coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
 
   if (gdk_device_get_axis (device, event->axes, GDK_AXIS_XTILT, &coords->xtilt))
     coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
                            GIMP_COORDS_MAX_TILT);
-  else
-    coords->xtilt = GIMP_COORDS_DEFAULT_TILT;
 
   if (gdk_device_get_axis (device, event->axes, GDK_AXIS_YTILT, &coords->ytilt))
     coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
                            GIMP_COORDS_MAX_TILT);
-  else
-    coords->ytilt = GIMP_COORDS_DEFAULT_TILT;
 
   if (gdk_device_get_axis (device, event->axes, GDK_AXIS_WHEEL, &coords->wheel))
     coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
                            GIMP_COORDS_MAX_WHEEL);
-  else
-    coords->wheel = GIMP_COORDS_DEFAULT_WHEEL;
 }
 
 gboolean
