@@ -46,12 +46,15 @@
 
 #define GIMP_COORDS_DEFAULT_VELOCITY  0.0
 
+#define GIMP_COORDS_DEFAULT_DIRECTION 0.0
+
 #define GIMP_COORDS_DEFAULT_VALUES    { 0.0, 0.0, \
                                         GIMP_COORDS_DEFAULT_PRESSURE, \
                                         GIMP_COORDS_DEFAULT_TILT,     \
                                         GIMP_COORDS_DEFAULT_TILT,     \
                                         GIMP_COORDS_DEFAULT_WHEEL,    \
-                                        GIMP_COORDS_DEFAULT_VELOCITY }
+                                        GIMP_COORDS_DEFAULT_VELOCITY, \
+                                        GIMP_COORDS_DEFAULT_DIRECTION }
 
 
 /*  base classes  */
