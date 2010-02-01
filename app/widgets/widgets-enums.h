@@ -83,28 +83,6 @@ typedef enum
 } GimpColorPickState;
 
 
-#define GIMP_TYPE_CURSOR_FORMAT (gimp_cursor_format_get_type ())
-
-GType gimp_cursor_format_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_CURSOR_FORMAT_BITMAP, /*< desc="Black & white" >*/
-  GIMP_CURSOR_FORMAT_PIXBUF  /*< desc="Fancy"         >*/
-} GimpCursorFormat;
-
-
-#define GIMP_TYPE_HELP_BROWSER_TYPE (gimp_help_browser_type_get_type ())
-
-GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_HELP_BROWSER_GIMP,        /*< desc="GIMP help browser" >*/
-  GIMP_HELP_BROWSER_WEB_BROWSER  /*< desc="Web browser"       >*/
-} GimpHelpBrowserType;
-
-
 #define GIMP_TYPE_HISTOGRAM_SCALE (gimp_histogram_scale_get_type ())
 
 GType gimp_histogram_scale_get_type (void) G_GNUC_CONST;
@@ -142,18 +120,6 @@ typedef enum
   GIMP_TAG_ENTRY_MODE_QUERY,
   GIMP_TAG_ENTRY_MODE_ASSIGN,
 } GimpTagEntryMode;
-
-
-#define GIMP_TYPE_WINDOW_HINT (gimp_window_hint_get_type ())
-
-GType gimp_window_hint_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_WINDOW_HINT_NORMAL,     /*< desc="Normal window"  >*/
-  GIMP_WINDOW_HINT_UTILITY,    /*< desc="Utility window" >*/
-  GIMP_WINDOW_HINT_KEEP_ABOVE  /*< desc="Keep above"     >*/
-} GimpWindowHint;
 
 
 /*

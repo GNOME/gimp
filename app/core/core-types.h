@@ -29,9 +29,6 @@
 
 /*  defines  */
 
-#define GIMP_OPACITY_TRANSPARENT      0.0
-#define GIMP_OPACITY_OPAQUE           1.0
-
 #define GIMP_COORDS_MIN_PRESSURE      0.0
 #define GIMP_COORDS_MAX_PRESSURE      1.0
 #define GIMP_COORDS_DEFAULT_PRESSURE  1.0

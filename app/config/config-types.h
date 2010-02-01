@@ -24,6 +24,12 @@
 
 #include "libgimpconfig/gimpconfigtypes.h"
 
+#include "config/config-enums.h"
+
+
+#define GIMP_OPACITY_TRANSPARENT      0.0
+#define GIMP_OPACITY_OPAQUE           1.0
+
 
 typedef struct _GimpBaseConfig       GimpBaseConfig;
 typedef struct _GimpCoreConfig       GimpCoreConfig;
@@ -34,7 +40,6 @@ typedef struct _GimpRc               GimpRc;
 
 typedef struct _GimpXmlParser        GimpXmlParser;
 
-/* should be in display/display-types.h */
 typedef struct _GimpDisplayOptions   GimpDisplayOptions;
 
 /* should be in core/core-types.h */

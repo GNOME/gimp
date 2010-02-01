@@ -164,64 +164,6 @@ gimp_color_pick_state_get_type (void)
 }
 
 GType
-gimp_cursor_format_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_CURSOR_FORMAT_BITMAP, "GIMP_CURSOR_FORMAT_BITMAP", "bitmap" },
-    { GIMP_CURSOR_FORMAT_PIXBUF, "GIMP_CURSOR_FORMAT_PIXBUF", "pixbuf" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_CURSOR_FORMAT_BITMAP, NC_("cursor-format", "Black & white"), NULL },
-    { GIMP_CURSOR_FORMAT_PIXBUF, NC_("cursor-format", "Fancy"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpCursorFormat", values);
-      gimp_type_set_translation_context (type, "cursor-format");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_help_browser_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_HELP_BROWSER_GIMP, "GIMP_HELP_BROWSER_GIMP", "gimp" },
-    { GIMP_HELP_BROWSER_WEB_BROWSER, "GIMP_HELP_BROWSER_WEB_BROWSER", "web-browser" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_HELP_BROWSER_GIMP, NC_("help-browser-type", "GIMP help browser"), NULL },
-    { GIMP_HELP_BROWSER_WEB_BROWSER, NC_("help-browser-type", "Web browser"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpHelpBrowserType", values);
-      gimp_type_set_translation_context (type, "help-browser-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_histogram_scale_get_type (void)
 {
   static const GEnumValue values[] =
@@ -314,37 +256,6 @@ gimp_tag_entry_mode_get_type (void)
     {
       type = g_enum_register_static ("GimpTagEntryMode", values);
       gimp_type_set_translation_context (type, "tag-entry-mode");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_window_hint_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_WINDOW_HINT_NORMAL, "GIMP_WINDOW_HINT_NORMAL", "normal" },
-    { GIMP_WINDOW_HINT_UTILITY, "GIMP_WINDOW_HINT_UTILITY", "utility" },
-    { GIMP_WINDOW_HINT_KEEP_ABOVE, "GIMP_WINDOW_HINT_KEEP_ABOVE", "keep-above" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_WINDOW_HINT_NORMAL, NC_("window-hint", "Normal window"), NULL },
-    { GIMP_WINDOW_HINT_UTILITY, NC_("window-hint", "Utility window"), NULL },
-    { GIMP_WINDOW_HINT_KEEP_ABOVE, NC_("window-hint", "Keep above"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpWindowHint", values);
-      gimp_type_set_translation_context (type, "window-hint");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

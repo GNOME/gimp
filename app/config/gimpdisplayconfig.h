@@ -21,8 +21,6 @@
 #ifndef __GIMP_DISPLAY_CONFIG_H__
 #define __GIMP_DISPLAY_CONFIG_H__
 
-#include "display/display-enums.h"
-
 #include "config/gimpcoreconfig.h"
 
 

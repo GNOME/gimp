@@ -19,18 +19,6 @@
 #define __DISPLAY_ENUMS_H__
 
 
-#define GIMP_TYPE_CURSOR_MODE (gimp_cursor_mode_get_type ())
-
-GType gimp_cursor_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_CURSOR_MODE_TOOL_ICON,       /*< desc="Tool icon"                >*/
-  GIMP_CURSOR_MODE_TOOL_CROSSHAIR,  /*< desc="Tool icon with crosshair" >*/
-  GIMP_CURSOR_MODE_CROSSHAIR        /*< desc="Crosshair only"           >*/
-} GimpCursorMode;
-
-
 #define GIMP_TYPE_CURSOR_PRECISION (gimp_cursor_precision_get_type ())
 
 GType gimp_cursor_precision_get_type (void) G_GNUC_CONST;
@@ -41,43 +29,6 @@ typedef enum
   GIMP_CURSOR_PRECISION_PIXEL_BORDER,
   GIMP_CURSOR_PRECISION_SUBPIXEL
 } GimpCursorPrecision;
-
-
-#define GIMP_TYPE_CANVAS_PADDING_MODE (gimp_canvas_padding_mode_get_type ())
-
-GType gimp_canvas_padding_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_CANVAS_PADDING_MODE_DEFAULT,      /*< desc="From theme"        >*/
-  GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK,  /*< desc="Light check color" >*/
-  GIMP_CANVAS_PADDING_MODE_DARK_CHECK,   /*< desc="Dark check color"  >*/
-  GIMP_CANVAS_PADDING_MODE_CUSTOM,       /*< desc="Custom color"      >*/
-  GIMP_CANVAS_PADDING_MODE_RESET = -1    /*< skip >*/
-} GimpCanvasPaddingMode;
-
-
-#define GIMP_TYPE_SPACE_BAR_ACTION (gimp_space_bar_action_get_type ())
-
-GType gimp_space_bar_action_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_SPACE_BAR_ACTION_NONE,  /*< desc="No action"           >*/
-  GIMP_SPACE_BAR_ACTION_PAN,   /*< desc="Pan view"            >*/
-  GIMP_SPACE_BAR_ACTION_MOVE   /*< desc="Switch to Move tool" >*/
-} GimpSpaceBarAction;
-
-
-#define GIMP_TYPE_ZOOM_QUALITY (gimp_zoom_quality_get_type ())
-
-GType gimp_zoom_quality_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ZOOM_QUALITY_LOW,   /*< desc="Low"  >*/
-  GIMP_ZOOM_QUALITY_HIGH   /*< desc="High" >*/
-} GimpZoomQuality;
 
 
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())

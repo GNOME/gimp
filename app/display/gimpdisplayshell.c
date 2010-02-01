@@ -33,6 +33,7 @@
 
 #include "config/gimpcoreconfig.h"
 #include "config/gimpdisplayconfig.h"
+#include "config/gimpdisplayoptions.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -53,7 +54,6 @@
 
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
-#include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"

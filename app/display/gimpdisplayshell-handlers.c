@@ -27,6 +27,7 @@
 #include "display-types.h"
 
 #include "config/gimpdisplayconfig.h"
+#include "config/gimpdisplayoptions.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -39,7 +40,6 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"

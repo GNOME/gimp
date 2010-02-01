@@ -142,9 +142,6 @@ AM_LDFLAGS = \
 	$(workaround_that_file_depends_on_plug_in)
 
 gimpconsoleldadd = \
-	display/gimpdisplayoptions.o	\
-	display/display-enums.o		\
-	widgets/widgets-enums.o		\
 	xcf/libappxcf.a			\
 	pdb/libappinternal-procs.a	\
 	pdb/libapppdb.a			\

@@ -81,7 +81,9 @@ app/actions/windows-actions.c
 app/base/base-enums.c
 app/base/tile-swap.c
 
+app/config/config-enums.c
 app/config/gimpconfig-file.c
+app/config/gimpdisplayoptions.c
 app/config/gimprc.c
 app/config/gimprc-blurbs.h
 app/config/gimprc-deserialize.c
@@ -204,11 +206,9 @@ app/dialogs/vectors-export-dialog.c
 app/dialogs/vectors-import-dialog.c
 app/dialogs/vectors-options-dialog.c
 
-app/display/display-enums.c
 app/display/gimpcursorview.c
 app/display/gimpdisplay.c
 app/display/gimpdisplay-handlers.c
-app/display/gimpdisplayoptions.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
 app/display/gimpdisplayshell-close.c

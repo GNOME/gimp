@@ -27,10 +27,9 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "core/core-types.h"
-#include "display-enums.h"
+#include "config-types.h"
 
-#include "config/gimprc-blurbs.h"
+#include "gimprc-blurbs.h"
 
 #include "gimpdisplayoptions.h"
 

@@ -23,8 +23,6 @@ libappdisplay_a_sources = \
 	gimpcursorview.h			\
 	gimpdisplay.c				\
 	gimpdisplay.h				\
-	gimpdisplayoptions.c			\
-	gimpdisplayoptions.h			\
 	gimpdisplay-foreach.c			\
 	gimpdisplay-foreach.h			\
 	gimpdisplay-handlers.c			\

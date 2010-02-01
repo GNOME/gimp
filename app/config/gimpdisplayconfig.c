@@ -28,16 +28,9 @@
 
 #include "config-types.h"
 
-/* FIXME: If we can get rid of this dependency to the display module,
- * we will greatly improve the module dependencies in the core, see
- * devel-docs/gimp-module-dependencies.svg. In particular, we will get
- * rid of the (transitive) dependency from the core to the UI code
- */
-#include "display/display-enums.h"
-#include "display/gimpdisplayoptions.h"
-
 #include "gimprc-blurbs.h"
 #include "gimpdisplayconfig.h"
+#include "gimpdisplayoptions.h"
 
 #include "gimp-intl.h"
 

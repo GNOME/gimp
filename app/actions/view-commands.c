@@ -25,6 +25,7 @@
 
 #include "actions-types.h"
 
+#include "config/gimpdisplayoptions.h"
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
@@ -35,7 +36,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayoptions.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-filter-dialog.h"

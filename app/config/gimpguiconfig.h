@@ -21,8 +21,6 @@
 #ifndef __GIMP_GUI_CONFIG_H__
 #define __GIMP_GUI_CONFIG_H__
 
-#include "widgets/widgets-enums.h"
-
 #include "config/gimpdisplayconfig.h"
 
 
