@@ -5,18 +5,18 @@
 # of course you can do. The sessionrc will be entirely rewritten every time
 # you quit GIMP. If this file isn't found, defaults are used.
 
-(session-info "toolbox" "dock"
+(session-info "dock" "gimp-toolbox-window"
     (position 0 0)
     (size 170 820)
     (open-on-exit)
-    (dock
+    (gimp-toolbox
         (book
             (dockable "gimp-tool-options"))))
-(session-info "dock" "dock"
+(session-info "dock" "gimp-dock-window"
     (position -0 0)
     (size 210 820)
     (open-on-exit)
-    (dock
+    (gimp-dock
         (book
             (dockable "gimp-layer-list"
 	        (tab-style icon))
