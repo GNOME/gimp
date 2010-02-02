@@ -45,13 +45,19 @@
     (plug-in-spread RUN-NONINTERACTIVE img logo-layer 5.0 5.0)
     (plug-in-ripple RUN-NONINTERACTIVE img logo-layer 27 2 0 0 0 TRUE TRUE)
     (plug-in-ripple RUN-NONINTERACTIVE img logo-layer 27 2 1 0 0 TRUE TRUE)
-    (plug-in-sobel RUN-NONINTERACTIVE img logo-layer TRUE TRUE TRUE)
-    (gimp-levels logo-layer 0 0 120 3.5 0 255)
 
-    ; work-around for sobel edge detect screw-up (why does this happen?)
-    ; the top line of the image has some garbage instead of the bgcolor
-    (gimp-rect-select img 0 0 width 1 CHANNEL-OP-ADD FALSE 0)
-    (gimp-edit-clear logo-layer)
+    ; sobel doesn't work on a layer with transparency, so merge layers:
+    (let ((logo-layer
+           (car (gimp-image-merge-down img logo-layer EXPAND-AS-NECESSARY))))
+      (plug-in-sobel RUN-NONINTERACTIVE img logo-layer TRUE TRUE TRUE)
+      (gimp-levels logo-layer 0 0 120 3.5 0 255)
+
+      ; work-around for sobel edge detect screw-up (why does this happen?)
+      ; the top line of the image has some garbage instead of the bgcolor
+      (gimp-rect-select img 0 0 width 1 CHANNEL-OP-ADD FALSE 0)
+      (gimp-edit-clear logo-layer)
+      )
+
     (gimp-selection-none img)
 
     (gimp-context-pop)
@@ -120,7 +126,7 @@
   ""
   SF-STRING     _"Text"               "CHALK"
   SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
-  SF-FONT       _"Font"               "Cooper"
+  SF-FONT       _"Font"               "Sans"
   SF-COLOR      _"Background color"   "black"
   SF-COLOR      _"Chalk color"        "white"
 )
