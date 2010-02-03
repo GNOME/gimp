@@ -121,8 +121,6 @@ libexec_PROGRAMS = \
 	film \
 	filter-pack \
 	fractal-trace \
-	gee \
-	gee-zoom \
 	gradient-map \
 	grid \
 	guillotine \
@@ -1537,38 +1535,6 @@ fractal_trace_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-gee_SOURCES = \
-	gee.c
-
-gee_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-gee_zoom_SOURCES = \
-	gee-zoom.c
-
-gee_zoom_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 gradient_map_SOURCES = \
 	gradient-map.c
 
@@ -2473,16 +2439,12 @@ web_browser_SOURCES = \
 	web-browser.c
 
 web_browser_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
 	$(libgimp)		\
 	$(libgimpmath)		\
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
-	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

@@ -83,8 +83,6 @@
     'film' => { ui => 1 },
     'filter-pack' => { ui => 1 },
     'fractal-trace' => { ui => 1 },
-    'gee' => { ui => 1 },
-    'gee-zoom' => { ui => 1 },
     'gradient-map' => {},
     'grid' => { ui => 1 },
     'guillotine' => {},

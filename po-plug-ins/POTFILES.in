@@ -90,8 +90,6 @@ plug-ins/common/file-xwd.c
 plug-ins/common/film.c
 plug-ins/common/filter-pack.c
 plug-ins/common/fractal-trace.c
-plug-ins/common/gee-zoom.c
-plug-ins/common/gee.c
 plug-ins/common/gradient-map.c
 plug-ins/common/grid.c
 plug-ins/common/guillotine.c
