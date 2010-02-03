@@ -140,7 +140,7 @@
     'video' => { ui => 1 },
     'warp' => { ui => 1 },
     'waves' => { ui => 1 },
-    'web-browser' => {},
+    'web-browser' => { ui => 1 },
     'whirl-pinch' => { ui => 1 },
     'wind' => { ui => 1 }
 );
