@@ -505,7 +505,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gdouble        pixel_initial;
   gdouble        xd, yd;
   gdouble        mag;
-  gdouble        dyn_spacing;
+  gdouble        dyn_spacing = core->spacing;
   gdouble        fade_point;
   gboolean       use_dyn_spacing;
 
@@ -517,23 +517,30 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  use_dyn_spacing = gimp_dynamics_output_is_enabled (core->dynamics->spacing_output);
+  use_dyn_spacing =
+    gimp_dynamics_output_is_enabled (core->dynamics->spacing_output);
 
   if (use_dyn_spacing)
     {
-      dyn_spacing = gimp_dynamics_output_get_linear_value (core->dynamics->spacing_output,
-                                                           &current_coords,
-                                                           paint_options,
-                                                           fade_point);
-      /* Dynamic spacing assumes that the value set in core is the min value
-       * and the max is full 200% spacing. This approach differs ofrom the usual
-       * factor from user input approach because making spacing smaller than
-       * the nominal value is unlikely and spacing has a hard defined max.
-       */
-      dyn_spacing = core->spacing + ((2.0 - core->spacing) * ( 1.0 - dyn_spacing));
+      dyn_spacing =
+        gimp_dynamics_output_get_linear_value (core->dynamics->spacing_output,
+                                               &current_coords,
+                                               paint_options,
+                                               fade_point);
 
-      dyn_spacing = MAX (core->spacing, dyn_spacing); /*Limiting spacing to minimum 1%*/
+      /* Dynamic spacing assumes that the value set in core is the min
+       * value and the max is full 200% spacing. This approach differs
+       * from the usual factor from user input approach because making
+       * spacing smaller than the nominal value is unlikely and
+       * spacing has a hard defined max.
+       */
+      dyn_spacing = (core->spacing +
+                     ((2.0 - core->spacing) * ( 1.0 - dyn_spacing)));
+
+      /*  Limiting spacing to minimum 1%  */
+      dyn_spacing = MAX (core->spacing, dyn_spacing);
     }
+
   gimp_avoid_exact_integer (&last_coords.x);
   gimp_avoid_exact_integer (&last_coords.y);
   gimp_avoid_exact_integer (&current_coords.x);
@@ -596,9 +603,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       num_points = dist / dyn_spacing;
 
       s0 = (gint) floor (st_offset + 0.5);
-
       t0 = (s0 - st_offset) / st_factor;
-
       dt = dyn_spacing / dist;
 
       if (num_points == 0)
@@ -750,10 +755,12 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
           gdouble jitter_dist;
           gint32  jitter_angle;
 
-          dyn_jitter = core->jitter * gimp_dynamics_output_get_linear_value (core->dynamics->jitter_output,
-                                                                             &current_coords,
-                                                                             paint_options,
-                                                                             fade_point);
+          dyn_jitter =
+            core->jitter *
+            gimp_dynamics_output_get_linear_value (core->dynamics->jitter_output,
+                                                   &current_coords,
+                                                   paint_options,
+                                                   fade_point);
 
           jitter_dist  = g_rand_double_range (core->rand, 0, dyn_jitter);
           jitter_angle = g_rand_int_range (core->rand,
@@ -818,25 +825,29 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
           fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                     paint_core->pixel_dist);
 
-          core->scale *= gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
-                                                                coords,
-                                                                paint_options,
-                                                                fade_point);
+          core->scale *=
+            gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
+                                                   coords,
+                                                   paint_options,
+                                                   fade_point);
 
-          core->angle += gimp_dynamics_output_get_angular_value (core->dynamics->angle_output,
-                                                                 coords,
-                                                                 paint_options,
-                                                                 fade_point);
+          core->angle +=
+            gimp_dynamics_output_get_angular_value (core->dynamics->angle_output,
+                                                    coords,
+                                                    paint_options,
+                                                    fade_point);
 
-          core->hardness = gimp_dynamics_output_get_linear_value (core->dynamics->hardness_output,
-                                                                  coords,
-                                                                  paint_options,
-                                                                  fade_point);
+          core->hardness =
+            gimp_dynamics_output_get_linear_value (core->dynamics->hardness_output,
+                                                   coords,
+                                                   paint_options,
+                                                   fade_point);
 
-          core->aspect_ratio *= gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_output,
-                                                                       coords,
-                                                                       paint_options,
-                                                                       fade_point);
+          core->aspect_ratio *=
+            gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_output,
+                                                   coords,
+                                                   paint_options,
+                                                   fade_point);
         }
     }
 
