@@ -34,7 +34,8 @@ sub path_list {
     %invoke = (
 	code => <<'CODE'
 {
-  path_list = gimp_container_get_name_array (image->vectors, &num_paths);
+  path_list = gimp_container_get_name_array (gimp_image_get_vectors (image),
+                                             &num_paths);
 }
 CODE
     );

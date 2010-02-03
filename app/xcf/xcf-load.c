@@ -289,7 +289,7 @@ xcf_load_image (Gimp     *gimp,
       if (channel != gimp_image_get_mask (image))
         gimp_image_add_channel (image, channel,
                                 NULL, /* FIXME tree */
-                                gimp_container_get_n_children (image->channels),
+                                gimp_container_get_n_children (gimp_image_get_channels (image)),
                                 FALSE);
 
       /* restore the saved position so we'll be ready to
@@ -1685,7 +1685,7 @@ xcf_load_old_paths (XcfInfo   *info,
     xcf_load_old_path (info, image);
 
   active_vectors =
-    GIMP_VECTORS (gimp_container_get_child_by_index (image->vectors,
+    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_vectors (image),
                                                      last_selected_row));
 
   if (active_vectors)
@@ -1784,7 +1784,7 @@ xcf_load_old_path (XcfInfo   *info,
 
   gimp_image_add_vectors (image, vectors,
                           NULL, /* can't be a tree */
-                          gimp_container_get_n_children (image->vectors),
+                          gimp_container_get_n_children (gimp_image_get_vectors (image)),
                           FALSE);
 
   return TRUE;
@@ -1829,7 +1829,7 @@ xcf_load_vectors (XcfInfo   *info,
 
   /* FIXME tree */
   active_vectors =
-    GIMP_VECTORS (gimp_container_get_child_by_index (image->vectors,
+    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_vectors (image),
                                                      active_index));
 
   if (active_vectors)
@@ -1977,7 +1977,7 @@ xcf_load_vector (XcfInfo   *info,
 
   gimp_image_add_vectors (image, vectors,
                           NULL, /* FIXME tree */
-                          gimp_container_get_n_children (image->vectors),
+                          gimp_container_get_n_children (gimp_image_get_vectors (image)),
                           FALSE);
 
   return TRUE;

@@ -105,12 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  /*  Layer/Channel attributes  */
-  GimpContainer     *layers;                /*  the list of layers           */
-  GimpContainer     *channels;              /*  the list of masks            */
-  GimpContainer     *vectors;               /*  the list of vectors          */
-  GSList            *layer_stack;           /*  the layers in MRU order      */
-
   GQuark             layer_alpha_handler;
   GQuark             channel_name_changed_handler;
   GQuark             channel_color_changed_handler;

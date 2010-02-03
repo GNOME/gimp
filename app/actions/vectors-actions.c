@@ -260,7 +260,7 @@ vectors_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      n_vectors  = gimp_container_get_n_children (image->vectors);
+      n_vectors  = gimp_image_get_n_vectors (image);
       mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
       global_buf = FALSE;
 

@@ -64,7 +64,8 @@ path_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      path_list = gimp_container_get_name_array (image->vectors, &num_paths);
+      path_list = gimp_container_get_name_array (gimp_image_get_vectors (image),
+                                                 &num_paths);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

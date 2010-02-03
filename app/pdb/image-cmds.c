@@ -974,7 +974,9 @@ image_get_layer_position_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      position = gimp_container_get_child_index (GIMP_CONTAINER (image->layers),
+      GimpContainer *container = gimp_image_get_layers (image);
+
+      position = gimp_container_get_child_index (container,
                                                  GIMP_OBJECT (layer));
       if (position < 0)
         success = FALSE;
@@ -1166,7 +1168,9 @@ image_get_channel_position_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      position = gimp_container_get_child_index (GIMP_CONTAINER (image->channels),
+      GimpContainer *container = gimp_image_get_channels (image);
+
+      position = gimp_container_get_child_index (container,
                                                  GIMP_OBJECT (channel));
       if (position < 0)
         success = FALSE;
@@ -1310,7 +1314,9 @@ image_get_vectors_position_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      position = gimp_container_get_child_index (GIMP_CONTAINER (image->vectors),
+      GimpContainer *container = gimp_image_get_vectors (image);
+
+      position = gimp_container_get_child_index (container,
                                                  GIMP_OBJECT (vectors));
       if (position < 0)
         success = FALSE;

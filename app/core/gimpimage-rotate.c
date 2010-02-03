@@ -78,9 +78,9 @@ gimp_image_rotate (GimpImage        *image,
   center_x              = previous_image_width  / 2.0;
   center_y              = previous_image_height / 2.0;
 
-  progress_max = (gimp_container_get_n_children (image->channels) +
-                  gimp_container_get_n_children (image->layers)   +
-                  gimp_container_get_n_children (image->vectors)  +
+  progress_max = (gimp_container_get_n_children (gimp_image_get_channels (image)) +
+                  gimp_container_get_n_children (gimp_image_get_layers (image))   +
+                  gimp_container_get_n_children (gimp_image_get_vectors (image))  +
                   1 /* selection */);
 
   g_object_freeze_notify (G_OBJECT (image));

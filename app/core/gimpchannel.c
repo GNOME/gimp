@@ -377,8 +377,10 @@ gimp_channel_get_description (GimpViewable  *viewable,
 static gboolean
 gimp_channel_is_attached (const GimpItem *item)
 {
-  return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
-          gimp_container_have (gimp_item_get_image (item)->channels,
+  GimpImage *image = gimp_item_get_image (item);
+
+  return (GIMP_IS_IMAGE (image) &&
+          gimp_container_have (gimp_image_get_channels (image),
                                GIMP_OBJECT (item)));
 }
 

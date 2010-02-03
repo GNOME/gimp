@@ -56,6 +56,12 @@ struct _GimpImagePrivate
   GList             *guides;                /*  guides                       */
   GimpGrid          *grid;                  /*  grid                         */
   GList             *sample_points;         /*  color sample points          */
+
+  /*  Layer/Channel attributes  */
+  GimpContainer     *layers;                /*  the list of layers           */
+  GimpContainer     *channels;              /*  the list of masks            */
+  GimpContainer     *vectors;               /*  the list of vectors          */
+  GSList            *layer_stack;           /*  the layers in MRU order      */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

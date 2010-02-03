@@ -89,9 +89,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
                                                  GIMP_ITEM_TYPE_LAYERS,
                                                  layer_set);
 
-  progress_max = (gimp_container_get_n_children (image->layers)   +
-                  gimp_container_get_n_children (image->channels) +
-                  gimp_container_get_n_children (image->vectors)  +
+  progress_max = (gimp_container_get_n_children (gimp_image_get_layers (image))   +
+                  gimp_container_get_n_children (gimp_image_get_channels (image)) +
+                  gimp_container_get_n_children (gimp_image_get_vectors (image))  +
                   g_list_length (resize_layers)                   +
                   1 /* selection */);
 

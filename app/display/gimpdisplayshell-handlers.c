@@ -144,12 +144,14 @@ static void   gimp_display_shell_quality_notify_handler     (GObject          *c
 void
 gimp_display_shell_connect (GimpDisplayShell *shell)
 {
-  GimpImage *image;
+  GimpImage     *image;
+  GimpContainer *vectors;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
 
-  image = gimp_display_get_image (shell->display);
+  image   = gimp_display_get_image (shell->display);
+  vectors = gimp_image_get_vectors (image);
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
@@ -200,22 +202,22 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
 
   shell->vectors_freeze_handler =
-    gimp_tree_handler_connect (image->vectors, "freeze",
+    gimp_tree_handler_connect (vectors, "freeze",
                                G_CALLBACK (gimp_display_shell_vectors_freeze_handler),
                                shell);
   shell->vectors_thaw_handler =
-    gimp_tree_handler_connect (image->vectors, "thaw",
+    gimp_tree_handler_connect (vectors, "thaw",
                                G_CALLBACK (gimp_display_shell_vectors_thaw_handler),
                                shell);
   shell->vectors_visible_handler =
-    gimp_tree_handler_connect (image->vectors, "visibility-changed",
+    gimp_tree_handler_connect (vectors, "visibility-changed",
                                G_CALLBACK (gimp_display_shell_vectors_visible_handler),
                                shell);
 
-  g_signal_connect (image->vectors, "add",
+  g_signal_connect (vectors, "add",
                     G_CALLBACK (gimp_display_shell_vectors_add_handler),
                     shell);
-  g_signal_connect (image->vectors, "remove",
+  g_signal_connect (vectors, "remove",
                     G_CALLBACK (gimp_display_shell_vectors_remove_handler),
                     shell);
 
@@ -287,7 +289,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 void
 gimp_display_shell_disconnect (GimpDisplayShell *shell)
 {
-  GimpImage *image;
+  GimpImage     *image;
+  GimpContainer *vectors;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
@@ -295,6 +298,8 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   image = gimp_display_get_image (shell->display);
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  vectors = gimp_image_get_vectors (image);
 
   gimp_display_shell_icon_update_stop (shell);
 
@@ -335,10 +340,10 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_check_notify_handler,
                                         shell);
 
-  g_signal_handlers_disconnect_by_func (image->vectors,
+  g_signal_handlers_disconnect_by_func (vectors,
                                         gimp_display_shell_vectors_remove_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (image->vectors,
+  g_signal_handlers_disconnect_by_func (vectors,
                                         gimp_display_shell_vectors_add_handler,
                                         shell);
 
