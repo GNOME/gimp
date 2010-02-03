@@ -105,9 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  GimpLayer         *floating_sel;          /*  the FS layer                 */
-  GimpChannel       *selection_mask;        /*  the selection mask channel   */
-
   GimpParasiteList  *parasites;             /*  Plug-in parasite data        */
 
   gboolean           visible[MAX_CHANNELS]; /*  visible channels             */

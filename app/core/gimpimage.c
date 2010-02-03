@@ -656,8 +656,8 @@ gimp_image_init (GimpImage *image)
   private->active_channel      = NULL;
   private->active_vectors      = NULL;
 
-  image->floating_sel          = NULL;
-  image->selection_mask        = NULL;
+  private->floating_sel        = NULL;
+  private->selection_mask      = NULL;
 
   image->parasites             = gimp_parasite_list_new ();
 
@@ -738,12 +738,12 @@ gimp_image_constructor (GType                  type,
     }
 
   /* create the selection mask */
-  image->selection_mask = gimp_selection_new (image,
-                                              gimp_image_get_width  (image),
-                                              gimp_image_get_height (image));
-  g_object_ref_sink (image->selection_mask);
+  private->selection_mask = gimp_selection_new (image,
+                                                gimp_image_get_width  (image),
+                                                gimp_image_get_height (image));
+  g_object_ref_sink (private->selection_mask);
 
-  g_signal_connect (image->selection_mask, "update",
+  g_signal_connect (private->selection_mask, "update",
                     G_CALLBACK (gimp_image_mask_update),
                     image);
 
@@ -909,10 +909,10 @@ gimp_image_finalize (GObject *object)
       private->layer_stack = NULL;
     }
 
-  if (image->selection_mask)
+  if (private->selection_mask)
     {
-      g_object_unref (image->selection_mask);
-      image->selection_mask = NULL;
+      g_object_unref (private->selection_mask);
+      private->selection_mask = NULL;
     }
 
   if (image->preview)
@@ -1031,7 +1031,7 @@ gimp_image_get_memsize (GimpObject *object,
 
   memsize += gimp_g_slist_get_memsize (private->layer_stack, 0);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->selection_mask),
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->selection_mask),
                                       gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->parasites),
@@ -1680,12 +1680,16 @@ void
 gimp_image_set_floating_selection (GimpImage *image,
                                    GimpLayer *floating_sel)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (floating_sel == NULL || GIMP_IS_LAYER (floating_sel));
 
-  if (image->floating_sel != floating_sel)
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->floating_sel != floating_sel)
     {
-      image->floating_sel = floating_sel;
+      private->floating_sel = floating_sel;
 
       image->flush_accum.floating_selection_changed = TRUE;
     }
@@ -1696,7 +1700,7 @@ gimp_image_get_floating_selection (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return image->floating_sel;
+  return GIMP_IMAGE_GET_PRIVATE (image)->floating_sel;
 }
 
 void
@@ -1712,7 +1716,7 @@ gimp_image_get_mask (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return image->selection_mask;
+  return GIMP_IMAGE_GET_PRIVATE (image)->selection_mask;
 }
 
 void

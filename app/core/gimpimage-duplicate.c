@@ -325,14 +325,17 @@ static void
 gimp_image_duplicate_mask (GimpImage *image,
                            GimpImage *new_image)
 {
+  GimpChannel *mask;
+  GimpChannel *new_mask;
   TileManager *src_tiles;
   TileManager *dest_tiles;
   PixelRegion  srcPR, destPR;
 
-  src_tiles  =
-    gimp_drawable_get_tiles (GIMP_DRAWABLE (gimp_image_get_mask (image)));
-  dest_tiles =
-    gimp_drawable_get_tiles (GIMP_DRAWABLE (gimp_image_get_mask (new_image)));
+  mask     = gimp_image_get_mask (image);
+  new_mask = gimp_image_get_mask (new_image);
+
+  src_tiles  = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
+  dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (new_mask));
 
   pixel_region_init (&srcPR, src_tiles,
                      0, 0,
@@ -347,8 +350,8 @@ gimp_image_duplicate_mask (GimpImage *image,
 
   copy_region (&srcPR, &destPR);
 
-  new_image->selection_mask->bounds_known   = FALSE;
-  new_image->selection_mask->boundary_known = FALSE;
+  new_mask->bounds_known   = FALSE;
+  new_mask->boundary_known = FALSE;
 }
 
 static void

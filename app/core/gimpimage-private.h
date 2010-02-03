@@ -70,6 +70,9 @@ struct _GimpImagePrivate
   GimpLayer         *active_layer;          /*  the active layer             */
   GimpChannel       *active_channel;        /*  the active channel           */
   GimpVectors       *active_vectors;        /*  the active vectors           */
+
+  GimpLayer         *floating_sel;          /*  the FS layer                 */
+  GimpChannel       *selection_mask;        /*  the selection mask channel   */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \
