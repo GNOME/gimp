@@ -52,6 +52,10 @@ struct _GimpImagePrivate
 
   GimpProjection    *projection;            /*  projection layers & channels */
   GeglNode          *graph;                 /*  GEGL projection graph        */
+
+  GList             *guides;                /*  guides                       */
+  GimpGrid          *grid;                  /*  grid                         */
+  GList             *sample_points;         /*  color sample points          */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

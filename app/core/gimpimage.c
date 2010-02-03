@@ -614,9 +614,9 @@ gimp_image_init (GimpImage *image)
 
   private->projection          = gimp_projection_new (GIMP_PROJECTABLE (image));
 
-  image->guides                = NULL;
-  image->grid                  = NULL;
-  image->sample_points         = NULL;
+  private->guides              = NULL;
+  private->grid                = NULL;
+  private->sample_points       = NULL;
 
   image->layers                = gimp_drawable_stack_new (GIMP_TYPE_LAYER);
   image->channels              = gimp_drawable_stack_new (GIMP_TYPE_CHANNEL);
@@ -721,7 +721,7 @@ gimp_image_constructor (GType                  type,
   private->yresolution     = config->default_image->yresolution;
   private->resolution_unit = config->default_image->resolution_unit;
 
-  image->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
+  private->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
 
   switch (private->base_type)
     {
@@ -926,25 +926,25 @@ gimp_image_finalize (GObject *object)
       image->parasites = NULL;
     }
 
-  if (image->guides)
+  if (private->guides)
     {
-      g_list_foreach (image->guides, (GFunc) g_object_unref, NULL);
-      g_list_free (image->guides);
-      image->guides = NULL;
+      g_list_foreach (private->guides, (GFunc) g_object_unref, NULL);
+      g_list_free (private->guides);
+      private->guides = NULL;
     }
 
-  if (image->grid)
+  if (private->grid)
     {
-      g_object_unref (image->grid);
-      image->grid = NULL;
+      g_object_unref (private->grid);
+      private->grid = NULL;
     }
 
-  if (image->sample_points)
+  if (private->sample_points)
     {
-      g_list_foreach (image->sample_points,
+      g_list_foreach (private->sample_points,
                       (GFunc) gimp_sample_point_unref, NULL);
-      g_list_free (image->sample_points);
-      image->sample_points = NULL;
+      g_list_free (private->sample_points);
+      private->sample_points = NULL;
     }
 
   if (image->undo_stack)
@@ -1016,7 +1016,7 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_g_list_get_memsize (gimp_image_get_guides (image),
                                       sizeof (GimpGuide));
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->grid), gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->grid), gui_size);
 
   memsize += gimp_g_list_get_memsize (gimp_image_get_sample_points (image),
                                       sizeof (GimpSamplePoint));

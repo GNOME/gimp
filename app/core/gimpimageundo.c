@@ -404,7 +404,7 @@ gimp_image_undo_pop (GimpUndo            *undo,
       {
         GimpGrid *grid;
 
-        grid = gimp_config_duplicate (GIMP_CONFIG (image->grid));
+        grid = gimp_config_duplicate (GIMP_CONFIG (gimp_image_get_grid (image)));
 
         gimp_image_set_grid (image, image_undo->grid, FALSE);
 

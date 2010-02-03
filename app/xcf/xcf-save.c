@@ -417,7 +417,7 @@ xcf_save_image_props (XcfInfo    *info,
   if (unit >= _gimp_unit_get_number_of_built_in_units (image->gimp))
     xcf_check_error (xcf_save_prop (info, image, PROP_USER_UNIT, error, unit));
 
-  if (GIMP_IS_GRID (image->grid))
+  if (gimp_image_get_grid (image))
     {
       GimpGrid *grid = gimp_image_get_grid (image);
 

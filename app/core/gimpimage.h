@@ -105,10 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  GList             *guides;                /*  guides                       */
-  GimpGrid          *grid;                  /*  grid                         */
-  GList             *sample_points;         /*  color sample points          */
-
   /*  Layer/Channel attributes  */
   GimpContainer     *layers;                /*  the list of layers           */
   GimpContainer     *channels;              /*  the list of masks            */

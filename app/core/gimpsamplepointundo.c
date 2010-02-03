@@ -22,6 +22,7 @@
 #include "core-types.h"
 
 #include "gimpimage.h"
+#include "gimpimage-private.h"
 #include "gimpimage-sample-points.h"
 #include "gimpsamplepoint.h"
 #include "gimpsamplepointundo.h"
@@ -165,9 +166,10 @@ gimp_sample_point_undo_pop (GimpUndo              *undo,
 
   if (x == -1)
     {
-      undo->image->sample_points =
-        g_list_append (undo->image->sample_points,
-                       sample_point_undo->sample_point);
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (undo->image);
+
+      private->sample_points = g_list_append (private->sample_points,
+                                              sample_point_undo->sample_point);
 
       sample_point_undo->sample_point->x = sample_point_undo->x;
       sample_point_undo->sample_point->y = sample_point_undo->y;

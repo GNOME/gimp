@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-grid.h"
 #include "core/gimpitem.h"
 #include "core/gimptreehandler.h"
 
@@ -161,7 +162,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "undo-event",
                     G_CALLBACK (gimp_display_shell_undo_event_handler),
                     shell);
-  g_signal_connect (image->grid, "notify",
+  g_signal_connect (gimp_image_get_grid (image), "notify",
                     G_CALLBACK (gimp_display_shell_grid_notify_handler),
                     shell);
   g_signal_connect (image, "name-changed",
@@ -383,7 +384,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_name_changed_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (image->grid,
+  g_signal_handlers_disconnect_by_func (gimp_image_get_grid (image),
                                         gimp_display_shell_grid_notify_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,

@@ -32,6 +32,7 @@
 #include "core/gimpgrid.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpprojection.h"
@@ -220,7 +221,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
 
 #define CROSSHAIR 2
 
-      grid = GIMP_GRID (image->grid);
+      grid = gimp_image_get_grid (image);
       if (! grid)
         return;
 

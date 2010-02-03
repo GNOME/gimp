@@ -25,6 +25,7 @@
 
 #include "gimp.h"
 #include "gimpimage.h"
+#include "gimpimage-private.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-undo-push.h"
 #include "gimpsamplepoint.h"
@@ -64,6 +65,8 @@ gimp_image_add_sample_point (GimpImage       *image,
                              gint             x,
                              gint             y)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (sample_point != NULL);
   g_return_if_fail (x >= 0);
@@ -71,7 +74,9 @@ gimp_image_add_sample_point (GimpImage       *image,
   g_return_if_fail (x < gimp_image_get_width  (image));
   g_return_if_fail (y < gimp_image_get_height (image));
 
-  image->sample_points = g_list_append (image->sample_points, sample_point);
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->sample_points = g_list_append (private->sample_points, sample_point);
 
   sample_point->x = x;
   sample_point->y = y;
@@ -86,10 +91,13 @@ gimp_image_remove_sample_point (GimpImage       *image,
                                 GimpSamplePoint *sample_point,
                                 gboolean         push_undo)
 {
-  GList *list;
+  GimpImagePrivate *private;
+  GList            *list;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (sample_point != NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   gimp_image_update_sample_point (image, sample_point);
 
@@ -97,11 +105,11 @@ gimp_image_remove_sample_point (GimpImage       *image,
     gimp_image_undo_push_sample_point (image, _("Remove Sample Point"),
                                        sample_point);
 
-  list = g_list_find (image->sample_points, sample_point);
+  list = g_list_find (private->sample_points, sample_point);
   if (list)
     list = g_list_next (list);
 
-  image->sample_points = g_list_remove (image->sample_points, sample_point);
+  private->sample_points = g_list_remove (private->sample_points, sample_point);
 
   gimp_image_sample_point_removed (image, sample_point);
 
@@ -145,7 +153,7 @@ gimp_image_get_sample_points (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return image->sample_points;
+  return GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
 }
 
 GimpSamplePoint *
@@ -168,7 +176,9 @@ gimp_image_find_sample_point (GimpImage *image,
       return NULL;
     }
 
-  for (list = image->sample_points; list; list = g_list_next (list))
+  for (list = GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
+       list;
+       list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
       gdouble          dist;

@@ -42,6 +42,7 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpitemstack.h"
 #include "core/gimplayer-floating-sel.h"
@@ -450,9 +451,10 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_GUIDES:
           {
-            gint32 position;
-            gint8  orientation;
-            gint   i, nguides;
+            GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+            gint32            position;
+            gint8             orientation;
+            gint              i, nguides;
 
             nguides = prop_size / (4 + 1);
             for (i = 0; i < nguides; i++)
@@ -485,10 +487,10 @@ xcf_load_image_props (XcfInfo   *info,
               }
 
             /*  this is silly as the order of guides doesn't really matter,
-             *  but it restores the list to it's original order, which
+             *  but it restores the list to its original order, which
              *  cannot be wrong  --Mitch
              */
-            image->guides = g_list_reverse (image->guides);
+            private->guides = g_list_reverse (private->guides);
           }
           break;
 

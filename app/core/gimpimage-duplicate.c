@@ -416,8 +416,8 @@ static void
 gimp_image_duplicate_grid (GimpImage *image,
                            GimpImage *new_image)
 {
-  if (image->grid)
-    gimp_image_set_grid (new_image, image->grid, FALSE);
+  if (gimp_image_get_grid (image))
+    gimp_image_set_grid (new_image, gimp_image_get_grid (image), FALSE);
 }
 
 static void

@@ -25,6 +25,7 @@
 #include "gimpimage.h"
 #include "gimpguide.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-private.h"
 #include "gimpimage-undo-push.h"
 
 #include "gimp-intl.h"
@@ -83,16 +84,20 @@ gimp_image_add_guide (GimpImage *image,
                       GimpGuide *guide,
                       gint       position)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_GUIDE (guide));
   g_return_if_fail (position >= 0);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_HORIZONTAL)
     g_return_if_fail (position <= gimp_image_get_height (image));
   else
     g_return_if_fail (position <= gimp_image_get_width (image));
 
-  image->guides = g_list_prepend (image->guides, guide);
+  private->guides = g_list_prepend (private->guides, guide);
 
   gimp_guide_set_position (guide, position);
   g_object_ref (G_OBJECT (guide));
@@ -105,15 +110,19 @@ gimp_image_remove_guide (GimpImage *image,
                          GimpGuide *guide,
                          gboolean   push_undo)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_GUIDE (guide));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   gimp_image_update_guide (image, guide);
 
   if (push_undo)
     gimp_image_undo_push_guide (image, _("Remove Guide"), guide);
 
-  image->guides = g_list_remove (image->guides, guide);
+  private->guides = g_list_remove (private->guides, guide);
   gimp_guide_removed (guide);
 
   gimp_guide_set_position (guide, -1);
@@ -148,7 +157,7 @@ gimp_image_get_guides (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return image->guides;
+  return GIMP_IMAGE_GET_PRIVATE (image)->guides;
 }
 
 GimpGuide *
@@ -159,7 +168,9 @@ gimp_image_get_guide (GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  for (guides = image->guides; guides; guides = g_list_next (guides))
+  for (guides = GIMP_IMAGE_GET_PRIVATE (image)->guides;
+       guides;
+       guides = g_list_next (guides))
     {
       GimpGuide *guide = guides->data;
 
@@ -186,7 +197,9 @@ gimp_image_get_next_guide (GimpImage *image,
   else
     *guide_found = FALSE;
 
-  for (guides = image->guides; guides; guides = g_list_next (guides))
+  for (guides = GIMP_IMAGE_GET_PRIVATE (image)->guides;
+       guides;
+       guides = g_list_next (guides))
     {
       GimpGuide *guide = guides->data;
 
@@ -211,20 +224,19 @@ gimp_image_find_guide (GimpImage *image,
                        gdouble    epsilon_y)
 {
   GList     *list;
-  GimpGuide *guide;
-  GimpGuide *ret = NULL;
-  gdouble    dist;
+  GimpGuide *ret     = NULL;
   gdouble    mindist = G_MAXDOUBLE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
 
-  for (list = image->guides; list; list = g_list_next (list))
+  for (list = GIMP_IMAGE_GET_PRIVATE (image)->guides;
+       list;
+       list = g_list_next (list))
     {
-      gint position;
-
-      guide = list->data;
-      position = gimp_guide_get_position (guide);
+      GimpGuide *guide    = list->data;
+      gint       position = gimp_guide_get_position (guide);
+      gdouble    dist;
 
       if (position < 0)
         continue;
