@@ -627,7 +627,7 @@ gimp_image_init (GimpImage *image)
                             G_CALLBACK (gimp_image_invalidate),
                             image);
 
-  image->layer_alpha_handler =
+  private->layer_alpha_handler =
     gimp_container_add_handler (private->layers, "alpha-changed",
                                 G_CALLBACK (gimp_image_layer_alpha_changed),
                                 image);
@@ -636,11 +636,11 @@ gimp_image_init (GimpImage *image)
                             G_CALLBACK (gimp_image_invalidate),
                             image);
 
-  image->channel_name_changed_handler =
+  private->channel_name_changed_handler =
     gimp_container_add_handler (private->channels, "name-changed",
                                 G_CALLBACK (gimp_image_channel_name_changed),
                                 image);
-  image->channel_color_changed_handler =
+  private->channel_color_changed_handler =
     gimp_container_add_handler (private->channels, "color-changed",
                                 G_CALLBACK (gimp_image_channel_color_changed),
                                 image);
@@ -839,16 +839,16 @@ gimp_image_dispose (GObject *object)
                                         image);
 
   gimp_container_remove_handler (private->layers,
-                                 image->layer_alpha_handler);
+                                 private->layer_alpha_handler);
 
   g_signal_handlers_disconnect_by_func (private->channels,
                                         gimp_image_invalidate,
                                         image);
 
   gimp_container_remove_handler (private->channels,
-                                 image->channel_name_changed_handler);
+                                 private->channel_name_changed_handler);
   gimp_container_remove_handler (private->channels,
-                                 image->channel_color_changed_handler);
+                                 private->channel_color_changed_handler);
 
   g_signal_handlers_disconnect_by_func (private->channels,
                                         gimp_image_channel_add,
@@ -859,7 +859,7 @@ gimp_image_dispose (GObject *object)
 
   gimp_container_foreach (private->layers,   (GFunc) gimp_item_removed, NULL);
   gimp_container_foreach (private->channels, (GFunc) gimp_item_removed, NULL);
-  gimp_container_foreach (private->vectors, (GFunc) gimp_item_removed, NULL);
+  gimp_container_foreach (private->vectors,  (GFunc) gimp_item_removed, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

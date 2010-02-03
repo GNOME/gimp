@@ -105,10 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  GQuark             layer_alpha_handler;
-  GQuark             channel_name_changed_handler;
-  GQuark             channel_color_changed_handler;
-
   GimpLayer         *active_layer;          /*  the active layer             */
   GimpChannel       *active_channel;        /*  the active channel           */
   GimpVectors       *active_vectors;        /*  the active vectors           */

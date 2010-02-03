@@ -62,6 +62,10 @@ struct _GimpImagePrivate
   GimpContainer     *channels;              /*  the list of masks            */
   GimpContainer     *vectors;               /*  the list of vectors          */
   GSList            *layer_stack;           /*  the layers in MRU order      */
+
+  GQuark             layer_alpha_handler;
+  GQuark             channel_name_changed_handler;
+  GQuark             channel_color_changed_handler;
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \
