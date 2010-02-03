@@ -105,10 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  GimpLayer         *active_layer;          /*  the active layer             */
-  GimpChannel       *active_channel;        /*  the active channel           */
-  GimpVectors       *active_vectors;        /*  the active vectors           */
-
   GimpLayer         *floating_sel;          /*  the FS layer                 */
   GimpChannel       *selection_mask;        /*  the selection mask channel   */
 
