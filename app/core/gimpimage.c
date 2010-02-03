@@ -610,7 +610,7 @@ gimp_image_init (GimpImage *image)
   private->instance_count      = 0;
   private->disp_count          = 0;
 
-  image->tattoo_state          = 0;
+  private->tattoo_state        = 0;
 
   image->projection            = gimp_projection_new (GIMP_PROJECTABLE (image));
 
@@ -2641,14 +2641,18 @@ gimp_image_parasite_detach (GimpImage   *image,
 GimpTattoo
 gimp_image_get_new_tattoo (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  image->tattoo_state++;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (G_UNLIKELY (image->tattoo_state == 0))
+  private->tattoo_state++;
+
+  if (G_UNLIKELY (private->tattoo_state == 0))
     g_warning ("%s: Tattoo state corrupted (integer overflow).", G_STRFUNC);
 
-  return image->tattoo_state;
+  return private->tattoo_state;
 }
 
 GimpTattoo
@@ -2656,7 +2660,7 @@ gimp_image_get_tattoo_state (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  return image->tattoo_state;
+  return GIMP_IMAGE_GET_PRIVATE (image)->tattoo_state;
 }
 
 gboolean
@@ -2726,7 +2730,7 @@ gimp_image_set_tattoo_state (GimpImage  *image,
 
   /* Must check if the state is valid */
   if (retval == TRUE)
-    image->tattoo_state = val;
+    GIMP_IMAGE_GET_PRIVATE (image)->tattoo_state = val;
 
   return retval;
 }

@@ -47,6 +47,8 @@ struct _GimpImagePrivate
 
   gint               instance_count;        /*  number of instances          */
   gint               disp_count;            /*  number of displays           */
+
+  GimpTattoo         tattoo_state;          /*  the last used tattoo         */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

@@ -105,8 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  GimpTattoo         tattoo_state;          /*  the last used tattoo         */
-
   GimpProjection    *projection;            /*  projection layers & channels */
   GeglNode          *graph;                 /*  GEGL projection graph        */
 
