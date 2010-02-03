@@ -338,6 +338,29 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
     }
 }
 
+void
+gimp_display_shell_get_screen_resolution (GimpDisplayShell *shell,
+                                          gdouble          *xres,
+                                          gdouble          *yres)
+{
+  gdouble x, y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->dot_for_dot)
+    {
+      gimp_image_get_resolution (shell->display->image, &x, &y);
+    }
+  else
+    {
+      x = shell->monitor_xres;
+      y = shell->monitor_yres;
+    }
+
+  if (xres) *xres = x;
+  if (yres) *yres = y;
+}
+
 /**
  * gimp_display_shell_scale:
  * @shell:     the #GimpDisplayShell
@@ -699,14 +722,16 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_calculate_scale_x_and_y (const GimpDisplayShell *shell,
-                                            gdouble                 scale,
-                                            gdouble                *scale_x,
-                                            gdouble                *scale_y)
+gimp_display_shell_calculate_scale_x_and_y (GimpDisplayShell *shell,
+                                            gdouble           scale,
+                                            gdouble          *scale_x,
+                                            gdouble          *scale_y)
 {
   GimpImage *image;
   gdouble    xres;
   gdouble    yres;
+  gdouble    screen_xres;
+  gdouble    screen_yres;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -715,9 +740,10 @@ gimp_display_shell_calculate_scale_x_and_y (const GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   gimp_image_get_resolution (image, &xres, &yres);
+  gimp_display_shell_get_screen_resolution (shell, &screen_xres, &screen_yres);
 
-  if (scale_x) *scale_x = scale * SCREEN_XRES (shell) / xres;
-  if (scale_y) *scale_y = scale * SCREEN_YRES (shell) / yres;
+  if (scale_x) *scale_x = scale * screen_xres / xres;
+  if (scale_y) *scale_y = scale * screen_yres / yres;
 }
 
 void

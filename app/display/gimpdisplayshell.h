@@ -23,12 +23,6 @@
 #define  PROJ_ROUND(coord)   ((gint) RINT (coord))
 #define  PROJ_ROUND64(coord) ((gint64) RINT (coord))
 
-/* finding the effective screen resolution (double) */
-#define  SCREEN_XRES(s)   ((s)->dot_for_dot ? \
-                           (s)->display->image->xresolution : (s)->monitor_xres)
-#define  SCREEN_YRES(s)   ((s)->dot_for_dot ? \
-                           (s)->display->image->yresolution : (s)->monitor_yres)
-
 /* scale values */
 #define  SCALEX(s,x)      PROJ_ROUND ((x) * (s)->scale_x)
 #define  SCALEY(s,y)      PROJ_ROUND ((y) * (s)->scale_y)
