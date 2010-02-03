@@ -622,7 +622,7 @@ gimp_display_set_image (GimpDisplay *display,
 
       gimp_display_disconnect (display);
 
-      gimp_image_inc_display_count (display->image);
+      gimp_image_dec_display_count (display->image);
 
       /*  set display->image before unrefing because there may be code
        *  that listens for image removals and then iterates the
@@ -650,7 +650,7 @@ gimp_display_set_image (GimpDisplay *display,
       private->instance = gimp_image_get_instance_count (image);
       gimp_image_inc_instance_count (image);
 
-      gimp_image_dec_display_count (image);
+      gimp_image_inc_display_count (image);
 
       gimp_display_connect (display);
 
