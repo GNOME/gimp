@@ -53,8 +53,6 @@ plug-ins/script-fu/scripts/flatland.scm
 plug-ins/script-fu/scripts/font-map.scm
 plug-ins/script-fu/scripts/frosty-logo.scm
 plug-ins/script-fu/scripts/fuzzyborder.scm
-plug-ins/script-fu/scripts/gimp-headers.scm
-plug-ins/script-fu/scripts/gimp-labels.scm
 plug-ins/script-fu/scripts/gimp-online.scm
 plug-ins/script-fu/scripts/glossy.scm
 plug-ins/script-fu/scripts/glowing-logo.scm
