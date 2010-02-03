@@ -33,6 +33,7 @@
 #include "gimpimage-duplicate.h"
 #include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-private.h"
 #include "gimpimage-sample-points.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
@@ -436,9 +437,12 @@ static void
 gimp_image_duplicate_parasites (GimpImage *image,
                                 GimpImage *new_image)
 {
-  if (image->parasites)
+  GimpImagePrivate *private     = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpImagePrivate *new_private = GIMP_IMAGE_GET_PRIVATE (new_image);
+
+  if (private->parasites)
     {
-      g_object_unref (new_image->parasites);
-      new_image->parasites = gimp_parasite_list_copy (image->parasites);
+      g_object_unref (new_private->parasites);
+      new_private->parasites = gimp_parasite_list_copy (private->parasites);
     }
 }

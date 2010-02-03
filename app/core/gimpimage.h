@@ -105,8 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  GimpParasiteList  *parasites;             /*  Plug-in parasite data        */
-
   gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
   gboolean           active[MAX_CHANNELS];  /*  active channels              */
 

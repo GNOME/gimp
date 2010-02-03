@@ -161,7 +161,9 @@ xcf_load_image (Gimp     *gimp,
 
       if (grid)
         {
-          gimp_parasite_list_remove (GIMP_IMAGE (image)->parasites,
+          GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+          gimp_parasite_list_remove (private->parasites,
                                      gimp_parasite_name (parasite));
 
           gimp_image_set_grid (GIMP_IMAGE (image), grid, FALSE);

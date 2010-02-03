@@ -444,9 +444,9 @@ gimp_image_undo_pop (GimpUndo            *undo,
           (gimp_image_parasite_find (image, image_undo->parasite_name));
 
         if (parasite)
-          gimp_parasite_list_add (image->parasites, parasite);
+          gimp_parasite_list_add (private->parasites, parasite);
         else
-          gimp_parasite_list_remove (image->parasites,
+          gimp_parasite_list_remove (private->parasites,
                                      image_undo->parasite_name);
 
         name = parasite ? parasite->name : image_undo->parasite_name;

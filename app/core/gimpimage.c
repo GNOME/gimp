@@ -659,7 +659,7 @@ gimp_image_init (GimpImage *image)
   private->floating_sel        = NULL;
   private->selection_mask      = NULL;
 
-  image->parasites             = gimp_parasite_list_new ();
+  private->parasites           = gimp_parasite_list_new ();
 
   for (i = 0; i < MAX_CHANNELS; i++)
     {
@@ -921,10 +921,10 @@ gimp_image_finalize (GObject *object)
       image->preview = NULL;
     }
 
-  if (image->parasites)
+  if (private->parasites)
     {
-      g_object_unref (image->parasites);
-      image->parasites = NULL;
+      g_object_unref (private->parasites);
+      private->parasites = NULL;
     }
 
   if (private->guides)
@@ -1034,7 +1034,7 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (private->selection_mask),
                                       gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->parasites),
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->parasites),
                                       gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->undo_stack),
@@ -2552,7 +2552,8 @@ gimp_image_parasite_find (const GimpImage *image,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return gimp_parasite_list_find (image->parasites, name);
+  return gimp_parasite_list_find (GIMP_IMAGE_GET_PRIVATE (image)->parasites,
+                                  name);
 }
 
 static void
@@ -2567,15 +2568,18 @@ gchar **
 gimp_image_parasite_list (const GimpImage *image,
                           gint            *count)
 {
-  gchar **list;
-  gchar **cur;
+  GimpImagePrivate  *private;
+  gchar            **list;
+  gchar            **cur;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  *count = gimp_parasite_list_length (image->parasites);
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  *count = gimp_parasite_list_length (private->parasites);
   cur = list = g_new (gchar *, *count);
 
-  gimp_parasite_list_foreach (image->parasites, (GHFunc) list_func, &cur);
+  gimp_parasite_list_foreach (private->parasites, (GHFunc) list_func, &cur);
 
   return list;
 }
@@ -2608,7 +2612,7 @@ gimp_image_parasite_attach (GimpImage          *image,
    *  Now we simply attach the parasite without pushing an undo. That way
    *  it's undoable but does not block the undo system.   --Sven
    */
-  gimp_parasite_list_add (image->parasites, &copy);
+  gimp_parasite_list_add (GIMP_IMAGE_GET_PRIVATE (image)->parasites, &copy);
 
   if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
@@ -2627,12 +2631,15 @@ void
 gimp_image_parasite_detach (GimpImage   *image,
                             const gchar *name)
 {
+  GimpImagePrivate   *private;
   const GimpParasite *parasite;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (name != NULL);
 
-  if (! (parasite = gimp_parasite_list_find (image->parasites, name)))
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (! (parasite = gimp_parasite_list_find (private->parasites, name)))
     return;
 
   if (gimp_parasite_is_undoable (parasite))
@@ -2640,7 +2647,7 @@ gimp_image_parasite_detach (GimpImage   *image,
                                                 _("Remove Parasite from Image"),
                                                 name);
 
-  gimp_parasite_list_remove (image->parasites, name);
+  gimp_parasite_list_remove (private->parasites, name);
 
   g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
                  name);

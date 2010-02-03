@@ -41,6 +41,7 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -372,10 +373,11 @@ xcf_save_image_props (XcfInfo    *info,
                       GimpImage  *image,
                       GError    **error)
 {
-  GimpParasite *parasite = NULL;
-  GimpUnit      unit     = gimp_image_get_unit (image);
-  gdouble       xres;
-  gdouble       yres;
+  GimpImagePrivate *private  = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpParasite     *parasite = NULL;
+  GimpUnit          unit     = gimp_image_get_unit (image);
+  gdouble           xres;
+  gdouble           yres;
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -422,18 +424,18 @@ xcf_save_image_props (XcfInfo    *info,
       GimpGrid *grid = gimp_image_get_grid (image);
 
       parasite = gimp_grid_to_parasite (grid);
-      gimp_parasite_list_add (GIMP_IMAGE (image)->parasites, parasite);
+      gimp_parasite_list_add (private->parasites, parasite);
     }
 
-  if (gimp_parasite_list_length (GIMP_IMAGE (image)->parasites) > 0)
+  if (gimp_parasite_list_length (private->parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
-                                      GIMP_IMAGE (image)->parasites));
+                                      private->parasites));
     }
 
   if (parasite)
     {
-      gimp_parasite_list_remove (GIMP_IMAGE (image)->parasites,
+      gimp_parasite_list_remove (private->parasites,
                                  gimp_parasite_name (parasite));
       gimp_parasite_free (parasite);
     }

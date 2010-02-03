@@ -73,6 +73,8 @@ struct _GimpImagePrivate
 
   GimpLayer         *floating_sel;          /*  the FS layer                 */
   GimpChannel       *selection_mask;        /*  the selection mask channel   */
+
+  GimpParasiteList  *parasites;             /*  Plug-in parasite data        */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \
