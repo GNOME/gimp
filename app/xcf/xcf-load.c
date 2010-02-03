@@ -570,7 +570,7 @@ xcf_load_image_props (XcfInfo   *info,
                 unit = GIMP_UNIT_INCH;
               }
 
-            image->resolution_unit = unit;
+            gimp_image_set_unit (image, unit);
           }
           break;
 
@@ -624,7 +624,7 @@ xcf_load_image_props (XcfInfo   *info,
                                      unit_strings[3],
                                      unit_strings[4]);
 
-            image->resolution_unit = unit;
+            gimp_image_set_unit (image, unit);
 
             for (i = 0; i < 5; i++)
               g_free (unit_strings[i]);

@@ -358,7 +358,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
           gimp_scan_convert_set_pixel_ratio (scan_convert, yres / xres);
 
-          width *= (image->yresolution /
+          width *= (yres /
                     _gimp_unit_get_factor (image->gimp, stroke_options->unit));
         }
 
