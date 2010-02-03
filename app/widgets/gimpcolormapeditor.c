@@ -511,13 +511,14 @@ gimp_colormap_editor_create_layout (GtkWidget *widget)
 static void
 gimp_colormap_editor_draw (GimpColormapEditor *editor)
 {
-  GimpImage *image  = GIMP_IMAGE_EDITOR (editor)->image;
-  gint       i, j, k, b;
-  gint       col;
-  guchar    *row;
-  gint       cellsize, ncol, xn, yn;
-  gint       width  = editor->preview->allocation.width;
-  gint       height = editor->preview->allocation.height;
+  GimpImage    *image    = GIMP_IMAGE_EDITOR (editor)->image;
+  const guchar *colormap = gimp_image_get_colormap (image);
+  gint          i, j, k, b;
+  gint          col;
+  guchar       *row;
+  gint          cellsize, ncol, xn, yn;
+  gint          width  = editor->preview->allocation.width;
+  gint          height = editor->preview->allocation.height;
 
   ncol = gimp_image_get_colormap_size (image);
 
@@ -559,7 +560,7 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
         {
           for (k = 0; k < cellsize; k++)
             for (b = 0; b < 3; b++)
-              row[(j * cellsize + k) * 3 + b] = image->colormap[col * 3 + b];
+              row[(j * cellsize + k) * 3 + b] = colormap[col * 3 + b];
         }
 
       if (j * cellsize < width)
@@ -585,10 +586,11 @@ static void
 gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
                                 gint                col)
 {
-  GimpImage *image    = GIMP_IMAGE_EDITOR (editor)->image;
-  gint       cellsize = editor->cellsize;
-  guchar    *row      = g_alloca (cellsize * 3);
-  gint       x, y, k;
+  GimpImage    *image    = GIMP_IMAGE_EDITOR (editor)->image;
+  const guchar *colormap = gimp_image_get_colormap (image);
+  gint          cellsize = editor->cellsize;
+  guchar       *row      = g_alloca (cellsize * 3);
+  gint          x, y, k;
 
   if (! editor->xn)
     return;
@@ -615,9 +617,9 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
 
       for (k = 1; k < cellsize - 1; k++)
         {
-          row[k*3]   = image->colormap[col * 3];
-          row[k*3+1] = image->colormap[col * 3 + 1];
-          row[k*3+2] = image->colormap[col * 3 + 2];
+          row[k*3]   = colormap[col * 3];
+          row[k*3+1] = colormap[col * 3 + 1];
+          row[k*3+2] = colormap[col * 3 + 2];
         }
       for (k = 1; k < cellsize - 1; k+=2)
         gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
@@ -634,9 +636,9 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
     {
       for (k = 0; k < cellsize; k++)
         {
-          row[k*3]   = image->colormap[col * 3];
-          row[k*3+1] = image->colormap[col * 3 + 1];
-          row[k*3+2] = image->colormap[col * 3 + 2];
+          row[k*3]   = colormap[col * 3];
+          row[k*3+1] = colormap[col * 3 + 1];
+          row[k*3+2] = colormap[col * 3 + 2];
         }
 
       for (k = 0; k < cellsize; k++)
@@ -714,12 +716,13 @@ gimp_colormap_editor_update_entries (GimpColormapEditor *editor)
     }
   else
     {
-      gchar  *string;
-      guchar *col;
+      const guchar *colormap = gimp_image_get_colormap (image);
+      const guchar *col;
+      gchar        *string;
 
       gtk_adjustment_set_value (editor->index_adjustment, editor->col_index);
 
-      col = image->colormap + editor->col_index * 3;
+      col = colormap + editor->col_index * 3;
 
       string = g_strdup_printf ("%02x%02x%02x", col[0], col[1], col[2]);
       gtk_entry_set_text (GTK_ENTRY (editor->color_entry), string);
