@@ -237,14 +237,15 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
 static gboolean
 gimp_display_shell_close_time_changed (GimpMessageBox *box)
 {
-  GimpImage *image  = g_object_get_data (G_OBJECT (box), "gimp-image");
+  GimpImage *image      = g_object_get_data (G_OBJECT (box), "gimp-image");
+  gint      *dirty_time = gimp_image_get_dirty_time (image);
 
-  if (image->dirty_time)
+  if (dirty_time)
     {
       gint hours   = 0;
       gint minutes = 0;
 
-      gimp_time_since (image->dirty_time, &hours, &minutes);
+      gimp_time_since (dirty_time, &hours, &minutes);
 
       if (hours > 0)
         {

@@ -233,6 +233,7 @@ libappcore_a_sources = \
 	gimpimage-pick-color.h			\
 	gimpimage-preview.c			\
 	gimpimage-preview.h			\
+	gimpimage-private.h			\
 	gimpimage-quick-mask.c			\
 	gimpimage-quick-mask.h			\
 	gimpimage-resize.c			\

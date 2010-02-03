@@ -27,6 +27,7 @@
 #include "gimp-utils.h"
 #include "gimpdrawableundo.h"
 #include "gimpimage.h"
+#include "gimpimage-private.h"
 #include "gimpimage-undo.h"
 #include "gimpitem.h"
 #include "gimplist.h"
@@ -136,7 +137,11 @@ gimp_image_strong_redo (GimpImage *image)
 void
 gimp_image_undo_free (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   /*  Emit the UNDO_FREE event before actually freeing everything
    *  so the views can properly detach from the undo items
@@ -151,8 +156,8 @@ gimp_image_undo_free (GimpImage *image)
    * This is because we've just nuked the actions that would allow
    * the image to become clean again.
    */
-  if (image->dirty < 0)
-    image->dirty = 100000;
+  if (private->dirty < 0)
+    private->dirty = 100000;
 
   /* The same applies to the case where the image would become clean
    * due to undo actions, but since user can't undo without an undo
@@ -165,12 +170,15 @@ gimp_image_undo_group_start (GimpImage    *image,
                              GimpUndoType  undo_type,
                              const gchar  *name)
 {
-  GimpUndoStack *undo_group;
-  GimpDirtyMask  dirty_mask;
+  GimpImagePrivate *private;
+  GimpUndoStack    *undo_group;
+  GimpDirtyMask     dirty_mask;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (undo_type >  GIMP_UNDO_GROUP_FIRST &&
                         undo_type <= GIMP_UNDO_GROUP_LAST, FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (! name)
     name = gimp_undo_type_to_name (undo_type);
@@ -181,7 +189,7 @@ gimp_image_undo_group_start (GimpImage    *image,
   if (image->group_count == 0 && dirty_mask != GIMP_DIRTY_NONE)
     gimp_image_dirty (image, dirty_mask);
 
-  if (image->undo_freeze_count > 0)
+  if (private->undo_freeze_count > 0)
     return FALSE;
 
   image->group_count++;
@@ -209,9 +217,13 @@ gimp_image_undo_group_start (GimpImage    *image,
 gboolean
 gimp_image_undo_group_end (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  if (image->undo_freeze_count > 0)
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->undo_freeze_count > 0)
     return FALSE;
 
   g_return_val_if_fail (image->group_count > 0, FALSE);
@@ -242,14 +254,17 @@ gimp_image_undo_push (GimpImage     *image,
                       GimpDirtyMask  dirty_mask,
                       ...)
 {
-  GParameter *params   = NULL;
-  gint        n_params = 0;
-  va_list     args;
-  GimpUndo   *undo;
+  GimpImagePrivate *private;
+  GParameter       *params   = NULL;
+  gint              n_params = 0;
+  va_list           args;
+  GimpUndo         *undo;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (g_type_is_a (object_type, GIMP_TYPE_UNDO), NULL);
   g_return_val_if_fail (undo_type > GIMP_UNDO_GROUP_LAST, NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   /* Does this undo dirty the image?  If so, we always want to mark
    * image dirty, even if we can't actually push the undo.
@@ -257,7 +272,7 @@ gimp_image_undo_push (GimpImage     *image,
   if (dirty_mask != GIMP_DIRTY_NONE)
     gimp_image_dirty (image, dirty_mask);
 
-  if (image->undo_freeze_count > 0)
+  if (private->undo_freeze_count > 0)
     return NULL;
 
   if (! name)
@@ -452,7 +467,8 @@ gimp_image_undo_free_space (GimpImage *image)
 static void
 gimp_image_undo_free_redo (GimpImage *image)
 {
-  GimpContainer *container = image->redo_stack->undos;
+  GimpImagePrivate *private   = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpContainer    *container = image->redo_stack->undos;
 
 #ifdef DEBUG_IMAGE_UNDO
   g_printerr ("redo_steps: %d    redo_bytes: %ld\n",
@@ -483,14 +499,14 @@ gimp_image_undo_free_redo (GimpImage *image)
   /* We need to use <= here because the undo counter has already been
    * incremented at this point.
    */
-  if (image->dirty <= 0)
+  if (private->dirty <= 0)
     {
       /* If the image was dirty, but could become clean by redo-ing
        * some actions, then it should now become 'infinitely' dirty.
        * This is because we've just nuked the actions that would allow
        * the image to become clean again.
        */
-      image->dirty = 100000;
+      private->dirty = 100000;
     }
 }
 

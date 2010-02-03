@@ -47,6 +47,7 @@
 #include "gimpimage-guides.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-preview.h"
+#include "gimpimage-private.h"
 #include "gimpimage-quick-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -556,6 +557,8 @@ gimp_image_class_init (GimpImageClass *klass)
                                                       G_PARAM_CONSTRUCT));
 
   gimp_image_color_hash_init ();
+
+  g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
 
 static void
@@ -580,28 +583,29 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
 static void
 gimp_image_init (GimpImage *image)
 {
-  gint i;
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  gint              i;
 
-  image->ID                    = 0;
+  private->ID                  = 0;
 
-  image->load_proc             = NULL;
-  image->save_proc             = NULL;
+  private->load_proc           = NULL;
+  private->save_proc           = NULL;
 
-  image->width                 = 0;
-  image->height                = 0;
-  image->xresolution           = 1.0;
-  image->yresolution           = 1.0;
-  image->resolution_unit       = GIMP_UNIT_INCH;
-  image->base_type             = GIMP_RGB;
+  private->width               = 0;
+  private->height              = 0;
+  private->xresolution         = 1.0;
+  private->yresolution         = 1.0;
+  private->resolution_unit     = GIMP_UNIT_INCH;
+  private->base_type           = GIMP_RGB;
 
-  image->colormap              = NULL;
-  image->n_colors              = 0;
+  private->colormap            = NULL;
+  private->n_colors            = 0;
 
-  image->dirty                 = 1;
-  image->dirty_time            = 0;
-  image->undo_freeze_count     = 0;
+  private->dirty               = 1;
+  private->dirty_time          = 0;
+  private->undo_freeze_count   = 0;
 
-  image->export_dirty          = 1;
+  private->export_dirty        = 1;
 
   image->instance_count        = 0;
   image->disp_count            = 0;
@@ -685,13 +689,15 @@ gimp_image_constructor (GType                  type,
                         guint                  n_params,
                         GObjectConstructParam *params)
 {
-  GObject        *object;
-  GimpImage      *image;
-  GimpCoreConfig *config;
+  GObject          *object;
+  GimpImage        *image;
+  GimpImagePrivate *private;
+  GimpCoreConfig   *config;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  image = GIMP_IMAGE (object);
+  image   = GIMP_IMAGE (object);
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   g_assert (GIMP_IS_GIMP (image->gimp));
 
@@ -699,33 +705,33 @@ gimp_image_constructor (GType                  type,
 
   do
     {
-      image->ID = image->gimp->next_image_ID++;
+      private->ID = image->gimp->next_image_ID++;
 
       if (image->gimp->next_image_ID == G_MAXINT)
         image->gimp->next_image_ID = 1;
     }
   while (g_hash_table_lookup (image->gimp->image_table,
-                              GINT_TO_POINTER (image->ID)));
+                              GINT_TO_POINTER (private->ID)));
 
   g_hash_table_insert (image->gimp->image_table,
-                       GINT_TO_POINTER (image->ID),
+                       GINT_TO_POINTER (private->ID),
                        image);
 
-  image->xresolution     = config->default_image->xresolution;
-  image->yresolution     = config->default_image->yresolution;
-  image->resolution_unit = config->default_image->resolution_unit;
+  private->xresolution     = config->default_image->xresolution;
+  private->yresolution     = config->default_image->yresolution;
+  private->resolution_unit = config->default_image->resolution_unit;
 
   image->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
 
-  switch (image->base_type)
+  switch (private->base_type)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
       break;
     case GIMP_INDEXED:
       /* always allocate 256 colors for the colormap */
-      image->n_colors = 0;
-      image->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+      private->n_colors = 0;
+      private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
       break;
     default:
       break;
@@ -762,7 +768,8 @@ gimp_image_set_property (GObject      *object,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-  GimpImage *image = GIMP_IMAGE (object);
+  GimpImage        *image   = GIMP_IMAGE (object);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
   switch (property_id)
     {
@@ -773,13 +780,13 @@ gimp_image_set_property (GObject      *object,
       g_assert_not_reached ();
       break;
     case PROP_WIDTH:
-      image->width = g_value_get_int (value);
+      private->width = g_value_get_int (value);
       break;
     case PROP_HEIGHT:
-      image->height = g_value_get_int (value);
+      private->height = g_value_get_int (value);
       break;
     case PROP_BASE_TYPE:
-      image->base_type = g_value_get_enum (value);
+      private->base_type = g_value_get_enum (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -793,7 +800,8 @@ gimp_image_get_property (GObject    *object,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpImage *image = GIMP_IMAGE (object);
+  GimpImage        *image   = GIMP_IMAGE (object);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
   switch (property_id)
     {
@@ -801,16 +809,16 @@ gimp_image_get_property (GObject    *object,
       g_value_set_object (value, image->gimp);
       break;
     case PROP_ID:
-      g_value_set_int (value, image->ID);
+      g_value_set_int (value, private->ID);
       break;
     case PROP_WIDTH:
-      g_value_set_int (value, image->width);
+      g_value_set_int (value, private->width);
       break;
     case PROP_HEIGHT:
-      g_value_set_int (value, image->height);
+      g_value_set_int (value, private->height);
       break;
     case PROP_BASE_TYPE:
-      g_value_set_enum (value, image->base_type);
+      g_value_set_enum (value, private->base_type);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -858,7 +866,8 @@ gimp_image_dispose (GObject *object)
 static void
 gimp_image_finalize (GObject *object)
 {
-  GimpImage *image = GIMP_IMAGE (object);
+  GimpImage        *image   = GIMP_IMAGE (object);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (image->projection)
     {
@@ -872,10 +881,10 @@ gimp_image_finalize (GObject *object)
       image->graph = NULL;
     }
 
-  if (image->colormap)
+  if (private->colormap)
     {
-      g_free (image->colormap);
-      image->colormap = NULL;
+      g_free (private->colormap);
+      private->colormap = NULL;
     }
 
   if (image->layers)
@@ -952,14 +961,14 @@ gimp_image_finalize (GObject *object)
   if (image->gimp && image->gimp->image_table)
     {
       g_hash_table_remove (image->gimp->image_table,
-                           GINT_TO_POINTER (image->ID));
+                           GINT_TO_POINTER (private->ID));
       image->gimp = NULL;
     }
 
-  if (image->display_name)
+  if (private->display_name)
     {
-      g_free (image->display_name);
-      image->display_name = NULL;
+      g_free (private->display_name);
+      private->display_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -968,16 +977,17 @@ gimp_image_finalize (GObject *object)
 static void
 gimp_image_name_changed (GimpObject *object)
 {
-  GimpImage   *image = GIMP_IMAGE (object);
-  const gchar *name;
+  GimpImage        *image   = GIMP_IMAGE (object);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  const gchar      *name;
 
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
-  if (image->display_name)
+  if (private->display_name)
     {
-      g_free (image->display_name);
-      image->display_name = NULL;
+      g_free (private->display_name);
+      private->display_name = NULL;
     }
 
   /* We never want the empty string as a name, so change empty strings
@@ -1217,10 +1227,10 @@ gimp_image_get_image (GimpProjectable *projectable)
 static GimpImageType
 gimp_image_get_image_type (GimpProjectable *projectable)
 {
-  GimpImage     *image = GIMP_IMAGE (projectable);
-  GimpImageType  type;
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (projectable);
+  GimpImageType     type;
 
-  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (image->base_type);
+  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (private->base_type);
 
   return GIMP_IMAGE_TYPE_WITH_ALPHA (type);
 }
@@ -1360,7 +1370,7 @@ gimp_image_base_type (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
 
-  return image->base_type;
+  return GIMP_IMAGE_GET_PRIVATE (image)->base_type;
 }
 
 GimpImageType
@@ -1368,7 +1378,7 @@ gimp_image_base_type_with_alpha (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
 
-  switch (image->base_type)
+  switch (GIMP_IMAGE_GET_PRIVATE (image)->base_type)
     {
     case GIMP_RGB:
       return GIMP_RGBA_IMAGE;
@@ -1393,7 +1403,7 @@ gimp_image_get_ID (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
 
-  return image->ID;
+  return GIMP_IMAGE_GET_PRIVATE (image)->ID;
 }
 
 GimpImage *
@@ -1474,16 +1484,20 @@ gimp_image_get_filename (const GimpImage *image)
 const gchar *
 gimp_image_get_display_name (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  if (! image->display_name)
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (! private->display_name)
     {
       const gchar *uri = gimp_image_get_uri (image);
 
-      image->display_name = file_utils_uri_display_basename (uri);
+      private->display_name = file_utils_uri_display_basename (uri);
     }
 
-  return image->display_name;
+  return private->display_name;
 }
 
 void
@@ -1492,7 +1506,7 @@ gimp_image_set_load_proc (GimpImage           *image,
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  image->load_proc = proc;
+  GIMP_IMAGE_GET_PRIVATE (image)->load_proc = proc;
 }
 
 GimpPlugInProcedure *
@@ -1500,7 +1514,7 @@ gimp_image_get_load_proc (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return image->load_proc;
+  return GIMP_IMAGE_GET_PRIVATE (image)->load_proc;
 }
 
 void
@@ -1509,7 +1523,7 @@ gimp_image_set_save_proc (GimpImage           *image,
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  image->save_proc = proc;
+  GIMP_IMAGE_GET_PRIVATE (image)->save_proc = proc;
 }
 
 GimpPlugInProcedure *
@@ -1517,7 +1531,7 @@ gimp_image_get_save_proc (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return image->save_proc;
+  return GIMP_IMAGE_GET_PRIVATE (image)->save_proc;
 }
 
 void
@@ -1525,21 +1539,25 @@ gimp_image_set_resolution (GimpImage *image,
                            gdouble    xresolution,
                            gdouble    yresolution)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   /* don't allow to set the resolution out of bounds */
   if (xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
       yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
     return;
 
-  if ((ABS (image->xresolution - xresolution) >= 1e-5) ||
-      (ABS (image->yresolution - yresolution) >= 1e-5))
+  if ((ABS (private->xresolution - xresolution) >= 1e-5) ||
+      (ABS (private->yresolution - yresolution) >= 1e-5))
     {
       gimp_image_undo_push_image_resolution (image,
                                              _("Change Image Resolution"));
 
-      image->xresolution = xresolution;
-      image->yresolution = yresolution;
+      private->xresolution = xresolution;
+      private->yresolution = yresolution;
 
       gimp_image_resolution_changed (image);
       gimp_image_size_changed_detailed (image,
@@ -1555,11 +1573,15 @@ gimp_image_get_resolution (const GimpImage *image,
                            gdouble         *xresolution,
                            gdouble         *yresolution)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (xresolution != NULL && yresolution != NULL);
 
-  *xresolution = image->xresolution;
-  *yresolution = image->yresolution;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  *xresolution = private->xresolution;
+  *yresolution = private->yresolution;
 }
 
 void
@@ -1574,15 +1596,19 @@ void
 gimp_image_set_unit (GimpImage *image,
                      GimpUnit   unit)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (unit > GIMP_UNIT_PIXEL);
 
-  if (image->resolution_unit != unit)
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->resolution_unit != unit)
     {
       gimp_image_undo_push_image_resolution (image,
                                              _("Change Image Unit"));
 
-      image->resolution_unit = unit;
+      private->resolution_unit = unit;
       gimp_image_unit_changed (image);
     }
 }
@@ -1592,7 +1618,7 @@ gimp_image_get_unit (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_UNIT_INCH);
 
-  return image->resolution_unit;
+  return GIMP_IMAGE_GET_PRIVATE (image)->resolution_unit;
 }
 
 void
@@ -1608,7 +1634,7 @@ gimp_image_get_width (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  return image->width;
+  return GIMP_IMAGE_GET_PRIVATE (image)->width;
 }
 
 gint
@@ -1616,7 +1642,7 @@ gimp_image_get_height (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  return image->height;
+  return GIMP_IMAGE_GET_PRIVATE (image)->height;
 }
 
 gboolean
@@ -1911,7 +1937,8 @@ gimp_image_colormap_changed (GimpImage *image,
                              gint       color_index)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (color_index >= -1 && color_index < image->n_colors);
+  g_return_if_fail (color_index >= -1 &&
+                    color_index < GIMP_IMAGE_GET_PRIVATE (image)->n_colors);
 
   g_signal_emit (image, gimp_image_signals[COLORMAP_CHANGED], 0,
                  color_index);
@@ -1942,7 +1969,7 @@ gimp_image_undo_is_enabled (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  return (image->undo_freeze_count == 0);
+  return (GIMP_IMAGE_GET_PRIVATE (image)->undo_freeze_count == 0);
 }
 
 gboolean
@@ -1967,11 +1994,15 @@ gimp_image_undo_disable (GimpImage *image)
 gboolean
 gimp_image_undo_freeze (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  image->undo_freeze_count++;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (image->undo_freeze_count == 1)
+  private->undo_freeze_count++;
+
+  if (private->undo_freeze_count == 1)
     gimp_image_undo_event (image, GIMP_UNDO_EVENT_UNDO_FREEZE, NULL);
 
   return TRUE;
@@ -1980,12 +2011,17 @@ gimp_image_undo_freeze (GimpImage *image)
 gboolean
 gimp_image_undo_thaw (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (image->undo_freeze_count > 0, FALSE);
 
-  image->undo_freeze_count--;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (image->undo_freeze_count == 0)
+  g_return_val_if_fail (private->undo_freeze_count > 0, FALSE);
+
+  private->undo_freeze_count--;
+
+  if (private->undo_freeze_count == 0)
     gimp_image_undo_event (image, GIMP_UNDO_EVENT_UNDO_THAW, NULL);
 
   return TRUE;
@@ -2039,44 +2075,56 @@ gint
 gimp_image_dirty (GimpImage     *image,
                   GimpDirtyMask  dirty_mask)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  image->dirty++;
-  image->export_dirty++;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (! image->dirty_time)
-    image->dirty_time = time (NULL);
+  private->dirty++;
+  private->export_dirty++;
+
+  if (! private->dirty_time)
+    private->dirty_time = time (NULL);
 
   g_signal_emit (image, gimp_image_signals[DIRTY], 0, dirty_mask);
 
-  TRC (("dirty %d -> %d\n", image->dirty - 1, image->dirty));
+  TRC (("dirty %d -> %d\n", private->dirty - 1, private->dirty));
 
-  return image->dirty;
+  return private->dirty;
 }
 
 gint
 gimp_image_clean (GimpImage     *image,
                   GimpDirtyMask  dirty_mask)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  image->dirty--;
-  image->export_dirty--;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->dirty--;
+  private->export_dirty--;
 
   g_signal_emit (image, gimp_image_signals[CLEAN], 0, dirty_mask);
 
-  TRC (("clean %d -> %d\n", image->dirty + 1, image->dirty));
+  TRC (("clean %d -> %d\n", private->dirty + 1, private->dirty));
 
-  return image->dirty;
+  return private->dirty;
 }
 
 void
 gimp_image_clean_all (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  image->dirty      = 0;
-  image->dirty_time = 0;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->dirty      = 0;
+  private->dirty_time = 0;
 
   g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
 }
@@ -2084,9 +2132,13 @@ gimp_image_clean_all (GimpImage *image)
 void
 gimp_image_export_clean_all (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  image->export_dirty = 0;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->export_dirty = 0;
 
   g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
 }
@@ -2100,7 +2152,9 @@ gimp_image_export_clean_all (GimpImage *image)
 gint
 gimp_image_is_dirty (const GimpImage *image)
 {
-  return image->dirty != 0;
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->dirty != 0;
 }
 
 /**
@@ -2112,8 +2166,19 @@ gimp_image_is_dirty (const GimpImage *image)
 gboolean
 gimp_image_is_export_dirty (const GimpImage *image)
 {
-  return image->export_dirty != 0;
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->export_dirty != 0;
 }
+
+gint
+gimp_image_get_dirty_time (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->dirty_time;
+}
+
 
 /**
  * gimp_image_saved:
@@ -2243,11 +2308,12 @@ gimp_image_get_color (const GimpImage *src_image,
     case GIMP_INDEXED_IMAGE:
       /*  Indexed palette lookup  */
       {
-        gint index = *src++ * 3;
+        GimpImagePrivate *src_private = GIMP_IMAGE_GET_PRIVATE (src_image);
+        gint              index       = *src++ * 3;
 
-        *rgba++ = src_image->colormap[index++];
-        *rgba++ = src_image->colormap[index++];
-        *rgba++ = src_image->colormap[index++];
+        *rgba++ = src_private->colormap[index++];
+        *rgba++ = src_private->colormap[index++];
+        *rgba++ = src_private->colormap[index++];
       }
       break;
     }

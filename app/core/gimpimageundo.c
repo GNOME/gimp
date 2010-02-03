@@ -33,6 +33,7 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
+#include "gimpimage-private.h"
 #include "gimpimageundo.h"
 #include "gimpparasitelist.h"
 
@@ -300,8 +301,9 @@ gimp_image_undo_pop (GimpUndo            *undo,
                      GimpUndoMode         undo_mode,
                      GimpUndoAccumulator *accum)
 {
-  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (undo);
-  GimpImage     *image      = undo->image;
+  GimpImageUndo    *image_undo = GIMP_IMAGE_UNDO (undo);
+  GimpImage        *image      = undo->image;
+  GimpImagePrivate *private    = GIMP_IMAGE_GET_PRIVATE (image);
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
@@ -376,8 +378,8 @@ gimp_image_undo_pop (GimpUndo            *undo,
         if (ABS (image_undo->xresolution - xres) >= 1e-5 ||
             ABS (image_undo->yresolution - yres) >= 1e-5)
           {
-            image->xresolution = image_undo->xresolution;
-            image->yresolution = image_undo->yresolution;
+            private->xresolution = image_undo->xresolution;
+            private->yresolution = image_undo->yresolution;
 
             image_undo->xresolution = xres;
             image_undo->yresolution = yres;
@@ -391,7 +393,7 @@ gimp_image_undo_pop (GimpUndo            *undo,
           GimpUnit unit;
 
           unit = gimp_image_get_unit (image);
-          image->resolution_unit = image_undo->resolution_unit;
+          private->resolution_unit = image_undo->resolution_unit;
           image_undo->resolution_unit = unit;
 
           accum->unit_changed = TRUE;

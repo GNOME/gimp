@@ -105,27 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  gint               ID;                    /*  provides a unique ID         */
-
-  GimpPlugInProcedure *load_proc;           /*  procedure used for loading   */
-  GimpPlugInProcedure *save_proc;           /*  last save procedure used     */
-
-  gchar             *display_name;          /*  display basename             */
-  gint               width, height;         /*  width and height attributes  */
-  gdouble            xresolution;           /*  image x-res, in dpi          */
-  gdouble            yresolution;           /*  image y-res, in dpi          */
-  GimpUnit           resolution_unit;       /*  resolution unit              */
-  GimpImageBaseType  base_type;             /*  base gimp_image type         */
-
-  guchar            *colormap;              /*  colormap (for indexed)       */
-  gint               n_colors;              /*  # of colors (for indexed)    */
-
-  gint               dirty;                 /*  dirty flag -- # of ops       */
-  guint              dirty_time;            /*  time when image became dirty */
-  gint               undo_freeze_count;     /*  counts the _freeze's         */
-
-  gint               export_dirty;          /*  'dirty' but for export       */
-
   gint               instance_count;        /*  number of instances          */
   gint               disp_count;            /*  number of displays           */
 
@@ -354,9 +333,10 @@ gint            gimp_image_dirty                 (GimpImage          *image,
 gint            gimp_image_clean                 (GimpImage          *image,
                                                   GimpDirtyMask       dirty_mask);
 void            gimp_image_clean_all             (GimpImage          *image);
+void            gimp_image_export_clean_all      (GimpImage          *image);
 gint            gimp_image_is_dirty              (const GimpImage    *image);
 gboolean        gimp_image_is_export_dirty       (const GimpImage    *image);
-void            gimp_image_export_clean_all      (GimpImage          *image);
+gint            gimp_image_get_dirty_time        (const GimpImage    *image);
 
 
 /*  flush this image's displays  */
