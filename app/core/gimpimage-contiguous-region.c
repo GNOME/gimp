@@ -127,7 +127,7 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if (sample_merged)
-    pickable = GIMP_PICKABLE (image->projection);
+    pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
   else
     pickable = GIMP_PICKABLE (drawable);
 
@@ -234,7 +234,7 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
                        cont.color + 3);
 
   if (sample_merged)
-    pickable = GIMP_PICKABLE (image->projection);
+    pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
   else
     pickable = GIMP_PICKABLE (drawable);
 

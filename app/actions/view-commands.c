@@ -721,7 +721,7 @@ view_use_gegl_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  image->projection->use_gegl = active;
+  gimp_image_get_projection (image)->use_gegl = active;
 
   layers = gimp_image_get_layer_list (image);
 

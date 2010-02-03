@@ -345,7 +345,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
     }
   else
     {
-      pickable = GIMP_PICKABLE (image->projection);
+      pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
    }
 
   gimp_pickable_flush (pickable);

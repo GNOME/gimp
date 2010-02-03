@@ -131,13 +131,16 @@ gimp_edit_copy_visible (GimpImage    *image,
                         GimpContext  *context,
                         GError      **error)
 {
-  GimpBuffer *buffer;
+  GimpProjection *projection;
+  GimpBuffer     *buffer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (image->projection),
+  projection = gimp_image_get_projection (image);
+
+  buffer = gimp_edit_extract (image, GIMP_PICKABLE (projection),
                               context, FALSE, error);
 
   if (buffer)
@@ -405,14 +408,17 @@ gimp_edit_named_copy_visible (GimpImage    *image,
                               GimpContext  *context,
                               GError      **error)
 {
-  GimpBuffer *buffer;
+  GimpProjection *projection;
+  GimpBuffer     *buffer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (image->projection),
+  projection = gimp_image_get_projection (image);
+
+  buffer = gimp_edit_extract (image, GIMP_PICKABLE (projection),
                               context, FALSE, error);
 
   if (buffer)

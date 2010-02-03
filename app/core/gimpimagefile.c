@@ -770,7 +770,7 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
     }
 
   /*  we need the projection constructed NOW, not some time later  */
-  gimp_pickable_flush (GIMP_PICKABLE (image->projection));
+  gimp_pickable_flush (GIMP_PICKABLE (gimp_image_get_projection (image)));
 
   pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image),
                                          /* random context, unused */

@@ -105,9 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  GimpProjection    *projection;            /*  projection layers & channels */
-  GeglNode          *graph;                 /*  GEGL projection graph        */
-
   GList             *guides;                /*  guides                       */
   GimpGrid          *grid;                  /*  grid                         */
   GList             *sample_points;         /*  color sample points          */

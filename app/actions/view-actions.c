@@ -547,6 +547,7 @@ view_actions_update (GimpActionGroup *group,
   gchar              *label          = NULL;
   gboolean            fullscreen     = FALSE;
   gboolean            revert_enabled = FALSE;   /* able to revert zoom? */
+  gboolean            use_gegl       = FALSE;
 
   if (display)
     {
@@ -564,6 +565,9 @@ view_actions_update (GimpActionGroup *group,
                  shell->no_image_options);
 
       revert_enabled = gimp_display_shell_scale_can_revert (shell);
+
+      if (image)
+        use_gegl = gimp_image_get_projection (image)->use_gegl;
     }
 
 #define SET_ACTIVE(action,condition) \
@@ -670,7 +674,7 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-shrink-wrap", image);
   SET_SENSITIVE ("view-fullscreen",  image);
   SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
-  SET_ACTIVE    ("view-use-gegl",    image && image->projection->use_gegl);
+  SET_ACTIVE    ("view-use-gegl",    use_gegl);
 
   if (GIMP_IS_IMAGE_WINDOW (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))

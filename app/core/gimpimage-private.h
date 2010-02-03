@@ -49,6 +49,9 @@ struct _GimpImagePrivate
   gint               disp_count;            /*  number of displays           */
 
   GimpTattoo         tattoo_state;          /*  the last used tattoo         */
+
+  GimpProjection    *projection;            /*  projection layers & channels */
+  GeglNode          *graph;                 /*  GEGL projection graph        */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

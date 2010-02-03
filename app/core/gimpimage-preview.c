@@ -125,21 +125,20 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                             gint          width,
                             gint          height)
 {
-  GimpImage   *image = GIMP_IMAGE (viewable);
-  TempBuf     *buf;
-  TileManager *tiles;
-  gdouble      scale_x;
-  gdouble      scale_y;
-  gint         level;
-  gboolean     is_premult;
+  GimpImage      *image = GIMP_IMAGE (viewable);
+  GimpProjection *projection = gimp_image_get_projection (image);
+  TempBuf        *buf;
+  TileManager    *tiles;
+  gdouble         scale_x;
+  gdouble         scale_y;
+  gint            level;
+  gboolean        is_premult;
 
   scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
 
-  level = gimp_projection_get_level (image->projection, scale_x, scale_y);
-
-  tiles = gimp_projection_get_tiles_at_level (image->projection, level,
-                                              &is_premult);
+  level = gimp_projection_get_level (projection, scale_x, scale_y);
+  tiles = gimp_projection_get_tiles_at_level (projection, level, &is_premult);
 
   buf = tile_manager_get_preview (tiles, width, height);
 

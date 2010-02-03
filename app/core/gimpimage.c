@@ -612,7 +612,7 @@ gimp_image_init (GimpImage *image)
 
   private->tattoo_state        = 0;
 
-  image->projection            = gimp_projection_new (GIMP_PROJECTABLE (image));
+  private->projection          = gimp_projection_new (GIMP_PROJECTABLE (image));
 
   image->guides                = NULL;
   image->grid                  = NULL;
@@ -869,16 +869,16 @@ gimp_image_finalize (GObject *object)
   GimpImage        *image   = GIMP_IMAGE (object);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (image->projection)
+  if (private->projection)
     {
-      g_object_unref (image->projection);
-      image->projection = NULL;
+      g_object_unref (private->projection);
+      private->projection = NULL;
     }
 
-  if (image->graph)
+  if (private->graph)
     {
-      g_object_unref (image->graph);
-      image->graph = NULL;
+      g_object_unref (private->graph);
+      private->graph = NULL;
     }
 
   if (private->colormap)
@@ -1003,13 +1003,14 @@ static gint64
 gimp_image_get_memsize (GimpObject *object,
                         gint64     *gui_size)
 {
-  GimpImage *image   = GIMP_IMAGE (object);
-  gint64     memsize = 0;
+  GimpImage        *image   = GIMP_IMAGE (object);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  gint64            memsize = 0;
 
   if (gimp_image_get_colormap (image))
     memsize += GIMP_IMAGE_COLORMAP_SIZE;
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->projection),
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->projection),
                                       gui_size);
 
   memsize += gimp_g_list_get_memsize (gimp_image_get_guides (image),
@@ -1238,28 +1239,29 @@ gimp_image_get_image_type (GimpProjectable *projectable)
 static GeglNode *
 gimp_image_get_graph (GimpProjectable *projectable)
 {
-  GimpImage *image = GIMP_IMAGE (projectable);
-  GeglNode  *layers_node;
-  GeglNode  *channels_node;
-  GeglNode  *blend_node;
-  GeglNode  *output;
+  GimpImage        *image   = GIMP_IMAGE (projectable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GeglNode         *layers_node;
+  GeglNode         *channels_node;
+  GeglNode         *blend_node;
+  GeglNode         *output;
 
-  if (image->graph)
-    return image->graph;
+  if (private->graph)
+    return private->graph;
 
-  image->graph = gegl_node_new ();
+  private->graph = gegl_node_new ();
 
   layers_node =
     gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->layers));
 
-  gegl_node_add_child (image->graph, layers_node);
+  gegl_node_add_child (private->graph, layers_node);
 
   channels_node =
     gimp_drawable_stack_get_graph (GIMP_DRAWABLE_STACK (image->channels));
 
-  gegl_node_add_child (image->graph, channels_node);
+  gegl_node_add_child (private->graph, channels_node);
 
-  blend_node = gegl_node_new_child (image->graph,
+  blend_node = gegl_node_new_child (private->graph,
                                     "operation", "gegl:over",
                                     NULL);
 
@@ -1268,12 +1270,12 @@ gimp_image_get_graph (GimpProjectable *projectable)
   gegl_node_connect_to (channels_node, "output",
                         blend_node,    "aux");
 
-  output = gegl_node_get_output_proxy (image->graph, "output");
+  output = gegl_node_get_output_proxy (private->graph, "output");
 
   gegl_node_connect_to (blend_node, "output",
                         output,     "input");
 
-  return image->graph;
+  return private->graph;
 }
 
 static void
@@ -2743,7 +2745,7 @@ gimp_image_get_projection (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return image->projection;
+  return GIMP_IMAGE_GET_PRIVATE (image)->projection;
 }
 
 

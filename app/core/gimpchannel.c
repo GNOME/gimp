@@ -1647,13 +1647,14 @@ gimp_channel_new_from_component (GimpImage       *image,
                                  const gchar     *name,
                                  const GimpRGB   *color)
 {
-  GimpChannel *channel;
-  TileManager *projection;
-  PixelRegion  src;
-  PixelRegion  dest;
-  gint         width;
-  gint         height;
-  gint         pixel;
+  GimpProjection *projection;
+  GimpChannel    *channel;
+  TileManager    *proj_tiles;
+  PixelRegion     src;
+  PixelRegion     dest;
+  gint            width;
+  gint            height;
+  gint            pixel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -1661,15 +1662,17 @@ gimp_channel_new_from_component (GimpImage       *image,
 
   g_return_val_if_fail (pixel != -1, NULL);
 
-  gimp_pickable_flush (GIMP_PICKABLE (image->projection));
+  projection = gimp_image_get_projection (image);
 
-  projection = gimp_pickable_get_tiles (GIMP_PICKABLE (image->projection));
-  width  = tile_manager_width  (projection);
-  height = tile_manager_height (projection);
+  gimp_pickable_flush (GIMP_PICKABLE (projection));
+
+  proj_tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (projection));
+  width  = tile_manager_width  (proj_tiles);
+  height = tile_manager_height (proj_tiles);
 
   channel = gimp_channel_new (image, width, height, name, color);
 
-  pixel_region_init (&src, projection,
+  pixel_region_init (&src, proj_tiles,
                      0, 0, width, height, FALSE);
   pixel_region_init (&dest,
                      gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
