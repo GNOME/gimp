@@ -75,18 +75,24 @@ void
 images_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpContext *context = action_data_get_context (data);
-  GimpImage   *image   = NULL;
+  GimpContext *context    = action_data_get_context (data);
+  GimpImage   *image      = NULL;
+  gint         disp_count = 0;
 
   if (context)
-    image = gimp_context_get_image (context);
+    {
+      image = gimp_context_get_image (context);
+
+      if (image)
+        disp_count = gimp_image_get_display_count (image);
+    }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("images-raise-views", image);
   SET_SENSITIVE ("images-new-view",    image);
-  SET_SENSITIVE ("images-delete",      image && image->disp_count == 0);
+  SET_SENSITIVE ("images-delete",      image && disp_count == 0);
 
 #undef SET_SENSITIVE
 }

@@ -104,7 +104,7 @@ images_delete_image_cmd_callback (GtkAction *action,
 
   if (image && gimp_container_have (container, GIMP_OBJECT (image)))
     {
-      if (image->disp_count == 0)
+      if (gimp_image_get_display_count (image) == 0)
         g_object_unref (image);
     }
 }

@@ -44,6 +44,9 @@ struct _GimpImagePrivate
   gint               export_dirty;          /*  'dirty' but for export       */
 
   gint               undo_freeze_count;     /*  counts the _freeze's         */
+
+  gint               instance_count;        /*  number of instances          */
+  gint               disp_count;            /*  number of displays           */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

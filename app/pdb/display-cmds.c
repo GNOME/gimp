@@ -79,7 +79,7 @@ display_new_invoker (GimpProcedure      *procedure,
       if (display)
         {
           /* the first display takes ownership of the image */
-          if (image->disp_count == 1)
+          if (gimp_image_get_display_count (image) == 1)
             g_object_unref (image);
         }
       else
@@ -179,15 +179,15 @@ displays_reconnect_invoker (GimpProcedure      *procedure,
   if (success)
     {
       success = (old_image != new_image    &&
-                 old_image->disp_count > 0 &&
-                 new_image->disp_count == 0);
+                 gimp_image_get_display_count (old_image) > 0 &&
+                 gimp_image_get_display_count (new_image) == 0);
 
       if (success)
         {
           gimp_reconnect_displays (gimp, old_image, new_image);
 
           /* take ownership of the image */
-          if (new_image->disp_count > 0)
+          if (gimp_image_get_display_count (new_image) > 0)
             g_object_unref (new_image);
         }
     }

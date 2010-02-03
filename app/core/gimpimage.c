@@ -607,8 +607,8 @@ gimp_image_init (GimpImage *image)
 
   private->export_dirty        = 1;
 
-  image->instance_count        = 0;
-  image->disp_count            = 0;
+  private->instance_count      = 0;
+  private->disp_count          = 0;
 
   image->tattoo_state          = 0;
 
@@ -2225,6 +2225,49 @@ gimp_image_flush (GimpImage *image)
 
   gimp_projectable_flush (GIMP_PROJECTABLE (image),
                           image->flush_accum.preview_invalidated);
+}
+
+
+/*  display / instance counters  */
+
+gint
+gimp_image_get_display_count (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->disp_count;
+}
+
+void
+gimp_image_inc_display_count (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  GIMP_IMAGE_GET_PRIVATE (image)->disp_count++;
+}
+
+void
+gimp_image_dec_display_count (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  GIMP_IMAGE_GET_PRIVATE (image)->disp_count--;
+}
+
+gint
+gimp_image_get_instance_count (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->instance_count;
+}
+
+void
+gimp_image_inc_instance_count (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  GIMP_IMAGE_GET_PRIVATE (image)->instance_count++;
 }
 
 

@@ -210,7 +210,7 @@ image_delete_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (image->disp_count == 0)
+      if (gimp_image_get_display_count (image) == 0)
         g_object_unref (image);
       else
         success = FALSE;

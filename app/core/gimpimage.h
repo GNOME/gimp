@@ -105,9 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  gint               instance_count;        /*  number of instances          */
-  gint               disp_count;            /*  number of displays           */
-
   GimpTattoo         tattoo_state;          /*  the last used tattoo         */
 
   GimpProjection    *projection;            /*  projection layers & channels */
@@ -342,6 +339,16 @@ gint            gimp_image_get_dirty_time        (const GimpImage    *image);
 /*  flush this image's displays  */
 
 void            gimp_image_flush                 (GimpImage          *image);
+
+
+/*  display / instance counters  */
+
+gint            gimp_image_get_display_count     (const GimpImage    *image);
+void            gimp_image_inc_display_count     (GimpImage          *image);
+void            gimp_image_dec_display_count     (GimpImage          *image);
+
+gint            gimp_image_get_instance_count    (const GimpImage    *image);
+void            gimp_image_inc_instance_count    (GimpImage          *image);
 
 
 /*  color transforms / utilities  */

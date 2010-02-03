@@ -85,10 +85,10 @@ gimp_display_shell_close (GimpDisplayShell *shell,
    *  it before nuking it--this only applies if its the last view
    *  to an image canvas.  (a image with disp_count = 1)
    */
-  if (! kill_it                   &&
-      image                       &&
-      image->disp_count == 1      &&
-      gimp_image_is_dirty (image) &&
+  if (! kill_it                                 &&
+      image                                     &&
+      gimp_image_get_display_count (image) == 1 &&
+      gimp_image_is_dirty (image)               &&
       shell->display->config->confirm_on_close)
     {
       /*  If there's a save dialog active for this image, then raise it.
@@ -238,7 +238,7 @@ static gboolean
 gimp_display_shell_close_time_changed (GimpMessageBox *box)
 {
   GimpImage *image      = g_object_get_data (G_OBJECT (box), "gimp-image");
-  gint      *dirty_time = gimp_image_get_dirty_time (image);
+  gint       dirty_time = gimp_image_get_dirty_time (image);
 
   if (dirty_time)
     {
