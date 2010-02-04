@@ -78,6 +78,10 @@ struct _GimpImagePrivate
 
   gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
   gboolean           active[MAX_CHANNELS];  /*  active channels              */
+
+  gboolean           quick_mask_state;      /*  TRUE if quick mask is on       */
+  gboolean           quick_mask_inverted;   /*  TRUE if quick mask is inverted */
+  GimpRGB            quick_mask_color;      /*  rgba triplet of the color      */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

@@ -105,10 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  gboolean           quick_mask_state;      /*  TRUE if quick mask is on       */
-  gboolean           quick_mask_inverted;   /*  TRUE if quick mask is inverted */
-  GimpRGB            quick_mask_color;      /*  rgba triplet of the color      */
-
   /*  Undo apparatus  */
   GimpUndoStack     *undo_stack;            /*  stack for undo operations    */
   GimpUndoStack     *redo_stack;            /*  stack for redo operations    */
@@ -263,6 +259,9 @@ gboolean        gimp_image_get_component_visible (const GimpImage    *image,
                                                   GimpChannelType     type);
 void            gimp_image_get_visible_array     (const GimpImage    *image,
                                                   gboolean           *components);
+
+
+/*  emitting image signals  */
 
 void            gimp_image_mode_changed          (GimpImage          *image);
 void            gimp_image_alpha_changed         (GimpImage          *image);

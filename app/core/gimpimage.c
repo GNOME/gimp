@@ -667,9 +667,9 @@ gimp_image_init (GimpImage *image)
       private->active[i]  = TRUE;
     }
 
-  image->quick_mask_state      = FALSE;
-  image->quick_mask_inverted   = FALSE;
-  gimp_rgba_set (&image->quick_mask_color, 1.0, 0.0, 0.0, 0.5);
+  private->quick_mask_state    = FALSE;
+  private->quick_mask_inverted = FALSE;
+  gimp_rgba_set (&private->quick_mask_color, 1.0, 0.0, 0.0, 0.5);
 
   image->undo_stack            = gimp_undo_stack_new (image);
   image->redo_stack            = gimp_undo_stack_new (image);
@@ -1349,7 +1349,7 @@ gimp_image_channel_color_changed (GimpChannel *channel,
   if (! strcmp (GIMP_IMAGE_QUICK_MASK_NAME,
                 gimp_object_get_name (channel)))
     {
-      image->quick_mask_color = channel->color;
+      GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color = channel->color;
     }
 }
 
@@ -1884,6 +1884,9 @@ gimp_image_get_visible_array (const GimpImage *image,
   for (i = 0; i < MAX_CHANNELS; i++)
     components[i] = private->visible[i];
 }
+
+
+/*  emitting image signals  */
 
 void
 gimp_image_mode_changed (GimpImage *image)

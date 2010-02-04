@@ -33,6 +33,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
+#include "core/gimpimage-quick-mask.h"
 #include "core/gimpitem.h"
 #include "core/gimptreehandler.h"
 
@@ -484,6 +485,7 @@ gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                                GimpDisplayShell *shell)
 {
   GtkImage *gtk_image;
+  gboolean  quick_mask_state;
 
   gtk_image = GTK_IMAGE (gtk_bin_get_child (GTK_BIN (shell->quick_mask_button)));
 
@@ -491,10 +493,12 @@ gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                    gimp_display_shell_quick_mask_toggled,
                                    shell);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->quick_mask_button),
-                                image->quick_mask_state);
+  quick_mask_state = gimp_image_get_quick_mask_state (image);
 
-  if (image->quick_mask_state)
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->quick_mask_button),
+                                quick_mask_state);
+
+  if (quick_mask_state)
     gtk_image_set_from_stock (gtk_image, GIMP_STOCK_QUICK_MASK_ON,
                               GTK_ICON_SIZE_MENU);
   else

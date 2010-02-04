@@ -430,9 +430,12 @@ static void
 gimp_image_duplicate_quick_mask (GimpImage *image,
                                  GimpImage *new_image)
 {
-  new_image->quick_mask_state    = image->quick_mask_state;
-  new_image->quick_mask_inverted = image->quick_mask_inverted;
-  new_image->quick_mask_color    = image->quick_mask_color;
+  GimpImagePrivate *private     = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpImagePrivate *new_private = GIMP_IMAGE_GET_PRIVATE (new_image);
+
+  new_private->quick_mask_state    = private->quick_mask_state;
+  new_private->quick_mask_inverted = private->quick_mask_inverted;
+  new_private->quick_mask_color    = private->quick_mask_color;
 }
 
 static void

@@ -26,6 +26,7 @@
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
+#include "gimpimage-private.h"
 #include "gimpimage-quick-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -45,30 +46,33 @@ void
 gimp_image_set_quick_mask_state (GimpImage *image,
                                  gboolean   active)
 {
-  GimpChannel *selection;
-  GimpChannel *mask;
-  gboolean     channel_was_active;
+  GimpImagePrivate *private;
+  GimpChannel      *selection;
+  GimpChannel      *mask;
+  gboolean          channel_was_active;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   if (active == gimp_image_get_quick_mask_state (image))
     return;
 
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
   /*  Keep track of the state so that we can make the right drawable
    *  active again when deactiviting quick mask (see bug #134371).
    */
-  if (image->quick_mask_state)
-    channel_was_active = (image->quick_mask_state & CHANNEL_WAS_ACTIVE) != 0;
+  if (private->quick_mask_state)
+    channel_was_active = (private->quick_mask_state & CHANNEL_WAS_ACTIVE) != 0;
   else
     channel_was_active = gimp_image_get_active_channel (image) != NULL;
 
-  /*  Set image->quick_mask_state early so we can return early when
+  /*  Set private->quick_mask_state early so we can return early when
    *  being called recursively.
    */
-  image->quick_mask_state = (active
-                             ? TRUE | (channel_was_active ?
-                                       CHANNEL_WAS_ACTIVE : 0)
-                             : FALSE);
+  private->quick_mask_state = (active
+                               ? TRUE | (channel_was_active ?
+                                         CHANNEL_WAS_ACTIVE : 0)
+                               : FALSE);
 
   selection = gimp_image_get_mask (image);
   mask      = gimp_image_get_quick_mask (image);
@@ -93,7 +97,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
                                        gimp_image_get_width  (image),
                                        gimp_image_get_height (image),
                                        GIMP_IMAGE_QUICK_MASK_NAME,
-                                       &image->quick_mask_color);
+                                       &private->quick_mask_color);
 
               /* Clear the mask */
               gimp_channel_clear (mask, NULL, FALSE);
@@ -108,12 +112,12 @@ gimp_image_set_quick_mask_state (GimpImage *image,
               /* Clear the selection */
               gimp_channel_clear (selection, NULL, TRUE);
 
-              gimp_channel_set_color (mask, &image->quick_mask_color, FALSE);
+              gimp_channel_set_color (mask, &private->quick_mask_color, FALSE);
               gimp_item_rename (GIMP_ITEM (mask), GIMP_IMAGE_QUICK_MASK_NAME,
                                 NULL);
             }
 
-          if (image->quick_mask_inverted)
+          if (private->quick_mask_inverted)
             gimp_channel_invert (mask, FALSE);
 
           gimp_image_add_channel (image, mask, NULL, 0, TRUE);
@@ -130,7 +134,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
                                        _("Disable Quick Mask"));
 
-          if (image->quick_mask_inverted)
+          if (private->quick_mask_inverted)
             gimp_channel_invert (mask, TRUE);
 
           if (floating_sel &&
@@ -156,7 +160,7 @@ gimp_image_get_quick_mask_state (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  return image->quick_mask_state;
+  return GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_state;
 }
 
 void
@@ -168,7 +172,7 @@ gimp_image_set_quick_mask_color (GimpImage     *image,
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (color != NULL);
 
-  image->quick_mask_color = *color;
+  GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color = *color;
 
   quick_mask = gimp_image_get_quick_mask (image);
   if (quick_mask)
@@ -182,7 +186,7 @@ gimp_image_get_quick_mask_color (const GimpImage *image,
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (color != NULL);
 
-  *color = image->quick_mask_color;
+  *color = GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color;
 }
 
 GimpChannel *
@@ -196,9 +200,13 @@ gimp_image_get_quick_mask (const GimpImage *image)
 void
 gimp_image_quick_mask_invert (GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  if (image->quick_mask_state)
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->quick_mask_state)
     {
       GimpChannel *quick_mask = gimp_image_get_quick_mask (image);
 
@@ -206,5 +214,13 @@ gimp_image_quick_mask_invert (GimpImage *image)
         gimp_channel_invert (quick_mask, TRUE);
     }
 
-  image->quick_mask_inverted = ! image->quick_mask_inverted;
+  private->quick_mask_inverted = ! private->quick_mask_inverted;
+}
+
+gboolean
+gimp_image_get_quick_mask_inverted (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_inverted;
 }

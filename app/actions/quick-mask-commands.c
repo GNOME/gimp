@@ -77,7 +77,7 @@ quick_mask_invert_cmd_callback (GtkAction *action,
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value != image->quick_mask_inverted)
+  if (value != gimp_image_get_quick_mask_inverted (image))
     {
       gimp_image_quick_mask_invert (image);
       gimp_image_flush (image);
