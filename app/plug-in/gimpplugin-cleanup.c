@@ -101,7 +101,7 @@ gimp_plug_in_cleanup_undo_group_start (GimpPlugIn *plug_in,
     {
       cleanup = gimp_plug_in_cleanup_image_new (image);
 
-      cleanup->undo_group_count = image->group_count;
+      cleanup->undo_group_count = gimp_image_get_undo_group_count (image);
 
       proc_frame->image_cleanups = g_list_prepend (proc_frame->image_cleanups,
                                                    cleanup);
@@ -126,7 +126,7 @@ gimp_plug_in_cleanup_undo_group_end (GimpPlugIn *plug_in,
   if (! cleanup)
     return FALSE;
 
-  if (cleanup->undo_group_count == image->group_count - 1)
+  if (cleanup->undo_group_count == gimp_image_get_undo_group_count (image) - 1)
     {
       proc_frame->image_cleanups = g_list_remove (proc_frame->image_cleanups,
                                                   cleanup);
@@ -273,10 +273,10 @@ gimp_plug_in_cleanup_image (GimpPlugInProcFrame    *proc_frame,
 {
   GimpImage *image = cleanup->image;
 
-  if (image->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
+  if (gimp_image_get_undo_group_count (image) == 0)
     return;
 
-  if (cleanup->undo_group_count != image->group_count)
+  if (cleanup->undo_group_count != gimp_image_get_undo_group_count (image))
     {
       GimpProcedure *proc = proc_frame->procedure;
 
@@ -284,8 +284,7 @@ gimp_plug_in_cleanup_image (GimpPlugInProcFrame    *proc_frame,
                  "closing open undo groups.",
                  gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)));
 
-      while (image->pushing_undo_group != GIMP_UNDO_GROUP_NONE &&
-             cleanup->undo_group_count < image->group_count)
+      while (cleanup->undo_group_count < gimp_image_get_undo_group_count (image))
         {
           if (! gimp_image_undo_group_end (image))
             break;

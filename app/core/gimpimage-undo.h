@@ -19,31 +19,35 @@
 #define __GIMP_IMAGE__UNDO_H__
 
 
-gboolean   gimp_image_undo              (GimpImage        *image);
-gboolean   gimp_image_redo              (GimpImage        *image);
+gboolean        gimp_image_undo                 (GimpImage        *image);
+gboolean        gimp_image_redo                 (GimpImage        *image);
 
-gboolean   gimp_image_strong_undo       (GimpImage        *image);
-gboolean   gimp_image_strong_redo       (GimpImage        *image);
+gboolean        gimp_image_strong_undo          (GimpImage        *image);
+gboolean        gimp_image_strong_redo          (GimpImage        *image);
 
-void       gimp_image_undo_free         (GimpImage        *image);
+GimpUndoStack * gimp_image_get_undo_stack       (const GimpImage  *image);
+GimpUndoStack * gimp_image_get_redo_stack       (const GimpImage  *image);
 
-gboolean   gimp_image_undo_group_start  (GimpImage        *image,
-                                         GimpUndoType      undo_type,
-                                         const gchar      *name);
-gboolean   gimp_image_undo_group_end    (GimpImage        *image);
+void            gimp_image_undo_free            (GimpImage        *image);
 
-GimpUndo * gimp_image_undo_push         (GimpImage        *image,
-                                         GType             object_type,
-                                         GimpUndoType      undo_type,
-                                         const gchar      *name,
-                                         GimpDirtyMask     dirty_mask,
-                                         ...) G_GNUC_NULL_TERMINATED;
+gint            gimp_image_get_undo_group_count (const GimpImage  *image);
+gboolean        gimp_image_undo_group_start     (GimpImage        *image,
+                                                 GimpUndoType      undo_type,
+                                                 const gchar      *name);
+gboolean        gimp_image_undo_group_end       (GimpImage        *image);
 
-GimpUndo * gimp_image_undo_can_compress (GimpImage        *image,
-                                         GType             object_type,
-                                         GimpUndoType      undo_type);
+GimpUndo      * gimp_image_undo_push            (GimpImage        *image,
+                                                 GType             object_type,
+                                                 GimpUndoType      undo_type,
+                                                 const gchar      *name,
+                                                 GimpDirtyMask     dirty_mask,
+                                                 ...) G_GNUC_NULL_TERMINATED;
 
-GimpUndo * gimp_image_undo_get_fadeable (GimpImage        *image);
+GimpUndo      * gimp_image_undo_can_compress    (GimpImage        *image,
+                                                 GType             object_type,
+                                                 GimpUndoType      undo_type);
+
+GimpUndo      * gimp_image_undo_get_fadeable    (GimpImage        *image);
 
 
 #endif /* __GIMP_IMAGE__UNDO_H__ */

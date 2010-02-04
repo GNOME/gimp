@@ -82,6 +82,12 @@ struct _GimpImagePrivate
   gboolean           quick_mask_state;      /*  TRUE if quick mask is on       */
   gboolean           quick_mask_inverted;   /*  TRUE if quick mask is inverted */
   GimpRGB            quick_mask_color;      /*  rgba triplet of the color      */
+
+  /*  Undo apparatus  */
+  GimpUndoStack     *undo_stack;            /*  stack for undo operations    */
+  GimpUndoStack     *redo_stack;            /*  stack for redo operations    */
+  gint               group_count;           /*  nested undo groups           */
+  GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

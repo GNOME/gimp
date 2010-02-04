@@ -32,6 +32,7 @@
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimpimage-undo.h"
 #include "gimpmarshal.h"
 #include "gimpundo.h"
 #include "gimpundostack.h"
@@ -439,9 +440,10 @@ gimp_undo_create_preview (GimpUndo    *undo,
 static gboolean
 gimp_undo_create_preview_idle (gpointer data)
 {
-  GimpUndoIdle *idle = data;
+  GimpUndoIdle *idle   = data;
+  GimpUndoStack *stack = gimp_image_get_undo_stack (idle->undo->image);
 
-  if (idle->undo == gimp_undo_stack_peek (idle->undo->image->undo_stack))
+  if (idle->undo == gimp_undo_stack_peek (stack))
     {
       gimp_undo_create_preview_private (idle->undo, idle->context);
     }

@@ -311,8 +311,8 @@ gimp_image_scale_check (const GimpImage *image,
             "scalable_size = %"G_GINT64_FORMAT"  scaled_size = %"G_GINT64_FORMAT,
             scalable_size, scaled_size);
 
-  undo_size = gimp_object_get_memsize (GIMP_OBJECT (image->undo_stack), NULL);
-  redo_size = gimp_object_get_memsize (GIMP_OBJECT (image->redo_stack), NULL);
+  undo_size = gimp_object_get_memsize (GIMP_OBJECT (gimp_image_get_undo_stack (image)), NULL);
+  redo_size = gimp_object_get_memsize (GIMP_OBJECT (gimp_image_get_redo_stack (image)), NULL);
 
   /*  the fixed part of the image's memsize w/o any undo information  */
   fixed_size = current_size - undo_size - redo_size - scalable_size;

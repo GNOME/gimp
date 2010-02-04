@@ -105,12 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  /*  Undo apparatus  */
-  GimpUndoStack     *undo_stack;            /*  stack for undo operations    */
-  GimpUndoStack     *redo_stack;            /*  stack for redo operations    */
-  gint               group_count;           /*  nested undo groups           */
-  GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
-
   /*  Preview  */
   TempBuf           *preview;               /*  the projection preview       */
 

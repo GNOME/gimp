@@ -284,8 +284,10 @@ edit_actions_update (GimpActionGroup *group,
 
       if (undo_enabled)
         {
-          GimpUndo *undo = gimp_undo_stack_peek (image->undo_stack);
-          GimpUndo *redo = gimp_undo_stack_peek (image->redo_stack);
+          GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
+          GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
+          GimpUndo      *undo       = gimp_undo_stack_peek (undo_stack);
+          GimpUndo      *redo       = gimp_undo_stack_peek (redo_stack);
 
           if (undo)
             {

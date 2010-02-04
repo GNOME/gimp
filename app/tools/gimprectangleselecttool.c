@@ -430,11 +430,13 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
     }
   else
     {
-      GimpImage      *image = gimp_display_get_image (tool->display);
+      GimpImage      *image      = gimp_display_get_image (tool->display);
+      GimpUndoStack  *undo_stack = gimp_image_get_undo_stack (image);
+      GimpUndoStack  *redo_stack = gimp_image_get_redo_stack (image);
       GimpUndo       *undo;
       GimpChannelOps  operation;
 
-      undo = gimp_undo_stack_peek (image->undo_stack);
+      undo = gimp_undo_stack_peek (undo_stack);
 
       if (undo && priv->undo == undo)
         {
@@ -446,7 +448,7 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
           /* we will need to redo if the user cancels or executes */
-          priv->redo = gimp_undo_stack_peek (image->redo_stack);
+          priv->redo = gimp_undo_stack_peek (redo_stack);
         }
 
       /* if the operation is "Replace", turn off the marching ants,
@@ -487,7 +489,8 @@ gimp_rectangle_select_tool_button_release (GimpTool              *tool,
    */
   if (release_type == GIMP_BUTTON_RELEASE_CLICK)
     {
-      GimpUndo *redo = gimp_undo_stack_peek (image->redo_stack);
+      GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
+      GimpUndo      *redo       = gimp_undo_stack_peek (redo_stack);
 
       if (redo && priv->redo == redo)
         {
@@ -847,15 +850,14 @@ gimp_rectangle_select_tool_cancel (GimpRectangleTool *rectangle)
 
   if (tool->display)
     {
-      GimpImage *image = gimp_display_get_image (tool->display);
-      GimpUndo  *undo;
+      GimpImage     *image      = gimp_display_get_image (tool->display);
+      GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
+      GimpUndo      *undo       = gimp_undo_stack_peek (undo_stack);
 
       /* if we have an existing rectangle in the current display, then
        * we have already "executed", and need to undo at this point,
        * unless the user has done something in the meantime
        */
-      undo  = gimp_undo_stack_peek (image->undo_stack);
-
       if (undo && priv->undo == undo)
         {
           /* prevent this change from halting the tool */
@@ -890,16 +892,15 @@ gimp_rectangle_select_tool_rectangle_change_complete (GimpRectangleTool *rectang
 
   if (tool->display && ! gimp_tool_control_is_active (tool->control))
     {
-      GimpImage *image = gimp_display_get_image (tool->display);
-      GimpUndo  *undo;
-      gint       x1, y1, x2, y2;
+      GimpImage     *image      = gimp_display_get_image (tool->display);
+      GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
+      GimpUndo      *undo       = gimp_undo_stack_peek (undo_stack);
+      gint           x1, y1, x2, y2;
 
       /* if we got here via button release, we have already undone the
        * previous operation.  But if we got here by some other means,
        * we need to undo it now.
        */
-      undo = gimp_undo_stack_peek (image->undo_stack);
-
       if (undo && priv->undo == undo)
         {
           gimp_image_undo (image);
@@ -918,7 +919,7 @@ gimp_rectangle_select_tool_rectangle_change_complete (GimpRectangleTool *rectang
           /* save the undo that we got when executing, but only if
            * we actually selected something
            */
-          priv->undo = gimp_undo_stack_peek (image->undo_stack);
+          priv->undo = gimp_undo_stack_peek (undo_stack);
           priv->redo = NULL;
         }
 

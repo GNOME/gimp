@@ -122,12 +122,14 @@ void
 edit_undo_clear_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpImage *image;
-  GtkWidget *widget;
-  GtkWidget *dialog;
-  gchar     *size;
-  gint64     memsize;
-  gint64     guisize;
+  GimpImage     *image;
+  GimpUndoStack *undo_stack;
+  GimpUndoStack *redo_stack;
+  GtkWidget     *widget;
+  GtkWidget     *dialog;
+  gchar         *size;
+  gint64         memsize;
+  gint64         guisize;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
@@ -159,11 +161,12 @@ edit_undo_clear_cmd_callback (GtkAction *action,
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("Really clear image's undo history?"));
 
-  memsize = gimp_object_get_memsize (GIMP_OBJECT (image->undo_stack),
-                                     &guisize);
+  undo_stack = gimp_image_get_undo_stack (image);
+  redo_stack = gimp_image_get_redo_stack (image);
+
+  memsize =  gimp_object_get_memsize (GIMP_OBJECT (undo_stack), &guisize);
   memsize += guisize;
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->redo_stack),
-                                      &guisize);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (redo_stack), &guisize);
   memsize += guisize;
 
   size = g_format_size_for_display (memsize);

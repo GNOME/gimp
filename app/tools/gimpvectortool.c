@@ -33,6 +33,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplist.h"
 #include "core/gimpprogress.h"
@@ -662,7 +663,7 @@ gimp_vector_tool_button_release (GimpTool              *tool,
       GimpUndo            *undo;
       GimpUndoAccumulator  accum = { 0, };
 
-      undo = gimp_undo_stack_pop_undo (image->undo_stack,
+      undo = gimp_undo_stack_pop_undo (gimp_image_get_undo_stack (image),
                                        GIMP_UNDO_MODE_UNDO, &accum);
 
       gimp_image_undo_event (image, GIMP_UNDO_EVENT_UNDO_EXPIRED, undo);

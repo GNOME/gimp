@@ -671,10 +671,10 @@ gimp_image_init (GimpImage *image)
   private->quick_mask_inverted = FALSE;
   gimp_rgba_set (&private->quick_mask_color, 1.0, 0.0, 0.0, 0.5);
 
-  image->undo_stack            = gimp_undo_stack_new (image);
-  image->redo_stack            = gimp_undo_stack_new (image);
-  image->group_count           = 0;
-  image->pushing_undo_group    = GIMP_UNDO_GROUP_NONE;
+  private->undo_stack          = gimp_undo_stack_new (image);
+  private->redo_stack          = gimp_undo_stack_new (image);
+  private->group_count         = 0;
+  private->pushing_undo_group  = GIMP_UNDO_GROUP_NONE;
 
   image->preview               = NULL;
 
@@ -948,15 +948,15 @@ gimp_image_finalize (GObject *object)
       private->sample_points = NULL;
     }
 
-  if (image->undo_stack)
+  if (private->undo_stack)
     {
-      g_object_unref (image->undo_stack);
-      image->undo_stack = NULL;
+      g_object_unref (private->undo_stack);
+      private->undo_stack = NULL;
     }
-  if (image->redo_stack)
+  if (private->redo_stack)
     {
-      g_object_unref (image->redo_stack);
-      image->redo_stack = NULL;
+      g_object_unref (private->redo_stack);
+      private->redo_stack = NULL;
     }
 
   if (image->gimp && image->gimp->image_table)
@@ -1037,9 +1037,9 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (private->parasites),
                                       gui_size);
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->undo_stack),
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->undo_stack),
                                       gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->redo_stack),
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->redo_stack),
                                       gui_size);
 
   *gui_size += temp_buf_get_memsize (image->preview);

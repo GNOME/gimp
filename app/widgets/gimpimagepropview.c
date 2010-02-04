@@ -40,6 +40,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpundostack.h"
 #include "core/gimpunit.h"
 #include "core/gimp-utils.h"
@@ -502,8 +503,10 @@ gimp_image_prop_view_update (GimpImagePropView *view)
                                           GIMP_OBJECT (image));
 
   /*  undo / redo  */
-  gimp_image_prop_view_label_set_undo (view->undo_label, image->undo_stack);
-  gimp_image_prop_view_label_set_undo (view->redo_label, image->redo_stack);
+  gimp_image_prop_view_label_set_undo (view->undo_label,
+                                       gimp_image_get_undo_stack (image));
+  gimp_image_prop_view_label_set_undo (view->redo_label,
+                                       gimp_image_get_redo_stack (image));
 
   /*  number of layers  */
   g_snprintf (buf, sizeof (buf), "%d",
