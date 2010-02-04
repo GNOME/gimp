@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-30 03:27+0300\n"
-"PO-Revision-Date: 2009-11-30 03:34+0300\n"
+"POT-Creation-Date: 2010-02-04 07:14+0300\n"
+"PO-Revision-Date: 2010-02-04 07:18+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -532,7 +532,7 @@ msgstr "Сгладить, используя алгоритм экстрапол
 msgid "_Antialias"
 msgstr "_Сгладить"
 
-#: ../plug-ins/common/antialias.c:147
+#: ../plug-ins/common/antialias.c:149
 msgid "Antialiasing..."
 msgstr "Сглаживание..."
 
@@ -632,12 +632,12 @@ msgstr "По _вертикали"
 #: ../plug-ins/common/file-dicom.c:556
 #: ../plug-ins/common/file-gif-load.c:927
 #: ../plug-ins/common/file-jp2-load.c:351
-#: ../plug-ins/common/file-pcx.c:411
-#: ../plug-ins/common/file-pcx.c:417
+#: ../plug-ins/common/file-pcx.c:418
+#: ../plug-ins/common/file-pcx.c:424
 #: ../plug-ins/common/file-pix.c:381
 #: ../plug-ins/common/file-png.c:851
 #: ../plug-ins/common/file-pnm.c:584
-#: ../plug-ins/common/file-raw.c:759
+#: ../plug-ins/common/file-raw.c:761
 #: ../plug-ins/common/file-sunras.c:974
 #: ../plug-ins/common/file-tga.c:1063
 #: ../plug-ins/common/file-tiff-load.c:998
@@ -653,7 +653,7 @@ msgstr "По _вертикали"
 #: ../plug-ins/file-jpeg/jpeg-load.c:760
 #: ../plug-ins/file-psd/psd-image-res-load.c:994
 #: ../plug-ins/file-psd/psd-load.c:1574
-#: ../plug-ins/file-sgi/sgi.c:383
+#: ../plug-ins/file-sgi/sgi.c:404
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/twain/twain.c:567
@@ -697,7 +697,7 @@ msgstr "Выборочное Гауссово размывание"
 #: ../plug-ins/common/photocopy.c:243
 #: ../plug-ins/common/pixelize.c:292
 #: ../plug-ins/common/softglow.c:223
-#: ../plug-ins/file-sgi/sgi.c:535
+#: ../plug-ins/file-sgi/sgi.c:555
 #: ../plug-ins/file-xjt/xjt.c:1683
 #: ../plug-ins/gradient-flare/gradient-flare.c:965
 msgid "Cannot operate on indexed color images."
@@ -1109,8 +1109,8 @@ msgstr "Загрузить установки микшера каналов"
 #: ../plug-ins/common/file-ps.c:1036
 #: ../plug-ins/common/file-ps.c:3043
 #: ../plug-ins/common/file-psp.c:1703
-#: ../plug-ins/common/file-raw.c:253
-#: ../plug-ins/common/file-raw.c:707
+#: ../plug-ins/common/file-raw.c:255
+#: ../plug-ins/common/file-raw.c:709
 #: ../plug-ins/common/file-sunras.c:390
 #: ../plug-ins/common/file-svg.c:332
 #: ../plug-ins/common/file-svg.c:730
@@ -1160,20 +1160,20 @@ msgstr "Сохранить установки микшера каналов"
 #: ../plug-ins/common/file-compressor.c:676
 #: ../plug-ins/common/file-csource.c:405
 #: ../plug-ins/common/file-dicom.c:800
-#: ../plug-ins/common/file-gbr.c:637
+#: ../plug-ins/common/file-gbr.c:652
 #: ../plug-ins/common/file-gif-save.c:761
 #: ../plug-ins/common/file-gih.c:1261
 #: ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609
 #: ../plug-ins/common/file-mng.c:943
-#: ../plug-ins/common/file-pat.c:461
-#: ../plug-ins/common/file-pcx.c:665
+#: ../plug-ins/common/file-pat.c:475
+#: ../plug-ins/common/file-pcx.c:672
 #: ../plug-ins/common/file-pix.c:523
 #: ../plug-ins/common/file-png.c:1269
 #: ../plug-ins/common/file-pnm.c:976
 #: ../plug-ins/common/file-ps.c:1213
-#: ../plug-ins/common/file-raw.c:587
-#: ../plug-ins/common/file-raw.c:615
+#: ../plug-ins/common/file-raw.c:589
+#: ../plug-ins/common/file-raw.c:617
 #: ../plug-ins/common/file-sunras.c:562
 #: ../plug-ins/common/file-tga.c:1169
 #: ../plug-ins/common/file-tiff-save.c:683
@@ -1861,7 +1861,7 @@ msgstr "Используйте функцию drag-n-drop чтобы перер�
 
 #: ../plug-ins/common/compose.c:188
 #: ../plug-ins/common/decompose.c:169
-#: ../plug-ins/common/file-raw.c:1096
+#: ../plug-ins/common/file-raw.c:1098
 msgid "RGB"
 msgstr "RGB"
 
@@ -2237,7 +2237,7 @@ msgstr "Делитель:"
 
 #: ../plug-ins/common/convolution-matrix.c:1008
 #: ../plug-ins/common/depth-merge.c:768
-#: ../plug-ins/common/file-raw.c:1117
+#: ../plug-ins/common/file-raw.c:1119
 msgid "O_ffset:"
 msgstr "Смещение:"
 
@@ -2815,7 +2815,7 @@ msgstr "Удаление штрихов"
 #: ../plug-ins/common/file-html-table.c:580
 #: ../plug-ins/common/file-ps.c:3166
 #: ../plug-ins/common/file-ps.c:3361
-#: ../plug-ins/common/file-raw.c:1130
+#: ../plug-ins/common/file-raw.c:1132
 #: ../plug-ins/common/smooth-palette.c:435
 #: ../plug-ins/common/tile-paper.c:302
 #: ../plug-ins/common/tile.c:431
@@ -3142,7 +3142,7 @@ msgstr "Гравировка"
 #: ../plug-ins/common/file-html-table.c:596
 #: ../plug-ins/common/file-ps.c:3176
 #: ../plug-ins/common/file-ps.c:3370
-#: ../plug-ins/common/file-raw.c:1143
+#: ../plug-ins/common/file-raw.c:1145
 #: ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:440
 #: ../plug-ins/common/tile-paper.c:313
@@ -3196,7 +3196,7 @@ msgstr "Загрузка палитры KISS"
 #: ../plug-ins/common/file-png.c:727
 #: ../plug-ins/common/file-pnm.c:498
 #: ../plug-ins/common/file-ps.c:1042
-#: ../plug-ins/common/file-raw.c:712
+#: ../plug-ins/common/file-raw.c:714
 #: ../plug-ins/common/file-sunras.c:485
 #: ../plug-ins/common/file-tga.c:446
 #: ../plug-ins/common/file-tiff-load.c:604
@@ -3211,7 +3211,7 @@ msgstr "Загрузка палитры KISS"
 #: ../plug-ins/file-ico/ico-load.c:645
 #: ../plug-ins/file-jpeg/jpeg-load.c:114
 #: ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:330
+#: ../plug-ins/file-sgi/sgi.c:329
 #: ../plug-ins/file-xjt/xjt.c:3328
 #, c-format
 msgid "Opening '%s'"
@@ -3229,12 +3229,12 @@ msgstr "Неподдерживаемое число цветов (%d)!"
 #. init the progress meter
 #. And let's begin the progress
 #: ../plug-ins/common/file-cel.c:587
-#: ../plug-ins/common/file-gbr.c:642
+#: ../plug-ins/common/file-gbr.c:657
 #: ../plug-ins/common/file-gif-save.c:768
 #: ../plug-ins/common/file-gih.c:1266
 #: ../plug-ins/common/file-html-table.c:255
-#: ../plug-ins/common/file-pat.c:466
-#: ../plug-ins/common/file-pcx.c:626
+#: ../plug-ins/common/file-pat.c:480
+#: ../plug-ins/common/file-pcx.c:633
 #: ../plug-ins/common/file-pix.c:528
 #: ../plug-ins/common/file-png.c:1276
 #: ../plug-ins/common/file-pnm.c:981
@@ -3252,7 +3252,7 @@ msgstr "Неподдерживаемое число цветов (%d)!"
 #: ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:286
 #: ../plug-ins/file-psd/psd-save.c:1642
-#: ../plug-ins/file-sgi/sgi.c:553
+#: ../plug-ins/file-sgi/sgi.c:573
 #: ../plug-ins/file-xjt/xjt.c:1692
 #, c-format
 msgid "Saving '%s'"
@@ -3349,7 +3349,7 @@ msgstr ""
 "не является файлом DICOM"
 
 #: ../plug-ins/common/file-dicom.c:768
-#: ../plug-ins/common/file-pcx.c:658
+#: ../plug-ins/common/file-pcx.c:665
 #: ../plug-ins/common/file-pnm.c:966
 msgid "Cannot save images with alpha channel."
 msgstr "Невозможно сохранить изображения с альфа-каналом."
@@ -3367,45 +3367,51 @@ msgstr "Невозможно выполнить действия с изобра
 msgid "GIMP brush"
 msgstr "Кисть GIMP"
 
-#: ../plug-ins/common/file-gbr.c:400
-#: ../plug-ins/common/file-gbr.c:412
+#: ../plug-ins/common/file-gbr.c:391
+#: ../plug-ins/common/file-pat.c:410
+#, c-format
+msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgstr ""
+
+#: ../plug-ins/common/file-gbr.c:415
+#: ../plug-ins/common/file-gbr.c:427
 msgid "Unsupported brush format"
 msgstr "Неподдерживаемый формат кисти"
 
-#: ../plug-ins/common/file-gbr.c:424
+#: ../plug-ins/common/file-gbr.c:439
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Ошибка в файле кисти GIMP \"%s\""
 
-#: ../plug-ins/common/file-gbr.c:432
+#: ../plug-ins/common/file-gbr.c:447
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ошибочная строка UTF-8 в файле кисти '%s'"
 
-#: ../plug-ins/common/file-gbr.c:438
+#: ../plug-ins/common/file-gbr.c:453
 #: ../plug-ins/common/file-gih.c:491
 #: ../plug-ins/common/file-gih.c:1140
 #: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Unnamed"
 msgstr "Безымянное"
 
-#: ../plug-ins/common/file-gbr.c:627
+#: ../plug-ins/common/file-gbr.c:642
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "Кисти GIMP либо в оттенках серого или RGBA"
 
-#: ../plug-ins/common/file-gbr.c:744
+#: ../plug-ins/common/file-gbr.c:759
 msgid "Brush"
 msgstr "Кисть"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:758
+#: ../plug-ins/common/file-gbr.c:773
 #: ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr "Интервал: "
 
-#: ../plug-ins/common/file-gbr.c:769
+#: ../plug-ins/common/file-gbr.c:784
 #: ../plug-ins/common/file-gih.c:891
-#: ../plug-ins/common/file-pat.c:542
+#: ../plug-ins/common/file-pat.c:557
 #: ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Описание:"
@@ -3736,8 +3742,8 @@ msgid "The amount of cellspacing."
 msgstr "Размер интервала ячеек."
 
 #: ../plug-ins/common/file-jp2-load.c:96
-msgid "JPEG-2000 image"
-msgstr "Изображение JPEG-2000"
+msgid "JPEG 2000 image"
+msgstr "Изображение JPEG 2000"
 
 #: ../plug-ins/common/file-jp2-load.c:215
 #, c-format
@@ -3751,28 +3757,28 @@ msgstr "Изображение '%s' использует градации сер
 
 #: ../plug-ins/common/file-jp2-load.c:264
 #, c-format
-msgid "The image '%s' is in RGB but is missing some of the components."
+msgid "The image '%s' is in RGB, but is missing some of the components."
 msgstr "Изображение '%s' использует цветовое пространство RGB, но некоторые его компоненты отсутствуют."
 
 #: ../plug-ins/common/file-jp2-load.c:284
 #, c-format
-msgid "The image '%s' is in the CIEXYZ color space but there is no code in place to convert it to RGB."
-msgstr "Изображение '%s' использует цветовое пространство CIEXYZ, которое пока что невозможно преобразовать в RGB."
+msgid "The image '%s' is in the CIEXYZ color space, but there is no code in place to convert it to RGB."
+msgstr "Изображение '%s' использует цветовое пространство CIE XYZ, которое пока что невозможно преобразовать в RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:291
 #, c-format
-msgid "The image '%s' is in the CIELAB color space but there is no code in place to convert it to RGB."
-msgstr "Изображение '%s' использует цветовое пространство CIELAB, которое пока что невозможно преобразовать в RGB."
+msgid "The image '%s' is in the CIELAB color space, but there is no code in place to convert it to RGB."
+msgstr "Изображение '%s' использует цветовое пространство CIE LAB, которое пока что невозможно преобразовать в RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:298
 #, c-format
-msgid "The image '%s' is in the YCbCr color space but there is no code in place to convert it to RGB."
+msgid "The image '%s' is in the YCbCr color space, but there is no code in place to convert it to RGB."
 msgstr "Изображение '%s' использует цветовое пространство YCbCr, которое пока что невозможно преобразовать в RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:306
-#, fuzzy, c-format
-msgid "The image '%s' is in an unkown color space."
-msgstr "Изображение '%s' содержит встроенный цветовой профиль:"
+#, c-format
+msgid "The image '%s' is in an unknown color space."
+msgstr "Изображение '%s' использует неизвестное цветовое пространство."
 
 #: ../plug-ins/common/file-jp2-load.c:320
 #, c-format
@@ -3826,8 +3832,9 @@ msgstr "Сохранить разрешение"
 msgid "Save creation time"
 msgstr "Сохранить время создания"
 
+#. Dialog init
 #: ../plug-ins/common/file-mng.c:1362
-#: ../plug-ins/common/file-png.c:1784
+#: ../plug-ins/common/file-png.c:1800
 msgid "PNG"
 msgstr "PNG"
 
@@ -3872,7 +3879,6 @@ msgid "PNG compression level:"
 msgstr "Степень сжатия PNG:"
 
 #: ../plug-ins/common/file-mng.c:1416
-#: ../plug-ins/common/file-png.c:1893
 msgid "Choose a high compression level for small file size"
 msgstr "Выберите большую степень сжатия для получения файла меньшего размера"
 
@@ -3910,7 +3916,7 @@ msgstr "Текстура GIMP"
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Ошибочная строка UTF-8 в файле текстуры '%s'."
 
-#: ../plug-ins/common/file-pat.c:527
+#: ../plug-ins/common/file-pat.c:542
 msgid "Pattern"
 msgstr "Текстура"
 
@@ -3947,31 +3953,36 @@ msgstr "Неподдерживаемая высота изображения: %d
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Некорректное число байтов на строку в заголовке PCX"
 
-#: ../plug-ins/common/file-pcx.c:452
+#: ../plug-ins/common/file-pcx.c:411
+#, c-format
+msgid "Image dimensions too large: width %d x height %d"
+msgstr "Слишком большое изображение: ширина %d × высота %d"
+
+#: ../plug-ins/common/file-pcx.c:459
 msgid "Unusual PCX flavour, giving up"
 msgstr "Необычный вид файла PCX. Выход."
 
-#: ../plug-ins/common/file-pcx.c:675
+#: ../plug-ins/common/file-pcx.c:682
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Некорректное смещение по X: %d"
 
-#: ../plug-ins/common/file-pcx.c:681
+#: ../plug-ins/common/file-pcx.c:688
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Некорректное смещение по Y: %d"
 
-#: ../plug-ins/common/file-pcx.c:687
+#: ../plug-ins/common/file-pcx.c:694
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Правая граница находится за допустимыми пределами (должна быть < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:694
+#: ../plug-ins/common/file-pcx.c:701
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижняя граница находится за допустимыми пределами (должна быть < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:751
+#: ../plug-ins/common/file-pcx.c:758
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ошибка при записи файла '%s': %s"
@@ -4054,50 +4065,10 @@ msgstr "В файле формата PNG указано смещение, кот
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Ошибка при сохранении '%s'. Невозможно сохранить изображение."
 
-#: ../plug-ins/common/file-png.c:1802
-msgid "_Interlacing (Adam7)"
-msgstr "Черезстрочность (Adam7)"
-
-#: ../plug-ins/common/file-png.c:1813
-msgid "Save _background color"
-msgstr "Сохранить цвет фона"
-
-#: ../plug-ins/common/file-png.c:1821
-msgid "Save _gamma"
-msgstr "Сохранить гамму"
-
-#: ../plug-ins/common/file-png.c:1831
-msgid "Save layer o_ffset"
-msgstr "Сохранить смещение слоя"
-
-#: ../plug-ins/common/file-png.c:1840
-msgid "Save _resolution"
-msgstr "Сохранить разрешение"
-
-#: ../plug-ins/common/file-png.c:1850
-msgid "Save creation _time"
-msgstr "Сохранить время создания"
-
-#: ../plug-ins/common/file-png.c:1859
-msgid "Save comme_nt"
-msgstr "Сохранить комментарий"
-
-#: ../plug-ins/common/file-png.c:1875
-msgid "Save color _values from transparent pixels"
-msgstr "Сохранить значения цвета прозрачных точек"
-
-#: ../plug-ins/common/file-png.c:1889
-msgid "Co_mpression level:"
-msgstr "Степень сжатия:"
-
-#: ../plug-ins/common/file-png.c:1907
-#: ../plug-ins/file-jpeg/jpeg-save.c:1179
-msgid "_Load Defaults"
-msgstr "З_агрузить исходные параметры"
-
-#: ../plug-ins/common/file-png.c:1915
-msgid "S_ave Defaults"
-msgstr "_Запомнить эти параметры"
+#: ../plug-ins/common/file-png.c:1817
+#, c-format
+msgid "Error loading UI file '%s': %s"
+msgstr "Ошибка при загрузке файла описания интерфейса '%s': %s"
 
 #: ../plug-ins/common/file-pnm.c:247
 msgid "PNM Image"
@@ -4160,20 +4131,20 @@ msgstr "Не поддерживаемое максимальное значен�
 msgid "Error reading file."
 msgstr "Ошибка при чтении файла."
 
-#: ../plug-ins/common/file-pnm.c:1184
+#: ../plug-ins/common/file-pnm.c:1185
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1187
+#: ../plug-ins/common/file-pnm.c:1188
 msgid "Data formatting"
 msgstr "Форматирование данных"
 
-#: ../plug-ins/common/file-pnm.c:1191
+#: ../plug-ins/common/file-pnm.c:1192
 msgid "Raw"
 msgstr "Необработанный"
 
-#: ../plug-ins/common/file-pnm.c:1192
+#: ../plug-ins/common/file-pnm.c:1193
 msgid "Ascii"
 msgstr "Ascii"
 
@@ -4393,85 +4364,85 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Raw Image Data"
 
-#: ../plug-ins/common/file-raw.c:1052
+#: ../plug-ins/common/file-raw.c:1054
 msgid "Load Image from Raw Data"
 msgstr "Загрузка изображения из Raw-данных"
 
-#: ../plug-ins/common/file-raw.c:1086
+#: ../plug-ins/common/file-raw.c:1088
 msgid "Image"
 msgstr "Изображение"
 
-#: ../plug-ins/common/file-raw.c:1097
+#: ../plug-ins/common/file-raw.c:1099
 msgid "RGB Alpha"
 msgstr "RGB с альфа-каналом"
 
-#: ../plug-ins/common/file-raw.c:1098
+#: ../plug-ins/common/file-raw.c:1100
 msgid "RGB565"
 msgstr "RGB565"
 
-#: ../plug-ins/common/file-raw.c:1099
+#: ../plug-ins/common/file-raw.c:1101
 msgid "Planar RGB"
 msgstr "Planar RGB"
 
-#: ../plug-ins/common/file-raw.c:1100
+#: ../plug-ins/common/file-raw.c:1102
 msgid "Indexed"
 msgstr "Индексированное"
 
-#: ../plug-ins/common/file-raw.c:1101
+#: ../plug-ins/common/file-raw.c:1103
 msgid "Indexed Alpha"
 msgstr "Индексированное с альфа-каналом"
 
-#: ../plug-ins/common/file-raw.c:1106
+#: ../plug-ins/common/file-raw.c:1108
 msgid "Image _Type:"
 msgstr "Тип изображения:"
 
-#: ../plug-ins/common/file-raw.c:1156
+#: ../plug-ins/common/file-raw.c:1158
 msgid "Palette"
 msgstr "Палитра"
 
-#: ../plug-ins/common/file-raw.c:1166
-#: ../plug-ins/common/file-raw.c:1251
+#: ../plug-ins/common/file-raw.c:1168
+#: ../plug-ins/common/file-raw.c:1253
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw.c:1167
-#: ../plug-ins/common/file-raw.c:1253
+#: ../plug-ins/common/file-raw.c:1169
+#: ../plug-ins/common/file-raw.c:1255
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (BMP-стиль)"
 
-#: ../plug-ins/common/file-raw.c:1172
+#: ../plug-ins/common/file-raw.c:1174
 msgid "_Palette Type:"
 msgstr "Тип _палитры:"
 
-#: ../plug-ins/common/file-raw.c:1183
+#: ../plug-ins/common/file-raw.c:1185
 msgid "Off_set:"
 msgstr "С_мещение:"
 
-#: ../plug-ins/common/file-raw.c:1195
+#: ../plug-ins/common/file-raw.c:1197
 msgid "Select Palette File"
 msgstr "Выберите файл палитры"
 
-#: ../plug-ins/common/file-raw.c:1201
+#: ../plug-ins/common/file-raw.c:1203
 msgid "Pal_ette File:"
 msgstr "_Файл палитры:"
 
-#: ../plug-ins/common/file-raw.c:1229
+#: ../plug-ins/common/file-raw.c:1231
 msgid "Raw Image"
 msgstr "Изображение без заголовка (Raw)"
 
-#: ../plug-ins/common/file-raw.c:1237
+#: ../plug-ins/common/file-raw.c:1239
 msgid "RGB Save Type"
 msgstr "Тип сохранения RGB"
 
-#: ../plug-ins/common/file-raw.c:1241
+#: ../plug-ins/common/file-raw.c:1243
 msgid "Standard (R,G,B)"
 msgstr "Стандартный (R,G,B)"
 
-#: ../plug-ins/common/file-raw.c:1242
+#: ../plug-ins/common/file-raw.c:1244
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Planar (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/file-raw.c:1247
+#: ../plug-ins/common/file-raw.c:1249
 msgid "Indexed Palette Type"
 msgstr "Тип индексированной палитры"
 
@@ -5513,36 +5484,6 @@ msgstr "Y1:"
 #: ../plug-ins/common/fractal-trace.c:787
 msgid "Y_2:"
 msgstr "Y2:"
-
-#: ../plug-ins/common/gee-zoom.c:131
-#: ../plug-ins/common/gee.c:98
-msgid "A big hello from the GIMP team!"
-msgstr "Куча приветов от команды разработчиков GIMP!"
-
-#: ../plug-ins/common/gee-zoom.c:136
-#: ../plug-ins/common/gee-zoom.c:196
-msgid "Gee Zoom"
-msgstr "Gee-_Zoom"
-
-#: ../plug-ins/common/gee-zoom.c:202
-#: ../plug-ins/common/gee.c:165
-msgid "Thank You for Choosing GIMP"
-msgstr "Спасибо за то, что выбрали GIMP"
-
-#: ../plug-ins/common/gee-zoom.c:210
-#, c-format
-msgid "An obsolete creation by %s"
-msgstr "Морально устаревшее творение %s"
-
-#: ../plug-ins/common/gee.c:103
-#: ../plug-ins/common/gee.c:159
-msgid "Gee Slime"
-msgstr "Gee-_Slime"
-
-#: ../plug-ins/common/gee.c:172
-#, c-format
-msgid "A less obsolete creation by %s"
-msgstr "Наименее устаревшее творение %s"
 
 #: ../plug-ins/common/gradient-map.c:83
 msgid "Recolor the image using colors from the active gradient"
@@ -8472,9 +8413,8 @@ msgid "The operating system is out of memory or resources."
 msgstr ""
 
 #: ../plug-ins/common/web-browser.c:139
-#, fuzzy
 msgid "The specified file was not found."
-msgstr "Слой %d не найден"
+msgstr "Указанный файл не найден."
 
 #: ../plug-ins/common/web-browser.c:142
 #, fuzzy
@@ -8486,9 +8426,8 @@ msgid "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image
 msgstr ""
 
 #: ../plug-ins/common/web-browser.c:148
-#, fuzzy
 msgid "The operating system denied access to the specified file."
-msgstr "Сохранить текущие настройки в указанном файле"
+msgstr "Операционная система отказала в доступе к указанному файлу."
 
 #: ../plug-ins/common/web-browser.c:151
 msgid "The file name association is incomplete or invalid."
@@ -8507,9 +8446,8 @@ msgid "The DDE transaction timed out."
 msgstr ""
 
 #: ../plug-ins/common/web-browser.c:163
-#, fuzzy
 msgid "The specified DLL was not found."
-msgstr "Указанное окно не найдено"
+msgstr "Указанная библиотека DLL не найдена."
 
 #: ../plug-ins/common/web-browser.c:166
 msgid "There is no application associated with the given file name extension."
@@ -8974,6 +8912,10 @@ msgstr "С плавающей точкой"
 msgid "Comment"
 msgstr "Комментарий"
 
+#: ../plug-ins/file-jpeg/jpeg-save.c:1179
+msgid "_Load Defaults"
+msgstr "З_агрузить исходные параметры"
+
 #: ../plug-ins/file-jpeg/jpeg-save.c:1188
 msgid "Sa_ve Defaults"
 msgstr "_Запомнить эти параметры"
@@ -9115,33 +9057,48 @@ msgstr "Преждевременный конец файла"
 msgid "Silicon Graphics IRIS image"
 msgstr "Изображение Silicon Graphics IRIS"
 
-#: ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-sgi/sgi.c:324
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Невозможно открыть \"%s\" для чтения"
 
-#: ../plug-ins/file-sgi/sgi.c:548
+#: ../plug-ins/file-sgi/sgi.c:340
+#, c-format
+msgid "Invalid width: %hu"
+msgstr "Некорректная ширина: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:347
+#, c-format
+msgid "Invalid height: %hu"
+msgstr "Некорректная высота: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:354
+#, c-format
+msgid "Invalid number of channels: %hu"
+msgstr "Некорректное число каналов: %hu"
+
+#: ../plug-ins/file-sgi/sgi.c:568
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Невозможно открыть \"%s\" для записи"
 
-#: ../plug-ins/file-sgi/sgi.c:628
+#: ../plug-ins/file-sgi/sgi.c:648
 msgid "SGI"
 msgstr "SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:630
+#: ../plug-ins/file-sgi/sgi.c:650
 msgid "Compression type"
 msgstr "Тип сжатия"
 
-#: ../plug-ins/file-sgi/sgi.c:634
+#: ../plug-ins/file-sgi/sgi.c:654
 msgid "No compression"
 msgstr "Без сжатия"
 
-#: ../plug-ins/file-sgi/sgi.c:636
+#: ../plug-ins/file-sgi/sgi.c:656
 msgid "RLE compression"
 msgstr "RLE сжатие"
 
-#: ../plug-ins/file-sgi/sgi.c:638
+#: ../plug-ins/file-sgi/sgi.c:658
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
@@ -9513,6 +9470,10 @@ msgstr ""
 "Добавьте запись \n"
 "(%s \"%s\")\n"
 "в файл %s."
+
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
+msgid "Fractal Explorer"
+msgstr "Исследователь фракталов"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
 msgid "Realtime preview"
@@ -12969,6 +12930,38 @@ msgstr "_Снимок экрана..."
 msgid "No data captured"
 msgstr "Данные не захвачены"
 
+#~ msgid "_Interlacing (Adam7)"
+#~ msgstr "Черезстрочность (Adam7)"
+#~ msgid "Save _background color"
+#~ msgstr "Сохранить цвет фона"
+#~ msgid "Save _gamma"
+#~ msgstr "Сохранить гамму"
+#~ msgid "Save layer o_ffset"
+#~ msgstr "Сохранить смещение слоя"
+#~ msgid "Save _resolution"
+#~ msgstr "Сохранить разрешение"
+#~ msgid "Save creation _time"
+#~ msgstr "Сохранить время создания"
+#~ msgid "Save comme_nt"
+#~ msgstr "Сохранить комментарий"
+#~ msgid "Save color _values from transparent pixels"
+#~ msgstr "Сохранить значения цвета прозрачных точек"
+#~ msgid "Co_mpression level:"
+#~ msgstr "Степень сжатия:"
+#~ msgid "S_ave Defaults"
+#~ msgstr "_Запомнить эти параметры"
+#~ msgid "A big hello from the GIMP team!"
+#~ msgstr "Куча приветов от команды разработчиков GIMP!"
+#~ msgid "Gee Zoom"
+#~ msgstr "Gee-_Zoom"
+#~ msgid "Thank You for Choosing GIMP"
+#~ msgstr "Спасибо за то, что выбрали GIMP"
+#~ msgid "An obsolete creation by %s"
+#~ msgstr "Морально устаревшее творение %s"
+#~ msgid "Gee Slime"
+#~ msgstr "Gee-_Slime"
+#~ msgid "A less obsolete creation by %s"
+#~ msgstr "Наименее устаревшее творение %s"
 #~ msgid "Image type currently not supported."
 #~ msgstr "Этот тип изображения не поддерживается."
 #~ msgid ""
