@@ -75,6 +75,9 @@ struct _GimpImagePrivate
   GimpChannel       *selection_mask;        /*  the selection mask channel   */
 
   GimpParasiteList  *parasites;             /*  Plug-in parasite data        */
+
+  gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
+  gboolean           active[MAX_CHANNELS];  /*  active channels              */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

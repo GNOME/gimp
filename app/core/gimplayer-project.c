@@ -75,6 +75,7 @@ gimp_layer_project_region (GimpDrawable *drawable,
       TileManager     *temp_layer_tiles = NULL;
       InitialMode      initial_mode;
       CombinationMode  combination_mode;
+      gboolean         visible[MAX_CHANNELS];
 
       gimp_drawable_init_src_region (drawable, &srcPR,
                                      x, y, width, height,
@@ -122,13 +123,15 @@ gimp_layer_project_region (GimpDrawable *drawable,
           break;
         }
 
+      gimp_image_get_visible_array (image, visible);
+
       if (combine)
         {
           combine_regions (projPR, &srcPR, projPR, mask_pr,
                            colormap,
                            gimp_layer_get_opacity (layer) * 255.999,
                            gimp_layer_get_mode (layer),
-                           image->visible,
+                           visible,
                            combination_mode);
         }
       else
@@ -137,7 +140,7 @@ gimp_layer_project_region (GimpDrawable *drawable,
                           colormap,
                           gimp_layer_get_opacity (layer) * 255.999,
                           gimp_layer_get_mode (layer),
-                          image->visible,
+                          visible,
                           initial_mode);
         }
 

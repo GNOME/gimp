@@ -359,12 +359,14 @@ static void
 gimp_image_duplicate_components (GimpImage *image,
                                  GimpImage *new_image)
 {
-  gint count;
+  GimpImagePrivate *private     = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpImagePrivate *new_private = GIMP_IMAGE_GET_PRIVATE (new_image);
+  gint              count;
 
   for (count = 0; count < MAX_CHANNELS; count++)
     {
-      new_image->visible[count] = image->visible[count];
-      new_image->active[count]  = image->active[count];
+      new_private->visible[count] = private->visible[count];
+      new_private->active[count]  = private->active[count];
     }
 }
 

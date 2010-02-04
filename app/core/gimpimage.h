@@ -105,9 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
-  gboolean           active[MAX_CHANNELS];  /*  active channels              */
-
   gboolean           quick_mask_state;      /*  TRUE if quick mask is on       */
   gboolean           quick_mask_inverted;   /*  TRUE if quick mask is inverted */
   GimpRGB            quick_mask_color;      /*  rgba triplet of the color      */
@@ -245,6 +242,9 @@ void       gimp_image_floating_selection_changed (GimpImage          *image);
 GimpChannel   * gimp_image_get_mask              (const GimpImage    *image);
 void            gimp_image_mask_changed          (GimpImage          *image);
 
+
+/*  image components  */
+
 gint            gimp_image_get_component_index   (const GimpImage    *image,
                                                   GimpChannelType     channel);
 
@@ -253,12 +253,16 @@ void            gimp_image_set_component_active  (GimpImage          *image,
                                                   gboolean            active);
 gboolean        gimp_image_get_component_active  (const GimpImage    *image,
                                                   GimpChannelType     type);
+void            gimp_image_get_active_array      (const GimpImage    *image,
+                                                  gboolean           *components);
 
 void            gimp_image_set_component_visible (GimpImage          *image,
                                                   GimpChannelType     type,
                                                   gboolean            visible);
 gboolean        gimp_image_get_component_visible (const GimpImage    *image,
                                                   GimpChannelType     type);
+void            gimp_image_get_visible_array     (const GimpImage    *image,
+                                                  gboolean           *components);
 
 void            gimp_image_mode_changed          (GimpImage          *image);
 void            gimp_image_alpha_changed         (GimpImage          *image);

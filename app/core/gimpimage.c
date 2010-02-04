@@ -663,8 +663,8 @@ gimp_image_init (GimpImage *image)
 
   for (i = 0; i < MAX_CHANNELS; i++)
     {
-      image->visible[i] = TRUE;
-      image->active[i]  = TRUE;
+      private->visible[i] = TRUE;
+      private->active[i]  = TRUE;
     }
 
   image->quick_mask_state      = FALSE;
@@ -1727,6 +1727,9 @@ gimp_image_mask_changed (GimpImage *image)
   g_signal_emit (image, gimp_image_signals[MASK_CHANGED], 0);
 }
 
+
+/*  image components  */
+
 gint
 gimp_image_get_component_index (const GimpImage *image,
                                 GimpChannelType  channel)
@@ -1757,17 +1760,20 @@ gimp_image_set_component_active (GimpImage       *image,
                                  GimpChannelType  channel,
                                  gboolean         active)
 {
-  gint index = -1;
+  GimpImagePrivate *private;
+  gint              index = -1;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
   index = gimp_image_get_component_index (image, channel);
 
-  if (index != -1 && active != image->active[index])
+  if (index != -1 && active != private->active[index])
     {
       GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
-      image->active[index] = active ? TRUE : FALSE;
+      private->active[index] = active ? TRUE : FALSE;
 
       if (floating_sel)
         gimp_drawable_update (GIMP_DRAWABLE (floating_sel),
@@ -1797,9 +1803,25 @@ gimp_image_get_component_active (const GimpImage *image,
   index = gimp_image_get_component_index (image, channel);
 
   if (index != -1)
-    return image->active[index];
+    return GIMP_IMAGE_GET_PRIVATE (image)->active[index];
 
   return FALSE;
+}
+
+void
+gimp_image_get_active_array (const GimpImage *image,
+                             gboolean        *components)
+{
+  GimpImagePrivate *private;
+  gint              i;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (components != NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  for (i = 0; i < MAX_CHANNELS; i++)
+    components[i] = private->active[i];
 }
 
 void
@@ -1807,15 +1829,18 @@ gimp_image_set_component_visible (GimpImage       *image,
                                   GimpChannelType  channel,
                                   gboolean         visible)
 {
-  gint index = -1;
+  GimpImagePrivate *private;
+  gint              index = -1;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
   index = gimp_image_get_component_index (image, channel);
 
-  if (index != -1 && visible != image->visible[index])
+  if (index != -1 && visible != private->visible[index])
     {
-      image->visible[index] = visible ? TRUE : FALSE;
+      private->visible[index] = visible ? TRUE : FALSE;
 
       g_signal_emit (image,
                      gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
@@ -1839,9 +1864,25 @@ gimp_image_get_component_visible (const GimpImage *image,
   index = gimp_image_get_component_index (image, channel);
 
   if (index != -1)
-    return image->visible[index];
+    return GIMP_IMAGE_GET_PRIVATE (image)->visible[index];
 
   return FALSE;
+}
+
+void
+gimp_image_get_visible_array (const GimpImage *image,
+                              gboolean        *components)
+{
+  GimpImagePrivate *private;
+  gint              i;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (components != NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  for (i = 0; i < MAX_CHANNELS; i++)
+    components[i] = private->visible[i];
 }
 
 void
