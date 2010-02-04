@@ -120,7 +120,7 @@ gimp_image_prop_view_init (GimpImagePropView *view)
   gtk_table_set_row_spacings (table, 3);
 
   view->pixel_size_label =
-    gimp_image_prop_view_add_label (table, row++, _("Pixel dimensions:"));
+    gimp_image_prop_view_add_label (table, row++, _("Size in pixels:"));
 
   view->print_size_label =
     gimp_image_prop_view_add_label (table, row++, _("Print size:"));
