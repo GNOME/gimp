@@ -88,6 +88,9 @@ struct _GimpImagePrivate
   GimpUndoStack     *redo_stack;            /*  stack for redo operations    */
   gint               group_count;           /*  nested undo groups           */
   GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
+
+  /*  Preview  */
+  TempBuf           *preview;               /*  the projection preview       */
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

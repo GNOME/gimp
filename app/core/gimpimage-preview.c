@@ -26,6 +26,7 @@
 
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
+#include "gimpimage-private.h"
 #include "gimpprojection.h"
 
 
@@ -97,25 +98,25 @@ gimp_image_get_preview (GimpViewable *viewable,
                         gint          width,
                         gint          height)
 {
-  GimpImage *image = GIMP_IMAGE (viewable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (viewable);
 
-  if (image->preview                  &&
-      image->preview->width  == width &&
-      image->preview->height == height)
+  if (private->preview                  &&
+      private->preview->width  == width &&
+      private->preview->height == height)
     {
       /*  The easy way  */
-      return image->preview;
+      return private->preview;
     }
   else
     {
       /*  The hard way  */
-      if (image->preview)
-        temp_buf_free (image->preview);
+      if (private->preview)
+        temp_buf_free (private->preview);
 
-      image->preview = gimp_image_get_new_preview (viewable, context,
-                                                   width, height);
+      private->preview = gimp_image_get_new_preview (viewable, context,
+                                                     width, height);
 
-      return image->preview;
+      return private->preview;
     }
 }
 
@@ -125,7 +126,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                             gint          width,
                             gint          height)
 {
-  GimpImage      *image = GIMP_IMAGE (viewable);
+  GimpImage      *image      = GIMP_IMAGE (viewable);
   GimpProjection *projection = gimp_image_get_projection (image);
   TempBuf        *buf;
   TileManager    *tiles;

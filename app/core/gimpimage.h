@@ -105,9 +105,6 @@ struct _GimpImage
 
   Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
-  /*  Preview  */
-  TempBuf           *preview;               /*  the projection preview       */
-
   /*  Signal emmision accumulator  */
   GimpImageFlushAccumulator  flush_accum;
 };
