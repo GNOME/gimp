@@ -78,17 +78,6 @@
 #define GIMP_IMAGE_ACTIVE_PARENT           ((gpointer) 1)
 
 
-typedef struct _GimpImageFlushAccumulator GimpImageFlushAccumulator;
-
-struct _GimpImageFlushAccumulator
-{
-  gboolean alpha_changed;
-  gboolean mask_changed;
-  gboolean floating_selection_changed;
-  gboolean preview_invalidated;
-};
-
-
 #define GIMP_TYPE_IMAGE            (gimp_image_get_type ())
 #define GIMP_IMAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE, GimpImage))
 #define GIMP_IMAGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE, GimpImageClass))
@@ -101,12 +90,9 @@ typedef struct _GimpImageClass GimpImageClass;
 
 struct _GimpImage
 {
-  GimpViewable       parent_instance;
+  GimpViewable  parent_instance;
 
-  Gimp              *gimp;                  /*  the GIMP the image belongs to*/
-
-  /*  Signal emmision accumulator  */
-  GimpImageFlushAccumulator  flush_accum;
+  Gimp         *gimp;  /*  the GIMP the image belongs to  */
 };
 
 struct _GimpImageClass

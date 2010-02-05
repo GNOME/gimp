@@ -19,6 +19,17 @@
 #define __GIMP_IMAGE_PRIVATE_H__
 
 
+typedef struct _GimpImageFlushAccumulator GimpImageFlushAccumulator;
+
+struct _GimpImageFlushAccumulator
+{
+  gboolean alpha_changed;
+  gboolean mask_changed;
+  gboolean floating_selection_changed;
+  gboolean preview_invalidated;
+};
+
+
 typedef struct _GimpImagePrivate GimpImagePrivate;
 
 struct _GimpImagePrivate
@@ -91,6 +102,9 @@ struct _GimpImagePrivate
 
   /*  Preview  */
   TempBuf           *preview;               /*  the projection preview       */
+
+  /*  Signal emmision accumulator  */
+  GimpImageFlushAccumulator  flush_accum;
 };
 
 #define GIMP_IMAGE_GET_PRIVATE(image) \

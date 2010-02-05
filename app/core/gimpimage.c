@@ -678,10 +678,10 @@ gimp_image_init (GimpImage *image)
 
   private->preview             = NULL;
 
-  image->flush_accum.alpha_changed              = FALSE;
-  image->flush_accum.mask_changed               = FALSE;
-  image->flush_accum.floating_selection_changed = FALSE;
-  image->flush_accum.preview_invalidated        = FALSE;
+  private->flush_accum.alpha_changed              = FALSE;
+  private->flush_accum.mask_changed               = FALSE;
+  private->flush_accum.floating_selection_changed = FALSE;
+  private->flush_accum.preview_invalidated        = FALSE;
 }
 
 static GObject *
@@ -1193,32 +1193,33 @@ static void
 gimp_image_projectable_flush (GimpProjectable *projectable,
                               gboolean         invalidate_preview)
 {
-  GimpImage *image = GIMP_IMAGE (projectable);
+  GimpImage        *image   = GIMP_IMAGE (projectable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (image->flush_accum.alpha_changed)
+  if (private->flush_accum.alpha_changed)
     {
       gimp_image_alpha_changed (image);
-      image->flush_accum.alpha_changed = FALSE;
+      private->flush_accum.alpha_changed = FALSE;
     }
 
-  if (image->flush_accum.mask_changed)
+  if (private->flush_accum.mask_changed)
     {
       gimp_image_mask_changed (image);
-      image->flush_accum.mask_changed = FALSE;
+      private->flush_accum.mask_changed = FALSE;
     }
 
-  if (image->flush_accum.floating_selection_changed)
+  if (private->flush_accum.floating_selection_changed)
     {
       gimp_image_floating_selection_changed (image);
-      image->flush_accum.floating_selection_changed = FALSE;
+      private->flush_accum.floating_selection_changed = FALSE;
     }
 
-  if (image->flush_accum.preview_invalidated)
+  if (private->flush_accum.preview_invalidated)
     {
       /*  don't invalidate the preview here, the projection does this when
        *  it is completely constructed.
        */
-      image->flush_accum.preview_invalidated = FALSE;
+      private->flush_accum.preview_invalidated = FALSE;
     }
 }
 
@@ -1289,7 +1290,7 @@ gimp_image_mask_update (GimpDrawable *drawable,
                         gint          height,
                         GimpImage    *image)
 {
-  image->flush_accum.mask_changed = TRUE;
+  GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.mask_changed = TRUE;
 }
 
 static void
@@ -1299,7 +1300,7 @@ gimp_image_layer_alpha_changed (GimpDrawable *drawable,
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (gimp_container_get_n_children (private->layers) == 1)
-    image->flush_accum.alpha_changed = TRUE;
+    private->flush_accum.alpha_changed = TRUE;
 }
 
 static void
@@ -1691,7 +1692,7 @@ gimp_image_set_floating_selection (GimpImage *image,
     {
       private->floating_sel = floating_sel;
 
-      image->flush_accum.floating_selection_changed = TRUE;
+      private->flush_accum.floating_selection_changed = TRUE;
     }
 }
 
@@ -1916,7 +1917,7 @@ gimp_image_invalidate (GimpImage *image,
   gimp_projectable_invalidate (GIMP_PROJECTABLE (image),
                                x, y, width, height);
 
-  image->flush_accum.preview_invalidated = TRUE;
+  GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.preview_invalidated = TRUE;
 }
 
 void
@@ -2282,7 +2283,7 @@ gimp_image_flush (GimpImage *image)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   gimp_projectable_flush (GIMP_PROJECTABLE (image),
-                          image->flush_accum.preview_invalidated);
+                          GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.preview_invalidated);
 }
 
 
@@ -3364,7 +3365,7 @@ gimp_image_add_layer (GimpImage *image,
                                        layer);
 
   if (old_has_alpha != gimp_image_has_alpha (image))
-    image->flush_accum.alpha_changed = TRUE;
+    private->flush_accum.alpha_changed = TRUE;
 
   return TRUE;
 }
@@ -3511,7 +3512,7 @@ gimp_image_remove_layer (GimpImage *image,
   g_object_unref (layer);
 
   if (old_has_alpha != gimp_image_has_alpha (image))
-    image->flush_accum.alpha_changed = TRUE;
+    private->flush_accum.alpha_changed = TRUE;
 
   if (undo_group)
     gimp_image_undo_group_end (image);
