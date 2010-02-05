@@ -88,14 +88,8 @@ gimp_image_add_guide (GimpImage *image,
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_GUIDE (guide));
-  g_return_if_fail (position >= 0);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_HORIZONTAL)
-    g_return_if_fail (position <= gimp_image_get_height (image));
-  else
-    g_return_if_fail (position <= gimp_image_get_width (image));
 
   private->guides = g_list_prepend (private->guides, guide);
 

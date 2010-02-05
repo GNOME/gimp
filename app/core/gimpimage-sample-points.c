@@ -69,10 +69,6 @@ gimp_image_add_sample_point (GimpImage       *image,
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (sample_point != NULL);
-  g_return_if_fail (x >= 0);
-  g_return_if_fail (y >= 0);
-  g_return_if_fail (x < gimp_image_get_width  (image));
-  g_return_if_fail (y < gimp_image_get_height (image));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 

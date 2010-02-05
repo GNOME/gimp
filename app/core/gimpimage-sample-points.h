@@ -19,14 +19,22 @@
 #define __GIMP_IMAGE_SAMPLE_POINTS_H__
 
 
+/*  public sample point adding API
+ */
 GimpSamplePoint * gimp_image_add_sample_point_at_pos (GimpImage        *image,
                                                       gint              x,
                                                       gint              y,
                                                       gboolean          push_undo);
+
+/*  internal sample point adding API, does not check the sample
+ *  point's position and is publically declared only to be used from
+ *  undo
+ */
 void              gimp_image_add_sample_point        (GimpImage       *image,
                                                       GimpSamplePoint *sample_point,
                                                       gint             x,
                                                       gint             y);
+
 void              gimp_image_remove_sample_point     (GimpImage       *image,
                                                       GimpSamplePoint *sample_point,
                                                       gboolean         push_undo);

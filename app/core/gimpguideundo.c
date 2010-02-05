@@ -23,7 +23,6 @@
 
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
-#include "gimpimage-private.h"
 #include "gimpguide.h"
 #include "gimpguideundo.h"
 
@@ -158,21 +157,10 @@ gimp_guide_undo_pop (GimpUndo              *undo,
   orientation = gimp_guide_get_orientation (guide_undo->guide);
   position    = gimp_guide_get_position (guide_undo->guide);
 
-  /*  add and move guides manually (nor using the gimp_image_guide
-   *  API), because we might be in the middle of an image resizing
-   *  undo group and the guide's position might be temporarily out of
-   *  image.
-   */
-
   if (position == -1)
     {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (undo->image);
-
-      private->guides = g_list_prepend (private->guides,
-                                        guide_undo->guide);
-      gimp_guide_set_position (guide_undo->guide, guide_undo->position);
-      g_object_ref (guide_undo->guide);
-      gimp_image_update_guide (undo->image, guide_undo->guide);
+      gimp_image_add_guide (undo->image,
+                            guide_undo->guide, guide_undo->position);
     }
   else if (guide_undo->position == -1)
     {

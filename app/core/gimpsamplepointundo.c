@@ -22,7 +22,6 @@
 #include "core-types.h"
 
 #include "gimpimage.h"
-#include "gimpimage-private.h"
 #include "gimpimage-sample-points.h"
 #include "gimpsamplepoint.h"
 #include "gimpsamplepointundo.h"
@@ -158,27 +157,12 @@ gimp_sample_point_undo_pop (GimpUndo              *undo,
   x = sample_point_undo->sample_point->x;
   y = sample_point_undo->sample_point->y;
 
-  /*  add and move sample points manually (nor using the
-   *  gimp_image_sample_point API), because we might be in the middle
-   *  of an image resizing undo group and the sample point's position
-   *  might be temporarily out of image.
-   */
-
   if (x == -1)
     {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (undo->image);
-
-      private->sample_points = g_list_append (private->sample_points,
-                                              sample_point_undo->sample_point);
-
-      sample_point_undo->sample_point->x = sample_point_undo->x;
-      sample_point_undo->sample_point->y = sample_point_undo->y;
-      gimp_sample_point_ref (sample_point_undo->sample_point);
-
-      gimp_image_sample_point_added (undo->image,
-                                     sample_point_undo->sample_point);
-      gimp_image_update_sample_point (undo->image,
-                                      sample_point_undo->sample_point);
+      gimp_image_add_sample_point (undo->image,
+                                   sample_point_undo->sample_point,
+                                   sample_point_undo->x,
+                                   sample_point_undo->y);
     }
   else if (sample_point_undo->x == -1)
     {
