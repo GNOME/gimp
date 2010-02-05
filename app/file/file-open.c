@@ -52,7 +52,6 @@
 #include "core/gimpdocumentlist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
-#include "core/gimpimage-private.h" /* FIXME: add api for undo freeze count */
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
 #include "core/gimplayer.h"
@@ -601,7 +600,7 @@ file_open_sanitize_image (GimpImage *image,
   gimp_image_undo_free (image);
 
   /* make sure that undo is enabled */
-  while (GIMP_IMAGE_GET_PRIVATE (image)->undo_freeze_count)
+  while (! gimp_image_undo_is_enabled (image))
     gimp_image_undo_thaw (image);
 
   /* Set the image to clean. Note that export dirtiness is not set to
