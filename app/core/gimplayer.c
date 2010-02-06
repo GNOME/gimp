@@ -97,8 +97,7 @@ static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
 
 static void       gimp_layer_removed            (GimpItem           *item);
 static gboolean   gimp_layer_is_attached        (const GimpItem     *item);
-static GimpContainer *
-                  gimp_layer_get_container      (GimpItem           *item);
+static GimpItemTree * gimp_layer_get_tree       (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type);
 static void       gimp_layer_convert            (GimpItem           *item,
@@ -244,7 +243,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   item_class->removed                 = gimp_layer_removed;
   item_class->is_attached             = gimp_layer_is_attached;
-  item_class->get_container           = gimp_layer_get_container;
+  item_class->get_tree                = gimp_layer_get_tree;
   item_class->duplicate               = gimp_layer_duplicate;
   item_class->convert                 = gimp_layer_convert;
   item_class->rename                  = gimp_layer_rename;
@@ -488,14 +487,14 @@ gimp_layer_is_attached (const GimpItem *item)
                                GIMP_OBJECT (item)));
 }
 
-static GimpContainer *
-gimp_layer_get_container (GimpItem *item)
+static GimpItemTree *
+gimp_layer_get_tree (GimpItem *item)
 {
   if (gimp_item_is_attached (item))
     {
       GimpImage *image = gimp_item_get_image (item);
 
-      return gimp_image_get_layers (image);
+      return gimp_image_get_layer_tree (image);
     }
 
   return NULL;

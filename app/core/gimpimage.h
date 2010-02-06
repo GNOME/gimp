@@ -359,6 +359,10 @@ GimpProjection * gimp_image_get_projection       (const GimpImage    *image);
 
 /*  layers / channels / vectors  */
 
+GimpItemTree  * gimp_image_get_layer_tree        (const GimpImage    *image);
+GimpItemTree  * gimp_image_get_channel_tree      (const GimpImage    *image);
+GimpItemTree  * gimp_image_get_vectors_tree      (const GimpImage    *image);
+
 GimpContainer * gimp_image_get_layers            (const GimpImage    *image);
 GimpContainer * gimp_image_get_channels          (const GimpImage    *image);
 GimpContainer * gimp_image_get_vectors           (const GimpImage    *image);

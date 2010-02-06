@@ -64,8 +64,7 @@ static gint64     gimp_vectors_get_memsize   (GimpObject        *object,
                                               gint64            *gui_size);
 
 static gboolean   gimp_vectors_is_attached   (const GimpItem    *item);
-static GimpContainer *
-                  gimp_vectors_get_container (GimpItem          *item);
+static GimpItemTree * gimp_vectors_get_tree  (GimpItem          *item);
 static GimpItem * gimp_vectors_duplicate     (GimpItem          *item,
                                               GType              new_type);
 static void       gimp_vectors_convert       (GimpItem          *item,
@@ -182,7 +181,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   viewable_class->default_stock_id = "gimp-path";
 
   item_class->is_attached          = gimp_vectors_is_attached;
-  item_class->get_container        = gimp_vectors_get_container;
+  item_class->get_tree             = gimp_vectors_get_tree;
   item_class->duplicate            = gimp_vectors_duplicate;
   item_class->convert              = gimp_vectors_convert;
   item_class->translate            = gimp_vectors_translate;
@@ -275,14 +274,14 @@ gimp_vectors_is_attached (const GimpItem *item)
                                GIMP_OBJECT (item)));
 }
 
-static GimpContainer *
-gimp_vectors_get_container (GimpItem *item)
+static GimpItemTree *
+gimp_vectors_get_tree (GimpItem *item)
 {
   if (gimp_item_is_attached (item))
     {
       GimpImage *image = gimp_item_get_image (item);
 
-      return gimp_image_get_vectors (image);
+      return gimp_image_get_vectors_tree (image);
     }
 
   return NULL;

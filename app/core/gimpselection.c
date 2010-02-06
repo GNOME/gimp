@@ -46,8 +46,7 @@
 
 
 static gboolean   gimp_selection_is_attached   (const GimpItem    *item);
-static GimpContainer *
-                  gimp_selection_get_container (GimpItem          *item);
+static GimpItemTree * gimp_selection_get_tree  (GimpItem          *item);
 static void       gimp_selection_translate     (GimpItem          *item,
                                                 gint               offset_x,
                                                 gint               offset_y,
@@ -145,7 +144,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   viewable_class->default_stock_id    = "gimp-selection";
 
   item_class->is_attached             = gimp_selection_is_attached;
-  item_class->get_container           = gimp_selection_get_container;
+  item_class->get_tree                = gimp_selection_get_tree;
   item_class->translate               = gimp_selection_translate;
   item_class->scale                   = gimp_selection_scale;
   item_class->resize                  = gimp_selection_resize;
@@ -193,8 +192,8 @@ gimp_selection_is_attached (const GimpItem *item)
           GIMP_CHANNEL (item));
 }
 
-static GimpContainer *
-gimp_selection_get_container (GimpItem *item)
+static GimpItemTree *
+gimp_selection_get_tree (GimpItem *item)
 {
   return NULL;
 }

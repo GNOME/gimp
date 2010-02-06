@@ -35,6 +35,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
 #include "gimpitem-preview.h"
+#include "gimpitemtree.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
@@ -180,7 +181,7 @@ gimp_item_class_init (GimpItemClass *klass)
 
   klass->is_attached               = NULL;
   klass->is_content_locked         = gimp_item_real_is_content_locked;
-  klass->get_container             = NULL;
+  klass->get_tree                  = NULL;
   klass->duplicate                 = gimp_item_real_duplicate;
   klass->convert                   = gimp_item_real_convert;
   klass->rename                    = gimp_item_real_rename;
@@ -688,10 +689,22 @@ gimp_item_is_attached (const GimpItem *item)
   return GIMP_ITEM_GET_CLASS (item)->is_attached (item);
 }
 
+GimpItemTree *
+gimp_item_get_tree (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  if (GIMP_ITEM_GET_CLASS (item)->get_tree)
+    return GIMP_ITEM_GET_CLASS (item)->get_tree (item);
+
+  return NULL;
+}
+
 GimpContainer *
 gimp_item_get_container (GimpItem *item)
 {
   GimpViewable *parent;
+  GimpItemTree *tree;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
@@ -700,8 +713,10 @@ gimp_item_get_container (GimpItem *item)
   if (parent)
     return gimp_viewable_get_children (GIMP_VIEWABLE (parent));
 
-  if (GIMP_ITEM_GET_CLASS (item)->get_container)
-    return GIMP_ITEM_GET_CLASS (item)->get_container (item);
+  tree = gimp_item_get_tree (item);
+
+  if (tree)
+    return tree->container;
 
   return NULL;
 }

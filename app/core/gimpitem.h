@@ -70,7 +70,7 @@ struct _GimpItemClass
   /*  virtual functions  */
   gboolean        (* is_attached)        (const GimpItem         *item);
   gboolean        (* is_content_locked)  (const GimpItem         *item);
-  GimpContainer * (* get_container)      (GimpItem               *item);
+  GimpItemTree  * (* get_tree)           (GimpItem               *item);
   GimpItem      * (* duplicate)          (GimpItem               *item,
                                           GType                   new_type);
   void            (* convert)            (GimpItem               *item,
@@ -143,6 +143,7 @@ gboolean        gimp_item_is_removed         (const GimpItem     *item);
 
 gboolean        gimp_item_is_attached        (const GimpItem     *item);
 
+GimpItemTree  * gimp_item_get_tree           (GimpItem           *item);
 GimpContainer * gimp_item_get_container      (GimpItem           *item);
 GList         * gimp_item_get_container_iter (GimpItem           *item);
 gint            gimp_item_get_index          (GimpItem           *item);

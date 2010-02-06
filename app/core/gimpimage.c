@@ -2825,6 +2825,30 @@ gimp_image_get_projection (const GimpImage *image)
 
 /*  layers / channels / vectors  */
 
+GimpItemTree *
+gimp_image_get_layer_tree (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->layers;
+}
+
+GimpItemTree *
+gimp_image_get_channel_tree (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->channels;
+}
+
+GimpItemTree *
+gimp_image_get_vectors_tree (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->vectors;
+}
+
 GimpContainer *
 gimp_image_get_layers (const GimpImage *image)
 {

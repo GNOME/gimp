@@ -47,7 +47,7 @@ enum
 
 static gboolean        gimp_layer_mask_is_attached       (const GimpItem *item);
 static gboolean        gimp_layer_mask_is_content_locked (const GimpItem *item);
-static GimpContainer * gimp_layer_mask_get_container     (GimpItem       *item);
+static GimpItemTree  * gimp_layer_mask_get_tree          (GimpItem       *item);
 static GimpItem      * gimp_layer_mask_duplicate         (GimpItem       *item,
                                                           GType           new_type);
 static gboolean        gimp_layer_mask_rename            (GimpItem       *item,
@@ -104,7 +104,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 
   item_class->is_attached       = gimp_layer_mask_is_attached;
   item_class->is_content_locked = gimp_layer_mask_is_content_locked;
-  item_class->get_container     = gimp_layer_mask_get_container;
+  item_class->get_tree          = gimp_layer_mask_get_tree;
   item_class->duplicate         = gimp_layer_mask_duplicate;
   item_class->rename            = gimp_layer_mask_rename;
   item_class->translate_desc    = _("Move Layer Mask");
@@ -143,8 +143,8 @@ gimp_layer_mask_is_attached (const GimpItem *item)
           gimp_item_is_attached (GIMP_ITEM (layer)));
 }
 
-static GimpContainer *
-gimp_layer_mask_get_container (GimpItem *item)
+static GimpItemTree *
+gimp_layer_mask_get_tree (GimpItem *item)
 {
   return NULL;
 }
