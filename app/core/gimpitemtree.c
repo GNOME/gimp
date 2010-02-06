@@ -26,6 +26,7 @@
 
 #include "core-types.h"
 
+#include "gimpimage.h"
 #include "gimpitem.h"
 #include "gimpitemstack.h"
 #include "gimpitemtree.h"
@@ -34,6 +35,7 @@
 enum
 {
   PROP_0,
+  PROP_IMAGE,
   PROP_CONTAINER_TYPE,
   PROP_ITEM_TYPE
 };
@@ -43,8 +45,9 @@ typedef struct _GimpItemTreePrivate GimpItemTreePrivate;
 
 struct _GimpItemTreePrivate
 {
-  GType container_type;
-  GType item_type;
+  GimpImage *image;
+  GType      container_type;
+  GType      item_type;
 };
 
 #define GIMP_ITEM_TREE_GET_PRIVATE(object) \
@@ -90,6 +93,13 @@ gimp_item_tree_class_init (GimpItemTreeClass *klass)
 
   gimp_object_class->get_memsize = gimp_item_tree_get_memsize;
 
+  g_object_class_install_property (object_class, PROP_IMAGE,
+                                   g_param_spec_object ("image",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_IMAGE,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_CONTAINER_TYPE,
                                    g_param_spec_gtype ("container-type",
                                                        NULL, NULL,
@@ -126,6 +136,7 @@ gimp_item_tree_constructor (GType                  type,
   tree    = GIMP_ITEM_TREE (object);
   private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
+  g_assert (GIMP_IS_IMAGE (private->image));
   g_assert (g_type_is_a (private->container_type, GIMP_TYPE_ITEM_STACK));
   g_assert (g_type_is_a (private->item_type,      GIMP_TYPE_ITEM));
   g_assert (private->item_type != GIMP_TYPE_ITEM);
@@ -164,6 +175,9 @@ gimp_item_tree_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_IMAGE:
+      private->image = g_value_get_object (value); /* don't ref */
+      break;
     case PROP_CONTAINER_TYPE:
       private->container_type = g_value_get_gtype (value);
       break;
@@ -187,6 +201,9 @@ gimp_item_tree_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_IMAGE:
+      g_value_set_object (value, private->image);
+      break;
     case PROP_CONTAINER_TYPE:
       g_value_set_gtype (value, private->container_type);
       break;
@@ -217,13 +234,16 @@ gimp_item_tree_get_memsize (GimpObject *object,
 /*  public functions  */
 
 GimpItemTree *
-gimp_item_tree_new (GType container_type,
-                    GType item_type)
+gimp_item_tree_new (GimpImage *image,
+                    GType      container_type,
+                    GType      item_type)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (g_type_is_a (container_type, GIMP_TYPE_ITEM_STACK), NULL);
   g_return_val_if_fail (g_type_is_a (item_type, GIMP_TYPE_ITEM), NULL);
 
   return g_object_new (GIMP_TYPE_ITEM_TREE,
+                       "image",          image,
                        "container-type", container_type,
                        "item-type",      item_type,
                        NULL);

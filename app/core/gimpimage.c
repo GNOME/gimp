@@ -619,11 +619,14 @@ gimp_image_init (GimpImage *image)
   private->grid                = NULL;
   private->sample_points       = NULL;
 
-  private->layers              = gimp_item_tree_new (GIMP_TYPE_DRAWABLE_STACK,
+  private->layers              = gimp_item_tree_new (image,
+                                                     GIMP_TYPE_DRAWABLE_STACK,
                                                      GIMP_TYPE_LAYER);
-  private->channels            = gimp_item_tree_new (GIMP_TYPE_DRAWABLE_STACK,
+  private->channels            = gimp_item_tree_new (image,
+                                                     GIMP_TYPE_DRAWABLE_STACK,
                                                      GIMP_TYPE_CHANNEL);
-  private->vectors             = gimp_item_tree_new (GIMP_TYPE_ITEM_STACK,
+  private->vectors             = gimp_item_tree_new (image,
+                                                     GIMP_TYPE_ITEM_STACK,
                                                      GIMP_TYPE_VECTORS);
   private->layer_stack         = NULL;
 
