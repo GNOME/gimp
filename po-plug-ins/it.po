@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-03 01:58+0100\n"
-"PO-Revision-Date: 2010-01-03 01:55+0100\n"
+"POT-Creation-Date: 2010-02-06 12:12+0100\n"
+"PO-Revision-Date: 2010-02-06 12:54+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -608,7 +608,7 @@ msgstr "_Verticale"
 #: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:418
 #: ../plug-ins/common/file-pcx.c:424 ../plug-ins/common/file-pix.c:381
 #: ../plug-ins/common/file-png.c:851 ../plug-ins/common/file-pnm.c:584
-#: ../plug-ins/common/file-raw.c:759 ../plug-ins/common/file-sunras.c:974
+#: ../plug-ins/common/file-raw.c:761 ../plug-ins/common/file-sunras.c:974
 #: ../plug-ins/common/file-tga.c:1063 ../plug-ins/common/file-tiff-load.c:998
 #: ../plug-ins/common/file-xbm.c:896 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:256 ../plug-ins/common/tile.c:266
@@ -1024,8 +1024,8 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-pdf.c:550 ../plug-ins/common/file-pix.c:342
 #: ../plug-ins/common/file-png.c:720 ../plug-ins/common/file-pnm.c:493
 #: ../plug-ins/common/file-ps.c:1036 ../plug-ins/common/file-ps.c:3043
-#: ../plug-ins/common/file-psp.c:1703 ../plug-ins/common/file-raw.c:253
-#: ../plug-ins/common/file-raw.c:707 ../plug-ins/common/file-sunras.c:390
+#: ../plug-ins/common/file-psp.c:1703 ../plug-ins/common/file-raw.c:255
+#: ../plug-ins/common/file-raw.c:709 ../plug-ins/common/file-sunras.c:390
 #: ../plug-ins/common/file-svg.c:332 ../plug-ins/common/file-svg.c:730
 #: ../plug-ins/common/file-tga.c:441 ../plug-ins/common/file-tiff-load.c:291
 #: ../plug-ins/common/file-xbm.c:736 ../plug-ins/common/file-xmc.c:666
@@ -1066,7 +1066,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-pat.c:475 ../plug-ins/common/file-pcx.c:672
 #: ../plug-ins/common/file-pix.c:523 ../plug-ins/common/file-png.c:1269
 #: ../plug-ins/common/file-pnm.c:976 ../plug-ins/common/file-ps.c:1213
-#: ../plug-ins/common/file-raw.c:587 ../plug-ins/common/file-raw.c:615
+#: ../plug-ins/common/file-raw.c:589 ../plug-ins/common/file-raw.c:617
 #: ../plug-ins/common/file-sunras.c:562 ../plug-ins/common/file-tga.c:1169
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
 #: ../plug-ins/common/file-xmc.c:1460 ../plug-ins/common/file-xwd.c:613
@@ -1748,7 +1748,7 @@ msgstr ""
 "il menu con le opzioni di ordinamento."
 
 #: ../plug-ins/common/compose.c:188 ../plug-ins/common/decompose.c:169
-#: ../plug-ins/common/file-raw.c:1096
+#: ../plug-ins/common/file-raw.c:1098
 msgid "RGB"
 msgstr "RGB"
 
@@ -2112,7 +2112,7 @@ msgid "D_ivisor:"
 msgstr "D_ivisore:"
 
 #: ../plug-ins/common/convolution-matrix.c:1008
-#: ../plug-ins/common/depth-merge.c:768 ../plug-ins/common/file-raw.c:1117
+#: ../plug-ins/common/depth-merge.c:768 ../plug-ins/common/file-raw.c:1119
 msgid "O_ffset:"
 msgstr "O_ffset:"
 
@@ -2666,7 +2666,7 @@ msgstr "Destriscia"
 
 #: ../plug-ins/common/destripe.c:473 ../plug-ins/common/file-html-table.c:580
 #: ../plug-ins/common/file-ps.c:3166 ../plug-ins/common/file-ps.c:3361
-#: ../plug-ins/common/file-raw.c:1130 ../plug-ins/common/smooth-palette.c:435
+#: ../plug-ins/common/file-raw.c:1132 ../plug-ins/common/smooth-palette.c:435
 #: ../plug-ins/common/tile-paper.c:302 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:402
@@ -2910,7 +2910,7 @@ msgstr "Sobel"
 
 #: ../plug-ins/common/edge.c:665
 msgid "Prewitt compass"
-msgstr "Bussola Prewitt"
+msgstr "Bussola di Prewitt"
 
 #: ../plug-ins/common/edge.c:666 ../plug-ins/common/sinus.c:903
 msgid "Gradient"
@@ -2978,7 +2978,7 @@ msgstr "Incisione"
 
 #: ../plug-ins/common/engrave.c:244 ../plug-ins/common/file-html-table.c:596
 #: ../plug-ins/common/file-ps.c:3176 ../plug-ins/common/file-ps.c:3370
-#: ../plug-ins/common/file-raw.c:1143 ../plug-ins/common/film.c:1002
+#: ../plug-ins/common/file-raw.c:1145 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:440 ../plug-ins/common/tile-paper.c:313
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:409
@@ -3021,7 +3021,7 @@ msgstr "Carica tavolozza KISS"
 #: ../plug-ins/common/file-pat.c:334 ../plug-ins/common/file-pcx.c:365
 #: ../plug-ins/common/file-pdf.c:595 ../plug-ins/common/file-pix.c:347
 #: ../plug-ins/common/file-png.c:727 ../plug-ins/common/file-pnm.c:498
-#: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:712
+#: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:714
 #: ../plug-ins/common/file-sunras.c:485 ../plug-ins/common/file-tga.c:446
 #: ../plug-ins/common/file-tiff-load.c:604 ../plug-ins/common/file-wmf.c:993
 #: ../plug-ins/common/file-xbm.c:741 ../plug-ins/common/file-xmc.c:678
@@ -3676,7 +3676,8 @@ msgstr "Salva la risoluzione"
 msgid "Save creation time"
 msgstr "Salva la data di creazione"
 
-#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1784
+#. Dialog init
+#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1800
 msgid "PNG"
 msgstr "PNG"
 
@@ -3720,7 +3721,7 @@ msgstr "Disposizione predefinita fotogrammi:"
 msgid "PNG compression level:"
 msgstr "Livello di compressione PNG:"
 
-#: ../plug-ins/common/file-mng.c:1416 ../plug-ins/common/file-png.c:1893
+#: ../plug-ins/common/file-mng.c:1416
 msgid "Choose a high compression level for small file size"
 msgstr "Scegliere una compressione alta per ottenere file piccoli"
 
@@ -3902,49 +3903,10 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errore durante il salvataggio di '%s'. Impossibile salvare l'immagine."
 
-#: ../plug-ins/common/file-png.c:1802
-msgid "_Interlacing (Adam7)"
-msgstr "_Interlacciamento (Adam7)"
-
-#: ../plug-ins/common/file-png.c:1813
-msgid "Save _background color"
-msgstr "Salva colore di _sfondo"
-
-#: ../plug-ins/common/file-png.c:1821
-msgid "Save _gamma"
-msgstr "Salva _gamma"
-
-#: ../plug-ins/common/file-png.c:1831
-msgid "Save layer o_ffset"
-msgstr "Salva sp_ostamento livello"
-
-#: ../plug-ins/common/file-png.c:1840
-msgid "Save _resolution"
-msgstr "Salva _risoluzione"
-
-#: ../plug-ins/common/file-png.c:1850
-msgid "Save creation _time"
-msgstr "Salva da_ta di creazione"
-
-#: ../plug-ins/common/file-png.c:1859
-msgid "Save comme_nt"
-msgstr "Salva comme_nti"
-
-#: ../plug-ins/common/file-png.c:1875
-msgid "Save color _values from transparent pixels"
-msgstr "Salva valori _colore dai punti trasparenti"
-
-#: ../plug-ins/common/file-png.c:1889
-msgid "Co_mpression level:"
-msgstr "Livello di co_mpressione:"
-
-#: ../plug-ins/common/file-png.c:1907 ../plug-ins/file-jpeg/jpeg-save.c:1179
-msgid "_Load Defaults"
-msgstr "Carica i va_lori predefiniti"
-
-#: ../plug-ins/common/file-png.c:1915
-msgid "S_ave Defaults"
-msgstr "S_alva i valori predefiniti"
+#: ../plug-ins/common/file-png.c:1817
+#, c-format
+msgid "Error loading UI file '%s': %s"
+msgstr "Errore di caricamento file IU \"%s\": %s"
 
 #: ../plug-ins/common/file-pnm.c:247
 msgid "PNM Image"
@@ -4004,20 +3966,20 @@ msgstr "Valore massimo non supportato"
 msgid "Error reading file."
 msgstr "Errore nella lettura del file"
 
-#: ../plug-ins/common/file-pnm.c:1184
+#: ../plug-ins/common/file-pnm.c:1185
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1187
+#: ../plug-ins/common/file-pnm.c:1188
 msgid "Data formatting"
 msgstr "Formattazione dati"
 
-#: ../plug-ins/common/file-pnm.c:1191
+#: ../plug-ins/common/file-pnm.c:1192
 msgid "Raw"
 msgstr "Raw"
 
-#: ../plug-ins/common/file-pnm.c:1192
+#: ../plug-ins/common/file-pnm.c:1193
 msgid "Ascii"
 msgstr "Ascii"
 
@@ -4229,83 +4191,83 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Dati immagine raw"
 
-#: ../plug-ins/common/file-raw.c:1052
+#: ../plug-ins/common/file-raw.c:1054
 msgid "Load Image from Raw Data"
 msgstr "Carica immagine da dati raw"
 
-#: ../plug-ins/common/file-raw.c:1086
+#: ../plug-ins/common/file-raw.c:1088
 msgid "Image"
 msgstr "Immagine"
 
-#: ../plug-ins/common/file-raw.c:1097
+#: ../plug-ins/common/file-raw.c:1099
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw.c:1098
+#: ../plug-ins/common/file-raw.c:1100
 msgid "RGB565"
 msgstr "RGB565"
 
-#: ../plug-ins/common/file-raw.c:1099
+#: ../plug-ins/common/file-raw.c:1101
 msgid "Planar RGB"
 msgstr "RGB planare"
 
-#: ../plug-ins/common/file-raw.c:1100
+#: ../plug-ins/common/file-raw.c:1102
 msgid "Indexed"
 msgstr "Indicizzata"
 
-#: ../plug-ins/common/file-raw.c:1101
+#: ../plug-ins/common/file-raw.c:1103
 msgid "Indexed Alpha"
 msgstr "Alfa indicizzata"
 
-#: ../plug-ins/common/file-raw.c:1106
+#: ../plug-ins/common/file-raw.c:1108
 msgid "Image _Type:"
 msgstr "_Tipo immagine:"
 
-#: ../plug-ins/common/file-raw.c:1156
+#: ../plug-ins/common/file-raw.c:1158
 msgid "Palette"
 msgstr "Tavolozza"
 
-#: ../plug-ins/common/file-raw.c:1166 ../plug-ins/common/file-raw.c:1251
+#: ../plug-ins/common/file-raw.c:1168 ../plug-ins/common/file-raw.c:1253
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normale)"
 
-#: ../plug-ins/common/file-raw.c:1167 ../plug-ins/common/file-raw.c:1253
+#: ../plug-ins/common/file-raw.c:1169 ../plug-ins/common/file-raw.c:1255
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (stile bmp)"
 
-#: ../plug-ins/common/file-raw.c:1172
+#: ../plug-ins/common/file-raw.c:1174
 msgid "_Palette Type:"
 msgstr "_Tipo tavolozza:"
 
-#: ../plug-ins/common/file-raw.c:1183
+#: ../plug-ins/common/file-raw.c:1185
 msgid "Off_set:"
 msgstr "_Spostamento:"
 
-#: ../plug-ins/common/file-raw.c:1195
+#: ../plug-ins/common/file-raw.c:1197
 msgid "Select Palette File"
 msgstr "Seleziona il file tavolozza"
 
-#: ../plug-ins/common/file-raw.c:1201
+#: ../plug-ins/common/file-raw.c:1203
 msgid "Pal_ette File:"
 msgstr "Fil_e tavolozza:"
 
-#: ../plug-ins/common/file-raw.c:1229
+#: ../plug-ins/common/file-raw.c:1231
 msgid "Raw Image"
 msgstr "Immagine raw"
 
-#: ../plug-ins/common/file-raw.c:1237
+#: ../plug-ins/common/file-raw.c:1239
 msgid "RGB Save Type"
 msgstr "Tipo salvataggio RGB"
 
-#: ../plug-ins/common/file-raw.c:1241
+#: ../plug-ins/common/file-raw.c:1243
 msgid "Standard (R,G,B)"
 msgstr "Standard (R, G, B)"
 
-#: ../plug-ins/common/file-raw.c:1242
+#: ../plug-ins/common/file-raw.c:1244
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Planare (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/file-raw.c:1247
+#: ../plug-ins/common/file-raw.c:1249
 msgid "Indexed Palette Type"
 msgstr "Tipo tavolozza indicizzata"
 
@@ -5372,32 +5334,6 @@ msgstr "Y_1:"
 #: ../plug-ins/common/fractal-trace.c:787
 msgid "Y_2:"
 msgstr "Y_2:"
-
-#: ../plug-ins/common/gee-zoom.c:131 ../plug-ins/common/gee.c:98
-msgid "A big hello from the GIMP team!"
-msgstr "Un grande saluto dal team di GIMP!"
-
-#: ../plug-ins/common/gee-zoom.c:136 ../plug-ins/common/gee-zoom.c:196
-msgid "Gee Zoom"
-msgstr "Gee-Zoom"
-
-#: ../plug-ins/common/gee-zoom.c:202 ../plug-ins/common/gee.c:165
-msgid "Thank You for Choosing GIMP"
-msgstr "Grazie per aver scelto GIMP"
-
-#: ../plug-ins/common/gee-zoom.c:210
-#, c-format
-msgid "An obsolete creation by %s"
-msgstr "Una creazione obsoleta di %s"
-
-#: ../plug-ins/common/gee.c:103 ../plug-ins/common/gee.c:159
-msgid "Gee Slime"
-msgstr "Gee-Slime"
-
-#: ../plug-ins/common/gee.c:172
-#, c-format
-msgid "A less obsolete creation by %s"
-msgstr "Una creazione meno obsoleta di %s"
 
 #: ../plug-ins/common/gradient-map.c:83
 msgid "Recolor the image using colors from the active gradient"
@@ -8829,6 +8765,10 @@ msgstr "Virgola mobile"
 msgid "Comment"
 msgstr "Commento"
 
+#: ../plug-ins/file-jpeg/jpeg-save.c:1179
+msgid "_Load Defaults"
+msgstr "Carica i va_lori predefiniti"
+
 #: ../plug-ins/file-jpeg/jpeg-save.c:1188
 msgid "Sa_ve Defaults"
 msgstr "Sal_va i valori predefiniti"
@@ -9384,6 +9324,10 @@ msgstr ""
 "Serve aggiungere una voce tipo\n"
 "(%s \"%s\")\n"
 "al tuo file %s."
+
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
+msgid "Fractal Explorer"
+msgstr "Esploratore frattali"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
 msgid "Realtime preview"
