@@ -248,3 +248,79 @@ gimp_item_tree_new (GimpImage *image,
                        "item-type",      item_type,
                        NULL);
 }
+
+gboolean
+gimp_item_tree_reorder_item (GimpItemTree            *tree,
+                             GimpItem                *item,
+                             GimpItem                *new_parent,
+                             gint                     new_index,
+                             GimpItemReorderUndoFunc  undo_func,
+                             const gchar             *undo_desc)
+{
+  GimpItemTreePrivate *private;
+  GimpContainer       *container;
+  GimpContainer       *new_container;
+  gint                 n_items;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), FALSE);
+
+  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
+  g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type),
+                        FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
+  g_return_val_if_fail (gimp_item_get_image (item) == private->image, FALSE);
+  g_return_val_if_fail (new_parent == NULL ||
+                        G_TYPE_CHECK_INSTANCE_TYPE (new_parent,
+                                                    private->item_type),
+                        FALSE);
+  g_return_val_if_fail (new_parent == NULL ||
+                        gimp_item_is_attached (new_parent), FALSE);
+  g_return_val_if_fail (new_parent == NULL ||
+                        gimp_item_get_image (new_parent) == private->image,
+                        FALSE);
+  g_return_val_if_fail (new_parent == NULL ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (new_parent)),
+                        FALSE);
+
+  container = gimp_item_get_container (item);
+
+  if (new_parent)
+    new_container = gimp_viewable_get_children (GIMP_VIEWABLE (new_parent));
+  else
+    new_container = tree->container;
+
+  n_items = gimp_container_get_n_children (new_container);
+
+  if (new_container == container)
+    n_items--;
+
+  new_index = CLAMP (new_index, 0, n_items);
+
+  if (new_container != container ||
+      new_index     != gimp_item_get_index (item))
+    {
+      if (undo_func)
+        undo_func (private->image, undo_desc, item);
+
+      if (new_container != container)
+        {
+          g_object_ref (item);
+
+          gimp_container_remove (container, GIMP_OBJECT (item));
+
+          gimp_viewable_set_parent (GIMP_VIEWABLE (item),
+                                    GIMP_VIEWABLE (new_parent));
+
+          gimp_container_insert (new_container, GIMP_OBJECT (item), new_index);
+
+          g_object_unref (item);
+        }
+      else
+        {
+          gimp_container_reorder (container, GIMP_OBJECT (item), new_index);
+        }
+    }
+
+  return TRUE;
+}

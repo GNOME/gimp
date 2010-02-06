@@ -25,6 +25,14 @@
 #include "gimpobject.h"
 
 
+/*  this is temporary, reorder undo will operate generically on the
+ *  item tree too
+ */
+typedef GimpUndo * (* GimpItemReorderUndoFunc) (GimpImage   *image,
+                                                const gchar *undo_desc,
+                                                GimpItem    *item);
+
+
 #define GIMP_TYPE_ITEM_TREE            (gimp_item_tree_get_type ())
 #define GIMP_ITEM_TREE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_TREE, GimpItemTree))
 #define GIMP_ITEM_TREE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_TREE, GimpItemTreeClass))
@@ -47,10 +55,16 @@ struct _GimpItemTreeClass
 };
 
 
-GType          gimp_item_tree_get_type (void) G_GNUC_CONST;
-GimpItemTree * gimp_item_tree_new      (GimpImage *image,
-                                        GType      container_type,
-                                        GType      item_type);
+GType          gimp_item_tree_get_type     (void) G_GNUC_CONST;
+GimpItemTree * gimp_item_tree_new          (GimpImage               *image,
+                                            GType                    container_type,
+                                            GType                    item_type);
 
+gboolean       gimp_item_tree_reorder_item (GimpItemTree            *tree,
+                                            GimpItem                *item,
+                                            GimpItem                *new_parent,
+                                            gint                     new_index,
+                                            GimpItemReorderUndoFunc  undo_func,
+                                            const gchar             *undo_desc);
 
 #endif  /*  __GIMP_ITEM_TREE_H__  */
