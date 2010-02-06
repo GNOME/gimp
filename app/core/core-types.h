@@ -75,6 +75,11 @@ typedef struct _GimpItemStack         GimpItemStack;
 typedef struct _GimpToolPresets       GimpToolPresets;
 
 
+/*  not really a container  */
+
+typedef struct _GimpItemTree          GimpItemTree;
+
+
 /*  context objects  */
 
 typedef struct _GimpContext         GimpContext;

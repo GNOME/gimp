@@ -268,6 +268,8 @@ libappcore_a_sources = \
 	gimpitempropundo.h			\
 	gimpitemstack.c				\
 	gimpitemstack.h				\
+	gimpitemtree.c				\
+	gimpitemtree.h				\
 	gimpitemundo.c				\
 	gimpitemundo.h				\
 	gimplayer.c				\
