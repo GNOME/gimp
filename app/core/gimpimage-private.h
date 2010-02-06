@@ -69,9 +69,9 @@ struct _GimpImagePrivate
   GList             *sample_points;         /*  color sample points          */
 
   /*  Layer/Channel attributes  */
-  GimpContainer     *layers;                /*  the list of layers           */
-  GimpContainer     *channels;              /*  the list of masks            */
-  GimpContainer     *vectors;               /*  the list of vectors          */
+  GimpItemTree      *layers;                /*  the tree of layers           */
+  GimpItemTree      *channels;              /*  the tree of masks            */
+  GimpItemTree      *vectors;               /*  the tree of vectors          */
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
   GQuark             layer_alpha_handler;
