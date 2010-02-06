@@ -25,6 +25,7 @@
 
 #include "gimp-utils.h"
 #include "gimpitem.h"
+#include "gimpitemtree.h"
 #include "gimpitempropundo.h"
 #include "gimpparasitelist.h"
 
@@ -109,6 +110,11 @@ gimp_item_prop_undo_constructor (GType                  type,
 
   switch (GIMP_UNDO (object)->undo_type)
     {
+    case GIMP_UNDO_ITEM_REORDER:
+      item_prop_undo->parent = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+      item_prop_undo->position = gimp_item_get_index (item);
+      break;
+
     case GIMP_UNDO_ITEM_RENAME:
       item_prop_undo->name = g_strdup (gimp_object_get_name (item));
       break;
@@ -209,6 +215,24 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
 
   switch (undo->undo_type)
     {
+    case GIMP_UNDO_ITEM_REORDER:
+      {
+        GimpItem *parent;
+        gint      position;
+
+        parent   = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+        position = gimp_item_get_index (item);
+
+        gimp_item_tree_reorder_item (gimp_item_get_tree (item), item,
+                                     item_prop_undo->parent,
+                                     item_prop_undo->position,
+                                     FALSE, NULL);
+
+        item_prop_undo->parent   = parent;
+        item_prop_undo->position = position;
+      }
+      break;
+
     case GIMP_UNDO_ITEM_RENAME:
       {
         gchar *name;

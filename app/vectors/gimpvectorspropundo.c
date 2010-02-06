@@ -78,11 +78,6 @@ gimp_vectors_prop_undo_constructor (GType                  type,
 
   switch (GIMP_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_VECTORS_REORDER:
-      vectors_prop_undo->parent   = GIMP_VECTORS (gimp_viewable_get_parent (GIMP_VIEWABLE (vectors)));
-      vectors_prop_undo->position = gimp_item_get_index (GIMP_ITEM (vectors));
-      break;
-
     default:
       g_assert_not_reached ();
     }
@@ -102,24 +97,6 @@ gimp_vectors_prop_undo_pop (GimpUndo            *undo,
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_VECTORS_REORDER:
-      {
-        GimpVectors *parent;
-        gint         position;
-
-        parent   = GIMP_VECTORS (gimp_viewable_get_parent (GIMP_VIEWABLE (vectors)));
-        position = gimp_item_get_index (GIMP_ITEM (vectors));
-
-        gimp_image_reorder_vectors (undo->image, vectors,
-                                    vectors_prop_undo->parent,
-                                    vectors_prop_undo->position,
-                                    FALSE, NULL);
-
-        vectors_prop_undo->parent   = parent;
-        vectors_prop_undo->position = position;
-      }
-      break;
-
     default:
       g_assert_not_reached ();
     }

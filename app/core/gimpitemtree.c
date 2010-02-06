@@ -27,6 +27,7 @@
 #include "core-types.h"
 
 #include "gimpimage.h"
+#include "gimpimage-undo-push.h"
 #include "gimpitem.h"
 #include "gimpitemstack.h"
 #include "gimpitemtree.h"
@@ -250,12 +251,12 @@ gimp_item_tree_new (GimpImage *image,
 }
 
 gboolean
-gimp_item_tree_reorder_item (GimpItemTree            *tree,
-                             GimpItem                *item,
-                             GimpItem                *new_parent,
-                             gint                     new_index,
-                             GimpItemReorderUndoFunc  undo_func,
-                             const gchar             *undo_desc)
+gimp_item_tree_reorder_item (GimpItemTree *tree,
+                             GimpItem     *item,
+                             GimpItem     *new_parent,
+                             gint          new_index,
+                             gboolean      push_undo,
+                             const gchar  *undo_desc)
 {
   GimpItemTreePrivate *private;
   GimpContainer       *container;
@@ -300,8 +301,8 @@ gimp_item_tree_reorder_item (GimpItemTree            *tree,
   if (new_container != container ||
       new_index     != gimp_item_get_index (item))
     {
-      if (undo_func)
-        undo_func (private->image, undo_desc, item);
+      if (push_undo)
+        gimp_image_undo_push_item_reorder (private->image, undo_desc, item);
 
       if (new_container != container)
         {

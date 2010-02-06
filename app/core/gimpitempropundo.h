@@ -36,6 +36,8 @@ struct _GimpItemPropUndo
 {
   GimpItemUndo  parent_instance;
 
+  GimpItem     *parent;
+  gint          position;
   gchar        *name;
   gint          offset_x;
   gint          offset_y;

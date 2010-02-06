@@ -3723,11 +3723,7 @@ gimp_image_reorder_layer (GimpImage   *image,
                                       (GimpItem *) layer,
                                       (GimpItem *) new_parent,
                                       new_index,
-                                      (GimpItemReorderUndoFunc)
-                                      (push_undo ?
-                                       gimp_image_undo_push_layer_reorder :
-                                       NULL),
-                                      undo_desc);
+                                      push_undo, undo_desc);
 }
 
 gboolean
@@ -3997,11 +3993,7 @@ gimp_image_reorder_channel (GimpImage   *image,
                                       (GimpItem *) channel,
                                       (GimpItem *) new_parent,
                                       new_index,
-                                      (GimpItemReorderUndoFunc)
-                                      (push_undo ?
-                                       gimp_image_undo_push_channel_reorder :
-                                       NULL),
-                                      undo_desc);
+                                      push_undo, undo_desc);
 }
 
 gboolean
@@ -4245,11 +4237,7 @@ gimp_image_reorder_vectors (GimpImage   *image,
                                       (GimpItem *) vectors,
                                       (GimpItem *) new_parent,
                                       new_index,
-                                      (GimpItemReorderUndoFunc)
-                                      (push_undo ?
-                                       gimp_image_undo_push_vectors_reorder :
-                                       NULL),
-                                      undo_desc);
+                                      push_undo, undo_desc);
 }
 
 GimpLayer *

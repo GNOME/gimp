@@ -35,9 +35,6 @@ typedef struct _GimpVectorsPropUndoClass GimpVectorsPropUndoClass;
 struct _GimpVectorsPropUndo
 {
   GimpItemUndo  parent_instance;
-
-  GimpVectors  *parent;
-  gint          position;
 };
 
 struct _GimpVectorsPropUndoClass

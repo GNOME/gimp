@@ -79,11 +79,6 @@ gimp_channel_prop_undo_constructor (GType                  type,
 
   switch (GIMP_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_CHANNEL_REORDER:
-      channel_prop_undo->parent   = GIMP_CHANNEL (gimp_viewable_get_parent (GIMP_VIEWABLE (channel)));
-      channel_prop_undo->position = gimp_item_get_index (GIMP_ITEM (channel));
-      break;
-
     case GIMP_UNDO_CHANNEL_COLOR:
       gimp_channel_get_color (channel, &channel_prop_undo->color);
       break;
@@ -107,24 +102,6 @@ gimp_channel_prop_undo_pop (GimpUndo            *undo,
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_CHANNEL_REORDER:
-      {
-        GimpChannel *parent;
-        gint         position;
-
-        parent   = GIMP_CHANNEL (gimp_viewable_get_parent (GIMP_VIEWABLE (channel)));
-        position = gimp_item_get_index (GIMP_ITEM (channel));
-
-        gimp_image_reorder_channel (undo->image, channel,
-                                    channel_prop_undo->parent,
-                                    channel_prop_undo->position,
-                                    FALSE, NULL);
-
-        channel_prop_undo->parent   = parent;
-        channel_prop_undo->position = position;
-      }
-      break;
-
     case GIMP_UNDO_CHANNEL_COLOR:
       {
         GimpRGB color;

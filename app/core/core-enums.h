@@ -410,13 +410,13 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_DRAWABLE,                 /*< desc="Layer/Channel"               >*/
   GIMP_UNDO_DRAWABLE_MOD,             /*< desc="Layer/Channel modification"  >*/
   GIMP_UNDO_MASK,                     /*< desc="Selection mask"              >*/
+  GIMP_UNDO_ITEM_REORDER,             /*< desc="Reorder item"                >*/
   GIMP_UNDO_ITEM_RENAME,              /*< desc="Rename item"                 >*/
   GIMP_UNDO_ITEM_DISPLACE,            /*< desc="Move item"                   >*/
   GIMP_UNDO_ITEM_VISIBILITY,          /*< desc="Item visibility"             >*/
   GIMP_UNDO_ITEM_LINKED,              /*< desc="Link/Unlink item"            >*/
   GIMP_UNDO_LAYER_ADD,                /*< desc="New layer"                   >*/
   GIMP_UNDO_LAYER_REMOVE,             /*< desc="Delete layer"                >*/
-  GIMP_UNDO_LAYER_REORDER,            /*< desc="Reorder layer"               >*/
   GIMP_UNDO_LAYER_MODE,               /*< desc="Set layer mode"              >*/
   GIMP_UNDO_LAYER_OPACITY,            /*< desc="Set layer opacity"           >*/
   GIMP_UNDO_LAYER_LOCK_ALPHA,         /*< desc="Lock/Unlock alpha channel"   >*/
@@ -431,12 +431,10 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_LAYER_MASK_SHOW,          /*< desc="Show layer mask"             >*/
   GIMP_UNDO_CHANNEL_ADD,              /*< desc="New channel"                 >*/
   GIMP_UNDO_CHANNEL_REMOVE,           /*< desc="Delete channel"              >*/
-  GIMP_UNDO_CHANNEL_REORDER,          /*< desc="Reorder channel"             >*/
   GIMP_UNDO_CHANNEL_COLOR,            /*< desc="Channel color"               >*/
   GIMP_UNDO_VECTORS_ADD,              /*< desc="New path"                    >*/
   GIMP_UNDO_VECTORS_REMOVE,           /*< desc="Delete path"                 >*/
   GIMP_UNDO_VECTORS_MOD,              /*< desc="Path modification"           >*/
-  GIMP_UNDO_VECTORS_REORDER,          /*< desc="Reorder path"                >*/
   GIMP_UNDO_FS_TO_LAYER,              /*< desc="Floating selection to layer" >*/
   GIMP_UNDO_TRANSFORM,                /*< desc="Transform"                   >*/
   GIMP_UNDO_PAINT,                    /*< desc="Paint"                       >*/

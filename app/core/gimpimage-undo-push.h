@@ -79,6 +79,9 @@ GimpUndo * gimp_image_undo_push_mask                (GimpImage     *image,
 
 /*  item undos  */
 
+GimpUndo * gimp_image_undo_push_item_reorder        (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpItem      *item);
 GimpUndo * gimp_image_undo_push_item_rename         (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item);
@@ -101,7 +104,6 @@ GimpUndo * gimp_image_undo_push_item_parasite_remove(GimpImage     *image,
                                                      const gchar   *name);
 
 
-
 /*  layer undos  */
 
 GimpUndo * gimp_image_undo_push_layer_add           (GimpImage     *image,
@@ -114,9 +116,6 @@ GimpUndo * gimp_image_undo_push_layer_remove        (GimpImage     *image,
                                                      GimpLayer     *prev_parent,
                                                      gint           prev_position,
                                                      GimpLayer     *prev_layer);
-GimpUndo * gimp_image_undo_push_layer_reorder       (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpLayer     *layer);
 GimpUndo * gimp_image_undo_push_layer_mode          (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer);
@@ -182,9 +181,6 @@ GimpUndo * gimp_image_undo_push_channel_remove      (GimpImage     *image,
                                                      GimpChannel   *prev_parent,
                                                      gint           prev_position,
                                                      GimpChannel   *prev_channel);
-GimpUndo * gimp_image_undo_push_channel_reorder     (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpChannel   *channel);
 GimpUndo * gimp_image_undo_push_channel_color       (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpChannel   *channel);
@@ -203,9 +199,6 @@ GimpUndo * gimp_image_undo_push_vectors_remove      (GimpImage     *image,
                                                      gint           prev_position,
                                                      GimpVectors   *prev_vectors);
 GimpUndo * gimp_image_undo_push_vectors_mod         (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpVectors   *vectors);
-GimpUndo * gimp_image_undo_push_vectors_reorder     (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpVectors   *vectors);
 

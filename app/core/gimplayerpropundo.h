@@ -36,8 +36,6 @@ struct _GimpLayerPropUndo
 {
   GimpItemUndo          parent_instance;
 
-  GimpLayer            *parent;
-  gint                  position;
   GimpLayerModeEffects  mode;
   gdouble               opacity;
   gboolean              lock_alpha;
