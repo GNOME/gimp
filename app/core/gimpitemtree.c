@@ -512,6 +512,11 @@ gimp_item_tree_reorder_item (GimpItemTree *tree,
   g_return_val_if_fail (new_parent == NULL ||
                         gimp_viewable_get_children (GIMP_VIEWABLE (new_parent)),
                         FALSE);
+  g_return_val_if_fail (item != new_parent, FALSE);
+  g_return_val_if_fail (new_parent == NULL ||
+                        ! gimp_viewable_is_ancestor (GIMP_VIEWABLE (item),
+                                                     GIMP_VIEWABLE (new_parent)),
+                        FALSE);
 
   container = gimp_item_get_container (item);
 
