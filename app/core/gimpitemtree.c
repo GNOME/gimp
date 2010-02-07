@@ -366,10 +366,16 @@ gimp_item_tree_add_item (GimpItemTree *tree,
                          GimpItem     *parent,
                          gint          position)
 {
-  GimpContainer *container;
+  GimpItemTreePrivate *private;
+  GimpContainer       *container;
 
   g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
+
+  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (! gimp_item_is_attached (item));
+  g_return_if_fail (gimp_item_get_image (item) == private->image);
 
   if (parent)
     container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
@@ -388,12 +394,18 @@ gimp_item_tree_remove_item (GimpItemTree *tree,
                             GimpItem     *item,
                             GimpItem     *new_active)
 {
-  GimpItem      *parent;
-  GimpContainer *container;
-  gint           index;
+  GimpItemTreePrivate *private;
+  GimpItem            *parent;
+  GimpContainer       *container;
+  gint                 index;
 
   g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+
+  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
+  g_return_val_if_fail (gimp_item_get_image (item) == private->image, NULL);
 
   parent    = gimp_item_get_parent (item);
   container = gimp_item_get_container (item);
