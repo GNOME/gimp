@@ -872,7 +872,7 @@ gimp_layer_tree_view_item_new (GimpImage *image)
                               gimp_image_get_width (image),
                               gimp_image_get_height (image),
                               gimp_image_base_type_with_alpha (image),
-                              _("Empty Layer"), 1.0, GIMP_NORMAL_MODE);
+                              NULL, 1.0, GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (image, new_layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

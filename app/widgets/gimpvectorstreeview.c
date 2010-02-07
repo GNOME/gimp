@@ -259,7 +259,7 @@ gimp_vectors_tree_view_item_new (GimpImage *image)
 {
   GimpVectors *new_vectors;
 
-  new_vectors = gimp_vectors_new (image, _("Empty Path"));
+  new_vectors = gimp_vectors_new (image, _("Path"));
 
   gimp_image_add_vectors (image, new_vectors,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

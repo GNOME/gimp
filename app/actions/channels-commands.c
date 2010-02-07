@@ -113,7 +113,7 @@ channels_new_cmd_callback (GtkAction *action,
                                         widget,
                                         &channel_color,
                                         channel_name ? channel_name :
-                                        _("New Channel"),
+                                        _("Channel"),
                                         _("New Channel"),
                                         "gimp-channel-new",
                                         GIMP_STOCK_CHANNEL,
@@ -159,8 +159,7 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
                                _("New Channel"));
 
   new_channel = gimp_channel_new (image, width, height,
-                                  channel_name ? channel_name :
-                                  _("New Channel"), &color);
+                                  channel_name, &color);
 
   gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
                               action_data_get_context (data),
@@ -335,6 +334,7 @@ channels_new_channel_response (GtkWidget            *widget,
 
       if (channel_name)
         g_free (channel_name);
+
       channel_name =
         g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 

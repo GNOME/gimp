@@ -162,7 +162,7 @@ vectors_new_cmd_callback (GtkAction *action,
                                         action_data_get_context (data),
                                         widget,
                                         vectors_name ? vectors_name :
-                                        _("New Path"),
+                                        _("Path"),
                                         _("New Path"),
                                         "gimp-vectors-new",
                                         GIMP_STOCK_PATH,
@@ -184,8 +184,7 @@ vectors_new_last_vals_cmd_callback (GtkAction *action,
   GimpVectors *new_vectors;
   return_if_no_image (image, data);
 
-  new_vectors = gimp_vectors_new (image,
-                                  vectors_name ? vectors_name : _("New Path"));
+  new_vectors = gimp_vectors_new (image, vectors_name);
 
   gimp_image_add_vectors (image, new_vectors,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

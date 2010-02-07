@@ -247,7 +247,7 @@ layers_new_cmd_callback (GtkAction *action,
   dialog = layer_options_dialog_new (image, NULL,
                                      action_data_get_context (data),
                                      widget,
-                                     layer_name ? layer_name : _("New Layer"),
+                                     layer_name ? layer_name : _("Layer"),
                                      layer_fill_type,
                                      _("New Layer"),
                                      "gimp-layer-new",
@@ -321,7 +321,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
 
   new_layer = gimp_layer_new (image, width, height,
                               gimp_image_base_type_with_alpha (image),
-                              layer_name ? layer_name : _("New Layer"),
+                              layer_name,
                               opacity, mode);
 
   gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
@@ -981,6 +981,7 @@ layers_new_layer_response (GtkWidget          *widget,
 
       if (layer_name)
         g_free (layer_name);
+
       layer_name =
         g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->name_entry)));
 

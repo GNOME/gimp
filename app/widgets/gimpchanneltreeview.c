@@ -342,7 +342,7 @@ gimp_channel_tree_view_item_new (GimpImage *image)
   new_channel = gimp_channel_new (image,
                                   gimp_image_get_width (image),
                                   gimp_image_get_height (image),
-                                  _("Empty Channel"), &color);
+                                  _("Channel"), &color);
 
   gimp_image_add_channel (image, new_channel,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
