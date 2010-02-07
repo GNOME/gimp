@@ -47,39 +47,42 @@ struct _GimpItemTreeClass
 };
 
 
-GType          gimp_item_tree_get_type        (void) G_GNUC_CONST;
-GimpItemTree * gimp_item_tree_new             (GimpImage    *image,
-                                               GType         container_type,
-                                               GType         item_type);
+GType          gimp_item_tree_get_type         (void) G_GNUC_CONST;
+GimpItemTree * gimp_item_tree_new              (GimpImage    *image,
+                                                GType         container_type,
+                                                GType         item_type);
 
-GimpItem     * gimp_item_tree_get_active_item (GimpItemTree *tree);
-void           gimp_item_tree_set_active_item (GimpItemTree *tree,
-                                               GimpItem     *item);
+GimpItem     * gimp_item_tree_get_active_item  (GimpItemTree *tree);
+void           gimp_item_tree_set_active_item  (GimpItemTree *tree,
+                                                GimpItem     *item);
 
-GimpItem     * gimp_item_tree_get_insert_pos  (GimpItemTree *tree,
-                                               GimpItem     *parent,
-                                               gint         *position);
+GimpItem     * gimp_item_tree_get_item_by_name (GimpItemTree *tree,
+                                                const gchar  *name);
 
-void           gimp_item_tree_add_item        (GimpItemTree *tree,
-                                               GimpItem     *item,
-                                               GimpItem     *parent,
-                                               gint          position);
-GimpItem     * gimp_item_tree_remove_item     (GimpItemTree *tree,
-                                               GimpItem     *item,
-                                               GimpItem     *new_active);
+GimpItem     * gimp_item_tree_get_insert_pos   (GimpItemTree *tree,
+                                                GimpItem     *parent,
+                                                gint         *position);
 
-gboolean       gimp_item_tree_reorder_item    (GimpItemTree *tree,
-                                               GimpItem     *item,
-                                               GimpItem     *new_parent,
-                                               gint          new_index,
-                                               gboolean      push_undo,
-                                               const gchar  *undo_desc);
+void           gimp_item_tree_add_item         (GimpItemTree *tree,
+                                                GimpItem     *item,
+                                                GimpItem     *parent,
+                                                gint          position);
+GimpItem     * gimp_item_tree_remove_item      (GimpItemTree *tree,
+                                                GimpItem     *item,
+                                                GimpItem     *new_active);
 
-void           gimp_item_tree_rename_item     (GimpItemTree *tree,
-                                               GimpItem     *item,
-                                               const gchar  *new_name,
-                                               gboolean      push_undo,
-                                               const gchar  *undo_desc);
+gboolean       gimp_item_tree_reorder_item     (GimpItemTree *tree,
+                                                GimpItem     *item,
+                                                GimpItem     *new_parent,
+                                                gint          new_index,
+                                                gboolean      push_undo,
+                                                const gchar  *undo_desc);
+
+void           gimp_item_tree_rename_item      (GimpItemTree *tree,
+                                                GimpItem     *item,
+                                                const gchar  *new_name,
+                                                gboolean      push_undo,
+                                                const gchar  *undo_desc);
 
 
 #endif  /*  __GIMP_ITEM_TREE_H__  */

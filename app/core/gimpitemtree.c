@@ -314,6 +314,17 @@ gimp_item_tree_set_active_item (GimpItemTree *tree,
 }
 
 GimpItem *
+gimp_item_tree_get_item_by_name (GimpItemTree *tree,
+                                 const gchar  *name)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  return g_hash_table_lookup (GIMP_ITEM_TREE_GET_PRIVATE (tree)->name_hash,
+                              name);
+}
+
+GimpItem *
 gimp_item_tree_get_insert_pos (GimpItemTree *tree,
                                GimpItem     *parent,
                                gint         *position)

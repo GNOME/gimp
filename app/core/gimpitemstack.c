@@ -234,37 +234,6 @@ gimp_item_stack_get_item_by_tattoo (GimpItemStack *stack,
 }
 
 GimpItem *
-gimp_item_stack_get_item_by_name (GimpItemStack *stack,
-                                  const gchar   *name)
-{
-  GList *list;
-
-  g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
-
-  for (list = GIMP_LIST (stack)->list; list; list = g_list_next (list))
-    {
-      GimpItem      *item = list->data;
-      GimpContainer *children;
-
-      if (! strcmp (gimp_object_get_name (item), name))
-        return item;
-
-      children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
-
-      if (children)
-        {
-          item = gimp_item_stack_get_item_by_name (GIMP_ITEM_STACK (children),
-                                                   name);
-
-          if (item)
-            return item;
-        }
-    }
-
-  return NULL;
-}
-
-GimpItem *
 gimp_item_stack_get_parent_by_path (GimpItemStack *stack,
                                     GList         *path,
                                     gint          *index)

@@ -3226,42 +3226,42 @@ GimpLayer *
 gimp_image_get_layer_by_name (const GimpImage *image,
                               const gchar     *name)
 {
-  GimpItemStack *stack;
+  GimpItemTree *tree;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
+  tree = gimp_image_get_layer_tree (image);
 
-  return GIMP_LAYER (gimp_item_stack_get_item_by_name (stack, name));
+  return GIMP_LAYER (gimp_item_tree_get_item_by_name (tree, name));
 }
 
 GimpChannel *
 gimp_image_get_channel_by_name (const GimpImage *image,
                                 const gchar     *name)
 {
-  GimpItemStack *stack;
+  GimpItemTree *tree;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
+  tree = gimp_image_get_channel_tree (image);
 
-  return GIMP_CHANNEL (gimp_item_stack_get_item_by_name (stack, name));
+  return GIMP_CHANNEL (gimp_item_tree_get_item_by_name (tree, name));
 }
 
 GimpVectors *
 gimp_image_get_vectors_by_name (const GimpImage *image,
                                 const gchar     *name)
 {
-  GimpItemStack *stack;
+  GimpItemTree *tree;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  tree = gimp_image_get_vectors_tree (image);
 
-  return GIMP_VECTORS (gimp_item_stack_get_item_by_name (stack, name));
+  return GIMP_VECTORS (gimp_item_tree_get_item_by_name (tree, name));
 }
 
 gboolean
