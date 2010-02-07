@@ -1,17 +1,17 @@
 # Japanese message table for GIMP 2.0
-# Copyright (C) 1998-2005,2008-2009 Free Software Foundation, Inc.
+# Copyright (C) 1998-2005,2008-2010 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2001, 2004.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003, 2004.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
-# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2009.
+# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-6\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&component=Internationalisation\n"
-"POT-Creation-Date: 2009-10-03 21:11+0900\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp;"
+"component=Internationalisation\n"
+"POT-Creation-Date: 2010-02-06 11:57+0000\n"
 "PO-Revision-Date: 2009-10-03 21:20+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -743,12 +743,12 @@ msgstr "中央揃え"
 
 #: ../libgimpbase/gimpbaseenums.c:1108
 msgid "Filled"
-msgstr "均等割付"
+msgstr "両端揃え"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/display-filter-lcms.c:183
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
+#: ../modules/color-selector-cmyk-lcms.c:422
+#: ../modules/color-selector-cmyk-lcms.c:428
 msgid "(invalid UTF-8 string)"
 msgstr "(不正な UTF-8 文字列)"
 
@@ -1507,11 +1507,11 @@ msgstr "黒のパーセンテージを着色の折込します"
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYKカラーセレクター(カラープロファイル使用)"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
+#: ../modules/color-selector-cmyk-lcms.c:410
 msgid "Profile: (none)"
 msgstr "プロファイルを使用しない"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:431
 #, c-format
 msgid "Profile: %s"
 msgstr "%s"
