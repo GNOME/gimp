@@ -220,7 +220,6 @@ gimp_drawable_stack_new (GType drawable_type)
                        "name",          g_type_name (drawable_type),
                        "children-type", drawable_type,
                        "policy",        GIMP_CONTAINER_POLICY_STRONG,
-                       "unique-names",  TRUE,
                        NULL);
 }
 

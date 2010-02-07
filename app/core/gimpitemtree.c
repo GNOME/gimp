@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include <gegl.h>
@@ -47,12 +48,14 @@ typedef struct _GimpItemTreePrivate GimpItemTreePrivate;
 
 struct _GimpItemTreePrivate
 {
-  GimpImage *image;
+  GimpImage  *image;
 
-  GType      container_type;
-  GType      item_type;
+  GType       container_type;
+  GType       item_type;
 
-  GimpItem  *active_item;
+  GimpItem   *active_item;
+
+  GHashTable *name_hash;
 };
 
 #define GIMP_ITEM_TREE_GET_PRIVATE(object) \
@@ -63,21 +66,25 @@ struct _GimpItemTreePrivate
 
 /*  local function prototypes  */
 
-static GObject * gimp_item_tree_constructor  (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params);
-static void      gimp_item_tree_finalize     (GObject               *object);
-static void      gimp_item_tree_set_property (GObject               *object,
-                                              guint                  property_id,
-                                              const GValue          *value,
-                                              GParamSpec            *pspec);
-static void      gimp_item_tree_get_property (GObject               *object,
-                                              guint                  property_id,
-                                              GValue                *value,
-                                              GParamSpec            *pspec);
+static GObject * gimp_item_tree_constructor   (GType                  type,
+                                               guint                  n_params,
+                                               GObjectConstructParam *params);
+static void      gimp_item_tree_finalize      (GObject               *object);
+static void      gimp_item_tree_set_property  (GObject               *object,
+                                               guint                  property_id,
+                                               const GValue          *value,
+                                               GParamSpec            *pspec);
+static void      gimp_item_tree_get_property  (GObject               *object,
+                                               guint                  property_id,
+                                               GValue                *value,
+                                               GParamSpec            *pspec);
 
-static gint64    gimp_item_tree_get_memsize  (GimpObject            *object,
-                                              gint64                *gui_size);
+static gint64    gimp_item_tree_get_memsize   (GimpObject            *object,
+                                               gint64                *gui_size);
+
+static void      gimp_item_tree_uniquefy_name (GimpItemTree          *tree,
+                                               GimpItem              *item,
+                                               const gchar           *new_name);
 
 
 G_DEFINE_TYPE (GimpItemTree, gimp_item_tree, GIMP_TYPE_OBJECT)
@@ -131,6 +138,9 @@ gimp_item_tree_class_init (GimpItemTreeClass *klass)
 static void
 gimp_item_tree_init (GimpItemTree *tree)
 {
+  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
+  private->name_hash = g_hash_table_new (g_str_hash, g_str_equal);
 }
 
 static GObject *
@@ -156,7 +166,6 @@ gimp_item_tree_constructor (GType                  type,
                                   "name",          g_type_name (private->item_type),
                                   "children-type", private->item_type,
                                   "policy",        GIMP_CONTAINER_POLICY_STRONG,
-                                  "unique-names",  TRUE,
                                   NULL);
 
   return object;
@@ -165,7 +174,14 @@ gimp_item_tree_constructor (GType                  type,
 static void
 gimp_item_tree_finalize (GObject *object)
 {
-  GimpItemTree *tree = GIMP_ITEM_TREE (object);
+  GimpItemTree        *tree    = GIMP_ITEM_TREE (object);
+  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
+  if (private->name_hash)
+    {
+      g_hash_table_unref (private->name_hash);
+      private->name_hash = NULL;
+    }
 
   if (tree->container)
     {
@@ -377,6 +393,8 @@ gimp_item_tree_add_item (GimpItemTree *tree,
   g_return_if_fail (! gimp_item_is_attached (item));
   g_return_if_fail (gimp_item_get_image (item) == private->image);
 
+  gimp_item_tree_uniquefy_name (tree, item, NULL);
+
   if (parent)
     container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
   else
@@ -541,6 +559,65 @@ gimp_item_tree_rename_item (GimpItemTree *tree,
       if (push_undo)
         gimp_image_undo_push_item_rename (item->image, undo_desc, item);
 
+      gimp_item_tree_uniquefy_name (tree, item, new_name);
+    }
+}
+
+
+/*  private functions  */
+
+static void
+gimp_item_tree_uniquefy_name (GimpItemTree *tree,
+                              GimpItem     *item,
+                              const gchar  *new_name)
+{
+  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
+  if (new_name)
+    {
+      g_hash_table_remove (private->name_hash,
+                           gimp_object_get_name (item));
+
       gimp_object_set_name (GIMP_OBJECT (item), new_name);
     }
+
+  while (g_hash_table_lookup (private->name_hash,
+                              gimp_object_get_name (item)))
+    {
+      gchar *name   = g_strdup (gimp_object_get_name (item));
+      gchar *ext    = strrchr (name, '#');
+      gint   number = 0;
+
+      if (ext)
+        {
+          gchar *ext_str;
+
+          number = atoi (ext + 1);
+
+          ext_str = g_strdup_printf ("%d", number);
+
+          /*  check if the extension really is of the form "#<n>"  */
+          if (! strcmp (ext_str, ext + 1))
+            {
+              *ext = '\0';
+            }
+          else
+            {
+              number = 0;
+            }
+
+          g_free (ext_str);
+        }
+
+      number++;
+
+      gimp_object_take_name (GIMP_OBJECT (item),
+                             g_strdup_printf ("%s#%d", name, number));
+
+      g_free (name);
+    }
+
+  g_hash_table_insert (private->name_hash,
+                       (gpointer) gimp_object_get_name (item),
+                       item);
 }

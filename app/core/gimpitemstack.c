@@ -112,7 +112,6 @@ gimp_item_stack_new (GType item_type)
                        "name",          g_type_name (item_type),
                        "children-type", item_type,
                        "policy",        GIMP_CONTAINER_POLICY_STRONG,
-                       "unique-names",  TRUE,
                        NULL);
 }
 
