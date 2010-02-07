@@ -3325,7 +3325,6 @@ gimp_image_add_layer (GimpImage *image,
                       gboolean   push_undo)
 {
   GimpImagePrivate *private;
-  GimpLayer        *floating_sel;
   gboolean          old_has_alpha;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -3354,12 +3353,11 @@ gimp_image_add_layer (GimpImage *image,
                                                       (GimpItem *) parent,
                                                       &position));
 
-  floating_sel = gimp_image_get_floating_selection (image);
-
   /*  If there is a floating selection (and this isn't it!),
    *  make sure the insert position is greater than 0
    */
-  if (parent == NULL && position == 0 && floating_sel)
+  if (parent == NULL && position == 0 &&
+      gimp_image_get_floating_selection (image))
     position = 1;
 
   old_has_alpha = gimp_image_has_alpha (image);
