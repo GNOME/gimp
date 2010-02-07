@@ -111,7 +111,7 @@ gimp_item_prop_undo_constructor (GType                  type,
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_ITEM_REORDER:
-      item_prop_undo->parent = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+      item_prop_undo->parent   = gimp_item_get_parent (item);
       item_prop_undo->position = gimp_item_get_index (item);
       break;
 
@@ -220,7 +220,7 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
         GimpItem *parent;
         gint      position;
 
-        parent   = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+        parent   = gimp_item_get_parent (item);
         position = gimp_item_get_index (item);
 
         gimp_item_tree_reorder_item (gimp_item_get_tree (item), item,

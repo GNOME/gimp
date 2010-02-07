@@ -202,9 +202,7 @@ gimp_layer_undo_pop (GimpUndo            *undo,
       /*  remove layer  */
 
       /*  record the current parent and position  */
-      layer_undo->prev_parent =
-        GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)));
-
+      layer_undo->prev_parent   = gimp_layer_get_parent (layer);
       layer_undo->prev_position = gimp_item_get_index (GIMP_ITEM (layer));
 
       gimp_image_remove_layer (undo->image, layer, FALSE,

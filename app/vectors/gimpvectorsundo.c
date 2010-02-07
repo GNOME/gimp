@@ -203,9 +203,7 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
       /*  remove vectors  */
 
       /*  record the current parent and position  */
-      vectors_undo->prev_parent =
-        GIMP_VECTORS (gimp_viewable_get_parent (GIMP_VIEWABLE (vectors)));
-
+      vectors_undo->prev_parent   = gimp_vectors_get_parent (vectors);
       vectors_undo->prev_position = gimp_item_get_index (GIMP_ITEM (vectors));
 
       gimp_image_remove_vectors (undo->image, vectors, FALSE,

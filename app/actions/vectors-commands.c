@@ -248,7 +248,6 @@ vectors_duplicate_cmd_callback (GtkAction *action,
   GimpImage   *image;
   GimpVectors *vectors;
   GimpVectors *new_vectors;
-  GimpVectors *parent;
   return_if_no_vectors (image, vectors, data);
 
   new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
@@ -258,9 +257,9 @@ vectors_duplicate_cmd_callback (GtkAction *action,
    *  the latter would add a duplicated group inside itself instead of
    *  above it
    */
-  parent = GIMP_VECTORS (gimp_viewable_get_parent (GIMP_VIEWABLE (vectors)));
-
-  gimp_image_add_vectors (image, new_vectors, parent, -1, TRUE);
+  gimp_image_add_vectors (image, new_vectors,
+                          gimp_vectors_get_parent (vectors), -1,
+                          TRUE);
 
   gimp_image_flush (image);
 }

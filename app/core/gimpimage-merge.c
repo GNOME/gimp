@@ -276,7 +276,7 @@ gimp_image_merge_group_layer (GimpImage      *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
                                _("Merge Layer Group"));
 
-  parent = GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (group)));
+  parent = gimp_layer_get_parent (GIMP_LAYER (group));
   index  = gimp_item_get_index (GIMP_ITEM (group));
 
   layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (group),
@@ -412,7 +412,7 @@ gimp_image_merge_layers (GimpImage     *image,
   x2 = y2      = 0;
   bottom_layer = NULL;
 
-  parent = GIMP_LAYER (gimp_viewable_get_parent (merge_list->data));
+  parent = gimp_layer_get_parent (merge_list->data);
 
   /*  Get the layer extents  */
   count = 0;

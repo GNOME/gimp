@@ -389,9 +389,9 @@ gimp_item_real_visibility_changed (GimpItem *item)
 static gboolean
 gimp_item_real_is_content_locked (const GimpItem *item)
 {
-  GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+  GimpItem *parent = gimp_item_get_parent (item);
 
-  if (parent && gimp_item_is_content_locked (GIMP_ITEM (parent)))
+  if (parent && gimp_item_is_content_locked (parent))
     return TRUE;
 
   return item->lock_content;
@@ -677,20 +677,20 @@ gimp_item_configure (GimpItem    *item,
 gboolean
 gimp_item_is_attached (const GimpItem *item)
 {
-  GimpViewable *parent;
+  GimpItem *parent;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+  parent = gimp_item_get_parent (item);
 
   if (parent)
-    return gimp_item_is_attached (GIMP_ITEM (parent));
+    return gimp_item_is_attached (parent);
 
   return GIMP_ITEM_GET_CLASS (item)->is_attached (item);
 }
 
 GimpItem *
-gimp_item_get_parent (GimpItem *item)
+gimp_item_get_parent (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
@@ -711,12 +711,12 @@ gimp_item_get_tree (GimpItem *item)
 GimpContainer *
 gimp_item_get_container (GimpItem *item)
 {
-  GimpViewable *parent;
+  GimpItem     *parent;
   GimpItemTree *tree;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
-  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (item));
+  parent = gimp_item_get_parent (item);
 
   if (parent)
     return gimp_viewable_get_children (GIMP_VIEWABLE (parent));
@@ -777,7 +777,7 @@ gimp_item_get_path (GimpItem *item)
 
       path = g_list_prepend (path, GUINT_TO_POINTER (index));
 
-      item = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+      item = gimp_item_get_parent (item);
 
       if (item)
         container = gimp_item_get_container (item);

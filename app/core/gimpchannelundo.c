@@ -204,9 +204,7 @@ gimp_channel_undo_pop (GimpUndo            *undo,
       /*  remove channel  */
 
       /*  record the current parent and position  */
-      channel_undo->prev_parent =
-        GIMP_CHANNEL (gimp_viewable_get_parent (GIMP_VIEWABLE (channel)));
-
+      channel_undo->prev_parent   = gimp_channel_get_parent (channel);
       channel_undo->prev_position = gimp_item_get_index (GIMP_ITEM (channel));
 
       gimp_image_remove_channel (undo->image, channel, FALSE,

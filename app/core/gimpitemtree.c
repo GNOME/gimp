@@ -286,7 +286,7 @@ gimp_item_tree_remove_item (GimpItemTree *tree,
   g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
-  parent    = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+  parent    = gimp_item_get_parent (item);
   container = gimp_item_get_container (item);
   index     = gimp_item_get_index (item);
 

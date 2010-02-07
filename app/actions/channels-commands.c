@@ -267,7 +267,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
        *  the latter would add a duplicated group inside itself instead of
        *  above it
        */
-      parent = GIMP_CHANNEL (gimp_viewable_get_parent (GIMP_VIEWABLE (channel)));
+      parent = gimp_channel_get_parent (channel);
     }
 
   gimp_image_add_channel (image, new_channel, parent, -1, TRUE);
