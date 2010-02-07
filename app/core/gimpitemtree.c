@@ -400,9 +400,16 @@ gimp_item_tree_add_item (GimpItemTree *tree,
 
   private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
-  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type));
   g_return_if_fail (! gimp_item_is_attached (item));
   g_return_if_fail (gimp_item_get_image (item) == private->image);
+  g_return_if_fail (parent == NULL ||
+                    G_TYPE_CHECK_INSTANCE_TYPE (parent, private->item_type));
+  g_return_if_fail (parent == NULL || gimp_item_is_attached (parent));
+  g_return_if_fail (parent == NULL ||
+                    gimp_item_get_image (parent) == private->image);
+  g_return_if_fail (parent == NULL ||
+                    gimp_viewable_get_children (GIMP_VIEWABLE (parent)));
 
   gimp_item_tree_uniquefy_name (tree, item, NULL);
 
@@ -432,7 +439,8 @@ gimp_item_tree_remove_item (GimpItemTree *tree,
 
   private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type),
+                        NULL);
   g_return_val_if_fail (gimp_item_is_attached (item), NULL);
   g_return_val_if_fail (gimp_item_get_image (item) == private->image, NULL);
 
@@ -560,7 +568,7 @@ gimp_item_tree_rename_item (GimpItemTree *tree,
 
   private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
-  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type));
   g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (gimp_item_get_image (item) == private->image);
   g_return_if_fail (new_name != NULL);
