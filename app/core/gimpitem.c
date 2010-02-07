@@ -474,7 +474,7 @@ gimp_item_real_rename (GimpItem     *item,
 {
   if (gimp_item_is_attached (item))
     gimp_item_tree_rename_item (gimp_item_get_tree (item), item,
-                                new_name, undo_desc);
+                                new_name, TRUE, undo_desc);
   else
     gimp_object_set_name (GIMP_OBJECT (item), new_name);
 

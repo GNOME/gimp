@@ -78,6 +78,7 @@ gboolean       gimp_item_tree_reorder_item    (GimpItemTree *tree,
 void           gimp_item_tree_rename_item     (GimpItemTree *tree,
                                                GimpItem     *item,
                                                const gchar  *new_name,
+                                               gboolean      push_undo,
                                                const gchar  *undo_desc);
 
 

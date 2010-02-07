@@ -238,7 +238,12 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
         gchar *name;
 
         name = g_strdup (gimp_object_get_name (item));
-        gimp_object_take_name (GIMP_OBJECT (item), item_prop_undo->name);
+
+        gimp_item_tree_rename_item (gimp_item_get_tree (item), item,
+                                    item_prop_undo->name,
+                                    FALSE, NULL);
+
+        g_free (item_prop_undo->name);
         item_prop_undo->name = name;
       }
       break;

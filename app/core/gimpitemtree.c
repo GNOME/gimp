@@ -522,6 +522,7 @@ void
 gimp_item_tree_rename_item (GimpItemTree *tree,
                             GimpItem     *item,
                             const gchar  *new_name,
+                            gboolean      push_undo,
                             const gchar  *undo_desc)
 {
   GimpItemTreePrivate *private;
@@ -537,7 +538,8 @@ gimp_item_tree_rename_item (GimpItemTree *tree,
 
   if (strcmp (new_name, gimp_object_get_name (item)))
     {
-      gimp_image_undo_push_item_rename (item->image, undo_desc, item);
+      if (push_undo)
+        gimp_image_undo_push_item_rename (item->image, undo_desc, item);
 
       gimp_object_set_name (GIMP_OBJECT (item), new_name);
     }
