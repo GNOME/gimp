@@ -52,6 +52,15 @@ GimpItemTree * gimp_item_tree_new          (GimpImage    *image,
                                             GType         container_type,
                                             GType         item_type);
 
+void           gimp_item_tree_add_item     (GimpItemTree *tree,
+                                            GimpItem     *item,
+                                            GimpItem     *parent,
+                                            gint          position);
+GimpItem     * gimp_item_tree_remove_item  (GimpItemTree *tree,
+                                            GimpItem     *item,
+                                            GimpItem     *current_active,
+                                            GimpItem     *new_active);
+
 gboolean       gimp_item_tree_reorder_item (GimpItemTree *tree,
                                             GimpItem     *item,
                                             GimpItem     *new_parent,

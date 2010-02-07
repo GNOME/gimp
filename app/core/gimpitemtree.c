@@ -250,6 +250,77 @@ gimp_item_tree_new (GimpImage *image,
                        NULL);
 }
 
+void
+gimp_item_tree_add_item (GimpItemTree *tree,
+                         GimpItem     *item,
+                         GimpItem     *parent,
+                         gint          position)
+{
+  GimpContainer *container;
+
+  g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (parent)
+    container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+  else
+    container = tree->container;
+
+  if (parent)
+    gimp_viewable_set_parent (GIMP_VIEWABLE (item),
+                              GIMP_VIEWABLE (parent));
+
+  gimp_container_insert (container, GIMP_OBJECT (item), position);
+}
+
+GimpItem *
+gimp_item_tree_remove_item (GimpItemTree *tree,
+                            GimpItem     *item,
+                            GimpItem     *current_active,
+                            GimpItem     *new_active)
+{
+  GimpItem      *parent;
+  GimpContainer *container;
+  gint           index;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  parent    = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+  container = gimp_item_get_container (item);
+  index     = gimp_item_get_index (item);
+
+  g_object_ref (item);
+
+  gimp_container_remove (container, GIMP_OBJECT (item));
+
+  if (parent)
+    gimp_viewable_set_parent (GIMP_VIEWABLE (item), NULL);
+
+  gimp_item_removed (item);
+
+  if (! new_active)
+    {
+      gint n_children = gimp_container_get_n_children (container);
+
+      if (n_children > 0)
+        {
+          index = CLAMP (index, 0, n_children - 1);
+
+          new_active =
+            GIMP_ITEM (gimp_container_get_child_by_index (container, index));
+        }
+      else if (parent)
+        {
+          new_active = parent;
+        }
+    }
+
+  g_object_unref (item);
+
+  return new_active;
+}
+
 gboolean
 gimp_item_tree_reorder_item (GimpItemTree *tree,
                              GimpItem     *item,
