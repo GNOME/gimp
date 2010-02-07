@@ -96,6 +96,8 @@ GimpLayer     * gimp_layer_new_from_region     (PixelRegion          *region,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
 
+GimpLayer     * gimp_layer_get_parent          (GimpLayer            *layer);
+
 GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
 GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
                                                 GimpAddMaskType       mask_type,

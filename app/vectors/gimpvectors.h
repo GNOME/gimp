@@ -88,6 +88,8 @@ GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
 GimpVectors   * gimp_vectors_new                (GimpImage         *image,
                                                  const gchar       *name);
 
+GimpVectors   * gimp_vectors_get_parent         (GimpVectors       *vectors);
+
 void            gimp_vectors_freeze             (GimpVectors       *vectors);
 void            gimp_vectors_thaw               (GimpVectors       *vectors);
 
@@ -95,7 +97,6 @@ void            gimp_vectors_copy_strokes       (const GimpVectors *src_vectors,
                                                  GimpVectors       *dest_vectors);
 void            gimp_vectors_add_strokes        (const GimpVectors *src_vectors,
                                                  GimpVectors       *dest_vectors);
-
 
 
 /* accessing / modifying the anchors */

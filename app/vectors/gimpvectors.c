@@ -587,6 +587,14 @@ gimp_vectors_new (GimpImage   *image,
   return vectors;
 }
 
+GimpVectors *
+gimp_vectors_get_parent (GimpVectors *vectors)
+{
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+
+  return GIMP_VECTORS (gimp_viewable_get_parent (GIMP_VIEWABLE (vectors)));
+}
+
 void
 gimp_vectors_freeze (GimpVectors *vectors)
 {

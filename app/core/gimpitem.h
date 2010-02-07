@@ -143,6 +143,8 @@ gboolean        gimp_item_is_removed         (const GimpItem     *item);
 
 gboolean        gimp_item_is_attached        (const GimpItem     *item);
 
+GimpItem      * gimp_item_get_parent         (GimpItem           *item);
+
 GimpItemTree  * gimp_item_get_tree           (GimpItem           *item);
 GimpContainer * gimp_item_get_container      (GimpItem           *item);
 GList         * gimp_item_get_container_iter (GimpItem           *item);

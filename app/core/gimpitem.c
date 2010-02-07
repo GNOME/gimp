@@ -689,6 +689,14 @@ gimp_item_is_attached (const GimpItem *item)
   return GIMP_ITEM_GET_CLASS (item)->is_attached (item);
 }
 
+GimpItem *
+gimp_item_get_parent (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  return GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+}
+
 GimpItemTree *
 gimp_item_get_tree (GimpItem *item)
 {

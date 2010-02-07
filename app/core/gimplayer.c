@@ -1339,6 +1339,14 @@ gimp_layer_new_from_region (PixelRegion          *region,
   return new_layer;
 }
 
+GimpLayer *
+gimp_layer_get_parent (GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
+  return GIMP_LAYER (gimp_viewable_get_parent (GIMP_VIEWABLE (layer)));
+}
+
 GimpLayerMask *
 gimp_layer_get_mask (const GimpLayer *layer)
 {
