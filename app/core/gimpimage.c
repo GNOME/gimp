@@ -2977,6 +2977,9 @@ gimp_image_get_vectors_list (const GimpImage *image)
   return gimp_item_stack_get_item_list (stack);
 }
 
+
+/*  active drawable, layer, channel, vectors  */
+
 GimpDrawable *
 gimp_image_get_active_drawable (const GimpImage *image)
 {
@@ -3183,6 +3186,9 @@ gimp_image_set_active_vectors (GimpImage   *image,
   return gimp_image_get_active_vectors (image);
 }
 
+
+/*  layer, channel, vectors by tattoo  */
+
 GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *image,
                                 GimpTattoo       tattoo)
@@ -3221,6 +3227,9 @@ gimp_image_get_vectors_by_tattoo (const GimpImage *image,
 
   return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
+
+
+/*  layer, channel, vectors by name  */
 
 GimpLayer *
 gimp_image_get_layer_by_name (const GimpImage *image,
@@ -3263,6 +3272,9 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
 
   return GIMP_VECTORS (gimp_item_tree_get_item_by_name (tree, name));
 }
+
+
+/*  layers  */
 
 gboolean
 gimp_image_add_layer (GimpImage *image,
@@ -3627,6 +3639,9 @@ gimp_image_reorder_layer (GimpImage   *image,
                                       push_undo, undo_desc);
 }
 
+
+/*  channels  */
+
 gboolean
 gimp_image_add_channel (GimpImage   *image,
                         GimpChannel *channel,
@@ -3838,6 +3853,9 @@ gimp_image_reorder_channel (GimpImage   *image,
                                       new_index,
                                       push_undo, undo_desc);
 }
+
+
+/*  vectors  */
 
 gboolean
 gimp_image_add_vectors (GimpImage   *image,
