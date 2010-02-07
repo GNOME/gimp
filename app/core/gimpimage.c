@@ -659,10 +659,6 @@ gimp_image_init (GimpImage *image)
                     G_CALLBACK (gimp_image_channel_remove),
                     image);
 
-  private->active_layer        = NULL;
-  private->active_channel      = NULL;
-  private->active_vectors      = NULL;
-
   private->floating_sel        = NULL;
   private->selection_mask      = NULL;
 
@@ -2985,21 +2981,26 @@ GimpDrawable *
 gimp_image_get_active_drawable (const GimpImage *image)
 {
   GimpImagePrivate *private;
+  GimpItem         *active_channel;
+  GimpItem         *active_layer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
+  active_channel = gimp_item_tree_get_active_item (private->channels);
+  active_layer   = gimp_item_tree_get_active_item (private->layers);
+
   /*  If there is an active channel (a saved selection, etc.),
    *  we ignore the active layer
    */
-  if (private->active_channel)
+  if (active_channel)
     {
-      return GIMP_DRAWABLE (private->active_channel);
+      return GIMP_DRAWABLE (active_channel);
     }
-  else if (private->active_layer)
+  else if (active_layer)
     {
-      GimpLayer     *layer = private->active_layer;
+      GimpLayer     *layer = GIMP_LAYER (active_layer);
       GimpLayerMask *mask  = gimp_layer_get_mask (layer);
 
       if (mask && gimp_layer_mask_get_edit (mask))
@@ -3016,7 +3017,7 @@ gimp_image_get_active_layer (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->active_layer;
+  return GIMP_LAYER (gimp_item_tree_get_active_item (GIMP_IMAGE_GET_PRIVATE (image)->layers));
 }
 
 GimpChannel *
@@ -3024,7 +3025,7 @@ gimp_image_get_active_channel (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->active_channel;
+  return GIMP_CHANNEL (gimp_item_tree_get_active_item (GIMP_IMAGE_GET_PRIVATE (image)->channels));
 }
 
 GimpVectors *
@@ -3032,7 +3033,7 @@ gimp_image_get_active_vectors (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->active_vectors;
+  return GIMP_VECTORS (gimp_item_tree_get_active_item (GIMP_IMAGE_GET_PRIVATE (image)->vectors));
 }
 
 GimpLayer *
@@ -3041,6 +3042,7 @@ gimp_image_set_active_layer (GimpImage *image,
 {
   GimpImagePrivate *private;
   GimpLayer        *floating_sel;
+  GimpLayer        *active_layer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
@@ -3057,7 +3059,9 @@ gimp_image_set_active_layer (GimpImage *image,
   if (floating_sel && layer != floating_sel)
     return floating_sel;
 
-  if (layer != private->active_layer)
+  active_layer = gimp_image_get_active_layer (image);
+
+  if (layer != active_layer)
     {
       if (layer)
         {
@@ -3067,18 +3071,18 @@ gimp_image_set_active_layer (GimpImage *image,
         }
 
       /*  Don't cache selection info for the previous active layer  */
-      if (private->active_layer)
-        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (private->active_layer));
+      if (active_layer)
+        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (active_layer));
 
-      private->active_layer = layer;
+      gimp_item_tree_set_active_item (private->layers, GIMP_ITEM (layer));
 
       g_signal_emit (image, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 
-      if (layer && private->active_channel)
+      if (layer && gimp_image_get_active_channel (image))
         gimp_image_set_active_channel (image, NULL);
     }
 
-  return private->active_layer;
+  return gimp_image_get_active_layer (image);
 }
 
 GimpChannel *
@@ -3086,6 +3090,7 @@ gimp_image_set_active_channel (GimpImage   *image,
                                GimpChannel *channel)
 {
   GimpImagePrivate *private;
+  GimpChannel      *active_channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
@@ -3100,17 +3105,19 @@ gimp_image_set_active_channel (GimpImage   *image,
   if (channel && gimp_image_get_floating_selection (image))
     return NULL;
 
-  if (channel != private->active_channel)
+  active_channel = gimp_image_get_active_channel (image);
+
+  if (channel != active_channel)
     {
-      private->active_channel = channel;
+      gimp_item_tree_set_active_item (private->channels, GIMP_ITEM (channel));
 
       g_signal_emit (image, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
 
-      if (channel && private->active_layer)
+      if (channel && gimp_image_get_active_layer (image))
         gimp_image_set_active_layer (image, NULL);
     }
 
-  return private->active_channel;
+  return gimp_image_get_active_channel (image);
 }
 
 GimpChannel *
@@ -3122,6 +3129,7 @@ gimp_image_unset_active_channel (GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
+
   channel = gimp_image_get_active_channel (image);
 
   if (channel)
@@ -3140,6 +3148,7 @@ gimp_image_set_active_vectors (GimpImage   *image,
                                GimpVectors *vectors)
 {
   GimpImagePrivate *private;
+  GimpVectors      *active_vectors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
@@ -3150,14 +3159,16 @@ gimp_image_set_active_vectors (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (vectors != private->active_vectors)
+  active_vectors = gimp_image_get_active_vectors (image);
+
+  if (vectors != active_vectors)
     {
-      private->active_vectors = vectors;
+      gimp_item_tree_set_active_item (private->vectors, GIMP_ITEM (vectors));
 
       g_signal_emit (image, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
     }
 
-  return private->active_vectors;
+  return gimp_image_get_active_vectors (image);
 }
 
 GimpLayer *

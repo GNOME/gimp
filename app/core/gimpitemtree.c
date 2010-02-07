@@ -38,7 +38,8 @@ enum
   PROP_0,
   PROP_IMAGE,
   PROP_CONTAINER_TYPE,
-  PROP_ITEM_TYPE
+  PROP_ITEM_TYPE,
+  PROP_ACTIVE_ITEM
 };
 
 
@@ -47,8 +48,11 @@ typedef struct _GimpItemTreePrivate GimpItemTreePrivate;
 struct _GimpItemTreePrivate
 {
   GimpImage *image;
+
   GType      container_type;
   GType      item_type;
+
+  GimpItem  *active_item;
 };
 
 #define GIMP_ITEM_TREE_GET_PRIVATE(object) \
@@ -114,6 +118,12 @@ gimp_item_tree_class_init (GimpItemTreeClass *klass)
                                                        GIMP_TYPE_ITEM,
                                                        GIMP_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_ACTIVE_ITEM,
+                                   g_param_spec_object ("active-item",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_ITEM,
+                                                        GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpItemTreePrivate));
 }
@@ -185,6 +195,9 @@ gimp_item_tree_set_property (GObject      *object,
     case PROP_ITEM_TYPE:
       private->item_type = g_value_get_gtype (value);
       break;
+    case PROP_ACTIVE_ITEM:
+      private->active_item = g_value_get_object (value); /* don't ref */
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -210,6 +223,9 @@ gimp_item_tree_get_property (GObject    *object,
       break;
     case PROP_ITEM_TYPE:
       g_value_set_gtype (value, private->item_type);
+      break;
+    case PROP_ACTIVE_ITEM:
+      g_value_set_object (value, private->active_item);
       break;
 
     default:
@@ -248,6 +264,37 @@ gimp_item_tree_new (GimpImage *image,
                        "container-type", container_type,
                        "item-type",      item_type,
                        NULL);
+}
+
+GimpItem *
+gimp_item_tree_get_active_item (GimpItemTree *tree)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+
+  return GIMP_ITEM_TREE_GET_PRIVATE (tree)->active_item;
+}
+
+void
+gimp_item_tree_set_active_item (GimpItemTree *tree,
+                                GimpItem     *item)
+{
+  GimpItemTreePrivate *private;
+
+  g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
+  g_return_if_fail (item == NULL || GIMP_IS_ITEM (item));
+
+  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
+  g_return_if_fail (item == NULL ||
+                    (gimp_item_is_attached (item) &&
+                     gimp_item_get_image (item) == private->image));
+
+  if (item != private->active_item)
+    {
+      private->active_item = item;
+
+      g_object_notify (G_OBJECT (tree), "active-item");
+    }
 }
 
 GimpItem *
