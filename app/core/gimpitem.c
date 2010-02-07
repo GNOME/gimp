@@ -661,10 +661,11 @@ gimp_item_configure (GimpItem    *item,
 
   gimp_item_set_offset (item, offset_x, offset_y);
 
-  if (name)
+  if (name && strlen (name))
     gimp_object_set_name (GIMP_OBJECT (item), name);
   else
-    gimp_object_set_static_name (GIMP_OBJECT (item), _("Unnamed"));
+    gimp_object_set_static_name (GIMP_OBJECT (item),
+                                 GIMP_ITEM_GET_CLASS (item)->default_name);
 
   g_object_thaw_notify (G_OBJECT (item));
 }
