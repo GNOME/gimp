@@ -90,8 +90,10 @@ gimp_vectors_prop_undo_pop (GimpUndo            *undo,
                             GimpUndoMode         undo_mode,
                             GimpUndoAccumulator *accum)
 {
+#if 0
   GimpVectorsPropUndo *vectors_prop_undo = GIMP_VECTORS_PROP_UNDO (undo);
   GimpVectors         *vectors           = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
+#endif
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
