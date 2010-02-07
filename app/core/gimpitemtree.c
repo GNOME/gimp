@@ -250,6 +250,67 @@ gimp_item_tree_new (GimpImage *image,
                        NULL);
 }
 
+GimpItem *
+gimp_item_tree_get_insert_pos (GimpItemTree   *tree,
+                               GimpItem       *parent,
+                               gint           *position,
+                               GimpItem       *active_item)
+{
+  GimpContainer *container;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+
+  /*  if we want to insert in the active item's parent container  */
+  if (parent == GIMP_IMAGE_ACTIVE_PARENT)
+    {
+      if (active_item)
+        {
+          /*  if the active item is a branch, add to the top of that
+           *  branch; add to the active item's parent container
+           *  otherwise
+           */
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (active_item)))
+            {
+              parent    = active_item;
+              *position = 0;
+            }
+          else
+            {
+              parent = gimp_item_get_parent (active_item);
+            }
+        }
+      else
+        {
+          /*  use the toplevel container if there is no active item  */
+          parent = NULL;
+        }
+    }
+
+  if (parent)
+    container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+  else
+    container = tree->container;
+
+  /*  if we want to add on top of the active item  */
+  if (*position == -1)
+    {
+      if (active_item)
+        *position = gimp_container_get_child_index (container,
+                                                    GIMP_OBJECT (active_item));
+
+      /*  if the active item is not in the specified parent container,
+       *  fall back to index 0
+       */
+      if (*position == -1)
+        *position = 0;
+    }
+
+  /*  don't add at a non-existing index  */
+  *position = CLAMP (*position, 0, gimp_container_get_n_children (container));
+
+  return parent;
+}
+
 void
 gimp_item_tree_add_item (GimpItemTree *tree,
                          GimpItem     *item,
