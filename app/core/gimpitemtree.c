@@ -517,3 +517,28 @@ gimp_item_tree_reorder_item (GimpItemTree *tree,
 
   return TRUE;
 }
+
+void
+gimp_item_tree_rename_item (GimpItemTree *tree,
+                            GimpItem     *item,
+                            const gchar  *new_name,
+                            const gchar  *undo_desc)
+{
+  GimpItemTreePrivate *private;
+
+  g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
+
+  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
+  g_return_if_fail (gimp_item_get_image (item) == private->image);
+  g_return_if_fail (new_name != NULL);
+
+  if (strcmp (new_name, gimp_object_get_name (item)))
+    {
+      gimp_image_undo_push_item_rename (item->image, undo_desc, item);
+
+      gimp_object_set_name (GIMP_OBJECT (item), new_name);
+    }
+}
