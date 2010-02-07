@@ -189,6 +189,15 @@ static void     gimp_image_channel_name_changed  (GimpChannel       *channel,
                                                   GimpImage         *image);
 static void     gimp_image_channel_color_changed (GimpChannel       *channel,
                                                   GimpImage         *image);
+static void     gimp_image_active_layer_notify   (GimpItemTree      *tree,
+                                                  const GParamSpec  *pspec,
+                                                  GimpImage         *image);
+static void     gimp_image_active_channel_notify (GimpItemTree      *tree,
+                                                  const GParamSpec  *pspec,
+                                                  GimpImage         *image);
+static void     gimp_image_active_vectors_notify (GimpItemTree      *tree,
+                                                  const GParamSpec  *pspec,
+                                                  GimpImage         *image);
 
 
 static const gint valid_combinations[][MAX_CHANNELS + 1] =
@@ -629,6 +638,16 @@ gimp_image_init (GimpImage *image)
                                                      GIMP_TYPE_ITEM_STACK,
                                                      GIMP_TYPE_VECTORS);
   private->layer_stack         = NULL;
+
+  g_signal_connect (private->layers, "notify::active-item",
+                    G_CALLBACK (gimp_image_active_layer_notify),
+                    image);
+  g_signal_connect (private->channels, "notify::active-item",
+                    G_CALLBACK (gimp_image_active_channel_notify),
+                    image);
+  g_signal_connect (private->vectors, "notify::active-item",
+                    G_CALLBACK (gimp_image_active_vectors_notify),
+                    image);
 
   g_signal_connect_swapped (private->layers->container, "update",
                             G_CALLBACK (gimp_image_invalidate),
@@ -1358,6 +1377,40 @@ gimp_image_channel_color_changed (GimpChannel *channel,
     {
       GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color = channel->color;
     }
+}
+
+static void
+gimp_image_active_layer_notify (GimpItemTree     *tree,
+                                const GParamSpec *pspec,
+                                GimpImage        *image)
+{
+  GimpLayer *layer = gimp_image_get_active_layer (image);
+
+  g_signal_emit (image, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
+
+  if (layer && gimp_image_get_active_channel (image))
+    gimp_image_set_active_channel (image, NULL);
+}
+
+static void
+gimp_image_active_channel_notify (GimpItemTree     *tree,
+                                  const GParamSpec *pspec,
+                                  GimpImage        *image)
+{
+  GimpChannel *channel = gimp_image_get_active_channel (image);
+
+  g_signal_emit (image, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
+
+  if (channel && gimp_image_get_active_layer (image))
+    gimp_image_set_active_layer (image, NULL);
+}
+
+static void
+gimp_image_active_vectors_notify (GimpItemTree     *tree,
+                                  const GParamSpec *pspec,
+                                  GimpImage        *image)
+{
+  g_signal_emit (image, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
 }
 
 
@@ -3090,11 +3143,6 @@ gimp_image_set_active_layer (GimpImage *image,
         gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (active_layer));
 
       gimp_item_tree_set_active_item (private->layers, GIMP_ITEM (layer));
-
-      g_signal_emit (image, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
-
-      if (layer && gimp_image_get_active_channel (image))
-        gimp_image_set_active_channel (image, NULL);
     }
 
   return gimp_image_get_active_layer (image);
@@ -3125,11 +3173,6 @@ gimp_image_set_active_channel (GimpImage   *image,
   if (channel != active_channel)
     {
       gimp_item_tree_set_active_item (private->channels, GIMP_ITEM (channel));
-
-      g_signal_emit (image, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
-
-      if (channel && gimp_image_get_active_layer (image))
-        gimp_image_set_active_layer (image, NULL);
     }
 
   return gimp_image_get_active_channel (image);
@@ -3179,8 +3222,6 @@ gimp_image_set_active_vectors (GimpImage   *image,
   if (vectors != active_vectors)
     {
       gimp_item_tree_set_active_item (private->vectors, GIMP_ITEM (vectors));
-
-      g_signal_emit (image, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
     }
 
   return gimp_image_get_active_vectors (image);
