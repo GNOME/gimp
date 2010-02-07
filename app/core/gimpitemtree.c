@@ -600,40 +600,49 @@ gimp_item_tree_uniquefy_name (GimpItemTree *tree,
       gimp_object_set_name (GIMP_OBJECT (item), new_name);
     }
 
-  while (g_hash_table_lookup (private->name_hash,
-                              gimp_object_get_name (item)))
+  if (g_hash_table_lookup (private->name_hash,
+                           gimp_object_get_name (item)))
     {
-      gchar *name   = g_strdup (gimp_object_get_name (item));
-      gchar *ext    = strrchr (name, '#');
-      gint   number = 0;
+      gchar *name     = g_strdup (gimp_object_get_name (item));
+      gchar *ext      = strrchr (name, '#');
+      gchar *new_name = NULL;
+      gint   number   = 0;
 
       if (ext)
         {
-          gchar *ext_str;
+          gchar ext_str[8];
 
           number = atoi (ext + 1);
 
-          ext_str = g_strdup_printf ("%d", number);
+          g_snprintf (ext_str, sizeof (ext_str), "%d", number);
 
           /*  check if the extension really is of the form "#<n>"  */
           if (! strcmp (ext_str, ext + 1))
             {
+              if (ext > name && *(ext - 1) == ' ')
+                ext--;
+
               *ext = '\0';
             }
           else
             {
               number = 0;
             }
-
-          g_free (ext_str);
         }
 
-      number++;
+      do
+        {
+          number++;
 
-      gimp_object_take_name (GIMP_OBJECT (item),
-                             g_strdup_printf ("%s#%d", name, number));
+          g_free (new_name);
+
+          new_name = g_strdup_printf ("%s #%d", name, number);
+        }
+      while (g_hash_table_lookup (private->name_hash, new_name));
 
       g_free (name);
+
+      gimp_object_take_name (GIMP_OBJECT (item), new_name);
     }
 
   g_hash_table_insert (private->name_hash,
