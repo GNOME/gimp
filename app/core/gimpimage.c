@@ -2872,109 +2872,109 @@ gimp_image_get_vectors (const GimpImage *image)
 gint
 gimp_image_get_n_layers (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
 
-  return gimp_item_stack_get_n_items (GIMP_ITEM_STACK (private->layers->container));
+  return gimp_item_stack_get_n_items (stack);
 }
 
 gint
 gimp_image_get_n_channels (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
 
-  return gimp_item_stack_get_n_items (GIMP_ITEM_STACK (private->channels->container));
+  return gimp_item_stack_get_n_items (stack);
 }
 
 gint
 gimp_image_get_n_vectors (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
 
-  return gimp_item_stack_get_n_items (GIMP_ITEM_STACK (private->vectors->container));
+  return gimp_item_stack_get_n_items (stack);
 }
 
 GList *
 gimp_image_get_layer_iter (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
 
-  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->layers->container));
+  return gimp_item_stack_get_item_iter (stack);
 }
 
 GList *
 gimp_image_get_channel_iter (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
 
-  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->channels->container));
+  return gimp_item_stack_get_item_iter (stack);
 }
 
 GList *
 gimp_image_get_vectors_iter (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
 
-  return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->vectors->container));
+  return gimp_item_stack_get_item_iter (stack);
 }
 
 GList *
 gimp_image_get_layer_list (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
 
-  return gimp_item_stack_get_item_list (GIMP_ITEM_STACK (private->layers->container));
+  return gimp_item_stack_get_item_list (stack);
 }
 
 GList *
 gimp_image_get_channel_list (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
 
-  return gimp_item_stack_get_item_list (GIMP_ITEM_STACK (private->channels->container));
+  return gimp_item_stack_get_item_list (stack);
 }
 
 GList *
 gimp_image_get_vectors_list (const GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
 
-  return gimp_item_stack_get_item_list (GIMP_ITEM_STACK (private->vectors->container));
+  return gimp_item_stack_get_item_list (stack);
 }
 
 GimpDrawable *
@@ -3015,25 +3015,37 @@ gimp_image_get_active_drawable (const GimpImage *image)
 GimpLayer *
 gimp_image_get_active_layer (const GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_LAYER (gimp_item_tree_get_active_item (GIMP_IMAGE_GET_PRIVATE (image)->layers));
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return GIMP_LAYER (gimp_item_tree_get_active_item (private->layers));
 }
 
 GimpChannel *
 gimp_image_get_active_channel (const GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_CHANNEL (gimp_item_tree_get_active_item (GIMP_IMAGE_GET_PRIVATE (image)->channels));
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return GIMP_CHANNEL (gimp_item_tree_get_active_item (private->channels));
 }
 
 GimpVectors *
 gimp_image_get_active_vectors (const GimpImage *image)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_VECTORS (gimp_item_tree_get_active_item (GIMP_IMAGE_GET_PRIVATE (image)->vectors));
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return GIMP_VECTORS (gimp_item_tree_get_active_item (private->vectors));
 }
 
 GimpLayer *
@@ -3179,7 +3191,7 @@ gimp_image_get_layer_by_tattoo (const GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (GIMP_IMAGE_GET_PRIVATE (image)->layers->container);
+  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
 
   return GIMP_LAYER (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
@@ -3192,7 +3204,7 @@ gimp_image_get_channel_by_tattoo (const GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (GIMP_IMAGE_GET_PRIVATE (image)->channels->container);
+  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
 
   return GIMP_CHANNEL (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
@@ -3205,7 +3217,7 @@ gimp_image_get_vectors_by_tattoo (const GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (GIMP_IMAGE_GET_PRIVATE (image)->vectors->container);
+  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
 
   return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
@@ -3219,7 +3231,7 @@ gimp_image_get_layer_by_name (const GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  stack = GIMP_ITEM_STACK (GIMP_IMAGE_GET_PRIVATE (image)->layers->container);
+  stack = GIMP_ITEM_STACK (gimp_image_get_layers (image));
 
   return GIMP_LAYER (gimp_item_stack_get_item_by_name (stack, name));
 }
@@ -3233,7 +3245,7 @@ gimp_image_get_channel_by_name (const GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  stack = GIMP_ITEM_STACK (GIMP_IMAGE_GET_PRIVATE (image)->channels->container);
+  stack = GIMP_ITEM_STACK (gimp_image_get_channels (image));
 
   return GIMP_CHANNEL (gimp_item_stack_get_item_by_name (stack, name));
 }
@@ -3247,7 +3259,7 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  stack = GIMP_ITEM_STACK (GIMP_IMAGE_GET_PRIVATE (image)->vectors->container);
+  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
 
   return GIMP_VECTORS (gimp_item_stack_get_item_by_name (stack, name));
 }
@@ -4103,12 +4115,14 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
 void
 gimp_image_invalidate_previews (GimpImage *image)
 {
-  GimpImagePrivate *private;
+  GimpItemStack *layers;
+  GimpItemStack *channels;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  layers   = GIMP_ITEM_STACK (gimp_image_get_layers (image));
+  channels = GIMP_ITEM_STACK (gimp_image_get_channels (image));
 
-  gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (private->layers->container));
-  gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (private->channels->container));
+  gimp_item_stack_invalidate_previews (layers);
+  gimp_item_stack_invalidate_previews (channels);
 }
