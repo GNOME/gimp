@@ -491,8 +491,8 @@ static void
 gimp_list_uniquefy_name (GimpList   *gimp_list,
                          GimpObject *object)
 {
-  GList       *list;
-  const gchar *name = gimp_object_get_name (object);
+  gchar *name = (gchar *) gimp_object_get_name (object);
+  GList *list;
 
   if (! name)
     return;
@@ -505,57 +505,65 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
       if (object != object2 &&
           name2             &&
           ! strcmp (name, name2))
+        break;
+    }
+
+  if (list)
+    {
+      gchar *ext;
+      gchar *new_name   = NULL;
+      gint   unique_ext = 0;
+
+      name = g_strdup (name);
+
+      ext = strrchr (name, '#');
+
+      if (ext)
         {
-          GList *list2;
-          gchar *ext        = strrchr (name, '#');
-          gchar *new_name   = NULL;
-          gint   unique_ext = 0;
+          gchar ext_str[8];
 
-          if (ext)
+          unique_ext = atoi (ext + 1);
+
+          g_snprintf (ext_str, sizeof (ext_str), "%d", unique_ext);
+
+          /*  check if the extension really is of the form "#<n>"  */
+          if (! strcmp (ext_str, ext + 1))
             {
-              gchar *ext_str;
+              if (ext > name && *(ext - 1) == ' ')
+                ext--;
 
-              unique_ext = atoi (ext + 1);
-
-              ext_str = g_strdup_printf ("%d", unique_ext);
-
-              /*  check if the extension really is of the form "#<n>"  */
-              if (! strcmp (ext_str, ext + 1))
-                {
-                  *ext = '\0';
-                }
-              else
-                {
-                  unique_ext = 0;
-                }
-
-              g_free (ext_str);
+              *ext = '\0';
             }
-
-          do
+          else
             {
-              unique_ext++;
-
-              g_free (new_name);
-
-              new_name = g_strdup_printf ("%s#%d", name, unique_ext);
-
-              for (list2 = gimp_list->list; list2; list2 = g_list_next (list2))
-                {
-                  object2 = list2->data;
-                  name2   = gimp_object_get_name (object2);
-
-                  if (object != object2 &&
-                      name2             &&
-                      ! strcmp (new_name, name2))
-                    break;
-                }
+              unique_ext = 0;
             }
-          while (list2);
-
-          gimp_object_take_name (object, new_name);
-          break;
         }
+
+      do
+        {
+          unique_ext++;
+
+          g_free (new_name);
+
+          new_name = g_strdup_printf ("%s #%d", name, unique_ext);
+
+          for (list = gimp_list->list; list; list = g_list_next (list))
+            {
+              GimpObject  *object2 = list->data;
+              const gchar *name2   = gimp_object_get_name (object2);
+
+              if (object != object2 &&
+                  name2             &&
+                  ! strcmp (new_name, name2))
+                break;
+            }
+        }
+      while (list);
+
+      g_free (name);
+
+      gimp_object_take_name (object, new_name);
     }
 }
 
