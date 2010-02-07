@@ -3260,7 +3260,6 @@ gimp_image_add_layer (GimpImage *image,
                       gboolean   push_undo)
 {
   GimpImagePrivate *private;
-  GimpLayer        *active_layer;
   GimpLayer        *floating_sel;
   gboolean          old_has_alpha;
 
@@ -3286,12 +3285,9 @@ gimp_image_add_layer (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  active_layer = gimp_image_get_active_layer (image);
-
   parent = GIMP_LAYER (gimp_item_tree_get_insert_pos (private->layers,
                                                       (GimpItem *) parent,
-                                                      &position,
-                                                      GIMP_ITEM (active_layer)));
+                                                      &position));
 
   floating_sel = gimp_image_get_floating_selection (image);
 
@@ -3305,7 +3301,8 @@ gimp_image_add_layer (GimpImage *image,
 
   if (push_undo)
     gimp_image_undo_push_layer_add (image, _("Add Layer"),
-                                    layer, active_layer);
+                                    layer,
+                                    gimp_image_get_active_layer (image));
 
   gimp_item_tree_add_item (private->layers, GIMP_ITEM (layer),
                            GIMP_ITEM (parent), position);
@@ -3414,7 +3411,6 @@ gimp_image_remove_layer (GimpImage *image,
   new_active =
     GIMP_LAYER (gimp_item_tree_remove_item (private->layers,
                                             GIMP_ITEM (layer),
-                                            GIMP_ITEM (active_layer),
                                             GIMP_ITEM (new_active)));
 
   if (gimp_layer_is_floating_sel (layer))
@@ -3449,7 +3445,6 @@ gimp_image_add_layers (GimpImage   *image,
                        const gchar *undo_desc)
 {
   GimpImagePrivate *private;
-  GimpLayer        *active_layer;
   GList            *list;
   gint              layers_x      = G_MAXINT;
   gint              layers_y      = G_MAXINT;
@@ -3475,12 +3470,9 @@ gimp_image_add_layers (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  active_layer = gimp_image_get_active_layer (image);
-
   parent = GIMP_LAYER (gimp_item_tree_get_insert_pos (private->layers,
                                                       (GimpItem *) parent,
-                                                      &position,
-                                                      GIMP_ITEM (active_layer)));
+                                                      &position));
 
   for (list = layers; list; list = g_list_next (list))
     {
@@ -3631,7 +3623,6 @@ gimp_image_add_channel (GimpImage   *image,
                         gboolean     push_undo)
 {
   GimpImagePrivate *private;
-  GimpChannel      *active_channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
@@ -3655,16 +3646,14 @@ gimp_image_add_channel (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  active_channel = gimp_image_get_active_channel (image);
-
   parent = GIMP_CHANNEL (gimp_item_tree_get_insert_pos (private->channels,
                                                         (GimpItem *) parent,
-                                                        &position,
-                                                        GIMP_ITEM (active_channel)));
+                                                        &position));
 
   if (push_undo)
     gimp_image_undo_push_channel_add (image, _("Add Channel"),
-                                      channel, active_channel);
+                                      channel,
+                                      gimp_image_get_active_channel (image));
 
   gimp_item_tree_add_item (private->channels, GIMP_ITEM (channel),
                            GIMP_ITEM (parent), position);
@@ -3720,7 +3709,6 @@ gimp_image_remove_channel (GimpImage   *image,
   new_active =
     GIMP_CHANNEL (gimp_item_tree_remove_item (private->channels,
                                               GIMP_ITEM (channel),
-                                              GIMP_ITEM (active_channel),
                                               GIMP_ITEM (new_active)));
 
   if (channel == active_channel)
@@ -3847,7 +3835,6 @@ gimp_image_add_vectors (GimpImage   *image,
                         gboolean     push_undo)
 {
   GimpImagePrivate *private;
-  GimpVectors      *active_vectors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
@@ -3871,16 +3858,14 @@ gimp_image_add_vectors (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  active_vectors = gimp_image_get_active_vectors (image);
-
   parent = GIMP_VECTORS (gimp_item_tree_get_insert_pos (private->vectors,
                                                         (GimpItem *) parent,
-                                                        &position,
-                                                        GIMP_ITEM (active_vectors)));
+                                                        &position));
 
   if (push_undo)
     gimp_image_undo_push_vectors_add (image, _("Add Path"),
-                                      vectors, active_vectors);
+                                      vectors,
+                                      gimp_image_get_active_vectors (image));
 
   gimp_item_tree_add_item (private->vectors, GIMP_ITEM (vectors),
                            GIMP_ITEM (parent), position);
@@ -3917,7 +3902,6 @@ gimp_image_remove_vectors (GimpImage   *image,
   new_active =
     GIMP_VECTORS (gimp_item_tree_remove_item (private->vectors,
                                               GIMP_ITEM (vectors),
-                                              GIMP_ITEM (active_vectors),
                                               GIMP_ITEM (new_active)));
 
   if (vectors == active_vectors)

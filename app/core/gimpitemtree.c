@@ -298,32 +298,34 @@ gimp_item_tree_set_active_item (GimpItemTree *tree,
 }
 
 GimpItem *
-gimp_item_tree_get_insert_pos (GimpItemTree   *tree,
-                               GimpItem       *parent,
-                               gint           *position,
-                               GimpItem       *active_item)
+gimp_item_tree_get_insert_pos (GimpItemTree *tree,
+                               GimpItem     *parent,
+                               gint         *position)
 {
-  GimpContainer *container;
+  GimpItemTreePrivate *private;
+  GimpContainer       *container;
 
   g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+
+  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
   /*  if we want to insert in the active item's parent container  */
   if (parent == GIMP_IMAGE_ACTIVE_PARENT)
     {
-      if (active_item)
+      if (private->active_item)
         {
           /*  if the active item is a branch, add to the top of that
            *  branch; add to the active item's parent container
            *  otherwise
            */
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (active_item)))
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (private->active_item)))
             {
-              parent    = active_item;
+              parent    = private->active_item;
               *position = 0;
             }
           else
             {
-              parent = gimp_item_get_parent (active_item);
+              parent = gimp_item_get_parent (private->active_item);
             }
         }
       else
@@ -341,9 +343,9 @@ gimp_item_tree_get_insert_pos (GimpItemTree   *tree,
   /*  if we want to add on top of the active item  */
   if (*position == -1)
     {
-      if (active_item)
+      if (private->active_item)
         *position = gimp_container_get_child_index (container,
-                                                    GIMP_OBJECT (active_item));
+                                                    GIMP_OBJECT (private->active_item));
 
       /*  if the active item is not in the specified parent container,
        *  fall back to index 0
@@ -384,7 +386,6 @@ gimp_item_tree_add_item (GimpItemTree *tree,
 GimpItem *
 gimp_item_tree_remove_item (GimpItemTree *tree,
                             GimpItem     *item,
-                            GimpItem     *current_active,
                             GimpItem     *new_active)
 {
   GimpItem      *parent;

@@ -48,18 +48,17 @@ struct _GimpItemTreeClass
 
 
 GType          gimp_item_tree_get_type        (void) G_GNUC_CONST;
-GimpItemTree * gimp_item_tree_new             (GimpImage      *image,
-                                               GType           container_type,
-                                               GType           item_type);
+GimpItemTree * gimp_item_tree_new             (GimpImage    *image,
+                                               GType         container_type,
+                                               GType         item_type);
 
-GimpItem     * gimp_item_tree_get_active_item (GimpItemTree   *tree);
-void           gimp_item_tree_set_active_item (GimpItemTree   *tree,
-                                               GimpItem       *item);
+GimpItem     * gimp_item_tree_get_active_item (GimpItemTree *tree);
+void           gimp_item_tree_set_active_item (GimpItemTree *tree,
+                                               GimpItem     *item);
 
-GimpItem     * gimp_item_tree_get_insert_pos  (GimpItemTree   *tree,
-                                               GimpItem       *parent,
-                                               gint           *position,
-                                               GimpItem       *active_item);
+GimpItem     * gimp_item_tree_get_insert_pos  (GimpItemTree *tree,
+                                               GimpItem     *parent,
+                                               gint         *position);
 
 void           gimp_item_tree_add_item        (GimpItemTree *tree,
                                                GimpItem     *item,
@@ -67,7 +66,6 @@ void           gimp_item_tree_add_item        (GimpItemTree *tree,
                                                gint          position);
 GimpItem     * gimp_item_tree_remove_item     (GimpItemTree *tree,
                                                GimpItem     *item,
-                                               GimpItem     *current_active,
                                                GimpItem     *new_active);
 
 gboolean       gimp_item_tree_reorder_item    (GimpItemTree *tree,
