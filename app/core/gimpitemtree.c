@@ -396,6 +396,7 @@ gimp_item_tree_add_item (GimpItemTree *tree,
 {
   GimpItemTreePrivate *private;
   GimpContainer       *container;
+  GimpContainer       *children;
 
   g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
 
@@ -413,6 +414,20 @@ gimp_item_tree_add_item (GimpItemTree *tree,
                     gimp_viewable_get_children (GIMP_VIEWABLE (parent)));
 
   gimp_item_tree_uniquefy_name (tree, item, NULL);
+
+  children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+  if (children)
+    {
+      GList *list = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (children));
+
+      while (list)
+        {
+          gimp_item_tree_uniquefy_name (tree, list->data, NULL);
+
+          list = g_list_remove (list, list->data);
+        }
+    }
 
   if (parent)
     container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
@@ -434,6 +449,7 @@ gimp_item_tree_remove_item (GimpItemTree *tree,
   GimpItemTreePrivate *private;
   GimpItem            *parent;
   GimpContainer       *container;
+  GimpContainer       *children;
   gint                 index;
 
   g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
@@ -453,6 +469,21 @@ gimp_item_tree_remove_item (GimpItemTree *tree,
 
   g_hash_table_remove (private->name_hash,
                        gimp_object_get_name (item));
+
+  children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+  if (children)
+    {
+      GList *list = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (children));
+
+      while (list)
+        {
+          g_hash_table_remove (private->name_hash,
+                               gimp_object_get_name (list->data));
+
+          list = g_list_remove (list, list->data);
+        }
+    }
 
   gimp_container_remove (container, GIMP_OBJECT (item));
 
