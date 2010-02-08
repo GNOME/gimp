@@ -3153,7 +3153,6 @@ gimp_image_set_active_channel (GimpImage   *image,
                                GimpChannel *channel)
 {
   GimpImagePrivate *private;
-  GimpChannel      *active_channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
@@ -3168,9 +3167,7 @@ gimp_image_set_active_channel (GimpImage   *image,
   if (channel && gimp_image_get_floating_selection (image))
     return NULL;
 
-  active_channel = gimp_image_get_active_channel (image);
-
-  if (channel != active_channel)
+  if (channel != gimp_image_get_active_channel (image))
     {
       gimp_item_tree_set_active_item (private->channels, GIMP_ITEM (channel));
     }
@@ -3206,7 +3203,6 @@ gimp_image_set_active_vectors (GimpImage   *image,
                                GimpVectors *vectors)
 {
   GimpImagePrivate *private;
-  GimpVectors      *active_vectors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
@@ -3217,9 +3213,7 @@ gimp_image_set_active_vectors (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  active_vectors = gimp_image_get_active_vectors (image);
-
-  if (vectors != active_vectors)
+  if (vectors != gimp_image_get_active_vectors (image))
     {
       gimp_item_tree_set_active_item (private->vectors, GIMP_ITEM (vectors));
     }
