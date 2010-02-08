@@ -6,9 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 23:09+0300\n"
-"PO-Revision-Date: 2009-07-07 23:16+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2010-02-07 10:15+0000\n"
+"PO-Revision-Date: 2010-01-31 15:55+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +21,7 @@ msgstr ""
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1045
 msgid "success"
-msgstr "success"
+msgstr "succes"
 
 #. procedure execution failed
 #: ../libgimp/gimp.c:1049
@@ -100,7 +101,7 @@ msgstr "Plugin-ul %s poate manipula numai imagini RGB"
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
-msgstr "Convertește la rgb"
+msgstr "Convertește la RGB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
@@ -123,7 +124,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Convertește la imagine indexată folosind setările implicite\n"
+"Convertește la imagine indexată folosind configurările implicite\n"
 "(trebuie intervenit manual pentru ajustarea rezultatului)"
 
 #: ../libgimp/gimpexport.c:308
@@ -137,7 +138,7 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Convertește la indexat folosind setările implicite\n"
+"Convertește la indexat folosind configurările implicite\n"
 "(efectuați manual pentru a ajusta rezultatul)"
 
 #: ../libgimp/gimpexport.c:318
@@ -162,7 +163,7 @@ msgstr "Plugin-ul %s necesită un canal alfa"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
-msgstr "Adaugă canal alfa"
+msgstr "Adaugă un canal alfa"
 
 #: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
@@ -184,6 +185,7 @@ msgstr "_Ignoră"
 msgid "_Export"
 msgstr "_Exportă"
 
+# a fost: din următoarele motive (iar motivele sunt de obicei unul singur)
 #. the headline
 #: ../libgimp/gimpexport.c:499
 #, c-format
@@ -191,8 +193,7 @@ msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"Imaginea trebuie exportată înainte de a putea fi salvată ca %s, din "
-"următoarele motive:"
+"Imaginea trebuie exportată înainte de a putea fi salvată ca %s, deoarece:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:573
@@ -369,7 +370,7 @@ msgstr "Canalul _alfa al stratului"
 
 #: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Transfer layer's alpha channel"
-msgstr "_Transfer canalul alfa al stratului"
+msgstr "_Transferul canalului alfa al stratului"
 
 #: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Selection"
@@ -498,11 +499,11 @@ msgstr "Model"
 # hm ?
 #: ../libgimpbase/gimpbaseenums.c:294
 msgid "Lightness"
-msgstr "_Luminozității (½*(max(R,G,B)+min(R,G,B)))"
+msgstr "_Luminozității (½×(max(R,G,B)+min(R,G,B)))"
 
 #: ../libgimpbase/gimpbaseenums.c:295
 msgid "Luminosity"
-msgstr "L_uminozității (0,21*R+0,71*G+0,07*B)"
+msgstr "L_uminozității (0,21×R+0,71×G+0,07×B)"
 
 #: ../libgimpbase/gimpbaseenums.c:296
 msgid "Average"
@@ -709,15 +710,15 @@ msgstr "Ajustează"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Clip"
-msgstr "Clip"
+msgstr "Decupează"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop to result"
-msgstr "Decupează urmărind rezultatul"
+msgstr "Decupează la rezultat"
 
 #: ../libgimpbase/gimpbaseenums.c:779
 msgid "Crop with aspect"
-msgstr "Decupează cu raport de aspect"
+msgstr "Decupează cu aspect"
 
 #: ../libgimpbase/gimpbaseenums.c:909
 msgid "Internal GIMP procedure"
@@ -725,7 +726,7 @@ msgstr "Procedură internă GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:910
 msgid "GIMP Plug-In"
-msgstr "Plugin GIMP"
+msgstr "Plug-in GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:911
 msgid "GIMP Extension"
@@ -761,8 +762,8 @@ msgstr "Unplut"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/display-filter-lcms.c:183
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
+#: ../modules/color-selector-cmyk-lcms.c:422
+#: ../modules/color-selector-cmyk-lcms.c:428
 msgid "(invalid UTF-8 string)"
 msgstr "(șir UTF-8 nevalid)"
 
@@ -882,7 +883,7 @@ msgstr "în timpul prelucrării expresiei „%s”: %s"
 #: ../libgimpconfig/gimpscanner.c:579
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
-msgstr "eroare fatală de prelucrare"
+msgstr "eroare fatală de interpretare"
 
 #: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
@@ -1036,8 +1037,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Notație de culoare hexazecimală ca cea folosită în HTML și CSS.  Această "
-"intrare acceptă de asemenea și nume de culoare CSS."
+"Notație de culoare în hexazecimal, așa cum este folosită în HTML și CSS.  "
+"Această intrare acceptă de asemenea și nume de culoare CSS."
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
@@ -1050,12 +1051,12 @@ msgstr "Apăsați F1 pentru mai mult ajutor"
 # hm ?
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
-msgstr "Deschide un selector de fișier pentru a răsfoi dosarele dumneavoastră"
+msgstr "Deschide un selector de fișiere pentru explorarea dosarelor"
 
 # hm ?
 #: ../libgimpwidgets/gimpfileentry.c:175
 msgid "Open a file selector to browse your files"
-msgstr "Deschide un selector de fișier pentru a răsfoi fișierele dumneavoastră"
+msgstr "Deschide un selector de fișiere pentru explorarea acestora"
 
 #: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
@@ -1067,15 +1068,15 @@ msgstr "Selectează fișierul"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
-msgstr "Kiloocteți"
+msgstr "Kibibaiți"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
-msgstr "Megaocteți"
+msgstr "Mebibaiți"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
-msgstr "Gigaocteți"
+msgstr "Gibibaiți"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:269
@@ -1145,7 +1146,7 @@ msgstr "Stil tablă de șah"
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
-msgstr "_Previzualizare"
+msgstr "_Previzualizează"
 
 #: ../libgimpwidgets/gimppropwidgets.c:1860
 #, c-format
@@ -1193,9 +1194,10 @@ msgstr "Re_setează"
 msgid "Visible"
 msgstr "Vizibil"
 
+# buton de acțiune în fereastra de stroke path
 #: ../libgimpwidgets/gimpstock.c:156 ../libgimpwidgets/gimpstock.c:160
 msgid "_Stroke"
-msgstr "_Trasează"
+msgstr "Con_turează"
 
 #: ../libgimpwidgets/gimpstock.c:172
 msgid "L_etter Spacing"
@@ -1513,11 +1515,11 @@ msgstr "Procentul de negru ce trebuie extras din cernelurile colorate."
 msgid "CMYK color selector (using color profile)"
 msgstr "Selector de culoare CMYK (folosind profilul de culoare)"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
+#: ../modules/color-selector-cmyk-lcms.c:410
 msgid "Profile: (none)"
 msgstr "Profil: (fără)"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:431
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
