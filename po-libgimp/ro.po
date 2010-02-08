@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-01-09 11:15+0000\n"
-"PO-Revision-Date: 2010-01-15 23:50+0200\n"
+"POT-Creation-Date: 2010-02-07 10:15+0000\n"
+"PO-Revision-Date: 2010-01-31 15:55+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -163,7 +163,7 @@ msgstr "Plugin-ul %s necesită un canal alfa"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
-msgstr "Adaugă canal alfa"
+msgstr "Adaugă un canal alfa"
 
 #: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
@@ -883,7 +883,7 @@ msgstr "în timpul prelucrării expresiei „%s”: %s"
 #: ../libgimpconfig/gimpscanner.c:579
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
-msgstr "eroare fatală de prelucrare"
+msgstr "eroare fatală de interpretare"
 
 #: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
@@ -1051,12 +1051,12 @@ msgstr "Apăsați F1 pentru mai mult ajutor"
 # hm ?
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
-msgstr "Deschide un selector de fișier pentru a răsfoi dosarele dumneavoastră"
+msgstr "Deschide un selector de fișiere pentru explorarea dosarelor"
 
 # hm ?
 #: ../libgimpwidgets/gimpfileentry.c:175
 msgid "Open a file selector to browse your files"
-msgstr "Deschide un selector de fișier pentru a răsfoi fișierele dumneavoastră"
+msgstr "Deschide un selector de fișiere pentru explorarea acestora"
 
 #: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"

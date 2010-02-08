@@ -1,16 +1,16 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
 # Lucian Adrian Grijincu <lucian.grijincu AT gmail DOT com>, 2009.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-01-17 21:02+0000\n"
-"PO-Revision-Date: 2010-01-18 00:13+0200\n"
+"POT-Creation-Date: 2010-02-07 10:14+0000\n"
+"PO-Revision-Date: 2010-02-04 18:24+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -658,9 +658,10 @@ msgstr "Intersectează acest canal cu selecția curentă"
 msgid "Channel Attributes"
 msgstr "Atribute canal"
 
+# titlu sub bară
 #: ../app/actions/channels-commands.c:88
 msgid "Edit Channel Attributes"
-msgstr "Editare atribute de canal"
+msgstr "Editează atributele de canal"
 
 #: ../app/actions/channels-commands.c:90
 msgid "Edit Channel Color"
@@ -1171,7 +1172,7 @@ msgstr "_Adaugă un tab"
 
 #: ../app/actions/dockable-actions.c:54
 msgid "_Preview Size"
-msgstr "Dimensiune _previzualizare"
+msgstr "Dimensiune de _previzualizare"
 
 #: ../app/actions/dockable-actions.c:55
 msgid "_Tab Style"
@@ -1462,7 +1463,7 @@ msgstr "Inversarea nu operează pe straturi indexate."
 msgid "White Balance operates only on RGB color layers."
 msgstr "Balansul la alb operează numai pe straturi RGB."
 
-# meniu principal
+# meniul principal
 #: ../app/actions/edit-actions.c:63
 msgid "_Edit"
 msgstr "_Editare"
@@ -2584,6 +2585,8 @@ msgstr "Stabilește dimensiunea canavelei imaginii"
 msgid "Resizing"
 msgstr "Redimensionare"
 
+# titlu pe bară
+# titlu sub bară
 #: ../app/actions/image-commands.c:306
 msgid "Set Image Print Resolution"
 msgstr "Stabilește rezoluția de tipărire a imaginii"
@@ -2820,7 +2823,7 @@ msgstr "Deformează textul acestui strat de-a lungul traseului curent"
 
 #: ../app/actions/layers-actions.c:170
 msgid "Layer B_oundary Size..."
-msgstr "_Dimensiune limită strat..."
+msgstr "_Dimensiunea limitei de strat..."
 
 #: ../app/actions/layers-actions.c:171
 msgid "Adjust the layer dimensions"
@@ -3019,9 +3022,10 @@ msgstr "Stabilește opacitatea"
 msgid "Layer Attributes"
 msgstr "Atribute de strat"
 
+# titlu sub bară
 #: ../app/actions/layers-commands.c:207
 msgid "Edit Layer Attributes"
-msgstr "Editare atribute de strat"
+msgstr "Editează atributele de strat"
 
 #: ../app/actions/layers-commands.c:250 ../app/actions/layers-commands.c:252
 #: ../app/actions/layers-commands.c:320 ../app/actions/layers-commands.c:324
@@ -3038,9 +3042,10 @@ msgstr "Creează un strat nou"
 msgid "Visible"
 msgstr "Vizibil"
 
+# titlu sub bară
 #: ../app/actions/layers-commands.c:574
 msgid "Set Layer Boundary Size"
-msgstr "Stabilire dimensiune limite strat"
+msgstr "Stabilește dimensiunea limitei de strat"
 
 # titlu pe bară
 # titlu sub bară
@@ -4059,6 +4064,8 @@ msgstr "Opțiuni traseu nou"
 msgid "Path to Selection"
 msgstr "Traseu la selecție"
 
+# titlu pe bară
+# buton sub zona de instrumente
 #: ../app/actions/vectors-commands.c:385 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1945 ../app/vectors/gimpvectors.c:200
 msgid "Stroke Path"
@@ -4805,7 +4812,7 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Stabilește rezoluția orizontală a monitorului, în puncte per inch. Dacă este "
+"Stabilește rezoluția orizontală a monitorului, în puncte per țol. Dacă este "
 "pus pe 0, forțează interogarea serverului despre ambele informații vertical "
 "și orizontal."
 
@@ -4815,7 +4822,7 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Stabilește rezoluția verticală a monitorului, în puncte per inch. Dacă este "
+"Stabilește rezoluția verticală a monitorului, în puncte per țol. Dacă este "
 "pus pe 0, forțează interogarea serverului despre ambele informații vertical "
 "și orizontal."
 
@@ -5210,7 +5217,7 @@ msgstr ""
 #: ../app/core/gimp-units.c:164 ../app/gui/session.c:206
 #: ../app/plug-in/plug-in-rc.c:213
 msgid "fatal parse error"
-msgstr "eroare fatală de prelucrare"
+msgstr "eroare fatală de interpretare"
 
 # hm ? ref: http://groups.google.com/group/diacritice/browse_frm/thread/3bac57a60b828fc2
 #: ../app/config/gimprc-deserialize.c:163
@@ -5448,13 +5455,15 @@ msgstr "Enorm"
 msgid "Gigantic"
 msgstr "Gigantic"
 
+# buton la baza listei de fonturi
 #: ../app/core/core-enums.c:607
 msgid "View as list"
-msgstr "Vizualizare ca listă"
+msgstr "Vizualizează ca listă"
 
+# buton la baza listei de fonturi
 #: ../app/core/core-enums.c:608
 msgid "View as grid"
-msgstr "Vizualizare ca grilă"
+msgstr "Vizualizează ca grilă"
 
 #: ../app/core/core-enums.c:672
 msgid "No thumbnails"
@@ -5884,36 +5893,39 @@ msgstr "Nu s-au putut citi %d baiți din „%s”: %s"
 #: ../app/core/gimpbrush-load.c:197
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Eroare fatală de prelucrare în fișierul penel „%s”: lățime = 0."
+msgstr "Eroare fatală de interpretare în fișierul penel „%s”: lățime = 0."
 
 #: ../app/core/gimpbrush-load.c:206
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Eroare fatală de prelucrare în fișierul penel „%s”: înălțime = 0."
+msgstr "Eroare fatală de interpretare în fișierul penel „%s”: înălțime = 0."
 
 #: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Eroare fatală de prelucrare în fișierul penel „%s”: baiți = 0."
+msgstr "Eroare fatală de interpretare în fișierul penel „%s”: baiți = 0."
 
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: adâncime necunoscută %d."
+"Eroare fatală de interpretare în fișierul penel „%s”: adâncime necunoscută %"
+"d."
 
 #: ../app/core/gimpbrush-load.c:252
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: versiune necunoscută %d."
+"Eroare fatală de interpretare în fișierul penel „%s”: versiune necunoscută %"
+"d."
 
 #: ../app/core/gimpbrush-load.c:268 ../app/core/gimpbrush-load.c:388
 #: ../app/core/gimpbrush-load.c:720
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: fișierul pare trunchiat."
+"Eroare fatală de interpretare în fișierul penel „%s”: fișierul pare "
+"trunchiat."
 
 #: ../app/core/gimpbrush-load.c:276 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
@@ -5934,8 +5946,8 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: adâncime nesuportată de "
-"penel %d.\n"
+"Eroare fatală de interpretare în fișierul penel „%s”: adâncime nesuportată "
+"de penel %d.\n"
 "Penelurile GIMP trebuie să fie GRI sau RGBA."
 
 #: ../app/core/gimpbrush-load.c:448
@@ -5943,36 +5955,36 @@ msgstr ""
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: nu se poate decoda "
+"Eroare fatală de interpretare în fișierul penel „%s”: nu se poate decoda "
 "versiunea de format abr %d."
 
 #: ../app/core/gimpbrush-load.c:615
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: penelurile late nu sunt "
-"suportate."
+"Eroare fatală de interpretare în fișierul penel „%s”: penelurile late nu "
+"sunt suportate."
 
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: nu este un fișier GIMP."
+"Eroare fatală de interpretare în fișierul penel „%s”: nu este un fișier GIMP."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: versiune necunoscută de "
-"penel GIMP la linia %d."
+"Eroare fatală de interpretare în fișierul penel „%s”: versiune necunoscută "
+"de penel GIMP la linia %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul penel „%s”: formă necunoscută de "
+"Eroare fatală de interpretare în fișierul penel „%s”: formă necunoscută de "
 "penel GIMP la linia %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
@@ -5994,7 +6006,7 @@ msgstr "Eroare în timpul deschiderii fișierului penel „%s”: %s"
 #: ../app/core/gimpbrushpipe-load.c:223
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "Eroare fatală de prelucrare în fișierul penel „%s”: fișier corupt."
+msgstr "Eroare fatală de interpretare în fișierul penel „%s”: fișier corupt."
 
 #: ../app/core/gimpchannel-select.c:60
 msgctxt "command"
@@ -6238,7 +6250,7 @@ msgstr "Niveluri"
 
 #: ../app/core/gimpdrawable-offset.c:316
 msgid "Offset Drawable"
-msgstr "Decalaj desenabil"
+msgstr "Decalaj obiect grafic"
 
 # titlu pe bară
 # apare la contextul lui undo
@@ -6280,14 +6292,14 @@ msgstr "Transformare"
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul degrade „%s”: eroare de citire la "
+"Eroare fatală de interpretare în fișierul degrade „%s”: eroare de citire la "
 "linia %d."
 
 #: ../app/core/gimpgradient-load.c:81
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul degrade „%s”: fișierul nu este un "
+"Eroare fatală de interpretare în fișierul degrade „%s”: fișierul nu este un "
 "degrade GIMP."
 
 #: ../app/core/gimpgradient-load.c:109
@@ -6299,14 +6311,14 @@ msgstr "Șir UTF-8 nevalid în fișierul degrade „%s”."
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul degrade „%s”: fișierul este corupt "
+"Eroare fatală de interpretare în fișierul degrade „%s”: fișierul este corupt "
 "la linia %d."
 
 #: ../app/core/gimpgradient-load.c:218 ../app/core/gimpgradient-load.c:229
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul degrade „%s”: segmentul %d este "
+"Eroare fatală de interpretare în fișierul degrade „%s”: segmentul %d este "
 "corupt la linia %d."
 
 #: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
@@ -6640,9 +6652,9 @@ msgstr "(Previzualizarea ar putea fi expirată)"
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
-msgstr[0] "%d x %d pixel"
-msgstr[1] "%d x %d pixeli"
-msgstr[2] "%d x %d de pixeli"
+msgstr[0] "%d × %d pixel"
+msgstr[1] "%d × %d pixeli"
+msgstr[2] "%d × %d de pixeli"
 
 #: ../app/core/gimpimagefile.c:628 ../app/display/gimpdisplayshell-title.c:325
 #, c-format
@@ -6798,14 +6810,15 @@ msgstr "Tip necunoscut de fișier de paletă: %s"
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
-"Eroare fatală de analiză în fișierul de paletă „%s”: eroare de citire la "
-"linia %d."
+"Eroare fatală de interpretare în fișierul de paletă „%s”: eroare de citire "
+"la linia %d."
 
 #: ../app/core/gimppalette-load.c:95
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr ""
-"Eroare fatală de analiză în fișierul de paletă „%s”: lipsește antetul magic."
+"Eroare fatală de interpretare în fișierul de paletă „%s”: lipsește antetul "
+"magic."
 
 #: ../app/core/gimppalette-load.c:123
 #, c-format
@@ -6853,15 +6866,16 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgstr ""
-"Eroare fatală de analiză în fișierul model „%s”: fișierul pare trunchiat."
+"Eroare fatală de interpretare în fișierul model „%s”: fișierul pare "
+"trunchiat."
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul model „%s”: versiune necunoscută de "
-"format de model %d."
+"Eroare fatală de interpretare în fișierul model „%s”: versiune necunoscută "
+"de format de model %d."
 
 #: ../app/core/gimppattern-load.c:114
 #, c-format
@@ -6869,8 +6883,8 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Eroare fatală de prelucrare în fișierul model „%s”: adâncime nesuportată de "
-"model %d.\n"
+"Eroare fatală de interpretare în fișierul model „%s”: adâncime nesuportată "
+"de model %d.\n"
 "Modelele GIMP trebuie să fie GRI sau RGB."
 
 #: ../app/core/gimppattern-load.c:139
@@ -6975,12 +6989,11 @@ msgstr "pixeli"
 #. standard units
 #: ../app/core/gimpunit.c:59
 msgid "inch"
-msgstr "inch"
+msgstr "țol"
 
-# hm ? sau inches ?
 #: ../app/core/gimpunit.c:59
 msgid "inches"
-msgstr "inch"
+msgstr "țoli"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeter"
@@ -7024,8 +7037,8 @@ msgstr "Vizitați saitul web GIMP"
 msgid "translator-credits"
 msgstr ""
 "Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>\n"
-"Cristian Secară <cristi AT secarica DOT ro>\n"
-"Lucian Adrian Grijincu <lucian DOT grijincu AT gmail DOT com>"
+"Lucian Adrian Grijincu <lucian DOT grijincu AT gmail DOT com>\n"
+"Cristian Secară <cristi AT secarica DOT ro>"
 
 #: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
@@ -7180,8 +7193,8 @@ msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
 msgstr ""
-"Numele de fișier dat nu are nicio extensie de fișier cunoscută. Introduceți "
-"o extensie cunoscută, sau selectați un format de fișier din lista de formate."
+"Numele de fișier dat nu are extensie de fișier cunoscută. Introduceți o "
+"extensie cunoscută, sau selectați un format de fișier din lista de formate."
 
 #: ../app/dialogs/file-save-dialog.c:371
 msgid ""
@@ -8045,12 +8058,12 @@ msgstr "Pixeli"
 #: ../app/dialogs/preferences-dialog.c:2347
 #: ../app/widgets/gimpimagepropview.c:476
 msgid "ppi"
-msgstr "pixeli/inch"
+msgstr "ppi (pixeli per țol)"
 
 #: ../app/dialogs/preferences-dialog.c:2363
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
-msgstr "_Detectare automată (curent este %d × %d pixeli/inch)"
+msgstr "_Detectare automată (curent este %d × %d ppi (pixeli per țol))"
 
 # hm ? sau introduceți manual ?
 #: ../app/dialogs/preferences-dialog.c:2383
@@ -8330,7 +8343,7 @@ msgstr "Selectează dosarul de teme"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
-msgstr "Dimensiune de tipărire"
+msgstr "Dimensiuni de tipărire"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:202
@@ -8468,7 +8481,7 @@ msgstr "Ar trebui să existe un fișier numit „%s”. Verificați instalarea."
 
 #: ../app/dialogs/tips-dialog.c:101
 msgid "The GIMP tips file could not be parsed!"
-msgstr "Fișierul de sfaturi GIMP nu a putut fi prelucrat !"
+msgstr "Fișierul de sfaturi GIMP nu a putut fi interpretat !"
 
 #: ../app/dialogs/tips-dialog.c:129
 msgid "GIMP Tip of the Day"
@@ -8835,7 +8848,7 @@ msgstr "nu este un fișier de curbe GIMP"
 #: ../app/gegl/gimpcurvesconfig.c:398 ../app/gegl/gimplevelsconfig.c:711
 #, c-format
 msgid "parse error"
-msgstr "eroare de prelucrare"
+msgstr "eroare de interpretare"
 
 #: ../app/gegl/gimplevelsconfig.c:664
 #, c-format
@@ -9190,7 +9203,7 @@ msgid ""
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
 "Procedura „%s” a întors un ID nevalid pentru argumentul „%s”. Cel mai "
-"probabil un plug-in încearcă să lucreze pe un strat care nu mai există."
+"probabil un plug‑in încearcă să lucreze pe un strat care nu mai există."
 
 #: ../app/pdb/gimpprocedure.c:641
 #, c-format
@@ -9199,7 +9212,7 @@ msgid ""
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
 "Procedura „%s” a fost chemată cu un ID nevalid pentru argumentul „%s”. Cel "
-"mai probabil un plug-in încearcă să lucreze pe un strat care nu mai există."
+"mai probabil un plug‑in încearcă să lucreze pe un strat care nu mai există."
 
 #: ../app/pdb/gimpprocedure.c:657
 #, c-format
@@ -9208,7 +9221,7 @@ msgid ""
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
 "Procedura „%s” a întors un ID nevalid pentru argumentul „%s”. Cel mai "
-"probabil un plug-in încearcă să lucreze pe o imagine care nu mai există."
+"probabil un plug‑in încearcă să lucreze pe o imagine care nu mai există."
 
 #: ../app/pdb/gimpprocedure.c:669
 #, c-format
@@ -9217,7 +9230,7 @@ msgid ""
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
 "Procedura „%s” a fost chemată cu un ID nevalid pentru argumentul „%s”. Cel "
-"mai probabil un plug-in încearcă să lucreze pe o imagine care nu mai există."
+"mai probabil un plug‑in încearcă să lucreze pe o imagine care nu mai există."
 
 #: ../app/pdb/gimpprocedure.c:689
 #, c-format
@@ -9317,12 +9330,12 @@ msgid ""
 "The dying plug-in may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
-"Acest plugin s-a înțepenit: „%s”\n"
+"Acest plug-in s-a înțepenit: „%s”\n"
 "(%s)\n"
 "\n"
-"Este posibil ca plugin-ul muribund să fi afectat starea internă a GIMP. Ar "
-"fi de dorit să salvați imaginile la care lucrați și să reporniți GIMP pentru "
-"a evita surprizele neplăcute."
+"Este posibil ca plugin-ul muribund să fi afectat starea internă a "
+"aplicației. Ar fi de dorit să salvați imaginile la care lucrați și să "
+"reporniți GIMP pentru a evita surprizele neplăcute."
 
 # hm ? sau executarea ?
 #: ../app/plug-in/gimppluginmanager-call.c:173
@@ -9878,7 +9891,7 @@ msgstr "Colorare: colorează imaginea"
 
 #: ../app/tools/gimpcolorizetool.c:92
 msgid "Colori_ze..."
-msgstr "_Colorează..."
+msgstr "_Colorare..."
 
 #: ../app/tools/gimpcolorizetool.c:109
 msgid "Colorize the Image"
@@ -10117,7 +10130,7 @@ msgstr "Desaturare: transformă culorile în tonuri de gri"
 
 #: ../app/tools/gimpdesaturatetool.c:79
 msgid "_Desaturate..."
-msgstr "_Desaturează..."
+msgstr "_Desaturare..."
 
 #: ../app/tools/gimpdesaturatetool.c:93
 msgid "Desaturate (Remove Colors)"
@@ -10434,12 +10447,12 @@ msgstr "Operație _GEGL..."
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "Operațiile GEGL nu funcționează pe straturi indexate."
 
-#: ../app/tools/gimpgegltool.c:338
+#: ../app/tools/gimpgegltool.c:339
 msgid "_Operation:"
 msgstr "_Operație:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:411
+#: ../app/tools/gimpgegltool.c:412
 msgid "Operation Settings"
 msgstr "Configurări de operare"
 
@@ -10993,7 +11006,7 @@ msgstr "Posterizare: reduce la un set limitat de culori"
 
 #: ../app/tools/gimpposterizetool.c:86
 msgid "_Posterize..."
-msgstr "_Posterizează..."
+msgstr "_Posterizare..."
 
 #: ../app/tools/gimpposterizetool.c:103
 msgid "Posterize (Reduce Number of Colors)"
@@ -12458,7 +12471,7 @@ msgstr "Interogare..."
 
 #: ../app/widgets/gimpimagepropview.c:122
 msgid "Pixel dimensions:"
-msgstr "Dimensiuni pixeli:"
+msgstr "Dimensiune în pixeli:"
 
 #: ../app/widgets/gimpimagepropview.c:125
 msgid "Print size:"
@@ -12478,7 +12491,7 @@ msgstr "Nume fișier:"
 
 #: ../app/widgets/gimpimagepropview.c:142
 msgid "File Size:"
-msgstr "Dimensiune de fișier:"
+msgstr "Mărime fișier:"
 
 #: ../app/widgets/gimpimagepropview.c:145
 msgid "File Type:"
@@ -12486,7 +12499,7 @@ msgstr "Tip de fișier:"
 
 #: ../app/widgets/gimpimagepropview.c:150
 msgid "Size in memory:"
-msgstr "Dimensiune în memorie:"
+msgstr "Mărime în memorie:"
 
 #: ../app/widgets/gimpimagepropview.c:153
 msgid "Undo steps:"
@@ -12655,12 +12668,12 @@ msgstr "Șterge configurările selectate"
 #: ../app/widgets/gimpsizebox.c:464
 #, c-format
 msgid "%d × %d ppi"
-msgstr "%d x %d pixeli/inch"
+msgstr "%d × %d ppi (pixeli per țol)"
 
 #: ../app/widgets/gimpsizebox.c:466
 #, c-format
 msgid "%d ppi"
-msgstr "%d pixeli/inch"
+msgstr "%d ppi (pixeli per țol)"
 
 #: ../app/widgets/gimpstrokeeditor.c:185
 msgid "Line width:"
@@ -12726,12 +12739,12 @@ msgstr "P_ictogramă:"
 #: ../app/widgets/gimptemplateeditor.c:671
 #, c-format
 msgid "%d × %d ppi, %s"
-msgstr "%d x %d pixeli/inch, %s"
+msgstr "%d × %d ppi (pixeli per țol), %s"
 
 #: ../app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d ppi, %s"
-msgstr "%d pixeli/inch, %s"
+msgstr "%d ppi (pixeli per țol), %s"
 
 #: ../app/widgets/gimptexteditor.c:188
 msgid "_Language:"
