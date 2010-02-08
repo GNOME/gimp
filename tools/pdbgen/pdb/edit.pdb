@@ -239,7 +239,7 @@ HELP
 {
   if (gimp->global_buffer)
     {
-      image = gimp_edit_paste_as_new (gimp, NULL, gimp->global_buffer);
+      image = gimp_image_new_from_buffer (gimp, NULL, gimp->global_buffer);
 
       if (! image)
         success = FALSE;
@@ -482,7 +482,7 @@ HELP
 
   if (buffer)
     {
-      image = gimp_edit_paste_as_new (gimp, NULL, buffer);
+      image = gimp_image_new_from_buffer (gimp, NULL, buffer);
 
       if (! image)
         success = FALSE;
@@ -917,6 +917,7 @@ CODE
               "core/gimp.h"
               "core/gimp-edit.h"
               "core/gimpimage.h"
+              "core/gimpimage-new.h"
               "core/gimpprogress.h"
               "gimppdb-utils.h"
               "gimp-intl.h");

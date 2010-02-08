@@ -34,6 +34,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimplayer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-new.h"
 #include "core/gimpimage-undo.h"
 
 #include "vectors/gimpvectors-import.h"
@@ -311,15 +312,12 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
     {
       GimpImage *image;
 
-      image = gimp_edit_paste_as_new (gimp, action_data_get_image (data),
-                                      buffer);
+      image = gimp_image_new_from_buffer (gimp, action_data_get_image (data),
+                                          buffer);
       g_object_unref (buffer);
 
-      if (image)
-        {
-          gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
-          g_object_unref (image);
-        }
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+      g_object_unref (image);
     }
   else
     {

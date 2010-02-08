@@ -24,9 +24,12 @@
 
 #include "core-types.h"
 
+#include "base/tile-manager.h"
+
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
+#include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -181,6 +184,59 @@ gimp_image_new_from_component (Gimp            *gimp,
   gimp_image_undo_enable (new_image);
 
   return new_image;
+}
+
+GimpImage *
+gimp_image_new_from_buffer (Gimp       *gimp,
+                            GimpImage  *invoke,
+                            GimpBuffer *paste)
+{
+  GimpImage     *image;
+  GimpLayer     *layer;
+  GimpImageType  type;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (invoke == NULL || GIMP_IS_IMAGE (invoke), NULL);
+  g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
+
+  switch (tile_manager_bpp (paste->tiles))
+    {
+    case 1: type = GIMP_GRAY_IMAGE;  break;
+    case 2: type = GIMP_GRAYA_IMAGE; break;
+    case 3: type = GIMP_RGB_IMAGE;   break;
+    case 4: type = GIMP_RGBA_IMAGE;  break;
+    default:
+      g_return_val_if_reached (NULL);
+      break;
+    }
+
+  /*  create a new image  (always of type GIMP_RGB)  */
+  image = gimp_create_image (gimp,
+                             gimp_buffer_get_width  (paste),
+                             gimp_buffer_get_height (paste),
+                             GIMP_IMAGE_TYPE_BASE_TYPE (type),
+                             TRUE);
+  gimp_image_undo_disable (image);
+
+  if (invoke)
+    {
+      gdouble xres;
+      gdouble yres;
+
+      gimp_image_get_resolution (invoke, &xres, &yres);
+      gimp_image_set_resolution (image, xres, yres);
+      gimp_image_set_unit (image, gimp_image_get_unit (invoke));
+    }
+
+  layer = gimp_layer_new_from_tiles (paste->tiles, image, type,
+                                     _("Pasted Layer"),
+                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  gimp_image_add_layer (image, layer, NULL, 0, TRUE);
+
+  gimp_image_undo_enable (image);
+
+  return image;
 }
 
 GimpImage *

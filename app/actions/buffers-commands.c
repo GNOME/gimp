@@ -27,6 +27,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-new.h"
 
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpcontainerview.h"
@@ -85,14 +86,10 @@ buffers_paste_as_new_cmd_callback (GtkAction *action,
         {
           GimpImage *new_image;
 
-          new_image = gimp_edit_paste_as_new (image->gimp, image, buffer);
-
-          if (new_image)
-            {
-              gimp_create_display (image->gimp, new_image,
-                                   GIMP_UNIT_PIXEL, 1.0);
-              g_object_unref (new_image);
-            }
+          new_image = gimp_image_new_from_buffer (image->gimp, image, buffer);
+          gimp_create_display (image->gimp, new_image,
+                               GIMP_UNIT_PIXEL, 1.0);
+          g_object_unref (new_image);
         }
     }
 }

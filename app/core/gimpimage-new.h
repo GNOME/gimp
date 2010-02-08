@@ -29,6 +29,9 @@ GimpImage    * gimp_image_new_from_drawable     (Gimp            *gimp,
 GimpImage    * gimp_image_new_from_component    (Gimp            *gimp,
                                                  GimpImage       *image,
                                                  GimpChannelType  component);
+GimpImage    * gimp_image_new_from_buffer       (Gimp            *gimp,
+                                                 GimpImage       *invoke,
+                                                 GimpBuffer      *paste);
 GimpImage    * gimp_image_new_from_pixbuf       (Gimp            *gimp,
                                                  GdkPixbuf       *pixbuf,
                                                  const gchar     *layer_name);

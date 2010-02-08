@@ -31,6 +31,7 @@
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-new.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
@@ -233,7 +234,7 @@ edit_paste_as_new_invoker (GimpProcedure      *procedure,
 
   if (gimp->global_buffer)
     {
-      image = gimp_edit_paste_as_new (gimp, NULL, gimp->global_buffer);
+      image = gimp_image_new_from_buffer (gimp, NULL, gimp->global_buffer);
 
       if (! image)
         success = FALSE;
@@ -470,7 +471,7 @@ edit_named_paste_as_new_invoker (GimpProcedure      *procedure,
 
       if (buffer)
         {
-          image = gimp_edit_paste_as_new (gimp, NULL, buffer);
+          image = gimp_image_new_from_buffer (gimp, NULL, buffer);
 
           if (! image)
             success = FALSE;

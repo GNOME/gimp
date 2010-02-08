@@ -27,7 +27,6 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -232,13 +231,10 @@ gimp_toolbox_drop_buffer (GtkWidget    *widget,
   if (context->gimp->busy)
     return;
 
-  image = gimp_edit_paste_as_new (context->gimp, NULL, GIMP_BUFFER (viewable));
-
-  if (image)
-    {
-      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
-      g_object_unref (image);
-    }
+  image = gimp_image_new_from_buffer (context->gimp, NULL,
+                                      GIMP_BUFFER (viewable));
+  gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+  g_object_unref (image);
 }
 
 static void
