@@ -1384,7 +1384,15 @@ gimp_image_active_layer_notify (GimpItemTree     *tree,
                                 const GParamSpec *pspec,
                                 GimpImage        *image)
 {
-  GimpLayer *layer = gimp_image_get_active_layer (image);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpLayer        *layer   = gimp_image_get_active_layer (image);
+
+  if (layer)
+    {
+      /*  Configure the layer stack to reflect this change  */
+      private->layer_stack = g_slist_remove (private->layer_stack, layer);
+      private->layer_stack = g_slist_prepend (private->layer_stack, layer);
+    }
 
   g_signal_emit (image, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 
@@ -3131,13 +3139,6 @@ gimp_image_set_active_layer (GimpImage *image,
 
   if (layer != active_layer)
     {
-      if (layer)
-        {
-          /*  Configure the layer stack to reflect this change  */
-          private->layer_stack = g_slist_remove (private->layer_stack, layer);
-          private->layer_stack = g_slist_prepend (private->layer_stack, layer);
-        }
-
       /*  Don't cache selection info for the previous active layer  */
       if (active_layer)
         gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (active_layer));
