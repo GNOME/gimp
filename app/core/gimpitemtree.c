@@ -451,6 +451,9 @@ gimp_item_tree_remove_item (GimpItemTree *tree,
 
   g_object_ref (item);
 
+  g_hash_table_remove (private->name_hash,
+                       gimp_object_get_name (item));
+
   gimp_container_remove (container, GIMP_OBJECT (item));
 
   if (parent)
