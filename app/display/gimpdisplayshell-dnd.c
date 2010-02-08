@@ -33,8 +33,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpimage-new.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -201,7 +201,6 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   GimpImage        *image     = gimp_display_get_image (shell->display);
   GType             new_type;
   GimpItem         *new_item;
-  gboolean          new_image = FALSE;
 
   GIMP_LOG (DND, NULL);
 
@@ -210,34 +209,12 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
   if (! image)
     {
-      GimpImage         *src_image = gimp_item_get_image (GIMP_ITEM (viewable));
-      GimpDrawable      *drawable  = GIMP_DRAWABLE (viewable);
-      GimpImageBaseType  type;
-      gdouble            xres;
-      gdouble            yres;
-
-      type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
-
-      image = gimp_create_image (shell->display->gimp,
-                                 gimp_item_get_width  (GIMP_ITEM (viewable)),
-                                 gimp_item_get_height (GIMP_ITEM (viewable)),
-                                 type, TRUE);
-      gimp_image_undo_disable (image);
-
-      if (type == GIMP_INDEXED)
-        gimp_image_set_colormap (image,
-                                 gimp_image_get_colormap (src_image),
-                                 gimp_image_get_colormap_size (src_image),
-                                 FALSE);
-
-      gimp_image_get_resolution (src_image, &xres, &yres);
-      gimp_image_set_resolution (image, xres, yres);
-      gimp_image_set_unit (image, gimp_image_get_unit (src_image));
-
-      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+      image = gimp_image_new_from_drawable (shell->display->gimp,
+                                            GIMP_DRAWABLE (viewable));
+      gimp_create_display (shell->display->gimp, image, GIMP_UNIT_PIXEL, 1.0);
       g_object_unref (image);
 
-      new_image = TRUE;
+      return;
     }
 
   if (GIMP_IS_LAYER (viewable))
@@ -254,8 +231,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      if (! new_image)
-        gimp_display_shell_dnd_position_item (shell, new_item);
+      gimp_display_shell_dnd_position_item (shell, new_item);
 
       gimp_item_set_visible (new_item, TRUE, FALSE);
       gimp_item_set_linked (new_item, FALSE, FALSE);
@@ -267,9 +243,6 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
       gimp_display_shell_dnd_flush (shell, image);
     }
-
-  if (new_image)
-    gimp_image_undo_enable (image);
 }
 
 static void
@@ -650,12 +623,21 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
   GimpImage        *image     = gimp_display_get_image (shell->display);
   GimpLayer        *new_layer;
   GimpImageType     image_type;
-  gboolean          new_image = FALSE;
 
   GIMP_LOG (DND, NULL);
 
   if (shell->display->gimp->busy)
     return;
+
+  if (! image)
+    {
+      image = gimp_image_new_from_pixbuf (shell->display->gimp, pixbuf,
+                                          _("Dropped Buffer"));
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+      g_object_unref (image);
+
+      return;
+    }
 
   switch (gdk_pixbuf_get_n_channels (pixbuf))
     {
@@ -668,22 +650,6 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
     default:
       g_return_if_reached ();
       break;
-    }
-
-  if (! image)
-    {
-      image = gimp_create_image (shell->display->gimp,
-                                 gdk_pixbuf_get_width (pixbuf),
-                                 gdk_pixbuf_get_height (pixbuf),
-                                 GIMP_IMAGE_TYPE_BASE_TYPE (image_type),
-                                 FALSE);
-
-      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
-      g_object_unref (image);
-
-      gimp_image_undo_disable (image);
-
-      new_image = TRUE;
     }
 
   new_layer =
@@ -700,8 +666,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
-      if (! new_image)
-        gimp_display_shell_dnd_position_item (shell, new_item);
+      gimp_display_shell_dnd_position_item (shell, new_item);
 
       gimp_image_add_layer (image, new_layer,
                             GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -710,7 +675,4 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
 
       gimp_display_shell_dnd_flush (shell, image);
     }
-
-  if (new_image)
-    gimp_image_undo_enable (image);
 }

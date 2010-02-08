@@ -19,6 +19,7 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -26,8 +27,12 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
+#include "gimpimage-colormap.h"
 #include "gimpimage-new.h"
+#include "gimpimage-undo.h"
+#include "gimplayer.h"
 #include "gimptemplate.h"
 
 #include "gimp-intl.h"
@@ -68,4 +73,156 @@ gimp_image_new_set_last_template (Gimp         *gimp,
 
   gimp_config_sync (G_OBJECT (template),
                     G_OBJECT (gimp->image_new_last_template), 0);
+}
+
+GimpImage *
+gimp_image_new_from_drawable (Gimp         *gimp,
+                              GimpDrawable *drawable)
+{
+  GimpItem          *item;
+  GimpImage         *image;
+  GimpImage         *new_image;
+  GimpLayer         *new_layer;
+  GType              new_type;
+  gint               off_x, off_y;
+  GimpImageBaseType  type;
+  gdouble            xres;
+  gdouble            yres;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  item  = GIMP_ITEM (drawable);
+  image = gimp_item_get_image (item);
+
+  type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+
+  new_image = gimp_create_image (gimp,
+                                 gimp_item_get_width  (item),
+                                 gimp_item_get_height (item),
+                                 type, TRUE);
+  gimp_image_undo_disable (new_image);
+
+  if (type == GIMP_INDEXED)
+    gimp_image_set_colormap (new_image,
+                             gimp_image_get_colormap (image),
+                             gimp_image_get_colormap_size (image),
+                             FALSE);
+
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_image_set_resolution (new_image, xres, yres);
+  gimp_image_set_unit (new_image, gimp_image_get_unit (image));
+
+  if (GIMP_IS_LAYER (drawable))
+    new_type = G_TYPE_FROM_INSTANCE (drawable);
+  else
+    new_type = GIMP_TYPE_LAYER;
+
+  new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (drawable),
+                                             new_image, new_type));
+
+  gimp_object_set_name (GIMP_OBJECT (new_layer),
+                        gimp_object_get_name (drawable));
+
+  gimp_item_get_offset (GIMP_ITEM (new_layer), &off_x, &off_y);
+  gimp_item_translate (GIMP_ITEM (new_layer), -off_x, -off_y, FALSE);
+  gimp_item_set_visible (GIMP_ITEM (new_layer), TRUE, FALSE);
+  gimp_item_set_linked (GIMP_ITEM (new_layer), FALSE, FALSE);
+  gimp_layer_set_mode (new_layer, GIMP_NORMAL_MODE, FALSE);
+  gimp_layer_set_opacity (new_layer, GIMP_OPACITY_OPAQUE, FALSE);
+  gimp_layer_set_lock_alpha (new_layer, FALSE, FALSE);
+
+  gimp_image_add_layer (new_image, new_layer, NULL, 0, TRUE);
+
+  gimp_image_undo_enable (new_image);
+
+  return new_image;
+}
+
+GimpImage *
+gimp_image_new_from_component (Gimp            *gimp,
+                               GimpImage       *image,
+                               GimpChannelType  component)
+{
+  GimpImage   *new_image;
+  GimpChannel *channel;
+  GimpLayer   *layer;
+  const gchar *desc;
+  gdouble      xres;
+  gdouble      yres;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  new_image = gimp_create_image (gimp,
+                                 gimp_image_get_width  (image),
+                                 gimp_image_get_height (image),
+                                 GIMP_GRAY, TRUE);
+
+  gimp_image_undo_disable (new_image);
+
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_image_set_resolution (new_image, xres, yres);
+  gimp_image_set_unit (new_image, gimp_image_get_unit (image));
+
+  channel = gimp_channel_new_from_component (image, component, NULL, NULL);
+
+  layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (channel),
+                                         new_image, GIMP_TYPE_LAYER));
+  g_object_unref (channel);
+
+  gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
+                       NULL, NULL, &desc, NULL);
+  gimp_object_take_name (GIMP_OBJECT (layer),
+                         g_strdup_printf (_("%s Channel Copy"), desc));
+
+  gimp_image_add_layer (new_image, layer, NULL, 0, TRUE);
+
+  gimp_image_undo_enable (new_image);
+
+  return new_image;
+}
+
+GimpImage *
+gimp_image_new_from_pixbuf (Gimp        *gimp,
+                            GdkPixbuf   *pixbuf,
+                            const gchar *layer_name)
+{
+  GimpImageType  image_type;
+  GimpImage     *new_image;
+  GimpLayer     *layer;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+
+  switch (gdk_pixbuf_get_n_channels (pixbuf))
+    {
+    case 1: image_type = GIMP_GRAY_IMAGE;  break;
+    case 2: image_type = GIMP_GRAYA_IMAGE; break;
+    case 3: image_type = GIMP_RGB_IMAGE;   break;
+    case 4: image_type = GIMP_RGBA_IMAGE;  break;
+      break;
+
+    default:
+      g_return_val_if_reached (NULL);
+      break;
+    }
+
+  new_image = gimp_create_image (gimp,
+                                 gdk_pixbuf_get_width  (pixbuf),
+                                 gdk_pixbuf_get_height (pixbuf),
+                                 GIMP_IMAGE_TYPE_BASE_TYPE (image_type),
+                                 FALSE);
+
+  gimp_image_undo_disable (new_image);
+
+  layer = gimp_layer_new_from_pixbuf (pixbuf, new_image, image_type,
+                                      layer_name,
+                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  gimp_image_add_layer (new_image, layer, NULL, 0, TRUE);
+
+  gimp_image_undo_enable (new_image);
+
+  return new_image;
 }

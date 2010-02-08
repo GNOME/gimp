@@ -19,10 +19,19 @@
 #define __GIMP_IMAGE_NEW_H__
 
 
-GimpTemplate * gimp_image_new_get_last_template (Gimp         *gimp,
-                                                 GimpImage    *image);
-void           gimp_image_new_set_last_template (Gimp         *gimp,
-                                                 GimpTemplate *template);
+GimpTemplate * gimp_image_new_get_last_template (Gimp            *gimp,
+                                                 GimpImage       *image);
+void           gimp_image_new_set_last_template (Gimp            *gimp,
+                                                 GimpTemplate    *template);
+
+GimpImage    * gimp_image_new_from_drawable     (Gimp            *gimp,
+                                                 GimpDrawable    *drawable);
+GimpImage    * gimp_image_new_from_component    (Gimp            *gimp,
+                                                 GimpImage       *image,
+                                                 GimpChannelType  component);
+GimpImage    * gimp_image_new_from_pixbuf       (Gimp            *gimp,
+                                                 GdkPixbuf       *pixbuf,
+                                                 const gchar     *layer_name);
 
 
 #endif /* __GIMP_IMAGE_NEW__ */
