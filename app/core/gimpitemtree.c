@@ -337,6 +337,23 @@ gimp_item_tree_get_insert_pos (GimpItemTree *tree,
 
   private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        G_TYPE_CHECK_INSTANCE_TYPE (parent, private->item_type),
+                        FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_item_is_attached (parent), FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_item_get_image (parent) == private->image,
+                        FALSE);
+  g_return_val_if_fail (parent == NULL ||
+                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
+                        FALSE);
+  g_return_val_if_fail (position != NULL, NULL);
+
   /*  if we want to insert in the active item's parent container  */
   if (parent == GIMP_IMAGE_ACTIVE_PARENT)
     {
