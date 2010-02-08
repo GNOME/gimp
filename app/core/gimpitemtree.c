@@ -297,13 +297,14 @@ gimp_item_tree_set_active_item (GimpItemTree *tree,
   GimpItemTreePrivate *private;
 
   g_return_if_fail (GIMP_IS_ITEM_TREE (tree));
-  g_return_if_fail (item == NULL || GIMP_IS_ITEM (item));
 
   private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
   g_return_if_fail (item == NULL ||
-                    (gimp_item_is_attached (item) &&
-                     gimp_item_get_image (item) == private->image));
+                    G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type));
+  g_return_if_fail (item == NULL || gimp_item_is_attached (item));
+  g_return_if_fail (item == NULL ||
+                    gimp_item_get_image (item) == private->image);
 
   if (item != private->active_item)
     {
