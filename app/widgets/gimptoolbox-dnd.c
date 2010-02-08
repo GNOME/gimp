@@ -33,6 +33,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimptoolinfo.h"

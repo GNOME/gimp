@@ -34,6 +34,7 @@
 #include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-private.h"
+#include "gimpimage-undo.h"
 #include "gimpimage-sample-points.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"

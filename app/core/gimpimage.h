@@ -265,18 +265,13 @@ void            gimp_image_size_changed_detailed (GimpImage          *image,
                                                   gint                previous_origin_y,
                                                   gint                previous_width,
                                                   gint                previous_height);
-
-
-/*  undo  */
-
-gboolean        gimp_image_undo_is_enabled       (const GimpImage    *image);
-gboolean        gimp_image_undo_enable           (GimpImage          *image);
-gboolean        gimp_image_undo_disable          (GimpImage          *image);
-gboolean        gimp_image_undo_freeze           (GimpImage          *image);
-gboolean        gimp_image_undo_thaw             (GimpImage          *image);
 void            gimp_image_undo_event            (GimpImage          *image,
                                                   GimpUndoEvent       event,
                                                   GimpUndo           *undo);
+
+
+/*  dirty counters  */
+
 gint            gimp_image_dirty                 (GimpImage          *image,
                                                   GimpDirtyMask       dirty_mask);
 gint            gimp_image_clean                 (GimpImage          *image,

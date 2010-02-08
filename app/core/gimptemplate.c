@@ -32,6 +32,7 @@
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimpprojection.h"
 #include "gimptemplate.h"

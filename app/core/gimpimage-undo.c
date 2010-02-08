@@ -49,6 +49,69 @@ static GimpDirtyMask gimp_image_undo_dirty_from_type (GimpUndoType   undo_type);
 /*  public functions  */
 
 gboolean
+gimp_image_undo_is_enabled (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  return (GIMP_IMAGE_GET_PRIVATE (image)->undo_freeze_count == 0);
+}
+
+gboolean
+gimp_image_undo_enable (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  /*  Free all undo steps as they are now invalidated  */
+  gimp_image_undo_free (image);
+
+  return gimp_image_undo_thaw (image);
+}
+
+gboolean
+gimp_image_undo_disable (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  return gimp_image_undo_freeze (image);
+}
+
+gboolean
+gimp_image_undo_freeze (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->undo_freeze_count++;
+
+  if (private->undo_freeze_count == 1)
+    gimp_image_undo_event (image, GIMP_UNDO_EVENT_UNDO_FREEZE, NULL);
+
+  return TRUE;
+}
+
+gboolean
+gimp_image_undo_thaw (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  g_return_val_if_fail (private->undo_freeze_count > 0, FALSE);
+
+  private->undo_freeze_count--;
+
+  if (private->undo_freeze_count == 0)
+    gimp_image_undo_event (image, GIMP_UNDO_EVENT_UNDO_THAW, NULL);
+
+  return TRUE;
+}
+
+gboolean
 gimp_image_undo (GimpImage *image)
 {
   GimpImagePrivate *private;

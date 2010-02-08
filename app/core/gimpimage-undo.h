@@ -19,6 +19,12 @@
 #define __GIMP_IMAGE__UNDO_H__
 
 
+gboolean        gimp_image_undo_is_enabled      (const GimpImage  *image);
+gboolean        gimp_image_undo_enable          (GimpImage        *image);
+gboolean        gimp_image_undo_disable         (GimpImage        *image);
+gboolean        gimp_image_undo_freeze          (GimpImage        *image);
+gboolean        gimp_image_undo_thaw            (GimpImage        *image);
+
 gboolean        gimp_image_undo                 (GimpImage        *image);
 gboolean        gimp_image_redo                 (GimpImage        *image);
 

@@ -2087,72 +2087,6 @@ gimp_image_quick_mask_changed (GimpImage *image)
   g_signal_emit (image, gimp_image_signals[QUICK_MASK_CHANGED], 0);
 }
 
-
-/*  undo  */
-
-gboolean
-gimp_image_undo_is_enabled (const GimpImage *image)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  return (GIMP_IMAGE_GET_PRIVATE (image)->undo_freeze_count == 0);
-}
-
-gboolean
-gimp_image_undo_enable (GimpImage *image)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  /*  Free all undo steps as they are now invalidated  */
-  gimp_image_undo_free (image);
-
-  return gimp_image_undo_thaw (image);
-}
-
-gboolean
-gimp_image_undo_disable (GimpImage *image)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  return gimp_image_undo_freeze (image);
-}
-
-gboolean
-gimp_image_undo_freeze (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  private->undo_freeze_count++;
-
-  if (private->undo_freeze_count == 1)
-    gimp_image_undo_event (image, GIMP_UNDO_EVENT_UNDO_FREEZE, NULL);
-
-  return TRUE;
-}
-
-gboolean
-gimp_image_undo_thaw (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  g_return_val_if_fail (private->undo_freeze_count > 0, FALSE);
-
-  private->undo_freeze_count--;
-
-  if (private->undo_freeze_count == 0)
-    gimp_image_undo_event (image, GIMP_UNDO_EVENT_UNDO_THAW, NULL);
-
-  return TRUE;
-}
-
 void
 gimp_image_undo_event (GimpImage     *image,
                        GimpUndoEvent  event,
@@ -2167,6 +2101,8 @@ gimp_image_undo_event (GimpImage     *image,
   g_signal_emit (image, gimp_image_signals[UNDO_EVENT], 0, event, undo);
 }
 
+
+/*  dirty counters  */
 
 /* NOTE about the image->dirty counter:
  *   If 0, then the image is clean (ie, copy on disk is the same as the one
@@ -2305,7 +2241,6 @@ gimp_image_get_dirty_time (const GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->dirty_time;
 }
 
-
 /**
  * gimp_image_saved:
  * @image:
@@ -2341,6 +2276,7 @@ gimp_image_exported (GimpImage   *image,
 
   g_signal_emit (image, gimp_image_signals[EXPORTED], 0, uri);
 }
+
 
 /*  flush this image's displays  */
 
