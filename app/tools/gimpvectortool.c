@@ -1233,10 +1233,20 @@ gimp_vector_tool_status_update (GimpTool        *tool,
           break;
 
         case VECTORS_MOVE_HANDLE:
-          status = gimp_suggest_modifiers (_("Click-Drag to move the handle "
-                                             "around"),
-                                           GDK_SHIFT_MASK & ~state,
-                                           NULL, NULL, NULL);
+          if (vector_tool->restriction != GIMP_ANCHOR_FEATURE_SYMMETRIC)
+            {
+              status = gimp_suggest_modifiers (_("Click-Drag to move the "
+                                                 "handle around"),
+                                               GDK_SHIFT_MASK & ~state,
+                                               NULL, NULL, NULL);
+            }
+          else
+            {
+              status = gimp_suggest_modifiers (_("Click-Drag to move the "
+                                                 "handles around symmetrically"),
+                                               GDK_SHIFT_MASK & ~state,
+                                               NULL, NULL, NULL);
+            }
           free_status = TRUE;
           break;
 
