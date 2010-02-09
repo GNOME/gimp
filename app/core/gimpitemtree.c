@@ -325,37 +325,43 @@ gimp_item_tree_get_item_by_name (GimpItemTree *tree,
                               name);
 }
 
-GimpItem *
-gimp_item_tree_get_insert_pos (GimpItemTree *tree,
-                               GimpItem     *parent,
-                               gint         *position)
+gboolean
+gimp_item_tree_get_insert_pos (GimpItemTree  *tree,
+                               GimpItem      *item,
+                               GimpItem     **parent,
+                               gint          *position)
 {
   GimpItemTreePrivate *private;
   GimpContainer       *container;
 
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE (tree), FALSE);
+  g_return_val_if_fail (parent != NULL, FALSE);
 
   private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        G_TYPE_CHECK_INSTANCE_TYPE (parent, private->item_type),
+  g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (item, private->item_type),
                         FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_is_attached (parent), FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_get_image (parent) == private->image,
+  g_return_val_if_fail (! gimp_item_is_attached (item), FALSE);
+  g_return_val_if_fail (gimp_item_get_image (item) == private->image, FALSE);
+  g_return_val_if_fail (*parent == NULL ||
+                        *parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        G_TYPE_CHECK_INSTANCE_TYPE (*parent, private->item_type),
                         FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
+  g_return_val_if_fail (*parent == NULL ||
+                        *parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_item_is_attached (*parent), FALSE);
+  g_return_val_if_fail (*parent == NULL ||
+                        *parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_item_get_image (*parent) == private->image,
                         FALSE);
-  g_return_val_if_fail (position != NULL, NULL);
+  g_return_val_if_fail (*parent == NULL ||
+                        *parent == GIMP_IMAGE_ACTIVE_PARENT ||
+                        gimp_viewable_get_children (GIMP_VIEWABLE (*parent)),
+                        FALSE);
+  g_return_val_if_fail (position != NULL, FALSE);
 
   /*  if we want to insert in the active item's parent container  */
-  if (parent == GIMP_IMAGE_ACTIVE_PARENT)
+  if (*parent == GIMP_IMAGE_ACTIVE_PARENT)
     {
       if (private->active_item)
         {
@@ -365,23 +371,23 @@ gimp_item_tree_get_insert_pos (GimpItemTree *tree,
            */
           if (gimp_viewable_get_children (GIMP_VIEWABLE (private->active_item)))
             {
-              parent    = private->active_item;
+              *parent   = private->active_item;
               *position = 0;
             }
           else
             {
-              parent = gimp_item_get_parent (private->active_item);
+              *parent = gimp_item_get_parent (private->active_item);
             }
         }
       else
         {
           /*  use the toplevel container if there is no active item  */
-          parent = NULL;
+          *parent = NULL;
         }
     }
 
-  if (parent)
-    container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+  if (*parent)
+    container = gimp_viewable_get_children (GIMP_VIEWABLE (*parent));
   else
     container = tree->container;
 
@@ -389,8 +395,9 @@ gimp_item_tree_get_insert_pos (GimpItemTree *tree,
   if (*position == -1)
     {
       if (private->active_item)
-        *position = gimp_container_get_child_index (container,
-                                                    GIMP_OBJECT (private->active_item));
+        *position =
+          gimp_container_get_child_index (container,
+                                          GIMP_OBJECT (private->active_item));
 
       /*  if the active item is not in the specified parent container,
        *  fall back to index 0
@@ -402,7 +409,7 @@ gimp_item_tree_get_insert_pos (GimpItemTree *tree,
   /*  don't add at a non-existing index  */
   *position = CLAMP (*position, 0, gimp_container_get_n_children (container));
 
-  return parent;
+  return TRUE;
 }
 
 void

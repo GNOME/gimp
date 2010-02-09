@@ -3259,30 +3259,16 @@ gimp_image_add_layer (GimpImage *image,
   gboolean          old_has_alpha;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-  g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (layer)), FALSE);
-  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) == image,
-                        FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        GIMP_IS_LAYER (parent), FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_get_image (GIMP_ITEM (parent)) == image,
-                        FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
-                        FALSE);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  parent = GIMP_LAYER (gimp_item_tree_get_insert_pos (private->layers,
-                                                      (GimpItem *) parent,
-                                                      &position));
+  /*  item and parent are type-checked in GimpItemTree
+   */
+  if (! gimp_item_tree_get_insert_pos (private->layers,
+                                       (GimpItem *) layer,
+                                       (GimpItem **) &parent,
+                                       &position))
+    return FALSE;
 
   /*  If there is a floating selection (and this isn't it!),
    *  make sure the insert position is greater than 0
@@ -3449,24 +3435,16 @@ gimp_image_add_layers (GimpImage   *image,
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (layers != NULL);
-  g_return_if_fail (parent == NULL ||
-                    parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                    GIMP_IS_LAYER (parent));
-  g_return_if_fail (parent == NULL ||
-                    parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                    gimp_item_is_attached (GIMP_ITEM (parent)));
-  g_return_if_fail (parent == NULL ||
-                    parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                    gimp_item_get_image (GIMP_ITEM (parent)) == image);
-  g_return_if_fail (parent == NULL ||
-                    parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                    gimp_viewable_get_children (GIMP_VIEWABLE (parent)));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  parent = GIMP_LAYER (gimp_item_tree_get_insert_pos (private->layers,
-                                                      (GimpItem *) parent,
-                                                      &position));
+  /*  item and parent are type-checked in GimpItemTree
+   */
+  if (! gimp_item_tree_get_insert_pos (private->layers,
+                                       (GimpItem *) layers->data,
+                                       (GimpItem **) &parent,
+                                       &position))
+    return;
 
   for (list = layers; list; list = g_list_next (list))
     {
@@ -3622,30 +3600,16 @@ gimp_image_add_channel (GimpImage   *image,
   GimpImagePrivate *private;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-  g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (channel)), FALSE);
-  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (channel)) == image,
-                        FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        GIMP_IS_CHANNEL (parent), FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_get_image (GIMP_ITEM (parent)) == image,
-                        FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
-                        FALSE);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  parent = GIMP_CHANNEL (gimp_item_tree_get_insert_pos (private->channels,
-                                                        (GimpItem *) parent,
-                                                        &position));
+  /*  item and parent are type-checked in GimpItemTree
+   */
+  if (! gimp_item_tree_get_insert_pos (private->channels,
+                                       (GimpItem *) channel,
+                                       (GimpItem **) &parent,
+                                       &position))
+    return FALSE;
 
   if (push_undo)
     gimp_image_undo_push_channel_add (image, _("Add Channel"),
@@ -3837,30 +3801,16 @@ gimp_image_add_vectors (GimpImage   *image,
   GimpImagePrivate *private;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (vectors)), FALSE);
-  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (vectors)) == image,
-                        FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        GIMP_IS_VECTORS (parent), FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_item_get_image (GIMP_ITEM (parent)) == image,
-                        FALSE);
-  g_return_val_if_fail (parent == NULL ||
-                        parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
-                        FALSE);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  parent = GIMP_VECTORS (gimp_item_tree_get_insert_pos (private->vectors,
-                                                        (GimpItem *) parent,
-                                                        &position));
+  /*  item and parent are type-checked in GimpItemTree
+   */
+  if (! gimp_item_tree_get_insert_pos (private->vectors,
+                                       (GimpItem *) vectors,
+                                       (GimpItem **) &parent,
+                                       &position))
+    return FALSE;
 
   if (push_undo)
     gimp_image_undo_push_vectors_add (image, _("Add Path"),
