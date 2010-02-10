@@ -218,7 +218,7 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, LOAD_PROC) == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
