@@ -39,6 +39,11 @@ extern gint tile_exist_peak;
 extern gint tile_exist_count;
 #endif
 
+#ifdef GIMP_UNSTABLE
+GList *tile_managers = NULL;
+#endif
+
+
 GType
 gimp_tile_manager_get_type (void)
 {
@@ -52,6 +57,26 @@ gimp_tile_manager_get_type (void)
   return type;
 }
 
+#ifdef GIMP_UNSTABLE
+void
+tile_manager_exit (void)
+{
+  if (tile_managers)
+    {
+      g_warning ("%d tile managers leaked", g_list_length (tile_managers));
+
+      while (tile_managers)
+        {
+          g_printerr ("unref tile manager %p (%d x %d)\n",
+                      tile_managers->data,
+                      tile_manager_width (tile_managers->data),
+                      tile_manager_height (tile_managers->data));
+
+          tile_manager_unref (tile_managers->data);
+        }
+    }
+}
+#endif
 
 static inline gint
 tile_manager_get_tile_num (TileManager *tm,
@@ -64,7 +89,6 @@ tile_manager_get_tile_num (TileManager *tm,
 
   return (ypixel / TILE_HEIGHT) * tm->ntile_cols + (xpixel / TILE_WIDTH);
 }
-
 
 TileManager *
 tile_manager_new (gint width,
@@ -85,6 +109,10 @@ tile_manager_new (gint width,
   tm->ntile_rows  = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
   tm->ntile_cols  = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
   tm->cached_num  = -1;
+
+#ifdef GIMP_UNSTABLE
+  tile_managers = g_list_prepend (tile_managers, tm);
+#endif
 
   return tm;
 }
@@ -108,6 +136,10 @@ tile_manager_unref (TileManager *tm)
 
   if (tm->ref_count < 1)
     {
+#ifdef GIMP_UNSTABLE
+      tile_managers = g_list_remove (tile_managers, tm);
+#endif
+
       if (tm->cached_tile)
         tile_release (tm->cached_tile, FALSE);
 

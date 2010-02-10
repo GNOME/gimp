@@ -24,6 +24,9 @@
 
 GType         gimp_tile_manager_get_type     (void) G_GNUC_CONST;
 
+#ifdef GIMP_UNSTABLE
+void          tile_manager_exit              (void);
+#endif
 
 /* Creates a new tile manager with the specified size */
 TileManager * tile_manager_new               (gint width,

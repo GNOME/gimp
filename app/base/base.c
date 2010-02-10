@@ -40,6 +40,7 @@
 #include "base.h"
 #include "pixel-processor.h"
 #include "tile-cache.h"
+#include "tile-manager.h"
 #include "tile-swap.h"
 
 
@@ -115,6 +116,10 @@ void
 base_exit (void)
 {
   g_return_if_fail (base_config != NULL);
+
+#ifdef GIMP_UNSTABLE
+  tile_manager_exit ();
+#endif
 
   pixel_processor_exit ();
   paint_funcs_free ();
