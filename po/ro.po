@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
 "POT-Creation-Date: 2010-02-07 10:14+0000\n"
-"PO-Revision-Date: 2010-02-04 18:24+0200\n"
+"PO-Revision-Date: 2010-02-10 18:47+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -11746,7 +11746,7 @@ msgstr "Scurtătura „%s” este deja luată de „%s” din grupul „%s”."
 #: ../app/widgets/gimpactionview.c:708
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr "Reasignarea scurtăturii va cauza eliminarea acesteia din „%s”."
+msgstr "Reasocierea scurtăturii va cauza eliminarea acesteia din „%s”."
 
 #: ../app/widgets/gimpactionview.c:781
 msgid "Invalid shortcut."

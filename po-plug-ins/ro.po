@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
 "POT-Creation-Date: 2010-02-07 10:15+0000\n"
-"PO-Revision-Date: 2010-02-07 01:58+0200\n"
+"PO-Revision-Date: 2010-02-10 01:04+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -510,8 +510,9 @@ msgstr "Anticrenelează folosind algoritmul de extrapolare-margini Scale3X"
 # apare la contextul lui undo
 #: ../plug-ins/common/antialias.c:90
 msgid "_Antialias"
-msgstr "_Anticrenelează"
+msgstr "_Anticrenelare"
 
+# apare pe bara de progres
 #: ../plug-ins/common/antialias.c:149
 msgid "Antialiasing..."
 msgstr "Anticrenelare..."
