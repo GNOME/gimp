@@ -86,9 +86,10 @@ gimp_drawable_undo_class_init (GimpDrawableUndoClass *klass)
   undo_class->free               = gimp_drawable_undo_free;
 
   g_object_class_install_property (object_class, PROP_TILES,
-                                   g_param_spec_pointer ("tiles", NULL, NULL,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_boxed ("tiles", NULL, NULL,
+                                                       GIMP_TYPE_TILE_MANAGER,
+                                                       GIMP_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SPARSE,
                                    g_param_spec_boolean ("sparse", NULL, NULL,
@@ -155,7 +156,7 @@ gimp_drawable_undo_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TILES:
-      drawable_undo->tiles = tile_manager_ref (g_value_get_pointer (value));
+      drawable_undo->tiles = g_value_dup_boxed (value);
       break;
     case PROP_SPARSE:
       drawable_undo->sparse = g_value_get_boolean (value);
@@ -190,7 +191,7 @@ gimp_drawable_undo_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_TILES:
-      g_value_set_pointer (value, drawable_undo->tiles);
+      g_value_set_boxed (value, drawable_undo->tiles);
       break;
     case PROP_SPARSE:
       g_value_set_boolean (value, drawable_undo->sparse);
