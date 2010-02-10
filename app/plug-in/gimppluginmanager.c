@@ -201,12 +201,6 @@ gimp_plug_in_manager_finalize (GObject *object)
       manager->plug_in_defs = NULL;
     }
 
-  if (manager->shm)
-    {
-      gimp_plug_in_shm_free (manager->shm);
-      manager->shm = NULL;
-    }
-
   if (manager->environ_table)
     {
       g_object_unref (manager->environ_table);
@@ -324,6 +318,15 @@ gimp_plug_in_manager_exit (GimpPlugInManager *manager)
 
   while (manager->open_plug_ins)
     gimp_plug_in_close (manager->open_plug_ins->data, TRUE);
+
+  /*  need to deatch from shared memory, we can't rely on exit()
+   *  cleaning up behind us (see bug #609026)
+   */
+  if (manager->shm)
+    {
+      gimp_plug_in_shm_free (manager->shm);
+      manager->shm = NULL;
+    }
 }
 
 void
