@@ -48,7 +48,8 @@ gimp_log_init (void)
         { "shadow-tiles",       GIMP_LOG_SHADOW_TILES       },
         { "scale",              GIMP_LOG_SCALE              },
         { "wm",                 GIMP_LOG_WM                 },
-        { "floating-selection", GIMP_LOG_FLOATING_SELECTION }
+        { "floating-selection", GIMP_LOG_FLOATING_SELECTION },
+        { "shm",                GIMP_LOG_SHM                }
       };
 
       /*  g_parse_debug_string() has special treatment of the string 'help',

@@ -68,6 +68,8 @@
 
 #include "gimppluginshm.h"
 
+#include "gimp-log.h"
+
 
 #define TILE_MAP_SIZE (TILE_WIDTH * TILE_HEIGHT * 4)
 
@@ -234,6 +236,10 @@ gimp_plug_in_shm_new (void)
       g_slice_free (GimpPlugInShm, shm);
       shm = NULL;
     }
+  else
+    {
+      GIMP_LOG (SHM, "attached shared memory segment ID = %d", shm->shm_ID);
+    }
 
   return shm;
 }
@@ -248,12 +254,11 @@ gimp_plug_in_shm_free (GimpPlugInShm *shm)
 
 #if defined (USE_SYSV_SHM)
 
+      shmdt (shm->shm_addr);
+
 #ifndef IPC_RMID_DEFERRED_RELEASE
-      shmdt (shm->shm_addr);
       shmctl (shm->shm_ID, IPC_RMID, NULL);
-#else
-      shmdt (shm->shm_addr);
-#endif /* IPC_RMID_DEFERRED_RELEASE */
+#endif
 
 #elif defined(USE_WIN32_SHM)
 
@@ -273,6 +278,7 @@ gimp_plug_in_shm_free (GimpPlugInShm *shm)
 
 #endif
 
+      GIMP_LOG (SHM, "detached shared memory segment ID = %d", shm->shm_ID);
     }
 
   g_slice_free (GimpPlugInShm, shm);
