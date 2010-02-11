@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-11 03:15+0300\n"
-"PO-Revision-Date: 2010-02-11 03:17+0300\n"
+"PO-Revision-Date: 2010-02-11 21:27+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8431,7 +8431,7 @@ msgstr "Ошибки"
 
 #: ../app/dialogs/dialogs.c:254
 msgid "Pointer"
-msgstr "Курсор мыши"
+msgstr "Указатель"
 
 #: ../app/dialogs/dialogs.c:273
 msgid "History"
@@ -8451,11 +8451,11 @@ msgstr "Выделение"
 
 #: ../app/dialogs/dialogs.c:304
 msgid "Selection Editor"
-msgstr "Правка выделенной области"
+msgstr "Правка выделения"
 
 #: ../app/dialogs/dialogs.c:308
 msgid "Undo"
-msgstr "Отменить"
+msgstr "История"
 
 #: ../app/dialogs/dialogs.c:308
 msgid "Undo History"
