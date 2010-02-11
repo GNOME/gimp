@@ -17,9 +17,9 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <string.h>
+
+#undef GSEAL_ENABLE
 
 /* FIXME: #undef GTK_DISABLE_DEPRECATED */
 #undef GTK_DISABLE_DEPRECATED
@@ -326,8 +326,7 @@ gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
 
       if (! HAVE_COLORMAP (image))
         {
-          editor->index_adjustment->upper = 0;
-          gtk_adjustment_changed (editor->index_adjustment);
+          gtk_adjustment_set_upper (editor->index_adjustment, 0);
 
           if (GTK_WIDGET_MAPPED (GTK_WIDGET (editor)))
             gimp_colormap_editor_clear (editor, -1);
@@ -352,10 +351,8 @@ gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
         {
           gimp_colormap_editor_draw (editor);
 
-          editor->index_adjustment->upper =
-            gimp_image_get_colormap_size (image) - 1;
-
-          gtk_adjustment_changed (editor->index_adjustment);
+          gtk_adjustment_set_upper (editor->index_adjustment,
+                                    gimp_image_get_colormap_size (image) - 1);
         }
     }
 
@@ -511,14 +508,13 @@ gimp_colormap_editor_create_layout (GtkWidget *widget)
 static void
 gimp_colormap_editor_draw (GimpColormapEditor *editor)
 {
-  GimpImage    *image    = GIMP_IMAGE_EDITOR (editor)->image;
-  const guchar *colormap = gimp_image_get_colormap (image);
-  gint          i, j, k, b;
-  gint          col;
-  guchar       *row;
-  gint          cellsize, ncol, xn, yn;
-  gint          width  = editor->preview->allocation.width;
-  gint          height = editor->preview->allocation.height;
+  GimpImage     *image    = GIMP_IMAGE_EDITOR (editor)->image;
+  const guchar  *colormap = gimp_image_get_colormap (image);
+  GtkAllocation  allocation;
+  gint           i, j, k, b;
+  gint           col;
+  guchar        *row;
+  gint           cellsize, ncol, xn, yn;
 
   ncol = gimp_image_get_colormap_size (image);
 
@@ -528,9 +524,11 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
       return;
     }
 
-  cellsize = sqrt (width * height / ncol);
+  gtk_widget_get_allocation (editor->preview, &allocation);
+
+  cellsize = sqrt (allocation.width * allocation.height / ncol);
   while (cellsize >= MIN_CELL_SIZE
-         && (xn = width / cellsize) * (yn = height / cellsize) < ncol)
+         && (xn = allocation.width / cellsize) * (yn = allocation.height / cellsize) < ncol)
     cellsize--;
 
   if (cellsize < MIN_CELL_SIZE)
@@ -552,7 +550,7 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
   editor->yn       = yn;
   editor->cellsize = cellsize;
 
-  row = g_new (guchar, MAX (width, xn * cellsize) * 3);
+  row = g_new (guchar, MAX (allocation.width, xn * cellsize) * 3);
   col = 0;
   for (i = 0; i < yn; i++)
     {
@@ -563,14 +561,14 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
               row[(j * cellsize + k) * 3 + b] = colormap[col * 3 + b];
         }
 
-      if (j * cellsize < width)
-        memset (row + j * cellsize * 3, 255, 3 * (width - j * cellsize));
+      if (j * cellsize < allocation.width)
+        memset (row + j * cellsize * 3, 255, 3 * (allocation.width - j * cellsize));
 
       for (k = 0; k < cellsize; k++)
         {
           gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, 0,
                                 i * cellsize + k,
-                                width);
+                                allocation.width);
         }
     }
 
@@ -657,6 +655,7 @@ gimp_colormap_preview_expose (GtkWidget          *widget,
                               GimpColormapEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GtkAllocation    allocation;
   gint             x, y;
   gint             width, height;
 
@@ -664,13 +663,15 @@ gimp_colormap_preview_expose (GtkWidget          *widget,
       gimp_image_base_type (image_editor->image) == GIMP_INDEXED)
     return;
 
+  gtk_widget_get_allocation (widget, &allocation);
+
   pango_layout_get_pixel_size (editor->layout, &width, &height);
 
-  x = (widget->allocation.width - width) / 2;
-  y = (widget->allocation.height - height) / 2;
+  x = (allocation.width - width) / 2;
+  y = (allocation.height - height) / 2;
 
-  gdk_draw_layout (editor->preview->window,
-                   editor->preview->style->fg_gc[widget->state],
+  gdk_draw_layout (gtk_widget_get_window (editor->preview),
+                   gtk_widget_get_style (editor->preview)->fg_gc[gtk_widget_get_state (widget)],
                    MAX (x, 0), MAX (y, 0),
                    editor->layout);
 }
@@ -679,23 +680,25 @@ static void
 gimp_colormap_editor_clear (GimpColormapEditor *editor,
                             gint                start_row)
 {
-  guchar *row;
-  gint    width  = editor->preview->allocation.width;
-  gint    height = editor->preview->allocation.height;
-  gint    y;
+  GtkAllocation  allocation;
+  guchar        *row;
+  gint           y;
+
+  gtk_widget_get_allocation (editor->preview, &allocation);
 
   if (start_row < 0)
     start_row = 0;
 
-  if (start_row >= height)
+  if (start_row >= allocation.height)
     return;
 
-  row = g_alloca (width * 3);
+  row = g_alloca (allocation.width * 3);
 
-  memset (row, 255, 3 * width);
+  memset (row, 255, 3 * allocation.width);
 
-  for (y = start_row; y < height; y++)
-    gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, 0, y, width);
+  for (y = start_row; y < allocation.height; y++)
+    gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
+                          0, y, allocation.width);
 
   gtk_widget_queue_draw (editor->preview);
 }
@@ -883,14 +886,8 @@ gimp_colormap_image_colormap_changed (GimpImage          *image,
           gimp_colormap_editor_draw_cell (editor, ncol);
         }
 
-      if (editor->index_adjustment->upper !=
-          (gimp_image_get_colormap_size (image) - 1))
-        {
-          editor->index_adjustment->upper =
-            gimp_image_get_colormap_size (image) - 1;
-
-          gtk_adjustment_changed (editor->index_adjustment);
-        }
+      gtk_adjustment_set_upper (editor->index_adjustment,
+                                gimp_image_get_colormap_size (image) - 1);
     }
   else
     {
