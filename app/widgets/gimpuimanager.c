@@ -20,9 +20,9 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <string.h>
+
+#undef GSEAL_ENABLE
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -953,7 +953,8 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
 
       if (! menu_item && GTK_IS_MENU (widget))
         {
-          GdkWindow *window = gtk_widget_get_window (GTK_MENU (widget)->toplevel);
+          GtkWidget *parent = gtk_widget_get_parent (widget);
+          GdkWindow *window = gtk_widget_get_window (parent);
           gint       x, y;
 
           gdk_window_get_pointer (window, &x, &y, NULL);
