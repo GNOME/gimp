@@ -160,10 +160,9 @@ static void
 gimp_statusbar_init (GimpStatusbar *statusbar)
 {
   GtkWidget     *hbox;
+  GtkWidget     *label;
   GtkWidget     *image;
   GimpUnitStore *store;
-  GtkWidget     *original_child;
-  GtkWidget     *original_child_parent;
 
   statusbar->shell          = NULL;
   statusbar->messages       = NULL;
@@ -181,18 +180,27 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->progress_active      = FALSE;
   statusbar->progress_shown       = FALSE;
 
+  label = g_object_ref (GTK_STATUSBAR (statusbar)->label);
+
   /* remove the message area or label and insert a hbox */
 #if GTK_CHECK_VERSION (2, 19, 1)
-  original_child = gtk_statusbar_get_message_area (GTK_STATUSBAR (statusbar));
+  {
+    hbox = gtk_statusbar_get_message_area (GTK_STATUSBAR (statusbar));
+    gtk_box_set_spacing (GTK_BOX (hbox), 1);
+    gtk_container_remove (GTK_CONTAINER (hbox), label);
+  }
 #else
-  original_child = GTK_STATUSBAR (statusbar)->label;
-#endif
-  original_child_parent = gtk_widget_get_parent (original_child);
-  gtk_container_remove (GTK_CONTAINER (original_child_parent), g_object_ref (original_child));
+  {
+    GtkWidget *label_parent;
 
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_add (GTK_CONTAINER (original_child_parent), hbox);
-  gtk_widget_show (hbox);
+    label_parent = gtk_widget_get_parent (label);
+    gtk_container_remove (GTK_CONTAINER (label_parent), label);
+
+    hbox = gtk_hbox_new (FALSE, 1);
+    gtk_container_add (GTK_CONTAINER (label_parent), hbox);
+    gtk_widget_show (hbox);
+  }
+#endif
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
   gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
@@ -226,9 +234,10 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     G_CALLBACK (gimp_statusbar_scale_activated),
                     statusbar);
 
-  /*  put the message area or label back into our hbox  */
-  gtk_box_pack_start (GTK_BOX (hbox), original_child, TRUE, TRUE, 1);
-  g_object_unref (original_child);
+  /*  put the message area or label back into the hbox  */
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 1);
+
+  g_object_unref (label);
 
   g_signal_connect_after (GTK_STATUSBAR (statusbar)->label, "expose-event",
                           G_CALLBACK (gimp_statusbar_label_expose),
