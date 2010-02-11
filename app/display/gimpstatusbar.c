@@ -75,7 +75,7 @@ static void     gimp_statusbar_finalize           (GObject           *object);
 
 static void     gimp_statusbar_destroy            (GtkObject         *object);
 
-static void     gimp_statusbar_frame_size_request (GtkWidget         *widget,
+static void     gimp_statusbar_hbox_size_request  (GtkWidget         *widget,
                                                    GtkRequisition    *requisition,
                                                    GimpStatusbar     *statusbar);
 
@@ -202,6 +202,10 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   }
 #endif
 
+  g_signal_connect (hbox, "size-request",
+                    G_CALLBACK (gimp_statusbar_hbox_size_request),
+                    statusbar);
+
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
   gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label, FALSE, FALSE, 0);
@@ -267,10 +271,6 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
                     statusbar);
-
-  g_signal_connect (GTK_STATUSBAR (statusbar)->frame, "size-request",
-                    G_CALLBACK (gimp_statusbar_frame_size_request),
-                    statusbar);
 }
 
 static void
@@ -312,40 +312,39 @@ gimp_statusbar_destroy (GtkObject *object)
 }
 
 static void
-gimp_statusbar_frame_size_request (GtkWidget      *widget,
-                                   GtkRequisition *requisition,
-                                   GimpStatusbar  *statusbar)
+gimp_statusbar_hbox_size_request (GtkWidget      *widget,
+                                  GtkRequisition *requisition,
+                                  GimpStatusbar  *statusbar)
 {
-  GtkRequisition  child_requisition;
-  gint            width   = 0;
-  gint            padding = 2 * gtk_widget_get_style (widget)->ythickness;
+  GtkRequisition child_requisition;
+  gint           width = 0;
 
   /*  also consider the children which can be invisible  */
 
   gtk_widget_size_request (statusbar->cursor_label, &child_requisition);
   width += child_requisition.width;
   requisition->height = MAX (requisition->height,
-                             padding + child_requisition.height);
+                             child_requisition.height);
 
   gtk_widget_size_request (statusbar->unit_combo, &child_requisition);
   width += child_requisition.width;
   requisition->height = MAX (requisition->height,
-                             padding + child_requisition.height);
+                             child_requisition.height);
 
   gtk_widget_size_request (statusbar->scale_combo, &child_requisition);
   width += child_requisition.width;
   requisition->height = MAX (requisition->height,
-                             padding + child_requisition.height);
+                             child_requisition.height);
 
   gtk_widget_size_request (statusbar->progressbar, &child_requisition);
   requisition->height = MAX (requisition->height,
-                             padding + child_requisition.height);
+                             child_requisition.height);
 
   gtk_widget_size_request (statusbar->cancel_button, &child_requisition);
   requisition->height = MAX (requisition->height,
-                             padding + child_requisition.height);
+                             child_requisition.height);
 
-  requisition->width = MAX (requisition->width, width + 24);
+  requisition->width = MAX (requisition->width, width + 32);
 }
 
 static GimpProgress *
@@ -1461,7 +1460,6 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   pango_layout_get_pixel_size (layout, &width, NULL);
 
   gtk_widget_set_size_request (statusbar->cursor_label, width, -1);
-  gtk_widget_queue_resize (GTK_STATUSBAR (statusbar)->frame);
 
   gimp_statusbar_clear_cursor (statusbar);
 }
