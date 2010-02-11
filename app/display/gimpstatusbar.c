@@ -52,6 +52,9 @@
 /*  maximal width of the string holding the cursor-coordinates  */
 #define CURSOR_LEN        256
 
+/*  the spacing of the hbox                                     */
+#define HBOX_SPACING        1
+
 /*  spacing between the icon and the statusbar label            */
 #define ICON_SPACING        2
 
@@ -186,7 +189,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 #if GTK_CHECK_VERSION (2, 19, 1)
   {
     hbox = gtk_statusbar_get_message_area (GTK_STATUSBAR (statusbar));
-    gtk_box_set_spacing (GTK_BOX (hbox), 1);
+    gtk_box_set_spacing (GTK_BOX (hbox), HBOX_SPACING);
     gtk_container_remove (GTK_CONTAINER (hbox), label);
   }
 #else
@@ -196,7 +199,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
     label_parent = gtk_widget_get_parent (label);
     gtk_container_remove (GTK_CONTAINER (label_parent), label);
 
-    hbox = gtk_hbox_new (FALSE, 1);
+    hbox = gtk_hbox_new (FALSE, HBOX_SPACING);
     gtk_container_add (GTK_CONTAINER (label_parent), hbox);
     gtk_widget_show (hbox);
   }
@@ -1448,7 +1451,7 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
     }
 
   gimp_statusbar_update_cursor (statusbar, GIMP_CURSOR_PRECISION_SUBPIXEL,
-                                image_width, image_height);
+                                -image_width, -image_height);
 
   text = gtk_label_get_text (GTK_LABEL (statusbar->cursor_label));
 
