@@ -48,6 +48,8 @@
 
 #include <libintl.h>
 
+#include "../script-fu-intl.h"
+
 #include "scheme-private.h"
 
 #if !STANDALONE
@@ -93,6 +95,7 @@ ts_output_string (TsOutputType  type,
 #define TOK_SHARP   10
 #define TOK_SHARP_CONST 11
 #define TOK_VEC     12
+#define TOK_USCORE  13
 
 # define BACKQUOTE '`'
 
@@ -1957,7 +1960,7 @@ static int token(scheme *sc) {
           return (TOK_DQUOTE);
      case '_':
           if ((c=inchar(sc)) == '"')
-               return (TOK_DQUOTE);
+               return (TOK_USCORE);
           backchar(sc,c);
           return (TOK_ATOM);
      case BACKQUOTE:
@@ -4058,6 +4061,7 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
 
 static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
      pointer x;
+     char *trans_str;
 
      if(sc->nesting!=0) {
           int n=sc->nesting;
@@ -4181,6 +4185,19 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                x=readstrexp(sc);
                if(x==sc->F) {
                  Error_0(sc,"Error reading string");
+               }
+               setimmutable(x);
+               s_return(sc,x);
+          case TOK_USCORE:
+               x=readstrexp(sc);
+               if(x==sc->F) {
+                 Error_0(sc,"Error reading string");
+               }
+               trans_str = gettext (strvalue (x));
+               if (trans_str != strvalue(x)) {
+                 sc->free(strvalue(x));
+                 strlength(x) = g_utf8_strlen(trans_str, -1);
+                 strvalue(x) = store_string(sc, strlength(x), trans_str, 0);
                }
                setimmutable(x);
                s_return(sc,x);
