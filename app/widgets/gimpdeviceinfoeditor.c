@@ -272,7 +272,7 @@ gimp_device_info_editor_constructor (GType                   type,
 
       gimp_device_info_get_key (private->info, i, &keyval, &modifiers);
 
-      gtk_list_store_insert_with_values (private->key_store, NULL,
+      gtk_list_store_insert_with_values (private->key_store, NULL, -1,
                                          KEY_COLUMN_INDEX, i,
                                          KEY_COLUMN_NAME,  string,
                                          KEY_COLUMN_KEY,   keyval,
