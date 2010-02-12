@@ -42,7 +42,7 @@ struct _GimpDeviceEditorClass
 
 GType       gimp_device_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_device_editor_new      (void);
+GtkWidget * gimp_device_editor_new      (Gimp *gimp);
 
 
 #endif /* __GIMP_DEVICE_EDITOR_H__ */

@@ -531,7 +531,7 @@ prefs_input_devices_dialog (GtkWidget *widget,
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (input_dialog));
 
-  editor = gimp_device_editor_new ();
+  editor = gimp_device_editor_new (gimp);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_container_add (GTK_CONTAINER (content_area), editor);
   gtk_widget_show (editor);

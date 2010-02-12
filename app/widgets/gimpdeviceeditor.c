@@ -23,19 +23,30 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpmarshal.h"
 
 #include "gimpdeviceeditor.h"
 #include "gimpdeviceinfo.h"
 #include "gimpdeviceinfoeditor.h"
+#include "gimpdevices.h"
 
 #include "gimp-intl.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_GIMP
+};
 
 
 typedef struct _GimpDeviceEditorPrivate GimpDeviceEditorPrivate;
 
 struct _GimpDeviceEditorPrivate
 {
+  Gimp      *gimp;
+
   GtkWidget *notebook;
 };
 
@@ -46,11 +57,25 @@ struct _GimpDeviceEditorPrivate
                                      GimpDeviceEditorPrivate)
 
 
-static void gimp_device_editor_screen_changed (GtkWidget *widget,
-                                               GdkScreen *previous_screen);
+static GObject * gimp_device_editor_constructor    (GType                  type,
+                                                    guint                  n_params,
+                                                    GObjectConstructParam *params);
+static void      gimp_device_editor_set_property   (GObject               *object,
+                                                    guint                  property_id,
+                                                    const GValue          *value,
+                                                    GParamSpec            *pspec);
+static void      gimp_device_editor_get_property   (GObject               *object,
+                                                    guint                  property_id,
+                                                    GValue                *value,
+                                                    GParamSpec            *pspec);
+
+static void      gimp_device_editor_screen_changed (GtkWidget             *widget,
+                                                    GdkScreen             *previous_screen);
 
 
 G_DEFINE_TYPE (GimpDeviceEditor, gimp_device_editor, GTK_TYPE_HBOX)
+
+#define parent_class gimp_device_editor_parent_class
 
 
 static void
@@ -59,7 +84,18 @@ gimp_device_editor_class_init (GimpDeviceEditorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->constructor    = gimp_device_editor_constructor;
+  object_class->set_property   = gimp_device_editor_set_property;
+  object_class->get_property   = gimp_device_editor_get_property;
+
   widget_class->screen_changed = gimp_device_editor_screen_changed;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (object_class, sizeof (GimpDeviceEditorPrivate));
 }
@@ -75,6 +111,65 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (private->notebook), GTK_POS_LEFT);
   gtk_box_pack_start (GTK_BOX (editor), private->notebook, TRUE, TRUE, 0);
   gtk_widget_show (private->notebook);
+}
+
+static GObject *
+gimp_device_editor_constructor (GType                   type,
+                                guint                   n_params,
+                                GObjectConstructParam  *params)
+{
+  GObject                 *object;
+  GimpDeviceEditor        *editor;
+  GimpDeviceEditorPrivate *private;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  editor  = GIMP_DEVICE_EDITOR (object);
+  private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+
+  g_assert (GIMP_IS_GIMP (private->gimp));
+
+  return object;
+}
+
+static void
+gimp_device_editor_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      private->gimp = g_value_get_object (value); /* don't ref */
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_device_editor_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      g_value_set_object (value, private->gimp);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -123,7 +218,11 @@ gimp_device_editor_screen_changed (GtkWidget *widget,
 }
 
 GtkWidget *
-gimp_device_editor_new (void)
+gimp_device_editor_new (Gimp *gimp)
 {
-  return g_object_new (GIMP_TYPE_DEVICE_EDITOR, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_new (GIMP_TYPE_DEVICE_EDITOR,
+                       "gimp", gimp,
+                       NULL);
 }
