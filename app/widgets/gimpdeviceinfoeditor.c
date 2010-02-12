@@ -144,6 +144,10 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
                                                NULL);
 
   cell = gtk_cell_renderer_accel_new ();
+  g_object_set (cell,
+                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
+                "editable", TRUE,
+                NULL);
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (key_view),
                                                -1, _("Key"),
                                                cell,
