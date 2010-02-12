@@ -38,14 +38,13 @@ enum
   PROP_INFO
 };
 
-
-typedef struct _GimpInputKeyInfo GimpInputKeyInfo;
-
-struct _GimpInputKeyInfo
+enum
 {
-  gint                  index;
-  GtkWidget            *entry;
-  GimpDeviceInfoEditor *editor;
+  KEY_COLUMN_INDEX,
+  KEY_COLUMN_NAME,
+  KEY_COLUMN_KEY,
+  KEY_COLUMN_MASK,
+  KEY_N_COLUMNS
 };
 
 
@@ -56,6 +55,8 @@ struct _GimpDeviceInfoEditorPrivate
   GimpDeviceInfo *info;
 
   GtkWidget      *axis_combos[GDK_AXIS_LAST - GDK_AXIS_X];
+
+  GtkListStore   *key_store;
 };
 
 #define GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE(editor) \
@@ -80,14 +81,15 @@ static void      gimp_device_info_editor_get_property (GObject               *ob
 void             gimp_device_info_editor_axis_changed (GimpIntComboBox       *combo,
                                                        GimpDeviceInfoEditor  *editor);
 
-static gboolean  gimp_device_info_editor_key_press    (GtkWidget        *widget,
-                                                       GdkEventKey      *event,
-                                                       GimpInputKeyInfo *key);
-static void      gimp_device_info_editor_clear_key    (GtkWidget        *widget,
-                                                       GimpInputKeyInfo *key);
-static void      gimp_device_info_editor_set_key      (GimpInputKeyInfo *key,
-                                                       guint             keyval,
-                                                       GdkModifierType   modifiers);
+static void     gimp_device_info_editor_key_edited    (GtkCellRendererAccel  *accel,
+                                                       const char            *path_string,
+                                                       guint                  accel_key,
+                                                       GdkModifierType        accel_mask,
+                                                       guint                  hardware_keycode,
+                                                       GimpDeviceInfoEditor  *editor);
+static void     gimp_device_info_editor_key_cleared   (GtkCellRendererAccel  *accel,
+                                                       const char            *path_string,
+                                                       GimpDeviceInfoEditor  *editor);
 
 
 G_DEFINE_TYPE (GimpDeviceInfoEditor, gimp_device_info_editor, GTK_TYPE_VBOX)
@@ -118,7 +120,52 @@ gimp_device_info_editor_class_init (GimpDeviceInfoEditorClass *klass)
 static void
 gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
 {
+  GimpDeviceInfoEditorPrivate *private;
+  GtkWidget                   *key_view;
+  GtkWidget                   *scrolled_win;
+  GtkCellRenderer             *cell;
+
+  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
+
   gtk_box_set_spacing (GTK_BOX (editor), 6);
+
+  private->key_store = gtk_list_store_new (KEY_N_COLUMNS,
+                                           G_TYPE_INT,
+                                           G_TYPE_STRING,
+                                           G_TYPE_UINT,
+                                           GDK_TYPE_MODIFIER_TYPE);
+  key_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->key_store));
+  g_object_unref (private->key_store);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (key_view),
+                                               -1, _("Button"),
+                                               gtk_cell_renderer_text_new (),
+                                               "text", KEY_COLUMN_NAME,
+                                               NULL);
+
+  cell = gtk_cell_renderer_accel_new ();
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (key_view),
+                                               -1, _("Key"),
+                                               cell,
+                                               "accel-key",  KEY_COLUMN_KEY,
+                                               "accel-mods", KEY_COLUMN_MASK,
+                                               NULL);
+
+  g_signal_connect (cell, "accel-edited",
+                    G_CALLBACK (gimp_device_info_editor_key_edited),
+                    editor);
+  g_signal_connect (cell, "accel-cleared",
+                    G_CALLBACK (gimp_device_info_editor_key_cleared),
+                    editor);
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                       GTK_SHADOW_IN);
+  gtk_box_pack_end (GTK_BOX (editor), scrolled_win, TRUE, TRUE, 0);
+  gtk_widget_show (scrolled_win);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_win), key_view);
+  gtk_widget_show (key_view);
 }
 
 static GObject *
@@ -215,52 +262,22 @@ gimp_device_info_editor_constructor (GType                   type,
 
   n_keys = gimp_device_info_get_n_keys (private->info);
 
-  table = gtk_table_new (n_keys, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
   for (i = 0; i < n_keys; i++)
     {
-      GimpInputKeyInfo *key = g_new (GimpInputKeyInfo, 1);
-      GtkWidget        *button;
-      gchar             string[32];
-      guint             keyval;
-      GdkModifierType   modifiers;
+      gchar           string[32];
+      guint           keyval;
+      GdkModifierType modifiers;
 
-      key->index  = i;
-      key->editor = editor;
-
-      g_snprintf (string, sizeof (string), "_%d:", i + 1);
-
-      hbox = gtk_hbox_new (FALSE, 6);
-
-      key->entry = gtk_entry_new ();
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), key->entry);
-      gtk_box_pack_start (GTK_BOX (hbox), key->entry, TRUE, TRUE, 0);
-
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, i - 1,
-                                 string, 0.0, 0.5,
-                                 hbox, 1, FALSE);
-
-      g_signal_connect (key->entry, "key-press-event",
-                        G_CALLBACK (gimp_device_info_editor_key_press),
-                        key);
-      g_object_set_data_full (G_OBJECT (key->entry), "key", key,
-                              (GDestroyNotify) g_free);
-
-      button = gtk_button_new_with_mnemonic (_("Cl_ear"));
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
-      gtk_widget_show (button);
-
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_device_info_editor_clear_key),
-                        key);
+      g_snprintf (string, sizeof (string), "%d", i + 1);
 
       gimp_device_info_get_key (private->info, i, &keyval, &modifiers);
 
-      gimp_device_info_editor_set_key (key, keyval, modifiers);
+      gtk_list_store_insert_with_values (private->key_store, NULL,
+                                         KEY_COLUMN_INDEX, i,
+                                         KEY_COLUMN_NAME,  string,
+                                         KEY_COLUMN_KEY,   keyval,
+                                         KEY_COLUMN_MASK,  modifiers,
+                                         -1);
     }
 
   return object;
@@ -388,73 +405,72 @@ gimp_device_info_editor_axis_changed (GimpIntComboBox      *combo,
     }
 }
 
-static gboolean
-gimp_device_info_editor_key_press (GtkWidget        *widget,
-                                   GdkEventKey      *event,
-                                   GimpInputKeyInfo *key)
+static void
+gimp_device_info_editor_key_edited (GtkCellRendererAccel *accel,
+                                    const char           *path_string,
+                                    guint                 accel_key,
+                                    GdkModifierType       accel_mask,
+                                    guint                 hardware_keycode,
+                                    GimpDeviceInfoEditor *editor)
 {
   GimpDeviceInfoEditorPrivate *private;
+  GtkTreePath                 *path;
+  GtkTreeIter                  iter;
 
-  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (key->editor);
+  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
 
-  gimp_device_info_editor_set_key (key, event->keyval, event->state & 0xFF);
+  path = gtk_tree_path_new_from_string (path_string);
 
-  gimp_device_info_set_key (private->info, key->index,
-                            event->keyval, event->state & 0xFF);
+  if (gtk_tree_model_get_iter (GTK_TREE_MODEL (private->key_store), &iter, path))
+    {
+      gint index;
 
-  return TRUE;
+      gtk_tree_model_get (GTK_TREE_MODEL (private->key_store), &iter,
+                          KEY_COLUMN_INDEX, &index,
+                          -1);
+
+      gtk_list_store_set (private->key_store, &iter,
+                          KEY_COLUMN_KEY,  accel_key,
+                          KEY_COLUMN_MASK, accel_mask,
+                          -1);
+
+      gimp_device_info_set_key (private->info, index, 0, 0);
+    }
+
+  gtk_tree_path_free (path);
 }
 
 static void
-gimp_device_info_editor_clear_key (GtkWidget        *widget,
-                                   GimpInputKeyInfo *key)
+gimp_device_info_editor_key_cleared (GtkCellRendererAccel *accel,
+                                     const char           *path_string,
+                                     GimpDeviceInfoEditor *editor)
 {
   GimpDeviceInfoEditorPrivate *private;
+  GtkTreePath                 *path;
+  GtkTreeIter                  iter;
 
-  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (key->editor);
+  private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
 
-  gimp_device_info_editor_set_key (key, 0, 0);
+  path = gtk_tree_path_new_from_string (path_string);
 
-  gimp_device_info_set_key (private->info, key->index, 0, 0);
-}
-
-static void
-gimp_device_info_editor_set_key (GimpInputKeyInfo *key,
-                                 guint             keyval,
-                                 GdkModifierType   modifiers)
-{
-  GString *str;
-  gchar    chars[2];
-
-  if (keyval)
+  if (gtk_tree_model_get_iter (GTK_TREE_MODEL (private->key_store), &iter, path))
     {
-      str = g_string_new (NULL);
+      gint index;
 
-      if (modifiers & GDK_SHIFT_MASK)
-        g_string_append (str, "Shift+");
-      if (modifiers & GDK_CONTROL_MASK)
-        g_string_append (str, "Ctrl+");
-      if (modifiers & GDK_MOD1_MASK)
-        g_string_append (str, "Alt+");
+      gtk_tree_model_get (GTK_TREE_MODEL (private->key_store), &iter,
+                          KEY_COLUMN_INDEX, &index,
+                          -1);
 
-      if ((keyval >= 0x20) && (keyval <= 0xFF))
-        {
-          chars[0] = keyval;
-          chars[1] = 0;
-          g_string_append (str, chars);
-        }
-      else
-        g_string_append (str, _("(unknown)"));
+      gtk_list_store_set (private->key_store, &iter,
+                          KEY_COLUMN_KEY,  0,
+                          KEY_COLUMN_MASK, 0,
+                          -1);
 
-      gtk_entry_set_text (GTK_ENTRY (key->entry),
-                          g_string_free (str, FALSE));
+      gimp_device_info_set_key (private->info, index, 0, 0);
     }
-  else
-    {
-      gtk_entry_set_text (GTK_ENTRY (key->entry), _("(disabled)"));
-    }
+
+  gtk_tree_path_free (path);
 }
-
 
 /*  public functions  */
 
