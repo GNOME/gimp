@@ -72,7 +72,12 @@ struct _GimpDeviceInfoClass
 GType            gimp_device_info_get_type          (void) G_GNUC_CONST;
 
 GimpDeviceInfo * gimp_device_info_new               (Gimp            *gimp,
-                                                     const gchar     *name);
+                                                     GdkDevice       *device,
+                                                     GdkDisplay      *display);
+
+void             gimp_device_info_set_device        (GimpDeviceInfo  *info,
+                                                     GdkDevice       *device,
+                                                     GdkDisplay      *display);
 
 GdkInputMode     gimp_device_info_get_mode          (GimpDeviceInfo  *info);
 void             gimp_device_info_set_mode          (GimpDeviceInfo  *info,
@@ -95,9 +100,6 @@ void             gimp_device_info_set_key           (GimpDeviceInfo *info,
                                                      guint            keyval,
                                                      GdkModifierType  modifiers);
 
-GimpDeviceInfo * gimp_device_info_set_from_device   (GimpDeviceInfo *info,
-                                                     GdkDevice      *device,
-                                                     GdkDisplay     *display);
 void             gimp_device_info_changed           (GimpDeviceInfo *info);
 
 GimpDeviceInfo * gimp_device_info_get_by_device     (GdkDevice      *device);

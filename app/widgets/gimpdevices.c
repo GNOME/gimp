@@ -76,6 +76,13 @@ static void   gimp_devices_display_closed (GdkDisplay        *display,
                                            gboolean           is_error,
                                            GimpDeviceManager *manager);
 
+static void   gimp_devices_device_added   (GdkDisplay        *gdk_display,
+                                           GdkDevice         *device,
+                                           GimpDeviceManager *manager);
+static void   gimp_devices_device_removed (GdkDisplay        *gdk_display,
+                                           GdkDevice         *device,
+                                           GimpDeviceManager *manager);
+
 
 /*  public functions  */
 
@@ -422,15 +429,9 @@ gimp_devices_display_opened (GdkDisplayManager *disp_manager,
   /*  create device info structures for present devices */
   for (list = gdk_display_list_devices (gdk_display); list; list = list->next)
     {
-      GdkDevice      *device = list->data;
-      GimpDeviceInfo *device_info;
+      GdkDevice *device = list->data;
 
-      device_info = gimp_device_info_new (manager->gimp, device->name);
-      gimp_device_info_set_from_device (device_info, device, gdk_display);
-
-      gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
-      g_object_unref (device_info);
-
+      gimp_devices_device_added (gdk_display, device, manager);
     }
 
   g_signal_connect (gdk_display, "closed",
@@ -441,6 +442,45 @@ gimp_devices_display_opened (GdkDisplayManager *disp_manager,
 static void
 gimp_devices_display_closed (GdkDisplay        *gdk_display,
                              gboolean           is_error,
+                             GimpDeviceManager *manager)
+{
+  GList *list;
+
+  for (list = gdk_display_list_devices (gdk_display); list; list = list->next)
+    {
+      GdkDevice *device = list->data;
+
+      gimp_devices_device_removed (gdk_display, device, manager);
+    }
+}
+
+static void
+gimp_devices_device_added (GdkDisplay        *gdk_display,
+                           GdkDevice         *device,
+                           GimpDeviceManager *manager)
+{
+  GimpDeviceInfo *device_info;
+
+  device_info =
+    GIMP_DEVICE_INFO (gimp_container_get_child_by_name (manager->device_info_list,
+                                                        device->name));
+
+  if (device_info)
+    {
+      gimp_device_info_set_device (device_info, device, gdk_display);
+    }
+  else
+    {
+      device_info = gimp_device_info_new (manager->gimp, device, gdk_display);
+
+      gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
+      g_object_unref (device_info);
+    }
+}
+
+static void
+gimp_devices_device_removed (GdkDisplay        *gdk_display,
+                             GdkDevice         *device,
                              GimpDeviceManager *manager)
 {
 }
