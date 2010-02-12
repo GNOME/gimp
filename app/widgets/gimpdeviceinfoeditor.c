@@ -434,7 +434,7 @@ gimp_device_info_editor_key_edited (GtkCellRendererAccel *accel,
                           KEY_COLUMN_MASK, accel_mask,
                           -1);
 
-      gimp_device_info_set_key (private->info, index, 0, 0);
+      gimp_device_info_set_key (private->info, index, accel_key, accel_mask);
     }
 
   gtk_tree_path_free (path);
