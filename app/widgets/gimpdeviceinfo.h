@@ -55,9 +55,9 @@ struct _GimpDeviceInfo
   /*  either "device" or the options below are set  */
 
   GdkInputMode   mode;
-  gint           num_axes;
+  gint           n_axes;
   GdkAxisUse    *axes;
-  gint           num_keys;
+  gint           n_keys;
   GdkDeviceKey  *keys;
 };
 
@@ -71,16 +71,36 @@ struct _GimpDeviceInfoClass
 
 GType            gimp_device_info_get_type          (void) G_GNUC_CONST;
 
-GimpDeviceInfo * gimp_device_info_new               (Gimp           *gimp,
-                                                     const gchar    *name);
+GimpDeviceInfo * gimp_device_info_new               (Gimp            *gimp,
+                                                     const gchar     *name);
 
-GimpDeviceInfo * gimp_device_info_set_from_device   (GimpDeviceInfo *device_info,
+GdkInputMode     gimp_device_info_get_mode          (GimpDeviceInfo  *info);
+void             gimp_device_info_set_mode          (GimpDeviceInfo  *info,
+                                                     GdkInputMode     mode);
+
+gint             gimp_device_info_get_n_axes        (GimpDeviceInfo  *info);
+GdkAxisUse       gimp_device_info_get_axis_use      (GimpDeviceInfo  *info,
+                                                     gint             axis);
+void             gimp_device_info_set_axis_use      (GimpDeviceInfo  *info,
+                                                     gint             axis,
+                                                     GdkAxisUse       use);
+
+gint             gimp_device_info_get_n_keys        (GimpDeviceInfo  *info);
+void             gimp_device_info_get_key           (GimpDeviceInfo  *info,
+                                                     gint             key,
+                                                     guint           *keyval,
+                                                     GdkModifierType *modifiers);
+void             gimp_device_info_set_key           (GimpDeviceInfo *info,
+                                                     gint             key,
+                                                     guint            keyval,
+                                                     GdkModifierType  modifiers);
+
+GimpDeviceInfo * gimp_device_info_set_from_device   (GimpDeviceInfo *info,
                                                      GdkDevice      *device,
                                                      GdkDisplay     *display);
-void             gimp_device_info_changed           (GimpDeviceInfo *device_info);
+void             gimp_device_info_changed           (GimpDeviceInfo *info);
 
 GimpDeviceInfo * gimp_device_info_get_by_device     (GdkDevice      *device);
-void             gimp_device_info_changed_by_device (GdkDevice      *device);
 
 
 G_END_DECLS

@@ -19,9 +19,6 @@
 
 #include <string.h>
 
-#undef GTK_DISABLE_DEPRECATED /* GtkInputDialog */
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -41,7 +38,7 @@
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontrollerlist.h"
-#include "widgets/gimpdeviceinfo.h"
+#include "widgets/gimpdeviceeditor.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpgrideditor.h"
@@ -103,9 +100,9 @@ static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
                                                    GtkWidget  *entry);
 static void   prefs_input_devices_dialog          (GtkWidget  *widget,
                                                    Gimp       *gimp);
-static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
-                                                   GdkDevice  *device,
-                                                   gpointer    data);
+static void   prefs_input_devices_dialog_response (GtkWidget  *dialog,
+                                                   gint        response_id,
+                                                   Gimp       *gimp);
 static void   prefs_menus_save_callback           (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_menus_clear_callback          (GtkWidget  *widget,
@@ -498,15 +495,28 @@ prefs_input_devices_dialog (GtkWidget *widget,
 {
   static GtkWidget *input_dialog = NULL;
 
+  GtkWidget *content_area;
+  GtkWidget *editor;
+
   if (input_dialog)
     {
       gtk_window_present (GTK_WINDOW (input_dialog));
       return;
     }
 
-  input_dialog = g_object_new (GTK_TYPE_INPUT_DIALOG,
-                               "title", _("Configure Input Devices"),
-                               NULL);
+  input_dialog = gimp_dialog_new (_("Configure Input Devices"), "preferences",
+                                  NULL, 0,
+                                  NULL, NULL,
+
+                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                  GTK_STOCK_SAVE,  GTK_RESPONSE_OK,
+
+                                  NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (input_dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CLOSE,
+                                           -1);
 
   g_object_add_weak_pointer (G_OBJECT (input_dialog),
                              (gpointer) &input_dialog);
@@ -515,32 +525,35 @@ prefs_input_devices_dialog (GtkWidget *widget,
                                 GTK_WINDOW (prefs_dialog));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (input_dialog), TRUE);
 
-  g_signal_connect_swapped (GTK_INPUT_DIALOG (input_dialog)->save_button,
-                            "clicked",
-                            G_CALLBACK (gimp_devices_save),
-                            gimp);
+  g_signal_connect (input_dialog, "response",
+                    G_CALLBACK (prefs_input_devices_dialog_response),
+                    gimp);
 
-  g_signal_connect_swapped (GTK_INPUT_DIALOG (input_dialog)->close_button,
-                            "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            input_dialog);
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (input_dialog));
 
-  g_signal_connect (input_dialog, "enable-device",
-                    G_CALLBACK (prefs_input_dialog_able_callback),
-                    NULL);
-  g_signal_connect (input_dialog, "disable-device",
-                    G_CALLBACK (prefs_input_dialog_able_callback),
-                    NULL);
+  editor = gimp_device_editor_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
+  gtk_container_add (GTK_CONTAINER (content_area), editor);
+  gtk_widget_show (editor);
 
   gtk_widget_show (input_dialog);
 }
 
 static void
-prefs_input_dialog_able_callback (GtkWidget *widget,
-                                  GdkDevice *device,
-                                  gpointer   data)
+prefs_input_devices_dialog_response (GtkWidget *dialog,
+                                     gint       response_id,
+                                     Gimp      *gimp)
 {
-  gimp_device_info_changed_by_device (device);
+  switch (response_id)
+    {
+    case GTK_RESPONSE_OK:
+      gimp_devices_save (gimp, TRUE);
+      break;
+
+    default:
+      gtk_widget_destroy (dialog);
+      break;
+    }
 }
 
 static void

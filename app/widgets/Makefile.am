@@ -112,8 +112,12 @@ libappwidgets_a_sources = \
 	gimpdataeditor.h		\
 	gimpdatafactoryview.c		\
 	gimpdatafactoryview.h		\
+	gimpdeviceeditor.c		\
+	gimpdeviceeditor.h		\
 	gimpdeviceinfo.c		\
 	gimpdeviceinfo.h		\
+	gimpdeviceinfoeditor.c		\
+	gimpdeviceinfoeditor.h		\
 	gimpdevices.c			\
 	gimpdevices.h			\
 	gimpdevicestatus.c		\
