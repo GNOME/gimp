@@ -63,6 +63,12 @@
 
 enum
 {
+  DISPOSE_STORE_VALUE_COLUMN,
+  DISPOSE_STORE_LABEL_COLUMN
+};
+
+enum
+{
   DISPOSE_UNSPECIFIED,
   DISPOSE_COMBINE,
   DISPOSE_REPLACE
@@ -979,24 +985,116 @@ bad_bounds_dialog (void)
   return crop;
 }
 
+static GtkWidget *
+file_gif_toggle_button_init (GtkBuilder  *builder,
+                             const gchar *name,
+                             gboolean     initial_value,
+                             gboolean    *value_pointer)
+{
+  GtkWidget *toggle = NULL;
+
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, name));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), initial_value);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    value_pointer);
+
+  return toggle;
+}
+
+static GtkWidget *
+file_gif_spin_button_int_init (GtkBuilder  *builder,
+                               const gchar *name,
+                               int          initial_value,
+                               int         *value_pointer)
+{
+  GtkWidget     *spin_button = NULL;
+  GtkAdjustment *adjustment  = NULL;
+
+  spin_button = GTK_WIDGET (gtk_builder_get_object (builder, name));
+
+  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin_button));
+  gtk_adjustment_set_value (adjustment, initial_value);
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gsvals.default_delay);
+
+  return spin_button;
+}
+
+static void
+file_gif_combo_box_int_update_value (GtkComboBox *combo,
+                                     gint        *value)
+{
+  GtkTreeIter iter;
+
+  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter))
+    {
+      gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)),
+                          &iter,
+                          DISPOSE_STORE_VALUE_COLUMN, value,
+                          -1);
+    }
+}
+
+static GtkWidget *
+file_gif_combo_box_int_init (GtkBuilder  *builder,
+                             const gchar *name,
+                             int          initial_value,
+                             int         *value_pointer,
+                             const gchar *first_label,
+                             gint         first_value,
+                             ...)
+{
+  GtkWidget    *combo  = NULL;
+  GtkListStore *store  = NULL;
+  const gchar  *label  = NULL;
+  gint          value  = 0;
+  GtkTreeIter   iter   = { 0, };
+  va_list       values = NULL;
+
+  combo = GTK_WIDGET (gtk_builder_get_object (builder, name));
+  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)));
+
+  /* Populate */
+  va_start (values, first_value);
+  for (label = first_label, value = first_value;
+       label;
+       label = va_arg (values, const gchar *), value = va_arg (values, gint))
+    {
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter,
+                          DISPOSE_STORE_VALUE_COLUMN, value,
+                          DISPOSE_STORE_LABEL_COLUMN, label,
+                          -1);
+    }
+  va_end (values);
+
+  /* Set initial value */
+  gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (store),
+                                 &iter,
+                                 NULL,
+                                 initial_value);
+  gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
+
+  /* Arrange update of value */
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (file_gif_combo_box_int_update_value),
+                    value_pointer);
+
+  return combo;
+}
 
 static gint
 save_dialog (gint32 image_ID)
 {
+  GtkBuilder    *builder = NULL;
+  gchar         *ui_file = NULL;
+  GError        *error   = NULL;
   GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *toggle;
-  GtkWidget     *label;
-  GtkWidget     *spinbutton;
-  GtkObject     *adj;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
   GtkWidget     *frame;
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *align;
-  GtkWidget     *combo;
-  GtkWidget     *scrolled_window;
 #ifdef FACEHUGGERS
   GimpParasite  *GIF2_CMNT;
 #endif
@@ -1009,63 +1107,28 @@ save_dialog (gint32 image_ID)
 
   dialog = gimp_export_dialog_new (_("GIF"), PLUG_IN_BINARY, SAVE_PROC);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  /* GtkBuilder init */
+  builder = gtk_builder_new ();
+  ui_file = g_build_filename (gimp_data_directory (),
+                              "ui/plug-ins/plug-in-file-gif.ui",
+                              NULL);
+  if (! gtk_builder_add_from_file (builder, ui_file, &error))
+    g_printerr (_("Error loading UI file '%s':\n%s"),
+                ui_file, error ? error->message : "???");
+  g_free (ui_file);
+
+  /* Main vbox */
   gtk_container_add (GTK_CONTAINER (gimp_export_dialog_get_content_area (dialog)),
-                     main_vbox);
-  gtk_widget_show (main_vbox);
+                     GTK_WIDGET (gtk_builder_get_object (builder, "main-vbox")));
 
   /*  regular gif parameter settings  */
-  frame = gimp_frame_new (_("GIF Options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  file_gif_toggle_button_init (builder, "interlace",
+                               gsvals.interlace, &gsvals.interlace);
+  file_gif_toggle_button_init (builder, "save-comment",
+                               gsvals.save_comment, &gsvals.save_comment);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("I_nterlace"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.interlace);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &gsvals.interlace);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-
-  align = gtk_alignment_new (0.0, 0.0, 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
-  gtk_widget_show (align);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("_GIF comment:"));
-  gtk_container_add (GTK_CONTAINER (align), toggle);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                gsvals.save_comment);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &gsvals.save_comment);
-
-  /* the comment text_view in a gtk_scrolled_window */
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                       GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (hbox), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
-
-  text_buffer = gtk_text_buffer_new (NULL);
-
-  text_view = gtk_text_view_new_with_buffer (text_buffer);
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-  gtk_widget_show (text_view);
-
-  g_object_unref (text_buffer);
+  text_view   = GTK_WIDGET (gtk_builder_get_object (builder, "comment"));
+  text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
 
   if (globalcomment)
     g_free (globalcomment);
@@ -1090,109 +1153,39 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (comment_entry_callback),
                     NULL);
 
-  gtk_widget_show (hbox);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
-
   /*  additional animated gif parameter settings  */
-  frame = gimp_frame_new (_("Animated GIF Options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("_Loop forever"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.loop);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &gsvals.loop);
+  file_gif_toggle_button_init (builder, "loop-forever",
+                               gsvals.loop, &gsvals.loop);
 
   /* default_delay entry field */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new_with_mnemonic (_("_Delay between frames where unspecified:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  spinbutton = gimp_spin_button_new (&adj, gsvals.default_delay,
-                                     0, 65000, 10, 100, 0, 1, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &gsvals.default_delay);
-
-  label = gtk_label_new (_("milliseconds"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (hbox);
+  file_gif_spin_button_int_init (builder, "delay-spin",
+                                 gsvals.default_delay, &gsvals.default_delay);
 
   /* Disposal selector */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new_with_mnemonic (_("_Frame disposal where unspecified:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  combo = gimp_int_combo_box_new (_("I don't care"),
-                                  DISPOSE_UNSPECIFIED,
-                                  _("Cumulative layers (combine)"),
-                                  DISPOSE_COMBINE,
-                                  _("One frame per layer (replace)"),
-                                  DISPOSE_REPLACE,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 gsvals.default_dispose);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &gsvals.default_dispose);
-
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  file_gif_combo_box_int_init (builder, "dispose-combo",
+                               gsvals.default_dispose, &gsvals.default_dispose,
+                               _("I don't care"),
+                               DISPOSE_UNSPECIFIED,
+                               _("Cumulative layers (combine)"),
+                               DISPOSE_COMBINE,
+                               _("One frame per layer (replace)"),
+                               DISPOSE_REPLACE,
+                               NULL);
 
   /* The "Always use default values" toggles */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Use delay entered above for all frames"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                gsvals.always_use_default_delay);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &gsvals.always_use_default_delay);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("U_se disposal entered above for all frames"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                gsvals.always_use_default_dispose);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &gsvals.always_use_default_dispose);
-
-  gtk_widget_show (hbox);
-  gtk_widget_show (vbox);
+  file_gif_toggle_button_init (builder, "use-default-delay",
+                               gsvals.always_use_default_delay,
+                               &gsvals.always_use_default_delay);
+  file_gif_toggle_button_init (builder, "use-default-dispose",
+                               gsvals.always_use_default_dispose,
+                               &gsvals.always_use_default_dispose);
 
   /* If the image has only one layer it can't be animated, so
      desensitize the animation options. */
 
+  frame = GTK_WIDGET (gtk_builder_get_object (builder, "animation-frame"));
   gtk_widget_set_sensitive (frame, animation_supported);
 
-  gtk_widget_show (frame);
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
