@@ -231,7 +231,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
   gchar                 *name;
 
   /*  only list present devices  */
-  if (! device_info->device)
+  if (! gimp_device_info_get_device (device_info, NULL))
     return;
 
   entry = g_slice_new0 (GimpDeviceStatusEntry);
@@ -415,10 +415,12 @@ gimp_device_status_update (GimpDeviceStatus *status)
   for (list = status->devices; list; list = list->next)
     {
       GimpDeviceStatusEntry *entry = list->data;
+      GdkDevice             *device;
+
+      device = gimp_device_info_get_device (entry->device_info, NULL);
 
       gtk_widget_set_visible (entry->arrow,
-                              entry->device_info->device &&
-                              entry->device_info->device == status->current_device);
+                              device && device == status->current_device);
     }
 }
 
@@ -429,7 +431,9 @@ static void
 gimp_device_status_update_entry (GimpDeviceInfo        *device_info,
                                  GimpDeviceStatusEntry *entry)
 {
-  if (! device_info->device || device_info->device->mode == GDK_MODE_DISABLED)
+  GdkDevice *device = gimp_device_info_get_device (device_info, NULL);
+
+  if (! device || device->mode == GDK_MODE_DISABLED)
     {
       gtk_widget_hide (entry->table);
     }

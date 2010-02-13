@@ -503,6 +503,18 @@ gimp_device_info_new (Gimp       *gimp,
                        NULL);
 }
 
+GdkDevice *
+gimp_device_info_get_device (GimpDeviceInfo  *info,
+                             GdkDisplay     **display)
+{
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+
+  if (display)
+    *display = info->display;
+
+  return info->device;
+}
+
 void
 gimp_device_info_set_device (GimpDeviceInfo *info,
                              GdkDevice      *device,
