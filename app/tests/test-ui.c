@@ -29,6 +29,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdocked.h"
+#include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimptooloptionseditor.h"
@@ -54,11 +55,14 @@ static void            gimp_ui_tool_options_editor_updates      (GimpTestFixture
                                                                  gconstpointer    data);
 static void            gimp_ui_create_new_image_via_dialog      (GimpTestFixture *fixture,
                                                                  gconstpointer    data);
+static void            gimp_ui_restore_recently_closed_dock     (GimpTestFixture *fixture,
+                                                                 gconstpointer    data);
 static void            gimp_ui_switch_to_single_window_mode     (GimpTestFixture *fixture,
                                                                  gconstpointer    data);
 static void            gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture *fixture,
                                                                  gconstpointer    data);
 static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp            *gimp);
+static void            gimp_ui_synthesize_delete_event          (GtkWidget       *widget);
 
 
 int main(int argc, char **argv)
@@ -90,6 +94,12 @@ int main(int argc, char **argv)
               gimp,
               NULL,
               gimp_ui_create_new_image_via_dialog,
+              NULL);
+  g_test_add ("/gimp-ui/restore-recently-closed-dock",
+              GimpTestFixture,
+              gimp,
+              NULL,
+              gimp_ui_restore_recently_closed_dock,
               NULL);
   g_test_add ("/gimp-ui/switch-to-single-window-mode",
               GimpTestFixture,
@@ -215,6 +225,64 @@ gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
 }
 
 static void
+gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
+                                      gconstpointer    data)
+{
+  Gimp      *gimp                          = GIMP (data);
+  GList     *iter                          = NULL;
+  GtkWidget *dock_window                   = NULL;
+  gint       n_session_infos_before_close  = -1;
+  gint       n_session_infos_after_close   = -1;
+  gint       n_session_infos_after_restore = -1;
+  GList     *session_infos                 = NULL;
+
+  /* Find a non-toolbox dock window */
+  for (iter = gimp_dialog_factory_get_session_infos (global_dock_factory);
+       iter;
+       iter = g_list_next (iter))
+    {
+      GtkWidget *widget = gimp_session_info_get_widget (iter->data);
+
+      if (GIMP_IS_DOCK_WINDOW (widget) &&
+          ! gimp_dock_window_has_toolbox (GIMP_DOCK_WINDOW (widget)))
+        {
+          dock_window = widget;
+          break;
+        }
+    }
+  g_assert (dock_window != NULL);
+
+  /* Count number of docks */
+  session_infos = gimp_dialog_factory_get_session_infos (global_dock_factory);
+  n_session_infos_before_close = g_list_length (session_infos);
+
+  /* Close one of the dock windows */
+  gimp_ui_synthesize_delete_event (GTK_WIDGET (dock_window));
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Make sure the number of session infos went down */
+  session_infos = gimp_dialog_factory_get_session_infos (global_dock_factory);
+  n_session_infos_after_close = g_list_length (session_infos);
+  g_assert_cmpint (n_session_infos_before_close,
+                   >,
+                   n_session_infos_after_close);
+
+  /* Restore the (only avaiable) closed dock and make sure the session
+   * infos in the global dock factory are increased again
+   */
+  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+                                   "windows",
+                                   /* FIXME: This is severly hardcoded */
+                                   "windows-recent-0003");
+  gimp_test_run_mainloop_until_idle ();
+  session_infos = gimp_dialog_factory_get_session_infos (global_dock_factory);
+  n_session_infos_after_restore = g_list_length (session_infos);
+  g_assert_cmpint (n_session_infos_after_close,
+                   <,
+                   n_session_infos_after_restore);
+}
+
+static void
 gimp_ui_switch_to_single_window_mode (GimpTestFixture *fixture,
                                       gconstpointer    data)
 {
@@ -267,4 +335,26 @@ gimp_ui_get_ui_manager (Gimp *gimp)
   ui_manager       = gimp_image_window_get_ui_manager (image_window);
 
   return ui_manager;
+}
+
+/**
+ * gimp_ui_synthesize_delete_event:
+ * @widget:
+ *
+ * Synthesize a delete event to @widget.
+ **/
+static void
+gimp_ui_synthesize_delete_event (GtkWidget *widget)
+{
+  GdkWindow *window = NULL;
+  GdkEvent *event = NULL;
+
+  window = gtk_widget_get_window (widget);
+  g_assert (window);
+
+  event = gdk_event_new (GDK_DELETE);
+  event->any.window     = g_object_ref (window);
+  event->any.send_event = TRUE;
+  gtk_main_do_event (event);
+  gdk_event_free (event);
 }
