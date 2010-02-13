@@ -612,9 +612,11 @@ static gboolean
 gimp_dock_window_delete_event (GtkWidget   *widget,
                                GdkEventAny *event)
 {
-  GimpDockWindow  *dock_window = GIMP_DOCK_WINDOW (widget);
-  GimpDock        *dock        = gimp_dock_window_get_dock (dock_window);
-  GimpSessionInfo *info        = NULL;
+  GimpDockWindow         *dock_window = GIMP_DOCK_WINDOW (widget);
+  GimpDock               *dock        = gimp_dock_window_get_dock (dock_window);
+  GimpSessionInfo        *info        = NULL;
+  const gchar            *entry_name  = NULL;
+  GimpDialogFactoryEntry *entry       = NULL;
 
   /* Don't add docks with just a singe dockable to the list of
    * recently closed dock since those can be brought back through the
@@ -631,6 +633,12 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   gimp_session_info_set_widget (info, GTK_WIDGET (dock_window));
   gimp_session_info_get_info (info);
   gimp_session_info_set_widget (info, NULL);
+
+  entry_name = (gimp_dock_window_has_toolbox (dock_window) ?
+                "gimp-toolbox-window" :
+                "gimp-dock-window");
+  entry = gimp_dialog_factory_find_entry (global_dock_factory, entry_name);
+  gimp_session_info_set_factory_entry (info, entry);
 
   gimp_container_add (global_recent_docks, GIMP_OBJECT (info));
   g_object_unref (info);
