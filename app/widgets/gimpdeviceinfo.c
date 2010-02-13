@@ -148,17 +148,17 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 }
 
 static void
-gimp_device_info_init (GimpDeviceInfo *device_info)
+gimp_device_info_init (GimpDeviceInfo *info)
 {
-  device_info->device   = NULL;
-  device_info->display  = NULL;
-  device_info->mode     = GDK_MODE_DISABLED;
-  device_info->n_axes   = 0;
-  device_info->axes     = NULL;
-  device_info->n_keys   = 0;
-  device_info->keys     = NULL;
+  info->device   = NULL;
+  info->display  = NULL;
+  info->mode     = GDK_MODE_DISABLED;
+  info->n_axes   = 0;
+  info->axes     = NULL;
+  info->n_keys   = 0;
+  info->keys     = NULL;
 
-  g_signal_connect (device_info, "notify::name",
+  g_signal_connect (info, "notify::name",
                     G_CALLBACK (gimp_device_info_guess_icon),
                     NULL);
 }
@@ -233,13 +233,13 @@ gimp_device_info_constructor (GType                  type,
 static void
 gimp_device_info_finalize (GObject *object)
 {
-  GimpDeviceInfo *device_info = GIMP_DEVICE_INFO (object);
+  GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
 
-  if (device_info->axes)
-    g_free (device_info->axes);
+  if (info->axes)
+    g_free (info->axes);
 
-  if (device_info->keys)
-    g_free (device_info->keys);
+  if (info->keys)
+    g_free (info->keys);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -250,21 +250,21 @@ gimp_device_info_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpDeviceInfo *device_info = GIMP_DEVICE_INFO (object);
-  GdkDevice      *device      = device_info->device;
+  GimpDeviceInfo *info   = GIMP_DEVICE_INFO (object);
+  GdkDevice      *device = info->device;
 
   switch (property_id)
     {
     case PROP_DEVICE:
-      device_info->device = g_value_get_object (value);
+      info->device = g_value_get_object (value);
       break;
 
     case PROP_DISPLAY:
-      device_info->display = g_value_get_object (value);
+      info->display = g_value_get_object (value);
       break;
 
     case PROP_MODE:
-      gimp_device_info_set_mode (device_info, g_value_get_enum (value));
+      gimp_device_info_set_mode (info, g_value_get_enum (value));
       break;
 
     case PROP_AXES:
@@ -284,8 +284,8 @@ gimp_device_info_set_property (GObject      *object,
               {
                 n_device_values = array->n_values;
 
-                device_info->n_axes = n_device_values;
-                device_info->axes   = g_new0 (GdkAxisUse, n_device_values);
+                info->n_axes = n_device_values;
+                info->axes   = g_new0 (GdkAxisUse, n_device_values);
               }
 
             for (i = 0; i < n_device_values; i++)
@@ -294,7 +294,7 @@ gimp_device_info_set_property (GObject      *object,
 
                 axis_use = g_value_get_enum (g_value_array_get_nth (array, i));
 
-                gimp_device_info_set_axis_use (device_info, i, axis_use);
+                gimp_device_info_set_axis_use (info, i, axis_use);
               }
           }
       }
@@ -317,8 +317,8 @@ gimp_device_info_set_property (GObject      *object,
               {
                 n_device_values = array->n_values;
 
-                device_info->n_keys = n_device_values;
-                device_info->keys   = g_new0 (GdkDeviceKey, n_device_values);
+                info->n_keys = n_device_values;
+                info->keys   = g_new0 (GdkDeviceKey, n_device_values);
               }
 
             for (i = 0; i < n_device_values; i++)
@@ -331,7 +331,7 @@ gimp_device_info_set_property (GObject      *object,
 
                 gtk_accelerator_parse (accel, &keyval, &modifiers);
 
-                gimp_device_info_set_key (device_info, i, keyval, modifiers);
+                gimp_device_info_set_key (info, i, keyval, modifiers);
               }
           }
       }
@@ -349,20 +349,20 @@ gimp_device_info_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpDeviceInfo *device_info = GIMP_DEVICE_INFO (object);
+  GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
 
   switch (property_id)
     {
     case PROP_DEVICE:
-      g_value_set_object (value, device_info->device);
+      g_value_set_object (value, info->device);
       break;
 
     case PROP_DISPLAY:
-      g_value_set_object (value, device_info->display);
+      g_value_set_object (value, info->display);
       break;
 
     case PROP_MODE:
-      g_value_set_enum (value, gimp_device_info_get_mode (device_info));
+      g_value_set_enum (value, gimp_device_info_get_mode (info));
       break;
 
     case PROP_AXES:
@@ -375,12 +375,12 @@ gimp_device_info_get_property (GObject    *object,
         array = g_value_array_new (6);
         g_value_init (&enum_value, GDK_TYPE_AXIS_USE);
 
-        n_axes = gimp_device_info_get_n_axes (device_info);
+        n_axes = gimp_device_info_get_n_axes (info);
 
         for (i = 0; i < n_axes; i++)
           {
             g_value_set_enum (&enum_value,
-                              gimp_device_info_get_axis_use (device_info, i));
+                              gimp_device_info_get_axis_use (info, i));
 
             g_value_array_append (array, &enum_value);
           }
@@ -401,14 +401,14 @@ gimp_device_info_get_property (GObject    *object,
         array = g_value_array_new (32);
         g_value_init (&string_value, G_TYPE_STRING);
 
-        n_keys = gimp_device_info_get_n_keys (device_info);
+        n_keys = gimp_device_info_get_n_keys (info);
 
         for (i = 0; i < n_keys; i++)
           {
             guint           keyval;
             GdkModifierType modifiers;
 
-            gimp_device_info_get_key (device_info, i, &keyval, &modifiers);
+            gimp_device_info_get_key (info, i, &keyval, &modifiers);
 
             if (keyval)
               {
@@ -504,45 +504,45 @@ gimp_device_info_new (Gimp       *gimp,
 }
 
 void
-gimp_device_info_set_device (GimpDeviceInfo *device_info,
+gimp_device_info_set_device (GimpDeviceInfo *info,
                              GdkDevice      *device,
                              GdkDisplay     *display)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (device_info));
+  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
   g_return_if_fail (GDK_IS_DEVICE (device));
   g_return_if_fail (GDK_IS_DISPLAY (display));
-  g_return_if_fail (device_info->device == NULL);
-  g_return_if_fail (device_info->display == NULL);
+  g_return_if_fail (info->device == NULL);
+  g_return_if_fail (info->display == NULL);
   g_return_if_fail (strcmp (device->name,
-                            gimp_object_get_name (device_info)) == 0);
+                            gimp_object_get_name (info)) == 0);
 
-  g_object_set_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY, device_info);
+  g_object_set_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY, info);
 
-  device_info->device  = device;
-  device_info->display = display;
+  info->device  = device;
+  info->display = display;
 
-  gdk_device_set_mode (device, device_info->mode);
+  gdk_device_set_mode (device, info->mode);
 
-  if (device_info->n_axes != device->num_axes)
+  if (info->n_axes != device->num_axes)
     g_printerr ("%s: stored 'num-axes' for device '%s' doesn't match "
                 "number of axes present in device\n",
                 G_STRFUNC, device->name);
 
-  for (i = 0; i < MIN (device_info->n_axes, device->num_axes); i++)
-    gimp_device_info_set_axis_use (device_info, i,
-                                   device_info->axes[i]);
+  for (i = 0; i < MIN (info->n_axes, device->num_axes); i++)
+    gimp_device_info_set_axis_use (info, i,
+                                   info->axes[i]);
 
-  if (device_info->n_keys != device->num_keys)
+  if (info->n_keys != device->num_keys)
     g_printerr ("%s: stored 'num-keys' for device '%s' doesn't match "
                 "number of keys present in device\n",
                 G_STRFUNC, device->name);
 
-  for (i = 0; i < MIN (device_info->n_keys, device->num_keys); i++)
-    gimp_device_info_set_key (device_info, i,
-                              device_info->keys[i].keyval,
-                              device_info->keys[i].modifiers);
+  for (i = 0; i < MIN (info->n_keys, device->num_keys); i++)
+    gimp_device_info_set_key (info, i,
+                              info->keys[i].keyval,
+                              info->keys[i].modifiers);
 }
 
 GdkInputMode
@@ -684,11 +684,11 @@ gimp_device_info_set_key (GimpDeviceInfo *info,
 }
 
 void
-gimp_device_info_changed (GimpDeviceInfo *device_info)
+gimp_device_info_changed (GimpDeviceInfo *info)
 {
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (device_info));
+  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
 
-  g_signal_emit (device_info, device_info_signals[CHANGED], 0);
+  g_signal_emit (info, device_info_signals[CHANGED], 0);
 }
 
 GimpDeviceInfo *
