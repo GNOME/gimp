@@ -17,26 +17,27 @@ SUBDIRS = \
 	$(app)
 
 EXTRA_DIST = \
-	ChangeLog		\
-	README			\
-	README.gtkdoc		\
-	contexts.txt		\
-	debug-plug-ins.txt	\
-	exif-handling.txt	\
-	gbr.txt			\
-	ggr.txt  		\
-	gih.txt  		\
-	gpb.txt  		\
-	includes.txt		\
-	parasites.txt		\
-	pat.txt			\
-	release-howto.txt	\
-	structure.xml		\
-	submitting-patches.txt	\
-	tagging.txt		\
-	ui-framework.txt	\
-	undo.txt		\
-	vbr.txt			\
+	ChangeLog			\
+	README				\
+	README.gtkdoc			\
+	contexts.txt			\
+	debug-plug-ins.txt		\
+	exif-handling.txt		\
+	gbr.txt				\
+	ggr.txt  			\
+	gih.txt  			\
+	gpb.txt  			\
+	includes.txt			\
+	parasites.txt			\
+	pat.txt				\
+	gtkbuilder-porting-guide.txt	\
+	release-howto.txt		\
+	structure.xml			\
+	submitting-patches.txt		\
+	tagging.txt			\
+	ui-framework.txt		\
+	undo.txt			\
+	vbr.txt				\
 	xcf.txt
 
 

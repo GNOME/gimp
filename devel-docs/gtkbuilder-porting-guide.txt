@@ -1,0 +1,150 @@
+gtkbuilder-porting-guide.txt
+============================
+
+This document describes some tips and rules for how to port UI code
+written with GTK+ and C to GtkBuilder + Glade.
+
+
+
+Overview
+--------
+
+1. Locate code to port
+2. Start a new UI file with Glade
+3. Systematically convert the code to Glade
+4. Construct UI with GtkBuilder and do setup of widgets
+5. Add .ui file to build system
+6. Test
+7. Enjoy less UI C code
+8. Troubleshooting
+
+
+
+Locate code to port
+-------------------
+
+Look for code that looks like this:
+
+  // Create a widget and add to hierarchy
+  widget = gtk_some_widget_new (some_params);
+  gtk_some_container_add (container, widget)
+  gtk_widget_show (widget);
+
+  // Repeat...
+
+
+
+Start a new UI file with Glade
+------------------------------
+
+Start glade-3. Pick project file format 'GtkBuilder' (not
+'Libglade'). For maximum compatibility, use the minimal gtk+ catalog
+possible. The file extension shall be .ui. Look where other files are
+put and how they are named.
+
+
+
+Systematically convert the code to Glade
+----------------------------------------
+
+Go through the code that you want to convert line by line and add
+widgets in Glade as you remove lines. For example:
+
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (dialog_vbox),
+                     main_vbox);
+  gtk_widget_show (main_vbox);
+
+is replaced by
+
+  <object class="GtkVBox" id="main-vbox">
+    <property name="visible">True</property>
+    <property name="border_width">12</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">12</property>
+    <child>
+      <!-- ... -->
+    </child>
+  </object>
+
+in the UI declaration produced by Glade.
+
+
+
+Construct UI with GtkBuilder and do setup of widgets
+----------------------------------------------------
+
+The code to construct the UI will look something like this:
+
+  builder = gtk_builder_new ();
+  ui_file = g_build_filename (gimp_data_directory (),
+                              "ui/plug-ins/plug-in-file-gif-save.ui",
+                              NULL);
+  if (! gtk_builder_add_from_file (builder, ui_file, &error))
+    g_printerr (_("Error loading UI file '%s':\n%s"),
+                ui_file, error ? error->message : "???");
+  g_free (ui_file);
+
+and then you do setup of widgets using:
+
+  widget = GTK_WIDGET (gtk_builder_get_object (builder, "widget-name"));
+  gtk_widget_whatever (widget, params);
+
+Look in plug-ins/common/file-gif-save.c for helper function you can
+use for some tricky widgets.
+
+
+
+Add .ui file to build system
+----------------------------
+
+The UI declarations are installed as data files, see
+plug-ins/ui/Makefile.am for example, and it needs to be added to
+POTFILES.in for translations.
+
+
+
+Test
+----
+
+When you're done, make sure
+
+1. that translations still work. If they don't, maybe you forgot to
+add the UI file to the relevant POTFILES.in or maybe you changed
+strings, for example by adding markup. In the latter case, use pango
+text styles instead of markup (use GKT+ 2.16 UI files).
+
+2. that mnemonics still work, in particular when the mnemonic is not
+on the widget to be activated. For e.g. labels you need to explicitly
+assign a widget that will be actiated when the label mnemonic is
+pressed.
+
+3. that the spacing and other layout detals are still correct.
+
+
+
+Enjoy less UI C code
+--------------------
+
+Enjoy!
+
+
+
+Troubleshooting
+---------------
+
+If your GtkComboBox doesn't draw any items it's probably because it
+doesn't have a cell renderer. Appearently there is no UI to add one in
+GLade-3, so add it manually in the UI file, see the GTK+ doc for
+GtkCellLayout; this is what you need to add:
+
+<object class="GtkComboBox" name="some-id">
+  ...
+  <child>
+    <object class="GtkCellRendererText"/>
+    <attributes>
+      <attribute name="text">0</attribute>
+    </attributes>
+  </child>
+</object>
