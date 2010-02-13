@@ -16,8 +16,7 @@ UI:
  - Add "lock content" button to the layers, channels and paths dialogs,
    make the lock buttons more compact
  - Refuse to edit locked items
- - Show layer groups in the layers dialog and add a menu item to
-   create group layers
+ - Add support for layer groups
  - Improve internals and GUI of the save/export functionality
  - Move the shortcut dialog's "clear" button into the entry
  - Clean up UI code by introducing GimpDockWindow and GimpImageWindow
@@ -33,6 +32,9 @@ UI:
  - Add a still incomplete and unstable Single-window mode
  - Have an Export button, not Save, in export dialogs
  - Improve Free Select Tool handle highlightning
+ - Support changing user interface language from preferences
+ - Update ps-menurc with PS CS4 keyboard shortcuts
+ - Reduce spacing around canvas and use it for the canvas itself
 
 
 Core:
@@ -50,6 +52,7 @@ Core:
  - Let drawables connect to their floating selection's "update" signal
    instead of letting the image do this job
  - Fix brush rotation artifacts at even 90 degree rotation
+ - Don't leak shared tile memory on Solaris
 
 
 GEGL:
@@ -61,11 +64,19 @@ Plug-ins:
 
  - Updated script-fu's scheme to latest upstream fixes
  - Don't store image-specific print settings globally
+ - Add fundamental OpenRaster (.ora) import and export support
 
 
 Data:
 
  - Add texture/grunge brushes made by Johannes Engelhardt
+
+
+Developer documentation:
+
+ - Explain GimpContext
+ - Add SVG graphic with GIMP application core module dependencies
+ - Add a schedule for 2.8 development
 
 
 General:
@@ -76,6 +87,7 @@ General:
  - Clean up subsystem linking dependencies in app/
  - Add unit testing framework in app/tests/ and some basic tests,
    including basic UI tests and XCF tests
+ - Tentatively introduce usage of using Glade + GtkBuilder
 
 
 Changes in GIMP 2.7.0
