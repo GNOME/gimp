@@ -52,11 +52,11 @@ typedef struct
 
 static void            gimp_ui_tool_options_editor_updates      (GimpTestFixture *fixture,
                                                                  gconstpointer    data);
+static void            gimp_ui_create_new_image_via_dialog      (GimpTestFixture *fixture,
+                                                                 gconstpointer    data);
 static void            gimp_ui_switch_to_single_window_mode     (GimpTestFixture *fixture,
                                                                  gconstpointer    data);
 static void            gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture *fixture,
-                                                                 gconstpointer    data);
-static void            gimp_ui_create_new_image_via_dialog      (GimpTestFixture *fixture,
                                                                  gconstpointer    data);
 static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp            *gimp);
 
@@ -85,6 +85,12 @@ int main(int argc, char **argv)
               NULL,
               gimp_ui_tool_options_editor_updates,
               NULL);
+  g_test_add ("/gimp-ui/create-new-image-via-dialog",
+              GimpTestFixture,
+              gimp,
+              NULL,
+              gimp_ui_create_new_image_via_dialog,
+              NULL);
   g_test_add ("/gimp-ui/switch-to-single-window-mode",
               GimpTestFixture,
               gimp,
@@ -96,12 +102,6 @@ int main(int argc, char **argv)
               gimp,
               NULL,
               gimp_ui_switch_back_to_multi_window_mode,
-              NULL);
-  g_test_add ("/gimp-ui/create-new-image-via-dialog",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_create_new_image_via_dialog,
               NULL);
 
   /* Run the tests and return status */
@@ -167,36 +167,6 @@ gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
 }
 
 static void
-gimp_ui_switch_to_single_window_mode (GimpTestFixture *fixture,
-                                      gconstpointer    data)
-{
-  Gimp *gimp = GIMP (data);
-
-  /* Switch to single-window mode. We consider this test as passed if
-   * we don't get any GLib warnings/errors
-   */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
-                                   "windows",
-                                   "windows-use-single-window-mode");
-  gimp_test_run_mainloop_until_idle ();
-}
-
-static void
-gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture *fixture,
-                                          gconstpointer    data)
-{
-  Gimp *gimp = GIMP (data);
-
-  /* Switch back to multi-window mode. We consider this test as passed
-   * if we don't get any GLib warnings/errors
-   */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
-                                   "windows",
-                                   "windows-use-single-window-mode");
-  gimp_test_run_mainloop_until_idle ();
-}
-
-static void
 gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
                                      gconstpointer    data)
 {
@@ -244,14 +214,57 @@ gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
                    n_initial_images + 1);
 }
 
+static void
+gimp_ui_switch_to_single_window_mode (GimpTestFixture *fixture,
+                                      gconstpointer    data)
+{
+  Gimp *gimp = GIMP (data);
+
+  /* Switch to single-window mode. We consider this test as passed if
+   * we don't get any GLib warnings/errors
+   */
+  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+                                   "windows",
+                                   "windows-use-single-window-mode");
+  gimp_test_run_mainloop_until_idle ();
+}
+
+static void
+gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture *fixture,
+                                          gconstpointer    data)
+{
+  Gimp *gimp = GIMP (data);
+
+  /* Switch back to multi-window mode. We consider this test as passed
+   * if we don't get any GLib warnings/errors
+   */
+  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+                                   "windows",
+                                   "windows-use-single-window-mode");
+  gimp_test_run_mainloop_until_idle ();
+}
+
 static GimpUIManager *
 gimp_ui_get_ui_manager (Gimp *gimp)
 {
-  GimpDisplay       *display          = GIMP_DISPLAY (gimp_get_empty_display (gimp));
-  GimpDisplayShell  *shell            = gimp_display_get_shell (display);
-  GtkWidget         *toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  GimpImageWindow   *image_window     = GIMP_IMAGE_WINDOW (toplevel);
-  GimpUIManager     *ui_manager       = gimp_image_window_get_ui_manager (image_window);
+  GimpDisplay       *display      = NULL;
+  GimpDisplayShell  *shell        = NULL;
+  GtkWidget         *toplevel     = NULL;
+  GimpImageWindow   *image_window = NULL;
+  GimpUIManager     *ui_manager   = NULL;
+
+  display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+
+  /* If there were not empty display, assume that there is at least
+   * one image display and use that
+   */
+  if (! display)
+    display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
+
+  shell            = gimp_display_get_shell (display);
+  toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  image_window     = GIMP_IMAGE_WINDOW (toplevel);
+  ui_manager       = gimp_image_window_get_ui_manager (image_window);
 
   return ui_manager;
 }
