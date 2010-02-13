@@ -295,22 +295,26 @@ gimp_device_editor_select_device (GimpContainerView *view,
                                   GimpDeviceEditor  *editor)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
-  GimpContainerTreeView   *treeview;
-  GtkWidget               *widget;
 
-  treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
-
-  gtk_tree_model_get (treeview->model, insert_data,
-                      GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA, &widget,
-                      -1);
-
-  if (widget)
+  if (viewable && insert_data)
     {
-      gint page_num = gtk_notebook_page_num (GTK_NOTEBOOK (private->notebook),
-                                             widget);
+      GimpContainerTreeView *treeview;
+      GtkWidget             *widget;
 
-      gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
-                                     page_num);
+      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
+
+      gtk_tree_model_get (treeview->model, insert_data,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA, &widget,
+                          -1);
+
+      if (widget)
+        {
+          gint page_num = gtk_notebook_page_num (GTK_NOTEBOOK (private->notebook),
+                                                 widget);
+
+          gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
+                                         page_num);
+        }
     }
 }
 
