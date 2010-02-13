@@ -275,20 +275,20 @@ run (const gchar      *name,
             default:
               break;
             }
+        }
 
-          if (status == GIMP_PDB_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          if (save_image (param[3].data.d_string,
+                          image_ID, drawable_ID, orig_image_ID,
+                          &error))
             {
-              if (save_image (param[3].data.d_string,
-                              image_ID, drawable_ID, orig_image_ID,
-                              &error))
-                {
-                  /*  Store psvals data  */
-                  gimp_set_data (SAVE_PROC, &gsvals, sizeof (GIFSaveVals));
-                }
-              else
-                {
-                  status = GIMP_PDB_EXECUTION_ERROR;
-                }
+              /*  Store psvals data  */
+              gimp_set_data (SAVE_PROC, &gsvals, sizeof (GIFSaveVals));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
             }
         }
 
