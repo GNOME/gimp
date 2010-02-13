@@ -51,6 +51,10 @@ struct _GimpDeviceEditorPrivate
   Gimp      *gimp;
 
   GtkWidget *treeview;
+
+  GtkWidget *label;
+  GtkWidget *image;
+
   GtkWidget *notebook;
 };
 
@@ -114,6 +118,9 @@ static void
 gimp_device_editor_init (GimpDeviceEditor *editor)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  GtkWidget               *vbox;
+  GtkWidget               *ebox;
+  GtkWidget               *hbox;
   gint                     icon_width;
   gint                     icon_height;
 
@@ -124,7 +131,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
                                      &icon_width, &icon_height);
 
   private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
-  gtk_widget_set_size_request (private->treeview, 250, -1);
+  gtk_widget_set_size_request (private->treeview, 200, -1);
   gtk_box_pack_start (GTK_BOX (editor), private->treeview, FALSE, FALSE, 0);
   gtk_widget_show (private->treeview);
 
@@ -163,10 +170,38 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_widget_set_sensitive (list->down_button, FALSE);
 #endif
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (editor), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  ebox = gtk_event_box_new ();
+  gtk_widget_set_state (ebox, GTK_STATE_SELECTED);
+  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
+  gtk_widget_show (ebox);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (ebox), hbox);
+  gtk_widget_show (hbox);
+
+  private->label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (private->label), 0.0, 0.5);
+  gtk_label_set_ellipsize (GTK_LABEL (private->label), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (private->label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (hbox), private->label, TRUE, TRUE, 0);
+  gtk_widget_show (private->label);
+
+  private->image = gtk_image_new ();
+  gtk_widget_set_size_request (private->image, -1, 24);
+  gtk_box_pack_end (GTK_BOX (hbox), private->image, FALSE, FALSE, 0);
+  gtk_widget_show (private->image);
+
   private->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
-  gtk_box_pack_start (GTK_BOX (editor), private->notebook, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), private->notebook, TRUE, TRUE, 0);
   gtk_widget_show (private->notebook);
 }
 
@@ -315,6 +350,12 @@ gimp_device_editor_select_device (GimpContainerView *view,
           gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
                                          page_num);
         }
+
+      gtk_label_set_text (GTK_LABEL (private->label),
+                          gimp_object_get_name (viewable));
+      gtk_image_set_from_stock (GTK_IMAGE (private->image),
+                                gimp_viewable_get_stock_id (viewable),
+                                GTK_ICON_SIZE_BUTTON);
     }
 }
 
