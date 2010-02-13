@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontext.c
- * Copyright (C) 1999-2001 Michael Natterer
+ * Copyright (C) 1999-2010 Michael Natterer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -338,7 +338,7 @@ static GType gimp_context_prop_types[] =
 };
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpContext, gimp_context, GIMP_TYPE_OBJECT,
+G_DEFINE_TYPE_WITH_CODE (GimpContext, gimp_context, GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_context_config_iface_init))
 

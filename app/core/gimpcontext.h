@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontext.h
- * Copyright (C) 1999-2001 Michael Natterer
+ * Copyright (C) 1999-2010 Michael Natterer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #define __GIMP_CONTEXT_H__
 
 
-#include "gimpobject.h"
+#include "gimpviewable.h"
 
 
 #define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
@@ -46,7 +46,7 @@ typedef struct _GimpContextClass GimpContextClass;
  */
 struct _GimpContext
 {
-  GimpObject            parent_instance;
+  GimpViewable          parent_instance;
 
   Gimp                 *gimp;
 
@@ -100,7 +100,7 @@ struct _GimpContext
 
 struct _GimpContextClass
 {
-  GimpObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 
   void (* image_changed)      (GimpContext          *context,
                                GimpImage            *image);
