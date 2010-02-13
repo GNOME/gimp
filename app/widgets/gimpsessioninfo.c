@@ -416,7 +416,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   info->p->open   = FALSE;
   info->p->screen = DEFAULT_SCREEN;
 
-  if (! info->p->factory_entry->dockable)
+  if (info->p->factory_entry &&
+      ! info->p->factory_entry->dockable)
     {
       GIMP_LOG (DIALOG_FACTORY, "restoring toplevel \"%s\" (info %p)",
                 info->p->factory_entry->identifier,
