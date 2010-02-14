@@ -819,6 +819,8 @@ gimp_drawable_get_node (GimpItem *item)
 
   node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
 
+  g_warn_if_fail (drawable->private->mode_node == NULL);
+
   drawable->private->mode_node = gegl_node_new_child (node,
                                                       "operation", "gegl:over",
                                                       NULL);
@@ -1533,7 +1535,7 @@ gimp_drawable_get_mode_node (GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if (! drawable->private->mode_node)
-    gimp_drawable_get_node (GIMP_ITEM (drawable));
+    gimp_item_get_node (GIMP_ITEM (drawable));
 
   return drawable->private->mode_node;
 }

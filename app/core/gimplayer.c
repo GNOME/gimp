@@ -761,6 +761,8 @@ gimp_layer_get_node (GimpItem *item)
   source = gimp_drawable_get_source_node (drawable);
   gegl_node_add_child (node, source);
 
+  g_warn_if_fail (layer->opacity_node == NULL);
+
   layer->opacity_node = gegl_node_new_child (node,
                                              "operation", "gegl:opacity",
                                              "value",     layer->opacity,

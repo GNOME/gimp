@@ -851,6 +851,8 @@ gimp_channel_get_node (GimpItem *item)
                        channel->color.b,
                        channel->color.a);
 
+  g_warn_if_fail (channel->color_node == NULL);
+
   channel->color_node = gegl_node_new_child (node,
                                              "operation", "gegl:color",
                                              "value",     color,
@@ -858,11 +860,15 @@ gimp_channel_get_node (GimpItem *item)
 
   g_object_unref (color);
 
+  g_warn_if_fail (channel->mask_node == NULL);
+
   channel->mask_node = gegl_node_new_child (node,
                                             "operation", "gegl:opacity",
                                             NULL);
   gegl_node_connect_to (channel->color_node, "output",
                         channel->mask_node,  "input");
+
+  g_warn_if_fail (channel->invert_node == NULL);
 
   channel->invert_node = gegl_node_new_child (node,
                                               "operation", "gegl:invert",
