@@ -555,6 +555,9 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
     gimp_device_info_set_key (info, i,
                               info->keys[i].keyval,
                               info->keys[i].modifiers);
+
+  /*  sort order depends on device presence  */
+  gimp_object_name_changed (GIMP_OBJECT (info));
 }
 
 GdkInputMode
@@ -709,4 +712,23 @@ gimp_device_info_get_by_device (GdkDevice *device)
   g_return_val_if_fail (GDK_IS_DEVICE (device), NULL);
 
   return g_object_get_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY);
+}
+
+gint
+gimp_device_info_compare (GimpDeviceInfo *a,
+                          GimpDeviceInfo *b)
+{
+  if (a->device && ! b->device)
+    {
+      return 1;
+    }
+  else if (! a->device && b->device)
+    {
+      return -1;
+    }
+  else
+    {
+      return - strcmp (gimp_object_get_name (a),
+                       gimp_object_get_name (b));
+    }
 }

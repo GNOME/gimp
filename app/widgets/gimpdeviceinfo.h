@@ -106,6 +106,9 @@ void             gimp_device_info_changed           (GimpDeviceInfo *info);
 
 GimpDeviceInfo * gimp_device_info_get_by_device     (GdkDevice      *device);
 
+gint             gimp_device_info_compare           (GimpDeviceInfo *a,
+                                                     GimpDeviceInfo *b);
+
 
 G_END_DECLS
 

@@ -112,6 +112,9 @@ gimp_devices_init (Gimp                   *gimp,
   manager->current_device   = gdk_display_get_core_pointer (gdk_display);
   manager->change_notify    = change_notify;
 
+  gimp_list_set_sort_func (GIMP_LIST (manager->device_info_list),
+                           (GCompareFunc) gimp_device_info_compare);
+
   displays = gdk_display_manager_list_displays (disp_manager);
 
   /*  present displays in the order in which they were opened  */
