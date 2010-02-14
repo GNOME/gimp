@@ -165,6 +165,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
   tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER]        = GIMP_TYPE_VIEW_RENDERER;
   tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME]            = G_TYPE_STRING;
   tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES] = PANGO_TYPE_ATTR_LIST;
+  tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE]  = G_TYPE_BOOLEAN;
   tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA]       = G_TYPE_POINTER;
 
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (box->scrolled_win),
@@ -236,6 +237,7 @@ gimp_container_tree_view_constructor (GType                  type,
                                        tree_view->priv->name_cell,
                                        "text",       GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME,
                                        "attributes", GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES,
+                                       "sensitive",  GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE,
                                        NULL);
 
   g_signal_connect (tree_view->priv->name_cell, "editing-canceled",
@@ -492,8 +494,9 @@ gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
   name = gimp_viewable_get_description (viewable, NULL);
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
-                      GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, renderer,
-                      GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME,     name,
+                      GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER,       renderer,
+                      GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME,           name,
+                      GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE, TRUE,
                       -1);
 
   g_free (name);
