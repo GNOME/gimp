@@ -247,6 +247,7 @@ gboolean        gimp_item_stroke             (GimpItem           *item,
                                               GError            **error);
 
 GeglNode      * gimp_item_get_node           (GimpItem           *item);
+GeglNode      * gimp_item_peek_node          (GimpItem           *item);
 GeglNode      * gimp_item_get_offset_node    (GimpItem           *item);
 
 

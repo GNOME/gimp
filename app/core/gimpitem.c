@@ -1422,6 +1422,14 @@ gimp_item_get_node (GimpItem *item)
 }
 
 GeglNode *
+gimp_item_peek_node (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  return item->node;
+}
+
+GeglNode *
 gimp_item_get_offset_node (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
