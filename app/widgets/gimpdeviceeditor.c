@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpdeviceeditor.c
+ * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -312,6 +315,8 @@ gimp_device_editor_add_device (GimpContainer    *container,
 
       gtk_tree_store_set (GTK_TREE_STORE (treeview->model), iter,
                           GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA, widget,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE,
+                          gimp_device_info_get_device (info, NULL) != NULL,
                           -1);
     }
 }
