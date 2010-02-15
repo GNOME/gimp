@@ -54,6 +54,7 @@ struct _GimpDeviceEditorPrivate
   Gimp      *gimp;
 
   GtkWidget *treeview;
+  GtkWidget *delete_button;
 
   GtkWidget *label;
   GtkWidget *image;
@@ -90,6 +91,9 @@ static void      gimp_device_editor_remove_device  (GimpContainer         *conta
 static void      gimp_device_editor_select_device  (GimpContainerView     *view,
                                                     GimpViewable          *viewable,
                                                     gpointer               insert_data,
+                                                    GimpDeviceEditor      *editor);
+
+static void      gimp_device_editor_delete_clicked (GtkWidget             *button,
                                                     GimpDeviceEditor      *editor);
 
 
@@ -142,36 +146,16 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
                            G_CALLBACK (gimp_device_editor_select_device),
                            G_OBJECT (editor), 0);
 
-#if 0
-  list->edit_button =
-    gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GTK_STOCK_PROPERTIES,
-                            _("Configure the selected controller"),
+  private->delete_button =
+    gimp_editor_add_button (GIMP_EDITOR (private->treeview),
+                            GTK_STOCK_DELETE,
+                            _("Delete the selected device"),
                             NULL,
-                            G_CALLBACK (gimp_controller_list_edit_clicked),
+                            G_CALLBACK (gimp_device_editor_delete_clicked),
                             NULL,
-                            list);
-  list->up_button =
-    gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GTK_STOCK_GO_UP,
-                            _("Move the selected controller up"),
-                            NULL,
-                            G_CALLBACK (gimp_controller_list_up_clicked),
-                            NULL,
-                            list);
-  list->down_button =
-    gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GTK_STOCK_GO_DOWN,
-                            _("Move the selected controller down"),
-                            NULL,
-                            G_CALLBACK (gimp_controller_list_down_clicked),
-                            NULL,
-                            list);
+                            editor);
 
-  gtk_widget_set_sensitive (list->edit_button, FALSE);
-  gtk_widget_set_sensitive (list->up_button,   FALSE);
-  gtk_widget_set_sensitive (list->down_button, FALSE);
-#endif
+  gtk_widget_set_sensitive (private->delete_button, FALSE);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (editor), vbox, TRUE, TRUE, 0);
@@ -228,6 +212,13 @@ gimp_device_editor_constructor (GType                   type,
 
   devices = gimp_devices_get_list (private->gimp);
 
+  /*  connect to "remove" before the container view does so we can get
+   *  the notebook child stored in its model
+   */
+  g_signal_connect (devices, "remove",
+                    G_CALLBACK (gimp_device_editor_remove_device),
+                    editor);
+
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->treeview),
                                      devices);
 
@@ -236,9 +227,6 @@ gimp_device_editor_constructor (GType                   type,
 
   g_signal_connect (devices, "add",
                     G_CALLBACK (gimp_device_editor_add_device),
-                    editor);
-  g_signal_connect (devices, "remove",
-                    G_CALLBACK (gimp_device_editor_remove_device),
                     editor);
 
   for (list = GIMP_LIST (devices)->list;
@@ -326,6 +314,26 @@ gimp_device_editor_remove_device (GimpContainer    *container,
                                   GimpDeviceInfo   *info,
                                   GimpDeviceEditor *editor)
 {
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  GtkTreeIter             *iter;
+
+  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
+                                     GIMP_VIEWABLE (info));
+
+  if (iter)
+    {
+      GimpContainerTreeView *treeview;
+      GtkWidget             *widget;
+
+      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
+
+      gtk_tree_model_get (treeview->model, iter,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA, &widget,
+                          -1);
+
+      if (widget)
+        gtk_widget_destroy (widget);
+    }
 }
 
 static void
@@ -334,7 +342,10 @@ gimp_device_editor_select_device (GimpContainerView *view,
                                   gpointer           insert_data,
                                   GimpDeviceEditor  *editor)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  GimpDeviceEditorPrivate *private;
+  gboolean                 delete_sensitive = FALSE;
+
+  private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
 
   if (viewable && insert_data)
     {
@@ -361,7 +372,19 @@ gimp_device_editor_select_device (GimpContainerView *view,
       gtk_image_set_from_stock (GTK_IMAGE (private->image),
                                 gimp_viewable_get_stock_id (viewable),
                                 GTK_ICON_SIZE_BUTTON);
+
+      if (! gimp_device_info_get_device (GIMP_DEVICE_INFO (viewable), NULL))
+        delete_sensitive = TRUE;
     }
+
+  gtk_widget_set_sensitive (private->delete_button, delete_sensitive);
+}
+
+static void
+gimp_device_editor_delete_clicked (GtkWidget        *button,
+                                   GimpDeviceEditor *editor)
+{
+  g_printerr ("delete clicked");
 }
 
 

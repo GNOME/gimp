@@ -165,6 +165,8 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_box_pack_end (GTK_BOX (editor), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
