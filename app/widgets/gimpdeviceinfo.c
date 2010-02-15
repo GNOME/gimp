@@ -28,6 +28,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcurve.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpmarshal.h"
 
@@ -158,6 +159,8 @@ gimp_device_info_init (GimpDeviceInfo *info)
   info->n_keys   = 0;
   info->keys     = NULL;
 
+  info->pressure_curve = GIMP_CURVE (gimp_curve_new ("pressure curve"));
+
   g_signal_connect (info, "notify::name",
                     G_CALLBACK (gimp_device_info_guess_icon),
                     NULL);
@@ -236,10 +239,22 @@ gimp_device_info_finalize (GObject *object)
   GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
 
   if (info->axes)
-    g_free (info->axes);
+    {
+      g_free (info->axes);
+      info->axes = NULL;
+    }
 
   if (info->keys)
-    g_free (info->keys);
+    {
+      g_free (info->keys);
+      info->keys = NULL;
+    }
+
+  if (info->pressure_curve)
+    {
+      g_object_unref (info->pressure_curve);
+      info->pressure_curve = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -727,6 +742,23 @@ gimp_device_info_set_key (GimpDeviceInfo *info,
         }
 
       g_object_notify (G_OBJECT (info), "keys");
+    }
+}
+
+GimpCurve *
+gimp_device_info_get_curve (GimpDeviceInfo *info,
+                            GdkAxisUse      use)
+{
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+
+  switch (use)
+    {
+    case GDK_AXIS_PRESSURE:
+      return info->pressure_curve;
+      break;
+
+    default:
+      return NULL;
     }
 }
 

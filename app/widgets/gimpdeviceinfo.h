@@ -59,6 +59,10 @@ struct _GimpDeviceInfo
   GdkAxisUse    *axes;
   gint           n_keys;
   GdkDeviceKey  *keys;
+
+  /*  curves  */
+
+  GimpCurve     *pressure_curve;
 };
 
 struct _GimpDeviceInfoClass
@@ -97,17 +101,20 @@ void             gimp_device_info_get_key           (GimpDeviceInfo  *info,
                                                      gint             key,
                                                      guint           *keyval,
                                                      GdkModifierType *modifiers);
-void             gimp_device_info_set_key           (GimpDeviceInfo *info,
+void             gimp_device_info_set_key           (GimpDeviceInfo  *info,
                                                      gint             key,
                                                      guint            keyval,
                                                      GdkModifierType  modifiers);
 
-void             gimp_device_info_changed           (GimpDeviceInfo *info);
+GimpCurve      * gimp_device_info_get_curve         (GimpDeviceInfo  *info,
+                                                     GdkAxisUse       use);
 
-GimpDeviceInfo * gimp_device_info_get_by_device     (GdkDevice      *device);
+void             gimp_device_info_changed           (GimpDeviceInfo  *info);
 
-gint             gimp_device_info_compare           (GimpDeviceInfo *a,
-                                                     GimpDeviceInfo *b);
+GimpDeviceInfo * gimp_device_info_get_by_device     (GdkDevice       *device);
+
+gint             gimp_device_info_compare           (GimpDeviceInfo  *a,
+                                                     GimpDeviceInfo  *b);
 
 
 G_END_DECLS
