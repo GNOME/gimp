@@ -486,4 +486,14 @@ gimp_devices_device_removed (GdkDisplay        *gdk_display,
                              GdkDevice         *device,
                              GimpDeviceManager *manager)
 {
+  GimpDeviceInfo *device_info;
+
+  device_info =
+    GIMP_DEVICE_INFO (gimp_container_get_child_by_name (manager->device_info_list,
+                                                        device->name));
+
+  if (device_info)
+    {
+      gimp_device_info_set_device (device_info, NULL, NULL);
+    }
 }
