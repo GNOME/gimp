@@ -83,6 +83,7 @@ typedef struct
   gint     default_dispose;
   gboolean always_use_default_delay;
   gboolean always_use_default_dispose;
+  gboolean as_animation;
 } GIFSaveVals;
 
 
@@ -137,7 +138,8 @@ static GIFSaveVals gsvals =
   100,     /* default_delay between frames (100ms) */
   0,       /* default_dispose = "don't care"       */
   FALSE,   /* don't always use default_delay       */
-  FALSE    /* don't always use default_dispose     */
+  FALSE,   /* don't always use default_dispose     */
+  FALSE    /* as_animation                         */
 };
 
 
@@ -214,35 +216,16 @@ run (const gchar      *name,
       drawable_ID = param[2].data.d_int32;
       filename    = param[3].data.d_string;
 
-      /*  eventually export the image */
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
-          export = gimp_export_image (&image_ID, &drawable_ID, NULL,
-                                      (GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                       GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-                                       GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION));
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-          break;
-        default:
-          break;
-        }
-
       status = sanity_check (filename, image_ID, &error);
 
+      /* Get the export options */
       if (status == GIMP_PDB_SUCCESS)
         {
           switch (run_mode)
             {
             case GIMP_RUN_INTERACTIVE:
+              gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
               /*  Possibly retrieve data  */
               gimp_get_data (SAVE_PROC, &gsvals);
 
@@ -277,6 +260,35 @@ run (const gchar      *name,
             }
         }
 
+      /* Create an exportable image based on the export options */
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          {
+            GimpExportCapabilities capabilities =
+              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+              GIMP_EXPORT_CAN_HANDLE_GRAY |
+              GIMP_EXPORT_CAN_HANDLE_ALPHA;
+
+            if (gsvals.as_animation)
+              capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+            export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+                                        capabilities);
+
+            if (export == GIMP_EXPORT_CANCEL)
+              {
+                values[0].data.d_status = GIMP_PDB_CANCEL;
+                return;
+              }
+          }
+          break;
+        default:
+          break;
+        }
+
+      /* Write the image to file */
       if (status == GIMP_PDB_SUCCESS)
         {
           if (save_image (param[3].data.d_string,
@@ -1094,6 +1106,7 @@ save_dialog (gint32 image_ID)
   GtkWidget     *dialog;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
+  GtkWidget     *toggle;
   GtkWidget     *frame;
 #ifdef FACEHUGGERS
   GimpParasite  *GIF2_CMNT;
@@ -1126,6 +1139,8 @@ save_dialog (gint32 image_ID)
                                gsvals.interlace, &gsvals.interlace);
   file_gif_toggle_button_init (builder, "save-comment",
                                gsvals.save_comment, &gsvals.save_comment);
+  file_gif_toggle_button_init (builder, "as-animation",
+                               gsvals.as_animation, &gsvals.as_animation);
 
   text_view   = GTK_WIDGET (gtk_builder_get_object (builder, "comment"));
   text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
@@ -1180,11 +1195,21 @@ save_dialog (gint32 image_ID)
                                gsvals.always_use_default_dispose,
                                &gsvals.always_use_default_dispose);
 
-  /* If the image has only one layer it can't be animated, so
-     desensitize the animation options. */
-
-  frame = GTK_WIDGET (gtk_builder_get_object (builder, "animation-frame"));
-  gtk_widget_set_sensitive (frame, animation_supported);
+  frame  = GTK_WIDGET (gtk_builder_get_object (builder, "animation-frame"));
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "as-animation"));
+  gtk_widget_set_sensitive (toggle, animation_supported);
+  if (! animation_supported)
+    gimp_help_set_help_data (toggle,
+                             _("You can only export as animation when the "
+                               "image has more than one layer. The image "
+                               "you are trying to export only has one "
+                               "layer."),
+                             NULL);
+  gtk_widget_set_sensitive (frame, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)));
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", frame);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_sensitive_update),
+                    NULL);
 
   gtk_widget_show (dialog);
 
