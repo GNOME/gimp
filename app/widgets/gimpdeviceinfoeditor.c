@@ -69,9 +69,8 @@ struct _GimpDeviceInfoEditorPrivate
 {
   GimpDeviceInfo *info;
 
-  GtkWidget      *axis_combos[GDK_AXIS_LAST - GDK_AXIS_X];
-
   GtkListStore   *input_store;
+
   GtkListStore   *axis_store;
   GtkTreeIter     axis_iters[GDK_AXIS_LAST - GDK_AXIS_X];
 
