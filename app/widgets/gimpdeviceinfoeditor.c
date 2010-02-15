@@ -121,8 +121,9 @@ static void
 gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
 {
   GimpDeviceInfoEditorPrivate *private;
-  GtkWidget                   *key_view;
+  GtkWidget                   *frame;
   GtkWidget                   *scrolled_win;
+  GtkWidget                   *key_view;
   GtkCellRenderer             *cell;
 
   private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
@@ -137,8 +138,10 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
   key_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->key_store));
   g_object_unref (private->key_store);
 
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (key_view), FALSE);
+
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (key_view),
-                                               -1, _("Button"),
+                                               -1, NULL,
                                                gtk_cell_renderer_text_new (),
                                                "text", KEY_COLUMN_NAME,
                                                NULL);
@@ -149,7 +152,7 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
                 "editable", TRUE,
                 NULL);
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (key_view),
-                                               -1, _("Key"),
+                                               -1, NULL,
                                                cell,
                                                "accel-key",  KEY_COLUMN_KEY,
                                                "accel-mods", KEY_COLUMN_MASK,
@@ -162,12 +165,16 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
                     G_CALLBACK (gimp_device_info_editor_key_cleared),
                     editor);
 
+  frame = gimp_frame_new (_("Keys"));
+  gtk_box_pack_end (GTK_BOX (editor), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_end (GTK_BOX (editor), scrolled_win, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
   gtk_widget_show (scrolled_win);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), key_view);
@@ -185,6 +192,7 @@ gimp_device_info_editor_constructor (GType                   type,
   GtkWidget                   *hbox;
   GtkWidget                   *label;
   GtkWidget                   *combo;
+  GtkWidget                   *frame;
   GtkWidget                   *table;
   gint                         n_keys;
   gint                         i;
@@ -215,10 +223,14 @@ gimp_device_info_editor_constructor (GType                   type,
 
   /*  the axes  */
 
+  frame = gimp_frame_new (_("Axes"));
+  gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   table = gtk_table_new (GDK_AXIS_LAST, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   for (i = GDK_AXIS_X; i < GDK_AXIS_LAST; i++)
