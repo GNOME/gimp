@@ -72,6 +72,7 @@ struct _GimpDeviceEditorPrivate
 static GObject * gimp_device_editor_constructor    (GType                  type,
                                                     guint                  n_params,
                                                     GObjectConstructParam *params);
+static void      gimp_device_editor_dispose        (GObject               *object);
 static void      gimp_device_editor_set_property   (GObject               *object,
                                                     guint                  property_id,
                                                     const GValue          *value,
@@ -108,6 +109,7 @@ gimp_device_editor_class_init (GimpDeviceEditorClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructor  = gimp_device_editor_constructor;
+  object_class->dispose      = gimp_device_editor_dispose;
   object_class->set_property = gimp_device_editor_set_property;
   object_class->get_property = gimp_device_editor_get_property;
 
@@ -237,6 +239,23 @@ gimp_device_editor_constructor (GType                   type,
     }
 
   return object;
+}
+
+static void
+gimp_device_editor_dispose (GObject *object)
+{
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
+  GimpContainer           *devices = gimp_devices_get_list (private->gimp);
+
+  g_signal_handlers_disconnect_by_func (devices,
+                                        gimp_device_editor_add_device,
+                                        object);
+
+  g_signal_handlers_disconnect_by_func (devices,
+                                        gimp_device_editor_remove_device,
+                                        object);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
