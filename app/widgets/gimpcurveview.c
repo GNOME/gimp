@@ -357,6 +357,24 @@ gimp_curve_view_expose (GtkWidget      *widget,
   width  = allocation.width  - 2 * border - 1;
   height = allocation.height - 2 * border - 1;
 
+  if (! gimp_histogram_view_get_histogram (GIMP_HISTOGRAM_VIEW (view)) &&
+      ! gimp_histogram_view_get_background (GIMP_HISTOGRAM_VIEW (view)))
+    {
+      GdkWindow *window = gtk_widget_get_window (widget);
+
+      gdk_draw_rectangle (window,
+                          style->base_gc[GTK_STATE_NORMAL], TRUE,
+                          0, 0,
+                          allocation.width,
+                          allocation.height);
+
+      /*  Draw the outer border  */
+      gdk_draw_rectangle (window,
+                          style->dark_gc[GTK_STATE_NORMAL], FALSE,
+                          border, border,
+                          width - 1, height - 1);
+    }
+
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   gdk_cairo_region (cr, event->region);
