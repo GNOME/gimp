@@ -86,7 +86,7 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_FILE_CLOSE },
 
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
-    NC_("view-action", "_Fit Image in Window"), "<shift><control>R",
+    NC_("view-action", "_Fit Image in Window"), "<shift><control>J",
     NC_("view-action", "Adjust the zoom ratio so that the image becomes fully visible"),
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
@@ -116,7 +116,7 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
 
   { "view-shrink-wrap", GTK_STOCK_ZOOM_FIT,
-    NC_("view-action", "Shrink _Wrap"), "<control>R",
+    NC_("view-action", "Shrink _Wrap"), "<control>J",
     NC_("view-action", "Reduce the image window to the size of the image display"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
     GIMP_HELP_VIEW_SHRINK_WRAP },
