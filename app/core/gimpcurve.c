@@ -434,12 +434,10 @@ gimp_curve_get_extension (GimpData *data)
 static GimpData *
 gimp_curve_duplicate (GimpData *data)
 {
-  GimpCurve *curve = GIMP_CURVE (data);
-  GimpCurve *new;
+  GimpCurve *new = g_object_new (GIMP_TYPE_CURVE, NULL);
 
-  new = g_object_new (GIMP_TYPE_CURVE,
-                      "curve-type", curve->curve_type,
-                      NULL);
+  gimp_config_copy (GIMP_CONFIG (data),
+                    GIMP_CONFIG (new), 0);
 
   return GIMP_DATA (new);
 }
