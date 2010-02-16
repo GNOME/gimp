@@ -112,7 +112,7 @@ GimpCurve      * gimp_device_info_get_curve         (GimpDeviceInfo  *info,
                                                      GdkAxisUse       use);
 gdouble          gimp_device_info_map_axis          (GimpDeviceInfo  *info,
                                                      GdkAxisUse       use,
-                                                     gboolean         value);
+                                                     gdouble          value);
 
 void             gimp_device_info_changed           (GimpDeviceInfo  *info);
 
