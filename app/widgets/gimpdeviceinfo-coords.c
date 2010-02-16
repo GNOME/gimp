@@ -51,8 +51,9 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
 
       if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure))
         {
-          coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
-                                    GIMP_COORDS_MAX_PRESSURE);
+          coords->pressure = gimp_device_info_map_axis (info,
+                                                        GDK_AXIS_PRESSURE,
+                                                        coords->pressure);
         }
 
       if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &coords->xtilt))
@@ -102,8 +103,9 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (info->device,
                            axes, GDK_AXIS_PRESSURE, &coords->pressure))
     {
-      coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
-                                GIMP_COORDS_MAX_PRESSURE);
+      coords->pressure = gimp_device_info_map_axis (info,
+                                                    GDK_AXIS_PRESSURE,
+                                                    coords->pressure);
     }
 
   if (gdk_device_get_axis (info->device,
@@ -145,8 +147,9 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (info->device,
                            event->axes, GDK_AXIS_PRESSURE, &coords->pressure))
     {
-      coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
-                                GIMP_COORDS_MAX_PRESSURE);
+      coords->pressure = gimp_device_info_map_axis (info,
+                                                    GDK_AXIS_PRESSURE,
+                                                    coords->pressure);
     }
 
   if (gdk_device_get_axis (info->device,

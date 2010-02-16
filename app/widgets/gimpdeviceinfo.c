@@ -29,6 +29,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcurve.h"
+#include "core/gimpcurve-map.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpmarshal.h"
 
@@ -771,6 +772,23 @@ gimp_device_info_get_curve (GimpDeviceInfo *info,
     default:
       return NULL;
     }
+}
+
+gdouble
+gimp_device_info_map_axis (GimpDeviceInfo *info,
+                           GdkAxisUse      use,
+                           gboolean        value)
+{
+  GimpCurve *curve;
+
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), value);
+
+  curve = gimp_device_info_get_curve (info, use);
+
+  if (curve)
+    return gimp_curve_map_value (curve, value);
+
+  return value;
 }
 
 void
