@@ -116,6 +116,8 @@ libappwidgets_a_sources = \
 	gimpdeviceeditor.h		\
 	gimpdeviceinfo.c		\
 	gimpdeviceinfo.h		\
+	gimpdeviceinfo-coords.c		\
+	gimpdeviceinfo-coords.h		\
 	gimpdeviceinfoeditor.c		\
 	gimpdeviceinfoeditor.h		\
 	gimpdevices.c			\

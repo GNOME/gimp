@@ -53,6 +53,8 @@
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
 #include "widgets/gimpcontrollerwheel.h"
+#include "widgets/gimpdeviceinfo.h"
+#include "widgets/gimpdeviceinfo-coords.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
@@ -402,11 +404,11 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 static void
 gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 {
-  GdkDevice *current_device;
+  GimpDeviceInfo *current_device;
 
   current_device = gimp_devices_get_current (shell->display->gimp);
 
-  shell->draw_cursor = ! current_device->has_cursor;
+  shell->draw_cursor = ! gimp_device_info_has_cursor (current_device);
 }
 
 static void
@@ -458,9 +460,9 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
       {
         GimpCoords coords;
 
-        gimp_display_shell_get_device_coords (shell,
-                                              gimp_devices_get_current (gimp),
-                                              &coords);
+        gimp_device_info_get_device_coords (gimp_devices_get_current (gimp),
+                                            gtk_widget_get_window (shell->canvas),
+                                            &coords);
 
         gimp_display_shell_start_scrolling (shell, coords.x, coords.y);
 
@@ -647,12 +649,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       device_changed = TRUE;
     }
 
-  gimp_display_shell_get_event_coords (shell, event,
-                                       gimp_devices_get_current (gimp),
-                                       &display_coords);
-  gimp_display_shell_get_event_state (shell, event,
-                                      gimp_devices_get_current (gimp),
-                                      &state);
+  gimp_device_info_get_event_coords (gimp_devices_get_current (gimp),
+                                     gtk_widget_get_window (shell->canvas),
+                                     event,
+                                     &display_coords);
+  gimp_device_info_get_event_state (gimp_devices_get_current (gimp),
+                                    gtk_widget_get_window (shell->canvas),
+                                    event,
+                                    &state);
   time = gdk_event_get_time (event);
 
   /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
@@ -877,7 +881,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  *  the wacom driver is known to report crappy hints
                  *  (#6901) --mitch
                  */
-                if (gimp_devices_get_current (gimp) ==
+                if (gimp_devices_get_current (gimp)->device ==
                     gdk_display_get_core_pointer (gdk_display))
                   {
                     event_mask |= GDK_POINTER_MOTION_HINT_MASK;
@@ -1252,12 +1256,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (compressed_motion && ! shell->scrolling)
           {
-            GdkDevice *device = gimp_devices_get_current (gimp);
+            GimpDeviceInfo *device = gimp_devices_get_current (gimp);
 
-            gimp_display_shell_get_event_coords (shell, compressed_motion,
-                                                 device, &display_coords);
-            gimp_display_shell_get_event_state (shell, compressed_motion,
-                                                device, &state);
+            gimp_device_info_get_event_coords (device,
+                                               gtk_widget_get_window (shell->canvas),
+                                               compressed_motion,
+                                               &display_coords);
+            gimp_device_info_get_event_state (device,
+                                              gtk_widget_get_window (shell->canvas),
+                                              compressed_motion,
+                                              &state);
             time = gdk_event_get_time (event);
 
             /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
@@ -1343,17 +1351,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                             &history_events,
                                             &n_history_events))
                   {
-                    gint i;
+                    GimpDeviceInfo *device;
+                    gint            i;
+
+                    device = gimp_device_info_get_by_device (mevent->device);
 
                     tool_manager_control_active (gimp, GIMP_TOOL_ACTION_PAUSE,
                                                  display);
 
                     for (i = 0; i < n_history_events; i++)
                       {
-                        gimp_display_shell_get_time_coords (shell,
-                                                            mevent->device,
-                                                            history_events[i],
-                                                            &display_coords);
+                        gimp_device_info_get_time_coords (device,
+                                                          history_events[i],
+                                                          &display_coords);
 
                         /*  GimpCoords passed to tools are ALWAYS in
                          *  image coordinates

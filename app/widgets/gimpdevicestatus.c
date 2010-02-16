@@ -415,12 +415,9 @@ gimp_device_status_update (GimpDeviceStatus *status)
   for (list = status->devices; list; list = list->next)
     {
       GimpDeviceStatusEntry *entry = list->data;
-      GdkDevice             *device;
-
-      device = gimp_device_info_get_device (entry->device_info, NULL);
 
       gtk_widget_set_visible (entry->arrow,
-                              device && device == status->current_device);
+                              entry->device_info == status->current_device);
     }
 }
 

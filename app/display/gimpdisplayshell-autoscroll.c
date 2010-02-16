@@ -21,10 +21,12 @@
 
 #include "display-types.h"
 
+#include "widgets/gimpdeviceinfo.h"
+#include "widgets/gimpdeviceinfo-coords.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-autoscroll.h"
-#include "gimpdisplayshell-coords.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
 
@@ -41,7 +43,7 @@
 typedef struct
 {
   GdkEventMotion  *mevent;
-  GdkDevice       *device;
+  GimpDeviceInfo  *device;
   guint32          time;
   GdkModifierType  state;
   guint            timeout_id;
@@ -70,7 +72,7 @@ gimp_display_shell_autoscroll_start (GimpDisplayShell *shell,
   info = g_slice_new0 (ScrollInfo);
 
   info->mevent     = mevent;
-  info->device     = mevent->device;
+  info->device     = gimp_device_info_get_by_device (mevent->device);
   info->time       = gdk_event_get_time ((GdkEvent *) mevent);
   info->state      = state;
   info->timeout_id = g_timeout_add (AUTOSCROLL_DT,
@@ -115,7 +117,9 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
   gint              dx = 0;
   gint              dy = 0;
 
-  gimp_display_shell_get_device_coords (shell, info->device, &device_coords);
+  gimp_device_info_get_device_coords (info->device,
+                                      gtk_widget_get_window (shell->canvas),
+                                      &device_coords);
 
   if (device_coords.x < 0)
     dx = device_coords.x;
