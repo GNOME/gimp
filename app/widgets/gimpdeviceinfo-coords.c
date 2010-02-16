@@ -50,20 +50,28 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
        */
 
       if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure))
-        coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
-                                  GIMP_COORDS_MAX_PRESSURE);
+        {
+          coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
+                                    GIMP_COORDS_MAX_PRESSURE);
+        }
 
       if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &coords->xtilt))
-        coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
-                               GIMP_COORDS_MAX_TILT);
+        {
+          coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
+                                 GIMP_COORDS_MAX_TILT);
+        }
 
       if (gdk_event_get_axis (event, GDK_AXIS_YTILT, &coords->ytilt))
-        coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
-                               GIMP_COORDS_MAX_TILT);
+        {
+          coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
+                                 GIMP_COORDS_MAX_TILT);
+        }
 
       if (gdk_event_get_axis (event, GDK_AXIS_WHEEL, &coords->wheel))
-        coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
-                               GIMP_COORDS_MAX_WHEEL);
+        {
+          coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
+                                 GIMP_COORDS_MAX_WHEEL);
+        }
 
       return TRUE;
     }
