@@ -255,6 +255,7 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (sel, GTK_SELECTION_BROWSE);
+  gtk_tree_selection_select_iter (sel, &private->axis_iters[0]);
 
   g_signal_connect (sel, "changed",
                     G_CALLBACK (gimp_device_info_editor_axis_selected),
@@ -566,7 +567,7 @@ gimp_device_info_editor_set_axes (GimpDeviceInfoEditor *editor)
 
   for (i = GDK_AXIS_X; i < GDK_AXIS_LAST; i++)
     {
-      gchar input_name[23];
+      gchar input_name[16];
       gint  j;
 
       for (j = 0; j < n_axes; j++)
