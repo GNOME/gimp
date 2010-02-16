@@ -89,6 +89,8 @@ GdkInputMode     gimp_device_info_get_mode          (GimpDeviceInfo  *info);
 void             gimp_device_info_set_mode          (GimpDeviceInfo  *info,
                                                      GdkInputMode     mode);
 
+gboolean         gimp_device_info_has_cursor        (GimpDeviceInfo  *info);
+
 gint             gimp_device_info_get_n_axes        (GimpDeviceInfo  *info);
 GdkAxisUse       gimp_device_info_get_axis_use      (GimpDeviceInfo  *info,
                                                      gint             axis);

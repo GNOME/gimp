@@ -636,6 +636,17 @@ gimp_device_info_set_mode (GimpDeviceInfo *info,
     }
 }
 
+gboolean
+gimp_device_info_has_cursor (GimpDeviceInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), FALSE);
+
+  if (info->device)
+    return info->device->has_cursor;
+
+  return FALSE;
+}
+
 gint
 gimp_device_info_get_n_axes (GimpDeviceInfo *info)
 {
