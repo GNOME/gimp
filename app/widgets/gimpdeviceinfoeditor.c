@@ -441,6 +441,7 @@ gimp_device_info_editor_constructor (GType                   type,
 
           view = gimp_curve_view_new ();
           g_object_set (view,
+                        "gimp",         GIMP_CONTEXT (private->info)->gimp,
                         "border-width", CURVE_BORDER,
                         NULL);
           gtk_widget_set_size_request (view,

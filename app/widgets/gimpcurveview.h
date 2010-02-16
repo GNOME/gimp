@@ -36,6 +36,8 @@ struct _GimpCurveView
 {
   GimpHistogramView  parent_instance;
 
+  Gimp              *gimp; /* only needed for copy & paste */
+
   GimpCurve         *curve;
 
   gboolean           draw_base_line;
@@ -63,6 +65,10 @@ struct _GimpCurveView
 struct _GimpCurveViewClass
 {
   GimpHistogramViewClass  parent_class;
+
+  void (* cut_clipboard)   (GimpCurveView *view);
+  void (* copy_clipboard)  (GimpCurveView *view);
+  void (* paste_clipboard) (GimpCurveView *view);
 };
 
 

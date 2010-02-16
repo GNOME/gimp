@@ -25,6 +25,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
+#include "core/gimpcurve.h"
 
 #include "gimpclipboard.h"
 #include "gimppixbuf.h"
@@ -48,8 +49,12 @@ struct _GimpClipboard
   GtkTargetEntry *svg_target_entries;
   gint            n_svg_target_entries;
 
+  GtkTargetEntry *curve_target_entries;
+  gint            n_curve_target_entries;
+
   GimpBuffer     *buffer;
   gchar          *svg;
+  GimpCurve      *curve;
 };
 
 
@@ -61,12 +66,17 @@ static GdkAtom * gimp_clipboard_wait_for_targets (Gimp             *gimp,
                                                   gint             *n_targets);
 static GdkAtom   gimp_clipboard_wait_for_buffer  (Gimp             *gimp);
 static GdkAtom   gimp_clipboard_wait_for_svg     (Gimp             *gimp);
+static GdkAtom   gimp_clipboard_wait_for_curve   (Gimp             *gimp);
 
 static void      gimp_clipboard_send_buffer      (GtkClipboard     *clipboard,
                                                   GtkSelectionData *selection_data,
                                                   guint             info,
                                                   Gimp             *gimp);
 static void      gimp_clipboard_send_svg         (GtkClipboard     *clipboard,
+                                                  GtkSelectionData *selection_data,
+                                                  guint             info,
+                                                  Gimp             *gimp);
+static void      gimp_clipboard_send_curve       (GtkClipboard     *clipboard,
                                                   GtkSelectionData *selection_data,
                                                   guint             info,
                                                   Gimp             *gimp);
@@ -162,6 +172,13 @@ gimp_clipboard_init (Gimp *gimp)
   gimp_clip->svg_target_entries[1].target = g_strdup ("image/svg+xml");
   gimp_clip->svg_target_entries[1].flags  = 0;
   gimp_clip->svg_target_entries[1].info   = 1;
+
+  gimp_clip->n_curve_target_entries = 1;
+  gimp_clip->curve_target_entries   = g_new0 (GtkTargetEntry, 1);
+
+  gimp_clip->curve_target_entries[0].target = g_strdup ("application/x-gimp-curve");
+  gimp_clip->curve_target_entries[0].flags  = 0;
+  gimp_clip->curve_target_entries[0].info   = 0;
 }
 
 void
@@ -246,6 +263,39 @@ gimp_clipboard_has_svg (Gimp *gimp)
   gimp_clip = gimp_clipboard_get (gimp);
 
   return (gimp_clip->svg != NULL);
+}
+
+/**
+ * gimp_clipboard_has_curve:
+ * @gimp: pointer to #Gimp
+ *
+ * Tests if there's curve data in %GDK_SELECTION_CLIPBOARD.
+ * This is done in a main-loop similar to
+ * gtk_clipboard_wait_is_text_available(). The same caveats apply here.
+ *
+ * Return value: %TRUE if there's curve data in the clipboard, %FALSE otherwise
+ **/
+gboolean
+gimp_clipboard_has_curve (Gimp *gimp)
+{
+  GimpClipboard *gimp_clip;
+  GtkClipboard  *clipboard;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+
+  if (clipboard                                              &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp) &&
+      gimp_clipboard_wait_for_curve (gimp)  != GDK_NONE)
+    {
+      return TRUE;
+    }
+
+  gimp_clip = gimp_clipboard_get (gimp);
+
+  return (gimp_clip->curve != NULL);
 }
 
 /**
@@ -373,6 +423,59 @@ gimp_clipboard_get_svg (Gimp  *gimp,
 }
 
 /**
+ * gimp_clipboard_get_curve:
+ * @gimp: pointer to #Gimp
+ *
+ * Retrieves curve data from %GDK_SELECTION_CLIPBOARD or from the global
+ * curve buffer of @gimp.
+ *
+ * The returned curve needs to be unref'ed when it's no longer needed.
+ *
+ * Return value: a reference to a #GimpCurve or %NULL if there's no
+ *               curve data
+ **/
+GimpCurve *
+gimp_clipboard_get_curve (Gimp *gimp)
+{
+  GimpClipboard *gimp_clip;
+  GtkClipboard  *clipboard;
+  GdkAtom        atom;
+  GimpCurve     *curve = NULL;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+
+  if (clipboard                                                        &&
+      gtk_clipboard_get_owner (clipboard)           != G_OBJECT (gimp) &&
+      (atom = gimp_clipboard_wait_for_curve (gimp)) != GDK_NONE)
+    {
+      GtkSelectionData *data;
+
+      gimp_set_busy (gimp);
+
+      data = gtk_clipboard_wait_for_contents (clipboard, atom);
+
+      if (data)
+        {
+          curve = gimp_selection_data_get_curve (data);
+
+          gtk_selection_data_free (data);
+        }
+
+      gimp_unset_busy (gimp);
+    }
+
+  gimp_clip = gimp_clipboard_get (gimp);
+
+  if (! curve && gimp_clip->curve)
+    curve = g_object_ref (gimp_clip->curve);
+
+  return curve;
+}
+
+/**
  * gimp_clipboard_set_buffer:
  * @gimp:   pointer to #Gimp
  * @buffer: a #GimpBuffer, or %NULL.
@@ -492,6 +595,51 @@ gimp_clipboard_set_text (Gimp        *gimp,
     gtk_clipboard_set_text (clipboard, text, -1);
 }
 
+/**
+ * gimp_clipboard_set_curve:
+ * @gimp: pointer to #Gimp
+ * @curve: a #GimpCurve, or %NULL
+ *
+ * Offers curve data in %GDK_SELECTION_CLIPBOARD.
+ **/
+void
+gimp_clipboard_set_curve (Gimp      *gimp,
+                          GimpCurve *curve)
+{
+  GimpClipboard *gimp_clip;
+  GtkClipboard  *clipboard;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (curve == NULL || GIMP_IS_CURVE (curve));
+
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+  if (! clipboard)
+    return;
+
+  gimp_clip = gimp_clipboard_get (gimp);
+
+  gimp_clipboard_clear (gimp_clip);
+
+  if (curve)
+    {
+      gimp_clip->curve = g_object_ref (curve);
+
+      gtk_clipboard_set_with_owner (clipboard,
+                                    gimp_clip->curve_target_entries,
+                                    gimp_clip->n_curve_target_entries,
+                                    (GtkClipboardGetFunc) gimp_clipboard_send_curve,
+                                    (GtkClipboardClearFunc) NULL,
+                                    G_OBJECT (gimp));
+
+      gtk_clipboard_set_can_store (clipboard, gimp_clip->curve_target_entries, 1);
+    }
+  else if (gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
+    {
+      gtk_clipboard_clear (clipboard);
+    }
+}
+
 
 /*  private functions  */
 
@@ -515,6 +663,12 @@ gimp_clipboard_clear (GimpClipboard *gimp_clip)
       g_free (gimp_clip->svg);
       gimp_clip->svg = NULL;
     }
+
+  if (gimp_clip->curve)
+    {
+      g_object_unref (gimp_clip->curve);
+      gimp_clip->curve = NULL;
+    }
 }
 
 static void
@@ -535,6 +689,11 @@ gimp_clipboard_free (GimpClipboard *gimp_clip)
     g_free (gimp_clip->svg_target_entries[i].target);
 
   g_free (gimp_clip->svg_target_entries);
+
+  for (i = 0; i < gimp_clip->n_curve_target_entries; i++)
+    g_free (gimp_clip->curve_target_entries[i].target);
+
+  g_free (gimp_clip->curve_target_entries);
 
   g_slice_free (GimpClipboard, gimp_clip);
 }
@@ -680,6 +839,35 @@ gimp_clipboard_wait_for_svg (Gimp *gimp)
   return result;
 }
 
+static GdkAtom
+gimp_clipboard_wait_for_curve (Gimp *gimp)
+{
+  GdkAtom *targets;
+  gint     n_targets;
+  GdkAtom  result = GDK_NONE;
+
+  targets = gimp_clipboard_wait_for_targets (gimp, &n_targets);
+
+  if (targets)
+    {
+      GdkAtom curve_atom = gdk_atom_intern_static_string ("application/x-gimp-curve");
+      gint    i;
+
+      for (i = 0; i < n_targets; i++)
+        {
+          if (targets[i] == curve_atom)
+            {
+              result = curve_atom;
+              break;
+            }
+        }
+
+      g_free (targets);
+    }
+
+  return result;
+}
+
 static void
 gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
                             GtkSelectionData *selection_data,
@@ -731,6 +919,28 @@ gimp_clipboard_send_svg (GtkClipboard     *clipboard,
       gimp_selection_data_set_stream (selection_data,
                                       (const guchar *) gimp_clip->svg,
                                       strlen (gimp_clip->svg));
+    }
+
+  gimp_unset_busy (gimp);
+}
+
+static void
+gimp_clipboard_send_curve (GtkClipboard     *clipboard,
+                           GtkSelectionData *selection_data,
+                           guint             info,
+                           Gimp             *gimp)
+{
+  GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
+
+  gimp_set_busy (gimp);
+
+  if (gimp_clip->curve)
+    {
+      if (gimp->be_verbose)
+        g_printerr ("clipboard: sending curve data as '%s'\n",
+                    gimp_clip->curve_target_entries[info].target);
+
+      gimp_selection_data_set_curve (selection_data, gimp_clip->curve);
     }
 
   gimp_unset_busy (gimp);

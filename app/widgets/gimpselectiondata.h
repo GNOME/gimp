@@ -43,6 +43,13 @@ const guchar  * gimp_selection_data_get_stream    (GtkSelectionData *selection,
                                                    gsize            *stream_length);
 
 
+/*  curve  */
+
+void            gimp_selection_data_set_curve     (GtkSelectionData *selection,
+                                                   GimpCurve        *curve);
+GimpCurve     * gimp_selection_data_get_curve     (GtkSelectionData *selection);
+
+
 /*  image  */
 
 void            gimp_selection_data_set_image     (GtkSelectionData *selection,

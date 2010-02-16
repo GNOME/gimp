@@ -22,56 +22,72 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcurve.h"
 #include "core/gimpcurve-map.h"
 #include "core/gimpmarshal.h"
 
+#include "gimpclipboard.h"
 #include "gimpcurveview.h"
 
 
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_BASE_LINE,
   PROP_GRID_ROWS,
   PROP_GRID_COLUMNS
 };
 
+enum
+{
+  CUT_CLIPBOARD,
+  COPY_CLIPBOARD,
+  PASTE_CLIPBOARD,
+  LAST_SIGNAL
+};
 
-static void       gimp_curve_view_finalize       (GObject          *object);
-static void       gimp_curve_view_dispose        (GObject          *object);
-static void       gimp_curve_view_set_property   (GObject          *object,
-                                                  guint             property_id,
-                                                  const GValue     *value,
-                                                  GParamSpec       *pspec);
-static void       gimp_curve_view_get_property   (GObject          *object,
-                                                  guint             property_id,
-                                                  GValue           *value,
-                                                  GParamSpec       *pspec);
 
-static void       gimp_curve_view_style_set      (GtkWidget        *widget,
-                                                  GtkStyle         *prev_style);
-static gboolean   gimp_curve_view_expose         (GtkWidget        *widget,
-                                                  GdkEventExpose   *event);
-static gboolean   gimp_curve_view_button_press   (GtkWidget        *widget,
-                                                  GdkEventButton   *bevent);
-static gboolean   gimp_curve_view_button_release (GtkWidget        *widget,
-                                                  GdkEventButton   *bevent);
-static gboolean   gimp_curve_view_motion_notify  (GtkWidget        *widget,
-                                                  GdkEventMotion   *bevent);
-static gboolean   gimp_curve_view_leave_notify   (GtkWidget        *widget,
-                                                  GdkEventCrossing *cevent);
-static gboolean   gimp_curve_view_key_press      (GtkWidget        *widget,
-                                                  GdkEventKey      *kevent);
+static void       gimp_curve_view_finalize        (GObject          *object);
+static void       gimp_curve_view_dispose         (GObject          *object);
+static void       gimp_curve_view_set_property    (GObject          *object,
+                                                   guint             property_id,
+                                                   const GValue     *value,
+                                                   GParamSpec       *pspec);
+static void       gimp_curve_view_get_property    (GObject          *object,
+                                                   guint             property_id,
+                                                   GValue           *value,
+                                                   GParamSpec       *pspec);
 
-static void       gimp_curve_view_set_cursor     (GimpCurveView    *view,
-                                                  gdouble           x,
-                                                  gdouble           y);
-static void       gimp_curve_view_unset_cursor   (GimpCurveView *view);
+static void       gimp_curve_view_style_set       (GtkWidget        *widget,
+                                                   GtkStyle         *prev_style);
+static gboolean   gimp_curve_view_expose          (GtkWidget        *widget,
+                                                   GdkEventExpose   *event);
+static gboolean   gimp_curve_view_button_press    (GtkWidget        *widget,
+                                                   GdkEventButton   *bevent);
+static gboolean   gimp_curve_view_button_release  (GtkWidget        *widget,
+                                                   GdkEventButton   *bevent);
+static gboolean   gimp_curve_view_motion_notify   (GtkWidget        *widget,
+                                                   GdkEventMotion   *bevent);
+static gboolean   gimp_curve_view_leave_notify    (GtkWidget        *widget,
+                                                   GdkEventCrossing *cevent);
+static gboolean   gimp_curve_view_key_press       (GtkWidget        *widget,
+                                                   GdkEventKey      *kevent);
+
+static void       gimp_curve_view_cut_clipboard   (GimpCurveView    *view);
+static void       gimp_curve_view_copy_clipboard  (GimpCurveView    *view);
+static void       gimp_curve_view_paste_clipboard (GimpCurveView    *view);
+
+static void       gimp_curve_view_set_cursor      (GimpCurveView    *view,
+                                                   gdouble           x,
+                                                   gdouble           y);
+static void       gimp_curve_view_unset_cursor    (GimpCurveView *view);
 
 
 G_DEFINE_TYPE (GimpCurveView, gimp_curve_view,
@@ -79,12 +95,15 @@ G_DEFINE_TYPE (GimpCurveView, gimp_curve_view,
 
 #define parent_class gimp_curve_view_parent_class
 
+static guint curve_view_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_curve_view_class_init (GimpCurveViewClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkBindingSet  *binding_set;
 
   object_class->finalize             = gimp_curve_view_finalize;
   object_class->dispose              = gimp_curve_view_dispose;
@@ -99,22 +118,70 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
   widget_class->leave_notify_event   = gimp_curve_view_leave_notify;
   widget_class->key_press_event      = gimp_curve_view_key_press;
 
+  klass->cut_clipboard               = gimp_curve_view_cut_clipboard;
+  klass->copy_clipboard              = gimp_curve_view_copy_clipboard;
+  klass->paste_clipboard             = gimp_curve_view_paste_clipboard;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_BASE_LINE,
                                    g_param_spec_boolean ("base-line",
                                                          NULL, NULL,
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_GRID_ROWS,
                                    g_param_spec_int ("grid-rows", NULL, NULL,
                                                      0, 100, 8,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_GRID_COLUMNS,
                                    g_param_spec_int ("grid-columns", NULL, NULL,
                                                      0, 100, 8,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
+
+  curve_view_signals[CUT_CLIPBOARD] =
+    g_signal_new ("cut-clipboard",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                  G_STRUCT_OFFSET (GimpCurveViewClass, cut_clipboard),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  curve_view_signals[COPY_CLIPBOARD] =
+    g_signal_new ("copy-clipboard",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                  G_STRUCT_OFFSET (GimpCurveViewClass, copy_clipboard),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  curve_view_signals[PASTE_CLIPBOARD] =
+    g_signal_new ("paste-clipboard",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                  G_STRUCT_OFFSET (GimpCurveViewClass, paste_clipboard),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  binding_set = gtk_binding_set_by_class (klass);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_x, GDK_CONTROL_MASK,
+                                "cut-clipboard", 0);
+  gtk_binding_entry_add_signal (binding_set, GDK_c, GDK_CONTROL_MASK,
+                                "copy-clipboard", 0);
+  gtk_binding_entry_add_signal (binding_set, GDK_v, GDK_CONTROL_MASK,
+                                "paste-clipboard", 0);
 }
 
 static void
@@ -179,6 +246,9 @@ gimp_curve_view_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      view->gimp = g_value_get_object (value); /* don't ref */
+      break;
     case PROP_GRID_ROWS:
       view->grid_rows = g_value_get_int (value);
       break;
@@ -204,6 +274,9 @@ gimp_curve_view_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, view->gimp);
+      break;
     case PROP_GRID_ROWS:
       g_value_set_int (value, view->grid_rows);
       break;
@@ -785,81 +858,146 @@ static gboolean
 gimp_curve_view_key_press (GtkWidget   *widget,
                            GdkEventKey *kevent)
 {
-  GimpCurveView *view   = GIMP_CURVE_VIEW (widget);
-  GimpCurve     *curve  = view->curve;
-  gint           i      = view->selected;
-  gdouble        x, y;
-  gboolean       retval = FALSE;
+  GimpCurveView *view    = GIMP_CURVE_VIEW (widget);
+  GimpCurve     *curve   = view->curve;
+  gboolean       handled = FALSE;
 
-  if (view->grabbed || ! curve ||
-      gimp_curve_get_curve_type (curve) == GIMP_CURVE_FREE)
-    return FALSE;
-
-  gimp_curve_get_point (curve, i, NULL, &y);
-
-  switch (kevent->keyval)
+  if (! view->grabbed && curve &&
+      gimp_curve_get_curve_type (curve) == GIMP_CURVE_SMOOTH)
     {
-    case GDK_Left:
-      for (i = i - 1; i >= 0 && ! retval; i--)
-        {
-          gimp_curve_get_point (curve, i, &x, NULL);
+      gint    i = view->selected;
+      gdouble x, y;
 
-          if (x >= 0.0)
+      gimp_curve_get_point (curve, i, NULL, &y);
+
+      switch (kevent->keyval)
+        {
+        case GDK_Left:
+          for (i = i - 1; i >= 0 && ! handled; i--)
             {
-              gimp_curve_view_set_selected (view, i);
+              gimp_curve_get_point (curve, i, &x, NULL);
 
-              retval = TRUE;
+              if (x >= 0.0)
+                {
+                  gimp_curve_view_set_selected (view, i);
+
+                  handled = TRUE;
+                }
             }
-        }
-      break;
+          break;
 
-    case GDK_Right:
-      for (i = i + 1; i < curve->n_points && ! retval; i++)
-        {
-          gimp_curve_get_point (curve, i, &x, NULL);
-
-          if (x >= 0.0)
+        case GDK_Right:
+          for (i = i + 1; i < curve->n_points && ! handled; i++)
             {
-              gimp_curve_view_set_selected (view, i);
+              gimp_curve_get_point (curve, i, &x, NULL);
 
-              retval = TRUE;
+              if (x >= 0.0)
+                {
+                  gimp_curve_view_set_selected (view, i);
+
+                  handled = TRUE;
+                }
             }
+          break;
+
+        case GDK_Up:
+          if (y < 1.0)
+            {
+              y = y + (kevent->state & GDK_SHIFT_MASK ?
+                       (16.0 / 255.0) : (1.0 / 255.0));
+
+              gimp_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
+
+              handled = TRUE;
+            }
+          break;
+
+        case GDK_Down:
+          if (y > 0)
+            {
+              y = y - (kevent->state & GDK_SHIFT_MASK ?
+                       (16.0 / 255.0) : (1.0 / 255.0));
+
+              gimp_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
+
+              handled = TRUE;
+            }
+          break;
+
+        default:
+          break;
         }
-      break;
-
-    case GDK_Up:
-      if (y < 1.0)
-        {
-          y = y + (kevent->state & GDK_SHIFT_MASK ?
-                   (16.0 / 255.0) : (1.0 / 255.0));
-
-          gimp_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
-
-          retval = TRUE;
-        }
-      break;
-
-    case GDK_Down:
-      if (y > 0)
-        {
-          y = y - (kevent->state & GDK_SHIFT_MASK ?
-                   (16.0 / 255.0) : (1.0 / 255.0));
-
-          gimp_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
-
-          retval = TRUE;
-        }
-      break;
-
-    default:
-      break;
     }
 
-  if (retval)
-    set_cursor (view, GDK_TCROSS);
+  if (handled)
+    {
+      set_cursor (view, GDK_TCROSS);
 
-  return retval;
+      return TRUE;
+    }
+
+  return GTK_WIDGET_CLASS (parent_class)->key_press_event (widget, kevent);
 }
+
+static void
+gimp_curve_view_cut_clipboard (GimpCurveView *view)
+{
+  g_printerr ("%s\n", G_STRFUNC);
+
+  if (! view->curve || ! view->gimp)
+    {
+      gtk_widget_error_bell (GTK_WIDGET (view));
+      return;
+    }
+
+  gimp_curve_view_copy_clipboard (view);
+
+  gimp_curve_reset (view->curve, FALSE);
+}
+
+static void
+gimp_curve_view_copy_clipboard (GimpCurveView *view)
+{
+  GimpCurve *copy;
+
+  g_printerr ("%s\n", G_STRFUNC);
+
+  if (! view->curve || ! view->gimp)
+    {
+      gtk_widget_error_bell (GTK_WIDGET (view));
+      return;
+    }
+
+  copy = GIMP_CURVE (gimp_data_duplicate (GIMP_DATA (view->curve)));
+  gimp_clipboard_set_curve (view->gimp, copy);
+  g_object_unref (copy);
+}
+
+static void
+gimp_curve_view_paste_clipboard (GimpCurveView *view)
+{
+  GimpCurve *copy;
+
+  g_printerr ("%s\n", G_STRFUNC);
+
+  if (! view->curve || ! view->gimp)
+    {
+      gtk_widget_error_bell (GTK_WIDGET (view));
+      return;
+    }
+
+  copy = gimp_clipboard_get_curve (view->gimp);
+
+  if (copy)
+    {
+      gimp_config_copy (GIMP_CONFIG (copy),
+                        GIMP_CONFIG (view->curve), 0);
+      g_object_unref (copy);
+    }
+}
+
+
+/*  public functions  */
 
 GtkWidget *
 gimp_curve_view_new (void)

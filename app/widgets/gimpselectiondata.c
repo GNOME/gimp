@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "widgets-types.h"
 
@@ -31,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcurve.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
@@ -359,6 +361,59 @@ gimp_selection_data_get_stream (GtkSelectionData *selection,
   *stream_length = length;
 
   return (const guchar *) gtk_selection_data_get_data (selection);
+}
+
+void
+gimp_selection_data_set_curve (GtkSelectionData *selection,
+                               GimpCurve        *curve)
+{
+  gchar *str;
+
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (GIMP_IS_CURVE (curve));
+
+  str = gimp_config_serialize_to_string (GIMP_CONFIG (curve), NULL);
+
+  gtk_selection_data_set (selection,
+                          gtk_selection_data_get_target (selection),
+                          8, (guchar *) str, strlen (str));
+
+  g_free (str);
+}
+
+GimpCurve *
+gimp_selection_data_get_curve (GtkSelectionData *selection)
+{
+  GimpCurve *curve;
+  gint       length;
+  GError    *error = NULL;
+
+  g_return_val_if_fail (selection != NULL, NULL);
+
+  length = gtk_selection_data_get_length (selection);
+
+  if (gtk_selection_data_get_format (selection) != 8 || length < 1)
+    {
+      g_warning ("Received invalid curve data!");
+      return NULL;
+    }
+
+  curve = GIMP_CURVE (gimp_curve_new ("pasted curve"));
+
+  if (! gimp_config_deserialize_string (GIMP_CONFIG (curve),
+                                        (const gchar *)
+                                        gtk_selection_data_get_data (selection),
+                                        length,
+                                        NULL,
+                                        &error))
+    {
+      g_warning ("Received invalid curve data: %s", error->message);
+      g_clear_error (&error);
+      g_object_unref (curve);
+      return NULL;
+    }
+
+  return curve;
 }
 
 void
