@@ -409,8 +409,9 @@ static gboolean
 gimp_curve_view_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
 {
-  GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
-  GtkStyle      *style = gtk_widget_get_style (widget);
+  GimpCurveView *view   = GIMP_CURVE_VIEW (widget);
+  GdkWindow     *window = gtk_widget_get_window (widget);
+  GtkStyle      *style  = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
   cairo_t       *cr;
   gint           border;
@@ -433,7 +434,6 @@ gimp_curve_view_expose (GtkWidget      *widget,
   if (! gimp_histogram_view_get_histogram (GIMP_HISTOGRAM_VIEW (view)) &&
       ! gimp_histogram_view_get_background (GIMP_HISTOGRAM_VIEW (view)))
     {
-      GdkWindow *window = gtk_widget_get_window (widget);
 
       gdk_draw_rectangle (window,
                           style->base_gc[GTK_STATE_NORMAL], TRUE,
@@ -446,6 +446,15 @@ gimp_curve_view_expose (GtkWidget      *widget,
                           style->dark_gc[GTK_STATE_NORMAL], FALSE,
                           border, border,
                           width - 1, height - 1);
+    }
+
+  if (gtk_widget_has_focus (widget))
+    {
+      gtk_paint_focus (style, window,
+                       gtk_widget_get_state (widget),
+                       &event->area, widget, NULL,
+                       border - 2, border - 2,
+                       width + 4, width + 4);
     }
 
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
