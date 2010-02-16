@@ -1499,7 +1499,16 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
-  gtk_widget_set_sensitive (frame, num_layers > 1);
+  if (num_layers <= 1)
+    {
+      gtk_widget_set_sensitive (frame, FALSE);
+      gimp_help_set_help_data (frame,
+                               _("These options are only available when "
+                                 "the exported image has more than one "
+                                 "layer. The image you are exporting only has "
+                                 "one layer."),
+                               NULL);
+    }
 
   gtk_widget_show (main_vbox);
   gtk_widget_show (dialog);
@@ -1592,7 +1601,7 @@ run (const gchar      *name,
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
                                        GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                        GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                                       GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION));
+                                       GIMP_EXPORT_CAN_HANDLE_LAYERS));
         }
 
       if (export == GIMP_EXPORT_CANCEL)
