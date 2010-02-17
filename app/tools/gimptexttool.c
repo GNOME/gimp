@@ -1424,6 +1424,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
   GtkTextIter    cursor;
   GtkTextIter    selection;
   GtkTextIter   *sel_start;
+  gboolean       cancel_selection = FALSE;
   gint           x_pos  = -1;
 
   g_printerr ("%s: %s count = %d, select = %s\n",
@@ -1454,22 +1455,29 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         gtk_text_iter_order (&cursor, &selection);
 
       sel_start = &cursor;
+
+      /* if we actually have a selection, just move *to* the beginning/end
+       * of the selection and not *from* there on LOGICAL_POSITIONS
+       * and VISUAL_POSITIONS movement
+       */
+      if (! gtk_text_iter_equal (&cursor, &selection))
+        cancel_selection = TRUE;
     }
 
   switch (step)
     {
     case GTK_MOVEMENT_LOGICAL_POSITIONS:
-      gtk_text_iter_forward_visible_cursor_positions (&cursor, count);
+      if (! cancel_selection)
+        gtk_text_iter_forward_visible_cursor_positions (&cursor, count);
       break;
 
     case GTK_MOVEMENT_VISUAL_POSITIONS:
-      if (count < 0)
+      if (! cancel_selection)
         {
-          gtk_text_iter_backward_cursor_position (&cursor);
-        }
-      else if (count > 0)
-        {
-          gtk_text_iter_forward_cursor_position (&cursor);
+          if (count < 0)
+            gtk_text_iter_backward_cursor_position (&cursor);
+          else if (count > 0)
+            gtk_text_iter_forward_cursor_position (&cursor);
         }
       break;
 
