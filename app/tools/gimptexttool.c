@@ -2537,67 +2537,6 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
   return FALSE;
 }
 
-void
-gimp_text_tool_set_layer (GimpTextTool *text_tool,
-                          GimpLayer    *layer)
-{
-  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
-  g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
-
-  if (gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), TRUE))
-    {
-      GimpTool    *tool = GIMP_TOOL (text_tool);
-      GimpItem    *item = GIMP_ITEM (layer);
-      GimpContext *context;
-      GimpDisplay *display;
-
-      context = gimp_get_user_context (tool->tool_info->gimp);
-      display = gimp_context_get_display (context);
-
-      if (! display ||
-          gimp_display_get_image (display) != gimp_item_get_image (item))
-        {
-          GList *list;
-
-          display = NULL;
-
-          for (list = gimp_get_display_iter (tool->tool_info->gimp);
-               list;
-               list = g_list_next (list))
-            {
-              display = list->data;
-
-              if (gimp_display_get_image (display) == gimp_item_get_image (item))
-                {
-                  gimp_context_set_display (context, display);
-                  break;
-                }
-
-              display = NULL;
-            }
-        }
-
-      tool->display = display;
-
-      if (tool->display)
-        {
-          GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
-
-          tool->drawable = GIMP_DRAWABLE (layer);
-
-          if (gimp_draw_tool_is_active (draw_tool))
-            gimp_draw_tool_stop (draw_tool);
-
-          gimp_draw_tool_start (draw_tool, display);
-
-          gimp_rectangle_tool_frame_item (GIMP_RECTANGLE_TOOL (tool),
-                                          GIMP_ITEM (layer));
-
-          gimp_text_tool_editor (text_tool);
-        }
-    }
-}
-
 static void
 gimp_text_tool_update_proxy (GimpTextTool *text_tool)
 {
@@ -2656,7 +2595,6 @@ gimp_text_tool_text_buffer_mark_set (GtkTextBuffer *text_buffer,
                                      GimpTextTool  *text_tool)
 {
   gimp_text_tool_update_layout (text_tool);
-/*   gimp_text_tool_update_proxy (text_tool); */
 }
 
 static void
@@ -2758,6 +2696,67 @@ gimp_text_tool_preedit_changed_cb (GtkIMContext *context,
 
 
 /*  public functions  */
+
+void
+gimp_text_tool_set_layer (GimpTextTool *text_tool,
+                          GimpLayer    *layer)
+{
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+  g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
+
+  if (gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), TRUE))
+    {
+      GimpTool    *tool = GIMP_TOOL (text_tool);
+      GimpItem    *item = GIMP_ITEM (layer);
+      GimpContext *context;
+      GimpDisplay *display;
+
+      context = gimp_get_user_context (tool->tool_info->gimp);
+      display = gimp_context_get_display (context);
+
+      if (! display ||
+          gimp_display_get_image (display) != gimp_item_get_image (item))
+        {
+          GList *list;
+
+          display = NULL;
+
+          for (list = gimp_get_display_iter (tool->tool_info->gimp);
+               list;
+               list = g_list_next (list))
+            {
+              display = list->data;
+
+              if (gimp_display_get_image (display) == gimp_item_get_image (item))
+                {
+                  gimp_context_set_display (context, display);
+                  break;
+                }
+
+              display = NULL;
+            }
+        }
+
+      tool->display = display;
+
+      if (tool->display)
+        {
+          GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+          tool->drawable = GIMP_DRAWABLE (layer);
+
+          if (gimp_draw_tool_is_active (draw_tool))
+            gimp_draw_tool_stop (draw_tool);
+
+          gimp_draw_tool_start (draw_tool, display);
+
+          gimp_rectangle_tool_frame_item (GIMP_RECTANGLE_TOOL (tool),
+                                          GIMP_ITEM (layer));
+
+          gimp_text_tool_editor (text_tool);
+        }
+    }
+}
 
 gboolean
 gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool)
