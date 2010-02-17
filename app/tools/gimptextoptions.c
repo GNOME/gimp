@@ -519,6 +519,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   options->dynamic_box_button = button =
     gtk_button_new_with_label (_("Dynamic Text Box"));
+  gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
