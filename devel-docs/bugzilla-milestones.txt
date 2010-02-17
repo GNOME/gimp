@@ -13,6 +13,10 @@ The bugs on the stable milestone, i.e. on the 2.6 milestone if GIMP
 2.6 is the stable release, are bugs for which fixes will be accepted
 onto the stable branch.
 
+Reports for bugs that are fixed in the stable branch should have the
+stable milestone set. Usually such a fix is done in the development
+branch and then cherry-picked to the stable branch.
+
 
 Next stable milestone
 ---------------------
@@ -22,6 +26,11 @@ the 2.8 milestone if GIMP 2.6 is the stable release, are bugs or
 enhancement requests scheduled and planned for inclusion in the next
 stable version. This list is rather dynamic and will be altered during
 the execution of a development cycle.
+
+If you fix a bug or implement a feature request for the next release,
+then please make sure that the milestone is set accordingly. This
+allows us to make a list of changes by looking at the resolved bugs on
+the milestone.
 
 
 Future milestone
