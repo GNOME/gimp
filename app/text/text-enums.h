@@ -25,8 +25,8 @@ GType gimp_text_box_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_TEXT_BOX_DYNAMIC,
-  GIMP_TEXT_BOX_FIXED
+  GIMP_TEXT_BOX_DYNAMIC, /*< desc="Dynamic" >*/
+  GIMP_TEXT_BOX_FIXED    /*< desc="Fixed"   >*/
 } GimpTextBoxMode;
 
 

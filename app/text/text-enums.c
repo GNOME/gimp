@@ -20,8 +20,8 @@ gimp_text_box_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_TEXT_BOX_DYNAMIC, "GIMP_TEXT_BOX_DYNAMIC", NULL },
-    { GIMP_TEXT_BOX_FIXED, "GIMP_TEXT_BOX_FIXED", NULL },
+    { GIMP_TEXT_BOX_DYNAMIC, NC_("text-box-mode", "Dynamic"), NULL },
+    { GIMP_TEXT_BOX_FIXED, NC_("text-box-mode", "Fixed"), NULL },
     { 0, NULL, NULL }
   };
 
