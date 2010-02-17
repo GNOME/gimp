@@ -1,0 +1,32 @@
+bugzilla-milestones.txt
+-----------------------
+
+This document describes how the GIMP project uses milestones in the
+Bugzilla bugtracker found at:
+https://bugzilla.gnome.org/browse.cgi?product=GIMP.
+
+
+Stable milestone
+----------------
+
+The bugs on the stable milestone, i.e. on the 2.6 milestone if GIMP
+2.6 is the stable release, are bugs for which fixes will be accepted
+onto the stable branch.
+
+
+Next stable milestone
+---------------------
+
+The bugs/enhancement requests on the next stable milestone, i.e. on
+the 2.8 milestone if GIMP 2.6 is the stable release, are bugs or
+enhancement requests scheduled and planned for inclusion in the next
+stable version. This list is rather dynamic and will be altered during
+the execution of a development cycle.
+
+
+Future milestone
+----------------
+
+The bugs/enhancement requests on the Future milestone are things that
+the GIMP project eventually want to include in a future version, but
+in what version is not yet decided.

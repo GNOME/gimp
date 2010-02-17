@@ -20,6 +20,7 @@ EXTRA_DIST = \
 	ChangeLog			\
 	README				\
 	README.gtkdoc			\
+	bugzilla-milestones.txt		\
 	contexts.txt			\
 	debug-plug-ins.txt		\
 	exif-handling.txt		\
