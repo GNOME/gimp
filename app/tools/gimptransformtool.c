@@ -1221,7 +1221,8 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
       return;
     }
 
-  gimp_dialog_factory_hide_dialog (tr_tool->dialog);
+  if (tr_tool->dialog)
+    gimp_dialog_factory_hide_dialog (tr_tool->dialog);
 
   mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
