@@ -512,13 +512,9 @@ gimp_text_tool_button_press (GimpTool            *tool,
               if (press_type == GIMP_BUTTON_PRESS_NORMAL)
                 {
                   /* enable keyboard-handling for the text */
-                  if (! text)
+                  if (text_tool->text && text_tool->text != text)
                     {
                       gimp_text_tool_canvas_editor (text_tool);
-                      gtk_text_buffer_set_text (buffer,
-                                                text_tool->text->text, -1);
-
-                      gimp_text_tool_update_layout (text_tool);
                     }
                 }
 
@@ -579,7 +575,6 @@ gimp_text_tool_button_press (GimpTool            *tool,
   text_tool->text_box_fixed = FALSE;
 
   gimp_text_tool_connect (text_tool, NULL, NULL);
-  gtk_text_buffer_set_text (buffer, "", -1);
   gimp_text_tool_canvas_editor (text_tool);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -989,7 +984,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_rectangle_tool_draw (draw_tool);
 
-  if (! text_tool->layer ||
+  if (! text_tool->text  ||
+      ! text_tool->layer ||
       ! text_tool->layer->text)
     return;
 
@@ -2285,6 +2281,12 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
 
   gtk_im_context_focus_in (text_tool->im_context);
 
+  if (text_tool->text)
+    gtk_text_buffer_set_text (text_tool->text_buffer,
+                              text_tool->text->text, -1);
+  else
+    gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
+
   gimp_text_tool_update_layout (text_tool);
 
   if (options->use_editor)
@@ -2584,7 +2586,17 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
 
       if (tool->display)
         {
+          GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
           tool->drawable = GIMP_DRAWABLE (layer);
+
+          if (gimp_draw_tool_is_active (draw_tool))
+            gimp_draw_tool_stop (draw_tool);
+
+          gimp_draw_tool_start (draw_tool, display);
+
+          gimp_rectangle_tool_frame_item (GIMP_RECTANGLE_TOOL (tool),
+                                          GIMP_ITEM (layer));
 
           gimp_text_tool_canvas_editor (text_tool);
         }
