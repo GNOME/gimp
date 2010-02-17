@@ -149,6 +149,10 @@ static void      gimp_text_tool_select_all      (GimpTextTool      *text_tool,
 static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpTextLayer     *layer,
                                                  GimpText          *text);
+
+static void      gimp_text_tool_options_notify  (GimpTextOptions   *options,
+                                                 GParamSpec        *pspec,
+                                                 GimpTextTool      *text_tool);
 static void      gimp_text_tool_set_dynamic_box (GimpTextTool      *text_tool);
 static void      gimp_text_tool_layer_notify    (GimpTextLayer     *layer,
                                                  GParamSpec        *pspec,
@@ -187,9 +191,6 @@ static void gimp_text_tool_text_buffer_changed  (GtkTextBuffer     *text_buffer,
 static void gimp_text_tool_text_buffer_mark_set (GtkTextBuffer     *text_buffer,
                                                  GtkTextIter       *location,
                                                  GtkTextMark       *mark,
-                                                 GimpTextTool      *text_tool);
-static void gimp_text_tool_use_editor_notify    (GimpTextOptions   *options,
-                                                 GParamSpec        *pspec,
                                                  GimpTextTool      *text_tool);
 
 static gint gimp_text_tool_xy_to_offset         (GimpTextTool      *text_tool,
@@ -345,7 +346,7 @@ gimp_text_tool_constructor (GType                  type,
                            text_tool, 0);
 
   g_signal_connect_object (options, "notify::use-editor",
-                           G_CALLBACK (gimp_text_tool_use_editor_notify),
+                           G_CALLBACK (gimp_text_tool_options_notify),
                            text_tool, 0);
 
   g_object_set (options,
@@ -1887,19 +1888,24 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
 }
 
 static void
-gimp_text_tool_use_editor_notify (GimpTextOptions *options,
-                                  GParamSpec      *pspec,
-                                  GimpTextTool    *text_tool)
+gimp_text_tool_options_notify (GimpTextOptions *options,
+                               GParamSpec      *pspec,
+                               GimpTextTool    *text_tool)
 {
-  if (options->use_editor)
+  const gchar *param_name = g_param_spec_get_name (pspec);
+
+  if (! strcmp (param_name, "use-editor"))
     {
-      if (text_tool->text)
-        gimp_text_tool_editor_dialog (text_tool);
-    }
-  else
-    {
-      if (text_tool->editor)
-        gtk_widget_destroy (text_tool->editor);
+      if (options->use_editor)
+        {
+          if (text_tool->text)
+            gimp_text_tool_editor_dialog (text_tool);
+        }
+      else
+        {
+          if (text_tool->editor)
+            gtk_widget_destroy (text_tool->editor);
+        }
     }
 }
 
