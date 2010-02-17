@@ -2,7 +2,9 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpTextTool
- * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2002-2010  Sven Neumann <sven@gimp.org>
+ *                          Daniel Eddeland <danedde@svn.gnome.org>
+ *                          Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -228,6 +230,43 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
 
   return retval;
 }
+
+gchar *
+gimp_text_tool_editor_get_text (GimpTextTool *text_tool)
+{
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+  GtkTextIter    start, end;
+  GtkTextIter    selstart, selend;
+  gchar         *string;
+  gchar         *fb;
+  gchar         *lb;
+
+  gtk_text_buffer_get_bounds (buffer, &start, &end);
+  gtk_text_buffer_get_selection_bounds (buffer, &selstart, &selend);
+
+  fb = gtk_text_buffer_get_text (buffer, &start, &selstart, TRUE);
+  lb = gtk_text_buffer_get_text (buffer, &selstart, &end, TRUE);
+
+  if (text_tool->preedit_string)
+    {
+      if (fb == NULL)
+        string = g_strconcat (text_tool->preedit_string, lb, NULL);
+      else
+        string = g_strconcat (fb, text_tool->preedit_string, lb, NULL);
+    }
+  else
+    {
+      string = g_strconcat (fb, lb, NULL);
+    }
+
+  g_free (fb);
+  g_free (lb);
+
+  return string;
+}
+
+
+/*  private functions  */
 
 static void
 gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
@@ -737,40 +776,6 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
                                    text_tool->editor);
 
   gtk_widget_show (text_tool->editor);
-}
-
-gchar *
-gimp_text_tool_editor_get_text (GimpTextTool *text_tool)
-{
-  GtkTextBuffer *buffer = text_tool->text_buffer;
-  GtkTextIter    start, end;
-  GtkTextIter    selstart, selend;
-  gchar         *string;
-  gchar         *fb;
-  gchar         *lb;
-
-  gtk_text_buffer_get_bounds (buffer, &start, &end);
-  gtk_text_buffer_get_selection_bounds (buffer, &selstart, &selend);
-
-  fb = gtk_text_buffer_get_text (buffer, &start, &selstart, TRUE);
-  lb = gtk_text_buffer_get_text (buffer, &selstart, &end, TRUE);
-
-  if (text_tool->preedit_string)
-    {
-      if (fb == NULL)
-        string = g_strconcat (text_tool->preedit_string, lb, NULL);
-      else
-        string = g_strconcat (fb, text_tool->preedit_string, lb, NULL);
-    }
-  else
-    {
-      string = g_strconcat (fb, lb, NULL);
-    }
-
-  g_free (fb);
-  g_free (lb);
-
-  return string;
 }
 
 static void

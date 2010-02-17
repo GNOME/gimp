@@ -2,7 +2,9 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpTextTool
- * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2002-2010  Sven Neumann <sven@gimp.org>
+ *                          Daniel Eddeland <danedde@svn.gnome.org>
+ *                          Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

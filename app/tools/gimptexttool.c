@@ -2,7 +2,9 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpTextTool
- * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2002-2010  Sven Neumann <sven@gimp.org>
+ *                          Daniel Eddeland <danedde@svn.gnome.org>
+ *                          Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -734,12 +736,12 @@ gimp_text_tool_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *display)
 {
-  GimpTextTool  *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
-  if (display != tool->display)
-    return FALSE;
+  if (display == tool->display)
+    return gimp_text_tool_editor_key_press (text_tool, kevent, display);
 
-  return gimp_text_tool_editor_key_press (text_tool, kevent, display);
+  return FALSE;
 }
 
 static void
@@ -1240,9 +1242,6 @@ gimp_text_tool_halt (GimpTextTool *text_tool)
 
   gimp_text_tool_editor_halt (text_tool);
 }
-
-
-/*  private functions  */
 
 static void
 gimp_text_tool_connect (GimpTextTool  *text_tool,
@@ -1836,6 +1835,22 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
   return FALSE;
 }
 
+static void
+gimp_text_tool_text_buffer_changed (GtkTextBuffer *text_buffer,
+                                    GimpTextTool  *text_tool)
+{
+  gimp_text_tool_update_proxy (text_tool);
+}
+
+static void
+gimp_text_tool_text_buffer_mark_set (GtkTextBuffer *text_buffer,
+                                     GtkTextIter   *iter,
+                                     GtkTextMark   *mark,
+                                     GimpTextTool  *text_tool)
+{
+  gimp_text_tool_update_layout (text_tool);
+}
+
 void
 gimp_text_tool_update_proxy (GimpTextTool *text_tool)
 {
@@ -1853,22 +1868,6 @@ gimp_text_tool_update_proxy (GimpTextTool *text_tool)
     {
       gimp_text_tool_create_layer (text_tool, NULL);
     }
-}
-
-static void
-gimp_text_tool_text_buffer_changed (GtkTextBuffer *text_buffer,
-                                    GimpTextTool  *text_tool)
-{
-  gimp_text_tool_update_proxy (text_tool);
-}
-
-static void
-gimp_text_tool_text_buffer_mark_set (GtkTextBuffer *text_buffer,
-                                     GtkTextIter   *iter,
-                                     GtkTextMark   *mark,
-                                     GimpTextTool  *text_tool)
-{
-  gimp_text_tool_update_layout (text_tool);
 }
 
 void
