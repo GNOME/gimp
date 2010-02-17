@@ -35,6 +35,7 @@
 #include "core/gimpimagemap.h"
 #include "core/gimpparamspecs-duplicate.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "display/gimpdisplay.h"
