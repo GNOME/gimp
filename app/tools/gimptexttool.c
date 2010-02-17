@@ -149,6 +149,7 @@ static void      gimp_text_tool_select_all      (GimpTextTool      *text_tool,
 static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpTextLayer     *layer,
                                                  GimpText          *text);
+static void      gimp_text_tool_set_dynamic_box (GimpTextTool      *text_tool);
 static void      gimp_text_tool_layer_notify    (GimpTextLayer     *layer,
                                                  GParamSpec        *pspec,
                                                  GimpTextTool      *text_tool);
@@ -1815,7 +1816,8 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                         GimpTextLayer *layer,
                         GimpText      *text)
 {
-  GimpTool *tool = GIMP_TOOL (text_tool);
+  GimpTool        *tool    = GIMP_TOOL (text_tool);
+  GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
 
   g_return_if_fail (text == NULL || (layer != NULL && layer->text == text));
 
@@ -1857,16 +1859,30 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
   if (text_tool->layer != layer)
     {
       if (text_tool->layer)
-        g_signal_handlers_disconnect_by_func (text_tool->layer,
-                                              gimp_text_tool_layer_notify,
-                                              text_tool);
+        {
+          g_signal_handlers_disconnect_by_func (text_tool->layer,
+                                                gimp_text_tool_layer_notify,
+                                                text_tool);
+
+          gtk_widget_set_sensitive (options->dynamic_box_button, FALSE);
+          g_signal_handlers_disconnect_by_func (options->dynamic_box_button,
+                                                gimp_text_tool_set_dynamic_box,
+                                                text_tool);
+        }
 
       text_tool->layer = layer;
 
       if (layer)
-        g_signal_connect_object (text_tool->layer, "notify::modified",
-                                 G_CALLBACK (gimp_text_tool_layer_notify),
-                                 text_tool, 0);
+        {
+          gtk_widget_set_sensitive (options->dynamic_box_button, TRUE);
+          g_signal_connect_swapped (options->dynamic_box_button, "clicked",
+                                    G_CALLBACK (gimp_text_tool_set_dynamic_box),
+                                    text_tool);
+
+          g_signal_connect_object (text_tool->layer, "notify::modified",
+                                   G_CALLBACK (gimp_text_tool_layer_notify),
+                                   text_tool, 0);
+        }
     }
 }
 
@@ -1884,6 +1900,26 @@ gimp_text_tool_use_editor_notify (GimpTextOptions *options,
     {
       if (text_tool->editor)
         gtk_widget_destroy (text_tool->editor);
+    }
+}
+
+static void
+gimp_text_tool_set_dynamic_box (GimpTextTool *text_tool)
+{
+  if (text_tool->layer &&
+      text_tool->text  &&
+      text_tool->text->box_mode == GIMP_TEXT_BOX_FIXED)
+    {
+      g_object_set (text_tool->proxy,
+                    "box-mode", GIMP_TEXT_BOX_DYNAMIC,
+                    NULL);
+
+      gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
+                                   _("Reshape Text Layer"));
+
+      gimp_text_tool_apply (text_tool);
+
+      gimp_image_undo_group_end (text_tool->image);
     }
 }
 

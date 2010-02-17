@@ -517,6 +517,11 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
 
+  options->dynamic_box_button = button =
+    gtk_button_new_with_label (_("Dynamic Text Box"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   /*  Only add the language entry if the iso-codes package is available.  */
 
 #ifdef HAVE_ISO_CODES

@@ -55,6 +55,7 @@ struct _GimpTextOptions
 
   /*  options gui  */
   GtkWidget             *size_entry;
+  GtkWidget             *dynamic_box_button;
 };
 
 
