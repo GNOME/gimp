@@ -60,6 +60,8 @@ enum
   PROP_INDENTATION,
   PROP_LINE_SPACING,
   PROP_LETTER_SPACING,
+  PROP_BOX_MODE,
+
   PROP_USE_EDITOR,
 
   PROP_FONT_VIEW_TYPE,
@@ -167,6 +169,12 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    -8192.0, 8192.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
+                                "box-mode",
+                                 N_("Text box resize mode"),
+                                 GIMP_TYPE_TEXT_BOX_MODE,
+                                 GIMP_TEXT_BOX_DYNAMIC,
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_EDITOR,
                                     "use-editor",
@@ -237,6 +245,9 @@ gimp_text_options_get_property (GObject    *object,
     case PROP_LETTER_SPACING:
       g_value_set_double (value, options->letter_spacing);
       break;
+    case PROP_BOX_MODE:
+      g_value_set_enum (value, options->box_mode);
+      break;
 
     case PROP_USE_EDITOR:
       g_value_set_boolean (value, options->use_editor);
@@ -295,6 +306,9 @@ gimp_text_options_set_property (GObject      *object,
       break;
     case PROP_LETTER_SPACING:
       options->letter_spacing = g_value_get_double (value);
+      break;
+    case PROP_BOX_MODE:
+      options->box_mode = g_value_get_enum (value);
       break;
 
     case PROP_USE_EDITOR:
@@ -433,6 +447,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *box;
   GtkWidget       *label;
   GtkWidget       *spinbutton;
+  GtkWidget       *combo;
   GtkSizeGroup    *size_group;
   gint             row = 0;
 
@@ -517,11 +532,10 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
 
-  options->dynamic_box_button = button =
-    gtk_button_new_with_label (_("Dynamic Text Box"));
-  gtk_widget_set_sensitive (button, FALSE);
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  combo = gimp_prop_enum_combo_box_new (config, "box-mode", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Box:"), 0.0, 0.5,
+                             combo, 1, TRUE);
 
   /*  Only add the language entry if the iso-codes package is available.  */
 

@@ -47,6 +47,7 @@ struct _GimpTextOptions
   gdouble                indent;
   gdouble                line_spacing;
   gdouble                letter_spacing;
+  GimpTextBoxMode        box_mode;
 
   GimpViewType           font_view_type;
   GimpViewSize           font_view_size;
@@ -55,7 +56,6 @@ struct _GimpTextOptions
 
   /*  options gui  */
   GtkWidget             *size_entry;
-  GtkWidget             *dynamic_box_button;
 };
 
 
