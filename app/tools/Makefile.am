@@ -170,6 +170,8 @@ libapptools_a_sources = \
 	gimptextoptions.h		\
 	gimptexttool.c			\
 	gimptexttool.h			\
+	gimptexttool-editor.c		\
+	gimptexttool-editor.h		\
 	gimpthresholdtool.c		\
 	gimpthresholdtool.h		\
 	gimptool.c			\
