@@ -164,10 +164,9 @@ static void      gimp_text_tool_apply           (GimpTextTool      *text_tool);
 static void      gimp_text_tool_create_layer    (GimpTextTool      *text_tool,
                                                  GimpText          *text);
 
+static void      gimp_text_tool_editor_dialog   (GimpTextTool      *text_tool);
 static void      gimp_text_tool_editor          (GimpTextTool      *text_tool);
-static void      gimp_text_tool_canvas_editor   (GimpTextTool      *text_tool);
-static gchar   * gimp_text_tool_canvas_editor_get_text
-                                                (GimpTextTool      *text_tool);
+static gchar   * gimp_text_tool_editor_get_text (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_layer_changed   (GimpImage         *image,
                                                  GimpTextTool      *text_tool);
@@ -514,7 +513,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
                   /* enable keyboard-handling for the text */
                   if (text_tool->text && text_tool->text != text)
                     {
-                      gimp_text_tool_canvas_editor (text_tool);
+                      gimp_text_tool_editor (text_tool);
                     }
                 }
 
@@ -575,7 +574,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
   text_tool->text_box_fixed = FALSE;
 
   gimp_text_tool_connect (text_tool, NULL, NULL);
-  gimp_text_tool_canvas_editor (text_tool);
+  gimp_text_tool_editor (text_tool);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -1871,7 +1870,7 @@ gimp_text_tool_use_editor_notify (GimpTextOptions *options,
   if (options->use_editor)
     {
       if (text_tool->text)
-        gimp_text_tool_editor (text_tool);
+        gimp_text_tool_editor_dialog (text_tool);
     }
   else
     {
@@ -2151,7 +2150,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
     }
   else
     {
-      gchar *str = gimp_text_tool_canvas_editor_get_text (text_tool);
+      gchar *str = gimp_text_tool_editor_get_text (text_tool);
 
       g_object_set (text_tool->proxy,
                     "text",     str,
@@ -2232,7 +2231,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_editor (GimpTextTool *text_tool)
+gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
 {
   GimpTool          *tool    = GIMP_TOOL (text_tool);
   GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
@@ -2270,7 +2269,7 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
 }
 
 static void
-gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
+gimp_text_tool_editor (GimpTextTool *text_tool)
 {
   GimpTool         *tool    = GIMP_TOOL (text_tool);
   GimpTextOptions  *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
@@ -2290,11 +2289,11 @@ gimp_text_tool_canvas_editor (GimpTextTool *text_tool)
   gimp_text_tool_update_layout (text_tool);
 
   if (options->use_editor)
-    gimp_text_tool_editor (text_tool);
+    gimp_text_tool_editor_dialog (text_tool);
 }
 
 static gchar *
-gimp_text_tool_canvas_editor_get_text (GimpTextTool *text_tool)
+gimp_text_tool_editor_get_text (GimpTextTool *text_tool)
 {
   GtkTextBuffer *buffer = text_tool->text_buffer;
   GtkTextIter    start, end;
@@ -2312,13 +2311,9 @@ gimp_text_tool_canvas_editor_get_text (GimpTextTool *text_tool)
   if (text_tool->preedit_string)
     {
       if (fb == NULL)
-        {
-          string = g_strconcat (text_tool->preedit_string, lb, NULL);
-        }
+        string = g_strconcat (text_tool->preedit_string, lb, NULL);
       else
-        {
-          string = g_strconcat (fb, text_tool->preedit_string, lb, NULL);
-        }
+        string = g_strconcat (fb, text_tool->preedit_string, lb, NULL);
     }
   else
     {
@@ -2358,7 +2353,7 @@ gimp_text_tool_confirm_response (GtkWidget    *widget,
           if (text_tool->proxy)
             g_object_notify (G_OBJECT (text_tool->proxy), "text");
 
-          gimp_text_tool_canvas_editor (text_tool);
+          gimp_text_tool_editor (text_tool);
           break;
 
         default:
@@ -2598,7 +2593,7 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
           gimp_rectangle_tool_frame_item (GIMP_RECTANGLE_TOOL (tool),
                                           GIMP_ITEM (layer));
 
-          gimp_text_tool_canvas_editor (text_tool);
+          gimp_text_tool_editor (text_tool);
         }
     }
 }
@@ -2608,7 +2603,7 @@ gimp_text_tool_update_proxy (GimpTextTool *text_tool)
 {
   if (text_tool->text)
     {
-      gchar *string = gimp_text_tool_canvas_editor_get_text (text_tool);
+      gchar *string = gimp_text_tool_editor_get_text (text_tool);
 
       g_object_set (text_tool->proxy,
                     "text", string,
