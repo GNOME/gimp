@@ -1063,7 +1063,7 @@ file_gif_combo_box_int_init (GtkBuilder  *builder,
   const gchar  *label  = NULL;
   gint          value  = 0;
   GtkTreeIter   iter   = { 0, };
-  va_list       values = NULL;
+  va_list       values;
 
   combo = GTK_WIDGET (gtk_builder_get_object (builder, name));
   store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)));
