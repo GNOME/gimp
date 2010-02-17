@@ -92,7 +92,7 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
                 _("GEGL Operation"),
                 _("GEGL Tool: Use an arbitrary GEGL operation"),
                 N_("_GEGL Operation..."), NULL,
-                NULL, "foo", /* GIMP_HELP_TOOL_GEGL, */
+                NULL, GIMP_HELP_TOOL_GEGL,
                 GIMP_STOCK_GEGL,
                 data);
 }
