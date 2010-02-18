@@ -15,10 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdlib.h>
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "dialogs/dialogs-types.h"
 
@@ -45,24 +48,30 @@
 #include "gimp-app-test-utils.h"
 
 
+#define GIMP_UI_POSITION_EPSILON 10
+
+
 typedef struct
 {
   int avoid_sizeof_zero;
 } GimpTestFixture;
 
 
-static void            gimp_ui_tool_options_editor_updates      (GimpTestFixture *fixture,
-                                                                 gconstpointer    data);
-static void            gimp_ui_create_new_image_via_dialog      (GimpTestFixture *fixture,
-                                                                 gconstpointer    data);
-static void            gimp_ui_restore_recently_closed_dock     (GimpTestFixture *fixture,
-                                                                 gconstpointer    data);
-static void            gimp_ui_switch_to_single_window_mode     (GimpTestFixture *fixture,
-                                                                 gconstpointer    data);
-static void            gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture *fixture,
-                                                                 gconstpointer    data);
-static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp            *gimp);
-static void            gimp_ui_synthesize_delete_event          (GtkWidget       *widget);
+static void            gimp_ui_tool_options_editor_updates      (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static void            gimp_ui_create_new_image_via_dialog      (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static void            gimp_ui_restore_recently_closed_dock     (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static void            gimp_ui_tab_toggle_dont_change_position  (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static void            gimp_ui_switch_to_single_window_mode     (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static void            gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp              *gimp);
+static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
+static GtkWidget     * gimp_ui_find_non_toolbox_dock_window     (GimpDialogFactory *dialog_factory);
 
 
 int main(int argc, char **argv)
@@ -100,6 +109,12 @@ int main(int argc, char **argv)
               gimp,
               NULL,
               gimp_ui_restore_recently_closed_dock,
+              NULL);
+  g_test_add ("/gimp-ui/tab-toggle-dont-change-dock-window-position",
+              GimpTestFixture,
+              gimp,
+              NULL,
+              gimp_ui_tab_toggle_dont_change_position,
               NULL);
   g_test_add ("/gimp-ui/switch-to-single-window-mode",
               GimpTestFixture,
@@ -229,7 +244,6 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
                                       gconstpointer    data)
 {
   Gimp      *gimp                          = GIMP (data);
-  GList     *iter                          = NULL;
   GtkWidget *dock_window                   = NULL;
   gint       n_session_infos_before_close  = -1;
   gint       n_session_infos_after_close   = -1;
@@ -237,19 +251,7 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
   GList     *session_infos                 = NULL;
 
   /* Find a non-toolbox dock window */
-  for (iter = gimp_dialog_factory_get_session_infos (global_dock_factory);
-       iter;
-       iter = g_list_next (iter))
-    {
-      GtkWidget *widget = gimp_session_info_get_widget (iter->data);
-
-      if (GIMP_IS_DOCK_WINDOW (widget) &&
-          ! gimp_dock_window_has_toolbox (GIMP_DOCK_WINDOW (widget)))
-        {
-          dock_window = widget;
-          break;
-        }
-    }
+  dock_window = gimp_ui_find_non_toolbox_dock_window (global_dock_factory);
   g_assert (dock_window != NULL);
 
   /* Count number of docks */
@@ -280,6 +282,68 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
   g_assert_cmpint (n_session_infos_after_close,
                    <,
                    n_session_infos_after_restore);
+}
+
+/**
+ * gimp_ui_tab_toggle_dont_change_position:
+ * @fixture:
+ * @data:
+ *
+ * Makes sure that when dock windows are hidden with Tab and shown
+ * again, their positions and sizes are not changed. We don't really
+ * use Tab though, we only simulate its effect.
+ **/
+static void
+gimp_ui_tab_toggle_dont_change_position (GimpTestFixture *fixture,
+                                         gconstpointer    data)
+{
+  GtkWidget *dock_window   = NULL;
+  gint       x_before_hide = -1;
+  gint       y_before_hide = -1;
+  gint       w_before_hide = -1;
+  gint       h_before_hide = -1;
+  gint       x_after_show  = -1;
+  gint       y_after_show  = -1;
+  gint       w_after_show  = -1;
+  gint       h_after_show  = -1;
+
+  /* Find a non-toolbox dock window */
+  dock_window = gimp_ui_find_non_toolbox_dock_window (global_dock_factory);
+  g_assert (dock_window != NULL);
+  g_assert (gtk_widget_get_visible (dock_window));
+
+  /* Get the position and size */
+  gimp_test_run_mainloop_until_idle ();
+  gtk_window_get_position (GTK_WINDOW (dock_window),
+                           &x_before_hide,
+                           &y_before_hide);
+  gtk_window_get_size (GTK_WINDOW (dock_window),
+                       &w_before_hide,
+                       &h_before_hide);
+
+  /* Hide all dock windows */
+  gimp_dialog_factories_toggle ();
+  gimp_test_run_mainloop_until_idle ();
+  g_assert (! gtk_widget_get_visible (dock_window));
+
+  /* Show them again */
+  gimp_dialog_factories_toggle ();
+  gimp_test_run_mainloop_until_idle ();
+  g_assert (gtk_widget_get_visible (dock_window));
+
+  /* Get the position and size again and make sure it's the same as
+   * before
+   */
+  gtk_window_get_position (GTK_WINDOW (dock_window),
+                           &x_after_show,
+                           &y_after_show);
+  gtk_window_get_size (GTK_WINDOW (dock_window),
+                       &w_after_show,
+                       &h_after_show);
+  g_assert_cmpint ((int)abs (x_before_hide - x_after_show), <, GIMP_UI_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (y_before_hide - y_after_show), <, GIMP_UI_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (w_before_hide - w_after_show), <, GIMP_UI_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (h_before_hide - h_after_show), <, GIMP_UI_POSITION_EPSILON);
 }
 
 static void
@@ -357,4 +421,27 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
   event->any.send_event = TRUE;
   gtk_main_do_event (event);
   gdk_event_free (event);
+}
+
+static GtkWidget *
+gimp_ui_find_non_toolbox_dock_window (GimpDialogFactory *dialog_factory)
+{
+  GList     *iter        = NULL;
+  GtkWidget *dock_window = NULL;
+
+  for (iter = gimp_dialog_factory_get_session_infos (dialog_factory);
+       iter;
+       iter = g_list_next (iter))
+    {
+      GtkWidget *widget = gimp_session_info_get_widget (iter->data);
+
+      if (GIMP_IS_DOCK_WINDOW (widget) &&
+          ! gimp_dock_window_has_toolbox (GIMP_DOCK_WINDOW (widget)))
+        {
+          dock_window = widget;
+          break;
+        }
+    }
+
+  return dock_window;
 }
