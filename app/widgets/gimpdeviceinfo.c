@@ -52,7 +52,8 @@ enum
   PROP_DISPLAY,
   PROP_MODE,
   PROP_AXES,
-  PROP_KEYS
+  PROP_KEYS,
+  PROP_PRESSURE_CURVE
 };
 
 
@@ -147,6 +148,11 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                                              param_spec,
                                                              GIMP_PARAM_STATIC_STRINGS |
                                                              GIMP_CONFIG_PARAM_FLAGS));
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
+                                   "pressure-curve", NULL,
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
@@ -266,8 +272,10 @@ gimp_device_info_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpDeviceInfo *info   = GIMP_DEVICE_INFO (object);
-  GdkDevice      *device = info->device;
+  GimpDeviceInfo *info       = GIMP_DEVICE_INFO (object);
+  GdkDevice      *device     = info->device;
+  GimpCurve      *src_curve  = NULL;
+  GimpCurve      *dest_curve = NULL;
 
   switch (property_id)
     {
@@ -353,9 +361,21 @@ gimp_device_info_set_property (GObject      *object,
       }
       break;
 
+    case PROP_PRESSURE_CURVE:
+      src_curve  = g_value_get_object (value);
+      dest_curve = info->pressure_curve;
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+
+  if (src_curve && dest_curve)
+    {
+      gimp_config_copy (GIMP_CONFIG (src_curve),
+                        GIMP_CONFIG (dest_curve),
+                        GIMP_CONFIG_PARAM_SERIALIZE);
     }
 }
 
@@ -450,6 +470,10 @@ gimp_device_info_get_property (GObject    *object,
 
         g_value_take_boxed (value, array);
       }
+      break;
+
+    case PROP_PRESSURE_CURVE:
+      g_value_set_object (value, info->pressure_curve);
       break;
 
     default:
