@@ -55,16 +55,8 @@ struct _GimpTextTool
   GimpTextLayer  *layer;
   GimpImage      *image;
 
-  GtkWidget      *editor;
   GtkWidget      *confirm_dialog;
   GimpUIManager  *ui_manager;
-  GtkIMContext   *im_context;
-
-  gboolean        needs_im_reset;
-
-  gchar          *preedit_string;
-  gint            preedit_len;
-  gint            preedit_cursor;
 
   gboolean        handle_rectangle_change_complete;
   gboolean        text_box_fixed;
@@ -74,15 +66,24 @@ struct _GimpTextTool
   gboolean        select_words;
   gboolean        select_lines;
 
-  gboolean        overwrite_mode;
-
-  gint            x_pos;
-
   GimpTextLayout *layout;
 
-  /* this sucks so much */
+  /* text editor state: */
+
+  GtkIMContext   *im_context;
+  gboolean        needs_im_reset;
+
+  gchar          *preedit_string;
+  gint            preedit_len;
+  gint            preedit_cursor;
+
+  gboolean        overwrite_mode;
+  gint            x_pos;
+
   GtkWidget      *offscreen_window;
   GtkWidget      *proxy_text_view;
+
+  GtkWidget      *editor_dialog;
 };
 
 struct _GimpTextToolClass

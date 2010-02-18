@@ -84,12 +84,14 @@ static void   gimp_text_tool_preedit_changed_cb (GtkIMContext    *context,
 void
 gimp_text_tool_editor_init (GimpTextTool *text_tool)
 {
-  text_tool->im_context = gtk_im_multicontext_new ();
+  text_tool->im_context     = gtk_im_multicontext_new ();
+  text_tool->needs_im_reset = FALSE;
 
   text_tool->preedit_string = NULL;
+  text_tool->preedit_len    = 0;
+  text_tool->preedit_cursor = 0;
   text_tool->overwrite_mode = FALSE;
-
-  text_tool->x_pos = -1;
+  text_tool->x_pos          = -1;
 
   g_signal_connect (text_tool->im_context, "commit",
                     G_CALLBACK (gimp_text_tool_commit_cb),
@@ -147,8 +149,8 @@ gimp_text_tool_editor_halt (GimpTextTool *text_tool)
                                         gimp_text_tool_options_notify,
                                         text_tool);
 
-  if (text_tool->editor)
-    gtk_widget_destroy (text_tool->editor);
+  if (text_tool->editor_dialog)
+    gtk_widget_destroy (text_tool->editor_dialog);
 
   if (text_tool->proxy_text_view)
     {
@@ -734,8 +736,8 @@ gimp_text_tool_options_notify (GimpTextOptions *options,
         }
       else
         {
-          if (text_tool->editor)
-            gtk_widget_destroy (text_tool->editor);
+          if (text_tool->editor_dialog)
+            gtk_widget_destroy (text_tool->editor_dialog);
         }
     }
 }
@@ -748,9 +750,9 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
   GimpDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
 
-  if (text_tool->editor)
+  if (text_tool->editor_dialog)
     {
-      gtk_window_present (GTK_WINDOW (text_tool->editor));
+      gtk_window_present (GTK_WINDOW (text_tool->editor_dialog));
       return;
     }
 
@@ -763,19 +765,20 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
       parent = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell)));
     }
 
-  text_tool->editor = gimp_text_options_editor_new (parent, options,
-                                                    gimp_dialog_factory_get_menu_factory (dialog_factory),
-                                                    _("GIMP Text Editor"),
-                                                    text_tool->text_buffer);
+  text_tool->editor_dialog =
+    gimp_text_options_editor_new (parent, options,
+                                  gimp_dialog_factory_get_menu_factory (dialog_factory),
+                                  _("GIMP Text Editor"),
+                                  text_tool->text_buffer);
 
-  g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
-                             (gpointer) &text_tool->editor);
+  g_object_add_weak_pointer (G_OBJECT (text_tool->editor_dialog),
+                             (gpointer) &text_tool->editor_dialog);
 
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",
-                                   text_tool->editor);
+                                   text_tool->editor_dialog);
 
-  gtk_widget_show (text_tool->editor);
+  gtk_widget_show (text_tool->editor_dialog);
 }
 
 static void
