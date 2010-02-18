@@ -940,15 +940,21 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
           gimp_session_info_set_factory_entry (info, entry);
 
-          /*  if we create a new session info, we never call
-           *  gimp_session_info_apply_geometry(), but still the
-           *  dialog needs GDK_HINT_USER_POS so it keeps its
-           *  position when hidden/shown within this(!) session.
-           */
           if (gimp_session_info_is_session_managed (info))
-            g_signal_connect (dialog, "configure-event",
-                              G_CALLBACK (gimp_dialog_factory_set_user_pos),
-                              NULL);
+            {
+              /* Make the dialog show up at the user position the
+               * first time it is shown. After it has been shown the
+               * first time we don't want it to show at the mouse the
+               * next time. Think of the use cases "hide and show with
+               * tab" and "change virtual desktops"
+               */
+              GIMP_LOG (WM, "setting GTK_WIN_POS_MOUSE for %p (\"%s\")\n",
+                        dialog, entry->identifier);
+              gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+              g_signal_connect (dialog, "configure-event",
+                                G_CALLBACK (gimp_dialog_factory_set_user_pos),
+                                NULL);
+            }
 
           factory->p->session_infos = g_list_append (factory->p->session_infos, info);
         }
@@ -957,9 +963,6 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
   /* Some special logic for dock windows */
   if (GIMP_IS_DOCK_WINDOW (dialog))
     {
-      /*  let new docks appear at the pointer position  */
-      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-
       g_signal_emit (factory, factory_signals[DOCK_WINDOW_ADDED], 0, dialog);
     }
 
@@ -1358,21 +1361,15 @@ gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
                                   GdkEventConfigure *cevent,
                                   gpointer           data)
 {
-  GdkWindowHints          geometry_mask;
-#ifdef DEBUG_FACTORY
-  GimpDialogFactoryEntry *entry;
+  GdkWindowHints geometry_mask;
 
-  gimp_dialog_factory_from_widget (dialog, &entry);
-
-  if (entry)
-    g_print ("%s: setting GDK_HINT_USER_POS for \"%s\"\n",
-             G_STRFUNC, entry->identifier);
-#endif /* DEBUG_FACTORY */
-
+  /* Not only set geometry hints, also reset window position */
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_NONE);
   g_signal_handlers_disconnect_by_func (dialog,
                                         gimp_dialog_factory_set_user_pos,
                                         data);
 
+  GIMP_LOG (WM, "setting GDK_HINT_USER_POS for %p\n", dialog);
   geometry_mask = GDK_HINT_USER_POS;
 
   if (gimp_dialog_factory_get_has_min_size (GTK_WINDOW (dialog)))
