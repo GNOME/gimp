@@ -256,6 +256,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
                     G_CALLBACK (gimp_text_tool_text_buffer_mark_set),
                     text_tool);
 
+  text_tool->handle_rectangle_change_complete = TRUE;
+
   gimp_text_tool_editor_init (text_tool);
 
   gimp_tool_control_set_scroll_lock          (tool->control, TRUE);
@@ -268,12 +270,6 @@ gimp_text_tool_init (GimpTextTool *text_tool)
                                               GIMP_TOOL_CURSOR_TEXT);
   gimp_tool_control_set_action_object_1      (tool->control,
                                               "context/context-font-select-set");
-
-  text_tool->handle_rectangle_change_complete = TRUE;
-
-  text_tool->overwrite_mode = FALSE;
-
-  text_tool->x_pos = -1;
 }
 
 static GObject *
@@ -596,10 +592,9 @@ gimp_text_tool_button_release (GimpTool              *tool,
     {
       /* user has clicked in dead space */
 
-      if (GIMP_IS_TEXT (text_tool->proxy))
-        g_object_set (text_tool->proxy,
-                      "box-mode", GIMP_TEXT_BOX_DYNAMIC,
-                      NULL);
+      g_object_set (text_tool->proxy,
+                    "box-mode", GIMP_TEXT_BOX_DYNAMIC,
+                    NULL);
 
       text_tool->handle_rectangle_change_complete = FALSE;
     }
