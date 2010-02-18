@@ -160,10 +160,6 @@ static gboolean  gimp_text_tool_set_drawable    (GimpTextTool      *text_tool,
 
 static void gimp_text_tool_text_buffer_changed  (GtkTextBuffer     *text_buffer,
                                                  GimpTextTool      *text_tool);
-static void gimp_text_tool_text_buffer_mark_set (GtkTextBuffer     *text_buffer,
-                                                 GtkTextIter       *location,
-                                                 GtkTextMark       *mark,
-                                                 GimpTextTool      *text_tool);
 
 static gint gimp_text_tool_xy_to_offset         (GimpTextTool      *text_tool,
                                                  gdouble            x,
@@ -251,9 +247,6 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
   g_signal_connect (text_tool->text_buffer, "changed",
                     G_CALLBACK (gimp_text_tool_text_buffer_changed),
-                    text_tool);
-  g_signal_connect (text_tool->text_buffer, "mark-set",
-                    G_CALLBACK (gimp_text_tool_text_buffer_mark_set),
                     text_tool);
 
   text_tool->handle_rectangle_change_complete = TRUE;
@@ -382,10 +375,6 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
     {
-      g_signal_handlers_block_by_func (buffer,
-                                       gimp_text_tool_text_buffer_mark_set,
-                                       text_tool);
-
       text_tool->selecting = FALSE;
 
       if (gimp_rectangle_tool_point_in_rectangle (rect_tool,
@@ -581,10 +570,6 @@ gimp_text_tool_button_release (GimpTool              *tool,
 
           gimp_text_tool_frame_item (text_tool);
 
-          g_signal_handlers_unblock_by_func (text_tool->text_buffer,
-                                             gimp_text_tool_text_buffer_mark_set,
-                                             text_tool);
-
           return;
         }
     }
@@ -607,10 +592,6 @@ gimp_text_tool_button_release (GimpTool              *tool,
                                       release_type, display);
 
   text_tool->handle_rectangle_change_complete = TRUE;
-
-  g_signal_handlers_unblock_by_func (text_tool->text_buffer,
-                                     gimp_text_tool_text_buffer_mark_set,
-                                     text_tool);
 }
 
 void
@@ -1816,15 +1797,6 @@ gimp_text_tool_text_buffer_changed (GtkTextBuffer *text_buffer,
                                     GimpTextTool  *text_tool)
 {
   gimp_text_tool_update_proxy (text_tool);
-}
-
-static void
-gimp_text_tool_text_buffer_mark_set (GtkTextBuffer *text_buffer,
-                                     GtkTextIter   *iter,
-                                     GtkTextMark   *mark,
-                                     GimpTextTool  *text_tool)
-{
-  gimp_text_tool_update_layout (text_tool);
 }
 
 void
