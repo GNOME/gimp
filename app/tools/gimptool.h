@@ -108,6 +108,9 @@ struct _GimpToolClass
   gboolean        (* key_press)           (GimpTool              *tool,
                                            GdkEventKey           *kevent,
                                            GimpDisplay           *display);
+  gboolean        (* key_release)         (GimpTool              *tool,
+                                           GdkEventKey           *kevent,
+                                           GimpDisplay           *display);
   void            (* modifier_key)        (GimpTool              *tool,
                                            GdkModifierType        key,
                                            gboolean               press,
@@ -170,6 +173,9 @@ void          gimp_tool_motion              (GimpTool            *tool,
                                              GimpDisplay         *display);
 
 gboolean      gimp_tool_key_press           (GimpTool            *tool,
+                                             GdkEventKey         *kevent,
+                                             GimpDisplay         *display);
+gboolean      gimp_tool_key_release         (GimpTool            *tool,
                                              GdkEventKey         *kevent,
                                              GimpDisplay         *display);
 

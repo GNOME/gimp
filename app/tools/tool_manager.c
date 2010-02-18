@@ -358,6 +358,27 @@ tool_manager_key_press_active (Gimp        *gimp,
   return FALSE;
 }
 
+gboolean
+tool_manager_key_release_active (Gimp        *gimp,
+                                 GdkEventKey *kevent,
+                                 GimpDisplay *display)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  tool_manager = tool_manager_get (gimp);
+
+  if (tool_manager->active_tool)
+    {
+      return gimp_tool_key_release (tool_manager->active_tool,
+                                    kevent,
+                                    display);
+    }
+
+  return FALSE;
+}
+
 void
 tool_manager_focus_display_active (Gimp        *gimp,
                                    GimpDisplay *display)

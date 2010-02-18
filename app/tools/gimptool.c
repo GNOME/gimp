@@ -88,6 +88,9 @@ static void       gimp_tool_real_motion         (GimpTool              *tool,
 static gboolean   gimp_tool_real_key_press      (GimpTool              *tool,
                                                  GdkEventKey           *kevent,
                                                  GimpDisplay           *display);
+static gboolean   gimp_tool_real_key_release    (GimpTool              *tool,
+                                                 GdkEventKey           *kevent,
+                                                 GimpDisplay           *display);
 static void       gimp_tool_real_modifier_key   (GimpTool              *tool,
                                                  GdkModifierType        key,
                                                  gboolean               press,
@@ -140,6 +143,7 @@ gimp_tool_class_init (GimpToolClass *klass)
   klass->button_release      = gimp_tool_real_button_release;
   klass->motion              = gimp_tool_real_motion;
   klass->key_press           = gimp_tool_real_key_press;
+  klass->key_release         = gimp_tool_real_key_release;
   klass->modifier_key        = gimp_tool_real_modifier_key;
   klass->active_modifier_key = gimp_tool_real_active_modifier_key;
   klass->oper_update         = gimp_tool_real_oper_update;
@@ -331,6 +335,14 @@ static gboolean
 gimp_tool_real_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *display)
+{
+  return FALSE;
+}
+
+static gboolean
+gimp_tool_real_key_release (GimpTool    *tool,
+                            GdkEventKey *kevent,
+                            GimpDisplay *display)
 {
   return FALSE;
 }
@@ -690,6 +702,18 @@ gimp_tool_key_press (GimpTool    *tool,
   g_return_val_if_fail (display == tool->focus_display, FALSE);
 
   return GIMP_TOOL_GET_CLASS (tool)->key_press (tool, kevent, display);
+}
+
+gboolean
+gimp_tool_key_release (GimpTool    *tool,
+                       GdkEventKey *kevent,
+                       GimpDisplay *display)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (display == tool->focus_display, FALSE);
+
+  return GIMP_TOOL_GET_CLASS (tool)->key_release (tool, kevent, display);
 }
 
 static void

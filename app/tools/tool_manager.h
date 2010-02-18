@@ -56,6 +56,9 @@ void       tool_manager_motion_active              (Gimp             *gimp,
 gboolean   tool_manager_key_press_active           (Gimp             *gimp,
                                                     GdkEventKey      *kevent,
                                                     GimpDisplay      *display);
+gboolean   tool_manager_key_release_active         (Gimp             *gimp,
+                                                    GdkEventKey      *kevent,
+                                                    GimpDisplay      *display);
 
 void       tool_manager_focus_display_active       (Gimp             *gimp,
                                                     GimpDisplay      *display);

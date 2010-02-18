@@ -1620,6 +1620,18 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             tool_manager_focus_display_active (gimp, display);
 
+            if (gimp_tool_control_get_wants_all_key_events (active_tool->control))
+              {
+                if (tool_manager_key_release_active (gimp, kevent, display))
+                  {
+                    /* FIXME: need to do some of the stuff below, like
+                     * calling oper_update()
+                     */
+
+                    return TRUE;
+                  }
+              }
+
             switch (kevent->keyval)
               {
               case GDK_space:
