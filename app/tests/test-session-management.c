@@ -18,6 +18,7 @@
 #include <gegl.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
+#include <stdlib.h>
 #include <string.h>
 #include <utime.h>
 
@@ -45,14 +46,15 @@ typedef struct
 
 typedef struct
 {
+  gchar    *filename;
   gchar    *md5;
   GTimeVal  modtime;
 } GimpTestFileState;
 
 
-static gboolean  gimp_test_get_file_state_verbose (gchar             *filename,
+static gboolean  gimp_test_get_file_state_verbose (const gchar       *filename,
                                                    GimpTestFileState *filestate);
-static gboolean  gimp_test_file_state_changes     (gchar             *filename,
+static gboolean  gimp_test_file_state_changes     (const gchar       *filename,
                                                    GimpTestFileState *state1,
                                                    GimpTestFileState *state2);
 
@@ -61,10 +63,10 @@ static Gimp *gimp = NULL;
 
 int main(int argc, char **argv)
 {
-  GimpTestFileState  initial_sessionrc_state = { NULL, { 0, 0 } };
-  GimpTestFileState  initial_dockrc_state    = { NULL, { 0, 0 } };
-  GimpTestFileState  final_sessionrc_state   = { NULL, { 0, 0 } };
-  GimpTestFileState  final_dockrc_state      = { NULL, { 0, 0 } };
+  GimpTestFileState  initial_sessionrc_state = { NULL, NULL, { 0, 0 } };
+  GimpTestFileState  initial_dockrc_state    = { NULL, NULL, { 0, 0 } };
+  GimpTestFileState  final_sessionrc_state   = { NULL, NULL, { 0, 0 } };
+  GimpTestFileState  final_dockrc_state      = { NULL, NULL, { 0, 0 } };
   gchar             *sessionrc_filename      = NULL;
   gchar             *dockrc_filename         = NULL;
 
@@ -146,10 +148,12 @@ int main(int argc, char **argv)
 }
 
 static gboolean
-gimp_test_get_file_state_verbose (gchar             *filename,
+gimp_test_get_file_state_verbose (const gchar       *filename,
                                   GimpTestFileState *filestate)
 {
   gboolean success = TRUE;
+
+  filestate->filename = g_strdup (filename);
 
   /* Get checksum */
   if (success)
@@ -199,7 +203,7 @@ gimp_test_get_file_state_verbose (gchar             *filename,
 }
 
 static gboolean
-gimp_test_file_state_changes (gchar             *filename,
+gimp_test_file_state_changes (const gchar       *filename,
                               GimpTestFileState *state1,
                               GimpTestFileState *state2)
 {
@@ -212,7 +216,13 @@ gimp_test_file_state_changes (gchar             *filename,
 
   if (strcmp (state1->md5, state2->md5) != 0)
     {
-      g_printerr ("'%s' was changed but should not have been\n", filename);
+      gchar cmd[400];
+
+      g_printerr ("'%s' was changed but should not have been. Reason (using system()):\n", filename);
+
+      sprintf (cmd, "diff -u '%s' '%s'", state1->filename, state2->filename);
+      system (cmd);
+
       return FALSE;
     }
 
