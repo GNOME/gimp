@@ -24,17 +24,20 @@
 #define __GIMP_TEXT_TOOL_EDITOR_H__
 
 
-void       gimp_text_tool_editor_init      (GimpTextTool *text_tool);
-void       gimp_text_tool_editor_finalize  (GimpTextTool *text_tool);
+void       gimp_text_tool_editor_init        (GimpTextTool *text_tool);
+void       gimp_text_tool_editor_finalize    (GimpTextTool *text_tool);
 
-void       gimp_text_tool_editor_start     (GimpTextTool *text_tool);
-void       gimp_text_tool_editor_halt      (GimpTextTool *text_tool);
+void       gimp_text_tool_editor_start       (GimpTextTool *text_tool);
+void       gimp_text_tool_editor_halt        (GimpTextTool *text_tool);
 
-gboolean   gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
-                                            GdkEventKey  *kevent,
-                                            GimpDisplay  *display);
+gboolean   gimp_text_tool_editor_key_press   (GimpTextTool *text_tool,
+                                              GdkEventKey  *kevent,
+                                              GimpDisplay  *display);
+gboolean   gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
+                                              GdkEventKey  *kevent,
+                                              GimpDisplay  *display);
 
-gchar    * gimp_text_tool_editor_get_text  (GimpTextTool *text_tool);
+gchar    * gimp_text_tool_editor_get_text    (GimpTextTool *text_tool);
 
 
 #endif /* __GIMP_TEXT_TOOL_EDITOR_H__ */

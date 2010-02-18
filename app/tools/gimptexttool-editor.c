@@ -235,6 +235,31 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
   return retval;
 }
 
+gboolean
+gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
+                                   GdkEventKey  *kevent,
+                                   GimpDisplay  *display)
+{
+  if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
+    {
+      text_tool->needs_im_reset = TRUE;
+
+      return TRUE;
+    }
+
+  gimp_text_tool_ensure_proxy (text_tool);
+
+  if (gtk_bindings_activate_event (GTK_OBJECT (text_tool->proxy_text_view),
+                                   kevent))
+    {
+      GIMP_LOG (TEXT_EDITING, "binding handled event");
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 gchar *
 gimp_text_tool_editor_get_text (GimpTextTool *text_tool)
 {

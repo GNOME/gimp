@@ -101,6 +101,9 @@ static void      gimp_text_tool_motion          (GimpTool          *tool,
 static gboolean  gimp_text_tool_key_press       (GimpTool          *tool,
                                                  GdkEventKey       *kevent,
                                                  GimpDisplay       *display);
+static gboolean  gimp_text_tool_key_release     (GimpTool          *tool,
+                                                 GdkEventKey       *kevent,
+                                                 GimpDisplay       *display);
 static void      gimp_text_tool_oper_update     (GimpTool          *tool,
                                                  const GimpCoords  *coords,
                                                  GdkModifierType    state,
@@ -211,6 +214,7 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   tool_class->motion           = gimp_text_tool_motion;
   tool_class->button_release   = gimp_text_tool_button_release;
   tool_class->key_press        = gimp_text_tool_key_press;
+  tool_class->key_release      = gimp_text_tool_key_release;
   tool_class->oper_update      = gimp_text_tool_oper_update;
   tool_class->cursor_update    = gimp_text_tool_cursor_update;
   tool_class->get_popup        = gimp_text_tool_get_popup;
@@ -706,6 +710,19 @@ gimp_text_tool_key_press (GimpTool    *tool,
 
   if (display == tool->display)
     return gimp_text_tool_editor_key_press (text_tool, kevent, display);
+
+  return FALSE;
+}
+
+static gboolean
+gimp_text_tool_key_release (GimpTool    *tool,
+                            GdkEventKey *kevent,
+                            GimpDisplay *display)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+
+  if (display == tool->display)
+    return gimp_text_tool_editor_key_release (text_tool, kevent, display);
 
   return FALSE;
 }
