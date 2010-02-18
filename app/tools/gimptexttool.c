@@ -838,9 +838,6 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTextTool   *text_tool = GIMP_TEXT_TOOL (draw_tool);
   GtkTextBuffer  *buffer    = text_tool->text_buffer;
-  GdkRectangle    clip_rect;
-  gint            x1, x2;
-  gint            y1, y2;
   gint            logical_off_x = 0;
   gint            logical_off_y = 0;
   PangoLayout    *layout;
@@ -862,21 +859,6 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   if (! text_tool->layout)
     gimp_text_tool_update_layout (text_tool);
 
-  /* Turn on clipping for text-cursor and selections */
-  g_object_get (text_tool,
-                "x1", &x1,
-                "y1", &y1,
-                "x2", &x2,
-                "y2", &y2,
-                NULL);
-
-  clip_rect.x      = x1;
-  clip_rect.width  = x2 - x1;
-  clip_rect.y      = y1;
-  clip_rect.height = y2 - y1;
-
-  gimp_draw_tool_set_clip_rect (draw_tool, &clip_rect, FALSE);
-
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
   pango_layout_get_pixel_extents (layout, &ink_extents, &logical_extents);
@@ -888,7 +870,35 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   if (ink_extents.y < 0)
     logical_off_y = -ink_extents.y;
 
-  if (! gtk_text_buffer_get_has_selection (buffer))
+  if (gtk_text_buffer_get_has_selection (buffer))
+    {
+      /* If the text buffer has a selection, highlight the selected letters */
+
+      GdkRectangle clip_rect;
+      gint         x1, x2;
+      gint         y1, y2;
+
+      /* Turn on clipping for selections */
+      g_object_get (text_tool,
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
+
+      clip_rect.x      = x1;
+      clip_rect.width  = x2 - x1;
+      clip_rect.y      = y1;
+      clip_rect.height = y2 - y1;
+
+      gimp_draw_tool_set_clip_rect (draw_tool, &clip_rect, FALSE);
+
+      gimp_text_tool_draw_selection (draw_tool, logical_off_x, logical_off_y);
+
+      /* Turn off clipping when done */
+      gimp_draw_tool_set_clip_rect (draw_tool, NULL, FALSE);
+    }
+  else
     {
       /* If the text buffer has no selection, draw the text cursor */
 
@@ -935,16 +945,6 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       if (text_tool->preedit_string && text_tool->preedit_len > 0)
         gimp_text_tool_draw_preedit (draw_tool, logical_off_x, logical_off_y);
     }
-  else
-    {
-      /* If the text buffer has a selection, highlight the selected
-       * letters
-       */
-      gimp_text_tool_draw_selection (draw_tool, logical_off_x, logical_off_y);
-    }
-
-  /* Turn off clipping when done */
-  gimp_draw_tool_set_clip_rect (draw_tool, NULL, FALSE);
 }
 
 static void
