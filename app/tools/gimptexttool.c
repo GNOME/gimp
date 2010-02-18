@@ -627,100 +627,97 @@ gimp_text_tool_motion (GimpTool         *tool,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
-  if (text_tool->selecting)
+  if (! text_tool->selecting)
     {
-      if (text_tool->layout)
+      gimp_rectangle_tool_motion (tool, coords, time, state, display);
+    }
+  else if (text_tool->layout)
+    {
+      GimpItem      *item   = GIMP_ITEM (text_tool->layer);
+      gdouble        x      = coords->x - gimp_item_get_offset_x (item);
+      gdouble        y      = coords->y - gimp_item_get_offset_y (item);
+      GtkTextBuffer *buffer = text_tool->text_buffer;
+      GtkTextIter    cursor;
+      GtkTextIter    selection;
+      gint           cursor_offset;
+      gint           selection_offset;
+      gint           offset;
+
+      offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
+
+      gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                        gtk_text_buffer_get_insert (buffer));
+      gtk_text_buffer_get_iter_at_mark (buffer, &selection,
+                                        gtk_text_buffer_get_selection_bound (buffer));
+
+      cursor_offset    = gtk_text_iter_get_offset (&cursor);
+      selection_offset = gtk_text_iter_get_offset (&selection);
+
+      if (text_tool->select_words ||
+          text_tool->select_lines)
         {
-          GimpItem      *item   = GIMP_ITEM (text_tool->layer);
-          gdouble        x      = coords->x - gimp_item_get_offset_x (item);
-          gdouble        y      = coords->y - gimp_item_get_offset_y (item);
-          GtkTextBuffer *buffer = text_tool->text_buffer;
-          GtkTextIter    cursor;
-          GtkTextIter    selection;
-          gint           cursor_offset;
-          gint           selection_offset;
-          gint           offset;
+          GtkTextIter start;
+          GtkTextIter end;
 
-          offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
+          gtk_text_buffer_get_iter_at_offset (buffer, &cursor,
+                                              offset);
+          gtk_text_buffer_get_iter_at_offset (buffer, &selection,
+                                              text_tool->select_start_offset);
 
-          gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
-                                            gtk_text_buffer_get_insert (buffer));
-          gtk_text_buffer_get_iter_at_mark (buffer, &selection,
-                                            gtk_text_buffer_get_selection_bound (buffer));
-
-          cursor_offset    = gtk_text_iter_get_offset (&cursor);
-          selection_offset = gtk_text_iter_get_offset (&selection);
-
-          if (text_tool->select_words ||
-              text_tool->select_lines)
+          if (offset <= text_tool->select_start_offset)
             {
-              GtkTextIter start;
-              GtkTextIter end;
-
-              gtk_text_buffer_get_iter_at_offset (buffer, &cursor,
-                                                  offset);
-              gtk_text_buffer_get_iter_at_offset (buffer, &selection,
-                                                  text_tool->select_start_offset);
-
-              if (offset <= text_tool->select_start_offset)
-                {
-                  start = cursor;
-                  end   = selection;
-                }
-              else
-                {
-                  start = selection;
-                  end   = cursor;
-                }
-
-              if (text_tool->select_words)
-                {
-                  if (! gtk_text_iter_starts_word (&start))
-                    gtk_text_iter_backward_visible_word_starts (&start, 1);
-
-                  if (! gtk_text_iter_ends_word (&end) &&
-                      ! gtk_text_iter_forward_visible_word_ends (&end, 1))
-                    gtk_text_iter_forward_to_line_end (&end);
-                }
-              else if (text_tool->select_lines)
-                {
-                  gtk_text_iter_set_line_offset (&start, 0);
-                  gtk_text_iter_forward_to_line_end (&end);
-                }
-
-              if (offset <= text_tool->select_start_offset)
-                {
-                  cursor    = start;
-                  selection = end;
-                }
-              else
-                {
-                  selection = start;
-                  cursor    = end;
-                }
+              start = cursor;
+              end   = selection;
             }
           else
             {
-              if (cursor_offset != offset)
-                {
-                  gtk_text_buffer_get_iter_at_offset (buffer, &cursor, offset);
-                }
+              start = selection;
+              end   = cursor;
             }
 
-          if (cursor_offset    != gtk_text_iter_get_offset (&cursor) ||
-              selection_offset != gtk_text_iter_get_offset (&selection))
+          if (text_tool->select_words)
             {
-              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+              if (! gtk_text_iter_starts_word (&start))
+                gtk_text_iter_backward_visible_word_starts (&start, 1);
 
-              gtk_text_buffer_select_range (buffer, &cursor, &selection);
+              if (! gtk_text_iter_ends_word (&end) &&
+                  ! gtk_text_iter_forward_visible_word_ends (&end, 1))
+                gtk_text_iter_forward_to_line_end (&end);
+            }
+          else if (text_tool->select_lines)
+            {
+              gtk_text_iter_set_line_offset (&start, 0);
+              gtk_text_iter_forward_to_line_end (&end);
+            }
 
-              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+          if (offset <= text_tool->select_start_offset)
+            {
+              cursor    = start;
+              selection = end;
+            }
+          else
+            {
+              selection = start;
+              cursor    = end;
             }
         }
-    }
-  else
-    {
-      gimp_rectangle_tool_motion (tool, coords, time, state, display);
+      else
+        {
+          if (cursor_offset != offset)
+            {
+              gtk_text_buffer_get_iter_at_offset (buffer, &cursor, offset);
+            }
+        }
+
+      if (cursor_offset    != gtk_text_iter_get_offset (&cursor) ||
+          selection_offset != gtk_text_iter_get_offset (&selection))
+        {
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+          gtk_text_buffer_select_range (buffer, &cursor, &selection);
+
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+        }
     }
 }
 
