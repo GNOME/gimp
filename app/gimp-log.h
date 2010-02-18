@@ -33,7 +33,8 @@ typedef enum
   GIMP_LOG_SCALE              = 1 << 9,
   GIMP_LOG_WM                 = 1 << 10,
   GIMP_LOG_FLOATING_SELECTION = 1 << 11,
-  GIMP_LOG_SHM                = 1 << 12
+  GIMP_LOG_SHM                = 1 << 12,
+  GIMP_LOG_TEXT_EDITING       = 1 << 13
 } GimpLogFlags;
 
 
@@ -87,6 +88,7 @@ void   gimp_logv     (const gchar *function,
 #define WM                 GIMP_LOG_WM
 #define FLOATING_SELECTION GIMP_LOG_FLOATING_SELECTION
 #define SHM                GIMP_LOG_SHM
+#define TEXT_EDITING       GIMP_LOG_TEXT_EDITING
 
 #if 0 /* last resort */
 #  define GIMP_LOG /* nothing => no varargs, no log */

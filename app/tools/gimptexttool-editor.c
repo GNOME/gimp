@@ -45,6 +45,7 @@
 #include "gimptexttool.h"
 #include "gimptexttool-editor.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -185,7 +186,8 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
   if (gtk_bindings_activate_event (GTK_OBJECT (text_tool->proxy_text_view),
                                    kevent))
     {
-      g_printerr ("binding handled event!\n");
+      GIMP_LOG (TEXT_EDITING, "binding handled event");
+
       return TRUE;
     }
 
@@ -338,12 +340,11 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
   gboolean       cancel_selection = FALSE;
   gint           x_pos  = -1;
 
-  g_printerr ("%s: %s count = %d, select = %s\n",
-              G_STRFUNC,
-              g_enum_get_value (g_type_class_ref (GTK_TYPE_MOVEMENT_STEP),
-                                step)->value_name,
-              count,
-              extend_selection ? "TRUE" : "FALSE");
+  GIMP_LOG (TEXT_EDITING, "%s count = %d, select = %s",
+            g_enum_get_value (g_type_class_ref (GTK_TYPE_MOVEMENT_STEP),
+                              step)->value_name,
+            count,
+            extend_selection ? "TRUE" : "FALSE");
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
@@ -580,11 +581,10 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
   GtkTextIter    cursor;
   GtkTextIter    end;
 
-  g_printerr ("%s: %s count = %d\n",
-              G_STRFUNC,
-              g_enum_get_value (g_type_class_ref (GTK_TYPE_DELETE_TYPE),
-                                type)->value_name,
-              count);
+  GIMP_LOG (TEXT_EDITING, "%s count = %d",
+            g_enum_get_value (g_type_class_ref (GTK_TYPE_DELETE_TYPE),
+                              type)->value_name,
+            count);
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));

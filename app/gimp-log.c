@@ -49,6 +49,7 @@ gimp_log_init (void)
         { "scale",              GIMP_LOG_SCALE              },
         { "wm",                 GIMP_LOG_WM                 },
         { "floating-selection", GIMP_LOG_FLOATING_SELECTION },
+        { "text-editing",       GIMP_LOG_TEXT_EDITING       },
         { "shm",                GIMP_LOG_SHM                }
       };
 
