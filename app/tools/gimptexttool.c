@@ -929,9 +929,12 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool,
   PangoLayout     *layout;
   PangoLayoutIter *line_iter;
   GtkTextIter      cursor, start;
-  gint             i;
   gint             min, max;
   gchar           *string;
+  gint             firstline, lastline;
+  gint             first_x,   last_x;
+  gdouble          first_tmp, last_tmp;
+  gint             i;
 
   gtk_text_buffer_get_selection_bounds (text_tool->text_buffer, &cursor, NULL);
   gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
@@ -944,27 +947,24 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool,
   max = min + text_tool->preedit_len;
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+
+  pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
+  pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
+
+  first_tmp = first_x;
+  last_tmp  = last_x;
+
+  gimp_text_layout_transform_distance (text_tool->layout, &first_tmp, NULL);
+  gimp_text_layout_transform_distance (text_tool->layout, &last_tmp,  NULL);
+
+  first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
+  last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
+
   line_iter = pango_layout_get_iter (layout);
   i = 0;
 
   do
     {
-      gint    firstline, lastline;
-      gint    first_x,   last_x;
-      gdouble first_tmp, last_tmp;
-
-      pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
-      pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
-
-      first_tmp = first_x;
-      last_tmp  = last_x;
-
-      gimp_text_layout_transform_distance (text_tool->layout, &first_tmp, NULL);
-      gimp_text_layout_transform_distance (text_tool->layout, &last_tmp,  NULL);
-
-      first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
-      last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
-
       if (i >= firstline && i <= lastline)
         {
           PangoRectangle crect;
@@ -1030,9 +1030,12 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   PangoLayoutIter *line_iter;
   GtkTextIter      start;
   GtkTextIter      sel_start, sel_end;
-  gint             i;
   gint             min, max;
   gchar           *string;
+  gint             firstline, lastline;
+  gint             first_x,   last_x;
+  gdouble          first_tmp, last_tmp;
+  gint             i;
 
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
   gtk_text_buffer_get_start_iter (buffer, &start);
@@ -1046,6 +1049,19 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   g_free (string);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+
+  pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
+  pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
+
+  first_tmp = first_x;
+  last_tmp  = last_x;
+
+  gimp_text_layout_transform_distance (text_tool->layout, &first_tmp, NULL);
+  gimp_text_layout_transform_distance (text_tool->layout, &last_tmp,  NULL);
+
+  first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
+  last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
+
   line_iter = pango_layout_get_iter (layout);
   i = 0;
 
@@ -1055,22 +1071,6 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
    */
   do
     {
-      gint    firstline, lastline;
-      gint    first_x,   last_x;
-      gdouble first_tmp, last_tmp;
-
-      pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
-      pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
-
-      first_tmp = first_x;
-      last_tmp  = last_x;
-
-      gimp_text_layout_transform_distance (text_tool->layout, &first_tmp, NULL);
-      gimp_text_layout_transform_distance (text_tool->layout, &last_tmp,  NULL);
-
-      first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
-      last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
-
       if (i >= firstline && i <= lastline)
         {
           PangoRectangle crect;
