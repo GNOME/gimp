@@ -403,8 +403,8 @@ gimp_text_tool_button_press (GimpTool            *tool,
           gimp_rectangle_tool_button_press (tool, coords, time, state, display);
         }
 
-      /* bail out now if the rectangle is narrow and the button press is
-       * outside the layer
+      /*  bail out now if the user user clicked on a handle of an
+       *  existing rectangle
        */
       if (text_tool->layer &&
           gimp_rectangle_tool_get_function (rect_tool) !=
@@ -434,23 +434,23 @@ gimp_text_tool_button_press (GimpTool            *tool,
       /*  did the user click on a text layer?  */
       if (gimp_text_tool_set_drawable (text_tool, drawable, TRUE))
         {
-          /*  if we clicked on a text layer while the tool was idle
-           *  (didn't show a rectangle), frame the layer and switch to
-           *  selecting instead of drawing a new rectangle
-           */
-          if (gimp_rectangle_tool_get_function (rect_tool) ==
-              GIMP_RECTANGLE_TOOL_CREATING)
-            {
-              text_tool->selecting = TRUE;
-
-              gimp_rectangle_tool_set_function (rect_tool,
-                                                GIMP_RECTANGLE_TOOL_DEAD);
-
-              gimp_text_tool_frame_item (text_tool);
-            }
-
           if (press_type == GIMP_BUTTON_PRESS_NORMAL)
             {
+              /*  if we clicked on a text layer while the tool was idle
+               *  (didn't show a rectangle), frame the layer and switch to
+               *  selecting instead of drawing a new rectangle
+               */
+              if (gimp_rectangle_tool_get_function (rect_tool) ==
+                  GIMP_RECTANGLE_TOOL_CREATING)
+                {
+                  text_tool->selecting = TRUE;
+
+                  gimp_rectangle_tool_set_function (rect_tool,
+                                                    GIMP_RECTANGLE_TOOL_DEAD);
+
+                  gimp_text_tool_frame_item (text_tool);
+                }
+
               if (text_tool->text && text_tool->text != text)
                 {
                   gimp_text_tool_editor_start (text_tool);
