@@ -1341,14 +1341,10 @@ gimp_text_tool_text_notify (GimpText     *text,
       g_value_unset (&value);
     }
 
-  /* we need to redraw the rectangle if it is visible and the shape of
-   * the layer has changed, because of an undo for example.
+  /* we need to redraw the rectangle in any case because whatever changes
+   * to the text can change its size
    */
-  if (strcmp (pspec->name, "box-width") == 0  ||
-      strcmp (pspec->name, "box-height") == 0)
-    {
-      gimp_text_tool_frame_item (text_tool);
-    }
+  gimp_text_tool_frame_item (text_tool);
 
   /* if the text has changed, (probably because of an undo), we put
    * the new text into the text buffer
