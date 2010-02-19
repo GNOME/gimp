@@ -37,6 +37,8 @@ gboolean   gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
                                               GdkEventKey  *kevent,
                                               GimpDisplay  *display);
 
+void       gimp_text_tool_reset_im_context   (GimpTextTool *text_tool);
+
 gchar    * gimp_text_tool_editor_get_text    (GimpTextTool *text_tool);
 
 

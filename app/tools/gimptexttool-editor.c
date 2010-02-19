@@ -71,7 +71,6 @@ static void   gimp_text_tool_options_notify     (GimpTextOptions *options,
 static void   gimp_text_tool_editor_dialog      (GimpTextTool    *text_tool);
 static void   gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
                                                  const gchar     *str);
-static void   gimp_text_tool_reset_im_context   (GimpTextTool    *text_tool);
 static void   gimp_text_tool_commit_cb          (GtkIMContext    *context,
                                                  const gchar     *str,
                                                  GimpTextTool    *text_tool);
@@ -121,6 +120,9 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
   gtk_im_context_set_client_window (text_tool->im_context,
                                     gtk_widget_get_window (shell->canvas));
 
+  text_tool->needs_im_reset = TRUE;
+  gimp_text_tool_reset_im_context (text_tool);
+
   gtk_im_context_focus_in (text_tool->im_context);
 
   if (text_tool->text)
@@ -155,6 +157,9 @@ gimp_text_tool_editor_halt (GimpTextTool *text_tool)
       text_tool->offscreen_window = NULL;
       text_tool->proxy_text_view = NULL;
     }
+
+  text_tool->needs_im_reset = TRUE;
+  gimp_text_tool_reset_im_context (text_tool);
 
   gtk_im_context_focus_out (text_tool->im_context);
 
@@ -202,15 +207,15 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
     case GDK_Return:
     case GDK_KP_Enter:
     case GDK_ISO_Enter:
-      gimp_text_tool_enter_text (text_tool, "\n");
       gimp_text_tool_reset_im_context (text_tool);
+      gimp_text_tool_enter_text (text_tool, "\n");
       break;
 
     case GDK_Tab:
     case GDK_KP_Tab:
     case GDK_ISO_Left_Tab:
-      gimp_text_tool_enter_text (text_tool, "\t");
       gimp_text_tool_reset_im_context (text_tool);
+      gimp_text_tool_enter_text (text_tool, "\t");
       break;
 
     case GDK_Escape:
@@ -253,6 +258,16 @@ gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
     }
 
   return FALSE;
+}
+
+void
+gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
+{
+  if (text_tool->needs_im_reset)
+    {
+      text_tool->needs_im_reset = FALSE;
+      gtk_im_context_reset (text_tool->im_context);
+    }
 }
 
 gchar *
@@ -550,6 +565,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
+  gimp_text_tool_reset_im_context (text_tool);
+
   gtk_text_buffer_select_range (buffer, &cursor, sel_start);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
@@ -607,6 +624,8 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
             g_enum_get_value (g_type_class_ref (GTK_TYPE_DELETE_TYPE),
                               type)->value_name,
             count);
+
+  gimp_text_tool_reset_im_context (text_tool);
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
@@ -687,6 +706,8 @@ static void
 gimp_text_tool_backspace (GimpTextTool *text_tool)
 {
   GtkTextBuffer *buffer = text_tool->text_buffer;
+
+  gimp_text_tool_reset_im_context (text_tool);
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
@@ -824,16 +845,6 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
     }
 
   gtk_text_buffer_insert_at_cursor (buffer, str, -1);
-}
-
-static void
-gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
-{
-  if (text_tool->needs_im_reset)
-    {
-      text_tool->needs_im_reset = FALSE;
-      gtk_im_context_reset (text_tool->im_context);
-    }
 }
 
 static void

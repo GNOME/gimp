@@ -345,8 +345,6 @@ gimp_text_tool_control (GimpTool       *tool,
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
-  gimp_rectangle_tool_control (tool, action, display);
-
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
@@ -357,6 +355,8 @@ gimp_text_tool_control (GimpTool       *tool,
       gimp_text_tool_halt (text_tool);
       break;
     }
+
+  gimp_rectangle_tool_control (tool, action, display);
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
@@ -379,6 +379,8 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
     {
+      gimp_text_tool_reset_im_context (text_tool);
+
       text_tool->selecting = FALSE;
 
       if (gimp_rectangle_tool_point_in_rectangle (rect_tool,
@@ -1217,9 +1219,13 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 static void
 gimp_text_tool_halt (GimpTextTool *text_tool)
 {
-  gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
   gimp_text_tool_editor_halt (text_tool);
+
+  gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
