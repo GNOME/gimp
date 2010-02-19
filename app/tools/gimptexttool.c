@@ -1164,10 +1164,21 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 
   if (text_tool->handle_rectangle_change_complete)
     {
-      GimpText *text = text_tool->text;
       GimpItem *item = GIMP_ITEM (text_tool->layer);
       gint      x1, y1;
       gint      x2, y2;
+
+      if (! item)
+        {
+          /* we can't set properties for the text layer, because it
+           * isn't created until some text has been inserted, so we
+           * need to make a special note that will remind us what to
+           * do when we actually create the layer
+           */
+          text_tool->text_box_fixed = TRUE;
+
+          return TRUE;
+        }
 
       g_object_get (rect_tool,
                     "x1", &x1,
@@ -1176,34 +1187,28 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
                     "y2", &y2,
                     NULL);
 
-      text_tool->text_box_fixed = TRUE;
-
-      if (! text || ! text->text || (text->text[0] == 0))
+      if (x1        != gimp_item_get_offset_x (item) ||
+          y1        != gimp_item_get_offset_y (item) ||
+          (x2 - x1) != gimp_item_get_width  (item)   ||
+          (y2 - y1) != gimp_item_get_height (item))
         {
-          /* we can't set properties for the text layer, because it
-           * isn't created until some text has been inserted, so we
-           * need to make a special note that will remind us what to
-           * do when we actually create the layer
-           */
-          return TRUE;
+          g_object_set (text_tool->proxy,
+                        "box-mode",   GIMP_TEXT_BOX_FIXED,
+                        "box-width",  (gdouble) (x2 - x1),
+                        "box-height", (gdouble) (y2 - y1),
+                        NULL);
+
+          gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
+                                       _("Reshape Text Layer"));
+
+          gimp_item_translate (item,
+                               x1 - gimp_item_get_offset_x (item),
+                               y1 - gimp_item_get_offset_y (item),
+                               TRUE);
+          gimp_text_tool_apply (text_tool);
+
+          gimp_image_undo_group_end (text_tool->image);
         }
-
-      g_object_set (text_tool->proxy,
-                    "box-mode",   GIMP_TEXT_BOX_FIXED,
-                    "box-width",  (gdouble) (x2 - x1),
-                    "box-height", (gdouble) (y2 - y1),
-                    NULL);
-
-      gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
-                                   _("Reshape Text Layer"));
-
-      gimp_item_translate (item,
-                           x1 - gimp_item_get_offset_x (item),
-                           y1 - gimp_item_get_offset_y (item),
-                           TRUE);
-      gimp_text_tool_apply (text_tool);
-
-      gimp_image_undo_group_end (text_tool->image);
     }
 
   return TRUE;
