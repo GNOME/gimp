@@ -1367,8 +1367,6 @@ gimp_text_tool_text_notify (GimpText     *text,
 
       /* force change of cursor and selection display */
       gimp_text_tool_update_layout (text_tool);
-
-      return;
     }
 }
 
