@@ -88,7 +88,6 @@ gimp_text_tool_editor_init (GimpTextTool *text_tool)
   text_tool->needs_im_reset = FALSE;
 
   text_tool->preedit_string = NULL;
-  text_tool->preedit_len    = 0;
   text_tool->preedit_cursor = 0;
   text_tool->overwrite_mode = FALSE;
   text_tool->x_pos          = -1;
@@ -855,8 +854,6 @@ gimp_text_tool_preedit_changed_cb (GtkIMContext *context,
   gtk_im_context_get_preedit_string (context,
                                      &text_tool->preedit_string, NULL,
                                      &text_tool->preedit_cursor);
-
-  text_tool->preedit_len = strlen (text_tool->preedit_string);
 
   /* FIXME: call gimp_text_tool_update_layout() here, and make sure
    * the preedit string is *only* honored for the display, and never

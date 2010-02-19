@@ -74,7 +74,6 @@ struct _GimpTextTool
   gboolean        needs_im_reset;
 
   gchar          *preedit_string;
-  gint            preedit_len;
   gint            preedit_cursor;
 
   gboolean        overwrite_mode;

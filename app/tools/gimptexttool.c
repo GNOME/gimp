@@ -908,8 +908,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       cursor_index = strlen (string);
 
       /* TODO: make cursor position itself even inside preedits! */
-      if (text_tool->preedit_len > 0)
-        cursor_index += text_tool->preedit_len;
+      if (text_tool->preedit_string)
+        cursor_index += strlen (text_tool->preedit_string);
 
       g_free (string);
 
@@ -931,7 +931,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                                        overwrite_cursor,
                                        TRUE);
 
-      if (text_tool->preedit_string && text_tool->preedit_len > 0)
+      if (text_tool->preedit_string)
         gimp_text_tool_draw_preedit (draw_tool, logical_off_x, logical_off_y);
     }
 }
@@ -960,7 +960,7 @@ gimp_text_tool_draw_preedit (GimpDrawTool *draw_tool,
   min = strlen (string);
   g_free (string);
 
-  max = min + text_tool->preedit_len;
+  max = min + strlen (text_tool->preedit_string);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
