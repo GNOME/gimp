@@ -425,7 +425,10 @@ gimp_paint_core_finish (GimpPaintCore *core,
    *  if nothing has, then just return...
    */
   if ((core->x2 == core->x1) || (core->y2 == core->y1))
-    return;
+    {
+      gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
+      return;
+    }
 
   if (push_undo)
     {
