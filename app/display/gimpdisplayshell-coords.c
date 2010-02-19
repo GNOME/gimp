@@ -278,7 +278,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
             else
               {
                 shell->event_delay = TRUE;
-
+                gimp_display_shell_push_event_history (shell, coords);
               }
           }
         else
