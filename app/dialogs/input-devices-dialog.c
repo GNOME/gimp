@@ -26,6 +26,7 @@
 #include "core/gimp.h"
 
 #include "widgets/gimpdeviceeditor.h"
+#include "widgets/gimpdevices.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "input-devices-dialog.h"
