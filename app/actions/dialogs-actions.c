@@ -213,7 +213,7 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-preferences-dialog",
     GIMP_HELP_PREFS_DIALOG },
 
-  { "dialogs-input-devices", GIMP_STOCK_DEVICE_STATUS, /* FIXME stock-id */
+  { "dialogs-input-devices", GIMP_STOCK_INPUT_DEVICE,
     NC_("dialogs-action", "_Input Devices"), NULL,
     NC_("dialogs-action", "Open the input devices editor"),
     "gimp-input-devices-dialog",

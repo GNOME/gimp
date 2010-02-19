@@ -103,7 +103,7 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
   object_class->set_property       = gimp_device_info_set_property;
   object_class->get_property       = gimp_device_info_get_property;
 
-  viewable_class->default_stock_id = GIMP_STOCK_DEVICE_STATUS; /* FIXME */
+  viewable_class->default_stock_id = GIMP_STOCK_INPUT_DEVICE;
 
   g_object_class_install_property (object_class, PROP_DEVICE,
                                    g_param_spec_object ("device",

@@ -197,6 +197,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOLS,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DEVICE_STATUS,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_INPUT_DEVICE,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CURSOR,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SAMPLE_POINT,             NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -390,6 +391,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOLS,                    stock_tools_24                    },
   { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_24             },
   { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_24            },
+  { GIMP_STOCK_INPUT_DEVICE,             stock_input_device_22             },
   { GIMP_STOCK_CURSOR,                   stock_cursor_24                   },
   { GIMP_STOCK_SAMPLE_POINT,             stock_sample_point_24             },
 
@@ -516,6 +518,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TOOLS,                    stock_tools_16                    },
   { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_16             },
   { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_16            },
+  { GIMP_STOCK_INPUT_DEVICE,             stock_input_device_16             },
   { GIMP_STOCK_CURSOR,                   stock_cursor_16                   },
   { GIMP_STOCK_SAMPLE_POINT,             stock_sample_point_16             },
 

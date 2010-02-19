@@ -71,6 +71,7 @@ STOCK_MENU_IMAGES = \
 	stock-image-16.png				\
 	stock-images-16.png				\
 	stock-info-16.png				\
+	stock-input-device-16.png			\
 	stock-invert-16.png				\
 	stock-join-bevel-16.png				\
 	stock-join-miter-16.png				\
@@ -177,6 +178,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-image-24.png			\
 	stock-images-24.png			\
 	stock-info-24.png			\
+	stock-input-device-22.png		\
 	stock-layer-24.png			\
 	stock-layer-mask-24.png			\
 	stock-layers-24.png			\

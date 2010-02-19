@@ -214,6 +214,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOLS                    "gimp-tools"
 #define GIMP_STOCK_TOOL_OPTIONS             "gimp-tool-options"
 #define GIMP_STOCK_DEVICE_STATUS            "gimp-device-status"
+#define GIMP_STOCK_INPUT_DEVICE             "gimp-input-device"
 #define GIMP_STOCK_CURSOR                   "gimp-cursor"
 #define GIMP_STOCK_SAMPLE_POINT             "gimp-sample-point"
 
