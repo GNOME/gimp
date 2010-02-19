@@ -502,11 +502,14 @@ gimp_text_tool_button_press (GimpTool            *tool,
         }
     }
 
-  /*  create a new text layer  */
-  text_tool->text_box_fixed = FALSE;
+  if (press_type == GIMP_BUTTON_PRESS_NORMAL)
+    {
+      /*  create a new text layer  */
+      text_tool->text_box_fixed = FALSE;
 
-  gimp_text_tool_connect (text_tool, NULL, NULL);
-  gimp_text_tool_editor_start (text_tool);
+      gimp_text_tool_connect (text_tool, NULL, NULL);
+      gimp_text_tool_editor_start (text_tool);
+    }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
