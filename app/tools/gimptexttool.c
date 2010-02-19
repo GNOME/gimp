@@ -513,20 +513,6 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
 #define MIN_LAYER_WIDTH 20
 
-/*
- * Here is what we want to do:
- * 1) If the user clicked on an existing text layer, and no rectangle
- *    yet exists there, we want to create one with the right shape.
- * 2) If the user has modified the rectangle for an existing text layer,
- *    we want to change its shape accordingly.  We do this by falling
- *    through to code that causes the "rectangle-change-complete" signal
- *    to be emitted.
- * 3) If the rectangle that has been swept out is too small, we want to
- *    use dynamic text.
- * 4) Otherwise, we want to use the new rectangle that the user has
- *    created as our text box.  This again is done by causing
- *    "rectangle-change-complete" to be emitted.
- */
 static void
 gimp_text_tool_button_release (GimpTool              *tool,
                                const GimpCoords      *coords,
@@ -537,19 +523,14 @@ gimp_text_tool_button_release (GimpTool              *tool,
 {
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
   GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
-  GimpText          *text      = text_tool->text;
-  gint               x1, y1;
-  gint               x2, y2;
-
-  g_object_get (text_tool,
-                "x1", &x1,
-                "y1", &y1,
-                "x2", &x2,
-                "y2", &y2,
-                NULL);
 
   if (text_tool->selecting)
     {
+      /*  we are in a selection process (user has initially clicked
+       *  on an existing text layer), so finish the selection process
+       *  any ignore rectangle-change-complete.
+       */
+
       if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
         {
           GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
@@ -562,34 +543,49 @@ gimp_text_tool_button_release (GimpTool              *tool,
         }
 
       text_tool->selecting = FALSE;
+
+      text_tool->handle_rectangle_change_complete = FALSE;
     }
-
-  if (text && text_tool->text == text)
+  else if (gimp_rectangle_tool_get_function (rect_tool) ==
+           GIMP_RECTANGLE_TOOL_DEAD)
     {
-      if (gimp_rectangle_tool_rectangle_is_new (rect_tool))
-        {
-          /* user has clicked on an existing text layer */
-
-          gimp_tool_control_halt (tool->control);
-
-          gimp_text_tool_frame_item (text_tool);
-
-          return;
-        }
-    }
-  else if (y2 - y1 < MIN_LAYER_WIDTH)
-    {
-      /* user has clicked in dead space */
-
-      g_object_set (text_tool->proxy,
-                    "box-mode", GIMP_TEXT_BOX_DYNAMIC,
-                    NULL);
+      /*  the user clicked in dead space (like between th corner and edge
+       *  handles, completely ignore that too.
+       */
 
       text_tool->handle_rectangle_change_complete = FALSE;
     }
   else
     {
-      /* user has defined box for a new text layer */
+      gint x1, y1;
+      gint x2, y2;
+
+      /*  otherwise the user has clicked outside of any text layer to
+       *  create a new text, fall through and let rectangle-change-complete
+       *  do its job of setting the new text layer's size.
+       */
+
+      g_object_get (text_tool,
+                    "x1", &x1,
+                    "y1", &y1,
+                    "x2", &x2,
+                    "y2", &y2,
+                    NULL);
+
+      if ((y2 - y1) < MIN_LAYER_WIDTH)
+        {
+          /*  unless the rectangle is unreasonably small to hold any
+           *  real text (the user has eitherjust clicked or just made
+           *  a rectangle of a few pixels), so set the text box to
+           *  dynamic and ignore rectangle-change-complete.
+           */
+
+          g_object_set (text_tool->proxy,
+                        "box-mode", GIMP_TEXT_BOX_DYNAMIC,
+                        NULL);
+
+          text_tool->handle_rectangle_change_complete = FALSE;
+        }
     }
 
   gimp_rectangle_tool_button_release (tool, coords, time, state,
