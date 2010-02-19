@@ -25,6 +25,7 @@
 #include <gegl.h>
 #include <pango/pangocairo.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "text-types.h"
@@ -40,6 +41,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimpitemtree.h"
 #include "core/gimpparasitelist.h"
 
 #include "gimptext.h"
@@ -576,9 +578,20 @@ gimp_text_layer_render (GimpTextLayer *layer)
     }
 
   if (layer->auto_rename)
-    gimp_object_set_name_safe (GIMP_OBJECT (layer),
-                               layer->text->text ?
-                               layer->text->text : _("Empty Text Layer"));
+    {
+      GimpItem *item = GIMP_ITEM (layer);
+      gchar    *name = (layer->text->text ?
+                        gimp_utf8_strtrim (layer->text->text, 30) :
+                        g_strdup (_("Empty Text Layer")));
+
+      if (gimp_item_is_attached (item))
+        gimp_item_tree_rename_item (gimp_item_get_tree (item), item,
+                                    name, FALSE, NULL);
+      else
+        gimp_object_set_name (GIMP_OBJECT (layer), name);
+
+      g_free (name);
+    }
 
   gimp_text_layer_render_layout (layer, layout);
 
