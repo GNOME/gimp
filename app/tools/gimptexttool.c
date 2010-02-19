@@ -1580,17 +1580,11 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
   if (text_tool->text_box_fixed)
     {
-      GimpItem *item = GIMP_ITEM (layer);
-
       g_object_set (text_tool->proxy,
                     "box-mode",   GIMP_TEXT_BOX_FIXED,
                     "box-width",  (gdouble) (x2 - x1),
                     "box-height", (gdouble) (y2 - y1),
                     NULL);
-      gimp_item_translate (item,
-                           x1 - gimp_item_get_offset_x (item),
-                           y1 - gimp_item_get_offset_y (item),
-                           TRUE);
     }
   else
     {
