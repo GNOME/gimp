@@ -418,7 +418,10 @@ gimp_paint_core_finish (GimpPaintCore *core,
    *  if nothing has, then just return...
    */
   if ((core->x2 == core->x1) || (core->y2 == core->y1))
-    return;
+    {
+      gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
+      return;
+    }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT, core->undo_desc);
 
