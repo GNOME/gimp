@@ -38,7 +38,6 @@
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontrollerlist.h"
-#include "widgets/gimpdeviceeditor.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpgrideditor.h"
@@ -100,8 +99,7 @@ static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
                                                    GtkWidget  *entry);
 static void   prefs_input_devices_dialog          (GtkWidget  *widget,
                                                    Gimp       *gimp);
-static void   prefs_input_devices_dialog_response (GtkWidget  *dialog,
-                                                   gint        response_id,
+static void   prefs_keyboard_shortcuts_dialog     (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_menus_save_callback           (GtkWidget  *widget,
                                                    Gimp       *gimp);
@@ -493,67 +491,9 @@ static void
 prefs_input_devices_dialog (GtkWidget *widget,
                             Gimp      *gimp)
 {
-  static GtkWidget *input_dialog = NULL;
-
-  GtkWidget *content_area;
-  GtkWidget *editor;
-
-  if (input_dialog)
-    {
-      gtk_window_present (GTK_WINDOW (input_dialog));
-      return;
-    }
-
-  input_dialog = gimp_dialog_new (_("Configure Input Devices"), "preferences",
-                                  NULL, 0,
-                                  NULL, NULL,
-
-                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                  GTK_STOCK_SAVE,  GTK_RESPONSE_OK,
-
-                                  NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (input_dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CLOSE,
-                                           -1);
-
-  g_object_add_weak_pointer (G_OBJECT (input_dialog),
-                             (gpointer) &input_dialog);
-
-  gtk_window_set_transient_for (GTK_WINDOW (input_dialog),
-                                GTK_WINDOW (prefs_dialog));
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (input_dialog), TRUE);
-
-  g_signal_connect (input_dialog, "response",
-                    G_CALLBACK (prefs_input_devices_dialog_response),
-                    gimp);
-
-  content_area = gtk_dialog_get_content_area (GTK_DIALOG (input_dialog));
-
-  editor = gimp_device_editor_new (gimp);
-  gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
-  gtk_container_add (GTK_CONTAINER (content_area), editor);
-  gtk_widget_show (editor);
-
-  gtk_widget_show (input_dialog);
-}
-
-static void
-prefs_input_devices_dialog_response (GtkWidget *dialog,
-                                     gint       response_id,
-                                     Gimp      *gimp)
-{
-  switch (response_id)
-    {
-    case GTK_RESPONSE_OK:
-      gimp_devices_save (gimp, TRUE);
-      break;
-
-    default:
-      gtk_widget_destroy (dialog);
-      break;
-    }
+  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_from_name ("toplevel"),
+                                    gtk_widget_get_screen (widget),
+                                    "gimp-input-devices-dialog", 0);
 }
 
 static void

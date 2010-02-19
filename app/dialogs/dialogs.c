@@ -205,6 +205,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   /*  singleton toplevels  */
   TOPLEVEL ("gimp-preferences-dialog",
             dialogs_preferences_get,        TRUE, TRUE,  FALSE),
+  TOPLEVEL ("gimp-input-devices-dialog",
+            dialogs_input_devices_get,      TRUE, TRUE,  FALSE),
   TOPLEVEL ("gimp-keyboard-shortcuts-dialog",
             dialogs_keyboard_shortcuts_get, TRUE, TRUE,  TRUE),
   TOPLEVEL ("gimp-module-dialog",

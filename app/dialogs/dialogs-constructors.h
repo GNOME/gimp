@@ -45,6 +45,10 @@ GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             GimpUIManager     *ui_manager,
                                             gint               view_size);
+GtkWidget * dialogs_input_devices_get      (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            GimpUIManager     *ui_manager,
+                                            gint               view_size);
 GtkWidget * dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             GimpUIManager     *ui_manager,

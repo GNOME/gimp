@@ -77,6 +77,7 @@
 #include "file-open-location-dialog.h"
 #include "file-save-dialog.h"
 #include "image-new-dialog.h"
+#include "input-devices-dialog.h"
 #include "keyboard-shortcuts-dialog.h"
 #include "module-dialog.h"
 #include "palette-import-dialog.h"
@@ -159,6 +160,15 @@ dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
                                 gint               view_size)
 {
   return keyboard_shortcuts_dialog_new (context->gimp);
+}
+
+GtkWidget *
+dialogs_input_devices_get (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           GimpUIManager     *ui_manager,
+                           gint               view_size)
+{
+  return input_devices_dialog_new (context->gimp);
 }
 
 GtkWidget *

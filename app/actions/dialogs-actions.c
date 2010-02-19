@@ -213,6 +213,12 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-preferences-dialog",
     GIMP_HELP_PREFS_DIALOG },
 
+  { "dialogs-input-devices", GIMP_STOCK_DEVICE_STATUS, /* FIXME stock-id */
+    NC_("dialogs-action", "_Input Devices"), NULL,
+    NC_("dialogs-action", "Open the input devices editor"),
+    "gimp-input-devices-dialog",
+    GIMP_HELP_INPUT_DEVICES },
+
   { "dialogs-keyboard-shortcuts", GIMP_STOCK_CHAR_PICKER,
     NC_("dialogs-action", "_Keyboard Shortcuts"), NULL,
     NC_("dialogs-action", "Open the keyboard shortcuts editor"),

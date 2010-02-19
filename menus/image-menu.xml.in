@@ -219,6 +219,7 @@
       <separator />
       <placeholder name="Preferences">
         <menuitem action="dialogs-preferences" />      
+        <menuitem action="dialogs-input-devices" />
         <menuitem action="dialogs-keyboard-shortcuts" />
         <menuitem action="dialogs-module-dialog"/>
       </placeholder>
