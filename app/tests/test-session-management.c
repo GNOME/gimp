@@ -220,7 +220,8 @@ gimp_test_file_state_changes (const gchar       *filename,
 
       g_printerr ("'%s' was changed but should not have been. Reason (using system()):\n", filename);
 
-      sprintf (cmd, "diff -u '%s' '%s'", state1->filename, state2->filename);
+      g_snprintf (cmd, sizeof (cmd),
+                  "diff -u '%s' '%s'", state1->filename, state2->filename);
       system (cmd);
 
       return FALSE;
