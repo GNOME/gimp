@@ -1,4 +1,4 @@
-# traditional Chinese translation for gimp-script-fu.
+# Chinese (Hong Kong) translation for gimp-script-fu.
 # Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-19 19:13+0800\n"
-"PO-Revision-Date: 2010-02-19 09:29+0800\n"
+"PO-Revision-Date: 2010-02-19 19:14+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
-"Language-Team: Chinese (traditional)\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -60,7 +60,7 @@ msgstr "Script-Fu 不能同時處理兩個 script"
 #: ../plug-ins/script-fu/script-fu-interface.c:198
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "您已經執行「%s」script。"
+msgstr "你已經執行「%s」script。"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:224
 #, c-format
@@ -101,7 +101,7 @@ msgstr "Script-Fu 圖樣選擇"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu 漸層選擇"
+msgstr "Script-Fu 漸變色選擇"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Brush Selection"
@@ -155,7 +155,7 @@ msgstr "啟動伺服器(_S)..."
 
 #: ../plug-ins/script-fu/script-fu.c:302
 msgid "_GIMP Online"
-msgstr "_GIMP 線上"
+msgstr "_GIMP 網上"
 
 #: ../plug-ins/script-fu/script-fu.c:303
 msgid "_User Manual"
@@ -213,9 +213,7 @@ msgstr "重新整理 Sc_ript"
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr ""
-"您不能在開啟 Script-Fu 對話盒的時候使用「重新整理 Script-Fu」。請關閉所有的 "
-"Script-Fu 視窗後再試一次。"
+msgstr "你不能在開啟 Script-Fu 對話盒的時候使用「重新整理 Script-Fu」。請關閉所有的 Script-Fu 視窗後再試一次。"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -431,7 +429,7 @@ msgstr "建立填滿立體 Truchet 圖樣的圖片"
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "End blend"
-msgstr "漸層結束顏色"
+msgstr "漸變色結束顏色"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:5
@@ -446,7 +444,7 @@ msgstr "垂直區域數目"
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
 msgid "Start blend"
-msgstr "漸層開始顏色"
+msgstr "漸變色開始顏色"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
@@ -668,11 +666,11 @@ msgstr "色帶數目"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of bands"
-msgstr "色帶寬度"
+msgstr "色帶闊度"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
-msgstr "間隔寬度"
+msgstr "間隔闊度"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 msgid ""
@@ -706,7 +704,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
-msgstr "斜面寬度"
+msgstr "斜面闊度"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
 msgid "Create a simple, beveled button graphic for webpages"
@@ -777,7 +775,7 @@ msgstr "高度"
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
 msgid "Width"
-msgstr "寬度"
+msgstr "闊度"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
@@ -825,7 +823,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
-msgstr "自製漸層範例"
+msgstr "自製漸變色範例"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-HSV"
@@ -847,7 +845,7 @@ msgstr "前景-透明"
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient"
-msgstr "漸層"
+msgstr "漸變色"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
@@ -856,7 +854,7 @@ msgstr "漸層"
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Gradient reverse"
-msgstr "文字內部使用相反方向漸層"
+msgstr "文字內部使用相反方向漸變色"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Offset (pixels)"
@@ -1391,7 +1389,7 @@ msgstr "圖片高度"
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:4
 #: ../plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Image width"
-msgstr "圖片寬度"
+msgstr "圖片闊度"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:5
 #: ../plug-ins/script-fu/scripts/land.scm.h:7
@@ -1540,7 +1538,7 @@ msgstr "移除背景"
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "Select-by-color threshold"
-msgstr "依色彩選擇時使用的臨界值"
+msgstr "根據色彩選擇時使用的臨界值"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
@@ -1601,11 +1599,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
-msgstr "混色漸層(輪廓)"
+msgstr "混色漸變色(輪廓)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend gradient (text)"
-msgstr "混色漸層(文字)"
+msgstr "混色漸變色(文字)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
@@ -1617,7 +1615,7 @@ msgstr "光面(_S)..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline gradient reverse"
-msgstr "輪廓使用相反方向漸層"
+msgstr "輪廓使用相反方向漸變色"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (outline)"
@@ -1637,15 +1635,15 @@ msgstr "陰影"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Text gradient reverse"
-msgstr "文字內部使用相反方向漸層"
+msgstr "文字內部使用相反方向漸變色"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern for outline instead of gradient"
-msgstr "使用圖樣而不是漸層來繪畫輪廓"
+msgstr "使用圖樣而不是漸變色來繪畫輪廓"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use pattern for text instead of gradient"
-msgstr "使用圖樣而不是漸層來繪畫文字"
+msgstr "使用圖樣而不是漸變色來繪畫文字"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:22
 msgid "Use pattern overlay"
@@ -1683,7 +1681,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
-msgstr "漸層斜面(_L)..."
+msgstr "漸變色斜面(_L)..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
@@ -1811,7 +1809,7 @@ msgstr "種子"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
-msgstr "使用目前的漸層"
+msgstr "使用目前的漸變色"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
@@ -2279,7 +2277,7 @@ msgstr "圓形"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color method"
-msgstr "著色方式"
+msgstr "着色方式"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
@@ -2604,7 +2602,7 @@ msgstr "絲帶間隔"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:3
 msgid "Ribbon width"
-msgstr "絲帶寬度"
+msgstr "絲帶闊度"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow darkness"

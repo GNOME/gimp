@@ -1,4 +1,4 @@
-# traditional Chinese translation for gimp-std-plugins.
+# Chinese (Hong Kong) translation for gimp-std-plugins.
 # Copyright (C) 2001, 03, 04 Free Software Foundation, Inc.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-19 19:08+0800\n"
-"PO-Revision-Date: 2009-05-10 20:58+0800\n"
+"PO-Revision-Date: 2010-02-19 19:11+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
-"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1263,11 +1263,11 @@ msgstr "圖片的第一行"
 
 #: ../plug-ins/common/cml-explorer.c:227
 msgid "Continuous gradient"
-msgstr "連續漸層"
+msgstr "連續漸變色"
 
 #: ../plug-ins/common/cml-explorer.c:228
 msgid "Continuous grad. w/o gap"
-msgstr "連續漸層而且沒有縫隙"
+msgstr "連續漸變色而且沒有縫隙"
 
 #: ../plug-ins/common/cml-explorer.c:229
 msgid "Random, ch. independent"
@@ -1652,7 +1652,7 @@ msgstr ""
 
 #: ../plug-ins/common/colorify.c:255
 msgid "Colorify"
-msgstr "著色"
+msgstr "着色"
 
 #: ../plug-ins/common/colorify.c:289
 msgid "Custom color:"
@@ -2168,7 +2168,7 @@ msgstr ""
 
 #: ../plug-ins/common/curve-bend.c:541
 msgid "_Curve Bend..."
-msgstr "依曲線扭曲(_C)..."
+msgstr "根據曲線扭曲(_C)..."
 
 #: ../plug-ins/common/curve-bend.c:677 ../plug-ins/common/edge-dog.c:176
 msgid "Can operate on layers only (but was called on channel or mask)."
@@ -2186,7 +2186,7 @@ msgstr "不適用於沒有選擇區域的情況之下。"
 #. The shell and main vbox
 #: ../plug-ins/common/curve-bend.c:1211 ../plug-ins/common/curve-bend.c:2932
 msgid "Curve Bend"
-msgstr "依曲線扭曲"
+msgstr "根據曲線扭曲"
 
 #. Preview area, top of column
 #. preview
@@ -2628,7 +2628,7 @@ msgstr "去條紋"
 #: ../plug-ins/imagemap/imap_rectangle.c:403
 #: ../plug-ins/print/print-page-layout.c:252
 msgid "_Width:"
-msgstr "寬度(_W)："
+msgstr "闊度(_W)："
 
 #: ../plug-ins/common/destripe.c:484
 msgid "Create _histogram"
@@ -2870,7 +2870,7 @@ msgstr ""
 
 #: ../plug-ins/common/edge.c:670 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
-msgstr "漸層"
+msgstr "漸變色"
 
 #: ../plug-ins/common/edge.c:671
 msgid "Roberts"
@@ -2944,7 +2944,7 @@ msgstr "高度(_H)："
 
 #: ../plug-ins/common/engrave.c:255
 msgid "_Limit line width"
-msgstr "限制線條寬度(_L)"
+msgstr "限制線條闊度(_L)"
 
 #: ../plug-ins/common/file-aa.c:98
 msgid "ASCII art"
@@ -3219,8 +3219,7 @@ msgstr ""
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
-msgstr ""
-"GIF 圖片格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
+msgstr "GIF 圖片格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
 
 #: ../plug-ins/common/file-gif-save.c:732
 msgid ""
@@ -3362,7 +3361,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gih.c:1036
 msgid " (Width Mismatch!) "
-msgstr " (寬度不符！) "
+msgstr " (闊度不符！) "
 
 #: ../plug-ins/common/file-gih.c:1040
 msgid " (Height Mismatch!) "
@@ -3401,7 +3400,7 @@ msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
 "crash your browser."
-msgstr "您正要建立一個很可能會讓瀏覽器掛掉的巨大 HTML 檔。"
+msgstr "你正要建立一個很可能會讓瀏覽器掛掉的巨大 HTML 檔。"
 
 #. HTML Page Options
 #: ../plug-ins/common/file-html-table.c:456
@@ -3416,9 +3415,7 @@ msgstr "產生完整的 _HTML 文件"
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
-msgstr ""
-"若選取本選項，GTM 會輸出一個包含 <HTML>、<BODY> 等標籤的完整 HTML 檔，而非只"
-"有表格部份的 HTML。"
+msgstr "若選取本選項，GTM 會輸出一個包含 <HTML>、<BODY> 等標籤的完整 HTML 檔，而非只有表格部份的 HTML。"
 
 #. HTML Table Creation Options
 #: ../plug-ins/common/file-html-table.c:482
@@ -3433,9 +3430,7 @@ msgstr "使用 _Cellspan"
 msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
-msgstr ""
-"若選上此選項，GTM 會將任何成矩型區域而且顏色相同的格子合成一個有 ROWSPAN 和 "
-"COLSPAN 值的大型方格。"
+msgstr "若選上此選項，GTM 會將任何成矩型區域而且顏色相同的格子合成一個有 ROWSPAN 和 COLSPAN 值的大型方格。"
 
 #: ../plug-ins/common/file-html-table.c:505
 msgid "Co_mpress TD tags"
@@ -3446,9 +3441,7 @@ msgid ""
 "Checking this tag will cause GTM to leave no whitespace between the TD tags "
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
-msgstr ""
-"若選上此選項，GTM 將不會在 TD 標籤及格子內容之間留下任何空白字符。這只在需要"
-"以像素的程度控制位置才有需要使用。"
+msgstr "若選上此選項，GTM 將不會在 TD 標籤及格子內容之間留下任何空白字符。這只在需要以像素的程度控制位置才有需要使用。"
 
 #: ../plug-ins/common/file-html-table.c:521
 msgid "C_aption"
@@ -3481,11 +3474,11 @@ msgstr "邊框(_B)："
 
 #: ../plug-ins/common/file-html-table.c:584
 msgid "The number of pixels in the table border."
-msgstr "表格邊框的寬度(像素)。"
+msgstr "表格邊框的闊度(像素)。"
 
 #: ../plug-ins/common/file-html-table.c:599
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "表格格子的寬度。可以是數字或是百分比。"
+msgstr "表格格子的闊度。可以是數字或是百分比。"
 
 #: ../plug-ins/common/file-html-table.c:615
 msgid "The height for each table cell.  Can be a number or a percent."
@@ -3497,7 +3490,7 @@ msgstr "格子留邊(_P)："
 
 #: ../plug-ins/common/file-html-table.c:630
 msgid "The amount of cellpadding."
-msgstr "格子留邊的寬度。"
+msgstr "格子留邊的闊度。"
 
 #: ../plug-ins/common/file-html-table.c:639
 msgid "Cell-_spacing:"
@@ -3535,7 +3528,7 @@ msgstr "儲存 gamma 值"
 
 #: ../plug-ins/common/file-mng.c:1346
 msgid "Save resolution"
-msgstr "儲存解析度"
+msgstr "儲存解像度"
 
 #: ../plug-ins/common/file-mng.c:1357
 msgid "Save creation time"
@@ -3787,7 +3780,7 @@ msgstr "儲存圖層偏移位置(_F)"
 
 #: ../plug-ins/common/file-png.c:1855
 msgid "Save _resolution"
-msgstr "儲存解析度(_R)"
+msgstr "儲存解像度(_R)"
 
 #: ../plug-ins/common/file-png.c:1865
 msgid "Save creation _time"
@@ -3944,7 +3937,7 @@ msgstr "描繪"
 #: ../plug-ins/common/file-ps.c:3154 ../plug-ins/common/file-svg.c:929
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
-msgstr "解析度："
+msgstr "解像度："
 
 #: ../plug-ins/common/file-ps.c:3193
 msgid "Pages:"
@@ -3973,7 +3966,7 @@ msgstr ""
 #. Colouring
 #: ../plug-ins/common/file-ps.c:3226
 msgid "Coloring"
-msgstr "著色方式"
+msgstr "着色方式"
 
 #: ../plug-ins/common/file-ps.c:3230
 msgid "B/W"
@@ -4196,7 +4189,7 @@ msgid ""
 "No image width specified"
 msgstr ""
 "‘%s’：\n"
-"未指定圖片寬度"
+"未指定圖片闊度"
 
 #: ../plug-ins/common/file-sunras.c:464 ../plug-ins/common/file-xbm.c:833
 #: ../plug-ins/common/file-xwd.c:498
@@ -4294,7 +4287,7 @@ msgstr "繪製 SVG"
 #: ../plug-ins/common/file-svg.c:808 ../plug-ins/common/file-wmf.c:571
 #: ../plug-ins/common/grid.c:724
 msgid "Width:"
-msgstr "寬度："
+msgstr "闊度："
 
 #: ../plug-ins/common/file-svg.c:814 ../plug-ins/common/file-wmf.c:577
 msgid "Height:"
@@ -4405,15 +4398,13 @@ msgid ""
 "this conversion."
 msgstr ""
 "警告：\n"
-"準備載入的圖片的色版是 16 位元色版。GIMP 只支援 8 位元色版，因此它會自動進行"
-"轉換，而在這個過程中將會失去一部份資訊。"
+"準備載入的圖片的色版是 16 位元色版。GIMP 只支援 8 位元色版，因此它會自動進行轉換，而在這個過程中將會失去一部份資訊。"
 
 #: ../plug-ins/common/file-tiff-save.c:887
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
-msgstr ""
-"TIFF 圖片格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
+msgstr "TIFF 圖片格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
 
 #: ../plug-ins/common/file-tiff-save.c:1061
 msgid "Save as TIFF"
@@ -4715,7 +4706,7 @@ msgstr "齒孔位置(_H)："
 
 #: ../plug-ins/common/film.c:1183
 msgid "Ho_le width:"
-msgstr "齒孔寬度(_L)："
+msgstr "齒孔闊度(_L)："
 
 #: ../plug-ins/common/film.c:1194
 msgid "Hol_e height:"
@@ -5254,7 +5245,7 @@ msgstr "斜邊"
 
 #: ../plug-ins/common/jigsaw.c:2501
 msgid "_Bevel width:"
-msgstr "斜邊寬度(_B)："
+msgstr "斜邊闊度(_B)："
 
 #: ../plug-ins/common/jigsaw.c:2505
 msgid "Degree of slope of each piece's edge"
@@ -5739,12 +5730,12 @@ msgstr "報紙印刷"
 
 #: ../plug-ins/common/newsprint.c:1031
 msgid "_Spot function:"
-msgstr "描繪斑點函式(_S)："
+msgstr "描繪斑點函數(_S)："
 
 #. resolution settings
 #: ../plug-ins/common/newsprint.c:1240
 msgid "Resolution"
-msgstr "解析度"
+msgstr "解像度"
 
 #: ../plug-ins/common/newsprint.c:1259
 msgid "_Input SPI:"
@@ -6130,11 +6121,11 @@ msgstr ""
 
 #: ../plug-ins/common/plasma.c:181
 msgid "_Plasma..."
-msgstr "電漿(_P)..."
+msgstr "等離子(_P)..."
 
 #: ../plug-ins/common/plasma.c:263 ../plug-ins/common/plasma.c:300
 msgid "Plasma"
-msgstr "電漿"
+msgstr "等離子"
 
 #: ../plug-ins/common/plasma.c:337
 msgid "Random _seed:"
@@ -6249,9 +6240,7 @@ msgstr "從四週開始映射(_T)"
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
-msgstr ""
-"如果不選用本選項，映射後的圖片底部表示原來圖片的中心點，而頂端表示原來圖片的"
-"四周。如果選用則會以相反方向映射。"
+msgstr "如果不選用本選項，映射後的圖片底部表示原來圖片的中心點，而頂端表示原來圖片的四周。如果選用則會以相反方向映射。"
 
 #: ../plug-ins/common/polar-coords.c:693
 msgid "To _polar"
@@ -6261,9 +6250,7 @@ msgstr "變成圓形(_P)"
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
-msgstr ""
-"如果不選用本選項，圖片會以旋轉方式映射至另一個長方形。如果選上則會映射至圓"
-"形。"
+msgstr "如果不選用本選項，圖片會以旋轉方式映射至另一個長方形。如果選上則會映射至圓形。"
 
 #: ../plug-ins/common/procedure-browser.c:83
 msgid "List available procedures in the PDB"
@@ -6506,7 +6493,7 @@ msgstr ""
 
 #: ../plug-ins/common/screenshot.c:845
 msgid "Mouse Pointer"
-msgstr "滑鼠指標"
+msgstr "鼠標"
 
 #: ../plug-ins/common/screenshot.c:949
 msgid "Specified window not found"
@@ -7141,7 +7128,7 @@ msgstr "玻璃磚片"
 
 #: ../plug-ins/common/tile-glass.c:289
 msgid "Tile _width:"
-msgstr "磚片寬度(_W)："
+msgstr "磚片闊度(_W)："
 
 #: ../plug-ins/common/tile-paper.c:243 ../plug-ins/common/tile-paper.c:556
 msgid "Paper Tile"
@@ -7349,9 +7336,7 @@ msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr ""
-"本欄是數值輸入欄位的提示。它指定了輸入欄位應提供多少個小數點，使得準確度大致"
-"上等於「英吋」的小數點後兩位。"
+msgstr "本欄是數值輸入欄位的提示。它指定了輸入欄位應提供多少個小數點，使得準確度大致上等於「英吋」的小數點後兩位。"
 
 #: ../plug-ins/common/unit-editor.c:104
 msgid "Symbol"
@@ -7361,9 +7346,7 @@ msgstr "符號"
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
-msgstr ""
-"本單位的符號 (如果有的話，例如英吋的「'」)。如果沒有該單位的相應符號則使用縮"
-"寫。"
+msgstr "本單位的符號 (如果有的話，例如英吋的「'」)。如果沒有該單位的相應符號則使用縮寫。"
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "Abbreviation"
@@ -7601,7 +7584,7 @@ msgstr ""
 
 #: ../plug-ins/common/van-gogh-lic.c:685
 msgid "_Gradient"
-msgstr "漸層(_G)"
+msgstr "漸變色(_G)"
 
 #: ../plug-ins/common/van-gogh-lic.c:691
 msgid "Convolve"
@@ -8899,7 +8882,7 @@ msgstr ""
 
 #: ../plug-ins/flame/flame.c:1206
 msgid "Custom gradient"
-msgstr "連續漸層"
+msgstr "連續漸變色"
 
 #: ../plug-ins/flame/flame.c:1232
 msgid "C_amera"
@@ -8916,7 +8899,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 "gimprc 中未定義 %1$s︰\n"
-"您需要在 %4$s 檔案中加上類似\n"
+"你需要在 %4$s 檔案中加上類似\n"
 "(%2$s \"%3$s\")\n"
 "的設定。"
 
@@ -9050,7 +9033,7 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:930
 msgid "Use loglog smoothing"
-msgstr "使用 loglog 平滑函式"
+msgstr "使用 loglog 平滑函數"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
@@ -9135,7 +9118,7 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1145
 msgid "Apply active gradient to final image"
-msgstr "將使用中的漸層套用在最終的圖片之上"
+msgstr "將使用中的漸變色套用在最終的圖片之上"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
@@ -9188,7 +9171,7 @@ msgstr ""
 #: ../plug-ins/gradient-flare/gradient-flare.c:3200
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "您是否確定同時從清單及磁碟中刪除“%s”？"
+msgstr "你是否確定同時從清單及磁碟中刪除“%s”？"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:760
 msgid "Delete Fractal"
@@ -9533,7 +9516,7 @@ msgstr "方向："
 
 #: ../plug-ins/gfig/gfig-dobject.c:585
 msgid "Hey where has the object gone ?"
-msgstr "嘿，物件到哪裡去了？"
+msgstr "嘿，物件到哪裏去了？"
 
 #: ../plug-ins/gfig/gfig-dobject.c:955
 msgid "Error reading file"
@@ -9642,7 +9625,7 @@ msgstr "筆刷中心點(_E)"
 
 #: ../plug-ins/gimpressionist/color.c:79
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "依筆刷下的所有像素的平均顏色來計算顏色"
+msgstr "根據筆刷下的所有像素的平均顏色來計算顏色"
 
 #: ../plug-ins/gimpressionist/color.c:83
 msgid "Samples the color from the pixel in the center of the brush"
@@ -9799,7 +9782,7 @@ msgstr ""
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr "依該區域的亮度來決定筆劃的方向"
+msgstr "根據該區域的亮度來決定筆劃的方向"
 
 #: ../plug-ins/gimpressionist/orientation.c:160
 #: ../plug-ins/gimpressionist/size.c:163
@@ -9837,7 +9820,7 @@ msgstr "筆劃會以「流動」的方式來鋪排"
 
 #: ../plug-ins/gimpressionist/orientation.c:181
 msgid "The hue of the region determines the direction of the stroke"
-msgstr "依該區域的色相來決定筆劃的方向"
+msgstr "根據該區域的色相來決定筆劃的方向"
 
 #: ../plug-ins/gimpressionist/orientation.c:184
 #: ../plug-ins/gimpressionist/size.c:187
@@ -10117,7 +10100,7 @@ msgstr "尺寸："
 #: ../plug-ins/gimpressionist/size.c:160
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "依該區域的亮度來決定筆劃的大小"
+msgstr "根據該區域的亮度來決定筆劃的大小"
 
 #: ../plug-ins/gimpressionist/size.c:164
 msgid ""
@@ -10134,7 +10117,7 @@ msgstr "依從圖片中心點出發至該點的方向來決定筆劃的大小"
 
 #: ../plug-ins/gimpressionist/size.c:184
 msgid "The hue of the region determines the size of the stroke"
-msgstr "依該區域的色相來決定筆劃的大小"
+msgstr "根據該區域的色相來決定筆劃的大小"
 
 #: ../plug-ins/gimpressionist/size.c:188
 msgid "The brush-size that matches the original image the closest is selected"
@@ -10354,7 +10337,7 @@ msgstr ""
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3321
 msgid "Rescan Gradients"
-msgstr "重新掃瞄漸層"
+msgstr "重新掃瞄漸變色"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3446
@@ -10390,13 +10373,13 @@ msgstr ""
 #: ../plug-ins/gradient-flare/gradient-flare.c:3658
 #: ../plug-ins/gradient-flare/gradient-flare.c:3797
 msgid "Gradients"
-msgstr "漸層"
+msgstr "漸變色"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3566
 #: ../plug-ins/gradient-flare/gradient-flare.c:3671
 #: ../plug-ins/gradient-flare/gradient-flare.c:3808
 msgid "Radial gradient:"
-msgstr "放射狀漸層:"
+msgstr "放射狀漸變色:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3570
 #: ../plug-ins/gradient-flare/gradient-flare.c:3675
@@ -11108,7 +11091,7 @@ msgstr "方格大小"
 
 #: ../plug-ins/imagemap/imap_grid.c:246
 msgid "_Width"
-msgstr "寬度(_W)"
+msgstr "闊度(_W)"
 
 #: ../plug-ins/imagemap/imap_grid.c:252
 msgid "_Height"
@@ -11421,7 +11404,7 @@ msgstr ""
 
 #: ../plug-ins/imagemap/imap_preferences.c:437
 msgid "Co_ntiguous Region"
-msgstr "連續漸層(_N)"
+msgstr "連續漸變色(_N)"
 
 #: ../plug-ins/imagemap/imap_preferences.c:443
 msgid "_Automatically convert"
@@ -12059,7 +12042,7 @@ msgstr ""
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: ../plug-ins/maze/maze-dialog.c:208
 msgid "Width (pixels):"
-msgstr "寬度(像素)："
+msgstr "闊度(像素)："
 
 #: ../plug-ins/maze/maze-dialog.c:220 ../plug-ins/maze/maze-dialog.c:236
 msgid "Pieces:"
@@ -12210,7 +12193,7 @@ msgstr ""
 
 #: ../plug-ins/pagecurl/pagecurl.c:586
 msgid "Current gradient"
-msgstr "目前的漸層"
+msgstr "目前的漸變色"
 
 #: ../plug-ins/pagecurl/pagecurl.c:591
 msgid "Foreground / background colors"
@@ -12270,7 +12253,7 @@ msgstr ""
 
 #: ../plug-ins/print/print.c:107
 msgid "_Print..."
-msgstr "列印(_P)..."
+msgstr "打印(_P)..."
 
 #: ../plug-ins/print/print.c:118
 msgid "Adjust page size and orientation for printing"
