@@ -130,8 +130,6 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
   else
     gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
 
-  gimp_text_tool_update_layout (text_tool);
-
   if (options->use_editor)
     gimp_text_tool_editor_dialog (text_tool);
 
@@ -207,7 +205,6 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
     case GDK_ISO_Enter:
       gimp_text_tool_enter_text (text_tool, "\n");
       gimp_text_tool_reset_im_context (text_tool);
-      gimp_text_tool_update_layout (text_tool);
       break;
 
     case GDK_Tab:
@@ -215,7 +212,6 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
     case GDK_ISO_Left_Tab:
       gimp_text_tool_enter_text (text_tool, "\t");
       gimp_text_tool_reset_im_context (text_tool);
-      gimp_text_tool_update_layout (text_tool);
       break;
 
     case GDK_Escape:
@@ -862,5 +858,9 @@ gimp_text_tool_preedit_changed_cb (GtkIMContext *context,
 
   text_tool->preedit_len = strlen (text_tool->preedit_string);
 
+  /* FIXME: call gimp_text_tool_update_layout() here, and make sure
+   * the preedit string is *only* honored for the display, and never
+   * ends up on the text object
+   */
   gimp_text_tool_update_proxy (text_tool);
 }

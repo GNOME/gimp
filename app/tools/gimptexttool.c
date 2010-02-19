@@ -1355,13 +1355,13 @@ gimp_text_tool_text_notify (GimpText     *text,
    */
   if (strcmp (pspec->name, "text") == 0)
     {
-      g_signal_handlers_block_by_func (text_tool->proxy,
+      g_signal_handlers_block_by_func (text_tool->text_buffer,
                                        gimp_text_tool_text_buffer_changed,
                                        text_tool);
 
       gtk_text_buffer_set_text (text_tool->text_buffer, text->text, -1);
 
-      g_signal_handlers_unblock_by_func (text_tool->proxy,
+      g_signal_handlers_unblock_by_func (text_tool->text_buffer,
                                          gimp_text_tool_text_buffer_changed,
                                          text_tool);
 
@@ -1829,25 +1829,24 @@ gimp_text_tool_update_proxy (GimpTextTool *text_tool)
     {
       gimp_text_tool_create_layer (text_tool, NULL);
     }
+
+  gimp_text_tool_update_layout (text_tool);
 }
 
 void
 gimp_text_tool_update_layout (GimpTextTool *text_tool)
 {
-  GimpImage *image;
-
-  if (! text_tool->text)
+  if (text_tool->text)
     {
-      gimp_text_tool_update_proxy (text_tool);
-      return;
+      GimpImage *image;
+
+      if (text_tool->layout)
+        g_object_unref (text_tool->layout);
+
+      image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
+
+      text_tool->layout = gimp_text_layout_new (text_tool->layer->text, image);
     }
-
-  if (text_tool->layout)
-    g_object_unref (text_tool->layout);
-
-  image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
-
-  text_tool->layout = gimp_text_layout_new (text_tool->layer->text, image);
 }
 
 static gint
