@@ -134,7 +134,6 @@ static void       gui_menu_hide_tooltip         (GimpUIManager      *manager,
 static void       gui_display_changed           (GimpContext        *context,
                                                  GimpDisplay        *display,
                                                  Gimp               *gimp);
-static void       gui_display_remove            (GimpContainer      *displays);
 
 
 /*  private variables  */
@@ -387,9 +386,6 @@ gui_restore_callback (Gimp               *gimp,
   g_signal_connect (gimp_get_user_context (gimp), "display-changed",
                     G_CALLBACK (gui_display_changed),
                     gimp);
-  g_signal_connect (gimp->displays, "remove",
-                    G_CALLBACK (gui_display_remove),
-                    NULL);
 
   /* make sure the monitor resolution is valid */
   if (display_config->monitor_res_from_gdk               ||
@@ -598,9 +594,6 @@ gui_exit_callback (Gimp     *gimp,
   if (TRUE /* gui_config->save_controllers */)
     gimp_controllers_save (gimp);
 
-  g_signal_handlers_disconnect_by_func (gimp->displays,
-                                        gui_display_remove,
-                                        NULL);
   g_signal_handlers_disconnect_by_func (gimp_get_user_context (gimp),
                                         gui_display_changed,
                                         gimp);
@@ -793,13 +786,4 @@ gui_display_changed (GimpContext *context,
     }
 
   gimp_ui_manager_update (image_ui_manager, display);
-}
-
-static void
-gui_display_remove (GimpContainer *displays)
-{
-  /* show the toolbox when the last image window is closed */
-
-  if (gimp_container_is_empty (displays))
-    windows_show_toolbox ();
 }
