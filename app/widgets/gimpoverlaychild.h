@@ -29,8 +29,13 @@ struct _GimpOverlayChild
 {
   GtkWidget      *widget;
   GdkWindow      *window;
+
+  gboolean        has_position;
   gdouble         xalign;
   gdouble         yalign;
+  gdouble         x;
+  gdouble         y;
+
   gdouble         angle;
   gdouble         opacity;
 

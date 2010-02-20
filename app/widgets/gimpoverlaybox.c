@@ -363,10 +363,10 @@ gimp_overlay_box_add_child (GimpOverlayBox *box,
 }
 
 void
-gimp_overlay_box_set_child_packing (GimpOverlayBox *box,
-                                    GtkWidget      *widget,
-                                    gdouble         xalign,
-                                    gdouble         yalign)
+gimp_overlay_box_set_child_alignment (GimpOverlayBox *box,
+                                      GtkWidget      *widget,
+                                      gdouble         xalign,
+                                      gdouble         yalign)
 {
   GimpOverlayChild *child = gimp_overlay_child_find (box, widget);
 
@@ -375,13 +375,40 @@ gimp_overlay_box_set_child_packing (GimpOverlayBox *box,
       xalign = CLAMP (xalign, 0.0, 1.0);
       yalign = CLAMP (yalign, 0.0, 1.0);
 
-      if (child->xalign != xalign ||
+      if (child->has_position     ||
+          child->xalign != xalign ||
           child->yalign != yalign)
         {
           gimp_overlay_child_invalidate (box, child);
 
-          child->xalign = xalign;
-          child->yalign = yalign;
+          child->has_position = FALSE;
+          child->xalign       = xalign;
+          child->yalign       = yalign;
+
+          gtk_widget_queue_resize (widget);
+        }
+    }
+}
+
+void
+gimp_overlay_box_set_child_position (GimpOverlayBox *box,
+                                     GtkWidget      *widget,
+                                     gdouble         x,
+                                     gdouble         y)
+{
+  GimpOverlayChild *child = gimp_overlay_child_find (box, widget);
+
+  if (child)
+    {
+      if (! child->has_position ||
+          child->x != x         ||
+          child->y != y)
+        {
+          gimp_overlay_child_invalidate (box, child);
+
+          child->has_position = TRUE;
+          child->x            = x;
+          child->y            = y;
 
           gtk_widget_queue_resize (widget);
         }
@@ -453,13 +480,21 @@ gimp_overlay_box_scroll (GimpOverlayBox *box,
 
   /*  Undraw all overlays  */
   for (list = box->children; list; list = g_list_next (list))
-    gimp_overlay_child_invalidate (box, list->data);
+    {
+      GimpOverlayChild *child = list->data;
+
+      gimp_overlay_child_invalidate (box, child);
+    }
 
   gdk_window_scroll (window, offset_x, offset_y);
 
   /*  Re-draw all overlays  */
   for (list = box->children; list; list = g_list_next (list))
-    gimp_overlay_child_invalidate (box, list->data);
+    {
+      GimpOverlayChild *child = list->data;
+
+      gimp_overlay_child_invalidate (box, child);
+    }
 
   /*  Make sure expose events are processed before scrolling again  */
   gdk_window_process_updates (window, FALSE);

@@ -69,11 +69,14 @@ gimp_overlay_child_new (GimpOverlayBox *box,
 
   child = g_slice_new0 (GimpOverlayChild);
 
-  child->widget  = widget;
-  child->xalign  = CLAMP (xalign, 0.0, 1.0);
-  child->yalign  = CLAMP (yalign, 0.0, 1.0);
-  child->angle   = angle;
-  child->opacity = CLAMP (opacity, 0.0, 1.0);
+  child->widget       = widget;
+  child->xalign       = CLAMP (xalign, 0.0, 1.0);
+  child->yalign       = CLAMP (yalign, 0.0, 1.0);
+  child->x            = 0.0;
+  child->y            = 0.0;
+  child->has_position = FALSE;
+  child->angle        = angle;
+  child->opacity      = CLAMP (opacity, 0.0, 1.0);
 
   cairo_matrix_init_identity (&child->matrix);
 
@@ -271,14 +274,22 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
   available_width  = allocation.width  - 2 * border;
   available_height = allocation.height - 2 * border;
 
-  x = border;
-  y = border;
+  if (child->has_position)
+    {
+      x = child->x;
+      y = child->y;
+    }
+  else
+    {
+      x = border;
+      y = border;
 
-  if (available_width > bounds.width)
-    x += child->xalign * (available_width - bounds.width) - bounds.x;
+      if (available_width > bounds.width)
+        x += child->xalign * (available_width - bounds.width) - bounds.x;
 
-  if (available_height > bounds.height)
-    y += child->yalign * (available_height - bounds.height) - bounds.y;
+      if (available_height > bounds.height)
+        y += child->yalign * (available_height - bounds.height) - bounds.y;
+    }
 
   cairo_matrix_init_translate (&child->matrix, x, y);
 
