@@ -236,11 +236,28 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
   gtk_widget_get_allocation (child->widget, &child_allocation);
 
   if (GTK_WIDGET_REALIZED (widget))
-    gdk_window_move_resize (child->window,
-                            child_allocation.x,
-                            child_allocation.y,
-                            child_allocation.width,
-                            child_allocation.height);
+    {
+      GdkRectangle old_allocation;
+      GdkRectangle old_bounds;
+
+      gdk_window_get_position (child->window,
+                               &old_allocation.x,
+                               &old_allocation.y);
+      gdk_drawable_get_size (child->window,
+                             &old_allocation.width,
+                             &old_allocation.height);
+
+      gimp_overlay_child_transform_bounds (child, &old_allocation, &old_bounds);
+
+      gdk_window_invalidate_rect (gtk_widget_get_window (widget),
+                                  &old_bounds, FALSE);
+
+      gdk_window_move_resize (child->window,
+                              child_allocation.x,
+                              child_allocation.y,
+                              child_allocation.width,
+                              child_allocation.height);
+    }
 
   cairo_matrix_init_identity (&child->matrix);
 
