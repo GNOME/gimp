@@ -918,8 +918,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   gdouble          first_tmp, last_tmp;
   gint             i;
 
-  gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
   gtk_text_buffer_get_start_iter (buffer, &start);
+  gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
   string = gtk_text_buffer_get_text (buffer, &start, &sel_start, FALSE);
   min = strlen (string);
@@ -946,10 +946,6 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   line_iter = pango_layout_get_iter (layout);
   i = 0;
 
-  /* Invert the selected letters by inverting all lines containing
-   * selected letters, then invert the unselected letters on these
-   * lines a second time to make them look normal
-   */
   do
     {
       if (i >= firstline && i <= lastline)
@@ -964,42 +960,21 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
           crect.x += logical_off_x;
           crect.y += logical_off_y;
 
+          if (i == lastline)
+            {
+              crect.width = last_x;
+            }
+
+          if (i == firstline)
+            {
+              crect.width -= first_x;
+              crect.x     += first_x;
+            }
+
           gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
                                          crect.x, crect.y,
                                          crect.width, crect.height,
                                          TRUE);
-
-          if (i == firstline)
-            {
-              /* Twice invert all letters before the selection, making
-               * them look normal
-               */
-              PangoRectangle crect2 = crect;
-
-              crect2.width = first_x - crect.x;
-              crect2.x     = crect.x;
-
-              gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                             crect2.x, crect2.y,
-                                             crect2.width, crect2.height,
-                                             TRUE);
-            }
-
-          if (i == lastline)
-            {
-              /* Twice invert all letters after the selection, making
-               * them look normal
-               */
-              PangoRectangle crect2 = crect;
-
-              crect2.width = crect.x + crect.width - last_x;
-              crect2.x     = last_x;
-
-              gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                             crect2.x, crect2.y,
-                                             crect2.width, crect2.height,
-                                             TRUE);
-            }
         }
 
       i++;
