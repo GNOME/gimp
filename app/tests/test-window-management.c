@@ -25,6 +25,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockwindow.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -98,12 +99,12 @@ gimp_test_window_roles (GimpTestFixture *fixture,
   GimpDockWindow *dock_window    = NULL;
   GimpDockWindow *toolbox_window = NULL;
 
-  dock           = gimp_dialog_factory_dock_with_window_new (global_dialog_factory,
-                                                             gdk_screen_get_default (),
-                                                             FALSE /*toolbox*/);
-  toolbox        = gimp_dialog_factory_dock_with_window_new (global_dialog_factory,
-                                                             gdk_screen_get_default (),
-                                                             TRUE /*toolbox*/);
+  dock           = gimp_dock_with_window_new (global_dialog_factory,
+                                              gdk_screen_get_default (),
+                                              FALSE /*toolbox*/);
+  toolbox        = gimp_dock_with_window_new (global_dialog_factory,
+                                              gdk_screen_get_default (),
+                                              TRUE /*toolbox*/);
   dock_window    = gimp_dock_window_from_dock (GIMP_DOCK (dock));
   toolbox_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
 

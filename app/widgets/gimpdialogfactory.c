@@ -41,6 +41,7 @@
 #include "gimpdockwindow.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-log.h"
 
@@ -477,9 +478,9 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
            *  dialog. We do this because the new dockable needs to be
            *  created in its dock's context.
            */
-          dock     = gimp_dialog_factory_dock_with_window_new (factory,
-                                                               screen,
-                                                               FALSE /*toolbox*/);
+          dock     = gimp_dock_with_window_new (factory,
+                                                screen,
+                                                FALSE /*toolbox*/);
           dockbook = gimp_dockbook_new (factory->p->menu_factory);
 
           gimp_dock_add_book (GIMP_DOCK (dock),
@@ -785,64 +786,6 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
                                                   view_size,
                                                   FALSE,
                                                   FALSE);
-}
-
-/**
- * gimp_dialog_factory_dock_with_window_new:
- * @factory: a #GimpDialogFacotry
- * @screen:  the #GdkScreen the dock window should appear on
- *
- * Returns a new #GimpDock in this %factory's context, put inside a
- * #GimpDockWindow. We use a function pointer passed to this
- * %factory's constructor instead of simply gimp_dock_new() because we
- * may want different instances of #GimpDialogFactory create different
- * subclasses of #GimpDock.
- *
- * Return value: the newly created #GimpDock.
- **/
-GtkWidget *
-gimp_dialog_factory_dock_with_window_new (GimpDialogFactory *factory,
-                                          GdkScreen         *screen,
-                                          gboolean           toolbox)
-{
-  GtkWidget     *dock_window = NULL;
-  GtkWidget     *dock        = NULL;
-  GimpUIManager *ui_manager  = NULL;
-
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-
-  /* Create a dock window to put the dock in. We need to create the
-   * dock window before the dock because the dock has a dependency to
-   * the ui manager in the dock window
-   */
-  dock_window =
-    gimp_dialog_factory_dialog_new (factory,
-                                    screen,
-                                    (toolbox ?
-                                     "gimp-toolbox-window" :
-                                     "gimp-dock-window"),
-                                    -1 /*view_size*/,
-                                    FALSE /*present*/);
-
-  /* Create the dock */
-  ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
-  dock       = gimp_dialog_factory_dialog_new (factory,
-                                               screen,
-                                               (toolbox ?
-                                                "gimp-toolbox" :
-                                                "gimp-dock"),
-                                               -1 /*view_size*/,
-                                               FALSE /*present*/);
-  if (dock)
-    {
-      /* Put the dock in the dock window */
-      gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
-                                 GIMP_DOCK (dock),
-                                 -1);
-    }
-
-  return dock;
 }
 
 void

@@ -31,6 +31,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -104,9 +105,9 @@ windows_show_toolbox (void)
 
   if (! dialogs_get_toolbox ())
     {
-      toolbox = gimp_dialog_factory_dock_with_window_new (global_dialog_factory,
-                                                          gdk_screen_get_default (),
-                                                          TRUE /*toolbox*/);
+      toolbox = gimp_dock_with_window_new (global_dialog_factory,
+                                           gdk_screen_get_default (),
+                                           TRUE /*toolbox*/);
 
       gtk_widget_show (toolbox);
     }

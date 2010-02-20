@@ -56,6 +56,9 @@
 
 #include "widgets-types.h"
 
+#include "gimpdialogfactory.h"
+#include "gimpdock.h"
+#include "gimpdockwindow.h"
 #include "gimperrordialog.h"
 #include "gimpwidgets-utils.h"
 
@@ -1185,4 +1188,59 @@ gimp_highlight_widget (GtkWidget *widget,
     gtk_drag_highlight (widget);
   else
     gtk_drag_unhighlight (widget);
+}
+
+/**
+ * gimp_dock_with_window_new:
+ * @factory: a #GimpDialogFacotry
+ * @screen:  the #GdkScreen the dock window should appear on
+ * @toolbox: if %TRUE; gives a "gimp-toolbox-window" with a
+ *           "gimp-toolbox", "gimp-dock-window"+"gimp-dock"
+ *           otherwise
+ *
+ * Returns: the newly created #GimpDock with the #GimpDockWindow
+ **/
+GtkWidget *
+gimp_dock_with_window_new (GimpDialogFactory *factory,
+                           GdkScreen         *screen,
+                           gboolean           toolbox)
+{
+  GtkWidget     *dock_window = NULL;
+  GtkWidget     *dock        = NULL;
+  GimpUIManager *ui_manager  = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+
+  /* Create a dock window to put the dock in. We need to create the
+   * dock window before the dock because the dock has a dependency to
+   * the ui manager in the dock window
+   */
+  dock_window =
+    gimp_dialog_factory_dialog_new (factory,
+                                    screen,
+                                    (toolbox ?
+                                     "gimp-toolbox-window" :
+                                     "gimp-dock-window"),
+                                    -1 /*view_size*/,
+                                    FALSE /*present*/);
+
+  /* Create the dock */
+  ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
+  dock       = gimp_dialog_factory_dialog_new (factory,
+                                               screen,
+                                               (toolbox ?
+                                                "gimp-toolbox" :
+                                                "gimp-dock"),
+                                               -1 /*view_size*/,
+                                               FALSE /*present*/);
+  if (dock)
+    {
+      /* Put the dock in the dock window */
+      gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
+                                 GIMP_DOCK (dock),
+                                 -1);
+    }
+
+  return dock;
 }
