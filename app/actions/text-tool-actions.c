@@ -113,6 +113,9 @@ static const GimpRadioActionEntry text_tool_direction_actions[] =
 };
 
 
+#define SET_HIDE_EMPTY(action,condition) \
+        gimp_action_group_set_action_hide_empty (group, action, (condition) != 0)
+
 void
 text_tool_actions_setup (GimpActionGroup *group)
 {
@@ -126,6 +129,8 @@ text_tool_actions_setup (GimpActionGroup *group)
                                        NULL,
                                        GIMP_TEXT_DIRECTION_LTR,
                                        G_CALLBACK (text_tool_direction_cmd_callback));
+
+  SET_HIDE_EMPTY ("text-tool-input-methods-menu", FALSE);
 }
 
 /* The following code is written on the assumption that this is for a
