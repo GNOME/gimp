@@ -332,7 +332,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
   if (! initialized && due_to_lack_of_points && *error == NULL)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Not enough points to stroke"));
+                           _("Not enough points to stroke"));
     }
 
   return initialized;
@@ -392,7 +392,7 @@ gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
             }
           else
             {
-              coords[i].direction = atan (delta_y / delta_x) / (2 * G_PI);
+              coords[i].direction = 1.0 - atan (delta_y / delta_x) / (2 * G_PI);
               if (delta_x > 0.0)
                 coords[i].direction = coords[i].direction + 0.5;
             }
