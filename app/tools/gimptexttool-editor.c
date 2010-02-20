@@ -513,13 +513,15 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
         pango_layout_iter_get_line_extents (layout_iter, NULL, &logical);
 
+        x_pos += logical.x;
+
         pango_layout_iter_free (layout_iter);
 
         /*  try to go to the remembered x_pos if it exists *and* we are at
          *  the beginning or at the end of the current line
          */
         if (text_tool->x_pos != -1 && (x_pos <= logical.x ||
-                                       x_pos >= logical.width))
+                                       x_pos >= logical.x + logical.width))
           x_pos = text_tool->x_pos;
 
         line += count;
@@ -544,7 +546,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
         pango_layout_iter_free (layout_iter);
 
-        pango_layout_line_x_to_index (layout_line, x_pos,
+        pango_layout_line_x_to_index (layout_line, x_pos - logical.x,
                                       &cursor_index, &trailing);
 
         string = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
