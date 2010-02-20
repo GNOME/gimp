@@ -60,6 +60,7 @@ GimpContainer     *global_recent_docks    = NULL;
     TRUE           /* session_managed  */, \
     remember_size  /* remember_size    */, \
     FALSE          /* remember_if_open */, \
+    TRUE           /* hideable         */, \
     FALSE          /* dockable         */}
 
 #define TOPLEVEL(id, new_func, singleton, session_managed, remember_size) \
@@ -74,6 +75,7 @@ GimpContainer     *global_recent_docks    = NULL;
     session_managed  /* session_managed  */, \
     remember_size    /* remember_size    */, \
     FALSE            /* remember_if_open */, \
+    TRUE             /* hideable         */, \
     FALSE            /* dockable         */}
 
 #define DOCKABLE(id, name, blurb, stock_id, help_id, new_func, view_size, singleton) \
@@ -88,6 +90,7 @@ GimpContainer     *global_recent_docks    = NULL;
     FALSE      /* session_managed  */, \
     FALSE      /* remember_size    */, \
     TRUE       /* remember_if_open */, \
+    TRUE       /* hideable         */, \
     TRUE       /* dockable         */}
 
 #define DOCK(id, new_func) \
@@ -102,6 +105,7 @@ GimpContainer     *global_recent_docks    = NULL;
     FALSE      /* session_managed  */, \
     FALSE      /* remember_size    */, \
     FALSE      /* remember_if_open */, \
+    TRUE       /* hideable         */, \
     FALSE      /* dockable         */}
 
 #define DOCK_WINDOW(id, new_func) \
@@ -116,6 +120,7 @@ GimpContainer     *global_recent_docks    = NULL;
     TRUE       /* session_managed  */, \
     TRUE       /* remember_size    */, \
     TRUE       /* remember_if_open */, \
+    TRUE       /* hideable         */, \
     FALSE      /* dockable         */}
 
 #define LISTGRID(id, name, blurb, stock_id, help_id, view_size) \
@@ -130,6 +135,7 @@ GimpContainer     *global_recent_docks    = NULL;
     FALSE                         /* session_managed  */,  \
     FALSE                         /* remember_size    */,  \
     TRUE                          /* remember_if_open */,  \
+    TRUE                          /* hideable         */,  \
     TRUE                          /* dockable         */}, \
   { "gimp-"#id"-grid"             /* identifier       */,  \
     name                          /* name             */,  \
@@ -142,6 +148,7 @@ GimpContainer     *global_recent_docks    = NULL;
     FALSE                         /* session_managed  */,  \
     FALSE                         /* remember_size    */,  \
     TRUE                          /* remember_if_open */,  \
+    TRUE                          /* hideable         */,  \
     TRUE                          /* dockable         */}
 
 #define LIST(id, name, blurb, stock_id, help_id, view_size) \
@@ -156,6 +163,7 @@ GimpContainer     *global_recent_docks    = NULL;
     FALSE                         /* session_managed  */, \
     FALSE                         /* remember_size    */, \
     TRUE                          /* remember_if_open */, \
+    TRUE                          /* hideable         */, \
     TRUE                          /* dockable         */}
 
 
@@ -357,14 +365,12 @@ dialogs_init (Gimp            *gimp,
   /* Toplevel */
   global_dialog_factory = gimp_dialog_factory_new ("toplevel",
                                                    gimp_get_user_context (gimp),
-                                                   menu_factory,
-                                                   TRUE);
+                                                   menu_factory);
 
   /* Display */
   global_display_factory = gimp_dialog_factory_new ("display",
                                                     gimp_get_user_context (gimp),
-                                                    menu_factory,
-                                                    FALSE);
+                                                    menu_factory);
 
 
   for (i = 0; i < G_N_ELEMENTS (entries); i++)
@@ -380,6 +386,7 @@ dialogs_init (Gimp            *gimp,
                                         entries[i].session_managed,
                                         entries[i].remember_size,
                                         entries[i].remember_if_open,
+                                        entries[i].hideable,
                                         entries[i].dockable);
 
   gimp_dialog_factory_register_entry (global_display_factory,
@@ -391,6 +398,7 @@ dialogs_init (Gimp            *gimp,
                                       TRUE,
                                       TRUE,
                                       TRUE,
+                                      FALSE,
                                       FALSE,
                                       FALSE);
 

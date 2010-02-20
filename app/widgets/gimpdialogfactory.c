@@ -69,8 +69,6 @@ struct _GimpDialogFactoryPrivate
   GList                 *session_infos;
 
   GList                 *registered_dialogs;
-
-  gboolean               toggle_visibility;
 };
 
 
@@ -249,8 +247,7 @@ gimp_dialog_factory_finalize (GObject *object)
 GimpDialogFactory *
 gimp_dialog_factory_new (const gchar           *name,
                          GimpContext           *context,
-                         GimpMenuFactory       *menu_factory,
-                         gboolean               toggle_visibility)
+                         GimpMenuFactory       *menu_factory)
 {
   GimpDialogFactory *factory;
   gpointer           key;
@@ -278,7 +275,6 @@ gimp_dialog_factory_new (const gchar           *name,
 
   factory->p->context           = context;
   factory->p->menu_factory      = menu_factory;
-  factory->p->toggle_visibility = toggle_visibility;
 
   return factory;
 }
@@ -314,6 +310,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
                                     gboolean           session_managed,
                                     gboolean           remember_size,
                                     gboolean           remember_if_open,
+                                    gboolean           hideable,
                                     gboolean           dockable)
 {
   GimpDialogFactoryEntry *entry;
@@ -334,6 +331,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
   entry->session_managed  = session_managed ? TRUE : FALSE;
   entry->remember_size    = remember_size ? TRUE : FALSE;
   entry->remember_if_open = remember_if_open ? TRUE : FALSE;
+  entry->hideable         = hideable ? TRUE : FALSE;
   entry->dockable         = dockable ? TRUE : FALSE;
 
   factory->p->registered_dialogs = g_list_prepend (factory->p->registered_dialogs,
@@ -1517,16 +1515,18 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
 {
   GList *list;
 
-  if (! factory->p->toggle_visibility)
-    return;
-
   for (list = factory->p->open_dialogs; list; list = g_list_next (list))
     {
       GtkWidget *widget = list->data;
 
       if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
+          GimpDialogFactoryEntry   *entry      = NULL;
           GimpDialogVisibilityState visibility = GIMP_DIALOG_VISIBILITY_UNKNOWN;
+
+          gimp_dialog_factory_from_widget (widget, &entry);
+          if (! entry->hideable)
+            continue;
 
           if (gtk_widget_get_visible (widget))
             {

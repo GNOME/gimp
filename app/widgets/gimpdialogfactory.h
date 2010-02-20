@@ -61,6 +61,9 @@ struct _GimpDialogFactoryEntry
   gboolean           remember_size;
   gboolean           remember_if_open;
 
+  /* If TRUE the visibility of the dialog is toggleable */
+  gboolean           hideable;
+
   /* If TRUE the entry is for a dockable, FALSE otherwise */
   gboolean           dockable;
 };
@@ -107,8 +110,7 @@ struct _GimpDialogFactoryClass
 GType               gimp_dialog_factory_get_type             (void) G_GNUC_CONST;
 GimpDialogFactory * gimp_dialog_factory_new                  (const gchar             *name,
                                                               GimpContext             *context,
-                                                              GimpMenuFactory         *menu_factory,
-                                                              gboolean                 toggle_visibility);
+                                                              GimpMenuFactory         *menu_factory);
 GimpDialogFactory * gimp_dialog_factory_from_name            (const gchar             *name);
 void                gimp_dialog_factory_register_entry       (GimpDialogFactory       *factory,
                                                               const gchar             *identifier,
@@ -122,6 +124,7 @@ void                gimp_dialog_factory_register_entry       (GimpDialogFactory 
                                                               gboolean                 session_managed,
                                                               gboolean                 remember_size,
                                                               gboolean                 remember_if_open,
+                                                              gboolean                 hideable,
                                                               gboolean                 dockable);
 GimpDialogFactoryEntry *
                     gimp_dialog_factory_find_entry           (GimpDialogFactory       *factory,
