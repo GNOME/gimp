@@ -62,8 +62,7 @@ enum
   PROP_0,
   PROP_GIMP,
   PROP_MENU_FACTORY,
-  PROP_DISPLAY_FACTORY,
-  PROP_DOCK_FACTORY
+  PROP_DIALOG_FACTORY,
 };
 
 
@@ -73,8 +72,7 @@ struct _GimpImageWindowPrivate
 {
   Gimp              *gimp;
   GimpUIManager     *menubar_manager;
-  GimpDialogFactory *display_factory;
-  GimpDialogFactory *dock_factory;
+  GimpDialogFactory *dialog_factory;
 
   GList             *shells;
   GimpDisplayShell  *active_shell;
@@ -203,15 +201,8 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_DISPLAY_FACTORY,
-                                   g_param_spec_object ("display-factory",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_DIALOG_FACTORY,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_DOCK_FACTORY,
-                                   g_param_spec_object ("dock-factory",
+  g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
+                                   g_param_spec_object ("dialog-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DIALOG_FACTORY,
                                                         GIMP_PARAM_READWRITE |
@@ -260,7 +251,7 @@ gimp_image_window_constructor (GType                  type,
                     G_CALLBACK (gimp_image_window_hide_tooltip),
                     window);
 
-  config = GIMP_GUI_CONFIG (gimp_dialog_factory_get_context (private->display_factory)->gimp->config);
+  config = GIMP_GUI_CONFIG (gimp_dialog_factory_get_context (private->dialog_factory)->gimp->config);
 
   /* Create the window toplevel container */
   private->main_vbox = gtk_vbox_new (FALSE, 0);
@@ -312,7 +303,7 @@ gimp_image_window_constructor (GType                  type,
   /* Create the left dock columns widget */
   private->left_docks =
     gimp_dock_columns_new (gimp_get_user_context (private->gimp),
-                           private->dock_factory,
+                           private->dialog_factory,
                            private->menubar_manager);
   gtk_paned_pack1 (GTK_PANED (private->left_hpane), private->left_docks,
                    FALSE, FALSE);
@@ -342,7 +333,7 @@ gimp_image_window_constructor (GType                  type,
   /* Create the right dock columns widget */
   private->right_docks =
     gimp_dock_columns_new (gimp_get_user_context (private->gimp),
-                           private->dock_factory,
+                           private->dialog_factory,
                            private->menubar_manager);
   gtk_paned_pack2 (GTK_PANED (private->right_hpane), private->right_docks,
                    FALSE, FALSE);
@@ -391,11 +382,8 @@ gimp_image_window_set_property (GObject      *object,
                                                                   FALSE);
       }
       break;
-    case PROP_DISPLAY_FACTORY:
-      private->display_factory = g_value_get_object (value);
-      break;
-    case PROP_DOCK_FACTORY:
-      private->dock_factory = g_value_get_object (value);
+    case PROP_DIALOG_FACTORY:
+      private->dialog_factory = g_value_get_object (value);
       break;
 
     default:
@@ -418,11 +406,8 @@ gimp_image_window_get_property (GObject    *object,
     case PROP_GIMP:
       g_value_set_object (value, private->gimp);
       break;
-    case PROP_DISPLAY_FACTORY:
-      g_value_set_object (value, private->display_factory);
-      break;
-    case PROP_DOCK_FACTORY:
-      g_value_set_object (value, private->dock_factory);
+    case PROP_DIALOG_FACTORY:
+      g_value_set_object (value, private->dialog_factory);
       break;
 
     case PROP_MENU_FACTORY:
@@ -616,21 +601,19 @@ GimpImageWindow *
 gimp_image_window_new (Gimp              *gimp,
                        GimpImage         *image,
                        GimpMenuFactory   *menu_factory,
-                       GimpDialogFactory *display_factory,
-                       GimpDialogFactory *dock_factory)
+                       GimpDialogFactory *dialog_factory)
 {
   GimpImageWindow *window;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (image) || image == NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (display_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
 
   window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
                          "gimp",            gimp,
                          "menu-factory",    menu_factory,
-                         "display-factory", display_factory,
-                         "dock-factory",    dock_factory,
+                         "dialog-factory",  dialog_factory,
                          /* The window position will be overridden by the
                           * dialog factory, it is only really used on first
                           * startup.
@@ -669,18 +652,6 @@ gimp_image_window_get_ui_manager (GimpImageWindow *window)
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return private->menubar_manager;
-}
-
-GimpDialogFactory*
-gimp_image_window_get_dock_factory (GimpImageWindow *window)
-{
-  GimpImageWindowPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
-
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-
-  return private->dock_factory;
 }
 
 GimpDockColumns  *
@@ -1162,7 +1133,7 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
 
   if (! gimp_display_get_image (active_display))
     {
-      gimp_dialog_factory_add_foreign (private->display_factory,
+      gimp_dialog_factory_add_foreign (private->dialog_factory,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (window));
     }
@@ -1229,7 +1200,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
         {
           private->is_empty = FALSE;
 
-          gimp_dialog_factory_remove_dialog (private->display_factory,
+          gimp_dialog_factory_remove_dialog (private->dialog_factory,
                                              GTK_WIDGET (window));
         }
     }
@@ -1248,7 +1219,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
        *  stored session info entry.
        */
       session_info =
-        gimp_dialog_factory_find_session_info (private->display_factory,
+        gimp_dialog_factory_find_session_info (private->dialog_factory,
                                                "gimp-empty-image-window");
 
       if (session_info)
@@ -1266,7 +1237,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
           height = allocation.height;
         }
 
-      gimp_dialog_factory_add_foreign (private->display_factory,
+      gimp_dialog_factory_add_foreign (private->dialog_factory,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (window));
 

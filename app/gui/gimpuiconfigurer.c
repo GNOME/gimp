@@ -325,7 +325,6 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
       new_image_window = gimp_image_window_new (ui_configurer->p->gimp,
                                                 NULL,
                                                 global_menu_factory,
-                                                global_dialog_factory,
                                                 global_dialog_factory);
       /* Move the shell there */
       shell = gimp_image_window_get_shell (source_image_window, 1);

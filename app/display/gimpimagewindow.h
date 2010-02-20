@@ -48,12 +48,10 @@ GType              gimp_image_window_get_type           (void) G_GNUC_CONST;
 GimpImageWindow  * gimp_image_window_new                (Gimp              *gimp,
                                                          GimpImage         *image,
                                                          GimpMenuFactory   *menu_factory,
-                                                         GimpDialogFactory *display_factory,
-                                                         GimpDialogFactory *dock_factory);
+                                                         GimpDialogFactory *dialog_factory);
 void               gimp_image_window_destroy            (GimpImageWindow   *window);
 
 GimpUIManager    * gimp_image_window_get_ui_manager     (GimpImageWindow  *window);
-GimpDialogFactory* gimp_image_window_get_dock_factory   (GimpImageWindow  *window);
 GimpDockColumns  * gimp_image_window_get_left_docks     (GimpImageWindow  *window);
 GimpDockColumns  * gimp_image_window_get_right_docks    (GimpImageWindow  *window);
 
