@@ -158,7 +158,7 @@ static gboolean  gimp_text_tool_set_drawable    (GimpTextTool      *text_tool,
                                                  GimpDrawable      *drawable,
                                                  gboolean           confirm);
 
-static void  gimp_text_tool_text_buffer_changed (GtkTextBuffer     *text_buffer,
+static void      gimp_text_tool_buffer_changed  (GtkTextBuffer     *text_buffer,
                                                  GimpTextTool      *text_tool);
 
 static gint      gimp_text_tool_xy_to_offset    (GimpTextTool      *text_tool,
@@ -247,7 +247,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
 
   g_signal_connect (text_tool->text_buffer, "changed",
-                    G_CALLBACK (gimp_text_tool_text_buffer_changed),
+                    G_CALLBACK (gimp_text_tool_buffer_changed),
                     text_tool);
 
   text_tool->handle_rectangle_change_complete = TRUE;
@@ -1221,13 +1221,13 @@ gimp_text_tool_text_notify (GimpText     *text,
   if (strcmp (pspec->name, "text") == 0)
     {
       g_signal_handlers_block_by_func (text_tool->text_buffer,
-                                       gimp_text_tool_text_buffer_changed,
+                                       gimp_text_tool_buffer_changed,
                                        text_tool);
 
       gtk_text_buffer_set_text (text_tool->text_buffer, text->text, -1);
 
       g_signal_handlers_unblock_by_func (text_tool->text_buffer,
-                                         gimp_text_tool_text_buffer_changed,
+                                         gimp_text_tool_buffer_changed,
                                          text_tool);
 
       /* force change of cursor and selection display */
@@ -1671,14 +1671,8 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_text_buffer_changed (GtkTextBuffer *text_buffer,
-                                    GimpTextTool  *text_tool)
-{
-  gimp_text_tool_update_proxy (text_tool);
-}
-
-void
-gimp_text_tool_update_proxy (GimpTextTool *text_tool)
+gimp_text_tool_buffer_changed (GtkTextBuffer *text_buffer,
+                               GimpTextTool  *text_tool)
 {
   if (text_tool->text)
     {
