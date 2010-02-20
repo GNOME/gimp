@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * dialogs.c
+ * Copyright (C) 2010 Martin Nordholts <martinn@src.gnome.org>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -420,6 +423,23 @@ dialogs_exit (Gimp *gimp)
     }
 }
 
+static void
+dialogs_ensure_factory_entry_on_recent_dock (GimpSessionInfo *info)
+{
+  if (! gimp_session_info_get_factory_entry (info))
+    {
+      GimpDialogFactoryEntry *entry = NULL;
+
+      /* The recent docks container only contains session infos for
+       * dock windows
+       */
+      entry = gimp_dialog_factory_find_entry (global_dialog_factory,
+                                              "gimp-dock-window");
+
+      gimp_session_info_set_factory_entry (info, entry);
+    }
+}
+
 void
 dialogs_load_recent_docks (Gimp *gimp)
 {
@@ -442,6 +462,13 @@ dialogs_load_recent_docks (Gimp *gimp)
 
       g_clear_error (&error);
     }
+
+  /* In GIMP 2.6 dockrc did not contain the factory entries for the
+   * session infos, so set that up manually if needed
+   */
+  gimp_container_foreach (global_recent_docks,
+                          (GFunc) dialogs_ensure_factory_entry_on_recent_dock,
+                          NULL);
 
   gimp_list_reverse (GIMP_LIST (global_recent_docks));
 

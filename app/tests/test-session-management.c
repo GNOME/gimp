@@ -85,7 +85,7 @@ int main(int argc, char **argv)
    * variant
    */
   sessionrc_filename = gimp_personal_rc_file ("sessionrc-expected");
-  dockrc_filename    = gimp_personal_rc_file ("dockrc");
+  dockrc_filename    = gimp_personal_rc_file ("dockrc-expected");
 
   /* Remeber the modtimes and MD5s */
   if (!gimp_test_get_file_state_verbose (sessionrc_filename,
