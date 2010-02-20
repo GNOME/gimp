@@ -56,7 +56,7 @@ dialogs_create_dockable_cmd_callback (GtkAction   *action,
   return_if_no_widget (widget, data);
 
   if (value)
-    gimp_dialog_factory_dialog_raise (global_dock_factory,
+    gimp_dialog_factory_dialog_raise (global_dialog_factory,
                                       gtk_widget_get_screen (widget),
                                       value, -1);
 }

@@ -871,7 +871,7 @@ context_get_palette_editor (void)
   GimpDialogFactory *dialog_factory;
   GimpSessionInfo   *info;
 
-  dialog_factory = gimp_dialog_factory_from_name ("dock");
+  dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
 
@@ -889,7 +889,7 @@ context_get_colormap_editor (void)
   GimpDialogFactory *dialog_factory;
   GimpSessionInfo   *info;
 
-  dialog_factory = gimp_dialog_factory_from_name ("dock");
+  dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
 

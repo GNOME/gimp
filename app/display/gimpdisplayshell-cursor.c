@@ -165,7 +165,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
 
   gimp_statusbar_update_cursor (statusbar, precision, image_x, image_y);
 
-  factory = gimp_dialog_factory_from_name ("dock");
+  factory = gimp_dialog_factory_from_name ("toplevel");
   session_info = gimp_dialog_factory_find_session_info (factory,
                                                         "gimp-cursor-view");
   if (session_info && gimp_session_info_get_widget (session_info))
@@ -204,7 +204,7 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 
   gimp_statusbar_clear_cursor (statusbar);
 
-  factory = gimp_dialog_factory_from_name ("dock");
+  factory = gimp_dialog_factory_from_name ("toplevel");
   session_info = gimp_dialog_factory_find_session_info (factory,
                                                         "gimp-cursor-view");
   if (session_info && gimp_session_info_get_widget (session_info))

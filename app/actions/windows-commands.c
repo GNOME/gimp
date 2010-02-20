@@ -91,9 +91,9 @@ windows_open_recent_cmd_callback (GtkAction *action,
   g_object_ref (info);
   gimp_container_remove (global_recent_docks, GIMP_OBJECT (info));
 
-  gimp_dialog_factory_add_session_info (global_dock_factory, info);
+  gimp_dialog_factory_add_session_info (global_dialog_factory, info);
 
-  gimp_session_info_restore (info, global_dock_factory);
+  gimp_session_info_restore (info, global_dialog_factory);
   gimp_session_info_clear_info (info);
 }
 
@@ -104,7 +104,7 @@ windows_show_toolbox (void)
 
   if (! dialogs_get_toolbox ())
     {
-      toolbox = gimp_dialog_factory_dock_with_window_new (global_dock_factory,
+      toolbox = gimp_dialog_factory_dock_with_window_new (global_dialog_factory,
                                                           gdk_screen_get_default (),
                                                           TRUE /*toolbox*/);
 

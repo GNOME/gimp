@@ -319,7 +319,7 @@ select_save_cmd_callback (GtkAction *action,
   gimp_selection_save (GIMP_SELECTION (gimp_image_get_mask (image)));
   gimp_image_flush (image);
 
-  gimp_dialog_factory_dialog_raise (global_dock_factory,
+  gimp_dialog_factory_dialog_raise (global_dialog_factory,
                                     gtk_widget_get_screen (widget),
                                     "gimp-channel-list", -1);
 }

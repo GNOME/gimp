@@ -469,7 +469,7 @@ gimp_device_status_view_clicked (GtkWidget       *widget,
 {
   GimpDialogFactory *dialog_factory;
 
-  dialog_factory = gimp_dialog_factory_from_name ("dock");
+  dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
   gimp_dialog_factory_dialog_raise (dialog_factory,
                                     gtk_widget_get_screen (widget),

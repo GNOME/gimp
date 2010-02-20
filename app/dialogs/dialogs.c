@@ -43,7 +43,6 @@
 
 
 GimpDialogFactory *global_dialog_factory  = NULL;
-GimpDialogFactory *global_dock_factory    = NULL;
 GimpDialogFactory *global_display_factory = NULL;
 
 GimpContainer     *global_recent_docks    = NULL;
@@ -160,7 +159,7 @@ GimpContainer     *global_recent_docks    = NULL;
     TRUE                          /* dockable         */}
 
 
-static const GimpDialogFactoryEntry toplevel_entries[] =
+static const GimpDialogFactoryEntry entries[] =
 {
   /*  foreign toplevels without constructor  */
   FOREIGN ("gimp-brightness-contrast-tool-dialog", TRUE,  FALSE),
@@ -222,11 +221,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   TOPLEVEL ("gimp-close-all-dialog",
             dialogs_close_all_get,          TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-quit-dialog",
-            dialogs_quit_get,               TRUE, FALSE, FALSE)
-};
+            dialogs_quit_get,               TRUE, FALSE, FALSE),
 
-static const GimpDialogFactoryEntry dock_entries[] =
-{
   /*  docks  */
   DOCK ("gimp-dock",
         dialogs_dock_new),
@@ -364,12 +360,6 @@ dialogs_init (Gimp            *gimp,
                                                    menu_factory,
                                                    TRUE);
 
-  /* Dock windows and docks */
-  global_dock_factory = gimp_dialog_factory_new ("dock",
-                                                 gimp_get_user_context (gimp),
-                                                 menu_factory,
-                                                 TRUE);
-
   /* Display */
   global_display_factory = gimp_dialog_factory_new ("display",
                                                     gimp_get_user_context (gimp),
@@ -377,35 +367,20 @@ dialogs_init (Gimp            *gimp,
                                                     FALSE);
 
 
-  for (i = 0; i < G_N_ELEMENTS (toplevel_entries); i++)
+  for (i = 0; i < G_N_ELEMENTS (entries); i++)
     gimp_dialog_factory_register_entry (global_dialog_factory,
-                                        toplevel_entries[i].identifier,
-                                        gettext (toplevel_entries[i].name),
-                                        gettext (toplevel_entries[i].blurb),
-                                        toplevel_entries[i].stock_id,
-                                        toplevel_entries[i].help_id,
-                                        toplevel_entries[i].new_func,
-                                        toplevel_entries[i].view_size,
-                                        toplevel_entries[i].singleton,
-                                        toplevel_entries[i].session_managed,
-                                        toplevel_entries[i].remember_size,
-                                        toplevel_entries[i].remember_if_open,
-                                        toplevel_entries[i].dockable);
-
-  for (i = 0; i < G_N_ELEMENTS (dock_entries); i++)
-    gimp_dialog_factory_register_entry (global_dock_factory,
-                                        dock_entries[i].identifier,
-                                        gettext (dock_entries[i].name),
-                                        gettext (dock_entries[i].blurb),
-                                        dock_entries[i].stock_id,
-                                        dock_entries[i].help_id,
-                                        dock_entries[i].new_func,
-                                        dock_entries[i].view_size,
-                                        dock_entries[i].singleton,
-                                        dock_entries[i].session_managed,
-                                        dock_entries[i].remember_size,
-                                        dock_entries[i].remember_if_open,
-                                        dock_entries[i].dockable);
+                                        entries[i].identifier,
+                                        gettext (entries[i].name),
+                                        gettext (entries[i].blurb),
+                                        entries[i].stock_id,
+                                        entries[i].help_id,
+                                        entries[i].new_func,
+                                        entries[i].view_size,
+                                        entries[i].singleton,
+                                        entries[i].session_managed,
+                                        entries[i].remember_size,
+                                        entries[i].remember_if_open,
+                                        entries[i].dockable);
 
   gimp_dialog_factory_register_entry (global_display_factory,
                                       "gimp-empty-image-window",
@@ -431,12 +406,6 @@ dialogs_exit (Gimp *gimp)
     {
       g_object_unref (global_dialog_factory);
       global_dialog_factory = NULL;
-    }
-
-  if (global_dock_factory)
-    {
-      g_object_unref (global_dock_factory);
-      global_dock_factory = NULL;
     }
 
   if (global_display_factory)
@@ -511,9 +480,9 @@ dialogs_get_toolbox (void)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_dock_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_dialog_factory), NULL);
 
-  for (list = gimp_dialog_factory_get_open_dialogs (global_dock_factory);
+  for (list = gimp_dialog_factory_get_open_dialogs (global_dialog_factory);
        list;
        list = g_list_next (list))
     {

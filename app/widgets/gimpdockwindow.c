@@ -637,7 +637,7 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   entry_name = (gimp_dock_window_has_toolbox (dock_window) ?
                 "gimp-toolbox-window" :
                 "gimp-dock-window");
-  entry = gimp_dialog_factory_find_entry (global_dock_factory, entry_name);
+  entry = gimp_dialog_factory_find_entry (global_dialog_factory, entry_name);
   gimp_session_info_set_factory_entry (info, entry);
 
   gimp_container_add (global_recent_docks, GIMP_OBJECT (info));

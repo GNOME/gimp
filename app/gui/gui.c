@@ -704,7 +704,7 @@ gui_device_change_notify (Gimp *gimp)
 {
   GimpSessionInfo *session_info;
 
-  session_info = gimp_dialog_factory_find_session_info (global_dock_factory,
+  session_info = gimp_dialog_factory_find_session_info (global_dialog_factory,
                                                         "gimp-device-status");
 
   if (session_info && gimp_session_info_get_widget (session_info))

@@ -161,7 +161,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
   GList *dialog_iter = NULL;
 
   dialogs =
-    g_list_copy (gimp_dialog_factory_get_open_dialogs (global_dock_factory));
+    g_list_copy (gimp_dialog_factory_get_open_dialogs (global_dialog_factory));
 
   for (dialog_iter = dialogs; dialog_iter; dialog_iter = dialog_iter->next)
     {
@@ -203,7 +203,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
       if (GTK_IS_WIDGET (dock_window) &&
           g_list_length (gimp_dock_window_get_docks (dock_window)) == 0)
         {
-          gimp_dialog_factory_remove_dialog (global_dock_factory,
+          gimp_dialog_factory_remove_dialog (global_dialog_factory,
                                              GTK_WIDGET (dock_window));
           gtk_widget_destroy (GTK_WIDGET (dock_window));
         }
@@ -283,7 +283,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer *ui_configurer,
        * toolbox
        */
       dock_window =
-        gimp_dialog_factory_dialog_new (global_dock_factory,
+        gimp_dialog_factory_dialog_new (global_dialog_factory,
                                         screen,
                                         (GIMP_IS_TOOLBOX (dock) ?
                                          "gimp-toolbox-window" :
@@ -326,7 +326,7 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
                                                 NULL,
                                                 global_menu_factory,
                                                 global_display_factory,
-                                                global_dock_factory);
+                                                global_dialog_factory);
       /* Move the shell there */
       shell = gimp_image_window_get_shell (source_image_window, 1);
 

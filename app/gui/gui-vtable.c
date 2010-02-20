@@ -352,7 +352,7 @@ gui_display_create (Gimp      *gimp,
                                   global_menu_factory,
                                   image_managers->data,
                                   global_display_factory,
-                                  global_dock_factory);
+                                  global_dialog_factory);
    }
 
   if (gimp_context_get_display (context) == display)

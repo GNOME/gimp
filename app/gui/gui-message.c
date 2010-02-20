@@ -102,7 +102,7 @@ gui_message_error_console (GimpMessageSeverity  severity,
     {
       GimpSessionInfo *info;
 
-      info = gimp_dialog_factory_find_session_info (global_dock_factory,
+      info = gimp_dialog_factory_find_session_info (global_dialog_factory,
                                                     "gimp-error-console");
 
       if (info && GIMP_IS_DOCKABLE (gimp_session_info_get_widget (info)))
@@ -110,7 +110,7 @@ gui_message_error_console (GimpMessageSeverity  severity,
     }
 
   if (! dockable)
-    dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
+    dockable = gimp_dialog_factory_dialog_raise (global_dialog_factory,
                                                  gdk_screen_get_default (),
                                                  "gimp-error-console", -1);
 

@@ -638,7 +638,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
   /*  use this tool's own options here (NOT color_tool->options)  */
   context = GIMP_CONTEXT (gimp_tool_get_options (tool));
 
-  dialog_factory = gimp_dialog_factory_from_name ("dock");
+  dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
   if (color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
       color_tool->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND)

@@ -449,7 +449,7 @@ edit_named_paste_cmd_callback (GtkAction *action,
   GtkWidget *widget;
   return_if_no_widget (widget, data);
 
-  gimp_dialog_factory_dialog_raise (global_dock_factory,
+  gimp_dialog_factory_dialog_raise (global_dialog_factory,
                                     gtk_widget_get_screen (widget),
                                     "gimp-buffer-list|gimp-buffer-grid", -1);
 }
