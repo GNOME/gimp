@@ -131,7 +131,6 @@ session_init (Gimp *gimp)
               gchar                  *factory_name = NULL;
               gchar                  *entry_name   = NULL;
               GimpDialogFactoryEntry *entry        = NULL;
-              gboolean                skip         = FALSE;
 
               token = G_TOKEN_STRING;
 
@@ -150,52 +149,58 @@ session_init (Gimp *gimp)
                                                         strcmp ("display", factory_name) == 0) ?
                                                        "toplevel" :
                                                        factory_name);
-
               if (! factory)
-                break;
-
-              if (! gimp_scanner_parse_string (scanner, &entry_name))
                 break;
 
               info = gimp_session_info_new ();
 
-              /* Previously, GimpDock was a toplevel. That is why
-               * versions <= GIMP 2.6 has "dock" as the entry name. We
-               * want "dock" to be interpreted as 'dock window'
-               * however so have some special-casing for that. When
-               * the entry name is "dock" the factory name is either
-               * "dock" or "toolbox".
+              /* GIMP 2.6 has the entry name as part of the
+               * session-info header, so try to get it
                */
-              if (strcmp (entry_name, "dock") == 0)
+              gimp_scanner_parse_string (scanner, &entry_name);
+              if (entry_name)
                 {
-                  entry =
-                    gimp_dialog_factory_find_entry (factory,
-                                                    (strcmp (factory_name, "toolbox") == 0 ?
-                                                     "gimp-toolbox-window" :
-                                                     "gimp-dock-window"));
-                }
-              else
-                {
-                  entry = gimp_dialog_factory_find_entry (factory,
-                                                          entry_name);
+                  /* Previously, GimpDock was a toplevel. That is why
+                   * versions <= GIMP 2.6 has "dock" as the entry name. We
+                   * want "dock" to be interpreted as 'dock window'
+                   * however so have some special-casing for that. When
+                   * the entry name is "dock" the factory name is either
+                   * "dock" or "toolbox".
+                   */
+                  if (strcmp (entry_name, "dock") == 0)
+                    {
+                      entry =
+                        gimp_dialog_factory_find_entry (factory,
+                                                        (strcmp (factory_name, "toolbox") == 0 ?
+                                                         "gimp-toolbox-window" :
+                                                         "gimp-dock-window"));
+                    }
+                  else
+                    {
+                      entry = gimp_dialog_factory_find_entry (factory,
+                                                              entry_name);
+                    }
                 }
 
               /* We're done with these now */
               g_free (factory_name);
               g_free (entry_name);
 
+              /* We can get the factory entry either now (the GIMP <=
+               * 2.6 way), or when we deserialize (the GIMP 2.8 way)
+               */
               if (entry)
                 {
                   gimp_session_info_set_factory_entry (info, entry);
                 }
-              else
-                {
-                  skip = TRUE;
-                }
 
+              /* Always try to deserialize */
               if (gimp_config_deserialize (GIMP_CONFIG (info), scanner, 1, NULL))
                 {
-                  if (! skip)
+                  /* Make sure we got a factory entry either the 2.6
+                   * or 2.8 way
+                   */
+                  if (gimp_session_info_get_factory_entry (info))
                     {
                       GIMP_LOG (DIALOG_FACTORY,
                                 "successfully parsed and added session info %p",

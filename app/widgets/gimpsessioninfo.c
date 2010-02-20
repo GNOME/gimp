@@ -44,6 +44,7 @@
 
 enum
 {
+  SESSION_INFO_FACTORY_ENTRY,
   SESSION_INFO_POSITION,
   SESSION_INFO_SIZE,
   SESSION_INFO_OPEN,
@@ -137,6 +138,13 @@ gimp_session_info_serialize (GimpConfig       *config,
   GimpSessionInfo *info = GIMP_SESSION_INFO (config);
   GList           *iter = NULL;
 
+  if (info->p->factory_entry && info->p->factory_entry->identifier)
+    {
+      gimp_config_writer_open (writer, "factory-entry");
+      gimp_config_writer_string (writer, info->p->factory_entry->identifier);
+      gimp_config_writer_close (writer);
+    }
+
   gimp_config_writer_open (writer, "position");
   gimp_config_writer_printf (writer, "%d %d", info->p->x, info->p->y);
   gimp_config_writer_close (writer);
@@ -213,6 +221,8 @@ gimp_session_info_deserialize (GimpConfig *config,
   scope_id = g_type_qname (G_TYPE_FROM_INSTANCE (config));
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
+  g_scanner_scope_add_symbol (scanner, scope_id, "factory-entry",
+                              GINT_TO_POINTER (SESSION_INFO_FACTORY_ENTRY));
   g_scanner_scope_add_symbol (scanner, scope_id, "position",
                               GINT_TO_POINTER (SESSION_INFO_POSITION));
   g_scanner_scope_add_symbol (scanner, scope_id, "size",
@@ -245,6 +255,26 @@ gimp_session_info_deserialize (GimpConfig *config,
         case G_TOKEN_SYMBOL:
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
+            case SESSION_INFO_FACTORY_ENTRY:
+              {
+                gchar                  *identifier = NULL;
+                GimpDialogFactoryEntry *entry      = NULL;
+
+                token = G_TOKEN_STRING;
+                if (! gimp_scanner_parse_string (scanner, &identifier))
+                  goto error;
+
+                entry = gimp_dialog_factory_find_entry (gimp_dialog_factory_from_name ("toplevel"),
+                                                        identifier);
+                if (! entry)
+                  goto error;
+
+                gimp_session_info_set_factory_entry (info, entry);
+
+                g_free (identifier);
+              }
+              break;
+
             case SESSION_INFO_POSITION:
               token = G_TOKEN_INT;
               if (! gimp_session_info_parse_offset (scanner,
@@ -351,6 +381,7 @@ gimp_session_info_deserialize (GimpConfig *config,
                        gimp_session_info_dock_new ("gimp-toolbox"));
     }
 
+  g_scanner_scope_remove_symbol (scanner, scope_id, "factory-entry");
   g_scanner_scope_remove_symbol (scanner, scope_id, "position");
   g_scanner_scope_remove_symbol (scanner, scope_id, "size");
   g_scanner_scope_remove_symbol (scanner, scope_id, "open-on-exit");

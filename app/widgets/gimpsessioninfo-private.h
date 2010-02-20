@@ -24,6 +24,11 @@
 
 struct _GimpSessionInfoPrivate
 {
+  /*  the dialog factory entry for object we have session info for
+   *  note that pure "dock" entries don't have any factory entry
+   */
+  GimpDialogFactoryEntry *factory_entry;
+
   gint                    x;
   gint                    y;
   gint                    width;
@@ -39,11 +44,6 @@ struct _GimpSessionInfoPrivate
   GList                  *aux_info;
 
   GtkWidget              *widget;
-
-  /*  the dialog factory entry for object we have session info for
-   *  note that pure "dock" entries don't have any factory entry
-   */
-  GimpDialogFactoryEntry *factory_entry;
 
   /*  list of GimpSessionInfoDock  */
   GList                  *docks;

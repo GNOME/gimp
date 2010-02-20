@@ -5,7 +5,8 @@
 # of course you can do.  The sessionrc will be entirely rewritten every time
 # you quit GIMP.  If this file isn't found, defaults are used.
 
-(session-info "toplevel" "gimp-dock-window"
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
     (position 566 171)
     (size 210 535)
     (open-on-exit)
@@ -25,7 +26,8 @@
             (current-page 0)
             (dockable "gimp-brush-grid"
                 (tab-style preview)))))
-(session-info "toplevel" "gimp-dock-window"
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
     (position 141 291)
     (size 406 300)
     (open-on-exit)
@@ -42,7 +44,8 @@
             (current-page 0)
             (dockable "gimp-device-status"
                 (tab-style icon)))))
-(session-info "toplevel" "gimp-dock-window"
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
     (position 795 43)
     (size 200 265)
     (open-on-exit)
@@ -56,7 +59,8 @@
                 (tab-style preview))
             (dockable "gimp-gradient-list"
                 (tab-style preview)))))
-(session-info "toplevel" "gimp-dock-window"
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
     (position 803 344)
     (size 200 404)
     (open-on-exit)
@@ -78,17 +82,21 @@
                     (edit-active "true")
                     (current-data "Standard")
                     (zoom-factor "2.80"))))))
-(session-info "toplevel" "gimp-toolbox-window"
+(session-info "toplevel"
+    (factory-entry "gimp-toolbox-window")
     (position 13 37)
     (size 96 620)
     (open-on-exit)
     (gimp-toolbox))
-(session-info "toplevel" "gimp-file-open-dialog"
+(session-info "toplevel"
+    (factory-entry "gimp-file-open-dialog")
     (position 392 140)
     (size 902 816))
-(session-info "toplevel" "gimp-image-new-dialog"
+(session-info "toplevel"
+    (factory-entry "gimp-image-new-dialog")
     (position 100 100))
-(session-info "toplevel" "gimp-empty-image-window"
+(session-info "toplevel"
+    (factory-entry "gimp-empty-image-window")
     (position 140 32)
     (size 610 190))
 

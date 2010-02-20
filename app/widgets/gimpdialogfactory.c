@@ -1451,8 +1451,6 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
       gimp_config_writer_open (writer, "session-info");
       gimp_config_writer_string (writer,
                                  gimp_object_get_name (factory));
-      gimp_config_writer_string (writer,
-                                 gimp_session_info_get_factory_entry (info)->identifier);
 
       GIMP_CONFIG_GET_INTERFACE (info)->serialize (GIMP_CONFIG (info),
                                                    writer,
