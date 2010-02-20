@@ -24,22 +24,25 @@
 #define __GIMP_TEXT_TOOL_EDITOR_H__
 
 
-void       gimp_text_tool_editor_init        (GimpTextTool *text_tool);
-void       gimp_text_tool_editor_finalize    (GimpTextTool *text_tool);
+void       gimp_text_tool_editor_init            (GimpTextTool   *text_tool);
+void       gimp_text_tool_editor_finalize        (GimpTextTool   *text_tool);
 
-void       gimp_text_tool_editor_start       (GimpTextTool *text_tool);
-void       gimp_text_tool_editor_halt        (GimpTextTool *text_tool);
+void       gimp_text_tool_editor_start           (GimpTextTool   *text_tool);
+void       gimp_text_tool_editor_halt            (GimpTextTool   *text_tool);
 
-gboolean   gimp_text_tool_editor_key_press   (GimpTextTool *text_tool,
-                                              GdkEventKey  *kevent,
-                                              GimpDisplay  *display);
-gboolean   gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
-                                              GdkEventKey  *kevent,
-                                              GimpDisplay  *display);
+gboolean   gimp_text_tool_editor_key_press       (GimpTextTool   *text_tool,
+                                                  GdkEventKey    *kevent,
+                                                  GimpDisplay    *display);
+gboolean   gimp_text_tool_editor_key_release     (GimpTextTool   *text_tool,
+                                                  GdkEventKey    *kevent,
+                                                  GimpDisplay    *display);
 
-void       gimp_text_tool_reset_im_context   (GimpTextTool *text_tool);
+void       gimp_text_tool_reset_im_context       (GimpTextTool   *text_tool);
 
-gchar    * gimp_text_tool_editor_get_text    (GimpTextTool *text_tool);
+void       gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
+                                                  PangoRectangle *cursor_rect,
+                                                  gint           *logical_off_x,
+                                                  gint           *logical_off_y);
 
 
 #endif /* __GIMP_TEXT_TOOL_EDITOR_H__ */
