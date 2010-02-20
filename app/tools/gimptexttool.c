@@ -1362,6 +1362,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   gimp_text_tool_frame_item (text_tool);
 
   gimp_image_flush (image);
+
   gimp_text_tool_update_layout (text_tool);
 }
 
@@ -1673,8 +1674,6 @@ gimp_text_tool_buffer_changed (GtkTextBuffer *text_buffer,
     {
       gimp_text_tool_create_layer (text_tool, NULL);
     }
-
-  gimp_text_tool_update_layout (text_tool);
 }
 
 void
