@@ -61,14 +61,14 @@ struct _GimpTextTool
   gboolean        handle_rectangle_change_complete;
   gboolean        text_box_fixed;
 
+  GimpTextLayout *layout;
+
+  /* text editor state: */
+
   gboolean        selecting;
   gint            select_start_offset;
   gboolean        select_words;
   gboolean        select_lines;
-
-  GimpTextLayout *layout;
-
-  /* text editor state: */
 
   GtkIMContext   *im_context;
   gboolean        needs_im_reset;

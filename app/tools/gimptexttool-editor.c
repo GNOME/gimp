@@ -71,6 +71,9 @@ static void   gimp_text_tool_options_notify     (GimpTextOptions *options,
 static void   gimp_text_tool_editor_dialog      (GimpTextTool    *text_tool);
 static void   gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
                                                  const gchar     *str);
+static gint   gimp_text_tool_xy_to_offset       (GimpTextTool    *text_tool,
+                                                 gdouble          x,
+                                                 gdouble          y);
 static void   gimp_text_tool_commit_cb          (GtkIMContext    *context,
                                                  const gchar     *str,
                                                  GimpTextTool    *text_tool);
@@ -176,10 +179,165 @@ gimp_text_tool_editor_halt (GimpTextTool *text_tool)
   gtk_im_context_set_client_window (text_tool->im_context, NULL);
 }
 
+void
+gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
+                                    gdouble              x,
+                                    gdouble              y,
+                                    GimpButtonPressType  press_type)
+{
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+  GtkTextIter    cursor;
+  GtkTextIter    selection;
+  gint           offset;
+
+  offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
+
+  gtk_text_buffer_get_iter_at_offset (buffer, &cursor, offset);
+
+  selection = cursor;
+
+  text_tool->select_start_offset = offset;
+  text_tool->select_words        = FALSE;
+  text_tool->select_lines        = FALSE;
+
+  switch (press_type)
+    {
+    case GIMP_BUTTON_PRESS_NORMAL:
+      gtk_text_buffer_place_cursor (buffer, &cursor);
+      break;
+
+    case GIMP_BUTTON_PRESS_DOUBLE:
+      text_tool->select_words = TRUE;
+
+      if (! gtk_text_iter_starts_word (&cursor))
+        gtk_text_iter_backward_visible_word_starts (&cursor, 1);
+
+      if (! gtk_text_iter_ends_word (&selection) &&
+          ! gtk_text_iter_forward_visible_word_ends (&selection, 1))
+        gtk_text_iter_forward_to_line_end (&selection);
+
+      gtk_text_buffer_select_range (buffer, &cursor, &selection);
+      break;
+
+    case GIMP_BUTTON_PRESS_TRIPLE:
+      text_tool->select_lines = TRUE;
+
+      gtk_text_iter_set_line_offset (&cursor, 0);
+      gtk_text_iter_forward_to_line_end (&selection);
+
+      gtk_text_buffer_select_range (buffer, &cursor, &selection);
+      break;
+    }
+}
+
+void
+gimp_text_tool_editor_button_release (GimpTextTool *text_tool)
+{
+  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+    {
+      GimpTool         *tool  = GIMP_TOOL (text_tool);
+      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+      GtkClipboard     *clipboard;
+
+      clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
+                                            GDK_SELECTION_PRIMARY);
+
+      gtk_text_buffer_copy_clipboard (text_tool->text_buffer, clipboard);
+    }
+}
+
+void
+gimp_text_tool_editor_motion (GimpTextTool *text_tool,
+                              gdouble       x,
+                              gdouble       y)
+{
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+  GtkTextIter    cursor;
+  GtkTextIter    selection;
+  gint           cursor_offset;
+  gint           selection_offset;
+  gint           offset;
+
+  offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
+
+  gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+                                    gtk_text_buffer_get_insert (buffer));
+  gtk_text_buffer_get_iter_at_mark (buffer, &selection,
+                                    gtk_text_buffer_get_selection_bound (buffer));
+
+  cursor_offset    = gtk_text_iter_get_offset (&cursor);
+  selection_offset = gtk_text_iter_get_offset (&selection);
+
+  if (text_tool->select_words ||
+      text_tool->select_lines)
+    {
+      GtkTextIter start;
+      GtkTextIter end;
+
+      gtk_text_buffer_get_iter_at_offset (buffer, &cursor,
+                                          offset);
+      gtk_text_buffer_get_iter_at_offset (buffer, &selection,
+                                          text_tool->select_start_offset);
+
+      if (offset <= text_tool->select_start_offset)
+        {
+          start = cursor;
+          end   = selection;
+        }
+      else
+        {
+          start = selection;
+          end   = cursor;
+        }
+
+      if (text_tool->select_words)
+        {
+          if (! gtk_text_iter_starts_word (&start))
+            gtk_text_iter_backward_visible_word_starts (&start, 1);
+
+          if (! gtk_text_iter_ends_word (&end) &&
+              ! gtk_text_iter_forward_visible_word_ends (&end, 1))
+            gtk_text_iter_forward_to_line_end (&end);
+        }
+      else if (text_tool->select_lines)
+        {
+          gtk_text_iter_set_line_offset (&start, 0);
+          gtk_text_iter_forward_to_line_end (&end);
+        }
+
+      if (offset <= text_tool->select_start_offset)
+        {
+          cursor    = start;
+          selection = end;
+        }
+      else
+        {
+          selection = start;
+          cursor    = end;
+        }
+    }
+  else
+    {
+      if (cursor_offset != offset)
+        {
+          gtk_text_buffer_get_iter_at_offset (buffer, &cursor, offset);
+        }
+    }
+
+  if (cursor_offset    != gtk_text_iter_get_offset (&cursor) ||
+      selection_offset != gtk_text_iter_get_offset (&selection))
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+      gtk_text_buffer_select_range (buffer, &cursor, &selection);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+    }
+}
+
 gboolean
 gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
-                                 GdkEventKey  *kevent,
-                                 GimpDisplay  *display)
+                                 GdkEventKey  *kevent)
 {
   GtkTextBuffer *buffer = text_tool->text_buffer;
   GtkTextIter    cursor;
@@ -247,8 +405,7 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
 
 gboolean
 gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
-                                   GdkEventKey  *kevent,
-                                   GimpDisplay  *display)
+                                   GdkEventKey  *kevent)
 {
   if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
     {
@@ -903,6 +1060,44 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
   gtk_text_buffer_insert_at_cursor (buffer, str, -1);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+}
+
+static gint
+gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
+                             gdouble       x,
+                             gdouble       y)
+{
+  PangoLayout    *layout;
+  PangoRectangle  ink_extents;
+  gchar          *string;
+  gint            offset;
+  gint            trailing;
+
+  gimp_text_layout_untransform_point (text_tool->layout, &x, &y);
+
+  /*  adjust to offset of logical rect  */
+  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+  pango_layout_get_pixel_extents (layout, &ink_extents, NULL);
+
+  if (ink_extents.x < 0)
+    x += ink_extents.x;
+
+  if (ink_extents.y < 0)
+    y += ink_extents.y;
+
+  string = gimp_text_tool_editor_get_text (text_tool);
+
+  pango_layout_xy_to_index (layout,
+                            x * PANGO_SCALE,
+                            y * PANGO_SCALE,
+                            &offset, &trailing);
+
+  offset = g_utf8_pointer_to_offset (string, string + offset);
+  offset += trailing;
+
+  g_free (string);
+
+  return offset;
 }
 
 static void
