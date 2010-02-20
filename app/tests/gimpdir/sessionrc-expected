@@ -88,7 +88,7 @@
     (size 902 816))
 (session-info "toplevel" "gimp-image-new-dialog"
     (position 100 100))
-(session-info "display" "gimp-empty-image-window"
+(session-info "toplevel" "gimp-empty-image-window"
     (position 140 32)
     (size 610 190))
 

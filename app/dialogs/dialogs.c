@@ -43,8 +43,6 @@
 
 
 GimpDialogFactory *global_dialog_factory  = NULL;
-GimpDialogFactory *global_display_factory = NULL;
-
 GimpContainer     *global_recent_docks    = NULL;
 
 
@@ -61,6 +59,21 @@ GimpContainer     *global_recent_docks    = NULL;
     remember_size  /* remember_size    */, \
     FALSE          /* remember_if_open */, \
     TRUE           /* hideable         */, \
+    FALSE          /* dockable         */}
+
+#define FOREIGN_NOT_HIDEABLE(id, singleton, remember_size) \
+  { id             /* identifier       */, \
+    NULL           /* name             */, \
+    NULL           /* blurb            */, \
+    NULL           /* stock_id         */, \
+    NULL           /* help_id          */, \
+    NULL           /* new_func         */, \
+    0              /* view_size        */, \
+    singleton      /* singleton        */, \
+    TRUE           /* session_managed  */, \
+    remember_size  /* remember_size    */, \
+    FALSE          /* remember_if_open */, \
+    FALSE          /* hideable         */, \
     FALSE          /* dockable         */}
 
 #define TOPLEVEL(id, new_func, singleton, session_managed, remember_size) \
@@ -347,7 +360,11 @@ static const GimpDialogFactoryEntry entries[] =
   DOCKABLE ("gimp-palette-editor",
             N_("Palette Editor"), NULL, GIMP_STOCK_PALETTE,
             GIMP_HELP_PALETTE_EDITOR_DIALOG,
-            dialogs_palette_editor_get, 0, TRUE)
+            dialogs_palette_editor_get, 0, TRUE),
+
+  /*  emtpy image window  */
+  FOREIGN_NOT_HIDEABLE ("gimp-empty-image-window",
+                        TRUE, TRUE)
 };
 
 
@@ -362,16 +379,9 @@ dialogs_init (Gimp            *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
-  /* Toplevel */
   global_dialog_factory = gimp_dialog_factory_new ("toplevel",
                                                    gimp_get_user_context (gimp),
                                                    menu_factory);
-
-  /* Display */
-  global_display_factory = gimp_dialog_factory_new ("display",
-                                                    gimp_get_user_context (gimp),
-                                                    menu_factory);
-
 
   for (i = 0; i < G_N_ELEMENTS (entries); i++)
     gimp_dialog_factory_register_entry (global_dialog_factory,
@@ -389,19 +399,6 @@ dialogs_init (Gimp            *gimp,
                                         entries[i].hideable,
                                         entries[i].dockable);
 
-  gimp_dialog_factory_register_entry (global_display_factory,
-                                      "gimp-empty-image-window",
-                                      NULL, NULL,
-                                      NULL, NULL,
-                                      NULL,
-                                      -1,
-                                      TRUE,
-                                      TRUE,
-                                      TRUE,
-                                      FALSE,
-                                      FALSE,
-                                      FALSE);
-
   global_recent_docks = gimp_list_new (GIMP_TYPE_SESSION_INFO, FALSE);
 }
 
@@ -414,12 +411,6 @@ dialogs_exit (Gimp *gimp)
     {
       g_object_unref (global_dialog_factory);
       global_dialog_factory = NULL;
-    }
-
-  if (global_display_factory)
-    {
-      g_object_unref (global_display_factory);
-      global_display_factory = NULL;
     }
 
   if (global_recent_docks)

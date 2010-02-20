@@ -20,8 +20,6 @@
 
 
 extern GimpDialogFactory *global_dialog_factory;
-extern GimpDialogFactory *global_display_factory;
-
 extern GimpContainer     *global_recent_docks;
 
 

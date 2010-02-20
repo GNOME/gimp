@@ -139,13 +139,15 @@ session_init (Gimp *gimp)
                 break;
 
               /* In versions <= GIMP 2.6 there was a "toolbox", a
-               * "dock" and a "toplevel" factory. These are now merged
-               * so if the factory name is "toolbox" or "dock", get
-               * the "toplevel" factory instead. We don't change
-               * factory_name because we need it below
+               * "dock", a "display" and a "toplevel" factory. These
+               * are now merged so if the factory name is "toolbox",
+               * "dock" or "display", get the "toplevel" factory
+               * instead. We don't change factory_name though because
+               * we need it below
                */
               factory = gimp_dialog_factory_from_name ((strcmp ("toolbox", factory_name) == 0 ||
-                                                        strcmp ("dock",    factory_name) == 0) ?
+                                                        strcmp ("dock",    factory_name) == 0 ||
+                                                        strcmp ("display", factory_name) == 0) ?
                                                        "toplevel" :
                                                        factory_name);
 
