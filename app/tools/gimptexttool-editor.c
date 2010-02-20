@@ -74,14 +74,14 @@ static void   gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
 static gint   gimp_text_tool_xy_to_offset       (GimpTextTool    *text_tool,
                                                  gdouble          x,
                                                  gdouble          y);
-static void   gimp_text_tool_commit_cb          (GtkIMContext    *context,
+static void   gimp_text_tool_im_commit          (GtkIMContext    *context,
                                                  const gchar     *str,
                                                  GimpTextTool    *text_tool);
-static void   gimp_text_tool_preedit_start      (GtkIMContext    *context,
+static void   gimp_text_tool_im_preedit_start   (GtkIMContext    *context,
                                                  GimpTextTool    *text_tool);
-static void   gimp_text_tool_preedit_end        (GtkIMContext    *context,
+static void   gimp_text_tool_im_preedit_end     (GtkIMContext    *context,
                                                  GimpTextTool    *text_tool);
-static void   gimp_text_tool_preedit_changed    (GtkIMContext    *context,
+static void   gimp_text_tool_im_preedit_changed (GtkIMContext    *context,
                                                  GimpTextTool    *text_tool);
 
 
@@ -99,16 +99,16 @@ gimp_text_tool_editor_init (GimpTextTool *text_tool)
   text_tool->x_pos          = -1;
 
   g_signal_connect (text_tool->im_context, "commit",
-                    G_CALLBACK (gimp_text_tool_commit_cb),
+                    G_CALLBACK (gimp_text_tool_im_commit),
                     text_tool);
   g_signal_connect (text_tool->im_context, "preedit-start",
-                    G_CALLBACK (gimp_text_tool_preedit_start),
+                    G_CALLBACK (gimp_text_tool_im_preedit_start),
                     text_tool);
   g_signal_connect (text_tool->im_context, "preedit-end",
-                    G_CALLBACK (gimp_text_tool_preedit_end),
+                    G_CALLBACK (gimp_text_tool_im_preedit_end),
                     text_tool);
   g_signal_connect (text_tool->im_context, "preedit-changed",
-                    G_CALLBACK (gimp_text_tool_preedit_changed),
+                    G_CALLBACK (gimp_text_tool_im_preedit_changed),
                     text_tool);
 
 }
@@ -1101,7 +1101,7 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_commit_cb (GtkIMContext *context,
+gimp_text_tool_im_commit (GtkIMContext *context,
                           const gchar  *str,
                           GimpTextTool *text_tool)
 {
@@ -1109,8 +1109,8 @@ gimp_text_tool_commit_cb (GtkIMContext *context,
 }
 
 static void
-gimp_text_tool_preedit_start (GtkIMContext *context,
-                              GimpTextTool *text_tool)
+gimp_text_tool_im_preedit_start (GtkIMContext *context,
+                                 GimpTextTool *text_tool)
 {
   GimpTool         *tool  = GIMP_TOOL (text_tool);
   GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
@@ -1156,8 +1156,8 @@ gimp_text_tool_preedit_start (GtkIMContext *context,
 }
 
 static void
-gimp_text_tool_preedit_end (GtkIMContext *context,
-                            GimpTextTool *text_tool)
+gimp_text_tool_im_preedit_end (GtkIMContext *context,
+                               GimpTextTool *text_tool)
 {
   if (text_tool->preedit_overlay)
     {
@@ -1168,8 +1168,8 @@ gimp_text_tool_preedit_end (GtkIMContext *context,
 }
 
 static void
-gimp_text_tool_preedit_changed (GtkIMContext *context,
-                                GimpTextTool *text_tool)
+gimp_text_tool_im_preedit_changed (GtkIMContext *context,
+                                   GimpTextTool *text_tool)
 {
   if (text_tool->preedit_string)
     g_free (text_tool->preedit_string);
