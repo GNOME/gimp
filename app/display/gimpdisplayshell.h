@@ -112,6 +112,8 @@ struct _GimpDisplayShell
 
   Selection         *selection;        /*  Selection (marching ants)          */
 
+  GList             *children;
+
   GtkWidget         *canvas;           /*  GimpCanvas widget                  */
   GdkGC             *grid_gc;          /*  GC for grid drawing                */
   GdkGC             *pen_gc;           /*  GC for felt pen drawing            */
@@ -216,6 +218,11 @@ GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
                                                     GimpUnit            unit,
                                                     gdouble             scale,
                                                     GimpUIManager      *popup_manager);
+
+void              gimp_display_shell_add_overlay   (GimpDisplayShell   *shell,
+                                                    GtkWidget          *child,
+                                                    gdouble             image_x,
+                                                    gdouble             image_y);
 
 GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
 GimpStatusbar   * gimp_display_shell_get_statusbar (GimpDisplayShell   *shell);

@@ -138,6 +138,10 @@ static void      gimp_display_shell_zoom_button_callback
 static void      gimp_display_shell_sync_config    (GimpDisplayShell  *shell,
                                                     GimpDisplayConfig *config);
 
+static void      gimp_display_shell_remove_overlay (GtkWidget        *canvas,
+                                                    GtkWidget        *child,
+                                                    GimpDisplayShell *shell);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
                          GTK_TYPE_VBOX,
@@ -483,6 +487,10 @@ gimp_display_shell_constructor (GType                  type,
   shell->canvas = gimp_canvas_new (config);
   gtk_widget_set_size_request (shell->canvas, shell_width, shell_height);
   gtk_container_set_border_width (GTK_CONTAINER (shell->canvas), 10);
+
+  g_signal_connect (shell->canvas, "remove",
+                    G_CALLBACK (gimp_display_shell_remove_overlay),
+                    shell);
 
   gimp_display_shell_dnd_init (shell);
   gimp_display_shell_selection_init (shell);
@@ -1048,6 +1056,14 @@ gimp_display_shell_sync_config (GimpDisplayShell  *shell,
     }
 }
 
+static void
+gimp_display_shell_remove_overlay (GtkWidget        *canvas,
+                                   GtkWidget        *child,
+                                   GimpDisplayShell *shell)
+{
+  shell->children = g_list_remove (shell->children, child);
+}
+
 
 /*  public functions  */
 
@@ -1065,6 +1081,39 @@ gimp_display_shell_new (GimpDisplay       *display,
                        "display",       display,
                        "unit",          unit,
                        NULL);
+}
+
+void
+gimp_display_shell_add_overlay (GimpDisplayShell *shell,
+                                GtkWidget        *child,
+                                gdouble           image_x,
+                                gdouble           image_y)
+{
+  gdouble *x_data;
+  gdouble *y_data;
+  gdouble  x, y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (shell));
+
+  x_data = g_new (gdouble, 1);
+  y_data = g_new (gdouble, 1);
+
+  *x_data = image_x;
+  *y_data = image_y;
+
+  g_object_set_data_full (G_OBJECT (child), "image-x", x_data,
+                          (GDestroyNotify) g_free);
+  g_object_set_data_full (G_OBJECT (child), "image-y", y_data,
+                          (GDestroyNotify) g_free);
+
+  shell->children = g_list_prepend (shell->children, child);
+
+  gimp_display_shell_transform_xy_f (shell, image_x, image_y, &x, &y, FALSE);
+
+  gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (shell->canvas), child, 0.0, 0.0);
+  gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (shell->canvas),
+                                       child, x, y);
 }
 
 GimpImageWindow *
@@ -1257,7 +1306,25 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 void
 gimp_display_shell_scaled (GimpDisplayShell *shell)
 {
+  GList *list;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  for (list = shell->children; list; list = g_list_next (list))
+    {
+      GtkWidget *child = list->data;
+      gdouble   *x_data;
+      gdouble   *y_data;
+      gdouble    x, y;
+
+      x_data = g_object_get_data (G_OBJECT (child), "image-x");
+      y_data = g_object_get_data (G_OBJECT (child), "image-y");
+
+      gimp_display_shell_transform_xy_f (shell, *x_data, *y_data, &x, &y, FALSE);
+
+      gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (shell->canvas),
+                                           child, x, y);
+    }
 
   g_signal_emit (shell, display_shell_signals[SCALED], 0);
 }
@@ -1265,7 +1332,25 @@ gimp_display_shell_scaled (GimpDisplayShell *shell)
 void
 gimp_display_shell_scrolled (GimpDisplayShell *shell)
 {
+  GList *list;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  for (list = shell->children; list; list = g_list_next (list))
+    {
+      GtkWidget *child = list->data;
+      gdouble   *x_data;
+      gdouble   *y_data;
+      gdouble    x, y;
+
+      x_data = g_object_get_data (G_OBJECT (child), "image-x");
+      y_data = g_object_get_data (G_OBJECT (child), "image-y");
+
+      gimp_display_shell_transform_xy_f (shell, *x_data, *y_data, &x, &y, FALSE);
+
+      gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (shell->canvas),
+                                           child, x, y);
+    }
 
   g_signal_emit (shell, display_shell_signals[SCROLLED], 0);
 }
