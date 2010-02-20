@@ -1117,6 +1117,16 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           text_tool->text = NULL;
 
           g_object_set (text_tool->proxy, "text", NULL, NULL);
+
+          g_signal_handlers_block_by_func (text_tool->text_buffer,
+                                           gimp_text_tool_buffer_changed,
+                                           text_tool);
+
+          gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
+
+          g_signal_handlers_unblock_by_func (text_tool->text_buffer,
+                                             gimp_text_tool_buffer_changed,
+                                             text_tool);
         }
 
       gimp_context_define_property (GIMP_CONTEXT (options),
