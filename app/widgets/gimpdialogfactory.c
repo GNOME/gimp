@@ -46,13 +46,6 @@
 #include "gimp-log.h"
 
 
-typedef enum
-{
-  GIMP_DIALOGS_SHOWN,
-  GIMP_DIALOGS_HIDDEN_EXPLICITLY,  /* user used the Tab key to hide dialogs */
-  GIMP_DIALOGS_HIDDEN_WITH_DISPLAY /* dialogs are hidden with the display   */
-} GimpDialogsState;
-
 enum
 {
   DOCK_WINDOW_ADDED,
@@ -1096,7 +1089,7 @@ gimp_dialog_factories_session_clear (void)
                         NULL);
 }
 
-static void
+void
 gimp_dialog_factories_set_state (GimpDialogsState state)
 {
   GimpDialogFactoryClass *factory_class;
@@ -1117,6 +1110,12 @@ gimp_dialog_factories_set_state (GimpDialogsState state)
                             (GHFunc) gimp_dialog_factories_hide_foreach,
                             NULL);
     }
+}
+
+GimpDialogsState
+gimp_dialog_factories_get_state (void)
+{
+  return dialogs_state;
 }
 
 void
