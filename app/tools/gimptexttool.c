@@ -793,6 +793,7 @@ gimp_text_tool_get_popup (GimpTool         *tool,
         {
           GimpDialogFactory *dialog_factory;
           GtkWidget         *im_menu;
+          GList             *children;
 
           dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
@@ -806,6 +807,14 @@ gimp_text_tool_get_popup (GimpTool         *tool,
 
           if (GTK_IS_MENU_ITEM (im_menu))
             im_menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (im_menu));
+
+          /*  hide the generated "empty" item  */
+          children = gtk_container_get_children (GTK_CONTAINER (im_menu));
+          while (children)
+            {
+              gtk_widget_hide (children->data);
+              children = g_list_remove (children, children->data);
+            }
 
           gtk_im_multicontext_append_menuitems (GTK_IM_MULTICONTEXT (text_tool->im_context),
                                                 GTK_MENU_SHELL (im_menu));
@@ -1836,7 +1845,11 @@ gimp_text_tool_delete_selection (GimpTextTool *text_tool)
 {
   if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
     {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
       gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
     }
 }
 
@@ -1852,7 +1865,12 @@ gimp_text_tool_cut_clipboard (GimpTextTool *text_tool)
 
   clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
   gtk_text_buffer_cut_clipboard (text_tool->text_buffer, clipboard, TRUE);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 void
@@ -1884,7 +1902,11 @@ gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
   clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
   gtk_text_buffer_paste_clipboard (text_tool->text_buffer, clipboard, NULL, TRUE);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 void

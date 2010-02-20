@@ -605,8 +605,12 @@ static void
 gimp_text_tool_insert_at_cursor (GimpTextTool *text_tool,
                                  const gchar  *str)
 {
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
   gtk_text_buffer_insert_interactive_at_cursor (text_tool->text_buffer,
                                                 str, -1, TRUE);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static gboolean
@@ -727,7 +731,11 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
 
   if (! gtk_text_iter_equal (&cursor, &end))
     {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
       gtk_text_buffer_delete_interactive (buffer, &cursor, &end, TRUE);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
     }
 }
 
@@ -737,6 +745,8 @@ gimp_text_tool_backspace (GimpTextTool *text_tool)
   GtkTextBuffer *buffer = text_tool->text_buffer;
 
   gimp_text_tool_reset_im_context (text_tool);
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
@@ -751,6 +761,8 @@ gimp_text_tool_backspace (GimpTextTool *text_tool)
 
       gtk_text_buffer_backspace (buffer, &cursor, TRUE, TRUE);
     }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
@@ -860,6 +872,8 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
 
   had_selection = gtk_text_buffer_get_has_selection (buffer);
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
   gimp_text_tool_delete_selection (text_tool);
 
   if (! had_selection && text_tool->overwrite_mode && strcmp (str, "\n"))
@@ -874,6 +888,8 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
     }
 
   gtk_text_buffer_insert_at_cursor (buffer, str, -1);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
