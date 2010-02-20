@@ -643,6 +643,7 @@
         <menuitem action="windows-show-toolbox" />
       </placeholder>
       <separator />
+      <menuitem action="windows-hide-docks" />
       <menuitem action="windows-use-single-window-mode" />
       <separator />
     </menu>

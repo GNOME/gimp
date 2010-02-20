@@ -85,6 +85,7 @@
 
 /*  local function prototypes  */
 
+static void       gimp_display_shell_toggle_hide_docks        (GimpDisplayShell *shell);
 static void       gimp_display_shell_vscrollbar_update        (GtkAdjustment    *adjustment,
                                                                GimpDisplayShell *shell);
 static void       gimp_display_shell_hscrollbar_update        (GtkAdjustment    *adjustment,
@@ -580,7 +581,7 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
         if (kevent->keyval == GDK_Tab ||
             kevent->keyval == GDK_ISO_Left_Tab)
           {
-            gimp_dialog_factories_toggle ();
+            gimp_display_shell_toggle_hide_docks (shell);
             return TRUE;
           }
       }
@@ -1552,7 +1553,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
                 else
                   {
-                    gimp_dialog_factories_toggle ();
+                    gimp_display_shell_toggle_hide_docks (shell);
                   }
 
                 return_val = TRUE;
@@ -2008,6 +2009,17 @@ gimp_display_shell_process_tool_event_queue (GimpDisplayShell *shell,
                        (GSourceFunc) gimp_display_shell_flush_event_queue,
                        shell);
     }
+}
+
+static void
+gimp_display_shell_toggle_hide_docks (GimpDisplayShell *shell)
+{
+  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+  if (window)
+    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
+                                     "windows",
+                                     "windows-hide-docks");
 }
 
 static void

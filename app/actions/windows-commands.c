@@ -50,6 +50,24 @@ windows_show_toolbox_cmd_callback (GtkAction *action,
 }
 
 void
+windows_hide_docks_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  gboolean         active    = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  GimpDialogsState state     = gimp_dialog_factories_get_state ();
+  GimpDialogsState new_state = state;
+
+  /* Make sure the state and toggle action are in sync */
+  if (active && state == GIMP_DIALOGS_SHOWN)
+    new_state = GIMP_DIALOGS_HIDDEN_EXPLICITLY;
+  else if (! active)
+    new_state = GIMP_DIALOGS_SHOWN;
+
+  if (state != new_state)
+    gimp_dialog_factories_set_state (new_state);
+}
+
+void
 windows_use_single_window_mode_cmd_callback (GtkAction *action,
                                              gpointer   data)
 {

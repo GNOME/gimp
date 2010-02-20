@@ -97,6 +97,20 @@ static const GimpActionEntry windows_actions[] =
 
 static const GimpToggleActionEntry windows_toggle_actions[] =
 {
+  { "windows-hide-docks", NULL,
+    NC_("windows-action", "Hide docks"),
+    /* The only reason we have Tab here is to give away the hardcoded
+     * keyboard shortcut. If the user changes the shortcut to
+     * something else, both that shortcut and Tab will work. The
+     * reason we have the shortcut hardcoded is beccause
+     * gtk_accelerator_valid() returns FALSE for GDK_tab.
+     */
+    "Tab",
+    NC_("windows-action", "When enabled docks and other dialogs are hidden, leaving only image windows."),
+    G_CALLBACK (windows_hide_docks_cmd_callback),
+    FALSE,
+    GIMP_HELP_WINDOWS_HIDE_DOCKS },
+
   { "windows-use-single-window-mode", NULL,
     NC_("windows-action", "Single-window mode"), NULL,
     NC_("windows-action", "When enabled GIMP is in a single-window mode. Far from completely implemented!"),
@@ -187,6 +201,8 @@ windows_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_ACTIVE ("windows-use-single-window-mode", config->single_window_mode);
+  SET_ACTIVE ("windows-hide-docks", (gimp_dialog_factories_get_state () !=
+                                     GIMP_DIALOGS_SHOWN));
 
 #undef SET_ACTIVE
 }

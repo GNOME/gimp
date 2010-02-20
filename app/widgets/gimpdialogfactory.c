@@ -1137,19 +1137,6 @@ gimp_dialog_factories_hide_with_display (void)
 }
 
 void
-gimp_dialog_factories_toggle (void)
-{
-  if (dialogs_state == GIMP_DIALOGS_SHOWN)
-    {
-      gimp_dialog_factories_set_state (GIMP_DIALOGS_HIDDEN_EXPLICITLY);
-    }
-  else
-    {
-      gimp_dialog_factories_set_state (GIMP_DIALOGS_SHOWN);
-    }
-}
-
-void
 gimp_dialog_factories_set_busy (void)
 {
   GimpDialogFactoryClass *factory_class;

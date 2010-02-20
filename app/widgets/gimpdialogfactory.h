@@ -165,7 +165,6 @@ void                gimp_dialog_factories_set_state          (GimpDialogsState  
 GimpDialogsState    gimp_dialog_factories_get_state          (void);
 void                gimp_dialog_factories_show_with_display  (void);
 void                gimp_dialog_factories_hide_with_display  (void);
-void                gimp_dialog_factories_toggle             (void);
 void                gimp_dialog_factories_set_busy           (void);
 void                gimp_dialog_factories_unset_busy         (void);
 GimpDialogFactory * gimp_dialog_factory_from_widget          (GtkWidget               *dialog,
