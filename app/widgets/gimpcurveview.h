@@ -40,6 +40,8 @@ struct _GimpCurveView
 
   GimpCurve         *curve;
 
+  GList             *bg_curves;
+
   gboolean           draw_base_line;
   gint               grid_rows;
   gint               grid_columns;
@@ -72,18 +74,24 @@ struct _GimpCurveViewClass
 };
 
 
-GType       gimp_curve_view_get_type     (void) G_GNUC_CONST;
+GType       gimp_curve_view_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_curve_view_new          (void);
+GtkWidget * gimp_curve_view_new               (void);
 
-void        gimp_curve_view_set_curve    (GimpCurveView *view,
-                                          GimpCurve     *curve);
-GimpCurve * gimp_curve_view_get_curve    (GimpCurveView *view);
+void        gimp_curve_view_set_curve         (GimpCurveView *view,
+                                               GimpCurve     *curve);
+GimpCurve * gimp_curve_view_get_curve         (GimpCurveView *view);
 
-void        gimp_curve_view_set_selected (GimpCurveView *view,
-                                          gint           selected);
-void        gimp_curve_view_set_xpos     (GimpCurveView *view,
-                                          gdouble        x);
+void        gimp_curve_view_add_background    (GimpCurveView *view,
+                                               GimpCurve     *curve,
+                                               const GimpRGB *color);
+void        gimp_curve_view_remove_background (GimpCurveView *view,
+                                               GimpCurve     *curve);
+
+void        gimp_curve_view_set_selected      (GimpCurveView *view,
+                                               gint           selected);
+void        gimp_curve_view_set_xpos          (GimpCurveView *view,
+                                               gdouble        x);
 
 
 #endif /* __GIMP_CURVE_VIEW_H__ */

@@ -54,6 +54,13 @@ enum
 };
 
 
+typedef struct
+{
+  GimpCurve *curve;
+  GimpRGB    color;
+} BGCurve;
+
+
 static void       gimp_curve_view_finalize        (GObject          *object);
 static void       gimp_curve_view_dispose         (GObject          *object);
 static void       gimp_curve_view_set_property    (GObject          *object,
@@ -233,6 +240,13 @@ gimp_curve_view_dispose (GObject *object)
 
   gimp_curve_view_set_curve (view, NULL);
 
+  while (view->bg_curves)
+    {
+      BGCurve *bg = view->bg_curves->data;
+
+      gimp_curve_view_remove_background (view, bg->curve);
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -405,6 +419,37 @@ gimp_curve_view_draw_point (GimpCurveView *view,
              0, 2 * G_PI);
 }
 
+static void
+gimp_curve_view_draw_curve (GimpCurveView *view,
+                            cairo_t       *cr,
+                            GimpCurve     *curve,
+                            gint           width,
+                            gint           height,
+                            gint           border)
+{
+  gdouble x, y;
+  gint    i;
+
+  x = 0.0;
+  y = 1.0 - gimp_curve_map_value (curve, 0.0);
+
+  cairo_move_to (cr,
+                 border + (gdouble) width  * x,
+                 border + (gdouble) height * y);
+
+  for (i = 1; i < 256; i++)
+    {
+      x = (gdouble) i / 255.0;
+      y = 1.0 - gimp_curve_map_value (curve, x);
+
+      cairo_line_to (cr,
+                     border + (gdouble) width  * x,
+                     border + (gdouble) height * y);
+    }
+
+  cairo_stroke (cr);
+}
+
 static gboolean
 gimp_curve_view_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
@@ -414,6 +459,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
   GtkStyle      *style  = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
   cairo_t       *cr;
+  GList         *list;
   gint           border;
   gint           width;
   gint           height;
@@ -467,28 +513,28 @@ gimp_curve_view_expose (GtkWidget      *widget,
   /*  Draw the grid lines  */
   gimp_curve_view_draw_grid (view, style, cr, width, height, border);
 
+  /*  Draw the background curves  */
+  for (list = view->bg_curves; list; list = g_list_next (list))
+    {
+      BGCurve *bg = list->data;
+
+      cairo_set_source_rgba (cr,
+                             bg->color.r,
+                             bg->color.g,
+                             bg->color.b,
+                             0.5);
+
+      gimp_curve_view_draw_curve (view, cr, bg->curve,
+                                  width, height, border);
+    }
+
   /*  Draw the curve  */
   gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
-  x = 0.0;
-  y = 1.0 - gimp_curve_map_value (view->curve, 0.0);
+  gimp_curve_view_draw_curve (view, cr, view->curve,
+                              width, height, border);
 
-  cairo_move_to (cr,
-                 border + (gdouble) width  * x,
-                 border + (gdouble) height * y);
-
-  for (i = 1; i < 256; i++)
-    {
-      x = (gdouble) i / 255.0;
-      y = 1.0 - gimp_curve_map_value (view->curve, x);
-
-      cairo_line_to (cr,
-                     border + (gdouble) width  * x,
-                     border + (gdouble) height * y);
-    }
-
-  cairo_stroke (cr);
-
+  /*  Draw the points  */
   if (gimp_curve_get_curve_type (view->curve) == GIMP_CURVE_SMOOTH)
     {
       gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
@@ -1056,6 +1102,55 @@ gimp_curve_view_get_curve (GimpCurveView *view)
   g_return_val_if_fail (GIMP_IS_CURVE_VIEW (view), NULL);
 
   return view->curve;
+}
+
+void
+gimp_curve_view_add_background (GimpCurveView *view,
+                                GimpCurve     *curve,
+                                const GimpRGB *color)
+{
+  BGCurve *bg;
+
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (color != NULL);
+
+  bg = g_slice_new0 (BGCurve);
+
+  bg->curve = g_object_ref (curve);
+  bg->color = *color;
+
+  view->bg_curves = g_list_append (view->bg_curves, bg);
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+
+void
+gimp_curve_view_remove_background (GimpCurveView *view,
+                                   GimpCurve     *curve)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (GIMP_IS_CURVE (curve));
+
+  for (list = view->bg_curves; list; list = g_list_next (list))
+    {
+      BGCurve *bg = list->data;
+
+      if (bg->curve == curve)
+        {
+          g_object_unref (bg->curve);
+
+          view->bg_curves = g_list_remove (view->bg_curves, bg);
+
+          g_slice_free (BGCurve, bg);
+
+          gtk_widget_queue_draw (GTK_WIDGET (view));
+
+          break;
+        }
+    }
 }
 
 void
