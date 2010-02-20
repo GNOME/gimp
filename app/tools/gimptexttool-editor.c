@@ -280,6 +280,17 @@ gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
     }
 }
 
+gchar *
+gimp_text_tool_editor_get_text (GimpTextTool *text_tool)
+{
+  GtkTextIter start, end;
+
+  gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
+
+  return gtk_text_buffer_get_text (text_tool->text_buffer,
+                                   &start, &end, TRUE);
+}
+
 void
 gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
                                        PangoRectangle *cursor_rect,
@@ -320,7 +331,7 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
 
-  string = gtk_text_buffer_get_text (buffer, &start, &cursor, FALSE);
+  string = gtk_text_buffer_get_text (buffer, &start, &cursor, TRUE);
   cursor_index = strlen (string);
   g_free (string);
 
@@ -487,7 +498,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
         gtk_text_buffer_get_bounds (buffer, &start, &end);
 
-        string = gtk_text_buffer_get_text (buffer, &start, &cursor, FALSE);
+        string = gtk_text_buffer_get_text (buffer, &start, &cursor, TRUE);
         cursor_index = strlen (string);
         g_free (string);
 
@@ -536,7 +547,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         pango_layout_line_x_to_index (layout_line, x_pos,
                                       &cursor_index, &trailing);
 
-        string = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
+        string = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
 
         string[cursor_index] = '\0';
 

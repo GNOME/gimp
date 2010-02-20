@@ -158,10 +158,10 @@ static gboolean  gimp_text_tool_set_drawable    (GimpTextTool      *text_tool,
                                                  GimpDrawable      *drawable,
                                                  gboolean           confirm);
 
-static void gimp_text_tool_text_buffer_changed  (GtkTextBuffer     *text_buffer,
+static void  gimp_text_tool_text_buffer_changed (GtkTextBuffer     *text_buffer,
                                                  GimpTextTool      *text_tool);
 
-static gint gimp_text_tool_xy_to_offset         (GimpTextTool      *text_tool,
+static gint      gimp_text_tool_xy_to_offset    (GimpTextTool      *text_tool,
                                                  gdouble            x,
                                                  gdouble            y);
 
@@ -1397,15 +1397,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
     }
   else
     {
-      GtkTextIter  start;
-      GtkTextIter  end;
-      gchar       *string;
-
-      gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
-      gtk_text_buffer_get_end_iter   (text_tool->text_buffer, &end);
-
-      string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                         &start, &end, FALSE);
+      gchar *string = gimp_text_tool_editor_get_text (text_tool);
 
       g_object_set (text_tool->proxy,
                     "text",     string,
@@ -1690,15 +1682,7 @@ gimp_text_tool_update_proxy (GimpTextTool *text_tool)
 {
   if (text_tool->text)
     {
-      GtkTextIter  start;
-      GtkTextIter  end;
-      gchar       *string;
-
-      gtk_text_buffer_get_start_iter (text_tool->text_buffer, &start);
-      gtk_text_buffer_get_end_iter   (text_tool->text_buffer, &end);
-
-      string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                         &start, &end, FALSE);
+      gchar *string = gimp_text_tool_editor_get_text (text_tool);
 
       g_object_set (text_tool->proxy,
                     "text", string,
@@ -1735,7 +1719,6 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
                              gdouble       x,
                              gdouble       y)
 {
-  GtkTextIter     start, end;
   PangoLayout    *layout;
   PangoRectangle  ink_extents;
   gchar          *string;
@@ -1754,9 +1737,7 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
   if (ink_extents.y < 0)
     y += ink_extents.y;
 
-  gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
-  string = gtk_text_buffer_get_text (text_tool->text_buffer,
-                                     &start, &end, TRUE);
+  string = gimp_text_tool_editor_get_text (text_tool);
 
   pango_layout_xy_to_index (layout,
                             x * PANGO_SCALE,
