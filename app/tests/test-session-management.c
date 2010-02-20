@@ -69,6 +69,7 @@ int main(int argc, char **argv)
   GimpTestFileState  final_dockrc_state      = { NULL, NULL, { 0, 0 } };
   gchar             *sessionrc_filename      = NULL;
   gchar             *dockrc_filename         = NULL;
+  gint               result                  = 0;
 
   g_type_init ();
   gtk_init (&argc, &argv);
@@ -89,10 +90,10 @@ int main(int argc, char **argv)
   /* Remeber the modtimes and MD5s */
   if (!gimp_test_get_file_state_verbose (sessionrc_filename,
                                          &initial_sessionrc_state))
-    goto fail;
+    result = -1;
   if (!gimp_test_get_file_state_verbose (dockrc_filename,
                                          &initial_dockrc_state))
-    goto fail;
+    result = -1;
 
   /* Start up GIMP */
   gimp = gimp_init_for_gui_testing (FALSE, TRUE);
@@ -120,10 +121,10 @@ int main(int argc, char **argv)
   /* Now get the new modtimes and MD5s */
   if (!gimp_test_get_file_state_verbose (sessionrc_filename,
                                          &final_sessionrc_state))
-    goto fail;
+    result = -1;
   if (!gimp_test_get_file_state_verbose (dockrc_filename,
                                          &final_dockrc_state))
-    goto fail;
+    result = -1;
 
   /* If things have gone our way, GIMP will have deserialized
    * sessionrc and dockrc, shown the GUI, and then serialized the new
@@ -134,17 +135,14 @@ int main(int argc, char **argv)
   if (!gimp_test_file_state_changes ("sessionrc",
                                      &initial_sessionrc_state,
                                      &final_sessionrc_state))
-    goto fail;
+    result = -1;
   if (!gimp_test_file_state_changes ("dockrc",
                                      &initial_dockrc_state,
                                      &final_dockrc_state))
-    goto fail;
+    result = -1;
 
   /* Don't bother freeing stuff, the process is short-lived */
-  return 0;
-
- fail:
-  return -1;
+  return result;
 }
 
 static gboolean
@@ -216,13 +214,27 @@ gimp_test_file_state_changes (const gchar       *filename,
 
   if (strcmp (state1->md5, state2->md5) != 0)
     {
-      gchar cmd[400];
+      char *diff_argv[5] = {
+        "diff",
+        "-u",
+        state1->filename,
+        state2->filename,
+        NULL
+      };
 
-      g_printerr ("'%s' was changed but should not have been. Reason (using system()):\n", filename);
+      g_printerr ("'%s' was changed but should not have been. Reason, using "
+                  "`diff -u $expected $actual`\n", filename);
 
-      g_snprintf (cmd, sizeof (cmd),
-                  "diff -u '%s' '%s'", state1->filename, state2->filename);
-      system (cmd);
+      g_spawn_sync (NULL /*working_directory*/,
+                    diff_argv,
+                    NULL /*envp*/,
+                    G_SPAWN_SEARCH_PATH,
+                    NULL /*child_setup*/,
+                    NULL /*user_data*/,
+                    NULL /*standard_output*/,
+                    NULL /*standard_error*/,
+                    NULL /*exist_status*/,
+                    NULL /*error*/);
 
       return FALSE;
     }
