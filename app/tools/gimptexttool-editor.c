@@ -69,6 +69,8 @@ static void   gimp_text_tool_options_notify     (GimpTextOptions *options,
                                                  GParamSpec      *pspec,
                                                  GimpTextTool    *text_tool);
 static void   gimp_text_tool_editor_dialog      (GimpTextTool    *text_tool);
+static void   gimp_text_tool_editor_destroy     (GtkWidget       *dialog,
+                                                 GimpTextTool    *text_tool);
 static void   gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
                                                  const gchar     *str);
 static gint   gimp_text_tool_xy_to_offset       (GimpTextTool    *text_tool,
@@ -156,7 +158,12 @@ gimp_text_tool_editor_halt (GimpTextTool *text_tool)
                                         text_tool);
 
   if (text_tool->editor_dialog)
-    gtk_widget_destroy (text_tool->editor_dialog);
+    {
+      g_signal_handlers_disconnect_by_func (text_tool->editor_dialog,
+                                            gimp_text_tool_editor_destroy,
+                                            text_tool);
+      gtk_widget_destroy (text_tool->editor_dialog);
+    }
 
   if (text_tool->proxy_text_view)
     {
@@ -1024,7 +1031,22 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
                                    "gimp-text-tool-dialog",
                                    text_tool->editor_dialog);
 
+  g_signal_connect (text_tool->editor_dialog, "destroy",
+                    G_CALLBACK (gimp_text_tool_editor_destroy),
+                    text_tool);
+
   gtk_widget_show (text_tool->editor_dialog);
+}
+
+static void
+gimp_text_tool_editor_destroy (GtkWidget    *dialog,
+                               GimpTextTool *text_tool)
+{
+  GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+
+  g_object_set (options,
+                "use-editor", FALSE,
+                NULL);
 }
 
 static void
