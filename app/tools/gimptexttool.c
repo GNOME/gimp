@@ -782,9 +782,11 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   GtkTextIter      sel_start, sel_end;
   gint             min, max;
   gchar           *string;
+#if 0
   gint             firstline, lastline;
   gint             first_x,   last_x;
   gdouble          first_tmp, last_tmp;
+#endif
   gint             i;
 
   gtk_text_buffer_get_start_iter (buffer, &start);
@@ -800,6 +802,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
+#if 0
   pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
   pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
 
@@ -811,6 +814,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
 
   first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
   last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
+#endif
 
   iter = pango_layout_get_iter (layout);
 
@@ -824,10 +828,16 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
       if (i >= min && i < max)
         {
           PangoRectangle rect;
+          gint           ytop, ybottom;
 
           g_printerr ("index %d is selected\n", i);
 
           pango_layout_iter_get_char_extents (iter, &rect);
+          pango_layout_iter_get_line_yrange (iter, &ytop, &ybottom);
+
+          rect.y      = ytop;
+          rect.height = ybottom - ytop;
+
           pango_extents_to_pixels (&rect, NULL);
 
           gimp_text_layout_transform_rect (text_tool->layout, &rect);
