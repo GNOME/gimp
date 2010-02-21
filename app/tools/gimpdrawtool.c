@@ -552,18 +552,20 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
   w = PROJ_ROUND (MAX (0.0, tx2));
   h = PROJ_ROUND (MAX (0.0, ty2));
 
-  if (! filled)
-    {
-      w--;
-      h--;
-    }
-
   if (w > 0 && h > 0)
-    gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
-                                GIMP_CANVAS_STYLE_XOR,
-                                filled,
-                                PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                                w, h);
+    {
+      if (! filled)
+        {
+          w--;
+          h--;
+        }
+
+      gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
+                                  GIMP_CANVAS_STYLE_XOR,
+                                  filled,
+                                  PROJ_ROUND (tx1), PROJ_ROUND (ty1),
+                                  w, h);
+    }
 }
 
 void
@@ -600,14 +602,14 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
   w = PROJ_ROUND (MAX (0.0, tx2));
   h = PROJ_ROUND (MAX (0.0, ty2));
 
-  if (! filled)
-    {
-      w--;
-      h--;
-    }
-
   if (w > 0 && h > 0)
     {
+      if (! filled)
+        {
+          w--;
+          h--;
+        }
+
       if (w != 1 && h != 1)
         {
           gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas),
