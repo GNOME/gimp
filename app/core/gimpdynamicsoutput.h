@@ -36,6 +36,8 @@ struct _GimpDynamicsOutput
 {
   GimpObject parent_instance;
 
+  GimpDynamicsOutputType type;
+
   gboolean   use_pressure;
   gboolean   use_velocity;
   gboolean   use_direction;
@@ -59,7 +61,8 @@ struct _GimpDynamicsOutputClass
 
 GType                gimp_dynamics_output_get_type (void) G_GNUC_CONST;
 
-GimpDynamicsOutput * gimp_dynamics_output_new      (const gchar        *name);
+GimpDynamicsOutput * gimp_dynamics_output_new      (const gchar            *name,
+                                                    GimpDynamicsOutputType  type);
 
 gboolean   gimp_dynamics_output_is_enabled         (GimpDynamicsOutput *output);
 

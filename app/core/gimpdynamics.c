@@ -70,8 +70,9 @@ static void
 static const gchar * gimp_dynamics_get_extension (GimpData     *data);
 
 static GimpDynamicsOutput *
-                     gimp_dynamics_create_output (GimpDynamics     *dynamics,
-                                                  const gchar      *name);
+                     gimp_dynamics_create_output (GimpDynamics           *dynamics,
+                                                  const gchar            *name,
+                                                  GimpDynamicsOutputType  type);
 static void          gimp_dynamics_output_notify (GObject          *output,
                                                   const GParamSpec *pspec,
                                                   GimpDynamics     *dynamics);
@@ -152,23 +153,32 @@ static void
 gimp_dynamics_init (GimpDynamics *dynamics)
 {
   dynamics->opacity_output      = gimp_dynamics_create_output (dynamics,
-                                                               "opacity-output");
+                                                               "opacity-output",
+                                                               GIMP_DYNAMICS_OUTPUT_OPACITY);
   dynamics->hardness_output     = gimp_dynamics_create_output (dynamics,
-                                                               "hardness-output");
+                                                               "hardness-output",
+                                                               GIMP_DYNAMICS_OUTPUT_HARDNESS);
   dynamics->rate_output         = gimp_dynamics_create_output (dynamics,
-                                                               "rate-output");
+                                                               "rate-output",
+                                                               GIMP_DYNAMICS_OUTPUT_RATE);
   dynamics->size_output         = gimp_dynamics_create_output (dynamics,
-                                                               "size-output");
+                                                               "size-output",
+                                                               GIMP_DYNAMICS_OUTPUT_SIZE);
   dynamics->aspect_ratio_output = gimp_dynamics_create_output (dynamics,
-                                                               "aspect-ratio-output");
+                                                               "aspect-ratio-output",
+                                                               GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO);
   dynamics->color_output        = gimp_dynamics_create_output (dynamics,
-                                                               "color-output");
+                                                               "color-output",
+                                                               GIMP_DYNAMICS_OUTPUT_COLOR);
   dynamics->angle_output        = gimp_dynamics_create_output (dynamics,
-                                                               "angle-output");
+                                                               "angle-output",
+                                                               GIMP_DYNAMICS_OUTPUT_ANGLE);
   dynamics->jitter_output       = gimp_dynamics_create_output (dynamics,
-                                                               "jitter-output");
+                                                               "jitter-output",
+                                                               GIMP_DYNAMICS_OUTPUT_JITTER);
   dynamics->spacing_output      = gimp_dynamics_create_output (dynamics,
-                                                               "spacing-output");
+                                                               "spacing-output",
+                                                               GIMP_DYNAMICS_OUTPUT_SPACING);
 }
 
 static void
@@ -374,14 +384,64 @@ gimp_dynamics_get_standard (void)
   return standard_dynamics;
 }
 
+GimpDynamicsOutput *
+gimp_dynamics_get_output (GimpDynamics           *dynamics,
+                          GimpDynamicsOutputType  type_id)
+{
+
+  switch (type_id)
+    {
+    case GIMP_DYNAMICS_OUTPUT_OPACITY:
+      return dynamics->opacity_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_HARDNESS:
+      return dynamics->hardness_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_RATE:
+      return dynamics->rate_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_SIZE:
+      return dynamics->size_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO:
+      return dynamics->aspect_ratio_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_COLOR:
+      return dynamics->color_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_ANGLE:
+      return dynamics->angle_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_JITTER:
+      return dynamics->jitter_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_SPACING:
+      return dynamics->spacing_output;
+      break;
+
+    default:
+      return NULL;
+      break;
+    }
+}
+
 
 /*  private functions  */
 
 static GimpDynamicsOutput *
 gimp_dynamics_create_output (GimpDynamics *dynamics,
-                             const gchar  *name)
+                             const gchar  *name,
+                             GimpDynamicsOutputType type)
 {
-  GimpDynamicsOutput *output = gimp_dynamics_output_new (name);
+  GimpDynamicsOutput *output = gimp_dynamics_output_new (name, type);
 
   g_signal_connect (output, "notify",
                     G_CALLBACK (gimp_dynamics_output_notify),
@@ -397,3 +457,5 @@ gimp_dynamics_output_notify (GObject          *output,
 {
   g_object_notify (G_OBJECT (dynamics), gimp_object_get_name (output));
 }
+
+
