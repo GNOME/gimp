@@ -777,7 +777,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
   GtkTextBuffer   *buffer    = text_tool->text_buffer;
   PangoLayout     *layout;
-  PangoLayoutIter *line_iter;
+  PangoLayoutIter *iter;
   GtkTextIter      start;
   GtkTextIter      sel_start, sel_end;
   gint             min, max;
@@ -812,7 +812,38 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
   last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
 
-  line_iter = pango_layout_get_iter (layout);
+  iter = pango_layout_get_iter (layout);
+
+  do
+    {
+      if (! pango_layout_iter_get_run (iter))
+        continue;
+
+      i = pango_layout_iter_get_index (iter);
+
+      if (i >= min && i < max)
+        {
+          PangoRectangle rect;
+
+          g_printerr ("index %d is selected\n", i);
+
+          pango_layout_iter_get_char_extents (iter, &rect);
+          pango_extents_to_pixels (&rect, NULL);
+
+          gimp_text_layout_transform_rect (text_tool->layout, &rect);
+
+          rect.x += logical_off_x;
+          rect.y += logical_off_y;
+
+          gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
+                                         rect.x, rect.y,
+                                         rect.width, rect.height,
+                                         TRUE);
+        }
+    }
+  while (pango_layout_iter_next_char (iter));
+
+#if 0
   i = 0;
 
   do
@@ -821,7 +852,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
         {
           PangoRectangle crect;
 
-          pango_layout_iter_get_line_extents (line_iter, NULL, &crect);
+          pango_layout_iter_get_line_extents (iter, NULL, &crect);
           pango_extents_to_pixels (&crect, NULL);
 
           gimp_text_layout_transform_rect (text_tool->layout, &crect);
@@ -848,9 +879,10 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
 
       i++;
     }
-  while (pango_layout_iter_next_line (line_iter));
+  while (pango_layout_iter_next_line (iter));
+#endif
 
-  pango_layout_iter_free (line_iter);
+  pango_layout_iter_free (iter);
 }
 
 static void
