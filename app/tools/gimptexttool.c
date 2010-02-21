@@ -949,6 +949,10 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
     {
       GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (tool);
 
+      g_signal_handlers_block_by_func (text_tool->text_buffer,
+                                       gimp_text_tool_buffer_changed,
+                                       text_tool);
+
       if (text_tool->text)
         {
           g_signal_handlers_disconnect_by_func (text_tool->text,
@@ -962,16 +966,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           text_tool->text = NULL;
 
           g_object_set (text_tool->proxy, "text", NULL, NULL);
-
-          g_signal_handlers_block_by_func (text_tool->text_buffer,
-                                           gimp_text_tool_buffer_changed,
-                                           text_tool);
-
           gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
-
-          g_signal_handlers_unblock_by_func (text_tool->text_buffer,
-                                             gimp_text_tool_buffer_changed,
-                                             text_tool);
         }
 
       gimp_context_define_property (GIMP_CONTEXT (options),
@@ -981,6 +976,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
       if (text)
         {
           gimp_config_sync (G_OBJECT (text), G_OBJECT (text_tool->proxy), 0);
+          gtk_text_buffer_set_text (text_tool->text_buffer, text->text, -1);
 
           text_tool->text = g_object_ref (text);
 
@@ -988,6 +984,10 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                             G_CALLBACK (gimp_text_tool_text_notify),
                             text_tool);
         }
+
+      g_signal_handlers_unblock_by_func (text_tool->text_buffer,
+                                         gimp_text_tool_buffer_changed,
+                                         text_tool);
     }
 
   if (text_tool->layer != layer)

@@ -138,12 +138,6 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
 
   gtk_im_context_focus_in (text_tool->im_context);
 
-  if (text_tool->text)
-    gtk_text_buffer_set_text (text_tool->text_buffer,
-                              text_tool->text->text, -1);
-  else
-    gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
-
   if (options->use_editor)
     gimp_text_tool_editor_dialog (text_tool);
 
