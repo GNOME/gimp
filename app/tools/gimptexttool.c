@@ -314,12 +314,6 @@ gimp_text_tool_finalize (GObject *object)
       text_tool->proxy = NULL;
     }
 
-  if (text_tool->layout)
-    {
-      g_object_unref (text_tool->layout);
-      text_tool->layout = NULL;
-    }
-
   if (text_tool->text_buffer)
     {
       g_object_unref (text_tool->text_buffer);
@@ -368,6 +362,9 @@ gimp_text_tool_button_press (GimpTool            *tool,
   GimpText          *text      = text_tool->text;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  if (tool->display && tool->display != display)
+    gimp_text_tool_halt (text_tool);
 
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
     {
@@ -444,8 +441,11 @@ gimp_text_tool_button_press (GimpTool            *tool,
                 }
             }
 
-          if (text_tool->layout && ! text_tool->moving)
+          if (text_tool->selecting)
             {
+              if (! text_tool->layout)
+                gimp_text_tool_update_layout (text_tool);
+
               gimp_text_tool_editor_button_press (text_tool, x, y, press_type);
             }
 
@@ -926,6 +926,12 @@ gimp_text_tool_halt (GimpTextTool *text_tool)
   gimp_text_tool_editor_halt (text_tool);
 
   gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
+
+  if (text_tool->layout)
+    {
+      g_object_unref (text_tool->layout);
+      text_tool->layout = NULL;
+    }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
