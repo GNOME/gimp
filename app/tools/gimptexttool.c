@@ -782,11 +782,6 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   GtkTextIter      sel_start, sel_end;
   gint             min, max;
   gchar           *string;
-#if 0
-  gint             firstline, lastline;
-  gint             first_x,   last_x;
-  gdouble          first_tmp, last_tmp;
-#endif
   gint             i;
 
   gtk_text_buffer_get_start_iter (buffer, &start);
@@ -802,20 +797,6 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
-#if 0
-  pango_layout_index_to_line_x (layout, min, 0, &firstline, &first_x);
-  pango_layout_index_to_line_x (layout, max, 0, &lastline,  &last_x);
-
-  first_tmp = first_x;
-  last_tmp  = last_x;
-
-  gimp_text_layout_transform_distance (text_tool->layout, &first_tmp, NULL);
-  gimp_text_layout_transform_distance (text_tool->layout, &last_tmp,  NULL);
-
-  first_x = PANGO_PIXELS (first_tmp) + logical_off_x;
-  last_x  = PANGO_PIXELS (last_tmp)  + logical_off_x;
-#endif
-
   iter = pango_layout_get_iter (layout);
 
   do
@@ -829,8 +810,6 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
         {
           PangoRectangle rect;
           gint           ytop, ybottom;
-
-          g_printerr ("index %d is selected\n", i);
 
           pango_layout_iter_get_char_extents (iter, &rect);
           pango_layout_iter_get_line_yrange (iter, &ytop, &ybottom);
@@ -852,45 +831,6 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
         }
     }
   while (pango_layout_iter_next_char (iter));
-
-#if 0
-  i = 0;
-
-  do
-    {
-      if (i >= firstline && i <= lastline)
-        {
-          PangoRectangle crect;
-
-          pango_layout_iter_get_line_extents (iter, NULL, &crect);
-          pango_extents_to_pixels (&crect, NULL);
-
-          gimp_text_layout_transform_rect (text_tool->layout, &crect);
-
-          crect.x += logical_off_x;
-          crect.y += logical_off_y;
-
-          if (i == lastline)
-            {
-              crect.width = last_x;
-            }
-
-          if (i == firstline)
-            {
-              crect.width -= first_x;
-              crect.x     += first_x;
-            }
-
-          gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                         crect.x, crect.y,
-                                         crect.width, crect.height,
-                                         TRUE);
-        }
-
-      i++;
-    }
-  while (pango_layout_iter_next_line (iter));
-#endif
 
   pango_layout_iter_free (iter);
 }
