@@ -37,7 +37,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpitem.h"
-#include "core/gimpunit.h"
 
 #include "widgets/gimpcolorframe.h"
 #include "widgets/gimpdocked.h"
@@ -118,7 +117,6 @@ static void   gimp_cursor_view_shell_unit_changed    (GimpCursorView      *view,
                                                       GParamSpec          *pspec,
                                                       GimpDisplayShell    *shell);
 static void   gimp_cursor_view_format_as_unit        (GimpUnit             unit,
-                                                      Gimp                *gimp,
                                                       gchar               *output_buf,
                                                       gint                 output_buf_size,
                                                       gdouble              pixel_value,
@@ -443,7 +441,6 @@ gimp_cursor_view_get_aux_info (GimpDocked *docked)
 
 static void
 gimp_cursor_view_format_as_unit (GimpUnit  unit,
-                                 Gimp     *gimp,
                                  gchar    *output_buf,
                                  gint      output_buf_size,
                                  gdouble   pixel_value,
@@ -454,22 +451,16 @@ gimp_cursor_view_format_as_unit (GimpUnit  unit,
   gint          unit_digits = 0;
   const gchar  *unit_str = "";
 
+  value = gimp_pixels_to_units (pixel_value, unit, image_res);
+
   if (unit != GIMP_UNIT_PIXEL)
     {
-      gdouble unit_factor;
-
-      unit_factor = _gimp_unit_get_factor (gimp, unit);
-      unit_digits = _gimp_unit_get_digits (gimp, unit);
-      unit_str    = _gimp_unit_get_abbreviation (gimp, unit);
-
-      value = pixel_value * unit_factor / image_res;
-    }
-  else
-    {
-      value = pixel_value;
+      unit_digits = gimp_unit_get_digits (unit);
+      unit_str    = gimp_unit_get_abbreviation (unit);
     }
 
-  g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s", unit_digits, unit_str);
+  g_snprintf (format_buf, sizeof (format_buf),
+              "%%.%df %s", unit_digits, unit_str);
 
   g_snprintf (output_buf, output_buf_size, format_buf, value);
 }
@@ -578,7 +569,9 @@ static void
 gimp_cursor_view_mask_changed (GimpCursorView *view,
                                GimpImage      *image)
 {
-  gimp_cursor_view_update_selection_info (view, view->priv->image, view->priv->unit);
+  gimp_cursor_view_update_selection_info (view,
+                                          view->priv->image,
+                                          view->priv->unit);
 }
 
 static void
@@ -645,26 +638,25 @@ static void gimp_cursor_view_update_selection_info (GimpCursorView *view,
 
   if (bounds_exist)
     {
-      Gimp     *gimp = image->gimp;
-      gint      width, height;
-      gdouble   xres, yres;
-      gchar     buf[32];
+      gint    width, height;
+      gdouble xres, yres;
+      gchar   buf[32];
 
       width  = x2 - x1;
       height = y2 - y1;
 
       gimp_image_get_resolution (image, &xres, &yres);
 
-      gimp_cursor_view_format_as_unit (unit, gimp, buf, sizeof (buf), x1, xres);
+      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), x1, xres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_x_label), buf);
 
-      gimp_cursor_view_format_as_unit (unit, gimp, buf, sizeof (buf), y1, yres);
+      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), y1, yres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_y_label), buf);
 
-      gimp_cursor_view_format_as_unit (unit, gimp, buf, sizeof (buf), width, xres);
+      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), width, xres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_width_label), buf);
 
-      gimp_cursor_view_format_as_unit (unit, gimp, buf, sizeof (buf), height, yres);
+      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), height, yres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_height_label), buf);
     }
   else
@@ -750,11 +742,11 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
   gtk_label_set_text (GTK_LABEL (view->priv->pixel_y_label), buf);
   gimp_cursor_view_set_label_italic (view->priv->pixel_y_label, ! in_image);
 
-  gimp_cursor_view_format_as_unit (unit, image->gimp, buf, sizeof (buf), x, xres);
+  gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), x, xres);
   gtk_label_set_text (GTK_LABEL (view->priv->unit_x_label), buf);
   gimp_cursor_view_set_label_italic (view->priv->unit_x_label, ! in_image);
 
-  gimp_cursor_view_format_as_unit (unit, image->gimp, buf, sizeof (buf), y, yres);
+  gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), y, yres);
   gtk_label_set_text (GTK_LABEL (view->priv->unit_y_label), buf);
   gimp_cursor_view_set_label_italic (view->priv->unit_y_label, ! in_image);
 
@@ -794,5 +786,7 @@ gimp_cursor_view_clear_cursor (GimpCursorView *view)
   gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_2));
 
   /* Start showing selection info from the active image again */
-  gimp_cursor_view_update_selection_info (view, view->priv->image, view->priv->unit);
+  gimp_cursor_view_update_selection_info (view,
+                                          view->priv->image,
+                                          view->priv->unit);
 }

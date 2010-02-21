@@ -38,7 +38,6 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
-#include "core/gimpunit.h"
 
 #include "text/gimptext.h"
 #include "text/gimptext-vectors.h"
@@ -866,27 +865,6 @@ gimp_text_tool_frame_item (GimpTextTool *text_tool)
   text_tool->handle_rectangle_change_complete = TRUE;
 }
 
-static gdouble
-pixels_to_units (Gimp    *gimp,
-                 gdouble  pixels,
-                 GimpUnit unit,
-                 gdouble  resolution)
-{
-  gdouble factor;
-
-  switch (unit)
-    {
-    case GIMP_UNIT_PIXEL:
-      return pixels;
-
-    default:
-      factor = _gimp_unit_get_factor (gimp, unit);
-
-      return pixels * factor / resolution;
-      break;
-    }
-}
-
 static gboolean
 gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 {
@@ -928,14 +906,12 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 
           g_object_set (text_tool->proxy,
                         "box-mode",   GIMP_TEXT_BOX_FIXED,
-                        "box-width",  pixels_to_units (text_tool->image->gimp,
-                                                       x2 - x1,
-                                                       text_tool->proxy->unit,
-                                                       xres),
-                        "box-height", pixels_to_units (text_tool->image->gimp,
-                                                       y2 - y1,
-                                                       text_tool->proxy->unit,
-                                                       yres),
+                        "box-width",  gimp_pixels_to_units (x2 - x1,
+                                                            text_tool->proxy->unit,
+                                                            xres),
+                        "box-height", gimp_pixels_to_units (y2 - y1,
+                                                            text_tool->proxy->unit,
+                                                            yres),
                         NULL);
 
           gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
@@ -1350,14 +1326,12 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
       g_object_set (text_tool->proxy,
                     "box-mode",   GIMP_TEXT_BOX_FIXED,
-                    "box-width",  pixels_to_units (image->gimp,
-                                                   x2 - x1,
-                                                   text_tool->proxy->unit,
-                                                   xres),
-                    "box-height", pixels_to_units (image->gimp,
-                                                   y2 - y1,
-                                                   text_tool->proxy->unit,
-                                                   yres),
+                    "box-width",  gimp_pixels_to_units (x2 - x1,
+                                                        text_tool->proxy->unit,
+                                                        xres),
+                    "box-height", gimp_pixels_to_units (y2 - y1,
+                                                        text_tool->proxy->unit,
+                                                        yres),
                     NULL);
     }
   else

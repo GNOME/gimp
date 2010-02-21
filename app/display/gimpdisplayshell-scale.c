@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -29,7 +30,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpunit.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -1122,18 +1122,10 @@ img2real (GimpDisplayShell *shell,
 {
   gdouble xres;
   gdouble yres;
-  gdouble res;
-
-  if (shell->unit == GIMP_UNIT_PIXEL)
-    return len;
 
   gimp_image_get_resolution (gimp_display_get_image (shell->display),
                              &xres, &yres);
 
-  if (xdir)
-    res = xres;
-  else
-    res = yres;
-
-  return len * _gimp_unit_get_factor (shell->display->gimp, shell->unit) / res;
+  return gimp_pixels_to_units (len, gimp_unit_get_factor (shell->unit),
+                               xdir ? xres : yres);
 }

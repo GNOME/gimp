@@ -48,7 +48,6 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimpprogress.h"
 #include "core/gimpsamplepoint.h"
-#include "core/gimpunit.h"
 
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
@@ -405,7 +404,7 @@ xcf_save_image_props (XcfInfo    *info,
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_image_get_tattoo_state (image)));
 
-  if (unit < _gimp_unit_get_number_of_built_in_units (image->gimp))
+  if (unit < gimp_unit_get_number_of_built_in_units ())
     xcf_check_error (xcf_save_prop (info, image, PROP_UNIT, error, unit));
 
   if (gimp_container_get_n_children (gimp_image_get_vectors (image)) > 0)
@@ -416,7 +415,7 @@ xcf_save_image_props (XcfInfo    *info,
         xcf_check_error (xcf_save_prop (info, image, PROP_VECTORS, error));
     }
 
-  if (unit >= _gimp_unit_get_number_of_built_in_units (image->gimp))
+  if (unit >= gimp_unit_get_number_of_built_in_units ())
     xcf_check_error (xcf_save_prop (info, image, PROP_USER_UNIT, error, unit));
 
   if (gimp_image_get_grid (image))
@@ -1019,13 +1018,13 @@ xcf_save_prop (XcfInfo    *info,
         unit = va_arg (args, guint32);
 
         /* write the entire unit definition */
-        unit_strings[0] = _gimp_unit_get_identifier (image->gimp, unit);
-        factor          = _gimp_unit_get_factor (image->gimp, unit);
-        digits          = _gimp_unit_get_digits (image->gimp, unit);
-        unit_strings[1] = _gimp_unit_get_symbol (image->gimp, unit);
-        unit_strings[2] = _gimp_unit_get_abbreviation (image->gimp, unit);
-        unit_strings[3] = _gimp_unit_get_singular (image->gimp, unit);
-        unit_strings[4] = _gimp_unit_get_plural (image->gimp, unit);
+        unit_strings[0] = gimp_unit_get_identifier (unit);
+        factor          = gimp_unit_get_factor (unit);
+        digits          = gimp_unit_get_digits (unit);
+        unit_strings[1] = gimp_unit_get_symbol (unit);
+        unit_strings[2] = gimp_unit_get_abbreviation (unit);
+        unit_strings[3] = gimp_unit_get_singular (unit);
+        unit_strings[4] = gimp_unit_get_plural (unit);
 
         size =
           2 * 4 +

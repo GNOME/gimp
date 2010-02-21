@@ -24,6 +24,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -32,7 +33,6 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimpimage.h"
-#include "core/gimpunit.h"
 #include "core/gimpprogress.h"
 
 #include "widgets/gimpunitstore.h"
@@ -944,8 +944,6 @@ gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
     {
       gdouble xres;
       gdouble yres;
-      gdouble unit_factor = _gimp_unit_get_factor (shell->display->gimp,
-                                                   shell->unit);
 
       gimp_image_get_resolution (gimp_display_get_image (shell->display),
                                  &xres, &yres);
@@ -954,9 +952,9 @@ gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
                            stock_id,
                            statusbar->cursor_format_str,
                            title,
-                           x * unit_factor / xres,
+                           gimp_pixels_to_units (x, shell->unit, xres),
                            separator,
-                           y * unit_factor / yres,
+                           gimp_pixels_to_units (y, shell->unit, yres),
                            help);
     }
 }
@@ -994,8 +992,6 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
       gdouble xres;
       gdouble yres;
       gdouble resolution;
-      gdouble unit_factor = _gimp_unit_get_factor (shell->display->gimp,
-                                                   shell->unit);
 
       gimp_image_get_resolution (gimp_display_get_image (shell->display),
                                  &xres, &yres);
@@ -1019,7 +1015,7 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
                            stock_id,
                            statusbar->length_format_str,
                            title,
-                           value * unit_factor / resolution,
+                           gimp_pixels_to_units (value, shell->unit, resolution),
                            help);
     }
 }
@@ -1441,13 +1437,13 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
                   "%%s%%.%df%%s%%.%df%%s",
-                  _gimp_unit_get_digits (shell->display->gimp, shell->unit),
-                  _gimp_unit_get_digits (shell->display->gimp, shell->unit));
+                  gimp_unit_get_digits (shell->unit),
+                  gimp_unit_get_digits (shell->unit));
       strcpy (statusbar->cursor_format_str_f, statusbar->cursor_format_str);
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
                   "%%s%%.%df%%s",
-                  _gimp_unit_get_digits (shell->display->gimp, shell->unit));
+                  gimp_unit_get_digits (shell->unit));
     }
 
   gimp_statusbar_update_cursor (statusbar, GIMP_CURSOR_PRECISION_SUBPIXEL,

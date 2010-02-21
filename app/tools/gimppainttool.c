@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "tools-types.h"
@@ -32,7 +33,6 @@
 #include "core/gimppaintinfo.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
-#include "core/gimpunit.h"
 
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
@@ -651,10 +651,10 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
               gimp_image_get_resolution (image, &xres, &yres);
 
               g_snprintf (format_str, sizeof (format_str), "%%.%df %s.  %%s",
-                          _gimp_unit_get_digits (image->gimp, shell->unit),
-                          _gimp_unit_get_symbol (image->gimp, shell->unit));
+                          gimp_unit_get_digits (shell->unit),
+                          gimp_unit_get_symbol (shell->unit));
 
-              dist = (_gimp_unit_get_factor (image->gimp, shell->unit) *
+              dist = (gimp_unit_get_factor (shell->unit) *
                       sqrt (SQR (dx / xres) +
                             SQR (dy / yres)));
 

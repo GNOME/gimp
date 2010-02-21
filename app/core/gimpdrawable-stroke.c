@@ -22,6 +22,7 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 
@@ -42,7 +43,6 @@
 #include "gimppattern.h"
 #include "gimpscanconvert.h"
 #include "gimpstrokeoptions.h"
-#include "gimpunit.h"
 
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
@@ -358,8 +358,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
           gimp_scan_convert_set_pixel_ratio (scan_convert, yres / xres);
 
-          width *= (yres /
-                    _gimp_unit_get_factor (image->gimp, stroke_options->unit));
+          width = gimp_units_to_pixels (stroke_options->width,
+                                        stroke_options->unit, yres);
         }
 
       gimp_scan_convert_stroke (scan_convert, width,

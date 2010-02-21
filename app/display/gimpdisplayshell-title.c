@@ -22,6 +22,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "libgimpbase/gimpbase.h"
@@ -34,7 +35,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
-#include "core/gimpunit.h"
 
 #include "file/file-utils.h"
 #include "file/gimp-file.h"
@@ -380,11 +380,10 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   gimp_image_get_resolution (image, &xres, &yres);
 
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                              _gimp_unit_get_digits (gimp, shell->unit) + 1);
+                              gimp_unit_get_digits (shell->unit) + 1);
                   i += print (title, title_len, i, unit_format,
-                              (gimp_image_get_width (image) *
-                               _gimp_unit_get_factor (gimp, shell->unit) /
-                               xres));
+                              gimp_pixels_to_units (gimp_image_get_width (image),
+                                                    shell->unit, xres));
                   break;
                 }
               /* else fallthru */
@@ -403,11 +402,10 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   gimp_image_get_resolution (image, &xres, &yres);
 
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                              _gimp_unit_get_digits (gimp, shell->unit) + 1);
+                              gimp_unit_get_digits (shell->unit) + 1);
                   i += print (title, title_len, i, unit_format,
-                              (gimp_image_get_height (image) *
-                               _gimp_unit_get_factor (gimp, shell->unit) /
-                               yres));
+                              gimp_pixels_to_units (gimp_image_get_height (image),
+                                                    shell->unit, yres));
                   break;
                 }
               /* else fallthru */
@@ -418,12 +416,12 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'u': /* unit symbol */
               i += print (title, title_len, i, "%s",
-                          _gimp_unit_get_symbol (gimp, shell->unit));
+                          gimp_unit_get_symbol (shell->unit));
               break;
 
             case 'U': /* unit abbreviation */
               i += print (title, title_len, i, "%s",
-                          _gimp_unit_get_abbreviation (gimp, shell->unit));
+                          gimp_unit_get_abbreviation (shell->unit));
               break;
 
               /* Other cool things to be added:

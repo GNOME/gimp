@@ -29,7 +29,6 @@
 
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
-#include "core/gimpunit.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -195,10 +194,8 @@ gimp_vectors_export_image_size (const GimpImage *image,
       break;
     }
 
-  g_ascii_formatd (wbuf, sizeof (wbuf),
-                   "%g", w * _gimp_unit_get_factor (image->gimp, unit));
-  g_ascii_formatd (hbuf, sizeof (hbuf),
-                   "%g", h * _gimp_unit_get_factor (image->gimp, unit));
+  g_ascii_formatd (wbuf, sizeof (wbuf), "%g", w * gimp_unit_get_factor (unit));
+  g_ascii_formatd (hbuf, sizeof (hbuf), "%g", h * gimp_unit_get_factor (unit));
 
   g_string_append_printf (str,
                           "width=\"%s%s\" height=\"%s%s\"",

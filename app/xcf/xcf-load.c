@@ -52,7 +52,6 @@
 #include "core/gimpprogress.h"
 #include "core/gimpselection.h"
 #include "core/gimptemplate.h"
-#include "core/gimpunit.h"
 
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
@@ -566,7 +565,7 @@ xcf_load_image_props (XcfInfo   *info,
             info->cp += xcf_read_int32 (info->fp, &unit, 1);
 
             if ((unit <= GIMP_UNIT_PIXEL) ||
-                (unit >= _gimp_unit_get_number_of_built_in_units (image->gimp)))
+                (unit >= gimp_unit_get_number_of_built_in_units ()))
               {
                 gimp_message_literal (info->gimp, G_OBJECT (info->progress),
 				      GIMP_MESSAGE_WARNING,
@@ -600,19 +599,17 @@ xcf_load_image_props (XcfInfo   *info,
               if (unit_strings[i] == NULL)
                 unit_strings[i] = g_strdup ("");
 
-            num_units = _gimp_unit_get_number_of_units (image->gimp);
+            num_units = gimp_unit_get_number_of_units ();
 
-            for (unit = _gimp_unit_get_number_of_built_in_units (image->gimp);
+            for (unit = gimp_unit_get_number_of_built_in_units ();
                  unit < num_units; unit++)
               {
                 /* if the factor and the identifier match some unit
                  * in unitrc, use the unitrc unit
                  */
-                if ((ABS (_gimp_unit_get_factor (image->gimp,
-                                                 unit) - factor) < 1e-5) &&
+                if ((ABS (gimp_unit_get_factor (unit) - factor) < 1e-5) &&
                     (strcmp (unit_strings[0],
-                             _gimp_unit_get_identifier (image->gimp,
-                                                        unit)) == 0))
+                             gimp_unit_get_identifier (unit)) == 0))
                   {
                     break;
                   }
@@ -620,14 +617,13 @@ xcf_load_image_props (XcfInfo   *info,
 
             /* no match */
             if (unit == num_units)
-              unit = _gimp_unit_new (image->gimp,
-                                     unit_strings[0],
-                                     factor,
-                                     digits,
-                                     unit_strings[1],
-                                     unit_strings[2],
-                                     unit_strings[3],
-                                     unit_strings[4]);
+              unit = gimp_unit_new (unit_strings[0],
+                                    factor,
+                                    digits,
+                                    unit_strings[1],
+                                    unit_strings[2],
+                                    unit_strings[3],
+                                    unit_strings[4]);
 
             gimp_image_set_unit (image, unit);
 

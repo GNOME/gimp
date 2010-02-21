@@ -30,7 +30,6 @@
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
-#include "core/gimpunit.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsizebox.h"

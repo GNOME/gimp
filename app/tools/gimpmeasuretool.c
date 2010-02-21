@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -36,7 +37,6 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
-#include "core/gimpunit.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptooldialog.h"
@@ -849,15 +849,13 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
 
   gimp_image_get_resolution (image, &xres, &yres);
 
-  unit_width  = (_gimp_unit_get_factor (image->gimp, shell->unit) *
-                 pixel_width / xres);
-  unit_height = (_gimp_unit_get_factor (image->gimp, shell->unit) *
-                 pixel_height / yres);
+  unit_width  = gimp_pixels_to_units (pixel_width,  shell->unit, xres);
+  unit_height = gimp_pixels_to_units (pixel_height, shell->unit, yres);
 
   pixel_distance = sqrt (SQR (ax - bx) + SQR (ay - by));
-  unit_distance  = (_gimp_unit_get_factor (image->gimp, shell->unit) *
-                    sqrt (SQR ((gdouble)(ax - bx) / xres) +
-                          SQR ((gdouble)(ay - by) / yres)));
+  unit_distance  = (gimp_unit_get_factor (shell->unit) *
+                    sqrt (SQR ((gdouble) (ax - bx) / xres) +
+                          SQR ((gdouble) (ay - by) / yres)));
 
   if (measure->num_points != 3)
     bx = ax > 0 ? 1 : -1;
@@ -890,10 +888,10 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
     {
       g_snprintf (format, sizeof (format),
                   "%%.%df %s, %%.2f\302\260 (%%.%df × %%.%df)",
-                  _gimp_unit_get_digits (image->gimp, shell->unit),
-                  _gimp_unit_get_plural (image->gimp, shell->unit),
-                  _gimp_unit_get_digits (image->gimp, shell->unit),
-                  _gimp_unit_get_digits (image->gimp, shell->unit));
+                  gimp_unit_get_digits (shell->unit),
+                  gimp_unit_get_plural (shell->unit),
+                  gimp_unit_get_digits (shell->unit),
+                  gimp_unit_get_digits (shell->unit));
 
       gimp_tool_replace_status (GIMP_TOOL (measure), display, format,
                                 unit_distance, unit_angle,
@@ -906,7 +904,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       gchar buf[128];
 
       g_snprintf (format, sizeof (format), "%%.%df",
-                  _gimp_unit_get_digits (image->gimp, shell->unit));
+                  gimp_unit_get_digits (shell->unit));
+
       /* Distance */
       g_snprintf (buf, sizeof (buf), "%.1f", pixel_distance);
       gtk_label_set_text (GTK_LABEL (measure->distance_label[0]), buf);
@@ -917,7 +916,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->distance_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[0]),
-                              _gimp_unit_get_plural (image->gimp, shell->unit));
+                              gimp_unit_get_plural (shell->unit));
         }
       else
         {
@@ -952,7 +951,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->width_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[2]),
-                              _gimp_unit_get_plural (image->gimp, shell->unit));
+                              gimp_unit_get_plural (shell->unit));
         }
       else
         {
@@ -970,7 +969,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->height_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[3]),
-                              _gimp_unit_get_plural (image->gimp, shell->unit));
+                              gimp_unit_get_plural (shell->unit));
         }
       else
         {

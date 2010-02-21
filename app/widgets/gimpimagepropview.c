@@ -42,7 +42,6 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpundostack.h"
-#include "core/gimpunit.h"
 #include "core/gimp-utils.h"
 
 #include "file/file-procedure.h"
@@ -454,23 +453,22 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   /*  print size  */
   unit = gimp_get_default_unit ();
 
-  unit_factor = _gimp_unit_get_factor (image->gimp, unit);
-  unit_digits = _gimp_unit_get_digits (image->gimp, unit);
+  unit_digits = gimp_unit_get_digits (unit);
 
   g_snprintf (format_buf, sizeof (format_buf), "%%.%df × %%.%df %s",
               unit_digits + 1, unit_digits + 1,
-              _gimp_unit_get_plural (image->gimp, unit));
+              gimp_unit_get_plural (unit));
   g_snprintf (buf, sizeof (buf), format_buf,
-              gimp_image_get_width  (image) * unit_factor / xres,
-              gimp_image_get_height (image) * unit_factor / yres);
+              gimp_pixels_to_units (gimp_image_get_width  (image), unit, xres),
+              gimp_pixels_to_units (gimp_image_get_height (image), unit, yres));
   gtk_label_set_text (GTK_LABEL (view->print_size_label), buf);
 
   /*  resolution  */
-  unit = gimp_image_get_unit (image);
-  unit_factor = _gimp_unit_get_factor (image->gimp, unit);
+  unit        = gimp_image_get_unit (image);
+  unit_factor = gimp_unit_get_factor (unit);
 
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
-              _gimp_unit_get_abbreviation (image->gimp, unit));
+              gimp_unit_get_abbreviation (unit));
   g_snprintf (buf, sizeof (buf), _("%g × %g %s"),
               xres / unit_factor,
               yres / unit_factor,
