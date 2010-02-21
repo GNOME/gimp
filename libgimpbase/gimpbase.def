@@ -80,6 +80,7 @@ EXPORTS
 	gimp_pdb_proc_type_get_type
 	gimp_pdb_status_type_get_type
 	gimp_personal_rc_file
+	gimp_pixels_to_units
 	gimp_pixpipe_params_build
 	gimp_pixpipe_params_init
 	gimp_pixpipe_params_parse
@@ -117,6 +118,7 @@ EXPORTS
 	gimp_unit_get_type
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
+	gimp_units_to_pixels
 	gimp_user_directory
 	gimp_user_directory_get_type
 	gimp_utf8_strtrim

@@ -459,3 +459,44 @@ gimp_param_spec_unit (const gchar *name,
   return G_PARAM_SPEC (pspec);
 }
 
+/**
+ * gimp_pixels_to_units:
+ * @pixels:     value in pixels
+ * @unit:       unit to convert to
+ * @resolution: respoution in DPI
+ *
+ * Returns: %pixels converted to units.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_pixels_to_units (gdouble  pixels,
+                      GimpUnit unit,
+                      gdouble  resolution)
+{
+  if (unit == GIMP_UNIT_PIXEL)
+    return pixels;
+
+  return pixels * gimp_unit_get_factor (unit) / resolution;
+}
+
+/**
+ * gimp_inits_to_pixels:
+ * @value:      value in units
+ * @unit:       unit of %value
+ * @resolution: respoution in DPI
+ *
+ * Returns: %value converted to pixels.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_units_to_pixels (gdouble  value,
+                      GimpUnit unit,
+                      gdouble  resolution)
+{
+  if (unit == GIMP_UNIT_PIXEL)
+    return value;
+
+  return value * resolution / gimp_unit_get_factor (unit);
+}

@@ -81,6 +81,13 @@ const gchar * gimp_unit_get_abbreviation    (GimpUnit  unit);
 const gchar * gimp_unit_get_singular        (GimpUnit  unit);
 const gchar * gimp_unit_get_plural          (GimpUnit  unit);
 
+gdouble       gimp_pixels_to_units          (gdouble   pixels,
+                                             GimpUnit  unit,
+                                             gdouble   resolution);
+gdouble       gimp_units_to_pixels          (gdouble   units,
+                                             GimpUnit  unit,
+                                             gdouble   resolution);
+
 
 G_END_DECLS
 
