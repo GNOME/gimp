@@ -33,9 +33,10 @@
 
 
 void
-gimp_text_layout_render (GimpTextLayout *layout,
-                         cairo_t        *cr,
-                         gboolean        path)
+gimp_text_layout_render (GimpTextLayout    *layout,
+                         cairo_t           *cr,
+                         GimpTextDirection  base_dir,
+                         gboolean           path)
 {
   PangoLayout    *pango_layout;
   cairo_matrix_t  trafo;
@@ -48,29 +49,27 @@ gimp_text_layout_render (GimpTextLayout *layout,
 
   pango_layout = gimp_text_layout_get_pango_layout (layout);
 
-  /* If the width of the layout is > 0, then the text-box is FIXED
-   * and the layout position should be offset if the alignment
-   * is centered or right-aligned*/
+  /* If the width of the layout is > 0, then the text-box is FIXED and
+   * the layout position should be offset if the alignment is centered
+   * or right-aligned, also adjust for RTL text direction.
+   */
   if (pango_layout_get_width (pango_layout) > 0)
     {
-      gint width;
+      PangoAlignment align = pango_layout_get_alignment (pango_layout);
+      gint           width;
 
       pango_layout_get_pixel_size (pango_layout, &width, NULL);
 
-      switch (pango_layout_get_alignment (pango_layout))
+      if ((base_dir == GIMP_TEXT_DIRECTION_LTR && align == PANGO_ALIGN_RIGHT) ||
+          (base_dir == GIMP_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_LEFT))
         {
-        case PANGO_ALIGN_LEFT:
-          break;
-
-        case PANGO_ALIGN_RIGHT:
           x += PANGO_PIXELS (pango_layout_get_width (pango_layout)) - width;
-          break;
-
-        case PANGO_ALIGN_CENTER:
+        }
+      else if (align == PANGO_ALIGN_CENTER)
+        {
           x += (PANGO_PIXELS (pango_layout_get_width (pango_layout))
                 - width) / 2;
-          break;
-        }
+       }
     }
 
   cairo_translate (cr, x, y);

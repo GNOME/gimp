@@ -632,7 +632,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   cr = cairo_create (surface);
 
-  gimp_text_layout_render (layout, cr, FALSE);
+  gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
 
   mask = tile_manager_new ( width, height, 1);
   pixel_region_init (&maskPR, mask, 0, 0, width, height, TRUE);

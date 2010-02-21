@@ -82,7 +82,7 @@ gimp_text_vectors_new (GimpImage *image,
       cr = cairo_create (surface);
 
       layout = gimp_text_layout_new (text, image);
-      gimp_text_layout_render (layout, cr, TRUE);
+      gimp_text_layout_render (layout, cr, text->base_dir, TRUE);
       g_object_unref (layout);
 
       gimp_text_render_vectors (cr, &context);

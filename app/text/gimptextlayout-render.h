@@ -22,9 +22,10 @@
 #define __GIMP_TEXT_LAYOUT_RENDER_H__
 
 
-void  gimp_text_layout_render (GimpTextLayout *layout,
-                               cairo_t        *cr,
-                               gboolean        path);
+void  gimp_text_layout_render (GimpTextLayout    *layout,
+                               cairo_t           *cr,
+                               GimpTextDirection  base_dir,
+                               gboolean           path);
 
 
 #endif /* __GIMP_TEXT_LAYOUT_RENDER_H__ */
