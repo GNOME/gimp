@@ -56,8 +56,12 @@ static void   gimp_dynamics_editor_notify_data     (GimpDynamics       *options,
 static void   gimp_dynamics_editor_add_output_row  (GObject     *config,
                                                     const gchar *row_label,
                                                     GtkTable    *table,
-                                                    gint         row,
-                                                    GtkWidget   *labels[]);
+                                                    gint         row);
+
+static void gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
+                                                      GtkWidget    *view_selector,
+                                                      GtkWidget    *notebook,
+                                                      GtkWidget    *check_grid);
 
 static GtkWidget * dynamics_check_button_new       (GObject     *config,
                                                     const gchar *property_name,
@@ -65,11 +69,8 @@ static GtkWidget * dynamics_check_button_new       (GObject     *config,
                                                     gint         column,
                                                     gint         row);
 
-
-static void    dynamics_check_button_size_allocate (GtkWidget     *toggle,
-                                                    GtkAllocation *allocation,
-                                                    GtkWidget     *label);
-
+static void      gimp_dynamics_editor_view_changed (GtkComboBox *combo,
+                                                    GtkWidget   *notebook);
 
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsEditor, gimp_dynamics_editor,
                          GIMP_TYPE_DATA_EDITOR,
@@ -97,6 +98,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   GimpDynamics   *dynamics;
   GtkWidget      *fixed;
   GtkWidget      *input_labels[6];
+  GtkWidget      *frame;
   gint            n_inputs = G_N_ELEMENTS (input_labels);
   gint            i;
 
@@ -106,9 +108,39 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                     G_CALLBACK (gimp_dynamics_editor_notify_model),
                     editor);
 
-  editor->table = gtk_table_new (10, n_inputs + 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (data_editor), editor->table, TRUE, TRUE, 0);
-  gtk_widget_show (editor->table);
+  editor->view_selector = gimp_enum_combo_box_new (GIMP_TYPE_DYNAMICS_OUTPUT_TYPE);
+  gtk_box_pack_start (GTK_BOX (data_editor), editor->view_selector, TRUE, TRUE, 0);
+  gtk_widget_show (editor->view_selector);
+
+
+
+  editor->notebook = gtk_notebook_new ();
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (editor->notebook), FALSE);
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (editor->notebook), FALSE);
+  gtk_box_pack_start (GTK_BOX (editor), editor->notebook, TRUE, TRUE, 0);
+  gtk_widget_show (editor->notebook);
+
+  editor->check_grid = gtk_table_new (10, n_inputs + 2, FALSE);
+
+  gimp_dynamics_editor_init_output_editors(dynamics,
+                                           editor->view_selector,
+                                           editor->notebook,
+                                           editor->check_grid);
+
+  frame = gtk_frame_new(_("Maping matrix"));
+  gtk_notebook_append_page (GTK_NOTEBOOK (editor->notebook), frame, NULL);
+  gtk_widget_show (frame);
+
+  gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (editor->view_selector),
+                              GIMP_INT_STORE_VALUE,    -1,
+                              GIMP_INT_STORE_LABEL,    _("Maping matrix"),
+                              GIMP_INT_STORE_USER_DATA, frame,
+                              -1);
+
+  gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX (editor->view_selector), -1);
+
+  gtk_container_add (GTK_CONTAINER (frame), editor->check_grid);
+  gtk_widget_show (editor->check_grid);
 
   input_labels[0] = gtk_label_new (_("Pressure"));
   input_labels[1] = gtk_label_new (_("Velocity"));
@@ -117,52 +149,9 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
   input_labels[4] = gtk_label_new (_("Random"));
   input_labels[5] = gtk_label_new (_("Fade"));
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->opacity_output),
-                                       _("Opacity"),
-                                       GTK_TABLE (editor->table),
-                                       1, input_labels);
 
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->hardness_output),
-                                       _("Hardness"),
-                                       GTK_TABLE (editor->table),
-                                       2, NULL);
-
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->rate_output),
-                                       _("Rate"),
-                                       GTK_TABLE (editor->table),
-                                       3, NULL);
-
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->size_output),
-                                       _("Size"),
-                                       GTK_TABLE (editor->table),
-                                       4, NULL);
-
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->aspect_ratio_output),
-                                       _("Aspect ratio"),
-                                       GTK_TABLE (editor->table),
-                                       5, NULL);
-
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->color_output),
-                                       _("Color"),
-                                       GTK_TABLE (editor->table),
-                                       6, NULL);
-
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->angle_output),
-                                       _("Angle"),
-                                       GTK_TABLE (editor->table),
-                                       7, NULL);
-
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->jitter_output),
-                                       _("Jitter"),
-                                       GTK_TABLE (editor->table),
-                                       8, NULL);
-
-  gimp_dynamics_editor_add_output_row (G_OBJECT (dynamics->spacing_output),
-                                       _("Spacing"),
-                                       GTK_TABLE (editor->table),
-                                       9, NULL);
   fixed = gtk_fixed_new ();
-  gtk_table_attach (GTK_TABLE (editor->table), fixed, 0, n_inputs + 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (editor->check_grid), fixed, 0, n_inputs + 2, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (fixed);
 
@@ -171,7 +160,9 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
       gtk_label_set_angle (GTK_LABEL (input_labels[i]),
                            90);
       gtk_misc_set_alignment (GTK_MISC (input_labels[i]), 1.0, 1.0);
-      gtk_fixed_put (GTK_FIXED (fixed), input_labels[i], 0, 0);
+
+      gtk_table_attach (GTK_TABLE(editor->check_grid), input_labels[i], i + 1, i + 2, 0, 1,
+                        GTK_SHRINK, GTK_SHRINK, 0, 0);
       gtk_widget_show (input_labels[i]);
     }
 }
@@ -222,7 +213,7 @@ gimp_dynamics_editor_set_data (GimpDataEditor *editor,
                         editor);
     }
 
-  gtk_widget_set_sensitive (dynamics_editor->table,
+  gtk_widget_set_sensitive (dynamics_editor->check_grid,
                             editor->data_editable);
 }
 
@@ -296,8 +287,7 @@ static void
 gimp_dynamics_editor_add_output_row (GObject     *config,
                                      const gchar *row_label,
                                      GtkTable    *table,
-                                     gint         row,
-                                     GtkWidget   *labels[])
+                                     gint         row)
 {
   GtkWidget *label;
   GtkWidget *button;
@@ -311,52 +301,36 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
 
   button = dynamics_check_button_new (config, "use-pressure",
                                       table, column, row);
-  if (labels)
-    g_signal_connect (button, "size-allocate",
-                      G_CALLBACK (dynamics_check_button_size_allocate),
-                      labels[column - 1]);
+
   column++;
 
   button = dynamics_check_button_new (config, "use-velocity",
                                       table, column, row);
-  if (labels)
-    g_signal_connect (button, "size-allocate",
-                      G_CALLBACK (dynamics_check_button_size_allocate),
-                      labels[column - 1]);
+
   column++;
 
   button = dynamics_check_button_new (config, "use-direction",
                                       table, column, row);
-  if (labels)
-    g_signal_connect (button, "size-allocate",
-                      G_CALLBACK (dynamics_check_button_size_allocate),
-                      labels[column - 1]);
+
   column++;
 
   button = dynamics_check_button_new (config,  "use-tilt",
                                       table, column, row);
-  if (labels)
-    g_signal_connect (button, "size-allocate",
-                      G_CALLBACK (dynamics_check_button_size_allocate),
-                      labels[column - 1]);
+
   column++;
 
   button = dynamics_check_button_new (config, "use-random",
                                       table, column, row);
-  if (labels)
-    g_signal_connect (button, "size-allocate",
-                      G_CALLBACK (dynamics_check_button_size_allocate),
-                      labels[column - 1]);
+
   column++;
 
   button = dynamics_check_button_new (config, "use-fade",
                                       table, column, row);
-  if (labels)
-    g_signal_connect (button, "size-allocate",
-                      G_CALLBACK (dynamics_check_button_size_allocate),
-                      labels[column - 1]);
+
   column++;
 }
+
+
 
 static GtkWidget *
 dynamics_check_button_new (GObject     *config,
@@ -376,26 +350,68 @@ dynamics_check_button_new (GObject     *config,
 }
 
 static void
-dynamics_check_button_size_allocate (GtkWidget     *toggle,
-                                     GtkAllocation *allocation,
-                                     GtkWidget     *label)
+gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
+                                          GtkWidget    *view_selector,
+                                          GtkWidget    *notebook,
+                                          GtkWidget    *check_grid)
 {
-  GtkWidget     *fixed = gtk_widget_get_parent (label);
-  GtkAllocation  label_allocation;
-  GtkAllocation  fixed_allocation;
-  gint           x, y;
+  GimpIntStore    *list = GIMP_INT_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(view_selector)));
+  GtkTreeModel    *model = GTK_TREE_MODEL(list);
+  GtkWidget       *frame;
+  GtkTreeIter      iter;
+  gboolean         iter_valid;
+  gint             i = 1;
 
-  gtk_widget_get_allocation (label, &label_allocation);
-  gtk_widget_get_allocation (fixed, &fixed_allocation);
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter)) {
 
-  if (gtk_widget_get_direction (label) == GTK_TEXT_DIR_LTR)
-    x = allocation->x;
-  else
-    x = allocation->x + allocation->width - label_allocation.width;
+    gint output_type;
+    gchar *label;
+    GimpDynamicsOutput *output;
 
-  x -= fixed_allocation.x;
+    gtk_tree_model_get (GTK_TREE_MODEL(model), &iter,
+                        GIMP_INT_STORE_VALUE, &output_type,
+                        GIMP_INT_STORE_LABEL, &label,
+                        -1);
 
-  y = fixed_allocation.height - label_allocation.height;
 
-  gtk_fixed_move (GTK_FIXED (fixed), label, x, y);
+    frame = gtk_frame_new(label);
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, NULL);
+    gtk_widget_show (frame);
+
+    gtk_list_store_set(GTK_LIST_STORE(list), &iter,
+                       GIMP_INT_STORE_USER_DATA, frame,
+                       -1);
+
+    output = gimp_dynamics_get_output(dynamics, output_type);
+
+    gimp_dynamics_editor_add_output_row (G_OBJECT (output),
+                                         label,
+                                         GTK_TABLE (check_grid),
+                                         i);
+    i++;
+
+  }
+
+  g_signal_connect( G_OBJECT (view_selector), "changed",
+                    G_CALLBACK (gimp_dynamics_editor_view_changed), notebook );
+}
+
+static void
+gimp_dynamics_editor_view_changed (GtkComboBox *combo,
+                                   GtkWidget   *notebook)
+{
+  GtkTreeModel    *model = GTK_TREE_MODEL(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
+  GtkTreeIter      iter;
+  gint             page;
+  GValue value = { 0, };
+
+  gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo), &iter);
+
+  gtk_tree_model_get_value (model, &iter, GIMP_INT_STORE_USER_DATA, &value);
+  page = gtk_notebook_page_num (GTK_NOTEBOOK(notebook),
+                                GTK_WIDGET(g_value_get_pointer(&value)));
+  gtk_notebook_set_current_page (GTK_NOTEBOOK(notebook),
+                                 page);
 }

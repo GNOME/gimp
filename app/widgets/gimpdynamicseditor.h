@@ -38,7 +38,10 @@ struct _GimpDynamicsEditor
 
   GimpDynamics   *dynamics_model;
 
-  GtkWidget      *table;
+  GtkWidget      *check_grid;
+  GtkWidget      *view_selector;
+  GtkWidget      *notebook;
+  
 };
 
 struct _GimpDynamicsEditorClass
