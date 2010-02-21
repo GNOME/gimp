@@ -457,7 +457,11 @@ gimp_text_layer_set (GimpTextLayer *layer,
   if (layer->modified)
     {
       gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-      gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer));
+      gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
+                               0, 0,
+                               gimp_item_get_width  (GIMP_ITEM (layer)),
+                               gimp_item_get_height (GIMP_ITEM (layer)),
+                               NULL, FALSE);
     }
 
   gimp_image_undo_push_text_layer (image, undo_desc, layer, NULL);
