@@ -150,6 +150,8 @@ libappwidgets_a_sources = \
 	gimpdynamicseditor.h		\
 	gimpdynamicsfactoryview.c		\
 	gimpdynamicsfactoryview.h		\
+	gimpdynamicsoutputeditor.c		\
+	gimpdynamicsoutputeditor.h		\
 	gimpeditor.c			\
 	gimpeditor.h			\
 	gimpenumaction.c		\

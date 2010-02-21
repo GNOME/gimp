@@ -31,6 +31,7 @@
 
 #include "gimpdocked.h"
 #include "gimpdynamicseditor.h"
+#include "gimpdynamicsoutputeditor.h"
 #include "gimpmenufactory.h"
 #include "gimppropwidgets.h"
 
@@ -357,7 +358,7 @@ gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
 {
   GimpIntStore    *list = GIMP_INT_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(view_selector)));
   GtkTreeModel    *model = GTK_TREE_MODEL(list);
-  GtkWidget       *frame;
+  GtkWidget       *output_editor;
   GtkTreeIter      iter;
   gboolean         iter_valid;
   gint             i = 1;
@@ -376,15 +377,16 @@ gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
                         -1);
 
 
-    frame = gtk_frame_new(label);
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, NULL);
-    gtk_widget_show (frame);
+    output = gimp_dynamics_get_output(dynamics, output_type);
+
+    output_editor = gimp_dynamics_output_editor_new (output);
+
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), output_editor, NULL);
+    gtk_widget_show (output_editor);
 
     gtk_list_store_set(GTK_LIST_STORE(list), &iter,
-                       GIMP_INT_STORE_USER_DATA, frame,
+                       GIMP_INT_STORE_USER_DATA, output_editor,
                        -1);
-
-    output = gimp_dynamics_get_output(dynamics, output_type);
 
     gimp_dynamics_editor_add_output_row (G_OBJECT (output),
                                          label,
