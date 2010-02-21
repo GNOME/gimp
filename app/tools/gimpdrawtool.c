@@ -552,12 +552,18 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
   w = PROJ_ROUND (MAX (0.0, tx2));
   h = PROJ_ROUND (MAX (0.0, ty2));
 
+  if (! filled)
+    {
+      w--;
+      h--;
+    }
+
   if (w > 0 && h > 0)
     gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
                                 GIMP_CANVAS_STYLE_XOR,
                                 filled,
                                 PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                                w - 1, h - 1);
+                                w, h);
 }
 
 void
@@ -594,6 +600,12 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
   w = PROJ_ROUND (MAX (0.0, tx2));
   h = PROJ_ROUND (MAX (0.0, ty2));
 
+  if (! filled)
+    {
+      w--;
+      h--;
+    }
+
   if (w > 0 && h > 0)
     {
       if (w != 1 && h != 1)
@@ -602,7 +614,7 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                                 GIMP_CANVAS_STYLE_XOR,
                                 filled,
                                 PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                                w - 1, h - 1,
+                                w, h,
                                 angle1, angle2);
         }
       else
@@ -614,7 +626,7 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                                       GIMP_CANVAS_STYLE_XOR,
                                       filled,
                                       PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                                      w - 1, h - 1);
+                                      w, h);
         }
     }
 }
