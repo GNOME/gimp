@@ -441,12 +441,16 @@ gimp_text_tool_button_press (GimpTool            *tool,
                 }
             }
 
-          if (text_tool->selecting)
+          if (text_tool->text)
             {
               if (! text_tool->layout)
                 gimp_text_tool_update_layout (text_tool);
 
               gimp_text_tool_editor_button_press (text_tool, x, y, press_type);
+            }
+          else
+            {
+              text_tool->selecting = FALSE;
             }
 
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -1012,7 +1016,8 @@ gimp_text_tool_layer_notify (GimpTextLayer *layer,
                              GimpTextTool  *text_tool)
 {
   if (layer->modified)
-    gimp_text_tool_connect (text_tool, NULL, NULL);
+    gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
+                       GIMP_TOOL (text_tool)->display);
 }
 
 static void
@@ -1178,8 +1183,11 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
 
           gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-          gimp_image_undo_push_drawable_mod (image,
-                                             NULL, GIMP_DRAWABLE (layer));
+          gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
+                                   0, 0,
+                                   gimp_item_get_width  (GIMP_ITEM (layer)),
+                                   gimp_item_get_height (GIMP_ITEM (layer)),
+                                   NULL, FALSE);
         }
 
       gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
@@ -1345,8 +1353,7 @@ gimp_text_tool_confirm_response (GtkWidget    *widget,
           gimp_text_tool_connect (text_tool, layer, layer->text);
 
           /*  cause the text layer to be rerendered  */
-          if (text_tool->proxy)
-            g_object_notify (G_OBJECT (text_tool->proxy), "text");
+          g_object_notify (G_OBJECT (text_tool->proxy), "text");
 
           gimp_text_tool_editor_start (text_tool);
           break;
