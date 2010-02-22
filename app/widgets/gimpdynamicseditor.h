@@ -41,7 +41,6 @@ struct _GimpDynamicsEditor
   GtkWidget      *check_grid;
   GtkWidget      *view_selector;
   GtkWidget      *notebook;
-  
 };
 
 struct _GimpDynamicsEditorClass

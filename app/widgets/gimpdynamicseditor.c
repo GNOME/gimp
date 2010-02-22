@@ -109,11 +109,11 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                     G_CALLBACK (gimp_dynamics_editor_notify_model),
                     editor);
 
-  editor->view_selector = gimp_enum_combo_box_new (GIMP_TYPE_DYNAMICS_OUTPUT_TYPE);
-  gtk_box_pack_start (GTK_BOX (data_editor), editor->view_selector, TRUE, TRUE, 0);
+  editor->view_selector =
+    gimp_enum_combo_box_new (GIMP_TYPE_DYNAMICS_OUTPUT_TYPE);
+  gtk_box_pack_start (GTK_BOX (data_editor), editor->view_selector,
+                      FALSE, FALSE, 0);
   gtk_widget_show (editor->view_selector);
-
-
 
   editor->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_border (GTK_NOTEBOOK (editor->notebook), FALSE);
@@ -123,12 +123,12 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
   editor->check_grid = gtk_table_new (10, n_inputs + 2, FALSE);
 
-  gimp_dynamics_editor_init_output_editors(dynamics,
-                                           editor->view_selector,
-                                           editor->notebook,
-                                           editor->check_grid);
+  gimp_dynamics_editor_init_output_editors (dynamics,
+                                            editor->view_selector,
+                                            editor->notebook,
+                                            editor->check_grid);
 
-  frame = gtk_frame_new(_("Mapping matrix"));
+  frame = gimp_frame_new (_("Mapping matrix"));
   gtk_notebook_append_page (GTK_NOTEBOOK (editor->notebook), frame, NULL);
   gtk_widget_show (frame);
 
@@ -138,7 +138,7 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                               GIMP_INT_STORE_USER_DATA, frame,
                               -1);
 
-  gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX (editor->view_selector), -1);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->view_selector), -1);
 
   gtk_container_add (GTK_CONTAINER (frame), editor->check_grid);
   gtk_widget_show (editor->check_grid);
@@ -158,11 +158,11 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
 
   for (i = 0; i < n_inputs; i++)
     {
-      gtk_label_set_angle (GTK_LABEL (input_labels[i]),
-                           90);
+      gtk_label_set_angle (GTK_LABEL (input_labels[i]), 90);
       gtk_misc_set_alignment (GTK_MISC (input_labels[i]), 1.0, 1.0);
 
-      gtk_table_attach (GTK_TABLE(editor->check_grid), input_labels[i], i + 1, i + 2, 0, 1,
+      gtk_table_attach (GTK_TABLE(editor->check_grid), input_labels[i],
+                        i + 1, i + 2, 0, 1,
                         GTK_SHRINK, GTK_SHRINK, 0, 0);
       gtk_widget_show (input_labels[i]);
     }
@@ -356,7 +356,7 @@ gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
                                           GtkWidget    *notebook,
                                           GtkWidget    *check_grid)
 {
-  GimpIntStore    *list = GIMP_INT_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(view_selector)));
+  GimpIntStore    *list = GIMP_INT_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (view_selector)));
   GtkTreeModel    *model = GTK_TREE_MODEL(list);
   GtkWidget       *output_editor;
   GtkTreeIter      iter;
@@ -365,49 +365,50 @@ gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter)) {
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gint                output_type;
+      gchar              *label;
+      GimpDynamicsOutput *output;
 
-    gint output_type;
-    gchar *label;
-    GimpDynamicsOutput *output;
+      gtk_tree_model_get (GTK_TREE_MODEL(model), &iter,
+                          GIMP_INT_STORE_VALUE, &output_type,
+                          GIMP_INT_STORE_LABEL, &label,
+                          -1);
 
-    gtk_tree_model_get (GTK_TREE_MODEL(model), &iter,
-                        GIMP_INT_STORE_VALUE, &output_type,
-                        GIMP_INT_STORE_LABEL, &label,
-                        -1);
+      output = gimp_dynamics_get_output (dynamics, output_type);
 
+      output_editor = gimp_dynamics_output_editor_new (output);
 
-    output = gimp_dynamics_get_output(dynamics, output_type);
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), output_editor, NULL);
+      gtk_widget_show (output_editor);
 
-    output_editor = gimp_dynamics_output_editor_new (output);
+      gtk_list_store_set(GTK_LIST_STORE(list), &iter,
+                         GIMP_INT_STORE_USER_DATA, output_editor,
+                         -1);
 
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), output_editor, NULL);
-    gtk_widget_show (output_editor);
+      gimp_dynamics_editor_add_output_row (G_OBJECT (output),
+                                           label,
+                                           GTK_TABLE (check_grid),
+                                           i);
+      i++;
 
-    gtk_list_store_set(GTK_LIST_STORE(list), &iter,
-                       GIMP_INT_STORE_USER_DATA, output_editor,
-                       -1);
-
-    gimp_dynamics_editor_add_output_row (G_OBJECT (output),
-                                         label,
-                                         GTK_TABLE (check_grid),
-                                         i);
-    i++;
-
+      g_free (label);
   }
 
-  g_signal_connect( G_OBJECT (view_selector), "changed",
-                    G_CALLBACK (gimp_dynamics_editor_view_changed), notebook );
+  g_signal_connect (G_OBJECT (view_selector), "changed",
+                    G_CALLBACK (gimp_dynamics_editor_view_changed),
+                    notebook);
 }
 
 static void
 gimp_dynamics_editor_view_changed (GtkComboBox *combo,
                                    GtkWidget   *notebook)
 {
-  GtkTreeModel    *model = GTK_TREE_MODEL(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
-  GtkTreeIter      iter;
-  gint             page;
-  GValue value = { 0, };
+  GtkTreeModel *model = GTK_TREE_MODEL(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
+  GtkTreeIter   iter;
+  gint          page;
+  GValue        value = { 0, };
 
   gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo), &iter);
 

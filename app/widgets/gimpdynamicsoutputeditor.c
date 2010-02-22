@@ -79,7 +79,8 @@ static void     gimp_dynamics_output_editor_curve_reset   (GtkWidget            
                                                            GimpCurve             *curve);
 
 
-G_DEFINE_TYPE (GimpDynamicsOutputEditor, gimp_dynamics_output_editor, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GimpDynamicsOutputEditor, gimp_dynamics_output_editor,
+               GTK_TYPE_VBOX)
 
 #define parent_class gimp_dynamics_output_editor_parent_class
 
@@ -110,7 +111,7 @@ gimp_dynamics_output_editor_init (GimpDynamicsOutputEditor *editor)
 
   private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
 
-
+  gtk_box_set_spacing (GTK_BOX (editor), 6);
 }
 
 static GObject *
@@ -121,11 +122,9 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   GObject                         *object;
   GimpDynamicsOutputEditor        *editor;
   GimpDynamicsOutputEditorPrivate *private;
-
-  GtkWidget                   *vbox;
-  GtkWidget                   *label;
-  GtkWidget                   *view;
-  GtkWidget                   *button;
+  GtkWidget                       *label;
+  GtkWidget                       *view;
+  GtkWidget                       *button;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -134,19 +133,9 @@ gimp_dynamics_output_editor_constructor (GType                   type,
 
   g_assert (GIMP_IS_DYNAMICS_OUTPUT (private->output));
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_set_spacing (GTK_BOX (vbox), 6);
-
-  gtk_box_pack_start (GTK_BOX (editor), vbox, FALSE, FALSE, 0);
-
-  gtk_widget_show(vbox);
-
-  label = gtk_label_new("This is pressure curve.");
-
-  gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
-
-  gtk_widget_show(label);
-
+  label = gtk_label_new ("This is pressure curve.");
+  gtk_box_pack_start (GTK_BOX (editor), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   view = gimp_curve_view_new ();
   g_object_set (view,
@@ -155,16 +144,14 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   gtk_widget_set_size_request (view,
                                CURVE_SIZE + CURVE_BORDER * 2,
                                CURVE_SIZE + CURVE_BORDER * 2);
-  gtk_box_pack_start (GTK_BOX(vbox), view, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
 
   gimp_curve_view_set_curve (GIMP_CURVE_VIEW (view),
                              private->output->pressure_curve);
 
-
-
   button = gtk_button_new_with_mnemonic (_("_Reset Curve"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -192,9 +179,9 @@ gimp_dynamics_output_editor_finalize (GObject *object)
 
 static void
 gimp_dynamics_output_editor_set_property (GObject      *object,
-                                      guint         property_id,
-                                      const GValue *value,
-                                      GParamSpec   *pspec)
+                                          guint         property_id,
+                                          const GValue *value,
+                                          GParamSpec   *pspec)
 {
   GimpDynamicsOutputEditorPrivate *private;
 
@@ -214,9 +201,9 @@ gimp_dynamics_output_editor_set_property (GObject      *object,
 
 static void
 gimp_dynamics_output_editor_get_property (GObject    *object,
-                                      guint       property_id,
-                                      GValue     *value,
-                                      GParamSpec *pspec)
+                                          guint       property_id,
+                                          GValue     *value,
+                                          GParamSpec *pspec)
 {
   GimpDynamicsOutputEditorPrivate *private;
 
@@ -237,7 +224,7 @@ gimp_dynamics_output_editor_get_property (GObject    *object,
 
 static void
 gimp_dynamics_output_editor_curve_reset (GtkWidget *button,
-                                     GimpCurve *curve)
+                                         GimpCurve *curve)
 {
   gimp_curve_reset (curve, TRUE);
 }
