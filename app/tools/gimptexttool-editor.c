@@ -346,12 +346,16 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
   gint           x_pos  = -1;
   gboolean       retval = TRUE;
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
   if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
     {
       text_tool->needs_im_reset = TRUE;
       text_tool->x_pos          = -1;
 
-      return TRUE;
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+
+     return TRUE;
     }
 
   gimp_text_tool_ensure_proxy (text_tool);
@@ -361,6 +365,8 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
     {
       GIMP_LOG (TEXT_EDITING, "binding handled event");
 
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+
       return TRUE;
     }
 
@@ -368,8 +374,6 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
                                     gtk_text_buffer_get_insert (buffer));
   gtk_text_buffer_get_iter_at_mark (buffer, &selection,
                                     gtk_text_buffer_get_selection_bound (buffer));
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
   switch (kevent->keyval)
     {
@@ -840,7 +844,11 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
     case GTK_DELETE_CHARS:
       if (gtk_text_buffer_get_has_selection (buffer))
         {
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
           gtk_text_buffer_delete_selection (buffer, TRUE, TRUE);
+
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
           return;
         }
       else
