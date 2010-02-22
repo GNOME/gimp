@@ -297,6 +297,7 @@ static void
 gimp_ui_tab_toggle_dont_change_position (GimpTestFixture *fixture,
                                          gconstpointer    data)
 {
+  Gimp      *gimp          = GIMP (data);
   GtkWidget *dock_window   = NULL;
   gint       x_before_hide = -1;
   gint       y_before_hide = -1;
@@ -322,12 +323,16 @@ gimp_ui_tab_toggle_dont_change_position (GimpTestFixture *fixture,
                        &h_before_hide);
 
   /* Hide all dock windows */
-  gimp_dialog_factories_toggle ();
+  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+                                   "windows",
+                                   "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
   g_assert (! gtk_widget_get_visible (dock_window));
 
   /* Show them again */
-  gimp_dialog_factories_toggle ();
+  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+                                   "windows",
+                                   "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
   g_assert (gtk_widget_get_visible (dock_window));
 
