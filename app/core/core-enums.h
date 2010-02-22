@@ -583,6 +583,7 @@ typedef enum  /*< pdb-skip >*/
   GIMP_COLOR_PROFILE_POLICY_CONVERT /*< desc="Convert to RGB workspace" >*/
 } GimpColorProfilePolicy;
 
+
 #define GIMP_TYPE_DYNAMICS_OUTPUT_TYPE (gimp_dynamics_output_type_get_type ())
 
 GType gimp_dynamics_output_type_get_type (void) G_GNUC_CONST;

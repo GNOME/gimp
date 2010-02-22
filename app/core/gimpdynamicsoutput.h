@@ -34,23 +34,23 @@ typedef struct _GimpDynamicsOutputClass GimpDynamicsOutputClass;
 
 struct _GimpDynamicsOutput
 {
-  GimpObject parent_instance;
+  GimpObject              parent_instance;
 
-  GimpDynamicsOutputType type;
+  GimpDynamicsOutputType  type;
 
-  gboolean   use_pressure;
-  gboolean   use_velocity;
-  gboolean   use_direction;
-  gboolean   use_tilt;
-  gboolean   use_random;
-  gboolean   use_fade;
+  gboolean                use_pressure;
+  gboolean                use_velocity;
+  gboolean                use_direction;
+  gboolean                use_tilt;
+  gboolean                use_random;
+  gboolean                use_fade;
 
-  GimpCurve *pressure_curve;
-  GimpCurve *velocity_curve;
-  GimpCurve *direction_curve;
-  GimpCurve *tilt_curve;
-  GimpCurve *random_curve;
-  GimpCurve *fade_curve;
+  GimpCurve              *pressure_curve;
+  GimpCurve              *velocity_curve;
+  GimpCurve              *direction_curve;
+  GimpCurve              *tilt_curve;
+  GimpCurve              *random_curve;
+  GimpCurve              *fade_curve;
 };
 
 struct _GimpDynamicsOutputClass

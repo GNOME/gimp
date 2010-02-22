@@ -53,13 +53,13 @@ struct _GimpDynamicsClass
 };
 
 
-GType      gimp_dynamics_get_type     (void) G_GNUC_CONST;
+GType                gimp_dynamics_get_type     (void) G_GNUC_CONST;
 
-GimpData * gimp_dynamics_new          (const gchar  *name);
-GimpData * gimp_dynamics_get_standard (void);
+GimpData           * gimp_dynamics_new          (const gchar            *name);
+GimpData           * gimp_dynamics_get_standard (void);
 
+GimpDynamicsOutput * gimp_dynamics_get_output   (GimpDynamics           *dynamics,
+                                                 GimpDynamicsOutputType  type);
 
-GimpDynamicsOutput * gimp_dynamics_get_output (GimpDynamics           *dynamics,
-                                               GimpDynamicsOutputType  type_id);
 
 #endif  /*  __GIMP_DYNAMICS_H__  */

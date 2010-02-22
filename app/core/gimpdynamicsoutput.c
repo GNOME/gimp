@@ -83,6 +83,14 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
   object_class->set_property = gimp_dynamics_output_set_property;
   object_class->get_property = gimp_dynamics_output_get_property;
 
+  g_object_class_install_property (object_class, PROP_TYPE,
+                                   g_param_spec_enum ("type", NULL,
+                                                      _("Output type"),
+                                                      GIMP_TYPE_DYNAMICS_OUTPUT_TYPE,
+                                                      GIMP_DYNAMICS_OUTPUT_OPACITY,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_PRESSURE,
                                     "use-pressure", NULL,
                                     DEFAULT_USE_PRESSURE,
@@ -112,14 +120,6 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
                                     "use-fade", NULL,
                                     DEFAULT_USE_FADE,
                                     GIMP_PARAM_STATIC_STRINGS);
-
-  g_object_class_install_property (object_class, PROP_TYPE,
-                                   g_param_spec_enum ("type", NULL,
-                                                      _("Output type"),
-                                                      GIMP_TYPE_DYNAMICS_OUTPUT_TYPE,
-                                                      GIMP_DYNAMICS_OUTPUT_OPACITY,
-                                                      GIMP_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -161,6 +161,7 @@ gimp_dynamics_output_set_property (GObject      *object,
     case PROP_TYPE:
       output->type = g_value_get_enum (value);
       break;
+
     case PROP_USE_PRESSURE:
       output->use_pressure = g_value_get_boolean (value);
       break;
@@ -204,6 +205,7 @@ gimp_dynamics_output_get_property (GObject    *object,
     case PROP_TYPE:
       g_value_set_enum (value, output->type);
       break;
+
     case PROP_USE_PRESSURE:
       g_value_set_boolean (value, output->use_pressure);
       break;
@@ -238,7 +240,8 @@ gimp_dynamics_output_get_property (GObject    *object,
 /*  public functions  */
 
 GimpDynamicsOutput *
-gimp_dynamics_output_new (const gchar *name, GimpDynamicsOutputType type)
+gimp_dynamics_output_new (const gchar            *name,
+                          GimpDynamicsOutputType  type)
 {
   g_return_val_if_fail (name != NULL, NULL);
 

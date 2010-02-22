@@ -437,9 +437,9 @@ gimp_dynamics_get_output (GimpDynamics           *dynamics,
 /*  private functions  */
 
 static GimpDynamicsOutput *
-gimp_dynamics_create_output (GimpDynamics *dynamics,
-                             const gchar  *name,
-                             GimpDynamicsOutputType type)
+gimp_dynamics_create_output (GimpDynamics           *dynamics,
+                             const gchar            *name,
+                             GimpDynamicsOutputType  type)
 {
   GimpDynamicsOutput *output = gimp_dynamics_output_new (name, type);
 
@@ -457,5 +457,3 @@ gimp_dynamics_output_notify (GObject          *output,
 {
   g_object_notify (G_OBJECT (dynamics), gimp_object_get_name (output));
 }
-
-
