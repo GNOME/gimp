@@ -28,6 +28,8 @@
 
 
 #include "gimpcurve.h"
+#include "gimpcurve-map.h"
+
 #include "gimpdynamicsoutput.h"
 
 #include "gimp-intl.h"
@@ -51,7 +53,13 @@ enum
   PROP_USE_DIRECTION,
   PROP_USE_TILT,
   PROP_USE_RANDOM,
-  PROP_USE_FADE
+  PROP_USE_FADE,
+  PROP_PRESSURE_CURVE,
+  PROP_VELOCITY_CURVE,
+  PROP_DIRECTION_CURVE,
+  PROP_TILT_CURVE,
+  PROP_RANDOM_CURVE,
+  PROP_FADE_CURVE
 };
 
 
@@ -120,6 +128,36 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
                                     "use-fade", NULL,
                                     DEFAULT_USE_FADE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PRESSURE_CURVE,
+                                   "pressure-curve", NULL,
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_VELOCITY_CURVE,
+                                   "velocity-curve", NULL,
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DIRECTION_CURVE,
+                                   "direction-curve", NULL,
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TILT_CURVE,
+                                   "tilt-curve", NULL,
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_RANDOM_CURVE,
+                                   "random-curve", NULL,
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_FADE_CURVE,
+                                   "fade-curve", NULL,
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
@@ -186,6 +224,30 @@ gimp_dynamics_output_set_property (GObject      *object,
       output->use_fade = g_value_get_boolean (value);
       break;
 
+    case PROP_PRESSURE_CURVE:
+      output->pressure_curve = g_value_get_object (value);
+      break;
+
+    case PROP_VELOCITY_CURVE:
+      output->velocity_curve = g_value_get_object (value);
+      break;
+
+    case PROP_DIRECTION_CURVE:
+      output->direction_curve = g_value_get_object (value);
+      break;
+
+    case PROP_TILT_CURVE:
+      output->tilt_curve = g_value_get_object (value);
+      break;
+
+    case PROP_RANDOM_CURVE:
+      output->random_curve = g_value_get_object (value);
+      break;
+
+    case PROP_FADE_CURVE:
+      output->fade_curve = g_value_get_object (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -228,6 +290,31 @@ gimp_dynamics_output_get_property (GObject    *object,
 
     case PROP_USE_FADE:
       g_value_set_boolean (value, output->use_fade);
+      break;
+
+
+    case PROP_PRESSURE_CURVE:
+      g_value_set_object (value, output->pressure_curve);
+      break;
+
+    case PROP_VELOCITY_CURVE:
+      g_value_set_object (value, output->velocity_curve);
+      break;
+
+    case PROP_DIRECTION_CURVE:
+      g_value_set_object (value, output->direction_curve);
+      break;
+
+    case PROP_TILT_CURVE:
+      g_value_set_object (value, output->tilt_curve);
+      break;
+
+    case PROP_RANDOM_CURVE:
+      g_value_set_object (value, output->random_curve);
+      break;
+
+    case PROP_FADE_CURVE:
+      g_value_set_object (value, output->fade_curve);
       break;
 
     default:
@@ -274,7 +361,8 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 
   if (output->use_pressure)
     {
-      total += coords->pressure;
+      total += gimp_curve_map_value (output->pressure_curve, coords->pressure);
+      printf("unmaped: %f, mapped:%f\n", coords->pressure, total);
       factors++;
     }
 
