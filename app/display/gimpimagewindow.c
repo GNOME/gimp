@@ -122,6 +122,9 @@ static gboolean  gimp_image_window_window_state_event  (GtkWidget           *wid
 static void      gimp_image_window_style_set           (GtkWidget           *widget,
                                                         GtkStyle            *prev_style);
 
+static void      gimp_image_window_config_notify       (GimpImageWindow     *window,
+                                                        GParamSpec          *pspec,
+                                                        GimpGuiConfig       *config);
 static void      gimp_image_window_show_tooltip        (GimpUIManager       *manager,
                                                         const gchar         *tooltip,
                                                         GimpImageWindow     *window);
@@ -307,8 +310,7 @@ gimp_image_window_constructor (GType                  type,
                            private->menubar_manager);
   gtk_paned_pack1 (GTK_PANED (private->left_hpane), private->left_docks,
                    FALSE, FALSE);
-  if (config->single_window_mode)
-    gtk_widget_show (private->left_docks);
+  gtk_widget_set_visible (private->left_docks, config->single_window_mode);
 
   /* Create the right pane */
   private->right_hpane = gtk_hpaned_new ();
@@ -337,9 +339,11 @@ gimp_image_window_constructor (GType                  type,
                            private->menubar_manager);
   gtk_paned_pack2 (GTK_PANED (private->right_hpane), private->right_docks,
                    FALSE, FALSE);
-  if (config->single_window_mode)
-    gtk_widget_show (private->right_docks);
+  gtk_widget_set_visible (private->right_docks, config->single_window_mode);
 
+  g_signal_connect_object (config, "notify::single-window-mode",
+                           G_CALLBACK (gimp_image_window_config_notify),
+                           window, G_CONNECT_SWAPPED);
   return object;
 }
 
@@ -852,33 +856,6 @@ gimp_image_window_get_show_menubar (GimpImageWindow *window)
   return gtk_widget_get_visible (private->menubar);
 }
 
-void
-gimp_image_window_set_show_docks (GimpImageWindow *window,
-                                  gboolean         show)
-{
-  GimpImageWindowPrivate *private;
-
-  g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
-
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-
-  gtk_widget_set_visible (private->left_docks,  show);
-  gtk_widget_set_visible (private->right_docks, show);
-}
-
-gboolean
-gimp_image_window_get_show_docks (GimpImageWindow *window)
-{
-  GimpImageWindowPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
-
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-
-  return (gtk_widget_get_visible (private->left_docks) &&
-          gtk_widget_get_visible (private->right_docks));
-}
-
 gboolean
 gimp_image_window_is_iconified (GimpImageWindow *window)
 {
@@ -1059,6 +1036,20 @@ gimp_image_window_show_tooltip (GimpUIManager   *manager,
 
   gimp_statusbar_push (statusbar, "menu-tooltip",
                        NULL, "%s", tooltip);
+}
+
+static void
+gimp_image_window_config_notify (GimpImageWindow *window,
+                                 GParamSpec      *pspec,
+                                 GimpGuiConfig   *config)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  if (strcmp (pspec->name, "single-window-mode") == 0)
+    {
+      gtk_widget_set_visible (private->left_docks, config->single_window_mode);
+      gtk_widget_set_visible (private->right_docks, config->single_window_mode);
+    }
 }
 
 static void

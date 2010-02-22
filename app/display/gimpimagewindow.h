@@ -80,10 +80,6 @@ void               gimp_image_window_set_show_statusbar (GimpImageWindow  *windo
                                                          gboolean          show);
 gboolean           gimp_image_window_get_show_statusbar (GimpImageWindow  *window);
 
-void               gimp_image_window_set_show_docks     (GimpImageWindow  *window,
-                                                         gboolean          show);
-gboolean           gimp_image_window_get_show_docks     (GimpImageWindow  *window);
-
 gboolean           gimp_image_window_is_iconified       (GimpImageWindow  *window);
 
 void               gimp_image_window_shrink_wrap        (GimpImageWindow  *window,

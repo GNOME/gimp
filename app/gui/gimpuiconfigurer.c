@@ -381,9 +381,6 @@ gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
                                             right_docks,
                                             FALSE /*only_toolbox*/);
 
-  /* Show the docks in the window */
-  gimp_image_window_set_show_docks (uber_image_window, TRUE);
-
   /* Move stuff from other windows to the uber image window */
   for (iter = windows; iter; iter = g_list_next (iter))
     {
@@ -427,9 +424,6 @@ gimp_ui_configurer_configure_for_multi_window (GimpUIConfigurer *ui_configurer)
       gimp_ui_configurer_separate_docks (ui_configurer, image_window);
 
       gimp_ui_configurer_separate_shells (ui_configurer, image_window);
-
-      /* Don't show docks in the new image winows */
-      gimp_image_window_set_show_docks (image_window, FALSE);
     }
 
   g_list_free (windows);
