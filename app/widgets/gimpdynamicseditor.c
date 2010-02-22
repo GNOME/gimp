@@ -128,13 +128,13 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
                                            editor->notebook,
                                            editor->check_grid);
 
-  frame = gtk_frame_new(_("Maping matrix"));
+  frame = gtk_frame_new(_("Mapping matrix"));
   gtk_notebook_append_page (GTK_NOTEBOOK (editor->notebook), frame, NULL);
   gtk_widget_show (frame);
 
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (editor->view_selector),
                               GIMP_INT_STORE_VALUE,    -1,
-                              GIMP_INT_STORE_LABEL,    _("Maping matrix"),
+                              GIMP_INT_STORE_LABEL,    _("Mapping matrix"),
                               GIMP_INT_STORE_USER_DATA, frame,
                               -1);
 
