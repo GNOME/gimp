@@ -500,7 +500,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
                        gtk_widget_get_state (widget),
                        &event->area, widget, NULL,
                        border - 2, border - 2,
-                       width + 4, width + 4);
+                       width + 4, height + 4);
     }
 
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
