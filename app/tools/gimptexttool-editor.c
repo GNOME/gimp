@@ -471,8 +471,7 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
   g_return_if_fail (cursor_rect != NULL);
 
-  if (! text_tool->layout)
-    gimp_text_tool_update_layout (text_tool);
+  gimp_text_tool_ensure_layout (text_tool);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
@@ -664,6 +663,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         cursor_index = strlen (string);
         g_free (string);
 
+        gimp_text_tool_ensure_layout (text_tool);
+
         layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
         pango_layout_index_to_line_x (layout, cursor_index, FALSE,
@@ -782,8 +783,7 @@ gimp_text_tool_insert_at_cursor (GimpTextTool *text_tool,
 {
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-  gtk_text_buffer_insert_interactive_at_cursor (text_tool->text_buffer,
-                                                str, -1, TRUE);
+  gtk_text_buffer_insert_at_cursor (text_tool->text_buffer, str, -1);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
@@ -912,7 +912,7 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-      gtk_text_buffer_delete_interactive (buffer, &cursor, &end, TRUE);
+      gtk_text_buffer_delete (buffer, &cursor, &end);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
     }
@@ -1096,6 +1096,8 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
   gchar          *string;
   gint            offset;
   gint            trailing;
+
+  gimp_text_tool_ensure_layout (text_tool);
 
   gimp_text_layout_untransform_point (text_tool->layout, &x, &y);
 

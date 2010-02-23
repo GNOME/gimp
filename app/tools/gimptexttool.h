@@ -113,7 +113,8 @@ void       gimp_text_tool_create_vectors         (GimpTextTool *text_tool);
 void       gimp_text_tool_create_vectors_warped  (GimpTextTool *text_tool);
 
 /*  only for the text editor  */
-void       gimp_text_tool_update_layout          (GimpTextTool *text_tool);
+void       gimp_text_tool_clear_layout           (GimpTextTool *text_tool);
+void       gimp_text_tool_ensure_layout          (GimpTextTool *text_tool);
 
 
 #endif /* __GIMP_TEXT_TOOL_H__ */
