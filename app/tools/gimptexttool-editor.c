@@ -453,6 +453,24 @@ gimp_text_tool_editor_get_text (GimpTextTool *text_tool)
                                    &start, &end, TRUE);
 }
 
+gint
+gimp_text_tool_editor_get_iter_index (GimpTextTool *text_tool,
+                                      GtkTextIter  *iter)
+{
+  GtkTextBuffer *buffer = text_tool->text_buffer;
+  GtkTextIter    start;
+  gchar         *string;
+  gint           index;
+
+  gtk_text_buffer_get_start_iter (buffer, &start);
+
+  string = gtk_text_buffer_get_text (buffer, &start, iter, TRUE);
+  index = strlen (string);
+  g_free (string);
+
+  return index;
+}
+
 void
 gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
                                        PangoRectangle *cursor_rect,
@@ -463,10 +481,8 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
   PangoLayout    *layout;
   PangoRectangle  ink_extents;
   PangoRectangle  logical_extents;
-  GtkTextIter     start;
   GtkTextIter     cursor;
   gint            cursor_index;
-  gchar          *string;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
   g_return_if_fail (cursor_rect != NULL);
@@ -488,13 +504,9 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
   else
     *logical_off_y = 0;
 
-  gtk_text_buffer_get_start_iter (buffer, &start);
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
-
-  string = gtk_text_buffer_get_text (buffer, &start, &cursor, TRUE);
-  cursor_index = strlen (string);
-  g_free (string);
+  cursor_index = gimp_text_tool_editor_get_iter_index (text_tool, &cursor);
 
   pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
   gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
@@ -659,9 +671,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
         gtk_text_buffer_get_bounds (buffer, &start, &end);
 
-        string = gtk_text_buffer_get_text (buffer, &start, &cursor, TRUE);
-        cursor_index = strlen (string);
-        g_free (string);
+        cursor_index = gimp_text_tool_editor_get_iter_index (text_tool,
+                                                             &cursor);
 
         gimp_text_tool_ensure_layout (text_tool);
 

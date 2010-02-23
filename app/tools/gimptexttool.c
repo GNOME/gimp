@@ -753,22 +753,14 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
   GtkTextBuffer   *buffer    = text_tool->text_buffer;
   PangoLayout     *layout;
   PangoLayoutIter *iter;
-  GtkTextIter      start;
   GtkTextIter      sel_start, sel_end;
   gint             min, max;
-  gchar           *string;
   gint             i;
 
-  gtk_text_buffer_get_start_iter (buffer, &start);
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
-  string = gtk_text_buffer_get_text (buffer, &start, &sel_start, FALSE);
-  min = strlen (string);
-  g_free (string);
-
-  string = gtk_text_buffer_get_text (buffer, &start, &sel_end, FALSE);
-  max = strlen (string);
-  g_free (string);
+  min = gimp_text_tool_editor_get_iter_index (text_tool, &sel_start);
+  max = gimp_text_tool_editor_get_iter_index (text_tool, &sel_end);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
