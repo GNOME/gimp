@@ -482,9 +482,9 @@ gimp_text_tool_button_release (GimpTool              *tool,
 
   if (text_tool->selecting)
     {
-      /*  we are in a selection process (user has initially clicked
-       *  on an existing text layer), so finish the selection process
-       *  any ignore rectangle-change-complete.
+      /*  we are in a selection process (user has initially clicked on
+       *  an existing text layer), so finish the selection process and
+       *  ignore rectangle-change-complete.
        */
       gimp_text_tool_editor_button_release (text_tool);
 
@@ -495,8 +495,8 @@ gimp_text_tool_button_release (GimpTool              *tool,
   else if (gimp_rectangle_tool_get_function (rect_tool) ==
            GIMP_RECTANGLE_TOOL_DEAD)
     {
-      /*  the user clicked in dead space (like between th corner and edge
-       *  handles, completely ignore that too.
+      /*  the user clicked in dead space (like between the corner and
+       *  edge handles, completely ignore that too.
        */
 
       text_tool->handle_rectangle_change_complete = FALSE;
@@ -506,9 +506,10 @@ gimp_text_tool_button_release (GimpTool              *tool,
       gint x1, y1;
       gint x2, y2;
 
-      /*  otherwise the user has clicked outside of any text layer to
-       *  create a new text, fall through and let rectangle-change-complete
-       *  do its job of setting the new text layer's size.
+      /*  otherwise the user has clicked outside of any text layer in
+       *  order to create a new text, fall through and let
+       *  rectangle-change-complete do its job of setting the new text
+       *  layer's size.
        */
 
       g_object_get (text_tool,
@@ -1035,8 +1036,8 @@ gimp_text_tool_text_notify (GimpText     *text,
       g_value_unset (&value);
     }
 
-  /* we need to redraw the rectangle in any case because whatever changes
-   * to the text can change its size
+  /* we need to redraw the rectangle in any case because whatever
+   * changes to the text can change its size
    */
   gimp_text_tool_frame_item (text_tool);
 
