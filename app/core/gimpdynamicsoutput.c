@@ -75,29 +75,9 @@ static void   gimp_dynamics_output_get_property (GObject      *object,
 static void   gimp_dynamics_output_copy_curve   (GimpCurve *src,
                                                  GimpCurve *dest);
 
-static void   gimp_dynamics_output_pressure_curve_dirty
-                                                (GimpCurve          *curve,
+static void   gimp_dynamics_output_curve_dirty  (GimpCurve          *curve,
                                                  GimpDynamicsOutput *output);
 
-static void   gimp_dynamics_output_velocity_curve_dirty
-                                                (GimpCurve          *curve,
-                                                 GimpDynamicsOutput *output);
-
-static void   gimp_dynamics_output_direction_curve_dirty
-                                                (GimpCurve          *curve,
-                                                 GimpDynamicsOutput *output);
-
-static void   gimp_dynamics_output_tilt_curve_dirty
-                                                (GimpCurve          *curve,
-                                                 GimpDynamicsOutput *output);
-
-static void   gimp_dynamics_output_random_curve_dirty
-                                                (GimpCurve          *curve,
-                                                 GimpDynamicsOutput *output);
-
-static void   gimp_dynamics_output_fade_curve_dirty
-                                                (GimpCurve          *curve,
-                                                 GimpDynamicsOutput *output);
 
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsOutput, gimp_dynamics_output,
                          GIMP_TYPE_OBJECT,
@@ -189,35 +169,35 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
 static void
 gimp_dynamics_output_init (GimpDynamicsOutput *output)
 {
-  output->pressure_curve  = GIMP_CURVE (gimp_curve_new ("Pressure curve"));
-  output->velocity_curve  = GIMP_CURVE (gimp_curve_new ("Velocity curve"));
-  output->direction_curve = GIMP_CURVE (gimp_curve_new ("Direction curve"));
-  output->tilt_curve      = GIMP_CURVE (gimp_curve_new ("Tilt curve"));
-  output->random_curve    = GIMP_CURVE (gimp_curve_new ("Random curve"));
-  output->fade_curve      = GIMP_CURVE (gimp_curve_new ("Fade curve"));
+  output->pressure_curve  = GIMP_CURVE (gimp_curve_new ("pressure-curve"));
+  output->velocity_curve  = GIMP_CURVE (gimp_curve_new ("velocity-curve"));
+  output->direction_curve = GIMP_CURVE (gimp_curve_new ("direction-curve"));
+  output->tilt_curve      = GIMP_CURVE (gimp_curve_new ("tilt-curve"));
+  output->random_curve    = GIMP_CURVE (gimp_curve_new ("random-curve"));
+  output->fade_curve      = GIMP_CURVE (gimp_curve_new ("fade-curve"));
 
   g_signal_connect_object (output->pressure_curve, "dirty",
-                           G_CALLBACK (gimp_dynamics_output_pressure_curve_dirty),
+                           G_CALLBACK (gimp_dynamics_output_curve_dirty),
                            output, 0);
 
   g_signal_connect_object (output->velocity_curve, "dirty",
-                           G_CALLBACK (gimp_dynamics_output_velocity_curve_dirty),
+                           G_CALLBACK (gimp_dynamics_output_curve_dirty),
                            output, 0);
 
   g_signal_connect_object (output->direction_curve, "dirty",
-                           G_CALLBACK (gimp_dynamics_output_direction_curve_dirty),
+                           G_CALLBACK (gimp_dynamics_output_curve_dirty),
                            output, 0);
 
   g_signal_connect_object (output->tilt_curve, "dirty",
-                           G_CALLBACK (gimp_dynamics_output_tilt_curve_dirty),
+                           G_CALLBACK (gimp_dynamics_output_curve_dirty),
                            output, 0);
 
   g_signal_connect_object (output->random_curve, "dirty",
-                           G_CALLBACK (gimp_dynamics_output_random_curve_dirty),
+                           G_CALLBACK (gimp_dynamics_output_curve_dirty),
                            output, 0);
 
   g_signal_connect_object (output->fade_curve, "dirty",
-                           G_CALLBACK (gimp_dynamics_output_fade_curve_dirty),
+                           G_CALLBACK (gimp_dynamics_output_curve_dirty),
                            output, 0);
 }
 
@@ -660,43 +640,9 @@ gimp_dynamics_output_copy_curve(GimpCurve *src,
 }
 
 static void
-gimp_dynamics_output_pressure_curve_dirty (GimpCurve          *curve,
-                                           GimpDynamicsOutput *output)
+gimp_dynamics_output_curve_dirty (GimpCurve          *curve,
+                                  GimpDynamicsOutput *output)
 {
-  g_object_notify (G_OBJECT (output), "pressure-curve");
+  g_object_notify (G_OBJECT (output), gimp_object_get_name(curve));
 }
 
-static void
-gimp_dynamics_output_velocity_curve_dirty (GimpCurve          *curve,
-                                           GimpDynamicsOutput *output)
-{
-  g_object_notify (G_OBJECT (output), "velocity-curve");
-}
-
-static void
-gimp_dynamics_output_direction_curve_dirty (GimpCurve          *curve,
-                                           GimpDynamicsOutput *output)
-{
-  g_object_notify (G_OBJECT (output), "direction-curve");
-}
-
-static void
-gimp_dynamics_output_tilt_curve_dirty (GimpCurve          *curve,
-                                       GimpDynamicsOutput *output)
-{
-  g_object_notify (G_OBJECT (output), "tilt-curve");
-}
-
-static void
-gimp_dynamics_output_random_curve_dirty (GimpCurve          *curve,
-                                         GimpDynamicsOutput *output)
-{
-  g_object_notify (G_OBJECT (output), "random-curve");
-}
-
-static void
-gimp_dynamics_output_fade_curve_dirty (GimpCurve          *curve,
-                                       GimpDynamicsOutput *output)
-{
-  g_object_notify (G_OBJECT (output), "fade-curve");
-}
