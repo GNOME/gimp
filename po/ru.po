@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-22 03:43+0300\n"
-"PO-Revision-Date: 2010-02-22 05:48+0300\n"
+"POT-Creation-Date: 2010-02-23 02:28+0300\n"
+"PO-Revision-Date: 2010-02-23 04:21+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -229,7 +229,7 @@ msgstr "%s версии %s"
 #: ../app/dialogs/dialogs.c:352
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
-msgstr "Редактор кистей"
+msgstr "Редактор кисти"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:110
@@ -372,7 +372,7 @@ msgstr "Редактор палитры образцов"
 #: ../app/dialogs/dialogs.c:289
 #: ../app/dialogs/preferences-dialog.c:2732
 msgid "Palettes"
-msgstr "Палитры цветов"
+msgstr "Палитры образцов"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:191
@@ -536,7 +536,7 @@ msgstr "_Изменить кисть..."
 #: ../app/actions/brushes-actions.c:86
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr "Отредактировать кисть"
+msgstr "Изменить эту кисть"
 
 #: ../app/actions/buffers-actions.c:41
 msgctxt "buffers-action"
@@ -2892,7 +2892,7 @@ msgstr "_Изменить градиент..."
 #: ../app/actions/gradients-actions.c:87
 msgctxt "gradients-action"
 msgid "Edit gradient"
-msgstr "Правка градиента"
+msgstr "Изменить градиент"
 
 #: ../app/actions/gradients-commands.c:65
 #, c-format
@@ -4522,7 +4522,7 @@ msgstr "_Изменить шаблон..."
 #: ../app/actions/templates-actions.c:64
 msgctxt "templates-action"
 msgid "Edit this template"
-msgstr "Отредактировать этот шаблон"
+msgstr "Изменить этот шаблон"
 
 #: ../app/actions/templates-actions.c:69
 msgctxt "templates-action"
@@ -5588,7 +5588,7 @@ msgstr "_Недавние панели"
 #: ../app/actions/windows-actions.c:89
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
-msgstr "_Панели"
+msgstr "_Прикрепляющиеся диалоги"
 
 #: ../app/actions/windows-actions.c:92
 msgctxt "windows-action"
@@ -5931,7 +5931,7 @@ msgstr "Произошла ошибка при чтении файла '%s'. Б�
 #.
 #: ../app/config/gimprc-blurbs.h:13
 msgid "When enabled, an image will become the active image when its image window receives the focus. This is useful for window managers using \"click to focus\"."
-msgstr "Если включено, изображение становится активным, когда его окно получает фокус. Это полезно в работе с оконными менеджерами, в которых для придания фокуса окну его нужно щелкнуть мышкой."
+msgstr "Если включено, изображение становится активным, когда его окно получает фокус. Это полезно в работе с оконными менеджерами, в которых для придания фокуса окну его нужно щёлкнуть мышкой."
 
 #: ../app/config/gimprc-blurbs.h:28
 msgid "Sets the canvas padding color used if the padding mode is set to custom color."
@@ -5982,9 +5982,8 @@ msgid "When enabled, the selected brush will be used for all tools."
 msgstr "Если включено, выбранная кисть используется всеми инструментами."
 
 #: ../app/config/gimprc-blurbs.h:148
-#, fuzzy
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "Если включено, выбранная кисть используется всеми инструментами."
+msgstr "Если включено, выбранная динамика используется всеми инструментами."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -10951,31 +10950,31 @@ msgstr "_Выравнивание"
 
 #: ../app/tools/gimpaligntool.c:600
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
-msgstr "Щелкните слой, контур или направляющую, либо используйте перетаскивание для выбора нескольких слоев"
+msgstr "Щёлкните слой, контур или направляющую, либо используйте щелчок и перетаскивание для выбора нескольких слоев"
 
 #: ../app/tools/gimpaligntool.c:609
 msgid "Click to pick this layer as first item"
-msgstr "Щелкните, чтобы сделать этот слой первым объектом"
+msgstr "Щёлкните, чтобы сделать этот слой первым объектом"
 
 #: ../app/tools/gimpaligntool.c:617
 msgid "Click to add this layer to the list"
-msgstr "Щелкните, чтобы добавить этот слой в список"
+msgstr "Щёлкните, чтобы добавить этот слой в список"
 
 #: ../app/tools/gimpaligntool.c:621
 msgid "Click to pick this guide as first item"
-msgstr "Щелкните, чтобы сделать эту направляющую первым объектом"
+msgstr "Щёлкните, чтобы сделать эту направляющую первым объектом"
 
 #: ../app/tools/gimpaligntool.c:629
 msgid "Click to add this guide to the list"
-msgstr "Щелкните, чтобы добавить эту направляющую в список"
+msgstr "Щёлкните, чтобы добавить эту направляющую в список"
 
 #: ../app/tools/gimpaligntool.c:633
 msgid "Click to pick this path as first item"
-msgstr "Щелкните, чтобы сделать этот контур первым объектом"
+msgstr "Щёлкните, чтобы сделать этот контур первым объектом"
 
 #: ../app/tools/gimpaligntool.c:641
 msgid "Click to add this path to the list"
-msgstr "Щелкните, чтобы добавить этот контур в список"
+msgstr "Щёлкните, чтобы добавить этот контур в список"
 
 #: ../app/tools/gimpaligntool.c:780
 msgid "Relative to:"
@@ -11397,21 +11396,21 @@ msgstr "_Пипетка"
 
 #: ../app/tools/gimpcolorpickertool.c:242
 msgid "Click in any image to view its color"
-msgstr "Щелкните любое изображение для просмотра его цвета"
+msgstr "Щёлкните любое изображение для просмотра его цвета"
 
 #: ../app/tools/gimpcolorpickertool.c:249
 #: ../app/tools/gimppainttool.c:493
 msgid "Click in any image to pick the foreground color"
-msgstr "Щелкните любое изображение, чтобы снять его цвет переднего плана"
+msgstr "Щёлкните любое изображение, чтобы снять с него цвет переднего плана"
 
 #: ../app/tools/gimpcolorpickertool.c:257
 #: ../app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the background color"
-msgstr "Щелкните любое изображение, чтобы снять его цвет фона"
+msgstr "Щёлкните любое изображение, чтобы снять с него цвет фона"
 
 #: ../app/tools/gimpcolorpickertool.c:265
 msgid "Click in any image to add the color to the palette"
-msgstr "Щелкните любое изображение, чтобы добавить цвет в палитру"
+msgstr "Щёлкните любое изображение, чтобы добавить цвет в палитру"
 
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
@@ -11529,15 +11528,15 @@ msgstr "Индексированные слои не редактируются 
 
 #: ../app/tools/gimpcurvestool.c:330
 msgid "Click to add a control point"
-msgstr "Нажмите, чтобы добавить контрольную точку"
+msgstr "Щёлкните, чтобы добавить контрольную точку"
 
 #: ../app/tools/gimpcurvestool.c:335
 msgid "Click to add control points to all channels"
-msgstr "Нажмите, чтобы добавить контрольные точки ко всем каналам"
+msgstr "Щёлкните, чтобы добавить контрольные точки ко всем каналам"
 
 #: ../app/tools/gimpcurvestool.c:340
 msgid "Click to locate on curve (try Shift, Ctrl)"
-msgstr "Щелкните мышкой для помещения точки под курсором на кривую (попробуйте с Shift, Ctrl)"
+msgstr "Щёлкните мышкой для помещения точки под курсором на кривую (попробуйте с Shift, Ctrl)"
 
 #: ../app/tools/gimpcurvestool.c:453
 #: ../app/tools/gimplevelstool.c:384
@@ -11815,11 +11814,11 @@ msgstr "С_вободное выделение"
 
 #: ../app/tools/gimpfreeselecttool.c:1119
 msgid "Click to complete selection"
-msgstr "Щелкните для завершения выделения"
+msgstr "Щёлкните для завершения выделения"
 
 #: ../app/tools/gimpfreeselecttool.c:1123
 msgid "Click-Drag to move segment vertex"
-msgstr "Щелкните и потащите, чтобы переместить вершину сегмента"
+msgstr "Щёлкните и потащите, чтобы переместить вершину сегмента"
 
 #: ../app/tools/gimpfreeselecttool.c:1128
 msgid "Return commits, Escape cancels, Backspace removes last segment"
@@ -11827,12 +11826,12 @@ msgstr "Ввод завершает выделение, Escape отменяет 
 
 #: ../app/tools/gimpfreeselecttool.c:1132
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
-msgstr "Щелчок+перетаскивание рисует произвольную линию, щелчок добавляет прямой отрезок"
+msgstr "Щелчок и перетаскивание рисует произвольную линию, щелчок добавляет прямой отрезок"
 
 #: ../app/tools/gimpfreeselecttool.c:1625
 msgctxt "command"
 msgid "Free Select"
-msgstr "Выделение от руки"
+msgstr "Свободное выделение"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fuzzy Select"
@@ -12062,15 +12061,15 @@ msgstr "%s: отключить автоприлипание"
 
 #: ../app/tools/gimpiscissorstool.c:957
 msgid "Click to close the curve"
-msgstr "Щелкните для закрытия контура"
+msgstr "Щёлкните для закрытия контура"
 
 #: ../app/tools/gimpiscissorstool.c:963
 msgid "Click to add a point on this segment"
-msgstr "Щелкните для добавления узла в сегмент"
+msgstr "Щёлкните для добавления узла в сегмент"
 
 #: ../app/tools/gimpiscissorstool.c:977
 msgid "Click or press Enter to convert to a selection"
-msgstr "Щелкните и нажите ввод для преобразования в выделение"
+msgstr "Щёлкните и нажите ввод для преобразования в выделение"
 
 #: ../app/tools/gimpiscissorstool.c:987
 msgid "Press Enter to convert to a selection"
@@ -12078,7 +12077,7 @@ msgstr "Нажмите ввод для преобразования в выде�
 
 #: ../app/tools/gimpiscissorstool.c:1002
 msgid "Click or Click-Drag to add a point"
-msgstr "Щелкните или щелкните и потащите для добавления узла"
+msgstr "Щёлкните или щёлкните и потащите для добавления узла"
 
 #: ../app/tools/gimplevelstool.c:151
 msgid "Levels Tool: Adjust color levels"
@@ -12102,7 +12101,7 @@ msgstr "Индексированные слои невозможно редак�
 
 #: ../app/tools/gimplevelstool.c:314
 msgid "Pick black point"
-msgstr "Выбор черной точки"
+msgstr "Выбор чёрной точки"
 
 #: ../app/tools/gimplevelstool.c:318
 msgid "Pick gray point"
@@ -12194,23 +12193,23 @@ msgstr "Добавить направляющие"
 
 #: ../app/tools/gimpmeasuretool.c:568
 msgid "Click to place vertical and horizontal guides"
-msgstr "Щелкните для размещения вертикальной или горизонтальной направляющей"
+msgstr "Щёлкните для размещения вертикальной или горизонтальной направляющей"
 
 #: ../app/tools/gimpmeasuretool.c:577
 msgid "Click to place a horizontal guide"
-msgstr "Щелкните для размещения горизонтальной направляющей"
+msgstr "Щёлкните для размещения горизонтальной направляющей"
 
 #: ../app/tools/gimpmeasuretool.c:592
 msgid "Click to place a vertical guide"
-msgstr "Щелкните для размещения вертикальной направляющей"
+msgstr "Щёлкните для размещения вертикальной направляющей"
 
 #: ../app/tools/gimpmeasuretool.c:606
 msgid "Click-Drag to add a new point"
-msgstr "Щелкните и потащите, чтобы добавить новую точку"
+msgstr "Щёлкните и потащите, чтобы добавить новую точку"
 
 #: ../app/tools/gimpmeasuretool.c:637
 msgid "Click-Drag to move all points"
-msgstr "Щелкните и потащите, чтобы переместить все точки"
+msgstr "Щёлкните и потащите, чтобы переместить все точки"
 
 #: ../app/tools/gimpmeasuretool.c:884
 #: ../app/tools/gimpmeasuretool.c:1029
@@ -12625,11 +12624,11 @@ msgstr "_Размазывание"
 
 #: ../app/tools/gimpsmudgetool.c:73
 msgid "Click to smudge"
-msgstr "Щелкните, чтобы размазать"
+msgstr "Щёлкните, чтобы размазать"
 
 #: ../app/tools/gimpsmudgetool.c:74
 msgid "Click to smudge the line"
-msgstr "Щелкните, чтобы размазать линией"
+msgstr "Щёлкните, чтобы размазать линией"
 
 #: ../app/tools/gimptextoptions.c:132
 msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
@@ -12914,30 +12913,29 @@ msgstr "Нажмите, чтобы создать новый компонент 
 
 #: ../app/tools/gimpvectortool.c:1211
 msgid "Click or Click-Drag to create a new anchor"
-msgstr "Щелкните или щелкните и потащите для создания нового узла"
+msgstr "Щёлкните или щёлкните и потащите для создания нового узла"
 
 #: ../app/tools/gimpvectortool.c:1221
 #: ../app/tools/gimpvectortool.c:1228
 msgid "Click-Drag to move the anchor around"
-msgstr "Нажмите и потащите, чтобы переместить узел"
+msgstr "Щёлкните и потащите, чтобы переместить узел"
 
 #: ../app/tools/gimpvectortool.c:1232
 #: ../app/tools/gimpvectortool.c:1255
 msgid "Click-Drag to move the anchors around"
-msgstr "Нажмите и потащите, чтобы переместить узлы"
+msgstr "Щёлкните и потащите, чтобы переместить узлы"
 
 #: ../app/tools/gimpvectortool.c:1238
 msgid "Click-Drag to move the handle around"
-msgstr "Нажмите и потащите, чтобы переместить рычаг"
+msgstr "Щёлкните и потащите, чтобы переместить рычаг"
 
 #: ../app/tools/gimpvectortool.c:1245
-#, fuzzy
 msgid "Click-Drag to move the handles around symmetrically"
-msgstr "Нажмите и потащите, чтобы переместить рычаг"
+msgstr "Щёлкните и потащите, чтобы переместить рычаги симметрично"
 
 #: ../app/tools/gimpvectortool.c:1260
 msgid "Click-Drag to change the shape of the curve"
-msgstr "Нажмите и потащите, чтобы изменить фигуру кривой"
+msgstr "Щёлкните и потащите, чтобы изменить фигуру кривой"
 
 #: ../app/tools/gimpvectortool.c:1263
 #, c-format
@@ -12946,31 +12944,31 @@ msgstr "%s: симметрично"
 
 #: ../app/tools/gimpvectortool.c:1268
 msgid "Click-Drag to move the component around"
-msgstr "Нажмите и потащите, чтобы переместить компонент"
+msgstr "Щёлкните и потащите, чтобы переместить компонент"
 
 #: ../app/tools/gimpvectortool.c:1276
 msgid "Click-Drag to move the path around"
-msgstr "Нажмите и потащите, чтобы переместить контур"
+msgstr "Щёлкните и потащите, чтобы переместить контур"
 
 #: ../app/tools/gimpvectortool.c:1280
 msgid "Click-Drag to insert an anchor on the path"
-msgstr "Нажмите, чтобы вставить узел в контур"
+msgstr "Щёлкните и потащите, чтобы вставить узел в контур"
 
 #: ../app/tools/gimpvectortool.c:1288
 msgid "Click to delete this anchor"
-msgstr "Нажмите, чтобы удалить этот узел"
+msgstr "Щёлкните, чтобы удалить этот узел"
 
 #: ../app/tools/gimpvectortool.c:1292
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr "Нажмите, чтобы соединить этот узел с выбранным конечным узлом"
+msgstr "Щёлкните, чтобы соединить этот узел с выбранным конечным узлом"
 
 #: ../app/tools/gimpvectortool.c:1297
 msgid "Click to open up the path"
-msgstr "Нажмите, чтобы разомкнуть контур"
+msgstr "Щёлкните, чтобы разомкнуть контур"
 
 #: ../app/tools/gimpvectortool.c:1301
 msgid "Click to make this node angular"
-msgstr "Нажмите, чтобы сделать этот узел угловым"
+msgstr "Щёлкните, чтобы сделать этот узел угловым"
 
 #: ../app/tools/gimpvectortool.c:1811
 msgid "Delete Anchors"
@@ -13674,7 +13672,7 @@ msgstr "Запереть точки растра от изменений"
 
 #: ../app/widgets/gimpdynamicseditor.c:131
 #: ../app/widgets/gimpdynamicseditor.c:137
-msgid "Maping matrix"
+msgid "Mapping matrix"
 msgstr "Матрица привязки"
 
 #: ../app/widgets/gimpdynamicseditor.c:146
@@ -14277,7 +14275,7 @@ msgstr ""
 "Цвета переднего плана и фона.\n"
 "Черный и белый квадратики сбрасывают цвета.\n"
 "Стрелки переключают цвета.\n"
-"Дважды щелкните цвет, чтобы изменить его."
+"Дважды щёлкните цвет, чтобы изменить его."
 
 #: ../app/widgets/gimptoolbox-color-area.c:140
 msgid "Change Foreground Color"
@@ -14294,35 +14292,35 @@ msgid ""
 "Click to open the Image Dialog."
 msgstr ""
 "Активное изображение.\n"
-"Щелкните, чтобы открыть диалог \"Изображение\"."
+"Щёлкните для открытия диалога «Изображение»."
 
 #: ../app/widgets/gimptoolbox-image-area.c:114
 msgid "Drag to an XDS enabled file-manager to save the image."
-msgstr "Перетащите в файловый менеджер с поддержкой XDS, чтобы сохранить."
+msgstr "Перетащите в файловый менеджер с поддержкой XDS для сохранения."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:149
 msgid ""
 "The active brush.\n"
 "Click to open the Brush Dialog."
 msgstr ""
-"Действующая кисть.\n"
-"Нажмите, чтобы открыть диалог «Кисти»."
+"Активная кисть.\n"
+"Щёлкните для открытия диалога «Кисти»."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:181
 msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
 msgstr ""
-"Действующая текстура.\n"
-"Нажмите, чтобы открыть диалог «Текстуры»."
+"Активная текстура.\n"
+"Щёлкните для открытия диалога «Текстуры»."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:213
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
 msgstr ""
-"Действующий градиент.\n"
-"Нажмите, чтобы открыть диалог «Градиенты»."
+"Активный градиент.\n"
+"Щёлкните для открытия диалога «Градиенты»."
 
 #: ../app/widgets/gimptooleditor.c:294
 msgid "Raise this tool"
