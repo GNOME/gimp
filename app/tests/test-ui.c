@@ -28,6 +28,8 @@
 #include "dialogs/dialogs.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 #include "display/gimpimagewindow.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -48,7 +50,10 @@
 #include "gimp-app-test-utils.h"
 
 
-#define GIMP_UI_POSITION_EPSILON 10
+#define GIMP_UI_WINDOW_POSITION_EPSILON 10
+#define GIMP_UI_WINDOW_POSITION_EPSILON 10
+#define GIMP_UI_POSITION_EPSILON        1
+#define GIMP_UI_POSITION_EPSILON        1
 
 
 typedef struct
@@ -66,6 +71,10 @@ static void            gimp_ui_restore_recently_closed_dock     (GimpTestFixture
 static void            gimp_ui_tab_toggle_dont_change_position  (GimpTestFixture   *fixture,
                                                                  gconstpointer      data);
 static void            gimp_ui_switch_to_single_window_mode     (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static void            gimp_ui_hide_docks_in_single_window_mode (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static void            gimp_ui_show_docks_in_single_window_mode (GimpTestFixture   *fixture,
                                                                  gconstpointer      data);
 static void            gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture   *fixture,
                                                                  gconstpointer      data);
@@ -121,6 +130,18 @@ int main(int argc, char **argv)
               gimp,
               NULL,
               gimp_ui_switch_to_single_window_mode,
+              NULL);
+  g_test_add ("/gimp-ui/hide-docks-in-single-window-mode",
+              GimpTestFixture,
+              gimp,
+              NULL,
+              gimp_ui_hide_docks_in_single_window_mode,
+              NULL);
+  g_test_add ("/gimp-ui/show-docks-in-single-window-mode",
+              GimpTestFixture,
+              gimp,
+              NULL,
+              gimp_ui_show_docks_in_single_window_mode,
               NULL);
   g_test_add ("/gimp-ui/switch-back-to-multi-window-mode",
               GimpTestFixture,
@@ -345,10 +366,10 @@ gimp_ui_tab_toggle_dont_change_position (GimpTestFixture *fixture,
   gtk_window_get_size (GTK_WINDOW (dock_window),
                        &w_after_show,
                        &h_after_show);
-  g_assert_cmpint ((int)abs (x_before_hide - x_after_show), <, GIMP_UI_POSITION_EPSILON);
-  g_assert_cmpint ((int)abs (y_before_hide - y_after_show), <, GIMP_UI_POSITION_EPSILON);
-  g_assert_cmpint ((int)abs (w_before_hide - w_after_show), <, GIMP_UI_POSITION_EPSILON);
-  g_assert_cmpint ((int)abs (h_before_hide - h_after_show), <, GIMP_UI_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (x_before_hide - x_after_show), <=, GIMP_UI_WINDOW_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (y_before_hide - y_after_show), <=, GIMP_UI_WINDOW_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (w_before_hide - w_after_show), <=, GIMP_UI_WINDOW_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (h_before_hide - h_after_show), <=, GIMP_UI_WINDOW_POSITION_EPSILON);
 }
 
 static void
@@ -364,6 +385,69 @@ gimp_ui_switch_to_single_window_mode (GimpTestFixture *fixture,
                                    "windows",
                                    "windows-use-single-window-mode");
   gimp_test_run_mainloop_until_idle ();
+}
+
+static void
+gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
+{
+  GimpDisplay      *display       = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
+  GimpDisplayShell *shell         = gimp_display_get_shell (display);
+  GtkWidget        *toplevel      = GTK_WIDGET (gimp_display_shell_get_window (shell));
+  gint              x_temp        = -1;
+  gint              y_temp        = -1;
+  gint              x_before_hide = -1;
+  gint              y_before_hide = -1;
+  gint              x_after_hide  = -1;
+  gint              y_after_hide  = -1;
+  g_assert (shell);
+  g_assert (toplevel);
+
+  /* Get toplevel coordinate of image origin */
+  gimp_test_run_mainloop_until_idle ();
+  gimp_display_shell_transform_xy (shell,
+                                   0.0, 0.0,
+                                   &x_temp, &y_temp,
+                                   FALSE /*use_offsets*/);
+  gtk_widget_translate_coordinates (GTK_WIDGET (shell),
+                                    toplevel,
+                                    x_temp, y_temp,
+                                    &x_before_hide, &y_before_hide);
+
+  /* Hide all dock windows */
+  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+                                   "windows",
+                                   "windows-hide-docks");
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Get toplevel coordinate of image origin */
+  gimp_test_run_mainloop_until_idle ();
+  gimp_display_shell_transform_xy (shell,
+                                   0.0, 0.0,
+                                   &x_temp, &y_temp,
+                                   FALSE /*use_offsets*/);
+  gtk_widget_translate_coordinates (GTK_WIDGET (shell),
+                                    toplevel,
+                                    x_temp, y_temp,
+                                    &x_after_hide, &y_after_hide);
+
+  g_assert_cmpint ((int)abs (x_after_hide - x_before_hide), <=, GIMP_UI_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (y_after_hide - y_before_hide), <=, GIMP_UI_POSITION_EPSILON);
+}
+
+static void
+gimp_ui_hide_docks_in_single_window_mode (GimpTestFixture *fixture,
+                                          gconstpointer   data)
+{
+  Gimp *gimp = GIMP (data);
+  gimp_ui_toggle_docks_in_single_window_mode (gimp);
+}
+
+static void
+gimp_ui_show_docks_in_single_window_mode (GimpTestFixture *fixture,
+                                          gconstpointer    data)
+{
+  Gimp *gimp = GIMP (data);
+  gimp_ui_toggle_docks_in_single_window_mode (gimp);
 }
 
 static void

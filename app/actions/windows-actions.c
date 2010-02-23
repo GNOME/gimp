@@ -201,8 +201,7 @@ windows_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_ACTIVE ("windows-use-single-window-mode", config->single_window_mode);
-  SET_ACTIVE ("windows-hide-docks", (gimp_dialog_factories_get_state () !=
-                                     GIMP_DIALOGS_SHOWN));
+  SET_ACTIVE ("windows-hide-docks", config->hide_docks);
 
 #undef SET_ACTIVE
 }

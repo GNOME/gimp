@@ -52,6 +52,7 @@ enum
   PROP_RESTORE_SESSION,
   PROP_SAVE_TOOL_OPTIONS,
   PROP_SHOW_TOOLTIPS,
+  PROP_HIDE_DOCKS,
   PROP_SINGLE_WINDOW_MODE,
   PROP_TEAROFF_MENUS,
   PROP_CAN_CHANGE_ACCELS,
@@ -152,6 +153,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOLTIPS,
                                     "show-tooltips", SHOW_TOOLTIPS_BLURB,
                                     TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HIDE_DOCKS,
+                                    "hide-docks", HIDE_DOCKS_BLURB,
+                                    FALSE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SINGLE_WINDOW_MODE,
@@ -353,6 +359,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SHOW_TOOLTIPS:
       gui_config->show_tooltips = g_value_get_boolean (value);
       break;
+    case PROP_HIDE_DOCKS:
+      gui_config->hide_docks = g_value_get_boolean (value);
+      break;
     case PROP_SINGLE_WINDOW_MODE:
       gui_config->single_window_mode = g_value_get_boolean (value);
       break;
@@ -473,6 +482,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SHOW_TOOLTIPS:
       g_value_set_boolean (value, gui_config->show_tooltips);
+      break;
+    case PROP_HIDE_DOCKS:
+      g_value_set_boolean (value, gui_config->hide_docks);
       break;
     case PROP_SINGLE_WINDOW_MODE:
       g_value_set_boolean (value, gui_config->single_window_mode);

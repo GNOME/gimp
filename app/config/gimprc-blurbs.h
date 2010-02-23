@@ -361,6 +361,9 @@ N_("Show a tooltip when the pointer hovers over an item.")
 #define SINGLE_WINDOW_MODE_BLURB \
 N_("Use GIMP in a single-window mode.")
 
+#define HIDE_DOCKS_BLURB \
+N_("Hide docks and other windows, leaving only image windows.")
+
 #define SPACE_BAR_ACTION_BLURB \
 N_("What to do when the space bar is pressed in the image window.")
 
