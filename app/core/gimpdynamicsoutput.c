@@ -376,25 +376,30 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 
   if (output->use_velocity)
     {
-      total += (1.0 - coords->velocity);
+      total += gimp_curve_map_value (output->velocity_curve,
+                                    (1.0 - coords->velocity));
       factors++;
     }
 
   if (output->use_direction)
     {
-      total += fmod (coords->direction + 0.5, 1) ;
+      total += gimp_curve_map_value (output->direction_curve,
+                                     fmod (coords->direction + 0.5, 1));
       factors++;
     }
 
   if (output->use_tilt)
     {
-      total += 1.0 - sqrt (SQR (coords->xtilt) + SQR (coords->ytilt));
+      total += gimp_curve_map_value (output->tilt_curve,
+                                     (1.0 - sqrt (SQR (coords->xtilt) +
+                                      SQR (coords->ytilt))));
       factors++;
     }
 
   if (output->use_random)
     {
-      total += g_random_double_range (0.0, 1.0);
+      total += gimp_curve_map_value (output->random_curve,
+                                     g_random_double_range (0.0, 1.0));
       factors++;
     }
 
@@ -404,7 +409,7 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
 
       if (fade_options->use_fade)
         {
-          total += fade_point;
+          total += gimp_curve_map_value (output->fade_curve, fade_point);
           factors++;
         }
     }
@@ -432,19 +437,20 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 
   if (output->use_pressure)
     {
-      total += coords->pressure;
+      total += gimp_curve_map_value (output->pressure_curve, coords->pressure);
       factors++;
     }
 
   if (output->use_velocity)
     {
-      total += (1.0 - coords->velocity);
+      total += gimp_curve_map_value (output->velocity_curve,
+                                    (1.0 - coords->velocity));
       factors++;
     }
 
   if (output->use_direction)
     {
-      total += coords->direction;
+      total += gimp_curve_map_value (output->direction_curve, coords->direction);
       factors++;
     }
 
@@ -483,13 +489,14 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       while (tilt < 0.0)
         tilt += 1.0;
 
-      total += tilt;
+      total += gimp_curve_map_value (output->tilt_curve, tilt);
       factors++;
     }
 
   if (output->use_random)
     {
-      total += g_random_double_range (0.0, 1.0);
+      total += gimp_curve_map_value (output->random_curve,
+                                     g_random_double_range (0.0, 1.0));
       factors++;
     }
 
@@ -499,7 +506,7 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 
       if (fade_options->use_fade)
         {
-          total += fade_point;
+          total += gimp_curve_map_value (output->fade_curve, fade_point);
           factors++;
         }
     }
@@ -527,13 +534,13 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
   if (output->use_pressure)
     {
-      total += 2 * coords->pressure;
+      total += gimp_curve_map_value (output->pressure_curve, 2 * coords->pressure);
       factors++;
     }
 
   if (output->use_velocity)
     {
-      total += 2 * coords->velocity;
+      total += gimp_curve_map_value (output->velocity_curve, 2 * coords->velocity);
       factors++;
     }
 
@@ -546,13 +553,15 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       if ((coords->direction > 0.0) && (coords->direction < 0.5))
         direction = 1 / direction;
 
-      total += direction;
+      total += gimp_curve_map_value (output->direction_curve, direction);
       factors++;
     }
 
   if (output->use_tilt)
     {
-      total += sqrt ((1 - fabs (coords->xtilt)) / (1 - fabs (coords->ytilt)));
+      total += gimp_curve_map_value (output->tilt_curve,
+                                     (sqrt ((1 - fabs (coords->xtilt)) /
+                                     (1 - fabs (coords->ytilt)))));
       factors++;
     }
 
@@ -565,7 +574,7 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       else
         random = (random - 0.5) / (1.0 - 0.5) * (2.0 - 1.0) + 1.0;
 
-      total += random;
+      total += gimp_curve_map_value (output->random_curve, random);
       factors++;
     }
 
@@ -575,7 +584,7 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
       if (fade_options->use_fade)
         {
-          total += fade_point;
+          total += gimp_curve_map_value (output->fade_curve, fade_point);
           factors++;
         }
     }
