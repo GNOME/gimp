@@ -521,6 +521,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (frame);
 
   tool->graph = gimp_curve_view_new ();
+  gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (tool->graph), 0, 255);
+  gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (tool->graph), 0, 255);
   gtk_widget_set_size_request (tool->graph,
                                GRAPH_SIZE + RADIUS * 2,
                                GRAPH_SIZE + RADIUS * 2);

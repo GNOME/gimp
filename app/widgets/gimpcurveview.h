@@ -58,6 +58,11 @@ struct _GimpCurveView
   gdouble            xpos;
   PangoLayout       *xpos_layout;
 
+  gdouble            range_x_min;
+  gdouble            range_x_max;
+  gdouble            range_y_min;
+  gdouble            range_y_max;
+
   gdouble            cursor_x;
   gdouble            cursor_y;
   PangoLayout       *cursor_layout;
@@ -90,6 +95,12 @@ void        gimp_curve_view_remove_background (GimpCurveView *view,
 
 void        gimp_curve_view_set_selected      (GimpCurveView *view,
                                                gint           selected);
+void        gimp_curve_view_set_range_x       (GimpCurveView *view,
+                                               gdouble        min,
+                                               gdouble        max);
+void        gimp_curve_view_set_range_y       (GimpCurveView *view,
+                                               gdouble        min,
+                                               gdouble        max);
 void        gimp_curve_view_set_xpos          (GimpCurveView *view,
                                                gdouble        x);
 

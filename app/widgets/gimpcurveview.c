@@ -202,6 +202,10 @@ gimp_curve_view_init (GimpCurveView *view)
   view->xpos        = -1.0;
   view->cursor_x    = -1.0;
   view->cursor_y    = -1.0;
+  view->range_x_min = 0.0;
+  view->range_x_max = 1.0;
+  view->range_y_min = 0.0;
+  view->range_y_max = 1.0;
 
   gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
   gtk_widget_add_events (GTK_WIDGET (view),
@@ -605,8 +609,19 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
       if (! view->cursor_layout)
         {
-          view->cursor_layout = gtk_widget_create_pango_layout (widget,
-                                                                "x:888 y:888");
+          /*  stupid heuristic: special-case for 0..255  */
+          if (view->range_x_max == 255.0 &&
+              view->range_y_max == 255.0)
+            {
+              view->cursor_layout =
+                gtk_widget_create_pango_layout (widget, "x:888 y:888");
+            }
+          else
+            {
+              view->cursor_layout =
+                gtk_widget_create_pango_layout (widget, "x:0.888 y:0.888");
+            }
+
           pango_layout_get_pixel_extents (view->cursor_layout,
                                           NULL, &view->cursor_rect);
         }
@@ -626,9 +641,29 @@ gimp_curve_view_expose (GtkWidget      *widget,
       cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
       cairo_stroke (cr);
 
-      g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
-                  (gint) (view->cursor_x         * 255.999),
-                  (gint) ((1.0 - view->cursor_y) * 255.999));
+      /*  stupid heuristic: special-case for 0..255  */
+      if (view->range_x_max == 255.0 &&
+          view->range_y_max == 255.0)
+        {
+          g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
+                      (gint) (view->cursor_x *
+                              (view->range_x_max - view->range_x_min) +
+                              view->range_x_min),
+                      (gint) ((1.0 - view->cursor_y) *
+                              (view->range_y_max - view->range_y_min) +
+                              view->range_y_min));
+        }
+      else
+        {
+          g_snprintf (buf, sizeof (buf), "x:%0.3f y:%0.3f",
+                      view->cursor_x *
+                      (view->range_x_max - view->range_x_min) +
+                      view->range_x_min,
+                      (1.0 - view->cursor_y) *
+                      (view->range_y_max - view->range_y_min) +
+                      view->range_y_min);
+        }
+
       pango_layout_set_text (view->cursor_layout, buf, -1);
 
       gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
@@ -1162,6 +1197,28 @@ gimp_curve_view_set_selected (GimpCurveView *view,
   view->selected = selected;
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+
+void
+gimp_curve_view_set_range_x (GimpCurveView *view,
+                             gdouble        min,
+                             gdouble        max)
+{
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+
+  view->range_x_min = min;
+  view->range_x_max = max;
+}
+
+void
+gimp_curve_view_set_range_y (GimpCurveView *view,
+                             gdouble        min,
+                             gdouble        max)
+{
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+
+  view->range_y_min = min;
+  view->range_y_max = max;
 }
 
 void
