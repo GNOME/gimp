@@ -72,6 +72,8 @@ static void   gimp_dynamics_output_get_property (GObject      *object,
                                                  guint         property_id,
                                                  GValue       *value,
                                                  GParamSpec   *pspec);
+static void   gimp_dynamics_output_copy_curve(   GimpCurve *src,
+                                                 GimpCurve *dest);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsOutput, gimp_dynamics_output,
@@ -225,27 +227,33 @@ gimp_dynamics_output_set_property (GObject      *object,
       break;
 
     case PROP_PRESSURE_CURVE:
-      output->pressure_curve = g_value_get_object (value);
+      gimp_dynamics_output_copy_curve (g_value_get_object (value),
+                                       output->pressure_curve);
       break;
 
     case PROP_VELOCITY_CURVE:
-      output->velocity_curve = g_value_get_object (value);
+      gimp_dynamics_output_copy_curve (g_value_get_object (value),
+                                       output->velocity_curve);
       break;
 
     case PROP_DIRECTION_CURVE:
-      output->direction_curve = g_value_get_object (value);
+      gimp_dynamics_output_copy_curve (g_value_get_object (value),
+                                       output->direction_curve);
       break;
 
     case PROP_TILT_CURVE:
-      output->tilt_curve = g_value_get_object (value);
+      gimp_dynamics_output_copy_curve (g_value_get_object (value),
+                                       output->tilt_curve);
       break;
 
     case PROP_RANDOM_CURVE:
-      output->random_curve = g_value_get_object (value);
+      gimp_dynamics_output_copy_curve (g_value_get_object (value),
+                                       output->random_curve);
       break;
 
     case PROP_FADE_CURVE:
-      output->fade_curve = g_value_get_object (value);
+      gimp_dynamics_output_copy_curve (g_value_get_object (value),
+                                       output->fade_curve);
       break;
 
     default:
@@ -581,4 +589,16 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 #endif
 
   return result;
+}
+
+static void
+gimp_dynamics_output_copy_curve(GimpCurve *src,
+                                GimpCurve *dest)
+{
+    if (src && dest)
+    {
+      gimp_config_copy (GIMP_CONFIG (src),
+                        GIMP_CONFIG (dest),
+                        GIMP_CONFIG_PARAM_SERIALIZE);
+    }
 }
