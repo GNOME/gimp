@@ -34,6 +34,7 @@
 #include "text/gimptextlayout.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpoverlaybox.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimptextproxy.h"
 
@@ -1167,10 +1168,12 @@ gimp_text_tool_im_preedit_start (GtkIMContext *context,
   text_tool->preedit_overlay = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (text_tool->preedit_overlay),
                              GTK_SHADOW_OUT);
-  gimp_display_shell_add_overlay (GIMP_DISPLAY_SHELL (shell),
+  gimp_display_shell_add_overlay (shell,
                                   text_tool->preedit_overlay,
                                   cursor_rect.x + off_x,
                                   cursor_rect.y + off_y);
+  gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
+                                      text_tool->preedit_overlay, 0.7);
   gtk_widget_show (text_tool->preedit_overlay);
 
   frame = gtk_frame_new (NULL);
