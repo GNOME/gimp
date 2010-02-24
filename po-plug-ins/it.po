@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-06 12:12+0100\n"
-"PO-Revision-Date: 2010-02-06 12:54+0100\n"
+"POT-Creation-Date: 2010-02-24 16:18+0100\n"
+"PO-Revision-Date: 2010-02-24 16:21+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1060,7 +1060,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
 #: ../plug-ins/common/file-csource.c:405 ../plug-ins/common/file-dicom.c:800
-#: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:761
+#: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:779
 #: ../plug-ins/common/file-gih.c:1261 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
 #: ../plug-ins/common/file-pat.c:475 ../plug-ins/common/file-pcx.c:672
@@ -3046,7 +3046,7 @@ msgstr "Profondità di colore (in bit) non supportata (%d)!"
 #. init the progress meter
 #. And let's begin the progress
 #: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:657
-#: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1266
+#: ../plug-ins/common/file-gif-save.c:786 ../plug-ins/common/file-gih.c:1266
 #: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:480
 #: ../plug-ins/common/file-pcx.c:633 ../plug-ins/common/file-pix.c:528
 #: ../plug-ins/common/file-png.c:1276 ../plug-ins/common/file-pnm.c:981
@@ -3212,7 +3212,7 @@ msgid "Description:"
 msgstr "Descrizione:"
 
 #: ../plug-ins/common/file-gif-load.c:148
-#: ../plug-ins/common/file-gif-save.c:168
+#: ../plug-ins/common/file-gif-save.c:176
 msgid "GIF image"
 msgstr "Immagine GIF"
 
@@ -3254,11 +3254,11 @@ msgstr ""
 "GIF: il tipo composito GIF %d non documentato non è gestibile. L'animazione "
 "non può essere eseguita o salvata perfettamente."
 
-#: ../plug-ins/common/file-gif-save.c:447
+#: ../plug-ins/common/file-gif-save.c:465
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "Impossibile ridurre ulteriormente i colori. Salvataggio come opaco."
 
-#: ../plug-ins/common/file-gif-save.c:562
+#: ../plug-ins/common/file-gif-save.c:580
 #, c-format
 msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
@@ -3267,7 +3267,7 @@ msgstr ""
 "Impossibile salvare \"%s\". Il formato file GIF non supporta immagini più "
 "larghe o alte di %d pixel."
 
-#: ../plug-ins/common/file-gif-save.c:673
+#: ../plug-ins/common/file-gif-save.c:691
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3275,20 +3275,20 @@ msgstr ""
 "Il formato GIF supporta solo commenti in codifica ASCII a 7bit. Commento non "
 "salvato."
 
-#: ../plug-ins/common/file-gif-save.c:732
+#: ../plug-ins/common/file-gif-save.c:750
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Impossibile salvare come immagine RGB a colori. Convertire prima in colore "
 "indicizzato o in scala di grigi."
 
-#: ../plug-ins/common/file-gif-save.c:910
+#: ../plug-ins/common/file-gif-save.c:928
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Ritardo inserito per prevenire l'uso di tutta la CPU da parte "
 "dell'animazione."
 
-#: ../plug-ins/common/file-gif-save.c:950
+#: ../plug-ins/common/file-gif-save.c:968
 msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3296,7 +3296,7 @@ msgstr ""
 "L'immagine che si sta tentando di salvare in formato GIF contiene livelli "
 "che si estendono oltre i limiti dell'immagine."
 
-#: ../plug-ins/common/file-gif-save.c:967
+#: ../plug-ins/common/file-gif-save.c:985
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
@@ -3304,70 +3304,42 @@ msgstr ""
 "Nei GIF ciò non è consentito. Potete tagliare tutti i livelli ai bordi \n"
 "dell'immagine o annullare il salvataggio."
 
-#: ../plug-ins/common/file-gif-save.c:1008
+#: ../plug-ins/common/file-gif-save.c:1121
 msgid "GIF"
 msgstr "GIF"
 
-#. regular gif parameter settings
-#: ../plug-ins/common/file-gif-save.c:1017
-msgid "GIF Options"
-msgstr "Opzioni GIF"
+#: ../plug-ins/common/file-gif-save.c:1129
+#, c-format
+msgid ""
+"Error loading UI file '%s':\n"
+"%s"
+msgstr ""
+"Errore di caricamento file IU \"%s\":\n"
+"%s"
 
-#: ../plug-ins/common/file-gif-save.c:1023
-msgid "I_nterlace"
-msgstr "I_nterlaccia"
-
-#: ../plug-ins/common/file-gif-save.c:1039
-msgid "_GIF comment:"
-msgstr "Commento _GIF:"
-
-#. additional animated gif parameter settings
-#: ../plug-ins/common/file-gif-save.c:1097
-msgid "Animated GIF Options"
-msgstr "Opzioni GIF animata"
-
-#: ../plug-ins/common/file-gif-save.c:1103
-msgid "_Loop forever"
-msgstr "Cic_lo infinito"
-
-#: ../plug-ins/common/file-gif-save.c:1116
-msgid "_Delay between frames where unspecified:"
-msgstr "Ritar_do predefinito tra fotogrammi:"
-
-#: ../plug-ins/common/file-gif-save.c:1131 ../plug-ins/common/file-mng.c:1493
-msgid "milliseconds"
-msgstr "millisecondi"
-
-#: ../plug-ins/common/file-gif-save.c:1141
-msgid "_Frame disposal where unspecified:"
-msgstr "Disposizione del _fotogramma quando non specificato: "
-
-#: ../plug-ins/common/file-gif-save.c:1145
+#: ../plug-ins/common/file-gif-save.c:1182
 msgid "I don't care"
 msgstr "Non importa"
 
-#: ../plug-ins/common/file-gif-save.c:1147
+#: ../plug-ins/common/file-gif-save.c:1184
 msgid "Cumulative layers (combine)"
 msgstr "Livelli cumulativi (combina)"
 
-#: ../plug-ins/common/file-gif-save.c:1149
+#: ../plug-ins/common/file-gif-save.c:1186
 msgid "One frame per layer (replace)"
 msgstr "Un fotogramma per livello (rimpiazza)"
 
-#. The "Always use default values" toggles
-#: ../plug-ins/common/file-gif-save.c:1165
-msgid "_Use delay entered above for all frames"
-msgstr "_Usa il ritardo immesso sopra per tutti i fotogrammi"
+#: ../plug-ins/common/file-gif-save.c:1203
+msgid ""
+"You can only export as animation when the image has more than one layer. The "
+"image you are trying to export only has one layer."
+msgstr "È possibile esportare come animazione solo quando l'immagine possiede più di un livello. L'immagine che si sta tentando di esportare possiede un solo livello."
 
-#: ../plug-ins/common/file-gif-save.c:1175
-msgid "U_se disposal entered above for all frames"
-msgstr "U_sa eliminazione immessa sopra per tutti i fotogrammi"
-
-#: ../plug-ins/common/file-gif-save.c:2328
+#: ../plug-ins/common/file-gif-save.c:2347
 msgid "Error writing output file."
 msgstr "Errore durante la scrittura del file di uscita."
 
-#: ../plug-ins/common/file-gif-save.c:2398
+#: ../plug-ins/common/file-gif-save.c:2417
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Il commento predefinito è limitato a %d caratteri."
@@ -3745,7 +3717,17 @@ msgstr "Ciclico"
 msgid "Default frame delay:"
 msgstr "Ritardo predefinito fotogrammi:"
 
-#: ../plug-ins/common/file-mng.c:1550
+#: ../plug-ins/common/file-mng.c:1493
+msgid "milliseconds"
+msgstr "millisecondi"
+
+#: ../plug-ins/common/file-mng.c:1506
+msgid ""
+"These options are only available when the exported image has more than one "
+"layer. The image you are exporting only has one layer."
+msgstr "Queste opzioni sono disponibili quando l'immagine esportata possiede più di un livello. L'immagine che si sta esportando ha un solo livello."
+
+#: ../plug-ins/common/file-mng.c:1559
 msgid "MNG animation"
 msgstr "Animazione MNG"
 
