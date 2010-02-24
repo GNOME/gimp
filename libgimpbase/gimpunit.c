@@ -463,7 +463,7 @@ gimp_param_spec_unit (const gchar *name,
  * gimp_pixels_to_units:
  * @pixels:     value in pixels
  * @unit:       unit to convert to
- * @resolution: respoution in DPI
+ * @resolution: resloution in DPI
  *
  * Returns: %pixels converted to units.
  *
@@ -481,10 +481,10 @@ gimp_pixels_to_units (gdouble  pixels,
 }
 
 /**
- * gimp_inits_to_pixels:
+ * gimp_units_to_pixels:
  * @value:      value in units
  * @unit:       unit of %value
- * @resolution: respoution in DPI
+ * @resolution: resloution in DPI
  *
  * Returns: %value converted to pixels.
  *
