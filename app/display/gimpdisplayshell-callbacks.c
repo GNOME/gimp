@@ -1083,7 +1083,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
                 if (gimp_tool_control_is_active (active_tool->control))
                   {
-                    g_array_append_val (shell->event_queue, image_coords);
+
                     if (shell->event_queue->len > 0)
                       gimp_display_shell_flush_event_queue (shell);
 

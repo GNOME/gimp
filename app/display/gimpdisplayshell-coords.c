@@ -33,6 +33,9 @@
 
 #define EVENT_FILL_PRECISION 6.0
 
+#define SMOOTH_FACTOR 0.3
+
+
 static void gimp_display_shell_interpolate_stroke (GimpDisplayShell *shell,
                                                    GimpCoords       *coords);
 
@@ -79,6 +82,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
   gdouble  dir_delta_y = 0.0;
   gdouble  distance    = 1.0;
   gboolean event_fill  = (inertia_factor > 0);
+  gdouble  delta_pressure = 0.0;
 
   /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
@@ -86,6 +90,18 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
   if (shell->scale_x > 1.0 || shell->scale_y > 1.0)
     {
       inertia_factor = 0.0;
+    }
+
+
+  delta_time = (shell->last_motion_delta_time * (1 - SMOOTH_FACTOR)
+                +  (time - shell->last_motion_time) * SMOOTH_FACTOR);
+
+  delta_pressure = coords->pressure - shell->last_coords.pressure;
+
+  /* Try to detect a pen lift */
+  if ((delta_time < 50) && (fabs(delta_pressure) > 0.04) && (delta_pressure < 0.0))
+    {
+      return FALSE;
     }
 
   if (shell->last_motion_time == 0)
@@ -103,8 +119,6 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
       delta_x = shell->last_coords.x - coords->x;
       delta_y = shell->last_coords.y - coords->y;
-
-#define SMOOTH_FACTOR 0.3
 
       /* Events with distances less than the screen resolution are not
        * worth handling.
@@ -265,7 +279,6 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
         }
 
         /* do event fill for devices that do not provide enough events*/
-
         if (distance >= EVENT_FILL_PRECISION &&
             event_fill                       &&
             shell->event_history->len >= 2)
