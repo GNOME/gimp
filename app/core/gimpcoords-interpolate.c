@@ -267,6 +267,7 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
     {
       GimpCoords coords;
       gdouble    velocity;
+      gdouble    pressure;
       gdouble    p = (gdouble) n / num_points;
 
       coords.x =
@@ -283,12 +284,13 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
                                               end_coords.y,
                                               future_coords.y);
 
-      coords.pressure =
+      pressure =
         gimp_coords_get_catmull_spline_point (p,
                                               past_coords.pressure,
                                               start_coords.pressure,
                                               end_coords.pressure,
                                               future_coords.pressure);
+      coords.pressure = CLAMP (pressure, 0.0, 1.0);
 
       coords.xtilt =
         gimp_coords_get_catmull_spline_point (p,
