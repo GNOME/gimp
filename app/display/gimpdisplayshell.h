@@ -223,6 +223,10 @@ void              gimp_display_shell_add_overlay   (GimpDisplayShell   *shell,
                                                     GtkWidget          *child,
                                                     gdouble             image_x,
                                                     gdouble             image_y);
+void              gimp_display_shell_move_overlay  (GimpDisplayShell   *shell,
+                                                    GtkWidget          *child,
+                                                    gdouble             image_x,
+                                                    gdouble             image_y);
 
 GimpImageWindow * gimp_display_shell_get_window    (GimpDisplayShell   *shell);
 GimpStatusbar   * gimp_display_shell_get_statusbar (GimpDisplayShell   *shell);

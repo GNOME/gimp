@@ -1116,6 +1116,34 @@ gimp_display_shell_add_overlay (GimpDisplayShell *shell,
                                        child, x, y);
 }
 
+void
+gimp_display_shell_move_overlay (GimpDisplayShell *shell,
+                                 GtkWidget        *child,
+                                 gdouble           image_x,
+                                 gdouble           image_y)
+{
+  gdouble *x_data;
+  gdouble *y_data;
+  gdouble  x, y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GTK_IS_WIDGET (shell));
+
+  x_data = g_object_get_data (G_OBJECT (child), "image-x");
+  y_data = g_object_get_data (G_OBJECT (child), "image-y");
+
+  if (! x_data || ! y_data)
+    return;
+
+  *x_data = image_x;
+  *y_data = image_y;
+
+  gimp_display_shell_transform_xy_f (shell, *x_data, *y_data, &x, &y, FALSE);
+
+  gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (shell->canvas),
+                                       child, x, y);
+}
+
 GimpImageWindow *
 gimp_display_shell_get_window (GimpDisplayShell *shell)
 {
