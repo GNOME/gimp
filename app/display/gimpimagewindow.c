@@ -141,6 +141,7 @@ static void      gimp_image_window_hide_tooltip        (GimpUIManager       *man
                                                         GimpImageWindow     *window);
 
 static void      gimp_image_window_keep_canvas_pos     (GimpImageWindow     *window);
+static gboolean  gimp_image_window_resume_shell        (GimpDisplayShell    *shell);
 static void      gimp_image_window_shell_size_allocate (GimpDisplayShell    *shell,
                                                         GtkAllocation       *allocation,
                                                         PosCorrectionData   *data);
@@ -1112,6 +1113,12 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
   gint               image_origin_window_y = -1;
   PosCorrectionData *data                  = NULL;
 
+  /* Freeze the active tool until the UI has stabilized. If it draws
+   * while we hide widgets there will be flicker
+   */
+  gimp_display_shell_pause (shell);
+  g_idle_add ((GSourceFunc) gimp_image_window_resume_shell, shell);
+
   gimp_display_shell_transform_xy (shell,
                                    0.0, 0.0,
                                    &image_origin_shell_x, &image_origin_shell_y,
@@ -1129,6 +1136,14 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
                          G_CALLBACK (gimp_image_window_shell_size_allocate),
                          data, (GClosureNotify) g_free,
                          G_CONNECT_AFTER);
+}
+
+static gboolean
+gimp_image_window_resume_shell (GimpDisplayShell *shell)
+{
+  gimp_display_shell_resume (shell);
+
+  return FALSE;
 }
 
 static void
