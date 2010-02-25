@@ -154,11 +154,12 @@ void
 text_tool_clear_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
-  GtkTextIter   start, end;
+  GimpTextTool  *text_tool = GIMP_TEXT_TOOL (data);
+  GtkTextBuffer *buffer    = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextIter    start, end;
 
-  gtk_text_buffer_get_bounds (text_tool->text_buffer, &start, &end);
-  gtk_text_buffer_select_range (text_tool->text_buffer, &start, &end);
+  gtk_text_buffer_get_bounds (buffer, &start, &end);
+  gtk_text_buffer_select_range (buffer, &start, &end);
   gimp_text_tool_delete_selection (text_tool);
 }
 

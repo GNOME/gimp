@@ -224,9 +224,10 @@ typedef struct _GimpCellRendererDashes       GimpCellRendererDashes;
 typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 
 
-/*  misc utilities & constructors  */
+/*  misc objects  */
 
 typedef struct _GimpDialogFactory            GimpDialogFactory;
+typedef struct _GimpTextBuffer               GimpTextBuffer;
 typedef struct _GimpUIConfigurer             GimpUIConfigurer;
 
 

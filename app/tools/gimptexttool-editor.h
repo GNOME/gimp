@@ -45,11 +45,6 @@ gboolean   gimp_text_tool_editor_key_release     (GimpTextTool        *text_tool
 
 void       gimp_text_tool_reset_im_context       (GimpTextTool        *text_tool);
 
-gchar    * gimp_text_tool_editor_get_text        (GimpTextTool        *text_tool);
-
-gint       gimp_text_tool_editor_get_iter_index  (GimpTextTool        *text_tool,
-                                                  GtkTextIter         *iter);
-
 void       gimp_text_tool_editor_get_cursor_rect (GimpTextTool        *text_tool,
                                                   PangoRectangle      *cursor_rect,
                                                   gint                *logical_off_x,

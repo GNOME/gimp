@@ -22,22 +22,7 @@
 
 #undef GSEAL_ENABLE
 
-#include <errno.h>
-#include <fcntl.h>
 #include <string.h>
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib/gstdio.h>
-
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
 
 #include <gtk/gtk.h>
 
@@ -885,125 +870,6 @@ gimp_window_set_transient_for (GtkWindow *window,
 
   g_object_unref (parent);
 #endif
-}
-
-gboolean
-gimp_text_buffer_load (GtkTextBuffer  *buffer,
-                       const gchar    *filename,
-                       GError        **error)
-{
-  FILE        *file;
-  gchar        buf[2048];
-  gint         remaining = 0;
-  GtkTextIter  iter;
-
-  g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  file = g_fopen (filename, "r");
-
-  if (! file)
-    {
-      g_set_error_literal (error, G_FILE_ERROR,
-                           g_file_error_from_errno (errno),
-                           g_strerror (errno));
-      return FALSE;
-    }
-
-  gtk_text_buffer_set_text (buffer, "", 0);
-  gtk_text_buffer_get_iter_at_offset (buffer, &iter, 0);
-
-  while (! feof (file))
-    {
-      const char *leftover;
-      gint        count;
-      gint        to_read = sizeof (buf) - remaining - 1;
-
-      count = fread (buf + remaining, 1, to_read, file);
-      buf[count + remaining] = '\0';
-
-      g_utf8_validate (buf, count + remaining, &leftover);
-
-      gtk_text_buffer_insert (buffer, &iter, buf, leftover - buf);
-      gtk_text_buffer_get_iter_at_offset (buffer, &iter, -1);
-
-      remaining = (buf + remaining + count) - leftover;
-      g_memmove (buf, leftover, remaining);
-
-      if (remaining > 6 || count < to_read)
-        break;
-    }
-
-  if (remaining)
-    g_message (_("Invalid UTF-8 data in file '%s'."),
-               gimp_filename_to_utf8 (filename));
-
-  fclose (file);
-
-  return TRUE;
-}
-
-gboolean
-gimp_text_buffer_save (GtkTextBuffer  *buffer,
-                       const gchar    *filename,
-                       gboolean        selection_only,
-                       GError        **error)
-{
-  GtkTextIter  start_iter;
-  GtkTextIter  end_iter;
-  gint         fd;
-  gchar       *text_contents;
-
-  g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  fd = g_open (filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
-
-  if (fd == -1)
-    {
-      g_set_error_literal (error, G_FILE_ERROR,
-                           g_file_error_from_errno (errno),
-                           g_strerror (errno));
-      return FALSE;
-    }
-
-  if (selection_only)
-    gtk_text_buffer_get_selection_bounds (buffer, &start_iter, &end_iter);
-  else
-    gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
-
-  text_contents = gtk_text_buffer_get_text (buffer,
-                                            &start_iter, &end_iter, TRUE);
-
-  if (text_contents)
-    {
-      gint text_length = strlen (text_contents);
-
-      if (text_length > 0)
-        {
-          gint bytes_written;
-
-          bytes_written = write (fd, text_contents, text_length);
-
-          if (bytes_written != text_length)
-            {
-              g_free (text_contents);
-              close (fd);
-              g_set_error_literal (error, G_FILE_ERROR,
-                                   g_file_error_from_errno (errno),
-                                   g_strerror (errno));
-              return FALSE;
-            }
-        }
-
-      g_free (text_contents);
-    }
-
-  close (fd);
-
-  return TRUE;
 }
 
 void

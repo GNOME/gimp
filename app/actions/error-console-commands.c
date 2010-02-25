@@ -28,7 +28,7 @@
 
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/gimptextbuffer.h"
 
 #include "error-console-commands.h"
 
@@ -149,7 +149,8 @@ error_console_save_response (GtkWidget        *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_text_buffer_save (console->text_buffer, filename,
+      if (! gimp_text_buffer_save (GIMP_TEXT_BUFFER (console->text_buffer),
+                                   filename,
                                    console->save_selection, &error))
         {
           gimp_message (console->gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,

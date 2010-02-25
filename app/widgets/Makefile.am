@@ -296,6 +296,8 @@ libappwidgets_a_sources = \
 	gimptemplateeditor.h		\
 	gimptemplateview.c		\
 	gimptemplateview.h		\
+	gimptextbuffer.c		\
+	gimptextbuffer.h		\
 	gimptexteditor.c		\
 	gimptexteditor.h		\
 	gimptextproxy.c			\

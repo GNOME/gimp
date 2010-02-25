@@ -26,10 +26,10 @@
 
 #include "core/gimp.h"
 
-#include "widgets/gimptexteditor.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimptextbuffer.h"
+#include "widgets/gimptexteditor.h"
 #include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "text-editor-commands.h"
 
@@ -136,7 +136,7 @@ text_editor_load_response (GtkWidget      *dialog,
       buffer   = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_text_buffer_load (buffer, filename, &error))
+      if (! gimp_text_buffer_load (GIMP_TEXT_BUFFER (buffer), filename, &error))
         {
           gimp_message (editor->ui_manager->gimp, G_OBJECT (dialog),
                         GIMP_MESSAGE_ERROR,

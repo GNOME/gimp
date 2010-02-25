@@ -51,6 +51,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimptextbuffer.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -240,8 +241,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->image   = NULL;
   text_tool->layout  = NULL;
 
-  text_tool->text_buffer = gtk_text_buffer_new (NULL);
-  gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
+  text_tool->text_buffer = gimp_text_buffer_new ();
 
   g_signal_connect (text_tool->text_buffer, "changed",
                     G_CALLBACK (gimp_text_tool_buffer_changed),
@@ -699,7 +699,7 @@ static void
 gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTextTool   *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GtkTextBuffer  *buffer    = text_tool->text_buffer;
+  GtkTextBuffer  *buffer    = GTK_TEXT_BUFFER (text_tool->text_buffer);
   PangoRectangle  cursor_rect;
   gint            logical_offset_x;
   gint            logical_offset_y;
@@ -750,7 +750,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
                                gint          logical_off_y)
 {
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GtkTextBuffer   *buffer    = text_tool->text_buffer;
+  GtkTextBuffer   *buffer    = GTK_TEXT_BUFFER (text_tool->text_buffer);
   PangoLayout     *layout;
   PangoLayoutIter *iter;
   GtkTextIter      sel_start, sel_end;
@@ -759,8 +759,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
 
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
-  min = gimp_text_tool_editor_get_iter_index (text_tool, &sel_start);
-  max = gimp_text_tool_editor_get_iter_index (text_tool, &sel_end);
+  min = gimp_text_buffer_get_iter_index (text_tool->text_buffer, &sel_start);
+  max = gimp_text_buffer_get_iter_index (text_tool->text_buffer, &sel_end);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
@@ -922,7 +922,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           text_tool->text = NULL;
 
           g_object_set (text_tool->proxy, "text", NULL, NULL);
-          gtk_text_buffer_set_text (text_tool->text_buffer, "", -1);
+          gimp_text_buffer_set_text (text_tool->text_buffer, NULL);
 
           gimp_text_tool_clear_layout (text_tool);
         }
@@ -934,7 +934,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
       if (text)
         {
           gimp_config_sync (G_OBJECT (text), G_OBJECT (text_tool->proxy), 0);
-          gtk_text_buffer_set_text (text_tool->text_buffer, text->text, -1);
+          gimp_text_buffer_set_text (text_tool->text_buffer, text->text);
 
           gimp_text_tool_clear_layout (text_tool);
 
@@ -1042,7 +1042,7 @@ gimp_text_tool_text_notify (GimpText     *text,
                                        gimp_text_tool_buffer_changed,
                                        text_tool);
 
-      gtk_text_buffer_set_text (text_tool->text_buffer, text->text, -1);
+      gimp_text_buffer_set_text (text_tool->text_buffer, text->text);
 
       g_signal_handlers_unblock_by_func (text_tool->text_buffer,
                                          gimp_text_tool_buffer_changed,
@@ -1224,7 +1224,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
     }
   else
     {
-      gchar *string = gimp_text_tool_editor_get_text (text_tool);
+      gchar *string = gimp_text_buffer_get_text (text_tool->text_buffer);
 
       g_object_set (text_tool->proxy,
                     "text",     string,
@@ -1505,12 +1505,12 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_buffer_changed (GtkTextBuffer *text_buffer,
+gimp_text_tool_buffer_changed (GtkTextBuffer *buffer,
                                GimpTextTool  *text_tool)
 {
   if (text_tool->text)
     {
-      gchar *string = gimp_text_tool_editor_get_text (text_tool);
+      gchar *string = gimp_text_buffer_get_text (GIMP_TEXT_BUFFER (buffer));
 
       g_object_set (text_tool->proxy,
                     "text", string,
@@ -1611,17 +1611,21 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
 gboolean
 gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool)
 {
-  return gtk_text_buffer_get_has_selection (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+
+  return gtk_text_buffer_get_has_selection (buffer);
 }
 
 void
 gimp_text_tool_delete_selection (GimpTextTool *text_tool)
 {
-  if (gtk_text_buffer_get_has_selection (text_tool->text_buffer))
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+
+  if (gtk_text_buffer_get_has_selection (buffer))
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-      gtk_text_buffer_delete_selection (text_tool->text_buffer, TRUE, TRUE);
+      gtk_text_buffer_delete_selection (buffer, TRUE, TRUE);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
     }
@@ -1642,7 +1646,8 @@ gimp_text_tool_cut_clipboard (GimpTextTool *text_tool)
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-  gtk_text_buffer_cut_clipboard (text_tool->text_buffer, clipboard, TRUE);
+  gtk_text_buffer_cut_clipboard (GTK_TEXT_BUFFER (text_tool->text_buffer),
+                                 clipboard, TRUE);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
@@ -1660,7 +1665,8 @@ gimp_text_tool_copy_clipboard (GimpTextTool *text_tool)
   clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
 
-  gtk_text_buffer_copy_clipboard (text_tool->text_buffer, clipboard);
+  gtk_text_buffer_copy_clipboard (GTK_TEXT_BUFFER (text_tool->text_buffer),
+                                  clipboard);
 }
 
 void
@@ -1678,7 +1684,8 @@ gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-  gtk_text_buffer_paste_clipboard (text_tool->text_buffer, clipboard, NULL, TRUE);
+  gtk_text_buffer_paste_clipboard (GTK_TEXT_BUFFER (text_tool->text_buffer),
+                                   clipboard, NULL, TRUE);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }

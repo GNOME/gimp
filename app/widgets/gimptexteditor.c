@@ -30,6 +30,7 @@
 
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
+#include "gimptextbuffer.h"
 #include "gimptexteditor.h"
 #include "gimpuimanager.h"
 
@@ -128,7 +129,7 @@ GtkWidget *
 gimp_text_editor_new (const gchar     *title,
                       GtkWindow       *parent,
                       GimpMenuFactory *menu_factory,
-                      GtkTextBuffer   *text_buffer)
+                      GimpTextBuffer  *text_buffer)
 {
   GimpTextEditor *editor;
   GtkWidget      *content_area;
@@ -138,6 +139,7 @@ gimp_text_editor_new (const gchar     *title,
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WINDOW (parent), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (text_buffer), NULL);
 
   editor = g_object_new (GIMP_TYPE_TEXT_EDITOR,
                          "title",         title,
@@ -181,7 +183,7 @@ gimp_text_editor_new (const gchar     *title,
   gtk_box_pack_start (GTK_BOX (content_area), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  editor->view = gtk_text_view_new_with_buffer (text_buffer);
+  editor->view = gtk_text_view_new_with_buffer (GTK_TEXT_BUFFER (text_buffer));
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (editor->view),
                                GTK_WRAP_WORD_CHAR);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
@@ -238,16 +240,12 @@ gchar *
 gimp_text_editor_get_text (GimpTextEditor *editor)
 {
   GtkTextBuffer *buffer;
-  GtkTextIter    start_iter;
-  GtkTextIter    end_iter;
 
   g_return_val_if_fail (GIMP_IS_TEXT_EDITOR (editor), NULL);
 
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
 
-  gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
-
-  return gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
+  return gimp_text_buffer_get_text (GIMP_TEXT_BUFFER (buffer));
 }
 
 void

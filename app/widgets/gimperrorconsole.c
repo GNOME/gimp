@@ -34,6 +34,7 @@
 
 #include "gimperrorconsole.h"
 #include "gimpmenufactory.h"
+#include "gimptextbuffer.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -73,7 +74,7 @@ gimp_error_console_init (GimpErrorConsole *console)
 {
   GtkWidget *scrolled_window;
 
-  console->text_buffer = gtk_text_buffer_new (NULL);
+  console->text_buffer = GTK_TEXT_BUFFER (gimp_text_buffer_new ());
 
   gtk_text_buffer_create_tag (console->text_buffer, "title",
                               "scale",  PANGO_SCALE_LARGE,

@@ -56,7 +56,7 @@ GType               gimp_text_editor_get_type      (void) G_GNUC_CONST;
 GtkWidget         * gimp_text_editor_new           (const gchar       *title,
                                                     GtkWindow         *parent,
                                                     GimpMenuFactory   *menu_factory,
-                                                    GtkTextBuffer     *text_buffer);
+                                                    GimpTextBuffer    *text_buffer);
 
 void                gimp_text_editor_set_text      (GimpTextEditor    *editor,
                                                     const gchar       *text,

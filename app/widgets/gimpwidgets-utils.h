@@ -71,13 +71,6 @@ void              gimp_window_set_hint             (GtkWindow            *window
 GdkNativeWindow   gimp_window_get_native           (GtkWindow            *window);
 void              gimp_window_set_transient_for    (GtkWindow            *window,
                                                     guint32               parent_ID);
-gboolean          gimp_text_buffer_load            (GtkTextBuffer        *buffer,
-                                                    const gchar          *filename,
-                                                    GError              **error);
-gboolean          gimp_text_buffer_save            (GtkTextBuffer        *buffer,
-                                                    const gchar          *filename,
-                                                    gboolean              selection_only,
-                                                    GError              **error);
 void              gimp_toggle_button_set_visible   (GtkToggleButton      *toggle,
                                                     GtkWidget            *widget);
 void              gimp_widget_set_accel_help       (GtkWidget            *widget,
