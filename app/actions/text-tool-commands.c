@@ -28,6 +28,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimptextbuffer.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -155,7 +156,7 @@ text_tool_clear_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpTextTool  *text_tool = GIMP_TEXT_TOOL (data);
-  GtkTextBuffer *buffer    = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer    = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    start, end;
 
   gtk_text_buffer_get_bounds (buffer, &start, &end);
@@ -218,7 +219,7 @@ text_tool_load_dialog_response (GtkWidget    *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_text_buffer_load (tool->text_buffer, filename, &error))
+      if (! gimp_text_buffer_load (tool->buffer, filename, &error))
         {
           gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (dialog),
                         GIMP_MESSAGE_ERROR,

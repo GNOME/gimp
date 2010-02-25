@@ -49,7 +49,7 @@ struct _GimpTextTool
 
   gboolean        moving;
 
-  GimpTextBuffer *text_buffer;
+  GimpTextBuffer *buffer;
 
   GimpText       *text;
   GimpTextLayer  *layer;

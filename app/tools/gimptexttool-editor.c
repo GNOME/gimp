@@ -188,7 +188,7 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
                                     gdouble              y,
                                     GimpButtonPressType  press_type)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    selection;
   gint           offset;
@@ -236,7 +236,7 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
 void
 gimp_text_tool_editor_button_release (GimpTextTool *text_tool)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
@@ -256,7 +256,7 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
                               gdouble       x,
                               gdouble       y)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    selection;
   gint           cursor_offset;
@@ -344,7 +344,7 @@ gboolean
 gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
                                  GdkEventKey  *kevent)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    selection;
   gint           x_pos  = -1;
@@ -452,7 +452,7 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
                                        gint           *logical_off_x,
                                        gint           *logical_off_y)
 {
-  GtkTextBuffer  *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer  *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   PangoLayout    *layout;
   PangoRectangle  ink_extents;
   PangoRectangle  logical_extents;
@@ -481,8 +481,7 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
-  cursor_index = gimp_text_buffer_get_iter_index (text_tool->text_buffer,
-                                                  &cursor);
+  cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer, &cursor);
 
   pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
   gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
@@ -559,7 +558,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
                             gint             count,
                             gboolean         extend_selection)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    selection;
   GtkTextIter   *sel_start;
@@ -647,7 +646,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
         gtk_text_buffer_get_bounds (buffer, &start, &end);
 
-        cursor_index = gimp_text_buffer_get_iter_index (text_tool->text_buffer,
+        cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer,
                                                         &cursor);
 
         gimp_text_tool_ensure_layout (text_tool);
@@ -770,7 +769,7 @@ gimp_text_tool_insert_at_cursor (GimpTextTool *text_tool,
 {
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-  gtk_text_buffer_insert_at_cursor (GTK_TEXT_BUFFER (text_tool->text_buffer),
+  gtk_text_buffer_insert_at_cursor (GTK_TEXT_BUFFER (text_tool->buffer),
                                     str, -1);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
@@ -812,7 +811,7 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
                                    GtkDeleteType  type,
                                    gint           count)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    end;
 
@@ -909,7 +908,7 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
 static void
 gimp_text_tool_backspace (GimpTextTool *text_tool)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
 
   gimp_text_tool_reset_im_context (text_tool);
 
@@ -946,7 +945,7 @@ static void
 gimp_text_tool_select_all (GimpTextTool *text_tool,
                            gboolean      select)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
@@ -1018,7 +1017,7 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
     gimp_text_options_editor_new (parent, options,
                                   gimp_dialog_factory_get_menu_factory (dialog_factory),
                                   _("GIMP Text Editor"),
-                                  text_tool->text_buffer);
+                                  text_tool->buffer);
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor_dialog),
                              (gpointer) &text_tool->editor_dialog);
@@ -1049,7 +1048,7 @@ static void
 gimp_text_tool_enter_text (GimpTextTool *text_tool,
                            const gchar  *str)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->text_buffer);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   gboolean       had_selection;
 
   had_selection = gtk_text_buffer_get_has_selection (buffer);
@@ -1099,7 +1098,7 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
   if (ink_extents.y < 0)
     y += ink_extents.y;
 
-  string = gimp_text_buffer_get_text (text_tool->text_buffer);
+  string = gimp_text_buffer_get_text (text_tool->buffer);
 
   pango_layout_xy_to_index (layout,
                             x * PANGO_SCALE,
