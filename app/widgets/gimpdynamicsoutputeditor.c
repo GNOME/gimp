@@ -45,6 +45,25 @@ enum
   PROP_OUTPUT
 };
 
+enum
+{
+  INPUT_COLUMN_INDEX,
+  INPUT_COLUMN_USE_INPUT,
+  INPUT_COLUMN_NAME,
+  INPUT_N_COLUMNS
+};
+
+enum
+{
+  INPUT_PRESSURE,
+  INPUT_VELOCITY,
+  INPUT_DIRECTION,
+  INPUT_TILT,
+  INPUT_RANDOM,
+  INPUT_FADE,
+  N_INPUTS
+};
+
 typedef struct _GimpDynamicsOutputEditorPrivate GimpDynamicsOutputEditorPrivate;
 
 struct _GimpDynamicsOutputEditorPrivate
@@ -54,6 +73,8 @@ struct _GimpDynamicsOutputEditorPrivate
   GtkWidget      *vbox;
 
   GtkWidget      *notebook;
+
+  GtkListStore   *input_list;
 };
 
 #define GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE(editor) \
@@ -125,6 +146,7 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   GtkWidget                       *label;
   GtkWidget                       *view;
   GtkWidget                       *button;
+  GtkCellRenderer                 *cell;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -157,6 +179,75 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_dynamics_output_editor_curve_reset),
                     private->output->pressure_curve);
+
+  private->input_list = gtk_list_store_new (INPUT_N_COLUMNS,
+                                            G_TYPE_INT,
+                                            G_TYPE_BOOLEAN,
+                                            G_TYPE_STRING);
+
+  gtk_list_store_insert_with_values (private->input_list,
+                                     INPUT_COLUMN_INDEX, INPUT_PRESSURE,
+                                     INPUT_COLUMN_USE_INPUT, private->output->use_pressure,
+                                     INPUT_COLUMN_NAME,  _("Pressure"),
+                                     -1);
+
+  gtk_list_store_insert_with_values (private->input_list,
+                                     INPUT_COLUMN_INDEX, INPUT_VELOCITY,
+                                     INPUT_COLUMN_USE_INPUT, private->output->use_velocity,
+                                     INPUT_COLUMN_NAME,  _("Velocity"),
+                                     -1);
+
+  gtk_list_store_insert_with_values (private->input_list,
+                                     INPUT_COLUMN_INDEX, INPUT_DIRECTION,
+                                     INPUT_COLUMN_USE_INPUT, private->output->use_direction,
+                                     INPUT_COLUMN_NAME,  _("Direction"),
+                                     -1);
+
+  gtk_list_store_insert_with_values (private->input_list,
+                                     INPUT_COLUMN_INDEX, INPUT_TILT,
+                                     INPUT_COLUMN_USE_INPUT, private->output->use_tilt,
+                                     INPUT_COLUMN_NAME,  _("Tilt"),
+                                     -1);
+
+  gtk_list_store_insert_with_values (private->input_list,
+                                     INPUT_COLUMN_INDEX, INPUT_RANDOM,
+                                     INPUT_COLUMN_USE_INPUT, private->output->use_random,
+                                     INPUT_COLUMN_NAME,  _("Random"),
+                                     -1);
+
+  gtk_list_store_insert_with_values (private->input_list,
+                                     INPUT_COLUMN_INDEX, INPUT_FADE,
+                                     INPUT_COLUMN_USE_INPUT, private->output->use_fade,
+                                     INPUT_COLUMN_NAME,  _("Fade"),
+                                     -1);
+
+  view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->input_list));
+  g_object_unref (private->input_list);
+
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
+
+
+  cell = gtk_cell_renderer_toggle_new ();
+
+  g_object_set (cell,
+                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
+                "editable", TRUE,
+                NULL);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
+                                               -1, NULL,
+                                               cell,
+                                               "active", INPUT_COLUMN_USE_INPUT,
+                                               NULL);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
+                                               -1, NULL,
+                                               gtk_cell_renderer_text_new (),
+                                               "text", INPUT_COLUMN_NAME,
+                                               NULL);
+
+  gtk_box_pack_start (GTK_BOX (editor), view, FALSE, FALSE, 0);
+  gtk_widget_show (view);
 
   return object;
 }
