@@ -42,6 +42,7 @@ enum
 {
   PROP_0,
   PROP_TEXT,
+  PROP_MARKUP,
   PROP_FONT,
   PROP_FONT_SIZE,
   PROP_UNIT,
@@ -110,6 +111,10 @@ gimp_text_class_init (GimpTextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
                                    "text", NULL,
+                                   NULL,
+                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_MARKUP,
+                                   "markup", NULL,
                                    NULL,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FONT,
@@ -249,6 +254,11 @@ gimp_text_finalize (GObject *object)
       g_free (text->text);
       text->text = NULL;
     }
+  if (text->markup)
+    {
+      g_free (text->markup);
+      text->markup = NULL;
+    }
   if (text->font)
     {
       g_free (text->font);
@@ -275,6 +285,9 @@ gimp_text_get_property (GObject      *object,
     {
     case PROP_TEXT:
       g_value_set_string (value, text->text);
+      break;
+    case PROP_MARKUP:
+      g_value_set_string (value, text->markup);
       break;
     case PROP_FONT:
       g_value_set_string (value, text->font);
@@ -364,6 +377,10 @@ gimp_text_set_property (GObject      *object,
     case PROP_TEXT:
       g_free (text->text);
       text->text = g_value_dup_string (value);
+      break;
+    case PROP_MARKUP:
+      g_free (text->markup);
+      text->markup = g_value_dup_string (value);
       break;
     case PROP_FONT:
       {
@@ -471,6 +488,7 @@ gimp_text_get_memsize (GimpObject *object,
   gint64    memsize = 0;
 
   memsize += gimp_string_get_memsize (text->text);
+  memsize += gimp_string_get_memsize (text->markup);
   memsize += gimp_string_get_memsize (text->font);
   memsize += gimp_string_get_memsize (text->language);
 

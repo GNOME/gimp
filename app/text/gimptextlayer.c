@@ -369,7 +369,7 @@ gimp_text_layer_new (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
-  if (! text->text)
+  if (! text->text && ! text->markup)
     return NULL;
 
   layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);

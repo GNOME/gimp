@@ -143,7 +143,9 @@ gimp_text_layout_new (GimpText  *text,
   pango_layout_set_font_description (layout->layout, font_desc);
   pango_font_description_free (font_desc);
 
-  if (text->text)
+  if (text->markup)
+    pango_layout_set_markup (layout->layout, text->markup, -1);
+  else if (text->text)
     pango_layout_set_text (layout->layout, text->text, -1);
   else
     pango_layout_set_text (layout->layout, NULL, 0);

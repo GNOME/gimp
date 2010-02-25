@@ -62,13 +62,14 @@ gimp_text_vectors_new (GimpImage *image,
 
   vectors = gimp_vectors_new (image, NULL);
 
-  if (text->text)
+  if (text->text || text->markup)
     {
       GimpTextLayout  *layout;
       cairo_surface_t *surface;
       cairo_t         *cr;
 
-      gimp_object_set_name_safe (GIMP_OBJECT (vectors), text->text);
+      if (text->text)
+        gimp_object_set_name_safe (GIMP_OBJECT (vectors), text->text);
 
       context.vectors = vectors;
 

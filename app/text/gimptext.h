@@ -41,6 +41,7 @@ struct _GimpText
   GimpObject             parent_instance;
 
   gchar                 *text;
+  gchar                 *markup;
   gchar                 *font;
   GimpUnit               unit;
   gdouble                font_size;
