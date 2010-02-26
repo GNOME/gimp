@@ -142,14 +142,21 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
           if (g_slist_find (active_tags, tag))
             {
               /* Drop all tags that were opened after this one (which are
-               * above this on in the stack)
+               * above this on in the stack), but move them to the added
+               * list so they get re-opened again, *unless* they are also
+               * closed at this iter
                */
               while (active_tags->data != tag)
                 {
                   close_tag (GIMP_TEXT_BUFFER (content_buffer),
                              string, active_tags->data);
 
-                  added = g_list_prepend (added, active_tags->data);
+                  /* if it also in the list of removed tags, *don't* add
+                   * it to the list of added tags again
+                   */
+                  if (! g_list_find (removed, active_tags->data))
+                    added = g_list_prepend (added, active_tags->data);
+
                   active_tags = g_slist_remove (active_tags, active_tags->data);
                 }
 
