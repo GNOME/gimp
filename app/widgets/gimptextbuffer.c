@@ -45,6 +45,7 @@
 #include "widgets-types.h"
 
 #include "gimptextbuffer.h"
+#include "gimptextbuffer-serialize.h"
 
 #include "gimp-intl.h"
 
@@ -76,6 +77,16 @@ gimp_text_buffer_class_init (GimpTextBufferClass *klass)
 static void
 gimp_text_buffer_init (GimpTextBuffer *buffer)
 {
+  buffer->markup_atom =
+    gtk_text_buffer_register_serialize_format (GTK_TEXT_BUFFER (buffer),
+                                               "application/x-gimp-pango-markup",
+                                               gimp_text_buffer_serialize,
+                                               NULL, NULL);
+
+  gtk_text_buffer_register_deserialize_format (GTK_TEXT_BUFFER (buffer),
+                                               "application/x-gimp-pango-markup",
+                                               gimp_text_buffer_deserialize,
+                                               NULL, NULL);
 }
 
 static GObject *
@@ -91,6 +102,26 @@ gimp_text_buffer_constructor (GType                  type,
   buffer = GIMP_TEXT_BUFFER (object);
 
   gtk_text_buffer_set_text (GTK_TEXT_BUFFER (buffer), "", -1);
+
+  buffer->bold_tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                                 "bold",
+                                                 "weight", PANGO_WEIGHT_BOLD,
+                                                 NULL);
+
+  buffer->italic_tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                                   "italic",
+                                                   "style", PANGO_STYLE_ITALIC,
+                                                   NULL);
+
+  buffer->underline_tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                                      "underline",
+                                                      "underline", PANGO_UNDERLINE_SINGLE,
+                                                      NULL);
+
+  buffer->strikethrough_tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                                          "strikethrough",
+                                                          "strikethrough", TRUE,
+                                                          NULL);
 
   return object;
 }
@@ -143,6 +174,105 @@ gimp_text_buffer_get_text (GimpTextBuffer *buffer)
 
   return gtk_text_buffer_get_text (GTK_TEXT_BUFFER (buffer),
                                    &start, &end, TRUE);
+}
+
+void
+gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
+                             const gchar    *markup)
+{
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+
+  gimp_text_buffer_set_text (buffer, NULL);
+
+  if (markup)
+    {
+      GtkTextIter  start;
+      GError      *error = NULL;
+
+      gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER (buffer), &start);
+
+      if (! gtk_text_buffer_deserialize (GTK_TEXT_BUFFER (buffer),
+                                         GTK_TEXT_BUFFER (buffer),
+                                         buffer->markup_atom,
+                                         &start,
+                                         (const guint8 *) markup, -1,
+                                         &error))
+        {
+          g_printerr ("EEK: %s\n", error->message);
+          g_clear_error (&error);
+        }
+    }
+}
+
+gchar *
+gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
+{
+  GtkTextIter start, end;
+  gsize       length;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+
+  gtk_text_buffer_get_bounds (GTK_TEXT_BUFFER (buffer), &start, &end);
+
+  return (gchar *) gtk_text_buffer_serialize (GTK_TEXT_BUFFER (buffer),
+                                              GTK_TEXT_BUFFER (buffer),
+                                              buffer->markup_atom,
+                                              &start, &end,
+                                              &length);
+}
+
+const gchar *
+gimp_text_buffer_tag_to_name (GimpTextBuffer *buffer,
+                              GtkTextTag     *tag)
+{
+  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+  g_return_val_if_fail (GTK_IS_TEXT_TAG (tag), NULL);
+
+  if (tag == buffer->bold_tag)
+    {
+      return "b";
+    }
+  else if (tag == buffer->italic_tag)
+    {
+      return "i";
+    }
+  else if (tag == buffer->underline_tag)
+    {
+      return "u";
+    }
+  else if (tag == buffer->strikethrough_tag)
+    {
+      return "s";
+    }
+
+  return NULL;
+}
+
+GtkTextTag *
+gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
+                              const gchar    *name)
+{
+  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  if (! strcmp (name, "b"))
+    {
+      return buffer->bold_tag;
+    }
+  else if (! strcmp (name, "i"))
+    {
+      return buffer->italic_tag;
+    }
+  else if (! strcmp (name, "u"))
+    {
+      return buffer->underline_tag;
+    }
+  else if (! strcmp (name, "s"))
+    {
+      return buffer->strikethrough_tag;
+    }
+
+  return NULL;
 }
 
 gint

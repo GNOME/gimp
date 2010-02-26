@@ -34,6 +34,13 @@ typedef struct _GimpTextBufferClass  GimpTextBufferClass;
 struct _GimpTextBuffer
 {
   GtkTextBuffer  parent_instance;
+
+  GtkTextTag    *bold_tag;
+  GtkTextTag    *italic_tag;
+  GtkTextTag    *underline_tag;
+  GtkTextTag    *strikethrough_tag;
+
+  GdkAtom        markup_atom;
 };
 
 struct _GimpTextBufferClass
@@ -49,6 +56,15 @@ GimpTextBuffer * gimp_text_buffer_new            (void);
 void             gimp_text_buffer_set_text       (GimpTextBuffer  *buffer,
                                                   const gchar     *text);
 gchar          * gimp_text_buffer_get_text       (GimpTextBuffer  *buffer);
+
+void             gimp_text_buffer_set_markup     (GimpTextBuffer  *buffer,
+                                                  const gchar     *markup);
+gchar          * gimp_text_buffer_get_markup     (GimpTextBuffer  *buffer);
+
+const gchar    * gimp_text_buffer_tag_to_name    (GimpTextBuffer  *buffer,
+                                                  GtkTextTag      *tag);
+GtkTextTag     * gimp_text_buffer_name_to_tag    (GimpTextBuffer  *buffer,
+                                                  const gchar     *name);
 
 gint             gimp_text_buffer_get_iter_index (GimpTextBuffer  *buffer,
                                                   GtkTextIter     *iter);

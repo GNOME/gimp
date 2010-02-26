@@ -298,10 +298,14 @@ libappwidgets_a_sources = \
 	gimptemplateview.h		\
 	gimptextbuffer.c		\
 	gimptextbuffer.h		\
+	gimptextbuffer-serialize.c	\
+	gimptextbuffer-serialize.h	\
 	gimptexteditor.c		\
 	gimptexteditor.h		\
 	gimptextproxy.c			\
 	gimptextproxy.h			\
+	gimptextstyleeditor.c		\
+	gimptextstyleeditor.h		\
 	gimpthumbbox.c			\
 	gimpthumbbox.h			\
 	gimptoggleaction.c		\
