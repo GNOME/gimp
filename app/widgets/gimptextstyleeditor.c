@@ -321,6 +321,8 @@ typedef struct
 {
   GimpTextStyleEditor *editor;
   GSList              *tags;
+  GSList              *tags_on;
+  GSList              *tags_off;
   GtkTextIter          iter;
   gboolean             any_active;
 } UpdateTogglesData;
@@ -358,7 +360,9 @@ gimp_text_style_editor_update_cursor (GtkTextTag        *tag,
                                    data->editor);
 
   gtk_toggle_button_set_active (toggle,
-                                g_slist_find (data->tags, tag) != NULL);
+                                (g_slist_find (data->tags, tag) &&
+                                 ! g_slist_find (data->tags_on, tag)) ||
+                                g_slist_find (data->tags_off, tag));
 
   g_signal_handlers_unblock_by_func (toggle,
                                      gimp_text_style_editor_tag_toggled,
@@ -411,13 +415,17 @@ gimp_text_style_editor_mark_set (GtkTextBuffer       *buffer,
       gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                         gtk_text_buffer_get_insert (buffer));
 
-      data.editor = editor;
-      data.tags   = gtk_text_iter_get_tags (&cursor);
+      data.editor   = editor;
+      data.tags     = gtk_text_iter_get_tags (&cursor);
+      data.tags_on  = gtk_text_iter_get_toggled_tags (&cursor, TRUE);
+      data.tags_off = gtk_text_iter_get_toggled_tags (&cursor, FALSE);
 
       g_hash_table_foreach (editor->tag_to_toggle_hash,
                             (GHFunc) gimp_text_style_editor_update_cursor,
                             &data);
 
       g_slist_free (data.tags);
+      g_slist_free (data.tags_on);
+      g_slist_free (data.tags_off);
     }
 }

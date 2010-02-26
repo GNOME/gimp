@@ -279,9 +279,32 @@ void
 gimp_text_buffer_insert (GimpTextBuffer *buffer,
                          const gchar    *text)
 {
+  GtkTextIter  iter, start;
+  gint         start_offset;
+  GSList      *tags_off;
+  GSList      *list;
+
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
 
-  gtk_text_buffer_insert_at_cursor (GTK_TEXT_BUFFER (buffer), text, -1);
+  gtk_text_buffer_get_iter_at_mark (GTK_TEXT_BUFFER (buffer), &iter,
+                                    gtk_text_buffer_get_insert (GTK_TEXT_BUFFER (buffer)));
+
+  start_offset = gtk_text_iter_get_offset (&iter);
+
+  tags_off = gtk_text_iter_get_toggled_tags (&iter, FALSE);
+
+  gtk_text_buffer_insert (GTK_TEXT_BUFFER (buffer), &iter, text, -1);
+
+  gtk_text_buffer_get_iter_at_offset (GTK_TEXT_BUFFER (buffer), &start,
+                                      start_offset);
+
+  for (list = tags_off; list; list = g_slist_next (list))
+    {
+      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                 &start, &iter);
+    }
+
+  g_slist_free (tags_off);
 }
 
 gint
