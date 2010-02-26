@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-26 04:40+0300\n"
-"PO-Revision-Date: 2010-02-26 04:42+0300\n"
+"PO-Revision-Date: 2010-02-26 08:48+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -14208,7 +14208,7 @@ msgstr "_Цветовое пространство:"
 
 #: ../app/widgets/gimptemplateeditor.c:369
 msgid "_Fill with:"
-msgstr "_Фон:"
+msgstr "_Заполнение:"
 
 #: ../app/widgets/gimptemplateeditor.c:379
 msgid "Comme_nt:"
