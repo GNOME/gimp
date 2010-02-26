@@ -275,6 +275,15 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
   return NULL;
 }
 
+void
+gimp_text_buffer_insert (GimpTextBuffer *buffer,
+                         const gchar    *text)
+{
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+
+  gtk_text_buffer_insert_at_cursor (GTK_TEXT_BUFFER (buffer), text, -1);
+}
+
 gint
 gimp_text_buffer_get_iter_index (GimpTextBuffer *buffer,
                                  GtkTextIter    *iter)

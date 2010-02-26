@@ -821,8 +821,7 @@ gimp_text_tool_insert_at_cursor (GimpTextTool *text_tool,
 {
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-  gtk_text_buffer_insert_at_cursor (GTK_TEXT_BUFFER (text_tool->buffer),
-                                    str, -1);
+  gimp_text_buffer_insert (text_tool->buffer, str);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
@@ -1120,7 +1119,7 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
         gimp_text_tool_delete_from_cursor (text_tool, GTK_DELETE_CHARS, 1);
     }
 
-  gtk_text_buffer_insert_at_cursor (buffer, str, -1);
+  gimp_text_buffer_insert (text_tool->buffer, str);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }

@@ -66,6 +66,9 @@ const gchar    * gimp_text_buffer_tag_to_name    (GimpTextBuffer  *buffer,
 GtkTextTag     * gimp_text_buffer_name_to_tag    (GimpTextBuffer  *buffer,
                                                   const gchar     *name);
 
+void             gimp_text_buffer_insert         (GimpTextBuffer  *buffer,
+                                                  const gchar     *text);
+
 gint             gimp_text_buffer_get_iter_index (GimpTextBuffer  *buffer,
                                                   GtkTextIter     *iter);
 
