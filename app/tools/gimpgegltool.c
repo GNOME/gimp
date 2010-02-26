@@ -410,7 +410,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
                       FALSE, FALSE, 0);
   gtk_widget_show (tool->options_frame);
 
-  tool->options_table = gtk_label_new ("Select an operation from the list above");
+  tool->options_table = gtk_label_new (_("Select an operation from the list above"));
   gimp_label_set_attributes (GTK_LABEL (tool->options_table),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
