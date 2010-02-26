@@ -65,6 +65,9 @@ struct _GimpTextTool
 
   /* text editor state: */
 
+  GtkWidget      *style_overlay;
+  GtkWidget      *style_editor;
+
   gboolean        selecting;
   gint            select_start_offset;
   gboolean        select_words;

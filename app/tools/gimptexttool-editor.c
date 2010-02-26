@@ -38,6 +38,7 @@
 #include "widgets/gimptextbuffer.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimptextproxy.h"
+#include "widgets/gimptextstyleeditor.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -133,6 +134,8 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
   GimpTool         *tool    = GIMP_TOOL (text_tool);
   GimpTextOptions  *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
+  GtkRequisition    requisition;
+  gint              x, y;
 
   gtk_im_context_set_client_window (text_tool->im_context,
                                     gtk_widget_get_window (shell->canvas));
@@ -148,12 +151,50 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
   g_signal_connect (options, "notify::use-editor",
                     G_CALLBACK (gimp_text_tool_options_notify),
                     text_tool);
+
+  if (! text_tool->style_overlay)
+    {
+      text_tool->style_overlay = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (text_tool->style_overlay),
+                                 GTK_SHADOW_OUT);
+      gimp_display_shell_add_overlay (shell,
+                                      text_tool->style_overlay,
+                                      0, 0);
+      gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
+                                          text_tool->style_overlay, 0.7);
+
+      text_tool->style_editor = gimp_text_style_editor_new (text_tool->buffer);
+      gtk_container_add (GTK_CONTAINER (text_tool->style_overlay),
+                         text_tool->style_editor);
+      gtk_widget_show (text_tool->style_editor);
+    }
+
+  gtk_widget_size_request (text_tool->style_overlay, &requisition);
+
+  g_object_get (text_tool,
+                "x1", &x,
+                "y1", &y,
+                NULL);
+
+  gimp_display_shell_move_overlay (shell,
+                                   text_tool->style_overlay,
+                                   x,
+                                   y - requisition.height - 6);
+
+  gtk_widget_show (text_tool->style_overlay);
 }
 
 void
 gimp_text_tool_editor_halt (GimpTextTool *text_tool)
 {
   GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+
+  if (text_tool->style_overlay)
+    {
+      gtk_widget_destroy (text_tool->style_overlay);
+      text_tool->style_overlay = NULL;
+      text_tool->style_editor  = NULL;
+    }
 
   g_signal_handlers_disconnect_by_func (options,
                                         gimp_text_tool_options_notify,
