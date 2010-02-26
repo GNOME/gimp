@@ -1446,18 +1446,39 @@ static void
 gimp_text_tool_layer_changed (GimpImage    *image,
                               GimpTextTool *text_tool)
 {
-  GimpLayer         *layer     = gimp_image_get_active_layer (image);
-  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (text_tool);
+  GimpLayer *layer = gimp_image_get_active_layer (image);
 
-  gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), FALSE);
+  if (layer == GIMP_LAYER (text_tool->layer))
+    return;
 
-  if (text_tool->layer)
+  /* all this stuff doesn't work quite yet, but it's better than before
+   */
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+  gimp_text_tool_editor_halt (text_tool);
+  gimp_text_tool_clear_layout (text_tool);
+
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (text_tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (text_tool));
+
+  if (gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), FALSE) &&
+      GIMP_LAYER (text_tool->layer) == layer)
     {
-      if (! gimp_rectangle_tool_rectangle_is_new (rect_tool))
-        {
-          gimp_text_tool_frame_item (text_tool);
-        }
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (text_tool),
+                            GIMP_TOOL (text_tool)->display);
+
+      gimp_text_tool_frame_item (text_tool);
+      gimp_text_tool_editor_start (text_tool);
+      gimp_text_tool_editor_position (text_tool);
     }
+  else
+    {
+      gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
+                         GIMP_TOOL (text_tool)->display);
+    }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
