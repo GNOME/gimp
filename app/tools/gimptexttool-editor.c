@@ -190,7 +190,7 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
 
       gimp_display_shell_move_overlay (shell,
                                        text_tool->style_overlay,
-                                       x,
+                                       x + 2,
                                        y - requisition.height - 6);
     }
 }
