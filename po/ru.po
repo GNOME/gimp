@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-23 02:28+0300\n"
-"PO-Revision-Date: 2010-02-23 04:21+0300\n"
+"POT-Creation-Date: 2010-02-26 04:40+0300\n"
+"PO-Revision-Date: 2010-02-26 04:42+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2202,7 +2202,7 @@ msgstr "Невозможно сохранить. Ничего не выделе�
 msgid "Save Error Log to File"
 msgstr "Сохранить сообщения об ошибках в файл"
 
-#: ../app/actions/error-console-commands.c:156
+#: ../app/actions/error-console-commands.c:157
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -4597,12 +4597,12 @@ msgid "From right to left"
 msgstr "Справа налево"
 
 #: ../app/actions/text-editor-commands.c:62
-#: ../app/actions/text-tool-commands.c:116
+#: ../app/actions/text-tool-commands.c:117
 msgid "Open Text File (UTF-8)"
 msgstr "Открыть текствый файл (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
-#: ../app/actions/text-tool-commands.c:224
+#: ../app/actions/text-tool-commands.c:226
 #: ../app/config/gimpconfig-file.c:58
 #: ../app/core/gimpbrush-load.c:139
 #: ../app/core/gimpbrush-load.c:419
@@ -4617,7 +4617,7 @@ msgstr "Открыть текствый файл (UTF-8)"
 #: ../app/core/gimppalette-load.c:461
 #: ../app/core/gimppalette-load.c:627
 #: ../app/core/gimppattern-load.c:75
-#: ../app/tools/gimpcurvestool.c:635
+#: ../app/tools/gimpcurvestool.c:637
 #: ../app/tools/gimplevelstool.c:747
 #: ../app/xcf/xcf.c:328
 #, c-format
@@ -5901,7 +5901,7 @@ msgstr "Обычный"
 #: ../app/core/gimpgradient-save.c:144
 #: ../app/core/gimppalette-save.c:55
 #: ../app/gui/themes.c:238
-#: ../app/tools/gimpcurvestool.c:688
+#: ../app/tools/gimpcurvestool.c:690
 #: ../app/tools/gimplevelstool.c:800
 #: ../app/vectors/gimpvectors-export.c:81
 #: ../app/xcf/xcf.c:421
@@ -6158,82 +6158,86 @@ msgid "Use GIMP in a single-window mode."
 msgstr "Использовать GIMP в однооконном режиме"
 
 #: ../app/config/gimprc-blurbs.h:365
+msgid "Hide docks and other windows, leaving only image windows."
+msgstr "Скрыть все диалоги и панели, оставить только окна изображений"
+
+#: ../app/config/gimprc-blurbs.h:368
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Что делать, когда в окне изображения нажимают пробел."
 
-#: ../app/config/gimprc-blurbs.h:368
+#: ../app/config/gimprc-blurbs.h:371
 msgid "Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that the swap file can easily get very large if GIMP is used with large images. Also, things can get horribly slow if the swap file is created on a folder that is mounted over NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr "Устанавливает местонахождение файла подкачки. GIMP использует мозаичный тип подкачки. Обратите внимание на то, что файл подкачки может стать очень большим, если работать с большими изображениями. Кроме того, работа может замедлиться, если файл подкачки создан в папке, которая смонтирована поверх NFS. В этом случае, возможно, лучше всего поместить файл подкачки в \"/tmp\"."
 
-#: ../app/config/gimprc-blurbs.h:377
+#: ../app/config/gimprc-blurbs.h:380
 msgid "When enabled, menus can be torn off."
 msgstr "Если включено, меню можно отцепить от панели инструментов."
 
-#: ../app/config/gimprc-blurbs.h:380
+#: ../app/config/gimprc-blurbs.h:383
 msgid "When enabled, you can change keyboard shortcuts for menu items by hitting a key combination while the menu item is highlighted."
 msgstr "Если включено, комбинации клавиш для быстрого доступа к подсвеченному пункту меню можно менять «на лету»."
 
-#: ../app/config/gimprc-blurbs.h:384
+#: ../app/config/gimprc-blurbs.h:387
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Сохранить измененные комбинации клавиши при выходе из GIMP."
 
-#: ../app/config/gimprc-blurbs.h:387
+#: ../app/config/gimprc-blurbs.h:390
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Восстановить сохраненные комбинации клавиш при запуске GIMP."
 
-#: ../app/config/gimprc-blurbs.h:390
+#: ../app/config/gimprc-blurbs.h:393
 msgid "Sets the folder for temporary storage. Files will appear here during the course of running GIMP.  Most files will disappear when GIMP exits, but some files are likely to remain, so it is best if this folder not be one that is shared by other users."
 msgstr "Определяет временный каталог. Здесь будут содержаться временные файлы, с которыми работает GIMP. Большинство из них будет удаляться сразу после окончания работы с GIMP, однако некоторые останутся, поэтому не стоит давать другим пользователям права на просмотр и изменение этого каталога."
 
-#: ../app/config/gimprc-blurbs.h:402
+#: ../app/config/gimprc-blurbs.h:405
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
-#: ../app/config/gimprc-blurbs.h:405
+#: ../app/config/gimprc-blurbs.h:408
 msgid "The thumbnail in the Open dialog will be automatically updated if the file being previewed is smaller than the size set here."
 msgstr "Если размер файла предпросмотра окажется меньше указанного здесь значения, то предпросмотр в диалоге открытия будет обновлен автоматически."
 
-#: ../app/config/gimprc-blurbs.h:409
+#: ../app/config/gimprc-blurbs.h:412
 msgid "When the amount of pixel data exceeds this limit, GIMP will start to swap tiles to disk.  This is a lot slower but it makes it possible to work on images that wouldn't fit into memory otherwise.  If you have a lot of RAM, you may want to set this to a higher value."
 msgstr "Когда объем растровых данных превышает установленное значение, GIMP начинает сохранять данные на диск. Это несколько замедляет работу, но позволяет обрабатывать данные, не помещающиеся в оперативную память. Если оперативной памяти много, это значение лучше увеличить."
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:418
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "Показывать текущий цвет переднего и заднего плана в панели инструментов."
 
-#: ../app/config/gimprc-blurbs.h:418
+#: ../app/config/gimprc-blurbs.h:421
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "Показывать активную кисть, текстуру и градиент в панели инструментов."
 
-#: ../app/config/gimprc-blurbs.h:421
+#: ../app/config/gimprc-blurbs.h:424
 msgid "Show the currently active image in the toolbox."
 msgstr "Показывать активное изображение в панели инструментов."
 
-#: ../app/config/gimprc-blurbs.h:427
+#: ../app/config/gimprc-blurbs.h:430
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Определяет, как будет отображаться прозрачность в изображении."
 
-#: ../app/config/gimprc-blurbs.h:430
+#: ../app/config/gimprc-blurbs.h:433
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Устанавливает размер клеток, отображающих прозрачность."
 
-#: ../app/config/gimprc-blurbs.h:433
+#: ../app/config/gimprc-blurbs.h:436
 msgid "When enabled, GIMP will not save an image if it has not been changed since it was opened."
 msgstr "Если включено, файлы, не изменившиеся после загрузки, не будут сохраняться."
 
-#: ../app/config/gimprc-blurbs.h:437
+#: ../app/config/gimprc-blurbs.h:440
 msgid "Sets the minimal number of operations that can be undone. More undo levels are kept available until the undo-size limit is reached."
 msgstr "Устанавливает минимальное количество возможных отмен. Большее количество отмен возможно до тех пор, пока не использована вся память, отведенная для этого."
 
-#: ../app/config/gimprc-blurbs.h:441
+#: ../app/config/gimprc-blurbs.h:444
 msgid "Sets an upper limit to the memory that is used per image to keep operations on the undo stack. Regardless of this setting, at least as many undo-levels as configured can be undone."
 msgstr "Устанавливает предельное значение памяти, используемый для отмен в каждом изображении. Предел может быть превышен для использования количества отмен, указанного в настройках."
 
-#: ../app/config/gimprc-blurbs.h:446
+#: ../app/config/gimprc-blurbs.h:449
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Устанавливает размер просмотра для истории действий."
 
-#: ../app/config/gimprc-blurbs.h:449
+#: ../app/config/gimprc-blurbs.h:452
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Когда эта опция включена, кнопкой F1 вызывается система помощи."
 
@@ -10019,7 +10023,7 @@ msgid "Navigate the image display"
 msgstr "Навигация по изображению"
 
 #: ../app/display/gimpdisplayshell.c:715
-#: ../app/display/gimpdisplayshell.c:1199
+#: ../app/display/gimpdisplayshell.c:1227
 #: ../app/widgets/gimptoolbox.c:310
 msgid "Drop image files here to open them"
 msgstr "Перетащите сюда изображения, которые хотите открыть"
@@ -10847,7 +10851,7 @@ msgstr ""
 "Да, но фальшивый экземпляръ!"
 
 #: ../app/text/gimptext-compat.c:107
-#: ../app/tools/gimptexttool.c:1277
+#: ../app/tools/gimptexttool.c:1286
 msgid "Add Text Layer"
 msgstr "Добавить текстовый слой"
 
@@ -11548,17 +11552,17 @@ msgstr "_Канал:"
 msgid "R_eset Channel"
 msgstr "_Восстановить"
 
-#: ../app/tools/gimpcurvestool.c:569
+#: ../app/tools/gimpcurvestool.c:571
 msgid "Curve _type:"
 msgstr "Тип _кривой:"
 
-#: ../app/tools/gimpcurvestool.c:644
+#: ../app/tools/gimpcurvestool.c:646
 #: ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Невозможно прочесть заголовок из '%s': %s"
 
-#: ../app/tools/gimpcurvestool.c:717
+#: ../app/tools/gimpcurvestool.c:719
 msgid "Use _old curves file format"
 msgstr "_Использовать старый формат кривых"
 
@@ -11871,6 +11875,10 @@ msgstr "_Операция:"
 msgid "Operation Settings"
 msgstr "Параметры"
 
+#: ../app/tools/gimpgegltool.c:413
+msgid "Select an operation from the list above"
+msgstr "Выберите операцию из списка вверху"
+
 #: ../app/tools/gimphealtool.c:53
 msgid "Healing Tool: Heal image irregularities"
 msgstr "Лечебная кисть: излечение дефектов в изображении"
@@ -11991,7 +11999,7 @@ msgstr "Коррекция"
 #: ../app/tools/gimpinkoptions-gui.c:67
 #: ../app/tools/gimpinkoptions-gui.c:92
 #: ../app/tools/gimprectangleoptions.c:972
-#: ../app/tools/gimptextoptions.c:470
+#: ../app/tools/gimptextoptions.c:471
 msgid "Size:"
 msgstr "Размер:"
 
@@ -12545,7 +12553,7 @@ msgid "Scale"
 msgstr "Масштаб"
 
 #: ../app/tools/gimpselectionoptions.c:257
-#: ../app/tools/gimptextoptions.c:483
+#: ../app/tools/gimptextoptions.c:484
 msgid "Antialiasing"
 msgstr "Сглаживание"
 
@@ -12630,92 +12638,92 @@ msgstr "Щёлкните, чтобы размазать"
 msgid "Click to smudge the line"
 msgstr "Щёлкните, чтобы размазать линией"
 
-#: ../app/tools/gimptextoptions.c:132
+#: ../app/tools/gimptextoptions.c:133
 msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr "Инструктирование изменяет контуры символа, чтобы выдать более чёткие растры при маленьких размерах"
 
-#: ../app/tools/gimptextoptions.c:140
+#: ../app/tools/gimptextoptions.c:141
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Выбор языка текста может изменить внешний вид текста"
 
-#: ../app/tools/gimptextoptions.c:156
+#: ../app/tools/gimptextoptions.c:157
 msgid "Indentation of the first line"
 msgstr "Отступ первой строки"
 
-#: ../app/tools/gimptextoptions.c:162
+#: ../app/tools/gimptextoptions.c:163
 msgid "Adjust line spacing"
 msgstr "Интервал между строками"
 
-#: ../app/tools/gimptextoptions.c:168
+#: ../app/tools/gimptextoptions.c:169
 msgid "Adjust letter spacing"
 msgstr "Интервал между буквами"
 
-#: ../app/tools/gimptextoptions.c:174
+#: ../app/tools/gimptextoptions.c:175
 msgid "Text box resize mode"
 msgstr ""
 
-#: ../app/tools/gimptextoptions.c:181
+#: ../app/tools/gimptextoptions.c:182
 msgid "Use an external editor window for text entry, instead of direct-on-canvas editing"
 msgstr "Использовать окно с редактором текста вместо редактирования текста прямо на холсте"
 
-#: ../app/tools/gimptextoptions.c:463
+#: ../app/tools/gimptextoptions.c:464
 msgid "Font:"
 msgstr "Шрифт:"
 
-#: ../app/tools/gimptextoptions.c:479
+#: ../app/tools/gimptextoptions.c:480
 msgid "Use editor"
 msgstr "Использовать диалог редактора"
 
-#: ../app/tools/gimptextoptions.c:499
+#: ../app/tools/gimptextoptions.c:500
 msgid "Hinting:"
 msgstr "Уточнение:"
 
-#: ../app/tools/gimptextoptions.c:503
+#: ../app/tools/gimptextoptions.c:504
 msgid "Text Color"
 msgstr "Цвет текста"
 
-#: ../app/tools/gimptextoptions.c:508
+#: ../app/tools/gimptextoptions.c:509
 msgid "Color:"
 msgstr "Цвет:"
 
-#: ../app/tools/gimptextoptions.c:514
+#: ../app/tools/gimptextoptions.c:515
 msgid "Justify:"
 msgstr "Выключка:"
 
-#: ../app/tools/gimptextoptions.c:537
+#: ../app/tools/gimptextoptions.c:538
 msgid "Box:"
 msgstr "Блок:"
 
-#: ../app/tools/gimptextoptions.c:551
+#: ../app/tools/gimptextoptions.c:552
 msgid "Language:"
 msgstr "Язык:"
 
-#: ../app/tools/gimptexttool.c:185
+#: ../app/tools/gimptexttool.c:191
 msgid "Text"
 msgstr "Текст"
 
-#: ../app/tools/gimptexttool.c:186
+#: ../app/tools/gimptexttool.c:192
 msgid "Text Tool: Create or edit text layers"
 msgstr "Текст: создание и редактирование текстовых слоев"
 
-#: ../app/tools/gimptexttool.c:187
+#: ../app/tools/gimptexttool.c:193
 msgid "Te_xt"
 msgstr "_Текст"
 
-#: ../app/tools/gimptexttool.c:901
+#: ../app/tools/gimptexttool.c:879
 msgid "Reshape Text Layer"
 msgstr "Смена размера текстового слоя"
 
-#: ../app/tools/gimptexttool.c:1385
-#: ../app/tools/gimptexttool.c:1388
+#: ../app/tools/gimptexttool.c:1394
+#: ../app/tools/gimptexttool.c:1397
 msgid "Confirm Text Editing"
 msgstr "Подтвердите изменение текста"
 
-#: ../app/tools/gimptexttool.c:1392
+#: ../app/tools/gimptexttool.c:1401
 msgid "Create _New Layer"
 msgstr "_Создать новый слой"
 
-#: ../app/tools/gimptexttool.c:1416
+#: ../app/tools/gimptexttool.c:1425
 msgid ""
 "The layer you selected is a text layer but it has been modified using other tools. Editing the layer with the text tool will discard these modifications.\n"
 "\n"
@@ -14224,7 +14232,7 @@ msgstr "%d × %d ppi, %s"
 msgid "%d ppi, %s"
 msgstr "%d точек на дюйм, %s"
 
-#: ../app/widgets/gimptexteditor.c:203
+#: ../app/widgets/gimptexteditor.c:205
 msgid "_Use selected font"
 msgstr "_Использовать выбранный шрифт"
 
@@ -14404,30 +14412,25 @@ msgstr "Открыть диалог выбора палитры"
 msgid "Open the font selection dialog"
 msgstr "Открыть диалог выбора шрифта"
 
-#: ../app/widgets/gimpwidgets-utils.c:663
+#: ../app/widgets/gimpwidgets-utils.c:648
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (попробуйте %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:663
+#: ../app/widgets/gimpwidgets-utils.c:648
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:667
+#: ../app/widgets/gimpwidgets-utils.c:652
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (попробуйте %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:671
+#: ../app/widgets/gimpwidgets-utils.c:656
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (попробуйте %s, %s, %s)"
-
-#: ../app/widgets/gimpwidgets-utils.c:939
-#, c-format
-msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Недопустимая строка UTF-8 в файле'%s'."
 
 #: ../app/widgets/widgets-enums.c:23
 msgctxt "active-color"
@@ -14634,6 +14637,8 @@ msgstr "Убедитесь, что панель инструментов вид�
 msgid "Couldn't start '%s': %s"
 msgstr "Невозможно запустить '%s': %s"
 
+#~ msgid "Invalid UTF-8 data in file '%s'."
+#~ msgstr "Недопустимая строка UTF-8 в файле'%s'."
 #~ msgid "Configure Input Devices"
 #~ msgstr "Настроить устройства ввода"
 #~ msgid "GIMP Text Editor"
