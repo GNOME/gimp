@@ -28,6 +28,7 @@ void       gimp_text_tool_editor_init            (GimpTextTool        *text_tool
 void       gimp_text_tool_editor_finalize        (GimpTextTool        *text_tool);
 
 void       gimp_text_tool_editor_start           (GimpTextTool        *text_tool);
+void       gimp_text_tool_editor_position        (GimpTextTool        *text_tool);
 void       gimp_text_tool_editor_halt            (GimpTextTool        *text_tool);
 
 void       gimp_text_tool_editor_button_press    (GimpTextTool        *text_tool,

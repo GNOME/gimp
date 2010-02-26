@@ -134,8 +134,6 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
   GimpTool         *tool    = GIMP_TOOL (text_tool);
   GimpTextOptions  *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
-  GtkRequisition    requisition;
-  gint              x, y;
 
   gtk_im_context_set_client_window (text_tool->im_context,
                                     gtk_widget_get_window (shell->canvas));
@@ -169,19 +167,32 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
       gtk_widget_show (text_tool->style_editor);
     }
 
-  gtk_widget_size_request (text_tool->style_overlay, &requisition);
-
-  g_object_get (text_tool,
-                "x1", &x,
-                "y1", &y,
-                NULL);
-
-  gimp_display_shell_move_overlay (shell,
-                                   text_tool->style_overlay,
-                                   x,
-                                   y - requisition.height - 6);
-
+  gimp_text_tool_editor_position (text_tool);
   gtk_widget_show (text_tool->style_overlay);
+}
+
+void
+gimp_text_tool_editor_position (GimpTextTool *text_tool)
+{
+  if (text_tool->style_overlay)
+    {
+      GimpTool         *tool    = GIMP_TOOL (text_tool);
+      GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
+      GtkRequisition    requisition;
+      gint              x, y;
+
+      gtk_widget_size_request (text_tool->style_overlay, &requisition);
+
+      g_object_get (text_tool,
+                    "x1", &x,
+                    "y1", &y,
+                    NULL);
+
+      gimp_display_shell_move_overlay (shell,
+                                       text_tool->style_overlay,
+                                       x,
+                                       y - requisition.height - 6);
+    }
 }
 
 void
