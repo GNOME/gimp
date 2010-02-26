@@ -449,7 +449,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
                 }
             }
 
-          if (text_tool->text)
+          if (text_tool->text && ! text_tool->moving)
             {
               text_tool->selecting = TRUE;
 
