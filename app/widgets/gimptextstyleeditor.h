@@ -44,6 +44,7 @@ struct _GimpTextStyleEditor
   GtkWidget      *underline_toggle;
   GtkWidget      *strikethrough_toggle;
 
+  GList          *toggles;
   GHashTable     *tag_to_toggle_hash;
 };
 
@@ -53,9 +54,11 @@ struct _GimpTextStyleEditorClass
 };
 
 
-GType       gimp_text_style_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_text_style_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_text_style_editor_new      (GimpTextBuffer *buffer);
+GtkWidget * gimp_text_style_editor_new       (GimpTextBuffer      *buffer);
+
+GList     * gimp_text_style_editor_list_tags (GimpTextStyleEditor *editor);
 
 
 #endif /*  __GIMP_TEXT_STYLE_EDITOR_H__  */

@@ -58,6 +58,10 @@ static GObject * gimp_text_buffer_constructor (GType                  type,
 static void      gimp_text_buffer_dispose     (GObject               *object);
 static void      gimp_text_buffer_finalize    (GObject               *object);
 
+static void      gimp_text_buffer_mark_set    (GtkTextBuffer         *buffer,
+                                               const GtkTextIter     *location,
+                                               GtkTextMark           *mark);
+
 
 G_DEFINE_TYPE (GimpTextBuffer, gimp_text_buffer, GTK_TYPE_TEXT_BUFFER)
 
@@ -67,11 +71,14 @@ G_DEFINE_TYPE (GimpTextBuffer, gimp_text_buffer, GTK_TYPE_TEXT_BUFFER)
 static void
 gimp_text_buffer_class_init (GimpTextBufferClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass       *object_class = G_OBJECT_CLASS (klass);
+  GtkTextBufferClass *buffer_class = GTK_TEXT_BUFFER_CLASS (klass);
 
   object_class->constructor = gimp_text_buffer_constructor;
   object_class->dispose     = gimp_text_buffer_dispose;
   object_class->finalize    = gimp_text_buffer_finalize;
+
+  buffer_class->mark_set    = gimp_text_buffer_mark_set;
 }
 
 static void
@@ -137,9 +144,21 @@ gimp_text_buffer_dispose (GObject *object)
 static void
 gimp_text_buffer_finalize (GObject *object)
 {
-  /* GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object); */
+  GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object);
+
+  gimp_text_buffer_clear_insert_tags (buffer);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_text_buffer_mark_set (GtkTextBuffer     *buffer,
+                           const GtkTextIter *location,
+                           GtkTextMark       *mark)
+{
+  gimp_text_buffer_clear_insert_tags (GIMP_TEXT_BUFFER (buffer));
+
+  GTK_TEXT_BUFFER_CLASS (parent_class)->mark_set (buffer, location, mark);
 }
 
 
@@ -161,6 +180,8 @@ gimp_text_buffer_set_text (GimpTextBuffer *buffer,
     text = "";
 
   gtk_text_buffer_set_text (GTK_TEXT_BUFFER (buffer), text, -1);
+
+  gimp_text_buffer_clear_insert_tags (buffer);
 }
 
 gchar *
@@ -202,6 +223,8 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
           g_clear_error (&error);
         }
     }
+
+  gimp_text_buffer_clear_insert_tags (buffer);
 }
 
 gchar *
@@ -276,13 +299,33 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
 }
 
 void
+gimp_text_buffer_set_insert_tags (GimpTextBuffer *buffer,
+                                  GList          *style)
+{
+  g_list_free (buffer->insert_tags);
+  buffer->insert_tags = style;
+  buffer->insert_tags_set = TRUE;
+}
+
+void
+gimp_text_buffer_clear_insert_tags (GimpTextBuffer *buffer)
+{
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+
+  g_list_free (buffer->insert_tags);
+  buffer->insert_tags = NULL;
+  buffer->insert_tags_set = FALSE;
+}
+
+void
 gimp_text_buffer_insert (GimpTextBuffer *buffer,
                          const gchar    *text)
 {
   GtkTextIter  iter, start;
   gint         start_offset;
-  GSList      *tags_off;
-  GSList      *list;
+  GList       *insert_tags;
+  gboolean     insert_tags_set;
+  GSList      *tags_off = NULL;
 
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
 
@@ -291,20 +334,46 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
 
   start_offset = gtk_text_iter_get_offset (&iter);
 
-  tags_off = gtk_text_iter_get_toggled_tags (&iter, FALSE);
+  insert_tags     = buffer->insert_tags;
+  insert_tags_set = buffer->insert_tags_set;
+  buffer->insert_tags     = NULL;
+  buffer->insert_tags_set = FALSE;
+
+  if (! insert_tags_set)
+    tags_off = gtk_text_iter_get_toggled_tags (&iter, FALSE);
 
   gtk_text_buffer_insert (GTK_TEXT_BUFFER (buffer), &iter, text, -1);
 
   gtk_text_buffer_get_iter_at_offset (GTK_TEXT_BUFFER (buffer), &start,
                                       start_offset);
 
-  for (list = tags_off; list; list = g_slist_next (list))
+  if (insert_tags_set)
     {
-      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), list->data,
-                                 &start, &iter);
-    }
+      GList *list;
 
-  g_slist_free (tags_off);
+      gtk_text_buffer_remove_all_tags (GTK_TEXT_BUFFER (buffer),
+                                       &start, &iter);
+
+      for (list = insert_tags; list; list = g_list_next (list))
+        {
+          gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                     &start, &iter);
+        }
+
+      g_list_free (insert_tags);
+    }
+  else
+    {
+      GSList *list;
+
+      for (list = tags_off; list; list = g_slist_next (list))
+        {
+          gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                     &start, &iter);
+        }
+
+      g_slist_free (tags_off);
+    }
 }
 
 gint

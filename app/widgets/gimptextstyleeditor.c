@@ -60,10 +60,7 @@ static void      gimp_text_style_editor_clear_tags   (GtkButton           *butto
 static void      gimp_text_style_editor_tag_toggled  (GtkToggleButton     *toggle,
                                                       GimpTextStyleEditor *editor);
 
-static void      gimp_text_style_editor_mark_set     (GtkTextBuffer       *buffer,
-                                                      GtkTextIter         *location,
-                                                      GtkTextMark         *mark,
-                                                      GimpTextStyleEditor *editor);
+static void      gimp_text_style_editor_update       (GimpTextStyleEditor *editor);
 
 
 G_DEFINE_TYPE (GimpTextStyleEditor, gimp_text_style_editor,
@@ -136,9 +133,22 @@ gimp_text_style_editor_constructor (GType                  type,
   gimp_text_style_editor_create_toggle (editor, editor->buffer->strikethrough_tag,
                                         GTK_STOCK_STRIKETHROUGH);
 
-  g_signal_connect (editor->buffer, "mark-set",
-                    G_CALLBACK (gimp_text_style_editor_mark_set),
-                    editor);
+  g_signal_connect_data (editor->buffer, "changed",
+                         G_CALLBACK (gimp_text_style_editor_update),
+                         editor, 0,
+                         G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_data (editor->buffer, "apply-tag",
+                         G_CALLBACK (gimp_text_style_editor_update),
+                         editor, 0,
+                         G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_data (editor->buffer, "remove-tag",
+                         G_CALLBACK (gimp_text_style_editor_update),
+                         editor, 0,
+                         G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_data (editor->buffer, "mark-set",
+                         G_CALLBACK (gimp_text_style_editor_update),
+                         editor, 0,
+                         G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   return object;
 }
@@ -151,7 +161,7 @@ gimp_text_style_editor_dispose (GObject *object)
   if (editor->buffer)
     {
       g_signal_handlers_disconnect_by_func (editor->buffer,
-                                            gimp_text_style_editor_mark_set,
+                                            gimp_text_style_editor_update,
                                             editor);
     }
 
@@ -231,6 +241,26 @@ gimp_text_style_editor_new (GimpTextBuffer *buffer)
                        NULL);
 }
 
+GList *
+gimp_text_style_editor_list_tags (GimpTextStyleEditor *editor)
+{
+  GList *toggles;
+  GList *tags = NULL;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_STYLE_EDITOR (editor), NULL);
+
+  for (toggles = editor->toggles; toggles; toggles = g_list_next (toggles))
+    {
+      if (gtk_toggle_button_get_active (toggles->data))
+        {
+          tags = g_list_prepend (tags,
+                                 g_object_get_data (toggles->data, "tag"));
+        }
+    }
+
+  return g_list_reverse (tags);
+}
+
 
 /*  private functions  */
 
@@ -246,6 +276,8 @@ gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
   gtk_widget_set_can_focus (toggle, FALSE);
   gtk_box_pack_start (GTK_BOX (editor), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
+
+  editor->toggles = g_list_append (editor->toggles, toggle);
 
   g_object_set_data (G_OBJECT (toggle), "tag", tag);
   g_hash_table_insert (editor->tag_to_toggle_hash, tag, toggle);
@@ -283,6 +315,7 @@ gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
   GtkTextTag    *tag    = g_object_get_data (G_OBJECT (toggle), "tag");
+  GList         *list;
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
@@ -299,6 +332,9 @@ gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
           gtk_text_buffer_remove_tag (buffer, tag, &start, &end);
         }
     }
+
+  list = gimp_text_style_editor_list_tags (editor);
+  gimp_text_buffer_set_insert_tags (editor->buffer, list);
 }
 
 static void
@@ -370,11 +406,10 @@ gimp_text_style_editor_update_cursor (GtkTextTag        *tag,
 }
 
 static void
-gimp_text_style_editor_mark_set (GtkTextBuffer       *buffer,
-                                 GtkTextIter         *location,
-                                 GtkTextMark         *mark,
-                                 GimpTextStyleEditor *editor)
+gimp_text_style_editor_update (GimpTextStyleEditor *editor)
 {
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
+
   if (gtk_text_buffer_get_has_selection (buffer))
     {
       GtkTextIter start, end;
@@ -405,7 +440,6 @@ gimp_text_style_editor_mark_set (GtkTextBuffer       *buffer,
           if (! data.any_active)
             break;
        }
-
     }
   else
     {

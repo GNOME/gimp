@@ -40,6 +40,9 @@ struct _GimpTextBuffer
   GtkTextTag    *underline_tag;
   GtkTextTag    *strikethrough_tag;
 
+  GList         *insert_tags;
+  gboolean       insert_tags_set;
+
   GdkAtom        markup_atom;
 };
 
@@ -49,36 +52,39 @@ struct _GimpTextBufferClass
 };
 
 
-GType            gimp_text_buffer_get_type       (void) G_GNUC_CONST;
+GType            gimp_text_buffer_get_type          (void) G_GNUC_CONST;
 
-GimpTextBuffer * gimp_text_buffer_new            (void);
+GimpTextBuffer * gimp_text_buffer_new               (void);
 
-void             gimp_text_buffer_set_text       (GimpTextBuffer  *buffer,
-                                                  const gchar     *text);
-gchar          * gimp_text_buffer_get_text       (GimpTextBuffer  *buffer);
+void             gimp_text_buffer_set_text          (GimpTextBuffer  *buffer,
+                                                     const gchar     *text);
+gchar          * gimp_text_buffer_get_text          (GimpTextBuffer  *buffer);
 
-void             gimp_text_buffer_set_markup     (GimpTextBuffer  *buffer,
-                                                  const gchar     *markup);
-gchar          * gimp_text_buffer_get_markup     (GimpTextBuffer  *buffer);
+void             gimp_text_buffer_set_markup        (GimpTextBuffer  *buffer,
+                                                     const gchar     *markup);
+gchar          * gimp_text_buffer_get_markup        (GimpTextBuffer  *buffer);
 
-const gchar    * gimp_text_buffer_tag_to_name    (GimpTextBuffer  *buffer,
-                                                  GtkTextTag      *tag);
-GtkTextTag     * gimp_text_buffer_name_to_tag    (GimpTextBuffer  *buffer,
-                                                  const gchar     *name);
+const gchar    * gimp_text_buffer_tag_to_name       (GimpTextBuffer  *buffer,
+                                                     GtkTextTag      *tag);
+GtkTextTag     * gimp_text_buffer_name_to_tag       (GimpTextBuffer  *buffer,
+                                                     const gchar     *name);
 
-void             gimp_text_buffer_insert         (GimpTextBuffer  *buffer,
-                                                  const gchar     *text);
+void             gimp_text_buffer_set_insert_tags   (GimpTextBuffer  *buffer,
+                                                     GList           *style);
+void             gimp_text_buffer_clear_insert_tags (GimpTextBuffer  *buffer);
+void             gimp_text_buffer_insert            (GimpTextBuffer  *buffer,
+                                                     const gchar     *text);
 
-gint             gimp_text_buffer_get_iter_index (GimpTextBuffer  *buffer,
-                                                  GtkTextIter     *iter);
+gint             gimp_text_buffer_get_iter_index    (GimpTextBuffer  *buffer,
+                                                     GtkTextIter     *iter);
 
-gboolean         gimp_text_buffer_load           (GimpTextBuffer  *buffer,
-                                                  const gchar     *filename,
-                                                  GError         **error);
-gboolean         gimp_text_buffer_save           (GimpTextBuffer  *buffer,
-                                                  const gchar     *filename,
-                                                  gboolean         selection_only,
-                                                  GError         **error);
+gboolean         gimp_text_buffer_load              (GimpTextBuffer  *buffer,
+                                                     const gchar     *filename,
+                                                     GError         **error);
+gboolean         gimp_text_buffer_save              (GimpTextBuffer  *buffer,
+                                                     const gchar     *filename,
+                                                     gboolean         selection_only,
+                                                     GError         **error);
 
 
 #endif /* __GIMP_TEXT_BUFFER_H__ */
