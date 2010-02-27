@@ -105,11 +105,20 @@ static void     gimp_dynamics_output_editor_curve_reset   (GtkWidget            
 static void    gimp_dynamics_output_editor_input_selected (GtkTreeSelection *selection,
                                                            GimpDynamicsOutputEditor *editor);
 
-static void     gimp_dynamics_output_editor_input_toggled (GtkWidget *cell,
+static void     gimp_dynamics_output_editor_input_toggled (GtkCellRenderer          *cell,
+                                                           gchar                    *path,
                                                            GimpDynamicsOutputEditor *editor);
 
 static void    gimp_dynamics_output_editor_activate_input (gint                      input,
                                                            GimpDynamicsOutputEditor *editor);
+
+static void         gimp_dynamics_output_editor_use_input (gint                      input,
+                                                           gboolean                  value,
+                                                           GimpDynamicsOutputEditor *editor);
+
+static void     gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
+                                                           const GParamSpec   *pspec,
+                                                           GtkListStore       *list);
 
 G_DEFINE_TYPE (GimpDynamicsOutputEditor, gimp_dynamics_output_editor,
                GTK_TYPE_VBOX)
@@ -277,6 +286,10 @@ gimp_dynamics_output_editor_constructor (GType                   type,
                   G_CALLBACK(gimp_dynamics_output_editor_input_selected),
                   editor);
 
+   g_signal_connect (private->output, "notify",
+                     G_CALLBACK (gimp_dynamics_output_editor_notify_output),
+                     private->input_list);
+
   return object;
 }
 
@@ -369,10 +382,31 @@ gimp_dynamics_output_editor_input_selected (GtkTreeSelection *selection,
 }
 
 static void
-gimp_dynamics_output_editor_input_toggled (GtkWidget *cell,
+gimp_dynamics_output_editor_input_toggled (GtkCellRenderer          *cell,
+                                           gchar                    *path,
                                            GimpDynamicsOutputEditor *editor)
 {
-  printf("Input toggled\n");
+  GimpDynamicsOutputEditorPrivate *private;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+  gint              input;
+  gboolean          use;
+
+  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
+
+  model = GTK_TREE_MODEL(private->input_list);
+
+  if (gtk_tree_model_get_iter_from_string (model, &iter, path))
+    {
+      gtk_tree_model_get (model, &iter,
+                          INPUT_COLUMN_INDEX, &input,
+                          INPUT_COLUMN_USE_INPUT, &use,
+                          -1);
+      use = !use;
+
+      gimp_dynamics_output_editor_use_input (input, use, editor);
+
+    }
 }
 
 static void
@@ -461,6 +495,101 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
 
 }
 
+static void
+gimp_dynamics_output_editor_use_input (gint                      input,
+                                       gboolean                  value,
+                                       GimpDynamicsOutputEditor *editor)
+{
+  GimpDynamicsOutputEditorPrivate *private;
+
+  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
+
+  if (input == INPUT_PRESSURE)
+    {
+     private->output->use_pressure =  value;
+     g_object_notify (G_OBJECT (private->output), "use-pressure");
+    }
+
+  if (input == INPUT_VELOCITY)
+    {
+      private->output->use_velocity = value;
+      g_object_notify (G_OBJECT (private->output), "use-velocity");
+    }
+  if (input == INPUT_DIRECTION)
+    {
+      private->output->use_direction = value;
+      g_object_notify (G_OBJECT (private->output), "use-direction");
+    }
+  if (input == INPUT_TILT)
+    {
+      private->output->use_tilt = value;
+      g_object_notify (G_OBJECT (private->output), "use-tilt");
+    }
+  if (input == INPUT_RANDOM)
+    {
+      private->output->use_random = value;
+      g_object_notify (G_OBJECT (private->output), "use-random");
+    }
+
+  if (input == INPUT_FADE)
+    {
+      private->output->use_fade = value;
+      g_object_notify (G_OBJECT (private->output), "use-fade");
+    }
+}
+
+static void
+gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
+                                           const GParamSpec   *pspec,
+                                           GtkListStore *list)
+{
+
+  GtkTreeModel    *model;
+  GtkTreeIter      iter;
+  gboolean         iter_valid;
+  gboolean         value;
+
+  model   = GTK_TREE_MODEL(list);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gint                input;
+
+      gtk_tree_model_get (GTK_TREE_MODEL(model), &iter,
+                          INPUT_COLUMN_INDEX, &input,
+                          -1);
+
+      switch (input)
+        {
+          case INPUT_PRESSURE:
+            value = output->use_pressure;
+            break;
+          case INPUT_VELOCITY:
+            value = output->use_velocity;
+            break;
+          case INPUT_DIRECTION:
+            value = output->use_direction;
+            break;
+          case INPUT_TILT:
+            value = output->use_tilt;
+            break;
+          case INPUT_RANDOM:
+            value = output->use_random;
+            break;
+          case INPUT_FADE:
+            value = output->use_fade;
+            break;
+
+        }
+
+
+      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                          INPUT_COLUMN_USE_INPUT, value, -1);
+  }
+
+}
 
 /*  public functions  */
 
