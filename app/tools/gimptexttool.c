@@ -831,6 +831,8 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (rect_tool);
 
+  gimp_text_tool_editor_position (text_tool);
+
   if (text_tool->handle_rectangle_change_complete)
     {
       GimpItem *item = GIMP_ITEM (text_tool->layer);
@@ -885,8 +887,6 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
           gimp_text_tool_apply (text_tool);
 
           gimp_image_undo_group_end (text_tool->image);
-
-          gimp_text_tool_editor_position (text_tool);
         }
     }
 
