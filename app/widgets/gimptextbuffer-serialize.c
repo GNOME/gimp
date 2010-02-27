@@ -73,11 +73,26 @@ open_tag (GimpTextBuffer *buffer,
           GString        *string,
           GtkTextTag     *tag)
 {
-  const gchar *name = gimp_text_buffer_tag_to_name (buffer, tag);
+  const gchar *name;
+  const gchar *attribute;
+  gchar       *attribute_value;
 
-  if (tag)
+  name = gimp_text_buffer_tag_to_name (buffer, tag,
+                                       &attribute,
+                                       &attribute_value);
+
+  if (name)
     {
-      g_string_append_printf (string, "<%s>", name);
+      if (attribute && attribute_value)
+        {
+          g_string_append_printf (string, "<%s %s=\"%s\">",
+                                  name, attribute, attribute_value);
+          g_free (attribute_value);
+        }
+      else
+        {
+          g_string_append_printf (string, "<%s>", name);
+        }
 
       return TRUE;
     }
@@ -90,9 +105,9 @@ close_tag (GimpTextBuffer *buffer,
            GString        *string,
            GtkTextTag     *tag)
 {
-  const gchar *name = gimp_text_buffer_tag_to_name (buffer, tag);
+  const gchar *name = gimp_text_buffer_tag_to_name (buffer, tag, NULL, NULL);
 
-  if (tag)
+  if (name)
     {
       g_string_append_printf (string, "</%s>", name);
 
@@ -335,14 +350,23 @@ parse_tag_element (GMarkupParseContext  *context,
                    ParseInfo            *info,
                    GError              **error)
 {
-  GtkTextTag *tag;
+  GtkTextTag  *tag;
+  const gchar *attribute_name  = NULL;
+  const gchar *attribute_value = NULL;
 
   g_assert (peek_state (info) == STATE_MARKUP ||
 	    peek_state (info) == STATE_TAG    ||
             peek_state (info) == STATE_UNKNOWN);
 
+  if (attribute_names)
+    attribute_name = attribute_names[0];
+
+  if (attribute_values)
+    attribute_value = attribute_values[0];
+
   tag = gimp_text_buffer_name_to_tag (GIMP_TEXT_BUFFER (info->buffer),
-                                      element_name);
+                                      element_name,
+                                      attribute_name, attribute_value);
 
   if (tag)
     {

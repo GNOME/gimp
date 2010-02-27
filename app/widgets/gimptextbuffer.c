@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
@@ -146,6 +147,18 @@ gimp_text_buffer_finalize (GObject *object)
 {
   GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object);
 
+  if (buffer->baseline_tags)
+    {
+      g_list_free (buffer->baseline_tags);
+      buffer->baseline_tags = NULL;
+    }
+
+  if (buffer->spacing_tags)
+    {
+      g_list_free (buffer->spacing_tags);
+      buffer->spacing_tags = NULL;
+    }
+
   gimp_text_buffer_clear_insert_tags (buffer);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -244,12 +257,154 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
                                               &length);
 }
 
+static gint
+get_baseline_at_iter (GimpTextBuffer     *buffer,
+                      const GtkTextIter  *iter,
+                      GtkTextTag        **baseline_tag)
+{
+  GList *list;
+
+  for (list = buffer->baseline_tags; list; list = g_list_next (list))
+    {
+      GtkTextTag *tag = list->data;
+
+      if (gtk_text_iter_has_tag (iter, tag))
+        {
+          gint baseline;
+
+          *baseline_tag = tag;
+
+          g_object_get (tag,
+                        "rise", &baseline,
+                        NULL);
+
+          return baseline;
+        }
+    }
+
+  *baseline_tag = NULL;
+
+  return 0;
+}
+
+static GtkTextTag *
+get_baseline_tag (GimpTextBuffer *buffer,
+                  gint            baseline)
+{
+  GList      *list;
+  GtkTextTag *tag;
+  gchar       name[32];
+
+  for (list = buffer->baseline_tags; list; list = g_list_next (list))
+    {
+      gint tag_baseline;
+
+      tag = list->data;
+
+      g_object_get (tag,
+                    "rise", &tag_baseline,
+                    NULL);
+
+      if (tag_baseline == baseline)
+        return tag;
+    }
+
+  g_snprintf (name, sizeof (name), "baseline-%d", baseline);
+
+  tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                    name,
+                                    "rise", baseline,
+                                    NULL);
+
+  buffer->baseline_tags = g_list_prepend (buffer->baseline_tags, tag);
+
+  return tag;
+}
+
+void
+gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
+                                  const GtkTextIter *start,
+                                  const GtkTextIter *end,
+                                  gint               count)
+{
+  GtkTextIter  iter;
+  GtkTextIter  span_start;
+  GtkTextIter  span_end;
+  gint         span_baseline;
+  GtkTextTag  *span_tag;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (&iter, end))
+    return;
+
+  iter          = *start;
+  span_start    = *start;
+  span_baseline = get_baseline_at_iter (buffer, &iter, &span_tag);
+
+  do
+    {
+      gint        iter_baseline;
+      GtkTextTag *iter_tag;
+
+      gtk_text_iter_forward_char (&iter);
+
+      iter_baseline = get_baseline_at_iter (buffer, &iter, &iter_tag);
+
+      span_end = iter;
+
+      if (iter_baseline != span_baseline ||
+          gtk_text_iter_equal (&iter, end))
+        {
+          if (span_baseline != 0)
+            {
+              gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), span_tag,
+                                          &span_start, &span_end);
+            }
+
+          if (span_baseline + count != 0)
+            {
+              span_tag = get_baseline_tag (buffer, span_baseline + count);
+
+              gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
+                                         &span_start, &span_end);
+            }
+
+          span_start    = iter;
+          span_baseline = iter_baseline;
+          span_tag      = iter_tag;
+        }
+    }
+  while (! gtk_text_iter_equal (&iter, end));
+}
+
+void
+gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
+                                 const GtkTextIter *start,
+                                 const GtkTextIter *end,
+                                 gint               count)
+{
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+}
+
 const gchar *
-gimp_text_buffer_tag_to_name (GimpTextBuffer *buffer,
-                              GtkTextTag     *tag)
+gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
+                              GtkTextTag      *tag,
+                              const gchar    **attribute,
+                              gchar          **value)
 {
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
   g_return_val_if_fail (GTK_IS_TEXT_TAG (tag), NULL);
+
+  if (attribute)
+    *attribute = NULL;
+
+  if (value)
+    *value = NULL;
 
   if (tag == buffer->bold_tag)
     {
@@ -267,13 +422,33 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer *buffer,
     {
       return "s";
     }
+  else if (g_list_find (buffer->baseline_tags, tag))
+    {
+      if (attribute)
+        *attribute = "rise";
+
+      if (value)
+        {
+          gint baseline;
+
+          g_object_get (tag,
+                        "rise", &baseline,
+                        NULL);
+
+          *value = g_strdup_printf ("%d", baseline);
+        }
+
+      return "span";
+    }
 
   return NULL;
 }
 
 GtkTextTag *
 gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
-                              const gchar    *name)
+                              const gchar    *name,
+                              const gchar    *attribute,
+                              const gchar    *value)
 {
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -293,6 +468,16 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
   else if (! strcmp (name, "s"))
     {
       return buffer->strikethrough_tag;
+    }
+  else if (! strcmp (name, "span"))
+    {
+      if (! attribute || ! value)
+        return NULL;
+
+      if (! strcmp (attribute, "rise"))
+        {
+          return get_baseline_tag (buffer, atoi (value));
+        }
     }
 
   return NULL;

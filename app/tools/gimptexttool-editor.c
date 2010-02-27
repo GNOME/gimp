@@ -1034,14 +1034,47 @@ static void
 gimp_text_tool_change_baseline (GimpTextTool *text_tool,
                                 gint          count)
 {
-  g_printerr ("%s: count = %d\n", G_STRFUNC, count);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  GtkTextIter    start;
+  GtkTextIter    end;
+
+  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
+    {
+      gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                        gtk_text_buffer_get_insert (buffer));
+      gtk_text_buffer_get_end_iter (buffer, &end);
+    }
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+  gtk_text_iter_order (&start, &end);
+  gimp_text_buffer_change_baseline (text_tool->buffer, &start, &end,
+                                    count * PANGO_SCALE);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
 gimp_text_tool_change_spacing (GimpTextTool *text_tool,
                                gint          count)
 {
-  g_printerr ("%s: count = %d\n", G_STRFUNC, count);
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  GtkTextIter    start;
+  GtkTextIter    end;
+
+  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
+    {
+      gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                        gtk_text_buffer_get_insert (buffer));
+      gtk_text_buffer_get_end_iter (buffer, &end);
+    }
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+  gtk_text_iter_order (&start, &end);
+  gimp_text_buffer_change_spacing (text_tool->buffer, &start, &end, count);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
