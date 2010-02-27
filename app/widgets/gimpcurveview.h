@@ -93,6 +93,8 @@ void        gimp_curve_view_add_background    (GimpCurveView *view,
 void        gimp_curve_view_remove_background (GimpCurveView *view,
                                                GimpCurve     *curve);
 
+void   gimp_curve_view_remove_all_backgrounds (GimpCurveView *view);
+
 void        gimp_curve_view_set_selected      (GimpCurveView *view,
                                                gint           selected);
 void        gimp_curve_view_set_range_x       (GimpCurveView *view,

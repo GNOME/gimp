@@ -785,12 +785,7 @@ gimp_curves_tool_config_notify (GObject        *object,
       gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->yrange),
                                   config->channel);
 
-      gimp_curve_view_remove_background (GIMP_CURVE_VIEW (tool->graph),
-                                         config->curve[GIMP_HISTOGRAM_RED]);
-      gimp_curve_view_remove_background (GIMP_CURVE_VIEW (tool->graph),
-                                         config->curve[GIMP_HISTOGRAM_GREEN]);
-      gimp_curve_view_remove_background (GIMP_CURVE_VIEW (tool->graph),
-                                         config->curve[GIMP_HISTOGRAM_BLUE]);
+      gimp_curve_view_remove_all_backgrounds (GIMP_CURVE_VIEW (tool->graph));
 
       gimp_rgb_set (&red,   1.0, 0.0, 0.0);
       gimp_rgb_set (&green, 0.0, 1.0, 0.0);

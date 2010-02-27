@@ -1189,6 +1189,27 @@ gimp_curve_view_remove_background (GimpCurveView *view,
 }
 
 void
+gimp_curve_view_remove_all_backgrounds (GimpCurveView *view)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+
+  for (list = view->bg_curves; list; list = g_list_next (list))
+    {
+      BGCurve *bg = list->data;
+
+      g_object_unref (bg->curve);
+
+      view->bg_curves = g_list_remove (view->bg_curves, bg);
+
+      g_slice_free (BGCurve, bg);
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+
+void
 gimp_curve_view_set_selected (GimpCurveView *view,
                               gint           selected)
 {
