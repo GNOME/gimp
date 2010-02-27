@@ -68,6 +68,11 @@ static void   gimp_text_tool_backspace          (GimpTextTool    *text_tool);
 static void   gimp_text_tool_toggle_overwrite   (GimpTextTool    *text_tool);
 static void   gimp_text_tool_select_all         (GimpTextTool    *text_tool,
                                                  gboolean         select);
+static void   gimp_text_tool_change_baseline    (GimpTextTool    *text_tool,
+                                                 gint             count);
+static void   gimp_text_tool_change_spacing     (GimpTextTool    *text_tool,
+                                                 gint             count);
+
 static void   gimp_text_tool_options_notify     (GimpTextOptions *options,
                                                  GParamSpec      *pspec,
                                                  GimpTextTool    *text_tool);
@@ -601,6 +606,12 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
       g_signal_connect_swapped (text_tool->proxy_text_view, "select-all",
                                 G_CALLBACK (gimp_text_tool_select_all),
                                 text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "change-baseline",
+                                G_CALLBACK (gimp_text_tool_change_baseline),
+                                text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "change-spacing",
+                                G_CALLBACK (gimp_text_tool_change_spacing),
+                                text_tool);
     }
 }
 
@@ -1017,6 +1028,20 @@ gimp_text_tool_select_all (GimpTextTool *text_tool,
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+}
+
+static void
+gimp_text_tool_change_baseline (GimpTextTool *text_tool,
+                                gint          count)
+{
+  g_printerr ("%s: count = %d\n", G_STRFUNC, count);
+}
+
+static void
+gimp_text_tool_change_spacing (GimpTextTool *text_tool,
+                               gint          count)
+{
+  g_printerr ("%s: count = %d\n", G_STRFUNC, count);
 }
 
 static void

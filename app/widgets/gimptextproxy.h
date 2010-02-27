@@ -40,6 +40,11 @@ struct _GimpTextProxy
 struct _GimpTextProxyClass
 {
   GtkTextViewClass  parent_class;
+
+  void (* change_baseline) (GimpTextProxy *proxy,
+                            gint           count);
+  void (* change_spacing)  (GimpTextProxy *proxy,
+                            gint           count);
 };
 
 

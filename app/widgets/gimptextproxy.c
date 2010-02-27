@@ -21,8 +21,19 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+
+#include "core/gimpmarshal.h"
 
 #include "gimptextproxy.h"
+
+
+enum
+{
+  CHANGE_BASELINE,
+  CHANGE_SPACING,
+  LAST_SIGNAL
+};
 
 
 static void   gimp_text_proxy_move_cursor        (GtkTextView     *text_view,
@@ -43,11 +54,14 @@ static void   gimp_text_proxy_toggle_overwrite   (GtkTextView     *text_view);
 
 G_DEFINE_TYPE (GimpTextProxy, gimp_text_proxy, GTK_TYPE_TEXT_VIEW)
 
+static guint proxy_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_text_proxy_class_init (GimpTextProxyClass *klass)
 {
   GtkTextViewClass *tv_class = GTK_TEXT_VIEW_CLASS (klass);
+  GtkBindingSet    *binding_set;
 
   tv_class->move_cursor        = gimp_text_proxy_move_cursor;
   tv_class->insert_at_cursor   = gimp_text_proxy_insert_at_cursor;
@@ -57,6 +71,42 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
   tv_class->copy_clipboard     = gimp_text_proxy_copy_clipboard;
   tv_class->paste_clipboard    = gimp_text_proxy_paste_clipboard;
   tv_class->toggle_overwrite   = gimp_text_proxy_toggle_overwrite;
+
+  proxy_signals[CHANGE_BASELINE] =
+    g_signal_new ("change-baseline",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+		  G_STRUCT_OFFSET (GimpTextProxyClass, change_baseline),
+		  NULL, NULL,
+		  gimp_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_INT);
+
+  proxy_signals[CHANGE_SPACING] =
+    g_signal_new ("change-spacing",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+		  G_STRUCT_OFFSET (GimpTextProxyClass, change_spacing),
+		  NULL, NULL,
+		  gimp_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_INT);
+
+  binding_set = gtk_binding_set_by_class (klass);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_Up, GDK_MOD1_MASK,
+				"change-baseline", 1,
+                                G_TYPE_INT, 1);
+  gtk_binding_entry_add_signal (binding_set, GDK_Down, GDK_MOD1_MASK,
+				"change-baseline", 1,
+                                G_TYPE_INT, -1);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_Left, GDK_MOD1_MASK,
+				"change-spacing", 1,
+                                G_TYPE_INT, -1);
+  gtk_binding_entry_add_signal (binding_set, GDK_Right, GDK_MOD1_MASK,
+				"change-spacing", 1,
+                                G_TYPE_INT, 1);
 }
 
 static void
