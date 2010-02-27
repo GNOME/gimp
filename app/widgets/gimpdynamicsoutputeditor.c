@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "widgets-types.h"
 
@@ -357,6 +358,9 @@ gimp_dynamics_output_editor_input_selected (GtkTreeSelection *selection,
   GimpDynamicsOutputEditorPrivate *private;
   GtkTreeModel     *model;
   GtkTreeIter       iter;
+  GimpRGB       bg_color;
+
+  gimp_rgb_set (&bg_color,   0.5, 0.5, 0.5);
 
   private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
 
@@ -368,39 +372,76 @@ gimp_dynamics_output_editor_input_selected (GtkTreeSelection *selection,
                         INPUT_COLUMN_INDEX, &input,
                         -1);
 
-    switch (input)
+    gimp_curve_view_remove_all_backgrounds (GIMP_CURVE_VIEW (private->curve_view));
+
+    if (input == INPUT_PRESSURE)
       {
-      case INPUT_PRESSURE:
         gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                    private->output->pressure_curve);
-        break;
-      case INPUT_VELOCITY:
+      }
+    else if (private->output->use_pressure)
+      {
+        gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                        private->output->pressure_curve,
+                                        &bg_color);
+      }
+
+    if (input == INPUT_VELOCITY)
+      {
         gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                    private->output->velocity_curve);
-        break;
-      case INPUT_DIRECTION:
+      }
+    else if (private->output->use_velocity)
+      {
+        gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                        private->output->velocity_curve,
+                                        &bg_color);
+      }
+    if (input == INPUT_DIRECTION)
+      {
         gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                    private->output->direction_curve);
-        break;
-      case INPUT_TILT:
+      }
+    else if (private->output->use_direction)
+      {
+        gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                        private->output->direction_curve,
+                                        &bg_color);
+      }
+    if (input == INPUT_TILT)
+      {
         gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                    private->output->tilt_curve);
-        break;
-      case INPUT_RANDOM:
+      }
+    else if (private->output->use_tilt)
+      {
+        gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                        private->output->tilt_curve,
+                                        &bg_color);
+      }
+    if (input == INPUT_RANDOM)
+      {
         gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                    private->output->random_curve);
-        break;
-      case INPUT_FADE:
+      }
+    else if (private->output->use_random)
+      {
+        gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                        private->output->random_curve,
+                                        &bg_color);
+      }
+
+    if (input == INPUT_FADE) {
         gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                    private->output->fade_curve);
-        break;
-
+        }
+    else if (private->output->use_fade) {
+        gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                        private->output->fade_curve,
+                                        &bg_color);
       }
-      gtk_widget_queue_draw (private->curve_view);
-    printf("Row activated. Input: %d\n", input);
+    gtk_widget_queue_draw (private->curve_view);
   }
-
-
 
 }
 
