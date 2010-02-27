@@ -101,6 +101,11 @@ static void      gimp_dynamics_output_editor_get_property (GObject              
 static void     gimp_dynamics_output_editor_curve_reset   (GtkWidget             *button,
                                                            GimpCurve             *curve);
 
+static void    gimp_dynamics_output_editor_input_selected (GtkTreeSelection *selection,
+                                                           GimpDynamicsOutputEditor *editor);
+
+static void     gimp_dynamics_output_editor_input_toggled (GtkWidget *cell,
+                                                           GimpDynamicsOutputEditor *editor);
 
 G_DEFINE_TYPE (GimpDynamicsOutputEditor, gimp_dynamics_output_editor,
                GTK_TYPE_VBOX)
@@ -149,6 +154,8 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   GtkWidget                       *view;
   GtkWidget                       *button;
   GtkCellRenderer                 *cell;
+  GtkTreeSelection                *tree_sel;
+  GtkTreeIter                      iter = {0};
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -188,36 +195,42 @@ gimp_dynamics_output_editor_constructor (GType                   type,
                                             G_TYPE_STRING);
 
   gtk_list_store_insert_with_values (private->input_list,
+                                     &iter, INPUT_PRESSURE,
                                      INPUT_COLUMN_INDEX, INPUT_PRESSURE,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_pressure,
                                      INPUT_COLUMN_NAME,  _("Pressure"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
+                                     &iter, INPUT_VELOCITY,
                                      INPUT_COLUMN_INDEX, INPUT_VELOCITY,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_velocity,
                                      INPUT_COLUMN_NAME,  _("Velocity"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
+                                     &iter, INPUT_DIRECTION,
                                      INPUT_COLUMN_INDEX, INPUT_DIRECTION,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_direction,
                                      INPUT_COLUMN_NAME,  _("Direction"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
+                                     &iter, INPUT_TILT,
                                      INPUT_COLUMN_INDEX, INPUT_TILT,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_tilt,
                                      INPUT_COLUMN_NAME,  _("Tilt"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
+                                     &iter, INPUT_RANDOM,
                                      INPUT_COLUMN_INDEX, INPUT_RANDOM,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_random,
                                      INPUT_COLUMN_NAME,  _("Random"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
+                                     &iter, INPUT_FADE,
                                      INPUT_COLUMN_INDEX, INPUT_FADE,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_fade,
                                      INPUT_COLUMN_NAME,  _("Fade"),
@@ -236,6 +249,11 @@ gimp_dynamics_output_editor_constructor (GType                   type,
                 "activatable", TRUE,
                 NULL);
 
+  g_signal_connect(G_OBJECT(cell),
+                  "toggled",
+                  G_CALLBACK(gimp_dynamics_output_editor_input_toggled),
+                  editor);
+
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
                                                -1, NULL,
                                                cell,
@@ -250,6 +268,16 @@ gimp_dynamics_output_editor_constructor (GType                   type,
 
   gtk_box_pack_start (GTK_BOX (editor), view, FALSE, FALSE, 0);
   gtk_widget_show (view);
+
+  tree_sel = gtk_tree_view_get_selection(GTK_TREE_VIEW (view));
+  gtk_tree_selection_set_mode(tree_sel,
+                              GTK_SELECTION_BROWSE);
+
+
+  g_signal_connect(G_OBJECT(tree_sel),
+                  "changed",
+                  G_CALLBACK(gimp_dynamics_output_editor_input_selected),
+                  editor);
 
   return object;
 }
@@ -322,6 +350,66 @@ gimp_dynamics_output_editor_curve_reset (GtkWidget *button,
   gimp_curve_reset (curve, TRUE);
 }
 
+static void
+gimp_dynamics_output_editor_input_selected (GtkTreeSelection *selection,
+                                            GimpDynamicsOutputEditor *editor)
+{
+  GimpDynamicsOutputEditorPrivate *private;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+
+  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
+
+  if (gtk_tree_selection_get_selected(selection, &model, &iter))
+  {
+    gint input;
+
+    gtk_tree_model_get (model, &iter,
+                        INPUT_COLUMN_INDEX, &input,
+                        -1);
+
+    switch (input)
+      {
+      case INPUT_PRESSURE:
+        gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+                                   private->output->pressure_curve);
+        break;
+      case INPUT_VELOCITY:
+        gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+                                   private->output->velocity_curve);
+        break;
+      case INPUT_DIRECTION:
+        gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+                                   private->output->direction_curve);
+        break;
+      case INPUT_TILT:
+        gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+                                   private->output->tilt_curve);
+        break;
+      case INPUT_RANDOM:
+        gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+                                   private->output->random_curve);
+        break;
+      case INPUT_FADE:
+        gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+                                   private->output->fade_curve);
+        break;
+
+      }
+      gtk_widget_queue_draw (private->curve_view);
+    printf("Row activated. Input: %d\n", input);
+  }
+
+
+
+}
+
+static void
+gimp_dynamics_output_editor_input_toggled (GtkWidget *cell,
+                                           GimpDynamicsOutputEditor *editor)
+{
+  printf("Input toggled\n");
+}
 
 /*  public functions  */
 
