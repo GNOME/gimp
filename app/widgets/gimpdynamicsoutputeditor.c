@@ -74,6 +74,8 @@ struct _GimpDynamicsOutputEditorPrivate
 
   GtkWidget      *notebook;
 
+  GtkWidget      *curve_view;
+
   GtkListStore   *input_list;
 };
 
@@ -159,17 +161,17 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (editor), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  view = gimp_curve_view_new ();
-  g_object_set (view,
+  private->curve_view = gimp_curve_view_new ();
+  g_object_set (private->curve_view,
                 "border-width", CURVE_BORDER,
                 NULL);
-  gtk_widget_set_size_request (view,
+  gtk_widget_set_size_request (private->curve_view,
                                CURVE_SIZE + CURVE_BORDER * 2,
                                CURVE_SIZE + CURVE_BORDER * 2);
-  gtk_box_pack_start (GTK_BOX (editor), view, TRUE, TRUE, 0);
-  gtk_widget_show (view);
+  gtk_box_pack_start (GTK_BOX (editor), private->curve_view, TRUE, TRUE, 0);
+  gtk_widget_show (private->curve_view);
 
-  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (view),
+  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                              private->output->pressure_curve);
 
   button = gtk_button_new_with_mnemonic (_("_Reset Curve"));
@@ -230,8 +232,8 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   cell = gtk_cell_renderer_toggle_new ();
 
   g_object_set (cell,
-                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
-                "editable", TRUE,
+                "mode",     GTK_CELL_RENDERER_MODE_ACTIVATABLE,
+                "activatable", TRUE,
                 NULL);
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
