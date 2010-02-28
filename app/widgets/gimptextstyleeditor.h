@@ -50,7 +50,6 @@ struct _GimpTextStyleEditor
   GtkWidget      *size_label;
 
   GList          *toggles;
-  GHashTable     *tag_to_toggle_hash;
 };
 
 struct _GimpTextStyleEditorClass

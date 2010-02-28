@@ -115,9 +115,6 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
   GtkWidget *image;
 
-  editor->tag_to_toggle_hash = g_hash_table_new (g_direct_hash,
-                                                 g_direct_equal);
-
   editor->clear_button = gtk_button_new ();
   gtk_widget_set_can_focus (editor->clear_button, FALSE);
   gtk_box_pack_start (GTK_BOX (editor), editor->clear_button, FALSE, FALSE, 0);
@@ -199,12 +196,6 @@ static void
 gimp_text_style_editor_finalize (GObject *object)
 {
   GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (object);
-
-  if (editor->tag_to_toggle_hash)
-    {
-      g_hash_table_unref (editor->tag_to_toggle_hash);
-      editor->tag_to_toggle_hash = NULL;
-    }
 
   if (editor->buffer)
     {
@@ -323,9 +314,7 @@ gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
   gtk_widget_show (toggle);
 
   editor->toggles = g_list_append (editor->toggles, toggle);
-
   g_object_set_data (G_OBJECT (toggle), "tag", tag);
-  g_hash_table_insert (editor->tag_to_toggle_hash, tag, toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_text_style_editor_tag_toggled),
@@ -383,71 +372,19 @@ gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
 }
 
 static void
-gimp_text_style_editor_enable_toggle (GtkTextTag          *tag,
-                                      GtkToggleButton     *toggle,
-                                      GimpTextStyleEditor *editor)
+gimp_text_style_editor_set_toggle (GimpTextStyleEditor *editor,
+                                   GtkToggleButton     *toggle,
+                                   gboolean             active)
 {
   g_signal_handlers_block_by_func (toggle,
                                    gimp_text_style_editor_tag_toggled,
                                    editor);
 
-  gtk_toggle_button_set_active (toggle, TRUE);
+  gtk_toggle_button_set_active (toggle, active);
 
   g_signal_handlers_unblock_by_func (toggle,
                                      gimp_text_style_editor_tag_toggled,
                                      editor);
-}
-
-typedef struct
-{
-  GimpTextStyleEditor *editor;
-  GSList              *tags;
-  GSList              *tags_on;
-  GSList              *tags_off;
-  GtkTextIter          iter;
-  gboolean             any_active;
-} UpdateTogglesData;
-
-static void
-gimp_text_style_editor_update_selection (GtkTextTag        *tag,
-                                         GtkToggleButton   *toggle,
-                                         UpdateTogglesData *data)
-{
-  if (! gtk_text_iter_has_tag (&data->iter, tag))
-    {
-      g_signal_handlers_block_by_func (toggle,
-                                       gimp_text_style_editor_tag_toggled,
-                                       data->editor);
-
-      gtk_toggle_button_set_active (toggle, FALSE);
-
-      g_signal_handlers_unblock_by_func (toggle,
-                                         gimp_text_style_editor_tag_toggled,
-                                         data->editor);
-    }
-  else
-    {
-      data->any_active = TRUE;
-    }
-}
-
-static void
-gimp_text_style_editor_update_cursor (GtkTextTag        *tag,
-                                      GtkToggleButton   *toggle,
-                                      UpdateTogglesData *data)
-{
-  g_signal_handlers_block_by_func (toggle,
-                                   gimp_text_style_editor_tag_toggled,
-                                   data->editor);
-
-  gtk_toggle_button_set_active (toggle,
-                                (g_slist_find (data->tags, tag) &&
-                                 ! g_slist_find (data->tags_on, tag)) ||
-                                g_slist_find (data->tags_off, tag));
-
-  g_signal_handlers_unblock_by_func (toggle,
-                                     gimp_text_style_editor_tag_toggled,
-                                     data->editor);
 }
 
 static void
@@ -457,32 +394,44 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
-      GtkTextIter start, end;
-      GtkTextIter iter;
+      GtkTextIter  start, end;
+      GtkTextIter  iter;
+      GList       *list;
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
       gtk_text_iter_order (&start, &end);
 
       /*  first, switch all toggles on  */
-      g_hash_table_foreach (editor->tag_to_toggle_hash,
-                            (GHFunc) gimp_text_style_editor_enable_toggle,
-                            editor);
+      for (list = editor->toggles; list; list = g_list_next (list))
+        {
+          GtkToggleButton *toggle = list->data;
+
+          gimp_text_style_editor_set_toggle (editor, toggle, TRUE);
+        }
 
       for (iter = start;
            gtk_text_iter_in_range (&iter, &start, &end);
            gtk_text_iter_forward_cursor_position (&iter))
         {
-          UpdateTogglesData data;
+          gboolean any_active = FALSE;
 
-          data.editor     = editor;
-          data.iter       = iter;
-          data.any_active = FALSE;
+          for (list = editor->toggles; list; list = g_list_next (list))
+            {
+              GtkToggleButton *toggle = list->data;
+              GtkTextTag      *tag    = g_object_get_data (G_OBJECT (toggle),
+                                                           "tag");
 
-          g_hash_table_foreach (editor->tag_to_toggle_hash,
-                                (GHFunc) gimp_text_style_editor_update_selection,
-                                &data);
+              if (! gtk_text_iter_has_tag (&iter, tag))
+                {
+                  gimp_text_style_editor_set_toggle (editor, toggle, FALSE);
+                }
+              else
+                {
+                  any_active = TRUE;
+                }
+            }
 
-          if (! data.any_active)
+          if (! any_active)
             break;
        }
 
@@ -490,28 +439,38 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
     }
   else
     {
-      UpdateTogglesData  data;
-      GtkTextIter        cursor;
-      gchar             *str;
+      GtkTextIter  cursor;
+      GSList      *tags;
+      GSList      *tags_on;
+      GSList      *tags_off;
+      GList       *list;
+      gchar       *str;
 
       gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                         gtk_text_buffer_get_insert (buffer));
 
-      data.editor   = editor;
-      data.tags     = gtk_text_iter_get_tags (&cursor);
-      data.tags_on  = gtk_text_iter_get_toggled_tags (&cursor, TRUE);
-      data.tags_off = gtk_text_iter_get_toggled_tags (&cursor, FALSE);
+      tags     = gtk_text_iter_get_tags (&cursor);
+      tags_on  = gtk_text_iter_get_toggled_tags (&cursor, TRUE);
+      tags_off = gtk_text_iter_get_toggled_tags (&cursor, FALSE);
 
-      g_hash_table_foreach (editor->tag_to_toggle_hash,
-                            (GHFunc) gimp_text_style_editor_update_cursor,
-                            &data);
+      for (list = editor->toggles; list; list = g_list_next (list))
+        {
+          GtkToggleButton *toggle = list->data;
+          GtkTextTag      *tag    = g_object_get_data (G_OBJECT (toggle),
+                                                       "tag");
+
+          gimp_text_style_editor_set_toggle (editor, toggle,
+                                             (g_slist_find (tags, tag) &&
+                                              ! g_slist_find (tags_on, tag)) ||
+                                             g_slist_find (tags_off, tag));
+        }
 
       str = g_strdup_printf ("%0.2f", editor->resolution_y);
       gtk_label_set_text (GTK_LABEL (editor->size_label), str);
       g_free (str);
 
-      g_slist_free (data.tags);
-      g_slist_free (data.tags_on);
-      g_slist_free (data.tags_off);
+      g_slist_free (tags);
+      g_slist_free (tags_on);
+      g_slist_free (tags_off);
     }
 }
