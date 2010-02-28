@@ -871,6 +871,8 @@ int
 main (int    argc,
       char **argv)
 {
+  int result;
+
   g_type_init ();
   gtk_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
@@ -913,9 +915,11 @@ main (int    argc,
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
                                        "app/tests/gimpdir-output");
 
+  /* Run the tests */
+  result = g_test_run ();
+
   /* Exit so we don't break script-fu plug-in wire */
   gimp_exit (gimp, TRUE);
 
-  /* Run the tests and return status */
-  return g_test_run ();
+  return result;
 }
