@@ -98,8 +98,6 @@ struct _GimpDialogFactoryClass
 {
   GimpObjectClass  parent_class;
 
-  GHashTable      *factories;
-
   void (* dock_window_added)   (GimpDialogFactory *factory,
                                 GimpDockWindow    *dock_window);
   void (* dock_window_removed) (GimpDialogFactory *factory,

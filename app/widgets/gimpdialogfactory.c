@@ -104,8 +104,6 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
   object_class->dispose  = gimp_dialog_factory_dispose;
   object_class->finalize = gimp_dialog_factory_finalize;
 
-  klass->factories = g_hash_table_new (g_str_hash, g_str_equal);
-
   factory_signals[DOCK_WINDOW_ADDED] =
     g_signal_new ("dock-window-added",
                   G_TYPE_FROM_CLASS (klass),
@@ -143,7 +141,6 @@ gimp_dialog_factory_dispose (GObject *object)
 {
   GimpDialogFactory *factory = GIMP_DIALOG_FACTORY (object);
   GList             *list;
-  gpointer           key;
 
   /*  start iterating from the beginning each time we destroyed a
    *  toplevel because destroying a dock may cause lots of items
@@ -184,11 +181,6 @@ gimp_dialog_factory_dispose (GObject *object)
       factory->p->session_infos = NULL;
     }
 
-  key = (gpointer)gimp_object_get_name (factory);
-
-  g_hash_table_remove (GIMP_DIALOG_FACTORY_GET_CLASS (object)->factories,
-                       key);
-
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -226,7 +218,6 @@ gimp_dialog_factory_new (const gchar           *name,
                          GimpMenuFactory       *menu_factory)
 {
   GimpDialogFactory *factory;
-  gpointer           key;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -236,11 +227,6 @@ gimp_dialog_factory_new (const gchar           *name,
   factory = g_object_new (GIMP_TYPE_DIALOG_FACTORY, NULL);
 
   gimp_object_set_name (GIMP_OBJECT (factory), name);
-
-  key = (gpointer)gimp_object_get_name (factory);
-
-  g_hash_table_insert (GIMP_DIALOG_FACTORY_GET_CLASS (factory)->factories,
-                       key, factory);
 
   factory->p->context           = context;
   factory->p->menu_factory      = menu_factory;
