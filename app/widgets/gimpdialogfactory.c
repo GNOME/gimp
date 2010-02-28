@@ -87,12 +87,6 @@ static gboolean    gimp_dialog_factory_dialog_configure     (GtkWidget          
                                                              GimpDialogFactory      *factory);
 static void        gimp_dialog_factory_hide                 (GimpDialogFactory      *factory);
 static void        gimp_dialog_factory_show                 (GimpDialogFactory      *factory);
-static void        gimp_dialog_factories_set_busy_foreach   (gconstpointer           key,
-                                                             GimpDialogFactory      *factory,
-                                                             gpointer                data);
-static void        gimp_dialog_factories_unset_busy_foreach (gconstpointer           key,
-                                                             GimpDialogFactory      *factory,
-                                                             gpointer                data);
 
 
 G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
@@ -1089,33 +1083,6 @@ gimp_dialog_factory_hide_with_display (GimpDialogFactory *factory)
     }
 }
 
-void
-gimp_dialog_factories_set_busy (void)
-{
-  GimpDialogFactoryClass *factory_class;
-
-  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-
-  if (factory_class)
-    g_hash_table_foreach (factory_class->factories,
-                          (GHFunc) gimp_dialog_factories_set_busy_foreach,
-                          NULL);
-}
-
-void
-gimp_dialog_factories_unset_busy (void)
-{
-  GimpDialogFactoryClass *factory_class;
-
-  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-
-  if (factory_class)
-    g_hash_table_foreach (factory_class->factories,
-                          (GHFunc) gimp_dialog_factories_unset_busy_foreach,
-                          NULL);
-}
-
-
 static GQuark gimp_dialog_factory_key       = 0;
 static GQuark gimp_dialog_factory_entry_key = 0;
 
@@ -1443,14 +1410,15 @@ gimp_dialog_factory_show (GimpDialogFactory *factory)
     }
 }
 
-static void
-gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
-                                        GimpDialogFactory *factory,
-                                        gpointer           data)
+void
+gimp_dialog_factory_set_busy (GimpDialogFactory *factory)
 {
   GdkDisplay *display = NULL;
   GdkCursor  *cursor  = NULL;
   GList      *list;
+
+  if (! factory)
+    return;
 
   for (list = factory->p->open_dialogs; list; list = g_list_next (list))
     {
@@ -1481,12 +1449,13 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
     gdk_cursor_unref (cursor);
 }
 
-static void
-gimp_dialog_factories_unset_busy_foreach (gconstpointer      key,
-                                          GimpDialogFactory *factory,
-                                          gpointer           data)
+void
+gimp_dialog_factory_unset_busy (GimpDialogFactory *factory)
 {
   GList *list;
+
+  if (! factory)
+    return;
 
   for (list = factory->p->open_dialogs; list; list = g_list_next (list))
     {

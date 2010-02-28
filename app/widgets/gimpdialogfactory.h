@@ -166,9 +166,8 @@ void                gimp_dialog_factory_set_state            (GimpDialogFactory 
 GimpDialogsState    gimp_dialog_factory_get_state            (GimpDialogFactory       *factory);
 void                gimp_dialog_factory_show_with_display    (GimpDialogFactory       *factory);
 void                gimp_dialog_factory_hide_with_display    (GimpDialogFactory       *factory);
-
-void                gimp_dialog_factories_set_busy           (void);
-void                gimp_dialog_factories_unset_busy         (void);
+void                gimp_dialog_factory_set_busy             (GimpDialogFactory       *factory);
+void                gimp_dialog_factory_unset_busy           (GimpDialogFactory       *factory);
 GimpDialogFactory * gimp_dialog_factory_from_widget          (GtkWidget               *dialog,
                                                               GimpDialogFactoryEntry **entry);
 void                gimp_dialog_factory_set_has_min_size     (GtkWindow               *window,
