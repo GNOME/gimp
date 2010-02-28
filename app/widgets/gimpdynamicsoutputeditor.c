@@ -78,6 +78,8 @@ struct _GimpDynamicsOutputEditorPrivate
   GtkWidget      *curve_view;
 
   GtkListStore   *input_list;
+
+  GimpCurve      *active_curve;
 };
 
 #define GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE(editor) \
@@ -99,8 +101,8 @@ static void      gimp_dynamics_output_editor_get_property (GObject              
                                                            GValue                *value,
                                                            GParamSpec            *pspec);
 
-static void     gimp_dynamics_output_editor_curve_reset   (GtkWidget             *button,
-                                                           GimpCurve             *curve);
+static void     gimp_dynamics_output_editor_curve_reset   (GtkWidget                *button,
+                                                           GimpDynamicsOutputEditor *editor);
 
 static void    gimp_dynamics_output_editor_input_selected (GtkTreeSelection *selection,
                                                            GimpDynamicsOutputEditor *editor);
@@ -194,7 +196,7 @@ gimp_dynamics_output_editor_constructor (GType                   type,
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_dynamics_output_editor_curve_reset),
-                    private->output->pressure_curve);
+                    editor);
 
   private->input_list = gtk_list_store_new (INPUT_N_COLUMNS,
                                             G_TYPE_INT,
@@ -356,9 +358,14 @@ gimp_dynamics_output_editor_get_property (GObject    *object,
 
 static void
 gimp_dynamics_output_editor_curve_reset (GtkWidget *button,
-                                         GimpCurve *curve)
+                                         GimpDynamicsOutputEditor *editor)
 {
-  gimp_curve_reset (curve, TRUE);
+  GimpDynamicsOutputEditorPrivate *private;
+
+  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
+
+  if (private->active_curve)
+    gimp_curve_reset (private->active_curve, TRUE);
 }
 
 static void
@@ -427,6 +434,7 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
     {
         gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                    private->output->pressure_curve);
+        private->active_curve = private->output->pressure_curve;
     }
   else if (private->output->use_pressure)
     {
@@ -439,6 +447,7 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
     {
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                   private->output->velocity_curve);
+      private->active_curve = private->output->velocity_curve;
     }
   else if (private->output->use_velocity)
     {
@@ -446,10 +455,12 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
                                       private->output->velocity_curve,
                                       &bg_color);
     }
+
   if (input == INPUT_DIRECTION)
     {
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                  private->output->direction_curve);
+      private->active_curve = private->output->direction_curve;
     }
   else if (private->output->use_direction)
     {
@@ -457,10 +468,12 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
                                       private->output->direction_curve,
                                       &bg_color);
     }
+
   if (input == INPUT_TILT)
     {
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                  private->output->tilt_curve);
+      private->active_curve = private->output->tilt_curve;
     }
   else if (private->output->use_tilt)
     {
@@ -468,10 +481,12 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
                                       private->output->tilt_curve,
                                       &bg_color);
     }
+
   if (input == INPUT_RANDOM)
     {
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                   private->output->random_curve);
+      private->active_curve = private->output->random_curve;
     }
   else if (private->output->use_random)
     {
@@ -484,6 +499,7 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
     {
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                  private->output->fade_curve);
+      private->active_curve = private->output->fade_curve;
     }
   else if (private->output->use_fade)
     {
@@ -491,6 +507,7 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
                                         private->output->fade_curve,
                                         &bg_color);
     }
+
   gtk_widget_queue_draw (private->curve_view);
 
 }
