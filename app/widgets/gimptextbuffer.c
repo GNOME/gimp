@@ -344,6 +344,8 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
   span_start    = *start;
   span_baseline = get_baseline_at_iter (buffer, &iter, &span_tag);
 
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
   do
     {
       gint        iter_baseline;
@@ -382,6 +384,8 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
         iter = *end;
     }
   while (! gtk_text_iter_equal (&iter, end));
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
 static gint
@@ -468,6 +472,8 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
   span_start   = *start;
   span_spacing = get_spacing_at_iter (buffer, &iter, &span_tag);
 
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
   if (gtk_text_iter_equal (start, end))
     {
       span_end = span_start;
@@ -485,6 +491,8 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
           gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
                                      &span_start, &span_end);
         }
+
+      gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 
       return;
     }
@@ -527,6 +535,8 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
         iter = *end;
     }
   while (! gtk_text_iter_equal (&iter, end));
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
 const gchar *
@@ -688,6 +698,8 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
   if (! insert_tags_set)
     tags_off = gtk_text_iter_get_toggled_tags (&iter, FALSE);
 
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
   gtk_text_buffer_insert (GTK_TEXT_BUFFER (buffer), &iter, text, -1);
 
   gtk_text_buffer_get_iter_at_offset (GTK_TEXT_BUFFER (buffer), &start,
@@ -720,6 +732,8 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
 
       g_slist_free (tags_off);
     }
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
 gint
@@ -766,6 +780,8 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
       return FALSE;
     }
 
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
   gimp_text_buffer_set_text (buffer, NULL);
   gtk_text_buffer_get_end_iter (GTK_TEXT_BUFFER (buffer), &iter);
 
@@ -796,6 +812,8 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
                gimp_filename_to_utf8 (filename));
 
   fclose (file);
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 
   return TRUE;
 }

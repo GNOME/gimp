@@ -160,12 +160,7 @@ static gboolean  gimp_text_tool_set_drawable    (GimpTextTool      *text_tool,
                                                  GimpDrawable      *drawable,
                                                  gboolean           confirm);
 
-static void      gimp_text_tool_buffer_changed  (GtkTextBuffer     *buffer,
-                                                 GimpTextTool      *text_tool);
-void             gimp_text_tool_buffer_tagged   (GtkTextBuffer     *buffer,
-                                                 GtkTextTag        *tag,
-                                                 GtkTextIter       *start,
-                                                 GtkTextIter       *end,
+static void      gimp_text_tool_buffer_edited   (GtkTextBuffer     *buffer,
                                                  GimpTextTool      *text_tool);
 
 
@@ -248,15 +243,9 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
   text_tool->buffer = gimp_text_buffer_new ();
 
-  g_signal_connect (text_tool->buffer, "changed",
-                    G_CALLBACK (gimp_text_tool_buffer_changed),
+  g_signal_connect (text_tool->buffer, "end-user-action",
+                    G_CALLBACK (gimp_text_tool_buffer_edited),
                     text_tool);
-  g_signal_connect_after (text_tool->buffer, "apply-tag",
-                          G_CALLBACK (gimp_text_tool_buffer_tagged),
-                          text_tool);
-  g_signal_connect_after (text_tool->buffer, "remove-tag",
-                          G_CALLBACK (gimp_text_tool_buffer_tagged),
-                          text_tool);
 
   text_tool->handle_rectangle_change_complete = TRUE;
 
@@ -919,10 +908,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
       GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (tool);
 
       g_signal_handlers_block_by_func (text_tool->buffer,
-                                       gimp_text_tool_buffer_changed,
-                                       text_tool);
-      g_signal_handlers_block_by_func (text_tool->buffer,
-                                       gimp_text_tool_buffer_tagged,
+                                       gimp_text_tool_buffer_edited,
                                        text_tool);
 
       if (text_tool->text)
@@ -967,10 +953,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
         }
 
       g_signal_handlers_unblock_by_func (text_tool->buffer,
-                                         gimp_text_tool_buffer_tagged,
-                                         text_tool);
-      g_signal_handlers_unblock_by_func (text_tool->buffer,
-                                         gimp_text_tool_buffer_changed,
+                                         gimp_text_tool_buffer_edited,
                                          text_tool);
     }
 
@@ -1064,10 +1047,7 @@ gimp_text_tool_text_notify (GimpText     *text,
       strcmp (pspec->name, "markup") == 0)
     {
       g_signal_handlers_block_by_func (text_tool->buffer,
-                                       gimp_text_tool_buffer_changed,
-                                       text_tool);
-      g_signal_handlers_block_by_func (text_tool->buffer,
-                                       gimp_text_tool_buffer_tagged,
+                                       gimp_text_tool_buffer_edited,
                                        text_tool);
 
       if (pspec->name[0] == 't')
@@ -1076,10 +1056,7 @@ gimp_text_tool_text_notify (GimpText     *text,
         gimp_text_buffer_set_markup (text_tool->buffer, text->markup);
 
       g_signal_handlers_unblock_by_func (text_tool->buffer,
-                                         gimp_text_tool_buffer_tagged,
-                                         text_tool);
-      g_signal_handlers_unblock_by_func (text_tool->buffer,
-                                         gimp_text_tool_buffer_changed,
+                                         gimp_text_tool_buffer_edited,
                                          text_tool);
     }
 
@@ -1563,8 +1540,8 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_buffer_changed (GtkTextBuffer *buffer,
-                               GimpTextTool  *text_tool)
+gimp_text_tool_buffer_edited (GtkTextBuffer *buffer,
+                              GimpTextTool  *text_tool)
 {
   if (text_tool->text)
     {
@@ -1576,6 +1553,8 @@ gimp_text_tool_buffer_changed (GtkTextBuffer *buffer,
                     "markup", markup,
                     NULL);
 
+      /* g_printerr ("markup: %s\n", markup); */
+
       g_free (text);
       g_free (markup);
     }
@@ -1583,16 +1562,6 @@ gimp_text_tool_buffer_changed (GtkTextBuffer *buffer,
     {
       gimp_text_tool_create_layer (text_tool, NULL);
     }
-}
-
-void
-gimp_text_tool_buffer_tagged (GtkTextBuffer *buffer,
-                              GtkTextTag    *tag,
-                              GtkTextIter   *start,
-                              GtkTextIter   *end,
-                              GimpTextTool  *text_tool)
-{
-  gimp_text_tool_buffer_changed (buffer, text_tool);
 }
 
 

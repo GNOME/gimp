@@ -357,6 +357,8 @@ gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
 
+      gtk_text_buffer_begin_user_action (buffer);
+
       if (gtk_toggle_button_get_active (toggle))
         {
           gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
@@ -365,6 +367,8 @@ gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
         {
           gtk_text_buffer_remove_tag (buffer, tag, &start, &end);
         }
+
+      gtk_text_buffer_end_user_action (buffer);
     }
 
   list = gimp_text_style_editor_list_tags (editor);
