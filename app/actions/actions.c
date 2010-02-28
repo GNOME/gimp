@@ -408,6 +408,20 @@ action_data_get_display (gpointer data)
   return NULL;
 }
 
+GimpDisplayShell *
+action_data_get_shell (gpointer data)
+{
+  GimpDisplay      *display = NULL;
+  GimpDisplayShell *shell   = NULL;
+
+  display = action_data_get_display (data);
+
+  if (display)
+    shell = gimp_display_get_shell (display);
+
+  return shell;
+}
+
 GtkWidget *
 action_data_get_widget (gpointer data)
 {
