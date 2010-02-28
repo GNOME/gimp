@@ -349,10 +349,11 @@ view_toggle_selection_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_selection (shell))
+    return;
 
   gimp_display_shell_set_show_selection (shell, active);
 }
@@ -362,10 +363,11 @@ view_toggle_layer_boundary_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_layer (shell))
+    return;
 
   gimp_display_shell_set_show_layer (shell, active);
 }
@@ -375,10 +377,11 @@ view_toggle_menubar_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_menubar (shell))
+    return;
 
   gimp_display_shell_set_show_menubar (shell, active);
 }
@@ -388,10 +391,11 @@ view_toggle_rulers_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_rulers (shell))
+    return;
 
   gimp_display_shell_set_show_rulers (shell, active);
 }
@@ -401,10 +405,11 @@ view_toggle_scrollbars_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_scrollbars (shell))
+    return;
 
   gimp_display_shell_set_show_scrollbars (shell, active);
 }
@@ -414,10 +419,11 @@ view_toggle_statusbar_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_statusbar (shell))
+    return;
 
   gimp_display_shell_set_show_statusbar (shell, active);
 }
@@ -427,10 +433,11 @@ view_toggle_guides_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_guides (shell))
+    return;
 
   gimp_display_shell_set_show_guides (shell, active);
 }
@@ -440,10 +447,11 @@ view_toggle_grid_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_grid (shell))
+    return;
 
   gimp_display_shell_set_show_grid (shell, active);
 }
@@ -453,10 +461,11 @@ view_toggle_sample_points_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_show_sample_points (shell))
+    return;
 
   gimp_display_shell_set_show_sample_points (shell, active);
 }
@@ -466,10 +475,11 @@ view_snap_to_guides_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_snap_to_guides (shell))
+    return;
 
   gimp_display_shell_set_snap_to_guides (shell, active);
 }
@@ -479,10 +489,11 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_snap_to_grid (shell))
+    return;
 
   gimp_display_shell_set_snap_to_grid (shell, active);
 }
@@ -492,10 +503,11 @@ view_snap_to_canvas_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_snap_to_canvas (shell))
+    return;
 
   gimp_display_shell_set_snap_to_canvas (shell, active);
 }
@@ -505,10 +517,11 @@ view_snap_to_vectors_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpDisplayShell *shell;
-  gboolean          active;
+  gboolean          active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  if (active == gimp_display_shell_get_snap_to_vectors (shell))
+    return;
 
   gimp_display_shell_set_snap_to_vectors (shell, active);
 }
