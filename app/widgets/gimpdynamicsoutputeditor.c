@@ -512,9 +512,6 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
                                         private->output->fade_curve,
                                         &bg_color);
     }
-
-  gtk_widget_queue_draw (private->curve_view);
-
 }
 
 static void
