@@ -337,7 +337,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
-  if (gtk_text_iter_equal (&iter, end))
+  if (gtk_text_iter_equal (start, end))
     return;
 
   iter          = *start;
@@ -356,7 +356,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
       span_end = iter;
 
       if (iter_baseline != span_baseline ||
-          gtk_text_iter_equal (&iter, end))
+          gtk_text_iter_compare (&iter, end) >= 0)
         {
           if (span_baseline != 0)
             {
@@ -376,8 +376,76 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
           span_baseline = iter_baseline;
           span_tag      = iter_tag;
         }
+
+      /* We might have moved too far */
+      if (gtk_text_iter_compare (&iter, end) > 0)
+        iter = *end;
     }
   while (! gtk_text_iter_equal (&iter, end));
+}
+
+static gint
+get_spacing_at_iter (GimpTextBuffer     *buffer,
+                     const GtkTextIter  *iter,
+                     GtkTextTag        **spacing_tag)
+{
+  GList *list;
+
+  for (list = buffer->spacing_tags; list; list = g_list_next (list))
+    {
+      GtkTextTag *tag = list->data;
+
+      if (gtk_text_iter_has_tag (iter, tag))
+        {
+          gint spacing;
+
+          *spacing_tag = tag;
+
+          g_object_get (tag,
+                        "rise", &spacing, /* FIXME */
+                        NULL);
+
+          return spacing;
+        }
+    }
+
+  *spacing_tag = NULL;
+
+  return 0;
+}
+
+static GtkTextTag *
+get_spacing_tag (GimpTextBuffer *buffer,
+                 gint            spacing)
+{
+  GList      *list;
+  GtkTextTag *tag;
+  gchar       name[32];
+
+  for (list = buffer->spacing_tags; list; list = g_list_next (list))
+    {
+      gint tag_spacing;
+
+      tag = list->data;
+
+      g_object_get (tag,
+                    "rise", &tag_spacing, /* FIXME */
+                    NULL);
+
+      if (tag_spacing == spacing)
+        return tag;
+    }
+
+  g_snprintf (name, sizeof (name), "spacing-%d", spacing);
+
+  tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                    name,
+                                    "rise", spacing, /* FIXME */
+                                    NULL);
+
+  buffer->spacing_tags = g_list_prepend (buffer->spacing_tags, tag);
+
+  return tag;
 }
 
 void
@@ -386,9 +454,79 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
                                  const GtkTextIter *end,
                                  gint               count)
 {
+  GtkTextIter  iter;
+  GtkTextIter  span_start;
+  GtkTextIter  span_end;
+  gint         span_spacing;
+  GtkTextTag  *span_tag;
+
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
+
+  iter         = *start;
+  span_start   = *start;
+  span_spacing = get_spacing_at_iter (buffer, &iter, &span_tag);
+
+  if (gtk_text_iter_equal (start, end))
+    {
+      span_end = span_start;
+
+      if (span_spacing != 0)
+        {
+          gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), span_tag,
+                                      &span_start, &span_end);
+        }
+
+      if (span_spacing + count != 0)
+        {
+          span_tag = get_spacing_tag (buffer, span_spacing + count);
+
+          gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
+                                     &span_start, &span_end);
+        }
+
+      return;
+    }
+
+  do
+    {
+      gint        iter_spacing;
+      GtkTextTag *iter_tag;
+
+      gtk_text_iter_forward_char (&iter);
+
+      iter_spacing = get_spacing_at_iter (buffer, &iter, &iter_tag);
+
+      span_end = iter;
+
+      if (iter_spacing != span_spacing ||
+          gtk_text_iter_compare (&iter, end) >= 0)
+        {
+          if (span_spacing != 0)
+            {
+              gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), span_tag,
+                                          &span_start, &span_end);
+            }
+
+          if (span_spacing + count != 0)
+            {
+              span_tag = get_spacing_tag (buffer, span_spacing + count);
+
+              gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
+                                         &span_start, &span_end);
+            }
+
+          span_start   = iter;
+          span_spacing = iter_spacing;
+          span_tag     = iter_tag;
+        }
+
+      /* We might have moved too far */
+      if (gtk_text_iter_compare (&iter, end) > 0)
+        iter = *end;
+    }
+  while (! gtk_text_iter_equal (&iter, end));
 }
 
 const gchar *
@@ -440,6 +578,24 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
 
       return "span";
     }
+  else if (g_list_find (buffer->spacing_tags, tag))
+    {
+      if (attribute)
+        *attribute = "letter_spacing";
+
+      if (value)
+        {
+          gint spacing;
+
+          g_object_get (tag,
+                        "rise", &spacing, /* FIXME */
+                        NULL);
+
+          *value = g_strdup_printf ("%d", spacing);
+        }
+
+      return "span";
+    }
 
   return NULL;
 }
@@ -469,14 +625,17 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
     {
       return buffer->strikethrough_tag;
     }
-  else if (! strcmp (name, "span"))
+  else if (! strcmp (name, "span") &&
+           attribute != NULL       &&
+           value     != NULL)
     {
-      if (! attribute || ! value)
-        return NULL;
-
       if (! strcmp (attribute, "rise"))
         {
           return get_baseline_tag (buffer, atoi (value));
+        }
+      else if (! strcmp (attribute, "letter_spacing"))
+        {
+          return get_spacing_tag (buffer, atoi (value));
         }
     }
 
@@ -487,6 +646,8 @@ void
 gimp_text_buffer_set_insert_tags (GimpTextBuffer *buffer,
                                   GList          *style)
 {
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+
   g_list_free (buffer->insert_tags);
   buffer->insert_tags = style;
   buffer->insert_tags_set = TRUE;
