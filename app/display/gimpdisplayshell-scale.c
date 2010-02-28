@@ -1126,6 +1126,6 @@ img2real (GimpDisplayShell *shell,
   gimp_image_get_resolution (gimp_display_get_image (shell->display),
                              &xres, &yres);
 
-  return gimp_pixels_to_units (len, gimp_unit_get_factor (shell->unit),
+  return gimp_pixels_to_units (len, shell->unit,
                                xdir ? xres : yres);
 }
