@@ -546,12 +546,12 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
             {
               GIMP_LOG (WM, "No displays visible any longer");
 
-              gimp_dialog_factories_hide_with_display ();
+              gimp_dialog_factory_hide_with_display (private->dialog_factory);
             }
         }
       else
         {
-          gimp_dialog_factories_show_with_display ();
+          gimp_dialog_factory_show_with_display (private->dialog_factory);
         }
 
       if (gimp_progress_is_active (GIMP_PROGRESS (statusbar)))

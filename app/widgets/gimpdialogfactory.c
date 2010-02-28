@@ -63,6 +63,8 @@ struct _GimpDialogFactoryPrivate
   GList                 *session_infos;
 
   GList                 *registered_dialogs;
+
+  GimpDialogsState       dialog_state;
 };
 
 
@@ -83,12 +85,8 @@ static gboolean    gimp_dialog_factory_set_user_pos         (GtkWidget          
 static gboolean    gimp_dialog_factory_dialog_configure     (GtkWidget              *dialog,
                                                              GdkEventConfigure      *cevent,
                                                              GimpDialogFactory      *factory);
-static void        gimp_dialog_factories_hide_foreach       (gconstpointer           key,
-                                                             GimpDialogFactory      *factory,
-                                                             gpointer                data);
-static void        gimp_dialog_factories_show_foreach       (gconstpointer           key,
-                                                             GimpDialogFactory      *factory,
-                                                             gpointer                data);
+static void        gimp_dialog_factory_hide                 (GimpDialogFactory      *factory);
+static void        gimp_dialog_factory_show                 (GimpDialogFactory      *factory);
 static void        gimp_dialog_factories_set_busy_foreach   (gconstpointer           key,
                                                              GimpDialogFactory      *factory,
                                                              gpointer                data);
@@ -102,8 +100,6 @@ G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
 #define parent_class gimp_dialog_factory_parent_class
 
 static guint factory_signals[LAST_SIGNAL] = { 0 };
-
-static GimpDialogsState dialogs_state = GIMP_DIALOGS_SHOWN;
 
 
 static void
@@ -145,6 +141,7 @@ gimp_dialog_factory_init (GimpDialogFactory *factory)
   factory->p = G_TYPE_INSTANCE_GET_PRIVATE (factory,
                                             GIMP_TYPE_DIALOG_FACTORY,
                                             GimpDialogFactoryPrivate);
+  factory->p->dialog_state = GIMP_DIALOGS_SHOWN;
 }
 
 static void
@@ -1025,10 +1022,12 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 void
 gimp_dialog_factory_hide_dialog (GtkWidget *dialog)
 {
+  GimpDialogFactory *factory = NULL;
+
   g_return_if_fail (GTK_IS_WIDGET (dialog));
   g_return_if_fail (gtk_widget_is_toplevel (dialog));
 
-  if (! gimp_dialog_factory_from_widget (dialog, NULL))
+  if (! (factory = gimp_dialog_factory_from_widget (dialog, NULL)))
     {
       g_warning ("%s: dialog was not created by a GimpDialogFactory",
                  G_STRFUNC);
@@ -1037,55 +1036,56 @@ gimp_dialog_factory_hide_dialog (GtkWidget *dialog)
 
   gtk_widget_hide (dialog);
 
-  if (dialogs_state != GIMP_DIALOGS_SHOWN)
+  if (factory->p->dialog_state != GIMP_DIALOGS_SHOWN)
     g_object_set_data (G_OBJECT (dialog), GIMP_DIALOG_VISIBILITY_KEY,
                        GINT_TO_POINTER (GIMP_DIALOG_VISIBILITY_INVISIBLE));
 }
 
 void
-gimp_dialog_factories_set_state (GimpDialogsState state)
+gimp_dialog_factory_set_state (GimpDialogFactory *factory,
+                               GimpDialogsState   state)
 {
-  GimpDialogFactoryClass *factory_class;
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
 
-  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-
-  dialogs_state = state;
+  factory->p->dialog_state = state;
 
   if (state == GIMP_DIALOGS_SHOWN)
     {
-      g_hash_table_foreach (factory_class->factories,
-                            (GHFunc) gimp_dialog_factories_show_foreach,
-                            NULL);
+      gimp_dialog_factory_show (factory);
     }
   else
     {
-      g_hash_table_foreach (factory_class->factories,
-                            (GHFunc) gimp_dialog_factories_hide_foreach,
-                            NULL);
+      gimp_dialog_factory_hide (factory);
     }
 }
 
 GimpDialogsState
-gimp_dialog_factories_get_state (void)
+gimp_dialog_factory_get_state (GimpDialogFactory *factory)
 {
-  return dialogs_state;
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), 0);
+
+  return factory->p->dialog_state;
 }
 
 void
-gimp_dialog_factories_show_with_display (void)
+gimp_dialog_factory_show_with_display (GimpDialogFactory *factory)
 {
-  if (dialogs_state == GIMP_DIALOGS_HIDDEN_WITH_DISPLAY)
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+
+  if (factory->p->dialog_state == GIMP_DIALOGS_HIDDEN_WITH_DISPLAY)
     {
-      gimp_dialog_factories_set_state (GIMP_DIALOGS_SHOWN);
+      gimp_dialog_factory_set_state (factory, GIMP_DIALOGS_SHOWN);
     }
 }
 
 void
-gimp_dialog_factories_hide_with_display (void)
+gimp_dialog_factory_hide_with_display (GimpDialogFactory *factory)
 {
-  if (dialogs_state == GIMP_DIALOGS_SHOWN)
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+
+  if (factory->p->dialog_state == GIMP_DIALOGS_SHOWN)
     {
-      gimp_dialog_factories_set_state (GIMP_DIALOGS_HIDDEN_WITH_DISPLAY);
+      gimp_dialog_factory_set_state (factory, GIMP_DIALOGS_HIDDEN_WITH_DISPLAY);
     }
 }
 
@@ -1368,9 +1368,7 @@ gimp_dialog_factory_restore (GimpDialogFactory *factory)
 }
 
 static void
-gimp_dialog_factories_hide_foreach (gconstpointer      key,
-                                    GimpDialogFactory *factory,
-                                    gpointer           data)
+gimp_dialog_factory_hide (GimpDialogFactory *factory)
 {
   GList *list;
 
@@ -1410,9 +1408,7 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
 }
 
 static void
-gimp_dialog_factories_show_foreach (gconstpointer      key,
-                                    GimpDialogFactory *factory,
-                                    gpointer           data)
+gimp_dialog_factory_show (GimpDialogFactory *factory)
 {
   GList *list;
 
