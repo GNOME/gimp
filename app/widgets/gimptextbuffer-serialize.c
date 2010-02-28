@@ -163,7 +163,7 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
                */
               while (active_tags->data != tag)
                 {
-                  close_tag (GIMP_TEXT_BUFFER (content_buffer),
+                  close_tag (GIMP_TEXT_BUFFER (register_buffer),
                              string, active_tags->data);
 
                   /* if it also in the list of removed tags, *don't* add
@@ -176,7 +176,7 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
                 }
 
               /*  then, close the tag itself  */
-              close_tag (GIMP_TEXT_BUFFER (content_buffer), string, tag);
+              close_tag (GIMP_TEXT_BUFFER (register_buffer), string, tag);
 
               active_tags = g_slist_remove (active_tags, active_tags->data);
             }
@@ -187,7 +187,7 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
 	{
 	  GtkTextTag *tag = tmp->data;
 
-          open_tag (GIMP_TEXT_BUFFER (content_buffer), string, tag);
+          open_tag (GIMP_TEXT_BUFFER (register_buffer), string, tag);
 
 	  active_tags = g_slist_prepend (active_tags, tag);
 	}
@@ -238,7 +238,7 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
 
   /* Close any open tags */
   for (tag_list = active_tags; tag_list; tag_list = tag_list->next)
-    close_tag (GIMP_TEXT_BUFFER (content_buffer), string, tag_list->data);
+    close_tag (GIMP_TEXT_BUFFER (register_buffer), string, tag_list->data);
 
   g_slist_free (active_tags);
 
@@ -263,7 +263,8 @@ typedef enum
 typedef struct
 {
   GSList        *states;
-  GtkTextBuffer *buffer;
+  GtkTextBuffer *register_buffer;
+  GtkTextBuffer *content_buffer;
   GSList        *tag_stack;
   GList         *spans;
 } ParseInfo;
@@ -364,7 +365,7 @@ parse_tag_element (GMarkupParseContext  *context,
   if (attribute_values)
     attribute_value = attribute_values[0];
 
-  tag = gimp_text_buffer_name_to_tag (GIMP_TEXT_BUFFER (info->buffer),
+  tag = gimp_text_buffer_name_to_tag (GIMP_TEXT_BUFFER (info->register_buffer),
                                       element_name,
                                       attribute_name, attribute_value);
 
@@ -527,12 +528,14 @@ text_handler (GMarkupParseContext  *context,
 
 static void
 parse_info_init (ParseInfo     *info,
-		 GtkTextBuffer *buffer)
+		 GtkTextBuffer *register_buffer,
+                 GtkTextBuffer *content_buffer)
 {
-  info->states    = g_slist_prepend (NULL, GINT_TO_POINTER (STATE_START));
-  info->tag_stack = NULL;
-  info->spans     = NULL;
-  info->buffer    = buffer;
+  info->states          = g_slist_prepend (NULL, GINT_TO_POINTER (STATE_START));
+  info->tag_stack       = NULL;
+  info->spans           = NULL;
+  info->register_buffer = register_buffer;
+  info->content_buffer  = content_buffer;
 }
 
 static void
@@ -564,7 +567,8 @@ insert_text (ParseInfo   *info,
 
   start_iter = *iter;
 
-  mark = gtk_text_buffer_create_mark (info->buffer, "deserialize-insert-point",
+  mark = gtk_text_buffer_create_mark (info->content_buffer,
+                                      "deserialize-insert-point",
   				      &start_iter, TRUE);
 
   for (tmp = info->spans; tmp; tmp = tmp->next)
@@ -572,23 +576,23 @@ insert_text (ParseInfo   *info,
       TextSpan *span = tmp->data;
 
       if (span->text)
-	gtk_text_buffer_insert (info->buffer, iter, span->text, -1);
+	gtk_text_buffer_insert (info->content_buffer, iter, span->text, -1);
 
-      gtk_text_buffer_get_iter_at_mark (info->buffer, &start_iter, mark);
+      gtk_text_buffer_get_iter_at_mark (info->content_buffer, &start_iter, mark);
 
       /* Apply tags */
       for (tags = span->tags; tags; tags = tags->next)
 	{
 	  GtkTextTag *tag = tags->data;
 
-	  gtk_text_buffer_apply_tag (info->buffer, tag,
+	  gtk_text_buffer_apply_tag (info->content_buffer, tag,
 				     &start_iter, iter);
 	}
 
-      gtk_text_buffer_move_mark (info->buffer, mark, iter);
+      gtk_text_buffer_move_mark (info->content_buffer, mark, iter);
     }
 
-  gtk_text_buffer_delete_mark (info->buffer, mark);
+  gtk_text_buffer_delete_mark (info->content_buffer, mark);
 }
 
 gboolean
@@ -614,7 +618,7 @@ gimp_text_buffer_deserialize (GtkTextBuffer *register_buffer,
     NULL
   };
 
-  parse_info_init (&info, content_buffer);
+  parse_info_init (&info, register_buffer, content_buffer);
 
   context = g_markup_parse_context_new (&markup_parser, 0, &info, NULL);
 
