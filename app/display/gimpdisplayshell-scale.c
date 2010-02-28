@@ -82,10 +82,6 @@ static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shel
                                                           gint             *y,
                                                           GimpZoomFocus     zoom_focus);
 
-static gdouble   img2real                                (GimpDisplayShell *shell,
-                                                          gboolean          xdir,
-                                                          gdouble           a);
-
 
 /*  public functions  */
 
@@ -173,6 +169,8 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
   GimpImage *image;
   gint       image_width;
   gint       image_height;
+  gdouble    resolution_x = 1.0;
+  gdouble    resolution_y = 1.0;
   gdouble    horizontal_lower;
   gdouble    horizontal_upper;
   gdouble    horizontal_max_size;
@@ -189,6 +187,8 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
     {
       image_width  = gimp_image_get_width  (image);
       image_height = gimp_image_get_height (image);
+
+      gimp_image_get_resolution (image, &resolution_x, &resolution_y);
     }
   else
     {
@@ -204,15 +204,23 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
 
   if (image)
     {
-      horizontal_upper    = img2real (shell, TRUE,
-                                      FUNSCALEX (shell, shell->disp_width));
-      horizontal_max_size = img2real (shell, TRUE,
-                                      MAX (image_width, image_height));
+      horizontal_upper    = gimp_pixels_to_units (FUNSCALEX (shell,
+                                                             shell->disp_width),
+                                                  shell->unit,
+                                                  resolution_x);
+      horizontal_max_size = gimp_pixels_to_units (MAX (image_width,
+                                                       image_height),
+                                                  shell->unit,
+                                                  resolution_x);
 
-      vertical_upper      = img2real (shell, FALSE,
-                                      FUNSCALEY (shell, shell->disp_height));
-      vertical_max_size   = img2real (shell, FALSE,
-                                      MAX (image_width, image_height));
+      vertical_upper      = gimp_pixels_to_units (FUNSCALEY (shell,
+                                                             shell->disp_height),
+                                                  shell->unit,
+                                                  resolution_y);
+      vertical_max_size   = gimp_pixels_to_units (MAX (image_width,
+                                                       image_height),
+                                                  shell->unit,
+                                                  resolution_y);
     }
   else
     {
@@ -228,19 +236,24 @@ gimp_display_shell_scale_update_rulers (GimpDisplayShell *shell)
 
   if (image)
     {
-      horizontal_lower += img2real (shell, TRUE,
-                                    FUNSCALEX (shell,
-                                               (gdouble) shell->offset_x));
-      horizontal_upper += img2real (shell, TRUE,
-                                    FUNSCALEX (shell,
-                                               (gdouble) shell->offset_x));
+      gdouble offset_x;
+      gdouble offset_y;
 
-      vertical_lower   += img2real (shell, FALSE,
-                                    FUNSCALEY (shell,
-                                               (gdouble) shell->offset_y));
-      vertical_upper   += img2real (shell, FALSE,
-                                    FUNSCALEY (shell,
-                                               (gdouble) shell->offset_y));
+      offset_x = gimp_pixels_to_units (FUNSCALEX (shell,
+                                                  (gdouble) shell->offset_x),
+                                       shell->unit,
+                                       resolution_x);
+
+      offset_y = gimp_pixels_to_units (FUNSCALEX (shell,
+                                                  (gdouble) shell->offset_y),
+                                       shell->unit,
+                                       resolution_y);
+
+      horizontal_lower += offset_x;
+      horizontal_upper += offset_x;
+
+      vertical_lower   += offset_y;
+      vertical_upper   += offset_y;
     }
 
   /* Finally setup the actual rulers */
@@ -1108,24 +1121,4 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
       }
       break;
     }
-}
-
-/* scale image coord to realworld units (cm, inches, pixels)
- *
- * 27/Feb/1999 I tried inlining this, but the result was slightly
- * slower (poorer cache locality, probably) -- austin
- */
-static gdouble
-img2real (GimpDisplayShell *shell,
-          gboolean          xdir,
-          gdouble           len)
-{
-  gdouble xres;
-  gdouble yres;
-
-  gimp_image_get_resolution (gimp_display_get_image (shell->display),
-                             &xres, &yres);
-
-  return gimp_pixels_to_units (len, shell->unit,
-                               xdir ? xres : yres);
 }
