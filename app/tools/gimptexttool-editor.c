@@ -1066,13 +1066,14 @@ gimp_text_tool_change_spacing (GimpTextTool *text_tool,
     {
       gtk_text_buffer_get_iter_at_mark (buffer, &start,
                                         gtk_text_buffer_get_insert (buffer));
-      gtk_text_buffer_get_end_iter (buffer, &end);
+      end = start;
     }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
   gtk_text_iter_order (&start, &end);
-  gimp_text_buffer_change_spacing (text_tool->buffer, &start, &end, count);
+  gimp_text_buffer_change_spacing (text_tool->buffer, &start, &end,
+                                   count * PANGO_SCALE);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
