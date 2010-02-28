@@ -220,21 +220,36 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
 
   if (markup)
     {
-      GtkTextIter  start;
-      GError      *error = NULL;
+      GtkTextBuffer *content;
+      GtkTextIter    insert;
+      GError        *error = NULL;
 
-      gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER (buffer), &start);
+      content = gtk_text_buffer_new (gtk_text_buffer_get_tag_table (GTK_TEXT_BUFFER (buffer)));
+
+      gtk_text_buffer_get_start_iter (content, &insert);
 
       if (! gtk_text_buffer_deserialize (GTK_TEXT_BUFFER (buffer),
-                                         GTK_TEXT_BUFFER (buffer),
+                                         content,
                                          buffer->markup_atom,
-                                         &start,
+                                         &insert,
                                          (const guint8 *) markup, -1,
                                          &error))
         {
           g_printerr ("EEK: %s\n", error->message);
           g_clear_error (&error);
         }
+      else
+        {
+          GtkTextIter start, end;
+
+          gtk_text_buffer_get_bounds (content, &start, &end);
+          gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER (buffer), &insert);
+
+          gtk_text_buffer_insert_range (GTK_TEXT_BUFFER (buffer),
+                                        &insert, &start, &end);
+        }
+
+      g_object_unref (content);
     }
 
   gimp_text_buffer_clear_insert_tags (buffer);
@@ -243,18 +258,32 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
 gchar *
 gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
 {
-  GtkTextIter start, end;
-  gsize       length;
+  GtkTextBuffer *content;
+  GtkTextIter    insert;
+  GtkTextIter    start, end;
+  gchar         *markup;
+  gsize          length;
 
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
 
-  gtk_text_buffer_get_bounds (GTK_TEXT_BUFFER (buffer), &start, &end);
+  content = gtk_text_buffer_new (gtk_text_buffer_get_tag_table (GTK_TEXT_BUFFER (buffer)));
 
-  return (gchar *) gtk_text_buffer_serialize (GTK_TEXT_BUFFER (buffer),
-                                              GTK_TEXT_BUFFER (buffer),
-                                              buffer->markup_atom,
-                                              &start, &end,
-                                              &length);
+  gtk_text_buffer_get_bounds (GTK_TEXT_BUFFER (buffer), &start, &end);
+  gtk_text_buffer_get_start_iter (content, &insert);
+
+  gtk_text_buffer_insert_range (content, &insert, &start, &end);
+
+  gtk_text_buffer_get_bounds (content, &start, &end);
+
+  markup = (gchar *) gtk_text_buffer_serialize (GTK_TEXT_BUFFER (buffer),
+                                                content,
+                                                buffer->markup_atom,
+                                                &start, &end,
+                                                &length);
+
+  g_object_unref (content);
+
+  return markup;
 }
 
 static gint
