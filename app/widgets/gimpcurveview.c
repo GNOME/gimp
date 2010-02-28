@@ -1129,6 +1129,8 @@ gimp_curve_view_set_curve (GimpCurveView *view,
                         G_CALLBACK (gimp_curve_view_curve_dirty),
                         view);
     }
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 GimpCurve *
@@ -1191,13 +1193,11 @@ gimp_curve_view_remove_background (GimpCurveView *view,
 void
 gimp_curve_view_remove_all_backgrounds (GimpCurveView *view)
 {
-  GList *list;
-
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
 
-  for (list = view->bg_curves; list; list = g_list_next (list))
+  while (view->bg_curves)
     {
-      BGCurve *bg = list->data;
+      BGCurve *bg = view->bg_curves->data;
 
       g_object_unref (bg->curve);
 
