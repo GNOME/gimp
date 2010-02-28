@@ -1123,7 +1123,7 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
                                    0.0, 0.0,
                                    &image_origin_shell_x, &image_origin_shell_y,
                                    FALSE /*use_offsets*/);
-  gtk_widget_translate_coordinates (GTK_WIDGET (shell),
+  gtk_widget_translate_coordinates (GTK_WIDGET (shell->canvas),
                                     GTK_WIDGET (window),
                                     image_origin_shell_x, image_origin_shell_y,
                                     &image_origin_window_x, &image_origin_window_y);
@@ -1156,7 +1156,7 @@ gimp_image_window_shell_size_allocate (GimpDisplayShell  *shell,
   gint             image_origin_shell_y = -1;
 
   gtk_widget_translate_coordinates (GTK_WIDGET (window),
-                                    GTK_WIDGET (shell),
+                                    GTK_WIDGET (shell->canvas),
                                     data->x, data->y,
                                     &image_origin_shell_x, &image_origin_shell_y);
 
