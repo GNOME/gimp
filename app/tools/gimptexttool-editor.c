@@ -167,7 +167,8 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
                                  GTK_SHADOW_OUT);
       gimp_display_shell_add_overlay (shell,
                                       text_tool->style_overlay,
-                                      0, 0);
+                                      0, 0,
+                                      GTK_ANCHOR_CENTER, 0, 0);
       gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
                                           text_tool->style_overlay, 0.7);
 
@@ -204,8 +205,8 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
 
       gimp_display_shell_move_overlay (shell,
                                        text_tool->style_overlay,
-                                       x + 2,
-                                       y - requisition.height - 6);
+                                       x, y,
+                                       GTK_ANCHOR_SOUTH_WEST, 4, 12);
 
       if (text_tool->image)
         {
@@ -1277,7 +1278,8 @@ gimp_text_tool_im_preedit_start (GtkIMContext *context,
   gimp_display_shell_add_overlay (shell,
                                   text_tool->preedit_overlay,
                                   cursor_rect.x + off_x,
-                                  cursor_rect.y + off_y);
+                                  cursor_rect.y + off_y,
+                                  GTK_ANCHOR_NORTH_WEST, 0, 0);
   gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
                                       text_tool->preedit_overlay, 0.7);
   gtk_widget_show (text_tool->preedit_overlay);

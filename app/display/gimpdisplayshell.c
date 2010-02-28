@@ -98,6 +98,18 @@ enum
 };
 
 
+typedef struct _GimpDisplayShellOverlay GimpDisplayShellOverlay;
+
+struct _GimpDisplayShellOverlay
+{
+  gdouble       image_x;
+  gdouble       image_y;
+  GtkAnchorType anchor;
+  gint          spacing_x;
+  gint          spacing_y;
+};
+
+
 /*  local function prototypes  */
 
 static void      gimp_color_managed_iface_init     (GimpColorManagedInterface *iface);
@@ -141,6 +153,10 @@ static void      gimp_display_shell_sync_config    (GimpDisplayShell  *shell,
 static void      gimp_display_shell_remove_overlay (GtkWidget        *canvas,
                                                     GtkWidget        *child,
                                                     GimpDisplayShell *shell);
+static void   gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
+                                                    GtkWidget        *child,
+                                                    gdouble          *x,
+                                                    gdouble          *y);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
@@ -1064,6 +1080,74 @@ gimp_display_shell_remove_overlay (GtkWidget        *canvas,
   shell->children = g_list_remove (shell->children, child);
 }
 
+static void
+gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
+                                      GtkWidget        *child,
+                                      gdouble          *x,
+                                      gdouble          *y)
+{
+  GimpDisplayShellOverlay *overlay;
+  GtkRequisition           requisition;
+
+  overlay = g_object_get_data (G_OBJECT (child), "image-coords-overlay");
+
+  gimp_display_shell_transform_xy_f (shell,
+                                     overlay->image_x,
+                                     overlay->image_y,
+                                     x, y,
+                                     FALSE);
+
+  gtk_widget_size_request (child, &requisition);
+
+  switch (overlay->anchor)
+    {
+    case GTK_ANCHOR_CENTER:
+      *x -= requisition.width  / 2;
+      *y -= requisition.height / 2;
+      break;
+
+    case GTK_ANCHOR_NORTH:
+      *x -= requisition.width / 2;
+      *y += overlay->spacing_y;
+      break;
+
+    case GTK_ANCHOR_NORTH_WEST:
+      *x += overlay->spacing_x;
+      *y += overlay->spacing_y;
+      break;
+
+    case GTK_ANCHOR_NORTH_EAST:
+      *x -= requisition.width + overlay->spacing_x;
+      *y += overlay->spacing_y;
+      break;
+
+    case GTK_ANCHOR_SOUTH:
+      *x -= requisition.width / 2;
+      *y -= requisition.height + overlay->spacing_y;
+      break;
+
+    case GTK_ANCHOR_SOUTH_WEST:
+      *x += overlay->spacing_x;
+      *y -= requisition.height + overlay->spacing_y;
+      break;
+
+    case GTK_ANCHOR_SOUTH_EAST:
+      *x -= requisition.width + overlay->spacing_x;
+      *y -= requisition.height + overlay->spacing_y;
+      break;
+
+    case GTK_ANCHOR_WEST:
+      *x += overlay->spacing_x;
+      *y -= requisition.height / 2;
+      break;
+
+    case GTK_ANCHOR_EAST:
+      *x -= requisition.width + overlay->spacing_x;
+      *y -= requisition.height / 2;
+      break;
+    }
+}
+
 
 /*  public functions  */
 
@@ -1087,29 +1171,31 @@ void
 gimp_display_shell_add_overlay (GimpDisplayShell *shell,
                                 GtkWidget        *child,
                                 gdouble           image_x,
-                                gdouble           image_y)
+                                gdouble           image_y,
+                                GtkAnchorType     anchor,
+                                gint              spacing_x,
+                                gint              spacing_y)
 {
-  gdouble *x_data;
-  gdouble *y_data;
-  gdouble  x, y;
+  GimpDisplayShellOverlay *overlay;
+  gdouble                  x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GTK_IS_WIDGET (shell));
 
-  x_data = g_new (gdouble, 1);
-  y_data = g_new (gdouble, 1);
+  overlay = g_new0 (GimpDisplayShellOverlay, 1);
 
-  *x_data = image_x;
-  *y_data = image_y;
+  overlay->image_x   = image_x;
+  overlay->image_y   = image_y;
+  overlay->anchor    = anchor;
+  overlay->spacing_x = spacing_x;
+  overlay->spacing_y = spacing_y;
 
-  g_object_set_data_full (G_OBJECT (child), "image-x", x_data,
-                          (GDestroyNotify) g_free);
-  g_object_set_data_full (G_OBJECT (child), "image-y", y_data,
+  g_object_set_data_full (G_OBJECT (child), "image-coords-overlay", overlay,
                           (GDestroyNotify) g_free);
 
   shell->children = g_list_prepend (shell->children, child);
 
-  gimp_display_shell_transform_xy_f (shell, image_x, image_y, &x, &y, FALSE);
+  gimp_display_shell_transform_overlay (shell, child, &x, &y);
 
   gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (shell->canvas), child, 0.0, 0.0);
   gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (shell->canvas),
@@ -1120,25 +1206,28 @@ void
 gimp_display_shell_move_overlay (GimpDisplayShell *shell,
                                  GtkWidget        *child,
                                  gdouble           image_x,
-                                 gdouble           image_y)
+                                 gdouble           image_y,
+                                 GtkAnchorType     anchor,
+                                 gint              spacing_x,
+                                 gint              spacing_y)
 {
-  gdouble *x_data;
-  gdouble *y_data;
-  gdouble  x, y;
+  GimpDisplayShellOverlay *overlay;
+  gdouble                  x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GTK_IS_WIDGET (shell));
 
-  x_data = g_object_get_data (G_OBJECT (child), "image-x");
-  y_data = g_object_get_data (G_OBJECT (child), "image-y");
+  overlay = g_object_get_data (G_OBJECT (child), "image-coords-overlay");
 
-  if (! x_data || ! y_data)
-    return;
+  g_return_if_fail (overlay != NULL);
 
-  *x_data = image_x;
-  *y_data = image_y;
+  overlay->image_x   = image_x;
+  overlay->image_y   = image_y;
+  overlay->anchor    = anchor;
+  overlay->spacing_x = spacing_x;
+  overlay->spacing_y = spacing_y;
 
-  gimp_display_shell_transform_xy_f (shell, *x_data, *y_data, &x, &y, FALSE);
+  gimp_display_shell_transform_overlay (shell, child, &x, &y);
 
   gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (shell->canvas),
                                        child, x, y);
@@ -1341,14 +1430,9 @@ gimp_display_shell_scaled (GimpDisplayShell *shell)
   for (list = shell->children; list; list = g_list_next (list))
     {
       GtkWidget *child = list->data;
-      gdouble   *x_data;
-      gdouble   *y_data;
       gdouble    x, y;
 
-      x_data = g_object_get_data (G_OBJECT (child), "image-x");
-      y_data = g_object_get_data (G_OBJECT (child), "image-y");
-
-      gimp_display_shell_transform_xy_f (shell, *x_data, *y_data, &x, &y, FALSE);
+      gimp_display_shell_transform_overlay (shell, child, &x, &y);
 
       gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (shell->canvas),
                                            child, x, y);
@@ -1367,14 +1451,9 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
   for (list = shell->children; list; list = g_list_next (list))
     {
       GtkWidget *child = list->data;
-      gdouble   *x_data;
-      gdouble   *y_data;
       gdouble    x, y;
 
-      x_data = g_object_get_data (G_OBJECT (child), "image-x");
-      y_data = g_object_get_data (G_OBJECT (child), "image-y");
-
-      gimp_display_shell_transform_xy_f (shell, *x_data, *y_data, &x, &y, FALSE);
+      gimp_display_shell_transform_overlay (shell, child, &x, &y);
 
       gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (shell->canvas),
                                            child, x, y);
