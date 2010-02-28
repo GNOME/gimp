@@ -83,12 +83,6 @@ static gboolean    gimp_dialog_factory_set_user_pos         (GtkWidget          
 static gboolean    gimp_dialog_factory_dialog_configure     (GtkWidget              *dialog,
                                                              GdkEventConfigure      *cevent,
                                                              GimpDialogFactory      *factory);
-static void        gimp_dialog_factories_save_foreach       (gconstpointer           key,
-                                                             GimpDialogFactory      *factory,
-                                                             GimpConfigWriter       *writer);
-static void        gimp_dialog_factories_restore_foreach    (gconstpointer           key,
-                                                             GimpDialogFactory      *factory,
-                                                             gpointer                data);
 static void        gimp_dialog_factories_hide_foreach       (gconstpointer           key,
                                                              GimpDialogFactory      *factory,
                                                              gpointer                data);
@@ -1049,32 +1043,6 @@ gimp_dialog_factory_hide_dialog (GtkWidget *dialog)
 }
 
 void
-gimp_dialog_factories_session_save (GimpConfigWriter *writer)
-{
-  GimpDialogFactoryClass *factory_class;
-
-  g_return_if_fail (writer != NULL);
-
-  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-
-  g_hash_table_foreach (factory_class->factories,
-                        (GHFunc) gimp_dialog_factories_save_foreach,
-                        writer);
-}
-
-void
-gimp_dialog_factories_session_restore (void)
-{
-  GimpDialogFactoryClass *factory_class;
-
-  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-
-  g_hash_table_foreach (factory_class->factories,
-                        (GHFunc) gimp_dialog_factories_restore_foreach,
-                        NULL);
-}
-
-void
 gimp_dialog_factories_set_state (GimpDialogsState state)
 {
   GimpDialogFactoryClass *factory_class;
@@ -1340,10 +1308,9 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
   return FALSE;
 }
 
-static void
-gimp_dialog_factories_save_foreach (gconstpointer      key,
-                                    GimpDialogFactory *factory,
-                                    GimpConfigWriter  *writer)
+void
+gimp_dialog_factory_save (GimpDialogFactory *factory,
+                          GimpConfigWriter  *writer)
 {
   GList *infos;
 
@@ -1377,10 +1344,8 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
     }
 }
 
-static void
-gimp_dialog_factories_restore_foreach (gconstpointer      key,
-                                       GimpDialogFactory *factory,
-                                       gpointer           data)
+void
+gimp_dialog_factory_restore (GimpDialogFactory *factory)
 {
   GList *infos;
 

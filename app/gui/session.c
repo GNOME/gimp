@@ -276,7 +276,7 @@ session_restore (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp_dialog_factories_session_restore ();
+  gimp_dialog_factory_restore (global_dialog_factory);
 }
 
 void
@@ -315,7 +315,7 @@ session_save (Gimp     *gimp,
   if (!writer)
     return;
 
-  gimp_dialog_factories_session_save (writer);
+  gimp_dialog_factory_save (global_dialog_factory, writer);
   gimp_config_writer_linefeed (writer);
 
   /* save last tip shown
