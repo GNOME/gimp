@@ -89,9 +89,6 @@ static void        gimp_dialog_factories_save_foreach       (gconstpointer      
 static void        gimp_dialog_factories_restore_foreach    (gconstpointer           key,
                                                              GimpDialogFactory      *factory,
                                                              gpointer                data);
-static void        gimp_dialog_factories_clear_foreach      (gconstpointer           key,
-                                                             GimpDialogFactory      *factory,
-                                                             gpointer                data);
 static void        gimp_dialog_factories_hide_foreach       (gconstpointer           key,
                                                              GimpDialogFactory      *factory,
                                                              gpointer                data);
@@ -1078,18 +1075,6 @@ gimp_dialog_factories_session_restore (void)
 }
 
 void
-gimp_dialog_factories_session_clear (void)
-{
-  GimpDialogFactoryClass *factory_class;
-
-  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-
-  g_hash_table_foreach (factory_class->factories,
-                        (GHFunc) gimp_dialog_factories_clear_foreach,
-                        NULL);
-}
-
-void
 gimp_dialog_factories_set_state (GimpDialogsState state)
 {
   GimpDialogFactoryClass *factory_class;
@@ -1414,24 +1399,6 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
                     "skipping to restore session info %p, not open",
                     info);
         }
-    }
-}
-
-static void
-gimp_dialog_factories_clear_foreach (gconstpointer      key,
-                                     GimpDialogFactory *factory,
-                                     gpointer           data)
-{
-  GList *list;
-
-  for (list = factory->p->session_infos; list; list = g_list_next (list))
-    {
-      GimpSessionInfo *info = list->data;
-
-      if (gimp_session_info_get_widget (info))
-        continue;
-
-      /* FIXME: implement session info deletion */
     }
 }
 
