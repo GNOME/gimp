@@ -54,7 +54,7 @@ windows_hide_docks_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   gboolean         active    = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-  GimpDialogsState state     = gimp_dialog_factory_get_state (global_dialog_factory);
+  GimpDialogsState state     = gimp_dialog_factory_get_state (gimp_dialog_factory_get_singleton ());
   GimpDialogsState new_state = state;
   Gimp            *gimp      = NULL;
   return_if_no_gimp (gimp, data);
@@ -69,7 +69,7 @@ windows_hide_docks_cmd_callback (GtkAction *action,
     new_state = GIMP_DIALOGS_SHOWN;
 
   if (state != new_state)
-    gimp_dialog_factory_set_state (global_dialog_factory, new_state);
+    gimp_dialog_factory_set_state (gimp_dialog_factory_get_singleton (), new_state);
 
   g_object_set (gimp->config,
                 "hide-docks", active,
@@ -119,9 +119,9 @@ windows_open_recent_cmd_callback (GtkAction *action,
   g_object_ref (info);
   gimp_container_remove (global_recent_docks, GIMP_OBJECT (info));
 
-  gimp_dialog_factory_add_session_info (global_dialog_factory, info);
+  gimp_dialog_factory_add_session_info (gimp_dialog_factory_get_singleton (), info);
 
-  gimp_session_info_restore (info, global_dialog_factory);
+  gimp_session_info_restore (info, gimp_dialog_factory_get_singleton ());
   gimp_session_info_clear_info (info);
 }
 
@@ -132,7 +132,7 @@ windows_show_toolbox (void)
 
   if (! dialogs_get_toolbox ())
     {
-      toolbox = gimp_dock_with_window_new (global_dialog_factory,
+      toolbox = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
                                            gdk_screen_get_default (),
                                            TRUE /*toolbox*/);
 

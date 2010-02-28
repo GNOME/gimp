@@ -50,8 +50,6 @@
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimpcoloroptions.h"
 #include "gimpcolortool.h"
 #include "gimptoolcontrol.h"
@@ -646,7 +644,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
       if (GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
         {
-          info = gimp_dialog_factory_find_session_info (global_dialog_factory,
+          info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
                                                         "gimp-indexed-palette");
           if (info && gimp_session_info_get_widget (info))
             {
@@ -660,7 +658,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
       if (TRUE)
         {
-          info = gimp_dialog_factory_find_session_info (global_dialog_factory,
+          info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
                                                         "gimp-palette-editor");
           if (info && gimp_session_info_get_widget (info))
             {
@@ -696,7 +694,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
         GtkWidget        *dockable;
 
         screen = gtk_widget_get_screen (GTK_WIDGET (shell));
-        dockable = gimp_dialog_factory_dialog_raise (global_dialog_factory,
+        dockable = gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                                      screen,
                                                      "gimp-palette-editor",
                                                      -1);

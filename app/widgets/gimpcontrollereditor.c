@@ -33,8 +33,6 @@
 
 #include "core/gimpcontext.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimpactioneditor.h"
 #include "gimpactionview.h"
 #include "gimpcontrollereditor.h"
@@ -683,7 +681,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
       g_object_add_weak_pointer (G_OBJECT (editor->edit_dialog),
                                  (gpointer) &editor->edit_dialog);
 
-      gimp_dialog_factory_add_foreign (global_dialog_factory,
+      gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                        "gimp-controller-action-dialog",
                                        editor->edit_dialog);
 

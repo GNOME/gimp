@@ -25,8 +25,6 @@
 
 #include "actions/actions.h"
 
-#include "dialogs/dialogs.h"
-
 #include "menus/menus.h"
 
 #include "base/base.h"

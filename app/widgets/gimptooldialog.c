@@ -29,8 +29,6 @@
 #include "core/gimpobject.h"
 #include "core/gimptoolinfo.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimpdialogfactory.h"
 #include "gimptooldialog.h"
 
@@ -96,7 +94,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
 
   identifier = g_strconcat (gimp_object_get_name (tool_info), "-dialog", NULL);
 
-  gimp_dialog_factory_add_foreign (global_dialog_factory,
+  gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                    identifier,
                                    dialog);
 

@@ -41,7 +41,6 @@
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptemplateview.h"
 
-#include "dialogs/dialogs.h"
 #include "dialogs/template-options-dialog.h"
 
 #include "actions.h"

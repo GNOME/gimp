@@ -50,7 +50,6 @@
 #include "display/gimpdisplayshell.h"
 
 #include "dialogs/convert-dialog.h"
-#include "dialogs/dialogs.h"
 #include "dialogs/grid-dialog.h"
 #include "dialogs/image-merge-layers-dialog.h"
 #include "dialogs/image-new-dialog.h"
@@ -127,7 +126,7 @@ image_new_cmd_callback (GtkAction *action,
   GtkWidget *dialog;
   return_if_no_widget (widget, data);
 
-  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+  dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                            gtk_widget_get_screen (widget),
                                            "gimp-image-new-dialog", -1, FALSE);
 

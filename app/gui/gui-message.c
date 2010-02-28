@@ -41,8 +41,6 @@
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gui-message.h"
 
 #include "gimp-intl.h"
@@ -102,7 +100,7 @@ gui_message_error_console (GimpMessageSeverity  severity,
     {
       GimpSessionInfo *info;
 
-      info = gimp_dialog_factory_find_session_info (global_dialog_factory,
+      info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
                                                     "gimp-error-console");
 
       if (info && GIMP_IS_DOCKABLE (gimp_session_info_get_widget (info)))
@@ -110,7 +108,7 @@ gui_message_error_console (GimpMessageSeverity  severity,
     }
 
   if (! dockable)
-    dockable = gimp_dialog_factory_dialog_raise (global_dialog_factory,
+    dockable = gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                                  gdk_screen_get_default (),
                                                  "gimp-error-console", -1);
 
@@ -175,7 +173,7 @@ progress_error_dialog (GimpProgress *progress)
 static GtkWidget *
 global_error_dialog (void)
 {
-  return gimp_dialog_factory_dialog_new (global_dialog_factory,
+  return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                          gdk_screen_get_default (),
                                          "gimp-error-dialog", -1,
                                          FALSE);

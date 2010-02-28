@@ -560,7 +560,7 @@ gui_exit_callback (Gimp     *gimp,
 
   if (! force && gimp_displays_dirty (gimp))
     {
-      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+      gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                         gdk_screen_get_default (),
                                         "gimp-quit-dialog", -1);
 
@@ -697,7 +697,7 @@ gui_device_change_notify (Gimp *gimp)
 {
   GimpSessionInfo *session_info;
 
-  session_info = gimp_dialog_factory_find_session_info (global_dialog_factory,
+  session_info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
                                                         "gimp-device-status");
 
   if (session_info && gimp_session_info_get_widget (session_info))

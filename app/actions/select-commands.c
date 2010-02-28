@@ -38,7 +38,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "dialogs/dialogs.h"
 #include "dialogs/stroke-dialog.h"
 
 #include "actions.h"
@@ -319,7 +318,7 @@ select_save_cmd_callback (GtkAction *action,
   gimp_selection_save (GIMP_SELECTION (gimp_image_get_mask (image)));
   gimp_image_flush (image);
 
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
                                     "gimp-channel-list", -1);
 }

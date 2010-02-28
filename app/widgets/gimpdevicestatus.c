@@ -35,8 +35,6 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimpdnd.h"
 #include "gimpdeviceinfo.h"
 #include "gimpdevices.h"
@@ -471,7 +469,7 @@ gimp_device_status_view_clicked (GtkWidget       *widget,
 {
   GimpDialogFactory *dialog_factory;
 
-  dialog_factory = global_dialog_factory;
+  dialog_factory = gimp_dialog_factory_get_singleton ();
 
   gimp_dialog_factory_dialog_raise (dialog_factory,
                                     gtk_widget_get_screen (widget),

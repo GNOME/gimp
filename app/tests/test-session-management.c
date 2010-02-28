@@ -26,8 +26,6 @@
 
 #include "dialogs/dialogs-types.h"
 
-#include "dialogs/dialogs.h"
-
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
 

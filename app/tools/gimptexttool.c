@@ -58,8 +58,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimprectangletool.h"
 #include "gimptextoptions.h"
 #include "gimptexttool.h"
@@ -662,7 +660,7 @@ gimp_text_tool_get_popup (GimpTool         *tool,
           GtkWidget         *im_menu;
           GList             *children;
 
-          dialog_factory = global_dialog_factory;
+          dialog_factory = gimp_dialog_factory_get_singleton ();
 
           text_tool->ui_manager =
             gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),

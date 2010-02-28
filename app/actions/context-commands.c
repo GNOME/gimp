@@ -41,8 +41,6 @@
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpcolormapeditor.h"
 
-#include "dialogs/dialogs.h"
-
 #include "actions.h"
 #include "context-commands.h"
 
@@ -872,9 +870,9 @@ context_get_palette_editor (void)
 {
   GimpSessionInfo *info = NULL;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_dialog_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (gimp_dialog_factory_get_singleton ()), NULL);
 
-  info = gimp_dialog_factory_find_session_info (global_dialog_factory,
+  info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
                                                 "gimp-palette-editor");
   if (info && gimp_session_info_get_widget (info))
     return GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));
@@ -887,9 +885,9 @@ context_get_colormap_editor (void)
 {
   GimpSessionInfo *info = NULL;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_dialog_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (gimp_dialog_factory_get_singleton ()), NULL);
 
-  info = gimp_dialog_factory_find_session_info (global_dialog_factory,
+  info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
                                                 "gimp-indexed-palette");
   if (info && gimp_session_info_get_widget (info))
     return GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));

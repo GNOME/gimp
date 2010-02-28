@@ -45,8 +45,7 @@
 #include "gimp-intl.h"
 
 
-GimpDialogFactory *global_dialog_factory  = NULL;
-GimpContainer     *global_recent_docks    = NULL;
+GimpContainer *global_recent_docks = NULL;
 
 
 #define FOREIGN(id, singleton, remember_size) \
@@ -377,17 +376,19 @@ void
 dialogs_init (Gimp            *gimp,
               GimpMenuFactory *menu_factory)
 {
-  gint i;
+  GimpDialogFactory *factory = NULL;
+  gint               i       = 0;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
-  global_dialog_factory = gimp_dialog_factory_new ("toplevel",
-                                                   gimp_get_user_context (gimp),
-                                                   menu_factory);
+  factory = gimp_dialog_factory_new ("toplevel",
+                                     gimp_get_user_context (gimp),
+                                     menu_factory);
+  gimp_dialog_factory_set_singleton (factory);
 
   for (i = 0; i < G_N_ELEMENTS (entries); i++)
-    gimp_dialog_factory_register_entry (global_dialog_factory,
+    gimp_dialog_factory_register_entry (gimp_dialog_factory_get_singleton (),
                                         entries[i].identifier,
                                         gettext (entries[i].name),
                                         gettext (entries[i].blurb),
@@ -410,10 +411,10 @@ dialogs_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (global_dialog_factory)
+  if (gimp_dialog_factory_get_singleton ())
     {
-      g_object_unref (global_dialog_factory);
-      global_dialog_factory = NULL;
+      g_object_unref (gimp_dialog_factory_get_singleton ());
+      gimp_dialog_factory_set_singleton (NULL);
     }
 
   if (global_recent_docks)
@@ -433,7 +434,7 @@ dialogs_ensure_factory_entry_on_recent_dock (GimpSessionInfo *info)
       /* The recent docks container only contains session infos for
        * dock windows
        */
-      entry = gimp_dialog_factory_find_entry (global_dialog_factory,
+      entry = gimp_dialog_factory_find_entry (gimp_dialog_factory_get_singleton (),
                                               "gimp-dock-window");
 
       gimp_session_info_set_factory_entry (info, entry);
@@ -506,9 +507,9 @@ dialogs_get_toolbox (void)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_dialog_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (gimp_dialog_factory_get_singleton ()), NULL);
 
-  for (list = gimp_dialog_factory_get_open_dialogs (global_dialog_factory);
+  for (list = gimp_dialog_factory_get_open_dialogs (gimp_dialog_factory_get_singleton ());
        list;
        list = g_list_next (list))
     {

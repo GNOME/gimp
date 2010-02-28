@@ -50,8 +50,6 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
 
-#include "dialogs/dialogs.h"
-
 #include "actions.h"
 #include "view-commands.h"
 
@@ -320,7 +318,7 @@ view_navigation_window_cmd_callback (GtkAction *action,
   GimpDisplayShell *shell;
   return_if_no_shell (shell, data);
 
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     "gimp-navigation-view", -1);
 }

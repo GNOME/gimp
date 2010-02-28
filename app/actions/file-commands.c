@@ -52,7 +52,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
-#include "dialogs/dialogs.h"
 #include "dialogs/file-save-dialog.h"
 
 #include "actions.h"
@@ -142,7 +141,7 @@ file_open_location_cmd_callback (GtkAction *action,
   GtkWidget *widget;
   return_if_no_widget (widget, data);
 
-  gimp_dialog_factory_dialog_new (global_dialog_factory,
+  gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                   gtk_widget_get_screen (widget),
                                   "gimp-file-open-location-dialog", -1, TRUE);
 }
@@ -450,7 +449,7 @@ file_close_all_cmd_callback (GtkAction *action,
       GtkWidget *widget;
       return_if_no_widget (widget, data);
 
-      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+      gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                         gtk_widget_get_screen (widget),
                                         "gimp-close-all-dialog", -1);
     }
@@ -489,7 +488,7 @@ file_open_dialog_show (Gimp        *gimp,
 {
   GtkWidget *dialog;
 
-  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+  dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                            gtk_widget_get_screen (parent),
                                            "gimp-file-open-dialog", -1, FALSE);
 
@@ -531,7 +530,7 @@ file_save_dialog_show (Gimp        *gimp,
 
   if (! dialog)
     {
-      dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+      dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (parent),
                                                "gimp-file-save-dialog",
                                                -1, FALSE);
@@ -581,7 +580,7 @@ file_export_dialog_show (Gimp      *gimp,
 
   if (! dialog)
     {
-      dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+      dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (parent),
                                                "gimp-file-export-dialog",
                                                -1, FALSE);

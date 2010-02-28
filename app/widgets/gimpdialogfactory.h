@@ -171,5 +171,8 @@ void                gimp_dialog_factory_set_has_min_size     (GtkWindow         
                                                               gboolean                 has_min_size);
 gboolean            gimp_dialog_factory_get_has_min_size     (GtkWindow               *window);
 
+GimpDialogFactory * gimp_dialog_factory_get_singleton        (void);
+void                gimp_dialog_factory_set_singleton        (GimpDialogFactory       *factory);
+
 
 #endif  /*  __GIMP_DIALOG_FACTORY_H__  */

@@ -25,8 +25,6 @@
 
 #include "dialogs/dialogs-types.h"
 
-#include "dialogs/dialogs.h"
-
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -181,7 +179,7 @@ gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
   GtkWidget             *toplevel     = gtk_widget_get_toplevel (GTK_WIDGET (shell));
   GimpImageWindow       *image_window = GIMP_IMAGE_WINDOW (toplevel);
   GimpUIManager         *ui_manager   = gimp_image_window_get_ui_manager (image_window);
-  GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (global_dialog_factory,
+  GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                                         gtk_widget_get_screen (toplevel),
                                                                         "gimp-tool-options",
                                                                         -1 /*view_size*/,
@@ -234,7 +232,7 @@ gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
 
   /* Get the GtkWindow of the dialog */
   new_image_dialog =
-    gimp_dialog_factory_dialog_raise (global_dialog_factory,
+    gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                       gtk_widget_get_screen (GTK_WIDGET (shell)),
                                       "gimp-image-new-dialog",
                                       -1 /*view_size*/);
@@ -270,11 +268,11 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
   GList     *session_infos                 = NULL;
 
   /* Find a non-toolbox dock window */
-  dock_window = gimp_ui_find_non_toolbox_dock_window (global_dialog_factory);
+  dock_window = gimp_ui_find_non_toolbox_dock_window (gimp_dialog_factory_get_singleton ());
   g_assert (dock_window != NULL);
 
   /* Count number of docks */
-  session_infos = gimp_dialog_factory_get_session_infos (global_dialog_factory);
+  session_infos = gimp_dialog_factory_get_session_infos (gimp_dialog_factory_get_singleton ());
   n_session_infos_before_close = g_list_length (session_infos);
 
   /* Close one of the dock windows */
@@ -282,7 +280,7 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
   gimp_test_run_mainloop_until_idle ();
 
   /* Make sure the number of session infos went down */
-  session_infos = gimp_dialog_factory_get_session_infos (global_dialog_factory);
+  session_infos = gimp_dialog_factory_get_session_infos (gimp_dialog_factory_get_singleton ());
   n_session_infos_after_close = g_list_length (session_infos);
   g_assert_cmpint (n_session_infos_before_close,
                    >,
@@ -296,7 +294,7 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
                                    /* FIXME: This is severly hardcoded */
                                    "windows-recent-0003");
   gimp_test_run_mainloop_until_idle ();
-  session_infos = gimp_dialog_factory_get_session_infos (global_dialog_factory);
+  session_infos = gimp_dialog_factory_get_session_infos (gimp_dialog_factory_get_singleton ());
   n_session_infos_after_restore = g_list_length (session_infos);
   g_assert_cmpint (n_session_infos_after_close,
                    <,
@@ -328,7 +326,7 @@ gimp_ui_tab_toggle_dont_change_position (GimpTestFixture *fixture,
   gint       h_after_show  = -1;
 
   /* Find a non-toolbox dock window */
-  dock_window = gimp_ui_find_non_toolbox_dock_window (global_dialog_factory);
+  dock_window = gimp_ui_find_non_toolbox_dock_window (gimp_dialog_factory_get_singleton ());
   g_assert (dock_window != NULL);
   g_assert (gtk_widget_get_visible (dock_window));
 

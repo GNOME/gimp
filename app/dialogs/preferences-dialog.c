@@ -59,8 +59,6 @@
 #include "gui/session.h"
 #include "gui/themes.h"
 
-#include "dialogs/dialogs.h"
-
 #include "preferences-dialog.h"
 #include "resolution-calibrate-dialog.h"
 
@@ -493,7 +491,7 @@ static void
 prefs_input_devices_dialog (GtkWidget *widget,
                             Gimp      *gimp)
 {
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
                                     "gimp-input-devices-dialog", 0);
 }
@@ -502,7 +500,7 @@ static void
 prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                                  Gimp      *gimp)
 {
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
                                     "gimp-keyboard-shortcuts-dialog", 0);
 }

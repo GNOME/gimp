@@ -96,6 +96,14 @@ G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
 static guint factory_signals[LAST_SIGNAL] = { 0 };
 
 
+/* Is set by dialogs.c to a dialog factory initialized there.
+ *
+ * FIXME: The layer above should not do this kind of initialization of
+ * layers below.
+ */
+static GimpDialogFactory *gimp_toplevel_factory = NULL;
+
+
 static void
 gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
 {
@@ -1428,4 +1436,33 @@ gimp_dialog_factory_unset_busy (GimpDialogFactory *factory)
             gdk_window_set_cursor (gtk_widget_get_window (widget), NULL);
         }
     }
+}
+
+/**
+ * gimp_dialog_factory_get_singleton:
+ *
+ * Returns: The toplevel GimpDialogFactory instance.
+ **/
+GimpDialogFactory *
+gimp_dialog_factory_get_singleton (void)
+{
+  g_return_val_if_fail (gimp_toplevel_factory != NULL, NULL);
+
+  return gimp_toplevel_factory;
+}
+
+/**
+ * gimp_dialog_factory_set_singleton:
+ * @:
+ *
+ * Set the toplevel GimpDialogFactory instance. Must only be called by
+ * dialogs_init()!.
+ **/
+void
+gimp_dialog_factory_set_singleton (GimpDialogFactory *factory)
+{
+  g_return_if_fail (gimp_toplevel_factory == NULL ||
+                    factory               == NULL);
+
+  gimp_toplevel_factory = factory;
 }

@@ -34,8 +34,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpcontrollereditor.h"
@@ -636,7 +634,7 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
 
                             NULL);
 
-  gimp_dialog_factory_add_foreign (global_dialog_factory,
+  gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                    "gimp-controller-editor-dialog",
                                    dialog);
 

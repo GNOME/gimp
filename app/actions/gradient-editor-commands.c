@@ -29,12 +29,11 @@
 #include "core/gimpgradient.h"
 
 #include "widgets/gimpcolordialog.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
-
-#include "dialogs/dialogs.h"
 
 #include "gradient-editor-commands.h"
 
@@ -86,7 +85,7 @@ gradient_editor_left_color_cmd_callback (GtkAction *action,
                            GIMP_STOCK_GRADIENT,
                            _("Gradient Segment's Left Endpoint Color"),
                            GTK_WIDGET (editor),
-                           global_dialog_factory,
+                           gimp_dialog_factory_get_singleton (),
                            "gimp-gradient-editor-color-dialog",
                            &editor->control_sel_l->left_color,
                            editor->instant_update, TRUE);
@@ -237,7 +236,7 @@ gradient_editor_right_color_cmd_callback (GtkAction *action,
                            GIMP_STOCK_GRADIENT,
                            _("Gradient Segment's Right Endpoint Color"),
                            GTK_WIDGET (editor),
-                           global_dialog_factory,
+                           gimp_dialog_factory_get_singleton (),
                            "gimp-gradient-editor-color-dialog",
                            &editor->control_sel_l->right_color,
                            editor->instant_update, TRUE);

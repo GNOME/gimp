@@ -104,21 +104,21 @@ windows_menu_setup (GimpUIManager *manager,
       windows_menu_display_add (manager->gimp->displays, display, manager);
     }
 
-  g_signal_connect_object (global_dialog_factory, "dock-window-added",
+  g_signal_connect_object (gimp_dialog_factory_get_singleton (), "dock-window-added",
                            G_CALLBACK (windows_menu_dock_window_added),
                            manager, 0);
-  g_signal_connect_object (global_dialog_factory, "dock-window-removed",
+  g_signal_connect_object (gimp_dialog_factory_get_singleton (), "dock-window-removed",
                            G_CALLBACK (windows_menu_dock_window_removed),
                            manager, 0);
 
-  for (list = gimp_dialog_factory_get_open_dialogs (global_dialog_factory);
+  for (list = gimp_dialog_factory_get_open_dialogs (gimp_dialog_factory_get_singleton ());
        list;
        list = g_list_next (list))
     {
       GimpDockWindow *dock_window = list->data;
 
       if (GIMP_IS_DOCK_WINDOW (dock_window))
-        windows_menu_dock_window_added (global_dialog_factory,
+        windows_menu_dock_window_added (gimp_dialog_factory_get_singleton (),
                                         dock_window,
                                         manager);
     }

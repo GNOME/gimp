@@ -29,8 +29,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpdockable.h"

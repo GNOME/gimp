@@ -139,10 +139,10 @@ session_init (Gimp *gimp)
 
               /* In versions <= GIMP 2.6 there was a "toolbox", a
                * "dock", a "display" and a "toplevel" factory. These
-               * are now merged to a single global_dialog_factory. We
+               * are now merged to a single gimp_dialog_factory_get_singleton (). We
                * need the legacy name though, so keep it around.
                */
-              factory = global_dialog_factory;
+              factory = gimp_dialog_factory_get_singleton ();
 
               info = gimp_session_info_new ();
 
@@ -268,7 +268,7 @@ session_restore (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp_dialog_factory_restore (global_dialog_factory);
+  gimp_dialog_factory_restore (gimp_dialog_factory_get_singleton ());
 }
 
 void
@@ -307,7 +307,7 @@ session_save (Gimp     *gimp,
   if (!writer)
     return;
 
-  gimp_dialog_factory_save (global_dialog_factory, writer);
+  gimp_dialog_factory_save (gimp_dialog_factory_get_singleton (), writer);
   gimp_config_writer_linefeed (writer);
 
   /* save last tip shown

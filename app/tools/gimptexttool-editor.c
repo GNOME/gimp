@@ -45,8 +45,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimprectangletool.h"
 #include "gimptextoptions.h"
 #include "gimptexttool.h"
@@ -1139,7 +1137,7 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
       return;
     }
 
-  dialog_factory = global_dialog_factory;
+  dialog_factory = gimp_dialog_factory_get_singleton ();
 
   if (tool->display)
     {

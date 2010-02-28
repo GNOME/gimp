@@ -34,8 +34,6 @@
 #include "widgets/gimpdocked.h"
 #include "widgets/gimpsessioninfo.h"
 
-#include "dialogs/dialogs.h"
-
 #include "dockable-commands.h"
 
 

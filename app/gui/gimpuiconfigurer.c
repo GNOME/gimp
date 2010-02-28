@@ -37,8 +37,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpimagewindow.h"
 
-#include "dialogs/dialogs.h"
-
 #include "menus/menus.h"
 
 #include "gimpuiconfigurer.h"
@@ -161,7 +159,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
   GList *dialog_iter = NULL;
 
   dialogs =
-    g_list_copy (gimp_dialog_factory_get_open_dialogs (global_dialog_factory));
+    g_list_copy (gimp_dialog_factory_get_open_dialogs (gimp_dialog_factory_get_singleton ()));
 
   for (dialog_iter = dialogs; dialog_iter; dialog_iter = dialog_iter->next)
     {
@@ -203,7 +201,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
       if (GTK_IS_WIDGET (dock_window) &&
           g_list_length (gimp_dock_window_get_docks (dock_window)) == 0)
         {
-          gimp_dialog_factory_remove_dialog (global_dialog_factory,
+          gimp_dialog_factory_remove_dialog (gimp_dialog_factory_get_singleton (),
                                              GTK_WIDGET (dock_window));
           gtk_widget_destroy (GTK_WIDGET (dock_window));
         }
@@ -283,7 +281,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer *ui_configurer,
        * toolbox
        */
       dock_window =
-        gimp_dialog_factory_dialog_new (global_dialog_factory,
+        gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                         screen,
                                         (GIMP_IS_TOOLBOX (dock) ?
                                          "gimp-toolbox-window" :
@@ -325,7 +323,7 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
       new_image_window = gimp_image_window_new (ui_configurer->p->gimp,
                                                 NULL,
                                                 global_menu_factory,
-                                                global_dialog_factory);
+                                                gimp_dialog_factory_get_singleton ());
       /* Move the shell there */
       shell = gimp_image_window_get_shell (source_image_window, 1);
 

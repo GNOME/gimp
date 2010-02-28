@@ -26,8 +26,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimpcolordialog.h"
 #include "gimpdialogfactory.h"
 #include "gimpfgbgeditor.h"
@@ -154,7 +152,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
       color_dialog = gimp_color_dialog_new (NULL, context,
                                             NULL, NULL, NULL,
                                             GTK_WIDGET (editor),
-                                            global_dialog_factory,
+                                            gimp_dialog_factory_get_singleton (),
                                             "gimp-toolbox-color-dialog",
                                             &color,
                                             TRUE, FALSE);

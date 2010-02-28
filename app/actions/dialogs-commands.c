@@ -25,8 +25,6 @@
 
 #include "widgets/gimpdialogfactory.h"
 
-#include "dialogs/dialogs.h"
-
 #include "actions.h"
 #include "dialogs-commands.h"
 
@@ -42,7 +40,7 @@ dialogs_create_toplevel_cmd_callback (GtkAction   *action,
   return_if_no_widget (widget, data);
 
   if (value)
-    gimp_dialog_factory_dialog_new (global_dialog_factory,
+    gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
                                     value, -1, TRUE);
 }
@@ -56,7 +54,7 @@ dialogs_create_dockable_cmd_callback (GtkAction   *action,
   return_if_no_widget (widget, data);
 
   if (value)
-    gimp_dialog_factory_dialog_raise (global_dialog_factory,
+    gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                       gtk_widget_get_screen (widget),
                                       value, -1);
 }

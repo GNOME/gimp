@@ -49,7 +49,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
-#include "dialogs/dialogs.h"
 #include "dialogs/fade-dialog.h"
 
 #include "actions.h"
@@ -449,7 +448,7 @@ edit_named_paste_cmd_callback (GtkAction *action,
   GtkWidget *widget;
   return_if_no_widget (widget, data);
 
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
                                     "gimp-buffer-list|gimp-buffer-grid", -1);
 }

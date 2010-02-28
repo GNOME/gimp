@@ -28,8 +28,6 @@
 
 #include "widgets-types.h"
 
-#include "dialogs/dialogs.h"
-
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockwindow.h"
@@ -264,7 +262,7 @@ gimp_session_info_deserialize (GimpConfig *config,
                 if (! gimp_scanner_parse_string (scanner, &identifier))
                   goto error;
 
-                entry = gimp_dialog_factory_find_entry (global_dialog_factory,
+                entry = gimp_dialog_factory_find_entry (gimp_dialog_factory_get_singleton (),
                                                         identifier);
                 if (! entry)
                   goto error;
