@@ -79,6 +79,8 @@ struct _GimpDynamicsOutputEditorPrivate
 
   GtkListStore   *input_list;
 
+  GtkWidget      *input_view;
+
   GimpCurve      *active_curve;
 };
 
@@ -118,9 +120,9 @@ static void         gimp_dynamics_output_editor_use_input (gint                 
                                                            gboolean                  value,
                                                            GimpDynamicsOutputEditor *editor);
 
-static void     gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
-                                                           const GParamSpec   *pspec,
-                                                           GtkListStore       *list);
+static void     gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
+                                                           const GParamSpec         *pspec,
+                                                           GimpDynamicsOutputEditor *editor);
 
 G_DEFINE_TYPE (GimpDynamicsOutputEditor, gimp_dynamics_output_editor,
                GTK_TYPE_VBOX)
@@ -211,35 +213,35 @@ gimp_dynamics_output_editor_constructor (GType                   type,
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
-                                     &iter, INPUT_VELOCITY,
+                                     NULL, INPUT_VELOCITY,
                                      INPUT_COLUMN_INDEX, INPUT_VELOCITY,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_velocity,
                                      INPUT_COLUMN_NAME,  _("Velocity"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
-                                     &iter, INPUT_DIRECTION,
+                                     NULL, INPUT_DIRECTION,
                                      INPUT_COLUMN_INDEX, INPUT_DIRECTION,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_direction,
                                      INPUT_COLUMN_NAME,  _("Direction"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
-                                     &iter, INPUT_TILT,
+                                     NULL, INPUT_TILT,
                                      INPUT_COLUMN_INDEX, INPUT_TILT,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_tilt,
                                      INPUT_COLUMN_NAME,  _("Tilt"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
-                                     &iter, INPUT_RANDOM,
+                                     NULL, INPUT_RANDOM,
                                      INPUT_COLUMN_INDEX, INPUT_RANDOM,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_random,
                                      INPUT_COLUMN_NAME,  _("Random"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
-                                     &iter, INPUT_FADE,
+                                     NULL, INPUT_FADE,
                                      INPUT_COLUMN_INDEX, INPUT_FADE,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_fade,
                                      INPUT_COLUMN_NAME,  _("Fade"),
@@ -278,10 +280,13 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (editor), view, FALSE, FALSE, 0);
   gtk_widget_show (view);
 
+  private->input_view = view;
+
   tree_sel = gtk_tree_view_get_selection(GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode(tree_sel,
                               GTK_SELECTION_BROWSE);
 
+  gtk_tree_selection_select_iter(tree_sel, &iter);
 
   g_signal_connect(G_OBJECT(tree_sel),
                   "changed",
@@ -290,7 +295,7 @@ gimp_dynamics_output_editor_constructor (GType                   type,
 
    g_signal_connect (private->output, "notify",
                      G_CALLBACK (gimp_dynamics_output_editor_notify_output),
-                     private->input_list);
+                     editor);
 
   return object;
 }
@@ -558,16 +563,22 @@ gimp_dynamics_output_editor_use_input (gint                      input,
 static void
 gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
                                            const GParamSpec   *pspec,
-                                           GtkListStore *list)
+                                           GimpDynamicsOutputEditor *editor)
 {
+  GimpDynamicsOutputEditorPrivate *private;
 
-  GtkTreeModel    *model;
-  GtkTreeIter      iter;
-  gboolean         iter_valid;
-  gboolean         value;
+  GtkTreeModel     *model;
+  GtkTreeSelection *sel;
+  GtkTreeIter       iter;
+  GtkTreeView      *view;
+  gboolean          iter_valid;
+  gboolean          value;
 
-  model   = GTK_TREE_MODEL(list);
+  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
 
+  view =  GTK_TREE_VIEW(private->input_view);
+  model = GTK_TREE_MODEL(gtk_tree_view_get_model(view));
+  sel   =  gtk_tree_view_get_selection(view);
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
@@ -604,6 +615,17 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
 
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                           INPUT_COLUMN_USE_INPUT, value, -1);
+
+      if (gtk_tree_selection_iter_is_selected(sel, &iter))
+        {
+          gint input;
+
+          gtk_tree_model_get (model, &iter,
+                              INPUT_COLUMN_INDEX, &input,
+                             -1);
+
+          gimp_dynamics_output_editor_activate_input(input, editor);
+        }
   }
 
 }
