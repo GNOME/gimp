@@ -642,3 +642,84 @@ gimp_text_buffer_deserialize (GtkTextBuffer *register_buffer,
 
   return retval;
 }
+
+void
+gimp_text_buffer_pre_serialize (GimpTextBuffer *buffer,
+                                GtkTextBuffer  *content)
+{
+  GtkTextIter iter;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (GTK_IS_TEXT_BUFFER (content));
+
+  gtk_text_buffer_get_start_iter (content, &iter);
+
+  do
+    {
+      GSList *tags = gtk_text_iter_get_tags (&iter);
+      GSList *list;
+
+      for (list = tags; list; list = g_slist_next (list))
+        {
+          GtkTextTag *tag = list->data;
+
+          if (g_list_find (buffer->spacing_tags, tag))
+            {
+              GtkTextIter end;
+
+              gtk_text_buffer_insert_with_tags (content, &iter,
+                                                "\342\200\215", -1,
+                                                tag, NULL);
+
+              end = iter;
+              gtk_text_iter_forward_char (&end);
+
+              gtk_text_buffer_remove_tag (content, tag, &iter, &end);
+              break;
+            }
+        }
+
+      g_slist_free (tags);
+    }
+  while (gtk_text_iter_forward_char (&iter));
+}
+
+void
+gimp_text_buffer_post_deserialize (GimpTextBuffer *buffer,
+                                   GtkTextBuffer  *content)
+{
+  GtkTextIter iter;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (GTK_IS_TEXT_BUFFER (content));
+
+  gtk_text_buffer_get_start_iter (content, &iter);
+
+  do
+    {
+      GSList *tags = gtk_text_iter_get_tags (&iter);
+      GSList *list;
+
+      for (list = tags; list; list = g_slist_next (list))
+        {
+          GtkTextTag *tag = list->data;
+
+          if (g_list_find (buffer->spacing_tags, tag))
+            {
+              GtkTextIter end;
+
+              gtk_text_iter_forward_char (&iter);
+              gtk_text_buffer_backspace (content, &iter, FALSE, TRUE);
+
+              end = iter;
+              gtk_text_iter_forward_char (&end);
+
+              gtk_text_buffer_apply_tag (content, tag, &iter, &end);
+              break;
+            }
+        }
+
+      g_slist_free (tags);
+    }
+  while (gtk_text_iter_forward_char (&iter));
+}

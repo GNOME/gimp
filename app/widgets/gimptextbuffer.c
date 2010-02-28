@@ -242,6 +242,10 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
         {
           GtkTextIter start, end;
 
+#if 0
+          gimp_text_buffer_post_deserialize (buffer, content);
+#endif
+
           gtk_text_buffer_get_bounds (content, &start, &end);
           gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER (buffer), &insert);
 
@@ -272,6 +276,10 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
   gtk_text_buffer_get_start_iter (content, &insert);
 
   gtk_text_buffer_insert_range (content, &insert, &start, &end);
+
+#if 0
+  gimp_text_buffer_pre_serialize (buffer, content);
+#endif
 
   gtk_text_buffer_get_bounds (content, &start, &end);
 
