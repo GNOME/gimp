@@ -85,5 +85,6 @@ gboolean           gimp_image_window_is_iconified       (GimpImageWindow  *windo
 void               gimp_image_window_shrink_wrap        (GimpImageWindow  *window,
                                                          gboolean          grow_only);
 
+void               gimp_image_window_keep_canvas_pos    (GimpImageWindow  *window);
 
 #endif /* __GIMP_IMAGE_WINDOW_H__ */
