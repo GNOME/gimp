@@ -23,6 +23,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "widgets-types.h"
 
 #include "gimptextbuffer.h"
@@ -32,7 +34,9 @@
 enum
 {
   PROP_0,
-  PROP_BUFFER
+  PROP_BUFFER,
+  PROP_RESOLUTION_X,
+  PROP_RESOLUTION_Y
 };
 
 
@@ -86,6 +90,24 @@ gimp_text_style_editor_class_init (GimpTextStyleEditorClass *klass)
                                                         GIMP_TYPE_TEXT_BUFFER,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_RESOLUTION_X,
+                                   g_param_spec_double ("resolution-x",
+                                                        NULL, NULL,
+                                                        GIMP_MIN_RESOLUTION,
+                                                        GIMP_MAX_RESOLUTION,
+                                                        1.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_RESOLUTION_Y,
+                                   g_param_spec_double ("resolution-y",
+                                                        NULL, NULL,
+                                                        GIMP_MIN_RESOLUTION,
+                                                        GIMP_MAX_RESOLUTION,
+                                                        1.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -108,6 +130,11 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   image = gtk_image_new_from_stock (GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
   gtk_widget_show (image);
+
+  editor->size_label = gtk_label_new ("0.0");
+  gtk_misc_set_padding (GTK_MISC (editor->size_label), 2, 0);
+  gtk_box_pack_end (GTK_BOX (editor), editor->size_label, FALSE, FALSE, 0);
+  gtk_widget_show (editor->size_label);
 }
 
 static GObject *
@@ -201,6 +228,12 @@ gimp_text_style_editor_set_property (GObject      *object,
     case PROP_BUFFER:
       editor->buffer = g_value_dup_object (value);
       break;
+    case PROP_RESOLUTION_X:
+      editor->resolution_x = g_value_get_double (value);
+      break;
+    case PROP_RESOLUTION_Y:
+      editor->resolution_y = g_value_get_double (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -221,6 +254,12 @@ gimp_text_style_editor_get_property (GObject    *object,
     case PROP_BUFFER:
       g_value_set_object (value, editor->buffer);
       break;
+    case PROP_RESOLUTION_X:
+      g_value_set_double (value, editor->resolution_x);
+      break;
+    case PROP_RESOLUTION_Y:
+      g_value_set_double (value, editor->resolution_y);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -232,12 +271,18 @@ gimp_text_style_editor_get_property (GObject    *object,
 /*  public functions  */
 
 GtkWidget *
-gimp_text_style_editor_new (GimpTextBuffer *buffer)
+gimp_text_style_editor_new (GimpTextBuffer *buffer,
+                            gdouble         resolution_x,
+                            gdouble         resolution_y)
 {
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
+  g_return_val_if_fail (resolution_x > 0.0, NULL);
+  g_return_val_if_fail (resolution_y > 0.0, NULL);
 
   return g_object_new (GIMP_TYPE_TEXT_STYLE_EDITOR,
-                       "buffer", buffer,
+                       "buffer",       buffer,
+                       "resolution-x", resolution_x,
+                       "resolution-y", resolution_y,
                        NULL);
 }
 
@@ -440,11 +485,14 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
           if (! data.any_active)
             break;
        }
+
+      gtk_label_set_text (GTK_LABEL (editor->size_label), "---");
     }
   else
     {
-      UpdateTogglesData data;
-      GtkTextIter       cursor;
+      UpdateTogglesData  data;
+      GtkTextIter        cursor;
+      gchar             *str;
 
       gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                         gtk_text_buffer_get_insert (buffer));
@@ -457,6 +505,10 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
       g_hash_table_foreach (editor->tag_to_toggle_hash,
                             (GHFunc) gimp_text_style_editor_update_cursor,
                             &data);
+
+      str = g_strdup_printf ("%0.2f", editor->resolution_y);
+      gtk_label_set_text (GTK_LABEL (editor->size_label), str);
+      g_free (str);
 
       g_slist_free (data.tags);
       g_slist_free (data.tags_on);

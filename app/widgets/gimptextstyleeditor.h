@@ -38,11 +38,16 @@ struct _GimpTextStyleEditor
 
   GimpTextBuffer *buffer;
 
+  gdouble         resolution_x;
+  gdouble         resolution_y;
+
   GtkWidget      *clear_button;
   GtkWidget      *bold_toggle;
   GtkWidget      *italic_toggle;
   GtkWidget      *underline_toggle;
   GtkWidget      *strikethrough_toggle;
+
+  GtkWidget      *size_label;
 
   GList          *toggles;
   GHashTable     *tag_to_toggle_hash;
@@ -56,7 +61,9 @@ struct _GimpTextStyleEditorClass
 
 GType       gimp_text_style_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_text_style_editor_new       (GimpTextBuffer      *buffer);
+GtkWidget * gimp_text_style_editor_new       (GimpTextBuffer      *buffer,
+                                              gdouble              resolution_x,
+                                              gdouble              resolution_y);
 
 GList     * gimp_text_style_editor_list_tags (GimpTextStyleEditor *editor);
 

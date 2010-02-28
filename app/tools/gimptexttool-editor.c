@@ -30,6 +30,8 @@
 
 #include "tools-types.h"
 
+#include "core/gimpimage.h"
+
 #include "text/gimptext.h"
 #include "text/gimptextlayout.h"
 
@@ -157,6 +159,9 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
 
   if (! text_tool->style_overlay)
     {
+      gdouble xres = 1.0;
+      gdouble yres = 1.0;
+
       text_tool->style_overlay = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (text_tool->style_overlay),
                                  GTK_SHADOW_OUT);
@@ -166,7 +171,11 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
       gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
                                           text_tool->style_overlay, 0.7);
 
-      text_tool->style_editor = gimp_text_style_editor_new (text_tool->buffer);
+      if (text_tool->image)
+        gimp_image_get_resolution (text_tool->image, &xres, &yres);
+
+      text_tool->style_editor = gimp_text_style_editor_new (text_tool->buffer,
+                                                            xres, yres);
       gtk_container_add (GTK_CONTAINER (text_tool->style_overlay),
                          text_tool->style_editor);
       gtk_widget_show (text_tool->style_editor);
@@ -197,6 +206,18 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
                                        text_tool->style_overlay,
                                        x + 2,
                                        y - requisition.height - 6);
+
+      if (text_tool->image)
+        {
+          gdouble xres, yres;
+
+          gimp_image_get_resolution (text_tool->image, &xres, &yres);
+
+          g_object_set (text_tool->style_editor,
+                        "resolution-x", xres,
+                        "resolution-y", yres,
+                        NULL);
+        }
     }
 }
 
