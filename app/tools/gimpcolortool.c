@@ -50,6 +50,8 @@
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
+#include "dialogs/dialogs.h"
+
 #include "gimpcoloroptions.h"
 #include "gimpcolortool.h"
 #include "gimptoolcontrol.h"
@@ -633,12 +635,9 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 {
   GimpTool          *tool = GIMP_TOOL (color_tool);
   GimpContext       *context;
-  GimpDialogFactory *dialog_factory;
 
   /*  use this tool's own options here (NOT color_tool->options)  */
   context = GIMP_CONTEXT (gimp_tool_get_options (tool));
-
-  dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
   if (color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
       color_tool->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND)
@@ -647,7 +646,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
       if (GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
         {
-          info = gimp_dialog_factory_find_session_info (dialog_factory,
+          info = gimp_dialog_factory_find_session_info (global_dialog_factory,
                                                         "gimp-indexed-palette");
           if (info && gimp_session_info_get_widget (info))
             {
@@ -661,7 +660,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
       if (TRUE)
         {
-          info = gimp_dialog_factory_find_session_info (dialog_factory,
+          info = gimp_dialog_factory_find_session_info (global_dialog_factory,
                                                         "gimp-palette-editor");
           if (info && gimp_session_info_get_widget (info))
             {
@@ -697,7 +696,8 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
         GtkWidget        *dockable;
 
         screen = gtk_widget_get_screen (GTK_WIDGET (shell));
-        dockable = gimp_dialog_factory_dialog_raise (dialog_factory, screen,
+        dockable = gimp_dialog_factory_dialog_raise (global_dialog_factory,
+                                                     screen,
                                                      "gimp-palette-editor",
                                                      -1);
         if (dockable)

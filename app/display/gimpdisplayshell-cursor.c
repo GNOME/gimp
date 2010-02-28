@@ -31,6 +31,8 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
 
+#include "dialogs/dialogs.h"
+
 #include "gimpdisplay.h"
 #include "gimpcursorview.h"
 #include "gimpdisplayshell.h"
@@ -126,7 +128,6 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
                                   gdouble              image_y)
 {
   GimpStatusbar     *statusbar;
-  GimpDialogFactory *factory;
   GimpSessionInfo   *session_info;
   GimpImage         *image;
   gboolean           new_cursor;
@@ -165,8 +166,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
 
   gimp_statusbar_update_cursor (statusbar, precision, image_x, image_y);
 
-  factory = gimp_dialog_factory_from_name ("toplevel");
-  session_info = gimp_dialog_factory_find_session_info (factory,
+  session_info = gimp_dialog_factory_find_session_info (global_dialog_factory,
                                                         "gimp-cursor-view");
   if (session_info && gimp_session_info_get_widget (session_info))
     {
@@ -195,7 +195,6 @@ void
 gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 {
   GimpStatusbar     *statusbar;
-  GimpDialogFactory *factory;
   GimpSessionInfo   *session_info;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -204,8 +203,7 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 
   gimp_statusbar_clear_cursor (statusbar);
 
-  factory = gimp_dialog_factory_from_name ("toplevel");
-  session_info = gimp_dialog_factory_find_session_info (factory,
+  session_info = gimp_dialog_factory_find_session_info (global_dialog_factory,
                                                         "gimp-cursor-view");
   if (session_info && gimp_session_info_get_widget (session_info))
     {

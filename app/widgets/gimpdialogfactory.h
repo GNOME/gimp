@@ -111,7 +111,6 @@ GType               gimp_dialog_factory_get_type             (void) G_GNUC_CONST
 GimpDialogFactory * gimp_dialog_factory_new                  (const gchar             *name,
                                                               GimpContext             *context,
                                                               GimpMenuFactory         *menu_factory);
-GimpDialogFactory * gimp_dialog_factory_from_name            (const gchar             *name);
 void                gimp_dialog_factory_register_entry       (GimpDialogFactory       *factory,
                                                               const gchar             *identifier,
                                                               const gchar             *name,

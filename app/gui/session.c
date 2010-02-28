@@ -139,18 +139,10 @@ session_init (Gimp *gimp)
 
               /* In versions <= GIMP 2.6 there was a "toolbox", a
                * "dock", a "display" and a "toplevel" factory. These
-               * are now merged so if the factory name is "toolbox",
-               * "dock" or "display", get the "toplevel" factory
-               * instead. We don't change factory_name though because
-               * we need it below
+               * are now merged to a single global_dialog_factory. We
+               * need the legacy name though, so keep it around.
                */
-              factory = gimp_dialog_factory_from_name ((strcmp ("toolbox", factory_name) == 0 ||
-                                                        strcmp ("dock",    factory_name) == 0 ||
-                                                        strcmp ("display", factory_name) == 0) ?
-                                                       "toplevel" :
-                                                       factory_name);
-              if (! factory)
-                break;
+              factory = global_dialog_factory;
 
               info = gimp_session_info_new ();
 

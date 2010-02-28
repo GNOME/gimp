@@ -41,6 +41,8 @@
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpcolormapeditor.h"
 
+#include "dialogs/dialogs.h"
+
 #include "actions.h"
 #include "context-commands.h"
 
@@ -868,14 +870,11 @@ context_set_color_index (gint      index,
 static GimpPaletteEditor *
 context_get_palette_editor (void)
 {
-  GimpDialogFactory *dialog_factory;
-  GimpSessionInfo   *info;
+  GimpSessionInfo *info = NULL;
 
-  dialog_factory = gimp_dialog_factory_from_name ("toplevel");
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_dialog_factory), NULL);
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
-
-  info = gimp_dialog_factory_find_session_info (dialog_factory,
+  info = gimp_dialog_factory_find_session_info (global_dialog_factory,
                                                 "gimp-palette-editor");
   if (info && gimp_session_info_get_widget (info))
     return GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));
@@ -886,14 +885,11 @@ context_get_palette_editor (void)
 static GimpColormapEditor *
 context_get_colormap_editor (void)
 {
-  GimpDialogFactory *dialog_factory;
-  GimpSessionInfo   *info;
+  GimpSessionInfo *info = NULL;
 
-  dialog_factory = gimp_dialog_factory_from_name ("toplevel");
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_dialog_factory), NULL);
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
-
-  info = gimp_dialog_factory_find_session_info (dialog_factory,
+  info = gimp_dialog_factory_find_session_info (global_dialog_factory,
                                                 "gimp-indexed-palette");
   if (info && gimp_session_info_get_widget (info))
     return GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));

@@ -33,6 +33,8 @@
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpdialogfactory.h"
 
+#include "dialogs/dialogs.h"
+
 #include "actions.h"
 #include "colormap-commands.h"
 
@@ -81,7 +83,7 @@ colormap_edit_color_cmd_callback (GtkAction *action,
                                GIMP_STOCK_COLORMAP,
                                desc,
                                GTK_WIDGET (editor),
-                               gimp_dialog_factory_from_name ("toplevel"),
+                               global_dialog_factory,
                                "gimp-colormap-editor-color-dialog",
                                (const GimpRGB *) &color,
                                FALSE, FALSE);

@@ -181,8 +181,7 @@ gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
   GtkWidget             *toplevel     = gtk_widget_get_toplevel (GTK_WIDGET (shell));
   GimpImageWindow       *image_window = GIMP_IMAGE_WINDOW (toplevel);
   GimpUIManager         *ui_manager   = gimp_image_window_get_ui_manager (image_window);
-  GimpDialogFactory     *dock_factory = gimp_dialog_factory_from_name ("toplevel");
-  GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (dock_factory,
+  GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (global_dialog_factory,
                                                                         gtk_widget_get_screen (toplevel),
                                                                         "gimp-tool-options",
                                                                         -1 /*view_size*/,
@@ -222,7 +221,6 @@ gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
   GtkWidget         *toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
   GimpImageWindow   *image_window     = GIMP_IMAGE_WINDOW (toplevel);
   GimpUIManager     *ui_manager       = gimp_image_window_get_ui_manager (image_window);
-  GimpDialogFactory *dialog_factory   = gimp_dialog_factory_from_name ("toplevel");
   GtkWidget         *new_image_dialog = NULL;
   guint              n_initial_images = g_list_length (gimp_get_image_iter (gimp));
   guint              n_images         = -1;
@@ -236,7 +234,7 @@ gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
 
   /* Get the GtkWindow of the dialog */
   new_image_dialog =
-    gimp_dialog_factory_dialog_raise (dialog_factory,
+    gimp_dialog_factory_dialog_raise (global_dialog_factory,
                                       gtk_widget_get_screen (GTK_WIDGET (shell)),
                                       "gimp-image-new-dialog",
                                       -1 /*view_size*/);

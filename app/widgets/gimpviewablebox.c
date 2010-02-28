@@ -30,6 +30,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 
+#include "dialogs/dialogs.h"
+
 #include "gimpcontainerentry.h"
 #include "gimpdialogfactory.h"
 #include "gimppropwidgets.h"
@@ -197,7 +199,7 @@ gradient_box_new (GimpContainer *container,
   button = gimp_viewable_button_new (container, context,
                                      view_type,
                                      GIMP_VIEW_SIZE_LARGE, view_size, 1,
-                                     gimp_dialog_factory_from_name ("toplevel"),
+                                     global_dialog_factory,
                                      "gimp-gradient-list|gimp-gradient-grid",
                                      GIMP_STOCK_GRADIENT,
                                      _("Open the gradient selection dialog"));
@@ -423,7 +425,7 @@ gimp_viewable_box_new (GimpContainer *container,
 
   button = gimp_viewable_button_new (container, context,
                                      view_type, button_view_size, view_size, 1,
-                                     gimp_dialog_factory_from_name ("toplevel"),
+                                     global_dialog_factory,
                                      dialog_identifier,
                                      dialog_stock_id,
                                      dialog_tooltip);

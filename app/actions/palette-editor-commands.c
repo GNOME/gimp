@@ -32,6 +32,8 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppaletteeditor.h"
 
+#include "dialogs/dialogs.h"
+
 #include "palette-editor-commands.h"
 
 #include "gimp-intl.h"
@@ -69,7 +71,7 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
                                GIMP_STOCK_PALETTE,
                                _("Edit Color Palette Entry"),
                                GTK_WIDGET (editor),
-                               gimp_dialog_factory_from_name ("toplevel"),
+                               global_dialog_factory,
                                "gimp-palette-editor-color-dialog",
                                &editor->color->color,
                                FALSE, FALSE);

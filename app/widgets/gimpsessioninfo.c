@@ -264,7 +264,7 @@ gimp_session_info_deserialize (GimpConfig *config,
                 if (! gimp_scanner_parse_string (scanner, &identifier))
                   goto error;
 
-                entry = gimp_dialog_factory_find_entry (gimp_dialog_factory_from_name ("toplevel"),
+                entry = gimp_dialog_factory_find_entry (global_dialog_factory,
                                                         identifier);
                 if (! entry)
                   goto error;

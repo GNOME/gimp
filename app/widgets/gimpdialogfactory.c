@@ -233,13 +233,6 @@ gimp_dialog_factory_new (const gchar           *name,
   g_return_val_if_fail (! menu_factory || GIMP_IS_MENU_FACTORY (menu_factory),
                         NULL);
 
-  if (gimp_dialog_factory_from_name (name))
-    {
-      g_warning ("%s: dialog factory \"%s\" already exists",
-                 G_STRFUNC, name);
-      return NULL;
-    }
-
   factory = g_object_new (GIMP_TYPE_DIALOG_FACTORY, NULL);
 
   gimp_object_set_name (GIMP_OBJECT (factory), name);
@@ -251,24 +244,6 @@ gimp_dialog_factory_new (const gchar           *name,
 
   factory->p->context           = context;
   factory->p->menu_factory      = menu_factory;
-
-  return factory;
-}
-
-GimpDialogFactory *
-gimp_dialog_factory_from_name (const gchar *name)
-{
-  GimpDialogFactoryClass *factory_class;
-  GimpDialogFactory      *factory;
-
-  g_return_val_if_fail (name != NULL, NULL);
-
-  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
-  if (! factory_class)
-    return NULL;
-
-  factory =
-    (GimpDialogFactory *) g_hash_table_lookup (factory_class->factories, name);
 
   return factory;
 }
