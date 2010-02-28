@@ -468,34 +468,14 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
   g_return_if_fail (start != NULL);
   g_return_if_fail (end != NULL);
 
+  if (gtk_text_iter_equal (start, end))
+    return;
+
   iter         = *start;
   span_start   = *start;
   span_spacing = get_spacing_at_iter (buffer, &iter, &span_tag);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
-
-  if (gtk_text_iter_equal (start, end))
-    {
-      span_end = span_start;
-
-      if (span_spacing != 0)
-        {
-          gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), span_tag,
-                                      &span_start, &span_end);
-        }
-
-      if (span_spacing + count != 0)
-        {
-          span_tag = get_spacing_tag (buffer, span_spacing + count);
-
-          gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
-                                     &span_start, &span_end);
-        }
-
-      gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
-
-      return;
-    }
 
   do
     {

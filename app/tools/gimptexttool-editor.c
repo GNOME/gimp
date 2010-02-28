@@ -1089,6 +1089,7 @@ gimp_text_tool_change_spacing (GimpTextTool *text_tool,
       gtk_text_buffer_get_iter_at_mark (buffer, &start,
                                         gtk_text_buffer_get_insert (buffer));
       end = start;
+      gtk_text_iter_forward_char (&end);
     }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
