@@ -64,8 +64,11 @@ typedef struct _GimpDisplayPrivate GimpDisplayPrivate;
 struct _GimpDisplayPrivate
 {
   gint       ID;           /*  unique identifier for this display  */
+
+  GimpImage *image;        /*  pointer to the associated image     */
   gint       instance;     /*  the instance # of this display as
                             *  taken from the image at creation    */
+
   GtkWidget *shell;
   GSList    *update_areas;
 };
@@ -244,7 +247,7 @@ gimp_display_get_property (GObject    *object,
       break;
 
     case PROP_IMAGE:
-      g_value_set_object (value, display->image);
+      g_value_set_object (value, private->image);
       break;
 
     case PROP_SHELL:
@@ -432,7 +435,7 @@ gimp_display_new (Gimp              *gimp,
   if (! window)
     {
       window = gimp_image_window_new (gimp,
-                                      display->image,
+                                      private->image,
                                       menu_factory,
                                       dialog_factory);
     }
@@ -592,7 +595,7 @@ gimp_display_get_image (GimpDisplay *display)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
-  return display->image;
+  return GIMP_DISPLAY_GET_PRIVATE (display)->image;
 }
 
 void
@@ -610,7 +613,7 @@ gimp_display_set_image (GimpDisplay *display,
 
   shell = gimp_display_get_shell (display);
 
-  if (display->image)
+  if (private->image)
     {
       /*  stop any active tool  */
       tool_manager_control_active (display->gimp, GIMP_TOOL_ACTION_HALT,
@@ -620,13 +623,13 @@ gimp_display_set_image (GimpDisplay *display,
 
       gimp_display_disconnect (display);
 
-      gimp_image_dec_display_count (display->image);
+      gimp_image_dec_display_count (private->image);
 
-      /*  set display->image before unrefing because there may be code
+      /*  set private->image before unrefing because there may be code
        *  that listens for image removals and then iterates the
        *  display list to find a valid display.
        */
-      old_image = display->image;
+      old_image = private->image;
 
 #if 0
       g_print ("%s: image->ref_count before unrefing: %d\n",
@@ -634,7 +637,7 @@ gimp_display_set_image (GimpDisplay *display,
 #endif
     }
 
-  display->image = image;
+  private->image = image;
 
   if (image)
     {
@@ -698,8 +701,13 @@ gimp_display_get_shell (GimpDisplay *display)
 void
 gimp_display_empty (GimpDisplay *display)
 {
+  GimpDisplayPrivate *private;
+
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (GIMP_IS_IMAGE (display->image));
+
+  private = GIMP_DISPLAY_GET_PRIVATE (display);
+
+  g_return_if_fail (GIMP_IS_IMAGE (private->image));
 
   gimp_display_set_image (display, NULL);
 
@@ -712,8 +720,14 @@ gimp_display_fill (GimpDisplay *display,
                    GimpUnit     unit,
                    gdouble      scale)
 {
+  GimpDisplayPrivate *private;
+
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_DISPLAY_GET_PRIVATE (display);
+
+  g_return_if_fail (private->image == NULL);
 
   gimp_display_set_image (display, image);
 
@@ -742,8 +756,8 @@ gimp_display_update_area (GimpDisplay *display,
   else
     {
       GimpArea *area;
-      gint      image_width  = gimp_image_get_width  (display->image);
-      gint      image_height = gimp_image_get_height (display->image);
+      gint      image_width  = gimp_image_get_width  (private->image);
+      gint      image_height = gimp_image_get_height (private->image);
 
       area = gimp_area_new (CLAMP (x,     0, image_width),
                             CLAMP (y,     0, image_height),
@@ -812,11 +826,12 @@ gimp_display_paint_area (GimpDisplay *display,
                          gint         w,
                          gint         h)
 {
-  GimpDisplayShell *shell        = gimp_display_get_shell (display);
-  gint              image_width  = gimp_image_get_width  (display->image);
-  gint              image_height = gimp_image_get_height (display->image);
-  gint              x1, y1, x2, y2;
-  gdouble           x1_f, y1_f, x2_f, y2_f;
+  GimpDisplayPrivate *private      = GIMP_DISPLAY_GET_PRIVATE (display);
+  GimpDisplayShell   *shell        = gimp_display_get_shell (display);
+  gint                image_width  = gimp_image_get_width  (private->image);
+  gint                image_height = gimp_image_get_height (private->image);
+  gint                x1, y1, x2, y2;
+  gdouble             x1_f, y1_f, x2_f, y2_f;
 
   /*  Bounds check  */
   x1 = CLAMP (x,     0, image_width);

@@ -34,12 +34,11 @@ typedef struct _GimpDisplayClass GimpDisplayClass;
 
 struct _GimpDisplay
 {
-  GimpObject  parent_instance;
+  GimpObject         parent_instance;
 
-  Gimp              *gimp;         /*  global gimp instance                */
+  Gimp              *gimp;
   GimpDisplayConfig *config;
 
-  GimpImage         *image;        /*  pointer to the associated image     */
 };
 
 struct _GimpDisplayClass

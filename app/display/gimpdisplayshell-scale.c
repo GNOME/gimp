@@ -362,7 +362,8 @@ gimp_display_shell_get_screen_resolution (GimpDisplayShell *shell,
 
   if (shell->dot_for_dot)
     {
-      gimp_image_get_resolution (shell->display->image, &x, &y);
+      gimp_image_get_resolution (gimp_display_get_image (shell->display),
+                                 &x, &y);
     }
   else
     {
