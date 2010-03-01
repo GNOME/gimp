@@ -983,7 +983,7 @@ gimp_text_tool_delete_from_cursor (GimpTextTool  *text_tool,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
-      gtk_text_buffer_delete (buffer, &cursor, &end);
+      gtk_text_buffer_delete_interactive (buffer, &cursor, &end, TRUE);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
     }
