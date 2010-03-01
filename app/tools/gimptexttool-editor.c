@@ -420,10 +420,13 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
     }
   else
     {
-      if (cursor_index != index)
+      gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
+                                          index, TRUE);
+      if (trailing)
         {
-          gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
-                                              index, TRUE);
+          gtk_text_iter_forward_char (&cursor);
+          index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                   &cursor, TRUE);
         }
     }
 
