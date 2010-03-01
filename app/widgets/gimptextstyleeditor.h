@@ -36,11 +36,16 @@ struct _GimpTextStyleEditor
 {
   GtkHBox         parent_instance;
 
+  Gimp           *gimp;
+  GimpContext    *context;
+
   GimpTextBuffer *buffer;
 
+  GimpContainer  *fonts;
   gdouble         resolution_x;
   gdouble         resolution_y;
 
+  GtkWidget      *font_entry;
   GtkWidget      *clear_button;
   GtkWidget      *bold_toggle;
   GtkWidget      *italic_toggle;
@@ -60,7 +65,9 @@ struct _GimpTextStyleEditorClass
 
 GType       gimp_text_style_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_text_style_editor_new       (GimpTextBuffer       *buffer,
+GtkWidget * gimp_text_style_editor_new       (Gimp                 *gimp,
+                                              GimpTextBuffer       *buffer,
+                                              GimpContainer        *fonts,
                                               gdouble               resolution_x,
                                               gdouble               resolution_y);
 

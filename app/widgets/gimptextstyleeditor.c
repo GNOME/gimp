@@ -24,17 +24,29 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
+
+#include "text/gimpfontlist.h"
+
+#include "gimpcontainerentry.h"
+#include "gimpcontainerview.h"
 #include "gimptextbuffer.h"
 #include "gimptextstyleeditor.h"
+
+#include "gimp-intl.h"
 
 
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_BUFFER,
+  PROP_FONTS,
   PROP_RESOLUTION_X,
   PROP_RESOLUTION_Y
 };
@@ -84,10 +96,24 @@ gimp_text_style_editor_class_init (GimpTextStyleEditorClass *klass)
   object_class->set_property = gimp_text_style_editor_set_property;
   object_class->get_property = gimp_text_style_editor_get_property;
 
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_BUFFER,
                                    g_param_spec_object ("buffer",
                                                         NULL, NULL,
                                                         GIMP_TYPE_TEXT_BUFFER,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_FONTS,
+                                   g_param_spec_object ("fonts",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_FONT_LIST,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -115,10 +141,26 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
   GtkWidget *image;
 
+  editor->font_entry = gimp_container_entry_new (NULL, NULL,
+                                                 GIMP_VIEW_SIZE_SMALL, 1);
+  gtk_box_pack_start (GTK_BOX (editor), editor->font_entry, FALSE, FALSE, 0);
+  gtk_widget_show (editor->font_entry);
+
+  /*  don't let unhandled key events drop through to the text editor  */
+  g_signal_connect_after (editor->font_entry, "key-press-event",
+                          G_CALLBACK (gtk_true),
+                          NULL);
+  g_signal_connect_after (editor->font_entry, "key-release-event",
+                          G_CALLBACK (gtk_false),
+                          NULL);
+
   editor->clear_button = gtk_button_new ();
   gtk_widget_set_can_focus (editor->clear_button, FALSE);
   gtk_box_pack_start (GTK_BOX (editor), editor->clear_button, FALSE, FALSE, 0);
   gtk_widget_show (editor->clear_button);
+
+  gimp_help_set_help_data (editor->clear_button,
+                           _("Clear style of selected text"), NULL);
 
   g_signal_connect (editor->clear_button, "clicked",
                     G_CALLBACK (gimp_text_style_editor_clear_tags),
@@ -146,7 +188,16 @@ gimp_text_style_editor_constructor (GType                  type,
 
   editor = GIMP_TEXT_STYLE_EDITOR (object);
 
+  g_assert (GIMP_IS_GIMP (editor->gimp));
+  g_assert (GIMP_IS_FONT_LIST (editor->fonts));
   g_assert (GIMP_IS_TEXT_BUFFER (editor->buffer));
+
+  editor->context = gimp_context_new (editor->gimp, "text style editor", NULL);
+
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->font_entry),
+                                     editor->fonts);
+  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (editor->font_entry),
+                                   editor->context);
 
   gimp_text_style_editor_create_toggle (editor, editor->buffer->bold_tag,
                                         GTK_STOCK_BOLD);
@@ -197,10 +248,22 @@ gimp_text_style_editor_finalize (GObject *object)
 {
   GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (object);
 
+  if (editor->context)
+    {
+      g_object_unref (editor->context);
+      editor->context = NULL;
+    }
+
   if (editor->buffer)
     {
       g_object_unref (editor->buffer);
       editor->buffer = NULL;
+    }
+
+  if (editor->fonts)
+    {
+      g_object_unref (editor->fonts);
+      editor->fonts = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -216,8 +279,14 @@ gimp_text_style_editor_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      editor->gimp = g_value_get_object (value); /* don't ref */
+      break;
     case PROP_BUFFER:
       editor->buffer = g_value_dup_object (value);
+      break;
+    case PROP_FONTS:
+      editor->fonts = g_value_dup_object (value);
       break;
     case PROP_RESOLUTION_X:
       editor->resolution_x = g_value_get_double (value);
@@ -242,8 +311,14 @@ gimp_text_style_editor_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, editor->gimp);
+      break;
     case PROP_BUFFER:
       g_value_set_object (value, editor->buffer);
+      break;
+    case PROP_FONTS:
+      g_value_set_object (value, editor->fonts);
       break;
     case PROP_RESOLUTION_X:
       g_value_set_double (value, editor->resolution_x);
@@ -262,16 +337,21 @@ gimp_text_style_editor_get_property (GObject    *object,
 /*  public functions  */
 
 GtkWidget *
-gimp_text_style_editor_new (GimpTextBuffer *buffer,
+gimp_text_style_editor_new (Gimp           *gimp,
+                            GimpTextBuffer *buffer,
+                            GimpContainer  *fonts,
                             gdouble         resolution_x,
                             gdouble         resolution_y)
 {
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
   g_return_val_if_fail (resolution_x > 0.0, NULL);
   g_return_val_if_fail (resolution_y > 0.0, NULL);
 
   return g_object_new (GIMP_TYPE_TEXT_STYLE_EDITOR,
+                       "gimp",         gimp,
                        "buffer",       buffer,
+                       "fonts",        fonts,
                        "resolution-x", resolution_x,
                        "resolution-y", resolution_y,
                        NULL);

@@ -30,6 +30,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "text/gimptext.h"
@@ -160,8 +161,9 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
 
   if (! text_tool->style_overlay)
     {
-      gdouble xres = 1.0;
-      gdouble yres = 1.0;
+      Gimp    *gimp = GIMP_CONTEXT (options)->gimp;
+      gdouble  xres = 1.0;
+      gdouble  yres = 1.0;
 
       text_tool->style_overlay = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (text_tool->style_overlay),
@@ -176,7 +178,9 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
       if (text_tool->image)
         gimp_image_get_resolution (text_tool->image, &xres, &yres);
 
-      text_tool->style_editor = gimp_text_style_editor_new (text_tool->buffer,
+      text_tool->style_editor = gimp_text_style_editor_new (gimp,
+                                                            text_tool->buffer,
+                                                            gimp->fonts,
                                                             xres, yres);
       gtk_container_add (GTK_CONTAINER (text_tool->style_overlay),
                          text_tool->style_editor);
