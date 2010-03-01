@@ -130,6 +130,7 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
                             GimpOverlayChild *child)
 {
   GtkWidget     *widget;
+  GdkDisplay    *display;
   GtkAllocation  child_allocation;
   GdkWindowAttr  attributes;
   gint           attributes_mask;
@@ -138,6 +139,8 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   g_return_if_fail (child != NULL);
 
   widget = GTK_WIDGET (box);
+
+  display = gtk_widget_get_display (widget);
 
   gtk_widget_get_allocation (child->widget, &child_allocation);
 
@@ -159,8 +162,13 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   attributes.visual      = gtk_widget_get_visual (widget);
   attributes.colormap    = gtk_widget_get_colormap (widget);
   attributes.event_mask  = gtk_widget_get_events (widget);
+  attributes.cursor      = gdk_cursor_new_for_display (display, GDK_LEFT_PTR);
 
-  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+  attributes_mask = (GDK_WA_X        |
+                     GDK_WA_Y        |
+                     GDK_WA_VISUAL   |
+                     GDK_WA_COLORMAP |
+                     GDK_WA_CURSOR);
 
   child->window = gdk_window_new (gtk_widget_get_root_window (widget),
                                   &attributes, attributes_mask);
@@ -168,6 +176,8 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   gtk_widget_set_parent_window (child->widget, child->window);
   gdk_offscreen_window_set_embedder (child->window,
                                      gtk_widget_get_window (widget));
+
+  gdk_cursor_unref (attributes.cursor);
 
   g_signal_connect (child->window, "from-embedder",
                     G_CALLBACK (gimp_overlay_child_from_embedder),
