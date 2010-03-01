@@ -560,7 +560,8 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
-  cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer, &cursor);
+  cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer, &cursor,
+                                                  TRUE);
 
   pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
   gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
@@ -719,7 +720,6 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
       {
         GtkTextIter      start;
         GtkTextIter      end;
-        gchar           *string;
         gint             cursor_index;
         PangoLayout     *layout;
         PangoLayoutLine *layout_line;
@@ -732,7 +732,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         gtk_text_buffer_get_bounds (buffer, &start, &end);
 
         cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                        &cursor);
+                                                        &cursor, TRUE);
 
         gimp_text_tool_ensure_layout (text_tool);
 
@@ -783,14 +783,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         pango_layout_line_x_to_index (layout_line, x_pos - logical.x,
                                       &cursor_index, &trailing);
 
-        string = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
-
-        string[cursor_index] = '\0';
-
-        gtk_text_buffer_get_iter_at_offset (buffer, &cursor,
-                                            g_utf8_strlen (string, -1));
-
-        g_free (string);
+        gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
+                                            cursor_index, TRUE);
 
         while (trailing--)
           gtk_text_iter_forward_char (&cursor);

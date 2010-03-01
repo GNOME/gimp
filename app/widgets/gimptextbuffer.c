@@ -51,6 +51,9 @@
 #include "gimp-intl.h"
 
 
+/* #define ENABLE_SPACING */
+
+
 /*  local function prototypes  */
 
 static GObject * gimp_text_buffer_constructor (GType                  type,
@@ -242,7 +245,7 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
         {
           GtkTextIter start, end;
 
-#if 0
+#ifdef ENABLE_SPACING
           gimp_text_buffer_post_deserialize (buffer, content);
 #endif
 
@@ -277,7 +280,7 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
 
   gtk_text_buffer_insert_range (content, &insert, &start, &end);
 
-#if 0
+#ifdef ENABLE_SPACING
   gimp_text_buffer_pre_serialize (buffer, content);
 #endif
 
@@ -755,7 +758,8 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
 
 gint
 gimp_text_buffer_get_iter_index (GimpTextBuffer *buffer,
-                                 GtkTextIter    *iter)
+                                 GtkTextIter    *iter,
+                                 gboolean        layout_index)
 {
   GtkTextIter  start;
   gchar       *string;
@@ -770,7 +774,105 @@ gimp_text_buffer_get_iter_index (GimpTextBuffer *buffer,
   index = strlen (string);
   g_free (string);
 
+#ifdef ENABLE_SPACING
+  if (layout_index)
+    {
+      do
+        {
+          GSList *tags = gtk_text_iter_get_tags (&start);
+          GSList *list;
+
+          for (list = tags; list; list = g_slist_next (list))
+            {
+              GtkTextTag *tag = list->data;
+
+              if (g_list_find (buffer->spacing_tags, tag))
+                {
+                  index += strlen ("\342\200\215");
+
+                  break;
+                }
+            }
+
+          g_slist_free (tags);
+
+          gtk_text_iter_forward_char (&start);
+
+          /* We might have moved too far */
+          if (gtk_text_iter_compare (&start, iter) > 0)
+            start = *iter;
+        }
+      while (! gtk_text_iter_equal (&start, iter));
+    }
+#endif
+
   return index;
+}
+
+void
+gimp_text_buffer_get_iter_at_index (GimpTextBuffer *buffer,
+                                    GtkTextIter    *iter,
+                                    gint            index,
+                                    gboolean        layout_index)
+{
+  GtkTextIter  start;
+  GtkTextIter  end;
+  gchar       *string;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+
+  gtk_text_buffer_get_bounds (GTK_TEXT_BUFFER (buffer), &start, &end);
+
+  string = gtk_text_buffer_get_text (GTK_TEXT_BUFFER (buffer),
+                                     &start, &end, TRUE);
+
+#ifdef ENABLE_SPACING
+  if (layout_index)
+    {
+      gchar *my_string = string;
+      gint   my_index  = 0;
+      gchar *tmp;
+
+      do
+        {
+          GSList *tags = gtk_text_iter_get_tags (&start);
+          GSList *list;
+
+          tmp = g_utf8_next_char (my_string);
+          my_index += (tmp - my_string);
+          my_string = tmp;
+
+          for (list = tags; list; list = g_slist_next (list))
+            {
+              GtkTextTag *tag = list->data;
+
+              if (g_list_find (buffer->spacing_tags, tag))
+                {
+                  index -= strlen ("\342\200\215");
+
+                  break;
+                }
+            }
+
+          g_slist_free (tags);
+
+          gtk_text_iter_forward_char (&start);
+
+          /* We might have moved too far */
+          if (gtk_text_iter_compare (&start, &end) > 0)
+            start = end;
+        }
+      while (my_index < index &&
+             ! gtk_text_iter_equal (&start, &end));
+    }
+#endif
+
+  string[index] = '\0';
+
+  gtk_text_buffer_get_iter_at_offset (GTK_TEXT_BUFFER (buffer), iter,
+                                      g_utf8_strlen (string, -1));
+
+  g_free (string);
 }
 
 gboolean

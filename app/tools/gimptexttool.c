@@ -759,8 +759,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool,
 
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
-  min = gimp_text_buffer_get_iter_index (text_tool->buffer, &sel_start);
-  max = gimp_text_buffer_get_iter_index (text_tool->buffer, &sel_end);
+  min = gimp_text_buffer_get_iter_index (text_tool->buffer, &sel_start, TRUE);
+  max = gimp_text_buffer_get_iter_index (text_tool->buffer, &sel_end, TRUE);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 

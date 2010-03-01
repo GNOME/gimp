@@ -92,7 +92,12 @@ void             gimp_text_buffer_insert            (GimpTextBuffer    *buffer,
                                                      const gchar       *text);
 
 gint             gimp_text_buffer_get_iter_index    (GimpTextBuffer    *buffer,
-                                                     GtkTextIter       *iter);
+                                                     GtkTextIter       *iter,
+                                                     gboolean           layout_index);
+void             gimp_text_buffer_get_iter_at_index (GimpTextBuffer    *buffer,
+                                                     GtkTextIter       *iter,
+                                                     gint               index,
+                                                     gboolean           layout_index);
 
 gboolean         gimp_text_buffer_load              (GimpTextBuffer    *buffer,
                                                      const gchar       *filename,
