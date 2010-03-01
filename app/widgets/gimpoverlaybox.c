@@ -102,6 +102,7 @@ gimp_overlay_box_class_init (GimpOverlayBoxClass *klass)
 static void
 gimp_overlay_box_init (GimpOverlayBox *box)
 {
+  gtk_widget_set_has_window (GTK_WIDGET (box), TRUE);
 }
 
 static void
