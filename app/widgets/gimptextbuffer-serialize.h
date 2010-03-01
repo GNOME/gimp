@@ -26,6 +26,10 @@
 #define __GIMP_TEXT_BUFFER_SERIALIZE_H__
 
 
+#define WORD_JOINER        "\342\201\240"
+#define WORD_JOINER_LENGTH 3
+
+
 guint8   * gimp_text_buffer_serialize        (GtkTextBuffer     *register_buffer,
                                               GtkTextBuffer     *content_buffer,
                                               const GtkTextIter *start,

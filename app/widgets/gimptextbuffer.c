@@ -788,7 +788,7 @@ gimp_text_buffer_get_iter_index (GimpTextBuffer *buffer,
 
               if (g_list_find (buffer->spacing_tags, tag))
                 {
-                  index += strlen ("\342\200\215");
+                  index += WORD_JOINER_LENGTH;
 
                   break;
                 }
@@ -848,7 +848,7 @@ gimp_text_buffer_get_iter_at_index (GimpTextBuffer *buffer,
 
               if (g_list_find (buffer->spacing_tags, tag))
                 {
-                  index -= strlen ("\342\200\215");
+                  index -= WORD_JOINER_LENGTH;
 
                   break;
                 }

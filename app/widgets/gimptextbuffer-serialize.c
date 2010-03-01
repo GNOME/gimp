@@ -668,7 +668,7 @@ gimp_text_buffer_pre_serialize (GimpTextBuffer *buffer,
               GtkTextIter end;
 
               gtk_text_buffer_insert_with_tags (content, &iter,
-                                                "\342\200\215", -1,
+                                                WORD_JOINER, -1,
                                                 tag, NULL);
 
               end = iter;
