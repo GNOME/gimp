@@ -1582,7 +1582,11 @@ gimp_rectangle_tool_oper_update (GimpTool         *tool,
       return;
     }
 
-  if (gimp_rectangle_tool_coord_outside (rect_tool, coords))
+  if (! proximity)
+    {
+      function = GIMP_RECTANGLE_TOOL_DEAD;
+    }
+  else if (gimp_rectangle_tool_coord_outside (rect_tool, coords))
     {
       /* The cursor is outside of the rectangle, clicking should
        * create a new rectangle.
