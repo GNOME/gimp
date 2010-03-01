@@ -238,7 +238,7 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   GimpRGB               padding_color;
   GtkAllocation         allocation;
 
-  gtk_widget_grab_focus (shell->canvas);
+  gtk_widget_grab_focus (canvas);
 
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
   gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
@@ -651,11 +651,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     }
 
   gimp_device_info_get_event_coords (gimp_devices_get_current (gimp),
-                                     gtk_widget_get_window (shell->canvas),
+                                     gtk_widget_get_window (canvas),
                                      event,
                                      &display_coords);
   gimp_device_info_get_event_state (gimp_devices_get_current (gimp),
-                                    gtk_widget_get_window (shell->canvas),
+                                    gtk_widget_get_window (canvas),
                                     event,
                                     &state);
   time = gdk_event_get_time (event);
@@ -1260,11 +1260,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             GimpDeviceInfo *device = gimp_devices_get_current (gimp);
 
             gimp_device_info_get_event_coords (device,
-                                               gtk_widget_get_window (shell->canvas),
+                                               gtk_widget_get_window (canvas),
                                                compressed_motion,
                                                &display_coords);
             gimp_device_info_get_event_state (device,
-                                              gtk_widget_get_window (shell->canvas),
+                                              gtk_widget_get_window (canvas),
                                               compressed_motion,
                                               &state);
             time = gdk_event_get_time (event);
