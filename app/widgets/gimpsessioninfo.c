@@ -456,7 +456,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
         gimp_dialog_factory_dialog_new (factory, screen,
                                         info->p->factory_entry->identifier,
                                         info->p->factory_entry->view_size,
-                                        TRUE);
+                                        TRUE/*present*/);
 
       if (dialog && info->p->aux_info)
         gimp_session_info_aux_set_list (dialog, info->p->aux_info);
@@ -471,8 +471,6 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                                     factory,
                                     screen,
                                     GIMP_DOCK_WINDOW (dialog));
-
-  gtk_widget_show (dialog);
 }
 
 /* This function mostly lifted from
