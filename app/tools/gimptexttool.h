@@ -69,7 +69,7 @@ struct _GimpTextTool
   GtkWidget      *style_editor;
 
   gboolean        selecting;
-  gint            select_start_offset;
+  gint            select_start_index;
   gboolean        select_words;
   gboolean        select_lines;
 

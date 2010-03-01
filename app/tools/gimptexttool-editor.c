@@ -83,9 +83,10 @@ static void   gimp_text_tool_editor_destroy     (GtkWidget       *dialog,
                                                  GimpTextTool    *text_tool);
 static void   gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
                                                  const gchar     *str);
-static gint   gimp_text_tool_xy_to_offset       (GimpTextTool    *text_tool,
+static gint   gimp_text_tool_xy_to_index        (GimpTextTool    *text_tool,
                                                  gdouble          x,
-                                                 gdouble          y);
+                                                 gdouble          y,
+                                                 gboolean        *trailing);
 static void   gimp_text_tool_im_commit          (GtkIMContext    *context,
                                                  const gchar     *str,
                                                  GimpTextTool    *text_tool);
@@ -270,17 +271,24 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    selection;
-  gint           offset;
+  gint           index;
+  gboolean       trailing;
 
-  offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
+  index = gimp_text_tool_xy_to_index (text_tool, x, y, &trailing);
 
-  gtk_text_buffer_get_iter_at_offset (buffer, &cursor, offset);
+  gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor, index, TRUE);
+  if (trailing)
+    {
+      gtk_text_iter_forward_char (&cursor);
+      index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                               &cursor, TRUE);
+    }
 
   selection = cursor;
 
-  text_tool->select_start_offset = offset;
-  text_tool->select_words        = FALSE;
-  text_tool->select_lines        = FALSE;
+  text_tool->select_start_index = index;
+  text_tool->select_words       = FALSE;
+  text_tool->select_lines       = FALSE;
 
   switch (press_type)
     {
@@ -338,19 +346,22 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    selection;
-  gint           cursor_offset;
-  gint           selection_offset;
-  gint           offset;
+  gint           cursor_index;
+  gint           selection_index;
+  gint           index;
+  gboolean       trailing;
 
-  offset = gimp_text_tool_xy_to_offset (text_tool, x, y);
+  index = gimp_text_tool_xy_to_index (text_tool, x, y, &trailing);
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
   gtk_text_buffer_get_iter_at_mark (buffer, &selection,
                                     gtk_text_buffer_get_selection_bound (buffer));
 
-  cursor_offset    = gtk_text_iter_get_offset (&cursor);
-  selection_offset = gtk_text_iter_get_offset (&selection);
+  cursor_index    = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                     &cursor, TRUE);
+  selection_index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                     &selection, TRUE);
 
   if (text_tool->select_words ||
       text_tool->select_lines)
@@ -358,12 +369,19 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
       GtkTextIter start;
       GtkTextIter end;
 
-      gtk_text_buffer_get_iter_at_offset (buffer, &cursor,
-                                          offset);
-      gtk_text_buffer_get_iter_at_offset (buffer, &selection,
-                                          text_tool->select_start_offset);
+      gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
+                                          index, TRUE);
+      if (trailing)
+        {
+          gtk_text_iter_forward_char (&cursor);
+          index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                   &cursor, TRUE);
+        }
 
-      if (offset <= text_tool->select_start_offset)
+      gimp_text_buffer_get_iter_at_index (text_tool->buffer, &selection,
+                                          text_tool->select_start_index, TRUE);
+
+      if (index <= text_tool->select_start_index)
         {
           start = cursor;
           end   = selection;
@@ -389,7 +407,7 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
           gtk_text_iter_forward_to_line_end (&end);
         }
 
-      if (offset <= text_tool->select_start_offset)
+      if (index <= text_tool->select_start_index)
         {
           cursor    = start;
           selection = end;
@@ -402,14 +420,19 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
     }
   else
     {
-      if (cursor_offset != offset)
+      if (cursor_index != index)
         {
-          gtk_text_buffer_get_iter_at_offset (buffer, &cursor, offset);
+          gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
+                                              index, TRUE);
         }
     }
 
-  if (cursor_offset    != gtk_text_iter_get_offset (&cursor) ||
-      selection_offset != gtk_text_iter_get_offset (&selection))
+  if (cursor_index    != gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                          &cursor,
+                                                          TRUE) ||
+      selection_index != gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                          &selection,
+                                                          TRUE))
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
@@ -1201,15 +1224,14 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
 }
 
 static gint
-gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
-                             gdouble       x,
-                             gdouble       y)
+gimp_text_tool_xy_to_index (GimpTextTool *text_tool,
+                            gdouble       x,
+                            gdouble       y,
+                            gboolean     *trailing)
 {
   PangoLayout    *layout;
   PangoRectangle  ink_extents;
-  gchar          *string;
-  gint            offset;
-  gint            trailing;
+  gint            index;
 
   gimp_text_tool_ensure_layout (text_tool);
 
@@ -1225,19 +1247,12 @@ gimp_text_tool_xy_to_offset (GimpTextTool *text_tool,
   if (ink_extents.y < 0)
     y += ink_extents.y;
 
-  string = gimp_text_buffer_get_text (text_tool->buffer);
-
   pango_layout_xy_to_index (layout,
                             x * PANGO_SCALE,
                             y * PANGO_SCALE,
-                            &offset, &trailing);
+                            &index, trailing);
 
-  offset = g_utf8_pointer_to_offset (string, string + offset);
-  offset += trailing;
-
-  g_free (string);
-
-  return offset;
+  return index;
 }
 
 static void
