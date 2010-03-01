@@ -51,7 +51,7 @@
 #include "gimp-intl.h"
 
 
-/* #define ENABLE_SPACING */
+#define ENABLE_SPACING
 
 
 /*  local function prototypes  */
