@@ -339,7 +339,11 @@ gimp_text_style_editor_clear_tags (GtkButton           *button,
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
 
+      gtk_text_buffer_begin_user_action (buffer);
+
       gtk_text_buffer_remove_all_tags (buffer, &start, &end);
+
+      gtk_text_buffer_end_user_action (buffer);
     }
 }
 
