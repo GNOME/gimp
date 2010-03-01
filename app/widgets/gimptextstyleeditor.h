@@ -60,11 +60,12 @@ struct _GimpTextStyleEditorClass
 
 GType       gimp_text_style_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_text_style_editor_new       (GimpTextBuffer      *buffer,
-                                              gdouble              resolution_x,
-                                              gdouble              resolution_y);
+GtkWidget * gimp_text_style_editor_new       (GimpTextBuffer       *buffer,
+                                              gdouble               resolution_x,
+                                              gdouble               resolution_y);
 
-GList     * gimp_text_style_editor_list_tags (GimpTextStyleEditor *editor);
+GList     * gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
+                                              GList               **remove_tags);
 
 
 #endif /*  __GIMP_TEXT_STYLE_EDITOR_H__  */

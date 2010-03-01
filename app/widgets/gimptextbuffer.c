@@ -674,13 +674,17 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
 
 void
 gimp_text_buffer_set_insert_tags (GimpTextBuffer *buffer,
-                                  GList          *style)
+                                  GList          *insert_tags,
+                                  GList          *remove_tags)
 {
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
 
-  g_list_free (buffer->insert_tags);
-  buffer->insert_tags = style;
   buffer->insert_tags_set = TRUE;
+
+  g_list_free (buffer->insert_tags);
+  g_list_free (buffer->remove_tags);
+  buffer->insert_tags = insert_tags;
+  buffer->remove_tags = remove_tags;
 }
 
 void
@@ -688,9 +692,12 @@ gimp_text_buffer_clear_insert_tags (GimpTextBuffer *buffer)
 {
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
 
-  g_list_free (buffer->insert_tags);
-  buffer->insert_tags = NULL;
   buffer->insert_tags_set = FALSE;
+
+  g_list_free (buffer->insert_tags);
+  g_list_free (buffer->remove_tags);
+  buffer->insert_tags = NULL;
+  buffer->remove_tags = NULL;
 }
 
 void
@@ -699,8 +706,9 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
 {
   GtkTextIter  iter, start;
   gint         start_offset;
-  GList       *insert_tags;
   gboolean     insert_tags_set;
+  GList       *insert_tags;
+  GList       *remove_tags;
   GSList      *tags_off = NULL;
 
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
@@ -710,13 +718,15 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
 
   start_offset = gtk_text_iter_get_offset (&iter);
 
-  insert_tags     = buffer->insert_tags;
   insert_tags_set = buffer->insert_tags_set;
-  buffer->insert_tags     = NULL;
-  buffer->insert_tags_set = FALSE;
+  insert_tags     = buffer->insert_tags;
+  remove_tags     = buffer->remove_tags;
 
-  if (! insert_tags_set)
-    tags_off = gtk_text_iter_get_toggled_tags (&iter, FALSE);
+  buffer->insert_tags_set = FALSE;
+  buffer->insert_tags     = NULL;
+  buffer->remove_tags     = NULL;
+
+  tags_off = gtk_text_iter_get_toggled_tags (&iter, FALSE);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
 
@@ -729,29 +739,44 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
     {
       GList *list;
 
-      gtk_text_buffer_remove_all_tags (GTK_TEXT_BUFFER (buffer),
-                                       &start, &iter);
+      for (list = remove_tags; list; list = g_list_next (list))
+        {
+          GtkTextTag *tag = list->data;
+
+          gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                      &start, &iter);
+        }
 
       for (list = insert_tags; list; list = g_list_next (list))
         {
-          gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), list->data,
+          GtkTextTag *tag = list->data;
+
+          gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                      &start, &iter);
         }
-
-      g_list_free (insert_tags);
     }
-  else
-    {
-      GSList *list;
 
-      for (list = tags_off; list; list = g_slist_next (list))
+  if (tags_off)
+    {
+      GSList *slist;
+
+      for (slist = tags_off; slist; slist = g_slist_next (slist))
         {
-          gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), list->data,
-                                     &start, &iter);
+          GtkTextTag *tag = slist->data;
+
+          if (! g_list_find (remove_tags, tag) &&
+              ! g_list_find (buffer->spacing_tags, tag))
+            {
+              gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                         &start, &iter);
+            }
         }
 
       g_slist_free (tags_off);
     }
+
+  g_list_free (remove_tags);
+  g_list_free (insert_tags);
 
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }

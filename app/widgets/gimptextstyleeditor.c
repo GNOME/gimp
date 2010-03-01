@@ -278,21 +278,32 @@ gimp_text_style_editor_new (GimpTextBuffer *buffer,
 }
 
 GList *
-gimp_text_style_editor_list_tags (GimpTextStyleEditor *editor)
+gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
+                                  GList               **remove_tags)
 {
   GList *toggles;
   GList *tags = NULL;
 
   g_return_val_if_fail (GIMP_IS_TEXT_STYLE_EDITOR (editor), NULL);
+  g_return_val_if_fail (remove_tags != NULL, NULL);
+
+  *remove_tags = NULL;
 
   for (toggles = editor->toggles; toggles; toggles = g_list_next (toggles))
     {
+      GtkTextTag *tag = g_object_get_data (toggles->data, "tag");
+
       if (gtk_toggle_button_get_active (toggles->data))
         {
-          tags = g_list_prepend (tags,
-                                 g_object_get_data (toggles->data, "tag"));
+          tags = g_list_prepend (tags, tag);
+        }
+      else
+        {
+          *remove_tags = g_list_prepend (*remove_tags, tag);
         }
     }
+
+  *remove_tags = g_list_reverse (*remove_tags);
 
   return g_list_reverse (tags);
 }
@@ -353,7 +364,8 @@ gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
   GtkTextTag    *tag    = g_object_get_data (G_OBJECT (toggle), "tag");
-  GList         *list;
+  GList         *insert_tags;
+  GList         *remove_tags;
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
@@ -375,8 +387,8 @@ gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
       gtk_text_buffer_end_user_action (buffer);
     }
 
-  list = gimp_text_style_editor_list_tags (editor);
-  gimp_text_buffer_set_insert_tags (editor->buffer, list);
+  insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
+  gimp_text_buffer_set_insert_tags (editor->buffer, insert_tags, remove_tags);
 }
 
 static void

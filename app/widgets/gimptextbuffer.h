@@ -43,8 +43,9 @@ struct _GimpTextBuffer
   GList         *baseline_tags;
   GList         *spacing_tags;
 
-  GList         *insert_tags;
   gboolean       insert_tags_set;
+  GList         *insert_tags;
+  GList         *remove_tags;
 
   GdkAtom        markup_atom;
 };
@@ -86,7 +87,8 @@ GtkTextTag     * gimp_text_buffer_name_to_tag       (GimpTextBuffer    *buffer,
                                                      const gchar       *value);
 
 void             gimp_text_buffer_set_insert_tags   (GimpTextBuffer    *buffer,
-                                                     GList             *style);
+                                                     GList             *insert_tags,
+                                                     GList             *remove_tags);
 void             gimp_text_buffer_clear_insert_tags (GimpTextBuffer    *buffer);
 void             gimp_text_buffer_insert            (GimpTextBuffer    *buffer,
                                                      const gchar       *text);
