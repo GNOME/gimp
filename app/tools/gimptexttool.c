@@ -164,7 +164,7 @@ static gboolean  gimp_text_tool_set_drawable    (GimpTextTool      *text_tool,
                                                  GimpDrawable      *drawable,
                                                  gboolean           confirm);
 
-static void      gimp_text_tool_buffer_edited   (GtkTextBuffer     *buffer,
+static void      gimp_text_tool_buffer_edited   (GimpTextBuffer    *buffer,
                                                  GimpTextTool      *text_tool);
 
 
@@ -1272,17 +1272,28 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
     }
   else
     {
-      gchar *string = gimp_text_buffer_get_text (text_tool->buffer);
-      gchar *markup = gimp_text_buffer_get_markup (text_tool->buffer);
+      gchar *string;
 
-      g_object_set (text_tool->proxy,
-                    "text",     string,
-                    "markup",   markup,
-                    "box-mode", GIMP_TEXT_BOX_DYNAMIC,
-                    NULL);
+      if (gimp_text_buffer_has_markup (text_tool->buffer))
+        {
+          string = gimp_text_buffer_get_markup (text_tool->buffer);
+
+          g_object_set (text_tool->proxy,
+                        "markup",   string,
+                        "box-mode", GIMP_TEXT_BOX_DYNAMIC,
+                        NULL);
+        }
+      else
+        {
+          string = gimp_text_buffer_get_text (text_tool->buffer);
+
+          g_object_set (text_tool->proxy,
+                        "text",     string,
+                        "box-mode", GIMP_TEXT_BOX_DYNAMIC,
+                        NULL);
+        }
 
       g_free (string);
-      g_free (markup);
 
       text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
     }
@@ -1577,23 +1588,31 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_buffer_edited (GtkTextBuffer *buffer,
-                              GimpTextTool  *text_tool)
+gimp_text_tool_buffer_edited (GimpTextBuffer *buffer,
+                              GimpTextTool   *text_tool)
 {
   if (text_tool->text)
     {
-      gchar *text   = gimp_text_buffer_get_text (GIMP_TEXT_BUFFER (buffer));
-      gchar *markup = gimp_text_buffer_get_markup (GIMP_TEXT_BUFFER (buffer));
+      gchar *string;
 
-      g_object_set (text_tool->proxy,
-                    "text",   text,
-                    "markup", markup,
-                    NULL);
+      if (gimp_text_buffer_has_markup (buffer))
+        {
+          string = gimp_text_buffer_get_markup (buffer);
 
-      /* g_printerr ("markup: %s\n", markup); */
+          g_object_set (text_tool->proxy,
+                        "markup", string,
+                        NULL);
+        }
+      else
+        {
+          string = gimp_text_buffer_get_text (buffer);
 
-      g_free (text);
-      g_free (markup);
+          g_object_set (text_tool->proxy,
+                        "text", string,
+                        NULL);
+        }
+
+      g_free (string);
     }
   else
     {

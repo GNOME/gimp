@@ -303,6 +303,30 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
   return markup;
 }
 
+gboolean
+gimp_text_buffer_has_markup (GimpTextBuffer *buffer)
+{
+  GtkTextIter iter;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), FALSE);
+
+  gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER (buffer), &iter);
+
+  do
+    {
+      GSList *tags = gtk_text_iter_get_tags (&iter);
+
+      if (tags)
+        {
+          g_slist_free (tags);
+          return TRUE;
+        }
+    }
+  while (gtk_text_iter_forward_char (&iter));
+
+  return FALSE;
+}
+
 GtkTextTag *
 gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
                                     const GtkTextIter *iter,

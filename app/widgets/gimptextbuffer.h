@@ -69,6 +69,8 @@ void             gimp_text_buffer_set_markup        (GimpTextBuffer    *buffer,
                                                      const gchar       *markup);
 gchar          * gimp_text_buffer_get_markup        (GimpTextBuffer    *buffer);
 
+gboolean         gimp_text_buffer_has_markup        (GimpTextBuffer    *buffer);
+
 GtkTextTag     * gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gint              *baseline);

@@ -399,10 +399,22 @@ gimp_text_set_property (GObject      *object,
     case PROP_TEXT:
       g_free (text->text);
       text->text = g_value_dup_string (value);
+      if (text->text && text->markup)
+        {
+          g_free (text->markup);
+          text->markup = NULL;
+          g_object_notify (object, "markup");
+        }
       break;
     case PROP_MARKUP:
       g_free (text->markup);
       text->markup = g_value_dup_string (value);
+      if (text->markup && text->text)
+        {
+          g_free (text->text);
+          text->text = NULL;
+          g_object_notify (object, "text");
+        }
       break;
     case PROP_FONT:
       {
