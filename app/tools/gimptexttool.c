@@ -873,10 +873,10 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
           g_object_set (text_tool->proxy,
                         "box-mode",   GIMP_TEXT_BOX_FIXED,
                         "box-width",  gimp_pixels_to_units (x2 - x1,
-                                                            text_tool->proxy->unit,
+                                                            text_tool->proxy->box_unit,
                                                             xres),
                         "box-height", gimp_pixels_to_units (y2 - y1,
-                                                            text_tool->proxy->unit,
+                                                            text_tool->proxy->box_unit,
                                                             yres),
                         NULL);
 
@@ -1309,10 +1309,10 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
       g_object_set (text_tool->proxy,
                     "box-mode",   GIMP_TEXT_BOX_FIXED,
                     "box-width",  gimp_pixels_to_units (x2 - x1,
-                                                        text_tool->proxy->unit,
+                                                        text_tool->proxy->box_unit,
                                                         xres),
                     "box-height", gimp_pixels_to_units (y2 - y1,
-                                                        text_tool->proxy->unit,
+                                                        text_tool->proxy->box_unit,
                                                         yres),
                     NULL);
     }
