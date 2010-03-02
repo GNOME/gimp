@@ -372,8 +372,9 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                          gboolean           return_existing,
                                          gboolean           present)
 {
-  GimpDialogFactoryEntry *entry;
-  GtkWidget              *dialog = NULL;
+  GimpDialogFactoryEntry *entry    = NULL;
+  GtkWidget              *dialog   = NULL;
+  GtkWidget              *toplevel = NULL;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
@@ -511,8 +512,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     {
       gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
-      if (present)
-        gtk_window_present (GTK_WINDOW (dialog));
+      toplevel = dialog;
     }
   else if (GIMP_IS_DOCKABLE (dialog))
     {
@@ -532,14 +532,11 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
             }
         }
 
-      if (present)
-        {
-          GtkWidget *toplevel = gtk_widget_get_toplevel (dialog);
-
-          if (GTK_IS_WINDOW (toplevel))
-            gtk_window_present (GTK_WINDOW (toplevel));
-        }
+      toplevel = gtk_widget_get_toplevel (dialog);
     }
+
+  if (present && toplevel != NULL && GTK_IS_WINDOW (toplevel))
+    gtk_window_present (GTK_WINDOW (toplevel));
 
   return dialog;
 }
