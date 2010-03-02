@@ -36,6 +36,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
@@ -588,17 +589,32 @@ gimp_text_layer_render (GimpTextLayer *layer)
   if (layer->auto_rename)
     {
       GimpItem *item = GIMP_ITEM (layer);
-      gchar    *name = (layer->text->text ?
-                        gimp_utf8_strtrim (layer->text->text, 30) :
-                        g_strdup (_("Empty Text Layer")));
+      gchar    *name = NULL;
+
+      if (layer->text->text)
+        {
+          name = gimp_utf8_strtrim (layer->text->text, 30);
+        }
+      else if (layer->text->markup)
+        {
+          gchar *tmp = gimp_markup_extract_text (layer->text->markup);
+          name = gimp_utf8_strtrim (tmp, 30);
+          g_free (tmp);
+        }
+
+      if (! name)
+        name = g_strdup (_("Empty Text Layer"));
 
       if (gimp_item_is_attached (item))
-        gimp_item_tree_rename_item (gimp_item_get_tree (item), item,
-                                    name, FALSE, NULL);
+        {
+          gimp_item_tree_rename_item (gimp_item_get_tree (item), item,
+                                      name, FALSE, NULL);
+          g_free (name);
+        }
       else
-        gimp_object_set_name (GIMP_OBJECT (layer), name);
-
-      g_free (name);
+        {
+          gimp_object_take_name (GIMP_OBJECT (layer), name);
+        }
     }
 
   gimp_text_layer_render_layout (layer, layout);

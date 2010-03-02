@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
@@ -526,6 +527,162 @@ gimp_container_get_neighbor_of_active (GimpContainer *container,
     }
 
   return NULL;
+}
+
+/*  markup unescape code stolen and adapted from gmarkup.c
+ */
+static gchar *
+char_str (gunichar c,
+          gchar   *buf)
+{
+  memset (buf, 0, 8);
+  g_unichar_to_utf8 (c, buf);
+  return buf;
+}
+
+static gboolean
+unescape_gstring (GString *string)
+{
+  const gchar *from;
+  gchar       *to;
+
+  /*
+   * Meeks' theorum: unescaping can only shrink text.
+   * for &lt; etc. this is obvious, for &#xffff; more
+   * thought is required, but this is patently so.
+   */
+  for (from = to = string->str; *from != '\0'; from++, to++)
+    {
+      *to = *from;
+
+      if (*to == '\r')
+        {
+          *to = '\n';
+          if (from[1] == '\n')
+            from++;
+        }
+      if (*from == '&')
+        {
+          from++;
+          if (*from == '#')
+            {
+              gboolean is_hex = FALSE;
+              gulong   l;
+              gchar   *end = NULL;
+
+              from++;
+
+              if (*from == 'x')
+                {
+                  is_hex = TRUE;
+                  from++;
+                }
+
+              /* digit is between start and p */
+              errno = 0;
+              if (is_hex)
+                l = strtoul (from, &end, 16);
+              else
+                l = strtoul (from, &end, 10);
+
+              if (end == from || errno != 0)
+                {
+                  return FALSE;
+                }
+              else if (*end != ';')
+                {
+                  return FALSE;
+                }
+              else
+                {
+                  /* characters XML 1.1 permits */
+                  if ((0 < l && l <= 0xD7FF) ||
+                      (0xE000 <= l && l <= 0xFFFD) ||
+                      (0x10000 <= l && l <= 0x10FFFF))
+                    {
+                      gchar buf[8];
+                      char_str (l, buf);
+                      strcpy (to, buf);
+                      to += strlen (buf) - 1;
+                      from = end;
+                    }
+                  else
+                    {
+                      return FALSE;
+                    }
+                }
+            }
+
+          else if (strncmp (from, "lt;", 3) == 0)
+            {
+              *to = '<';
+              from += 2;
+            }
+          else if (strncmp (from, "gt;", 3) == 0)
+            {
+              *to = '>';
+              from += 2;
+            }
+          else if (strncmp (from, "amp;", 4) == 0)
+            {
+              *to = '&';
+              from += 3;
+            }
+          else if (strncmp (from, "quot;", 5) == 0)
+            {
+              *to = '"';
+              from += 4;
+            }
+          else if (strncmp (from, "apos;", 5) == 0)
+            {
+              *to = '\'';
+              from += 4;
+            }
+          else
+            {
+              return FALSE;
+            }
+        }
+    }
+
+  g_assert (to - string->str <= string->len);
+  if (to - string->str != string->len)
+    g_string_truncate (string, to - string->str);
+
+  return TRUE;
+}
+
+gchar *
+gimp_markup_extract_text (const gchar *markup)
+{
+  GString     *string;
+  const gchar *p;
+  gboolean     in_tag = FALSE;
+
+  if (! markup)
+    return NULL;
+
+  string = g_string_new (NULL);
+
+  for (p = markup; *p; p++)
+    {
+      if (in_tag)
+        {
+          if (*p == '>')
+            in_tag = FALSE;
+        }
+      else
+        {
+          if (*p == '<')
+            in_tag = TRUE;
+          else
+            g_string_append_c (string, *p);
+        }
+    }
+
+  unescape_gstring (string);
+
+  return g_string_free (string, FALSE);
 }
 
 /**
