@@ -32,6 +32,7 @@
 
 #include "text-types.h"
 
+#include "core/gimpmarshal.h"
 #include "core/gimpstrokeoptions.h"
 #include "core/gimp-utils.h"
 
@@ -69,24 +70,35 @@ enum
   PROP_HINTING
 };
 
+enum
+{
+  CHANGED,
+  LAST_SIGNAL
+};
 
-static void     gimp_text_finalize     (GObject      *object);
-static void     gimp_text_get_property (GObject      *object,
-                                        guint         property_id,
-                                        GValue       *value,
-                                        GParamSpec   *pspec);
-static void     gimp_text_set_property (GObject      *object,
-                                        guint         property_id,
-                                        const GValue *value,
-                                        GParamSpec   *pspec);
-static gint64   gimp_text_get_memsize  (GimpObject   *object,
-                                        gint64       *gui_size);
+
+static void     gimp_text_finalize                    (GObject      *object);
+static void     gimp_text_get_property                (GObject      *object,
+                                                       guint         property_id,
+                                                       GValue       *value,
+                                                       GParamSpec   *pspec);
+static void     gimp_text_set_property                (GObject      *object,
+                                                       guint         property_id,
+                                                       const GValue *value,
+                                                       GParamSpec   *pspec);
+static void     gimp_text_dispatch_properties_changed (GObject      *object,
+                                                       guint         n_pspecs,
+                                                       GParamSpec  **pspecs);
+static gint64   gimp_text_get_memsize                 (GimpObject   *object,
+                                                       gint64       *gui_size);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpText, gimp_text, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_text_parent_class
+
+static guint text_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
@@ -98,11 +110,21 @@ gimp_text_class_init (GimpTextClass *klass)
   GimpMatrix2      identity;
   gchar           *language;
 
-  object_class->finalize         = gimp_text_finalize;
-  object_class->get_property     = gimp_text_get_property;
-  object_class->set_property     = gimp_text_set_property;
+  text_signals[CHANGED] =
+    g_signal_new ("changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpTextClass, changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
-  gimp_object_class->get_memsize = gimp_text_get_memsize;
+  object_class->finalize                    = gimp_text_finalize;
+  object_class->get_property                = gimp_text_get_property;
+  object_class->set_property                = gimp_text_set_property;
+  object_class->dispatch_properties_changed = gimp_text_dispatch_properties_changed;
+
+  gimp_object_class->get_memsize            = gimp_text_get_memsize;
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_matrix2_identity (&identity);
@@ -478,6 +500,17 @@ gimp_text_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_text_dispatch_properties_changed (GObject     *object,
+                                       guint        n_pspecs,
+                                       GParamSpec **pspecs)
+{
+  G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
+                                                              n_pspecs, pspecs);
+
+  g_signal_emit (object, text_signals[CHANGED], 0);
 }
 
 static gint64

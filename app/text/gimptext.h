@@ -70,6 +70,8 @@ struct _GimpText
 struct _GimpTextClass
 {
   GimpObjectClass        parent_class;
+
+  void (* changed) (GimpText *text);
 };
 
 

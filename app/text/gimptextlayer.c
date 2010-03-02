@@ -97,7 +97,7 @@ static void       gimp_text_layer_push_undo      (GimpDrawable    *drawable,
                                                   gint             width,
                                                   gint             height);
 
-static void       gimp_text_layer_text_notify    (GimpTextLayer   *layer);
+static void       gimp_text_layer_text_changed   (GimpTextLayer   *layer);
 static gboolean   gimp_text_layer_render         (GimpTextLayer   *layer);
 static void       gimp_text_layer_render_layout  (GimpTextLayer   *layer,
                                                   GimpTextLayout  *layout);
@@ -351,6 +351,8 @@ gimp_text_layer_push_undo (GimpDrawable *drawable,
 }
 
 
+/*  public functions  */
+
 /**
  * gimp_text_layer_new:
  * @image: the #GimpImage the layer should belong to
@@ -404,7 +406,7 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
   if (layer->text)
     {
       g_signal_handlers_disconnect_by_func (layer->text,
-                                            G_CALLBACK (gimp_text_layer_text_notify),
+                                            G_CALLBACK (gimp_text_layer_text_changed),
                                             layer);
 
       g_object_unref (layer->text);
@@ -415,8 +417,8 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
     {
       layer->text = g_object_ref (text);
 
-      g_signal_connect_object (text, "notify",
-                               G_CALLBACK (gimp_text_layer_text_notify),
+      g_signal_connect_object (text, "changed",
+                               G_CALLBACK (gimp_text_layer_text_changed),
                                layer, G_CONNECT_SWAPPED);
     }
 
@@ -511,8 +513,10 @@ gimp_drawable_is_text_layer (GimpDrawable *drawable)
 }
 
 
+/*  private functions  */
+
 static void
-gimp_text_layer_text_notify (GimpTextLayer *layer)
+gimp_text_layer_text_changed (GimpTextLayer *layer)
 {
   /*   If the text layer was created from a parasite, it's time to
    *   remove that parasite now.

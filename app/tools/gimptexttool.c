@@ -143,9 +143,13 @@ static void      gimp_text_tool_layer_notify    (GimpTextLayer     *layer,
 static void      gimp_text_tool_proxy_notify    (GimpText          *text,
                                                  GParamSpec        *pspec,
                                                  GimpTextTool      *text_tool);
+
 static void      gimp_text_tool_text_notify     (GimpText          *text,
                                                  GParamSpec        *pspec,
                                                  GimpTextTool      *text_tool);
+static void      gimp_text_tool_text_changed    (GimpText          *text,
+                                                 GimpTextTool      *text_tool);
+
 static gboolean  gimp_text_tool_idle_apply      (GimpTextTool      *text_tool);
 static void      gimp_text_tool_apply           (GimpTextTool      *text_tool);
 
@@ -738,7 +742,6 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       gimp_text_tool_draw_selection (draw_tool,
                                      logical_offset_x, logical_offset_y);
-
     }
   else
     {
@@ -930,6 +933,9 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           g_signal_handlers_disconnect_by_func (text_tool->text,
                                                 gimp_text_tool_text_notify,
                                                 text_tool);
+          g_signal_handlers_disconnect_by_func (text_tool->text,
+                                                gimp_text_tool_text_changed,
+                                                text_tool);
 
           if (text_tool->pending)
             gimp_text_tool_apply (text_tool);
@@ -962,6 +968,9 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
 
           g_signal_connect (text, "notify",
                             G_CALLBACK (gimp_text_tool_text_notify),
+                            text_tool);
+          g_signal_connect (text, "changed",
+                            G_CALLBACK (gimp_text_tool_text_changed),
                             text_tool);
         }
 
@@ -1048,11 +1057,6 @@ gimp_text_tool_text_notify (GimpText     *text,
       g_value_unset (&value);
     }
 
-  /* we need to redraw the rectangle in any case because whatever
-   * changes to the text can change its size
-   */
-  gimp_text_tool_frame_item (text_tool);
-
   /* if the text has changed, (probably because of an undo), we put
    * the new text into the text buffer
    */
@@ -1072,6 +1076,20 @@ gimp_text_tool_text_notify (GimpText     *text,
                                          gimp_text_tool_buffer_edited,
                                          text_tool);
     }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+}
+
+static void
+gimp_text_tool_text_changed (GimpText     *text,
+                             GimpTextTool *text_tool)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+  /* we need to redraw the rectangle in any case because whatever
+   * changes to the text can change its size
+   */
+  gimp_text_tool_frame_item (text_tool);
 
   gimp_text_tool_clear_layout (text_tool);
 
@@ -1184,6 +1202,9 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   g_signal_handlers_block_by_func (dest,
                                    gimp_text_tool_text_notify,
                                    text_tool);
+  g_signal_handlers_block_by_func (dest,
+                                   gimp_text_tool_text_changed,
+                                   text_tool);
 
   g_object_freeze_notify (dest);
 
@@ -1212,6 +1233,9 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   g_signal_handlers_unblock_by_func (dest,
                                      gimp_text_tool_text_notify,
+                                     text_tool);
+  g_signal_handlers_unblock_by_func (dest,
+                                     gimp_text_tool_text_changed,
                                      text_tool);
 
   if (push_undo)
