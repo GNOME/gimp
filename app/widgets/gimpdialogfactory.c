@@ -410,27 +410,42 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
   if (! dialog)
     {
       GtkWidget *dock              = NULL;
+      GtkWidget *dock_window       = NULL;
       gboolean   called_from_raise = FALSE;
 
       called_from_raise = (context == NULL);
-                                 
-      if (entry->dockable && called_from_raise)
+
+      /* What follows is special-case code for some entires. At some
+       * point we might want to abstract this block of code away.
+       */
+      if (called_from_raise)
         {
-          GtkWidget *dockbook;
+          if (entry->dockable)
+            {
+              GtkWidget *dockbook;
 
-          /*  It doesn't make sense to have a dockable without a dock
-           *  so create one. Create a new dock _before_ creating the
-           *  dialog. We do this because the new dockable needs to be
-           *  created in its dock's context.
-           */
-          dock     = gimp_dock_with_window_new (factory,
-                                                screen,
-                                                FALSE /*toolbox*/);
-          dockbook = gimp_dockbook_new (factory->p->menu_factory);
+              /*  It doesn't make sense to have a dockable without a dock
+               *  so create one. Create a new dock _before_ creating the
+               *  dialog. We do this because the new dockable needs to be
+               *  created in its dock's context.
+               */
+              dock     = gimp_dock_with_window_new (factory,
+                                                    screen,
+                                                    FALSE /*toolbox*/);
+              dockbook = gimp_dockbook_new (factory->p->menu_factory);
 
-          gimp_dock_add_book (GIMP_DOCK (dock),
-                              GIMP_DOCKBOOK (dockbook),
-                              0);
+              gimp_dock_add_book (GIMP_DOCK (dock),
+                                  GIMP_DOCKBOOK (dockbook),
+                                  0);
+            }
+          else if (strcmp ("gimp-toolbox", entry->identifier) == 0)
+            {
+              dock_window = gimp_dialog_factory_dialog_new (factory,
+                                                            screen,
+                                                            "gimp-toolbox-window",
+                                                            -1 /*view_size*/,
+                                                            FALSE /*present*/);
+            }
         }
 
       /*  Create the new dialog in the appropriate context which is
@@ -488,6 +503,31 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                   dock   = NULL;
                 }
             }
+          else if (dock_window)
+            {
+              if (GIMP_IS_DOCK (dialog))
+                {
+                  gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
+                                             GIMP_DOCK (dialog),
+                                             -1 /*index*/);
+
+                  gtk_widget_set_visible (dialog, present);
+                  gtk_widget_set_visible (dock_window, present);
+                }
+              else
+                {
+                  g_warning ("%s: GimpDialogFactory is a dock factory entry "
+                             "but constructor for \"%s\" did not return a "
+                             "GimpDock",
+                             G_STRFUNC, identifier);
+
+                  gtk_widget_destroy (dialog);
+                  gtk_widget_destroy (dock_window);
+
+                  dialog      = NULL;
+                  dock_window = NULL;
+                }
+            }
         }
       else if (dock)
         {
@@ -513,6 +553,10 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
       toplevel = dialog;
+    }
+  else if (GIMP_IS_DOCK (dialog))
+    {
+      toplevel = gtk_widget_get_toplevel (dialog);
     }
   else if (GIMP_IS_DOCKABLE (dialog))
     {

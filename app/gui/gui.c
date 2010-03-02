@@ -539,8 +539,6 @@ gui_restore_after_callback (Gimp               *gimp,
       if (gui_config->restore_session)
         session_restore (gimp);
 
-      windows_show_toolbox ();
-
       /*  move keyboard focus to the display  */
       gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
     }

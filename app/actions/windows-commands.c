@@ -43,13 +43,6 @@
 
 
 void
-windows_show_toolbox_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  windows_show_toolbox ();
-}
-
-void
 windows_hide_docks_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
@@ -123,26 +116,4 @@ windows_open_recent_cmd_callback (GtkAction *action,
 
   gimp_session_info_restore (info, gimp_dialog_factory_get_singleton ());
   gimp_session_info_clear_info (info);
-}
-
-void
-windows_show_toolbox (void)
-{
-  GtkWidget *toolbox = NULL;
-
-  if (! dialogs_get_toolbox ())
-    {
-      toolbox = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
-                                           gdk_screen_get_default (),
-                                           TRUE /*toolbox*/);
-
-      gtk_widget_show (toolbox);
-    }
-  else
-    {
-      toolbox = dialogs_get_toolbox ();
-
-      if (toolbox)
-        gtk_window_present (GTK_WINDOW (toolbox));
-    }
 }

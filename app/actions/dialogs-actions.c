@@ -34,6 +34,12 @@
 
 const GimpStringActionEntry dialogs_dockable_actions[] =
 {
+  { "dialogs-toolbox", NULL,
+    NC_("windows-action", "Tool_box"), "<control>B",
+    NC_("windows-action", "Raise the toolbox"),
+    "gimp-toolbox",
+    GIMP_HELP_TOOLBOX },
+
   { "dialogs-tool-options", GIMP_STOCK_TOOL_OPTIONS,
     NC_("dialogs-action", "Tool _Options"), NULL,
     NC_("dialogs-action", "Open the tool options dialog"),

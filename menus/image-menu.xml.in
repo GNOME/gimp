@@ -580,7 +580,7 @@
       <menuitem action="tools-text" />
       <menuitem action="tools-gegl" />
       <separator />
-      <menuitem action="windows-show-toolbox" />
+      <menuitem action="dialogs-toolbox" />
       <menuitem action="context-colors-default" />
       <menuitem action="context-colors-swap" />
     </menu>
@@ -640,7 +640,7 @@
       <placeholder name="Images" />
       <separator />
       <placeholder name="Docks">
-        <menuitem action="windows-show-toolbox" />
+        <menuitem action="dialogs-toolbox" />
       </placeholder>
       <separator />
       <menuitem action="windows-hide-docks" />

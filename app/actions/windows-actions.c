@@ -87,12 +87,6 @@ static const GimpActionEntry windows_actions[] =
                                       "_Recently Closed Docks") },
   { "windows-dialogs-menu", NULL, NC_("windows-action",
                                       "_Dockable Dialogs")      },
-
-  { "windows-show-toolbox", NULL,
-    NC_("windows-action", "Tool_box"), "<control>B",
-    NC_("windows-action", "Raise the toolbox"),
-    G_CALLBACK (windows_show_toolbox_cmd_callback),
-    GIMP_HELP_TOOLBOX }
 };
 
 static const GimpToggleActionEntry windows_toggle_actions[] =
