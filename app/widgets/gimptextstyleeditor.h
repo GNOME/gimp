@@ -55,6 +55,8 @@ struct _GimpTextStyleEditor
   GtkWidget      *size_label;
 
   GList          *toggles;
+
+  guint           update_idle_id;
 };
 
 struct _GimpTextStyleEditorClass

@@ -80,6 +80,7 @@ static void      gimp_text_style_editor_tag_toggled  (GtkToggleButton     *toggl
                                                       GimpTextStyleEditor *editor);
 
 static void      gimp_text_style_editor_update       (GimpTextStyleEditor *editor);
+static gboolean  gimp_text_style_editor_update_idle  (GimpTextStyleEditor *editor);
 
 
 G_DEFINE_TYPE (GimpTextStyleEditor, gimp_text_style_editor,
@@ -245,6 +246,12 @@ gimp_text_style_editor_dispose (GObject *object)
       g_signal_handlers_disconnect_by_func (editor->buffer,
                                             gimp_text_style_editor_update,
                                             editor);
+    }
+
+  if (editor->update_idle_id)
+    {
+      g_source_remove (editor->update_idle_id);
+      editor->update_idle_id = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -543,7 +550,24 @@ gimp_text_style_editor_set_font (GimpTextStyleEditor *editor,
 static void
 gimp_text_style_editor_update (GimpTextStyleEditor *editor)
 {
+  if (editor->update_idle_id)
+    g_source_remove (editor->update_idle_id);
+
+  editor->update_idle_id =
+    gdk_threads_add_idle ((GSourceFunc) gimp_text_style_editor_update_idle,
+                          editor);
+}
+
+static gboolean
+gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
+{
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
+
+  if (editor->update_idle_id)
+    {
+      g_source_remove (editor->update_idle_id);
+      editor->update_idle_id = 0;
+    }
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
@@ -667,4 +691,6 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
       g_slist_free (tags_on);
       g_slist_free (tags_off);
     }
+
+  return FALSE;
 }
