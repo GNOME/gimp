@@ -162,6 +162,12 @@ gimp_text_buffer_finalize (GObject *object)
       buffer->spacing_tags = NULL;
     }
 
+  if (buffer->font_tags)
+    {
+      g_list_free (buffer->font_tags);
+      buffer->font_tags = NULL;
+    }
+
   gimp_text_buffer_clear_insert_tags (buffer);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -297,10 +303,10 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
   return markup;
 }
 
-static gint
-get_baseline_at_iter (GimpTextBuffer     *buffer,
-                      const GtkTextIter  *iter,
-                      GtkTextTag        **baseline_tag)
+gint
+gimp_text_buffer_get_baseline (GimpTextBuffer     *buffer,
+                               const GtkTextIter  *iter,
+                               GtkTextTag        **baseline_tag)
 {
   GList *list;
 
@@ -328,8 +334,8 @@ get_baseline_at_iter (GimpTextBuffer     *buffer,
 }
 
 static GtkTextTag *
-get_baseline_tag (GimpTextBuffer *buffer,
-                  gint            baseline)
+gimp_text_buffer_get_baseline_tag (GimpTextBuffer *buffer,
+                                   gint            baseline)
 {
   GList      *list;
   GtkTextTag *tag;
@@ -382,7 +388,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
 
   iter          = *start;
   span_start    = *start;
-  span_baseline = get_baseline_at_iter (buffer, &iter, &span_tag);
+  span_baseline = gimp_text_buffer_get_baseline (buffer, &iter, &span_tag);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
 
@@ -393,7 +399,7 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
 
       gtk_text_iter_forward_char (&iter);
 
-      iter_baseline = get_baseline_at_iter (buffer, &iter, &iter_tag);
+      iter_baseline = gimp_text_buffer_get_baseline (buffer, &iter, &iter_tag);
 
       span_end = iter;
 
@@ -408,7 +414,8 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
 
           if (span_baseline + count != 0)
             {
-              span_tag = get_baseline_tag (buffer, span_baseline + count);
+              span_tag = gimp_text_buffer_get_baseline_tag (buffer,
+                                                            span_baseline + count);
 
               gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
                                          &span_start, &span_end);
@@ -428,10 +435,10 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
-static gint
-get_spacing_at_iter (GimpTextBuffer     *buffer,
-                     const GtkTextIter  *iter,
-                     GtkTextTag        **spacing_tag)
+gint
+gimp_text_buffer_get_spacing (GimpTextBuffer     *buffer,
+                              const GtkTextIter  *iter,
+                              GtkTextTag        **spacing_tag)
 {
   GList *list;
 
@@ -459,8 +466,8 @@ get_spacing_at_iter (GimpTextBuffer     *buffer,
 }
 
 static GtkTextTag *
-get_spacing_tag (GimpTextBuffer *buffer,
-                 gint            spacing)
+gimp_text_buffer_get_spacing_tag (GimpTextBuffer *buffer,
+                                  gint            spacing)
 {
   GList      *list;
   GtkTextTag *tag;
@@ -513,7 +520,7 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
 
   iter         = *start;
   span_start   = *start;
-  span_spacing = get_spacing_at_iter (buffer, &iter, &span_tag);
+  span_spacing = gimp_text_buffer_get_spacing (buffer, &iter, &span_tag);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
 
@@ -524,7 +531,7 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
 
       gtk_text_iter_forward_char (&iter);
 
-      iter_spacing = get_spacing_at_iter (buffer, &iter, &iter_tag);
+      iter_spacing = gimp_text_buffer_get_spacing (buffer, &iter, &iter_tag);
 
       span_end = iter;
 
@@ -539,7 +546,8 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
 
           if (span_spacing + count != 0)
             {
-              span_tag = get_spacing_tag (buffer, span_spacing + count);
+              span_tag = gimp_text_buffer_get_spacing_tag (buffer,
+                                                           span_spacing + count);
 
               gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
                                          &span_start, &span_end);
@@ -555,6 +563,109 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
         iter = *end;
     }
   while (! gtk_text_iter_equal (&iter, end));
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
+}
+
+gchar *
+gimp_text_buffer_get_font (GimpTextBuffer     *buffer,
+                           const GtkTextIter  *iter,
+                           GtkTextTag        **font_tag)
+{
+  GList *list;
+
+  for (list = buffer->font_tags; list; list = g_list_next (list))
+    {
+      GtkTextTag *tag = list->data;
+
+      if (gtk_text_iter_has_tag (iter, tag))
+        {
+          gchar *font;
+
+          *font_tag = tag;
+
+          g_object_get (tag,
+                        "font", &font,
+                        NULL);
+
+          return font;
+        }
+    }
+
+  *font_tag = NULL;
+
+  return NULL;
+}
+
+static GtkTextTag *
+gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
+                               const gchar    *font)
+{
+  GList      *list;
+  GtkTextTag *tag;
+  gchar       name[256];
+
+  for (list = buffer->font_tags; list; list = g_list_next (list))
+    {
+      gchar *tag_font;
+
+      tag = list->data;
+
+      g_object_get (tag,
+                    "font", &tag_font,
+                    NULL);
+
+      if (! strcmp (font, tag_font))
+        {
+          g_free (tag_font);
+          return tag;
+        }
+
+      g_free (tag_font);
+    }
+
+  g_snprintf (name, sizeof (name), "font-%s", font);
+
+  tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                    name,
+                                    "font", font,
+                                    NULL);
+
+  buffer->font_tags = g_list_prepend (buffer->font_tags, tag);
+
+  return tag;
+}
+
+void
+gimp_text_buffer_set_font (GimpTextBuffer    *buffer,
+                           const GtkTextIter *start,
+                           const GtkTextIter *end,
+                           const gchar       *font)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (start, end))
+    return;
+
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
+  for (list = buffer->font_tags; list; list = g_list_next (list))
+    {
+      gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                  start, end);
+    }
+
+  if (font)
+    {
+      GtkTextTag *tag = gimp_text_buffer_get_font_tag (buffer, font);
+
+      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                 start, end);
+    }
 
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
@@ -626,6 +737,20 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
 
       return "span";
     }
+  else if (g_list_find (buffer->font_tags, tag))
+    {
+      if (attribute)
+        *attribute = "font";
+
+      if (value)
+        {
+          g_object_get (tag,
+                        "font", value,
+                        NULL);
+        }
+
+      return "span";
+    }
 
   return NULL;
 }
@@ -661,11 +786,15 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
     {
       if (! strcmp (attribute, "rise"))
         {
-          return get_baseline_tag (buffer, atoi (value));
+          return gimp_text_buffer_get_baseline_tag (buffer, atoi (value));
         }
       else if (! strcmp (attribute, "letter_spacing"))
         {
-          return get_spacing_tag (buffer, atoi (value));
+          return gimp_text_buffer_get_spacing_tag (buffer, atoi (value));
+        }
+      else if (! strcmp (attribute, "font"))
+        {
+          return gimp_text_buffer_get_font_tag (buffer, value);
         }
     }
 

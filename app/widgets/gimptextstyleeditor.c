@@ -73,6 +73,9 @@ static GtkWidget *
 
 static void      gimp_text_style_editor_clear_tags   (GtkButton           *button,
                                                       GimpTextStyleEditor *editor);
+static void      gimp_text_style_editor_font_changed (GimpContext         *context,
+                                                      GimpFont            *font,
+                                                      GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_tag_toggled  (GtkToggleButton     *toggle,
                                                       GimpTextStyleEditor *editor);
 
@@ -193,6 +196,10 @@ gimp_text_style_editor_constructor (GType                  type,
   g_assert (GIMP_IS_TEXT_BUFFER (editor->buffer));
 
   editor->context = gimp_context_new (editor->gimp, "text style editor", NULL);
+
+  g_signal_connect (editor->context, "font-changed",
+                    G_CALLBACK (gimp_text_style_editor_font_changed),
+                    editor);
 
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->font_entry),
                                      editor->fonts);
@@ -439,6 +446,28 @@ gimp_text_style_editor_clear_tags (GtkButton           *button,
 }
 
 static void
+gimp_text_style_editor_font_changed (GimpContext         *context,
+                                     GimpFont            *font,
+                                     GimpTextStyleEditor *editor)
+{
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
+  const gchar   *name   = gimp_context_get_font_name (context);
+
+  if (gtk_text_buffer_get_has_selection (buffer))
+    {
+      GtkTextIter start, end;
+
+      gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
+
+      gtk_text_buffer_begin_user_action (buffer);
+
+      gimp_text_buffer_set_font (editor->buffer, &start, &end, name);
+
+      gtk_text_buffer_end_user_action (buffer);
+    }
+}
+
+static void
 gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
                                     GimpTextStyleEditor *editor)
 {
@@ -488,6 +517,30 @@ gimp_text_style_editor_set_toggle (GimpTextStyleEditor *editor,
 }
 
 static void
+gimp_text_style_editor_set_font (GimpTextStyleEditor *editor,
+                                 GtkTextTag          *font_tag)
+{
+  gchar *font = NULL;
+
+  if (font_tag)
+    g_object_get (font_tag,
+                  "font", &font,
+                  NULL);
+
+  g_signal_handlers_block_by_func (editor->context,
+                                   gimp_text_style_editor_font_changed,
+                                   editor);
+
+  gimp_context_set_font_name (editor->context, font);
+
+  g_signal_handlers_unblock_by_func (editor->context,
+                                     gimp_text_style_editor_font_changed,
+                                     editor);
+
+  g_free (font);
+}
+
+static void
 gimp_text_style_editor_update (GimpTextStyleEditor *editor)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
@@ -497,6 +550,9 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
       GtkTextIter  start, end;
       GtkTextIter  iter;
       GList       *list;
+      gboolean     any_toggle_active = TRUE;
+      gboolean     font_differs      = FALSE;
+      GtkTextTag  *font_tag          = NULL;
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
       gtk_text_iter_order (&start, &end);
@@ -509,31 +565,72 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
           gimp_text_style_editor_set_toggle (editor, toggle, TRUE);
         }
 
+      /*  and get the initial font tag  */
+      for (list = editor->buffer->font_tags; list; list = g_list_next (list))
+        {
+          GtkTextTag *tag = list->data;
+
+          if (gtk_text_iter_has_tag (&start, tag))
+            {
+              font_tag = tag;
+              break;
+            }
+        }
+
       for (iter = start;
            gtk_text_iter_in_range (&iter, &start, &end);
            gtk_text_iter_forward_cursor_position (&iter))
         {
-          gboolean any_active = FALSE;
-
-          for (list = editor->toggles; list; list = g_list_next (list))
+          if (any_toggle_active)
             {
-              GtkToggleButton *toggle = list->data;
-              GtkTextTag      *tag    = g_object_get_data (G_OBJECT (toggle),
-                                                           "tag");
+              any_toggle_active = FALSE;
 
-              if (! gtk_text_iter_has_tag (&iter, tag))
+              for (list = editor->toggles; list; list = g_list_next (list))
                 {
-                  gimp_text_style_editor_set_toggle (editor, toggle, FALSE);
-                }
-              else
-                {
-                  any_active = TRUE;
+                  GtkToggleButton *toggle = list->data;
+                  GtkTextTag      *tag    = g_object_get_data (G_OBJECT (toggle),
+                                                               "tag");
+
+                  if (! gtk_text_iter_has_tag (&iter, tag))
+                    {
+                      gimp_text_style_editor_set_toggle (editor, toggle, FALSE);
+                    }
+                  else
+                    {
+                      any_toggle_active = TRUE;
+                    }
                 }
             }
 
-          if (! any_active)
+          if (! font_differs)
+            {
+              for (list = editor->buffer->font_tags;
+                   list;
+                   list = g_list_next (list))
+                {
+                  GtkTextTag *tag = list->data;
+
+                  if (gtk_text_iter_has_tag (&iter, tag))
+                    {
+                      if (tag != font_tag)
+                        font_differs = TRUE;
+
+                      break;
+                    }
+                }
+
+              if (! list && font_tag)
+                font_differs = TRUE;
+            }
+
+          if (! any_toggle_active || font_differs)
             break;
        }
+
+      if (font_differs)
+        font_tag = NULL;
+
+      gimp_text_style_editor_set_font (editor, font_tag);
 
       gtk_label_set_text (GTK_LABEL (editor->size_label), "---");
     }
@@ -552,6 +649,22 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
       tags     = gtk_text_iter_get_tags (&cursor);
       tags_on  = gtk_text_iter_get_toggled_tags (&cursor, TRUE);
       tags_off = gtk_text_iter_get_toggled_tags (&cursor, FALSE);
+
+      for (list = editor->buffer->font_tags; list; list = g_list_next (list))
+        {
+          GtkTextTag *tag = list->data;
+
+          if ((g_slist_find (tags, tag) &&
+               ! g_slist_find (tags_on, tag)) ||
+              g_slist_find (tags_off, tag))
+            {
+              gimp_text_style_editor_set_font (editor, tag);
+              break;
+            }
+        }
+
+      if (! list)
+        gimp_text_style_editor_set_font (editor, NULL);
 
       for (list = editor->toggles; list; list = g_list_next (list))
         {
