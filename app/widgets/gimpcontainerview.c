@@ -1185,11 +1185,9 @@ gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
                                              GimpViewable *viewable,
                                              gpointer      data)
 {
-  GimpContainerView        *view    = GIMP_CONTAINER_VIEW (data);
-  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (data);
 
-  if (viewable && private->container &&
-      gimp_container_have (private->container, GIMP_OBJECT (viewable)))
+  if (viewable && gimp_container_view_lookup (view, viewable))
     {
       gimp_container_view_item_selected (view, viewable);
 

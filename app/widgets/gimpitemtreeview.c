@@ -1134,13 +1134,10 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
                                  gpointer      data)
 {
   GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (data);
-  GimpItemTreeView      *view            = GIMP_ITEM_TREE_VIEW (data);
-  GimpContainer         *container;
+  GimpContainerView     *view            = GIMP_CONTAINER_VIEW (data);
 
-  container = gimp_container_view_get_container (GIMP_CONTAINER_VIEW (view));
-
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)) &&
-      item_view_class->new_default_action)
+  if (item_view_class->new_default_action &&
+      viewable && gimp_container_view_lookup (view, viewable))
     {
       GtkAction *action;
 
