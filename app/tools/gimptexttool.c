@@ -486,7 +486,21 @@ gimp_text_tool_button_release (GimpTool              *tool,
        *  an existing text layer), so finish the selection process and
        *  ignore rectangle-change-complete.
        */
+
+      /*  need to block "end-user-action" on the text buffer, because
+       *  GtkTextBuffer considers copying text to the clipboard an
+       *  undo-relevant user action, which is clearly a bug, but what
+       *  can we do...
+       */
+      g_signal_handlers_block_by_func (text_tool->buffer,
+                                       gimp_text_tool_buffer_edited,
+                                       text_tool);
+
       gimp_text_tool_editor_button_release (text_tool);
+
+      g_signal_handlers_unblock_by_func (text_tool->buffer,
+                                         gimp_text_tool_buffer_edited,
+                                         text_tool);
 
       text_tool->selecting = FALSE;
 
