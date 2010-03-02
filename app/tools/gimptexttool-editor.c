@@ -84,10 +84,10 @@ static void   gimp_text_tool_editor_destroy     (GtkWidget       *dialog,
                                                  GimpTextTool    *text_tool);
 static void   gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
                                                  const gchar     *str);
-static gint   gimp_text_tool_xy_to_index        (GimpTextTool    *text_tool,
+static void   gimp_text_tool_xy_to_iter         (GimpTextTool    *text_tool,
                                                  gdouble          x,
                                                  gdouble          y,
-                                                 gboolean        *trailing);
+                                                 GtkTextIter     *iter);
 static void   gimp_text_tool_im_commit          (GtkIMContext    *context,
                                                  const gchar     *str,
                                                  GimpTextTool    *text_tool);
@@ -275,24 +275,14 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    cursor;
   GtkTextIter    selection;
-  gint           index;
-  gboolean       trailing;
 
-  index = gimp_text_tool_xy_to_index (text_tool, x, y, &trailing);
-
-  gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor, index, TRUE);
-  if (trailing)
-    {
-      gtk_text_iter_forward_char (&cursor);
-      index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                               &cursor, TRUE);
-    }
+  gimp_text_tool_xy_to_iter (text_tool, x, y, &cursor);
 
   selection = cursor;
 
-  text_tool->select_start_index = index;
-  text_tool->select_words       = FALSE;
-  text_tool->select_lines       = FALSE;
+  text_tool->select_start_iter = cursor;
+  text_tool->select_words      = FALSE;
+  text_tool->select_lines      = FALSE;
 
   switch (press_type)
     {
@@ -348,24 +338,18 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
                               gdouble       y)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  GtkTextIter    old_cursor;
+  GtkTextIter    old_selection;
   GtkTextIter    cursor;
   GtkTextIter    selection;
-  gint           cursor_index;
-  gint           selection_index;
-  gint           index;
-  gboolean       trailing;
 
-  index = gimp_text_tool_xy_to_index (text_tool, x, y, &trailing);
-
-  gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
+  gtk_text_buffer_get_iter_at_mark (buffer, &old_cursor,
                                     gtk_text_buffer_get_insert (buffer));
-  gtk_text_buffer_get_iter_at_mark (buffer, &selection,
+  gtk_text_buffer_get_iter_at_mark (buffer, &old_selection,
                                     gtk_text_buffer_get_selection_bound (buffer));
 
-  cursor_index    = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                     &cursor, TRUE);
-  selection_index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                     &selection, TRUE);
+  gimp_text_tool_xy_to_iter (text_tool, x, y, &cursor);
+  selection = text_tool->select_start_iter;
 
   if (text_tool->select_words ||
       text_tool->select_lines)
@@ -373,19 +357,7 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
       GtkTextIter start;
       GtkTextIter end;
 
-      gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
-                                          index, TRUE);
-      if (trailing)
-        {
-          gtk_text_iter_forward_char (&cursor);
-          index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                   &cursor, TRUE);
-        }
-
-      gimp_text_buffer_get_iter_at_index (text_tool->buffer, &selection,
-                                          text_tool->select_start_index, TRUE);
-
-      if (index <= text_tool->select_start_index)
+      if (gtk_text_iter_compare (&cursor, &selection) < 0)
         {
           start = cursor;
           end   = selection;
@@ -411,7 +383,7 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
           gtk_text_iter_forward_to_line_end (&end);
         }
 
-      if (index <= text_tool->select_start_index)
+      if (gtk_text_iter_compare (&cursor, &selection) < 0)
         {
           cursor    = start;
           selection = end;
@@ -422,24 +394,9 @@ gimp_text_tool_editor_motion (GimpTextTool *text_tool,
           cursor    = end;
         }
     }
-  else
-    {
-      gimp_text_buffer_get_iter_at_index (text_tool->buffer, &cursor,
-                                          index, TRUE);
-      if (trailing)
-        {
-          gtk_text_iter_forward_char (&cursor);
-          index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                   &cursor, TRUE);
-        }
-    }
 
-  if (cursor_index    != gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                          &cursor,
-                                                          TRUE) ||
-      selection_index != gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                          &selection,
-                                                          TRUE))
+  if (! gtk_text_iter_equal (&cursor,    &old_cursor) ||
+      ! gtk_text_iter_equal (&selection, &old_selection))
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
@@ -1230,15 +1187,16 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
-static gint
-gimp_text_tool_xy_to_index (GimpTextTool *text_tool,
-                            gdouble       x,
-                            gdouble       y,
-                            gboolean     *trailing)
+static void
+gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
+                           gdouble       x,
+                           gdouble       y,
+                           GtkTextIter  *iter)
 {
   PangoLayout    *layout;
   PangoRectangle  ink_extents;
   gint            index;
+  gint            trailing;
 
   gimp_text_tool_ensure_layout (text_tool);
 
@@ -1257,9 +1215,12 @@ gimp_text_tool_xy_to_index (GimpTextTool *text_tool,
   pango_layout_xy_to_index (layout,
                             x * PANGO_SCALE,
                             y * PANGO_SCALE,
-                            &index, trailing);
+                            &index, &trailing);
 
-  return index;
+  gimp_text_buffer_get_iter_at_index (text_tool->buffer, iter, index, TRUE);
+
+  if (trailing)
+    gtk_text_iter_forward_char (iter);
 }
 
 static void
