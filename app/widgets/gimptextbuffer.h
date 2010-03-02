@@ -69,25 +69,25 @@ void             gimp_text_buffer_set_markup        (GimpTextBuffer    *buffer,
                                                      const gchar       *markup);
 gchar          * gimp_text_buffer_get_markup        (GimpTextBuffer    *buffer);
 
-gint             gimp_text_buffer_get_baseline      (GimpTextBuffer    *buffer,
+GtkTextTag     * gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
-                                                     GtkTextTag       **baseline_tag);
+                                                     gint              *baseline);
 void             gimp_text_buffer_change_baseline   (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               count);
 
-gint             gimp_text_buffer_get_spacing       (GimpTextBuffer    *buffer,
+GtkTextTag     * gimp_text_buffer_get_iter_spacing  (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
-                                                     GtkTextTag       **spacing_tag);
+                                                     gint              *spacing);
 void             gimp_text_buffer_change_spacing    (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               count);
 
-gchar          * gimp_text_buffer_get_font          (GimpTextBuffer    *buffer,
+GtkTextTag     * gimp_text_buffer_get_iter_font     (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
-                                                     GtkTextTag       **font_tag);
+                                                     gchar            **font);
 void             gimp_text_buffer_set_font          (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,

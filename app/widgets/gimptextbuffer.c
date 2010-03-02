@@ -303,10 +303,10 @@ gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
   return markup;
 }
 
-gint
-gimp_text_buffer_get_baseline (GimpTextBuffer     *buffer,
-                               const GtkTextIter  *iter,
-                               GtkTextTag        **baseline_tag)
+GtkTextTag *
+gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
+                                    const GtkTextIter *iter,
+                                    gint              *baseline)
 {
   GList *list;
 
@@ -316,21 +316,19 @@ gimp_text_buffer_get_baseline (GimpTextBuffer     *buffer,
 
       if (gtk_text_iter_has_tag (iter, tag))
         {
-          gint baseline;
+          if (baseline)
+            g_object_get (tag,
+                          "rise", baseline,
+                          NULL);
 
-          *baseline_tag = tag;
-
-          g_object_get (tag,
-                        "rise", &baseline,
-                        NULL);
-
-          return baseline;
+          return tag;
         }
     }
 
-  *baseline_tag = NULL;
+  if (baseline)
+    *baseline = 0;
 
-  return 0;
+  return NULL;
 }
 
 static GtkTextTag *
@@ -376,8 +374,8 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
   GtkTextIter  iter;
   GtkTextIter  span_start;
   GtkTextIter  span_end;
-  gint         span_baseline;
   GtkTextTag  *span_tag;
+  gint         span_baseline;
 
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
@@ -386,20 +384,22 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
   if (gtk_text_iter_equal (start, end))
     return;
 
-  iter          = *start;
-  span_start    = *start;
-  span_baseline = gimp_text_buffer_get_baseline (buffer, &iter, &span_tag);
+  iter       = *start;
+  span_start = *start;
+  span_tag   = gimp_text_buffer_get_iter_baseline (buffer, &iter,
+                                                   &span_baseline);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
 
   do
     {
-      gint        iter_baseline;
       GtkTextTag *iter_tag;
+      gint        iter_baseline;
 
       gtk_text_iter_forward_char (&iter);
 
-      iter_baseline = gimp_text_buffer_get_baseline (buffer, &iter, &iter_tag);
+      iter_tag = gimp_text_buffer_get_iter_baseline (buffer, &iter,
+                                                     &iter_baseline);
 
       span_end = iter;
 
@@ -435,10 +435,10 @@ gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
-gint
-gimp_text_buffer_get_spacing (GimpTextBuffer     *buffer,
-                              const GtkTextIter  *iter,
-                              GtkTextTag        **spacing_tag)
+GtkTextTag *
+gimp_text_buffer_get_iter_spacing (GimpTextBuffer    *buffer,
+                                   const GtkTextIter *iter,
+                                   gint              *spacing)
 {
   GList *list;
 
@@ -448,21 +448,19 @@ gimp_text_buffer_get_spacing (GimpTextBuffer     *buffer,
 
       if (gtk_text_iter_has_tag (iter, tag))
         {
-          gint spacing;
+          if (spacing)
+            g_object_get (tag,
+                          "rise", spacing, /* FIXME */
+                          NULL);
 
-          *spacing_tag = tag;
-
-          g_object_get (tag,
-                        "rise", &spacing, /* FIXME */
-                        NULL);
-
-          return spacing;
+          return tag;
         }
     }
 
-  *spacing_tag = NULL;
+  if (spacing)
+    *spacing = 0;
 
-  return 0;
+  return NULL;
 }
 
 static GtkTextTag *
@@ -508,8 +506,8 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
   GtkTextIter  iter;
   GtkTextIter  span_start;
   GtkTextIter  span_end;
-  gint         span_spacing;
   GtkTextTag  *span_tag;
+  gint         span_spacing;
 
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
   g_return_if_fail (start != NULL);
@@ -518,20 +516,22 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
   if (gtk_text_iter_equal (start, end))
     return;
 
-  iter         = *start;
-  span_start   = *start;
-  span_spacing = gimp_text_buffer_get_spacing (buffer, &iter, &span_tag);
+  iter       = *start;
+  span_start = *start;
+  span_tag   = gimp_text_buffer_get_iter_spacing (buffer, &iter,
+                                                  &span_spacing);
 
   gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
 
   do
     {
-      gint        iter_spacing;
       GtkTextTag *iter_tag;
+      gint        iter_spacing;
 
       gtk_text_iter_forward_char (&iter);
 
-      iter_spacing = gimp_text_buffer_get_spacing (buffer, &iter, &iter_tag);
+      iter_tag = gimp_text_buffer_get_iter_spacing (buffer, &iter,
+                                                    &iter_spacing);
 
       span_end = iter;
 
@@ -567,10 +567,10 @@ gimp_text_buffer_change_spacing (GimpTextBuffer    *buffer,
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
-gchar *
-gimp_text_buffer_get_font (GimpTextBuffer     *buffer,
-                           const GtkTextIter  *iter,
-                           GtkTextTag        **font_tag)
+GtkTextTag *
+gimp_text_buffer_get_iter_font (GimpTextBuffer     *buffer,
+                                const GtkTextIter  *iter,
+                                gchar             **font)
 {
   GList *list;
 
@@ -580,19 +580,17 @@ gimp_text_buffer_get_font (GimpTextBuffer     *buffer,
 
       if (gtk_text_iter_has_tag (iter, tag))
         {
-          gchar *font;
+          if (font)
+            g_object_get (tag,
+                          "font", font,
+                          NULL);
 
-          *font_tag = tag;
-
-          g_object_get (tag,
-                        "font", &font,
-                        NULL);
-
-          return font;
+          return tag;
         }
     }
 
-  *font_tag = NULL;
+  if (font)
+    *font = NULL;
 
   return NULL;
 }

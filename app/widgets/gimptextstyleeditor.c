@@ -566,16 +566,7 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
         }
 
       /*  and get the initial font tag  */
-      for (list = editor->buffer->font_tags; list; list = g_list_next (list))
-        {
-          GtkTextTag *tag = list->data;
-
-          if (gtk_text_iter_has_tag (&start, tag))
-            {
-              font_tag = tag;
-              break;
-            }
-        }
+      font_tag = gimp_text_buffer_get_iter_font (editor->buffer, &start, NULL);
 
       for (iter = start;
            gtk_text_iter_in_range (&iter, &start, &end);
@@ -604,26 +595,16 @@ gimp_text_style_editor_update (GimpTextStyleEditor *editor)
 
           if (! font_differs)
             {
-              for (list = editor->buffer->font_tags;
-                   list;
-                   list = g_list_next (list))
-                {
-                  GtkTextTag *tag = list->data;
+              GtkTextTag *tag;
 
-                  if (gtk_text_iter_has_tag (&iter, tag))
-                    {
-                      if (tag != font_tag)
-                        font_differs = TRUE;
+              tag = gimp_text_buffer_get_iter_font (editor->buffer, &iter,
+                                                    NULL);
 
-                      break;
-                    }
-                }
-
-              if (! list && font_tag)
+              if (tag != font_tag)
                 font_differs = TRUE;
             }
 
-          if (! any_toggle_active || font_differs)
+          if (! any_toggle_active && font_differs)
             break;
        }
 
