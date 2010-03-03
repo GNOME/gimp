@@ -226,11 +226,13 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
 
   if (markup)
     {
-      GtkTextBuffer *content;
-      GtkTextIter    insert;
-      GError        *error = NULL;
+      GtkTextTagTable *tag_table;
+      GtkTextBuffer   *content;
+      GtkTextIter      insert;
+      GError          *error = NULL;
 
-      content = gtk_text_buffer_new (gtk_text_buffer_get_tag_table (GTK_TEXT_BUFFER (buffer)));
+      tag_table = gtk_text_buffer_get_tag_table (GTK_TEXT_BUFFER (buffer));
+      content = gtk_text_buffer_new (tag_table);
 
       gtk_text_buffer_get_start_iter (content, &insert);
 
@@ -266,15 +268,17 @@ gimp_text_buffer_set_markup (GimpTextBuffer *buffer,
 gchar *
 gimp_text_buffer_get_markup (GimpTextBuffer *buffer)
 {
-  GtkTextBuffer *content;
-  GtkTextIter    insert;
-  GtkTextIter    start, end;
-  gchar         *markup;
-  gsize          length;
+  GtkTextTagTable *tag_table;
+  GtkTextBuffer   *content;
+  GtkTextIter      insert;
+  GtkTextIter      start, end;
+  gchar           *markup;
+  gsize            length;
 
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
 
-  content = gtk_text_buffer_new (gtk_text_buffer_get_tag_table (GTK_TEXT_BUFFER (buffer)));
+  tag_table = gtk_text_buffer_get_tag_table (GTK_TEXT_BUFFER (buffer));
+  content = gtk_text_buffer_new (tag_table);
 
   gtk_text_buffer_get_bounds (GTK_TEXT_BUFFER (buffer), &start, &end);
   gtk_text_buffer_get_start_iter (content, &insert);
