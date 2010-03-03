@@ -41,7 +41,7 @@ struct _GimpTextBuffer
   GtkTextTag    *strikethrough_tag;
 
   GList         *baseline_tags;
-  GList         *spacing_tags;
+  GList         *kerning_tags;
   GList         *font_tags;
 
   gboolean       insert_tags_set;
@@ -79,10 +79,10 @@ void             gimp_text_buffer_change_baseline   (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *end,
                                                      gint               count);
 
-GtkTextTag     * gimp_text_buffer_get_iter_spacing  (GimpTextBuffer    *buffer,
+GtkTextTag     * gimp_text_buffer_get_iter_kerning  (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
-                                                     gint              *spacing);
-void             gimp_text_buffer_change_spacing    (GimpTextBuffer    *buffer,
+                                                     gint              *kerning);
+void             gimp_text_buffer_change_kerning    (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               count);

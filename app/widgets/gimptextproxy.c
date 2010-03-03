@@ -31,7 +31,7 @@
 enum
 {
   CHANGE_BASELINE,
-  CHANGE_SPACING,
+  CHANGE_KERNING,
   LAST_SIGNAL
 };
 
@@ -82,11 +82,11 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 
-  proxy_signals[CHANGE_SPACING] =
-    g_signal_new ("change-spacing",
+  proxy_signals[CHANGE_KERNING] =
+    g_signal_new ("change-kerning",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-		  G_STRUCT_OFFSET (GimpTextProxyClass, change_spacing),
+		  G_STRUCT_OFFSET (GimpTextProxyClass, change_kerning),
 		  NULL, NULL,
 		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
@@ -102,10 +102,10 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
                                 G_TYPE_INT, -1);
 
   gtk_binding_entry_add_signal (binding_set, GDK_Left, GDK_MOD1_MASK,
-				"change-spacing", 1,
+				"change-kerning", 1,
                                 G_TYPE_INT, -1);
   gtk_binding_entry_add_signal (binding_set, GDK_Right, GDK_MOD1_MASK,
-				"change-spacing", 1,
+				"change-kerning", 1,
                                 G_TYPE_INT, 1);
 }
 

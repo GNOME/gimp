@@ -43,7 +43,7 @@ struct _GimpTextProxyClass
 
   void (* change_baseline) (GimpTextProxy *proxy,
                             gint           count);
-  void (* change_spacing)  (GimpTextProxy *proxy,
+  void (* change_kerning)  (GimpTextProxy *proxy,
                             gint           count);
 };
 

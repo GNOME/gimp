@@ -73,7 +73,7 @@ static void   gimp_text_tool_select_all         (GimpTextTool    *text_tool,
                                                  gboolean         select);
 static void   gimp_text_tool_change_baseline    (GimpTextTool    *text_tool,
                                                  gint             count);
-static void   gimp_text_tool_change_spacing     (GimpTextTool    *text_tool,
+static void   gimp_text_tool_change_kerning     (GimpTextTool    *text_tool,
                                                  gint             count);
 
 static void   gimp_text_tool_options_notify     (GimpTextOptions *options,
@@ -619,8 +619,8 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
       g_signal_connect_swapped (text_tool->proxy_text_view, "change-baseline",
                                 G_CALLBACK (gimp_text_tool_change_baseline),
                                 text_tool);
-      g_signal_connect_swapped (text_tool->proxy_text_view, "change-spacing",
-                                G_CALLBACK (gimp_text_tool_change_spacing),
+      g_signal_connect_swapped (text_tool->proxy_text_view, "change-kerning",
+                                G_CALLBACK (gimp_text_tool_change_kerning),
                                 text_tool);
     }
 }
@@ -1058,7 +1058,7 @@ gimp_text_tool_change_baseline (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_change_spacing (GimpTextTool *text_tool,
+gimp_text_tool_change_kerning (GimpTextTool *text_tool,
                                gint          count)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
@@ -1076,7 +1076,7 @@ gimp_text_tool_change_spacing (GimpTextTool *text_tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
   gtk_text_iter_order (&start, &end);
-  gimp_text_buffer_change_spacing (text_tool->buffer, &start, &end,
+  gimp_text_buffer_change_kerning (text_tool->buffer, &start, &end,
                                    count * PANGO_SCALE);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));

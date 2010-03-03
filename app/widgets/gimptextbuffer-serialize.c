@@ -663,7 +663,7 @@ gimp_text_buffer_pre_serialize (GimpTextBuffer *buffer,
         {
           GtkTextTag *tag = list->data;
 
-          if (g_list_find (buffer->spacing_tags, tag))
+          if (g_list_find (buffer->kerning_tags, tag))
             {
               GtkTextIter end;
 
@@ -704,7 +704,7 @@ gimp_text_buffer_post_deserialize (GimpTextBuffer *buffer,
         {
           GtkTextTag *tag = list->data;
 
-          if (g_list_find (buffer->spacing_tags, tag))
+          if (g_list_find (buffer->kerning_tags, tag))
             {
               GtkTextIter end;
 
