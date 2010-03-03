@@ -28,6 +28,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenudock.h"
 
+#include "display/gimpimagewindow.h"
+
 #include "actions.h"
 #include "dock-actions.h"
 #include "dock-commands.h"
@@ -125,6 +127,11 @@ dock_actions_update (GimpActionGroup *group,
        *  (see view-actions.c)
        */
       window_actions_update (group, toplevel);
+    }
+  else if (GIMP_IS_IMAGE_WINDOW (toplevel))
+    {
+      SET_VISIBLE ("dock-show-image-menu",    FALSE);
+      SET_VISIBLE ("dock-auto-follow-active", FALSE);
     }
 
 #undef SET_ACTIVE
