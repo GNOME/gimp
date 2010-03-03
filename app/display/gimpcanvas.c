@@ -37,6 +37,9 @@
 #include "gimp-intl.h"
 
 
+#define MAX_BATCH_SIZE 32000
+
+
 enum
 {
   PROP_0,
@@ -786,13 +789,13 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
-  while (num_segments >= 32000)
+  while (num_segments >= MAX_BATCH_SIZE)
     {
       gdk_draw_segments (gtk_widget_get_window (GTK_WIDGET (canvas)),
                          canvas->gc[style],
-                         segments, 32000);
-      num_segments -= 32000;
-      segments     += 32000;
+                         segments, MAX_BATCH_SIZE);
+      num_segments -= MAX_BATCH_SIZE;
+      segments     += MAX_BATCH_SIZE;
     }
 
   gdk_draw_segments (gtk_widget_get_window (GTK_WIDGET (canvas)),
