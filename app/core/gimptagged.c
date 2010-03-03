@@ -130,11 +130,24 @@ void
 gimp_tagged_remove_tag (GimpTagged *tagged,
                         GimpTag    *tag)
 {
+  GList        *tag_iter;
+
   g_return_if_fail (GIMP_IS_TAGGED (tagged));
 
-  if (GIMP_TAGGED_GET_INTERFACE (tagged)->remove_tag (tagged, tag))
+  for (tag_iter = gimp_tagged_get_tags (tagged); tag_iter;
+       tag_iter = g_list_next (tag_iter))
     {
-      g_signal_emit (tagged, gimp_tagged_signals[TAG_REMOVED], 0, tag);
+      GimpTag *tag_ref = GIMP_TAG (tag_iter->data);
+
+      if (gimp_tag_equals (tag_ref, tag))
+        {
+          g_object_ref (tag_ref);
+          if (GIMP_TAGGED_GET_INTERFACE (tagged)->remove_tag (tagged, tag_ref))
+            {
+              g_signal_emit (tagged, gimp_tagged_signals[TAG_REMOVED], 0, tag_ref);
+            }
+          g_object_unref (tag_ref);
+        }
     }
 }
 
