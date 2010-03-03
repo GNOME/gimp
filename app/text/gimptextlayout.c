@@ -191,8 +191,14 @@ gimp_text_layout_new (GimpText  *text,
                                                          yres));
   if (fabs (text->letter_spacing) > 0.1)
     {
-      PangoAttrList  *attrs = pango_attr_list_new ();
+      PangoAttrList  *attrs;
       PangoAttribute *attr;
+
+      attrs = pango_layout_get_attributes (layout->layout);
+      if (attrs)
+        pango_attr_list_ref (attrs);
+      else
+        attrs = pango_attr_list_new ();
 
       attr = pango_attr_letter_spacing_new (text->letter_spacing * PANGO_SCALE);
 
