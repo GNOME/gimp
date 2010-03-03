@@ -947,7 +947,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                         "text",   NULL,
                         "markup", NULL,
                         NULL);
-          gimp_text_buffer_set_markup (text_tool->buffer, NULL);
+          gimp_text_buffer_set_text (text_tool->buffer, NULL);
 
           gimp_text_tool_clear_layout (text_tool);
         }
@@ -959,8 +959,11 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
       if (text)
         {
           gimp_config_sync (G_OBJECT (text), G_OBJECT (text_tool->proxy), 0);
-          gimp_text_buffer_set_text (text_tool->buffer, text->text);
-          gimp_text_buffer_set_markup (text_tool->buffer, text->markup);
+
+          if (text->markup)
+            gimp_text_buffer_set_markup (text_tool->buffer, text->markup);
+          else
+            gimp_text_buffer_set_text (text_tool->buffer, text->text);
 
           gimp_text_tool_clear_layout (text_tool);
 
