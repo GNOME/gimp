@@ -52,6 +52,12 @@ struct _GimpTextStyleEditor
   GtkWidget      *underline_toggle;
   GtkWidget      *strikethrough_toggle;
 
+  GtkWidget      *baseline_spinbutton;
+  GtkAdjustment  *baseline_adjustment;
+
+  GtkWidget      *kerning_spinbutton;
+  GtkAdjustment  *kerning_adjustment;
+
   GtkWidget      *size_label;
 
   GList          *toggles;

@@ -74,6 +74,10 @@ gboolean         gimp_text_buffer_has_markup        (GimpTextBuffer    *buffer);
 GtkTextTag     * gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gint              *baseline);
+void             gimp_text_buffer_set_baseline      (GimpTextBuffer    *buffer,
+                                                     const GtkTextIter *start,
+                                                     const GtkTextIter *end,
+                                                     gint               count);
 void             gimp_text_buffer_change_baseline   (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
@@ -82,6 +86,10 @@ void             gimp_text_buffer_change_baseline   (GimpTextBuffer    *buffer,
 GtkTextTag     * gimp_text_buffer_get_iter_kerning  (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gint              *kerning);
+void             gimp_text_buffer_set_kerning       (GimpTextBuffer    *buffer,
+                                                     const GtkTextIter *start,
+                                                     const GtkTextIter *end,
+                                                     gint               count);
 void             gimp_text_buffer_change_kerning    (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,

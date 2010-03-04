@@ -387,6 +387,42 @@ gimp_text_buffer_get_baseline_tag (GimpTextBuffer *buffer,
 }
 
 void
+gimp_text_buffer_set_baseline (GimpTextBuffer    *buffer,
+                               const GtkTextIter *start,
+                               const GtkTextIter *end,
+                               gint               baseline)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (start, end))
+    return;
+
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
+  for (list = buffer->baseline_tags; list; list = g_list_next (list))
+    {
+      gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                  start, end);
+    }
+
+  if (baseline != 0)
+    {
+      GtkTextTag *tag;
+
+      tag = gimp_text_buffer_get_baseline_tag (buffer, baseline);
+
+      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                 start, end);
+    }
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
+}
+
+void
 gimp_text_buffer_change_baseline (GimpTextBuffer    *buffer,
                                   const GtkTextIter *start,
                                   const GtkTextIter *end,
@@ -516,6 +552,42 @@ gimp_text_buffer_get_kerning_tag (GimpTextBuffer *buffer,
   buffer->kerning_tags = g_list_prepend (buffer->kerning_tags, tag);
 
   return tag;
+}
+
+void
+gimp_text_buffer_set_kerning (GimpTextBuffer    *buffer,
+                              const GtkTextIter *start,
+                              const GtkTextIter *end,
+                              gint               kerning)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (start, end))
+    return;
+
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
+  for (list = buffer->kerning_tags; list; list = g_list_next (list))
+    {
+      gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                  start, end);
+    }
+
+  if (kerning != 0)
+    {
+      GtkTextTag *tag;
+
+      tag = gimp_text_buffer_get_kerning_tag (buffer, kerning);
+
+      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                 start, end);
+    }
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
 void
