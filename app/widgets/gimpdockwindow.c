@@ -683,20 +683,25 @@ gimp_dock_window_update_title (GimpDockWindow *dock_window)
 static gboolean
 gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
 {
-  GimpDock *dock  = NULL;
-  gchar    *title = NULL;
+  GString *complete_title = g_string_new ("");
+  GList   *iter           = NULL;
 
-  dock = gimp_dock_window_get_dock (dock_window);
+  for (iter = gimp_dock_window_get_docks (dock_window);
+       iter;
+       iter = g_list_next (iter))
+    {
+      gchar *title = gimp_dock_get_title (GIMP_DOCK (iter->data));
+      g_string_append (complete_title, title);
+      g_free (title);
 
-  if (! dock)
-    return FALSE;
+      if (g_list_next (iter))
+        g_string_append (complete_title, " | ");
+    }
 
-  title = gimp_dock_get_title (dock);
+  if (complete_title->len > 0)
+    gtk_window_set_title (GTK_WINDOW (dock_window), complete_title->str);
 
-  if (title)
-    gtk_window_set_title (GTK_WINDOW (dock_window), title);
-
-  g_free (title);
+  g_string_free (complete_title, TRUE /*free_segment*/);
 
   dock_window->p->update_title_idle_id = 0;
 
