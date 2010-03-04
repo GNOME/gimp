@@ -100,7 +100,7 @@ static gboolean  gimp_text_style_editor_update_idle      (GimpTextStyleEditor *e
 
 
 G_DEFINE_TYPE (GimpTextStyleEditor, gimp_text_style_editor,
-               GTK_TYPE_HBOX)
+               GTK_TYPE_VBOX)
 
 #define parent_class gimp_text_style_editor_parent_class
 
@@ -161,9 +161,16 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
   GtkWidget *image;
 
+  /*  upper row  */
+
+  editor->upper_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), editor->upper_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (editor->upper_hbox);
+
   editor->font_entry = gimp_container_entry_new (NULL, NULL,
                                                  GIMP_VIEW_SIZE_SMALL, 1);
-  gtk_box_pack_start (GTK_BOX (editor), editor->font_entry, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->font_entry,
+                      FALSE, FALSE, 0);
   gtk_widget_show (editor->font_entry);
 
   /*  don't let unhandled key events drop through to the text editor  */
@@ -174,9 +181,22 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                           G_CALLBACK (gtk_false),
                           NULL);
 
+  editor->size_label = gtk_label_new ("0.0");
+  gtk_misc_set_padding (GTK_MISC (editor->size_label), 2, 0);
+  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->size_label,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (editor->size_label);
+
+  /*  lower row  */
+
+  editor->lower_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), editor->lower_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (editor->lower_hbox);
+
   editor->clear_button = gtk_button_new ();
   gtk_widget_set_can_focus (editor->clear_button, FALSE);
-  gtk_box_pack_start (GTK_BOX (editor), editor->clear_button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor->lower_hbox), editor->clear_button,
+                      FALSE, FALSE, 0);
   gtk_widget_show (editor->clear_button);
 
   gimp_help_set_help_data (editor->clear_button,
@@ -190,17 +210,12 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
   gtk_widget_show (image);
 
-  editor->size_label = gtk_label_new ("0.0");
-  gtk_misc_set_padding (GTK_MISC (editor->size_label), 2, 0);
-  gtk_box_pack_end (GTK_BOX (editor), editor->size_label, FALSE, FALSE, 0);
-  gtk_widget_show (editor->size_label);
-
   editor->kerning_adjustment =
     GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -1000.0, 1000.0, 1.0, 10.0, 0.0));
   editor->kerning_spinbutton = gtk_spin_button_new (editor->kerning_adjustment,
                                                     1.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (editor->kerning_spinbutton), 5);
-  gtk_box_pack_end (GTK_BOX (editor), editor->kerning_spinbutton,
+  gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->kerning_spinbutton,
                     FALSE, FALSE, 0);
   gtk_widget_show (editor->kerning_spinbutton);
 
@@ -213,7 +228,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   editor->baseline_spinbutton = gtk_spin_button_new (editor->baseline_adjustment,
                                                      1.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (editor->baseline_spinbutton), 5);
-  gtk_box_pack_end (GTK_BOX (editor), editor->baseline_spinbutton,
+  gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->baseline_spinbutton,
                     FALSE, FALSE, 0);
   gtk_widget_show (editor->baseline_spinbutton);
 
@@ -457,7 +472,7 @@ gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
 
   toggle = gtk_toggle_button_new ();
   gtk_widget_set_can_focus (toggle, FALSE);
-  gtk_box_pack_start (GTK_BOX (editor), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor->lower_hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   editor->toggles = g_list_append (editor->toggles, toggle);

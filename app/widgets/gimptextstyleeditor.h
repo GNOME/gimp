@@ -34,7 +34,7 @@ typedef struct _GimpTextStyleEditorClass GimpTextStyleEditorClass;
 
 struct _GimpTextStyleEditor
 {
-  GtkHBox         parent_instance;
+  GtkVBox         parent_instance;
 
   Gimp           *gimp;
   GimpContext    *context;
@@ -45,20 +45,19 @@ struct _GimpTextStyleEditor
   gdouble         resolution_x;
   gdouble         resolution_y;
 
+  GtkWidget      *upper_hbox;
+  GtkWidget      *lower_hbox;
+
   GtkWidget      *font_entry;
+  GtkWidget      *size_label;
+
   GtkWidget      *clear_button;
-  GtkWidget      *bold_toggle;
-  GtkWidget      *italic_toggle;
-  GtkWidget      *underline_toggle;
-  GtkWidget      *strikethrough_toggle;
 
   GtkWidget      *baseline_spinbutton;
   GtkAdjustment  *baseline_adjustment;
 
   GtkWidget      *kerning_spinbutton;
   GtkAdjustment  *kerning_adjustment;
-
-  GtkWidget      *size_label;
 
   GList          *toggles;
 
@@ -67,7 +66,7 @@ struct _GimpTextStyleEditor
 
 struct _GimpTextStyleEditorClass
 {
-  GtkHBoxClass  parent_class;
+  GtkVBoxClass  parent_class;
 };
 
 
