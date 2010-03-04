@@ -161,6 +161,14 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
   GtkWidget *image;
 
+  /*  don't let unhandled key events drop through to the text editor  */
+  g_signal_connect_after (editor, "key-press-event",
+                          G_CALLBACK (gtk_true),
+                          NULL);
+  g_signal_connect_after (editor, "key-release-event",
+                          G_CALLBACK (gtk_false),
+                          NULL);
+
   /*  upper row  */
 
   editor->upper_hbox = gtk_hbox_new (FALSE, 0);
@@ -172,14 +180,6 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->font_entry,
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->font_entry);
-
-  /*  don't let unhandled key events drop through to the text editor  */
-  g_signal_connect_after (editor->font_entry, "key-press-event",
-                          G_CALLBACK (gtk_true),
-                          NULL);
-  g_signal_connect_after (editor->font_entry, "key-release-event",
-                          G_CALLBACK (gtk_false),
-                          NULL);
 
   editor->size_label = gtk_label_new ("0.0");
   gtk_misc_set_padding (GTK_MISC (editor->size_label), 2, 0);
