@@ -150,8 +150,7 @@ static void      gimp_text_tool_text_notify     (GimpText          *text,
 static void      gimp_text_tool_text_changed    (GimpText          *text,
                                                  GimpTextTool      *text_tool);
 
-static gboolean  gimp_text_tool_idle_apply      (GimpTextTool      *text_tool);
-static void      gimp_text_tool_apply           (GimpTextTool      *text_tool);
+static gboolean  gimp_text_tool_apply           (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_create_layer    (GimpTextTool      *text_tool,
                                                  GimpText          *text);
@@ -1025,7 +1024,7 @@ gimp_text_tool_proxy_notify (GimpText     *text,
 
       text_tool->idle_id =
         g_idle_add_full (G_PRIORITY_LOW,
-                         (GSourceFunc) gimp_text_tool_idle_apply, text_tool,
+                         (GSourceFunc) gimp_text_tool_apply, text_tool,
                          NULL);
     }
 }
@@ -1100,16 +1099,6 @@ gimp_text_tool_text_changed (GimpText     *text,
 }
 
 static gboolean
-gimp_text_tool_idle_apply (GimpTextTool *text_tool)
-{
-  text_tool->idle_id = 0;
-
-  gimp_text_tool_apply (text_tool);
-
-  return FALSE;
-}
-
-static void
 gimp_text_tool_apply (GimpTextTool *text_tool)
 {
   const GParamSpec *pspec = NULL;
@@ -1127,13 +1116,13 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
       text_tool->idle_id = 0;
     }
 
-  g_return_if_fail (text_tool->text != NULL);
-  g_return_if_fail (text_tool->layer != NULL);
+  g_return_val_if_fail (text_tool->text != NULL, FALSE);
+  g_return_val_if_fail (text_tool->layer != NULL, FALSE);
 
   layer = text_tool->layer;
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  g_return_if_fail (layer->text == text_tool->text);
+  g_return_val_if_fail (layer->text == text_tool->text, FALSE);
 
   /*  Walk over the list of changes and figure out if we are changing
    *  a single property or need to push a full text undo.
@@ -1256,6 +1245,8 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   gimp_text_tool_clear_layout (text_tool);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+
+  return FALSE;
 }
 
 static void
