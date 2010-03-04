@@ -163,7 +163,12 @@ static gboolean  gimp_text_tool_set_drawable    (GimpTextTool      *text_tool,
                                                  GimpDrawable      *drawable,
                                                  gboolean           confirm);
 
-static void      gimp_text_tool_buffer_edited   (GimpTextBuffer    *buffer,
+static void      gimp_text_tool_block_drawing   (GimpTextTool      *text_tool);
+static void      gimp_text_tool_unblock_drawing (GimpTextTool      *text_tool);
+
+static void    gimp_text_tool_buffer_begin_edit (GimpTextBuffer    *buffer,
+                                                 GimpTextTool      *text_tool);
+static void    gimp_text_tool_buffer_end_edit   (GimpTextBuffer    *buffer,
                                                  GimpTextTool      *text_tool);
 
 
@@ -246,8 +251,11 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
   text_tool->buffer = gimp_text_buffer_new ();
 
+  g_signal_connect (text_tool->buffer, "begin-user-action",
+                    G_CALLBACK (gimp_text_tool_buffer_begin_edit),
+                    text_tool);
   g_signal_connect (text_tool->buffer, "end-user-action",
-                    G_CALLBACK (gimp_text_tool_buffer_edited),
+                    G_CALLBACK (gimp_text_tool_buffer_end_edit),
                     text_tool);
 
   text_tool->handle_rectangle_change_complete = TRUE;
@@ -496,13 +504,19 @@ gimp_text_tool_button_release (GimpTool              *tool,
        *  can we do...
        */
       g_signal_handlers_block_by_func (text_tool->buffer,
-                                       gimp_text_tool_buffer_edited,
+                                       gimp_text_tool_buffer_begin_edit,
+                                       text_tool);
+      g_signal_handlers_block_by_func (text_tool->buffer,
+                                       gimp_text_tool_buffer_end_edit,
                                        text_tool);
 
       gimp_text_tool_editor_button_release (text_tool);
 
       g_signal_handlers_unblock_by_func (text_tool->buffer,
-                                         gimp_text_tool_buffer_edited,
+                                         gimp_text_tool_buffer_end_edit,
+                                         text_tool);
+      g_signal_handlers_unblock_by_func (text_tool->buffer,
+                                         gimp_text_tool_buffer_begin_edit,
                                          text_tool);
 
       text_tool->selecting = FALSE;
@@ -872,6 +886,8 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 
           gimp_image_get_resolution (text_tool->image, &xres, &yres);
 
+          gimp_text_tool_block_drawing (text_tool);
+
           g_object_set (text_tool->proxy,
                         "box-mode",   GIMP_TEXT_BOX_FIXED,
                         "box-width",  gimp_pixels_to_units (x2 - x1,
@@ -924,7 +940,10 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
       GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (tool);
 
       g_signal_handlers_block_by_func (text_tool->buffer,
-                                       gimp_text_tool_buffer_edited,
+                                       gimp_text_tool_buffer_begin_edit,
+                                       text_tool);
+      g_signal_handlers_block_by_func (text_tool->buffer,
+                                       gimp_text_tool_buffer_end_edit,
                                        text_tool);
 
       if (text_tool->text)
@@ -977,7 +996,10 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
         }
 
       g_signal_handlers_unblock_by_func (text_tool->buffer,
-                                         gimp_text_tool_buffer_edited,
+                                         gimp_text_tool_buffer_end_edit,
+                                         text_tool);
+      g_signal_handlers_unblock_by_func (text_tool->buffer,
+                                         gimp_text_tool_buffer_begin_edit,
                                          text_tool);
     }
 
@@ -1036,7 +1058,7 @@ gimp_text_tool_text_notify (GimpText     *text,
 {
   g_return_if_fail (text == text_tool->text);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+  gimp_text_tool_block_drawing (text_tool);
 
   if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE)
     {
@@ -1066,7 +1088,10 @@ gimp_text_tool_text_notify (GimpText     *text,
       strcmp (pspec->name, "markup") == 0)
     {
       g_signal_handlers_block_by_func (text_tool->buffer,
-                                       gimp_text_tool_buffer_edited,
+                                       gimp_text_tool_buffer_begin_edit,
+                                       text_tool);
+      g_signal_handlers_block_by_func (text_tool->buffer,
+                                       gimp_text_tool_buffer_end_edit,
                                        text_tool);
 
       if (pspec->name[0] == 't')
@@ -1075,27 +1100,24 @@ gimp_text_tool_text_notify (GimpText     *text,
         gimp_text_buffer_set_markup (text_tool->buffer, text->markup);
 
       g_signal_handlers_unblock_by_func (text_tool->buffer,
-                                         gimp_text_tool_buffer_edited,
+                                         gimp_text_tool_buffer_end_edit,
+                                         text_tool);
+      g_signal_handlers_unblock_by_func (text_tool->buffer,
+                                         gimp_text_tool_buffer_begin_edit,
                                          text_tool);
     }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
 gimp_text_tool_text_changed (GimpText     *text,
                              GimpTextTool *text_tool)
 {
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
-
   /* we need to redraw the rectangle in any case because whatever
    * changes to the text can change its size
    */
   gimp_text_tool_frame_item (text_tool);
 
-  gimp_text_tool_clear_layout (text_tool);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+  gimp_text_tool_unblock_drawing (text_tool);
 }
 
 static gboolean
@@ -1167,8 +1189,6 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
             }
         }
     }
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
   if (push_undo)
     {
@@ -1242,9 +1262,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   gimp_image_flush (image);
 
-  gimp_text_tool_clear_layout (text_tool);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+  gimp_text_tool_unblock_drawing (text_tool);
 
   return FALSE;
 }
@@ -1259,6 +1277,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
   GimpLayer         *layer;
   gint               x1, y1;
   gint               x2, y2;
+
+  gimp_text_tool_block_drawing (text_tool);
 
   if (text)
     {
@@ -1344,10 +1364,14 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
                                                         text_tool->proxy->box_unit,
                                                         yres),
                     NULL);
+
+      gimp_text_tool_apply (text_tool); /* unblocks drawing */
     }
   else
     {
       gimp_text_tool_frame_item (text_tool);
+
+      gimp_text_tool_unblock_drawing (text_tool);
     }
 
   gimp_image_undo_group_end (image);
@@ -1582,8 +1606,38 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_buffer_edited (GimpTextBuffer *buffer,
-                              GimpTextTool   *text_tool)
+gimp_text_tool_block_drawing (GimpTextTool *text_tool)
+{
+  if (! text_tool->drawing_blocked)
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
+
+      gimp_text_tool_clear_layout (text_tool);
+
+      text_tool->drawing_blocked = TRUE;
+    }
+}
+
+static void
+gimp_text_tool_unblock_drawing (GimpTextTool *text_tool)
+{
+  g_return_if_fail (text_tool->drawing_blocked == TRUE);
+
+  text_tool->drawing_blocked = FALSE;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+}
+
+static void
+gimp_text_tool_buffer_begin_edit (GimpTextBuffer *buffer,
+                                  GimpTextTool   *text_tool)
+{
+  gimp_text_tool_block_drawing (text_tool);
+}
+
+static void
+gimp_text_tool_buffer_end_edit (GimpTextBuffer *buffer,
+                                GimpTextTool   *text_tool)
 {
   if (text_tool->text)
     {
@@ -1713,11 +1767,7 @@ gimp_text_tool_delete_selection (GimpTextTool *text_tool)
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
-
       gtk_text_buffer_delete_selection (buffer, TRUE, TRUE);
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
     }
 }
 
@@ -1734,12 +1784,8 @@ gimp_text_tool_cut_clipboard (GimpTextTool *text_tool)
   clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
-
   gtk_text_buffer_cut_clipboard (GTK_TEXT_BUFFER (text_tool->buffer),
                                  clipboard, TRUE);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 void
@@ -1772,12 +1818,8 @@ gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
   clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
-
   gtk_text_buffer_paste_clipboard (GTK_TEXT_BUFFER (text_tool->buffer),
                                    clipboard, NULL, TRUE);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 void

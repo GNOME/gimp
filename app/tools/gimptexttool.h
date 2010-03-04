@@ -62,6 +62,7 @@ struct _GimpTextTool
   gboolean        text_box_fixed;
 
   GimpTextLayout *layout;
+  gboolean        drawing_blocked;
 
   /* text editor state: */
 
