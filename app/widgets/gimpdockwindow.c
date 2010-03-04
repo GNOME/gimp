@@ -613,7 +613,7 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
                                GdkEventAny *event)
 {
   GimpDockWindow         *dock_window = GIMP_DOCK_WINDOW (widget);
-  GimpDock               *dock        = gimp_dock_window_get_dock (dock_window);
+  GList                  *docks       = gimp_dock_window_get_docks (dock_window);
   GimpSessionInfo        *info        = NULL;
   const gchar            *entry_name  = NULL;
   GimpDialogFactoryEntry *entry       = NULL;
@@ -622,7 +622,8 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
    * recently closed dock since those can be brought back through the
    * normal Windows->Dockable Dialogs menu
    */
-  if (gimp_dock_get_n_dockables (dock) < 2)
+  if (g_list_length (docks) == 1 &&
+      gimp_dock_get_n_dockables (GIMP_DOCK (g_list_nth_data (docks, 0))) == 1)
     return FALSE;
 
   info = gimp_session_info_new ();
@@ -951,22 +952,6 @@ gimp_dock_window_get_docks (GimpDockWindow *dock_window)
   g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
 
   return gimp_dock_columns_get_docks (dock_window->p->dock_columns);
-}
-
-/**
- * gimp_dock_window_get_dock:
- * @dock_window:
- *
- * Get the #GimpDock within the #GimpDockWindow.
- *
- * Returns:
- **/
-GimpDock *
-gimp_dock_window_get_dock (GimpDockWindow *dock_window)
-{
-  GList *docks = gimp_dock_columns_get_docks (dock_window->p->dock_columns);
-
-  return g_list_length (docks) > 0 ? GIMP_DOCK (docks->data) : NULL;
 }
 
 gboolean

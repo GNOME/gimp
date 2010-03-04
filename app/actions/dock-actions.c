@@ -104,12 +104,11 @@ dock_actions_update (GimpActionGroup *group,
 
   if (GIMP_IS_DOCK_WINDOW (toplevel))
     {
-      GimpDock *dock = gimp_dock_window_get_dock (GIMP_DOCK_WINDOW (toplevel));
-      
-      if (GIMP_IS_MENU_DOCK (dock))
-        {
-          GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
+      GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (toplevel);
+      gboolean show_image_menu = ! gimp_dock_window_has_toolbox (dock_window);
 
+      if (show_image_menu)
+        {
           SET_VISIBLE ("dock-show-image-menu",    TRUE);
           SET_VISIBLE ("dock-auto-follow-active", TRUE);
 
