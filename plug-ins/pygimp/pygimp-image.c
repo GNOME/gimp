@@ -1305,6 +1305,46 @@ img_get_vectors(PyGimpImage *self, void *closure)
     return ret;
 }
 
+static PyObject *
+img_get_active_vectors(PyGimpImage *self, void *closure)
+{
+    gint32 id = gimp_image_get_active_vectors(self->ID);
+
+    if (id == -1) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
+    return pygimp_vectors_new(id);
+}
+
+static int
+img_set_active_vectors(PyGimpImage *self, PyObject *value, void *closure)
+{
+    PyGimpVectors *vtr;
+
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "cannot delete active_vectors");
+        return -1;
+    }
+
+    if (!pygimp_vectors_check(value)) {
+        PyErr_SetString(PyExc_TypeError, "type mismatch");
+        return -1;
+    }
+
+    vtr = (PyGimpVectors *)value;
+
+    if (!gimp_image_set_active_vectors(self->ID, vtr->ID)) {
+        PyErr_Format(pygimp_error,
+                     "could not set active vectors (ID %d) on image (ID %d)",
+                     vtr->ID, self->ID);
+        return -1;
+    }
+
+    return 0;
+}
+
 static PyGetSetDef img_getsets[] = {
     { "ID", (getter)img_get_ID, (setter)0 },
     { "active_channel", (getter)img_get_active_channel,
@@ -1312,6 +1352,8 @@ static PyGetSetDef img_getsets[] = {
     { "active_drawable", (getter)img_get_active_drawable, (setter)0 },
     { "active_layer", (getter)img_get_active_layer,
       (setter)img_set_active_layer },
+    { "active_vectors", (getter)img_get_active_vectors,
+      (setter)img_set_active_vectors},
     { "base_type", (getter)img_get_base_type, (setter)0 },
     { "channels", (getter)img_get_channels, (setter)0 },
     { "colormap", (getter)img_get_colormap, (setter)img_set_colormap },
