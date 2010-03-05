@@ -1804,8 +1804,27 @@ gimp_text_tool_copy_clipboard (GimpTextTool *text_tool)
   clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
                                         GDK_SELECTION_CLIPBOARD);
 
+  /*  need to block "end-user-action" on the text buffer, because
+   *  GtkTextBuffer considers copying text to the clipboard an
+   *  undo-relevant user action, which is clearly a bug, but what
+   *  can we do...
+   */
+  g_signal_handlers_block_by_func (text_tool->buffer,
+                                   gimp_text_tool_buffer_begin_edit,
+                                   text_tool);
+  g_signal_handlers_block_by_func (text_tool->buffer,
+                                   gimp_text_tool_buffer_end_edit,
+                                   text_tool);
+
   gtk_text_buffer_copy_clipboard (GTK_TEXT_BUFFER (text_tool->buffer),
                                   clipboard);
+
+  g_signal_handlers_unblock_by_func (text_tool->buffer,
+                                     gimp_text_tool_buffer_end_edit,
+                                     text_tool);
+  g_signal_handlers_unblock_by_func (text_tool->buffer,
+                                     gimp_text_tool_buffer_begin_edit,
+                                     text_tool);
 }
 
 void
