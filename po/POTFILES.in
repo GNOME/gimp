@@ -131,6 +131,7 @@ app/core/gimpdrawable-stroke.c
 app/core/gimpdrawable-threshold.c
 app/core/gimpdrawable-transform.c
 app/core/gimpdrawable.c
+app/core/gimpdynamicsoutput.c
 app/core/gimpgradient-load.c
 app/core/gimpgradient-save.c
 app/core/gimpgrid.c
@@ -185,6 +186,7 @@ app/dialogs/image-merge-layers-dialog.c
 app/dialogs/image-new-dialog.c
 app/dialogs/image-properties-dialog.c
 app/dialogs/image-scale-dialog.c
+app/dialogs/input-devices-dialog.c
 app/dialogs/keyboard-shortcuts-dialog.c
 app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c
@@ -299,6 +301,7 @@ app/text/gimptext-compat.c
 app/text/gimptextlayer.c
 app/text/gimptextlayer-transform.c
 app/text/gimptextlayer-xcf.c
+app/text/text-enums.c
 
 app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
@@ -369,6 +372,7 @@ app/tools/gimpsheartool.c
 app/tools/gimpsmudgetool.c
 app/tools/gimptextoptions.c
 app/tools/gimptexttool.c
+app/tools/gimptexttool-editor.c
 app/tools/gimpthresholdtool.c
 app/tools/gimptool.c
 app/tools/gimptransformoptions.c
@@ -403,16 +407,19 @@ app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerlist.c
 app/widgets/gimpcontrollerwheel.c
 app/widgets/gimpdataeditor.c
+app/widgets/gimpdeviceeditor.c
+app/widgets/gimpdeviceinfoeditor.c
 app/widgets/gimpdevices.c
 app/widgets/gimpdevicestatus.c
-app/widgets/gimpdnd.c
 app/widgets/gimpdnd-xds.c
+app/widgets/gimpdnd.c
 app/widgets/gimpdock.c
 app/widgets/gimpdockable.c
 app/widgets/gimpdockwindow.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
 app/widgets/gimpdynamicseditor.c
+app/widgets/gimpdynamicsoutputeditor.c
 app/widgets/gimpeditor.c
 app/widgets/gimperrorconsole.c
 app/widgets/gimperrordialog.c
@@ -443,9 +450,11 @@ app/widgets/gimpsizebox.c
 app/widgets/gimpstrokeeditor.c
 app/widgets/gimptagentry.c
 app/widgets/gimptemplateeditor.c
+app/widgets/gimptextbuffer-serialize.c
+app/widgets/gimptextbuffer.c
 app/widgets/gimptexteditor.c
+app/widgets/gimptextstyleeditor.c
 app/widgets/gimpthumbbox.c
-app/widgets/gimptranslationstore.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-dnd.c
 app/widgets/gimptoolbox-image-area.c
@@ -453,6 +462,7 @@ app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
 app/widgets/gimptooleditor.c
 app/widgets/gimptooloptionseditor.c
+app/widgets/gimptranslationstore.c
 app/widgets/gimpuimanager.c
 app/widgets/gimpundoeditor.c
 app/widgets/gimpvectorstreeview.c
