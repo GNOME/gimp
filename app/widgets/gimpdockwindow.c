@@ -377,6 +377,15 @@ gimp_dock_window_constructor (GType                  type,
                              G_CALLBACK (gimp_dock_window_dock_removed),
                              dock_window,
                              G_CONNECT_SWAPPED);
+
+    g_signal_connect_object (dock_window->p->dock_columns, "dock-added",
+                             G_CALLBACK (gimp_dock_window_update_title),
+                             dock_window,
+                             G_CONNECT_SWAPPED);
+    g_signal_connect_object (dock_window->p->dock_columns, "dock-removed",
+                             G_CALLBACK (gimp_dock_window_update_title),
+                             dock_window,
+                             G_CONNECT_SWAPPED);
   }
 
   if (dock_window->p->auto_follow_active)
@@ -856,8 +865,6 @@ gimp_dock_window_add_dock (GimpDockWindow *dock_window,
                               GIMP_DOCK (dock),
                               index);
 
-  /* Update window title now and when docks title is invalidated */
-  gimp_dock_window_update_title (dock_window);
   g_signal_connect_object (dock, "title-invalidated",
                            G_CALLBACK (gimp_dock_window_update_title),
                            dock_window,
