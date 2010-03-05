@@ -769,7 +769,18 @@ gimp_toolbox_drag_drop (GtkWidget      *widget,
 static gchar *
 gimp_toolbox_get_title (GimpDock *dock)
 {
-  return g_strdup (_("Toolbox"));
+  GString *title      = g_string_new (_("Toolbox"));
+  gchar   *dock_title = GIMP_DOCK_CLASS (parent_class)->get_title (dock);
+
+  if (dock_title && strlen (dock_title) > 0)
+    {
+      g_string_append (title, " - ");
+      g_string_append (title, dock_title);
+    }
+
+  g_free (dock_title);
+
+  return g_string_free (title, FALSE /*free_segment*/);
 }
 
 static void

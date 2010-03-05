@@ -54,7 +54,6 @@ struct _GimpMenuDockPrivate
 static void   gimp_menu_dock_style_set               (GtkWidget      *widget,
                                                       GtkStyle       *prev_style);
 
-static gchar *gimp_menu_dock_get_title               (GimpDock       *dock);
 static void   gimp_menu_dock_book_added              (GimpDock       *dock,
                                                       GimpDockbook   *dockbook);
 static void   gimp_menu_dock_book_removed            (GimpDock       *dock,
@@ -79,7 +78,6 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
 
   widget_class->style_set   = gimp_menu_dock_style_set;
 
-  dock_class->get_title     = gimp_menu_dock_get_title;
   dock_class->book_added    = gimp_menu_dock_book_added;
   dock_class->book_removed  = gimp_menu_dock_book_removed;
 
@@ -158,42 +156,5 @@ gimp_menu_dock_dockbook_changed (GimpDockbook *dockbook,
                                  GimpMenuDock *dock)
 {
   gimp_dock_invalidate_title (GIMP_DOCK (dock));
-}
-
-static gchar *
-gimp_menu_dock_get_title (GimpDock *dock)
-{
-  GString *title;
-  GList   *list;
-
-  title = g_string_new (NULL);
-
-  for (list = gimp_dock_get_dockbooks (dock);
-       list;
-       list = g_list_next (list))
-    {
-      GimpDockbook *dockbook = list->data;
-      GList        *children;
-      GList        *child;
-
-      children = gtk_container_get_children (GTK_CONTAINER (dockbook));
-
-      for (child = children; child; child = g_list_next (child))
-        {
-          GimpDockable *dockable = child->data;
-
-          g_string_append (title, gimp_dockable_get_name (dockable));
-
-          if (g_list_next (child))
-            g_string_append (title, ", ");
-        }
-
-      g_list_free (children);
-
-      if (g_list_next (list))
-        g_string_append (title, " - ");
-    }
-
-  return g_string_free (title, FALSE);
 }
 

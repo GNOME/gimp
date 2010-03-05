@@ -72,6 +72,7 @@ struct _GimpDockPrivate
 static void              gimp_dock_style_set         (GtkWidget    *widget,
                                                       GtkStyle     *prev_style);
 static void              gimp_dock_destroy           (GtkObject    *object);
+static gchar           * gimp_dock_real_get_title    (GimpDock     *dock);
 static void              gimp_dock_real_book_added   (GimpDock     *dock,
                                                       GimpDockbook *dockbook);
 static void              gimp_dock_real_book_removed (GimpDock     *dock,
@@ -137,6 +138,7 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   widget_class->style_set        = gimp_dock_style_set;
 
+  klass->get_title               = gimp_dock_real_get_title;
   klass->set_host_geometry_hints = NULL;
   klass->book_added              = gimp_dock_real_book_added;
   klass->book_removed            = gimp_dock_real_book_removed;
@@ -239,6 +241,43 @@ gimp_dock_destroy (GtkObject *object)
     gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->p->dockbooks->data));
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static gchar *
+gimp_dock_real_get_title (GimpDock *dock)
+{
+  GString *title;
+  GList   *list;
+
+  title = g_string_new (NULL);
+
+  for (list = gimp_dock_get_dockbooks (dock);
+       list;
+       list = g_list_next (list))
+    {
+      GimpDockbook *dockbook = list->data;
+      GList        *children;
+      GList        *child;
+
+      children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+
+      for (child = children; child; child = g_list_next (child))
+        {
+          GimpDockable *dockable = child->data;
+
+          g_string_append (title, gimp_dockable_get_name (dockable));
+
+          if (g_list_next (child))
+            g_string_append (title, ", ");
+        }
+
+      g_list_free (children);
+
+      if (g_list_next (list))
+        g_string_append (title, " - ");
+    }
+
+  return g_string_free (title, FALSE);
 }
 
 static void
