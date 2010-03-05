@@ -1317,7 +1317,10 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
   g_object_unref (text);
 
   if (! layer)
-    return;
+    {
+      gimp_text_tool_unblock_drawing (text_tool);
+      return;
+    }
 
   gimp_text_tool_connect (text_tool, GIMP_TEXT_LAYER (layer), text);
 
