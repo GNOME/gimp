@@ -636,11 +636,11 @@
       <menu action="windows-dialogs-menu" name="Dockable Dialogs">
         <xi:include href="dialogs-menuitems.xml" />
       </menu>
+      <menuitem action="dialogs-toolbox" />
       <separator />
       <placeholder name="Images" />
       <separator />
       <placeholder name="Docks">
-        <menuitem action="dialogs-toolbox" />
       </placeholder>
       <separator />
       <menuitem action="windows-hide-docks" />
