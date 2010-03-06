@@ -261,6 +261,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   gimp_text_tool_editor_init (text_tool);
 
   gimp_tool_control_set_scroll_lock          (tool->control, TRUE);
+  gimp_tool_control_set_wants_click          (tool->control, TRUE);
   gimp_tool_control_set_wants_double_click   (tool->control, TRUE);
   gimp_tool_control_set_wants_triple_click   (tool->control, TRUE);
   gimp_tool_control_set_wants_all_key_events (tool->control, TRUE);
@@ -476,8 +477,6 @@ gimp_text_tool_button_press (GimpTool            *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
-#define MIN_LAYER_WIDTH 20
-
 static void
 gimp_text_tool_button_release (GimpTool              *tool,
                                const GimpCoords      *coords,
@@ -520,13 +519,27 @@ gimp_text_tool_button_release (GimpTool              *tool,
       text_tool->selecting = FALSE;
 
       text_tool->handle_rectangle_change_complete = FALSE;
+
+      /*  there is no cancelling of selections yet  */
+      if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+        release_type = GIMP_BUTTON_RELEASE_NORMAL;
     }
   else if (gimp_rectangle_tool_get_function (rect_tool) ==
            GIMP_RECTANGLE_TOOL_DEAD)
     {
       /*  the user clicked in dead space (like between the corner and
-       *  edge handles, completely ignore that too.
+       *  edge handles, so completely ignore that.
        */
+
+      text_tool->handle_rectangle_change_complete = FALSE;
+    }
+  else if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+    {
+      /*  user has clicked outside of any text layer in order to
+       *  create a new text, but cancelled the operation.
+       */
+
+      gimp_text_tool_editor_halt (text_tool);
 
       text_tool->handle_rectangle_change_complete = FALSE;
     }
@@ -548,7 +561,9 @@ gimp_text_tool_button_release (GimpTool              *tool,
                     "y2", &y2,
                     NULL);
 
-      if ((y2 - y1) < MIN_LAYER_WIDTH)
+      if (release_type == GIMP_BUTTON_RELEASE_CLICK ||
+          (x2 - x1) < 3                             ||
+          (y2 - y1) < 3)
         {
           /*  unless the rectangle is unreasonably small to hold any
            *  real text (the user has eitherjust clicked or just made
