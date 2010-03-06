@@ -125,6 +125,7 @@ static void      gimp_dock_window_style_set               (GtkWidget            
                                                            GtkStyle              *prev_style);
 static gboolean  gimp_dock_window_delete_event            (GtkWidget             *widget,
                                                            GdkEventAny           *event);
+static gboolean  gimp_dock_window_should_add_to_recent    (GimpDockWindow        *dock_window);
 static void      gimp_dock_window_display_changed         (GimpDockWindow        *dock_window,
                                                            GimpObject            *display,
                                                            GimpContext           *context);
@@ -622,7 +623,6 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
                                GdkEventAny *event)
 {
   GimpDockWindow         *dock_window = GIMP_DOCK_WINDOW (widget);
-  GList                  *docks       = gimp_dock_window_get_docks (dock_window);
   GimpSessionInfo        *info        = NULL;
   const gchar            *entry_name  = NULL;
   GimpDialogFactoryEntry *entry       = NULL;
@@ -631,8 +631,7 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
    * recently closed dock since those can be brought back through the
    * normal Windows->Dockable Dialogs menu
    */
-  if (g_list_length (docks) == 1 &&
-      gimp_dock_get_n_dockables (GIMP_DOCK (g_list_nth_data (docks, 0))) == 1)
+  if (! gimp_dock_window_should_add_to_recent (dock_window))
     return FALSE;
 
   info = gimp_session_info_new ();
@@ -654,6 +653,44 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   g_object_unref (info);
 
   return FALSE;
+}
+
+/**
+ * gimp_dock_window_should_add_to_recent:
+ * @dock_window:
+ *
+ * Returns: %FALSE if the dock window can be recreated with one
+ *          Windows menu item such as Windows->Toolbox or
+ *          Windows->Dockable Dialogs->Layers, %TRUE if not. It should
+ *          then be added to the list of recently closed docks.
+ **/
+static gboolean
+gimp_dock_window_should_add_to_recent (GimpDockWindow *dock_window)
+{
+  GList    *docks      = gimp_dock_window_get_docks (dock_window);
+  gboolean  should_add = TRUE;
+
+  if (g_list_length (docks) < 1)
+    {
+      should_add = FALSE;
+    }
+  else if (g_list_length (docks) == 1)
+    {
+      GimpDock *dock = GIMP_DOCK (g_list_nth_data (docks, 0));
+
+      if (GIMP_IS_TOOLBOX (dock) &&
+          gimp_dock_get_n_dockables (dock) == 0)
+        {
+          should_add = FALSE;
+        }
+      else if (! GIMP_IS_TOOLBOX (dock) &&
+               gimp_dock_get_n_dockables (dock) == 1)
+        {
+          should_add = FALSE;
+        }
+    }
+
+  return should_add;
 }
 
 static void
