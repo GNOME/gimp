@@ -21,6 +21,7 @@
 #include <string.h>
 
 #undef GSEAL_ENABLE
+#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 

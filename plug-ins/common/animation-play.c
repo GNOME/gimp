@@ -36,6 +36,7 @@
 #include <string.h>
 
 #undef GSEAL_ENABLE
+#undef GTK_DISABLE_DEPRECATED
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
