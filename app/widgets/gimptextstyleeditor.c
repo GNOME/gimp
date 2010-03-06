@@ -800,6 +800,8 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
       gimp_text_style_editor_set_font (editor, font_tag);
 
+      gtk_label_set_text (GTK_LABEL (editor->size_label), "---");
+
       if (baseline_differs)
         gtk_entry_set_text (GTK_ENTRY (editor->baseline_spinbutton), "");
       else
@@ -809,8 +811,6 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
         gtk_entry_set_text (GTK_ENTRY (editor->kerning_spinbutton), "");
       else
         gimp_text_style_editor_set_kerning (editor, kerning);
-
-      gtk_label_set_text (GTK_LABEL (editor->size_label), "---");
     }
   else
     {
@@ -845,6 +845,10 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       if (! list)
         gimp_text_style_editor_set_font (editor, NULL);
 
+      str = g_strdup_printf ("%0.2f", editor->resolution_y);
+      gtk_label_set_text (GTK_LABEL (editor->size_label), str);
+      g_free (str);
+
       for (list = editor->toggles; list; list = g_list_next (list))
         {
           GtkToggleButton *toggle = list->data;
@@ -862,10 +866,6 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
       gimp_text_buffer_get_iter_kerning (editor->buffer, &cursor, &value);
       gimp_text_style_editor_set_kerning (editor, value);
-
-      str = g_strdup_printf ("%0.2f", editor->resolution_y);
-      gtk_label_set_text (GTK_LABEL (editor->size_label), str);
-      g_free (str);
 
       g_slist_free (tags);
       g_slist_free (tags_on);
