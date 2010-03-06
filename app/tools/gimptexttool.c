@@ -1036,6 +1036,8 @@ gimp_text_tool_proxy_notify (GimpText     *text,
 
   if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE)
     {
+      gimp_text_tool_block_drawing (text_tool);
+
       text_tool->pending = g_list_append (text_tool->pending, pspec);
 
       if (text_tool->idle_id)
