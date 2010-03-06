@@ -506,47 +506,34 @@ gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
 
 void
 gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
-                                       PangoRectangle *cursor_rect,
-                                       gint           *logical_off_x,
-                                       gint           *logical_off_y)
+                                       PangoRectangle *cursor_rect)
 {
-  GtkTextBuffer  *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
-  PangoLayout    *layout;
-  PangoRectangle  ink_extents;
-  PangoRectangle  logical_extents;
-  GtkTextIter     cursor;
-  gint            cursor_index;
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  PangoLayout   *layout;
+  gint           offset_x;
+  gint           offset_y;
+  GtkTextIter    cursor;
+  gint           cursor_index;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
   g_return_if_fail (cursor_rect != NULL);
-
-  gimp_text_tool_ensure_layout (text_tool);
-
-  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
-
-  pango_layout_get_pixel_extents (layout, &ink_extents, &logical_extents);
-  gimp_text_layout_transform_rect (text_tool->layout, &logical_extents);
-
-  if (ink_extents.x < 0)
-    *logical_off_x = -ink_extents.x;
-  else
-    *logical_off_x = 0;
-
-  if (ink_extents.y < 0)
-    *logical_off_y = -ink_extents.y;
-  else
-    *logical_off_y = 0;
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
   cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer, &cursor,
                                                   TRUE);
 
+  gimp_text_tool_ensure_layout (text_tool);
+
+  layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+
+  gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
+
   pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
   gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
 
-  cursor_rect->x      = PANGO_PIXELS (cursor_rect->x) + *logical_off_x;
-  cursor_rect->y      = PANGO_PIXELS (cursor_rect->y) + *logical_off_y;
+  cursor_rect->x      = PANGO_PIXELS (cursor_rect->x) + offset_x;
+  cursor_rect->y      = PANGO_PIXELS (cursor_rect->y) + offset_y;
   cursor_rect->width  = PANGO_PIXELS (cursor_rect->width);
   cursor_rect->height = PANGO_PIXELS (cursor_rect->height);
 }
@@ -1161,24 +1148,21 @@ gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
                            gdouble       y,
                            GtkTextIter  *iter)
 {
-  PangoLayout    *layout;
-  PangoRectangle  ink_extents;
-  gint            index;
-  gint            trailing;
+  PangoLayout *layout;
+  gint         offset_x;
+  gint         offset_y;
+  gint         index;
+  gint         trailing;
 
   gimp_text_tool_ensure_layout (text_tool);
 
   gimp_text_layout_untransform_point (text_tool->layout, &x, &y);
 
-  /*  adjust to offset of logical rect  */
+  gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
+  x -= offset_x;
+  y -= offset_y;
+
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
-  pango_layout_get_pixel_extents (layout, &ink_extents, NULL);
-
-  if (ink_extents.x < 0)
-    x += ink_extents.x;
-
-  if (ink_extents.y < 0)
-    y += ink_extents.y;
 
   pango_layout_xy_to_index (layout,
                             x * PANGO_SCALE,
@@ -1209,12 +1193,10 @@ gimp_text_tool_im_preedit_start (GtkIMContext *context,
   GtkWidget        *frame;
   GtkWidget        *ebox;
   PangoRectangle    cursor_rect = { 0, };
-  gint              unused1, unused2;
   gint              off_x, off_y;
 
   if (text_tool->text)
-    gimp_text_tool_editor_get_cursor_rect (text_tool, &cursor_rect,
-                                           &unused1, &unused2);
+    gimp_text_tool_editor_get_cursor_rect (text_tool, &cursor_rect);
 
   g_object_get (text_tool, "x1", &off_x, "y1", &off_y, NULL);
 

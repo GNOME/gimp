@@ -47,9 +47,7 @@ gboolean   gimp_text_tool_editor_key_release     (GimpTextTool        *text_tool
 void       gimp_text_tool_reset_im_context       (GimpTextTool        *text_tool);
 
 void       gimp_text_tool_editor_get_cursor_rect (GimpTextTool        *text_tool,
-                                                  PangoRectangle      *cursor_rect,
-                                                  gint                *logical_off_x,
-                                                  gint                *logical_off_y);
+                                                  PangoRectangle      *cursor_rect);
 
 
 #endif /* __GIMP_TEXT_TOOL_EDITOR_H__ */
