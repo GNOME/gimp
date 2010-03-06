@@ -883,8 +883,6 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 
           gimp_image_get_resolution (text_tool->image, &xres, &yres);
 
-          gimp_text_tool_block_drawing (text_tool);
-
           g_object_set (text_tool->proxy,
                         "box-mode",   GIMP_TEXT_BOX_FIXED,
                         "box-width",  gimp_pixels_to_units (x2 - x1,
