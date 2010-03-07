@@ -331,6 +331,7 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
     {
       GimpCoords last_coords;
       GimpCoords current_coords;
+      gdouble scale;
 
       gimp_paint_core_get_last_coords (paint_core, &last_coords);
       gimp_paint_core_get_current_coords (paint_core, &current_coords);
@@ -348,6 +349,25 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
         {
           return FALSE;
         }
+  /*No drawing anything if the scale is too small*/
+  if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      gdouble    fade_point;
+
+      if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
+        {
+          fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                                    paint_core->pixel_dist);
+
+          scale = paint_options->brush_scale *
+                  gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
+                                                         &current_coords,
+                                                         paint_options,
+                                                         fade_point);
+          if (scale < 0.0001) return FALSE;
+        }
+    }
 
       if (GIMP_BRUSH_CORE_GET_CLASS (paint_core)->handles_changing_brush)
         {
@@ -1482,7 +1502,7 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
 
   if ((core->scale == 1.0) &&
       (core->angle == 0.0) &&
-      (core->hardness == 1.0) && 
+      (core->hardness == 1.0) &&
       (core->aspect_ratio == 1.0))
     return brush->mask;
 

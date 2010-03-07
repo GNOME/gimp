@@ -560,10 +560,10 @@ gimp_brush_generated_get_half_size (GimpBrushGenerated      *gbrush,
   GimpVector2  x_axis;
   GimpVector2  y_axis;
 
-  /* Since floatongpoint is not really accurate, 
-   * we need to round to limit the errors. 
-   * Errors in some border cases resulted in 
-   * different height and width reported for 
+  /* Since floatongpoint is not really accurate,
+   * we need to round to limit the errors.
+   * Errors in some border cases resulted in
+   * different height and width reported for
    * the same input value on calling procedure side.
    * This became problem at the rise of dynamics that
    * allows for any angle to turn up.
