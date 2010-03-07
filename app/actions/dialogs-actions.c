@@ -24,7 +24,10 @@
 #include "actions-types.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpsessioninfo.h"
+#include "widgets/gimptoolbox.h"
 
 #include "dialogs-actions.h"
 #include "dialogs-commands.h"
@@ -32,11 +35,14 @@
 #include "gimp-intl.h"
 
 
+static gboolean dialogs_actions_toolbox_exists (void);
+
+
 const GimpStringActionEntry dialogs_dockable_actions[] =
 {
   { "dialogs-toolbox", NULL,
     NC_("windows-action", "Tool_box"), "<control>B",
-    NC_("windows-action", "Raise the toolbox"),
+    NULL /* set in dialogs_actions_update() */,
     "gimp-toolbox",
     GIMP_HELP_TOOLBOX },
 
@@ -251,6 +257,21 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
 };
 
 
+static gboolean
+dialogs_actions_toolbox_exists (void)
+{
+  GimpDialogFactory *factory = gimp_dialog_factory_get_singleton ();
+  GtkWidget         *widget  = NULL;
+  GimpSessionInfo   *info    = NULL;
+
+  info = gimp_dialog_factory_find_session_info (factory, "gimp-toolbox-window");
+
+  if (info)
+    widget = gimp_session_info_get_widget (info);
+
+  return widget != NULL;
+}
+
 void
 dialogs_actions_setup (GimpActionGroup *group)
 {
@@ -269,4 +290,20 @@ void
 dialogs_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
+  const gchar *toolbox_label   = NULL;
+  const gchar *toolbox_tooltip = NULL;
+
+  if (dialogs_actions_toolbox_exists ())
+    {
+      toolbox_label   = _("Toolbox");
+      toolbox_tooltip = _("Raise the toolbox");
+    }
+  else
+    {
+      toolbox_label   = _("New Toolbox");
+      toolbox_tooltip = _("Create a new toolbox");
+    }
+
+  gimp_action_group_set_action_label (group, "dialogs-toolbox", toolbox_label);
+  gimp_action_group_set_action_tooltip (group, "dialogs-toolbox", toolbox_tooltip);
 }

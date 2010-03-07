@@ -140,6 +140,7 @@ static void      gimp_image_window_show_tooltip        (GimpUIManager       *man
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_hide_tooltip        (GimpUIManager       *manager,
                                                         GimpImageWindow     *window);
+static void      gimp_image_window_update_ui_manager   (GimpImageWindow     *window);
 
 static gboolean  gimp_image_window_resume_shell        (GimpDisplayShell    *shell);
 static void      gimp_image_window_shell_size_allocate (GimpDisplayShell    *shell,
@@ -258,6 +259,13 @@ gimp_image_window_constructor (GType                  type,
 
   g_assert (GIMP_IS_UI_MANAGER (private->menubar_manager));
 
+  g_signal_connect_object (private->dialog_factory, "dock-window-added",
+                           G_CALLBACK (gimp_image_window_update_ui_manager),
+                           window, G_CONNECT_SWAPPED);
+  g_signal_connect_object (private->dialog_factory, "dock-window-removed",
+                           G_CALLBACK (gimp_image_window_update_ui_manager),
+                           window, G_CONNECT_SWAPPED);
+
   gtk_window_add_accel_group (GTK_WINDOW (window),
                               gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (private->menubar_manager)));
 
@@ -375,6 +383,10 @@ gimp_image_window_finalize (GObject *object)
       g_object_unref (private->menubar_manager);
       private->menubar_manager = NULL;
     }
+
+  g_signal_handlers_disconnect_by_func (private->dialog_factory,
+                                        gimp_image_window_update_ui_manager,
+                                        window);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1136,6 +1148,13 @@ gimp_image_window_hide_tooltip (GimpUIManager   *manager,
   statusbar = gimp_display_shell_get_statusbar (shell);
 
   gimp_statusbar_pop (statusbar, "menu-tooltip");
+}
+
+static void
+gimp_image_window_update_ui_manager (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  gimp_ui_manager_update (private->menubar_manager, private->active_shell->display);
 }
 
 static gboolean
