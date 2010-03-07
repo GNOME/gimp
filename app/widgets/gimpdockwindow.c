@@ -742,7 +742,7 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
       g_free (title);
 
       if (g_list_next (iter))
-        g_string_append (complete_title, " | ");
+        g_string_append (complete_title, _(" | "));
     }
 
   if (complete_title->len > 0)
