@@ -789,6 +789,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       ! text_tool->layer->text)
     return;
 
+  gimp_text_tool_ensure_layout (text_tool);
+
   if (gtk_text_buffer_get_has_selection (GTK_TEXT_BUFFER (text_tool->buffer)))
     {
       /* If the text buffer has a selection, highlight the selected letters */
