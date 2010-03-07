@@ -34,6 +34,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-layer.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer-floating-sel.h"
@@ -397,22 +398,55 @@ gimp_text_tool_button_press (GimpTool            *tool,
         }
 
       /*  bail out now if the user user clicked on a handle of an
-       *  existing rectangle
+       *  existing rectangle, but not inside an existing framed layer
        */
-      if (text_tool->layer &&
-          gimp_rectangle_tool_get_function (rect_tool) !=
+      if (gimp_rectangle_tool_get_function (rect_tool) !=
           GIMP_RECTANGLE_TOOL_CREATING)
         {
-          GimpItem *item = GIMP_ITEM (text_tool->layer);
-          gdouble   x    = coords->x - gimp_item_get_offset_x (item);
-          gdouble   y    = coords->y - gimp_item_get_offset_y (item);
+          if (text_tool->layer)
+            {
+              GimpItem *item = GIMP_ITEM (text_tool->layer);
+              gdouble   x    = coords->x - gimp_item_get_offset_x (item);
+              gdouble   y    = coords->y - gimp_item_get_offset_y (item);
 
-          if (x < 0 || x >= gimp_item_get_width  (item) ||
-              y < 0 || y >= gimp_item_get_height (item))
+              if (x < 0 || x >= gimp_item_get_width  (item) ||
+                  y < 0 || y >= gimp_item_get_height (item))
+                {
+                  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+                  return;
+                }
+            }
+          else
             {
               gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
               return;
+            }
+        }
+
+      /* if the the click is not related to the currently edited text
+       * layer in any way, try to pick a text layer
+       */
+      if (! text_tool->moving &&
+          gimp_rectangle_tool_get_function (rect_tool) ==
+          GIMP_RECTANGLE_TOOL_CREATING)
+        {
+          GimpTextLayer *text_layer;
+
+          text_layer = gimp_image_pick_text_layer (image, coords->x, coords->y);
+
+          if (text_layer && text_layer != text_tool->layer)
+            {
+              if (text_tool->image == image)
+                g_signal_handlers_block_by_func (image,
+                                                 gimp_text_tool_layer_changed,
+                                                 text_tool);
+
+              gimp_image_set_active_layer (image, GIMP_LAYER (text_layer));
+
+              if (text_tool->image == image)
+                g_signal_handlers_unblock_by_func (image,
+                                                   gimp_text_tool_layer_changed,
+                                                   text_tool);
             }
         }
     }
