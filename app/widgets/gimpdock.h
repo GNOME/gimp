@@ -67,7 +67,6 @@ struct _GimpDockClass
 GType               gimp_dock_get_type                (void) G_GNUC_CONST;
 
 gchar             * gimp_dock_get_title               (GimpDock       *dock);
-void                gimp_dock_invalidate_title        (GimpDock       *dock);
 void                gimp_dock_set_host_geometry_hints (GimpDock       *dock,
                                                        GtkWindow      *window);
 void                gimp_dock_invalidate_geometry     (GimpDock       *dock);

@@ -77,6 +77,7 @@ static void              gimp_dock_real_book_added   (GimpDock     *dock,
                                                       GimpDockbook *dockbook);
 static void              gimp_dock_real_book_removed (GimpDock     *dock,
                                                       GimpDockbook *dockbook);
+static void              gimp_dock_invalidate_title  (GimpDock     *dock);
 static gboolean          gimp_dock_dropped_cb        (GtkWidget    *source,
                                                       gint          insert_index,
                                                       gpointer      data);
@@ -292,6 +293,14 @@ gimp_dock_real_book_removed (GimpDock     *dock,
 {
 }
 
+static void
+gimp_dock_invalidate_title (GimpDock *dock)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  g_signal_emit (dock, dock_signals[TITLE_INVALIDATED], 0);
+}
+
 static gboolean
 gimp_dock_dropped_cb (GtkWidget *source,
                       gint       insert_index,
@@ -367,14 +376,6 @@ gimp_dock_get_title (GimpDock *dock)
     return GIMP_DOCK_GET_CLASS (dock)->get_title (dock);
 
   return NULL;
-}
-
-void
-gimp_dock_invalidate_title (GimpDock *dock)
-{
-  g_return_if_fail (GIMP_IS_DOCK (dock));
-
-  g_signal_emit (dock, dock_signals[TITLE_INVALIDATED], 0);
 }
 
 /**
@@ -617,11 +618,23 @@ gimp_dock_add_book (GimpDock     *dock,
 
   gimp_dockbook_set_dock (dockbook, dock);
 
+  g_signal_connect_object (dockbook, "dockable-added",
+                           G_CALLBACK (gimp_dock_invalidate_title),
+                           dock, G_CONNECT_SWAPPED);
+  g_signal_connect_object (dockbook, "dockable-removed",
+                           G_CALLBACK (gimp_dock_invalidate_title),
+                           dock, G_CONNECT_SWAPPED);
+  g_signal_connect_object (dockbook, "dockable-reordered",
+                           G_CALLBACK (gimp_dock_invalidate_title),
+                           dock, G_CONNECT_SWAPPED);
+
   dock->p->dockbooks = g_list_insert (dock->p->dockbooks, dockbook, index);
   gimp_paned_box_add_widget (GIMP_PANED_BOX (dock->p->paned_vbox),
                              GTK_WIDGET (dockbook),
                              index);
   gtk_widget_show (GTK_WIDGET (dockbook));
+
+  gimp_dock_invalidate_title (dock);
 
   g_signal_emit (dock, dock_signals[BOOK_ADDED], 0, dockbook);
 }
@@ -636,6 +649,10 @@ gimp_dock_remove_book (GimpDock     *dock,
 
   gimp_dockbook_set_dock (dockbook, NULL);
 
+  g_signal_handlers_disconnect_by_func (dockbook,
+                                        gimp_dock_invalidate_title,
+                                        dock);
+
   /* Ref the dockbook so we can emit the "book-removed" signal and
    * pass it as a parameter before it's destroyed
    */
@@ -644,6 +661,8 @@ gimp_dock_remove_book (GimpDock     *dock,
   dock->p->dockbooks = g_list_remove (dock->p->dockbooks, dockbook);
   gimp_paned_box_remove_widget (GIMP_PANED_BOX (dock->p->paned_vbox),
                                 GTK_WIDGET (dockbook));
+
+  gimp_dock_invalidate_title (dock);
 
   g_signal_emit (dock, dock_signals[BOOK_REMOVED], 0, dockbook);
 

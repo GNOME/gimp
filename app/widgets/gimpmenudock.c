@@ -54,16 +54,6 @@ struct _GimpMenuDockPrivate
 static void   gimp_menu_dock_style_set               (GtkWidget      *widget,
                                                       GtkStyle       *prev_style);
 
-static void   gimp_menu_dock_book_added              (GimpDock       *dock,
-                                                      GimpDockbook   *dockbook);
-static void   gimp_menu_dock_book_removed            (GimpDock       *dock,
-                                                      GimpDockbook   *dockbook);
-
-static void   gimp_menu_dock_dockbook_changed        (GimpDockbook   *dockbook,
-                                                      GimpDockable   *dockable,
-                                                      GimpMenuDock   *dock);
-
-
 
 G_DEFINE_TYPE (GimpMenuDock, gimp_menu_dock, GIMP_TYPE_DOCK)
 
@@ -74,12 +64,8 @@ static void
 gimp_menu_dock_class_init (GimpMenuDockClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
 
-  widget_class->style_set   = gimp_menu_dock_style_set;
-
-  dock_class->book_added    = gimp_menu_dock_book_added;
-  dock_class->book_removed  = gimp_menu_dock_book_removed;
+  widget_class->style_set = gimp_menu_dock_style_set;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("minimal-width",
@@ -112,49 +98,8 @@ gimp_menu_dock_style_set (GtkWidget *widget,
   gtk_widget_set_size_request (widget, minimal_width, -1);
 }
 
-static void
-gimp_menu_dock_book_added (GimpDock     *dock,
-                           GimpDockbook *dockbook)
-{
-  g_signal_connect (dockbook, "dockable-added",
-                    G_CALLBACK (gimp_menu_dock_dockbook_changed),
-                    dock);
-  g_signal_connect (dockbook, "dockable-removed",
-                    G_CALLBACK (gimp_menu_dock_dockbook_changed),
-                    dock);
-  g_signal_connect (dockbook, "dockable-reordered",
-                    G_CALLBACK (gimp_menu_dock_dockbook_changed),
-                    dock);
-
-  gimp_dock_invalidate_title (GIMP_DOCK (dock));
-
-  GIMP_DOCK_CLASS (parent_class)->book_added (dock, dockbook);
-}
-
-static void
-gimp_menu_dock_book_removed (GimpDock     *dock,
-                             GimpDockbook *dockbook)
-{
-  g_signal_handlers_disconnect_by_func (dockbook,
-                                        gimp_menu_dock_dockbook_changed,
-                                        dock);
-
-  gimp_dock_invalidate_title (GIMP_DOCK (dock));
-
-  GIMP_DOCK_CLASS (parent_class)->book_removed (dock, dockbook);
-}
-
 GtkWidget *
 gimp_menu_dock_new (void)
 {
   return g_object_new (GIMP_TYPE_MENU_DOCK, NULL);
 }
-
-static void
-gimp_menu_dock_dockbook_changed (GimpDockbook *dockbook,
-                                 GimpDockable *dockable,
-                                 GimpMenuDock *dock)
-{
-  gimp_dock_invalidate_title (GIMP_DOCK (dock));
-}
-
