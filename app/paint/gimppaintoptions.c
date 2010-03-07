@@ -570,8 +570,7 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
       else
         pos = pos - (gint) pos;
 
-      /*  Model the amount of paint left as a gaussian curve  */
-      z = exp (- pos * pos * 5.541);
+      z = pos;
 
       if (fade_options->fade_reverse)
         z = 1.0 - z;
@@ -648,7 +647,7 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 
 /*  Im leaving the pressurize code in here, but Im not sure how,
  *  or if at all it should be used. Not as hardness anyway.
- * 
+ *
  *  if (gimp_dynamics_output_is_enabled(dynamics->hardness_output))
  *    return GIMP_BRUSH_PRESSURE; */
 
