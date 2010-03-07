@@ -122,6 +122,11 @@ palettes_actions_update (GimpActionGroup *group,
     {
       palette = gimp_context_get_palette (context);
 
+      if (action_data_sel_count (user_data) > 1)
+        {
+          palette = NULL;
+        }
+
       if (palette)
         {
           data = GIMP_DATA (palette);

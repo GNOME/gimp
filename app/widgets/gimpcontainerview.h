@@ -81,6 +81,9 @@ struct _GimpContainerViewInterface
                                   gpointer           insert_data);
   void     (* clear_items)       (GimpContainerView *view);
   void     (* set_view_size)     (GimpContainerView *view);
+  gint     (* get_selected)      (GimpContainerView  *view,
+                                  GList             **items);
+
 
   /*  the destroy notifier for private->hash_table's values  */
   GDestroyNotify  insert_data_free;
@@ -122,7 +125,8 @@ void      gimp_container_view_activate_item    (GimpContainerView *view,
                                                 GimpViewable      *viewable);
 void      gimp_container_view_context_item     (GimpContainerView *view,
                                                 GimpViewable      *viewable);
-
+gint      gimp_container_view_get_selected     (GimpContainerView  *view,
+                                                GList             **list);
 
 /*  protected  */
 
@@ -131,6 +135,8 @@ gpointer  gimp_container_view_lookup           (GimpContainerView *view,
 
 gboolean  gimp_container_view_item_selected    (GimpContainerView *view,
                                                 GimpViewable      *item);
+gboolean  gimp_container_view_multi_selected   (GimpContainerView *view,
+                                                GList             *items);
 void      gimp_container_view_item_activated   (GimpContainerView *view,
                                                 GimpViewable      *item);
 void      gimp_container_view_item_context     (GimpContainerView *view,
@@ -147,6 +153,5 @@ void      gimp_container_view_get_property       (GObject      *object,
                                                   guint         property_id,
                                                   GValue       *value,
                                                   GParamSpec   *pspec);
-
 
 #endif  /*  __GIMP_CONTAINER_VIEW_H__  */

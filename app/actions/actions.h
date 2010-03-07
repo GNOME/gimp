@@ -31,6 +31,7 @@ GimpImage        * action_data_get_image   (gpointer              data);
 GimpDisplay      * action_data_get_display (gpointer              data);
 GimpDisplayShell * action_data_get_shell   (gpointer              data);
 GtkWidget        * action_data_get_widget  (gpointer              data);
+gint               action_data_sel_count   (gpointer              data);
 
 gdouble            action_select_value     (GimpActionSelectType  select_type,
                                             gdouble               value,

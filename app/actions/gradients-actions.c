@@ -116,6 +116,11 @@ gradients_actions_update (GimpActionGroup *group,
     {
       gradient = gimp_context_get_gradient (context);
 
+      if (action_data_sel_count (user_data) > 1)
+        {
+          gradient = NULL;
+        }
+
       if (gradient)
         {
           data = GIMP_DATA (gradient);

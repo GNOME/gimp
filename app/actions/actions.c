@@ -431,6 +431,22 @@ action_data_get_widget (gpointer data)
   return dialogs_get_toolbox ();
 }
 
+gint
+action_data_sel_count (gpointer data)
+{
+  if (GIMP_IS_CONTAINER_EDITOR (data))
+    {
+      GimpContainerEditor  *editor;
+
+      editor = GIMP_CONTAINER_EDITOR (data);
+      return gimp_container_view_get_selected (editor->view, NULL);
+    }
+  else
+    {
+      return 0;
+    }
+}
+
 gdouble
 action_select_value (GimpActionSelectType  select_type,
                      gdouble               value,

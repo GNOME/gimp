@@ -99,6 +99,11 @@ static GimpViewable *gimp_container_tree_view_drag_viewable     (GtkWidget      
 static GdkPixbuf    *gimp_container_tree_view_drag_pixbuf       (GtkWidget                   *widget,
                                                                  gpointer                     data);
 
+static gboolean      gimp_container_tree_view_get_selected_single (GimpContainerTreeView  *tree_view,
+                                                                   GtkTreeIter            *iter);
+static gint          gimp_container_tree_view_get_selected        (GimpContainerView    *view,
+                                                                   GList               **items);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
                          GIMP_TYPE_CONTAINER_BOX,
@@ -147,6 +152,7 @@ gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->select_item   = gimp_container_tree_view_select_item;
   iface->clear_items   = gimp_container_tree_view_clear_items;
   iface->set_view_size = gimp_container_tree_view_set_view_size;
+  iface->get_selected  = gimp_container_tree_view_get_selected;
 
   iface->insert_data_free = (GDestroyNotify) gtk_tree_iter_free;
 }
@@ -249,6 +255,9 @@ gimp_container_tree_view_constructor (GType                  type,
 
   tree_view->priv->selection = gtk_tree_view_get_selection (tree_view->view);
 
+  gtk_tree_selection_set_mode (tree_view->priv->selection,
+                               GTK_SELECTION_MULTIPLE);
+
   g_signal_connect (tree_view->priv->selection, "changed",
                     G_CALLBACK (gimp_container_tree_view_selection_changed),
                     tree_view);
@@ -334,8 +343,7 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
       *y += allocation.y;
     }
 
-  if (gtk_tree_selection_get_selected (tree_view->priv->selection, NULL,
-                                       &selected_iter))
+  if (gimp_container_tree_view_get_selected_single (tree_view, &selected_iter))
     {
       GtkTreePath  *path;
       GdkRectangle  cell_rect;
@@ -680,8 +688,8 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
       else
         container = gimp_container_view_get_container (view);
 
-      selected = gtk_tree_selection_get_selected (tree_view->priv->selection,
-                                                  NULL, &selected_iter);
+      selected = gimp_container_tree_view_get_selected_single (tree_view,
+                                                               &selected_iter);
 
       if (selected)
         {
@@ -780,11 +788,11 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
                                       gpointer           insert_data)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GtkTreeIter           *iter      = (GtkTreeIter *) insert_data;
 
-  if (iter)
+  if (viewable && insert_data)
     {
       GtkTreePath *path;
+      GtkTreeIter *iter = (GtkTreeIter *) insert_data;
 
       path = gtk_tree_model_get_path (tree_view->model, iter);
 
@@ -803,8 +811,10 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
 
       gtk_tree_path_free (path);
     }
-  else
+  else if (insert_data == NULL)
     {
+      /* viewable == NULL && insert_data != NULL means multiple selection.
+       * viewable == NULL && insert_data == NULL means no selection. */
       gtk_tree_selection_unselect_all (tree_view->priv->selection);
     }
 
@@ -922,7 +932,7 @@ gimp_container_tree_view_name_canceled (GtkCellRendererText   *cell,
 {
   GtkTreeIter iter;
 
-  if (gtk_tree_selection_get_selected (tree_view->priv->selection, NULL, &iter))
+  if (gimp_container_tree_view_get_selected_single (tree_view, &iter))
     {
       GimpViewRenderer *renderer;
       gchar            *name;
@@ -946,20 +956,12 @@ static void
 gimp_container_tree_view_selection_changed (GtkTreeSelection      *selection,
                                             GimpContainerTreeView *tree_view)
 {
-  GtkTreeIter iter;
+  GimpContainerView    *view = GIMP_CONTAINER_VIEW (tree_view);
+  GList                *items;
 
-  if (gtk_tree_selection_get_selected (selection, NULL, &iter))
-    {
-      GimpViewRenderer *renderer;
-
-      gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
-                          -1);
-
-      gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (tree_view),
-                                         renderer->viewable);
-      g_object_unref (renderer);
-    }
+  gimp_container_tree_view_get_selected (view, &items);
+  gimp_container_view_multi_selected (view, items);
+  g_list_free (items);
 }
 
 static GtkCellRenderer *
@@ -1028,6 +1030,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       GtkCellRenderer          *edit_cell    = NULL;
       GdkRectangle              column_area;
       GtkTreeIter               iter;
+      gboolean                  handled = TRUE;
 
       gtk_tree_model_get_iter (tree_view->model, &iter, path);
 
@@ -1100,12 +1103,9 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
         case 1:
           if (bevent->type == GDK_BUTTON_PRESS)
             {
-              gboolean success = TRUE;
-
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
-                success = gimp_container_view_item_selected (container_view,
-                                                             renderer->viewable);
+                  handled = FALSE;
 
               /*  a callback invoked by selecting the item may have
                *  destroyed us, so check if the container is still there
@@ -1217,6 +1217,8 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
       gtk_tree_path_free (path);
       g_object_unref (renderer);
+
+      return handled;
     }
   else
     {
@@ -1229,9 +1231,9 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
         default:
           break;
         }
-    }
 
-  return TRUE;
+      return TRUE;
+    }
 }
 
 static gboolean
@@ -1333,3 +1335,83 @@ gimp_container_tree_view_drag_pixbuf (GtkWidget *widget,
 
   return NULL;
 }
+
+static gboolean
+gimp_container_tree_view_get_selected_single (GimpContainerTreeView  *tree_view,
+                                               GtkTreeIter            *iter)
+{
+  GtkTreeSelection         *selection;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view->view));
+
+  if (gtk_tree_selection_count_selected_rows (selection) == 1)
+    {
+      GList    *selected_rows;
+
+      selected_rows = gtk_tree_selection_get_selected_rows (selection, NULL);
+
+      gtk_tree_model_get_iter (GTK_TREE_MODEL (tree_view->model), iter,
+                               (GtkTreePath *) selected_rows->data);
+
+      g_list_foreach (selected_rows, (GFunc) gtk_tree_path_free, NULL);
+      g_list_free (selected_rows);
+
+      return TRUE;
+    }
+  else
+    {
+      return FALSE;
+    }
+}
+
+static gint
+gimp_container_tree_view_get_selected (GimpContainerView    *view,
+                                       GList               **items)
+{
+  GimpContainerTreeView    *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GtkTreeSelection         *selection;
+  gint                      selected_count;
+  GList                    *selected_rows;
+  GList                    *current_row;
+  GtkTreeIter               iter;
+  GimpViewRenderer         *renderer;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view->view));
+  selected_count = gtk_tree_selection_count_selected_rows (selection);
+
+  if (items == NULL)
+    {
+      /* just provide selected count */
+      return selected_count;
+    }
+
+  selected_rows = gtk_tree_selection_get_selected_rows (selection, NULL);
+
+  *items = NULL;
+  for (current_row = g_list_first (selected_rows);
+       current_row;
+       current_row = g_list_next (current_row))
+    {
+      gtk_tree_model_get_iter (GTK_TREE_MODEL (tree_view->model), &iter,
+                               (GtkTreePath *) current_row->data);
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      if (renderer->viewable)
+        {
+          *items = g_list_prepend (*items, renderer->viewable);
+        }
+
+      g_object_unref (renderer);
+    }
+
+  g_list_foreach (selected_rows, (GFunc) gtk_tree_path_free, NULL);
+  g_list_free (selected_rows);
+
+  *items = g_list_reverse (*items);
+
+  return selected_count;
+}
+

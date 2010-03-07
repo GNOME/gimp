@@ -37,6 +37,8 @@
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpviewrenderer.h"
+#include "gimpuimanager.h"
+#include "gimpcontainertreeview.h"
 
 
 enum
@@ -128,6 +130,8 @@ static void  gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
                                                           gint          y,
                                                           GimpViewable *viewable,
                                                           gpointer      data);
+static gint  gimp_container_view_real_get_selected (GimpContainerView    *view,
+                                                    GList               **list);
 
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
@@ -210,6 +214,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
   view_iface->rename_item       = NULL;
   view_iface->clear_items       = gimp_container_view_real_clear_items;
   view_iface->set_view_size     = NULL;
+  view_iface->get_selected      = gimp_container_view_real_get_selected;
 
   view_iface->insert_data_free  = NULL;
   view_iface->model_is_tree     = FALSE;
@@ -728,6 +733,76 @@ gimp_container_view_item_selected (GimpContainerView *view,
   return success;
 }
 
+gboolean
+gimp_container_view_multi_selected (GimpContainerView *view,
+                                    GList             *items)
+{
+  guint                     selected_count;
+  gboolean                  success = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
+
+  selected_count = g_list_length (items);
+
+  if (selected_count == 0)
+    {
+      /* do nothing */
+    }
+  else if (selected_count == 1)
+    {
+      success = gimp_container_view_item_selected (view, items->data);
+    }
+  else
+    {
+      success = FALSE;
+      g_signal_emit (view, view_signals[SELECT_ITEM], 0,
+                     NULL, items, &success);
+    }
+
+  return success;
+}
+
+gint
+gimp_container_view_get_selected (GimpContainerView  *view,
+                                  GList             **list)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), 0);
+
+  return GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->get_selected (view, list);
+}
+
+static gint
+gimp_container_view_real_get_selected (GimpContainerView    *view,
+                                       GList               **list)
+{
+  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  GType                     children_type;
+  GimpObject               *object;
+
+  if (list)
+    {
+      *list = NULL;
+    }
+
+  if (!private->container
+      || !private->context)
+    {
+      return 0;
+    }
+
+  children_type = gimp_container_get_children_type (private->container);
+  object = gimp_context_get_by_type (private->context,
+                                     children_type);
+
+  if (list
+      && object)
+    {
+      *list = g_list_append (*list, object);
+    }
+
+  return object != NULL;
+}
+
 void
 gimp_container_view_item_activated (GimpContainerView *view,
                                     GimpViewable      *viewable)
@@ -1194,3 +1269,4 @@ gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
       gtk_button_clicked (GTK_BUTTON (widget));
     }
 }
+

@@ -115,6 +115,11 @@ brushes_actions_update (GimpActionGroup *group,
     {
       brush = gimp_context_get_brush (context);
 
+      if (action_data_sel_count (user_data) > 1)
+        {
+          brush = NULL;
+        }
+
       if (brush)
         {
           data = GIMP_DATA (brush);

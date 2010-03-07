@@ -115,6 +115,11 @@ patterns_actions_update (GimpActionGroup *group,
     {
       pattern = gimp_context_get_pattern (context);
 
+      if (action_data_sel_count (user_data) > 1)
+        {
+          pattern = NULL;
+        }
+
       if (pattern)
         {
           data = GIMP_DATA (pattern);
