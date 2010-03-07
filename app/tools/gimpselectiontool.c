@@ -27,6 +27,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-layer.h"
 #include "core/gimppickable.h"
 
 #include "display/gimpdisplay.h"

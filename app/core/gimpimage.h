@@ -492,9 +492,6 @@ gboolean        gimp_image_reorder_vectors       (GimpImage          *image,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc);
 
-GimpLayer     * gimp_image_pick_layer            (const GimpImage    *image,
-                                                  gint                x,
-                                                  gint                y);
 gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
                                                   const GimpCoords   *coords,
                                                   gboolean            sample_merged,

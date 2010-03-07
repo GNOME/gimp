@@ -39,6 +39,7 @@
 #include "core/gimpimage-flip.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-pick-color.h"
+#include "core/gimpimage-pick-layer.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"

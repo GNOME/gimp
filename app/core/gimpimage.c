@@ -3961,39 +3961,6 @@ gimp_image_reorder_vectors (GimpImage   *image,
                                       push_undo, undo_desc);
 }
 
-GimpLayer *
-gimp_image_pick_layer (const GimpImage *image,
-                       gint             x,
-                       gint             y)
-{
-  GList *all_layers;
-  GList *list;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  all_layers = gimp_image_get_layer_list (image);
-
-  for (list = all_layers; list; list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
-      gint       off_x, off_y;
-
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-
-      if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
-                                        x - off_x, y - off_y) > 63)
-        {
-          g_list_free (all_layers);
-
-          return layer;
-        }
-    }
-
-  g_list_free (all_layers);
-
-  return NULL;
-}
-
 gboolean
 gimp_image_coords_in_active_pickable (GimpImage        *image,
                                       const GimpCoords *coords,
