@@ -773,13 +773,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       overwrite = text_tool->overwrite_mode && cursor_rect.width > 0;
 
       gimp_draw_tool_draw_text_cursor (draw_tool,
-                                       cursor_rect.x,
-                                       cursor_rect.y,
-                                       overwrite ?
-                                       cursor_rect.x + cursor_rect.width :
-                                       cursor_rect.x,
-                                       cursor_rect.y + cursor_rect.height,
-                                       overwrite,
+                                       &cursor_rect, overwrite,
                                        TRUE);
     }
 }

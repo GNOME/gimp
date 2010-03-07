@@ -1463,13 +1463,10 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
-                                 gdouble       x1,
-                                 gdouble       y1,
-                                 gdouble       x2,
-                                 gdouble       y2,
-                                 gboolean      overwrite,
-                                 gboolean      use_offsets)
+gimp_draw_tool_draw_text_cursor (GimpDrawTool   *draw_tool,
+                                 PangoRectangle *cursor,
+                                 gboolean        overwrite,
+                                 gboolean        use_offsets)
 {
   GimpDisplayShell *shell;
   gdouble           tx1, ty1;
@@ -1480,31 +1477,43 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool *draw_tool,
   shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
-                                     x1, y1,
+                                     cursor->x, cursor->y,
                                      &tx1, &ty1,
-                                     use_offsets);
-  gimp_display_shell_transform_xy_f (shell,
-                                     x2, y2,
-                                     &tx2, &ty2,
                                      use_offsets);
 
   if (overwrite)
     {
+      gint x, y;
+      gint width, height;
+
+      gimp_display_shell_transform_xy_f (shell,
+                                         cursor->x + cursor->width,
+                                         cursor->y + cursor->height,
+                                         &tx2, &ty2,
+                                         use_offsets);
+
+      x      = PROJ_ROUND (tx1);
+      y      = PROJ_ROUND (ty1);
+      width  = PROJ_ROUND (tx2 - tx1);
+      height = PROJ_ROUND (ty2 - ty1);
+
       gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
                                   GIMP_CANVAS_STYLE_XOR, FALSE,
-                                  PROJ_ROUND (tx1),
-                                  PROJ_ROUND (ty1),
-                                  PROJ_ROUND (tx2 - tx1),
-                                  PROJ_ROUND (ty2 - ty1));
+                                  x, y,
+                                  width, height);
       gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
                                   GIMP_CANVAS_STYLE_XOR, FALSE,
-                                  PROJ_ROUND (tx1) + 1,
-                                  PROJ_ROUND (ty1) + 1,
-                                  PROJ_ROUND (tx2 - tx1) - 2,
-                                  PROJ_ROUND (ty2 - ty1) - 2);
+                                  x + 1, y + 1,
+                                  width - 2, height - 2);
     }
   else
     {
+      gimp_display_shell_transform_xy_f (shell,
+                                         cursor->x,
+                                         cursor->y + cursor->height,
+                                         &tx2, &ty2,
+                                         use_offsets);
+
       /*  vertical line  */
       gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
                              GIMP_CANVAS_STYLE_XOR,

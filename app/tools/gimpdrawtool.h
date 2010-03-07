@@ -203,10 +203,7 @@ void       gimp_draw_tool_draw_boundary            (GimpDrawTool     *draw_tool,
                                                     gboolean          use_offsets);
 
 void       gimp_draw_tool_draw_text_cursor         (GimpDrawTool     *draw_tool,
-                                                    gdouble           x1,
-                                                    gdouble           y1,
-                                                    gdouble           x2,
-                                                    gdouble           y2,
+                                                    PangoRectangle   *cursor,
                                                     gboolean          overwrite,
                                                     gboolean          use_offsets);
 
