@@ -35,6 +35,7 @@
 #include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimptoolbox.h"
 #include "widgets/gimptooloptionseditor.h"
 #include "widgets/gimpuimanager.h"
 
@@ -52,6 +53,9 @@
 #define GIMP_UI_WINDOW_POSITION_EPSILON 10
 #define GIMP_UI_POSITION_EPSILON        1
 #define GIMP_UI_POSITION_EPSILON        1
+
+
+typedef gboolean (*GimpUiTestFunc) (GObject *object);
 
 
 typedef struct
@@ -78,7 +82,9 @@ static void            gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture
                                                                  gconstpointer      data);
 static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp              *gimp);
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
-static GtkWidget     * gimp_ui_find_non_toolbox_dock_window     (GimpDialogFactory *dialog_factory);
+static GtkWidget     * gimp_ui_find_dock_window                 (GimpDialogFactory *dialog_factory,
+                                                                 GimpUiTestFunc     predicate);
+static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
 
 
 int main(int argc, char **argv)
@@ -268,7 +274,8 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
   GList     *session_infos                 = NULL;
 
   /* Find a non-toolbox dock window */
-  dock_window = gimp_ui_find_non_toolbox_dock_window (gimp_dialog_factory_get_singleton ());
+  dock_window = gimp_ui_find_dock_window (gimp_dialog_factory_get_singleton (),
+                                          gimp_ui_not_toolbox_window);
   g_assert (dock_window != NULL);
 
   /* Count number of docks */
@@ -326,7 +333,8 @@ gimp_ui_tab_toggle_dont_change_position (GimpTestFixture *fixture,
   gint       h_after_show  = -1;
 
   /* Find a non-toolbox dock window */
-  dock_window = gimp_ui_find_non_toolbox_dock_window (gimp_dialog_factory_get_singleton ());
+  dock_window = gimp_ui_find_dock_window (gimp_dialog_factory_get_singleton (),
+                                          gimp_ui_not_toolbox_window);
   g_assert (dock_window != NULL);
   g_assert (gtk_widget_get_visible (dock_window));
 
@@ -509,10 +517,13 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
 }
 
 static GtkWidget *
-gimp_ui_find_non_toolbox_dock_window (GimpDialogFactory *dialog_factory)
+gimp_ui_find_dock_window (GimpDialogFactory *dialog_factory,
+                          GimpUiTestFunc     predicate)
 {
   GList     *iter        = NULL;
   GtkWidget *dock_window = NULL;
+
+  g_return_val_if_fail (predicate != NULL, NULL);
 
   for (iter = gimp_dialog_factory_get_session_infos (dialog_factory);
        iter;
@@ -521,7 +532,7 @@ gimp_ui_find_non_toolbox_dock_window (GimpDialogFactory *dialog_factory)
       GtkWidget *widget = gimp_session_info_get_widget (iter->data);
 
       if (GIMP_IS_DOCK_WINDOW (widget) &&
-          ! gimp_dock_window_has_toolbox (GIMP_DOCK_WINDOW (widget)))
+          predicate (G_OBJECT (widget)))
         {
           dock_window = widget;
           break;
@@ -529,4 +540,10 @@ gimp_ui_find_non_toolbox_dock_window (GimpDialogFactory *dialog_factory)
     }
 
   return dock_window;
+}
+
+static gboolean
+gimp_ui_not_toolbox_window (GObject *object)
+{
+  return ! gimp_dock_window_has_toolbox (GIMP_DOCK_WINDOW (object));
 }
