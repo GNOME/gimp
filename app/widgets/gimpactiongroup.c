@@ -786,6 +786,29 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
 }
 
 void
+gimp_action_group_set_action_tooltip (GimpActionGroup     *group,
+                                      const gchar         *action_name,
+                                      const gchar         *tooltip)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set tooltip of action "
+                 "which doesn't exist: %s",
+                 G_STRFUNC, action_name);
+      return;
+    }
+
+  gtk_action_set_tooltip (action, tooltip);
+}
+
+void
 gimp_action_group_set_action_color (GimpActionGroup *group,
                                     const gchar     *action_name,
                                     const GimpRGB   *color,

@@ -186,6 +186,9 @@ void   gimp_action_group_set_action_active    (GimpActionGroup     *group,
 void   gimp_action_group_set_action_label     (GimpActionGroup     *group,
                                                const gchar         *action_name,
                                                const gchar         *label);
+void   gimp_action_group_set_action_tooltip   (GimpActionGroup     *group,
+                                               const gchar         *action_name,
+                                               const gchar         *tooltip);
 void   gimp_action_group_set_action_color     (GimpActionGroup     *group,
                                                const gchar         *action_name,
                                                const GimpRGB       *color,
