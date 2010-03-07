@@ -274,7 +274,8 @@ gimp_dock_columns_dock_book_removed (GimpDockColumns *dock_columns,
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
   if (gimp_dock_get_dockbooks (dock) == NULL &&
-      ! GIMP_IS_TOOLBOX (dock))
+      ! GIMP_IS_TOOLBOX (dock) &&
+      gtk_widget_get_parent (GTK_WIDGET (dock)) == GTK_WIDGET (dock_columns))
     gimp_dock_columns_remove_dock (dock_columns, dock);
 }
 
