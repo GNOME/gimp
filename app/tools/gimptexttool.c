@@ -888,18 +888,17 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
           (x2 - x1) != gimp_item_get_width  (item)   ||
           (y2 - y1) != gimp_item_get_height (item))
         {
-          gdouble xres, yres;
+          GimpUnit box_unit = text_tool->proxy->box_unit;
+          gdouble  xres, yres;
 
           gimp_image_get_resolution (text_tool->image, &xres, &yres);
 
           g_object_set (text_tool->proxy,
                         "box-mode",   GIMP_TEXT_BOX_FIXED,
                         "box-width",  gimp_pixels_to_units (x2 - x1,
-                                                            text_tool->proxy->box_unit,
-                                                            xres),
+                                                            box_unit, xres),
                         "box-height", gimp_pixels_to_units (y2 - y1,
-                                                            text_tool->proxy->box_unit,
-                                                            yres),
+                                                            box_unit, yres),
                         NULL);
 
           gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
@@ -1360,18 +1359,17 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
   if (text_tool->text_box_fixed)
     {
-      gdouble xres, yres;
+      GimpUnit box_unit = text_tool->proxy->box_unit;
+      gdouble  xres, yres;
 
       gimp_image_get_resolution (image, &xres, &yres);
 
       g_object_set (text_tool->proxy,
                     "box-mode",   GIMP_TEXT_BOX_FIXED,
                     "box-width",  gimp_pixels_to_units (x2 - x1,
-                                                        text_tool->proxy->box_unit,
-                                                        xres),
+                                                        box_unit, xres),
                     "box-height", gimp_pixels_to_units (y2 - y1,
-                                                        text_tool->proxy->box_unit,
-                                                        yres),
+                                                        box_unit, yres),
                     NULL);
 
       gimp_text_tool_apply (text_tool); /* unblocks drawing */
