@@ -85,6 +85,7 @@ static void            gimp_ui_synthesize_delete_event          (GtkWidget      
 static GtkWidget     * gimp_ui_find_dock_window                 (GimpDialogFactory *dialog_factory,
                                                                  GimpUiTestFunc     predicate);
 static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
+static gboolean        gimp_ui_multicolumn_not_toolbox_window   (GObject           *object);
 
 
 int main(int argc, char **argv)
@@ -117,7 +118,7 @@ int main(int argc, char **argv)
               NULL,
               gimp_ui_create_new_image_via_dialog,
               NULL);
-  g_test_add ("/gimp-ui/restore-recently-closed-dock",
+  g_test_add ("/gimp-ui/restore-recently-closed-multi-column-dock",
               GimpTestFixture,
               gimp,
               NULL,
@@ -275,7 +276,7 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
 
   /* Find a non-toolbox dock window */
   dock_window = gimp_ui_find_dock_window (gimp_dialog_factory_get_singleton (),
-                                          gimp_ui_not_toolbox_window);
+                                          gimp_ui_multicolumn_not_toolbox_window);
   g_assert (dock_window != NULL);
 
   /* Count number of docks */
@@ -546,4 +547,13 @@ static gboolean
 gimp_ui_not_toolbox_window (GObject *object)
 {
   return ! gimp_dock_window_has_toolbox (GIMP_DOCK_WINDOW (object));
+}
+
+static gboolean
+gimp_ui_multicolumn_not_toolbox_window (GObject *object)
+{
+  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+
+  return (! gimp_dock_window_has_toolbox (dock_window) &&
+          g_list_length (gimp_dock_window_get_docks (dock_window)) > 1);
 }
