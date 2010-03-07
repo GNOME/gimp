@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#include <string.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -35,6 +36,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockwindow.h"
+#include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
 
 #include "display/gimpdisplay.h"
@@ -46,34 +48,36 @@
 #include "windows-menu.h"
 
 
-static void      windows_menu_display_add             (GimpContainer     *container,
-                                                       GimpDisplay       *display,
-                                                       GimpUIManager     *manager);
-static void      windows_menu_display_remove          (GimpContainer     *container,
-                                                       GimpDisplay       *display,
-                                                       GimpUIManager     *manager);
-static void      windows_menu_image_notify            (GimpDisplay       *display,
-                                                       const GParamSpec  *unused,
-                                                       GimpUIManager     *manager);
-static void      windows_menu_dock_window_added       (GimpDialogFactory *factory,
-                                                       GimpDockWindow    *dock_window,
-                                                       GimpUIManager     *manager);
-static void      windows_menu_dock_window_removed     (GimpDialogFactory *factory,
-                                                       GimpDockWindow    *dock_window,
-                                                       GimpUIManager     *manager);
-static gchar   * windows_menu_dock_window_to_merge_id (GimpDockWindow    *dock_window);
-static void      windows_menu_recent_add              (GimpContainer     *container,
-                                                       GimpSessionInfo   *info,
-                                                       GimpUIManager     *manager);
-static void      windows_menu_recent_remove           (GimpContainer     *container,
-                                                       GimpSessionInfo   *info,
-                                                       GimpUIManager     *manager);
-static gboolean  windows_menu_display_query_tooltip   (GtkWidget         *widget,
-                                                       gint               x,
-                                                       gint               y,
-                                                       gboolean           keyboard_mode,
-                                                       GtkTooltip        *tooltip,
-                                                       GimpAction        *action);
+static void      windows_menu_display_add                (GimpContainer     *container,
+                                                          GimpDisplay       *display,
+                                                          GimpUIManager     *manager);
+static void      windows_menu_display_remove             (GimpContainer     *container,
+                                                          GimpDisplay       *display,
+                                                          GimpUIManager     *manager);
+static void      windows_menu_image_notify               (GimpDisplay       *display,
+                                                          const GParamSpec  *unused,
+                                                          GimpUIManager     *manager);
+static void      windows_menu_dock_window_added          (GimpDialogFactory *factory,
+                                                          GimpDockWindow    *dock_window,
+                                                          GimpUIManager     *manager);
+static void      windows_menu_dock_window_removed        (GimpDialogFactory *factory,
+                                                          GimpDockWindow    *dock_window,
+                                                          GimpUIManager     *manager);
+static gboolean  windows_menu_is_toolbox_dock_window     (GimpDockWindow    *dock_window);
+static void      windows_menu_remove_toolbox_entries     (GimpContainer     *docks);
+static gchar   * windows_menu_dock_window_to_merge_id    (GimpDockWindow    *dock_window);
+static void      windows_menu_recent_add                 (GimpContainer     *container,
+                                                          GimpSessionInfo   *info,
+                                                          GimpUIManager     *manager);
+static void      windows_menu_recent_remove              (GimpContainer     *container,
+                                                          GimpSessionInfo   *info,
+                                                          GimpUIManager     *manager);
+static gboolean  windows_menu_display_query_tooltip      (GtkWidget         *widget,
+                                                          gint               x,
+                                                          gint               y,
+                                                          gboolean           keyboard_mode,
+                                                          GtkTooltip        *tooltip,
+                                                          GimpAction        *action);
 
 
 void
@@ -273,6 +277,12 @@ windows_menu_dock_window_added (GimpDialogFactory *factory,
                          GTK_UI_MANAGER_MENUITEM,
                          FALSE);
 
+  /* There can only be one toolbox around, so if a new is created,
+   * make sure to remove any toolbox entries from Recenly Closed Docks
+   */
+  if (windows_menu_is_toolbox_dock_window (dock_window))
+    windows_menu_remove_toolbox_entries (global_recent_docks);
+
   g_free (merge_key);
   g_free (action_path);
   g_free (action_name);
@@ -292,6 +302,45 @@ windows_menu_dock_window_removed (GimpDialogFactory *factory,
   g_object_set_data (G_OBJECT (manager), merge_key, NULL);
 
   g_free (merge_key);
+}
+
+static gboolean
+windows_menu_is_toolbox_dock_window (GimpDockWindow *dock_window)
+{
+  GimpDialogFactoryEntry *entry          = NULL;
+  gboolean                is_for_toolbox = FALSE;
+
+  gimp_dialog_factory_from_widget (GTK_WIDGET (dock_window), &entry);
+
+  if (entry && strcmp ("gimp-toolbox-window", entry->identifier) == 0)
+    is_for_toolbox = TRUE;
+
+  return is_for_toolbox;
+}
+
+static void
+windows_menu_remove_toolbox_entries (GimpContainer *docks)
+{
+  GList *iter        = NULL;
+  GList *for_removal = NULL;
+
+  for (iter = GIMP_LIST (docks)->list; iter; iter = g_list_next (iter))
+    {
+      GimpSessionInfo        *info  = iter->data;
+      GimpDialogFactoryEntry *entry = gimp_session_info_get_factory_entry (info);
+
+      if (entry && strcmp ("gimp-toolbox-window", entry->identifier) == 0)
+        for_removal = g_list_prepend (for_removal, info);
+    }
+
+  for (iter = for_removal; iter; iter = g_list_next (iter))
+    {
+      GimpSessionInfo *info = iter->data;
+
+      gimp_container_remove (docks, GIMP_OBJECT (info));
+    }
+
+  g_list_free (for_removal);
 }
 
 static gchar *
