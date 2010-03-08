@@ -1041,6 +1041,10 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       GdkRectangle              column_area;
       GtkTreeIter               iter;
       gboolean                  handled = TRUE;
+      gboolean                  multisel_mode;
+
+      multisel_mode = (gtk_tree_selection_get_mode (tree_view->priv->selection)
+                       == GTK_SELECTION_MULTIPLE);
 
       gtk_tree_model_get_iter (tree_view->model, &iter, path);
 
@@ -1115,7 +1119,18 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
             {
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
-                  handled = FALSE;
+                {
+                  if (multisel_mode)
+                    {
+                      /* let parent do the work */
+                      handled = FALSE;
+                    }
+                  else
+                    {
+                      handled = gimp_container_view_item_selected (container_view,
+                                                                   renderer->viewable);
+                    }
+                }
 
               /*  a callback invoked by selecting the item may have
                *  destroyed us, so check if the container is still there
@@ -1228,7 +1243,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       gtk_tree_path_free (path);
       g_object_unref (renderer);
 
-      return handled;
+      return multisel_mode ? handled : TRUE;
     }
   else
     {
