@@ -72,9 +72,9 @@ static void   gimp_text_tool_toggle_overwrite   (GimpTextTool    *text_tool);
 static void   gimp_text_tool_select_all         (GimpTextTool    *text_tool,
                                                  gboolean         select);
 static void   gimp_text_tool_change_baseline    (GimpTextTool    *text_tool,
-                                                 gint             count);
+                                                 gdouble          amount);
 static void   gimp_text_tool_change_kerning     (GimpTextTool    *text_tool,
-                                                 gint             count);
+                                                 gdouble          amount);
 
 static void   gimp_text_tool_options_notify     (GimpTextOptions *options,
                                                  GParamSpec      *pspec,
@@ -998,7 +998,7 @@ gimp_text_tool_select_all (GimpTextTool *text_tool,
 
 static void
 gimp_text_tool_change_baseline (GimpTextTool *text_tool,
-                                gint          count)
+                                gdouble       amount)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    start;
@@ -1013,12 +1013,12 @@ gimp_text_tool_change_baseline (GimpTextTool *text_tool,
 
   gtk_text_iter_order (&start, &end);
   gimp_text_buffer_change_baseline (text_tool->buffer, &start, &end,
-                                    count * PANGO_SCALE);
+                                    amount * PANGO_SCALE);
 }
 
 static void
 gimp_text_tool_change_kerning (GimpTextTool *text_tool,
-                               gint          count)
+                               gdouble       amount)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   GtkTextIter    start;
@@ -1034,7 +1034,7 @@ gimp_text_tool_change_kerning (GimpTextTool *text_tool,
 
   gtk_text_iter_order (&start, &end);
   gimp_text_buffer_change_kerning (text_tool->buffer, &start, &end,
-                                   count * PANGO_SCALE);
+                                   amount * PANGO_SCALE);
 }
 
 static void

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpTextProxy
- * Copyright (C) 2009  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2009-2010  Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,9 +78,9 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
 		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
 		  G_STRUCT_OFFSET (GimpTextProxyClass, change_baseline),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
+		  gimp_marshal_VOID__DOUBLE,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
+		  G_TYPE_DOUBLE);
 
   proxy_signals[CHANGE_KERNING] =
     g_signal_new ("change-kerning",
@@ -88,25 +88,25 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
 		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
 		  G_STRUCT_OFFSET (GimpTextProxyClass, change_kerning),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
+		  gimp_marshal_VOID__DOUBLE,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
+		  G_TYPE_DOUBLE);
 
   binding_set = gtk_binding_set_by_class (klass);
 
   gtk_binding_entry_add_signal (binding_set, GDK_Up, GDK_MOD1_MASK,
 				"change-baseline", 1,
-                                G_TYPE_INT, 1);
+                                G_TYPE_DOUBLE, 1.0);
   gtk_binding_entry_add_signal (binding_set, GDK_Down, GDK_MOD1_MASK,
 				"change-baseline", 1,
-                                G_TYPE_INT, -1);
+                                G_TYPE_DOUBLE, -1.0);
 
   gtk_binding_entry_add_signal (binding_set, GDK_Left, GDK_MOD1_MASK,
 				"change-kerning", 1,
-                                G_TYPE_INT, -1);
+                                G_TYPE_DOUBLE, -1.0);
   gtk_binding_entry_add_signal (binding_set, GDK_Right, GDK_MOD1_MASK,
 				"change-kerning", 1,
-                                G_TYPE_INT, 1);
+                                G_TYPE_DOUBLE, 1.0);
 }
 
 static void

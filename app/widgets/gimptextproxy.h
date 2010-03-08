@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpTextProxy
- * Copyright (C) 2009  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2009-2010  Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,9 +42,9 @@ struct _GimpTextProxyClass
   GtkTextViewClass  parent_class;
 
   void (* change_baseline) (GimpTextProxy *proxy,
-                            gint           count);
+                            gdouble        amount);
   void (* change_kerning)  (GimpTextProxy *proxy,
-                            gint           count);
+                            gdouble        amount);
 };
 
 
