@@ -42,6 +42,7 @@ struct _GimpDynamicsOutput
   gboolean                use_velocity;
   gboolean                use_direction;
   gboolean                use_tilt;
+  gboolean                use_wheel;
   gboolean                use_random;
   gboolean                use_fade;
 
@@ -49,6 +50,7 @@ struct _GimpDynamicsOutput
   GimpCurve              *velocity_curve;
   GimpCurve              *direction_curve;
   GimpCurve              *tilt_curve;
+  GimpCurve              *wheel_curve;
   GimpCurve              *random_curve;
   GimpCurve              *fade_curve;
 };

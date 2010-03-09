@@ -60,6 +60,7 @@ enum
   INPUT_VELOCITY,
   INPUT_DIRECTION,
   INPUT_TILT,
+  INPUT_WHEEL,
   INPUT_RANDOM,
   INPUT_FADE,
   N_INPUTS
@@ -231,6 +232,13 @@ gimp_dynamics_output_editor_constructor (GType                   type,
                                      INPUT_COLUMN_INDEX, INPUT_TILT,
                                      INPUT_COLUMN_USE_INPUT, private->output->use_tilt,
                                      INPUT_COLUMN_NAME,  _("Tilt"),
+                                     -1);
+
+  gtk_list_store_insert_with_values (private->input_list,
+                                     NULL, INPUT_WHEEL,
+                                     INPUT_COLUMN_INDEX, INPUT_WHEEL,
+                                     INPUT_COLUMN_USE_INPUT, private->output->use_wheel,
+                                     INPUT_COLUMN_NAME,  _("Wheel"),
                                      -1);
 
   gtk_list_store_insert_with_values (private->input_list,
@@ -487,6 +495,19 @@ gimp_dynamics_output_editor_activate_input (gint                      input,
                                       &bg_color);
     }
 
+  if (input == INPUT_WHEEL)
+    {
+      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+                                 private->output->wheel_curve);
+      private->active_curve = private->output->wheel_curve;
+    }
+  else if (private->output->use_wheel)
+    {
+      gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                      private->output->wheel_curve,
+                                      &bg_color);
+    }
+
   if (input == INPUT_RANDOM)
     {
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
@@ -544,6 +565,11 @@ gimp_dynamics_output_editor_use_input (gint                      input,
       private->output->use_tilt = value;
       g_object_notify (G_OBJECT (private->output), "use-tilt");
     }
+  if (input == INPUT_WHEEL)
+    {
+      private->output->use_wheel = value;
+      g_object_notify (G_OBJECT (private->output), "use-wheel");
+    }
   if (input == INPUT_RANDOM)
     {
       private->output->use_random = value;
@@ -599,6 +625,9 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
             break;
           case INPUT_TILT:
             value = output->use_tilt;
+            break;
+          case INPUT_WHEEL:
+            value = output->use_wheel;
             break;
           case INPUT_RANDOM:
             value = output->use_random;

@@ -39,6 +39,7 @@
 #define DEFAULT_USE_VELOCITY  FALSE
 #define DEFAULT_USE_DIRECTION FALSE
 #define DEFAULT_USE_TILT      FALSE
+#define DEFAULT_USE_WHEEL     FALSE
 #define DEFAULT_USE_RANDOM    FALSE
 #define DEFAULT_USE_FADE      FALSE
 
@@ -52,12 +53,14 @@ enum
   PROP_USE_VELOCITY,
   PROP_USE_DIRECTION,
   PROP_USE_TILT,
+  PROP_USE_WHEEL,
   PROP_USE_RANDOM,
   PROP_USE_FADE,
   PROP_PRESSURE_CURVE,
   PROP_VELOCITY_CURVE,
   PROP_DIRECTION_CURVE,
   PROP_TILT_CURVE,
+  PROP_WHEEL_CURVE,
   PROP_RANDOM_CURVE,
   PROP_FADE_CURVE
 };
@@ -126,6 +129,12 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
                                     DEFAULT_USE_TILT,
                                     GIMP_PARAM_STATIC_STRINGS);
 
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_WHEEL,
+                                    "use-wheel", NULL,
+                                    DEFAULT_USE_TILT,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_RANDOM,
                                     "use-random", NULL,
                                     DEFAULT_USE_RANDOM,
@@ -156,6 +165,11 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
                                    GIMP_TYPE_CURVE,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
 
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_WHEEL_CURVE,
+                                   "wheel-curve", NULL,
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
+
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_RANDOM_CURVE,
                                    "random-curve", NULL,
                                    GIMP_TYPE_CURVE,
@@ -179,6 +193,8 @@ gimp_dynamics_output_init (GimpDynamicsOutput *output)
                                                                "direction-curve");
   output->tilt_curve      = gimp_dynamics_output_create_curve (output,
                                                                "tilt-curve");
+  output->wheel_curve     = gimp_dynamics_output_create_curve (output,
+                                                               "wheel-curve");
   output->random_curve    = gimp_dynamics_output_create_curve (output,
                                                                "random-curve");
   output->fade_curve      = gimp_dynamics_output_create_curve (output,
@@ -194,6 +210,7 @@ gimp_dynamics_output_finalize (GObject *object)
   g_object_unref (output->velocity_curve);
   g_object_unref (output->direction_curve);
   g_object_unref (output->tilt_curve);
+  g_object_unref (output->wheel_curve);
   g_object_unref (output->random_curve);
   g_object_unref (output->fade_curve);
 
@@ -230,6 +247,10 @@ gimp_dynamics_output_set_property (GObject      *object,
       output->use_tilt = g_value_get_boolean (value);
       break;
 
+    case PROP_USE_WHEEL:
+      output->use_wheel = g_value_get_boolean (value);
+      break;
+
     case PROP_USE_RANDOM:
       output->use_random = g_value_get_boolean (value);
       break;
@@ -256,6 +277,11 @@ gimp_dynamics_output_set_property (GObject      *object,
     case PROP_TILT_CURVE:
       gimp_dynamics_output_copy_curve (g_value_get_object (value),
                                        output->tilt_curve);
+      break;
+
+    case PROP_WHEEL_CURVE:
+      gimp_dynamics_output_copy_curve (g_value_get_object (value),
+                                       output->wheel_curve);
       break;
 
     case PROP_RANDOM_CURVE:
@@ -304,6 +330,10 @@ gimp_dynamics_output_get_property (GObject    *object,
       g_value_set_boolean (value, output->use_tilt);
       break;
 
+    case PROP_USE_WHEEL:
+      g_value_set_boolean (value, output->use_wheel);
+      break;
+
     case PROP_USE_RANDOM:
       g_value_set_boolean (value, output->use_random);
       break;
@@ -326,6 +356,10 @@ gimp_dynamics_output_get_property (GObject    *object,
 
     case PROP_TILT_CURVE:
       g_value_set_object (value, output->tilt_curve);
+      break;
+
+    case PROP_WHEEL_CURVE:
+      g_value_set_object (value, output->wheel_curve);
       break;
 
     case PROP_RANDOM_CURVE:
@@ -364,6 +398,7 @@ gimp_dynamics_output_is_enabled (GimpDynamicsOutput *output)
           output->use_velocity  ||
           output->use_direction ||
           output->use_tilt      ||
+          output->use_wheel     ||
           output->use_random    ||
           output->use_fade);
 }
@@ -403,6 +438,18 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
       total += gimp_curve_map_value (output->tilt_curve,
                                      (1.0 - sqrt (SQR (coords->xtilt) +
                                       SQR (coords->ytilt))));
+      factors++;
+    }
+
+  if (output->use_wheel)
+    {
+      gdouble wheel;
+      if (coords->wheel >= 0.5)
+        wheel = (coords->wheel - 0.5) * 2;
+      else
+        wheel = 1 - coords->wheel * 2;
+
+      total += gimp_curve_map_value (output->wheel_curve, wheel);
       factors++;
     }
 
@@ -503,6 +550,14 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       factors++;
     }
 
+  if (output->use_wheel)
+    {
+      gdouble angle = 1.0 - fmod(0.5 + coords->wheel, 1);
+
+      total += gimp_curve_map_value (output->wheel_curve, angle);
+      factors++;
+    }
+
   if (output->use_random)
     {
       total += gimp_curve_map_value (output->random_curve,
@@ -544,26 +599,26 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
   if (output->use_pressure)
     {
-      total += gimp_curve_map_value (output->pressure_curve, 2 * coords->pressure);
+      total += 2 * gimp_curve_map_value (output->pressure_curve, coords->pressure);
       factors++;
     }
 
   if (output->use_velocity)
     {
-      total += gimp_curve_map_value (output->velocity_curve, 2 * coords->velocity);
+      total +=  2 * gimp_curve_map_value (output->velocity_curve, coords->velocity);
       factors++;
     }
 
   if (output->use_direction)
     {
-      gdouble direction = 0.0;
+      gdouble direction = gimp_curve_map_value (output->direction_curve, coords->direction);
 
-      direction = fmod (1 + coords->direction, 0.5) / 0.25;
+      direction = fmod (1 + direction, 0.5) / 0.25;
 
       if ((coords->direction > 0.0) && (coords->direction < 0.5))
         direction = 1 / direction;
 
-      total += gimp_curve_map_value (output->direction_curve, direction);
+      total += direction;
       factors++;
     }
 
@@ -575,16 +630,23 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       factors++;
     }
 
+  if (output->use_wheel)
+    {
+      total += 2 * gimp_curve_map_value (output->wheel_curve, coords->wheel);
+      factors++;
+    }
+
   if (output->use_random)
     {
-      gdouble random = g_random_double_range (0.0, 1.0);
+      gdouble random = gimp_curve_map_value (output->random_curve,
+                                             g_random_double_range (0.0, 1.0));
 
       if (random <= 0.5)
         random = 1 / (random / 0.5 * (2.0 - 1.0) + 1.0);
       else
         random = (random - 0.5) / (1.0 - 0.5) * (2.0 - 1.0) + 1.0;
 
-      total += gimp_curve_map_value (output->random_curve, random);
+      total += random;
       factors++;
     }
 
@@ -606,6 +668,7 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
   g_printerr ("Dynamics queried(aspect). Result: %f, factors: %d, total: %f\n",
               result, factors, total);
 #endif
+  if (result < 0.25) result = 0.25;
 
   return result;
 }
