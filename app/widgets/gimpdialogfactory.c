@@ -30,6 +30,9 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
@@ -75,6 +78,9 @@ static GtkWidget * gimp_dialog_factory_constructor          (GimpDialogFactory  
                                                              GimpContext            *context,
                                                              GimpUIManager          *ui_manager,
                                                              gint                    view_size);
+static void        gimp_dialog_factory_config_notify        (GimpDialogFactory      *factory,
+                                                             GParamSpec             *pspec,
+                                                             GimpGuiConfig          *config);
 static void        gimp_dialog_factory_set_widget_data      (GtkWidget              *dialog,
                                                              GimpDialogFactory      *factory,
                                                              GimpDialogFactoryEntry *entry);
@@ -226,6 +232,7 @@ gimp_dialog_factory_new (const gchar           *name,
                          GimpMenuFactory       *menu_factory)
 {
   GimpDialogFactory *factory;
+  GimpGuiConfig     *config;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -236,9 +243,18 @@ gimp_dialog_factory_new (const gchar           *name,
 
   gimp_object_set_name (GIMP_OBJECT (factory), name);
 
-  factory->p->context           = context;
-  factory->p->menu_factory      = menu_factory;
+  config = GIMP_GUI_CONFIG (context->gimp->config);
 
+  factory->p->context      = context;
+  factory->p->menu_factory = menu_factory;
+  factory->p->dialog_state = (config->hide_docks ?
+                              GIMP_DIALOGS_HIDDEN_EXPLICITLY :
+                              GIMP_DIALOGS_SHOWN);
+
+  g_signal_connect_object (config, "notify::hide-docks",
+                           G_CALLBACK (gimp_dialog_factory_config_notify),
+                           factory, G_CONNECT_SWAPPED);
+  
   return factory;
 }
 
@@ -1175,6 +1191,24 @@ gimp_dialog_factory_constructor (GimpDialogFactory      *factory,
     }
 
   return widget;
+}
+
+static void
+gimp_dialog_factory_config_notify (GimpDialogFactory *factory,
+                                   GParamSpec        *pspec,
+                                   GimpGuiConfig     *config)
+{
+  GimpDialogsState   state     = gimp_dialog_factory_get_state (factory);
+  GimpDialogsState   new_state = state;
+
+  /* Make sure the state and config are in sync */
+  if (config->hide_docks && state == GIMP_DIALOGS_SHOWN)
+    new_state = GIMP_DIALOGS_HIDDEN_EXPLICITLY;
+  else if (! config->hide_docks)
+    new_state = GIMP_DIALOGS_SHOWN;
+
+  if (state != new_state)
+    gimp_dialog_factory_set_state (factory, new_state);
 }
 
 static void

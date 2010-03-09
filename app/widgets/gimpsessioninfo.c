@@ -28,6 +28,11 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockwindow.h"
@@ -448,6 +453,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   if (info->p->factory_entry &&
       ! info->p->factory_entry->dockable)
     {
+      GimpCoreConfig *config = gimp_dialog_factory_get_context (factory)->gimp->config;
+
       GIMP_LOG (DIALOG_FACTORY, "restoring toplevel \"%s\" (info %p)",
                 info->p->factory_entry->identifier,
                 info);
@@ -456,7 +463,12 @@ gimp_session_info_restore (GimpSessionInfo   *info,
         gimp_dialog_factory_dialog_new (factory, screen,
                                         info->p->factory_entry->identifier,
                                         info->p->factory_entry->view_size,
-                                        TRUE/*present*/);
+                                        ! GIMP_GUI_CONFIG (config)->hide_docks);
+
+      g_object_set_data (G_OBJECT (dialog), GIMP_DIALOG_VISIBILITY_KEY,
+                         GINT_TO_POINTER (GIMP_GUI_CONFIG (config)->hide_docks ?
+                                          GIMP_DIALOG_VISIBILITY_HIDDEN :
+                                          GIMP_DIALOG_VISIBILITY_VISIBLE));
 
       if (dialog && info->p->aux_info)
         gimp_session_info_aux_set_list (dialog, info->p->aux_info);

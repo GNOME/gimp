@@ -47,22 +47,11 @@ windows_hide_docks_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   gboolean         active    = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-  GimpDialogsState state     = gimp_dialog_factory_get_state (gimp_dialog_factory_get_singleton ());
-  GimpDialogsState new_state = state;
   Gimp            *gimp      = NULL;
   return_if_no_gimp (gimp, data);
 
   if (GIMP_GUI_CONFIG (gimp->config)->hide_docks == active)
     return;
-
-  /* Make sure the state and toggle action are in sync */
-  if (active && state == GIMP_DIALOGS_SHOWN)
-    new_state = GIMP_DIALOGS_HIDDEN_EXPLICITLY;
-  else if (! active)
-    new_state = GIMP_DIALOGS_SHOWN;
-
-  if (state != new_state)
-    gimp_dialog_factory_set_state (gimp_dialog_factory_get_singleton (), new_state);
 
   g_object_set (gimp->config,
                 "hide-docks", active,
