@@ -1364,9 +1364,8 @@ gimp_dialog_factory_hide (GimpDialogFactory *factory)
 
           if (gtk_widget_get_visible (widget))
             {
-              visibility = GIMP_DIALOG_VISIBILITY_VISIBLE;
-
               gtk_widget_hide (widget);
+              visibility = GIMP_DIALOG_VISIBILITY_HIDDEN;
 
               GIMP_LOG (WM, "Hiding '%s' [%p]",
                         gtk_window_get_title (GTK_WINDOW (widget)),
@@ -1402,7 +1401,7 @@ gimp_dialog_factory_show (GimpDialogFactory *factory)
                                                 GIMP_DIALOG_VISIBILITY_KEY));
 
           if (! gtk_widget_get_visible (widget) &&
-              visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)
+              visibility == GIMP_DIALOG_VISIBILITY_HIDDEN)
             {
               GIMP_LOG (WM, "Showing '%s' [%p]",
                         gtk_window_get_title (GTK_WINDOW (widget)),
@@ -1412,6 +1411,9 @@ gimp_dialog_factory_show (GimpDialogFactory *factory)
                * keyboard focus to move.
                */
               gtk_widget_show (widget);
+              g_object_set_data (G_OBJECT (widget),
+                                 GIMP_DIALOG_VISIBILITY_KEY,
+                                 GINT_TO_POINTER (GIMP_DIALOG_VISIBILITY_VISIBLE));
 
               if (gtk_widget_get_visible (widget))
                 gdk_window_raise (gtk_widget_get_window (widget));

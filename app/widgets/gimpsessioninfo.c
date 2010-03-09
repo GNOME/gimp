@@ -654,7 +654,12 @@ gimp_session_info_read_geometry (GimpSessionInfo *info)
           info->p->open = FALSE;
           break;
 
+        case GIMP_DIALOG_VISIBILITY_HIDDEN:
         case GIMP_DIALOG_VISIBILITY_VISIBLE:
+          /* Even if a dialog is hidden (with Windows->Hide docks) it
+           * is still considered open. It will be restored the next
+           * time GIMP starts
+           */
           info->p->open = TRUE;
           break;
         }
