@@ -132,7 +132,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (buffer_view),
                                          view_type,
                                          container, context,
-                                         view_size, view_border_width, FALSE,
+                                         view_size, view_border_width,
                                          menu_factory, "<Buffers>",
                                          "/buffers-popup"))
     {

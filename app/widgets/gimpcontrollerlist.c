@@ -268,7 +268,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (GTK_WIDGET (list)),
                                      icon_size, &icon_width, &icon_height);
 
-  list->dest = gimp_container_tree_view_new (NULL, NULL, icon_height, 0, FALSE);
+  list->dest = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
   gimp_container_tree_view_set_main_column_title (GIMP_CONTAINER_TREE_VIEW (list->dest),
                                                   _("Active Controllers"));
   gtk_tree_view_set_headers_visible (GIMP_CONTAINER_TREE_VIEW (list->dest)->view,

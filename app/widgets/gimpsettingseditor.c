@@ -148,7 +148,7 @@ gimp_settings_editor_constructor (GType                  type,
 
   editor->view = gimp_container_tree_view_new (editor->container,
                                                gimp_get_user_context (editor->gimp),
-                                               16, 0, FALSE);
+                                               16, 0);
   gtk_widget_set_size_request (editor->view, 200, 200);
   gtk_container_add (GTK_CONTAINER (editor), editor->view);
   gtk_widget_show (editor->view);

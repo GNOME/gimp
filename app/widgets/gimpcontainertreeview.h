@@ -111,8 +111,7 @@ GType       gimp_container_tree_view_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_container_tree_view_new      (GimpContainer *container,
                                                GimpContext   *context,
                                                gint           view_size,
-                                               gint           view_border_width,
-                                               gboolean       multiple_selection);
+                                               gint           view_border_width);
 
 void        gimp_container_tree_view_set_main_column_title
                                               (GimpContainerTreeView *tree_view,

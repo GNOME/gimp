@@ -63,7 +63,6 @@ gboolean  gimp_container_editor_construct (GimpContainerEditor *editor,
                                            GimpContext         *context,
                                            gint                 view_size,
                                            gint                 view_border_width,
-                                           gboolean             multiple_selection,
                                            GimpMenuFactory     *menu_factory,
                                            const gchar         *menu_identifier,
                                            const gchar         *ui_path);

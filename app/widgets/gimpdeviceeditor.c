@@ -139,7 +139,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
                                      GTK_ICON_SIZE_BUTTON,
                                      &icon_width, &icon_height);
 
-  private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0, FALSE);
+  private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
   gtk_widget_set_size_request (private->treeview, 200, -1);
   gtk_box_pack_start (GTK_BOX (editor), private->treeview, FALSE, FALSE, 0);
   gtk_widget_show (private->treeview);
