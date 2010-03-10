@@ -107,13 +107,13 @@ static void      gimp_device_info_editor_get_property (GObject               *ob
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
 
-void             gimp_device_info_editor_set_axes     (GimpDeviceInfoEditor  *editor);
+static void      gimp_device_info_editor_set_axes     (GimpDeviceInfoEditor  *editor);
 
-void             gimp_device_info_editor_axis_changed (GtkCellRendererCombo  *combo,
+static void      gimp_device_info_editor_axis_changed (GtkCellRendererCombo  *combo,
                                                        const gchar           *path_string,
                                                        GtkTreeIter           *new_iter,
                                                        GimpDeviceInfoEditor  *editor);
-void            gimp_device_info_editor_axis_selected (GtkTreeSelection      *selection,
+static void     gimp_device_info_editor_axis_selected (GtkTreeSelection      *selection,
                                                        GimpDeviceInfoEditor  *editor);
 
 static void     gimp_device_info_editor_key_edited    (GtkCellRendererAccel  *accel,
@@ -555,7 +555,7 @@ gimp_device_info_editor_get_property (GObject    *object,
     }
 }
 
-void
+static void
 gimp_device_info_editor_set_axes (GimpDeviceInfoEditor *editor)
 {
   GimpDeviceInfoEditorPrivate *private;
@@ -592,7 +592,7 @@ gimp_device_info_editor_set_axes (GimpDeviceInfoEditor *editor)
     }
 }
 
-void
+static void
 gimp_device_info_editor_axis_changed (GtkCellRendererCombo  *combo,
                                       const gchar           *path_string,
                                       GtkTreeIter           *new_iter,
@@ -663,7 +663,7 @@ gimp_device_info_editor_axis_changed (GtkCellRendererCombo  *combo,
   gtk_tree_path_free (path);
 }
 
-void
+static void
 gimp_device_info_editor_axis_selected (GtkTreeSelection     *selection,
                                        GimpDeviceInfoEditor *editor)
 {
