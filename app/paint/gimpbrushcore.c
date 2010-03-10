@@ -534,6 +534,18 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gimp_paint_core_get_last_coords (paint_core, &last_coords);
   gimp_paint_core_get_current_coords (paint_core, &current_coords);
 
+  /*Zero sized brushes are unfit for interpolate,
+   * so we just let paint core fail onits own
+   **/
+  if (core->scale == 0.0)
+    {
+      gimp_paint_core_set_last_coords (paint_core, &current_coords);
+
+      gimp_paint_core_paint (paint_core, drawable, paint_options,
+                             GIMP_PAINT_STATE_MOTION, time);
+      return;
+    }
+
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
