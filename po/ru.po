@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-08 08:31+0300\n"
-"PO-Revision-Date: 2010-03-08 10:07+0300\n"
+"POT-Creation-Date: 2010-03-11 18:20+0300\n"
+"PO-Revision-Date: 2010-03-11 22:25+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5127,7 +5127,7 @@ msgstr "_Вид"
 #: ../app/actions/view-actions.c:70
 msgctxt "view-action"
 msgid "_Zoom"
-msgstr "Масштаб"
+msgstr "_Масштаб"
 
 #: ../app/actions/view-actions.c:71
 msgctxt "view-action"
@@ -7637,7 +7637,7 @@ msgstr "Преобразование слоя"
 msgid "Transformation"
 msgstr "Преобразование"
 
-#: ../app/core/gimpdynamicsoutput.c:103
+#: ../app/core/gimpdynamicsoutput.c:106
 #, fuzzy
 msgid "Output type"
 msgstr "Уровни на выходе"
@@ -11386,7 +11386,7 @@ msgstr "_Насыщенность:"
 #: ../app/tools/gimpcolorizetool.c:272
 #: ../app/tools/gimphuesaturationtool.c:404
 msgid "_Lightness:"
-msgstr "_Освещенность:"
+msgstr "_Освещённость:"
 
 #: ../app/tools/gimpcoloroptions.c:75
 msgid "Color Picker Average Radius"
@@ -11938,7 +11938,7 @@ msgstr "Масштабирование гистограммы"
 
 #: ../app/tools/gimphuesaturationtool.c:103
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr "Тон-Насыщенность: коррекция тона, насыщенности и освещенности"
+msgstr "Тон-Насыщенность: коррекция тона, насыщенности и освещённости"
 
 #: ../app/tools/gimphuesaturationtool.c:104
 msgid "Hue-_Saturation..."
@@ -11946,7 +11946,7 @@ msgstr "Тон-_Насыщенность..."
 
 #: ../app/tools/gimphuesaturationtool.c:121
 msgid "Adjust Hue / Lightness / Saturation"
-msgstr "Коррекция тона, освещенности, насыщенности"
+msgstr "Коррекция тона, освещённости, насыщенности"
 
 #: ../app/tools/gimphuesaturationtool.c:123
 msgid "Import Hue-Saturation Settings"
@@ -12805,7 +12805,7 @@ msgstr "Преобразование:"
 
 #: ../app/tools/gimptransformoptions.c:281
 #: ../app/widgets/gimpdynamicseditor.c:148
-#: ../app/widgets/gimpdynamicsoutputeditor.c:226
+#: ../app/widgets/gimpdynamicsoutputeditor.c:227
 msgid "Direction"
 msgstr "Направление"
 
@@ -13667,7 +13667,7 @@ msgstr "Удалить выбранное устройство"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
 #: ../app/widgets/gimpdynamicseditor.c:146
-#: ../app/widgets/gimpdynamicsoutputeditor.c:212
+#: ../app/widgets/gimpdynamicsoutputeditor.c:213
 msgid "Pressure"
 msgstr "Нажим"
 
@@ -13680,6 +13680,8 @@ msgid "Y tilt"
 msgstr "Наклон по Y"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
+#: ../app/widgets/gimpdynamicseditor.c:150
+#: ../app/widgets/gimpdynamicsoutputeditor.c:241
 msgid "Wheel"
 msgstr "Колесо"
 
@@ -13705,7 +13707,7 @@ msgid "%s Curve"
 msgstr "Кривая %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:473
-#: ../app/widgets/gimpdynamicsoutputeditor.c:195
+#: ../app/widgets/gimpdynamicsoutputeditor.c:196
 msgid "_Reset Curve"
 msgstr "С_бросить"
 
@@ -13784,22 +13786,22 @@ msgid "Mapping matrix"
 msgstr "Матрица привязки"
 
 #: ../app/widgets/gimpdynamicseditor.c:147
-#: ../app/widgets/gimpdynamicsoutputeditor.c:219
+#: ../app/widgets/gimpdynamicsoutputeditor.c:220
 msgid "Velocity"
 msgstr "Скорость"
 
 #: ../app/widgets/gimpdynamicseditor.c:149
-#: ../app/widgets/gimpdynamicsoutputeditor.c:233
+#: ../app/widgets/gimpdynamicsoutputeditor.c:234
 msgid "Tilt"
 msgstr "Наклон"
 
-#: ../app/widgets/gimpdynamicseditor.c:150
-#: ../app/widgets/gimpdynamicsoutputeditor.c:240
+#: ../app/widgets/gimpdynamicseditor.c:151
+#: ../app/widgets/gimpdynamicsoutputeditor.c:248
 msgid "Random"
 msgstr "Случайность"
 
-#: ../app/widgets/gimpdynamicseditor.c:151
-#: ../app/widgets/gimpdynamicsoutputeditor.c:247
+#: ../app/widgets/gimpdynamicseditor.c:152
+#: ../app/widgets/gimpdynamicsoutputeditor.c:255
 msgid "Fade"
 msgstr "Угасание"
 
