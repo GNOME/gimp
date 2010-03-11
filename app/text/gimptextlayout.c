@@ -507,6 +507,31 @@ gimp_text_layout_position (GimpTextLayout *layout)
   layout->extents.width  = x2 - x1;
   layout->extents.height = y2 - y1;
 
+  /* If the width of the layout is > 0, then the text-box is FIXED and
+   * the layout position should be offset if the alignment is centered
+   * or right-aligned, also adjust for RTL text direction.
+   */
+  if (pango_layout_get_width (layout->layout) > 0)
+    {
+      PangoAlignment    align    = pango_layout_get_alignment (layout->layout);
+      GimpTextDirection base_dir = layout->text->base_dir;
+      gint              width;
+
+      pango_layout_get_pixel_size (layout->layout, &width, NULL);
+
+      if ((base_dir == GIMP_TEXT_DIRECTION_LTR && align == PANGO_ALIGN_RIGHT) ||
+          (base_dir == GIMP_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_LEFT))
+        {
+          layout->extents.x +=
+            PANGO_PIXELS (pango_layout_get_width (layout->layout)) - width;
+        }
+      else if (align == PANGO_ALIGN_CENTER)
+        {
+          layout->extents.x +=
+            (PANGO_PIXELS (pango_layout_get_width (layout->layout)) - width) / 2;
+       }
+    }
+
   if (layout->text->border > 0)
     {
       gint border = layout->text->border;
