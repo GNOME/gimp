@@ -184,6 +184,19 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   return TRUE;
 }
 
+gboolean
+gimp_container_editor_get_multiple_selection (GimpContainerEditor *editor)
+{
+  return gimp_container_view_get_multiple_selection (GIMP_CONTAINER_VIEW (editor->view));
+}
+
+void
+gimp_container_editor_set_multiple_selection (GimpContainerEditor *editor,
+                                              gboolean             value)
+{
+  gimp_container_view_set_multiple_selection (GIMP_CONTAINER_VIEW (editor->view),
+                                              value);
+}
 
 /*  private functions  */
 

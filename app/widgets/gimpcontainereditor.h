@@ -54,6 +54,10 @@ struct _GimpContainerEditorClass
 
 GType     gimp_container_editor_get_type  (void) G_GNUC_CONST;
 
+gboolean  gimp_container_editor_get_multiple_selection (GimpContainerEditor *editor);
+void      gimp_container_editor_set_multiple_selection (GimpContainerEditor *editor,
+                                                        gboolean             value);
+
 
 /*  protected  */
 

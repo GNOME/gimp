@@ -27,6 +27,7 @@ typedef enum
   GIMP_CONTAINER_VIEW_PROP_0,
   GIMP_CONTAINER_VIEW_PROP_CONTAINER,
   GIMP_CONTAINER_VIEW_PROP_CONTEXT,
+  GIMP_CONTAINER_VIEW_PROP_MULTIPLE_SELECTION,
   GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
   GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE,
   GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH,
@@ -62,6 +63,9 @@ struct _GimpContainerViewInterface
                                   GimpContainer     *container);
   void     (* set_context)       (GimpContainerView *view,
                                   GimpContext       *context);
+  void     (* set_multiple_selection) (GimpContainerView *view,
+                                       gboolean           value);
+
   gpointer (* insert_item)       (GimpContainerView *view,
                                   GimpViewable      *object,
                                   gpointer           parent_insert_data,
@@ -100,6 +104,10 @@ void            gimp_container_view_set_container (GimpContainerView *view,
 GimpContext   * gimp_container_view_get_context   (GimpContainerView *view);
 void            gimp_container_view_set_context   (GimpContainerView *view,
                                                    GimpContext       *context);
+
+gboolean        gimp_container_view_get_multiple_selection (GimpContainerView *view);
+void            gimp_container_view_set_multiple_selection (GimpContainerView *view,
+                                                            gboolean           value);
 
 gint         gimp_container_view_get_view_size (GimpContainerView *view,
                                                 gint              *view_border_width);

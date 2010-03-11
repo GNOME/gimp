@@ -57,6 +57,9 @@ static void          gimp_container_tree_view_set_container     (GimpContainerVi
                                                                  GimpContainer               *container);
 static void          gimp_container_tree_view_set_context       (GimpContainerView           *view,
                                                                  GimpContext                 *context);
+static void          gimp_container_tree_view_set_multiple_selection (GimpContainerView      *view,
+                                                                      gboolean                value);
+
 static gpointer      gimp_container_tree_view_insert_item       (GimpContainerView           *view,
                                                                  GimpViewable                *viewable,
                                                                  gpointer                     parent_insert_data,
@@ -143,8 +146,12 @@ gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
+  if (! parent_view_iface)
+    parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
+
   iface->set_container = gimp_container_tree_view_set_container;
   iface->set_context   = gimp_container_tree_view_set_context;
+  iface->set_multiple_selection = gimp_container_tree_view_set_multiple_selection;
   iface->insert_item   = gimp_container_tree_view_insert_item;
   iface->remove_item   = gimp_container_tree_view_remove_item;
   iface->reorder_item  = gimp_container_tree_view_reorder_item;
@@ -605,6 +612,19 @@ gimp_container_tree_view_set_context (GimpContainerView *view,
                               gimp_container_tree_view_set_context_foreach,
                               context);
     }
+}
+
+static void
+gimp_container_tree_view_set_multiple_selection (GimpContainerView *view,
+                                                 gboolean           value)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+
+  gtk_tree_selection_set_mode (tree_view->priv->selection,
+                               value ? GTK_SELECTION_MULTIPLE :
+                                       GTK_SELECTION_NONE);
+
+  parent_view_iface->set_multiple_selection (view, value);
 }
 
 static gpointer
