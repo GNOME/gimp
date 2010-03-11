@@ -838,7 +838,7 @@ save_dialog (gint channels)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "pressed",
+  g_signal_connect (toggle, "clicked",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGB_565));
 
@@ -851,14 +851,14 @@ save_dialog (gint channels)
 
   gtk_widget_show (toggle);
 
-  g_signal_connect (toggle, "pressed",
+  g_signal_connect (toggle, "clicked",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGBA_5551));
   toggle = gtk_radio_button_new_with_label (group, "X1 R5 G5 B5");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "pressed",
+  g_signal_connect (toggle, "clicked",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGB_555));
 
@@ -870,7 +870,7 @@ save_dialog (gint channels)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON(toggle));
   gtk_container_add (GTK_CONTAINER (frame), toggle);
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "pressed",
+  g_signal_connect (toggle, "clicked",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGB_888));
   if (channels < 4)
@@ -902,7 +902,7 @@ save_dialog (gint channels)
     }
 
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "pressed",
+  g_signal_connect (toggle, "clicked",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGBA_8888));
 
@@ -910,7 +910,7 @@ save_dialog (gint channels)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_container_add (GTK_CONTAINER (vbox), toggle);
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "pressed",
+  g_signal_connect (toggle, "clicked",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGBX_8888));
 
