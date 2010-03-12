@@ -85,7 +85,10 @@ def save_ora(img, drawable, filename, raw_filename):
 
     def store_layer(img, drawable, path):
         tmp = os.path.join(tempdir, 'tmp.png')
-        pdb['file-png-save-defaults'](img, drawable, tmp, 'tmp.png')
+        interlace, compression = 0, 2
+        png_chunks = (1, 1, 1, 1, 1) # write all PNG chunks
+        pdb['file-png-save'](img, drawable, tmp, 'tmp.png',
+                             interlace, compression, *png_chunks)
         orafile.write(tmp, path)
         os.remove(tmp)
 
