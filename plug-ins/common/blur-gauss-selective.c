@@ -751,7 +751,9 @@ sel_gauss (GimpDrawable *drawable,
   mat = g_new (gdouble, numrad);
   init_matrix (radius, mat, numrad);
 
-  src  = g_new (guchar, width * height * bytes);
+  /*  allocate with extra padding because MMX instructions may read
+      more than strictly necessary  */
+  src  = g_new (guchar, width * height * bytes + 16);
   dest = g_new (guchar, width * height * bytes);
 
   gimp_pixel_rgn_init (&src_rgn,
@@ -810,7 +812,9 @@ preview_update (GimpPreview *preview)
                        FALSE, FALSE);
   render_buffer = g_new (guchar, width * height * bytes);
 
-  src = g_new (guchar, width * height * bytes);
+  /*  allocate with extra padding because MMX instructions may read
+      more than strictly necessary  */
+  src = g_new (guchar, width * height * bytes + 16);
 
   /* render image */
   gimp_pixel_rgn_get_rect (&srcPR, src, x, y, width, height);
