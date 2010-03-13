@@ -64,7 +64,8 @@ struct _GimpDockClass
   GtkVBoxClass  parent_class;
 
   /*  virtual functions  */
-  gchar * (* get_description)         (GimpDock       *dock);
+  gchar * (* get_description)         (GimpDock       *dock,
+                                       gboolean        complete);
   void    (* set_host_geometry_hints) (GimpDock       *dock,
                                        GtkWindow      *window);
 
@@ -80,7 +81,8 @@ struct _GimpDockClass
 
 GType               gimp_dock_get_type                (void) G_GNUC_CONST;
 
-gchar             * gimp_dock_get_description         (GimpDock       *dock);
+gchar             * gimp_dock_get_description         (GimpDock       *dock,
+                                                       gboolean        complete);
 void                gimp_dock_set_host_geometry_hints (GimpDock       *dock,
                                                        GtkWindow      *window);
 void                gimp_dock_invalidate_geometry     (GimpDock       *dock);

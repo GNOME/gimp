@@ -72,7 +72,8 @@ struct _GimpDockPrivate
 static void              gimp_dock_style_set              (GtkWidget    *widget,
                                                            GtkStyle     *prev_style);
 static void              gimp_dock_destroy                (GtkObject    *object);
-static gchar           * gimp_dock_real_get_description   (GimpDock     *dock);
+static gchar           * gimp_dock_real_get_description   (GimpDock     *dock,
+                                                           gboolean      complete);
 static void              gimp_dock_real_book_added        (GimpDock     *dock,
                                                            GimpDockbook *dockbook);
 static void              gimp_dock_real_book_removed      (GimpDock     *dock,
@@ -245,7 +246,8 @@ gimp_dock_destroy (GtkObject *object)
 }
 
 static gchar *
-gimp_dock_real_get_description (GimpDock *dock)
+gimp_dock_real_get_description (GimpDock *dock,
+                                gboolean  complete)
 {
   GString *desc;
   GList   *list;
@@ -260,7 +262,22 @@ gimp_dock_real_get_description (GimpDock *dock)
       GList        *children;
       GList        *child;
 
-      children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+      if (complete)
+        {
+          /* Include all dockables */
+          children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+        }
+      else
+        {
+          GtkWidget *dockable = NULL;
+          gint       page_num = 0;
+
+          page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+          dockable = gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+          /* Only include active dockables */
+          children = g_list_append (NULL, dockable);
+        }
 
       for (child = children; child; child = g_list_next (child))
         {
@@ -285,12 +302,18 @@ static void
 gimp_dock_real_book_added (GimpDock     *dock,
                            GimpDockbook *dockbook)
 {
+  g_signal_connect_object (dockbook, "switch-page",
+                           G_CALLBACK (gimp_dock_invalidate_description),
+                           dock, G_CONNECT_SWAPPED);
 }
 
 static void
 gimp_dock_real_book_removed (GimpDock     *dock,
                              GimpDockbook *dockbook)
 {
+  g_signal_handlers_disconnect_by_func (dockbook,
+                                        gimp_dock_invalidate_description,
+                                        dock);
 }
 
 static void
@@ -367,13 +390,22 @@ gimp_dock_get_dock_columns (GimpDock *dock)
 
 /*  public functions  */
 
+/**
+ * gimp_dock_get_description:
+ * @dock:
+ * @complete: If %TRUE, only includes the active dockables, i.e. not the
+ *            dockables in a non-active GtkNotebook tab
+ *
+ * Returns: A string describing the contents of the dock.
+ **/
 gchar *
-gimp_dock_get_description (GimpDock *dock)
+gimp_dock_get_description (GimpDock *dock,
+                           gboolean  complete)
 {
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
   if (GIMP_DOCK_GET_CLASS (dock)->get_description)
-    return GIMP_DOCK_GET_CLASS (dock)->get_description (dock);
+    return GIMP_DOCK_GET_CLASS (dock)->get_description (dock, complete);
 
   return NULL;
 }

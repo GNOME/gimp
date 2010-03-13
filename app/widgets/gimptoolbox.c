@@ -132,7 +132,8 @@ static gboolean    gimp_toolbox_drag_drop               (GtkWidget             *
                                                          gint                   y,
                                                          guint                  time,
                                                          GimpToolbox           *toolbox);
-static gchar     * gimp_toolbox_get_description         (GimpDock              *dock);
+static gchar     * gimp_toolbox_get_description         (GimpDock              *dock,
+                                                         gboolean               complete);
 static void        gimp_toolbox_set_host_geometry_hints (GimpDock              *dock,
                                                          GtkWindow             *window);
 static void        gimp_toolbox_book_added              (GimpDock              *dock,
@@ -767,10 +768,12 @@ gimp_toolbox_drag_drop (GtkWidget      *widget,
 }
 
 static gchar *
-gimp_toolbox_get_description (GimpDock *dock)
+gimp_toolbox_get_description (GimpDock *dock,
+                              gboolean  complete)
 {
   GString *desc      = g_string_new (_("Toolbox"));
-  gchar   *dock_desc = GIMP_DOCK_CLASS (parent_class)->get_description (dock);
+  gchar   *dock_desc = GIMP_DOCK_CLASS (parent_class)->get_description (dock,
+                                                                        complete);
 
   if (dock_desc && strlen (dock_desc) > 0)
     {
@@ -787,6 +790,9 @@ static void
 gimp_toolbox_book_added (GimpDock     *dock,
                          GimpDockbook *dockbook)
 {
+  if (GIMP_DOCK_CLASS (gimp_toolbox_parent_class)->book_added)
+    GIMP_DOCK_CLASS (gimp_toolbox_parent_class)->book_added (dock, dockbook);
+  
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 1)
     {
       gimp_dock_invalidate_geometry (dock);
@@ -797,6 +803,9 @@ static void
 gimp_toolbox_book_removed (GimpDock     *dock,
                            GimpDockbook *dockbook)
 {
+  if (GIMP_DOCK_CLASS (gimp_toolbox_parent_class)->book_removed)
+    GIMP_DOCK_CLASS (gimp_toolbox_parent_class)->book_removed (dock, dockbook);
+
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 0 &&
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
     {

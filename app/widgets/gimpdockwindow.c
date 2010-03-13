@@ -137,6 +137,8 @@ static void      gimp_dock_window_image_flush             (GimpImage            
                                                            GimpDockWindow        *dock_window);
 static void      gimp_dock_window_update_title            (GimpDockWindow        *dock_window);
 static gboolean  gimp_dock_window_update_title_idle       (GimpDockWindow        *dock_window);
+static gchar *   gimp_dock_window_get_description         (GimpDockWindow        *dock_window,
+                                                           gboolean               complete);
 static void      gimp_dock_window_dock_removed            (GimpDockWindow        *dock_window,
                                                            GimpDock              *dock,
                                                            GimpDockColumns       *dock_columns);
@@ -626,6 +628,7 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   GimpSessionInfo        *info        = NULL;
   const gchar            *entry_name  = NULL;
   GimpDialogFactoryEntry *entry       = NULL;
+  gchar                  *name        = NULL;
 
   /* Don't add docks with just a singe dockable to the list of
    * recently closed dock since those can be brought back through the
@@ -636,8 +639,9 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
 
   info = gimp_session_info_new ();
 
-  gimp_object_set_name (GIMP_OBJECT (info),
-                        gtk_window_get_title (GTK_WINDOW (dock_window)));
+  name = gimp_dock_window_get_description (dock_window, TRUE /*complete*/);
+  gimp_object_set_name (GIMP_OBJECT (info), name);
+  g_free (name);
 
   gimp_session_info_set_widget (info, GTK_WIDGET (dock_window));
   gimp_session_info_get_info (info);
@@ -730,29 +734,36 @@ gimp_dock_window_update_title (GimpDockWindow *dock_window)
 static gboolean
 gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
 {
-  GString *complete_title = g_string_new ("");
-  GList   *iter           = NULL;
+  gchar *desc = gimp_dock_window_get_description (dock_window,
+                                                  FALSE /*complete*/);
+  if (desc != NULL)
+    gtk_window_set_title (GTK_WINDOW (dock_window), desc);
+
+  dock_window->p->update_title_idle_id = 0;
+
+  return FALSE;
+}
+
+static gchar *
+gimp_dock_window_get_description (GimpDockWindow *dock_window,
+                                  gboolean        complete)
+{
+  GString *complete_desc = g_string_new (NULL);
+  GList   *iter          = NULL;
 
   for (iter = gimp_dock_window_get_docks (dock_window);
        iter;
        iter = g_list_next (iter))
     {
-      gchar *title = gimp_dock_get_description (GIMP_DOCK (iter->data));
-      g_string_append (complete_title, title);
-      g_free (title);
+      gchar *desc = gimp_dock_get_description (GIMP_DOCK (iter->data), complete);
+      g_string_append (complete_desc, desc);
+      g_free (desc);
 
       if (g_list_next (iter))
-        g_string_append (complete_title, GIMP_DOCK_COLUMN_SEPARATOR);
+        g_string_append (complete_desc, GIMP_DOCK_COLUMN_SEPARATOR);
     }
 
-  if (complete_title->len > 0)
-    gtk_window_set_title (GTK_WINDOW (dock_window), complete_title->str);
-
-  g_string_free (complete_title, TRUE /*free_segment*/);
-
-  dock_window->p->update_title_idle_id = 0;
-
-  return FALSE;
+  return g_string_free (complete_desc, FALSE /*free_segment*/);
 }
 
 static void
