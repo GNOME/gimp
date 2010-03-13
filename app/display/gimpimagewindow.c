@@ -134,6 +134,9 @@ static void      gimp_image_window_style_set           (GtkWidget           *wid
 static void      gimp_image_window_config_notify       (GimpImageWindow     *window,
                                                         GParamSpec          *pspec,
                                                         GimpGuiConfig       *config);
+static void      gimp_image_window_session_clear       (GimpImageWindow     *window);
+static void      gimp_image_window_session_apply       (GimpImageWindow     *window,
+                                                        const gchar         *entry_id);
 static void      gimp_image_window_session_update      (GimpImageWindow     *window,
                                                         GimpDisplay         *new_display);
 static void      gimp_image_window_show_tooltip        (GimpUIManager       *manager,
@@ -1304,6 +1307,58 @@ gimp_image_window_image_notify (GimpDisplay      *display,
 }
 
 static void
+gimp_image_window_session_clear (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GtkWidget              *widget  = GTK_WIDGET (window);
+
+  if (gimp_dialog_factory_from_widget (widget, NULL))
+    gimp_dialog_factory_remove_dialog (private->dialog_factory,
+                                       widget);
+}
+
+static void
+gimp_image_window_session_apply (GimpImageWindow *window,
+                                 const gchar     *entry_id)
+{
+  GimpImageWindowPrivate *private      = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpSessionInfo        *session_info = NULL;
+  gint                    width        = -1;
+  gint                    height       = -1;
+
+  gtk_window_unfullscreen (GTK_WINDOW (window));
+
+  /*  get the NIW size before adding the display to the dialog
+   *  factory so the window's current size doesn't affect the
+   *  stored session info entry.
+   */
+  session_info =
+    gimp_dialog_factory_find_session_info (private->dialog_factory, entry_id);
+
+  if (session_info)
+    {
+      width  = gimp_session_info_get_width  (session_info);
+      height = gimp_session_info_get_height (session_info);
+    }
+  else
+    {
+      GtkAllocation allocation;
+
+      gtk_widget_get_allocation (GTK_WIDGET (window), &allocation);
+
+      width  = allocation.width;
+      height = allocation.height;
+    }
+
+  gimp_dialog_factory_add_foreign (private->dialog_factory,
+                                   entry_id,
+                                   GTK_WIDGET (window));
+
+  gtk_window_unmaximize (GTK_WINDOW (window));
+  gtk_window_resize (GTK_WINDOW (window), width, height);
+}
+
+static void
 gimp_image_window_session_update (GimpImageWindow *window,
                                   GimpDisplay     *new_display)
 {
@@ -1311,14 +1366,10 @@ gimp_image_window_session_update (GimpImageWindow *window,
 
   if (gimp_display_get_image (new_display))
     {
-      GtkWidget *widget = GTK_WIDGET (window);
-
-      /* As soon as we have an image we should not affect the size of
-       * the empty image window
+      /* As soon as we have an image we should not affect the size of the
+       * empty image window
        */
-      if (gimp_dialog_factory_from_widget (widget, NULL))
-        gimp_dialog_factory_remove_dialog (private->dialog_factory,
-                                           widget);
+      gimp_image_window_session_clear (window);
     }
   else if (! gimp_display_get_image (new_display) &&
            g_list_length (private->shells) <= 1)
@@ -1326,42 +1377,7 @@ gimp_image_window_session_update (GimpImageWindow *window,
       /* As soon as we have no image (and no other shells that may
        * contain images) we should become the empty image window
        */
-
-      GimpSessionInfo *session_info;
-      gint             width;
-      gint             height;
-
-      gtk_window_unfullscreen (GTK_WINDOW (window));
-
-      /*  get the NIW size before adding the display to the dialog
-       *  factory so the window's current size doesn't affect the
-       *  stored session info entry.
-       */
-      session_info =
-        gimp_dialog_factory_find_session_info (private->dialog_factory,
-                                               "gimp-empty-image-window");
-
-      if (session_info)
-        {
-          width  = gimp_session_info_get_width  (session_info);
-          height = gimp_session_info_get_height (session_info);
-        }
-      else
-        {
-          GtkAllocation allocation;
-
-          gtk_widget_get_allocation (GTK_WIDGET (window), &allocation);
-
-          width  = allocation.width;
-          height = allocation.height;
-        }
-
-      gimp_dialog_factory_add_foreign (private->dialog_factory,
-                                       "gimp-empty-image-window",
-                                       GTK_WIDGET (window));
-
-      gtk_window_unmaximize (GTK_WINDOW (window));
-      gtk_window_resize (GTK_WINDOW (window), width, height);
+      gimp_image_window_session_apply (window, "gimp-empty-image-window");
     }
 }
 
