@@ -269,13 +269,13 @@ gimp_dock_real_get_title (GimpDock *dock)
           g_string_append (title, gimp_dockable_get_name (dockable));
 
           if (g_list_next (child))
-            g_string_append (title, _(", "));
+            g_string_append (title, GIMP_DOCK_DOCKABLE_SEPARATOR);
         }
 
       g_list_free (children);
 
       if (g_list_next (list))
-        g_string_append (title, _(" - "));
+        g_string_append (title, GIMP_DOCK_BOOK_SEPARATOR);
     }
 
   return g_string_free (title, FALSE);

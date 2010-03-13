@@ -30,6 +30,20 @@
 #define GIMP_DOCK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCK, GimpDockClass))
 
 
+/* String used to separate dockables, e.g. "Tool Options, Layers" */
+#define GIMP_DOCK_DOCKABLE_SEPARATOR C_("dock", ", ")
+
+/* String used to separate books (GtkNotebooks) within a dock,
+   e.g. "Tool Options, Layers - Brushes"
+ */
+#define GIMP_DOCK_BOOK_SEPARATOR C_("dock", " - ")
+
+/* String used to separate dock columns,
+   e.g. "Tool Options, Layers - Brushes | Gradients"
+ */
+#define GIMP_DOCK_COLUMN_SEPARATOR C_("dock", " | ")
+
+
 typedef struct _GimpDockClass    GimpDockClass;
 typedef struct _GimpDockPrivate  GimpDockPrivate;
 

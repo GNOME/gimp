@@ -774,7 +774,7 @@ gimp_toolbox_get_title (GimpDock *dock)
 
   if (dock_title && strlen (dock_title) > 0)
     {
-      g_string_append (title, " - ");
+      g_string_append (title, GIMP_DOCK_BOOK_SEPARATOR);
       g_string_append (title, dock_title);
     }
 

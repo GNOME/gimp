@@ -414,6 +414,7 @@ app/widgets/gimpdevicestatus.c
 app/widgets/gimpdnd-xds.c
 app/widgets/gimpdnd.c
 app/widgets/gimpdock.c
+app/widgets/gimpdock.h
 app/widgets/gimpdockable.c
 app/widgets/gimpdockwindow.c
 app/widgets/gimpdocumentview.c

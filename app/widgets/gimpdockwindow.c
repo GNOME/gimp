@@ -742,7 +742,7 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
       g_free (title);
 
       if (g_list_next (iter))
-        g_string_append (complete_title, _(" | "));
+        g_string_append (complete_title, GIMP_DOCK_COLUMN_SEPARATOR);
     }
 
   if (complete_title->len > 0)
