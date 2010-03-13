@@ -52,7 +52,7 @@ enum
 {
   BOOK_ADDED,
   BOOK_REMOVED,
-  TITLE_INVALIDATED,
+  DESCRIPTION_INVALIDATED,
   GEOMETRY_INVALIDATED,
   LAST_SIGNAL
 };
@@ -69,19 +69,19 @@ struct _GimpDockPrivate
 };
 
 
-static void              gimp_dock_style_set         (GtkWidget    *widget,
-                                                      GtkStyle     *prev_style);
-static void              gimp_dock_destroy           (GtkObject    *object);
-static gchar           * gimp_dock_real_get_title    (GimpDock     *dock);
-static void              gimp_dock_real_book_added   (GimpDock     *dock,
-                                                      GimpDockbook *dockbook);
-static void              gimp_dock_real_book_removed (GimpDock     *dock,
-                                                      GimpDockbook *dockbook);
-static void              gimp_dock_invalidate_title  (GimpDock     *dock);
-static gboolean          gimp_dock_dropped_cb        (GtkWidget    *source,
-                                                      gint          insert_index,
-                                                      gpointer      data);
-static GimpDockColumns * gimp_dock_get_dock_columns  (GimpDock     *dock);
+static void              gimp_dock_style_set              (GtkWidget    *widget,
+                                                           GtkStyle     *prev_style);
+static void              gimp_dock_destroy                (GtkObject    *object);
+static gchar           * gimp_dock_real_get_description   (GimpDock     *dock);
+static void              gimp_dock_real_book_added        (GimpDock     *dock,
+                                                           GimpDockbook *dockbook);
+static void              gimp_dock_real_book_removed      (GimpDock     *dock,
+                                                           GimpDockbook *dockbook);
+static void              gimp_dock_invalidate_description (GimpDock     *dock);
+static gboolean          gimp_dock_dropped_cb             (GtkWidget    *source,
+                                                           gint          insert_index,
+                                                           gpointer      data);
+static GimpDockColumns * gimp_dock_get_dock_columns       (GimpDock     *dock);
 
 
 G_DEFINE_TYPE (GimpDock, gimp_dock, GTK_TYPE_VBOX)
@@ -117,11 +117,11 @@ gimp_dock_class_init (GimpDockClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCKBOOK);
 
-  dock_signals[TITLE_INVALIDATED] =
-    g_signal_new ("title-invalidated",
+  dock_signals[DESCRIPTION_INVALIDATED] =
+    g_signal_new ("description-invalidated",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpDockClass, title_invalidated),
+                  G_STRUCT_OFFSET (GimpDockClass, description_invalidated),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -139,11 +139,11 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   widget_class->style_set        = gimp_dock_style_set;
 
-  klass->get_title               = gimp_dock_real_get_title;
+  klass->get_description         = gimp_dock_real_get_description;
   klass->set_host_geometry_hints = NULL;
   klass->book_added              = gimp_dock_real_book_added;
   klass->book_removed            = gimp_dock_real_book_removed;
-  klass->title_invalidated       = NULL;
+  klass->description_invalidated = NULL;
   klass->geometry_invalidated    = NULL;
 
   gtk_widget_class_install_style_property (widget_class,
@@ -245,12 +245,12 @@ gimp_dock_destroy (GtkObject *object)
 }
 
 static gchar *
-gimp_dock_real_get_title (GimpDock *dock)
+gimp_dock_real_get_description (GimpDock *dock)
 {
-  GString *title;
+  GString *desc;
   GList   *list;
 
-  title = g_string_new (NULL);
+  desc = g_string_new (NULL);
 
   for (list = gimp_dock_get_dockbooks (dock);
        list;
@@ -266,19 +266,19 @@ gimp_dock_real_get_title (GimpDock *dock)
         {
           GimpDockable *dockable = child->data;
 
-          g_string_append (title, gimp_dockable_get_name (dockable));
+          g_string_append (desc, gimp_dockable_get_name (dockable));
 
           if (g_list_next (child))
-            g_string_append (title, GIMP_DOCK_DOCKABLE_SEPARATOR);
+            g_string_append (desc, GIMP_DOCK_DOCKABLE_SEPARATOR);
         }
 
       g_list_free (children);
 
       if (g_list_next (list))
-        g_string_append (title, GIMP_DOCK_BOOK_SEPARATOR);
+        g_string_append (desc, GIMP_DOCK_BOOK_SEPARATOR);
     }
 
-  return g_string_free (title, FALSE);
+  return g_string_free (desc, FALSE);
 }
 
 static void
@@ -294,11 +294,11 @@ gimp_dock_real_book_removed (GimpDock     *dock,
 }
 
 static void
-gimp_dock_invalidate_title (GimpDock *dock)
+gimp_dock_invalidate_description (GimpDock *dock)
 {
   g_return_if_fail (GIMP_IS_DOCK (dock));
 
-  g_signal_emit (dock, dock_signals[TITLE_INVALIDATED], 0);
+  g_signal_emit (dock, dock_signals[DESCRIPTION_INVALIDATED], 0);
 }
 
 static gboolean
@@ -368,12 +368,12 @@ gimp_dock_get_dock_columns (GimpDock *dock)
 /*  public functions  */
 
 gchar *
-gimp_dock_get_title (GimpDock *dock)
+gimp_dock_get_description (GimpDock *dock)
 {
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  if (GIMP_DOCK_GET_CLASS (dock)->get_title)
-    return GIMP_DOCK_GET_CLASS (dock)->get_title (dock);
+  if (GIMP_DOCK_GET_CLASS (dock)->get_description)
+    return GIMP_DOCK_GET_CLASS (dock)->get_description (dock);
 
   return NULL;
 }
@@ -619,13 +619,13 @@ gimp_dock_add_book (GimpDock     *dock,
   gimp_dockbook_set_dock (dockbook, dock);
 
   g_signal_connect_object (dockbook, "dockable-added",
-                           G_CALLBACK (gimp_dock_invalidate_title),
+                           G_CALLBACK (gimp_dock_invalidate_description),
                            dock, G_CONNECT_SWAPPED);
   g_signal_connect_object (dockbook, "dockable-removed",
-                           G_CALLBACK (gimp_dock_invalidate_title),
+                           G_CALLBACK (gimp_dock_invalidate_description),
                            dock, G_CONNECT_SWAPPED);
   g_signal_connect_object (dockbook, "dockable-reordered",
-                           G_CALLBACK (gimp_dock_invalidate_title),
+                           G_CALLBACK (gimp_dock_invalidate_description),
                            dock, G_CONNECT_SWAPPED);
 
   dock->p->dockbooks = g_list_insert (dock->p->dockbooks, dockbook, index);
@@ -634,7 +634,7 @@ gimp_dock_add_book (GimpDock     *dock,
                              index);
   gtk_widget_show (GTK_WIDGET (dockbook));
 
-  gimp_dock_invalidate_title (dock);
+  gimp_dock_invalidate_description (dock);
 
   g_signal_emit (dock, dock_signals[BOOK_ADDED], 0, dockbook);
 }
@@ -650,7 +650,7 @@ gimp_dock_remove_book (GimpDock     *dock,
   gimp_dockbook_set_dock (dockbook, NULL);
 
   g_signal_handlers_disconnect_by_func (dockbook,
-                                        gimp_dock_invalidate_title,
+                                        gimp_dock_invalidate_description,
                                         dock);
 
   /* Ref the dockbook so we can emit the "book-removed" signal and
@@ -662,7 +662,7 @@ gimp_dock_remove_book (GimpDock     *dock,
   gimp_paned_box_remove_widget (GIMP_PANED_BOX (dock->p->paned_vbox),
                                 GTK_WIDGET (dockbook));
 
-  gimp_dock_invalidate_title (dock);
+  gimp_dock_invalidate_description (dock);
 
   g_signal_emit (dock, dock_signals[BOOK_REMOVED], 0, dockbook);
 

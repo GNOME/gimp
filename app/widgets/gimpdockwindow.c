@@ -737,7 +737,7 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
        iter;
        iter = g_list_next (iter))
     {
-      gchar *title = gimp_dock_get_title (GIMP_DOCK (iter->data));
+      gchar *title = gimp_dock_get_description (GIMP_DOCK (iter->data));
       g_string_append (complete_title, title);
       g_free (title);
 
@@ -902,7 +902,7 @@ gimp_dock_window_add_dock (GimpDockWindow *dock_window,
                               GIMP_DOCK (dock),
                               index);
 
-  g_signal_connect_object (dock, "title-invalidated",
+  g_signal_connect_object (dock, "description-invalidated",
                            G_CALLBACK (gimp_dock_window_update_title),
                            dock_window,
                            G_CONNECT_SWAPPED);

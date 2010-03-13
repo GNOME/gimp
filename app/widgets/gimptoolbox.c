@@ -132,7 +132,7 @@ static gboolean    gimp_toolbox_drag_drop               (GtkWidget             *
                                                          gint                   y,
                                                          guint                  time,
                                                          GimpToolbox           *toolbox);
-static gchar     * gimp_toolbox_get_title               (GimpDock              *dock);
+static gchar     * gimp_toolbox_get_description         (GimpDock              *dock);
 static void        gimp_toolbox_set_host_geometry_hints (GimpDock              *dock,
                                                          GtkWindow             *window);
 static void        gimp_toolbox_book_added              (GimpDock              *dock,
@@ -197,7 +197,7 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   widget_class->button_press_event    = gimp_toolbox_button_press_event;
   widget_class->expose_event          = gimp_toolbox_expose_event;
 
-  dock_class->get_title               = gimp_toolbox_get_title;
+  dock_class->get_description         = gimp_toolbox_get_description;
   dock_class->set_host_geometry_hints = gimp_toolbox_set_host_geometry_hints;
   dock_class->book_added              = gimp_toolbox_book_added;
   dock_class->book_removed            = gimp_toolbox_book_removed;
@@ -767,20 +767,20 @@ gimp_toolbox_drag_drop (GtkWidget      *widget,
 }
 
 static gchar *
-gimp_toolbox_get_title (GimpDock *dock)
+gimp_toolbox_get_description (GimpDock *dock)
 {
-  GString *title      = g_string_new (_("Toolbox"));
-  gchar   *dock_title = GIMP_DOCK_CLASS (parent_class)->get_title (dock);
+  GString *desc      = g_string_new (_("Toolbox"));
+  gchar   *dock_desc = GIMP_DOCK_CLASS (parent_class)->get_description (dock);
 
-  if (dock_title && strlen (dock_title) > 0)
+  if (dock_desc && strlen (dock_desc) > 0)
     {
-      g_string_append (title, GIMP_DOCK_BOOK_SEPARATOR);
-      g_string_append (title, dock_title);
+      g_string_append (desc, GIMP_DOCK_BOOK_SEPARATOR);
+      g_string_append (desc, dock_desc);
     }
 
-  g_free (dock_title);
+  g_free (dock_desc);
 
-  return g_string_free (title, FALSE /*free_segment*/);
+  return g_string_free (desc, FALSE /*free_segment*/);
 }
 
 static void
