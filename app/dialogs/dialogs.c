@@ -364,8 +364,10 @@ static const GimpDialogFactoryEntry entries[] =
             GIMP_HELP_PALETTE_EDITOR_DIALOG,
             dialogs_palette_editor_get, 0, TRUE),
 
-  /*  emtpy image window  */
+  /*  image windows  */
   FOREIGN_NOT_HIDEABLE ("gimp-empty-image-window",
+                        TRUE, TRUE),
+  FOREIGN_NOT_HIDEABLE ("gimp-single-image-window",
                         TRUE, TRUE)
 };
 

@@ -58,6 +58,9 @@
 #include "gimp-log.h"
 #include "gimp-intl.h"
 
+#define GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID  "gimp-empty-image-window"
+#define GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID "gimp-single-image-window"
+
 
 enum
 {
@@ -89,6 +92,8 @@ struct _GimpImageWindowPrivate
   GtkWidget         *right_docks;
 
   GdkWindowState     window_state;
+
+  const gchar       *entry_id;
 };
 
 typedef struct
@@ -139,6 +144,10 @@ static void      gimp_image_window_session_apply       (GimpImageWindow     *win
                                                         const gchar         *entry_id);
 static void      gimp_image_window_session_update      (GimpImageWindow     *window,
                                                         GimpDisplay         *new_display);
+static const gchar *
+                 gimp_image_window_config_to_entry_id  (GimpGuiConfig       *config);
+static void      gimp_image_window_set_entry_id        (GimpImageWindow     *window,
+                                                        const gchar         *entry_id);
 static void      gimp_image_window_show_tooltip        (GimpUIManager       *manager,
                                                         const gchar         *tooltip,
                                                         GimpImageWindow     *window);
@@ -369,6 +378,9 @@ gimp_image_window_constructor (GType                  type,
   g_signal_connect_object (config, "notify::hide-docks",
                            G_CALLBACK (gimp_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
+
+  private->entry_id = gimp_image_window_config_to_entry_id (config);
+
   return object;
 }
 
@@ -1115,6 +1127,7 @@ gimp_image_window_config_notify (GimpImageWindow *window,
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
+  /* Dock column visibility */
   if (strcmp (pspec->name, "single-window-mode") == 0 ||
       strcmp (pspec->name, "hide-docks")         == 0)
     {
@@ -1124,6 +1137,13 @@ gimp_image_window_config_notify (GimpImageWindow *window,
       gimp_image_window_keep_canvas_pos (window);
       gtk_widget_set_visible (private->left_docks, show_docks);
       gtk_widget_set_visible (private->right_docks, show_docks);
+    }
+
+  /* Session management */
+  if (strcmp (pspec->name, "single-window-mode") == 0)
+    {
+      gimp_image_window_set_entry_id (window,
+                                      gimp_image_window_config_to_entry_id (config));
     }
 }
 
@@ -1364,21 +1384,63 @@ gimp_image_window_session_update (GimpImageWindow *window,
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  if (gimp_display_get_image (new_display))
+  if (private->entry_id == NULL)
+    return;
+
+  if (strcmp (private->entry_id, GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID) == 0)
     {
-      /* As soon as we have an image we should not affect the size of the
-       * empty image window
-       */
-      gimp_image_window_session_clear (window);
+      if (gimp_display_get_image (new_display))
+        {
+          /* As soon as we have an image we should not affect the size of the
+           * empty image window
+           */
+          gimp_image_window_session_clear (window);
+        }
+      else if (! gimp_display_get_image (new_display) &&
+               g_list_length (private->shells) <= 1)
+        {
+          /* As soon as we have no image (and no other shells that may
+           * contain images) we should become the empty image window
+           */
+          gimp_image_window_session_apply (window, private->entry_id);
+        }
     }
-  else if (! gimp_display_get_image (new_display) &&
-           g_list_length (private->shells) <= 1)
+  else if (strcmp (private->entry_id, GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
     {
-      /* As soon as we have no image (and no other shells that may
-       * contain images) we should become the empty image window
-       */
-      gimp_image_window_session_apply (window, "gimp-empty-image-window");
+      /* Always session manage the single image window */
+      gimp_image_window_session_apply (window, private->entry_id);
     }
+  else
+    {
+      g_assert_not_reached ();
+    }
+}
+
+static const gchar *
+gimp_image_window_config_to_entry_id (GimpGuiConfig *config)
+{
+  return (config->single_window_mode ?
+          GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID :
+          GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID);
+}
+
+static void
+gimp_image_window_set_entry_id (GimpImageWindow *window,
+                                const gchar     *entry_id)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  g_return_if_fail (entry_id != NULL);
+
+  if ((private->entry_id && strcmp (private->entry_id, entry_id) == 0) ||
+      ! private->active_shell)
+    return;
+
+  gimp_image_window_session_clear (window);
+
+  private->entry_id = entry_id;
+
+  gimp_image_window_session_update (window, private->active_shell->display);
 }
 
 static void

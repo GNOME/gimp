@@ -34,5 +34,13 @@
 	        (tab-style preview))
             (dockable "gimp-gradient-list"
 	        (tab-style preview)))))
+(session-info "toplevel"
+    (factory-entry "gimp-empty-image-window")
+    (position 410 370)
+    (size 620 200))
+(session-info "toplevel"
+    (factory-entry "gimp-single-image-window")
+    (position 160 70)
+    (size 1140 780))
 
 # end of sessionrc
