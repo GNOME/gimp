@@ -812,9 +812,17 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
   if (viewable && insert_data)
     {
       GtkTreePath *path;
+      GtkTreePath *parent_path;
       GtkTreeIter *iter = (GtkTreeIter *) insert_data;
 
       path = gtk_tree_model_get_path (tree_view->model, iter);
+
+      parent_path = gtk_tree_path_copy (path);
+
+      if (gtk_tree_path_up (parent_path))
+        gtk_tree_view_expand_to_path (tree_view->view, parent_path);
+
+      gtk_tree_path_free (parent_path);
 
       g_signal_handlers_block_by_func (tree_view->priv->selection,
                                        gimp_container_tree_view_selection_changed,
