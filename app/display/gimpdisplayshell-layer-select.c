@@ -189,10 +189,11 @@ static void
 layer_select_advance (LayerSelect *layer_select,
                       gint         move)
 {
-  GimpContainer *container;
-  GimpLayer     *current_layer;
-  GimpLayer     *next_layer;
-  gint           index;
+  GimpLayer *active_layer;
+  GimpLayer *next_layer;
+  GList     *layers;
+  gint       n_layers;
+  gint       index;
 
   if (move == 0)
     return;
@@ -201,31 +202,34 @@ layer_select_advance (LayerSelect *layer_select,
   if (gimp_image_get_floating_selection (layer_select->image))
     return;
 
-  current_layer = gimp_image_get_active_layer (layer_select->image);
+  active_layer = gimp_image_get_active_layer (layer_select->image);
 
-  container = gimp_item_get_container (GIMP_ITEM (current_layer));
-  index     = gimp_item_get_index (GIMP_ITEM (current_layer));
+  layers   = gimp_image_get_layer_list (layer_select->image);
+  n_layers = g_list_length (layers);
 
+  index = g_list_index (layers, active_layer);
   index += move;
 
   if (index < 0)
-    index = gimp_container_get_n_children (container) - 1;
-  else if (index >= gimp_container_get_n_children (container))
+    index = n_layers - 1;
+  else if (index >= n_layers)
     index = 0;
 
-  next_layer = GIMP_LAYER (gimp_container_get_child_by_index (container, index));
+  next_layer = g_list_nth_data (layers, index);
 
-  if (next_layer && next_layer != current_layer)
+  g_list_free (layers);
+
+  if (next_layer && next_layer != active_layer)
     {
-      current_layer = gimp_image_set_active_layer (layer_select->image,
-                                                   next_layer);
+      active_layer = gimp_image_set_active_layer (layer_select->image,
+                                                  next_layer);
 
-      if (current_layer)
+      if (active_layer)
         {
           gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
-                                  GIMP_VIEWABLE (current_layer));
+                                  GIMP_VIEWABLE (active_layer));
           gtk_label_set_text (GTK_LABEL (layer_select->label),
-                              gimp_object_get_name (current_layer));
+                              gimp_object_get_name (active_layer));
         }
     }
 }
