@@ -140,7 +140,7 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
       gimp_airbrush_motion (paint_core, drawable, paint_options, coords);
 
-      if (options->rate != 0.0)
+      if ((options->rate != 0.0) && (!options->motion_only))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
           gdouble    fade_point;

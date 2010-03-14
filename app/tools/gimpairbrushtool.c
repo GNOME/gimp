@@ -80,9 +80,15 @@ gimp_airbrush_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *table;
+  GtkWidget *button;
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
+
+  button = gimp_prop_check_button_new (config, "motion-only", _("Motion only"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 

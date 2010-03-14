@@ -28,12 +28,13 @@
 
 #define AIRBRUSH_DEFAULT_RATE        80.0
 #define AIRBRUSH_DEFAULT_FLOW        10.0
-
+#define AIRBRUSH_DEFAULT_MOTION_ONLY FALSE
 
 enum
 {
   PROP_0,
   PROP_RATE,
+  PROP_MOTION_ONLY,
   PROP_FLOW
 };
 
@@ -65,6 +66,12 @@ gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
                                    0.0, 150.0, AIRBRUSH_DEFAULT_RATE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MOTION_ONLY,
+                                    "motion-only", NULL,
+                                    AIRBRUSH_DEFAULT_MOTION_ONLY,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FLOW,
                                    "flow", NULL,
                                    0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
@@ -89,6 +96,9 @@ gimp_airbrush_options_set_property (GObject      *object,
     case PROP_RATE:
       options->rate = g_value_get_double (value);
       break;
+    case PROP_MOTION_ONLY:
+      options->motion_only = g_value_get_boolean (value);
+      break;
     case PROP_FLOW:
       options->flow = g_value_get_double (value);
       break;
@@ -111,6 +121,9 @@ gimp_airbrush_options_get_property (GObject    *object,
     {
     case PROP_RATE:
       g_value_set_double (value, options->rate);
+      break;
+    case PROP_MOTION_ONLY:
+      g_value_set_boolean (value, options->motion_only);
       break;
     case PROP_FLOW:
       g_value_set_double (value, options->flow);

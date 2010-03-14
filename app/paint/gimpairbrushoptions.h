@@ -37,6 +37,7 @@ struct _GimpAirbrushOptions
   GimpPaintOptions  parent_instance;
 
   gdouble           rate;
+  gboolean          motion_only;
   gdouble           flow;
 };
 
