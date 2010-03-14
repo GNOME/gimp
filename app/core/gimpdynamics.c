@@ -49,6 +49,7 @@ enum
   PROP_ASPECT_RATIO_OUTPUT,
   PROP_SPACING_OUTPUT,
   PROP_RATE_OUTPUT,
+  PROP_FLOW_OUTPUT,
   PROP_JITTER_OUTPUT
 };
 
@@ -118,6 +119,11 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                    GIMP_TYPE_DYNAMICS_OUTPUT,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
 
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_FLOW_OUTPUT,
+                                   "flow-output", NULL,
+                                   GIMP_TYPE_DYNAMICS_OUTPUT,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
+
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_SIZE_OUTPUT,
                                    "size-output", NULL,
                                    GIMP_TYPE_DYNAMICS_OUTPUT,
@@ -161,6 +167,9 @@ gimp_dynamics_init (GimpDynamics *dynamics)
   dynamics->rate_output         = gimp_dynamics_create_output (dynamics,
                                                                "rate-output",
                                                                GIMP_DYNAMICS_OUTPUT_RATE);
+  dynamics->flow_output         = gimp_dynamics_create_output (dynamics,
+                                                               "flow-output",
+                                                               GIMP_DYNAMICS_OUTPUT_RATE);
   dynamics->size_output         = gimp_dynamics_create_output (dynamics,
                                                                "size-output",
                                                                GIMP_DYNAMICS_OUTPUT_SIZE);
@@ -189,6 +198,7 @@ gimp_dynamics_finalize (GObject *object)
   g_object_unref (dynamics->opacity_output);
   g_object_unref (dynamics->hardness_output);
   g_object_unref (dynamics->rate_output);
+  g_object_unref (dynamics->flow_output);
   g_object_unref (dynamics->size_output);
   g_object_unref (dynamics->aspect_ratio_output);
   g_object_unref (dynamics->color_output);
@@ -228,6 +238,11 @@ gimp_dynamics_set_property (GObject      *object,
     case PROP_RATE_OUTPUT:
       src_output  = g_value_get_object (value);
       dest_output = dynamics->rate_output;
+      break;
+
+    case PROP_FLOW_OUTPUT:
+      src_output  = g_value_get_object (value);
+      dest_output = dynamics->flow_output;
       break;
 
     case PROP_SIZE_OUTPUT:
@@ -297,6 +312,10 @@ gimp_dynamics_get_property (GObject    *object,
 
     case PROP_RATE_OUTPUT:
       g_value_set_object (value, dynamics->rate_output);
+      break;
+
+    case PROP_FLOW_OUTPUT:
+      g_value_set_object (value, dynamics->flow_output);
       break;
 
     case PROP_SIZE_OUTPUT:
@@ -401,6 +420,10 @@ gimp_dynamics_get_output (GimpDynamics           *dynamics,
 
     case GIMP_DYNAMICS_OUTPUT_RATE:
       return dynamics->rate_output;
+      break;
+
+    case GIMP_DYNAMICS_OUTPUT_FLOW:
+      return dynamics->flow_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_SIZE:
