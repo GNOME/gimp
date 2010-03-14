@@ -591,14 +591,14 @@ GType gimp_dynamics_output_type_get_type (void) G_GNUC_CONST;
 typedef enum  /*< pdb-skip >*/
 {
   GIMP_DYNAMICS_OUTPUT_OPACITY,      /*< desc="Opacity"      >*/
-  GIMP_DYNAMICS_OUTPUT_HARDNESS,     /*< desc="Hardness"     >*/
-  GIMP_DYNAMICS_OUTPUT_RATE,         /*< desc="Rate"         >*/
   GIMP_DYNAMICS_OUTPUT_SIZE,         /*< desc="Size"         >*/
-  GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO, /*< desc="Aspect ratio" >*/
-  GIMP_DYNAMICS_OUTPUT_COLOR,        /*< desc="Color"        >*/
   GIMP_DYNAMICS_OUTPUT_ANGLE,        /*< desc="Angle"        >*/
-  GIMP_DYNAMICS_OUTPUT_JITTER,       /*< desc="Jitter"       >*/
+  GIMP_DYNAMICS_OUTPUT_COLOR,        /*< desc="Color"        >*/
+  GIMP_DYNAMICS_OUTPUT_HARDNESS,     /*< desc="Hardness"     >*/
+  GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO, /*< desc="Aspect ratio" >*/
   GIMP_DYNAMICS_OUTPUT_SPACING,      /*< desc="Spacing"      >*/
+  GIMP_DYNAMICS_OUTPUT_RATE,         /*< desc="Rate"         >*/
+  GIMP_DYNAMICS_OUTPUT_JITTER,       /*< desc="Jitter"       >*/
 } GimpDynamicsOutputType;
 
 
