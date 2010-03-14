@@ -92,9 +92,9 @@ gimp_airbrush_options_gui (GimpToolOptions *tool_options)
                              1.0, 1.0, 1,
                              FALSE, 0.0, 0.0);
 
-  gimp_prop_scale_entry_new (config, "pressure",
+  gimp_prop_scale_entry_new (config, "flow",
                              GTK_TABLE (table), 0, 1,
-                             _("Pressure:"),
+                             _("Flow:"),
                              1.0, 1.0, 1,
                              FALSE, 0.0, 0.0);
 

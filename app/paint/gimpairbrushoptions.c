@@ -26,15 +26,15 @@
 #include "gimpairbrushoptions.h"
 
 
-#define AIRBRUSH_DEFAULT_RATE     80.0
-#define AIRBRUSH_DEFAULT_PRESSURE 10.0
+#define AIRBRUSH_DEFAULT_RATE        80.0
+#define AIRBRUSH_DEFAULT_FLOW        10.0
 
 
 enum
 {
   PROP_0,
   PROP_RATE,
-  PROP_PRESSURE
+  PROP_FLOW
 };
 
 
@@ -65,9 +65,9 @@ gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
                                    0.0, 150.0, AIRBRUSH_DEFAULT_RATE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PRESSURE,
-                                   "pressure", NULL,
-                                   0.0, 100.0, AIRBRUSH_DEFAULT_PRESSURE,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FLOW,
+                                   "flow", NULL,
+                                   0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -89,8 +89,8 @@ gimp_airbrush_options_set_property (GObject      *object,
     case PROP_RATE:
       options->rate = g_value_get_double (value);
       break;
-    case PROP_PRESSURE:
-      options->pressure = g_value_get_double (value);
+    case PROP_FLOW:
+      options->flow = g_value_get_double (value);
       break;
 
     default:
@@ -112,8 +112,8 @@ gimp_airbrush_options_get_property (GObject    *object,
     case PROP_RATE:
       g_value_set_double (value, options->rate);
       break;
-    case PROP_PRESSURE:
-      g_value_set_double (value, options->pressure);
+    case PROP_FLOW:
+      g_value_set_double (value, options->flow);
       break;
 
     default:

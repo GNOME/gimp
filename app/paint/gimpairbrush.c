@@ -196,7 +196,7 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
-  opacity  = options->pressure / 100.0;
+  opacity  = options->flow / 100.0;
   opacity *= gimp_dynamics_output_get_linear_value(GIMP_BRUSH_CORE(paint_core)->dynamics->opacity_output,
                                                    coords,
                                                    paint_options,

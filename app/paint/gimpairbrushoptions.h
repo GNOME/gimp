@@ -37,7 +37,7 @@ struct _GimpAirbrushOptions
   GimpPaintOptions  parent_instance;
 
   gdouble           rate;
-  gdouble           pressure;
+  gdouble           flow;
 };
 
 struct _GimpAirbrushOptionsClass
