@@ -583,13 +583,13 @@ layers_actions_update (GimpActionGroup *group,
 
   if (layer && gimp_layer_is_floating_sel (layer))
     {
-      SET_LABEL ("layers-new",             "To _New Layer");
-      SET_LABEL ("layers-new-last-values", "To _New Layer");
+      SET_LABEL ("layers-new",             C_("layers-action", "To _New Layer"));
+      SET_LABEL ("layers-new-last-values", C_("layers-action", "To _New Layer"));
     }
   else
     {
-      SET_LABEL ("layers-new",             "_New Layer...");
-      SET_LABEL ("layers-new-last-values", "_New Layer");
+      SET_LABEL ("layers-new",             C_("layers-action", "_New Layer..."));
+      SET_LABEL ("layers-new-last-values", C_("layers-action", "_New Layer"));
     }
 
   SET_SENSITIVE ("layers-new",              image);
