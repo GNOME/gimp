@@ -35,7 +35,8 @@ enum
   PROP_0,
   PROP_RATE,
   PROP_MOTION_ONLY,
-  PROP_FLOW
+  PROP_FLOW,
+  PROP_PRESSURE /*for backwards copatibility of tool options*/
 };
 
 
@@ -76,6 +77,12 @@ gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
                                    "flow", NULL,
                                    0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  /*backwads-compadibility prop for flow fomerly known as pressure*/
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PRESSURE,
+                                   "pressure", NULL,
+                                   0.0, 100.0, AIRBRUSH_DEFAULT_FLOW,
+                                   GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -99,6 +106,7 @@ gimp_airbrush_options_set_property (GObject      *object,
     case PROP_MOTION_ONLY:
       options->motion_only = g_value_get_boolean (value);
       break;
+    case PROP_PRESSURE:
     case PROP_FLOW:
       options->flow = g_value_get_double (value);
       break;
@@ -125,6 +133,7 @@ gimp_airbrush_options_get_property (GObject    *object,
     case PROP_MOTION_ONLY:
       g_value_set_boolean (value, options->motion_only);
       break;
+    case PROP_PRESSURE:
     case PROP_FLOW:
       g_value_set_double (value, options->flow);
       break;
