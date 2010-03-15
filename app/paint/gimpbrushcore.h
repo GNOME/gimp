@@ -84,9 +84,12 @@ struct _GimpBrushCore
 
   /*  don't use these...  */
   BoundSeg      *brush_bound_segs;
+  BoundSeg      *transformed_brush_bound_segs;
   gint           n_brush_bound_segs;
   gint           brush_bound_width;
   gint           brush_bound_height;
+  gint           transformed_brush_bound_width;
+  gint           transformed_brush_bound_height;
 };
 
 struct _GimpBrushCoreClass
@@ -118,6 +121,8 @@ void    gimp_brush_core_set_dynamics   (GimpBrushCore            *core,
 
 void    gimp_brush_core_create_bound_segs (GimpBrushCore         *core,
                                            GimpPaintOptions      *options);
+void gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
+                                           GimpPaintOptions *paint_options);
 
 void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
@@ -149,5 +154,10 @@ TempBuf * gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
                                           GimpBrushApplicationMode  brush_hardness,
                                           gdouble                   dynamic_hardness);
 
+
+void gimp_brush_core_eval_transform_dynamics (GimpPaintCore     *paint_core,
+                                              GimpDrawable      *drawable,
+                                              GimpPaintOptions  *paint_options,
+                                              const GimpCoords  *coords);
 
 #endif  /*  __GIMP_BRUSH_CORE_H__  */

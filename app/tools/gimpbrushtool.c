@@ -220,6 +220,7 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
       GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
       GimpBrush     *brush;
+      GimpDynamics  *dynamics;
 
       brush_tool->brush_x = coords->x;
       brush_tool->brush_y = coords->y;
@@ -228,6 +229,19 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
 
       if (brush_core->main_brush != brush)
         gimp_brush_core_set_brush (brush_core, brush);
+
+      dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+
+      if (brush_core->dynamics != dynamics)
+        gimp_brush_core_set_dynamics (brush_core, dynamics);
+
+      if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
+        {
+          gimp_brush_core_eval_transform_dynamics (paint_tool->core,
+                                                   NULL,
+                                                   paint_options,
+                                                   coords);
+        }
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -302,10 +316,13 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
     }
 
   if (brush_core->brush_bound_segs)
+      gimp_brush_core_transform_bound_segs (brush_core, options);
+
+  if (brush_core->transformed_brush_bound_segs)
     {
       GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
-      gdouble           width  = brush_core->brush_bound_width;
-      gdouble           height = brush_core->brush_bound_height;
+      gdouble           width  = brush_core->transformed_brush_bound_width;
+      gdouble           height = brush_core->transformed_brush_bound_height;
 
       /*  don't draw the boundary if it becomes too small  */
       if (SCALEX (shell, width) > 4 && SCALEY (shell, height) > 4)
@@ -326,7 +343,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
             }
 
           gimp_draw_tool_draw_boundary (draw_tool,
-                                        brush_core->brush_bound_segs,
+                                        brush_core->transformed_brush_bound_segs,
                                         brush_core->n_brush_bound_segs,
                                         x, y,
                                         FALSE);

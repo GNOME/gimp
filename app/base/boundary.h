@@ -56,6 +56,9 @@ BoundSeg * boundary_simplify  (BoundSeg       *sorted_segs,
                                gint            num_groups,
                                gint           *num_segs);
 
+BoundSeg * boundary_transform (const BoundSeg *segs,
+                               gint           *num_segs,
+                               GimpMatrix3    *matrix);
 
 
 #endif  /*  __BOUNDARY_H__  */
