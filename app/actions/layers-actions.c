@@ -26,6 +26,7 @@
 
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 
 #include "text/gimptextlayer.h"
@@ -574,9 +575,22 @@ layers_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
+#define SET_LABEL(action,label) \
+        gimp_action_group_set_action_label (group, action, label)
 
   SET_VISIBLE   ("layers-text-tool",        text_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes",  layer && !fs && !ac);
+
+  if (layer && gimp_layer_is_floating_sel (layer))
+    {
+      SET_LABEL ("layers-new",             "To _New Layer");
+      SET_LABEL ("layers-new-last-values", "To _New Layer");
+    }
+  else
+    {
+      SET_LABEL ("layers-new",             "_New Layer...");
+      SET_LABEL ("layers-new-last-values", "_New Layer");
+    }
 
   SET_SENSITIVE ("layers-new",              image);
   SET_SENSITIVE ("layers-new-last-values",  image);
@@ -647,4 +661,5 @@ layers_actions_update (GimpActionGroup *group,
 #undef SET_VISIBLE
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
+#undef SET_LABEL
 }
