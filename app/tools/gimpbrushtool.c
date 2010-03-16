@@ -115,6 +115,7 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
                                          "context/context-brush-select-set");
 
   brush_tool->show_cursor = TRUE;
+  brush_tool->in_motion   = FALSE;
   brush_tool->draw_brush  = TRUE;
   brush_tool->brush_x     = 0.0;
   brush_tool->brush_y     = 0.0;
@@ -194,7 +195,7 @@ gimp_brush_tool_motion (GimpTool         *tool,
       brush_tool->brush_x = coords->x;
       brush_tool->brush_y = coords->y;
     }
-
+  brush_tool->in_motion = TRUE;
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
@@ -243,7 +244,7 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
                                                    coords);
         }
     }
-
+    brush_tool->in_motion = FALSE;
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
@@ -318,7 +319,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   if (brush_core->brush_bound_segs)
       gimp_brush_core_transform_bound_segs (brush_core, options);
 
-  if (brush_core->transformed_brush_bound_segs)
+  if ((brush_core->transformed_brush_bound_segs) && !(brush_tool->in_motion))
     {
       GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
       gdouble           width  = brush_core->transformed_brush_bound_width;
@@ -348,7 +349,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
                                         x, y,
                                         FALSE);
         }
-      else if (draw_fallback)
+      else if ((draw_fallback) || (brush_tool->in_motion))
         {
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CROSS,
                                       x, y,
