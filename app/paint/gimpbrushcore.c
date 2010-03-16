@@ -1687,7 +1687,8 @@ gimp_brush_core_eval_transform_dynamics (GimpPaintCore     *paint_core,
   core->angle = paint_options->brush_angle;
   core->aspect_ratio = paint_options->brush_aspect_ratio;
 
-  g_return_if_fail (GIMP_IS_DYNAMICS (core->dynamics));
+  if (!GIMP_IS_DYNAMICS (core->dynamics))
+    return;
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
     {
