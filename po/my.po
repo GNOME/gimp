@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-29 18:39+0200\n"
-"PO-Revision-Date: 2010-01-29 17:16+0200\n"
-"Last-Translator: Russell Kyaw <rkyaw@yahoo.com>\n"
+"POT-Creation-Date: 2010-03-18 01:03+0200\n"
+"PO-Revision-Date: 2010-02-18 22:50+0530\n"
+"Last-Translator: \n"
 "Language-Team: Burmese <burmait@burmait.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 1.0\n"
 
@@ -27,16 +27,14 @@ msgid "GNU Image Manipulation Program"
 msgstr "GNU ရုပ်ပုံ စီမံကိုင်တွယ်ရေး ပရိုဂရမ်"
 
 #: ../app/about.h:30
-#, fuzzy
 msgid ""
 "Copyright © 1995-2008\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "မူပိုင်ခွင့် © ၁၉၉၅-၂၀၀၉\n"
-"Spencer Kimball, Peter Mattis နှင့် GIMP တည်ဆောက်ရေး အဖွဲ့"
+" Spencer Kimball, Peter Mattis နှင့် GIMP တည်ဆောက်ရေး အဖွဲ့"
 
 #: ../app/about.h:34
-#, fuzzy
 msgid ""
 "GIMP is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -52,10 +50,18 @@ msgid ""
 "GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
 "Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"GIMP ဟာ အခမဲ့ ဆော့ဗ်ဝဲ ဖြစ်တယ် - ၄င်းကို GNU ခေါ် အထွေထွေ လူထု သင် ပြန်လည် "
-"ဖြန့်ဖြူနိုင်ပြီး/(သို့) ပြုပြင်နိုင်တယ်။ or modify it under the terms of the GNU "
-"General Public License as published by the Free Software Foundation; either "
-"version 3 of the License, or (at your option) any later version.\n"
+"GIMP ဟာ အခမဲ့ ဆော့ဗ်ဝဲ ဖြစ်တယ် - ၄င်းကို GNU အထွေထွေ လူထု ခွင့်ပြုချက် အောက်မှာ "
+"လွတ်လပ်တဲ့ ဆော့ဗ်ဝဲ ဖောင်ဒေးရှင်းဖြင့် ထုတ်ပြန်ထားတဲ့ အတိုင်း၊ ခွင့်ပြုချက် မူအဆင့် ၂၊ (သို့) "
+"(သင့်ရဲ့ ရွေးစရာထဲမှ) မူအဆင့်တခုခုဖြင့်၊ သင် ပြန်လည်ဖြန့်ဖြူးနိုင်ပြီး/(သို့) ပြုပြင်နိုင်တယ်။\n"
+"\n"
+"GIMP ကို အကျိုးရှိတဲ့ မျှော်လင့်အဖြင့် ဖြန့်ဖြူးထားတယ်၊ ဒါပေမဲ့ အာမခံချက် မရှိဘူး။ "
+"ရည်ညွှန်းထားတဲ့ ကုန်သွယ်ရောင်း၀ယ်မှု အာမခံချက် (သို့) သီးခြား ရည်ရွယ်ချက် တခု "
+"အံဝင်ခွင်ကျဖြစ်မှု မရှိဘူး။ ပိုမို အသေးစိတ်များ သိရှိဖို့ GNU အထွေထွေ လူထု ခွင့်ပြုချက်ကို "
+"လေ့လာပါ။\n"
+"\n"
+"GIMP နဲ့ တပါးတည်း GNU အထွေထွေ လူထု ခွင့်ပြုချက် မိတ္တူပွားတခုကို သင်ရရှိထားရမယ်၊ ဒါမှ "
+"မဟုတ်ရင်၊ အခမဲ့ ဆော့ဗ်ဝဲ ဖောင်ဒေရှင်း Inc., 59 Temple Place - Suite 330, Boston, "
+"MA 02111-1307, USA ကို စာရေးပါ၊"
 
 #: ../app/app.c:214
 #, c-format
@@ -213,7 +219,7 @@ msgstr ""
 "ပတ်၀န်းကျင် ကိန်းရှင် G_FILENAME_ENCODING ကို စစ်ဆေးပါ။"
 
 #: ../app/sanity.c:384
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
 "converted to UTF-8: %s\n"
@@ -222,10 +228,12 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"GIMP သုံးစွဲသူ ပြုပြင်ဖန်တီးမှုကို ထိန်းထားတဲ့ ဖိုင်တွဲအမည်ကို UTF-8 အဖြစ် အသွင်ပြောင်းလို့ "
+"GIMP သုံးစွဲသူ ပြုပြင်ဖန်တီးမှုကို ထိန်းထားတဲ့ ဖိုင်တွဲအမည်ကို UTF-8: %s အဖြစ် အသွင်ပြောင်းလို့ "
 "မရဘူး။\n"
-"s\n"
 "\n"
+"သင့်ရဲ့ ဖိုင်နည်းစနစ်ကို UTF-8 အဖြစ် မဟုတ်ပဲ စာဝှက်ရေးသားခြင်း တခုနဲ့ ဖိုင်များကို "
+"သိုလှောင်ထားနိုင်ပြီး ဒီအကြောင်းကို GLib ဆီ သင် ပြောခဲ့မှာ မဟုတ်ဘူး။ ပတ်၀န်းကျင် ကိန်းရှင် "
+"G_FILENAME_ENCODING ကို ချမှတ်ပါ။"
 
 #. show versions of libraries used by GIMP
 #: ../app/version.c:64
@@ -414,274 +422,221 @@ msgid "Windows"
 msgstr "၀င်းဒိုး"
 
 #: ../app/actions/brush-editor-actions.c:43
-#, fuzzy
 msgid "Brush Editor Menu"
-msgstr "Brush Editor Menu"
+msgstr "စုတ်တံ တည်းဖြတ်ကိရိယာ စာရင်းမှတ်"
 
 #: ../app/actions/brush-editor-actions.c:50
-#, fuzzy
 msgid "Edit Active Brush"
-msgstr "Edit Active Brush"
+msgstr "သက်၀င်တဲ့ စုတ်တံကို တည်းဖြတ်ပါ"
 
 #: ../app/actions/brushes-actions.c:43
-#, fuzzy
 msgid "Brushes Menu"
-msgstr "စုတ်တံများ စာရင်းမှတ်"
+msgstr "စုတ်တံများ စာရင်းမှတ် "
 
 #: ../app/actions/brushes-actions.c:47
-#, fuzzy
 msgid "_Open Brush as Image"
-msgstr "စုတ်တံကို ရုပ်ပုံလို ဖွင့်ပါ"
+msgstr "စုတ်တံကို ရုပ်ပုံအဖြစ် ဖွင့်ပါ"
 
 #: ../app/actions/brushes-actions.c:48
-#, fuzzy
 msgid "Open brush as image"
-msgstr "စုတ်တံကို ရုပ်ပုံလို ဖွင့်ပါ"
+msgstr "စုတ်တံကို ရုပ်ပုံအဖြစ် ဖွင့်ပါ"
 
 #: ../app/actions/brushes-actions.c:53
-#, fuzzy
 msgid "_New Brush"
-msgstr "စုတ်တံအသစ်"
+msgstr "စုတ်တံ အသစ်"
 
 #: ../app/actions/brushes-actions.c:54
-#, fuzzy
 msgid "New brush"
-msgstr "စုတ်တံအသစ်"
+msgstr "စုတ်တံ အသစ်"
 
 #: ../app/actions/brushes-actions.c:59
-#, fuzzy
 msgid "D_uplicate Brush"
-msgstr "စုတ်တံကို ပုံတူပွားပါ"
+msgstr "စုတ်တံကို ပုံတူပွားပါ "
 
 #: ../app/actions/brushes-actions.c:60
-#, fuzzy
 msgid "Duplicate brush"
-msgstr "စုတ်တံကို ပုံတူပွားပါ"
+msgstr "စုတ်တံကို ပုံတူပွားပါ "
 
 #: ../app/actions/brushes-actions.c:65
-#, fuzzy
 msgid "Copy Brush _Location"
-msgstr "စုတ်တံ တည်နေရာကို မိတ္တူကူးပါ"
+msgstr "စုတ်တံ တည်နေရာကို မိတ္တူကူးပါ "
 
 #: ../app/actions/brushes-actions.c:66
-#, fuzzy
 msgid "Copy brush file location to clipboard"
-msgstr "စုတ်တံဖိုင် တည်နေရာကို clipboard ဆီ မိတ္တူကူးပါ"
+msgstr "စုတ်တံဖိုင် တည်နေရာကို clipboard ဆီ မိတ္တူကူးပါ "
 
 #: ../app/actions/brushes-actions.c:71
-#, fuzzy
 msgid "_Delete Brush"
-msgstr "စုတ်တံကို ပယ်ဖျက်ပါ"
+msgstr "စုတ်တံကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/brushes-actions.c:72
-#, fuzzy
 msgid "Delete brush"
-msgstr "စုတ်တံကို ပယ်ဖျက်ပါ"
+msgstr "စုတ်တံကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/brushes-actions.c:77
-#, fuzzy
 msgid "_Refresh Brushes"
-msgstr "စုတ်တံများကို ပြန်နှိုးပါ"
+msgstr "စုတ်တံများကို ပြန်နှိုးပါ "
 
 #: ../app/actions/brushes-actions.c:78
-#, fuzzy
 msgid "Refresh brushes"
-msgstr "စုတ်တံများကို ပြန်နှိုးပါ"
+msgstr "စုတ်တံများကို ပြန်နှိုးပါ "
 
 #: ../app/actions/brushes-actions.c:86
-#, fuzzy
 msgid "_Edit Brush..."
-msgstr "စုတ်တံကို တည်းဖြတ်ပါ..."
+msgstr "စုတ်တံကို တည်းဖြတ်ပါ ..."
 
 #: ../app/actions/brushes-actions.c:87
-#, fuzzy
 msgid "Edit brush"
-msgstr "ဒီစုတ်တံကို တည်းဖြတ်ပါ"
+msgstr "စုတ်တံကို တည်းဖြတ်ပါ"
 
 #: ../app/actions/buffers-actions.c:42
-#, fuzzy
 msgid "Buffers Menu"
-msgstr "ဘာဖာများ စာရင်းမှတ်"
+msgstr "ဘာဖာများကို စာရင်းမှတ်"
 
 #: ../app/actions/buffers-actions.c:46
-#, fuzzy
 msgid "_Paste Buffer"
-msgstr "ဘာဖာကို ပွားယူပါ"
+msgstr "ဘာဖာကို ပွားယူပါ "
 
 #: ../app/actions/buffers-actions.c:47
-#, fuzzy
 msgid "Paste the selected buffer"
-msgstr "ရွေးထားတဲ့ ဘာဖာကို ပွားယူပါ"
+msgstr "ရွေးထားတဲ့ ဘာဖာကို ပွားယူပါ "
 
 #: ../app/actions/buffers-actions.c:52
-#, fuzzy
 msgid "Paste Buffer _Into"
-msgstr "ဘာဖာထဲကို ပွားယူပါ"
+msgstr "ဘာဖာကို အထဲ ပွားယူပါ"
 
 #: ../app/actions/buffers-actions.c:53
-#, fuzzy
 msgid "Paste the selected buffer into the selection"
-msgstr "ရွေးထားတဲ့ ဘာဖာကို ရွေးချယ်ချက်ထဲ ပွားယူပါ"
+msgstr "ရွေးထားတဲ့ ဘာဖာကို ရွေးချယ်ချက်ထဲ ပွားယူပါ "
 
 #: ../app/actions/buffers-actions.c:58
-#, fuzzy
 msgid "Paste Buffer as _New"
-msgstr "ဘာဖာကို အသစ်လို ပွားယူပါ"
+msgstr "ဘာဖာကို အသစ်အဖြစ် ပွားယူပါ"
 
 #: ../app/actions/buffers-actions.c:59
-#, fuzzy
 msgid "Paste the selected buffer as new image"
-msgstr "ရွေးထားတဲ့ ဘာဖာကို ရုပ်ပုံသစ်တခု အဖြင့် ပွားယူပါ"
+msgstr "ရွေးထားတဲ့ ဘာဖာကို ရုပ်ပုံသစ်တခုအဖြင့် ပွားယူပါ"
 
 #: ../app/actions/buffers-actions.c:64
-#, fuzzy
 msgid "_Delete Buffer"
-msgstr "ဘာဖာကို ပယ်ဖျက်ပါ"
+msgstr "ဘာဖာကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/buffers-actions.c:65
-#, fuzzy
 msgid "Delete the selected buffer"
-msgstr "ရွေးထားတဲ့ ဘာဖာကို ပယ်ဖျက်ပါ"
+msgstr "ရွေးထားတဲ့ ဘာဖာကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/channels-actions.c:44
-#, fuzzy
 msgid "Channels Menu"
-msgstr "ချာနယ်များ စာရင်းမှတ်"
+msgstr "ချာနယ်များ စာရင်းမှတ် "
 
 #: ../app/actions/channels-actions.c:48
-#, fuzzy
 msgid "_Edit Channel Attributes..."
-msgstr "ချာနယ် အရည်အသွေးများကို တည်းဖြတ်ပါ..."
+msgstr "ချာနယ် အရည်အသွေးများကို တည်းဖြတ်ပါ... "
 
 #: ../app/actions/channels-actions.c:49
-#, fuzzy
 msgid "Edit the channel's name, color and opacity"
-msgstr "ချာနယ်အမည်၊ အရောင်နဲ့ အလင်းပိတ်မှုကို တည်းဖြတ်ပါ"
+msgstr "ချာနယ်အမည်၊ အရောင်နဲ့ အလင်းပိတ်မှုကို တည်းဖြတ်ပါ "
 
 #: ../app/actions/channels-actions.c:54
-#, fuzzy
 msgid "_New Channel..."
-msgstr "ချာနယ်အသစ်..."
+msgstr "ချာနယ်အသစ်... "
 
 #: ../app/actions/channels-actions.c:55
-#, fuzzy
 msgid "Create a new channel"
-msgstr "ချာနယ်အသစ် တခု ဖန်တီးပါ"
+msgstr "ချာနယ်အသစ် တခု ဖန်တီးပါ "
 
 #: ../app/actions/channels-actions.c:60
-#, fuzzy
 msgid "_New Channel"
-msgstr "ချာနယ်အသစ်"
+msgstr "ချာနယ်အသစ် "
 
 #: ../app/actions/channels-actions.c:61
-#, fuzzy
 msgid "Create a new channel with last used values"
-msgstr "နောက်ဆုံး သုံးစွဲတဲ့ တန်ဖိုးများနဲ့ ချာနယ်အသစ် တခုကို ဖန်တီးပါ"
+msgstr "နောက်ဆုံး သုံးစွဲတဲ့ တန်ဖိုးများပါတဲ့ ချာနယ်အသစ် တခုကို ဖန်တီးပါ"
 
 #: ../app/actions/channels-actions.c:66
-#, fuzzy
 msgid "D_uplicate Channel"
-msgstr "ချာနယ်များကို ပုံတူပွားပါ"
+msgstr "ချာနယ်ကို ပုံတူပွားပါ"
 
 #: ../app/actions/channels-actions.c:67
-#, fuzzy
 msgid "Create a duplicate of this channel and add it to the image"
-msgstr "ဒီချာနယ်အတွက် ပုံတူပွားမှုတခု ဖန်တီးပြီး ၄င်းကို ရုပ်ပုံထဲမှာ ပေါင်းထည့်ပါ"
+msgstr "ဒီချာနယ်အတွက် ပုံတူပွားမှုတခု ဖန်တီးပြီး ၄င်းကို ရုပ်ပုံထဲမှာ ပေါင်းထည့်ပါ "
 
 #: ../app/actions/channels-actions.c:72
-#, fuzzy
 msgid "_Delete Channel"
-msgstr "ချာနယ်ကို ပယ်ဖျက်ပါ"
+msgstr "ချာနယ်ကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/channels-actions.c:73
-#, fuzzy
 msgid "Delete this channel"
-msgstr "ဒီချာနယ်ကို ပယ်ဖျက်ပါ"
+msgstr "ဒီချာနယ်ကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/channels-actions.c:78
-#, fuzzy
 msgid "_Raise Channel"
-msgstr "ချာနယ်ကို မြှင့်တင်ပါ"
+msgstr "ချာနယ်ကို မြှင့်တင်ပါ "
 
 #: ../app/actions/channels-actions.c:79
-#, fuzzy
 msgid "Raise this channel one step in the channel stack"
-msgstr "ဒီချာနယ်ကို လှိုင်း ဆင့်စီချက်ထဲမှာ အဆင့်တခု မြှင့်တင်ပါ"
+msgstr "ဒီချာနယ်ကို ချာနယ် ဆင့်စီချက်ထဲမှာ အဆင့်တခု မြှင့်တင်ပါ"
 
 #: ../app/actions/channels-actions.c:84
-#, fuzzy
 msgid "Raise Channel to _Top"
-msgstr "ချာနယ်ကို ထိပ်ဖက် မြှင့်တင်ပါ"
+msgstr "ချာနယ်ကို ထိပ်ဖက် မြှင့်တင်ပါ "
 
 #: ../app/actions/channels-actions.c:85
-#, fuzzy
 msgid "Raise this channel to the top of the channel stack"
-msgstr "ဒီချာနယ်ကို လှိုင်း ဆင့်စီချက်ရဲ့ ထိပ်ဖက်ကို မြှင့်တင်ပါ"
+msgstr "ဒီချာနယ်ကို ချာနယ် ဆင့်စီချက်ရဲ့ ထိပ်ဖက်ကို မြှင့်တင်ပါ"
 
 #: ../app/actions/channels-actions.c:90
-#, fuzzy
 msgid "_Lower Channel"
-msgstr "ချာနယ်ကို လျှော့ချပါ"
+msgstr "ချာနယ်ကို လျှော့ချပါ "
 
 #: ../app/actions/channels-actions.c:91
-#, fuzzy
 msgid "Lower this channel one step in the channel stack"
-msgstr "ဒီချာနယ်ကို ချာနယ် ဆင့်စီချက်ထဲမှာ အဆင့်တခု လျှော့ချပါ"
+msgstr "ဒီချာနယ်ကို ချာနယ် ဆင့်စီချက်ထဲမှ အဆင့်တခု လျှော့ချပါ"
 
 #: ../app/actions/channels-actions.c:96
-#, fuzzy
 msgid "Lower Channel to _Bottom"
-msgstr "ချာနယ်ကို အောက်ခြေကို လျှော့ပါ"
+msgstr "ချာနယ်ကို အောက်ခြေကို လျှော့ပါ "
 
 #: ../app/actions/channels-actions.c:97
-#, fuzzy
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr "ဒီချာနယ်ကို ချာနယ် ဆင့်စီချက်ရဲ့ အောက်ခြေကို လျှော့ချပါ"
+msgstr "ဒီချာနယ်ကို ချာနယ် ဆင့်စီချက်ရဲ့ အောက်ခြေကို လျှော့ချပါ "
 
 #: ../app/actions/channels-actions.c:105
-#, fuzzy
 msgid "Channel to Sele_ction"
-msgstr "ရွေးချယ်မှု ချာနယ်"
+msgstr "ရွေးချယ်မှု ချာနယ် "
 
 #: ../app/actions/channels-actions.c:106
-#, fuzzy
 msgid "Replace the selection with this channel"
-msgstr "ရွေးချယ်ချက်ကို ဒီချာနယ်နဲ့ အစားထိုးပါ"
+msgstr "ရွေးချယ်ချက်ကို ဒီချာနယ်နဲ့ အစားထိုးပါ "
 
 #: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:266
 #: ../app/actions/vectors-actions.c:173
-#, fuzzy
 msgid "_Add to Selection"
-msgstr "ရွေးချယ်ချက်ထဲ ပေါင်းထည့်ပါ"
+msgstr "ရွေးချယ်ချက်ထဲ ပေါင်းထည့်ပါ "
 
 #: ../app/actions/channels-actions.c:112
-#, fuzzy
 msgid "Add this channel to the current selection"
-msgstr "ဒီချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်ဆီ ပေါင်းထည့်ပါ"
+msgstr "ဒီချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်ထဲ ပေါင်းထည့်ပါ"
 
 #: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:272
 #: ../app/actions/layers-actions.c:299 ../app/actions/layers-actions.c:326
 #: ../app/actions/vectors-actions.c:179
-#, fuzzy
 msgid "_Subtract from Selection"
-msgstr "ရွေးချယ်ချက်ထဲမှ နှုတ်ယူပါ"
+msgstr "ရွေးချယ်ချက်ထဲမှ နှုတ်ယူပါ "
 
 #: ../app/actions/channels-actions.c:118
-#, fuzzy
 msgid "Subtract this channel from the current selection"
-msgstr "ဒီချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်ထဲမှ နှုတ်ယူပါ"
+msgstr "ဒီချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်ထဲမှ နှုတ်ယူပါ "
 
 #: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:278
 #: ../app/actions/layers-actions.c:305 ../app/actions/layers-actions.c:332
 #: ../app/actions/vectors-actions.c:185
-#, fuzzy
 msgid "_Intersect with Selection"
-msgstr "ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ"
+msgstr "ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ "
 
 #: ../app/actions/channels-actions.c:124
-#, fuzzy
 msgid "Intersect this channel with the current selection"
-msgstr "ဒီချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ"
+msgstr "ဒီချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ "
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:393
@@ -731,41 +686,34 @@ msgid "Channel to Selection"
 msgstr "ရွေးချယ်မှု ချာနယ်"
 
 #: ../app/actions/colormap-actions.c:44
-#, fuzzy
 msgid "Colormap Menu"
-msgstr "အရောင်ဇယား စာရင်းမှတ်"
+msgstr "အရောင်ဇယား စာရင်းမှတ် "
 
 #: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:48
-#, fuzzy
 msgid "_Edit Color..."
-msgstr "အရောင်ကို တည်းဖြတ်ပါ..."
+msgstr "အရောင်ကို တည်းဖြတ်ပါ... "
 
 #: ../app/actions/colormap-actions.c:49
 #: ../app/actions/palette-editor-actions.c:49
-#, fuzzy
 msgid "Edit color"
-msgstr "ဒီအရောင်ကို တည်း​ဖြတ်ပါ"
+msgstr "အရောင်ကို တည်း​ဖြတ်ပါ"
 
 #: ../app/actions/colormap-actions.c:57
-#, fuzzy
 msgid "_Add Color from FG"
-msgstr "FG မှ အရောင်ကို ပေါင်းထည့်ပါ"
+msgstr "FG မှ အရောင်ကို ပေါင်းထည့်ပါ "
 
 #: ../app/actions/colormap-actions.c:58
-#, fuzzy
 msgid "Add current foreground color"
-msgstr "လက်ရှိ အနီးမြင်ကွင်း အရောင်ကို ပေါင်းထည့်ပါ"
+msgstr "လက်ရှိ အနီးမြင်ကွင်း အရောင်ကို ပေါင်းထည့်ပါ "
 
 #: ../app/actions/colormap-actions.c:63
-#, fuzzy
 msgid "_Add Color from BG"
-msgstr "FG မှ အရောင်ကို ပေါင်းထည့်ပါ"
+msgstr "FG မှ အရောင်ကို ပေါင်းထည့်ပါ "
 
 #: ../app/actions/colormap-actions.c:64
-#, fuzzy
 msgid "Add current background color"
-msgstr "လက်ရှိ နောက်ခံ အရောင်ကို ပေါင်းထည့်ပါ"
+msgstr "လက်ရှိ နောက်ခံ အရောင်ကို ပေါင်းထည့်ပါ "
 
 #: ../app/actions/colormap-commands.c:73
 #, c-format
@@ -777,39 +725,32 @@ msgid "Edit Colormap Entry"
 msgstr "အရောင်ဇယား ရေးသွင်းချက်ကို တည်း​ဖြတ်ပါ"
 
 #: ../app/actions/config-actions.c:39
-#, fuzzy
 msgid "Use _GEGL"
-msgstr "_GEGL ကို သုံးစွဲပါ"
+msgstr "_GEGL ကို သုံးစွဲပါ "
 
 #: ../app/actions/config-actions.c:40
-#, fuzzy
 msgid "If possible, use GEGL for image processing"
-msgstr "ဖြစ်နိုင်ရင်၊ GEGL ကို ရုပ်ပုံ စီမံပြုပြင်ရေးအတွက် သုံးစွဲပါ"
+msgstr "ဖြစ်နိုင်ရင်၊ GEGL ကို ရုပ်ပုံ စီမံပြုပြင်ရေးအတွက် သုံးစွဲပါ "
 
 #: ../app/actions/context-actions.c:46
-#, fuzzy
 msgid "_Context"
-msgstr "အကြောင်းအရာ"
+msgstr "အကြောင်းအရာ "
 
 #: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:59
-#, fuzzy
 msgid "_Colors"
-msgstr "အရောင်များ"
+msgstr "အရောင်များ "
 
 #: ../app/actions/context-actions.c:48 ../app/actions/layers-actions.c:58
-#, fuzzy
 msgid "_Opacity"
-msgstr "အလင်းပိတ်မှု"
+msgstr "အလင်းပိတ်မှု "
 
 #: ../app/actions/context-actions.c:49
-#, fuzzy
 msgid "Paint _Mode"
-msgstr "ရေးဆွဲမှု စနစ်"
+msgstr "ရေးဆွဲမှု စနစ် "
 
 #: ../app/actions/context-actions.c:50
-#, fuzzy
 msgid "_Tool"
-msgstr "ကိရိယာ"
+msgstr "ကိရိယာ "
 
 #: ../app/actions/context-actions.c:51
 #: ../app/dialogs/preferences-dialog.c:1940
@@ -822,9 +763,8 @@ msgid "_Pattern"
 msgstr "နမူနာပုံစံ"
 
 #: ../app/actions/context-actions.c:53
-#, fuzzy
 msgid "_Palette"
-msgstr "အရောင်စပ် ဆေးခွက်"
+msgstr "အရောင်စပ်ဆေးခွက်"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:216
@@ -833,64 +773,52 @@ msgid "_Gradient"
 msgstr "ရောင်စဉ်တန်း"
 
 #: ../app/actions/context-actions.c:55
-#, fuzzy
 msgid "_Font"
-msgstr "ဖောင့်"
+msgstr "ဖောင့် "
 
 #: ../app/actions/context-actions.c:57
-#, fuzzy
 msgid "_Shape"
-msgstr "ပုံသဏ္ဍာန်"
+msgstr "ပုံသဏ္ဍာန် "
 
 #: ../app/actions/context-actions.c:58
-#, fuzzy
 msgid "_Radius"
-msgstr "အချင်း၀က်"
+msgstr "အချင်း၀က် "
 
 #: ../app/actions/context-actions.c:59
-#, fuzzy
 msgid "S_pikes"
-msgstr "စပိုက်များ"
+msgstr "စပိုက်များ "
 
 #: ../app/actions/context-actions.c:60
-#, fuzzy
 msgid "_Hardness"
-msgstr "ခိုင်မာမှု"
+msgstr "ခိုင်မာမှု "
 
 #: ../app/actions/context-actions.c:61
-#, fuzzy
 msgid "_Aspect"
-msgstr "ပုံပန်း အချိုး"
+msgstr "ပုံပန်းအချိုး"
 
 #: ../app/actions/context-actions.c:62
-#, fuzzy
 msgid "A_ngle"
-msgstr "ထောင့်"
+msgstr "ထောင့် "
 
 #: ../app/actions/context-actions.c:65
-#, fuzzy
 msgid "_Default Colors"
-msgstr "စံထားချက် အရောင်များ"
+msgstr "စံထားချက် အရောင်များ "
 
 #: ../app/actions/context-actions.c:66
-#, fuzzy
 msgid "Set foreground color to black, background color to white"
-msgstr "အနီးမြင်ကွင်း အရောင်ကို အနက်ရောင်၊ နောက်ခံအရောင်ကို အဖြူရောင် သတ်မှတ်ပါ"
+msgstr "အနီးမြင်ကွင်း အရောင်ကို အနက်ရောင်၊ နောက်ခံအရောင်ကို အဖြူရောင် သတ်မှတ်ပါ "
 
 #: ../app/actions/context-actions.c:71
-#, fuzzy
 msgid "S_wap Colors"
-msgstr "Swap အရောင်များ"
+msgstr "Swap အရောင်များ "
 
 #: ../app/actions/context-actions.c:72
-#, fuzzy
 msgid "Exchange foreground and background colors"
-msgstr "အနီးကပ်မြင်ကွင်းနဲ့ နောက်ခံ အရောင်များကို ဖလှယ်ပါ"
+msgstr "အနီးကပ်မြင်ကွင်းနဲ့ နောက်ခံ အရောင်များကို ဖလှယ်ပါ "
 
 #: ../app/actions/cursor-info-actions.c:40
-#, fuzzy
 msgid "Pointer Information Menu"
-msgstr "ညွှန်တံ အချက်အလက် စာရင်းမှတ်"
+msgstr "ညွှန်တံ အချက်အလက် စာရင်းမှတ် "
 
 #: ../app/actions/cursor-info-actions.c:47
 #: ../app/actions/sample-points-actions.c:47
@@ -900,9 +828,8 @@ msgstr "နမူနာ ပေါင်းစပ်ချက်"
 
 #: ../app/actions/cursor-info-actions.c:48
 #: ../app/actions/sample-points-actions.c:48
-#, fuzzy
 msgid "Sample Merged"
-msgstr "နမူနာ ပေါင်းစပ်မှု"
+msgstr "နမူနာ ပေါင်းစပ်မှု "
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:344
 #: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:220
@@ -948,303 +875,244 @@ msgstr ""
 "ဆန္ဒရှိသလား။"
 
 #: ../app/actions/dialogs-actions.c:39
-#, fuzzy
 msgid "Tool _Options"
-msgstr "ကိရိယာ ရွေးစရာများ"
+msgstr "ကိရိယာ ရွေးစရာများ "
 
 #: ../app/actions/dialogs-actions.c:40
-#, fuzzy
 msgid "Open the tool options dialog"
-msgstr "ကိရိယာ ရွေးစရာများ အညွန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ကိရိယာ ရွေးစရာများ အညွန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:45
-#, fuzzy
 msgid "_Device Status"
-msgstr "ကိရိယာ အနေအထား"
+msgstr "ကိရိယာ အနေအထား "
 
 #: ../app/actions/dialogs-actions.c:46
-#, fuzzy
 msgid "Open the device status dialog"
-msgstr "ကိရိယာ အနေအထား အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ကိရိယာ အနေအထား အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:51
-#, fuzzy
 msgid "_Layers"
-msgstr "အလွှာများ"
+msgstr "အလွှာများ "
 
 #: ../app/actions/dialogs-actions.c:52
-#, fuzzy
 msgid "Open the layers dialog"
-msgstr "အလွှာများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "အလွှာများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:57
-#, fuzzy
 msgid "_Channels"
-msgstr "ချာနယ်များ"
+msgstr "ချာနယ်များ "
 
 #: ../app/actions/dialogs-actions.c:58
-#, fuzzy
 msgid "Open the channels dialog"
-msgstr "ချာနယ်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ချာနယ်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:63
-#, fuzzy
 msgid "_Paths"
-msgstr "လမ်းကြောင်းများ"
+msgstr "လမ်းကြောင်းများ "
 
 #: ../app/actions/dialogs-actions.c:64
-#, fuzzy
 msgid "Open the paths dialog"
-msgstr "လမ်းကြောင်းများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "လမ်းကြောင်းများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:69
-#, fuzzy
 msgid "Color_map"
-msgstr "အရောင်ဇယား"
+msgstr "အရောင်ဇယား "
 
 #: ../app/actions/dialogs-actions.c:70
-#, fuzzy
 msgid "Open the colormap dialog"
-msgstr "အရောင်ဇယား အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "အရောင်ဇယား အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:75
-#, fuzzy
 msgid "Histogra_m"
-msgstr "ဟီစတိုဂရမ်"
+msgstr "ဟီစတိုဂရမ် "
 
 #: ../app/actions/dialogs-actions.c:76
-#, fuzzy
 msgid "Open the histogram dialog"
-msgstr "ဟီစတိုဂရမ် အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ဟီစတိုဂရမ် အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:81
-#, fuzzy
 msgid "_Selection Editor"
-msgstr "ရွေးချယ်ချက် တည်းဖြတ်ကိရိယာ"
+msgstr "ရွေးချယ်ချက် တည်းဖြတ်ကိရိယာ "
 
 #: ../app/actions/dialogs-actions.c:82
-#, fuzzy
 msgid "Open the selection editor"
-msgstr "ရွေးချယ်ချက် တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ"
+msgstr "ရွေးချယ်ချက် တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:87
-#, fuzzy
 msgid "Na_vigation"
-msgstr "ကူးသန်းကြည့်ရှုခြင်း"
+msgstr "ကူးသန်းကြည့်ရှုခြင်း "
 
 #: ../app/actions/dialogs-actions.c:88
-#, fuzzy
 msgid "Open the display navigation dialog"
-msgstr "ပြသမှု ကူးသန်းကြည့်ရှုခြင်း အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ပြသမှု ကူးသန်းကြည့်ရှုခြင်း အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:93
-#, fuzzy
 msgid "Undo _History"
-msgstr "မှတ်တမ်းကို ပြန်ဖြည်ပါ"
+msgstr "မှတ်တမ်းကို ပြန်ဖြည်ပါ "
 
 #: ../app/actions/dialogs-actions.c:94
-#, fuzzy
 msgid "Open the undo history dialog"
-msgstr "မှတ်တမ် ပြန်ဖြည်ပေးတဲ့ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "မှတ်တမ်း ပြန်ဖြည်ပေးတဲ့ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
 
 #: ../app/actions/dialogs-actions.c:99 ../app/dialogs/dialogs.c:150
 msgid "Pointer"
 msgstr "ညွှန်တံ"
 
 #: ../app/actions/dialogs-actions.c:100
-#, fuzzy
 msgid "Open the pointer information dialog"
-msgstr "ညွှန်တံ အချက်အလက် အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ညွှန်တံ အချက်အလက် အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:105
-#, fuzzy
 msgid "_Sample Points"
-msgstr "နမူနာ အမှတ်များ"
+msgstr "နမူနာ အမှတ်များ "
 
 #: ../app/actions/dialogs-actions.c:106
-#, fuzzy
 msgid "Open the sample points dialog"
-msgstr "နမူနာ အမှတ်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "နမူနာ အမှတ်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:111
-#, fuzzy
 msgid "Colo_rs"
-msgstr "အရောင်များ"
+msgstr "အရောင်များ "
 
 #: ../app/actions/dialogs-actions.c:112
-#, fuzzy
 msgid "Open the FG/BG color dialog"
-msgstr "FG/BG အရောင် အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "FG/BG အရောင် အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:117
-#, fuzzy
 msgid "_Brushes"
-msgstr "စုတ်တံများ"
+msgstr "စုတ်တံများ "
 
 #: ../app/actions/dialogs-actions.c:118
-#, fuzzy
 msgid "Open the brushes dialog"
-msgstr "စုတ်တံ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "စုတ်တံ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:124
-#, fuzzy
 msgid "Open the brush editor"
-msgstr "စုတ်တံ တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ"
+msgstr "စုတ်တံ တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:129
-#, fuzzy
 msgid "P_atterns"
-msgstr "ပုံစံများ"
+msgstr "ပုံစံများ "
 
 #: ../app/actions/dialogs-actions.c:130
-#, fuzzy
 msgid "Open the patterns dialog"
-msgstr "နမူနာပုံစံများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "နမူနာပုံစံများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:135
-#, fuzzy
 msgid "_Gradients"
-msgstr "ရောင်စဉ်တန်းများ"
+msgstr "ရောင်စဉ်တန်းများ "
 
 #: ../app/actions/dialogs-actions.c:136
-#, fuzzy
 msgid "Open the gradients dialog"
-msgstr "ရောင်စဉ်တန်းများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ရောင်စဉ်တန်းများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:142
-#, fuzzy
 msgid "Open the gradient editor"
-msgstr "ရောင်စဉ်တန်း တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ"
+msgstr "ရောင်စဉ်တန်း တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:147
-#, fuzzy
 msgid "Pal_ettes"
-msgstr "အရောင်စပ်ဆေးခွက်များ"
+msgstr "အရောင်စပ်ဆေးခွက်များ "
 
 #: ../app/actions/dialogs-actions.c:148
-#, fuzzy
 msgid "Open the palettes dialog"
-msgstr "အရောင်စပ်ဆေးခွက်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "အရောင်စပ်ဆေးခွက်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:154
-#, fuzzy
 msgid "Open the palette editor"
-msgstr "အရောင်စပ်ဆေးခွက်များ တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ"
+msgstr "အရောင်စပ်ဆေးခွက် တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ"
 
 #: ../app/actions/dialogs-actions.c:159
-#, fuzzy
 msgid "_Fonts"
-msgstr "ဖောင့်များ"
+msgstr "ဖောင့်များ "
 
 #: ../app/actions/dialogs-actions.c:160
-#, fuzzy
 msgid "Open the fonts dialog"
-msgstr "ဖောင့်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ဖောင့်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:165
-#, fuzzy
 msgid "B_uffers"
-msgstr "ဘာဖာများ"
+msgstr "ဘာဖာများ "
 
 #: ../app/actions/dialogs-actions.c:166
-#, fuzzy
 msgid "Open the named buffers dialog"
-msgstr "အမည်ပေးထားတဲ့ ဘာဖာများ အညွှန်းစာမျက်နှာ ဖွင့်ပါ"
+msgstr "အမည်ပေးထားတဲ့ ဘာဖာများ အညွှန်းစာမျက်နှာ ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:171
-#, fuzzy
 msgid "_Images"
-msgstr "ရုပ်ပုံများ"
+msgstr "ရုပ်ပုံများ "
 
 #: ../app/actions/dialogs-actions.c:172
-#, fuzzy
 msgid "Open the images dialog"
-msgstr "ရုပ်ပုံများ အညွှန်းစာမျက်နှာ ဖွင့်ပါ"
+msgstr "ရုပ်ပုံများ အညွှန်းစာမျက်နှာ ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:177
-#, fuzzy
 msgid "Document Histor_y"
-msgstr "စာတမ်း မှတ်တမ်း"
+msgstr "စာတမ်း မှတ်တမ်း "
 
 #: ../app/actions/dialogs-actions.c:178
-#, fuzzy
 msgid "Open the document history dialog"
-msgstr "စာတမ်း မှတ်တမ်း အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "စာတမ်း မှတ်တမ်း အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:183
-#, fuzzy
 msgid "_Templates"
-msgstr "ပုံစံခွက်များ"
+msgstr "ပုံစံခွက်များ "
 
 #: ../app/actions/dialogs-actions.c:184
-#, fuzzy
 msgid "Open the image templates dialog"
-msgstr "ရုပ်ပုံ ပုံစံခွက်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ရုပ်ပုံ ပုံစံခွက်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:189
-#, fuzzy
 msgid "T_ools"
-msgstr "ကိရိယာများ"
+msgstr "ကိရိယာများ "
 
 #: ../app/actions/dialogs-actions.c:190
-#, fuzzy
 msgid "Open the tools dialog"
-msgstr "ကိရိယာများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ကိရိယာများ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:195
-#, fuzzy
 msgid "Error Co_nsole"
-msgstr "မှားယွင်းတဲ့ ထိန်းချုပ်ခလုတ်ခုံ"
+msgstr "မှားယွင်းတဲ့ ထိန်းချုပ်ခလုတ်ခုံ "
 
 #: ../app/actions/dialogs-actions.c:196
-#, fuzzy
 msgid "Open the error console"
-msgstr "မှားယွင်းတဲ့ ထိန်းချုပ်ခလုတ်ခုံကို ဖွင့်ပါ"
+msgstr "မှားယွင်းတဲ့ ထိန်းချုပ်ခလုတ်ခုံကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:206
-#, fuzzy
 msgid "_Preferences"
-msgstr "ဦးစားပေးချက်များ"
+msgstr "ဦးစားပေးချက်များ "
 
 #: ../app/actions/dialogs-actions.c:207
-#, fuzzy
 msgid "Open the preferences dialog"
-msgstr "ဦးစာပေးချက်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ဦးစာပေးချက်များ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:212
-#, fuzzy
 msgid "_Keyboard Shortcuts"
-msgstr "ကီး​ဘုတ် ဖြတ်လမ်းများ"
+msgstr "ကီး​ဘုတ် ဖြတ်လမ်းများ "
 
 #: ../app/actions/dialogs-actions.c:213
-#, fuzzy
 msgid "Open the keyboard shortcuts editor"
-msgstr "ကီးဘုတ် ဖြတ်လမ်းများ တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ"
+msgstr "ကီးဘုတ် ဖြတ်လမ်းများ တည်းဖြတ်ကိရိယာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:218
-#, fuzzy
 msgid "_Modules"
-msgstr "အစိတ်အပိုင်းများ"
+msgstr "အစိတ်အပိုင်းများ "
 
 #: ../app/actions/dialogs-actions.c:219
-#, fuzzy
 msgid "Open the module manager dialog"
-msgstr "အစိတ်အပိုင်း မန်နေဂျာ အညွန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "အစိတ်အပိုင်း မန်နေဂျာ အညွန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/dialogs-actions.c:224
-#, fuzzy
 msgid "_Tip of the Day"
-msgstr "​တနေ့တာ သိကောင်းစရာ"
+msgstr "​တနေ့တာ သိကောင်းစရာ "
 
 #: ../app/actions/dialogs-actions.c:225
-#, fuzzy
 msgid "Show some helpful tips on using GIMP"
-msgstr "GIMP သုံးစွဲခြင်း အထောက်အကူပြု သိကောင်းစရာများ အချို့ကို ဖေါ်ပြပါ"
+msgstr "GIMP သုံးစွဲပြီး အထောက်အကူပြု သိကောင်းစရာများ အချို့ကို ဖေါ်ပြပါ"
 
 #: ../app/actions/dialogs-actions.c:230
-#, fuzzy
 msgid "_About"
-msgstr "အကြောင်း"
+msgstr "အကြောင်း "
 
 #: ../app/actions/dialogs-actions.c:231 ../app/dialogs/about-dialog.c:114
 #: ../app/gui/gui.c:479
@@ -1252,254 +1120,204 @@ msgid "About GIMP"
 msgstr "GIMP အကြောင်း"
 
 #: ../app/actions/dock-actions.c:43
-#, fuzzy
 msgid "M_ove to Screen"
-msgstr "မျက်နှာပြင်ဆီ ရွှေ့ပါ"
+msgstr "ဖန်သားပြင်ဆီ ရွှေ့ပါ"
 
 #: ../app/actions/dock-actions.c:47
-#, fuzzy
 msgid "Close Dock"
-msgstr "ရပ်နားနေရာကို ပိတ်ပါ"
+msgstr "ရပ်နားနေရာကို ပိတ်ပါ "
 
 #: ../app/actions/dock-actions.c:52 ../app/actions/view-actions.c:123
-#, fuzzy
 msgid "_Open Display..."
-msgstr "ပြသ​မှုကို ဖွင့်ပါ..."
+msgstr "ပြသ​မှုကို ဖွင့်ပါ... "
 
 #: ../app/actions/dock-actions.c:53 ../app/actions/view-actions.c:124
-#, fuzzy
 msgid "Connect to another display"
-msgstr "တခြား ပြသမှုဆီ ချိတ်ဆက်ပါ"
+msgstr "တခြား ပြသမှုကို ချိတ်ဆက်ပါ"
 
 #: ../app/actions/dock-actions.c:61
-#, fuzzy
 msgid "_Show Image Selection"
-msgstr "ရုပ်ပုံ ရွေးချယ်ချက်ကို ဖေါ်ပြပါ"
+msgstr "ရုပ်ပုံ ရွေးချယ်ချက်ကို ဖေါ်ပြပါ "
 
 #: ../app/actions/dock-actions.c:67
-#, fuzzy
 msgid "Auto _Follow Active Image"
-msgstr "အလိုအလျှောက် လိုက်ပါတဲ့ သက်ကြွတဲ့ ရုပ်ပုံ"
+msgstr "အလိုအလျှောက် လိုက်ပါတဲ့ သက်ကြွတဲ့ ရုပ်ပုံ "
 
 #: ../app/actions/dockable-actions.c:49
-#, fuzzy
 msgid "Dialogs Menu"
-msgstr "အညွှန်းစာမျက်နှာ စာရင်းမှတ်"
+msgstr "အညွှန်းစာမျက်နှာ စာရင်းမှတ် "
 
 #: ../app/actions/dockable-actions.c:53
-#, fuzzy
 msgid "_Add Tab"
-msgstr "စာအမှတ်ကို ပေါင်းထည့်ပါ"
+msgstr "စာအမှတ် ပေါင်းထည့်ပါ"
 
 #: ../app/actions/dockable-actions.c:54
-#, fuzzy
 msgid "_Preview Size"
-msgstr "အရွယ်အစားကို အစမ်းကြည့်ရှုပါ"
+msgstr "အရွယ်ကို အစမ်းကြည့်ရှုပါ"
 
 #: ../app/actions/dockable-actions.c:55
-#, fuzzy
 msgid "_Tab Style"
-msgstr "စာအမှတ် စတိုင်"
+msgstr "စာအမှတ် စတိုင် "
 
 #: ../app/actions/dockable-actions.c:58
-#, fuzzy
 msgid "_Close Tab"
-msgstr "စာအမှတ်ကို ပိတ်ပါ"
+msgstr "စာအမှတ်ကို ပိတ်ပါ "
 
 #: ../app/actions/dockable-actions.c:63
-#, fuzzy
 msgid "_Detach Tab"
-msgstr "စာအမှတ်ကို ဖြတ်ထုတ်ပါ"
+msgstr "စာအမှတ်ကို ဖြတ်ထုတ်ပါ "
 
 #: ../app/actions/dockable-actions.c:81
-#, fuzzy
 msgid "_Tiny"
-msgstr "သေးငယ်တယ်"
+msgstr "သေးငယ်တယ် "
 
 #: ../app/actions/dockable-actions.c:82
-#, fuzzy
 msgid "E_xtra Small"
-msgstr "အလွန် ငယ်တယ်"
+msgstr "အလွန် ငယ်တယ် "
 
 #: ../app/actions/dockable-actions.c:83
-#, fuzzy
 msgid "_Small"
-msgstr "ငယ်တယ်"
+msgstr "ငယ်တယ် "
 
 #: ../app/actions/dockable-actions.c:84
-#, fuzzy
 msgid "_Medium"
-msgstr "အလယ်အလတ်"
+msgstr "အလယ်အလတ် "
 
 #: ../app/actions/dockable-actions.c:85
-#, fuzzy
 msgid "_Large"
-msgstr "ကြီးကျယ်တယ်"
+msgstr "ကြီးကျယ်တယ် "
 
 #: ../app/actions/dockable-actions.c:86
-#, fuzzy
 msgid "Ex_tra Large"
-msgstr "အလွန်ကြီးကျယ်တယ်"
+msgstr "အလွန်ကြီးကျယ်တယ် "
 
 #: ../app/actions/dockable-actions.c:87
-#, fuzzy
 msgid "_Huge"
-msgstr "အလွန်ကြီးမားတယ်"
+msgstr "အလွန်ကြီးမားတယ် "
 
 #: ../app/actions/dockable-actions.c:88
-#, fuzzy
 msgid "_Enormous"
-msgstr "ဧရာမ ကြီးမားတယ်"
+msgstr "ဧရာမ ကြီးမားတယ် "
 
 #: ../app/actions/dockable-actions.c:89
-#, fuzzy
 msgid "_Gigantic"
-msgstr "အတိုင်းထက် ကြီးမားတယ်"
+msgstr "အတိုင်းထက် ကြီးမားတယ် "
 
 #: ../app/actions/dockable-actions.c:94
-#, fuzzy
 msgid "_Icon"
-msgstr "ပုံသင်္ကေတ"
+msgstr "ပုံသင်္ကေတ "
 
 #: ../app/actions/dockable-actions.c:95
-#, fuzzy
 msgid "Current _Status"
-msgstr "လက်ရှိအနေအထား"
+msgstr "လက်ရှိအနေအထား "
 
 #: ../app/actions/dockable-actions.c:96
-#, fuzzy
 msgid "_Text"
-msgstr "စာသား"
+msgstr "စာသား "
 
 #: ../app/actions/dockable-actions.c:97
-#, fuzzy
 msgid "I_con & Text"
-msgstr "ပုံသင်္ကေတနဲ့ စာသား"
+msgstr "ပုံသင်္ကေတနဲ့ စာသား "
 
 #: ../app/actions/dockable-actions.c:98
-#, fuzzy
 msgid "St_atus & Text"
-msgstr "အနေအထားနဲ့ စာသား"
+msgstr "အနေအထားနဲ့ စာသား "
 
 #: ../app/actions/dockable-actions.c:108
-#, fuzzy
 msgid "Loc_k Tab to Dock"
-msgstr "ရပ်နားနေရာထဲမှာ စာအမှတ်ကို သော့ခတ်ပါ"
+msgstr "ရပ်နားနေရာထဲမှာ စာအမှတ်ကို သော့ခတ်ပါ "
 
 #: ../app/actions/dockable-actions.c:109
-#, fuzzy
 msgid "Protect this tab from being dragged with the mouse pointer"
-msgstr "ဒီစာအမှတ်ကို ကြွတ်ခလုတ်နဲ့ ဒရွတ်ဆွဲခြင်းမှ ကာကွယ်ပါ"
+msgstr "ဒီစာအမှတ်ကို ကြွတ်ခလုတ်နဲ့ ဒရွတ်ဆွဲခြင်းမှ ကာကွယ်ပါ "
 
 #: ../app/actions/dockable-actions.c:115
-#, fuzzy
 msgid "Show _Button Bar"
-msgstr "အနေအထား တန်းလျာကို ဖေါ်ပြပါ"
+msgstr "အနေအထား တန်းလျာကို ဖေါ်ပြပါ "
 
 #: ../app/actions/dockable-actions.c:124
-#, fuzzy
 msgid "View as _List"
-msgstr "စာရင်းအဖြစ် ရှုမြင်ပါ"
+msgstr "စာရင်းအဖြစ် ရှုမြင်ပါ "
 
 #: ../app/actions/dockable-actions.c:129
-#, fuzzy
 msgid "View as _Grid"
-msgstr "ဂရစ်ကွက်အဖြစ် ရှုမြင်ပါ"
+msgstr "ဂရစ်ကွက်အဖြစ် ရှုမြင်ပါ "
 
 #: ../app/actions/documents-actions.c:42
-#, fuzzy
 msgid "Documents Menu"
-msgstr "စာတမ်းများ စာရင်းမှတ်"
+msgstr "စာတမ်းများ စာရင်းမှတ် "
 
 #: ../app/actions/documents-actions.c:46
-#, fuzzy
 msgid "_Open Image"
-msgstr "ရုပ်ပုံကို ဖွင့်ပါ"
+msgstr "ရုပ်ပုံကို ဖွင့်ပါ "
 
 #: ../app/actions/documents-actions.c:47
-#, fuzzy
 msgid "Open the selected entry"
-msgstr "ရွေးထားတဲ့ ရေးသွင်းချက်ကို ဖွင့်ပါ"
+msgstr "ရွေးထားတဲ့ ရေးသွင်းချက်ကို ဖွင့်ပါ "
 
 #: ../app/actions/documents-actions.c:52
-#, fuzzy
 msgid "_Raise or Open Image"
-msgstr "ရုပ်ပုံကို မြှင့်တင် (သို့) ဖွင့်ပါ"
+msgstr "ရုပ်ပုံကို မြှင့်တင် (သို့) ဖွင့်ပါ "
 
 #: ../app/actions/documents-actions.c:53
-#, fuzzy
 msgid "Raise window if already open"
-msgstr "၀င်းဒိုးကို ဖွင့်နေပြီးသားဆိုရင် မြှင့်တင်ပါ"
+msgstr "၀င်းဒိုးကို ဖွင့်နေပြီးသားဆိုရင် မြှင့်တင်ပါ "
 
 #: ../app/actions/documents-actions.c:58
-#, fuzzy
 msgid "File Open _Dialog"
-msgstr "ဖိုင် ဖွင့်တဲ့ အညွှန်းစာမျက်နှာ"
+msgstr "ဖိုင် ဖွင့်တဲ့ အညွှန်းစာမျက်နှာ "
 
 #: ../app/actions/documents-actions.c:59
-#, fuzzy
 msgid "Open image dialog"
-msgstr "ရုပ်ပုံ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ"
+msgstr "ရုပ်ပုံ အညွှန်းစာမျက်နှာကို ဖွင့်ပါ "
 
 #: ../app/actions/documents-actions.c:64
-#, fuzzy
 msgid "Copy Image _Location"
-msgstr "ရုပ်ပုံ တည်နေရာကို မိတ္တူကူးပါ"
+msgstr "ရုပ်ပုံ တည်နေရာကို မိတ္တူကူးပါ "
 
 #: ../app/actions/documents-actions.c:65
-#, fuzzy
 msgid "Copy image location to clipboard"
-msgstr "ရုပ်ပုံ တည်နေရာကို clipboard ဆီ မိတ္တူကူးပါ"
+msgstr "ရုပ်ပုံ တည်နေရာကို clipboard ဆီ မိတ္တူကူးပါ "
 
 #: ../app/actions/documents-actions.c:70
-#, fuzzy
 msgid "Remove _Entry"
-msgstr "ရေးသွင်းချက်ကို ဖယ်ရှားပါ"
+msgstr "ရေးသွင်းချက်ကို ဖယ်ရှားပါ "
 
 #: ../app/actions/documents-actions.c:71
-#, fuzzy
 msgid "Remove the selected entry"
-msgstr "ရွေးထားတဲ့ ရေးသွင်းချက်ကို ဖယ်ရှားပါ"
+msgstr "ရွေးထားတဲ့ ရေးသွင်းချက်ကို ဖယ်ရှားပါ "
 
 #: ../app/actions/documents-actions.c:76
-#, fuzzy
 msgid "_Clear History"
-msgstr "မှတ်တမ်းကို ရှင်းလင်းပါ"
+msgstr "မှတ်တမ်းကို ရှင်းလင်းပါ "
 
 #: ../app/actions/documents-actions.c:77
-#, fuzzy
 msgid "Clear the entire document history"
-msgstr "စာတမ်း မှတ်တမ်း တခုလုံးကို ရှင်းလင်းပါ"
+msgstr "စာတမ်း မှတ်တမ်း တခုလုံးကို ရှင်းလင်းပါ "
 
 #: ../app/actions/documents-actions.c:82
-#, fuzzy
 msgid "Recreate _Preview"
-msgstr "အစမ်းမြင်ကွင်းကို တဖန် ဖန်တီးပါ"
+msgstr "အစမ်းမြင်ကွင်းကို တဖန် ဖန်တီးပါ "
 
 #: ../app/actions/documents-actions.c:83
-#, fuzzy
 msgid "Recreate preview"
-msgstr "အစမ်းမြင်ကွင်းကို တဖန် ဖန်တီးပါ"
+msgstr "အစမ်းမြင်ကွင်းကို တဖန် ဖန်တီးပါ "
 
 #: ../app/actions/documents-actions.c:88
-#, fuzzy
 msgid "Reload _all Previews"
-msgstr "အစမ်းမြင်ကွင်း အားလုံးကို ပြန်ဖွင့်ပါ"
+msgstr "အစမ်းမြင်ကွင်း အားလုံးကို ပြန်ဖွင့်ပါ "
 
 #: ../app/actions/documents-actions.c:89
-#, fuzzy
 msgid "Reload all previews"
-msgstr "အစမ်းမြင်ကွင်း အားလုံးကို ပြန်ဖွင့်ပါ"
+msgstr "အစမ်းမြင်ကွင်း အားလုံးကို ပြန်ဖွင့်ပါ "
 
 #: ../app/actions/documents-actions.c:94
-#, fuzzy
 msgid "Remove Dangling E_ntries"
-msgstr "တွဲလွဲကျတဲ့ ရေးသွင်းချက်များကို ဖယ်ရှားပါ"
+msgstr "တွဲလွဲကျတဲ့ ရေးသွင်းချက်များကို ဖယ်ရှားပါ "
 
 #: ../app/actions/documents-actions.c:95
-#, fuzzy
 msgid "Remove dangling entries"
-msgstr "တွဲလွဲကျတဲ့ ရေးသွင်းချက်များကို ဖယ်ရှားပါ"
+msgstr "တွဲလွဲကျတဲ့ ရေးသွင်းချက်များကို ဖယ်ရှားပါ "
 
 #: ../app/actions/documents-commands.c:198
 msgid "Clear Document History"
@@ -1510,124 +1328,101 @@ msgid "Clear the Recent Documents list?"
 msgstr "လက်ရှိ စာတမ်းများ စာရင်းကို ရှင်းလင်းပါ"
 
 #: ../app/actions/documents-commands.c:224
-#, fuzzy
 msgid ""
 "Clearing the document history will permanently remove all items from the "
 "recent documents list in all applications."
 msgstr ""
 "စာတမ်း မှတ်တမ်းကို ရှင်းလင်းမှု​က လက်ရှိ စာတမ်းများ စာရင်းမှ ရုပ်ပုံများ အားလုံးကို "
-"အမြဲတမ်း ဖယ်ရှားလိမ့်မယ်။"
+"အမြဲတမ်း ဖယ်ရှားလိမ့်မယ်။ "
 
 #: ../app/actions/drawable-actions.c:45
-#, fuzzy
 msgid "_Equalize"
-msgstr "ညီမျှစေပါ"
+msgstr "ညီမျှစေပါ "
 
 #: ../app/actions/drawable-actions.c:46
-#, fuzzy
 msgid "Automatic contrast enhancement"
-msgstr "အလိုအလျှောက် ခြားနားမှု တိုးမြှင့်ကောင်းမွန်စေခြင်း"
+msgstr "အလိုအလျှောက် ခြားနားမှု တိုးမြှင့်ကောင်းမွန်စေမှု"
 
 #: ../app/actions/drawable-actions.c:51
-#, fuzzy
 msgid "In_vert"
-msgstr "ပြောင်းပြန်လှန်ပါ"
+msgstr "ပြောင်းပြန်လှန်ပါ "
 
 #: ../app/actions/drawable-actions.c:52
-#, fuzzy
 msgid "Invert the colors"
-msgstr "အရောင်များကို ပြောင်းပြန်လှန်ပါ"
+msgstr "အရောင်များကို ပြောင်းပြန်လှန်ပါ "
 
 #: ../app/actions/drawable-actions.c:57
-#, fuzzy
 msgid "_White Balance"
-msgstr "အဖြူရောင် ညီမျှမှု"
+msgstr "အဖြူရောင် ညီမျှမှု "
 
 #: ../app/actions/drawable-actions.c:58
-#, fuzzy
 msgid "Automatic white balance correction"
-msgstr "အလိုအလျှောက် အဖြူရောက် ညီမျှမှု ပြုပြင်မွမ်းမံချက်"
+msgstr "အလိုအလျှောက် အဖြူရောက် ညီမျှမှု ပြုပြင်မွမ်းမံချက် "
 
 #: ../app/actions/drawable-actions.c:63
-#, fuzzy
 msgid "_Offset..."
-msgstr "အော့ဖ်ဆက်..."
+msgstr "အော့ဖ်ဆက်... "
 
 #: ../app/actions/drawable-actions.c:64
-#, fuzzy
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr ""
-"ပစ်ဆယ်များကို အနားသတ်များမှာ ချင့်ချင့်ချိန်ချိန် ထုပ်ပိုးပြီး ၄င်းတို့ကို ရွှေ့ပြောင်းပါ"
+"ပစ်ဆယ်များကို အနားသတ်များမှာ ချင့်ချင့်ချိန်ချိန် ထုပ်ပိုးပြီး ၄င်းတို့ကို ရွှေ့ပြောင်းပါ "
 
 #: ../app/actions/drawable-actions.c:72 ../app/actions/vectors-actions.c:153
-#, fuzzy
 msgid "_Linked"
-msgstr "ချိတ်ဆက်ထားတယ်"
+msgstr "ချိတ်ဆက်ထားမှု"
 
 #: ../app/actions/drawable-actions.c:73
-#, fuzzy
 msgid "Toggle the linked state"
-msgstr "ချိတ်ဆက်မှု အခြေအနေကို ထိန်းကျောင်းပါ"
+msgstr "ချိတ်ဆက်မှု အခြေအနေကို ထိန်းကျောင်းပါ "
 
 #: ../app/actions/drawable-actions.c:79 ../app/actions/vectors-actions.c:147
-#, fuzzy
 msgid "_Visible"
-msgstr "မြင်နိုင်တယ်"
+msgstr "မြင်နိုင်တယ် "
 
 #: ../app/actions/drawable-actions.c:80
-#, fuzzy
 msgid "Toggle visibility"
-msgstr "မြင်ကွင်းကို ထိန်းကျောင်းပါ"
+msgstr "မြင်ကွင်းကို ထိန်းကျောင်းပါ "
 
 #: ../app/actions/drawable-actions.c:89 ../app/actions/image-actions.c:159
-#, fuzzy
 msgid "Flip _Horizontally"
-msgstr "ပြင်ညီအလိုက် လှန်ဖွင့်ပါ"
+msgstr "ပြင်ညီအလိုက် လှန်ဖွင့်ပါ "
 
 #: ../app/actions/drawable-actions.c:90
-#, fuzzy
 msgid "Flip horizontally"
-msgstr "ပြင်ညီအလိုက် လှန်ဖွင့်ပါ"
+msgstr "ပြင်ညီအလိုက် လှန်ဖွင့်ပါ "
 
 #: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
-#, fuzzy
 msgid "Flip _Vertically"
-msgstr "ဒေါင်အလိုက် လှန်ဖွင့်ပါ"
+msgstr "ဒေါင်အလိုက် လှန်ဖွင့်ပါ "
 
 #: ../app/actions/drawable-actions.c:96
-#, fuzzy
 msgid "Flip vertically"
-msgstr "ဒေါင်အလိုက် လှန်ဖွင့်ပါ"
+msgstr "ဒေါင်အလိုက် လှန်ဖွင့်ပါ "
 
 #: ../app/actions/drawable-actions.c:104 ../app/actions/image-actions.c:174
-#, fuzzy
 msgid "Rotate 90° _clockwise"
-msgstr "နာရီပုံစံ​ ၉ဝံ လှည့်ပါ"
+msgstr "နာရီပုံစံ​ ၉ဝံ လှည့်ပါ "
 
 #: ../app/actions/drawable-actions.c:105
-#, fuzzy
 msgid "Rotate 90 degrees to the right"
-msgstr "ညာဖက် ၉ဝ ဒီဂရီ လှည့်ပါ"
+msgstr "ညာဖက် ၉ဝ ဒီဂရီ လှည့်ပါ "
 
 #: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:180
-#, fuzzy
 msgid "Rotate _180°"
-msgstr "၁၈ဝံ လှည့်ပါ"
+msgstr "၁၈ဝံ လှည့်ပါ "
 
 #: ../app/actions/drawable-actions.c:111
-#, fuzzy
 msgid "Turn upside-down"
-msgstr "အထက်အောက် ပြောင်းပြန်လှန်ပါ"
+msgstr "အထက်အောက် ပြောင်းပြန်လှန်ပါ "
 
 #: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:186
-#, fuzzy
 msgid "Rotate 90° counter-clock_wise"
-msgstr "နာရီ ဆန့်ကျင်ဖက် ၉ဝံ လှည့်ပါ"
+msgstr "နာရီ ဆန့်ကျင်ဖက် ၉ဝံ လှည့်ပါ "
 
 #: ../app/actions/drawable-actions.c:117
-#, fuzzy
 msgid "Rotate 90 degrees to the left"
-msgstr "ဘယ်ဖက် ၉ဝ ဒီဂရီ လှည့်ပါ"
+msgstr "ဘယ်ဖက် ၉ဝ ဒီဂရီ လှည့်ပါ "
 
 #: ../app/actions/drawable-commands.c:62
 msgid "Equalize does not operate on indexed layers."
@@ -1642,239 +1437,197 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "အဖြူရောင် ညီမျှချက်ဟာ နီစိမ်းပြာ ​အရောင် အလွှာများပေါ်၌သာ အလုပ်လုပ်တယ်။"
 
 #: ../app/actions/edit-actions.c:63
-#, fuzzy
 msgid "_Edit"
-msgstr "တည်းဖြတ်ပါ"
+msgstr "တည်းဖြတ်ပါ "
 
 #: ../app/actions/edit-actions.c:64
-#, fuzzy
 msgid "_Paste as"
-msgstr "ပွားယူမဲ့ ပုံစံ"
+msgstr "ပွားယူမဲ့ ပုံစံ "
 
 #: ../app/actions/edit-actions.c:65
-#, fuzzy
 msgid "_Buffer"
-msgstr "ဘာဖာ"
+msgstr "ဘာဖာ "
 
 #: ../app/actions/edit-actions.c:68
-#, fuzzy
 msgid "Undo History Menu"
-msgstr "မှတ်တမ်း စာရင်းမှတ်ကို ပြန်ဖြည်ပါ"
+msgstr "မှတ်တမ်း စာရင်းမှတ်ကို ပြန်ဖြည်ပါ "
 
 #: ../app/actions/edit-actions.c:72 ../app/actions/edit-actions.c:313
 msgid "_Undo"
 msgstr "ပြန်ဖြည်ပါ"
 
 #: ../app/actions/edit-actions.c:73
-#, fuzzy
 msgid "Undo the last operation"
-msgstr "နောက်ဆုံး လည်ပတ်မှုကို ပြန်ဖြည်ပါ"
+msgstr "နောက်ဆုံး ဆောင်ရွတ်ချက်ကို ပြန်ဖြည်ပါ"
 
 #: ../app/actions/edit-actions.c:78 ../app/actions/edit-actions.c:314
 msgid "_Redo"
 msgstr "ပြန်ပြင်ပါ"
 
 #: ../app/actions/edit-actions.c:79
-#, fuzzy
 msgid "Redo the last operation that was undone"
-msgstr "မပြီးသေးတဲ့ နောက်ဆုံး လည်ပတ်မှုကို ပြန်ပြင်ပါ"
+msgstr "မပြီးသေးတဲ့ နောက်ဆုံးဆောင်ရွတ်ချက်ကို ပြန်ပြင်ပါ"
 
 #: ../app/actions/edit-actions.c:84
-#, fuzzy
 msgid "Strong Undo"
-msgstr "ထက်မြက်တဲ့ ပြန်ဖြည်မှု"
+msgstr "ထက်မြက်တဲ့ ပြန်ဖြည်မှု "
 
 #: ../app/actions/edit-actions.c:85
-#, fuzzy
 msgid "Undo the last operation, skipping visibility changes"
-msgstr "မြင်ကွင်း ပြောင်းလဲမှုများကို ကျော်သွားပြီး၊ နောက်ဆုံး လည်ပတ်မှုကို ပြန်​ဖြည်ပါ၊"
+msgstr ""
+"မြင်ကွင်း ပြောင်းလဲမှုများကို ကျော်သွားပြီး၊ နောက်ဆုံး ဆောင်ရွတ်ချက်ကို ပြန်​ဖြည်ပါ၊"
 
 #: ../app/actions/edit-actions.c:90
-#, fuzzy
 msgid "Strong Redo"
-msgstr "ထက်မြက်တဲ့ ပြန်ပြင်မှု"
+msgstr "ထက်မြက်တဲ့ ပြန်ပြင်မှု "
 
 #: ../app/actions/edit-actions.c:91
-#, fuzzy
 msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr ""
-"မြင်ကွင်း ပြောင်းလဲမှုများကို ကျော်ပြီး၊ ​မပြီးသေးတဲ့ နောက်ဆုံး လည်ပတ်မှုကို ပြန်ပြင်ပါ"
+"မြင်ကွင်း ပြောင်းလဲမှုများကို ကျော်ပြီး၊ ​မပြီးသေးတဲ့ နောက်ဆုံး ဆောင်ရွတ်ချက်ကို "
+"ပြန်ပြင်ပါ"
 
 #: ../app/actions/edit-actions.c:96
-#, fuzzy
 msgid "_Clear Undo History"
-msgstr "ပြန်ဖြည်မှု မှတ်တမ်းကို ရှင်းလင်းပါ"
+msgstr "ပြန်ဖြည်မှု မှတ်တမ်းကို ရှင်းလင်းပါ "
 
 #: ../app/actions/edit-actions.c:97
-#, fuzzy
 msgid "Remove all operations from the undo history"
-msgstr "ပြန်ဖြည်မှု မှတ်တမ်းမှ လည်ပတ်မှုများ အားလုံးကို ဖယ်ရှားပါ"
+msgstr "ပြန်ဖြည်မှု မှတ်တမ်းမှ လည်ပတ်မှုများ အားလုံးကို ဖယ်ရှားပါ "
 
 #: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:315
 msgid "_Fade..."
 msgstr "မှေးမှိန်စေပါ"
 
 #: ../app/actions/edit-actions.c:103
-#, fuzzy
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr "နောက်ဆုံး ပစ်ဆယ် စီမံကိုင်တွယ်မှုရဲ့ ပုံဆွဲစနစ်နဲ့ အလင်းပိတ်မှုကို ပြုပြင်ပါ"
+msgstr "နောက်ဆုံး ပစ်ဆယ် စီမံကိုင်တွယ်မှုရဲ့ ပုံဆွဲစနစ်နဲ့ အလင်းပိတ်မှုကို ပြုပြင်ပါ "
 
 #: ../app/actions/edit-actions.c:108
-#, fuzzy
 msgid "Cu_t"
-msgstr "ဖြတ်ယူပါ"
+msgstr "ဖြတ်ယူပါ "
 
 #: ../app/actions/edit-actions.c:109
-#, fuzzy
 msgid "Move the selected pixels to the clipboard"
-msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို clipboard ဆီ ရွှေ့သွားပါ"
+msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို clipboard ဆီ ရွှေ့သွားပါ "
 
 #: ../app/actions/edit-actions.c:114
-#, fuzzy
 msgid "_Copy"
-msgstr "မိတ္တူကူးပါ"
+msgstr "မိတ္တူကူးပါ "
 
 #: ../app/actions/edit-actions.c:115
-#, fuzzy
 msgid "Copy the selected pixels to the clipboard"
-msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို clipboard ဆီ မိတ္တူကူးပါ"
+msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို clipboard ဆီ မိတ္တူကူးပါ "
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:120
-#, fuzzy
 msgid "Copy _Visible"
-msgstr "မြင်နိုင်မှုကို မိတ္တူကူးပါ"
+msgstr "မြင်နိုင်မှုကို မိတ္တူကူးပါ "
 
 #: ../app/actions/edit-actions.c:121
-#, fuzzy
 msgid "Copy what is visible in the selected region"
-msgstr "ရွေးထားတဲ့ နယ်ပယ်မှာ မြင်နိုင်တဲ့ အရာကို မိတ္တူကူးပါ"
+msgstr "ရွေးထားတဲ့ နယ်ပယ်မှာ မြင်နိုင်တဲ့ အရာကို မိတ္တူကူးပါ "
 
 #: ../app/actions/edit-actions.c:126
-#, fuzzy
 msgid "_Paste"
-msgstr "ပွားယူပါ"
+msgstr "ပွားယူပါ "
 
 #: ../app/actions/edit-actions.c:127
-#, fuzzy
 msgid "Paste the content of the clipboard"
-msgstr "Clipboard ရဲ့ အကြောင်းအရာကို ပွားယူပါ"
+msgstr "Clipboard ရဲ့ အကြောင်းအရာကို ပွားယူပါ "
 
 #: ../app/actions/edit-actions.c:132
-#, fuzzy
 msgid "Paste _Into"
-msgstr "ပွားယူရမဲ့ နေရာ"
+msgstr "ပွားယူရမဲ့ နေရာ "
 
 #: ../app/actions/edit-actions.c:133
-#, fuzzy
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Clipboard ထဲရှိ အကြောင်းအရာကို လက်ရှိ ရွေးချယ်ချက်ထဲမှာ ပွားယူပါ"
+msgstr "Clipboard ထဲရှိ အကြောင်းအရာကို လက်ရှိ ရွေးချယ်ချက်ထဲမှာ ပွားယူပါ "
 
 #: ../app/actions/edit-actions.c:138
-#, fuzzy
 msgid "From _Clipboard"
-msgstr "Clipboard မှတဆင့်"
+msgstr "Clipboard မှတဆင့် "
 
 #: ../app/actions/edit-actions.c:139 ../app/actions/edit-actions.c:145
-#, fuzzy
 msgid "Create a new image from the content of the clipboard"
-msgstr "Clipboard ရဲ့ အကြောင်းအရာမှ ရုပ်ပုံအသစ်တခုကို ဖန်တီးပါ"
+msgstr "Clipboard ရဲ့ အကြောင်းအရာမှ ရုပ်ပုံအသစ်တခုကို ဖန်တီးပါ "
 
 #: ../app/actions/edit-actions.c:144
-#, fuzzy
 msgid "_New Image"
-msgstr "ရုပ်ပုံအသစ်"
+msgstr "ရုပ်ပုံအသစ် "
 
 #: ../app/actions/edit-actions.c:150
-#, fuzzy
 msgid "New _Layer"
-msgstr "အလွှာအသစ်"
+msgstr "အလွှာအသစ် "
 
 #: ../app/actions/edit-actions.c:151
-#, fuzzy
 msgid "Create a new layer from the content of the clipboard"
-msgstr "Clipboard ရဲ့ အကြောင်းအရာမှ အလွှာအသစ် တခုကို ဖန်တီးပါ"
+msgstr "Clipboard ရဲ့ အကြောင်းအရာမှ အလွှာအသစ် တခုကို ဖန်တီးပါ "
 
 #: ../app/actions/edit-actions.c:156
-#, fuzzy
 msgid "Cu_t Named..."
-msgstr "အမည်ပေးချက်ကို ဖြတ်ယူပါ"
+msgstr "အမည်ပေးချက်ကို ဖြတ်ယူပါ "
 
 #: ../app/actions/edit-actions.c:157
-#, fuzzy
 msgid "Move the selected pixels to a named buffer"
-msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို အမည်ပေးတဲ့ ဘာဖာ တခုဆီ ရွှေ့ပါ"
+msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို အမည်ပေးတဲ့ ဘာဖာ တခုဆီ ရွှေ့ပါ "
 
 #: ../app/actions/edit-actions.c:162
-#, fuzzy
 msgid "_Copy Named..."
-msgstr "အ​မည်ပေးချက်ကို မိတ္တူကူးပါ..."
+msgstr "အ​မည်ပေးချက်ကို မိတ္တူကူးပါ... "
 
 #: ../app/actions/edit-actions.c:163
-#, fuzzy
 msgid "Copy the selected pixels to a named buffer"
-msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို အမည်ပေးတဲ့ ဘာဖာ တခုဆီ မိတ္တူကူးပါ"
+msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို အမည်ပေးတဲ့ ဘာဖာ တခုဆီ မိတ္တူကူးပါ "
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:168
-#, fuzzy
 msgid "Copy _Visible Named..."
-msgstr "မြင်နိုင်တဲ့ အမည်ပေးချက်ကို မိတ္တူကူးပါ"
+msgstr "မြင်နိုင်တဲ့ အမည်ပေးချက်ကို မိတ္တူကူးပါ "
 
 #: ../app/actions/edit-actions.c:169
-#, fuzzy
 msgid "Copy the selected region to a named buffer"
-msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို အမည်ပေးတဲ့ ဘာဖာ တခုဆီ မိတ္တူကူးပါ"
+msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို အမည်ပေးတဲ့ ဘာဖာ တခုဆီ မိတ္တူကူးပါ "
 
 #: ../app/actions/edit-actions.c:174
-#, fuzzy
 msgid "_Paste Named..."
-msgstr "အမည်ပေးချက်ကို ပွားယူပါ..."
+msgstr "အမည်ပေးချက်ကို ပွားယူပါ... "
 
 #: ../app/actions/edit-actions.c:175
-#, fuzzy
 msgid "Paste the content of a named buffer"
-msgstr "အမည်ပေးတဲ့ ဘာဖာ တခုရဲ့ အကြောင်းအရာကို ပွားယူပါ"
+msgstr "အမည်ပေးတဲ့ ဘာဖာ တခုရဲ့ အကြောင်းအရာကို ပွားယူပါ "
 
 #: ../app/actions/edit-actions.c:180
-#, fuzzy
 msgid "Cl_ear"
-msgstr "ရှင်းလင်းပါ"
+msgstr "ရှင်းလင်းပါ "
 
 #: ../app/actions/edit-actions.c:181
-#, fuzzy
 msgid "Clear the selected pixels"
-msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို ရှင်းလင်းပါ"
+msgstr "ရွေးထားတဲ့ ပစ်ဆယ်များကို ရှင်းလင်းပါ "
 
 #: ../app/actions/edit-actions.c:189
-#, fuzzy
 msgid "Fill with _FG Color"
-msgstr "FG အရောင်နဲ့ ဖြည့်ပါ"
+msgstr "FG အရောင်နဲ့ ဖြည့်ပါ "
 
 #: ../app/actions/edit-actions.c:190
-#, fuzzy
 msgid "Fill the selection using the foreground color"
-msgstr "အနီးမြင်ကွင်း အရောင်ကို သုံးပြီး ရွေးချယ်ချက်ကို ဖြည့်ပါ"
+msgstr "အနီးမြင်ကွင်း အရောင်ကို သုံးပြီး ရွေးချယ်ချက်ကို ဖြည့်ပါ "
 
 #: ../app/actions/edit-actions.c:195
-#, fuzzy
 msgid "Fill with B_G Color"
-msgstr "BG အရောင်နဲ့ ဖြည့်ပါ"
+msgstr "BG အရောင်နဲ့ ဖြည့်ပါ "
 
 #: ../app/actions/edit-actions.c:196
-#, fuzzy
 msgid "Fill the selection using the background color"
-msgstr "နောက်ခံအရောင်ကို သုံးပြီး ရွေးချယ်ချက်ကို ဖြည့်ပါ"
+msgstr "နောက်ခံအရောင်ကို သုံးပြီး ရွေးချယ်ချက်ကို ဖြည့်ပါ "
 
 #: ../app/actions/edit-actions.c:201
-#, fuzzy
 msgid "Fill with P_attern"
-msgstr "နမူနာပုံစံနဲ့ ဖြည့်ပါ"
+msgstr "နမူနာပုံစံနဲ့ ဖြည့်ပါ "
 
 #: ../app/actions/edit-actions.c:202
-#, fuzzy
 msgid "Fill the selection using the active pattern"
-msgstr "သက်ကြွတဲ့ နမူနာပုံစံကို သုံးပြီး ရွေးချယ်ချက်ကို ဖြည့်ပါ"
+msgstr "သက်၀င်တဲ့ နမူနာပုံစံကို သုံးပြီး ရွေးချယ်ချက်ကို ဖြည့်ပါ"
 
 #: ../app/actions/edit-actions.c:279
 #, c-format
@@ -1954,49 +1707,40 @@ msgid "There is no active layer or channel to copy from."
 msgstr "မိတ္တူကူးဖို့ သက်ကြွတဲ့ အလွှာ (သို့) ချာနယ် မရှိဘူး။"
 
 #: ../app/actions/error-console-actions.c:40
-#, fuzzy
 msgid "Error Console Menu"
-msgstr "မှားယွင်းတဲ့ ထိန်းချုပ်ခလုတ်ခုံ စာရင်းမှတ်"
+msgstr "မှားယွင်းတဲ့ ထိန်းချုပ်ခလုတ်ခုံ စာရင်းမှတ် "
 
 #: ../app/actions/error-console-actions.c:44
-#, fuzzy
 msgid "_Clear"
-msgstr "ရှင်းလင်းပါ"
+msgstr "ရှင်းလင်းပါ "
 
 #: ../app/actions/error-console-actions.c:45
-#, fuzzy
 msgid "Clear error console"
-msgstr "မှားယွင်းတဲ့ ထိန်းချုပ်ခလုတ်ခုံကို ရှင်းလင်းပါ"
+msgstr "မှားယွင်းတဲ့ ထိန်းချုပ်ခလုတ်ခုံကို ရှင်းလင်းပါ "
 
 #: ../app/actions/error-console-actions.c:50
-#, fuzzy
 msgid "Select _All"
-msgstr "အားလုံးကို ရှင်းလင်းပါ"
+msgstr "အားလုံးကို ရွေးချယ်ပါ"
 
 #: ../app/actions/error-console-actions.c:51
-#, fuzzy
 msgid "Select all errors"
-msgstr "မှားယွင်းတဲ့ သတင်းတိုများ အားလုံးကို ရွေးပါ"
+msgstr "အမှားအယွင်းများ အားလုံး ရွေးပါ"
 
 #: ../app/actions/error-console-actions.c:59
-#, fuzzy
 msgid "_Save Error Log to File..."
-msgstr "မှားယွင်းတဲ့ မှတ်တမ်းကို ဖိုင်ထဲ သိမ်းဆည်းပါ..."
+msgstr "မှားယွင်းတဲ့ မှတ်တမ်းကို ဖိုင်ထဲ သိမ်းဆည်းပါ... "
 
 #: ../app/actions/error-console-actions.c:60
-#, fuzzy
 msgid "Save error log"
-msgstr "မှားယွင်းတဲ့ မှတ်တမ်းကို ဖိုင်ထဲ သိမ်းဆည်းပါ"
+msgstr "မှားယွင်းတဲ့ မှတ်တမ်းကို သိမ်းဆည်းပါ"
 
 #: ../app/actions/error-console-actions.c:65
-#, fuzzy
 msgid "Save S_election to File..."
-msgstr "ရွေးထားချက်ကို ဖိုင်ထဲ သိမ်းဆည်းပါ..."
+msgstr "ရွေးထားချက်ကို ဖိုင်ထဲ သိမ်းဆည်းပါ... "
 
 #: ../app/actions/error-console-actions.c:66
-#, fuzzy
 msgid "Save selection"
-msgstr "ရွေးချယ်မှုကို ရွှေ့ပါ"
+msgstr "ရွေးချယ်မှုကို သိမ်းဆည်းပါ"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
@@ -2016,129 +1760,104 @@ msgstr ""
 "%s"
 
 #: ../app/actions/file-actions.c:66
-#, fuzzy
 msgid "_File"
-msgstr "ဖိုင်"
+msgstr "ဖိုင် "
 
 #: ../app/actions/file-actions.c:67
-#, fuzzy
 msgid "Create"
-msgstr "ဖန်တီးပါ"
+msgstr "ဖန်တီးပါ "
 
 #: ../app/actions/file-actions.c:68
-#, fuzzy
 msgid "Open _Recent"
-msgstr "လတ်တလောအရာကို ဖွင့်ပါ"
+msgstr "လတ်တလောအရာကို ဖွင့်ပါ "
 
 #: ../app/actions/file-actions.c:71
-#, fuzzy
 msgid "_Open..."
-msgstr "ဖွင့်ပါ..."
+msgstr "ဖွင့်ပါ... "
 
 #: ../app/actions/file-actions.c:72
-#, fuzzy
 msgid "Open an image file"
-msgstr "ရုပ်ပုံဖိုင်တခုကို ဖွင့်ပါ"
+msgstr "ရုပ်ပုံဖိုင်တခုကို ဖွင့်ပါ "
 
 #: ../app/actions/file-actions.c:77
-#, fuzzy
 msgid "Op_en as Layers..."
-msgstr "အလွှာများလို ဖွင့်ပါ..."
+msgstr "အလွှာများကဲ့သို့ ဖွင့်ပါ..."
 
 #: ../app/actions/file-actions.c:78
-#, fuzzy
 msgid "Open an image file as layers"
-msgstr "ရုပ်ပုံဖိုင် တခုကကို အလွှာများလို ဖွင့်ပါ"
+msgstr "ရုပ်ပုံဖိုင် တခုကကို အလွှာများကဲ့သို့ ဖွင့်ပါ"
 
 #: ../app/actions/file-actions.c:83
-#, fuzzy
 msgid "Open _Location..."
-msgstr "တည်နေရာကို ဖွင့်ပါ"
+msgstr "တည်နေရာကို ဖွင့်ပါ "
 
 #: ../app/actions/file-actions.c:84
-#, fuzzy
 msgid "Open an image file from a specified location"
-msgstr "ရုပ်ပုံဖိုင်တခုကို သတ်မှတ်ထားတဲ့ တည်နေရာတခုမှ ဖွင့်ပါ"
+msgstr "ရုပ်ပုံဖိုင်တခုကို သတ်မှတ်ထားတဲ့ တည်နေရာတခုမှ ဖွင့်ပါ "
 
 #: ../app/actions/file-actions.c:89
-#, fuzzy
 msgid "Save as _Template..."
-msgstr "ပုံစံခွက်ကို ဖန်တီးပါ..."
+msgstr "ပုံစံခွက်ကို ဖန်တီးပါ... "
 
 #: ../app/actions/file-actions.c:90
-#, fuzzy
 msgid "Create a new template from this image"
-msgstr "ပုံစံခွက် အသစ်တခုကို ဒီရုပ်ပုံမှ ဖန်တီးပါ"
+msgstr "ပုံစံခွက် အသစ်တခုကို ဒီရုပ်ပုံမှ ဖန်တီးပါ "
 
 #: ../app/actions/file-actions.c:95
-#, fuzzy
 msgid "Re_vert"
-msgstr "ပြောင်းပြန်လှန်ပါ"
+msgstr "ပြောင်းပြန်လှန်ပါ "
 
 #: ../app/actions/file-actions.c:96
-#, fuzzy
 msgid "Reload the image file from disk"
-msgstr "ရုပ်ပုံဖိုင်ကို ဓါတ်ပြားထဲမှ ပြန်ဖွင့်ပါ"
+msgstr "ရုပ်ပုံဖိုင်ကို ဓါတ်ပြားထဲမှ ပြန်ဖွင့်ပါ "
 
 #: ../app/actions/file-actions.c:101
-#, fuzzy
 msgid "Close all"
-msgstr "အားလုံးကို ပိတ်ပါ"
+msgstr "အားလုံးကို ပိတ်ပါ "
 
 #: ../app/actions/file-actions.c:102
-#, fuzzy
 msgid "Close all opened images"
-msgstr "ဖွင့်ထားတဲ့ ရုပ်ပုံများအားလုံးကို ပိတ်ပါ"
+msgstr "ဖွင့်ထားတဲ့ ရုပ်ပုံများအားလုံးကို ပိတ်ပါ "
 
 #: ../app/actions/file-actions.c:107
-#, fuzzy
 msgid "_Quit"
-msgstr "ပိတ်ပါ"
+msgstr "ပိတ်ပါ "
 
 #: ../app/actions/file-actions.c:108
-#, fuzzy
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "GNU ရုပ်ပုံ စီမံကိုင်တွယ်ရေး ပရိုဂရမ်ကို ပိတ်ပါ"
+msgstr "GNU ရုပ်ပုံ စီမံဖန်းတီးရေး ပရိုဂရမ်ကို ပိတ်ပါ"
 
 #: ../app/actions/file-actions.c:116
-#, fuzzy
 msgid "_Save"
-msgstr "သိမ်းဆည်းပါ"
+msgstr "သိမ်းဆည်းပါ "
 
 #: ../app/actions/file-actions.c:117
-#, fuzzy
 msgid "Save this image"
-msgstr "ဒီရုပ်ပုံကို သိမ်းဆည်းပါ"
+msgstr "ဒီရုပ်ပုံကို သိမ်းဆည်းပါ "
 
 #: ../app/actions/file-actions.c:122
-#, fuzzy
 msgid "Save _As..."
-msgstr "သိမ်းဆည်းမဲ့ ပုံစံ..."
+msgstr "သိမ်းဆည်းမဲ့ ပုံစံ... "
 
 #: ../app/actions/file-actions.c:123
-#, fuzzy
 msgid "Save this image with a different name"
-msgstr "ဒီရုပ်ပုံကို အခြား အမည်တမျိုးနဲ့ သိမ်းဆည်းပါ"
+msgstr "ဒီရုပ်ပုံကို အခြား အမည်တမျိုးနဲ့ သိမ်းဆည်းပါ "
 
 #: ../app/actions/file-actions.c:128
-#, fuzzy
 msgid "Save a Cop_y..."
-msgstr "မိတ္တူတခုကို သိမ်းဆည်းပါ..."
+msgstr "မိတ္တူတခုကို သိမ်းဆည်းပါ... "
 
 #: ../app/actions/file-actions.c:129
-#, fuzzy
 msgid "Save this image with a different name, but keep its current name"
-msgstr "ဒီရုပ်ပုံကို အခြား အမည်တမျိုးနဲ့ သိမ်းဆည်းပါ၊ ဒါပေမဲ့ ၄င်းရဲ့ လက်ရှိအမည်ကို သိမ်းထားပါ"
+msgstr "ဒီရုပ်ပုံကို အခြား အမည်တမျိုးနဲ့ သိမ်းဆည်းပါ၊ ဒါပေမဲ့ ၄င်းရဲ့ လက်ရှိအမည်ကို သိမ်းထားပါ "
 
 #: ../app/actions/file-actions.c:134
-#, fuzzy
 msgid "Save and Close..."
-msgstr "သိမ်းဆည်းပြီး ပိတ်ပါ..."
+msgstr "သိမ်းဆည်းပြီး ပိတ်ပါ... "
 
 #: ../app/actions/file-actions.c:135
-#, fuzzy
 msgid "Save this image and close its window"
-msgstr "ဒီရုပ်ပုံကို သိမ်းဆည်းပြီး ၄င်းရဲ့ ၀င်းဒိုးကို ပိတ်ပါ"
+msgstr "ဒီရုပ်ပုံကို သိမ်းဆည်းပြီး ၄င်းရဲ့ ၀င်းဒိုးကို ပိတ်ပါ "
 
 #: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:456
 #: ../app/dialogs/file-open-dialog.c:76
@@ -2222,184 +1941,150 @@ msgstr ""
 "%s"
 
 #: ../app/actions/fonts-actions.c:44
-#, fuzzy
 msgid "Fonts Menu"
-msgstr "ဖောင့်များ စာရင်းမှတ်"
+msgstr "ဖောင့်များ စာရင်းမှတ် "
 
 #: ../app/actions/fonts-actions.c:48
-#, fuzzy
 msgid "_Rescan Font List"
-msgstr "ဖောင့်များ စာရင်းကို စကင်ပြန်ဖတ်ပါ"
+msgstr "ဖောင့်များ စာရင်းကို စကင်ပြန်ဖတ်ပါ "
 
 #: ../app/actions/fonts-actions.c:49
-#, fuzzy
 msgid "Rescan font list"
-msgstr "ဖောင့်များ စာရင်းကို စကင်ပြန်ဖတ်ပါ"
+msgstr "ဖောင့်များ စာရင်းကို စကင်ပြန်ဖတ်ပါ "
 
 #: ../app/actions/gradient-editor-actions.c:46
-#, fuzzy
 msgid "Gradient Editor Menu"
-msgstr "ရောင်စဉ်တန်း တည်းဖြတ်ကိရိယာ စာရင်းမှတ်"
+msgstr "ရောင်စဉ်တန်း တည်းဖြတ်ကိရိယာ စာရင်းမှတ် "
 
 #: ../app/actions/gradient-editor-actions.c:50
-#, fuzzy
 msgid "Left Color Type"
-msgstr "ဘယ်ဖက် အရောင် အမျိုးအစား"
+msgstr "ဘယ်ဖက် အရောင် အမျိုးအစား "
 
 #: ../app/actions/gradient-editor-actions.c:52
-#, fuzzy
 msgid "_Load Left Color From"
-msgstr "ဘယ်ဖက် အရောင်ကို ဖွင့်မဲ့ နေရာ"
+msgstr "ဘယ်ဖက် အရောင်ကို ဖွင့်ယူမဲ့ နေရာ "
 
 #: ../app/actions/gradient-editor-actions.c:54
-#, fuzzy
 msgid "_Save Left Color To"
-msgstr "ဘယ်ဖက် အရောင်ကို သိမ်းဆည်းမဲ့ နေရာ"
+msgstr "ဘယ်ဖက် အရောင်ကို သိမ်းဆည်းမဲ့ နေရာ "
 
 #: ../app/actions/gradient-editor-actions.c:57
-#, fuzzy
 msgid "Right Color Type"
-msgstr "ညာဖက် အရောင် အမျိုးအစား"
+msgstr "ညာဖက် အရောင် အမျိုးအစား "
 
 #: ../app/actions/gradient-editor-actions.c:59
-#, fuzzy
 msgid "Load Right Color Fr_om"
-msgstr "ညာဖက် အရောင်ကို ဖွင့်မဲ့ နေရာ"
+msgstr "ညာဖက် အရောင်ကို ဖွင့်မဲ့ နေရာ "
 
 #: ../app/actions/gradient-editor-actions.c:61
-#, fuzzy
 msgid "Sa_ve Right Color To"
-msgstr "ညာဖက် အရောင်ကို သိမ်းဆည်းမဲ့ နေရာ"
+msgstr "ညာဖက် အရောင်ကို သိမ်းဆည်းမဲ့ နေရာ "
 
 #: ../app/actions/gradient-editor-actions.c:67
-#, fuzzy
 msgid "L_eft Endpoint's Color..."
-msgstr "ဘယ်ဖက် အဆုံးသတ်အမှတ်ရဲ့ အရောင်"
+msgstr "ဘယ်ဖက် အဆုံးသတ်အမှတ်ရဲ့ အရောင် "
 
 #: ../app/actions/gradient-editor-actions.c:72
-#, fuzzy
 msgid "R_ight Endpoint's Color..."
-msgstr "ညာဖက် အဆုံးသတ်အမှတ်ရဲ့ အရောင်"
+msgstr "ညာဖက် အဆုံးသတ်အမှတ်ရဲ့ အရောင် "
 
 #: ../app/actions/gradient-editor-actions.c:112
-#, fuzzy
 msgid "Ble_nd Endpoints' Colors"
-msgstr "ရောစပ်မှု အဆုံးသတ်အမှတ်ရဲ့ အရောင်"
+msgstr "ရောစပ်မှု အဆုံးသတ်အမှတ်ရဲ့ အရောင် "
 
 #: ../app/actions/gradient-editor-actions.c:117
-#, fuzzy
 msgid "Blend Endpoints' Opacit_y"
-msgstr "ရောစပ်မှု အဆုံးသတ်အမှတ်ရဲ့ အရောင်"
+msgstr "ရောစပ်မှု အဆုံးသတ်အမှတ်ရဲ့ အရောင် "
 
 #: ../app/actions/gradient-editor-actions.c:125
-#, fuzzy
 msgid "Edit Active Gradient"
-msgstr "သက်ကြွတဲ့ ရောင်စဉ်တန်းကို တည်း​ဖြတ်ပါ"
+msgstr "သက်၀င်တဲ့ ရောင်စဉ်တန်းကို တည်း​ဖြတ်ပါ"
 
 #: ../app/actions/gradient-editor-actions.c:156
-#, fuzzy
 msgid "_Left Neighbor's Right Endpoint"
-msgstr "ဘယ်ဖက် နီးစပ်ရာ ညာဖက် အဆုံးသတ်အမှတ်"
+msgstr "ဘယ်ဖက် နီးစပ်ရာ ညာဖက် အဆုံးသတ်အမှတ် "
 
 #: ../app/actions/gradient-editor-actions.c:161
-#, fuzzy
 msgid "_Right Endpoint"
-msgstr "ညာဖက် အဆုံးသတ်အမှတ်"
+msgstr "ညာဖက် အဆုံးသတ်အမှတ် "
 
 #: ../app/actions/gradient-editor-actions.c:166
 #: ../app/actions/gradient-editor-actions.c:214
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "အနီးမြင်ကွင်း အရောင်"
+msgstr "အနီးမြင်ကွင်း အရောင် "
 
 #: ../app/actions/gradient-editor-actions.c:171
 #: ../app/actions/gradient-editor-actions.c:219
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:301
-#, fuzzy
 msgid "_Background Color"
-msgstr "နောက်ခံ ​အရောင်"
+msgstr "နောက်ခံ ​အရောင် "
 
 #: ../app/actions/gradient-editor-actions.c:204
-#, fuzzy
 msgid "_Right Neighbor's Left Endpoint"
-msgstr "ညာဖက် နီးစပ်ရာ ဘယ်ဖက် အဆုံသတ်အမှတ်"
+msgstr "ညာဖက် နီးစပ်ရာ ဘယ်ဖက် အဆုံးသတ်အမှတ် "
 
 #: ../app/actions/gradient-editor-actions.c:209
-#, fuzzy
 msgid "_Left Endpoint"
-msgstr "ဘယ်ဖက် အဆုံးသတ်အမှတ်"
+msgstr "ဘယ်ဖက် အဆုံးသတ်အမှတ် "
 
 #: ../app/actions/gradient-editor-actions.c:258
 #: ../app/actions/gradient-editor-actions.c:286
-#, fuzzy
 msgid "_Fixed"
-msgstr "သတ်မှတ်ထားချက်"
+msgstr "သတ်မှတ်ထားချက် "
 
 #: ../app/actions/gradient-editor-actions.c:263
 #: ../app/actions/gradient-editor-actions.c:291
-#, fuzzy
 msgid "F_oreground Color"
-msgstr "အနီးမြင်ကွင်း အရောင်"
+msgstr "အနီးမြင်ကွင်း အရောင် "
 
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:296
-#, fuzzy
 msgid "Fo_reground Color (Transparent)"
-msgstr "အနီးမြင်ကွင်း အရောင် (ဖေါက်ထွင်းမြင်နိုင်မှု)"
+msgstr "အနီးမြင်ကွင်း အရောင် (ဖေါက်ထွင်းမြင်နိုင်မှု) "
 
 #: ../app/actions/gradient-editor-actions.c:278
 #: ../app/actions/gradient-editor-actions.c:306
-#, fuzzy
 msgid "B_ackground Color (Transparent)"
-msgstr "နောက်ခံ အရောင် (ဖေါက်ထွင်းမြင်နိုင်မှု)"
+msgstr "နောက်ခံ အရောင် (ဖေါက်ထွင်းမြင်နိုင်မှု) "
 
 #: ../app/actions/gradient-editor-actions.c:314
-#, fuzzy
 msgid "_Linear"
-msgstr "အလျား"
+msgstr "အလျား "
 
 #: ../app/actions/gradient-editor-actions.c:319
-#, fuzzy
 msgid "_Curved"
-msgstr "မျဉ်းခုံး"
+msgstr "မျဉ်းခုံး "
 
 #: ../app/actions/gradient-editor-actions.c:324
-#, fuzzy
 msgid "_Sinusoidal"
-msgstr "အတွန့်အလိမ်"
+msgstr "အတွန့်အလိမ် "
 
 #: ../app/actions/gradient-editor-actions.c:329
-#, fuzzy
 msgid "Spherical (i_ncreasing)"
-msgstr "အလုံး (ကြီးထွား​မှု)"
+msgstr "အလုံး (ကြီးထွား​မှု) "
 
 #: ../app/actions/gradient-editor-actions.c:334
-#, fuzzy
 msgid "Spherical (_decreasing)"
-msgstr "အလုံး (လျှော့နည်းမှု)"
+msgstr "အလုံး (လျှော့နည်းမှု) "
 
 #: ../app/actions/gradient-editor-actions.c:339
 #: ../app/actions/gradient-editor-actions.c:362
-#, fuzzy
 msgid "(Varies)"
-msgstr "(ခြားနားချက်များ)"
+msgstr "(ခြားနားချက်များ) "
 
 #: ../app/actions/gradient-editor-actions.c:347
 #: ../app/actions/image-actions.c:141
-#, fuzzy
 msgid "_RGB"
-msgstr "နီစိမ်းပြာ"
+msgstr "နီစိမ်းပြာ "
 
 #: ../app/actions/gradient-editor-actions.c:352
-#, fuzzy
 msgid "HSV (_counter-clockwise hue)"
-msgstr "HSV (နာရီ-ပြောင်းပြန် အရောင်)"
+msgstr "HSV (နာရီ-ပြောင်းပြန် အရောင်) "
 
 #: ../app/actions/gradient-editor-actions.c:357
-#, fuzzy
 msgid "HSV (clockwise _hue)"
-msgstr "HSV (နာရီပုံစံ​ အရောင်)"
+msgstr "HSV (နာရီပုံစံ​ အရောင်) "
 
 #: ../app/actions/gradient-editor-actions.c:370
 #: ../app/actions/view-actions.c:273
@@ -2593,79 +2278,64 @@ msgstr ""
 "ညီညာတဲ့ အပိုင်းရဲ့ အရေအတွက်ကို ရွေးပါ။"
 
 #: ../app/actions/gradients-actions.c:44
-#, fuzzy
 msgid "Gradients Menu"
-msgstr "ရောင်စဉ်တန်းများ စာရင်းမှတ်"
+msgstr "ရောင်စဉ်တန်းများ စာရင်းမှတ် "
 
 #: ../app/actions/gradients-actions.c:48
-#, fuzzy
 msgid "_New Gradient"
-msgstr "ရောင်စဉ်တန်း အသစ်"
+msgstr "ရောင်စဉ်တန်း အသစ် "
 
 #: ../app/actions/gradients-actions.c:49
-#, fuzzy
 msgid "New gradient"
-msgstr "ရောင်စဉ်တန်း အသစ်"
+msgstr "ရောင်စဉ်တန်း အသစ် "
 
 #: ../app/actions/gradients-actions.c:54
-#, fuzzy
 msgid "D_uplicate Gradient"
-msgstr "ရောင်စဉ်တန်းကို ပုံတူပွားပါ"
+msgstr "ရောင်စဉ်တန်းကို ပုံတူပွားပါ "
 
 #: ../app/actions/gradients-actions.c:55
-#, fuzzy
 msgid "Duplicate gradient"
-msgstr "ရောင်စဉ်တန်းကို ပုံတူပွားပါ"
+msgstr "ရောင်စဉ်တန်းကို ပုံတူပွားပါ "
 
 #: ../app/actions/gradients-actions.c:60
-#, fuzzy
 msgid "Copy Gradient _Location"
-msgstr "ရောင်စဉ်တန်း တည်နေရာကို မိတ္တူကူးပါ"
+msgstr "ရောင်စဉ်တန်း တည်နေရာကို မိတ္တူကူးပါ "
 
 #: ../app/actions/gradients-actions.c:61
-#, fuzzy
 msgid "Copy gradient file location to clipboard"
-msgstr "ရောင်စဉ်တန်း ဖိုင် တည်နေရာကို Clipboard ဆီ မိတ္တူကူးပါ"
+msgstr "ရောင်စဉ်တန်း ဖိုင် တည်နေရာကို Clipboard ဆီ မိတ္တူကူးပါ "
 
 #: ../app/actions/gradients-actions.c:66
-#, fuzzy
 msgid "Save as _POV-Ray..."
-msgstr "POV-အလင်းတန်း အဖြစ် သိမ်းဆည်းပါ..."
+msgstr "POV-အလင်းတန်း အဖြစ် သိမ်းဆည်းပါ... "
 
 #: ../app/actions/gradients-actions.c:67
-#, fuzzy
 msgid "Save gradient as POV-Ray"
-msgstr "POV-အလင်းတန်းလို ရောင်စဉ်တန်းကို သိမ်းဆည်းပါ"
+msgstr "POV-အလင်းတန်းလို ရောင်စဉ်တန်းကို သိမ်းဆည်းပါ "
 
 #: ../app/actions/gradients-actions.c:72
-#, fuzzy
 msgid "_Delete Gradient"
-msgstr "ရောင်စဉ်တန်းကို ပယ်ဖျက်ပါ"
+msgstr "ရောင်စဉ်တန်းကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/gradients-actions.c:73
-#, fuzzy
 msgid "Delete gradient"
-msgstr "ရောင်စဉ်တန်းကို ပယ်ဖျက်ပါ"
+msgstr "ရောင်စဉ်တန်းကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/gradients-actions.c:78
-#, fuzzy
 msgid "_Refresh Gradients"
-msgstr "ရောင်စဉ်တန်းများကို ပြန်နိူးပါ"
+msgstr "ရောင်စဉ်တန်းများကို ပြန်နိူးပါ "
 
 #: ../app/actions/gradients-actions.c:79
-#, fuzzy
 msgid "Refresh gradients"
-msgstr "ရောင်စဉ်တန်းများကို ပြန်နိူးပါ"
+msgstr "ရောင်စဉ်တန်းများကို ပြန်နိူးပါ "
 
 #: ../app/actions/gradients-actions.c:87
-#, fuzzy
 msgid "_Edit Gradient..."
-msgstr "ရောင်စဉ်တန်းကို တည်းဖြတ်ပါ..."
+msgstr "ရောင်စဉ်တန်းကို တည်းဖြတ်ပါ... "
 
 #: ../app/actions/gradients-actions.c:88
-#, fuzzy
 msgid "Edit gradient"
-msgstr "ရောင်စဉ်တန်းကို တည်းဖြတ်ပါ"
+msgstr "ရောင်စဉ်တန်းကို တည်းဖြတ်ပါ "
 
 #: ../app/actions/gradients-commands.c:66
 #, c-format
@@ -2673,54 +2343,44 @@ msgid "Save '%s' as POV-Ray"
 msgstr "POV-အလင်းတန်းလို '%s' ကို သိမ်းဆည်းပါ"
 
 #: ../app/actions/help-actions.c:38 ../app/actions/help-actions.c:41
-#, fuzzy
 msgid "_Help"
-msgstr "အကူအညီ"
+msgstr "အကူအညီ "
 
 #: ../app/actions/help-actions.c:42
-#, fuzzy
 msgid "Open the GIMP user manual"
-msgstr "GIMP သုံးစွဲသူ လက်စွဲကို ဖွင့်ပါ"
+msgstr "GIMP သုံးစွဲသူ လက်စွဲကို ဖွင့်ပါ "
 
 #: ../app/actions/help-actions.c:47
-#, fuzzy
 msgid "_Context Help"
-msgstr "အကြောင်းအချက် အကူအညိ"
+msgstr "အကြောင်းအချက် အကူအညိ "
 
 #: ../app/actions/help-actions.c:48
-#, fuzzy
 msgid "Show the help for a specific user interface item"
-msgstr "သတ်မှတ်ထားတဲ့ သုံးစွဲသူ ကြားခံမြင်ကွင်း အချက် တခုအတွက် အကူအညီကို ဖေါ်ပြပါ"
+msgstr "သတ်မှတ်ထားတဲ့ သုံးစွဲသူ ကြားခံမြင်ကွင်း အချက် တခုအတွက် အကူအညီကို ဖေါ်ပြပါ "
 
 #: ../app/actions/image-actions.c:47 ../app/actions/image-actions.c:51
-#, fuzzy
 msgid "Image Menu"
-msgstr "ရုပ်ပုံ စာရင်းမှတ်"
+msgstr "ရုပ်ပုံ စာရင်းမှတ် "
 
 #: ../app/actions/image-actions.c:54
-#, fuzzy
 msgid "_Image"
-msgstr "ရုပ်ပုံ"
+msgstr "ရုပ်ပုံ "
 
 #: ../app/actions/image-actions.c:55
-#, fuzzy
 msgid "_Mode"
-msgstr "စနစ်"
+msgstr "စနစ် "
 
 #: ../app/actions/image-actions.c:56 ../app/actions/layers-actions.c:56
-#, fuzzy
 msgid "_Transform"
-msgstr "အသွင်ပြောင်းပါ"
+msgstr "အသွင်ပြောင်းပါ "
 
 #: ../app/actions/image-actions.c:57
-#, fuzzy
 msgid "_Guides"
-msgstr "လမ်းညွှန်များ"
+msgstr "လမ်းညွှန်များ "
 
 #: ../app/actions/image-actions.c:60
-#, fuzzy
 msgid "I_nfo"
-msgstr "အချက်အလက်"
+msgstr "အချက်အလက် "
 
 #: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:653
 #: ../app/tools/gimpthresholdtool.c:264
@@ -2728,184 +2388,148 @@ msgid "_Auto"
 msgstr "အ​လိုအလျှောက်"
 
 #: ../app/actions/image-actions.c:62 ../app/actions/plug-in-actions.c:95
-#, fuzzy
 msgid "_Map"
-msgstr "မြေပုံ"
+msgstr "မြေပုံ "
 
 #: ../app/actions/image-actions.c:63
-#, fuzzy
 msgid "C_omponents"
-msgstr "အစိတ်အပိုင်းများ"
+msgstr "အစိတ်အပိုင်းများ "
 
 #: ../app/actions/image-actions.c:66
-#, fuzzy
 msgid "_New..."
-msgstr "အသစ်..."
+msgstr "အသစ်... "
 
 #: ../app/actions/image-actions.c:67
-#, fuzzy
 msgid "Create a new image"
-msgstr "ရုပ်ပုံအသစ် တခု ဖန်တီးပါ"
+msgstr "ရုပ်ပုံအသစ် တခု ဖန်တီးပါ "
 
 #: ../app/actions/image-actions.c:72
-#, fuzzy
 msgid "Can_vas Size..."
-msgstr "ပတ္တူစ အရွယ်..."
+msgstr "Can_vas အရွယ်... "
 
 #: ../app/actions/image-actions.c:73
-#, fuzzy
 msgid "Adjust the image dimensions"
-msgstr "ရုပ်ပုံ အတိုင်းအတာများကို ညှိပါ"
+msgstr "ရုပ်ပုံ အတိုင်းအတာများကို ညှိပါ "
 
 #: ../app/actions/image-actions.c:78
-#, fuzzy
 msgid "F_it Canvas to Layers"
-msgstr "အလွှာများထဲ ပတ္တူစကို အံကိုက်ထည့်သွင်းပါ"
+msgstr "အလွှာများထဲ Canvas ကို အံကိုက်ထည့်သွင်းပါ"
 
 #: ../app/actions/image-actions.c:79
-#, fuzzy
 msgid "Resize the image to enclose all layers"
-msgstr "အလွှာများ အားလုံးကို ဝိုင်းရံဖို့ ရုပ်ပုံကို အရွယ်ညှိပါ"
+msgstr "အလွှာများ အားလုံးကို ဝိုင်းရံဖို့ ရုပ်ပုံကို အရွယ်ညှိပါ "
 
 #: ../app/actions/image-actions.c:84
-#, fuzzy
 msgid "F_it Canvas to Selection"
-msgstr "ရွေးချယ်ချက်ထံ ပတ္တူစကို အံကိုက်ထည့်သွင်းပါ"
+msgstr "ရွေးချယ်ချက်မှာ Canvas ကို အံကိုက်ထည့်သွင်းပါ"
 
 #: ../app/actions/image-actions.c:85
-#, fuzzy
 msgid "Resize the image to the extents of the selection"
-msgstr "ရွေးချယ်ချက်ရဲ့ အတိုင်းအတာများ အတိုင်း ရုပ်ပုံကို အရွယ်ညှိပါ"
+msgstr "ရွေးချယ်ချက်ရဲ့ အတိုင်းအတာများ အတိုင်း ရုပ်ပုံကို အရွယ်ညှိပါ "
 
 #: ../app/actions/image-actions.c:90
-#, fuzzy
 msgid "_Print Size..."
-msgstr "ပုံနှိုပ်ချက် အရွယ်..."
+msgstr "ပုံနှိုပ်ချက် အရွယ်... "
 
 #: ../app/actions/image-actions.c:91
-#, fuzzy
 msgid "Adjust the print resolution"
-msgstr "ပုံနှိုပ်ချက် ထင်ရှားပြတ်သားမှုကို ညှိပါ"
+msgstr "ပုံနှိုပ်ချက် ထင်ရှားပြတ်သားမှုကို ညှိပါ "
 
 #: ../app/actions/image-actions.c:96
-#, fuzzy
 msgid "_Scale Image..."
-msgstr "ရုပ်ပုံကို စကေးတိုင်းပါ..."
+msgstr "ရုပ်ပုံကို စကေးတိုင်းပါ... "
 
 #: ../app/actions/image-actions.c:97
-#, fuzzy
 msgid "Change the size of the image content"
-msgstr "ရုပ်ပုံ အကြောင်းအရာရဲ့ အရွယ်ကို ပြောင်းလဲပါ"
+msgstr "ရုပ်ပုံ အကြောင်းအရာရဲ့ အရွယ်ကို ပြောင်းလဲပါ "
 
 #: ../app/actions/image-actions.c:102 ../app/actions/layers-actions.c:188
-#, fuzzy
 msgid "_Crop to Selection"
-msgstr "ရွေးချယ်ချက်ကို လှီးဖြတ်ပါ"
+msgstr "ရွေးချယ်ချက်ကို လှီးဖြတ်ပါ "
 
 #: ../app/actions/image-actions.c:103
-#, fuzzy
 msgid "Crop the image to the extents of the selection"
-msgstr "ရွေးချယ်ချက်ရဲ့ အတိုင်းအတာများ အတိုင်း ရုပ်ပုံကို လှီးဖြတ်ပါ"
+msgstr "ရွေးချယ်ချက်ရဲ့ အတိုင်းအတာများ အတိုင်း ရုပ်ပုံကို လှီးဖြတ်ပါ "
 
 #: ../app/actions/image-actions.c:108
-#, fuzzy
 msgid "_Duplicate"
-msgstr "ပုံတူပွားပါ"
+msgstr "ပုံတူပွားပါ "
 
 #: ../app/actions/image-actions.c:109
-#, fuzzy
 msgid "Create a duplicate of this image"
-msgstr "ဒီရုပ်ပုံရဲ့ ပုံတူပွားတခုကို ဖန်တီးပါ"
+msgstr "ဒီရုပ်ပုံရဲ့ ပုံတူပွားတခုကို ဖန်တီးပါ "
 
 #: ../app/actions/image-actions.c:114
-#, fuzzy
 msgid "Merge Visible _Layers..."
-msgstr "မြင်နိုင်တဲ့ အလွှာများကို ပေါင်းစပ်ပါ..."
+msgstr "မြင်နိုင်တဲ့ အလွှာများကို ပေါင်းစပ်ပါ... "
 
 #: ../app/actions/image-actions.c:115 ../app/actions/layers-actions.c:141
-#, fuzzy
 msgid "Merge all visible layers into one layer"
-msgstr "မြင်နိုင်တဲ့ အလွှာများ အားလုံးကို အလွှာတခုထဲမှာ ပေါင်းစပ်ပါ"
+msgstr "မြင်နိုင်တဲ့ အလွှာများ အားလုံးကို အလွှာတခုထဲမှာ ပေါင်းစပ်ပါ "
 
 #: ../app/actions/image-actions.c:120 ../app/actions/layers-actions.c:146
-#, fuzzy
 msgid "_Flatten Image"
-msgstr "ရုပ်ပုံကို ပြန့်စေပါ"
+msgstr "ရုပ်ပုံကို ပြန့်စေပါ "
 
 #: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:147
-#, fuzzy
 msgid "Merge all layers into one and remove transparency"
-msgstr "အလွှာများ အားလုံးကို တခုထဲအဖြစ် ပေါင်းစပ်ပြီး ဖေါက်ထွင်းနိုင်မှုကို ဖယ်ရှားပါ"
+msgstr "အလွှာများ အားလုံးကို တခုထဲအဖြစ် ပေါင်းစပ်ပြီး ဖေါက်ထွင်းနိုင်မှုကို ဖယ်ရှားပါ "
 
 #: ../app/actions/image-actions.c:126
-#, fuzzy
 msgid "Configure G_rid..."
-msgstr "ဂရစ်ကွက်ကို စီစဉ်ဖန်တီးပါ..."
+msgstr "ဂရစ်ကွက်ကို စီစဉ်ဖန်တီးပါ... "
 
 #: ../app/actions/image-actions.c:127
-#, fuzzy
 msgid "Configure the grid for this image"
-msgstr "ဒီရုပ်ပုံအတွက် ဂရစ်ကွက်ကို စီစဉ်ဖန်တီးပါ..."
+msgstr "ဒီရုပ်ပုံအတွက် ဂရစ်ကွက်ကို စီစဉ်ဖန်တီးပါ... "
 
 #: ../app/actions/image-actions.c:132
-#, fuzzy
 msgid "Image Pr_operties"
-msgstr "ရုပ်ပုံရဲ့ ဂုဏ်အင်္ဂါရပ်များ"
+msgstr "ရုပ်ပုံရဲ့ ဂုဏ်အင်္ဂါရပ်များ "
 
 #: ../app/actions/image-actions.c:133
-#, fuzzy
 msgid "Display information about this image"
-msgstr "ဒီရုပ်ပုံ အကြောင်း အချက်အလက်ကို ဖေါ်ပြပါ"
+msgstr "ဒီရုပ်ပုံ အကြောင်း အချက်အလက်ကို ဖေါ်ပြပါ "
 
 #: ../app/actions/image-actions.c:142
-#, fuzzy
 msgid "Convert the image to the RGB colorspace"
-msgstr "ရုပ်ပုံကို နီစိမ်းပြာ အရောင်ကွက်ထဲ အသွင်ပြောင်းပါ"
+msgstr "ရုပ်ပုံကို နီစိမ်းပြာ အရောင်ကွက်ထဲ အသွင်ပြောင်းပါ "
 
 #: ../app/actions/image-actions.c:146
-#, fuzzy
 msgid "_Grayscale"
-msgstr "မီးခိုးရောင်"
+msgstr "မီးခိုးရောင် "
 
 #: ../app/actions/image-actions.c:147
-#, fuzzy
 msgid "Convert the image to grayscale"
-msgstr "ရုပ်ပုံကကို မိးခိုးရောင်အဖြစ် အသွင်ပြောင်းပါ"
+msgstr "ရုပ်ပုံကကို မိးခိုးရောင်အဖြစ် အသွင်ပြောင်းပါ "
 
 #: ../app/actions/image-actions.c:151
-#, fuzzy
 msgid "_Indexed..."
-msgstr "ညွှန်းထားချက်..."
+msgstr "ညွှန်းထားချက်... "
 
 #: ../app/actions/image-actions.c:152
-#, fuzzy
 msgid "Convert the image to indexed colors"
-msgstr "ရုပ်ပုံကို ညွှန်းထားတဲ့ အရောင်းများအဖြစ် အသွင်ပြောင်းပါ"
+msgstr "ရုပ်ပုံကို ညွှန်းထားတဲ့ အရောင်းများအဖြစ် အသွင်ပြောင်းပါ "
 
 #: ../app/actions/image-actions.c:160
-#, fuzzy
 msgid "Flip image horizontally"
-msgstr "ရုပ်ပုံကို ပြင်ညီအလိုက် လှန်ဖွင့်ပါ"
+msgstr "ရုပ်ပုံကို ပြင်ညီအလိုက် လှန်ဖွင့်ပါ "
 
 #: ../app/actions/image-actions.c:166
-#, fuzzy
 msgid "Flip image vertically"
-msgstr "ရုပ်ပုံကကို ဒေါင်အလိုက် လှန်ဖွင့်ပါ"
+msgstr "ရုပ်ပုံကကို ဒေါင်အလိုက် လှန်ဖွင့်ပါ "
 
 #: ../app/actions/image-actions.c:175
-#, fuzzy
 msgid "Rotate the image 90 degrees to the right"
-msgstr "ရုပ်ပုံကို ညာဖက်ကို ၉ဝ ဒီဂရီ လှည့်ပါ"
+msgstr "ရုပ်ပုံကို ညာဖက်ကို ၉ဝ ဒီဂရီ လှည့်ပါ "
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
 msgid "Turn the image upside-down"
-msgstr "ရုပ်ပုံကို အထက်-အောက် လှည့်ပါ"
+msgstr "ရုပ်ပုံကို အထက်-အောက် လှည့်ပါ "
 
 #: ../app/actions/image-actions.c:187
-#, fuzzy
 msgid "Rotate the image 90 degrees to the left"
-msgstr "ရုပ်ပုံကို ဘယ်ဖက်ကို ၉ဝ ဒီဂရီ လှည့်ပါ"
+msgstr "ရုပ်ပုံကို ဘယ်ဖက်ကို ၉ဝ ဒီဂရီ လှည့်ပါ "
 
 #: ../app/actions/image-commands.c:235
 msgid "Set Image Canvas Size"
@@ -2957,491 +2581,394 @@ msgid "Scaling"
 msgstr "စကေးချခြင်း"
 
 #: ../app/actions/images-actions.c:43
-#, fuzzy
 msgid "Images Menu"
-msgstr "ရုပ်ပုံများ စာရင်းမှတ်"
+msgstr "ရုပ်ပုံများ စာရင်းမှတ် "
 
 #: ../app/actions/images-actions.c:47
-#, fuzzy
 msgid "_Raise Views"
-msgstr "မြင်ကွင်းများကို မြှင့်တင်ပါ"
+msgstr "မြင်ကွင်းများကို မြှင့်တင်ပါ "
 
 #: ../app/actions/images-actions.c:48
-#, fuzzy
 msgid "Raise this image's displays"
-msgstr "ဒီရုပ်ပုံရဲ့ ပြသချက်များကို မြှင့်တင်ပါ"
+msgstr "ဒီရုပ်ပုံရဲ့ ပြသချက်များကို မြှင့်တင်ပါ "
 
 #: ../app/actions/images-actions.c:53 ../app/actions/view-actions.c:75
-#, fuzzy
 msgid "_New View"
-msgstr "ရှုမြင်ချက် အသစ်"
+msgstr "ရှုမြင်ချက် အသစ် "
 
 #: ../app/actions/images-actions.c:54
-#, fuzzy
 msgid "Create a new display for this image"
-msgstr "ဒီရုပ်ပုံအတွက် ပြသချက် အသစ်တခုကို ဖန်တီးပါ"
+msgstr "ဒီရုပ်ပုံအတွက် ပြသချက် အသစ်တခုကို ဖန်တီးပါ "
 
 #: ../app/actions/images-actions.c:59
-#, fuzzy
 msgid "_Delete Image"
-msgstr "ရုပ်ပုံကို ပယ်ဖျက်ပါ"
+msgstr "ရုပ်ပုံကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/images-actions.c:60
-#, fuzzy
 msgid "Delete this image"
-msgstr "ဒီရုပ်ပုံကို ပယ်ဖျက်ပါ"
+msgstr "ဒီရုပ်ပုံကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/layers-actions.c:48
-#, fuzzy
 msgid "Layers Menu"
-msgstr "အလွှာများ စာရင်းမှတ်"
+msgstr "အလွှာများ စာရင်းမှတ် "
 
 #: ../app/actions/layers-actions.c:51
-#, fuzzy
 msgid "_Layer"
-msgstr "အလွှာ"
+msgstr "အလွှာ "
 
 #: ../app/actions/layers-actions.c:52
-#, fuzzy
 msgid "Stac_k"
-msgstr "ဆင့်စီချက်"
+msgstr "ဆင့်စီချက် "
 
 #: ../app/actions/layers-actions.c:53
-#, fuzzy
 msgid "Te_xt to Selection"
-msgstr "ရွေးချယ်ချက် စာသား"
+msgstr "ရွေးချယ်ချက် စာသား "
 
 #: ../app/actions/layers-actions.c:54
-#, fuzzy
 msgid "_Mask"
-msgstr "မျက်နှာဖုံး"
+msgstr "မျက်နှာဖုံး "
 
 #: ../app/actions/layers-actions.c:55
-#, fuzzy
 msgid "Tr_ansparency"
-msgstr "ဖေါက်ထွင်းမြင်နိုင်မှု"
+msgstr "ဖေါက်ထွင်းမြင်နိုင်မှု "
 
 #: ../app/actions/layers-actions.c:57
-#, fuzzy
 msgid "_Properties"
-msgstr "ဂုဏ်အင်္ဂါရပ်များ"
+msgstr "ဂုဏ်အင်္ဂါရပ်များ "
 
 #: ../app/actions/layers-actions.c:59
-#, fuzzy
 msgid "Layer _Mode"
-msgstr "အလွှာ စနစ်"
+msgstr "အလွှာ စနစ် "
 
 #: ../app/actions/layers-actions.c:62
-#, fuzzy
 msgid "Te_xt Tool"
-msgstr "စာသား ကိရိယာ"
+msgstr "စာသား ကိရိယာ "
 
 #: ../app/actions/layers-actions.c:63
-#, fuzzy
 msgid "Activate the text tool on this text layer"
-msgstr "စာသား ကိရိယာကို ဒီစာသား အလွှာပေါ်မှာ ဖွင့်ပေးပါ"
+msgstr "စာသား ကိရိယာကို ဒီစာသား အလွှာပေါ်မှာ ဖွင့်ပေးပါ "
 
 #: ../app/actions/layers-actions.c:68
-#, fuzzy
 msgid "_Edit Layer Attributes..."
-msgstr "အလွှာ ဂုဏ်အင်္ဂါရပ်များကို တည်းဖြတ်ပါ..."
+msgstr "အလွှာ ဂုဏ်အင်္ဂါရပ်များကို တည်းဖြတ်ပါ... "
 
 #: ../app/actions/layers-actions.c:69
-#, fuzzy
 msgid "Edit the layer's name"
-msgstr "အလွှာရဲ့ အမည်ကို တည်းဖြတ်ပါ"
+msgstr "အလွှာရဲ့ အမည်ကို တည်းဖြတ်ပါ "
 
 #: ../app/actions/layers-actions.c:74
-#, fuzzy
 msgid "_New Layer..."
-msgstr "အလွှာအသစ်..."
+msgstr "အလွှာအသစ်... "
 
 #: ../app/actions/layers-actions.c:75
-#, fuzzy
 msgid "Create a new layer and add it to the image"
-msgstr "အလွှာအသစ် တခုကို ဖန်တီးပြီး ၄င်းကို ရုပ်ပုံထဲ ပေါင်းထည့်ပါ"
+msgstr "အလွှာအသစ် တခုကို ဖန်တီးပြီး ၄င်းကို ရုပ်ပုံထဲ ပေါင်းထည့်ပါ "
 
 #: ../app/actions/layers-actions.c:80
-#, fuzzy
 msgid "_New Layer"
-msgstr "အလွှာအသစ်"
+msgstr "အလွှာအသစ် "
 
 #: ../app/actions/layers-actions.c:81
-#, fuzzy
 msgid "Create a new layer with last used values"
-msgstr "အလွှာအသစ် တခုကို  နောက်ဆုံး သုံးစွဲတဲ့ တန်ဖိုးများနဲ့ ဖန်တီးပါ"
+msgstr "အလွှာအသစ် တခုကို  နောက်ဆုံး သုံးစွဲတဲ့ တန်ဖိုးများနဲ့ ဖန်တီးပါ "
 
 #: ../app/actions/layers-actions.c:86
-#, fuzzy
 msgid "New from _Visible"
-msgstr "မြင်နိုင်မှုဆီမှ အသစ်"
+msgstr "မြင်နိုင်မှုဆီမှ အသစ် "
 
 #: ../app/actions/layers-actions.c:87
-#, fuzzy
 msgid "Create a new layer from what is visible in this image"
-msgstr "ဒီရုပ်ပုံမှာ မြင်နိုင်တဲ့ အရာမှ အလွှာအသစ် တခုကို ဖန်တီးပါ"
+msgstr "ဒီရုပ်ပုံမှာ မြင်နိုင်တဲ့ အရာမှ အလွှာအသစ် တခုကို ဖန်တီးပါ "
 
 #: ../app/actions/layers-actions.c:92
-#, fuzzy
 msgid "D_uplicate Layer"
-msgstr "အလွှာကို ပုံတူပွားပါ"
+msgstr "အလွှာကို ပုံတူပွားပါ "
 
 #: ../app/actions/layers-actions.c:93
-#, fuzzy
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr "အလွှာရဲ့ ပုံတူပွားတခုကို ​ဖန်တီပြီး ၄င်းကို ရုပ်ပုံထဲ ပေါင်းထည့်ပါ"
+msgstr "အလွှာရဲ့ ပုံတူပွားတခုကို ​ဖန်တီပြီး ၄င်းကို ရုပ်ပုံထဲ ပေါင်းထည့်ပါ "
 
 #: ../app/actions/layers-actions.c:98
-#, fuzzy
 msgid "_Delete Layer"
-msgstr "အလွှာကို ပယ်ဖျက်ပါ"
+msgstr "အလွှာကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/layers-actions.c:99
-#, fuzzy
 msgid "Delete this layer"
-msgstr "ဒီအလွှာကို ပယ်ဖျက်ပါ"
+msgstr "ဒီအလွှာကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/layers-actions.c:104
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "အလွှာကို မြှင့်တင်ပါ"
+msgstr "အလွှာကို မြှင့်တင်ပါ "
 
 #: ../app/actions/layers-actions.c:105
-#, fuzzy
 msgid "Raise this layer one step in the layer stack"
-msgstr "ဒီအလွှာကို အလွှာ ဆင့်စီချက်ထဲမှာ အဆင့်တခု မြှင့်တင်ပါ"
+msgstr "ဒီအလွှာကို အလွှာ ဆင့်စီချက်ထဲမှာ အဆင့်တခု မြှင့်တင်ပါ "
 
 #: ../app/actions/layers-actions.c:110
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "ထိပ်အတွက် အလွှာ"
+msgstr "ထိပ်အတွက် အလွှာ "
 
 #: ../app/actions/layers-actions.c:111
-#, fuzzy
 msgid "Move this layer to the top of the layer stack"
-msgstr "ဒီအလွှာကို အလွှာဆင့်စီချက်ရဲ့ ထိပ်ကို ရွှေ့ပါ"
+msgstr "ဒီအလွှာကို အလွှာဆင့်စီချက်ရဲ့ ထိပ်ကို ရွှေ့ပါ "
 
 #: ../app/actions/layers-actions.c:116
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "အောက်အလွှာ"
+msgstr "အောက်အလွှာ "
 
 #: ../app/actions/layers-actions.c:117
-#, fuzzy
 msgid "Lower this layer one step in the layer stack"
-msgstr "ဒီအလွှာကို အလွှာ ဆင့်စီချက်ထဲမှာ အဆင့်တခု လျှော့ချပါ"
+msgstr "ဒီအလွှာကို အလွှာ ဆင့်စီချက်ထဲမှာ အဆင့်တခု လျှော့ချပါ "
 
 #: ../app/actions/layers-actions.c:122
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "အောက်ခြေအတွက် အလွှာ"
+msgstr "အောက်ခြေအတွက် အလွှာ "
 
 #: ../app/actions/layers-actions.c:123
-#, fuzzy
 msgid "Move this layer to the bottom of the layer stack"
-msgstr "ဒီအလွှာကို အလွှာ ဆင့်စီချက်ရဲ့ အောက်ကို ရွှေ့ပါ"
+msgstr "ဒီအလွှာကို အလွှာ ဆင့်စီချက်ရဲ့ အောက်ကို ရွှေ့ပါ "
 
 #: ../app/actions/layers-actions.c:128
-#, fuzzy
 msgid "_Anchor Layer"
-msgstr "ကျောက်ဆူး အလွှာ"
+msgstr "ကျောက်ဆူး အလွှာ "
 
 #: ../app/actions/layers-actions.c:129
-#, fuzzy
 msgid "Anchor the floating layer"
-msgstr "မျောနေတဲ့ အလွှာကို ချိတ်တွယ်ပါ"
+msgstr "မျောနေတဲ့ အလွှာကို ချိတ်တွယ်ပါ "
 
 #: ../app/actions/layers-actions.c:134
-#, fuzzy
 msgid "Merge Do_wn"
-msgstr "အောက်ကို ပေါင်းစပ်ပါ"
+msgstr "အောက်ကို ပေါင်းစပ်ပါ "
 
 #: ../app/actions/layers-actions.c:135
-#, fuzzy
 msgid "Merge this layer with the one below it"
-msgstr "ဒီအလွှာကို ၄င်းရဲ့ အောက်မှ တခုနဲ့ ပေါင်းစပ်ပါ"
+msgstr "ဒီအလွှာကို ၄င်းရဲ့ အောက်မှ တခုနဲ့ ပေါင်းစပ်ပါ "
 
 #: ../app/actions/layers-actions.c:140
-#, fuzzy
 msgid "Merge _Visible Layers..."
-msgstr "မြင်နိုင်တဲ့ အလွှာများကို ပေါင်းစပ်ပါ..."
+msgstr "မြင်နိုင်တဲ့ အလွှာများကို ပေါင်းစပ်ပါ... "
 
 #: ../app/actions/layers-actions.c:152
-#, fuzzy
 msgid "_Discard Text Information"
-msgstr "စာသား အချက်အလက်ကို စွန့်ပစ်ပါ"
+msgstr "စာသား အချက်အလက်ကို စွန့်ပစ်ပါ "
 
 #: ../app/actions/layers-actions.c:153
-#, fuzzy
 msgid "Turn this text layer into a normal layer"
-msgstr "ဒီစာသား အလွှာကို သာမန် အလွှာတခု အဖြစ် ​ပြောင်းလဲပါ"
+msgstr "ဒီစာသား အလွှာကို သာမန် အလွှာတခု အဖြစ် ​ပြောင်းလဲပါ "
 
 #: ../app/actions/layers-actions.c:158
-#, fuzzy
 msgid "Text to _Path"
-msgstr "လမ်းကြောင်းအတွက် စာသား"
+msgstr "လမ်းကြောင်းအတွက် စာသား "
 
 #: ../app/actions/layers-actions.c:159
-#, fuzzy
 msgid "Create a path from this text layer"
-msgstr "ဒီစာသား အလွှာမှ လမ်းကြောင်း တခုကို ဖန်တီးပါ"
+msgstr "ဒီစာသား အလွှာမှ လမ်းကြောင်း တခုကို ဖန်တီးပါ "
 
 #: ../app/actions/layers-actions.c:164
-#, fuzzy
 msgid "Text alon_g Path"
-msgstr "လမ်းကြောင်းရှိ စာသား"
+msgstr "လမ်းကြောင်းရှိ စာသား "
 
 #: ../app/actions/layers-actions.c:165
-#, fuzzy
 msgid "Warp this layer's text along the current path"
-msgstr "လက်ရှိ လမ်းကြောင်း တလျှောက် အလွှာရဲ့ စာသားများကို ထုပ်ပိုးပါ"
+msgstr "လက်ရှိ လမ်းကြောင်း တလျှောက် အလွှာရဲ့ စာသားများကို ထုပ်ပိုးပါ "
 
 #: ../app/actions/layers-actions.c:170
-#, fuzzy
 msgid "Layer B_oundary Size..."
-msgstr "အလွှာ နယ်သတ်မျဉ်းအရွယ်..."
+msgstr "အလွှာ နယ်သတ်မျဉ်းအရွယ်... "
 
 #: ../app/actions/layers-actions.c:171
-#, fuzzy
 msgid "Adjust the layer dimensions"
-msgstr "အလွှာ အတိုင်းအတာများကို ညှိပါ"
+msgstr "အလွှာ အတိုင်းအတာများကို ညှိပါ "
 
 #: ../app/actions/layers-actions.c:176
-#, fuzzy
 msgid "Layer to _Image Size"
-msgstr "ရုပ်ပုံအရွယ် အလွှာ"
+msgstr "ရုပ်ပုံအရွယ် အလွှာ "
 
 #: ../app/actions/layers-actions.c:177
-#, fuzzy
 msgid "Resize the layer to the size of the image"
-msgstr "အလွှာကို ရုပ်ပုံရဲ့ အလွှာအဖြစ် အရွယ်ညှိပါ"
+msgstr "အလွှာကို ရုပ်ပုံရဲ့ အလွှာအဖြစ် အရွယ်ညှိပါ "
 
 #: ../app/actions/layers-actions.c:182
-#, fuzzy
 msgid "_Scale Layer..."
-msgstr "အလွှာကို ​စကေးချပါ..."
+msgstr "အလွှာကို ​စကေးချပါ... "
 
 #: ../app/actions/layers-actions.c:183
-#, fuzzy
 msgid "Change the size of the layer content"
-msgstr "အလွှာရဲ့ အကြောင်းအရာ အရွယ်ကို ပြောင်းလဲပါ"
+msgstr "အလွှာရဲ့ အကြောင်းအရာ အရွယ်ကို ပြောင်းလဲပါ "
 
 #: ../app/actions/layers-actions.c:189
-#, fuzzy
 msgid "Crop the layer to the extents of the selection"
-msgstr "အလွှာကို ရွေးချယ်ချက်ရဲ့ အတိုင်းအတာများ အတိုင်း လှီးဖြတ်ပါ"
+msgstr "အလွှာကို ရွေးချယ်ချက်ရဲ့ အတိုင်းအတာများ အတိုင်း လှီးဖြတ်ပါ "
 
 #: ../app/actions/layers-actions.c:194
-#, fuzzy
 msgid "Add La_yer Mask..."
-msgstr "အလွှာ မျက်နှာဖုံးကို ပေါင်းထည့်ပါ..."
+msgstr "အလွှာ မျက်နှာဖုံးကို ပေါင်းထည့်ပါ... "
 
 #: ../app/actions/layers-actions.c:195
-#, fuzzy
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
 "ဖျက်စီးမှု မရှိတဲ့ ဖေါက်ထွင်းမြင်နိုင်မှု တည်းဖြတ်ခြင်းကို လက်ခံတဲ့ မျက်နှာဖုံးတခုကို "
-"ပေါင်းထည့်ပါ"
+"ပေါင်းထည့်ပါ "
 
 #: ../app/actions/layers-actions.c:200
-#, fuzzy
 msgid "Add Alpha C_hannel"
-msgstr "အာဖာ လှိုင်းကို ပေါင်းထည့်ပါ"
+msgstr "အာဖာ လှိုင်းကို ပေါင်းထည့်ပါ "
 
 #: ../app/actions/layers-actions.c:201
-#, fuzzy
 msgid "Add transparency information to the layer"
-msgstr "ဖေါက်ထွင်း မြင်နိုင်မှု အချက်အလက်ကို အလွှာထဲ ပေါင်းထည့်ပါ"
+msgstr "ဖေါက်ထွင်း မြင်နိုင်မှု အချက်အလက်ကို အလွှာထဲ ပေါင်းထည့်ပါ "
 
 #: ../app/actions/layers-actions.c:206
-#, fuzzy
 msgid "_Remove Alpha Channel"
-msgstr "အာဖာ ချာနယ်ကို ဖယ်ရှားပါ"
+msgstr "အာဖာ ချာနယ်ကို ဖယ်ရှားပါ "
 
 #: ../app/actions/layers-actions.c:207
-#, fuzzy
 msgid "Remove transparency information from the layer"
-msgstr "ဖေါက်ထွင်းမြင်နိုင်မှု အချက်အလက်ကို အလွှာမှ ဖယ်ရှားပါ"
+msgstr "ဖေါက်ထွင်းမြင်နိုင်မှု အချက်အလက်ကို အလွှာမှ ဖယ်ရှားပါ "
 
 #: ../app/actions/layers-actions.c:215
-#, fuzzy
 msgid "Lock Alph_a Channel"
-msgstr "အာဖာ ချာနယ်ကို သော့ခတ်ပါ"
+msgstr "အာဖာ ချာနယ်ကို သော့ခတ်ပါ "
 
 #: ../app/actions/layers-actions.c:216
-#, fuzzy
 msgid "Keep transparency information on this layer from being modified"
-msgstr "ဒီအ​လွှာပေါ်မှ ဖေါက်ထွင်းမြင်နိုင်မှု အချက်အလက်ကို ပြင်ဆင်ခြင်းမှာ ကာကွယ်ပါ"
+msgstr "ဒီအ​လွှာပေါ်မှ ဖေါက်ထွင်းမြင်နိုင်မှု အချက်အလက်ကို ပြင်ဆင်ခြင်းမှာ ကာကွယ်ပါ "
 
 #: ../app/actions/layers-actions.c:222
-#, fuzzy
 msgid "_Edit Layer Mask"
-msgstr "အလွှာ မျက်နှာဖုံးကို တည်း​ဖြတ်ပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို တည်း​ဖြတ်ပါ "
 
 #: ../app/actions/layers-actions.c:223
-#, fuzzy
 msgid "Work on the layer mask"
-msgstr "​အလွှာ မျက်နှာဖုံးပေါ် လုပ်ဆောင်ပါ"
+msgstr "​အလွှာ မျက်နှာဖုံးပေါ် လုပ်ဆောင်ပါ "
 
 #: ../app/actions/layers-actions.c:229
-#, fuzzy
 msgid "S_how Layer Mask"
-msgstr "အလွှာ မျက်နှာဖုံးကို ပြသပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို ပြသပါ "
 
 #: ../app/actions/layers-actions.c:235
-#, fuzzy
 msgid "_Disable Layer Mask"
-msgstr "အလွှာ မျက်နှာဖုံးကို ပိတ်ပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို ပိတ်ပါ "
 
 #: ../app/actions/layers-actions.c:236
-#, fuzzy
 msgid "Dismiss the effect of the layer mask"
-msgstr "အလွှာ မျက်နှာဖုံးရဲ့ သက်ရောက်မှုကို ဖယ်ထုတ်ပါ"
+msgstr "အလွှာ မျက်နှာဖုံးရဲ့ သက်ရောက်မှုကို ဖယ်ထုတ်ပါ "
 
 #: ../app/actions/layers-actions.c:245
-#, fuzzy
 msgid "Apply Layer _Mask"
-msgstr "အလွှာ မျက်နှာဖုံးကို အသုံးချပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို အသုံးချပါ "
 
 #: ../app/actions/layers-actions.c:246
-#, fuzzy
 msgid "Apply the effect of the layer mask and remove it"
-msgstr "အလွှာ မျက်နှာဖုံးရဲ့ သက်ရောက်မှုကို အသုံးချပြီး ၄င်းကို ဖယ်ရှားပါ"
+msgstr "အလွှာ မျက်နှာဖုံးရဲ့ သက်ရောက်မှုကို အသုံးချပြီး ၄င်းကို ဖယ်ရှားပါ "
 
 #: ../app/actions/layers-actions.c:251
-#, fuzzy
 msgid "Delete Layer Mas_k"
-msgstr "အလွှာ မျက်နာဖုံးကို ပယ်ဖျက်ပါ"
+msgstr "အလွှာ မျက်နာဖုံးကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/layers-actions.c:252
-#, fuzzy
 msgid "Remove the layer mask and its effect"
-msgstr "အလွှာ မျက်နှာဖုံးနဲ့ ၄င်းရဲ့ သက်ရောက်မှုကို ဖယ်ရှားပါ"
+msgstr "အလွှာ မျက်နှာဖုံးနဲ့ ၄င်းရဲ့ သက်ရောက်မှုကို ဖယ်ရှားပါ "
 
 #: ../app/actions/layers-actions.c:260
-#, fuzzy
 msgid "_Mask to Selection"
-msgstr "ရွေးချယ်ချက်ကို ဖုံးပါ"
+msgstr "ရွေးချယ်ချက်ကို ဖုံးပါ "
 
 #: ../app/actions/layers-actions.c:261
-#, fuzzy
 msgid "Replace the selection with the layer mask"
-msgstr "ရွေးချယ်ချက်ကို အလွှာ မျက်နှာဖုံးနဲ့ အစားထိုးပါ"
+msgstr "ရွေးချယ်ချက်ကို အလွှာ မျက်နှာဖုံးနဲ့ အစားထိုးပါ "
 
 #: ../app/actions/layers-actions.c:267
-#, fuzzy
 msgid "Add the layer mask to the current selection"
-msgstr "အလွှာ မျက်နှာဖုံးကို လက်ရှိ ရွေးချယ်ချက်ဆီ ပေါင်းထည့်ပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို လက်ရှိ ရွေးချယ်ချက်ဆီ ပေါင်းထည့်ပါ "
 
 #: ../app/actions/layers-actions.c:273
-#, fuzzy
 msgid "Subtract the layer mask from the current selection"
-msgstr "အလွှာ မျက်နှာဖုံးကို လက်ရှိ ရွေးချယ်ချက်မှ နှုတ်ယူပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို လက်ရှိ ရွေးချယ်ချက်မှ နှုတ်ယူပါ "
 
 #: ../app/actions/layers-actions.c:279
-#, fuzzy
 msgid "Intersect the layer mask with the current selection"
-msgstr "အလွှာ မျက်နှာဖုံးကို လက်ရှိ ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို လက်ရှိ ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ "
 
 #: ../app/actions/layers-actions.c:287
-#, fuzzy
 msgid "Al_pha to Selection"
-msgstr "ရွေးချယ်ချက် အာဖာ"
+msgstr "ရွေးချယ်ချက် အာဖာ "
 
 #: ../app/actions/layers-actions.c:288
-#, fuzzy
 msgid "Replace the selection with the layer's alpha channel"
-msgstr "ရွေးချယ်ချက်ကို အလွှာရဲ့ အာဖာ ချာနယ်နဲ့ အစားထိုးပါ"
+msgstr "ရွေးချယ်ချက်ကို အလွှာရဲ့ အာဖာ ချာနယ်နဲ့ အစားထိုးပါ "
 
 #: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
-#, fuzzy
 msgid "A_dd to Selection"
-msgstr "ရွေးချယ်ချက်ထဲ ထည့်သွင်းပါ"
+msgstr "ရွေးချယ်ချက်ထဲ ထည့်သွင်းပါ "
 
 #: ../app/actions/layers-actions.c:294
-#, fuzzy
 msgid "Add the layer's alpha channel to the current selection"
-msgstr "အလွှာရဲ့ အာ​ဖာ ချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်ထဲ ပေါင်းထည့်ပါ"
+msgstr "အလွှာရဲ့ အာ​ဖာ ချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်ထဲ ပေါင်းထည့်ပါ "
 
 #: ../app/actions/layers-actions.c:300
-#, fuzzy
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr "အလွှာရဲ့ အာ​ဖာ ချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်မှ နှုတ်ယူပါ"
+msgstr "အလွှာရဲ့ အာ​ဖာ ချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်မှ နှုတ်ယူပါ "
 
 #: ../app/actions/layers-actions.c:306
-#, fuzzy
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr "အလွှာရဲ့ အာ​ဖာ ချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ"
+msgstr "အလွှာရဲ့ အာ​ဖာ ချာနယ်ကို လက်ရှိ ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ "
 
 #: ../app/actions/layers-actions.c:314
-#, fuzzy
 msgid "_Text to Selection"
-msgstr "ရွေးချယ်ချက်အတွက် စာသား"
+msgstr "ရွေးချယ်ချက်အတွက် စာသား "
 
 #: ../app/actions/layers-actions.c:315
-#, fuzzy
 msgid "Replace the selection with the text layer's outline"
-msgstr "ရွေးချယ်ချက်ကို စာသား အလွှာရဲ့ အနှစ်ချုပ်နဲ့ ​အ​စားထိုးပါ"
+msgstr "ရွေးချယ်ချက်ကို စာသား အလွှာရဲ့ အနှစ်ချုပ်နဲ့ ​အ​စားထိုးပါ "
 
 #: ../app/actions/layers-actions.c:321
-#, fuzzy
 msgid "Add the text layer's outline to the current selection"
-msgstr "စာသား အလွှာရဲ့ အနှစ်ချုပ်ကို လက်ရှိ ရွေးချယ်ချက်ဆီ ပေါင်းထည့်ပါ"
+msgstr "စာသား အလွှာရဲ့ အနှစ်ချုပ်ကို လက်ရှိ ရွေးချယ်ချက်ဆီ ပေါင်းထည့်ပါ "
 
 #: ../app/actions/layers-actions.c:327
-#, fuzzy
 msgid "Subtract the text layer's outline from the current selection"
-msgstr "စာသား အလွှာရဲ့ အနှစ်ချုပ်ကို လက်ရှိ ရွေးချယ်ချက်မှ နှုတ်ယူပါ"
+msgstr "စာသား အလွှာရဲ့ အနှစ်ချုပ်ကို လက်ရှိ ရွေးချယ်ချက်မှ နှုတ်ယူပါ "
 
 #: ../app/actions/layers-actions.c:333
-#, fuzzy
 msgid "Intersect the text layer's outline with the current selection"
-msgstr "စာသား အလွှာရဲ့ အနှစ်ချုပ်ကို လက်ရှိ ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ"
+msgstr "စာသား အလွှာရဲ့ အနှစ်ချုပ်ကို လက်ရှိ ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ "
 
 #: ../app/actions/layers-actions.c:341
-#, fuzzy
 msgid "Select _Top Layer"
-msgstr "ထိပ် အလွှာကို ရွေးပါ"
+msgstr "ထိပ် အလွှာကို ရွေးပါ "
 
 #: ../app/actions/layers-actions.c:342
-#, fuzzy
 msgid "Select the topmost layer"
-msgstr "ထိပ်ဆုံး အလွှာကို ရွေးပါ"
+msgstr "ထိပ်ဆုံး အလွှာကို ရွေးပါ "
 
 #: ../app/actions/layers-actions.c:347
-#, fuzzy
 msgid "Select _Bottom Layer"
-msgstr "အောက်ခြေ အလွှာကို ရွေးပါ"
+msgstr "အောက်ခြေ အလွှာကို ရွေးပါ "
 
 #: ../app/actions/layers-actions.c:348
-#, fuzzy
 msgid "Select the bottommost layer"
-msgstr "အောက်ဆုံး အလွှာကကို ရွေးပါ"
+msgstr "အောက်ဆုံး အလွှာကို ရွေးပါ"
 
 #: ../app/actions/layers-actions.c:353
-#, fuzzy
 msgid "Select _Previous Layer"
-msgstr "အရင် အလွှာကို ရွေးပါ"
+msgstr "အရင် အလွှာကို ရွေးပါ "
 
 #: ../app/actions/layers-actions.c:354
-#, fuzzy
 msgid "Select the layer above the current layer"
-msgstr "လက်ရှိ အလွှာ အထက်က အလွှာကို ရွေးပါ"
+msgstr "လက်ရှိ အလွှာ အထက်က အလွှာကို ရွေးပါ "
 
 #: ../app/actions/layers-actions.c:359
-#, fuzzy
 msgid "Select _Next Layer"
-msgstr "နောက် အလွှာကို ရွေးပါ"
+msgstr "နောက် အလွှာကို ရွေးပါ "
 
 #: ../app/actions/layers-actions.c:360
-#, fuzzy
 msgid "Select the layer below the current layer"
-msgstr "လက်ရှိ အလွှာအောက်က အလွှာကို ရွေးပါ"
+msgstr "လက်ရှိ အလွှာအောက်က အလွှာကို ရွေးပါ "
 
 #: ../app/actions/layers-actions.c:368
-#, fuzzy
 msgid "Set Opacity"
-msgstr "အလင်းပိတ်မှု"
+msgstr "အလင်းပိတ်မှုကို ချမှတ်ပါ"
 
 #: ../app/actions/layers-commands.c:204
 msgid "Layer Attributes"
@@ -3492,44 +3019,36 @@ msgid "Add Layer Mask"
 msgstr "အလွှာ မျက်နှာဖုံးကို ပေါင်းထည့်ပါ"
 
 #: ../app/actions/palette-editor-actions.c:44
-#, fuzzy
 msgid "Palette Editor Menu"
-msgstr "အရောင်စပ်ဆေးခွက် တည်းဖြတ်ကိရိယာ စာရင်းမှတ်"
+msgstr "အရောင်စပ်ဆေးခွက် တည်းဖြတ်ကိရိယာ စာရင်းမှတ် "
 
 #: ../app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgid "_Delete Color"
-msgstr "အရောင်ကို ပယ်ဖျက်ပါ"
+msgstr "အရောင် ပယ်ဖျက်ပါ"
 
 #: ../app/actions/palette-editor-actions.c:55
-#, fuzzy
 msgid "Delete color"
-msgstr "အရောင်ကို ပယ်ဖျက်ပါ"
+msgstr "အရောင် ပယ်ဖျက်ပါ"
 
 #: ../app/actions/palette-editor-actions.c:63
-#, fuzzy
 msgid "Edit Active Palette"
-msgstr "သက်ကြွတဲ့ အရောင်စပ်ဆေးခွက်ကို တည်းဖြတ်ပါ"
+msgstr "သက်ကြွတဲ့ အရောင်စပ်ဆေးခွက်ကို တည်းဖြတ်ပါ "
 
 #: ../app/actions/palette-editor-actions.c:72
-#, fuzzy
 msgid "New Color from _FG"
-msgstr "FG မှ အရောင်အသစ်"
+msgstr "FG မှ အရောင်အသစ် "
 
 #: ../app/actions/palette-editor-actions.c:73
-#, fuzzy
 msgid "New color from foreground color"
-msgstr "လက်ရှိ အနီးမြင်ကွင်း အရောင်ကို ပေါင်းထည့်ပါ"
+msgstr "အနီးမြင်ကွင်း အရောင်မှ အရောင်သစ်"
 
 #: ../app/actions/palette-editor-actions.c:78
-#, fuzzy
 msgid "New Color from _BG"
-msgstr "BG မှ အရောင်အသစ်"
+msgstr "BG မှ အရောင်အသစ် "
 
 #: ../app/actions/palette-editor-actions.c:79
-#, fuzzy
 msgid "New color from background color"
-msgstr "လက်ရှိ နောက်ခံ အရောင်ကို ပေါင်းထည့်ပါ"
+msgstr "နောက်ခံ အရောင်မှ အရောင်သစ်"
 
 #: ../app/actions/palette-editor-actions.c:87
 #: ../app/actions/view-actions.c:261
@@ -3554,89 +3073,72 @@ msgid "Edit Color Palette Entry"
 msgstr "အရောင်စပ်ဆေးခွက် ရေးသွင်းချက်ကို တည်းဖြတ်ပါ"
 
 #: ../app/actions/palettes-actions.c:44
-#, fuzzy
 msgid "Palettes Menu"
-msgstr "အရောင်စပ်ဆေးခွက်များ စာရင်းမှတ်"
+msgstr "အရောင်စပ်ဆေးခွက်များ စာရင်းမှတ် "
 
 #: ../app/actions/palettes-actions.c:48
-#, fuzzy
 msgid "_New Palette"
-msgstr "အရောင်စပ် ဆေးခွက်အသစ်"
+msgstr "အရောင်စပ် ဆေးခွက်အသစ် "
 
 #: ../app/actions/palettes-actions.c:49
-#, fuzzy
 msgid "New palette"
-msgstr "အရောင်စပ် ဆေးခွက်အသစ်"
+msgstr "အရောင်စပ် ဆေးခွက်အသစ် "
 
 #: ../app/actions/palettes-actions.c:54
-#, fuzzy
 msgid "_Import Palette..."
-msgstr "အရောင်စပ်ဆေးခွက်ကို တင်သွင်းပါ..."
+msgstr "အရောင်စပ်ဆေးခွက်ကို တင်သွင်းပါ... "
 
 #: ../app/actions/palettes-actions.c:55
-#, fuzzy
 msgid "Import palette"
-msgstr "အရောင်စပ်ဆေးခွက်ကို တင်သွင်းပါ"
+msgstr "အရောင်စပ်ဆေးခွက်ကို တင်သွင်းပါ "
 
 #: ../app/actions/palettes-actions.c:60
-#, fuzzy
 msgid "D_uplicate Palette"
-msgstr "အရောင်စပ်ဆေးခွက်ကို ပုံတူပွားပါ"
+msgstr "အရောင်စပ်ဆေးခွက်ကို ပုံတူပွားပါ "
 
 #: ../app/actions/palettes-actions.c:61
-#, fuzzy
 msgid "Duplicate palette"
-msgstr "အရောင်စပ်ဆေးခွက်ကို ပုံတူပွားပါ"
+msgstr "အရောင်စပ်ဆေးခွက်ကို ပုံတူပွားပါ "
 
 #: ../app/actions/palettes-actions.c:66
-#, fuzzy
 msgid "_Merge Palettes..."
-msgstr "အရောင်စပ်ဆေးခွက်များကို ပေါင်းစပ်ပါ..."
+msgstr "အရောင်စပ်ဆေးခွက်များကို ပေါင်းစပ်ပါ... "
 
 #: ../app/actions/palettes-actions.c:67
-#, fuzzy
 msgid "Merge palettes"
-msgstr "အရောင်စပ်ဆေးခွက်များကို ပေါင်းစပ်ပါ"
+msgstr "အရောင်စပ်ဆေးခွက်များကို ပေါင်းစပ်ပါ "
 
 #: ../app/actions/palettes-actions.c:72
-#, fuzzy
 msgid "Copy Palette _Location"
-msgstr "အရောင်စပ်ဆေးခွက် တည်နေရာကို မိတ္တူကူးပါ"
+msgstr "အရောင်စပ်ဆေးခွက် တည်နေရာကို မိတ္တူကူးပါ "
 
 #: ../app/actions/palettes-actions.c:73
-#, fuzzy
 msgid "Copy palette file location to clipboard"
-msgstr "အရောင်စပ်ဆေးခွက် ဖိုင် တည်နေရာကို Clipboard ဆီ မိတ္တူကူးပါ"
+msgstr "အရောင်စပ်ဆေးခွက် ဖိုင် တည်နေရာကို Clipboard ဆီ မိတ္တူကူးပါ "
 
 #: ../app/actions/palettes-actions.c:78
-#, fuzzy
 msgid "_Delete Palette"
-msgstr "အရောင်စပ်ဆေးခွက်ကို ပယ်ဖျက်ပါ"
+msgstr "အရောင်စပ်ဆေးခွက် ပယ်ဖျက်ပါ"
 
 #: ../app/actions/palettes-actions.c:79
-#, fuzzy
 msgid "Delete palette"
-msgstr "အရောင်စပ်ဆေးခွက်ကို ပယ်ဖျက်ပါ"
+msgstr "အရောင်စပ်ဆေးခွက် ပယ်ဖျက်ပါ"
 
 #: ../app/actions/palettes-actions.c:84
-#, fuzzy
 msgid "_Refresh Palettes"
-msgstr "အရောင်စပ်ဆေးခွက်များကို ပြန်နှိုးပါ"
+msgstr "အရောင်စပ်ဆေးခွက်များ ပြန်နှိုးပါ"
 
 #: ../app/actions/palettes-actions.c:85
-#, fuzzy
 msgid "Refresh palettes"
-msgstr "အရောင်စပ်ဆေးခွက်များကို ပြန်နှိုးပါ"
+msgstr "အရောင်စပ်ဆေးခွက်များ ပြန်နှိုးပါ"
 
 #: ../app/actions/palettes-actions.c:93
-#, fuzzy
 msgid "_Edit Palette..."
-msgstr "အရောင်စပ်ဆေးခွက်ကို တည်းဖြတ်ပါ..."
+msgstr "အရောင်စပ်ဆေးခွက် တည်းဖြတ်ပါ..."
 
 #: ../app/actions/palettes-actions.c:94
-#, fuzzy
 msgid "Edit palette"
-msgstr "အရောင်စပ်ဆေးခွက်ကို တည်းဖြတ်ပါ"
+msgstr "အရောင်စပ်ဆေးခွက် တည်းဖြတ်ပါ..."
 
 #: ../app/actions/palettes-commands.c:74
 msgid "Merge Palette"
@@ -3647,194 +3149,156 @@ msgid "Enter a name for the merged palette"
 msgstr "ပေါင်းစပ်ထားတဲ့ အရောင်စပ်ဆေးခွက်များအတွက် အမည်တခု ရေးထည့်ပါ"
 
 #: ../app/actions/patterns-actions.c:43
-#, fuzzy
 msgid "Patterns Menu"
-msgstr "နမူနာပုံစံများ စာရင်းမှတ်"
+msgstr "နမူနာပုံစံများ စာရင်းမှတ် "
 
 #: ../app/actions/patterns-actions.c:47
-#, fuzzy
 msgid "_Open Pattern as Image"
-msgstr "နမူနာပုံစံကို ရုပ်ပုံလို ဖွင့်ပါ"
+msgstr "နမူနာပုံစံကို ရုပ်ပုံကဲ့သို့ ဖွင့်ပါ"
 
 #: ../app/actions/patterns-actions.c:48
-#, fuzzy
 msgid "Open pattern as image"
-msgstr "နမူနာပုံစံကို ရုပ်ပုံလို ဖွင့်ပါ"
+msgstr "နမူနာပုံစံကို ရုပ်ပုံကဲ့သို့ ဖွင့်ပါ"
 
 #: ../app/actions/patterns-actions.c:53
-#, fuzzy
 msgid "_New Pattern"
-msgstr "နမူနာပုံစံ အသစ်"
+msgstr "နမူနာပုံစံ အသစ် "
 
 #: ../app/actions/patterns-actions.c:54
-#, fuzzy
 msgid "New pattern"
-msgstr "နမူနာပုံစံ အသစ်"
+msgstr "နမူနာပုံစံ အသစ် "
 
 #: ../app/actions/patterns-actions.c:59
-#, fuzzy
 msgid "D_uplicate Pattern"
-msgstr "နမူနာပုံစံကို ပုံတူပွားပါ"
+msgstr "နမူနာပုံစံ ပုံတူပွားပါ"
 
 #: ../app/actions/patterns-actions.c:60
-#, fuzzy
 msgid "Duplicate pattern"
-msgstr "နမူနာပုံစံကို ပုံတူပွားပါ"
+msgstr "နမူနာပုံစံ ပုံတူပွားပါ"
 
 #: ../app/actions/patterns-actions.c:65
-#, fuzzy
 msgid "Copy Pattern _Location"
-msgstr "နမူနာပုံစံ တည်နေရာကို မိတ္တူကူးပါ"
+msgstr "နမူနာပုံစံ တည်နေရာကို မိတ္တူကူးပါ "
 
 #: ../app/actions/patterns-actions.c:66
-#, fuzzy
 msgid "Copy pattern file location to clipboard"
-msgstr "နမူနာပုံစံ ဖိုင်တည်နေရာကို Clipboard ဆီ မိတ္တူကူးပါ"
+msgstr "နမူနာပုံစံ ဖိုင်တည်နေရာကို Clipboard ဆီ မိတ္တူကူးပါ "
 
 #: ../app/actions/patterns-actions.c:71
-#, fuzzy
 msgid "_Delete Pattern"
-msgstr "နမူနာပုံစံကို ပယ်ဖျက်ပါ"
+msgstr "နမူနာပုံစံ ပယ်ဖျက်ပါ"
 
 #: ../app/actions/patterns-actions.c:72
-#, fuzzy
 msgid "Delete pattern"
-msgstr "နမူနာပုံစံကို ပယ်ဖျက်ပါ"
+msgstr "နမူနာပုံစံ ပယ်ဖျက်ပါ"
 
 #: ../app/actions/patterns-actions.c:77
-#, fuzzy
 msgid "_Refresh Patterns"
-msgstr "နမူနာပုံစံများကို ပြန်နှိုးပါ"
+msgstr "နမူနာပုံစံများကို ပြန်နှိုးပါ "
 
 #: ../app/actions/patterns-actions.c:78
-#, fuzzy
 msgid "Refresh patterns"
-msgstr "နမူနာပုံစံများကို ပြန်နှိုးပါ"
+msgstr "နမူနာပုံစံများကို ပြန်နှိုးပါ "
 
 #: ../app/actions/patterns-actions.c:86
-#, fuzzy
 msgid "_Edit Pattern..."
-msgstr "နမူနာပုံစံကို တည်းဖြတ်ပါ..."
+msgstr "နမူနာပုံစံ တည်းဖြတ်ပါ... "
 
 #: ../app/actions/patterns-actions.c:87
-#, fuzzy
 msgid "Edit pattern"
-msgstr "နမူနာပုံစံကို တည်းဖြတ်ပါ"
+msgstr "နမူနာပုံစံ တည်းဖြတ်ပါ... "
 
 #: ../app/actions/plug-in-actions.c:83
-#, fuzzy
 msgid "Filte_rs"
-msgstr "စစ်ထုတ်ကိရိယာများ"
+msgstr "စစ်ထုတ်ကိရိယာများ "
 
 #: ../app/actions/plug-in-actions.c:84
-#, fuzzy
 msgid "Recently Used"
-msgstr "လတ်တလော သုံးစွဲမှု"
+msgstr "လတ်တလော သုံးစွဲမှု "
 
 #: ../app/actions/plug-in-actions.c:85
-#, fuzzy
 msgid "_Blur"
-msgstr "မှုန်ဝါးစေပါ"
+msgstr "မှုန်ဝါးစေပါ "
 
 #: ../app/actions/plug-in-actions.c:86
-#, fuzzy
 msgid "_Noise"
-msgstr "_Noise"
+msgstr "လျှပ်လှိုင်း"
 
 #: ../app/actions/plug-in-actions.c:87
-#, fuzzy
 msgid "Edge-De_tect"
-msgstr "အစွန် ဖေါ်ထုတ်မှု"
+msgstr "အစွန် ဖေါ်ထုတ်မှု "
 
 #: ../app/actions/plug-in-actions.c:88
-#, fuzzy
 msgid "En_hance"
-msgstr "ပိုကောင်းစေပါ"
+msgstr "ပိုကောင်းစေပါ "
 
 #: ../app/actions/plug-in-actions.c:89
-#, fuzzy
 msgid "C_ombine"
-msgstr "ပေါင်းစပ်ပါ"
+msgstr "ပေါင်းစပ်ပါ "
 
 #: ../app/actions/plug-in-actions.c:90
-#, fuzzy
 msgid "_Generic"
-msgstr "ယေဘုယျ"
+msgstr "ယေဘုယျ "
 
 #: ../app/actions/plug-in-actions.c:91
-#, fuzzy
 msgid "_Light and Shadow"
-msgstr "အလင်းနဲ့ အရိပ်"
+msgstr "အလင်းနဲ့ အရိပ် "
 
 #: ../app/actions/plug-in-actions.c:92
-#, fuzzy
 msgid "_Distorts"
-msgstr "တွန့်လိမ်ချက်များ"
+msgstr "တွန့်လိမ်ချက်များ "
 
 #: ../app/actions/plug-in-actions.c:93
-#, fuzzy
 msgid "_Artistic"
-msgstr "အနုပညာဆန်တယ်"
+msgstr "အနုပညာဆန်တယ် "
 
 #: ../app/actions/plug-in-actions.c:94
-#, fuzzy
 msgid "_Decor"
-msgstr "အပြင်အဆင်"
+msgstr "အပြင်အဆင် "
 
 #: ../app/actions/plug-in-actions.c:96
-#, fuzzy
 msgid "_Render"
-msgstr "တင်ဆက်ပါ"
+msgstr "တင်ဆက်ပါ "
 
 #: ../app/actions/plug-in-actions.c:97
-#, fuzzy
 msgid "_Clouds"
-msgstr "မြူတိမ်များ"
+msgstr "မြူတိမ်များ "
 
 #: ../app/actions/plug-in-actions.c:98
-#, fuzzy
 msgid "_Nature"
-msgstr "ဖြစ်ရိုးဖြစ်စဉ်"
+msgstr "ဖြစ်ရိုးဖြစ်စဉ် "
 
 #: ../app/actions/plug-in-actions.c:100
-#, fuzzy
 msgid "_Web"
-msgstr "ကွန်ရက်"
+msgstr "ကွန်ရက် "
 
 #: ../app/actions/plug-in-actions.c:101
-#, fuzzy
 msgid "An_imation"
-msgstr "သက်၀င်လှုပ်ရှားမှု"
+msgstr "သက်၀င်လှုပ်ရှားမှု "
 
 #: ../app/actions/plug-in-actions.c:104
-#, fuzzy
 msgid "Reset all _Filters"
-msgstr "စစ်ထုတ်ကိရိယာများ အားလုံးကို ပြန်ချိန်ပါ"
+msgstr "စစ်ထုတ်ကိရိယာများ အားလုံးကို ပြန်ချိန်ပါ "
 
 #: ../app/actions/plug-in-actions.c:105
-#, fuzzy
 msgid "Reset all plug-ins to their default settings"
-msgstr "ယန္တရားငယ်များ အားလုံးကို ၄င်းတို့ စံထားချက် ခင်းကျင်းမှုများအတိုင်း ပြန်ချိန်ပါ"
+msgstr "ယန္တရားငယ်များ အားလုံးကို ၄င်းတို့ စံထားချက် ခင်းကျင်းမှုများအတိုင်း ပြန်ချိန်ပါ "
 
 #: ../app/actions/plug-in-actions.c:113
-#, fuzzy
 msgid "Re_peat Last"
-msgstr "နောက်ဆုံးကို ထပ်လုပ်ပါ"
+msgstr "နောက်ဆုံးကို ထပ်လုပ်ပါ "
 
 #: ../app/actions/plug-in-actions.c:114
-#, fuzzy
 msgid "Rerun the last used plug-in using the same settings"
-msgstr "တူညီတဲ့ ခင်းကျင်းမှုများကို သုံးပြီး နောက်ဆုံး သုံးစွဲတဲ့ ယန္တရားငယ်ကို ပြန် လည်ပတ်ပါ"
+msgstr "တူညီတဲ့ ခင်းကျင်းမှုများကို သုံးပြီး နောက်ဆုံး သုံးစွဲတဲ့ ယန္တရားငယ်ကို ပြန် လည်ပတ်ပါ "
 
 #: ../app/actions/plug-in-actions.c:119
-#, fuzzy
 msgid "R_e-Show Last"
-msgstr "နောက်ဆုံးကို ပြန်ပြပါ"
+msgstr "နောက်ဆုံးကို ပြန်ပြပါ "
 
 #: ../app/actions/plug-in-actions.c:120
-#, fuzzy
 msgid "Show the last used plug-in dialog again"
-msgstr "နောက်ဆုံး သုံးစွဲတဲ့ ယန္တရားငယ် အညွှန်းစာမျက်နှာကို နောက်တခါ ပြပါ"
+msgstr "နောက်ဆုံး သုံးစွဲတဲ့ ယန္တရားငယ် အညွှန်းစာမျက်နှာကို နောက်တခါ ပြပါ "
 
 #: ../app/actions/plug-in-actions.c:503
 #, c-format
@@ -3863,19 +3327,16 @@ msgid "Do you really want to reset all filters to default values?"
 msgstr "စစ်ထုတ်ကိရယာများ အားလုံးကို စံထားချက် တန်ဖိုးများ အတိုင်း သင်တကယ် ပြန်ချိန်လိုသလား။"
 
 #: ../app/actions/quick-mask-actions.c:42
-#, fuzzy
 msgid "Quick Mask Menu"
-msgstr "အမြန် မျက်နှာဖုံး စာရင်းမှတ်"
+msgstr "အမြန် မျက်နှာဖုံး စာရင်းမှတ် "
 
 #: ../app/actions/quick-mask-actions.c:46
-#, fuzzy
 msgid "_Configure Color and Opacity..."
-msgstr "အရောင်နဲ့ အလင်း​ပိတ်မှုကို စီစဉ်ဖန်တီးပါ..."
+msgstr "အရောင်နဲ့ အလင်း​ပိတ်မှုကို စီစဉ်ဖန်တီးပါ... "
 
 #: ../app/actions/quick-mask-actions.c:54
-#, fuzzy
 msgid "Toggle _Quick Mask"
-msgstr "အမြန် မျက်နှာဖုံးကို ထိန်းပါ"
+msgstr "အမြန် မျက်နှာဖုံးကို ထိန်းပါ "
 
 #: ../app/actions/quick-mask-actions.c:54
 #: ../app/display/gimpdisplayshell.c:1169
@@ -3883,14 +3344,12 @@ msgid "Toggle Quick Mask"
 msgstr "အမြန် မျက်နှာဖုံးကို ထိန်းပါ"
 
 #: ../app/actions/quick-mask-actions.c:63
-#, fuzzy
 msgid "Mask _Selected Areas"
-msgstr "ရွေးထားတဲ့ နယ်ပယ်များကို ဖုံးပါ"
+msgstr "ရွေးထားတဲ့ နယ်ပယ်များကို ဖုံးပါ "
 
 #: ../app/actions/quick-mask-actions.c:68
-#, fuzzy
 msgid "Mask _Unselected Areas"
-msgstr "ရွေးမထားတဲ့ နယ်ပယ်များကို ဖုံးပါ"
+msgstr " ရွေးမထားတဲ့ နယ်ပယ်များကို ဖုံးပါ"
 
 #: ../app/actions/quick-mask-commands.c:105
 msgid "Quick Mask Attributes"
@@ -3909,139 +3368,112 @@ msgid "_Mask opacity:"
 msgstr "မျက်နှာဖုံး အလင်းပိန်မှု -"
 
 #: ../app/actions/sample-points-actions.c:40
-#, fuzzy
 msgid "Sample Point Menu"
-msgstr "နမူနာ အမှတ် စာရင်းမှတ်"
+msgstr "နမူနာ အမှတ် စာရင်းမှတ် "
 
 #: ../app/actions/select-actions.c:44
-#, fuzzy
 msgid "Selection Editor Menu"
-msgstr "ရွေးချယ်ချက် တည်းဖြတ်ကိရိယာ စာရင်းမှတ်"
+msgstr "ရွေးချယ်ချက် တည်းဖြတ်ကိရိယာ စာရင်းမှတ် "
 
 #: ../app/actions/select-actions.c:47
-#, fuzzy
 msgid "_Select"
-msgstr "ရွေးချယ်ပါ"
+msgstr "ရွေးချယ်ပါ "
 
 #: ../app/actions/select-actions.c:50
-#, fuzzy
 msgid "select|_All"
-msgstr "အားလုံးကို ရှင်းလင်းပါ"
+msgstr "အားလုံးကို ရှင်းလင်းပါ "
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
 msgid "Select everything"
-msgstr "အားလုံးကို ရွေးချယ်ပါ"
+msgstr "အားလုံးကို ရွေးချယ်ပါ "
 
 #: ../app/actions/select-actions.c:56
-#, fuzzy
 msgid "select|_None"
-msgstr "ဘာမျှ မရွေးထားနဲ့"
+msgstr "ဘာမျှ မရွေးထားနဲ့ "
 
 #: ../app/actions/select-actions.c:57
-#, fuzzy
 msgid "Dismiss the selection"
-msgstr "ရွေးချယ်ချက်ကို ဖယ်ထုတ်ပါ"
+msgstr "ရွေးချယ်ချက်ကို ဖယ်ထုတ်ပါ "
 
 #: ../app/actions/select-actions.c:62
-#, fuzzy
 msgid "_Invert"
-msgstr "ပြောင်းပြန်လုပ်ပါ"
+msgstr "ပြောင်းပြန်လုပ်ပါ "
 
 #: ../app/actions/select-actions.c:63
-#, fuzzy
 msgid "Invert the selection"
-msgstr "ရွေးချယ်ချက်ကို ပြောင်းပြန်လုပ်ပါ"
+msgstr "ရွေးချယ်ချက်ကို ပြောင်းပြန်လုပ်ပါ "
 
 #: ../app/actions/select-actions.c:68
-#, fuzzy
 msgid "_Float"
-msgstr "မျောစေပါ"
+msgstr "မျောစေပါ "
 
 #: ../app/actions/select-actions.c:69
-#, fuzzy
 msgid "Create a floating selection"
-msgstr "မျောနေတဲ့ ရွေးချယ်ချက် တခုကို ဖန်တီးပါ"
+msgstr "မျောနေတဲ့ ရွေးချယ်ချက် တခုကို ဖန်တီးပါ "
 
 #: ../app/actions/select-actions.c:74
-#, fuzzy
 msgid "Fea_ther..."
-msgstr "ချောမွေ့စေပါ..."
+msgstr "ချောမွေ့စေပါ... "
 
 #: ../app/actions/select-actions.c:75
-#, fuzzy
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr "ရွေးချယ်ချက် အနားသတ်ကို ချောချော မွေ့မွေ့ မှိန်သွားဖို့ မှိုန်ဝါးစေပါ"
+msgstr "ရွေးချယ်ချက် အနားသတ်ကို ချောချော မွေ့မွေ့ မှိန်သွားဖို့ မှိုန်ဝါးစေပါ "
 
 #: ../app/actions/select-actions.c:80
-#, fuzzy
 msgid "_Sharpen"
-msgstr "စူးရှထင်ရှားစေပါ"
+msgstr "စူးရှထင်ရှားစေပါ "
 
 #: ../app/actions/select-actions.c:81
-#, fuzzy
 msgid "Remove fuzzyness from the selection"
-msgstr "ရွေးချယ်ချက်ထဲမှ မှုန်ဝါးမှုကို ဖယ်ရှားပါ"
+msgstr "ရွေးချယ်ချက်ထဲမှ မှုန်ဝါးမှုကို ဖယ်ရှားပါ "
 
 #: ../app/actions/select-actions.c:86
-#, fuzzy
 msgid "S_hrink..."
-msgstr "ကျုံ့စေပါ..."
+msgstr "ကျုံ့စေပါ... "
 
 #: ../app/actions/select-actions.c:87
-#, fuzzy
 msgid "Contract the selection"
-msgstr "ရွေးချယ်ချက်ကို ခြားနားစေပါ"
+msgstr "ရွေးချယ်ချက်ကို ခြားနားစေပါ "
 
 #: ../app/actions/select-actions.c:92
-#, fuzzy
 msgid "_Grow..."
-msgstr "ကြီးထွားစေပါ..."
+msgstr "ကြီးထွားစေပါ... "
 
 #: ../app/actions/select-actions.c:93
-#, fuzzy
 msgid "Enlarge the selection"
-msgstr "ရွေးချယ်ချက်ကို ကြီးမားစေပါ"
+msgstr "ရွေးချယ်ချက်ကို ကြီးမားစေပါ "
 
 #: ../app/actions/select-actions.c:98
-#, fuzzy
 msgid "Bo_rder..."
-msgstr "အနားသတ်..."
+msgstr "အနားသတ်... "
 
 #: ../app/actions/select-actions.c:99
-#, fuzzy
 msgid "Replace the selection by its border"
-msgstr "ရွေးချယ်ချက်ကို ၄င်းရဲ့ အနားသတ်နဲ့ အစားထိုးပါ"
+msgstr "ရွေးချယ်ချက်ကို ၄င်းရဲ့ အနားသတ်နဲ့ အစားထိုးပါ "
 
 #: ../app/actions/select-actions.c:104
-#, fuzzy
 msgid "Save to _Channel"
-msgstr "ချာနယ်ဆီမှာ သိမ်းဆည်းပါ"
+msgstr "ချာနယ်ဆီမှာ သိမ်းဆည်းပါ "
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
 msgid "Save the selection to a channel"
-msgstr "ရွေးချယ်ချက်ကို ချာနယ်တခုဆီ သိမ်းဆည်း​ထားပါ"
+msgstr "ရွေးချယ်ချက်ကို ချာနယ်တခုဆီ သိမ်းဆည်း​ထားပါ "
 
 #: ../app/actions/select-actions.c:110
-#, fuzzy
 msgid "_Stroke Selection..."
-msgstr "စုတ်ချက် ရွေးချယ်ချက်..."
+msgstr "စုတ်ချက် ရွေးချယ်ချက်... "
 
 #: ../app/actions/select-actions.c:111
-#, fuzzy
 msgid "Paint along the selection outline"
-msgstr "ရွေးချယ်ချက် အကြမ်းဆွဲချက်အတိုင်း ရေးဆွဲပါ"
+msgstr "ရွေးချယ်ချက် အကြမ်းဆွဲချက်အတိုင်း ရေးဆွဲပါ "
 
 #: ../app/actions/select-actions.c:116
-#, fuzzy
 msgid "_Stroke Selection"
-msgstr "စုတ်ချက် ရွေးချယ်ချက်"
+msgstr "စုတ်ချက် ရွေးချယ်ချက် "
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
 msgid "Stroke the selection with last used values"
-msgstr "ရွေးချယ်ချက်ကို နောက်ဆုံး သုံးစွဲတဲ့ တန်ဖိုးများနဲ့ မှတ်သားပါ"
+msgstr "ရွေးချယ်ချက်ကို နောက်ဆုံး သုံးစွဲတဲ့ တန်ဖိုးများနဲ့ မှတ်သားပါ "
 
 #: ../app/actions/select-commands.c:153 ../app/core/gimpselection.c:167
 msgid "Feather Selection"
@@ -4100,59 +3532,48 @@ msgid "Stroke Selection"
 msgstr "စုတ်ချက် ရွေးချယ်ချက်"
 
 #: ../app/actions/templates-actions.c:42
-#, fuzzy
 msgid "Templates Menu"
-msgstr "ပုံစံခွက်များ စာရင်းမှတ်"
+msgstr "ပုံစံခွက်များ စာရင်းမှတ် "
 
 #: ../app/actions/templates-actions.c:46
-#, fuzzy
 msgid "_Create Image from Template"
-msgstr "ပုံစီခွက်မှ ရုပ်ပုံကို ဖန်တီးပါ"
+msgstr "ပုံစီခွက်မှ ရုပ်ပုံကို ဖန်တီးပါ "
 
 #: ../app/actions/templates-actions.c:47
-#, fuzzy
 msgid "Create a new image from the selected template"
-msgstr "ရွေးထားတဲ့ ပုံစံခွက်မှ ရုပ်ပုံအသစ် တခုကို ဖန်တီးပါ"
+msgstr "ရွေးထားတဲ့ ပုံစံခွက်မှ ရုပ်ပုံအသစ် တခုကို ဖန်တီးပါ "
 
 #: ../app/actions/templates-actions.c:52
-#, fuzzy
 msgid "_New Template..."
-msgstr "ပုံစံခွက် အသစ်..."
+msgstr "ပုံစံခွက် အသစ်... "
 
 #: ../app/actions/templates-actions.c:53
-#, fuzzy
 msgid "Create a new template"
-msgstr "ပုံစံ အသစ်တခုကို ဖန်တီးပါ"
+msgstr "ပုံစံ အသစ်တခုကို ဖန်တီးပါ "
 
 #: ../app/actions/templates-actions.c:58
-#, fuzzy
 msgid "D_uplicate Template..."
-msgstr "ပုံစံခွက်ကို ပုံတူပွားပါ..."
+msgstr "ပုံစံခွက်ကို ပုံတူပွားပါ... "
 
 #: ../app/actions/templates-actions.c:59
-#, fuzzy
 msgid "Duplicate the selected template"
-msgstr "ဒီပုံစံခွက်ကို ပုံတူပွားပါ"
+msgstr "ဒီပုံစံခွက်ကို ပုံတူပွားပါ "
 
 #: ../app/actions/templates-actions.c:64
-#, fuzzy
 msgid "_Edit Template..."
-msgstr "ပုံစံခွက်ကို တည်းဖြတ်ပါ..."
+msgstr "ပုံစံခွက်ကို တည်းဖြတ်ပါ... "
 
 #: ../app/actions/templates-actions.c:65
-#, fuzzy
 msgid "Edit the selected template"
-msgstr "ဒီပုံစံခွက်ကို တည်းဖြတ်ပါ"
+msgstr "ဒီပုံစံခွက်ကို တည်းဖြတ်ပါ "
 
 #: ../app/actions/templates-actions.c:70
-#, fuzzy
 msgid "_Delete Template"
-msgstr "ဒီပုံစံခွက်ကို ပယ်ဖျက်ပါ"
+msgstr "ပုံစံခွက် ပယ်ဖျက်ပါ"
 
 #: ../app/actions/templates-actions.c:71
-#, fuzzy
 msgid "Delete the selected template"
-msgstr "ဒီပုံစံခွက်ကို ပယ်ဖျက်ပါ"
+msgstr "ရွေးထားတဲ့ ပုံစံခွက်ကို ပယ်ဖျက်ပါ"
 
 #: ../app/actions/templates-commands.c:113
 msgid "New Template"
@@ -4178,43 +3599,36 @@ msgid ""
 msgstr "ပုံစံခွက် '%s' ကို စာရင်းနဲ့ ဓါတ်ပြားထဲမှ သင်တကယ် ပယ်ဖျက်လိုသလား။"
 
 #: ../app/actions/text-editor-actions.c:44
-#, fuzzy
 msgid "Open"
-msgstr "ဖွင့်ပါ"
+msgstr "ဖွင့်ပါ "
 
 #: ../app/actions/text-editor-actions.c:45
-#, fuzzy
 msgid "Load text from file"
-msgstr "ဖိုင်ထဲမှာ စာသားကို ဖွင့်ပါ"
+msgstr "ဖိုင်ထဲမှ စာသားကို ဖွင့်ပါ"
 
 #: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:445
 msgid "Clear"
 msgstr "ရှင်းလင်းပါ"
 
 #: ../app/actions/text-editor-actions.c:51
-#, fuzzy
 msgid "Clear all text"
-msgstr "စာသားအာလုံးကို ရှင်းလင်းပါ"
+msgstr "စာသားအာလုံးကို ရှင်းလင်းပါ "
 
 #: ../app/actions/text-editor-actions.c:59
-#, fuzzy
 msgid "LTR"
-msgstr "ဘမည"
+msgstr "ဘယ်မှ ညာ"
 
 #: ../app/actions/text-editor-actions.c:60
-#, fuzzy
 msgid "From left to right"
-msgstr "ဘယ်မှညာ"
+msgstr "ဘယ်မှ ညာ "
 
 #: ../app/actions/text-editor-actions.c:65
-#, fuzzy
 msgid "RTL"
-msgstr "ညမဘ"
+msgstr "ညာမှ ဘယ်"
 
 #: ../app/actions/text-editor-actions.c:66
-#, fuzzy
 msgid "From right to left"
-msgstr "ညာမှဘယ်"
+msgstr "ညာမှ ဘယ် "
 
 #: ../app/actions/text-editor-commands.c:63
 msgid "Open Text File (UTF-8)"
@@ -4235,54 +3649,44 @@ msgid "Could not open '%s' for reading: %s"
 msgstr " %s ကို ဖတ်ရှုဖို့ '%s' ကို ဖွင့်လို့ မရဘူး။"
 
 #: ../app/actions/tool-options-actions.c:56
-#, fuzzy
 msgid "Tool Options Menu"
-msgstr "ကိရိယာ ရွေးစရာများ စာရင်းမှတ်"
+msgstr "ကိရိယာ ရွေးစရာများ စာရင်းမှတ် "
 
 #: ../app/actions/tool-options-actions.c:60
-#, fuzzy
 msgid "_Save Options To"
-msgstr "ရွေးစရာများကို သိမ်းဆည်းမဲ့ နေရာ"
+msgstr "ရွေးစရာများကို သိမ်းဆည်းမဲ့ နေရာ "
 
 #: ../app/actions/tool-options-actions.c:64
-#, fuzzy
 msgid "_Restore Options From"
-msgstr "ရွေးစရာများကို ပြန်ထားမဲ့ နေရာ"
+msgstr "ရွေးစရာများကို ပြန်ထားမဲ့ နေရာ "
 
 #: ../app/actions/tool-options-actions.c:68
-#, fuzzy
 msgid "Re_name Saved Options"
-msgstr "သိမ်းဆည်းထားတဲ့ ရွေးစရာများကို အ​မည်ပြောင်းပါ"
+msgstr "သိမ်းဆည်းထားတဲ့ ရွေးစရာများကို အ​မည်ပြောင်းပါ "
 
 #: ../app/actions/tool-options-actions.c:72
-#, fuzzy
 msgid "_Delete Saved Options"
-msgstr "သိမ်းဆည်းထားတဲ့ ရွေးစရာများကို ပယ်ဖျက်ပါ"
+msgstr "သိမ်းဆည်းထားတဲ့ ရွေးစရာများကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/tool-options-actions.c:76
-#, fuzzy
 msgid "_New Entry..."
-msgstr "ရေးသွင်းချက် အသစ်..."
+msgstr "ရေးသွင်းချက် အသစ်... "
 
 #: ../app/actions/tool-options-actions.c:81
-#, fuzzy
 msgid "R_eset Tool Options"
-msgstr "ကိရိယာ ရွေးစရာများကို ပြန်ချိန်ပါ"
+msgstr "ကိရိယာ ရွေးစရာများကို ပြန်ချိန်ပါ "
 
 #: ../app/actions/tool-options-actions.c:82
-#, fuzzy
 msgid "Reset to default values"
-msgstr "စံထားချက် တန်ဖိုးများ အတိုင်း ပြန်ချိန်ပါ"
+msgstr "စံထားချက် တန်ဖိုးများ အတိုင်း ပြန်ချိန်ပါ "
 
 #: ../app/actions/tool-options-actions.c:87
-#, fuzzy
 msgid "Reset _all Tool Options"
-msgstr "ကိရိယာ ရွေးစရာများ အားလုံးကို ပြန်ချိန်ပါ"
+msgstr "ကိရိယာ ရွေးစရာများ အားလုံးကို ပြန်ချိန်ပါ "
 
 #: ../app/actions/tool-options-actions.c:88
-#, fuzzy
 msgid "Reset all tool options"
-msgstr "ကိရိယာ ရွေးစရာများ အားလုံးကို ပြန်ချိန်ပါ"
+msgstr "ကိရိယာ ရွေးစရာများ အားလုံးကို ပြန်ချိန်ပါ "
 
 #: ../app/actions/tool-options-commands.c:72
 msgid "Save Tool Options"
@@ -4316,307 +3720,248 @@ msgstr ""
 "ကိရိယာ ရွေးစရာများ အားလုံးကို စံထားချက် တန်ဖိုးများ အတိုင်း သင် တကယ် ပြန်ချိန်လို သလား။"
 
 #: ../app/actions/tools-actions.c:47
-#, fuzzy
 msgid "Tools Menu"
-msgstr "ကိရိယာများ စာရင်းမှတ်"
+msgstr "ကိရိယာများ စာရင်းမှတ် "
 
 #: ../app/actions/tools-actions.c:50
-#, fuzzy
 msgid "_Tools"
-msgstr "ကိရိယာများ"
+msgstr "ကိရိယာများ "
 
 #: ../app/actions/tools-actions.c:51
-#, fuzzy
 msgid "_Selection Tools"
-msgstr "ရွေးချယ်ချက် ကိရိယာများ"
+msgstr "ရွေးချယ်ချက် ကိရိယာများ "
 
 #: ../app/actions/tools-actions.c:52
-#, fuzzy
 msgid "_Paint Tools"
-msgstr "ရွေးဆွဲချက် ကိရိယာများ"
+msgstr "ရွေးဆွဲချက် ကိရိယာများ "
 
 #: ../app/actions/tools-actions.c:53
-#, fuzzy
 msgid "_Transform Tools"
-msgstr "အသွင်ပြောင်း ကိရိယာများ"
+msgstr "အသွင်ပြောင်း ကိရိယာများ "
 
 #: ../app/actions/tools-actions.c:54
-#, fuzzy
 msgid "_Color Tools"
-msgstr "အရောင် ကိရိယာများ"
+msgstr "အရောင် ကိရိယာများ "
 
 #: ../app/actions/tools-actions.c:57
-#, fuzzy
 msgid "R_aise Tool"
-msgstr "ကိရိယာကို မြှင့်တင်ပါ"
+msgstr "ကိရိယာကို မြှင့်တင်ပါ "
 
 #: ../app/actions/tools-actions.c:58
-#, fuzzy
 msgid "Raise tool"
-msgstr "ကိရိယာကို မြှင့်တင်ပါ"
+msgstr "ကိရိယာကို မြှင့်တင်ပါ "
 
 #: ../app/actions/tools-actions.c:63
-#, fuzzy
 msgid "Ra_ise to Top"
-msgstr "ထိပ်ကို မြှင့်တင်ပါ"
+msgstr "ထိပ်ကို မြှင့်တင်ပါ "
 
 #: ../app/actions/tools-actions.c:64
-#, fuzzy
 msgid "Raise tool to top"
-msgstr "ဒီကိရိယာကို ထိပ်ကို မြှင့်တင်ပါ"
+msgstr "ဒီကိရိယာကို ထိပ်ကို မြှင့်တင်ပါ "
 
 #: ../app/actions/tools-actions.c:69
-#, fuzzy
 msgid "L_ower Tool"
-msgstr "ကိရိယာကို လျှော့ချပါ"
+msgstr "ကိရိယာကို လျှော့ချပါ "
 
 #: ../app/actions/tools-actions.c:70
-#, fuzzy
 msgid "Lower tool"
-msgstr "ကိရိယာကို လျှော့ချပါ"
+msgstr "ကိရိယာကို လျှော့ချပါ "
 
 #: ../app/actions/tools-actions.c:75
-#, fuzzy
 msgid "Lo_wer to Bottom"
-msgstr "အောက်ခြေကို လျှော့ချပါ"
+msgstr "အောက်ခြေကို လျှော့ချပါ "
 
 #: ../app/actions/tools-actions.c:76
-#, fuzzy
 msgid "Lower tool to bottom"
-msgstr "ဒီကိရိယာကို အောက် လျှော့ချပါ"
+msgstr "ကိရိယာကို အောက်ဖက် လျှော့ချပါ"
 
 #: ../app/actions/tools-actions.c:81
-#, fuzzy
 msgid "_Reset Order & Visibility"
-msgstr "အစဉ်လိုက်နဲ့ မြင်ကွင်းကို ပြန်ချိန်ပါ"
+msgstr "အစဉ်လိုက်နဲ့ မြင်ကွင်းကို ပြန်ချိန်ပါ "
 
 #: ../app/actions/tools-actions.c:82
-#, fuzzy
 msgid "Reset tool order and visibility"
-msgstr "ကိရိယာ အစဉ်လိုက်နဲ့ မြင်ကွင်းကို ပြန်ချိန်ပါ"
+msgstr "ကိရိယာ အစဉ်လိုက်နဲ့ မြင်ကွင်းကို ပြန်ချိန်ပါ "
 
 #: ../app/actions/tools-actions.c:90
-#, fuzzy
 msgid "_Show in Toolbox"
-msgstr "ကိရိယာအိတ်ထဲမှာ ​ပြသပါ"
+msgstr "ကိရိယာအိတ်ထဲမှာ ​ပြသပါ "
 
 #: ../app/actions/tools-actions.c:99
-#, fuzzy
 msgid "_By Color"
-msgstr "​အရောင်အလိုက်"
+msgstr "​အရောင်အလိုက် "
 
 #: ../app/actions/tools-actions.c:100
-#, fuzzy
 msgid "Select regions with similar colors"
-msgstr "နယ်​ပယ်များကို တူညီတဲ့ အရောင်များနဲ့ ရွေးပါ"
+msgstr "နယ်​ပယ်များကို တူညီတဲ့ အရောင်များနဲ့ ရွေးပါ "
 
 #: ../app/actions/tools-actions.c:105
-#, fuzzy
 msgid "_Arbitrary Rotation..."
-msgstr "တဖက်သတ် လည်ပတ်မှု..."
+msgstr "တဖက်သတ် လည်ပတ်မှု... "
 
 #: ../app/actions/tools-actions.c:106
-#, fuzzy
 msgid "Rotate by an arbitrary angle"
-msgstr "တဖက်သတ် ထောင့်တခု အလိုက် လှည့်ပါ"
+msgstr "တဖက်သတ် ထောင့်တခု အလိုက် လှည့်ပါ "
 
 #: ../app/actions/vectors-actions.c:44
-#, fuzzy
 msgid "Paths Menu"
-msgstr "လမ်းကြောင်းများ စာရင်းမှတ်"
+msgstr "လမ်းကြောင်းများ စာရင်းမှတ် "
 
 #: ../app/actions/vectors-actions.c:48
-#, fuzzy
 msgid "Path _Tool"
-msgstr "လမ်းကြောင်း ကိရိယာ"
+msgstr "လမ်းကြောင်း ကိရိယာ "
 
 #: ../app/actions/vectors-actions.c:53
-#, fuzzy
 msgid "_Edit Path Attributes..."
-msgstr "လမ်းကြောင်း အရည်အသွေးများကို တည်းဖြတ်ပါ..."
+msgstr "လမ်းကြောင်း အရည်အသွေးများကို တည်းဖြတ်ပါ... "
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
 msgid "Edit path attributes"
-msgstr "လမ်းကြောင်း အရည်​အသွေးများကို တည်းဖြတ်ပါ"
+msgstr "လမ်းကြောင်း အရည်​အသွေးများကို တည်းဖြတ်ပါ "
 
 #: ../app/actions/vectors-actions.c:59
-#, fuzzy
 msgid "_New Path..."
-msgstr "လမ်းကြောင်း အသစ်..."
+msgstr "လမ်းကြောင်းသစ်... "
 
 #: ../app/actions/vectors-actions.c:60
-#, fuzzy
 msgid "New path..."
-msgstr "လမ်းကြောင်း အသစ်..."
+msgstr "လမ်းကြောင်းသစ်... "
 
 #: ../app/actions/vectors-actions.c:65
-#, fuzzy
 msgid "_New Path"
-msgstr "လမ်းကြောင်း အသစ်"
+msgstr "လမ်းကြောင်းသစ်... "
 
 #: ../app/actions/vectors-actions.c:66
-#, fuzzy
 msgid "New path with last values"
-msgstr "နောက်ဆုံး တန်ဖိုးများနဲ့ လမ်းကြောင်း အသစ်ကို ဖန်တီးပါ"
+msgstr "နောက်ဆုံး တန်ဖိုးများနဲ့ လမ်းကြောင်းသစ်ကို ဖန်တီးပါ"
 
 #: ../app/actions/vectors-actions.c:71
-#, fuzzy
 msgid "D_uplicate Path"
-msgstr "လမ်းကြောင်းကို ပုံတူပွားပါ"
+msgstr "လမ်းကြောင်းကို ပုံတူပွားပါ "
 
 #: ../app/actions/vectors-actions.c:72
-#, fuzzy
 msgid "Duplicate path"
-msgstr "လမ်းကြောင်းကို ပုံတူပွားပါ"
+msgstr "လမ်းကြောင်းကို ပုံတူပွားပါ "
 
 #: ../app/actions/vectors-actions.c:77
-#, fuzzy
 msgid "_Delete Path"
-msgstr "လမ်းကြောင်းကို ပယ်ဖျက်ပါ"
+msgstr "လမ်းကြောင်းကို ပယ်ဖျက်ပါ "
 
 #: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:920
-#, fuzzy
 msgid "Delete path"
-msgstr "လမ်းကြောင်းကို ပယ်ဖျက်ပါ"
+msgstr "လမ်းကြောင်း ပယ်ဖျက်ပါ"
 
 #: ../app/actions/vectors-actions.c:83
-#, fuzzy
 msgid "Merge _Visible Paths"
-msgstr "မြင်နိုင်တဲ့ လမ်းကြောင်းများကို ပေါင်းစပ်ပါ"
+msgstr "မြင်နိုင်တဲ့ လမ်းကြောင်းများ ပေါင်းစပ်ပါ"
 
 #: ../app/actions/vectors-actions.c:88
-#, fuzzy
 msgid "_Raise Path"
-msgstr "လမ်းကြောင်းကို မြှင့်တင်ပါ"
+msgstr "လမ်းကြောင်း မြှင့်တင်ပါ"
 
 #: ../app/actions/vectors-actions.c:89
-#, fuzzy
 msgid "Raise path"
-msgstr "လမ်းကြောင်းကို မြှင့်ပါ"
+msgstr "လမ်းကြောင်း မြှင့်တင်ပါ"
 
 #: ../app/actions/vectors-actions.c:94
-#, fuzzy
 msgid "Raise Path to _Top"
 msgstr "လမ်းကြောင်းကို ထိပ်ပိုင်း မြှင့်တင်ပါ"
 
 #: ../app/actions/vectors-actions.c:95
-#, fuzzy
 msgid "Raise path to top"
-msgstr "လမ်းကြောင်းကို ထိပ်ပိုင်း မြှင့်ပါ"
+msgstr "လမ်းကြောင်းကို ထိပ်ပိုင်း မြှင့်ပါ "
 
 #: ../app/actions/vectors-actions.c:100
-#, fuzzy
 msgid "_Lower Path"
-msgstr "လမ်းကြောင်းကို လျှော့ချပါ"
+msgstr "လမ်းကြောင်းကို လျှော့ချပါ "
 
 #: ../app/actions/vectors-actions.c:101
-#, fuzzy
 msgid "Lower path"
-msgstr "လမ်းကြောင်းကို လျှော့ချပါ"
+msgstr "လမ်းကြောင်းကို လျှော့ချပါ "
 
 #: ../app/actions/vectors-actions.c:106
-#, fuzzy
 msgid "Lower Path to _Bottom"
-msgstr "လမ်းကြောင်းကို အောက်ခြေဖက် လျှော့ချပါ"
+msgstr "လမ်းကြောင်းကို အောက်ခြေဖက် လျှော့ချပါ "
 
 #: ../app/actions/vectors-actions.c:107
-#, fuzzy
 msgid "Lower path to bottom"
-msgstr "လမ်းကြောင်းကို အောက်ခြေ လျှော့ချပါ"
+msgstr "လမ်းကြောင်းကို အောက်ခြေ လျှော့ချပါ "
 
 #: ../app/actions/vectors-actions.c:112
-#, fuzzy
 msgid "Stro_ke Path..."
-msgstr "လမ်းကြောင်းကို မှတ်သားပါ..."
+msgstr "လမ်းကြောင်းကို မှတ်သားပါ... "
 
 #: ../app/actions/vectors-actions.c:113
-#, fuzzy
 msgid "Paint along the path"
-msgstr "လမ်းကြောင်း တလျှောက် ရေးဆွဲပါ"
+msgstr "လမ်းကြောင်း တလျှောက် ရေးဆွဲပါ "
 
 #: ../app/actions/vectors-actions.c:118
-#, fuzzy
 msgid "Stro_ke Path"
-msgstr "လမ်းကြောင်းကို မှတ်သားပါ"
+msgstr "လမ်းကြောင်းကို မှတ်သားပါ "
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
 msgid "Paint along the path with last values"
-msgstr "နောက်ဆုံး တန်ဖိုးများနဲ့ လမ်းကြောင်း တလျှောက် ရေးဆွဲပါ"
+msgstr "နောက်ဆုံး တန်ဖိုးများနဲ့ လမ်းကြောင်း တလျှောက် ရေးဆွဲပါ "
 
 #: ../app/actions/vectors-actions.c:124
-#, fuzzy
 msgid "Co_py Path"
-msgstr "လမ်းကြောင်းကို မိတ္တူကူးပါ"
+msgstr "လမ်းကြောင်းကို မိတ္တူကူးပါ "
 
 #: ../app/actions/vectors-actions.c:129
-#, fuzzy
 msgid "Paste Pat_h"
-msgstr "လမ်းကြောင်းကို ပွားယူပါ"
+msgstr "လမ်းကြောင်းကို ပွားယူပါ "
 
 #: ../app/actions/vectors-actions.c:134
-#, fuzzy
 msgid "E_xport Path..."
-msgstr "လမ်းကြောင်းကို တင်ပို့ပါ..."
+msgstr "လမ်းကြောင်းကို တင်ပို့ပါ... "
 
 #: ../app/actions/vectors-actions.c:139
-#, fuzzy
 msgid "I_mport Path..."
-msgstr "လမ်းကြောင်းကို တင်သွင်းပါ..."
+msgstr "လမ်းကြောင်းကို တင်သွင်းပါ... "
 
 #: ../app/actions/vectors-actions.c:162
-#, fuzzy
 msgid "Path to Sele_ction"
-msgstr "ရွေးထားချက် လမ်းကြောင်း"
+msgstr "ရွေးထားချက် လမ်းကြောင်း "
 
 #: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1912
 msgid "Path to selection"
 msgstr "ရွေးချယ်ချက် လမ်းကြောင်း"
 
 #: ../app/actions/vectors-actions.c:168
-#, fuzzy
 msgid "Fr_om Path"
-msgstr "လမ်းကြောင်းမှ"
+msgstr "လမ်းကြောင်းမှ "
 
 #: ../app/actions/vectors-actions.c:174
 msgid "Add"
-msgstr ""
+msgstr "ပေါင်းထည့်ပါ"
 
 #: ../app/actions/vectors-actions.c:180 ../app/base/base-enums.c:119
-#, fuzzy
 msgid "Subtract"
-msgstr "​နှုတ်ယူချက်"
+msgstr "​နှုတ်ယူချက် "
 
 #: ../app/actions/vectors-actions.c:186
-#, fuzzy
 msgid "Intersect"
-msgstr "ပြောင်းပြန်လှန်ပါ"
+msgstr "ပြောင်းပြန်လှန်ပါ "
 
 #: ../app/actions/vectors-actions.c:194
-#, fuzzy
 msgid "Selecti_on to Path"
-msgstr "လမ်းကြောင်း ရွေးထားချက်"
+msgstr "လမ်းကြောင်း ရွေးထားချက် "
 
 #: ../app/actions/vectors-actions.c:195 ../app/actions/vectors-actions.c:201
-#, fuzzy
 msgid "Selection to path"
-msgstr "လမ်းကြောင်း ရွေးချယ်ချက်"
+msgstr "လမ်းကြောင်း ရွေးချယ်ချက် "
 
 #: ../app/actions/vectors-actions.c:200
-#, fuzzy
 msgid "To _Path"
-msgstr "လမ်းကြောင်းဆီ"
+msgstr "လမ်းကြောင်းဆီ "
 
 #: ../app/actions/vectors-actions.c:206
-#, fuzzy
 msgid "Selection to Path (_Advanced)"
-msgstr "လမ်းကြောင်း ရွေးချယ်ချက် (အဆင့်မြင့်)"
+msgstr "လမ်းကြောင်း ရွေးချယ်ချက် (အဆင့်မြင့်) "
 
 #: ../app/actions/vectors-actions.c:207
-#, fuzzy
 msgid "Advanced options"
-msgstr "အဆင့်မြင့် ရွေးစရာများ"
+msgstr "အဆင့်မြင့် ရွေးစရာများ "
 
 #: ../app/actions/vectors-commands.c:138
 msgid "Path Attributes"
@@ -4646,398 +3991,320 @@ msgid "Stroke Path"
 msgstr "စုတ်ချက် လမ်းကြောင်း"
 
 #: ../app/actions/view-actions.c:67
-#, fuzzy
 msgid "_View"
-msgstr "ရှုမြင်ပါ"
+msgstr "ရှုမြင်ပါ "
 
 #: ../app/actions/view-actions.c:68
-#, fuzzy
 msgid "_Zoom"
-msgstr "ချဲ့ပါ"
+msgstr "ချဲ့ပါ "
 
 #: ../app/actions/view-actions.c:69
-#, fuzzy
 msgid "_Padding Color"
-msgstr "အခုအခံ အရောင်"
+msgstr "အခုအခံ အရောင် "
 
 #: ../app/actions/view-actions.c:71
-#, fuzzy
 msgid "Move to Screen"
-msgstr "မျက်နှာပြင်ဆီ ​ရွံ့ပါ"
+msgstr "မျက်နှာပြင်ဆီ ​ရွံ့ပါ "
 
 #: ../app/actions/view-actions.c:76
-#, fuzzy
 msgid "Create another view on this image"
-msgstr "ဒီရုပ်ပုံပေါ် အခြား ရှုမြင်ချက်ကို ဖန်တီးပါ"
+msgstr "ဒီရုပ်ပုံပေါ် အခြား ရှုမြင်ချက်ကို ဖန်တီးပါ "
 
 #: ../app/actions/view-actions.c:81
-#, fuzzy
 msgid "_Close"
-msgstr "ပိတ်ပါ"
+msgstr "ပိတ်ပါ "
 
 #: ../app/actions/view-actions.c:82
-#, fuzzy
 msgid "Close this image window"
-msgstr "ဒီရုပ်ပုံ ၀င်းဒိုးကို ပိတ်ပါ"
+msgstr "ဒီရုပ်ပုံ ၀င်းဒိုးကို ပိတ်ပါ "
 
 #: ../app/actions/view-actions.c:87
-#, fuzzy
 msgid "_Fit Image in Window"
-msgstr "ရုပ်ပုံကို ၀င်းဒိုးထဲမှာ အံကိုက်ထည့်ပါ"
+msgstr "ရုပ်ပုံကို ၀င်းဒိုးထဲမှာ အံကိုက်ထည့်ပါ "
 
 #: ../app/actions/view-actions.c:88
-#, fuzzy
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr "ရုပ်ပုံကို အပြည့် မြင်နိုင်ဖို့ ချဲ့ထွင်းမှု အချိုးကို ညှိယူပါ"
+msgstr "ရုပ်ပုံကို အပြည့် မြင်နိုင်ဖို့ ချဲ့ထွင်းမှု အချိုးကို ညှိယူပါ "
 
 #: ../app/actions/view-actions.c:93
-#, fuzzy
 msgid "Fi_ll Window"
-msgstr "၀င်းဒိုးကို ဖြည့်ပါ"
+msgstr "၀င်းဒိုးကို ဖြည့်ပါ "
 
 #: ../app/actions/view-actions.c:94
-#, fuzzy
 msgid "Adjust the zoom ratio so that the entire window is used"
-msgstr "၀င်းဒိုး တခုလုံး သုံးစွဲနိုင်ဖို့ ချဲ့ထွင်မှု အချိုးကို ညှိယူပါ"
+msgstr "၀င်းဒိုး တခုလုံး သုံးစွဲနိုင်ဖို့ ချဲ့ထွင်မှု အချိုးကို ညှိယူပါ "
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:579
 msgid "Re_vert Zoom"
 msgstr "ချဲ့ထွင်မှုကို​ ပြောင်းပြန်လှန်ပါ"
 
 #: ../app/actions/view-actions.c:100
-#, fuzzy
 msgid "Restore the previous zoom level"
-msgstr "အရင် ချဲ့ထွင်မှု အဆင့်ကို ပြန်ထားပါ"
+msgstr "အရင် ချဲ့ထွင်မှု အဆင့်ကို ပြန်ထားပါ "
 
 #: ../app/actions/view-actions.c:105
-#, fuzzy
 msgid "Na_vigation Window"
-msgstr "ကူးသန်း​ကြည့်ရှုတဲ့ ၀င်းဒိုး"
+msgstr "ကူးသန်း​ကြည့်ရှုတဲ့ ၀င်းဒိုး "
 
 #: ../app/actions/view-actions.c:106
-#, fuzzy
 msgid "Show an overview window for this image"
-msgstr "ဒီရုပ်ပုံအတွက် ခြုံငုံသုံးသပ်ချက် တခုကို ​ဖေါ်ပြပါ"
+msgstr "ဒီရုပ်ပုံအတွက် ခြုံငုံသုံးသပ်ချက် တခုကို ​ဖေါ်ပြပါ "
 
 #: ../app/actions/view-actions.c:111
-#, fuzzy
 msgid "Display _Filters..."
-msgstr "စစ်ထုတ်ကိရိယာများကို ပြသပါ..."
+msgstr "စစ်ထုတ်ကိရိယာများကို ပြသပါ... "
 
 #: ../app/actions/view-actions.c:112
-#, fuzzy
 msgid "Configure filters applied to this view"
-msgstr "ဒီရှုမြင်ချက်နဲ့ ဆီလျှော်တဲ့ စစ်ထုတ်ကိရိယာများကို စီစဉ်ဖန်တီးပါ"
+msgstr "ဒီရှုမြင်ချက်နဲ့ ဆီလျှော်တဲ့ စစ်ထုတ်ကိရိယာများကို စီစဉ်ဖန်တီးပါ "
 
 #: ../app/actions/view-actions.c:117
-#, fuzzy
 msgid "Shrink _Wrap"
-msgstr "ထုပ်ပိုးချက်ကို ကျုံ့ပါ"
+msgstr "ထုပ်ပိုးချက်ကို ကျုံ့ပါ "
 
 #: ../app/actions/view-actions.c:118
-#, fuzzy
 msgid "Reduce the image window to the size of the image display"
-msgstr "ရုပ်ပုံ ၀င်းဒိုးကို ပြသတဲ့ ရုပ်ပုံအရွယ် အတိုင်း လျှော့ချပါ"
+msgstr "ရုပ်ပုံ ၀င်းဒိုးကို ပြသတဲ့ ရုပ်ပုံအရွယ် အတိုင်း လျှော့ချပါ "
 
 #: ../app/actions/view-actions.c:132
-#, fuzzy
 msgid "_Dot for Dot"
-msgstr "အစက် တစက်ဆီ"
+msgstr "အစက် တစက်ဆီ "
 
 #: ../app/actions/view-actions.c:133
-#, fuzzy
 msgid "A pixel on the screen represents an image pixel"
-msgstr "မျက်နှာပြင်မှ ပစ်ဆက်တခုက ရုပ်ပုံ ပစ်ဆယ် တခုကို ကိုယ်စားပြုတယ်"
+msgstr "မျက်နှာပြင်မှ ပစ်ဆက်တခုက ရုပ်ပုံ ပစ်ဆယ် တခုကို ကိုယ်စားပြုတယ် "
 
 #: ../app/actions/view-actions.c:139
-#, fuzzy
 msgid "Show _Selection"
-msgstr "ရွေးချယ်ချက်ကို ပြပါ"
+msgstr "ရွေးချယ်ချက်ကို ပြပါ "
 
 #: ../app/actions/view-actions.c:140
-#, fuzzy
 msgid "Display the selection outline"
-msgstr "ရွေးချယ်ချက် အကြမ်းဆွဲချက်ကို ပြသပါ"
+msgstr "ရွေးချယ်ချက် အကြမ်းဆွဲချက်ကို ပြသပါ "
 
 #: ../app/actions/view-actions.c:146
-#, fuzzy
 msgid "Show _Layer Boundary"
-msgstr "အလွှာ နယ်သတ်မျဉ်းကို ပြပါ"
+msgstr "အလွှာ နယ်သတ်မျဉ်းကို ပြပါ "
 
 #: ../app/actions/view-actions.c:147
-#, fuzzy
 msgid "Draw a border around the active layer"
-msgstr "သက်ကြွ်တဲ့ အလွှာ တလျှောက် အနားသတ် တခု ဆွဲပါ"
+msgstr "သက်၀င်တဲ့ အလွှာ တလျှောက် အနားသတ် တခု ဆွဲပါ"
 
 #: ../app/actions/view-actions.c:153
-#, fuzzy
 msgid "Show _Guides"
-msgstr "လမ်းညွှန်းများကို ပြသပါ"
+msgstr "လမ်းညွှန်းများကို ပြသပါ "
 
 #: ../app/actions/view-actions.c:154
-#, fuzzy
 msgid "Display the image's guides"
-msgstr "ရုပ်ပုံရဲ့ လမ်းညွှန်များကို ပြသပါ"
+msgstr "ရုပ်ပုံရဲ့ လမ်းညွှန်များကို ပြသပါ "
 
 #: ../app/actions/view-actions.c:160
-#, fuzzy
 msgid "S_how Grid"
-msgstr "ဂရစ်ကွက်ကို ပြသပါ"
+msgstr "ဂရစ်ကွက်ကို ပြသပါ "
 
 #: ../app/actions/view-actions.c:161
-#, fuzzy
 msgid "Display the image's grid"
-msgstr "ရုပ်ပုံရဲ့ ဂရစ်ကွက်ကို ပြသပါ"
+msgstr "ရုပ်ပုံရဲ့ ဂရစ်ကွက်ကို ပြသပါ "
 
 #: ../app/actions/view-actions.c:167
-#, fuzzy
 msgid "Show Sample Points"
-msgstr "နမူနာ အမှတ်များကို ​ပြပါ"
+msgstr "နမူနာ အမှတ်များကို ​ပြပါ "
 
 #: ../app/actions/view-actions.c:168
-#, fuzzy
 msgid "Display the image's color sample points"
-msgstr "ရုပ်ပုံရဲ့ အရောင် နမူနာ အမှတ်များကို ပြသပါ"
+msgstr "ရုပ်ပုံရဲ့ အရောင် နမူနာ အမှတ်များကို ပြသပါ "
 
 #: ../app/actions/view-actions.c:174
-#, fuzzy
 msgid "Sn_ap to Guides"
-msgstr "လမ်းညွှန်များဆီ ကူးသွားပါ"
+msgstr "လမ်းညွှန်များဆီ ကူးသွားပါ "
 
 #: ../app/actions/view-actions.c:175
-#, fuzzy
 msgid "Tool operations snap to guides"
-msgstr "ကိရိယာ လည်ပတ်မှုများ လမ်းညွှန်များဆီ ဦးတည်သွားတယ်"
+msgstr "ကိရိယာ လည်ပတ်မှုများ လမ်းညွှန်များဆီ ဦးတည်သွားတယ် "
 
 #: ../app/actions/view-actions.c:181
-#, fuzzy
 msgid "Sna_p to Grid"
-msgstr "ဂရစ်ကွက်ဆီ ကူးသွားပါ"
+msgstr "ဂရစ်ကွက်ဆီ ကူးသွားပါ "
 
 #: ../app/actions/view-actions.c:182
-#, fuzzy
 msgid "Tool operations snap to the grid"
-msgstr "ကိရိယာ လည်ပတ်မှုများ ဂရစ်ကွက်ဆီ ဦးတည်သွားတယ်"
+msgstr "ကိရိယာ လည်ပတ်မှုများ ဂရစ်ကွက်ဆီ ဦးတည်သွားတယ် "
 
 #: ../app/actions/view-actions.c:188
-#, fuzzy
 msgid "Snap to _Canvas Edges"
-msgstr "ပတ္တူစ အစွန်းကို ကူးသွားပါ"
+msgstr "ပတ္တူစ အစွန်းကို ကူးသွားပါ "
 
 #: ../app/actions/view-actions.c:189
-#, fuzzy
 msgid "Tool operations snap to the canvas edges"
-msgstr "ကိရိယာ လည်ပတ်မှုများ ပတ္တူစ အစွန်းဆီ ကူးသွားတယ်"
+msgstr "ကိရိယာ လည်ပတ်မှုများ canvas အစွန်းဆီ ကူးသွားတယ်"
 
 #: ../app/actions/view-actions.c:195
-#, fuzzy
 msgid "Snap t_o Active Path"
-msgstr "သက်ကြွတဲ့ လမ်းကြောင်းဆီ ကူးသွားပါ"
+msgstr "သက်ကြွတဲ့ လမ်းကြောင်းဆီ ကူးသွားပါ "
 
 #: ../app/actions/view-actions.c:196
-#, fuzzy
 msgid "Tool operations snap to the active path"
-msgstr "ကိရိယာ လည်ပတ်မှုများ သက်ကြွတဲ့ လမ်းကြောင်းဆီ ကူးသွားတယ်"
+msgstr "ကိရိယာ လည်ပတ်မှုများ သက်ကြွတဲ့ လမ်းကြောင်းဆီ ကူးသွားတယ် "
 
 #: ../app/actions/view-actions.c:202
-#, fuzzy
 msgid "Show _Menubar"
-msgstr "စာရင်းမှတ်တန်းကို ပြပါ"
+msgstr "စာရင်းမှတ်တန်းကို ပြပါ "
 
 #: ../app/actions/view-actions.c:203
-#, fuzzy
 msgid "Show this window's menubar"
-msgstr "၀င်းဒိုး စာရင်းမှတ်တန်းကို ပြပါ"
+msgstr "၀င်းဒိုး စာရင်းမှတ်တန်းကို ပြပါ "
 
 #: ../app/actions/view-actions.c:209
-#, fuzzy
 msgid "Show R_ulers"
-msgstr "ပေတံများကို ပြပါ"
+msgstr "ပေတံများကို ပြပါ "
 
 #: ../app/actions/view-actions.c:210
-#, fuzzy
 msgid "Show this window's rulers"
-msgstr "၀င်းဒိုးရဲ့ ပေတံများကို ပြပါ"
+msgstr "၀င်းဒိုးရဲ့ ပေတံများကို ပြပါ "
 
 #: ../app/actions/view-actions.c:216
-#, fuzzy
 msgid "Show Scroll_bars"
-msgstr "လှိမ့်ဆင်းတန်းများကို ပြပါ"
+msgstr "လှိမ့်ဆင်းတန်းများကို ပြပါ "
 
 #: ../app/actions/view-actions.c:217
-#, fuzzy
 msgid "Show this window's scrollbars"
-msgstr "ဒီ၀င်းဒိုးရဲ့ လှိမ့်ဆင်းတန်းများကို ပြပါ"
+msgstr "ဒီ၀င်းဒိုးရဲ့ လှိမ့်ဆင်းတန်းများကို ပြပါ "
 
 #: ../app/actions/view-actions.c:223
-#, fuzzy
 msgid "Show S_tatusbar"
-msgstr "​အနေအထားပြတန်းကို ပြပါ"
+msgstr "​အနေအထားပြတန်းကို ပြပါ "
 
 #: ../app/actions/view-actions.c:224
-#, fuzzy
 msgid "Show this window's statusbar"
-msgstr "ဒီ၀င်းဒိုးရဲ့ ​အနေအထားပြတန်းကို ပြပါ"
+msgstr "ဒီ၀င်းဒိုးရဲ့ ​အနေအထားပြတန်းကို ပြပါ "
 
 #: ../app/actions/view-actions.c:230
-#, fuzzy
 msgid "Fullscr_een"
-msgstr "မျက်နှာပြင်အပြည့်"
+msgstr "မျက်နှာပြင်အပြည့် "
 
 #: ../app/actions/view-actions.c:231
-#, fuzzy
 msgid "Toggle fullscreen view"
-msgstr "မျက်နှာပြင်အပြည့် ရှုမြင်ချက်ကို ထိန်းပါ"
+msgstr "မျက်နှာပြင်အပြည့် ရှုမြင်ချက်ကို ထိန်းပါ "
 
 #: ../app/actions/view-actions.c:292
-#, fuzzy
 msgid "1_6:1  (1600%)"
-msgstr "၁_၆:၁  (၁၆၀၀%)"
+msgstr "၁_၆:၁  (၁၆၀၀%) "
 
 #: ../app/actions/view-actions.c:293
-#, fuzzy
 msgid "Zoom 16:1"
-msgstr "ချဲ့ထွင်ချက် ၁၆:၁"
+msgstr "ချဲ့ထွင်ချက် ၁၆:၁ "
 
 #: ../app/actions/view-actions.c:298
-#, fuzzy
 msgid "_8:1  (800%)"
-msgstr "၈:၁  (၈၀၀%)"
+msgstr "၈:၁  (၈၀၀%) "
 
 #: ../app/actions/view-actions.c:299
-#, fuzzy
 msgid "Zoom 8:1"
-msgstr "ချဲ့ထွင်ချက် ၈:၁"
+msgstr "ချဲ့ထွင်ချက် ၈:၁ "
 
 #: ../app/actions/view-actions.c:304
-#, fuzzy
 msgid "_4:1  (400%)"
-msgstr "၄:၁  (၄၀၀%)"
+msgstr "၄:၁  (၄၀၀%) "
 
 #: ../app/actions/view-actions.c:305
-#, fuzzy
 msgid "Zoom 4:1"
-msgstr "ချဲ့ထွင်ချက် ၄:၁"
+msgstr "ချဲ့ထွင်ချက် ၄:၁ "
 
 #: ../app/actions/view-actions.c:310
-#, fuzzy
 msgid "_2:1  (200%)"
-msgstr "၂:၁ (၂၀၀%)"
+msgstr "၂:၁ (၂၀၀%) "
 
 #: ../app/actions/view-actions.c:311
-#, fuzzy
 msgid "Zoom 2:1"
-msgstr "ချဲ့ထွင်ချက် ၂:၁"
+msgstr "ချဲ့ထွင်ချက် ၂:၁ "
 
 #: ../app/actions/view-actions.c:316
-#, fuzzy
 msgid "_1:1  (100%)"
-msgstr "၁:၁ (၁၀၀%)"
+msgstr "၁:၁ (၁၀၀%) "
 
 #: ../app/actions/view-actions.c:317
-#, fuzzy
 msgid "Zoom 1:1"
-msgstr "ချဲ့ထွင်ချက် ၁:၁"
+msgstr "ချဲ့ထွင်ချက် ၁:၁ "
 
 #: ../app/actions/view-actions.c:322
-#, fuzzy
 msgid "1:_2  (50%)"
-msgstr "၁:၂ (၅၀%)"
+msgstr "၁:၂ (၅၀%) "
 
 #: ../app/actions/view-actions.c:323
-#, fuzzy
 msgid "Zoom 1:2"
-msgstr "ချဲ့ထွင်ချက် ၁:၂"
+msgstr "ချဲ့ထွင်ချက် ၁:၂ "
 
 #: ../app/actions/view-actions.c:328
-#, fuzzy
 msgid "1:_4  (25%)"
-msgstr "၁:၄ (၂၅%)"
+msgstr "၁:၄ (၂၅%) "
 
 #: ../app/actions/view-actions.c:329
-#, fuzzy
 msgid "Zoom 1:4"
-msgstr "ချဲ့ထွင်ချက် ၁:၄"
+msgstr "ချဲ့ထွင်ချက် ၁:၄ "
 
 #: ../app/actions/view-actions.c:334
-#, fuzzy
 msgid "1:_8  (12.5%)"
-msgstr "၁:၈ (၁၂.၅%)"
+msgstr "၁:၈ (၁၂.၅%) "
 
 #: ../app/actions/view-actions.c:335
-#, fuzzy
 msgid "Zoom 1:8"
-msgstr "ချဲ့ထွင်ချက် ၁:၈"
+msgstr "ချဲ့ထွင်ချက် ၁:၈ "
 
 #: ../app/actions/view-actions.c:340
-#, fuzzy
 msgid "1:1_6  (6.25%)"
-msgstr "၁:၁၆ (၆.၂၅%)"
+msgstr "၁:၁၆ (၆.၂၅%) "
 
 #: ../app/actions/view-actions.c:341
-#, fuzzy
 msgid "Zoom 1:16"
-msgstr "ချဲ့ထွင်ချက် ၁:၁၆"
+msgstr "ချဲ့ထွင်ချက် ၁:၁၆ "
 
 #: ../app/actions/view-actions.c:346
-#, fuzzy
 msgid "Othe_r..."
-msgstr "အခြား..."
+msgstr "အခြား... "
 
 #: ../app/actions/view-actions.c:347
-#, fuzzy
 msgid "Set a custom zoom factor"
-msgstr "စိတ်ကြိုက် ချဲ့ထွင်မှု အချက်တခုကို ချမှတ်ပါ"
+msgstr "စိတ်ကြိုက် ချဲ့ထွင်မှု အချက်တခုကို ချမှတ်ပါ "
 
 #: ../app/actions/view-actions.c:355
-#, fuzzy
 msgid "From _Theme"
-msgstr "အခင်းအကျင်းမှ"
+msgstr "အခင်းအကျင်းမှ "
 
 #: ../app/actions/view-actions.c:356
-#, fuzzy
 msgid "Use the current theme's background color"
-msgstr "လက်တလော အခင်းအကျင်းရဲ့ နောက်ခံ အရောင်ကို သုံးစွဲပါ"
+msgstr "လက်ရှိ အခင်းအကျင်းရဲ့ နောက်ခံ အရောင်ကို သုံးစွဲပါ"
 
 #: ../app/actions/view-actions.c:361
-#, fuzzy
 msgid "_Light Check Color"
-msgstr "တောက်ပမှု စစ်ဆေးတဲ့ အရောင်"
+msgstr "တောက်ပမှု စစ်ဆေးတဲ့ အရောင် "
 
 #: ../app/actions/view-actions.c:362
-#, fuzzy
 msgid "Use the light check color"
-msgstr "တောက်ပမှု စစ်ဆေးတဲ့ အရောင်ကို သုံးစွဲပါ"
+msgstr "တောက်ပမှု စစ်ဆေးတဲ့ အရောင်ကို သုံးစွဲပါ "
 
 #: ../app/actions/view-actions.c:367
-#, fuzzy
 msgid "_Dark Check Color"
-msgstr "မဲ​နက်မှု စစ်ဆေးတဲ့ အရောင်"
+msgstr "မဲ​နက်မှု စစ်ဆေးတဲ့ အရောင် "
 
 #: ../app/actions/view-actions.c:368
-#, fuzzy
 msgid "Use the dark check color"
-msgstr "မဲနက်မှု စစ်ဆေးတဲ့ အရောင်ကို သုံးစွဲပါ"
+msgstr "မဲနက်မှု စစ်ဆေးတဲ့ အရောင်ကို သုံးစွဲပါ "
 
 #: ../app/actions/view-actions.c:373
-#, fuzzy
 msgid "Select _Custom Color..."
-msgstr "စိတ်ကြိုက်အရောင်ကို ရွေးပါ..."
+msgstr "စိတ်ကြိုက်အရောင်ကို ရွေးပါ... "
 
 #: ../app/actions/view-actions.c:374
-#, fuzzy
 msgid "Use an arbitrary color"
-msgstr "တဖက်သတ် အရောင်တခုကို သုံးစွဲပါ"
+msgstr "တဖက်သတ် အရောင်တခုကို သုံးစွဲပါ "
 
 #: ../app/actions/view-actions.c:379
-#, fuzzy
 msgid "As in _Preferences"
-msgstr "ဦးစားပေးချက်များကဲ့သို့"
+msgstr "ဦးစားပေးချက်များကဲ့သို့ "
 
 #: ../app/actions/view-actions.c:380
-#, fuzzy
 msgid "Reset padding color to what's configured in preferences"
-msgstr "ဦးစားပေးချက်များမှာ စီစဉ်ဖန်တီးတဲ့အတိုင်း အခုအခံ အရောင်ကို ပြန်ချိန်ပါ"
+msgstr "ဦးစားပေးချက်များမှာ စီစဉ်ဖန်တီးတဲ့အတိုင်း အခုအခံ အရောင်ကို ပြန်ချိန်ပါ "
 
 #: ../app/actions/view-actions.c:571
 #, c-format
@@ -5073,45 +4340,37 @@ msgid "Move this window to screen %s"
 msgstr "ဒီ၀င်းဒိုးကို မျက်နှာပြင် %s ဆီ ရွှေ့ပါ"
 
 #: ../app/actions/windows-actions.c:79
-#, fuzzy
 msgid "_Windows"
-msgstr "၀င်းဒိုး"
+msgstr "၀င်းဒိုး "
 
 #: ../app/actions/windows-actions.c:80
-#, fuzzy
 msgid "_Recently Closed Docks"
-msgstr "လတ်တလော ပိတ်ထားတဲ့ ရပ်နားနေရာများ"
+msgstr "လတ်တလော ပိတ်ထားတဲ့ ရပ်နားနေရာများ "
 
 #: ../app/actions/windows-actions.c:81
-#, fuzzy
 msgid "_Dockable Dialogs"
-msgstr "ရပ်နားနိုင်တဲ့ အညွှန်းစာမျက်နှာများ"
+msgstr "ရပ်နားနိုင်တဲ့ အညွှန်းစာမျက်နှာများ "
 
 #: ../app/actions/windows-actions.c:84
-#, fuzzy
 msgid "Tool_box"
-msgstr "ကိရိယာအိတ်"
+msgstr "ကိရိယာအိတ် "
 
 #: ../app/actions/windows-actions.c:85
-#, fuzzy
 msgid "Raise the toolbox"
-msgstr "ကိရိယာအိတ်ကို မြှင့်တင်ပါ"
+msgstr "ကိရိယာအိတ်ကို မြှင့်တင်ပါ "
 
 #: ../app/base/base-enums.c:23
-#, fuzzy
 msgid "Smooth"
-msgstr "ချောမွေ့စေပါ"
+msgstr "ချောမွေ့စေပါ "
 
 #: ../app/base/base-enums.c:24
-#, fuzzy
 msgid "Freehand"
-msgstr "လက်တန်း"
+msgstr "လက်တန်း "
 
 #: ../app/base/base-enums.c:55 ../app/base/base-enums.c:125
 #: ../app/core/core-enums.c:1202
-#, fuzzy
 msgid "Value"
-msgstr "တန်ဖိုး"
+msgstr "တန်ဖိုး "
 
 #: ../app/base/base-enums.c:56 ../app/core/core-enums.c:1197
 #: ../app/tools/gimpcolorbalancetool.c:296
@@ -5132,134 +4391,109 @@ msgid "Blue"
 msgstr "အပြာရောင်"
 
 #: ../app/base/base-enums.c:59
-#, fuzzy
 msgid "Alpha"
-msgstr "အာဖာ"
+msgstr "အာဖာ "
 
 #: ../app/base/base-enums.c:60 ../app/display/gimpdisplayshell-title.c:233
 #: ../app/widgets/widgets-enums.c:84
-#, fuzzy
 msgid "RGB"
-msgstr "နီစိမ်းပြာ"
+msgstr "နီစိမ်းပြာ "
 
 #: ../app/base/base-enums.c:111
-#, fuzzy
 msgid "Normal"
-msgstr "သာမန်"
+msgstr "သာမန် "
 
 #: ../app/base/base-enums.c:112
-#, fuzzy
 msgid "Dissolve"
-msgstr "ရောနှောမှု"
+msgstr "ရောနှောမှု "
 
 #: ../app/base/base-enums.c:113
-#, fuzzy
 msgid "Behind"
-msgstr "နောက်ကွယ်မှာ"
+msgstr "နောက်ကွယ်မှာ "
 
 #: ../app/base/base-enums.c:114
-#, fuzzy
 msgid "Multiply"
-msgstr "ပွားများစေမှု"
+msgstr "ပွားများစေမှု "
 
 #: ../app/base/base-enums.c:115
-#, fuzzy
 msgid "Screen"
-msgstr "မျက်နှာပြင်"
+msgstr "မျက်နှာပြင် "
 
 #: ../app/base/base-enums.c:116
-#, fuzzy
 msgid "Overlay"
-msgstr "အထပ်လွှာ"
+msgstr "အထပ်လွှာ "
 
 #: ../app/base/base-enums.c:117
-#, fuzzy
 msgid "Difference"
-msgstr "ကွာခြားမှု"
+msgstr "ကွာခြားမှု "
 
 #: ../app/base/base-enums.c:118
-#, fuzzy
 msgid "Addition"
-msgstr "ဖြည့်စွတ်ချက်"
+msgstr "ဖြည့်စွတ်ချက် "
 
 #: ../app/base/base-enums.c:120
-#, fuzzy
 msgid "Darken only"
-msgstr "မဲနက်စေရန်သာ"
+msgstr "မဲနက်စေရန်သာ "
 
 #: ../app/base/base-enums.c:121
-#, fuzzy
 msgid "Lighten only"
-msgstr "တောက်ပစေရန်သာ"
+msgstr "တောက်ပစေရန်သာ "
 
 #: ../app/base/base-enums.c:122 ../app/core/core-enums.c:1200
-#, fuzzy
 msgid "Hue"
-msgstr "​အရောင်"
+msgstr "​အရောင် "
 
 #: ../app/base/base-enums.c:123 ../app/core/core-enums.c:1201
-#, fuzzy
 msgid "Saturation"
-msgstr "ပျော်၀င်ခြင်း"
+msgstr "ပျော်၀င်ခြင်း "
 
 #: ../app/base/base-enums.c:124 ../app/tools/gimppaintoptions-gui.c:174
 msgid "Color"
 msgstr "အရောင်"
 
 #: ../app/base/base-enums.c:126
-#, fuzzy
 msgid "Divide"
-msgstr "ခွဲခြားပါ"
+msgstr "ခွဲခြားပါ "
 
 #: ../app/base/base-enums.c:127
-#, fuzzy
 msgid "Dodge"
-msgstr "ရှောင်တိမ်းမှု"
+msgstr "ရှောင်တိမ်းမှု "
 
 #: ../app/base/base-enums.c:128
-#, fuzzy
 msgid "Burn"
-msgstr "လောင်ကျွမ်းမှု"
+msgstr "လောင်ကျွမ်းမှု "
 
 #: ../app/base/base-enums.c:129
-#, fuzzy
 msgid "Hard light"
-msgstr "အရောင်ရင့်"
+msgstr "အရောင်ရင့် "
 
 #: ../app/base/base-enums.c:130
-#, fuzzy
 msgid "Soft light"
-msgstr "အရောင်နု"
+msgstr "အရောင်နု "
 
 #: ../app/base/base-enums.c:131
-#, fuzzy
 msgid "Grain extract"
-msgstr "အကြမ်း ဆွဲထုတ်မှု"
+msgstr "အကြမ်း ဆွဲထုတ်မှု "
 
 #: ../app/base/base-enums.c:132
-#, fuzzy
 msgid "Grain merge"
-msgstr "အကြမ်း ပေါင်းစပ်မှု"
+msgstr "အကြမ်း ပေါင်းစပ်မှု "
 
 #: ../app/base/base-enums.c:133
-#, fuzzy
 msgid "Color erase"
-msgstr "ချေဖျက်တဲ့ အရောင်"
+msgstr "ချေဖျက်တဲ့ အရောင် "
 
 #: ../app/base/base-enums.c:134
-#, fuzzy
 msgid "Erase"
-msgstr "ချေဖျက်ပါ"
+msgstr "ချေဖျက်ပါ "
 
 #: ../app/base/base-enums.c:135
-#, fuzzy
 msgid "Replace"
-msgstr "အစားထိုးပါ"
+msgstr "အစားထိုးပါ "
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgid "Anti erase"
-msgstr "ဆန့်ကျင် ​ချေဖျက်မှု"
+msgstr "ဆန့်ကျင် ​ချေဖျက်မှု "
 
 #: ../app/base/tile-swap.c:553
 msgid ""
@@ -5867,44 +5101,36 @@ msgid "None"
 msgstr "ဘာမျှမရှိ"
 
 #: ../app/core/core-enums.c:54
-#, fuzzy
 msgid "Floyd-Steinberg (normal)"
-msgstr "Floyd-Steinberg (သာမန်)"
+msgstr "Floyd-Steinberg (သာမန်) "
 
 #: ../app/core/core-enums.c:55
-#, fuzzy
 msgid "Floyd-Steinberg (reduced color bleeding)"
-msgstr "Floyd-Steinberg (အရောင် ပျံ့နှံ့မှုကို လျှော့ချမှု)"
+msgstr "Floyd-Steinberg (အရောင် ပျံ့နှံ့မှုကို လျှော့ချမှု) "
 
 #: ../app/core/core-enums.c:56
-#, fuzzy
 msgid "Positioned"
-msgstr "နေရာချမှု"
+msgstr "နေရာချမှု "
 
 #: ../app/core/core-enums.c:85
-#, fuzzy
 msgid "Generate optimum palette"
-msgstr "အသင့်လျှော်ဆုံး အရောင်စပ်ဆေးခွက်ကို ထုတ်လုပ်ပါ"
+msgstr "အသင့်လျှော်ဆုံး အရောင်စပ်ဆေးခွက်ကို ထုတ်လုပ်ပါ "
 
 #: ../app/core/core-enums.c:86
-#, fuzzy
 msgid "Use web-optimized palette"
-msgstr "ကွန်ရက်အတွက် သင့်လျှော်တဲ့ အရောင်စပ်ဆေးခွက်ကို သုံးစွဲပါ"
+msgstr "ကွန်ရက်အတွက် သင့်လျှော်တဲ့ အရောင်စပ်ဆေးခွက်ကို သုံးစွဲပါ "
 
 #: ../app/core/core-enums.c:87
-#, fuzzy
 msgid "Use black and white (1-bit) palette"
-msgstr "အမဲနဲ့ အဖြူ (၁-bit) အရောင်စပ်ဆေးခွက်ကို သုံးစွဲပါ"
+msgstr "အမဲနဲ့ အဖြူ (၁-bit) အရောင်စပ်ဆေးခွက်ကို သုံးစွဲပါ "
 
 #: ../app/core/core-enums.c:88
-#, fuzzy
 msgid "Use custom palette"
-msgstr "စိတ်ကြိုက်ဖန်တီးတဲ့ အရောင်စပ်ဆေးခွက်ကို သုံးစွဲပါ"
+msgstr "စိတ်ကြိုက်ဖန်တီးတဲ့ အရောင်စပ်ဆေးခွက်ကို သုံးစွဲပါ "
 
 #: ../app/core/core-enums.c:211
-#, fuzzy
 msgid "First item"
-msgstr "ပထမ အချက်"
+msgstr "ပထမ အချက် "
 
 #: ../app/core/core-enums.c:213 ../app/dialogs/dialogs.c:198
 #: ../app/tools/tools-enums.c:210
@@ -5912,34 +5138,28 @@ msgid "Selection"
 msgstr "ရွေးချယ်ချက်"
 
 #: ../app/core/core-enums.c:214
-#, fuzzy
 msgid "Active layer"
-msgstr "သက်ကြွတဲ့ အလွှာ"
+msgstr "သက်ကြွတဲ့ အလွှာ "
 
 #: ../app/core/core-enums.c:215
-#, fuzzy
 msgid "Active channel"
-msgstr "သက်ကြွတဲ့ ချာနယ်"
+msgstr "သက်၀င်တဲ့ ချာနယ်"
 
 #: ../app/core/core-enums.c:216
-#, fuzzy
 msgid "Active path"
-msgstr "သက်ကြွတဲ့ လမ်းကြောင်း"
+msgstr "သက်၀င်တဲ့ လမ်းကြောင်း"
 
 #: ../app/core/core-enums.c:247
-#, fuzzy
 msgid "Foreground color"
-msgstr "အနီးမြင်ကွင်း အရောင်"
+msgstr " အနီးမြင်ကွင်း အရောင်"
 
 #: ../app/core/core-enums.c:248
-#, fuzzy
 msgid "Background color"
-msgstr "နောက်ခံ အရောင်"
+msgstr "နောက်ခံ အရောင် "
 
 #: ../app/core/core-enums.c:249
-#, fuzzy
 msgid "White"
-msgstr "အဖြူရောင်"
+msgstr "အဖြူရောင် "
 
 #. Transparency
 #: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2311
@@ -5947,114 +5167,92 @@ msgid "Transparency"
 msgstr "ဖေါက်ထွင်းမြင်နိုင်မှု"
 
 #: ../app/core/core-enums.c:251 ../app/core/core-enums.c:308
-#, fuzzy
 msgid "Pattern"
-msgstr "နမူနာပုံစံ"
+msgstr "နမူနာပုံစံ "
 
 #: ../app/core/core-enums.c:279
-#, fuzzy
 msgid "Stroke line"
-msgstr "စုတ်ချက် လိုင်း"
+msgstr "စုတ်ချက် လိုင်း "
 
 #: ../app/core/core-enums.c:280
-#, fuzzy
 msgid "Stroke with a paint tool"
-msgstr "ရေးဆွဲကိရိယာ တခုနဲ့ မှတ်သားပါ"
+msgstr "ရေးဆွဲကိရိယာ တခုနဲ့ မှတ်သားပါ "
 
 #: ../app/core/core-enums.c:307
-#, fuzzy
 msgid "Solid color"
-msgstr "ခိုင်မာတဲ့ အရောင်"
+msgstr "ခိုင်မာတဲ့ အရောင် "
 
 #: ../app/core/core-enums.c:336
-#, fuzzy
 msgid "Miter"
-msgstr "မိုင်တာ"
+msgstr "မိုင်တာ "
 
 #: ../app/core/core-enums.c:337 ../app/core/core-enums.c:367
-#, fuzzy
 msgid "Round"
-msgstr "အဝိုင်း"
+msgstr "အဝိုင်း "
 
 #: ../app/core/core-enums.c:338
-#, fuzzy
 msgid "Bevel"
-msgstr "အ​နားစောင်း"
+msgstr "အ​နားစောင်း "
 
 #: ../app/core/core-enums.c:366
-#, fuzzy
 msgid "Butt"
-msgstr "အစီခံ"
+msgstr "အစီခံ "
 
 #: ../app/core/core-enums.c:368 ../app/core/core-enums.c:443
-#, fuzzy
 msgid "Square"
-msgstr "စတုရန်း"
+msgstr "စတုရန်း "
 
 #: ../app/core/core-enums.c:404
-#, fuzzy
 msgid "Custom"
-msgstr "စိတ်ကြိုက်ဖန်တီးမှု"
+msgstr "စိတ်ကြိုက်ဖန်တီးမှု "
 
 #: ../app/core/core-enums.c:405
-#, fuzzy
 msgid "Line"
-msgstr "လိုင်း"
+msgstr "လိုင်း "
 
 #: ../app/core/core-enums.c:406
-#, fuzzy
 msgid "Long dashes"
-msgstr "မျဉ်းရှည်လေးများ"
+msgstr "မျဉ်းရှည်လေးများ "
 
 #: ../app/core/core-enums.c:407
-#, fuzzy
 msgid "Medium dashes"
-msgstr "အလယ်အလတ်မျဉ်းများ"
+msgstr "အလယ်အလတ်မျဉ်းများ "
 
 #: ../app/core/core-enums.c:408
-#, fuzzy
 msgid "Short dashes"
-msgstr "မျဉ်းတိုများ"
+msgstr "မျဉ်းတိုများ "
 
 #: ../app/core/core-enums.c:409
-#, fuzzy
 msgid "Sparse dots"
-msgstr "နည်းပါးတဲ့ အစက်များ"
+msgstr "နည်းပါးတဲ့ အစက်များ "
 
 #: ../app/core/core-enums.c:410
-#, fuzzy
 msgid "Normal dots"
-msgstr "သာမန် အစက်များ"
+msgstr "သာမန် အစက်များ "
 
 #: ../app/core/core-enums.c:411
-#, fuzzy
 msgid "Dense dots"
-msgstr "သိပ်သည်းတဲ့ အစက်များ"
+msgstr "သိပ်သည်းတဲ့ အစက်များ "
 
 #: ../app/core/core-enums.c:412
-#, fuzzy
 msgid "Stipples"
-msgstr "အစက်အပြောက်များ"
+msgstr "အစက်အပြောက်များ "
 
 #: ../app/core/core-enums.c:413
-#, fuzzy
 msgid "Dash, dot"
-msgstr "မျဉ်းလေး၊ အစက်"
+msgstr "မျဉ်းလေး၊ အစက် "
 
 #: ../app/core/core-enums.c:414
-#, fuzzy
 msgid "Dash, dot, dot"
-msgstr "မျဉ်းလေး၊ အစက်၊ အစက်"
+msgstr "မျဉ်းလေး၊ အစက်၊ အစက် "
 
 #: ../app/core/core-enums.c:442
-#, fuzzy
 msgid "Circle"
-msgstr "စက်ဝိုင်း"
+msgstr "စက်ဝိုင်း "
 
 #: ../app/core/core-enums.c:444
-#, fuzzy
 msgid "Diamond"
-msgstr "စိန်"
+msgstr "စိန် "
 
 #: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2343
 msgid "Horizontal"
@@ -6065,149 +5263,120 @@ msgid "Vertical"
 msgstr "ဒေါင်လိုက်"
 
 #: ../app/core/core-enums.c:474
-#, fuzzy
 msgid "Unknown"
-msgstr "အမည်မသိ"
+msgstr "အမည်မသိ "
 
 #: ../app/core/core-enums.c:505
-#, fuzzy
 msgid "All layers"
-msgstr "အလွှာများအားလုံး"
+msgstr "အလွှာများအားလုံး "
 
 #: ../app/core/core-enums.c:506
-#, fuzzy
 msgid "Image-sized layers"
-msgstr "ရုပ်ပုံ-အရွယ် အလွှာများ"
+msgstr "ရုပ်ပုံ-အရွယ် အလွှာများ "
 
 #: ../app/core/core-enums.c:507
-#, fuzzy
 msgid "All visible layers"
-msgstr "မြင်နိုင်တဲ့ အလွှာများ အားလုံး"
+msgstr "မြင်နိုင်တဲ့ အလွှာများ အားလုံး "
 
 #: ../app/core/core-enums.c:508
-#, fuzzy
 msgid "All linked layers"
-msgstr "ချိတ်ဆက်တဲ့ အလွှာများ အားလုံး"
+msgstr "ချိတ်ဆက်တဲ့ အလွှာများ အားလုံး "
 
 #: ../app/core/core-enums.c:572
-#, fuzzy
 msgid "Tiny"
-msgstr "အလွန် သေးငယ်တယ်"
+msgstr "အလွန် သေးငယ်တယ် "
 
 #: ../app/core/core-enums.c:573
-#, fuzzy
 msgid "Very small"
-msgstr "အလွန် ငယ်တယ်"
+msgstr "အလွန် ငယ်တယ် "
 
 #: ../app/core/core-enums.c:574
-#, fuzzy
 msgid "Small"
-msgstr "ငယ်တယ်"
+msgstr "ငယ်တယ် "
 
 #: ../app/core/core-enums.c:575
-#, fuzzy
 msgid "Medium"
-msgstr "အလယ်အလတ်"
+msgstr "အလယ်အလတ် "
 
 #: ../app/core/core-enums.c:576
-#, fuzzy
 msgid "Large"
-msgstr "ကြီးမားတယ်"
+msgstr "ကြီးမားတယ် "
 
 #: ../app/core/core-enums.c:577
-#, fuzzy
 msgid "Very large"
-msgstr "အလွန် ကြီးတယ်"
+msgstr "အလွန် ကြီးတယ် "
 
 #: ../app/core/core-enums.c:578
-#, fuzzy
 msgid "Huge"
-msgstr "အလွန်ကြီးမားတယ်"
+msgstr "အလွန်ကြီးမားတယ် "
 
 #: ../app/core/core-enums.c:579
-#, fuzzy
 msgid "Enormous"
-msgstr "ဧရာမ ကြီးမားတယ် "
+msgstr "ဧရာမ ကြီးမားတယ်  "
 
 #: ../app/core/core-enums.c:580
-#, fuzzy
 msgid "Gigantic"
-msgstr "အတိုင်းထက် ကြီးမားတယ်"
+msgstr "အတိုင်းထက် ကြီးမားတယ် "
 
 #: ../app/core/core-enums.c:607
-#, fuzzy
 msgid "View as list"
-msgstr "စာရင်း ပုံစံနဲ့ ရှုမြင်ပါ"
+msgstr "စာရင်း ပုံစံနဲ့ ရှုမြင်ပါ "
 
 #: ../app/core/core-enums.c:608
-#, fuzzy
 msgid "View as grid"
-msgstr "ဂရစ်ကွယ်ပုံစံနဲ့ ရှုမြင်ပါ"
+msgstr "ဂရစ်ကွယ်ပုံစံနဲ့ ရှုမြင်ပါ "
 
 #: ../app/core/core-enums.c:672
-#, fuzzy
 msgid "No thumbnails"
-msgstr "လက်သည်းပုံများ မရှိဘူး"
+msgstr "လက်သည်းပုံများ မရှိဘူး "
 
 #: ../app/core/core-enums.c:673
-#, fuzzy
 msgid "Normal (128x128)"
-msgstr "သာမန် (၁၂၈x၁၂၈)"
+msgstr "သာမန် (၁၂၈x၁၂၈) "
 
 #: ../app/core/core-enums.c:674
-#, fuzzy
 msgid "Large (256x256)"
-msgstr "ကြီးမားတယ် (၂၅၆x၂၅၆)"
+msgstr "ကြီးမားတယ် (၂၅၆x၂၅၆) "
 
 #: ../app/core/core-enums.c:850
-#, fuzzy
 msgid "<<invalid>>"
-msgstr "<<မမှန်ဘူး>>"
+msgstr "<<မမှန်ဘူး>> "
 
 #: ../app/core/core-enums.c:851
-#, fuzzy
 msgid "Scale image"
-msgstr "ရုပ်ပုံကို စကေးချပါ"
+msgstr "ရုပ်ပုံကို စကေးချပါ "
 
 #: ../app/core/core-enums.c:852
-#, fuzzy
 msgid "Resize image"
-msgstr "ရုပ်ပုံကို အရွယ်ညှိပါ"
+msgstr "ရုပ်ပုံကို အရွယ်ညှိပါ "
 
 #: ../app/core/core-enums.c:853
-#, fuzzy
 msgid "Flip image"
-msgstr "ရုပ်ပုံကို လှန်ဖွင့်ပါ"
+msgstr "ရုပ်ပုံကို လှန်ဖွင့်ပါ "
 
 #: ../app/core/core-enums.c:854
-#, fuzzy
 msgid "Rotate image"
-msgstr "ရုပ်ပုံကို လှည့်ပါ"
+msgstr "ရုပ်ပုံကို လှည့်ပါ "
 
 #: ../app/core/core-enums.c:855
-#, fuzzy
 msgid "Crop image"
-msgstr "ရုပ်ပုံကို လှီးဖြတ်ပါ"
+msgstr "ရုပ်ပုံကို လှီးဖြတ်ပါ "
 
 #: ../app/core/core-enums.c:856
-#, fuzzy
 msgid "Convert image"
-msgstr "ရုပ်ပုံကို အသွင်ပြောင်းပါ"
+msgstr "ရုပ်ပုံကို အသွင်ပြောင်းပါ "
 
 #: ../app/core/core-enums.c:857
-#, fuzzy
 msgid "Remove item"
-msgstr "အချက်ကို ဖယ်ရှားပါ"
+msgstr "အချက်ကို ဖယ်ရှားပါ "
 
 #: ../app/core/core-enums.c:858
-#, fuzzy
 msgid "Merge layers"
-msgstr "အလွှာများကို ပေါင်းစပ်ပါ"
+msgstr "အလွှာများကို ပေါင်းစပ်ပါ "
 
 #: ../app/core/core-enums.c:859
-#, fuzzy
 msgid "Merge paths"
-msgstr "လမ်းကြောင်းများကို ပေါင်းစပ်ပါ"
+msgstr "လမ်းကြောင်းများကို ပေါင်းစပ်ပါ "
 
 #: ../app/core/core-enums.c:861 ../app/core/core-enums.c:892
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:152
@@ -6216,94 +5385,76 @@ msgid "Grid"
 msgstr "ဂရစ်ကွက်"
 
 #: ../app/core/core-enums.c:862 ../app/core/core-enums.c:894
-#, fuzzy
 msgid "Guide"
-msgstr "လမ်းညွှန်"
+msgstr "လမ်းညွှန် "
 
 #: ../app/core/core-enums.c:863 ../app/core/core-enums.c:895
-#, fuzzy
 msgid "Sample Point"
-msgstr "နမူနာ အမှတ်"
+msgstr "နမူနာ အမှတ် "
 
 #: ../app/core/core-enums.c:864 ../app/core/core-enums.c:896
-#, fuzzy
 msgid "Layer/Channel"
-msgstr "အလွှာ/ချာနယ်"
+msgstr "အလွှာ/ချာနယ်  "
 
 #: ../app/core/core-enums.c:865 ../app/core/core-enums.c:897
-#, fuzzy
 msgid "Layer/Channel modification"
-msgstr "အလွှာ/ချာနယ် ပြုပြင်မှု"
+msgstr "အလွှာ/ချာနယ် ပြုပြင်မှု "
 
 #: ../app/core/core-enums.c:866 ../app/core/core-enums.c:898
-#, fuzzy
 msgid "Selection mask"
-msgstr "ရွေးချယ်ချက် မျက်နှာဖုံး"
+msgstr "ရွေးချယ်ချက် မျက်နှာဖုံး "
 
 #: ../app/core/core-enums.c:867 ../app/core/core-enums.c:901
-#, fuzzy
 msgid "Item visibility"
-msgstr "အချက် မြင်ကွင်း"
+msgstr "အချက် မြင်ကွင်း "
 
 #: ../app/core/core-enums.c:868 ../app/core/core-enums.c:902
-#, fuzzy
 msgid "Link/Unlink item"
-msgstr "အချက်ကို ချိတ်ဆက်ပါ/မချိတ်ဆက်နဲ့"
+msgstr "အချက်ကို ချိတ်ဆက်ပါ/မချိတ်ဆက်နဲ့ "
 
 #: ../app/core/core-enums.c:869
-#, fuzzy
 msgid "Item properties"
-msgstr "အချက် ဂုဏ်အင်္ဂါရပ်များ"
+msgstr "အချက် ဂုဏ်အင်္ဂါရပ်များ "
 
 #: ../app/core/core-enums.c:870 ../app/core/core-enums.c:900
-#, fuzzy
 msgid "Move item"
-msgstr "အချက်ကို ရွှေ့ပါ"
+msgstr "အချက်ကို ရွှေ့ပါ "
 
 #: ../app/core/core-enums.c:871
-#, fuzzy
 msgid "Scale item"
-msgstr "အချက်ကို ​စကေးချပါ"
+msgstr "အချက်ကို ​စကေးချပါ "
 
 #: ../app/core/core-enums.c:872
-#, fuzzy
 msgid "Resize item"
-msgstr "အချက်ကို အရွယ်ညှိပါ"
+msgstr "အချက်ကို အရွယ်ညှိပါ "
 
 #: ../app/core/core-enums.c:873
-#, fuzzy
 msgid "Add layer"
-msgstr "အလွှာ ပေါင်းထည့်ပါ"
+msgstr "အလွှာ ပေါင်းထည့်ပါ "
 
 #: ../app/core/core-enums.c:874 ../app/core/core-enums.c:911
-#, fuzzy
 msgid "Add layer mask"
-msgstr "အလွှာမျက်နှာဖုံး ပေါင်းထည့်ပါ"
+msgstr "အလွှာမျက်နှာဖုံး ပေါင်းထည့်ပါ "
 
 #: ../app/core/core-enums.c:875 ../app/core/core-enums.c:913
-#, fuzzy
 msgid "Apply layer mask"
-msgstr "အလွှာ မျက်နှာဖုံးကို အသုံးချပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို အသုံးချပါ "
 
 #: ../app/core/core-enums.c:876 ../app/core/core-enums.c:923
-#, fuzzy
 msgid "Floating selection to layer"
-msgstr "အလွှာအတွက် မျောနေတဲ့ ရွေးချယ်ချက်"
+msgstr "အလွှာအတွက် မျောနေတဲ့ ရွေးချယ်ချက် "
 
 #: ../app/core/core-enums.c:877
-#, fuzzy
 msgid "Float selection"
-msgstr "မျောနေတဲ့ ရွေးချယ်ချက်"
+msgstr "မျောနေတဲ့ ရွေးချယ်ချက် "
 
 #: ../app/core/core-enums.c:878
-#, fuzzy
 msgid "Anchor floating selection"
-msgstr "မျောနေတဲ့ ရွေးချယ်ချက်ကို ချိတ်တွယ်ပါ"
+msgstr "မျောနေတဲ့ ရွေးချယ်ချက်ကို ချိတ်တွယ်ပါ "
 
 #: ../app/core/core-enums.c:879
-#, fuzzy
 msgid "Remove floating selection"
-msgstr "မျောနေတဲ့ ရွေးချယ်ချက်ကို ဖယ်ရှားပါ"
+msgstr "မျောနေတဲ့ ရွေးချယ်ချက်ကို ဖယ်ရှားပါ "
 
 #: ../app/core/core-enums.c:880 ../app/core/gimp-edit.c:262
 msgid "Paste"
@@ -6313,7 +5464,7 @@ msgstr "ပွားယူပါ"
 msgid "Cut"
 msgstr "ဖြတ်ယူပါ"
 
-#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:160
+#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:161
 #: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "စာသား"
@@ -6329,143 +5480,116 @@ msgid "Paint"
 msgstr "ရေးဆွဲပါ"
 
 #: ../app/core/core-enums.c:885 ../app/core/core-enums.c:930
-#, fuzzy
 msgid "Attach parasite"
-msgstr "ကပ်ပါးကောင်ကို ပူးတွဲပါ"
+msgstr "ကပ်ပါးကောင်ကို ပူးတွဲပါ "
 
 #: ../app/core/core-enums.c:886 ../app/core/core-enums.c:931
-#, fuzzy
 msgid "Remove parasite"
-msgstr "ကပ်ပါးကောင်ကို ဖယ်ရှားပါ"
+msgstr "ကပ်ပါးကောင်ကို ဖယ်ရှားပါ "
 
 #: ../app/core/core-enums.c:887
-#, fuzzy
 msgid "Import paths"
-msgstr "လမ်းကြောင်းများကို တင်သွင်းပါ"
+msgstr "လမ်းကြောင်းများကို တင်သွင်းပါ "
 
 #: ../app/core/core-enums.c:888 ../app/pdb/drawable-cmds.c:885
 msgid "Plug-In"
 msgstr "ယန္တရားငယ်"
 
 #: ../app/core/core-enums.c:889
-#, fuzzy
 msgid "Image type"
-msgstr "ရုပ်ပုံ အမျိုးအစား"
+msgstr "ရုပ်ပုံ အမျိုးအစား "
 
 #: ../app/core/core-enums.c:890
-#, fuzzy
 msgid "Image size"
-msgstr "ရုပ်ပုံ အရွယ်"
+msgstr "ရုပ်ပုံ အရွယ် "
 
 #: ../app/core/core-enums.c:891
-#, fuzzy
 msgid "Image resolution change"
-msgstr "ရုပ်ပုံ ထင်ရှားပြတ်သားမှု အပြောင်းအလဲ"
+msgstr "ရုပ်ပုံ ထင်ရှားပြတ်သားမှု အပြောင်းအလဲ "
 
 #: ../app/core/core-enums.c:893
-#, fuzzy
 msgid "Change indexed palette"
-msgstr "ညွှန်းထားတဲ့ အရောင်စပ်ဆေးခွက်ကို ပြောင်းလဲပါ"
+msgstr "ညွှန်းထားတဲ့ အရောင်စပ်ဆေးခွက်ကို ပြောင်းလဲပါ "
 
 #: ../app/core/core-enums.c:899
-#, fuzzy
 msgid "Rename item"
-msgstr "အချက်ကို အမည်ပြောင်းပါ"
+msgstr "အချက်ကို အမည်ပြောင်းပါ "
 
 #: ../app/core/core-enums.c:903
-#, fuzzy
 msgid "New layer"
-msgstr "အလွှာသစ်"
+msgstr "အလွှာသစ် "
 
 #: ../app/core/core-enums.c:904
-#, fuzzy
 msgid "Delete layer"
-msgstr "အလွှာကို ပယ်ဖျက်ပါ"
+msgstr "အလွှာကို ပယ်ဖျက်ပါ "
 
 #: ../app/core/core-enums.c:905
-#, fuzzy
 msgid "Reposition layer"
-msgstr "နေရာပြန်ချတဲ့ အလွှာ"
+msgstr "နေရာပြန်ချတဲ့ အလွှာ "
 
 #: ../app/core/core-enums.c:906
-#, fuzzy
 msgid "Set layer mode"
-msgstr "အလွှာ စနစ်ကို ချမှတ်ပါ"
+msgstr "အလွှာ စနစ်ကို ချမှတ်ပါ "
 
 #: ../app/core/core-enums.c:907
-#, fuzzy
 msgid "Set layer opacity"
-msgstr "အလွှာ အလင်းပိတ်မှုကို ချမှတ်ပါ"
+msgstr "အလွှာ အလင်းပိတ်မှုကို ချမှတ်ပါ "
 
 #: ../app/core/core-enums.c:908
-#, fuzzy
 msgid "Lock/Unlock alpha channel"
-msgstr "အာဖာ ချာနယ်ကို သော့ပိတ်/ဖွင့်ပါ"
+msgstr "အာဖာ ချာနယ်ကို သော့ပိတ်/ဖွင့်ပါ "
 
 #: ../app/core/core-enums.c:909
-#, fuzzy
 msgid "Text layer"
-msgstr "စာသား အလွှာ"
+msgstr "စာသား အလွှာ "
 
 #: ../app/core/core-enums.c:910
-#, fuzzy
 msgid "Text layer modification"
-msgstr "စာသား အလွှာ ပြုပြင်မှု"
+msgstr "စာသား အလွှာ ပြုပြင်မှု "
 
 #: ../app/core/core-enums.c:912
-#, fuzzy
 msgid "Delete layer mask"
-msgstr "အလွှာ မျက်နှာဖုံးကို ပယ်ဖျက်ပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို ပယ်ဖျက်ပါ "
 
 #: ../app/core/core-enums.c:914
-#, fuzzy
 msgid "Show layer mask"
-msgstr "အလွှာ မျက်နှာဖုံးကို ပြသပါ"
+msgstr "အလွှာ မျက်နှာဖုံးကို ပြသပါ "
 
 #: ../app/core/core-enums.c:915
-#, fuzzy
 msgid "New channel"
-msgstr "ချာနယ် အသစ်"
+msgstr "ချာနယ် အသစ် "
 
 #: ../app/core/core-enums.c:916
-#, fuzzy
 msgid "Delete channel"
-msgstr "ချာနယ်ကို ပယ်ဖျက်ပါ"
+msgstr "ချာနယ်ကို ပယ်ဖျက်ပါ "
 
 #: ../app/core/core-enums.c:917
-#, fuzzy
 msgid "Reposition channel"
-msgstr "ချာနယ်ကို နေရာပြန်ချပါ"
+msgstr "ချာနယ်ကို နေရာပြန်ချပါ "
 
 #: ../app/core/core-enums.c:918
-#, fuzzy
 msgid "Channel color"
-msgstr "ချာနယ် အရောင်"
+msgstr "ချာနယ် အရောင် "
 
 #: ../app/core/core-enums.c:919
-#, fuzzy
 msgid "New path"
-msgstr "လမ်းကြောင်း အသစ်"
+msgstr "လမ်းကြောင်း အသစ် "
 
 #: ../app/core/core-enums.c:921
-#, fuzzy
 msgid "Path modification"
-msgstr "လမ်းကြောင်း ပြုပြင်မှု"
+msgstr "လမ်းကြောင်း ပြုပြင်မှု "
 
 #: ../app/core/core-enums.c:922
-#, fuzzy
 msgid "Reposition path"
-msgstr "လမ်းကြောင်း နေရာပြန်ချမှု"
+msgstr "လမ်းကြောင်း နေရာပြန်ချမှု "
 
 #: ../app/core/core-enums.c:924
-#, fuzzy
 msgid "Rigor floating selection"
-msgstr "မျောနေတဲ့ ရွေးချယ်ချက်ကို ချိတ်တွယ်ပါ"
+msgstr "မျောနေတဲ့ ရွေးချယ်ချက်ကို တင်းကျပ်ပါ "
 
 #: ../app/core/core-enums.c:925
-#, fuzzy
 msgid "Relax floating selection"
-msgstr "မျောနေတဲ့ ရွေးချယ်ချက် တခုကို ဖန်တီးပါ"
+msgstr "မျောနေတဲ့ ရွေးချယ်ချက် တခုကို ဖြေလျှော့ပါ"
 
 #: ../app/core/core-enums.c:928 ../app/paint/gimpink.c:95
 #: ../app/tools/gimpinktool.c:55
@@ -6473,49 +5597,40 @@ msgid "Ink"
 msgstr "မင်ရည်"
 
 #: ../app/core/core-enums.c:929
-#, fuzzy
 msgid "Select foreground"
-msgstr "အနီးမြင်ကွင်းကို ရွေးပါ"
+msgstr "အနီးမြင်ကွင်းကို ရွေးပါ "
 
 #: ../app/core/core-enums.c:932
-#, fuzzy
 msgid "Not undoable"
-msgstr "ပြန်ဖြည်လို့ မရဘူး"
+msgstr "ပြန်ဖြည်လို့ မရဘူး "
 
 #: ../app/core/core-enums.c:1196
-#, fuzzy
 msgid "Composite"
-msgstr "ပေါင်းစပ်ပါ"
+msgstr "ပေါင်းစပ်ပါ "
 
 #: ../app/core/core-enums.c:1230
-#, fuzzy
 msgid "Message"
-msgstr "သတင်းတို"
+msgstr "သတင်းတို "
 
 #: ../app/core/core-enums.c:1231
-#, fuzzy
 msgid "Warning"
-msgstr "သတိပေးချက်"
+msgstr "သတိပေးချက် "
 
 #: ../app/core/core-enums.c:1232
-#, fuzzy
 msgid "Error"
-msgstr "မှားယွင်းမှု"
+msgstr "မှားယွင်းမှု "
 
 #: ../app/core/core-enums.c:1260
-#, fuzzy
 msgid "Ask what to do"
-msgstr "လုပ်မဲ့အရာကို မေးပါ"
+msgstr "လုပ်မဲ့အရာကို မေးပါ "
 
 #: ../app/core/core-enums.c:1261
-#, fuzzy
 msgid "Keep embedded profile"
-msgstr "ထည့်မြုပ်တဲ့ ခြုံငုံချက်ကို သိမ်းထားပါ"
+msgstr "ထည့်မြုပ်တဲ့ ခြုံငုံချက်ကို သိမ်းထားပါ "
 
 #: ../app/core/core-enums.c:1262
-#, fuzzy
 msgid "Convert to RGB workspace"
-msgstr "နီစိမ်းပြာ လုပ်ကွက်ထဲ အသွင်ပြောင်းပါ"
+msgstr "နီစိမ်းပြာ လုပ်ကွက်ထဲ အသွင်ပြောင်းပါ "
 
 #: ../app/core/gimp-contexts.c:155 ../app/core/gimptooloptions.c:231
 #: ../app/gui/session.c:307 ../app/menus/menus.c:433
@@ -7694,9 +6809,8 @@ msgstr "နောက်ခံ"
 
 #. pseudo unit
 #: ../app/core/gimpunit.c:56
-#, fuzzy
 msgid "pixel"
-msgstr "ပစ်ဆယ်"
+msgstr "ပစ်ဆယ် "
 
 #: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:877
 #: ../app/tools/gimpmeasuretool.c:1020 ../app/tools/gimpmeasuretool.c:1076
@@ -7706,55 +6820,45 @@ msgstr "ပစ်ဆယ်များ"
 
 #. standard units
 #: ../app/core/gimpunit.c:59
-#, fuzzy
 msgid "inch"
-msgstr "လက်မ"
+msgstr "လက်မ "
 
 #: ../app/core/gimpunit.c:59
-#, fuzzy
 msgid "inches"
-msgstr "လက်မများ"
+msgstr "လက်မများ "
 
 #: ../app/core/gimpunit.c:60
-#, fuzzy
 msgid "millimeter"
-msgstr "မီလီမီတာ"
+msgstr "မီလီမီတာ "
 
 #: ../app/core/gimpunit.c:60
-#, fuzzy
 msgid "millimeters"
-msgstr "မီလီမီတာများ"
+msgstr "မီလီမီတာများ "
 
 #. professional units
 #: ../app/core/gimpunit.c:63
-#, fuzzy
 msgid "point"
-msgstr "အမှတ်"
+msgstr "အမှတ် "
 
 #: ../app/core/gimpunit.c:63
-#, fuzzy
 msgid "points"
-msgstr "အမှတ်များ"
+msgstr "အမှတ်များ "
 
 #: ../app/core/gimpunit.c:64
-#, fuzzy
 msgid "pica"
-msgstr "ပိုင်ကာ"
+msgstr "ပိုင်ကာ "
 
 #: ../app/core/gimpunit.c:64
-#, fuzzy
 msgid "picas"
-msgstr "ပိုင်ကာများ"
+msgstr "ပိုင်ကာများ "
 
 #: ../app/core/gimpunit.c:71
-#, fuzzy
 msgid "percent"
-msgstr "ရာခိုင်နှုန်း"
+msgstr "ရာခိုင်နှုန်း "
 
 #: ../app/core/gimpunit.c:71
-#, fuzzy
 msgid "plural|percent"
-msgstr "ရာခိုင်နှုန်း"
+msgstr "အများ|ရာခိုင်နှုန်း"
 
 #: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
@@ -9092,10 +8196,10 @@ msgid "If you close these images now, changes will be lost."
 msgstr "ဒီရုပ်ပုံများကို ယခု သင်ပိတ်ရင်၊ ပြင်ဆင်ချက်တွေ ဆုံးရှုံးလိမ့်မယ်။"
 
 #: ../app/dialogs/quit-dialog.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "သိမ်းဆည်းမထားတဲ့ ပြင်ဆင်ချက်များ ရှိတဲ့ ရုပ်ပုံတခု ရှိတယ် -"
+msgstr[0] "သိမ်းဆည်းမထားတဲ့ ပြင်ဆင်ချက်များ ပါတဲ့ ရုပ်ပုံ %d ပုံ ရှိတယ် -"
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
@@ -9261,64 +8365,52 @@ msgid "Path name:"
 msgstr "လမ်းကြောင်း အမည် -"
 
 #: ../app/display/display-enums.c:24
-#, fuzzy
 msgid "Tool icon"
-msgstr "ကိရိယာ ပုံသ​င်္ကေတ"
+msgstr "ကိရိယာ ပုံသ​င်္ကေတ "
 
 #: ../app/display/display-enums.c:25
-#, fuzzy
 msgid "Tool icon with crosshair"
-msgstr "Crosshair ပါတဲ့ ကိရိယာ ပုံသင်္ကေတ"
+msgstr "Crosshair ပါတဲ့ ကိရိယာ ပုံသင်္ကေတ "
 
 #: ../app/display/display-enums.c:26
-#, fuzzy
 msgid "Crosshair only"
-msgstr "Crosshair သာလျှင်"
+msgstr "Crosshair ကိုသာ"
 
 #: ../app/display/display-enums.c:85
-#, fuzzy
 msgid "From theme"
-msgstr "အခင်းအကျင်းမှ"
+msgstr "အခင်းအကျင်းမှ "
 
 #: ../app/display/display-enums.c:86
-#, fuzzy
 msgid "Light check color"
-msgstr "တောက်ပမှု စစ်ဆေးတဲ့ အရောင်"
+msgstr "တောက်ပမှု စစ်ဆေးတဲ့ အရောင် "
 
 #: ../app/display/display-enums.c:87
-#, fuzzy
 msgid "Dark check color"
-msgstr "မဲနက်မှု စစ်ဆေးတဲ့ အရောင်"
+msgstr "မဲနက်မှု စစ်ဆေးတဲ့ အရောင် "
 
 #: ../app/display/display-enums.c:88
-#, fuzzy
 msgid "Custom color"
-msgstr "စိတ်ကြိုက် အရောင်"
+msgstr "စိတ်ကြိုက် အရောင် "
 
 #: ../app/display/display-enums.c:116
-#, fuzzy
 msgid "No action"
-msgstr "လုပ်ဆောင်မှု မရှိဘူး"
+msgstr "လုပ်ဆောင်မှု မရှိဘူး "
 
 #: ../app/display/display-enums.c:117
-#, fuzzy
 msgid "Pan view"
-msgstr "တပြင်လုံး ရှုမြင်ချက်"
+msgstr "တပြင်လုံး မြင်ကွင်း"
 
 #: ../app/display/display-enums.c:118
-#, fuzzy
 msgid "Switch to Move tool"
-msgstr "ရွှေ့လျား ကိရိယာဆီ ကူးပြောင်းပါ"
+msgstr "ရွှေ့လျား ကိရိယာဆီ ကူးပြောင်းပါ "
 
 #: ../app/display/display-enums.c:145
-#, fuzzy
 msgid "quality|Low"
-msgstr "အရည်အသွေး"
+msgstr "အရည်အသွေး|အဆင့်နိမ့်"
 
 #: ../app/display/display-enums.c:146
-#, fuzzy
 msgid "quality|High"
-msgstr "အရည်အသွေး"
+msgstr "အရည်အသွေး|အဆင့်မြင့်"
 
 #: ../app/display/gimpdisplay-handlers.c:160
 #, c-format
@@ -9349,9 +8441,8 @@ msgid "Close %s"
 msgstr "%s ကို ပိတ်ပါ"
 
 #: ../app/display/gimpdisplayshell-close.c:159
-#, fuzzy
 msgid "Do_n't Save"
-msgstr "သိမ်းဆည်းပါ"
+msgstr "မသိမ်းဆည်းပါနဲ့"
 
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
@@ -9359,11 +8450,12 @@ msgid "Save the changes to image '%s' before closing?"
 msgstr "မပိတ်ခင် '%s' ရုပ်ပုံ ပြင်ဆင်ချက်များကို သိမ်းဆည်းပါ။"
 
 #: ../app/display/gimpdisplayshell-close.c:254
-#, fuzzy, c-format
+#, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] "ရုပ်ပုံကို သင် မသိမ်းထားရင်၊​ နောက်ဆုံး ​နာရီ ပြင်ဆင်ချက်တွေ ပျောက်ဆုံးလိမ့်မယ်။"
+msgstr[0] ""
+"ရုပ်ပုံကို သင် မသိမ်းဆည်းရင်၊​ နောက်ဆုံး ​%d နာရီအချိန် ပြင်ဆင်ချက်တွေ ပျောက်ဆုံးလိမ့်မယ်။"
 
 #: ../app/display/gimpdisplayshell-close.c:264
 #, c-format
@@ -9377,11 +8469,12 @@ msgstr[0] ""
 "ရုပ်ပုံကို သင် မသိမ်းထားရင်၊​ နောက်ဆုံး ​နာရီ ပြင်ဆင်ချက်တွေနဲ့ %d မိနစ် ပျောက်ဆုံးလိမ့်မယ်။"
 
 #: ../app/display/gimpdisplayshell-close.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "ရုပ်ပုံကို သင် မသိမ်းထားရင်၊​ နောက်ဆုံး ​မိနစ် ပြင်ဆင်ချက်တွေ ပျောက်ဆုံးလိမ့်မယ်။"
+msgstr[0] ""
+"ရုပ်ပုံကို သင် မသိမ်းဆည်းရင်၊​ နောက်ဆုံး %d မိနစ်များ ​ပြင်ဆင်ချက်တွေ ပျောက်ဆုံးလိမ့်မယ်။"
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
 #: ../app/display/gimpdisplayshell-dnd.c:587
@@ -9433,26 +8526,23 @@ msgstr "ချဲ့ထွင်မှု -"
 
 #: ../app/display/gimpdisplayshell-title.c:233
 msgid "RGB-empty"
-msgstr ""
+msgstr "နီးစိမ်းပြာ-ဗလာ"
 
 #: ../app/display/gimpdisplayshell-title.c:236
-#, fuzzy
 msgid "grayscale-empty"
-msgstr "မီးခိုးရောင်"
+msgstr "မီးခိုးရောင်-ဗလာ"
 
 #: ../app/display/gimpdisplayshell-title.c:236
-#, fuzzy
 msgid "grayscale"
-msgstr "မီးခိုးရောင်"
+msgstr "မီးခိုးရောင် "
 
 #: ../app/display/gimpdisplayshell-title.c:239
 msgid "indexed-empty"
-msgstr ""
+msgstr "ညွှန်းထားချက်-ဗလာ"
 
 #: ../app/display/gimpdisplayshell-title.c:239
-#, fuzzy
 msgid "indexed"
-msgstr "အညွှန်း %d"
+msgstr "ညွှန်းထားချက်"
 
 #: ../app/display/gimpdisplayshell-title.c:293
 msgid "(modified)"
@@ -9622,34 +8712,28 @@ msgid "Set a source image first."
 msgstr "အရင်းအမြစ် ရုပ်ပုံတခုကို အရင် ချမှတ်ပါ။"
 
 #: ../app/paint/paint-enums.c:51
-#, fuzzy
 msgid "Modify Perspective"
-msgstr "ရှုထောင့်ကို ပြုပြင်ပါ"
+msgstr "ရှုထောင့်ကို ပြုပြင်ပါ "
 
 #: ../app/paint/paint-enums.c:82
-#, fuzzy
 msgid "Aligned"
-msgstr "တန်းညှိ​ချက်"
+msgstr "တန်းညှိ​ချက်  "
 
 #: ../app/paint/paint-enums.c:83
-#, fuzzy
 msgid "Registered"
-msgstr "မှတ်ပုံတင်ချက်"
+msgstr "မှတ်ပုံတင်ချက် "
 
 #: ../app/paint/paint-enums.c:84
-#, fuzzy
 msgid "Fixed"
-msgstr "သတ်မှတ်ချက်"
+msgstr "သတ်မှတ်ချက် "
 
 #: ../app/paint/paint-enums.c:111
-#, fuzzy
 msgid "Blur"
-msgstr "မှုန်ဝါးစေပါ"
+msgstr "မှုန်ဝါးစေပါ "
 
 #: ../app/paint/paint-enums.c:112
-#, fuzzy
 msgid "Sharpen"
-msgstr "စူးရှစေပါ"
+msgstr "စူးရှစေပါ "
 
 #: ../app/pdb/channel-cmds.c:183
 msgid "Combine Masks"
@@ -9702,14 +8786,14 @@ msgstr ""
 "မရဘူး။"
 
 #: ../app/pdb/floating-sel-cmds.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot rigor this layer because it is not a floating selection."
-msgstr "ဒီအလွှာဟာ မျောနေတဲ့ ရွေးချယ်ချက် တခု မဟုတ်တဲ့အတွက် ဖယ်ရှားလို့ မရဘူး။"
+msgstr "ဒီအလွှာဟာ မျောနေတဲ့ ရွေးချယ်ချက် တခု မဟုတ်တဲ့အတွက် တင်းကျပ်လို့ မရဘူး။"
 
 #: ../app/pdb/floating-sel-cmds.c:222
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot relax this layer because it is not a floating selection."
-msgstr "ဒီအလွှာဟာ မျောနေတဲ့ ရွေးချယ်ချက် တခု မဟုတ်တဲ့အတွက် ဖယ်ရှားလို့ မရဘူး။"
+msgstr "ဒီအလွှာဟာ မျောနေတဲ့ ရွေးချယ်ချက် တခု မဟုတ်တဲ့အတွက် လွှတ်ထားလို့ မရဘူး။"
 
 #: ../app/pdb/gimppdb-query.c:300 ../app/pdb/gimppdb.c:307
 #: ../app/pdb/gimppdb.c:377
@@ -9836,9 +8920,9 @@ msgstr ""
 "မျှော်လင့်ထားတယ်"
 
 #: ../app/pdb/gimppdb-utils.c:430
-#, fuzzy, c-format
+#, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
-msgstr "ရုပ်ပုံ '%s' (%d) ဟာ အမျိုးအစား ဖြစ်နေပြီ"
+msgstr "ရုပ်ပုံ '%s' (%d) ဟာ '%s' အမျိုးအစား ဖြစ်နေပြီ"
 
 #: ../app/pdb/gimppdb-utils.c:455
 #, c-format
@@ -9914,22 +8998,22 @@ msgstr ""
 "အဖြစ်နိုင်ဆုံး ယန္တရားငယ် တခုဟာ မရှိတော့တဲ့ ရုပ်ပုံတခုမှာ လုပ်ဆောင်ဖို့ ကြိုးစားနေတယ်။"
 
 #: ../app/pdb/gimpprocedure.c:689
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"လုပ်ငန်းစဉ် %s က ထုတ်ပြန်တဲ့ တန်ဖိုး '%s' (#%d, အမျိုးအစား %s) အတိုင်း '%s' ကို ထုတ်ပြန်​"
-"ထားတယ်။ ဒီတန်ဖိုးဟာ နေရာ မဆန့်ဘူး။"
+"လုပ်ငန်းစဉ် %s က ထုတ်ပြန်တဲ့ တန်ဖိုး '%s' (#%d, အမျိုးအစား %s) အဖြစ် '%s' ကို ထုတ်ပြန်​"
+"ထားတယ်။ ဒီတန်ဖိုးအတွက် နေရာ မဆန့်ဘူး။"
 
 #: ../app/pdb/gimpprocedure.c:702
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
 "s). This value is out of range."
 msgstr ""
 "လုပ်ငန်းစဉ် %s က ဆွေးနွေးချက် '%s' (#%d, အမျိုးအစား %s) အတွက် တန်ဖိုး '%s' ကို "
-"ခေါ်ယူထားတယ်။ ဒီတန်ဖိုးဟာ နေရာ မဆန့်ဘူး။"
+"ခေါ်ယူထားတယ်။ ဒီတန်ဖိုးအတွက် နေရာ မဆန့်ဘူး။"
 
 #: ../app/pdb/image-cmds.c:2268
 #, c-format
@@ -10042,11 +9126,11 @@ msgstr "ယန္တရားငယ်များကို စတင်နေ�
 msgid "Starting Extensions"
 msgstr "တိုးချဲ့ချက်များကို စတင်ခြင်း"
 
-#: ../app/plug-in/gimppluginmanager.c:296
+#: ../app/plug-in/gimppluginmanager.c:290
 msgid "Plug-In Interpreters"
 msgstr "ယန္တရားငယ် စကားပြန်များ"
 
-#: ../app/plug-in/gimppluginmanager.c:303
+#: ../app/plug-in/gimppluginmanager.c:297
 msgid "Plug-In Environment"
 msgstr "ယန္တရားငယ် ပတ်၀န်းကျင်"
 
@@ -10107,7 +9191,7 @@ msgstr ""
 "ကျွန်ပ် သေတ္တာကို\n"
 "ငါး ဒါဇင် အရက် ကရားများနဲ့ ထုတ်ပိုးပါ"
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:879
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:901
 msgid "Add Text Layer"
 msgstr "စာသား အလွှာကို ပေါင်းထည့်ပါ"
 
@@ -11029,9 +10113,8 @@ msgid "Mark foreground by painting on the object to extract"
 msgstr "အနီးကပ်မြင်ကွင်းကို ဖြည်ချမဲ့ ၀တ္ထူပေါ်မှာ ရွေးဆွဲခြင်းဖြင့် မှတ်သားပါ"
 
 #: ../app/tools/gimpforegroundselecttool.c:327
-#, fuzzy
 msgid "Rougly outline the object to extract"
-msgstr "ဖြည်ချမဲ့ ၀တ္ထူကို အကြမ်းဖျင်း ရေးဆွဲပါ"
+msgstr "ဖြည်ချမဲ့ ၀တ္ထူကို အကြမ်းဖျင်း ရေးဆွဲပါ "
 
 #: ../app/tools/gimpforegroundselecttool.c:766
 msgctxt "command"
@@ -11102,12 +10185,12 @@ msgstr "GEGL လုပ်ဆောင်ချက်..."
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "GEGL လုပ်ဆောင်ချက်များဟာ ညွှန်းထားတဲ့ အလွှာများပေါ်မှာ အလုပ် မလုပ်ဘူး။"
 
-#: ../app/tools/gimpgegltool.c:338
+#: ../app/tools/gimpgegltool.c:339
 msgid "_Operation:"
 msgstr "လုပ်ဆောင်ချက် -"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:411
+#: ../app/tools/gimpgegltool.c:412
 msgid "Operation Settings"
 msgstr "လည်ပတ်မှု ခင်းကျင်းမှုများ"
 
@@ -11878,6 +10961,8 @@ msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
 msgstr ""
+"အကယ်၍၊ ဖောင့်ဆီမှ အရိပ်အမြွတ်များကို သုံးစွဲထားရင် အလိုလျှောက် အရိပ်အမြွတ်ပေးကိရိယာကို "
+"သင်အမြဲ သုံးစွဲလိုလိမ့်မယ်။"
 
 #: ../app/tools/gimptextoptions.c:159
 msgid "Indentation of the first line"
@@ -11896,13 +10981,12 @@ msgid "Font:"
 msgstr "ဖောင့် -"
 
 #: ../app/tools/gimptextoptions.c:461
-#, fuzzy
 msgid "Hinting"
-msgstr "အရိပ်အမြွတ်ပေးခြင်း -"
+msgstr "အရိပ်အမြွတ်ပေးခြင်း - "
 
 #: ../app/tools/gimptextoptions.c:466
 msgid "Force auto-hinter"
-msgstr ""
+msgstr "အလိုလျှောက်-အရိပ်အမြွတ်ပေးကိရိယာ ဖိအားပေးပါ"
 
 #: ../app/tools/gimptextoptions.c:487
 msgid "Text Color"
@@ -11918,36 +11002,34 @@ msgstr "စာလုံးတန်းညှိပါ -"
 
 #. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:520
-#, fuzzy
 msgid "Path from Text"
-msgstr "စာသားမှ လမ်းကြောင်း"
+msgstr "စာသားမှ လမ်းကြောင်း "
 
 #: ../app/tools/gimptextoptions.c:527
-#, fuzzy
 msgid "Text along Path"
-msgstr "လမ်းကြောင်းရှိ စာသား"
+msgstr "လမ်းကြောင်းရှိ စာသား "
 
-#: ../app/tools/gimptexttool.c:161
+#: ../app/tools/gimptexttool.c:162
 msgid "Text Tool: Create or edit text layers"
 msgstr "စာသား အလွှာ - စာသား အလွှာများကို ဖန်တီး (သို့) တည်းဖြတ်ပါ"
 
-#: ../app/tools/gimptexttool.c:162
+#: ../app/tools/gimptexttool.c:163
 msgid "Te_xt"
 msgstr "စာသား"
 
-#: ../app/tools/gimptexttool.c:956
+#: ../app/tools/gimptexttool.c:987
 msgid "GIMP Text Editor"
 msgstr "GIMP စာသား တည်းဖြတ်ကိရိယာ"
 
-#: ../app/tools/gimptexttool.c:1072 ../app/tools/gimptexttool.c:1075
+#: ../app/tools/gimptexttool.c:1103 ../app/tools/gimptexttool.c:1106
 msgid "Confirm Text Editing"
 msgstr "စာသား တည်းဖြတ်ခြင်းကို အတည်ပြုပါ"
 
-#: ../app/tools/gimptexttool.c:1079
+#: ../app/tools/gimptexttool.c:1110
 msgid "Create _New Layer"
 msgstr "အလွှာအသစ်ကို ဖန်တီးပါ"
 
-#: ../app/tools/gimptexttool.c:1103
+#: ../app/tools/gimptexttool.c:1134
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11962,7 +11044,7 @@ msgstr ""
 "အလွှာကို ၄င်းရဲ့ စာသား အရည်အသွေးများမှ သင် တည်းဖြတ်နိုင် (သို့) စာသား အလွှာ တခုကို "
 "ဖန်တီးနိုင်တယ်။"
 
-#: ../app/tools/gimptexttool.c:1315
+#: ../app/tools/gimptexttool.c:1356
 msgid "Reshape Text Layer"
 msgstr "စာသား အလွှာကို ပုံပြန်ဖေါ်ပါ"
 
@@ -12202,24 +11284,20 @@ msgid "There is no active layer or channel to stroke to"
 msgstr "မှတ်သားမဲ့ သက်ကြွတဲ့ အလွာ (သို့) ချာနယ် မရှိဘူး"
 
 #: ../app/tools/tools-enums.c:58
-#, fuzzy
 msgid "No guides"
-msgstr "လမ်းညွှန်များ မရှိဘူး"
+msgstr "လမ်းညွှန်များ မရှိဘူး "
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
 msgid "Center lines"
-msgstr "လိုင်းများကို အလယ်ချထားပါ"
+msgstr "လိုင်းများကို အလယ်ချထားပါ "
 
 #: ../app/tools/tools-enums.c:60
-#, fuzzy
 msgid "Rule of thirds"
-msgstr "တတိယအချက်များအတွက် စည်းကမ်း"
+msgstr "တတိယအချက်များအတွက် စည်းမျဉ်း"
 
 #: ../app/tools/tools-enums.c:61
-#, fuzzy
 msgid "Golden sections"
-msgstr "ရွှေရောင် အခန်းများ"
+msgstr "ရွှေရောင် အခန်းများ "
 
 #: ../app/tools/tools-enums.c:148
 msgid "Aspect ratio"
@@ -12236,53 +11314,44 @@ msgid "Height"
 msgstr "အမြင့်"
 
 #: ../app/tools/tools-enums.c:179
-#, fuzzy
 msgid "Free select"
-msgstr "လွတ်လပ်တဲ့ ရွေးထားချက်"
+msgstr "လွတ်လပ်တဲ့ ရွေးထားချက် "
 
 #: ../app/tools/tools-enums.c:180
-#, fuzzy
 msgid "Fixed size"
-msgstr "သတ်မှတ်ထားတဲ့ အရွယ်"
+msgstr "သတ်မှတ်ထားတဲ့ အရွယ် "
 
 #: ../app/tools/tools-enums.c:181
-#, fuzzy
 msgid "Fixed aspect ratio"
-msgstr "သတ်မှတ်ထားတဲ့ ရှုထောင့် အချိုး"
+msgstr "သတ်မှတ်ထားတဲ့ ရှုထောင့် အချိုး "
 
 #: ../app/tools/tools-enums.c:211 ../app/vectors/gimpvectors.c:192
 msgid "Path"
 msgstr "လမ်း​ကြောင်း"
 
 #: ../app/tools/tools-enums.c:240
-#, fuzzy
 msgid "Outline"
-msgstr "အကြမ်းဆွဲချက်"
+msgstr "အကြမ်းဆွဲချက် "
 
 #: ../app/tools/tools-enums.c:243
-#, fuzzy
 msgid "Image + Grid"
-msgstr "ရုပ်ပုံ + ဂရစ်ကွက်"
+msgstr "ရုပ်ပုံ + ဂရစ်ကွက် "
 
 #: ../app/tools/tools-enums.c:270
-#, fuzzy
 msgid "Number of grid lines"
-msgstr "ဂရစ်ကွက် လိုင်းများရဲ့ အရေအတွက်"
+msgstr "ဂရစ်ကွက် လိုင်းများရဲ့ အရေအတွက် "
 
 #: ../app/tools/tools-enums.c:271
-#, fuzzy
 msgid "Grid line spacing"
-msgstr "ဂရစ်ကွက် လိုင်း ကြားအကွာအဝေး"
+msgstr "ဂရစ်ကွက် လိုင်း ကြားအကွာအဝေး "
 
 #: ../app/tools/tools-enums.c:299
-#, fuzzy
 msgid "Design"
-msgstr "ဒီဇိုင်း"
+msgstr "ဒီဇိုင်း "
 
 #: ../app/tools/tools-enums.c:301
-#, fuzzy
 msgid "Move"
-msgstr "ရွှေ့ပါ"
+msgstr "ရွှေ့ပါ "
 
 #: ../app/vectors/gimpvectors.c:193
 msgid "Rename Path"
@@ -12729,7 +11798,7 @@ msgid "Remove Controller '%s'?"
 msgstr "'%s' အထိန်းကို ဖယ်ရှားမလား။"
 
 #: ../app/widgets/gimpcontrollerlist.c:573
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -12737,9 +11806,10 @@ msgid ""
 "Selecting \"Disable Controller\" will disable the controller without "
 "removing it."
 msgstr ""
-"ဒီအထိန်းကို သက်ကြွတဲ့ အထိန်းများ စာရင်းမှ ဖယ်ရှားခြင်းကြောင့် သင် စီစဉ်ဖန်ထားတဲ့ "
-"ဖြစ်ရပ် ပုံဖေါ်ချက်များ အားလုံးကို အမြဲတမ်း ပယ်ဖျက်သွားမယ်။\n"
+"ဒီအထိန်းကို သက်သင်တဲ့ အထိန်းများ စာရင်းမှ ဖယ်ရှားခြင်းကြောင့် သင် စီစဉ်ထားတဲ့ ဖြစ်ရပ် "
+"ပုံဖေါ်ချက်များ အားလုံးကို အမြဲတမ်း ပယ်ဖျက်သွားမယ်။\n"
 "\n"
+"\"Disable Controller\" ရွေးချယ်မှုက အထိန်းကို ၄င်းကို မဖယ်ရှားပဲ ပိတ်ထားမယ်။"
 
 #: ../app/widgets/gimpcontrollerlist.c:633
 msgid "Configure Input Controller"
@@ -13407,7 +12477,6 @@ msgid "Creating preview..."
 msgstr "အစမ်းမြင်ကွင်းကို ဖန်တီးပါ..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:80
-#, fuzzy
 msgid ""
 "Foreground & background colors.\n"
 "The black and white squares reset colors.\n"
@@ -13417,6 +12486,7 @@ msgstr ""
 "အနီးမြင်ကွင်း & နောက်ခံ အရောင်များ။\n"
 "အနက်နဲ့ အဖြူ စတုရန်းများက အရောင်များကို ချမှတ်ထားတယ်။\n"
 "မြှားများက အရောင်များကို ​ဖလှယ်ထားတယ်။\n"
+"အရောင် ရွေးချယ်မှု အညွှန်းစာမျက်နှာကို ဖွင့်ဖို့ နှိုပ်ပါ။"
 
 #: ../app/widgets/gimptoolbox-color-area.c:141
 msgid "Change Foreground Color"
@@ -13485,9 +12555,8 @@ msgid "Your GIMP installation is incomplete:"
 msgstr "သင့်ရဲ့ GIMP တပ်ဆင်မှုဟာ မပြည့်စုံဘူး -"
 
 #: ../app/widgets/gimpuimanager.c:740
-#, fuzzy
 msgid "Plase make sure the menu XML files are correctly installed."
-msgstr "စာရင်းမှတ် XML ဖိုင်များကို မှန်မှန်ကန်ကန် တပ်ဆင်မှုကို သေချာစေပါ။"
+msgstr "စာရင်းမှတ် XML ဖိုင်များကို မှန်မှန်ကန်ကန် တပ်ဆင်မှုကို သေချာစေပါ။ "
 
 #: ../app/widgets/gimpuimanager.c:746
 #, c-format
@@ -13556,124 +12625,100 @@ msgid "Invalid UTF-8 data in file '%s'."
 msgstr "'%s' ဖိုင်မှ မမှန်တဲ့ UTF-8 အချက်အလက်ကြမ်း"
 
 #: ../app/widgets/widgets-enums.c:23
-#, fuzzy
 msgid "Foreground"
-msgstr "အနီးကပ်မြင်ကွင်း"
+msgstr "အနီးကပ်မြင်ကွင်း "
 
 #: ../app/widgets/widgets-enums.c:83
-#, fuzzy
 msgid "Pixel"
-msgstr "ပစ်ဆယ်"
+msgstr "ပစ်ဆယ် "
 
 #: ../app/widgets/widgets-enums.c:85
-#, fuzzy
 msgid "HSV"
-msgstr "HSV"
+msgstr "HSV "
 
 #: ../app/widgets/widgets-enums.c:86
-#, fuzzy
 msgid "CMYK"
-msgstr "CMYK"
+msgstr "CMYK "
 
 #: ../app/widgets/widgets-enums.c:115
-#, fuzzy
 msgid "Pick only"
-msgstr "ရွေးရန်သာ"
+msgstr "ရွေးဖို့သာ"
 
 #: ../app/widgets/widgets-enums.c:116
-#, fuzzy
 msgid "Set foreground color"
-msgstr "အနီးကပ်မြင်ကွင်း အရောင်ကို သတ်မှတ်ပါ"
+msgstr "အနီးကပ်မြင်ကွင်း အရောင်ကို သတ်မှတ်ပါ "
 
 #: ../app/widgets/widgets-enums.c:117
-#, fuzzy
 msgid "Set background color"
-msgstr "နောက်ခံ အရောင်ကို သတ်မှတ်ပါ"
+msgstr "နောက်ခံ အရောင်ကို သတ်မှတ်ပါ "
 
 #: ../app/widgets/widgets-enums.c:118
-#, fuzzy
 msgid "Add to palette"
-msgstr "အရောင်စပ်ဆေးခွက်ထဲ ပေါင်းထည့်ပါ"
+msgstr "အရောင်စပ်ဆေးခွက်ထဲ ပေါင်းထည့်ပါ "
 
 #: ../app/widgets/widgets-enums.c:173
-#, fuzzy
 msgid "Black & white"
-msgstr "အနက် & အဖြူ"
+msgstr "အနက် & အဖြူ "
 
 #: ../app/widgets/widgets-enums.c:174
-#, fuzzy
 msgid "Fancy"
-msgstr "ချစ်စရာကောင်းတယ်"
+msgstr "ချစ်စရာကောင်းတယ် "
 
 #: ../app/widgets/widgets-enums.c:201
-#, fuzzy
 msgid "GIMP help browser"
-msgstr "GIMP အကူအညီ ကွန်ရက်ကြည့်ယန္တရား"
+msgstr "GIMP အကူအညီ ကွန်ရက်ကြည့်ယန္တရား "
 
 #: ../app/widgets/widgets-enums.c:202
-#, fuzzy
 msgid "Web browser"
-msgstr "ကွန်ရက်ကြည့်ယန္တရား"
+msgstr "ကွန်ရက်ကြည့်ယန္တရား "
 
 #: ../app/widgets/widgets-enums.c:229
-#, fuzzy
 msgid "Linear histogram"
-msgstr "အစဉ်လိုက် ဟီစတိုဂရမ်"
+msgstr "အစဉ်လိုက် ဟီစတိုဂရမ် "
 
 #: ../app/widgets/widgets-enums.c:230
-#, fuzzy
 msgid "Logarithmic histogram"
-msgstr "လော်ဂရစ်သမ် ဟီစတိုဂရမ်"
+msgstr "လော်ဂရစ်သမ် ဟီစတိုဂရမ် "
 
 #: ../app/widgets/widgets-enums.c:263
-#, fuzzy
 msgid "Icon"
-msgstr "ပုံသင်္ကေတ"
+msgstr "ပုံသင်္ကေတ "
 
 #: ../app/widgets/widgets-enums.c:264
-#, fuzzy
 msgid "Current status"
-msgstr "လက်​ရှိ အနေအထား"
+msgstr "လက်​ရှိ အနေအထား "
 
 #: ../app/widgets/widgets-enums.c:266
-#, fuzzy
 msgid "Description"
-msgstr "ဖေါ်ပြချက်"
+msgstr "ဖေါ်ပြချက် "
 
 #: ../app/widgets/widgets-enums.c:267
-#, fuzzy
 msgid "Icon & text"
-msgstr "ပုံသင်္ကေတနဲ့ စာသား"
+msgstr "ပုံသင်္ကေတနဲ့ စာသား "
 
 #: ../app/widgets/widgets-enums.c:268
-#, fuzzy
 msgid "Icon & desc"
-msgstr "ပုံသင်္ကေတနဲ့ desc"
+msgstr "ပုံသင်္ကေတနဲ့ desc "
 
 #: ../app/widgets/widgets-enums.c:269
-#, fuzzy
 msgid "Status & text"
-msgstr "အနေအထား & စာသား"
+msgstr "အနေအထား & စာသား "
 
 #: ../app/widgets/widgets-enums.c:270
-#, fuzzy
 msgid "Status & desc"
-msgstr "အနေအထား & desc"
+msgstr "အနေအထား & desc "
 
 #: ../app/widgets/widgets-enums.c:298
-#, fuzzy
 msgid "Normal window"
-msgstr "သာမန် ၀င်းဒိုး"
+msgstr "သာမန် ၀င်းဒိုး "
 
 #: ../app/widgets/widgets-enums.c:299
-#, fuzzy
 msgid "Utility window"
-msgstr "အသုံး၀င်တဲ့ ၀င်းဒိုး"
+msgstr "အသုံး၀င်တဲ့ ၀င်းဒိုး "
 
 #: ../app/widgets/widgets-enums.c:300
-#, fuzzy
 msgid "Keep above"
-msgstr "အထက်မှာ ထားပါ"
+msgstr "အထက်မှာ ထားပါ "
 
 #: ../app/xcf/xcf-load.c:277
 msgid ""
