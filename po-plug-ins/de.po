@@ -12,7 +12,7 @@
 # Jens Seidel <jseidel@cvs.gnome.org>, 2005.
 # Axel Wernicke <axel.wernicke@gmail.com>, 2007.
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2008.
-# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007-2009.
+# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007-2010.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2010.
 msgid ""
 msgstr ""
@@ -1681,7 +1681,7 @@ msgstr "zu Transparenz"
 
 #: ../plug-ins/common/colorify.c:101
 msgid "Replace all colors with shades of a specified color"
-msgstr "Alle Farben mit denn Schattierungen einer vorgegebenen Farbe ersetzen"
+msgstr "Alle Farben mit den Schattierungen einer vorgegebenen Farbe ersetzen"
 
 #: ../plug-ins/common/colorify.c:107
 msgid "Colorif_y..."
@@ -3419,7 +3419,7 @@ msgstr "Zellanzahl:"
 
 #: ../plug-ins/common/file-gih.c:986
 msgid " Rows of "
-msgstr " Reihen von "
+msgstr " Reihen mit "
 
 #: ../plug-ins/common/file-gih.c:998
 msgid " Columns on each layer"
@@ -3437,13 +3437,15 @@ msgstr " (Höhe passt nicht!)"
 msgid "Display as:"
 msgstr "Anzeigen als:"
 
+# CHECK (alt: Abmessung)
 #: ../plug-ins/common/file-gih.c:1020
 msgid "Dimension:"
-msgstr "Abmessung:"
+msgstr "Dimensionen:"
 
+# CHECK (alt: Rang)
 #: ../plug-ins/common/file-gih.c:1095
 msgid "Ranks:"
-msgstr "Rang:"
+msgstr "Reihen:"
 
 #: ../plug-ins/common/file-header.c:76
 msgid "C source code header"
@@ -4014,7 +4016,7 @@ msgstr "PDF-Dokument"
 #: ../plug-ins/common/file-ps.c:1050
 #, c-format
 msgid "Could not interpret Postscript file '%s'"
-msgstr "Postscript-Datei »%s« konnte nicht interpretiert werden"
+msgstr "PostScript-Datei »%s« konnte nicht interpretiert werden"
 
 #: ../plug-ins/common/file-ps.c:1192
 #, c-format
@@ -4169,7 +4171,7 @@ msgstr "Ausgabe"
 
 #: ../plug-ins/common/file-ps.c:3447
 msgid "_PostScript level 2"
-msgstr "_Postscript Level 2"
+msgstr "_PostScript Level 2"
 
 #: ../plug-ins/common/file-ps.c:3456
 msgid "_Encapsulated PostScript"
@@ -4553,16 +4555,17 @@ msgstr ""
 
 #: ../plug-ins/common/file-tiff-save.c:1061
 msgid "TIFF"
-msgstr ""
+msgstr "TIFF"
 
 #. compression
 #: ../plug-ins/common/file-tiff-save.c:1069
 msgid "Compression"
 msgstr "Kompression"
 
+# Kompression:
 #: ../plug-ins/common/file-tiff-save.c:1073
 msgid "_None"
-msgstr "Kei_n"
+msgstr "Kei_ne"
 
 #: ../plug-ins/common/file-tiff-save.c:1074
 msgid "_LZW"

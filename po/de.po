@@ -10,7 +10,9 @@
 # Roman Joost <romanofski@gimp.org>, 2005.
 # Hendrik Richter <hendrikr@gnome.org>, 2005.
 # Jens Seidel <jseidel@cvs.gnome.org>, 2005.
-# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2008-2009, 2010.
+# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2008-2010.
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
@@ -4633,22 +4635,22 @@ msgstr "Gesamten Text löschen"
 #: ../app/actions/text-editor-actions.c:58
 msgctxt "text-editor-action"
 msgid "LTR"
-msgstr "Links nach Rechts"
+msgstr "Links nach rechts"
 
 #: ../app/actions/text-editor-actions.c:59
 msgctxt "text-editor-action"
 msgid "From left to right"
-msgstr "Von Links nach Rechts"
+msgstr "Von links nach rechts"
 
 #: ../app/actions/text-editor-actions.c:64
 msgctxt "text-editor-action"
 msgid "RTL"
-msgstr "Rechts nach Links"
+msgstr "Rechts nach links"
 
 #: ../app/actions/text-editor-actions.c:65
 msgctxt "text-editor-action"
 msgid "From right to left"
-msgstr "Von Rechts nach Links"
+msgstr "Von rechts nach links"
 
 #: ../app/actions/text-editor-commands.c:62
 #: ../app/actions/text-tool-commands.c:117
@@ -7584,7 +7586,7 @@ msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
 "Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte GIMP-"
-"Pinsel-Form in Zeile %d."
+"Pinselform in Zeile %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:225
 #, c-format
@@ -9008,7 +9010,7 @@ msgstr "_Vereinen"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:92
 msgid "Final, Merged Layer should be:"
-msgstr "Die vereinigte Ebene sollte sein:"
+msgstr "Die vereinte Ebene sollte sein:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:96
 msgid "Expanded as necessary"
@@ -9043,7 +9045,7 @@ msgstr "Bildgröße bestätigen"
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr "Sie versuchen ein Bild der Größe %s anzulegen."
+msgstr "Sie versuchen, ein Bild der Größe %s anzulegen."
 
 #: ../app/dialogs/image-new-dialog.c:328
 #, c-format
@@ -9127,9 +9129,10 @@ msgstr "_Tastenkombination beim Beenden speichern"
 msgid "Add a Mask to the Layer"
 msgstr "Eine Maske zur Ebene hinzufügen"
 
+# ... mit: Weiß, Schwarz, Alphakanal, Auswahl, Graustufenkopie, Kanal
 #: ../app/dialogs/layer-add-mask-dialog.c:112
 msgid "Initialize Layer Mask to:"
-msgstr "Ebenenmaske initialisieren nach:"
+msgstr "Ebenenmaske initialisieren mit:"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:143
 msgid "In_vert mask"
@@ -11929,7 +11932,7 @@ msgstr "Nur die aktive Ebene"
 
 #: ../app/tools/gimpcropoptions.c:166
 msgid "Allow growing"
-msgstr "Vergrössern zulassen"
+msgstr "Vergrößern zulassen"
 
 #: ../app/tools/gimpcroptool.c:127
 msgid "Crop"
@@ -14899,7 +14902,7 @@ msgid ""
 "Click to open the Brush Dialog."
 msgstr ""
 "Der aktive Pinsel.\n"
-"Anklickrn öffnet die Pinselauswahl."
+"Anklicken öffnet die Pinselauswahl."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:181
 msgid ""
