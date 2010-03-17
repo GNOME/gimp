@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -715,7 +716,7 @@ gimp_drawable_real_update (GimpDrawable *drawable,
       rect.width  = width;
       rect.height = height;
 
-      gegl_operation_invalidate (operation, &rect);
+      gegl_operation_invalidate (GEGL_OPERATION (operation), &rect, FALSE);
 
       g_object_unref (operation);
     }
