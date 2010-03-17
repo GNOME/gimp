@@ -35,11 +35,6 @@
 
 /*  local function prototypes  */
 
-static void    gimp_brush_transform_matrix       (TempBuf           *brush,
-                                                  gdouble            scale_x,
-                                                  gdouble            scale_y,
-                                                  gdouble            angle,
-                                                  GimpMatrix3       *matrix);
 static void    gimp_brush_transform_bounding_box (TempBuf           *brush,
                                                   const GimpMatrix3 *matrix,
                                                   gint              *x,
@@ -47,12 +42,12 @@ static void    gimp_brush_transform_bounding_box (TempBuf           *brush,
                                                   gint              *width,
                                                   gint              *height);
 
-static gdouble gimp_brush_transform_array_sum    (gfloat            *arr, 
+static gdouble gimp_brush_transform_array_sum    (gfloat            *arr,
                                                   gint               len);
 static void    gimp_brush_transform_fill_blur_kernel (gfloat            *arr,
                                                       gint               len);
-static gint    gimp_brush_transform_blur_kernel_size (gint height, 
-                                                      gint width, 
+static gint    gimp_brush_transform_blur_kernel_size (gint height,
+                                                      gint width,
                                                       gdouble hardness);
 #define MAX_BLUR_KERNEL   15
 /*  public functions  */
@@ -69,10 +64,10 @@ gimp_brush_real_transform_size (GimpBrush *brush,
   gint        x, y;
 
   if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (brush->mask,
+    gimp_brush_transform_matrix (brush->mask->width, brush->mask->height,
                                  scale * aspect_ratio, scale, angle, &matrix);
   else
-    gimp_brush_transform_matrix (brush->mask,
+    gimp_brush_transform_matrix (brush->mask->width, brush->mask->height,
                                  scale, scale / aspect_ratio, angle, &matrix);
 
   gimp_brush_transform_bounding_box (brush->mask, &matrix, &x, &y, width, height);
@@ -179,10 +174,10 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   source = temp_buf_copy (brush->mask, NULL);
 
    if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (source,
+    gimp_brush_transform_matrix (source->height, source->width,
                                  scale * aspect_ratio, scale, angle, &matrix);
   else
-    gimp_brush_transform_matrix (source,
+    gimp_brush_transform_matrix (source->height, source->width,
                                  scale, scale / aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
@@ -338,7 +333,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       TempBuf      *blur_src;
       PixelRegion  srcPR;
       PixelRegion  destPR;
-      gint kernel_size = gimp_brush_transform_blur_kernel_size ( result->height, 
+      gint kernel_size = gimp_brush_transform_blur_kernel_size ( result->height,
                                                                  result->width,
                                                                  hardness);
       gint kernel_len  = kernel_size * kernel_size;
@@ -356,7 +351,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
                        GIMP_NORMAL_CONVOL, FALSE);
 
     }
-  
+
   return result;
 }
 
@@ -466,10 +461,10 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   source = brush->pixmap;
 
   if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (source,
+    gimp_brush_transform_matrix (source->height, source->width,
                                  scale * aspect_ratio, scale, angle, &matrix);
   else
-    gimp_brush_transform_matrix (source,
+    gimp_brush_transform_matrix (source->height, source->width,
                                  scale, scale / aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
@@ -631,7 +626,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
       TempBuf      *blur_src;
       PixelRegion  srcPR;
       PixelRegion  destPR;
-      gint kernel_size = gimp_brush_transform_blur_kernel_size ( result->height, 
+      gint kernel_size = gimp_brush_transform_blur_kernel_size ( result->height,
                                                                  result->width,
                                                                  hardness);
       gint kernel_len  = kernel_size * kernel_size;
@@ -654,17 +649,17 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 }
 
 
-/*  private functions  */
 
-static void
-gimp_brush_transform_matrix (TempBuf     *brush,
+void
+gimp_brush_transform_matrix (gdouble      width,
+                             gdouble      height,
                              gdouble      scale_x,
                              gdouble      scale_y,
                              gdouble      angle,
                              GimpMatrix3 *matrix)
 {
-  const gdouble center_x = brush->width  / 2;
-  const gdouble center_y = brush->height / 2;
+  const gdouble center_x = width  / 2;
+  const gdouble center_y = height / 2;
 
   gimp_matrix3_identity (matrix);
   gimp_matrix3_translate (matrix, - center_x, - center_y);
@@ -672,6 +667,8 @@ gimp_brush_transform_matrix (TempBuf     *brush,
   gimp_matrix3_translate (matrix, center_x, center_y);
   gimp_matrix3_scale (matrix, scale_x, scale_y);
 }
+
+/*  private functions  */
 
 static void
 gimp_brush_transform_bounding_box (TempBuf           *brush,
@@ -729,16 +726,16 @@ gimp_brush_transform_fill_blur_kernel (gfloat *arr, gint len)
 }
 
 static gint
-gimp_brush_transform_blur_kernel_size (gint height, 
-                                       gint width, 
+gimp_brush_transform_blur_kernel_size (gint height,
+                                       gint width,
                                        gdouble hardness)
 {
 
-  gint kernel_size = MIN (MAX_BLUR_KERNEL, MIN(width, height)) * 
+  gint kernel_size = MIN (MAX_BLUR_KERNEL, MIN(width, height)) *
                         ((MIN (width, height) * (1.0 - hardness)) / MIN (width, height));
 
   /*Kernel size must be odd*/
   if ( kernel_size % 2 == 0) kernel_size++;
-  
+
   return kernel_size;
 }

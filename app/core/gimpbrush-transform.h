@@ -40,5 +40,12 @@ TempBuf * gimp_brush_real_transform_pixmap (GimpBrush *brush,
                                             gdouble    angle,
                                             gdouble    hardness);
 
+void        gimp_brush_transform_matrix    (gdouble            width,
+                                            gdouble            height,
+                                            gdouble            scale_x,
+                                            gdouble            scale_y,
+                                            gdouble            angle,
+                                            GimpMatrix3       *matrix);
+
 
 #endif  /*  __GIMP_BRUSH_SCALE_H__  */

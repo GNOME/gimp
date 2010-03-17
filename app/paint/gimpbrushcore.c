@@ -38,6 +38,7 @@
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
+#include "core/gimpbrush-transform.h"
 
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-kernels.h"
@@ -1043,16 +1044,11 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
   if ((scale > 0.0) && (aspect_ratio > 0.0))
     {
 
-      const gdouble center_x = width  / 2;
-      const gdouble center_y = height / 2;
-
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
 
-      gimp_matrix3_identity (&matrix);
-      gimp_matrix3_translate (&matrix, - center_x, - center_y);
-      gimp_matrix3_rotate (&matrix, -2 * G_PI * angle);
-      gimp_matrix3_translate (&matrix, center_x, center_y);
-      gimp_matrix3_scale (&matrix, scale_x, scale_y);
+
+      gimp_brush_transform_matrix (height, width,
+                                   scale_y, scale_x, angle, &matrix);
 
       core->transformed_brush_bound_segs
                       = boundary_transform (core->brush_bound_segs,
