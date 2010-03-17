@@ -231,24 +231,63 @@ gimp_gegl_tool_map (GimpImageMapTool *image_map_tool)
 }
 
 static gboolean
-gimp_gegl_tool_operation_blacklisted (const gchar *name)
+gimp_gegl_tool_operation_blacklisted (const gchar *name,
+                                      const gchar *categories_str)
 {
-  static const gchar * const blacklist[] =
+  gchar **categories;
+  static const gchar * const category_blacklist[] =
+  {
+    "compositors",
+    "core",
+    "debug",
+    "hidden",
+    "input",
+    "output",
+    "programming",
+    "render",
+    "transform",
+    "video"
+  };
+  static const gchar * const name_blacklist[] =
   {
     "gegl:convert-format",
     "gegl:introspect",
     "gegl:path",
     "gegl:text",
-    "gimp-"
+    "gegl:layer",
+    "gimp-",
+    "gimp:"
   };
   gint i;
 
-  for (i = 0; i < G_N_ELEMENTS (blacklist); i++)
+  /* Operations with no name are abstract base classes */
+  if (!name)
+    return TRUE;
+
+  for (i = 0; i < G_N_ELEMENTS (name_blacklist); i++)
     {
-      if (g_str_has_prefix (name, blacklist[i]))
+      if (g_str_has_prefix (name, name_blacklist[i]))
         return TRUE;
     }
 
+
+  if (!categories_str)
+    return FALSE;
+
+  categories = g_strsplit (categories_str, ":", 0);
+
+  for (i = 0; i < G_N_ELEMENTS (category_blacklist); i++)
+    {
+      gint j;
+      for (j = 0; categories[j]; j++)
+        if (g_str_equal (categories[j], category_blacklist[i]))
+          {
+            g_strfreev (categories);
+            return TRUE;
+          }
+    }
+
+  g_strfreev (categories);
   return FALSE;
 }
 
@@ -270,14 +309,9 @@ gimp_get_subtype_classes (GType  type,
   klass = GEGL_OPERATION_CLASS (g_type_class_ref (type));
   ops = g_type_children (type, &n_ops);
 
-  /* only add classes which have a name, this avoids
-   * the abstract base classes
-   */
-  if (klass->name)
-    {
-      if (! gimp_gegl_tool_operation_blacklisted (klass->name))
-        classes = g_list_prepend (classes, klass);
-    }
+  if (! gimp_gegl_tool_operation_blacklisted (klass->name,
+                                              klass->categories))
+    classes = g_list_prepend (classes, klass);
 
   for (i = 0; i < n_ops; i++)
     classes = gimp_get_subtype_classes (ops[i], classes);
@@ -346,37 +380,25 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   for (iter = opclasses; iter; iter = iter->next)
     {
       GeglOperationClass *opclass = GEGL_OPERATION_CLASS (iter->data);
+      const gchar        *stock_id;
+      const gchar        *label;
 
-      if (strstr (opclass->categories, "color")   ||
-          strstr (opclass->categories, "enhance") ||
-          strstr (opclass->categories, "misc")    ||
-          strstr (opclass->categories, "blur")    ||
-          strstr (opclass->categories, "edge")    ||
-          strstr (opclass->categories, "render"))
+      if (g_str_has_prefix (opclass->name, "gegl:"))
         {
-	  const gchar *stock_id;
-	  const gchar *label;
-
-	  if (g_str_has_prefix (opclass->name, "gimp:"))
-	    continue;
-
-	  if (g_str_has_prefix (opclass->name, "gegl:"))
-	    {
-	      label    = opclass->name + strlen ("gegl:");
-	      stock_id = GIMP_STOCK_GEGL;
-	    }
-	  else
-	    {
-	      label    = opclass->name;
-	      stock_id = NULL;
-	    }
-
-          gtk_list_store_insert_with_values (store, NULL, -1,
-                                             COLUMN_NAME,     opclass->name,
-					     COLUMN_LABEL,    label,
-					     COLUMN_STOCK_ID, stock_id,
-                                             -1);
+	  label    = opclass->name + strlen ("gegl:");
+	  stock_id = GIMP_STOCK_GEGL;
+	}
+      else
+        {
+          label    = opclass->name;
+          stock_id = NULL;
         }
+
+      gtk_list_store_insert_with_values (store, NULL, -1,
+                                         COLUMN_NAME,     opclass->name,
+					 COLUMN_LABEL,    label,
+					 COLUMN_STOCK_ID, stock_id,
+                                         -1);
     }
 
   g_list_free (opclasses);
