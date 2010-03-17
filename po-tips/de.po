@@ -6,6 +6,9 @@
 # Sven Neumann <sven@gimp.org>, 2004-2007.
 # Hendrik Brandt <heb@gnome-de.org>, 2006, 2007.
 # Sven Neumann <sven@gimp.org>, 2007.
+# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007, 2010.
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
@@ -186,8 +189,8 @@ msgid ""
 "in to work on the whole image."
 msgstr ""
 "Die meisten Plugins bearbeiten nur die aktive Ebene des aktuellen Bildes. In "
-"einigen Fällen müssen die Ebenen daher vereinigt werden (Bild→Bild "
-"zusammenfügen) wenn das Plugin auf das gesamte Bild angewendet werden soll."
+"einigen Fällen müssen die Ebenen daher vereint werden (Bild→Bild "
+"zusammenfügen), wenn das Plugin auf das gesamte Bild angewendet werden soll."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""

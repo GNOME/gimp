@@ -191,7 +191,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
-msgstr "Palette zu _wiederholenden Farbverlauf"
+msgstr "Palette zu _wiederholendem Farbverlauf"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
