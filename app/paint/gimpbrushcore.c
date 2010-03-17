@@ -1020,8 +1020,8 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
   angle = core->angle;
   aspect_ratio = core->aspect_ratio;
 
-  height = core->main_brush->mask->height;
-  width  = core->main_brush->mask->width;
+  height = core->brush_bound_width;
+  width  = core->brush_bound_height;
 
   if (aspect_ratio < 1.0)
     {
