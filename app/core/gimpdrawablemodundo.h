@@ -37,6 +37,7 @@ struct _GimpDrawableModUndo
   GimpItemUndo   parent_instance;
 
   TileManager   *tiles;
+  gboolean       copy_tiles;
   GimpImageType  type;
   gint           offset_x;
   gint           offset_y;

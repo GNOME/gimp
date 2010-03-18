@@ -783,7 +783,7 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
 
   if (push_undo)
     gimp_image_undo_push_drawable_mod (gimp_item_get_image (item), undo_desc,
-                                       drawable);
+                                       drawable, FALSE);
 
   /*  ref new before unrefing old, they might be the same  */
   tile_manager_ref (tiles);

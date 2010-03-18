@@ -254,7 +254,8 @@ gimp_image_undo_push_drawable (GimpImage    *image,
 GimpUndo *
 gimp_image_undo_push_drawable_mod (GimpImage    *image,
                                    const gchar  *undo_desc,
-                                   GimpDrawable *drawable)
+                                   GimpDrawable *drawable,
+                                   gboolean      copy_tiles)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -263,7 +264,8 @@ gimp_image_undo_push_drawable_mod (GimpImage    *image,
   return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_MOD_UNDO,
                                GIMP_UNDO_DRAWABLE_MOD, undo_desc,
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
-                               "item", drawable,
+                               "item",       drawable,
+                               "copy-tiles", copy_tiles,
                                NULL);
 }
 
