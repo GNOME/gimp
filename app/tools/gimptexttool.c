@@ -1239,11 +1239,10 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
 
           gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-          gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
-                                   0, 0,
-                                   gimp_item_get_width  (GIMP_ITEM (layer)),
-                                   gimp_item_get_height (GIMP_ITEM (layer)),
-                                   NULL, FALSE);
+
+          /*  see comment in gimp_text_layer_set()  */
+          gimp_image_undo_push_drawable_mod (image, NULL,
+                                             GIMP_DRAWABLE (layer), TRUE);
         }
 
       gimp_image_undo_push_text_layer (image, NULL, layer, pspec);

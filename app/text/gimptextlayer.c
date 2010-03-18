@@ -460,11 +460,16 @@ gimp_text_layer_set (GimpTextLayer *layer,
   if (layer->modified)
     {
       gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-      gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
-                               0, 0,
-                               gimp_item_get_width  (GIMP_ITEM (layer)),
-                               gimp_item_get_height (GIMP_ITEM (layer)),
-                               NULL, FALSE);
+
+      /*  pass copy_tiles = TRUE so we not only ref the tiles; after
+       *  being a text layer again, undo doesn't care about the
+       *  layer's pixels any longer because they are generated, so
+       *  changing the text would happily overwrite the layer's
+       *  pixels, changing the pixels on the undo stack too without
+       *  any chance to ever undo again.
+       */
+      gimp_image_undo_push_drawable_mod (image, NULL,
+                                         GIMP_DRAWABLE (layer), TRUE);
     }
 
   gimp_image_undo_push_text_layer (image, undo_desc, layer, NULL);
