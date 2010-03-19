@@ -42,7 +42,7 @@
 #include "gimpdrawtool.h"
 
 
-#define DRAW_TIMEOUT 35 /* ~29 FPS */
+#define DRAW_TIMEOUT 4 /* ~29 FPS */
 #define USE_TIMEOUT  1
 
 
