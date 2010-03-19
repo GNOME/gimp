@@ -318,7 +318,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   if (brush_core->brush_bound_segs)
       gimp_brush_core_transform_bound_segs (brush_core, options);
 
-  if ((brush_core->transformed_brush_bound_segs) && !(brush_tool->in_motion))
+  if (brush_core->transformed_brush_bound_segs)
     {
       GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
       gdouble           width  = brush_core->transformed_brush_bound_width;
@@ -348,7 +348,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
                                         x, y,
                                         FALSE);
         }
-      else if ((draw_fallback) || (brush_tool->in_motion))
+      else if (draw_fallback)
         {
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CROSS,
                                       x, y,
