@@ -246,7 +246,7 @@ gimp_buffer_new (TileManager *tiles,
     }
   else
     {
-      buffer->tiles = tiles;
+      buffer->tiles = tile_manager_ref (tiles);
     }
 
   return buffer;
@@ -256,6 +256,7 @@ GimpBuffer *
 gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
                              const gchar *name)
 {
+  GimpBuffer  *buffer;
   TileManager *tiles;
   guchar      *pixels;
   PixelRegion  destPR;
@@ -284,7 +285,11 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
       pixel_region_set_row (&destPR, 0, y, width, pixels);
    }
 
-  return gimp_buffer_new (tiles, name, FALSE);
+  buffer = gimp_buffer_new (tiles, name, FALSE);
+
+  tile_manager_unref (tiles);
+
+  return buffer;
 }
 
 gint

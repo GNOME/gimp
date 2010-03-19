@@ -57,8 +57,6 @@ static GimpBuffer * gimp_edit_extract         (GimpImage            *image,
                                                GimpContext          *context,
                                                gboolean              cut_pixels,
                                                GError              **error);
-static GimpBuffer * gimp_edit_make_buffer     (Gimp                 *gimp,
-                                               TileManager          *tiles);
 static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GimpContext          *context,
@@ -509,14 +507,16 @@ gimp_edit_extract (GimpImage     *image,
   if (cut_pixels)
     gimp_image_undo_group_end (image);
 
-  return gimp_edit_make_buffer (image->gimp, tiles);
-}
+  if (tiles)
+    {
+      GimpBuffer *buffer = gimp_buffer_new (tiles, _("Global Buffer"), FALSE);
 
-static GimpBuffer *
-gimp_edit_make_buffer (Gimp        *gimp,
-                       TileManager *tiles)
-{
-  return tiles ? gimp_buffer_new (tiles, _("Global Buffer"), FALSE) : NULL;
+      tile_manager_unref (tiles);
+
+      return buffer;
+    }
+
+  return NULL;
 }
 
 static gboolean
