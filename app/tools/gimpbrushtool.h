@@ -38,7 +38,6 @@ struct _GimpBrushTool
 
   gboolean       show_cursor;
   gboolean       draw_brush;
-  gboolean       in_motion;
   gdouble        brush_x;
   gdouble        brush_y;
 };

@@ -115,7 +115,6 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
                                          "context/context-brush-select-set");
 
   brush_tool->show_cursor = TRUE;
-  brush_tool->in_motion   = FALSE;
   brush_tool->draw_brush  = TRUE;
   brush_tool->brush_x     = 0.0;
   brush_tool->brush_y     = 0.0;
@@ -195,7 +194,7 @@ gimp_brush_tool_motion (GimpTool         *tool,
       brush_tool->brush_x = coords->x;
       brush_tool->brush_y = coords->y;
     }
-  brush_tool->in_motion = TRUE;
+
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
@@ -244,7 +243,7 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
                                                    coords);
         }
     }
-    brush_tool->in_motion = FALSE;
+
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
