@@ -42,6 +42,10 @@
 #include "gimpdrawtool.h"
 
 
+#define DRAW_TIMEOUT 35 /* ~29 FPS */
+#define USE_TIMEOUT  1
+
+
 static gboolean      gimp_draw_tool_has_display  (GimpTool       *tool,
                                                   GimpDisplay    *display);
 static GimpDisplay * gimp_draw_tool_has_image    (GimpTool       *tool,
@@ -154,10 +158,22 @@ gimp_draw_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
+static gboolean
+gimp_draw_tool_draw_timeout (GimpDrawTool *draw_tool)
+{
+  draw_tool->draw_timeout = 0;
+
+  gimp_draw_tool_draw (draw_tool);
+
+  return FALSE;
+}
+
 static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->paused_count == 0 && draw_tool->display)
+  if (! draw_tool->draw_timeout    &&
+      draw_tool->paused_count == 0 &&
+      draw_tool->display)
     {
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
 
@@ -192,6 +208,12 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
 
   gimp_draw_tool_draw (draw_tool);
 
+  if (draw_tool->draw_timeout)
+    {
+      g_source_remove (draw_tool->draw_timeout);
+      draw_tool->draw_timeout = 0;
+    }
+
   draw_tool->display = NULL;
 }
 
@@ -211,6 +233,12 @@ gimp_draw_tool_pause (GimpDrawTool *draw_tool)
   gimp_draw_tool_draw (draw_tool);
 
   draw_tool->paused_count++;
+
+  if (draw_tool->draw_timeout)
+    {
+      g_source_remove (draw_tool->draw_timeout);
+      draw_tool->draw_timeout = 0;
+    }
 }
 
 void
@@ -222,7 +250,16 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
     {
       draw_tool->paused_count--;
 
-      gimp_draw_tool_draw (draw_tool);
+#ifdef USE_TIMEOUT
+      if (! draw_tool->draw_timeout)
+        draw_tool->draw_timeout =
+          gdk_threads_add_timeout_full (G_PRIORITY_HIGH,
+                                        DRAW_TIMEOUT,
+                                        (GSourceFunc) gimp_draw_tool_draw_timeout,
+                                        draw_tool, NULL);
+#else
+  gimp_draw_tool_draw (draw_tool);
+#endif
     }
   else
     {
