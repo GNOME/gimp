@@ -158,6 +158,33 @@ tile_manager_unref (TileManager *tm)
     }
 }
 
+TileManager *
+tile_manager_duplicate (TileManager *tm)
+{
+  TileManager *copy;
+  gint         n_tiles;
+  gint         i;
+
+  g_return_val_if_fail (tm != NULL, NULL);
+
+  copy = tile_manager_new (tm->width, tm->height, tm->bpp);
+
+  tile_manager_allocate_tiles (copy);
+
+  n_tiles = tm->ntile_rows * tm->ntile_cols;
+
+  for (i = 0; i < n_tiles; i++)
+    {
+      Tile *tile;
+
+      tile = tile_manager_get (tm, i, TRUE, FALSE);
+      tile_manager_map (copy, i, tile);
+      tile_release (tile, FALSE);
+    }
+
+  return copy;
+}
+
 void
 tile_manager_set_validate_proc (TileManager      *tm,
                                 TileValidateProc  proc,

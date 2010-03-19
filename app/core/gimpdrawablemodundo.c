@@ -21,10 +21,7 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/tile-manager.h"
-
-#include "paint-funcs/paint-funcs.h"
 
 #include "gimpimage.h"
 #include "gimpdrawable.h"
@@ -94,6 +91,45 @@ gimp_drawable_mod_undo_init (GimpDrawableModUndo *undo)
 {
 }
 
+static GObject *
+gimp_drawable_mod_undo_constructor (GType                  type,
+                                    guint                  n_params,
+                                    GObjectConstructParam *params)
+{
+  GObject             *object;
+  GimpDrawableModUndo *drawable_mod_undo;
+  GimpItem            *item;
+  GimpDrawable        *drawable;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (object);
+
+  g_assert (GIMP_IS_DRAWABLE (GIMP_ITEM_UNDO (object)->item));
+
+  item     = GIMP_ITEM_UNDO (object)->item;
+  drawable = GIMP_DRAWABLE (item);
+
+  if (drawable_mod_undo->copy_tiles)
+    {
+      drawable_mod_undo->tiles =
+        tile_manager_duplicate (gimp_drawable_get_tiles (drawable));
+    }
+  else
+    {
+      drawable_mod_undo->tiles =
+        tile_manager_ref (gimp_drawable_get_tiles (drawable));
+    }
+
+  drawable_mod_undo->type = gimp_drawable_type (drawable);
+
+  gimp_item_get_offset (item,
+                        &drawable_mod_undo->offset_x,
+                        &drawable_mod_undo->offset_y);
+
+  return object;
+}
+
 static void
 gimp_drawable_mod_undo_set_property (GObject      *object,
                                      guint         property_id,
@@ -132,55 +168,6 @@ gimp_drawable_mod_undo_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static GObject *
-gimp_drawable_mod_undo_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
-{
-  GObject             *object;
-  GimpDrawableModUndo *drawable_mod_undo;
-  GimpItem            *item;
-  GimpDrawable        *drawable;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (object);
-
-  g_assert (GIMP_IS_DRAWABLE (GIMP_ITEM_UNDO (object)->item));
-
-  item     = GIMP_ITEM_UNDO (object)->item;
-  drawable = GIMP_DRAWABLE (item);
-
-  if (drawable_mod_undo->copy_tiles)
-    {
-      PixelRegion srcPR, destPR;
-      gint        width  = gimp_item_get_width (item);
-      gint        height = gimp_item_get_height (item);
-
-      drawable_mod_undo->tiles =
-        tile_manager_new (width, height,
-                          gimp_drawable_bytes (drawable));
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, drawable_mod_undo->tiles,
-                         0, 0, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
-    }
-  else
-    {
-      drawable_mod_undo->tiles =
-        tile_manager_ref (gimp_drawable_get_tiles (drawable));
-    }
-
-  drawable_mod_undo->type = gimp_drawable_type (drawable);
-
-  gimp_item_get_offset (item,
-                        &drawable_mod_undo->offset_x,
-                        &drawable_mod_undo->offset_y);
-
-  return object;
 }
 
 static gint64

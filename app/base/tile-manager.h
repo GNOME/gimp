@@ -38,6 +38,10 @@ TileManager * tile_manager_new               (gint width,
 TileManager * tile_manager_ref               (TileManager *tm);
 void          tile_manager_unref             (TileManager *tm);
 
+/* Make a copy of the tile manager.
+ */
+TileManager * tile_manager_duplicate         (TileManager *tm);
+
 /* Set the validate procedure for the tile manager.  The validate
  *  procedure is called when an invalid tile is referenced. If the
  *  procedure is NULL, then the tile is set to valid and its memory is

@@ -28,8 +28,6 @@
 #include "base/tile-manager-preview.h"
 #include "base/temp-buf.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "gimpbuffer.h"
 
 
@@ -234,20 +232,9 @@ gimp_buffer_new (TileManager *tiles,
                          NULL);
 
   if (copy_pixels)
-    {
-      PixelRegion srcPR, destPR;
-
-      buffer->tiles = tile_manager_new (width, height,
-                                        tile_manager_bpp (tiles));
-
-      pixel_region_init (&srcPR, tiles, 0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, buffer->tiles, 0, 0, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
-    }
+    buffer->tiles = tile_manager_duplicate (tiles);
   else
-    {
-      buffer->tiles = tile_manager_ref (tiles);
-    }
+    buffer->tiles = tile_manager_ref (tiles);
 
   return buffer;
 }
