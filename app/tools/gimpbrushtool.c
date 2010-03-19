@@ -299,10 +299,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
 
   g_return_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool));
 
-  /* if we are getting motion calls, the brush core will be busy drawing
-   * and output provides everything the outline could offer.
-   **/
-  if ((! brush_tool->draw_brush) || (brush_tool->in_motion))
+  if (! brush_tool->draw_brush)
     return;
 
   draw_tool  = GIMP_DRAW_TOOL (brush_tool);
@@ -321,7 +318,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   if (brush_core->brush_bound_segs)
       gimp_brush_core_transform_bound_segs (brush_core, options);
 
-  if (brush_core->transformed_brush_bound_segs)
+  if ((brush_core->transformed_brush_bound_segs) && !(brush_tool->in_motion))
     {
       GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
       gdouble           width  = brush_core->transformed_brush_bound_width;
@@ -351,7 +348,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
                                         x, y,
                                         FALSE);
         }
-      else if (draw_fallback)
+      else if ((draw_fallback) || (brush_tool->in_motion))
         {
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CROSS,
                                       x, y,
