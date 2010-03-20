@@ -41,6 +41,8 @@ struct _GimpTextProxyClass
 {
   GtkTextViewClass  parent_class;
 
+  void (* change_size)     (GimpTextProxy *proxy,
+                            gdouble        amount);
   void (* change_baseline) (GimpTextProxy *proxy,
                             gdouble        amount);
   void (* change_kerning)  (GimpTextProxy *proxy,

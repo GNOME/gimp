@@ -30,6 +30,7 @@
 
 enum
 {
+  CHANGE_SIZE,
   CHANGE_BASELINE,
   CHANGE_KERNING,
   LAST_SIGNAL
@@ -72,6 +73,16 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
   tv_class->paste_clipboard    = gimp_text_proxy_paste_clipboard;
   tv_class->toggle_overwrite   = gimp_text_proxy_toggle_overwrite;
 
+  proxy_signals[CHANGE_SIZE] =
+    g_signal_new ("change-size",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+		  G_STRUCT_OFFSET (GimpTextProxyClass, change_size),
+		  NULL, NULL,
+		  gimp_marshal_VOID__DOUBLE,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_DOUBLE);
+
   proxy_signals[CHANGE_BASELINE] =
     g_signal_new ("change-baseline",
 		  G_TYPE_FROM_CLASS (klass),
@@ -93,6 +104,13 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
 		  G_TYPE_DOUBLE);
 
   binding_set = gtk_binding_set_by_class (klass);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_plus, GDK_MOD1_MASK,
+				"change-size", 1,
+                                G_TYPE_DOUBLE, 1.0);
+  gtk_binding_entry_add_signal (binding_set, GDK_minus, GDK_MOD1_MASK,
+				"change-size", 1,
+                                G_TYPE_DOUBLE, -1.0);
 
   gtk_binding_entry_add_signal (binding_set, GDK_Up, GDK_MOD1_MASK,
 				"change-baseline", 1,
