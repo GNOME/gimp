@@ -33,6 +33,8 @@
 
 #define EVENT_FILL_PRECISION 6.0
 
+#define DIRECTION_RADIUS  (1.5 / MAX (shell->scale_x, shell->scale_y))
+
 #define SMOOTH_FACTOR 0.3
 
 
@@ -161,7 +163,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           coords->velocity = MIN (coords->velocity, 1.0);
         }
 
-      if ((fabs (delta_x) > 1.5) && (fabs (delta_y) > 1.5))
+      if ((fabs (delta_x) > DIRECTION_RADIUS) && (fabs (delta_y) > DIRECTION_RADIUS))
         {
           dir_delta_x = delta_x;
           dir_delta_y = delta_y;
@@ -170,8 +172,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
         {
           gint x = 3;
 
-          while (((fabs (dir_delta_x) < 1.5) ||
-                  (fabs (dir_delta_y) < 1.5)) && (x >= 0))
+          while (((fabs (dir_delta_x) < DIRECTION_RADIUS) ||
+                  (fabs (dir_delta_y) < DIRECTION_RADIUS)) && (x >= 0))
             {
               const GimpCoords old_event = g_array_index (shell->event_history,
                                                           GimpCoords, x);
@@ -183,13 +185,10 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
             }
         }
 
-      if (dir_delta_x == 0.0)
+      if ((fabs (dir_delta_x) < DIRECTION_RADIUS) ||
+          (fabs (dir_delta_y) < DIRECTION_RADIUS))
         {
-          if (dir_delta_y >= 0.0)
-            coords->direction = 0.5;
-          else if (dir_delta_y < 0.0)
-            coords->direction = 0.0;
-          else coords->direction = shell->last_coords.direction;
+          coords->direction = shell->last_coords.direction;
         }
       else
         {
