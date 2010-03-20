@@ -42,7 +42,7 @@
 #include "gimpdrawtool.h"
 
 
-#define DRAW_TIMEOUT 4 /* ~29 FPS */
+#define DRAW_TIMEOUT 4
 #define USE_TIMEOUT  1
 
 
@@ -315,7 +315,7 @@ gimp_draw_tool_calc_distance (GimpDrawTool *draw_tool,
  * distances.
  *
  * Returns: the square of the distance between the given points in
-            display coordinates
+ *          display coordinates
  **/
 gdouble
 gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
@@ -1293,7 +1293,6 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
       break;
     }
 }
-
 
 void
 gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
