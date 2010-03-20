@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-18 06:05+0300\n"
-"PO-Revision-Date: 2010-03-18 06:09+0300\n"
+"POT-Creation-Date: 2010-03-20 21:37+0300\n"
+"PO-Revision-Date: 2010-03-20 21:38+0300\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5580,8 +5580,8 @@ msgstr "_Стыкуемые диалоги"
 
 #: ../app/actions/windows-actions.c:95
 msgctxt "windows-action"
-msgid "Hide docks"
-msgstr "Скрыть панели"
+msgid "Hide Docks"
+msgstr "Скрыть стыкуемые диалоги"
 
 #: ../app/actions/windows-actions.c:103
 msgctxt "windows-action"
@@ -5592,7 +5592,7 @@ msgstr ""
 
 #: ../app/actions/windows-actions.c:109
 msgctxt "windows-action"
-msgid "Single-window mode"
+msgid "Single-Window Mode"
 msgstr "Однооконный режим"
 
 #: ../app/actions/windows-actions.c:110
@@ -7215,43 +7215,43 @@ msgstr "Дрожание"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Невозможно удалить \"%s\": %s"
 
-#: ../app/core/gimp-edit.c:192 ../app/core/gimpimage-new.c:232
+#: ../app/core/gimp-edit.c:190 ../app/core/gimpimage-new.c:232
 msgid "Pasted Layer"
 msgstr "Вставленный слой"
 
-#: ../app/core/gimp-edit.c:263
+#: ../app/core/gimp-edit.c:261
 msgid "Paste"
 msgstr "Вставить"
 
-#: ../app/core/gimp-edit.c:390
+#: ../app/core/gimp-edit.c:388
 msgid "Clear"
 msgstr "Очистить"
 
-#: ../app/core/gimp-edit.c:409
+#: ../app/core/gimp-edit.c:407
 msgid "Fill with Foreground Color"
 msgstr "Залить цветом переднего плана"
 
-#: ../app/core/gimp-edit.c:413
+#: ../app/core/gimp-edit.c:411
 msgid "Fill with Background Color"
 msgstr "Залить цветом фона"
 
-#: ../app/core/gimp-edit.c:417
+#: ../app/core/gimp-edit.c:415
 msgid "Fill with White"
 msgstr "Залить белым"
 
-#: ../app/core/gimp-edit.c:421
+#: ../app/core/gimp-edit.c:419
 msgid "Fill with Transparency"
 msgstr "Залить прозрачным"
 
-#: ../app/core/gimp-edit.c:425
+#: ../app/core/gimp-edit.c:423
 msgid "Fill with Pattern"
 msgstr "Заливка текстурой"
 
-#: ../app/core/gimp-edit.c:502
+#: ../app/core/gimp-edit.c:500
 msgid "Cut"
 msgstr "Вырезать"
 
-#: ../app/core/gimp-edit.c:519
+#: ../app/core/gimp-edit.c:512
 msgid "Global Buffer"
 msgstr "Глобальный буфер"
 
@@ -8052,7 +8052,7 @@ msgstr "Удаление образцовой точки"
 msgid "Move Sample Point"
 msgstr "Перемещение образцовой точки"
 
-#: ../app/core/gimpimage-undo-push.c:860
+#: ../app/core/gimpimage-undo-push.c:862
 #, c-format
 msgid "Can't undo %s"
 msgstr "Невозможно отменить %s"
@@ -11096,7 +11096,7 @@ msgstr ""
 "В чащах юга жил-был цитрус.\n"
 "Да, но фальшивый экземпляръ!"
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1369
+#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1368
 msgid "Add Text Layer"
 msgstr "Добавить текстовый слой"
 
@@ -11132,15 +11132,15 @@ msgstr "Вращать текстовый слой"
 msgid "Transform Text Layer"
 msgstr "Преобразование текстового слоя"
 
-#: ../app/text/gimptextlayer.c:502
+#: ../app/text/gimptextlayer.c:507
 msgid "Discard Text Information"
 msgstr "Удалить текстовую информацию"
 
-#: ../app/text/gimptextlayer.c:555
+#: ../app/text/gimptextlayer.c:560
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Из-за недостатка шрифтов функциональные возможности текста недоступны."
 
-#: ../app/text/gimptextlayer.c:606
+#: ../app/text/gimptextlayer.c:611
 msgid "Empty Text Layer"
 msgstr "Пустой текстовый слой"
 
@@ -12972,15 +12972,15 @@ msgstr "_Текст"
 msgid "Reshape Text Layer"
 msgstr "Смена размера текстового слоя"
 
-#: ../app/tools/gimptexttool.c:1480 ../app/tools/gimptexttool.c:1483
+#: ../app/tools/gimptexttool.c:1479 ../app/tools/gimptexttool.c:1482
 msgid "Confirm Text Editing"
 msgstr "Подтвердите изменение текста"
 
-#: ../app/tools/gimptexttool.c:1487
+#: ../app/tools/gimptexttool.c:1486
 msgid "Create _New Layer"
 msgstr "_Создать новый слой"
 
-#: ../app/tools/gimptexttool.c:1511
+#: ../app/tools/gimptexttool.c:1510
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
