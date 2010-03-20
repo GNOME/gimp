@@ -36,6 +36,8 @@
 #include "gimpdeviceinfo.h"
 #include "gimpdeviceinfoeditor.h"
 #include "gimpdevices.h"
+#include "gimpmessagebox.h"
+#include "gimpmessagedialog.h"
 
 #include "gimp-intl.h"
 
@@ -94,6 +96,10 @@ static void      gimp_device_editor_select_device  (GimpContainerView     *view,
                                                     gpointer               insert_data,
                                                     GimpDeviceEditor      *editor);
 
+static void      gimp_device_editor_switch_page    (GtkNotebook           *notebook,
+                                                    GtkNotebookPage       *page,
+                                                    guint                  page_num,
+                                                    GimpDeviceEditor      *editor);
 static void      gimp_device_editor_delete_clicked (GtkWidget             *button,
                                                     GimpDeviceEditor      *editor);
 
@@ -192,6 +198,10 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), private->notebook, TRUE, TRUE, 0);
   gtk_widget_show (private->notebook);
+
+  g_signal_connect (private->notebook, "switch-page",
+                    G_CALLBACK (gimp_device_editor_switch_page),
+                    editor);
 }
 
 static GObject *
@@ -361,10 +371,7 @@ gimp_device_editor_select_device (GimpContainerView *view,
                                   gpointer           insert_data,
                                   GimpDeviceEditor  *editor)
 {
-  GimpDeviceEditorPrivate *private;
-  gboolean                 delete_sensitive = FALSE;
-
-  private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
 
   if (viewable && insert_data)
     {
@@ -385,25 +392,113 @@ gimp_device_editor_select_device (GimpContainerView *view,
           gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
                                          page_num);
         }
-
-      gtk_label_set_text (GTK_LABEL (private->label),
-                          gimp_object_get_name (viewable));
-      gtk_image_set_from_stock (GTK_IMAGE (private->image),
-                                gimp_viewable_get_stock_id (viewable),
-                                GTK_ICON_SIZE_BUTTON);
-
-      if (! gimp_device_info_get_device (GIMP_DEVICE_INFO (viewable), NULL))
-        delete_sensitive = TRUE;
     }
+}
+
+static void
+gimp_device_editor_switch_page (GtkNotebook      *notebook,
+                                GtkNotebookPage  *page,
+                                guint             page_num,
+                                GimpDeviceEditor *editor)
+{
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  GtkWidget               *widget;
+  GimpDeviceInfo          *info;
+  gboolean                 delete_sensitive = FALSE;
+
+  widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
+
+  g_object_get (widget ,"info", &info, NULL);
+
+  gtk_label_set_text (GTK_LABEL (private->label),
+                      gimp_object_get_name (info));
+  gtk_image_set_from_stock (GTK_IMAGE (private->image),
+                            gimp_viewable_get_stock_id (GIMP_VIEWABLE (info)),
+                            GTK_ICON_SIZE_BUTTON);
+
+  if (! gimp_device_info_get_device (info, NULL))
+    delete_sensitive = TRUE;
 
   gtk_widget_set_sensitive (private->delete_button, delete_sensitive);
+
+  g_object_unref (info);
+}
+
+static void
+gimp_device_editor_delete_response (GtkWidget        *dialog,
+                                    gint              response_id,
+                                    GimpDeviceEditor *editor)
+{
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+
+  gtk_widget_destroy (dialog);
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GList *selected;
+
+      if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (private->treeview),
+                                            &selected))
+        {
+          GimpContainer *devices;
+
+          devices = gimp_devices_get_list (private->gimp);
+
+          gimp_container_remove (devices, selected->data);
+
+          g_list_free (selected);
+        }
+    }
+
+  gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
 }
 
 static void
 gimp_device_editor_delete_clicked (GtkWidget        *button,
                                    GimpDeviceEditor *editor)
 {
-  g_printerr ("delete clicked");
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  GtkWidget               *dialog;
+  GList                   *selected;
+
+  if (! gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (private->treeview),
+                                          &selected))
+    return;
+
+  dialog = gimp_message_dialog_new (_("Delete Device Settings"),
+                                    GIMP_STOCK_QUESTION,
+                                    gtk_widget_get_toplevel (GTK_WIDGET (editor)),
+                                    GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    gimp_standard_help_func, NULL,
+
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_DELETE, GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gimp_device_editor_delete_response),
+                    editor);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("Delete \"%s\"?"),
+                                     gimp_object_get_name (selected->data));
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             _("You are about to delete this device's "
+                               "stored settings.\n"
+                               "The next time this device is plugged, "
+                               "default settings will be used."));
+
+  g_list_free (selected);
+
+  gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+
+  gtk_widget_show (dialog);
 }
 
 
