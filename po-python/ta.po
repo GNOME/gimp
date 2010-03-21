@@ -1,0 +1,315 @@
+# translation of gimp-python.gimp-2-6.po to Tamil
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Dr.T.Vasudevan <agnihot3@gmail.com>, 2010.
+# Dr,T,Vasudevan <agnihot3@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python.gimp-2-6\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2010-03-17 23:19+0000\n"
+"PO-Revision-Date: 2010-03-21 17:40+0530\n"
+"Last-Translator: Dr,T,Vasudevan <agnihot3@gmail.com>\n"
+"Language-Team: Tamil <Ubuntu-l10n-tam@lists.ubuntu.com>>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: ../plug-ins/pygimp/gimpfu.py:386
+msgid "Missing exception information"
+msgstr "விலக்கு தகவல்  காணப்படவில்லை"
+
+#: ../plug-ins/pygimp/gimpfu.py:395
+#, python-format
+msgid "An error occured running %s"
+msgstr "%s ஐ இயக்கும் போது பிழை"
+
+#: ../plug-ins/pygimp/gimpfu.py:406
+msgid "_More Information"
+msgstr "_M மேலதிக தகவல்"
+
+#: ../plug-ins/pygimp/gimpfu.py:518 ../plug-ins/pygimp/gimpfu.py:530
+#: ../plug-ins/pygimp/gimpfu.py:536
+msgid "No"
+msgstr "இல்லை"
+
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:536
+msgid "Yes"
+msgstr "ஆம்"
+
+#: ../plug-ins/pygimp/gimpfu.py:587 ../plug-ins/pygimp/gimpui.py:224
+msgid "Python-Fu File Selection"
+msgstr "பைத்தான் ஃபூ கோப்பு தேர்வு"
+
+#: ../plug-ins/pygimp/gimpfu.py:598
+msgid "Python-Fu Folder Selection"
+msgstr "பைத்தான் ஃபூ அடைவு தேர்வு"
+
+#: ../plug-ins/pygimp/gimpfu.py:689
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr " '%s' க்கு செல்லுபடியாகாத உள்ளீடு"
+
+#: ../plug-ins/pygimp/gimpui.py:177
+msgid "Python-Fu Color Selection"
+msgstr "பைத்தான்-ஃபூ நிறம் தேர்வு"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "வண்ண எக்ஸ்ஹெச்டிஎம்எல் ஆக சேமிக்கிறது"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "வண்ண எக்ஸ்ஹெச்டிஎம்எல் ஆக சேமி"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "வண்ண எக்ஸ்ஹெச்டிஎம்எல் "
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Character _source"
+msgstr "_s எழுத்து மூலம்"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Source code"
+msgstr "மூலம்"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Text file"
+msgstr "உரை கோப்பு"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Entry box"
+msgstr "உள்ளீடு பெட்டி"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr "படிக்க கோப்பு அல்லது பயன்படுத்த எண் எழுத்துக்கள் குறியீடுகள்"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "Fo_nt size in pixels"
+msgstr "_n எழுத்துரு அளவு பிக்ஸல்களில்"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+msgid "_Write a separate CSS file"
+msgstr "_W ஒரு சிஎஸ்எஸ்(CSS) கோப்பு ஆக எழுது"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
+msgid "Add a layer of fog"
+msgstr "இதில் ஒரு அடுக்கு மூடுபனியை சேர்"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "_Fog..."
+msgstr "_F மூடுபனி..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+msgid "_Layer name"
+msgstr "_L அடுக்கு பெயர்"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+msgid "Clouds"
+msgstr "மேகங்கள்"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+msgid "_Fog color"
+msgstr "_F மூடுபனி நிறம்"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+msgid "_Turbulence"
+msgstr "_T கொந்தளிப்பு"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:70
+msgid "Op_acity"
+msgstr "_a ஒளி புகாத்தன்மை"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "வண்ணத்தட்டில் நிற குத்து நீட்டம் "
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "_O குத்து நீட்டம்..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "வண்ணத்தட்டு "
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "_s குத்து நீட்டம்"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "வண்ணத்தட்டில் நிறங்களை வரிசைப்படுத்து "
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "_S வண்ணத்தட்டில் வரிசைப்படுத்து..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "_m நிற மாதிரி"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "ஆர்ஜிபி"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "ஹெச்எஸ்வி "
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "_s வரிசைப்படுத்த வாய்க்கால் "
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "சிகப்பு அல்லது சாயல்"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "பச்சை அல்லது தெவிட்டம்"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "நீலம் அல்லது மதிப்பு"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "ஏறுவரிசை(_A)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "வண்ணத்தட்டில் இருந்து நிறங்களை பயன்படுத்தி ஒரு திருப்பும் சீர் மாற்றத்தை உருவாக்குக"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "_R திருப்பும் சீர் மாற்றத்துக்கு வண்ணத்தட்டு"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "வண்ணத்தட்டில் இருந்து நிறங்களை பயன்படுத்தி ஒரு சீர் மாற்றத்தை உருவாக்குக"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "_G சீர் மாற்றத்துக்கு வண்ணத்தட்டு"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "துண்டு"
+
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:418
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "பிம்பத்தை அதன் வழிகாட்டிகளோடு வெட்டுகிறது; பிம்பங்களை உருவாக்குகிறது மற்றும் ஒரு ஹெச்டிஎம்எல்(HTML) அட்டவணை வெட்டு துண்டை உருவாக்குகிறது "
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:429
+msgid "_Slice..."
+msgstr "_S வெட்டுத்துண்டு..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Path for HTML export"
+msgstr "ஹெச்டிஎம்எல்(HTML) ஏற்றுமதிக்கு பாதை"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+msgid "Filename for export"
+msgstr "ஏற்றுமதிக்கு கோப்பு பெயர்"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Image name prefix"
+msgstr "பிம்ப முன்னொட்டு பெயர்"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Image format"
+msgstr "பிம்ப ஒழுங்கு"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Separate image folder"
+msgstr "தனி பட அடைவு"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+msgid "Folder for image export"
+msgstr "ஏற்றுமதி செய்ய படங்களுக்கு அடைவு"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Space between table elements"
+msgstr "அட்டவணை மூலகங்கள் நடுவில் இடம் "
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Javascript for onmouseover and clicked"
+msgstr "சொடுக்கிமேலோட்டம் மற்றும் சொடுக்கலுக்கு ஜாவா ஸ்கிரிப்ட் "
+
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
+msgid "Skip animation for table caps"
+msgstr "அட்டவணை தலைப்புக்களுக்கு அசைவூட்டம் தவிர்"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+msgid "Python Console"
+msgstr "பைத்தான் முனையம்"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+msgid "_Browse..."
+msgstr "_B உலாவு..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:139
+msgid "Python Procedure Browser"
+msgstr "பைத்தான் நடைமுறை உலாவி"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:168
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "எழுதுவதற்கு '%s'ஐ திறக்கமுடியவில்லை: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "'%s' க்கு எழுத முடியவில்லை: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:191
+msgid "Save Python-Fu Console Output"
+msgstr "பைத்தான்-ஃபூ முனைய வெளிப்பாட்டை சேமி "
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:217
+msgid "Interactive GIMP Python interpreter"
+msgstr "ஊடாடும் கிம்ப் பைத்தான் உணர்ந்துணரி"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+msgid "_Console"
+msgstr "(_C) முனையம்"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "ஒரு அடுக்குக்கு ஒரு நிழல் இடு, மேலும் தேர்வில் அதை சாய்முனையாகச்செய்"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "_D நிழல் இடு மற்றும் சாய்முனையாக்கு..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Shadow blur"
+msgstr "_S நிழலை மழுங்கச்செய்"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Bevel"
+msgstr "_B சாய்முனை"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "_Drop shadow"
+msgstr "_D நிழல் இடு "
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr " நிழல் இட _X நகட்டம்"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr " நிழல் இட _Y நகட்டம்"
+
+
