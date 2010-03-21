@@ -3,19 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Dr.T.vasudevan <agnihot3@gmail.com>, 2010.
+# Dr,T,Vasudevan <agnihot3@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2010-03-17 23:18+0000\n"
-"PO-Revision-Date: 2010-03-21 11:19+0530\n"
-"Last-Translator: Dr.T.vasudevan <agnihot3@gmail.com>\n"
-"Language-Team: Tamil <Ubuntu-l10n-tam@lists.ubuntu.com>\n"
+"PO-Revision-Date: 2010-03-21 17:37+0530\n"
+"Last-Translator: Dr,T,Vasudevan <agnihot3@gmail.com>\n"
+"Language-Team: Tamil <Ubuntu-l10n-tam@lists.ubuntu.com>>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 0.3\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1045
@@ -64,10 +65,8 @@ msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "."
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
-#, c-format
-#, fuzzy
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "அங். அசைவூட்டம் சட்டங்கள்"
+msgstr "%s சொருகி அடுக்குகளை அசைவூட்ட சட்டங்கள் ஆக மட்டுமே கையாள முடியும்"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -79,26 +78,20 @@ msgid "Flatten Image"
 msgstr "பிம்பத்தை தட்டையாக்கு"
 
 #: ../libgimp/gimpexport.c:262
-#, c-format
-#, fuzzy
 msgid "%s plug-in can't handle transparency"
-msgstr "அங்."
+msgstr "%s சொருகி ஊடு தெரிதல் ஐ கையாள முடியாது"
 
 #: ../libgimp/gimpexport.c:271
-#, c-format
-#, fuzzy
 msgid "%s plug-in can't handle layer masks"
-msgstr "அங்."
+msgstr "%s சொருகி அடுக்கு மறை  மூடிகளை  கையாள முடியாது"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "அடுக்கு மறைமூடிகளை ஏற்றுக "
 
 #: ../libgimp/gimpexport.c:280
-#, c-format
-#, fuzzy
 msgid "%s plug-in can only handle RGB images"
-msgstr "அங். ஆர்ஜிபி"
+msgstr "%s சொருகி ஆர்பி ஜிபிம்பங்களை மட்டுமே  கையாள முடியும்"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -106,10 +99,8 @@ msgid "Convert to RGB"
 msgstr "ஆர்ஜிபி ஆக மாற்றுக"
 
 #: ../libgimp/gimpexport.c:289
-#, c-format
-#, fuzzy
 msgid "%s plug-in can only handle grayscale images"
-msgstr "அங். சாம்பல்நிற அளவை"
+msgstr "%s சொருகி சாம்பல் நிற அளவுகளை மட்டுமே  கையாள முடியும்"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -117,18 +108,17 @@ msgid "Convert to Grayscale"
 msgstr "சாம்பல்நிற அளவாக மாற்றுக "
 
 #: ../libgimp/gimpexport.c:298
-#, c-format
-#, fuzzy
 msgid "%s plug-in can only handle indexed images"
-msgstr "அங். வரிசைப்படுத்தப்பட்டது"
+msgstr "%s சொருகி அட்டவணைப்படுத்திய பிம்பங்களை மட்டுமே  கையாள முடியும்"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
-#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
-msgstr "வரை இ வரை"
+msgstr ""
+"முன்னிருப்பு அமைப்பை பயன்படுத்தி அட்டவணையிட்டதாக மாற்றுக\n"
+"(விடையை நுண் திருத்த கைமுறையாக செய்க )"
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
@@ -1968,4 +1958,5 @@ msgstr "கிம்ப்"
 #, fuzzy
 msgid "GIMP MIDI Input Controller"
 msgstr "கிம்ப் உள்ளீடு"
+
 
