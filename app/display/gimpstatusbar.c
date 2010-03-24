@@ -49,6 +49,9 @@
 /*  maximal width of the string holding the cursor-coordinates  */
 #define CURSOR_LEN        256
 
+/*  the spacing of the hbox                                     */
+#define HBOX_SPACING        1
+
 /*  spacing between the icon and the statusbar label            */
 #define ICON_SPACING        2
 
@@ -152,6 +155,7 @@ static void
 gimp_statusbar_init (GimpStatusbar *statusbar)
 {
   GtkWidget     *hbox;
+  GtkWidget     *label;
   GtkWidget     *image;
   GimpUnitStore *store;
 
@@ -171,13 +175,27 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->progress_active      = FALSE;
   statusbar->progress_shown       = FALSE;
 
-  /* remove the label and insert a hbox */
-  gtk_container_remove (GTK_CONTAINER (GTK_STATUSBAR (statusbar)->frame),
-                        g_object_ref (GTK_STATUSBAR (statusbar)->label));
+  label = g_object_ref (GTK_STATUSBAR (statusbar)->label);
 
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_add (GTK_CONTAINER (GTK_STATUSBAR (statusbar)->frame), hbox);
-  gtk_widget_show (hbox);
+  /* remove the message area or label and insert a hbox */
+#if GTK_CHECK_VERSION (2, 19, 1)
+  {
+    hbox = gtk_statusbar_get_message_area (GTK_STATUSBAR (statusbar));
+    gtk_box_set_spacing (GTK_BOX (hbox), HBOX_SPACING);
+    gtk_container_remove (GTK_CONTAINER (hbox), label);
+  }
+#else
+  {
+    GtkWidget *label_parent;
+
+    label_parent = gtk_widget_get_parent (label);
+    gtk_container_remove (GTK_CONTAINER (label_parent), label);
+
+    hbox = gtk_hbox_new (FALSE, HBOX_SPACING);
+    gtk_container_add (GTK_CONTAINER (label_parent), hbox);
+    gtk_widget_show (hbox);
+  }
+#endif
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
   gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
