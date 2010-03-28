@@ -838,6 +838,7 @@ load_dialog (PopplerDocument  *doc,
 
   /* Title */
   title = gimp_prop_label_new (G_OBJECT (doc), "title");
+  gtk_label_set_ellipsize (GTK_LABEL (title), PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (vbox), title, FALSE, FALSE, 0);
   gtk_widget_show (title);
 
