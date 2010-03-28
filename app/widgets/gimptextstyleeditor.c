@@ -88,7 +88,7 @@ static void      gimp_text_style_editor_set_toggle       (GimpTextStyleEditor *e
 static void      gimp_text_style_editor_size_changed     (GtkAdjustment       *adjustment,
                                                           GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_set_size         (GimpTextStyleEditor *editor,
-                                                          gint                 size);
+                                                          GtkTextTag          *size_tag);
 
 static void      gimp_text_style_editor_baseline_changed (GtkAdjustment       *adjustment,
                                                           GimpTextStyleEditor *editor);
@@ -644,16 +644,27 @@ gimp_text_style_editor_size_changed (GtkAdjustment       *adjustment,
 
 static void
 gimp_text_style_editor_set_size (GimpTextStyleEditor *editor,
-                                 gint                 size)
+                                 GtkTextTag          *size_tag)
 {
+  gint size = 0;
+
+  if (size_tag)
+    g_object_get (size_tag,
+                  "size", &size,
+                  NULL);
+
   g_signal_handlers_block_by_func (editor->size_adjustment,
                                    gimp_text_style_editor_size_changed,
                                    editor);
 
   gtk_adjustment_set_value (editor->size_adjustment,
                             (gdouble) size / PANGO_SCALE);
-  /* make sure the "" really gets replaced */
-  gtk_adjustment_value_changed (editor->size_adjustment);
+
+  if (size != 0)
+    /* make sure the "" really gets replaced */
+    gtk_adjustment_value_changed (editor->size_adjustment);
+  else
+    gtk_entry_set_text (GTK_ENTRY (editor->size_spinbutton), "");
 
   g_signal_handlers_unblock_by_func (editor->size_adjustment,
                                      gimp_text_style_editor_size_changed,
@@ -768,7 +779,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       gboolean     baseline_differs  = FALSE;
       gboolean     kerning_differs   = FALSE;
       GtkTextTag  *font_tag          = NULL;
-      gint         size;
+      GtkTextTag  *size_tag          = NULL;
       gint         baseline;
       gint         kerning;
 
@@ -785,7 +796,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
       /*  and get some initial values  */
       font_tag = gimp_text_buffer_get_iter_font (editor->buffer, &start, NULL);
-      gimp_text_buffer_get_iter_size (editor->buffer, &start, &size);
+      size_tag = gimp_text_buffer_get_iter_size (editor->buffer, &start, NULL);
       gimp_text_buffer_get_iter_baseline (editor->buffer, &start, &baseline);
       gimp_text_buffer_get_iter_kerning (editor->buffer, &start, &kerning);
 
@@ -827,12 +838,12 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
           if (! size_differs)
             {
-              gint tag_size;
+              GtkTextTag *tag;
 
-              gimp_text_buffer_get_iter_size (editor->buffer, &iter,
-                                              &tag_size);
+              tag = gimp_text_buffer_get_iter_size (editor->buffer, &iter,
+                                                    NULL);
 
-              if (size != tag_size)
+              if (tag != size_tag)
                 size_differs = TRUE;
             }
 
@@ -866,15 +877,8 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
             break;
        }
 
-      if (font_differs)
-        font_tag = NULL;
-
-      gimp_text_style_editor_set_font (editor, font_tag);
-
-      if (size_differs)
-        gtk_entry_set_text (GTK_ENTRY (editor->size_spinbutton), "");
-      else
-        gimp_text_style_editor_set_size (editor, size);
+      gimp_text_style_editor_set_font (editor, font_differs ? NULL : font_tag);
+      gimp_text_style_editor_set_size (editor, size_differs ? NULL : size_tag);
 
       if (baseline_differs)
         gtk_entry_set_text (GTK_ENTRY (editor->baseline_spinbutton), "");
@@ -918,6 +922,22 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       if (! list)
         gimp_text_style_editor_set_font (editor, NULL);
 
+      for (list = editor->buffer->size_tags; list; list = g_list_next (list))
+        {
+          GtkTextTag *tag = list->data;
+
+          if ((g_slist_find (tags, tag) &&
+               ! g_slist_find (tags_on, tag)) ||
+              g_slist_find (tags_off, tag))
+            {
+              gimp_text_style_editor_set_size (editor, tag);
+              break;
+            }
+        }
+
+      if (! list)
+        gimp_text_style_editor_set_size (editor, NULL);
+
       for (list = editor->toggles; list; list = g_list_next (list))
         {
           GtkToggleButton *toggle = list->data;
@@ -929,12 +949,6 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
                                               ! g_slist_find (tags_on, tag)) ||
                                              g_slist_find (tags_off, tag));
         }
-
-      gimp_text_buffer_get_iter_size (editor->buffer, &cursor, &value);
-      if (value == 0)
-        gtk_entry_set_text (GTK_ENTRY (editor->size_spinbutton), "");
-      else
-        gimp_text_style_editor_set_size (editor, value);
 
       gimp_text_buffer_get_iter_baseline (editor->buffer, &cursor, &value);
       gimp_text_style_editor_set_baseline (editor, value);
