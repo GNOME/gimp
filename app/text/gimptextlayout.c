@@ -226,6 +226,13 @@ gimp_text_layout_new (GimpText  *text,
         PANGO_PIXELS (gimp_text_layout_pixel_size (text->box_height,
                                                    text->box_unit,
                                                    yres));
+
+/* #define VERBOSE */
+
+#ifdef VERBOSE
+      g_printerr ("extents set to %d x %d\n",
+                  layout->extents.width, layout->extents.height);
+#endif
       break;
     }
 
@@ -488,10 +495,10 @@ gimp_text_layout_position (GimpTextLayout *layout)
   logical.width = ceil ((gdouble) logical.width * layout->xres / layout->yres);
 
 #ifdef VERBOSE
-  g_print ("ink rect: %d x %d @ %d, %d\n",
-           ink.width, ink.height, ink.x, ink.y);
-  g_print ("logical rect: %d x %d @ %d, %d\n",
-           logical.width, logical.height, logical.x, logical.y);
+  g_printerr ("ink rect: %d x %d @ %d, %d\n",
+              ink.width, ink.height, ink.x, ink.y);
+  g_printerr ("logical rect: %d x %d @ %d, %d\n",
+              logical.width, logical.height, logical.x, logical.y);
 #endif
 
   if (ink.width < 1 || ink.height < 1)
@@ -543,9 +550,9 @@ gimp_text_layout_position (GimpTextLayout *layout)
     }
 
 #ifdef VERBOSE
-  g_print ("layout extents: %d x %d @ %d, %d\n",
-           layout->extents.width, layout->extents.height,
-           layout->extents.x, layout->extents.y);
+  g_printerr ("layout extents: %d x %d @ %d, %d\n",
+              layout->extents.width, layout->extents.height,
+              layout->extents.x, layout->extents.y);
 #endif
 }
 
