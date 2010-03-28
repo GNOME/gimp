@@ -40,6 +40,7 @@ struct _GimpTextBuffer
   GtkTextTag    *underline_tag;
   GtkTextTag    *strikethrough_tag;
 
+  GList         *size_tags;
   GList         *baseline_tags;
   GList         *kerning_tags;
   GList         *font_tags;
@@ -70,6 +71,18 @@ void             gimp_text_buffer_set_markup        (GimpTextBuffer    *buffer,
 gchar          * gimp_text_buffer_get_markup        (GimpTextBuffer    *buffer);
 
 gboolean         gimp_text_buffer_has_markup        (GimpTextBuffer    *buffer);
+
+GtkTextTag     * gimp_text_buffer_get_iter_size     (GimpTextBuffer    *buffer,
+                                                     const GtkTextIter *iter,
+                                                     gint              *size);
+void             gimp_text_buffer_set_size          (GimpTextBuffer    *buffer,
+                                                     const GtkTextIter *start,
+                                                     const GtkTextIter *end,
+                                                     gint               size);
+void             gimp_text_buffer_change_size       (GimpTextBuffer    *buffer,
+                                                     const GtkTextIter *start,
+                                                     const GtkTextIter *end,
+                                                     gint               amount);
 
 GtkTextTag     * gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *iter,

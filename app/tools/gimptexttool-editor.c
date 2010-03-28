@@ -71,6 +71,8 @@ static void   gimp_text_tool_backspace          (GimpTextTool    *text_tool);
 static void   gimp_text_tool_toggle_overwrite   (GimpTextTool    *text_tool);
 static void   gimp_text_tool_select_all         (GimpTextTool    *text_tool,
                                                  gboolean         select);
+static void   gimp_text_tool_change_size        (GimpTextTool    *text_tool,
+                                                 gdouble          amount);
 static void   gimp_text_tool_change_baseline    (GimpTextTool    *text_tool,
                                                  gdouble          amount);
 static void   gimp_text_tool_change_kerning     (GimpTextTool    *text_tool,
@@ -595,6 +597,9 @@ gimp_text_tool_ensure_proxy (GimpTextTool *text_tool)
       g_signal_connect_swapped (text_tool->proxy_text_view, "select-all",
                                 G_CALLBACK (gimp_text_tool_select_all),
                                 text_tool);
+      g_signal_connect_swapped (text_tool->proxy_text_view, "change-size",
+                                G_CALLBACK (gimp_text_tool_change_size),
+                                text_tool);
       g_signal_connect_swapped (text_tool->proxy_text_view, "change-baseline",
                                 G_CALLBACK (gimp_text_tool_change_baseline),
                                 text_tool);
@@ -994,6 +999,24 @@ gimp_text_tool_select_all (GimpTextTool *text_tool,
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+}
+
+static void
+gimp_text_tool_change_size (GimpTextTool *text_tool,
+                            gdouble       amount)
+{
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  GtkTextIter    start;
+  GtkTextIter    end;
+
+  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
+    {
+      return;
+    }
+
+  gtk_text_iter_order (&start, &end);
+  gimp_text_buffer_change_size (text_tool->buffer, &start, &end,
+                                amount * PANGO_SCALE);
 }
 
 static void

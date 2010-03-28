@@ -147,6 +147,12 @@ gimp_text_buffer_finalize (GObject *object)
 {
   GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object);
 
+  if (buffer->size_tags)
+    {
+      g_list_free (buffer->size_tags);
+      buffer->size_tags = NULL;
+    }
+
   if (buffer->baseline_tags)
     {
       g_list_free (buffer->baseline_tags);
@@ -322,6 +328,174 @@ gimp_text_buffer_has_markup (GimpTextBuffer *buffer)
   while (gtk_text_iter_forward_char (&iter));
 
   return FALSE;
+}
+
+GtkTextTag *
+gimp_text_buffer_get_iter_size (GimpTextBuffer    *buffer,
+                                const GtkTextIter *iter,
+                                gint              *size)
+{
+  GList *list;
+
+  for (list = buffer->size_tags; list; list = g_list_next (list))
+    {
+      GtkTextTag *tag = list->data;
+
+      if (gtk_text_iter_has_tag (iter, tag))
+        {
+          if (size)
+            g_object_get (tag,
+                          "size", size,
+                          NULL);
+
+          return tag;
+        }
+    }
+
+  if (size)
+    *size = 0;
+
+  return NULL;
+}
+
+static GtkTextTag *
+gimp_text_buffer_get_size_tag (GimpTextBuffer *buffer,
+                               gint            size)
+{
+  GList      *list;
+  GtkTextTag *tag;
+  gchar       name[32];
+
+  for (list = buffer->size_tags; list; list = g_list_next (list))
+    {
+      gint tag_size;
+
+      tag = list->data;
+
+      g_object_get (tag,
+                    "size", &tag_size,
+                    NULL);
+
+      if (tag_size == size)
+        return tag;
+    }
+
+  g_snprintf (name, sizeof (name), "size-%d", size);
+
+  tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                    name,
+                                    "size", size,
+                                    NULL);
+
+  buffer->size_tags = g_list_prepend (buffer->size_tags, tag);
+
+  return tag;
+}
+
+void
+gimp_text_buffer_set_size (GimpTextBuffer    *buffer,
+                           const GtkTextIter *start,
+                           const GtkTextIter *end,
+                           gint               size)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (start, end))
+    return;
+
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
+  for (list = buffer->size_tags; list; list = g_list_next (list))
+    {
+      gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                  start, end);
+    }
+
+  if (size != 0)
+    {
+      GtkTextTag *tag;
+
+      tag = gimp_text_buffer_get_size_tag (buffer, size);
+
+      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                 start, end);
+    }
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
+}
+
+void
+gimp_text_buffer_change_size (GimpTextBuffer    *buffer,
+                              const GtkTextIter *start,
+                              const GtkTextIter *end,
+                              gint               count)
+{
+  GtkTextIter  iter;
+  GtkTextIter  span_start;
+  GtkTextIter  span_end;
+  GtkTextTag  *span_tag;
+  gint         span_size;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (start, end))
+    return;
+
+  iter       = *start;
+  span_start = *start;
+  span_tag   = gimp_text_buffer_get_iter_size (buffer, &iter,
+                                               &span_size);
+
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
+  do
+    {
+      GtkTextTag *iter_tag;
+      gint        iter_size;
+
+      gtk_text_iter_forward_char (&iter);
+
+      iter_tag = gimp_text_buffer_get_iter_size (buffer, &iter,
+                                                 &iter_size);
+
+      span_end = iter;
+
+      if (iter_size != span_size ||
+          gtk_text_iter_compare (&iter, end) >= 0)
+        {
+          if (span_size != 0)
+            {
+              gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), span_tag,
+                                          &span_start, &span_end);
+            }
+
+          if ((span_size + count) > 0)
+            {
+              span_tag = gimp_text_buffer_get_size_tag (buffer,
+                                                        span_size + count);
+
+              gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), span_tag,
+                                         &span_start, &span_end);
+            }
+
+          span_start = iter;
+          span_size  = iter_size;
+          span_tag   = iter_tag;
+        }
+
+      /* We might have moved too far */
+      if (gtk_text_iter_compare (&iter, end) > 0)
+        iter = *end;
+    }
+  while (! gtk_text_iter_equal (&iter, end));
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
 GtkTextTag *
@@ -792,6 +966,24 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
     {
       return "s";
     }
+  else if (g_list_find (buffer->size_tags, tag))
+    {
+      if (attribute)
+        *attribute = "size";
+
+      if (value)
+        {
+          gint size;
+
+          g_object_get (tag,
+                        "size", &size,
+                        NULL);
+
+          *value = g_strdup_printf ("%d", size);
+        }
+
+      return "span";
+    }
   else if (g_list_find (buffer->baseline_tags, tag))
     {
       if (attribute)
@@ -875,7 +1067,11 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
            attribute != NULL       &&
            value     != NULL)
     {
-      if (! strcmp (attribute, "rise"))
+      if (! strcmp (attribute, "size"))
+        {
+          return gimp_text_buffer_get_size_tag (buffer, atoi (value));
+        }
+      else if (! strcmp (attribute, "rise"))
         {
           return gimp_text_buffer_get_baseline_tag (buffer, atoi (value));
         }

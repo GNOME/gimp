@@ -85,6 +85,11 @@ static void      gimp_text_style_editor_set_toggle       (GimpTextStyleEditor *e
                                                           GtkToggleButton     *toggle,
                                                           gboolean             active);
 
+static void      gimp_text_style_editor_size_changed     (GtkAdjustment       *adjustment,
+                                                          GimpTextStyleEditor *editor);
+static void      gimp_text_style_editor_set_size         (GimpTextStyleEditor *editor,
+                                                          gint                 size);
+
 static void      gimp_text_style_editor_baseline_changed (GtkAdjustment       *adjustment,
                                                           GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_set_baseline     (GimpTextStyleEditor *editor,
@@ -181,11 +186,21 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->font_entry);
 
-  editor->size_label = gtk_label_new ("0.0");
-  gtk_misc_set_padding (GTK_MISC (editor->size_label), 2, 0);
-  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->size_label,
+  editor->size_adjustment =
+    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 10.0, 0.0));
+  editor->size_spinbutton = gtk_spin_button_new (editor->size_adjustment,
+                                                 1.0, 1);
+  gtk_entry_set_width_chars (GTK_ENTRY (editor->size_spinbutton), 5);
+  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->size_spinbutton,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->size_label);
+  gtk_widget_show (editor->size_spinbutton);
+
+  gimp_help_set_help_data (editor->size_spinbutton,
+                           _("Change size of selected text"), NULL);
+
+  g_signal_connect (editor->size_adjustment, "value-changed",
+                    G_CALLBACK (gimp_text_style_editor_size_changed),
+                    editor);
 
   /*  lower row  */
 
@@ -219,6 +234,9 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     FALSE, FALSE, 0);
   gtk_widget_show (editor->kerning_spinbutton);
 
+  gimp_help_set_help_data (editor->kerning_spinbutton,
+                           _("Change kerning of selected text"), NULL);
+
   g_signal_connect (editor->kerning_adjustment, "value-changed",
                     G_CALLBACK (gimp_text_style_editor_kerning_changed),
                     editor);
@@ -231,6 +249,9 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->baseline_spinbutton,
                     FALSE, FALSE, 0);
   gtk_widget_show (editor->baseline_spinbutton);
+
+  gimp_help_set_help_data (editor->baseline_spinbutton,
+                           _("Change baseline of selected text"), NULL);
 
   g_signal_connect (editor->baseline_adjustment, "value-changed",
                     G_CALLBACK (gimp_text_style_editor_baseline_changed),
@@ -605,6 +626,41 @@ gimp_text_style_editor_set_toggle (GimpTextStyleEditor *editor,
 }
 
 static void
+gimp_text_style_editor_size_changed (GtkAdjustment       *adjustment,
+                                     GimpTextStyleEditor *editor)
+{
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
+  GtkTextIter    start, end;
+
+  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
+    {
+      return;
+    }
+
+  gimp_text_buffer_set_size (editor->buffer, &start, &end,
+                             gtk_adjustment_get_value (adjustment) *
+                             PANGO_SCALE);
+}
+
+static void
+gimp_text_style_editor_set_size (GimpTextStyleEditor *editor,
+                                 gint                 size)
+{
+  g_signal_handlers_block_by_func (editor->size_adjustment,
+                                   gimp_text_style_editor_size_changed,
+                                   editor);
+
+  gtk_adjustment_set_value (editor->size_adjustment,
+                            (gdouble) size / PANGO_SCALE);
+  /* make sure the "" really gets replaced */
+  gtk_adjustment_value_changed (editor->size_adjustment);
+
+  g_signal_handlers_unblock_by_func (editor->size_adjustment,
+                                     gimp_text_style_editor_size_changed,
+                                     editor);
+}
+
+static void
 gimp_text_style_editor_baseline_changed (GtkAdjustment       *adjustment,
                                          GimpTextStyleEditor *editor)
 {
@@ -708,9 +764,11 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       GList       *list;
       gboolean     any_toggle_active = TRUE;
       gboolean     font_differs      = FALSE;
+      gboolean     size_differs      = FALSE;
       gboolean     baseline_differs  = FALSE;
       gboolean     kerning_differs   = FALSE;
       GtkTextTag  *font_tag          = NULL;
+      gint         size;
       gint         baseline;
       gint         kerning;
 
@@ -727,6 +785,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
       /*  and get some initial values  */
       font_tag = gimp_text_buffer_get_iter_font (editor->buffer, &start, NULL);
+      gimp_text_buffer_get_iter_size (editor->buffer, &start, &size);
       gimp_text_buffer_get_iter_baseline (editor->buffer, &start, &baseline);
       gimp_text_buffer_get_iter_kerning (editor->buffer, &start, &kerning);
 
@@ -766,6 +825,17 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
                 font_differs = TRUE;
             }
 
+          if (! size_differs)
+            {
+              gint tag_size;
+
+              gimp_text_buffer_get_iter_size (editor->buffer, &iter,
+                                              &tag_size);
+
+              if (size != tag_size)
+                size_differs = TRUE;
+            }
+
           if (! baseline_differs)
             {
               gint tag_baseline;
@@ -790,6 +860,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
           if (! any_toggle_active &&
               font_differs        &&
+              size_differs        &&
               baseline_differs    &&
               kerning_differs)
             break;
@@ -800,7 +871,10 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
       gimp_text_style_editor_set_font (editor, font_tag);
 
-      gtk_label_set_text (GTK_LABEL (editor->size_label), "---");
+      if (size_differs)
+        gtk_entry_set_text (GTK_ENTRY (editor->size_spinbutton), "");
+      else
+        gimp_text_style_editor_set_size (editor, size);
 
       if (baseline_differs)
         gtk_entry_set_text (GTK_ENTRY (editor->baseline_spinbutton), "");
@@ -819,7 +893,6 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       GSList      *tags_on;
       GSList      *tags_off;
       GList       *list;
-      gchar       *str;
       gint         value;
 
       gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
@@ -845,10 +918,6 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       if (! list)
         gimp_text_style_editor_set_font (editor, NULL);
 
-      str = g_strdup_printf ("%0.2f", editor->resolution_y);
-      gtk_label_set_text (GTK_LABEL (editor->size_label), str);
-      g_free (str);
-
       for (list = editor->toggles; list; list = g_list_next (list))
         {
           GtkToggleButton *toggle = list->data;
@@ -860,6 +929,12 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
                                               ! g_slist_find (tags_on, tag)) ||
                                              g_slist_find (tags_off, tag));
         }
+
+      gimp_text_buffer_get_iter_size (editor->buffer, &cursor, &value);
+      if (value == 0)
+        gtk_entry_set_text (GTK_ENTRY (editor->size_spinbutton), "");
+      else
+        gimp_text_style_editor_set_size (editor, value);
 
       gimp_text_buffer_get_iter_baseline (editor->buffer, &cursor, &value);
       gimp_text_style_editor_set_baseline (editor, value);
