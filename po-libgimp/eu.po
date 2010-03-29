@@ -3,14 +3,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2006, 2008, 2009.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2006, 2008, 2009, 2010.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-27 19:23+0200\n"
-"PO-Revision-Date: 2009-09-07 12:44+0200\n"
+"PO-Revision-Date: 2010-03-29 18:18+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "_Arakatu..."
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "%s plugin-ak ezin ditu geruzak kudeatu"
+msgstr "%s pluginak ezin ditu geruzak kudeatu"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -63,13 +63,13 @@ msgstr "Batu ikusgai dauden geruzak"
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
-"%s plugin-ak ezin ditu geruzen desplazamenduak, tamaina edo opakutasuna "
+"%s pluginak ezin ditu geruzen desplazamenduak, tamaina edo opakutasuna "
 "kudeatu"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s plugin-ak geruzak animazio-marko gisa bakarrik kudea ditzake"
+msgstr "%s pluginak geruzak animazio-marko gisa bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -83,12 +83,12 @@ msgstr "Lautu irudia"
 #: ../libgimp/gimpexport.c:262
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "%s plugin-ak ezin du gardentasuna kudeatu"
+msgstr "%s pluginak ezin du gardentasuna kudeatu"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "%s plugin-ak ezin ditu geruza-maskarak kudeatu"
+msgstr "%s pluginak ezin ditu geruza-maskarak kudeatu"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -97,7 +97,7 @@ msgstr "Aplikatu geruza-maskarak"
 #: ../libgimp/gimpexport.c:280
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s plugin-ak GBU irudiak bakarrik kudea ditzake"
+msgstr "%s pluginak GBU irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -107,7 +107,7 @@ msgstr "Bihurtu GBU"
 #: ../libgimp/gimpexport.c:289
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s plugin-ak gris-eskalako irudiak bakarrik kudea ditzake"
+msgstr "%s pluginak gris-eskalako irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -117,7 +117,7 @@ msgstr "Bihurtu gris-eskalara "
 #: ../libgimp/gimpexport.c:298
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s plugin-ak indexatutako irudiak bakarrik kudea ditzake"
+msgstr "%s pluginak indexatutako irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -131,7 +131,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "%s plugin-ak indexatutako bitmap (bi kolore) irudiak bakarrik kudea ditzake"
+msgstr "%s pluginak indexatutako bitmap (bi kolore) irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -144,22 +144,22 @@ msgstr ""
 #: ../libgimp/gimpexport.c:318
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s  plugin-ak GBU edo gris-eskalako irudiak bakarrik kudea ditzake"
+msgstr "%s  pluginak GBU edo gris-eskalako irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "%s plugin-ak GBU edo indexatutako irudiak bakarrik kudea ditzake"
+msgstr "%s pluginak GBU edo indexatutako irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "%s plugin-ak gris-eskalako edo indexatutako irudiak bakarrik kudea ditzake"
+msgstr "%s pluginak gris-eskalako edo indexatutako irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s plugin-ak alfa kanala behar du"
+msgstr "%s pluginak alfa kanala behar du"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -367,7 +367,7 @@ msgstr "Geruzaren _alfa kanala"
 
 #: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Transfer layer's alpha channel"
-msgstr "_Transeritu geruzaren alfa kanala"
+msgstr "_Transferitu geruzaren alfa kanala"
 
 #: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Selection"
@@ -715,7 +715,7 @@ msgstr "GIMPen barne-prozedura"
 
 #: ../libgimpbase/gimpbaseenums.c:910
 msgid "GIMP Plug-In"
-msgstr "GIMPen plugin-a"
+msgstr "GIMPen plugina"
 
 #: ../libgimpbase/gimpbaseenums.c:911
 msgid "GIMP Extension"
@@ -1035,7 +1035,7 @@ msgstr "Ireki fitxategi-hautatzailea zure karpetak arakatzeko"
 
 #: ../libgimpwidgets/gimpfileentry.c:175
 msgid "Open a file selector to browse your files"
-msgstr "Ireki fixtategi-hautatzailea zure fitxategiak arakatzeko"
+msgstr "Ireki fitxategi-hautatzailea zure fitxategiak arakatzeko"
 
 #: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
@@ -1099,7 +1099,7 @@ msgstr[1] "%d orrialde hautatuta"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
-msgstr "Idazkorra"
+msgstr "Idazgarria"
 
 #: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
@@ -1255,7 +1255,7 @@ msgstr "_H"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
-msgstr "�bardura"
+msgstr "Ñabardura"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
@@ -1366,7 +1366,7 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Iragazki honek Hobespenak elkarizketa-koadroko Kolore-kudeaketa ataletik "
+"Iragazki honek Hobespenak elkarrizketa-koadroko Kolore-kudeaketa ataletik "
 "hartzen du bere konfigurazioa."
 
 #: ../modules/display-filter-lcms.c:226
@@ -1681,7 +1681,7 @@ msgstr "Gurpila eskuinera"
 
 #: ../modules/controller-linux-input.c:178
 msgid "Linux input event controller"
-msgstr "Linuxeko sarrerako gertaeren kontroladorea"
+msgstr "Linux-eko sarrerako gertaeren kontroladorea"
 
 #: ../modules/controller-linux-input.c:218
 #: ../modules/controller-dx-dinput.c:196 ../modules/controller-midi.c:212
@@ -1690,15 +1690,15 @@ msgstr "Gailua:"
 
 #: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
-msgstr "Gailuaren izena inuxeko sarrerako gertaerak irakurtzeko."
+msgstr "Gailuaren izena Linux-eko sarrerako gertaerak irakurtzeko."
 
 #: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
-msgstr "Linuxeko sarrera"
+msgstr "Linux-eko sarrera"
 
 #: ../modules/controller-linux-input.c:513
 msgid "Linux Input Events"
-msgstr "Linuxeko sarreren gertaerak"
+msgstr "Linux-eko sarreren gertaerak"
 
 #: ../modules/controller-linux-input.c:525
 #: ../modules/controller-dx-dinput.c:1095 ../modules/controller-midi.c:505
