@@ -3,21 +3,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2005, 2006, 2008.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2005, 2006, 2008, 2010.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-16 17:53+0100\n"
-"PO-Revision-Date: 2008-09-20 13:29+0200\n"
+"PO-Revision-Date: 2010-03-29 17:56+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 
 #: ../app/about.h:23
@@ -76,20 +76,18 @@ msgid ""
 msgstr ""
 "Ezin da testu-trukatzeko fitxategia ireki.\n"
 "\n"
-"Datuen galera sahiesteko, egiaztatu trukatze-direktorioaren (Hobespenean "
+"Datuen galera saihesteko, egiaztatu trukatze-direktorioaren (Hobespenean "
 "definituta duzun \"%s\") helbidea eta baimenak egokiak direla."
 
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr ""
-"Ez da 'batch' interpretatzailerik zehaztu, '%s' lehenetsia erabiltzen.\n"
+msgstr "Ez da 'batch' interpretatzailerik zehaztu, '%s' lehenetsia erabiltzen.\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr ""
-"'%s' batch interpretatzailea ez dago erabilgarri. Batch modua desgaituta."
+msgstr "'%s' batch interpretatzailea ez dago erabilgarri. Batch modua desgaituta."
 
 #: ../app/main.c:135 ../tools/gimp-remote.c:59
 msgid "Show version information and exit"
@@ -129,7 +127,7 @@ msgstr "Ez erakutsi abioko leihoa"
 
 #: ../app/main.c:180
 msgid "Do not use shared memory between GIMP and plugins"
-msgstr "Ez erabili GIMP eta plugin-en arteko memoria partekatua"
+msgstr "Ez erabili GIMP eta pluginen arteko memoria partekatua"
 
 #: ../app/main.c:185
 msgid "Do not use special CPU acceleration functions"
@@ -195,7 +193,7 @@ msgstr ""
 
 #: ../app/main.c:383
 msgid "Another GIMP instance is already running."
-msgstr "GIMPen beste instantzi bat exekutatzen dago."
+msgstr "GIMPen beste instantzia bat exekutatzen dago."
 
 #: ../app/main.c:453
 msgid "GIMP output. Type any character to close this window."
@@ -217,7 +215,7 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"Konfiguratutako fitxategi-izenaren kodeketaezin da UTF-8 gisa bihurtu: %s\n"
+"Konfiguratutako fitxategi-izenaren kodeketa ezin da UTF-8 gisa bihurtu: %s\n"
 "\n"
 "Egiaztatu inguruko G_FILENAME_ENCODING aldagaiaren balioa."
 
@@ -389,7 +387,7 @@ msgstr "Ereduak"
 
 #: ../app/actions/actions.c:194 ../app/dialogs/preferences-dialog.c:2744
 msgid "Plug-Ins"
-msgstr "Plugin-ak"
+msgstr "Pluginak"
 
 #: ../app/actions/actions.c:197 ../app/core/gimpchannel.c:369
 msgid "Quick Mask"
@@ -507,10 +505,9 @@ msgid "Duplicate this brush"
 msgstr "Bikoiztu brotxa"
 
 #: ../app/actions/brushes-actions.c:64
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Copy Brush _Location"
-msgstr "Kopiatu brotzaren _kokalekua"
+msgstr "Kopiatu brotxaren _kokalekua"
 
 #: ../app/actions/brushes-actions.c:65
 #, fuzzy
@@ -621,10 +618,9 @@ msgid "_Edit Channel Attributes..."
 msgstr "_Editatu kanal-atributuak..."
 
 #: ../app/actions/channels-actions.c:49
-#, fuzzy
 msgctxt "channels-action"
 msgid "Edit the channel's name, color and opacity"
-msgstr "Editatu kanalaren izena, kolorea eta opakotasuna"
+msgstr "Editatu kanalaren izena, kolorea eta opakutasuna"
 
 #: ../app/actions/channels-actions.c:54
 #, fuzzy
@@ -645,10 +641,9 @@ msgid "_New Channel"
 msgstr "_Kanal berria"
 
 #: ../app/actions/channels-actions.c:61
-#, fuzzy
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
-msgstr "Sortu kanal berria erablitako azken balioekin"
+msgstr "Sortu kanal berria erabilitako azken balioekin"
 
 #: ../app/actions/channels-actions.c:66
 #, fuzzy
@@ -708,7 +703,7 @@ msgstr "_Jaitsi kanala"
 #, fuzzy
 msgctxt "channels-action"
 msgid "Lower this channel one step in the channel stack"
-msgstr "Jeitsi kanala maila bat kanalen pilan"
+msgstr "Jaitsi kanala maila bat kanalen pilan"
 
 #: ../app/actions/channels-actions.c:98
 #, fuzzy
@@ -1076,8 +1071,7 @@ msgstr "Ezabatu '%s'?"
 
 #: ../app/actions/data-commands.c:261
 #, c-format
-msgid ""
-"Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Ziur zaude '%s' ezabatu nahi duzula zerrendatik eta diskotik?"
 
 #: ../app/actions/dialogs-actions.c:44
@@ -2018,10 +2012,9 @@ msgid "Duplicate this dynamics"
 msgstr "Bikoiztu bidea"
 
 #: ../app/actions/dynamics-actions.c:58
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Copy Dynamics _Location"
-msgstr "Kopiatu brotzaren _kokalekua"
+msgstr "Kopiatu brotxaren _kokalekua"
 
 #: ../app/actions/dynamics-actions.c:59
 #, fuzzy
@@ -2171,7 +2164,7 @@ msgstr "_Iraungi..."
 #, fuzzy
 msgctxt "edit-action"
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr "Eraldatutako azken pixelen margotze-modua eta opakotasuna aldatzen du"
+msgstr "Eraldatutako azken pixelen margotze-modua eta opakutasuna aldatzen du"
 
 #: ../app/actions/edit-actions.c:110
 #, fuzzy
@@ -2286,7 +2279,7 @@ msgstr "_Kopiatu izenduna..."
 #, fuzzy
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Kopiatu hautatutako pixelak izendatutako buferrean"
+msgstr "Kopiatu hautatutako pixelak izendatutako bufferrean"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:171
@@ -3891,7 +3884,7 @@ msgstr "_Jaitsi geruza"
 #, fuzzy
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
-msgstr "Jeitsi kanala maila bat kanalen pilan"
+msgstr "Jaitsi kanala maila bat kanalen pilan"
 
 #: ../app/actions/layers-actions.c:139
 #, fuzzy
@@ -3903,7 +3896,7 @@ msgstr "Geruza be_hera"
 #, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
-msgstr "Jeitsi kanala mailarik baxuenera kanalen pilan"
+msgstr "Jaitsi kanala mailarik baxuenera kanalen pilan"
 
 #: ../app/actions/layers-actions.c:145
 #, fuzzy
@@ -4244,10 +4237,9 @@ msgid "_Text to Selection"
 msgstr "_Testua hautapenera"
 
 #: ../app/actions/layers-actions.c:344
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the text layer's outline"
-msgstr "Ordeztu hautapena testu-geruzaen eskemarekin"
+msgstr "Ordeztu hautapena testu-geruzaren eskemarekin"
 
 #: ../app/actions/layers-actions.c:351
 #, fuzzy
@@ -4788,7 +4780,7 @@ msgstr "E_rrepikatu azkena"
 #, fuzzy
 msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
-msgstr "Exekutatu berriro erabilitako azken plugin-a ezarpen berdinak erabiliz"
+msgstr "Exekutatu berriro erabilitako azken plugina ezarpen berdinak erabiliz"
 
 #: ../app/actions/plug-in-actions.c:139
 #, fuzzy
@@ -4800,7 +4792,7 @@ msgstr "Erakutsi _berriro azkena"
 #, fuzzy
 msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
-msgstr "Erakutsi erabilitako azken plugin-aren elkarrizketa-koadroa berriro"
+msgstr "Erakutsi erabilitako azken pluginaren elkarrizketa-koadroa berriro"
 
 #: ../app/actions/plug-in-actions.c:518
 #, c-format
@@ -4859,10 +4851,9 @@ msgid "Mask _Selected Areas"
 msgstr "Maskaratu _hautatutako areak"
 
 #: ../app/actions/quick-mask-actions.c:70
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
-msgstr "Maskaratu _deshautatutako areak"
+msgstr "Maskaratu _desautatutako areak"
 
 #: ../app/actions/quick-mask-commands.c:105
 msgid "Quick Mask Attributes"
@@ -5195,10 +5186,8 @@ msgstr "Ezabatu txantiloia"
 
 #: ../app/actions/templates-commands.c:238
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr ""
-"Ziur zaude \"%s\"txantiloia  ezabatu nahi duzula zerrendatik eta diskotik?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
+msgstr "Ziur zaude \"%s\"txantiloia  ezabatu nahi duzula zerrendatik eta diskotik?"
 
 #: ../app/actions/text-editor-actions.c:43
 #, fuzzy
@@ -5446,8 +5435,7 @@ msgstr "Berrasieratu tresna-aukerak"
 
 #: ../app/actions/tool-options-commands.c:208
 msgid "Do you really want to reset all tool options to default values?"
-msgstr ""
-"Nahi duzu tresna-aukera guztiak lehenespeneko balioekin berrasieratzea?"
+msgstr "Nahi duzu tresna-aukera guztiak lehenespeneko balioekin berrasieratzea?"
 
 #: ../app/actions/tools-actions.c:45
 #, fuzzy
@@ -5935,8 +5923,7 @@ msgstr "_Uzkurtu"
 #, fuzzy
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
-msgstr ""
-"Gutxiagotu irudiaren leihoa erakusten den irudiaren tamainari egokitzeko"
+msgstr "Gutxiagotu irudiaren leihoa erakusten den irudiaren tamainari egokitzeko"
 
 #: ../app/actions/view-actions.c:125
 #, fuzzy
@@ -6408,8 +6395,7 @@ msgstr ""
 
 #: ../app/actions/windows-actions.c:103
 msgctxt "windows-action"
-msgid ""
-"When enabled docks and other dialogs are hidden, leaving only image windows."
+msgid "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
 
 #: ../app/actions/windows-actions.c:109
@@ -6611,10 +6597,9 @@ msgid "Color erase"
 msgstr "Ezabatu kolorea"
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Erase"
-msgstr "Ezbatu"
+msgstr "Ezabatu"
 
 #: ../app/base/base-enums.c:137
 #, fuzzy
@@ -6886,7 +6871,7 @@ msgstr "Gaitutakoan, hautatutako brotxa tresna guztietan erabiliko da."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "Gaitutakoan, hautatutako gradientea tesna guztietan erabiliko da."
+msgstr "Gaitutakoan, hautatutako gradientea tresna guztietan erabiliko da."
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected pattern will be used for all tools."
@@ -6913,15 +6898,13 @@ msgstr ""
 "bestela 1:1 eskalan bistaratuko da."
 
 #: ../app/config/gimprc-blurbs.h:192
-msgid ""
-"Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Instalatu kolore-mapa pribatu bat; erabilgarria izan daiteke 8 bit-eko (256 "
 "kolore) pantailetan."
 
 #: ../app/config/gimprc-blurbs.h:195
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Ezarri eskalatzeko eta bestelako eraldatzeetarako erabiliko den interpolazio-"
 "maila."
@@ -7003,7 +6986,6 @@ msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr "Ezarri prozesadore-kopurua, GIMP-ek aldi berean erabiltzen saiatzeko."
 
 #: ../app/config/gimprc-blurbs.h:257
-#, fuzzy
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -7012,8 +6994,8 @@ msgid ""
 "painting."
 msgstr ""
 "Gaituta dagoenean, X zerbitzariari mugimendu-gertaera bakoitzean saguaren "
-"unekokokalekua zein den kontsultatzen zaio, kokalekuaren iradokizunaz fidatu "
-"ordez. Horrek esannahi du brotxa handiekin margotzea zehatzagoa izango dela, "
+"uneko kokalekua zein den kontsultatzen zaio, kokalekuaren iradokizunaz fidatu "
+"ordez. Horrek esanahi du brotxa handiekin margotzea zehatzagoa izango dela, "
 "baina motelagoa izan daiteke. Aitzitik, X zerbitzari batzuetan aukera hori "
 "gaitzean azkarrago margotzen da."
 
@@ -7053,14 +7035,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:290
 msgid "Let GIMP try to restore your last saved session on each startup."
-msgstr ""
-"Utzi GIMPi abio bakoitzean gordetako azken saioa leheneratzen saiatzen."
+msgstr "Utzi GIMPi abio bakoitzean gordetako azken saioa leheneratzen saiatzen."
 
 #: ../app/config/gimprc-blurbs.h:293
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr ""
-"Gogoratu uneko tresna, eredua, kolorea eta brotxa hurrengo GIMP saioetan."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgstr "Gogoratu uneko tresna, eredua, kolorea eta brotxa hurrengo GIMP saioetan."
 
 #: ../app/config/gimprc-blurbs.h:297
 msgid ""
@@ -7072,8 +7051,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:301
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
-msgstr ""
-"Gorde elkarrizketa-koadro nagusien kokalekuak eta tamainak GIMP ixtean."
+msgstr "Gorde elkarrizketa-koadro nagusien kokalekuak eta tamainak GIMP ixtean."
 
 #: ../app/config/gimprc-blurbs.h:304
 msgid "Save the tool options when GIMP exits."
@@ -7290,8 +7268,7 @@ msgstr "Gardentasuna irudietan bistaratzeko modua ezartzen du."
 
 #: ../app/config/gimprc-blurbs.h:433
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
-"Gardentasuna bistaratzeko erabiltzen den koadrikularen tamaina ezartzen du."
+msgstr "Gardentasuna bistaratzeko erabiltzen den koadrikularen tamaina ezartzen du."
 
 #: ../app/config/gimprc-blurbs.h:436
 msgid ""
@@ -7960,7 +7937,7 @@ msgstr "Inportatu bideak"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Plug-In"
-msgstr "Plugin-a"
+msgstr "Plugina"
 
 #: ../app/core/core-enums.c:908
 #, fuzzy
@@ -8439,8 +8416,7 @@ msgstr "Analisi-errore larria '%s' brotxa-fitxategian: %d sakonera ezezaguna."
 #: ../app/core/gimpbrush-load.c:251
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr ""
-"Analisi-errore larria: '%s' brotxa-fitxategian:: %d brotxa-bertsio ezezaguna."
+msgstr "Analisi-errore larria: '%s' brotxa-fitxategian:: %d brotxa-bertsio ezezaguna."
 
 #: ../app/core/gimpbrush-load.c:267 ../app/core/gimpbrush-load.c:387
 #: ../app/core/gimpbrush-load.c:719
@@ -8474,10 +8450,9 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:447
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
-"Analisi-errore larria: '%s' brotxa-fitxategian: ezin da dekodetu formatu "
+"Analisi-errore larria: '%s' brotxa-fitxategian: ezin da deskodetu formatu "
 "laburreko %d bertsioa."
 
 #: ../app/core/gimpbrush-load.c:614
@@ -8501,16 +8476,14 @@ msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:103
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
 "Analisi-errore larria '%s' brotxa-fitxategian: GIMPen brotxa-bertsio "
 "ezezaguna %d lerroan."
 
 #: ../app/core/gimpbrushgenerated-load.c:149
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
 "Analisi-errore larria '%s' brotxa-fitxategian: GIMPen brotxa-forma ezezaguna "
 "%d lerroan."
@@ -8564,8 +8537,7 @@ msgstr "Brotxak"
 #: ../app/core/gimpbrushpipe-load.c:222
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr ""
-"Analisi-errore larria '%s' brotxa-fitxategian: fitxategia hondatuta dago."
+msgstr "Analisi-errore larria '%s' brotxa-fitxategian: fitxategia hondatuta dago."
 
 #: ../app/core/gimpchannel-select.c:59
 msgctxt "command"
@@ -8925,8 +8897,7 @@ msgid "The foreground color of the grid."
 msgstr "Saretaren aurreko planoaren kolorea."
 
 #: ../app/core/gimpgrid.c:94
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr ""
 "Saretaren atzeko planoko kolorea, marratxo bikoitzeko lerro estiloan "
 "bakarrik erabilgarri."
@@ -8940,8 +8911,7 @@ msgid "Vertical spacing of grid lines."
 msgstr "Saretako lerroen arteko tarte bertikala."
 
 #: ../app/core/gimpgrid.c:114
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 "Saretako lehen lerroaren desplazamendu horizontala, zenbaki negatiboa izan "
 "behar du."
@@ -9436,14 +9406,12 @@ msgstr "Paleta-fitxategi mota ezezaguna: %s"
 #: ../app/core/gimppalette-load.c:236
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
-msgstr ""
-"Analisi-errore larria '%s' paleta-fitxategian: irakurketa-errorea %d lerroan."
+msgstr "Analisi-errore larria '%s' paleta-fitxategian: irakurketa-errorea %d lerroan."
 
 #: ../app/core/gimppalette-load.c:94
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr ""
-"Analisi-errore larria '%s' paleta-fitxategian: goiburu magikoa falta da."
+msgstr "Analisi-errore larria '%s' paleta-fitxategian: goiburu magikoa falta da."
 
 #: ../app/core/gimppalette-load.c:123
 #, c-format
@@ -9487,20 +9455,17 @@ msgstr "Ezin izan da goiburua irakurri '%s'(e)tik: %s"
 #: ../app/core/gimppalette-load.c:495 ../app/core/gimppalette-load.c:583
 #, fuzzy, c-format
 msgid "Fatal parse error in palette file '%s'"
-msgstr ""
-"Analisi-errore larria '%s' paleta-fitxategian: goiburu magikoa falta da."
+msgstr "Analisi-errore larria '%s' paleta-fitxategian: goiburu magikoa falta da."
 
 #: ../app/core/gimppattern-load.c:84 ../app/core/gimppattern-load.c:130
 #: ../app/core/gimppattern-load.c:161
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr ""
-"Analisi-errore larria '%s' eredu-fitxategian: fitxategia trunkatuta ageri da."
+msgstr "Analisi-errore larria '%s' eredu-fitxategian: fitxategia trunkatuta ageri da."
 
 #: ../app/core/gimppattern-load.c:103
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Analisi-errore larria '%s' eredu-fitxategian: eredu formatuaren %d bertsio "
 "ezezaguna."
@@ -9524,7 +9489,7 @@ msgstr "UTF-8 kate baliogabea '%s' eredu-fitxategian."
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Ezin da %s atzeradeia exekutatu. Beharbada dagokion plugin-a kraskatuta "
+"Ezin da %s atzeradeia exekutatu. Beharbada dagokion plugina kraskatuta "
 "egongo da."
 
 #: ../app/core/gimpprogress.c:106 ../app/core/gimpprogress.c:153
@@ -9880,8 +9845,7 @@ msgstr "Luzapena ez dator bat"
 
 #: ../app/dialogs/file-save-dialog.c:638
 msgid "The given file extension does not match the chosen file type."
-msgstr ""
-"Zehaztutako fitxategi-luzapena ez dator bat aukeratutako fitxategi motarekin."
+msgstr "Zehaztutako fitxategi-luzapena ez dator bat aukeratutako fitxategi motarekin."
 
 #: ../app/dialogs/file-save-dialog.c:642
 msgid "Do you want to save the image using this name anyway?"
@@ -10009,10 +9973,8 @@ msgstr ""
 "gehiago erabiliko du (unekoa %s)"
 
 #: ../app/dialogs/image-scale-dialog.c:260
-msgid ""
-"Scaling the image to the chosen size will shrink some layers completely away."
-msgstr ""
-"Irudia aukeratutako tamainara eskalatzean geruza batzuk desagertuko dira."
+msgid "Scaling the image to the chosen size will shrink some layers completely away."
+msgstr "Irudia aukeratutako tamainara eskalatzean geruza batzuk desagertuko dira."
 
 #: ../app/dialogs/image-scale-dialog.c:264
 msgid "Is this what you want to do?"
@@ -10391,8 +10353,7 @@ msgstr "Berretsi gorde g_abeko irudiak ixtea"
 
 #: ../app/dialogs/preferences-dialog.c:1576
 msgid "Keep record of used files in the Recent Documents list"
-msgstr ""
-"Mantendu erabilitako fitxategien erregistroa azken dokumentuen zerrendan"
+msgstr "Mantendu erabilitako fitxategien erregistroa azken dokumentuen zerrendan"
 
 #: ../app/dialogs/preferences-dialog.c:1585
 msgid "User Interface"
@@ -10605,7 +10566,7 @@ msgstr "Irudi-sareta lehenetsia"
 
 #: ../app/dialogs/preferences-dialog.c:2033
 msgid "Default Grid"
-msgstr "Sareta lehentesia"
+msgstr "Sareta lehenetsia"
 
 #: ../app/dialogs/preferences-dialog.c:2054
 msgid "Image Windows"
@@ -10696,7 +10657,7 @@ msgstr "Uneko formatua"
 
 #: ../app/dialogs/preferences-dialog.c:2183
 msgid "Default format"
-msgstr "Formatu lehentesia"
+msgstr "Formatu lehenetsia"
 
 #: ../app/dialogs/preferences-dialog.c:2184
 msgid "Show zoom percentage"
@@ -10884,7 +10845,7 @@ msgstr "_Tresna-kutxaren aholkua:"
 
 #: ../app/dialogs/preferences-dialog.c:2622
 msgid "Focus"
-msgstr "Fokoa"
+msgstr "Fokua"
 
 #: ../app/dialogs/preferences-dialog.c:2626
 msgid "Activate the _focused image"
@@ -10979,11 +10940,11 @@ msgstr "Hautatu letra-tipoen karpetak"
 
 #: ../app/dialogs/preferences-dialog.c:2744
 msgid "Plug-In Folders"
-msgstr "Plugin-en karpetak"
+msgstr "Pluginen karpetak"
 
 #: ../app/dialogs/preferences-dialog.c:2746
 msgid "Select Plug-In Folders"
-msgstr "Hautatu plugin-en karpetak"
+msgstr "Hautatu pluginen karpetak"
 
 #: ../app/dialogs/preferences-dialog.c:2748
 msgid "Scripts"
@@ -11343,8 +11304,7 @@ msgstr "Gorde aldaketak '%s' irudian itxi aurretik?"
 #: ../app/display/gimpdisplayshell-close.c:254
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] "Ez baduzu irudia gorde, azken orduko aldaketak galduko dira."
 msgstr[1] "Ez baduzu irudia gorde, azken %d ordutako aldaketak galduko dira."
 
@@ -11366,8 +11326,7 @@ msgstr[1] ""
 #: ../app/display/gimpdisplayshell-close.c:275
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] "Ez baduzu irudia gorde, azken minutuko (%d) aldaketak galduko dira."
 msgstr[1] "Ez baduzu irudia gorde, azken %d minututako aldaketak galduko dira."
 
@@ -11483,12 +11442,12 @@ msgstr "Ez da fitxategi erregularra"
 #: ../app/file/file-open.c:188
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr "%s plugin-ak SUCCESS eman du, baina ez du irudirik itzuli"
+msgstr "%s pluginak SUCCESS eman du, baina ez du irudirik itzuli"
 
 #: ../app/file/file-open.c:199
 #, c-format
 msgid "%s plug-In could not open image"
-msgstr "%s plugin-ak ezin izan du irudia ireki"
+msgstr "%s pluginak ezin izan du irudia ireki"
 
 #: ../app/file/file-open.c:518
 msgid "Image doesn't contain any layers"
@@ -11514,7 +11473,7 @@ msgstr "Fitxategi mota ezezaguna"
 #: ../app/file/file-save.c:189
 #, c-format
 msgid "%s plug-in could not save image"
-msgstr "%s plugin-ak ezin izan du irudia gorde"
+msgstr "%s pluginak ezin izan du irudia gorde"
 
 #: ../app/file/file-utils.c:74
 #, c-format
@@ -11696,7 +11655,7 @@ msgstr "Konbinatu maskarak"
 
 #: ../app/pdb/drawable-cmds.c:941
 msgid "Plug-In"
-msgstr "Plugin-a"
+msgstr "Plugina"
 
 #: ../app/pdb/drawable-transform-cmds.c:309
 #: ../app/pdb/drawable-transform-cmds.c:394
@@ -11737,8 +11696,7 @@ msgstr "Ezin da geruza hau ainguratu, hautapen mugikorra ez delako."
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
-msgstr ""
-"Ezin da geruza hau geruz normalean bihurtu, hautapen mugikorra ez delako."
+msgstr "Ezin da geruza hau geruz normalean bihurtu, hautapen mugikorra ez delako."
 
 #: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:376
@@ -11818,7 +11776,7 @@ msgstr "Bufferraren izen huts baliogabea"
 #: ../app/pdb/gimppdb-utils.c:270
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "Ez da '%s' izeneko buferrik aurkitu"
+msgstr "Ez da '%s' izeneko bufferrik aurkitu"
 
 #: ../app/pdb/gimppdb-utils.c:289
 msgid "Invalid empty paint method name"
@@ -11831,8 +11789,7 @@ msgstr "Ez da margotzeko '%s' metodorik existitzen"
 
 #: ../app/pdb/gimppdb-utils.c:316
 #, c-format
-msgid ""
-"Item '%s' (%d) can not be used because it has not been added to an image"
+msgid "Item '%s' (%d) can not be used because it has not been added to an image"
 msgstr "'%s' elementua (%d) ezin da erabili, ez baita irudi bati gehitu"
 
 #: ../app/pdb/gimppdb-utils.c:341
@@ -11913,7 +11870,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"'%s' prozedurak '%s'  argumentuaren okerreko IDa itzuli du. Badirudi plugin-"
+"'%s' prozedurak '%s'  argumentuaren okerreko IDa itzuli du. Badirudi plugin"
 "a existitzen ez den geruza batekin lan egiten saiatzen ari dela."
 
 #: ../app/pdb/gimpprocedure.c:677
@@ -11922,7 +11879,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"'%s' prozedurak '%s'  argumentua okerreko IDarekin deitu du. Badirudi plugin-"
+"'%s' prozedurak '%s'  argumentua okerreko IDarekin deitu du. Badirudi plugin"
 "a existitzen ez den geruza batekin lan egiten saiatzen ari dela."
 
 #: ../app/pdb/gimpprocedure.c:693
@@ -11931,7 +11888,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"'%s' prozedurak '%s'  argumentuaren okerreko IDa itzuli du. Badirudi plugin-"
+"'%s' prozedurak '%s'  argumentuaren okerreko IDa itzuli du. Badirudi plugin"
 "a existitzen ez den irudi batekin lan egiten saiatzen ari dela."
 
 #: ../app/pdb/gimpprocedure.c:705
@@ -11940,7 +11897,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"'%s' prozedurak '%s'  argumentua okerreko IDarekin deitu du. Badirudi plugin-"
+"'%s' prozedurak '%s'  argumentua okerreko IDarekin deitu du. Badirudi plugin"
 "a existitzen ez den irudi batekin lan egiten saiatzen ari dela."
 
 #: ../app/pdb/gimpprocedure.c:725
@@ -11962,8 +11919,7 @@ msgstr ""
 "deitu du. Balio hau barrutiz kanpo dago."
 
 #: ../app/pdb/image-cmds.c:2311
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Irudiaren bereizmena mugetatik kanpo dago, bereizmen lehenetsia erabiliko da "
 "horren ordez."
@@ -12044,8 +12000,7 @@ msgstr "Aldagaiaren izen ilegala %s ingurune-fitxategian: %s"
 #: ../app/plug-in/gimpinterpreterdb.c:263
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr ""
-"Interpretatzaile okerra adierazi da %s interpretatzaile-fitxategian: %s"
+msgstr "Interpretatzaile okerra adierazi da %s interpretatzaile-fitxategian: %s"
 
 #: ../app/plug-in/gimpinterpreterdb.c:322
 #, c-format
@@ -12083,10 +12038,10 @@ msgid ""
 "The dying plug-in may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
-"Plugin-a kraskatuta: \"%s\"\n"
+"Plugina kraskatuta: \"%s\"\n"
 "(%s)\n"
 "\n"
-"Baliteke kraskatu den plugin-ak GIMPen barneko egoera nahaspilatu izana. "
+"Baliteke kraskatu den pluginak GIMPen barneko egoera nahaspilatu izana. "
 "Irudiak gordetzea eta GIMP berrabiaraztea komeni zaizu, segurutik jokatzeko."
 
 #: ../app/plug-in/gimppluginmanager-call.c:172
@@ -12098,7 +12053,7 @@ msgstr "Huts egin du \"%s\" plugina exekutatzean"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:225
 msgid "Searching Plug-Ins"
-msgstr "Plugin-ak bilatzen"
+msgstr "Pluginak bilatzen"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:274
 msgid "Resource configuration"
@@ -12110,7 +12065,7 @@ msgstr "Plugin berriak kontsultatzen"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:360
 msgid "Initializing Plug-ins"
-msgstr "Plugin-ak abiarazten"
+msgstr "Pluginak abiarazten"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:432
 msgid "Starting Extensions"
@@ -12118,11 +12073,11 @@ msgstr "Luzapenak abiarazten"
 
 #: ../app/plug-in/gimppluginmanager.c:297
 msgid "Plug-In Interpreters"
-msgstr "Plugin-interpretatzaileak"
+msgstr "Plugininterpretatzaileak"
 
 #: ../app/plug-in/gimppluginmanager.c:304
 msgid "Plug-In Environment"
-msgstr "Plugin-en ingurunea"
+msgstr "Pluginen ingurunea"
 
 #: ../app/plug-in/gimppluginprocedure.c:995
 #, c-format
@@ -12154,7 +12109,7 @@ msgstr "Errorea '%s' exekutatzean"
 #: ../app/plug-in/plug-in-icc-profile.c:256
 #, c-format
 msgid "Plug-In missing (%s)"
-msgstr "Plugin-a falta da (%s)"
+msgstr "Plugina falta da (%s)"
 
 #: ../app/plug-in/plug-in-rc.c:205
 #, c-format
@@ -12223,8 +12178,7 @@ msgstr "Baztertu informazioaren testua"
 
 #: ../app/text/gimptextlayer.c:555
 msgid "Due to lack of any fonts, text functionality is not available."
-msgstr ""
-"Tipografiak falta direla eta, testu funtzionalitatea ez dago eskuragarri."
+msgstr "Tipografiak falta direla eta, testu funtzionalitatea ez dago eskuragarri."
 
 #: ../app/text/gimptextlayer.c:606
 msgid "Empty Text Layer"
@@ -12294,8 +12248,7 @@ msgstr "Lerrokatu"
 
 #: ../app/tools/gimpaligntool.c:136
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr ""
-"Lerrokatzeko tresna: lerrokatu edo antolatu geruzak eta beste objektuak"
+msgstr "Lerrokatzeko tresna: lerrokatu edo antolatu geruzak eta beste objektuak"
 
 #: ../app/tools/gimpaligntool.c:137
 msgid "_Align"
@@ -12457,11 +12410,11 @@ msgstr "Doitu distira eta kontrastea"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:135
 msgid "Import Brightness-Contrast settings"
-msgstr "Inportatu distira_kontrastearen ezarpenak"
+msgstr "Inportatu distira-kontrastearen ezarpenak"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:136
 msgid "Export Brightness-Contrast settings"
-msgstr "Esportatu distira_kontrastearen ezarpenak"
+msgstr "Esportatu distira-kontrastearen ezarpenak"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:183
 msgid "Brightness-Contrast does not operate on indexed layers."
@@ -12549,8 +12502,7 @@ msgstr "Hautatu kolorearen arabera"
 
 #: ../app/tools/gimpbycolorselecttool.c:68
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr ""
-"Kolorearen arabera hautatzekotresna: hautatu antzeko koloredun eskualdeak"
+msgstr "Kolorearen arabera hautatzeko tresna: hautatu antzeko koloredun eskualdeak"
 
 #: ../app/tools/gimpbycolorselecttool.c:69
 msgid "_By Color Select"
@@ -12781,8 +12733,7 @@ msgstr "Lausotu / Enfokatu"
 
 #: ../app/tools/gimpconvolvetool.c:73
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
-"Lausotu / Enfokatu tresna: lausotze edo enfokatze selektiboa brotxa erabiliz"
+msgstr "Lausotu / Enfokatu tresna: lausotze edo enfokatze selektiboa brotxa erabiliz"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Bl_ur / Sharpen"
@@ -13003,8 +12954,7 @@ msgstr "Hautapen _eliptikoa"
 
 #: ../app/tools/gimperasertool.c:66
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr ""
-"Borragoma tresna: ezabatu atzeko planoa edo gardentasuna brotxa erabiliz"
+msgstr "Borragoma tresna: ezabatu atzeko planoa edo gardentasuna brotxa erabiliz"
 
 #: ../app/tools/gimperasertool.c:67
 msgid "_Eraser"
@@ -13044,8 +12994,7 @@ msgid "Flip"
 msgstr "Irauli"
 
 #: ../app/tools/gimpfliptool.c:80
-msgid ""
-"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 "Irauli tresna: alderantzikatu geruza, hautapena edo bidea horizontalki edo "
 "bertikalki"
@@ -13073,7 +13022,7 @@ msgid ""
 "in the selection"
 msgstr ""
 "Balio txikiek hautapenaren ertza zehatzagoa egiten dute, baina zuloak sar "
-"ditzakehautapenean"
+"ditzake hautapenean"
 
 #: ../app/tools/gimpforegroundselectoptions.c:120
 msgid "Sensitivity for brightness component"
@@ -13160,8 +13109,7 @@ msgid "Foreground Select"
 msgstr "Aurreko planoaren hautapena"
 
 #: ../app/tools/gimpfreeselecttool.c:199
-msgid ""
-"Free Select Tool: Select a hand-drawn region with free and polygonal segments"
+msgid "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
 "Hautapen librea tresna: hautatu eskuz marraztutako eskualdeak segmentu libre "
 "eta poligonalekin"
@@ -13201,8 +13149,7 @@ msgstr "Hurbilketazko hautapena"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr ""
-"Hurbilketazko hautapena tresna: hautatu alboko eskualdeak kolorearen arabera"
+msgstr "Hurbilketazko hautapena tresna: hautatu alboko eskualdeak kolorearen arabera"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
@@ -13265,8 +13212,7 @@ msgstr "Histograma-eskala"
 
 #: ../app/tools/gimphuesaturationtool.c:103
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr ""
-"Ñabardura/Saturazioa tresna: doitu ñabardura, saturazioa eta argitasuna"
+msgstr "Ñabardura/Saturazioa tresna: doitu ñabardura, saturazioa eta argitasuna"
 
 #: ../app/tools/gimphuesaturationtool.c:104
 msgid "Hue-_Saturation..."
@@ -13286,8 +13232,7 @@ msgstr "Esportatu ñabardura-saturazioaren ezarpenak"
 
 #: ../app/tools/gimphuesaturationtool.c:170
 msgid "Hue-Saturation operates only on RGB color layers."
-msgstr ""
-"Ñabardurak/Saturazioak GBU koloreko geruzetan bakarrik funtzionatzen du."
+msgstr "Ñabardurak/Saturazioak GBU koloreko geruzetan bakarrik funtzionatzen du."
 
 #: ../app/tools/gimphuesaturationtool.c:248
 msgid "M_aster"
@@ -13406,8 +13351,7 @@ msgstr "Guraizeak"
 
 #: ../app/tools/gimpiscissorstool.c:280
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr ""
-"Guraizeen hautapen tresna: hautatu formak ertzen doiketa adimentsua erabiliz"
+msgstr "Guraizeen hautapen tresna: hautatu formak ertzen doiketa adimentsua erabiliz"
 
 #: ../app/tools/gimpiscissorstool.c:281
 msgid "Intelligent _Scissors"
@@ -13567,11 +13511,11 @@ msgstr "Egin klik gida bertikala kokatzeko"
 
 #: ../app/tools/gimpmeasuretool.c:606
 msgid "Click-Drag to add a new point"
-msgstr "Egin klik eta arratsatu puntu berria gehitzeko"
+msgstr "Egin klik eta arrastatu puntu berria gehitzeko"
 
 #: ../app/tools/gimpmeasuretool.c:637
 msgid "Click-Drag to move all points"
-msgstr "Egin klik eta arrastatu puntu gutziak lekuz aldatzeko"
+msgstr "Egin klik eta arrastatu puntu guztiak lekuz aldatzeko"
 
 #: ../app/tools/gimpmeasuretool.c:884 ../app/tools/gimpmeasuretool.c:1029
 #: ../app/tools/gimpmeasuretool.c:1085 ../app/tools/gimpmeasuretool.c:1113
@@ -13619,8 +13563,7 @@ msgstr "Lekuz aldatu"
 
 #: ../app/tools/gimpmovetool.c:130
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr ""
-"Lekuz aldatzeko tresna: aldatu geruzak, hautapenak eta beste objektuak lekuz"
+msgstr "Lekuz aldatzeko tresna: aldatu geruzak, hautapenak eta beste objektuak lekuz"
 
 #: ../app/tools/gimpmovetool.c:131
 msgid "_Move"
@@ -13725,7 +13668,7 @@ msgstr "Ezin da geruza-maskararik izenez aldatu."
 #: ../app/tools/gimppainttool.c:689
 #, c-format
 msgid "%s for a straight line"
-msgstr "%s marra zuzena sorrzeko"
+msgstr "%s marra zuzena sortzeko"
 
 #: ../app/tools/gimppenciltool.c:51
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -13931,7 +13874,7 @@ msgstr "Egin klik eta arrastatu uneko hautapenari gehitzeko"
 
 #: ../app/tools/gimpselectiontool.c:275
 msgid "Click-Drag to subtract from the current selection"
-msgstr "Egin klik eta arrastatuuneko hautapenetik kentzeko"
+msgstr "Egin klik eta arrastatu uneko hautapenetik kentzeko"
 
 #: ../app/tools/gimpselectiontool.c:284
 msgid "Click-Drag to intersect with the current selection"
@@ -13995,8 +13938,7 @@ msgid "Click to smudge the line"
 msgstr "Egin klik marraren zirriborroa egiteko"
 
 #: ../app/tools/gimptextoptions.c:133
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Atxikitze-indizeak letra-tipoen eskema aldatzen du tamaina txikiko bit-mapa "
 "doitzeko"
@@ -14598,8 +14540,7 @@ msgstr "Esleitu laster-tekla _berriro"
 #: ../app/widgets/gimpactionview.c:690
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr ""
-"\"%1$s\" laster-tekla jadanik \"%3$s\" taldeko \"%2$s\" elementuak dauka."
+msgstr "\"%1$s\" laster-tekla jadanik \"%3$s\" taldeko \"%2$s\" elementuak dauka."
 
 #: ../app/widgets/gimpactionview.c:694
 #, c-format
@@ -14608,7 +14549,7 @@ msgstr "Laster-tekla berriro esleitzeak \"%s\"-(e)tik ezabatuko du."
 
 #: ../app/widgets/gimpactionview.c:767
 msgid "Invalid shortcut."
-msgstr "Laster-tekla baliobagea."
+msgstr "Laster-tekla baliogabea."
 
 #: ../app/widgets/gimpactionview.c:856
 msgid "Removing shortcut failed."
@@ -15148,8 +15089,7 @@ msgid "Auto"
 msgstr "Automatikoa"
 
 #: ../app/widgets/gimpdockwindow.c:362
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "Gaitutakoan elkarrizketa-koadroak lantzen ari zaren irudiari jarraituko dio "
 "automatikoki."
@@ -15380,7 +15320,7 @@ msgstr "Laguntza-arakatzailea ez da abiatu"
 
 #: ../app/widgets/gimphelp.c:337
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Ezin izan da GIMPeko laguntza-arakatzaileko plugin-a abiarazi."
+msgstr "Ezin izan da GIMPeko laguntza-arakatzaileko plugina abiarazi."
 
 #: ../app/widgets/gimphelp.c:364
 msgid "Use _Web Browser"
@@ -15436,9 +15376,8 @@ msgstr "Kanala:"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
-#, fuzzy
 msgid "Use default comment"
-msgstr "Formatu lehentesia"
+msgstr "Formatu lehenetsia"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid ""
@@ -15544,7 +15483,7 @@ msgstr "Ordenatu berriro geruza"
 
 #: ../app/widgets/gimplayertreeview.c:332
 msgid "Lock alpha channel"
-msgstr "Bloketau alfa kanala"
+msgstr "Blokeatu alfa kanala"
 
 #: ../app/widgets/gimpmessagebox.c:442
 #, c-format
@@ -16127,8 +16066,7 @@ msgstr "'%s' irekitzen"
 #: ../app/xcf/xcf.c:312
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
-"XCF errorea: XCF fitxategi motaren onartu gabeko %d bertsioa aurkitu da"
+msgstr "XCF errorea: XCF fitxategi motaren onartu gabeko %d bertsioa aurkitu da"
 
 #: ../app/xcf/xcf.c:382
 #, c-format
@@ -16187,260 +16125,3 @@ msgstr "Ziurtatu tresna-kutxa ikusgai dagoela!"
 msgid "Couldn't start '%s': %s"
 msgstr "Ezin izan da %s' abiarazi: %s"
 
-#~ msgid ""
-#~ "The window type hint that is set on the toolbox. This may affect how your "
-#~ "window manager decorates and handles the toolbox window."
-#~ msgstr ""
-#~ "Leiho motaren aholkuak tresna-kutxan ezarrita dagoela dio. Honek leiho-"
-#~ "kudeatzaileak tresna-kutxa marraztean eta kudeatzean eragin dezake."
-
-#, fuzzy
-#~ msgctxt "undo-type"
-#~ msgid "Reorder layer"
-#~ msgstr "Ordenatu berriro geruza"
-
-#, fuzzy
-#~ msgctxt "undo-type"
-#~ msgid "Reorder channel"
-#~ msgstr "Ordenatu berriz kanala"
-
-#, fuzzy
-#~ msgctxt "undo-type"
-#~ msgid "Reorder path"
-#~ msgstr "Antolatu berriro bidea"
-
-#, fuzzy
-#~ msgid "Cannot merge down a layer group."
-#~ msgstr "Ezin da geruza-maskararik izenez aldatu."
-
-#~ msgid "Hint for other _docks:"
-#~ msgstr "Beste _atrakagarrien aholkua:"
-
-#~ msgid "tool|_Zoom"
-#~ msgstr "_Zooma"
-
-#, fuzzy
-#~ msgid "Direction:"
-#~ msgstr "Norabidea"
-
-#~ msgid "Empty Channel"
-#~ msgstr "Hustu kanalaren kopia"
-
-#~ msgid "You can drop dockable dialogs here"
-#~ msgstr "Elkarrizketa-koadro atrakagarriak hemen utz ditzakezu"
-
-#~ msgid "Pixel dimensions:"
-#~ msgstr "Pixel-dimentsioak:"
-
-#~ msgid "Empty Layer"
-#~ msgstr "Hustu testuaren geruza"
-
-#, fuzzy
-#~ msgid "Lower this tool Lower this tool to the bottom"
-#~ msgstr "Jaitsi tresna leku baxuenera"
-
-#~ msgid "Empty Path"
-#~ msgstr "Hustu bidea"
-
-#~ msgid "New brush"
-#~ msgstr "Brotxa berria"
-
-#~ msgid "_Aspect"
-#~ msgstr "A_spektua"
-
-#~ msgid "Sample Merged"
-#~ msgstr "Batutako lagina"
-
-#~ msgid "T_ools"
-#~ msgstr "T_resnak"
-
-#~ msgid "Open the tools dialog"
-#~ msgstr "Ireki tresnen elkarrizketa-koadroa"
-
-#~ msgid "Remove dangling entries"
-#~ msgstr "Kendu zintzilik dauden sarrerak"
-
-#~ msgid "Copy the selected region to a named buffer"
-#~ msgstr "Kopiatu hautatutako eremua izendatutako bufferrean"
-
-#~ msgid "Fill with P_attern"
-#~ msgstr "Bete _ereduarekin"
-
-#~ msgid "Save error log"
-#~ msgstr "Gorde erroreen egunkaria"
-
-#~ msgid "Save selection"
-#~ msgstr "Gorde hautapena"
-
-#~ msgid "Save as _Template..."
-#~ msgstr "Gorde _txantiloi gisa..."
-
-#~ msgid "Rescan font list"
-#~ msgstr "Eskaneatu berriro letra-tipoen zerrenda"
-
-#~ msgid "New gradient"
-#~ msgstr "Gradiente berria"
-
-#~ msgid "Set Opacity"
-#~ msgstr "Ezarri opakutasuna"
-
-#~ msgid "Delete color"
-#~ msgstr "Ezabatu kolorea"
-
-#~ msgid "New palette"
-#~ msgstr "_Paleta berria"
-
-#~ msgid "New pattern"
-#~ msgstr "Eredu berria"
-
-#~ msgid "select|_All"
-#~ msgstr "_Denak"
-
-#~ msgid "select|_None"
-#~ msgstr "_Bat ere ez"
-
-#~ msgid "Edit the selected template"
-#~ msgstr "Editatu hautatutako txantiloia"
-
-#~ msgid "Delete the selected template"
-#~ msgstr "Ezabatu hautatutako txantiloia"
-
-#~ msgid "Tools Menu"
-#~ msgstr "Tresnen menua"
-
-#~ msgid "R_aise Tool"
-#~ msgstr "_Goratu tresna"
-
-#~ msgid "Raise tool"
-#~ msgstr "Igo tresna"
-
-#~ msgid "Ra_ise to Top"
-#~ msgstr "_Igo goienera"
-
-#~ msgid "Raise tool to top"
-#~ msgstr "Igo tresna goienera"
-
-#~ msgid "L_ower Tool"
-#~ msgstr "_Jaitsi tresna"
-
-#~ msgid "Lo_wer to Bottom"
-#~ msgstr "J_aitsi leku baxuenera"
-
-#~ msgid "_Reset Order & Visibility"
-#~ msgstr "_Berrasieratu antolaketa eta ikusgaitasuna"
-
-#~ msgid "_Show in Toolbox"
-#~ msgstr "_Erakutsi tresna-kutxan"
-
-#~ msgid "New path..."
-#~ msgstr "Bide berria..."
-
-#~ msgid "_New Path"
-#~ msgstr "_Bide berria"
-
-#~ msgid "Add"
-#~ msgstr "Gehitu"
-
-#~ msgid "Intersect"
-#~ msgstr "Gurutzatu"
-
-#~ msgid "When enabled, GIMP will show mnemonics in menus."
-#~ msgstr "Gaituta dagoenean, GIMPek mnemoteknikoak erakutsiko ditu menuetan."
-
-#~ msgid ""
-#~ "When enabled, dock windows (the toolbox and palettes) are set to be "
-#~ "transient to the active image window. Most window managers will keep the "
-#~ "dock windows above the image window then, but it may also have other "
-#~ "effects."
-#~ msgstr ""
-#~ "Gaituta degoenean, leiho atrakagarriak (tresna-barra eta paletak) irudi-"
-#~ "leiho aktiboaren arabera jartzen dira. Leiho-kudeatzaile gehienek leiho "
-#~ "atrakagarria irudi-leihoaren gainean mantentzen dute, baina baliteke "
-#~ "beste eragin batzuk izatea."
-
-#~ msgid ""
-#~ "Sets the external web browser to be used.  This can be an absolute path "
-#~ "or the name of an executable to search for in the user's PATH. If the "
-#~ "command contains '%s' it will be replaced with the URL, else the URL will "
-#~ "be appended to the command with a space separating the two."
-#~ msgstr ""
-#~ "Erabili beharreko kanpoko web araktzailea ezartzen du. Bide-izen "
-#~ "absolutua edo exekutagarriaren izena (erabiltzailearen PATH aldagaian "
-#~ "bilatzeko) izan daiteke. Komandoak '%s' edukiz gero, URLarengatik ordeztu "
-#~ "daiteke, bestela URLa komandoari gehituko zaio zuriunea erabiliz bereizle "
-#~ "bezala."
-
-#~ msgid "Remove floating selection"
-#~ msgstr "Kendu hautapen mugikorra"
-
-#~ msgid "Reposition layer"
-#~ msgstr "Kokatu berriro geruza"
-
-#~ msgid "Reposition channel"
-#~ msgstr "Kokatu berriro kanala"
-
-#~ msgid "Reposition path"
-#~ msgstr "Kokatu berriro bidea"
-
-#~ msgid "Rigor floating selection"
-#~ msgstr "Gogortu hautapen mugikorra"
-
-#~ msgid "Relax floating selection"
-#~ msgstr "Bigundu hautapen mugikorra"
-
-#~ msgid "plural|percent"
-#~ msgstr "ehunekoa"
-
-#~ msgid "Show menu _mnemonics (access keys)"
-#~ msgstr "Erakutsi _menu-mnemoteknikoak (sarbide-teklak)"
-
-#~ msgid "Web Browser"
-#~ msgstr "Web arakatzailea"
-
-#~ msgid "_Web browser to use:"
-#~ msgstr "Erabili beharreko _web arakatzailea:"
-
-#~ msgid "Toolbox and other docks are transient to the active image window"
-#~ msgstr ""
-#~ "Tresna-barrak eta beste atrakagarriak irudiaren leiho aktiboaren mende "
-#~ "daude"
-
-#~ msgid "quality|Low"
-#~ msgstr "Baxua"
-
-#~ msgid "quality|High"
-#~ msgstr "Altua"
-
-#~ msgid "Do_n't Save"
-#~ msgstr "E_z gorde"
-
-#~ msgid "RGB-empty"
-#~ msgstr "GBU hutsik"
-
-#~ msgid "grayscale-empty"
-#~ msgstr "gris-eskala hutsik"
-
-#~ msgid "grayscale"
-#~ msgstr "gris-eskala"
-
-#~ msgid "indexed-empty"
-#~ msgstr "indexatua hutsik"
-
-#~ msgid "indexed"
-#~ msgstr "indexatua"
-
-#~ msgid "Cannot rigor this layer because it is not a floating selection."
-#~ msgstr "Ezin da geruza hau gogortu, hautapen mugikorra ez delako."
-
-#~ msgid "Cannot relax this layer because it is not a floating selection."
-#~ msgstr "Ezin da geruza hau bigundu, hautapen mugikorra ez delako."
-
-#~ msgid ""
-#~ "If available, hints from the font are used but you may prefer to always "
-#~ "use the automatic hinter"
-#~ msgstr ""
-#~ "Erabilgarri badaude, letra-tipoen atxikitze-indizeak erabiltzen dira, "
-#~ "baina agian nahiago duzu beti atxikitze-automatikoa erabiltzea"
-
-#~ msgid "Force auto-hinter"
-#~ msgstr "Behartu atxikitze-automatikoak"
