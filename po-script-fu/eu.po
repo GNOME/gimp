@@ -3,21 +3,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2005, 2006, 2008.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2005, 2006, 2008, 2010.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-18 15:33+0200\n"
-"PO-Revision-Date: 2008-09-18 15:41+0200\n"
+"PO-Revision-Date: 2010-03-29 18:51+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:131
@@ -63,7 +63,7 @@ msgstr "'Script-Fu'-k ezin du bi script aldi berean landu."
 #: ../plug-ins/script-fu/script-fu-interface.c:198
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "\"%s\" scripta jadanik exekutatzen ari zara."
+msgstr "\"%s\" script-a jadanik exekutatzen ari zara."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:245
 #, c-format
@@ -229,7 +229,7 @@ msgstr "Erliebe-maparen (alfa geruza) lausotze-erradioa"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
-msgstr "Sortu logotipoa testuaren eskemanrekin eta itzal jaurtiarekin"
+msgstr "Sortu logotipoa testuaren eskemarekin eta itzal jaurtiarekin"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
@@ -578,7 +578,7 @@ msgstr "Barraren luzera"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Create an Hrule graphic with an eerie glow for web pages"
-msgstr "Sortu marra horizontalek ografikoa dirdira espektralekin web orrialdeentzako"
+msgstr "Sortu marra horizontaleko grafikoa dirdira espektralekin web orrialdeentzako"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
@@ -707,7 +707,7 @@ msgstr "O_inarrizkoa II.."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 msgid "Create a simple logo with a shadow and a highlight"
-msgstr "Sortu logotipo bakuna itzalarekin eta nabarmedua"
+msgstr "Sortu logotipo bakuna itzalarekin eta nabarmendua"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
@@ -808,7 +808,7 @@ msgstr "Begiztatua"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "Max. blur radius"
-msgstr "Geh lausotze-erradioa"
+msgstr "Geh. lausotze-erradioa"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
@@ -819,7 +819,7 @@ msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
-"Gehitu nahastutak oatzeko planoak, nabarmenduak eta itzalak hautatutako "
+"Gehitu nahastutako atzeko planoak, nabarmenduak eta itzalak hautatutako "
 "eskualdeari (edo gardentasunari)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -919,7 +919,7 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"Sortu tarteko geruzak bi geruzen artean transizioko 'erregailua' motako "
+"Sortu tarteko geruzak bi geruzen artean trantsizioko 'erregailua' motako "
 "animazioa sortzeko"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
@@ -1142,7 +1142,7 @@ msgstr "Zirkuitu-hazia"
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
-"Bete hautatutako eskualdea (edo gardentasuna) zirkuito elektronikoko "
+"Bete hautatutako eskualdea (edo gardentasuna) zirkuitu elektronikoko "
 "trazuekin bezala"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
@@ -1256,7 +1256,7 @@ msgstr "_Metal hotza..."
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 msgid "Create a metallic logo with reflections and perspective shadows"
-msgstr "SOrtu logotipo metalikoa isaladarekin eta perspektibako itzalarekin"
+msgstr "Sortu logotipo metalikoa isaladarekin eta perspektibako itzalarekin"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
@@ -1502,7 +1502,7 @@ msgstr "_Izoztuta..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
-msgstr "Gehitu koskadun ertz lauzoa irudiari"
+msgstr "Gehitu koskadun ertz lausoa irudiari"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
@@ -1536,11 +1536,11 @@ msgstr "Ebaki automatikoki"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr "Sortu goiburu handiaren irudia gimp.org guineko gaia erabiliz"
+msgstr "Sortu goiburu handiaren irudia gimp.org guneko gaia erabiliz"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr "Sortu goiburu txikiaren irudia gimp.org guineko gaia erabiliz"
+msgstr "Sortu goiburu txikiaren irudia gimp.org guneko gaia erabiliz"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
@@ -1589,25 +1589,25 @@ msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
 msgstr ""
-"Sortu botoiaren etiketako hodi orokorraren irudia gimp.org guineko gaia "
+"Sortu botoiaren etiketako hodi orokorraren irudia gimp.org guneko gaia "
 "erabiliz"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr "Sortu botoiaren etiketako hodiaren irudia gimp.org guineko gaia erabiliz"
+msgstr "Sortu botoiaren etiketako hodiaren irudia gimp.org guneko gaia erabiliz"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr "Sortu azpibotoiaren etiketako hodiaren irudia gimp.org guineko gaia erabiliz"
+msgstr "Sortu azpibotoiaren etiketako hodiaren irudia gimp.org guneko gaia erabiliz"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"Sortu azpiazpibotoiaren etiketako hodiaren irudia gimp.org guineko gaia "
+"Sortu azpiazpibotoiaren etiketako hodiaren irudia gimp.org guneko gaia "
 "erabiliz"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
@@ -1616,7 +1616,7 @@ msgstr "Azpibotoiaren etiketako ho_dia..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "Azpi-azpibotoiaren etiketako h_odia..."
+msgstr "Azpiazpibotoiaren etiketako h_odia..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
@@ -1701,7 +1701,7 @@ msgstr "Bero _dirdiratsua..."
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 msgstr ""
-"Gehitu alakadun efektu disdiratsua hautatutako eskualdeari (edo "
+"Gehitu alakadun efektu distiratsua hautatutako eskualdeari (edo "
 "gardentasunari)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
@@ -1716,7 +1716,7 @@ msgstr "Ertzaren tamaina (pixeletan)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
-msgstr "Sortu logotipoa alakadun ertz disdiratsuekin"
+msgstr "Sortu logotipoa alakadun ertz distiratsuekin"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
@@ -2675,7 +2675,7 @@ msgstr "_Bilbea..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr "Sortu GIMPen web guneraren laster-marka"
+msgstr "Sortu GIMPen webgunearen laster-marka"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Bookmark to the user manual"
