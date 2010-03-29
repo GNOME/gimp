@@ -1,4 +1,4 @@
-# translation of gimp-plug-ins.gimp-2-6.po to Basque
+# translation of eu.po to Basque
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -7,10 +7,10 @@
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins.gimp-2-6\n"
+"Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-16 17:56+0100\n"
-"PO-Revision-Date: 2010-03-15 22:25+0100\n"
+"PO-Revision-Date: 2010-03-29 18:43+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -425,7 +425,7 @@ msgstr "Animazioa optimizatzen"
 
 #: ../plug-ins/common/animation-play.c:163
 msgid "Preview a GIMP layer-based animation"
-msgstr "Aurrikusi GIMPeko geruzetan oinarritutako animazioa"
+msgstr "Aurreikusi GIMPeko geruzetan oinarritutako animazioa"
 
 #: ../plug-ins/common/animation-play.c:168
 msgid "_Playback..."
@@ -759,7 +759,7 @@ msgstr "_Y:"
 
 #: ../plug-ins/common/blur-motion.c:1101
 msgid "Blur _outward"
-msgstr "Lauzotu _kanpokaldea"
+msgstr "Lauzatu _kanpoaldea"
 
 #: ../plug-ins/common/blur-motion.c:1114
 msgid "Blur Parameters"
@@ -1316,7 +1316,7 @@ msgstr "(bat ere ez)"
 
 #: ../plug-ins/common/cml-explorer.c:455
 msgid "Create abstract Coupled-Map Lattice patterns"
-msgstr "Sortu Coupled-Map-Lattice eredu abstraktoak"
+msgstr "Sortu Coupled-Map-Lattice eredu abstraktuak"
 
 #: ../plug-ins/common/cml-explorer.c:466
 msgid "CML _Explorer..."
@@ -1524,7 +1524,7 @@ msgstr "Abisua: '%s' ez da formatu zaharreko fitxategia."
 #: ../plug-ins/common/cml-explorer.c:2211
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr "Abisua: '%s' CML arakaitzaile berriagorako parametro-fitxategia da."
+msgstr "Abisua: '%s' CML arakatzaile berriagorako parametro-fitxategia da."
 
 #: ../plug-ins/common/cml-explorer.c:2274
 msgid "Error: failed to load parameters"
@@ -1804,11 +1804,11 @@ msgstr "_Luma y470:"
 
 #: ../plug-ins/common/compose.c:253
 msgid "_Blueness cb470:"
-msgstr "_Blueness cb470:"
+msgstr "_Urdinaren krominantzia cb470:"
 
 #: ../plug-ins/common/compose.c:254
 msgid "_Redness cr470:"
-msgstr "_Redness cr470:"
+msgstr "_Gorriaren krominantzia cr470:"
 
 #: ../plug-ins/common/compose.c:260
 msgid "_Luma y709:"
@@ -1816,11 +1816,11 @@ msgstr "_Luma y709:"
 
 #: ../plug-ins/common/compose.c:261
 msgid "_Blueness cb709:"
-msgstr "_Blueness cb709:"
+msgstr "_Urdinaren krominantzia cb709:"
 
 #: ../plug-ins/common/compose.c:262
 msgid "_Redness cr709:"
-msgstr "_Redness cr709:"
+msgstr "_Gorriaren krominantzia cr709:"
 
 #: ../plug-ins/common/compose.c:268
 msgid "_Luma y470f:"
@@ -1828,11 +1828,11 @@ msgstr "_Luma y470f:"
 
 #: ../plug-ins/common/compose.c:269
 msgid "_Blueness cb470f:"
-msgstr "_Blueness cb470f:"
+msgstr "_Urdinaren krominantzia cb470f:"
 
 #: ../plug-ins/common/compose.c:270
 msgid "_Redness cr470f:"
-msgstr "-Redness cr470f:"
+msgstr "-Gorriaren krominantzia cr470f:"
 
 #: ../plug-ins/common/compose.c:276
 msgid "_Luma y709f:"
@@ -1840,11 +1840,11 @@ msgstr "_Luma y709f:"
 
 #: ../plug-ins/common/compose.c:277
 msgid "_Blueness cb709f:"
-msgstr "_Blueness cb709f:"
+msgstr "_Urdinaren krominantzia cb709f:"
 
 #: ../plug-ins/common/compose.c:278
 msgid "_Redness cr709f:"
-msgstr "_Redness cr709f:"
+msgstr "_Gorriaren krominantzia cr709f:"
 
 #: ../plug-ins/common/compose.c:404
 msgid "Create an image using multiple gray images as color channels"
@@ -3055,8 +3055,7 @@ msgstr "Ez dago luzapen garbirik, XCF konprimitu gisa gordeko da."
 
 #: ../plug-ins/common/file-compressor.c:572
 msgid "No sensible file extension, attempting to load with file magic."
-msgstr ""
-"Ez dago luzapen garbirik, fitxategi magikoarekin kargatzen saiatuko naiz."
+msgstr "Ez dago luzapen garbirik, fitxategi magikoarekin kargatzen saiatuko naiz."
 
 #: ../plug-ins/common/file-csource.c:112
 msgid "C source code"
@@ -3148,8 +3147,7 @@ msgstr "GIMPen brotxa"
 #: ../plug-ins/common/file-gbr.c:392 ../plug-ins/common/file-pat.c:411
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr ""
-"Goiburuko datu baliogabeak '%s'(e)n: zabalera=%lu, altuera=%lu, byteak=%lu"
+msgstr "Goiburuko datu baliogabeak '%s'(e)n: zabalera=%lu, altuera=%lu, byteak=%lu"
 
 #: ../plug-ins/common/file-gbr.c:416 ../plug-ins/common/file-gbr.c:428
 msgid "Unsupported brush format"
@@ -3254,16 +3252,14 @@ msgstr ""
 "ditu. Ez da iradokizunik gorde."
 
 #: ../plug-ins/common/file-gif-save.c:732
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Ezin dira GBU irudiak GIF gisa gorde. Bihurtu irudi indexatu edo gris-"
 "eskalara lehenik."
 
 #: ../plug-ins/common/file-gif-save.c:910
 msgid "Delay inserted to prevent evil CPU-sucking animation."
-msgstr ""
-"Atzerapena txertatu da, PUZ xurgatzen duen animazio gaizto hori eragozteko."
+msgstr "Atzerapena txertatu da, PUZ xurgatzen duen animazio gaizto hori eragozteko."
 
 #: ../plug-ins/common/file-gif-save.c:950
 msgid ""
@@ -3672,7 +3668,7 @@ msgstr "GIMPen eredua"
 #: ../plug-ins/common/file-pat.c:371
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "UTF-8 jkate baliogabea '%s' eredu-fitxategian."
+msgstr "UTF-8 kate baliogabea '%s' eredu-fitxategian."
 
 #: ../plug-ins/common/file-pat.c:543
 msgid "Save as Pattern"
@@ -3696,13 +3692,13 @@ msgstr "'%s' ez da PCX fitxategia"
 #: ../plug-ins/file-psd/psd-load.c:302
 #, c-format
 msgid "Unsupported or invalid image width: %d"
-msgstr "Ez da onartzen edo irudiraren zabalera baliogabea da: %d"
+msgstr "Ez da onartzen edo irudiaren zabalera baliogabea da: %d"
 
 #: ../plug-ins/common/file-pcx.c:400 ../plug-ins/file-bmp/bmp-read.c:644
 #: ../plug-ins/file-psd/psd-load.c:294
 #, c-format
 msgid "Unsupported or invalid image height: %d"
-msgstr "Ez da onartzen edo irudiraren altuera baliogabea da: %d"
+msgstr "Ez da onartzen edo irudiaren altuera baliogabea da: %d"
 
 #: ../plug-ins/common/file-pcx.c:405
 msgid "Invalid number of bytes per line in PCX header"
@@ -3804,7 +3800,7 @@ msgstr "Errorea '%s' irakurtzean. Fitxategia hondatuta dago?"
 #: ../plug-ins/common/file-png.c:834
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr "Kolore modelu ezezaguna '%s' PNG fitxategian."
+msgstr "Kolore-modelo ezezaguna '%s' PNG fitxategian."
 
 #: ../plug-ins/common/file-png.c:889
 msgid ""
@@ -4266,7 +4262,7 @@ msgid ""
 "Image width is larger than GIMP can handle"
 msgstr ""
 "'%s':\n"
-"Irudiaren zabalera handiegia da GIMPek kudetazeko"
+"Irudiaren zabalera handiegia da GIMPek kudeatzeko"
 
 #: ../plug-ins/common/file-sunras.c:472 ../plug-ins/common/file-xbm.c:840
 #: ../plug-ins/common/file-xwd.c:506
@@ -4286,7 +4282,7 @@ msgid ""
 "Image height is larger than GIMP can handle"
 msgstr ""
 "'%s':\n"
-"Irudiaren altuera handiegia da GIMPek kudetazeko"
+"Irudiaren altuera handiegia da GIMPek kudeatzeko"
 
 #: ../plug-ins/common/file-sunras.c:518
 msgid "This image depth is not supported"
@@ -4390,8 +4386,7 @@ msgid "Import _paths"
 msgstr "Inportatu _bideak"
 
 #: ../plug-ins/common/file-svg.c:961
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Inportatu SVG-ko bide-elementuak, GIMPeko bide-tresnarekin erabil ahal "
 "izateko."
@@ -4681,7 +4676,7 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"%s XWD fitxategiak %d formatua, %d sakoneraeta %d bit pixeleko ditu.Une "
+"%s XWD fitxategiak %d formatua, %d sakonera eta %d bit pixeleko ditu. Une "
 "honetan hori ez da onartzen."
 
 #: ../plug-ins/common/file-xwd.c:593
@@ -4698,7 +4693,7 @@ msgstr "Errorea GBU irudia idaztean"
 
 #: ../plug-ins/common/film.c:217
 msgid "Combine several images on a film strip"
-msgstr "Konbinatu hainbat irudi filme baten zatian"
+msgstr "Konbinatu hainbat irudi filma baten zatian"
 
 #: ../plug-ins/common/film.c:222
 msgid "_Filmstrip..."
@@ -5125,7 +5120,7 @@ msgstr "Ebakiduraren kolorea"
 
 #: ../plug-ins/common/guillotine.c:75
 msgid "Slice the image into subimages using guides"
-msgstr "Zatitu irudia azpi-irudiretan gidak erabiliz"
+msgstr "Zatitu irudia azpi-irudietan gidak erabiliz"
 
 #: ../plug-ins/common/guillotine.c:82
 msgid "_Guillotine"
@@ -5412,10 +5407,8 @@ msgid "Default RGB working space"
 msgstr "GBU laneko espazio lehenetsia"
 
 #: ../plug-ins/common/lcms.c:775
-msgid ""
-"Data attached as 'icc-profile' does not appear to be an ICC color profile"
-msgstr ""
-"Erantsitako 'icc-profile' datuak ez dirudite ICC kolore-profila direnik"
+msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
+msgstr "Erantsitako 'icc-profile' datuak ez dirudite ICC kolore-profila direnik"
 
 #: ../plug-ins/common/lcms.c:825
 #, c-format
@@ -5602,7 +5595,7 @@ msgstr "Errendatu lenteen erlantza"
 
 #: ../plug-ins/common/lens-flare.c:306
 msgid "Lens Flare"
-msgstr "Lentees erlantza"
+msgstr "Lenteen erlantza"
 
 #: ../plug-ins/common/lens-flare.c:753
 msgid "Center of Flare Effect"
@@ -5655,7 +5648,7 @@ msgstr "Ezin izan da sendmail (%s) abiarazi"
 
 #: ../plug-ins/common/max-rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
-msgstr "Murritzu irudia gorri, berde eta urdin garbietara"
+msgstr "Murriztu irudia gorri, berde eta urdin garbietara"
 
 #: ../plug-ins/common/max-rgb.c:95
 msgid "Maxim_um RGB..."
@@ -6027,7 +6020,7 @@ msgstr "#%d kanala:"
 
 #: ../plug-ins/common/noise-solid.c:176
 msgid "Create a random cloud-like texture"
-msgstr "Sortu ausazko lainko antzeko testura"
+msgstr "Sortu ausazko laino antzeko testura"
 
 #: ../plug-ins/common/noise-solid.c:182
 msgid "_Solid Noise..."
@@ -6323,8 +6316,7 @@ msgstr "_Mapatu atzerantz"
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
-msgstr ""
-"Hau hautatuz gero, mapatzea eskuineko aldean hasiko da, eta ez ezkerrekoan."
+msgstr "Hau hautatuz gero, mapatzea eskuineko aldean hasiko da, eta ez ezkerrekoan."
 
 #: ../plug-ins/common/polar-coords.c:675
 msgid "Map from _top"
@@ -6364,7 +6356,7 @@ msgstr "Prozedura arakatzailea"
 
 #: ../plug-ins/common/qbist.c:402
 msgid "Generate a huge variety of abstract patterns"
-msgstr "Sortu eredu abstrakto asko"
+msgstr "Sortu eredu abstraktu asko"
 
 #: ../plug-ins/common/qbist.c:410
 msgid "_Qbist..."
@@ -6610,8 +6602,7 @@ msgid "After the delay, the screenshot is taken."
 msgstr "Atzerapenaren ondoren, pantailaren kaptura egingo da."
 
 #: ../plug-ins/common/screenshot.c:1101
-msgid ""
-"After the delay, drag your mouse to select the region for the screenshot."
+msgid "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Atzerapenaren ondoren, sagua erabil dezakezu pantailaren eskualde laukiluzea "
 "hautatzeko."
@@ -7417,8 +7408,7 @@ msgid "ID"
 msgstr "IDa"
 
 #: ../plug-ins/common/unit-editor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Kate hau GIMPen konfigurazio-fitxategietan unitate bat identifikatzeko "
 "erabiliko da."
@@ -7487,8 +7477,7 @@ msgstr "Sortu unitate berria hutsetik"
 
 #: ../plug-ins/common/unit-editor.c:127
 msgid "Create a new unit using the currently selected unit as template"
-msgstr ""
-"Sortu unitate berria unean hautatutako unitatea txantiloi gisa erabiliz"
+msgstr "Sortu unitate berria unean hautatutako unitatea txantiloi gisa erabiliz"
 
 #: ../plug-ins/common/unit-editor.c:145
 msgid "Create or alter units used in GIMP"
@@ -7778,7 +7767,7 @@ msgstr "_Puntuak"
 
 #: ../plug-ins/common/video.c:1807
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr "Simulatu distortzioa (bereizmen baxuko monitoreak sortzen duena)"
+msgstr "Simulatu distortsioa (bereizmen baxuko monitoreak sortzen duena)"
 
 #: ../plug-ins/common/video.c:1814
 msgid "Vi_deo..."
@@ -7886,7 +7875,7 @@ msgstr "Erabili magnitude-mapa"
 #. ---------    The "other" table         --------------------------
 #: ../plug-ins/common/warp.c:622
 msgid "More Advanced Options"
-msgstr "Beste aukera aurretuak"
+msgstr "Beste aukera aurreratuak"
 
 #: ../plug-ins/common/warp.c:639
 msgid "Gradient scale:"
@@ -7930,7 +7919,7 @@ msgstr "%d. fluxu-urratsa"
 
 #: ../plug-ins/common/waves.c:120
 msgid "Distort the image with waves"
-msgstr "Distortzionatu irudia uhinekin"
+msgstr "Distortsionatu irudia uhinekin"
 
 #: ../plug-ins/common/waves.c:125
 msgid "_Waves..."
@@ -7996,7 +7985,7 @@ msgstr ""
 
 #: ../plug-ins/common/whirl-pinch.c:138
 msgid "Distort an image by whirling and pinching"
-msgstr "Distortzionatu irudia bihurrituz eta tiratuz"
+msgstr "Distortsionatu irudia bihurrituz eta tiratuz"
 
 #: ../plug-ins/common/whirl-pinch.c:149
 msgid "W_hirl and Pinch..."
@@ -8119,7 +8108,7 @@ msgstr "Errorea BMP fitxategi-goiburua '%s'tik irakurtzean"
 
 #: ../plug-ins/file-bmp/bmp-read.c:590
 msgid "Unrecognized or invalid BMP compression format."
-msgstr "BMP konpresio-formatu ezezagune edo baliogabea."
+msgstr "BMP konpresio-formatu ezezaguna edo baliogabea."
 
 #: ../plug-ins/file-bmp/bmp-read.c:632
 msgid "Unsupported or invalid bitdepth."
@@ -8128,12 +8117,11 @@ msgstr "Kolore-sakonera ez da onartzen edo ez da baliagarria."
 #: ../plug-ins/file-bmp/bmp-read.c:820 ../plug-ins/file-bmp/bmp-read.c:861
 #: ../plug-ins/file-bmp/bmp-read.c:911
 msgid "The bitmap ends unexpectedly."
-msgstr "Bitmapa ustegabean amaitu da."
+msgstr "Bitmapa ustekabean amaitu da."
 
 #: ../plug-ins/file-bmp/bmp-write.c:188 ../plug-ins/file-bmp/bmp-write.c:210
 msgid "Cannot save indexed image with transparency in BMP file format."
-msgstr ""
-"Ezin da indexatuta irudia gardentasunarekin gorde BMP fitxategi-formatuan."
+msgstr "Ezin da indexatuta irudia gardentasunarekin gorde BMP fitxategi-formatuan."
 
 #: ../plug-ins/file-bmp/bmp-write.c:190 ../plug-ins/file-bmp/bmp-write.c:212
 msgid "Alpha channel will be ignored."
@@ -8332,7 +8320,7 @@ msgstr "_Kalitatea:"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:866
 msgid "JPEG quality parameter"
-msgstr "JPEG kalitare-parametroa"
+msgstr "JPEG kalitate-parametroa"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:885
 msgid "Enable preview to obtain the file size."
@@ -8451,7 +8439,7 @@ msgstr "Errorea PSD fitxategia kargatzean: %s"
 #: ../plug-ins/file-psd/psd-load.c:270
 #, c-format
 msgid "Not a valid photoshop document file"
-msgstr "Ez da baiozko Photoshop dokumentu motako fitxategia"
+msgstr "Ez da baliozko Photoshop dokumentu motako fitxategia"
 
 #: ../plug-ins/file-psd/psd-load.c:277
 #, c-format
@@ -8466,7 +8454,7 @@ msgstr "Kanal gehiegi fitxategian: %d"
 #: ../plug-ins/file-psd/psd-load.c:311
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
-msgstr "Ez da onartzen edo irudiraren tamaina baliogabea da: %dx%d"
+msgstr "Ez da onartzen edo irudiaren tamaina baliogabea da: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:323
 #, c-format
@@ -8731,7 +8719,7 @@ msgstr "Irakurtzeko '%s' irekitzean HTTP kodearen erantzuna sortu du: %d"
 #: ../plug-ins/file-uri/uri-backend-wget.c:253
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
-msgstr "wget ustegabean amaitu da '%s' URIan"
+msgstr "wget ustekabean amaitu da '%s' URIan"
 
 #. The third line is "Connecting to..."
 #: ../plug-ins/file-uri/uri-backend-wget.c:190
@@ -9044,8 +9032,7 @@ msgstr "Aurrebista denbora errealean"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:646
 msgid "If enabled the preview will be redrawn automatically"
-msgstr ""
-"Aukera hau gaitzen baduzu, aurrebista berriro marraztuko da automatikoki"
+msgstr "Aukera hau gaitzen baduzu, aurrebista berriro marraztuko da automatikoki"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
 msgid "R_edraw preview"
@@ -9093,8 +9080,7 @@ msgid "Bottom:"
 msgstr "Behean:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:773
-msgid ""
-"The higher the number of iterations, the more details will be calculated"
+msgid "The higher the number of iterations, the more details will be calculated"
 msgstr "Zenbat eta handiagoa izan, xehetasun gehiago kalkulatuko dira"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:781
@@ -9706,8 +9692,7 @@ msgid "_Gfig..."
 msgstr "_Irudi geometrikoak (Gfig)..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Errorea irudia parasito gisa gordetzean: ezin da parasitoa marrazgaiari "
 "erantsi."
@@ -9715,8 +9700,7 @@ msgstr ""
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
-msgstr ""
-"Errorea '%s' aldi baterako fitxategia irekitzean parasitoa kargatzeko: %s"
+msgstr "Errorea '%s' aldi baterako fitxategia irekitzean parasitoa kargatzeko: %s"
 
 #: ../plug-ins/gimpressionist/brush.c:247
 msgid "Can only save drawables!"
@@ -9774,8 +9758,7 @@ msgstr "B_rotxaren erdian"
 
 #: ../plug-ins/gimpressionist/color.c:79
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr ""
-"Kolorea brotxaren azpiko pixel guztien batazbestekoarekin kalkulatzen da"
+msgstr "Kolorea brotxaren azpiko pixel guztien batez bestekoarekin kalkulatzen da"
 
 #: ../plug-ins/gimpressionist/color.c:83
 msgid "Samples the color from the pixel in the center of the brush"
@@ -9816,8 +9799,7 @@ msgstr "Kolore lisoko atzeko planoa"
 
 #: ../plug-ins/gimpressionist/general.c:186
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr ""
-"Erabili atzeko plano gardena; pintatutako trazuak bakarrik ikusiko dira"
+msgstr "Erabili atzeko plano gardena; pintatutako trazuak bakarrik ikusiko dira"
 
 #: ../plug-ins/gimpressionist/general.c:203
 msgid "Paint edges"
@@ -9867,10 +9849,8 @@ msgid "Shadow depth:"
 msgstr "Itzalaren sakonera:"
 
 #: ../plug-ins/gimpressionist/general.c:262
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
-"Itzalaren sakonera, hau da, objektutik zein distantziatara egon behar duen"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr "Itzalaren sakonera, hau da, objektutik zein distantziatara egon behar duen"
 
 #: ../plug-ins/gimpressionist/general.c:267
 msgid "Shadow blur:"
@@ -10044,7 +10024,7 @@ msgstr "_Hil"
 
 #: ../plug-ins/gimpressionist/orientmap.c:630
 msgid "Delete selected vector"
-msgstr "Ezabau hautatutako bektorea"
+msgstr "Ezabatu hautatutako bektorea"
 
 #: ../plug-ins/gimpressionist/orientmap.c:641
 msgid "Type"
@@ -10257,13 +10237,11 @@ msgid "Size:"
 msgstr "Tamaina:"
 
 #: ../plug-ins/gimpressionist/size.c:160
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Eskualdearen balioak (distirak) zehazten du trazuaren tamaina"
 
 #: ../plug-ins/gimpressionist/size.c:164
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Irudiaren erdira dagoen distantziak trazuaren tamaina zehazten du"
 
 #: ../plug-ins/gimpressionist/size.c:168
@@ -10337,7 +10315,7 @@ msgstr "Aldatu hautatutako bektorearen indarra"
 
 #: ../plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
-msgstr "I_ndararen berr.:"
+msgstr "I_ndarraren berr.:"
 
 #: ../plug-ins/gimpressionist/sizemap.c:549
 msgid ""
@@ -10558,7 +10536,7 @@ msgstr "Gradiente angeluarra:"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3574
 #: ../plug-ins/gradient-flare/gradient-flare.c:3679
 msgid "Angular size gradient:"
-msgstr "Gradientearen taimaina angeluarra:"
+msgstr "Gradientearen tamaina angeluarra:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3594
 #: ../plug-ins/gradient-flare/gradient-flare.c:3699
@@ -10634,7 +10612,7 @@ msgstr "GIMPeko Laguntza arakatzailea"
 
 #: ../plug-ins/help-browser/dialog.c:564
 msgid "Go back one page"
-msgstr "Joan orralde bat atzera"
+msgstr "Joan orrialde bat atzera"
 
 #: ../plug-ins/help-browser/dialog.c:569
 msgid "Go forward one page"
@@ -10716,7 +10694,7 @@ msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
 msgstr ""
-"Instalatu laguntzako pakete gehigarriak edo erabili likneako erabiltzeilaren "
+"Instalatu laguntzako pakete gehigarriak edo erabili lineako erabiltzailearen "
 "gida honako gunean: http://docs.gimp.org/."
 
 #: ../plug-ins/help/gimphelpdomain.c:197
@@ -11852,8 +11830,7 @@ msgstr "_Distira:"
 #: ../plug-ins/lighting/lighting-ui.c:691
 #: ../plug-ins/map-object/map-object-ui.c:853
 msgid "Intensity of original color when lit by a light source"
-msgstr ""
-"Jatorrizko kolorearen intentsitatea, argi-iturri batek argiztatzen duenean"
+msgstr "Jatorrizko kolorearen intentsitatea, argi-iturri batek argiztatzen duenean"
 
 #: ../plug-ins/lighting/lighting-ui.c:705
 msgid "_Shiny:"
@@ -11983,8 +11960,7 @@ msgstr "Mapa zilindrora"
 
 #: ../plug-ins/map-object/map-object-main.c:193
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
-msgstr ""
-"Egin irudiaren mapa objektu batean (planoa, esfera, kutxa edo zilindroa)"
+msgstr "Egin irudiaren mapa objektu batean (planoa, esfera, kutxa edo zilindroa)"
 
 #: ../plug-ins/map-object/map-object-main.c:198
 msgid "Map _Object..."
@@ -12050,8 +12026,7 @@ msgstr "Gaitu/Desgaitu ertz zorrotzak kentzea (antialiasing)"
 
 #: ../plug-ins/map-object/map-object-ui.c:576
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr ""
-"Antialiasing kalitatea. Kalitate handia hobea da, baina mantsoagoa ere bai"
+msgstr "Antialiasing kalitatea. Kalitate handia hobea da, baina mantsoagoa ere bai"
 
 #: ../plug-ins/map-object/map-object-ui.c:593
 msgid "Stop when pixel differences are smaller than this value"
@@ -12100,8 +12075,7 @@ msgstr "Islagarritasuna"
 
 #: ../plug-ins/map-object/map-object-ui.c:896
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
-"Balio handiekin objektuak argi gehiago islatzen du (argiago ikusten da)"
+msgstr "Balio handiekin objektuak argi gehiago islatzen du (argiago ikusten da)"
 
 #: ../plug-ins/map-object/map-object-ui.c:910
 msgid "Specular:"
@@ -12522,3 +12496,4 @@ msgstr "_Pantaila-argazkia..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "Ez da daturik kapturatu"
+
