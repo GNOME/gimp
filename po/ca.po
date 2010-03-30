@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-18 19:06+0200\n"
-"PO-Revision-Date: 2008-10-18 19:07+0200\n"
+"POT-Creation-Date: 2010-03-30 18:42+0200\n"
+"PO-Revision-Date: 2010-03-30 18:43+0200\n"
 "Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -217,7 +217,7 @@ msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Sortida del GIMP. Podeu minimitzar aquesta finestra, però no la podeu tancar."
 
-#: ../app/sanity.c:342
+#: ../app/sanity.c:365
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -229,7 +229,7 @@ msgstr ""
 "\n"
 "Comproveu el valor de la variable d'entorn G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:361
+#: ../app/sanity.c:384
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -265,7 +265,7 @@ msgstr "Editor del pinzell"
 #  initialize the list of gimp brushes
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:104 ../app/core/gimp.c:838
-#: ../app/dialogs/dialogs.c:157 ../app/dialogs/preferences-dialog.c:2738
+#: ../app/dialogs/dialogs.c:157 ../app/dialogs/preferences-dialog.c:2744
 msgid "Brushes"
 msgstr "Pinzells"
 
@@ -312,7 +312,7 @@ msgstr "Plafó encastable"
 
 #. Document History
 #: ../app/actions/actions.c:137 ../app/dialogs/dialogs.c:171
-#: ../app/dialogs/preferences-dialog.c:1589
+#: ../app/dialogs/preferences-dialog.c:1595
 msgid "Document History"
 msgstr "Fitxers recents"
 
@@ -334,7 +334,7 @@ msgstr "Fitxer"
 
 #  initialize the list of gimp fonts
 #: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:165
-#: ../app/dialogs/preferences-dialog.c:2754
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Fonts"
 msgstr "Tipus de lletra"
 
@@ -346,7 +346,7 @@ msgstr "Editor de degradats"
 #  initialize the list of gimp gradients
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:158 ../app/core/gimp.c:850
-#: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2750
+#: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2756
 msgid "Gradients"
 msgstr "Degradats"
 
@@ -378,18 +378,18 @@ msgstr "Editor de la paleta"
 #  initialize the list of gimp palettes
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:176 ../app/core/gimp.c:846
-#: ../app/dialogs/dialogs.c:163 ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/dialogs.c:163 ../app/dialogs/preferences-dialog.c:2752
 msgid "Palettes"
 msgstr "Paletes"
 
 #  initialize the list of gimp patterns
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:179 ../app/core/gimp.c:842
-#: ../app/dialogs/dialogs.c:159 ../app/dialogs/preferences-dialog.c:2742
+#: ../app/dialogs/dialogs.c:159 ../app/dialogs/preferences-dialog.c:2748
 msgid "Patterns"
 msgstr "Patrons"
 
-#: ../app/actions/actions.c:182 ../app/dialogs/preferences-dialog.c:2758
+#: ../app/actions/actions.c:182 ../app/dialogs/preferences-dialog.c:2764
 msgid "Plug-Ins"
 msgstr "Connectors"
 
@@ -418,7 +418,7 @@ msgid "Text Editor"
 msgstr "Editor de text"
 
 #: ../app/actions/actions.c:200 ../app/dialogs/dialogs.c:138
-#: ../app/dialogs/preferences-dialog.c:1874 ../app/gui/gui.c:423
+#: ../app/dialogs/preferences-dialog.c:1880 ../app/gui/gui.c:429
 msgid "Tool Options"
 msgstr "Opcions de l'eina"
 
@@ -694,7 +694,7 @@ msgid "New Channel Color"
 msgstr "Color del nou canal"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:567
+#: ../app/display/gimpdisplayshell-dnd.c:584
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
@@ -774,12 +774,12 @@ msgid "_Tool"
 msgstr "_Eina"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1934
+#: ../app/dialogs/preferences-dialog.c:1940
 msgid "_Brush"
 msgstr "_Pinzell"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:99
-#: ../app/dialogs/preferences-dialog.c:1937
+#: ../app/dialogs/preferences-dialog.c:1943
 msgid "_Pattern"
 msgstr "_Patró"
 
@@ -789,7 +789,7 @@ msgstr "_Paleta"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:216
-#: ../app/dialogs/preferences-dialog.c:1940
+#: ../app/dialogs/preferences-dialog.c:1946
 msgid "_Gradient"
 msgstr "De_gradat"
 
@@ -852,14 +852,14 @@ msgstr "Mo_stra fusionada"
 msgid "Sample Merged"
 msgstr "Mostra fusionada"
 
-#: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:342
-#: ../app/actions/file-commands.c:181 ../app/dialogs/file-open-dialog.c:220
+#: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:344
+#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:220
 #: ../app/dialogs/file-open-dialog.c:264
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:520
+#: ../app/display/gimpdisplayshell-dnd.c:537
 #: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
-#: ../app/widgets/gimptoolbox.c:979
+#: ../app/widgets/gimptoolbox.c:981
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1135,7 +1135,7 @@ msgid "_About"
 msgstr "_Quant a"
 
 #: ../app/actions/dialogs-actions.c:231 ../app/dialogs/about-dialog.c:114
-#: ../app/gui/gui.c:473
+#: ../app/gui/gui.c:479
 msgid "About GIMP"
 msgstr "Quant al GIMP"
 
@@ -1898,7 +1898,7 @@ msgstr "Desa i tanca..."
 msgid "Save this image and close its window"
 msgstr "Desa aquesta imatge i tanca'n la finestra"
 
-#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:450
+#: ../app/actions/file-commands.c:104 ../app/actions/file-commands.c:456
 #: ../app/dialogs/file-open-dialog.c:76
 msgid "Open Image"
 msgstr "Obre una imatge"
@@ -1908,11 +1908,11 @@ msgid "Open Image as Layers"
 msgstr "Obre una imatge com a capes"
 
 #  File Saving
-#: ../app/actions/file-commands.c:260
+#: ../app/actions/file-commands.c:266
 msgid "Saving canceled"
 msgstr "L'acció desar s'ha cancel·lat"
 
-#: ../app/actions/file-commands.c:269 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:275 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:173
 #, c-format
 msgid ""
@@ -1924,42 +1924,42 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:294
+#: ../app/actions/file-commands.c:300
 msgid "No changes need to be saved"
 msgstr "No hi ha cap canvi per a desar"
 
-#: ../app/actions/file-commands.c:301 ../app/dialogs/file-save-dialog.c:88
+#: ../app/actions/file-commands.c:307 ../app/dialogs/file-save-dialog.c:88
 msgid "Save Image"
 msgstr "Desa la imatge"
 
-#: ../app/actions/file-commands.c:307
+#: ../app/actions/file-commands.c:313
 msgid "Save a Copy of the Image"
 msgstr "Desa una còpia de la imatge"
 
-#: ../app/actions/file-commands.c:327
+#: ../app/actions/file-commands.c:333
 msgid "Create New Template"
 msgstr "Crea nova plantilla"
 
-#: ../app/actions/file-commands.c:331
+#: ../app/actions/file-commands.c:337
 msgid "Enter a name for this template"
 msgstr "Anomena aquesta plantilla"
 
-#: ../app/actions/file-commands.c:357
+#: ../app/actions/file-commands.c:363
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "No es pot tornar endarrere. No hi ha cap nom de fitxer associat a aquesta "
 "imatge."
 
-#: ../app/actions/file-commands.c:370
+#: ../app/actions/file-commands.c:376
 msgid "Revert Image"
 msgstr "Recupera la imatge"
 
-#: ../app/actions/file-commands.c:396
+#: ../app/actions/file-commands.c:402
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Voleu recuperar «%s» a l'anterior «%s»?"
 
-#: ../app/actions/file-commands.c:402
+#: ../app/actions/file-commands.c:408
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1967,11 +1967,11 @@ msgstr ""
 "Si torneu la imatge a l'estat desat al disc perdreu tots els canvis, "
 "incloent-hi tota la informació per desfer."
 
-#: ../app/actions/file-commands.c:557
+#: ../app/actions/file-commands.c:563
 msgid "(Unnamed Template)"
 msgstr "(Plantilla sense nom)"
 
-#: ../app/actions/file-commands.c:605
+#: ../app/actions/file-commands.c:611
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2602,7 +2602,7 @@ msgstr "S'està capgirant"
 msgid "Rotating"
 msgstr "S'està girant"
 
-#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:639
+#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:642
 msgid "Cannot crop because the current selection is empty."
 msgstr "No s'ha pogut escapçar perquè l'àrea seleccionada està buida."
 
@@ -2615,12 +2615,12 @@ msgid "Scale Image"
 msgstr "Escala la imatge"
 
 #. Scaling
-#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1101
-#: ../app/dialogs/preferences-dialog.c:1919
+#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1104
+#: ../app/dialogs/preferences-dialog.c:1925
 #: ../app/pdb/drawable-transform-cmds.c:682
 #: ../app/pdb/drawable-transform-cmds.c:758 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:289
-#: ../app/pdb/layer-cmds.c:334 ../app/pdb/transform-tools-cmds.c:291
+#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:292
+#: ../app/pdb/layer-cmds.c:337 ../app/pdb/transform-tools-cmds.c:291
 #: ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
 msgstr "Escalat"
@@ -3023,50 +3023,50 @@ msgstr "Selecciona la capa inferior a l'actual"
 msgid "Set Opacity"
 msgstr "Defineix l'opacitat"
 
-#: ../app/actions/layers-commands.c:203
+#: ../app/actions/layers-commands.c:204
 msgid "Layer Attributes"
 msgstr "Atributs de la capa"
 
-#: ../app/actions/layers-commands.c:206
+#: ../app/actions/layers-commands.c:207
 msgid "Edit Layer Attributes"
 msgstr "Edita els atributs de la capa"
 
-#: ../app/actions/layers-commands.c:249 ../app/actions/layers-commands.c:251
-#: ../app/actions/layers-commands.c:319 ../app/actions/layers-commands.c:323
+#: ../app/actions/layers-commands.c:250 ../app/actions/layers-commands.c:252
+#: ../app/actions/layers-commands.c:320 ../app/actions/layers-commands.c:324
 #: ../app/widgets/gimpdrawabletreeview.c:326
 #: ../app/widgets/gimplayertreeview.c:835
 msgid "New Layer"
 msgstr "Nova capa"
 
-#: ../app/actions/layers-commands.c:254
+#: ../app/actions/layers-commands.c:255
 msgid "Create a New Layer"
 msgstr "Crea una capa nova"
 
-#: ../app/actions/layers-commands.c:352
+#: ../app/actions/layers-commands.c:355
 msgid "Visible"
 msgstr "Visible"
 
-#: ../app/actions/layers-commands.c:571
+#: ../app/actions/layers-commands.c:574
 msgid "Set Layer Boundary Size"
 msgstr "Defineix mida del marc de la capa"
 
-#: ../app/actions/layers-commands.c:612 ../app/core/gimplayer.c:251
+#: ../app/actions/layers-commands.c:615 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
 msgstr "Escala la capa"
 
-#: ../app/actions/layers-commands.c:649
+#: ../app/actions/layers-commands.c:652
 msgid "Crop Layer"
 msgstr "Escapça la capa"
 
-#: ../app/actions/layers-commands.c:788
+#: ../app/actions/layers-commands.c:791
 msgid "Layer Mask to Selection"
 msgstr "Màscara de capa a la selecció"
 
-#: ../app/actions/layers-commands.c:1036
+#: ../app/actions/layers-commands.c:1039
 msgid "Please select a channel first"
 msgstr "Primer seleccioneu un canal"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
+#: ../app/actions/layers-commands.c:1047 ../app/core/gimplayer.c:1283
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Afegeix una màscara de capa"
@@ -3394,7 +3394,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Commuta mascara _ràpida"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1158
+#: ../app/display/gimpdisplayshell.c:1169
 msgid "Toggle Quick Mask"
 msgstr "Commuta mascara ràpida"
 
@@ -5246,7 +5246,7 @@ msgstr "Blanc"
 
 # Quim: llista d'opcions per definir com ha de ser el fons de la nova capa
 #. Transparency
-#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2305
+#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2311
 msgid "Transparency"
 msgstr "Transparent"
 
@@ -5338,11 +5338,11 @@ msgstr "Cercle"
 msgid "Diamond"
 msgstr "Diamant"
 
-#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2337
+#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2343
 msgid "Horizontal"
 msgstr "Horitzontal"
 
-#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2339
+#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2345
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -5548,7 +5548,7 @@ msgstr "Enganxa"
 msgid "Cut"
 msgstr "Retalla"
 
-#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:160
+#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:161
 #: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "Text"
@@ -5559,7 +5559,7 @@ msgid "Transform"
 msgstr "Transforma"
 
 #: ../app/core/core-enums.c:884 ../app/core/core-enums.c:927
-#: ../app/paint/gimppaintcore.c:135
+#: ../app/paint/gimppaintcore.c:137
 msgid "Paint"
 msgstr "Pinta"
 
@@ -5825,7 +5825,7 @@ msgid "Fonts (this may take a while)"
 msgstr "Tipus de lletra (pot tardar una mica)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:863 ../app/dialogs/preferences-dialog.c:2766
+#: ../app/core/gimp.c:863 ../app/dialogs/preferences-dialog.c:2772
 msgid "Modules"
 msgstr "Mòduls"
 
@@ -6009,7 +6009,7 @@ msgstr "Capgira el canal"
 msgid "Rotate Channel"
 msgstr "Gira el canal"
 
-#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:843
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:886
 msgid "Transform Channel"
 msgstr "Transforma el canal"
 
@@ -6112,12 +6112,12 @@ msgstr ""
 msgid "Blend"
 msgstr "Degradat"
 
-#: ../app/core/gimpdrawable-brightness-contrast.c:71
+#: ../app/core/gimpdrawable-brightness-contrast.c:76
 msgid "Brightness_Contrast"
 msgstr "Brillantor_contrast"
 
-#: ../app/core/gimpdrawable-brightness-contrast.c:82
-#: ../app/tools/gimpbrightnesscontrasttool.c:110
+#: ../app/core/gimpdrawable-brightness-contrast.c:87
+#: ../app/tools/gimpbrightnesscontrasttool.c:111
 msgid "Brightness-Contrast"
 msgstr "Brillantor-contrast"
 
@@ -6170,7 +6170,7 @@ msgstr "To-Saturació avançat"
 msgid "Hue_Saturation"
 msgstr "To_Saturació"
 
-#: ../app/core/gimpdrawable-invert.c:55 ../app/core/gimpdrawable-invert.c:63
+#: ../app/core/gimpdrawable-invert.c:60 ../app/core/gimpdrawable-invert.c:68
 msgid "Invert"
 msgstr "Inverteix"
 
@@ -6198,21 +6198,21 @@ msgstr "Dibuixa el traç"
 msgid "Threshold"
 msgstr "Llindar blanc i negre"
 
-#: ../app/core/gimpdrawable-transform.c:629 ../app/tools/gimpfliptool.c:116
+#: ../app/core/gimpdrawable-transform.c:645 ../app/tools/gimpfliptool.c:116
 msgctxt "command"
 msgid "Flip"
 msgstr "Capgira"
 
-#: ../app/core/gimpdrawable-transform.c:716 ../app/tools/gimprotatetool.c:121
+#: ../app/core/gimpdrawable-transform.c:745 ../app/tools/gimprotatetool.c:121
 msgctxt "command"
 msgid "Rotate"
 msgstr "Gira"
 
-#: ../app/core/gimpdrawable-transform.c:841 ../app/core/gimplayer.c:255
+#: ../app/core/gimpdrawable-transform.c:884 ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Transforma la capa"
 
-#: ../app/core/gimpdrawable-transform.c:856
+#: ../app/core/gimpdrawable-transform.c:899
 msgid "Transformation"
 msgstr "Transformació"
 
@@ -6539,7 +6539,7 @@ msgstr "Abaixa el camí"
 msgid "Lower Path to Bottom"
 msgstr "Mou el camí al capdavall"
 
-#: ../app/core/gimpimagefile.c:528 ../app/dialogs/preferences-dialog.c:1721
+#: ../app/core/gimpimagefile.c:528 ../app/dialogs/preferences-dialog.c:1727
 msgid "Folder"
 msgstr "Carpeta"
 
@@ -6633,8 +6633,8 @@ msgstr "Capa"
 msgid "Rename Layer"
 msgstr "Canvia el nom de la capa"
 
-#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:434
-#: ../app/pdb/layer-cmds.c:470
+#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:437
+#: ../app/pdb/layer-cmds.c:473
 msgid "Move Layer"
 msgstr "Mou la capa"
 
@@ -6650,7 +6650,7 @@ msgstr "Capgira la capa"
 msgid "Rotate Layer"
 msgstr "Gira la capa"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1330
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6665,39 +6665,39 @@ msgstr ""
 "Selecció flotant\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1265
+#: ../app/core/gimplayer.c:1266
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No es pot afegir una màscara de capa perquè la capa ja en té una."
 
-#: ../app/core/gimplayer.c:1276
+#: ../app/core/gimplayer.c:1277
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No es pot afegir una màscara de capa de mida diferent de la capa "
 "especificada."
 
-#: ../app/core/gimplayer.c:1384
+#: ../app/core/gimplayer.c:1385
 msgid "Transfer Alpha to Mask"
 msgstr "Transfereix alfa a màscara"
 
-#: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1557 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Aplica una màscara de capa"
 
-#: ../app/core/gimplayer.c:1557
+#: ../app/core/gimplayer.c:1558
 msgid "Delete Layer Mask"
 msgstr "Suprimeix la màscara de capa"
 
-#: ../app/core/gimplayer.c:1669
+#: ../app/core/gimplayer.c:1670
 msgid "Add Alpha Channel"
 msgstr "Afegeix canal alfa"
 
-#: ../app/core/gimplayer.c:1723
+#: ../app/core/gimplayer.c:1724
 msgid "Remove Alpha Channel"
 msgstr "Suprimeix el canal alfa"
 
-#: ../app/core/gimplayer.c:1745
+#: ../app/core/gimplayer.c:1746
 msgid "Layer to Image Size"
 msgstr "Capa a mida de la imatge"
 
@@ -6890,9 +6890,9 @@ msgstr "Fons"
 msgid "pixel"
 msgstr "píxel"
 
-#: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:874
-#: ../app/tools/gimpmeasuretool.c:1017 ../app/tools/gimpmeasuretool.c:1073
-#: ../app/tools/gimpmeasuretool.c:1101 ../app/tools/gimppainttool.c:615
+#: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:877
+#: ../app/tools/gimpmeasuretool.c:1020 ../app/tools/gimpmeasuretool.c:1076
+#: ../app/tools/gimpmeasuretool.c:1104 ../app/tools/gimppainttool.c:615
 msgid "pixels"
 msgstr "píxels"
 
@@ -7006,7 +7006,7 @@ msgstr "S'està indexant els colors"
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "No es pot convertir a una paleta amb més de 256 colors."
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:158
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:161
 #: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
 msgstr "Missatge del GIMP"
@@ -7168,21 +7168,21 @@ msgid "Create a New Image"
 msgstr "Crea una nova imatge"
 
 #: ../app/dialogs/image-new-dialog.c:144
-#: ../app/dialogs/preferences-dialog.c:2015
+#: ../app/dialogs/preferences-dialog.c:2021
 msgid "_Template:"
 msgstr "Plan_tilla:"
 
-#: ../app/dialogs/image-new-dialog.c:295
+#: ../app/dialogs/image-new-dialog.c:299
 msgid "Confirm Image Size"
 msgstr "Confirmeu la mida de la imatge"
 
-#: ../app/dialogs/image-new-dialog.c:317
+#: ../app/dialogs/image-new-dialog.c:321
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "Esteu intentant crear una imatge amb una mida de %s."
 
-#: ../app/dialogs/image-new-dialog.c:324
+#: ../app/dialogs/image-new-dialog.c:328
 #, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
@@ -7272,12 +7272,12 @@ msgstr "_Nom de la capa:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1062
+#: ../app/tools/gimpmeasuretool.c:1065
 msgid "Width:"
 msgstr "Amplada:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1090
+#: ../app/tools/gimpmeasuretool.c:1093
 msgid "Height:"
 msgstr "Alçada:"
 
@@ -7467,11 +7467,11 @@ msgstr ""
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Cal que reinicieu el GIMP perquè els següents canvis tinguin efecte:"
 
-#: ../app/dialogs/preferences-dialog.c:494
+#: ../app/dialogs/preferences-dialog.c:500
 msgid "Configure Input Devices"
 msgstr "Configura els dispositius d'entrada"
 
-#: ../app/dialogs/preferences-dialog.c:571
+#: ../app/dialogs/preferences-dialog.c:577
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -7479,15 +7479,15 @@ msgstr ""
 "Les dreceres de teclat per defecte es recuperaran la propera vegada que "
 "engegueu el GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:582
+#: ../app/dialogs/preferences-dialog.c:588
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Suprimeix totes les dreceres de teclat"
 
-#: ../app/dialogs/preferences-dialog.c:604
+#: ../app/dialogs/preferences-dialog.c:610
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "Voleu eliminar totes les dreceres del teclat de tots els menús?"
 
-#: ../app/dialogs/preferences-dialog.c:645
+#: ../app/dialogs/preferences-dialog.c:651
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -7495,7 +7495,7 @@ msgstr ""
 "La configuració de la finestra recuperarà els valors per defecte la propera "
 "vegada que inicieu el GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:680
+#: ../app/dialogs/preferences-dialog.c:686
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -7503,7 +7503,7 @@ msgstr ""
 "Els paràmetres del dispositiu d'entrada recuperaran els valors per defecte "
 "la propera vegada que inicieu el GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:715
+#: ../app/dialogs/preferences-dialog.c:721
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -7511,734 +7511,734 @@ msgstr ""
 "Les opcions d'eina es recuperaran als valors per defecte la propera vegada "
 "que inicieu el GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:1283
+#: ../app/dialogs/preferences-dialog.c:1289
 msgid "Show _menubar"
 msgstr "Mostra la barra de _menú"
 
-#: ../app/dialogs/preferences-dialog.c:1287
+#: ../app/dialogs/preferences-dialog.c:1293
 msgid "Show _rulers"
 msgstr "Mostra els _regles"
 
-#: ../app/dialogs/preferences-dialog.c:1290
+#: ../app/dialogs/preferences-dialog.c:1296
 msgid "Show scroll_bars"
 msgstr "Mostra les _barres de desplaçament"
 
-#: ../app/dialogs/preferences-dialog.c:1293
+#: ../app/dialogs/preferences-dialog.c:1299
 msgid "Show s_tatusbar"
 msgstr "Mostra la barra d'es_tat"
 
-#: ../app/dialogs/preferences-dialog.c:1301
+#: ../app/dialogs/preferences-dialog.c:1307
 msgid "Show s_election"
 msgstr "Mostra la s_elecció"
 
-#: ../app/dialogs/preferences-dialog.c:1304
+#: ../app/dialogs/preferences-dialog.c:1310
 msgid "Show _layer boundary"
 msgstr "Mostra e_l marc de la capa"
 
-#: ../app/dialogs/preferences-dialog.c:1307
+#: ../app/dialogs/preferences-dialog.c:1313
 msgid "Show _guides"
 msgstr "Mostra les _guies"
 
-#: ../app/dialogs/preferences-dialog.c:1310
+#: ../app/dialogs/preferences-dialog.c:1316
 msgid "Show gri_d"
 msgstr "Mostra la grae_lla"
 
-#: ../app/dialogs/preferences-dialog.c:1316
+#: ../app/dialogs/preferences-dialog.c:1322
 msgid "Canvas _padding mode:"
 msgstr "_Farciment de l'àrea de treball:"
 
-#: ../app/dialogs/preferences-dialog.c:1321
+#: ../app/dialogs/preferences-dialog.c:1327
 msgid "Custom p_adding color:"
 msgstr "Color de farciment person_alitzat:"
 
-#: ../app/dialogs/preferences-dialog.c:1322
+#: ../app/dialogs/preferences-dialog.c:1328
 msgid "Select Custom Canvas Padding Color"
 msgstr "Defineix un color personalitzat per a l'àrea de treball"
 
-#: ../app/dialogs/preferences-dialog.c:1411
+#: ../app/dialogs/preferences-dialog.c:1417
 msgid "Preferences"
 msgstr "Preferències"
 
-#: ../app/dialogs/preferences-dialog.c:1523
-#: ../app/dialogs/preferences-dialog.c:2774
+#: ../app/dialogs/preferences-dialog.c:1529
+#: ../app/dialogs/preferences-dialog.c:2780
 msgid "Environment"
 msgstr "Entorn"
 
-#: ../app/dialogs/preferences-dialog.c:1537
+#: ../app/dialogs/preferences-dialog.c:1543
 msgid "Resource Consumption"
 msgstr "Consum dels recursos"
 
-#: ../app/dialogs/preferences-dialog.c:1547
+#: ../app/dialogs/preferences-dialog.c:1553
 msgid "Minimal number of _undo levels:"
 msgstr "N_ombre mínim de nivells a desfer:"
 
-#: ../app/dialogs/preferences-dialog.c:1550
+#: ../app/dialogs/preferences-dialog.c:1556
 msgid "Maximum undo _memory:"
 msgstr "_Memòria màxima per desfer:"
 
-#: ../app/dialogs/preferences-dialog.c:1553
+#: ../app/dialogs/preferences-dialog.c:1559
 msgid "Tile cache _size:"
 msgstr "_Mida de la memòria cau:"
 
-#: ../app/dialogs/preferences-dialog.c:1556
+#: ../app/dialogs/preferences-dialog.c:1562
 msgid "Maximum _new image size:"
 msgstr "Mida màxima de les imatges _noves:"
 
-#: ../app/dialogs/preferences-dialog.c:1561
+#: ../app/dialogs/preferences-dialog.c:1567
 msgid "Number of _processors to use:"
 msgstr "Nombre de _processadors a emprar:"
 
 #  Image Thumbnails
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1566
+#: ../app/dialogs/preferences-dialog.c:1572
 msgid "Image Thumbnails"
 msgstr "Miniatures de la imatge"
 
-#: ../app/dialogs/preferences-dialog.c:1571
+#: ../app/dialogs/preferences-dialog.c:1577
 msgid "Size of _thumbnails:"
 msgstr "Mida de les minia_tures:"
 
-#: ../app/dialogs/preferences-dialog.c:1575
+#: ../app/dialogs/preferences-dialog.c:1581
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Mida màxima del _fitxer de miniatures:"
 
 #  File Saving
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1579
+#: ../app/dialogs/preferences-dialog.c:1585
 msgid "Saving Images"
 msgstr "Desar les imatges"
 
-#: ../app/dialogs/preferences-dialog.c:1582
+#: ../app/dialogs/preferences-dialog.c:1588
 msgid "Confirm closing of unsa_ved images"
 msgstr "Confirma el tancament de les imatges _sense desar"
 
-#: ../app/dialogs/preferences-dialog.c:1592
+#: ../app/dialogs/preferences-dialog.c:1598
 msgid "Keep record of used files in the Recent Documents list"
 msgstr ""
 "Mantén un registre permanent dels fitxers utilitzats a la llista de fitxers "
 "recents"
 
-#: ../app/dialogs/preferences-dialog.c:1601
+#: ../app/dialogs/preferences-dialog.c:1607
 msgid "User Interface"
 msgstr "Interfície d'usuari"
 
-#: ../app/dialogs/preferences-dialog.c:1604
+#: ../app/dialogs/preferences-dialog.c:1610
 msgid "Interface"
 msgstr "Interfície"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1611
+#: ../app/dialogs/preferences-dialog.c:1617
 msgid "Previews"
 msgstr "Previsualitzacions"
 
-#: ../app/dialogs/preferences-dialog.c:1614
+#: ../app/dialogs/preferences-dialog.c:1620
 msgid "_Enable layer & channel previews"
 msgstr "_Mostra miniatures de capes i canals"
 
-#: ../app/dialogs/preferences-dialog.c:1620
+#: ../app/dialogs/preferences-dialog.c:1626
 msgid "_Default layer & channel preview size:"
 msgstr "_Mida de les miniatures de les capes i canals:"
 
 # Quim: no hi cap "previsualització"
-#: ../app/dialogs/preferences-dialog.c:1623
+#: ../app/dialogs/preferences-dialog.c:1629
 msgid "Na_vigation preview size:"
 msgstr "Mida de la miniatura a la finestra de na_vegació:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1627
+#: ../app/dialogs/preferences-dialog.c:1633
 msgid "Keyboard Shortcuts"
 msgstr "Dreceres de teclat"
 
-#: ../app/dialogs/preferences-dialog.c:1631
+#: ../app/dialogs/preferences-dialog.c:1637
 msgid "Show menu _mnemonics (access keys)"
 msgstr "_Mostra les dreceres de teclat"
 
-#: ../app/dialogs/preferences-dialog.c:1634
+#: ../app/dialogs/preferences-dialog.c:1640
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "_Utilitza les dreceres de teclat dinàmiques"
 
-#: ../app/dialogs/preferences-dialog.c:1638
+#: ../app/dialogs/preferences-dialog.c:1644
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Configura les dreceres de _teclat..."
 
-#: ../app/dialogs/preferences-dialog.c:1645
+#: ../app/dialogs/preferences-dialog.c:1651
 msgid "_Save keyboard shortcuts on exit"
 msgstr "De_sa les dreceres de teclat en sortir"
 
-#: ../app/dialogs/preferences-dialog.c:1649
+#: ../app/dialogs/preferences-dialog.c:1655
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Desa _ara les dreceres de teclat"
 
-#: ../app/dialogs/preferences-dialog.c:1656
+#: ../app/dialogs/preferences-dialog.c:1662
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Recupera les dreceres de teclat per defecte"
 
-#: ../app/dialogs/preferences-dialog.c:1665
+#: ../app/dialogs/preferences-dialog.c:1671
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Suprimeix _totes les dreceres de teclat"
 
-#: ../app/dialogs/preferences-dialog.c:1677
-#: ../app/dialogs/preferences-dialog.c:1716
+#: ../app/dialogs/preferences-dialog.c:1683
+#: ../app/dialogs/preferences-dialog.c:1722
 msgid "Theme"
 msgstr "Tema"
 
-#: ../app/dialogs/preferences-dialog.c:1686
+#: ../app/dialogs/preferences-dialog.c:1692
 msgid "Select Theme"
 msgstr "Seleccioneu un tema"
 
-#: ../app/dialogs/preferences-dialog.c:1768
+#: ../app/dialogs/preferences-dialog.c:1774
 msgid "Reload C_urrent Theme"
 msgstr "Torna a carregar el tema act_ual"
 
-#: ../app/dialogs/preferences-dialog.c:1780
+#: ../app/dialogs/preferences-dialog.c:1786
 msgid "Help System"
 msgstr "Sistema d'ajuda"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1792
-#: ../app/dialogs/preferences-dialog.c:1886
-#: ../app/dialogs/preferences-dialog.c:2073
+#: ../app/dialogs/preferences-dialog.c:1798
+#: ../app/dialogs/preferences-dialog.c:1892
+#: ../app/dialogs/preferences-dialog.c:2079
 #: ../app/widgets/gimpcontrollereditor.c:189
 msgid "General"
 msgstr "General"
 
-#: ../app/dialogs/preferences-dialog.c:1795
+#: ../app/dialogs/preferences-dialog.c:1801
 msgid "Show _tooltips"
 msgstr "_Ajudes contextuals"
 
-#: ../app/dialogs/preferences-dialog.c:1798
+#: ../app/dialogs/preferences-dialog.c:1804
 msgid "Show help _buttons"
 msgstr "Mostra els _botons d'ajuda"
 
-#: ../app/dialogs/preferences-dialog.c:1811
+#: ../app/dialogs/preferences-dialog.c:1817
 msgid "Use the online version"
 msgstr "Utilitza la versió en línia"
 
-#: ../app/dialogs/preferences-dialog.c:1812
+#: ../app/dialogs/preferences-dialog.c:1818
 msgid "Use a locally installed copy"
 msgstr "Utilitza una còpia instal·lada en local"
 
-#: ../app/dialogs/preferences-dialog.c:1813
+#: ../app/dialogs/preferences-dialog.c:1819
 msgid "User manual:"
 msgstr "Manual d'usuari:"
 
-#: ../app/dialogs/preferences-dialog.c:1820
+#: ../app/dialogs/preferences-dialog.c:1826
 msgid "There's a local installation of the user manual."
 msgstr "Hi ha una instal·lació en local del manual d'usuari."
 
-#: ../app/dialogs/preferences-dialog.c:1825
+#: ../app/dialogs/preferences-dialog.c:1831
 msgid "The user manual is not installed locally."
 msgstr "El manual d'usuari no està instal·lat en local."
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1848
+#: ../app/dialogs/preferences-dialog.c:1854
 msgid "Help Browser"
 msgstr "Navegador de l'ajuda"
 
-#: ../app/dialogs/preferences-dialog.c:1852
+#: ../app/dialogs/preferences-dialog.c:1858
 msgid "H_elp browser to use:"
 msgstr "Nav_egador de l'ajuda a utilitzar:"
 
-#: ../app/dialogs/preferences-dialog.c:1857
+#: ../app/dialogs/preferences-dialog.c:1863
 msgid "Web Browser"
 msgstr "Navegador web"
 
-#: ../app/dialogs/preferences-dialog.c:1861
+#: ../app/dialogs/preferences-dialog.c:1867
 msgid "_Web browser to use:"
 msgstr "Navegador _web a utilitzar:"
 
-#: ../app/dialogs/preferences-dialog.c:1889
+#: ../app/dialogs/preferences-dialog.c:1895
 msgid "_Save tool options on exit"
 msgstr "De_sa les opcions de les finestres en sortir"
 
-#: ../app/dialogs/preferences-dialog.c:1893
+#: ../app/dialogs/preferences-dialog.c:1899
 msgid "Save Tool Options _Now"
 msgstr "Desa les opcio_ns d'eina"
 
-#: ../app/dialogs/preferences-dialog.c:1900
+#: ../app/dialogs/preferences-dialog.c:1906
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Recupera els valors per defecte de les eines"
 
 #  Snapping Distance
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1910
+#: ../app/dialogs/preferences-dialog.c:1916
 msgid "Guide & Grid Snapping"
 msgstr "Ajusta a les guies i a la graella"
 
-#: ../app/dialogs/preferences-dialog.c:1915
+#: ../app/dialogs/preferences-dialog.c:1921
 msgid "_Snap distance:"
 msgstr "Di_stància d'ajust:"
 
-#: ../app/dialogs/preferences-dialog.c:1923
+#: ../app/dialogs/preferences-dialog.c:1929
 msgid "Default _interpolation:"
 msgstr "_Interpolació per defecte:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1930
+#: ../app/dialogs/preferences-dialog.c:1936
 msgid "Paint Options Shared Between Tools"
 msgstr "Opcions de pintura compartides entre les eines"
 
-#: ../app/dialogs/preferences-dialog.c:1943
+#: ../app/dialogs/preferences-dialog.c:1949
 msgid "Move Tool"
 msgstr "Moviment"
 
-#: ../app/dialogs/preferences-dialog.c:1947
+#: ../app/dialogs/preferences-dialog.c:1953
 msgid "Set layer or path as active"
 msgstr "Activa la capa o el camí"
 
-#: ../app/dialogs/preferences-dialog.c:1960 ../app/widgets/gimptoolbox.c:631
+#: ../app/dialogs/preferences-dialog.c:1966 ../app/widgets/gimptoolbox.c:633
 msgid "Toolbox"
 msgstr "Caixa d'eines"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1972
-#: ../app/dialogs/preferences-dialog.c:2146
+#: ../app/dialogs/preferences-dialog.c:1978
+#: ../app/dialogs/preferences-dialog.c:2152
 #: ../app/widgets/gimpgrideditor.c:204
 msgid "Appearance"
 msgstr "Aparença"
 
-#: ../app/dialogs/preferences-dialog.c:1976
+#: ../app/dialogs/preferences-dialog.c:1982
 msgid "Show _foreground & background color"
 msgstr "Mostra el color de primer pla i de _fons"
 
-#: ../app/dialogs/preferences-dialog.c:1980
+#: ../app/dialogs/preferences-dialog.c:1986
 msgid "Show active _brush, pattern & gradient"
 msgstr "Mostra el _pinzell, patró i degradat actiu"
 
-#: ../app/dialogs/preferences-dialog.c:1984
+#: ../app/dialogs/preferences-dialog.c:1990
 msgid "Show active _image"
 msgstr "Mostra la _imatge activa"
 
-#: ../app/dialogs/preferences-dialog.c:1997
+#: ../app/dialogs/preferences-dialog.c:2003
 msgid "Default New Image"
 msgstr "Nova imatge predeterminada"
 
-#: ../app/dialogs/preferences-dialog.c:2000
+#: ../app/dialogs/preferences-dialog.c:2006
 msgid "Default Image"
 msgstr "Imatge predeterminada"
 
-#: ../app/dialogs/preferences-dialog.c:2037
+#: ../app/dialogs/preferences-dialog.c:2043
 msgid "Default Image Grid"
 msgstr "Graella d'imatge predeterminada"
 
-#: ../app/dialogs/preferences-dialog.c:2040
+#: ../app/dialogs/preferences-dialog.c:2046
 msgid "Default Grid"
 msgstr "Graella predeterminada"
 
-#: ../app/dialogs/preferences-dialog.c:2061
+#: ../app/dialogs/preferences-dialog.c:2067
 msgid "Image Windows"
 msgstr "Finestres d'imatges"
 
-#: ../app/dialogs/preferences-dialog.c:2076
+#: ../app/dialogs/preferences-dialog.c:2082
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Utilitza «punt a punt» per _defecte"
 
-#: ../app/dialogs/preferences-dialog.c:2082
+#: ../app/dialogs/preferences-dialog.c:2088
 msgid "Marching _ants speed:"
 msgstr "_Velocitat del contorn de la selecció:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2086
+#: ../app/dialogs/preferences-dialog.c:2092
 msgid "Zoom & Resize Behavior"
 msgstr "Opcions d'ampliació i canvi de mida"
 
-#: ../app/dialogs/preferences-dialog.c:2090
+#: ../app/dialogs/preferences-dialog.c:2096
 msgid "Resize window on _zoom"
 msgstr "Canvia la mida de la finestra quan s'_ampliï la imatge"
 
-#: ../app/dialogs/preferences-dialog.c:2093
+#: ../app/dialogs/preferences-dialog.c:2099
 msgid "Resize window on image _size change"
 msgstr "Canvia la mida de la finestra quan es canviï la de la _imatge"
 
-#: ../app/dialogs/preferences-dialog.c:2099
+#: ../app/dialogs/preferences-dialog.c:2105
 msgid "Fit to window"
 msgstr "Ajusta a la finestra"
 
-#: ../app/dialogs/preferences-dialog.c:2101
+#: ../app/dialogs/preferences-dialog.c:2107
 msgid "Initial zoom _ratio:"
 msgstr "_Factor d'ampliació inicial:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2105
+#: ../app/dialogs/preferences-dialog.c:2111
 msgid "Space Bar"
 msgstr "Barra d'espai"
 
-#: ../app/dialogs/preferences-dialog.c:2111
+#: ../app/dialogs/preferences-dialog.c:2117
 msgid "_While space bar is pressed:"
 msgstr "En _prémer la barra d'espai:"
 
 #  Mouse Cursors
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2115
+#: ../app/dialogs/preferences-dialog.c:2121
 msgid "Mouse Pointers"
 msgstr "Ratolins"
 
-#: ../app/dialogs/preferences-dialog.c:2119
+#: ../app/dialogs/preferences-dialog.c:2125
 msgid "Show _brush outline"
 msgstr "Mostra contorn de pin_zell"
 
-#: ../app/dialogs/preferences-dialog.c:2122
+#: ../app/dialogs/preferences-dialog.c:2128
 msgid "Show pointer for paint _tools"
 msgstr "Mos_tra el punter per a les eines de pintar"
 
-#: ../app/dialogs/preferences-dialog.c:2128
+#: ../app/dialogs/preferences-dialog.c:2134
 msgid "Pointer _mode:"
 msgstr "_Mode del punter:"
 
-#: ../app/dialogs/preferences-dialog.c:2131
+#: ../app/dialogs/preferences-dialog.c:2137
 msgid "Pointer re_ndering:"
 msgstr "_Estil del punter:"
 
-#: ../app/dialogs/preferences-dialog.c:2143
+#: ../app/dialogs/preferences-dialog.c:2149
 msgid "Image Window Appearance"
 msgstr "Aparença de la finestra d'imatge"
 
-#: ../app/dialogs/preferences-dialog.c:2154
+#: ../app/dialogs/preferences-dialog.c:2160
 msgid "Default Appearance in Normal Mode"
 msgstr "Aparença predeterminada en mode normal"
 
-#: ../app/dialogs/preferences-dialog.c:2159
+#: ../app/dialogs/preferences-dialog.c:2165
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Aparença predeterminada en mode a pantalla completa"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2174
 msgid "Image Title & Statusbar Format"
 msgstr "Format de títol d'imatge i de barra d'estat"
 
-#: ../app/dialogs/preferences-dialog.c:2171
+#: ../app/dialogs/preferences-dialog.c:2177
 msgid "Title & Status"
 msgstr "Títol i estat"
 
-#: ../app/dialogs/preferences-dialog.c:2189
+#: ../app/dialogs/preferences-dialog.c:2195
 msgid "Current format"
 msgstr "Format actual"
 
-#: ../app/dialogs/preferences-dialog.c:2190
+#: ../app/dialogs/preferences-dialog.c:2196
 msgid "Default format"
 msgstr "Format predeterminat"
 
-#: ../app/dialogs/preferences-dialog.c:2191
+#: ../app/dialogs/preferences-dialog.c:2197
 msgid "Show zoom percentage"
 msgstr "Mostrar el percentatge d'ampliació"
 
-#: ../app/dialogs/preferences-dialog.c:2192
+#: ../app/dialogs/preferences-dialog.c:2198
 msgid "Show zoom ratio"
 msgstr "Mostra el factor d'ampliació"
 
-#: ../app/dialogs/preferences-dialog.c:2193
+#: ../app/dialogs/preferences-dialog.c:2199
 msgid "Show image size"
 msgstr "Mostra la mida de la imatge"
 
-#: ../app/dialogs/preferences-dialog.c:2206
+#: ../app/dialogs/preferences-dialog.c:2212
 msgid "Image Title Format"
 msgstr "Format de títol d'imatge"
 
-#: ../app/dialogs/preferences-dialog.c:2208
+#: ../app/dialogs/preferences-dialog.c:2214
 msgid "Image Statusbar Format"
 msgstr "Format d'imatge de la barra d'estat"
 
-#: ../app/dialogs/preferences-dialog.c:2293
+#: ../app/dialogs/preferences-dialog.c:2299
 msgid "Display"
 msgstr "Visualització"
 
 # check: quadre, com en un taulell d'escacs, cada peça
 # ocupa un "check"
-#: ../app/dialogs/preferences-dialog.c:2309
+#: ../app/dialogs/preferences-dialog.c:2315
 msgid "_Check style:"
 msgstr "_Revisa l'estil:"
 
-#: ../app/dialogs/preferences-dialog.c:2312
+#: ../app/dialogs/preferences-dialog.c:2318
 msgid "Check _size:"
 msgstr "Revisa la _mida:"
 
-#: ../app/dialogs/preferences-dialog.c:2315
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "Monitor Resolution"
 msgstr "Resolució del monitor"
 
 # Quim: pixels surt a preferencies-graella i hauria de ser en minúscoles
-#: ../app/dialogs/preferences-dialog.c:2319
+#: ../app/dialogs/preferences-dialog.c:2325
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:269
 #: ../app/widgets/gimpgrideditor.c:301
 msgid "Pixels"
 msgstr "píxels"
 
-#: ../app/dialogs/preferences-dialog.c:2341
+#: ../app/dialogs/preferences-dialog.c:2347
 #: ../app/widgets/gimpimagepropview.c:476
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2357
+#: ../app/dialogs/preferences-dialog.c:2363
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Detecta-la automàticament (actualment, %d x %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2377
+#: ../app/dialogs/preferences-dialog.c:2383
 msgid "_Enter manually"
 msgstr "_Introdueix-la manualment"
 
-#: ../app/dialogs/preferences-dialog.c:2392
+#: ../app/dialogs/preferences-dialog.c:2398
 msgid "C_alibrate..."
 msgstr "C_alibra..."
 
-#: ../app/dialogs/preferences-dialog.c:2415
+#: ../app/dialogs/preferences-dialog.c:2421
 msgid "Color Management"
 msgstr "Gestió de color"
 
-#: ../app/dialogs/preferences-dialog.c:2435
+#: ../app/dialogs/preferences-dialog.c:2441
 msgid "_RGB profile:"
 msgstr "Perfil _RGB:"
 
-#: ../app/dialogs/preferences-dialog.c:2436
+#: ../app/dialogs/preferences-dialog.c:2442
 msgid "Select RGB Color Profile"
 msgstr "Seleccioneu el perfil de color RGB"
 
-#: ../app/dialogs/preferences-dialog.c:2437
+#: ../app/dialogs/preferences-dialog.c:2443
 msgid "_CMYK profile:"
 msgstr "Perfil _CMYK:"
 
-#: ../app/dialogs/preferences-dialog.c:2438
+#: ../app/dialogs/preferences-dialog.c:2444
 msgid "Select CMYK Color Profile"
 msgstr "Seleccioneu el perfil de color CMYK"
 
-#: ../app/dialogs/preferences-dialog.c:2439
+#: ../app/dialogs/preferences-dialog.c:2445
 msgid "_Monitor profile:"
 msgstr "Perfil del _monitor:"
 
-#: ../app/dialogs/preferences-dialog.c:2440
+#: ../app/dialogs/preferences-dialog.c:2446
 msgid "Select Monitor Color Profile"
 msgstr "Seleccioneu el perfil de color del monitor"
 
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2447
 msgid "_Print simulation profile:"
 msgstr "Imprimeix el _perfil de simulació:"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2448
 msgid "Select Printer Color Profile"
 msgstr "Seleccioneu el perfil de color"
 
-#: ../app/dialogs/preferences-dialog.c:2453
+#: ../app/dialogs/preferences-dialog.c:2459
 msgid "_Mode of operation:"
 msgstr "_Mode d'operació:"
 
-#: ../app/dialogs/preferences-dialog.c:2483
+#: ../app/dialogs/preferences-dialog.c:2489
 msgid "_Try to use the system monitor profile"
 msgstr "_Prova d'utilitzar el perfil de monitor del sistema"
 
-#: ../app/dialogs/preferences-dialog.c:2493
+#: ../app/dialogs/preferences-dialog.c:2499
 msgid "_Display rendering intent:"
 msgstr "_Prova del renderitzat de pantalla:"
 
-#: ../app/dialogs/preferences-dialog.c:2502
+#: ../app/dialogs/preferences-dialog.c:2508
 msgid "_Softproof rendering intent:"
 msgstr "P_seudoprova de renderitzat:"
 
-#: ../app/dialogs/preferences-dialog.c:2515
+#: ../app/dialogs/preferences-dialog.c:2521
 msgid "Mark out of gamut colors"
 msgstr "Marca els colors de la gamma"
 
-#: ../app/dialogs/preferences-dialog.c:2520
+#: ../app/dialogs/preferences-dialog.c:2526
 msgid "Select Warning Color"
 msgstr "Selecciona un color d'avís"
 
-#: ../app/dialogs/preferences-dialog.c:2533
+#: ../app/dialogs/preferences-dialog.c:2539
 msgid "File Open behaviour:"
 msgstr "Quan s'obri un fitxer:"
 
-#: ../app/dialogs/preferences-dialog.c:2545
+#: ../app/dialogs/preferences-dialog.c:2551
 msgid "Input Devices"
 msgstr "Dispositius d'entrada"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2555
+#: ../app/dialogs/preferences-dialog.c:2561
 msgid "Extended Input Devices"
 msgstr "Dispositius d'entrada estesos"
 
-#: ../app/dialogs/preferences-dialog.c:2559
+#: ../app/dialogs/preferences-dialog.c:2565
 msgid "Configure E_xtended Input Devices..."
 msgstr "Configura dispositius d'entrada e_stesos..."
 
-#: ../app/dialogs/preferences-dialog.c:2566
+#: ../app/dialogs/preferences-dialog.c:2572
 msgid "_Save input device settings on exit"
 msgstr "De_sa els paràmetres dels dispositius d'entrada en sortir"
 
-#: ../app/dialogs/preferences-dialog.c:2570
+#: ../app/dialogs/preferences-dialog.c:2576
 msgid "Save Input Device Settings _Now"
 msgstr "Desa _ara els paràmetres dels dispositius"
 
-#: ../app/dialogs/preferences-dialog.c:2577
+#: ../app/dialogs/preferences-dialog.c:2583
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Recupera els valors per defecte dels dispositius d'entrada"
 
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2598
 msgid "Additional Input Controllers"
 msgstr "Controladors d'entrada addicionals"
 
-#: ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/preferences-dialog.c:2601
 msgid "Input Controllers"
 msgstr "Controladors d'entrada"
 
-#: ../app/dialogs/preferences-dialog.c:2611
+#: ../app/dialogs/preferences-dialog.c:2617
 msgid "Window Management"
 msgstr "Gestió de finestres"
 
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:2626
 msgid "Window Manager Hints"
 msgstr "Configuració del tipus de finestra"
 
-#: ../app/dialogs/preferences-dialog.c:2626
+#: ../app/dialogs/preferences-dialog.c:2632
 msgid "Hint for the _toolbox:"
 msgstr "Plafó principal amb la _caixa d'eines:"
 
-#: ../app/dialogs/preferences-dialog.c:2630
+#: ../app/dialogs/preferences-dialog.c:2636
 msgid "Hint for other _docks:"
 msgstr "Plafons _secundaris:"
 
-#: ../app/dialogs/preferences-dialog.c:2635
+#: ../app/dialogs/preferences-dialog.c:2641
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr "La caixa d'eines i els altres plafons es mostren sempre en primer pla"
 
-#: ../app/dialogs/preferences-dialog.c:2640
+#: ../app/dialogs/preferences-dialog.c:2646
 msgid "Focus"
 msgstr "Focus"
 
-#: ../app/dialogs/preferences-dialog.c:2644
+#: ../app/dialogs/preferences-dialog.c:2650
 msgid "Activate the _focused image"
 msgstr "Activa la imatge amb _focus"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2648
+#: ../app/dialogs/preferences-dialog.c:2654
 msgid "Window Positions"
 msgstr "Posicions de la finestra"
 
-#: ../app/dialogs/preferences-dialog.c:2651
+#: ../app/dialogs/preferences-dialog.c:2657
 msgid "_Save window positions on exit"
 msgstr "De_sa les posicions de les finestres en sortir"
 
-#: ../app/dialogs/preferences-dialog.c:2655
+#: ../app/dialogs/preferences-dialog.c:2661
 msgid "Save Window Positions _Now"
 msgstr "Desa _ara les posicions de la finestra"
 
-#: ../app/dialogs/preferences-dialog.c:2662
+#: ../app/dialogs/preferences-dialog.c:2668
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Recupera les posicions per defecte de les finestres"
 
-#: ../app/dialogs/preferences-dialog.c:2677
+#: ../app/dialogs/preferences-dialog.c:2683
 msgid "Folders"
 msgstr "Carpetes"
 
-#: ../app/dialogs/preferences-dialog.c:2697
+#: ../app/dialogs/preferences-dialog.c:2703
 msgid "Temporary folder:"
 msgstr "Carpeta temporal:"
 
-#: ../app/dialogs/preferences-dialog.c:2698
+#: ../app/dialogs/preferences-dialog.c:2704
 msgid "Select Folder for Temporary Files"
 msgstr "Selecciona una carpeta per als fitxers temporals"
 
-#: ../app/dialogs/preferences-dialog.c:2702
+#: ../app/dialogs/preferences-dialog.c:2708
 msgid "Swap folder:"
 msgstr "Directori d'intercanvi:"
 
-#: ../app/dialogs/preferences-dialog.c:2703
+#: ../app/dialogs/preferences-dialog.c:2709
 msgid "Select Swap Folder"
 msgstr "Seleccioneu la carpeta d'intercanvi"
 
-#: ../app/dialogs/preferences-dialog.c:2738
+#: ../app/dialogs/preferences-dialog.c:2744
 msgid "Brush Folders"
 msgstr "Carpetes de pinzells"
 
-#: ../app/dialogs/preferences-dialog.c:2740
+#: ../app/dialogs/preferences-dialog.c:2746
 msgid "Select Brush Folders"
 msgstr "Selecciona carpetes de pinzells"
 
-#: ../app/dialogs/preferences-dialog.c:2742
+#: ../app/dialogs/preferences-dialog.c:2748
 msgid "Pattern Folders"
 msgstr "Carpetes de patrons"
 
-#: ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/preferences-dialog.c:2750
 msgid "Select Pattern Folders"
 msgstr "Selecciona carpetes de patrons"
 
-#: ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/preferences-dialog.c:2752
 msgid "Palette Folders"
 msgstr "Carpeta de paletes"
 
-#: ../app/dialogs/preferences-dialog.c:2748
+#: ../app/dialogs/preferences-dialog.c:2754
 msgid "Select Palette Folders"
 msgstr "Selecciona les carpetes de paletes"
 
-#: ../app/dialogs/preferences-dialog.c:2750
+#: ../app/dialogs/preferences-dialog.c:2756
 msgid "Gradient Folders"
 msgstr "Carpetes de degradats"
 
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/dialogs/preferences-dialog.c:2758
 msgid "Select Gradient Folders"
 msgstr "Selecciona carpetes de degradats"
 
-#: ../app/dialogs/preferences-dialog.c:2754
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Font Folders"
 msgstr "Carpetes de tipus de lletra"
 
-#: ../app/dialogs/preferences-dialog.c:2756
+#: ../app/dialogs/preferences-dialog.c:2762
 msgid "Select Font Folders"
 msgstr "Selecciona carpetes de tipus de lletra"
 
-#: ../app/dialogs/preferences-dialog.c:2758
+#: ../app/dialogs/preferences-dialog.c:2764
 msgid "Plug-In Folders"
 msgstr "Carpetes de connectors"
 
-#: ../app/dialogs/preferences-dialog.c:2760
+#: ../app/dialogs/preferences-dialog.c:2766
 msgid "Select Plug-In Folders"
 msgstr "Selecciona carpetes de connectors"
 
-#: ../app/dialogs/preferences-dialog.c:2762
+#: ../app/dialogs/preferences-dialog.c:2768
 msgid "Scripts"
 msgstr "Fitxers de seqüència"
 
-#: ../app/dialogs/preferences-dialog.c:2762
+#: ../app/dialogs/preferences-dialog.c:2768
 msgid "Script-Fu Folders"
 msgstr "Carpetes de funcions"
 
-#: ../app/dialogs/preferences-dialog.c:2764
+#: ../app/dialogs/preferences-dialog.c:2770
 msgid "Select Script-Fu Folders"
 msgstr "Selecciona carpetes de funcions"
 
-#: ../app/dialogs/preferences-dialog.c:2766
+#: ../app/dialogs/preferences-dialog.c:2772
 msgid "Module Folders"
 msgstr "Carpetes de mòduls"
 
-#: ../app/dialogs/preferences-dialog.c:2768
+#: ../app/dialogs/preferences-dialog.c:2774
 msgid "Select Module Folders"
 msgstr "Selecciona les carpetes de mòduls"
 
-#: ../app/dialogs/preferences-dialog.c:2770
+#: ../app/dialogs/preferences-dialog.c:2776
 msgid "Interpreters"
 msgstr "Intèrprets"
 
-#: ../app/dialogs/preferences-dialog.c:2770
+#: ../app/dialogs/preferences-dialog.c:2776
 msgid "Interpreter Folders"
 msgstr "Carpetes d'intèrprets"
 
-#: ../app/dialogs/preferences-dialog.c:2772
+#: ../app/dialogs/preferences-dialog.c:2778
 msgid "Select Interpreter Folders"
 msgstr "Selecciona les carpetes dels intèrprets"
 
-#: ../app/dialogs/preferences-dialog.c:2774
+#: ../app/dialogs/preferences-dialog.c:2780
 msgid "Environment Folders"
 msgstr "Carpetes d'entorn"
 
-#: ../app/dialogs/preferences-dialog.c:2776
+#: ../app/dialogs/preferences-dialog.c:2782
 msgid "Select Environment Folders"
 msgstr "Selecciona les carpetes d'entorn"
 
-#: ../app/dialogs/preferences-dialog.c:2778
+#: ../app/dialogs/preferences-dialog.c:2784
 msgid "Themes"
 msgstr "Temes"
 
-#: ../app/dialogs/preferences-dialog.c:2778
+#: ../app/dialogs/preferences-dialog.c:2784
 msgid "Theme Folders"
 msgstr "Carpetes de temes"
 
-#: ../app/dialogs/preferences-dialog.c:2780
+#: ../app/dialogs/preferences-dialog.c:2786
 msgid "Select Theme Folders"
 msgstr "Selecciona carpetes de temes"
 
@@ -8522,20 +8522,20 @@ msgstr "Alta"
 msgid "Image saved to '%s'"
 msgstr "Imatge desada a «%s»"
 
-#: ../app/display/gimpdisplayshell.c:1024
+#: ../app/display/gimpdisplayshell.c:1035
 msgid "Access the image menu"
 msgstr "Accedeix al menú imatge"
 
-#: ../app/display/gimpdisplayshell.c:1129
+#: ../app/display/gimpdisplayshell.c:1140
 msgid "Zoom image when window size changes"
 msgstr "Amplia la imatge quan canvia la mida de la finestra"
 
-#: ../app/display/gimpdisplayshell.c:1179
+#: ../app/display/gimpdisplayshell.c:1190
 msgid "Navigate the image display"
 msgstr "Navega per la imatge"
 
-#: ../app/display/gimpdisplayshell.c:1274
-#: ../app/display/gimpdisplayshell.c:1364 ../app/widgets/gimptoolbox.c:222
+#: ../app/display/gimpdisplayshell.c:1285
+#: ../app/display/gimpdisplayshell.c:1375 ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
 msgstr "Arrossega-hi fitxers d'imatges per a obrir-los"
 
@@ -8586,8 +8586,8 @@ msgstr[0] "Si no deseu la imatge, es perdran els canvis de l'últim minut."
 msgstr[1] "Si no deseu la imatge, es perdran els canvis dels últims %d minuts."
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
-#: ../app/display/gimpdisplayshell-dnd.c:570
-#: ../app/display/gimpdisplayshell-dnd.c:641
+#: ../app/display/gimpdisplayshell-dnd.c:587
+#: ../app/display/gimpdisplayshell-dnd.c:658
 msgid "Drop New Layer"
 msgstr "Elimina la capa nova"
 
@@ -8595,12 +8595,12 @@ msgstr "Elimina la capa nova"
 msgid "Drop New Path"
 msgstr "Elimina el camí nou"
 
-#: ../app/display/gimpdisplayshell-dnd.c:504
+#: ../app/display/gimpdisplayshell-dnd.c:497
 #: ../app/widgets/gimplayertreeview.c:719
 msgid "Drop layers"
 msgstr "Elimina les capes"
 
-#: ../app/display/gimpdisplayshell-dnd.c:631
+#: ../app/display/gimpdisplayshell-dnd.c:648
 #: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Objecte eliminat del porta-retalls del GIMP"
@@ -8661,13 +8661,13 @@ msgstr "(modificat)"
 msgid "(clean)"
 msgstr "(net)"
 
-#: ../app/display/gimpdisplayshell-title.c:337
-#: ../app/display/gimpdisplayshell-title.c:349
+#: ../app/display/gimpdisplayshell-title.c:346
+#: ../app/display/gimpdisplayshell-title.c:359
 #: ../app/widgets/gimpactiongroup.c:805
 msgid "(none)"
 msgstr "(cap)"
 
-#: ../app/display/gimpstatusbar.c:346
+#: ../app/display/gimpstatusbar.c:364
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Cancel·la <i>%s</i>"
@@ -8742,7 +8742,7 @@ msgid "not a GIMP Levels file"
 msgstr "no és un fitxer de nivells del GIMP "
 
 #. initialize the document history
-#: ../app/gui/gui.c:420
+#: ../app/gui/gui.c:426
 msgid "Documents"
 msgstr "Documents"
 
@@ -8793,6 +8793,11 @@ msgstr "La cicatrització no funciona en capes indexades."
 #: ../app/paint/gimppaintbrush.c:63 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Pinzell"
+
+#: ../app/paint/gimppaintcore-stroke.c:332
+#, c-format
+msgid "Not enough points to stroke"
+msgstr "No hi ha prou punts per pintar"
 
 #: ../app/paint/gimppencil.c:42 ../app/tools/gimppenciltool.c:51
 msgid "Pencil"
@@ -8869,7 +8874,7 @@ msgstr "Transformació 2D"
 msgid "2D Transforming"
 msgstr "S'està transformant a 2D"
 
-#: ../app/pdb/edit-cmds.c:709 ../app/tools/gimpblendtool.c:223
+#: ../app/pdb/edit-cmds.c:709 ../app/tools/gimpblendtool.c:225
 msgid "Blending"
 msgstr "S'està aplicant el degradat"
 
@@ -8908,100 +8913,100 @@ msgstr "No es pot fer aquesta capa flexible perquè no és una selecció flotant
 msgid "Procedure '%s' not found"
 msgstr "No s'ha trobat la funció «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:59
+#: ../app/pdb/gimppdb-utils.c:61
 #, c-format
 msgid "Invalid empty brush name"
 msgstr "No és vàlid un nom de pinzell buit"
 
-#: ../app/pdb/gimppdb-utils.c:69
+#: ../app/pdb/gimppdb-utils.c:71
 #, c-format
 msgid "Brush '%s' not found"
 msgstr "No s'ha trobat el pinzell «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:74
+#: ../app/pdb/gimppdb-utils.c:76
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "El pinzell «%s» no és editable"
 
-#: ../app/pdb/gimppdb-utils.c:100
+#: ../app/pdb/gimppdb-utils.c:102
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "El pinzell «%s» no és un pinzell generat"
 
-#: ../app/pdb/gimppdb-utils.c:120
+#: ../app/pdb/gimppdb-utils.c:122
 #, c-format
 msgid "Invalid empty pattern name"
 msgstr "No és vàlid un nom de patró buit"
 
 # Quim: no és 'menú dels patrons' pel mateix criteri que 'brushes menu'
-#: ../app/pdb/gimppdb-utils.c:130
+#: ../app/pdb/gimppdb-utils.c:132
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "No s'ha trobat el patró «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:150
+#: ../app/pdb/gimppdb-utils.c:152
 #, c-format
 msgid "Invalid empty gradient name"
 msgstr "No és vàlid un nom de degradat buit"
 
 # Quim: no és 'menú dels degradats' pel mateix criteri que 'brushes menu'
-#: ../app/pdb/gimppdb-utils.c:160
+#: ../app/pdb/gimppdb-utils.c:162
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "No s'ha trobat el degradat «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:165
+#: ../app/pdb/gimppdb-utils.c:167
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "El degradat «%s» no és editable"
 
-#: ../app/pdb/gimppdb-utils.c:186
+#: ../app/pdb/gimppdb-utils.c:188
 #, c-format
 msgid "Invalid empty palette name"
 msgstr "No és vàlid un nom de paleta buit"
 
 # Quim: no és 'menú dels porta-retalls' pel mateix criteri que 'brushes menu'
-#: ../app/pdb/gimppdb-utils.c:196
+#: ../app/pdb/gimppdb-utils.c:198
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "No s'ha trobat la paleta «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:201
+#: ../app/pdb/gimppdb-utils.c:203
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "La paleta «%s» no és editable"
 
-#: ../app/pdb/gimppdb-utils.c:221
+#: ../app/pdb/gimppdb-utils.c:223
 #, c-format
 msgid "Invalid empty font name"
 msgstr "No és vàlid un nom de tipus de lletra buit"
 
-#: ../app/pdb/gimppdb-utils.c:231
+#: ../app/pdb/gimppdb-utils.c:233
 #, c-format
 msgid "Font '%s' not found"
 msgstr "No s'ha trobat el tipus de lletra «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:250
+#: ../app/pdb/gimppdb-utils.c:252
 #, c-format
 msgid "Invalid empty buffer name"
 msgstr "No és vàlid un nom buit"
 
-#: ../app/pdb/gimppdb-utils.c:260
+#: ../app/pdb/gimppdb-utils.c:262
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "No s'ha trobat l'objecte «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:279
+#: ../app/pdb/gimppdb-utils.c:281
 #, c-format
 msgid "Invalid empty paint method name"
 msgstr "No és vàlid un nom de mètode de pintar buit"
 
-#: ../app/pdb/gimppdb-utils.c:289
+#: ../app/pdb/gimppdb-utils.c:291
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "El mètode de pintar «%s» no s'ha trobat"
 
-#: ../app/pdb/gimppdb-utils.c:305
+#: ../app/pdb/gimppdb-utils.c:307
 #, c-format
 msgid ""
 "Item '%s' (%d) can not be used because it has not been added to an image"
@@ -9009,33 +9014,33 @@ msgstr ""
 "L'element «%s» (%d) no es pot utilitzar perquè no s'ha afegit a cap imatge "
 "encara"
 
-#: ../app/pdb/gimppdb-utils.c:327
+#: ../app/pdb/gimppdb-utils.c:329
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "L'element «%s» (%d) ja s'ha afegit a una imatge"
 
-#: ../app/pdb/gimppdb-utils.c:335
+#: ../app/pdb/gimppdb-utils.c:337
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "S'està intentant afegir l'element «%s» (%d) a la imatge errònia"
 
-#: ../app/pdb/gimppdb-utils.c:354
+#: ../app/pdb/gimppdb-utils.c:356
 #, c-format
 msgid "Layer '%s' (%d) can not be used because it is not a text layer"
 msgstr "L'element «%s» (%d) no es pot utilitzar perquè no és una capa de text"
 
-#: ../app/pdb/gimppdb-utils.c:395
+#: ../app/pdb/gimppdb-utils.c:401
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "La imatge «%s» (%d) és de tipus «%s» però s'esperava una imatge de tipus «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:418
+#: ../app/pdb/gimppdb-utils.c:430
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr "La imatge «%s» (%d) ja és de tipus «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:441
+#: ../app/pdb/gimppdb-utils.c:455
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "L'objecte de vectors %d no té cap traça amb l'ID %d"
@@ -9049,12 +9054,12 @@ msgstr ""
 "La funció «%s» s'ha cridat amb un paràmetre (núm #%d) amb el tipus "
 "incorrecte. S'esperava un %s, però ha arribat un %s."
 
-#: ../app/pdb/gimpprocedure.c:360 ../app/plug-in/gimppluginprocframe.c:209
+#: ../app/pdb/gimpprocedure.c:361 ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "La funció «%s» no ha retornat cap valor"
 
-#: ../app/pdb/gimpprocedure.c:584
+#: ../app/pdb/gimpprocedure.c:585
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -9063,7 +9068,7 @@ msgstr ""
 "La funció «%s» ha retornat valor «%s» (núm. %d) amb el tipus incorrecte. "
 "S'esperava un %s, però ha retornat un %s."
 
-#: ../app/pdb/gimpprocedure.c:596
+#: ../app/pdb/gimpprocedure.c:597
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
@@ -9072,7 +9077,7 @@ msgstr ""
 "La funció «%s» s'ha cridat amb un paràmetre «%s» (núm %d) amb el tipus "
 "incorrecte. S'esperava un %s, però ha arribat un %s."
 
-#: ../app/pdb/gimpprocedure.c:628
+#: ../app/pdb/gimpprocedure.c:629
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -9081,7 +9086,7 @@ msgstr ""
 "La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament un "
 "connector està intentant treballar amb una capa que ja no existeix."
 
-#: ../app/pdb/gimpprocedure.c:640
+#: ../app/pdb/gimpprocedure.c:641
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -9090,7 +9095,7 @@ msgstr ""
 "La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». Segurament "
 "un connector està intentant treballar amb una capa que ja no existeix."
 
-#: ../app/pdb/gimpprocedure.c:656
+#: ../app/pdb/gimpprocedure.c:657
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -9099,7 +9104,7 @@ msgstr ""
 "La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament un "
 "connector està intentant treballar amb una imatge que ja no existeix."
 
-#: ../app/pdb/gimpprocedure.c:668
+#: ../app/pdb/gimpprocedure.c:669
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -9108,7 +9113,7 @@ msgstr ""
 "La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». Segurament "
 "un connector està intentant treballar amb una imatge que ja no existeix."
 
-#: ../app/pdb/gimpprocedure.c:688
+#: ../app/pdb/gimpprocedure.c:689
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -9117,7 +9122,7 @@ msgstr ""
 "La funció «%s» ha retornat «%s» com a valor de retorn «%s» (núm. %d, de tipus %"
 "s). Aquest valor no és permès."
 
-#: ../app/pdb/gimpprocedure.c:701
+#: ../app/pdb/gimpprocedure.c:702
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -9243,11 +9248,11 @@ msgstr "S'estan inicialitzant els connectors"
 msgid "Starting Extensions"
 msgstr "S'estan iniciant les extensions"
 
-#: ../app/plug-in/gimppluginmanager.c:296
+#: ../app/plug-in/gimppluginmanager.c:290
 msgid "Plug-In Interpreters"
 msgstr "Intèrprets de connectors"
 
-#: ../app/plug-in/gimppluginmanager.c:303
+#: ../app/plug-in/gimppluginmanager.c:297
 msgid "Plug-In Environment"
 msgstr "Entorn de connector"
 
@@ -9314,7 +9319,7 @@ msgstr ""
 "Posa'm a la bossa\n"
 "cinc dotzenes de licors."
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:877
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:901
 msgid "Add Text Layer"
 msgstr "Afegeix capa de text"
 
@@ -9404,7 +9409,7 @@ msgstr "Factor:"
 msgid "Pressure:"
 msgstr "Pressió:"
 
-#: ../app/tools/gimpaligntool.c:134 ../app/tools/gimpaligntool.c:754
+#: ../app/tools/gimpaligntool.c:134 ../app/tools/gimpaligntool.c:766
 msgid "Align"
 msgstr "Alinea"
 
@@ -9416,93 +9421,93 @@ msgstr "Eina Alinea: alinea o organitza capes i altres elements"
 msgid "_Align"
 msgstr "_Alinea"
 
-#: ../app/tools/gimpaligntool.c:587
+#: ../app/tools/gimpaligntool.c:599
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
 "Cliqueu la capa, el camí o la guia o cliqueu i arrossegueu per a agafar "
 "diverses capes"
 
-#: ../app/tools/gimpaligntool.c:596
+#: ../app/tools/gimpaligntool.c:608
 msgid "Click to pick this layer as first item"
 msgstr "Cliqueu aquesta capa com a primer element"
 
-#: ../app/tools/gimpaligntool.c:604
+#: ../app/tools/gimpaligntool.c:616
 msgid "Click to add this layer to the list"
 msgstr "Cliqueu aquesta capa per a afegir-la a la llista"
 
-#: ../app/tools/gimpaligntool.c:608
+#: ../app/tools/gimpaligntool.c:620
 msgid "Click to pick this guide as first item"
 msgstr "Cliqueu aquesta guia com a primer element"
 
-#: ../app/tools/gimpaligntool.c:616
+#: ../app/tools/gimpaligntool.c:628
 msgid "Click to add this guide to the list"
 msgstr "Cliqueu aquesta guia per a afegir-la a la llista"
 
-#: ../app/tools/gimpaligntool.c:620
+#: ../app/tools/gimpaligntool.c:632
 msgid "Click to pick this path as first item"
 msgstr "Cliqueu aquest camí com a primer element"
 
-#: ../app/tools/gimpaligntool.c:628
+#: ../app/tools/gimpaligntool.c:640
 msgid "Click to add this path to the list"
 msgstr "Cliqueu aquest camí per a afegir-lo a la llista"
 
-#: ../app/tools/gimpaligntool.c:766
+#: ../app/tools/gimpaligntool.c:778
 msgid "Relative to:"
 msgstr "Relatiu a:"
 
-#: ../app/tools/gimpaligntool.c:784
+#: ../app/tools/gimpaligntool.c:796
 msgid "Align left edge of target"
 msgstr "Alinea amb la vora esquerra"
 
-#: ../app/tools/gimpaligntool.c:790
+#: ../app/tools/gimpaligntool.c:802
 msgid "Align center of target"
 msgstr "Alinea amb el centre (horitz.)"
 
-#: ../app/tools/gimpaligntool.c:796
+#: ../app/tools/gimpaligntool.c:808
 msgid "Align right edge of target"
 msgstr "Alinea amb la vora dreta"
 
-#: ../app/tools/gimpaligntool.c:806
+#: ../app/tools/gimpaligntool.c:818
 msgid "Align top edge of target"
 msgstr "Alinea amb la vora superior"
 
-#: ../app/tools/gimpaligntool.c:812
+#: ../app/tools/gimpaligntool.c:824
 msgid "Align middle of target"
 msgstr "Alinea amb el centre (vertic.)"
 
-#: ../app/tools/gimpaligntool.c:818
+#: ../app/tools/gimpaligntool.c:830
 msgid "Align bottom of target"
 msgstr "Alinea amb la vora inferior"
 
-#: ../app/tools/gimpaligntool.c:822
+#: ../app/tools/gimpaligntool.c:834
 msgid "Distribute"
 msgstr "Distribueix"
 
-#: ../app/tools/gimpaligntool.c:836
+#: ../app/tools/gimpaligntool.c:848
 msgid "Distribute left edges of targets"
 msgstr "Distribueix per l'esquerra"
 
-#: ../app/tools/gimpaligntool.c:843
+#: ../app/tools/gimpaligntool.c:855
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribueix horitzontalment els centres"
 
-#: ../app/tools/gimpaligntool.c:850
+#: ../app/tools/gimpaligntool.c:862
 msgid "Distribute right edges of targets"
 msgstr "Distribueix per la dreta"
 
-#: ../app/tools/gimpaligntool.c:860
+#: ../app/tools/gimpaligntool.c:872
 msgid "Distribute top edges of targets"
 msgstr "Distribueix per la part superior"
 
-#: ../app/tools/gimpaligntool.c:867
+#: ../app/tools/gimpaligntool.c:879
 msgid "Distribute vertical centers of targets"
 msgstr "Distribueix vertic. els centre"
 
-#: ../app/tools/gimpaligntool.c:873
+#: ../app/tools/gimpaligntool.c:885
 msgid "Distribute bottoms of targets"
 msgstr "Distribueix per la part inferior"
 
-#: ../app/tools/gimpaligntool.c:881 ../app/tools/gimpblendoptions.c:222
+#: ../app/tools/gimpaligntool.c:893 ../app/tools/gimpblendoptions.c:222
 msgid "Offset:"
 msgstr "Desplaçament:"
 
@@ -9540,59 +9545,59 @@ msgstr "Eina Degradats: omple amb un degradat de color"
 msgid "Blen_d"
 msgstr "_Degradat"
 
-#: ../app/tools/gimpblendtool.c:162
+#: ../app/tools/gimpblendtool.c:164
 #, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "L'eina degradat no funciona en capes indexades."
 
-#: ../app/tools/gimpblendtool.c:400 ../app/tools/gimppainttool.c:606
+#: ../app/tools/gimpblendtool.c:402 ../app/tools/gimppainttool.c:606
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per a angles restringits"
 
-#: ../app/tools/gimpblendtool.c:401
+#: ../app/tools/gimpblendtool.c:403
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s per a moure la línia sencera"
 
-#: ../app/tools/gimpblendtool.c:405
+#: ../app/tools/gimpblendtool.c:407
 msgid "Blend: "
 msgstr "Degradat: "
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:111
+#: ../app/tools/gimpbrightnesscontrasttool.c:112
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
 msgstr "Eina Brillantor i contrast: ajusta la brillantor i el contrast"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:112
+#: ../app/tools/gimpbrightnesscontrasttool.c:113
 msgid "B_rightness-Contrast..."
 msgstr "B_rillantor-contrast..."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:132
+#: ../app/tools/gimpbrightnesscontrasttool.c:133
 msgid "Adjust Brightness and Contrast"
 msgstr "Ajusta la brillantor i el contrast"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:134
+#: ../app/tools/gimpbrightnesscontrasttool.c:135
 msgid "Import Brightness-Contrast settings"
 msgstr "Importa les opcions de brillantor-contrast"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:135
+#: ../app/tools/gimpbrightnesscontrasttool.c:136
 msgid "Export Brightness-Contrast settings"
 msgstr "Exporta les opcions de brillantor-contrast"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:183
+#: ../app/tools/gimpbrightnesscontrasttool.c:184
 #, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Brillantor-contrast no funciona en capes indexades."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:320
+#: ../app/tools/gimpbrightnesscontrasttool.c:325
 msgid "_Brightness:"
 msgstr "_Brillantor:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:335
+#: ../app/tools/gimpbrightnesscontrasttool.c:340
 msgid "Con_trast:"
 msgstr "Con_trast:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:349
+#: ../app/tools/gimpbrightnesscontrasttool.c:354
 msgid "Edit these Settings as Levels"
 msgstr "Edita aquestes opcions com a nivells"
 
@@ -10268,25 +10273,25 @@ msgstr ""
 msgid "_Free Select"
 msgstr "Selecció _lliure"
 
-#: ../app/tools/gimpfreeselecttool.c:1116
+#: ../app/tools/gimpfreeselecttool.c:1117
 msgid "Click to complete selection"
 msgstr "Cliqueu per a completar la selecció"
 
-#: ../app/tools/gimpfreeselecttool.c:1120
+#: ../app/tools/gimpfreeselecttool.c:1121
 msgid "Click-Drag to move segment vertex"
 msgstr "Cliqueu i arrossegueu per a moure el vèrtex del segment"
 
-#: ../app/tools/gimpfreeselecttool.c:1125
+#: ../app/tools/gimpfreeselecttool.c:1126
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "Retorn acaba, Esc cancel·la, Retrocés suprimeix l'últim segment"
 
-#: ../app/tools/gimpfreeselecttool.c:1129
+#: ../app/tools/gimpfreeselecttool.c:1130
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Cliqueu i arrossegueu per a afegir un segment arbitrari;  cliqueu per a "
 "afegir un segment poligonal"
 
-#: ../app/tools/gimpfreeselecttool.c:1581
+#: ../app/tools/gimpfreeselecttool.c:1582
 msgctxt "command"
 msgid "Free Select"
 msgstr "Selecció lliure"
@@ -10305,29 +10310,29 @@ msgstr ""
 msgid "Fu_zzy Select"
 msgstr "Selecció _de regió contigua"
 
-#: ../app/tools/gimpgegltool.c:83 ../app/tools/gimpgegltool.c:102
+#: ../app/tools/gimpgegltool.c:92 ../app/tools/gimpgegltool.c:111
 msgid "GEGL Operation"
 msgstr "Operació GEGL"
 
-#: ../app/tools/gimpgegltool.c:84
+#: ../app/tools/gimpgegltool.c:93
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "Eina GEGL: permet fer servir una operació GEGL arbitrària"
 
-#: ../app/tools/gimpgegltool.c:85
+#: ../app/tools/gimpgegltool.c:94
 msgid "_GEGL Operation..."
 msgstr "Operació _GEGL..."
 
-#: ../app/tools/gimpgegltool.c:149
+#: ../app/tools/gimpgegltool.c:158
 #, c-format
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "Les operacions GEGL no funcionen en capes indexades."
 
-#: ../app/tools/gimpgegltool.c:324
+#: ../app/tools/gimpgegltool.c:339
 msgid "_Operation:"
 msgstr "_Operació:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:370
+#: ../app/tools/gimpgegltool.c:412
 msgid "Operation Settings"
 msgstr "Opcions de l'operació"
 
@@ -10456,7 +10461,7 @@ msgstr "Ajustament"
 msgid "Size:"
 msgstr "Mida:"
 
-#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:1034
+#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:1037
 #: ../app/widgets/gimpbrusheditor.c:208
 msgid "Angle:"
 msgstr "Angle:"
@@ -10509,7 +10514,7 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "Tisores _intel·ligents"
 
-#: ../app/tools/gimpiscissorstool.c:940 ../app/tools/gimpmeasuretool.c:606
+#: ../app/tools/gimpiscissorstool.c:940 ../app/tools/gimpmeasuretool.c:609
 msgid "Click-Drag to move this point"
 msgstr "Cliqueu i arrossegueu per a moure aquest punt"
 
@@ -10640,36 +10645,36 @@ msgstr "Eina Compàs: mesura distàncies i angles"
 msgid "_Measure"
 msgstr "_Compàs"
 
-#: ../app/tools/gimpmeasuretool.c:238
+#: ../app/tools/gimpmeasuretool.c:241
 msgid "Add Guides"
 msgstr "Afegeix guies"
 
-#: ../app/tools/gimpmeasuretool.c:558
+#: ../app/tools/gimpmeasuretool.c:561
 msgid "Click to place vertical and horizontal guides"
 msgstr "Cliqueu per a afegir una guia vertical o horitzontal"
 
-#: ../app/tools/gimpmeasuretool.c:567
+#: ../app/tools/gimpmeasuretool.c:570
 msgid "Click to place a horizontal guide"
 msgstr "Cliqueu per a afegir una guia horitzontal"
 
-#: ../app/tools/gimpmeasuretool.c:581
+#: ../app/tools/gimpmeasuretool.c:584
 msgid "Click to place a vertical guide"
 msgstr "Cliqueu per a afegir una guia vertical"
 
-#: ../app/tools/gimpmeasuretool.c:595
+#: ../app/tools/gimpmeasuretool.c:598
 msgid "Click-Drag to add a new point"
 msgstr "Cliqueu i arrossegueu per a afegir un punt de control"
 
-#: ../app/tools/gimpmeasuretool.c:625
+#: ../app/tools/gimpmeasuretool.c:628
 msgid "Click-Drag to move all points"
 msgstr "Cliqueu i arrossegueu per a moure tots els punts"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:986
+#: ../app/tools/gimpmeasuretool.c:989
 msgid "Measure Distances and Angles"
 msgstr "Mesura distàncies i angles"
 
-#: ../app/tools/gimpmeasuretool.c:1006
+#: ../app/tools/gimpmeasuretool.c:1009
 msgid "Distance:"
 msgstr "Distància:"
 
@@ -10951,7 +10956,7 @@ msgstr "Eina Selecció rectangular: selecciona una regió rectangular"
 msgid "_Rectangle Select"
 msgstr "Selecció _rectangular"
 
-#: ../app/tools/gimprectangletool.c:1084 ../app/tools/gimprectangletool.c:1980
+#: ../app/tools/gimprectangletool.c:1085 ../app/tools/gimprectangletool.c:1981
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -11164,27 +11169,27 @@ msgstr "Camí a partir d'un text"
 msgid "Text along Path"
 msgstr "El text segueix el camí"
 
-#: ../app/tools/gimptexttool.c:161
+#: ../app/tools/gimptexttool.c:162
 msgid "Text Tool: Create or edit text layers"
 msgstr "Eina Text: crea o edita una capa de text"
 
-#: ../app/tools/gimptexttool.c:162
+#: ../app/tools/gimptexttool.c:163
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:954
+#: ../app/tools/gimptexttool.c:987
 msgid "GIMP Text Editor"
 msgstr "Editor de text del GIMP"
 
-#: ../app/tools/gimptexttool.c:1070 ../app/tools/gimptexttool.c:1073
+#: ../app/tools/gimptexttool.c:1103 ../app/tools/gimptexttool.c:1106
 msgid "Confirm Text Editing"
 msgstr "Confirma l'edició del text"
 
-#: ../app/tools/gimptexttool.c:1077
+#: ../app/tools/gimptexttool.c:1110
 msgid "Create _New Layer"
 msgstr "Crea una capa _nova"
 
-#: ../app/tools/gimptexttool.c:1101
+#: ../app/tools/gimptexttool.c:1134
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11198,7 +11203,7 @@ msgstr ""
 "\n"
 "Podeu editar la capa o crear-ne una nova amb els mateixos atributs."
 
-#: ../app/tools/gimptexttool.c:1313
+#: ../app/tools/gimptexttool.c:1356
 msgid "Reshape Text Layer"
 msgstr "Canvia la forma de la capa de text"
 
@@ -12108,24 +12113,24 @@ msgstr "Els missatges són redireccionats a la sortida estàndard."
 msgid "%s Message"
 msgstr "Missatge %s"
 
-#: ../app/widgets/gimpfiledialog.c:279
+#: ../app/widgets/gimpfiledialog.c:310
 msgid "Automatically Detected"
 msgstr "Detectat automàticament"
 
-#: ../app/widgets/gimpfiledialog.c:289
+#: ../app/widgets/gimpfiledialog.c:320
 msgid "By Extension"
 msgstr "Per extensió"
 
-#: ../app/widgets/gimpfiledialog.c:617
+#: ../app/widgets/gimpfiledialog.c:652
 msgid "All files"
 msgstr "Tots els fitxers"
 
 #  list & grid views
-#: ../app/widgets/gimpfiledialog.c:622
+#: ../app/widgets/gimpfiledialog.c:657
 msgid "All images"
 msgstr "Totes les imatges"
 
-#: ../app/widgets/gimpfiledialog.c:751
+#: ../app/widgets/gimpfiledialog.c:786
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleccioneu el _tipus de fitxer (%s)"
@@ -12249,15 +12254,15 @@ msgstr "Color del _fons:"
 msgid "Spacing"
 msgstr "Espaiat"
 
-#: ../app/widgets/gimphelp.c:267
+#: ../app/widgets/gimphelp.c:294
 msgid "Help browser is missing"
 msgstr "No s'ha trobat el navegador de l'ajuda"
 
-#: ../app/widgets/gimphelp.c:268
+#: ../app/widgets/gimphelp.c:295
 msgid "The GIMP help browser is not available."
 msgstr "El navegador de l'ajuda del GIMP no està disponible."
 
-#: ../app/widgets/gimphelp.c:269
+#: ../app/widgets/gimphelp.c:296
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -12266,31 +12271,31 @@ msgstr ""
 "instal·lat. En el seu lloc podeu utilitzar un navegador web per a llegir les "
 "pàgines d'ajuda."
 
-#: ../app/widgets/gimphelp.c:310
+#: ../app/widgets/gimphelp.c:337
 msgid "Help browser doesn't start"
 msgstr "El navegador de l'ajuda no ha funcionat"
 
-#: ../app/widgets/gimphelp.c:311
+#: ../app/widgets/gimphelp.c:338
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "No s'ha pogut iniciar el connector del navegador de l'ajuda del GIMP."
 
-#: ../app/widgets/gimphelp.c:338
+#: ../app/widgets/gimphelp.c:365
 msgid "Use _Web Browser"
 msgstr "Utilitza un navegador _web"
 
-#: ../app/widgets/gimphelp.c:587
+#: ../app/widgets/gimphelp.c:614
 msgid "GIMP user manual is missing"
 msgstr "Falta el manual d'usuari del GIMP"
 
-#: ../app/widgets/gimphelp.c:594
+#: ../app/widgets/gimphelp.c:621
 msgid "_Read Online"
 msgstr "_Llegeix-lo del web"
 
-#: ../app/widgets/gimphelp.c:618
+#: ../app/widgets/gimphelp.c:645
 msgid "The GIMP user manual is not installed on your computer."
 msgstr "El manual d'usuari del GIMP no està instal·lat en el vostre ordinador."
 
-#: ../app/widgets/gimphelp.c:621
+#: ../app/widgets/gimphelp.c:648
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -12614,7 +12619,7 @@ msgstr "_Idioma:"
 msgid "_Use selected font"
 msgstr "_Utilitza el tipus de lletra escollit"
 
-#: ../app/widgets/gimpthumbbox.c:330
+#: ../app/widgets/gimpthumbbox.c:344
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -12624,20 +12629,20 @@ msgstr ""
 "%s%s Cliqueu per a forçar l'actualització, encara que la previsualització "
 "estigui actualitzada"
 
-#: ../app/widgets/gimpthumbbox.c:348
+#: ../app/widgets/gimpthumbbox.c:362
 msgid "Pr_eview"
 msgstr "Pr_evisualitza"
 
-#: ../app/widgets/gimpthumbbox.c:403 ../app/widgets/gimpthumbbox.c:467
+#: ../app/widgets/gimpthumbbox.c:417 ../app/widgets/gimpthumbbox.c:481
 msgid "No selection"
 msgstr "Cap selecció"
 
-#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
+#: ../app/widgets/gimpthumbbox.c:609 ../app/widgets/gimpthumbbox.c:630
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura %d de %d"
 
-#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
+#: ../app/widgets/gimpthumbbox.c:743 ../app/widgets/gimpthumbbox.c:753
 msgid "Creating preview..."
 msgstr "S'està creant la previsualització ..."
 
