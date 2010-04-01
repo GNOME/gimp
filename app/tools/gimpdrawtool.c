@@ -158,6 +158,7 @@ gimp_draw_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
+#ifdef USE_TIMEOUT
 static gboolean
 gimp_draw_tool_draw_timeout (GimpDrawTool *draw_tool)
 {
@@ -167,6 +168,7 @@ gimp_draw_tool_draw_timeout (GimpDrawTool *draw_tool)
 
   return FALSE;
 }
+#endif
 
 static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
@@ -258,7 +260,7 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
                                         (GSourceFunc) gimp_draw_tool_draw_timeout,
                                         draw_tool, NULL);
 #else
-  gimp_draw_tool_draw (draw_tool);
+      gimp_draw_tool_draw (draw_tool);
 #endif
     }
   else
