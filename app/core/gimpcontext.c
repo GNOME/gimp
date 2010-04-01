@@ -1153,6 +1153,7 @@ gimp_context_get_memsize (GimpObject *object,
   memsize += gimp_string_get_memsize (context->tool_name);
   memsize += gimp_string_get_memsize (context->paint_name);
   memsize += gimp_string_get_memsize (context->brush_name);
+  memsize += gimp_string_get_memsize (context->dynamics_name);
   memsize += gimp_string_get_memsize (context->pattern_name);
   memsize += gimp_string_get_memsize (context->palette_name);
   memsize += gimp_string_get_memsize (context->font_name);
