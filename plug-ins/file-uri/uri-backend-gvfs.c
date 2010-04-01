@@ -157,10 +157,9 @@ uri_backend_map_image (const gchar  *uri,
 
       if (! mount_enclosing_volume (file, &error))
         {
-
-          if (error->domain == G_IO_ERROR   &&
-              error->code   == G_IO_ERROR_ALREADY_MOUNTED)
-            success = TRUE;
+          if (error->domain != G_IO_ERROR ||
+              error->code   != G_IO_ERROR_ALREADY_MOUNTED)
+            success = FALSE;
 
           g_error_free (error);
         }
