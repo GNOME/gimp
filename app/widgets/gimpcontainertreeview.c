@@ -262,9 +262,6 @@ gimp_container_tree_view_constructor (GType                  type,
 
   tree_view->priv->selection = gtk_tree_view_get_selection (tree_view->view);
 
-  gtk_tree_selection_set_mode (tree_view->priv->selection,
-                               GTK_SELECTION_MULTIPLE);
-
   g_signal_connect (tree_view->priv->selection, "changed",
                     G_CALLBACK (gimp_container_tree_view_selection_changed),
                     tree_view);
