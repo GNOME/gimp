@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: GIMP 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-03-07 11:48+0000\n"
-"PO-Revision-Date: 2010-03-09 19:09+0100\n"
+"POT-Creation-Date: 2010-03-28 19:39+0000\n"
+"PO-Revision-Date: 2010-04-01 16:39+0200\n"
 "Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
 "Language-Team: Serbian <gnome@prevod.org>\n"
 "MIME-Version: 1.0\n"
@@ -435,13 +435,13 @@ msgid "Windows"
 msgstr "Prozori"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:559
+#: ../app/actions/actions.c:575
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:585
+#: ../app/actions/actions.c:601
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -957,7 +957,7 @@ msgstr "Zasniva izbor oblasti na svim vidljivim slojevima"
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:552
 #: ../app/widgets/gimplayertreeview.c:768 ../app/widgets/gimptoolbox-dnd.c:178
-#: ../app/widgets/gimptoolbox.c:1211
+#: ../app/widgets/gimptoolbox.c:1220
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1337,24 +1337,19 @@ msgid "About GIMP"
 msgstr "Prikazuje podatke o Gimpu"
 
 #: ../app/actions/dialogs-actions.c:298
-#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:772
+#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:774
 msgid "Toolbox"
 msgstr "Alatnica"
 
 #: ../app/actions/dialogs-actions.c:299
-#| msgctxt "windows-action"
-#| msgid "Raise the toolbox"
 msgid "Raise the toolbox"
 msgstr "Prikazuje traku sa alatima"
 
 #: ../app/actions/dialogs-actions.c:303
-#| msgid "Toolbox"
 msgid "New Toolbox"
 msgstr "Nova alatnica"
 
 #: ../app/actions/dialogs-actions.c:304
-#| msgctxt "brushes-action"
-#| msgid "Create a new brush"
 msgid "Create a new toolbox"
 msgstr "Dodaje novu traku sa alatima"
 
@@ -3265,517 +3260,522 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Briše tekuću sliku"
 
-#: ../app/actions/layers-actions.c:47
+#: ../app/actions/layers-actions.c:48
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Meni za slojeve"
 
-#: ../app/actions/layers-actions.c:51
+#: ../app/actions/layers-actions.c:52
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "S_lojevi"
 
-#: ../app/actions/layers-actions.c:53
+#: ../app/actions/layers-actions.c:54
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "_Redosled"
 
-#: ../app/actions/layers-actions.c:55
+#: ../app/actions/layers-actions.c:56
 msgctxt "layers-action"
 msgid "Te_xt to Selection"
 msgstr "_Tekst u izbor"
 
-#: ../app/actions/layers-actions.c:57
+#: ../app/actions/layers-actions.c:58
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maska"
 
-#: ../app/actions/layers-actions.c:59
+#: ../app/actions/layers-actions.c:60
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Pr_ovidnost"
 
-#: ../app/actions/layers-actions.c:61
+#: ../app/actions/layers-actions.c:62
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Transformacija"
 
-#: ../app/actions/layers-actions.c:63
+#: ../app/actions/layers-actions.c:64
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "Oso_bine"
 
-#: ../app/actions/layers-actions.c:65
+#: ../app/actions/layers-actions.c:66
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "_Neprovidnost"
 
-#: ../app/actions/layers-actions.c:67
+#: ../app/actions/layers-actions.c:68
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "_Režim sloja"
 
-#: ../app/actions/layers-actions.c:70
+#: ../app/actions/layers-actions.c:71
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "_Alat za tekst"
 
-#: ../app/actions/layers-actions.c:71
+#: ../app/actions/layers-actions.c:72
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "Pokreće alat za obradu teksta u tekućem tekstualnom sloju"
 
-#: ../app/actions/layers-actions.c:76
+#: ../app/actions/layers-actions.c:77
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "Iz_meni svojstva sloja..."
 
-#: ../app/actions/layers-actions.c:77
+#: ../app/actions/layers-actions.c:78
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Izmeni ime sloja"
 
-#: ../app/actions/layers-actions.c:82
+#: ../app/actions/layers-actions.c:83 ../app/actions/layers-actions.c:591
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Novi sloj..."
 
-#: ../app/actions/layers-actions.c:83
+#: ../app/actions/layers-actions.c:84
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Pravi novi sloj i dodaje ga u sliku"
 
-#: ../app/actions/layers-actions.c:88
+#: ../app/actions/layers-actions.c:89 ../app/actions/layers-actions.c:592
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Novi sloj"
 
-#: ../app/actions/layers-actions.c:89
+#: ../app/actions/layers-actions.c:90
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "Pravi novi sloj sa poslednjim korišćenim vrednostima"
 
-#: ../app/actions/layers-actions.c:94
+#: ../app/actions/layers-actions.c:95
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "Novi iz _vidljivog"
 
-#: ../app/actions/layers-actions.c:96
+#: ../app/actions/layers-actions.c:97
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "Pravi novi sloj iz onoga što je vidljivo na slici"
 
-#: ../app/actions/layers-actions.c:101
+#: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
 msgid "New Layer _Group..."
 msgstr "Nova _grupa slojeva..."
 
-#: ../app/actions/layers-actions.c:102
+#: ../app/actions/layers-actions.c:103
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
 msgstr "Pravi novu grupu za slojeve i dodaje je na sliku"
 
-#: ../app/actions/layers-actions.c:107
+#: ../app/actions/layers-actions.c:108
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "U_dvostruči sloj"
 
-#: ../app/actions/layers-actions.c:109
+#: ../app/actions/layers-actions.c:110
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Pravi umnožak sloja i dodaje ga u sliku"
 
-#: ../app/actions/layers-actions.c:114
+#: ../app/actions/layers-actions.c:115
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "O_briši sloj"
 
-#: ../app/actions/layers-actions.c:115
+#: ../app/actions/layers-actions.c:116
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "Briše tekući sloj"
 
-#: ../app/actions/layers-actions.c:120
+#: ../app/actions/layers-actions.c:121
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "_Podigni sloj"
 
-#: ../app/actions/layers-actions.c:121
+#: ../app/actions/layers-actions.c:122
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "Izdiže tekući sloj za jedno mesto u nizu slojeva"
 
-#: ../app/actions/layers-actions.c:126
+#: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "Sloj na _vrh"
 
-#: ../app/actions/layers-actions.c:127
+#: ../app/actions/layers-actions.c:128
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "Premešta tekući sloj na vrh niza slojeva"
 
-#: ../app/actions/layers-actions.c:132
+#: ../app/actions/layers-actions.c:133
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "_Spusti sloj"
 
-#: ../app/actions/layers-actions.c:133
+#: ../app/actions/layers-actions.c:134
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "Spušta tekući sloj za jedno mesto u nizu slojeva"
 
-#: ../app/actions/layers-actions.c:138
+#: ../app/actions/layers-actions.c:139
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "Sloj na _dno"
 
-#: ../app/actions/layers-actions.c:139
+#: ../app/actions/layers-actions.c:140
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Premešta tekući sloj na dno niza slojeva"
 
-#: ../app/actions/layers-actions.c:144
+#: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "_Usidri sloj"
 
-#: ../app/actions/layers-actions.c:145
+#: ../app/actions/layers-actions.c:146
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Usidrava plutajući sloj"
 
-#: ../app/actions/layers-actions.c:150
+#: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "Spoji sa slojem _ispod"
 
-#: ../app/actions/layers-actions.c:151
+#: ../app/actions/layers-actions.c:152
 msgctxt "layers-action"
 msgid "Merge this layer with the one below it"
 msgstr "Spaja tekući sloj sa onim koji se nalazi ispod njega"
 
-#: ../app/actions/layers-actions.c:156
+#: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
 msgid "Merge Layer Group"
 msgstr "Spoji grupu slojeva"
 
-#: ../app/actions/layers-actions.c:157
+#: ../app/actions/layers-actions.c:158
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
 msgstr "Spaja slojeve iz grupe u jedan običan sloj na slici"
 
-#: ../app/actions/layers-actions.c:162
+#: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "Spoji _vidljive slojeve..."
 
-#: ../app/actions/layers-actions.c:163
+#: ../app/actions/layers-actions.c:164
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Spaja sve vidljive slojeve slike u jedan"
 
-#: ../app/actions/layers-actions.c:168
+#: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "_Izravnaj sliku"
 
-#: ../app/actions/layers-actions.c:169
+#: ../app/actions/layers-actions.c:170
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Spoaja sve vidljive slojeve i uklanja providnost"
 
-#: ../app/actions/layers-actions.c:174
+#: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "_Zanemari podatke o tekstu"
 
-#: ../app/actions/layers-actions.c:175
+#: ../app/actions/layers-actions.c:176
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "Pretvara tekući tekstualni sloj u običan"
 
-#: ../app/actions/layers-actions.c:180
+#: ../app/actions/layers-actions.c:181
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "Tekst u puta_nju"
 
-#: ../app/actions/layers-actions.c:181
+#: ../app/actions/layers-actions.c:182
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "Pravi putanju od tekućeg tekstualnog sloja"
 
-#: ../app/actions/layers-actions.c:186
+#: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Tekst du_ž putanje"
 
-#: ../app/actions/layers-actions.c:187
+#: ../app/actions/layers-actions.c:188
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Prianja tekst tekućeg sloja uz aktivnu putanju"
 
-#: ../app/actions/layers-actions.c:192
+#: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "Veličina _granica sloja..."
 
-#: ../app/actions/layers-actions.c:193
+#: ../app/actions/layers-actions.c:194
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "Prilagođava veličinu sloja"
 
-#: ../app/actions/layers-actions.c:198
+#: ../app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "Sloj na _veličinu slike"
 
-#: ../app/actions/layers-actions.c:199
+#: ../app/actions/layers-actions.c:200
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "Menja veličinu sloja na veličinu slike"
 
-#: ../app/actions/layers-actions.c:204
+#: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "_Veličina sloja..."
 
-#: ../app/actions/layers-actions.c:205
+#: ../app/actions/layers-actions.c:206
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "Menja veličinu sadržaja sloja"
 
-#: ../app/actions/layers-actions.c:210
+#: ../app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "Ise_ci na izbor"
 
-#: ../app/actions/layers-actions.c:211
+#: ../app/actions/layers-actions.c:212
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "Seče sloj na veličinu izbora"
 
-#: ../app/actions/layers-actions.c:216
+#: ../app/actions/layers-actions.c:217
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "Dodaj masku _sloja..."
 
-#: ../app/actions/layers-actions.c:218
+#: ../app/actions/layers-actions.c:219
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr "Dodaje masku koja omogućava uređivanje providnosti bez gubljenja podataka"
 
-#: ../app/actions/layers-actions.c:223
+#: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Dodaj alfa _kanal"
 
-#: ../app/actions/layers-actions.c:224
+#: ../app/actions/layers-actions.c:225
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "Dodaje podatke za omogućavanje providnosti sloja"
 
-#: ../app/actions/layers-actions.c:229
+#: ../app/actions/layers-actions.c:230
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "Ukloni alfa ka_nal"
 
-#: ../app/actions/layers-actions.c:230
+#: ../app/actions/layers-actions.c:231
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "Uklanja podatke za omogućavanje providnosti sloja"
 
-#: ../app/actions/layers-actions.c:238
+#: ../app/actions/layers-actions.c:239
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "_Zaključaj alfa kanal"
 
-#: ../app/actions/layers-actions.c:240
+#: ../app/actions/layers-actions.c:241
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr "Zabranjuje izmenu providnosti izabranog sloja"
 
-#: ../app/actions/layers-actions.c:246
+#: ../app/actions/layers-actions.c:247
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "_Uredi masku sloja"
 
-#: ../app/actions/layers-actions.c:247
+#: ../app/actions/layers-actions.c:248
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Radi na masci sloja"
 
-#: ../app/actions/layers-actions.c:253
+#: ../app/actions/layers-actions.c:254
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "P_rikaži masku sloja"
 
-#: ../app/actions/layers-actions.c:259
+#: ../app/actions/layers-actions.c:260
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "Isk_ljuči masku sloja"
 
-#: ../app/actions/layers-actions.c:260
+#: ../app/actions/layers-actions.c:261
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "Zanemaruje efekat maske sloja"
 
-#: ../app/actions/layers-actions.c:269
+#: ../app/actions/layers-actions.c:270
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Prim_eni masku sloja"
 
-#: ../app/actions/layers-actions.c:270
+#: ../app/actions/layers-actions.c:271
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Primenjuje efekat maske sloja i uklanja je"
 
-#: ../app/actions/layers-actions.c:275
+#: ../app/actions/layers-actions.c:276
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Obri_ši masku sloja"
 
-#: ../app/actions/layers-actions.c:276
+#: ../app/actions/layers-actions.c:277
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Uklanja masku sloja i njen efekat"
 
-#: ../app/actions/layers-actions.c:284
+#: ../app/actions/layers-actions.c:285
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "Maska u izbo_r"
 
-#: ../app/actions/layers-actions.c:285
+#: ../app/actions/layers-actions.c:286
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Menja izbor maskom sloja"
 
-#: ../app/actions/layers-actions.c:290
+#: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "_Dodaj u izbor"
 
-#: ../app/actions/layers-actions.c:291
+#: ../app/actions/layers-actions.c:292
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Dodaje masku sloja u tekući izbor"
 
-#: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
-#: ../app/actions/layers-actions.c:355
+#: ../app/actions/layers-actions.c:297 ../app/actions/layers-actions.c:326
+#: ../app/actions/layers-actions.c:356
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "_Izbaci iz izbora"
 
-#: ../app/actions/layers-actions.c:297
+#: ../app/actions/layers-actions.c:298
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Izbacuje masku sloja iz tekućeg izbora"
 
-#: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
-#: ../app/actions/layers-actions.c:362
+#: ../app/actions/layers-actions.c:303 ../app/actions/layers-actions.c:333
+#: ../app/actions/layers-actions.c:363
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "_Presek sa izborom"
 
-#: ../app/actions/layers-actions.c:303
+#: ../app/actions/layers-actions.c:304
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "Pravi presek maske sloja sa tekućim izborom"
 
-#: ../app/actions/layers-actions.c:311
+#: ../app/actions/layers-actions.c:312
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Al_fa u izbor"
 
-#: ../app/actions/layers-actions.c:313
+#: ../app/actions/layers-actions.c:314
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Menja izbor alfa kanalom sloja"
 
-#: ../app/actions/layers-actions.c:318 ../app/actions/layers-actions.c:348
+#: ../app/actions/layers-actions.c:319 ../app/actions/layers-actions.c:349
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "Dodaj u _izbor"
 
-#: ../app/actions/layers-actions.c:320
+#: ../app/actions/layers-actions.c:321
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Dodaje alfa kanal sloja u tekući izbor"
 
-#: ../app/actions/layers-actions.c:327
+#: ../app/actions/layers-actions.c:328
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Izbacuje alfa kanal sloja iz tekućeg izbora"
 
-#: ../app/actions/layers-actions.c:334
+#: ../app/actions/layers-actions.c:335
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Pravi presek alfa kanala sloja sa tekućim izborom"
 
-#: ../app/actions/layers-actions.c:342
+#: ../app/actions/layers-actions.c:343
 msgctxt "layers-action"
 msgid "_Text to Selection"
 msgstr "_Tekst u izbor"
 
-#: ../app/actions/layers-actions.c:343
+#: ../app/actions/layers-actions.c:344
 msgctxt "layers-action"
 msgid "Replace the selection with the text layer's outline"
 msgstr "Menja izbor granicama tekstualnog sloja"
 
-#: ../app/actions/layers-actions.c:350
+#: ../app/actions/layers-actions.c:351
 msgctxt "layers-action"
 msgid "Add the text layer's outline to the current selection"
 msgstr "Dodaje granice tekstualnog sloja u tekući izbor"
 
-#: ../app/actions/layers-actions.c:357
+#: ../app/actions/layers-actions.c:358
 msgctxt "layers-action"
 msgid "Subtract the text layer's outline from the current selection"
 msgstr "Izbacuje granice tekstualnog sloja iz tekućeg izbora"
 
-#: ../app/actions/layers-actions.c:364
+#: ../app/actions/layers-actions.c:365
 msgctxt "layers-action"
 msgid "Intersect the text layer's outline with the current selection"
 msgstr "Pravi presek granica tekstualnog sloja sa tekućim izborom"
 
-#: ../app/actions/layers-actions.c:372
+#: ../app/actions/layers-actions.c:373
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Izaberi sloj na _vrhu"
 
-#: ../app/actions/layers-actions.c:373
+#: ../app/actions/layers-actions.c:374
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Pravi izbor od sloja na vrhu niza slojeva"
 
-#: ../app/actions/layers-actions.c:378
+#: ../app/actions/layers-actions.c:379
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Izaberi sloj na _dnu"
 
-#: ../app/actions/layers-actions.c:379
+#: ../app/actions/layers-actions.c:380
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Pravi izbor od sloja na dnu niza slojeva"
 
-#: ../app/actions/layers-actions.c:384
+#: ../app/actions/layers-actions.c:385
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "Izaberi _prethodni sloj"
 
-#: ../app/actions/layers-actions.c:385
+#: ../app/actions/layers-actions.c:386
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "Pravi izbor od sloja koji se nalazi iznad tekućeg"
 
-#: ../app/actions/layers-actions.c:390
+#: ../app/actions/layers-actions.c:391
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "Izaberi _sledeći sloj"
 
-#: ../app/actions/layers-actions.c:391
+#: ../app/actions/layers-actions.c:392
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "Pravi izbor od sloja koji se nalazi ispod tekućeg"
+
+#: ../app/actions/layers-actions.c:586 ../app/actions/layers-actions.c:587
+msgctxt "layers-action"
+msgid "To _New Layer"
+msgstr "U _novi sloj"
 
 #: ../app/actions/layers-commands.c:203
 msgid "Layer Attributes"
@@ -5567,7 +5567,7 @@ msgstr "_Prikačivi prozori"
 
 #: ../app/actions/windows-actions.c:95
 msgctxt "windows-action"
-msgid "Hide docks"
+msgid "Hide Docks"
 msgstr "Sakrij prikačive delove"
 
 #: ../app/actions/windows-actions.c:103
@@ -5578,7 +5578,7 @@ msgstr "Sakriva sve prozorčiće, ostavljajući samo prozor sa slikom."
 
 #: ../app/actions/windows-actions.c:109
 msgctxt "windows-action"
-msgid "Single-window mode"
+msgid "Single-Window Mode"
 msgstr "Režim u jednom prozoru"
 
 #: ../app/actions/windows-actions.c:110
@@ -7157,50 +7157,55 @@ msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Pretvori u RGB radni prostor"
 
-#: ../app/core/core-enums.c:1325
+#: ../app/core/core-enums.c:1326
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Neprovidnost"
 
-#: ../app/core/core-enums.c:1326
-msgctxt "dynamics-output-type"
-msgid "Hardness"
-msgstr "Tvrdoća"
-
 #: ../app/core/core-enums.c:1327
-msgctxt "dynamics-output-type"
-msgid "Rate"
-msgstr "Brzina"
-
-#: ../app/core/core-enums.c:1328
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Veličina"
 
-#: ../app/core/core-enums.c:1329
-msgctxt "dynamics-output-type"
-msgid "Aspect ratio"
-msgstr "Razmera"
-
-#: ../app/core/core-enums.c:1330
-msgctxt "dynamics-output-type"
-msgid "Color"
-msgstr "Boja"
-
-#: ../app/core/core-enums.c:1331
+#: ../app/core/core-enums.c:1328
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Ugao"
 
-#: ../app/core/core-enums.c:1332
+#: ../app/core/core-enums.c:1329
 msgctxt "dynamics-output-type"
-msgid "Jitter"
-msgstr "Pomeranje"
+msgid "Color"
+msgstr "Boja"
 
-#: ../app/core/core-enums.c:1333
+#: ../app/core/core-enums.c:1330
+msgctxt "dynamics-output-type"
+msgid "Hardness"
+msgstr "Tvrdoća"
+
+#: ../app/core/core-enums.c:1331
+msgctxt "dynamics-output-type"
+msgid "Aspect ratio"
+msgstr "Razmera"
+
+#: ../app/core/core-enums.c:1332
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Razmak"
+
+#: ../app/core/core-enums.c:1333
+msgctxt "dynamics-output-type"
+msgid "Rate"
+msgstr "Brzina"
+
+#: ../app/core/core-enums.c:1334
+msgctxt "dynamics-output-type"
+msgid "Flow"
+msgstr "Protok"
+
+#: ../app/core/core-enums.c:1335
+msgctxt "dynamics-output-type"
+msgid "Jitter"
+msgstr "Pomeranje"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:232
 #: ../app/gui/session.c:349 ../app/menus/menus.c:448
@@ -7209,43 +7214,43 @@ msgstr "Razmak"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Nije uspelo brisanje „%s“: %s"
 
-#: ../app/core/gimp-edit.c:192 ../app/core/gimpimage-new.c:232
+#: ../app/core/gimp-edit.c:190 ../app/core/gimpimage-new.c:232
 msgid "Pasted Layer"
 msgstr "Preneseni sloj"
 
-#: ../app/core/gimp-edit.c:263
+#: ../app/core/gimp-edit.c:261
 msgid "Paste"
 msgstr "Ubaci"
 
-#: ../app/core/gimp-edit.c:390
+#: ../app/core/gimp-edit.c:388
 msgid "Clear"
 msgstr "Očisti"
 
-#: ../app/core/gimp-edit.c:409
+#: ../app/core/gimp-edit.c:407
 msgid "Fill with Foreground Color"
 msgstr "Popuni bojom četke"
 
-#: ../app/core/gimp-edit.c:413
+#: ../app/core/gimp-edit.c:411
 msgid "Fill with Background Color"
 msgstr "Popuni bojom pozadine"
 
-#: ../app/core/gimp-edit.c:417
+#: ../app/core/gimp-edit.c:415
 msgid "Fill with White"
 msgstr "Popuni belom bojom"
 
-#: ../app/core/gimp-edit.c:421
+#: ../app/core/gimp-edit.c:419
 msgid "Fill with Transparency"
 msgstr "Popuni kao providno"
 
-#: ../app/core/gimp-edit.c:425
+#: ../app/core/gimp-edit.c:423
 msgid "Fill with Pattern"
 msgstr "Popuni mustrom"
 
-#: ../app/core/gimp-edit.c:502
+#: ../app/core/gimp-edit.c:500
 msgid "Cut"
 msgstr "Iseci"
 
-#: ../app/core/gimp-edit.c:519
+#: ../app/core/gimp-edit.c:512
 msgid "Global Buffer"
 msgstr "Opšti bafer"
 
@@ -7797,8 +7802,7 @@ msgstr "Transformiši sloj"
 msgid "Transformation"
 msgstr "Transformiši"
 
-#: ../app/core/gimpdynamicsoutput.c:103
-#| msgid "Output Levels"
+#: ../app/core/gimpdynamicsoutput.c:106
 msgid "Output type"
 msgstr "Vrsta izlaza"
 
@@ -8053,7 +8057,7 @@ msgstr "Ukloni referentnu tačku"
 msgid "Move Sample Point"
 msgstr "Premesti referentnu tačku"
 
-#: ../app/core/gimpimage-undo-push.c:860
+#: ../app/core/gimpimage-undo-push.c:862
 #, c-format
 msgid "Can't undo %s"
 msgstr "Ne mogu da poništim %s"
@@ -10230,7 +10234,7 @@ msgid "Navigate the image display"
 msgstr "Prođi kroz prikaz slike"
 
 #: ../app/display/gimpdisplayshell.c:731
-#: ../app/display/gimpdisplayshell.c:1316 ../app/widgets/gimptoolbox.c:310
+#: ../app/display/gimpdisplayshell.c:1316 ../app/widgets/gimptoolbox.c:311
 msgid "Drop image files here to open them"
 msgstr "Za otvaranje prevucite ovde datoteke sa slikama"
 
@@ -10484,11 +10488,11 @@ msgstr "Gimp se podiže"
 msgid "Airbrush"
 msgstr "Sprej"
 
-#: ../app/paint/gimpbrushcore.c:402
+#: ../app/paint/gimpbrushcore.c:430
 msgid "No brushes available for use with this tool."
 msgstr "Nijedna četkica nije dostupna za ovaj alat."
 
-#: ../app/paint/gimpbrushcore.c:409
+#: ../app/paint/gimpbrushcore.c:437
 msgid "No paint dynamics available for use with this tool."
 msgstr "Nijedna dinamika crtanja nije dostupna za ovaj alat."
 
@@ -11092,7 +11096,7 @@ msgstr ""
 "Ptici u Hadžićima možda zafali\n"
 "pevušenje najboljeg đačkog orkestra."
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1367
+#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1368
 msgid "Add Text Layer"
 msgstr "Dodaj tekstualni sloj"
 
@@ -11128,15 +11132,15 @@ msgstr "Rotiraj tekstualni sloj"
 msgid "Transform Text Layer"
 msgstr "Transformiši tekstualni sloj"
 
-#: ../app/text/gimptextlayer.c:502
+#: ../app/text/gimptextlayer.c:507
 msgid "Discard Text Information"
 msgstr "Zanemari podatke o tekstu"
 
-#: ../app/text/gimptextlayer.c:555
+#: ../app/text/gimptextlayer.c:560
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zbog nedostatka fontova, nije moguća upotreba teksta."
 
-#: ../app/text/gimptextlayer.c:606
+#: ../app/text/gimptextlayer.c:611
 msgid "Empty Text Layer"
 msgstr "Prazan sloj za tekst"
 
@@ -11156,14 +11160,11 @@ msgstr ""
 "teksta, ne treba da brinete o ovome."
 
 #: ../app/text/text-enums.c:23
-#| msgid "Dynamics"
 msgctxt "text-box-mode"
 msgid "Dynamic"
 msgstr "Dinamika"
 
 #: ../app/text/text-enums.c:24
-#| msgctxt "source-align-mode"
-#| msgid "Fixed"
 msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Nepromenjivo"
@@ -11184,14 +11185,18 @@ msgstr "Sprej: Alat za crtanje koji koristi četkicu promenljivim pritiskom"
 msgid "_Airbrush"
 msgstr "_Sprej"
 
-#: ../app/tools/gimpairbrushtool.c:91 ../app/tools/gimpconvolvetool.c:216
+#: ../app/tools/gimpairbrushtool.c:88
+msgid "Motion only"
+msgstr "Samo pokret"
+
+#: ../app/tools/gimpairbrushtool.c:97 ../app/tools/gimpconvolvetool.c:216
 #: ../app/tools/gimpsmudgetool.c:96
 msgid "Rate:"
 msgstr "Brzina:"
 
-#: ../app/tools/gimpairbrushtool.c:97
-msgid "Pressure:"
-msgstr "Pritisak:"
+#: ../app/tools/gimpairbrushtool.c:103
+msgid "Flow:"
+msgstr "Protok:"
 
 #: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:768
 msgid "Align"
@@ -12116,16 +12121,16 @@ msgstr "_Gegl operacije..."
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "Ne možete koristiti Gegl operacije na indeksiranim slojevima."
 
-#: ../app/tools/gimpgegltool.c:337
+#: ../app/tools/gimpgegltool.c:371
 msgid "_Operation:"
 msgstr "_Operacije:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:408
+#: ../app/tools/gimpgegltool.c:430
 msgid "Operation Settings"
 msgstr "Podešavanje operacija"
 
-#: ../app/tools/gimpgegltool.c:413
+#: ../app/tools/gimpgegltool.c:435
 msgid "Select an operation from the list above"
 msgstr "Izaberite radnju iz priloženog spiska"
 
@@ -12952,19 +12957,19 @@ msgstr "Tekst: Pravi i uređuje tekstualne slojeve"
 msgid "Te_xt"
 msgstr "Te_kst"
 
-#: ../app/tools/gimptexttool.c:939
+#: ../app/tools/gimptexttool.c:941
 msgid "Reshape Text Layer"
 msgstr "Promeni oblik tekstualnog sloja"
 
-#: ../app/tools/gimptexttool.c:1478 ../app/tools/gimptexttool.c:1481
+#: ../app/tools/gimptexttool.c:1479 ../app/tools/gimptexttool.c:1482
 msgid "Confirm Text Editing"
 msgstr "Potvrdi uređivanje teksta"
 
-#: ../app/tools/gimptexttool.c:1485
+#: ../app/tools/gimptexttool.c:1486
 msgid "Create _New Layer"
 msgstr "_Napravi novi sloj"
 
-#: ../app/tools/gimptexttool.c:1509
+#: ../app/tools/gimptexttool.c:1510
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -12978,7 +12983,7 @@ msgstr ""
 "Možete menjati ovaj sloj ili napraviti novi tekstualni sloj na osnovu njegovih "
 "tekstualnih osobina."
 
-#: ../app/tools/gimptexttool-editor.c:1088
+#: ../app/tools/gimptexttool-editor.c:1111
 msgid "GIMP Text Editor"
 msgstr "Gimpov urednik teksta"
 
@@ -13020,7 +13025,7 @@ msgstr "Transformacija:"
 
 #: ../app/tools/gimptransformoptions.c:281
 #: ../app/widgets/gimpdynamicseditor.c:148
-#: ../app/widgets/gimpdynamicsoutputeditor.c:226
+#: ../app/widgets/gimpdynamicsoutputeditor.c:227
 msgid "Direction"
 msgstr "Smer"
 
@@ -13873,60 +13878,70 @@ msgstr "Vrati"
 msgid "%s (read only)"
 msgstr "%s (samo za čitanje)"
 
-#: ../app/widgets/gimpdeviceeditor.c:154
-#| msgid "Delete the selected settings"
+#: ../app/widgets/gimpdeviceeditor.c:160
 msgid "Delete the selected device"
 msgstr "Obriši izabrani uređaj"
 
+#: ../app/widgets/gimpdeviceeditor.c:468
+msgid "Delete Device Settings"
+msgstr "Izbriši podešavanja uređaja"
+
+#: ../app/widgets/gimpdeviceeditor.c:489
+#, c-format
+msgid "Delete \"%s\"?"
+msgstr "Da obrišem „%s“?"
+
+#: ../app/widgets/gimpdeviceeditor.c:492
+msgid ""
+"You are about to delete this device's stored settings.\n"
+"The next time this device is plugged, default settings will be used."
+msgstr ""
+"Ovim ćete obrisati sačuvana podešavanja uređaja.\n"
+"Kada sledeći put priključite uređaj, on će koristiti podrazumevana podešavanja."
+
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
 #: ../app/widgets/gimpdynamicseditor.c:146
-#: ../app/widgets/gimpdynamicsoutputeditor.c:212
+#: ../app/widgets/gimpdynamicsoutputeditor.c:213
 msgid "Pressure"
 msgstr "Pritisak"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:143
-#| msgid "Tilt"
 msgid "X tilt"
 msgstr "X pomeraj"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:144
-#| msgid "Tilt"
 msgid "Y tilt"
 msgstr "Y  pomeraj"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
-#| msgid "Mouse Wheel"
+#: ../app/widgets/gimpdynamicseditor.c:150
+#: ../app/widgets/gimpdynamicsoutputeditor.c:241
 msgid "Wheel"
 msgstr "Točkić"
 
 #. the axes
 #: ../app/widgets/gimpdeviceinfoeditor.c:192
-#| msgid "Pixels"
 msgid "Axes"
 msgstr "Ose"
 
 #. the keys
 #: ../app/widgets/gimpdeviceinfoeditor.c:266
-#| msgid "Key Up"
 msgid "Keys"
 msgstr "Tasteri"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:366
 #: ../app/widgets/gimpdeviceinfoeditor.c:584
 #, c-format
-#| msgid "(none)"
 msgid "none"
 msgstr "ništa"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:414
 #, c-format
-#| msgid "Curves"
 msgid "%s Curve"
 msgstr "%s kriva"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:473
-#: ../app/widgets/gimpdynamicsoutputeditor.c:195
-#| msgid "R_eset Color"
+#: ../app/widgets/gimpdynamicsoutputeditor.c:196
 msgid "_Reset Curve"
 msgstr "Poništi _krivu"
 
@@ -13970,32 +13985,41 @@ msgstr "Datoteka „%s“ već postoji."
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Želite li da je presnimite datotekom koju čuvate?"
 
-#: ../app/widgets/gimpdock.c:272
-#| msgid ","
+#. String used to separate dockables, e.g. "Tool Options, Layers"
+#: ../app/widgets/gimpdock.h:34
+msgctxt "dock"
 msgid ", "
 msgstr ", "
 
-#: ../app/widgets/gimpdock.c:278
+#. String used to separate books (GtkNotebooks) within a dock,
+#. e.g. "Tool Options, Layers - Brushes"
+#.
+#: ../app/widgets/gimpdock.h:39
+msgctxt "dock"
 msgid " - "
 msgstr " — "
+
+#. String used to separate dock columns,
+#. e.g. "Tool Options, Layers - Brushes | Gradients"
+#.
+#: ../app/widgets/gimpdock.h:44
+msgctxt "dock"
+msgid " | "
+msgstr " | "
 
 #: ../app/widgets/gimpdockable.c:235
 msgid "Configure this tab"
 msgstr "Podesi ovaj list"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:349
+#: ../app/widgets/gimpdockwindow.c:351
 msgid "Auto"
 msgstr "Auto"
 
-#: ../app/widgets/gimpdockwindow.c:360
+#: ../app/widgets/gimpdockwindow.c:362
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr "Kada je uključeno, prozorče samo prati sliku na kojoj radite."
-
-#: ../app/widgets/gimpdockwindow.c:745
-msgid " | "
-msgstr " | "
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
 msgid "Lock pixels"
@@ -14007,22 +14031,22 @@ msgid "Mapping matrix"
 msgstr "Matrica mapiranja"
 
 #: ../app/widgets/gimpdynamicseditor.c:147
-#: ../app/widgets/gimpdynamicsoutputeditor.c:219
+#: ../app/widgets/gimpdynamicsoutputeditor.c:220
 msgid "Velocity"
 msgstr "Brzina"
 
 #: ../app/widgets/gimpdynamicseditor.c:149
-#: ../app/widgets/gimpdynamicsoutputeditor.c:233
+#: ../app/widgets/gimpdynamicsoutputeditor.c:234
 msgid "Tilt"
 msgstr "Nagib"
 
-#: ../app/widgets/gimpdynamicseditor.c:150
-#: ../app/widgets/gimpdynamicsoutputeditor.c:240
+#: ../app/widgets/gimpdynamicseditor.c:151
+#: ../app/widgets/gimpdynamicsoutputeditor.c:248
 msgid "Random"
 msgstr "Nasumično"
 
-#: ../app/widgets/gimpdynamicseditor.c:151
-#: ../app/widgets/gimpdynamicsoutputeditor.c:247
+#: ../app/widgets/gimpdynamicseditor.c:152
+#: ../app/widgets/gimpdynamicsoutputeditor.c:255
 msgid "Fade"
 msgstr "Izbledi"
 
@@ -14523,7 +14547,7 @@ msgstr "unesi oznake"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1655
+#: ../app/widgets/gimptagentry.c:1718
 msgid ","
 msgstr ","
 
@@ -14576,7 +14600,7 @@ msgstr "Svojstvo „%s“ nije ispravno za <%s> element u ovom kontekstu"
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Spoljni element teksta mora biti <markup>, a ne <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1171
+#: ../app/widgets/gimptextbuffer.c:1367
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Neispravni UTF-8 podaci u datoteci „%s“"
@@ -14585,11 +14609,24 @@ msgstr "Neispravni UTF-8 podaci u datoteci „%s“"
 msgid "_Use selected font"
 msgstr "Koristi izabrani _font"
 
-#: ../app/widgets/gimptextstyleeditor.c:203
-#| msgctxt "edit-action"
-#| msgid "Clear the selected pixels"
+#: ../app/widgets/gimptextstyleeditor.c:199
+#| msgid "Clear style of selected text"
+msgid "Change size of selected text"
+msgstr "Menja veličinu izabranog teksta"
+
+#: ../app/widgets/gimptextstyleeditor.c:218
 msgid "Clear style of selected text"
 msgstr "Čisti stil za izabrani tekst"
+
+#: ../app/widgets/gimptextstyleeditor.c:238
+#| msgid "Clear style of selected text"
+msgid "Change kerning of selected text"
+msgstr "Menja kerning za izabrani tekst"
+
+#: ../app/widgets/gimptextstyleeditor.c:254
+#| msgid "Clear style of selected text"
+msgid "Change baseline of selected text"
+msgstr "Menja osnovnu liniju izabranog teksta"
 
 #: ../app/widgets/gimpthumbbox.c:343
 #, c-format
@@ -14993,6 +15030,9 @@ msgstr "Proverite da li je alatnica vidljiva!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Ne mogu da pokrenem „%s“: %s"
+
+#~ msgid "Pressure:"
+#~ msgstr "Pritisak:"
 
 #~ msgctxt "undo-type"
 #~ msgid "Reorder layer"
