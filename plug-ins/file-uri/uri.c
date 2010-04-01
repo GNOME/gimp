@@ -231,10 +231,10 @@ load_image (const gchar  *uri,
             GimpRunMode   run_mode,
             GError      **error)
 {
-  gchar    *tmpname    = NULL;
   gint32    image_ID   = -1;
   gboolean  name_image = FALSE;
-  gboolean  mapped;
+  gchar    *tmpname;
+  gboolean  mapped     = FALSE;
 
   tmpname = uri_backend_map_image (uri, run_mode);
 
@@ -282,7 +282,7 @@ save_image (const gchar  *uri,
 {
   GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
   gchar             *tmpname;
-  gboolean           mapped;
+  gboolean           mapped = FALSE;
 
   tmpname = uri_backend_map_image (uri, run_mode);
 
